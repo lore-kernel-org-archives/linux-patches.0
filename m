@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739EB1586CB;
-	Tue, 23 Jul 2024 18:35:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72ABF158878;
+	Tue, 23 Jul 2024 18:35:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759712; cv=none; b=XlysvejWqx6fZiUYV/4rR0EZTa5kGuWm531oWeYuGrpC7xgXhXUlTOpncR/dbGtEXlqG1Nts1GcEqfmarpJaVAvvb6orpN8Oa+Kmlae9ctbTlXpPBgvHozL5vLHupmQh+cFsu38Jt5sARyNEbgWIo0guZiuWYQULmaOsr+/z25I=
+	t=1721759715; cv=none; b=j+LKGDs0tXcWl+/o9UIMkUxys1xX4r+cjUBUBWHWK2Lzncwb2F5LA3uXYXPwCu/f5MJLmRWpTAdz7jW0ZPlAL1809atC9QxTDRufcXT7EXXjVsWDaZYrq69iorGFuOjH64MfMpiVGe1hRlQeY4qCaUnsIcSRBIcxLWcq9kNQelE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759712; c=relaxed/simple;
-	bh=EVgnMeJbF9Y7dqjSTEPXaZ1koadNAFO4Mh7wqk66sSo=;
+	s=arc-20240116; t=1721759715; c=relaxed/simple;
+	bh=gBePPhEsOwOuTgw9Km9DtlH1QOBvaW3LxpYZxlLelPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YTuTU8fX2Oi44AelGnKjTSDuy5ir6IsF5VSeHBXHFuGHarMZ6p1LBN80vE6OGjZKGuJFB3v2g401Ua4K8GfZxP0L/jlkCfXh8S8a+xQh1feGPyutskvuXhGxQzhiKko1pKeLd/5QXOw2d6uEgy+sNFFauxAWoT6Ujh6m32dJYDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emWxGHvt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=izfhBmgUYiZ4ZGTeV5xvTCHpLlSXgsgNZv0Y0nG1Gcu8FyE0M/EU+51wbHOC6/maMIioubCc+Fm9UaryZIrffmU2uVXqawgbwRD6XzHGfuoWldHkOc5+qeDoy/iIKNWvdmPiZUsGH+WR9TKi6m8VwUYi82oVObsk1KYor7fz7YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1J9dJdt6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emWxGHvt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB57C4AF09;
-	Tue, 23 Jul 2024 18:35:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1J9dJdt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C55C4AF09;
+	Tue, 23 Jul 2024 18:35:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759712;
-	bh=EVgnMeJbF9Y7dqjSTEPXaZ1koadNAFO4Mh7wqk66sSo=;
+	s=korg; t=1721759715;
+	bh=gBePPhEsOwOuTgw9Km9DtlH1QOBvaW3LxpYZxlLelPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=emWxGHvtbJuqJXiyzorwdNgSvSkgTOoVowZfa7H/zWYu9k/h65yMeCkEeTTRU6vdM
-	 0wG9pvBaR/Se+QR7+N8Gb85pSdybgoM7hG1/Zee7UZJjMeSCLSZH0FuQZIzYMWNzVo
-	 loEKxdKuJAsU+1F1xshK8q3PG86VZAsU/wcbx3B0=
+	b=1J9dJdt6kWA9VVGqLajb4ACNSfxcdl1gVlt/s7aSTxKTKZLhf4GzPwW//o2VTipr2
+	 a79oOmG02/wIp3/zxR6ycwI4EX8vkHWL0sY6E4nR0Y0yZDbu9VVW3EDeLYFDRmHZV7
+	 2cwkb2WH+6oEy6tmsCAeYZO0LhQ6sUOQYXgTlwe0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Dhere <chaitanya.dhere@amd.com>,
-	Nevenko Stupar <nevenko.stupar@amd.com>,
+	Sun peng Li <sunpeng.li@amd.com>,
 	Jerry Zuo <jerry.zuo@amd.com>,
-	Alvin Lee <alvin.lee2@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/129] drm/amd/display: Account for cursor prefetch BW in DML1 mode support
-Date: Tue, 23 Jul 2024 20:24:11 +0200
-Message-ID: <20240723180408.773140075@linuxfoundation.org>
+Subject: [PATCH 6.6 104/129] drm/amd/display: Fix refresh rate range for some panel
+Date: Tue, 23 Jul 2024 20:24:12 +0200
+Message-ID: <20240723180408.811967822@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -55,42 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alvin Lee <alvin.lee2@amd.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit 074b3a886713f69d98d30bb348b1e4cb3ce52b22 ]
+[ Upstream commit 9ef1548aeaa8858e7aee2152bf95cc71cdcd6dff ]
 
-[Description]
-We need to ensure to take into account cursor prefetch BW in
-mode support or we may pass ModeQuery but fail an actual flip
-which will cause a hang. Flip may fail because the cursor_pre_bw
-is populated during mode programming (and mode programming is
-never called prior to ModeQuery).
+[Why]
+Some of the panels does not have the refresh rate range info
+in base EDID and only have the refresh rate range info in
+DisplayID block.
+It will cause the max/min freesync refresh rate set to 0.
 
-Reviewed-by: Chaitanya Dhere <chaitanya.dhere@amd.com>
-Reviewed-by: Nevenko Stupar <nevenko.stupar@amd.com>
+[How]
+Try to parse the refresh rate range info from DisplayID if the
+max/min refresh rate is 0.
+
+Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
 Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
-Signed-off-by: Alvin Lee <alvin.lee2@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-index 6c84b0fa40f44..0782a34689a00 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-@@ -3364,6 +3364,9 @@ void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
- 							&mode_lib->vba.UrgentBurstFactorLumaPre[k],
- 							&mode_lib->vba.UrgentBurstFactorChromaPre[k],
- 							&mode_lib->vba.NotUrgentLatencyHidingPre[k]);
-+
-+					v->cursor_bw_pre[k] = mode_lib->vba.NumberOfCursors[k] * mode_lib->vba.CursorWidth[k][0] * mode_lib->vba.CursorBPP[k][0] /
-+							8.0 / (mode_lib->vba.HTotal[k] / mode_lib->vba.PixelClock[k]) * v->VRatioPreY[i][j][k];
- 				}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 6e5ca0c755c3b..60db3800666ec 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -10630,6 +10630,49 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
+ 	return ret;
+ }
  
- 				{
++static void parse_edid_displayid_vrr(struct drm_connector *connector,
++		struct edid *edid)
++{
++	u8 *edid_ext = NULL;
++	int i;
++	int j = 0;
++	u16 min_vfreq;
++	u16 max_vfreq;
++
++	if (edid == NULL || edid->extensions == 0)
++		return;
++
++	/* Find DisplayID extension */
++	for (i = 0; i < edid->extensions; i++) {
++		edid_ext = (void *)(edid + (i + 1));
++		if (edid_ext[0] == DISPLAYID_EXT)
++			break;
++	}
++
++	if (edid_ext == NULL)
++		return;
++
++	while (j < EDID_LENGTH) {
++		/* Get dynamic video timing range from DisplayID if available */
++		if (EDID_LENGTH - j > 13 && edid_ext[j] == 0x25	&&
++		    (edid_ext[j+1] & 0xFE) == 0 && (edid_ext[j+2] == 9)) {
++			min_vfreq = edid_ext[j+9];
++			if (edid_ext[j+1] & 7)
++				max_vfreq = edid_ext[j+10] + ((edid_ext[j+11] & 3) << 8);
++			else
++				max_vfreq = edid_ext[j+10];
++
++			if (max_vfreq && min_vfreq) {
++				connector->display_info.monitor_range.max_vfreq = max_vfreq;
++				connector->display_info.monitor_range.min_vfreq = min_vfreq;
++
++				return;
++			}
++		}
++		j++;
++	}
++}
++
+ static int parse_amd_vsdb(struct amdgpu_dm_connector *aconnector,
+ 			  struct edid *edid, struct amdgpu_hdmi_vsdb_info *vsdb_info)
+ {
+@@ -10752,6 +10795,11 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+ 	if (!adev->dm.freesync_module)
+ 		goto update;
+ 
++	/* Some eDP panels only have the refresh rate range info in DisplayID */
++	if ((connector->display_info.monitor_range.min_vfreq == 0 ||
++	     connector->display_info.monitor_range.max_vfreq == 0))
++		parse_edid_displayid_vrr(connector, edid);
++
+ 	if (edid && (sink->sink_signal == SIGNAL_TYPE_DISPLAY_PORT ||
+ 		     sink->sink_signal == SIGNAL_TYPE_EDP)) {
+ 		bool edid_check_required = false;
 -- 
 2.43.0
 
