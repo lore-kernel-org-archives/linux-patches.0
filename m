@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948A913D600;
-	Tue, 23 Jul 2024 18:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A75D13D896;
+	Tue, 23 Jul 2024 18:41:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760107; cv=none; b=q2PO2CVHo0gQJ/MexCHxAVHn8mPRd8iJd5rIDOHFQ6KvfSv8Uvs57EcLeT7T74I/weC+IgzE0mW5UDgIsnKe8SUGjEdFjw8dpAS2SYTdf4vglkzx5kxum51iND1XJuURfmWB+VHxZ1QOyYAu6lePTJ9TbT2tpxN99F6dFCg1sPs=
+	t=1721760110; cv=none; b=kQI1/YygojB6RkLiaWJuMDPKv47fClbElXaDnJFkQqBsegpYDrnAJ2xtk8Wk4GWCcVagqs+jXIf/GIK/APRlSL4+DkhQCSt7EnDV0Z5mQgzgb9LZus3Va9Yqs0zIHyjSdVDPy5/I/Nhu3+jzDf7ZIUze1VJtKRJvi9eFBVUlZ00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760107; c=relaxed/simple;
-	bh=oBZ4aUZXWXOa80R3zclCA2t7Pg23iDplEHeEivaB1Ic=;
+	s=arc-20240116; t=1721760110; c=relaxed/simple;
+	bh=suzVP3IiyNPm1YwYRv6kLTGTHj5euoagWLKy/iuCmsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RF1hJU+ao5FOJXbk7wMVVjWEKzJ5cwLksm34915VOCBF5eyva37caXWDuUGhjAosRnW6vlscLBA8qiY2t1h+IDApd8HH4tSpuUAEJgBPqbtKieLXFZbxkTlyLpQL1B40x/U8qnfgg/EvRxxFWAX9fQGSinwQcuyIjZVt9AZ7yW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IKK28Vx9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rAEgOYv7aXh8JWkjdEf5p1WHc/9umF2VWbZZ9fL/LqLsGZqGO3W+1uD1K2GcNLBqQjuDrrEO5yPIdyLoFdb/S+a9VzaZAqXwvWvvCmSiDYYxJUfQ7+UmebH9xQT70B2nvgNPqnukVzY5idGQ6D3njVc+2cLOvGbOWcsDv0lJ13U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boUL8gG7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IKK28Vx9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19E86C4AF0A;
-	Tue, 23 Jul 2024 18:41:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boUL8gG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2BEAC4AF09;
+	Tue, 23 Jul 2024 18:41:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760107;
-	bh=oBZ4aUZXWXOa80R3zclCA2t7Pg23iDplEHeEivaB1Ic=;
+	s=korg; t=1721760110;
+	bh=suzVP3IiyNPm1YwYRv6kLTGTHj5euoagWLKy/iuCmsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKK28Vx9k+AfWJW6dvIBQ60sI1Rd6KHEsbj1ifqN1lClaZZa1dZNU2elJCN6dfJw4
-	 4qTwPG/CugzIiQOFGUBhmBhIzRKgQ+XIUqGQcFEWTaG9scFLHSLnPRZOxVE1dM20+y
-	 90unmaJ5XZOW9lueCma/Q7mo1On7or9U+bM635c8=
+	b=boUL8gG7IaC9Gxkhu8xVMV7ebIohsPtgH7Mix80OPhkjjCrcah79m4ISTNVrtzOmY
+	 oeiDWhZ1Hc3f+QBFBrXhywsZPN9Uoc2seaPmz/bGjBhA7PEbg/FRUGBPor533NuMOH
+	 HD6uNJEdsltKKdrcYQw/Zz/XWD9r5MQ2JzcyBypA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Alexey Makhalov <alexey.makhalov@broadcom.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 074/163] drm/vmwgfx: Fix missing HYPERVISOR_GUEST dependency
-Date: Tue, 23 Jul 2024 20:23:23 +0200
-Message-ID: <20240723180146.329095098@linuxfoundation.org>
+Subject: [PATCH 6.9 075/163] ALSA: hda/realtek: Add more codec ID to no shutup pins list
+Date: Tue, 23 Jul 2024 20:23:24 +0200
+Message-ID: <20240723180146.367869735@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexey Makhalov <alexey.makhalov@broadcom.com>
+From: Kailang Yang <kailang@realtek.com>
 
-[ Upstream commit 8c4d6945fe5bd04ff847c3c788abd34ca354ecee ]
+[ Upstream commit 70794b9563fe011988bcf6a081af9777e63e8d37 ]
 
-VMWARE_HYPERCALL alternative will not work as intended without VMware guest code
-initialization.
+If it enter to runtime D3 state, it didn't shutup Headset MIC pin.
 
-  [ bp: note that this doesn't reproduce with newer gccs so it must be
-    something gcc-9-specific. ]
-
-Closes: https://lore.kernel.org/oe-kbuild-all/202406152104.FxakP1MB-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Alexey Makhalov <alexey.makhalov@broadcom.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240616012511.198243-1-alexey.makhalov@broadcom.com
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/r/8d86f61e7d6f4a03b311e4eb4e5caaef@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/vmwgfx/Kconfig b/drivers/gpu/drm/vmwgfx/Kconfig
-index faddae3d6ac2e..6f1ac940cbae7 100644
---- a/drivers/gpu/drm/vmwgfx/Kconfig
-+++ b/drivers/gpu/drm/vmwgfx/Kconfig
-@@ -2,7 +2,7 @@
- config DRM_VMWGFX
- 	tristate "DRM driver for VMware Virtual GPU"
- 	depends on DRM && PCI && MMU
--	depends on X86 || ARM64
-+	depends on (X86 && HYPERVISOR_GUEST) || ARM64
- 	select DRM_TTM
- 	select DRM_TTM_HELPER
- 	select MAPPING_DIRTY_HELPERS
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 9a326e66b0b19..a260dfb7fde0c 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -585,10 +585,14 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ 	switch (codec->core.vendor_id) {
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 	case 0x10ec0283:
++	case 0x10ec0285:
+ 	case 0x10ec0286:
++	case 0x10ec0287:
+ 	case 0x10ec0288:
++	case 0x10ec0295:
+ 	case 0x10ec0298:
+ 		alc_headset_mic_no_shutup(codec);
+ 		break;
 -- 
 2.43.0
 
