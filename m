@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8B713C3F5;
-	Tue, 23 Jul 2024 18:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2160B15821A;
+	Tue, 23 Jul 2024 18:37:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759852; cv=none; b=N300E34cFbhcMUf7vJ/jsbrvQOAMV3Y42W3ODl4cTdT8TCH87AuVPhJw4qjDf4uI/SNC1IJUSShZK95N5fhwD8EgUDuU6hU3jjUTE7/LOhfy61u0OHgYKeIYEOw9/wulsfyecF2CYJRm4ufq8uAxYVgoLeb4O8eXWl+d0QH7IdY=
+	t=1721759855; cv=none; b=OFgPHBDCsupAljFqO5wMT4rbLINtB8e8p6vZRHkip5W5TOP0C/yAs4weDpUyq/bLRGGH+VlS90D56YtZJ3m3ENpIvEK3Fa3PLd/TSdo9RB7kg41ek1FGvqpM8iEAaFFdtnFC3JIgxZKwBMJg5hTQet9OfqWKUMAl2L8n34Tw2oA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759852; c=relaxed/simple;
-	bh=I7PXCCnJr5AKQgMg+Yga4IiLjl83B9io0rzvqFP8gqE=;
+	s=arc-20240116; t=1721759855; c=relaxed/simple;
+	bh=6Djtc48wtl1Sw5Wd5cBFKknL82R3w3JR4aXjxu7kR30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EdAr/aQ9TJQiI7AOBsVfqmpVGcn18ZLDNKwSAnawfcd5wQrYg6mvvCzausJGMECfgxcTUmAcdoRPZz9ja4YCapz0odgEEyjA5ciKqYGF7ayPg5jiZil/TeiSdSOf5YMYsmHZ5ity5GkD49an9UUehda1LT5ixLpmWqH4gOGwkgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2JPAn/kp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=boLaxp5IMRfAP7nglir6WkFyYNA75Euf1JXm4ts4ZA/o4bTXB32uFgJ8JRE3kbYCg0iZQa6TeI+ydBp5DA7wnQPoEZ4LV73bjRzWoDeHMwemEOrFVUTW/Fwtx/w9FgdQPWJSplDFlFIAhibA2wDfk4DA3KYD1aQ0n1Alzg7Yk4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJcmQ/9T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2JPAn/kp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1C86C4AF0A;
-	Tue, 23 Jul 2024 18:37:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJcmQ/9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D20FC4AF09;
+	Tue, 23 Jul 2024 18:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759852;
-	bh=I7PXCCnJr5AKQgMg+Yga4IiLjl83B9io0rzvqFP8gqE=;
+	s=korg; t=1721759855;
+	bh=6Djtc48wtl1Sw5Wd5cBFKknL82R3w3JR4aXjxu7kR30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JPAn/kpP7q1JyDh7mJv6C9LHZEJpa1v4ONx+H1F9hx5F6ILYUZK0HSzCjbUWwfLN
-	 oTIuI6avY46pwX0jFLNik952zSoDzy9pcHRjIfdoEjYXf27AmvjiC/FCQOfMC4yhzW
-	 aZu8rw+0G1yuzMEdD1acoO9BrQhDF4XqM9ektF54=
+	b=FJcmQ/9TuowYLgN/u2sJ1cBFr17hto9JF1MzFFjNQjBAkBJXUJFL159211eUHiwj9
+	 A1DABjj66gvlv4MZY/C1xssJM7yYk7XNeC0G3+3DKLI0cRGklcVaVa6FZs99JBNnFg
+	 Iki93jyo5JpXiIAgPIQNZ90/spSMUZu2CbhuaV2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Martin Wilck <martin.wilck@suse.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rajashekhar M A <rajs@netapp.com>
-Subject: [PATCH 6.9 002/163] scsi: core: alua: I/O errors for ALUA state transitions
-Date: Tue, 23 Jul 2024 20:22:11 +0200
-Message-ID: <20240723180143.559269316@linuxfoundation.org>
+	Yedidya Benshimol <yedidya.ben.shimol@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 020/163] wifi: iwlwifi: mvm: Handle BIGTK cipher in kek_kck cmd
+Date: Tue, 23 Jul 2024 20:22:29 +0200
+Message-ID: <20240723180144.250955963@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -56,108 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <martin.wilck@suse.com>
+From: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
 
-[ Upstream commit 10157b1fc1a762293381e9145041253420dfc6ad ]
+[ Upstream commit 08b16d1b5997dc378533318e2a9cd73c7a898284 ]
 
-When a host is configured with a few LUNs and I/O is running, injecting FC
-faults repeatedly leads to path recovery problems.  The LUNs have 4 paths
-each and 3 of them come back active after say an FC fault which makes 2 of
-the paths go down, instead of all 4. This happens after several iterations
-of continuous FC faults.
+The BIGTK cipher field was added to the kek_kck_material_cmd
+but wasn't assigned. Fix that by differentiating between the
+IGTK/BIGTK keys and assign the ciphers fields accordingly.
 
-Reason here is that we're returning an I/O error whenever we're
-encountering sense code 06/04/0a (LOGICAL UNIT NOT ACCESSIBLE, ASYMMETRIC
-ACCESS STATE TRANSITION) instead of retrying.
-
-[mwilck: The original patch was developed by Rajashekhar M A and Hannes
-Reinecke. I moved the code to alua_check_sense() as suggested by Mike
-Christie [1]. Evan Milne had raised the question whether pg->state should
-be set to transitioning in the UA case [2]. I believe that doing this is
-correct. SCSI_ACCESS_STATE_TRANSITIONING by itself doesn't cause I/O
-errors. Our handler schedules an RTPG, which will only result in an I/O
-error condition if the transitioning timeout expires.]
-
-[1] https://lore.kernel.org/all/0bc96e82-fdda-4187-148d-5b34f81d4942@oracle.com/
-[2] https://lore.kernel.org/all/CAGtn9r=kicnTDE2o7Gt5Y=yoidHYD7tG8XdMHEBJTBraVEoOCw@mail.gmail.com/
-
-Co-developed-by: Rajashekhar M A <rajs@netapp.com>
-Co-developed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin Wilck <martin.wilck@suse.com>
-Link: https://lore.kernel.org/r/20240514140344.19538-1-mwilck@suse.com
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240513132416.7fd0b22b7267.Ie9b581652b74bd7806980364d59e1b2e78e682c0@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/device_handler/scsi_dh_alua.c | 31 +++++++++++++++-------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
-index a226dc1b65d71..4eb0837298d4d 100644
---- a/drivers/scsi/device_handler/scsi_dh_alua.c
-+++ b/drivers/scsi/device_handler/scsi_dh_alua.c
-@@ -414,28 +414,40 @@ static char print_alua_state(unsigned char state)
- 	}
- }
- 
--static enum scsi_disposition alua_check_sense(struct scsi_device *sdev,
--					      struct scsi_sense_hdr *sense_hdr)
-+static void alua_handle_state_transition(struct scsi_device *sdev)
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index 74743c3ceeefb..6f16b5b33f0c0 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -595,6 +595,12 @@ static void iwl_mvm_wowlan_gtk_type_iter(struct ieee80211_hw *hw,
+ 					 void *_data)
  {
- 	struct alua_dh_data *h = sdev->handler_data;
- 	struct alua_port_group *pg;
- 
-+	rcu_read_lock();
-+	pg = rcu_dereference(h->pg);
-+	if (pg)
-+		pg->state = SCSI_ACCESS_STATE_TRANSITIONING;
-+	rcu_read_unlock();
-+	alua_check(sdev, false);
-+}
+ 	struct wowlan_key_gtk_type_iter *data = _data;
++	__le32 *cipher = NULL;
 +
-+static enum scsi_disposition alua_check_sense(struct scsi_device *sdev,
-+					      struct scsi_sense_hdr *sense_hdr)
-+{
- 	switch (sense_hdr->sense_key) {
- 	case NOT_READY:
- 		if (sense_hdr->asc == 0x04 && sense_hdr->ascq == 0x0a) {
- 			/*
- 			 * LUN Not Accessible - ALUA state transition
- 			 */
--			rcu_read_lock();
--			pg = rcu_dereference(h->pg);
--			if (pg)
--				pg->state = SCSI_ACCESS_STATE_TRANSITIONING;
--			rcu_read_unlock();
--			alua_check(sdev, false);
-+			alua_handle_state_transition(sdev);
- 			return NEEDS_RETRY;
- 		}
- 		break;
- 	case UNIT_ATTENTION:
-+		if (sense_hdr->asc == 0x04 && sense_hdr->ascq == 0x0a) {
-+			/*
-+			 * LUN Not Accessible - ALUA state transition
-+			 */
-+			alua_handle_state_transition(sdev);
-+			return NEEDS_RETRY;
-+		}
- 		if (sense_hdr->asc == 0x29 && sense_hdr->ascq == 0x00) {
- 			/*
- 			 * Power On, Reset, or Bus Device Reset.
-@@ -502,7 +514,8 @@ static int alua_tur(struct scsi_device *sdev)
++	if (key->keyidx == 4 || key->keyidx == 5)
++		cipher = &data->kek_kck_cmd->igtk_cipher;
++	if (key->keyidx == 6 || key->keyidx == 7)
++		cipher = &data->kek_kck_cmd->bigtk_cipher;
  
- 	retval = scsi_test_unit_ready(sdev, ALUA_FAILOVER_TIMEOUT * HZ,
- 				      ALUA_FAILOVER_RETRIES, &sense_hdr);
--	if (sense_hdr.sense_key == NOT_READY &&
-+	if ((sense_hdr.sense_key == NOT_READY ||
-+	     sense_hdr.sense_key == UNIT_ATTENTION) &&
- 	    sense_hdr.asc == 0x04 && sense_hdr.ascq == 0x0a)
- 		return SCSI_DH_RETRY;
- 	else if (retval)
+ 	switch (key->cipher) {
+ 	default:
+@@ -606,10 +612,13 @@ static void iwl_mvm_wowlan_gtk_type_iter(struct ieee80211_hw *hw,
+ 		return;
+ 	case WLAN_CIPHER_SUITE_BIP_GMAC_256:
+ 	case WLAN_CIPHER_SUITE_BIP_GMAC_128:
+-		data->kek_kck_cmd->igtk_cipher = cpu_to_le32(STA_KEY_FLG_GCMP);
++		if (cipher)
++			*cipher = cpu_to_le32(STA_KEY_FLG_GCMP);
+ 		return;
+ 	case WLAN_CIPHER_SUITE_AES_CMAC:
+-		data->kek_kck_cmd->igtk_cipher = cpu_to_le32(STA_KEY_FLG_CCM);
++	case WLAN_CIPHER_SUITE_BIP_CMAC_256:
++		if (cipher)
++			*cipher = cpu_to_le32(STA_KEY_FLG_CCM);
+ 		return;
+ 	case WLAN_CIPHER_SUITE_CCMP:
+ 		if (!sta)
 -- 
 2.43.0
 
