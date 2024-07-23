@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607E3158872;
-	Tue, 23 Jul 2024 18:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF89156F29;
+	Tue, 23 Jul 2024 18:27:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759276; cv=none; b=D+TuEnZkzGTSkQhXJLUMmImOGZISGssMyNLilXz3FmgIoPkhZNKGoyzs1KEyWk01Iin9yC+pSQ/qh+B2QgQr5BX/S7wtJ1ni/At8PtqbMLHcJEZ4e+3slTivXdZIzMrW/okIhcUpmfYkuR9QBJR9D669aE8JBwj8uJB+iK/ZxVo=
+	t=1721759279; cv=none; b=IxNoJqAOGa8qVXXv2ds1kNub+DJZOq3yfFtWlX+OO1q69LBHbYNS6MBqiVZf0rHsbIxyPQ4hPE5+bmBKH2oRMDVJ247g+dRpjrqZ6kFG7iVgUnTnrO6BYQxGV5jXQ5Mzicm02OUGMTqaFTwawfJa3OweDcmY/zC8h40N2OzgvRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759276; c=relaxed/simple;
-	bh=ls0YnJV2IEGiJjdU4JmOcna4t1VjJtBmoudK1O4H5VQ=;
+	s=arc-20240116; t=1721759279; c=relaxed/simple;
+	bh=1XQWgJChmgYrlF0jWwuvxW3lVxRK10y12NR7FKarzv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o47TNNKXh0phqJMA0xJYxjZhg0FuhJsMmlUEeOKTdazustkSY1oxoQ2OpVpn4EbNeZm6Mck+7IZrw6mGA067nV1m8PMvsbrxtDh1xPwrpmu315YSM2MSIrohBO7uf+76TkgjmtSduJnS6W0ImoUZilDfs6D3Y+Eh5oVvJdfxr9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGfV7wrp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ARrbQ1eJEMsZqPsYWQG02+ZsedWFLDqwh9lUAm4hinJgO2EkZn6gvxJjOGvzSErq+JR/fq4TVs5a3D3M/zTjZ+nAOlB9SsiqVYI0k6AFJTUni9aEqxq6ebL1Y9P2M6YSfpo6AAo9V53nWNnoYlURtFnFFlazh7ZmiKpWw5LE6ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+XltgX+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGfV7wrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FAAC4AF0A;
-	Tue, 23 Jul 2024 18:27:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+XltgX+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7F56C4AF0A;
+	Tue, 23 Jul 2024 18:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759276;
-	bh=ls0YnJV2IEGiJjdU4JmOcna4t1VjJtBmoudK1O4H5VQ=;
+	s=korg; t=1721759279;
+	bh=1XQWgJChmgYrlF0jWwuvxW3lVxRK10y12NR7FKarzv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGfV7wrpomMkpJQ2ttajrY2ExVFfYOZiqj21lILRILUsn+xb8eTvRvW59gX26q54g
-	 1VwFNb1FN+3ClqRusb69A62O8zA8S4g1hkXLidcl5DDjnl5mzMpItDY9rNuIfsd4a3
-	 GcMzRPFVN+xqlvkx6yTigMbWHdkLwJas8CJOTfaY=
+	b=B+XltgX+g+FNOLTmk5rqBSYbpkgcumludk9hGld9G22l+XYTW99RCjmdy/dehmBc/
+	 rvstzfK445txlissdML/eL1dNb8OhDPUf09AQY3Ma2YEsLNjAlVO3nHcMR5MF+Hni3
+	 e5xfy8iQzTBVj5LMbEF4qdzoxfWG88wmIaataJWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	Alexander Aring <aahringo@redhat.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/105] net: ipv6: rpl_iptunnel: block BH in rpl_output() and rpl_input()
-Date: Tue, 23 Jul 2024 20:23:08 +0200
-Message-ID: <20240723180404.378758542@linuxfoundation.org>
+Subject: [PATCH 6.1 032/105] ila: block BH in ila_output()
+Date: Tue, 23 Jul 2024 20:23:09 +0200
+Message-ID: <20240723180404.443821066@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -55,89 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit db0090c6eb12c31246438b7fe2a8f1b833e7a653 ]
+[ Upstream commit cf28ff8e4c02e1ffa850755288ac954b6ff0db8c ]
 
 As explained in commit 1378817486d6 ("tipc: block BH
 before using dst_cache"), net/core/dst_cache.c
 helpers need to be called with BH disabled.
 
-Disabling preemption in rpl_output() is not good enough,
-because rpl_output() is called from process context,
-lwtunnel_output() only uses rcu_read_lock().
+ila_output() is called from lwtunnel_output()
+possibly from process context, and under rcu_read_lock().
 
-We might be interrupted by a softirq, re-enter rpl_output()
+We might be interrupted by a softirq, re-enter ila_output()
 and corrupt dst_cache data structures.
 
-Fix the race by using local_bh_disable() instead of
-preempt_disable().
-
-Apply a similar change in rpl_input().
+Fix the race by using local_bh_disable().
 
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Alexander Aring <aahringo@redhat.com>
 Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240531132636.2637995-3-edumazet@google.com
+Link: https://lore.kernel.org/r/20240531132636.2637995-5-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/rpl_iptunnel.c | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+ net/ipv6/ila/ila_lwt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
-index ff691d9f4a04f..26adbe7f8a2f0 100644
---- a/net/ipv6/rpl_iptunnel.c
-+++ b/net/ipv6/rpl_iptunnel.c
-@@ -212,9 +212,9 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 	if (unlikely(err))
- 		goto drop;
+diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
+index 8c1ce78956bae..9d37f7164e732 100644
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -58,7 +58,9 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 		return orig_dst->lwtstate->orig_output(net, sk, skb);
+ 	}
  
--	preempt_disable();
 +	local_bh_disable();
- 	dst = dst_cache_get(&rlwt->cache);
--	preempt_enable();
+ 	dst = dst_cache_get(&ilwt->dst_cache);
 +	local_bh_enable();
- 
  	if (unlikely(!dst)) {
- 		struct ipv6hdr *hdr = ipv6_hdr(skb);
-@@ -234,9 +234,9 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 		struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 		struct flowi6 fl6;
+@@ -86,8 +88,11 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
  			goto drop;
  		}
  
--		preempt_disable();
-+		local_bh_disable();
- 		dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
--		preempt_enable();
-+		local_bh_enable();
+-		if (ilwt->connected)
++		if (ilwt->connected) {
++			local_bh_disable();
+ 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
++			local_bh_enable();
++		}
  	}
  
- 	skb_dst_drop(skb);
-@@ -268,9 +268,8 @@ static int rpl_input(struct sk_buff *skb)
- 		return err;
- 	}
- 
--	preempt_disable();
-+	local_bh_disable();
- 	dst = dst_cache_get(&rlwt->cache);
--	preempt_enable();
- 
- 	skb_dst_drop(skb);
- 
-@@ -278,14 +277,13 @@ static int rpl_input(struct sk_buff *skb)
- 		ip6_route_input(skb);
- 		dst = skb_dst(skb);
- 		if (!dst->error) {
--			preempt_disable();
- 			dst_cache_set_ip6(&rlwt->cache, dst,
- 					  &ipv6_hdr(skb)->saddr);
--			preempt_enable();
- 		}
- 	} else {
- 		skb_dst_set(skb, dst);
- 	}
-+	local_bh_enable();
- 
- 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
- 	if (unlikely(err))
+ 	skb_dst_set(skb, dst);
 -- 
 2.43.0
 
