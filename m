@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1661C158A3F;
-	Tue, 23 Jul 2024 18:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0391586F5;
+	Tue, 23 Jul 2024 18:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760134; cv=none; b=Jv7hA/gzLTpTJbWuuVvTqJuZPH1G47sDQyS2APXUr6LK9EGqYlw/bcWQi2bXebj4uqsJo4MHiYBOpXiTgRqnFpY+JAzI40/3Gg53/8K+ykEdN9ti82wyCiSLPZtvDbg1mLgwKv4QnAQpZZVazjGfEsFxk0xRFMZ2TpBa9P/KF6A=
+	t=1721760137; cv=none; b=dv4/6NbcnAiL4lO5+m1/klivQipuNHHYThvKO5T36OyMElWRsODitwidLjZd5v9IIddlAgrkP1UMd/SeXf0KjfTFOUyWdLJSNgBoeSbLTYvtjUYgP2azkpryDDF41s7DcUASIqXegC+aiK1lk6XithteoRiuDkB3LDg0fug7Xx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760134; c=relaxed/simple;
-	bh=9o2uyzxOAgHx7B9rrgMlsYi1GeH0r1YS/s7NOpQiHP8=;
+	s=arc-20240116; t=1721760137; c=relaxed/simple;
+	bh=S4SnK1GBcU2G9p62OJt2mU88KwdvoYKypBu4H45SrW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a2w7p8fq5aS2bUlgQ+f+7dtdBr01xeeXNWmxwCajAzONmoS1HCDsY5JRgDC1hZNi2wum8ntQUyA3iwjtMDPIPfM0Wf/xjMow6CQbArJRakHGMXr2o5nK7eH0AjeIzq2piFyAknn40QOmucJvCQbLUV9O/ACmyt4Zuhp3WQmBRwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hr9vmoEV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gIIY+0dPCPSq1Gq9BnZkf3431zJkOwVmlxTiuBHXYOqAUziO8gOh9YJ08YBOxRyPllk9mQWTtzQ0PBBkw3TJYkiQJZocLHWFL0ix2pqaw7d1M7zPGsItta+Lozg+BRs7fV7IQyx5z8qeeV+CIeBNUTz3cUTOOE5am3GXEvpVSZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKS4c4ia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hr9vmoEV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F64EC4AF09;
-	Tue, 23 Jul 2024 18:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKS4c4ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86318C4AF0A;
+	Tue, 23 Jul 2024 18:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760134;
-	bh=9o2uyzxOAgHx7B9rrgMlsYi1GeH0r1YS/s7NOpQiHP8=;
+	s=korg; t=1721760136;
+	bh=S4SnK1GBcU2G9p62OJt2mU88KwdvoYKypBu4H45SrW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hr9vmoEVHOoSm0FSAZpk2gMeQoeSqlD1X4tf0DUt/QTdKrM87gnL8DOTWfAed2cgL
-	 Jaoa48d5cfTb2ZuN1bScQBPiZayFZYIPOgPPwZjGWHpt+EiL5IAdtJHG7oqizOY/KT
-	 t+dZZ+bBs1tlGYoz/QveIPxTpklwVLlTODBizHUI=
+	b=PKS4c4iapxTUcTEsyqzM4BDOCbIbtKZoBQNRh1Za4VMdHZjJrsnbbbtDWpcIJ0zlU
+	 QgJLB6Sp23mhXzVQxn/HJHK1QlHDi/xRzBLrAZmQLpCoxtKWHGW1SG6WEgPbsh1bAF
+	 PTrYYcoAgbN9YJgLndKsczAz9Kc8RBdGg0NMnXYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Boris Burkov <boris@bur.io>,
 	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 114/163] btrfs: scrub: handle RST lookup error correctly
-Date: Tue, 23 Jul 2024 20:24:03 +0200
-Message-ID: <20240723180147.878755416@linuxfoundation.org>
+Subject: [PATCH 6.9 115/163] btrfs: qgroup: fix quota root leak after quota disable failure
+Date: Tue, 23 Jul 2024 20:24:04 +0200
+Message-ID: <20240723180147.917603293@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,99 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 2c49908634a2b97b1c3abe0589be2739ac5e7fd5 ]
+[ Upstream commit a7e4c6a3031c74078dba7fa36239d0f4fe476c53 ]
 
-[BUG]
-When running btrfs/060 with forced RST feature, it would crash the
-following ASSERT() inside scrub_read_endio():
+If during the quota disable we fail when cleaning the quota tree or when
+deleting the root from the root tree, we jump to the 'out' label without
+ever dropping the reference on the quota root, resulting in a leak of the
+root since fs_info->quota_root is no longer pointing to the root (we have
+set it to NULL just before those steps).
 
-	ASSERT(sector_nr < stripe->nr_sectors);
+Fix this by always doing a btrfs_put_root() call under the 'out' label.
+This is a problem that exists since qgroups were first added in 2012 by
+commit bed92eae26cc ("Btrfs: qgroup implementation and prototypes"), but
+back then we missed a kfree on the quota root and free_extent_buffer()
+calls on its root and commit root nodes, since back then roots were not
+yet reference counted.
 
-Before that, we would have tree dump from
-btrfs_get_raid_extent_offset(), as we failed to find the RST entry for
-the range.
-
-[CAUSE]
-Inside scrub_submit_extent_sector_read() every time we allocated a new
-bbio we immediately called btrfs_map_block() to make sure there was some
-RST range covering the scrub target.
-
-But if btrfs_map_block() fails, we immediately call endio for the bbio,
-while the bbio is newly allocated, it's completely empty.
-
-Then inside scrub_read_endio(), we go through the bvecs to find
-the sector number (as bi_sector is no longer reliable if the bio is
-submitted to lower layers).
-
-And since the bio is empty, such bvecs iteration would not find any
-sector matching the sector, and return sector_nr == stripe->nr_sectors,
-triggering the ASSERT().
-
-[FIX]
-Instead of calling btrfs_map_block() after allocating a new bbio, call
-btrfs_map_block() first.
-
-Since our only objective of calling btrfs_map_block() is only to update
-stripe_len, there is really no need to do that after btrfs_alloc_bio().
-
-This new timing would avoid the problem of handling empty bbio
-completely, and in fact fixes a possible race window for the old code,
-where if the submission thread is the only owner of the pending_io, the
-scrub would never finish (since we didn't decrease the pending_io
-counter).
-
-Although the root cause of RST lookup failure still needs to be
-addressed.
-
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/scrub.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ fs/btrfs/qgroup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/scrub.c b/fs/btrfs/scrub.c
-index afd6932f5e895..d7caa3732f074 100644
---- a/fs/btrfs/scrub.c
-+++ b/fs/btrfs/scrub.c
-@@ -1688,20 +1688,24 @@ static void scrub_submit_extent_sector_read(struct scrub_ctx *sctx,
- 					    (i << fs_info->sectorsize_bits);
- 			int err;
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 4caa078d972a3..9af2afb417308 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1351,7 +1351,7 @@ static int flush_reservations(struct btrfs_fs_info *fs_info)
  
--			bbio = btrfs_bio_alloc(stripe->nr_sectors, REQ_OP_READ,
--					       fs_info, scrub_read_endio, stripe);
--			bbio->bio.bi_iter.bi_sector = logical >> SECTOR_SHIFT;
--
- 			io_stripe.is_scrub = true;
-+			stripe_len = (nr_sectors - i) << fs_info->sectorsize_bits;
-+			/*
-+			 * For RST cases, we need to manually split the bbio to
-+			 * follow the RST boundary.
-+			 */
- 			err = btrfs_map_block(fs_info, BTRFS_MAP_READ, logical,
--					      &stripe_len, &bioc, &io_stripe,
--					      &mirror);
-+					      &stripe_len, &bioc, &io_stripe, &mirror);
- 			btrfs_put_bioc(bioc);
--			if (err) {
--				btrfs_bio_end_io(bbio,
--						 errno_to_blk_status(err));
--				return;
-+			if (err < 0) {
-+				set_bit(i, &stripe->io_error_bitmap);
-+				set_bit(i, &stripe->error_bitmap);
-+				continue;
- 			}
-+
-+			bbio = btrfs_bio_alloc(stripe->nr_sectors, REQ_OP_READ,
-+					       fs_info, scrub_read_endio, stripe);
-+			bbio->bio.bi_iter.bi_sector = logical >> SECTOR_SHIFT;
- 		}
+ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ {
+-	struct btrfs_root *quota_root;
++	struct btrfs_root *quota_root = NULL;
+ 	struct btrfs_trans_handle *trans = NULL;
+ 	int ret = 0;
  
- 		__bio_add_page(&bbio->bio, page, fs_info->sectorsize, pgoff);
+@@ -1449,9 +1449,9 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 	btrfs_free_tree_block(trans, btrfs_root_id(quota_root),
+ 			      quota_root->node, 0, 1);
+ 
+-	btrfs_put_root(quota_root);
+ 
+ out:
++	btrfs_put_root(quota_root);
+ 	mutex_unlock(&fs_info->qgroup_ioctl_lock);
+ 	if (ret && trans)
+ 		btrfs_end_transaction(trans);
 -- 
 2.43.0
 
