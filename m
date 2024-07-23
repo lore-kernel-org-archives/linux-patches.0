@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA9158A01;
-	Tue, 23 Jul 2024 18:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AB813D896;
+	Tue, 23 Jul 2024 18:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759904; cv=none; b=icLxrPTefXY3gyXTzuc2sVfTRS9qn2EZN0vQkSfKSEA1316uMvTktdGSsX7cVOspIvqd02SDgfzkd0r6vQaXOn7eH14mFFy9NmRIt0+wXsDdWmnYZwb3LdoOGr0aRiyH4k6JmbO4nOwUweKrRHOHd2j61uQ+Pm6gABgPCLIboJk=
+	t=1721759907; cv=none; b=QGMoyrSVVeT9GaevyUmOeqyH+w36OPIMxqm1iAgXfOJTQbbRG+bkMuCsYB6zGgveyJ4NJJff5fGHGcelc3ALZtBrBQu4DfPVNU3Gnq9iWMJUkAXDLgCBOIjqCGGyoSyPMy+4ygH2KuiPIwOKJr/uhAW9b90+Pd7nJ3DlmljbX0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759904; c=relaxed/simple;
-	bh=pQDh12rE2IA4/Ms91rn05IimNwPjATiNBQhaVBy+OmI=;
+	s=arc-20240116; t=1721759907; c=relaxed/simple;
+	bh=BP6sNZjOHwIou8OrUYh8Ea16NKZ8f7WPzCdifCpEHsc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EnogSaA2ho/OH7Cq8IGaTh0jKwBHbTWwwZL/EMSnuEzuXfvf9az1upOzVdFkrO927g7xPRUUP2MSijDwsOdLttLg9FRbighnAuD3P0hvgmulhF07ZrItQ+C/hBhIyhcGQJBkX6DreT/+jxbRcTI1QDWBv7O7s25RuL4y9c18HAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GHI0XiOl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=STJDU8egizLq58vz9bfCcYYTNJY2g1wt4nYJfpNpc19agNdYEz3Pkx7Xcp54ZFwPYVUu+j14TX0k+H2UBuYHxj2W3BQpcAC1foklkp3vz5NDVtArVlfSiIzPzr4d8KfZ8uWndfvUffRNI/rP1+ycc20pAewYk51jT4OWp9PkgSU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IVaZoVZ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GHI0XiOl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6460DC4AF09;
-	Tue, 23 Jul 2024 18:38:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IVaZoVZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 515EDC4AF0A;
+	Tue, 23 Jul 2024 18:38:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759904;
-	bh=pQDh12rE2IA4/Ms91rn05IimNwPjATiNBQhaVBy+OmI=;
+	s=korg; t=1721759907;
+	bh=BP6sNZjOHwIou8OrUYh8Ea16NKZ8f7WPzCdifCpEHsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GHI0XiOlAsVaov5oqCWZAsO/XkkN3wlI97YRdK0PkbWD+KkvG8Ara71Kza3k42Cq5
-	 9xkSg1LVAc4OKwfgdiEjmGA/uMyxslYtYB3bCGOyBxTph0QnggHhNLV+WAbsOeRN4f
-	 LtzLH7CFLXeOBghLQ4D5zv7eJLudeBAxSalnfDnM=
+	b=IVaZoVZ+Y8PlvTT5VsKrtpLtuV0wZvtvE7wFFtunqBD++aLuA3wmMlsL0C0cFeyZ7
+	 9KaOCoUoPcOIGNkTyW4X7kC+itwG1rznG/cok5eQh/l4AgFCIdwnf1gO4/ZbTPQvcO
+	 ycMi5hJ9wtEqssDPkqldFDuUmO84OFAUbOz+m/cI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 007/163] efi/libstub: zboot.lds: Discard .discard sections
-Date: Tue, 23 Jul 2024 20:22:16 +0200
-Message-ID: <20240723180143.749807220@linuxfoundation.org>
+Subject: [PATCH 6.9 008/163] ACPI: EC: Abort address space access upon error
+Date: Tue, 23 Jul 2024 20:22:17 +0200
+Message-ID: <20240723180143.787495191@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,52 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 5134acb15d9ef27aa2b90aad46d4e89fcef79fdc ]
+[ Upstream commit f6f172dc6a6d7775b2df6adfd1350700e9a847ec ]
 
-When building ARCH=loongarch defconfig + CONFIG_UNWINDER_ORC=y using
-LLVM, there is a warning from ld.lld when linking the EFI zboot image
-due to the use of unreachable() in number() in vsprintf.c:
+When a multi-byte address space access is requested, acpi_ec_read()/
+acpi_ec_write() is being called multiple times.
 
-  ld.lld: warning: drivers/firmware/efi/libstub/lib.a(vsprintf.stub.o):(.discard.unreachable+0x0): has non-ABS relocation R_LARCH_32_PCREL against symbol ''
+Abort such operations if a single call to acpi_ec_read() /
+acpi_ec_write() fails, as the data read from / written to the EC
+might be incomplete.
 
-If the compiler cannot eliminate the default case for any reason, the
-.discard.unreachable section will remain in the final binary but the
-entire point of any section prefixed with .discard is that it is only
-used at compile time, so it can be discarded via /DISCARD/ in a linker
-script. The asm-generic vmlinux.lds.h includes .discard and .discard.*
-in the COMMON_DISCARDS macro but that is not used for zboot.lds, as it
-is not a kernel image linker script.
-
-Add .discard and .discard.* to /DISCARD/ in zboot.lds, so that any
-sections meant to be discarded at link time are not included in the
-final zboot image. This issue is not specific to LoongArch, it is just
-the first architecture to select CONFIG_OBJTOOL, which defines
-annotate_unreachable() as an asm statement to add the
-.discard.unreachable section, and use the EFI stub.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2023
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Acked-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/zboot.lds | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/ec.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/libstub/zboot.lds b/drivers/firmware/efi/libstub/zboot.lds
-index ac8c0ef851581..af2c82f7bd902 100644
---- a/drivers/firmware/efi/libstub/zboot.lds
-+++ b/drivers/firmware/efi/libstub/zboot.lds
-@@ -41,6 +41,7 @@ SECTIONS
- 	}
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 1cec29ab64ce8..b66e5971fd3d1 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1333,10 +1333,13 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_enable(ec);
  
- 	/DISCARD/ : {
-+		*(.discard .discard.*)
- 		*(.modinfo .init.modinfo)
- 	}
- }
+-	for (i = 0; i < bytes; ++i, ++address, ++value)
++	for (i = 0; i < bytes; ++i, ++address, ++value) {
+ 		result = (function == ACPI_READ) ?
+ 			acpi_ec_read(ec, address, value) :
+ 			acpi_ec_write(ec, address, *value);
++		if (result < 0)
++			break;
++	}
+ 
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_disable(ec);
 -- 
 2.43.0
 
