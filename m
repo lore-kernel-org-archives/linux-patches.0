@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436DC158215;
-	Tue, 23 Jul 2024 18:36:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3891414EC58;
+	Tue, 23 Jul 2024 18:36:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759766; cv=none; b=p9dyVPtjlxTvenDjg5njNnAua/inG8IWKOG8Ns4uxLzUKr3dYlmJhIH3ibMhrkXRmUD+S0gxsEqw6Ag/LVZfF2UryU3B6+onytyJ6GJ6BEil4ezK5kK83MK4kg18bmZw2B2x64jz/QTDtdfp8xyBsY3vL+Vvp+h1DIO/Cm8OkIU=
+	t=1721759769; cv=none; b=p5EJ4xXiMtVAdYKI0N4m+TO/s3FAePOdxWY/2/Y3ay5PFzB1FMNj8Am1xrCTeLXZLSU1/YjDauU/xaWly4cTBFd/AvWJ+N6JTX2x+w12DyCZ7vL/aQ8Fx3LX4tOPRRojMfI7vHJbdr6GF1xo68Q/3Cw9c4RxwyVSQPCq9UeFXFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759766; c=relaxed/simple;
-	bh=XKMdenBcGs14TaNFKTy2CtecZgJ3MZYe4Mpye/WlVXI=;
+	s=arc-20240116; t=1721759769; c=relaxed/simple;
+	bh=DgumAvX23O+x1B4Bhbps7RGZg3Or1/3RDpF1vRV+SUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h8PXRRjoMdx3ZHadLMN/1RUVtBZ8Z9QKxvAxbNz5Vw1h4aqPTxCzhqEV0dGQ2B7PTrh3Nn6lb6enJDBeX+EEwZQ4V8M6kGcCeyA/iRgBP+2j6xQi10TEd4mOGQxYtTeYOKIXGj0M6VkYrrAgANAi9zCdtLAu85zqGUoN4LHE6PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PvtkUbQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AG+Y7TXcOpbdp4SuI6U7qtPI7ToASuD4ZRtS+GhoMtDEoDsl75/sK7QnQdTBTdcaB1HWkkJXbTN1tpqXmdJgo/o/HHy9CtabXefOBkzszAhXQ5E9gJ7/XuBZWHLqfdlE35WR0yr776iFr5EJ/VIKaGpZDAuNwVwAVHv65zhYOFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L1YQsCqY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PvtkUbQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15BFC4AF0A;
-	Tue, 23 Jul 2024 18:36:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L1YQsCqY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9907C4AF09;
+	Tue, 23 Jul 2024 18:36:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759766;
-	bh=XKMdenBcGs14TaNFKTy2CtecZgJ3MZYe4Mpye/WlVXI=;
+	s=korg; t=1721759769;
+	bh=DgumAvX23O+x1B4Bhbps7RGZg3Or1/3RDpF1vRV+SUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvtkUbQIhjs0LZGIfXCWA2rnr3cKjNHf5RCfItU9fwTJIAAftmhX5afZfwjCQ504p
-	 2FTz4bIOpycH5XkXQjfzYMkQ55sjDHdrruFCp4jMoho5bFDQZHTzo7177MVsBA/eOt
-	 CVcad4oJixu5Mbvhk2h3766JhLF/PZX0l5h9Nw+A=
+	b=L1YQsCqYneTmxTfPx7Whd0QWr5NeHLT+5Gfp44YX6QJnBFSLyJttWO3jBTSrLPsv9
+	 NYUkZKZE/gQfIfmegvIWpgVLWygX51dEPWKQhQH0pcCUMrFndpWgZ30QtrZnCs4nKJ
+	 tCqE5maKo7EeeHPROS0W6UKu5jWLNwoJib/TxYsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	John Stultz <jstultz@google.com>
-Subject: [PATCH 6.6 120/129] ARM: 9324/1: fix get_user() broken with veneer
-Date: Tue, 23 Jul 2024 20:24:28 +0200
-Message-ID: <20240723180409.426694227@linuxfoundation.org>
+	Vishal Chourasia <vishalc@linux.ibm.com>,
+	Anjali K <anjalik@linux.ibm.com>,
+	Srikar Dronamraju <srikar@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 094/129] powerpc/pseries: Whitelist dtl slub object for copying to userspace
+Date: Tue, 23 Jul 2024 20:24:02 +0200
+Message-ID: <20240723180408.420333222@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,72 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Anjali K <anjalik@linux.ibm.com>
 
-commit 24d3ba0a7b44c1617c27f5045eecc4f34752ab03 upstream.
+[ Upstream commit 1a14150e1656f7a332a943154fc486504db4d586 ]
 
-The 32-bit ARM kernel stops working if the kernel grows to the point
-where veneers for __get_user_* are created.
+Reading the dispatch trace log from /sys/kernel/debug/powerpc/dtl/cpu-*
+results in a BUG() when the config CONFIG_HARDENED_USERCOPY is enabled as
+shown below.
 
-AAPCS32 [1] states, "Register r12 (IP) may be used by a linker as a
-scratch register between a routine and any subroutine it calls. It
-can also be used within a routine to hold intermediate values between
-subroutine calls."
+    kernel BUG at mm/usercopy.c:102!
+    Oops: Exception in kernel mode, sig: 5 [#1]
+    LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
+    Modules linked in: xfs libcrc32c dm_service_time sd_mod t10_pi sg ibmvfc
+    scsi_transport_fc ibmveth pseries_wdt dm_multipath dm_mirror dm_region_hash dm_log dm_mod fuse
+    CPU: 27 PID: 1815 Comm: python3 Not tainted 6.10.0-rc3 #85
+    Hardware name: IBM,9040-MRX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NM1060_042) hv:phyp pSeries
+    NIP:  c0000000005d23d4 LR: c0000000005d23d0 CTR: 00000000006ee6f8
+    REGS: c000000120c078c0 TRAP: 0700   Not tainted  (6.10.0-rc3)
+    MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 2828220f  XER: 0000000e
+    CFAR: c0000000001fdc80 IRQMASK: 0
+    [ ... GPRs omitted ... ]
+    NIP [c0000000005d23d4] usercopy_abort+0x78/0xb0
+    LR [c0000000005d23d0] usercopy_abort+0x74/0xb0
+    Call Trace:
+     usercopy_abort+0x74/0xb0 (unreliable)
+     __check_heap_object+0xf8/0x120
+     check_heap_object+0x218/0x240
+     __check_object_size+0x84/0x1a4
+     dtl_file_read+0x17c/0x2c4
+     full_proxy_read+0x8c/0x110
+     vfs_read+0xdc/0x3a0
+     ksys_read+0x84/0x144
+     system_call_exception+0x124/0x330
+     system_call_vectored_common+0x15c/0x2ec
+    --- interrupt: 3000 at 0x7fff81f3ab34
 
-However, bl instructions buried within the inline asm are unpredictable
-for compilers; hence, "ip" must be added to the clobber list.
+Commit 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
+requires that only whitelisted areas in slab/slub objects can be copied to
+userspace when usercopy hardening is enabled using CONFIG_HARDENED_USERCOPY.
+Dtl contains hypervisor dispatch events which are expected to be read by
+privileged users. Hence mark this safe for user access.
+Specify useroffset=0 and usersize=DISPATCH_LOG_BYTES to whitelist the
+entire object.
 
-This becomes critical when veneers for __get_user_* are created because
-veneers use the ip register since commit 02e541db0540 ("ARM: 8323/1:
-force linker to use PIC veneers").
-
-[1]: https://github.com/ARM-software/abi-aa/blob/2023Q1/aapcs32/aapcs32.rst
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Cc: John Stultz <jstultz@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Co-developed-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
+Signed-off-by: Anjali K <anjalik@linux.ibm.com>
+Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240614173844.746818-1-anjalik@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/uaccess.h |   14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ arch/powerpc/platforms/pseries/setup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm/include/asm/uaccess.h
-+++ b/arch/arm/include/asm/uaccess.h
-@@ -109,16 +109,6 @@ extern int __get_user_64t_1(void *);
- extern int __get_user_64t_2(void *);
- extern int __get_user_64t_4(void *);
+diff --git a/arch/powerpc/platforms/pseries/setup.c b/arch/powerpc/platforms/pseries/setup.c
+index ad4d4d38e50ae..1feb6b919bd97 100644
+--- a/arch/powerpc/platforms/pseries/setup.c
++++ b/arch/powerpc/platforms/pseries/setup.c
+@@ -343,8 +343,8 @@ static int alloc_dispatch_log_kmem_cache(void)
+ {
+ 	void (*ctor)(void *) = get_dtl_cache_ctor();
  
--#define __GUP_CLOBBER_1	"lr", "cc"
--#ifdef CONFIG_CPU_USE_DOMAINS
--#define __GUP_CLOBBER_2	"ip", "lr", "cc"
--#else
--#define __GUP_CLOBBER_2 "lr", "cc"
--#endif
--#define __GUP_CLOBBER_4	"lr", "cc"
--#define __GUP_CLOBBER_32t_8 "lr", "cc"
--#define __GUP_CLOBBER_8	"lr", "cc"
--
- #define __get_user_x(__r2, __p, __e, __l, __s)				\
- 	   __asm__ __volatile__ (					\
- 		__asmeq("%0", "r0") __asmeq("%1", "r2")			\
-@@ -126,7 +116,7 @@ extern int __get_user_64t_4(void *);
- 		"bl	__get_user_" #__s				\
- 		: "=&r" (__e), "=r" (__r2)				\
- 		: "0" (__p), "r" (__l)					\
--		: __GUP_CLOBBER_##__s)
-+		: "ip", "lr", "cc")
- 
- /* narrowing a double-word get into a single 32bit word register: */
- #ifdef __ARMEB__
-@@ -148,7 +138,7 @@ extern int __get_user_64t_4(void *);
- 		"bl	__get_user_64t_" #__s				\
- 		: "=&r" (__e), "=r" (__r2)				\
- 		: "0" (__p), "r" (__l)					\
--		: __GUP_CLOBBER_##__s)
-+		: "ip", "lr", "cc")
- #else
- #define __get_user_x_64t __get_user_x
- #endif
+-	dtl_cache = kmem_cache_create("dtl", DISPATCH_LOG_BYTES,
+-						DISPATCH_LOG_BYTES, 0, ctor);
++	dtl_cache = kmem_cache_create_usercopy("dtl", DISPATCH_LOG_BYTES,
++						DISPATCH_LOG_BYTES, 0, 0, DISPATCH_LOG_BYTES, ctor);
+ 	if (!dtl_cache) {
+ 		pr_warn("Failed to create dispatch trace log buffer cache\n");
+ 		pr_warn("Stolen time statistics will be unreliable\n");
+-- 
+2.43.0
+
 
 
