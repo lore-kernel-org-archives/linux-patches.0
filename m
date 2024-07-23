@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E8F156F29;
-	Tue, 23 Jul 2024 18:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4891586CB;
+	Tue, 23 Jul 2024 18:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759315; cv=none; b=MK2fjBt2XWhLMCJbFKM8FVtvYTR+Zw86dosavk8i58oEbHBCAicHUWIOKF2G9yUVzNOzl+0n199uV0FMGJMypoOHtq/8utmf6eHclVi8aFklmY6Ehq3UOpPWSd/1YvSHtDI+7uv6iwH4eQClWg7+RIHro3zqYn+gcWOGCAS9KAk=
+	t=1721759318; cv=none; b=WxY9XqTNHlfbAeVG1uZx/wIs415tnIWebXXWf4Sdy+RBk+sv3rdxBGoMJN+p9/A6bmg6EfrDkUxxZTkFIU1wLjPEAWqOCOAjU9oBTYwc2kgw9wGe6115Bmm5giB0H0ez+oK0kHZeMQ+monNHsaU+xjSrl9zk6VAwIec8xKFFfQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759315; c=relaxed/simple;
-	bh=/lVPAbDa7euuAShbBahHYp4+wUmpTGhqmDByGI8yy5k=;
+	s=arc-20240116; t=1721759318; c=relaxed/simple;
+	bh=Kx2ZCEBzJfn1LA1fiR3gTZysNr+0HuI8dOIEH9G3f70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WV24NuCPrYnefpnpp4nK11xP5XhJ2IxAAMrLxF63FAdpd93ghpDYWc/DpwsZysGlCoLQBF7WRAmvMbRVBng6oeqGJgQI0Sf99TOQCtiLodrcUsfduXtCWPw8mdiIXC3j2QRzg3TzHUn3zP2iN0AUIiPjWuvShH4D2f/9hFKETd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Se+YGcwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABO4OGytlgE+VOMNOKk2gtTPnRUsZvh6GEQtr2MBTLuuQXCit0a/zs2yWHzRdbD6p3VUerw0ZfDU+pjj7z0EvDHq+l3zKo0EJljt46JcpgIU2MkUATNvmvTG9E8CNCJfBgqeThlvj3871RctN4M7O/+3QYBbfh8tlltDIO0Vpko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZtDq9IX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Se+YGcwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76580C4AF09;
-	Tue, 23 Jul 2024 18:28:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZtDq9IX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7008BC4AF0A;
+	Tue, 23 Jul 2024 18:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759314;
-	bh=/lVPAbDa7euuAShbBahHYp4+wUmpTGhqmDByGI8yy5k=;
+	s=korg; t=1721759317;
+	bh=Kx2ZCEBzJfn1LA1fiR3gTZysNr+0HuI8dOIEH9G3f70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Se+YGcwHDm45aSqZJWgIDbpVAe96XG7tgmDS2CPsu75iyNBzjkAcVIG1Jh2oBVSKH
-	 PZfWba9SchxE9YaEAthY9aty7fJslI2WQW1Zo8jYlXZ9qnMV0nN+w62vWZZSCZ8xbY
-	 uOjI+exJy/qzgCFjYixq7jxdecTFElfjuTmqX030=
+	b=eZtDq9IXEmZCURALdF7YYM/8N5ECTlkr8E5lb6h49y5D4YLC2MhazPpYxbaRj0G7i
+	 1kN5HDfFNyJ86VYabUPBC9eGUYuX3cWOa+ecek6S5laGqixFIojNZ98bWze1r81KNO
+	 Dd09R4p6SI9E+t7tXKgSV6g7ZTyEyMuFkZBcIiho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Vyacheslav Frantsishko <itmymaill@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/105] ALSA: dmaengine_pcm: terminate dmaengine before synchronize
-Date: Tue, 23 Jul 2024 20:23:52 +0200
-Message-ID: <20240723180406.136377251@linuxfoundation.org>
+Subject: [PATCH 6.1 076/105] ASoC: amd: yc: Fix non-functional mic on ASUS M5602RA
+Date: Tue, 23 Jul 2024 20:23:53 +0200
+Message-ID: <20240723180406.174514282@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -51,64 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Vyacheslav Frantsishko <itmymaill@gmail.com>
 
-[ Upstream commit 6a7db25aad8ce6512b366d2ce1d0e60bac00a09d ]
+[ Upstream commit 63b47f026cc841bd3d3438dd6fccbc394dfead87 ]
 
-When dmaengine supports pause function, in suspend state,
-dmaengine_pause() is called instead of dmaengine_terminate_async(),
+The Vivobook S 16X IPS needs a quirks-table entry for the internal microphone to function properly.
 
-In end of playback stream, the runtime->state will go to
-SNDRV_PCM_STATE_DRAINING, if system suspend & resume happen
-at this time, application will not resume playback stream, the
-stream will be closed directly, the dmaengine_terminate_async()
-will not be called before the dmaengine_synchronize(), which
-violates the call sequence for dmaengine_synchronize().
-
-This behavior also happens for capture streams, but there is no
-SNDRV_PCM_STATE_DRAINING state for capture. So use
-dmaengine_tx_status() to check the DMA status if the status is
-DMA_PAUSED, then call dmaengine_terminate_async() to terminate
-dmaengine before dmaengine_synchronize().
-
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/1718851218-27803-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Vyacheslav Frantsishko <itmymaill@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://patch.msgid.link/20240626070334.45633-1-itmymaill@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_dmaengine.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/core/pcm_dmaengine.c b/sound/core/pcm_dmaengine.c
-index d142609570347..e299e8634751f 100644
---- a/sound/core/pcm_dmaengine.c
-+++ b/sound/core/pcm_dmaengine.c
-@@ -368,6 +368,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_sync_stop);
- int snd_dmaengine_pcm_close(struct snd_pcm_substream *substream)
- {
- 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
-+	struct dma_tx_state state;
-+	enum dma_status status;
-+
-+	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
-+	if (status == DMA_PAUSED)
-+		dmaengine_terminate_async(prtd->dma_chan);
- 
- 	dmaengine_synchronize(prtd->dma_chan);
- 	kfree(prtd);
-@@ -388,6 +394,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_close);
- int snd_dmaengine_pcm_close_release_chan(struct snd_pcm_substream *substream)
- {
- 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
-+	struct dma_tx_state state;
-+	enum dma_status status;
-+
-+	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
-+	if (status == DMA_PAUSED)
-+		dmaengine_terminate_async(prtd->dma_chan);
- 
- 	dmaengine_synchronize(prtd->dma_chan);
- 	dma_release_channel(prtd->dma_chan);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 0568e64d10150..8e3eccb4faa72 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -283,6 +283,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "M5402RA"),
+ 		}
+ 	},
++        {
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "M5602RA"),
++		}
++	},
+ 	{
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
 -- 
 2.43.0
 
