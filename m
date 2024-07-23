@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A60E155351;
-	Tue, 23 Jul 2024 18:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208E5155351;
+	Tue, 23 Jul 2024 18:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759294; cv=none; b=CaIiFu8B2eK5SBANltabasdB5D0L8hPmSvT9ZE21/MwIwSJQzEmz/ZHG5qHxpI/9K0m6jSVbpuQRTK3BGgh4BtXOm2oUXH5+YOI/+eUjwn7AMPKWAC7kIrspXj6YY7orwHtHfA8HFVDFN5m+lvfji8zrfQRgIG5toIXjP3uzpdg=
+	t=1721759297; cv=none; b=bLN/EObnWbXHpcEHliaz+XHUBaLx09XU0Z/w/anCuTkBglPR/du66PSCKKBf9T5uQl07iINA8wIYeuY8r/J4pvFlhZo/yHhF7cEzM3hEtnsfZg3LcZsZVIcZjbU3964RWkHuJ5zXFgJVGltxnvNIgDSyVlQExfhCzhYgwx4piYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759294; c=relaxed/simple;
-	bh=Xml8rrKY3WqCCmpE7gB+1cSjXwErRziL/e4M5wZCppg=;
+	s=arc-20240116; t=1721759297; c=relaxed/simple;
+	bh=IytkNd6WBVGu/jzGQfEoYxJ+cKrM00kO3NswDDIfjjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RHgpy1EVKkU1rapv0KerTacAMiTirels+6yPL0X059tiPxVsVTd/0M8MU8koLSsKf2rZ+REObnnInvGetGSaj+pZs5pUcbAxjOVQDH3GUEDKUc4LRqTXPLhPU6SYyaha5F/CB2+k4r25UkRh6C7xDRTutqj51DNEnFIU9AbLv9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZLgRnlk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XlxcFyiS6c737jlg5wUOg08Y2SxRO/2lkV+NaD9MEOw4qFDuBuEW9HHpcq7xCdQ64Q6JXLQ+9oSc/+RJmBA5o+MllotYbK05KkKUGiashV6uNzAbbos4AYzw36hLIuarWJK7ekLpiigYjT5AtgMe7Ke1Mcw9CgmmTzEfmJ21q2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IQ/wr3Cm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZLgRnlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A06DDC4AF0A;
-	Tue, 23 Jul 2024 18:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IQ/wr3Cm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB1FC4AF09;
+	Tue, 23 Jul 2024 18:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759294;
-	bh=Xml8rrKY3WqCCmpE7gB+1cSjXwErRziL/e4M5wZCppg=;
+	s=korg; t=1721759297;
+	bh=IytkNd6WBVGu/jzGQfEoYxJ+cKrM00kO3NswDDIfjjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZLgRnlk8elk1vLcx/bzgTv8DIf6RjvPNuUWCTJy8i+Ve4f+lxzzRvR5mdka0dlX2
-	 PACnSg/3OL6i8jy/Q/Ov8XOvs+msJ0R9xM5eFtQPxU0CjBCeUYf19m//BS0K5H/x2j
-	 7ku3h2J5hFh99qYl/ZrpuZHUhre6+m4sq9n9dXvk=
+	b=IQ/wr3CmdFbUdPWQZr+ppmYHmZ0uBVYQ8v+hj4TaQmqTFIM3lJkdU8fbeANxkDRVh
+	 ZNCi1+LHpPo6Hj56VQ25n/adcr/KP5coZyqyM01S1KqgUBYlifzYa3P+6GYCXLxEuz
+	 JJlv7y53eSkdRQn50bFFrEtODqsT6s1QzizE1bCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/105] platform/x86: lg-laptop: Remove LGEX0815 hotkey handling
-Date: Tue, 23 Jul 2024 20:23:45 +0200
-Message-ID: <20240723180405.866106655@linuxfoundation.org>
+Subject: [PATCH 6.1 069/105] platform/x86: lg-laptop: Change ACPI device id
+Date: Tue, 23 Jul 2024 20:23:46 +0200
+Message-ID: <20240723180405.904629045@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -56,53 +56,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 413c204595ca98a4f33414a948c18d7314087342 ]
+[ Upstream commit 58a54f27a0dac81f7fd3514be01012635219a53c ]
 
-The rfkill hotkey handling is already provided by the wireless-hotkey
-driver. Remove the now unnecessary rfkill hotkey handling to avoid
-duplicating functionality.
+The LGEX0815 ACPI device id is used for handling hotkey events, but
+this functionality is already handled by the wireless-hotkey driver.
 
-The ACPI notify handler still prints debugging information when
-receiving ACPI notifications to aid in reverse-engineering.
+The LGEX0820 ACPI device id however is used to manage various
+platform features using the WMAB/WMBB ACPI methods. Use this ACPI
+device id to avoid blocking the wireless-hotkey driver from probing.
 
 Tested-by: Agathe Boutmy <agathe@boutmy.com>
 Signed-off-by: Armin Wolf <W_Armin@gmx.de>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20240606233540.9774-3-W_Armin@gmx.de
+Link: https://lore.kernel.org/r/20240606233540.9774-4-W_Armin@gmx.de
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lg-laptop.c | 8 --------
- 1 file changed, 8 deletions(-)
+ drivers/platform/x86/lg-laptop.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/platform/x86/lg-laptop.c b/drivers/platform/x86/lg-laptop.c
-index 332868b140ed5..aa063c3c935b5 100644
+index aa063c3c935b5..40051b043c422 100644
 --- a/drivers/platform/x86/lg-laptop.c
 +++ b/drivers/platform/x86/lg-laptop.c
-@@ -84,7 +84,6 @@ static const struct key_entry wmi_keymap[] = {
- 					  * this key both sends an event and
- 					  * changes backlight level.
- 					  */
--	{KE_KEY, 0x80, {KEY_RFKILL} },
- 	{KE_END, 0}
- };
- 
-@@ -272,14 +271,7 @@ static void wmi_input_setup(void)
- 
- static void acpi_notify(struct acpi_device *device, u32 event)
- {
--	struct key_entry *key;
--
- 	acpi_handle_debug(device->handle, "notify: %d\n", event);
--	if (inited & INIT_SPARSE_KEYMAP) {
--		key = sparse_keymap_entry_from_scancode(wmi_input_dev, 0x80);
--		if (key && key->type == KE_KEY)
--			sparse_keymap_report_entry(wmi_input_dev, key, 1, true);
--	}
+@@ -770,7 +770,7 @@ static int acpi_remove(struct acpi_device *device)
  }
  
- static ssize_t fan_mode_store(struct device *dev,
+ static const struct acpi_device_id device_ids[] = {
+-	{"LGEX0815", 0},
++	{"LGEX0820", 0},
+ 	{"", 0}
+ };
+ MODULE_DEVICE_TABLE(acpi, device_ids);
 -- 
 2.43.0
 
