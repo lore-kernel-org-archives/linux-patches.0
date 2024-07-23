@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7565942067;
-	Tue, 23 Jul 2024 18:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C4713D600;
+	Tue, 23 Jul 2024 18:32:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759563; cv=none; b=t/2YxZwOt9mrcxqOhpl+GE9Be/PU2AJtnvGCtx0S12NBxMtuoZIMTghwKXof07UDn0BbICbPzGhgXGsMK+k8VXIk/HLnXpp/fz5aju5ZwfNKEE+XUt/TxlmJGeZ2oRNVsV42wiXRkI7VTP8M2UMnrQuTMgXcwJJLC/zPi8gM2MI=
+	t=1721759566; cv=none; b=AGm0kZ8fqQkqK+7VjoH2qALBNkZIcNF5yAYkt8wxZ6IDMsTdki3Bm35qvtca7/TAnuP1OU/2P3vQ5YWIBRrev/fxs8NOYVBD80rcllTEVgKtcbhMuT+ewpX0mYG6UdA0m0YLwxgoNaLBoxomJHN+Y8So2fp3GSfTut4aV4APVSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759563; c=relaxed/simple;
-	bh=yopVS5e5aZQz48xZUgVAX3NXG5XKsO3Dg/oTwGW0yeE=;
+	s=arc-20240116; t=1721759566; c=relaxed/simple;
+	bh=V1tOo47yfCNNu36/wDL2fAtfPU4Acb1/RZR0BPlO3ZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d7Qu743ZDIxZaq+IQjef0mjr79jQ6W28wq60uCX1M13vqu7+nl9fRfv+jCdEtoR7stbpj9M++KH+E8zkTOffIepnIXHfAKi46pFGTFmxjGQnmycqV5Jlst2U2aKJLif/w3M+zGeqDgx0D4bYOJIUppgX2UzfkpcRq9DwXcFcKeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F7+62hjJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ld3/8MQ0ZQbRXBGGiKlm1uYFBM7kUbRnPgl/T3f11gay5G+vGYjdCdTBM0Ibd3N2fuSRrh7lSWGJzYPcP1GL6KpLd8moINzVbMWOHeYGJldjwI+w+/rsH0e0slv0BMH6Es3quXtADzJE+3/v3/NxpAR84LbdbggvQl9I99LCXTA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9O06YY1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F7+62hjJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC2EC4AF0A;
-	Tue, 23 Jul 2024 18:32:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9O06YY1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9116C4AF0B;
+	Tue, 23 Jul 2024 18:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759563;
-	bh=yopVS5e5aZQz48xZUgVAX3NXG5XKsO3Dg/oTwGW0yeE=;
+	s=korg; t=1721759566;
+	bh=V1tOo47yfCNNu36/wDL2fAtfPU4Acb1/RZR0BPlO3ZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F7+62hjJ7kIYMawednth7cCYyCPsjaLztVrI+ZXtiym1THy07APbum12betQiU9eA
-	 MpVALd/VI1W4CkNgjwsgpJjD9+lnN2i2mhfNM3b9CzZNCcmqjMTIlXDRxlzEUDJ3db
-	 Ps6mGppEsLZVrfcYR09jHyrSePpkBtJdRsFV5E4k=
+	b=g9O06YY1hKisQgANMuN4edNDYS8nwyZoZOPXXVW9ssBcVIbtyDsrPo6RlkvI5LhLC
+	 RY07BjXC01SK46JTEc9AhrVL5p7+VpGNX4gCkNI0DirjJTaK4i5vqJq9RaP7HqNAvJ
+	 GIFKRftykoXQ9gMOIDxT6i0r6rVpp0F0uIqI8Ivw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+253cd2d2491df77c93ac@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/129] wifi: cfg80211: wext: add extra SIOCSIWSCAN data check
-Date: Tue, 23 Jul 2024 20:23:20 +0200
-Message-ID: <20240723180406.799058657@linuxfoundation.org>
+Subject: [PATCH 6.6 053/129] ALSA: hda/realtek: Support Lenovo Thinkbook 16P Gen 5
+Date: Tue, 23 Jul 2024 20:23:21 +0200
+Message-ID: <20240723180406.837527756@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,45 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Stefan Binding <sbinding@opensource.cirrus.com>
 
-[ Upstream commit 6ef09cdc5ba0f93826c09d810c141a8d103a80fc ]
+[ Upstream commit 75f2ea939b5c694b36aad8ef823a2f9bcf7b3d7d ]
 
-In 'cfg80211_wext_siwscan()', add extra check whether number of
-channels passed via 'ioctl(sock, SIOCSIWSCAN, ...)' doesn't exceed
-IW_MAX_FREQUENCIES and reject invalid request with -EINVAL otherwise.
+Add support for this laptop, which uses CS35L41 HDA amps.
+The laptop does not contain valid _DSD for these amps, so requires
+entries into the CS35L41 configuration table to function correctly.
 
-Reported-by: syzbot+253cd2d2491df77c93ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=253cd2d2491df77c93ac
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://msgid.link/20240531032010.451295-1-dmantipov@yandex.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ fixed to lower hex numbers in quirk entries -- tiwai ]
+
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240606130351.333495-4-sbinding@opensource.cirrus.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/wireless/scan.c b/net/wireless/scan.c
-index ab559ff0909a2..7fccb5c0e4c6a 100644
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -3178,10 +3178,14 @@ int cfg80211_wext_siwscan(struct net_device *dev,
- 	wiphy = &rdev->wiphy;
- 
- 	/* Determine number of channels, needed to allocate creq */
--	if (wreq && wreq->num_channels)
-+	if (wreq && wreq->num_channels) {
-+		/* Passed from userspace so should be checked */
-+		if (unlikely(wreq->num_channels > IW_MAX_FREQUENCIES))
-+			return -EINVAL;
- 		n_channels = wreq->num_channels;
--	else
-+	} else {
- 		n_channels = ieee80211_get_num_supported_channels(wiphy);
-+	}
- 
- 	creq = kzalloc(sizeof(*creq) + sizeof(struct cfg80211_ssid) +
- 		       n_channels * sizeof(void *),
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 7743cb31b6e06..0624006bbaf40 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10288,6 +10288,8 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x17aa, 0x38cd, "Y790 VECO DUAL", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d2, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x38d7, "Lenovo Yoga 9 14IMH9", ALC287_FIXUP_YOGA9_14IMH9_BASS_SPK_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x38f9, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
++	SND_PCI_QUIRK(0x17aa, 0x38fa, "Thinkbook 16P Gen5", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x17aa, 0x3902, "Lenovo E50-80", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
+ 	SND_PCI_QUIRK(0x17aa, 0x3977, "IdeaPad S210", ALC283_FIXUP_INT_MIC),
+ 	SND_PCI_QUIRK(0x17aa, 0x3978, "Lenovo B50-70", ALC269_FIXUP_DMIC_THINKPAD_ACPI),
 -- 
 2.43.0
 
