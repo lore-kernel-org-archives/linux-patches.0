@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB29813D896;
-	Tue, 23 Jul 2024 18:37:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78221581F4;
+	Tue, 23 Jul 2024 18:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759864; cv=none; b=uy1JXoLl8sS8F7ahFeZZdWzX80JQNmgbsHDmIP0p2Eivf4z8AcfBkmcoJKRqTen0wcmd5/xjjtaaWJ61MJI7CDEp2o31z2BJE4gg+bA9HqNfT3D8QRrvCQkbrLrHtgUxIBCsgMuQhGn8n/6NIE/XI8ZcYq9P308LLa/yu5RjlzM=
+	t=1721759866; cv=none; b=MSAzFHWlalpPNrMvGi5LK0tHrmfubAW2hCZ8SRRz8yLKrlliL/o+JgvfYjzhNRF8QNqVMZeAW0w/ftRUECSR6xWTUQAe0GLWJ6J4eLR36UKR4UYlQI7ngV2nf0cCZ6V3eyEU+BT1uWsYGol8vSR1AEZ7wzbb8sPbJbA0jSblm9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759864; c=relaxed/simple;
-	bh=YOEm3XpObDPfufk9rg+IayPaynQTRlQlM6iPTO6FZVg=;
+	s=arc-20240116; t=1721759866; c=relaxed/simple;
+	bh=rvj23M+fMNTNbJ0e1UPviN+Ix7zZiBezRVI62oeGpB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WcdoLdjd59IxfyCB41xWuqiWx+5T6E7agJnZXXcTihUR32LmsNDLvOk44qaoqXZz7s8GEpl+HXxSsh2YNV9vG2Bi9yGYADS28X2uhsg/X5WezRQEdHlV040rmTOWlhBSSIwX9UoM8W3TAXaTnBdb9C6DXifXPTDNXDrF0tTjNJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pWwf9ccf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bi2XU6+6syfXtF9uXflYLtKZ/YUmoTIXA0nuJJwvmAP/bZoBhRD6PnJncuuHS396dqmYds/vJHpQoOQlWKnvVOgiXdXIvyLOzPZQYtq4Su0sRXQp15AoVlwdlRhuhMwOfvpk4pp0eKlGEjQnXEULzcbvfcLecZ6GmoEOk/pN3m0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B1kZWh1x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pWwf9ccf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C3AC4AF0B;
-	Tue, 23 Jul 2024 18:37:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B1kZWh1x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C63DC4AF0B;
+	Tue, 23 Jul 2024 18:37:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759863;
-	bh=YOEm3XpObDPfufk9rg+IayPaynQTRlQlM6iPTO6FZVg=;
+	s=korg; t=1721759866;
+	bh=rvj23M+fMNTNbJ0e1UPviN+Ix7zZiBezRVI62oeGpB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWwf9ccfezGw7HVeEyuDaebEQIr/0Gz8b9JVqelCEjwtPa4lMNzC4C7niXq1eS2dg
-	 fBysz8edcag14FCoRHlhhdl3bnh+F9fdrX0UTq83He0MNNerzsoSd6E3JSU4FZ+LOs
-	 WcK55h9atFOaZbS0AeR5GzTbYXgIBWCUCdLCw21Q=
+	b=B1kZWh1xRdvqWnNwDHQmJ7zVe9ZQQ7Jf1CLNdKTvVggA35G/n9CEBxH6ocYRzk6J6
+	 KDHJe4cHdNBVs+xPz+1MyT9uHxnGQ56vqunMdfmMR3yWW2khtzSTYAs/cKr9d1TCUj
+	 wrTWdajRVsXBJlflpRRk2Z6SpPMSUtv3h2ush/Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilan Peer <ilan.peer@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 023/163] wifi: iwlwifi: mvm: Fix scan abort handling with HW rfkill
-Date: Tue, 23 Jul 2024 20:22:32 +0200
-Message-ID: <20240723180144.365812682@linuxfoundation.org>
+Subject: [PATCH 6.9 024/163] wifi: mac80211: fix UBSAN noise in ieee80211_prep_hw_scan()
+Date: Tue, 23 Jul 2024 20:22:33 +0200
+Message-ID: <20240723180144.403894243@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,49 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilan Peer <ilan.peer@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit e6dd2936ce7ce94a1915b799f8af8193ec628e87 ]
+[ Upstream commit 92ecbb3ac6f3fe8ae9edf3226c76aa17b6800699 ]
 
-When HW rfkill is toggled to disable the RF, the flow to stop scan is
-called. When trying to send the command to abort the scan, since
-HW rfkill is toggled, the command is not sent due to rfkill being
-asserted, and -ERFKILL is returned from iwl_trans_send_cmd(), but this
-is silently ignored in iwl_mvm_send_cmd() and thus the scan abort flow
-continues to wait for scan complete notification and fails. Since it
-fails, the UID to type mapping is not cleared, and thus a warning is
-later fired when trying to stop the interface.
+When testing the previous patch with CONFIG_UBSAN_BOUNDS, I've
+noticed the following:
 
-To fix this, modify the UMAC scan abort flow to force sending the
-scan abort command even when in rfkill, so stop the FW from accessing
-the radio etc.
+UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:372:4
+index 0 is out of range for type 'struct ieee80211_channel *[]'
+CPU: 0 PID: 1435 Comm: wpa_supplicant Not tainted 6.9.0+ #1
+Hardware name: LENOVO 20UN005QRT/20UN005QRT <...BIOS details...>
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x2d/0x90
+ __ubsan_handle_out_of_bounds+0xe7/0x140
+ ? timerqueue_add+0x98/0xb0
+ ieee80211_prep_hw_scan+0x2db/0x480 [mac80211]
+ ? __kmalloc+0xe1/0x470
+ __ieee80211_start_scan+0x541/0x760 [mac80211]
+ rdev_scan+0x1f/0xe0 [cfg80211]
+ nl80211_trigger_scan+0x9b6/0xae0 [cfg80211]
+ ...<the rest is not too useful...>
 
-Signed-off-by: Ilan Peer <ilan.peer@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240513132416.8cbe2f8c1a97.Iffe235c12a919dafec88eef399eb1f7bae2c5bdb@changeid
+Since '__ieee80211_start_scan()' leaves 'hw_scan_req->req.n_channels'
+uninitialized, actual boundaries of 'hw_scan_req->req.channels' can't
+be checked in 'ieee80211_prep_hw_scan()'. Although an initialization
+of 'hw_scan_req->req.n_channels' introduces some confusion around
+allocated vs. used VLA members, this shouldn't be a problem since
+everything is correctly adjusted soon in 'ieee80211_prep_hw_scan()'.
+
+Cleanup 'kmalloc()' math in '__ieee80211_start_scan()' by using the
+convenient 'struct_size()' as well.
+
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://msgid.link/20240517153332.18271-2-dmantipov@yandex.ru
+[improve (imho) indentation a bit]
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/scan.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-index e8d40e4a2f2ff..aa5fa6c657c02 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
-@@ -3254,10 +3254,11 @@ static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type)
+diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
+index 3da1c5c450358..8ecc4b710b0e6 100644
+--- a/net/mac80211/scan.c
++++ b/net/mac80211/scan.c
+@@ -744,15 +744,21 @@ static int __ieee80211_start_scan(struct ieee80211_sub_if_data *sdata,
+ 			local->hw_scan_ies_bufsize *= n_bands;
+ 		}
  
- 	ret = iwl_mvm_send_cmd_pdu(mvm,
- 				   WIDE_ID(IWL_ALWAYS_LONG_GROUP, SCAN_ABORT_UMAC),
--				   0, sizeof(cmd), &cmd);
-+				   CMD_SEND_IN_RFKILL, sizeof(cmd), &cmd);
- 	if (!ret)
- 		mvm->scan_uid_status[uid] = type << IWL_MVM_SCAN_STOPPING_SHIFT;
+-		local->hw_scan_req = kmalloc(
+-				sizeof(*local->hw_scan_req) +
+-				req->n_channels * sizeof(req->channels[0]) +
+-				local->hw_scan_ies_bufsize, GFP_KERNEL);
++		local->hw_scan_req = kmalloc(struct_size(local->hw_scan_req,
++							 req.channels,
++							 req->n_channels) +
++					     local->hw_scan_ies_bufsize,
++					     GFP_KERNEL);
+ 		if (!local->hw_scan_req)
+ 			return -ENOMEM;
  
-+	IWL_DEBUG_SCAN(mvm, "Scan abort: ret=%d\n", ret);
- 	return ret;
- }
- 
+ 		local->hw_scan_req->req.ssids = req->ssids;
+ 		local->hw_scan_req->req.n_ssids = req->n_ssids;
++		/* None of the channels are actually set
++		 * up but let UBSAN know the boundaries.
++		 */
++		local->hw_scan_req->req.n_channels = req->n_channels;
++
+ 		ies = (u8 *)local->hw_scan_req +
+ 			sizeof(*local->hw_scan_req) +
+ 			req->n_channels * sizeof(req->channels[0]);
 -- 
 2.43.0
 
