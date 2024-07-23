@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96191581EB;
-	Tue, 23 Jul 2024 18:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE03156F37;
+	Tue, 23 Jul 2024 18:25:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759132; cv=none; b=GGNmgK5a69jEe7qxRf1rI/Ma+rVjo7i3hnEGSQugPEwANv0A0vrzv2BjGJY9sAhbSm3gUBKd/rzTqaaAiAQBAAmFLb0bkwHI8FloTk1FoWtFI83a8DGt5z0d+tPy8UYIFj5C3tB5Q9OoR4O7wWN74oEmyFFp300oe1dR2G/Y2dA=
+	t=1721759134; cv=none; b=gVqZo7/xWeZGVL60R9hrQMKq1XYbU/WyACKZf+t/Nfqz5gnOZH26rMjyEDy9dSXixZCw2LfslJlf17cOoKqUeXk6T+oYlxfpbNFCkCQijrto7fZ1kXaS/QmZ9Zq69eKqrc2bjH3yQ9SxyV7OFFlWvQaeVVykSh/Mm4lZ44cTdUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759132; c=relaxed/simple;
-	bh=4FGm1l23MvhjzgzKgf66nQjAEyTen+bycr5SWZjgQiA=;
+	s=arc-20240116; t=1721759134; c=relaxed/simple;
+	bh=c5LE65l48i9KKdNsMEkqW0EIQfR2kgQeA+d0KsnU5D0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbnu0ByXiK1G3Yp6mG47O+kE89cshlW+SNRU8kSNzf48l+3wN4Dh1aK8Ue+33Xrp0seEw6S/pIH5eZ9++XyhHv9lkotS89sOv9b/72wzNo2I/0Xuh/q5oVHE/41E0mEbsiGwXGSTI0gKxxCN0MCow0RyY3/z9MDW4GwHuKL7Klw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IX7t+XCp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e9fZIelnQcWnbrQsxFGliRFzvHSV1dlNT8Dm5HgJxPrJdhjOOyJ52CqcGku2njmQH90QuPkraGkXjrRUSETv3Y7vhP7YRTnolSn9K5fnDtdT0/poswkSCRYvjY1VnlW2qXI+HeTwoepRO+smeTKlmdO5kVsMAez556LXMA1bhaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQ6n6+5c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IX7t+XCp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E02F4C4AF09;
-	Tue, 23 Jul 2024 18:25:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQ6n6+5c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3A2C4AF09;
+	Tue, 23 Jul 2024 18:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759131;
-	bh=4FGm1l23MvhjzgzKgf66nQjAEyTen+bycr5SWZjgQiA=;
+	s=korg; t=1721759134;
+	bh=c5LE65l48i9KKdNsMEkqW0EIQfR2kgQeA+d0KsnU5D0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IX7t+XCpmocT3HxZ2pqkUiX5ahY+PMebxJb+NV1Zq0CV1+RUajmkWfJhmSbO5R9zX
-	 yKirni4DxprD55Qu9Ur8fYSmlCM2qMZnhY5S7qO8qEYWaK/US31eKvMnkJyPN8QIhI
-	 0TpSsemsXvKXtuf7QRlJCAFIbzRGdo67KclxodIo=
+	b=wQ6n6+5cGa7Bk4xnU0PLCpfYuldsHTf15R2YZN4DOnsYXzVsjChmFrQ/sIgR0M2S3
+	 FLTZzA2gOdDY/ZNl/l2oeclM0CF01Y3QzGROsbB/OIln8/S1n2Lns5x69LYEmi+N31
+	 RPKrsjWlv16aIpPfyXfyA0zY9fPUyGzDIj5K+wUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/105] scsi: qedf: Set qed_slowpath_params to zero before use
-Date: Tue, 23 Jul 2024 20:22:50 +0200
-Message-ID: <20240723180403.298709815@linuxfoundation.org>
+Subject: [PATCH 6.1 014/105] efi/libstub: zboot.lds: Discard .discard sections
+Date: Tue, 23 Jul 2024 20:22:51 +0200
+Message-ID: <20240723180403.357681228@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -52,33 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 6c3bb589debd763dc4b94803ddf3c13b4fcca776 ]
+[ Upstream commit 5134acb15d9ef27aa2b90aad46d4e89fcef79fdc ]
 
-Zero qed_slowpath_params before use.
+When building ARCH=loongarch defconfig + CONFIG_UNWINDER_ORC=y using
+LLVM, there is a warning from ld.lld when linking the EFI zboot image
+due to the use of unreachable() in number() in vsprintf.c:
 
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240515091101.18754-4-skashyap@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  ld.lld: warning: drivers/firmware/efi/libstub/lib.a(vsprintf.stub.o):(.discard.unreachable+0x0): has non-ABS relocation R_LARCH_32_PCREL against symbol ''
+
+If the compiler cannot eliminate the default case for any reason, the
+.discard.unreachable section will remain in the final binary but the
+entire point of any section prefixed with .discard is that it is only
+used at compile time, so it can be discarded via /DISCARD/ in a linker
+script. The asm-generic vmlinux.lds.h includes .discard and .discard.*
+in the COMMON_DISCARDS macro but that is not used for zboot.lds, as it
+is not a kernel image linker script.
+
+Add .discard and .discard.* to /DISCARD/ in zboot.lds, so that any
+sections meant to be discarded at link time are not included in the
+final zboot image. This issue is not specific to LoongArch, it is just
+the first architecture to select CONFIG_OBJTOOL, which defines
+annotate_unreachable() as an asm statement to add the
+.discard.unreachable section, and use the EFI stub.
+
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2023
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Acked-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 1 +
+ drivers/firmware/efi/libstub/zboot.lds | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index 524807f9f4eb1..179967774cc8c 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -3477,6 +3477,7 @@ static int __qedf_probe(struct pci_dev *pdev, int mode)
+diff --git a/drivers/firmware/efi/libstub/zboot.lds b/drivers/firmware/efi/libstub/zboot.lds
+index 93d33f68333b2..a7fffbad6d46a 100644
+--- a/drivers/firmware/efi/libstub/zboot.lds
++++ b/drivers/firmware/efi/libstub/zboot.lds
+@@ -34,6 +34,7 @@ SECTIONS
  	}
  
- 	/* Start the Slowpath-process */
-+	memset(&slowpath_params, 0, sizeof(struct qed_slowpath_params));
- 	slowpath_params.int_mode = QED_INT_MODE_MSIX;
- 	slowpath_params.drv_major = QEDF_DRIVER_MAJOR_VER;
- 	slowpath_params.drv_minor = QEDF_DRIVER_MINOR_VER;
+ 	/DISCARD/ : {
++		*(.discard .discard.*)
+ 		*(.modinfo .init.modinfo)
+ 	}
+ }
 -- 
 2.43.0
 
