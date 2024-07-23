@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E53E13D600;
-	Tue, 23 Jul 2024 18:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2638413D600;
+	Tue, 23 Jul 2024 18:40:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760039; cv=none; b=OzjpR33F+TEUm/PAjISRDE84O5qR5D6Uu7hoTwj2aHDpqgqYK6nHwOd5NqUdvI/xTk8nZ3GE++J3FJUfRfJeNs+k6ZdVDY7JxrmwKGuP2Sr3jRwjUFyIuKw+2W2wdyqip0h+Zar/dkQ5K6DARdUFhhYbveBlQ7QP58MCcPmp93U=
+	t=1721760042; cv=none; b=U2txkRPbetvoAXFgXS8OVF1rIE5QYwPaQoIl9nFTzrXQCAWMj4YntBY3uKSE42eV7WpnivgynsaD/GTdZiGORvJXkvHYAsrNyAKObCTFmEtfLSQlWOcKx9SlbK59vlfE7jMph2gVNN14/HpL55s2fp3uEUnR8SBA2CAejqU+Ch4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760039; c=relaxed/simple;
-	bh=QJWEm6CqPo9EXOSKBMS8J+0nKCvA1BiVSlLQqHRipcw=;
+	s=arc-20240116; t=1721760042; c=relaxed/simple;
+	bh=p0rbzBoXSR5H/yW/GnckVWg+Mi/T9+/dvxD0HI8b/6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TjqSfamS1ZSvGwZ8UoWVLeVgAWb+5UgSy9OGhR7kEvxvz2tr6zRhKVs1oG4eUYFBoTJQOupvVC6uu/0nghsk62ZsufhmLzUsi9xigIIHMhtVyufBB2j8nFTod9uJFZApZOLz6WuMVxHeSRedmYgyX6tV5YqriUF/ykIRyTwS46U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keJ3iOGN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H74MmK1rPLDloovCYE2PZHmtqHavy0FcMoNCUzubjWAwAqOdTqSzh4ys6nCJYMRk3RFfnqEpSXMRkeYrPRYrN2l4C9N7u33h+4AnFruYB8SubG85B7enmtD0xYGPBoOua07Npi0ktbiqkkHYjAFWIlKpyaq5rtstvf5RbGUal6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YEQktTKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keJ3iOGN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B95C4AF0A;
-	Tue, 23 Jul 2024 18:40:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YEQktTKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E0ADC4AF09;
+	Tue, 23 Jul 2024 18:40:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760039;
-	bh=QJWEm6CqPo9EXOSKBMS8J+0nKCvA1BiVSlLQqHRipcw=;
+	s=korg; t=1721760042;
+	bh=p0rbzBoXSR5H/yW/GnckVWg+Mi/T9+/dvxD0HI8b/6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=keJ3iOGNTu2lDGiIqKKt9k13p3Y5mqQLl4ud/5ZWLrlIx5BXT7GLeN81CBpb2eYCj
-	 c8n7jaeztz49AguncSUtBQ58OPoR3maiehP1SFLcfOBlg7407pU2mZEm4M7blBA8E/
-	 nBo/GM02eY13n34x1vVAm+SVmuPc5tp+OBLALIPk=
+	b=YEQktTKvaOE/IN7MZVjDN9p7cz+9O+8t/cSi33wvcJ6VYGprfX9TT+iiN/4I3u04y
+	 rKtjC1E4ULELRzA8K0Iu6QjpAsBAcyPEUxBHdQV85PNjFkASmTw7LLhkw+XPa1T4XJ
+	 V9ZonqdDijhFkLzhMXc48MTgSJ1l+h1xrpJDB464=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 083/163] ALSA: hda: cs35l56: Select SERIAL_MULTI_INSTANTIATE
-Date: Tue, 23 Jul 2024 20:23:32 +0200
-Message-ID: <20240723180146.679529179@linuxfoundation.org>
+Subject: [PATCH 6.9 084/163] mips: fix compat_sys_lseek syscall
+Date: Tue, 23 Jul 2024 20:23:33 +0200
+Message-ID: <20240723180146.721214504@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,45 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9b1effff19cdf2230d3ecb07ff4038a0da32e9cc ]
+[ Upstream commit 0d5679a0aae2d8cda72169452c32e5cb88a7ab33 ]
 
-The ACPI IDs used in the CS35L56 HDA drivers are all handled by the
-serial multi-instantiate driver which starts multiple Linux device
-instances from a single ACPI Device() node.
+This is almost compatible, but passing a negative offset should result
+in a EINVAL error, but on mips o32 compat mode would seek to a large
+32-bit byte offset.
 
-As serial multi-instantiate is not an optional part of the system add it
-as a dependency in Kconfig so that it is not overlooked.
+Use compat_sys_lseek() to correctly sign-extend the argument.
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Link: https://lore.kernel.org/20240619161602.117452-1-simont@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/kernel/syscalls/syscall_o32.tbl | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
-index f806636242ee9..9f560a8186802 100644
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -160,6 +160,7 @@ config SND_HDA_SCODEC_CS35L56_I2C
- 	depends on ACPI || COMPILE_TEST
- 	depends on SND_SOC
- 	select FW_CS_DSP
-+	select SERIAL_MULTI_INSTANTIATE
- 	select SND_HDA_GENERIC
- 	select SND_SOC_CS35L56_SHARED
- 	select SND_HDA_SCODEC_CS35L56
-@@ -176,6 +177,7 @@ config SND_HDA_SCODEC_CS35L56_SPI
- 	depends on ACPI || COMPILE_TEST
- 	depends on SND_SOC
- 	select FW_CS_DSP
-+	select SERIAL_MULTI_INSTANTIATE
- 	select SND_HDA_GENERIC
- 	select SND_SOC_CS35L56_SHARED
- 	select SND_HDA_SCODEC_CS35L56
+diff --git a/arch/mips/kernel/syscalls/syscall_o32.tbl b/arch/mips/kernel/syscalls/syscall_o32.tbl
+index 0352c07c608e9..fe76282a353f5 100644
+--- a/arch/mips/kernel/syscalls/syscall_o32.tbl
++++ b/arch/mips/kernel/syscalls/syscall_o32.tbl
+@@ -27,7 +27,7 @@
+ 17	o32	break				sys_ni_syscall
+ # 18 was sys_stat
+ 18	o32	unused18			sys_ni_syscall
+-19	o32	lseek				sys_lseek
++19	o32	lseek				sys_lseek			compat_sys_lseek
+ 20	o32	getpid				sys_getpid
+ 21	o32	mount				sys_mount
+ 22	o32	umount				sys_oldumount
 -- 
 2.43.0
 
