@@ -1,133 +1,106 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8C0613D609;
-	Tue, 23 Jul 2024 11:52:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA321514DD;
+	Tue, 23 Jul 2024 11:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721735530; cv=none; b=cEwBydD0WwZQYzqAsilmQgjHYQ3RQkCg6AsBdGs9SA5Q7ZtFVt5LHIaWC/DfiFC8vtutP3xR9V+7KVTmaxhkEq57NBJStzNwNEpOgGAc0VwWo4HbxVnNyLaf+fnpwPEwfpZ83vJ3XFfOXnzpDide6wU2iwCiXldlmEzGoklBKzk=
+	t=1721735536; cv=none; b=trnKTwHg+JvOQmijyYEghSHoKByE/q1XO6UU9fvzFzbCX/h76wSp54A3FgaG2Sr+KPFqfEVJrCwxa4X7vbUe+XLpABbB88vDpXRNCxfvUYQAKJw+ekcRH2NedS/6RXg1pnV+vhOu70/lSacL5a/2tDiC6yDjH/o4h7HcV4PC5l0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721735530; c=relaxed/simple;
-	bh=mwasLmA3UqDoqZDlD7yKei2JQ2hx5htgK1//Ltn4O+E=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FtWITfq55UfMdjmMJcJM0Vka00uy4xckLD4zf7+YKc63+mc+XAyA42tF9KJKW+VjU3zzDO0qUynhrXa1oROGRd/+Bz20o7hj9/EpvwpPUu9uJx5RclxM+uljeHuGnGNPN5bHTlLSSDl7ggE0j2AAAFUuiI8CxQaptIig0YW0LDQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w79mWa0T; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721735536; c=relaxed/simple;
+	bh=Q75RzGZ+m5jPtvmJXq8cBIiETcYTaC1zaEsQkzRqdco=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sUwCrj+PI3CPK+LtKioJYk02gSf2gb4Nn5X9ojc5K41PsA8bHhdb5T5U1Ha+9jk2ybV1OUI6tZur8iyQ4L4WcBXkjP4rzvNKpP9rCT4m25BMcbHYZz6/YFPnLHKeygDvRy514Ymh2+komasqNp8dSzFjadOPT9LDTVlhDvDV8Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Md/Wjm/w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w79mWa0T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B62F9C4AF0A;
-	Tue, 23 Jul 2024 11:52:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Md/Wjm/w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB19C4AF09;
+	Tue, 23 Jul 2024 11:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721735530;
-	bh=mwasLmA3UqDoqZDlD7yKei2JQ2hx5htgK1//Ltn4O+E=;
-	h=From:To:Cc:Subject:Date:From;
-	b=w79mWa0Ts7zSA1IydzkU52uptj7dfdfyOg+XcHZYxz/IAyGEtp3E6n6W6lJRmgMip
-	 ifCZpJ1BHVG3/v1W1+CPevUVnEkThVsz4MuzO54Vs/U3AGriQRPo44nxVJnzpnw9gO
-	 Q7FxIbsLdQ6iCWSvuREBDOXvFe0VW4hO+jpetzUc=
+	s=korg; t=1721735535;
+	bh=Q75RzGZ+m5jPtvmJXq8cBIiETcYTaC1zaEsQkzRqdco=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=Md/Wjm/wRlL5ZTX5fGMXgblYywoPBBSb6CB0ko6DnTorRCHkAmciASSOULre6WVRw
+	 cVCXExL2dAtol/skkm636iuyoyK+o/eyyRT7QxCgkG05S8JjT50uu0l9B/E27kI+fY
+	 aMtDxVhB1r+jWRzsy047bH/MHustNiV3UTsUHWdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.10 0/9] 6.10.1-rc1 review
-Date: Tue, 23 Jul 2024 13:51:54 +0200
-Message-ID: <20240723114047.281580960@linuxfoundation.org>
+	David Howells <dhowells@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	linux-cifs@vger.kernel.org,
+	netfs@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.10 2/9] cifs: Fix missing error code set
+Date: Tue, 23 Jul 2024 13:51:56 +0200
+Message-ID: <20240723114047.375094133@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240723114047.281580960@linuxfoundation.org>
+References: <20240723114047.281580960@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.1-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.10.1-rc1
-X-KernelTest-Deadline: 2024-07-25T11:40+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.10.1 release.
-There are 9 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Thu, 25 Jul 2024 11:40:39 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.1-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-and the diffstat can be found below.
+From: David Howells <dhowells@redhat.com>
 
-thanks,
+commit d2c5eb57b6da10f335c30356f9696bd667601e6a upstream.
 
-greg k-h
+In cifs_strict_readv(), the default rc (-EACCES) is accidentally cleared by
+a successful return from netfs_start_io_direct(), such that if
+cifs_find_lock_conflict() fails, we don't return an error.
 
--------------
-Pseudo-Shortlog of commits:
+Fix this by resetting the default error code.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.10.1-rc1
+Fixes: 14b1cd25346b ("cifs: Fix locking in cifs_strict_readv()")
+Cc: stable@vger.kernel.org
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+cc: Jeff Layton <jlayton@kernel.org>
+cc: linux-cifs@vger.kernel.org
+cc: netfs@lists.linux.dev
+cc: linux-fsdevel@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/smb/client/file.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Richard Fitzgerald <rf@opensource.cirrus.com>
-    ASoC: cs35l56: Limit Speaker Volume to +12dB maximum
+diff --git a/fs/smb/client/file.c b/fs/smb/client/file.c
+index 1374635e89fa..6178c6d8097d 100644
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -2877,6 +2877,7 @@ cifs_strict_readv(struct kiocb *iocb, struct iov_iter *to)
+ 		rc = netfs_start_io_direct(inode);
+ 		if (rc < 0)
+ 			goto out;
++		rc = -EACCES;
+ 		down_read(&cinode->lock_sem);
+ 		if (!cifs_find_lock_conflict(
+ 			    cfile, iocb->ki_pos, iov_iter_count(to),
+@@ -2889,6 +2890,7 @@ cifs_strict_readv(struct kiocb *iocb, struct iov_iter *to)
+ 		rc = netfs_start_io_read(inode);
+ 		if (rc < 0)
+ 			goto out;
++		rc = -EACCES;
+ 		down_read(&cinode->lock_sem);
+ 		if (!cifs_find_lock_conflict(
+ 			    cfile, iocb->ki_pos, iov_iter_count(to),
+-- 
+2.45.2
 
-Richard Fitzgerald <rf@opensource.cirrus.com>
-    ASoC: cs35l56: Use header defines for Speaker Volume control definition
-
-Hao Ge <gehao@kylinos.cn>
-    tpm: Use auth only after NULL check in tpm_buf_check_hmac_response()
-
-David Howells <dhowells@redhat.com>
-    cifs: Fix setting of zero_point after DIO write
-
-David Howells <dhowells@redhat.com>
-    cifs: Fix server re-repick on subrequest retry
-
-Steve French <stfrench@microsoft.com>
-    cifs: fix noisy message on copy_file_range
-
-David Howells <dhowells@redhat.com>
-    cifs: Fix missing fscache invalidation
-
-David Howells <dhowells@redhat.com>
-    cifs: Fix missing error code set
-
-Kees Cook <kees@kernel.org>
-    ext4: use memtostr_pad() for s_volume_name
-
-
--------------
-
-Diffstat:
-
- Makefile                         |  4 ++--
- drivers/char/tpm/tpm2-sessions.c |  5 +++--
- fs/ext4/ext4.h                   |  2 +-
- fs/ext4/ioctl.c                  |  2 +-
- fs/smb/client/cifsfs.c           |  2 +-
- fs/smb/client/file.c             | 21 +++++++++++++++++----
- fs/smb/client/smb2pdu.c          |  3 ---
- include/sound/cs35l56.h          |  2 +-
- sound/soc/codecs/cs35l56.c       |  6 +++++-
- 9 files changed, 31 insertions(+), 16 deletions(-)
 
 
