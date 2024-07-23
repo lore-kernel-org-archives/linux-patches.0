@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1DB14EC58;
-	Tue, 23 Jul 2024 18:37:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B74158215;
+	Tue, 23 Jul 2024 18:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759858; cv=none; b=CeO2Z752D4kdOHIOB2LgsmllT1bp1mHkP+JR1mAEVBbsqYsq4OtcYHIKOeodRityg+qsSKeO0NVMEbxMRROrLNyXjRRaHrv5mfqpRH8JVx2flsMPMBgZPPkMHX07fpIxECnKz3tH7gdlrGgqEt2NCnq0da7QRs1VPQeM60qJe3o=
+	t=1721759861; cv=none; b=eXsK4oTm5Nby9rw4yRBZ+Z20MdHy/vOmYpdKRRCgR80jbHACqcX3j2U+08N7zJUDIYplL78NQxUpMgWmoT8ZQSvlssVyVeQQUAt2gkNxxrex98RMDXweBsyAwLWoEjlG+qNl0CafjboZpUXXVeFL/K4aXkCpTKcfRdNyaVkwlUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759858; c=relaxed/simple;
-	bh=uTJJCj7W3AUR+G/+QxVi7bY3UhjqwVF3VughUiT5uqk=;
+	s=arc-20240116; t=1721759861; c=relaxed/simple;
+	bh=agz+bZtGb2ZwsuHi/BuQ+XoTIuHAN1dKyO5NLMPUS9w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HIrlF7xckAsz84CBpiVnC0LhE/8Ms0Uf0HFEMYwxCvAgIPPtODfmV5oJvWRSSPdNKFw14xL1gP99sTpl5vHXr+dAmYgazZhpZktpuo55gt3jcrOaqj2GWXt91FsZeaxcjJLPXOSMs9sX7zBRxvF7+YrWlED/oIQrw9itVo2ZuaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ePCoXSW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ht434qQRcg2gRQAVeHr7RJ4OweJh8lISxIFuo1JZQsilgox9CmoGfntkxyij2wq/uJNinkLlr3+slwh+VF/7ry+jONbM1cEygdtAM4Qxo1CEzrPirISQ2Zsa8u7f6bEwFZaGSDuMxqdaKKuFPGw6rMaab5JbbVX2IiVe8z9BBxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8cmB/3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ePCoXSW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989BDC4AF0A;
-	Tue, 23 Jul 2024 18:37:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8cmB/3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8553FC4AF0A;
+	Tue, 23 Jul 2024 18:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759858;
-	bh=uTJJCj7W3AUR+G/+QxVi7bY3UhjqwVF3VughUiT5uqk=;
+	s=korg; t=1721759860;
+	bh=agz+bZtGb2ZwsuHi/BuQ+XoTIuHAN1dKyO5NLMPUS9w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ePCoXSW88kIEzOuK10DTC2PK3QW/FW9Xcvt3ZIgvEx42wy2VMzbT/+g2/NIvU6US
-	 quhlf4bQWe+eaPQCVyYDBI+DgzSSR4LzS5yoy3Q0Bi/c3DjuvsyadmZxv4g6nAJoa0
-	 FuqmcSvPfAem3TXzFVp4TWyzMUakp1tgW2dF4z5Y=
+	b=h8cmB/3w7ZKx7iT/9IHELxVLHySihHx7CwLL0EnfHkydYeo//zI/XwxJhi8WwgutT
+	 lQKJIAowsg5/VqQ0QOFQ4if/0lEqscK54S0Up7P0OWawUH/wZRICtwad2WYLIpMIlQ
+	 uurfH1saO+I7UyXV0R4AyrY9TsSYnlAe2yHPIv2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ayala Beker <ayala.beker@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
 	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 021/163] wifi: iwlwifi: mvm: handle BA session teardown in RF-kill
-Date: Tue, 23 Jul 2024 20:22:30 +0200
-Message-ID: <20240723180144.290142399@linuxfoundation.org>
+Subject: [PATCH 6.9 022/163] wifi: iwlwifi: mvm: properly set 6 GHz channel direct probe option
+Date: Tue, 23 Jul 2024 20:22:31 +0200
+Message-ID: <20240723180144.328307740@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,93 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Ayala Beker <ayala.beker@intel.com>
 
-[ Upstream commit 4d08c0b3357cba0aeffaf3abc62cae0c154f2816 ]
+[ Upstream commit 989830d1cf16bd149bf0690d889a9caef95fb5b1 ]
 
-When entering RF-kill, mac80211 tears down BA sessions, but
-due to RF-kill the commands aren't sent to the device. As a
-result, there can be frames pending on the reorder buffer or
-perhaps even received while doing so, leading to warnings.
+Ensure that the 6 GHz channel is configured with a valid direct BSSID,
+avoiding any invalid or multicast BSSID addresses.
 
-Avoid the warnings by doing the BA session teardown normally
-even in RF-kill, which also requires queue sync.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Ayala Beker <ayala.beker@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
 Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240513132416.0762cd80fb3d.I43c5877f3b546159b2db4f36d6d956b333c41cf0@changeid
+Link: https://msgid.link/20240513132416.91a631a0fe60.I2ea2616af9b8a2eaf959b156c69cf65a2f1204d4@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |  2 +-
- drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c  |  3 ++-
- drivers/net/wireless/intel/iwlwifi/mvm/sta.c      | 12 ++++++++----
- 3 files changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 3b61fe8ca47fa..d3db883dfaa5b 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -6164,7 +6164,7 @@ void iwl_mvm_sync_rx_queues_internal(struct iwl_mvm *mvm,
- 		.len[0] = sizeof(cmd),
- 		.data[1] = data,
- 		.len[1] = size,
--		.flags = sync ? 0 : CMD_ASYNC,
-+		.flags = CMD_SEND_IN_RFKILL | (sync ? 0 : CMD_ASYNC),
- 	};
- 	int ret;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 525d8efcc1475..e8d40e4a2f2ff 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -1717,7 +1717,10 @@ iwl_mvm_umac_scan_fill_6g_chan_list(struct iwl_mvm *mvm,
+ 				break;
+ 		}
  
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-index a21e29947475f..dbe668db7ce37 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mld-sta.c
-@@ -1012,7 +1012,8 @@ static int iwl_mvm_mld_update_sta_baids(struct iwl_mvm *mvm,
- 
- 		cmd.modify.tid = cpu_to_le32(data->tid);
- 
--		ret = iwl_mvm_send_cmd_pdu(mvm, cmd_id, 0, sizeof(cmd), &cmd);
-+		ret = iwl_mvm_send_cmd_pdu(mvm, cmd_id, CMD_SEND_IN_RFKILL,
-+					   sizeof(cmd), &cmd);
- 		data->sta_mask = new_sta_mask;
- 		if (ret)
- 			return ret;
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-index 491c449fd4316..908d0bc474da6 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/sta.c
-@@ -2836,7 +2836,12 @@ static int iwl_mvm_fw_baid_op_cmd(struct iwl_mvm *mvm,
- 		.action = start ? cpu_to_le32(IWL_RX_BAID_ACTION_ADD) :
- 				  cpu_to_le32(IWL_RX_BAID_ACTION_REMOVE),
- 	};
--	u32 cmd_id = WIDE_ID(DATA_PATH_GROUP, RX_BAID_ALLOCATION_CONFIG_CMD);
-+	struct iwl_host_cmd hcmd = {
-+		.id = WIDE_ID(DATA_PATH_GROUP, RX_BAID_ALLOCATION_CONFIG_CMD),
-+		.flags = CMD_SEND_IN_RFKILL,
-+		.len[0] = sizeof(cmd),
-+		.data[0] = &cmd,
-+	};
- 	int ret;
- 
- 	BUILD_BUG_ON(sizeof(struct iwl_rx_baid_cfg_resp) != sizeof(baid));
-@@ -2848,7 +2853,7 @@ static int iwl_mvm_fw_baid_op_cmd(struct iwl_mvm *mvm,
- 		cmd.alloc.ssn = cpu_to_le16(ssn);
- 		cmd.alloc.win_size = cpu_to_le16(buf_size);
- 		baid = -EIO;
--	} else if (iwl_fw_lookup_cmd_ver(mvm->fw, cmd_id, 1) == 1) {
-+	} else if (iwl_fw_lookup_cmd_ver(mvm->fw, hcmd.id, 1) == 1) {
- 		cmd.remove_v1.baid = cpu_to_le32(baid);
- 		BUILD_BUG_ON(sizeof(cmd.remove_v1) > sizeof(cmd.remove));
- 	} else {
-@@ -2857,8 +2862,7 @@ static int iwl_mvm_fw_baid_op_cmd(struct iwl_mvm *mvm,
- 		cmd.remove.tid = cpu_to_le32(tid);
- 	}
- 
--	ret = iwl_mvm_send_cmd_pdu_status(mvm, cmd_id, sizeof(cmd),
--					  &cmd, &baid);
-+	ret = iwl_mvm_send_cmd_status(mvm, &hcmd, &baid);
- 	if (ret)
- 		return ret;
- 
+-		if (k == idex_b && idex_b < SCAN_BSSID_MAX_SIZE) {
++		if (k == idex_b && idex_b < SCAN_BSSID_MAX_SIZE &&
++		    !WARN_ONCE(!is_valid_ether_addr(scan_6ghz_params[j].bssid),
++			       "scan: invalid BSSID at index %u, index_b=%u\n",
++			       j, idex_b)) {
+ 			memcpy(&pp->bssid_array[idex_b++],
+ 			       scan_6ghz_params[j].bssid, ETH_ALEN);
+ 		}
 -- 
 2.43.0
 
