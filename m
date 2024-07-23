@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FC791581F4;
-	Tue, 23 Jul 2024 18:39:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4296C13D896;
+	Tue, 23 Jul 2024 18:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759977; cv=none; b=bD/J017AD26DH6Q7qaN5pa4hUpzBbin1OYDy15leKuVfC8U1yLincUmLbdWFOyoqg+o0HOfN9uPej//H1f6HLoCUZxbCI5dN9npcRHhH74+im7YFyLfnvV7GHT2fotFY2WjwsotNOejHI54qEh3F4keEGwH5zqCyKDWMvAQL4aQ=
+	t=1721759980; cv=none; b=D097LEeU/TciCOajRXvt/s7L583bkCtg7x7ATHfEB8xEa/maXfXLwN4kC+02EKnlJSgAyCzEmo5dIOnbs55BTmvF3Nn3P+F0E0WN0WVOhVVHmxJGQjPV4G0roxcIM6vHW3GmIk9vT06wEndXERwaTlMYRl+kLpJoaTBdpn897f4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759977; c=relaxed/simple;
-	bh=+UkwjURgY5biVXTUyncCgY7WqF+j6rA+g9JILJXi/Jg=;
+	s=arc-20240116; t=1721759980; c=relaxed/simple;
+	bh=f+jVCPyOCkJNNsBrHi0rzJvgBLgMKmNg7zY9bX8ijCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OV38Ons4tkPdhhCI2MQD2Cxla88P4eOu7HtfM5RHhi9qjFaJCRO27ceRINSIOLVnzQ5xVDiZMs6ejVSb76/hcDg0YBGF6LyGdQH4rFAh0kZC47Ud85GdOSPZMgnKi3HuKsyu2Ql54T0Q7XcuXgvHztGNVKZYGAi9Tu8n1ppEKT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=laXEY0rR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XwtO7d4Z4xfFHPLvQCgCnpxaa9A4Ns39p9WY9YrkfqYuxfSArs3S7TIOkqa+JnLB+l4pNWRvmYHGD4ubGuBEB+tMtfKV5J9l76U8PWnBH1hp8veXxm+HJgSPZoBZphpy7LGpIUtecPhwYQNy7MG6fOpvI8Y5lCBX6mEpdJoI0rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I3PIqnHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="laXEY0rR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC63DC4AF0A;
-	Tue, 23 Jul 2024 18:39:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I3PIqnHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92E3C4AF0A;
+	Tue, 23 Jul 2024 18:39:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759977;
-	bh=+UkwjURgY5biVXTUyncCgY7WqF+j6rA+g9JILJXi/Jg=;
+	s=korg; t=1721759980;
+	bh=f+jVCPyOCkJNNsBrHi0rzJvgBLgMKmNg7zY9bX8ijCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=laXEY0rRf31AUAO3J84xIDXf4blWBcBtjKCQ0DKNbDNhBR34UY0JEIRZFtJNo4Yf6
-	 s65Wy16J8T6Xq6PYmDf6jyq5XvG+XBagAZnBKWmHh0iZl3/Lbym7prDYJPyVylfRJ2
-	 VQskll0yqX/wjeEYhS+0ld9eGSlnZHWPFEwQwSNA=
+	b=I3PIqnHsyGpPheGsj6sdYUYkD28s6IZ8EsstQk7khGhk+pVY/z6rFBlOoap8Vo06j
+	 IxsMEGQity1ikRjLEAmWaqi8SYSt53HuRVDN1gWJMnfmk7jBuYW2o2LfzlhORvfB0w
+	 5jR3M8SnW04pA/PeiwZi0NbpXAyC8cVBBmqwehng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxime Ripard <mripard@kernel.org>,
-	Fei Shao <fshao@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
+	Chunguang Xu <chunguang.xu@shopee.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 061/163] drm/mediatek: Call drm_atomic_helper_shutdown() at shutdown time
-Date: Tue, 23 Jul 2024 20:23:10 +0200
-Message-ID: <20240723180145.830075500@linuxfoundation.org>
+Subject: [PATCH 6.9 062/163] nvme: avoid double free special payload
+Date: Tue, 23 Jul 2024 20:23:11 +0200
+Message-ID: <20240723180145.867468404@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,63 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Chunguang Xu <chunguang.xu@shopee.com>
 
-[ Upstream commit c38896ca6318c2df20bbe6c8e3f633e071fda910 ]
+[ Upstream commit e5d574ab37f5f2e7937405613d9b1a724811e5ad ]
 
-Based on grepping through the source code this driver appears to be
-missing a call to drm_atomic_helper_shutdown() at system shutdown
-time. Among other things, this means that if a panel is in use that it
-won't be cleanly powered off at system shutdown time.
+If a discard request needs to be retried, and that retry may fail before
+a new special payload is added, a double free will result. Clear the
+RQF_SPECIAL_LOAD when the request is cleaned.
 
-The fact that we should call drm_atomic_helper_shutdown() in the case
-of OS shutdown/restart comes straight out of the kernel doc "driver
-instance overview" in drm_drv.c.
-
-This driver users the component model and shutdown happens in the base
-driver. The "drvdata" for this driver will always be valid if
-shutdown() is called and as of commit 2a073968289d
-("drm/atomic-helper: drm_atomic_helper_shutdown(NULL) should be a
-noop") we don't need to confirm that "drm" is non-NULL.
-
-Suggested-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Maxime Ripard <mripard@kernel.org>
-Reviewed-by: Fei Shao <fshao@chromium.org>
-Tested-by: Fei Shao <fshao@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240611102744.v2.1.I2b014f90afc4729b6ecc7b5ddd1f6dedcea4625b@changeid
+Signed-off-by: Chunguang Xu <chunguang.xu@shopee.com>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/nvme/host/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index 74832c2130921..0b570e194079a 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -950,6 +950,13 @@ static void mtk_drm_remove(struct platform_device *pdev)
- 		of_node_put(private->comp_node[i]);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index d513fd27589df..36f30594b671f 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -998,6 +998,7 @@ void nvme_cleanup_cmd(struct request *req)
+ 			clear_bit_unlock(0, &ctrl->discard_page_busy);
+ 		else
+ 			kfree(bvec_virt(&req->special_vec));
++		req->rq_flags &= ~RQF_SPECIAL_PAYLOAD;
+ 	}
  }
- 
-+static void mtk_drm_shutdown(struct platform_device *pdev)
-+{
-+	struct mtk_drm_private *private = platform_get_drvdata(pdev);
-+
-+	drm_atomic_helper_shutdown(private->drm);
-+}
-+
- static int mtk_drm_sys_prepare(struct device *dev)
- {
- 	struct mtk_drm_private *private = dev_get_drvdata(dev);
-@@ -981,6 +988,7 @@ static const struct dev_pm_ops mtk_drm_pm_ops = {
- static struct platform_driver mtk_drm_platform_driver = {
- 	.probe	= mtk_drm_probe,
- 	.remove_new = mtk_drm_remove,
-+	.shutdown = mtk_drm_shutdown,
- 	.driver	= {
- 		.name	= "mediatek-drm",
- 		.pm     = &mtk_drm_pm_ops,
+ EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
 -- 
 2.43.0
 
