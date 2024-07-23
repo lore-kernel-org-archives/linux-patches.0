@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53EA15445E;
-	Tue, 23 Jul 2024 18:30:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0CF913D896;
+	Tue, 23 Jul 2024 18:30:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759436; cv=none; b=K8W5t1EchSh6siOI5OsgzitcFUIyeBoJEmRApP5e6qW0Yb6GS6+3ay+tGQ4r7dyfdfnDgGNCoFOXuscFzqqJlYSkG1BeQ/P85f342t+zb1DtlGCsDQ2P3pw75jU5TuGsqrDPlezDh5ec1fFEhZ75603iC0yuYm7KqqERqnckrnQ=
+	t=1721759438; cv=none; b=S1oECHpy5YMt14C2XwHeNb3i7F/3CdqSFKksh1zV0VzxPQu5++usfY/Ye3yNjGIBSJMSYilocneRNnJPTd5c9SZxRehTfx1cpbUyEDYnJ700LkZRQOlipWp3czZDqwcsxTFYT9dlHuhW+R1ig9NfrcHVJIPUwe5mZSDFv2eI+AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759436; c=relaxed/simple;
-	bh=6G695V5vdUlobM4xaHILGRsT9u+jUlkMTFsMSjQkgsg=;
+	s=arc-20240116; t=1721759438; c=relaxed/simple;
+	bh=ud9WOUAObVecRN7d/eq2hdmr3E46qghaPtcEj+nInPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DtpdYOYtSg/jPq0BpN/4FwXiptr16mSlTHgrUQGYrZvIvWqmppnCPVM4+dlItzPs/DFwY/g8Yl+py0yyNl8pQubrxlt8cHK4Vg41UdBrazCppYB2EP0OcuA8SgNhWdjUOLwN4yJ8OPZze3VyYCavORoFUIal+pPUkOiVPmlnnt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WeYcinuM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hWGSglpapFtkqcYCVUAo89JkaGAmgXPddKAI+xReBWp3AQOG0LEOBgX+/rD9l9qwllJMDMapZKMvdEUsKNDoPSdn6qxDceuVkwR3C/mM7vBGJSHy9K7SvAHf914YPsv0M5UkHvS1pils5VkBDY29+LQOgQanvgmMTWMrTq7+wTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJ86seui; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WeYcinuM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62676C4AF0B;
-	Tue, 23 Jul 2024 18:30:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJ86seui"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BBD8C4AF0A;
+	Tue, 23 Jul 2024 18:30:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759435;
-	bh=6G695V5vdUlobM4xaHILGRsT9u+jUlkMTFsMSjQkgsg=;
+	s=korg; t=1721759438;
+	bh=ud9WOUAObVecRN7d/eq2hdmr3E46qghaPtcEj+nInPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WeYcinuMULBV6WhpbQRKONFxKSyDS2jJsYJoFWdUc6KxaPr8HJKzeBT1YWEqYazlr
-	 IeGpVo6joYYwIlz2HAYk4zdChqvL2PXDl1uefs3HqbiMVfti/yuDFCn/OyQ1qLb4Wr
-	 Rcy0ve3MVy4Q1AveInKCkP+85EHBb1TY2NSEGnTg=
+	b=qJ86seuiqeEWtha9K2dwveAvohVg1qx5O/pkDBOLZZHKn/Fy7SLiyLlH/uUg+1YsY
+	 nMhSuiWpO+jOW1RmQNoTIO92kk8A8+w1YAHhM5zuHf4lGli+3Iw6ANTzqnXHvneLEA
+	 ZgCnXljb8wew2Qv1kYvyN0VCUi6J/UGennavSwDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ananth Narayan <Ananth.Narayan@amd.com>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Nicolas Escande <nico.escande@gmail.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/129] tools/power/cpupower: Fix Pstate frequency reporting on AMD Family 1Ah CPUs
-Date: Tue, 23 Jul 2024 20:22:38 +0200
-Message-ID: <20240723180405.179794690@linuxfoundation.org>
+Subject: [PATCH 6.6 011/129] wifi: mac80211: mesh: init nonpeer_pm to active by default in mesh sdata
+Date: Tue, 23 Jul 2024 20:22:39 +0200
+Message-ID: <20240723180405.218223159@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -53,79 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+From: Nicolas Escande <nico.escande@gmail.com>
 
-[ Upstream commit 43cad521c6d228ea0c51e248f8e5b3a6295a2849 ]
+[ Upstream commit 6f6291f09a322c1c1578badac8072d049363f4e6 ]
 
-Update cpupower's P-State frequency calculation and reporting with AMD
-Family 1Ah+ processors, when using the acpi-cpufreq driver. This is due
-to a change in the PStateDef MSR layout in AMD Family 1Ah+.
+With a ath9k device I can see that:
+	iw phy phy0 interface add mesh0 type mp
+	ip link set mesh0 up
+	iw dev mesh0 scan
 
-Tested on 4th and 5th Gen AMD EPYC system
+Will start a scan with the Power Management bit set in the Frame Control Field.
+This is because we set this bit depending on the nonpeer_pm variable of the mesh
+iface sdata and when there are no active links on the interface it remains to
+NL80211_MESH_POWER_UNKNOWN.
 
-Signed-off-by: Ananth Narayan <Ananth.Narayan@amd.com>
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+As soon as links starts to be established, it wil switch to
+NL80211_MESH_POWER_ACTIVE as it is the value set by befault on the per sta
+nonpeer_pm field.
+As we want no power save by default, (as expressed with the per sta ini values),
+lets init it to the expected default value of NL80211_MESH_POWER_ACTIVE.
+
+Also please note that we cannot change the default value from userspace prior to
+establishing a link as using NL80211_CMD_SET_MESH_CONFIG will not work before
+NL80211_CMD_JOIN_MESH has been issued. So too late for our initial scan.
+
+Signed-off-by: Nicolas Escande <nico.escande@gmail.com>
+Link: https://msgid.link/20240527141759.299411-1-nico.escande@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/power/cpupower/utils/helpers/amd.c | 26 +++++++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ net/mac80211/mesh.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/power/cpupower/utils/helpers/amd.c b/tools/power/cpupower/utils/helpers/amd.c
-index c519cc89c97f4..0a56e22240fc8 100644
---- a/tools/power/cpupower/utils/helpers/amd.c
-+++ b/tools/power/cpupower/utils/helpers/amd.c
-@@ -41,6 +41,16 @@ union core_pstate {
- 		unsigned res1:31;
- 		unsigned en:1;
- 	} pstatedef;
-+	/* since fam 1Ah: */
-+	struct {
-+		unsigned fid:12;
-+		unsigned res1:2;
-+		unsigned vid:8;
-+		unsigned iddval:8;
-+		unsigned idddiv:2;
-+		unsigned res2:31;
-+		unsigned en:1;
-+	} pstatedef2;
- 	unsigned long long val;
- };
- 
-@@ -48,6 +58,10 @@ static int get_did(union core_pstate pstate)
- {
- 	int t;
- 
-+	/* Fam 1Ah onward do not use did */
-+	if (cpupower_cpu_info.family >= 0x1A)
-+		return 0;
-+
- 	if (cpupower_cpu_info.caps & CPUPOWER_CAP_AMD_PSTATEDEF)
- 		t = pstate.pstatedef.did;
- 	else if (cpupower_cpu_info.family == 0x12)
-@@ -61,12 +75,18 @@ static int get_did(union core_pstate pstate)
- static int get_cof(union core_pstate pstate)
- {
- 	int t;
--	int fid, did, cof;
-+	int fid, did, cof = 0;
- 
- 	did = get_did(pstate);
- 	if (cpupower_cpu_info.caps & CPUPOWER_CAP_AMD_PSTATEDEF) {
--		fid = pstate.pstatedef.fid;
--		cof = 200 * fid / did;
-+		if (cpupower_cpu_info.family >= 0x1A) {
-+			fid = pstate.pstatedef2.fid;
-+			if (fid > 0x0f)
-+				cof = (fid * 5);
-+		} else {
-+			fid = pstate.pstatedef.fid;
-+			cof = 200 * fid / did;
-+		}
- 	} else {
- 		t = 0x10;
- 		fid = pstate.pstate.fid;
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index 7b3ecc288f09d..25223184d6e5b 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -1792,6 +1792,7 @@ void ieee80211_mesh_init_sdata(struct ieee80211_sub_if_data *sdata)
+ 	ifmsh->last_preq = jiffies;
+ 	ifmsh->next_perr = jiffies;
+ 	ifmsh->csa_role = IEEE80211_MESH_CSA_ROLE_NONE;
++	ifmsh->nonpeer_pm = NL80211_MESH_POWER_ACTIVE;
+ 	/* Allocate all mesh structures when creating the first mesh interface. */
+ 	if (!mesh_allocated)
+ 		ieee80211s_init();
 -- 
 2.43.0
 
