@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FBD14C5B0;
-	Tue, 23 Jul 2024 18:30:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81093158215;
+	Tue, 23 Jul 2024 18:30:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759412; cv=none; b=Dhm/t1/kj45GJedzofWuRkAZagm7V6Ovrz1S6C1BnkLDTUrh5ZVI65Uj+yMFZ5vrWn7EaOeOIi4sDBCMRoelcLvvwXKBRPtyFGfiTTOFeQEw+9aqzpySAfCUmdekzHLuIrFIeBqOk4PE4cpq3mw9txBKFpJaTzvsD5UzYbQZcBU=
+	t=1721759415; cv=none; b=CVhlHtA0JJZxY1ss0Q4/OFgRRK9fVI/QOAczD6QZKlFNui+WpZrsuVUAgTJMT2MgPk6auR1jpYK3nBP7tIII7q5FACsaNOQX4FEht3c4aaHRo37ZQuVVgIhVeYV9LcZSWaOEMxXbuf8pQhaM+8J/zn4MkXJnqYf5dGGTGluydv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759412; c=relaxed/simple;
-	bh=aR6faF6fL6Tg4MZl4dofDXeOlIU1i1FgTifl3LwrRbk=;
+	s=arc-20240116; t=1721759415; c=relaxed/simple;
+	bh=2vVNVK/gkweRWimQm947hgccmthPABL2PR+H7IUJntE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDsHm69TIX2uWnyVJWhEV3JkVS1opf8WKZqopyyTZHUCgAO5cXCqcXOC3fT4umYRMBd+89qvwMb5BOXb94MHlRToEc3J1543kv2l64pTqbE9Javib1JY/UuiUPvLLM1+MWClOfJ7MhaHKyV/1LNTSIvFT3ZQo3HY1tFKyE3XD80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vv+hBWcC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JE9lHjQ/TWGaOFKbzE29xFb9S+vsXyvExzVeFg/UU6u8Io2ohq5htEqLX4b9fMYeMys0xDBLXp/NYZ1X+c0QgqM+jO/+E+2uQ/zOYimblMBd22nJljhK83yfkwNPdoSZtC5oHSmfGEXcn/luqpi1hoQxsyrNmz3yP5ieXklXMbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jGponjVM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vv+hBWcC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB85CC4AF09;
-	Tue, 23 Jul 2024 18:30:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jGponjVM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC14C4AF09;
+	Tue, 23 Jul 2024 18:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759412;
-	bh=aR6faF6fL6Tg4MZl4dofDXeOlIU1i1FgTifl3LwrRbk=;
+	s=korg; t=1721759415;
+	bh=2vVNVK/gkweRWimQm947hgccmthPABL2PR+H7IUJntE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vv+hBWcCcK/Rp0FTwKQaBqPyVyYeL34ep5YTapiQCjTzqlISK/BGki6/EZeqRWWEJ
-	 rShheMVo9N/sivWQfQ5mAId1FT2P0lWiopRJff/lMa/Qqp8pLnHwC0sZlSyPu4qC/q
-	 4Yi7owSiUADdaMWE6FWS55IZDMroilUm5GXVrZog=
+	b=jGponjVMYL7M7a2h3hZRgJEosBjN0LHhbV6Q4QlDdJZEZoKat35qY3yvCpC+dzv9g
+	 rgRc/451PxXYxjLHF32FD+B2/ZXDv5p/+ewfnI6MPu1r3uvqMavuutwnUtJuhZFJWJ
+	 fA06h8AjwZ7F3LLlQKi2yIKBmi0BPhK68A2UGC0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 096/105] spi: mux: set ctlr->bits_per_word_mask
-Date: Tue, 23 Jul 2024 20:24:13 +0200
-Message-ID: <20240723180406.945141598@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 097/105] cifs: fix noisy message on copy_file_range
+Date: Tue, 23 Jul 2024 20:24:14 +0200
+Message-ID: <20240723180406.982857640@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -51,36 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit c8bd922d924bb4ab6c6c488310157d1a27996f31 ]
+commit ae4ccca47195332c69176b8615c5ee17efd30c46 upstream.
 
-Like other SPI controller flags, bits_per_word_mask may be used by a
-peripheral driver, so it needs to reflect the capabilities of the
-underlying controller.
+There are common cases where copy_file_range can noisily
+log "source and target of copy not on same server"
+e.g. the mv command across mounts to two different server's shares.
+Change this to informational rather than logging as an error.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20240708-spi-mux-fix-v1-3-6c8845193128@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A followon patch will add dynamic trace points e.g. for
+cifs_file_copychunk_range
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-mux.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/smb/client/cifsfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-mux.c b/drivers/spi/spi-mux.c
-index 0709e987bd5ab..465d5b0e1d1a9 100644
---- a/drivers/spi/spi-mux.c
-+++ b/drivers/spi/spi-mux.c
-@@ -156,6 +156,7 @@ static int spi_mux_probe(struct spi_device *spi)
- 	/* supported modes are the same as our parent's */
- 	ctlr->mode_bits = spi->controller->mode_bits;
- 	ctlr->flags = spi->controller->flags;
-+	ctlr->bits_per_word_mask = spi->controller->bits_per_word_mask;
- 	ctlr->transfer_one_message = spi_mux_transfer_one_message;
- 	ctlr->setup = spi_mux_setup;
- 	ctlr->num_chipselect = mux_control_states(priv->mux);
--- 
-2.43.0
-
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1397,7 +1397,7 @@ ssize_t cifs_file_copychunk_range(unsign
+ 	target_tcon = tlink_tcon(smb_file_target->tlink);
+ 
+ 	if (src_tcon->ses != target_tcon->ses) {
+-		cifs_dbg(VFS, "source and target of copy not on same server\n");
++		cifs_dbg(FYI, "source and target of copy not on same server\n");
+ 		goto out;
+ 	}
+ 
 
 
