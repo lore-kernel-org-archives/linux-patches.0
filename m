@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59903156C6C;
-	Tue, 23 Jul 2024 18:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11BC15445E;
+	Tue, 23 Jul 2024 18:30:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759430; cv=none; b=sxxVmkDrNdoBYzTiRg1aWN8hfGJy5yYkjzz+c6X6orfnuqqPUkZi4fQ39JPYjAp10pI5hJ6X3PoTY3ZT149y4uLdKNAOuli/U8c0iP1C1hLXjRY7TiZste0rZMv+1l5lRJqrA9o2AvQ+2pArFnedtKbqkBArwgbAg/3iU4ZOQwU=
+	t=1721759433; cv=none; b=Jb0MTt/pf6lZR4b92E8WcycuOtnLyoAJmnTN6BTquQXn7hF/4H8CW0ncJH8LwjpnIul551K9CitsoPn5+bWsBWpCCwNF0X+xnzgZLMqD6X0VyCoVGXjyOhjw9JckyloTGnlzuNNntgDrIPcBTAm7d+JrrdsXID5gi9c3eiI8174=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759430; c=relaxed/simple;
-	bh=L6gLPUGpL300K/wZWjXlSVMli3OZtmHvwpt94/19p8M=;
+	s=arc-20240116; t=1721759433; c=relaxed/simple;
+	bh=KeRi+ItxTtYF+x1O0OLg4aaWr4AtUs1ZUmWPtISQnBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EfIZGON6SlNBMvaLNzxoDjF+TAORy5+fZXcYK8h1KUP4or0D1GZuxRuDG4GnN9OG189atwx9G4z6+WxOUQkOtIxmv3Bb2Hw0wDitcjqjDEr8AWhYbsUeyggw5DoLlmuUwGeDIf6GVvBsCwS52vD8hWVjnDBGdIXTJKoE29cfWE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC2YnsDL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GYaDQQo7TihlpybSuhgELQGqxRk4y9ZUG/L+6nrkCe3qbOPCHxUJYAS/b6hUxmfTImLhiPOFgwkdclfmwE3O9IkItdb4iEZtfDVbNFZpXymAJ9FJtd+V6f8EDUsE3HV0l4h0PnO8BxR0x7tQeDNAAxbAsa3gbH7glRELJbRoTjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PU6tJvAa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC2YnsDL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACAAC4AF0A;
-	Tue, 23 Jul 2024 18:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PU6tJvAa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77196C4AF0A;
+	Tue, 23 Jul 2024 18:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759429;
-	bh=L6gLPUGpL300K/wZWjXlSVMli3OZtmHvwpt94/19p8M=;
+	s=korg; t=1721759432;
+	bh=KeRi+ItxTtYF+x1O0OLg4aaWr4AtUs1ZUmWPtISQnBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EC2YnsDL3bvAnIqJ/+Kny4xst6SP2HpoTCOg1mJVc6RgyJ43WSuJyUcRhSKGyDD7y
-	 g/xQqodMRG2l42/8mMJ8foxSpbdmdb00l+zoE2GHbjqSNKHmcZFKzCp+c8qdsYEHrF
-	 UYAj5amt9oEB0UZsXHruQxGS66K1UAB1OFT3oVrE=
+	b=PU6tJvAazT7NjzNzeLwgXHNexRw/pUVBnSkmaxO2Hzo96TpUjn+1JMWtx47+mxKdC
+	 aPyC1BUwHNycZCzcCKx3tqbE07l0LNJvPyNk69IxM3F9nuH3P56AO6xGM+QRW9luRd
+	 8iW5k8LnT5EgXhTj9ojmGPLiMntGyHafWGvvAXsM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 092/105] spi: imx: Dont expect DMA for i.MX{25,35,50,51,53} cspi devices
-Date: Tue, 23 Jul 2024 20:24:09 +0200
-Message-ID: <20240723180406.792342339@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.6 001/129] filelock: Remove locks reliably when fcntl/close race is detected
+Date: Tue, 23 Jul 2024 20:22:29 +0200
+Message-ID: <20240723180404.821026789@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
-References: <20240723180402.490567226@linuxfoundation.org>
+In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
+References: <20240723180404.759900207@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit ce1dac560a74220f2e53845ec0723b562288aed4 ]
+commit 3cad1bc010416c6dd780643476bc59ed742436b9 upstream.
 
-While in commit 2dd33f9cec90 ("spi: imx: support DMA for imx35") it was
-claimed that DMA works on i.MX25, i.MX31 and i.MX35 the respective
-device trees don't add DMA channels. The Reference manuals of i.MX31 and
-i.MX25 also don't mention the CSPI core being DMA capable. (I didn't
-check the others.)
+When fcntl_setlk() races with close(), it removes the created lock with
+do_lock_file_wait().
+However, LSMs can allow the first do_lock_file_wait() that created the lock
+while denying the second do_lock_file_wait() that tries to remove the lock.
+In theory (but AFAIK not in practice), posix_lock_file() could also fail to
+remove a lock due to GFP_KERNEL allocation failure (when splitting a range
+in the middle).
 
-Since commit e267a5b3ec59 ("spi: spi-imx: Use dev_err_probe for failed
-DMA channel requests") this results in an error message
+After the bug has been triggered, use-after-free reads will occur in
+lock_get_status() when userspace reads /proc/locks. This can likely be used
+to read arbitrary kernel memory, but can't corrupt kernel memory.
+This only affects systems with SELinux / Smack / AppArmor / BPF-LSM in
+enforcing mode and only works from some security contexts.
 
-	spi_imx 43fa4000.spi: error -ENODEV: can't get the TX DMA channel!
+Fix it by calling locks_remove_posix() instead, which is designed to
+reliably get rid of POSIX locks associated with the given file and
+files_struct and is also used by filp_flush().
 
-during boot. However that isn't fatal and the driver gets loaded just
-fine, just without using DMA.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://patch.msgid.link/20240508095610.2146640-2-u.kleine-koenig@pengutronix.de
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c293621bbf67 ("[PATCH] stale POSIX lock handling")
+Cc: stable@kernel.org
+Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2563
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20240702-fs-lock-recover-2-v1-1-edd456f63789@google.com
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[stable fixup: ->c.flc_type was ->fl_type in older kernels]
+Signed-off-by: Jann Horn <jannh@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-imx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/locks.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
-index 2c660a95c17e7..93e83fbc3403f 100644
---- a/drivers/spi/spi-imx.c
-+++ b/drivers/spi/spi-imx.c
-@@ -1040,7 +1040,7 @@ static struct spi_imx_devtype_data imx35_cspi_devtype_data = {
- 	.rx_available = mx31_rx_available,
- 	.reset = mx31_reset,
- 	.fifo_size = 8,
--	.has_dmamode = true,
-+	.has_dmamode = false,
- 	.dynamic_burst = false,
- 	.has_slavemode = false,
- 	.devtype = IMX35_CSPI,
--- 
-2.43.0
-
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2381,8 +2381,9 @@ int fcntl_setlk(unsigned int fd, struct
+ 	error = do_lock_file_wait(filp, cmd, file_lock);
+ 
+ 	/*
+-	 * Attempt to detect a close/fcntl race and recover by releasing the
+-	 * lock that was just acquired. There is no need to do that when we're
++	 * Detect close/fcntl races and recover by zapping all POSIX locks
++	 * associated with this file and our files_struct, just like on
++	 * filp_flush(). There is no need to do that when we're
+ 	 * unlocking though, or for OFD locks.
+ 	 */
+ 	if (!error && file_lock->fl_type != F_UNLCK &&
+@@ -2397,9 +2398,7 @@ int fcntl_setlk(unsigned int fd, struct
+ 		f = files_lookup_fd_locked(files, fd);
+ 		spin_unlock(&files->file_lock);
+ 		if (f != filp) {
+-			file_lock->fl_type = F_UNLCK;
+-			error = do_lock_file_wait(filp, cmd, file_lock);
+-			WARN_ON_ONCE(error);
++			locks_remove_posix(filp, files);
+ 			error = -EBADF;
+ 		}
+ 	}
 
 
