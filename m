@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66426155351;
-	Tue, 23 Jul 2024 18:34:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58513158878;
+	Tue, 23 Jul 2024 18:34:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759671; cv=none; b=VlNPx78nMjwtR03urEKw2xY1rHbAsze1gGWOlZzi4yOtbeul2wjLAgOpuF52jceDDxPyyvqVulfiMEN1HUIiNW8DV8rTKLMWFgDS9Y9oI+B9lWOMgh4byajgUJKMv8opCupxo6/jO4Kb49cL8iDHBqQAGZLCPCo8002ooUeOA1E=
+	t=1721759674; cv=none; b=dLvYWxtgejL1jXjFMdxH+F68jwdJg5nL0GGye2+mdVugN1rZ3RjMdKdbZzBToWCQ6Y8XZpDS6xWOzLlNDfmlVyG10UOR7yARLiar4vtoW9opLXnxS3QJS1KJ3RAzEI4TOEjTOdAwrqqG69FF3X26jjRxZJxNQ0dE00/9gTPq+5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759671; c=relaxed/simple;
-	bh=ns3txKkwnz3kFZdkLzKlF7/KOnATLoop5FbNSTgMKdQ=;
+	s=arc-20240116; t=1721759674; c=relaxed/simple;
+	bh=y1SFZgK7rAu9Enmgf7Gqd/oovAy10sDpekUq12s7XIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MoXXgIQML8l+R4vblQzj0zw5pG+Vm5p5pHTBkEYocu6dXHsNV490esRdqg9t/975A60ff/lih1tgJ4yQ01QLOI5H+QcmnUno7zVpJ06l/cH0ezNTvdhgucK4xfoIX9fxBXA3rJvkMokcMRwBqkPknj4kTT7O4TXeAygGRRy66UY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0MDrYNb9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxU3M48lD8/Vqpk+3PMOWR0lXAL3T8B8CX37EOsXJx+Crq9oDo8sBRHiVYGDJ4ZTBHYeblRrNRJqctgSK2yQpfuHNfCcGSLKgvxdvyZWbWIe2URdrms+ZtWQz4X1NtUfr58QmqpHRAxR9yyKFRrytwQGaNnbEnmzqO+Q7sdGLFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEjdj8SG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0MDrYNb9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1767C4AF0A;
-	Tue, 23 Jul 2024 18:34:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEjdj8SG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3394C4AF09;
+	Tue, 23 Jul 2024 18:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759671;
-	bh=ns3txKkwnz3kFZdkLzKlF7/KOnATLoop5FbNSTgMKdQ=;
+	s=korg; t=1721759674;
+	bh=y1SFZgK7rAu9Enmgf7Gqd/oovAy10sDpekUq12s7XIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0MDrYNb90AWdEAOu1DRzVlf7h7R4IfXUE0jw1464GUZjeSbzyFC4xVOF2KuWVPrwm
-	 qS/zoj2wi/jj3vRGgUabjG8wrYB1iAPmasmKwPlkAuyyPdMcvEXIhuGGGTlVXdqd23
-	 bT7vz34UsSfB2SUSd2XSsYs+ARve8yQcP0f0BvJQ=
+	b=fEjdj8SGOZgQm6lmwnQDcc5AUnoes9z8qNezkM344SAPpBa1XaYceUKJ/MQFnjl+4
+	 I7gipBjdeCSJlm6rYbgn3gB3o7zK/D68VdPvMnFyDU/1yN3x0pK9hkVs/AFo6CErC1
+	 Gs/P0gKU+ciYtPqkv9sivWqd79/2YzigieOkU9No=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/129] ALSA: hda: cs35l56: Select SERIAL_MULTI_INSTANTIATE
-Date: Tue, 23 Jul 2024 20:23:29 +0200
-Message-ID: <20240723180407.143962331@linuxfoundation.org>
+Subject: [PATCH 6.6 088/129] ALSA: PCM: Allow resume only for suspended streams
+Date: Tue, 23 Jul 2024 20:23:56 +0200
+Message-ID: <20240723180408.187076142@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -51,45 +50,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 9b1effff19cdf2230d3ecb07ff4038a0da32e9cc ]
+[ Upstream commit 1225675ca74c746f09211528588e83b3def1ff6a ]
 
-The ACPI IDs used in the CS35L56 HDA drivers are all handled by the
-serial multi-instantiate driver which starts multiple Linux device
-instances from a single ACPI Device() node.
+snd_pcm_resume() should bail out if the stream isn't in a suspended
+state.  Otherwise it'd allow doubly resume.
 
-As serial multi-instantiate is not an optional part of the system add it
-as a dependency in Kconfig so that it is not overlooked.
-
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Link: https://lore.kernel.org/20240619161602.117452-1-simont@opensource.cirrus.com
+Link: https://patch.msgid.link/20240624125443.27808-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/Kconfig | 2 ++
+ sound/core/pcm_native.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
-index 21046f72cdca9..f8ef87a30cab2 100644
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -141,6 +141,7 @@ config SND_HDA_SCODEC_CS35L56_I2C
- 	depends on ACPI || COMPILE_TEST
- 	depends on SND_SOC
- 	select FW_CS_DSP
-+	select SERIAL_MULTI_INSTANTIATE
- 	select SND_HDA_GENERIC
- 	select SND_SOC_CS35L56_SHARED
- 	select SND_HDA_SCODEC_CS35L56
-@@ -155,6 +156,7 @@ config SND_HDA_SCODEC_CS35L56_SPI
- 	depends on ACPI || COMPILE_TEST
- 	depends on SND_SOC
- 	select FW_CS_DSP
-+	select SERIAL_MULTI_INSTANTIATE
- 	select SND_HDA_GENERIC
- 	select SND_SOC_CS35L56_SHARED
- 	select SND_HDA_SCODEC_CS35L56
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index bd9ddf412b465..cc21c483c4a57 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -1783,6 +1783,8 @@ static int snd_pcm_pre_resume(struct snd_pcm_substream *substream,
+ 			      snd_pcm_state_t state)
+ {
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
++	if (runtime->state != SNDRV_PCM_STATE_SUSPENDED)
++		return -EBADFD;
+ 	if (!(runtime->info & SNDRV_PCM_INFO_RESUME))
+ 		return -ENOSYS;
+ 	runtime->trigger_master = substream;
 -- 
 2.43.0
 
