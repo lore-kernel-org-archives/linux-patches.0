@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6560A1581F4;
-	Tue, 23 Jul 2024 18:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B27157A61;
+	Tue, 23 Jul 2024 18:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759972; cv=none; b=qThoJhpgpyv1Uw1XL8IMUsnGfs+hmz6I/90h4NnDh/iQaDitqEpVyI1zFttcdAW6t1DLH4yFXwhFIxeRStOZLrFUKa2ZWWz9yusF4MSYNI1iJiWbT2UbDUsu7MkLf7zFcUMRYnZG6652XI+zXMwaZPOZs57RehPVX8jKIsm/jAc=
+	t=1721759974; cv=none; b=BsS0AWYN/4oV4gQ2nvUn6zLtdIYzqCE2LaEQu7CLJtN8m1cwd97oryuLnIM7aas60NTJ/R3L3MmqNBU4Smh2I8Oc8UgluV9a4H4YDtMo190Skj07r8zYwlkSiY8ZfDUDAWzjPu9lwrwijfJYjkzJ8gu7Bj62QK1rDosLSqZdc3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759972; c=relaxed/simple;
-	bh=YL+dcMehirCVDsU7MVoqYwEHiaMeetOtCJct8mpzYvE=;
+	s=arc-20240116; t=1721759974; c=relaxed/simple;
+	bh=e9KMmS60aeg7zo8Vp/a2pWOo1O9rQXutc/fDRhCJplo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AciB1rfFweLRrFSeVupFfeLTO64d5DYIYSZEtuvUjW83ARyaybHDb0r4ctN95a4aK7waUcd9G0bt3goAoHicy7vVfFwZ8PjxgemBfP4sjMU7sX6Z17MzmRTbGSPwzfYIsTIXOawjirVlowTNUGIpj+r9tvzrnxhGhSvDY7Y1OkY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZPFW1mX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBOwHr6yb/6HUnXqUhTi5v9EFB+sbJdvKzrpbtyLZIBCJDtpFSzOBb17fA+9kUDl3etp5aaUB6kIw8VV2KJmUIxaZD15JJqkX8o161v0f8XdRcLmJf9C0NZDiSd9zVtOgwoZRFUbyClFDhwXi6W9YLssHJXHwFDN69l8IctXcYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQqmlwJL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZPFW1mX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 942EDC4AF0A;
-	Tue, 23 Jul 2024 18:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQqmlwJL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91499C4AF0A;
+	Tue, 23 Jul 2024 18:39:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759971;
-	bh=YL+dcMehirCVDsU7MVoqYwEHiaMeetOtCJct8mpzYvE=;
+	s=korg; t=1721759974;
+	bh=e9KMmS60aeg7zo8Vp/a2pWOo1O9rQXutc/fDRhCJplo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZPFW1mXUE0jRkEwlMhMqBjE/rjYPjqgYccE0XCknq7DbT0tryv2V1WSBcoDOGdya
-	 vaH3C+3uZnSCXsPTye12NPyVTHWIkQA1cqP2QMw1vWLGaTr+slgSbh3pyzJ+6+uyhq
-	 HDjIFpCvN9MvY0KHV3VvRhOVTOZCBNpL7Oiibpdg=
+	b=AQqmlwJLChAW/iGc9VBLPoCqAIrTWlks1prtlDTEd2FBfh6tGhTaMAS5uEOclr+pf
+	 reJJZm29kUMsPTJ56e5CJepYfUhDdInN7Hq+4mZvIee73abNxmBVhitl7+CHI2KOTS
+	 jhdFli8XGRjp5wb+9asY2eyYbE5k7L4c1mD67x0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Jakobi <tjakobi@math.uni-bielefeld.de>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sui Jingfeng <sui.jingfeng@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 059/163] drm: panel-orientation-quirks: Add quirk for Aya Neo KUN
-Date: Tue, 23 Jul 2024 20:23:08 +0200
-Message-ID: <20240723180145.754122309@linuxfoundation.org>
+Subject: [PATCH 6.9 060/163] drm: renesas: shmobile: Call drm_atomic_helper_shutdown() at shutdown time
+Date: Tue, 23 Jul 2024 20:23:09 +0200
+Message-ID: <20240723180145.791880560@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,40 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit f74fb5df429ebc6a614dc5aa9e44d7194d402e5a ]
+[ Upstream commit 0320ca14c6fb68ad19aa72e55a1a21c061b2946b ]
 
-Similar to the other Aya Neo devices this one features
-again a portrait screen, here with a native resolution
-of 1600x2560.
+Based on grepping through the source code, this driver appears to be
+missing a call to drm_atomic_helper_shutdown() at system shutdown time.
+This is important because drm_atomic_helper_shutdown() will cause
+panels to get disabled cleanly which may be important for their power
+sequencing.  Future changes will remove any custom powering off in
+individual panel drivers so the DRM drivers need to start getting this
+right.
 
-Signed-off-by: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240310220401.895591-1-tjakobi@math.uni-bielefeld.de
+The fact that we should call drm_atomic_helper_shutdown() in the case of
+OS shutdown comes straight out of the kernel doc "driver instance
+overview" in drm_drv.c.
+
+[geert: shmob_drm_remove() already calls drm_atomic_helper_shutdown]
+
+Suggested-by: Maxime Ripard <mripard@kernel.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20230901164111.RFT.15.Iaf638a1d4c8b3c307a6192efabb4cbb06b195f15@changeid
+[geert: s/drm_helper_force_disable_all/drm_atomic_helper_shutdown/]
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Sui Jingfeng <sui.jingfeng@linux.dev>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/17c6a5a668e5975f871b77fb1fca6711a0799d9e.1718176895.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_panel_orientation_quirks.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/renesas/shmobile/shmob_drm_drv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 426bbee2d9f5e..5db52d6c5c35c 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-@@ -202,6 +202,12 @@ static const struct dmi_system_id orientation_data[] = {
- 		  DMI_MATCH(DMI_BOARD_NAME, "NEXT"),
- 		},
- 		.driver_data = (void *)&lcd800x1280_rightside_up,
-+	}, {	/* AYA NEO KUN */
-+		.matches = {
-+		  DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AYANEO"),
-+		  DMI_MATCH(DMI_BOARD_NAME, "KUN"),
-+		},
-+		.driver_data = (void *)&lcd1600x2560_rightside_up,
- 	}, {	/* Chuwi HiBook (CWI514) */
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
+diff --git a/drivers/gpu/drm/renesas/shmobile/shmob_drm_drv.c b/drivers/gpu/drm/renesas/shmobile/shmob_drm_drv.c
+index e83c3e52251de..0250d5f00bf10 100644
+--- a/drivers/gpu/drm/renesas/shmobile/shmob_drm_drv.c
++++ b/drivers/gpu/drm/renesas/shmobile/shmob_drm_drv.c
+@@ -171,6 +171,13 @@ static void shmob_drm_remove(struct platform_device *pdev)
+ 	drm_kms_helper_poll_fini(ddev);
+ }
+ 
++static void shmob_drm_shutdown(struct platform_device *pdev)
++{
++	struct shmob_drm_device *sdev = platform_get_drvdata(pdev);
++
++	drm_atomic_helper_shutdown(&sdev->ddev);
++}
++
+ static int shmob_drm_probe(struct platform_device *pdev)
+ {
+ 	struct shmob_drm_platform_data *pdata = pdev->dev.platform_data;
+@@ -273,6 +280,7 @@ static const struct of_device_id shmob_drm_of_table[] __maybe_unused = {
+ static struct platform_driver shmob_drm_platform_driver = {
+ 	.probe		= shmob_drm_probe,
+ 	.remove_new	= shmob_drm_remove,
++	.shutdown	= shmob_drm_shutdown,
+ 	.driver		= {
+ 		.name	= "shmob-drm",
+ 		.of_match_table = of_match_ptr(shmob_drm_of_table),
 -- 
 2.43.0
 
