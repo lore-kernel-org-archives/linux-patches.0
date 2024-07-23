@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B410C13D896;
-	Tue, 23 Jul 2024 18:41:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4BEC13D896;
+	Tue, 23 Jul 2024 18:41:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760101; cv=none; b=b3bQwj6kqlfniAYmeBX3DYRIn7E3TsJ4Ie5uROy3f/mLxn99Fv2jaXPQOnsZXibP46poAlWGmuWSsqX9SC65iRUREGrsB+yiDZcflHt1OlyGH23YM0hvYGGwKLNLF1Dqusjgf1gLm0UUgeSxfPOfSY6P0THptZr76LM3Rzj2KpI=
+	t=1721760104; cv=none; b=KjXybEVNtEvCJWh9nyoR4LzqbdfB1Pa8tfTLNuC8V+rUyx0nlE+kRyK2ZsbPNeD1dFSq46Fc2cxxez5uRF+If071mKN6VqT5zvobkQu/j7o+Fs+G9cNG/vRSd07wtStTfsH5vyEPGrOjqiPdcZJ6PY3E/mnuFi1u29y/SFQ5R+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760101; c=relaxed/simple;
-	bh=Pm3Rt/piY2pWyNbie01Dzusgm2DjtxOVKbZ7wcpENIg=;
+	s=arc-20240116; t=1721760104; c=relaxed/simple;
+	bh=mZPjkiwws9hk7QgffD6XPP9CKtlbVOy0qi3tEZwRgbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QI6+BdMxhsSPeiShHQoCUOkWiMpMDE7vIShgHC+X5lhiPb3Zo066hSzE4oaRv1HSS3YrJHflFJlHKWasd77MYqgzpazKiI6HX9PYXPTrZkkZGyypfVMcR2q+8o7w9NiH0UbRKiB2zzmKw97gtVwg3wtP49QrLo9KRAUKQjrlTXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/CE+OSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rC4j9+GXKUsqNMUGb5zHnv6aO2yX+/BNazTQA9pEH9YVAq8fkM3QAJWBndnXUj/3soMIyvy0SqY/qsr4AqMAsJ/TMjjWs3yEEQCiGoJxSiQjsWfW2Is0MuP2mSIEJqc2Og+cToQrQFrGjIKa0xjqDbopnkyzdKlvqtkO8scvcKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imE2ves5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/CE+OSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EC9C4AF0A;
-	Tue, 23 Jul 2024 18:41:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imE2ves5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F88C4AF0A;
+	Tue, 23 Jul 2024 18:41:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760101;
-	bh=Pm3Rt/piY2pWyNbie01Dzusgm2DjtxOVKbZ7wcpENIg=;
+	s=korg; t=1721760104;
+	bh=mZPjkiwws9hk7QgffD6XPP9CKtlbVOy0qi3tEZwRgbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L/CE+OSgtjMXt8h9AxGJcGC4PdYWn8hBeetGB5oLk73zLiwqw8lrcSO8Pyp7p1rYQ
-	 Qu27VXjhcHF8hQuJsgo1C1Yq1w24GzanoEYhnYyIUONxrzv+rrZgoXyXtRx5q0qR6l
-	 tzZsgP9b4sl005CyRfCcOplXfFcMsy8D7ymaBzcY=
+	b=imE2ves5Kw0MdGAyPVaRGPXByJz0IiMadDByLXku7QklwHdsT65RlIkng4E+AJKPd
+	 QD9b1Gacy88gu3hyIL+IQW0HVMv28okUb+jVpQ+fV564CjtJ0tPDmRpGm5SDZdVNWy
+	 SFttDdXPZFW/yWDqJOZTs5UEwZ+qtJgfgreSmM2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Kenton Groombridge <concord@gentoo.org>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.9 072/163] wifi: mac80211: Avoid address calculations via out of bounds array indexing
-Date: Tue, 23 Jul 2024 20:23:21 +0200
-Message-ID: <20240723180146.251270085@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.9 073/163] KVM: PPC: Book3S HV: Prevent UAF in kvm_spapr_tce_attach_iommu_group()
+Date: Tue, 23 Jul 2024 20:23:22 +0200
+Message-ID: <20240723180146.290437500@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -53,96 +51,145 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kenton Groombridge <concord@gentoo.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 2663d0462eb32ae7c9b035300ab6b1523886c718 ]
+[ Upstream commit a986fa57fd81a1430e00b3c6cf8a325d6f894a63 ]
 
-req->n_channels must be set before req->channels[] can be used.
+Al reported a possible use-after-free (UAF) in kvm_spapr_tce_attach_iommu_group().
 
-This patch fixes one of the issues encountered in [1].
+It looks up `stt` from tablefd, but then continues to use it after doing
+fdput() on the returned fd. After the fdput() the tablefd is free to be
+closed by another thread. The close calls kvm_spapr_tce_release() and
+then release_spapr_tce_table() (via call_rcu()) which frees `stt`.
 
-[   83.964255] UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:364:4
-[   83.964258] index 0 is out of range for type 'struct ieee80211_channel *[]'
-[...]
-[   83.964264] Call Trace:
-[   83.964267]  <TASK>
-[   83.964269]  dump_stack_lvl+0x3f/0xc0
-[   83.964274]  __ubsan_handle_out_of_bounds+0xec/0x110
-[   83.964278]  ieee80211_prep_hw_scan+0x2db/0x4b0
-[   83.964281]  __ieee80211_start_scan+0x601/0x990
-[   83.964291]  nl80211_trigger_scan+0x874/0x980
-[   83.964295]  genl_family_rcv_msg_doit+0xe8/0x160
-[   83.964298]  genl_rcv_msg+0x240/0x270
-[...]
+Although there are calls to rcu_read_lock() in
+kvm_spapr_tce_attach_iommu_group() they are not sufficient to prevent
+the UAF, because `stt` is used outside the locked regions.
 
-[1] https://bugzilla.kernel.org/show_bug.cgi?id=218810
+With an artifcial delay after the fdput() and a userspace program which
+triggers the race, KASAN detects the UAF:
 
-Co-authored-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Kenton Groombridge <concord@gentoo.org>
-Link: https://msgid.link/20240605152218.236061-1-concord@gentoo.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  BUG: KASAN: slab-use-after-free in kvm_spapr_tce_attach_iommu_group+0x298/0x720 [kvm]
+  Read of size 4 at addr c000200027552c30 by task kvm-vfio/2505
+  CPU: 54 PID: 2505 Comm: kvm-vfio Not tainted 6.10.0-rc3-next-20240612-dirty #1
+  Hardware name: 8335-GTH POWER9 0x4e1202 opal:skiboot-v6.5.3-35-g1851b2a06 PowerNV
+  Call Trace:
+    dump_stack_lvl+0xb4/0x108 (unreliable)
+    print_report+0x2b4/0x6ec
+    kasan_report+0x118/0x2b0
+    __asan_load4+0xb8/0xd0
+    kvm_spapr_tce_attach_iommu_group+0x298/0x720 [kvm]
+    kvm_vfio_set_attr+0x524/0xac0 [kvm]
+    kvm_device_ioctl+0x144/0x240 [kvm]
+    sys_ioctl+0x62c/0x1810
+    system_call_exception+0x190/0x440
+    system_call_vectored_common+0x15c/0x2ec
+  ...
+  Freed by task 0:
+   ...
+   kfree+0xec/0x3e0
+   release_spapr_tce_table+0xd4/0x11c [kvm]
+   rcu_core+0x568/0x16a0
+   handle_softirqs+0x23c/0x920
+   do_softirq_own_stack+0x6c/0x90
+   do_softirq_own_stack+0x58/0x90
+   __irq_exit_rcu+0x218/0x2d0
+   irq_exit+0x30/0x80
+   arch_local_irq_restore+0x128/0x230
+   arch_local_irq_enable+0x1c/0x30
+   cpuidle_enter_state+0x134/0x5cc
+   cpuidle_enter+0x6c/0xb0
+   call_cpuidle+0x7c/0x100
+   do_idle+0x394/0x410
+   cpu_startup_entry+0x60/0x70
+   start_secondary+0x3fc/0x410
+   start_secondary_prolog+0x10/0x14
+
+Fix it by delaying the fdput() until `stt` is no longer in use, which
+is effectively the entire function. To keep the patch minimal add a call
+to fdput() at each of the existing return paths. Future work can convert
+the function to goto or __cleanup style cleanup.
+
+With the fix in place the test case no longer triggers the UAF.
+
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Closes: https://lore.kernel.org/all/20240610024437.GA1464458@ZenIV/
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240614122910.3499489-1-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/scan.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/powerpc/kvm/book3s_64_vio.c | 18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 8ecc4b710b0e6..b5f2df61c7f67 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -358,7 +358,8 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_sub_if_data *sdata)
- 	struct cfg80211_scan_request *req;
- 	struct cfg80211_chan_def chandef;
- 	u8 bands_used = 0;
--	int i, ielen, n_chans;
-+	int i, ielen;
-+	u32 *n_chans;
- 	u32 flags = 0;
+diff --git a/arch/powerpc/kvm/book3s_64_vio.c b/arch/powerpc/kvm/book3s_64_vio.c
+index b569ebaa590e2..3ff3de9a52acf 100644
+--- a/arch/powerpc/kvm/book3s_64_vio.c
++++ b/arch/powerpc/kvm/book3s_64_vio.c
+@@ -130,14 +130,16 @@ long kvm_spapr_tce_attach_iommu_group(struct kvm *kvm, int tablefd,
+ 	}
+ 	rcu_read_unlock();
  
- 	req = rcu_dereference_protected(local->scan_req,
-@@ -368,34 +369,34 @@ static bool ieee80211_prep_hw_scan(struct ieee80211_sub_if_data *sdata)
- 		return false;
- 
- 	if (ieee80211_hw_check(&local->hw, SINGLE_SCAN_ON_ALL_BANDS)) {
-+		local->hw_scan_req->req.n_channels = req->n_channels;
-+
- 		for (i = 0; i < req->n_channels; i++) {
- 			local->hw_scan_req->req.channels[i] = req->channels[i];
- 			bands_used |= BIT(req->channels[i]->band);
- 		}
+-	fdput(f);
 -
--		n_chans = req->n_channels;
- 	} else {
- 		do {
- 			if (local->hw_scan_band == NUM_NL80211_BANDS)
- 				return false;
+-	if (!found)
++	if (!found) {
++		fdput(f);
+ 		return -EINVAL;
++	}
  
--			n_chans = 0;
-+			n_chans = &local->hw_scan_req->req.n_channels;
-+			*n_chans = 0;
+ 	table_group = iommu_group_get_iommudata(grp);
+-	if (WARN_ON(!table_group))
++	if (WARN_ON(!table_group)) {
++		fdput(f);
+ 		return -EFAULT;
++	}
  
- 			for (i = 0; i < req->n_channels; i++) {
- 				if (req->channels[i]->band !=
- 				    local->hw_scan_band)
- 					continue;
--				local->hw_scan_req->req.channels[n_chans] =
-+				local->hw_scan_req->req.channels[(*n_chans)++] =
- 							req->channels[i];
--				n_chans++;
-+
- 				bands_used |= BIT(req->channels[i]->band);
- 			}
+ 	for (i = 0; i < IOMMU_TABLE_GROUP_MAX_TABLES; ++i) {
+ 		struct iommu_table *tbltmp = table_group->tables[i];
+@@ -158,8 +160,10 @@ long kvm_spapr_tce_attach_iommu_group(struct kvm *kvm, int tablefd,
+ 			break;
+ 		}
+ 	}
+-	if (!tbl)
++	if (!tbl) {
++		fdput(f);
+ 		return -EINVAL;
++	}
  
- 			local->hw_scan_band++;
--		} while (!n_chans);
-+		} while (!*n_chans);
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(stit, &stt->iommu_tables, next) {
+@@ -170,6 +174,7 @@ long kvm_spapr_tce_attach_iommu_group(struct kvm *kvm, int tablefd,
+ 			/* stit is being destroyed */
+ 			iommu_tce_table_put(tbl);
+ 			rcu_read_unlock();
++			fdput(f);
+ 			return -ENOTTY;
+ 		}
+ 		/*
+@@ -177,6 +182,7 @@ long kvm_spapr_tce_attach_iommu_group(struct kvm *kvm, int tablefd,
+ 		 * its KVM reference counter and can return.
+ 		 */
+ 		rcu_read_unlock();
++		fdput(f);
+ 		return 0;
+ 	}
+ 	rcu_read_unlock();
+@@ -184,6 +190,7 @@ long kvm_spapr_tce_attach_iommu_group(struct kvm *kvm, int tablefd,
+ 	stit = kzalloc(sizeof(*stit), GFP_KERNEL);
+ 	if (!stit) {
+ 		iommu_tce_table_put(tbl);
++		fdput(f);
+ 		return -ENOMEM;
  	}
  
--	local->hw_scan_req->req.n_channels = n_chans;
- 	ieee80211_prepare_scan_chandef(&chandef);
+@@ -192,6 +199,7 @@ long kvm_spapr_tce_attach_iommu_group(struct kvm *kvm, int tablefd,
  
- 	if (req->flags & NL80211_SCAN_FLAG_MIN_PREQ_CONTENT)
+ 	list_add_rcu(&stit->next, &stt->iommu_tables);
+ 
++	fdput(f);
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
