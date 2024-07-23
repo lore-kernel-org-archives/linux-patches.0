@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29DCD13D896;
-	Tue, 23 Jul 2024 18:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E4413D896;
+	Tue, 23 Jul 2024 18:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760193; cv=none; b=HiQ8lA/XzgeDN6pV2QlJXr/OZqN0EE2v31hvgaLAXxUWtQXqi7DdEqYF0DHtlETsKwkdzgdXBTBmDEfNfjDtpvii06Q0cLxaJ/5VweKGD+U/dJul+yw5WNHjiDYVAOMZhJng68DXlAAeE+QhANDrGspT7rhQah1GysvLtL3/8NI=
+	t=1721760196; cv=none; b=WS3hat77uvZNqgmnjGbZU4bzZJBYUW/Sr7Q/Usyzwz3GJO+ob734eKsKDsrVt9iV6iNFM76IkibPS4xEh6sGu5YrqcJ4SEYGMQHk19xQLSM3L8y3zmyA0DHyZmJ4g5JYEcf838ldL3eFpytLLJIbApPSWKce6XyOYqczq8IulZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760193; c=relaxed/simple;
-	bh=pjOxc/NVReVhSpcR+DEYvzMm5HhR4N4IfoIyPS9hpDM=;
+	s=arc-20240116; t=1721760196; c=relaxed/simple;
+	bh=sfgfsRoZQdlg8PfNf4kWI+hFnu+70kgZtzqJd5uyL0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OsiIwie6j40uBEVUkfsJ2VR2OBXDCrufeYRcELTzbj+0XDLrMep3YGvK7Mzh/g2dHGacskQvNVDWqDEzWsKgg//7hJjK6xLtRjbJjvKk5tVhjqp5E1/mZfcV3HcnOz2CErUfS8sgvWE2PXwLD4UdA6eKR9TCbhT/Nwc/yn1L0mc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mfh3Z6rF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R1e1H3LKmoJxpiDdgEFaibudrDi6WgX707Ee8f6VqE0s8H9i4zH+ARU2we++v1LVseDDln4FppW0b6p+lBVCIRwR+5o5zuIPITZ0LoXgLzwc7/1rv7rWB5BnMOI514OoqpRZIt0lgPl8Fi3C4uLYUiK1iJ0drLCyc+Qlu/F6x5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1I6OBXls; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mfh3Z6rF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DF6C4AF09;
-	Tue, 23 Jul 2024 18:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1I6OBXls"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90A50C4AF09;
+	Tue, 23 Jul 2024 18:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760193;
-	bh=pjOxc/NVReVhSpcR+DEYvzMm5HhR4N4IfoIyPS9hpDM=;
+	s=korg; t=1721760196;
+	bh=sfgfsRoZQdlg8PfNf4kWI+hFnu+70kgZtzqJd5uyL0k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mfh3Z6rF8uVG4+r/s7kFROEbbuX/2dew16ZRRl9/XrvJCILEXPbaoaTkw+oqiJZpZ
-	 npRS+HNjb1hoj4fMsAapy7waCUGKKddTi/6q7C9wb94112/i1SgXzL1hBY4A/IlTLV
-	 qvNpQCtCp2MWxQC1u5eYzWOXT5jmFjc3kS/I+n5E=
+	b=1I6OBXlsyXQUbzxWD6LUJNFGAzZwhnQv01t4CU+NcyqEh3S5eopmqKIq57p1nhsuh
+	 /2oyzmOnSBzdCwieLsKpNafPbbRnwc/OrQLRQCj+n0/NZjve3RjTUCN4mgFHmuhltM
+	 qK1Z+gLggrVRDDxucMCi2qitcV04SuuQde+sPx9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 132/163] erofs: ensure m_llen is reset to 0 if metadata is invalid
-Date: Tue, 23 Jul 2024 20:24:21 +0200
-Message-ID: <20240723180148.574205243@linuxfoundation.org>
+Subject: [PATCH 6.9 104/163] can: kvaser_usb: fix return value for hif_usb_send_regout
+Date: Tue, 23 Jul 2024 20:23:53 +0200
+Message-ID: <20240723180147.493796171@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -50,42 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 9b32b063be1001e322c5f6e01f2a649636947851 ]
+[ Upstream commit 0d34d8163fd87978a6abd792e2d8ad849f4c3d57 ]
 
-Sometimes, the on-disk metadata might be invalid due to user
-interrupts, storage failures, or other unknown causes.
+As the potential failure of usb_submit_urb(), it should be better to
+return the err variable to catch the error.
 
-In that case, z_erofs_map_blocks_iter() may still return a valid
-m_llen while other fields remain invalid (e.g., m_plen can be 0).
-
-Due to the return value of z_erofs_scan_folio() in some path will
-be ignored on purpose, the following z_erofs_scan_folio() could
-then use the invalid value by accident.
-
-Let's reset m_llen to 0 to prevent this.
-
-Link: https://lore.kernel.org/r/20240629185743.2819229-1-hsiangkao@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://lore.kernel.org/all/20240521041020.1519416-1-nichen@iscas.ac.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index e313c936351d5..6bd435a565f61 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -723,6 +723,8 @@ int z_erofs_map_blocks_iter(struct inode *inode, struct erofs_map_blocks *map,
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+index ffc3e93292501..024169461cad0 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -295,7 +295,7 @@ int kvaser_usb_send_cmd_async(struct kvaser_usb_net_priv *priv, void *cmd,
+ 	}
+ 	usb_free_urb(urb);
  
- 	err = z_erofs_do_map_blocks(inode, map, flags);
- out:
-+	if (err)
-+		map->m_llen = 0;
- 	trace_z_erofs_map_blocks_iter_exit(inode, map, flags, err);
- 	return err;
+-	return 0;
++	return err;
  }
+ 
+ int kvaser_usb_can_rx_over_error(struct net_device *netdev)
 -- 
 2.43.0
 
