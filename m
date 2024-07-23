@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1959F1586F5;
-	Tue, 23 Jul 2024 18:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC78158215;
+	Tue, 23 Jul 2024 18:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760045; cv=none; b=i2WVDQqg2glP7atX4zeaVhrTlP3kSfcf25uUhIsczTqzQbtuMs9t4lESdfADQLne+yU1fA9xR1ivPqkS21YSrpeTFVqovo1V3CN4HcjAs1t4GJ3KzqImS5wMkZMW0vpJdinKa9Qhxy9s0/fhn+4z2+CLrBIVvW1m8hRpTmAj/kM=
+	t=1721760048; cv=none; b=jetrAYf6/VDnNSr2ivpp1r2CcpM1hZeqSoBljDwOP2/eFRHSh1d24wovfeyycCkw8jb3lEQCfNvSINj9lwG2v2UZoSUiPUyK4tkfll7z7V8MSUyBq0kMHNHwDl8ecc9YH86p9cGA5DhtC/Bcw4HYqfdP0iU/CA5bw3DlZ7aAGDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760045; c=relaxed/simple;
-	bh=2OytDb9C/NdJYAN70oxhXQkdCEPCCX7CDaz3XYLCY9E=;
+	s=arc-20240116; t=1721760048; c=relaxed/simple;
+	bh=87cDHmn0GemGl2ZjheRAE3D6EtsXCerFkoXfCVd1qPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B8VMSk9RnyV5iTaaEkHAbFxQYS1qWBz4lRE7J5v4tgMjSqQICh0IvMcNZB6UH5RlYRBIV0gdy7x7rs3/PTQ8nCJZVH0L9TIHw5A7vYd+i7PgQIPRpAfdYhNK4OTt9Pls+LedUFwPJnq8cwFsIKC2iXryJ4NN0wlMjp7eEZmtlcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0MIRubM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jhpkun3V30tvHoj9LR3QczR34Etd7Qt17GoSO/m0Yt3J2qbyPHORzsCqbWsfGFpdJP3sXgCvn46QhXgfuW7F24NTFw8xH8tfH3jdmraWSJ6sznh5Tw4Q95ngGU1ot9+jwXTBRIRkXvGv0LAWHlzOG5E4yF/qyF6DdHfQLxaGuVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYM2+qeV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0MIRubM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C49C4AF09;
-	Tue, 23 Jul 2024 18:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYM2+qeV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AF7FC4AF0A;
+	Tue, 23 Jul 2024 18:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760045;
-	bh=2OytDb9C/NdJYAN70oxhXQkdCEPCCX7CDaz3XYLCY9E=;
+	s=korg; t=1721760047;
+	bh=87cDHmn0GemGl2ZjheRAE3D6EtsXCerFkoXfCVd1qPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0MIRubMBT6lmRZqTxnb4YQRvurcmhAibxaLbPXwlxxFiVOhxfFx5WfSzYMe/ffbQ
-	 5u/j/n47DGzErjQ0J78vM+9KII0ffG132E3TF4ZKBrtpvYpA4w5YLDERmLfaEHuEQn
-	 kZsqxTxp3jyJIBuDCdXzABG5PGWX8igAneb+dcy8=
+	b=LYM2+qeVwGRbqe62TS7JUtcuxuNv0Q3PhP3Sb8GiwwyjnQDacBIP1/hUYlJEF4Rgv
+	 gH/Ov93QU3IfQ1EbzbvljpFaOWRxhhyQ9IrUVkZCGPYLYYUC3Tcit6cUBgdkoLyQOq
+	 UPgEl742n+ThqbFpmtsmFg3ItblS1LzEvKWJhkyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 085/163] closures: Change BUG_ON() to WARN_ON()
-Date: Tue, 23 Jul 2024 20:23:34 +0200
-Message-ID: <20240723180146.760360830@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Jan Engelhardt <jengelh@inai.de>
+Subject: [PATCH 6.9 086/163] workqueue: Refactor worker ID formatting and make wq_worker_comm() use full ID string
+Date: Tue, 23 Jul 2024 20:23:35 +0200
+Message-ID: <20240723180146.799051237@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -50,93 +52,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kent Overstreet <kent.overstreet@linux.dev>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 339b84ab6b1d66900c27bd999271cb2ae40ce812 ]
+[ Upstream commit 2a1b02bcba78f8498ab00d6142e1238d85b01591 ]
 
-If a BUG_ON() can be hit in the wild, it shouldn't be a BUG_ON()
+Currently, worker ID formatting is open coded in create_worker(),
+init_rescuer() and worker_thread() (for %WORKER_DIE case). The formatted ID
+is saved into task->comm and wq_worker_comm() uses it as the base name to
+append extra information to when generating the name to be shown to
+userspace.
 
-For reference, this has popped up once in the CI, and we'll need more
-info to debug it:
+However, TASK_COMM_LEN is only 16 leading to badly truncated names for
+rescuers. For example, the rescuer for the inet_frag_wq workqueue becomes:
 
-03240 ------------[ cut here ]------------
-03240 kernel BUG at lib/closure.c:21!
-03240 kernel BUG at lib/closure.c:21!
-03240 Internal error: Oops - BUG: 00000000f2000800 [#1] SMP
-03240 Modules linked in:
-03240 CPU: 15 PID: 40534 Comm: kworker/u80:1 Not tainted 6.10.0-rc4-ktest-ga56da69799bd #25570
-03240 Hardware name: linux,dummy-virt (DT)
-03240 Workqueue: btree_update btree_interior_update_work
-03240 pstate: 00001005 (nzcv daif -PAN -UAO -TCO -DIT +SSBS BTYPE=--)
-03240 pc : closure_put+0x224/0x2a0
-03240 lr : closure_put+0x24/0x2a0
-03240 sp : ffff0000d12071c0
-03240 x29: ffff0000d12071c0 x28: dfff800000000000 x27: ffff0000d1207360
-03240 x26: 0000000000000040 x25: 0000000000000040 x24: 0000000000000040
-03240 x23: ffff0000c1f20180 x22: 0000000000000000 x21: ffff0000c1f20168
-03240 x20: 0000000040000000 x19: ffff0000c1f20140 x18: 0000000000000001
-03240 x17: 0000000000003aa0 x16: 0000000000003ad0 x15: 1fffe0001c326974
-03240 x14: 0000000000000a1e x13: 0000000000000000 x12: 1fffe000183e402d
-03240 x11: ffff6000183e402d x10: dfff800000000000 x9 : ffff6000183e402e
-03240 x8 : 0000000000000001 x7 : 00009fffe7c1bfd3 x6 : ffff0000c1f2016b
-03240 x5 : ffff0000c1f20168 x4 : ffff6000183e402e x3 : ffff800081391954
-03240 x2 : 0000000000000001 x1 : 0000000000000000 x0 : 00000000a8000000
-03240 Call trace:
-03240  closure_put+0x224/0x2a0
-03240  bch2_check_for_deadlock+0x910/0x1028
-03240  bch2_six_check_for_deadlock+0x1c/0x30
-03240  six_lock_slowpath.isra.0+0x29c/0xed0
-03240  six_lock_ip_waiter+0xa8/0xf8
-03240  __bch2_btree_node_lock_write+0x14c/0x298
-03240  bch2_trans_lock_write+0x6d4/0xb10
-03240  __bch2_trans_commit+0x135c/0x5520
-03240  btree_interior_update_work+0x1248/0x1c10
-03240  process_scheduled_works+0x53c/0xd90
-03240  worker_thread+0x370/0x8c8
-03240  kthread+0x258/0x2e8
-03240  ret_from_fork+0x10/0x20
-03240 Code: aa1303e0 d63f0020 a94363f7 17ffff8c (d4210000)
-03240 ---[ end trace 0000000000000000 ]---
-03240 Kernel panic - not syncing: Oops - BUG: Fatal exception
-03240 SMP: stopping secondary CPUs
-03241 SMP: failed to stop secondary CPUs 13,15
-03241 Kernel Offset: disabled
-03241 CPU features: 0x00,00000003,80000008,4240500b
-03241 Memory Limit: none
-03241 ---[ end Kernel panic - not syncing: Oops - BUG: Fatal exception ]---
-03246 ========= FAILED TIMEOUT copygc_torture_no_checksum in 7200s
+  $ ps -ef | grep '[k]worker/R-inet'
+  root         483       2  0 Apr26 ?        00:00:00 [kworker/R-inet_]
 
-Signed-off-by: Kent Overstreet <kent.overstreet@linux.dev>
+Even for non-rescue workers, it's easy to run over 15 characters on
+moderately large machines.
+
+Fit it by consolidating worker ID formatting into a new helper
+format_worker_id() and calling it from wq_worker_comm() to obtain the
+untruncated worker ID string.
+
+  $ ps -ef | grep '[k]worker/R-inet'
+  root          60       2  0 12:10 ?        00:00:00 [kworker/R-inet_frag_wq]
+
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-and-tested-by: Jan Engelhardt <jengelh@inai.de>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/closure.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/workqueue.c | 51 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 34 insertions(+), 17 deletions(-)
 
-diff --git a/lib/closure.c b/lib/closure.c
-index c16540552d61b..99380d9b4aa94 100644
---- a/lib/closure.c
-+++ b/lib/closure.c
-@@ -17,12 +17,18 @@ static inline void closure_put_after_sub(struct closure *cl, int flags)
- {
- 	int r = flags & CLOSURE_REMAINING_MASK;
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index d2dbe099286b9..7634fc32ee05a 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -124,6 +124,7 @@ enum wq_internal_consts {
+ 	HIGHPRI_NICE_LEVEL	= MIN_NICE,
  
--	BUG_ON(flags & CLOSURE_GUARD_MASK);
--	BUG_ON(!r && (flags & ~CLOSURE_DESTRUCTOR));
-+	if (WARN(flags & CLOSURE_GUARD_MASK,
-+		 "closure has guard bits set: %x (%u)",
-+		 flags & CLOSURE_GUARD_MASK, (unsigned) __fls(r)))
-+		r &= ~CLOSURE_GUARD_MASK;
+ 	WQ_NAME_LEN		= 32,
++	WORKER_ID_LEN		= 10 + WQ_NAME_LEN, /* "kworker/R-" + WQ_NAME_LEN */
+ };
  
- 	if (!r) {
- 		smp_acquire__after_ctrl_dep();
+ /*
+@@ -2778,6 +2779,26 @@ static void worker_detach_from_pool(struct worker *worker)
+ 		complete(detach_completion);
+ }
  
-+		WARN(flags & ~CLOSURE_DESTRUCTOR,
-+		     "closure ref hit 0 with incorrect flags set: %x (%u)",
-+		     flags & ~CLOSURE_DESTRUCTOR, (unsigned) __fls(flags));
++static int format_worker_id(char *buf, size_t size, struct worker *worker,
++			    struct worker_pool *pool)
++{
++	if (worker->rescue_wq)
++		return scnprintf(buf, size, "kworker/R-%s",
++				 worker->rescue_wq->name);
 +
- 		cl->closure_get_happened = false;
++	if (pool) {
++		if (pool->cpu >= 0)
++			return scnprintf(buf, size, "kworker/%d:%d%s",
++					 pool->cpu, worker->id,
++					 pool->attrs->nice < 0  ? "H" : "");
++		else
++			return scnprintf(buf, size, "kworker/u%d:%d",
++					 pool->id, worker->id);
++	} else {
++		return scnprintf(buf, size, "kworker/dying");
++	}
++}
++
+ /**
+  * create_worker - create a new workqueue worker
+  * @pool: pool the new worker will belong to
+@@ -2794,7 +2815,6 @@ static struct worker *create_worker(struct worker_pool *pool)
+ {
+ 	struct worker *worker;
+ 	int id;
+-	char id_buf[23];
  
- 		if (cl->fn && !(flags & CLOSURE_DESTRUCTOR)) {
+ 	/* ID is needed to determine kthread name */
+ 	id = ida_alloc(&pool->worker_ida, GFP_KERNEL);
+@@ -2813,17 +2833,14 @@ static struct worker *create_worker(struct worker_pool *pool)
+ 	worker->id = id;
+ 
+ 	if (!(pool->flags & POOL_BH)) {
+-		if (pool->cpu >= 0)
+-			snprintf(id_buf, sizeof(id_buf), "%d:%d%s", pool->cpu, id,
+-				 pool->attrs->nice < 0  ? "H" : "");
+-		else
+-			snprintf(id_buf, sizeof(id_buf), "u%d:%d", pool->id, id);
++		char id_buf[WORKER_ID_LEN];
+ 
++		format_worker_id(id_buf, sizeof(id_buf), worker, pool);
+ 		worker->task = kthread_create_on_node(worker_thread, worker,
+-					pool->node, "kworker/%s", id_buf);
++						      pool->node, "%s", id_buf);
+ 		if (IS_ERR(worker->task)) {
+ 			if (PTR_ERR(worker->task) == -EINTR) {
+-				pr_err("workqueue: Interrupted when creating a worker thread \"kworker/%s\"\n",
++				pr_err("workqueue: Interrupted when creating a worker thread \"%s\"\n",
+ 				       id_buf);
+ 			} else {
+ 				pr_err_once("workqueue: Failed to create a worker thread: %pe",
+@@ -3386,7 +3403,6 @@ static int worker_thread(void *__worker)
+ 		raw_spin_unlock_irq(&pool->lock);
+ 		set_pf_worker(false);
+ 
+-		set_task_comm(worker->task, "kworker/dying");
+ 		ida_free(&pool->worker_ida, worker->id);
+ 		worker_detach_from_pool(worker);
+ 		WARN_ON_ONCE(!list_empty(&worker->entry));
+@@ -5430,6 +5446,7 @@ static int wq_clamp_max_active(int max_active, unsigned int flags,
+ static int init_rescuer(struct workqueue_struct *wq)
+ {
+ 	struct worker *rescuer;
++	char id_buf[WORKER_ID_LEN];
+ 	int ret;
+ 
+ 	if (!(wq->flags & WQ_MEM_RECLAIM))
+@@ -5443,7 +5460,9 @@ static int init_rescuer(struct workqueue_struct *wq)
+ 	}
+ 
+ 	rescuer->rescue_wq = wq;
+-	rescuer->task = kthread_create(rescuer_thread, rescuer, "kworker/R-%s", wq->name);
++	format_worker_id(id_buf, sizeof(id_buf), rescuer, NULL);
++
++	rescuer->task = kthread_create(rescuer_thread, rescuer, "%s", id_buf);
+ 	if (IS_ERR(rescuer->task)) {
+ 		ret = PTR_ERR(rescuer->task);
+ 		pr_err("workqueue: Failed to create a rescuer kthread for wq \"%s\": %pe",
+@@ -6272,19 +6291,15 @@ void show_freezable_workqueues(void)
+ /* used to show worker information through /proc/PID/{comm,stat,status} */
+ void wq_worker_comm(char *buf, size_t size, struct task_struct *task)
+ {
+-	int off;
+-
+-	/* always show the actual comm */
+-	off = strscpy(buf, task->comm, size);
+-	if (off < 0)
+-		return;
+-
+ 	/* stabilize PF_WQ_WORKER and worker pool association */
+ 	mutex_lock(&wq_pool_attach_mutex);
+ 
+ 	if (task->flags & PF_WQ_WORKER) {
+ 		struct worker *worker = kthread_data(task);
+ 		struct worker_pool *pool = worker->pool;
++		int off;
++
++		off = format_worker_id(buf, size, worker, pool);
+ 
+ 		if (pool) {
+ 			raw_spin_lock_irq(&pool->lock);
+@@ -6303,6 +6318,8 @@ void wq_worker_comm(char *buf, size_t size, struct task_struct *task)
+ 			}
+ 			raw_spin_unlock_irq(&pool->lock);
+ 		}
++	} else {
++		strscpy(buf, task->comm, size);
+ 	}
+ 
+ 	mutex_unlock(&wq_pool_attach_mutex);
 -- 
 2.43.0
 
