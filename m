@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A9915884E;
-	Tue, 23 Jul 2024 18:44:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D231581F4;
+	Tue, 23 Jul 2024 18:44:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760246; cv=none; b=MO8hEfVQ0NyonmQNfgSPa8lSHn3VRM+7WbFDd7V/wY7Ric2Szrt9vhO5aKMMPIN6XjnWVDphAXBVphnyX+jvb4w47CdGt62zDVm4LeyN7Yd1fQ9d0A8GyeH9L06QVLy8Du7bWJbMBUn61Sdm2Cc9fR0EjPIdJcNTcOxYq6GclP8=
+	t=1721760249; cv=none; b=TC6YVVMF7k6Ug3erBC+oKDqPZ4Yv1qju5TLfSDUvylpi/z1sBSMVqO/sQENSJI4UFd54lEQMTWAERSI+xTEmi6RUFQcwTPwUFF04VgH0ZNjYlOnDJO4IQUQdTyaw9BSX6lwd3mBVVEZHxdfNae4boQnWTDTVxdtavbTgX6WW/70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760246; c=relaxed/simple;
-	bh=ATC2w5OPHN2rgs9QIptE2loHYNhxGWzOAuZk/6h/4Lg=;
+	s=arc-20240116; t=1721760249; c=relaxed/simple;
+	bh=Ab/ckbKXdoHHO96ikXxjtDgzYym3UU7Q+Mmj4oed5aY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N4HLdWJP9uqMaybzm2BwfuXmjHqr0gq4ZrHW1RysJjg/zdcnNHtBIkhAfI91IajDgxEQcCpL6zbHsodMRf49lWuuXuEQT1HLDh7GRDAxJeN069fiERhtlvU7LqaftYFnfjTWiG4JQ/WIiJhCrWoizuN8SShDg0ikoWKm/UtZPwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rb9nrsmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ocus+khZa5OxkQU9LTad/9xKQHXw98QDWShFYbE84hwsgy+U9rdS9FjlLl8+xQOflLXiZ2NLZwktcxLPlNbS1UHlDCVzOUsbaSUoErJjedyrUgNW4EGrflUJ4cn1Mj+crzMmcvUtTz7fN2Xaes0ljZkZ5UlITj8m/T6N6g2uYEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q3wa5Nbu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rb9nrsmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B234AC4AF0A;
-	Tue, 23 Jul 2024 18:44:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q3wa5Nbu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD86DC4AF09;
+	Tue, 23 Jul 2024 18:44:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760246;
-	bh=ATC2w5OPHN2rgs9QIptE2loHYNhxGWzOAuZk/6h/4Lg=;
+	s=korg; t=1721760249;
+	bh=Ab/ckbKXdoHHO96ikXxjtDgzYym3UU7Q+Mmj4oed5aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rb9nrsmY07KTEB4gNx1mkbvKh7DQU0fpM/9mLYyPaaFRggx/ChA7P4kHgNwm6+3bO
-	 ATwfsPYtPCun5HJhP3KJ3LDL15yFNHaQ5LKAGCry08kt6axO+sNmwGff0G2L4IMjQz
-	 0zD55DU43rBtq4iindjVdDufP+2cGbSeLVmrrVgI=
+	b=q3wa5Nbufygem8/nFNPTRMs17kfVwIqlyoK/EWk+KRqDlHtQB70aIx0IRrthk94d1
+	 in0NWAb3xQju2XHBJf7H92xoS+FhmuDnj4+1MPTnVyqRW6FckBkii9X6C6MM92PRCC
+	 CrgnHld5pjWDxQfGSPrHPRD8VvgpCt2EccCsEtnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Lechner <dlechner@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	Sun peng Li <sunpeng.li@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 152/163] spi: mux: set ctlr->bits_per_word_mask
-Date: Tue, 23 Jul 2024 20:24:41 +0200
-Message-ID: <20240723180149.342933642@linuxfoundation.org>
+Subject: [PATCH 6.9 135/163] drm/amd/display: Fix refresh rate range for some panel
+Date: Tue, 23 Jul 2024 20:24:24 +0200
+Message-ID: <20240723180148.689822587@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,34 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Tom Chung <chiahsuan.chung@amd.com>
 
-[ Upstream commit c8bd922d924bb4ab6c6c488310157d1a27996f31 ]
+[ Upstream commit 9ef1548aeaa8858e7aee2152bf95cc71cdcd6dff ]
 
-Like other SPI controller flags, bits_per_word_mask may be used by a
-peripheral driver, so it needs to reflect the capabilities of the
-underlying controller.
+[Why]
+Some of the panels does not have the refresh rate range info
+in base EDID and only have the refresh rate range info in
+DisplayID block.
+It will cause the max/min freesync refresh rate set to 0.
 
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20240708-spi-mux-fix-v1-3-6c8845193128@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+[How]
+Try to parse the refresh rate range info from DisplayID if the
+max/min refresh rate is 0.
+
+Reviewed-by: Sun peng Li <sunpeng.li@amd.com>
+Signed-off-by: Jerry Zuo <jerry.zuo@amd.com>
+Signed-off-by: Tom Chung <chiahsuan.chung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-mux.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/drivers/spi/spi-mux.c b/drivers/spi/spi-mux.c
-index 031b5795d1060..a8bb07b38ec64 100644
---- a/drivers/spi/spi-mux.c
-+++ b/drivers/spi/spi-mux.c
-@@ -156,6 +156,7 @@ static int spi_mux_probe(struct spi_device *spi)
- 	/* supported modes are the same as our parent's */
- 	ctlr->mode_bits = spi->controller->mode_bits;
- 	ctlr->flags = spi->controller->flags;
-+	ctlr->bits_per_word_mask = spi->controller->bits_per_word_mask;
- 	ctlr->transfer_one_message = spi_mux_transfer_one_message;
- 	ctlr->setup = spi_mux_setup;
- 	ctlr->num_chipselect = mux_control_states(priv->mux);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 087d7aad8e6b4..c29d271579ad3 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -11161,6 +11161,49 @@ static bool parse_edid_cea(struct amdgpu_dm_connector *aconnector,
+ 	return ret;
+ }
+ 
++static void parse_edid_displayid_vrr(struct drm_connector *connector,
++		struct edid *edid)
++{
++	u8 *edid_ext = NULL;
++	int i;
++	int j = 0;
++	u16 min_vfreq;
++	u16 max_vfreq;
++
++	if (edid == NULL || edid->extensions == 0)
++		return;
++
++	/* Find DisplayID extension */
++	for (i = 0; i < edid->extensions; i++) {
++		edid_ext = (void *)(edid + (i + 1));
++		if (edid_ext[0] == DISPLAYID_EXT)
++			break;
++	}
++
++	if (edid_ext == NULL)
++		return;
++
++	while (j < EDID_LENGTH) {
++		/* Get dynamic video timing range from DisplayID if available */
++		if (EDID_LENGTH - j > 13 && edid_ext[j] == 0x25	&&
++		    (edid_ext[j+1] & 0xFE) == 0 && (edid_ext[j+2] == 9)) {
++			min_vfreq = edid_ext[j+9];
++			if (edid_ext[j+1] & 7)
++				max_vfreq = edid_ext[j+10] + ((edid_ext[j+11] & 3) << 8);
++			else
++				max_vfreq = edid_ext[j+10];
++
++			if (max_vfreq && min_vfreq) {
++				connector->display_info.monitor_range.max_vfreq = max_vfreq;
++				connector->display_info.monitor_range.min_vfreq = min_vfreq;
++
++				return;
++			}
++		}
++		j++;
++	}
++}
++
+ static int parse_amd_vsdb(struct amdgpu_dm_connector *aconnector,
+ 			  struct edid *edid, struct amdgpu_hdmi_vsdb_info *vsdb_info)
+ {
+@@ -11282,6 +11325,11 @@ void amdgpu_dm_update_freesync_caps(struct drm_connector *connector,
+ 	if (!adev->dm.freesync_module)
+ 		goto update;
+ 
++	/* Some eDP panels only have the refresh rate range info in DisplayID */
++	if ((connector->display_info.monitor_range.min_vfreq == 0 ||
++	     connector->display_info.monitor_range.max_vfreq == 0))
++		parse_edid_displayid_vrr(connector, edid);
++
+ 	if (edid && (sink->sink_signal == SIGNAL_TYPE_DISPLAY_PORT ||
+ 		     sink->sink_signal == SIGNAL_TYPE_EDP)) {
+ 		bool edid_check_required = false;
 -- 
 2.43.0
 
