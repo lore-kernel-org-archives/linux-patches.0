@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56434381B1;
-	Tue, 23 Jul 2024 17:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A261581E4;
+	Tue, 23 Jul 2024 17:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721757278; cv=none; b=uAHqIVyuI0/7vvtDXnbHxjBSYGWswjNp+rwcX3TPMuAFmQDbpA81KXueW8G8aHi2fqTC+HzQfbYxF62DTZQcnbTKDCCy6Ov0wWy5vHNNsaAni3gwGz5r0zDHRGLEnfgaoU+LdFi86Y4NQ69krlxKkPF+R9cYvUE8i8oJh5Bh0x4=
+	t=1721757286; cv=none; b=f2bKvJkiOKr7zuxfPnPWk+Ge8//Zif4eovTG4m83CyGyUVPCQQhsDiiFGaVTLeKEOuTReXvSNFyGybET4DKDvVG85V2KA/rjIvSnCVeclU1XT/UdOYizoyDWgrn5rwP4S3Q+xmMsyXmS6aALoQOlEneYx8BWiV1V1oT+iZ9/c14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721757278; c=relaxed/simple;
-	bh=gjdvEsHmjw+motQxM6pnuw5JVUoyB+SZzUw3Pe7SY0c=;
+	s=arc-20240116; t=1721757286; c=relaxed/simple;
+	bh=f9RrNds/FXt1oPRVVwPc9r0U5k3Q7rqJ+lRky0lDcps=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=LKg+E7Ea0HqhYE+UOPuhvOdNRNz03HoK5ui6iINBhX+MFy10OEqT34iCuCGLVJO74I7dRpCE0yvKGDcFNIqqwAuuHgWpqHOzefC7cAPrgiX2Rl/oKIlmifpnzIodWc56zIpgALGzKCs0BUl/l+evBJECkvzMnMkpLNDGCgxiVJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bDrHD8F+; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=b8wm9WvbHOdZwEH/bITmAv7z0EWYgQwhcdZsvSrW3rgjO8iK0+FatxNq/7wj5VFjvSMNYObTManz/UjHly2F0c/XRyKTQoExIquq9ozCG1bAKUaLH3KaDEjRf8AyZyjR0vDiyotrns5X2El8+v5hg7+PKr0lJfBMjAZP0+WsWsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B/FTwShL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bDrHD8F+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9047FC4AF09;
-	Tue, 23 Jul 2024 17:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B/FTwShL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8ECC4AF09;
+	Tue, 23 Jul 2024 17:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721757277;
-	bh=gjdvEsHmjw+motQxM6pnuw5JVUoyB+SZzUw3Pe7SY0c=;
+	s=korg; t=1721757286;
+	bh=f9RrNds/FXt1oPRVVwPc9r0U5k3Q7rqJ+lRky0lDcps=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=bDrHD8F+UVxLMrV4xjK+kYnkbuPYDphs3Kzavxff9YtCySpl87x6SI70hJ18aTivV
-	 RwhpVLoyrFylrlA336fu9mksN8UnWFLedDKI537cMzoZYMsspn9XreUak7P3MnRWT/
-	 AyiWkszh+ntszhCGD91iNt8MQD6h0At+oG/or6b4=
-Subject: Patch "cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()" has been added to the 6.6-stable tree
-To: brauner@kernel.org,gregkh@linuxfoundation.org,houtao1@huawei.com,hsiangkao@linux.alibaba.com,libaokun1@huawei.com,libaokun@huaweicloud.com,patches@lists.linux.dev,sashal@kernel.org,yangerkun@huawei.com
+	b=B/FTwShLpTKrsRKGZZG4dnydi0xS3KgJusAKZ6m6iobTqcFtIVNjlIYl+HRSbfj2J
+	 t9ccN9gGDX5dmsk0lOd9GygvORqE/f28kuAdmiqQAeGQpoq06I+J90m6DcLTCXPnSJ
+	 uqHEgskjz+MxBARMokn3/HOshUXhHz6py7Rks2ns=
+Subject: Patch "cachefiles: fix slab-use-after-free in fscache_withdraw_volume()" has been added to the 6.6-stable tree
+To: brauner@kernel.org,gregkh@linuxfoundation.org,hsiangkao@linux.alibaba.com,libaokun1@huawei.com,libaokun@huaweicloud.com,patches@lists.linux.dev,sashal@kernel.org,yangerkun@huawei.com
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Tue, 23 Jul 2024 19:54:35 +0200
-In-Reply-To: <20240719134004.1584648-3-libaokun@huaweicloud.com>
-Message-ID: <2024072335-pang-ergonomic-36d5@gregkh>
+In-Reply-To: <20240719134004.1584648-2-libaokun@huaweicloud.com>
+Message-ID: <2024072335-viewpoint-vertebrae-9b7b@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,183 +44,190 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()
+    cachefiles: fix slab-use-after-free in fscache_withdraw_volume()
 
 to the 6.6-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     cachefiles-fix-slab-use-after-free-in-cachefiles_withdraw_cookie.patch
+     cachefiles-fix-slab-use-after-free-in-fscache_withdraw_volume.patch
 and it can be found in the queue-6.6 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-60609-greg=kroah.com@vger.kernel.org Fri Jul 19 15:43:34 2024
+From stable+bounces-60610-greg=kroah.com@vger.kernel.org Fri Jul 19 15:43:05 2024
 From: libaokun@huaweicloud.com
-Date: Fri, 19 Jul 2024 21:40:04 +0800
-Subject: cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()
+Date: Fri, 19 Jul 2024 21:40:03 +0800
+Subject: cachefiles: fix slab-use-after-free in fscache_withdraw_volume()
 To: stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, sashal@kernel.org, patches@lists.linux.dev, hsiangkao@linux.alibaba.com, yangerkun@huawei.com, libaokun1@huawei.com, Hou Tao <houtao1@huawei.com>, Christian Brauner <brauner@kernel.org>
-Message-ID: <20240719134004.1584648-3-libaokun@huaweicloud.com>
+Cc: gregkh@linuxfoundation.org, sashal@kernel.org, patches@lists.linux.dev, hsiangkao@linux.alibaba.com, yangerkun@huawei.com, libaokun1@huawei.com, Christian Brauner <brauner@kernel.org>
+Message-ID: <20240719134004.1584648-2-libaokun@huaweicloud.com>
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 5d8f805789072ea7fd39504694b7bd17e5f751c4 ]
+[ Upstream commit 522018a0de6b6fcce60c04f86dfc5f0e4b6a1b36 ]
 
 We got the following issue in our fault injection stress test:
 
 ==================================================================
-BUG: KASAN: slab-use-after-free in cachefiles_withdraw_cookie+0x4d9/0x600
-Read of size 8 at addr ffff888118efc000 by task kworker/u78:0/109
+BUG: KASAN: slab-use-after-free in fscache_withdraw_volume+0x2e1/0x370
+Read of size 4 at addr ffff88810680be08 by task ondemand-04-dae/5798
 
-CPU: 13 PID: 109 Comm: kworker/u78:0 Not tainted 6.8.0-dirty #566
+CPU: 0 PID: 5798 Comm: ondemand-04-dae Not tainted 6.8.0-dirty #565
 Call Trace:
- <TASK>
- kasan_report+0x93/0xc0
- cachefiles_withdraw_cookie+0x4d9/0x600
- fscache_cookie_state_machine+0x5c8/0x1230
- fscache_cookie_worker+0x91/0x1c0
- process_one_work+0x7fa/0x1800
- [...]
-
-Allocated by task 117:
- kmalloc_trace+0x1b3/0x3c0
- cachefiles_acquire_volume+0xf3/0x9c0
- fscache_create_volume_work+0x97/0x150
- process_one_work+0x7fa/0x1800
- [...]
-
-Freed by task 120301:
- kfree+0xf1/0x2c0
- cachefiles_withdraw_cache+0x3fa/0x920
+ kasan_check_range+0xf6/0x1b0
+ fscache_withdraw_volume+0x2e1/0x370
+ cachefiles_withdraw_volume+0x31/0x50
+ cachefiles_withdraw_cache+0x3ad/0x900
  cachefiles_put_unbind_pincount+0x1f6/0x250
  cachefiles_daemon_release+0x13b/0x290
  __fput+0x204/0xa00
  task_work_run+0x139/0x230
- do_exit+0x87a/0x29b0
+
+Allocated by task 5820:
+ __kmalloc+0x1df/0x4b0
+ fscache_alloc_volume+0x70/0x600
+ __fscache_acquire_volume+0x1c/0x610
+ erofs_fscache_register_volume+0x96/0x1a0
+ erofs_fscache_register_fs+0x49a/0x690
+ erofs_fc_fill_super+0x6c0/0xcc0
+ vfs_get_super+0xa9/0x140
+ vfs_get_tree+0x8e/0x300
+ do_new_mount+0x28c/0x580
+ [...]
+
+Freed by task 5820:
+ kfree+0xf1/0x2c0
+ fscache_put_volume.part.0+0x5cb/0x9e0
+ erofs_fscache_unregister_fs+0x157/0x1b0
+ erofs_kill_sb+0xd9/0x1c0
+ deactivate_locked_super+0xa3/0x100
+ vfs_get_super+0x105/0x140
+ vfs_get_tree+0x8e/0x300
+ do_new_mount+0x28c/0x580
  [...]
 ==================================================================
 
 Following is the process that triggers the issue:
 
-           p1                |             p2
+        mount failed         |         daemon exit
 ------------------------------------------------------------
-                              fscache_begin_lookup
-                               fscache_begin_volume_access
-                                fscache_cache_is_live(fscache_cache)
-cachefiles_daemon_release
- cachefiles_put_unbind_pincount
-  cachefiles_daemon_unbind
-   cachefiles_withdraw_cache
-    fscache_withdraw_cache
-     fscache_set_cache_state(cache, FSCACHE_CACHE_IS_WITHDRAWN);
-    cachefiles_withdraw_objects(cache)
-    fscache_wait_for_objects(fscache)
-      atomic_read(&fscache_cache->object_count) == 0
-                              fscache_perform_lookup
-                               cachefiles_lookup_cookie
-                                cachefiles_alloc_object
-                                 refcount_set(&object->ref, 1);
-                                 object->volume = volume
-                                 fscache_count_object(vcookie->cache);
-                                  atomic_inc(&fscache_cache->object_count)
-    cachefiles_withdraw_volumes
-     cachefiles_withdraw_volume
-      fscache_withdraw_volume
-      __cachefiles_free_volume
-       kfree(cachefiles_volume)
-                              fscache_cookie_state_machine
-                               cachefiles_withdraw_cookie
-                                cache = object->volume->cache;
-                                // cachefiles_volume UAF !!!
+ deactivate_locked_super        cachefiles_daemon_release
+  erofs_kill_sb
+   erofs_fscache_unregister_fs
+    fscache_relinquish_volume
+     __fscache_relinquish_volume
+      fscache_put_volume(fscache_volume, fscache_volume_put_relinquish)
+       zero = __refcount_dec_and_test(&fscache_volume->ref, &ref);
+                                 cachefiles_put_unbind_pincount
+                                  cachefiles_daemon_unbind
+                                   cachefiles_withdraw_cache
+                                    cachefiles_withdraw_volumes
+                                     list_del_init(&volume->cache_link)
+       fscache_free_volume(fscache_volume)
+        cache->ops->free_volume
+         cachefiles_free_volume
+          list_del_init(&cachefiles_volume->cache_link);
+        kfree(fscache_volume)
+                                     cachefiles_withdraw_volume
+                                      fscache_withdraw_volume
+                                       fscache_volume->n_accesses
+                                       // fscache_volume UAF !!!
 
-After setting FSCACHE_CACHE_IS_WITHDRAWN, wait for all the cookie lookups
-to complete first, and then wait for fscache_cache->object_count == 0 to
-avoid the cookie exiting after the volume has been freed and triggering
-the above issue. Therefore call fscache_withdraw_volume() before calling
-cachefiles_withdraw_objects().
+The fscache_volume in cache->volumes must not have been freed yet, but its
+reference count may be 0. So use the new fscache_try_get_volume() helper
+function try to get its reference count.
 
-This way, after setting FSCACHE_CACHE_IS_WITHDRAWN, only the following two
-cases will occur:
-1) fscache_begin_lookup fails in fscache_begin_volume_access().
-2) fscache_withdraw_volume() will ensure that fscache_count_object() has
-   been executed before calling fscache_wait_for_objects().
+If the reference count of fscache_volume is 0, fscache_put_volume() is
+freeing it, so wait for it to be removed from cache->volumes.
+
+If its reference count is not 0, call cachefiles_withdraw_volume() with
+reference count protection to avoid the above issue.
 
 Fixes: fe2140e2f57f ("cachefiles: Implement volume support")
-Suggested-by: Hou Tao <houtao1@huawei.com>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-4-libaokun@huaweicloud.com
+Link: https://lore.kernel.org/r/20240628062930.2467993-3-libaokun@huaweicloud.com
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cachefiles/cache.c  |   35 ++++++++++++++++++++++++++++++++++-
- fs/cachefiles/volume.c |    1 -
- 2 files changed, 34 insertions(+), 2 deletions(-)
+ fs/cachefiles/cache.c          |   10 ++++++++++
+ include/trace/events/fscache.h |    4 ++++
+ 2 files changed, 14 insertions(+)
 
 --- a/fs/cachefiles/cache.c
 +++ b/fs/cachefiles/cache.c
-@@ -313,7 +313,39 @@ static void cachefiles_withdraw_objects(
- }
+@@ -8,6 +8,7 @@
+ #include <linux/slab.h>
+ #include <linux/statfs.h>
+ #include <linux/namei.h>
++#include <trace/events/fscache.h>
+ #include "internal.h"
  
  /*
-- * Withdraw volumes.
-+ * Withdraw fscache volumes.
-+ */
-+static void cachefiles_withdraw_fscache_volumes(struct cachefiles_cache *cache)
-+{
-+	struct list_head *cur;
-+	struct cachefiles_volume *volume;
-+	struct fscache_volume *vcookie;
-+
-+	_enter("");
-+retry:
-+	spin_lock(&cache->object_list_lock);
-+	list_for_each(cur, &cache->volumes) {
-+		volume = list_entry(cur, struct cachefiles_volume, cache_link);
-+
-+		if (atomic_read(&volume->vcookie->n_accesses) == 0)
-+			continue;
-+
-+		vcookie = fscache_try_get_volume(volume->vcookie,
-+						 fscache_volume_get_withdraw);
-+		if (vcookie) {
-+			spin_unlock(&cache->object_list_lock);
-+			fscache_withdraw_volume(vcookie);
-+			fscache_put_volume(vcookie, fscache_volume_put_withdraw);
-+			goto retry;
-+		}
-+	}
-+	spin_unlock(&cache->object_list_lock);
-+
-+	_leave("");
-+}
-+
-+/*
-+ * Withdraw cachefiles volumes.
-  */
- static void cachefiles_withdraw_volumes(struct cachefiles_cache *cache)
- {
-@@ -381,6 +413,7 @@ void cachefiles_withdraw_cache(struct ca
- 	pr_info("File cache on %s unregistering\n", fscache->name);
+@@ -319,12 +320,20 @@ static void cachefiles_withdraw_volumes(
+ 	_enter("");
  
- 	fscache_withdraw_cache(fscache);
-+	cachefiles_withdraw_fscache_volumes(cache);
+ 	for (;;) {
++		struct fscache_volume *vcookie = NULL;
+ 		struct cachefiles_volume *volume = NULL;
  
- 	/* we now have to destroy all the active objects pertaining to this
- 	 * cache - which we do by passing them off to thread pool to be
---- a/fs/cachefiles/volume.c
-+++ b/fs/cachefiles/volume.c
-@@ -133,7 +133,6 @@ void cachefiles_free_volume(struct fscac
+ 		spin_lock(&cache->object_list_lock);
+ 		if (!list_empty(&cache->volumes)) {
+ 			volume = list_first_entry(&cache->volumes,
+ 						  struct cachefiles_volume, cache_link);
++			vcookie = fscache_try_get_volume(volume->vcookie,
++							 fscache_volume_get_withdraw);
++			if (!vcookie) {
++				spin_unlock(&cache->object_list_lock);
++				cpu_relax();
++				continue;
++			}
+ 			list_del_init(&volume->cache_link);
+ 		}
+ 		spin_unlock(&cache->object_list_lock);
+@@ -332,6 +341,7 @@ static void cachefiles_withdraw_volumes(
+ 			break;
  
- void cachefiles_withdraw_volume(struct cachefiles_volume *volume)
- {
--	fscache_withdraw_volume(volume->vcookie);
- 	cachefiles_set_volume_xattr(volume);
- 	__cachefiles_free_volume(volume);
- }
+ 		cachefiles_withdraw_volume(volume);
++		fscache_put_volume(vcookie, fscache_volume_put_withdraw);
+ 	}
+ 
+ 	_leave("");
+--- a/include/trace/events/fscache.h
++++ b/include/trace/events/fscache.h
+@@ -35,12 +35,14 @@ enum fscache_volume_trace {
+ 	fscache_volume_get_cookie,
+ 	fscache_volume_get_create_work,
+ 	fscache_volume_get_hash_collision,
++	fscache_volume_get_withdraw,
+ 	fscache_volume_free,
+ 	fscache_volume_new_acquire,
+ 	fscache_volume_put_cookie,
+ 	fscache_volume_put_create_work,
+ 	fscache_volume_put_hash_collision,
+ 	fscache_volume_put_relinquish,
++	fscache_volume_put_withdraw,
+ 	fscache_volume_see_create_work,
+ 	fscache_volume_see_hash_wake,
+ 	fscache_volume_wait_create_work,
+@@ -120,12 +122,14 @@ enum fscache_access_trace {
+ 	EM(fscache_volume_get_cookie,		"GET cook ")		\
+ 	EM(fscache_volume_get_create_work,	"GET creat")		\
+ 	EM(fscache_volume_get_hash_collision,	"GET hcoll")		\
++	EM(fscache_volume_get_withdraw,		"GET withd")            \
+ 	EM(fscache_volume_free,			"FREE     ")		\
+ 	EM(fscache_volume_new_acquire,		"NEW acq  ")		\
+ 	EM(fscache_volume_put_cookie,		"PUT cook ")		\
+ 	EM(fscache_volume_put_create_work,	"PUT creat")		\
+ 	EM(fscache_volume_put_hash_collision,	"PUT hcoll")		\
+ 	EM(fscache_volume_put_relinquish,	"PUT relnq")		\
++	EM(fscache_volume_put_withdraw,		"PUT withd")            \
+ 	EM(fscache_volume_see_create_work,	"SEE creat")		\
+ 	EM(fscache_volume_see_hash_wake,	"SEE hwake")		\
+ 	E_(fscache_volume_wait_create_work,	"WAIT crea")
 
 
 Patches currently in stable-queue which might be from kroah.com@vger.kernel.org are
