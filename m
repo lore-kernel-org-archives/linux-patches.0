@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17E4B158858;
-	Tue, 23 Jul 2024 18:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F7CB156F29;
+	Tue, 23 Jul 2024 18:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759309; cv=none; b=T/1zAA8uydeyk4ppuJzgRcWJ5zNvfMcAo7Zaa3veT9ISH54vMN1PaTZ6RyZ/4sF9zS3sSN6m7WGdq/u86JptOwOAXxBQlb1UdvFX+1PeNSzLCw8at6V+Pkp6s4GDLBNIZo5FP9mLOHBtko41i/ILQ4pKyZl4IPcXRIViceUX6Rw=
+	t=1721759312; cv=none; b=gXjE1LM159E7ZpKamoqZVvSh45yDxdplQNgnxvfyakpbwXw72Ur+KgJh8FHVj48aNan6makdIAKtdINevEGqMMlipvOfPhP2fDuKc8Bb0qXEr5UdgV3uKt76hVPuDTwhM1G2wk/ed5dcKJQBOxsx+rhPNgMK+ts2VAUxaonYrzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759309; c=relaxed/simple;
-	bh=xQ2Vxc1PsuBgc2+FWENJw/NG0X/jFysdZy5Z9uH2AmI=;
+	s=arc-20240116; t=1721759312; c=relaxed/simple;
+	bh=AwtVg4dRE23XPPim3VdN87AgexhUlwccbFBc/sdIg4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuhDS8x7ja31zAzT3IQhVypBPUvQnW+VxIYBbcwAJxJM8GUVUYRvffrBzxOMBS7W2aSRpfe4G9cZj6RJleP4dk8q84Wa6c+uQoAp4Xmv3rsWdK3s2yzLDoeieB/m/COry4OgkY1jUB04rENbZ/XYm+IYNgNjq+cnETjk4xSY0R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxPBwfu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/l/icrlFeCFvHgm1hDjo70pmQTCYxXmsLf4IF3fZtfW1YNeJyHmrjQDbfnL2sdmuIL7ACUbougYPBEqx4WtRW5xhAaDWt3OvCjky+gZPdAkrGdJtOEEt2Aq9mHrjbwc4m3nDZqN8Joh8M6qT3g3mDw6eyjC77d0g4d7n8OpUV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ed0VzR8F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxPBwfu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E51C4AF09;
-	Tue, 23 Jul 2024 18:28:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ed0VzR8F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87CF7C4AF0A;
+	Tue, 23 Jul 2024 18:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759309;
-	bh=xQ2Vxc1PsuBgc2+FWENJw/NG0X/jFysdZy5Z9uH2AmI=;
+	s=korg; t=1721759311;
+	bh=AwtVg4dRE23XPPim3VdN87AgexhUlwccbFBc/sdIg4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxPBwfu93lsdJNXh1TExQdrxxsRgFuViloc16KFRdFSzmlN162rvQE29wwpqOxoGL
-	 xJI86XjD842HJJoO29eD8Pe4j50T7cOpn5fV0sjLV3hQ/ON5YbQTh6EaKTRivnuexF
-	 VlJDsBUzBZYwUW+9oCKy5P2DVIzpiVp1LE02FWck=
+	b=ed0VzR8FeJJ31UUQxKpVZ8PjF0oTOmmxnimi2PyLvMWrJ8MqWidUP0aOkgSvvkV/T
+	 5IuvcZeYEDiK2cnsdRGC3XTYOK4/7GRsrWU7vOn209/QreRWNuE4VNC0p0ETEO7FRv
+	 LqmvdLjvWo1QjYQU9lAOnG+Emh6ckHjy8cYrkKtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aivaz Latypov <reichaivaz@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/105] ALSA: PCM: Allow resume only for suspended streams
-Date: Tue, 23 Jul 2024 20:23:50 +0200
-Message-ID: <20240723180406.059575354@linuxfoundation.org>
+Subject: [PATCH 6.1 074/105] ALSA: hda/relatek: Enable Mute LED on HP Laptop 15-gw0xxx
+Date: Tue, 23 Jul 2024 20:23:51 +0200
+Message-ID: <20240723180406.098044132@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -50,33 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Aivaz Latypov <reichaivaz@gmail.com>
 
-[ Upstream commit 1225675ca74c746f09211528588e83b3def1ff6a ]
+[ Upstream commit 1d091a98c399c17d0571fa1d91a7123a698446e4 ]
 
-snd_pcm_resume() should bail out if the stream isn't in a suspended
-state.  Otherwise it'd allow doubly resume.
+This HP Laptop uses ALC236 codec with COEF 0x07 controlling
+the mute LED. Enable existing quirk for this device.
 
-Link: https://patch.msgid.link/20240624125443.27808-1-tiwai@suse.de
+Signed-off-by: Aivaz Latypov <reichaivaz@gmail.com>
+Link: https://patch.msgid.link/20240625081217.1049-1-reichaivaz@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
-index 9238abbfb2d62..2b73518e5e314 100644
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -1781,6 +1781,8 @@ static int snd_pcm_pre_resume(struct snd_pcm_substream *substream,
- 			      snd_pcm_state_t state)
- {
- 	struct snd_pcm_runtime *runtime = substream->runtime;
-+	if (runtime->state != SNDRV_PCM_STATE_SUSPENDED)
-+		return -EBADFD;
- 	if (!(runtime->info & SNDRV_PCM_INFO_RESUME))
- 		return -ENOSYS;
- 	runtime->trigger_master = substream;
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 8852c0b429fd7..66b8adb2069af 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9701,6 +9701,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e7, "HP ProBook 450 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87f1, "HP ProBook 630 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.43.0
 
