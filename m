@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F341E13D600;
-	Tue, 23 Jul 2024 18:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8590158A27;
+	Tue, 23 Jul 2024 18:34:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759692; cv=none; b=AgiRTSIRp1vjWdKEzm/eSUfoGyB5tFu5Rmw3DPTtRnlt/z6t1FJTSrX9FcltX4Bz12lrHaQVtgpBv1muokULNvU6pAGt9rvjGjfpylvOnEBDUWy+9flVdKVNOno9wNpvqLxc7uw/DnFg5m7s6vGAh0ZG8aWAT1m2R/3mA3yKhw0=
+	t=1721759695; cv=none; b=Xlsy74XMonwOsE/qmqvHt7YVz6d5z69I/xxQ4L1pbmMf8D4hSP3IGRWXtJ8cnS1dUjlXxMlsSOFhZWatILQe1tKLwLGx+3gpXRvbXjt8lgdS1wcRZ3rk/QdDC3BYke0bI4rHOx8tdptDA3ijt19/dR4tCwa1zTS7iaH3fITDjOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759692; c=relaxed/simple;
-	bh=1B11/NAhkpqSYyYQCIWkXNnusz1pvACc6phGIWHEiEk=;
+	s=arc-20240116; t=1721759695; c=relaxed/simple;
+	bh=xRYbgyojz5eRyWw0igpX267weI1Jjfj/8CEw+XfUU44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2R3Y6K6maMiDNWKwZJK//34fJgjYYxw6RE0Ybf5jMByTMMwfKYFgCBe/YUqIn+oCoOJ/3P6j2Q05/AW6+YH5gAuuni1efSZgZWoZyfppxRLAg0NnM3aJFW9wGM/EmPIJpZRG7ADhomYXI/LaawGQd2Jz1a3EOlWJyzD4cpDl+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kh308vnw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jIccXnk3G7SNhlRDmGRzkFEVBe0+OaFgngm7dstIvx11nlRl6ImyYprmj8vj9JbjKqSqbSXnoJJGiRIemVW3xg4DVTNpqGFhWDvvnCFhA8UcgX/b4B1DVUQW6wpBw1KNUYxqelLvmBEAdtw0L5bMOTs7hxyoDQe28nF0L3wGGms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IuWGg0Yl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kh308vnw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796BCC4AF09;
-	Tue, 23 Jul 2024 18:34:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IuWGg0Yl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D14AC4AF09;
+	Tue, 23 Jul 2024 18:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759691;
-	bh=1B11/NAhkpqSYyYQCIWkXNnusz1pvACc6phGIWHEiEk=;
+	s=korg; t=1721759694;
+	bh=xRYbgyojz5eRyWw0igpX267weI1Jjfj/8CEw+XfUU44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kh308vnwxnjJlzlRSwyBBG5gx37cuRDmn35kCOrO9Ro6T8X4LtR+OCoyKhqH7BJan
-	 bm90pvO4EZFvxeMo0bOOtN99+94tyJPyibdeRG9aZEsUw3mSmLviFkT5nw7LUk7ARW
-	 /BCy5k+08ndQjYFsX91YFXCeX4l+wptbQTymKbfM=
+	b=IuWGg0YlOXwYntLaxUeH5GOFMZGY6KAPqdVy3e+JfXxBKL+hYelSRY2NpCPgdNJAk
+	 VxIRekRKprzRVnT5Pdfs4EpDpdXgeplltV/kqt89ASNr5RbrBKXkpHhlCqW3WjFCta
+	 JoRtuPgRI/geTWngnuOFv5NDvudUrkLSv5wI/Rzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Yu <jack.yu@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/129] ASoC: rt722-sdca-sdw: add silence detection register as volatile
-Date: Tue, 23 Jul 2024 20:23:33 +0200
-Message-ID: <20240723180407.297307207@linuxfoundation.org>
+Subject: [PATCH 6.6 066/129] Input: xpad - add support for ASUS ROG RAIKIRI PRO
+Date: Tue, 23 Jul 2024 20:23:34 +0200
+Message-ID: <20240723180407.335661276@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -51,40 +51,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Yu <jack.yu@realtek.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit 968c974c08106fcf911d8d390d0f049af855d348 ]
+[ Upstream commit cee77149ebe9cd971ba238d87aa10e09bd98f1c9 ]
 
-Including silence detection register as volatile.
+Add the VID/PID for ASUS ROG RAIKIRI PRO to the list of known devices.
 
-Signed-off-by: Jack Yu <jack.yu@realtek.com>
-Link: https://msgid.link/r/c66a6bd6d220426793096b42baf85437@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Link: https://lore.kernel.org/r/20240607223722.1170776-1-luke@ljones.dev
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt722-sdca-sdw.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/input/joystick/xpad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/rt722-sdca-sdw.c b/sound/soc/codecs/rt722-sdca-sdw.c
-index 43a4e79e56966..cf2feb41c8354 100644
---- a/sound/soc/codecs/rt722-sdca-sdw.c
-+++ b/sound/soc/codecs/rt722-sdca-sdw.c
-@@ -68,6 +68,7 @@ static bool rt722_sdca_mbq_readable_register(struct device *dev, unsigned int re
- 	case 0x200007f:
- 	case 0x2000082 ... 0x200008e:
- 	case 0x2000090 ... 0x2000094:
-+	case 0x3110000:
- 	case 0x5300000 ... 0x5300002:
- 	case 0x5400002:
- 	case 0x5600000 ... 0x5600007:
-@@ -125,6 +126,7 @@ static bool rt722_sdca_mbq_volatile_register(struct device *dev, unsigned int re
- 	case 0x2000067:
- 	case 0x2000084:
- 	case 0x2000086:
-+	case 0x3110000:
- 		return true;
- 	default:
- 		return false;
+diff --git a/drivers/input/joystick/xpad.c b/drivers/input/joystick/xpad.c
+index cd97a7a9f812d..daf2a46521f01 100644
+--- a/drivers/input/joystick/xpad.c
++++ b/drivers/input/joystick/xpad.c
+@@ -208,6 +208,7 @@ static const struct xpad_device {
+ 	{ 0x0738, 0xf738, "Super SFIV FightStick TE S", 0, XTYPE_XBOX360 },
+ 	{ 0x07ff, 0xffff, "Mad Catz GamePad", 0, XTYPE_XBOX360 },
+ 	{ 0x0b05, 0x1a38, "ASUS ROG RAIKIRI", 0, XTYPE_XBOXONE },
++	{ 0x0b05, 0x1abb, "ASUS ROG RAIKIRI PRO", 0, XTYPE_XBOXONE },
+ 	{ 0x0c12, 0x0005, "Intec wireless", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x8801, "Nyko Xbox Controller", 0, XTYPE_XBOX },
+ 	{ 0x0c12, 0x8802, "Zeroplus Xbox Controller", 0, XTYPE_XBOX },
 -- 
 2.43.0
 
