@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF75158A01;
-	Tue, 23 Jul 2024 18:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D309156F37;
+	Tue, 23 Jul 2024 18:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759193; cv=none; b=M0eQKd+dRWX88XKjZU4lvhg0gUIPOrEx3x3S0aAulgzzaYTghDIqRvJlUlv9iCfrRZXjCWFCKj+rVCWZon5moK49wRPHRkXxbuUdzFMmaU/FX405TSY6dzj1VXd4sIoaHzDrIPKmmVzp9RlywGoTcFjQm/HL0OkAxKY6K32TMa4=
+	t=1721759196; cv=none; b=BLJulVu23r/EW6xkSY5bgqok6xBEkbIirhp2H9J6uchrcrQdk/NLQRx2NXCn4/wOF6TiolhZaEPgRonyDcBMY577qH51aJgKh9tj6BSRkctJlLr2ehy6irSsgDRcQLeh4/zAHcUXbuI7pbWvuiPfPksTrNZjxvStRHpqiU+54HM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759193; c=relaxed/simple;
-	bh=rfJ5d00IgqzvV8Uvag12RfRQrqHmZr5GlMS0VQMGQjI=;
+	s=arc-20240116; t=1721759196; c=relaxed/simple;
+	bh=XV7Wpo3eKvAU7Kdwobz7AxVm+eVUSQiC9zHvjAbBX5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hbRMErWCbHZkX6ZbEwR+MCnykr+VmDqO5kXZ0LcxBvzoms3kjp3Fow4dkSwMG8PxTRgG8FUATXfISirprqTdpuS++BIuhnDRaSqyt/W4/B5I7DcaynMwyKOc44Jk28micbDq3ohmfIvDVnydNhX16WW5ekpDCtkdDcJRvVBy7j8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OjYPdlsY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ij3S8j0r7qUNcZn4kGAswPGqSGy0cXDr8HlKsF1BBq0523ZaLG2toqH1byM57xK8aKl7S03nGMZveqNHLEaXlBhXjCOVD82+krilhm6Q4itGCn1x1uZLkuS62emJCwlQnxaprhCjzKpbfOOjquACf6oQ3z8lh3/Smp8uUudkK+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AE3/fbAV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OjYPdlsY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7502C4AF09;
-	Tue, 23 Jul 2024 18:26:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AE3/fbAV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDEB0C4AF0E;
+	Tue, 23 Jul 2024 18:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759193;
-	bh=rfJ5d00IgqzvV8Uvag12RfRQrqHmZr5GlMS0VQMGQjI=;
+	s=korg; t=1721759196;
+	bh=XV7Wpo3eKvAU7Kdwobz7AxVm+eVUSQiC9zHvjAbBX5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OjYPdlsYKFkearwFeVE17+IfLFXmC0JsLqyMylocS+RXNzHXrN6FmQ/vxa475C664
-	 H2L8eym34EogmUxjwq3yHfHpGocwo4Z3iktkSNH2FhhaZwyGKU41ltbsqKUH00xNAJ
-	 I/PV1wjPWZYnNBrXv2fmyBCH6fH+mRQzcU6Qcvc0=
+	b=AE3/fbAV6pUIEcI1xAZ8R2RY5OJ4yMlA0UzRC6odNQeoPKATQ9l5fUWv01CmQj6NS
+	 hHdI+jStUf4FDiRWjDyazGDjPiQ+UW75ds51SNetfhcZYL00hsLf3qTiTo8mdbaolK
+	 83Z5iWyjorGkObEd9dVEA7HP1fG429lyMSpnLlBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/105] wifi: mac80211: fix UBSAN noise in ieee80211_prep_hw_scan()
-Date: Tue, 23 Jul 2024 20:23:03 +0200
-Message-ID: <20240723180404.082306018@linuxfoundation.org>
+Subject: [PATCH 6.1 035/105] kconfig: remove wrong expr_trans_bool()
+Date: Tue, 23 Jul 2024 20:23:12 +0200
+Message-ID: <20240723180404.590294595@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -51,78 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 92ecbb3ac6f3fe8ae9edf3226c76aa17b6800699 ]
+[ Upstream commit 77a92660d8fe8d29503fae768d9f5eb529c88b36 ]
 
-When testing the previous patch with CONFIG_UBSAN_BOUNDS, I've
-noticed the following:
+expr_trans_bool() performs an incorrect transformation.
 
-UBSAN: array-index-out-of-bounds in net/mac80211/scan.c:372:4
-index 0 is out of range for type 'struct ieee80211_channel *[]'
-CPU: 0 PID: 1435 Comm: wpa_supplicant Not tainted 6.9.0+ #1
-Hardware name: LENOVO 20UN005QRT/20UN005QRT <...BIOS details...>
-Call Trace:
- <TASK>
- dump_stack_lvl+0x2d/0x90
- __ubsan_handle_out_of_bounds+0xe7/0x140
- ? timerqueue_add+0x98/0xb0
- ieee80211_prep_hw_scan+0x2db/0x480 [mac80211]
- ? __kmalloc+0xe1/0x470
- __ieee80211_start_scan+0x541/0x760 [mac80211]
- rdev_scan+0x1f/0xe0 [cfg80211]
- nl80211_trigger_scan+0x9b6/0xae0 [cfg80211]
- ...<the rest is not too useful...>
+[Test Code]
 
-Since '__ieee80211_start_scan()' leaves 'hw_scan_req->req.n_channels'
-uninitialized, actual boundaries of 'hw_scan_req->req.channels' can't
-be checked in 'ieee80211_prep_hw_scan()'. Although an initialization
-of 'hw_scan_req->req.n_channels' introduces some confusion around
-allocated vs. used VLA members, this shouldn't be a problem since
-everything is correctly adjusted soon in 'ieee80211_prep_hw_scan()'.
+    config MODULES
+            def_bool y
+            modules
 
-Cleanup 'kmalloc()' math in '__ieee80211_start_scan()' by using the
-convenient 'struct_size()' as well.
+    config A
+            def_bool y
+            select C if B != n
 
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Link: https://msgid.link/20240517153332.18271-2-dmantipov@yandex.ru
-[improve (imho) indentation a bit]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+    config B
+            def_tristate m
+
+    config C
+            tristate
+
+[Result]
+
+    CONFIG_MODULES=y
+    CONFIG_A=y
+    CONFIG_B=m
+    CONFIG_C=m
+
+This output is incorrect because CONFIG_C=y is expected.
+
+Documentation/kbuild/kconfig-language.rst clearly explains the function
+of the '!=' operator:
+
+    If the values of both symbols are equal, it returns 'n',
+    otherwise 'y'.
+
+Therefore, the statement:
+
+    select C if B != n
+
+should be equivalent to:
+
+    select C if y
+
+Or, more simply:
+
+    select C
+
+Hence, the symbol C should be selected by the value of A, which is 'y'.
+
+However, expr_trans_bool() wrongly transforms it to:
+
+    select C if B
+
+Therefore, the symbol C is selected by (A && B), which is 'm'.
+
+The comment block of expr_trans_bool() correctly explains its intention:
+
+  * bool FOO!=n => FOO
+    ^^^^
+
+If FOO is bool, FOO!=n can be simplified into FOO. This is correct.
+
+However, the actual code performs this transformation when FOO is
+tristate:
+
+    if (e->left.sym->type == S_TRISTATE) {
+                             ^^^^^^^^^^
+
+While it can be fixed to S_BOOLEAN, there is no point in doing so
+because expr_tranform() already transforms FOO!=n to FOO when FOO is
+bool. (see the "case E_UNEQUAL" part)
+
+expr_trans_bool() is wrong and unnecessary.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/scan.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ scripts/kconfig/expr.c | 29 -----------------------------
+ scripts/kconfig/expr.h |  1 -
+ scripts/kconfig/menu.c |  2 --
+ 3 files changed, 32 deletions(-)
 
-diff --git a/net/mac80211/scan.c b/net/mac80211/scan.c
-index 933d02d7c1284..62c22ff329ad4 100644
---- a/net/mac80211/scan.c
-+++ b/net/mac80211/scan.c
-@@ -733,15 +733,21 @@ static int __ieee80211_start_scan(struct ieee80211_sub_if_data *sdata,
- 			local->hw_scan_ies_bufsize *= n_bands;
- 		}
+diff --git a/scripts/kconfig/expr.c b/scripts/kconfig/expr.c
+index 81ebf8108ca74..81dfdf4470f75 100644
+--- a/scripts/kconfig/expr.c
++++ b/scripts/kconfig/expr.c
+@@ -396,35 +396,6 @@ static struct expr *expr_eliminate_yn(struct expr *e)
+ 	return e;
+ }
  
--		local->hw_scan_req = kmalloc(
--				sizeof(*local->hw_scan_req) +
--				req->n_channels * sizeof(req->channels[0]) +
--				local->hw_scan_ies_bufsize, GFP_KERNEL);
-+		local->hw_scan_req = kmalloc(struct_size(local->hw_scan_req,
-+							 req.channels,
-+							 req->n_channels) +
-+					     local->hw_scan_ies_bufsize,
-+					     GFP_KERNEL);
- 		if (!local->hw_scan_req)
- 			return -ENOMEM;
+-/*
+- * bool FOO!=n => FOO
+- */
+-struct expr *expr_trans_bool(struct expr *e)
+-{
+-	if (!e)
+-		return NULL;
+-	switch (e->type) {
+-	case E_AND:
+-	case E_OR:
+-	case E_NOT:
+-		e->left.expr = expr_trans_bool(e->left.expr);
+-		e->right.expr = expr_trans_bool(e->right.expr);
+-		break;
+-	case E_UNEQUAL:
+-		// FOO!=n -> FOO
+-		if (e->left.sym->type == S_TRISTATE) {
+-			if (e->right.sym == &symbol_no) {
+-				e->type = E_SYMBOL;
+-				e->right.sym = NULL;
+-			}
+-		}
+-		break;
+-	default:
+-		;
+-	}
+-	return e;
+-}
+-
+ /*
+  * e1 || e2 -> ?
+  */
+diff --git a/scripts/kconfig/expr.h b/scripts/kconfig/expr.h
+index 9c9caca5bd5f2..c91060e19e477 100644
+--- a/scripts/kconfig/expr.h
++++ b/scripts/kconfig/expr.h
+@@ -296,7 +296,6 @@ void expr_free(struct expr *e);
+ void expr_eliminate_eq(struct expr **ep1, struct expr **ep2);
+ int expr_eq(struct expr *e1, struct expr *e2);
+ tristate expr_calc_value(struct expr *e);
+-struct expr *expr_trans_bool(struct expr *e);
+ struct expr *expr_eliminate_dups(struct expr *e);
+ struct expr *expr_transform(struct expr *e);
+ int expr_contains_symbol(struct expr *dep, struct symbol *sym);
+diff --git a/scripts/kconfig/menu.c b/scripts/kconfig/menu.c
+index 109325f31bef3..9d4c3f366a061 100644
+--- a/scripts/kconfig/menu.c
++++ b/scripts/kconfig/menu.c
+@@ -380,8 +380,6 @@ void menu_finalize(struct menu *parent)
+ 				dep = expr_transform(dep);
+ 				dep = expr_alloc_and(expr_copy(basedep), dep);
+ 				dep = expr_eliminate_dups(dep);
+-				if (menu->sym && menu->sym->type != S_TRISTATE)
+-					dep = expr_trans_bool(dep);
+ 				prop->visible.expr = dep;
  
- 		local->hw_scan_req->req.ssids = req->ssids;
- 		local->hw_scan_req->req.n_ssids = req->n_ssids;
-+		/* None of the channels are actually set
-+		 * up but let UBSAN know the boundaries.
-+		 */
-+		local->hw_scan_req->req.n_channels = req->n_channels;
-+
- 		ies = (u8 *)local->hw_scan_req +
- 			sizeof(*local->hw_scan_req) +
- 			req->n_channels * sizeof(req->channels[0]);
+ 				/*
 -- 
 2.43.0
 
