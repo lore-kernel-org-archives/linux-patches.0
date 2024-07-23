@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887A715885A;
-	Tue, 23 Jul 2024 18:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC55156F29;
+	Tue, 23 Jul 2024 18:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759258; cv=none; b=X+Zxkj6Xp9E4ULeyOFU22DlL56QVjNo5Y5CbyDRJNLnF4SthxDgWO0CJGsAt5YRAGLHjKSE7ZZBgRc0YT3TJmKExBj+Y2X0WePIlI0fhuOFB/YPG4pZ/TUlKhI6f1qfnxevpPX4JxgK2YY0v4w3iiX8+FOlmFMN9z7T0LnkGEBs=
+	t=1721759261; cv=none; b=XCwqwvbpJN+jLoYJ9yvU/DIvGiQNODiv9KGZnefca0mI38Of95QJsoB8YBiqDvtX4HR5BEvRFKGIJvP9l96g0PyvmrcsGLDcW8bOqPZZ5zGHGHpCcYtrueb0pgbhM8cV2eOJVUMoq7XyVQorm8oUv+riCZKEUaYARoIU4D9TAaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759258; c=relaxed/simple;
-	bh=zT83hDoe6CNq6S5F2LjQM6Ji7XgN5FAxTkLTB22BXCU=;
+	s=arc-20240116; t=1721759261; c=relaxed/simple;
+	bh=DWmD0REmdxFORw3GbA8Xuj9pg7cUvnQAKfOMKq9GTPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GEbCxrNhGspHYkbxQXQf7O96+0lSYpmD2N9ksMevI3U+R4m4JyjOcpuYshXa7KGGz9d4XlfRrIHCTqIgHXeBcXzJddv4Fx40em7Ws7u8M/831EHKHJzQ6il2lGCejev0DxKO/PqvLBbgGZKxcT7j25gsVawG05x6ik9ztBA2OXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XIJ0eQNy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RmkmMCC4DfNnyJYfJgyPz86QOh9KknIcjfOrWKU354/xNQboXLvW9PAJCjX2xc8KzfefP5uk6sYd2lyzLkQTwi+mLD/+CY8m/D3muWQLOKnOPHWWh2Z6r15kVuz6MTRoRHVaQyenkC3O3umMSePaS+iPp846QVmKFUUYQ9C72sE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aghAbpJ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XIJ0eQNy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1101FC4AF09;
-	Tue, 23 Jul 2024 18:27:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aghAbpJ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 040BDC4AF0A;
+	Tue, 23 Jul 2024 18:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759258;
-	bh=zT83hDoe6CNq6S5F2LjQM6Ji7XgN5FAxTkLTB22BXCU=;
+	s=korg; t=1721759261;
+	bh=DWmD0REmdxFORw3GbA8Xuj9pg7cUvnQAKfOMKq9GTPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XIJ0eQNyZUuCUvdaEcECkPWo0jcQidDC6aJYZgI51+NZiYmes4+rcfCw0fQyMR3qD
-	 t9NBZaWFTAyhyziqcx6yEd7qB5vM3j+TGyQc+bKM99hMYQ9ooetEVyMK30dB1vOII3
-	 6jU+XkaXRGyNYVOyT1XHjPtizmFefnLz+xhD2j0Y=
+	b=aghAbpJ0PnAOG8Wt9lXR+HkdIuT3m08WvT5J7ynhNmOMEKLtkJvqzXqVy5Xkw9oXL
+	 eqDGebxGKuhMZbDf8mOKJkZFn7e+lY/hRsrfUjZGAsfvM9hMhxys+LzkhklUBA2Ojr
+	 UL9Diu4LZ2DfUTWUeDmRpTwJd8K/hheNfd7CCQ74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Liaw <edliaw@google.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Tobias Jakobi <tjakobi@math.uni-bielefeld.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 028/105] selftests/futex: pass _GNU_SOURCE without a value to the compiler
-Date: Tue, 23 Jul 2024 20:23:05 +0200
-Message-ID: <20240723180404.197959883@linuxfoundation.org>
+Subject: [PATCH 6.1 055/105] Input: i8042 - add Ayaneo Kun to i8042 quirk table
+Date: Tue, 23 Jul 2024 20:23:32 +0200
+Message-ID: <20240723180405.370510781@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -53,51 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Hubbard <jhubbard@nvidia.com>
+From: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
 
-[ Upstream commit cb708ab9f584f159798b60853edcf0c8b67ce295 ]
+[ Upstream commit 955af6355ddfe35140f9706a635838212a32513b ]
 
-It's slightly better to set _GNU_SOURCE in the source code, but if one
-must do it via the compiler invocation, then the best way to do so is
-this:
+See the added comment for details. Also fix a typo in the
+quirk's define.
 
-    $(CC) -D_GNU_SOURCE=
-
-...because otherwise, if this form is used:
-
-    $(CC) -D_GNU_SOURCE
-
-...then that leads the compiler to set a value, as if you had passed in:
-
-    $(CC) -D_GNU_SOURCE=1
-
-That, in turn, leads to warnings under both gcc and clang, like this:
-
-    futex_requeue_pi.c:20: warning: "_GNU_SOURCE" redefined
-
-Fix this by using the "-D_GNU_SOURCE=" form.
-
-Reviewed-by: Edward Liaw <edliaw@google.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
-Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Tobias Jakobi <tjakobi@math.uni-bielefeld.de>
+Link: https://lore.kernel.org/r/20240531190100.3874731-1-tjakobi@math.uni-bielefeld.de
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/futex/functional/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/serio/i8042-acpipnpio.h | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
-index a392d0917b4e5..994fa3468f170 100644
---- a/tools/testing/selftests/futex/functional/Makefile
-+++ b/tools/testing/selftests/futex/functional/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- INCLUDES := -I../include -I../../ $(KHDR_INCLUDES)
--CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE -pthread $(INCLUDES) $(KHDR_INCLUDES)
-+CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE= -pthread $(INCLUDES) $(KHDR_INCLUDES)
- LDLIBS := -lpthread -lrt
+diff --git a/drivers/input/serio/i8042-acpipnpio.h b/drivers/input/serio/i8042-acpipnpio.h
+index dfc6c581873b7..5b50475ec4140 100644
+--- a/drivers/input/serio/i8042-acpipnpio.h
++++ b/drivers/input/serio/i8042-acpipnpio.h
+@@ -76,7 +76,7 @@ static inline void i8042_write_command(int val)
+ #define SERIO_QUIRK_PROBE_DEFER		BIT(5)
+ #define SERIO_QUIRK_RESET_ALWAYS	BIT(6)
+ #define SERIO_QUIRK_RESET_NEVER		BIT(7)
+-#define SERIO_QUIRK_DIECT		BIT(8)
++#define SERIO_QUIRK_DIRECT		BIT(8)
+ #define SERIO_QUIRK_DUMBKBD		BIT(9)
+ #define SERIO_QUIRK_NOLOOP		BIT(10)
+ #define SERIO_QUIRK_NOTIMEOUT		BIT(11)
+@@ -1332,6 +1332,20 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
+ 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
+ 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
+ 	},
++	{
++		/*
++		 * The Ayaneo Kun is a handheld device where some the buttons
++		 * are handled by an AT keyboard. The keyboard is usually
++		 * detected as raw, but sometimes, usually after a cold boot,
++		 * it is detected as translated. Make sure that the keyboard
++		 * is always in raw mode.
++		 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "AYANEO"),
++			DMI_MATCH(DMI_BOARD_NAME, "KUN"),
++		},
++		.driver_data = (void *)(SERIO_QUIRK_DIRECT)
++	},
+ 	{ }
+ };
  
- LOCAL_HDRS := \
+@@ -1655,7 +1669,7 @@ static void __init i8042_check_quirks(void)
+ 		if (quirks & SERIO_QUIRK_RESET_NEVER)
+ 			i8042_reset = I8042_RESET_NEVER;
+ 	}
+-	if (quirks & SERIO_QUIRK_DIECT)
++	if (quirks & SERIO_QUIRK_DIRECT)
+ 		i8042_direct = true;
+ 	if (quirks & SERIO_QUIRK_DUMBKBD)
+ 		i8042_dumbkbd = true;
 -- 
 2.43.0
 
