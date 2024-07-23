@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89B6713D896;
-	Tue, 23 Jul 2024 18:39:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34320158A02;
+	Tue, 23 Jul 2024 18:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759983; cv=none; b=TcPwEkGoqxkLvTZ4ZI7n3FbJDW7a1NfehVTK5/AcEOJfIx7arRY2d3XIDspaSfLEbOqq8GpCgrzbsmpBsEilX6prt968cuNpoX93bjxc1PCj1fwEoW//azcaFkuGXb7AeYaVjdv4RFcq5U4veX6CkoHAuHcbASYqwjGV8FzaHRk=
+	t=1721759986; cv=none; b=EA7sa+qdjjFqOhCEvTfc4xQTImOGETDzpoXlgSQVGaAgSI2ZhmVnaKbQmgdnW4yCVchuOfLFpPwEwEPuUVPDmh3MGWHsXQAerq3LYcFOkUVv0ZQsDZbehSwoYIqNGjqkHI0Tw1PjqCZ8LVtR1L8SiN1f5H6jkqKkYmVW9B5lyA8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759983; c=relaxed/simple;
-	bh=/a2VGOh8/7YdD6r24cikY1SonOSdSaD9iwNG8mlhHZg=;
+	s=arc-20240116; t=1721759986; c=relaxed/simple;
+	bh=40MxM9SRCcMARZKi/OLoezZCv2gs+9GKF3tQbSAFe8s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ADMzgUEfAe+50n9tbYZ95Xh3zfWnYB4rL+JpW0OBVAa+kst4IjS49uK+PYWljr1JW1coa6UfpLQLNaeEoqVLIoJ0sgP8YMaoZgpg0K70cOocc/I6YGL9mZ1DqMz3eFshQn/+I2k9UjWTp3nUrc3I2SpugwOsw7oVOvRsTY8eMaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZ1vw4o4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mF8nFEvq34nqV4GR48UzR+Nh+a51rjP9CcPKLsIT/tobfZ1+BEjsRJX5Omb8LylA/4LKpJ74xvgLbNCxPzOCi3TCA8TSxaysDScE0z4k+v1jrMT+GFa3NCckwwQET7+dt88JZ9dSK+oLqTK6G185nCUD8FIlBWwFGxkZguHFtkg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qlBMw0AC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZ1vw4o4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2429C4AF09;
-	Tue, 23 Jul 2024 18:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qlBMw0AC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE519C4AF0A;
+	Tue, 23 Jul 2024 18:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759983;
-	bh=/a2VGOh8/7YdD6r24cikY1SonOSdSaD9iwNG8mlhHZg=;
+	s=korg; t=1721759986;
+	bh=40MxM9SRCcMARZKi/OLoezZCv2gs+9GKF3tQbSAFe8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WZ1vw4o48W2Bw5Wjc2jcy9MOwNG/VQ7SPNMlXlbr7YwaoiRPJUyY/ynXXMo8KNDgA
-	 58dLi5IWRmahOJ3sS7K+HJ5FfwANT/1I5U7x+gBEJaV/27kdufzMZaTDkecxeEEpLa
-	 l0bWjDVtrWQvkpGPNWoc7lecs7VEGrQJxV3PIqCg=
+	b=qlBMw0ACmFsw4jdszTOg9vEVMUBmKQoK6JzlWoG4ACIidCTJ4dvpxXJmlVk0qA2G2
+	 EavjGcpJjQX7bjH5I9ujfPwV8JvDDafTzFKrjN+yPAtFEPUQ9N05IxyyEGpsmni5hg
+	 YeFnWAuW6Gq5wgOCWiVSmr3TbjE0tPNn4HwCPWdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Heyne <mheyne@amazon.de>,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 036/163] io_uring: fix possible deadlock in io_register_iowq_max_workers()
-Date: Tue, 23 Jul 2024 20:22:45 +0200
-Message-ID: <20240723180144.867564832@linuxfoundation.org>
+Subject: [PATCH 6.9 063/163] nvmet: always initialize cqe.result
+Date: Tue, 23 Jul 2024 20:23:12 +0200
+Message-ID: <20240723180145.905711973@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,57 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit 73254a297c2dd094abec7c9efee32455ae875bdf ]
+[ Upstream commit cd0c1b8e045a8d2785342b385cb2684d9b48e426 ]
 
-The io_register_iowq_max_workers() function calls io_put_sq_data(),
-which acquires the sqd->lock without releasing the uring_lock.
-Similar to the commit 009ad9f0c6ee ("io_uring: drop ctx->uring_lock
-before acquiring sqd->lock"), this can lead to a potential deadlock
-situation.
+The spec doesn't mandate that the first two double words (aka results)
+for the command queue entry need to be set to 0 when they are not
+used (not specified). Though, the target implemention returns 0 for TCP
+and FC but not for RDMA.
 
-To resolve this issue, the uring_lock is released before calling
-io_put_sq_data(), and then it is re-acquired after the function call.
+Let's make RDMA behave the same and thus explicitly initializing the
+result field. This prevents leaking any data from the stack.
 
-This change ensures that the locks are acquired in the correct
-order, preventing the possibility of a deadlock.
-
-Suggested-by: Maximilian Heyne <mheyne@amazon.de>
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Link: https://lore.kernel.org/r/20240604130527.3597-1-hagarhem@amazon.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/register.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/target/core.c             | 1 +
+ drivers/nvme/target/fabrics-cmd-auth.c | 3 ---
+ drivers/nvme/target/fabrics-cmd.c      | 6 ------
+ 3 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/io_uring/register.c b/io_uring/register.c
-index 99c37775f974c..1ae8491e35abb 100644
---- a/io_uring/register.c
-+++ b/io_uring/register.c
-@@ -355,8 +355,10 @@ static __cold int io_register_iowq_max_workers(struct io_ring_ctx *ctx,
- 	}
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index 06f0c587f3437..4ff460ba28263 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -957,6 +957,7 @@ bool nvmet_req_init(struct nvmet_req *req, struct nvmet_cq *cq,
+ 	req->metadata_sg_cnt = 0;
+ 	req->transfer_len = 0;
+ 	req->metadata_len = 0;
++	req->cqe->result.u64 = 0;
+ 	req->cqe->status = 0;
+ 	req->cqe->sq_head = 0;
+ 	req->ns = NULL;
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index eb7785be0ca77..ee76491e8b12c 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -332,7 +332,6 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		pr_debug("%s: ctrl %d qid %d nvme status %x error loc %d\n",
+ 			 __func__, ctrl->cntlid, req->sq->qid,
+ 			 status, req->error_loc);
+-	req->cqe->result.u64 = 0;
+ 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
+ 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
+ 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
+@@ -515,8 +514,6 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 	status = nvmet_copy_to_sgl(req, 0, d, al);
+ 	kfree(d);
+ done:
+-	req->cqe->result.u64 = 0;
+-
+ 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2)
+ 		nvmet_auth_sq_free(req->sq);
+ 	else if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index b23f4cf840bd5..f6714453b8bb3 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -226,9 +226,6 @@ static void nvmet_execute_admin_connect(struct nvmet_req *req)
+ 	if (status)
+ 		goto out;
  
- 	if (sqd) {
-+		mutex_unlock(&ctx->uring_lock);
- 		mutex_unlock(&sqd->lock);
- 		io_put_sq_data(sqd);
-+		mutex_lock(&ctx->uring_lock);
- 	}
+-	/* zero out initial completion result, assign values as needed */
+-	req->cqe->result.u32 = 0;
+-
+ 	if (c->recfmt != 0) {
+ 		pr_warn("invalid connect version (%d).\n",
+ 			le16_to_cpu(c->recfmt));
+@@ -304,9 +301,6 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 	if (status)
+ 		goto out;
  
- 	if (copy_to_user(arg, new_count, sizeof(new_count)))
-@@ -381,8 +383,10 @@ static __cold int io_register_iowq_max_workers(struct io_ring_ctx *ctx,
- 	return 0;
- err:
- 	if (sqd) {
-+		mutex_unlock(&ctx->uring_lock);
- 		mutex_unlock(&sqd->lock);
- 		io_put_sq_data(sqd);
-+		mutex_lock(&ctx->uring_lock);
- 	}
- 	return ret;
- }
+-	/* zero out initial completion result, assign values as needed */
+-	req->cqe->result.u32 = 0;
+-
+ 	if (c->recfmt != 0) {
+ 		pr_warn("invalid connect version (%d).\n",
+ 			le16_to_cpu(c->recfmt));
 -- 
 2.43.0
 
