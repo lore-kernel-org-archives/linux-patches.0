@@ -1,160 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [217.70.183.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1047515099C;
-	Tue, 23 Jul 2024 13:54:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0E6154C18
+	for <patches@lists.linux.dev>; Tue, 23 Jul 2024 14:34:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.70.183.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721742843; cv=none; b=Yazuqe07a1OgdlGeFVrgBsKEAqYLKq0Jt/4NvxCjsVkvs+LLrhjOjVWFULsdcQcJzG+5JuUoqz3ScpsreZpkT6abnpcqLK3bdvRx4a22fyKXz4S1EDC4NbbWaEqebTcpRl/yUo5RshSWcywoC/k+nj2VAnamqD34BYmlDv67cL4=
+	t=1721745263; cv=none; b=P9rFrz76v9djmDeZg5b9q+yRwbcMPjo421Fkv5BqJfA9Huzmp6ahNJcuU1EFadMBS8J89ZRIamnRT6sb/hGJsu9xk/gBiN7G5QsnpaSRG6kM/ODQEz1AbDI/6FkjX2ROikfLEpBpPZj+9EydGJX1Fe6hwxhCaUljGUnOMcA2xpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721742843; c=relaxed/simple;
-	bh=79FNuvOncjyOteU1cfc/iVq+a86SpWnnE/NSw0bVqSo=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=AJFigw+wbLRbUSFcDE/oAMtFsv0jjio9VOSzM1OaemIXJP7KxiDW4rn+XhVQMUsz+o4bIQtKng8x622O6UXz9BPCfEQR5VTJ6CawxUG0YGP6GX0rx4M1BbP1Sqr6pX9KDaanXzyzoJ2CKsBTc46SkXuiivXJWSFe6IRImNdYrfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgZDpjSk; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721745263; c=relaxed/simple;
+	bh=1B6BsBDUtFfeVEALIeX4Iv8qeLMx4W7b1/biT1lFRn8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NgNgbrId9Tvq9UbZnTvBHus0l0KUhAB6cypBpMzlZzaklJ/VCTpq5/khks0GoeULqH6G3nkMQ7PphsBzqPFkgU0PG/P2cRj31ZUZL0piXSNpwbYewcX18zgcVpEv48aHIMH/+20YcGa5mvi1UQL+RP9L45/KLwjWBBm2A9LRwf4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=krisman.be; spf=pass smtp.mailfrom=krisman.be; dkim=pass (2048-bit key) header.d=krisman.be header.i=@krisman.be header.b=ixJYvmLs; arc=none smtp.client-ip=217.70.183.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=krisman.be
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=krisman.be
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgZDpjSk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74891C4AF09;
-	Tue, 23 Jul 2024 13:54:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721742842;
-	bh=79FNuvOncjyOteU1cfc/iVq+a86SpWnnE/NSw0bVqSo=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=ZgZDpjSksu/KVROmWIK69B8qUziVugHF0CmMlnsy2UexzodQu9/rF4CxpGrqenE27
-	 suQ8+JV2IOG6OCCnZnb3U1IPw35PJJI3DgEjjYTZ7JxpptjBrZyrkupGDfJJtBmTnJ
-	 MPnjO09mZV8B/5tCsfj8BiaWCk3SaBOos+Uy5U1k=
-Subject: Patch "netfs, fscache: export fscache_put_volume() and add fscache_try_get_volume()" has been added to the 6.9-stable tree
-To: brauner@kernel.org,gregkh@linuxfoundation.org,hsiangkao@linux.alibaba.com,libaokun1@huawei.com,libaokun@huaweicloud.com,patches@lists.linux.dev,sashal@kernel.org,yangerkun@huawei.com
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Tue, 23 Jul 2024 15:53:46 +0200
-In-Reply-To: <20240719132812.1542957-1-libaokun@huaweicloud.com>
-Message-ID: <2024072346-dealer-seismic-1a5a@gregkh>
+	dkim=pass (2048-bit key) header.d=krisman.be header.i=@krisman.be header.b="ixJYvmLs"
+Received: by mail.gandi.net (Postfix) with ESMTPSA id 89D0B240004;
+	Tue, 23 Jul 2024 14:34:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=krisman.be; s=gm1;
+	t=1721745254;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=1IoKig6xPx7s5cqLIWwCW1VLXu1C3mGlxSSzRtiuDkc=;
+	b=ixJYvmLsYrtjIBStPK6eU8LhOXpkOrIjU5kHUvKu04nnfJEwg3SZSbNAdFqrsEP329pk0N
+	R5g5EQr48TRdg9fIFKMPX3vn1tSua4WdJhzEFIvht0KTKlswh1kAV9RL5bNFaIrj/ot/rI
+	BR4zMHSdSNRhQiXEO2VFEw7oER67mxaTtIfhp48sDeM7DGWSjvUHLKl7CsG59fq+0qmGLy
+	VAmYj9xcW5NVZrqoYqgnTSmXR9cRNlgZacPl4tVbU4bdUDKRbD2iAgFI9IcJwygYX5/SAO
+	kDorZzZDnKpwD+29hN2akJtGO4tHPrH8A4uTc3N6OmuameAapZU/8b6a0YJiRw==
+From: Gabriel Krisman Bertazi <gabriel@krisman.be>
+To: Amir Goldstein <amir73il@gmail.com>
+Cc: Ajay Kaher <ajay.kaher@broadcom.com>,  chuck.lever@oracle.com,
+  gregkh@linuxfoundation.org,  jack@suse.cz,  krisman@collabora.com,
+  patches@lists.linux.dev,  sashal@kernel.org,  stable@vger.kernel.org,
+  adilger.kernel@dilger.ca,  linux-ext4@vger.kernel.org,  tytso@mit.edu,
+  alexey.makhalov@broadcom.com,  vasavi.sirnapalli@broadcom.com,
+  florian.fainelli@broadcom.com
+Subject: Re: [PATCH 5.10 387/770] fanotify: Allow users to request
+ FAN_FS_ERROR events
+In-Reply-To: <CAOQ4uxgz4Gq2Yg4upLWrOf15FaDuAPppRVsLbYvMxrLbpHJE1g@mail.gmail.com>
+	(Amir Goldstein's message of "Tue, 23 Jul 2024 12:20:39 +0300")
+References: <20240618123422.213844892@linuxfoundation.org>
+	<1721718387-9038-1-git-send-email-ajay.kaher@broadcom.com>
+	<CAOQ4uxgz4Gq2Yg4upLWrOf15FaDuAPppRVsLbYvMxrLbpHJE1g@mail.gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Tue, 23 Jul 2024 10:34:08 -0400
+Message-ID: <875xswtbxb.fsf@mailhost.krisman.be>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-GND-Sasl: gabriel@krisman.be
 
+Amir Goldstein <amir73il@gmail.com> writes:
 
-This is a note to let you know that I've just added the patch titled
+> On Tue, Jul 23, 2024 at 10:06=E2=80=AFAM Ajay Kaher <ajay.kaher@broadcom.=
+com> wrote:
+>> Without 9709bd548f11 in v5.10.y skips LTP fanotify22 test case, as:
+>> fanotify22.c:312: TCONF: FAN_FS_ERROR not supported in kernel
+>>
+>> With 9709bd548f11 in v5.10.220, LTP fanotify22 is failing because of
+>> timeout as no notification. To fix need to merge following two upstream
+>> commit to v5.10:
+>>
+>> 124e7c61deb27d758df5ec0521c36cf08d417f7a:
+>> 0001-ext4_fix_error_code_saved_on_super_block_during_file_system.patch
+>> https://lore.kernel.org/stable/1721717240-8786-1-git-send-email-ajay.kah=
+er@broadcom.com/T/#mf76930487697d8c1383ed5d21678fe504e8e2305
+>>
+>> 9a089b21f79b47eed240d4da7ea0d049de7c9b4d:
+>> 0001-ext4_Send_notifications_on_error.patch
+>> Link: https://lore.kernel.org/stable/1721717240-8786-1-git-send-email-aj=
+ay.kaher@broadcom.com/T/#md1be98e0ecafe4f92d7b61c048e15bcf286cbd53
+>>
+>> -Ajay
+>
+> I agree that this is the best approach, because the test has no other
+> way to test
+> if ext4 specifically supports FAN_FS_ERROR.
+>
+> Chuck,
+>
+> I wonder how those patches end up in 5.15.y but not in 5.10.y?
 
-    netfs, fscache: export fscache_put_volume() and add fscache_try_get_volume()
+I wonder why this was backported to stable in the first place.  I get
+there is a lot of refactoring in this series, which might be useful when
+backporting further fixes. but 9709bd548f11 just enabled a new feature -
+which seems against stable rules.  Considering that "anything is a CVE",
+we really need to be cautious about this kind of stuff in stable
+kernels.
 
-to the 6.9-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Is it possible to drop 9709bd548f11 from stable instead?
 
-The filename of the patch is:
-     netfs-fscache-export-fscache_put_volume-and-add-fscache_try_get_volume.patch
-and it can be found in the queue-6.9 subdirectory.
+> Gabriel, if 9abeae5d4458 has a Fixes: tag it may have been auto seleced
+> for 5.15.y after c0baf9ac0b05 was picked up...
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
+right.  It would be really cool if we had a way to append this
+information after the fact.  How would people feel about using
+git-notes in the kernel tree to support that?
 
-
-From stable+bounces-60606-greg=kroah.com@vger.kernel.org Fri Jul 19 15:31:16 2024
-From: libaokun@huaweicloud.com
-Date: Fri, 19 Jul 2024 21:28:10 +0800
-Subject: netfs, fscache: export fscache_put_volume() and add fscache_try_get_volume()
-To: stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, sashal@kernel.org, patches@lists.linux.dev, hsiangkao@linux.alibaba.com, yangerkun@huawei.com, libaokun1@huawei.com, Christian Brauner <brauner@kernel.org>
-Message-ID: <20240719132812.1542957-1-libaokun@huaweicloud.com>
-
-From: libaokun@huaweicloud.com
-
-From: Baokun Li <libaokun1@huawei.com>
-
-[ Upstream commit 85b08b31a22b481ec6528130daf94eee4452e23f ]
-
-Export fscache_put_volume() and add fscache_try_get_volume()
-helper function to allow cachefiles to get/put fscache_volume
-via linux/fscache-cache.h.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240628062930.2467993-2-libaokun@huaweicloud.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Stable-dep-of: 522018a0de6b ("cachefiles: fix slab-use-after-free in fscache_withdraw_volume()")
-Stable-dep-of: 5d8f80578907 ("cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/netfs/fscache_volume.c     |   14 ++++++++++++++
- fs/netfs/internal.h           |    2 --
- include/linux/fscache-cache.h |    6 ++++++
- 3 files changed, 20 insertions(+), 2 deletions(-)
-
---- a/fs/netfs/fscache_volume.c
-+++ b/fs/netfs/fscache_volume.c
-@@ -27,6 +27,19 @@ struct fscache_volume *fscache_get_volum
- 	return volume;
- }
- 
-+struct fscache_volume *fscache_try_get_volume(struct fscache_volume *volume,
-+					      enum fscache_volume_trace where)
-+{
-+	int ref;
-+
-+	if (!__refcount_inc_not_zero(&volume->ref, &ref))
-+		return NULL;
-+
-+	trace_fscache_volume(volume->debug_id, ref + 1, where);
-+	return volume;
-+}
-+EXPORT_SYMBOL(fscache_try_get_volume);
-+
- static void fscache_see_volume(struct fscache_volume *volume,
- 			       enum fscache_volume_trace where)
- {
-@@ -420,6 +433,7 @@ void fscache_put_volume(struct fscache_v
- 			fscache_free_volume(volume);
- 	}
- }
-+EXPORT_SYMBOL(fscache_put_volume);
- 
- /*
-  * Relinquish a volume representation cookie.
---- a/fs/netfs/internal.h
-+++ b/fs/netfs/internal.h
-@@ -326,8 +326,6 @@ extern const struct seq_operations fscac
- 
- struct fscache_volume *fscache_get_volume(struct fscache_volume *volume,
- 					  enum fscache_volume_trace where);
--void fscache_put_volume(struct fscache_volume *volume,
--			enum fscache_volume_trace where);
- bool fscache_begin_volume_access(struct fscache_volume *volume,
- 				 struct fscache_cookie *cookie,
- 				 enum fscache_access_trace why);
---- a/include/linux/fscache-cache.h
-+++ b/include/linux/fscache-cache.h
-@@ -19,6 +19,7 @@
- enum fscache_cache_trace;
- enum fscache_cookie_trace;
- enum fscache_access_trace;
-+enum fscache_volume_trace;
- 
- enum fscache_cache_state {
- 	FSCACHE_CACHE_IS_NOT_PRESENT,	/* No cache is present for this name */
-@@ -97,6 +98,11 @@ extern void fscache_withdraw_cookie(stru
- 
- extern void fscache_io_error(struct fscache_cache *cache);
- 
-+extern struct fscache_volume *
-+fscache_try_get_volume(struct fscache_volume *volume,
-+		       enum fscache_volume_trace where);
-+extern void fscache_put_volume(struct fscache_volume *volume,
-+			       enum fscache_volume_trace where);
- extern void fscache_end_volume_access(struct fscache_volume *volume,
- 				      struct fscache_cookie *cookie,
- 				      enum fscache_access_trace why);
-
-
-Patches currently in stable-queue which might be from kroah.com@vger.kernel.org are
-
-queue-6.9/cachefiles-fix-slab-use-after-free-in-cachefiles_withdraw_cookie.patch
-queue-6.9/cachefiles-fix-slab-use-after-free-in-fscache_withdraw_volume.patch
-queue-6.9/netfs-fscache-export-fscache_put_volume-and-add-fscache_try_get_volume.patch
+--=20
+Gabriel Krisman Bertazi
