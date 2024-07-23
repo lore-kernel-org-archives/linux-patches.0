@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C3015821E;
-	Tue, 23 Jul 2024 18:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4570315821E;
+	Tue, 23 Jul 2024 18:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759958; cv=none; b=SkXZ4/hGnO9sFFyFL/wV0IukJfK8iyMUysNES6vSoY2eRK8eaZ9l37vzauTjxasziewDM71It8FInU8srH09OPkOAiWIM3BD9g931BicmsdZCFFEZ3fo4rUhzdm+ITJ59LUBMfOSz60dK2afm5yjYE364NXA0Tj0N/kDZhkGkbU=
+	t=1721759962; cv=none; b=CtOx4hMl1z/VE5T9JOIGwKzBnW5h3gT5K/UiDTZxDJyFnP046gSw5swZ6p2rTni9oPVnjZh5Oyz40ForQc8USaEoA1O2Ose86qh+n3MYkoxw/WHlN9dZY9FaCoDDhoWVWd0ZvFdh7qk/bUb0yHht2v+tJhebZ5EKnRi0yyMPit0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759958; c=relaxed/simple;
-	bh=1Q7qtXJcivNIlqW5z10uGWViFqeoZXd8hAlNNiyUnT4=;
+	s=arc-20240116; t=1721759962; c=relaxed/simple;
+	bh=GaIQt3WTqgci55cYJ+wEeCyNOi/nt8/ug05s6Ll6VXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHBRySzNC5i9Zb63vNZGf00DIB5TiF1EOhHU72B8fAnGHqbdeNS2G9d6gGQtW4xX7jh36WYB9NEJLtjBHhZB42DOcfQhaEOl9gmn71VEejBuh8Wi6mxC0RrxUkXyUgkMe8BSRivJV2hsetvwwFuw/gdlEO0xlUx0MGW35j+z+5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hISyNH2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=F6pmr0zjQsMu4LVO6+ijcDfLP8cVKkRD0I7VWAudogSZP9XgIWxq6oUUwlc6Fin6zMR7xBO3Sypxhd2EmQnTdqTIzaWVee/nfp0aINMey5O8jQfjXdAjsRpyGtSaSjkVTePoQB6byKOs41lQKRuOtGb4Cv9U6KFaWhaHImbwh1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JuUNoJs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hISyNH2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9F40C4AF09;
-	Tue, 23 Jul 2024 18:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JuUNoJs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F7CC4AF09;
+	Tue, 23 Jul 2024 18:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759958;
-	bh=1Q7qtXJcivNIlqW5z10uGWViFqeoZXd8hAlNNiyUnT4=;
+	s=korg; t=1721759962;
+	bh=GaIQt3WTqgci55cYJ+wEeCyNOi/nt8/ug05s6Ll6VXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hISyNH2t7NA/soNarJXane2fhB4Mf8bK0kVcQGG2CfJO1WxO0AxvwlkJ4c8QaS2hV
-	 QGo/QsmvpdqEq/kq01REHsBWkLq3fW0qjqopWSM5C2CUiVxXvRK/PvZvSgmM/d+gq2
-	 vkuYDSlSY9QburnVW4lgSJundH8Bhnxs7+4gQ/Qw=
+	b=0JuUNoJsg5bRkCwaoOcHANfyxhrntCqTOADVpbGzRSHajKtK6C3dhkJvF8BN9o7rR
+	 xrdtkZFNXfgwtbFdzlD5IwMB3Z03IMyJ9aVlWY/BPY6+0ME5bSKAwNnCE/8aNiPbaf
+	 ihbckuvBC3SMFE3ldCA6nIdOumpzJo0vO716TFS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 055/163] mei: demote client disconnect warning on suspend to debug
-Date: Tue, 23 Jul 2024 20:23:04 +0200
-Message-ID: <20240723180145.602062055@linuxfoundation.org>
+Subject: [PATCH 6.9 056/163] parport: amiga: Mark driver struct with __refdata to prevent section mismatch
+Date: Tue, 23 Jul 2024 20:23:05 +0200
+Message-ID: <20240723180145.640244686@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -45,52 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 1db5322b7e6b58e1b304ce69a50e9dca798ca95b ]
+[ Upstream commit 73fedc31fed38cb6039fd8a7efea1774143b68b0 ]
 
-Change level for the "not connected" client message in the write
-callback from error to debug.
+As described in the added code comment, a reference to .exit.text is ok
+for drivers registered via module_platform_driver_probe(). Make this
+explicit to prevent the following section mismatch warning
 
-The MEI driver currently disconnects all clients upon system suspend.
-This behavior is by design and user-space applications with
-open connections before the suspend are expected to handle errors upon
-resume, by reopening their handles, reconnecting,
-and retrying their operations.
+	WARNING: modpost: drivers/parport/parport_amiga: section mismatch in reference: amiga_parallel_driver+0x8 (section: .data) -> amiga_parallel_remove (section: .exit.text)
 
-However, the current driver implementation logs an error message every
-time a write operation is attempted on a disconnected client.
-Since this is a normal and expected flow after system resume
-logging this as an error can be misleading.
+that triggers on an allmodconfig W=1 build.
 
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240530091415.725247-1-tomas.winkler@intel.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20240513075206.2337310-2-u.kleine-koenig@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/parport/parport_amiga.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/mei/main.c b/drivers/misc/mei/main.c
-index 79e6f3c1341fe..40c3fe26f76df 100644
---- a/drivers/misc/mei/main.c
-+++ b/drivers/misc/mei/main.c
-@@ -329,7 +329,7 @@ static ssize_t mei_write(struct file *file, const char __user *ubuf,
- 	}
+diff --git a/drivers/parport/parport_amiga.c b/drivers/parport/parport_amiga.c
+index e6dc857aac3fe..e06c7b2aac5c4 100644
+--- a/drivers/parport/parport_amiga.c
++++ b/drivers/parport/parport_amiga.c
+@@ -229,7 +229,13 @@ static void __exit amiga_parallel_remove(struct platform_device *pdev)
+ 	parport_put_port(port);
+ }
  
- 	if (!mei_cl_is_connected(cl)) {
--		cl_err(dev, cl, "is not connected");
-+		cl_dbg(dev, cl, "is not connected");
- 		rets = -ENODEV;
- 		goto out;
- 	}
+-static struct platform_driver amiga_parallel_driver = {
++/*
++ * amiga_parallel_remove() lives in .exit.text. For drivers registered via
++ * module_platform_driver_probe() this is ok because they cannot get unbound at
++ * runtime. So mark the driver struct with __refdata to prevent modpost
++ * triggering a section mismatch warning.
++ */
++static struct platform_driver amiga_parallel_driver __refdata = {
+ 	.remove_new = __exit_p(amiga_parallel_remove),
+ 	.driver   = {
+ 		.name	= "amiga-parallel",
 -- 
 2.43.0
 
