@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA3F13D896;
-	Tue, 23 Jul 2024 18:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5851581F4;
+	Tue, 23 Jul 2024 18:42:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760160; cv=none; b=Eej90Qa8bi0VXVOSu4Hlcm3/L2H5HoliMIkXHS8U5/BNK7gxxaMn1W61WveCkjh9VRmB2TbHpgC3midf9hK7cvGMUpjBEUUtjS69eeJGdYYPbI8gftaBiXFrax0P2/gtQkcnq69MA9Fg/jtPGPSRi2QTVx019gPhC3Vfcb5ImhQ=
+	t=1721760164; cv=none; b=lBryyTa/XtBEYtmr05YYuew3uBDFoJu8DY/+qpCKI45QbF4/gJCTW3UbDuwFQGLdpu+NqGpxsyQyLO7S3yk9Y7uhrwciXs4Pxyu32xOGGy6NtjTyHXAIvqAZtMIZdGJnAoqtfVvio8vQGgOtUqZ3B3o8B63ueHDsbZcRSoBKPJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760160; c=relaxed/simple;
-	bh=vIXq2G3F8cJmPbHKpWGdia6aCYpxPmNoKx6kw+TPAFc=;
+	s=arc-20240116; t=1721760164; c=relaxed/simple;
+	bh=2wKien1XtKTYrTP7ZpuigxqTAUntQwoHcYzffovaZ64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TY7+ciDNxlHSg7oZH6/h0xEV0hc075Vv4M2u+0+PNGFp4Th1F8mV42fV1b6YcHBdqfPnW+KJzgPZvkR583cKCXHdhYn1I+ihm9eg+UgaAywULyIlLIS57L0jZCmfXTzf/SiMZeU4aR0MjiOJrG9jiMiBR1jzLtWx4qoNAO4xiR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvbf4acJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s17SukM/wkdnZASZ3s+GC7O3/SnGJjVG++Zb3AepuHlmra7yLIjxCOmMfXDUTQFKYhOxj/rwb4rSBvGgiz6GdDSfBDEOI09eV7fqwX65mxu9vd9DzBjYr4tQUWzUah+vBfgYT78jvCABLxj41thpYZxtlCnZOUy6lxOTbNUirS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTAsPEqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvbf4acJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BAAC4AF0B;
-	Tue, 23 Jul 2024 18:42:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTAsPEqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E0CC4AF0B;
+	Tue, 23 Jul 2024 18:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760160;
-	bh=vIXq2G3F8cJmPbHKpWGdia6aCYpxPmNoKx6kw+TPAFc=;
+	s=korg; t=1721760163;
+	bh=2wKien1XtKTYrTP7ZpuigxqTAUntQwoHcYzffovaZ64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvbf4acJNXkv1jEB1Vd7FQnTy1duD49roZaa+LaCRxIlUWfb+m4Rvy2hrqGS/J7gc
-	 ICTlzdTpeT5AF9AYgVHJ2dHTwvFlYIcJvGSSMKx7Ei+XfoKpEYu5poEVcZCgDPs/VJ
-	 YFDt7VNJfTMVIirucgT1oUXILYfUrSkcizM1pGok=
+	b=yTAsPEqoRX48qBClDpGESli+tpQngNOF+xkbIXs36ntEa77jIOQT5nY1Jl2N/EZHz
+	 yPD5SJrSKSBTRRyfFKqH91j+kjigvxXssXBcoKgDOWPQu4r1r27+2/pT0zX9I+C+5N
+	 XqlcCyhaBcNZPyz9hV4L2GQLPfsuE53zmZ7ncqM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 122/163] net: usb: qmi_wwan: add Telit FN912 compositions
-Date: Tue, 23 Jul 2024 20:24:11 +0200
-Message-ID: <20240723180148.185999425@linuxfoundation.org>
+Subject: [PATCH 6.9 123/163] clk: qcom: apss-ipq-pll: remove config_ctl_hi_val from Stromer pll configs
+Date: Tue, 23 Jul 2024 20:24:12 +0200
+Message-ID: <20240723180148.225170400@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -46,90 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-[ Upstream commit 77453e2b015b5ced5b3f45364dd5a72dfc3bdecb ]
+[ Upstream commit 2ba8425678af422da37b6c9b50e9ce66f0f55cae ]
 
-Add the following Telit FN912 compositions:
+Since the CONFIG_CTL register is only 32 bits wide in the Stromer
+and Stromer Plus PLLs , the 'config_ctl_hi_val' values from the
+IPQ5018 and IPQ5332 configurations are not used so remove those.
 
-0x3000: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=3000 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN912
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+No functional changes.
 
-0x3001: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=3001 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN912
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://patch.msgid.link/20240625102236.69539-1-dnlplm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240509-stromer-config-ctl-v1-1-6034e17b28d5@gmail.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/apss-ipq-pll.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index a5469cf5cf670..befbca01bfe37 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1380,6 +1380,8 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1260, 2)},	/* Telit LE910Cx */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1261, 2)},	/* Telit LE910Cx */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1900, 1)},	/* Telit LN940 series */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x3000, 0)},	/* Telit FN912 series */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x3001, 0)},	/* Telit FN912 series */
- 	{QMI_FIXED_INTF(0x1c9e, 0x9801, 3)},	/* Telewell TW-3G HSPA+ */
- 	{QMI_FIXED_INTF(0x1c9e, 0x9803, 4)},	/* Telewell TW-3G HSPA+ */
- 	{QMI_FIXED_INTF(0x1c9e, 0x9b01, 3)},	/* XS Stick W100-2 from 4G Systems */
+diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
+index d7ab5bd5d4b41..e12bb9abf6b6a 100644
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -100,7 +100,6 @@ static struct clk_alpha_pll ipq_pll_stromer_plus = {
+ static const struct alpha_pll_config ipq5018_pll_config = {
+ 	.l = 0x2a,
+ 	.config_ctl_val = 0x4001075b,
+-	.config_ctl_hi_val = 0x304,
+ 	.main_output_mask = BIT(0),
+ 	.aux_output_mask = BIT(1),
+ 	.early_output_mask = BIT(3),
+@@ -114,7 +113,6 @@ static const struct alpha_pll_config ipq5018_pll_config = {
+ static const struct alpha_pll_config ipq5332_pll_config = {
+ 	.l = 0x2d,
+ 	.config_ctl_val = 0x4001075b,
+-	.config_ctl_hi_val = 0x304,
+ 	.main_output_mask = BIT(0),
+ 	.aux_output_mask = BIT(1),
+ 	.early_output_mask = BIT(3),
 -- 
 2.43.0
 
