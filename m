@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7563213D600;
-	Tue, 23 Jul 2024 18:32:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE0E1586C4;
+	Tue, 23 Jul 2024 18:32:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759536; cv=none; b=Eht5oB9uiYdqXuGnz7IDRH5jIesTUE2fdw8P0ppnqjwYRu2cPxraxs6VruuAeRLONaZk1DmXNrYwHiHCo7+OVruvGzU0rN5ckFV2G9TiN4zgkOgVDwClyhYVYazjQ6O7xUYi1tAoJW84RZnG35zHw3OB9E2zP9zGSv3FG/ST004=
+	t=1721759540; cv=none; b=rRVukd338X4YhhemS/YfdRqLko1MgYGOrSCMiwzx19YUfg6vtfmj31xt60l0DxGXLmSFFxkOaCjPT6eNx8kOjpYqxEN/qRIZTFG62ayVcarrYJwiAXYeCSAaLlUTdyNyK/PQPHT1fj8cSLOQxELgGdEzPLRHzdmyUYptUVjvGtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759536; c=relaxed/simple;
-	bh=aaHOqgRnvMPiDqpGUTIqjvBPtC8apTIbUgAVzlUhLMg=;
+	s=arc-20240116; t=1721759540; c=relaxed/simple;
+	bh=+pv4NaMJzO+MQzjMjPX6eBDhxVIEpp9oL2FkH4udfzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s8kxuw8w9l9O/oDAAhhRsrWD7wWr2L6Zu2EV2TAF6REc4e/1RhD5Qhlhr8IsImQCFzMHAUiRPZKEd+q5/VPVoYuxVDdgCRWB0yH7Iw0QLwoeG+scTFPo4+l9vRoYWTtXecpRHQf0Eh/N8rdByYfixaHVFHGq3vvTjsAep4TJVyY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QAt4RNpa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KG5RvOh4YeNnaqDl8hli4UxkWPRsipeC7sJWf4I6YjQhq+ZGLZ8nNrMKMyauqhFp9VVOAMKqjO8/RL9DVacthKkHZthpqY0GcxO/oao0lWPHfEyyBGw/tPfR97RE1QVLIYxdTikQdWzjFyL8sKaqbukGiD+6tb+FuOP1Am/aVyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wTA6pvc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QAt4RNpa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E8AC4AF09;
-	Tue, 23 Jul 2024 18:32:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wTA6pvc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95EFC4AF0A;
+	Tue, 23 Jul 2024 18:32:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759536;
-	bh=aaHOqgRnvMPiDqpGUTIqjvBPtC8apTIbUgAVzlUhLMg=;
+	s=korg; t=1721759539;
+	bh=+pv4NaMJzO+MQzjMjPX6eBDhxVIEpp9oL2FkH4udfzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QAt4RNpamLSWJ8Pg3Lw+IIk/rmxZHCrWDPfXxofP4Wme8Hxq5zHlAUn3InCf7c2YP
-	 mDzG9rZ8CA8UXMivKNqcqNZPNsYoHAkB7E19nZCL+2tBRSG33wXD8me3B3esb0VCJM
-	 Qhn9fKgEDQdeojoG/kfMd4vz7djGHW7W2uD0ZhC8=
+	b=1wTA6pvcIBmyTqfUuCN7CfJENuhk+crhRQZwExq1J2OujMgHUO8ODX2O6UbPGu65A
+	 B8kRyj8KRI0yuZ6khF9HOSZnVGkD8qiPBFic0FyTxYgWtpL8WwSmOLx6xDr62BB6I3
+	 0nEhm431GICBHmpAQcIuX6axSjCYXc6I0f8u0psY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Alexander Aring <aahringo@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 044/129] mei: demote client disconnect warning on suspend to debug
-Date: Tue, 23 Jul 2024 20:23:12 +0200
-Message-ID: <20240723180406.491482847@linuxfoundation.org>
+Subject: [PATCH 6.6 027/129] net: ipv6: rpl_iptunnel: block BH in rpl_output() and rpl_input()
+Date: Tue, 23 Jul 2024 20:22:55 +0200
+Message-ID: <20240723180405.840133128@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -51,46 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1db5322b7e6b58e1b304ce69a50e9dca798ca95b ]
+[ Upstream commit db0090c6eb12c31246438b7fe2a8f1b833e7a653 ]
 
-Change level for the "not connected" client message in the write
-callback from error to debug.
+As explained in commit 1378817486d6 ("tipc: block BH
+before using dst_cache"), net/core/dst_cache.c
+helpers need to be called with BH disabled.
 
-The MEI driver currently disconnects all clients upon system suspend.
-This behavior is by design and user-space applications with
-open connections before the suspend are expected to handle errors upon
-resume, by reopening their handles, reconnecting,
-and retrying their operations.
+Disabling preemption in rpl_output() is not good enough,
+because rpl_output() is called from process context,
+lwtunnel_output() only uses rcu_read_lock().
 
-However, the current driver implementation logs an error message every
-time a write operation is attempted on a disconnected client.
-Since this is a normal and expected flow after system resume
-logging this as an error can be misleading.
+We might be interrupted by a softirq, re-enter rpl_output()
+and corrupt dst_cache data structures.
 
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240530091415.725247-1-tomas.winkler@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix the race by using local_bh_disable() instead of
+preempt_disable().
+
+Apply a similar change in rpl_input().
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Alexander Aring <aahringo@redhat.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240531132636.2637995-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/rpl_iptunnel.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/misc/mei/main.c b/drivers/misc/mei/main.c
-index bb4e9eabda978..c018534c780f9 100644
---- a/drivers/misc/mei/main.c
-+++ b/drivers/misc/mei/main.c
-@@ -329,7 +329,7 @@ static ssize_t mei_write(struct file *file, const char __user *ubuf,
+diff --git a/net/ipv6/rpl_iptunnel.c b/net/ipv6/rpl_iptunnel.c
+index a013b92cbb860..2c83b7586422d 100644
+--- a/net/ipv6/rpl_iptunnel.c
++++ b/net/ipv6/rpl_iptunnel.c
+@@ -212,9 +212,9 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 	if (unlikely(err))
+ 		goto drop;
+ 
+-	preempt_disable();
++	local_bh_disable();
+ 	dst = dst_cache_get(&rlwt->cache);
+-	preempt_enable();
++	local_bh_enable();
+ 
+ 	if (unlikely(!dst)) {
+ 		struct ipv6hdr *hdr = ipv6_hdr(skb);
+@@ -234,9 +234,9 @@ static int rpl_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
+ 		}
+ 
+-		preempt_disable();
++		local_bh_disable();
+ 		dst_cache_set_ip6(&rlwt->cache, dst, &fl6.saddr);
+-		preempt_enable();
++		local_bh_enable();
  	}
  
- 	if (!mei_cl_is_connected(cl)) {
--		cl_err(dev, cl, "is not connected");
-+		cl_dbg(dev, cl, "is not connected");
- 		rets = -ENODEV;
- 		goto out;
+ 	skb_dst_drop(skb);
+@@ -268,23 +268,21 @@ static int rpl_input(struct sk_buff *skb)
+ 		return err;
  	}
+ 
+-	preempt_disable();
++	local_bh_disable();
+ 	dst = dst_cache_get(&rlwt->cache);
+-	preempt_enable();
+ 
+ 	if (!dst) {
+ 		ip6_route_input(skb);
+ 		dst = skb_dst(skb);
+ 		if (!dst->error) {
+-			preempt_disable();
+ 			dst_cache_set_ip6(&rlwt->cache, dst,
+ 					  &ipv6_hdr(skb)->saddr);
+-			preempt_enable();
+ 		}
+ 	} else {
+ 		skb_dst_drop(skb);
+ 		skb_dst_set(skb, dst);
+ 	}
++	local_bh_enable();
+ 
+ 	err = skb_cow_head(skb, LL_RESERVED_SPACE(dst->dev));
+ 	if (unlikely(err))
 -- 
 2.43.0
 
