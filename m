@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 146F315445E;
-	Tue, 23 Jul 2024 18:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59903156C6C;
+	Tue, 23 Jul 2024 18:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759427; cv=none; b=uZgcZPbgs5DbLcHaWUG7AYJ8ZTOexi1wOCwMavmNKxlfvdQ69B+fD4YNygGcJ5J0LlG7+T/MA5gX/UrVpzta7d9dimc9JqqN6UY0PN6IuutrvpENK3jhNTmKWfb19IGXDVhCgZqMfNt77VoeZZMez8otIidX4LMui0CDJ2nxLCI=
+	t=1721759430; cv=none; b=sxxVmkDrNdoBYzTiRg1aWN8hfGJy5yYkjzz+c6X6orfnuqqPUkZi4fQ39JPYjAp10pI5hJ6X3PoTY3ZT149y4uLdKNAOuli/U8c0iP1C1hLXjRY7TiZste0rZMv+1l5lRJqrA9o2AvQ+2pArFnedtKbqkBArwgbAg/3iU4ZOQwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759427; c=relaxed/simple;
-	bh=jZyvuzOd+isjuGHULbUp9jiLjTAJ1PeuO0lq7p6q2Vg=;
+	s=arc-20240116; t=1721759430; c=relaxed/simple;
+	bh=L6gLPUGpL300K/wZWjXlSVMli3OZtmHvwpt94/19p8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W0kxIHtKCYdcReNOoApXyNI9OntfK3GMQWGFEviwjx3tQv+dImMBwr5r8M70Ww0Ci++gV0cCqGJQijexhMdrWZG2Ts0a2GqtvGdSVMjCZWpl1TCgp72gXwheSIOz/pok1WxszRdWVgoZVKtwsXL7Bdqdj1+koG8c3VZ1a5CjWB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivzTdTGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EfIZGON6SlNBMvaLNzxoDjF+TAORy5+fZXcYK8h1KUP4or0D1GZuxRuDG4GnN9OG189atwx9G4z6+WxOUQkOtIxmv3Bb2Hw0wDitcjqjDEr8AWhYbsUeyggw5DoLlmuUwGeDIf6GVvBsCwS52vD8hWVjnDBGdIXTJKoE29cfWE0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EC2YnsDL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivzTdTGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A89AC4AF09;
-	Tue, 23 Jul 2024 18:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EC2YnsDL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACAAC4AF0A;
+	Tue, 23 Jul 2024 18:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759426;
-	bh=jZyvuzOd+isjuGHULbUp9jiLjTAJ1PeuO0lq7p6q2Vg=;
+	s=korg; t=1721759429;
+	bh=L6gLPUGpL300K/wZWjXlSVMli3OZtmHvwpt94/19p8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ivzTdTGq97zKMSE9jzUeHhXkcF3lZCaMAs75NlACplfkMlRk2kTgZPoQqYlMu4/AT
-	 gox1ehT5TgmsPD/xi1ICLAG7PPiEzVeZkUxwcpnUQmFdMtEzgY/h4vVfjRBDHxc+Dq
-	 OYZt232IKMU0mn+ev17vT1CASw+9bgK6RBvDHGsk=
+	b=EC2YnsDL3bvAnIqJ/+Kny4xst6SP2HpoTCOg1mJVc6RgyJ43WSuJyUcRhSKGyDD7y
+	 g/xQqodMRG2l42/8mMJ8foxSpbdmdb00l+zoE2GHbjqSNKHmcZFKzCp+c8qdsYEHrF
+	 UYAj5amt9oEB0UZsXHruQxGS66K1UAB1OFT3oVrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+cd6135193ba6bb9ad158@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 101/105] wifi: cfg80211: wext: set ssids=NULL for passive scans
-Date: Tue, 23 Jul 2024 20:24:18 +0200
-Message-ID: <20240723180407.136440375@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 092/105] spi: imx: Dont expect DMA for i.MX{25,35,50,51,53} cspi devices
+Date: Tue, 23 Jul 2024 20:24:09 +0200
+Message-ID: <20240723180406.792342339@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -44,47 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit 0941772342d59e48733131ac3a202fa1a4d832e9 upstream.
+[ Upstream commit ce1dac560a74220f2e53845ec0723b562288aed4 ]
 
-In nl80211, we always set the ssids of a scan request to
-NULL when n_ssids==0 (passive scan). Drivers have relied
-on this behaviour in the past, so we fixed it in 6 GHz
-scan requests as well, and added a warning so we'd have
-assurance the API would always be called that way.
+While in commit 2dd33f9cec90 ("spi: imx: support DMA for imx35") it was
+claimed that DMA works on i.MX25, i.MX31 and i.MX35 the respective
+device trees don't add DMA channels. The Reference manuals of i.MX31 and
+i.MX25 also don't mention the CSPI core being DMA capable. (I didn't
+check the others.)
 
-syzbot found that wext doesn't ensure that, so we reach
-the check and trigger the warning. Fix the wext code to
-set the ssids pointer to NULL when there are none.
+Since commit e267a5b3ec59 ("spi: spi-imx: Use dev_err_probe for failed
+DMA channel requests") this results in an error message
 
-Reported-by: syzbot+cd6135193ba6bb9ad158@syzkaller.appspotmail.com
-Fixes: f7a8b10bfd61 ("wifi: cfg80211: fix 6 GHz scan request building")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	spi_imx 43fa4000.spi: error -ENODEV: can't get the TX DMA channel!
+
+during boot. However that isn't fatal and the driver gets loaded just
+fine, just without using DMA.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://patch.msgid.link/20240508095610.2146640-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/scan.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/spi/spi-imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/wireless/scan.c
-+++ b/net/wireless/scan.c
-@@ -2800,8 +2800,10 @@ int cfg80211_wext_siwscan(struct net_dev
- 			memcpy(creq->ssids[0].ssid, wreq->essid, wreq->essid_len);
- 			creq->ssids[0].ssid_len = wreq->essid_len;
- 		}
--		if (wreq->scan_type == IW_SCAN_TYPE_PASSIVE)
-+		if (wreq->scan_type == IW_SCAN_TYPE_PASSIVE) {
-+			creq->ssids = NULL;
- 			creq->n_ssids = 0;
-+		}
- 	}
- 
- 	for (i = 0; i < NUM_NL80211_BANDS; i++)
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 2c660a95c17e7..93e83fbc3403f 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -1040,7 +1040,7 @@ static struct spi_imx_devtype_data imx35_cspi_devtype_data = {
+ 	.rx_available = mx31_rx_available,
+ 	.reset = mx31_reset,
+ 	.fifo_size = 8,
+-	.has_dmamode = true,
++	.has_dmamode = false,
+ 	.dynamic_burst = false,
+ 	.has_slavemode = false,
+ 	.devtype = IMX35_CSPI,
+-- 
+2.43.0
+
 
 
