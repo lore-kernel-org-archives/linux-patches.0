@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2819D156F29;
-	Tue, 23 Jul 2024 18:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C01157A4F;
+	Tue, 23 Jul 2024 18:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759368; cv=none; b=bDhdCYdcfXlu54zoa/lhLFCHGXrvZXj2ugBCLHaHPolrvfuj6+10QAAgQ8z4bi8nT70MMYZ9gQKiltw+eD1AiHoFjJnC2iVUZcwWs9dXTPPvfqC63bswDjtEqkXmKRd+lq2tsg7ZH8hxSYYnnaAcO0+N4694cbcKZx4JNqZ9oww=
+	t=1721759371; cv=none; b=lkluJ/OGoD/u6J8iB7QtpKLkITV0Te882U60iQPOtMn+Hqa3P0G7suvRp73a+XaA2+G67sGTaxq5Y4JaMp0pfQhrHQl8vCE1AffiflP9oMaLbYhdtuB865BoY01xy0B0/WEEGCZsS6uS98GWLiC5c4WofUTA0xPWZlCy+xeKiXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759368; c=relaxed/simple;
-	bh=vg//bSqi8TBZRi+wQUkSkT82AI8LbWCSWhAqT1CdkZo=;
+	s=arc-20240116; t=1721759371; c=relaxed/simple;
+	bh=azEYriXkMdquOW9xTWWs2kqzyYOanGb0xpPuxFX+G1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ad5vGOUYNNxdrZw2ZUzfEcTm6pufSUuKlYORIV7ZQuLXUihbAz4MdfIIZMpgOg/2yI4F55imbyZhtdNinv4CepwtLPRDSAkOBO5dlFapmirs+4n5HLtpeIyrzxft/1HPTPOlMl1UWYRiHD38PZwt7NIYPMpVtcYdGjjH8LIibns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xIJjMaYH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=swSupo46eaDDKb5SBv+r9NguQCcoJmd1orEjpxhB8d+sbAakkc54CUxw2BsPYy+6m2D7G2DFms8eCdkL4hfCM9fG7mZbVa7817BfJw7LPQ3JeN9lAoXK1fb7DtKGavsPV/M3t/0IZ6SY4k6MUfkI/WDNmgRBNXbduV6YvPE7b68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvUzQuST; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xIJjMaYH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A372CC4AF0A;
-	Tue, 23 Jul 2024 18:29:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvUzQuST"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBF6C4AF0B;
+	Tue, 23 Jul 2024 18:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759368;
-	bh=vg//bSqi8TBZRi+wQUkSkT82AI8LbWCSWhAqT1CdkZo=;
+	s=korg; t=1721759371;
+	bh=azEYriXkMdquOW9xTWWs2kqzyYOanGb0xpPuxFX+G1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xIJjMaYHEbXuzExADA0c5mNvO2dTJYRRYKAMORG19b/vzAMhm/xBeuE1RfCQHEfy4
-	 t/2gxbPeEfyBRJXOEFha5zxTPAqDV0QHNMhcq5beavc4rfnU7G4sNO3oPF17ZmhGUP
-	 CyCHPEVsYEN3Mx2eXeCdCjWiDIEyonMrmP0KSSpA=
+	b=wvUzQuST+AoH0UGw5aaeImTxG0YZ+qTclv3s46Yq+syFK+1Vqx3FqUbKNfwTNwNal
+	 UdvqExj7i7AC3dramvCsauSnBw9L8MwGUblwyT/1pZJ3uUU5xK+2O2xcYVVEyjTZXX
+	 84lilsPhls68MfcriR58kRNKbf2QbT/yKrucWwLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/105] riscv: stacktrace: fix usage of ftrace_graph_ret_addr()
-Date: Tue, 23 Jul 2024 20:24:08 +0200
-Message-ID: <20240723180406.754408918@linuxfoundation.org>
+Subject: [PATCH 6.1 062/105] ASoC: SOF: sof-audio: Skip unprepare for in-use widgets on error rollback
+Date: Tue, 23 Jul 2024 20:23:39 +0200
+Message-ID: <20240723180405.637541902@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -52,47 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 393da6cbb2ff89aadc47683a85269f913aa1c139 ]
+[ Upstream commit 6f2a43e3d14f6e31a3b041a1043195d02c54d615 ]
 
-ftrace_graph_ret_addr() takes an `idx` integer pointer that is used to
-optimize the stack unwinding. Pass it a valid pointer to utilize the
-optimizations that might be available in the future.
+If the ipc_prepare() callback fails for a module instance, on error rewind
+we must skip the ipc_unprepare() call for ones that has positive use count.
 
-The commit is making riscv's usage of ftrace_graph_ret_addr() match
-x86_64.
+The positive use count means that the module instance is in active use, it
+cannot be unprepared.
 
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/20240618145820.62112-1-puranjay@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+The issue affects capture direction paths with branches (single dai with
+multiple PCMs), the affected widgets are in the shared part of the paths.
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20240612121203.15468-1-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/sof/sof-audio.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 0d3f00eb0baee..10e311b2759d3 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -32,6 +32,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			     bool (*fn)(void *, unsigned long), void *arg)
- {
- 	unsigned long fp, sp, pc;
-+	int graph_idx = 0;
- 	int level = 0;
- 
- 	if (regs) {
-@@ -68,7 +69,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 			pc = regs->ra;
- 		} else {
- 			fp = frame->fp;
--			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
-+			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
- 						   &frame->ra);
- 			if (pc == (unsigned long)ret_from_exception) {
- 				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
+diff --git a/sound/soc/sof/sof-audio.c b/sound/soc/sof/sof-audio.c
+index 061ab7289a6c3..b1141f4478168 100644
+--- a/sound/soc/sof/sof-audio.c
++++ b/sound/soc/sof/sof-audio.c
+@@ -328,7 +328,7 @@ sof_prepare_widgets_in_path(struct snd_sof_dev *sdev, struct snd_soc_dapm_widget
+ 			if (ret < 0) {
+ 				/* unprepare the source widget */
+ 				if (widget_ops[widget->id].ipc_unprepare &&
+-				    swidget && swidget->prepared) {
++				    swidget && swidget->prepared && swidget->use_count == 0) {
+ 					widget_ops[widget->id].ipc_unprepare(swidget);
+ 					swidget->prepared = false;
+ 				}
 -- 
 2.43.0
 
