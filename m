@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F45915887F;
-	Tue, 23 Jul 2024 18:35:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D327158A3F;
+	Tue, 23 Jul 2024 18:35:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759724; cv=none; b=byZKwVb1vP5N1WccHEZ8mNLH/un1TBU8Tkx1uJpcvMc7HzL13KLaHPZIRoGa46lEBqdfqncmS42tNU6m6qLmay6vATlFepjjMpIcmQi7OjRh/LXyxDNZ3Yq/E4pL6ewAA/G6i1MDGDBibLupYEiIByzKbBL8vOGvU76tzww2m8M=
+	t=1721759727; cv=none; b=NWT1Q/uvoa4dGyJkpY+pBQ4iVj1uGAyMql1uwxHtiQNQcPFI9ZlJ9wHMlpmN8ThGtuhC/L6RK4kBj6BWNmnjoiqIH0XygbyLD7LuYOJxxikZ/SDc6kYcFNl1QYyTJa7J1+uXD26Tr8QV3G+lXFPJRoKhvhc6SQpyIpgemwiikc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759724; c=relaxed/simple;
-	bh=/K9urH5O2G+uikkcUXfBSpPi7X75JwH5gBsezKkpKIo=;
+	s=arc-20240116; t=1721759727; c=relaxed/simple;
+	bh=dYJG8hlj1Lk1mq4u4OgOZ7fZdCzmoEZaF4pckbBpj9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XukhRoST8LBr5WzKOF+HoCUDFuFresa3BCvvYIHnvuIucHNhjX42KblONyfw9xKimsFSkxT2iJoDTj5bN8fSUj+FKaj7HxnhueXnbUjnDyvCMS77lb88D6145d/hySyKiKe6NokJQcHvQvJfj3TEZL02b+fXW+8KNyAKkiyskC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8ShobKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tb5n113cdOi8DDh2I/zvmDaHApFdl3AF9B6MKcsoy6ZxJDNKrpD1cWpLE/jKRiqgBCtc9vl/sOIx9W6GFr+PUto6yZWX4Lb0jkcLP51owaPPRzWCbbUXzblHzPwqDJLq3Epl81Jshwor/wfwbr6eScsXaKYBMAVokZsB7dhp+q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rwwTrFCp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8ShobKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD24C4AF0A;
-	Tue, 23 Jul 2024 18:35:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rwwTrFCp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3804C4AF0B;
+	Tue, 23 Jul 2024 18:35:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759724;
-	bh=/K9urH5O2G+uikkcUXfBSpPi7X75JwH5gBsezKkpKIo=;
+	s=korg; t=1721759727;
+	bh=dYJG8hlj1Lk1mq4u4OgOZ7fZdCzmoEZaF4pckbBpj9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8ShobKHK+RYVQBejgmNCC5e5X6CoZqP2pslAjKp4rmmh7aV1ELTK5vd6ErP7krBd
-	 OqjV2DBzuflFi32gFqCn+rEneVNd8OySGh0c220G3JW0ipDD7o0t5Ax8XrCFBKe34o
-	 onGkUO2VjjntCqiJP71wTQn3+ifKF8uZ5lgyqiVg=
+	b=rwwTrFCp8zJ7JPC0SCMnu2QcHHoMgMy76WkGAbu2jkWw+GqvyywwAKyMCc3G7l7YR
+	 CyoBcyBea7csD7vxfYNt4T8bPsnBYj1O0e4oRQjeUG3DFFBgiulmq7iufLWhZZrCUS
+	 Bhh2AL1BhuEMgCeM3mgCoBvLxSYZ2x+ifvmHYq7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Atish Patra <atishp@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 107/129] wifi: iwlwifi: properly set WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK
-Date: Tue, 23 Jul 2024 20:24:15 +0200
-Message-ID: <20240723180408.926142603@linuxfoundation.org>
+Subject: [PATCH 6.6 108/129] drivers/perf: riscv: Reset the counter to hpmevent mapping while starting cpus
+Date: Tue, 23 Jul 2024 20:24:16 +0200
+Message-ID: <20240723180408.963698306@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,37 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Samuel Holland <samuel.holland@sifive.com>
 
-[ Upstream commit 4ec17ce716bdaf680288ce680b4621b52483cc96 ]
+[ Upstream commit 7dd646cf745c34d31e7ed2a52265e9ca8308f58f ]
 
-The WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK should be set based on the
-WOWLAN_KEK_KCK_MATERIAL command version. Currently, the command
-version in the firmware has advanced to 4, which prevents the
-flag from being set correctly, fix that.
+Currently, we stop all the counters while a new cpu is brought online.
+However, the hpmevent to counter mappings are not reset. The firmware may
+have some stale encoding in their mapping structure which may lead to
+undesirable results. We have not encountered such scenario though.
 
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240703064026.a0f162108575.If1a9785727d2a1b0197a396680965df1b53d4096@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Samuel Holland <samuel.holland@sifive.com>
+Signed-off-by: Atish Patra <atishp@rivosinc.com>
+Link: https://lore.kernel.org/r/20240628-misc_perf_fixes-v4-2-e01cfddcf035@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c | 2 +-
+ drivers/perf/riscv_pmu_sbi.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-index 37f628a9b8115..7d0032a51f2d3 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -600,7 +600,7 @@ int iwl_mvm_mac_setup_register(struct iwl_mvm *mvm)
- 		hw->wiphy->features |= NL80211_FEATURE_WFA_TPC_IE_IN_PROBES;
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index d80b4b09152df..ae16ecb15f2d9 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -611,7 +611,7 @@ static inline void pmu_sbi_stop_all(struct riscv_pmu *pmu)
+ 	 * which may include counters that are not enabled yet.
+ 	 */
+ 	sbi_ecall(SBI_EXT_PMU, SBI_EXT_PMU_COUNTER_STOP,
+-		  0, pmu->cmask, 0, 0, 0, 0);
++		  0, pmu->cmask, SBI_PMU_STOP_FLAG_RESET, 0, 0, 0);
+ }
  
- 	if (iwl_fw_lookup_cmd_ver(mvm->fw, WOWLAN_KEK_KCK_MATERIAL,
--				  IWL_FW_CMD_VER_UNKNOWN) == 3)
-+				  IWL_FW_CMD_VER_UNKNOWN) >= 3)
- 		hw->wiphy->flags |= WIPHY_FLAG_SUPPORTS_EXT_KEK_KCK;
- 
- 	if (fw_has_api(&mvm->fw->ucode_capa,
+ static inline void pmu_sbi_stop_hw_ctrs(struct riscv_pmu *pmu)
 -- 
 2.43.0
 
