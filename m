@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F397D42067;
-	Tue, 23 Jul 2024 18:31:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBC342067;
+	Tue, 23 Jul 2024 18:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759477; cv=none; b=Hcbo25VXbj/PA9AIeUxXqhTrEFD7ojL7ykTFFG0dRH1NcdFXdakL0q0OY7Jv3+mCYYTFV26H+K2VhYCJu10eTLW5D5XjACTYBlKdnLGkF54YB1xWd06nHRq+asn4gwhxZMRj+jWPN0W6vPy/NY/nDzkMGUGsaPD34DBan8I2Aos=
+	t=1721759480; cv=none; b=NM9kJU3KYF7RiN6p2t9VvlHm/e3c3mvFOu1iM1uMI3P+41QlCT6ukWUiEbe/xrGX3+d/tM8OgmtDgYcu9CVtY+1R5wqtWt6i570Z+2QGUBRfq0vjZmZid2PcJalS6Dm123aelkdhgMcUYfj67MPrD4G110o28SBY0LnRA79zOnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759477; c=relaxed/simple;
-	bh=56ZOs9AdXaD0oxFhaJpZCx/1/LWgDbblDIU7zRnxZpo=;
+	s=arc-20240116; t=1721759480; c=relaxed/simple;
+	bh=WQAL4eiz1s+Lr8kKq0vKlRbJwpLa1ZicUctWnqFNInI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gtQj9mC9gsRw459amIfd/PAfpGM5i4XYZPq4I27WCARbGWqjhl6elSlt/422fE5WI+ybMoUxhQdOvoHNyufPOTqkLPCZgWRSR8JTvBFNS7QrePKZ911UvzFhlbwVYxJwvRKCB9nmBfzwuyJHgEDbNfQaqwXCHnVxe6IxK2W0ZgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glXMekr5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aTtKehDHQkaSO9ZH9HMaNWWa8ksOIuJh6r5kBWZrksP2Dq6Q3C4/5sk2maQHeE1r8Co89pKKkmmLBNnUxLM4sVgzOYKyaWHga9Ag0+ze0mrIijhmUHdSaXHY4W4pNzEZ0ZnQ+PHyyKZHP7H662FT329qhzO4Q5IAegue7v609Z8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SryRe8GO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glXMekr5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A150C4AF0A;
-	Tue, 23 Jul 2024 18:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SryRe8GO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E784C4AF0A;
+	Tue, 23 Jul 2024 18:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759476;
-	bh=56ZOs9AdXaD0oxFhaJpZCx/1/LWgDbblDIU7zRnxZpo=;
+	s=korg; t=1721759480;
+	bh=WQAL4eiz1s+Lr8kKq0vKlRbJwpLa1ZicUctWnqFNInI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glXMekr5pXYeljdCS+RlLt9/XYc2ybGQimf34vVNNTs682lHu/QD93aHL4h2qimtU
-	 AkrDry3O7yqHVYdNwKwLTDUvPGVBz135T6Jy9d2BGTO3SenoDx/B4XJjS0ChogbNJ5
-	 zYNP2qMvCNYYIIpz33R7TPpW5WHPlpw8/MTTcT2I=
+	b=SryRe8GOADhMG8oVzM8CN90BgyKKxpqdRhInKd2Eari87QRG7Ir3mOravVDM1RDOm
+	 KmWKmU0zdGUGt0Jfqu9G6WdtVj0/E7onaI8v6CR+l7Ge80XN0BkX5w7PAXhvNRTuDk
+	 THbpWkyV80j4GWs+BezD95rLzOfgP+MKLxRJWs7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
+	Edward Liaw <edliaw@google.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	John Hubbard <jhubbard@nvidia.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 023/129] selftests/openat2: Fix build warnings on ppc64
-Date: Tue, 23 Jul 2024 20:22:51 +0200
-Message-ID: <20240723180405.686196483@linuxfoundation.org>
+Subject: [PATCH 6.6 024/129] selftests/futex: pass _GNU_SOURCE without a value to the compiler
+Date: Tue, 23 Jul 2024 20:22:52 +0200
+Message-ID: <20240723180405.723937486@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -46,46 +47,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit 84b6df4c49a1cc2854a16937acd5fd3e6315d083 ]
+[ Upstream commit cb708ab9f584f159798b60853edcf0c8b67ce295 ]
 
-Fix warnings like:
+It's slightly better to set _GNU_SOURCE in the source code, but if one
+must do it via the compiler invocation, then the best way to do so is
+this:
 
-  openat2_test.c: In function ‘test_openat2_flags’:
-  openat2_test.c:303:73: warning: format ‘%llX’ expects argument of type
-  ‘long long unsigned int’, but argument 5 has type ‘__u64’ {aka ‘long
-  unsigned int’} [-Wformat=]
+    $(CC) -D_GNU_SOURCE=
 
-By switching to unsigned long long for u64 for ppc64 builds.
+...because otherwise, if this form is used:
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+    $(CC) -D_GNU_SOURCE
+
+...then that leads the compiler to set a value, as if you had passed in:
+
+    $(CC) -D_GNU_SOURCE=1
+
+That, in turn, leads to warnings under both gcc and clang, like this:
+
+    futex_requeue_pi.c:20: warning: "_GNU_SOURCE" redefined
+
+Fix this by using the "-D_GNU_SOURCE=" form.
+
+Reviewed-by: Edward Liaw <edliaw@google.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: John Hubbard <jhubbard@nvidia.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/openat2/openat2_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/futex/functional/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/openat2/openat2_test.c b/tools/testing/selftests/openat2/openat2_test.c
-index 7fb902099de45..f9d2b0ec77564 100644
---- a/tools/testing/selftests/openat2/openat2_test.c
-+++ b/tools/testing/selftests/openat2/openat2_test.c
-@@ -5,6 +5,7 @@
-  */
+diff --git a/tools/testing/selftests/futex/functional/Makefile b/tools/testing/selftests/futex/functional/Makefile
+index a392d0917b4e5..994fa3468f170 100644
+--- a/tools/testing/selftests/futex/functional/Makefile
++++ b/tools/testing/selftests/futex/functional/Makefile
+@@ -1,6 +1,6 @@
+ # SPDX-License-Identifier: GPL-2.0
+ INCLUDES := -I../include -I../../ $(KHDR_INCLUDES)
+-CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE -pthread $(INCLUDES) $(KHDR_INCLUDES)
++CFLAGS := $(CFLAGS) -g -O2 -Wall -D_GNU_SOURCE= -pthread $(INCLUDES) $(KHDR_INCLUDES)
+ LDLIBS := -lpthread -lrt
  
- #define _GNU_SOURCE
-+#define __SANE_USERSPACE_TYPES__ // Use ll64
- #include <fcntl.h>
- #include <sched.h>
- #include <sys/stat.h>
+ LOCAL_HDRS := \
 -- 
 2.43.0
 
