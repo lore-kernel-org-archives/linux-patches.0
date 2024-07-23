@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E8613D600;
-	Tue, 23 Jul 2024 18:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7601586C4;
+	Tue, 23 Jul 2024 18:36:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759793; cv=none; b=JFoOColrU1FXAObZhZ5+ug+4yulcWt9xuz8UhIOTfvHEJ4Cuzl877nLzPA/U8IVy2NDHQgGYJD2KusBoyWMbyC+5RI0CPOOnwM7Ee1mq+4A8FU3mBXklwl+V+bmdpKiw5LA+Rr8OLWQHcpp3TvdymEiVi+TjEtGVoV12DxsCG8s=
+	t=1721759795; cv=none; b=fAHpBkScvl72/9YCI/nXLoc+VKVnCj5O5SbcDJ6JTei8pcd6jchAAm9ii+Yn+6B6RSa/Vn6/fNQpQF+eAmWSCSkQwxZ1TnGjbE4XRgBSlzm1m7Y7nqeFD3lseT1d3vThsnV6V3tu1DtZQvayns3ZAC/qYHR9tPUqU0Nee2hUAjI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759793; c=relaxed/simple;
-	bh=o0aFCpupDaM1y/wy0q6VgaFOBOb48S+lTsS611ulrR8=;
+	s=arc-20240116; t=1721759795; c=relaxed/simple;
+	bh=zpuHKN5NaXH7kcqs9oNIDi9Bq6VWt1dA2glWst8KrV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FzaqMCUlFIlhkAYFAvhicas3mpcnD2OMpp9Wu8msxTr+acE2BG8AzkmuIIGIpzVNowCSJ6auz5Z83YbfZRHew5ma9Jv3UT59lgZZOaW9UE4G+X93BZofebxoIfF4rf7oVNmyEpS7xiNUrUmezXuzdpzjX0PK53otZGT/0eHSAi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B+BYeNvK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Kr+X5e/fEnsgCt/s3ZuWchQiee7DqYkjqQF3LBnZA5FptuQfK4KqFO2bGzPHjHMtwssNkXqZ1UJ3vRv5wNko9qTa/9VOrZGH38KSuxHAIsq+C+c1qELR5/Mcdpp8LY/a3LHPgNJD5BHMJylvNwT7o2hEN4JAn45EOuBuqPAQjiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySgeGLJw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B+BYeNvK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65559C4AF0A;
-	Tue, 23 Jul 2024 18:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySgeGLJw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C34FC4AF0A;
+	Tue, 23 Jul 2024 18:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759792;
-	bh=o0aFCpupDaM1y/wy0q6VgaFOBOb48S+lTsS611ulrR8=;
+	s=korg; t=1721759795;
+	bh=zpuHKN5NaXH7kcqs9oNIDi9Bq6VWt1dA2glWst8KrV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B+BYeNvKyKWU0na2b0TW0ijkSem+JL6Wu3fgX/9/zTRnePl8cpgY8AS1yWNr8yg5G
-	 0An9eIXJDQczyd1KTw5I/vCanr8Zq5jkh4LglJx0h/NupzTRs+shBbpVUbPt5VCV0z
-	 dvu2vxTD5fGcXYsXfaIjRZ/ZsAWIoxyU9xN4CzJg=
+	b=ySgeGLJwtRodDjVFUFo9PrGpNMl53Ry88UwN1IWUqWXPwZqXvNcuPmC4ESJgSqtgY
+	 BZ87t0DEFa/cDbSJyjn+n7UD6wm9oUZPIihvp9z8sgqNbLq0KeWSO3MObcfzlsqoug
+	 rwGydMWxGlH23yiE8V5K8qQTDGlaBK8a7oPTmz+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 098/129] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
-Date: Tue, 23 Jul 2024 20:24:06 +0200
-Message-ID: <20240723180408.575182340@linuxfoundation.org>
+Subject: [PATCH 6.6 099/129] Bluetooth: btnxpuart: Enable Power Save feature on startup
+Date: Tue, 23 Jul 2024 20:24:07 +0200
+Message-ID: <20240723180408.614035237@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,52 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
 
-[ Upstream commit 0d151a103775dd9645c78c97f77d6e2a5298d913 ]
+[ Upstream commit 4183a7be77009fc31c5760429fe095f163bf96a9 ]
 
-syzbot is reporting that calling hci_release_dev() from hci_error_reset()
-due to hci_dev_put() from hci_error_reset() can cause deadlock at
-destroy_workqueue(), for hci_error_reset() is called from
-hdev->req_workqueue which destroy_workqueue() needs to flush.
+This sets the default power save mode setting to enabled.
 
-We need to make sure that hdev->{rx_work,cmd_work,tx_work} which are
-queued into hdev->workqueue and hdev->{power_on,error_reset} which are
-queued into hdev->req_workqueue are no longer running by the moment
+The power save feature is now stable and stress test issues, such as the
+TX timeout error, have been resolved.
+commit c7ee0bc8db32 ("Bluetooth: btnxpuart: Resolve TX timeout error in
+power save stress test")
 
-       destroy_workqueue(hdev->workqueue);
-       destroy_workqueue(hdev->req_workqueue);
+With this setting, the driver will send the vendor command to FW at
+startup, to enable power save feature.
 
-are called from hci_release_dev().
+User can disable this feature using the following vendor command:
+hcitool cmd 3f 23 03 00 00 (HCI_NXP_AUTO_SLEEP_MODE)
 
-Call cancel_work_sync() on these work items from hci_unregister_dev()
-as soon as hdev->list is removed from hci_dev_list.
-
-Reported-by: syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=da0a9c9721e36db712e8
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/bluetooth/btnxpuart.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 3817d6369f0cc..b4d5b7200ff9c 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2704,7 +2704,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
- 	list_del(&hdev->list);
- 	write_unlock(&hci_dev_list_lock);
+diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
+index abccd571cf3ee..5c5a5b752419e 100644
+--- a/drivers/bluetooth/btnxpuart.c
++++ b/drivers/bluetooth/btnxpuart.c
+@@ -280,7 +280,7 @@ static u8 crc8_table[CRC8_TABLE_SIZE];
  
-+	cancel_work_sync(&hdev->rx_work);
-+	cancel_work_sync(&hdev->cmd_work);
-+	cancel_work_sync(&hdev->tx_work);
- 	cancel_work_sync(&hdev->power_on);
-+	cancel_work_sync(&hdev->error_reset);
+ /* Default configurations */
+ #define DEFAULT_H2C_WAKEUP_MODE	WAKEUP_METHOD_BREAK
+-#define DEFAULT_PS_MODE		PS_MODE_DISABLE
++#define DEFAULT_PS_MODE		PS_MODE_ENABLE
+ #define FW_INIT_BAUDRATE	HCI_NXP_PRI_BAUDRATE
  
- 	hci_cmd_sync_clear(hdev);
- 
+ static struct sk_buff *nxp_drv_send_cmd(struct hci_dev *hdev, u16 opcode,
 -- 
 2.43.0
 
