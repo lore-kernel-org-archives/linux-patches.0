@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB64D13D600;
-	Tue, 23 Jul 2024 18:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7DBC13D896;
+	Tue, 23 Jul 2024 18:40:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760051; cv=none; b=ikPHO+Rbn9Tr0QLdMHNg90QhHObn4osOn+E8X/yo8UKWrMOW0OaSw6Kx24RxIyvEEmAOhVGanoDBFNFvuHImWPLtrcIpcoRYQAJ4vRoUzV0ZB2uLKV90kcwklRNLxeMg7lg8mtDeFee/R9M36/cDzDwzdu6Jru6pdcrjAGuUhYs=
+	t=1721760053; cv=none; b=c6Wdqm4Oo1VJ2g2yE6kJ478vEbzmQT9++sYF1vw3I65DHXVAuDJ/xylw2fM40KJAwAuuj6oEo604ppeL2IrfUHYt8L1U7ph7QRgxtkT5U0KifilcBtisXKtVGpHDBgaFysa7NQTbvf0gGMkMD8yWEM7Wogja6TTQmbUgM6r3UA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760051; c=relaxed/simple;
-	bh=iIXzWbgeWj70E8lpCvoFF6bQLniZ1vgCwOyGbBOOu6k=;
+	s=arc-20240116; t=1721760053; c=relaxed/simple;
+	bh=KoQv4lFRJVbSJboyGOHN7HnmZlJI831fZ1SegT8Ad+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/v+4Bub+mB4+7GSBYgWPw9BIDBsSgXsd9Hz36pJGPeUAm7gd/7dswIJkErAEmZoCPAOmlVqhB0fxURvdUo6kypa+vJ7ipjqsabXTOBdmeNqHeBWlZe8aOut/4iB07PIxFod4OiX7fXp7lv/dOQonU1otgo1NNQrvfBKqmTdurw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t93Cmeyz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IPcPjXv4umGBQck8kzfRwhQJublF7B3/QR0GGrBJfa8Gb9IkpZnqX9OHG//LKYv7QY7wMaxGX5IkaQ/VRyh9xjYpHOaAmBLNwaWbKsU/wtPubd2XctTFhiCNvMm1eCNTid4jw/1fVq/22/DMcsNYRvSHp/Bb0Xl1ywoFsIqhQEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tsMDbUtQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t93Cmeyz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73326C4AF09;
-	Tue, 23 Jul 2024 18:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tsMDbUtQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C9EC4AF09;
+	Tue, 23 Jul 2024 18:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760050;
-	bh=iIXzWbgeWj70E8lpCvoFF6bQLniZ1vgCwOyGbBOOu6k=;
+	s=korg; t=1721760053;
+	bh=KoQv4lFRJVbSJboyGOHN7HnmZlJI831fZ1SegT8Ad+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t93CmeyzL1dVqOQsR3qi/XCHMRuGONHpA47OCOIhMjysK40AW966Drcn06xQKFQSA
-	 J50PED+RqLPZS3B9/SLs9fhLirYbWhoSugC1Hl63h4aLMfm4/3wGAjZ0UJetnkxHye
-	 mT7UbcFynR4m2or2H966aJoqoSij8RjcILSbucw0=
+	b=tsMDbUtQG1fNvHQF22IdBC07p29l1N1BTY5v+AP5uuXAoWqbAuyGyAd86XJ7pRd1n
+	 R8CfNbq+zZq3USMRd7oCr53HvNRTnL85JNc9XDj9vW68FVGkvHp8dPyL4UFh/Bc11p
+	 DucAJnuxE9XB3HvsrIFElwtgqBVn4UsPMj16DGqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Jonathan Denose <jdenose@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 069/163] ALSA: hda: cs35l41: Support Lenovo Thinkbook 13x Gen 4
-Date: Tue, 23 Jul 2024 20:23:18 +0200
-Message-ID: <20240723180146.135372160@linuxfoundation.org>
+Subject: [PATCH 6.9 087/163] Input: elantech - fix touchpad state on resume for Lenovo N24
+Date: Tue, 23 Jul 2024 20:23:36 +0200
+Message-ID: <20240723180146.837377036@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,43 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Binding <sbinding@opensource.cirrus.com>
+From: Jonathan Denose <jdenose@google.com>
 
-[ Upstream commit b32f92d1af3789038f03c2899e3be0d00b43faf2 ]
+[ Upstream commit a69ce592cbe0417664bc5a075205aa75c2ec1273 ]
 
-This laptop does not contain _DSD so needs to be supported using the
-configuration table.
+The Lenovo N24 on resume becomes stuck in a state where it
+sends incorrect packets, causing elantech_packet_check_v4 to fail.
+The only way for the device to resume sending the correct packets is for
+it to be disabled and then re-enabled.
 
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/20240606130351.333495-3-sbinding@opensource.cirrus.com
+This change adds a dmi check to trigger this behavior on resume.
+
+Signed-off-by: Jonathan Denose <jdenose@google.com>
+Link: https://lore.kernel.org/r/20240503155020.v2.1.Ifa0e25ebf968d8f307f58d678036944141ab17e6@changeid
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l41_hda_property.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/input/mouse/elantech.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/sound/pci/hda/cs35l41_hda_property.c b/sound/pci/hda/cs35l41_hda_property.c
-index e034828df4452..6ad6cb176d43a 100644
---- a/sound/pci/hda/cs35l41_hda_property.c
-+++ b/sound/pci/hda/cs35l41_hda_property.c
-@@ -118,6 +118,8 @@ static const struct cs35l41_config cs35l41_config_table[] = {
- 	{ "17AA38B5", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
- 	{ "17AA38B6", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
- 	{ "17AA38B7", 2, EXTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, 0, 0 }, 0, 1, -1, 0, 0, 0 },
-+	{ "17AA38C7", 4, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, CS35L41_LEFT, CS35L41_RIGHT }, 0, 2, -1, 1000, 4500, 24 },
-+	{ "17AA38C8", 4, INTERNAL, { CS35L41_LEFT, CS35L41_RIGHT, CS35L41_LEFT, CS35L41_RIGHT }, 0, 2, -1, 1000, 4500, 24 },
- 	{ "17AA38F9", 2, EXTERNAL, { CS35L41_RIGHT, CS35L41_LEFT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
- 	{ "17AA38FA", 2, EXTERNAL, { CS35L41_RIGHT, CS35L41_LEFT, 0, 0 }, 0, 2, -1, 0, 0, 0 },
- 	{}
-@@ -511,6 +513,8 @@ static const struct cs35l41_prop_model cs35l41_prop_model_table[] = {
- 	{ "CSC3551", "17AA38B5", generic_dsd_config },
- 	{ "CSC3551", "17AA38B6", generic_dsd_config },
- 	{ "CSC3551", "17AA38B7", generic_dsd_config },
-+	{ "CSC3551", "17AA38C7", generic_dsd_config },
-+	{ "CSC3551", "17AA38C8", generic_dsd_config },
- 	{ "CSC3551", "17AA38F9", generic_dsd_config },
- 	{ "CSC3551", "17AA38FA", generic_dsd_config },
- 	{}
+diff --git a/drivers/input/mouse/elantech.c b/drivers/input/mouse/elantech.c
+index 4e38229404b4b..b4723ea395eb9 100644
+--- a/drivers/input/mouse/elantech.c
++++ b/drivers/input/mouse/elantech.c
+@@ -1476,16 +1476,47 @@ static void elantech_disconnect(struct psmouse *psmouse)
+ 	psmouse->private = NULL;
+ }
+ 
++/*
++ * Some hw_version 4 models fail to properly activate absolute mode on
++ * resume without going through disable/enable cycle.
++ */
++static const struct dmi_system_id elantech_needs_reenable[] = {
++#if defined(CONFIG_DMI) && defined(CONFIG_X86)
++	{
++		/* Lenovo N24 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "81AF"),
++		},
++	},
++#endif
++	{ }
++};
++
+ /*
+  * Put the touchpad back into absolute mode when reconnecting
+  */
+ static int elantech_reconnect(struct psmouse *psmouse)
+ {
++	int err;
++
+ 	psmouse_reset(psmouse);
+ 
+ 	if (elantech_detect(psmouse, 0))
+ 		return -1;
+ 
++	if (dmi_check_system(elantech_needs_reenable)) {
++		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_DISABLE);
++		if (err)
++			psmouse_warn(psmouse, "failed to deactivate mouse on %s: %d\n",
++				     psmouse->ps2dev.serio->phys, err);
++
++		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_ENABLE);
++		if (err)
++			psmouse_warn(psmouse, "failed to reactivate mouse on %s: %d\n",
++				     psmouse->ps2dev.serio->phys, err);
++	}
++
+ 	if (elantech_set_absolute_mode(psmouse)) {
+ 		psmouse_err(psmouse,
+ 			    "failed to put touchpad back into absolute mode.\n");
 -- 
 2.43.0
 
