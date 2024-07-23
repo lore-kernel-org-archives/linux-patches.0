@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764601581F4;
-	Tue, 23 Jul 2024 18:38:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608E71581F4;
+	Tue, 23 Jul 2024 18:38:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759881; cv=none; b=t4jIE1KcGGodA8FZDG+hHZ2/CinoqQY67NQEUy4pyLbWJIwNgKllAjVEHd6LZvbn8WopwbpdWFF24yYTG7DsvHsEQNrCic93fHQKOcmMB2lFHKhtigRPoL0rN1opsGGzLTyFCbYFoHEYODVV4EZ0zGu8kblam3Qx4SEz4I8frbA=
+	t=1721759884; cv=none; b=QmoT5Amtp85al1r6mIdzLOuRXdtctqo5mxeu1GRUVav7gaHLuIenRRQS6kY8UqTLqLYY/gzalHT6VzGrKObF2LW+Nxv78H8UobtOnW1ZhzbxZud8/SNTv143DaPIQJEizUO83zXkZishHpYx3XM9M9p4QuxgE2luz/GQPIyPPX4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759881; c=relaxed/simple;
-	bh=lIeh4ESSGqlOSummBlBXoirkKrEM6WqViV+wIWZ0hdA=;
+	s=arc-20240116; t=1721759884; c=relaxed/simple;
+	bh=VBVBdY/swVRwZVXcX0at4Dt8vYH6Oxy5kT1YrNB8Mg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bCRlOnbuiiuviSCiwvEPgMMahHkKYazTHThPphRlaIAve3sgGRC+W2/jBhhVl0TuYwP0Qe/lRMhugEiLFB4dA4gAmHqRmmqPZTRyxt/rFT7JPMBsKR7CdajQVfBxArCA1+JNezjOld9qLetcsnBdmeJMQC58wn2tkuv+mQ/+0Vc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EO+uxuqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fG3KruOGg3s56auLC3QkblLSDmKtIofpjZf1A3jZH4Iqs9lR+bxxAP4QEqEpBAekzDClDA2N6tAJQalSZPVUrBHDKfVaQwXPioYp5qQyMjJPA24wUpNBdEz+QIXv4a/l3/6aTfYFx7vlQfowxsmWej8a6z8Qr1YQSsWToSwrJe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8zcN0ml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EO+uxuqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF750C4AF09;
-	Tue, 23 Jul 2024 18:38:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8zcN0ml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB0F4C4AF09;
+	Tue, 23 Jul 2024 18:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759881;
-	bh=lIeh4ESSGqlOSummBlBXoirkKrEM6WqViV+wIWZ0hdA=;
+	s=korg; t=1721759884;
+	bh=VBVBdY/swVRwZVXcX0at4Dt8vYH6Oxy5kT1YrNB8Mg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EO+uxuqyF4iCSDI766Rt9dYWiHgYdzgZVDyYRT09W+gxZUkXw4R64asB9RLxb9w11
-	 jLysrkFTCt1ZqboNR3E7oOr19Q3mn+LutQzpLSnI0/nJsYEPr9Y6RSlaBDDMxn5ggm
-	 f7vKs3Z4NlLYTKeoHbJtvAD+461hy2nmMxd8CSa8=
+	b=h8zcN0mlyrLGl8gmoKfjwuCrwj3mLFeSwXHW0IUE0Lp+Y4+r69mzRawGW0tehQPkz
+	 cNu/tyFCQeg2uawzwtAi36wpQV/o0m/Ex3tdenR/4DN6ZlYulwhG8dAEJh68OEZ8DE
+	 l3E21/fta14EI+Ci7zZFHHQmo6AAGuX2Tm+SVnBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Anup Patel <apatel@ventanamicro.com>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+	linux-hardening@vger.kernel.org,
+	Justin Stitt <justinstitt@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 029/163] of/irq: Factor out parsing of interrupt-map parent phandle+args from of_irq_parse_raw()
-Date: Tue, 23 Jul 2024 20:22:38 +0200
-Message-ID: <20240723180144.598173200@linuxfoundation.org>
+Subject: [PATCH 6.9 003/163] scsi: sr: Fix unintentional arithmetic wraparound
+Date: Tue, 23 Jul 2024 20:22:12 +0200
+Message-ID: <20240723180143.596702160@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,238 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rob Herring (Arm) <robh@kernel.org>
+From: Justin Stitt <justinstitt@google.com>
 
-[ Upstream commit 935df1bd40d43c4ee91838c42a20e9af751885cc ]
+[ Upstream commit 9fad9d560af5c654bb38e0b07ee54a4e9acdc5cd ]
 
-Factor out the parsing of interrupt-map interrupt parent phandle and its
-arg cells to a separate function, of_irq_parse_imap_parent(), so that it
-can be used in other parsing scenarios (e.g. fw_devlink).
+Running syzkaller with the newly reintroduced signed integer overflow
+sanitizer produces this report:
 
-There was a refcount leak on non-matching entries when iterating thru
-"interrupt-map" which is fixed.
+[   65.194362] ------------[ cut here ]------------
+[   65.197752] UBSAN: signed-integer-overflow in ../drivers/scsi/sr_ioctl.c:436:9
+[   65.203607] -2147483648 * 177 cannot be represented in type 'int'
+[   65.207911] CPU: 2 PID: 10416 Comm: syz-executor.1 Not tainted 6.8.0-rc2-00035-gb3ef86b5a957 #1
+[   65.213585] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   65.219923] Call Trace:
+[   65.221556]  <TASK>
+[   65.223029]  dump_stack_lvl+0x93/0xd0
+[   65.225573]  handle_overflow+0x171/0x1b0
+[   65.228219]  sr_select_speed+0xeb/0xf0
+[   65.230786]  ? __pm_runtime_resume+0xe6/0x130
+[   65.233606]  sr_block_ioctl+0x15d/0x1d0
+...
 
-Tested-by: Marc Zyngier <maz@kernel.org>
-Tested-by: Anup Patel <apatel@ventanamicro.com>
-Link: https://lore.kernel.org/r/20240529-dt-interrupt-map-fix-v2-1-ef86dc5bcd2a@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+Historically, the signed integer overflow sanitizer did not work in the
+kernel due to its interaction with `-fwrapv` but this has since been
+changed [1] in the newest version of Clang. It was re-enabled in the kernel
+with Commit 557f8c582a9b ("ubsan: Reintroduce signed overflow sanitizer").
+
+Firstly, let's change the type of "speed" to unsigned long as
+sr_select_speed()'s only caller passes in an unsigned long anyways.
+
+$ git grep '\.select_speed'
+|	drivers/scsi/sr.c:      .select_speed           = sr_select_speed,
+...
+|	static int cdrom_ioctl_select_speed(struct cdrom_device_info *cdi,
+|	                unsigned long arg)
+|	{
+|	        ...
+|	        return cdi->ops->select_speed(cdi, arg);
+|	}
+
+Next, let's add an extra check to make sure we don't exceed 0xffff/177
+(350) since 0xffff is the max speed. This has two benefits: 1) we deal
+with integer overflow before it happens and 2) we properly respect the
+max speed of 0xffff. There are some "magic" numbers here but I did not
+want to change more than what was necessary.
+
+Link: https://github.com/llvm/llvm-project/pull/82432 [1]
+Closes: https://github.com/KSPP/linux/issues/357
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Link: https://lore.kernel.org/r/20240508-b4-b4-sio-sr_select_speed-v2-1-00b68f724290@google.com
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/irq.c        | 125 ++++++++++++++++++++++++----------------
- drivers/of/of_private.h |   3 +
- 2 files changed, 77 insertions(+), 51 deletions(-)
+ Documentation/cdrom/cdrom-standard.rst | 4 ++--
+ drivers/scsi/sr.h                      | 2 +-
+ drivers/scsi/sr_ioctl.c                | 5 ++++-
+ include/linux/cdrom.h                  | 2 +-
+ 4 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/of/irq.c b/drivers/of/irq.c
-index 174900072c18c..462375b293e47 100644
---- a/drivers/of/irq.c
-+++ b/drivers/of/irq.c
-@@ -25,6 +25,8 @@
- #include <linux/string.h>
- #include <linux/slab.h>
+diff --git a/Documentation/cdrom/cdrom-standard.rst b/Documentation/cdrom/cdrom-standard.rst
+index 7964fe134277b..6c1303cff159e 100644
+--- a/Documentation/cdrom/cdrom-standard.rst
++++ b/Documentation/cdrom/cdrom-standard.rst
+@@ -217,7 +217,7 @@ current *struct* is::
+ 		int (*media_changed)(struct cdrom_device_info *, int);
+ 		int (*tray_move)(struct cdrom_device_info *, int);
+ 		int (*lock_door)(struct cdrom_device_info *, int);
+-		int (*select_speed)(struct cdrom_device_info *, int);
++		int (*select_speed)(struct cdrom_device_info *, unsigned long);
+ 		int (*get_last_session) (struct cdrom_device_info *,
+ 					 struct cdrom_multisession *);
+ 		int (*get_mcn)(struct cdrom_device_info *, struct cdrom_mcn *);
+@@ -396,7 +396,7 @@ action need be taken, and the return value should be 0.
  
-+#include "of_private.h"
-+
- /**
-  * irq_of_parse_and_map - Parse and map an interrupt into linux virq space
-  * @dev: Device node of the device whose interrupt is to be mapped
-@@ -96,6 +98,57 @@ static const char * const of_irq_imap_abusers[] = {
- 	NULL,
- };
+ ::
  
-+const __be32 *of_irq_parse_imap_parent(const __be32 *imap, int len, struct of_phandle_args *out_irq)
-+{
-+	u32 intsize, addrsize;
-+	struct device_node *np;
-+
-+	/* Get the interrupt parent */
-+	if (of_irq_workarounds & OF_IMAP_NO_PHANDLE)
-+		np = of_node_get(of_irq_dflt_pic);
-+	else
-+		np = of_find_node_by_phandle(be32_to_cpup(imap));
-+	imap++;
-+
-+	/* Check if not found */
-+	if (!np) {
-+		pr_debug(" -> imap parent not found !\n");
-+		return NULL;
-+	}
-+
-+	/* Get #interrupt-cells and #address-cells of new parent */
-+	if (of_property_read_u32(np, "#interrupt-cells",
-+					&intsize)) {
-+		pr_debug(" -> parent lacks #interrupt-cells!\n");
-+		of_node_put(np);
-+		return NULL;
-+	}
-+	if (of_property_read_u32(np, "#address-cells",
-+					&addrsize))
-+		addrsize = 0;
-+
-+	pr_debug(" -> intsize=%d, addrsize=%d\n",
-+		intsize, addrsize);
-+
-+	/* Check for malformed properties */
-+	if (WARN_ON(addrsize + intsize > MAX_PHANDLE_ARGS)
-+		|| (len < (addrsize + intsize))) {
-+		of_node_put(np);
-+		return NULL;
-+	}
-+
-+	pr_debug(" -> imaplen=%d\n", len);
-+
-+	imap += addrsize + intsize;
-+
-+	out_irq->np = np;
-+	for (int i = 0; i < intsize; i++)
-+		out_irq->args[i] = be32_to_cpup(imap - intsize + i);
-+	out_irq->args_count = intsize;
-+
-+	return imap;
-+}
-+
- /**
-  * of_irq_parse_raw - Low level interrupt tree parsing
-  * @addr:	address specifier (start of "reg" property of the device) in be32 format
-@@ -112,12 +165,12 @@ static const char * const of_irq_imap_abusers[] = {
-  */
- int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- {
--	struct device_node *ipar, *tnode, *old = NULL, *newpar = NULL;
-+	struct device_node *ipar, *tnode, *old = NULL;
- 	__be32 initial_match_array[MAX_PHANDLE_ARGS];
- 	const __be32 *match_array = initial_match_array;
--	const __be32 *tmp, *imap, *imask, dummy_imask[] = { [0 ... MAX_PHANDLE_ARGS] = cpu_to_be32(~0) };
--	u32 intsize = 1, addrsize, newintsize = 0, newaddrsize = 0;
--	int imaplen, match, i, rc = -EINVAL;
-+	const __be32 *tmp, dummy_imask[] = { [0 ... MAX_PHANDLE_ARGS] = cpu_to_be32(~0) };
-+	u32 intsize = 1, addrsize;
-+	int i, rc = -EINVAL;
+-	int select_speed(struct cdrom_device_info *cdi, int speed)
++	int select_speed(struct cdrom_device_info *cdi, unsigned long speed)
  
- #ifdef DEBUG
- 	of_print_phandle_args("of_irq_parse_raw: ", out_irq);
-@@ -176,6 +229,9 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
+ Some CD-ROM drives are capable of changing their head-speed. There
+ are several reasons for changing the speed of a CD-ROM drive. Badly
+diff --git a/drivers/scsi/sr.h b/drivers/scsi/sr.h
+index 1175f2e213b56..dc899277b3a44 100644
+--- a/drivers/scsi/sr.h
++++ b/drivers/scsi/sr.h
+@@ -65,7 +65,7 @@ int sr_disk_status(struct cdrom_device_info *);
+ int sr_get_last_session(struct cdrom_device_info *, struct cdrom_multisession *);
+ int sr_get_mcn(struct cdrom_device_info *, struct cdrom_mcn *);
+ int sr_reset(struct cdrom_device_info *);
+-int sr_select_speed(struct cdrom_device_info *cdi, int speed);
++int sr_select_speed(struct cdrom_device_info *cdi, unsigned long speed);
+ int sr_audio_ioctl(struct cdrom_device_info *, unsigned int, void *);
  
- 	/* Now start the actual "proper" walk of the interrupt tree */
- 	while (ipar != NULL) {
-+		int imaplen, match;
-+		const __be32 *imap, *oldimap, *imask;
-+		struct device_node *newpar;
- 		/*
- 		 * Now check if cursor is an interrupt-controller and
- 		 * if it is then we are done, unless there is an
-@@ -216,7 +272,7 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- 
- 		/* Parse interrupt-map */
- 		match = 0;
--		while (imaplen > (addrsize + intsize + 1) && !match) {
-+		while (imaplen > (addrsize + intsize + 1)) {
- 			/* Compare specifiers */
- 			match = 1;
- 			for (i = 0; i < (addrsize + intsize); i++, imaplen--)
-@@ -224,48 +280,17 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- 
- 			pr_debug(" -> match=%d (imaplen=%d)\n", match, imaplen);
- 
--			/* Get the interrupt parent */
--			if (of_irq_workarounds & OF_IMAP_NO_PHANDLE)
--				newpar = of_node_get(of_irq_dflt_pic);
--			else
--				newpar = of_find_node_by_phandle(be32_to_cpup(imap));
--			imap++;
--			--imaplen;
--
--			/* Check if not found */
--			if (newpar == NULL) {
--				pr_debug(" -> imap parent not found !\n");
--				goto fail;
--			}
--
--			if (!of_device_is_available(newpar))
--				match = 0;
--
--			/* Get #interrupt-cells and #address-cells of new
--			 * parent
--			 */
--			if (of_property_read_u32(newpar, "#interrupt-cells",
--						 &newintsize)) {
--				pr_debug(" -> parent lacks #interrupt-cells!\n");
--				goto fail;
--			}
--			if (of_property_read_u32(newpar, "#address-cells",
--						 &newaddrsize))
--				newaddrsize = 0;
--
--			pr_debug(" -> newintsize=%d, newaddrsize=%d\n",
--			    newintsize, newaddrsize);
--
--			/* Check for malformed properties */
--			if (WARN_ON(newaddrsize + newintsize > MAX_PHANDLE_ARGS)
--			    || (imaplen < (newaddrsize + newintsize))) {
--				rc = -EFAULT;
-+			oldimap = imap;
-+			imap = of_irq_parse_imap_parent(oldimap, imaplen, out_irq);
-+			if (!imap)
- 				goto fail;
--			}
- 
--			imap += newaddrsize + newintsize;
--			imaplen -= newaddrsize + newintsize;
-+			match &= of_device_is_available(out_irq->np);
-+			if (match)
-+				break;
- 
-+			of_node_put(out_irq->np);
-+			imaplen -= imap - oldimap;
- 			pr_debug(" -> imaplen=%d\n", imaplen);
- 		}
- 		if (!match) {
-@@ -287,11 +312,11 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- 		 * Successfully parsed an interrupt-map translation; copy new
- 		 * interrupt specifier into the out_irq structure
- 		 */
--		match_array = imap - newaddrsize - newintsize;
--		for (i = 0; i < newintsize; i++)
--			out_irq->args[i] = be32_to_cpup(imap - newintsize + i);
--		out_irq->args_count = intsize = newintsize;
--		addrsize = newaddrsize;
-+		match_array = oldimap + 1;
-+
-+		newpar = out_irq->np;
-+		intsize = out_irq->args_count;
-+		addrsize = (imap - match_array) - intsize;
- 
- 		if (ipar == newpar) {
- 			pr_debug("%pOF interrupt-map entry to self\n", ipar);
-@@ -300,7 +325,6 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- 
- 	skiplevel:
- 		/* Iterate again with new parent */
--		out_irq->np = newpar;
- 		pr_debug(" -> new parent: %pOF\n", newpar);
- 		of_node_put(ipar);
- 		ipar = newpar;
-@@ -310,7 +334,6 @@ int of_irq_parse_raw(const __be32 *addr, struct of_phandle_args *out_irq)
- 
-  fail:
- 	of_node_put(ipar);
--	of_node_put(newpar);
- 
- 	return rc;
+ int sr_is_xa(Scsi_CD *);
+diff --git a/drivers/scsi/sr_ioctl.c b/drivers/scsi/sr_ioctl.c
+index 5b0b35e60e61f..a0d2556a27bba 100644
+--- a/drivers/scsi/sr_ioctl.c
++++ b/drivers/scsi/sr_ioctl.c
+@@ -425,11 +425,14 @@ int sr_reset(struct cdrom_device_info *cdi)
+ 	return 0;
  }
-diff --git a/drivers/of/of_private.h b/drivers/of/of_private.h
-index 485483524b7f1..b0609de49c7c4 100644
---- a/drivers/of/of_private.h
-+++ b/drivers/of/of_private.h
-@@ -158,6 +158,9 @@ extern void __of_sysfs_remove_bin_file(struct device_node *np,
- extern int of_bus_n_addr_cells(struct device_node *np);
- extern int of_bus_n_size_cells(struct device_node *np);
  
-+const __be32 *of_irq_parse_imap_parent(const __be32 *imap, int len,
-+				       struct of_phandle_args *out_irq);
+-int sr_select_speed(struct cdrom_device_info *cdi, int speed)
++int sr_select_speed(struct cdrom_device_info *cdi, unsigned long speed)
+ {
+ 	Scsi_CD *cd = cdi->handle;
+ 	struct packet_command cgc;
+ 
++	/* avoid exceeding the max speed or overflowing integer bounds */
++	speed = clamp(0, speed, 0xffff / 177);
 +
- struct bus_dma_region;
- #if defined(CONFIG_OF_ADDRESS) && defined(CONFIG_HAS_DMA)
- int of_dma_get_range(struct device_node *np,
+ 	if (speed == 0)
+ 		speed = 0xffff;	/* set to max */
+ 	else
+diff --git a/include/linux/cdrom.h b/include/linux/cdrom.h
+index 98c6fd0b39b63..fdfb61ccf55ae 100644
+--- a/include/linux/cdrom.h
++++ b/include/linux/cdrom.h
+@@ -77,7 +77,7 @@ struct cdrom_device_ops {
+ 				      unsigned int clearing, int slot);
+ 	int (*tray_move) (struct cdrom_device_info *, int);
+ 	int (*lock_door) (struct cdrom_device_info *, int);
+-	int (*select_speed) (struct cdrom_device_info *, int);
++	int (*select_speed) (struct cdrom_device_info *, unsigned long);
+ 	int (*get_last_session) (struct cdrom_device_info *,
+ 				 struct cdrom_multisession *);
+ 	int (*get_mcn) (struct cdrom_device_info *,
 -- 
 2.43.0
 
