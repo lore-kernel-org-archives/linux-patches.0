@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33D815821E;
-	Tue, 23 Jul 2024 18:39:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A6015821E;
+	Tue, 23 Jul 2024 18:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759944; cv=none; b=XLUe4NJQP1LLgYrN5bYMB/xDBb0PVoVRx7asfufXaR9+0pjdz38yl/JHNv38eTz5d7wUN5ublqsL7MypGoMnV5tR6th321gz4Suw6IZuUNECOBH4if4r4iDOqWYvj/qW6GuYz0c2024G4f6OV2NsSOx1mZ1gapA6BeN84j+7A6I=
+	t=1721759947; cv=none; b=OOsMaKsuRg33k1VMaq+MNk8fosPsFu0xit8eiTL50xwitH21FU4BS12/m/Ax54uvK2D+7JdYKDThtz/HtxBG20QpvFDjBgvFSsU0z0+R3Z/JI99HPrd2GeFdmKncaC/i977a/++6Jl12ZUCSOMBurWUEmGi1+OOxtP7qfTnbOI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759944; c=relaxed/simple;
-	bh=K1CpoupfEUyMb/+oaQlaThdXD8ysGxCYAbQKIYtZCc4=;
+	s=arc-20240116; t=1721759947; c=relaxed/simple;
+	bh=IpyWVZWUBT0nAce6zc9I1Xm9NA9eFqdP7xJeMbNRCWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TPZvA+NTbnFNCmDDXM1AtEd7B3ueA1kb+Cv+rztsnNtdal1eOlQViHO2uP5ydKIhy06AUGZ5GaQ8ADs7S6vPfd6Ge+O+NdRVzzH5FrrUvPCuSJmDT7PPLewcVg/BuvUmrwLL9SOWW2bw2C89LiNOVjGiecUxHKFcCuF9zbJ9Mjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sdx1yZun; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5VKwBArZuA3xvNBOBXGr3eSLQ3XiNRNIbJKTgRWXsUs5K7tXTL6nxgtc3wrfGBRYSjVNhfQ+puug/4fA7QXb8asN4QL67APTxvLi1Trz+xmqK38Y3v4opnmlLqv7fb5o7VfIV+EVk8qx4HCjywevHfJUl4/xHoKtQEsoEolBt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7mF4XeY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sdx1yZun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B9D1C4AF09;
-	Tue, 23 Jul 2024 18:39:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7mF4XeY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF5EC4AF09;
+	Tue, 23 Jul 2024 18:39:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759943;
-	bh=K1CpoupfEUyMb/+oaQlaThdXD8ysGxCYAbQKIYtZCc4=;
+	s=korg; t=1721759946;
+	bh=IpyWVZWUBT0nAce6zc9I1Xm9NA9eFqdP7xJeMbNRCWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sdx1yZun75+OCvrvcQG8w2kHsdfWgvw7we6epYnrWZ3UaUAD33qZ4K1e4eVCAMMXu
-	 Yp4JJsCRJ73el6GB5RSEw0hcK1NZsPTMxO+VSCYUsSghT0WSC6lDy8+Bvw92N3rA9m
-	 iUJ0zkaufJnjK+bLiuM9IyLBRiJjfcCnU+A2F6kI=
+	b=j7mF4XeYpsZDSd8YPFw1Yz+3VSz68A6yhAqdv+1PbBpmJ2YR9Bp3Vo/P2m5Ai6ukJ
+	 RqmsvdUDr3jz6xvFocMYBaOBDoe3fhv8/qIxpt8/8joOxFgDqo9Kk9B5jZWUPowAGj
+	 I/9AaScdRFcagt2xWzAb5mOmqMuDk/iPkIt6+oaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Jia Zhu <zhujia.zj@bytedance.com>,
+	Yuntao Wang <yuntao.wang@linux.dev>,
+	Jan Kara <jack@suse.cz>,
 	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 051/163] cachefiles: make on-demand read killable
-Date: Tue, 23 Jul 2024 20:23:00 +0200
-Message-ID: <20240723180145.448591198@linuxfoundation.org>
+Subject: [PATCH 6.9 052/163] fs/file: fix the check in find_next_fd()
+Date: Tue, 23 Jul 2024 20:23:01 +0200
+Message-ID: <20240723180145.486096711@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -54,101 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Yuntao Wang <yuntao.wang@linux.dev>
 
-[ Upstream commit bc9dde6155464e906e630a0a5c17a4cab241ffbb ]
+[ Upstream commit ed8c7fbdfe117abbef81f65428ba263118ef298a ]
 
-Replacing wait_for_completion() with wait_for_completion_killable() in
-cachefiles_ondemand_send_req() allows us to kill processes that might
-trigger a hunk_task if the daemon is abnormal.
+The maximum possible return value of find_next_zero_bit(fdt->full_fds_bits,
+maxbit, bitbit) is maxbit. This return value, multiplied by BITS_PER_LONG,
+gives the value of bitbit, which can never be greater than maxfd, it can
+only be equal to maxfd at most, so the following check 'if (bitbit > maxfd)'
+will never be true.
 
-But now only CACHEFILES_OP_READ is killable, because OP_CLOSE and OP_OPEN
-is initiated from kworker context and the signal is prohibited in these
-kworker.
+Moreover, when bitbit equals maxfd, it indicates that there are no unused
+fds, and the function can directly return.
 
-Note that when the req in xas changes, i.e. xas_load(&xas) != req, it
-means that a process will complete the current request soon, so wait
-again for the request to be completed.
+Fix this check.
 
-In addition, add the cachefiles_ondemand_finish_req() helper function to
-simplify the code.
-
-Suggested-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Link: https://lore.kernel.org/r/20240522114308.2402121-13-libaokun@huaweicloud.com
-Acked-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Jia Zhu <zhujia.zj@bytedance.com>
+Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
+Link: https://lore.kernel.org/r/20240529160656.209352-1-yuntao.wang@linux.dev
+Reviewed-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cachefiles/ondemand.c | 40 ++++++++++++++++++++++++++++------------
- 1 file changed, 28 insertions(+), 12 deletions(-)
+ fs/file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cachefiles/ondemand.c b/fs/cachefiles/ondemand.c
-index a0e34581a1cd6..d0059d36cbd51 100644
---- a/fs/cachefiles/ondemand.c
-+++ b/fs/cachefiles/ondemand.c
-@@ -380,6 +380,20 @@ static struct cachefiles_req *cachefiles_ondemand_select_req(struct xa_state *xa
- 	return NULL;
- }
+diff --git a/fs/file.c b/fs/file.c
+index 3b683b9101d84..005841dd35977 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -481,12 +481,12 @@ struct files_struct init_files = {
  
-+static inline bool cachefiles_ondemand_finish_req(struct cachefiles_req *req,
-+						  struct xa_state *xas, int err)
-+{
-+	if (unlikely(!xas || !req))
-+		return false;
-+
-+	if (xa_cmpxchg(xas->xa, xas->xa_index, req, NULL, 0) != req)
-+		return false;
-+
-+	req->error = err;
-+	complete(&req->done);
-+	return true;
-+}
-+
- ssize_t cachefiles_ondemand_daemon_read(struct cachefiles_cache *cache,
- 					char __user *_buffer, size_t buflen)
+ static unsigned int find_next_fd(struct fdtable *fdt, unsigned int start)
  {
-@@ -443,16 +457,8 @@ ssize_t cachefiles_ondemand_daemon_read(struct cachefiles_cache *cache,
- out:
- 	cachefiles_put_object(req->object, cachefiles_obj_put_read_req);
- 	/* Remove error request and CLOSE request has no reply */
--	if (ret || msg->opcode == CACHEFILES_OP_CLOSE) {
--		xas_reset(&xas);
--		xas_lock(&xas);
--		if (xas_load(&xas) == req) {
--			req->error = ret;
--			complete(&req->done);
--			xas_store(&xas, NULL);
--		}
--		xas_unlock(&xas);
--	}
-+	if (ret || msg->opcode == CACHEFILES_OP_CLOSE)
-+		cachefiles_ondemand_finish_req(req, &xas, ret);
- 	cachefiles_req_put(req);
- 	return ret ? ret : n;
- }
-@@ -557,8 +563,18 @@ static int cachefiles_ondemand_send_req(struct cachefiles_object *object,
- 		goto out;
+-	unsigned int maxfd = fdt->max_fds;
++	unsigned int maxfd = fdt->max_fds; /* always multiple of BITS_PER_LONG */
+ 	unsigned int maxbit = maxfd / BITS_PER_LONG;
+ 	unsigned int bitbit = start / BITS_PER_LONG;
  
- 	wake_up_all(&cache->daemon_pollwq);
--	wait_for_completion(&req->done);
--	ret = req->error;
-+wait:
-+	ret = wait_for_completion_killable(&req->done);
-+	if (!ret) {
-+		ret = req->error;
-+	} else {
-+		ret = -EINTR;
-+		if (!cachefiles_ondemand_finish_req(req, &xas, ret)) {
-+			/* Someone will complete it soon. */
-+			cpu_relax();
-+			goto wait;
-+		}
-+	}
- 	cachefiles_req_put(req);
- 	return ret;
- out:
+ 	bitbit = find_next_zero_bit(fdt->full_fds_bits, maxbit, bitbit) * BITS_PER_LONG;
+-	if (bitbit > maxfd)
++	if (bitbit >= maxfd)
+ 		return maxfd;
+ 	if (bitbit > start)
+ 		start = bitbit;
 -- 
 2.43.0
 
