@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953FB13D896;
-	Tue, 23 Jul 2024 18:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860F013D896;
+	Tue, 23 Jul 2024 18:41:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760074; cv=none; b=mJKAxDEsA+wMVrs+wFvoRmqTrfAyf/G/tYSql9YbPl9dKTYagl2nBNDEwul7nLBioFy21kggRMT22xUwCesfgK38az7gvfAFgcjG/i/uxLOxK6szJHwjs1NuAUV2YilMa87CyaMyktl9dPans8/mOs65YbJGZkIsEZfDDA2s6JA=
+	t=1721760077; cv=none; b=UnZF9te9ixf4uFoawvA2nFSVeBhR39o8rpLlyDzI7VVw+W5KRrUY1nxceC8ejOzJ4YmQa1Tfy8lxU+kaT8+sz0PnrZEJ2a6RB+qj9QKdLTzsxOjKHYA65VuTC1KkEf17+asYgd6jUM0aQJk6x4Lf5s/TZrePVPLhkpKkTmlCXSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760074; c=relaxed/simple;
-	bh=R0npayD2raiKeQr618mWdTKWiizv5nYHTLzx4GerW+I=;
+	s=arc-20240116; t=1721760077; c=relaxed/simple;
+	bh=aXnXGtcCJtLlyIcV+gYTezpzoCxwdu5bUSP07Cg7f+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f6JI0VtLD/xwiQQJdfwyPmdaGK5S26OfYUjkH4DrD1kA/FTjhQS5SxU3XjKfOaSANrgT7HXaQqZ52UZlMUsSHASKf/GpmrbUW0PpkjG62d6WHTzDe8axJAzs7wGVfZLJdPZLtDgUSwDcm+iQlgPxp0wzyqHzsfrwP19ERTAI2LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qxOG6KOB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EYYrjHh8tQhYuvBuccps/n5qdyUvUZsXfKkSzmYCsg00y/flvXAUWtVwLp1AVWpz2m5r0l5yU3R2eG699efe6XwtiiGWCkDnYe8IRLsRkxT6QJcZw+KdbPQNRwl2bURvhe7yDCd8lG9bc/zFrYxM8+EwcfTGreWZFr5pbMvDTEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXWciaIA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qxOG6KOB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE48C4AF09;
-	Tue, 23 Jul 2024 18:41:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXWciaIA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B576C4AF09;
+	Tue, 23 Jul 2024 18:41:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760074;
-	bh=R0npayD2raiKeQr618mWdTKWiizv5nYHTLzx4GerW+I=;
+	s=korg; t=1721760077;
+	bh=aXnXGtcCJtLlyIcV+gYTezpzoCxwdu5bUSP07Cg7f+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxOG6KOBUn2s8f51/dQtW1LdzvhfaUe0t9cipDs7O30K2ECct1RVUAGkcR3ET7P3T
-	 jyy/gVg+6TZ+LKQLgy3SCMncHUU0Zqoao6+njtpa7A5FfSlKEi5NEgJin/PdaPM4jJ
-	 vYZzMVr7YDfbbrcmqRbxhNyZK8n3VLSguaeQAoIo=
+	b=hXWciaIA6xYA/rAqFwfyR+gBbfSltShkLBSUzNm/v/sMWaH3xCEh9fECY3rx9NjyN
+	 Od6814VJ9pb3brO5etqwHfajftyYCM6Z14jRIUI/DxpNOYkN5J1proeIkOpxr6K3a6
+	 CwdOzPDnWzYU1ahmVe9lN/g0Ezzboihpi/QfueiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Thomas GENTY <tomlohave@gmail.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 094/163] ASoC: topology: Do not assign fields that are already set
-Date: Tue, 23 Jul 2024 20:23:43 +0200
-Message-ID: <20240723180147.110056932@linuxfoundation.org>
+Subject: [PATCH 6.9 095/163] bytcr_rt5640 : inverse jack detect for Archos 101 cesium
+Date: Tue, 23 Jul 2024 20:23:44 +0200
+Message-ID: <20240723180147.148781299@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -46,46 +47,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.9-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Thomas GENTY <tomlohave@gmail.com>
 
-[ Upstream commit daf0b99d4720c9f05bdb81c73b2efdb43fa9def3 ]
+[ Upstream commit e3209a1827646daaab744aa6a5767b1f57fb5385 ]
 
-The routes are allocated with kzalloc(), so all fields are zeroed by
-default, skip unnecessary assignments.
+When headphones are plugged in, they appear absent; when they are removed,
+they appear present.
+Add a specific entry in bytcr_rt5640 for this device
 
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20240603102818.36165-4-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Thomas GENTY <tomlohave@gmail.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20240608170251.99936-1-tomlohave@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-topology.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ sound/soc/intel/boards/bytcr_rt5640.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
-index 7add1dbf1d214..ce22613bf9690 100644
---- a/sound/soc/soc-topology.c
-+++ b/sound/soc/soc-topology.c
-@@ -1072,11 +1072,7 @@ static int soc_tplg_dapm_graph_elems_load(struct soc_tplg *tplg,
- 			break;
- 		}
- 
--		/* set to NULL atm for tplg users */
--		route->connected = NULL;
--		if (strnlen(elem->control, SNDRV_CTL_ELEM_ID_NAME_MAXLEN) == 0) {
--			route->control = NULL;
--		} else {
-+		if (strnlen(elem->control, SNDRV_CTL_ELEM_ID_NAME_MAXLEN) != 0) {
- 			route->control = devm_kmemdup(tplg->dev, elem->control,
- 						      min(strlen(elem->control),
- 							  SNDRV_CTL_ELEM_ID_NAME_MAXLEN),
+diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
+index b41a1147f1c34..a64d1989e28a5 100644
+--- a/sound/soc/intel/boards/bytcr_rt5640.c
++++ b/sound/soc/intel/boards/bytcr_rt5640.c
+@@ -610,6 +610,17 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
+ 					BYT_RT5640_SSP0_AIF1 |
+ 					BYT_RT5640_MCLK_EN),
+ 	},
++	{
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "ARCHOS 101 CESIUM"),
++		},
++		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
++					BYT_RT5640_JD_NOT_INV |
++					BYT_RT5640_DIFF_MIC |
++					BYT_RT5640_SSP0_AIF1 |
++					BYT_RT5640_MCLK_EN),
++	},
+ 	{
+ 		.matches = {
+ 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
 -- 
 2.43.0
 
