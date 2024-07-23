@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02FFA14EC58;
-	Tue, 23 Jul 2024 18:39:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4B213D600;
+	Tue, 23 Jul 2024 18:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759995; cv=none; b=G0/UTh9jFjl567El5/Emlw1l7kW9fEDSXCDYTABx9nVloubtFrlojWtiDY+bB1FknBzSPmkyLL5QUgwN5Ie+4mipuman3N7Nfa0O4wVvUt3dibd4BrO3tb0iZCD0MmcMpL5psLo8RDbRm3dW1o4CzE4x3aAiGWQFxAE9alNCX7Q=
+	t=1721759997; cv=none; b=FL6XsZAQsMtPVj7ezpg8joPhkOSWkR5nuBrDyV2DsDEcDHn1rNB4M7s9bTVjORosPi3UHpFH2vKuNX2/aIvp0cW07tQ+cW5ig84Cn421KhRVDBXcr9dHxmghlzrAJqioatpjZtNtpfoZkg00txDW5sUFVJcHRKIcBz2R+Hx+bd0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759995; c=relaxed/simple;
-	bh=O62zmvb8+rJkeLa5jUterfr7QonZ6LarYTvltJaBQ8U=;
+	s=arc-20240116; t=1721759997; c=relaxed/simple;
+	bh=1SGUcO8GcjKzlSON/X94gKThJrlovfogvgq9oVbUwEo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QT6arXjqiYalImmR51aaMYi66cC0WvedEgafr4Bn110PU1b057C+m/QKs8xBkdx7ZIAosXdbhgYuKTafFgNwo7IA3h3BVlV1FccBPzitK9ijhTE/DhFFPWWjINR8JpEhRIgAFbDxL0WO9QXyJsY1hoGxgjyKwIfB4pJEhhkbnj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7Z9/O7T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XwUu1HuNaohy2SK5lGIRTpqQC6NhpC2S5KYAyoFvWCgJ52uE4IexvPBNmTXYCnU6f9dc8Ym9+Ut5KpwB6dt4qyx1M6uBLkUYG1Rtp8DzAqc3u5GQLG1X9xaOX9gsFdmUqtH5k3kDw8i40suA76iBcqGkQBK9kqOGTJdscX5TWAA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EyxOA/mS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7Z9/O7T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75DF9C4AF0A;
-	Tue, 23 Jul 2024 18:39:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EyxOA/mS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57EABC4AF09;
+	Tue, 23 Jul 2024 18:39:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759994;
-	bh=O62zmvb8+rJkeLa5jUterfr7QonZ6LarYTvltJaBQ8U=;
+	s=korg; t=1721759997;
+	bh=1SGUcO8GcjKzlSON/X94gKThJrlovfogvgq9oVbUwEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7Z9/O7TEx5ktAXY+iXo15hnSA9RsWSryws7ZbPNUGwF3Y/c4PGQkv6xP9WjndKri
-	 QVGNXlp9w0T+mM6/obgu5OiHsm1ONYJl2ZHRHTnN54P8VA8hdhoNmDsHN2oZXOgo3M
-	 FW+U5928s4S417wfNsJU7lptMwWlNZ1kQ34ODtGI=
+	b=EyxOA/mSIjbGD+a6fipRrruZLXnTVygvVwBGb1UHfORf7hQZA18OIzvkAQYsMpaVV
+	 zLhvxox3ZM4w2mlzdeELqQiqKkg7sGTYgN356p7mu3h+4vdZcCG1pRJ/+eWs/V5ens
+	 OS3tcaxpJEz2aGkbP5sKwprQmxyfka+XSKcyCYpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Trimmer <simont@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Wei Li <liwei391@huawei.com>,
+	Huisong Li <lihuisong@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 066/163] ALSA: hda: cs35l56: Fix lifecycle of codec pointer
-Date: Tue, 23 Jul 2024 20:23:15 +0200
-Message-ID: <20240723180146.021934297@linuxfoundation.org>
+Subject: [PATCH 6.9 037/163] arm64: armv8_deprecated: Fix warning in isndep cpuhp starting process
+Date: Tue, 23 Jul 2024 20:22:46 +0200
+Message-ID: <20240723180144.906650959@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,45 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Trimmer <simont@opensource.cirrus.com>
+From: Wei Li <liwei391@huawei.com>
 
-[ Upstream commit d339131bf02d4ed918415574082caf5e8af6e664 ]
+[ Upstream commit 14951beaec93696b092a906baa0f29322cf34004 ]
 
-The codec should be cleared when the amp driver is unbound and when
-resuming it should be tested to prevent loading firmware into the device
-and ALSA in a partially configured system state.
+The function run_all_insn_set_hw_mode() is registered as startup callback
+of 'CPUHP_AP_ARM64_ISNDEP_STARTING', it invokes set_hw_mode() methods of
+all emulated instructions.
 
-Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20240531112716.25323-1-simont@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+As the STARTING callbacks are not expected to fail, if one of the
+set_hw_mode() fails, e.g. due to el0 mixed-endian is not supported for
+'setend', it will report a warning:
+
+```
+CPU[2] cannot support the emulation of setend
+CPU 2 UP state arm64/isndep:starting (136) failed (-22)
+CPU2: Booted secondary processor 0x0000000002 [0x414fd0c1]
+```
+
+To fix it, add a check for INSN_UNAVAILABLE status and skip the process.
+
+Signed-off-by: Wei Li <liwei391@huawei.com>
+Tested-by: Huisong Li <lihuisong@huawei.com>
+Link: https://lore.kernel.org/r/20240423093501.3460764-1-liwei391@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/kernel/armv8_deprecated.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 6b77c38a0e155..e134ede6c5aa5 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -735,6 +735,8 @@ static void cs35l56_hda_unbind(struct device *dev, struct device *master, void *
- 	if (comps[cs35l56->index].dev == dev)
- 		memset(&comps[cs35l56->index], 0, sizeof(*comps));
- 
-+	cs35l56->codec = NULL;
+diff --git a/arch/arm64/kernel/armv8_deprecated.c b/arch/arm64/kernel/armv8_deprecated.c
+index dd6ce86d4332b..b776e7424fe91 100644
+--- a/arch/arm64/kernel/armv8_deprecated.c
++++ b/arch/arm64/kernel/armv8_deprecated.c
+@@ -462,6 +462,9 @@ static int run_all_insn_set_hw_mode(unsigned int cpu)
+ 	for (int i = 0; i < ARRAY_SIZE(insn_emulations); i++) {
+ 		struct insn_emulation *insn = insn_emulations[i];
+ 		bool enable = READ_ONCE(insn->current_mode) == INSN_HW;
++		if (insn->status == INSN_UNAVAILABLE)
++			continue;
 +
- 	dev_dbg(cs35l56->base.dev, "Unbound\n");
- }
- 
-@@ -840,6 +842,9 @@ static int cs35l56_hda_system_resume(struct device *dev)
- 
- 	cs35l56->suspended = false;
- 
-+	if (!cs35l56->codec)
-+		return 0;
-+
- 	ret = cs35l56_is_fw_reload_needed(&cs35l56->base);
- 	dev_dbg(cs35l56->base.dev, "fw_reload_needed: %d\n", ret);
- 	if (ret > 0) {
+ 		if (insn->set_hw_mode && insn->set_hw_mode(enable)) {
+ 			pr_warn("CPU[%u] cannot support the emulation of %s",
+ 				cpu, insn->name);
 -- 
 2.43.0
 
