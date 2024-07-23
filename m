@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9437C158A29;
-	Tue, 23 Jul 2024 18:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884A01586F5;
+	Tue, 23 Jul 2024 18:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760293; cv=none; b=OIYz8YCXmLpqseZxO6Kgf+2KOuvf+K3nnTNFPN874n9QRWMW+7xzdxmZFng/g1Mztmw28zyLRKG8p8yrpkAT5ooiOvRrbYdTwrWo9zLqjhHCbzKrh5cofeYM4wDaPJc/ooKGHNMx0GQbJicK1gZln4RfvwrHJO7GC5L9tOvZm0M=
+	t=1721760296; cv=none; b=gRCFHMGTKzkbASWqVpFJNToDzjpuMLD5/EQpY/Hx1BkVn+Cgi+MB4lTBmM8g9A4v+aCP42VlEBZ44cJbxxGJG8NRSGFnrx0wSZJZVZdfOy3IW9Zvt1iLZVLi4ojdp5sNI4K2kiGR/Qzriybx/vQoIDrLEeRRV8rhgi+e+ZSqKzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760293; c=relaxed/simple;
-	bh=WtS5zO7AZbzOfg0rYHRvOlQGXikce4Irk+prG6LpDN0=;
+	s=arc-20240116; t=1721760296; c=relaxed/simple;
+	bh=St5q47khe3wfIh39CrHZRpFxWKNDleMZq4id3ubzi30=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmzqav5g7tOGGd/lRm0FZ7oZiFPGmzg+8Ca17TAQS0jzf3QWgLMbMk9o3jiAS74pbN6A1aXroIgkCrSSHuAfbAod8tgicEdmD/OAwbkaVmhJmzeyMmh1JZ5Ix5jTHYMd4YlViNCFgIdBQ5ZQEWOwuK/6Lt1FJTwP7Olyw5YopuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aQOivvag; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p7ej3ykaXYmERkWJCm+JRPiZqxeusPx3pLILoLR2niWbwH37d3MIbT6lF+mJWhmFk4jx2pXbtBIBZG/eKnMPL3MenV4XxI+afEoaaVtFfOwhxfodaja1pvhlY22+I6mv4bljnBrFeQe68jcgerFlgm+iuiDjZww/VnyXyAKzdJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RRUgsz4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aQOivvag"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1627AC4AF0F;
-	Tue, 23 Jul 2024 18:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RRUgsz4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F443C4AF09;
+	Tue, 23 Jul 2024 18:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760293;
-	bh=WtS5zO7AZbzOfg0rYHRvOlQGXikce4Irk+prG6LpDN0=;
+	s=korg; t=1721760296;
+	bh=St5q47khe3wfIh39CrHZRpFxWKNDleMZq4id3ubzi30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aQOivvagKEKMR0SMxz4IGC/mUz9+NtnshGRlEJRphRMb1YH3C4h0K0GD976bcsyeo
-	 LYrrdy59erq0Xcweqho8kRE6cJ3ehYbs/n3ze1HXpga/P3qq+xK44cochE92vPPqxH
-	 0tT9b4e+nDaaTYJ7RFL+ZdRvZEkyQohhGiuAaRDE=
+	b=RRUgsz4cbY3+ve/uQ8eMESLDLJtF3wZ4JsXQGzccFBncBTA8tnC5ClPfvvUNA8Q4f
+	 YchBvcDNbqR3yAFW3PWurQAeeH3p3ekU+FvwgVURC0NHnNnPyDvaYKh7na3DBx3n2A
+	 Brw3SPE9VHkVZ3qsUgzcK0wUPgmxBFeBT5/gTQ/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 139/163] btrfs: fix uninitialized return value in the ref-verify tool
-Date: Tue, 23 Jul 2024 20:24:28 +0200
-Message-ID: <20240723180148.843728351@linuxfoundation.org>
+Subject: [PATCH 6.9 140/163] fs: better handle deep ancestor chains in is_subdir()
+Date: Tue, 23 Jul 2024 20:24:29 +0200
+Message-ID: <20240723180148.882113899@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,59 +52,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 9da45c88e124f13a3c4d480b89b298e007fbb9e4 ]
+[ Upstream commit 391b59b045004d5b985d033263ccba3e941a7740 ]
 
-In the ref-verify tool, when processing the inline references of an extent
-item, we may end up returning with uninitialized return value, because:
+Jan reported that 'cd ..' may take a long time in deep directory
+hierarchies under a bind-mount. If concurrent renames happen it is
+possible to livelock in is_subdir() because it will keep retrying.
 
-1) The 'ret' variable is not initialized if there are no inline extent
-   references ('ptr' == 'end' before the while loop starts);
+Change is_subdir() from simply retrying over and over to retry once and
+then acquire the rename lock to handle deep ancestor chains better. The
+list of alternatives to this approach were less then pleasant. Change
+the scope of rcu lock to cover the whole walk while at it.
 
-2) If we find an extent owner inline reference we don't initialize 'ret'.
+A big thanks to Jan and Linus. Both Jan and Linus had proposed
+effectively the same thing just that one version ended up being slightly
+more elegant.
 
-So fix these cases by initializing 'ret' to 0 when declaring the variable
-and set it to -EINVAL if we find an extent owner inline references and
-simple quotas are not enabled (as well as print an error message).
-
-Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Link: https://lore.kernel.org/linux-btrfs/59b40ebe-c824-457d-8b24-0bbca69d472b@gmail.com/
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ref-verify.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ fs/dcache.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/fs/btrfs/ref-verify.c b/fs/btrfs/ref-verify.c
-index 8c4fc98ca9ce7..aa7ddc09c55fa 100644
---- a/fs/btrfs/ref-verify.c
-+++ b/fs/btrfs/ref-verify.c
-@@ -441,7 +441,8 @@ static int process_extent_item(struct btrfs_fs_info *fs_info,
- 	u32 item_size = btrfs_item_size(leaf, slot);
- 	unsigned long end, ptr;
- 	u64 offset, flags, count;
--	int type, ret;
-+	int type;
-+	int ret = 0;
+diff --git a/fs/dcache.c b/fs/dcache.c
+index 66515fbc9dd70..4c144519aa709 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -3035,28 +3035,25 @@ EXPORT_SYMBOL(d_splice_alias);
+   
+ bool is_subdir(struct dentry *new_dentry, struct dentry *old_dentry)
+ {
+-	bool result;
++	bool subdir;
+ 	unsigned seq;
  
- 	ei = btrfs_item_ptr(leaf, slot, struct btrfs_extent_item);
- 	flags = btrfs_extent_flags(leaf, ei);
-@@ -486,7 +487,11 @@ static int process_extent_item(struct btrfs_fs_info *fs_info,
- 						  key->objectid, key->offset);
- 			break;
- 		case BTRFS_EXTENT_OWNER_REF_KEY:
--			WARN_ON(!btrfs_fs_incompat(fs_info, SIMPLE_QUOTA));
-+			if (!btrfs_fs_incompat(fs_info, SIMPLE_QUOTA)) {
-+				btrfs_err(fs_info,
-+			  "found extent owner ref without simple quotas enabled");
-+				ret = -EINVAL;
-+			}
- 			break;
- 		default:
- 			btrfs_err(fs_info, "invalid key type in iref");
+ 	if (new_dentry == old_dentry)
+ 		return true;
+ 
+-	do {
+-		/* for restarting inner loop in case of seq retry */
+-		seq = read_seqbegin(&rename_lock);
+-		/*
+-		 * Need rcu_readlock to protect against the d_parent trashing
+-		 * due to d_move
+-		 */
+-		rcu_read_lock();
+-		if (d_ancestor(old_dentry, new_dentry))
+-			result = true;
+-		else
+-			result = false;
+-		rcu_read_unlock();
+-	} while (read_seqretry(&rename_lock, seq));
+-
+-	return result;
++	/* Access d_parent under rcu as d_move() may change it. */
++	rcu_read_lock();
++	seq = read_seqbegin(&rename_lock);
++	subdir = d_ancestor(old_dentry, new_dentry);
++	 /* Try lockless once... */
++	if (read_seqretry(&rename_lock, seq)) {
++		/* ...else acquire lock for progress even on deep chains. */
++		read_seqlock_excl(&rename_lock);
++		subdir = d_ancestor(old_dentry, new_dentry);
++		read_sequnlock_excl(&rename_lock);
++	}
++	rcu_read_unlock();
++	return subdir;
+ }
+ EXPORT_SYMBOL(is_subdir);
+ 
 -- 
 2.43.0
 
