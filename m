@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B9713D896;
-	Tue, 23 Jul 2024 18:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2605C13C3F5;
+	Tue, 23 Jul 2024 18:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759887; cv=none; b=KnLGghcXidMxIRUvDKQPzI36dymUH6DM2vElcIIY7+gUEeZl4HcygvlJQOsukdC+DfdCL3NKeZd6GL5K7PVSkz9uTU9tlXjZ9cEyUWIhzZJru4BJxOLJm9NYy0X1NaCNU3xaPGw+RHvKUL50gL8s6kibjm0qYGD2TIYXLnJnuF8=
+	t=1721759890; cv=none; b=ckqZjUwFw01dOkS8+rlOYYa5lmxy078XfLgnra9gcEqb0YIw1c3DputnZ/4A89ssYoX8m55bcOO6fDYQBn1tejS7nmKBXaoPGtS8LJNpRW/gFbE104ChQrzawPZJnpVPxf/37Dp2LOxDwxTOOk6QdzX7BsPaZvCzTIHW7rpRl64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759887; c=relaxed/simple;
-	bh=az4J3gM8rGA3/q5veLcCLM6BUIPB0c+7nsjz9/9QfnY=;
+	s=arc-20240116; t=1721759890; c=relaxed/simple;
+	bh=q4SkxXtfY4PeETKlI6OpeIfeXQ1xbBv0Wz8HVpF+3AI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t4txcABylyHdvqMqnGI/jwe6IKBHWL8O1m2F0NTU3N2+8gkR2cEwZnvJqmungBqvYSHCz9riwf+PbEeFrLLuipoCSMxP/Jz20580M7aaGQlNxP/WbSNj2izOMEjhljfXwXWy38ZNbclTj+JiqqeHAYLBBroKE/Eu3AYh0TfBjVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UFQyjVPY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wadq5/uMuAGLmbfP/H8E7D1mBSUrM0kLsVH6Kyc0OekNzfVkDqLY6Gnn9NajlHxhUA5zLxqY1bcAxcZ6VdGwMZPyfUk1ztDKVb1EX9fmbmYYYnvcIaDzTaPB9qpvKcXGBeP3HP40c/i+B4qmzbrVEU4dEgOMK0IiZMH7zCCMb2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l9TP6rKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UFQyjVPY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3BDBC4AF0A;
-	Tue, 23 Jul 2024 18:38:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l9TP6rKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F9DC4AF0A;
+	Tue, 23 Jul 2024 18:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759887;
-	bh=az4J3gM8rGA3/q5veLcCLM6BUIPB0c+7nsjz9/9QfnY=;
+	s=korg; t=1721759890;
+	bh=q4SkxXtfY4PeETKlI6OpeIfeXQ1xbBv0Wz8HVpF+3AI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFQyjVPYDzPk/g7QynLSYr9WI0jJ+sNV8Blcy7ifoedYkUyalYjfr+PZk93zmLbNC
-	 rLuCPjwB0cV+RAfl8mjQEPdgwETujljKqdkAwdlXmqzAF4VU7Ukux6oQbXsO+qnozO
-	 Ns9qmjt+O/4m2gyV/AOwsKQXuEQvdvmWIu+lVv3s=
+	b=l9TP6rKKImi/HUiSxectNbsFFmUo5eI04bpdNU8o8PTdzShZALMiE66UQ9QRqPRct
+	 plSHrEShdIXpWa8hXu7bhPNeO1ryFJ/McaNqLc32ZopCh2B0lZU24rQeM0IUo0Q3Xi
+	 GDLOpeCBDsNgoeF/NsbQLbo7IsXrKTaNNpyEu5FU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunguang Xu <chunguang.xu@shopee.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 030/163] nvme-fabrics: use reserved tag for reg read/write command
-Date: Tue, 23 Jul 2024 20:22:39 +0200
-Message-ID: <20240723180144.636304520@linuxfoundation.org>
+Subject: [PATCH 6.9 031/163] LoongArch: Fix GMACs phy-mode definitions in dts
+Date: Tue, 23 Jul 2024 20:22:40 +0200
+Message-ID: <20240723180144.673573994@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -54,65 +50,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunguang Xu <chunguang.xu@shopee.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 7dc3bfcb4c9cc58970fff6aaa48172cb224d85aa ]
+[ Upstream commit eb36e520f4f1b690fd776f15cbac452f82ff7bfa ]
 
-In some scenarios, if too many commands are issued by nvme command in
-the same time by user tasks, this may exhaust all tags of admin_q. If
-a reset (nvme reset or IO timeout) occurs before these commands finish,
-reconnect routine may fail to update nvme regs due to insufficient tags,
-which will cause kernel hang forever. In order to workaround this issue,
-maybe we can let reg_read32()/reg_read64()/reg_write32() use reserved
-tags. This maybe safe for nvmf:
+The GMAC of Loongson chips cannot insert the correct 1.5-2ns delay. So
+we need the PHY to insert internal delays for both transmit and receive
+data lines from/to the PHY device. Fix this by changing the "phy-mode"
+from "rgmii" to "rgmii-id" in dts.
 
-1. For the disable ctrl path,  we will not issue connect command
-2. For the enable ctrl / fw activate path, since connect and reg_xx()
-   are called serially.
-
-So the reserved tags may still be enough while reg_xx() use reserved tags.
-
-Signed-off-by: Chunguang Xu <chunguang.xu@shopee.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fabrics.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/loongarch/boot/dts/loongson-2k0500-ref.dts | 4 ++--
+ arch/loongarch/boot/dts/loongson-2k1000-ref.dts | 4 ++--
+ arch/loongarch/boot/dts/loongson-2k2000-ref.dts | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
-index 1f0ea1f32d22f..f6416f8553f03 100644
---- a/drivers/nvme/host/fabrics.c
-+++ b/drivers/nvme/host/fabrics.c
-@@ -180,7 +180,7 @@ int nvmf_reg_read32(struct nvme_ctrl *ctrl, u32 off, u32 *val)
- 	cmd.prop_get.offset = cpu_to_le32(off);
+diff --git a/arch/loongarch/boot/dts/loongson-2k0500-ref.dts b/arch/loongarch/boot/dts/loongson-2k0500-ref.dts
+index 8aefb0c126722..a34734a6c3ce8 100644
+--- a/arch/loongarch/boot/dts/loongson-2k0500-ref.dts
++++ b/arch/loongarch/boot/dts/loongson-2k0500-ref.dts
+@@ -44,14 +44,14 @@ linux,cma {
+ &gmac0 {
+ 	status = "okay";
  
- 	ret = __nvme_submit_sync_cmd(ctrl->fabrics_q, &cmd, &res, NULL, 0,
--			NVME_QID_ANY, 0);
-+			NVME_QID_ANY, NVME_SUBMIT_RESERVED);
+-	phy-mode = "rgmii";
++	phy-mode = "rgmii-id";
+ 	bus_id = <0x0>;
+ };
  
- 	if (ret >= 0)
- 		*val = le64_to_cpu(res.u64);
-@@ -226,7 +226,7 @@ int nvmf_reg_read64(struct nvme_ctrl *ctrl, u32 off, u64 *val)
- 	cmd.prop_get.offset = cpu_to_le32(off);
+ &gmac1 {
+ 	status = "okay";
  
- 	ret = __nvme_submit_sync_cmd(ctrl->fabrics_q, &cmd, &res, NULL, 0,
--			NVME_QID_ANY, 0);
-+			NVME_QID_ANY, NVME_SUBMIT_RESERVED);
+-	phy-mode = "rgmii";
++	phy-mode = "rgmii-id";
+ 	bus_id = <0x1>;
+ };
  
- 	if (ret >= 0)
- 		*val = le64_to_cpu(res.u64);
-@@ -271,7 +271,7 @@ int nvmf_reg_write32(struct nvme_ctrl *ctrl, u32 off, u32 val)
- 	cmd.prop_set.value = cpu_to_le64(val);
+diff --git a/arch/loongarch/boot/dts/loongson-2k1000-ref.dts b/arch/loongarch/boot/dts/loongson-2k1000-ref.dts
+index ed4d324340411..aaf41b565805a 100644
+--- a/arch/loongarch/boot/dts/loongson-2k1000-ref.dts
++++ b/arch/loongarch/boot/dts/loongson-2k1000-ref.dts
+@@ -43,7 +43,7 @@ linux,cma {
+ &gmac0 {
+ 	status = "okay";
  
- 	ret = __nvme_submit_sync_cmd(ctrl->fabrics_q, &cmd, NULL, NULL, 0,
--			NVME_QID_ANY, 0);
-+			NVME_QID_ANY, NVME_SUBMIT_RESERVED);
- 	if (unlikely(ret))
- 		dev_err(ctrl->device,
- 			"Property Set error: %d, offset %#x\n",
+-	phy-mode = "rgmii";
++	phy-mode = "rgmii-id";
+ 	phy-handle = <&phy0>;
+ 	mdio {
+ 		compatible = "snps,dwmac-mdio";
+@@ -58,7 +58,7 @@ phy0: ethernet-phy@0 {
+ &gmac1 {
+ 	status = "okay";
+ 
+-	phy-mode = "rgmii";
++	phy-mode = "rgmii-id";
+ 	phy-handle = <&phy1>;
+ 	mdio {
+ 		compatible = "snps,dwmac-mdio";
+diff --git a/arch/loongarch/boot/dts/loongson-2k2000-ref.dts b/arch/loongarch/boot/dts/loongson-2k2000-ref.dts
+index 74b99bd234cc3..ea9e6985d0e9f 100644
+--- a/arch/loongarch/boot/dts/loongson-2k2000-ref.dts
++++ b/arch/loongarch/boot/dts/loongson-2k2000-ref.dts
+@@ -92,7 +92,7 @@ phy1: ethernet-phy@1 {
+ &gmac2 {
+ 	status = "okay";
+ 
+-	phy-mode = "rgmii";
++	phy-mode = "rgmii-id";
+ 	phy-handle = <&phy2>;
+ 	mdio {
+ 		compatible = "snps,dwmac-mdio";
 -- 
 2.43.0
 
