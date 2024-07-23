@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C86042067;
-	Tue, 23 Jul 2024 18:31:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBD713D24D;
+	Tue, 23 Jul 2024 18:31:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759465; cv=none; b=uhVbdlMKWC/rhhmP20iJeepaqSNwOf82T8M+mlr85SzZQS8PjefX/lMTTkKiPUcdd5zCrAvOGF5oB66I9oQUrndPdhlG8An/92ZPXCdC6jVQblI7FMF7vvax60N0ddcftAAuT3m7gWOqmBUI9mNYwvdJCFGgBN7I9JZumuIxZm4=
+	t=1721759468; cv=none; b=RwkGoVHi2KRM79yObVkqM5ch7KSha4YKMPuTxud9s9fBSC8xxWOVEVQ0Ks8s+Mgmgvm73JCch651WkHJMlFC5SVVMG9YnpRQw6tPHRCo/ptFNSuRU404dEqxh0vpmVxgQkHcfoB2g+ztB/RQYfnK0Vc/dV1Yg9J1EASFuv6kL7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759465; c=relaxed/simple;
-	bh=RP5TucjlpRGUO0mfzLIr3GtgzYvhcE/72rv29JxHvAM=;
+	s=arc-20240116; t=1721759468; c=relaxed/simple;
+	bh=hFkor73tMVIUKvjU0am2wt2GZeLMOd0oPpbXNfLpO88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OXHY5CUd89fK/KviaZtrp0aPA3omqGonpx8HvcV3bzlToMIONCHtmKm5DGVZFyCsG+OLqxvcih1/ckI8zydKRdhs8CYQAZfGDzia0e27Io0m3MMYK7I1O7b+cOyG/NidtFqmJ6fJ9T2u5jF+qwFOtZBACbP3EBSm8MJx+gP+bQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeN0yZ/M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCMIMVT/AQMZA2knFTN74En7oUF+CvyvRdh0OMZEJR51EoXYiOza/Z+9t5GuICbI/KtgnGArYUd5t4TJWNr/+Rny/QiGQDKg8bejftlpOjMnd09npZe3rnMdYpv27NRT+ZlJwBBP2JIWdj1f0Fd1crreekGoiiEO92WFxie4sHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jDU87J1s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeN0yZ/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA11EC4AF09;
-	Tue, 23 Jul 2024 18:31:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jDU87J1s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD050C4AF0A;
+	Tue, 23 Jul 2024 18:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759465;
-	bh=RP5TucjlpRGUO0mfzLIr3GtgzYvhcE/72rv29JxHvAM=;
+	s=korg; t=1721759468;
+	bh=hFkor73tMVIUKvjU0am2wt2GZeLMOd0oPpbXNfLpO88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeN0yZ/MFEiNVL6FguhQlvCpDq6rFAcWzYXsSur6NS+t9gnj+KoOJ60YVr2Fy0ILs
-	 86etAxPXXE4moy4EmoMoSsLHWBjGIiLFkPaAgybWLuRr69hM9RFfgn16pMRFqhmD9b
-	 mTwefMCvTiXHXqskN0EKFeDw53veLXfPeM/454Pw=
+	b=jDU87J1s5E48jnBZUvPpvQnMXGvzQj6bnutieGN/hqIJkIuB4q0XZ8oVVmXT1eqyX
+	 PChqRee7z2/w0QVeT1F7hLRpjIe2wW0rSCTqksgax+2IMZeqmRJB/SyaAPpbFlA0hQ
+	 4zLnmqjnrDFr8zkIAdKHnwP0SanyEZIYqRgTdU48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Martin Wilck <martin.wilck@suse.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rajashekhar M A <rajs@netapp.com>
-Subject: [PATCH 6.6 002/129] scsi: core: alua: I/O errors for ALUA state transitions
-Date: Tue, 23 Jul 2024 20:22:30 +0200
-Message-ID: <20240723180404.859905826@linuxfoundation.org>
+	Ilan Peer <ilan.peer@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 020/129] wifi: iwlwifi: mvm: Fix scan abort handling with HW rfkill
+Date: Tue, 23 Jul 2024 20:22:48 +0200
+Message-ID: <20240723180405.566552887@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -56,108 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <martin.wilck@suse.com>
+From: Ilan Peer <ilan.peer@intel.com>
 
-[ Upstream commit 10157b1fc1a762293381e9145041253420dfc6ad ]
+[ Upstream commit e6dd2936ce7ce94a1915b799f8af8193ec628e87 ]
 
-When a host is configured with a few LUNs and I/O is running, injecting FC
-faults repeatedly leads to path recovery problems.  The LUNs have 4 paths
-each and 3 of them come back active after say an FC fault which makes 2 of
-the paths go down, instead of all 4. This happens after several iterations
-of continuous FC faults.
+When HW rfkill is toggled to disable the RF, the flow to stop scan is
+called. When trying to send the command to abort the scan, since
+HW rfkill is toggled, the command is not sent due to rfkill being
+asserted, and -ERFKILL is returned from iwl_trans_send_cmd(), but this
+is silently ignored in iwl_mvm_send_cmd() and thus the scan abort flow
+continues to wait for scan complete notification and fails. Since it
+fails, the UID to type mapping is not cleared, and thus a warning is
+later fired when trying to stop the interface.
 
-Reason here is that we're returning an I/O error whenever we're
-encountering sense code 06/04/0a (LOGICAL UNIT NOT ACCESSIBLE, ASYMMETRIC
-ACCESS STATE TRANSITION) instead of retrying.
+To fix this, modify the UMAC scan abort flow to force sending the
+scan abort command even when in rfkill, so stop the FW from accessing
+the radio etc.
 
-[mwilck: The original patch was developed by Rajashekhar M A and Hannes
-Reinecke. I moved the code to alua_check_sense() as suggested by Mike
-Christie [1]. Evan Milne had raised the question whether pg->state should
-be set to transitioning in the UA case [2]. I believe that doing this is
-correct. SCSI_ACCESS_STATE_TRANSITIONING by itself doesn't cause I/O
-errors. Our handler schedules an RTPG, which will only result in an I/O
-error condition if the transitioning timeout expires.]
-
-[1] https://lore.kernel.org/all/0bc96e82-fdda-4187-148d-5b34f81d4942@oracle.com/
-[2] https://lore.kernel.org/all/CAGtn9r=kicnTDE2o7Gt5Y=yoidHYD7tG8XdMHEBJTBraVEoOCw@mail.gmail.com/
-
-Co-developed-by: Rajashekhar M A <rajs@netapp.com>
-Co-developed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin Wilck <martin.wilck@suse.com>
-Link: https://lore.kernel.org/r/20240514140344.19538-1-mwilck@suse.com
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240513132416.8cbe2f8c1a97.Iffe235c12a919dafec88eef399eb1f7bae2c5bdb@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/device_handler/scsi_dh_alua.c | 31 +++++++++++++++-------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/scan.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
-index a226dc1b65d71..4eb0837298d4d 100644
---- a/drivers/scsi/device_handler/scsi_dh_alua.c
-+++ b/drivers/scsi/device_handler/scsi_dh_alua.c
-@@ -414,28 +414,40 @@ static char print_alua_state(unsigned char state)
- 	}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+index 150beeb9df117..6ef932e6299da 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/scan.c
+@@ -3242,10 +3242,11 @@ static int iwl_mvm_umac_scan_abort(struct iwl_mvm *mvm, int type)
+ 
+ 	ret = iwl_mvm_send_cmd_pdu(mvm,
+ 				   WIDE_ID(IWL_ALWAYS_LONG_GROUP, SCAN_ABORT_UMAC),
+-				   0, sizeof(cmd), &cmd);
++				   CMD_SEND_IN_RFKILL, sizeof(cmd), &cmd);
+ 	if (!ret)
+ 		mvm->scan_uid_status[uid] = type << IWL_MVM_SCAN_STOPPING_SHIFT;
+ 
++	IWL_DEBUG_SCAN(mvm, "Scan abort: ret=%d\n", ret);
+ 	return ret;
  }
  
--static enum scsi_disposition alua_check_sense(struct scsi_device *sdev,
--					      struct scsi_sense_hdr *sense_hdr)
-+static void alua_handle_state_transition(struct scsi_device *sdev)
- {
- 	struct alua_dh_data *h = sdev->handler_data;
- 	struct alua_port_group *pg;
- 
-+	rcu_read_lock();
-+	pg = rcu_dereference(h->pg);
-+	if (pg)
-+		pg->state = SCSI_ACCESS_STATE_TRANSITIONING;
-+	rcu_read_unlock();
-+	alua_check(sdev, false);
-+}
-+
-+static enum scsi_disposition alua_check_sense(struct scsi_device *sdev,
-+					      struct scsi_sense_hdr *sense_hdr)
-+{
- 	switch (sense_hdr->sense_key) {
- 	case NOT_READY:
- 		if (sense_hdr->asc == 0x04 && sense_hdr->ascq == 0x0a) {
- 			/*
- 			 * LUN Not Accessible - ALUA state transition
- 			 */
--			rcu_read_lock();
--			pg = rcu_dereference(h->pg);
--			if (pg)
--				pg->state = SCSI_ACCESS_STATE_TRANSITIONING;
--			rcu_read_unlock();
--			alua_check(sdev, false);
-+			alua_handle_state_transition(sdev);
- 			return NEEDS_RETRY;
- 		}
- 		break;
- 	case UNIT_ATTENTION:
-+		if (sense_hdr->asc == 0x04 && sense_hdr->ascq == 0x0a) {
-+			/*
-+			 * LUN Not Accessible - ALUA state transition
-+			 */
-+			alua_handle_state_transition(sdev);
-+			return NEEDS_RETRY;
-+		}
- 		if (sense_hdr->asc == 0x29 && sense_hdr->ascq == 0x00) {
- 			/*
- 			 * Power On, Reset, or Bus Device Reset.
-@@ -502,7 +514,8 @@ static int alua_tur(struct scsi_device *sdev)
- 
- 	retval = scsi_test_unit_ready(sdev, ALUA_FAILOVER_TIMEOUT * HZ,
- 				      ALUA_FAILOVER_RETRIES, &sense_hdr);
--	if (sense_hdr.sense_key == NOT_READY &&
-+	if ((sense_hdr.sense_key == NOT_READY ||
-+	     sense_hdr.sense_key == UNIT_ATTENTION) &&
- 	    sense_hdr.asc == 0x04 && sense_hdr.ascq == 0x0a)
- 		return SCSI_DH_RETRY;
- 	else if (retval)
 -- 
 2.43.0
 
