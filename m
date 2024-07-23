@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA138152179;
-	Tue, 23 Jul 2024 11:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A087213D609;
+	Tue, 23 Jul 2024 11:52:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721735551; cv=none; b=XtEPOrrHmCaxfcxsVXj6SrZlNpEfQb8x1HInWZ+65X3qlES9L4Th6eiPiqePpnAenLQliONY4fYDOrMnkTdXwKjT2GrWNjE1f50NI/IwwnAHrsOrvNzUYk0POHojHAOW/cMIxce+azmYj4ysXvNfMBrAUSgFSqveIAUGE/AIjA0=
+	t=1721735553; cv=none; b=LSI8KG+BxECSMaeay/hbJ6SBEFFiLkHvvPyMCwJr22pBBXkXrjfrqwDRYAC8160aUgBAeq34iTT+gx40KJ/4OVpFTc2DXv9WQqDAnnxZBHkJVGqcP9hAbVV2YrQxHcXc5ng+mmWE14QA5Zp/Zm3Ymihk19c0t5yZa0FCCNfj02g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721735551; c=relaxed/simple;
-	bh=G0CebsfWLIqYG1o71uPfB4w0UIAw5AvfpZWeNpSPP6U=;
+	s=arc-20240116; t=1721735553; c=relaxed/simple;
+	bh=J0E8oMyKLE7pwTrDxEnXrTWStDtsPpGOVWunZo+U2q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RCGrm1NqnZDnyqMn44E0nihh/rjqptzMqoNAxF0UyL8NEQIHH2w6xWCk+YN7BCiWMYt/TtzHJFrKZKVxl0REf5s1+JoOBh7JnnHdCmwoW+Py15z51vQ3lpqXJyeYuqRbZBaQa8dJF76EbcTS7U2zjjGZ5Y0PXo0vwimUeCjJS0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjgYvvlc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rM/daWF/BDL3ZjF+mGJvuQ0iwj7x8LOJIYXZEnqWvm7+ZjfK2a/Y1srYqSiG4QxR0i9GWBLXZjv2d6z8B4RNkgxODb59q5H+IqqqB0E6sqGi0ZzOJSEyA1qP47a9DBomYG0hxZND3WIh2+u4VND+xfgOu7mD67KKtrbZeKZaGYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzlZBBw+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjgYvvlc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A95C4AF09;
-	Tue, 23 Jul 2024 11:52:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzlZBBw+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1BBC4AF09;
+	Tue, 23 Jul 2024 11:52:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721735550;
-	bh=G0CebsfWLIqYG1o71uPfB4w0UIAw5AvfpZWeNpSPP6U=;
+	s=korg; t=1721735553;
+	bh=J0E8oMyKLE7pwTrDxEnXrTWStDtsPpGOVWunZo+U2q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sjgYvvlctCLWKLIXF4ih1HjB1oSLx56DXk9VPF+xHqU39JiZcc6NZI2sQJMiWurjK
-	 fcbcKUeGceUGcqMBDe4O8Cf9Kki/iSnP4kiRwp0WBSl+xiBGvGeI5K3eEBFn7FsY2S
-	 sDqZd+zhNsUPmAuA0hmuUJHVpAgP0GZPlbXeNySM=
+	b=qzlZBBw+IyV/OE3Ky+0bEvu3Uk2apLW2+fx7hJ7R7115xa0yXpVxnEkJMrkaOWKhY
+	 tzI1oHFilncpOvOSsGeNDUUqaCoaTXRvt+VyKhhENl4ixCcrzrXRm/O/ynbJPrTYdb
+	 L1OIMVT4VgZS3N9mWFO1l2aVNajDttfrHWEhWT9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Ge <gehao@kylinos.cn>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.10 7/9] tpm: Use auth only after NULL check in tpm_buf_check_hmac_response()
-Date: Tue, 23 Jul 2024 13:52:01 +0200
-Message-ID: <20240723114047.542651110@linuxfoundation.org>
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.10 8/9] ASoC: cs35l56: Use header defines for Speaker Volume control definition
+Date: Tue, 23 Jul 2024 13:52:02 +0200
+Message-ID: <20240723114047.577982361@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723114047.281580960@linuxfoundation.org>
 References: <20240723114047.281580960@linuxfoundation.org>
@@ -50,49 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Ge <gehao@kylinos.cn>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit 7dc357d343f134bf59815ff6098b93503ec8a23b upstream.
+commit c66995ae403073212f5ba60d2079003866c6e130 upstream.
 
-Dereference auth after NULL check in tpm_buf_check_hmac_response().
-Otherwise, unless tpm2_sessions_init() was called, a call can cause NULL
-dereference, when TCG_TPM2_HMAC is enabled.
+The "Speaker Volume" control was being defined using four hardcoded magic
+numbers. There are #defines in the cs35l56.h header for these numbers, so
+change the code to use the defined constants.
 
-[jarkko: adjusted the commit message.]
-Cc: stable@vger.kernel.org # v6.10+
-Fixes: 7ca110f2679b ("tpm: Address !chip->auth in tpm_buf_append_hmac_session*()")
-Signed-off-by: Hao Ge <gehao@kylinos.cn>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20240703095517.208077-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm2-sessions.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/codecs/cs35l56.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
-index 2281d55df545..d3521aadd43e 100644
---- a/drivers/char/tpm/tpm2-sessions.c
-+++ b/drivers/char/tpm/tpm2-sessions.c
-@@ -746,15 +746,16 @@ int tpm_buf_check_hmac_response(struct tpm_chip *chip, struct tpm_buf *buf,
- 	struct tpm2_auth *auth = chip->auth;
- 	off_t offset_s, offset_p;
- 	u8 rphash[SHA256_DIGEST_SIZE];
--	u32 attrs;
-+	u32 attrs, cc;
- 	struct sha256_state sctx;
- 	u16 tag = be16_to_cpu(head->tag);
--	u32 cc = be32_to_cpu(auth->ordinal);
- 	int parm_len, len, i, handles;
- 
- 	if (!auth)
- 		return rc;
- 
-+	cc = be32_to_cpu(auth->ordinal);
-+
- 	if (auth->session >= TPM_HEADER_SIZE) {
- 		WARN(1, "tpm session not filled correctly\n");
- 		goto out;
--- 
-2.45.2
-
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -196,7 +196,11 @@ static const struct snd_kcontrol_new cs3
+ 		       cs35l56_dspwait_get_volsw, cs35l56_dspwait_put_volsw),
+ 	SOC_SINGLE_S_EXT_TLV("Speaker Volume",
+ 			     CS35L56_MAIN_RENDER_USER_VOLUME,
+-			     6, -400, 400, 9, 0,
++			     CS35L56_MAIN_RENDER_USER_VOLUME_SHIFT,
++			     CS35L56_MAIN_RENDER_USER_VOLUME_MIN,
++			     CS35L56_MAIN_RENDER_USER_VOLUME_MAX,
++			     CS35L56_MAIN_RENDER_USER_VOLUME_SIGNBIT,
++			     0,
+ 			     cs35l56_dspwait_get_volsw,
+ 			     cs35l56_dspwait_put_volsw,
+ 			     vol_tlv),
 
 
