@@ -1,63 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE841803E;
-	Tue, 23 Jul 2024 19:03:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C463F13F456
+	for <patches@lists.linux.dev>; Tue, 23 Jul 2024 19:50:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721761425; cv=none; b=jR1byMDllcdwZQWpwMh578XLdYIFMvDemO8keSyZtUDT7MQguXlcQsDXDN8Gg6WM1CXxCfr9Fqx7BJmS2vdl+ZV7kmVTEuFgIgD6OJxQltP0pXxrQ+GEu5gDz0PVnIFYdxQRNS/VW1wDEQvd3j3KJEuWil8v1TzxWheKk1h6wJ8=
+	t=1721764229; cv=none; b=uu1vuSlGSwO83wMFab8dXeOzhc0vPtAiT31ttavuhJG2nvV5PZjFp7lN6Xz2ASmHio7rhPk8J4wEdgHufBwKBPcSykAlefYWHyqICrm8ocJ76sRq49BYTfrMLNm52G/BOPC1yq8iwqOF1RNcNxxbSJ8H2OffDEDbtwln11q/hY4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721761425; c=relaxed/simple;
-	bh=W9rjHqk3tVYIaj87CZl4OK/lXQOk5Wr/Y5fP7ydjT9g=;
-	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=oqhYOs6iqX0nR/Sux9EWuUTDF6oj4tGoZRP5byMqhFv+o8YqhZLcxw2WHb7GrHwoK2W5Mk3yl8oyXz8xjHIy5NQQHVJWVswyDSuSP/rfN7wpuqpJVOqEZJtgqjaDZ+Fjt6dq14+7dgUU7+63lRpPjAqfP+PH+TwIN7nLxVGDuLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FgTUj0IC; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FgTUj0IC"
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C565AC4AF09;
-	Tue, 23 Jul 2024 19:03:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721761424;
-	bh=W9rjHqk3tVYIaj87CZl4OK/lXQOk5Wr/Y5fP7ydjT9g=;
-	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
-	b=FgTUj0ICF/RhsNYuBp/Ugf+WJ40oEPYxI0TgRpsHBreuaDDdDlm5aFF/d57uQFXK9
-	 PRDVE9jUEqGP+43YL9XGi7m4CT0FV7sz6vA8euFgmQM8zf0Xz5zwEMnLmojja+qO+/
-	 nGalskRd6iUrEd/vxSK1yUro0RdsGqHXhlWt07lYjDamMgtk9OPA61GnUPWPhMXzIH
-	 GrX5r17IDQnZk6hlo9h0CMtIFWayJo55WEAabWq4BMRva3rzawPiHhtOti5TtNd8dy
-	 bPGXeVZ449hVa6zxcZFdnX6B20itN6637rrby2lCradI7U9DvtgTE8LKksPtjYTw5n
-	 hmeTwayI9tYmg==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id BBEBEC43443;
-	Tue, 23 Jul 2024 19:03:44 +0000 (UTC)
-Subject: Re: [GIT PULL] Modules changes for v6.11-rc1
-From: pr-tracker-bot@kernel.org
-In-Reply-To: <Zp_k2XEViIlDavXX@bombadil.infradead.org>
-References: <Zp_k2XEViIlDavXX@bombadil.infradead.org>
-X-PR-Tracked-List-Id: <patches.lists.linux.dev>
-X-PR-Tracked-Message-Id: <Zp_k2XEViIlDavXX@bombadil.infradead.org>
-X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.11-rc1
-X-PR-Tracked-Commit-Id: 61842868de13aa7fd7391c626e889f4d6f1450bf
-X-PR-Merge-Tree: torvalds/linux.git
-X-PR-Merge-Refname: refs/heads/master
-X-PR-Merge-Commit-Id: f488790059fe7be6b2b059ddee10835b2500b603
-Message-Id: <172176142476.11519.3165189063000430046.pr-tracker-bot@kernel.org>
-Date: Tue, 23 Jul 2024 19:03:44 +0000
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, linux-modules@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, jtornosm@redhat.com, lucas.demarchi@intel.com, mcgrof@kernel.org
+	s=arc-20240116; t=1721764229; c=relaxed/simple;
+	bh=ADdpkwbwR3T/L4KoLCfJzPkwbsNcv6jSTx+Pv0eDwGs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ITbpD3300UWDe3/xSi3e62MdTJLSRdfk0wG+V1HdusPkoTsW12rE3SAbsqA/p31pbUQsQYHOpKYTLyw81OskvorsZT7MR2nQLLZQC1j7gTF4peG8OTghBwE9UatK1DW0wjTURK+vWvaWtZOWg1sTCQd8+ChHz9pvyjBW4qLQvVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 3EC4B1C0082; Tue, 23 Jul 2024 21:50:19 +0200 (CEST)
+Date: Tue, 23 Jul 2024 21:50:18 +0200
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/105] 6.1.101-rc1 review
+Message-ID: <ZqAJehfxpzE5SI2S@duo.ucw.cz>
+References: <20240723180402.490567226@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="FpvG4RfpDJ/CopU5"
+Content-Disposition: inline
+In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 
-The pull request you sent on Tue, 23 Jul 2024 10:14:01 -0700:
 
-> git://git.kernel.org/pub/scm/linux/kernel/git/mcgrof/linux.git/ tags/modules-6.11-rc1
+--FpvG4RfpDJ/CopU5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-has been merged into torvalds/linux.git:
-https://git.kernel.org/torvalds/c/f488790059fe7be6b2b059ddee10835b2500b603
+Hi!
 
-Thank you!
+> This is the start of the stable review cycle for the 6.1.101 release.
+> There are 105 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
--- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/prtracker.html
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--FpvG4RfpDJ/CopU5
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZqAJegAKCRAw5/Bqldv6
+8tdPAJ9aztYl6oH1TOwJ5xzvFSo4EvckCACgo/vLgt6CsAjTcpgeZ21RToaqDX4=
+=FrRe
+-----END PGP SIGNATURE-----
+
+--FpvG4RfpDJ/CopU5--
