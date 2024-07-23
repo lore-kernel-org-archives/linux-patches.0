@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26776156F37;
-	Tue, 23 Jul 2024 18:25:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBE2157A4F;
+	Tue, 23 Jul 2024 18:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759149; cv=none; b=gwCSl763L/8OatSNBX+sPOhNuwYUoS7l2mt5pRlLZM3Gnw7EokeXXNBM1eRBbFcCDHRvgAeHYWwFR8DwSdtpuZDQ1DmrgTeZ13U/NtgE9spQeOyXbfbAt00NLma/4+PjAYyfZPHIDQx5HTv6oiTU6sHbuTZL2+3+cxJwZlJy1H8=
+	t=1721759152; cv=none; b=oFIAtg/XAXTpTHuCkCumHOuyWjQOyKigAycsoVgmIybD+qsdDLDZfZL/8XZFqgWN33lVJKt1QdPmde3eMwZ7/JiaMMfX15BWzEFDiUfmWM+yJf2eoOQQAa/BMtqh/t5Ka1RxGj/vMPLt8b6FMjyUD6hJ9G/piLk3nPsyDgV2X/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759149; c=relaxed/simple;
-	bh=Dyynr/zrwPY+G+agNMizkLzg3KQDFIGX3GhgCwKZ2Ic=;
+	s=arc-20240116; t=1721759152; c=relaxed/simple;
+	bh=Sa2uj6NI5VvC5xzrQzM7fKoE9EJXV7PpofE/WMQLz+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8YOmxpzUc5tdZnx3ZLIxoCbHHiIMelF/OVQkYCv+xAc+07We2WbraQYRrftHLmmET7ha80cVzx78Ya2K01q0VhjZk9QAsgkPRpUdefQWObxPk8dhrmdoMKnwbMWhgu+Zl1JT4RDm5TAwXZ3n7YdmLDsGjJ67BAXHRufykbnbuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PypYa6uz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tfGQbKIx4gm7DKHaA50cd4IObq1i4sf3SrDpnnZ/1xFAIveoyU1qibWnXIqmE5oZNuI8C75LdWBLfiNZ2c0MU7aUxyKf712rI6Fb7gCt7eRViPO74XlMq6RBEIaCLLfjXBjWoga/eGyGA9XpH8xuXqBLyRr68G29O9WS0yO3ArQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zx/gjUQQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PypYa6uz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1366C4AF0B;
-	Tue, 23 Jul 2024 18:25:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zx/gjUQQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6A2C4AF09;
+	Tue, 23 Jul 2024 18:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759149;
-	bh=Dyynr/zrwPY+G+agNMizkLzg3KQDFIGX3GhgCwKZ2Ic=;
+	s=korg; t=1721759152;
+	bh=Sa2uj6NI5VvC5xzrQzM7fKoE9EJXV7PpofE/WMQLz+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PypYa6uz2ejrQZt3CwWsaycSXqtT/ZSWjdCZ+HaI88yPzWa0LbisRsCR3WdUx43X/
-	 hUtVqi7VmHDvSMhVreNMIpXztvV3MzZ9njaALL3b3DQ/oWaT7PO98L3XrfbJqT7qt1
-	 g4zjVDgsthmJu9Z1aWFetZT5U9qR0dgQkbWNEjmg=
+	b=zx/gjUQQbaED+L/LTvL5YZD0fLIMSvl55KTniBj9hBT3VSbB1PSi3HglvNfYs7LDo
+	 7FvY5K0bXElNaKGxq83Dxa34ah755qUnMaUCiHsP8cfpk/bGe0oMI+qcwePEXWT+Gm
+	 zK3AFsFEXTVE1w7huIj9Xh+46FEVgcf9svihWjwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+de87c09cc7b964ea2e23@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/105] wifi: mac80211: apply mcast rate only if interface is up
-Date: Tue, 23 Jul 2024 20:22:56 +0200
-Message-ID: <20240723180403.658148693@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 6.1 002/105] minmax: clamp more efficiently by avoiding extra comparison
+Date: Tue, 23 Jul 2024 20:22:39 +0200
+Message-ID: <20240723180402.639283397@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -51,39 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-[ Upstream commit 02c665f048a439c0d58cc45334c94634bd7c18e6 ]
+commit 2122e2a4efc2cd139474079e11939b6e07adfacd upstream.
 
-If the interface isn't enabled, don't apply multicast
-rate changes immediately.
+Currently the clamp algorithm does:
 
-Reported-by: syzbot+de87c09cc7b964ea2e23@syzkaller.appspotmail.com
-Link: https://msgid.link/20240515133410.d6cffe5756cc.I47b624a317e62bdb4609ff7fa79403c0c444d32d@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    if (val > hi)
+        val = hi;
+    if (val < lo)
+        val = lo;
+
+But since hi > lo by definition, this can be made more efficient with:
+
+    if (val > hi)
+        val = hi;
+    else if (val < lo)
+        val = lo;
+
+So fix up the clamp and clamp_t functions to do this, adding the same
+argument checking as for min and min_t.
+
+For simple cases, code generation on x86_64 and aarch64 stay about the
+same:
+
+    before:
+            cmp     edi, edx
+            mov     eax, esi
+            cmova   edi, edx
+            cmp     edi, esi
+            cmovnb  eax, edi
+            ret
+    after:
+            cmp     edi, esi
+            mov     eax, edx
+            cmovnb  esi, edi
+            cmp     edi, edx
+            cmovb   eax, esi
+            ret
+
+    before:
+            cmp     w0, w2
+            csel    w8, w0, w2, lo
+            cmp     w8, w1
+            csel    w0, w8, w1, hi
+            ret
+    after:
+            cmp     w0, w1
+            csel    w8, w0, w1, hi
+            cmp     w0, w2
+            csel    w0, w8, w2, lo
+            ret
+
+On MIPS64, however, code generation improves, by removing arithmetic in
+the second branch:
+
+    before:
+            sltu    $3,$6,$4
+            bne     $3,$0,.L2
+            move    $2,$6
+
+            move    $2,$4
+    .L2:
+            sltu    $3,$2,$5
+            bnel    $3,$0,.L7
+            move    $2,$5
+
+    .L7:
+            jr      $31
+            nop
+    after:
+            sltu    $3,$4,$6
+            beq     $3,$0,.L13
+            move    $2,$6
+
+            sltu    $3,$4,$5
+            bne     $3,$0,.L12
+            move    $2,$4
+
+    .L13:
+            jr      $31
+            nop
+
+    .L12:
+            jr      $31
+            move    $2,$5
+
+For more complex cases with surrounding code, the effects are a bit
+more complicated. For example, consider this simplified version of
+timestamp_truncate() from fs/inode.c on x86_64:
+
+    struct timespec64 timestamp_truncate(struct timespec64 t, struct inode *inode)
+    {
+        struct super_block *sb = inode->i_sb;
+        unsigned int gran = sb->s_time_gran;
+
+        t.tv_sec = clamp(t.tv_sec, sb->s_time_min, sb->s_time_max);
+        if (t.tv_sec == sb->s_time_max || t.tv_sec == sb->s_time_min)
+            t.tv_nsec = 0;
+        return t;
+    }
+
+    before:
+            mov     r8, rdx
+            mov     rdx, rsi
+            mov     rcx, QWORD PTR [r8]
+            mov     rax, QWORD PTR [rcx+8]
+            mov     rcx, QWORD PTR [rcx+16]
+            cmp     rax, rdi
+            mov     r8, rcx
+            cmovge  rdi, rax
+            cmp     rdi, rcx
+            cmovle  r8, rdi
+            cmp     rax, r8
+            je      .L4
+            cmp     rdi, rcx
+            jge     .L4
+            mov     rax, r8
+            ret
+    .L4:
+            xor     edx, edx
+            mov     rax, r8
+            ret
+
+    after:
+            mov     rax, QWORD PTR [rdx]
+            mov     rdx, QWORD PTR [rax+8]
+            mov     rax, QWORD PTR [rax+16]
+            cmp     rax, rdi
+            jg      .L6
+            mov     r8, rax
+            xor     edx, edx
+    .L2:
+            mov     rax, r8
+            ret
+    .L6:
+            cmp     rdx, rdi
+            mov     r8, rdi
+            cmovge  r8, rdx
+            cmp     rax, r8
+            je      .L4
+            xor     eax, eax
+            cmp     rdx, rdi
+            cmovl   rax, rsi
+            mov     rdx, rax
+            mov     rax, r8
+            ret
+    .L4:
+            xor     edx, edx
+            jmp     .L2
+
+In this case, we actually gain a branch, unfortunately, because the
+compiler's replacement axioms no longer as cleanly apply.
+
+So all and all, this change is a bit of a mixed bag.
+
+Link: https://lkml.kernel.org/r/20220926133435.1333846-2-Jason@zx2c4.com
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 2122e2a4efc2cd139474079e11939b6e07adfacd)
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/linux/minmax.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 1e57027da2913..2c60fc165801c 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2838,8 +2838,9 @@ static int ieee80211_set_mcast_rate(struct wiphy *wiphy, struct net_device *dev,
- 	memcpy(sdata->vif.bss_conf.mcast_rate, rate,
- 	       sizeof(int) * NUM_NL80211_BANDS);
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -38,7 +38,7 @@
+ 		__cmp_once(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), op))
  
--	ieee80211_link_info_change_notify(sdata, &sdata->deflink,
--					  BSS_CHANGED_MCAST_RATE);
-+	if (ieee80211_sdata_running(sdata))
-+		ieee80211_link_info_change_notify(sdata, &sdata->deflink,
-+						  BSS_CHANGED_MCAST_RATE);
+ #define __clamp(val, lo, hi)	\
+-	__cmp(__cmp(val, lo, >), hi, <)
++	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
  
- 	return 0;
- }
--- 
-2.43.0
-
+ #define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({	\
+ 		typeof(val) unique_val = (val);				\
 
 
