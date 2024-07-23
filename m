@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A5B1586CB;
-	Tue, 23 Jul 2024 18:43:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C0213D896;
+	Tue, 23 Jul 2024 18:43:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760234; cv=none; b=UBNQmSoHSk0Gz3tMFGU9jutgbJCqhA5K/1N2PQaQfxMKjxVN/T+iofJvQREo3IqsOUfjgprdTbIhFAbCX6nD/HVQkXB/UmadadHtapZTugITeoyvVEKtVgP16MdAudNjsO5fH+Qt7Hm4OzuhwZMiM3SsYcsC71gGXmoau3i6/n0=
+	t=1721760237; cv=none; b=pczPxDo6O81AUyrZDXGALNWaE6BI/SRYtMcxeSgiGOAzIb82jt+rn6hKniDhRD4RM4XqSqftV/GfHMPk7bsXRtE5g1HmldfWPSXs6IdB/1yhq450f0V020MFdVbkfqyKR+I9ZtIX6jOdEq8yweMxYAYlIZvFZWn0zvCiaUZ2DQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760234; c=relaxed/simple;
-	bh=ri/uUIQQej7HC4cSLzUDdsP4AWKLoFTQgJSGze2Ah7k=;
+	s=arc-20240116; t=1721760237; c=relaxed/simple;
+	bh=5ipQLiVnoFjKdy+V1MmPZsT+E/DKfNLXJFdesAq2IfE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LeixHX7wqDJVmI9gKWiYwiiPycC17BlUwZ3V5UZQwE4T2502crr2ncGVDoEXI/MZllBBSXOMVlaoTu2U5ZkNbHDapvdywzRpvRaTXr5XGsHWi+yeE3DhijaVgFTvmk5KMpNSisfjCiEDBRvHOHOyCA1E8gSDiwDDIU7LL57/PoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RrEXcd80; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qLXHBEMeHAtvKLaS+xmtvwaYBxkldUd80vtDPGNbmaNJGH/1kueFIYXhUIitbZFLbGGjEba4pJuOnrorY/HdWBflyvp1/0ropASOxGeq1d2In36cpcMF6u01zBzUEloIogwHgKmpQIsLghj4iwCpHlwaQ04rtFJEw9TgWoBTqu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gd++E5gX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RrEXcd80"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD2CC4AF0A;
-	Tue, 23 Jul 2024 18:43:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gd++E5gX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D37ADC4AF0A;
+	Tue, 23 Jul 2024 18:43:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760234;
-	bh=ri/uUIQQej7HC4cSLzUDdsP4AWKLoFTQgJSGze2Ah7k=;
+	s=korg; t=1721760237;
+	bh=5ipQLiVnoFjKdy+V1MmPZsT+E/DKfNLXJFdesAq2IfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RrEXcd80GBWLsY/LkSTqGy3j/6Fm/ILw/Tn/EtQyD4930LgaxgVjFH2IzapO+IsNR
-	 ui74h214DX6qvVaam1xMZZ64ClLn6Ry1gPQW/rZMAXTTV+UE8TvrGq/cZ0Pj3W7oCC
-	 3i1jxTe+3uHjhhAnE8I7CDmtEq14MmbLXOJ3YkIE=
+	b=gd++E5gXlWMGAkflRdOrs10yXH2PjZu3oVNkJ8brxLdnH0ghz15dVJUF4q17HVBiu
+	 3yK3Cx7DpQISXTqCTmzldARjdKCvQVsmDJ/Y6sF0RqLDbJWAy9URXrZN4dN4MuMUDe
+	 v0nd4QkMS+j+o9q4nM2rDO431HzcK663yGtQCcTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Safonov <dima@arista.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	Edward Liaw <edliaw@google.com>,
 	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	John Hubbard <jhubbard@nvidia.com>,
-	Andrei Vagin <avagin@google.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 148/163] selftest/timerns: fix clang build failures for abs() calls
-Date: Tue, 23 Jul 2024 20:24:37 +0200
-Message-ID: <20240723180149.190772121@linuxfoundation.org>
+Subject: [PATCH 6.9 149/163] selftests/vDSO: fix clang build errors and warnings
+Date: Tue, 23 Jul 2024 20:24:38 +0200
+Message-ID: <20240723180149.228135124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -56,110 +56,119 @@ Content-Transfer-Encoding: 8bit
 
 From: John Hubbard <jhubbard@nvidia.com>
 
-[ Upstream commit f76f9bc616b7320df6789241ca7d26cedcf03cf3 ]
+[ Upstream commit 73810cd45b99c6c418e1c6a487b52c1e74edb20d ]
 
 When building with clang, via:
 
     make LLVM=1 -C tools/testing/selftests
 
-...clang warns about mismatches between the expected and required
-integer length being supplied to abs(3).
+...there are several warnings, and an error. This fixes all of those and
+allows these tests to run and pass.
 
-Fix this by using the correct variant of abs(3): labs(3) or llabs(3), in
-these cases.
+1. Fix linker error (undefined reference to memcpy) by providing a local
+   version of memcpy.
 
-Reviewed-by: Dmitry Safonov <dima@arista.com>
+2. clang complains about using this form:
+
+    if (g = h & 0xf0000000)
+
+...so factor out the assignment into a separate step.
+
+3. The code is passing a signed const char* to elf_hash(), which expects
+   a const unsigned char *. There are several callers, so fix this at
+   the source by allowing the function to accept a signed argument, and
+   then converting to unsigned operations, once inside the function.
+
+4. clang doesn't have __attribute__((externally_visible)) and generates
+   a warning to that effect. Fortunately, gcc 12 and gcc 13 do not seem
+   to require that attribute in order to build, run and pass tests here,
+   so remove it.
+
+Reviewed-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Edward Liaw <edliaw@google.com>
 Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
+Tested-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
 Signed-off-by: John Hubbard <jhubbard@nvidia.com>
-Acked-by: Andrei Vagin <avagin@google.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/timens/exec.c       | 6 +++---
- tools/testing/selftests/timens/timer.c      | 2 +-
- tools/testing/selftests/timens/timerfd.c    | 2 +-
- tools/testing/selftests/timens/vfork_exec.c | 4 ++--
- 4 files changed, 7 insertions(+), 7 deletions(-)
+ tools/testing/selftests/vDSO/parse_vdso.c      | 16 +++++++++++-----
+ .../selftests/vDSO/vdso_standalone_test_x86.c  | 18 ++++++++++++++++--
+ 2 files changed, 27 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/timens/exec.c b/tools/testing/selftests/timens/exec.c
-index e40dc5be2f668..d12ff955de0d8 100644
---- a/tools/testing/selftests/timens/exec.c
-+++ b/tools/testing/selftests/timens/exec.c
-@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
+diff --git a/tools/testing/selftests/vDSO/parse_vdso.c b/tools/testing/selftests/vDSO/parse_vdso.c
+index 413f75620a35b..4ae417372e9eb 100644
+--- a/tools/testing/selftests/vDSO/parse_vdso.c
++++ b/tools/testing/selftests/vDSO/parse_vdso.c
+@@ -55,14 +55,20 @@ static struct vdso_info
+ 	ELF(Verdef) *verdef;
+ } vdso_info;
  
- 		for (i = 0; i < 2; i++) {
- 			_gettime(CLOCK_MONOTONIC, &tst, i);
--			if (abs(tst.tv_sec - now.tv_sec) > 5)
-+			if (labs(tst.tv_sec - now.tv_sec) > 5)
- 				return pr_fail("%ld %ld\n", now.tv_sec, tst.tv_sec);
- 		}
- 		return 0;
-@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
- 
- 	for (i = 0; i < 2; i++) {
- 		_gettime(CLOCK_MONOTONIC, &tst, i);
--		if (abs(tst.tv_sec - now.tv_sec) > 5)
-+		if (labs(tst.tv_sec - now.tv_sec) > 5)
- 			return pr_fail("%ld %ld\n",
- 					now.tv_sec, tst.tv_sec);
+-/* Straight from the ELF specification. */
+-static unsigned long elf_hash(const unsigned char *name)
++/*
++ * Straight from the ELF specification...and then tweaked slightly, in order to
++ * avoid a few clang warnings.
++ */
++static unsigned long elf_hash(const char *name)
+ {
+ 	unsigned long h = 0, g;
+-	while (*name)
++	const unsigned char *uch_name = (const unsigned char *)name;
++
++	while (*uch_name)
+ 	{
+-		h = (h << 4) + *name++;
+-		if (g = h & 0xf0000000)
++		h = (h << 4) + *uch_name++;
++		g = h & 0xf0000000;
++		if (g)
+ 			h ^= g >> 24;
+ 		h &= ~g;
  	}
-@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
- 		/* Check that a child process is in the new timens. */
- 		for (i = 0; i < 2; i++) {
- 			_gettime(CLOCK_MONOTONIC, &tst, i);
--			if (abs(tst.tv_sec - now.tv_sec - OFFSET) > 5)
-+			if (labs(tst.tv_sec - now.tv_sec - OFFSET) > 5)
- 				return pr_fail("%ld %ld\n",
- 						now.tv_sec + OFFSET, tst.tv_sec);
- 		}
-diff --git a/tools/testing/selftests/timens/timer.c b/tools/testing/selftests/timens/timer.c
-index 5e7f0051bd7be..5b939f59dfa4d 100644
---- a/tools/testing/selftests/timens/timer.c
-+++ b/tools/testing/selftests/timens/timer.c
-@@ -56,7 +56,7 @@ int run_test(int clockid, struct timespec now)
- 			return pr_perror("timerfd_gettime");
+diff --git a/tools/testing/selftests/vDSO/vdso_standalone_test_x86.c b/tools/testing/selftests/vDSO/vdso_standalone_test_x86.c
+index 8a44ff973ee17..27f6fdf119691 100644
+--- a/tools/testing/selftests/vDSO/vdso_standalone_test_x86.c
++++ b/tools/testing/selftests/vDSO/vdso_standalone_test_x86.c
+@@ -18,7 +18,7 @@
  
- 		elapsed = new_value.it_value.tv_sec;
--		if (abs(elapsed - 3600) > 60) {
-+		if (llabs(elapsed - 3600) > 60) {
- 			ksft_test_result_fail("clockid: %d elapsed: %lld\n",
- 					      clockid, elapsed);
- 			return 1;
-diff --git a/tools/testing/selftests/timens/timerfd.c b/tools/testing/selftests/timens/timerfd.c
-index 9edd43d6b2c13..a4196bbd6e33f 100644
---- a/tools/testing/selftests/timens/timerfd.c
-+++ b/tools/testing/selftests/timens/timerfd.c
-@@ -61,7 +61,7 @@ int run_test(int clockid, struct timespec now)
- 			return pr_perror("timerfd_gettime(%d)", clockid);
+ #include "parse_vdso.h"
  
- 		elapsed = new_value.it_value.tv_sec;
--		if (abs(elapsed - 3600) > 60) {
-+		if (llabs(elapsed - 3600) > 60) {
- 			ksft_test_result_fail("clockid: %d elapsed: %lld\n",
- 					      clockid, elapsed);
- 			return 1;
-diff --git a/tools/testing/selftests/timens/vfork_exec.c b/tools/testing/selftests/timens/vfork_exec.c
-index beb7614941fb1..5b8907bf451dd 100644
---- a/tools/testing/selftests/timens/vfork_exec.c
-+++ b/tools/testing/selftests/timens/vfork_exec.c
-@@ -32,7 +32,7 @@ static void *tcheck(void *_args)
+-/* We need a libc functions... */
++/* We need some libc functions... */
+ int strcmp(const char *a, const char *b)
+ {
+ 	/* This implementation is buggy: it never returns -1. */
+@@ -34,6 +34,20 @@ int strcmp(const char *a, const char *b)
+ 	return 0;
+ }
  
- 	for (i = 0; i < 2; i++) {
- 		_gettime(CLOCK_MONOTONIC, &tst, i);
--		if (abs(tst.tv_sec - now->tv_sec) > 5) {
-+		if (labs(tst.tv_sec - now->tv_sec) > 5) {
- 			pr_fail("%s: in-thread: unexpected value: %ld (%ld)\n",
- 				args->tst_name, tst.tv_sec, now->tv_sec);
- 			return (void *)1UL;
-@@ -64,7 +64,7 @@ static int check(char *tst_name, struct timespec *now)
- 
- 	for (i = 0; i < 2; i++) {
- 		_gettime(CLOCK_MONOTONIC, &tst, i);
--		if (abs(tst.tv_sec - now->tv_sec) > 5)
-+		if (labs(tst.tv_sec - now->tv_sec) > 5)
- 			return pr_fail("%s: unexpected value: %ld (%ld)\n",
- 					tst_name, tst.tv_sec, now->tv_sec);
++/*
++ * The clang build needs this, although gcc does not.
++ * Stolen from lib/string.c.
++ */
++void *memcpy(void *dest, const void *src, size_t count)
++{
++	char *tmp = dest;
++	const char *s = src;
++
++	while (count--)
++		*tmp++ = *s++;
++	return dest;
++}
++
+ /* ...and two syscalls.  This is x86-specific. */
+ static inline long x86_syscall3(long nr, long a0, long a1, long a2)
+ {
+@@ -70,7 +84,7 @@ void to_base10(char *lastdig, time_t n)
  	}
+ }
+ 
+-__attribute__((externally_visible)) void c_main(void **stack)
++void c_main(void **stack)
+ {
+ 	/* Parse the stack */
+ 	long argc = (long)*stack;
 -- 
 2.43.0
 
