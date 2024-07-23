@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2270C13D896;
-	Tue, 23 Jul 2024 18:36:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4941B158215;
+	Tue, 23 Jul 2024 18:36:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759760; cv=none; b=UjHSXSpPv/NsK1BRmWCarEqKTsfkeaElJgI5/Xx8+nwv4ne+tBiBdQ2dEH10Mo2MSiqohMMnE2SC7skQKQDK9EiihP8d7kX8lK+n8OzWIdO3DbDv1Bm+yJ3EjoRyrHXp9m/HkhTQrhnCQKmkChPbCBYo24NUGBdulGlzZbl0qkw=
+	t=1721759763; cv=none; b=ekdNK2yIdhwyZ2oddYnw/L+1+x/ldbaK0OJE/hryU6pZPLXY95Nl7Q38jBf1dXoYZPutL3M48rL58GLWEwarg6PMgS1E66HXTlFLAYt8w0yvKUYsrLC9DPNw1LuT5z9IDDEze+bCQ2XlTIP0DFKv1OZ/9NAMWbrsHr6D8BJmhtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759760; c=relaxed/simple;
-	bh=vK0a0X3ccvBZ1xnaCZsBhcexaKCYwxPpTvUzGAik6Js=;
+	s=arc-20240116; t=1721759763; c=relaxed/simple;
+	bh=ejfqUEs+rJePaR33QOdCDf9dl5KtK+MGNdWx+ngWVao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eutd2BiRjzRGDRuYA16b+1avjpgKPNtmW5Je7IIt1q36HxPyFd+YqSwZStmLCkENLS68H1Fq3HjnJqksxDlcRuKl5RLYu9zs8Bx+967r0HxWbsRgpf/9FBAb7cNz9xo+GP+pAnOMX3VAt5WZ6FQ2pi8QQ7Un8VRrpF1HmBSRges=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2qHMgVbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dp3fdJACXFs/xqJHJnDC8dldx880MJ+77FyLOTNLcpypTrFLaVClCoK+p/mftt9Q5StplLiZfKcDNmr7TRxtkscoSVXmlJiVtcWVAfQkOCtUm8GVTYPWfbw/sNxwIIv3cZXeRYR5tTqEC8kpyBjpNismLhTowmN7G3JUs1wYwRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rjRkvZfg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2qHMgVbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9498CC4AF09;
-	Tue, 23 Jul 2024 18:35:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rjRkvZfg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6FBC4AF0A;
+	Tue, 23 Jul 2024 18:36:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759760;
-	bh=vK0a0X3ccvBZ1xnaCZsBhcexaKCYwxPpTvUzGAik6Js=;
+	s=korg; t=1721759763;
+	bh=ejfqUEs+rJePaR33QOdCDf9dl5KtK+MGNdWx+ngWVao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2qHMgVbGWyqHz9IPUNO76prt+3zOwPozG8G2f9cqp6Qk6TocLSS8zRhTITXw7Ah/g
-	 /gUjvid73+5XozmUgY6yzEg6tCrq1sIPo6ggZq3UbGJljGO1ioY8cgmgmSr/HN2q74
-	 7pbGpF8Oj/Aga88W2eCzJyBNWKjBhnGRFLHcJc7M=
+	b=rjRkvZfgxIpBBXconEUQu+QIxKwNfso3EjfW9Ghejl7Pr16+JUPLsMJkjnpVqsEls
+	 1IIQdByHaWwrms9EMFgDx5jVUWqhZQgovxI7V0Oj50FCzMfW0yw0Yeg9N3Df/nQIoZ
+	 jzRA0UeDH9vWirDkr1AQ+Edo6DVdmDAyUq1qI3bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 118/129] ALSA: hda: Use imply for suggesting CONFIG_SERIAL_MULTI_INSTANTIATE
-Date: Tue, 23 Jul 2024 20:24:26 +0200
-Message-ID: <20240723180409.349017294@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 119/129] cifs: fix noisy message on copy_file_range
+Date: Tue, 23 Jul 2024 20:24:27 +0200
+Message-ID: <20240723180409.387861980@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,51 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 17563b4a19d1844bdbccc7a82d2f31c28ca9cfae ]
+commit ae4ccca47195332c69176b8615c5ee17efd30c46 upstream.
 
-The recent fix introduced a reverse selection of
-CONFIG_SERIAL_MULTI_INSTANTIATE, but its condition isn't always met.
-Use a weak reverse selection to suggest the config for avoiding such
-inconsistencies, instead.
+There are common cases where copy_file_range can noisily
+log "source and target of copy not on same server"
+e.g. the mv command across mounts to two different server's shares.
+Change this to informational rather than logging as an error.
 
-Fixes: 9b1effff19cd ("ALSA: hda: cs35l56: Select SERIAL_MULTI_INSTANTIATE")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406210732.ozgk8IMK-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202406211244.oLhoF3My-lkp@intel.com/
-Reviewed-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20240621073915.19576-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A followon patch will add dynamic trace points e.g. for
+cifs_file_copychunk_range
+
+Cc: stable@vger.kernel.org
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/Kconfig b/sound/pci/hda/Kconfig
-index f8ef87a30cab2..9698ebe3fbc2e 100644
---- a/sound/pci/hda/Kconfig
-+++ b/sound/pci/hda/Kconfig
-@@ -141,7 +141,7 @@ config SND_HDA_SCODEC_CS35L56_I2C
- 	depends on ACPI || COMPILE_TEST
- 	depends on SND_SOC
- 	select FW_CS_DSP
--	select SERIAL_MULTI_INSTANTIATE
-+	imply SERIAL_MULTI_INSTANTIATE
- 	select SND_HDA_GENERIC
- 	select SND_SOC_CS35L56_SHARED
- 	select SND_HDA_SCODEC_CS35L56
-@@ -156,7 +156,7 @@ config SND_HDA_SCODEC_CS35L56_SPI
- 	depends on ACPI || COMPILE_TEST
- 	depends on SND_SOC
- 	select FW_CS_DSP
--	select SERIAL_MULTI_INSTANTIATE
-+	imply SERIAL_MULTI_INSTANTIATE
- 	select SND_HDA_GENERIC
- 	select SND_SOC_CS35L56_SHARED
- 	select SND_HDA_SCODEC_CS35L56
--- 
-2.43.0
-
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1404,7 +1404,7 @@ ssize_t cifs_file_copychunk_range(unsign
+ 	target_tcon = tlink_tcon(smb_file_target->tlink);
+ 
+ 	if (src_tcon->ses != target_tcon->ses) {
+-		cifs_dbg(VFS, "source and target of copy not on same server\n");
++		cifs_dbg(FYI, "source and target of copy not on same server\n");
+ 		goto out;
+ 	}
+ 
 
 
