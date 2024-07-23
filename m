@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A087213D609;
-	Tue, 23 Jul 2024 11:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C771509AC;
+	Tue, 23 Jul 2024 11:52:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721735553; cv=none; b=LSI8KG+BxECSMaeay/hbJ6SBEFFiLkHvvPyMCwJr22pBBXkXrjfrqwDRYAC8160aUgBAeq34iTT+gx40KJ/4OVpFTc2DXv9WQqDAnnxZBHkJVGqcP9hAbVV2YrQxHcXc5ng+mmWE14QA5Zp/Zm3Ymihk19c0t5yZa0FCCNfj02g=
+	t=1721735556; cv=none; b=A/SbUjlWz7+MGEw23hFMLPbj0USF5yHU29CTxN+p+Eh1BLieCTPocOE0kX+04vTNSAMrQ6ab3F6VT06EhhILbb+8wZZeUh+Yi56UDKyyqJQGfe9JpvDc3ow0pcW+BELgoFiWUNxWkldf1qPQmUKf84xSTW0Th2JUjFrEj5MIZbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721735553; c=relaxed/simple;
-	bh=J0E8oMyKLE7pwTrDxEnXrTWStDtsPpGOVWunZo+U2q4=;
+	s=arc-20240116; t=1721735556; c=relaxed/simple;
+	bh=f74qUKOoH2QHS9m0GVs6fxK5uA8ARiisayBNi2y/aq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rM/daWF/BDL3ZjF+mGJvuQ0iwj7x8LOJIYXZEnqWvm7+ZjfK2a/Y1srYqSiG4QxR0i9GWBLXZjv2d6z8B4RNkgxODb59q5H+IqqqB0E6sqGi0ZzOJSEyA1qP47a9DBomYG0hxZND3WIh2+u4VND+xfgOu7mD67KKtrbZeKZaGYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzlZBBw+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B3WPtSjFNBZiBbvUKIv39wTyyEiFkI0DtlPYkO+ziaD4DRkdjGZFxDe2rL2Z7qfKaXIG2iPiVWBXV7TquD3m4+uf+vxKPYtV2PfmkWkJwbu/Dt2vk04rCIDwhlVz5Pw0/wjhx2rpxHzSIM9ZLyEp3psVYHzwZDxtZh5wg40/+Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=clg+wnO6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzlZBBw+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F1BBC4AF09;
-	Tue, 23 Jul 2024 11:52:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="clg+wnO6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12591C4AF09;
+	Tue, 23 Jul 2024 11:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721735553;
-	bh=J0E8oMyKLE7pwTrDxEnXrTWStDtsPpGOVWunZo+U2q4=;
+	s=korg; t=1721735556;
+	bh=f74qUKOoH2QHS9m0GVs6fxK5uA8ARiisayBNi2y/aq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzlZBBw+IyV/OE3Ky+0bEvu3Uk2apLW2+fx7hJ7R7115xa0yXpVxnEkJMrkaOWKhY
-	 tzI1oHFilncpOvOSsGeNDUUqaCoaTXRvt+VyKhhENl4ixCcrzrXRm/O/ynbJPrTYdb
-	 L1OIMVT4VgZS3N9mWFO1l2aVNajDttfrHWEhWT9U=
+	b=clg+wnO6iSOpXcQueSm6A8zHe9qh998SmeDJHFGOxV5N9fr1l65cKnPqxm5kSsucK
+	 m+a59XJRKTaXjC7p+/791VtydLTX0UpLV3gGHhG+MalfTOX1i2OTYEbujD6M15bpYd
+	 qcLVSjxxP12Tzp6mQZ6lb/IS//7DHLsGt1iyOgGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Richard Fitzgerald <rf@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.10 8/9] ASoC: cs35l56: Use header defines for Speaker Volume control definition
-Date: Tue, 23 Jul 2024 13:52:02 +0200
-Message-ID: <20240723114047.577982361@linuxfoundation.org>
+Subject: [PATCH 6.10 9/9] ASoC: cs35l56: Limit Speaker Volume to +12dB maximum
+Date: Tue, 23 Jul 2024 13:52:03 +0200
+Message-ID: <20240723114047.605318290@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723114047.281580960@linuxfoundation.org>
 References: <20240723114047.281580960@linuxfoundation.org>
@@ -52,34 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-commit c66995ae403073212f5ba60d2079003866c6e130 upstream.
+commit 244389bd42870640c4b5ef672a360da329b579ed upstream.
 
-The "Speaker Volume" control was being defined using four hardcoded magic
-numbers. There are #defines in the cs35l56.h header for these numbers, so
-change the code to use the defined constants.
+Change CS35L56_MAIN_RENDER_USER_VOLUME_MAX to 48, to limit the maximum
+value of the Speaker Volume control to +12dB. The minimum value is
+unchanged so that the default 0dB has the same integer control value.
+
+The original maximum of 400 (+100dB) was the largest value that can be
+mathematically handled by the DSP. The actual maximum amplification is
++12dB.
 
 Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20240703095517.208077-2-rf@opensource.cirrus.com
+Link: https://patch.msgid.link/20240703095517.208077-3-rf@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs35l56.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/sound/cs35l56.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -196,7 +196,11 @@ static const struct snd_kcontrol_new cs3
- 		       cs35l56_dspwait_get_volsw, cs35l56_dspwait_put_volsw),
- 	SOC_SINGLE_S_EXT_TLV("Speaker Volume",
- 			     CS35L56_MAIN_RENDER_USER_VOLUME,
--			     6, -400, 400, 9, 0,
-+			     CS35L56_MAIN_RENDER_USER_VOLUME_SHIFT,
-+			     CS35L56_MAIN_RENDER_USER_VOLUME_MIN,
-+			     CS35L56_MAIN_RENDER_USER_VOLUME_MAX,
-+			     CS35L56_MAIN_RENDER_USER_VOLUME_SIGNBIT,
-+			     0,
- 			     cs35l56_dspwait_get_volsw,
- 			     cs35l56_dspwait_put_volsw,
- 			     vol_tlv),
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -209,7 +209,7 @@
+ 
+ /* CS35L56_MAIN_RENDER_USER_VOLUME */
+ #define CS35L56_MAIN_RENDER_USER_VOLUME_MIN		-400
+-#define CS35L56_MAIN_RENDER_USER_VOLUME_MAX		400
++#define CS35L56_MAIN_RENDER_USER_VOLUME_MAX		48
+ #define CS35L56_MAIN_RENDER_USER_VOLUME_MASK		0x0000FFC0
+ #define CS35L56_MAIN_RENDER_USER_VOLUME_SHIFT		6
+ #define CS35L56_MAIN_RENDER_USER_VOLUME_SIGNBIT		9
 
 
