@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B80A1586CB;
-	Tue, 23 Jul 2024 18:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF27C158A03;
+	Tue, 23 Jul 2024 18:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759394; cv=none; b=NqBjysCgH3GohabL937EdsDX8O6GP3zJ9gfYLgRxbwCI0ZZlUxY9QH2LMlRAiMTPiuh4H6dv0hKDu741saX8LnVDSZPEGIMp8+YYPogDz5euENUeyEP7nRS2iD4JuWdRnB4W/Cctm2yOkKenQJK6WHAJznq25SEnCc2hf85D4xw=
+	t=1721759397; cv=none; b=CXqDzfM80FR3wE47Fh2CMyChHhOkNSIIjtCSzXZqqCX0ei5B6fqYVdOWmBOmp8J77zhPy7InSmjaWDaomppYjV4Xx/5gxUP9wDpMAC6Uh4zjH7t0wWEXNfndRPLsXLIaFGqBBEKEXPZBKrLR2+wJUxxohRKW0ziM/NIxinC3pOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759394; c=relaxed/simple;
-	bh=BM23ZajvDc8jzuuglDoR102V/1NO+wHg8zEfgNQtbAI=;
+	s=arc-20240116; t=1721759397; c=relaxed/simple;
+	bh=Eh2wKF1f1/D6+K5BzF1shBxvVZyObL2QdqlypengchY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWdtslRpcRZN0N7COtW8DyhkkePh1N0mQFhqOtR1z4U97e/djrWaKp44TPMgF2eVZ06hnVL8twLZaJPWybN0ROpCNLb5x2enAVkeMGN3XOzTFszEyEKJwM+0WjajEJP0VQLhdjgn35zdFjSwvzVtufsz41YM1qUoWEhPbJtsG/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bRUvHYSB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ela8PRUDidE7jb8tOU5DjFmxjvKy57ozLvb6FURJSHkCSXic6180HicIZ+FYvYJ6EqUmbIi0HJ3vw3ClTumBI8IUV7TeQ0VKqDES2p9Ylx2DEOy1+CK4wjET7sJSrOMZ7hEoceFjl3NLIfd6ASDZnxk5fOCp9ITsPKNUVeMq5Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=to2q0YiS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bRUvHYSB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23BA3C4AF09;
-	Tue, 23 Jul 2024 18:29:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="to2q0YiS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125E2C4AF0A;
+	Tue, 23 Jul 2024 18:29:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759394;
-	bh=BM23ZajvDc8jzuuglDoR102V/1NO+wHg8zEfgNQtbAI=;
+	s=korg; t=1721759397;
+	bh=Eh2wKF1f1/D6+K5BzF1shBxvVZyObL2QdqlypengchY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bRUvHYSB7LDs8qbZh0samYLzhQCWu9jtUTMyTOZf09RIYHehlJH8gl+9Ci5Js+90H
-	 TnbFx7tN6pTpb784GEOp4l0Ln+5lLd/1HWKoUVHss7BRVAkp0WSRiFcfpg6DSD/Few
-	 TfIiCANDp8Du6Jabdvxijb3w0UgW/TdisNqqp45w=
+	b=to2q0YiSHSYwYOL/ZJLi/Qxp1D2vhaWRMkAjICYPN1RKxg+pFVDfu7VZDyuTX/NJ2
+	 44ET/IGNS6oHQtjYhNhgxL0ARAwHTbCADIKRO6YZvrhgLtm5eAcax7sw9JEPYWoBX2
+	 RK4sfDN9jmB6/kF2DiSaVhV/9KVZ/xIEy3/rPqEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1d516edf1e74469ba5d3@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 102/105] wifi: mac80211: disable softirqs for queued frame handling
-Date: Tue, 23 Jul 2024 20:24:19 +0200
-Message-ID: <20240723180407.174144818@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 103/105] netfs, fscache: export fscache_put_volume() and add fscache_try_get_volume()
+Date: Tue, 23 Jul 2024 20:24:20 +0200
+Message-ID: <20240723180407.211980130@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -50,46 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 321028bc45f01edb9e57b0ae5c11c5c3600d00ca upstream.
+[ Upstream commit 85b08b31a22b481ec6528130daf94eee4452e23f ]
 
-As noticed by syzbot, calling ieee80211_handle_queued_frames()
-(and actually handling frames there) requires softirqs to be
-disabled, since we call into the RX code. Fix that in the case
-of cleaning up frames left over during shutdown.
+Export fscache_put_volume() and add fscache_try_get_volume()
+helper function to allow cachefiles to get/put fscache_volume
+via linux/fscache-cache.h.
 
-Fixes: 177c6ae9725d ("wifi: mac80211: handle tasklet frames before stopping")
-Reported-by: syzbot+1d516edf1e74469ba5d3@syzkaller.appspotmail.com
-Link: https://patch.msgid.link/20240626091559.cd6f08105a6e.I74778610a5ff2cf8680964698131099d2960352a@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240628062930.2467993-2-libaokun@huaweicloud.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 522018a0de6b ("cachefiles: fix slab-use-after-free in fscache_withdraw_volume()")
+Stable-dep-of: 5d8f80578907 ("cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/main.c |    1 +
- net/mac80211/util.c |    2 ++
- 2 files changed, 3 insertions(+)
+ fs/fscache/internal.h         |    2 --
+ fs/fscache/volume.c           |   14 ++++++++++++++
+ include/linux/fscache-cache.h |    6 ++++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -300,6 +300,7 @@ u32 ieee80211_reset_erp_info(struct ieee
- 	       BSS_CHANGED_ERP_SLOT;
+--- a/fs/fscache/internal.h
++++ b/fs/fscache/internal.h
+@@ -145,8 +145,6 @@ extern const struct seq_operations fscac
+ 
+ struct fscache_volume *fscache_get_volume(struct fscache_volume *volume,
+ 					  enum fscache_volume_trace where);
+-void fscache_put_volume(struct fscache_volume *volume,
+-			enum fscache_volume_trace where);
+ bool fscache_begin_volume_access(struct fscache_volume *volume,
+ 				 struct fscache_cookie *cookie,
+ 				 enum fscache_access_trace why);
+--- a/fs/fscache/volume.c
++++ b/fs/fscache/volume.c
+@@ -27,6 +27,19 @@ struct fscache_volume *fscache_get_volum
+ 	return volume;
  }
  
-+/* context: requires softirqs disabled */
- void ieee80211_handle_queued_frames(struct ieee80211_local *local)
++struct fscache_volume *fscache_try_get_volume(struct fscache_volume *volume,
++					      enum fscache_volume_trace where)
++{
++	int ref;
++
++	if (!__refcount_inc_not_zero(&volume->ref, &ref))
++		return NULL;
++
++	trace_fscache_volume(volume->debug_id, ref + 1, where);
++	return volume;
++}
++EXPORT_SYMBOL(fscache_try_get_volume);
++
+ static void fscache_see_volume(struct fscache_volume *volume,
+ 			       enum fscache_volume_trace where)
  {
- 	struct sk_buff *skb;
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -2207,7 +2207,9 @@ u32 ieee80211_sta_get_rates(struct ieee8
+@@ -420,6 +433,7 @@ void fscache_put_volume(struct fscache_v
+ 			fscache_free_volume(volume);
+ 	}
+ }
++EXPORT_SYMBOL(fscache_put_volume);
  
- void ieee80211_stop_device(struct ieee80211_local *local)
- {
-+	local_bh_disable();
- 	ieee80211_handle_queued_frames(local);
-+	local_bh_enable();
+ /*
+  * Relinquish a volume representation cookie.
+--- a/include/linux/fscache-cache.h
++++ b/include/linux/fscache-cache.h
+@@ -19,6 +19,7 @@
+ enum fscache_cache_trace;
+ enum fscache_cookie_trace;
+ enum fscache_access_trace;
++enum fscache_volume_trace;
  
- 	ieee80211_led_radio(local, false);
- 	ieee80211_mod_tpt_led_trig(local, 0, IEEE80211_TPT_LEDTRIG_FL_RADIO);
+ enum fscache_cache_state {
+ 	FSCACHE_CACHE_IS_NOT_PRESENT,	/* No cache is present for this name */
+@@ -97,6 +98,11 @@ extern void fscache_withdraw_cookie(stru
+ 
+ extern void fscache_io_error(struct fscache_cache *cache);
+ 
++extern struct fscache_volume *
++fscache_try_get_volume(struct fscache_volume *volume,
++		       enum fscache_volume_trace where);
++extern void fscache_put_volume(struct fscache_volume *volume,
++			       enum fscache_volume_trace where);
+ extern void fscache_end_volume_access(struct fscache_volume *volume,
+ 				      struct fscache_cookie *cookie,
+ 				      enum fscache_access_trace why);
 
 
