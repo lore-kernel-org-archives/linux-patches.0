@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7601586C4;
-	Tue, 23 Jul 2024 18:36:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCE5A158215;
+	Tue, 23 Jul 2024 18:36:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759795; cv=none; b=fAHpBkScvl72/9YCI/nXLoc+VKVnCj5O5SbcDJ6JTei8pcd6jchAAm9ii+Yn+6B6RSa/Vn6/fNQpQF+eAmWSCSkQwxZ1TnGjbE4XRgBSlzm1m7Y7nqeFD3lseT1d3vThsnV6V3tu1DtZQvayns3ZAC/qYHR9tPUqU0Nee2hUAjI=
+	t=1721759798; cv=none; b=ai1LS8pkJI49fw2uK7jLSiifK1ob0NN63ciB5rlxxQ/J2b6ChengxCEOhbkAqmw5Gb7x+xpz+95/a6iQar2Ol68dO/bBoGUC5KHUKvi5jmU3/oaPCnM7SL4MGptZzuPnvt72X8e6J5DYJL7RYwZ20BShD4hEsRCYhjnkM3YESLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759795; c=relaxed/simple;
-	bh=zpuHKN5NaXH7kcqs9oNIDi9Bq6VWt1dA2glWst8KrV0=;
+	s=arc-20240116; t=1721759798; c=relaxed/simple;
+	bh=oC1R5fQlRceJwFYgly/bHKrz+IOH+wXTzosOQ1yWtz8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kr+X5e/fEnsgCt/s3ZuWchQiee7DqYkjqQF3LBnZA5FptuQfK4KqFO2bGzPHjHMtwssNkXqZ1UJ3vRv5wNko9qTa/9VOrZGH38KSuxHAIsq+C+c1qELR5/Mcdpp8LY/a3LHPgNJD5BHMJylvNwT7o2hEN4JAn45EOuBuqPAQjiU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySgeGLJw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z9lsh2PJ9CZQpCrkRmk79ZHyZ/mNvmyrvgq8NNa4XRptPYduQQg9jURG56iRndja7G25ldaGg/ipTR2HAHatl0porsPcErGr8vfBDK4qpBzPvC4JLLNKOMGpuE7zJCoWOiAEpj1Y51a5jUL0CkTss+Hm1vqH/ciw0Chte7gOILk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rTm8zzDD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySgeGLJw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C34FC4AF0A;
-	Tue, 23 Jul 2024 18:36:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rTm8zzDD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D64C4AF09;
+	Tue, 23 Jul 2024 18:36:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759795;
-	bh=zpuHKN5NaXH7kcqs9oNIDi9Bq6VWt1dA2glWst8KrV0=;
+	s=korg; t=1721759798;
+	bh=oC1R5fQlRceJwFYgly/bHKrz+IOH+wXTzosOQ1yWtz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySgeGLJwtRodDjVFUFo9PrGpNMl53Ry88UwN1IWUqWXPwZqXvNcuPmC4ESJgSqtgY
-	 BZ87t0DEFa/cDbSJyjn+n7UD6wm9oUZPIihvp9z8sgqNbLq0KeWSO3MObcfzlsqoug
-	 rwGydMWxGlH23yiE8V5K8qQTDGlaBK8a7oPTmz+I=
+	b=rTm8zzDDJ6N5wmoD2OwaB+5h6AnHpfDcR2eVrZlGsdTNcx1hfKf3V8BuZarx9kFyE
+	 H0iVlOSjoftLNtmsO7btiHRf3EVI0aHZdlNA52XRg1YkNmBO9WUK6glp8CRYsTiwhr
+	 8gfH6XwhMwINfTv9x/bl/RN8I3qvBuvZpknaKuKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Edward Adam Davis <eadavis@qq.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 099/129] Bluetooth: btnxpuart: Enable Power Save feature on startup
-Date: Tue, 23 Jul 2024 20:24:07 +0200
-Message-ID: <20240723180408.614035237@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 100/129] bluetooth/l2cap: sync sock recv cb and release
+Date: Tue, 23 Jul 2024 20:24:08 +0200
+Message-ID: <20240723180408.656852465@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -52,44 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 4183a7be77009fc31c5760429fe095f163bf96a9 ]
+[ Upstream commit 89e856e124f9ae548572c56b1b70c2255705f8fe ]
 
-This sets the default power save mode setting to enabled.
+The problem occurs between the system call to close the sock and hci_rx_work,
+where the former releases the sock and the latter accesses it without lock protection.
 
-The power save feature is now stable and stress test issues, such as the
-TX timeout error, have been resolved.
-commit c7ee0bc8db32 ("Bluetooth: btnxpuart: Resolve TX timeout error in
-power save stress test")
+           CPU0                       CPU1
+           ----                       ----
+           sock_close                 hci_rx_work
+	   l2cap_sock_release         hci_acldata_packet
+	   l2cap_sock_kill            l2cap_recv_frame
+	   sk_free                    l2cap_conless_channel
+	                              l2cap_sock_recv_cb
 
-With this setting, the driver will send the vendor command to FW at
-startup, to enable power save feature.
+If hci_rx_work processes the data that needs to be received before the sock is
+closed, then everything is normal; Otherwise, the work thread may access the
+released sock when receiving data.
 
-User can disable this feature using the following vendor command:
-hcitool cmd 3f 23 03 00 00 (HCI_NXP_AUTO_SLEEP_MODE)
+Add a chan mutex in the rx callback of the sock to achieve synchronization between
+the sock release and recv cb.
 
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Sock is dead, so set chan data to NULL, avoid others use invalid sock pointer.
+
+Reported-and-tested-by: syzbot+b7f6f8c9303466e16c8a@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_sock.c | 25 ++++++++++++++++++++++---
+ 1 file changed, 22 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index abccd571cf3ee..5c5a5b752419e 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -280,7 +280,7 @@ static u8 crc8_table[CRC8_TABLE_SIZE];
+diff --git a/net/bluetooth/l2cap_sock.c b/net/bluetooth/l2cap_sock.c
+index 97d0a0f5829a6..ae19d5deba3ae 100644
+--- a/net/bluetooth/l2cap_sock.c
++++ b/net/bluetooth/l2cap_sock.c
+@@ -1250,6 +1250,10 @@ static void l2cap_sock_kill(struct sock *sk)
  
- /* Default configurations */
- #define DEFAULT_H2C_WAKEUP_MODE	WAKEUP_METHOD_BREAK
--#define DEFAULT_PS_MODE		PS_MODE_DISABLE
-+#define DEFAULT_PS_MODE		PS_MODE_ENABLE
- #define FW_INIT_BAUDRATE	HCI_NXP_PRI_BAUDRATE
+ 	BT_DBG("sk %p state %s", sk, state_to_string(sk->sk_state));
  
- static struct sk_buff *nxp_drv_send_cmd(struct hci_dev *hdev, u16 opcode,
++	/* Sock is dead, so set chan data to NULL, avoid other task use invalid
++	 * sock pointer.
++	 */
++	l2cap_pi(sk)->chan->data = NULL;
+ 	/* Kill poor orphan */
+ 
+ 	l2cap_chan_put(l2cap_pi(sk)->chan);
+@@ -1492,12 +1496,25 @@ static struct l2cap_chan *l2cap_sock_new_connection_cb(struct l2cap_chan *chan)
+ 
+ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ {
+-	struct sock *sk = chan->data;
+-	struct l2cap_pinfo *pi = l2cap_pi(sk);
++	struct sock *sk;
++	struct l2cap_pinfo *pi;
+ 	int err;
+ 
+-	lock_sock(sk);
++	/* To avoid race with sock_release, a chan lock needs to be added here
++	 * to synchronize the sock.
++	 */
++	l2cap_chan_hold(chan);
++	l2cap_chan_lock(chan);
++	sk = chan->data;
+ 
++	if (!sk) {
++		l2cap_chan_unlock(chan);
++		l2cap_chan_put(chan);
++		return -ENXIO;
++	}
++
++	pi = l2cap_pi(sk);
++	lock_sock(sk);
+ 	if (chan->mode == L2CAP_MODE_ERTM && !list_empty(&pi->rx_busy)) {
+ 		err = -ENOMEM;
+ 		goto done;
+@@ -1546,6 +1563,8 @@ static int l2cap_sock_recv_cb(struct l2cap_chan *chan, struct sk_buff *skb)
+ 
+ done:
+ 	release_sock(sk);
++	l2cap_chan_unlock(chan);
++	l2cap_chan_put(chan);
+ 
+ 	return err;
+ }
 -- 
 2.43.0
 
