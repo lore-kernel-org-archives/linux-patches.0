@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272061514DE;
-	Tue, 23 Jul 2024 11:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1530614F138;
+	Tue, 23 Jul 2024 11:52:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721735539; cv=none; b=ft3CSn9oBa6Aifd/K+j5WQneah7q0WN02l1/rMSoN9zvb+ThQpUDe2dsZY9bdzTjjVRP7CJYqvHtlAkxRTzH0vagNIbI0KzfVaeNOMHlN5BjzOWNNd8Pn9TRNBqDYDhkWE/l2UaLED8OcOSIRVqVAvkeKsDVuntiOgPOwvozWZg=
+	t=1721735542; cv=none; b=IpDTYt4UKAaovKfYP2NQyTPca6qpZk0Cc5LAKsMXiVbRcIqVpn0EdzegO45n5dNOP0aU0Si/W78PPicZavbQuqsPnRYKWSgU5nuejHOY/gajRFA91sJz11xdRQfHlCPdwU1Y81Ry5aYhw83XY7DyblRW3uBPwez42ow4PzpYD5M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721735539; c=relaxed/simple;
-	bh=fnGlvnVVajk0n/+8DsGik+8yqDDdFWAb5kZJ8soCR1E=;
+	s=arc-20240116; t=1721735542; c=relaxed/simple;
+	bh=loBTzAl6ZaDPBpOThZdo9odtvFkB7pTioDF5QEQUtcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miPMrtaVFLL+MHHxzvikrFJL5opR0MjBt1Dywd1962pN6WVtmQAUzevpMCKMCFf5RTeqvT5lteJXVsRAYd8omNhjZU1Fab0bUF++zBKlivxsGXhLavAUTuMTgdANCojukJV4gg8uds2gTtKTNXw47c6vzwdmPVA5GICCgnPEbtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ck6kNG7L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s/NuqiFr0aa/a+5mWGslkT53E6DNRad3LUXvubFplY4vNO7qeZPAuefnh0UOfxBlwdDTtvqAQb0eq0qzjIhyt0YuKL/QYbtV9WjOTFncl8SUEDkDnJ3CEVi3ZF41PIET/JbmHI7tr+5Zld/oWcl25OUVDmSFFRrViE11c3DLZ0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4qDRLcD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ck6kNG7L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25498C4AF0A;
-	Tue, 23 Jul 2024 11:52:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4qDRLcD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46FC2C4AF09;
+	Tue, 23 Jul 2024 11:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721735538;
-	bh=fnGlvnVVajk0n/+8DsGik+8yqDDdFWAb5kZJ8soCR1E=;
+	s=korg; t=1721735541;
+	bh=loBTzAl6ZaDPBpOThZdo9odtvFkB7pTioDF5QEQUtcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ck6kNG7Lq9wm9aOwFOej6R3e7K50bPLhidLKRaDhWV7xJWG9bNa8+ENkhObV3ttc2
-	 ydnc/w2vAIJzqS/T7ztPL4Zi3zOi+zQPESb2CEMqUkeSPn5UXc4sYSxa6ZXoA8AEyR
-	 DlG0loXnpCBNMHn3n1KVjZYW7bNFUqfFq62ab8NQ=
+	b=M4qDRLcD1XXbxacwf5pUxLT/nq/+3lzZDI/Z8yGpevVjlzu0Wm4O8azK56FmCLGml
+	 Vvn4LuJ3AvE49wIu0eTR5GVkT0DnZeILJoT9GICqjqc2ThKudTcm4JHpQf+Ey1oObc
+	 +6189YZlCGa2ZN1ITKj7Jv0ENUhJbu3wSWfvzfF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
+	Shyam Prasad N <sprasad@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 3/9] cifs: Fix missing fscache invalidation
-Date: Tue, 23 Jul 2024 13:51:57 +0200
-Message-ID: <20240723114047.405296521@linuxfoundation.org>
+Subject: [PATCH 6.10 4/9] cifs: fix noisy message on copy_file_range
+Date: Tue, 23 Jul 2024 13:51:58 +0200
+Message-ID: <20240723114047.443482253@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723114047.281580960@linuxfoundation.org>
 References: <20240723114047.281580960@linuxfoundation.org>
@@ -55,50 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit a07d38afd15281c42613943a9a715c3ba07c21e6 upstream.
+commit ae4ccca47195332c69176b8615c5ee17efd30c46 upstream.
 
-A network filesystem needs to implement a netfslib hook to invalidate
-fscache if it's to be able to use the cache.
+There are common cases where copy_file_range can noisily
+log "source and target of copy not on same server"
+e.g. the mv command across mounts to two different server's shares.
+Change this to informational rather than logging as an error.
 
-Fix cifs to implement the cache invalidation hook.
+A followon patch will add dynamic trace points e.g. for
+cifs_file_copychunk_range
 
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
+Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/smb/client/cifsfs.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -123,6 +123,11 @@ fail:
- 	goto out;
- }
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1359,7 +1359,7 @@ ssize_t cifs_file_copychunk_range(unsign
+ 	target_tcon = tlink_tcon(smb_file_target->tlink);
  
-+static void cifs_netfs_invalidate_cache(struct netfs_io_request *wreq)
-+{
-+	cifs_invalidate_cache(wreq->inode, 0);
-+}
-+
- /*
-  * Split the read up according to how many credits we can get for each piece.
-  * It's okay to sleep here if we need to wait for more credit to become
-@@ -307,6 +312,7 @@ const struct netfs_request_ops cifs_req_
- 	.begin_writeback	= cifs_begin_writeback,
- 	.prepare_write		= cifs_prepare_write,
- 	.issue_write		= cifs_issue_write,
-+	.invalidate_cache	= cifs_netfs_invalidate_cache,
- };
+ 	if (src_tcon->ses != target_tcon->ses) {
+-		cifs_dbg(VFS, "source and target of copy not on same server\n");
++		cifs_dbg(FYI, "source and target of copy not on same server\n");
+ 		goto out;
+ 	}
  
- /*
 
 
