@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F074415884E;
-	Tue, 23 Jul 2024 18:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2737158A06;
+	Tue, 23 Jul 2024 18:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760273; cv=none; b=sSCdNV0IdIRWT3RxTEjX85MQUVP6Tum0OC+jLgKEOXRz1Ti0KLs8aBnqlcT7BgvnD0Ql4mVoVllYkepWoS5hwgsfrROprICVPpsjW6V76DvjR24NoxoWPemosKpS2csfQmeNSwBlLt5cofmu2UYK49cLlyHz/LHHcDFhUlxvpKo=
+	t=1721760276; cv=none; b=cWaDK3FdphupAz/yCY110S7nxrVT1BD6zUTSErNMJdQzRvEU7jXyi1AxjKQKxjHcvfh2WbyFvwgSt44ftgBbMGuSzL52FWHH5qoECwto9GhNd2nWNMKXlUaFewyC7WOpzIpjRDkwxuUdOJUPswLwE3+8QC0UYQ95WsDVvnI5g+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760273; c=relaxed/simple;
-	bh=1i9+KGAJZnGG5VukdjddR3J6+DWsQjCIH1VJdM54XWc=;
+	s=arc-20240116; t=1721760276; c=relaxed/simple;
+	bh=PzNef/mhQ+Ksj9OxzWKr/ujJA987d1MTqRB7cfnRk54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NaHR5Nf2OZra+ahTamANFNMTCbrxmmOkHYPjwo5iitojyhu4DTAXPqQNHMW7yZ98X6JQgeWq+T5Mh90IQzE5mFM1ms7m8N7EHXWAZNFYHGKzdCKzfEHlbatr2nbnjYigUM5rnzPZ6gfkZvojYZ/ZOATK45dUrhMC484kUs2yIdM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNRYXIp0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vw+2cPqr+l9TI7ZeSmOFF/ncQ8n7csL2NFviWz3HNmGL616vEyoJN8tn2Cl2d+HneHhof1H8+2Y32+KtXXlING4aR2wQzkhu3u5PhvYvtmFJqN4LKgvRalkzTuLDyxxmeN987KW0uBRBWKySx1YrmmzfW34T2utL4zoBerj964c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e2hPCF2O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNRYXIp0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77410C4AF0A;
-	Tue, 23 Jul 2024 18:44:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e2hPCF2O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691CFC4AF0A;
+	Tue, 23 Jul 2024 18:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760272;
-	bh=1i9+KGAJZnGG5VukdjddR3J6+DWsQjCIH1VJdM54XWc=;
+	s=korg; t=1721760275;
+	bh=PzNef/mhQ+Ksj9OxzWKr/ujJA987d1MTqRB7cfnRk54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNRYXIp0Sm0sCrRPrebfmzNIuhszwV5Z9A7aV2ISwG6THk3qht+pVHrnGazrO4a3G
-	 qqIN8kwwOvffe5oUmoNFymAt1lyKIFiMVnp49IvTp0qvhLp9YIvEwVDTmoPKrQjIx3
-	 /50CN+80DhVzzhPolJLL66sYgPJZ6auVZ6bPuKw0=
+	b=e2hPCF2O0lsE0e4KiHg+Z2Ss0ErKLlxgxwQavbfuPTf3mAANdvJvRv5iJltqYTwRU
+	 4aNcE4ZHK9+/qRynsj9EGMnRHmZ0dZkG9pdg+S7RmK2qdQqVTv4YMeJWHkBmSujTee
+	 3xJ+oSWyvC8UMuijyDgQ1ORUS/lKpWl5cvLwU45k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.9 160/163] wifi: iwlwifi: mvm: dont wake up rx_sync_waitq upon RFKILL
-Date: Tue, 23 Jul 2024 20:24:49 +0200
-Message-ID: <20240723180149.652896617@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.9 161/163] netfs, fscache: export fscache_put_volume() and add fscache_try_get_volume()
+Date: Tue, 23 Jul 2024 20:24:50 +0200
+Message-ID: <20240723180149.690379529@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,57 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit e715c9302b1c6fae990b9898a80fac855549d1f0 upstream.
+[ Upstream commit 85b08b31a22b481ec6528130daf94eee4452e23f ]
 
-Since we now want to sync the queues even when we're in RFKILL, we
-shouldn't wake up the wait queue since we still expect to get all the
-notifications from the firmware.
+Export fscache_put_volume() and add fscache_try_get_volume()
+helper function to allow cachefiles to get/put fscache_volume
+via linux/fscache-cache.h.
 
-Fixes: 4d08c0b3357c ("wifi: iwlwifi: mvm: handle BA session teardown in RF-kill")
-Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240703064027.be7a9dbeacde.I5586cb3ca8d6e44f79d819a48a0c22351ff720c9@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Link: https://lore.kernel.org/r/20240628062930.2467993-2-libaokun@huaweicloud.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Stable-dep-of: 522018a0de6b ("cachefiles: fix slab-use-after-free in fscache_withdraw_volume()")
+Stable-dep-of: 5d8f80578907 ("cachefiles: fix slab-use-after-free in cachefiles_withdraw_cookie()")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c |    6 ++----
- drivers/net/wireless/intel/iwlwifi/mvm/ops.c      |    6 ++----
- 2 files changed, 4 insertions(+), 8 deletions(-)
+ fs/netfs/fscache_volume.c     |   14 ++++++++++++++
+ fs/netfs/internal.h           |    2 --
+ include/linux/fscache-cache.h |    6 ++++++
+ 3 files changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mac80211.c
-@@ -6189,11 +6189,9 @@ void iwl_mvm_sync_rx_queues_internal(str
- 	if (sync) {
- 		lockdep_assert_held(&mvm->mutex);
- 		ret = wait_event_timeout(mvm->rx_sync_waitq,
--					 READ_ONCE(mvm->queue_sync_state) == 0 ||
--					 iwl_mvm_is_radio_hw_killed(mvm),
-+					 READ_ONCE(mvm->queue_sync_state) == 0,
- 					 SYNC_RX_QUEUE_TIMEOUT);
--		WARN_ONCE(!ret && !iwl_mvm_is_radio_hw_killed(mvm),
--			  "queue sync: failed to sync, state is 0x%lx, cookie %d\n",
-+		WARN_ONCE(!ret, "queue sync: failed to sync, state is 0x%lx, cookie %d\n",
- 			  mvm->queue_sync_state,
- 			  mvm->queue_sync_cookie);
+--- a/fs/netfs/fscache_volume.c
++++ b/fs/netfs/fscache_volume.c
+@@ -27,6 +27,19 @@ struct fscache_volume *fscache_get_volum
+ 	return volume;
+ }
+ 
++struct fscache_volume *fscache_try_get_volume(struct fscache_volume *volume,
++					      enum fscache_volume_trace where)
++{
++	int ref;
++
++	if (!__refcount_inc_not_zero(&volume->ref, &ref))
++		return NULL;
++
++	trace_fscache_volume(volume->debug_id, ref + 1, where);
++	return volume;
++}
++EXPORT_SYMBOL(fscache_try_get_volume);
++
+ static void fscache_see_volume(struct fscache_volume *volume,
+ 			       enum fscache_volume_trace where)
+ {
+@@ -420,6 +433,7 @@ void fscache_put_volume(struct fscache_v
+ 			fscache_free_volume(volume);
  	}
---- a/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/ops.c
-@@ -1854,12 +1854,10 @@ static bool iwl_mvm_set_hw_rfkill_state(
- 	bool rfkill_safe_init_done = READ_ONCE(mvm->rfkill_safe_init_done);
- 	bool unified = iwl_mvm_has_unified_ucode(mvm);
+ }
++EXPORT_SYMBOL(fscache_put_volume);
  
--	if (state) {
-+	if (state)
- 		set_bit(IWL_MVM_STATUS_HW_RFKILL, &mvm->status);
--		wake_up(&mvm->rx_sync_waitq);
--	} else {
-+	else
- 		clear_bit(IWL_MVM_STATUS_HW_RFKILL, &mvm->status);
--	}
+ /*
+  * Relinquish a volume representation cookie.
+--- a/fs/netfs/internal.h
++++ b/fs/netfs/internal.h
+@@ -326,8 +326,6 @@ extern const struct seq_operations fscac
  
- 	iwl_mvm_set_rfkill_state(mvm);
+ struct fscache_volume *fscache_get_volume(struct fscache_volume *volume,
+ 					  enum fscache_volume_trace where);
+-void fscache_put_volume(struct fscache_volume *volume,
+-			enum fscache_volume_trace where);
+ bool fscache_begin_volume_access(struct fscache_volume *volume,
+ 				 struct fscache_cookie *cookie,
+ 				 enum fscache_access_trace why);
+--- a/include/linux/fscache-cache.h
++++ b/include/linux/fscache-cache.h
+@@ -19,6 +19,7 @@
+ enum fscache_cache_trace;
+ enum fscache_cookie_trace;
+ enum fscache_access_trace;
++enum fscache_volume_trace;
  
+ enum fscache_cache_state {
+ 	FSCACHE_CACHE_IS_NOT_PRESENT,	/* No cache is present for this name */
+@@ -97,6 +98,11 @@ extern void fscache_withdraw_cookie(stru
+ 
+ extern void fscache_io_error(struct fscache_cache *cache);
+ 
++extern struct fscache_volume *
++fscache_try_get_volume(struct fscache_volume *volume,
++		       enum fscache_volume_trace where);
++extern void fscache_put_volume(struct fscache_volume *volume,
++			       enum fscache_volume_trace where);
+ extern void fscache_end_volume_access(struct fscache_volume *volume,
+ 				      struct fscache_cookie *cookie,
+ 				      enum fscache_access_trace why);
 
 
