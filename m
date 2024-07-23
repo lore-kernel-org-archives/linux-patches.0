@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C144156F37;
-	Tue, 23 Jul 2024 18:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6BF156F37;
+	Tue, 23 Jul 2024 18:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759205; cv=none; b=m/WwJGAYsE1MPmx6i0+tUUo4vHzo9Jn4DmTFH8he5V5qI6xHAVLNMxMBTssoLVjxYlQ4rf27R0LiwV3C0ElCUJTgY4okgvUWNA2jYhEtXSWx4eRLg4mSmm8K8Hy1uE+wrgt6JnMK/nZB3Qcab0jLW7NtMkuRnIakII6MztovETo=
+	t=1721759208; cv=none; b=LulJvuggyKCyOT2F/JTaOcYyAauxXwapGPFhZ6tJcd71y7a8MFJegnkZ1wAnqQEk7OdULPwKRO/RuZeN/Yosj0hr+nHCeXECLTyS9++415DYn54Ltz5G+zMNaI5u+1zjQIfH9a7QKT19Dw7jC2Rd54u3O9MCsI+ExEojDHpbJwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759205; c=relaxed/simple;
-	bh=lQkQpaFvf3gTSjN6+pwRL7GYknuYE3CH2txS7uq3YsE=;
+	s=arc-20240116; t=1721759208; c=relaxed/simple;
+	bh=BETKXisDMwTL1JparBljnPqP+onBZJJ11rjJASxxpJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mNUpqCWk3d1oE93pVHpQ9H8hkb7IoQV1QISKvw0hEEghIA41n7jzNlbparEi/ZeOFBk+631ipYS6T7ZvTI29iCPUDViIFFWmENT34UrtVheSiywIq1SH6v3uj/GL71pUvN/SGD8HUCNBl0XY973NTUK5gS4FIwwcjAOqPqRDEY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XAq24agO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BCxkbFTCkgmJV3eV75So9TImciuo4Ppb6VHzqrua89TPW7cIb1hV7kILIP6GxUsoVjM7DOg+RBH+We8eVUauVpafnH9T7nT2hBS0is/+Xv0nGSemWLToSLFDvZjFb1DA6rWjFrimqqV7BEN+ATQpX9njoYw4p7erBusYdL0MFco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gRXONjC/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XAq24agO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2A9DC4AF09;
-	Tue, 23 Jul 2024 18:26:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gRXONjC/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A5EC4AF09;
+	Tue, 23 Jul 2024 18:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759205;
-	bh=lQkQpaFvf3gTSjN6+pwRL7GYknuYE3CH2txS7uq3YsE=;
+	s=korg; t=1721759208;
+	bh=BETKXisDMwTL1JparBljnPqP+onBZJJ11rjJASxxpJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAq24agO7K7fTR4kjKV6tAFTx9Rgs8FUm/nV8O8y7Ym6e2/b62p17aqkAXe+NZcBe
-	 Z+AIUCgVavMxbZGmZPejBRa6u1IsJo0EeHqTjffm0ASZ9JEGL3Kro3fbAWeGLDtpzl
-	 wIvPftP93u+mDz7tG3RcMGyyBX3SkWE5J5kta90Q=
+	b=gRXONjC/CHJof+Q2vbiIog/yjK43rTo8dkx7b+Df0/v2G4eUwcGElMCiGAnsYHF0a
+	 dIzDtnhek97f45kTTlz7Ez2r6wVDCNKL+9XU3vqrnVVQKEOFYzTLU9c1TwSIoRDL/2
+	 N4HGkpEl+luVM9vZrapYTSM4ahBa/FOiQJ1Ng+MQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Jeff Layton <jlayton@kernel.org>,
+	Scott Mayhew <smayhew@redhat.com>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/105] nfs: propagate readlink errors in nfs_symlink_filler
-Date: Tue, 23 Jul 2024 20:23:15 +0200
-Message-ID: <20240723180404.709185716@linuxfoundation.org>
+Subject: [PATCH 6.1 039/105] nfs: dont invalidate dentries on transient errors
+Date: Tue, 23 Jul 2024 20:23:16 +0200
+Message-ID: <20240723180404.747884564@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -53,38 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Scott Mayhew <smayhew@redhat.com>
 
-[ Upstream commit 134d0b3f2440cdddd12fc3444c9c0f62331ce6fc ]
+[ Upstream commit 0c8c7c559740d2d8b66048162af6c4dba8f0c88c ]
 
-There is an inherent race where a symlink file may have been overriden
-(by a different client) between lookup and readlink, resulting in a
-spurious EIO error returned to userspace. Fix this by propagating back
-ESTALE errors such that the vfs will retry the lookup/get_link (similar
-to nfs4_file_open) at least once.
+This is a slight variation on a patch previously proposed by Neil Brown
+that never got merged.
 
-Cc: Dan Aloni <dan.aloni@vastdata.com>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Prior to commit 5ceb9d7fdaaf ("NFS: Refactor nfs_lookup_revalidate()"),
+any error from nfs_lookup_verify_inode() other than -ESTALE would result
+in nfs_lookup_revalidate() returning that error (-ESTALE is mapped to
+zero).
+
+Since that commit, all errors result in nfs_lookup_revalidate()
+returning zero, resulting in dentries being invalidated where they
+previously were not (particularly in the case of -ERESTARTSYS).
+
+Fix it by passing the actual error code to nfs_lookup_revalidate_done(),
+and leaving the decision on whether to  map the error code to zero or
+one to nfs_lookup_revalidate_done().
+
+A simple reproducer is to run the following python code in a
+subdirectory of an NFS mount (not in the root of the NFS mount):
+
+---8<---
+import os
+import multiprocessing
+import time
+
+if __name__=="__main__":
+    multiprocessing.set_start_method("spawn")
+
+    count = 0
+    while True:
+        try:
+            os.getcwd()
+            pool = multiprocessing.Pool(10)
+            pool.close()
+            pool.terminate()
+            count += 1
+        except Exception as e:
+            print(f"Failed after {count} iterations")
+            print(e)
+            break
+---8<---
+
+Prior to commit 5ceb9d7fdaaf, the above code would run indefinitely.
+After commit 5ceb9d7fdaaf, it fails almost immediately with -ENOENT.
+
+Signed-off-by: Scott Mayhew <smayhew@redhat.com>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/symlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/dir.c | 27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/fs/nfs/symlink.c b/fs/nfs/symlink.c
-index 0e27a2e4e68b8..13818129d268f 100644
---- a/fs/nfs/symlink.c
-+++ b/fs/nfs/symlink.c
-@@ -41,7 +41,7 @@ static int nfs_symlink_filler(struct file *file, struct folio *folio)
- error:
- 	folio_set_error(folio);
- 	folio_unlock(folio);
--	return -EIO;
-+	return error;
+diff --git a/fs/nfs/dir.c b/fs/nfs/dir.c
+index a5a4d9422d6ed..70660ff248b79 100644
+--- a/fs/nfs/dir.c
++++ b/fs/nfs/dir.c
+@@ -1615,7 +1615,16 @@ nfs_lookup_revalidate_done(struct inode *dir, struct dentry *dentry,
+ 	switch (error) {
+ 	case 1:
+ 		break;
+-	case 0:
++	case -ETIMEDOUT:
++		if (inode && (IS_ROOT(dentry) ||
++			      NFS_SERVER(inode)->flags & NFS_MOUNT_SOFTREVAL))
++			error = 1;
++		break;
++	case -ESTALE:
++	case -ENOENT:
++		error = 0;
++		fallthrough;
++	default:
+ 		/*
+ 		 * We can't d_drop the root of a disconnected tree:
+ 		 * its d_hash is on the s_anon list and d_drop() would hide
+@@ -1670,18 +1679,8 @@ static int nfs_lookup_revalidate_dentry(struct inode *dir,
+ 
+ 	dir_verifier = nfs_save_change_attribute(dir);
+ 	ret = NFS_PROTO(dir)->lookup(dir, dentry, fhandle, fattr);
+-	if (ret < 0) {
+-		switch (ret) {
+-		case -ESTALE:
+-		case -ENOENT:
+-			ret = 0;
+-			break;
+-		case -ETIMEDOUT:
+-			if (NFS_SERVER(inode)->flags & NFS_MOUNT_SOFTREVAL)
+-				ret = 1;
+-		}
++	if (ret < 0)
+ 		goto out;
+-	}
+ 
+ 	/* Request help from readdirplus */
+ 	nfs_lookup_advise_force_readdirplus(dir, flags);
+@@ -1725,7 +1724,7 @@ nfs_do_lookup_revalidate(struct inode *dir, struct dentry *dentry,
+ 			 unsigned int flags)
+ {
+ 	struct inode *inode;
+-	int error;
++	int error = 0;
+ 
+ 	nfs_inc_stats(dir, NFSIOS_DENTRYREVALIDATE);
+ 	inode = d_inode(dentry);
+@@ -1770,7 +1769,7 @@ nfs_do_lookup_revalidate(struct inode *dir, struct dentry *dentry,
+ out_bad:
+ 	if (flags & LOOKUP_RCU)
+ 		return -ECHILD;
+-	return nfs_lookup_revalidate_done(dir, dentry, inode, 0);
++	return nfs_lookup_revalidate_done(dir, dentry, inode, error);
  }
  
- static const char *nfs_get_link(struct dentry *dentry,
+ static int
 -- 
 2.43.0
 
