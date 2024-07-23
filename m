@@ -1,121 +1,103 @@
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004BD17BD5;
-	Mon, 22 Jul 2024 20:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890E418D
+	for <patches@lists.linux.dev>; Tue, 23 Jul 2024 07:06:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721680831; cv=none; b=qJkhxImFORyzLzqhDKHktO5SnY6MJTO11VlyfEDMMM3oTx7LM0ScvykJqfcBmZDZdjqzM+BVezYnEbevnFl3ubcCEdNtmjs71WgHNvPnvi0K3FLB5tYthG2SFlTwR0B69oFP9S87gf/hyf8DKzKS9K6ypAo2DpDQZMoDlNCqHl8=
+	t=1721718396; cv=none; b=ciUwZ4eICH7J9WugKK7mVxKpJ64w0W69N+Xk/pDPOoQt5ocF9dxswJlEkRSXjBtQPYPkbMw3ppVr6EWCbT8iKTwmDJ0YzHk40htJ6xa+D4bTurBUoZqBQyzVlMJwcuQC5c3LnnwxYGzuUjitZtreWn1GsRGOqNIJZhaHd/Kf3Wg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721680831; c=relaxed/simple;
-	bh=ZM0TEKHIPTb9upIze52L+kcVfI1EmrENKGNYYSecqTI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=eTBIMEL9XT8pk1TXlQxkqzXeAt0jcZxsbcxmz6Lgniy5OaQkDkpOsIAulwKvtcuGYcUexGWY2kaKeAhf0TJ4DCvNxR+vB6d/9zapmVQaBSbnoR4J+F64/Q0oz1JNX0ZGoIpnD9Bq4TWohCJHI9JKv83v+bE7i1KSED94vNg86Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=ymsfcAQz; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1721718396; c=relaxed/simple;
+	bh=T0a5WQAwYpflbA1vg5hpjmRavw1oEVX/Ht39sOULNIM=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References; b=baZkSFI0/vS22c+pq+o70wG2h+rsIn5sn9m2tBXA/iHYLPJYo0eRQMOoOTxyyugAF0069BmbYmhjgPBeemvBkj7OJ73e7nl0FbRR1iIyZD3x9IT3obBHPoiV64X4q64iPH32G7EFKMwXmslq6yknUO0EOdVzFxsGAGqUAo4lY7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=eD4Mc55X; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="ymsfcAQz"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=+GiUc2WmyvgkUASQSnB2Oz3syL/kRQ02gJ1uI6Lrwko=; b=ymsfcAQzaJhIg7/WsKWlP+nAAu
-	JWd8mlnq+xTX2yQ07mTgWQaujGtdVS/TtZ09hW3xc9F0yCLSWALGdnpK5NATRyYcjYjZVdombE83z
-	t/Hh77YIzpwCwaSNGgFd3mXfvP226OgerVrKrBIwmCnfxCn6V+/bH6V3d0HDvyRA5jw6AfUdmVdo0
-	I0FQg6RUdfeqt5QPSwxAdNxoPbJ5o41YacI+dQFRqaYKP5MS+K7NTVsX50maNGEU/fQbFtUD9ylly
-	3tzMNSFQFAj91Fa0Sm0jaYZMk0QBWcbTJGBAiy1TVi4ZOYW2bENmTO9iO3IJl74ynnmU2TVU9y+Ab
-	hbN5Bqtw==;
-Received: from [50.53.4.147] (helo=[192.168.254.15])
-	by bombadil.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sVzpb-0000000AVjU-2qib;
-	Mon, 22 Jul 2024 20:40:27 +0000
-Message-ID: <4e02ac87-2e00-4399-9f6c-a10ef828592b@infradead.org>
-Date: Mon, 22 Jul 2024 13:40:26 -0700
+	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="eD4Mc55X"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7a18ba4143bso1282267a12.2
+        for <patches@lists.linux.dev>; Tue, 23 Jul 2024 00:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=broadcom.com; s=google; t=1721718395; x=1722323195; darn=lists.linux.dev;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=TVQolDblYpfBAHM0BVYvZ7L0Xvl6DY3RRTkKfePEOus=;
+        b=eD4Mc55XKj1hYkWJXiReRHOZZwVdutP4PpDsgJntqSueKdGROAQ1AqJL71VkBR1qbo
+         ykHDId/GZPnJuoKaa2SAZlwbZUIw3Q0oXNGBUSbm5lb4LwF5t/b6p7xv/V2M1635SXEQ
+         6qc+Jspr5dIlrrzzrbHpwpIEKdGr3mlm8M+0k=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721718395; x=1722323195;
+        h=references:in-reply-to:message-id:date:subject:cc:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TVQolDblYpfBAHM0BVYvZ7L0Xvl6DY3RRTkKfePEOus=;
+        b=qAgUhTq5vHbI2MFv4ZBJtB/ajPaadBNu08JgQsxvFC3Wo6x1ewT3T8qMwsBE6o4U/k
+         HdF/y2IfIMNvJxwgWeZsjxAAjAPWL4qHTsGUho1kXoEsE2i1K+Y6VSppOndnj0JfimlA
+         ROpEKOHAAY8M+wGLrSKBGQqSVE0lBtmO1Rvcy6YwXhtldEITnhu5naV/mpingMQK6Hrq
+         /8zBQD6wtR2XMoRU+EOMhPchnGqJfuK5aZBBs9KjkkmouNm3CzPUfhsAtkOZhvpFRYIK
+         SCS9vy0WSJjQ2GFXBhLTZqO5TWdjRetLD+rdxOFFBzxfud/XjhRAub7B94Csc4EJyiwG
+         gu4g==
+X-Forwarded-Encrypted: i=1; AJvYcCVjEwfrS/HfmZPZcPWLi9+rwUjtIVB6dncBU5qBfHCKyT/LfvAkabd3thjN6lJPRVYZVhsvZs8elqCqDALuEs0uqp74wAv9bg==
+X-Gm-Message-State: AOJu0Yyz0DDivRHiwalXdyZiWeufhda82CWLzS5TuvEseLZUlvPQe5vy
+	1D4HzBxVpRY0NZSTRGvDyjJT9bpUJgsBOOFWWOuTuGxaLnSbH8yyyOY+rKDNxw==
+X-Google-Smtp-Source: AGHT+IH6yBqLPZThrJF1lWBcvb2T28e1qgZqnd8sJbhHQ+K1obWAqxroFQqZT+6CS59cjnBEKk6+6w==
+X-Received: by 2002:a05:6a21:9993:b0:1c2:8dd5:71d9 with SMTP id adf61e73a8af0-1c4285b75f1mr8005527637.4.1721718394067;
+        Tue, 23 Jul 2024 00:06:34 -0700 (PDT)
+Received: from akaher-virtual-machine.eng.vmware.com ([66.170.99.2])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1fd6f25ac64sm67166915ad.59.2024.07.23.00.06.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 23 Jul 2024 00:06:33 -0700 (PDT)
+From: Ajay Kaher <ajay.kaher@broadcom.com>
+To: gregkh@linuxfoundation.org
+Cc: amir73il@gmail.com,
+	chuck.lever@oracle.com,
+	jack@suse.cz,
+	krisman@collabora.com,
+	patches@lists.linux.dev,
+	sashal@kernel.org,
+	stable@vger.kernel.org,
+	adilger.kernel@dilger.ca,
+	linux-ext4@vger.kernel.org,
+	tytso@mit.edu,
+	ajay.kaher@broadcom.com,
+	alexey.makhalov@broadcom.com,
+	vasavi.sirnapalli@broadcom.com,
+	florian.fainelli@broadcom.com
+Subject: [PATCH 5.10 387/770] fanotify: Allow users to request FAN_FS_ERROR events
+Date: Tue, 23 Jul 2024 12:36:27 +0530
+Message-Id: <1721718387-9038-1-git-send-email-ajay.kaher@broadcom.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <20240618123422.213844892@linuxfoundation.org>
+References: <20240618123422.213844892@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/8] fwctl: Add documentation
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
- Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
- linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
- netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
- Saeed Mahameed <saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>,
- Andy Gospodarek <andrew.gospodarek@broadcom.com>,
- Aron Silverton <aron.silverton@oracle.com>,
- Dan Williams <dan.j.williams@intel.com>, David Ahern <dsahern@kernel.org>,
- Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
- Leonid Bloch <lbloch@nvidia.com>, Leon Romanovsky <leonro@nvidia.com>,
- linux-cxl@vger.kernel.org, patches@lists.linux.dev
-References: <6-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <c1a2b518-f258-41f2-8b0c-173f32756f49@infradead.org>
- <20240722161818.GK3371438@nvidia.com>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20240722161818.GK3371438@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-Hi,
+> [ Upstream commit 9709bd548f11a092d124698118013f66e1740f9b ]
+> 
+> Wire up the FAN_FS_ERROR event in the fanotify_mark syscall, allowing
+> user space to request the monitoring of FAN_FS_ERROR events.
+> 
+> These events are limited to filesystem marks, so check it is the
+> case in the syscall handler.
 
-On 7/22/24 9:18 AM, Jason Gunthorpe wrote:
-> On Tue, Jun 25, 2024 at 03:04:42PM -0700, Randy Dunlap wrote:
->>> +There are many things this interface must not allow user space to do (without a
->>> +Taint or CAP), broadly derived from the principles of kernel lockdown. Some
->>> +examples:
->>> +
->>> + 1. DMA to/from arbitrary memory, hang the system, run code in the device, or
->>
->> An RPC message is going to run code in the device. Should this say something instead
->> like:
->>
->> download [or load] code to be executed in the device,
-> 
-> Yeah, it is a hard concept. It is kind of murky as even today's
-> devlink flash will let you load untrusted code into the device under
-> lockdown AFAICR.
-> 
-> How about:
-> 
->  1. DMA to/from arbitrary memory, hang the system, compromise FW integrity with
->     untrusted code, or otherwise compromise device or system security and
->     integrity.
-> 
-> Which is a little broader I suppose.
+Greg,
 
-OK, somewhat better.
+Without 9709bd548f11 in v5.10.y skips LTP fanotify22 test case, as: 
+fanotify22.c:312: TCONF: FAN_FS_ERROR not supported in kernel
 
->>> +The kernel remains the gatekeeper for this interface. If violations of the
->>> +scopes, security or isolation principles are found, we have options to let
->>> +devices fix them with a FW update, push a kernel patch to parse and block RPC
->>
->> fwctl does not do FW updates, is that correct?
-> 
-> I think it is up to the specific RPCs the device supports. Given there
-> is currently no way to marshal a large amount of data it is not a good
-> interface for FW update.
-> 
-> I'd encourage people to use devlink flash more broadly, but I also
-> wouldn't go out of the way to block FW update RPCs that might exist
-> from here.
-> 
-> I certainly wouldn't want people to make their own FW update ioctls
-> (as still seems to be happening) out of fear they shouldn't use
-> fwctl :\
+With 9709bd548f11 in v5.10.220, LTP fanotify22 is failing because of
+timeout as no notification. To fix need to merge following two upstream
+commit to v5.10:
 
-fair enough.
+124e7c61deb27d758df5ec0521c36cf08d417f7a:
+0001-ext4_fix_error_code_saved_on_super_block_during_file_system.patch
+https://lore.kernel.org/stable/1721717240-8786-1-git-send-email-ajay.kaher@broadcom.com/T/#mf76930487697d8c1383ed5d21678fe504e8e2305
 
-> Looking particularly at mlx5, we've had devlink flash for a long time
-> now, but it hasn't suceeded to displace the mlx5 specific tools, for
-> whatever reason.
-> 
-> I grabbed all the changes here thanks!
+9a089b21f79b47eed240d4da7ea0d049de7c9b4d:
+0001-ext4_Send_notifications_on_error.patch
+Link: https://lore.kernel.org/stable/1721717240-8786-1-git-send-email-ajay.kaher@broadcom.com/T/#md1be98e0ecafe4f92d7b61c048e15bcf286cbd53 
 
+-Ajay
 
--- 
-~Randy
