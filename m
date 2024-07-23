@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C1915098E;
-	Tue, 23 Jul 2024 11:52:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA138152179;
+	Tue, 23 Jul 2024 11:52:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721735548; cv=none; b=gI2v8UGquXPnaoSFy5unfyp1r7Yo68Te8iGNCNGSVTYlW/VMepaX/G9rNtitHu1VLZH/Z3MNOB52ziv+ireP8pIRuiI42+uDa3W1r+yCQOfuRE0csx8++5Gd+6BqtrMcBIAKk+W/MXwDHtL8B7GJ/h9P9CSK6izOzPraQ95Udbs=
+	t=1721735551; cv=none; b=XtEPOrrHmCaxfcxsVXj6SrZlNpEfQb8x1HInWZ+65X3qlES9L4Th6eiPiqePpnAenLQliONY4fYDOrMnkTdXwKjT2GrWNjE1f50NI/IwwnAHrsOrvNzUYk0POHojHAOW/cMIxce+azmYj4ysXvNfMBrAUSgFSqveIAUGE/AIjA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721735548; c=relaxed/simple;
-	bh=ZggV/pIb7W5ya1ZlMMtMwfFVM9xCnefWJ/6DE6ScF8c=;
+	s=arc-20240116; t=1721735551; c=relaxed/simple;
+	bh=G0CebsfWLIqYG1o71uPfB4w0UIAw5AvfpZWeNpSPP6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtUdVTTg5MWmO1X3YvlPDNkJvoldVWBTvVNQuZGdbTZMBOVbyTFtJ8JGVLjB8lVVhWGzPSFHDX2tSnOCzJ28HPD6oyns5bFc4QE0pIHk8mNxWAOp6klZd8xT6lj1qIrOqk5GGA5KAn+3mZ8H8xGAdmUS8TSD+hGqjS7F18NB0cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpJ7twKF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RCGrm1NqnZDnyqMn44E0nihh/rjqptzMqoNAxF0UyL8NEQIHH2w6xWCk+YN7BCiWMYt/TtzHJFrKZKVxl0REf5s1+JoOBh7JnnHdCmwoW+Py15z51vQ3lpqXJyeYuqRbZBaQa8dJF76EbcTS7U2zjjGZ5Y0PXo0vwimUeCjJS0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sjgYvvlc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpJ7twKF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 361F0C4AF09;
-	Tue, 23 Jul 2024 11:52:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sjgYvvlc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27A95C4AF09;
+	Tue, 23 Jul 2024 11:52:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721735547;
-	bh=ZggV/pIb7W5ya1ZlMMtMwfFVM9xCnefWJ/6DE6ScF8c=;
+	s=korg; t=1721735550;
+	bh=G0CebsfWLIqYG1o71uPfB4w0UIAw5AvfpZWeNpSPP6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XpJ7twKFlTPy0BZ81mBrWN9rcMl6C8BXPy6aoz8xmv6++XMgSO8ZyhquGo22jG0d7
-	 0Ruhbd7B+AvP4ikRT4oZfezw25/o7DdNxhX2lKQFOHcVCAIu3ZKectGdQYGANnckXt
-	 jTqTyzdnMu3Yr/6aHBsUcwVBudpm51c1sIFSrYsk=
+	b=sjgYvvlctCLWKLIXF4ih1HjB1oSLx56DXk9VPF+xHqU39JiZcc6NZI2sQJMiWurjK
+	 fcbcKUeGceUGcqMBDe4O8Cf9Kki/iSnP4kiRwp0WBSl+xiBGvGeI5K3eEBFn7FsY2S
+	 sDqZd+zhNsUPmAuA0hmuUJHVpAgP0GZPlbXeNySM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve French <sfrench@samba.org>,
-	David Howells <dhowells@redhat.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	linux-cifs@vger.kernel.org,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.10 6/9] cifs: Fix setting of zero_point after DIO write
-Date: Tue, 23 Jul 2024 13:52:00 +0200
-Message-ID: <20240723114047.508715979@linuxfoundation.org>
+	Hao Ge <gehao@kylinos.cn>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.10 7/9] tpm: Use auth only after NULL check in tpm_buf_check_hmac_response()
+Date: Tue, 23 Jul 2024 13:52:01 +0200
+Message-ID: <20240723114047.542651110@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723114047.281580960@linuxfoundation.org>
 References: <20240723114047.281580960@linuxfoundation.org>
@@ -56,64 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Hao Ge <gehao@kylinos.cn>
 
-commit 61ea6b3a3104fcd66364282391dd2152bc4c129a upstream.
+commit 7dc357d343f134bf59815ff6098b93503ec8a23b upstream.
 
-At the moment, at the end of a DIO write, cifs calls netfs_resize_file() to
-adjust the size of the file if it needs it.  This will reduce the
-zero_point (the point above which we assume a read will just return zeros)
-if it's more than the new i_size, but won't increase it.
+Dereference auth after NULL check in tpm_buf_check_hmac_response().
+Otherwise, unless tpm2_sessions_init() was called, a call can cause NULL
+dereference, when TCG_TPM2_HMAC is enabled.
 
-With DIO writes, however, we definitely want to increase it as we have
-clobbered the local pagecache and then written some data that's not
-available locally.
-
-Fix cifs to make the zero_point above the end of a DIO or unbuffered write.
-
-This fixes corruption seen occasionally with the generic/708 xfs-test.  In
-that case, the read-back of some of the written data is being
-short-circuited and replaced with zeroes.
-
-Fixes: 3ee1a1fc3981 ("cifs: Cut over to using netfslib")
-Cc: stable@vger.kernel.org
-Reported-by: Steve French <sfrench@samba.org>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-cc: Jeff Layton <jlayton@kernel.org>
-cc: linux-cifs@vger.kernel.org
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[jarkko: adjusted the commit message.]
+Cc: stable@vger.kernel.org # v6.10+
+Fixes: 7ca110f2679b ("tpm: Address !chip->auth in tpm_buf_append_hmac_session*()")
+Signed-off-by: Hao Ge <gehao@kylinos.cn>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/file.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/char/tpm/tpm2-sessions.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -2364,13 +2364,18 @@ void cifs_write_subrequest_terminated(st
- 				      bool was_async)
- {
- 	struct netfs_io_request *wreq = wdata->rreq;
--	loff_t new_server_eof;
-+	struct netfs_inode *ictx = netfs_inode(wreq->inode);
-+	loff_t wrend;
+diff --git a/drivers/char/tpm/tpm2-sessions.c b/drivers/char/tpm/tpm2-sessions.c
+index 2281d55df545..d3521aadd43e 100644
+--- a/drivers/char/tpm/tpm2-sessions.c
++++ b/drivers/char/tpm/tpm2-sessions.c
+@@ -746,15 +746,16 @@ int tpm_buf_check_hmac_response(struct tpm_chip *chip, struct tpm_buf *buf,
+ 	struct tpm2_auth *auth = chip->auth;
+ 	off_t offset_s, offset_p;
+ 	u8 rphash[SHA256_DIGEST_SIZE];
+-	u32 attrs;
++	u32 attrs, cc;
+ 	struct sha256_state sctx;
+ 	u16 tag = be16_to_cpu(head->tag);
+-	u32 cc = be32_to_cpu(auth->ordinal);
+ 	int parm_len, len, i, handles;
  
- 	if (result > 0) {
--		new_server_eof = wdata->subreq.start + wdata->subreq.transferred + result;
-+		wrend = wdata->subreq.start + wdata->subreq.transferred + result;
+ 	if (!auth)
+ 		return rc;
  
--		if (new_server_eof > netfs_inode(wreq->inode)->remote_i_size)
--			netfs_resize_file(netfs_inode(wreq->inode), new_server_eof, true);
-+		if (wrend > ictx->zero_point &&
-+		    (wdata->rreq->origin == NETFS_UNBUFFERED_WRITE ||
-+		     wdata->rreq->origin == NETFS_DIO_WRITE))
-+			ictx->zero_point = wrend;
-+		if (wrend > ictx->remote_i_size)
-+			netfs_resize_file(ictx, wrend, true);
- 	}
- 
- 	netfs_write_subrequest_terminated(&wdata->subreq, result, was_async);
++	cc = be32_to_cpu(auth->ordinal);
++
+ 	if (auth->session >= TPM_HEADER_SIZE) {
+ 		WARN(1, "tpm session not filled correctly\n");
+ 		goto out;
+-- 
+2.45.2
+
 
 
