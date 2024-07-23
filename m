@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0EC4156F37;
-	Tue, 23 Jul 2024 18:27:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C776E157A4F;
+	Tue, 23 Jul 2024 18:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759234; cv=none; b=M3Ev7xJ3EiS4neEMLlr/kxvja/0nQ16PSd5adfTZQK9OqNzc186NDxuOj16FI+0zr0vtKF/n2PeORNO/0uVSqlw2L0yRYfso+u6zo7KnmCPmwEqgBX8PkKpXfmTVZsdu4D6KDbxjfqjWPu9OUpec3iFtXi+6dZA7NtDuLn1B5Jw=
+	t=1721759237; cv=none; b=CDhAMHlhBeFky4/vgyXLcSZziuKULQ7jifJqjT5cgxIldub43hIuGsCLnstWJe7alKPKFzX+kG745rYXtpgwfdLlX7uiZCZztPPY+cer5OVG+trRjYEXNhxUCb9dol9UQIrazCVomidlVU21i0GNOL8Lv9krFdLZ0dgqS6FFxNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759234; c=relaxed/simple;
-	bh=umqC/fw6lYjhQfUB6Q9bW5ypaULukBPaI80gKN6VRIo=;
+	s=arc-20240116; t=1721759237; c=relaxed/simple;
+	bh=3nEuDfQLd/l+QGOmEFvmI950u9HE8wV8xddd0p+J2xo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CW4ii0kB5XvQhpt1yId/6v0IQVARd/+w8cnOiqM/5AKHb1OsEgGRHWYUvmHIAunlNIt0KGYYobTqqeQCZwS+AkHAcnkc6qc5Ez7MKfC09/qWRh4j7PAOG/2cmpFNt3tnI3io0gftMFVWYfQRfU+iOHPGADOKa+pXUaaU8QHOHbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxt5KZEF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u8/L/o5oITzWEevOK2+sPZGG9uQyDMTxgizi6EF4dn4b0VkYNw9asRfhp+NB+KsrIzsW4Q9xzQbeWk7J7RTLvMcMnCyEmKQS+5qDZw1EPX+12CKsIxMnNFNWwsIHT767Wz8wvKIKQicDHRTJO9lTZ5lY0Q/5gwg3DDv36yb/0wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GvjbgpJe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxt5KZEF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57604C4AF0A;
-	Tue, 23 Jul 2024 18:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GvjbgpJe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC6DC4AF09;
+	Tue, 23 Jul 2024 18:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759234;
-	bh=umqC/fw6lYjhQfUB6Q9bW5ypaULukBPaI80gKN6VRIo=;
+	s=korg; t=1721759237;
+	bh=3nEuDfQLd/l+QGOmEFvmI950u9HE8wV8xddd0p+J2xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fxt5KZEFfRX+PuNZOrNGn25bbK68gHj5Xo0tqrUk2tp2sTxMmyWAeZ6sQKHDtL2uR
-	 tAaphvitSs6J/w8yZskcv4UbCO3h7QTvOGl3Nkj6lZEg1AF8qMpsEWc8x8uTAezntv
-	 EBzdTJsNOaCsR9X3/qgq+2cuoMN+SVM0dWiJ1/20=
+	b=GvjbgpJeXqylVzuFWkuJPGDlltIiZynmqQ9ueF1IVnMP8QvbEdDU0K2Sb6qOGPLsD
+	 OX594gigY4lgS15gb55hMOc6/Qgzq5KGibT7d23pkQvVjoScIpu04LtjPpD0mFD/Xy
+	 DBpDdYbvkPLtgMGdqIEaywcVYzaTBq7QHbxFD8ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunguang Xu <chunguang.xu@shopee.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
+	Daniel Wagner <dwagner@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/105] nvme: avoid double free special payload
-Date: Tue, 23 Jul 2024 20:23:24 +0200
-Message-ID: <20240723180405.063434457@linuxfoundation.org>
+Subject: [PATCH 6.1 048/105] nvmet: always initialize cqe.result
+Date: Tue, 23 Jul 2024 20:23:25 +0200
+Message-ID: <20240723180405.103597278@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
 References: <20240723180402.490567226@linuxfoundation.org>
@@ -53,35 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunguang Xu <chunguang.xu@shopee.com>
+From: Daniel Wagner <dwagner@suse.de>
 
-[ Upstream commit e5d574ab37f5f2e7937405613d9b1a724811e5ad ]
+[ Upstream commit cd0c1b8e045a8d2785342b385cb2684d9b48e426 ]
 
-If a discard request needs to be retried, and that retry may fail before
-a new special payload is added, a double free will result. Clear the
-RQF_SPECIAL_LOAD when the request is cleaned.
+The spec doesn't mandate that the first two double words (aka results)
+for the command queue entry need to be set to 0 when they are not
+used (not specified). Though, the target implemention returns 0 for TCP
+and FC but not for RDMA.
 
-Signed-off-by: Chunguang Xu <chunguang.xu@shopee.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
+Let's make RDMA behave the same and thus explicitly initializing the
+result field. This prevents leaking any data from the stack.
+
+Signed-off-by: Daniel Wagner <dwagner@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/nvme/target/core.c             | 1 +
+ drivers/nvme/target/fabrics-cmd-auth.c | 3 ---
+ drivers/nvme/target/fabrics-cmd.c      | 6 ------
+ 3 files changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 75b4dd8a55b03..1aff793a1d77e 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -954,6 +954,7 @@ void nvme_cleanup_cmd(struct request *req)
- 			clear_bit_unlock(0, &ctrl->discard_page_busy);
- 		else
- 			kfree(bvec_virt(&req->special_vec));
-+		req->rq_flags &= ~RQF_SPECIAL_PAYLOAD;
- 	}
- }
- EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
+diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
+index d2954406b2297..a68e7b1606da5 100644
+--- a/drivers/nvme/target/core.c
++++ b/drivers/nvme/target/core.c
+@@ -944,6 +944,7 @@ bool nvmet_req_init(struct nvmet_req *req, struct nvmet_cq *cq,
+ 	req->metadata_sg_cnt = 0;
+ 	req->transfer_len = 0;
+ 	req->metadata_len = 0;
++	req->cqe->result.u64 = 0;
+ 	req->cqe->status = 0;
+ 	req->cqe->sq_head = 0;
+ 	req->ns = NULL;
+diff --git a/drivers/nvme/target/fabrics-cmd-auth.c b/drivers/nvme/target/fabrics-cmd-auth.c
+index fbae76cdc2546..e0dc22fea086d 100644
+--- a/drivers/nvme/target/fabrics-cmd-auth.c
++++ b/drivers/nvme/target/fabrics-cmd-auth.c
+@@ -336,7 +336,6 @@ void nvmet_execute_auth_send(struct nvmet_req *req)
+ 		pr_debug("%s: ctrl %d qid %d nvme status %x error loc %d\n",
+ 			 __func__, ctrl->cntlid, req->sq->qid,
+ 			 status, req->error_loc);
+-	req->cqe->result.u64 = 0;
+ 	if (req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2 &&
+ 	    req->sq->dhchap_step != NVME_AUTH_DHCHAP_MESSAGE_FAILURE2) {
+ 		unsigned long auth_expire_secs = ctrl->kato ? ctrl->kato : 120;
+@@ -528,8 +527,6 @@ void nvmet_execute_auth_receive(struct nvmet_req *req)
+ 	status = nvmet_copy_to_sgl(req, 0, d, al);
+ 	kfree(d);
+ done:
+-	req->cqe->result.u64 = 0;
+-
+ 	if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_SUCCESS2)
+ 		nvmet_auth_sq_free(req->sq);
+ 	else if (req->sq->dhchap_step == NVME_AUTH_DHCHAP_MESSAGE_FAILURE1) {
+diff --git a/drivers/nvme/target/fabrics-cmd.c b/drivers/nvme/target/fabrics-cmd.c
+index d8da840a1c0ed..fa9e8dc921539 100644
+--- a/drivers/nvme/target/fabrics-cmd.c
++++ b/drivers/nvme/target/fabrics-cmd.c
+@@ -225,9 +225,6 @@ static void nvmet_execute_admin_connect(struct nvmet_req *req)
+ 	if (status)
+ 		goto out;
+ 
+-	/* zero out initial completion result, assign values as needed */
+-	req->cqe->result.u32 = 0;
+-
+ 	if (c->recfmt != 0) {
+ 		pr_warn("invalid connect version (%d).\n",
+ 			le16_to_cpu(c->recfmt));
+@@ -305,9 +302,6 @@ static void nvmet_execute_io_connect(struct nvmet_req *req)
+ 	if (status)
+ 		goto out;
+ 
+-	/* zero out initial completion result, assign values as needed */
+-	req->cqe->result.u32 = 0;
+-
+ 	if (c->recfmt != 0) {
+ 		pr_warn("invalid connect version (%d).\n",
+ 			le16_to_cpu(c->recfmt));
 -- 
 2.43.0
 
