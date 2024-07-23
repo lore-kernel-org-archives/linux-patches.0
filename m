@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5851581F4;
-	Tue, 23 Jul 2024 18:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65B013D896;
+	Tue, 23 Jul 2024 18:42:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760164; cv=none; b=lBryyTa/XtBEYtmr05YYuew3uBDFoJu8DY/+qpCKI45QbF4/gJCTW3UbDuwFQGLdpu+NqGpxsyQyLO7S3yk9Y7uhrwciXs4Pxyu32xOGGy6NtjTyHXAIvqAZtMIZdGJnAoqtfVvio8vQGgOtUqZ3B3o8B63ueHDsbZcRSoBKPJc=
+	t=1721760166; cv=none; b=fzBY1sVJtzmGS4wHzYmpvGZhRc7+juIB/AZD0LhCHT9Aj8W6tInAjoeGnjTjqMfV5Vw1aZ0EsE2r1YIcj5BzI1V/ENSx4/CBCw4FfgbuHQSg1U6K43qCD1/rDYQt+owVbrvDrmYNwQT4dwXTZSpJnAudQIV2YJFQDPXws9a3EmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760164; c=relaxed/simple;
-	bh=2wKien1XtKTYrTP7ZpuigxqTAUntQwoHcYzffovaZ64=;
+	s=arc-20240116; t=1721760166; c=relaxed/simple;
+	bh=qiyiX0ZDkpRXYeqFWEBZ2ONXiC4SFh8JC7nPktW893g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s17SukM/wkdnZASZ3s+GC7O3/SnGJjVG++Zb3AepuHlmra7yLIjxCOmMfXDUTQFKYhOxj/rwb4rSBvGgiz6GdDSfBDEOI09eV7fqwX65mxu9vd9DzBjYr4tQUWzUah+vBfgYT78jvCABLxj41thpYZxtlCnZOUy6lxOTbNUirS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yTAsPEqo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K3bst1sUaLihVCdDS8vx1E3oa+DDw1A8AvE7+a2jSe8GTAYfea5+Nd/YEjAZkELK48t25mmXEUwMqjj0cYumpfsZA0cINUHOjQBbBHmGKqM8YcXWE3mb1r5L0IZI7mvsR7+LAzGFBG7fOaK75A3Xqnf3di3d9CivrMdD132PhNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efR8rzYr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yTAsPEqo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39E0CC4AF0B;
-	Tue, 23 Jul 2024 18:42:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efR8rzYr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABFCC4AF09;
+	Tue, 23 Jul 2024 18:42:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760163;
-	bh=2wKien1XtKTYrTP7ZpuigxqTAUntQwoHcYzffovaZ64=;
+	s=korg; t=1721760166;
+	bh=qiyiX0ZDkpRXYeqFWEBZ2ONXiC4SFh8JC7nPktW893g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yTAsPEqoRX48qBClDpGESli+tpQngNOF+xkbIXs36ntEa77jIOQT5nY1Jl2N/EZHz
-	 yPD5SJrSKSBTRRyfFKqH91j+kjigvxXssXBcoKgDOWPQu4r1r27+2/pT0zX9I+C+5N
-	 XqlcCyhaBcNZPyz9hV4L2GQLPfsuE53zmZ7ncqM0=
+	b=efR8rzYrtc9CLrLzRWFvZAgCc8MLv09UUJKZYcHq8odaC4Rqxocgs7EbnihFoYdqI
+	 bo2NEY4z6EGqC1DdQ3PtNt9+EDY/ejt330mjmm0VfDXyiRyphULV03wPYIMm0mQJae
+	 ogJgc4VFpbL2xCCoYr+r1UXqfzYjZKmKV6Z3VBbc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yunshui Jiang <jiangyunshui@kylinos.cn>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 123/163] clk: qcom: apss-ipq-pll: remove config_ctl_hi_val from Stromer pll configs
-Date: Tue, 23 Jul 2024 20:24:12 +0200
-Message-ID: <20240723180148.225170400@linuxfoundation.org>
+Subject: [PATCH 6.9 124/163] net: mac802154: Fix racy device stats updates by DEV_STATS_INC() and DEV_STATS_ADD()
+Date: Tue, 23 Jul 2024 20:24:13 +0200
+Message-ID: <20240723180148.263022651@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -53,46 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Yunshui Jiang <jiangyunshui@kylinos.cn>
 
-[ Upstream commit 2ba8425678af422da37b6c9b50e9ce66f0f55cae ]
+[ Upstream commit b8ec0dc3845f6c9089573cb5c2c4b05f7fc10728 ]
 
-Since the CONFIG_CTL register is only 32 bits wide in the Stromer
-and Stromer Plus PLLs , the 'config_ctl_hi_val' values from the
-IPQ5018 and IPQ5332 configurations are not used so remove those.
+mac802154 devices update their dev->stats fields locklessly. Therefore
+these counters should be updated atomically. Adopt SMP safe DEV_STATS_INC()
+and DEV_STATS_ADD() to achieve this.
 
-No functional changes.
-
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Kathiravan Thirumoorthy <quic_kathirav@quicinc.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240509-stromer-config-ctl-v1-1-6034e17b28d5@gmail.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Yunshui Jiang <jiangyunshui@kylinos.cn>
+Message-ID: <20240531080739.2608969-1-jiangyunshui@kylinos.cn>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/apss-ipq-pll.c | 2 --
- 1 file changed, 2 deletions(-)
+ net/mac802154/tx.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-index d7ab5bd5d4b41..e12bb9abf6b6a 100644
---- a/drivers/clk/qcom/apss-ipq-pll.c
-+++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -100,7 +100,6 @@ static struct clk_alpha_pll ipq_pll_stromer_plus = {
- static const struct alpha_pll_config ipq5018_pll_config = {
- 	.l = 0x2a,
- 	.config_ctl_val = 0x4001075b,
--	.config_ctl_hi_val = 0x304,
- 	.main_output_mask = BIT(0),
- 	.aux_output_mask = BIT(1),
- 	.early_output_mask = BIT(3),
-@@ -114,7 +113,6 @@ static const struct alpha_pll_config ipq5018_pll_config = {
- static const struct alpha_pll_config ipq5332_pll_config = {
- 	.l = 0x2d,
- 	.config_ctl_val = 0x4001075b,
--	.config_ctl_hi_val = 0x304,
- 	.main_output_mask = BIT(0),
- 	.aux_output_mask = BIT(1),
- 	.early_output_mask = BIT(3),
+diff --git a/net/mac802154/tx.c b/net/mac802154/tx.c
+index 2a6f1ed763c9b..6fbed5bb5c3e0 100644
+--- a/net/mac802154/tx.c
++++ b/net/mac802154/tx.c
+@@ -34,8 +34,8 @@ void ieee802154_xmit_sync_worker(struct work_struct *work)
+ 	if (res)
+ 		goto err_tx;
+ 
+-	dev->stats.tx_packets++;
+-	dev->stats.tx_bytes += skb->len;
++	DEV_STATS_INC(dev, tx_packets);
++	DEV_STATS_ADD(dev, tx_bytes, skb->len);
+ 
+ 	ieee802154_xmit_complete(&local->hw, skb, false);
+ 
+@@ -90,8 +90,8 @@ ieee802154_tx(struct ieee802154_local *local, struct sk_buff *skb)
+ 		if (ret)
+ 			goto err_wake_netif_queue;
+ 
+-		dev->stats.tx_packets++;
+-		dev->stats.tx_bytes += len;
++		DEV_STATS_INC(dev, tx_packets);
++		DEV_STATS_ADD(dev, tx_bytes, len);
+ 	} else {
+ 		local->tx_skb = skb;
+ 		queue_work(local->workqueue, &local->sync_tx_work);
 -- 
 2.43.0
 
