@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D4B13D896;
-	Tue, 23 Jul 2024 18:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A2313D896;
+	Tue, 23 Jul 2024 18:43:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760178; cv=none; b=XFuSAQkjoEU1Z0Gew33LNGE7BCOcP1qWtQS3lKUqi4vXca8fuCwhjO/42gPS8eeb1H957tblD8KXIf6oBqZEf/5p4aLJZBCvzz8cKGiYh14p1aeDlB8FDzXgpyYx8VWkNbk/x80JIKsFPta+a3rZkRP/YgZr+uGrQ6I8GQgUuXA=
+	t=1721760181; cv=none; b=h2G+UQ0/S6auorsmJtM9P26erUHJEqy4G1Zj8TVAszh+NZs/ClxiBD5Xje7qSrDTOfy8aPSg51BNsUC03pB+sNcaS+3eKXpfejwy2MpNEFzTU/eKu7xEap2MS6VVvFibB9eBNg6E93w8f3Ihg7pMINuf3Jcwmu6LlxZv60bFthA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760178; c=relaxed/simple;
-	bh=js9362GxM1g7OGNHkT6w/U2nutVMwTjNI8lr2u9mXow=;
+	s=arc-20240116; t=1721760181; c=relaxed/simple;
+	bh=y9a8BDzH9Iv5+VPIHNZMoBuujOUFsIDVc4yclA0gsiU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NulgoLsBiA1bH73KwOa9F+2NPKqN0t2U3X4rfRsrjW5N/a4LjMyEofXvTElLaTq1B1SGygN82f+psj/osEHtWhpd5fx8RRWmjgranzehL9fSIVkZJCMT+PuEFjDNR+ScyOlHdoW8tbPp6H+UdTx7gRr3Z0r0BJcrxBWln3xS2gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgMB/4ly; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RX5KI2mshF7V4qeFyTj9jZc497GeliN2fNJwcYenEQdM2IzPvch6sP1953W+SwLeo+LTkgMceqv5WT57jGguoYE+9IQiRzvvdF83+Y893naGafbQ2//Z+h04P0biu8BSxqGLN0cegT4GGYmlDlNrjbuVAQ4tymCYL2hDiRA0Mvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj9Z/F6z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgMB/4ly"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3A4C4AF0A;
-	Tue, 23 Jul 2024 18:42:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj9Z/F6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1616C4AF0A;
+	Tue, 23 Jul 2024 18:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760178;
-	bh=js9362GxM1g7OGNHkT6w/U2nutVMwTjNI8lr2u9mXow=;
+	s=korg; t=1721760181;
+	bh=y9a8BDzH9Iv5+VPIHNZMoBuujOUFsIDVc4yclA0gsiU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgMB/4lyOmxElrDezXmqaFdn9AnA1scDBQQVW92Dzc6oiiXIc2OCLT6dvk+SVScva
-	 eY0eDJXb9w8PbpcE+uR7+tFGOB0ct9/04QU5aznKZc7zF8xHQZpn3wyckPza9S75bl
-	 HSqeElZ4v/yqKa+C2PeTxrXqF7ogFSxYmOVHFdy4=
+	b=Rj9Z/F6zyQOlD9g8QIqLpY4lZcHDAaNVqR48EKKK6YnC0wY1cfYHEcgcU0Gi42MZB
+	 6dFDRjZovAa6PGuoRfsGUJzNT5ypW3ukJA0rQKDPJxZFAkepGnMCSKhZqXJ+um5hTW
+	 gDeWNajeBRQrcaSEj0WZw+KB5fWdy5fE+BHv0rAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"ming-jen.chang" <ming-jen.chang@mediatek.com>,
-	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
+	syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 128/163] tee: optee: ffa: Fix missing-field-initializers warning
-Date: Tue, 23 Jul 2024 20:24:17 +0200
-Message-ID: <20240723180148.418333178@linuxfoundation.org>
+Subject: [PATCH 6.9 129/163] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
+Date: Tue, 23 Jul 2024 20:24:18 +0200
+Message-ID: <20240723180148.457273655@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,61 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit e0556255a53d6d3d406a28362dffd972018a997c ]
+[ Upstream commit 0d151a103775dd9645c78c97f77d6e2a5298d913 ]
 
-The 'missing-field-initializers' warning was reported
-when building with W=2.
-This patch use designated initializers for
-'struct ffa_send_direct_data' to suppress the warning
-and clarify the initialization intent.
+syzbot is reporting that calling hci_release_dev() from hci_error_reset()
+due to hci_dev_put() from hci_error_reset() can cause deadlock at
+destroy_workqueue(), for hci_error_reset() is called from
+hdev->req_workqueue which destroy_workqueue() needs to flush.
 
-Signed-off-by: ming-jen.chang <ming-jen.chang@mediatek.com>
-Signed-off-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
+We need to make sure that hdev->{rx_work,cmd_work,tx_work} which are
+queued into hdev->workqueue and hdev->{power_on,error_reset} which are
+queued into hdev->req_workqueue are no longer running by the moment
+
+       destroy_workqueue(hdev->workqueue);
+       destroy_workqueue(hdev->req_workqueue);
+
+are called from hci_release_dev().
+
+Call cancel_work_sync() on these work items from hci_unregister_dev()
+as soon as hdev->list is removed from hci_dev_list.
+
+Reported-by: syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=da0a9c9721e36db712e8
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tee/optee/ffa_abi.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/bluetooth/hci_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/tee/optee/ffa_abi.c b/drivers/tee/optee/ffa_abi.c
-index ecb5eb079408e..c5a3e25c55dab 100644
---- a/drivers/tee/optee/ffa_abi.c
-+++ b/drivers/tee/optee/ffa_abi.c
-@@ -660,7 +660,9 @@ static bool optee_ffa_api_is_compatbile(struct ffa_device *ffa_dev,
- 					const struct ffa_ops *ops)
- {
- 	const struct ffa_msg_ops *msg_ops = ops->msg_ops;
--	struct ffa_send_direct_data data = { OPTEE_FFA_GET_API_VERSION };
-+	struct ffa_send_direct_data data = {
-+		.data0 = OPTEE_FFA_GET_API_VERSION,
-+	};
- 	int rc;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 24f6b6a5c7721..131bb8b5777b4 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -2744,7 +2744,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	list_del(&hdev->list);
+ 	write_unlock(&hci_dev_list_lock);
  
- 	msg_ops->mode_32bit_set(ffa_dev);
-@@ -677,7 +679,9 @@ static bool optee_ffa_api_is_compatbile(struct ffa_device *ffa_dev,
- 		return false;
- 	}
++	cancel_work_sync(&hdev->rx_work);
++	cancel_work_sync(&hdev->cmd_work);
++	cancel_work_sync(&hdev->tx_work);
+ 	cancel_work_sync(&hdev->power_on);
++	cancel_work_sync(&hdev->error_reset);
  
--	data = (struct ffa_send_direct_data){ OPTEE_FFA_GET_OS_VERSION };
-+	data = (struct ffa_send_direct_data){
-+		.data0 = OPTEE_FFA_GET_OS_VERSION,
-+	};
- 	rc = msg_ops->sync_send_receive(ffa_dev, &data);
- 	if (rc) {
- 		pr_err("Unexpected error %d\n", rc);
-@@ -698,7 +702,9 @@ static bool optee_ffa_exchange_caps(struct ffa_device *ffa_dev,
- 				    unsigned int *rpc_param_count,
- 				    unsigned int *max_notif_value)
- {
--	struct ffa_send_direct_data data = { OPTEE_FFA_EXCHANGE_CAPABILITIES };
-+	struct ffa_send_direct_data data = {
-+		.data0 = OPTEE_FFA_EXCHANGE_CAPABILITIES,
-+	};
- 	int rc;
+ 	hci_cmd_sync_clear(hdev);
  
- 	rc = ops->msg_ops->sync_send_receive(ffa_dev, &data);
 -- 
 2.43.0
 
