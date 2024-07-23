@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED074158A2C;
-	Tue, 23 Jul 2024 18:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE63F158A30;
+	Tue, 23 Jul 2024 18:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759510; cv=none; b=F/Oqy2iVy9yA0O4J99qu7B16olWUhn+cuI76AlDuFDxj3T8PsOrjT8v9Nq6Z8YMMdY7ZuhcUi06b/uGaQ87M1bSEvW2Q0I33NMMwncyiXFwb16AKPg/MXBW+99wQCGLrgEvnMEHY66od6q9z22uEcaQrhyQgcoGNrpb0EgeSPP4=
+	t=1721759512; cv=none; b=gA3xJ3PvPPRIRG5tX+JEL86Uc3QY90BfXAEi7Fy27AdCnp94LnQkp+4es1L4OPwE+GYMtWJKvxlPhtF5ICGDtCsB2d18fKIdB5izC4V/gGaJiBSGruy3tYxKCiV7BW5t14eSRj8lJSGcphtdGXe9ob57SRXhYWc5g7kXkDfIlSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759510; c=relaxed/simple;
-	bh=HMBk9q87Wf1cojHoS1ZtjPj1i/cZfUMa6WN3mqz4zHc=;
+	s=arc-20240116; t=1721759512; c=relaxed/simple;
+	bh=f0ErGEEmuvN2iMEFK3TTBILI35c/1ES6B0qfLx70Tl8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rw7AGrx19wy2Ukgbkn/623Cf/R2L8p5iX763MOr5qYnVCfEumnqKGsu7yiQDumAJq7CLxaBKtWEszRvVAMRYyKqBeexmdu7c7ukGP/supsIUOYewj1RlSOU5hUj/2BHuxGgzKfwwvy3ePwRoD9NzvnyaX//laqpGlwZpWLs08ek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfLaKdSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iOESITb3KrvQI/DfRDKG5Zc5/1zwyqZ/njeBoCzCtjYmKcmi+PiPRMeRjtnD+ssjWM40sUnSDKrk3eDO0Vq338QM8M33LWhLwqu8Ro+Oi3TJ03N4w6MG+lpWrN5sQOhq50boY91uP3TgW2MMtc8Q7sNPae6hteg+ca3kQD/Q71E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cJPT5Aa4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfLaKdSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8A5C4AF0A;
-	Tue, 23 Jul 2024 18:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cJPT5Aa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55479C4AF0A;
+	Tue, 23 Jul 2024 18:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759509;
-	bh=HMBk9q87Wf1cojHoS1ZtjPj1i/cZfUMa6WN3mqz4zHc=;
+	s=korg; t=1721759512;
+	bh=f0ErGEEmuvN2iMEFK3TTBILI35c/1ES6B0qfLx70Tl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfLaKdSdixRTjyvsnfw67lVYmGA25QGgvYbEjIVTrXPOddNNZX55M8x0OQFHmq56+
-	 L8B8qrLQwNAbqTHZQNkois8NqxYSrxZb3XgOeUcVAv23BDT7nQCAzeFNT5yEAnTYO/
-	 FXMtJtTj3mY0XHdF2jlo8TZSeOihnnaujMWi4nYU=
+	b=cJPT5Aa4SyG/aaM3SOskk9kiD1x9yCKYQH+G1SAGkiujGF9iEpljlgpyx9HTZap8H
+	 Pi0DNurzcfo6jvqrd7mmRZa4yd4KZ9RsY10M+jAX4/sV8wk0n4ijXIP+L7Zh09S/2U
+	 kKISaBJcTt1igQayTnr1zmn8Ctrk+gGfO1drW4mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Louis Dalibard <ontake@ontake.dev>,
-	Jiri Kosina <jkosina@suse.com>,
+	Dmitry Mastykin <mastichi@gmail.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/129] HID: Ignore battery for ELAN touchscreens 2F2C and 4116
-Date: Tue, 23 Jul 2024 20:23:03 +0200
-Message-ID: <20240723180406.146580713@linuxfoundation.org>
+Subject: [PATCH 6.6 036/129] NFSv4: Fix memory leak in nfs4_set_security_label
+Date: Tue, 23 Jul 2024 20:23:04 +0200
+Message-ID: <20240723180406.184722764@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -51,54 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Louis Dalibard <ontake@ontake.dev>
+From: Dmitry Mastykin <mastichi@gmail.com>
 
-[ Upstream commit a3a5a37efba11b7cf1a86abe7bccfbcdb521764e ]
+[ Upstream commit aad11473f8f4be3df86461081ce35ec5b145ba68 ]
 
-At least ASUS Zenbook 14 (2023) and ASUS Zenbook 14 Pro (2023) are affected.
+We leak nfs_fattr and nfs4_label every time we set a security xattr.
 
-The touchscreen reports a battery status of 0% and jumps to 1% when a
-stylus is used.
-
-The device ID was added and the battery ignore quirk was enabled for it.
-
-[jkosina@suse.com: reformatted changelog a bit]
-Signed-off-by: Louis Dalibard <ontake@ontake.dev>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Signed-off-by: Dmitry Mastykin <mastichi@gmail.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 2 ++
- drivers/hid/hid-input.c | 4 ++++
- 2 files changed, 6 insertions(+)
+ fs/nfs/nfs4proc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 89aef5874202c..4246348ca16e9 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -418,6 +418,8 @@
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
- #define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
- #define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
-+#define I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN 0x2F2C
-+#define I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN 0x4116
- #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
- #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
- #define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 8bb16e9b94aa5..c9094a4f281e9 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -377,6 +377,10 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN),
-+	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN),
-+	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index f0953200acd08..05490d4784f1a 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -6268,6 +6268,7 @@ nfs4_set_security_label(struct inode *inode, const void *buf, size_t buflen)
+ 	if (status == 0)
+ 		nfs_setsecurity(inode, fattr);
+ 
++	nfs_free_fattr(fattr);
+ 	return status;
+ }
+ #endif	/* CONFIG_NFS_V4_SECURITY_LABEL */
 -- 
 2.43.0
 
