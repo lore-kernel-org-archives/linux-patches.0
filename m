@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3E115884E;
-	Tue, 23 Jul 2024 18:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75481586CB;
+	Tue, 23 Jul 2024 18:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759925; cv=none; b=iMvkoE//0QAlAIb/o4KTZhww0KfdzfbIeBk5e/6jLYNPFTGwDOLEiJnfwxh/CUN9P03QEcHaF2ZWoJ2hY+06fkWQ25po+eRM+UTDM1TJtGTRtwFyqTMea4xFKKTq/8a3AME8bCLi85gXKg0e0OEQc77vgM0VHEIrH32WoI/L8e4=
+	t=1721759928; cv=none; b=pq5q1No717cv5SpaR8efDGMlt9GAgorcytssOhcp4KtPuqf3xfNbchbC8DanR6tYnDzKgpQZAx6n4mYndZBBuGH+COJRUqeHn2zieW3h43KucaSSksVO2mgdY+3s8LUeHCo9YM7ko0CSglsuJUE/I1Exw0GYizCmnYgw1csSrZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759925; c=relaxed/simple;
-	bh=To0kZLUDwCiyWTUfjCBuNvo6euwzZTJW7ur1kfj5xbk=;
+	s=arc-20240116; t=1721759928; c=relaxed/simple;
+	bh=7Kb6fA3FhOkCE1X2AH1vXxPO5OacMg5tLa4I2APKoMM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G4YDP0GRL21V4B14SVU1BMMPgW7O6F7gQFwPehwmDKmmT0aOgeZOVraQaCgwd6Mkk/xt6IzlGHBCHdIBj7pHGjlF+ZaMqg2kS4K7UZqNWhfFjnTx6a0z11Y6sAYFQRJgc7druWox9WZ8NWI/vDyEQMYJtscy9z8bse4TtAwD38Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dKUAUfO1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oi6yM5azF5OxM6oiEluxDtarkdzyko10DA3lTbkOBYLqUesH5pwy5bnpPnJtTw5RHFA5LEDizRtDpzHYdSZucWKEmMcATxsNCalUmq/XmOab1c9Ibp/LsCPYEl3L9sGSr3bGikf9k2OHYGQ7xDIIi18Fnt2nvj3UBtvET7Rc7yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xvsJe1NC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dKUAUfO1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5306FC4AF0A;
-	Tue, 23 Jul 2024 18:38:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xvsJe1NC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487ECC4AF09;
+	Tue, 23 Jul 2024 18:38:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759925;
-	bh=To0kZLUDwCiyWTUfjCBuNvo6euwzZTJW7ur1kfj5xbk=;
+	s=korg; t=1721759928;
+	bh=7Kb6fA3FhOkCE1X2AH1vXxPO5OacMg5tLa4I2APKoMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKUAUfO1GQu0IlDhfQXUnec/GcIVnGJ/dOeg4/Xk3I7tC2mgI+yqoPUKId1bwH6Qt
-	 SpekLov0W9yPci7MBmCHygUxpuFsi/velPcYHhyxadfO/G+d610a0TUZQ3zh1/GEcy
-	 tEDjw2irNiPm94Fg5byuIQLJLn+Nk+y+NRPrGn+4=
+	b=xvsJe1NCmTErrCIwAux4Gi44Pryc4ZO2cqQLu9AAftYyZucauYNHGFztG93M+DNSF
+	 F1qE8vTaaq3n1/HNCPpEZJpOCkI2xBSq0FyAkllsq97KazdcmCt1aiJXbmRQF1zldv
+	 Lxuq9T4ADQbWNVWP6nSxLqXZCDWsDp2zuChBpMfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Mastykin <mastichi@gmail.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Jeff Layton <jlayton@kernel.org>,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 045/163] NFSv4: Fix memory leak in nfs4_set_security_label
-Date: Tue, 23 Jul 2024 20:22:54 +0200
-Message-ID: <20240723180145.213675053@linuxfoundation.org>
+Subject: [PATCH 6.9 046/163] nfs: propagate readlink errors in nfs_symlink_filler
+Date: Tue, 23 Jul 2024 20:22:55 +0200
+Message-ID: <20240723180145.251569344@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -51,31 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Mastykin <mastichi@gmail.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit aad11473f8f4be3df86461081ce35ec5b145ba68 ]
+[ Upstream commit 134d0b3f2440cdddd12fc3444c9c0f62331ce6fc ]
 
-We leak nfs_fattr and nfs4_label every time we set a security xattr.
+There is an inherent race where a symlink file may have been overriden
+(by a different client) between lookup and readlink, resulting in a
+spurious EIO error returned to userspace. Fix this by propagating back
+ESTALE errors such that the vfs will retry the lookup/get_link (similar
+to nfs4_file_open) at least once.
 
-Signed-off-by: Dmitry Mastykin <mastichi@gmail.com>
+Cc: Dan Aloni <dan.aloni@vastdata.com>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfs/symlink.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 3a816c4a6d5e2..a691fa10b3e95 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -6289,6 +6289,7 @@ nfs4_set_security_label(struct inode *inode, const void *buf, size_t buflen)
- 	if (status == 0)
- 		nfs_setsecurity(inode, fattr);
- 
-+	nfs_free_fattr(fattr);
- 	return status;
+diff --git a/fs/nfs/symlink.c b/fs/nfs/symlink.c
+index 0e27a2e4e68b8..13818129d268f 100644
+--- a/fs/nfs/symlink.c
++++ b/fs/nfs/symlink.c
+@@ -41,7 +41,7 @@ static int nfs_symlink_filler(struct file *file, struct folio *folio)
+ error:
+ 	folio_set_error(folio);
+ 	folio_unlock(folio);
+-	return -EIO;
++	return error;
  }
- #endif	/* CONFIG_NFS_V4_SECURITY_LABEL */
+ 
+ static const char *nfs_get_link(struct dentry *dentry,
 -- 
 2.43.0
 
