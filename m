@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A2313D896;
-	Tue, 23 Jul 2024 18:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52AF91586F5;
+	Tue, 23 Jul 2024 18:43:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721760181; cv=none; b=h2G+UQ0/S6auorsmJtM9P26erUHJEqy4G1Zj8TVAszh+NZs/ClxiBD5Xje7qSrDTOfy8aPSg51BNsUC03pB+sNcaS+3eKXpfejwy2MpNEFzTU/eKu7xEap2MS6VVvFibB9eBNg6E93w8f3Ihg7pMINuf3Jcwmu6LlxZv60bFthA=
+	t=1721760184; cv=none; b=sqZmarSTr/MnCBko6k4dTbn2varaax88QLSvUIOr3sDZ+OZDc3lwCvBceiD3UgHtf/zz9Sew+UvIbBrh6iYlN0Q51cwMbCimx0NHqxE2aZFWdXilmuKc0ayFsa7oNvbFRf9BDREt53H25xk62rt6vJtW5m5TfWKpR8ZNyymD/gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721760181; c=relaxed/simple;
-	bh=y9a8BDzH9Iv5+VPIHNZMoBuujOUFsIDVc4yclA0gsiU=;
+	s=arc-20240116; t=1721760184; c=relaxed/simple;
+	bh=FKPYFm7xEaa6lZu0snh9Bw0PaifgWe3WE0mIlVlL8q4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RX5KI2mshF7V4qeFyTj9jZc497GeliN2fNJwcYenEQdM2IzPvch6sP1953W+SwLeo+LTkgMceqv5WT57jGguoYE+9IQiRzvvdF83+Y893naGafbQ2//Z+h04P0biu8BSxqGLN0cegT4GGYmlDlNrjbuVAQ4tymCYL2hDiRA0Mvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rj9Z/F6z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kh+neNY1WuGyQcnbvb1+3ti2K0jKRmuq4+iMI267mu1tSXH0+tSmeiIRCdo8gtefOq0gXSO3kSjpTv0N9uKGBAiERpfZxUUyP1dDJSa402BHrKozaj2/YFLvhHu5PuUIOoD7yZ+K6BDQV2APmxR9941zZuhva2uOO0Lj09LTCFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IB5fY6M8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rj9Z/F6z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1616C4AF0A;
-	Tue, 23 Jul 2024 18:43:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IB5fY6M8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D67C4AF09;
+	Tue, 23 Jul 2024 18:43:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721760181;
-	bh=y9a8BDzH9Iv5+VPIHNZMoBuujOUFsIDVc4yclA0gsiU=;
+	s=korg; t=1721760184;
+	bh=FKPYFm7xEaa6lZu0snh9Bw0PaifgWe3WE0mIlVlL8q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rj9Z/F6zyQOlD9g8QIqLpY4lZcHDAaNVqR48EKKK6YnC0wY1cfYHEcgcU0Gi42MZB
-	 6dFDRjZovAa6PGuoRfsGUJzNT5ypW3ukJA0rQKDPJxZFAkepGnMCSKhZqXJ+um5hTW
-	 gDeWNajeBRQrcaSEj0WZw+KB5fWdy5fE+BHv0rAA=
+	b=IB5fY6M8E/3J09CJ3JtIguqU+MVAXw7gVHb7nbPfKf4aVUAISRPXV0cAf3jJC4HKJ
+	 OnIBaaenbrRnTO8dvSUjhK3NeJd+HZNjVbsy/C5NI8BZY9tmrCUoRtuqyDvkO1n2K5
+	 MYm/YUXNzDrMNkONJUb5KcCbXCMsZlpGajEOpxh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 129/163] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
-Date: Tue, 23 Jul 2024 20:24:18 +0200
-Message-ID: <20240723180148.457273655@linuxfoundation.org>
+Subject: [PATCH 6.9 103/163] Input: ads7846 - use spi_device_id table
+Date: Tue, 23 Jul 2024 20:23:52 +0200
+Message-ID: <20240723180147.456081600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,52 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 0d151a103775dd9645c78c97f77d6e2a5298d913 ]
+[ Upstream commit 7c7b1be19b228b450c2945ec379d7fc6bfef9852 ]
 
-syzbot is reporting that calling hci_release_dev() from hci_error_reset()
-due to hci_dev_put() from hci_error_reset() can cause deadlock at
-destroy_workqueue(), for hci_error_reset() is called from
-hdev->req_workqueue which destroy_workqueue() needs to flush.
+As the driver supports more devices over time the single MODULE_ALIAS
+is complete and raises several warnings:
+SPI driver ads7846 has no spi_device_id for ti,tsc2046
+SPI driver ads7846 has no spi_device_id for ti,ads7843
+SPI driver ads7846 has no spi_device_id for ti,ads7845
+SPI driver ads7846 has no spi_device_id for ti,ads7873
 
-We need to make sure that hdev->{rx_work,cmd_work,tx_work} which are
-queued into hdev->workqueue and hdev->{power_on,error_reset} which are
-queued into hdev->req_workqueue are no longer running by the moment
+Fix this by adding a spi_device_id table and removing the manual
+MODULE_ALIAS.
 
-       destroy_workqueue(hdev->workqueue);
-       destroy_workqueue(hdev->req_workqueue);
-
-are called from hci_release_dev().
-
-Call cancel_work_sync() on these work items from hci_unregister_dev()
-as soon as hdev->list is removed from hci_dev_list.
-
-Reported-by: syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=da0a9c9721e36db712e8
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20240619122703.2081476-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/input/touchscreen/ads7846.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 24f6b6a5c7721..131bb8b5777b4 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -2744,7 +2744,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
- 	list_del(&hdev->list);
- 	write_unlock(&hci_dev_list_lock);
+diff --git a/drivers/input/touchscreen/ads7846.c b/drivers/input/touchscreen/ads7846.c
+index d2bbb436a77df..4d13db13b9e57 100644
+--- a/drivers/input/touchscreen/ads7846.c
++++ b/drivers/input/touchscreen/ads7846.c
+@@ -1111,6 +1111,16 @@ static const struct of_device_id ads7846_dt_ids[] = {
+ };
+ MODULE_DEVICE_TABLE(of, ads7846_dt_ids);
  
-+	cancel_work_sync(&hdev->rx_work);
-+	cancel_work_sync(&hdev->cmd_work);
-+	cancel_work_sync(&hdev->tx_work);
- 	cancel_work_sync(&hdev->power_on);
-+	cancel_work_sync(&hdev->error_reset);
++static const struct spi_device_id ads7846_spi_ids[] = {
++	{ "tsc2046", 7846 },
++	{ "ads7843", 7843 },
++	{ "ads7845", 7845 },
++	{ "ads7846", 7846 },
++	{ "ads7873", 7873 },
++	{ },
++};
++MODULE_DEVICE_TABLE(spi, ads7846_spi_ids);
++
+ static const struct ads7846_platform_data *ads7846_get_props(struct device *dev)
+ {
+ 	struct ads7846_platform_data *pdata;
+@@ -1386,10 +1396,10 @@ static struct spi_driver ads7846_driver = {
+ 	},
+ 	.probe		= ads7846_probe,
+ 	.remove		= ads7846_remove,
++	.id_table	= ads7846_spi_ids,
+ };
  
- 	hci_cmd_sync_clear(hdev);
+ module_spi_driver(ads7846_driver);
  
+ MODULE_DESCRIPTION("ADS7846 TouchScreen Driver");
+ MODULE_LICENSE("GPL");
+-MODULE_ALIAS("spi:ads7846");
 -- 
 2.43.0
 
