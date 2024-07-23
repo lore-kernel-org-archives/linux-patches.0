@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A6015821E;
-	Tue, 23 Jul 2024 18:39:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AA314EC58;
+	Tue, 23 Jul 2024 18:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759947; cv=none; b=OOsMaKsuRg33k1VMaq+MNk8fosPsFu0xit8eiTL50xwitH21FU4BS12/m/Ax54uvK2D+7JdYKDThtz/HtxBG20QpvFDjBgvFSsU0z0+R3Z/JI99HPrd2GeFdmKncaC/i977a/++6Jl12ZUCSOMBurWUEmGi1+OOxtP7qfTnbOI8=
+	t=1721759949; cv=none; b=oH2VH0FyqeP26zLTLVxR4rVYKQmygSi0/+l2D4ovJnwAeVPtN97kxg+H2SDwk/N+4OXFi10zL/evYGr/0o6CS6I1nJMBj5AfATMfv8THV8zPKjgmWQvsNikxcV354w8cbn79D6zjIMCrKEeMYWVM57m+t8UsR66nSZw4Jtop5vA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759947; c=relaxed/simple;
-	bh=IpyWVZWUBT0nAce6zc9I1Xm9NA9eFqdP7xJeMbNRCWU=;
+	s=arc-20240116; t=1721759949; c=relaxed/simple;
+	bh=EsfnKMT8x3Xon3ved2L0AYWpLQX/eDHoLiMOcaoeOv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5VKwBArZuA3xvNBOBXGr3eSLQ3XiNRNIbJKTgRWXsUs5K7tXTL6nxgtc3wrfGBRYSjVNhfQ+puug/4fA7QXb8asN4QL67APTxvLi1Trz+xmqK38Y3v4opnmlLqv7fb5o7VfIV+EVk8qx4HCjywevHfJUl4/xHoKtQEsoEolBt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j7mF4XeY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aZ5WdgJDxsrwyoBDzoP1NkcYHU9WINaIbdry85W4HB/6R91IqY7W3rL7PSYGwmIH/iakkZZZuo8VkFDUQemiyl1SpfUOpniBipSOkhz4WV7ojZBebTZSkGI1pUWL3vV2Dt08hYZEuJLn8K9WH3HmDEpDfN9nYoiUQNkwws3ETIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZWD62B1F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j7mF4XeY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CF5EC4AF09;
-	Tue, 23 Jul 2024 18:39:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZWD62B1F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9665C4AF0A;
+	Tue, 23 Jul 2024 18:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759946;
-	bh=IpyWVZWUBT0nAce6zc9I1Xm9NA9eFqdP7xJeMbNRCWU=;
+	s=korg; t=1721759949;
+	bh=EsfnKMT8x3Xon3ved2L0AYWpLQX/eDHoLiMOcaoeOv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j7mF4XeYpsZDSd8YPFw1Yz+3VSz68A6yhAqdv+1PbBpmJ2YR9Bp3Vo/P2m5Ai6ukJ
-	 RqmsvdUDr3jz6xvFocMYBaOBDoe3fhv8/qIxpt8/8joOxFgDqo9Kk9B5jZWUPowAGj
-	 I/9AaScdRFcagt2xWzAb5mOmqMuDk/iPkIt6+oaA=
+	b=ZWD62B1FOYz1xKwwLdEJ2jT3VAwV1zn3oKge9DFjt5h4zdPKnAYuGOq7U4f6W5zlm
+	 TRHN2SmGwlLcEqclKMVV3VbfJc1EDQtZqztiTiQfUYzsqEO5hLPZPizoEYzxYrQ2wp
+	 44Ar2iWVUCiC8VsvXiolUfgMLWxDzdgW2MxMCWQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <yuntao.wang@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.9 052/163] fs/file: fix the check in find_next_fd()
-Date: Tue, 23 Jul 2024 20:23:01 +0200
-Message-ID: <20240723180145.486096711@linuxfoundation.org>
+Subject: [PATCH 6.9 035/163] ila: block BH in ila_output()
+Date: Tue, 23 Jul 2024 20:22:44 +0200
+Message-ID: <20240723180144.828557935@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
 References: <20240723180143.461739294@linuxfoundation.org>
@@ -52,49 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <yuntao.wang@linux.dev>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ed8c7fbdfe117abbef81f65428ba263118ef298a ]
+[ Upstream commit cf28ff8e4c02e1ffa850755288ac954b6ff0db8c ]
 
-The maximum possible return value of find_next_zero_bit(fdt->full_fds_bits,
-maxbit, bitbit) is maxbit. This return value, multiplied by BITS_PER_LONG,
-gives the value of bitbit, which can never be greater than maxfd, it can
-only be equal to maxfd at most, so the following check 'if (bitbit > maxfd)'
-will never be true.
+As explained in commit 1378817486d6 ("tipc: block BH
+before using dst_cache"), net/core/dst_cache.c
+helpers need to be called with BH disabled.
 
-Moreover, when bitbit equals maxfd, it indicates that there are no unused
-fds, and the function can directly return.
+ila_output() is called from lwtunnel_output()
+possibly from process context, and under rcu_read_lock().
 
-Fix this check.
+We might be interrupted by a softirq, re-enter ila_output()
+and corrupt dst_cache data structures.
 
-Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
-Link: https://lore.kernel.org/r/20240529160656.209352-1-yuntao.wang@linux.dev
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fix the race by using local_bh_disable().
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240531132636.2637995-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/ila/ila_lwt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/file.c b/fs/file.c
-index 3b683b9101d84..005841dd35977 100644
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -481,12 +481,12 @@ struct files_struct init_files = {
+diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
+index 0601bad798221..ff7e734e335b0 100644
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -58,7 +58,9 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 		return orig_dst->lwtstate->orig_output(net, sk, skb);
+ 	}
  
- static unsigned int find_next_fd(struct fdtable *fdt, unsigned int start)
- {
--	unsigned int maxfd = fdt->max_fds;
-+	unsigned int maxfd = fdt->max_fds; /* always multiple of BITS_PER_LONG */
- 	unsigned int maxbit = maxfd / BITS_PER_LONG;
- 	unsigned int bitbit = start / BITS_PER_LONG;
++	local_bh_disable();
+ 	dst = dst_cache_get(&ilwt->dst_cache);
++	local_bh_enable();
+ 	if (unlikely(!dst)) {
+ 		struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 		struct flowi6 fl6;
+@@ -86,8 +88,11 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
+ 		}
  
- 	bitbit = find_next_zero_bit(fdt->full_fds_bits, maxbit, bitbit) * BITS_PER_LONG;
--	if (bitbit > maxfd)
-+	if (bitbit >= maxfd)
- 		return maxfd;
- 	if (bitbit > start)
- 		start = bitbit;
+-		if (ilwt->connected)
++		if (ilwt->connected) {
++			local_bh_disable();
+ 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
++			local_bh_enable();
++		}
+ 	}
+ 
+ 	skb_dst_set(skb, dst);
 -- 
 2.43.0
 
