@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F0C158A06;
-	Tue, 23 Jul 2024 18:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ECAB158A02;
+	Tue, 23 Jul 2024 18:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759650; cv=none; b=uM73jmj7a5kQ/grifeH9efUjuE4eeuPOW9RyLXMN6fYP5NIbv/e45gvQULUIlggG1Jjwul7/LCMSgTdCG87RyZ8cKeBKRkacuRqdyNzzkravmG37puxp030EykDhlo+tunOAVHwxULr1XVk6QW1sx9QG7tymbLBUmjcn2lOdIw0=
+	t=1721759653; cv=none; b=gGzw8Qcl+VxOA4eOxHHCs5nTQkFWN4sE9WDy8W0Ce/IdoaAAJC+ew0HtQ09j4EV7SoDqf2UmdxzN7RlKcXE15VWURwus8RDm5Tb34T4XbVM6/F65TZyJVbvonUMeQ3G8qfAh/DUicuWFcSu8a/lXgNBCYVwO4yzqMK+JB++W9rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759650; c=relaxed/simple;
-	bh=USAQkLOQiQW6Kd0aQhc5LzJ8EI1MIY4ZJDWBIUjGt18=;
+	s=arc-20240116; t=1721759653; c=relaxed/simple;
+	bh=I4+LwafH7gSzLnAUPQ2o0AWLET+NgNOymU25uX3d0lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UBN5pzxBUm1N4vXZwCycBviwYr53IG7/sYvtXoW5fvnfN7iAZBJ9QynAboJic7NMNHvYiYC1lP6q9yjM17NSDDUG0Ic92cpldM/NA2Z/c6gLz0y+7TNla12M1VfVo4/OEiyPhFuIfVg+z7XL9LusJ+zji8MyjKMYcoqYYC8B1bM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwTy2xH/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rqrM8f9VR7Jdd5urcQLM1a71DLHjDjDUAOPIVuhV7hlRmmAmJRQ2NEfTPpqC2hAt4tXmYoOfdcrWSo5MWkbA0zh4E56KcwtewmqimggHgie3tG0bm30gIHR+qA9CHHVsBGW2XEeaoALjEYK9+iW+uISr2n53U6G/AT+6yP8QFAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLE+iJRS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwTy2xH/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4726C4AF0A;
-	Tue, 23 Jul 2024 18:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLE+iJRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2608C4AF0A;
+	Tue, 23 Jul 2024 18:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759650;
-	bh=USAQkLOQiQW6Kd0aQhc5LzJ8EI1MIY4ZJDWBIUjGt18=;
+	s=korg; t=1721759653;
+	bh=I4+LwafH7gSzLnAUPQ2o0AWLET+NgNOymU25uX3d0lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwTy2xH/MiA3OVJhXlWk78hAk2wj5seda08GBfv2FHSB0xvJPrSNv0FlIXk2YHShi
-	 5BL+H1dAbV/cjDo/uATDOLAYwWy2FDZRxNQn4hQUDXet4D9wbNjmGgnBSyVAk721z2
-	 ELj5Jpxw7olN72zs0Mz2kNhThIfEUWW2PbCt6Kwo=
+	b=gLE+iJRSn6zg5aGwH/Oux+tACNjcc6xph5CY6hsl87HTUdjheygvD2+6r/83To4RJ
+	 CEjIbm21MQsChOWNKIJZu8kQvbBIv2/O28UicaEbVQJFNzia1HbRm4a4634jhTbpR2
+	 tdYq9CsZg+TapOj6AEkw3IEyd+JXVIJ8D1yrkR0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
+	Agathe Boutmy <agathe@boutmy.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 081/129] platform/mellanox: nvsw-sn2201: Add check for platform_device_add_resources
-Date: Tue, 23 Jul 2024 20:23:49 +0200
-Message-ID: <20240723180407.914116402@linuxfoundation.org>
+Subject: [PATCH 6.6 082/129] platform/x86: wireless-hotkey: Add support for LG Airplane Button
+Date: Tue, 23 Jul 2024 20:23:50 +0200
+Message-ID: <20240723180407.953207757@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -45,52 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit d56fbfbaf592a115b2e11c1044829afba34069d2 ]
+[ Upstream commit 151e78a0b89ee6dec93382dbdf5b1ef83f9c4716 ]
 
-Add check for the return value of platform_device_add_resources() and
-return the error if it fails in order to catch the error.
+The LGEX0815 ACPI device is used by the "LG Airplane Mode Button"
+Windows driver for handling rfkill requests. When the ACPI device
+receives an 0x80 ACPI notification, an rfkill event is to be
+send to userspace.
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20240605032745.2916183-1-nichen@iscas.ac.cn
+Add support for the LGEX0815 ACPI device to the driver.
+
+Tested-by: Agathe Boutmy <agathe@boutmy.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240606233540.9774-2-W_Armin@gmx.de
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/mellanox/nvsw-sn2201.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/platform/x86/wireless-hotkey.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/mellanox/nvsw-sn2201.c b/drivers/platform/mellanox/nvsw-sn2201.c
-index 75b699676ca6d..1a7c45aa41bbf 100644
---- a/drivers/platform/mellanox/nvsw-sn2201.c
-+++ b/drivers/platform/mellanox/nvsw-sn2201.c
-@@ -1198,6 +1198,7 @@ static int nvsw_sn2201_config_pre_init(struct nvsw_sn2201 *nvsw_sn2201)
- static int nvsw_sn2201_probe(struct platform_device *pdev)
- {
- 	struct nvsw_sn2201 *nvsw_sn2201;
-+	int ret;
+diff --git a/drivers/platform/x86/wireless-hotkey.c b/drivers/platform/x86/wireless-hotkey.c
+index 4422863f47bbe..01feb6e6787f2 100644
+--- a/drivers/platform/x86/wireless-hotkey.c
++++ b/drivers/platform/x86/wireless-hotkey.c
+@@ -19,6 +19,7 @@ MODULE_AUTHOR("Alex Hung");
+ MODULE_ALIAS("acpi*:HPQ6001:*");
+ MODULE_ALIAS("acpi*:WSTADEF:*");
+ MODULE_ALIAS("acpi*:AMDI0051:*");
++MODULE_ALIAS("acpi*:LGEX0815:*");
  
- 	nvsw_sn2201 = devm_kzalloc(&pdev->dev, sizeof(*nvsw_sn2201), GFP_KERNEL);
- 	if (!nvsw_sn2201)
-@@ -1205,8 +1206,10 @@ static int nvsw_sn2201_probe(struct platform_device *pdev)
+ struct wl_button {
+ 	struct input_dev *input_dev;
+@@ -29,6 +30,7 @@ static const struct acpi_device_id wl_ids[] = {
+ 	{"HPQ6001", 0},
+ 	{"WSTADEF", 0},
+ 	{"AMDI0051", 0},
++	{"LGEX0815", 0},
+ 	{"", 0},
+ };
  
- 	nvsw_sn2201->dev = &pdev->dev;
- 	platform_set_drvdata(pdev, nvsw_sn2201);
--	platform_device_add_resources(pdev, nvsw_sn2201_lpc_io_resources,
-+	ret = platform_device_add_resources(pdev, nvsw_sn2201_lpc_io_resources,
- 				      ARRAY_SIZE(nvsw_sn2201_lpc_io_resources));
-+	if (ret)
-+		return ret;
- 
- 	nvsw_sn2201->main_mux_deferred_nr = NVSW_SN2201_MAIN_MUX_DEFER_NR;
- 	nvsw_sn2201->main_mux_devs = nvsw_sn2201_main_mux_brdinfo;
 -- 
 2.43.0
 
