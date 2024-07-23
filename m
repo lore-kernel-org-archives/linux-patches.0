@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F197A158A22;
-	Tue, 23 Jul 2024 18:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED074158A2C;
+	Tue, 23 Jul 2024 18:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759507; cv=none; b=fQDOqm5W2ofN3AUT0c72icXymLNiSbqrG0Svm44c5F/Dkr0aM9UnL6hxB/g3wnRHiz364r5hqOBfxQismVD/hlDCnVxmJoj+3sDWYeO75n1k5LUyHS39OAnlibwiuz2H8vobAY6YvLg1PwRut4ntuQ5xf3r7m8VV68/XHpMo30k=
+	t=1721759510; cv=none; b=F/Oqy2iVy9yA0O4J99qu7B16olWUhn+cuI76AlDuFDxj3T8PsOrjT8v9Nq6Z8YMMdY7ZuhcUi06b/uGaQ87M1bSEvW2Q0I33NMMwncyiXFwb16AKPg/MXBW+99wQCGLrgEvnMEHY66od6q9z22uEcaQrhyQgcoGNrpb0EgeSPP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759507; c=relaxed/simple;
-	bh=X5dLK1K2hw0cu5AHYimb2wMOjgNrbUBdsBuJBTNISWI=;
+	s=arc-20240116; t=1721759510; c=relaxed/simple;
+	bh=HMBk9q87Wf1cojHoS1ZtjPj1i/cZfUMa6WN3mqz4zHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgkUs6fgq/rNihsH6fEWF3E7L59hBb9h8A2cQd1DZ2rJu8zDKYe/6T9BbU3Hy8ZKnSo86gqLUfJ8ndnY0nju8gqub6atq9zV01AaMgMyzU7QrJxrNiUX4OJG4kVpe1g0MkbNPOxTZtEcKyvPeuzBj9WCvyoNX2ETvYUvLB6GZE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZpL0zAP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rw7AGrx19wy2Ukgbkn/623Cf/R2L8p5iX763MOr5qYnVCfEumnqKGsu7yiQDumAJq7CLxaBKtWEszRvVAMRYyKqBeexmdu7c7ukGP/supsIUOYewj1RlSOU5hUj/2BHuxGgzKfwwvy3ePwRoD9NzvnyaX//laqpGlwZpWLs08ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfLaKdSd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZpL0zAP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 796F2C4AF0A;
-	Tue, 23 Jul 2024 18:31:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfLaKdSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A8A5C4AF0A;
+	Tue, 23 Jul 2024 18:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759506;
-	bh=X5dLK1K2hw0cu5AHYimb2wMOjgNrbUBdsBuJBTNISWI=;
+	s=korg; t=1721759509;
+	bh=HMBk9q87Wf1cojHoS1ZtjPj1i/cZfUMa6WN3mqz4zHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZpL0zAPa/HwfRQwn31df5Fa3bmt1pu7Lb33jYFR66/lgh2ED5ifgsUGWwpaLUqTw
-	 jXnI6Q6bwkEYlQ/tcoE/a1TzXWLzub5vSvqfHVwkQd7CEkYiScukMoYPfPknaa0LC3
-	 MPEcmSPZ2cZNUW02kLhF43HCHWZIXl2or2TllDCM=
+	b=DfLaKdSdixRTjyvsnfw67lVYmGA25QGgvYbEjIVTrXPOddNNZX55M8x0OQFHmq56+
+	 L8B8qrLQwNAbqTHZQNkois8NqxYSrxZb3XgOeUcVAv23BDT7nQCAzeFNT5yEAnTYO/
+	 FXMtJtTj3mY0XHdF2jlo8TZSeOihnnaujMWi4nYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Louis Dalibard <ontake@ontake.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/129] Input: silead - Always support 10 fingers
-Date: Tue, 23 Jul 2024 20:22:54 +0200
-Message-ID: <20240723180405.801663649@linuxfoundation.org>
+Subject: [PATCH 6.6 035/129] HID: Ignore battery for ELAN touchscreens 2F2C and 4116
+Date: Tue, 23 Jul 2024 20:23:03 +0200
+Message-ID: <20240723180406.146580713@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -51,98 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Louis Dalibard <ontake@ontake.dev>
 
-[ Upstream commit 38a38f5a36da9820680d413972cb733349400532 ]
+[ Upstream commit a3a5a37efba11b7cf1a86abe7bccfbcdb521764e ]
 
-When support for Silead touchscreens was orginal added some touchscreens
-with older firmware versions only supported 5 fingers and this was made
-the default requiring the setting of a "silead,max-fingers=10" uint32
-device-property for all touchscreen models which do support 10 fingers.
+At least ASUS Zenbook 14 (2023) and ASUS Zenbook 14 Pro (2023) are affected.
 
-There are very few models with the old 5 finger fw, so in practice the
-setting of the "silead,max-fingers=10" is boilerplate which needs to
-be copy and pasted to every touchscreen config.
+The touchscreen reports a battery status of 0% and jumps to 1% when a
+stylus is used.
 
-Reporting that 10 fingers are supported on devices which only support
-5 fingers doesn't cause any problems for userspace in practice, since
-at max 4 finger gestures are supported anyways. Drop the max_fingers
-configuration and simply always assume 10 fingers.
+The device ID was added and the battery ignore quirk was enabled for it.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Link: https://lore.kernel.org/r/20240525193854.39130-2-hdegoede@redhat.com
+[jkosina@suse.com: reformatted changelog a bit]
+Signed-off-by: Louis Dalibard <ontake@ontake.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/silead.c | 19 +++++--------------
- 1 file changed, 5 insertions(+), 14 deletions(-)
+ drivers/hid/hid-ids.h   | 2 ++
+ drivers/hid/hid-input.c | 4 ++++
+ 2 files changed, 6 insertions(+)
 
-diff --git a/drivers/input/touchscreen/silead.c b/drivers/input/touchscreen/silead.c
-index 62f562ad50263..050fa9ca4ec94 100644
---- a/drivers/input/touchscreen/silead.c
-+++ b/drivers/input/touchscreen/silead.c
-@@ -71,7 +71,6 @@ struct silead_ts_data {
- 	struct regulator_bulk_data regulators[2];
- 	char fw_name[64];
- 	struct touchscreen_properties prop;
--	u32 max_fingers;
- 	u32 chip_id;
- 	struct input_mt_pos pos[SILEAD_MAX_FINGERS];
- 	int slots[SILEAD_MAX_FINGERS];
-@@ -136,7 +135,7 @@ static int silead_ts_request_input_dev(struct silead_ts_data *data)
- 	touchscreen_parse_properties(data->input, true, &data->prop);
- 	silead_apply_efi_fw_min_max(data);
- 
--	input_mt_init_slots(data->input, data->max_fingers,
-+	input_mt_init_slots(data->input, SILEAD_MAX_FINGERS,
- 			    INPUT_MT_DIRECT | INPUT_MT_DROP_UNUSED |
- 			    INPUT_MT_TRACK);
- 
-@@ -256,10 +255,10 @@ static void silead_ts_read_data(struct i2c_client *client)
- 		return;
- 	}
- 
--	if (buf[0] > data->max_fingers) {
-+	if (buf[0] > SILEAD_MAX_FINGERS) {
- 		dev_warn(dev, "More touches reported then supported %d > %d\n",
--			 buf[0], data->max_fingers);
--		buf[0] = data->max_fingers;
-+			 buf[0], SILEAD_MAX_FINGERS);
-+		buf[0] = SILEAD_MAX_FINGERS;
- 	}
- 
- 	if (silead_ts_handle_pen_data(data, buf))
-@@ -315,7 +314,6 @@ static void silead_ts_read_data(struct i2c_client *client)
- 
- static int silead_ts_init(struct i2c_client *client)
- {
--	struct silead_ts_data *data = i2c_get_clientdata(client);
- 	int error;
- 
- 	error = i2c_smbus_write_byte_data(client, SILEAD_REG_RESET,
-@@ -325,7 +323,7 @@ static int silead_ts_init(struct i2c_client *client)
- 	usleep_range(SILEAD_CMD_SLEEP_MIN, SILEAD_CMD_SLEEP_MAX);
- 
- 	error = i2c_smbus_write_byte_data(client, SILEAD_REG_TOUCH_NR,
--					data->max_fingers);
-+					  SILEAD_MAX_FINGERS);
- 	if (error)
- 		goto i2c_write_err;
- 	usleep_range(SILEAD_CMD_SLEEP_MIN, SILEAD_CMD_SLEEP_MAX);
-@@ -591,13 +589,6 @@ static void silead_ts_read_props(struct i2c_client *client)
- 	const char *str;
- 	int error;
- 
--	error = device_property_read_u32(dev, "silead,max-fingers",
--					 &data->max_fingers);
--	if (error) {
--		dev_dbg(dev, "Max fingers read error %d\n", error);
--		data->max_fingers = 5; /* Most devices handle up-to 5 fingers */
--	}
--
- 	error = device_property_read_string(dev, "firmware-name", &str);
- 	if (!error)
- 		snprintf(data->fw_name, sizeof(data->fw_name),
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 89aef5874202c..4246348ca16e9 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -418,6 +418,8 @@
+ #define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
+ #define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
+ #define I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN 0x2C82
++#define I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN 0x2F2C
++#define I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN 0x4116
+ #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
+ #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
+ #define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
+diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
+index 8bb16e9b94aa5..c9094a4f281e9 100644
+--- a/drivers/hid/hid-input.c
++++ b/drivers/hid/hid-input.c
+@@ -377,6 +377,10 @@ static const struct hid_device_id hid_battery_quirks[] = {
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_GV301RA_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
++	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX3402_TOUCHSCREEN),
++	  HID_BATTERY_QUIRK_IGNORE },
++	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_UX6404_TOUCHSCREEN),
++	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
+ 	  HID_BATTERY_QUIRK_IGNORE },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
 -- 
 2.43.0
 
