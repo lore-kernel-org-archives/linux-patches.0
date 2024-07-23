@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAF115821A;
-	Tue, 23 Jul 2024 18:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2A915821A;
+	Tue, 23 Jul 2024 18:35:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721759739; cv=none; b=HeUiBUg88UDANpBR6DO5/w3MgwNGtyMvG8H6TyDixkxaL54sRjyr0VK3NQU/uUl8rmfvJeKAQMSuvnxx7L34ZqnA3Ia7FbjVKhU7vhZ5EQvuFa4pzo8RXi4sXnujenm78t4VS7e5Uha5/DpH2VjziCFpOH6NM5ZFyZxmiiq7a6Y=
+	t=1721759742; cv=none; b=Ik1rRNmOrWph3FESXM3h2/JcfQ0JedEtMewFk4/LH8B1T4zXUZL4dxxj9M1o8oggM53O/8CUeSWdNIeLhcKyBuWjqn7wA0BC+8fMxrChJ466JRl1z5n5TAtMMkNLJrNERzdSG/zCW83OK38zRtgGilYZPFqcE/zqMHdehVEmFGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721759739; c=relaxed/simple;
-	bh=3LVCA+06CslviNdn3RC2OxN5hquJPqPwPmb5BF8F0kY=;
+	s=arc-20240116; t=1721759742; c=relaxed/simple;
+	bh=M9o7sUp1Xq912wDI2fi4ZGu+sC3UK2HNQIrJHiHk6no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fk3tDIULfn2qC3Zag9fO6e4xhNn0AdY1vbwFGWTJ8jn93cet3AUr05IoOUp2QvULjJFvXy/q005R+Lvg5Dgdy6X5Dbno9sTfx+v7ZF3zSinks8rLvrhsdf9CLo2GfbjEl1Te9uY6GCvqMaJerF/IZi6VxCn1TKOlOmPG3WBEleA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oMc4bivs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJb+QtoYvtaWMdTo1z+lhWjm0oIvPUamFu+LMHo4s+1SA6aQfUrdqjmOuBDrfxmGj+3bG+O2Z62Auc6dLLvRLWX+kpDRTZw7YUCxA1feleLL94pU0eAvOToyKyjC6hBUfFWN8IeCeoBNJ48u/fdNAPaCEyF8yd6TRq4FCjuixMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yXXBW7Q3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oMc4bivs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B17AC4AF0A;
-	Tue, 23 Jul 2024 18:35:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yXXBW7Q3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87E82C4AF09;
+	Tue, 23 Jul 2024 18:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721759738;
-	bh=3LVCA+06CslviNdn3RC2OxN5hquJPqPwPmb5BF8F0kY=;
+	s=korg; t=1721759741;
+	bh=M9o7sUp1Xq912wDI2fi4ZGu+sC3UK2HNQIrJHiHk6no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMc4bivs0+oFu/Omv3CXlENCPqKRMkjbn8Zo90miY5TDfmndt34/mVZucPh2+cnWj
-	 nFERWJyYobTqCX4/6IHLnd9vyZ7L6erNRrDD4OUND9owoKDIeMjWe8jO8SMiNzg6zy
-	 V7OiMww4LvS7bYMi45MF9EMk73w2eJy22t+jC9Fo=
+	b=yXXBW7Q3aQQM8GtoO5NiYz6UrUggUyQ4hUOTbCm6/Meze5wKJrk0LXGlE9Fzpg094
+	 myHH+czbZf1nEUy2LecPNj4KTtcCYTb5lj7S8LxA5/oiY6+LZ9ppQZXB1nWnwBFoGb
+	 Ay7yrZGpi+eYASxY2ulU/5k8nIuWs398fvLriNHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 111/129] ksmbd: return FILE_DEVICE_DISK instead of super magic
-Date: Tue, 23 Jul 2024 20:24:19 +0200
-Message-ID: <20240723180409.080477245@linuxfoundation.org>
+Subject: [PATCH 6.6 112/129] ASoC: SOF: Intel: hda-pcm: Limit the maximum number of periods by MAX_BDL_ENTRIES
+Date: Tue, 23 Jul 2024 20:24:20 +0200
+Message-ID: <20240723180409.120100257@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240723180404.759900207@linuxfoundation.org>
 References: <20240723180404.759900207@linuxfoundation.org>
@@ -51,87 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 25a6e135569b3901452e4863c94560df7c11c492 ]
+[ Upstream commit 82bb8db96610b558920b8c57cd250ec90567d79b ]
 
-MS-SMB2 specification describes setting ->DeviceType to FILE_DEVICE_DISK
-or FILE_DEVICE_CD_ROM. Set FILE_DEVICE_DISK instead of super magic in
-FS_DEVICE_INFORMATION. And Set FILE_READ_ONLY_DEVICE for read-only share.
+The HDaudio specification Section 3.6.2 limits the number of BDL entries to 256.
 
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Make sure we don't allow more periods than this normative value.
+
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://patch.msgid.link/20240704090106.371497-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/common/smb2pdu.h | 34 ++++++++++++++++++++++++++++++++++
- fs/smb/server/smb2pdu.c |  9 +++++++--
- 2 files changed, 41 insertions(+), 2 deletions(-)
+ sound/soc/sof/intel/hda-pcm.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/smb/common/smb2pdu.h b/fs/smb/common/smb2pdu.h
-index 8d10be1fe18a8..c3ee42188d252 100644
---- a/fs/smb/common/smb2pdu.h
-+++ b/fs/smb/common/smb2pdu.h
-@@ -917,6 +917,40 @@ struct smb2_query_directory_rsp {
- 	__u8   Buffer[];
- } __packed;
+diff --git a/sound/soc/sof/intel/hda-pcm.c b/sound/soc/sof/intel/hda-pcm.c
+index f23c72cdff489..7d17d586ed9db 100644
+--- a/sound/soc/sof/intel/hda-pcm.c
++++ b/sound/soc/sof/intel/hda-pcm.c
+@@ -254,6 +254,12 @@ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
+ 	snd_pcm_hw_constraint_integer(substream->runtime,
+ 				      SNDRV_PCM_HW_PARAM_PERIODS);
  
-+/* DeviceType Flags */
-+#define FILE_DEVICE_CD_ROM              0x00000002
-+#define FILE_DEVICE_CD_ROM_FILE_SYSTEM  0x00000003
-+#define FILE_DEVICE_DFS                 0x00000006
-+#define FILE_DEVICE_DISK                0x00000007
-+#define FILE_DEVICE_DISK_FILE_SYSTEM    0x00000008
-+#define FILE_DEVICE_FILE_SYSTEM         0x00000009
-+#define FILE_DEVICE_NAMED_PIPE          0x00000011
-+#define FILE_DEVICE_NETWORK             0x00000012
-+#define FILE_DEVICE_NETWORK_FILE_SYSTEM 0x00000014
-+#define FILE_DEVICE_NULL                0x00000015
-+#define FILE_DEVICE_PARALLEL_PORT       0x00000016
-+#define FILE_DEVICE_PRINTER             0x00000018
-+#define FILE_DEVICE_SERIAL_PORT         0x0000001b
-+#define FILE_DEVICE_STREAMS             0x0000001e
-+#define FILE_DEVICE_TAPE                0x0000001f
-+#define FILE_DEVICE_TAPE_FILE_SYSTEM    0x00000020
-+#define FILE_DEVICE_VIRTUAL_DISK        0x00000024
-+#define FILE_DEVICE_NETWORK_REDIRECTOR  0x00000028
++	/* Limit the maximum number of periods to not exceed the BDL entries count */
++	if (runtime->hw.periods_max > HDA_DSP_MAX_BDL_ENTRIES)
++		snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_PERIODS,
++					     runtime->hw.periods_min,
++					     HDA_DSP_MAX_BDL_ENTRIES);
 +
-+/* Device Characteristics */
-+#define FILE_REMOVABLE_MEDIA			0x00000001
-+#define FILE_READ_ONLY_DEVICE			0x00000002
-+#define FILE_FLOPPY_DISKETTE			0x00000004
-+#define FILE_WRITE_ONCE_MEDIA			0x00000008
-+#define FILE_REMOTE_DEVICE			0x00000010
-+#define FILE_DEVICE_IS_MOUNTED			0x00000020
-+#define FILE_VIRTUAL_VOLUME			0x00000040
-+#define FILE_DEVICE_SECURE_OPEN			0x00000100
-+#define FILE_CHARACTERISTIC_TS_DEVICE		0x00001000
-+#define FILE_CHARACTERISTIC_WEBDAV_DEVICE	0x00002000
-+#define FILE_PORTABLE_DEVICE			0x00004000
-+#define FILE_DEVICE_ALLOW_APPCONTAINER_TRAVERSAL 0x00020000
-+
- /*
-  * Maximum number of iovs we need for a set-info request.
-  * The largest one is rename/hardlink
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 74e1971dc4851..592a2cdfd0670 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5323,8 +5323,13 @@ static int smb2_get_info_filesystem(struct ksmbd_work *work,
- 
- 		info = (struct filesystem_device_info *)rsp->Buffer;
- 
--		info->DeviceType = cpu_to_le32(stfs.f_type);
--		info->DeviceCharacteristics = cpu_to_le32(0x00000020);
-+		info->DeviceType = cpu_to_le32(FILE_DEVICE_DISK);
-+		info->DeviceCharacteristics =
-+			cpu_to_le32(FILE_DEVICE_IS_MOUNTED);
-+		if (!test_tree_conn_flag(work->tcon,
-+					 KSMBD_TREE_CONN_FLAG_WRITABLE))
-+			info->DeviceCharacteristics |=
-+				cpu_to_le32(FILE_READ_ONLY_DEVICE);
- 		rsp->OutputBufferLength = cpu_to_le32(8);
- 		break;
- 	}
+ 	/* Only S16 and S32 supported by HDA hardware when used without DSP */
+ 	if (sdev->dspless_mode_selected)
+ 		snd_pcm_hw_constraint_mask64(substream->runtime, SNDRV_PCM_HW_PARAM_FORMAT,
 -- 
 2.43.0
 
