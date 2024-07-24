@@ -1,165 +1,182 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2049.outbound.protection.outlook.com [40.107.236.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F50487B0
-	for <patches@lists.linux.dev>; Wed, 24 Jul 2024 06:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721803961; cv=none; b=PUeXK908mTqAZbOnKqm0YoKy2d6ecI/y9MT28YQU7FTT21IWHbe9NnnH4NpE1cyiwsfQtZ0NeJ+2U8uPZCvVVZlQEyoEwtjqzG5eetfP5rruIwWuOspFJHxnOHzwu7ujmfk1YuVFk1CyBLebDXztNXAQvyR05WZGCWhmV26RzV4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721803961; c=relaxed/simple;
-	bh=Bfx5l7uwGafxxKFg8g544NeKdX/OJ82VNbHROmOPw5M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FA580erEKOmyxnu+6i+U8sLWxuo8AkJZ692rPhfh33kJ1VaVxDe4lZFn5oXHq46lfh4N4lgbbkVnvZua/vjEGpldtvQf8RclwEK6xZzVj0ye89oePhBkitCkrA0Fg1HwC3qdZX6FXsHqLodhf91ThtxA+6qLseltusHC6FYrLGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GuxnWaSH; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3772B61FDA
+	for <patches@lists.linux.dev>; Wed, 24 Jul 2024 07:35:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.49
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1721806551; cv=fail; b=GC08rE9UVqUd4OUsVekdDjuqXa/8GpNdjwemUW+kx9H0Grh5QssQUfquzSlh4BKdJkz9KC0SRaXudqVQQKT829WGozeQe2lKwONb4zOQkuziPbiwbOzFMfnX8kOxb2O+5+i34c2X3y3YH7aXiYZ4PJh794dG3/gdCZbQquPkvHs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1721806551; c=relaxed/simple;
+	bh=O92d11WLpQTUBrQwuagMmgsFdrbmCzaT96R6rRqQndo=;
+	h=From:To:CC:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID:Date; b=sr07vxxgocqFQLNU503Ssn4BOxNtIE94GHmNm9T7LkHabCgjq+kegMDOnQh9Q9fhDjPuks/Nn7Y7Vq95m+5pDgq4o8OlFSKDdTIG6WUR3m9VgWSgHSdtQnZuCN42Db2iDiHgCoRlTEMM5Im41c5oPrkIlHIO6zP5hrvHCyAmw3M=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=edhSOcj6; arc=fail smtp.client-ip=40.107.236.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GuxnWaSH"
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-79f19f19059so367044685a.0
-        for <patches@lists.linux.dev>; Tue, 23 Jul 2024 23:52:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1721803959; x=1722408759; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Bfx5l7uwGafxxKFg8g544NeKdX/OJ82VNbHROmOPw5M=;
-        b=GuxnWaSHRZoN2I2UA/GIUrWsuMobkyzG0pJCrRmQRJ1bytbVxRGJMxM8qjmDzIEFgZ
-         gLzfB029yUq9DCJkFrINcoqen4cx0ZvXd4pxpz3icACayDH7J+bEkqvlmnkpVkXypSyW
-         uu3kW4E86XmOIM0YVZc01qR8MF7ybyR8K0QK7KUaZMx9GTpT7DnRmDGS3QLYBwdTvN8l
-         EJyM8E+UisxKld9sknCDy26ZhyD/wSLBatT2wk0O4ychf2uOpKZ5EHYkstoWc5FnB7mz
-         MiqTvR6AiVHjDalYjQzt8GF5BefcKoRiWbsNHQpqZJCs6heGO7bi28yT64q2miPqhHv4
-         fDUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721803959; x=1722408759;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Bfx5l7uwGafxxKFg8g544NeKdX/OJ82VNbHROmOPw5M=;
-        b=dJgbZBNEJu+x/uKNlPTjOlQWCvn7chk6wgfKkPLVskXUysWUktDShPCkkB+OVfWbas
-         IQz/OIDM4IfuW0uIzcSejq9GpASLhUQS3bWXyVUUxfCNZjstp18312oy6L0p01jfmsFk
-         JJF/PHzyZPKp0Dv8adGDLYYUBsjvuUav7csZUcl2A76S6Jb+WW05hTZg8+FX3ZWDH6K9
-         6DUZ34HdMRcktvFv3YGDGw01LMO3Edb0VF3oCBD1npozWDNk93BPk1DJmygAheq4dp/F
-         1+lvW7mdX5z6l65qJwOVCdLouykwleMo74lFgQ3zk9Stv8MeDQLS4eDAEAUQjRAxaH5e
-         MmHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVJ+IFmM94axsZnaXZdcXI0FK/aII/QrrmKd12PfbAkQJs70l+n4h2z6uNGvpLa8QHbNpCTfsSJN0JxIrVLAI7g33VNo5qEfg==
-X-Gm-Message-State: AOJu0Yw9AoTumOzo7dsAM51Z9AhhS02ezv6SnKWpu8T2Y4rEECdnl6zu
-	a5ok4aztcWJWROG9/XLRkkJ53Q40cjvLiyGd3HPNMVIGcYq2ctPSqtBVHpIiGU/PPPRPzKTuqIB
-	SO77l/DHs4dTc9QIey1RdKoxZ7Ds=
-X-Google-Smtp-Source: AGHT+IFfEqKfp851TI5GZPpKydt1I9aSw9uQDJMX+tizWj/bXIso7OPQLfv/VqnOOQ/0D4vxzeFCclLX2uexl3AmuU4=
-X-Received: by 2002:a05:620a:400a:b0:79f:b34:9edc with SMTP id
- af79cd13be357-7a1cbd35be0mr139400485a.66.1721803958898; Tue, 23 Jul 2024
- 23:52:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="edhSOcj6"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ahaBx9Xk81gxHtg1ZzFqGl7iQt+gSaq+kdRCICT3tTKN96brA5bNoNBf7pzQNaLcU8F5E5Zmf7HnnLbNxFNbnCDEKguo/mJancvLPlUHA/MkiZdDOMcSA5EOa95RW7abF5SD9uin9hAZ+XKjiv9Fj/mELWIqek8FqmfHmO4UINoxDygP75h2Z1W9AyivrzdpHaqjcBUSqFHg7wvuYtbQ+mDMPP67LC3/q0E8pWyoylu87UM78COLg3J+lbzEovtgCyFqq4prdNNAlESDH6qYoQRyU6amMDIn3pboMPfSK/emiZlFoNl9hIb0sOZWoh4VbZkf5VWJEePTHKyqzvoAQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=K4nvJ8D8I2Zxl0Wz/E9Tt10gr4ushfdjb0CfC5ECZjU=;
+ b=F/ToXjDms4Fm6nxHXut0YEQtaTUPaVOs0954v7I2/lxPJF5EnsAycUwIETvuNHpYHNQ1sdBQ75bXiujHw0M71cJ4IOdEHTtLtmuAMQQXBKS74XOllUXC8iYDOlHkM97jVjLlvK6P6PIyF02mcL0hLiYZyPE5Ac51bgLkn+Gm5ZSAr5FfsYUbPebkX9GWcGmt10T7dZPDTzTNVskwXqqKGs3qNc2HvP5mpHl2KPRhwLVmBwKPw4wHTWne+O5KsnAtFjS2faDgyPUvqQkxTdelMoQ0Ln8RMrsEElKcwJqH88a3itZWqpWXIUJgn/bVrD5ALlsxfrcxz3ko0kuvQQe8sQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=K4nvJ8D8I2Zxl0Wz/E9Tt10gr4ushfdjb0CfC5ECZjU=;
+ b=edhSOcj6835uWKlXXAUGnSBB6v3hSqkTbIVTsr4doZLIQx/yCdQ6LsTHqKXMOTJekN6VRoIhY1Ge3X84HfVVmMf1gsvA0dDZrkPn4vfhrARfrgVDdglcWZ0P29CTA17KoAIhS4gOYMBUQP7jp+lbj2F0tWM43no2lsqO4+fEk/tbmM7neHkFZZnEWGNlTIrgPlbkTwnsAsPQ/qd32MUOKjrjsP6UWqE3DFrAwExvWPXI6dcyJMQEJ5Be59HwYX+A7hUB0YHEgvJB/TQcQc8MENfS+xnZcchs+tlefR/gFWwvN+yP+LfNxATfphTf/bi4KlUZ0Xbl/MPdU3cWm6aO+Q==
+Received: from DS7P222CA0005.NAMP222.PROD.OUTLOOK.COM (2603:10b6:8:2e::17) by
+ PH7PR12MB5805.namprd12.prod.outlook.com (2603:10b6:510:1d1::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.20; Wed, 24 Jul
+ 2024 07:35:45 +0000
+Received: from DS2PEPF00003439.namprd02.prod.outlook.com
+ (2603:10b6:8:2e:cafe::f3) by DS7P222CA0005.outlook.office365.com
+ (2603:10b6:8:2e::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7784.17 via Frontend
+ Transport; Wed, 24 Jul 2024 07:35:45 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ DS2PEPF00003439.mail.protection.outlook.com (10.167.18.36) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7784.11 via Frontend Transport; Wed, 24 Jul 2024 07:35:45 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 24 Jul
+ 2024 00:35:31 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 24 Jul
+ 2024 00:35:31 -0700
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Wed, 24 Jul 2024 00:35:30 -0700
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <conor@kernel.org>, <allen.lkml@gmail.com>,
+	<broonie@kernel.org>, <linux-tegra@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH 6.1 000/105] 6.1.101-rc1 review
+In-Reply-To: <20240723180402.490567226@linuxfoundation.org>
+References: <20240723180402.490567226@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240618123422.213844892@linuxfoundation.org> <1721718387-9038-1-git-send-email-ajay.kaher@broadcom.com>
- <CAOQ4uxgz4Gq2Yg4upLWrOf15FaDuAPppRVsLbYvMxrLbpHJE1g@mail.gmail.com> <1C4B79C7-D88F-4664-AA99-4C9A39A32934@oracle.com>
-In-Reply-To: <1C4B79C7-D88F-4664-AA99-4C9A39A32934@oracle.com>
-From: Amir Goldstein <amir73il@gmail.com>
-Date: Wed, 24 Jul 2024 09:52:27 +0300
-Message-ID: <CAOQ4uxiWttnpLBbFzVjQLKbeubbwWG35pn3Ve_majuV9a0mPJQ@mail.gmail.com>
-Subject: Re: [PATCH 5.10 387/770] fanotify: Allow users to request
- FAN_FS_ERROR events
-To: Chuck Lever III <chuck.lever@oracle.com>
-Cc: Ajay Kaher <ajay.kaher@broadcom.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "jack@suse.cz" <jack@suse.cz>, 
-	"krisman@collabora.com" <krisman@collabora.com>, "patches@lists.linux.dev" <patches@lists.linux.dev>, 
-	"sashal@kernel.org" <sashal@kernel.org>, "stable@vger.kernel.org" <stable@vger.kernel.org>, 
-	"adilger.kernel@dilger.ca" <adilger.kernel@dilger.ca>, 
-	"linux-ext4@vger.kernel.org" <linux-ext4@vger.kernel.org>, "tytso@mit.edu" <tytso@mit.edu>, 
-	"alexey.makhalov@broadcom.com" <alexey.makhalov@broadcom.com>, 
-	"vasavi.sirnapalli@broadcom.com" <vasavi.sirnapalli@broadcom.com>, 
-	"florian.fainelli@broadcom.com" <florian.fainelli@broadcom.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <2f4fbd6b-f495-4a8e-8ad2-0c90b70618cd@rnnvmail205.nvidia.com>
+Date: Wed, 24 Jul 2024 00:35:30 -0700
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PEPF00003439:EE_|PH7PR12MB5805:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f1f2817-ddd9-455c-8f70-08dcabb33ad5
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|7416014|82310400026|376014|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?VkRPRjQ3UTBjZEFmNU9nbVM4MkNhSFNZSStsQTk1TkZ6bDZLc2FDQkN6WUtB?=
+ =?utf-8?B?b0NrcGk3T2JsNWFBTkw3ek04Nmg2Rkt2dHk5VjNPQ2Q4dXhmSnJURUhYck1X?=
+ =?utf-8?B?TXVHK2haOS9LQUJyNzkvM3dKQ01YRFRMbWxiNGFlRDcrVy9VeTVoNzliZ2FX?=
+ =?utf-8?B?NEU0SXFwVG9wcVpYV3Z1YWlLZkFKenhzVTBWT3NuRE5mU2xNTC8xdEsxWXYz?=
+ =?utf-8?B?OVdiK3NCL0dPQUovdkdaSERSV0YrVHA0d252NVBja3ZzN0xBNktGWXg3UUhZ?=
+ =?utf-8?B?VHBCVVdlWk8vTkQ0cTVsbUU0d2U0TERhN1I4U3RPb1RyTDZpOXc3UEQ0bzU0?=
+ =?utf-8?B?d3UzWHU4TkZNMURrVjd6ekxGVTVzR0MwMmFOUVNTaFZvc1k4aHZuZVMvcnJO?=
+ =?utf-8?B?UGw3OExxUnZKczd5b25DZ2pyVThnaUREVnB3eFZ0aFd3YmFMZGFrUjg4YTJp?=
+ =?utf-8?B?RDRNRTdkS1k1N3BrckU0L0Z2UHdNSnVGNUl0QzV0QkdxK29JZlV2ME54U3or?=
+ =?utf-8?B?MFNtdldLMGlFL2p6Mll4cXlKL0Z1THNsL3loa1Bqam1QMGVvWGQ4R1d2L0xi?=
+ =?utf-8?B?RTQ1WlNIY00wMVoyemc2NkhPaDlYVjFBK3NrWXpleHdKUzZGWUhOYTVsNjlp?=
+ =?utf-8?B?T3BCcDVWbTUrZXBYWmQyNHlKVE5oKzg1Uy9JdXljZnBxTHlnejBIRmNKTjI3?=
+ =?utf-8?B?R3dpK3F5ZHM2YkhYZVFNbTZGMWVRZmlzZlVOemUrUFRMNnRZSFFkTnJJMzVr?=
+ =?utf-8?B?VWxoY3J6eUhkQ3hoZUgzZ3dCZFhXak5za1N3VW9xUk5pY0xZNjhmMWdEeS92?=
+ =?utf-8?B?c2g5SE1UT1FOOEpZN3dORXoyTWpIUjhYUXNETFVLM1BmVGxpMW81UklDUWlL?=
+ =?utf-8?B?UnVSZTVKN3IxVU5lNjIyckovRzU5TXpncU90UzZDa0JuOGJqY3V3ZU55RkRW?=
+ =?utf-8?B?aXFkTEk1Wko1MGFpYkIxRlBmTW1jRlByTFdnTkxrRUowaitOWFJHamVuSG9U?=
+ =?utf-8?B?Q2Fjemc2WGtuSlYwVmVJV3dJVGlPWXFUNnVKZnN1TENyWGxOU3dIemxhT0FJ?=
+ =?utf-8?B?ZkdMWjJiT1lrTlZSN3NzY05jOWxKUk51NkYyeSsvdDVEeFF5UlphTjQ4c1lJ?=
+ =?utf-8?B?cVN3a2dSZWtVcmErK0gvemYrdDlPWU9pTWFvYU4ra3ltNjlVQzdqZ2tWOWVi?=
+ =?utf-8?B?NUNNSFpTSllOWUs2NWNEb0hrNnFLanFLM2FKYS9wRXBnUEwrYWc2ODlwUTdZ?=
+ =?utf-8?B?MjRza2pKNXd0aitpRnUrUXMrdkI4ZUhWS1BzRDhtWE1jTUp5bzV0S05oZ2VL?=
+ =?utf-8?B?ckR3b3ZYbG1NSkhnMXdvdXd1RllyYUdxRXMrWWhrTzBHNUVMb3dnbDBmSlV5?=
+ =?utf-8?B?TVF3YjRiNExmTm5UaVlLNm1LR2NyS2lGbGdYYm96V0ttUU8yRjA4YWxLTDNV?=
+ =?utf-8?B?TVJ1ZWY4Zlg2aHRNVnFIYm5XUUM1UUdmbllFUGduTmVueG9MckJETURjMThW?=
+ =?utf-8?B?OStScURXZXpML2sweml3V1NTSEluem93M25LWHJST2VKRS9DMGp0YnlLMCtX?=
+ =?utf-8?B?RUVBQjQ3d1VkV3NDdGRDUE1MSmdkVXRlcnBRaWd4eUU0RTVtaUxPNi9pUWNz?=
+ =?utf-8?B?enltRm0ybmc2bkkwdjQ1SzBoY3NVUlR6N2FpMHlFTWxkNk9BTHJpOWZEdnZ2?=
+ =?utf-8?B?bWJEMFFaOTFTM1ludzNZQS9KelZFZ2VoOW5JcXZMcFVnckNvSW9uU0FHRnBx?=
+ =?utf-8?B?Y0hhYnUyL3BTUXYza3hXd3lBenRzYVpza1UwR09QOGt6R05kTyt0ZGpMci9T?=
+ =?utf-8?B?cmVpT1FBTis0b091NiswZTBPRkFJQ2F1U2hVWlRTakIzNW1DM1Q2Wm5XUEhK?=
+ =?utf-8?B?UkxGRTg4cUNQY2lEVGZOVHRkT01rVXZSSzhGbm9NR3hvdDNpZGlGdmMxd09N?=
+ =?utf-8?Q?5ay644b6UkbTPyV1NqgpvlHDPkoCzYfo?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(7416014)(82310400026)(376014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2024 07:35:45.2775
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f1f2817-ddd9-455c-8f70-08dcabb33ad5
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DS2PEPF00003439.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5805
 
-On Tue, Jul 23, 2024 at 4:48=E2=80=AFPM Chuck Lever III <chuck.lever@oracle=
-.com> wrote:
->
->
->
-> > On Jul 23, 2024, at 5:20=E2=80=AFAM, Amir Goldstein <amir73il@gmail.com=
-> wrote:
-> >
-> > On Tue, Jul 23, 2024 at 10:06=E2=80=AFAM Ajay Kaher <ajay.kaher@broadco=
-m.com> wrote:
-> >>
-> >>> [ Upstream commit 9709bd548f11a092d124698118013f66e1740f9b ]
-> >>>
-> >>> Wire up the FAN_FS_ERROR event in the fanotify_mark syscall, allowing
-> >>> user space to request the monitoring of FAN_FS_ERROR events.
-> >>>
-> >>> These events are limited to filesystem marks, so check it is the
-> >>> case in the syscall handler.
-> >>
-> >> Greg,
-> >>
-> >> Without 9709bd548f11 in v5.10.y skips LTP fanotify22 test case, as:
-> >> fanotify22.c:312: TCONF: FAN_FS_ERROR not supported in kernel
-> >>
-> >> With 9709bd548f11 in v5.10.220, LTP fanotify22 is failing because of
-> >> timeout as no notification. To fix need to merge following two upstrea=
-m
-> >> commit to v5.10:
-> >>
-> >> 124e7c61deb27d758df5ec0521c36cf08d417f7a:
-> >> 0001-ext4_fix_error_code_saved_on_super_block_during_file_system.patch
-> >> https://lore.kernel.org/stable/1721717240-8786-1-git-send-email-ajay.k=
-aher@broadcom.com/T/#mf76930487697d8c1383ed5d21678fe504e8e2305
-> >>
-> >> 9a089b21f79b47eed240d4da7ea0d049de7c9b4d:
-> >> 0001-ext4_Send_notifications_on_error.patch
-> >> Link: https://lore.kernel.org/stable/1721717240-8786-1-git-send-email-=
-ajay.kaher@broadcom.com/T/#md1be98e0ecafe4f92d7b61c048e15bcf286cbd53
-> >>
-> >> -Ajay
-> >
-> > I agree that this is the best approach, because the test has no other
-> > way to test
-> > if ext4 specifically supports FAN_FS_ERROR.
-> >
-> > Chuck,
-> >
-> > I wonder how those patches end up in 5.15.y but not in 5.10.y?
->
-> The process was by hand. I tried to copy the same
-> commit ID set from 5.15 to 5.10, but some patches
-> did not apply to 5.10, or may have been omitted
-> unintentionally.
->
->
-> > Also, since you backported *most* of this series:
-> > https://lore.kernel.org/all/20211025192746.66445-1-krisman@collabora.co=
-m/
-> >
-> > I think it would be wise to also backport the sample code and documenta=
-tion
-> > patches to 5.15.y and 5.10.y.
-> >
-> > 9abeae5d4458 docs: Fix formatting of literal sections in fanotify docs
-> > 8fc70b3a142f samples: Make fs-monitor depend on libc and headers
-> > c0baf9ac0b05 docs: Document the FAN_FS_ERROR event
-> > 5451093081db samples: Add fs error monitoring example.
-> >
-> > Gabriel, if 9abeae5d4458 has a Fixes: tag it may have been auto seleced
-> > for 5.15.y after c0baf9ac0b05 was picked up...
->
-> Or this... I might not have backported those at all
-> to 5.15, and they got pulled in by another process.
->
-> In any event, do you want me to backport these to
-> 5.10, or would you like to do it yourself?
->
+On Tue, 23 Jul 2024 20:22:37 +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.101 release.
+> There are 105 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 25 Jul 2024 18:03:27 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.101-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Please backport the docs and sample patches above to 5.15 and 5.10
-for completion of the backport.
+All tests passing for Tegra ...
 
-I do not expect you should have any major conflicts with these standalone
-document and sample code.
+Test results for stable-v6.1:
+    10 builds:	10 pass, 0 fail
+    26 boots:	26 pass, 0 fail
+    116 tests:	116 pass, 0 fail
 
-Thanks,
-Amir.
+Linux version:	6.1.101-rc1-gef20ea3e5a9f
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
+
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+
+Jon
