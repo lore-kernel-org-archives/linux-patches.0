@@ -1,93 +1,121 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E50C07173C
-	for <patches@lists.linux.dev>; Wed, 24 Jul 2024 20:44:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE5613A252
+	for <patches@lists.linux.dev>; Wed, 24 Jul 2024 21:52:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721853863; cv=none; b=paABuBCNpo75+bsERX8Uy2B11Z0lx9+upv2moZMIe1Hu3GrTHe6MlQs76Z1qH0EWZU9z2+qffxXcCP8L+Teqc2r0zv64FyTtPfylf0RqL4ckQbYQM/pUF9/aGx0yuFQdxT4eXEW2p+RQdobUF6fCPicY33t6O/efvPtIIDNjbvg=
+	t=1721857929; cv=none; b=m0VvfAFdPmJa/N6emOIJGbrwo/KxPgimsYtVdM2hrb5U6B2X3rh8mwz4X+wuPlioY5G06gpDNrSUrcVvNAF3TpRTclpwXVUrQ1AiIF8kcMVArmBQPFdguZ5vC/OHX0i1t2t1BEtKkFuuyvY6YXcoBwRmnWW039NKrh745N1dH6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721853863; c=relaxed/simple;
-	bh=tRFFpnNkFTCn6F9hWRoxPuhAwvFwiDH3vXBp30TlnJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dEou8qNvXaVK7bTAyhx/6m861Th8UT3iOlVpBVoWyqOUEjdzE/pwCgWAUax5i8iFHmAWg5vSbVOvxNCkr2hSCy4jjqqxCH8U1K839Og4KmT+YcriG1axkgm+NejX5zdub/7kFRWV+PYbVwn9G62s54+WUjxJYIEjGbf1TCxS364=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 42A9D1C0082; Wed, 24 Jul 2024 22:44:14 +0200 (CEST)
-Date: Wed, 24 Jul 2024 22:44:13 +0200
-From: Pavel Machek <pavel@denx.de>
-To: DAVIETTE <sevend@ecolauricella.com>
-Cc: "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-	"akpm@linux-foundation.org" <akpm@linux-foundation.org>,
-	"allen.lkml@gmail.com" <allen.lkml@gmail.com>,
-	"broonie@kernel.org" <broonie@kernel.org>,
-	"conor@kernel.org" <conor@kernel.org>,
-	"f.fainelli@gmail.com" <f.fainelli@gmail.com>,
-	"jonathanh@nvidia.com" <jonathanh@nvidia.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"linux@roeck-us.net" <linux@roeck-us.net>,
-	"lkft-triage@lists.linaro.org" <lkft-triage@lists.linaro.org>,
-	"patches@kernelci.org" <patches@kernelci.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"pavel@denx.de" <pavel@denx.de>, "rwarsow@gmx.de" <rwarsow@gmx.de>,
-	"shuah@kernel.org" <shuah@kernel.org>,
-	"srw@sladewatkins.net" <srw@sladewatkins.net>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"sudipm.mukherjee@gmail.com" <sudipm.mukherjee@gmail.com>,
-	"torvalds@linux-foundation.org" <torvalds@linux-foundation.org>
-Subject: Re: [PATCH 6.9 000/250] 6.9.7-rc1 review
-Message-ID: <ZqFnnVWNuouT83r+@duo.ucw.cz>
-References: <BYAPR17MB20541144DDD717F5A48E5E5DD7AA2@BYAPR17MB2054.namprd17.prod.outlook.com>
+	s=arc-20240116; t=1721857929; c=relaxed/simple;
+	bh=oEOmOlfz6CpQP8CwygJ/qQgE6bITPukNt50FQUhP2N8=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=B+5Eo0naXUmTFD2BQFZmAxzChbEjegxz3ebTOGW/UQyTx9Mldki9d+ktplyDmfHlCPrdTIO8dF1QE63PshyoNn2uJd3CbIbpnw0Edg3I+2uggHbX5mKFtny0VB2VsdIWD9cETvBMpGmIGBCvVX1pibZpJ9N2OfoGvMEccFDcV6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=f690Mp/H; arc=none smtp.client-ip=185.70.40.133
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="f690Mp/H"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+	s=protonmail; t=1721857924; x=1722117124;
+	bh=9wT9nGk/Kl4gZK0Tax5hk03ECjrHn3Gb2YCLJm9dH3M=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=f690Mp/HqT5J3u5HaDV08jrxv8C/kMBNcWHBh51benkj26V9zDr5FEZIi8Er6gOW0
+	 aVbQSNlkLGegZu9RoGuv+hosNnTKiENbyC/js6rE5aWJYtAD2hg6pD5BRhC+M+mZBE
+	 mRWhmSXDgbEeN0dal1v/tiEr9hbvgOdVW1c28qYy8prkG03iYTHn+QA+EnM+aELZp1
+	 aSg0Cbdae0xTP5/peyYM97iutSGteAU6l1Efc97G7R3toarBivkNrx/1vjlunbeXBT
+	 eCK2g4/jHZ0ojc8MHz2ap1jfeqglC+drOxqzOgTp9kOGBW1VesIsVYwqEVCV6XSwfT
+	 dzJYzhoCTIzAg==
+Date: Wed, 24 Jul 2024 21:51:57 +0000
+To: Miguel Ojeda <ojeda@kernel.org>, Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, Masahiro Yamada <masahiroy@kernel.org>
+From: Benno Lossin <benno.lossin@proton.me>
+Cc: x86@kernel.org, "H. Peter Anvin" <hpa@zytor.com>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, linux-kbuild@vger.kernel.org
+Subject: Re: [PATCH v2 0/6] Rust: support `CPU_MITIGATIONS` and enable `objtool`
+Message-ID: <e51f3b91-690d-4b72-9841-75a61684777d@proton.me>
+In-Reply-To: <20240724161501.1319115-1-ojeda@kernel.org>
+References: <20240724161501.1319115-1-ojeda@kernel.org>
+Feedback-ID: 71780778:user:proton
+X-Pm-Message-ID: 6af68a83f926bf6d26972ff1532292b9d003c3a4
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="1FSJMhHn9SwfI8ay"
-Content-Disposition: inline
-In-Reply-To: <BYAPR17MB20541144DDD717F5A48E5E5DD7AA2@BYAPR17MB2054.namprd17.prod.outlook.com>
-
-
---1FSJMhHn9SwfI8ay
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Wed 2024-07-24 18:48:20, DAVIETTE wrote:
-> Afternoon:
+On 24.07.24 18:14, Miguel Ojeda wrote:
+> Hi,
 >=20
-> Has any test on incorporation of muti platform data been seen using the P=
-ATCH file ?
+> This is an updated series to the CPU mitigations support for Rust. It
+> also has the patch to enable `objtool`, so that we can start running it
+> for Rust.
 >=20
-> Will the install cause support default models to reset.
+> It would be nice to get this applied soon, so that we start being
+> warning-free (since we already get warnings under IBT builds via
+> `vmlinux.o`). I am happy to take it through the Rust tree if the x86 and
+> objtool maintainers give an Acked-by, or through any of the other trees,
+> as you prefer. Otherwise, I think at this point we would need to make
+> Rust exclusive to the mitigations, which isn't great.
 >=20
-> Any other information is welcomed and appreciated, Thanks.
+> With this series, again, x86_64 is warning-free with `objtool` enabled. I
+> tested `-O2`/`-Os` and the Rust versions we support under `-O2` (mainly
+> for the `noreturn` patch, which uses heuristics), as well as IBT vs. no
+> IBT (i.e.  running on individual object files vs. in `vmlinux`). I also
+> did an arm64 build.
 >=20
-> D.Lauricella
+> Testing is very welcome for this one!
+>=20
+> Cheers,
+> Miguel
+>=20
+> v2:
+>   - Add patch to enable `objtool` for Rust.
+>=20
+>   - Add patch to list `noreturn` Rust functions (via heuristics) to avoid
+>     warnings related to that.
+>=20
+>   - Make the `RETHUNK` patch not an RFC since the Rust compiler has
+>   support for
+>     it now.
+>=20
+>   - Update the names of the migitation config symbols, given the changes
+>   at e.g.
+>     commit 7b75782ffd82 ("x86/bugs: Rename CONFIG_MITIGATION_SLS =3D>
+>     CONFIG_MITIGATION_SLS").
+>=20
+> Miguel Ojeda (6):
+>   rust: module: add static pointer to `{init,cleanup}_module()`
+>   x86/rust: support MITIGATION_RETPOLINE
+>   x86/rust: support MITIGATION_RETHUNK
+>   x86/rust: support MITIGATION_SLS
+>   objtool: list `noreturn` Rust functions
+>   objtool/kbuild/rust: enable objtool for Rust
+>=20
+>  arch/x86/Makefile               |  7 ++++++-
+>  rust/Makefile                   | 22 ++++++++++++--------
+>  rust/macros/module.rs           | 12 +++++++++++
+>  scripts/Makefile.build          |  9 +++++++--
+>  scripts/generate_rust_target.rs | 15 ++++++++++++++
+>  tools/objtool/check.c           | 36 ++++++++++++++++++++++++++++++++-
+>  tools/objtool/noreturns.h       |  2 ++
+>  7 files changed, 91 insertions(+), 12 deletions(-)
+>=20
+>=20
+> base-commit: b1263411112305acf2af728728591465becb45b0
+> --
+> 2.45.2
+>=20
 
-Has spam gotten smart with use of AI, or is this real?
+I tested this series with a config that produces the objtool warnings on
+b126341 and it worked flawlessly. I also tried `-O2` and `-Os`:
 
-Can you fix your mailer to to generate in-reply-to headers and try
-again stating your question?
+Tested-by: Benno Lossin <benno.lossin@proton.me>
 
-BR,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+---
+Cheers,
+Benno
 
---1FSJMhHn9SwfI8ay
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZqFnnQAKCRAw5/Bqldv6
-8rfJAJ0Q02nfe0QeU5bfe8BTBMXgv7bBYgCgu1HMRgTknNvji/43xUrIsFCd9tM=
-=g0nH
------END PGP SIGNATURE-----
-
---1FSJMhHn9SwfI8ay--
