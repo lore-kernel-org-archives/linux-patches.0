@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F9015B134;
-	Wed, 24 Jul 2024 16:15:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862DB15E5DC;
+	Wed, 24 Jul 2024 16:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721837735; cv=none; b=afb9nZ7V7aS/z1ndJ2T8jTR5xXF83/1vrhn+mgBvnC1YRGbHBCVh5DbxSuS1N58BXps7YMt/xfAIsAiKJpTaKERoOPW6vC9XaXoAY1JfeL7lUxERpa8HQ139tW1XZEVUEkz2xM1d4h1JBDr9ddwFn5hUqgUJWBQndXm0WU0xfVc=
+	t=1721837741; cv=none; b=qM+GyMwtg2PaeWchs7hS2XVtkkIkzUl+NVe8EH1g2902Q61EXS7HojhAAKRrKaRhTTuxDAU3SoEawb9xuYzCFtrc5x50UQkPjy2Oz9Qr9yEbGUIwZVQhGFqEGdEiWYTc7IH2c6O/j2OPhSCQ+d2sSMH30bdNGDbbkaD8c/Xj/wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721837735; c=relaxed/simple;
-	bh=62HOawHTIw3KVJYCgacE1sz8810PmzPRoDT7e9avsRo=;
+	s=arc-20240116; t=1721837741; c=relaxed/simple;
+	bh=JjJsN/FzkXwzpwKYvwcVO1h/1p2V89dpbFM+/qYYWcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fFI5uC/9O9ss4dNc0XIUgIsF3xgvUGxNLHbdbPwXX/y3F+9wODd00PIU3favMq7HAvtX9O3a+Ex0WniASzEZQgO3XBTZU9AiWf6U7FkDCoXfn7A1YiOrCN5n6KlglPgA75NhMyQRt8RngyHzbvCgd4nv+uMdccFBm0TYoEaWI3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAanHT0v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GH6Tp5EMnw8wxXbPVfkqAwmJt8js5JCA2T/E0LPUX4M9P7Yyny6JKCOuKsMNmnPEAZwTD2YhefTdSZRPz+PJXBuHoiIZHhQoSyCDv6z3JoJ0G9WE930CAfZHCFYqk0Ug6HpSnShOeWDy+7LSQdhWGgTUKVswvy8BkS6oVFp+b2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hv85D+bL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAanHT0v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7109BC32781;
-	Wed, 24 Jul 2024 16:15:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hv85D+bL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9894BC32781;
+	Wed, 24 Jul 2024 16:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721837735;
-	bh=62HOawHTIw3KVJYCgacE1sz8810PmzPRoDT7e9avsRo=;
+	s=k20201202; t=1721837741;
+	bh=JjJsN/FzkXwzpwKYvwcVO1h/1p2V89dpbFM+/qYYWcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAanHT0vv/S/66XOcrpIaFVo24vR6XHyfD/sNV9aZcLCGfa3uIDJ66nObaW4vPfpg
-	 l2mFR5niCvHnexbJ8TMDNQBrTgUb5JHN+0Zp+7eOj5XtCGez2nTZ2DkpOEu9oXlJP4
-	 6dgAbnE8xME/w/UE2iu+/dDkUVuF6+6RT162DP8yZR+OgqpG7rM0C+u4rmpsCESlfl
-	 E61wgwSM3XWnLo6GaKHqioleudaBPAGvLTdMWWvixVXOeqqq7IqIUH9yCbpfKZrtln
-	 hCqBAzXErinuqvePpfFghKeA9qe0wClltjlgrdVGUrPrAzNq84fPYGw7bCtKZ0euGM
-	 FgTscqe1nJHWQ==
+	b=Hv85D+bLQllw7E5DXLnMY4obG06zABtO7uJ8l3IHxK4SBLsDJ75+nCGlbopXXVMnQ
+	 lq6sQDJZ01jomOese3bNGUEJGOUH/Ui0z4xjSUbb5Asfp/et0MFmCjYvreEOtMlGYa
+	 7aIk0jWTEuVQCaIkDY+wqr+Y2/Eg8DveNNQhHfyGxnilcqsqOawq4x2yQAUWF6E/4l
+	 Axi6TI6s0BdOCX+1FPMGI0rdGfkvzQpAnmIcqroIGlAhBsU59loPD1jfoiuOp7h3XO
+	 g7XFaDfn6ei8Efzvtn8APvfUiozB0L/4DfKMlezM6Dl2B/ioJFnP5NHlv+dHV7h+0J
+	 Tl5WrqHiYQ1rg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Josh Poimboeuf <jpoimboe@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -50,9 +50,9 @@ Cc: x86@kernel.org,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v2 3/6] x86/rust: support MITIGATION_RETHUNK
-Date: Wed, 24 Jul 2024 18:14:56 +0200
-Message-ID: <20240724161501.1319115-4-ojeda@kernel.org>
+Subject: [PATCH v2 4/6] x86/rust: support MITIGATION_SLS
+Date: Wed, 24 Jul 2024 18:14:57 +0200
+Message-ID: <20240724161501.1319115-5-ojeda@kernel.org>
 In-Reply-To: <20240724161501.1319115-1-ojeda@kernel.org>
 References: <20240724161501.1319115-1-ojeda@kernel.org>
 Precedence: bulk
@@ -63,51 +63,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Rust compiler added support for `-Zfunction-return=thunk-extern` [1]
-in 1.76.0 [2], i.e. the equivalent of `-mfunction-return=thunk-extern`.
-Thus add support for `MITIGATION_RETHUNK`.
+Support `MITIGATION_SLS` by enabling the target features that Clang does.
 
-Without this, `objtool` would warn if enabled for Rust and already warns
-under IBT builds, e.g.:
+Without this, `objtool` would complain if enabled for Rust, e.g.:
 
-    samples/rust/rust_print.o: warning: objtool:
-    _R...init+0xa5c: 'naked' return found in RETHUNK build
+    rust/core.o: warning: objtool:
+    _R...next_up+0x44: missing int3 after ret
 
-Link: https://github.com/rust-lang/rust/issues/116853 [1]
-Link: https://github.com/rust-lang/rust/pull/116892 [2]
+These should be eventually enabled via `-Ctarget-feature` when `rustc`
+starts recognizing them (or via a new dedicated flag) [1].
+
+Link: https://github.com/rust-lang/rust/issues/116851 [1]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- arch/x86/Makefile | 5 +++++
- 1 file changed, 5 insertions(+)
+ scripts/generate_rust_target.rs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index e8214bff1aeb..a1883a30a5d8 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -24,11 +24,15 @@ RETPOLINE_CFLAGS	+= $(call cc-option,-mindirect-branch-cs-prefix)
- 
- ifdef CONFIG_MITIGATION_RETHUNK
- RETHUNK_CFLAGS		:= -mfunction-return=thunk-extern
-+RETHUNK_RUSTFLAGS	:= -Zfunction-return=thunk-extern
- RETPOLINE_CFLAGS	+= $(RETHUNK_CFLAGS)
-+RETPOLINE_RUSTFLAGS	+= $(RETHUNK_RUSTFLAGS)
- endif
- 
- export RETHUNK_CFLAGS
-+export RETHUNK_RUSTFLAGS
- export RETPOLINE_CFLAGS
-+export RETPOLINE_RUSTFLAGS
- export RETPOLINE_VDSO_CFLAGS
- 
- # For gcc stack alignment is specified with -mpreferred-stack-boundary,
-@@ -218,6 +222,7 @@ KBUILD_CFLAGS += -fno-asynchronous-unwind-tables
- # Avoid indirect branches in kernel to deal with Spectre
- ifdef CONFIG_MITIGATION_RETPOLINE
-   KBUILD_CFLAGS += $(RETPOLINE_CFLAGS)
-+  KBUILD_RUSTFLAGS += $(RETPOLINE_RUSTFLAGS)
-   # Additionally, avoid generating expensive indirect jumps which
-   # are subject to retpolines for small number of switch cases.
-   # LLVM turns off jump table generation by default when under
--- 
+diff --git a/scripts/generate_rust_target.rs b/scripts/generate_rust_target.rs
+index 44952f0a3aac..ba1bd455e160 100644
+--- a/scripts/generate_rust_target.rs
++++ b/scripts/generate_rust_target.rs
+@@ -173,6 +173,14 @@ fn main() {
+             features += ",+retpoline-indirect-branches";
+             features += ",+retpoline-indirect-calls";
+         }
++        if cfg.has("MITIGATION_SLS") {
++            // The kernel uses `-mharden-sls=all`, which Clang maps to both these target features in
++            // `clang/lib/Driver/ToolChains/Arch/X86.cpp`. These should be eventually enabled via
++            // `-Ctarget-feature` when `rustc` starts recognizing them (or via a new dedicated
++            // flag); see https://github.com/rust-lang/rust/issues/116851.
++            features += ",+harden-sls-ijmp";
++            features += ",+harden-sls-ret";
++        }
+         ts.push("features", features);
+         ts.push("llvm-target", "x86_64-linux-gnu");
+         ts.push("target-pointer-width", "64");
+--
 2.45.2
-
