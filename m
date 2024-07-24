@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C1B158DA7;
-	Wed, 24 Jul 2024 16:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CB4158DA7;
+	Wed, 24 Jul 2024 16:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721837716; cv=none; b=Y+mLajvMGTJen2QSmtNHhe+Ij/w0H0jAeV1XMdf0gprF7y4cxLPeIUIFTQUicOcLX+iLiQ5RFlJF3V2YUocgxuKIfhI3tEk7OcG/dfZVhv4Ch8ihKowIe+quCXgth1K9N76to1vqvz70jv5oQnqtDE0nLcAJWhYZjCg62ITqLac=
+	t=1721837722; cv=none; b=GjDkTj/GR+D6UKKmzCvxwIBoPTsLekkENTIUw73ktjnGDTwzAE+sGPYOv7j1YlY3HXQUiSXdw8aK6VvA+qpqfURei93fNG21VuqY9PfI9RhoZy6IcSfw/8a4OTGvxulDgi2Cvs6ZpFnEH4JT42hB9PJqpTQUd8GvPTYRKKFwSE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721837716; c=relaxed/simple;
-	bh=8M3qjziEkK6RAO+75p2nb4kN9+Ujgr+tBOEusNCKTV8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=H3HN3dnXJa3acHfdUPMFrFYtk5bwEwcaVLnfS0aAoYpnUcQRxP3/d1ZtiEx1m7ykyTxDqkn2JeAugFxI/bd4OPPyjCS9Nonq/8/Mjw0b9NTvcAacXiRpbVZvHkKw7+sKdK8OYjzS/pTwdZSDHiwfT4Xc1TzaLMaacNbR0toHyso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FlVLHRe5; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721837722; c=relaxed/simple;
+	bh=XWZEvVncWNQU08txXncXxWG+iRfEAo91RZkkjZxh1zI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=j9J9OoC9GSCseTw8xLdF5RKEX1nj7KznV3qAXfEVCW2ecPET8AU432Y1ib4dNvQ3xpBaAQSvkpPDX4IWGAy442UZYMcqDXC/y5O7MfajDyupvH1cmSkxU0TMMCwFtDRJ05VH6WlCAQeOK283LmLs/yv4C1v2Qo3FG3j/BVEN+zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HFSyptWK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FlVLHRe5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7041AC32781;
-	Wed, 24 Jul 2024 16:15:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HFSyptWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E89C4AF0B;
+	Wed, 24 Jul 2024 16:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721837716;
-	bh=8M3qjziEkK6RAO+75p2nb4kN9+Ujgr+tBOEusNCKTV8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=FlVLHRe59YHkx4tbO6Y8QuEwXnbAXcenjTrbEw+w6A77CmxgaLm6cApR+go0XNoqd
-	 zmvKg6OIjYAFqTvpm0++9kXLqjzuZlKtLdqq9q+ldXD0SIyqEC+i4sWku5ZrsAzRkD
-	 HMjpTIhEoDo1tHRdNWGnkA44Y1MfH4yQmSJaYohYNGug/gjJ300aPnq1pFTrtEmy0j
-	 Gcndq0rFG8u7uzbIHzw5siyh2kJFRnTLXXiAaSq/qDuy+VvYS2XxaT53RrmMsOjt1I
-	 mzebKG2bXK22zaKt04+BfSScquf6seeIDOszccpTtFNrWE4agkjP9yyMDNKAqQUT2X
-	 9PT1VmmwMOQgg==
+	s=k20201202; t=1721837722;
+	bh=XWZEvVncWNQU08txXncXxWG+iRfEAo91RZkkjZxh1zI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=HFSyptWK4b57Lmyk1a2bXr/2Orsb7SSZLahbADTChWKxZYKi7xI6dinh6rCuw+NY2
+	 dCzP/mgDxXCq6dwGQbpCW1Ul5pkkcqKas0VqarXD2Clc+z8TBeUKsPPNwTjU+Bk4Hx
+	 nqToGf05CxswLyuHn5QQKnsARKvt2b3cHScyrAKKxD8gRhLiopzZhW/b63bi6329L+
+	 PgGZcLrsV2hVMyE8uUkSIlqFl8Dxww7k09YpGqmKAXDk+C9XVeTQ/71YSGzl+pvck5
+	 uUVJQfb0IbUlFgWl3mTl9D0P/2FblRIc3ntKxR8eC3d2k2yPqdiSKpxW3xhAeF6x/n
+	 VbnSdrdSZhEJA==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Josh Poimboeuf <jpoimboe@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -48,11 +49,12 @@ Cc: x86@kernel.org,
 	Alice Ryhl <aliceryhl@google.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-kbuild@vger.kernel.org
-Subject: [PATCH v2 0/6] Rust: support `CPU_MITIGATIONS` and enable `objtool`
-Date: Wed, 24 Jul 2024 18:14:53 +0200
-Message-ID: <20240724161501.1319115-1-ojeda@kernel.org>
+	patches@lists.linux.dev
+Subject: [PATCH v2 1/6] rust: module: add static pointer to `{init,cleanup}_module()`
+Date: Wed, 24 Jul 2024 18:14:54 +0200
+Message-ID: <20240724161501.1319115-2-ojeda@kernel.org>
+In-Reply-To: <20240724161501.1319115-1-ojeda@kernel.org>
+References: <20240724161501.1319115-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -61,63 +63,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi,
+Add the equivalent of the `___ADDRESSABLE()` annotation in the
+`module_{init,exit}` macros to the Rust `module!` macro.
 
-This is an updated series to the CPU mitigations support for Rust. It
-also has the patch to enable `objtool`, so that we can start running it
-for Rust.
+Without this, `objtool` would complain if enabled for Rust, e.g.:
 
-It would be nice to get this applied soon, so that we start being
-warning-free (since we already get warnings under IBT builds via
-`vmlinux.o`). I am happy to take it through the Rust tree if the x86 and
-objtool maintainers give an Acked-by, or through any of the other trees,
-as you prefer. Otherwise, I think at this point we would need to make
-Rust exclusive to the mitigations, which isn't great.
+    samples/rust/rust_print.o: warning: objtool: cleanup_module(): not an indirect call target
+    samples/rust/rust_print.o: warning: objtool: init_module(): not an indirect call target
 
-With this series, again, x86_64 is warning-free with `objtool` enabled. I
-tested `-O2`/`-Os` and the Rust versions we support under `-O2` (mainly
-for the `noreturn` patch, which uses heuristics), as well as IBT vs. no
-IBT (i.e.  running on individual object files vs. in `vmlinux`). I also
-did an arm64 build.
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ rust/macros/module.rs | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Testing is very welcome for this one!
-
-Cheers,
-Miguel
-
-v2:
-  - Add patch to enable `objtool` for Rust.
-
-  - Add patch to list `noreturn` Rust functions (via heuristics) to avoid
-    warnings related to that.
-
-  - Make the `RETHUNK` patch not an RFC since the Rust compiler has
-  support for
-    it now.
-
-  - Update the names of the migitation config symbols, given the changes
-  at e.g.
-    commit 7b75782ffd82 ("x86/bugs: Rename CONFIG_MITIGATION_SLS =>
-    CONFIG_MITIGATION_SLS").
-
-Miguel Ojeda (6):
-  rust: module: add static pointer to `{init,cleanup}_module()`
-  x86/rust: support MITIGATION_RETPOLINE
-  x86/rust: support MITIGATION_RETHUNK
-  x86/rust: support MITIGATION_SLS
-  objtool: list `noreturn` Rust functions
-  objtool/kbuild/rust: enable objtool for Rust
-
- arch/x86/Makefile               |  7 ++++++-
- rust/Makefile                   | 22 ++++++++++++--------
- rust/macros/module.rs           | 12 +++++++++++
- scripts/Makefile.build          |  9 +++++++--
- scripts/generate_rust_target.rs | 15 ++++++++++++++
- tools/objtool/check.c           | 36 ++++++++++++++++++++++++++++++++-
- tools/objtool/noreturns.h       |  2 ++
- 7 files changed, 91 insertions(+), 12 deletions(-)
-
-
-base-commit: b1263411112305acf2af728728591465becb45b0
---
+diff --git a/rust/macros/module.rs b/rust/macros/module.rs
+index 411dc103d82e..571ffa2e189c 100644
+--- a/rust/macros/module.rs
++++ b/rust/macros/module.rs
+@@ -256,6 +256,12 @@ mod __module_init {{
+                         unsafe {{ __init() }}
+                     }}
+ 
++                    #[cfg(MODULE)]
++                    #[doc(hidden)]
++                    #[used]
++                    #[link_section = \".init.data\"]
++                    static __UNIQUE_ID___addressable_init_module: unsafe extern \"C\" fn() -> i32 = init_module;
++
+                     #[cfg(MODULE)]
+                     #[doc(hidden)]
+                     #[no_mangle]
+@@ -269,6 +275,12 @@ mod __module_init {{
+                         unsafe {{ __exit() }}
+                     }}
+ 
++                    #[cfg(MODULE)]
++                    #[doc(hidden)]
++                    #[used]
++                    #[link_section = \".exit.data\"]
++                    static __UNIQUE_ID___addressable_cleanup_module: extern \"C\" fn() = cleanup_module;
++
+                     // Built-in modules are initialized through an initcall pointer
+                     // and the identifiers need to be unique.
+                     #[cfg(not(MODULE))]
+-- 
 2.45.2
+
