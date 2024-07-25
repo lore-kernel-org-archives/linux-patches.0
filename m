@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD8D1990DD;
-	Thu, 25 Jul 2024 14:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59DF2FC19;
+	Thu, 25 Jul 2024 14:53:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919230; cv=none; b=NVXi9GfqvICMNZ22+Yvqi9kmBI1I9RNrIt87dJ6ILQepsFAfM3cRb1Bo9mSZmzSak/dGuCj7+RUAa2POl4v0/m+T8Aziw2aCKExyxv9Z7xLZYh/mi+ETUcPRdlioaJvyW7RuwAQVYvTBbUBTqhBG572rihFrzNfDus/xWjKZmWk=
+	t=1721919233; cv=none; b=b9Wu6f5+gxO3Px7C99xmc4KigCTwqH/X567gDOMMbaZs4sxVVx6H+g71YUdVq1Gt9Rb+ZzW/bOcoQ7Tp8UXMktttfIUA/vjeqBcxn+XT11Uf7H8LWTxH288HUW85RM90LxSasXoLYK7sfpFHgvFUpx+d86qKVW6Ovj9OT6grgfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919230; c=relaxed/simple;
-	bh=UHnYBQE9y8jE1X9cAg6cQbvsDOeFx+bZitpE0Lq9DxE=;
+	s=arc-20240116; t=1721919233; c=relaxed/simple;
+	bh=RMo/uWZz0TO4dr1igDrXYcp+V06JvPxdXTlXW1f5VGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=okP8rlsalEzQm7AjafRfV+FGsr3sRlnfbBMc7ao7dYK0BmhaptaYKkROlIM7eVXSYqyT0nUMX0vET8G8wDu2CDBGgdQSTFbqok/GMnPOZ9zV3/Qc8e6Gh1aywlzFtH3+vCaFjbrM2cOY4gRudaZdWZoqI3aFreZAoK9EjJYPcXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXInGf8A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WP1pOq8E8iTz5DB1TkU1mrvu8zPSe6ZXHGk91RjM+G/zuSxFWOvdGbd0iXM9oaG9kHjVvhmm8Lk7Rh54ZeBxPcFgV1kTGLDKAJeT9APTp7e1sS90oO5lrBbodHirSOvLrAX+7WvQBa4ar7BdHATSpJAaKLNEiiD9LnsP2tqiQ7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9b278VP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXInGf8A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E2FC116B1;
-	Thu, 25 Jul 2024 14:53:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9b278VP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8CFCC116B1;
+	Thu, 25 Jul 2024 14:53:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919230;
-	bh=UHnYBQE9y8jE1X9cAg6cQbvsDOeFx+bZitpE0Lq9DxE=;
+	s=korg; t=1721919233;
+	bh=RMo/uWZz0TO4dr1igDrXYcp+V06JvPxdXTlXW1f5VGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXInGf8AC4pDMxnpcPVFpctrnRWN1YmoBGnU/+XYQ6dA71ne557RjLfW/dTHaqpnF
-	 ozXXcS2aCUuK4Xr/JY7OOqMQoutFyHGGbJ+/yMxadGsD7XDrP+9qmQ2XJuZBuf3Tke
-	 3Mrnts1wEQIU1HPkKjE2WA+8NecsoNQLbCJGvGo4=
+	b=J9b278VPWinbb8oQ1kODJwqLspC9iBnA1Zia4sk0i0M4KObCbSqX4j8lB1YcaachM
+	 W6TfPyzIexqy/faiVRJjhRtX6CgzTl/7Mok82FXg3tvWiUeX/P/rO9k11oE1eQxfSY
+	 BFVluT4Nfe9ae8TepHtRxZBUXJ5fc9NisQtFyIRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+efde959319469ff8d4d7@syzkaller.appspotmail.com,
-	syzbot+01ade747b16e9c8030e0@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 62/87] hfsplus: fix uninit-value in copy_name
-Date: Thu, 25 Jul 2024 16:37:35 +0200
-Message-ID: <20240725142740.770881863@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Alexey Makhalov <alexey.makhalov@broadcom.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 33/87] drm/vmwgfx: Fix missing HYPERVISOR_GUEST dependency
+Date: Thu, 25 Jul 2024 16:37:06 +0200
+Message-ID: <20240725142739.684918070@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -53,68 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Alexey Makhalov <alexey.makhalov@broadcom.com>
 
-[ Upstream commit 0570730c16307a72f8241df12363f76600baf57d ]
+[ Upstream commit 8c4d6945fe5bd04ff847c3c788abd34ca354ecee ]
 
-[syzbot reported]
-BUG: KMSAN: uninit-value in sized_strscpy+0xc4/0x160
- sized_strscpy+0xc4/0x160
- copy_name+0x2af/0x320 fs/hfsplus/xattr.c:411
- hfsplus_listxattr+0x11e9/0x1a50 fs/hfsplus/xattr.c:750
- vfs_listxattr fs/xattr.c:493 [inline]
- listxattr+0x1f3/0x6b0 fs/xattr.c:840
- path_listxattr fs/xattr.c:864 [inline]
- __do_sys_listxattr fs/xattr.c:876 [inline]
- __se_sys_listxattr fs/xattr.c:873 [inline]
- __x64_sys_listxattr+0x16b/0x2f0 fs/xattr.c:873
- x64_sys_call+0x2ba0/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:195
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+VMWARE_HYPERCALL alternative will not work as intended without VMware guest code
+initialization.
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:3877 [inline]
- slab_alloc_node mm/slub.c:3918 [inline]
- kmalloc_trace+0x57b/0xbe0 mm/slub.c:4065
- kmalloc include/linux/slab.h:628 [inline]
- hfsplus_listxattr+0x4cc/0x1a50 fs/hfsplus/xattr.c:699
- vfs_listxattr fs/xattr.c:493 [inline]
- listxattr+0x1f3/0x6b0 fs/xattr.c:840
- path_listxattr fs/xattr.c:864 [inline]
- __do_sys_listxattr fs/xattr.c:876 [inline]
- __se_sys_listxattr fs/xattr.c:873 [inline]
- __x64_sys_listxattr+0x16b/0x2f0 fs/xattr.c:873
- x64_sys_call+0x2ba0/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:195
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[Fix]
-When allocating memory to strbuf, initialize memory to 0.
+  [ bp: note that this doesn't reproduce with newer gccs so it must be
+    something gcc-9-specific. ]
 
-Reported-and-tested-by: syzbot+efde959319469ff8d4d7@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://lore.kernel.org/r/tencent_8BBB6433BC9E1C1B7B4BDF1BF52574BA8808@qq.com
-Reported-and-tested-by: syzbot+01ade747b16e9c8030e0@syzkaller.appspotmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Closes: https://lore.kernel.org/oe-kbuild-all/202406152104.FxakP1MB-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Alexey Makhalov <alexey.makhalov@broadcom.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240616012511.198243-1-alexey.makhalov@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfsplus/xattr.c | 2 +-
+ drivers/gpu/drm/vmwgfx/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
-index e2855ceefd394..71fb2f8e91170 100644
---- a/fs/hfsplus/xattr.c
-+++ b/fs/hfsplus/xattr.c
-@@ -699,7 +699,7 @@ ssize_t hfsplus_listxattr(struct dentry *dentry, char *buffer, size_t size)
- 		return err;
- 	}
- 
--	strbuf = kmalloc(NLS_MAX_CHARSET_SIZE * HFSPLUS_ATTR_MAX_STRLEN +
-+	strbuf = kzalloc(NLS_MAX_CHARSET_SIZE * HFSPLUS_ATTR_MAX_STRLEN +
- 			XATTR_MAC_OSX_PREFIX_LEN + 1, GFP_KERNEL);
- 	if (!strbuf) {
- 		res = -ENOMEM;
+diff --git a/drivers/gpu/drm/vmwgfx/Kconfig b/drivers/gpu/drm/vmwgfx/Kconfig
+index c9ce47c448e03..5b9a9fba85421 100644
+--- a/drivers/gpu/drm/vmwgfx/Kconfig
++++ b/drivers/gpu/drm/vmwgfx/Kconfig
+@@ -2,7 +2,7 @@
+ config DRM_VMWGFX
+ 	tristate "DRM driver for VMware Virtual GPU"
+ 	depends on DRM && PCI && MMU
+-	depends on X86 || ARM64
++	depends on (X86 && HYPERVISOR_GUEST) || ARM64
+ 	select DRM_TTM
+ 	select MAPPING_DIRTY_HELPERS
+ 	# Only needed for the transitional use of drm_crtc_init - can be removed
 -- 
 2.43.0
 
