@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D681A19AA5F;
-	Thu, 25 Jul 2024 14:44:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB6119D066;
+	Thu, 25 Jul 2024 14:44:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918660; cv=none; b=nDQagG+azOiU3+d6FrRBUkbRraPuYH2LyYDP1xgNX280CVabHSWRp1027F2anL+iO5eulc/sV86hT2DjN2Z9JxLf/sy70YW7y6HcRaWbcMTibPSmO/KhBLkf0Uc/hD9nIvfsxWqHE4kTP08fwn4G+3pxT9wzWJEDwYJEFWdxq+o=
+	t=1721918664; cv=none; b=om+1cJfioYSUcFGzjfzH06v4Ff7tcCcCe/mvqCDW876skEfrPa8puP+ErzTDs5o9UXQHDUuBPBg6IkKTPPytwUwWi1vGS+eDW6jS0B2nzyryeBDrBb+mq1zdhZ/fC+MAWlT/AaNAIEDLWKaOvvDmSvNGsQhWnANtqfWyIt/cJZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918660; c=relaxed/simple;
-	bh=bfnSJhCtwOVyJG+jgpRU6YDG+NZCuFIuSND9LN6pws8=;
+	s=arc-20240116; t=1721918664; c=relaxed/simple;
+	bh=HysMFN/3fXSfn2xS80AsodmfmvZNhYYZboKu/tUJwHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j83gZCiKb/QAZycq6jqCyvJajO4FAHDwBi3B1GPrRLtkWJHE36t9aB3cQ/m++gr3FhzJHGp8ZIkOrGofjBfvHrYClFPucqLjSCpO7BknuQ18bB+W5BIGNntMoBGVhSHlWq4QOeJUx1fqpVLkX+/sPc9q1wDAL5KSwAL9ZJBTQxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krVa2jul; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QBoYuoy7fJibk26c27Wc3L83wnAC/2lBSl7P6AjXUFk+NVBvqvlh3gJLx4clOYC8diPuJqeupe03R2r1vh57cY9nszo13l/q613RK05JuVm0QkC9DXjpIrsUCwJnzyOoI3lk94EJLNFp32mqab5Xtu2NQen7tGy+rxuZXj7dbZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+HscSB5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krVa2jul"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53794C4AF0C;
-	Thu, 25 Jul 2024 14:44:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+HscSB5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA6AC116B1;
+	Thu, 25 Jul 2024 14:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918660;
-	bh=bfnSJhCtwOVyJG+jgpRU6YDG+NZCuFIuSND9LN6pws8=;
+	s=korg; t=1721918664;
+	bh=HysMFN/3fXSfn2xS80AsodmfmvZNhYYZboKu/tUJwHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=krVa2julr5Gm9+oFiJUJo3s/ovvZiS4MijL+2uf0TVgsgF6bPJ6oTfHyeQRycJ5Ge
-	 1NyRsgTvVML4CyJvxCwxQk9vo4RM+C++9LmO/cV7DxTewhu7voF/CoQCpPMAGkjsz7
-	 uXZZdoPnpEcOMnjsrajgujwXVGijOWM9cEV/Rmwg=
+	b=U+HscSB5bSSpvKFqdQWotptCG5nOQfX47zFu3SGkEYQLuNxdPJv1s0yFsUULF3/nG
+	 mH/aWVnlFWizmYJ1ULQRS7LGzl92XIHx/aYVm5Q4rmZlY6lLzU8aaWZha78TtUffGY
+	 +5kUpZAK3WYi1yjInLf+0hgNwSu2d2jOaTIPrguU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 6.1 01/13] drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
-Date: Thu, 25 Jul 2024 16:37:10 +0200
-Message-ID: <20240725142728.087209261@linuxfoundation.org>
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>,
+	syzbot+d0ab8746c920a592aeab@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 02/13] f2fs: avoid dead loop in f2fs_issue_checkpoint()
+Date: Thu, 25 Jul 2024 16:37:11 +0200
+Message-ID: <20240725142728.124122639@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.029052310@linuxfoundation.org>
 References: <20240725142728.029052310@linuxfoundation.org>
@@ -46,38 +46,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chao Yu <chao@kernel.org>
 
-commit 6769a23697f17f9bf9365ca8ed62fe37e361a05a upstream.
+commit 5079e1c0c879311668b77075de3e701869804adf upstream.
 
-The "instance" variable needs to be signed for the error handling to work.
+generic/082 reports a bug as below:
 
-Fixes: 8b2faf1a4f3b ("drm/amdgpu: add error handle to avoid out-of-bounds")
-Reviewed-by: Bob Zhou <bob.zhou@amd.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+__schedule+0x332/0xf60
+schedule+0x6f/0xf0
+schedule_timeout+0x23b/0x2a0
+wait_for_completion+0x8f/0x140
+f2fs_issue_checkpoint+0xfe/0x1b0
+f2fs_sync_fs+0x9d/0xb0
+sync_filesystem+0x87/0xb0
+dquot_load_quota_sb+0x41b/0x460
+dquot_load_quota_inode+0xa5/0x130
+dquot_quota_on+0x4b/0x60
+f2fs_quota_on+0xe3/0x1b0
+do_quotactl+0x483/0x700
+__x64_sys_quotactl+0x15c/0x310
+do_syscall_64+0x3f/0x90
+entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+The root casue is race case as below:
+
+Thread A			Kworker			IRQ
+- write()
+: write data to quota.user file
+
+				- writepages
+				 - f2fs_submit_page_write
+				  - __is_cp_guaranteed return false
+				  - inc_page_count(F2FS_WB_DATA)
+				 - submit_bio
+- quotactl(Q_QUOTAON)
+ - f2fs_quota_on
+  - dquot_quota_on
+   - dquot_load_quota_inode
+    - vfs_setup_quota_inode
+    : inode->i_flags |= S_NOQUOTA
+							- f2fs_write_end_io
+							 - __is_cp_guaranteed return true
+							 - dec_page_count(F2FS_WB_CP_DATA)
+    - dquot_load_quota_sb
+     - f2fs_sync_fs
+      - f2fs_issue_checkpoint
+       - do_checkpoint
+        - f2fs_wait_on_all_pages(F2FS_WB_CP_DATA)
+        : loop due to F2FS_WB_CP_DATA count is negative
+
+Calling filemap_fdatawrite() and filemap_fdatawait() to keep all data
+clean before quota file setup.
+
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sergio González Collado <sergio.collado@gmail.com>
+Reported-by: syzbot+d0ab8746c920a592aeab@syzkaller.appspotmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/super.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-@@ -2045,7 +2045,7 @@ static int sdma_v4_0_process_trap_irq(st
- 				      struct amdgpu_irq_src *source,
- 				      struct amdgpu_iv_entry *entry)
- {
--	uint32_t instance;
-+	int instance;
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -2824,15 +2824,26 @@ static int f2fs_quota_on(struct super_bl
+ 		return -EBUSY;
+ 	}
  
- 	DRM_DEBUG("IH: SDMA trap\n");
- 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
++	if (path->dentry->d_sb != sb)
++		return -EXDEV;
++
+ 	err = f2fs_quota_sync(sb, type);
+ 	if (err)
+ 		return err;
+ 
+-	err = dquot_quota_on(sb, type, format_id, path);
++	inode = d_inode(path->dentry);
++
++	err = filemap_fdatawrite(inode->i_mapping);
+ 	if (err)
+ 		return err;
+ 
+-	inode = d_inode(path->dentry);
++	err = filemap_fdatawait(inode->i_mapping);
++	if (err)
++		return err;
++
++	err = dquot_quota_on(sb, type, format_id, path);
++	if (err)
++		return err;
+ 
+ 	inode_lock(inode);
+ 	F2FS_I(inode)->i_flags |= F2FS_NOATIME_FL | F2FS_IMMUTABLE_FL;
 
 
