@@ -1,80 +1,209 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2593199E9F;
-	Thu, 25 Jul 2024 14:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F5419CD17;
+	Thu, 25 Jul 2024 14:39:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918377; cv=none; b=PVSqgtdpeve7cZ3GZ4mBBaKjCNUjXSeTQOx06FzIW5Lj64VEpiOO1T4poZg6rMikokTys4u5AEnhSHjbGkOBDJvmeOYo30+h1x7H9GivaZ5fchl0yfy16iwTmeH7KfkFNa33vu0m1b/CkrYQ9v5deqUQaXcmIfrkh0rqwHJmjLk=
+	t=1721918379; cv=none; b=qoOX17WnI3YUs+iOFkiIgCATPLjMcF5Kj2Isr/1/XBTUfG13f1QjH16dJEAgeX6DQx1Riu9ZcynYlmmelIELl4skyWc8tFqG851GlJZKePk98A08MxJkYTm2zNXB1VWqExvTkdd1FJel8U92z1qhoLeJs8axKWid6e9a4kVa3HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918377; c=relaxed/simple;
-	bh=T+/JarZQUqrcrIhU1f/R/ACzMUzk6PXiUQcyQENP4+M=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mlAR3RuGGucBPdhHYKcqsoqxYwfJXcm0kr4/ecdg4lu0ZeOJ4qY+ciSsvusBNJIr/CXWuMBpS9/f+zvbShfORavfn4pRkCbEggILmTbtM629lR1TegCCY09IdS2QqyGDmDZH1RLQWqLfnkH1aItPTz6QoZommalLF3EqyAHsTEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dD4NsatV; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721918379; c=relaxed/simple;
+	bh=GJ68F/+PoOUcHYSYqlt5pCBKbCkdy1ioG9LuJgF/UAM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cYezFFDLvfCIKrxQziFH2Ghlcqc/26Wozm8UY7+VdCw+XgeyokGP4moBExMaCBsyOxZbI55J6sMe+YZ7suCds4g2u3rjGFkyXV8gFGdTpDhoBTZa3eU942G900RO9J8LFDiLx6U2t49GEdf1qQj9RTRf0LrP2eSCX4vd59FVM2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dETM/AJl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dD4NsatV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03828C116B1;
-	Thu, 25 Jul 2024 14:39:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dETM/AJl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D96C116B1;
+	Thu, 25 Jul 2024 14:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918376;
-	bh=T+/JarZQUqrcrIhU1f/R/ACzMUzk6PXiUQcyQENP4+M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dD4NsatVTD0xhyV/R5wf1P5n8KrJTynZac58uYNpe8epbtvO6SzBOOvWLcAUhJ/Kq
-	 wF5qI9fkoY7EN5fYzjH2iIfMOOjOwrxkKUCRGJOhq9HEM/2ekLwE1Ffv0WVKo70Oki
-	 3Un4So4EVZwVb5+eFhXYgxcGDFt0oDdsWHZdS9zU=
+	s=korg; t=1721918379;
+	bh=GJ68F/+PoOUcHYSYqlt5pCBKbCkdy1ioG9LuJgF/UAM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=dETM/AJlqRVRlSS0DG2HiMdTH2dGwgfMP9lrKOqzzCvYnVDAj4zf8QaP1Ivc+0Zs3
+	 i3jlDf9gHZnbpEb4f0pPRHg5vFBHZivv2ZOw2diGKyf678wNwd9kIXaK+ntQr04k7s
+	 cLIbb2Wkemw2ugG3s96nCJiaqFoZEDx9kZWh8U/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 09/29] ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
-Date: Thu, 25 Jul 2024 16:36:25 +0200
-Message-ID: <20240725142732.167377561@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org
+Subject: [PATCH 6.10 00/29] 6.10.2-rc1 review
+Date: Thu, 25 Jul 2024 16:36:16 +0200
+Message-ID: <20240725142731.814288796@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
-References: <20240725142731.814288796@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.2-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.10.2-rc1
+X-KernelTest-Deadline: 2024-07-27T14:27+00:00
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+This is the start of the stable review cycle for the 6.10.2 release.
+There are 29 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-------------------
+Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
+Anything received after that time might be too late.
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.2-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+and the diffstat can be found below.
 
-commit 8fc1e8b230771442133d5cf5fa4313277aa2bb8b upstream.
+thanks,
 
-Positivo SU C1400 is equipped with ALC256, and it needs
-ALC269_FIXUP_ASPIRE_HEADSET_MIC quirk to make its headset mic work.
+greg k-h
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240712180642.22564-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+-------------
+Pseudo-Shortlog of commits:
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10384,6 +10384,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
- 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
- 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.10.2-rc1
+
+Jann Horn <jannh@google.com>
+    filelock: Fix fcntl/close race recovery compat path
+
+Takashi Iwai <tiwai@suse.de>
+    ALSA: seq: ump: Skip useless ports for static blocks
+
+Shengjiu Wang <shengjiu.wang@nxp.com>
+    ALSA: pcm_dmaengine: Don't synchronize DMA channel when DMA is paused
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: sm6115: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: sdm845: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: ipq8074: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: sdm630: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: ipq6018: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: msm8998: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: sm6350: Disable SS instance in Parkmode for USB
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: msm8996: Disable SS instance in Parkmode for USB
+
+Abel Vesa <abel.vesa@linaro.org>
+    arm64: dts: qcom: x1e80100-crd: Fix USB PHYs regulators
+
+Abel Vesa <abel.vesa@linaro.org>
+    arm64: dts: qcom: x1e80100-qcp: Fix the PHY regulator for PCIe 6a
+
+Abel Vesa <abel.vesa@linaro.org>
+    arm64: dts: qcom: x1e80100-crd: Fix the PHY regulator for PCIe 6a
+
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+    arm64: dts: qcom: qrb4210-rb2: switch I2C2 to i2c-gpio
+
+Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+    arm64: dts: qcom: qrb2210-rb1: switch I2C2 to i2c-gpio
+
+Abel Vesa <abel.vesa@linaro.org>
+    arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs regulators
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: sc7280: Disable SuperSpeed instances in park mode
+
+Krishna Kurapati <quic_kriskura@quicinc.com>
+    arm64: dts: qcom: sc7180: Disable SuperSpeed instances in park mode
+
+Seunghun Han <kkamagui@gmail.com>
+    ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
+
+Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+    ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
+
+Shenghao Ding <shenghao-ding@ti.com>
+    ALSA: hda/tas2781: Add new quirk for Lenovo Hera2 Laptop
+
+Takashi Iwai <tiwai@suse.de>
+    usb: gadget: midi2: Fix incorrect default MIDI2 protocol setup
+
+lei lu <llfamsec@gmail.com>
+    fs/ntfs3: Validate ff offset
+
+Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+    fs/ntfs3: Add a check for attr_names and oatbl
+
+lei lu <llfamsec@gmail.com>
+    jfs: don't walk off the end of ealist
+
+lei lu <llfamsec@gmail.com>
+    ocfs2: add bounds checking to ocfs2_check_dir_entry()
+
+Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+    s390/mm: Fix VM_FAULT_HWPOISON handling in do_exception()
+
+Dan Carpenter <dan.carpenter@linaro.org>
+    drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                  |  4 +--
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi     |  1 +
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi     |  2 ++
+ arch/arm64/boot/dts/qcom/msm8996.dtsi     |  1 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi     |  1 +
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts  | 13 ++++++++-
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts  | 13 ++++++++-
+ arch/arm64/boot/dts/qcom/sc7180.dtsi      |  1 +
+ arch/arm64/boot/dts/qcom/sc7280.dtsi      |  1 +
+ arch/arm64/boot/dts/qcom/sdm630.dtsi      |  1 +
+ arch/arm64/boot/dts/qcom/sdm845.dtsi      |  2 ++
+ arch/arm64/boot/dts/qcom/sm6115.dtsi      |  1 +
+ arch/arm64/boot/dts/qcom/sm6350.dtsi      |  1 +
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 17 +++++++++---
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 17 +++++++++---
+ arch/s390/mm/fault.c                      |  3 +-
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c    |  2 +-
+ drivers/usb/gadget/function/f_midi2.c     | 19 +++++++------
+ fs/jfs/xattr.c                            | 23 +++++++++++++---
+ fs/locks.c                                |  9 +++---
+ fs/ntfs3/fslog.c                          | 44 ++++++++++++++++++++++++-----
+ fs/ocfs2/dir.c                            | 46 +++++++++++++++++++------------
+ sound/core/pcm_dmaengine.c                |  6 +++-
+ sound/core/seq/seq_ump_client.c           | 16 +++++++++++
+ sound/pci/hda/patch_realtek.c             |  3 ++
+ 25 files changed, 191 insertions(+), 56 deletions(-)
 
 
