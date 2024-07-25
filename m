@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932841E89C;
-	Thu, 25 Jul 2024 14:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7FB19D082;
+	Thu, 25 Jul 2024 14:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918797; cv=none; b=pYZYeF72bCwjLRpQJhQ93fjhdbL3v5OUeauHebvzQmKyuU1wYlN4JluJBFEhi2qh0HBFE59nwfssw7smPElfNRvclkBCYu8aCceri7vkH1eUUSZ172lzWpmpKkZ9RNMpkU4C9/xM+w6yR4Skx0Bgla+3rX5gb0jUfvJrndDD9Po=
+	t=1721918800; cv=none; b=uc/h8WmlRwifxib0uutThWzIpUn9QndSvuAUN1TcZ7VlHKgxL5n272HtZud3U1sMk9mxipiPiBrH5UhPUr0lMDL2jakMA0UMQQlU3H9Cuwo6Ff8E66ooqFWxTUtltXlZdiYtvNY+UfWMBe/hLMvq1q4jO/VPFgsvTgCwxakhJgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918797; c=relaxed/simple;
-	bh=oRiar7uXRQ3kS4a5+jjuqhiLXKqoVg31AVVdkrl5F0M=;
+	s=arc-20240116; t=1721918800; c=relaxed/simple;
+	bh=UUsdFs6PsQVSMbKkaswn2Js4nJ9Q+tUxEGjvZiZoFEg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BEd0w9oBasFdmgB5dSfDp4yV6IYjU6QEKihD3aGLrhywLHGv9Z62bmHtcGzTwgG2pYtHVJRIblgDjf6+8878gd3WtCXcA41MBQNl61cEOnjxmu6XZGtkePL8VjBlKeqUiVzqmMxm7dvphsRFXJ0dusLPZmdqZXS0KQ6CMDx4ie4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EwkDlbx+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EzDQeE8qzdqGXXvlEsdms5JSfNxHCIfqpUZroSVCX3+hmG4C6AraH7gl1oNpk/QYeES+XNWyXQzvwl9CDUZKN/753NGqB4dXd48nwHfyR0pbwAlSlrJLq6e0EbH5VFhWWFDbl1D3P9K9To1EHSRsItTpYutkVF3vT9a/nej+iN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCDZbnwm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EwkDlbx+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3B69C116B1;
-	Thu, 25 Jul 2024 14:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCDZbnwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D41E7C116B1;
+	Thu, 25 Jul 2024 14:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918797;
-	bh=oRiar7uXRQ3kS4a5+jjuqhiLXKqoVg31AVVdkrl5F0M=;
+	s=korg; t=1721918800;
+	bh=UUsdFs6PsQVSMbKkaswn2Js4nJ9Q+tUxEGjvZiZoFEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EwkDlbx+VqS7WgTZkDN5WW2BsSdyqZxgvDXguqJGQOJBHEX0rz0oI3+A+q5UZQUKk
-	 Q1/D9QISIr1U+aGkv1hFauklN5H1KvNMEOLie+3sVCG38EzfwlY4+NYzuleqDInzWP
-	 xQobjHcRkhVZ3+f12qpP/DMBOOPi74JSHfbt6pIc=
+	b=kCDZbnwmKVYpFgLqylLRpAvteBVHr8NcT9S+Ecel0CPAc97p+xk3EyWo/2oV1VIqi
+	 U6iBzRpnBM9oeIBDccrwcOZB6ifb9fEpshWAFvB9z3xVJRt6CmRsnUFM2VFJggE4bx
+	 NnS4JsdV1GVdr+kkrBDF1H3Nk5Y1Qg7OntsYTgts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	lei lu <llfamsec@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 6.9 04/29] jfs: dont walk off the end of ealist
-Date: Thu, 25 Jul 2024 16:37:14 +0200
-Message-ID: <20240725142731.848085993@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.9 05/29] fs/ntfs3: Add a check for attr_names and oatbl
+Date: Thu, 25 Jul 2024 16:37:15 +0200
+Message-ID: <20240725142731.884686984@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.678993846@linuxfoundation.org>
 References: <20240725142731.678993846@linuxfoundation.org>
@@ -50,83 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: lei lu <llfamsec@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit d0fa70aca54c8643248e89061da23752506ec0d4 upstream.
+commit 702d4930eb06dcfda85a2fa67e8a1a27bfa2a845 upstream.
 
-Add a check before visiting the members of ea to
-make sure each ea stays within the ealist.
+Added out-of-bound checking for *ane (ATTR_NAME_ENTRY).
 
-Signed-off-by: lei lu <llfamsec@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reported-by: lei lu <llfamsec@gmail.com>
+Fixes: 865e7a7700d93 ("fs/ntfs3: Reduce stack usage")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ fs/ntfs3/fslog.c |   38 ++++++++++++++++++++++++++++++++------
+ 1 file changed, 32 insertions(+), 6 deletions(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -797,7 +797,7 @@ ssize_t __jfs_getxattr(struct inode *ino
- 		       size_t buf_size)
- {
- 	struct jfs_ea_list *ealist;
--	struct jfs_ea *ea;
-+	struct jfs_ea *ea, *ealist_end;
- 	struct ea_buffer ea_buf;
- 	int xattr_size;
- 	ssize_t size;
-@@ -817,9 +817,16 @@ ssize_t __jfs_getxattr(struct inode *ino
- 		goto not_found;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3722,6 +3722,8 @@ int log_replay(struct ntfs_inode *ni, bo
  
- 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
-+	ealist_end = END_EALIST(ealist);
+ 	u64 rec_lsn, checkpt_lsn = 0, rlsn = 0;
+ 	struct ATTR_NAME_ENTRY *attr_names = NULL;
++	u32 attr_names_bytes = 0;
++	u32 oatbl_bytes = 0;
+ 	struct RESTART_TABLE *dptbl = NULL;
+ 	struct RESTART_TABLE *trtbl = NULL;
+ 	const struct RESTART_TABLE *rt;
+@@ -3736,6 +3738,7 @@ int log_replay(struct ntfs_inode *ni, bo
+ 	struct NTFS_RESTART *rst = NULL;
+ 	struct lcb *lcb = NULL;
+ 	struct OPEN_ATTR_ENRTY *oe;
++	struct ATTR_NAME_ENTRY *ane;
+ 	struct TRANSACTION_ENTRY *tr;
+ 	struct DIR_PAGE_ENTRY *dp;
+ 	u32 i, bytes_per_attr_entry;
+@@ -4314,17 +4317,40 @@ check_attr_table:
+ 	lcb = NULL;
  
- 	/* Find the named attribute */
--	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea))
-+	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
-+		if (unlikely(ea + 1 > ealist_end) ||
-+		    unlikely(NEXT_EA(ea) > ealist_end)) {
-+			size = -EUCLEAN;
-+			goto release;
-+		}
+ check_attribute_names2:
+-	if (rst->attr_names_len && oatbl) {
+-		struct ATTR_NAME_ENTRY *ane = attr_names;
+-		while (ane->off) {
++	if (attr_names && oatbl) {
++		off = 0;
++		for (;;) {
++			/* Check we can use attribute name entry 'ane'. */
++			static_assert(sizeof(*ane) == 4);
++			if (off + sizeof(*ane) > attr_names_bytes) {
++				/* just ignore the rest. */
++				break;
++			}
 +
- 		if ((namelen == ea->namelen) &&
- 		    memcmp(name, ea->name, namelen) == 0) {
- 			/* Found it */
-@@ -834,6 +841,7 @@ ssize_t __jfs_getxattr(struct inode *ino
- 			memcpy(data, value, size);
- 			goto release;
++			ane = Add2Ptr(attr_names, off);
++			t16 = le16_to_cpu(ane->off);
++			if (!t16) {
++				/* this is the only valid exit. */
++				break;
++			}
++
++			/* Check we can use open attribute entry 'oe'. */
++			if (t16 + sizeof(*oe) > oatbl_bytes) {
++				/* just ignore the rest. */
++				break;
++			}
++
+ 			/* TODO: Clear table on exit! */
+-			oe = Add2Ptr(oatbl, le16_to_cpu(ane->off));
++			oe = Add2Ptr(oatbl, t16);
+ 			t16 = le16_to_cpu(ane->name_bytes);
++			off += t16 + sizeof(*ane);
++			if (off > attr_names_bytes) {
++				/* just ignore the rest. */
++				break;
++			}
+ 			oe->name_len = t16 / sizeof(short);
+ 			oe->ptr = ane->name;
+ 			oe->is_attr_name = 2;
+-			ane = Add2Ptr(ane,
+-				      sizeof(struct ATTR_NAME_ENTRY) + t16);
  		}
-+	}
-       not_found:
- 	size = -ENODATA;
-       release:
-@@ -861,7 +869,7 @@ ssize_t jfs_listxattr(struct dentry * de
- 	ssize_t size = 0;
- 	int xattr_size;
- 	struct jfs_ea_list *ealist;
--	struct jfs_ea *ea;
-+	struct jfs_ea *ea, *ealist_end;
- 	struct ea_buffer ea_buf;
- 
- 	down_read(&JFS_IP(inode)->xattr_sem);
-@@ -876,9 +884,16 @@ ssize_t jfs_listxattr(struct dentry * de
- 		goto release;
- 
- 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
-+	ealist_end = END_EALIST(ealist);
- 
- 	/* compute required size of list */
--	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea)) {
-+	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
-+		if (unlikely(ea + 1 > ealist_end) ||
-+		    unlikely(NEXT_EA(ea) > ealist_end)) {
-+			size = -EUCLEAN;
-+			goto release;
-+		}
-+
- 		if (can_list(ea))
- 			size += name_size(ea) + 1;
  	}
+ 
 
 
