@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22DE019D068;
-	Thu, 25 Jul 2024 14:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC4A19D083;
+	Thu, 25 Jul 2024 14:41:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918470; cv=none; b=W/wGhleQiYMpSXTdp7MbLmk8yW+iT9uBSh9ENct29/8rWXe/WLNCq9W0245tBIw+IS/5wQdiyWR9j/9XLfrcFWGK8KtZzqe8kP60UoRxZeRWVB/BitXA/bAoArw+OX4oEgFT59uNM4URI6t5qy7xaKW1LUz1b6FHcCDXKiAjDy4=
+	t=1721918473; cv=none; b=Xh5vGEP1UKs3tlukNQtXICq7vwEULC91l7/tLidnfSb0xB12gF8e6uNRR4shkJyd+ffYHuReW/84blpK6cFn8c01mvQ0l+MXFa0fJGnrG+Pwc+2egA69gvbZ9sGrcajyRRTS9EcGXcbtu/KzWDZRlv+LhrViXFc7s00j5YegF78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918470; c=relaxed/simple;
-	bh=lVWOQFQu9YzXBzq0Cg7ECBKzQBYLpqMRD7VlztZy9M8=;
+	s=arc-20240116; t=1721918473; c=relaxed/simple;
+	bh=+ISidtzFIoQud6JdCE1LnjNL4zzdqHWmecygLcl+WUg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qT8ZZGKPK12kS++EELJyBuWlDqZuRaLnKObUwW/mExLC0lfLnMicWWOOEmG7pGlPqDfRwi0JhjhVfmeuJe5mnTJRJinH1jjz1QU5qZSqsXiCgQkzUITGIVf7x2UpENLeDn12KF4gJSJb14SCttDPo6ZII7/cRFMx+vNGFw/JnrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uU0sY/wD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N7ReZBhumFF4XqJCMHOIRHNSmkbCcz0G8BDnp0LaiM5pXtBMnynYi0MwagUqFSaPKACKf7wmnDFnHbss44YhyIIPx4udKBCYipAvR/PbFpK7hY0dXwdiLXhDySJlc+a/Jwo/IuXQx/9rjcmNxUOf+0rTSjVlLWHFz1jkn1rAJ6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVbEPsdI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uU0sY/wD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DEC1C116B1;
-	Thu, 25 Jul 2024 14:41:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVbEPsdI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E8DC116B1;
+	Thu, 25 Jul 2024 14:41:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918470;
-	bh=lVWOQFQu9YzXBzq0Cg7ECBKzQBYLpqMRD7VlztZy9M8=;
+	s=korg; t=1721918473;
+	bh=+ISidtzFIoQud6JdCE1LnjNL4zzdqHWmecygLcl+WUg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uU0sY/wDqi5EzV6yP7QoszeINQ+MJpuAuxstB5s2pqFC+Zb9UfEM7ak/4rgnShCra
-	 1R2Xl1V4x+zfXr+xTKIF9isedA49xCrDtcG3uoULyqunX5KcFX8xVgVn99zpoFMu+J
-	 sg1uNm0J0kYWlSHX/rAhfhhmJB10eR/VtdfFTCwE=
+	b=lVbEPsdIcL/O8D71w1MTrrVcAMPvaqt8Yh8g2Z/7dvmLQfSdmNTl6aBKlf9mF+aEE
+	 q7KI9LLNvpjYT9ocn7DuOKjcEriPe/3i0me0H9NWlKNZIirZgorr4ZETQZIqmluKdZ
+	 NtZRSkpN/69uaM01S57zXpTrt7Acs5tZxvGzSULc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Sikorski <belegdol@gmail.com>,
-	Kuan-Wei Chiu <visitorckw@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 4.19 29/33] ACPI: processor_idle: Fix invalid comparison with insertion sort for latency
-Date: Thu, 25 Jul 2024 16:36:52 +0200
-Message-ID: <20240725142729.609971804@linuxfoundation.org>
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 03/33] ACPI: EC: Abort address space access upon error
+Date: Thu, 25 Jul 2024 16:36:26 +0200
+Message-ID: <20240725142728.646466042@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -51,103 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-commit 233323f9b9f828cd7cd5145ad811c1990b692542 upstream.
+[ Upstream commit f6f172dc6a6d7775b2df6adfd1350700e9a847ec ]
 
-The acpi_cst_latency_cmp() comparison function currently used for
-sorting C-state latencies does not satisfy transitivity, causing
-incorrect sorting results.
+When a multi-byte address space access is requested, acpi_ec_read()/
+acpi_ec_write() is being called multiple times.
 
-Specifically, if there are two valid acpi_processor_cx elements A and B
-and one invalid element C, it may occur that A < B, A = C, and B = C.
-Sorting algorithms assume that if A < B and A = C, then C < B, leading
-to incorrect ordering.
+Abort such operations if a single call to acpi_ec_read() /
+acpi_ec_write() fails, as the data read from / written to the EC
+might be incomplete.
 
-Given the small size of the array (<=8), we replace the library sort
-function with a simple insertion sort that properly ignores invalid
-elements and sorts valid ones based on latency. This change ensures
-correct ordering of the C-state latencies.
-
-Fixes: 65ea8f2c6e23 ("ACPI: processor idle: Fix up C-state latency if not ordered")
-Reported-by: Julian Sikorski <belegdol@gmail.com>
-Closes: https://lore.kernel.org/lkml/70674dc7-5586-4183-8953-8095567e73df@gmail.com
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Tested-by: Julian Sikorski <belegdol@gmail.com>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240701205639.117194-1-visitorckw@gmail.com
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/processor_idle.c |   40 ++++++++++++++++------------------------
- 1 file changed, 16 insertions(+), 24 deletions(-)
+ drivers/acpi/ec.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/acpi/processor_idle.c
-+++ b/drivers/acpi/processor_idle.c
-@@ -29,7 +29,6 @@
- #include <linux/acpi.h>
- #include <linux/dmi.h>
- #include <linux/sched.h>       /* need_resched() */
--#include <linux/sort.h>
- #include <linux/tick.h>
- #include <linux/cpuidle.h>
- #include <linux/cpu.h>
-@@ -545,28 +544,24 @@ static void acpi_processor_power_verify_
- 	return;
- }
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index d2fde87e4d0d4..78f8b8b5a8099 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1330,10 +1330,13 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_enable(ec);
  
--static int acpi_cst_latency_cmp(const void *a, const void *b)
-+static void acpi_cst_latency_sort(struct acpi_processor_cx *states, size_t length)
- {
--	const struct acpi_processor_cx *x = a, *y = b;
-+	int i, j, k;
- 
--	if (!(x->valid && y->valid))
--		return 0;
--	if (x->latency > y->latency)
--		return 1;
--	if (x->latency < y->latency)
--		return -1;
--	return 0;
--}
--static void acpi_cst_latency_swap(void *a, void *b, int n)
--{
--	struct acpi_processor_cx *x = a, *y = b;
--	u32 tmp;
-+	for (i = 1; i < length; i++) {
-+		if (!states[i].valid)
-+			continue;
- 
--	if (!(x->valid && y->valid))
--		return;
--	tmp = x->latency;
--	x->latency = y->latency;
--	y->latency = tmp;
-+		for (j = i - 1, k = i; j >= 0; j--) {
-+			if (!states[j].valid)
-+				continue;
-+
-+			if (states[j].latency > states[k].latency)
-+				swap(states[j].latency, states[k].latency);
-+
-+			k = j;
-+		}
+-	for (i = 0; i < bytes; ++i, ++address, ++value)
++	for (i = 0; i < bytes; ++i, ++address, ++value) {
+ 		result = (function == ACPI_READ) ?
+ 			acpi_ec_read(ec, address, value) :
+ 			acpi_ec_write(ec, address, *value);
++		if (result < 0)
++			break;
 +	}
- }
  
- static int acpi_processor_power_verify(struct acpi_processor *pr)
-@@ -611,10 +606,7 @@ static int acpi_processor_power_verify(s
- 
- 	if (buggy_latency) {
- 		pr_notice("FW issue: working around C-state latencies out of order\n");
--		sort(&pr->power.states[1], max_cstate,
--		     sizeof(struct acpi_processor_cx),
--		     acpi_cst_latency_cmp,
--		     acpi_cst_latency_swap);
-+		acpi_cst_latency_sort(&pr->power.states[1], max_cstate);
- 	}
- 
- 	lapic_timer_propagate_broadcast(pr);
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_disable(ec);
+-- 
+2.43.0
+
 
 
