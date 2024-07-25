@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF63FF519;
-	Thu, 25 Jul 2024 14:49:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333EB8468;
+	Thu, 25 Jul 2024 14:49:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918979; cv=none; b=CyDgkobWOUTp73UuTRKzgbXVitPTFBodP6z4+E+lPFXQOqS5uH1PHWeJW8nLHiUR4cD8+0y53okbaLsVUtoklex+1mv4JGujWjftxhwc0+6VGYCjXcnE1i7U6PBi6kf+t/Z+TBXKtVstAp0Al8zM49a/sNEhMp0PD6uMpGWpQkg=
+	t=1721918982; cv=none; b=uHBVkRu4W4WrAcz9YqQLEz7LJD8Tcm+Hx8owPASf1YQP3cr0eRihLGCfVIOl9Vw8WdgiD3LwAEBeRNbvgwjPECXxnq2EBCmjCH3uL6cWl9NnyAa/sxk94vPXo9biR4ahhj9OFGzi3Gl7DuDT0vv43BCYv0ppYWR/tKtl6UJa6u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918979; c=relaxed/simple;
-	bh=Tq1XbQNiTbyjz1DYk7ZAMxzc6HKGZWFV/+OR8myrC7U=;
+	s=arc-20240116; t=1721918982; c=relaxed/simple;
+	bh=EpLc/UjxtMC0L0J8esYSWmdDKrjM5Okt4NR5i+7tMUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5vPS34MJNAc4GIZcyofctZefqCNNgxmTljhK+sSTpLc2RJjgVn3wn/mL0xdpiU0fzOv501oHhMca4STzAalJv4yF/Kwde6Vw2Ve/FrE43fEEKSgmn6opQFhvdRhPai6Aulput1F4XBVJAI/xEN3ePicOTQtjk60FV3gWzZiJyE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0gpwe6QH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CzQSxgXJzVEHgqbsrn5X++XizgRFea2GxSy7PZf9qDuae4gTg9PNKUT88uQDLsigCqpZwm8BIaGxkK4t9vsZEvnV/G5jmNBuB2Vaj03TgFeM65Vt1br3PA27rQ7iyaSnnNPBLnCClO6hfz7FdSEsLdC1sAk+2YcVcnWybLtmOaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UWucvz2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0gpwe6QH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 726DBC116B1;
-	Thu, 25 Jul 2024 14:49:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UWucvz2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B285CC116B1;
+	Thu, 25 Jul 2024 14:49:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918978;
-	bh=Tq1XbQNiTbyjz1DYk7ZAMxzc6HKGZWFV/+OR8myrC7U=;
+	s=korg; t=1721918982;
+	bh=EpLc/UjxtMC0L0J8esYSWmdDKrjM5Okt4NR5i+7tMUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0gpwe6QH5430edYBYEiThM3T6FH0F8C4QFD3gLzco+74V9Y9ZWpWL/dBLKe9K9Pf6
-	 BA4D9xLC3jxGSJU8VDVcfoW/+J7iSgq+EWHtHnYMMEmyDJsP1b5QuZbNAKLrRTyj9c
-	 lSBDqdXmKgvEk1PjjZrwqytk0I5WFM9APUE0fJYY=
+	b=UWucvz2uuEUWkYzxiUQcBsb2w74MKFmyNOLL2MvdYO4R2S3kYiwTPE1zhvzlrIFSP
+	 Jpus4kGyZdfgDqv8T47DkgFoIxAAlJsCJSV9r4O8dEG6f8DCliz1fIhmcMoyhGC8DA
+	 zN2mZ8d0tWehVhgji+hysc5qQGnRnDIyVuqLoMUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bing-Jhong Billy Jheng <billy@starlabs.sg>,
-	Muhammad Ramdhan <ramdhan@starlabs.sg>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+aa8c8ec2538929f18f2d@syzkaller.appspotmail.com,
+	Jason Xing <kernelxing@tencent.com>,
 	Daniel Borkmann <daniel@iogearbox.net>,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>
-Subject: [PATCH 5.10 46/59] bpf: Fix overrunning reservations in ringbuf
-Date: Thu, 25 Jul 2024 16:37:36 +0200
-Message-ID: <20240725142735.000106095@linuxfoundation.org>
+	John Fastabend <john.fastabend@gmail.com>,
+	Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
+Subject: [PATCH 5.10 47/59] bpf, skmsg: Fix NULL pointer dereference in sk_psock_skb_ingress_enqueue
+Date: Thu, 25 Jul 2024 16:37:37 +0200
+Message-ID: <20240725142735.037490902@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -53,143 +53,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Jason Xing <kernelxing@tencent.com>
 
-commit cfa1a2329a691ffd991fcf7248a57d752e712881 upstream.
+commit 6648e613226e18897231ab5e42ffc29e63fa3365 upstream.
 
-The BPF ring buffer internally is implemented as a power-of-2 sized circular
-buffer, with two logical and ever-increasing counters: consumer_pos is the
-consumer counter to show which logical position the consumer consumed the
-data, and producer_pos which is the producer counter denoting the amount of
-data reserved by all producers.
+Fix NULL pointer data-races in sk_psock_skb_ingress_enqueue() which
+syzbot reported [1].
 
-Each time a record is reserved, the producer that "owns" the record will
-successfully advance producer counter. In user space each time a record is
-read, the consumer of the data advanced the consumer counter once it finished
-processing. Both counters are stored in separate pages so that from user
-space, the producer counter is read-only and the consumer counter is read-write.
+[1]
+BUG: KCSAN: data-race in sk_psock_drop / sk_psock_skb_ingress_enqueue
 
-One aspect that simplifies and thus speeds up the implementation of both
-producers and consumers is how the data area is mapped twice contiguously
-back-to-back in the virtual memory, allowing to not take any special measures
-for samples that have to wrap around at the end of the circular buffer data
-area, because the next page after the last data page would be first data page
-again, and thus the sample will still appear completely contiguous in virtual
-memory.
+write to 0xffff88814b3278b8 of 8 bytes by task 10724 on cpu 1:
+ sk_psock_stop_verdict net/core/skmsg.c:1257 [inline]
+ sk_psock_drop+0x13e/0x1f0 net/core/skmsg.c:843
+ sk_psock_put include/linux/skmsg.h:459 [inline]
+ sock_map_close+0x1a7/0x260 net/core/sock_map.c:1648
+ unix_release+0x4b/0x80 net/unix/af_unix.c:1048
+ __sock_release net/socket.c:659 [inline]
+ sock_close+0x68/0x150 net/socket.c:1421
+ __fput+0x2c1/0x660 fs/file_table.c:422
+ __fput_sync+0x44/0x60 fs/file_table.c:507
+ __do_sys_close fs/open.c:1556 [inline]
+ __se_sys_close+0x101/0x1b0 fs/open.c:1541
+ __x64_sys_close+0x1f/0x30 fs/open.c:1541
+ do_syscall_64+0xd3/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
 
-Each record has a struct bpf_ringbuf_hdr { u32 len; u32 pg_off; } header for
-book-keeping the length and offset, and is inaccessible to the BPF program.
-Helpers like bpf_ringbuf_reserve() return `(void *)hdr + BPF_RINGBUF_HDR_SZ`
-for the BPF program to use. Bing-Jhong and Muhammad reported that it is however
-possible to make a second allocated memory chunk overlapping with the first
-chunk and as a result, the BPF program is now able to edit first chunk's
-header.
+read to 0xffff88814b3278b8 of 8 bytes by task 10713 on cpu 0:
+ sk_psock_data_ready include/linux/skmsg.h:464 [inline]
+ sk_psock_skb_ingress_enqueue+0x32d/0x390 net/core/skmsg.c:555
+ sk_psock_skb_ingress_self+0x185/0x1e0 net/core/skmsg.c:606
+ sk_psock_verdict_apply net/core/skmsg.c:1008 [inline]
+ sk_psock_verdict_recv+0x3e4/0x4a0 net/core/skmsg.c:1202
+ unix_read_skb net/unix/af_unix.c:2546 [inline]
+ unix_stream_read_skb+0x9e/0xf0 net/unix/af_unix.c:2682
+ sk_psock_verdict_data_ready+0x77/0x220 net/core/skmsg.c:1223
+ unix_stream_sendmsg+0x527/0x860 net/unix/af_unix.c:2339
+ sock_sendmsg_nosec net/socket.c:730 [inline]
+ __sock_sendmsg+0x140/0x180 net/socket.c:745
+ ____sys_sendmsg+0x312/0x410 net/socket.c:2584
+ ___sys_sendmsg net/socket.c:2638 [inline]
+ __sys_sendmsg+0x1e9/0x280 net/socket.c:2667
+ __do_sys_sendmsg net/socket.c:2676 [inline]
+ __se_sys_sendmsg net/socket.c:2674 [inline]
+ __x64_sys_sendmsg+0x46/0x50 net/socket.c:2674
+ do_syscall_64+0xd3/0x1d0
+ entry_SYSCALL_64_after_hwframe+0x6d/0x75
 
-For example, consider the creation of a BPF_MAP_TYPE_RINGBUF map with size
-of 0x4000. Next, the consumer_pos is modified to 0x3000 /before/ a call to
-bpf_ringbuf_reserve() is made. This will allocate a chunk A, which is in
-[0x0,0x3008], and the BPF program is able to edit [0x8,0x3008]. Now, lets
-allocate a chunk B with size 0x3000. This will succeed because consumer_pos
-was edited ahead of time to pass the `new_prod_pos - cons_pos > rb->mask`
-check. Chunk B will be in range [0x3008,0x6010], and the BPF program is able
-to edit [0x3010,0x6010]. Due to the ring buffer memory layout mentioned
-earlier, the ranges [0x0,0x4000] and [0x4000,0x8000] point to the same data
-pages. This means that chunk B at [0x4000,0x4008] is chunk A's header.
-bpf_ringbuf_submit() / bpf_ringbuf_discard() use the header's pg_off to then
-locate the bpf_ringbuf itself via bpf_ringbuf_restore_from_rec(). Once chunk
-B modified chunk A's header, then bpf_ringbuf_commit() refers to the wrong
-page and could cause a crash.
+value changed: 0xffffffff83d7feb0 -> 0x0000000000000000
 
-Fix it by calculating the oldest pending_pos and check whether the range
-from the oldest outstanding record to the newest would span beyond the ring
-buffer size. If that is the case, then reject the request. We've tested with
-the ring buffer benchmark in BPF selftests (./benchs/run_bench_ringbufs.sh)
-before/after the fix and while it seems a bit slower on some benchmarks, it
-is still not significantly enough to matter.
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 10713 Comm: syz-executor.4 Tainted: G        W          6.8.0-syzkaller-08951-gfe46a7dd189e #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/29/2024
 
-Fixes: 457f44363a88 ("bpf: Implement BPF ring buffer and verifier support for it")
-Reported-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Reported-by: Muhammad Ramdhan <ramdhan@starlabs.sg>
-Co-developed-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Co-developed-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Bing-Jhong Billy Jheng <billy@starlabs.sg>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Prior to this, commit 4cd12c6065df ("bpf, sockmap: Fix NULL pointer
+dereference in sk_psock_verdict_data_ready()") fixed one NULL pointer
+similarly due to no protection of saved_data_ready. Here is another
+different caller causing the same issue because of the same reason. So
+we should protect it with sk_callback_lock read lock because the writer
+side in the sk_psock_drop() uses "write_lock_bh(&sk->sk_callback_lock);".
+
+To avoid errors that could happen in future, I move those two pairs of
+lock into the sk_psock_data_ready(), which is suggested by John Fastabend.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Reported-by: syzbot+aa8c8ec2538929f18f2d@syzkaller.appspotmail.com
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240621140828.18238-1-daniel@iogearbox.net
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Reviewed-by: John Fastabend <john.fastabend@gmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=aa8c8ec2538929f18f2d
+Link: https://lore.kernel.org/all/20240329134037.92124-1-kerneljasonxing@gmail.com
+Link: https://lore.kernel.org/bpf/20240404021001.94815-1-kerneljasonxing@gmail.com
+Signed-off-by: Ashwin Dayanand Kamat <ashwin.kamat@broadcom.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/ringbuf.c |   30 +++++++++++++++++++++++++-----
- 1 file changed, 25 insertions(+), 5 deletions(-)
+ include/linux/skmsg.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/bpf/ringbuf.c
-+++ b/kernel/bpf/ringbuf.c
-@@ -41,9 +41,12 @@ struct bpf_ringbuf {
- 	 * mapping consumer page as r/w, but restrict producer page to r/o.
- 	 * This protects producer position from being modified by user-space
- 	 * application and ruining in-kernel position tracking.
-+	 * Note that the pending counter is placed in the same
-+	 * page as the producer, so that it shares the same cache line.
- 	 */
- 	unsigned long consumer_pos __aligned(PAGE_SIZE);
- 	unsigned long producer_pos __aligned(PAGE_SIZE);
-+	unsigned long pending_pos;
- 	char data[] __aligned(PAGE_SIZE);
- };
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -407,10 +407,12 @@ static inline void sk_psock_put(struct s
  
-@@ -145,6 +148,7 @@ static struct bpf_ringbuf *bpf_ringbuf_a
- 	rb->mask = data_sz - 1;
- 	rb->consumer_pos = 0;
- 	rb->producer_pos = 0;
-+	rb->pending_pos = 0;
- 
- 	return rb;
- }
-@@ -323,9 +327,9 @@ bpf_ringbuf_restore_from_rec(struct bpf_
- 
- static void *__bpf_ringbuf_reserve(struct bpf_ringbuf *rb, u64 size)
+ static inline void sk_psock_data_ready(struct sock *sk, struct sk_psock *psock)
  {
--	unsigned long cons_pos, prod_pos, new_prod_pos, flags;
--	u32 len, pg_off;
-+	unsigned long cons_pos, prod_pos, new_prod_pos, pend_pos, flags;
- 	struct bpf_ringbuf_hdr *hdr;
-+	u32 len, pg_off, tmp_size, hdr_len;
++	read_lock_bh(&sk->sk_callback_lock);
+ 	if (psock->parser.enabled)
+ 		psock->parser.saved_data_ready(sk);
+ 	else
+ 		sk->sk_data_ready(sk);
++	read_unlock_bh(&sk->sk_callback_lock);
+ }
  
- 	if (unlikely(size > RINGBUF_MAX_RECORD_SZ))
- 		return NULL;
-@@ -343,13 +347,29 @@ static void *__bpf_ringbuf_reserve(struc
- 		spin_lock_irqsave(&rb->spinlock, flags);
- 	}
- 
-+	pend_pos = rb->pending_pos;
- 	prod_pos = rb->producer_pos;
- 	new_prod_pos = prod_pos + len;
- 
--	/* check for out of ringbuf space by ensuring producer position
--	 * doesn't advance more than (ringbuf_size - 1) ahead
-+	while (pend_pos < prod_pos) {
-+		hdr = (void *)rb->data + (pend_pos & rb->mask);
-+		hdr_len = READ_ONCE(hdr->len);
-+		if (hdr_len & BPF_RINGBUF_BUSY_BIT)
-+			break;
-+		tmp_size = hdr_len & ~BPF_RINGBUF_DISCARD_BIT;
-+		tmp_size = round_up(tmp_size + BPF_RINGBUF_HDR_SZ, 8);
-+		pend_pos += tmp_size;
-+	}
-+	rb->pending_pos = pend_pos;
-+
-+	/* check for out of ringbuf space:
-+	 * - by ensuring producer position doesn't advance more than
-+	 *   (ringbuf_size - 1) ahead
-+	 * - by ensuring oldest not yet committed record until newest
-+	 *   record does not span more than (ringbuf_size - 1)
- 	 */
--	if (new_prod_pos - cons_pos > rb->mask) {
-+	if (new_prod_pos - cons_pos > rb->mask ||
-+	    new_prod_pos - pend_pos > rb->mask) {
- 		spin_unlock_irqrestore(&rb->spinlock, flags);
- 		return NULL;
- 	}
+ static inline void psock_set_prog(struct bpf_prog **pprog,
 
 
