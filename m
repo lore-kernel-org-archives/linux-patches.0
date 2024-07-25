@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A85321E895;
-	Thu, 25 Jul 2024 14:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC14819D886;
+	Thu, 25 Jul 2024 14:50:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919032; cv=none; b=ILWrhwqM9l/UCM0ZXQNeGd3/wxaAkjK5G2/rBjkx0Wzfdc5FWKXqNESrVYBAnMed5yEgvyf/V6FVvE8oDYiGGonAhZ+2qBzlxKk44C3R00qAbIsv6PZO6vvkcBkflg00uknJ7e1oUjSS4WLfFZO3xlNa+qpPeIKja8jDPHtNJh8=
+	t=1721919035; cv=none; b=DS68AeSP3mckyEWLOe6ccxhj0h47X/Vy/W0MG8AKlIIxcnR9tbyx6NUbHmL38cQDu7W7qDS5pHQSW9B/mooB5Knokfq8WF+MX4DV8qyYOl5fLvk6lNGgFVVDsxh5U9Sc2C/4LGQJZx8V6Cgi14M2+WbpVCDIx8ZDn5HFM6dN23Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919032; c=relaxed/simple;
-	bh=WOZz3erTPIGz+sOzsE0DF/o/r2/g7JICK1DR1fjGYIM=;
+	s=arc-20240116; t=1721919035; c=relaxed/simple;
+	bh=+9imkdzRMuG3AelQclnD8qTAyGw5CggEaSkT4E185ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPhZyAsRKYRvFEVp0e8G8NY3bLp/usYQgV+rfUGckOxFLPnX7zDriFVIVIpkIK52DAb6lkCPAKt3TNsyn3szDsECbl1apvkIB3Nkb2L9TBuHtEv0vv6Lqi+nbok5RBFCU7WTgbziQ1rHIXbGF9lEZBaXdreJMWIie+CM8BVKfrM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSS6nxj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OaWQXje5LgdTG2uc0dbHxxNnVu7xJrT8/sOtYepN66E4GYoFuW5L1EZ6V6enKtBD8zVMODG4Ib/q+2XgZ4cKHgi6KQQWcRdXcSmN9vUN42o2g0savlas6O6eohXd0LcozGeoVWuZmldYtfRwRl/bRlJgde6k/SygdskqtDgJXW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H0kzquD/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSS6nxj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2756FC116B1;
-	Thu, 25 Jul 2024 14:50:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H0kzquD/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC79C4AF0F;
+	Thu, 25 Jul 2024 14:50:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919032;
-	bh=WOZz3erTPIGz+sOzsE0DF/o/r2/g7JICK1DR1fjGYIM=;
+	s=korg; t=1721919035;
+	bh=+9imkdzRMuG3AelQclnD8qTAyGw5CggEaSkT4E185ps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSS6nxj8ocbcJ8WX1heQ0ImvonvK9twnz7UiUNB810NiJwxCYkApfaGEPIzmZvVpY
-	 2bYkSPinQTjHXkNnJRMawlZExpMH+H79P7+JT29FNqsMZuizeOfGbVnFoWmeU91FwT
-	 3W/2FqmYXvsIId+yKr+J1CXSEcBBxpMMVgzORAPc=
+	b=H0kzquD/f0fEv3bqxGJNEdmIVHeJZy4yzfmJYEXjQeEX35/7nilknKotDbFXU5Y75
+	 btmB69iVHNu1JJr6jcW5MxbrZPHRycALci5oexIGfyty6y5gGU7hANhJ5/svpeI+FB
+	 c8phnIo2idWiGMXu+YGB2UdWxNsjQmdT1oZpLQs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/59] mips: fix compat_sys_lseek syscall
-Date: Thu, 25 Jul 2024 16:37:11 +0200
-Message-ID: <20240725142734.063122837@linuxfoundation.org>
+	Seunghun Han <kkamagui@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 56/59] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
+Date: Thu, 25 Jul 2024 16:37:46 +0200
+Message-ID: <20240725142735.373339580@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -51,38 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Seunghun Han <kkamagui@gmail.com>
 
-[ Upstream commit 0d5679a0aae2d8cda72169452c32e5cb88a7ab33 ]
+commit d7063c08738573fc2f3296da6d31a22fa8aa843a upstream.
 
-This is almost compatible, but passing a negative offset should result
-in a EINVAL error, but on mips o32 compat mode would seek to a large
-32-bit byte offset.
+Samsung Galaxy Book Pro 360 (13" 2022 NT935QDB-KC71S) with codec SSID
+144d:c1a4 requires the same workaround to enable the speaker amp
+as other Samsung models with the ALC298 codec.
 
-Use compat_sys_lseek() to correctly sign-extend the argument.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240718080908.8677-1-kkamagui@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/kernel/syscalls/syscall_o32.tbl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/kernel/syscalls/syscall_o32.tbl b/arch/mips/kernel/syscalls/syscall_o32.tbl
-index 6036af4f30e2d..c262975484fa4 100644
---- a/arch/mips/kernel/syscalls/syscall_o32.tbl
-+++ b/arch/mips/kernel/syscalls/syscall_o32.tbl
-@@ -27,7 +27,7 @@
- 17	o32	break				sys_ni_syscall
- # 18 was sys_stat
- 18	o32	unused18			sys_ni_syscall
--19	o32	lseek				sys_lseek
-+19	o32	lseek				sys_lseek			compat_sys_lseek
- 20	o32	getpid				sys_getpid
- 21	o32	mount				sys_mount
- 22	o32	umount				sys_oldumount
--- 
-2.43.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9208,6 +9208,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc1a4, "Samsung Galaxy Book Pro 360 (NT935QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
+ 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
 
 
