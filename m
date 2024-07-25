@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E818468;
-	Thu, 25 Jul 2024 14:49:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241F8FC19;
+	Thu, 25 Jul 2024 14:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918997; cv=none; b=fL1l5vbHg+nB+WfgCDlXKLT1NGhqH230FrL7CIpjfNnvylby7DPdkzHloMm2Sq6y0/7o3ORiOr2rO9acork4MqT/8diO6IYhwcTw3v1qG4LLP2XzuEg3P0QG7TbByWLdIhNPe6c76iHeFCpgZUiyug0JvQ9PBC+zb+DJxtsVGl0=
+	t=1721919000; cv=none; b=LB/IP2Bdb57fcOPfIgRdq9Ye856xBkMXKrQaL60J6UvnPGvtLh1E9VH0pMGlt+7TT8j/I20zMHVMLQ5ww/tmTHI6oNgT0V8ec8E9ntw2Y6igxAK/mlkwI3w1Wsh7P/+jRq8g1V15Bj2YEOUd3NQIGvrKaxZC0MlpBep/UjcW5WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918997; c=relaxed/simple;
-	bh=JhtOviAJIo4V1pDdSTxb2DUt/+BQi8qtNlOZSMOESqo=;
+	s=arc-20240116; t=1721919000; c=relaxed/simple;
+	bh=qTJikoGy3Hf8OKZMcc13FnbQNP+HZ1i5gVTQL3J1y20=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUMh4bRyXpsXDvbHpO4ZRgqhLeD5fH9pz1iZJPx8uJiXMhHM/Y4d84or7ehqw+S1sJngnxBX9gYWcfD0Tua9D0qfkdeQQz0FQPvxWbZqkfEQf6xCUs9rWxa2V8mBAcsba94Tly6f5hipyQVR+BtdeJuDuUPitsbtI9yxmav07fI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJLrvJCx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h94t4NArJzZW0g78SxLLz/CWRoyxCcfKJOUofJ6o8XHKf6GiI/mnu6m0pXajtSvsvRuFcMRcJgk0xMhvSVmiD9XqurweQnovErdU7MYKNGvsOgAofo5JFtNuFLVXi1+H6VYot6wW24oCRDbnITnjyUa99DmIW3QlFQXuB8OYvLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3QO2MB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJLrvJCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 574C9C4AF07;
-	Thu, 25 Jul 2024 14:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3QO2MB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FEE2C116B1;
+	Thu, 25 Jul 2024 14:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918996;
-	bh=JhtOviAJIo4V1pDdSTxb2DUt/+BQi8qtNlOZSMOESqo=;
+	s=korg; t=1721919000;
+	bh=qTJikoGy3Hf8OKZMcc13FnbQNP+HZ1i5gVTQL3J1y20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJLrvJCxD/d/138dXoVKEd6TtNEeX7YhVWyWeCLsnL2AVtMwQj6PLY57TjZCd8tWC
-	 V/kz9BzAoHc268/rldLs3z/RP6wqYg0vFhp/CQmZgY8m3zXoLJqilUj8sS1fQ9nvQU
-	 clYiVhiJvTmzm0Ryv4McB2h6VpuoAqlU8YpT0xnw=
+	b=E3QO2MB9Q5KDGAKiObl6V3BSx+mVnyrK+fXTg7REx/jkf9FCI1M8kNvKbVYG2rzWl
+	 ZeCu5t2tfdienLd5DUFCsY8Wnx1yN85oyDXVeKMB2dtYdR/UpfEA8INexHV4lVci3b
+	 hma9/yAjYLtxkhtU96kYlJ3ZiwSnub4QTl7x8H+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas GENTY <tomlohave@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 24/59] bytcr_rt5640 : inverse jack detect for Archos 101 cesium
-Date: Thu, 25 Jul 2024 16:37:14 +0200
-Message-ID: <20240725142734.174374511@linuxfoundation.org>
+	Bob Zhou <bob.zhou@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Subject: [PATCH 5.10 51/59] drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
+Date: Thu, 25 Jul 2024 16:37:41 +0200
+Message-ID: <20240725142735.184338562@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -53,48 +52,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas GENTY <tomlohave@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e3209a1827646daaab744aa6a5767b1f57fb5385 ]
+commit 6769a23697f17f9bf9365ca8ed62fe37e361a05a upstream.
 
-When headphones are plugged in, they appear absent; when they are removed,
-they appear present.
-Add a specific entry in bytcr_rt5640 for this device
+The "instance" variable needs to be signed for the error handling to work.
 
-Signed-off-by: Thomas GENTY <tomlohave@gmail.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20240608170251.99936-1-tomlohave@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8b2faf1a4f3b ("drm/amdgpu: add error handle to avoid out-of-bounds")
+Reviewed-by: Bob Zhou <bob.zhou@amd.com>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 1d049685e7075..47b581d99da67 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -468,6 +468,17 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF1 |
- 					BYT_RT5640_MCLK_EN),
- 	},
-+	{
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "ARCHOS 101 CESIUM"),
-+		},
-+		.driver_data = (void *)(BYTCR_INPUT_DEFAULTS |
-+					BYT_RT5640_JD_NOT_INV |
-+					BYT_RT5640_DIFF_MIC |
-+					BYT_RT5640_SSP0_AIF1 |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
+@@ -2069,7 +2069,7 @@ static int sdma_v4_0_process_trap_irq(st
+ 				      struct amdgpu_irq_src *source,
+ 				      struct amdgpu_iv_entry *entry)
+ {
+-	uint32_t instance;
++	int instance;
+ 
+ 	DRM_DEBUG("IH: SDMA trap\n");
+ 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
 
 
