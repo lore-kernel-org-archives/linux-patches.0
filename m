@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E6B4315F;
-	Thu, 25 Jul 2024 14:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08D48468;
+	Thu, 25 Jul 2024 14:51:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919071; cv=none; b=QAKY6AMnofPoE29P/mENeVkGeWwjxMc9zryw6JtTHma7vw7C0sQQhOFAZMa1FzK4WsJZ3hzz34Dcz5bCghQUEaIpjKb2/yU7o1GbfIBIcoM0AuhPaFY8oPgTFQj2mfal0OMEhAO8NT5Udx0iDkYOk5pg7vptoytQgOqz0fNnbXA=
+	t=1721919074; cv=none; b=Fs9kHpI53E2nIL6MHnF3c6RCtGQetfEZ7vugqjMznZKurP6Fb7IzXsGjs7IMoALhihnkfvqHcjTlsCzBAkM+GPNlSs+8fV6VG2rnKaSUeXR+nQ517rLnpoA+WnUiAl6iwp4RqG9sjyW7/Bnr0GnypqEc972I/uUQDB1gkBabZ2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919071; c=relaxed/simple;
-	bh=5zAkD4uy2NJ0WdC3QIe4He+F17SxZR60mi6F6Ogq6bI=;
+	s=arc-20240116; t=1721919074; c=relaxed/simple;
+	bh=e6ggF2XX54wXiMfNTzCnoWhtB40o+b5vHO4ajDTNZtU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=buAfP6OS3AgJHwRtIWrpYVkqiTvYez2l34BBRtOtXp25D9W8LRjfqq29uG1l882M2+2ilDD1ydVNjlJmC6S5x3yjG2p/BnZr91UX013YCZ9dPC0R5taItHeRXg8e/ljbKjF13AvMZNIPZgvv3hvq1YaTKT0Z+lRBbGfGJ7lDc/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjeGjRQI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pQXsEB70XCwzfLUqWC5OZDwza7fJN0quSFI7jCy07KzX/LXZpDWIAVliJpI5AXB52PK57AUSfdHH23DzMtBBO6P144Ipa9FZAQ42XLLGPZ9ALqeDD5/CtEBQEKe5mES5w0G9cwKC18W3EofCNAczNbgwzQ5DlSEP0+aUTFPDoFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVJRvuHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjeGjRQI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC82EC116B1;
-	Thu, 25 Jul 2024 14:51:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVJRvuHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F128AC116B1;
+	Thu, 25 Jul 2024 14:51:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919071;
-	bh=5zAkD4uy2NJ0WdC3QIe4He+F17SxZR60mi6F6Ogq6bI=;
+	s=korg; t=1721919074;
+	bh=e6ggF2XX54wXiMfNTzCnoWhtB40o+b5vHO4ajDTNZtU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qjeGjRQIZnWs/WV4KhkulakZVErYsKzWtECmOzbcGjulvCJFeOzCbEmLYWHz1iSUF
-	 jpujCJzigmZBhtrK7s0BvAQD3unc9emI1tee7wz75h7OVlnaY02LDacFINT294GHHS
-	 eSR9cNy4Ve3jYL3n8fn6aMuj1fxvHYeB2F/k8uX8=
+	b=aVJRvuHpyJjTeR3GLdEWFurJVFRDF7q3mP+iZBiKeO89yrpif21bMJE2mPIZyhvjB
+	 d6AGhmiqB7uUYSqrPmMWOHxj1EPW+4YP7mJ/gC9QPDEAVtOArDDgoTNeUPCdGOZ864
+	 oJlyXnCUAGjAGp6uedSlv6YuExH1u3qHm99+MDXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8830db5d3593b5546d2e@syzkaller.appspotmail.com,
+	Yedidya Benshimol <yedidya.ben.shimol@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 15/87] wifi: mac80211: handle tasklet frames before stopping
-Date: Thu, 25 Jul 2024 16:36:48 +0200
-Message-ID: <20240725142739.007940535@linuxfoundation.org>
+Subject: [PATCH 5.15 16/87] wifi: iwlwifi: mvm: d3: fix WoWLAN command version lookup
+Date: Thu, 25 Jul 2024 16:36:49 +0200
+Message-ID: <20240725142739.045317401@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -51,81 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
 
-[ Upstream commit 177c6ae9725d783f9e96f02593ce8fb2639be22f ]
+[ Upstream commit b7ffca99313d856f7d1cc89038d9061b128e8e97 ]
 
-The code itself doesn't want to handle frames from the driver
-if it's already stopped, but if the tasklet was queued before
-and runs after the stop, then all bets are off. Flush queues
-before actually stopping, RX should be off at this point since
-all the interfaces are removed already, etc.
+After moving from commands to notificaitons in the d3 resume flow,
+removing the WOWLAN_GET_STATUSES and REPLY_OFFLOADS_QUERY_CMD causes
+the return of the default value when looking up their version.
+Returning zero here results in the driver sending the not supported
+NON_QOS_TX_COUNTER_CMD.
 
-Reported-by: syzbot+8830db5d3593b5546d2e@syzkaller.appspotmail.com
-Link: https://msgid.link/20240515135318.b05f11385c9a.I41c1b33a2e1814c3a7ef352cd7f2951b91785617@changeid
+Signed-off-by: Yedidya Benshimol <yedidya.ben.shimol@intel.com>
+Reviewed-by: Gregory Greenman <gregory.greenman@intel.com>
+Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240510170500.8cabfd580614.If3a0db9851f56041f8f5360959354abd5379224a@changeid
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h |  2 ++
- net/mac80211/main.c        | 10 ++++++++--
- net/mac80211/util.c        |  2 ++
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/d3.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 03f8c8bdab765..03c238e68038b 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -1803,6 +1803,8 @@ void ieee80211_bss_info_change_notify(struct ieee80211_sub_if_data *sdata,
- void ieee80211_configure_filter(struct ieee80211_local *local);
- u32 ieee80211_reset_erp_info(struct ieee80211_sub_if_data *sdata);
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+index c4c62bcbe67de..f9b004d139501 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/d3.c
+@@ -1796,7 +1796,8 @@ static bool iwl_mvm_setup_connection_keep(struct iwl_mvm *mvm,
  
-+void ieee80211_handle_queued_frames(struct ieee80211_local *local);
-+
- u64 ieee80211_mgmt_tx_cookie(struct ieee80211_local *local);
- int ieee80211_attach_ack_skb(struct ieee80211_local *local, struct sk_buff *skb,
- 			     u64 *cookie, gfp_t gfp);
-diff --git a/net/mac80211/main.c b/net/mac80211/main.c
-index 9617ff8e27147..7d62374fe727b 100644
---- a/net/mac80211/main.c
-+++ b/net/mac80211/main.c
-@@ -220,9 +220,8 @@ u32 ieee80211_reset_erp_info(struct ieee80211_sub_if_data *sdata)
- 	       BSS_CHANGED_ERP_SLOT;
- }
- 
--static void ieee80211_tasklet_handler(struct tasklet_struct *t)
-+void ieee80211_handle_queued_frames(struct ieee80211_local *local)
- {
--	struct ieee80211_local *local = from_tasklet(local, t, tasklet);
- 	struct sk_buff *skb;
- 
- 	while ((skb = skb_dequeue(&local->skb_queue)) ||
-@@ -247,6 +246,13 @@ static void ieee80211_tasklet_handler(struct tasklet_struct *t)
- 	}
- }
- 
-+static void ieee80211_tasklet_handler(struct tasklet_struct *t)
-+{
-+	struct ieee80211_local *local = from_tasklet(local, t, tasklet);
-+
-+	ieee80211_handle_queued_frames(local);
-+}
-+
- static void ieee80211_restart_work(struct work_struct *work)
- {
- 	struct ieee80211_local *local =
-diff --git a/net/mac80211/util.c b/net/mac80211/util.c
-index 354badd32793a..3d47c2dba39da 100644
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -2146,6 +2146,8 @@ u32 ieee80211_sta_get_rates(struct ieee80211_sub_if_data *sdata,
- 
- void ieee80211_stop_device(struct ieee80211_local *local)
- {
-+	ieee80211_handle_queued_frames(local);
-+
- 	ieee80211_led_radio(local, false);
- 	ieee80211_mod_tpt_led_trig(local, 0, IEEE80211_TPT_LEDTRIG_FL_RADIO);
- 
+ out:
+ 	if (iwl_fw_lookup_notif_ver(mvm->fw, LONG_GROUP,
+-				    WOWLAN_GET_STATUSES, 0) < 10) {
++				    WOWLAN_GET_STATUSES,
++				    IWL_FW_CMD_VER_UNKNOWN) < 10) {
+ 		mvmvif->seqno_valid = true;
+ 		/* +0x10 because the set API expects next-to-use, not last-used */
+ 		mvmvif->seqno = le16_to_cpu(status->non_qos_seq_ctr) + 0x10;
 -- 
 2.43.0
 
