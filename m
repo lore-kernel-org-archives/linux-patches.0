@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C1E719D096;
-	Thu, 25 Jul 2024 14:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B25FC19;
+	Thu, 25 Jul 2024 14:48:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918922; cv=none; b=jU9uxSbMmmtUTA1wDI4WMmLaiSIYHMQmGxGBzUAtM3QdJ6oFGggj+Uwz9Qzt2zKLpeLicpyr5k+YG/zHzVI7bMkPlNtfuft5qgkaY4aZUravvruFkzxpVK3u7j5Gi0st9/ACPIdeGMc7vhZqIEmBmV62sVUcfOw2RgeWP15OzEU=
+	t=1721918925; cv=none; b=uOeN28AoSo36KpCyKf1ES0qByfgfh0FnorgVWrRNW/O4XwLz8j9U84Kdia42igkO+XAatHC8jN4Rqa5+/HNSsVe3IRijqKQwGDuBKrESB0odsUQVHgoIC4fQa3V8LhcO9zptMJGpzvLp/clE40Li1CRHjP1ntwMcPGoznpb2HEU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918922; c=relaxed/simple;
-	bh=F6xC11Aj18V7L1SN0cK5aqhRD8Guwx2p8noFU8CNU3U=;
+	s=arc-20240116; t=1721918925; c=relaxed/simple;
+	bh=DT8wOBJ+v9hdcNpNb9QUqX1GQggPkR58VXsPPqgePtg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDLES7RJ13bWY+PEHJ/AIu2agVR9eZUsz5/N/5TRzGKOLqH6dxFI6Ff5kwXoK13YPu0q6HJe/wZ7sHB6iwbDoXxhM1W9uSQ9I5/uAW5uw91NRps2B4/OfXy5+V4OzEgBXVg+4EJuGe0SJp/T0e65U/bdXiSBH0cdPEDAbC8FWZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ve4KvpmB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlY+tnLUaIuILasVAQDzp11ri65UuGiwk428v8cucGjIcazhLPPtcnIeUoJfewoxUzgkgub0szoHZXlqwKlzzp/5jQA4CC6AnckZpgMfrhii1bNBYNuofnZQGNFzKqlw0tEsP0WmbBAxKhTz+918/qQ9rzGc3Rh87fMTNCZvllA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ysLRpR6b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ve4KvpmB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CBAC32782;
-	Thu, 25 Jul 2024 14:48:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ysLRpR6b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F011DC116B1;
+	Thu, 25 Jul 2024 14:48:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918922;
-	bh=F6xC11Aj18V7L1SN0cK5aqhRD8Guwx2p8noFU8CNU3U=;
+	s=korg; t=1721918925;
+	bh=DT8wOBJ+v9hdcNpNb9QUqX1GQggPkR58VXsPPqgePtg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ve4KvpmBx+qUnytFSC1/SJRPhYEFVxxJSfWRnewA6TFWwB7bUYkf5mEqbV+ZKBgDy
-	 7FDacPM/mreONTkW2vZRS0vFmJXhfXUZeY+g9PvJcgW2jTfXoG0/XfPb8dxlZVyMZC
-	 69F65zivVIcZeQTPO9jLiTNXJDTIOgIgeHUT2PXA=
+	b=ysLRpR6bpklR20wwwReZYcaXWo+nlfVMdP/q7qPWnsuVbRAtAJio2DLS6ohrV9Mrb
+	 rLNXcCkcueqR26j4AYOc6+ClQZcKeTt3u1xYqpGyZPV6CQWC2p/ayxupw35NDTyrql
+	 3lSE+3nI5QGc5eAduYd+ix3uvqD1EBO6/fkXk4U4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Denose <jdenose@google.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Aivaz Latypov <reichaivaz@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/59] Input: elantech - fix touchpad state on resume for Lenovo N24
-Date: Thu, 25 Jul 2024 16:37:12 +0200
-Message-ID: <20240725142734.099859817@linuxfoundation.org>
+Subject: [PATCH 5.10 31/59] ALSA: hda/relatek: Enable Mute LED on HP Laptop 15-gw0xxx
+Date: Thu, 25 Jul 2024 16:37:21 +0200
+Message-ID: <20240725142734.442147597@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -51,77 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Denose <jdenose@google.com>
+From: Aivaz Latypov <reichaivaz@gmail.com>
 
-[ Upstream commit a69ce592cbe0417664bc5a075205aa75c2ec1273 ]
+[ Upstream commit 1d091a98c399c17d0571fa1d91a7123a698446e4 ]
 
-The Lenovo N24 on resume becomes stuck in a state where it
-sends incorrect packets, causing elantech_packet_check_v4 to fail.
-The only way for the device to resume sending the correct packets is for
-it to be disabled and then re-enabled.
+This HP Laptop uses ALC236 codec with COEF 0x07 controlling
+the mute LED. Enable existing quirk for this device.
 
-This change adds a dmi check to trigger this behavior on resume.
-
-Signed-off-by: Jonathan Denose <jdenose@google.com>
-Link: https://lore.kernel.org/r/20240503155020.v2.1.Ifa0e25ebf968d8f307f58d678036944141ab17e6@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Aivaz Latypov <reichaivaz@gmail.com>
+Link: https://patch.msgid.link/20240625081217.1049-1-reichaivaz@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/elantech.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/input/mouse/elantech.c b/drivers/input/mouse/elantech.c
-index 400281feb4e8d..8246662fa60b7 100644
---- a/drivers/input/mouse/elantech.c
-+++ b/drivers/input/mouse/elantech.c
-@@ -1476,16 +1476,47 @@ static void elantech_disconnect(struct psmouse *psmouse)
- 	psmouse->private = NULL;
- }
- 
-+/*
-+ * Some hw_version 4 models fail to properly activate absolute mode on
-+ * resume without going through disable/enable cycle.
-+ */
-+static const struct dmi_system_id elantech_needs_reenable[] = {
-+#if defined(CONFIG_DMI) && defined(CONFIG_X86)
-+	{
-+		/* Lenovo N24 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "81AF"),
-+		},
-+	},
-+#endif
-+	{ }
-+};
-+
- /*
-  * Put the touchpad back into absolute mode when reconnecting
-  */
- static int elantech_reconnect(struct psmouse *psmouse)
- {
-+	int err;
-+
- 	psmouse_reset(psmouse);
- 
- 	if (elantech_detect(psmouse, 0))
- 		return -1;
- 
-+	if (dmi_check_system(elantech_needs_reenable)) {
-+		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_DISABLE);
-+		if (err)
-+			psmouse_warn(psmouse, "failed to deactivate mouse on %s: %d\n",
-+				     psmouse->ps2dev.serio->phys, err);
-+
-+		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_ENABLE);
-+		if (err)
-+			psmouse_warn(psmouse, "failed to reactivate mouse on %s: %d\n",
-+				     psmouse->ps2dev.serio->phys, err);
-+	}
-+
- 	if (elantech_set_absolute_mode(psmouse)) {
- 		psmouse_err(psmouse,
- 			    "failed to put touchpad back into absolute mode.\n");
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index fdbc76eaf233e..5cc158c56d43e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9096,6 +9096,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8788, "HP OMEN 15", ALC285_FIXUP_HP_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87b7, "HP Laptop 14-fq0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87c8, "HP", ALC287_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x87d3, "HP Laptop 15-gw0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x87e5, "HP ProBook 440 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87e7, "HP ProBook 450 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x87f1, "HP ProBook 630 G8 Notebook PC", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.43.0
 
