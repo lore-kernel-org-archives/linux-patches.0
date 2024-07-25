@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7FC413C816;
-	Thu, 25 Jul 2024 14:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EB713DDB8;
+	Thu, 25 Jul 2024 14:52:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919131; cv=none; b=CV0FJ0bAlbXe6vSINNxH1XEXXrB7UzmTZvCaGhbL2DrgUD43fxZAOgSbDLPXUzekuJutrQPptPgdAVOGV8vXkv+s2DDAHYkdD1UbZ6G0+wB1uNJ+QsXImk6XMpiabz4iXF+LrsVtzSZd9sx7n9p6jbG5zx9SarLc0rczZzlvW48=
+	t=1721919135; cv=none; b=C5wl7CTbqoro6EZuGMXRbVTQEXdGakqAJzUpIgMuPSEg8rDOIxOhZUgePzs9U2TfPnEnxoBwaFPc7TXik1VEuesdf6G6l3wCGb9L2L6b+lqHSdmZUayQIXyJPlWnWoE/0O5Qqvxg8uK9Vldgmf6L3yKYIUxGM9jO3udAm3hLQ+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919131; c=relaxed/simple;
-	bh=rGEUHh3IpwjFAIQZD3oemwVY0c4I5N59K0e48UTBgPY=;
+	s=arc-20240116; t=1721919135; c=relaxed/simple;
+	bh=UfN87ARUrgCokFa86qpvTt838c9AD12a4w4Nih9xwiQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o1nXWVnPn9BuARrfAF8ItHBQvk7bMNzSZ6WzzT2ZEy4lWqZRMGg0Iz0k+83iV8ytmfmhamc0IHbTLqZL1TFAAcduqUviCXi56qcw3VW/fxPIdMS+/3E9nXfSKb8hmkTgw6vDfSaHbFkd+uhMG1qLw4dbVUFXKqkJlL1mFIij0V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAmECmMu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jEaxm8YsXhPnpWXZtTRKuYYgG9r8czRo0YEYV2ylMfrsxkzoMNGxIoGGJ4cJI1LoOdY5BbGA7D/FJlgr9EC51l89dPw/rxc1SCwFvXrGPCPJLCKnvPI3u50iJav5r/HzLUIjHqPwVrVAT+YhmlDjIdKw3Np2d59ZmciGKXh3G20=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=df3dYF65; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAmECmMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C18BC116B1;
-	Thu, 25 Jul 2024 14:52:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="df3dYF65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7CDC116B1;
+	Thu, 25 Jul 2024 14:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919131;
-	bh=rGEUHh3IpwjFAIQZD3oemwVY0c4I5N59K0e48UTBgPY=;
+	s=korg; t=1721919135;
+	bh=UfN87ARUrgCokFa86qpvTt838c9AD12a4w4Nih9xwiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAmECmMuQtaYGnPJUGuQGmdHLrzPOxCkPqsd85LusNwehYgaQVgZLS5qEmVDmlI4J
-	 TXkVPbVaGtXNTJhPH35TOZezm6Jkcmje9AZSItukapnF6Tuxu4rnCYpEd5T3+2t+Fq
-	 kwoEp2GJOYFTSpElxCeO3pu0J6aeOlaoPT2h/fes=
+	b=df3dYF65IwOiACIVlQ++CIFOig9cOKRaN7cD0KP+WDSr57dy1edo2IcKZF76ircHG
+	 FH6jcD54kE11M/Zow/T27lK+UcjtO2SifC34uXr/eIeSU18sR5DmynMj/nZxRCsyyf
+	 9Ygjy+WNKB6hz5bmNFhjS9RFMLYxw52rayfbf/MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Martin Wilck <martin.wilck@suse.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Christie <michael.christie@oracle.com>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rajashekhar M A <rajs@netapp.com>
-Subject: [PATCH 5.15 07/87] scsi: core: alua: I/O errors for ALUA state transitions
-Date: Thu, 25 Jul 2024 16:36:40 +0200
-Message-ID: <20240725142738.705670316@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 08/87] scsi: qedf: Dont process stag work during unload and recovery
+Date: Thu, 25 Jul 2024 16:36:41 +0200
+Message-ID: <20240725142738.743076453@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -56,108 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Wilck <martin.wilck@suse.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-[ Upstream commit 10157b1fc1a762293381e9145041253420dfc6ad ]
+[ Upstream commit 51071f0831ea975fc045526dd7e17efe669dc6e1 ]
 
-When a host is configured with a few LUNs and I/O is running, injecting FC
-faults repeatedly leads to path recovery problems.  The LUNs have 4 paths
-each and 3 of them come back active after say an FC fault which makes 2 of
-the paths go down, instead of all 4. This happens after several iterations
-of continuous FC faults.
+Stag work can cause issues during unload and recovery, hence don't process
+it.
 
-Reason here is that we're returning an I/O error whenever we're
-encountering sense code 06/04/0a (LOGICAL UNIT NOT ACCESSIBLE, ASYMMETRIC
-ACCESS STATE TRANSITION) instead of retrying.
-
-[mwilck: The original patch was developed by Rajashekhar M A and Hannes
-Reinecke. I moved the code to alua_check_sense() as suggested by Mike
-Christie [1]. Evan Milne had raised the question whether pg->state should
-be set to transitioning in the UA case [2]. I believe that doing this is
-correct. SCSI_ACCESS_STATE_TRANSITIONING by itself doesn't cause I/O
-errors. Our handler schedules an RTPG, which will only result in an I/O
-error condition if the transitioning timeout expires.]
-
-[1] https://lore.kernel.org/all/0bc96e82-fdda-4187-148d-5b34f81d4942@oracle.com/
-[2] https://lore.kernel.org/all/CAGtn9r=kicnTDE2o7Gt5Y=yoidHYD7tG8XdMHEBJTBraVEoOCw@mail.gmail.com/
-
-Co-developed-by: Rajashekhar M A <rajs@netapp.com>
-Co-developed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin Wilck <martin.wilck@suse.com>
-Link: https://lore.kernel.org/r/20240514140344.19538-1-mwilck@suse.com
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240515091101.18754-2-skashyap@marvell.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/device_handler/scsi_dh_alua.c | 31 +++++++++++++++-------
- 1 file changed, 22 insertions(+), 9 deletions(-)
+ drivers/scsi/qedf/qedf_main.c | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/drivers/scsi/device_handler/scsi_dh_alua.c b/drivers/scsi/device_handler/scsi_dh_alua.c
-index a9c4a5e2ccb90..60792f257c235 100644
---- a/drivers/scsi/device_handler/scsi_dh_alua.c
-+++ b/drivers/scsi/device_handler/scsi_dh_alua.c
-@@ -406,28 +406,40 @@ static char print_alua_state(unsigned char state)
- 	}
- }
+diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
+index 18380a932ab61..ab43e15fa8f36 100644
+--- a/drivers/scsi/qedf/qedf_main.c
++++ b/drivers/scsi/qedf/qedf_main.c
+@@ -4001,6 +4001,22 @@ void qedf_stag_change_work(struct work_struct *work)
+ 	struct qedf_ctx *qedf =
+ 	    container_of(work, struct qedf_ctx, stag_work.work);
  
--static enum scsi_disposition alua_check_sense(struct scsi_device *sdev,
--					      struct scsi_sense_hdr *sense_hdr)
-+static void alua_handle_state_transition(struct scsi_device *sdev)
- {
- 	struct alua_dh_data *h = sdev->handler_data;
- 	struct alua_port_group *pg;
- 
-+	rcu_read_lock();
-+	pg = rcu_dereference(h->pg);
-+	if (pg)
-+		pg->state = SCSI_ACCESS_STATE_TRANSITIONING;
-+	rcu_read_unlock();
-+	alua_check(sdev, false);
-+}
++	if (!qedf) {
++		QEDF_ERR(&qedf->dbg_ctx, "qedf is NULL");
++		return;
++	}
 +
-+static enum scsi_disposition alua_check_sense(struct scsi_device *sdev,
-+					      struct scsi_sense_hdr *sense_hdr)
-+{
- 	switch (sense_hdr->sense_key) {
- 	case NOT_READY:
- 		if (sense_hdr->asc == 0x04 && sense_hdr->ascq == 0x0a) {
- 			/*
- 			 * LUN Not Accessible - ALUA state transition
- 			 */
--			rcu_read_lock();
--			pg = rcu_dereference(h->pg);
--			if (pg)
--				pg->state = SCSI_ACCESS_STATE_TRANSITIONING;
--			rcu_read_unlock();
--			alua_check(sdev, false);
-+			alua_handle_state_transition(sdev);
- 			return NEEDS_RETRY;
- 		}
- 		break;
- 	case UNIT_ATTENTION:
-+		if (sense_hdr->asc == 0x04 && sense_hdr->ascq == 0x0a) {
-+			/*
-+			 * LUN Not Accessible - ALUA state transition
-+			 */
-+			alua_handle_state_transition(sdev);
-+			return NEEDS_RETRY;
-+		}
- 		if (sense_hdr->asc == 0x29 && sense_hdr->ascq == 0x00) {
- 			/*
- 			 * Power On, Reset, or Bus Device Reset.
-@@ -494,7 +506,8 @@ static int alua_tur(struct scsi_device *sdev)
- 
- 	retval = scsi_test_unit_ready(sdev, ALUA_FAILOVER_TIMEOUT * HZ,
- 				      ALUA_FAILOVER_RETRIES, &sense_hdr);
--	if (sense_hdr.sense_key == NOT_READY &&
-+	if ((sense_hdr.sense_key == NOT_READY ||
-+	     sense_hdr.sense_key == UNIT_ATTENTION) &&
- 	    sense_hdr.asc == 0x04 && sense_hdr.ascq == 0x0a)
- 		return SCSI_DH_RETRY;
- 	else if (retval)
++	if (test_bit(QEDF_IN_RECOVERY, &qedf->flags)) {
++		QEDF_ERR(&qedf->dbg_ctx,
++			 "Already is in recovery, hence not calling software context reset.\n");
++		return;
++	}
++
++	if (test_bit(QEDF_UNLOADING, &qedf->flags)) {
++		QEDF_ERR(&qedf->dbg_ctx, "Driver unloading\n");
++		return;
++	}
++
+ 	printk_ratelimited("[%s]:[%s:%d]:%d: Performing software context reset.",
+ 			dev_name(&qedf->pdev->dev), __func__, __LINE__,
+ 			qedf->dbg_ctx.host_no);
 -- 
 2.43.0
 
