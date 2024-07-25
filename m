@@ -1,107 +1,151 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9321919DF64;
-	Thu, 25 Jul 2024 16:46:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011CA38DC0
+	for <patches@lists.linux.dev>; Thu, 25 Jul 2024 16:49:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721925999; cv=none; b=q4hTJxJ/cutpLD+aZggZ7t40TZ52+2g53h+tVc25thVBOwEG8UnX8K1SoBL6FT7h/yfc+93POuVX9ikXcsRYkhi/USJfbIVCUhZsSPgOfzw4JIrrYHBm/5Ec0Pqh8tEm+MSlM21oV+bgy9zdXz1CLgGR2Ws+bW3C0vPePNtAruw=
+	t=1721926143; cv=none; b=gpeTLuguludf626mK3otKpN1hKboPkUEEyRrqcm1rtNi10ToGaCjAvylOPWTl93e0ia0+zuMpO0SQIl/xxX7FH4QkrW5MPqAIpBEmaAxm6wjUyWb3MesssYDe9rc1pn9jGQwGsnWkKPfN+cS3V5gbH9Sq+ibpDb0ur/Z3vVCu8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721925999; c=relaxed/simple;
-	bh=BB6mD9MVfalBY2Sh8QiPsmLsNCeDOP5OqjX1/QypdnE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eulFsQjd73yvAGDSt3xdRURiUfU1ApXiEJ0W/wtQyMhk4IWakdBWDPfiaFguFPRSbZAQVlW1j3Al6Tx3o2RicKiG51VF6njjSJivILixYCrNrPzNGM3/ToyaU6uPn9L02Siubci/roGPqwzEFOjGKZzifHMWo0UnsmSdv4/L4+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L+d91RQ2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721926143; c=relaxed/simple;
+	bh=zl9tyaX3atF1FD6Oj4CMVfjVeFukwL1OauJx8MZgj8w=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SL19WBiDjOlenWFhFl7Bl99wJHlxlOpsqHsmDU8EYY9AYyEYKfZxtWIw+BfadpAZAIl6XFqq2I69ZXUZY/D2Ufq9BqWsbzYJsRwmtkfu7rBVAldJ6T8tn92DqJONcZo7DJCvIg5WCfPjAXxSMlTvLtpixu98pHYQRBSz8unZ660=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Kusow6fH; arc=none smtp.client-ip=209.85.221.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L+d91RQ2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D1DC4AF0E;
-	Thu, 25 Jul 2024 16:46:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721925999;
-	bh=BB6mD9MVfalBY2Sh8QiPsmLsNCeDOP5OqjX1/QypdnE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+d91RQ2OsaoskFRNBR8TuJagp//xrXXJwHZpmg9ujOutiIBRvbkg1dT/Hr0FLDS6
-	 JR91ucZ15amlWT4aHeLYvZlPG4cSxFWmwtvsJDqv2BoS2whS5qLtYNwcuLS1LfCEWV
-	 cpVbLqoVHAE2hyxF7JT3f7BmEaETBx9KUQ9AyeFoHx2K2EH5ECb4w6GE7ZrsFEeo62
-	 tDaqn6XJ7CujZ1E/Pv01m+7iuMn+Lfb+AQQfuvxQRVa/SozCfK0+Tg7QqMBI65i/U8
-	 cWa5cLA/wS7AXNlfPB0puTwyxr66I2hFp2h3w5YoeudvputdLsy0wqxuSpbFH2/cq5
-	 F0JU21qp5LrCg==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: David Collins <quic_collinsd@quicinc.com>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 3/3] spmi: pmic-arb: add missing newline in dev_err format strings
-Date: Thu, 25 Jul 2024 09:46:33 -0700
-Message-ID: <20240725164636.3362690-4-sboyd@kernel.org>
-X-Mailer: git-send-email 2.46.0.rc1.232.g9752f9e123-goog
-In-Reply-To: <20240725164636.3362690-1-sboyd@kernel.org>
-References: <20240725164636.3362690-1-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kusow6fH"
+Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-4f2c8e99c0fso361554e0c.1
+        for <patches@lists.linux.dev>; Thu, 25 Jul 2024 09:49:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1721926141; x=1722530941; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jKCeuZLzTZnQ+M0GtznLWK7b6OnFbkvquUnPvitUBac=;
+        b=Kusow6fH/AwUNezIE+zC1lcwd4Q2JFrUS28LDRKmpQgQxoXVE6Ub1iVKPpfYvEsF47
+         O8IJaGMvTVUPtBuOTQpEVIxsQbpJRBBjojHt3P+T26jKPMlp6wGpgPedXsX1wMDsL3J2
+         y+OaWMraf2/BmUPM3sWlyv/XN+aXF8raDhaqgsSXR9Bp/0EYrQKd9Xnarz1Co7huaPHp
+         wNF1cXsUY0MfvfS11sT9E8iU6Sy8U9gkF++2wjnuNik9ZzbbDRitrqKbfNljSK4fmEi/
+         EVY1ZE6nf5AU2doSNLdo4W53IybPfqbm8utGyCLBNALcX6JvAMA8Un6SPEtoYCFXeSfg
+         FVzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721926141; x=1722530941;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jKCeuZLzTZnQ+M0GtznLWK7b6OnFbkvquUnPvitUBac=;
+        b=XCzF5OSXtaIC0N0guW9gF2TBTHgIXnruf+/PpcPBv+p8qHiVcdb2hC7BJGQEXvnZt9
+         6la7ILz42ogaNIpBi7mrP3iUVtvbkQ9xLjTKL0DnWFYZv47qwTfoazAtpuIeZwozyX2Q
+         esBJnqqa2rWpdkTNeJAi/kn/lS0wzou1LKlt5ZcvrNLSAewhOQHejPlYiI2qOanIa80a
+         ZnvJzipCNHYnQBBlt34fHMPhRPa7MSGW9rjE1mV/nToRzIhuvZZAZpAaUE4ad7PYPfiF
+         8xcEZlKMSiWR9W9b+IRMXrP3kyL4rAIP2gapESn1gXWh4CnwfIYSX59oUV5koaGnKc7z
+         CyPg==
+X-Forwarded-Encrypted: i=1; AJvYcCXQnilIQfImrMxDN83wByDjz5RarSDe4x+bRRTj4rFd+ZsPwLBCzW6NNNEjxjMcq1lZ818cLbBuP4fIx4IZP0ToQm8k2qVIwg==
+X-Gm-Message-State: AOJu0YxDF8ek2C7J6XMB9U+c5pZyS9QYHzkBYjRhvN1w7IYAu0t+dt7f
+	vgfdP2JUZVJr/YQx/l2MG8+4Q4VHaXlUTKBiDQah4cxwjllCmJpaEWByA7cxgq6kkPMh47XFVgw
+	Fkckj4TGZo82MXkHfwCfaHnmpcA/MhHhV9V7jBA==
+X-Google-Smtp-Source: AGHT+IH+sca/eScSSpr1hspS4ecSOGX3fro/SHs8Yt+aVmqnAYTWGrfofCR+92nWoCEokUgsHg1b91tdBPwJtE+Jp5c=
+X-Received: by 2002:a05:6122:1d4a:b0:4f3:828:7a47 with SMTP id
+ 71dfb90a1353d-4f6ca2da2fbmr3128684e0c.6.1721926140905; Thu, 25 Jul 2024
+ 09:49:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20240725142738.422724252@linuxfoundation.org>
+In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 25 Jul 2024 22:18:49 +0530
+Message-ID: <CA+G9fYvCyg1hXaci_j-RB4YgATb458ZqRjJSye4qub9zYrmL_A@mail.gmail.com>
+Subject: Re: [PATCH 5.15 00/87] 5.15.164-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Anders Roxell <anders.roxell@linaro.org>, 
+	Arnd Bergmann <arnd@arndb.de>, Dan Carpenter <dan.carpenter@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: David Collins <quic_collinsd@quicinc.com>
+On Thu, 25 Jul 2024 at 20:22, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.164 release.
+> There are 87 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.164-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-dev_err() format strings should end with '\n'.  Several such
-format strings in the spmi-pmic-arb driver are missing it.
-Add newlines where needed.
+The following build errors noticed while building arm configs with toolchains
+gcc-12 and clang-18 on stable-rc linux-5.15.y
 
-Fixes: 02922ccbb330 ("spmi: pmic-arb: Register controller for bus instead of arbiter")
-Signed-off-by: David Collins <quic_collinsd@quicinc.com>
-Link: https://lore.kernel.org/r/20240703221248.3640490-1-quic_collinsd@quicinc.com
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/spmi/spmi-pmic-arb.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+First seen on today builds 25-July-2024.
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index b6880c13163c..9ba9495fcc4b 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -398,7 +398,7 @@ static int pmic_arb_fmt_read_cmd(struct spmi_pmic_arb_bus *bus, u8 opc, u8 sid,
- 
- 	*offset = rc;
- 	if (bc >= PMIC_ARB_MAX_TRANS_BYTES) {
--		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested",
-+		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested\n",
- 			PMIC_ARB_MAX_TRANS_BYTES, len);
- 		return  -EINVAL;
- 	}
-@@ -477,7 +477,7 @@ static int pmic_arb_fmt_write_cmd(struct spmi_pmic_arb_bus *bus, u8 opc,
- 
- 	*offset = rc;
- 	if (bc >= PMIC_ARB_MAX_TRANS_BYTES) {
--		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested",
-+		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested\n",
- 			PMIC_ARB_MAX_TRANS_BYTES, len);
- 		return  -EINVAL;
- 	}
-@@ -1702,7 +1702,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
- 
- 	index = of_property_match_string(node, "reg-names", "cnfg");
- 	if (index < 0) {
--		dev_err(dev, "cnfg reg region missing");
-+		dev_err(dev, "cnfg reg region missing\n");
- 		return -EINVAL;
- 	}
- 
-@@ -1712,7 +1712,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
- 
- 	index = of_property_match_string(node, "reg-names", "intr");
- 	if (index < 0) {
--		dev_err(dev, "intr reg region missing");
-+		dev_err(dev, "intr reg region missing\n");
- 		return -EINVAL;
- 	}
- 
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+  GOOD: b84034c8f228 ("Linux 5.15.163-rc2")
+  BAD:  1d0703aa8114 ("Linux 5.15.164-rc1")
 
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Build log:
+-------
+from drivers/net/wireless/ralink/rt2x00/rt2800lib.c:25:
+drivers/net/wireless/ralink/rt2x00/rt2800lib.c: In function
+'rt2800_txpower_to_dev':
+include/linux/build_bug.h:78:41: error: static assertion failed:
+"clamp() low limit (char)(-7) greater than high limit (char)(15)"
+   78 | #define __static_assert(expr, msg, ...) _Static_assert(expr, msg)
+      |                                         ^~~~~~~~~~~~~~
+include/linux/build_bug.h:77:34: note: in expansion of macro '__static_assert'
+   77 | #define static_assert(expr, ...) __static_assert(expr,
+##__VA_ARGS__, #expr)
+      |                                  ^~~~~~~~~~~~~~~
+include/linux/minmax.h:66:17: note: in expansion of macro 'static_assert'
+   66 |
+static_assert(__builtin_choose_expr(__is_constexpr((lo) > (hi)),
+ \
+      |                 ^~~~~~~~~~~~~
+include/linux/minmax.h:76:17: note: in expansion of macro '__clamp_once'
+   76 |                 __clamp_once(val, lo, hi, __UNIQUE_ID(__val),
+         \
+      |                 ^~~~~~~~~~~~
+include/linux/minmax.h:180:36: note: in expansion of macro '__careful_clamp'
+  180 | #define clamp_t(type, val, lo, hi)
+__careful_clamp((type)(val), (type)(lo), (type)(hi))
+      |                                    ^~~~~~~~~~~~~~~
+drivers/net/wireless/ralink/rt2x00/rt2800lib.c:3993:24: note: in
+expansion of macro 'clamp_t'
+ 3993 |                 return clamp_t(char, txpower, MIN_A_TXPOWER,
+MAX_A_TXPOWER);
+      |                        ^~~~~~~
+
+
+metadata:
+----
+  config: https://storage.tuxsuite.com/public/linaro/lkft/builds/2jkA3TgHM4HJPklKlKvochTS6Sk/config
+  download_url:
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2jkA3TgHM4HJPklKlKvochTS6Sk/
+  git_describe: v5.15.163-88-g1d0703aa8114
+  git_repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git_sha: 1d0703aa8114ca7fa386273d01ed8a7e1b66d335
+  git_short_log: 1d0703aa8114 ("Linux 5.15.164-rc1")
+
+--
+Linaro LKFT
+https://lkft.linaro.org
