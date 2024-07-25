@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2322A199E9F;
-	Thu, 25 Jul 2024 14:38:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC9B19A29C;
+	Thu, 25 Jul 2024 14:38:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918323; cv=none; b=R0qGzFTjPHYQWOW+R/e0XOg4SmjXxtfNKhgh0BTBzq2bnJwMGrzxfPGMfcrYpeCdg6QXThS6/VMX9JH2cl4s0epcGF/WV2vu+/Z2hcpRAJfhxMzVP40ElNXr8FIwgUxywWrmCtqqeikGQiiqt7Awd4HIztEbWn8nNygsiox64Tg=
+	t=1721918326; cv=none; b=OoA5SRDLfnvmp50tlKabdFdqLmg/NNwd6jpt6l+Wrru+h9KH4aE8wHUW3D4lZBL2BCZVx1B3gn838q9xRXzvsX7VeGVtJ72JBT/DpVHvQwJ21W5QeVc/gjckcoDWJZK/9SuV2kIwFEKZBZ3NNX9Lk+6SVAoZix38wTvo9lV0deA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918323; c=relaxed/simple;
-	bh=TAYXGKwFmTwNusY8nlNrErbVZ6SlFZtoU5E8YdN/eoQ=;
+	s=arc-20240116; t=1721918326; c=relaxed/simple;
+	bh=J1GJWfE2i2KJGpyHwwDnrd9ImpqQGJWLSpPkvO+zSLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NrKifCYUuNk+Q9fWhTSRsyaO27JMayXRCaWJO2HrJE8iKFy34tiFroJDmkdMLvmJiR34wfmV8OEcREYTfy88gtYPRjn0HoFmSbjUdV8JZ55Nu12j+Po/ny4ZHoGQ2WgIaeyzmyORXcxCBzGJruB7QiUdy2KeUFPg9kzIxOwC9Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eg206CQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBBxlURszbEfJSSzS70QvizqzCczRdkEX/HTzeqBTcfUmZ1FSNlNZq6EbjIcHHFmT4MzQA72pBJszMNE1Gd6A61X7qTvNhotVF2TisponpPkaxV+H+x9HUTZE9Oc6db7ZS1lgIn3Fgf9BZW+NXPFBFmK5z4YNL7IoOJDP7DNb54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iee3oue9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eg206CQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D206C116B1;
-	Thu, 25 Jul 2024 14:38:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iee3oue9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0052C116B1;
+	Thu, 25 Jul 2024 14:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918323;
-	bh=TAYXGKwFmTwNusY8nlNrErbVZ6SlFZtoU5E8YdN/eoQ=;
+	s=korg; t=1721918326;
+	bh=J1GJWfE2i2KJGpyHwwDnrd9ImpqQGJWLSpPkvO+zSLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eg206CQEvGajagG+iYkOI1jbZiPg2+1N5WDCyD581vl9fBHAyXpdTreSOI1qWOirP
-	 J5YtAHK6vsoGTRPmQnVdLCivVftYyZ4/3qqUw6pdCSdn+7l5dvdLo3QutOzlroKPos
-	 M3QwOW0iMGm+o4W36n58WD4qIKxxxEVUs3ywbUxg=
+	b=iee3oue9xPWbDhP1LJ8jiV8TwMJh9l6CNZcbzz8Axo/DNhBFPNGY2XV57thQ50z4h
+	 KhgjfUwp7rjesPV9wWcLUduTx3o4JkJKNw7ZbFJOIEF31GjB5+81OxRIk4m3C2HZFp
+	 A1oI+BTiF0qQQcy0T/EuM0cbD5/06z5N9NImcuSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 15/29] arm64: dts: qcom: qrb4210-rb2: switch I2C2 to i2c-gpio
-Date: Thu, 25 Jul 2024 16:36:31 +0200
-Message-ID: <20240725142732.389560730@linuxfoundation.org>
+Subject: [PATCH 6.10 16/29] arm64: dts: qcom: x1e80100-crd: Fix the PHY regulator for PCIe 6a
+Date: Thu, 25 Jul 2024 16:36:32 +0200
+Message-ID: <20240725142732.425665394@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -51,59 +51,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit f77e7bd40c3c2d79685e9cc80de874b69a976f55 upstream.
+commit cf7d2157aa87dca6f078a2d4867fd0a9dbc357aa upstream.
 
-On the Qualcomm RB2 platform the I2C bus connected to the LT9611UXC
-bridge under some circumstances can go into a state when all transfers
-timeout. This causes both issues with fetching of EDID and with
-updating of the bridge's firmware. While we are debugging the issue,
-switch corresponding I2C bus to use i2c-gpio driver. While using
-i2c-gpio no communication issues are observed.
+The actual PHY regulator is L1d instead of L3j, so fix it accordingly.
 
-This patch is asusmed to be a temporary fix, so it is implemented in a
-non-intrusive manner to simply reverting it later.
-
-Fixes: f7b01e07e89c ("arm64: dts: qcom: qrb4210-rb2: Enable display out")
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20240605-rb12-i2c2g-pio-v2-2-946f5d6b6948@linaro.org
+Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: stable@vger.kernel.org      # 6.9
+Link: https://lore.kernel.org/r/20240530-x1e80100-dts-pcie6a-v1-1-ee17a9939ba5@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -60,6 +60,17 @@
- 		};
- 	};
- 
-+	i2c2_gpio: i2c {
-+		compatible = "i2c-gpio";
-+
-+		sda-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+		scl-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		status = "disabled";
-+	};
-+
- 	leds {
- 		compatible = "gpio-leds";
- 
-@@ -190,7 +201,7 @@
- 	};
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -659,7 +659,7 @@
  };
  
--&i2c2 {
-+&i2c2_gpio {
- 	clock-frequency = <400000>;
- 	status = "okay";
+ &pcie6a_phy {
+-	vdda-phy-supply = <&vreg_l3j_0p8>;
++	vdda-phy-supply = <&vreg_l1d_0p8>;
+ 	vdda-pll-supply = <&vreg_l2j_1p2>;
  
+ 	status = "okay";
 
 
