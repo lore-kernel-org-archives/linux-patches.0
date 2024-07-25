@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31CD8468;
-	Thu, 25 Jul 2024 14:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4461DF519;
+	Thu, 25 Jul 2024 14:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919020; cv=none; b=iRiwCcVy8BpPkmvQ5Z6H9VkNCf2I3Of5Rcq0PNZvRUKzzUy+JBNEav4ZgGqZ6JyVShAZ0unGHTOWMyeyTpIWQ1dYxxP59/CKJLC/xjcKNat5nMrhVHbPQRrwsgCDEFF7hAifP66zYVpkD/G6YeHVUVsnBXRu6hKhfgE4xMqjkWs=
+	t=1721919023; cv=none; b=sTh8YSbXqGo1bcx3mGjqleL4IRStUDxxS7yjPCKg0Hvw2Pq8HvouLxxCaK0IVp4/58k/3evjWc++xv1K7aGJ7TpO8xXkhPQ1NpaIg7JhgaeruOXeMeeUZvvYL4lcaGMzRxLdlSAhXJF9td1dMVV8081XRFhvvi0YRPGzCS0mK+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919020; c=relaxed/simple;
-	bh=WQEcn3j51i4fqavPf0S3N2tHt1zYzezeK8L6+YcPcs0=;
+	s=arc-20240116; t=1721919023; c=relaxed/simple;
+	bh=j8/DCpBowdzcb9SMRKze/NCe98LdUNmd3pKBirqBDSQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJvo+vepdEI/iTVv+8MVo6Ny9RB+7MdOCzww3uYUEYWqHXY/ZKOPYI5fNFiWhrUPIVoiPKk3T4qJQFnIpFTTIngHcCaKO1i6k4bLFsKSod8Zhz6fj7wVOywnUxfs1/xjFhRkrxOMq0n626FM7NOOtM815KTVi6ngo8t3aYA5Fv4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skOPjR+2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cmYYxz31L8XLb6+9XpfqPDwaZk1sRSh9zWC9nhbg12ICSeP3AxxWstjHQCuq6IKJWOs1qUy95efDgKdG4KNp9J2mucGngyLX4AXaCP5TZv5gBI9kq5J2pJ0haDXXBkLP1rgs8LnP5HH/dGqYjWTIZkyxhw4KryWLBX9KP8rxolU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WVid4rJ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skOPjR+2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B02C116B1;
-	Thu, 25 Jul 2024 14:50:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WVid4rJ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C21C116B1;
+	Thu, 25 Jul 2024 14:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919019;
-	bh=WQEcn3j51i4fqavPf0S3N2tHt1zYzezeK8L6+YcPcs0=;
+	s=korg; t=1721919023;
+	bh=j8/DCpBowdzcb9SMRKze/NCe98LdUNmd3pKBirqBDSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skOPjR+2QvIdJgVor9P+fR0muhO/zh1HuvPf0GDBtynavaimJDgAwBo3THBq571gb
-	 JWwZKsHrHc6+3np2EEv16KrBHTfVjOqds6o4kEDJFaNDwDrCxNEOoeA3fPGuC0WZkI
-	 hJUsh72SLmu5/wzyRs3qPnvxVAl+bFJnvnwDa16g=
+	b=WVid4rJ7kRnOlgiE6ECFCRNhZzJvpSiJc7774eB+j4J78WNeDIqvuL805x7+wOULI
+	 WVfz6ZPUwj9ukiResSgO+aeVQCkmST2fO46lj6fTlv1JOQJ/VAeEnwOXEwR7r86R5b
+	 HwQxeAHlxyAhgCYk+3BQgpII8cVyrlsvcYSNMUB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Primoz Fiser <primoz.fiser@norik.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 27/59] ASoC: ti: omap-hdmi: Fix too long driver name
-Date: Thu, 25 Jul 2024 16:37:17 +0200
-Message-ID: <20240725142734.286749148@linuxfoundation.org>
+Subject: [PATCH 5.10 28/59] can: kvaser_usb: fix return value for hif_usb_send_regout
+Date: Thu, 25 Jul 2024 16:37:18 +0200
+Message-ID: <20240725142734.325117348@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -52,41 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Primoz Fiser <primoz.fiser@norik.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 524d3f126362b6033e92cbe107ae2158d7fbff94 ]
+[ Upstream commit 0d34d8163fd87978a6abd792e2d8ad849f4c3d57 ]
 
-Set driver name to "HDMI". This simplifies the code and gets rid of
-the following error messages:
+As the potential failure of usb_submit_urb(), it should be better to
+return the err variable to catch the error.
 
-  ASoC: driver name too long 'HDMI 58040000.encoder' -> 'HDMI_58040000_e'
-
-Signed-off-by: Primoz Fiser <primoz.fiser@norik.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20240610125847.773394-1-primoz.fiser@norik.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Link: https://lore.kernel.org/all/20240521041020.1519416-1-nichen@iscas.ac.cn
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/ti/omap-hdmi.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/ti/omap-hdmi.c b/sound/soc/ti/omap-hdmi.c
-index 3328c02f93c74..1dfe439d13417 100644
---- a/sound/soc/ti/omap-hdmi.c
-+++ b/sound/soc/ti/omap-hdmi.c
-@@ -353,11 +353,7 @@ static int omap_hdmi_audio_probe(struct platform_device *pdev)
- 	if (!card)
- 		return -ENOMEM;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+index 411b3adb1d9ea..a96b223984070 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -266,7 +266,7 @@ int kvaser_usb_send_cmd_async(struct kvaser_usb_net_priv *priv, void *cmd,
+ 	}
+ 	usb_free_urb(urb);
  
--	card->name = devm_kasprintf(dev, GFP_KERNEL,
--				    "HDMI %s", dev_name(ad->dssdev));
--	if (!card->name)
--		return -ENOMEM;
--
-+	card->name = "HDMI";
- 	card->owner = THIS_MODULE;
- 	card->dai_link =
- 		devm_kzalloc(dev, sizeof(*(card->dai_link)), GFP_KERNEL);
+-	return 0;
++	return err;
+ }
+ 
+ int kvaser_usb_can_rx_over_error(struct net_device *netdev)
 -- 
 2.43.0
 
