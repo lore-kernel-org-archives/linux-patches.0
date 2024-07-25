@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3651B13D51B;
-	Thu, 25 Jul 2024 18:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6A143738;
+	Thu, 25 Jul 2024 18:35:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721932532; cv=none; b=AHDqozLcp/PqwCpb4aVLH3p7X58thJpVFobdubZzj8eAnadpzLp82BHvUMWr6jaJObMF1ptC9MTPYhNKoLRDQAg+QCyhU2FDN/zzF2B8NHa1KC4LRB9D9xomnMUbSe8ToEvTJ33DFC727Y/QMCuOqAxhAGoBom2y7SYzsN+gN44=
+	t=1721932538; cv=none; b=D4hzzRiZFX3uVf/OMPmZ2ZITOOfXBm5QeO0eaZUqxOpGu2lHKisCPtN5jAy9L4vaYqsDwFZxl9wQv1DiOFlZ1cq+AxOB6co4lHzlYGyVV+R0wh1Sv9ijDHcfb6YlSebHSFKeHoBXW3Anu1OcyBr0yLSZE9sw2BLaF/BvD7lfzzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721932532; c=relaxed/simple;
-	bh=GLtC3wYk2GEvmZ/aRZo96oaKNYBG3w8k9VJ+Yew0iPU=;
+	s=arc-20240116; t=1721932538; c=relaxed/simple;
+	bh=1V2SGN37vLr5gMJa3dfaVAiysIrCfOIQXazWxhqrSKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h+uzw55ECZGB3/JxxkDQIMimCeB6YYZfbh3jBtTUyCPnqDmYV9VsQxUXgDJkOuPfDnSFehgz7nIYuEJsh8xTMqQObBfgMlBXEslBncwjvWZX8FcM9u8w15y7WDqJMYCFJlaHYIcdfhFcmjdgTAQB9k3dciuTSqX0u7XWQSq1mNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C0XM/mBc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YvFi87hbPDMEOFqDcEHxfWb41pV+lvkRqUeHyuf0D2wVpFRaV8UirCq/Dp4dTVaYZlE92DDyTmJrrxbza/Rrj0d6wHu5C4fSmrwi5YV+H75r0BlFqLePWH+rKwfCCxxWaaTWVjnMpWM9RysEa8R2wlmFQyqlyuBBY1n02ZpZl6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=c3FKWyHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C0XM/mBc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4E8C4AF0E;
-	Thu, 25 Jul 2024 18:35:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="c3FKWyHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79326C4AF07;
+	Thu, 25 Jul 2024 18:35:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721932531;
-	bh=GLtC3wYk2GEvmZ/aRZo96oaKNYBG3w8k9VJ+Yew0iPU=;
+	s=k20201202; t=1721932538;
+	bh=1V2SGN37vLr5gMJa3dfaVAiysIrCfOIQXazWxhqrSKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0XM/mBc6pGWaY3brJpPfsLGz8qkt8h2fr9B6QyAaDPjGTQkyzTNY7JNyqXpkZVzG
-	 ujzfoey6Rs9iZrKwOTI5uG0NVI2f2dg+qItXULkVxWun6MO6WRgDizEEnKvhdwPczI
-	 4NntDCZp92CrsZATy/G7JiiTt1l+6oiHXFL7ga12yhCTAhPB5FvSFSTmagEf5QCmvq
-	 R3QM8qwPnzkr6rL9MV2byBzlPU2R3kcsCGTL/kpkb6FxBVrzM4LAkjN49tfKrH+cgt
-	 DX7O2QrFQ2PJLkKy6hKHlg5mJoy4iw1UDpTVDeNX0bKhfDMuWH3+xX56TREdVI99kg
-	 E1O5SmhnQbaDQ==
+	b=c3FKWyHsUFq4kCnQcHIQRL3fr4kcSGZcPBLUo/30bZjjaUILROluTpAPhwbT63xYx
+	 20YGr8CxU1lINVPXt4CW7qY2M306rG8MypvJh+P8ZkpELdvWF2KUR6HFpvahPb4cVR
+	 B9GYnOLQxXNKQ1dzj+bG11/Pnmx7Ub5bsAOu5c0gOqoSEXv8uXpGrIlJ4HBxzjtMdQ
+	 bitljVnZyfkHk18OhjVQYIFpbnidrEtaRUbc7stuxbpYMKkaYL3fZM4aXZtqtS0ErZ
+	 rzwKAGy8kmrgroG12cmQyCfUQ/EwxB3nH0wJ9at7c0mFtc7eHA0wV3wojzs9MCo7Ri
+	 dm7QDWB55L+Yg==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Josh Poimboeuf <jpoimboe@kernel.org>,
 	Peter Zijlstra <peterz@infradead.org>,
@@ -49,10 +49,11 @@ Cc: x86@kernel.org,
 	Alice Ryhl <aliceryhl@google.com>,
 	rust-for-linux@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH v3 5/6] objtool/rust: list `noreturn` Rust functions
-Date: Thu, 25 Jul 2024 20:33:22 +0200
-Message-ID: <20240725183325.122827-6-ojeda@kernel.org>
+	patches@lists.linux.dev,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH v3 6/6] objtool/kbuild/rust: enable objtool for Rust
+Date: Thu, 25 Jul 2024 20:33:23 +0200
+Message-ID: <20240725183325.122827-7-ojeda@kernel.org>
 In-Reply-To: <20240725183325.122827-1-ojeda@kernel.org>
 References: <20240725183325.122827-1-ojeda@kernel.org>
 Precedence: bulk
@@ -63,134 +64,113 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Rust functions may be `noreturn` (i.e. diverging) by returning the
-"never" type, `!`, e.g.
+Now that we should be `objtool`-warning free, enable `objtool` for
+Rust too.
 
-    fn f() -> ! {
-        loop {}
-    }
+Before this patch series, we were already getting warnings under e.g. IBT
+builds, since those would see Rust code via `vmlinux.o`.
 
-Thus list the known `noreturn` functions to avoid such warnings.
-
-Without this, `objtool` would complain if enabled for Rust, e.g.:
-
-    rust/core.o: warning: objtool:
-    _R...9panic_fmt() falls through to next function _R...18panic_nounwind_fmt()
-
-    rust/alloc.o: warning: objtool:
-    .text: unexpected end of section
-
-In order to do so, we cannot match symbols' names exactly, for two
-reasons:
-
-  - Rust mangling scheme [1] contains disambiguators [2] which we
-    cannot predict (e.g. they may vary depending on the compiler version).
-
-    One possibility to solve this would be to parse v0 and ignore/zero
-    those before comparison.
-
-  - Some of the diverging functions come from `core`, i.e. the Rust
-    standard library, which may change with each compiler version
-    since they are implementation details (e.g. `panic_internals`).
-
-Thus, to workaround both issues, only part of the symbols are matched,
-instead of using the `NORETURN` macro in `noreturns.h`.
-
-Ideally, just like for the C side, we should have a better solution. For
-instance, the compiler could give us the list via something like:
-
-    $ rustc --emit=noreturns ...
-
-Link: https://rust-lang.github.io/rfcs/2603-rust-symbol-name-mangling-v0.html [1]
-Link: https://doc.rust-lang.org/rustc/symbol-mangling/v0.html#disambiguator [2]
+Tested-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Benno Lossin <benno.lossin@proton.me>
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- tools/objtool/check.c     | 48 ++++++++++++++++++++++++++++++++++++++-
- tools/objtool/noreturns.h |  2 ++
- 2 files changed, 49 insertions(+), 1 deletion(-)
+ rust/Makefile          | 22 ++++++++++++++--------
+ scripts/Makefile.build |  9 +++++++--
+ 2 files changed, 21 insertions(+), 10 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 0a33d9195b7a..deace6fca2ed 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -177,6 +177,48 @@ static bool is_sibling_call(struct instruction *insn)
- 	return (is_static_jump(insn) && insn_call_dest(insn));
- }
+diff --git a/rust/Makefile b/rust/Makefile
+index bf05e65365da..1756238b641d 100644
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -344,7 +344,8 @@ quiet_cmd_rustc_library = $(if $(skip_clippy),RUSTC,$(RUSTC_OR_CLIPPY_QUIET)) L
+ 		--crate-type rlib -L$(objtree)/$(obj) \
+ 		--crate-name $(patsubst %.o,%,$(notdir $@)) $< \
+ 		--sysroot=/dev/null \
+-	$(if $(rustc_objcopy),;$(OBJCOPY) $(rustc_objcopy) $@)
++	$(if $(rustc_objcopy),;$(OBJCOPY) $(rustc_objcopy) $@) \
++	$(cmd_objtool)
  
-+/*
-+ * Checks if a string ends with another.
-+ */
-+static bool str_ends_with(const char *s, const char *sub)
-+{
-+	const int slen = strlen(s);
-+	const int sublen = strlen(sub);
-+
-+	if (sublen > slen)
-+		return 0;
-+
-+	return !memcmp(s + slen - sublen, sub, sublen);
-+}
-+
-+/*
-+ * Checks if a function is a Rust "noreturn" one.
-+ */
-+static bool is_rust_noreturn(const struct symbol *func)
-+{
-+	/*
-+	 * If it does not start with "_R", then it is not a Rust symbol.
-+	 */
-+	if (strncmp(func->name, "_R", 2))
-+		return false;
-+
-+	/*
-+	 * These are just heuristics -- we do not control the precise symbol
-+	 * name, due to the crate disambiguators (which depend on the compiler)
-+	 * as well as changes to the source code itself between versions (since
-+	 * these come from the Rust standard library).
-+	 */
-+	return str_ends_with(func->name, "_4core6option13unwrap_failed")			||
-+	       str_ends_with(func->name, "_4core6result13unwrap_failed")			||
-+	       str_ends_with(func->name, "_4core9panicking5panic")				||
-+	       str_ends_with(func->name, "_4core9panicking9panic_fmt")				||
-+	       str_ends_with(func->name, "_4core9panicking14panic_explicit")			||
-+	       str_ends_with(func->name, "_4core9panicking18panic_bounds_check")		||
-+	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")		||
-+	       (strstr(func->name, "_4core5slice5index24slice_") &&
-+		str_ends_with(func->name, "_fail"));
-+}
-+
- /*
-  * This checks to see if the given function is a "noreturn" function.
-  *
-@@ -202,10 +244,14 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
- 	if (!func)
- 		return false;
+ rust-analyzer:
+ 	$(Q)$(srctree)/scripts/generate_rust_analyzer.py \
+@@ -366,44 +367,49 @@ ifneq ($(or $(CONFIG_ARM64),$(and $(CONFIG_RISCV),$(CONFIG_64BIT))),)
+ 		__ashlti3 __lshrti3
+ endif
  
--	if (func->bind == STB_GLOBAL || func->bind == STB_WEAK)
-+	if (func->bind == STB_GLOBAL || func->bind == STB_WEAK) {
-+		if (is_rust_noreturn(func))
-+			return true;
++define rule_rustc_library
++	$(call cmd_and_fixdep,rustc_library)
++	$(call cmd,gen_objtooldep)
++endef
 +
- 		for (i = 0; i < ARRAY_SIZE(global_noreturns); i++)
- 			if (!strcmp(func->name, global_noreturns[i]))
- 				return true;
-+	}
+ $(obj)/core.o: private skip_clippy = 1
+ $(obj)/core.o: private skip_flags = -Wunreachable_pub
+ $(obj)/core.o: private rustc_objcopy = $(foreach sym,$(redirect-intrinsics),--redefine-sym $(sym)=__rust$(sym))
+ $(obj)/core.o: private rustc_target_flags = $(core-cfgs)
+ $(obj)/core.o: $(RUST_LIB_SRC)/core/src/lib.rs FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ ifdef CONFIG_X86_64
+ $(obj)/core.o: scripts/target.json
+ endif
  
- 	if (func->bind == STB_WEAK)
- 		return false;
-diff --git a/tools/objtool/noreturns.h b/tools/objtool/noreturns.h
-index 7ebf29c91184..82a001ac433b 100644
---- a/tools/objtool/noreturns.h
-+++ b/tools/objtool/noreturns.h
-@@ -35,6 +35,8 @@ NORETURN(panic)
- NORETURN(panic_smp_self_stop)
- NORETURN(rest_init)
- NORETURN(rewind_stack_and_make_dead)
-+NORETURN(rust_begin_unwind)
-+NORETURN(rust_helper_BUG)
- NORETURN(sev_es_terminate)
- NORETURN(snp_abort)
- NORETURN(start_kernel)
+ $(obj)/compiler_builtins.o: private rustc_objcopy = -w -W '__*'
+ $(obj)/compiler_builtins.o: $(src)/compiler_builtins.rs $(obj)/core.o FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ 
+ $(obj)/alloc.o: private skip_clippy = 1
+ $(obj)/alloc.o: private skip_flags = -Wunreachable_pub
+ $(obj)/alloc.o: private rustc_target_flags = $(alloc-cfgs)
+ $(obj)/alloc.o: $(RUST_LIB_SRC)/alloc/src/lib.rs $(obj)/compiler_builtins.o FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ 
+ $(obj)/build_error.o: $(src)/build_error.rs $(obj)/compiler_builtins.o FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ 
+ $(obj)/bindings.o: $(src)/bindings/lib.rs \
+     $(obj)/compiler_builtins.o \
+     $(obj)/bindings/bindings_generated.rs \
+     $(obj)/bindings/bindings_helpers_generated.rs FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ 
+ $(obj)/uapi.o: $(src)/uapi/lib.rs \
+     $(obj)/compiler_builtins.o \
+     $(obj)/uapi/uapi_generated.rs FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ 
+ $(obj)/kernel.o: private rustc_target_flags = --extern alloc \
+     --extern build_error --extern macros --extern bindings --extern uapi
+ $(obj)/kernel.o: $(src)/kernel/lib.rs $(obj)/alloc.o $(obj)/build_error.o \
+     $(obj)/libmacros.so $(obj)/bindings.o $(obj)/uapi.o FORCE
+-	+$(call if_changed_dep,rustc_library)
++	+$(call if_changed_rule,rustc_library)
+ 
+ endif # CONFIG_RUST
+diff --git a/scripts/Makefile.build b/scripts/Makefile.build
+index efacca63c897..72b1232b1f7d 100644
+--- a/scripts/Makefile.build
++++ b/scripts/Makefile.build
+@@ -288,10 +288,15 @@ rust_common_cmd = \
+ # would not match each other.
+ 
+ quiet_cmd_rustc_o_rs = $(RUSTC_OR_CLIPPY_QUIET) $(quiet_modtag) $@
+-      cmd_rustc_o_rs = $(rust_common_cmd) --emit=obj=$@ $<
++      cmd_rustc_o_rs = $(rust_common_cmd) --emit=obj=$@ $< $(cmd_objtool)
++
++define rule_rustc_o_rs
++	$(call cmd_and_fixdep,rustc_o_rs)
++	$(call cmd,gen_objtooldep)
++endef
+ 
+ $(obj)/%.o: $(obj)/%.rs FORCE
+-	+$(call if_changed_dep,rustc_o_rs)
++	+$(call if_changed_rule,rustc_o_rs)
+ 
+ quiet_cmd_rustc_rsi_rs = $(RUSTC_OR_CLIPPY_QUIET) $(quiet_modtag) $@
+       cmd_rustc_rsi_rs = \
 -- 
 2.45.2
 
