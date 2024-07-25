@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F9519A29C;
-	Thu, 25 Jul 2024 14:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2BB199E9F;
+	Thu, 25 Jul 2024 14:38:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918304; cv=none; b=S6eKzZr2k5wnU6AhjukDyjmuOIpniY4Cbm1dBFpb2hcl2zRok7Je7P7Yb+iOv+fFgiLEnoPK9Xq1LypEh5mp+k2rV8y35ts+OgH1YmZGsxMfoqxQVEcf7/kLG3nW5Dop+c6GIkOF+4z14LGT1NYxaqp2qqvQ6jRWEkaBB/bcwKU=
+	t=1721918307; cv=none; b=qn9GswpdE8ZWB2zhPeORrqEzlDUG3zJHkpIkMUgWNYTKQYvT2SjHqb15Bg/NhPddKFKyN/bvKL+fDce6ewhaO/VBesRmLynUWVT+fCZEE5ASabHTkgWNimsgWbkExRU5wWiq4ZJasO7fZF7yT/YuDgtMsObJKJPXxYUCvJ8E2vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918304; c=relaxed/simple;
-	bh=Yv1Tfp7MXPkUw+uwkCOsovb+cETVRXYcXCfUxnhp77w=;
+	s=arc-20240116; t=1721918307; c=relaxed/simple;
+	bh=DdI9xwhuiVKQDhrhnoeywGa5muiHYLVjP7AfXD3E5Do=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kO8/Is3mmwkKZ9N4YSNCElEEYUjVNlJwdo/+KRTCYwl1SQ3f0ArNr1WpuGhQ1/L4K/XV61yiiDGxGU2cyhsHeGPD13BVT1HIoCH6ll/uq3TAFVDf1upMPpgDd526oSCMyIoRhNcpYsNjufcjp1haVWqpyY+eZ5CoXpY0xlzC68s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AQbG1Hcf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HOoXMb+aRkj/JWNaGFtqg0t0+AdYQwrcKR9IfugZDHZpBIxkms96xxulCrMhoZALCZtdgn+WJKuhQ90z73U1u5ggT7Hs4QEAeXUoGcOdKKZKEfR3JWOcIhOgCJKBVByMcauF2ZqEsBpv/MhhYY6/h6GxmoL0Ddwp9BCsTk/KXDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=te1oQ8Es; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AQbG1Hcf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3612C116B1;
-	Thu, 25 Jul 2024 14:38:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="te1oQ8Es"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABD42C116B1;
+	Thu, 25 Jul 2024 14:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918304;
-	bh=Yv1Tfp7MXPkUw+uwkCOsovb+cETVRXYcXCfUxnhp77w=;
+	s=korg; t=1721918307;
+	bh=DdI9xwhuiVKQDhrhnoeywGa5muiHYLVjP7AfXD3E5Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AQbG1Hcf7cpH7p3K5JaUNtVPnwdOI6ocYP94bNdZFSqg85W2SUEqwFMEzoCGaGxu9
-	 7OVAPLAVtKA1JiIjec4ISFj8PROGj/B3HXLv+fPFtO5ub5pFsso7zh8+nGsxXT/dz8
-	 QBvFNGSkuKriMw2tnI5cVGNuQn2ep82hBb/AB+50=
+	b=te1oQ8EsXJI+MBk8h1VpjVcQcIXSgSJRfNHI6/h3OhINVwxgeGI/PkWY5qDJIRu/W
+	 gQkvkGC2qtkMOeCXcBqKyVgrDvfHow1qCRdJEuEsjT5sTnQQ7wJ5WsAf0hxKZtZvzm
+	 CVxzPR0Yvcb5lkv0aM40pEcpXMo246zNQb87alr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 6.10 01/29] drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
-Date: Thu, 25 Jul 2024 16:36:17 +0200
-Message-ID: <20240725142731.873778629@linuxfoundation.org>
+	Seunghun Han <kkamagui@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 10/29] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
+Date: Thu, 25 Jul 2024 16:36:26 +0200
+Message-ID: <20240725142732.204539198@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -52,32 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Seunghun Han <kkamagui@gmail.com>
 
-commit 6769a23697f17f9bf9365ca8ed62fe37e361a05a upstream.
+commit d7063c08738573fc2f3296da6d31a22fa8aa843a upstream.
 
-The "instance" variable needs to be signed for the error handling to work.
+Samsung Galaxy Book Pro 360 (13" 2022 NT935QDB-KC71S) with codec SSID
+144d:c1a4 requires the same workaround to enable the speaker amp
+as other Samsung models with the ALC298 codec.
 
-Fixes: 8b2faf1a4f3b ("drm/amdgpu: add error handle to avoid out-of-bounds")
-Reviewed-by: Bob Zhou <bob.zhou@amd.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Signed-off-by: Seunghun Han <kkamagui@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240718080908.8677-1-kkamagui@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-@@ -2017,7 +2017,7 @@ static int sdma_v4_0_process_trap_irq(st
- 				      struct amdgpu_irq_src *source,
- 				      struct amdgpu_iv_entry *entry)
- {
--	uint32_t instance;
-+	int instance;
- 
- 	DRM_DEBUG("IH: SDMA trap\n");
- 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10399,6 +10399,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
++	SND_PCI_QUIRK(0x144d, 0xc1a4, "Samsung Galaxy Book Pro 360 (NT935QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+ 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
+ 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
 
 
