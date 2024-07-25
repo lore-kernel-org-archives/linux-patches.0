@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B488BFC18;
-	Thu, 25 Jul 2024 14:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7368468;
+	Thu, 25 Jul 2024 14:45:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918743; cv=none; b=Ot0ITUxvsBEHWD7jIfig0ztGmD8n0z0mRIQLvPxrYwH8QH0I7/TO+GkOr7z5p8X0hN8nRvck/xWr566N5B7jpxGiyKm9Jz9M8GLtsDyxkhbfPFVGvcdynup906PdfKYDnuMaMuPOvQgSnOmAqpmcoktc/CkV0f1dQPrtFhuFgEM=
+	t=1721918747; cv=none; b=ltQ8qRUk6uWFzalWQURx63CZrhKbFgFV5cUeGqZDiPgkUsQKvCLSfenw1YO91Qvvc7+mHl2PpAdlGhF9L5SbGVQ99o3Uu0KVQARMNd0FzRN1kXsnsm7Rnfo0FNYK21euMzMUnGmNm8N26G5HLEkwE2OY9BXHSPq1bwMD/jgI5hU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918743; c=relaxed/simple;
-	bh=AzNzEtJRaa9eoMifnNo9Ak9mmm0EVKFkQhg3bfWGdEc=;
+	s=arc-20240116; t=1721918747; c=relaxed/simple;
+	bh=lnguMXchgzAt07WoGtEhMN0vhfHIK3jWwkl0wvinrWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y2r3U1sK/T4mPYUeaevVxLCNv2rdaVE9qeIz89IqFZsekV0v4rmBM/EalQ7TzP+o3b9YTK7aa/LSz57kj9DvtkXV2F3Mxd6JHB+OaXTBjIPQf25CxQx6W8niMocv1sLwcAYnP79HqO7JNjDlZIPSyK27ludK0M0JU3HX7gcXwQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBx7VzGs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fxYwP7YB8wp+3N0k5JLmW6n1wfNeuFPtlPBN8+XofnadVB3vChO1PttQ+pwdKUaeTUfjQcHJE9EwJrQuj/uEJ26M9egBckfVMJCYVExfh2KteoPeyOEK89bxoRCvcjJUWdICN2K+IQnSxTkbiRmrI+P+ECs/IZMiOTSkb5MD5VY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S9z+4taE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBx7VzGs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237F6C32782;
-	Thu, 25 Jul 2024 14:45:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S9z+4taE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8F94C116B1;
+	Thu, 25 Jul 2024 14:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918743;
-	bh=AzNzEtJRaa9eoMifnNo9Ak9mmm0EVKFkQhg3bfWGdEc=;
+	s=korg; t=1721918747;
+	bh=lnguMXchgzAt07WoGtEhMN0vhfHIK3jWwkl0wvinrWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBx7VzGsK7qoh1+QoYYvyZWKpNT4PuCNGDnaxDwVvOEC93Asi6cpkbSjgMK74Twnm
-	 jhvjVfZiEmhAj/LjjUiXWODt9i9sXTahbQE7Uz6JnY0aCSTBkslgU3r3HEZILQb++j
-	 PrEa8JNlH5rp7Yr/x827XOVo05UPBQZEk1dUAC7I=
+	b=S9z+4taEAd9nPRueiaTk46NcSRpa16PpRJDM6XVWm99dJils+eWQW4z9WU1BzPrJX
+	 hdzISyhSh2QcDjcKtxE4smgQJdxv0OLv95JAeMcayqxx1GzU+3Fz/cYS0MxwsnrhHn
+	 7IaeQBXFVGySnPcTj73uWa5AjwVgdw1Xec6pFnUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.6 09/16] arm64: dts: qcom: qrb4210-rb2: switch I2C2 to i2c-gpio
-Date: Thu, 25 Jul 2024 16:37:22 +0200
-Message-ID: <20240725142729.255319868@linuxfoundation.org>
+Subject: [PATCH 6.6 10/16] arm64: dts: qcom: msm8996: Disable SS instance in Parkmode for USB
+Date: Thu, 25 Jul 2024 16:37:23 +0200
+Message-ID: <20240725142729.292177176@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.905379352@linuxfoundation.org>
 References: <20240725142728.905379352@linuxfoundation.org>
@@ -51,59 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-commit f77e7bd40c3c2d79685e9cc80de874b69a976f55 upstream.
+commit 44ea1ae3cf95db97e10d6ce17527948121f1dd4b upstream.
 
-On the Qualcomm RB2 platform the I2C bus connected to the LT9611UXC
-bridge under some circumstances can go into a state when all transfers
-timeout. This causes both issues with fetching of EDID and with
-updating of the bridge's firmware. While we are debugging the issue,
-switch corresponding I2C bus to use i2c-gpio driver. While using
-i2c-gpio no communication issues are observed.
+For Gen-1 targets like MSM8996, it is seen that stressing out the
+controller in host mode results in HC died error:
 
-This patch is asusmed to be a temporary fix, so it is implemented in a
-non-intrusive manner to simply reverting it later.
+ xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
+ xhci-hcd.12.auto: xHCI host controller not responding, assume dead
+ xhci-hcd.12.auto: HC died; cleaning up
 
-Fixes: f7b01e07e89c ("arm64: dts: qcom: qrb4210-rb2: Enable display out")
+And at this instant only restarting the host mode fixes it. Disable
+SuperSpeed instance in park mode for MSM8996 to mitigate this issue.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20240605-rb12-i2c2g-pio-v2-2-946f5d6b6948@linaro.org
+Fixes: 1e39255ed29d ("arm64: dts: msm8996: Add device node for qcom,dwc3")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240704152848.3380602-8-quic_kriskura@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -57,6 +57,17 @@
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3082,6 +3082,7 @@
+ 				snps,dis_u2_susphy_quirk;
+ 				snps,dis_enblslpm_quirk;
+ 				snps,is-utmi-l1-suspend;
++				snps,parkmode-disable-ss-quirk;
+ 				tx-fifo-resize;
+ 			};
  		};
- 	};
- 
-+	i2c2_gpio: i2c {
-+		compatible = "i2c-gpio";
-+
-+		sda-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
-+		scl-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		status = "disabled";
-+	};
-+
- 	leds {
- 		compatible = "gpio-leds";
- 
-@@ -187,7 +198,7 @@
- 	};
- };
- 
--&i2c2 {
-+&i2c2_gpio {
- 	clock-frequency = <400000>;
- 	status = "okay";
- 
 
 
