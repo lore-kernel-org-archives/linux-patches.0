@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9EF313DDB8;
-	Thu, 25 Jul 2024 14:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D380C13DDB8;
+	Thu, 25 Jul 2024 14:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919112; cv=none; b=XIwAWKUVa3fiNBA4lj80GEUqQ5wwjGFrOq6YeUOdIkRFTtDls+jjgoJqtork5PYSssTupExPIqCRaFPRp6W2+R8y6zcJt8urwgTclp5IMtusPbvA7T1ESTBTi2wcdPR4qrpfI3PcjH2B2O2WZNMl+1SZOtZUUxCrfwUO1w6HB/E=
+	t=1721919115; cv=none; b=p/k8EGmShRGCh0Lln2Gn5YjjKERKEeE/S9X/HU6+uhs02FY1lUxDCn8Mm7GuKOe05wAWMOkZdsAlA/rmMV/s/Unix2HNQccWro50pSVptXQBkED2BZrhJMDYP4iwU2WpNIlX2iDTVHKZfn8KP+Iy3ffmDt2v+QLl3Qd8QxRkIHI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919112; c=relaxed/simple;
-	bh=+P6flF0kanCxASEJFyAlazCsWInv1Xrq2TLRPhUxy74=;
+	s=arc-20240116; t=1721919115; c=relaxed/simple;
+	bh=rA1cYnL9FUKSHJR9d93QXW8mvmDnP8gZauR0xNlbdIE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDmgc7q2XpDbPk5QdvooNHUJqtFQDa3Of201Hm8LPW0Q54O20hiIxy/sMivUUcVTFYtK5cy2pQbQjVpPBDlMB8eZu4rjdfm5oTRPMJR6GlYbc8Ccudl38rlTj2FuwwE1w0EzHXMHRMXGzunZwpM/yVciKmeeznTGw36bcch86bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8XcfZLV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECSGD1+D1QCz/Lm8r9uuyg88AI29uuFXnFLGKXThTHxgK7SFjjnWnhbP21vusIpqZmYvQZyV4Yo8wb8QOnvCEon8AvJXLErCNVSFIcRGW1eLfIIbx35bB76YfS4fEeFTX2Ju5cTMo/a4mM8MWmK+JM9IB4AY6cMboLfHqfQ55P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJnXJgzh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8XcfZLV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC11C116B1;
-	Thu, 25 Jul 2024 14:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJnXJgzh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56614C116B1;
+	Thu, 25 Jul 2024 14:51:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919112;
-	bh=+P6flF0kanCxASEJFyAlazCsWInv1Xrq2TLRPhUxy74=;
+	s=korg; t=1721919115;
+	bh=rA1cYnL9FUKSHJR9d93QXW8mvmDnP8gZauR0xNlbdIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8XcfZLVTrQ/e4cHXIsfz4X2ZtSc6MPrSDoG+u80059Tk3YUSPw516J/1QPsHe70K
-	 mI/hzTVfeJlDI9Xe/6uKMjyXwEzY4Gx5aiftC+K4CwjcNKj8Sym8oFEYZ8exn34Sq7
-	 DRl0uHiCDCoXf1rnIIwExnYQDlseLO3ydE6eitGo=
+	b=ZJnXJgzhsMyw9L6c34dJFR79qujgqqNs0oOza90aVS8L73rWgwICtYJqC8qS+bJFH
+	 l6r4c93Pbfh2E4t0QvvyYE8TwpeuLDEcSL86wVFhXHkAaDt0e8m3/Q+oT5N8erMf1o
+	 ObNtWxj6kXNpGfVGNVpuHdfNOTOhCst4bS/+tiGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Randy Dunlap <rdunlap@infradead.org>,
+	Yuntao Wang <yuntao.wang@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 27/87] kconfig: remove wrong expr_trans_bool()
-Date: Thu, 25 Jul 2024 16:37:00 +0200
-Message-ID: <20240725142739.460589614@linuxfoundation.org>
+Subject: [PATCH 5.15 28/87] fs/file: fix the check in find_next_fd()
+Date: Thu, 25 Jul 2024 16:37:01 +0200
+Message-ID: <20240725142739.498300448@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -51,156 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Yuntao Wang <yuntao.wang@linux.dev>
 
-[ Upstream commit 77a92660d8fe8d29503fae768d9f5eb529c88b36 ]
+[ Upstream commit ed8c7fbdfe117abbef81f65428ba263118ef298a ]
 
-expr_trans_bool() performs an incorrect transformation.
+The maximum possible return value of find_next_zero_bit(fdt->full_fds_bits,
+maxbit, bitbit) is maxbit. This return value, multiplied by BITS_PER_LONG,
+gives the value of bitbit, which can never be greater than maxfd, it can
+only be equal to maxfd at most, so the following check 'if (bitbit > maxfd)'
+will never be true.
 
-[Test Code]
+Moreover, when bitbit equals maxfd, it indicates that there are no unused
+fds, and the function can directly return.
 
-    config MODULES
-            def_bool y
-            modules
+Fix this check.
 
-    config A
-            def_bool y
-            select C if B != n
-
-    config B
-            def_tristate m
-
-    config C
-            tristate
-
-[Result]
-
-    CONFIG_MODULES=y
-    CONFIG_A=y
-    CONFIG_B=m
-    CONFIG_C=m
-
-This output is incorrect because CONFIG_C=y is expected.
-
-Documentation/kbuild/kconfig-language.rst clearly explains the function
-of the '!=' operator:
-
-    If the values of both symbols are equal, it returns 'n',
-    otherwise 'y'.
-
-Therefore, the statement:
-
-    select C if B != n
-
-should be equivalent to:
-
-    select C if y
-
-Or, more simply:
-
-    select C
-
-Hence, the symbol C should be selected by the value of A, which is 'y'.
-
-However, expr_trans_bool() wrongly transforms it to:
-
-    select C if B
-
-Therefore, the symbol C is selected by (A && B), which is 'm'.
-
-The comment block of expr_trans_bool() correctly explains its intention:
-
-  * bool FOO!=n => FOO
-    ^^^^
-
-If FOO is bool, FOO!=n can be simplified into FOO. This is correct.
-
-However, the actual code performs this transformation when FOO is
-tristate:
-
-    if (e->left.sym->type == S_TRISTATE) {
-                             ^^^^^^^^^^
-
-While it can be fixed to S_BOOLEAN, there is no point in doing so
-because expr_tranform() already transforms FOO!=n to FOO when FOO is
-bool. (see the "case E_UNEQUAL" part)
-
-expr_trans_bool() is wrong and unnecessary.
-
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
+Link: https://lore.kernel.org/r/20240529160656.209352-1-yuntao.wang@linux.dev
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/kconfig/expr.c | 29 -----------------------------
- scripts/kconfig/expr.h |  1 -
- scripts/kconfig/menu.c |  2 --
- 3 files changed, 32 deletions(-)
+ fs/file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/kconfig/expr.c b/scripts/kconfig/expr.c
-index 81ebf8108ca74..81dfdf4470f75 100644
---- a/scripts/kconfig/expr.c
-+++ b/scripts/kconfig/expr.c
-@@ -396,35 +396,6 @@ static struct expr *expr_eliminate_yn(struct expr *e)
- 	return e;
- }
+diff --git a/fs/file.c b/fs/file.c
+index 69a51d37b66d9..b46a4a725a0ef 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -481,12 +481,12 @@ struct files_struct init_files = {
  
--/*
-- * bool FOO!=n => FOO
-- */
--struct expr *expr_trans_bool(struct expr *e)
--{
--	if (!e)
--		return NULL;
--	switch (e->type) {
--	case E_AND:
--	case E_OR:
--	case E_NOT:
--		e->left.expr = expr_trans_bool(e->left.expr);
--		e->right.expr = expr_trans_bool(e->right.expr);
--		break;
--	case E_UNEQUAL:
--		// FOO!=n -> FOO
--		if (e->left.sym->type == S_TRISTATE) {
--			if (e->right.sym == &symbol_no) {
--				e->type = E_SYMBOL;
--				e->right.sym = NULL;
--			}
--		}
--		break;
--	default:
--		;
--	}
--	return e;
--}
--
- /*
-  * e1 || e2 -> ?
-  */
-diff --git a/scripts/kconfig/expr.h b/scripts/kconfig/expr.h
-index 9c9caca5bd5f2..c91060e19e477 100644
---- a/scripts/kconfig/expr.h
-+++ b/scripts/kconfig/expr.h
-@@ -296,7 +296,6 @@ void expr_free(struct expr *e);
- void expr_eliminate_eq(struct expr **ep1, struct expr **ep2);
- int expr_eq(struct expr *e1, struct expr *e2);
- tristate expr_calc_value(struct expr *e);
--struct expr *expr_trans_bool(struct expr *e);
- struct expr *expr_eliminate_dups(struct expr *e);
- struct expr *expr_transform(struct expr *e);
- int expr_contains_symbol(struct expr *dep, struct symbol *sym);
-diff --git a/scripts/kconfig/menu.c b/scripts/kconfig/menu.c
-index 606ba8a63c24e..8c53d9478be1f 100644
---- a/scripts/kconfig/menu.c
-+++ b/scripts/kconfig/menu.c
-@@ -380,8 +380,6 @@ void menu_finalize(struct menu *parent)
- 				dep = expr_transform(dep);
- 				dep = expr_alloc_and(expr_copy(basedep), dep);
- 				dep = expr_eliminate_dups(dep);
--				if (menu->sym && menu->sym->type != S_TRISTATE)
--					dep = expr_trans_bool(dep);
- 				prop->visible.expr = dep;
+ static unsigned int find_next_fd(struct fdtable *fdt, unsigned int start)
+ {
+-	unsigned int maxfd = fdt->max_fds;
++	unsigned int maxfd = fdt->max_fds; /* always multiple of BITS_PER_LONG */
+ 	unsigned int maxbit = maxfd / BITS_PER_LONG;
+ 	unsigned int bitbit = start / BITS_PER_LONG;
  
- 				/*
+ 	bitbit = find_next_zero_bit(fdt->full_fds_bits, maxbit, bitbit) * BITS_PER_LONG;
+-	if (bitbit > maxfd)
++	if (bitbit >= maxfd)
+ 		return maxfd;
+ 	if (bitbit > start)
+ 		start = bitbit;
 -- 
 2.43.0
 
