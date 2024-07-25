@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A3F719B5BE;
-	Thu, 25 Jul 2024 14:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6B919D8AA;
+	Thu, 25 Jul 2024 14:40:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918451; cv=none; b=UXFwwQTPN/RvEZZCPlFpXjz2YlEUAAgNgBP/ulhOsKKM1CfRJw4Pisc6bq/nQ2aEt8QDqrvKA5EQJ1WONq6+5LGDMs354u6W/O8O1VTL/R9UwgubE0ICR0eVug+sn/eo9bSTD+UQh/tYA5LzsA64WhcCwa7W58TrA6O+2amBChY=
+	t=1721918454; cv=none; b=m1yZRQ2TdOKvrVK0Fx1lBLniYjgVD+xS4di0ExH5CflolFVUjJHvCXYwwfpWRdFBaxGMqnHYqUM/W251qAFdDfwZxpR5cB25/MWVlWrk2+uiiNdLGWK472+A7SSC0HzTIIIPNx90V8ji1sp8n70prU2Js8wU7GPU8KLaxF4hpo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918451; c=relaxed/simple;
-	bh=OjCDkc1jzmGEAM9go17T82EYP6ET3zt3iwA1z3iGplw=;
+	s=arc-20240116; t=1721918454; c=relaxed/simple;
+	bh=aIlY7GAaxP6GGUi33A5disRajKI2U7PZLXBIGYv0bv4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=llwZCJe59m4ZL1jWfM+7kUtapjRLU5xA0/vfGnTPX41ifN4Y+d/pyLrd+TC5PqsPMHYyJof+zj8KIX7LoGmPNh5j+XcSjzIfx4GbisJc70LXCNwYuwxWBjxFrdbjJ0EUZQ9BpyEkwp3nmYcNvXUVkI4OPEOjsWa3RRLg9to04kM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vu4C++HZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QA/Y9EcqfVOGtBlgf8iHcgn293cQt9WMhFBhU3OQIqx9B5+82Gl/+sUBpa5bLQT6XVl+jgTigBz5CK9xA2KS6aXmCGgfssEVeWPCESNaQL/j1ly7dNLncBmgL2dp+dRndm1KH0XuciaYkEwPC5vC7f86DwSq9jFpNvHfhHtnwV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcX72Mjn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vu4C++HZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71CDC116B1;
-	Thu, 25 Jul 2024 14:40:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcX72Mjn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E02C116B1;
+	Thu, 25 Jul 2024 14:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918451;
-	bh=OjCDkc1jzmGEAM9go17T82EYP6ET3zt3iwA1z3iGplw=;
+	s=korg; t=1721918454;
+	bh=aIlY7GAaxP6GGUi33A5disRajKI2U7PZLXBIGYv0bv4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vu4C++HZusKN2xZ0AhO9mWceN2E4hG3QnAnJn8SCmkTXdpkm1ZVg//3/xc5O/iYm4
-	 3Dy4P8d3bAlzm2zT73tUFduLHi9JM+s1exWgjY/TQpCW1x3tBGlif+sGJ1HhIsxnCt
-	 sAx8v6+oNYX1438GaEtdN0zDvB9Hm4N0G4SH4Wik=
+	b=dcX72MjnvHmNeRtFzeLmAG5URoXoJ9s/7mETT9mt/TxKysUboCSEmc1+Efkz5Ypcm
+	 BZF2kUDQ1IVrRC//Nw3BjqgvMxD9Iu2wjx7yPZMQXeUwjyQe0lpKr8zR/IRdCbfF9w
+	 dRpd6xrc5cuKEa1xW+AEr/oKDCG6r/NiwhCHzsfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Christian Brauner <brauner@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 23/33] fs: better handle deep ancestor chains in is_subdir()
-Date: Thu, 25 Jul 2024 16:36:46 +0200
-Message-ID: <20240725142729.390475028@linuxfoundation.org>
+Subject: [PATCH 4.19 24/33] spi: imx: Dont expect DMA for i.MX{25,35,50,51,53} cspi devices
+Date: Thu, 25 Jul 2024 16:36:47 +0200
+Message-ID: <20240725142729.426060424@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -46,84 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 391b59b045004d5b985d033263ccba3e941a7740 ]
+[ Upstream commit ce1dac560a74220f2e53845ec0723b562288aed4 ]
 
-Jan reported that 'cd ..' may take a long time in deep directory
-hierarchies under a bind-mount. If concurrent renames happen it is
-possible to livelock in is_subdir() because it will keep retrying.
+While in commit 2dd33f9cec90 ("spi: imx: support DMA for imx35") it was
+claimed that DMA works on i.MX25, i.MX31 and i.MX35 the respective
+device trees don't add DMA channels. The Reference manuals of i.MX31 and
+i.MX25 also don't mention the CSPI core being DMA capable. (I didn't
+check the others.)
 
-Change is_subdir() from simply retrying over and over to retry once and
-then acquire the rename lock to handle deep ancestor chains better. The
-list of alternatives to this approach were less then pleasant. Change
-the scope of rcu lock to cover the whole walk while at it.
+Since commit e267a5b3ec59 ("spi: spi-imx: Use dev_err_probe for failed
+DMA channel requests") this results in an error message
 
-A big thanks to Jan and Linus. Both Jan and Linus had proposed
-effectively the same thing just that one version ended up being slightly
-more elegant.
+	spi_imx 43fa4000.spi: error -ENODEV: can't get the TX DMA channel!
 
-Reported-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+during boot. However that isn't fatal and the driver gets loaded just
+fine, just without using DMA.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://patch.msgid.link/20240508095610.2146640-2-u.kleine-koenig@pengutronix.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dcache.c | 31 ++++++++++++++-----------------
- 1 file changed, 14 insertions(+), 17 deletions(-)
+ drivers/spi/spi-imx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/dcache.c b/fs/dcache.c
-index 4d96eb591f5d9..93671238abce1 100644
---- a/fs/dcache.c
-+++ b/fs/dcache.c
-@@ -3003,28 +3003,25 @@ EXPORT_SYMBOL(d_splice_alias);
-   
- bool is_subdir(struct dentry *new_dentry, struct dentry *old_dentry)
- {
--	bool result;
-+	bool subdir;
- 	unsigned seq;
- 
- 	if (new_dentry == old_dentry)
- 		return true;
- 
--	do {
--		/* for restarting inner loop in case of seq retry */
--		seq = read_seqbegin(&rename_lock);
--		/*
--		 * Need rcu_readlock to protect against the d_parent trashing
--		 * due to d_move
--		 */
--		rcu_read_lock();
--		if (d_ancestor(old_dentry, new_dentry))
--			result = true;
--		else
--			result = false;
--		rcu_read_unlock();
--	} while (read_seqretry(&rename_lock, seq));
--
--	return result;
-+	/* Access d_parent under rcu as d_move() may change it. */
-+	rcu_read_lock();
-+	seq = read_seqbegin(&rename_lock);
-+	subdir = d_ancestor(old_dentry, new_dentry);
-+	 /* Try lockless once... */
-+	if (read_seqretry(&rename_lock, seq)) {
-+		/* ...else acquire lock for progress even on deep chains. */
-+		read_seqlock_excl(&rename_lock);
-+		subdir = d_ancestor(old_dentry, new_dentry);
-+		read_sequnlock_excl(&rename_lock);
-+	}
-+	rcu_read_unlock();
-+	return subdir;
- }
- EXPORT_SYMBOL(is_subdir);
- 
+diff --git a/drivers/spi/spi-imx.c b/drivers/spi/spi-imx.c
+index 0078cb365d8c2..adcd519c70b19 100644
+--- a/drivers/spi/spi-imx.c
++++ b/drivers/spi/spi-imx.c
+@@ -968,7 +968,7 @@ static struct spi_imx_devtype_data imx35_cspi_devtype_data = {
+ 	.rx_available = mx31_rx_available,
+ 	.reset = mx31_reset,
+ 	.fifo_size = 8,
+-	.has_dmamode = true,
++	.has_dmamode = false,
+ 	.dynamic_burst = false,
+ 	.has_slavemode = false,
+ 	.devtype = IMX35_CSPI,
 -- 
 2.43.0
 
