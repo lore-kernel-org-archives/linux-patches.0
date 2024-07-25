@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3ED819D086;
-	Thu, 25 Jul 2024 14:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D2519AD91;
+	Thu, 25 Jul 2024 14:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918705; cv=none; b=YD23NemB/Cv/hHYbBKdM+7Lac8M+HKLf6ckfXWbcQBmhUNEBsyo4ScROxFBfhn1EJBf8NTCunmWyBxOrPlL25Nmt0ydMYskPXXN+EiKym9gYnJg2rWDLomoU7ZY0mNYGqiRNDHOs4LnsJiHK0YIRNCG+QdazGvoi1ci0u6DgBZg=
+	t=1721918709; cv=none; b=kKCSSHvGLsJaveONAYpTg/S97iohfHZgNHhwUE1Cep5+JJb21bXCsKP662EijwwB/gy7OzdnNXpUynu1bzHo2OuzL03kG3lMCKUUox2ta+cJBlbrz42b7VFyEZpxB83CZ8cCEN3EcmlBsceVh9yR94ezumxU88YuROnO7Oawy/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918705; c=relaxed/simple;
-	bh=+iQcVOclMuqN7DoLmRQSR5oNtuf/z4HqdE/WtDv8DIM=;
+	s=arc-20240116; t=1721918709; c=relaxed/simple;
+	bh=3Fctq7n2bqNzHYuHteXIwuwSKx75wJn64C0DAoCX3Fk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZifLdG2iDH7obK62xGUVridctsngJYXudVrlHtlir2/4kSrJ/gKoJ6bu6RET4Vti2Pre/SmbLcBky9txp6gBdqD4OU9fhxG+IlK7laQga6+ztfvi9OFGFDeZeM6IoGEdqY50ODXZQslrm3x4c/Whkg1BdGqzSAwNJbtdwI3SCio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tctBVXca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eahOHGwlm9Z1lId3otJjkBgLZbBUireQT5L/wV6KFCwcKfPAucucE5n/LypgGwlhaG2ST0Px9fLESShd9ZihsAlQUKM7S71dvx0aQGtQuTDFhxPLGELZkx5Vn9jx01qPuwZcoCwBFSUT5jsyFPEd+IW803yc6u+eyy0C4CkpZZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKyRSYJE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tctBVXca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23FF1C116B1;
-	Thu, 25 Jul 2024 14:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKyRSYJE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A94C116B1;
+	Thu, 25 Jul 2024 14:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918705;
-	bh=+iQcVOclMuqN7DoLmRQSR5oNtuf/z4HqdE/WtDv8DIM=;
+	s=korg; t=1721918708;
+	bh=3Fctq7n2bqNzHYuHteXIwuwSKx75wJn64C0DAoCX3Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tctBVXcaT2SAlx0F22pmHxN+CTm6Bo5+kpqbnf2mUKzNTeRAkHHRYS6ySn9ai6Ufy
-	 b8UUn8OWFoK7TCcjo0KZnEXmhX/C4HDCFEyO8dNLz7i769r7gtB90CFybWmDXNMo7s
-	 jl6o/idIeHc6YPlBkBc9DoYJ0FvbCMkm+pNtr/vk=
+	b=BKyRSYJE9lQ1OmJRa1CeKi6VBfLTEIbqlz5ZPRNgb65psUD3gNHpvw+DMhLSltXMH
+	 vArDtFgMNQK1Q7XOQBf5GQGwkNM86GZcDUfuJgDaY88YmGH6ZLJRs5jph+zBnhJ9+Z
+	 9cpQLmzltk8oYSeheVYESUkULN+7P8pRzcnitY10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 6.6 01/16] drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
-Date: Thu, 25 Jul 2024 16:37:14 +0200
-Message-ID: <20240725142728.962595279@linuxfoundation.org>
+	lei lu <llfamsec@gmail.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 02/16] ocfs2: add bounds checking to ocfs2_check_dir_entry()
+Date: Thu, 25 Jul 2024 16:37:15 +0200
+Message-ID: <20240725142728.999575039@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.905379352@linuxfoundation.org>
 References: <20240725142728.905379352@linuxfoundation.org>
@@ -52,32 +58,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: lei lu <llfamsec@gmail.com>
 
-commit 6769a23697f17f9bf9365ca8ed62fe37e361a05a upstream.
+commit 255547c6bb8940a97eea94ef9d464ea5967763fb upstream.
 
-The "instance" variable needs to be signed for the error handling to work.
+This adds sanity checks for ocfs2_dir_entry to make sure all members of
+ocfs2_dir_entry don't stray beyond valid memory region.
 
-Fixes: 8b2faf1a4f3b ("drm/amdgpu: add error handle to avoid out-of-bounds")
-Reviewed-by: Bob Zhou <bob.zhou@amd.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Siddh Raman Pant <siddh.raman.pant@oracle.com>
+Link: https://lkml.kernel.org/r/20240626104433.163270-1-llfamsec@gmail.com
+Signed-off-by: lei lu <llfamsec@gmail.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ocfs2/dir.c |   46 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-@@ -2027,7 +2027,7 @@ static int sdma_v4_0_process_trap_irq(st
- 				      struct amdgpu_irq_src *source,
- 				      struct amdgpu_iv_entry *entry)
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -294,13 +294,16 @@ out:
+  * bh passed here can be an inode block or a dir data block, depending
+  * on the inode inline data flag.
+  */
+-static int ocfs2_check_dir_entry(struct inode * dir,
+-				 struct ocfs2_dir_entry * de,
+-				 struct buffer_head * bh,
++static int ocfs2_check_dir_entry(struct inode *dir,
++				 struct ocfs2_dir_entry *de,
++				 struct buffer_head *bh,
++				 char *buf,
++				 unsigned int size,
+ 				 unsigned long offset)
  {
--	uint32_t instance;
-+	int instance;
+ 	const char *error_msg = NULL;
+ 	const int rlen = le16_to_cpu(de->rec_len);
++	const unsigned long next_offset = ((char *) de - buf) + rlen;
  
- 	DRM_DEBUG("IH: SDMA trap\n");
- 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
+ 	if (unlikely(rlen < OCFS2_DIR_REC_LEN(1)))
+ 		error_msg = "rec_len is smaller than minimal";
+@@ -308,9 +311,11 @@ static int ocfs2_check_dir_entry(struct
+ 		error_msg = "rec_len % 4 != 0";
+ 	else if (unlikely(rlen < OCFS2_DIR_REC_LEN(de->name_len)))
+ 		error_msg = "rec_len is too small for name_len";
+-	else if (unlikely(
+-		 ((char *) de - bh->b_data) + rlen > dir->i_sb->s_blocksize))
+-		error_msg = "directory entry across blocks";
++	else if (unlikely(next_offset > size))
++		error_msg = "directory entry overrun";
++	else if (unlikely(next_offset > size - OCFS2_DIR_REC_LEN(1)) &&
++		 next_offset != size)
++		error_msg = "directory entry too close to end";
+ 
+ 	if (unlikely(error_msg != NULL))
+ 		mlog(ML_ERROR, "bad entry in directory #%llu: %s - "
+@@ -352,16 +357,17 @@ static inline int ocfs2_search_dirblock(
+ 	de_buf = first_de;
+ 	dlimit = de_buf + bytes;
+ 
+-	while (de_buf < dlimit) {
++	while (de_buf < dlimit - OCFS2_DIR_MEMBER_LEN) {
+ 		/* this code is executed quadratically often */
+ 		/* do minimal checking `by hand' */
+ 
+ 		de = (struct ocfs2_dir_entry *) de_buf;
+ 
+-		if (de_buf + namelen <= dlimit &&
++		if (de->name + namelen <= dlimit &&
+ 		    ocfs2_match(namelen, name, de)) {
+ 			/* found a match - just to be sure, do a full check */
+-			if (!ocfs2_check_dir_entry(dir, de, bh, offset)) {
++			if (!ocfs2_check_dir_entry(dir, de, bh, first_de,
++						   bytes, offset)) {
+ 				ret = -1;
+ 				goto bail;
+ 			}
+@@ -1138,7 +1144,7 @@ static int __ocfs2_delete_entry(handle_t
+ 	pde = NULL;
+ 	de = (struct ocfs2_dir_entry *) first_de;
+ 	while (i < bytes) {
+-		if (!ocfs2_check_dir_entry(dir, de, bh, i)) {
++		if (!ocfs2_check_dir_entry(dir, de, bh, first_de, bytes, i)) {
+ 			status = -EIO;
+ 			mlog_errno(status);
+ 			goto bail;
+@@ -1638,7 +1644,8 @@ int __ocfs2_add_entry(handle_t *handle,
+ 		/* These checks should've already been passed by the
+ 		 * prepare function, but I guess we can leave them
+ 		 * here anyway. */
+-		if (!ocfs2_check_dir_entry(dir, de, insert_bh, offset)) {
++		if (!ocfs2_check_dir_entry(dir, de, insert_bh, data_start,
++					   size, offset)) {
+ 			retval = -ENOENT;
+ 			goto bail;
+ 		}
+@@ -1777,7 +1784,8 @@ static int ocfs2_dir_foreach_blk_id(stru
+ 		}
+ 
+ 		de = (struct ocfs2_dir_entry *) (data->id_data + ctx->pos);
+-		if (!ocfs2_check_dir_entry(inode, de, di_bh, ctx->pos)) {
++		if (!ocfs2_check_dir_entry(inode, de, di_bh, (char *)data->id_data,
++					   i_size_read(inode), ctx->pos)) {
+ 			/* On error, skip the f_pos to the end. */
+ 			ctx->pos = i_size_read(inode);
+ 			break;
+@@ -1870,7 +1878,8 @@ static int ocfs2_dir_foreach_blk_el(stru
+ 		while (ctx->pos < i_size_read(inode)
+ 		       && offset < sb->s_blocksize) {
+ 			de = (struct ocfs2_dir_entry *) (bh->b_data + offset);
+-			if (!ocfs2_check_dir_entry(inode, de, bh, offset)) {
++			if (!ocfs2_check_dir_entry(inode, de, bh, bh->b_data,
++						   sb->s_blocksize, offset)) {
+ 				/* On error, skip the f_pos to the
+ 				   next block. */
+ 				ctx->pos = (ctx->pos | (sb->s_blocksize - 1)) + 1;
+@@ -3342,7 +3351,7 @@ static int ocfs2_find_dir_space_id(struc
+ 	struct super_block *sb = dir->i_sb;
+ 	struct ocfs2_dinode *di = (struct ocfs2_dinode *)di_bh->b_data;
+ 	struct ocfs2_dir_entry *de, *last_de = NULL;
+-	char *de_buf, *limit;
++	char *first_de, *de_buf, *limit;
+ 	unsigned long offset = 0;
+ 	unsigned int rec_len, new_rec_len, free_space;
+ 
+@@ -3355,14 +3364,16 @@ static int ocfs2_find_dir_space_id(struc
+ 	else
+ 		free_space = dir->i_sb->s_blocksize - i_size_read(dir);
+ 
+-	de_buf = di->id2.i_data.id_data;
++	first_de = di->id2.i_data.id_data;
++	de_buf = first_de;
+ 	limit = de_buf + i_size_read(dir);
+ 	rec_len = OCFS2_DIR_REC_LEN(namelen);
+ 
+ 	while (de_buf < limit) {
+ 		de = (struct ocfs2_dir_entry *)de_buf;
+ 
+-		if (!ocfs2_check_dir_entry(dir, de, di_bh, offset)) {
++		if (!ocfs2_check_dir_entry(dir, de, di_bh, first_de,
++					   i_size_read(dir), offset)) {
+ 			ret = -ENOENT;
+ 			goto out;
+ 		}
+@@ -3444,7 +3455,8 @@ static int ocfs2_find_dir_space_el(struc
+ 			/* move to next block */
+ 			de = (struct ocfs2_dir_entry *) bh->b_data;
+ 		}
+-		if (!ocfs2_check_dir_entry(dir, de, bh, offset)) {
++		if (!ocfs2_check_dir_entry(dir, de, bh, bh->b_data, blocksize,
++					   offset)) {
+ 			status = -ENOENT;
+ 			goto bail;
+ 		}
 
 
