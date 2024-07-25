@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE83613DDB8;
-	Thu, 25 Jul 2024 14:44:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1905A13DDB8;
+	Thu, 25 Jul 2024 14:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918650; cv=none; b=dd6BCOtnjssqHepXlB0byuH7j7Th0Dr2gpAtUWKblJa4Jm3Y8DwDxRU54gHgWFHz4H2E8w1+YyiyAO0p80ekRoVgRWcmFsFmD5wN04S91HXCaDH1f7kpTAH61kctWJEaTyC7o4dSK8qv0DfNTocMOHDJ8p0uBNugEJCyQmFEKiA=
+	t=1721918654; cv=none; b=Yvo/1us4ys4UgXjZTq9yzYTSDHyudUNrPJvVT/aU1M1OhMlErk34JYeoxfcbTr3hvXg1RaLWL7FOIbB3PZbLcH3wqGZLHe/NBAYiVGWte9yPz7ofEgUxTf8D1BsIBN3kOML1NA2tvVgPUJw2lz+JYlJ+1pc23tokd1gBqtXSpEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918650; c=relaxed/simple;
-	bh=oJ6CUeDIMvfeEzok1mFB999Ir52WTgGVn4V9qbSVJmo=;
+	s=arc-20240116; t=1721918654; c=relaxed/simple;
+	bh=3ZvkwQ3nI8gv1bq8ZSneRDjWb8gT+JDP7fR9KGvLUuE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AVcn50zyWXg8woBkuHdwO0bAsSCKBEyQlb/HEumids4/1DWsP4Rg7UTexn0BIIaE0MnEmIcagLQHcIw6hJWmoQVOjM1ospo3LR4ABiyX5myCnKajEMxi6MrtRyeNQ1/XoW7J1j8VU0CKUO9rVhTifln9fV7k89De5ygeDh6BsrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utkQKEO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oqt/bABIeRE9vdVQmy8SgMAZgfDIkTcIN6y41ty5MavBTvIswOhiGTBWarfYJWli0msEnpDMLS069uJezqbyWEJkccFwtbJm7wr/E+fqcJc/WAK54lCXmM4P3etefzF4Kk4XfAM4qLp1l300VgcJ8FbAI1byEbewIaye3UYzE4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y55rJbxn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utkQKEO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE68C116B1;
-	Thu, 25 Jul 2024 14:44:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y55rJbxn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DA3C116B1;
+	Thu, 25 Jul 2024 14:44:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918650;
-	bh=oJ6CUeDIMvfeEzok1mFB999Ir52WTgGVn4V9qbSVJmo=;
+	s=korg; t=1721918654;
+	bh=3ZvkwQ3nI8gv1bq8ZSneRDjWb8gT+JDP7fR9KGvLUuE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utkQKEO2iEko8AZeYjBWcbCyl4K+iHTMJ+67aAS/EquXA5FntOQQJ6yRgRYlx5pLZ
-	 iMgz7PH5+kkbkiLnBYK73t8yIYdYMODqJ4KknY2B25nHKQ9OpVeO7hhWJSgthfouqO
-	 EhEOoW9UCJjdnAir5Xq8aLUdioFppnCuz8F/h73w=
+	b=Y55rJbxnGID5D2XxETUF2hD2+d8gBH/CnKoT2tJYJJq4nz8uJOGHhwKZn/9eKuXIZ
+	 UWMJo0ZduJGMCKVSc6Wu398SQvjyKYjsQ7fdfgWYdySeyN48CpEWEzGWqYg5Gwtn9j
+	 xZOAImquef8K5wwtNWGbYniigRjMBQXEaThZY+Ns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Denose <jdenose@google.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 18/43] Input: elantech - fix touchpad state on resume for Lenovo N24
-Date: Thu, 25 Jul 2024 16:36:41 +0200
-Message-ID: <20240725142731.162136419@linuxfoundation.org>
+Subject: [PATCH 5.4 09/43] ila: block BH in ila_output()
+Date: Thu, 25 Jul 2024 16:36:32 +0200
+Message-ID: <20240725142730.827049266@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -51,77 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonathan Denose <jdenose@google.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit a69ce592cbe0417664bc5a075205aa75c2ec1273 ]
+[ Upstream commit cf28ff8e4c02e1ffa850755288ac954b6ff0db8c ]
 
-The Lenovo N24 on resume becomes stuck in a state where it
-sends incorrect packets, causing elantech_packet_check_v4 to fail.
-The only way for the device to resume sending the correct packets is for
-it to be disabled and then re-enabled.
+As explained in commit 1378817486d6 ("tipc: block BH
+before using dst_cache"), net/core/dst_cache.c
+helpers need to be called with BH disabled.
 
-This change adds a dmi check to trigger this behavior on resume.
+ila_output() is called from lwtunnel_output()
+possibly from process context, and under rcu_read_lock().
 
-Signed-off-by: Jonathan Denose <jdenose@google.com>
-Link: https://lore.kernel.org/r/20240503155020.v2.1.Ifa0e25ebf968d8f307f58d678036944141ab17e6@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+We might be interrupted by a softirq, re-enter ila_output()
+and corrupt dst_cache data structures.
+
+Fix the race by using local_bh_disable().
+
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20240531132636.2637995-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/elantech.c | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+ net/ipv6/ila/ila_lwt.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/mouse/elantech.c b/drivers/input/mouse/elantech.c
-index 9ff89bfda7a24..8e286e023916f 100644
---- a/drivers/input/mouse/elantech.c
-+++ b/drivers/input/mouse/elantech.c
-@@ -1476,16 +1476,47 @@ static void elantech_disconnect(struct psmouse *psmouse)
- 	psmouse->private = NULL;
- }
+diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
+index 422dcc691f71c..6a6a30e82810d 100644
+--- a/net/ipv6/ila/ila_lwt.c
++++ b/net/ipv6/ila/ila_lwt.c
+@@ -58,7 +58,9 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 		return orig_dst->lwtstate->orig_output(net, sk, skb);
+ 	}
  
-+/*
-+ * Some hw_version 4 models fail to properly activate absolute mode on
-+ * resume without going through disable/enable cycle.
-+ */
-+static const struct dmi_system_id elantech_needs_reenable[] = {
-+#if defined(CONFIG_DMI) && defined(CONFIG_X86)
-+	{
-+		/* Lenovo N24 */
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "81AF"),
-+		},
-+	},
-+#endif
-+	{ }
-+};
-+
- /*
-  * Put the touchpad back into absolute mode when reconnecting
-  */
- static int elantech_reconnect(struct psmouse *psmouse)
- {
-+	int err;
-+
- 	psmouse_reset(psmouse);
++	local_bh_disable();
+ 	dst = dst_cache_get(&ilwt->dst_cache);
++	local_bh_enable();
+ 	if (unlikely(!dst)) {
+ 		struct ipv6hdr *ip6h = ipv6_hdr(skb);
+ 		struct flowi6 fl6;
+@@ -86,8 +88,11 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+ 			goto drop;
+ 		}
  
- 	if (elantech_detect(psmouse, 0))
- 		return -1;
+-		if (ilwt->connected)
++		if (ilwt->connected) {
++			local_bh_disable();
+ 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
++			local_bh_enable();
++		}
+ 	}
  
-+	if (dmi_check_system(elantech_needs_reenable)) {
-+		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_DISABLE);
-+		if (err)
-+			psmouse_warn(psmouse, "failed to deactivate mouse on %s: %d\n",
-+				     psmouse->ps2dev.serio->phys, err);
-+
-+		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_ENABLE);
-+		if (err)
-+			psmouse_warn(psmouse, "failed to reactivate mouse on %s: %d\n",
-+				     psmouse->ps2dev.serio->phys, err);
-+	}
-+
- 	if (elantech_set_absolute_mode(psmouse)) {
- 		psmouse_err(psmouse,
- 			    "failed to put touchpad back into absolute mode.\n");
+ 	skb_dst_set(skb, dst);
 -- 
 2.43.0
 
