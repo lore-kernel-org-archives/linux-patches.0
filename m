@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3016C8468;
-	Thu, 25 Jul 2024 14:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F3E6F519;
+	Thu, 25 Jul 2024 14:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918896; cv=none; b=rHdW7XsoZcBarh7xqELbKv8GZt6AC7wZqh5Be7hFYzPfeI4ELfzY4eJi2uxhxE+nFFAzhbhIuWM7HqK/p9Ss79teXDaAroyrOlLfyju2qwjbjrQq59VVyvI/tWgOaCukvTodabwzi0kbrfy/I9fTIQS+nrGgEHTsKirMC4DucR0=
+	t=1721918899; cv=none; b=lfb9NwCIuGTwiSd+YTMkVdcQ5Po/5JlKgAZkR1bjhKxXiEDHL8DyhU7YL9MqBgLEiwISFq8/3QWT0adh2GAwgwn+Rip2OsDJ3WG6g3P1DQzvjX09r796WI9YNVPDkRw8coRnCYWni6ki6j6KFJC3Dbrj0UHNmsLCyxJIdVuRuI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918896; c=relaxed/simple;
-	bh=tXts4WTbpc8Hye/I5uTKdgfCacb/W+415fSqSLZx2aA=;
+	s=arc-20240116; t=1721918899; c=relaxed/simple;
+	bh=GXpL1/I+I8Bj1mtoKGb43bVrJuw1Hsr9gtrHI91Y0KQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VUE4sxypLuP2w2gAWsv25zWBjZINsfS5o95Rli9aUwmcSB0JSjnuwO1NX7WBC2OwpraaqNjRAg45a8E98I8BKaOvB0m9DYpP1QpOeRxYT93MKpp6bBXegClaZcRZcq8+uKzcm05oGRcH5Pi5xoKXxQLDP+pwA841YJkI9BgIFG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHUV+PAr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IMw9K3R9mV/chmnP6AQ6fyMJN0Q8E4tConZE5ehb/KwoGGOziuk6+LdkaSG9Za5JZR0hzhhKOoU5jCZhYALykobrDmqbomIYgd4V2ftMkjfneoftwKFJnMclXFgnEZ2BxeZCUQGXQhRtYvx0qGuOpHxqP0KaqeDyRmYi7yuCFI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IJBPMUg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHUV+PAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9571DC116B1;
-	Thu, 25 Jul 2024 14:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IJBPMUg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97B7C116B1;
+	Thu, 25 Jul 2024 14:48:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918896;
-	bh=tXts4WTbpc8Hye/I5uTKdgfCacb/W+415fSqSLZx2aA=;
+	s=korg; t=1721918899;
+	bh=GXpL1/I+I8Bj1mtoKGb43bVrJuw1Hsr9gtrHI91Y0KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHUV+PArtXvOwexFMcOs3+dLuDl3LdohIfGr6O6gl156QLcRaIZDUKPfmzIcTquPW
-	 uxsPjvfGgAjEtj5FWxwLfroR2OirGddT30c6oCqjBnh4wks5/9MCls0Xr+eXydwuaK
-	 +XOdW5zmG5jXc5k6jbtLHFJOnp6Vl8329+i0IZNQ=
+	b=IJBPMUg/E2e7y115WgZBXTi/yO4QDvlhtFvy/8ciX8rlFbNKDGs9zLjUodGdWNRur
+	 s+c9hoIGjs4HZaVNLdq5SweS0+wsVztOnLLEOXw9OTtXDQI+xt7TrGXzvK/4b4HjwU
+	 mBRsKWFAv9wpnY1W6FdXTlBtkIbrbcxdrgzQntBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 03/59] scsi: qedf: Set qed_slowpath_params to zero before use
-Date: Thu, 25 Jul 2024 16:36:53 +0200
-Message-ID: <20240725142733.393417308@linuxfoundation.org>
+Subject: [PATCH 5.10 04/59] ACPI: EC: Abort address space access upon error
+Date: Thu, 25 Jul 2024 16:36:54 +0200
+Message-ID: <20240725142733.430517336@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -52,33 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 6c3bb589debd763dc4b94803ddf3c13b4fcca776 ]
+[ Upstream commit f6f172dc6a6d7775b2df6adfd1350700e9a847ec ]
 
-Zero qed_slowpath_params before use.
+When a multi-byte address space access is requested, acpi_ec_read()/
+acpi_ec_write() is being called multiple times.
 
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240515091101.18754-4-skashyap@marvell.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Abort such operations if a single call to acpi_ec_read() /
+acpi_ec_write() fails, as the data read from / written to the EC
+might be incomplete.
+
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qedf/qedf_main.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/ec.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
-index 6923862be3fbc..2536da96130ea 100644
---- a/drivers/scsi/qedf/qedf_main.c
-+++ b/drivers/scsi/qedf/qedf_main.c
-@@ -3453,6 +3453,7 @@ static int __qedf_probe(struct pci_dev *pdev, int mode)
- 	}
+diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
+index 487884420fb0d..60f49ee161479 100644
+--- a/drivers/acpi/ec.c
++++ b/drivers/acpi/ec.c
+@@ -1316,10 +1316,13 @@ acpi_ec_space_handler(u32 function, acpi_physical_address address,
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_enable(ec);
  
- 	/* Start the Slowpath-process */
-+	memset(&slowpath_params, 0, sizeof(struct qed_slowpath_params));
- 	slowpath_params.int_mode = QED_INT_MODE_MSIX;
- 	slowpath_params.drv_major = QEDF_DRIVER_MAJOR_VER;
- 	slowpath_params.drv_minor = QEDF_DRIVER_MINOR_VER;
+-	for (i = 0; i < bytes; ++i, ++address, ++value)
++	for (i = 0; i < bytes; ++i, ++address, ++value) {
+ 		result = (function == ACPI_READ) ?
+ 			acpi_ec_read(ec, address, value) :
+ 			acpi_ec_write(ec, address, *value);
++		if (result < 0)
++			break;
++	}
+ 
+ 	if (ec->busy_polling || bits > 8)
+ 		acpi_ec_burst_disable(ec);
 -- 
 2.43.0
 
