@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19CCF199E9F;
-	Thu, 25 Jul 2024 14:38:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C1419B3E2;
+	Thu, 25 Jul 2024 14:38:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918314; cv=none; b=LWTHMAT2g5hl15oj6oRg1KXJpk2A+94GzPH4WbWBh/yBVBYLe/mLovB13XyHvPnZvZmRT7OtKupDKwrZb8i5DUtmXtVjd+Nh+DzKAKuhw0XgRB6D7YDtBe1x8N6BY72bV9A+NoglgjZfANSkqDJPjQZzAEcvW3vgqMYet9NO+AA=
+	t=1721918317; cv=none; b=fPiFvb2jTVGq+0EutMuwowoK1TZIGARyguispqeFY59n4eHBricylBno1t/ndfUGrSF9EUh7Bk0IcClc32UpbWkniDoiLVGmUPA0a0o0FyLatqdfvugnc9oFVsApA0FWlVuJIKdcRYpbwJLsXsk5INsN78qYnjc2MO2Y9dKSGFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918314; c=relaxed/simple;
-	bh=JSlUaw2LzySg5kC8NJvXS759zktC8iz4ESpV8mpACmQ=;
+	s=arc-20240116; t=1721918317; c=relaxed/simple;
+	bh=wEcCaD+1XuwyFSB13jMtHmH55RYJTf7Uy9tF0coQCRg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tVTaXI9Op+mXqCYhfUkOBOzlDdRbn8lF2EPhMGGvPKq59K72OTgIfvvRlNGYDIBqrQyYLWZZV/OC6Y1YSjjhCBRtpUYLOMC3REVdvkzyvdarlMSpqQpSg2Sar3R3RpYOMSzrJqbS+935kdxZDZoTUI8YR5j1p+zSZXQS5ZVASZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UGIJU2pS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/LtlqVYigesvJWNN7tQ8+00mX0Fxx2VI8zCgn7U1xfC9Y9PGW5DOeXzM9V4iwRRRGqZHMniMwYbLGDS3r6F815gfh7Z9HCS7D3lFjfHBE9gxtOliUXFGfoxkm29B3fQV2nF7VFwXMlgdbPu1Kh3DlWZeDv2nTEO/sWnVrAStR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6OmgoF8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UGIJU2pS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21A73C116B1;
-	Thu, 25 Jul 2024 14:38:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6OmgoF8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A054C116B1;
+	Thu, 25 Jul 2024 14:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918313;
-	bh=JSlUaw2LzySg5kC8NJvXS759zktC8iz4ESpV8mpACmQ=;
+	s=korg; t=1721918316;
+	bh=wEcCaD+1XuwyFSB13jMtHmH55RYJTf7Uy9tF0coQCRg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGIJU2pSt/haLOaa5meA2WNCcRN7Dcp5TXNvysItAb4Y//6atDfPDgsB+ianexhr4
-	 0mgiRTfn/ke9+zr/Y2VvQs5fSSENm66PMGCY2HFbA4YKz3wV9bvhcAB078abGKg2Oz
-	 t3+FWy2DYB8Skx+a955eqN9JJwa3vDlGJJF8fddc=
+	b=M6OmgoF85yOPVHwRQpxlDcUFmOzGRfxieHAAzUb3nFg67rhY6eABG+X2c/zx0ubos
+	 aF4KWnoewFWNoo41vgUGptGGblDXnwq+BU1GqZkhV3PDZzAT2O6AwFCYLszRCwtVMe
+	 knJ0zvPtpI2hJ1dc/NdithP//yfXvAfyRCTtGs44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@google.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 12/29] arm64: dts: qcom: sc7280: Disable SuperSpeed instances in park mode
-Date: Thu, 25 Jul 2024 16:36:28 +0200
-Message-ID: <20240725142732.277640941@linuxfoundation.org>
+Subject: [PATCH 6.10 13/29] arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs regulators
+Date: Thu, 25 Jul 2024 16:36:29 +0200
+Message-ID: <20240725142732.313824704@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -52,41 +51,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 3d930f1750ce30a6c36dbc71f8ff7e20322b94d7 upstream.
+commit 20676f7819d7364b7e8bd437b212106faa893b49 upstream.
 
-On SC7280, in host mode, it is observed that stressing out controller
-results in HC died error:
+The 1.2v HS PHY shared regulator is actually LDO2 from PM8550ve id J.
+Also add the missing supplies to QMP PHYs.
 
- xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
- xhci-hcd.12.auto: xHCI host controller not responding, assume dead
- xhci-hcd.12.auto: HC died; cleaning up
-
-And at this instant only restarting the host mode fixes it. Disable
-SuperSpeed instances in park mode for SC7280 to mitigate this issue.
-
-Reported-by: Doug Anderson <dianders@google.com>
-Cc: stable@vger.kernel.org
-Fixes: bb9efa59c665 ("arm64: dts: qcom: sc7280: Add USB related nodes")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240604060659.1449278-3-quic_kriskura@quicinc.com
+Fixes: f9a9c11471da ("arm64: dts: qcom: x1e80100-qcp: Enable more support")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: stable@vger.kernel.org      # 6.9
+Link: https://lore.kernel.org/r/20240530-x1e80100-dts-fix-usb-phy-supplies-v1-2-6eb72a546227@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -4150,6 +4150,7 @@
- 				iommus = <&apps_smmu 0xe0 0x0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 				maximum-speed = "super-speed";
+--- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
+@@ -537,7 +537,7 @@
+ 
+ &usb_1_ss0_hsphy {
+ 	vdd-supply = <&vreg_l2e_0p8>;
+-	vdda12-supply = <&vreg_l3e_1p2>;
++	vdda12-supply = <&vreg_l2j_1p2>;
+ 
+ 	phys = <&smb2360_0_eusb2_repeater>;
+ 
+@@ -545,6 +545,9 @@
+ };
+ 
+ &usb_1_ss0_qmpphy {
++	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-pll-supply = <&vreg_l1j_0p8>;
++
+ 	status = "okay";
+ };
+ 
+@@ -559,7 +562,7 @@
+ 
+ &usb_1_ss1_hsphy {
+ 	vdd-supply = <&vreg_l2e_0p8>;
+-	vdda12-supply = <&vreg_l3e_1p2>;
++	vdda12-supply = <&vreg_l2j_1p2>;
+ 
+ 	phys = <&smb2360_1_eusb2_repeater>;
+ 
+@@ -567,6 +570,9 @@
+ };
+ 
+ &usb_1_ss1_qmpphy {
++	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-pll-supply = <&vreg_l2d_0p9>;
++
+ 	status = "okay";
+ };
+ 
+@@ -581,7 +587,7 @@
+ 
+ &usb_1_ss2_hsphy {
+ 	vdd-supply = <&vreg_l2e_0p8>;
+-	vdda12-supply = <&vreg_l3e_1p2>;
++	vdda12-supply = <&vreg_l2j_1p2>;
+ 
+ 	phys = <&smb2360_2_eusb2_repeater>;
+ 
+@@ -589,6 +595,9 @@
+ };
+ 
+ &usb_1_ss2_qmpphy {
++	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-pll-supply = <&vreg_l2d_0p9>;
++
+ 	status = "okay";
+ };
+ 
 
 
