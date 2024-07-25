@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ED218468;
-	Thu, 25 Jul 2024 14:48:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E328DFC19;
+	Thu, 25 Jul 2024 14:48:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918889; cv=none; b=QVKKoDNemhPHMI40o7eDGJQQCm0xI+p/pGzip8trFmUip6KkLhZTBal85Ld+VHGoLD9IsoS+V/TvLhnyRtXN80c7TqMCV0g4hle9ofaor5P92Kkgs8XrkwLGf8YlZQirFrLn+p/7rJkDR1OE5AU1NHlYWHgoReFMDv1Cmwy6bms=
+	t=1721918893; cv=none; b=Lb09bwtsniVw5qG7my9rbbPZ1XKHaXyBHSzan3dXQWbuMZbO41w2fePB7YZjNhi/MuQP+K0nufG23haWXY1VjwXhEScL21JxS6GphTIMhHb7DWGKiuNgHRPZlvAnLsOmDidxcISmKXeu6/hjvI1h8Rly7kNY184SBfLLmGGhoRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918889; c=relaxed/simple;
-	bh=w+zJjzM8kSxU2v8WuYuGJF+u3OPt/g3DQJyYaFkp5vY=;
+	s=arc-20240116; t=1721918893; c=relaxed/simple;
+	bh=3TK13e+SVkhw8E/KGnTENazwPWIkS/Ez/4wWVtR0j7k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nr/xcLM8WAcqNPLc2uh/NOyLa/rtXHoF3RG7tlRysldVX9SUoccmGzjcSQeiNwmnyr3rJkcrE6RAgS0lbXjSY/ZVQP+aJWg/GSIYpiqgJGWG5NsSV0nbR/z+7AY1cfYEhVbk3bd9KsbkhZMoCcbNuoVYeEx+uJhTuzXXiG4xSPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUF3slGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ls7VkCX4ZYzk7CNE+nk8f2uC1aLu1g54TR/ivJ4BfEF+XWI2oZFGUke4+21IVIdSca8xOcfyzlPTRUa7Px7ZLeepUZSgBTU1WwbPd3WUhFy4mdkZquft+PdAvUxXzknXEx6tb2OHLIqm8H3UWrh6H3ERnsm8z1flQk2d7sUCt9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1z5HNrQ1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUF3slGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F43C116B1;
-	Thu, 25 Jul 2024 14:48:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1z5HNrQ1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53295C116B1;
+	Thu, 25 Jul 2024 14:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918889;
-	bh=w+zJjzM8kSxU2v8WuYuGJF+u3OPt/g3DQJyYaFkp5vY=;
+	s=korg; t=1721918892;
+	bh=3TK13e+SVkhw8E/KGnTENazwPWIkS/Ez/4wWVtR0j7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUF3slGG93tlUA/i8szQtQzeiGvENMB7Nu1nLvg2BAM6qgVQhyhbBmVqJEavZWS75
-	 iJjnwsHI0AID6ZStNi5QC1AWc48MpEllkS/yC7woymX9GzcRvaktB0XFYDy9L0Ln0T
-	 Q1bne3zD20ZLcKW5ytCpZKe0EEAhPTtcDLhlmhFM=
+	b=1z5HNrQ1PVxv2C6wqhJ8kPjWZLxbyjYe7NezHydYhKvsYM3btVhSYLQzSpH+8E1Fy
+	 KvXR5hT8ojCIyREWlpLeiQbeDVgiRk/2gBcz0t1slvukTE1EoeEipFgy+ULNbo2Mjl
+	 0fhoU79vAQ0gsv6WV6cPCOxwH8HA1BIP3ziOiGxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.10 02/59] filelock: Remove locks reliably when fcntl/close race is detected
-Date: Thu, 25 Jul 2024 16:36:52 +0200
-Message-ID: <20240725142733.356390890@linuxfoundation.org>
+	Kailang Yang <kailang@realtek.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 20/59] ALSA: hda/realtek: Add more codec ID to no shutup pins list
+Date: Thu, 25 Jul 2024 16:37:10 +0200
+Message-ID: <20240725142734.026562706@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -52,66 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 3cad1bc010416c6dd780643476bc59ed742436b9 upstream.
+[ Upstream commit 70794b9563fe011988bcf6a081af9777e63e8d37 ]
 
-When fcntl_setlk() races with close(), it removes the created lock with
-do_lock_file_wait().
-However, LSMs can allow the first do_lock_file_wait() that created the lock
-while denying the second do_lock_file_wait() that tries to remove the lock.
-In theory (but AFAIK not in practice), posix_lock_file() could also fail to
-remove a lock due to GFP_KERNEL allocation failure (when splitting a range
-in the middle).
+If it enter to runtime D3 state, it didn't shutup Headset MIC pin.
 
-After the bug has been triggered, use-after-free reads will occur in
-lock_get_status() when userspace reads /proc/locks. This can likely be used
-to read arbitrary kernel memory, but can't corrupt kernel memory.
-This only affects systems with SELinux / Smack / AppArmor / BPF-LSM in
-enforcing mode and only works from some security contexts.
-
-Fix it by calling locks_remove_posix() instead, which is designed to
-reliably get rid of POSIX locks associated with the given file and
-files_struct and is also used by filp_flush().
-
-Fixes: c293621bbf67 ("[PATCH] stale POSIX lock handling")
-Cc: stable@kernel.org
-Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2563
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20240702-fs-lock-recover-2-v1-1-edd456f63789@google.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[stable fixup: ->c.flc_type was ->fl_type in older kernels]
-Signed-off-by: Jann Horn <jannh@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
+Link: https://lore.kernel.org/r/8d86f61e7d6f4a03b311e4eb4e5caaef@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/locks.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ sound/pci/hda/patch_realtek.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -2588,8 +2588,9 @@ int fcntl_setlk(unsigned int fd, struct
- 	error = do_lock_file_wait(filp, cmd, file_lock);
- 
- 	/*
--	 * Attempt to detect a close/fcntl race and recover by releasing the
--	 * lock that was just acquired. There is no need to do that when we're
-+	 * Detect close/fcntl races and recover by zapping all POSIX locks
-+	 * associated with this file and our files_struct, just like on
-+	 * filp_flush(). There is no need to do that when we're
- 	 * unlocking though, or for OFD locks.
- 	 */
- 	if (!error && file_lock->fl_type != F_UNLCK &&
-@@ -2604,9 +2605,7 @@ int fcntl_setlk(unsigned int fd, struct
- 		f = files_lookup_fd_locked(files, fd);
- 		spin_unlock(&files->file_lock);
- 		if (f != filp) {
--			file_lock->fl_type = F_UNLCK;
--			error = do_lock_file_wait(filp, cmd, file_lock);
--			WARN_ON_ONCE(error);
-+			locks_remove_posix(filp, files);
- 			error = -EBADF;
- 		}
- 	}
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 669937bae570e..fdbc76eaf233e 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -578,10 +578,14 @@ static void alc_shutup_pins(struct hda_codec *codec)
+ 	switch (codec->core.vendor_id) {
+ 	case 0x10ec0236:
+ 	case 0x10ec0256:
++	case 0x10ec0257:
+ 	case 0x19e58326:
+ 	case 0x10ec0283:
++	case 0x10ec0285:
+ 	case 0x10ec0286:
++	case 0x10ec0287:
+ 	case 0x10ec0288:
++	case 0x10ec0295:
+ 	case 0x10ec0298:
+ 		alc_headset_mic_no_shutup(codec);
+ 		break;
+-- 
+2.43.0
+
 
 
