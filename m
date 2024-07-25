@@ -1,39 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8959519D066;
-	Thu, 25 Jul 2024 14:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73C719A29C;
+	Thu, 25 Jul 2024 14:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918476; cv=none; b=PwnFNssn+IGhTa4Lz8/OqP5s7Ta1lllmXbySVKpdxJS5RVWBJ/TOuwbt8MGUT6NSurAm3DTciB7Nvg9M/Vu4xT0WORS+BmHt8b3kkcJWCXaHCBm0TWGeFjCKqAS98HqSsrVA/0fiLTora7lgJeBD/Krjw6s94z/JR/S6eCAaZ/c=
+	t=1721918479; cv=none; b=ZiCM8ibOZ2+LDR+n+2gTv90/JBDsBXIjgAkQwaaEjGDCeh5VgVxMyfB6Rj68UqY3rbeHF8SXen5iYA4LiBnL35M/US36nkwZyinhH3qGpeuGiUNkj+c5OUc/D+whjT3MHwJesHq94H/V8MuU6Yxuwe0l9vozqVKOYPZEIgRg9mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918476; c=relaxed/simple;
-	bh=wnUyVKHmzf0dB3ILZy1ciP0qN6IDzexLCYMDEMwFo+M=;
+	s=arc-20240116; t=1721918479; c=relaxed/simple;
+	bh=kKIvqr9pxTGs6zmPJJt+5S29leuEi0acGJ1DUUgqly0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zf+IXN1paznAW7eK/oxJ3H8qK9hdmBWNU3PQ6HeyKKnVyGTImk+g6M14t8MqUXxbGg8MEa/To6WzRZjPHGUqtX3YCzS4rh+3m1Os/2Q0oKcvyzlh54LyGwsJUdsoHAhPv/BjnpNFRtNfickIqSPQeKvnSbG5KHCTM2AV7x3kZAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDMJhCOO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGrE+dsHYdty+2vO8Zb4HZBPFbjHuq6K+ncQlMcs+VqnZs0TBdk1BfPywI8HRpT1PYipljW7ZljoGvvRz4pRY0mkinXz+pA2oZt+7j8c09C6JZZrZHNfgGo3JCWBQY6yIivd1OpDcr7Om2drfnAm0ZUS171G5RaVeKvzhSl8QSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHtfcioO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDMJhCOO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D626FC32782;
-	Thu, 25 Jul 2024 14:41:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHtfcioO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF67C116B1;
+	Thu, 25 Jul 2024 14:41:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918476;
-	bh=wnUyVKHmzf0dB3ILZy1ciP0qN6IDzexLCYMDEMwFo+M=;
+	s=korg; t=1721918479;
+	bh=kKIvqr9pxTGs6zmPJJt+5S29leuEi0acGJ1DUUgqly0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDMJhCOOISWKOlbAE3yyfU5VeUGsIuJLOR3XedY9W2eCOtZSUincK1H1DgGsYVl+W
-	 iHGSiiMyXAIN9YgqK/zQNvQ5kxtns8KH5sb8szNUNDb5iYkceL9UM0ayP6c4ufM2Cf
-	 BoU8kSE7r1TtVnIvP1oq/Za8uKzIq83T38yhXbkE=
+	b=YHtfcioOnp57hC09NEFxmhYKptXqYDQui3VbsG6aZFUuqEg6XuK0mJ2gvyKy3V7Wd
+	 ArDMt7Ledbgxyhsvz/GP+pPJk18o+7aXDunieWhZZoKJkDbjkXhCS97vfWytMYXnGb
+	 17mmiY54ezAwLJn4gTS18IvC1OvrIM5GDzhkHFY8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Paasch <cpaasch@apple.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Nikolay Kuratov <kniv@yandex-team.ru>
-Subject: [PATCH 4.19 30/33] net: relax socket state check at accept time.
-Date: Thu, 25 Jul 2024 16:36:53 +0200
-Message-ID: <20240725142729.647183391@linuxfoundation.org>
+	lei lu <llfamsec@gmail.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 31/33] ocfs2: add bounds checking to ocfs2_check_dir_entry()
+Date: Thu, 25 Jul 2024 16:36:54 +0200
+Message-ID: <20240725142729.683806352@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -52,84 +58,163 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: lei lu <llfamsec@gmail.com>
 
-commit 26afda78cda3da974fd4c287962c169e9462c495 upstream.
+commit 255547c6bb8940a97eea94ef9d464ea5967763fb upstream.
 
-Christoph reported the following splat:
+This adds sanity checks for ocfs2_dir_entry to make sure all members of
+ocfs2_dir_entry don't stray beyond valid memory region.
 
-WARNING: CPU: 1 PID: 772 at net/ipv4/af_inet.c:761 __inet_accept+0x1f4/0x4a0
-Modules linked in:
-CPU: 1 PID: 772 Comm: syz-executor510 Not tainted 6.9.0-rc7-g7da7119fe22b #56
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
-RIP: 0010:__inet_accept+0x1f4/0x4a0 net/ipv4/af_inet.c:759
-Code: 04 38 84 c0 0f 85 87 00 00 00 41 c7 04 24 03 00 00 00 48 83 c4 10 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc e8 ec b7 da fd <0f> 0b e9 7f fe ff ff e8 e0 b7 da fd 0f 0b e9 fe fe ff ff 89 d9 80
-RSP: 0018:ffffc90000c2fc58 EFLAGS: 00010293
-RAX: ffffffff836bdd14 RBX: 0000000000000000 RCX: ffff888104668000
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
-RBP: dffffc0000000000 R08: ffffffff836bdb89 R09: fffff52000185f64
-R10: dffffc0000000000 R11: fffff52000185f64 R12: dffffc0000000000
-R13: 1ffff92000185f98 R14: ffff88810754d880 R15: ffff8881007b7800
-FS:  000000001c772880(0000) GS:ffff88811b280000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fb9fcf2e178 CR3: 00000001045d2002 CR4: 0000000000770ef0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-PKRU: 55555554
-Call Trace:
- <TASK>
- inet_accept+0x138/0x1d0 net/ipv4/af_inet.c:786
- do_accept+0x435/0x620 net/socket.c:1929
- __sys_accept4_file net/socket.c:1969 [inline]
- __sys_accept4+0x9b/0x110 net/socket.c:1999
- __do_sys_accept net/socket.c:2016 [inline]
- __se_sys_accept net/socket.c:2013 [inline]
- __x64_sys_accept+0x7d/0x90 net/socket.c:2013
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0x58/0x100 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x4315f9
-Code: fd ff 48 81 c4 80 00 00 00 e9 f1 fe ff ff 0f 1f 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 ab b4 fd ff c3 66 2e 0f 1f 84 00 00 00 00
-RSP: 002b:00007ffdb26d9c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
-RAX: ffffffffffffffda RBX: 0000000000400300 RCX: 00000000004315f9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000004
-RBP: 00000000006e1018 R08: 0000000000400300 R09: 0000000000400300
-R10: 0000000000400300 R11: 0000000000000246 R12: 0000000000000000
-R13: 000000000040cdf0 R14: 000000000040ce80 R15: 0000000000000055
- </TASK>
-
-The reproducer invokes shutdown() before entering the listener status.
-After commit 94062790aedb ("tcp: defer shutdown(SEND_SHUTDOWN) for
-TCP_SYN_RECV sockets"), the above causes the child to reach the accept
-syscall in FIN_WAIT1 status.
-
-Eric noted we can relax the existing assertion in __inet_accept()
-
-Reported-by: Christoph Paasch <cpaasch@apple.com>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/490
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Fixes: 94062790aedb ("tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets")
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/23ab880a44d8cfd967e84de8b93dbf48848e3d8c.1716299669.git.pabeni@redhat.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
+Link: https://lkml.kernel.org/r/20240626104433.163270-1-llfamsec@gmail.com
+Signed-off-by: lei lu <llfamsec@gmail.com>
+Reviewed-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/af_inet.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ocfs2/dir.c |   46 +++++++++++++++++++++++++++++-----------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -749,7 +749,9 @@ int inet_accept(struct socket *sock, str
- 	sock_rps_record_flow(sk2);
- 	WARN_ON(!((1 << sk2->sk_state) &
- 		  (TCPF_ESTABLISHED | TCPF_SYN_RECV |
--		  TCPF_CLOSE_WAIT | TCPF_CLOSE)));
-+		   TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 |
-+		   TCPF_CLOSING | TCPF_CLOSE_WAIT |
-+		   TCPF_CLOSE)));
+--- a/fs/ocfs2/dir.c
++++ b/fs/ocfs2/dir.c
+@@ -314,13 +314,16 @@ out:
+  * bh passed here can be an inode block or a dir data block, depending
+  * on the inode inline data flag.
+  */
+-static int ocfs2_check_dir_entry(struct inode * dir,
+-				 struct ocfs2_dir_entry * de,
+-				 struct buffer_head * bh,
++static int ocfs2_check_dir_entry(struct inode *dir,
++				 struct ocfs2_dir_entry *de,
++				 struct buffer_head *bh,
++				 char *buf,
++				 unsigned int size,
+ 				 unsigned long offset)
+ {
+ 	const char *error_msg = NULL;
+ 	const int rlen = le16_to_cpu(de->rec_len);
++	const unsigned long next_offset = ((char *) de - buf) + rlen;
  
- 	sock_graft(sk2, newsock);
+ 	if (unlikely(rlen < OCFS2_DIR_REC_LEN(1)))
+ 		error_msg = "rec_len is smaller than minimal";
+@@ -328,9 +331,11 @@ static int ocfs2_check_dir_entry(struct
+ 		error_msg = "rec_len % 4 != 0";
+ 	else if (unlikely(rlen < OCFS2_DIR_REC_LEN(de->name_len)))
+ 		error_msg = "rec_len is too small for name_len";
+-	else if (unlikely(
+-		 ((char *) de - bh->b_data) + rlen > dir->i_sb->s_blocksize))
+-		error_msg = "directory entry across blocks";
++	else if (unlikely(next_offset > size))
++		error_msg = "directory entry overrun";
++	else if (unlikely(next_offset > size - OCFS2_DIR_REC_LEN(1)) &&
++		 next_offset != size)
++		error_msg = "directory entry too close to end";
  
+ 	if (unlikely(error_msg != NULL))
+ 		mlog(ML_ERROR, "bad entry in directory #%llu: %s - "
+@@ -372,16 +377,17 @@ static inline int ocfs2_search_dirblock(
+ 	de_buf = first_de;
+ 	dlimit = de_buf + bytes;
+ 
+-	while (de_buf < dlimit) {
++	while (de_buf < dlimit - OCFS2_DIR_MEMBER_LEN) {
+ 		/* this code is executed quadratically often */
+ 		/* do minimal checking `by hand' */
+ 
+ 		de = (struct ocfs2_dir_entry *) de_buf;
+ 
+-		if (de_buf + namelen <= dlimit &&
++		if (de->name + namelen <= dlimit &&
+ 		    ocfs2_match(namelen, name, de)) {
+ 			/* found a match - just to be sure, do a full check */
+-			if (!ocfs2_check_dir_entry(dir, de, bh, offset)) {
++			if (!ocfs2_check_dir_entry(dir, de, bh, first_de,
++						   bytes, offset)) {
+ 				ret = -1;
+ 				goto bail;
+ 			}
+@@ -1158,7 +1164,7 @@ static int __ocfs2_delete_entry(handle_t
+ 	pde = NULL;
+ 	de = (struct ocfs2_dir_entry *) first_de;
+ 	while (i < bytes) {
+-		if (!ocfs2_check_dir_entry(dir, de, bh, i)) {
++		if (!ocfs2_check_dir_entry(dir, de, bh, first_de, bytes, i)) {
+ 			status = -EIO;
+ 			mlog_errno(status);
+ 			goto bail;
+@@ -1658,7 +1664,8 @@ int __ocfs2_add_entry(handle_t *handle,
+ 		/* These checks should've already been passed by the
+ 		 * prepare function, but I guess we can leave them
+ 		 * here anyway. */
+-		if (!ocfs2_check_dir_entry(dir, de, insert_bh, offset)) {
++		if (!ocfs2_check_dir_entry(dir, de, insert_bh, data_start,
++					   size, offset)) {
+ 			retval = -ENOENT;
+ 			goto bail;
+ 		}
+@@ -1796,7 +1803,8 @@ static int ocfs2_dir_foreach_blk_id(stru
+ 		}
+ 
+ 		de = (struct ocfs2_dir_entry *) (data->id_data + ctx->pos);
+-		if (!ocfs2_check_dir_entry(inode, de, di_bh, ctx->pos)) {
++		if (!ocfs2_check_dir_entry(inode, de, di_bh, (char *)data->id_data,
++					   i_size_read(inode), ctx->pos)) {
+ 			/* On error, skip the f_pos to the end. */
+ 			ctx->pos = i_size_read(inode);
+ 			break;
+@@ -1893,7 +1901,8 @@ static int ocfs2_dir_foreach_blk_el(stru
+ 		while (ctx->pos < i_size_read(inode)
+ 		       && offset < sb->s_blocksize) {
+ 			de = (struct ocfs2_dir_entry *) (bh->b_data + offset);
+-			if (!ocfs2_check_dir_entry(inode, de, bh, offset)) {
++			if (!ocfs2_check_dir_entry(inode, de, bh, bh->b_data,
++						   sb->s_blocksize, offset)) {
+ 				/* On error, skip the f_pos to the
+ 				   next block. */
+ 				ctx->pos = (ctx->pos | (sb->s_blocksize - 1)) + 1;
+@@ -3369,7 +3378,7 @@ static int ocfs2_find_dir_space_id(struc
+ 	struct super_block *sb = dir->i_sb;
+ 	struct ocfs2_dinode *di = (struct ocfs2_dinode *)di_bh->b_data;
+ 	struct ocfs2_dir_entry *de, *last_de = NULL;
+-	char *de_buf, *limit;
++	char *first_de, *de_buf, *limit;
+ 	unsigned long offset = 0;
+ 	unsigned int rec_len, new_rec_len, free_space = dir->i_sb->s_blocksize;
+ 
+@@ -3382,14 +3391,16 @@ static int ocfs2_find_dir_space_id(struc
+ 	else
+ 		free_space = dir->i_sb->s_blocksize - i_size_read(dir);
+ 
+-	de_buf = di->id2.i_data.id_data;
++	first_de = di->id2.i_data.id_data;
++	de_buf = first_de;
+ 	limit = de_buf + i_size_read(dir);
+ 	rec_len = OCFS2_DIR_REC_LEN(namelen);
+ 
+ 	while (de_buf < limit) {
+ 		de = (struct ocfs2_dir_entry *)de_buf;
+ 
+-		if (!ocfs2_check_dir_entry(dir, de, di_bh, offset)) {
++		if (!ocfs2_check_dir_entry(dir, de, di_bh, first_de,
++					   i_size_read(dir), offset)) {
+ 			ret = -ENOENT;
+ 			goto out;
+ 		}
+@@ -3471,7 +3482,8 @@ static int ocfs2_find_dir_space_el(struc
+ 			/* move to next block */
+ 			de = (struct ocfs2_dir_entry *) bh->b_data;
+ 		}
+-		if (!ocfs2_check_dir_entry(dir, de, bh, offset)) {
++		if (!ocfs2_check_dir_entry(dir, de, bh, bh->b_data, blocksize,
++					   offset)) {
+ 			status = -ENOENT;
+ 			goto bail;
+ 		}
 
 
