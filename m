@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E328DFC19;
-	Thu, 25 Jul 2024 14:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3016C8468;
+	Thu, 25 Jul 2024 14:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918893; cv=none; b=Lb09bwtsniVw5qG7my9rbbPZ1XKHaXyBHSzan3dXQWbuMZbO41w2fePB7YZjNhi/MuQP+K0nufG23haWXY1VjwXhEScL21JxS6GphTIMhHb7DWGKiuNgHRPZlvAnLsOmDidxcISmKXeu6/hjvI1h8Rly7kNY184SBfLLmGGhoRA=
+	t=1721918896; cv=none; b=rHdW7XsoZcBarh7xqELbKv8GZt6AC7wZqh5Be7hFYzPfeI4ELfzY4eJi2uxhxE+nFFAzhbhIuWM7HqK/p9Ss79teXDaAroyrOlLfyju2qwjbjrQq59VVyvI/tWgOaCukvTodabwzi0kbrfy/I9fTIQS+nrGgEHTsKirMC4DucR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918893; c=relaxed/simple;
-	bh=3TK13e+SVkhw8E/KGnTENazwPWIkS/Ez/4wWVtR0j7k=;
+	s=arc-20240116; t=1721918896; c=relaxed/simple;
+	bh=tXts4WTbpc8Hye/I5uTKdgfCacb/W+415fSqSLZx2aA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ls7VkCX4ZYzk7CNE+nk8f2uC1aLu1g54TR/ivJ4BfEF+XWI2oZFGUke4+21IVIdSca8xOcfyzlPTRUa7Px7ZLeepUZSgBTU1WwbPd3WUhFy4mdkZquft+PdAvUxXzknXEx6tb2OHLIqm8H3UWrh6H3ERnsm8z1flQk2d7sUCt9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1z5HNrQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VUE4sxypLuP2w2gAWsv25zWBjZINsfS5o95Rli9aUwmcSB0JSjnuwO1NX7WBC2OwpraaqNjRAg45a8E98I8BKaOvB0m9DYpP1QpOeRxYT93MKpp6bBXegClaZcRZcq8+uKzcm05oGRcH5Pi5xoKXxQLDP+pwA841YJkI9BgIFG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VHUV+PAr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1z5HNrQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53295C116B1;
-	Thu, 25 Jul 2024 14:48:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VHUV+PAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9571DC116B1;
+	Thu, 25 Jul 2024 14:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918892;
-	bh=3TK13e+SVkhw8E/KGnTENazwPWIkS/Ez/4wWVtR0j7k=;
+	s=korg; t=1721918896;
+	bh=tXts4WTbpc8Hye/I5uTKdgfCacb/W+415fSqSLZx2aA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1z5HNrQ1PVxv2C6wqhJ8kPjWZLxbyjYe7NezHydYhKvsYM3btVhSYLQzSpH+8E1Fy
-	 KvXR5hT8ojCIyREWlpLeiQbeDVgiRk/2gBcz0t1slvukTE1EoeEipFgy+ULNbo2Mjl
-	 0fhoU79vAQ0gsv6WV6cPCOxwH8HA1BIP3ziOiGxc=
+	b=VHUV+PArtXvOwexFMcOs3+dLuDl3LdohIfGr6O6gl156QLcRaIZDUKPfmzIcTquPW
+	 uxsPjvfGgAjEtj5FWxwLfroR2OirGddT30c6oCqjBnh4wks5/9MCls0Xr+eXydwuaK
+	 +XOdW5zmG5jXc5k6jbtLHFJOnp6Vl8329+i0IZNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/59] ALSA: hda/realtek: Add more codec ID to no shutup pins list
-Date: Thu, 25 Jul 2024 16:37:10 +0200
-Message-ID: <20240725142734.026562706@linuxfoundation.org>
+Subject: [PATCH 5.10 03/59] scsi: qedf: Set qed_slowpath_params to zero before use
+Date: Thu, 25 Jul 2024 16:36:53 +0200
+Message-ID: <20240725142733.393417308@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -51,39 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kailang Yang <kailang@realtek.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-[ Upstream commit 70794b9563fe011988bcf6a081af9777e63e8d37 ]
+[ Upstream commit 6c3bb589debd763dc4b94803ddf3c13b4fcca776 ]
 
-If it enter to runtime D3 state, it didn't shutup Headset MIC pin.
+Zero qed_slowpath_params before use.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/r/8d86f61e7d6f4a03b311e4eb4e5caaef@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240515091101.18754-4-skashyap@marvell.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/qedf/qedf_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 669937bae570e..fdbc76eaf233e 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -578,10 +578,14 @@ static void alc_shutup_pins(struct hda_codec *codec)
- 	switch (codec->core.vendor_id) {
- 	case 0x10ec0236:
- 	case 0x10ec0256:
-+	case 0x10ec0257:
- 	case 0x19e58326:
- 	case 0x10ec0283:
-+	case 0x10ec0285:
- 	case 0x10ec0286:
-+	case 0x10ec0287:
- 	case 0x10ec0288:
-+	case 0x10ec0295:
- 	case 0x10ec0298:
- 		alc_headset_mic_no_shutup(codec);
- 		break;
+diff --git a/drivers/scsi/qedf/qedf_main.c b/drivers/scsi/qedf/qedf_main.c
+index 6923862be3fbc..2536da96130ea 100644
+--- a/drivers/scsi/qedf/qedf_main.c
++++ b/drivers/scsi/qedf/qedf_main.c
+@@ -3453,6 +3453,7 @@ static int __qedf_probe(struct pci_dev *pdev, int mode)
+ 	}
+ 
+ 	/* Start the Slowpath-process */
++	memset(&slowpath_params, 0, sizeof(struct qed_slowpath_params));
+ 	slowpath_params.int_mode = QED_INT_MODE_MSIX;
+ 	slowpath_params.drv_major = QEDF_DRIVER_MAJOR_VER;
+ 	slowpath_params.drv_minor = QEDF_DRIVER_MINOR_VER;
 -- 
 2.43.0
 
