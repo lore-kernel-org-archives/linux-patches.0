@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00F519AD91;
-	Thu, 25 Jul 2024 16:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6438319D89E;
+	Thu, 25 Jul 2024 16:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721925999; cv=none; b=A3A/8XVNI4lwcbwXXQrVyKkYKkvL+k0uEOwZRPFom/hVLrDgh7gGkWfidUsnghpT3aO3CvLsCAkdgIhh42CLf0ioetxuYakYCgVTagFi1TmYl6vW7sYpYInZkhsNDJymU5n9jvDJi7RIaWsijiJhAhnC+O4gWJw516ZdRbplOnM=
+	t=1721925999; cv=none; b=TV4OcwQi5NQKIJXYeEIU0zCurs7VWEdLeXU7ZsMzXTrBt8fMkrPtB63ux+x2gCG5hAN5/DYn0Of0E0aB3v6xgg/EKCKYblFK3AI3Rcev3uZfLmcnnsCA95gIDo8wBE6kBxoAd5oHji2yKtd2YPJ8FMD6dtyNls3Y1kpby2jWORA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1721925999; c=relaxed/simple;
-	bh=SSWd5Cnq+ZrCshF93rK3w3XNcMN4l49cB+5OMG1g2/I=;
+	bh=Qq3CcW40qWfdw5BFZRNSV2DrrWbD7dh0AWeFfVliKVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j8h4z0S+XXwliGVXwHrIcp0Hg87/AVXRk0CNcgCtD3C0bF+vnq5fkBpn1cxFgLQgfnsDy4R1PaYRBmD18qh2XNAf/Iegjfd0/XEAX2ary0C7jXbMTfIeof9OuFXooMuJpfToXJcjPnA9NozONurmI1tPUXPXM7yMYRL1zGlGCx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jTG8Lmd9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p1qmEI2Y4GOzc/ML0lMB+3dijMny3nDQX7sOMJeds+MbvEIMV4QJZmoKKdPJ5NEZ0kbQhcHIEAi0HDWCJgC3Wz55dRPiQp0JgYrt1W222mCsT2p9Ecbj+QA5HuzCwilQ+Cj7h4G+qlVlvhqWc440W3UqRCGaIgO+PV9jZGDWciA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XLtbxnCV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jTG8Lmd9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 389D0C4AF07;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XLtbxnCV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2E9C32782;
 	Thu, 25 Jul 2024 16:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721925998;
-	bh=SSWd5Cnq+ZrCshF93rK3w3XNcMN4l49cB+5OMG1g2/I=;
+	s=k20201202; t=1721925999;
+	bh=Qq3CcW40qWfdw5BFZRNSV2DrrWbD7dh0AWeFfVliKVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTG8Lmd9g7jMyyYZIVEFgD8oNX95GGLhdAiZC3eO1TrIki9UxSp1K7J9p9reii4FA
-	 072BcifkbzYfeoNdMe/rkoVRT9Gb81EB2e38ZOMDOuIXIbH7rI3KifZq+emNFrkRZC
-	 lYANVl4ZYm+kucbd6Gt6Inwo1V6un/6JuNJtRQ4L9NcQEmDt5d/ZYF+b3Dy8ErCljU
-	 LyiFwRTgYTbI7lR6NczmFu7HT0P9YPfGHqO3PmhJf7nrRBn+nROGnOgLppQ5iZf1ar
-	 +dcjz68D/NOf+coXHvAcYYr1QoZFuDaHic8wDdCkIwnFEK8ze4zraIrumATWg1RDEd
-	 ZX3ilsM5w1hbw==
+	b=XLtbxnCVsM3H88hxCT4whwdZObEvgfX0FGOw6VDK3bTQ7fqdxxyj/UJb8E+p2SnC3
+	 chyIiKVV4cXmLRbif4eKgr4Xf97QJpf8mbJRU2C3Mxqe4teXXiZd0gy288ib9MUjUw
+	 twvBSmq1JTuIHyjyYWuWi0lwJUhFqxPGUe/yELQIcb28JPWTsPM3a1yMFdcQSVHe2i
+	 EzzpgxcCgq2X2qoLNlw+esFvejW6Awz1x330vAbu429VaPNw5ZsDhlRj6sAlp5VUlt
+	 ZOuUgOeFx4ypAnfpg1vb7O1i63mqP2ECLUHoM3gs/J90o2wZxFkfOYcRlrAkDtyY0d
+	 S0SfxslSoqqMQ==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jeff Johnson <quic_jjohnson@quicinc.com>,
+Cc: Konrad Dybcio <konrad.dybcio@linaro.org>,
 	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: [PATCH 1/3] spmi: add missing MODULE_DESCRIPTION() macros
-Date: Thu, 25 Jul 2024 09:46:31 -0700
-Message-ID: <20240725164636.3362690-2-sboyd@kernel.org>
+	patches@lists.linux.dev,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	stable@vger.kernel.org
+Subject: [PATCH 2/3] spmi: pmic-arb: Pass the correct of_node to irq_domain_add_tree
+Date: Thu, 25 Jul 2024 09:46:32 -0700
+Message-ID: <20240725164636.3362690-3-sboyd@kernel.org>
 X-Mailer: git-send-email 2.46.0.rc1.232.g9752f9e123-goog
 In-Reply-To: <20240725164636.3362690-1-sboyd@kernel.org>
 References: <20240725164636.3362690-1-sboyd@kernel.org>
@@ -45,45 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Johnson <quic_jjohnson@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-make allmodconfig && make W=1 C=1 reports:
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spmi/hisi-spmi-controller.o
-WARNING: modpost: missing MODULE_DESCRIPTION() in drivers/spmi/spmi-pmic-arb.o
+Currently, irqchips for all of the subnodes (which represent a given
+bus master) point to the parent wrapper node. This is no bueno, as
+no interrupts arrive, ever (because nothing references that node).
 
-Add the missing invocations of the MODULE_DESCRIPTION() macro.
+Fix that by passing a reference to the respective master's of_node.
 
-Signed-off-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Link: https://lore.kernel.org/r/20240609-md-drivers-spmi-v1-1-f1d5b24e7a66@quicinc.com
+Worth noting, this is a NOP for devices with only a single master
+described.
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240522-topic-spmi_multi_master_irqfix-v2-1-7ec92a862b9f@linaro.org
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 02922ccbb330 ("spmi: pmic-arb: Register controller for bus instead of arbiter")
+Cc: stable@vger.kernel.org
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 ---
- drivers/spmi/hisi-spmi-controller.c | 1 +
- drivers/spmi/spmi-pmic-arb.c        | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/spmi/spmi-pmic-arb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/spmi/hisi-spmi-controller.c b/drivers/spmi/hisi-spmi-controller.c
-index fa068b34b040..3cafdf22c909 100644
---- a/drivers/spmi/hisi-spmi-controller.c
-+++ b/drivers/spmi/hisi-spmi-controller.c
-@@ -344,6 +344,7 @@ static void __exit spmi_controller_exit(void)
- }
- module_exit(spmi_controller_exit);
- 
-+MODULE_DESCRIPTION("Hisilicon 3670 SPMI Controller driver");
- MODULE_LICENSE("GPL v2");
- MODULE_VERSION("1.0");
- MODULE_ALIAS("platform:spmi_controller");
 diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 791cdc160c51..f240fcc5a4e1 100644
+index f240fcc5a4e1..b6880c13163c 100644
 --- a/drivers/spmi/spmi-pmic-arb.c
 +++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1891,5 +1891,6 @@ static struct platform_driver spmi_pmic_arb_driver = {
- };
- module_platform_driver(spmi_pmic_arb_driver);
+@@ -1737,8 +1737,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
  
-+MODULE_DESCRIPTION("Qualcomm MSM SPMI Controller (PMIC Arbiter) driver");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("platform:spmi_pmic_arb");
+ 	dev_dbg(&pdev->dev, "adding irq domain for bus %d\n", bus_index);
+ 
+-	bus->domain = irq_domain_add_tree(dev->of_node,
+-					  &pmic_arb_irq_domain_ops, bus);
++	bus->domain = irq_domain_add_tree(node, &pmic_arb_irq_domain_ops, bus);
+ 	if (!bus->domain) {
+ 		dev_err(&pdev->dev, "unable to create irq_domain\n");
+ 		return -ENOMEM;
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
