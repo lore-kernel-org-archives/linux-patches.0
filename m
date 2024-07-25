@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D9113DDB8;
-	Thu, 25 Jul 2024 14:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8A919CD17;
+	Thu, 25 Jul 2024 14:43:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918579; cv=none; b=MOv3TYN/ZgC0EqQ2VmxKb2BdhUfkbsguFXox/y0o4CW0TLVzfOTKgcGlWDa6uAMN52zRhfF3Kq8QyLKK7FpsR5nljVx+goqJCj5+/ttMcqXxkwpoFzhmw/wpvcLl8BIRogIJ2zpIbuYIgcSi8ln+puNCohMmQ2O7MuzoF/7IWuQ=
+	t=1721918582; cv=none; b=JE6aJ5m7N0CY8YTItI5EvLa+Rd2GMMTBQxEpz7HrLYzRVQjJ2u5sGLhxHnoxpv8LLxonLOovB/8b4k3tRVDh33UIJVQEFDyCWEDDI1+ObVJimOxJKnkdqKoQonKQ/d9qp0hx/N95NwKlwkk9er7SZq58NyPRETvCZMLNxkhIOV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918579; c=relaxed/simple;
-	bh=1jatA/yznV/l0eMeRWS3Q+JcT+AtI1YWQI1xmuNFAeM=;
+	s=arc-20240116; t=1721918582; c=relaxed/simple;
+	bh=6SNHZoWPKJa7Th7P5FYvg9HKe87MSnlCUPSYR8sL4q0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBiVPO62rZ78P2knqoxaw6hYbLhPCWmc+CCi3ySyb0iGgdvEpHgjmAWie6roqEDnmkjOhLtnr74L8+GS6PJ3qiFzv5OAnvIihtxDh89BWPUM3uL8d4egCY89Oq6lHqYP/xqUgO4sO81qebuxjfw5Sll6y5opRgN3hFRc5QwzB88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVossVzu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhIZDKypuQSZi8fWPuAf4HSF72UwpoRtTJmiA2x3VxQMCrOdprRhr/EPSRfD/4ZMq8CAq5w7g58m7FOimV7YIa/4908Omw7RpVm6ju4VDfX0u5FsXW3Jp0a4o8B381q36a0lyfBhRLSfIcpAOd7xmG0JLIFKt7e6AlZSHDcu9t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4DIRo++; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVossVzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FAAC116B1;
-	Thu, 25 Jul 2024 14:42:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4DIRo++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C45C32782;
+	Thu, 25 Jul 2024 14:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918578;
-	bh=1jatA/yznV/l0eMeRWS3Q+JcT+AtI1YWQI1xmuNFAeM=;
+	s=korg; t=1721918582;
+	bh=6SNHZoWPKJa7Th7P5FYvg9HKe87MSnlCUPSYR8sL4q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HVossVzuUIeSBMk/z3xUcqjBF7HcyqSNfsGUHjuvcamyZG30yrf2vVWwppdJBkymV
-	 trqI21UrHzxWEwoH/h67QhUlIjd3cvWD2wJVWhoA+hihq0++d7FTcDyO26sPWN2yhp
-	 RDYEEIhgCvh0rlEv1vo6fBXGYrD3cMOHwzuaSepE=
+	b=N4DIRo++ltVrFyccGHFNn9OCJ9XOh204ywDnLww0u+4G4cjOp8P43gpx3A5Xncfsa
+	 FyqVH+gZPpJ65NEZUunsH/P4/BwjQhshXGDWLIsGlqjkIGO7+6UbOrptoE5xNZ2Fov
+	 X2mJYMV9ksLiEl0Cjg2Mpa6cHB9/So0k8GJi4gjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vishal Chourasia <vishalc@linux.ibm.com>,
-	Anjali K <anjalik@linux.ibm.com>,
-	Srikar Dronamraju <srikar@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 28/43] powerpc/pseries: Whitelist dtl slub object for copying to userspace
-Date: Thu, 25 Jul 2024 16:36:51 +0200
-Message-ID: <20240725142731.534747309@linuxfoundation.org>
+Subject: [PATCH 5.4 11/43] kconfig: remove wrong expr_trans_bool()
+Date: Thu, 25 Jul 2024 16:36:34 +0200
+Message-ID: <20240725142730.900847124@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -53,75 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anjali K <anjalik@linux.ibm.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 1a14150e1656f7a332a943154fc486504db4d586 ]
+[ Upstream commit 77a92660d8fe8d29503fae768d9f5eb529c88b36 ]
 
-Reading the dispatch trace log from /sys/kernel/debug/powerpc/dtl/cpu-*
-results in a BUG() when the config CONFIG_HARDENED_USERCOPY is enabled as
-shown below.
+expr_trans_bool() performs an incorrect transformation.
 
-    kernel BUG at mm/usercopy.c:102!
-    Oops: Exception in kernel mode, sig: 5 [#1]
-    LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-    Modules linked in: xfs libcrc32c dm_service_time sd_mod t10_pi sg ibmvfc
-    scsi_transport_fc ibmveth pseries_wdt dm_multipath dm_mirror dm_region_hash dm_log dm_mod fuse
-    CPU: 27 PID: 1815 Comm: python3 Not tainted 6.10.0-rc3 #85
-    Hardware name: IBM,9040-MRX POWER10 (raw) 0x800200 0xf000006 of:IBM,FW1060.00 (NM1060_042) hv:phyp pSeries
-    NIP:  c0000000005d23d4 LR: c0000000005d23d0 CTR: 00000000006ee6f8
-    REGS: c000000120c078c0 TRAP: 0700   Not tainted  (6.10.0-rc3)
-    MSR:  8000000000029033 <SF,EE,ME,IR,DR,RI,LE>  CR: 2828220f  XER: 0000000e
-    CFAR: c0000000001fdc80 IRQMASK: 0
-    [ ... GPRs omitted ... ]
-    NIP [c0000000005d23d4] usercopy_abort+0x78/0xb0
-    LR [c0000000005d23d0] usercopy_abort+0x74/0xb0
-    Call Trace:
-     usercopy_abort+0x74/0xb0 (unreliable)
-     __check_heap_object+0xf8/0x120
-     check_heap_object+0x218/0x240
-     __check_object_size+0x84/0x1a4
-     dtl_file_read+0x17c/0x2c4
-     full_proxy_read+0x8c/0x110
-     vfs_read+0xdc/0x3a0
-     ksys_read+0x84/0x144
-     system_call_exception+0x124/0x330
-     system_call_vectored_common+0x15c/0x2ec
-    --- interrupt: 3000 at 0x7fff81f3ab34
+[Test Code]
 
-Commit 6d07d1cd300f ("usercopy: Restrict non-usercopy caches to size 0")
-requires that only whitelisted areas in slab/slub objects can be copied to
-userspace when usercopy hardening is enabled using CONFIG_HARDENED_USERCOPY.
-Dtl contains hypervisor dispatch events which are expected to be read by
-privileged users. Hence mark this safe for user access.
-Specify useroffset=0 and usersize=DISPATCH_LOG_BYTES to whitelist the
-entire object.
+    config MODULES
+            def_bool y
+            modules
 
-Co-developed-by: Vishal Chourasia <vishalc@linux.ibm.com>
-Signed-off-by: Vishal Chourasia <vishalc@linux.ibm.com>
-Signed-off-by: Anjali K <anjalik@linux.ibm.com>
-Reviewed-by: Srikar Dronamraju <srikar@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240614173844.746818-1-anjalik@linux.ibm.com
+    config A
+            def_bool y
+            select C if B != n
+
+    config B
+            def_tristate m
+
+    config C
+            tristate
+
+[Result]
+
+    CONFIG_MODULES=y
+    CONFIG_A=y
+    CONFIG_B=m
+    CONFIG_C=m
+
+This output is incorrect because CONFIG_C=y is expected.
+
+Documentation/kbuild/kconfig-language.rst clearly explains the function
+of the '!=' operator:
+
+    If the values of both symbols are equal, it returns 'n',
+    otherwise 'y'.
+
+Therefore, the statement:
+
+    select C if B != n
+
+should be equivalent to:
+
+    select C if y
+
+Or, more simply:
+
+    select C
+
+Hence, the symbol C should be selected by the value of A, which is 'y'.
+
+However, expr_trans_bool() wrongly transforms it to:
+
+    select C if B
+
+Therefore, the symbol C is selected by (A && B), which is 'm'.
+
+The comment block of expr_trans_bool() correctly explains its intention:
+
+  * bool FOO!=n => FOO
+    ^^^^
+
+If FOO is bool, FOO!=n can be simplified into FOO. This is correct.
+
+However, the actual code performs this transformation when FOO is
+tristate:
+
+    if (e->left.sym->type == S_TRISTATE) {
+                             ^^^^^^^^^^
+
+While it can be fixed to S_BOOLEAN, there is no point in doing so
+because expr_tranform() already transforms FOO!=n to FOO when FOO is
+bool. (see the "case E_UNEQUAL" part)
+
+expr_trans_bool() is wrong and unnecessary.
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/setup.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ scripts/kconfig/expr.c | 29 -----------------------------
+ scripts/kconfig/expr.h |  1 -
+ scripts/kconfig/menu.c |  2 --
+ 3 files changed, 32 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/setup.c b/arch/powerpc/platforms/pseries/setup.c
-index d5abb25865e36..bc1a4e024529b 100644
---- a/arch/powerpc/platforms/pseries/setup.c
-+++ b/arch/powerpc/platforms/pseries/setup.c
-@@ -305,8 +305,8 @@ static int alloc_dispatch_log_kmem_cache(void)
- {
- 	void (*ctor)(void *) = get_dtl_cache_ctor();
+diff --git a/scripts/kconfig/expr.c b/scripts/kconfig/expr.c
+index 9f1de58e9f0c9..9e409418534b8 100644
+--- a/scripts/kconfig/expr.c
++++ b/scripts/kconfig/expr.c
+@@ -397,35 +397,6 @@ static struct expr *expr_eliminate_yn(struct expr *e)
+ 	return e;
+ }
  
--	dtl_cache = kmem_cache_create("dtl", DISPATCH_LOG_BYTES,
--						DISPATCH_LOG_BYTES, 0, ctor);
-+	dtl_cache = kmem_cache_create_usercopy("dtl", DISPATCH_LOG_BYTES,
-+						DISPATCH_LOG_BYTES, 0, 0, DISPATCH_LOG_BYTES, ctor);
- 	if (!dtl_cache) {
- 		pr_warn("Failed to create dispatch trace log buffer cache\n");
- 		pr_warn("Stolen time statistics will be unreliable\n");
+-/*
+- * bool FOO!=n => FOO
+- */
+-struct expr *expr_trans_bool(struct expr *e)
+-{
+-	if (!e)
+-		return NULL;
+-	switch (e->type) {
+-	case E_AND:
+-	case E_OR:
+-	case E_NOT:
+-		e->left.expr = expr_trans_bool(e->left.expr);
+-		e->right.expr = expr_trans_bool(e->right.expr);
+-		break;
+-	case E_UNEQUAL:
+-		// FOO!=n -> FOO
+-		if (e->left.sym->type == S_TRISTATE) {
+-			if (e->right.sym == &symbol_no) {
+-				e->type = E_SYMBOL;
+-				e->right.sym = NULL;
+-			}
+-		}
+-		break;
+-	default:
+-		;
+-	}
+-	return e;
+-}
+-
+ /*
+  * e1 || e2 -> ?
+  */
+diff --git a/scripts/kconfig/expr.h b/scripts/kconfig/expr.h
+index 017843c9a4f42..fbbd8ebe852a1 100644
+--- a/scripts/kconfig/expr.h
++++ b/scripts/kconfig/expr.h
+@@ -302,7 +302,6 @@ struct expr *expr_copy(const struct expr *org);
+ void expr_free(struct expr *e);
+ void expr_eliminate_eq(struct expr **ep1, struct expr **ep2);
+ tristate expr_calc_value(struct expr *e);
+-struct expr *expr_trans_bool(struct expr *e);
+ struct expr *expr_eliminate_dups(struct expr *e);
+ struct expr *expr_transform(struct expr *e);
+ int expr_contains_symbol(struct expr *dep, struct symbol *sym);
+diff --git a/scripts/kconfig/menu.c b/scripts/kconfig/menu.c
+index d9d16469859ab..2c95e8a7ef165 100644
+--- a/scripts/kconfig/menu.c
++++ b/scripts/kconfig/menu.c
+@@ -387,8 +387,6 @@ void menu_finalize(struct menu *parent)
+ 				dep = expr_transform(dep);
+ 				dep = expr_alloc_and(expr_copy(basedep), dep);
+ 				dep = expr_eliminate_dups(dep);
+-				if (menu->sym && menu->sym->type != S_TRISTATE)
+-					dep = expr_trans_bool(dep);
+ 				prop->visible.expr = dep;
+ 
+ 				/*
 -- 
 2.43.0
 
