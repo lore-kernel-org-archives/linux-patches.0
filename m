@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F6019D09A;
-	Thu, 25 Jul 2024 14:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E3C19D074;
+	Thu, 25 Jul 2024 14:52:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919144; cv=none; b=Wru+VGrFzgB9eZQGt5er4rMr11k6ei+kV5Gu8a3BvO/kUrZCxjp95fqoj3roZIYbLXo4xzGmRkBsK0otU5o9VO4kdzVoKpaY0QTAYunvYVUwkwR/8dXmo0xddCDHQNz4vFIiRoaCK2bS4ih6OLw72awjKZ9P4XSQHG+eF6C4blc=
+	t=1721919147; cv=none; b=reBVfBdszP4E1wlAX7hB5i8nhxLm9ueHy4GfSfu6OKAUZv7qBQVeOae0Vsroav+6Ihie/7/av3uIOYFl9oQ2ew6omDXsCvInoXcX2Dl+Sa2D66UP+VCtnIzGOaOrD/AW8rFYhvCGBQDVS1Hbc+vixvPtMlXJKnmmz5KNUJ4Ybqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919144; c=relaxed/simple;
-	bh=EuQZc7g/kOYxbgp1CEUwuFKGqIXj5DUXmDSS1AalG9w=;
+	s=arc-20240116; t=1721919147; c=relaxed/simple;
+	bh=Aubh2E17B4zUihaWIHwKPsFVd6jEDwheUl+OEvgTI7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=COh7HoFrFIZrn4jhejOWWTKUnbHWzdPTO68/eodt7E0mL4WVM/DhcXAQ2uGIBftoqkH5w4m6FQfahCNPumX6AN0IctvEeCvpY3lyICRAlJG7dUjaX97LelXjcTztPGoo2l4Xu24bepkaGZnyvSiNX9KEgckvBIy0MbI9D6FGQvE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oU84Us4X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G6mQY3UOXQydg0Ek2OXf+uiVlF/lcdImEvonxrWqbsZoLuwWEuWjUCcE+wAHNTayx9Gs/Zx6SvvsX1jPeXLDgEmxWmoL4VGGLrxhTv02vIllFwpIUNWkKtS6XmVqMaqQ0E8mH+1AA/zCAa0NMJb22bcdQQooauYjMchzf8tnmAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D3d5T6XK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oU84Us4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0701DC116B1;
-	Thu, 25 Jul 2024 14:52:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D3d5T6XK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48FDFC116B1;
+	Thu, 25 Jul 2024 14:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919144;
-	bh=EuQZc7g/kOYxbgp1CEUwuFKGqIXj5DUXmDSS1AalG9w=;
+	s=korg; t=1721919147;
+	bh=Aubh2E17B4zUihaWIHwKPsFVd6jEDwheUl+OEvgTI7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oU84Us4X59+u/KtZZjk81gL21YNDKz7thb0GPM1LSPB3UCTKfC+YAucK7m40XQV1C
-	 9eg089tKsF+Vmpa+EbkCjnmVX9gVnGbBf/YlH3shyEyCsRl+ArzDUyBLJDBlWMwfID
-	 dzwZoxBcMNK5KDitmXexMSUmcfkmTxajOBoDyM8U=
+	b=D3d5T6XK1OwbSaNc/9xwaHej1cmtxLmhdgZRxqWrj0ueLKfiX1OnCBmoCWamom8oe
+	 0UyczTi7u286/I5CKXt5Uld02HpX64yEqE1bbCKn60OQ85yGNj5HuiRWTNC07D7jtB
+	 3UyZL2MHZzfgNOCBlkKR45QY2GhvwKmc4033dwuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunguang Xu <chunguang.xu@shopee.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/87] nvme: avoid double free special payload
-Date: Thu, 25 Jul 2024 16:37:03 +0200
-Message-ID: <20240725142739.571759418@linuxfoundation.org>
+Subject: [PATCH 5.15 39/87] ALSA: dmaengine: Synchronize dma channel after drop()
+Date: Thu, 25 Jul 2024 16:37:12 +0200
+Message-ID: <20240725142739.908520249@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -53,35 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chunguang Xu <chunguang.xu@shopee.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit e5d574ab37f5f2e7937405613d9b1a724811e5ad ]
+[ Upstream commit e8343410ddf08fc36a9b9cc7c51a4e53a262d4c6 ]
 
-If a discard request needs to be retried, and that retry may fail before
-a new special payload is added, a double free will result. Clear the
-RQF_SPECIAL_LOAD when the request is cleaned.
+Sometimes the stream may be stopped due to XRUN events, in which case
+the userspace can call snd_pcm_drop() and snd_pcm_prepare() to stop and
+start the stream again.
 
-Signed-off-by: Chunguang Xu <chunguang.xu@shopee.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+In these cases, we must wait for the DMA channel to synchronize before
+marking the stream as prepared for playback, as the DMA channel gets
+stopped by drop() without any synchronization. Make sure the ALSA core
+synchronizes the DMA channel by adding a sync_stop() hook.
+
+Reviewed-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240611-asoc_next-v3-1-fcfd84b12164@ti.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/sound/dmaengine_pcm.h         |  1 +
+ sound/core/pcm_dmaengine.c            | 10 ++++++++++
+ sound/soc/soc-generic-dmaengine-pcm.c |  8 ++++++++
+ 3 files changed, 19 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 960a31e3307a2..93a19588ae92a 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -981,6 +981,7 @@ void nvme_cleanup_cmd(struct request *req)
- 			clear_bit_unlock(0, &ctrl->discard_page_busy);
- 		else
- 			kfree(bvec_virt(&req->special_vec));
-+		req->rq_flags &= ~RQF_SPECIAL_PAYLOAD;
- 	}
+diff --git a/include/sound/dmaengine_pcm.h b/include/sound/dmaengine_pcm.h
+index 96666efddb396..6d9c94a570733 100644
+--- a/include/sound/dmaengine_pcm.h
++++ b/include/sound/dmaengine_pcm.h
+@@ -34,6 +34,7 @@ snd_pcm_uframes_t snd_dmaengine_pcm_pointer_no_residue(struct snd_pcm_substream
+ int snd_dmaengine_pcm_open(struct snd_pcm_substream *substream,
+ 	struct dma_chan *chan);
+ int snd_dmaengine_pcm_close(struct snd_pcm_substream *substream);
++int snd_dmaengine_pcm_sync_stop(struct snd_pcm_substream *substream);
+ 
+ int snd_dmaengine_pcm_open_request_chan(struct snd_pcm_substream *substream,
+ 	dma_filter_fn filter_fn, void *filter_data);
+diff --git a/sound/core/pcm_dmaengine.c b/sound/core/pcm_dmaengine.c
+index 0fe93b423c4ed..3e479dca122a0 100644
+--- a/sound/core/pcm_dmaengine.c
++++ b/sound/core/pcm_dmaengine.c
+@@ -344,6 +344,16 @@ int snd_dmaengine_pcm_open_request_chan(struct snd_pcm_substream *substream,
  }
- EXPORT_SYMBOL_GPL(nvme_cleanup_cmd);
+ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_open_request_chan);
+ 
++int snd_dmaengine_pcm_sync_stop(struct snd_pcm_substream *substream)
++{
++	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
++
++	dmaengine_synchronize(prtd->dma_chan);
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_sync_stop);
++
+ /**
+  * snd_dmaengine_pcm_close - Close a dmaengine based PCM substream
+  * @substream: PCM substream
+diff --git a/sound/soc/soc-generic-dmaengine-pcm.c b/sound/soc/soc-generic-dmaengine-pcm.c
+index 4aa48c74f21a0..fa1f91c34834f 100644
+--- a/sound/soc/soc-generic-dmaengine-pcm.c
++++ b/sound/soc/soc-generic-dmaengine-pcm.c
+@@ -323,6 +323,12 @@ static int dmaengine_copy_user(struct snd_soc_component *component,
+ 	return 0;
+ }
+ 
++static int dmaengine_pcm_sync_stop(struct snd_soc_component *component,
++				   struct snd_pcm_substream *substream)
++{
++	return snd_dmaengine_pcm_sync_stop(substream);
++}
++
+ static const struct snd_soc_component_driver dmaengine_pcm_component = {
+ 	.name		= SND_DMAENGINE_PCM_DRV_NAME,
+ 	.probe_order	= SND_SOC_COMP_ORDER_LATE,
+@@ -332,6 +338,7 @@ static const struct snd_soc_component_driver dmaengine_pcm_component = {
+ 	.trigger	= dmaengine_pcm_trigger,
+ 	.pointer	= dmaengine_pcm_pointer,
+ 	.pcm_construct	= dmaengine_pcm_new,
++	.sync_stop	= dmaengine_pcm_sync_stop,
+ };
+ 
+ static const struct snd_soc_component_driver dmaengine_pcm_component_process = {
+@@ -344,6 +351,7 @@ static const struct snd_soc_component_driver dmaengine_pcm_component_process = {
+ 	.pointer	= dmaengine_pcm_pointer,
+ 	.copy_user	= dmaengine_copy_user,
+ 	.pcm_construct	= dmaengine_pcm_new,
++	.sync_stop	= dmaengine_pcm_sync_stop,
+ };
+ 
+ static const char * const dmaengine_pcm_dma_channel_names[] = {
 -- 
 2.43.0
 
