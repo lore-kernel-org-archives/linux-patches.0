@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACBB199E9F;
-	Thu, 25 Jul 2024 14:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989C219AA5F;
+	Thu, 25 Jul 2024 14:43:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918605; cv=none; b=jRl+8tQtrJH/bccsg2tgjhqcAFAgmWd/yRR9jQ7ZUftqLnQE1YCpfAUCEgGoDx7UjKm5OuS0p6M0S2UWERcFIyeJay8slixSJYoKqkzFjRfntb43sbdGisp3zSUewtidU+wN6wxvEe15gFCkRDL35UpB18kDpn89gwfQUrZLPwo=
+	t=1721918608; cv=none; b=j4+d51RcDE0bypPnbtFXezVbQc7qB2TqJUmv5Jkry4clCl0Y6fjP3jIelwiMqxmcc0lkQbvFmHot4y0Csf13SXjS90JXC0q366vsJI5ec2GU/rqG9JjaDjhDjgD9YQPEnPleKOi4Ah/FazljvU9gh7XHtl9Ve1CJRlB33QTeL24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918605; c=relaxed/simple;
-	bh=mbiboMtB9NIx43FEmSvWwcbAMLuWHlh75Zb5Z0WI7PQ=;
+	s=arc-20240116; t=1721918608; c=relaxed/simple;
+	bh=uLs88oG3mamLsZPjTTP+hmBbWIOPyhW/KqEJ0qP2bag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ioDN5a3dzuecL+hVoa4Q79iRlxrO0nwwqLHAp3ke7q2E0G6HKRfQhPm25DRk3ieh2pjmaj29J67ZekXtIcfp4VO+Kcb1oo+/oUto+zhVBj+qiwv4tpj/Hse17TPQWyIhKMYaStnY2V2V0vYW/PGpxQeBAwdWwUQLAZa5QMuGdlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7jO75mC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nu6Q4kgy/Y1VyhzyLtLI4u0O9dwtbzlG/QY2jpUt9xSXaV2dXx2PY3kkpSWxQE5IdO5hpgi9jW3VtkOP1Ugv55hZJGC+o9Ty12gUGhvZ3MMMVu+Q5Z2s9zFHn+Uv5PnBR9C1uzMC/om7T9VSP2xpnmxM8jdswioLAZ2or6ukQVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3XQ66zy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7jO75mC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D41C116B1;
-	Thu, 25 Jul 2024 14:43:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3XQ66zy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF7F6C116B1;
+	Thu, 25 Jul 2024 14:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918605;
-	bh=mbiboMtB9NIx43FEmSvWwcbAMLuWHlh75Zb5Z0WI7PQ=;
+	s=korg; t=1721918608;
+	bh=uLs88oG3mamLsZPjTTP+hmBbWIOPyhW/KqEJ0qP2bag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7jO75mC0o51CUVcf1CLE151BDgR+onhaDrH9gAxzL4jPjvQRJuxcJOvIRt8fenbO
-	 D4mpQPPt37UxH/pNIKEVyuHzIvN62Bxm060nQ9YRmVA4KyNP1os90wohrmB6HBO/qT
-	 NsVn1ppZhb/sNEPLkGW0NA0iUjmC6NI9WD8Yplos=
+	b=b3XQ66zyPVqoBt0thTP/BJNSMPdgRCYJl4N8oW+6UZDmt3iNxVHtqzRH3/bI/toZt
+	 5lY1Ddb4jXoogVj9o/ROibHFWxHe6GHeLixrVLKZJk1B3rvR2mo7XB1mWBBMhv6gQM
+	 f0rVMwwwtTplk0ghEZGInMbLv0Mls0O5odMGUJwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Adam Davis <eadavis@qq.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+efde959319469ff8d4d7@syzkaller.appspotmail.com,
-	syzbot+01ade747b16e9c8030e0@syzkaller.appspotmail.com
-Subject: [PATCH 5.4 35/43] hfsplus: fix uninit-value in copy_name
-Date: Thu, 25 Jul 2024 16:36:58 +0200
-Message-ID: <20240725142731.798727948@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH 5.4 36/43] ARM: 9324/1: fix get_user() broken with veneer
+Date: Thu, 25 Jul 2024 16:36:59 +0200
+Message-ID: <20240725142731.836261154@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -53,70 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 0570730c16307a72f8241df12363f76600baf57d ]
+commit 24d3ba0a7b44c1617c27f5045eecc4f34752ab03 upstream.
 
-[syzbot reported]
-BUG: KMSAN: uninit-value in sized_strscpy+0xc4/0x160
- sized_strscpy+0xc4/0x160
- copy_name+0x2af/0x320 fs/hfsplus/xattr.c:411
- hfsplus_listxattr+0x11e9/0x1a50 fs/hfsplus/xattr.c:750
- vfs_listxattr fs/xattr.c:493 [inline]
- listxattr+0x1f3/0x6b0 fs/xattr.c:840
- path_listxattr fs/xattr.c:864 [inline]
- __do_sys_listxattr fs/xattr.c:876 [inline]
- __se_sys_listxattr fs/xattr.c:873 [inline]
- __x64_sys_listxattr+0x16b/0x2f0 fs/xattr.c:873
- x64_sys_call+0x2ba0/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:195
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+The 32-bit ARM kernel stops working if the kernel grows to the point
+where veneers for __get_user_* are created.
 
-Uninit was created at:
- slab_post_alloc_hook mm/slub.c:3877 [inline]
- slab_alloc_node mm/slub.c:3918 [inline]
- kmalloc_trace+0x57b/0xbe0 mm/slub.c:4065
- kmalloc include/linux/slab.h:628 [inline]
- hfsplus_listxattr+0x4cc/0x1a50 fs/hfsplus/xattr.c:699
- vfs_listxattr fs/xattr.c:493 [inline]
- listxattr+0x1f3/0x6b0 fs/xattr.c:840
- path_listxattr fs/xattr.c:864 [inline]
- __do_sys_listxattr fs/xattr.c:876 [inline]
- __se_sys_listxattr fs/xattr.c:873 [inline]
- __x64_sys_listxattr+0x16b/0x2f0 fs/xattr.c:873
- x64_sys_call+0x2ba0/0x3b50 arch/x86/include/generated/asm/syscalls_64.h:195
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-[Fix]
-When allocating memory to strbuf, initialize memory to 0.
+AAPCS32 [1] states, "Register r12 (IP) may be used by a linker as a
+scratch register between a routine and any subroutine it calls. It
+can also be used within a routine to hold intermediate values between
+subroutine calls."
 
-Reported-and-tested-by: syzbot+efde959319469ff8d4d7@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://lore.kernel.org/r/tencent_8BBB6433BC9E1C1B7B4BDF1BF52574BA8808@qq.com
-Reported-and-tested-by: syzbot+01ade747b16e9c8030e0@syzkaller.appspotmail.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, bl instructions buried within the inline asm are unpredictable
+for compilers; hence, "ip" must be added to the clobber list.
+
+This becomes critical when veneers for __get_user_* are created because
+veneers use the ip register since commit 02e541db0540 ("ARM: 8323/1:
+force linker to use PIC veneers").
+
+[1]: https://github.com/ARM-software/abi-aa/blob/2023Q1/aapcs32/aapcs32.rst
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: John Stultz <jstultz@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/xattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/include/asm/uaccess.h |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/fs/hfsplus/xattr.c b/fs/hfsplus/xattr.c
-index bb0b27d88e502..d91f76ef18d9b 100644
---- a/fs/hfsplus/xattr.c
-+++ b/fs/hfsplus/xattr.c
-@@ -700,7 +700,7 @@ ssize_t hfsplus_listxattr(struct dentry *dentry, char *buffer, size_t size)
- 		return err;
- 	}
+--- a/arch/arm/include/asm/uaccess.h
++++ b/arch/arm/include/asm/uaccess.h
+@@ -143,16 +143,6 @@ extern int __get_user_64t_1(void *);
+ extern int __get_user_64t_2(void *);
+ extern int __get_user_64t_4(void *);
  
--	strbuf = kmalloc(NLS_MAX_CHARSET_SIZE * HFSPLUS_ATTR_MAX_STRLEN +
-+	strbuf = kzalloc(NLS_MAX_CHARSET_SIZE * HFSPLUS_ATTR_MAX_STRLEN +
- 			XATTR_MAC_OSX_PREFIX_LEN + 1, GFP_KERNEL);
- 	if (!strbuf) {
- 		res = -ENOMEM;
--- 
-2.43.0
-
+-#define __GUP_CLOBBER_1	"lr", "cc"
+-#ifdef CONFIG_CPU_USE_DOMAINS
+-#define __GUP_CLOBBER_2	"ip", "lr", "cc"
+-#else
+-#define __GUP_CLOBBER_2 "lr", "cc"
+-#endif
+-#define __GUP_CLOBBER_4	"lr", "cc"
+-#define __GUP_CLOBBER_32t_8 "lr", "cc"
+-#define __GUP_CLOBBER_8	"lr", "cc"
+-
+ #define __get_user_x(__r2, __p, __e, __l, __s)				\
+ 	   __asm__ __volatile__ (					\
+ 		__asmeq("%0", "r0") __asmeq("%1", "r2")			\
+@@ -160,7 +150,7 @@ extern int __get_user_64t_4(void *);
+ 		"bl	__get_user_" #__s				\
+ 		: "=&r" (__e), "=r" (__r2)				\
+ 		: "0" (__p), "r" (__l)					\
+-		: __GUP_CLOBBER_##__s)
++		: "ip", "lr", "cc")
+ 
+ /* narrowing a double-word get into a single 32bit word register: */
+ #ifdef __ARMEB__
+@@ -182,7 +172,7 @@ extern int __get_user_64t_4(void *);
+ 		"bl	__get_user_64t_" #__s				\
+ 		: "=&r" (__e), "=r" (__r2)				\
+ 		: "0" (__p), "r" (__l)					\
+-		: __GUP_CLOBBER_##__s)
++		: "ip", "lr", "cc")
+ #else
+ #define __get_user_x_64t __get_user_x
+ #endif
 
 
