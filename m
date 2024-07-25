@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D96B19AD93;
-	Thu, 25 Jul 2024 14:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11DD13C816;
+	Thu, 25 Jul 2024 14:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919240; cv=none; b=ZVNZpCIhbYuZ60m6PVhd5OoKkFGYxJLxiV6aY4Ai6Y598xo8dCGXsgYUSQ7Ab4ytDRTT4SFV6MAbMJKRMBpKOFgHqWiTikfA3/leQMi+NpXY4ze3pUq1fKi/58BYVtJmhELoxrFgRlAov8YTIuD0vXYOxJO/Z1IzABVHvXHxbMQ=
+	t=1721919243; cv=none; b=KqN2VcFiVCZrrVGH1rC0xUE+4ifJOoRJEoibWskz4oIKt4WpvOCAWm2ae6Do2L7mkqGFjQkfpBhESPJ8WJ5FZTMvKukvqClEnuVWo5A33MjTptuq6glbEZ0na/ml7I/lc/LtbYZ7xefMWN8zvG/FZaA3vZe9rMsIe/URAWkX0ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919240; c=relaxed/simple;
-	bh=s2PR9rvFiggAXH6L1bQRwlo7+E7mCtqSgc2rJGlIBeQ=;
+	s=arc-20240116; t=1721919243; c=relaxed/simple;
+	bh=BXpxJviUXyVHnwH2k9sS4gs21yxWWw7Cuqh+MM3GHPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ctpgUZ4vwHSu/35tYKzPHTPcBeeNlB3Mo31hufBTKTsQDAytgCQBkjC7pSoIZ5ZoCo2RdzwQ0dYs6PqSccIpVYMxCqpKO1kZApq5508d0UY6RthPQhLMMw3c20GAbM1OIV0zvaOgp/jMjshhVQXWIuqwm9Q4ZecqBDEueQd1UU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nc2c/ZWs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QiX99DTL876z97OzZ6E4s1Z83SVCcZPAxKVsy3EY/foFn20uVXU7y+suqB5rtp2/Vh5HrbfTEtz9cDUFiQMemjC8xi/VFn1lwk9V1T/G2iWZ1Eu1hqqmqJGDGdR4kJH9x+1+fTUoTumQplcx83SbqETI059bRbIazNKyXZzWipo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KELEiBzz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nc2c/ZWs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AA15C116B1;
-	Thu, 25 Jul 2024 14:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KELEiBzz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B26C32782;
+	Thu, 25 Jul 2024 14:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919240;
-	bh=s2PR9rvFiggAXH6L1bQRwlo7+E7mCtqSgc2rJGlIBeQ=;
+	s=korg; t=1721919243;
+	bh=BXpxJviUXyVHnwH2k9sS4gs21yxWWw7Cuqh+MM3GHPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nc2c/ZWsbsD8YwRO80IV4Vbi2mmrTn1tN1XjX0ZO3Qjan1LTM9Cb1YrduRADfWHTX
-	 JJISwPS4OBTVVEyX0vORUuMpIObhi+3Af1zlc6EI9FV4Giyhp/QtTZx9NVdgejKVfe
-	 763Y+ToH+wFlYcKi3R/IhZ0LH1aYykMBofgYBWyo=
+	b=KELEiBzzznFlnNOd4C70vrys0d1FdR8uipIK+u3ltaDoWlmP0ed9Rys2bVzDYPqsw
+	 +ytIdQBERKSg0qEdJM7VPKyQw3KhNFS/FDqJTWCFxbz2BWLRqzbTgm1SeIoH2WeyZg
+	 0zhJ7htb7qvmZrNP/quNK3uQPCIYfBA/+OC2bFjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Jonathan Denose <jdenose@google.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 35/87] mips: fix compat_sys_lseek syscall
-Date: Thu, 25 Jul 2024 16:37:08 +0200
-Message-ID: <20240725142739.758737187@linuxfoundation.org>
+Subject: [PATCH 5.15 36/87] Input: elantech - fix touchpad state on resume for Lenovo N24
+Date: Thu, 25 Jul 2024 16:37:09 +0200
+Message-ID: <20240725142739.796165373@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -51,36 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jonathan Denose <jdenose@google.com>
 
-[ Upstream commit 0d5679a0aae2d8cda72169452c32e5cb88a7ab33 ]
+[ Upstream commit a69ce592cbe0417664bc5a075205aa75c2ec1273 ]
 
-This is almost compatible, but passing a negative offset should result
-in a EINVAL error, but on mips o32 compat mode would seek to a large
-32-bit byte offset.
+The Lenovo N24 on resume becomes stuck in a state where it
+sends incorrect packets, causing elantech_packet_check_v4 to fail.
+The only way for the device to resume sending the correct packets is for
+it to be disabled and then re-enabled.
 
-Use compat_sys_lseek() to correctly sign-extend the argument.
+This change adds a dmi check to trigger this behavior on resume.
 
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Jonathan Denose <jdenose@google.com>
+Link: https://lore.kernel.org/r/20240503155020.v2.1.Ifa0e25ebf968d8f307f58d678036944141ab17e6@changeid
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/syscalls/syscall_o32.tbl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/mouse/elantech.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-diff --git a/arch/mips/kernel/syscalls/syscall_o32.tbl b/arch/mips/kernel/syscalls/syscall_o32.tbl
-index ec1119760cd3c..cd107ca10e69a 100644
---- a/arch/mips/kernel/syscalls/syscall_o32.tbl
-+++ b/arch/mips/kernel/syscalls/syscall_o32.tbl
-@@ -27,7 +27,7 @@
- 17	o32	break				sys_ni_syscall
- # 18 was sys_stat
- 18	o32	unused18			sys_ni_syscall
--19	o32	lseek				sys_lseek
-+19	o32	lseek				sys_lseek			compat_sys_lseek
- 20	o32	getpid				sys_getpid
- 21	o32	mount				sys_mount
- 22	o32	umount				sys_oldumount
+diff --git a/drivers/input/mouse/elantech.c b/drivers/input/mouse/elantech.c
+index 4e38229404b4b..b4723ea395eb9 100644
+--- a/drivers/input/mouse/elantech.c
++++ b/drivers/input/mouse/elantech.c
+@@ -1476,16 +1476,47 @@ static void elantech_disconnect(struct psmouse *psmouse)
+ 	psmouse->private = NULL;
+ }
+ 
++/*
++ * Some hw_version 4 models fail to properly activate absolute mode on
++ * resume without going through disable/enable cycle.
++ */
++static const struct dmi_system_id elantech_needs_reenable[] = {
++#if defined(CONFIG_DMI) && defined(CONFIG_X86)
++	{
++		/* Lenovo N24 */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "81AF"),
++		},
++	},
++#endif
++	{ }
++};
++
+ /*
+  * Put the touchpad back into absolute mode when reconnecting
+  */
+ static int elantech_reconnect(struct psmouse *psmouse)
+ {
++	int err;
++
+ 	psmouse_reset(psmouse);
+ 
+ 	if (elantech_detect(psmouse, 0))
+ 		return -1;
+ 
++	if (dmi_check_system(elantech_needs_reenable)) {
++		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_DISABLE);
++		if (err)
++			psmouse_warn(psmouse, "failed to deactivate mouse on %s: %d\n",
++				     psmouse->ps2dev.serio->phys, err);
++
++		err = ps2_command(&psmouse->ps2dev, NULL, PSMOUSE_CMD_ENABLE);
++		if (err)
++			psmouse_warn(psmouse, "failed to reactivate mouse on %s: %d\n",
++				     psmouse->ps2dev.serio->phys, err);
++	}
++
+ 	if (elantech_set_absolute_mode(psmouse)) {
+ 		psmouse_err(psmouse,
+ 			    "failed to put touchpad back into absolute mode.\n");
 -- 
 2.43.0
 
