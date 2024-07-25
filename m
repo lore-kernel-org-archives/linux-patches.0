@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 295BF19CD11;
-	Thu, 25 Jul 2024 14:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5668319CD11;
+	Thu, 25 Jul 2024 14:44:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918693; cv=none; b=pXZZm583GNw1mdKc+YACJ1VqMgxWbSF5LWk4upKl30Z96PcrmPPMFKeWoSXyV2Matp/VsUEMajhbffa73KGH4HAOE66UB6a1lsBxYTQSpqC70OxaHoFZyLHMOBNv8GU7+5DBgFFkOXDOG0moBQwvGiRyYDqGL80Kbb9cPDcE2Lo=
+	t=1721918696; cv=none; b=Zc0f2TZQyyI6JJSvGmbwKfC82CwOhcaJkgsPzDBCVOgeU8iGG8DnbsH9XYZcHjqE0w+iyMoqsTUAYHQgiCZtECfZcAvWUxmhHAUNY/LqnEm+AaXKnT8GY2RxVKle1fYFf4WOaetN7HZ3nwqIFNGcgZYriwEQzHmymamGIcMbg50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918693; c=relaxed/simple;
-	bh=OKxne6J4qoskQLiLC1uYZMftrOn6Qy1b0T1Cc8RRzRE=;
+	s=arc-20240116; t=1721918696; c=relaxed/simple;
+	bh=8I0vLTJt/pFL/mIM9E0OafyeNUbK2EOG5k2vnU0Uwjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAXhQ5LsLTbkgQ/lgNlV/bjAVHjqWaZ3gAEh5VHDsVmb5Syq4GDs/DUiaEBQAteS2dOtyk4OzkaJhRlPW25KraJjj1n12vY4BSUo1rLEr0FVqXP6wLOFgOvvtehK+JCOVolbRdmQYOWdgsJLuqyvnMuYrkjxWGxcYQmRPlnn7gI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jMvyAtlj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tyMIIJFkXNEZkK63PeN+TMaZD9Bg7nrBaTX5G/UbeYoBrZFfI0W1w9r4SuSqtrYjM3UrxMzP1GgYLWT5pEzrAfw2Q61GYbK+fEp5oXhmRb1kC9k3pgvMkZWpE+iZhQVXXZA0/4GpQaQXhpUQkdcVxVkVAxbXWT06+MiPhi1pQto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bVP/FJwu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jMvyAtlj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762AFC116B1;
-	Thu, 25 Jul 2024 14:44:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bVP/FJwu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1A07C116B1;
+	Thu, 25 Jul 2024 14:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918692;
-	bh=OKxne6J4qoskQLiLC1uYZMftrOn6Qy1b0T1Cc8RRzRE=;
+	s=korg; t=1721918696;
+	bh=8I0vLTJt/pFL/mIM9E0OafyeNUbK2EOG5k2vnU0Uwjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jMvyAtljnpjgOD2WcBDlkgNY8ylz4kScNEtmRulwnGswIFsJRq7ek5xPEVSrr9FvW
-	 qQbyd2M7+GTmnVs+IZbbKyaZITtolQ3v5lUv0hVEaOGzjtxuSSvrbvYl7ql6CPAwma
-	 ikK4jIrhZVWnN3WKEmd07e4DAtgpOgPCvQEeKz/M=
+	b=bVP/FJwuycIKR/0vla+DlWdmREtZaD88pnXHUO/6ZsuC8z5QSB9YestNZLypFuagi
+	 8585C+WiZVfDPObFb9mRbdiLtEap0mZlWFNxF3KI27t3cUo5YAiLc627cHg5eOh+6L
+	 Lxq8HuRws1Bp9oUnb7BsOTUO41nCCtOE+jsScTRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 11/13] ALSA: pcm_dmaengine: Dont synchronize DMA channel when DMA is paused
-Date: Thu, 25 Jul 2024 16:37:20 +0200
-Message-ID: <20240725142728.466385861@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 12/13] filelock: Fix fcntl/close race recovery compat path
+Date: Thu, 25 Jul 2024 16:37:21 +0200
+Message-ID: <20240725142728.503993036@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.029052310@linuxfoundation.org>
 References: <20240725142728.029052310@linuxfoundation.org>
@@ -50,40 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Jann Horn <jannh@google.com>
 
-commit 88e98af9f4b5b0d60c1fe7f7f2701b5467691e75 upstream.
+commit f8138f2ad2f745b9a1c696a05b749eabe44337ea upstream.
 
-When suspended, the DMA channel may enter PAUSE state if dmaengine_pause()
-is supported by DMA.
-At this state, dmaengine_synchronize() should not be called, otherwise
-the DMA channel can't be resumed successfully.
+When I wrote commit 3cad1bc01041 ("filelock: Remove locks reliably when
+fcntl/close race is detected"), I missed that there are two copies of the
+code I was patching: The normal version, and the version for 64-bit offsets
+on 32-bit kernels.
+Thanks to Greg KH for stumbling over this while doing the stable
+backport...
 
-Fixes: e8343410ddf0 ("ALSA: dmaengine: Synchronize dma channel after drop()")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/1721198693-27636-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Apply exactly the same fix to the compat path for 32-bit kernels.
+
+Fixes: c293621bbf67 ("[PATCH] stale POSIX lock handling")
+Cc: stable@kernel.org
+Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2563
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20240723-fs-lock-recover-compatfix-v1-1-148096719529@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_dmaengine.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/locks.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
---- a/sound/core/pcm_dmaengine.c
-+++ b/sound/core/pcm_dmaengine.c
-@@ -352,8 +352,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_open
- int snd_dmaengine_pcm_sync_stop(struct snd_pcm_substream *substream)
- {
- 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
-+	struct dma_tx_state state;
-+	enum dma_status status;
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2516,8 +2516,9 @@ int fcntl_setlk64(unsigned int fd, struc
+ 	error = do_lock_file_wait(filp, cmd, file_lock);
  
--	dmaengine_synchronize(prtd->dma_chan);
-+	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
-+	if (status != DMA_PAUSED)
-+		dmaengine_synchronize(prtd->dma_chan);
- 
- 	return 0;
- }
+ 	/*
+-	 * Attempt to detect a close/fcntl race and recover by releasing the
+-	 * lock that was just acquired. There is no need to do that when we're
++	 * Detect close/fcntl races and recover by zapping all POSIX locks
++	 * associated with this file and our files_struct, just like on
++	 * filp_flush(). There is no need to do that when we're
+ 	 * unlocking though, or for OFD locks.
+ 	 */
+ 	if (!error && file_lock->fl_type != F_UNLCK &&
+@@ -2532,9 +2533,7 @@ int fcntl_setlk64(unsigned int fd, struc
+ 		f = files_lookup_fd_locked(files, fd);
+ 		spin_unlock(&files->file_lock);
+ 		if (f != filp) {
+-			file_lock->fl_type = F_UNLCK;
+-			error = do_lock_file_wait(filp, cmd, file_lock);
+-			WARN_ON_ONCE(error);
++			locks_remove_posix(filp, files);
+ 			error = -EBADF;
+ 		}
+ 	}
 
 
