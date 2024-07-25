@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1905A13DDB8;
-	Thu, 25 Jul 2024 14:44:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA202199E9F;
+	Thu, 25 Jul 2024 14:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918654; cv=none; b=Yvo/1us4ys4UgXjZTq9yzYTSDHyudUNrPJvVT/aU1M1OhMlErk34JYeoxfcbTr3hvXg1RaLWL7FOIbB3PZbLcH3wqGZLHe/NBAYiVGWte9yPz7ofEgUxTf8D1BsIBN3kOML1NA2tvVgPUJw2lz+JYlJ+1pc23tokd1gBqtXSpEs=
+	t=1721918658; cv=none; b=R/nOEHdyv/rrKclCFt8BPrwgEYS35wzn6hAW3cpK9encK9kyJ0ldTA8Ul+P5fOiyFiJy4yqUhn/eUzzrJJgvsm/cc6MuEv7oZN8Ivuk4IRbQsQM95R2GEbSiI3TJda8FSBeQOKpUd4L0WqDXSyYpWHNuvfR00a/DJSOSVasCvkY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918654; c=relaxed/simple;
-	bh=3ZvkwQ3nI8gv1bq8ZSneRDjWb8gT+JDP7fR9KGvLUuE=;
+	s=arc-20240116; t=1721918658; c=relaxed/simple;
+	bh=woxgRUw1bBPya8jc/DEfpXZ2zYf7KUfhRmt1WPFiC1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oqt/bABIeRE9vdVQmy8SgMAZgfDIkTcIN6y41ty5MavBTvIswOhiGTBWarfYJWli0msEnpDMLS069uJezqbyWEJkccFwtbJm7wr/E+fqcJc/WAK54lCXmM4P3etefzF4Kk4XfAM4qLp1l300VgcJ8FbAI1byEbewIaye3UYzE4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y55rJbxn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GdSFnzqLoxSkC4fNW2AiG26UFavsoe6EFZXnmzv6+XzMYj2I3zvxN8BYkOKMXE2nMNP/MhaL/H+Drf9wRjePvcoyCwyQhsQ589/n+6kOB4XaslAY8xEN8FStEEpknT7Qm97TgBney258D/guYQivJSY2LWwYporE+Y4Dd206hRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXpj9hyS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y55rJbxn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81DA3C116B1;
-	Thu, 25 Jul 2024 14:44:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXpj9hyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943DAC116B1;
+	Thu, 25 Jul 2024 14:44:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918654;
-	bh=3ZvkwQ3nI8gv1bq8ZSneRDjWb8gT+JDP7fR9KGvLUuE=;
+	s=korg; t=1721918657;
+	bh=woxgRUw1bBPya8jc/DEfpXZ2zYf7KUfhRmt1WPFiC1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y55rJbxnGID5D2XxETUF2hD2+d8gBH/CnKoT2tJYJJq4nz8uJOGHhwKZn/9eKuXIZ
-	 UWMJo0ZduJGMCKVSc6Wu398SQvjyKYjsQ7fdfgWYdySeyN48CpEWEzGWqYg5Gwtn9j
-	 xZOAImquef8K5wwtNWGbYniigRjMBQXEaThZY+Ns=
+	b=wXpj9hySz3SK52O5ofZTSHfuUWJjHWrcaDK7HnXJCb4MrSK3fI2nyI9PdPeKClL5r
+	 KVIjJFvSDbyn3C1QT2mhlpxEOPrjo4Ys7sxpjuh49DPgekAO4u4Q4VHTn43bDIubkE
+	 CDVv73+BHSevLKUwGrXihWTq/Frl6y9qoMKLQDg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 09/43] ila: block BH in ila_output()
-Date: Thu, 25 Jul 2024 16:36:32 +0200
-Message-ID: <20240725142730.827049266@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 5.4 43/43] filelock: Fix fcntl/close race recovery compat path
+Date: Thu, 25 Jul 2024 16:37:06 +0200
+Message-ID: <20240725142732.097230811@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -52,60 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit cf28ff8e4c02e1ffa850755288ac954b6ff0db8c ]
+commit f8138f2ad2f745b9a1c696a05b749eabe44337ea upstream.
 
-As explained in commit 1378817486d6 ("tipc: block BH
-before using dst_cache"), net/core/dst_cache.c
-helpers need to be called with BH disabled.
+When I wrote commit 3cad1bc01041 ("filelock: Remove locks reliably when
+fcntl/close race is detected"), I missed that there are two copies of the
+code I was patching: The normal version, and the version for 64-bit offsets
+on 32-bit kernels.
+Thanks to Greg KH for stumbling over this while doing the stable
+backport...
 
-ila_output() is called from lwtunnel_output()
-possibly from process context, and under rcu_read_lock().
+Apply exactly the same fix to the compat path for 32-bit kernels.
 
-We might be interrupted by a softirq, re-enter ila_output()
-and corrupt dst_cache data structures.
-
-Fix the race by using local_bh_disable().
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240531132636.2637995-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c293621bbf67 ("[PATCH] stale POSIX lock handling")
+Cc: stable@kernel.org
+Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2563
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20240723-fs-lock-recover-compatfix-v1-1-148096719529@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ila/ila_lwt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/locks.c |    9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
-index 422dcc691f71c..6a6a30e82810d 100644
---- a/net/ipv6/ila/ila_lwt.c
-+++ b/net/ipv6/ila/ila_lwt.c
-@@ -58,7 +58,9 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 		return orig_dst->lwtstate->orig_output(net, sk, skb);
- 	}
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2656,8 +2656,9 @@ int fcntl_setlk64(unsigned int fd, struc
+ 	error = do_lock_file_wait(filp, cmd, file_lock);
  
-+	local_bh_disable();
- 	dst = dst_cache_get(&ilwt->dst_cache);
-+	local_bh_enable();
- 	if (unlikely(!dst)) {
- 		struct ipv6hdr *ip6h = ipv6_hdr(skb);
- 		struct flowi6 fl6;
-@@ -86,8 +88,11 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 			goto drop;
+ 	/*
+-	 * Attempt to detect a close/fcntl race and recover by releasing the
+-	 * lock that was just acquired. There is no need to do that when we're
++	 * Detect close/fcntl races and recover by zapping all POSIX locks
++	 * associated with this file and our files_struct, just like on
++	 * filp_flush(). There is no need to do that when we're
+ 	 * unlocking though, or for OFD locks.
+ 	 */
+ 	if (!error && file_lock->fl_type != F_UNLCK &&
+@@ -2671,9 +2672,7 @@ int fcntl_setlk64(unsigned int fd, struc
+ 		f = fcheck(fd);
+ 		spin_unlock(&current->files->file_lock);
+ 		if (f != filp) {
+-			file_lock->fl_type = F_UNLCK;
+-			error = do_lock_file_wait(filp, cmd, file_lock);
+-			WARN_ON_ONCE(error);
++			locks_remove_posix(filp, &current->files);
+ 			error = -EBADF;
  		}
- 
--		if (ilwt->connected)
-+		if (ilwt->connected) {
-+			local_bh_disable();
- 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
-+			local_bh_enable();
-+		}
  	}
- 
- 	skb_dst_set(skb, dst);
--- 
-2.43.0
-
 
 
