@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D1019A29C;
-	Thu, 25 Jul 2024 14:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF2F19D088;
+	Thu, 25 Jul 2024 14:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918445; cv=none; b=pnT30Slp4VsX+y+CzYpSW3Ta77nTN5ExNnyr5itO0jZcckFNItWzMxI2T12+h2vf42v5mO5AhqLJpZYziJyOKJ8Kxu0K/6e/K7c5AIc0ccp2lPzd13QmE1L05WyD3qlsnBtPKC9k6Ih5BBxu73aZz3TVOtxWnvoU0whgc8oQg6U=
+	t=1721918448; cv=none; b=hNfnUwrsnfbT+UCuSy5Sx+RYl/0z/4bZ45A1Qbt2WQKulGPcVJbF3rKQOyrZdlXRfd2KEBqIu3tCJA2QWmHX0IIOZGwfqYRH800GlQPlmcDN2GM685zUfIJUjqQco4PHMTB3NO+HrPD9G6Th4MeTxcNKqGKq48Lha9lhyXRhdLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918445; c=relaxed/simple;
-	bh=ueuv5fCSIT6F09ofOwlxSZ0Y16U2VBd8Cpcjke/XqYE=;
+	s=arc-20240116; t=1721918448; c=relaxed/simple;
+	bh=v6Oto3nn11K/iHXG92PzBJM3L0addZNfysxQrybb8qs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MCxdeTS9PMSIo5DxSaMWtChcskNPkbIeU41fxLPNFYB77+wFGn4o146xHPEGVZM/DuB/CL9EquQgRKeqY8oom3Yf65noEK04J35b6hryasPWY275h9bcAQ+7d1B8n4NMkdLzyedM2ZYdYxFIGMl8tINUbt2Dmv6h2YqlvI0m540=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVVHYdYz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b/PZyLi7rWuhZZAMWVPmwNbx26IVEFpys/Cis64KM4ZwO9nOXHkBLsZ6ScBI78Cu25RW4gIEtZQ+TN7F+DqRea7hh9UDEjXFxdobb7UDJnI0+3k8CTaliyLF+Bf9hZpgy43jYskQTQXeIn7BI0P2xyfdSpyI6Ep+m/Y7g8YpN8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hb+IxU5n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVVHYdYz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ED88C116B1;
-	Thu, 25 Jul 2024 14:40:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hb+IxU5n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95C9CC116B1;
+	Thu, 25 Jul 2024 14:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918444;
-	bh=ueuv5fCSIT6F09ofOwlxSZ0Y16U2VBd8Cpcjke/XqYE=;
+	s=korg; t=1721918448;
+	bh=v6Oto3nn11K/iHXG92PzBJM3L0addZNfysxQrybb8qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVVHYdYz81mXyFmwUGBRuYuBWM2yICXbXuSGe/F0tfTPjftuYgWENZxmyrBanUisj
-	 kSekRtt0DhC/j7Ckt9cy6zWwBJamCh+II3W1HNAWz0xOFf+qNKjZYM2U6V5UKgmoJw
-	 8CQRJqPzeHbvtP4QWvTsg81WogooZxV/16GsUI1g=
+	b=Hb+IxU5ntLGFok3w2qMjUZYqJxigvWR/Y8cAq20j8h2uu+WpGtvMFH2f8DAT4q+CD
+	 XFTGpsfbNTQ5aSHa4k9V61Kp/PwwrCtH6kNSYg2j7DP6H7OJzyLHZ3NaptqWyiAO1N
+	 LYTibCMTDyRR8AbB1PzPHfZwpEAlhWld1HCqnGIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunshui Jiang <jiangyunshui@kylinos.cn>,
-	Stefan Schmidt <stefan@datenfreihafen.org>,
+	syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 21/33] net: mac802154: Fix racy device stats updates by DEV_STATS_INC() and DEV_STATS_ADD()
-Date: Thu, 25 Jul 2024 16:36:44 +0200
-Message-ID: <20240725142729.316208523@linuxfoundation.org>
+Subject: [PATCH 4.19 22/33] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
+Date: Thu, 25 Jul 2024 16:36:45 +0200
+Message-ID: <20240725142729.353753188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -51,48 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yunshui Jiang <jiangyunshui@kylinos.cn>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit b8ec0dc3845f6c9089573cb5c2c4b05f7fc10728 ]
+[ Upstream commit 0d151a103775dd9645c78c97f77d6e2a5298d913 ]
 
-mac802154 devices update their dev->stats fields locklessly. Therefore
-these counters should be updated atomically. Adopt SMP safe DEV_STATS_INC()
-and DEV_STATS_ADD() to achieve this.
+syzbot is reporting that calling hci_release_dev() from hci_error_reset()
+due to hci_dev_put() from hci_error_reset() can cause deadlock at
+destroy_workqueue(), for hci_error_reset() is called from
+hdev->req_workqueue which destroy_workqueue() needs to flush.
 
-Signed-off-by: Yunshui Jiang <jiangyunshui@kylinos.cn>
-Message-ID: <20240531080739.2608969-1-jiangyunshui@kylinos.cn>
-Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
+We need to make sure that hdev->{rx_work,cmd_work,tx_work} which are
+queued into hdev->workqueue and hdev->{power_on,error_reset} which are
+queued into hdev->req_workqueue are no longer running by the moment
+
+       destroy_workqueue(hdev->workqueue);
+       destroy_workqueue(hdev->req_workqueue);
+
+are called from hci_release_dev().
+
+Call cancel_work_sync() on these work items from hci_unregister_dev()
+as soon as hdev->list is removed from hci_dev_list.
+
+Reported-by: syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>
+Closes: https://syzkaller.appspot.com/bug?extid=da0a9c9721e36db712e8
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac802154/tx.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/bluetooth/hci_core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mac802154/tx.c b/net/mac802154/tx.c
-index 2f873a0dc5836..0f192174a5693 100644
---- a/net/mac802154/tx.c
-+++ b/net/mac802154/tx.c
-@@ -42,8 +42,8 @@ void ieee802154_xmit_worker(struct work_struct *work)
- 	if (res)
- 		goto err_tx;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 47f1eec0eb35f..504f6aa4e95db 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3288,7 +3288,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
+ 	list_del(&hdev->list);
+ 	write_unlock(&hci_dev_list_lock);
  
--	dev->stats.tx_packets++;
--	dev->stats.tx_bytes += skb->len;
-+	DEV_STATS_INC(dev, tx_packets);
-+	DEV_STATS_ADD(dev, tx_bytes, skb->len);
++	cancel_work_sync(&hdev->rx_work);
++	cancel_work_sync(&hdev->cmd_work);
++	cancel_work_sync(&hdev->tx_work);
+ 	cancel_work_sync(&hdev->power_on);
++	cancel_work_sync(&hdev->error_reset);
  
- 	ieee802154_xmit_complete(&local->hw, skb, false);
+ 	hci_dev_do_close(hdev);
  
-@@ -94,8 +94,8 @@ ieee802154_tx(struct ieee802154_local *local, struct sk_buff *skb)
- 			goto err_tx;
- 		}
- 
--		dev->stats.tx_packets++;
--		dev->stats.tx_bytes += len;
-+		DEV_STATS_INC(dev, tx_packets);
-+		DEV_STATS_ADD(dev, tx_bytes, len);
- 	} else {
- 		local->tx_skb = skb;
- 		queue_work(local->workqueue, &local->tx_work);
 -- 
 2.43.0
 
