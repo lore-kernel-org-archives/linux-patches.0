@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7556EFC18;
-	Thu, 25 Jul 2024 14:46:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB9C198A2C;
+	Thu, 25 Jul 2024 14:46:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918809; cv=none; b=q9Gd/IuAgwnz/Qhfq7bep3/s09lQ1hNZWsTc07Y+Nmgne+bOblaAyQuoqEmRP0U1v0vW0LVAKaVD7MAZ9W9uT27ynAWdhvh0lUPcTXyMcj2PalVf6XXj1Qy4oOpgpzlpRXNByx+X0GUr4rRvx54JsldUGO741Klh2hhbI14adA4=
+	t=1721918812; cv=none; b=dbdbUW/S/t2mEBTrFKVAOG6+TY0FxYag+w8aWXX2t6NZeeuglnRbPPpab77YGW3LJeiHXYTLjmIYffNJfSAdB9Rqb2fxVQS+IIPgyJ7hiSJUEFVZL4D4zoc7nG188Ncu632OxPrEYf4xMO6fgUNncoNkb7QZm4nwVFmqXuvarn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918809; c=relaxed/simple;
-	bh=jEXQWsAZ/LyOMBd+z8/trwGYzOaClt7bw1zO4KP/Szw=;
+	s=arc-20240116; t=1721918812; c=relaxed/simple;
+	bh=2wo4BfBGTlOIm1Re7AOlCCizGiEfFLpsX6B7aQ7M41w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CQGBNSuC+ga0KGqXuVshQTv7ZA/rvlwlYJ9eAtS8rVJIX/6mCm/xMFYeJZnGA7hPksAWw4LG1Vm4wk6v029hlY0FeOkDiNuGqIFTWPxnh6ijsDRqB99hgjdqwV+VRpSnKLY9M3SLJJh7gsTKLb7ysl1K1Tu0NBy/8PQ/LNXKj3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmyODhuU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PX1FAEWtnIHv5ZqaSuzEiPXfusr95DP0fcfyfRwpK4vNU++RuRRdhmS/EZHUNglykGLoAYq0l9tSetZlcqX5MQQw+P3+75GdFsVf6PoUFX25hAqeTdVGrKdGvANOs9hq5ITMhFLL0lh4puZEzBpJSyKOsv8VBiys/YW+TG+UvoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mC2gVI3B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmyODhuU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F13E4C116B1;
-	Thu, 25 Jul 2024 14:46:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mC2gVI3B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E34C32782;
+	Thu, 25 Jul 2024 14:46:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918809;
-	bh=jEXQWsAZ/LyOMBd+z8/trwGYzOaClt7bw1zO4KP/Szw=;
+	s=korg; t=1721918812;
+	bh=2wo4BfBGTlOIm1Re7AOlCCizGiEfFLpsX6B7aQ7M41w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmyODhuUylnvkrDY/xPF9UlL3bDbBafcysU7Bf+57pZoal+zki1y2KVwKjstmORsr
-	 2jkGMPkyYM/etJLJE6TNntNni8OKcyO8qyc3NfnorMwmOLCJWmcRp4SOSdEst95rtB
-	 mF7dXqjNvFHQrRiZa67Y7mIVPSXSIIOxX64UhvNk=
+	b=mC2gVI3Bo6gl2gvM37COliMJK3ApTTGt8ghsqni3WepogkofQaaZOQoqL0tw2vjCS
+	 iUiF0+G4IDFMJTQToP21gUb+56PSEa4hMWJsymVXdErvlqi/5PiRD2s7YYcVCXnsHx
+	 jV7jZ/IXUoEukvZxLTRKgml/g0IIYDyNJ8vRmVEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>,
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.9 08/29] ALSA: hda/tas2781: Add new quirk for Lenovo Hera2 Laptop
-Date: Thu, 25 Jul 2024 16:37:18 +0200
-Message-ID: <20240725142731.993139234@linuxfoundation.org>
+Subject: [PATCH 6.9 09/29] ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
+Date: Thu, 25 Jul 2024 16:37:19 +0200
+Message-ID: <20240725142732.029894875@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.678993846@linuxfoundation.org>
 References: <20240725142731.678993846@linuxfoundation.org>
@@ -50,15 +50,16 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenghao Ding <shenghao-ding@ti.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit 1e5597e5ff18d452cf9afa847e904f301d1ac690 upstream.
+commit 8fc1e8b230771442133d5cf5fa4313277aa2bb8b upstream.
 
-Add new vendor_id and subsystem_id in quirk for Lenovo Hera2 Laptop.
+Positivo SU C1400 is equipped with ALC256, and it needs
+ALC269_FIXUP_ASPIRE_HEADSET_MIC quirk to make its headset mic work.
 
-Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240717115305.723-1-shenghao-ding@ti.com
+Link: https://patch.msgid.link/20240712180642.22564-1-edson.drosdeck@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
@@ -67,13 +68,13 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -10488,6 +10488,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x17aa, 0x231a, "Thinkpad Z16 Gen2", ALC287_FIXUP_MG_RTKC_CSAMP_CS35L41_I2C_THINKPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x231e, "Thinkpad", ALC287_FIXUP_LENOVO_THKPAD_WH_ALC1318),
- 	SND_PCI_QUIRK(0x17aa, 0x231f, "Thinkpad", ALC287_FIXUP_LENOVO_THKPAD_WH_ALC1318),
-+	SND_PCI_QUIRK(0x17aa, 0x2326, "Hera2", ALC287_FIXUP_TAS2781_I2C),
- 	SND_PCI_QUIRK(0x17aa, 0x30bb, "ThinkCentre AIO", ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY),
- 	SND_PCI_QUIRK(0x17aa, 0x30e2, "ThinkCentre AIO", ALC233_FIXUP_LENOVO_LINE2_MIC_HOTKEY),
- 	SND_PCI_QUIRK(0x17aa, 0x310c, "ThinkCentre Station", ALC294_FIXUP_LENOVO_MIC_LOCATION),
+@@ -10333,6 +10333,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
++	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
 
 
