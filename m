@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B3D13C816;
-	Thu, 25 Jul 2024 14:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497F113C816;
+	Thu, 25 Jul 2024 14:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919311; cv=none; b=phO6svx0MGFLf/+RZp06aeBeKcDR+YHFwZvHZueRTSJ3EoRrpfL7oO3o5WVVbS9NcYpDVRpOAAs+7KwJT7E7ZuNjM7g2CNd9stUPOD8PAPT2fbi6TjJQciABBIVTt3YiJXWVRDln79uAPhypkGg49rd1gFFwbjcZ8XHQnd94XQA=
+	t=1721919314; cv=none; b=JT/FXAad1p/ln+5+gzBNDhtWXdnQKbLB5eSDsNNP4UcN7LWnYoH1AMlvC5Wl6KgL8HqXSHWujQrNYiBVvGBpMwXbzQtxHgL/Q/DNZfR9sWKJTenF+A2kLxEuhoiKCZkAAOCcaiIcjHwS1QMzlgGNitjh2fy95F9QHFF3BrJDm4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919311; c=relaxed/simple;
-	bh=qJNKfbwTA7yq6EPsfk00M59c/juUNNqPG2iiLZNghuQ=;
+	s=arc-20240116; t=1721919314; c=relaxed/simple;
+	bh=G6nmWHDB3/hi2c2fku5ZHyyqVACAoiZvw9NCoxA+dJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OhaRC+AJqcEeUBicbZSQwYICIiopDRFBcc8gqHwU2z/hf6jx+zhCc/S7iMWUBR6REO0qF7I6oy77MTNmABnL67YWhLU3gJhBYVAnB6kP4n4FDqYKAJ69VrCjS/eexI68rW7f5LgpVN5HzzJy6naLljkIslkqoV9mGXkexhh42Ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVz+d0tx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQYa94aMZg4SidhpbO2pTJDarGCsdtII6r7QaiaRMKUsT/q2kKQKiA5C0wYIgK9C66BBD1OcgZofEBmraVFHAgs/mUP9C3fc+bPGnxinA4fXoSrmxdHjKQCMfXssIfdcactBYwHJzIF5MLzFaI65eoCB/1gojea+uFgWhPXFfA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QTQ5ffeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVz+d0tx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17F0C4AF07;
-	Thu, 25 Jul 2024 14:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QTQ5ffeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC580C116B1;
+	Thu, 25 Jul 2024 14:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919311;
-	bh=qJNKfbwTA7yq6EPsfk00M59c/juUNNqPG2iiLZNghuQ=;
+	s=korg; t=1721919314;
+	bh=G6nmWHDB3/hi2c2fku5ZHyyqVACAoiZvw9NCoxA+dJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVz+d0tx6r/5vd68nQ18hZNQaqklwAIs041uQqNhe76dldNfStcmTLLl/8/iC8q3z
-	 SbtbD42+gXq49ZO9ohJ77YynZh6FvestYKuylDnXSsa9BnAJkLi9tleU2X5C/eriOW
-	 qnj6x0EVEiTlAQ0B1Wn3qlRNbezGyuRZvVv2S2Dg=
+	b=QTQ5ffeC3D59vaxY7eACpk/lq04TcEfpqxuPwtIWlCG1Eqv/VxJ1OEXm63AiFtgzC
+	 DvNbqYbKFMHkcN9GVFBI5U1Yv5JqkYE/x1g/31KPa0UHWz92sptvgZidJlqNSVJ7dH
+	 j0Y2d4wQUNn56/bCxGBIf0FRiSFmsSmg+L+u2WNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Kees Cook <keescook@chromium.org>,
+	Herve Codina <herve.codina@bootlin.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	SeongJae Park <sj@kernel.org>
-Subject: [PATCH 5.15 66/87] minmax: clamp more efficiently by avoiding extra comparison
-Date: Thu, 25 Jul 2024 16:37:39 +0200
-Message-ID: <20240725142740.922824102@linuxfoundation.org>
+Subject: [PATCH 5.15 67/87] minmax: fix header inclusions
+Date: Thu, 25 Jul 2024 16:37:40 +0200
+Message-ID: <20240725142740.960306698@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -53,183 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 2122e2a4efc2cd139474079e11939b6e07adfacd upstream.
+commit f6e9d38f8eb00ac8b52e6d15f6aa9bcecacb081b upstream.
 
-Currently the clamp algorithm does:
+BUILD_BUG_ON*() macros are defined in build_bug.h.  Include it.  Replace
+compiler_types.h by compiler.h, which provides the former, to have a
+definition of the __UNIQUE_ID().
 
-    if (val > hi)
-        val = hi;
-    if (val < lo)
-        val = lo;
+Link: https://lkml.kernel.org/r/20230912092355.79280-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Cc: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-But since hi > lo by definition, this can be made more efficient with:
-
-    if (val > hi)
-        val = hi;
-    else if (val < lo)
-        val = lo;
-
-So fix up the clamp and clamp_t functions to do this, adding the same
-argument checking as for min and min_t.
-
-For simple cases, code generation on x86_64 and aarch64 stay about the
-same:
-
-    before:
-            cmp     edi, edx
-            mov     eax, esi
-            cmova   edi, edx
-            cmp     edi, esi
-            cmovnb  eax, edi
-            ret
-    after:
-            cmp     edi, esi
-            mov     eax, edx
-            cmovnb  esi, edi
-            cmp     edi, edx
-            cmovb   eax, esi
-            ret
-
-    before:
-            cmp     w0, w2
-            csel    w8, w0, w2, lo
-            cmp     w8, w1
-            csel    w0, w8, w1, hi
-            ret
-    after:
-            cmp     w0, w1
-            csel    w8, w0, w1, hi
-            cmp     w0, w2
-            csel    w0, w8, w2, lo
-            ret
-
-On MIPS64, however, code generation improves, by removing arithmetic in
-the second branch:
-
-    before:
-            sltu    $3,$6,$4
-            bne     $3,$0,.L2
-            move    $2,$6
-
-            move    $2,$4
-    .L2:
-            sltu    $3,$2,$5
-            bnel    $3,$0,.L7
-            move    $2,$5
-
-    .L7:
-            jr      $31
-            nop
-    after:
-            sltu    $3,$4,$6
-            beq     $3,$0,.L13
-            move    $2,$6
-
-            sltu    $3,$4,$5
-            bne     $3,$0,.L12
-            move    $2,$4
-
-    .L13:
-            jr      $31
-            nop
-
-    .L12:
-            jr      $31
-            move    $2,$5
-
-For more complex cases with surrounding code, the effects are a bit
-more complicated. For example, consider this simplified version of
-timestamp_truncate() from fs/inode.c on x86_64:
-
-    struct timespec64 timestamp_truncate(struct timespec64 t, struct inode *inode)
-    {
-        struct super_block *sb = inode->i_sb;
-        unsigned int gran = sb->s_time_gran;
-
-        t.tv_sec = clamp(t.tv_sec, sb->s_time_min, sb->s_time_max);
-        if (t.tv_sec == sb->s_time_max || t.tv_sec == sb->s_time_min)
-            t.tv_nsec = 0;
-        return t;
-    }
-
-    before:
-            mov     r8, rdx
-            mov     rdx, rsi
-            mov     rcx, QWORD PTR [r8]
-            mov     rax, QWORD PTR [rcx+8]
-            mov     rcx, QWORD PTR [rcx+16]
-            cmp     rax, rdi
-            mov     r8, rcx
-            cmovge  rdi, rax
-            cmp     rdi, rcx
-            cmovle  r8, rdi
-            cmp     rax, r8
-            je      .L4
-            cmp     rdi, rcx
-            jge     .L4
-            mov     rax, r8
-            ret
-    .L4:
-            xor     edx, edx
-            mov     rax, r8
-            ret
-
-    after:
-            mov     rax, QWORD PTR [rdx]
-            mov     rdx, QWORD PTR [rax+8]
-            mov     rax, QWORD PTR [rax+16]
-            cmp     rax, rdi
-            jg      .L6
-            mov     r8, rax
-            xor     edx, edx
-    .L2:
-            mov     rax, r8
-            ret
-    .L6:
-            cmp     rdx, rdi
-            mov     r8, rdi
-            cmovge  r8, rdx
-            cmp     rax, r8
-            je      .L4
-            xor     eax, eax
-            cmp     rdx, rdi
-            cmovl   rax, rsi
-            mov     rdx, rax
-            mov     rax, r8
-            ret
-    .L4:
-            xor     edx, edx
-            jmp     .L2
-
-In this case, we actually gain a branch, unfortunately, because the
-compiler's replacement axioms no longer as cleanly apply.
-
-So all and all, this change is a bit of a mixed bag.
-
-Link: https://lkml.kernel.org/r/20220926133435.1333846-2-Jason@zx2c4.com
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Kees Cook <keescook@chromium.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 2122e2a4efc2cd139474079e11939b6e07adfacd)
+(cherry picked from commit f6e9d38f8eb00ac8b52e6d15f6aa9bcecacb081b)
 Signed-off-by: SeongJae Park <sj@kernel.org>
+[Fix a conflict due to absence of compiler_types.h include]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/minmax.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/minmax.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/include/linux/minmax.h
 +++ b/include/linux/minmax.h
-@@ -38,7 +38,7 @@
- 		__cmp_once(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), op))
+@@ -2,6 +2,8 @@
+ #ifndef _LINUX_MINMAX_H
+ #define _LINUX_MINMAX_H
  
- #define __clamp(val, lo, hi)	\
--	__cmp(__cmp(val, lo, >), hi, <)
-+	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
++#include <linux/build_bug.h>
++#include <linux/compiler.h>
+ #include <linux/const.h>
  
- #define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({	\
- 		typeof(val) unique_val = (val);				\
+ /*
 
 
