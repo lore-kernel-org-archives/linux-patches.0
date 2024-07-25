@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F608468;
-	Thu, 25 Jul 2024 14:47:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35956FC18;
+	Thu, 25 Jul 2024 14:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918847; cv=none; b=cz34OrOuCnvvJknnPcJTpPaKqagNexEELW1LLJz3r0/Au0zRBGZRCctSDVTP0NBxB5bhmt/qXTEP0fB5/NE1YsJmI5CRE7EJrxMO+lei2byeEuqSi8rR+j0AuQlNeynEtvQIPj/u838K+iasnmaW1hwkYCcaf0bo9BK/N7QgGvk=
+	t=1721918850; cv=none; b=o+7V3Bg5Sf2Rwnlj9dqRImRjCmIC7s3xw8Ue1SebVs5Y/TmbTDxUI+Yysd0vqV6TgSqbqs4CfJDMlAktHgJ2yhTxGQ309p5gskL2leJrQxpcfAViWghGKx6excgXOCWSSUM8jHE3ghnLq1m/nZh/inTbt+cNUuw++1Md3KPf9AM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918847; c=relaxed/simple;
-	bh=RF9n2+mSRlFrkpFHMIEg3Z/dF+crOrSNrrqnNlfJyu4=;
+	s=arc-20240116; t=1721918850; c=relaxed/simple;
+	bh=MtnR71uHLSdS0PItkJlfQQwNA+VjTlfLPvWqv1NqxtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dxnYbrmTcvnr60PSEUThhz7bhArjszCBB+UQlbQAg7u7dJTqS6DaG30AEV0s5JkM0YBJ6BIB1N2Iu372GQQ1quBGbR31XyJVFNOoUsfWOHU/huxKQEL9E43FZbreBquBvzBCnMbUaQZ4C7C2HmJMv5DSV3ERCQDHW3O2yZC35ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C9WnxoB1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iVnE9LnLV41BvAFTxRb8gxFo5O6VLR8r0oDdvtAnv1N0mRpI5MQXNbBDuWp+zCU9uO42Hee2y/mIwlC9K1nyXwh16YOVRO6u6sUXWncGSaIQctNTVmJ3qa9iNdJMj9/NjFPw129vdHFp9GLKU4KdOB8kGVC7pibLWTLm6aY73ic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L91Pye5p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C9WnxoB1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6100AC116B1;
-	Thu, 25 Jul 2024 14:47:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L91Pye5p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D76C4AF0B;
+	Thu, 25 Jul 2024 14:47:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918846;
-	bh=RF9n2+mSRlFrkpFHMIEg3Z/dF+crOrSNrrqnNlfJyu4=;
+	s=korg; t=1721918850;
+	bh=MtnR71uHLSdS0PItkJlfQQwNA+VjTlfLPvWqv1NqxtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C9WnxoB1Twykn1anXHPf5AOmPp7pBthMTgoVZPifxUEzL+X3qes7vEPyUnMeCVjax
-	 Cd0WnOKlkU4aGzmtfGz4aKmZF1gWaN2D4FcXKo0+coW4AsEXXDYar8Ap4O5OLqRQU3
-	 +JAoje9tWh7CFhXu4TckXmVzVJJsnqRAEWmvOytc=
+	b=L91Pye5pw+mhUPOW17sYU7pI1eH1JD9gZerKUqTN42uR5J15xcU7ELa1F3HXhaA9v
+	 OZEvUFrAqxBqEb60Gg0pF/HxtRLEI8lcEZ2nHFvmgg6AkMOwTz+1R//ZcFqobBPjsq
+	 NYw1uTKeZIACyGXjjGk+j+4KWfDNK9wAhBdJGYjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.9 28/29] ALSA: seq: ump: Skip useless ports for static blocks
-Date: Thu, 25 Jul 2024 16:37:38 +0200
-Message-ID: <20240725142732.729530544@linuxfoundation.org>
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.9 19/29] arm64: dts: qcom: msm8996: Disable SS instance in Parkmode for USB
+Date: Thu, 25 Jul 2024 16:37:29 +0200
+Message-ID: <20240725142732.401820878@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.678993846@linuxfoundation.org>
 References: <20240725142731.678993846@linuxfoundation.org>
@@ -49,89 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-commit 3bfd7c0ba184de99e9f5083b29e5308f30767265 upstream.
+commit 44ea1ae3cf95db97e10d6ce17527948121f1dd4b upstream.
 
-When the UMP Endpoint is configured with static blocks, the block
-configuration will never change, hence the unused ports will be
-unchanged as well.  Creating sequencer ports for those unused ports
-is simply useless, and it might be rather confusing for users.
-The idea behind the inactive ports was for allowing connections
-from/to ports that can become usable later, but this will never
-happen for inactive groups in static blocks.
+For Gen-1 targets like MSM8996, it is seen that stressing out the
+controller in host mode results in HC died error:
 
-Let's change the sequencer UMP binding to skip those unused ports when
-the UMP EP is with static blocks.
+ xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
+ xhci-hcd.12.auto: xHCI host controller not responding, assume dead
+ xhci-hcd.12.auto: HC died; cleaning up
 
-Fixes: 81fd444aa371 ("ALSA: seq: Bind UMP device")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240717083322.25892-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+And at this instant only restarting the host mode fixes it. Disable
+SuperSpeed instance in park mode for MSM8996 to mitigate this issue.
+
+Cc: stable@vger.kernel.org
+Fixes: 1e39255ed29d ("arm64: dts: msm8996: Add device node for qcom,dwc3")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240704152848.3380602-8-quic_kriskura@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_ump_client.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/core/seq/seq_ump_client.c
-+++ b/sound/core/seq/seq_ump_client.c
-@@ -28,6 +28,7 @@ struct seq_ump_group {
- 	int group;			/* group index (0-based) */
- 	unsigned int dir_bits;		/* directions */
- 	bool active;			/* activeness */
-+	bool valid;			/* valid group (referred by blocks) */
- 	char name[64];			/* seq port name */
- };
- 
-@@ -210,6 +211,13 @@ static void fill_port_info(struct snd_se
- 		sprintf(port->name, "Group %d", group->group + 1);
- }
- 
-+/* skip non-existing group for static blocks */
-+static bool skip_group(struct seq_ump_client *client, struct seq_ump_group *group)
-+{
-+	return !group->valid &&
-+		(client->ump->info.flags & SNDRV_UMP_EP_INFO_STATIC_BLOCKS);
-+}
-+
- /* create a new sequencer port per UMP group */
- static int seq_ump_group_init(struct seq_ump_client *client, int group_index)
- {
-@@ -217,6 +225,9 @@ static int seq_ump_group_init(struct seq
- 	struct snd_seq_port_info *port __free(kfree) = NULL;
- 	struct snd_seq_port_callback pcallbacks;
- 
-+	if (skip_group(client, group))
-+		return 0;
-+
- 	port = kzalloc(sizeof(*port), GFP_KERNEL);
- 	if (!port)
- 		return -ENOMEM;
-@@ -250,6 +261,9 @@ static void update_port_infos(struct seq
- 		return;
- 
- 	for (i = 0; i < SNDRV_UMP_MAX_GROUPS; i++) {
-+		if (skip_group(client, &client->groups[i]))
-+			continue;
-+
- 		old->addr.client = client->seq_client;
- 		old->addr.port = i;
- 		err = snd_seq_kernel_client_ctl(client->seq_client,
-@@ -284,6 +298,7 @@ static void update_group_attrs(struct se
- 		group->dir_bits = 0;
- 		group->active = 0;
- 		group->group = i;
-+		group->valid = false;
- 	}
- 
- 	list_for_each_entry(fb, &client->ump->block_list, list) {
-@@ -291,6 +306,7 @@ static void update_group_attrs(struct se
- 			break;
- 		group = &client->groups[fb->info.first_group];
- 		for (i = 0; i < fb->info.num_groups; i++, group++) {
-+			group->valid = true;
- 			if (fb->info.active)
- 				group->active = 1;
- 			switch (fb->info.direction) {
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3061,6 +3061,7 @@
+ 				snps,dis_u2_susphy_quirk;
+ 				snps,dis_enblslpm_quirk;
+ 				snps,is-utmi-l1-suspend;
++				snps,parkmode-disable-ss-quirk;
+ 				tx-fifo-resize;
+ 			};
+ 		};
 
 
