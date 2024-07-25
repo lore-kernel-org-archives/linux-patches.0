@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DD5199E9F;
-	Thu, 25 Jul 2024 14:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2322A199E9F;
+	Thu, 25 Jul 2024 14:38:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918320; cv=none; b=hBx2noWEzMOdXADCEpk7ad18BAsHXHVOZd2uZQKMCqbvmPR5qemM8ER1QX4jaYmBwBm8WddG4PT9a3CNcfxsR0KpPBtyzCG0e++2CHTZNXxeg1/G8gobg9xRWVMyyTGZds8dHc2BF+tUnAkbCODufufgzcTwluT+OWMzrO4a8m8=
+	t=1721918323; cv=none; b=R0qGzFTjPHYQWOW+R/e0XOg4SmjXxtfNKhgh0BTBzq2bnJwMGrzxfPGMfcrYpeCdg6QXThS6/VMX9JH2cl4s0epcGF/WV2vu+/Z2hcpRAJfhxMzVP40ElNXr8FIwgUxywWrmCtqqeikGQiiqt7Awd4HIztEbWn8nNygsiox64Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918320; c=relaxed/simple;
-	bh=gy0vVZxV0uKcHdZO3lpgwIE4oFYyJ43cg9+D/JBg9dI=;
+	s=arc-20240116; t=1721918323; c=relaxed/simple;
+	bh=TAYXGKwFmTwNusY8nlNrErbVZ6SlFZtoU5E8YdN/eoQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i4yssafQ8O82RY6L2YI0YBe0zjVoQtHQ8kO0C90qy/5VQG6WLToy0YyBY9xbspq65BcyuKvUAkzic8DqAMMT7m7PJE/8ZDLamqgDZf7J+mWbJd3o/o+itUZ4dcoGRYmgPqR7fIREqPP10ui+awLxGLw7R2qXfTCAH4d5JnNKie8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqHnaAav; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NrKifCYUuNk+Q9fWhTSRsyaO27JMayXRCaWJO2HrJE8iKFy34tiFroJDmkdMLvmJiR34wfmV8OEcREYTfy88gtYPRjn0HoFmSbjUdV8JZ55Nu12j+Po/ny4ZHoGQ2WgIaeyzmyORXcxCBzGJruB7QiUdy2KeUFPg9kzIxOwC9Mw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Eg206CQE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqHnaAav"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B133C116B1;
-	Thu, 25 Jul 2024 14:38:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Eg206CQE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D206C116B1;
+	Thu, 25 Jul 2024 14:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918319;
-	bh=gy0vVZxV0uKcHdZO3lpgwIE4oFYyJ43cg9+D/JBg9dI=;
+	s=korg; t=1721918323;
+	bh=TAYXGKwFmTwNusY8nlNrErbVZ6SlFZtoU5E8YdN/eoQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqHnaAav22/1lfwywyzyoK+EixxyLmErI+ETI4hkst8n/afHI6GppUEOVMSNBMRRp
-	 2sjRLaQvdL8BYjGNXrh/0IX48jGctlnFaAHcg8toXIp81VQsiIlj2AXIxXY0eby4Bc
-	 Pzq/ayGoZ9saQyWxXp4OII4lQu/V/6GD/fNFe6Ms=
+	b=Eg206CQEvGajagG+iYkOI1jbZiPg2+1N5WDCyD581vl9fBHAyXpdTreSOI1qWOirP
+	 J5YtAHK6vsoGTRPmQnVdLCivVftYyZ4/3qqUw6pdCSdn+7l5dvdLo3QutOzlroKPos
+	 M3QwOW0iMGm+o4W36n58WD4qIKxxxEVUs3ywbUxg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Caleb Connolly <caleb.connolly@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 14/29] arm64: dts: qcom: qrb2210-rb1: switch I2C2 to i2c-gpio
-Date: Thu, 25 Jul 2024 16:36:30 +0200
-Message-ID: <20240725142732.352238624@linuxfoundation.org>
+Subject: [PATCH 6.10 15/29] arm64: dts: qcom: qrb4210-rb2: switch I2C2 to i2c-gpio
+Date: Thu, 25 Jul 2024 16:36:31 +0200
+Message-ID: <20240725142732.389560730@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit b7b545ccc08873e107aa24c461b1fdb123dd3761 upstream.
+commit f77e7bd40c3c2d79685e9cc80de874b69a976f55 upstream.
 
-On the Qualcomm RB1 platform the I2C bus connected to the LT9611UXC
+On the Qualcomm RB2 platform the I2C bus connected to the LT9611UXC
 bridge under some circumstances can go into a state when all transfers
 timeout. This causes both issues with fetching of EDID and with
 updating of the bridge's firmware. While we are debugging the issue,
@@ -65,20 +65,20 @@ i2c-gpio no communication issues are observed.
 This patch is asusmed to be a temporary fix, so it is implemented in a
 non-intrusive manner to simply reverting it later.
 
-Fixes: 616eda24edd4 ("arm64: dts: qcom: qrb2210-rb1: Set up HDMI")
+Fixes: f7b01e07e89c ("arm64: dts: qcom: qrb4210-rb2: Enable display out")
 Cc: stable@vger.kernel.org
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Link: https://lore.kernel.org/r/20240605-rb12-i2c2g-pio-v2-1-946f5d6b6948@linaro.org
+Link: https://lore.kernel.org/r/20240605-rb12-i2c2g-pio-v2-2-946f5d6b6948@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts |   13 ++++++++++++-
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts |   13 ++++++++++++-
  1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -59,6 +59,17 @@
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -60,6 +60,17 @@
  		};
  	};
  
@@ -96,8 +96,8 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
  	leds {
  		compatible = "gpio-leds";
  
-@@ -199,7 +210,7 @@
- 	status = "okay";
+@@ -190,7 +201,7 @@
+ 	};
  };
  
 -&i2c2 {
