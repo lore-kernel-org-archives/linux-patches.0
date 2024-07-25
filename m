@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FA619D074;
-	Thu, 25 Jul 2024 14:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CC18468;
+	Thu, 25 Jul 2024 14:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919103; cv=none; b=jHkgptbgt/xhMjAiguTStlZho92ALMGOpsFYcFHGdtJ1sHh0OM91TtU3ygW/WCMteVEusTktTWSjMsEtEHegNuH7rCXQvpNItnqbjvg+9S1BM2u/9JDBSF/qp2J2knWhFBBh7W4uSNSTwwz4fxcIJTITEV40u6GYyF856wVnefw=
+	t=1721919106; cv=none; b=LWs3DhdF4YKI7NlDuIGBeNL43tdxDwjmvltjSdyQ0M8SAmEom342zP64R+EB98RgnrwB73u+CGN0SXDOB3FVuRKAKgqwwxMG1GmHdM4d01s4mtd+s3Ac+6WMbgCfBM0Kn33XL7ggv+85/G1TtOLNRqdw+WMwB0XsKqq+ZG6nRKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919103; c=relaxed/simple;
-	bh=2F95Z+6lxs9jiIUKF3BCKTzxZPVzsbJzfWeSDp4bGfg=;
+	s=arc-20240116; t=1721919106; c=relaxed/simple;
+	bh=rD4pWXgfuxLMfT7epwJqOoLrBTokt9YN7D2qG8Yj4Fg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DEdyk2NcTLdkH5T2SACQpKsGJxFfzX5JMtTMCUu4AIjR5stEvD4hYQqxsFhF18goxs58cYJU265J29614AbynTh6PiuuwhiV58WC73oF6ak2+G3eBIFp8xOl5j3s8Ulecy66AUeTFydTShjIKwLuKsave30iV83YTls0+8CTH1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KsJ0+tGd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bzXJiDwJofn/zcOgfQ50wktAs4+rmtzTYUTDsxToixHhcMvVbYITI/3by4trdRXzg3O/eAfTJaFniuiV9cskri9vSwdfP7HwEgTESRo7AfPNgS7U7m0WZ7T2ihNKkKJa+HUJ8Ga8gjWP+stRPXco3o1/QoFon0JTSZ9AbEFM1a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uFphKaJU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KsJ0+tGd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D5EC32782;
-	Thu, 25 Jul 2024 14:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uFphKaJU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD9ABC4AF0B;
+	Thu, 25 Jul 2024 14:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919103;
-	bh=2F95Z+6lxs9jiIUKF3BCKTzxZPVzsbJzfWeSDp4bGfg=;
+	s=korg; t=1721919106;
+	bh=rD4pWXgfuxLMfT7epwJqOoLrBTokt9YN7D2qG8Yj4Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KsJ0+tGdMD0IEQgKZwo3KP9EHnmuuQyYoicPkgBn0+rLxg05y2KHSF3HaUrT5AnrD
-	 TPwYArAwbbzijEQZvtj0OEs+oU9W2CGPDu6w9IhBcqwuOABxo9KHviC6lsLM34SHzN
-	 lL/Vdgt90NqP1qrRgao/78IJ75SKoCiKr9SAHurg=
+	b=uFphKaJUssWITWgllHaW/6pmhgvxGLqj7GF13Wj5YMVtIyQgDWedyuJgIgkSE1LKe
+	 XpzhwCVoTrDZdoOi4c6tTeFi/hyCHde0jVowh+HRfJznbxfpnlBTsQRPBp9jjNBV+M
+	 S+ZjzVg4UomT75/P1ODEjLa+/Lh5+wrZ0YDvMHEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Li <liwei391@huawei.com>,
-	Huisong Li <lihuisong@huawei.com>,
-	Will Deacon <will@kernel.org>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/87] arm64: armv8_deprecated: Fix warning in isndep cpuhp starting process
-Date: Thu, 25 Jul 2024 16:36:57 +0200
-Message-ID: <20240725142739.346725276@linuxfoundation.org>
+Subject: [PATCH 5.15 25/87] null_blk: fix validation of block size
+Date: Thu, 25 Jul 2024 16:36:58 +0200
+Message-ID: <20240725142739.384146972@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -52,49 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Li <liwei391@huawei.com>
+From: Andreas Hindborg <a.hindborg@samsung.com>
 
-[ Upstream commit 14951beaec93696b092a906baa0f29322cf34004 ]
+[ Upstream commit c462ecd659b5fce731f1d592285832fd6ad54053 ]
 
-The function run_all_insn_set_hw_mode() is registered as startup callback
-of 'CPUHP_AP_ARM64_ISNDEP_STARTING', it invokes set_hw_mode() methods of
-all emulated instructions.
+Block size should be between 512 and PAGE_SIZE and be a power of 2. The current
+check does not validate this, so update the check.
 
-As the STARTING callbacks are not expected to fail, if one of the
-set_hw_mode() fails, e.g. due to el0 mixed-endian is not supported for
-'setend', it will report a warning:
+Without this patch, null_blk would Oops due to a null pointer deref when
+loaded with bs=1536 [1].
 
-```
-CPU[2] cannot support the emulation of setend
-CPU 2 UP state arm64/isndep:starting (136) failed (-22)
-CPU2: Booted secondary processor 0x0000000002 [0x414fd0c1]
-```
+Link: https://lore.kernel.org/all/87wmn8mocd.fsf@metaspace.dk/
 
-To fix it, add a check for INSN_UNAVAILABLE status and skip the process.
-
-Signed-off-by: Wei Li <liwei391@huawei.com>
-Tested-by: Huisong Li <lihuisong@huawei.com>
-Link: https://lore.kernel.org/r/20240423093501.3460764-1-liwei391@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Andreas Hindborg <a.hindborg@samsung.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20240603192645.977968-1-nmi@metaspace.dk
+[axboe: remove unnecessary braces and != 0 check]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/armv8_deprecated.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/block/null_blk/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/kernel/armv8_deprecated.c b/arch/arm64/kernel/armv8_deprecated.c
-index 91eabe56093d6..91c29979aea79 100644
---- a/arch/arm64/kernel/armv8_deprecated.c
-+++ b/arch/arm64/kernel/armv8_deprecated.c
-@@ -471,6 +471,9 @@ static int run_all_insn_set_hw_mode(unsigned int cpu)
- 	for (i = 0; i < ARRAY_SIZE(insn_emulations); i++) {
- 		struct insn_emulation *insn = insn_emulations[i];
- 		bool enable = READ_ONCE(insn->current_mode) == INSN_HW;
-+		if (insn->status == INSN_UNAVAILABLE)
-+			continue;
-+
- 		if (insn->set_hw_mode && insn->set_hw_mode(enable)) {
- 			pr_warn("CPU[%u] cannot support the emulation of %s",
- 				cpu, insn->name);
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index ec78d9ad3e9bc..23c4a7b3d4e53 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -1749,8 +1749,8 @@ static int null_validate_conf(struct nullb_device *dev)
+ 		return -EINVAL;
+ 	}
+ 
+-	dev->blocksize = round_down(dev->blocksize, 512);
+-	dev->blocksize = clamp_t(unsigned int, dev->blocksize, 512, 4096);
++	if (blk_validate_block_size(dev->blocksize))
++		return -EINVAL;
+ 
+ 	if (dev->queue_mode == NULL_Q_MQ && dev->use_per_node_hctx) {
+ 		if (dev->submit_queues != nr_online_nodes)
 -- 
 2.43.0
 
