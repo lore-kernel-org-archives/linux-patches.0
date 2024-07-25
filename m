@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C163119D066;
-	Thu, 25 Jul 2024 14:41:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1913219A29C;
+	Thu, 25 Jul 2024 14:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918504; cv=none; b=LeuqlBoTcVzHYv37RSYoW6p9wSYufSHR6KMNTC59fSjHbp3yc+Kpm9vxTsCWYV/+iSvo31bVG7V84gPX+3V00zCc1BF5OPO4xpqHcbC+uvOBUMVb+NC50zB2fEB07QRfmTvymln6CeOqoTTNRGySZdXOlW2VPwineGzFHzhYxoA=
+	t=1721918508; cv=none; b=ZOBTklo9bNlsARhBypkL7bf5ywKSMTNti+IMi5E09n52SgwhxU7uOSE7xP/8fP94O83SIIgyfLk9VjHv3yGMpyeMBMcsJOwUhFULxLpp0s5t1LMD0dH3EQx0RM4MPc2yKtPPIrrzIZtX6JTHjKrzXvxZhSVhnSG00CIendLkN4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918504; c=relaxed/simple;
-	bh=T1z4vm5oxhs8BwmgrfPR15IaEJsSvEbGwYSCko/zaio=;
+	s=arc-20240116; t=1721918508; c=relaxed/simple;
+	bh=dzVBhccvp0hU0+Ir7A9lbv+vH5/lOzD+6wiLDbQnmDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pJVPr4kjyko0rtDg/wqVacP39jxFrMkTGQganROGK2ar92ftxyu7569mwxhfB52XDRrQus9hKPTbGXxwr+YfpUOlbxuYwjlZWNI7Re3KfPKJKnvUEaosMOah4rEA78AUWqL1LOV0Z2xUJME8us50RzenAF7FprCwnohFTH3EOIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a9+zBL5A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GtaCd0hDUqaD+DyWZLTUXT1G48rT+kdDm0t3h8e/sCR8isa+mRE1ocOw8D/sFPVUKVpN9CoUVCxFGzbF2uIFD9RDxOxwVQz5w2recPTQhObbGEAoYmVu4xmV44PxoDZIpBBxQggi4ArXYatnASxwu0nQKQDmVp7N4ux1Gc0Jd28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moVKY3wS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a9+zBL5A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38350C116B1;
-	Thu, 25 Jul 2024 14:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moVKY3wS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3BCC116B1;
+	Thu, 25 Jul 2024 14:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918504;
-	bh=T1z4vm5oxhs8BwmgrfPR15IaEJsSvEbGwYSCko/zaio=;
+	s=korg; t=1721918507;
+	bh=dzVBhccvp0hU0+Ir7A9lbv+vH5/lOzD+6wiLDbQnmDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a9+zBL5AtHguGSBXvrNoUW/jRvNe+6z5r/rvxQgCotCmxCuQWtB9wHtB2sXzqYahD
-	 HJJhqUIn4GBvzPoRlWplP/gRvdo3S1Vx77M58IdxgovvuRPBZXwmMgNy+4f2v66OKP
-	 0v0LS+oZS6E2C9m21hPnLYbZeKAPXioR5Su4ygkI=
+	b=moVKY3wSTVvexUDOupdj3Ic58xjzLBnY6GR1aBVJJD52T7jo8LuJT40oKgJOsHJP5
+	 dXYZ35VRIK8otn+KRrPmPx234QWUNRsOlQ727nsMkW2jXqtJ0Eu10zFfaIv2eI1whu
+	 lbL0a420hB8mkirG/rovoIgbdQ9V6z5IdLT5nQY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 08/33] ila: block BH in ila_output()
-Date: Thu, 25 Jul 2024 16:36:31 +0200
-Message-ID: <20240725142728.835743130@linuxfoundation.org>
+Subject: [PATCH 4.19 09/33] kconfig: gconf: give a proper initial state to the Save button
+Date: Thu, 25 Jul 2024 16:36:32 +0200
+Message-ID: <20240725142728.873711772@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -52,58 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit cf28ff8e4c02e1ffa850755288ac954b6ff0db8c ]
+[ Upstream commit 46edf4372e336ef3a61c3126e49518099d2e2e6d ]
 
-As explained in commit 1378817486d6 ("tipc: block BH
-before using dst_cache"), net/core/dst_cache.c
-helpers need to be called with BH disabled.
+Currently, the initial state of the "Save" button is always active.
 
-ila_output() is called from lwtunnel_output()
-possibly from process context, and under rcu_read_lock().
+If none of the CONFIG options are changed while loading the .config
+file, the "Save" button should be greyed out.
 
-We might be interrupted by a softirq, re-enter ila_output()
-and corrupt dst_cache data structures.
+This can be fixed by calling conf_read() after widget initialization.
 
-Fix the race by using local_bh_disable().
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/20240531132636.2637995-5-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ila/ila_lwt.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ scripts/kconfig/gconf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/ila/ila_lwt.c b/net/ipv6/ila/ila_lwt.c
-index 3d56a2fb6f86f..c7630776bd8e8 100644
---- a/net/ipv6/ila/ila_lwt.c
-+++ b/net/ipv6/ila/ila_lwt.c
-@@ -58,7 +58,9 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 		return orig_dst->lwtstate->orig_output(net, sk, skb);
- 	}
+diff --git a/scripts/kconfig/gconf.c b/scripts/kconfig/gconf.c
+index 36f578415c4a6..5e0ea015394e9 100644
+--- a/scripts/kconfig/gconf.c
++++ b/scripts/kconfig/gconf.c
+@@ -1485,7 +1485,6 @@ int main(int ac, char *av[])
  
-+	local_bh_disable();
- 	dst = dst_cache_get(&ilwt->dst_cache);
-+	local_bh_enable();
- 	if (unlikely(!dst)) {
- 		struct ipv6hdr *ip6h = ipv6_hdr(skb);
- 		struct flowi6 fl6;
-@@ -86,8 +88,11 @@ static int ila_output(struct net *net, struct sock *sk, struct sk_buff *skb)
- 			goto drop;
- 		}
+ 	conf_parse(name);
+ 	fixup_rootmenu(&rootmenu);
+-	conf_read(NULL);
  
--		if (ilwt->connected)
-+		if (ilwt->connected) {
-+			local_bh_disable();
- 			dst_cache_set_ip6(&ilwt->dst_cache, dst, &fl6.saddr);
-+			local_bh_enable();
-+		}
- 	}
+ 	/* Load the interface and connect signals */
+ 	init_main_window(glade_file);
+@@ -1493,6 +1492,8 @@ int main(int ac, char *av[])
+ 	init_left_tree();
+ 	init_right_tree();
  
- 	skb_dst_set(skb, dst);
++	conf_read(NULL);
++
+ 	switch (view_mode) {
+ 	case SINGLE_VIEW:
+ 		display_tree_part();
 -- 
 2.43.0
 
