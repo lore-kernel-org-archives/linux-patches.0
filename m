@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895D319D88A;
-	Thu, 25 Jul 2024 14:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A635D19D892;
+	Thu, 25 Jul 2024 14:54:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919273; cv=none; b=lcCx6TIY7KLfPsNczSCPfy5ZD73+TLs2J96kX7IRJBDRjfj0K+tn4Q61zRaR1Nm2LJT8O4j/rovgQfSZoTioa9h70lVC8OV+7IeAzN4eYSfYpl/BdgTTnTP9JQ/dBTHqseMcR1qqb5CjqQNY91k8Elw1LCtMjyMLjSUFk0cBPyo=
+	t=1721919276; cv=none; b=PqC00ozVhsmuTmaHMtiHlv4dEqoaXOSjE4G/JXJk7GAgi7br8Lf12G42i8oXQSGshTViH9d/OkqLTx9UVCs8aN2lzATpbEz4BEostl745PM9P1ORUSHO9Q8RELeOXmwnxAMszPhX1SbrbYK4kg3KLGODNu+LhP8SSEJjoX3qjFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919273; c=relaxed/simple;
-	bh=PsRRiYbeSmm2DqW92L/rq3OxLrG3TMaFI+v/Sztag1U=;
+	s=arc-20240116; t=1721919276; c=relaxed/simple;
+	bh=AOlAGbE7Db6u43uhrbf+deYlkgiBS6GdgguCbqlhwkM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPHM3a1IhJNfbPIO9c3nm0UZvgXOUbFlnku3WjXdaHv5GEfSHFsQd0hwHL+/uR/GcM013D4Wvdvo0jYFItwqj4slavJ8ZkjU5MBpaQuGBINQMQLM281VGKuPbd6Ja6TkZ3r938neZdZg6sLs0GOmkZO+0qgTSxlwgA6zuTiggno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVrVykZr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gF/nC+eYZayBH182egso+50Hjtnt8uVS+rThfIi81Ii4BNMGbum4sYGiMBqRLLkgF9qykj2fIshvOI6IHMQxIfDan+5hf831vr3zpb5e0/k/1OwA3dgQnYjO+TRsqgWQRZyScL4Du5+1J2AFpQqjqzA6ng//9oKSIgwu0EFkQR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vhmnPWzR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVrVykZr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8748DC116B1;
-	Thu, 25 Jul 2024 14:54:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vhmnPWzR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAF6C116B1;
+	Thu, 25 Jul 2024 14:54:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919273;
-	bh=PsRRiYbeSmm2DqW92L/rq3OxLrG3TMaFI+v/Sztag1U=;
+	s=korg; t=1721919276;
+	bh=AOlAGbE7Db6u43uhrbf+deYlkgiBS6GdgguCbqlhwkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVrVykZr90nMVF3aBGDmUJl4qaBJ0Ty3gGxSjVQtrEln1tQO1uH8Vqk+vnlxfDsqE
-	 +p+nfF2yeT6WmgMI0QXX+Y3xIfHTIoamxd0/nHi1X65QD15V7PYxufXJyQ/L5ZYwFf
-	 dXjygI1y/OacXjRTm6JcZ6QtFIIEz0h0TSrESizQ=
+	b=vhmnPWzRet0hML6Pm9tk6anLKZQOb0a3jhsTEPahCiCsTIRtxyXnzKU4pNNWa5/3/
+	 O4jid7uADE2dSzIRAV+FoL3h/I4OnT/w1WKecxdFj0+p94jx0azQc1lb91KqaLOrwp
+	 DSNfzZ/z/FM3487UeyaeMloxqMcCe1G6Q3DRKmZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 77/87] Add gitignore file for samples/fanotify/ subdirectory
-Date: Thu, 25 Jul 2024 16:37:50 +0200
-Message-ID: <20240725142741.343975788@linuxfoundation.org>
+	Christoph Paasch <cpaasch@apple.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Nikolay Kuratov <kniv@yandex-team.ru>
+Subject: [PATCH 5.15 78/87] net: relax socket state check at accept time.
+Date: Thu, 25 Jul 2024 16:37:51 +0200
+Message-ID: <20240725142741.381494123@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -50,28 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit c107fb9b4f8338375b3e865c3d2c1d98ccb3a95a ]
+commit 26afda78cda3da974fd4c287962c169e9462c495 upstream.
 
-Commit 5451093081db ("samples: Add fs error monitoring example") added a
-new sample program, but didn't teach git to ignore the new generated
-files, causing unnecessary noise from 'git status' after a full build.
+Christoph reported the following splat:
 
-Add the 'fs-monitor' sample executable to the .gitignore for this
-subdirectory to silence it all again.
+WARNING: CPU: 1 PID: 772 at net/ipv4/af_inet.c:761 __inet_accept+0x1f4/0x4a0
+Modules linked in:
+CPU: 1 PID: 772 Comm: syz-executor510 Not tainted 6.9.0-rc7-g7da7119fe22b #56
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.11.0-2.el7 04/01/2014
+RIP: 0010:__inet_accept+0x1f4/0x4a0 net/ipv4/af_inet.c:759
+Code: 04 38 84 c0 0f 85 87 00 00 00 41 c7 04 24 03 00 00 00 48 83 c4 10 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc e8 ec b7 da fd <0f> 0b e9 7f fe ff ff e8 e0 b7 da fd 0f 0b e9 fe fe ff ff 89 d9 80
+RSP: 0018:ffffc90000c2fc58 EFLAGS: 00010293
+RAX: ffffffff836bdd14 RBX: 0000000000000000 RCX: ffff888104668000
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+RBP: dffffc0000000000 R08: ffffffff836bdb89 R09: fffff52000185f64
+R10: dffffc0000000000 R11: fffff52000185f64 R12: dffffc0000000000
+R13: 1ffff92000185f98 R14: ffff88810754d880 R15: ffff8881007b7800
+FS:  000000001c772880(0000) GS:ffff88811b280000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb9fcf2e178 CR3: 00000001045d2002 CR4: 0000000000770ef0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+PKRU: 55555554
+Call Trace:
+ <TASK>
+ inet_accept+0x138/0x1d0 net/ipv4/af_inet.c:786
+ do_accept+0x435/0x620 net/socket.c:1929
+ __sys_accept4_file net/socket.c:1969 [inline]
+ __sys_accept4+0x9b/0x110 net/socket.c:1999
+ __do_sys_accept net/socket.c:2016 [inline]
+ __se_sys_accept net/socket.c:2013 [inline]
+ __x64_sys_accept+0x7d/0x90 net/socket.c:2013
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0x58/0x100 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+RIP: 0033:0x4315f9
+Code: fd ff 48 81 c4 80 00 00 00 e9 f1 fe ff ff 0f 1f 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 0f 83 ab b4 fd ff c3 66 2e 0f 1f 84 00 00 00 00
+RSP: 002b:00007ffdb26d9c78 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
+RAX: ffffffffffffffda RBX: 0000000000400300 RCX: 00000000004315f9
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000004
+RBP: 00000000006e1018 R08: 0000000000400300 R09: 0000000000400300
+R10: 0000000000400300 R11: 0000000000000246 R12: 0000000000000000
+R13: 000000000040cdf0 R14: 000000000040ce80 R15: 0000000000000055
+ </TASK>
 
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+The reproducer invokes shutdown() before entering the listener status.
+After commit 94062790aedb ("tcp: defer shutdown(SEND_SHUTDOWN) for
+TCP_SYN_RECV sockets"), the above causes the child to reach the accept
+syscall in FIN_WAIT1 status.
+
+Eric noted we can relax the existing assertion in __inet_accept()
+
+Reported-by: Christoph Paasch <cpaasch@apple.com>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/490
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Fixes: 94062790aedb ("tcp: defer shutdown(SEND_SHUTDOWN) for TCP_SYN_RECV sockets")
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/23ab880a44d8cfd967e84de8b93dbf48848e3d8c.1716299669.git.pabeni@redhat.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- samples/fanotify/.gitignore |    1 +
- 1 file changed, 1 insertion(+)
- create mode 100644 samples/fanotify/.gitignore
+ net/ipv4/af_inet.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- /dev/null
-+++ b/samples/fanotify/.gitignore
-@@ -0,0 +1 @@
-+fs-monitor
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -761,7 +761,9 @@ int inet_accept(struct socket *sock, str
+ 	sock_rps_record_flow(sk2);
+ 	WARN_ON(!((1 << sk2->sk_state) &
+ 		  (TCPF_ESTABLISHED | TCPF_SYN_RECV |
+-		  TCPF_CLOSE_WAIT | TCPF_CLOSE)));
++		   TCPF_FIN_WAIT1 | TCPF_FIN_WAIT2 |
++		   TCPF_CLOSING | TCPF_CLOSE_WAIT |
++		   TCPF_CLOSE)));
+ 
+ 	sock_graft(sk2, newsock);
+ 
 
 
