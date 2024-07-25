@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355D719B5BE;
-	Thu, 25 Jul 2024 14:42:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CF519A29C;
+	Thu, 25 Jul 2024 14:42:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918559; cv=none; b=kWtHI3KE4ivfTNNath0USP8QrTRl75q8o+KXl7EmzwOmXTpwZ93mHwUx0IxzANfwiLVeAbDKePke/NqIVe2mtDUE31/uLJrt7fDQ902NgoCuvWIg23sj6FvfQxe66OHdYxWoQmWGmmU0tw8+ZnznrkUyl9dFPR3KhjaRnmP90PE=
+	t=1721918562; cv=none; b=gtq/KB6RtnvzUYYMR63ZQ8WARC5qAws1K3JuooYbW55xR9ngk/gekEKiq9/E/aF74O0uj0a+VYSgmrUwDdC23wYqSuLCS2kiIHeKUJFSZguMMarKySWVFlhACIiS7Fu5OR2yEPTReidmtUIx4cIl0H8594Ag1qjwjSvz91i60Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918559; c=relaxed/simple;
-	bh=Qiev8cGpMCudh6YAJBuz/LESEzMKk8ordXeTzNixkb4=;
+	s=arc-20240116; t=1721918562; c=relaxed/simple;
+	bh=lmg3xzFI82KttQK9Ffh3dvH2RfjfVPkYJ5cSrCXt1S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLROqjyFS+JyOlmSOAS/cIn0J4zPYfj6QFgyB0f/RWVCJkDgwAL1roU2lGsvhJOJxZ/NnkwEQyAd0qUNdOE/PMzS5qKKLB4Mhy2p6nyFoI9E8MsD8wDyG5LeEBQ/Kxzwou7EQItb2cv+KZQX2xaGGCqGy6wJIgTx2AKpO2sWv8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CfHOtrS4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LL/w8fpMDtlVlFhVBzb/DKy5ctwRwgR2xp4JjZqCRI4e9dgmH4lDvYVW8rku6XNzWjudF1hZjRnbZXIwAgZtdpaw3lirZ7PyTqL5I8sfyucW8t9q10OIuBMSYr0ednw6rIvdKhEVlxxMBf5DPGc9tYyim17wlH/9G+ioDC4myTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrK5/T4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CfHOtrS4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A269C116B1;
-	Thu, 25 Jul 2024 14:42:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrK5/T4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B875C116B1;
+	Thu, 25 Jul 2024 14:42:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918558;
-	bh=Qiev8cGpMCudh6YAJBuz/LESEzMKk8ordXeTzNixkb4=;
+	s=korg; t=1721918561;
+	bh=lmg3xzFI82KttQK9Ffh3dvH2RfjfVPkYJ5cSrCXt1S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfHOtrS4p2bmILjYyysszLYoaWbKa+Dqlr1tjyl3lpJL54xDpdxlNeqkvikjjNEp8
-	 gTBTWr+GLhjVImbkoGHoBEfw8ZfXDyAd5MzLLTaaAG3+bOAi55QMvGkbblaMCR8N9C
-	 EE6vzi+zot42VUVWYvHR1DBd5Ye48xpLGwMDH3aA=
+	b=KrK5/T4+QiMSgTAosK2K7OBq4bvL4qhIzK55nfsnLKGByzYjblfrSKH5UcrtjurdX
+	 r05YgFeNQ/XrfEONFtDYxoxv3wj0q5RZwJVXDuSpjZQ5MSmu6oGIcI1ZF5avaDDiOG
+	 buDljsqeDm88sOscXHnvWDbndUaGpYFA/4L8a7/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 22/43] can: kvaser_usb: fix return value for hif_usb_send_regout
-Date: Thu, 25 Jul 2024 16:36:45 +0200
-Message-ID: <20240725142731.312469599@linuxfoundation.org>
+Subject: [PATCH 5.4 23/43] gpio: pca953x: fix pca953x_irq_bus_sync_unlock race
+Date: Thu, 25 Jul 2024 16:36:46 +0200
+Message-ID: <20240725142731.349817406@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -51,34 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-[ Upstream commit 0d34d8163fd87978a6abd792e2d8ad849f4c3d57 ]
+[ Upstream commit bfc6444b57dc7186b6acc964705d7516cbaf3904 ]
 
-As the potential failure of usb_submit_urb(), it should be better to
-return the err variable to catch the error.
+Ensure that `i2c_lock' is held when setting interrupt latch and mask in
+pca953x_irq_bus_sync_unlock() in order to avoid races.
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://lore.kernel.org/all/20240521041020.1519416-1-nichen@iscas.ac.cn
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The other (non-probe) call site pca953x_gpio_set_multiple() ensures the
+lock is held before calling pca953x_write_regs().
+
+The problem occurred when a request raced against irq_bus_sync_unlock()
+approximately once per thousand reboots on an i.MX8MP based system.
+
+ * Normal case
+
+   0-0022: write register AI|3a {03,02,00,00,01} Input latch P0
+   0-0022: write register AI|49 {fc,fd,ff,ff,fe} Interrupt mask P0
+   0-0022: write register AI|08 {ff,00,00,00,00} Output P3
+   0-0022: write register AI|12 {fc,00,00,00,00} Config P3
+
+ * Race case
+
+   0-0022: write register AI|08 {ff,00,00,00,00} Output P3
+   0-0022: write register AI|08 {03,02,00,00,01} *** Wrong register ***
+   0-0022: write register AI|12 {fc,00,00,00,00} Config P3
+   0-0022: write register AI|49 {fc,fd,ff,ff,fe} Interrupt mask P0
+
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://lore.kernel.org/r/20240620042915.2173-1-ian.ray@gehealthcare.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpio-pca953x.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-index 411b3adb1d9ea..a96b223984070 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -266,7 +266,7 @@ int kvaser_usb_send_cmd_async(struct kvaser_usb_net_priv *priv, void *cmd,
- 	}
- 	usb_free_urb(urb);
+diff --git a/drivers/gpio/gpio-pca953x.c b/drivers/gpio/gpio-pca953x.c
+index c81d73d5e0159..d4c81373929af 100644
+--- a/drivers/gpio/gpio-pca953x.c
++++ b/drivers/gpio/gpio-pca953x.c
+@@ -696,6 +696,8 @@ static void pca953x_irq_bus_sync_unlock(struct irq_data *d)
+ 	pca953x_read_regs(chip, chip->regs->direction, reg_direction);
  
--	return 0;
-+	return err;
- }
+ 	if (chip->driver_data & PCA_PCAL) {
++		guard(mutex)(&chip->i2c_lock);
++
+ 		/* Enable latch on interrupt-enabled inputs */
+ 		pca953x_write_regs(chip, PCAL953X_IN_LATCH, chip->irq_mask);
  
- int kvaser_usb_can_rx_over_error(struct net_device *netdev)
 -- 
 2.43.0
 
