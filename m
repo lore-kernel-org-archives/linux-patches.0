@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1C1419B3E2;
-	Thu, 25 Jul 2024 14:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DD5199E9F;
+	Thu, 25 Jul 2024 14:38:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918317; cv=none; b=fPiFvb2jTVGq+0EutMuwowoK1TZIGARyguispqeFY59n4eHBricylBno1t/ndfUGrSF9EUh7Bk0IcClc32UpbWkniDoiLVGmUPA0a0o0FyLatqdfvugnc9oFVsApA0FWlVuJIKdcRYpbwJLsXsk5INsN78qYnjc2MO2Y9dKSGFs=
+	t=1721918320; cv=none; b=hBx2noWEzMOdXADCEpk7ad18BAsHXHVOZd2uZQKMCqbvmPR5qemM8ER1QX4jaYmBwBm8WddG4PT9a3CNcfxsR0KpPBtyzCG0e++2CHTZNXxeg1/G8gobg9xRWVMyyTGZds8dHc2BF+tUnAkbCODufufgzcTwluT+OWMzrO4a8m8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918317; c=relaxed/simple;
-	bh=wEcCaD+1XuwyFSB13jMtHmH55RYJTf7Uy9tF0coQCRg=;
+	s=arc-20240116; t=1721918320; c=relaxed/simple;
+	bh=gy0vVZxV0uKcHdZO3lpgwIE4oFYyJ43cg9+D/JBg9dI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/LtlqVYigesvJWNN7tQ8+00mX0Fxx2VI8zCgn7U1xfC9Y9PGW5DOeXzM9V4iwRRRGqZHMniMwYbLGDS3r6F815gfh7Z9HCS7D3lFjfHBE9gxtOliUXFGfoxkm29B3fQV2nF7VFwXMlgdbPu1Kh3DlWZeDv2nTEO/sWnVrAStR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M6OmgoF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i4yssafQ8O82RY6L2YI0YBe0zjVoQtHQ8kO0C90qy/5VQG6WLToy0YyBY9xbspq65BcyuKvUAkzic8DqAMMT7m7PJE/8ZDLamqgDZf7J+mWbJd3o/o+itUZ4dcoGRYmgPqR7fIREqPP10ui+awLxGLw7R2qXfTCAH4d5JnNKie8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JqHnaAav; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M6OmgoF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A054C116B1;
-	Thu, 25 Jul 2024 14:38:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JqHnaAav"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B133C116B1;
+	Thu, 25 Jul 2024 14:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918316;
-	bh=wEcCaD+1XuwyFSB13jMtHmH55RYJTf7Uy9tF0coQCRg=;
+	s=korg; t=1721918319;
+	bh=gy0vVZxV0uKcHdZO3lpgwIE4oFYyJ43cg9+D/JBg9dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6OmgoF85yOPVHwRQpxlDcUFmOzGRfxieHAAzUb3nFg67rhY6eABG+X2c/zx0ubos
-	 aF4KWnoewFWNoo41vgUGptGGblDXnwq+BU1GqZkhV3PDZzAT2O6AwFCYLszRCwtVMe
-	 knJ0zvPtpI2hJ1dc/NdithP//yfXvAfyRCTtGs44=
+	b=JqHnaAav22/1lfwywyzyoK+EixxyLmErI+ETI4hkst8n/afHI6GppUEOVMSNBMRRp
+	 2sjRLaQvdL8BYjGNXrh/0IX48jGctlnFaAHcg8toXIp81VQsiIlj2AXIxXY0eby4Bc
+	 Pzq/ayGoZ9saQyWxXp4OII4lQu/V/6GD/fNFe6Ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 13/29] arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs regulators
-Date: Thu, 25 Jul 2024 16:36:29 +0200
-Message-ID: <20240725142732.313824704@linuxfoundation.org>
+Subject: [PATCH 6.10 14/29] arm64: dts: qcom: qrb2210-rb1: switch I2C2 to i2c-gpio
+Date: Thu, 25 Jul 2024 16:36:30 +0200
+Message-ID: <20240725142732.352238624@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -51,82 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-commit 20676f7819d7364b7e8bd437b212106faa893b49 upstream.
+commit b7b545ccc08873e107aa24c461b1fdb123dd3761 upstream.
 
-The 1.2v HS PHY shared regulator is actually LDO2 from PM8550ve id J.
-Also add the missing supplies to QMP PHYs.
+On the Qualcomm RB1 platform the I2C bus connected to the LT9611UXC
+bridge under some circumstances can go into a state when all transfers
+timeout. This causes both issues with fetching of EDID and with
+updating of the bridge's firmware. While we are debugging the issue,
+switch corresponding I2C bus to use i2c-gpio driver. While using
+i2c-gpio no communication issues are observed.
 
-Fixes: f9a9c11471da ("arm64: dts: qcom: x1e80100-qcp: Enable more support")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: stable@vger.kernel.org      # 6.9
-Link: https://lore.kernel.org/r/20240530-x1e80100-dts-fix-usb-phy-supplies-v1-2-6eb72a546227@linaro.org
+This patch is asusmed to be a temporary fix, so it is implemented in a
+non-intrusive manner to simply reverting it later.
+
+Fixes: 616eda24edd4 ("arm64: dts: qcom: qrb2210-rb1: Set up HDMI")
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Link: https://lore.kernel.org/r/20240605-rb12-i2c2g-pio-v2-1-946f5d6b6948@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -537,7 +537,7 @@
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -59,6 +59,17 @@
+ 		};
+ 	};
  
- &usb_1_ss0_hsphy {
- 	vdd-supply = <&vreg_l2e_0p8>;
--	vdda12-supply = <&vreg_l3e_1p2>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_0_eusb2_repeater>;
- 
-@@ -545,6 +545,9 @@
- };
- 
- &usb_1_ss0_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l1j_0p8>;
++	i2c2_gpio: i2c {
++		compatible = "i2c-gpio";
 +
++		sda-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
++		scl-gpios = <&tlmm 7 GPIO_ACTIVE_HIGH>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		status = "disabled";
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -199,7 +210,7 @@
  	status = "okay";
  };
  
-@@ -559,7 +562,7 @@
- 
- &usb_1_ss1_hsphy {
- 	vdd-supply = <&vreg_l2e_0p8>;
--	vdda12-supply = <&vreg_l3e_1p2>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_1_eusb2_repeater>;
- 
-@@ -567,6 +570,9 @@
- };
- 
- &usb_1_ss1_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
+-&i2c2 {
++&i2c2_gpio {
+ 	clock-frequency = <400000>;
  	status = "okay";
- };
- 
-@@ -581,7 +587,7 @@
- 
- &usb_1_ss2_hsphy {
- 	vdd-supply = <&vreg_l2e_0p8>;
--	vdda12-supply = <&vreg_l3e_1p2>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_2_eusb2_repeater>;
- 
-@@ -589,6 +595,9 @@
- };
- 
- &usb_1_ss2_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
- 	status = "okay";
- };
  
 
 
