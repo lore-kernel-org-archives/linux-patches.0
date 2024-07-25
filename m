@@ -1,60 +1,58 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF84381C8;
-	Thu, 25 Jul 2024 17:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E11E3B79C;
+	Thu, 25 Jul 2024 18:35:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721929648; cv=none; b=XPi5cVGibqudvCqG9P2C+Rw/IGXRj0Bh5op+e89zHNZJqx56ktccfCxTPJxOiHJscIxfnFkCLCVmS6gCNkKdHu4fIasTrSWRI6NarI92MOVYFtccFKza7UpK9VZWinHeDo1LBfyab2qNgk8+VZaRAyLyvBahJRTdN6iEtFlwjtI=
+	t=1721932502; cv=none; b=U0t8L/+r91kKEFidqmU70/YoFErKOuIW7crK5c1QJgpdzIXCFpt5DnJlIrv6OY5G2bTfBhvPp5etK8SxCLFkH6iTIhqVBO8lTRHbKlEueUwIEyWKJ1IbFqX5pRFDw19/jm2w+cBouhMlXrFgZGDuO69kYJ4jEcFUd0EzA0VHPOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721929648; c=relaxed/simple;
-	bh=brGtcMltNc5qyVro7QoNysIIShWxU3siffgKjgWUwjk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cE3nRk607gg5cuyaXvX/mhymYvdTJZhH5byplE+Of6jUTk0QfoXYyz8FUDJMClN2vos2DbIUhbbnPaUyflCz7pJL/oEzm/c41GYCeevtd8KmLG+ElxpT6W9GbfT7wohvg3mkkFtxmqqrgbRhCysXYbNF01gc8InVaU9UOM7HrGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3xz1gwD; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721932502; c=relaxed/simple;
+	bh=26T2QjUffzc0MnZFn4Miu/SCpQ+ELbRTz6C+axsjgFE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZnNU7H7L2rbh1iqq/AeGf5jylhKtLxDVCrN4apc2xsWYwKYxbtMaXoQnQGy1f2uHa+mdvgncIS8woEe+ZcfQMhm1oAH0QKbBM9kyGGssn1sKkHBYj8Xx3hoOnbHcRwgNTl/j25Yh7l865vEPW8y2r785uaSaXnd2iWmOlFYqM/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A/BhvdJq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3xz1gwD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F5CC32782;
-	Thu, 25 Jul 2024 17:47:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A/BhvdJq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C2BCC116B1;
+	Thu, 25 Jul 2024 18:34:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721929648;
-	bh=brGtcMltNc5qyVro7QoNysIIShWxU3siffgKjgWUwjk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3xz1gwDOOO5vZFDO+s0upF8qVfCQKyggUdqbRVP+e+AqWB8jltx3m+dICiPROAV+
-	 yh824BEe3mPEZ5N5zmgFBs9pQ4PkJVTicOOW5HesfpMOO6s0ouGXWyFshfs7betdJg
-	 xknBzZQNfHZknZ5ejt9H09pr9rxyIlCh90wOOZq17JJVD2lMOh3xQn+iNH+GDZfQre
-	 mzavMShTcOmEuRcs2gPdq7Nq0mPH4exsKRQJWRIKFQt5Bp57HKDboQezsrb5Dyev8z
-	 r6vJ6FDLB48hn4oROBP5RoLq50HhFr7mfR/7dIqrdqyaz+kBNrO/2IHNa/NS6tv4pl
-	 QLc9XmfzP+oYg==
+	s=k20201202; t=1721932502;
+	bh=26T2QjUffzc0MnZFn4Miu/SCpQ+ELbRTz6C+axsjgFE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=A/BhvdJqEKf4EXKUaYF01vDx52mBO1ws2o10zdq9tKn7A9q4AlQeDGm2PjQzOt5O9
+	 mb1vOLlhfxEFxrmwgUk8jN5ZhPFFBCfnAsuDl7HsskA2QPrPAZVk9csdcJefd3pTdo
+	 QuTADG2PsjJXa7+uEPUpcESE/MVdznSLGJ2jQaYzUOHs0rOBOJXmPVaVHj8oV3DZC/
+	 x3KS6sTbSQIpAuMB3PEGmff7YvlQ1MDY/pbzFDuJ2hfROjIej2ZS2TgdKDERqUJdc7
+	 FyPKN+IKuoybKslhCc8AOzfQdTBjz8UKW0UtqmIkXtYHRlGGLvNuMJHUdzpukFbRvr
+	 9H0fLeMyavDsQ==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: gary@garyguo.net
-Cc: a.hindborg@samsung.com,
-	alex.gaynor@gmail.com,
-	aliceryhl@google.com,
-	benno.lossin@proton.me,
-	bjorn3_gh@protonmail.com,
-	boqun.feng@gmail.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	hpa@zytor.com,
-	jpoimboe@kernel.org,
-	linux-kernel@vger.kernel.org,
-	masahiroy@kernel.org,
-	mingo@redhat.com,
-	nathan@kernel.org,
-	nicolas@fjasle.eu,
-	ojeda@kernel.org,
-	patches@lists.linux.dev,
-	peterz@infradead.org,
+To: Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
 	rust-for-linux@vger.kernel.org,
-	tglx@linutronix.de,
-	wedsonaf@gmail.com,
-	x86@kernel.org
-Subject: Re: Re: [PATCH v2 1/6] rust: module: add static pointer to `{init,cleanup}_module()`
-Date: Thu, 25 Jul 2024 19:47:13 +0200
-Message-ID: <20240725174713.103150-1-ojeda@kernel.org>
-In-Reply-To: <20240724204649.7de3ffed.gary@garyguo.net>
-References: <20240724204649.7de3ffed.gary@garyguo.net>
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-kbuild@vger.kernel.org
+Subject: [PATCH v3 0/6] Rust: support `CPU_MITIGATIONS` and enable `objtool`
+Date: Thu, 25 Jul 2024 20:33:17 +0200
+Message-ID: <20240725183325.122827-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,14 +61,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-On Wed, 24 Jul 2024 20:46:49 +0100 Gary Guo <gary@garyguo.net> wrote:
->
-> Should this be in section `.discard.addressable` instead?
+Hi,
 
-No, we need to mimic the call to `___ADDRESSABLE()` (i.e. the one with
-3 underscores, not 2), which passes `__{init,exit}data`.
+This is just v2 with the helper function suggested by Peter.
 
-By the way, thanks for the reviews Gary!
+I dropped Benno's and Alice's Tested-bys from the modified patch, just
+in case, but the logic should be equivalent.
 
 Cheers,
 Miguel
+
+v3:
+  - Added `is_rust_noreturn()` helper function (Peter).
+  - Reworded a couple bits.
+
+v2: https://lore.kernel.org/rust-for-linux/20240724161501.1319115-1-ojeda@kernel.org/
+v1: https://lore.kernel.org/rust-for-linux/20231023174449.251550-1-ojeda@kernel.org/
+
+Miguel Ojeda (6):
+  rust: module: add static pointer to `{init,cleanup}_module()`
+  x86/rust: support MITIGATION_RETPOLINE
+  x86/rust: support MITIGATION_RETHUNK
+  x86/rust: support MITIGATION_SLS
+  objtool/rust: list `noreturn` Rust functions
+  objtool/kbuild/rust: enable objtool for Rust
+
+ arch/x86/Makefile               |  7 ++++-
+ rust/Makefile                   | 22 +++++++++------
+ rust/macros/module.rs           | 12 +++++++++
+ scripts/Makefile.build          |  9 +++++--
+ scripts/generate_rust_target.rs | 15 +++++++++++
+ tools/objtool/check.c           | 48 ++++++++++++++++++++++++++++++++-
+ tools/objtool/noreturns.h       |  2 ++
+ 7 files changed, 103 insertions(+), 12 deletions(-)
+
+
+base-commit: b1263411112305acf2af728728591465becb45b0
+--
+2.45.2
