@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C619FC19;
-	Thu, 25 Jul 2024 14:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 576F1F519;
+	Thu, 25 Jul 2024 14:48:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918912; cv=none; b=i3IbXawNJpO+sCF/lGi34Wnxp1dbQFWtXil5tqu12J7cmvj9hmqMo6GJDQq7lBGbXRxv0ekIXKpV8Y63JBnZwD9e1YY+tq+XdlSU1aIViqaRke2HiRHBdHAbG51Q39bjrbRQyviBIU+bC17mXvj9gAyMcMsYazwhkmmAH0nV7zE=
+	t=1721918915; cv=none; b=ZsW8fOHxIyCuCCJa005EIDHs6yfk4+FCjIZff39Dz3KGfUkSK20ZI2LppVaEXDuCSfO8ZOer1I2WWLRMo2pmiu3YE6r7oYd15404r3Dsl9/3Q57BBt9gCkK3XRB/uBoQ/sY0AWY0czFbq+VRM2xdQugcUaBTQyQaTUWNxUYjCWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918912; c=relaxed/simple;
-	bh=G5yGq0y8UKf7bMigFZoW+NeIn2FVHkPIch+hgMSbYd0=;
+	s=arc-20240116; t=1721918915; c=relaxed/simple;
+	bh=36t1/LG9X0DD5CHX19c/IEXSkbdZK+JCJgYY8WghYHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kJU6ZLyD3dTWnPncf2a209kBvZoRXOLw5CqsEuDA+9YqkXHtIrvDdxBgSZABqjfmS58uuRcCyUaxzMZ1MJnWQwr7e/fFlOJejhFGSLaTqyl6NE2dGh2UVi9m42aTRnGE5lbkyUq5Xc0wyD5B7ADlzIUsnEvZra5o2eL2vJvC/BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=knAolHKp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B1o7KEtb1rdn3xAfJBWBtnzb9K3OeO9AZgNILdKoAlcYRFPBAR27sjojsyMIBqViNTuCuINCBZzpbtsRGM6aW9Y5l3D5J9DmgUKsOfhGkpirJWRgy2Y3bFg1f9LCg1DQ+RKIoz0WR0pvk/E+bfAfAWW2P0kIk6+R9dvwJQt5cHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IR3rJ4bS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="knAolHKp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5DCC116B1;
-	Thu, 25 Jul 2024 14:48:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IR3rJ4bS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D02ADC116B1;
+	Thu, 25 Jul 2024 14:48:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918912;
-	bh=G5yGq0y8UKf7bMigFZoW+NeIn2FVHkPIch+hgMSbYd0=;
+	s=korg; t=1721918915;
+	bh=36t1/LG9X0DD5CHX19c/IEXSkbdZK+JCJgYY8WghYHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=knAolHKpQamCVnQze3ZjTY3/TA4XDTRySBTzeuiSJwezOSLI1J7puqZpIOZoCJh+1
-	 CYmya/1+QvUZsU+VJnlVtvi2hNemEYIcHMy79wC8t5Y/fMKR4nbuTYjVjhUUVkNmhf
-	 GaogXSuXkIuOQo3tKf3VTLr+puCH1TZKH4on1vGs=
+	b=IR3rJ4bSxaZhbbp6MRExJWUZIAUiGASKGpHNhoMhXM4CjnhebXhvZIaJkZ65vfQFk
+	 qsrDMbbFd0bkoUXY16FTsK1ayOccdHAZZXu5CtW8HGiKi+x5PazKiZ7e61bcm+S87Z
+	 qHs+B+/qy19sN6LhRHvRdjYOMFZ3vzpGdW5JAZb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/59] selftests/openat2: Fix build warnings on ppc64
-Date: Thu, 25 Jul 2024 16:36:58 +0200
-Message-ID: <20240725142733.579431284@linuxfoundation.org>
+Subject: [PATCH 5.10 09/59] Input: silead - Always support 10 fingers
+Date: Thu, 25 Jul 2024 16:36:59 +0200
+Message-ID: <20240725142733.618855998@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -46,46 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 84b6df4c49a1cc2854a16937acd5fd3e6315d083 ]
+[ Upstream commit 38a38f5a36da9820680d413972cb733349400532 ]
 
-Fix warnings like:
+When support for Silead touchscreens was orginal added some touchscreens
+with older firmware versions only supported 5 fingers and this was made
+the default requiring the setting of a "silead,max-fingers=10" uint32
+device-property for all touchscreen models which do support 10 fingers.
 
-  openat2_test.c: In function ‘test_openat2_flags’:
-  openat2_test.c:303:73: warning: format ‘%llX’ expects argument of type
-  ‘long long unsigned int’, but argument 5 has type ‘__u64’ {aka ‘long
-  unsigned int’} [-Wformat=]
+There are very few models with the old 5 finger fw, so in practice the
+setting of the "silead,max-fingers=10" is boilerplate which needs to
+be copy and pasted to every touchscreen config.
 
-By switching to unsigned long long for u64 for ppc64 builds.
+Reporting that 10 fingers are supported on devices which only support
+5 fingers doesn't cause any problems for userspace in practice, since
+at max 4 finger gestures are supported anyways. Drop the max_fingers
+configuration and simply always assume 10 fingers.
 
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Reviewed-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/20240525193854.39130-2-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/openat2/openat2_test.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/touchscreen/silead.c | 19 +++++--------------
+ 1 file changed, 5 insertions(+), 14 deletions(-)
 
-diff --git a/tools/testing/selftests/openat2/openat2_test.c b/tools/testing/selftests/openat2/openat2_test.c
-index 453152b58e7f0..1045df1a98c07 100644
---- a/tools/testing/selftests/openat2/openat2_test.c
-+++ b/tools/testing/selftests/openat2/openat2_test.c
-@@ -5,6 +5,7 @@
-  */
+diff --git a/drivers/input/touchscreen/silead.c b/drivers/input/touchscreen/silead.c
+index e8b6c3137420b..901e28bc01645 100644
+--- a/drivers/input/touchscreen/silead.c
++++ b/drivers/input/touchscreen/silead.c
+@@ -70,7 +70,6 @@ struct silead_ts_data {
+ 	struct regulator_bulk_data regulators[2];
+ 	char fw_name[64];
+ 	struct touchscreen_properties prop;
+-	u32 max_fingers;
+ 	u32 chip_id;
+ 	struct input_mt_pos pos[SILEAD_MAX_FINGERS];
+ 	int slots[SILEAD_MAX_FINGERS];
+@@ -98,7 +97,7 @@ static int silead_ts_request_input_dev(struct silead_ts_data *data)
+ 	input_set_abs_params(data->input, ABS_MT_POSITION_Y, 0, 4095, 0, 0);
+ 	touchscreen_parse_properties(data->input, true, &data->prop);
  
- #define _GNU_SOURCE
-+#define __SANE_USERSPACE_TYPES__ // Use ll64
- #include <fcntl.h>
- #include <sched.h>
- #include <sys/stat.h>
+-	input_mt_init_slots(data->input, data->max_fingers,
++	input_mt_init_slots(data->input, SILEAD_MAX_FINGERS,
+ 			    INPUT_MT_DIRECT | INPUT_MT_DROP_UNUSED |
+ 			    INPUT_MT_TRACK);
+ 
+@@ -145,10 +144,10 @@ static void silead_ts_read_data(struct i2c_client *client)
+ 		return;
+ 	}
+ 
+-	if (buf[0] > data->max_fingers) {
++	if (buf[0] > SILEAD_MAX_FINGERS) {
+ 		dev_warn(dev, "More touches reported then supported %d > %d\n",
+-			 buf[0], data->max_fingers);
+-		buf[0] = data->max_fingers;
++			 buf[0], SILEAD_MAX_FINGERS);
++		buf[0] = SILEAD_MAX_FINGERS;
+ 	}
+ 
+ 	touch_nr = 0;
+@@ -200,7 +199,6 @@ static void silead_ts_read_data(struct i2c_client *client)
+ 
+ static int silead_ts_init(struct i2c_client *client)
+ {
+-	struct silead_ts_data *data = i2c_get_clientdata(client);
+ 	int error;
+ 
+ 	error = i2c_smbus_write_byte_data(client, SILEAD_REG_RESET,
+@@ -210,7 +208,7 @@ static int silead_ts_init(struct i2c_client *client)
+ 	usleep_range(SILEAD_CMD_SLEEP_MIN, SILEAD_CMD_SLEEP_MAX);
+ 
+ 	error = i2c_smbus_write_byte_data(client, SILEAD_REG_TOUCH_NR,
+-					data->max_fingers);
++					  SILEAD_MAX_FINGERS);
+ 	if (error)
+ 		goto i2c_write_err;
+ 	usleep_range(SILEAD_CMD_SLEEP_MIN, SILEAD_CMD_SLEEP_MAX);
+@@ -437,13 +435,6 @@ static void silead_ts_read_props(struct i2c_client *client)
+ 	const char *str;
+ 	int error;
+ 
+-	error = device_property_read_u32(dev, "silead,max-fingers",
+-					 &data->max_fingers);
+-	if (error) {
+-		dev_dbg(dev, "Max fingers read error %d\n", error);
+-		data->max_fingers = 5; /* Most devices handle up-to 5 fingers */
+-	}
+-
+ 	error = device_property_read_string(dev, "firmware-name", &str);
+ 	if (!error)
+ 		snprintf(data->fw_name, sizeof(data->fw_name),
 -- 
 2.43.0
 
