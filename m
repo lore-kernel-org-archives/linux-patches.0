@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF6419A29C;
-	Thu, 25 Jul 2024 14:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8332919A29C;
+	Thu, 25 Jul 2024 14:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918366; cv=none; b=pcLGJOjCaBx4d8ED4dDmnHiKIZgQvgRX1ZS7b++molZE/+l/Q84xxa9TbfdZaCfxb/wix7f5k11O95j+WP++KQm4ntyOlyQ+dseOwxIWHV/Zx/Xk3QgGH6qCcNvUrPlBl6j6oc/3t9dSmIHsjEy1MMyHs0n9wp1eA9zqP9F6Ieo=
+	t=1721918369; cv=none; b=Y9bVfosCXu2HYcnIeEa305RbxyKTl31954nrsePSUtw6nBLBAcERnO7G8kj57/ueA21hvY8G4xiueyHuVKJ+rtmbxHOVaMwTSELI+v9GAhBGQUG285OnWwNv0Kbq41BWIDz3f4lyyRA37dP+yyrq56gtqiv1v3QARD1o3alrWlM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918366; c=relaxed/simple;
-	bh=SVB5c5EltdIVhsEg0v7eJ1/D3AhUtnnRcw70cYTvWnc=;
+	s=arc-20240116; t=1721918369; c=relaxed/simple;
+	bh=2dnrj1htSEe0YyV953l2J76yIf0VcovrNhmY+pK8AxM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KOrGbVszyHah5FQ7Og+XEaIb21Lu7fSsG9E/5aMH5EYOw050pOdXjl0RbP3mgwF15s7By2/gCtKBJ4qRxItOvE5S2MQsT7tFi8exKXkGp2Sw8lYvFZif+0f6JpcJNQex6KKpcOewzvUEZ/9oE+kv3eir3lRoszfpRje3Zy4PsRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKum2qo6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1LEn2303jqKin+0N09E1DL7a4NiG9fV0uRzqbfxYBWN8OkXhat00DdWRkYS9eBCyLEtw3MEbYocOWKDWFpAzX8rccBhNmxBCrKkJK6pCI9n3zhTfbl0H6BR7oG0W+uWAAXOVzRJKVnJxl0rnT4SmQzQSh4SEZcUt8QIwAStBoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDHYbavg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKum2qo6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB2EC116B1;
-	Thu, 25 Jul 2024 14:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDHYbavg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01D58C116B1;
+	Thu, 25 Jul 2024 14:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918366;
-	bh=SVB5c5EltdIVhsEg0v7eJ1/D3AhUtnnRcw70cYTvWnc=;
+	s=korg; t=1721918369;
+	bh=2dnrj1htSEe0YyV953l2J76yIf0VcovrNhmY+pK8AxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKum2qo67XsjjdxmowW0dJ72OlQO1UiIm3PfU+L1IoofZ0yGSqAqeLyvE4Z89R0QJ
-	 662rPHbPhbuxFU6w6pSpnv84MWiwxEBeqPVvG8NXd8KgRILlswzNi0n3CeS+9g+AGu
-	 75SpYI41BbmVWxydUXOcNDqrj3eWJDBum0bdRv6M=
+	b=yDHYbavgocRIMJvII2vaFTtIydBnCBZMR8Fqx/NdtkNRVStCDT++9ss45u5yonZWT
+	 esY79m81JaBQY+7Bhd+gi85WU4xwVPeveCRcGPQOjFqpmEfuWqiZhJgegrfc9Lal/k
+	 5ExpijvUWOFvd8JBhavSoynX+5wu9HU+scIBeIGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei lu <llfamsec@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 6.10 06/29] fs/ntfs3: Validate ff offset
-Date: Thu, 25 Jul 2024 16:36:22 +0200
-Message-ID: <20240725142732.058337344@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 07/29] usb: gadget: midi2: Fix incorrect default MIDI2 protocol setup
+Date: Thu, 25 Jul 2024 16:36:23 +0200
+Message-ID: <20240725142732.094747026@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -50,43 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: lei lu <llfamsec@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 50c47879650b4c97836a0086632b3a2e300b0f06 upstream.
+commit 3eb27d3e32c78badbc4db6ae76614b5961e32291 upstream.
 
-This adds sanity checks for ff offset. There is a check
-on rt->first_free at first, but walking through by ff
-without any check. If the second ff is a large offset.
-We may encounter an out-of-bound read.
+The MIDI2 gadget driver handled the default MIDI protocol version
+incorrectly due to the confusion of the protocol version passed via
+configfs (either 1 or 2) and UMP protocol bits (0x100 / 0x200).
+As a consequence, the default protocol always resulted in MIDI1.
 
-Signed-off-by: lei lu <llfamsec@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+This patch addresses the misunderstanding of the protocol handling.
+
+Fixes: 29ee7a4dddd5 ("usb: gadget: midi2: Add configfs support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240708095719.25627-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/fslog.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_midi2.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -724,7 +724,8 @@ static bool check_rstbl(const struct RES
+--- a/drivers/usb/gadget/function/f_midi2.c
++++ b/drivers/usb/gadget/function/f_midi2.c
+@@ -150,6 +150,9 @@ struct f_midi2 {
  
- 	if (!rsize || rsize > bytes ||
- 	    rsize + sizeof(struct RESTART_TABLE) > bytes || bytes < ts ||
--	    le16_to_cpu(rt->total) > ne || ff > ts || lf > ts ||
-+	    le16_to_cpu(rt->total) > ne ||
-+			ff > ts - sizeof(__le32) || lf > ts - sizeof(__le32) ||
- 	    (ff && ff < sizeof(struct RESTART_TABLE)) ||
- 	    (lf && lf < sizeof(struct RESTART_TABLE))) {
- 		return false;
-@@ -754,6 +755,9 @@ static bool check_rstbl(const struct RES
- 			return false;
+ #define func_to_midi2(f)	container_of(f, struct f_midi2, func)
  
- 		off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
++/* convert from MIDI protocol number (1 or 2) to SNDRV_UMP_EP_INFO_PROTO_* */
++#define to_ump_protocol(v)	(((v) & 3) << 8)
 +
-+		if (off > ts - sizeof(__le32))
-+			return false;
- 	}
+ /* get EP name string */
+ static const char *ump_ep_name(const struct f_midi2_ep *ep)
+ {
+@@ -564,8 +567,7 @@ static void reply_ump_stream_ep_config(s
+ 		.status = UMP_STREAM_MSG_STATUS_STREAM_CFG,
+ 	};
  
- 	return true;
+-	if ((ep->info.protocol & SNDRV_UMP_EP_INFO_PROTO_MIDI_MASK) ==
+-	    SNDRV_UMP_EP_INFO_PROTO_MIDI2)
++	if (ep->info.protocol == 2)
+ 		rep.protocol = UMP_STREAM_MSG_EP_INFO_CAP_MIDI2 >> 8;
+ 	else
+ 		rep.protocol = UMP_STREAM_MSG_EP_INFO_CAP_MIDI1 >> 8;
+@@ -627,13 +629,13 @@ static void process_ump_stream_msg(struc
+ 		return;
+ 	case UMP_STREAM_MSG_STATUS_STREAM_CFG_REQUEST:
+ 		if (*data & UMP_STREAM_MSG_EP_INFO_CAP_MIDI2) {
+-			ep->info.protocol = SNDRV_UMP_EP_INFO_PROTO_MIDI2;
++			ep->info.protocol = 2;
+ 			DBG(midi2, "Switching Protocol to MIDI2\n");
+ 		} else {
+-			ep->info.protocol = SNDRV_UMP_EP_INFO_PROTO_MIDI1;
++			ep->info.protocol = 1;
+ 			DBG(midi2, "Switching Protocol to MIDI1\n");
+ 		}
+-		snd_ump_switch_protocol(ep->ump, ep->info.protocol);
++		snd_ump_switch_protocol(ep->ump, to_ump_protocol(ep->info.protocol));
+ 		reply_ump_stream_ep_config(ep);
+ 		return;
+ 	case UMP_STREAM_MSG_STATUS_FB_DISCOVERY:
+@@ -1065,7 +1067,8 @@ static void f_midi2_midi1_ep_out_complet
+ 		group = midi2->out_cable_mapping[cable].group;
+ 		bytes = midi1_packet_bytes[*buf & 0x0f];
+ 		for (c = 0; c < bytes; c++) {
+-			snd_ump_convert_to_ump(cvt, group, ep->info.protocol,
++			snd_ump_convert_to_ump(cvt, group,
++					       to_ump_protocol(ep->info.protocol),
+ 					       buf[c + 1]);
+ 			if (cvt->ump_bytes) {
+ 				snd_ump_receive(ep->ump, cvt->ump,
+@@ -1375,7 +1378,7 @@ static void assign_block_descriptors(str
+ 			desc->nNumGroupTrm = b->num_groups;
+ 			desc->iBlockItem = ep->blks[blk].string_id;
+ 
+-			if (ep->info.protocol & SNDRV_UMP_EP_INFO_PROTO_MIDI2)
++			if (ep->info.protocol == 2)
+ 				desc->bMIDIProtocol = USB_MS_MIDI_PROTO_2_0;
+ 			else
+ 				desc->bMIDIProtocol = USB_MS_MIDI_PROTO_1_0_128;
+@@ -1552,7 +1555,7 @@ static int f_midi2_create_card(struct f_
+ 		if (midi2->info.static_block)
+ 			ump->info.flags |= SNDRV_UMP_EP_INFO_STATIC_BLOCKS;
+ 		ump->info.protocol_caps = (ep->info.protocol_caps & 3) << 8;
+-		ump->info.protocol = (ep->info.protocol & 3) << 8;
++		ump->info.protocol = to_ump_protocol(ep->info.protocol);
+ 		ump->info.version = 0x0101;
+ 		ump->info.family_id = ep->info.family;
+ 		ump->info.model_id = ep->info.model;
 
 
