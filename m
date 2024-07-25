@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC2B13DDB8;
-	Thu, 25 Jul 2024 14:43:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC1D199E9F;
+	Thu, 25 Jul 2024 14:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918615; cv=none; b=fzvtu5iIKPJdWLb+qNKOQKg7lby+LQ2hXY01SgWiYwdXZNAjI/lzXhEYodcgKVNX7KiWKHReJzbKwuFhSjJVfpxgWp9jesmGXYXiiY1BXA4mN+KPqDUeBsQejXPGQ5laMVpbf3SyPegT7X/ometwQbGGlo+EBIQkd11wcrejD+Y=
+	t=1721918618; cv=none; b=kw795uAm7qG3sXwwyLlZcXQuH+wbGg/zWCLd1A7JpYY+a14Huk0O1I5Rs8Ga+4S+970uyhan86tvIG8iMSAqWVR4vJ3wDLOLDdGRa/xi35nSTPswwh7ZawH8MjyoiQTTIFdU/5UHQ2fMjLPqHWdbP47vVC8Ma+bJ4m/LF2xjYxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918615; c=relaxed/simple;
-	bh=m1bXEMbd3iQtQy6kqlpez5HrmJ4xYIrB34VNIay+NuE=;
+	s=arc-20240116; t=1721918618; c=relaxed/simple;
+	bh=m4J2SlaXEMB32o/Z9GA+bzVDcRx261GVdHLYjAOM14k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ot+ldY+KAmMoAaPyFFhHqAazEO4f0tIG9xhNRViCsvToXa5l6/inRiRVqenizVOrgQkS96037fRQMarPi3HbFlzW2rty0VubL+EaZwbRnxjZ/LyLRK1I4x8E1oP2bT/mOQIVquiO1TSB2RQ4aFsRnEEYJwaD0OXyYoAY4XyL2Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=an2FqXZy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oqWDfB3kvlB6CgLp8DrE4rOTItwlxin1uvsj0uvt9AYt4/2gewtDk+zyQZvGXbAQAorldus9OhD8H+6KX0LqvRECZanFVG0D0sCygWvsHpJx1prw8zI4qBrA1SGQKaG3u15tlu1SOW5OnREpBJu6kfk2BJtHYLI+dGf2gLXyI2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OI/9TWuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="an2FqXZy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C40BC116B1;
-	Thu, 25 Jul 2024 14:43:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OI/9TWuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FD9AC116B1;
+	Thu, 25 Jul 2024 14:43:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918614;
-	bh=m1bXEMbd3iQtQy6kqlpez5HrmJ4xYIrB34VNIay+NuE=;
+	s=korg; t=1721918618;
+	bh=m4J2SlaXEMB32o/Z9GA+bzVDcRx261GVdHLYjAOM14k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=an2FqXZy5IW5yrxubcXa7jYJxszi/c9wIlkuBY6hFf9FLIIp4P9/4O8zbFPKUmKps
-	 R18THxltJEFrx2ccfhwxHtLFEMDNfm2+Wwq2JgVrEUYnbObbWK6Vu2f7AhuMIx3ji7
-	 y/nknESOFPMYSNBYigIm+DP02DzXKY8mMuzFPEsY=
+	b=OI/9TWuImT3LVjrSsfwooQ80kBMk4IcM1c1/JOVcQg/t6udbibmuqxAG5d2j3SIRp
+	 13CKxqa61gawV1rZ183n1Vfqi683y5ApmVbWMZBqSR38ymibFV8tdO64g4sNJktv5M
+	 3RuJhQXBp96AkIqqn0CCWaDytWKjWlQuay7MOwvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Zhou <bob.zhou@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Subject: [PATCH 5.4 38/43] drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
-Date: Thu, 25 Jul 2024 16:37:01 +0200
-Message-ID: <20240725142731.911172186@linuxfoundation.org>
+	Yuntao Wang <yuntao.wang@linux.dev>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 12/43] fs/file: fix the check in find_next_fd()
+Date: Thu, 25 Jul 2024 16:36:35 +0200
+Message-ID: <20240725142730.938979986@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -52,32 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Yuntao Wang <yuntao.wang@linux.dev>
 
-commit 6769a23697f17f9bf9365ca8ed62fe37e361a05a upstream.
+[ Upstream commit ed8c7fbdfe117abbef81f65428ba263118ef298a ]
 
-The "instance" variable needs to be signed for the error handling to work.
+The maximum possible return value of find_next_zero_bit(fdt->full_fds_bits,
+maxbit, bitbit) is maxbit. This return value, multiplied by BITS_PER_LONG,
+gives the value of bitbit, which can never be greater than maxfd, it can
+only be equal to maxfd at most, so the following check 'if (bitbit > maxfd)'
+will never be true.
 
-Fixes: 8b2faf1a4f3b ("drm/amdgpu: add error handle to avoid out-of-bounds")
-Reviewed-by: Bob Zhou <bob.zhou@amd.com>
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Siddh Raman Pant <siddh.raman.pant@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Moreover, when bitbit equals maxfd, it indicates that there are no unused
+fds, and the function can directly return.
+
+Fix this check.
+
+Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
+Link: https://lore.kernel.org/r/20240529160656.209352-1-yuntao.wang@linux.dev
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c
-@@ -2003,7 +2003,7 @@ static int sdma_v4_0_process_trap_irq(st
- 				      struct amdgpu_irq_src *source,
- 				      struct amdgpu_iv_entry *entry)
- {
--	uint32_t instance;
-+	int instance;
+diff --git a/fs/file.c b/fs/file.c
+index e56059fa1b309..64892b7444191 100644
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -462,12 +462,12 @@ struct files_struct init_files = {
  
- 	DRM_DEBUG("IH: SDMA trap\n");
- 	instance = sdma_v4_0_irq_id_to_seq(entry->client_id);
+ static unsigned int find_next_fd(struct fdtable *fdt, unsigned int start)
+ {
+-	unsigned int maxfd = fdt->max_fds;
++	unsigned int maxfd = fdt->max_fds; /* always multiple of BITS_PER_LONG */
+ 	unsigned int maxbit = maxfd / BITS_PER_LONG;
+ 	unsigned int bitbit = start / BITS_PER_LONG;
+ 
+ 	bitbit = find_next_zero_bit(fdt->full_fds_bits, maxbit, bitbit) * BITS_PER_LONG;
+-	if (bitbit > maxfd)
++	if (bitbit >= maxfd)
+ 		return maxfd;
+ 	if (bitbit > start)
+ 		start = bitbit;
+-- 
+2.43.0
+
 
 
