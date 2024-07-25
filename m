@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F6A413A409;
-	Thu, 25 Jul 2024 14:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9D9027473;
+	Thu, 25 Jul 2024 14:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918932; cv=none; b=bhL2j992HrSmDjRCxkmW/T/KZuk8SGhhBBhxiud0r8kpKeZXDN5DPWTOdvn7sqet4vsK/VePjfhLVEx0JbhvaoqRGDrnOn2fLdMjn1hKUsrtnLXwZJNg66Nut33+4I/yXh9g5k+OyJykNixG8gAZFN/jv1w3oXfITN2kH6lcXcg=
+	t=1721918935; cv=none; b=ATMK0Lgi6kUj8+ebO4uPmef6vWuwZxfwOihdflYDk/8ufIUBHywufxi6RrxSDsgFyD2rkHzEtUGNxLH+za9X7sqK+qNcUmHBnz9UupXLVJiRYrS2OzPAXhxdct5VnaAr/OSIkKp3tnLziEzvTnAfC5nqXQehFKL0DoRkFIqRd04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918932; c=relaxed/simple;
-	bh=LOfQMc+vSpelZIohb9VXq+gGDw1HbMsMTHjkzEabjNo=;
+	s=arc-20240116; t=1721918935; c=relaxed/simple;
+	bh=eR/HgKutPIGdRwtRPxK9t4VXr8j53kGSinUWb4vHFz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ihG4ZcteVQLOVFjWjQB2WzxB+htoHh3/3HMXhmW1BRxGbSQcVYQYTt/YJZvbhiq6chV2C9/XyQhq5770NYcxb+IGkXxQKmnBTCBblV2sGCLBBr0elzSc019rUn0rpYnSAyN1oOYGfJfBV+yG4S36irDjs65sfLLg4zE8kNytWGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iv0SUQim; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V3ZEpHDGLgh2R8nGFxsXZ+9Ul9Lg7JUqnU3PfXefIo98TUJ4UNkXcf+hJoX6SMbGVacW6bgrmxqU4SGN+qf7HuewYh15XDm6UC9QXl9vFwUlqNdBQDDtaEnfTV+evVDB+G3omV8iJQGmg6TTLGsqb+HoODA4AGeg6dco6a5EsQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wt5YmRwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iv0SUQim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E34BCC116B1;
-	Thu, 25 Jul 2024 14:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wt5YmRwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B0EC116B1;
+	Thu, 25 Jul 2024 14:48:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918932;
-	bh=LOfQMc+vSpelZIohb9VXq+gGDw1HbMsMTHjkzEabjNo=;
+	s=korg; t=1721918935;
+	bh=eR/HgKutPIGdRwtRPxK9t4VXr8j53kGSinUWb4vHFz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Iv0SUQimI46mHvRyaMUf6mOOViaDT1ZxIIAMmubV73c9VPiUp88ePdpuBW7R2cnSo
-	 tPagKGbpxjVzikaW1mD2t+7JpKifqs5Wt0XtaCHvcImADs8KF2Efv7jxD/UdCsW55F
-	 IYo1jXnvwF3QZA6+4PwK6Wf85RfeY6IqFk1jLmww=
+	b=wt5YmRwgjJF6xYTnduiW+q8WtwIQDmTIMdjNZkuNRJTYkEgYLsqFvqBrI9LKEWZxb
+	 uEOA5FMaKKrdoJaCrKY9m1pwJDephDrRdiItTOOVgHOyA4pyYLkHnisqhm/zZdLPtV
+	 iLLs6CNDuk3oybHI5kYv2xLCfPxH2NlhK+HTKSAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yunshui Jiang <jiangyunshui@kylinos.cn>,
+	Stefan Schmidt <stefan@datenfreihafen.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/59] net: usb: qmi_wwan: add Telit FN912 compositions
-Date: Thu, 25 Jul 2024 16:37:23 +0200
-Message-ID: <20240725142734.516763620@linuxfoundation.org>
+Subject: [PATCH 5.10 34/59] net: mac802154: Fix racy device stats updates by DEV_STATS_INC() and DEV_STATS_ADD()
+Date: Thu, 25 Jul 2024 16:37:24 +0200
+Message-ID: <20240725142734.554136887@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -46,90 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Yunshui Jiang <jiangyunshui@kylinos.cn>
 
-[ Upstream commit 77453e2b015b5ced5b3f45364dd5a72dfc3bdecb ]
+[ Upstream commit b8ec0dc3845f6c9089573cb5c2c4b05f7fc10728 ]
 
-Add the following Telit FN912 compositions:
+mac802154 devices update their dev->stats fields locklessly. Therefore
+these counters should be updated atomically. Adopt SMP safe DEV_STATS_INC()
+and DEV_STATS_ADD() to achieve this.
 
-0x3000: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
-T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=3000 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN912
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-0x3001: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
-T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
-D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1bc7 ProdID=3001 Rev=05.15
-S:  Manufacturer=Telit Cinterion
-S:  Product=FN912
-S:  SerialNumber=92c4c4d8
-C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Link: https://patch.msgid.link/20240625102236.69539-1-dnlplm@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Yunshui Jiang <jiangyunshui@kylinos.cn>
+Message-ID: <20240531080739.2608969-1-jiangyunshui@kylinos.cn>
+Signed-off-by: Stefan Schmidt <stefan@datenfreihafen.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac802154/tx.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index 4dd1a9fb4c8a0..d2a8238e144a6 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -1312,6 +1312,8 @@ static const struct usb_device_id products[] = {
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1260, 2)},	/* Telit LE910Cx */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1261, 2)},	/* Telit LE910Cx */
- 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1900, 1)},	/* Telit LN940 series */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x3000, 0)},	/* Telit FN912 series */
-+	{QMI_QUIRK_SET_DTR(0x1bc7, 0x3001, 0)},	/* Telit FN912 series */
- 	{QMI_FIXED_INTF(0x1c9e, 0x9801, 3)},	/* Telewell TW-3G HSPA+ */
- 	{QMI_FIXED_INTF(0x1c9e, 0x9803, 4)},	/* Telewell TW-3G HSPA+ */
- 	{QMI_FIXED_INTF(0x1c9e, 0x9b01, 3)},	/* XS Stick W100-2 from 4G Systems */
+diff --git a/net/mac802154/tx.c b/net/mac802154/tx.c
+index c829e4a753256..7cea95d0b78f9 100644
+--- a/net/mac802154/tx.c
++++ b/net/mac802154/tx.c
+@@ -34,8 +34,8 @@ void ieee802154_xmit_worker(struct work_struct *work)
+ 	if (res)
+ 		goto err_tx;
+ 
+-	dev->stats.tx_packets++;
+-	dev->stats.tx_bytes += skb->len;
++	DEV_STATS_INC(dev, tx_packets);
++	DEV_STATS_ADD(dev, tx_bytes, skb->len);
+ 
+ 	ieee802154_xmit_complete(&local->hw, skb, false);
+ 
+@@ -86,8 +86,8 @@ ieee802154_tx(struct ieee802154_local *local, struct sk_buff *skb)
+ 			goto err_tx;
+ 		}
+ 
+-		dev->stats.tx_packets++;
+-		dev->stats.tx_bytes += len;
++		DEV_STATS_INC(dev, tx_packets);
++		DEV_STATS_ADD(dev, tx_bytes, len);
+ 	} else {
+ 		local->tx_skb = skb;
+ 		queue_work(local->workqueue, &local->tx_work);
 -- 
 2.43.0
 
