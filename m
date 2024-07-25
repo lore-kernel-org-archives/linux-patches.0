@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDA519D06D;
-	Thu, 25 Jul 2024 14:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84C619A29C;
+	Thu, 25 Jul 2024 14:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918386; cv=none; b=EqbgyhVKy1EPsdXjYiPpGxx+I4He2vfN7n5KLGf+zWwt58w7tSMesGWzi0PppSXVsyRiEbxlyo7VW9Ng3peIBmpB/xjn9gp1mTmguqhpYhrE8WBwUhUFT45H6naChveepxAKD1FDvUq8ZPEfOvfPsRHAL3PqWT/AbGmHyFDtSyc=
+	t=1721918389; cv=none; b=GDRFP/yFsxXLVibpBGt/+EJEzgiTf7gpNCjyH62ue+OuqiYcGdWHVAbvhV7ipoTdg+kQ+W9WpLD0Nzlgbt9tBOTboxUvePWAvXsUbroVqta34yu0I7DPr+Yx2MxOLJu5U8YVTum+oui1+TsEcndRj2h/uQi0LBVv4Od8jk9+pGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918386; c=relaxed/simple;
-	bh=MEA4/yeKHW+6wmwKisn51uofiORZGpN5e66y0I0O4Yo=;
+	s=arc-20240116; t=1721918389; c=relaxed/simple;
+	bh=QsG3dx0mBl8GtHmVd18FQH4nn5+oU887JRhCdFH/TPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eMwvGKWc0Sdb1rWfMV58eu7E1qWEh5TIaUhiDneROCTzDQzjqgex+XOSQKBraXrp/tsePNDP/4iNzQemnLxR+kCzmswZe+U/sw3GQImhZ04fk15ewOXzFc6fOdaP+BsLyQFLzZDJVpCMcfD2WZ7dDq6dbkhkec/UYJtlsvQUV9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUB8pluf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HQw+kLC0tJczUR2OVkWd9Ozt6psVdQ3hf4cm3lHPeCZIPvNPzpUx+1aTizUw/hbrwU6xE2If64zyHxyOXyjUR6FiMQ6EpkpX/6xbPoRB9zMqThwkrRW3AXHCFc9MHZZRkjEOKaOXhEi+HEO+rzZFP5utLRU+GzxA9nUNaVyIJgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAey/UxE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUB8pluf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E9C4AF07;
-	Thu, 25 Jul 2024 14:39:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAey/UxE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357D1C32782;
+	Thu, 25 Jul 2024 14:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918386;
-	bh=MEA4/yeKHW+6wmwKisn51uofiORZGpN5e66y0I0O4Yo=;
+	s=korg; t=1721918389;
+	bh=QsG3dx0mBl8GtHmVd18FQH4nn5+oU887JRhCdFH/TPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qUB8pluf7l+KZIzs4dAj1s1mqsDjbsM0zk5KXSc7wjyCMH/w5l/zeBVk2cTzz5//R
-	 GXycSX/uhmcnMJWTXCakhgY+2igvKvBSCayL5RREi5wjeKNtCkoiOOHJlaXsD9hgqi
-	 FUF4S87SzLIUmFy6M5gMwCYH4Hhm0wi+HjMmmXnc=
+	b=UAey/UxEKDsSMk2S9W1BirqXZDR1PfKVZD761npLRvDzf98yerUQdLwGlUl/92e1d
+	 OnQ/b3sCnckRsrWFCHwIFGjPEEa1FX2QLcbNFa8zBQ4EcfXMt5g+MuqRXpwVmD/Wv0
+	 +f6yc+ku0rBes20HOJX2cbwstAOq2C8cUBUk93G4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 26/29] arm64: dts: qcom: sm6115: Disable SS instance in Parkmode for USB
-Date: Thu, 25 Jul 2024 16:36:42 +0200
-Message-ID: <20240725142732.798921569@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 27/29] ALSA: pcm_dmaengine: Dont synchronize DMA channel when DMA is paused
+Date: Thu, 25 Jul 2024 16:36:43 +0200
+Message-ID: <20240725142732.835497220@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -51,40 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 074992a1163295d717faa21d1818c4c19ef6e676 upstream.
+commit 88e98af9f4b5b0d60c1fe7f7f2701b5467691e75 upstream.
 
-For Gen-1 targets like SM6115, it is seen that stressing out the
-controller in host mode results in HC died error:
+When suspended, the DMA channel may enter PAUSE state if dmaengine_pause()
+is supported by DMA.
+At this state, dmaengine_synchronize() should not be called, otherwise
+the DMA channel can't be resumed successfully.
 
- xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
- xhci-hcd.12.auto: xHCI host controller not responding, assume dead
- xhci-hcd.12.auto: HC died; cleaning up
-
-And at this instant only restarting the host mode fixes it. Disable
-SuperSpeed instance in park mode for SM6115 to mitigate this issue.
-
-Cc: stable@vger.kernel.org
-Fixes: 97e563bf5ba1 ("arm64: dts: qcom: sm6115: Add basic soc dtsi")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240704152848.3380602-6-quic_kriskura@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e8343410ddf0 ("ALSA: dmaengine: Synchronize dma channel after drop()")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/1721198693-27636-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm6115.dtsi |    1 +
- 1 file changed, 1 insertion(+)
+ sound/core/pcm_dmaengine.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
-@@ -1656,6 +1656,7 @@
- 				snps,has-lpm-erratum;
- 				snps,hird-threshold = /bits/ 8 <0x10>;
- 				snps,usb3_lpm_capable;
-+				snps,parkmode-disable-ss-quirk;
+--- a/sound/core/pcm_dmaengine.c
++++ b/sound/core/pcm_dmaengine.c
+@@ -352,8 +352,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_open
+ int snd_dmaengine_pcm_sync_stop(struct snd_pcm_substream *substream)
+ {
+ 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
++	struct dma_tx_state state;
++	enum dma_status status;
  
- 				usb-role-switch;
+-	dmaengine_synchronize(prtd->dma_chan);
++	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
++	if (status != DMA_PAUSED)
++		dmaengine_synchronize(prtd->dma_chan);
  
+ 	return 0;
+ }
 
 
