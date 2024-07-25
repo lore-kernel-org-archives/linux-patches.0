@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 758A0FC19;
-	Thu, 25 Jul 2024 14:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAA81E89C;
+	Thu, 25 Jul 2024 14:50:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919026; cv=none; b=So22oYXXjWYrHZfNb/e2e5Kysy27oEzdtqXJCAu1/8Sd8sxHWOV/z/1zLYAu/PLfeIsWqjZkw663/ZaoUeP3svia3JiXRji49VBVfZt7LG+82mhlRC+xpBs6RufYN74TkKPtD5ABWM8vafvo3CYl48gwYDnwNHL0J6oUpKBeLd8=
+	t=1721919029; cv=none; b=Cs/D6A3PXqkWNibVaJYzNX09nm35Z4zzWj/65palAQYutzUVKjcrbYzeD6y2HxorFp6nEplki+Zyc+Jx1O9zpblKnHU3ikCgN3E5fJlhlJUev75mxHJS/i9cB1a/sI1wF4V5A7r30jIGkyLcN50dMfi8pbAtY8I8LlwEFVS+9lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919026; c=relaxed/simple;
-	bh=eIGrVGYKA4gweZFa/qIS3Fae85l5lfYjdcmmOq2RTiU=;
+	s=arc-20240116; t=1721919029; c=relaxed/simple;
+	bh=TVBjDDN5cFTXP/EK0Vr7oertmgNnPwu1IyEybtgECK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TQ1TQ5TDKFlSuKPOXTQSKfHamQqVXinTiJgGP+U3cBZhpjDOOacFNrYYyrb0N16/8h+j2p6Dy/rYOqdb0INqjSreYtYmUCbsvlvMMUbGBRG30O1AOZU0vHaICe0AHliT0gYGhd0UCXxGvEM9fv2QyARNd9xKFn1vpgCO2ya1kds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFM5feee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XORWEGxCnQ+fCNMGsjJqKBCrcWtEHdoBDw1L5GUaNhTL59QEBB/cn5bs7lWvA9wNnoOpoGq5th2ap0cxUQbKq4kqA7aXA5x4625eAxL8BSHnHqZPeSayFW3nDcZJrNzveuyCHkm13F7nWMsEoTjtdETOHiPuYQdv/wfAUHRNbCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDrYjCf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFM5feee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB206C116B1;
-	Thu, 25 Jul 2024 14:50:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDrYjCf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23681C116B1;
+	Thu, 25 Jul 2024 14:50:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919026;
-	bh=eIGrVGYKA4gweZFa/qIS3Fae85l5lfYjdcmmOq2RTiU=;
+	s=korg; t=1721919029;
+	bh=TVBjDDN5cFTXP/EK0Vr7oertmgNnPwu1IyEybtgECK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFM5feeeMe5b2XD4B1BB7I+8DycCjKxnRDyQ/YLOPnKqqtbHC1X55wPH/0TKLqqqD
-	 6RCKS7eU81W1xNmKtQmGPcrlHkB+JS/mc3qnmGUB0rI2pXLZG1r4S3ZEbXnSO8dY3W
-	 MmJUlHsmGk+RWoCZouSnmdCBiLtFFWruTHAVdSiA=
+	b=yDrYjCf+7oQbmHVA+0e4JHQhf557GK9TojFxuAIcQwTy5+F9zm+p6cAh3OTo6QJx9
+	 0B5dgvsSGFRK8Ta+/zObt8nGdFzuO0lRncgVpEujB2fNhBzWN6YyShn0j40ssdiPnT
+	 42/qc5zCfOJz6M9uPwJ9P3KleNds80aCA1Nsifno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 29/59] s390/sclp: Fix sclp_init() cleanup on failure
-Date: Thu, 25 Jul 2024 16:37:19 +0200
-Message-ID: <20240725142734.361493340@linuxfoundation.org>
+Subject: [PATCH 5.10 30/59] btrfs: qgroup: fix quota root leak after quota disable failure
+Date: Thu, 25 Jul 2024 16:37:20 +0200
+Message-ID: <20240725142734.399466812@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -52,55 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 6434b33faaa063df500af355ee6c3942e0f8d982 ]
+[ Upstream commit a7e4c6a3031c74078dba7fa36239d0f4fe476c53 ]
 
-If sclp_init() fails it only partially cleans up: if there are multiple
-failing calls to sclp_init() sclp_state_change_event will be added several
-times to sclp_reg_list, which results in the following warning:
+If during the quota disable we fail when cleaning the quota tree or when
+deleting the root from the root tree, we jump to the 'out' label without
+ever dropping the reference on the quota root, resulting in a leak of the
+root since fs_info->quota_root is no longer pointing to the root (we have
+set it to NULL just before those steps).
 
-------------[ cut here ]------------
-list_add double add: new=000003ffe1598c10, prev=000003ffe1598bf0, next=000003ffe1598c10.
-WARNING: CPU: 0 PID: 1 at lib/list_debug.c:35 __list_add_valid_or_report+0xde/0xf8
-CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.10.0-rc3
-Krnl PSW : 0404c00180000000 000003ffe0d6076a (__list_add_valid_or_report+0xe2/0xf8)
-           R:0 T:1 IO:0 EX:0 Key:0 M:1 W:0 P:0 AS:3 CC:0 PM:0 RI:0 EA:3
-...
-Call Trace:
- [<000003ffe0d6076a>] __list_add_valid_or_report+0xe2/0xf8
-([<000003ffe0d60766>] __list_add_valid_or_report+0xde/0xf8)
- [<000003ffe0a8d37e>] sclp_init+0x40e/0x450
- [<000003ffe00009f2>] do_one_initcall+0x42/0x1e0
- [<000003ffe15b77a6>] do_initcalls+0x126/0x150
- [<000003ffe15b7a0a>] kernel_init_freeable+0x1ba/0x1f8
- [<000003ffe0d6650e>] kernel_init+0x2e/0x180
- [<000003ffe000301c>] __ret_from_fork+0x3c/0x60
- [<000003ffe0d759ca>] ret_from_fork+0xa/0x30
+Fix this by always doing a btrfs_put_root() call under the 'out' label.
+This is a problem that exists since qgroups were first added in 2012 by
+commit bed92eae26cc ("Btrfs: qgroup implementation and prototypes"), but
+back then we missed a kfree on the quota root and free_extent_buffer()
+calls on its root and commit root nodes, since back then roots were not
+yet reference counted.
 
-Fix this by removing sclp_state_change_event from sclp_reg_list when
-sclp_init() fails.
-
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/sclp.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/qgroup.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/s390/char/sclp.c b/drivers/s390/char/sclp.c
-index d2ab3f07c008c..8296e6bc229ee 100644
---- a/drivers/s390/char/sclp.c
-+++ b/drivers/s390/char/sclp.c
-@@ -1208,6 +1208,7 @@ sclp_init(void)
- fail_unregister_reboot_notifier:
- 	unregister_reboot_notifier(&sclp_reboot_notifier);
- fail_init_state_uninitialized:
-+	list_del(&sclp_state_change_event.list);
- 	sclp_init_state = sclp_init_state_uninitialized;
- 	free_page((unsigned long) sclp_read_sccb);
- 	free_page((unsigned long) sclp_init_sccb);
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 50669ff9346c6..83d17f22335b1 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1197,7 +1197,7 @@ int btrfs_quota_enable(struct btrfs_fs_info *fs_info)
+ 
+ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ {
+-	struct btrfs_root *quota_root;
++	struct btrfs_root *quota_root = NULL;
+ 	struct btrfs_trans_handle *trans = NULL;
+ 	int ret = 0;
+ 
+@@ -1290,9 +1290,9 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 	btrfs_tree_unlock(quota_root->node);
+ 	btrfs_free_tree_block(trans, quota_root, quota_root->node, 0, 1);
+ 
+-	btrfs_put_root(quota_root);
+ 
+ out:
++	btrfs_put_root(quota_root);
+ 	mutex_unlock(&fs_info->qgroup_ioctl_lock);
+ 	if (ret && trans)
+ 		btrfs_end_transaction(trans);
 -- 
 2.43.0
 
