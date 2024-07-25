@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4CE0F519;
-	Thu, 25 Jul 2024 14:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4CA18468;
+	Thu, 25 Jul 2024 14:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918787; cv=none; b=ce9PBch2etykUnmbVdZ58AOstnFkhzEnspD0JqnRzD0n2Ul90TWzmAyX4RaJuOT8Mbpy/6KXW1AhkMUtdC1o1mbuCG1bxA8+ZbzEbKKc4p9txrLLrli0C/fDqF0Kkw11X7B4sp6jMres7Yr20vKDeH/+Qd4doozhXD/RchZlcfA=
+	t=1721918791; cv=none; b=LxGGD3YZtzYtGWruANKyzv1iQNm1rFg7DH4W2sqsQA1lc/olKQU3r1z+AvrbM8/qYwU26mzRGUfpTcDuTPSNt547IIUYAM0Bw2FhiNTrwuayeZ1jqz7M4I6aKtG5Qx0StOq9ItBx76aai5d6kZuvi/5tJSwhlleDkxV2vJOOKQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918787; c=relaxed/simple;
-	bh=BLlxdd9+AUhmvO6pinhnzJRGrIe6EBW7NxLPdANK8TI=;
+	s=arc-20240116; t=1721918791; c=relaxed/simple;
+	bh=CQTQhZPfbdNMZmFi3hS2SbZbun8U02axy2YPyHOOnLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IHAyr7yKypnYEWJwv1uJ4d7JQQposz/8h2WRy45/ICF41jdWyQSqhDAYrTkbUNQ0YKwk0QISDx/RBa4lMGRuMJOyzv1QawFkYs20lZQZgyU0AIOqh4i6h3X908G9r/iJTeuD3LRkNL+IydGumg6Yc1GpbzWDoXyjRu0TZABSDyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s5omDbzu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JDuYRpAcWAiYBalmJyDdamAkRQ9Z07YfsYZB7DMx4BplOm8twSj4yY7oTIC6/LzeeMTin+eImhFzgjhZnSgqjUPE3bkV1h/vOjm+7Z580Xjr58pMLxaKSnkbEtjfzKgNEYW7eN65CrWMT+Prp7UrSoxXACsqE8EdXskBR4Y/eVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pk/HjXt9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s5omDbzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D269C116B1;
-	Thu, 25 Jul 2024 14:46:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pk/HjXt9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC58C116B1;
+	Thu, 25 Jul 2024 14:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918787;
-	bh=BLlxdd9+AUhmvO6pinhnzJRGrIe6EBW7NxLPdANK8TI=;
+	s=korg; t=1721918790;
+	bh=CQTQhZPfbdNMZmFi3hS2SbZbun8U02axy2YPyHOOnLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5omDbzu0qeQZAbozRXWIP/FG9M5gGfFRIB3W4OcKf8DAais59mpq8GH5LV5NQw2k
-	 OuQ1fZkEmvLqEm5NnHFCCxono6hGGkz1iW3yvehM1mtKJbo4UrEG7J/ijRMjABJPz2
-	 ZFJiFFQDtdGEa2nQR3+5q5wEuUPayj93K/RE53H8=
+	b=Pk/HjXt9BM6n4Ywm82IHpvjp1iw63LUvUB+5AKFo+7pos+m1OmP78x/ytSqe8DgGr
+	 CdxTRZTPVsWqw3WtS13uZvnFznD0s3fTlnvu8UgGF4sKC7KSVD499i/P6dkyywHGvt
+	 WYjxrrRJl95fZb94jsh+eHKo7WeJq70siNc+Jwy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.9 18/29] arm64: dts: qcom: x1e80100-crd: Fix USB PHYs regulators
-Date: Thu, 25 Jul 2024 16:37:28 +0200
-Message-ID: <20240725142732.364238662@linuxfoundation.org>
+	Yunseong Kim <yskelg@gmail.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Gerald Schaefer <gerald.schaefer@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.9 02/29] s390/mm: Fix VM_FAULT_HWPOISON handling in do_exception()
+Date: Thu, 25 Jul 2024 16:37:12 +0200
+Message-ID: <20240725142731.773049432@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.678993846@linuxfoundation.org>
 References: <20240725142731.678993846@linuxfoundation.org>
@@ -51,76 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
 
-commit ae5cee8e7349d7e5deff4cf90a08cbd738287155 upstream.
+commit df39038cd89525d465c2c8827eb64116873f141a upstream.
 
-The 1.2v HS PHY shared regulator is actually LDO2 from PM8550ve id J.
-Also add the missing supplies to QMP PHYs.
+There is no support for HWPOISON, MEMORY_FAILURE, or ARCH_HAS_COPY_MC on
+s390. Therefore we do not expect to see VM_FAULT_HWPOISON in
+do_exception().
 
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: stable@vger.kernel.org      # 6.9
-Link: https://lore.kernel.org/r/20240530-x1e80100-dts-fix-usb-phy-supplies-v1-1-6eb72a546227@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+However, since commit af19487f00f3 ("mm: make PTE_MARKER_SWAPIN_ERROR more
+general"), it is possible to see VM_FAULT_HWPOISON in combination with
+PTE_MARKER_POISONED, even on architectures that do not support HWPOISON
+otherwise. In this case, we will end up on the BUG() in do_exception().
+
+Fix this by treating VM_FAULT_HWPOISON the same as VM_FAULT_SIGBUS, similar
+to x86 when MEMORY_FAILURE is not configured. Also print unexpected fault
+flags, for easier debugging.
+
+Note that VM_FAULT_HWPOISON_LARGE is not expected, because s390 cannot
+support swap entries on other levels than PTE level.
+
+Cc: stable@vger.kernel.org # 6.6+
+Fixes: af19487f00f3 ("mm: make PTE_MARKER_SWAPIN_ERROR more general")
+Reported-by: Yunseong Kim <yskelg@gmail.com>
+Tested-by: Yunseong Kim <yskelg@gmail.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Gerald Schaefer <gerald.schaefer@linux.ibm.com>
+Message-ID: <20240715180416.3632453-1-gerald.schaefer@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/s390/mm/fault.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -824,12 +824,15 @@
- 
- &usb_1_ss0_hsphy {
- 	vdd-supply = <&vreg_l2e_0p8>;
--	vdda12-supply = <&vreg_l3e_1p2>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	status = "okay";
- };
- 
- &usb_1_ss0_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l1j_0p8>;
-+
- 	status = "okay";
- };
- 
-@@ -844,12 +847,15 @@
- 
- &usb_1_ss1_hsphy {
- 	vdd-supply = <&vreg_l2e_0p8>;
--	vdda12-supply = <&vreg_l3e_1p2>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	status = "okay";
- };
- 
- &usb_1_ss1_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
- 	status = "okay";
- };
- 
-@@ -864,12 +870,15 @@
- 
- &usb_1_ss2_hsphy {
- 	vdd-supply = <&vreg_l2e_0p8>;
--	vdda12-supply = <&vreg_l3e_1p2>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	status = "okay";
- };
- 
- &usb_1_ss2_qmpphy {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
- 	status = "okay";
- };
- 
+--- a/arch/s390/mm/fault.c
++++ b/arch/s390/mm/fault.c
+@@ -432,12 +432,13 @@ error:
+ 			handle_fault_error_nolock(regs, 0);
+ 		else
+ 			do_sigsegv(regs, SEGV_MAPERR);
+-	} else if (fault & VM_FAULT_SIGBUS) {
++	} else if (fault & (VM_FAULT_SIGBUS | VM_FAULT_HWPOISON)) {
+ 		if (!user_mode(regs))
+ 			handle_fault_error_nolock(regs, 0);
+ 		else
+ 			do_sigbus(regs);
+ 	} else {
++		pr_emerg("Unexpected fault flags: %08x\n", fault);
+ 		BUG();
+ 	}
+ }
 
 
