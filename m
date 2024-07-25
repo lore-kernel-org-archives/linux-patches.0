@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4FD19D06D;
-	Thu, 25 Jul 2024 14:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1331319D06D;
+	Thu, 25 Jul 2024 14:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918464; cv=none; b=FqrBi2AAfPB2Q7QaR1FdtiIoNF3vC9dlxBqRWQFWYni2A1ZAgRdidjQ1PCc2ho1G+idY8ijqwSz1U4zNNY4nZ/Y4RuHBInnANSps4kNQY3GJkYILzbX28lK4/FoxbXd/+9I8hrUz2pwVDjPtqnDYaExLjr4/jpmMSKiXSnaZca0=
+	t=1721918467; cv=none; b=T7gdGBQE3C5nknHD40c/jTPUJ326MIhWgvu9+zEs/cjNcXh7chZD3aM6mRMydsStOPiPCft5OprPvaaNdQUXI+PynoNk/mE3jkEYQiXpYeKnwI0waHOc7YIftzsfk37rliee8gqbJ2nWTf7bMM7uMGtcBajCVH8UUh1cfexehjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918464; c=relaxed/simple;
-	bh=SUyyXiUq/pAc17sOmRuSBYOfrAsHvdInMkQFr2K2ZMc=;
+	s=arc-20240116; t=1721918467; c=relaxed/simple;
+	bh=eWW3Qq77Xz1JDT5u+4QLE18B/Z/+J/rGCcshiQTPOHU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IbRnUGRiWgSOQiuus+cipBa7qrVPlLpJrPc1RZNnsHjqA7rohqQh9w5EML/kU/B0EH8FBBdETJNwp14bo4jVlUxiCJWytRlYAYcF8v0n29q14h6PEU5fc2uNjWg7i1bnFlW9Tc6vKjseB9tY4wevMar5Vgq+XbAhqiquv4qQL9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyWkNhL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pUvLvm2OmMCyynlk0GFPQVWuOg0p5d0RfJAsQYEDcg3hl8d+DTt2+jUBdQMmzaQj4xU6Kn6Cp6yIEbabIDQnmyfeQK/JPUfp9V1Gxp5/SQfIu3AZ8IBMBP9Fn26Lf6KvuC3eGkGsVfC9GCPMLVSj+ZOBWfyyW8vPRx/5ZpTokbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jvws5Mn0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyWkNhL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC5BC4AF0F;
-	Thu, 25 Jul 2024 14:41:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jvws5Mn0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDA2C116B1;
+	Thu, 25 Jul 2024 14:41:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918463;
-	bh=SUyyXiUq/pAc17sOmRuSBYOfrAsHvdInMkQFr2K2ZMc=;
+	s=korg; t=1721918467;
+	bh=eWW3Qq77Xz1JDT5u+4QLE18B/Z/+J/rGCcshiQTPOHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyWkNhL1iUrkgf/0hxnSDDv83YakMQVyQ6pd3vKQoViduWkM+FidEkEDO8QX6wd29
-	 B0wHNWTUmXw8IaKRChO4u91/9pXN2AlTNqUbFLet69cb7vpH1KmIEdXXsi4s0ErCXQ
-	 KxzhCvovUbZyArivXxa2Q0c8zPJNgVdeLKMSWnPQ=
+	b=jvws5Mn0p7VacfVtb9JVCb0SeDedlBrRcvviKXt86DrTdgxjsJFaIex4J3E0KWOhq
+	 0yewxG+YX8gwCtwHmTlbBYEzEr2nreg6/3h7r6uXQWlRXmHywHfm6iEiURUTN0MEZW
+	 piATlO8MvMHPST+noLCP6XMWgoKPFaFP3iQUdJ/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 4.19 27/33] filelock: Remove locks reliably when fcntl/close race is detected
-Date: Thu, 25 Jul 2024 16:36:50 +0200
-Message-ID: <20240725142729.535353711@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH 4.19 28/33] ARM: 9324/1: fix get_user() broken with veneer
+Date: Thu, 25 Jul 2024 16:36:51 +0200
+Message-ID: <20240725142729.571727472@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -52,66 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 3cad1bc010416c6dd780643476bc59ed742436b9 upstream.
+commit 24d3ba0a7b44c1617c27f5045eecc4f34752ab03 upstream.
 
-When fcntl_setlk() races with close(), it removes the created lock with
-do_lock_file_wait().
-However, LSMs can allow the first do_lock_file_wait() that created the lock
-while denying the second do_lock_file_wait() that tries to remove the lock.
-In theory (but AFAIK not in practice), posix_lock_file() could also fail to
-remove a lock due to GFP_KERNEL allocation failure (when splitting a range
-in the middle).
+The 32-bit ARM kernel stops working if the kernel grows to the point
+where veneers for __get_user_* are created.
 
-After the bug has been triggered, use-after-free reads will occur in
-lock_get_status() when userspace reads /proc/locks. This can likely be used
-to read arbitrary kernel memory, but can't corrupt kernel memory.
-This only affects systems with SELinux / Smack / AppArmor / BPF-LSM in
-enforcing mode and only works from some security contexts.
+AAPCS32 [1] states, "Register r12 (IP) may be used by a linker as a
+scratch register between a routine and any subroutine it calls. It
+can also be used within a routine to hold intermediate values between
+subroutine calls."
 
-Fix it by calling locks_remove_posix() instead, which is designed to
-reliably get rid of POSIX locks associated with the given file and
-files_struct and is also used by filp_flush().
+However, bl instructions buried within the inline asm are unpredictable
+for compilers; hence, "ip" must be added to the clobber list.
 
-Fixes: c293621bbf67 ("[PATCH] stale POSIX lock handling")
-Cc: stable@kernel.org
-Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2563
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20240702-fs-lock-recover-2-v1-1-edd456f63789@google.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-[stable fixup: ->c.flc_type was ->fl_type in older kernels]
-Signed-off-by: Jann Horn <jannh@google.com>
+This becomes critical when veneers for __get_user_* are created because
+veneers use the ip register since commit 02e541db0540 ("ARM: 8323/1:
+force linker to use PIC veneers").
+
+[1]: https://github.com/ARM-software/abi-aa/blob/2023Q1/aapcs32/aapcs32.rst
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: John Stultz <jstultz@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/locks.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ arch/arm/include/asm/uaccess.h |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -2297,8 +2297,9 @@ int fcntl_setlk(unsigned int fd, struct
- 	error = do_lock_file_wait(filp, cmd, file_lock);
+--- a/arch/arm/include/asm/uaccess.h
++++ b/arch/arm/include/asm/uaccess.h
+@@ -145,16 +145,6 @@ extern int __get_user_64t_1(void *);
+ extern int __get_user_64t_2(void *);
+ extern int __get_user_64t_4(void *);
  
- 	/*
--	 * Attempt to detect a close/fcntl race and recover by releasing the
--	 * lock that was just acquired. There is no need to do that when we're
-+	 * Detect close/fcntl races and recover by zapping all POSIX locks
-+	 * associated with this file and our files_struct, just like on
-+	 * filp_flush(). There is no need to do that when we're
- 	 * unlocking though, or for OFD locks.
- 	 */
- 	if (!error && file_lock->fl_type != F_UNLCK &&
-@@ -2312,9 +2313,7 @@ int fcntl_setlk(unsigned int fd, struct
- 		f = fcheck(fd);
- 		spin_unlock(&current->files->file_lock);
- 		if (f != filp) {
--			file_lock->fl_type = F_UNLCK;
--			error = do_lock_file_wait(filp, cmd, file_lock);
--			WARN_ON_ONCE(error);
-+			locks_remove_posix(filp, &current->files);
- 			error = -EBADF;
- 		}
- 	}
+-#define __GUP_CLOBBER_1	"lr", "cc"
+-#ifdef CONFIG_CPU_USE_DOMAINS
+-#define __GUP_CLOBBER_2	"ip", "lr", "cc"
+-#else
+-#define __GUP_CLOBBER_2 "lr", "cc"
+-#endif
+-#define __GUP_CLOBBER_4	"lr", "cc"
+-#define __GUP_CLOBBER_32t_8 "lr", "cc"
+-#define __GUP_CLOBBER_8	"lr", "cc"
+-
+ #define __get_user_x(__r2, __p, __e, __l, __s)				\
+ 	   __asm__ __volatile__ (					\
+ 		__asmeq("%0", "r0") __asmeq("%1", "r2")			\
+@@ -162,7 +152,7 @@ extern int __get_user_64t_4(void *);
+ 		"bl	__get_user_" #__s				\
+ 		: "=&r" (__e), "=r" (__r2)				\
+ 		: "0" (__p), "r" (__l)					\
+-		: __GUP_CLOBBER_##__s)
++		: "ip", "lr", "cc")
+ 
+ /* narrowing a double-word get into a single 32bit word register: */
+ #ifdef __ARMEB__
+@@ -184,7 +174,7 @@ extern int __get_user_64t_4(void *);
+ 		"bl	__get_user_64t_" #__s				\
+ 		: "=&r" (__e), "=r" (__r2)				\
+ 		: "0" (__p), "r" (__l)					\
+-		: __GUP_CLOBBER_##__s)
++		: "ip", "lr", "cc")
+ #else
+ #define __get_user_x_64t __get_user_x
+ #endif
 
 
