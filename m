@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1020C19A29C;
-	Thu, 25 Jul 2024 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126CEFC19;
+	Thu, 25 Jul 2024 14:50:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919049; cv=none; b=iWwN1Yr7TiiVqJl//8UiTBTf3YI3T+loQYZyHTrMmMvXI2BitEJPcKNHD14BiDlx9J3rVYctfXqgd743AFB0cUdIBfO460pmYiNoYe5cnGRoIm3PHwIQihaSvpz9980PLxq5fEBYmNh9MMrziFrPsbVmggWgZy1Rg3Q43g/cDGU=
+	t=1721919052; cv=none; b=ta6wReuootI3YMxgTbl1qNTqLhFbrKpbT9szWQ4LfSh/aQD+GWTkQZqLOwiL3TizSi5AD92y4hyKykRX3Tu7WEcrUx6SoJXc1NCurE7ZIzeOwqENBUCSRkeE4gIGJfmZ8OJtFI/suID5INnc3xa0xmT7SSztEsgfhqCMOMc2B2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919049; c=relaxed/simple;
-	bh=tkJTqjpNdUZeZf/MQpZrmrMUxccWeRxg+CvXuCvbJ3A=;
+	s=arc-20240116; t=1721919052; c=relaxed/simple;
+	bh=EuySZPdNE+eRw/Az/90Z2+SSoyyBVSJTC0gDHTz74t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nmwTZazFe28G5QgUesVvE0Zg4bNRCI79UhOlNdgHPZJTUJ3O2Q7JkOFIsyXMj6+0Ld8oZjm1rKAOLDYGeWtsZP0rG6SjJSN5ZyS1AvqsZf5cvwpIdAv+WSJkv5CFLWKs5zdzr2u/KYblKA+A3Arytgr+4JOH1iaVzTgkJtnrbaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVqxitgE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uS74078awL6cSMwuAv6I6gkcKyhvCnnhM1sCcChbb/Bs2gKUqRPwm5YWuOmtH0ni6IAvppVQtY6CVZzbffY6rAIiL6lcdbsiMAq1glaNszIvoozsfZORQvgnrIF43L0gT4TDi+TYyYHBOXZG3vy8bDyLG2o4gVXynhESeThTpIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cr4wcyur; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVqxitgE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B329C116B1;
-	Thu, 25 Jul 2024 14:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cr4wcyur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70234C116B1;
+	Thu, 25 Jul 2024 14:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919048;
-	bh=tkJTqjpNdUZeZf/MQpZrmrMUxccWeRxg+CvXuCvbJ3A=;
+	s=korg; t=1721919051;
+	bh=EuySZPdNE+eRw/Az/90Z2+SSoyyBVSJTC0gDHTz74t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HVqxitgE2WHdVEJiFKyO+LG/x4jJbU1+RolxYOyqkQHQZnvZb18LedfWxduMUZ5EP
-	 fxiLgXBIwJgxkatH7zaOUyv/OVdXbiTkBXW7Z1Xd6tmuQ0GttDF84tbF69HaffkM9k
-	 Fa1HOWf00HB1/V0pzNghIHrUgNmQs2vYBaUqOl38=
+	b=Cr4wcyurt6A/7e7jWdCXKnlFr+5KZez2cexQAmEIbE8sEXtfv4roZwEyNLMZMB01f
+	 mS7Jn4EifkRvyAtxkzErMNvSUxA6i3VeE96x6UkFnmYeMyUkzFcITakKbyvKMK73R2
+	 6W0unV+BaJCzLvBc8Dmh6s3Aq5aFGvtCjkcHYWw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 55/59] ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
-Date: Thu, 25 Jul 2024 16:37:45 +0200
-Message-ID: <20240725142735.334673911@linuxfoundation.org>
+	linux-hardening@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Thomas Meyer <thomas@m3y3r.de>
+Subject: [PATCH 5.15 01/87] gcc-plugins: Rename last_stmt() for GCC 14+
+Date: Thu, 25 Jul 2024 16:36:34 +0200
+Message-ID: <20240725142738.480817874@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
-References: <20240725142733.262322603@linuxfoundation.org>
+In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
+References: <20240725142738.422724252@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,35 +47,35 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-5.10-stable review patch.  If anyone has any objections, please let me know.
+5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 8fc1e8b230771442133d5cf5fa4313277aa2bb8b upstream.
+commit 2e3f65ccfe6b0778b261ad69c9603ae85f210334 upstream.
 
-Positivo SU C1400 is equipped with ALC256, and it needs
-ALC269_FIXUP_ASPIRE_HEADSET_MIC quirk to make its headset mic work.
+In GCC 14, last_stmt() was renamed to last_nondebug_stmt(). Add a helper
+macro to handle the renaming.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240712180642.22564-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Cc: Thomas Meyer <thomas@m3y3r.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ scripts/gcc-plugins/gcc-common.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9195,6 +9195,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
- 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
- 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+--- a/scripts/gcc-plugins/gcc-common.h
++++ b/scripts/gcc-plugins/gcc-common.h
+@@ -570,4 +570,8 @@ static inline void debug_gimple_stmt(con
+ #define SET_DECL_MODE(decl, mode)	DECL_MODE(decl) = (mode)
+ #endif
+ 
++#if BUILDING_GCC_VERSION >= 14000
++#define last_stmt(x)			last_nondebug_stmt(x)
++#endif
++
+ #endif
 
 
