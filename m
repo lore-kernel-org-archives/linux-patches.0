@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D380C13DDB8;
-	Thu, 25 Jul 2024 14:51:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07294F519;
+	Thu, 25 Jul 2024 14:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919115; cv=none; b=p/k8EGmShRGCh0Lln2Gn5YjjKERKEeE/S9X/HU6+uhs02FY1lUxDCn8Mm7GuKOe05wAWMOkZdsAlA/rmMV/s/Unix2HNQccWro50pSVptXQBkED2BZrhJMDYP4iwU2WpNIlX2iDTVHKZfn8KP+Iy3ffmDt2v+QLl3Qd8QxRkIHI=
+	t=1721919119; cv=none; b=WNGQE1nAq7MHJkbTCBxxQq9Y6CP4m/xm7SYB24O/V4lBAptbptEynmiOWxIXTQiggolwsp9ixVeqZjQ2YmgVkhxftrGhFAr1vRlsOwGeIQXxkbozivqa6/brdYq9aMU4UpiIjHC/j/glvzL9pYnE/WPalHJgltU8sPZx7QYQX3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919115; c=relaxed/simple;
-	bh=rA1cYnL9FUKSHJR9d93QXW8mvmDnP8gZauR0xNlbdIE=;
+	s=arc-20240116; t=1721919119; c=relaxed/simple;
+	bh=2WaCDGe+hKRJuviBPSza/eZja65aAcN4vJ19XYYtrqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECSGD1+D1QCz/Lm8r9uuyg88AI29uuFXnFLGKXThTHxgK7SFjjnWnhbP21vusIpqZmYvQZyV4Yo8wb8QOnvCEon8AvJXLErCNVSFIcRGW1eLfIIbx35bB76YfS4fEeFTX2Ju5cTMo/a4mM8MWmK+JM9IB4AY6cMboLfHqfQ55P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZJnXJgzh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEyYdsk0Xwc3p7dDM3i//zggfxdmDAj+pr7RNsW3oTNGGzMSMrLsyRlBMRBtrATyKta2SK17EYMEXJPzN4UGeR0Y1ibTJN2FbNVZZw5QK6QVLg7NF9Hdk+KME4XkeZ8ZuADPAFNtxwG+8/VvmZ/z9A60n/GBbX+Qw7KPjQTfVOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rondybkz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZJnXJgzh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56614C116B1;
-	Thu, 25 Jul 2024 14:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rondybkz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C87C116B1;
+	Thu, 25 Jul 2024 14:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919115;
-	bh=rA1cYnL9FUKSHJR9d93QXW8mvmDnP8gZauR0xNlbdIE=;
+	s=korg; t=1721919118;
+	bh=2WaCDGe+hKRJuviBPSza/eZja65aAcN4vJ19XYYtrqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZJnXJgzhsMyw9L6c34dJFR79qujgqqNs0oOza90aVS8L73rWgwICtYJqC8qS+bJFH
-	 l6r4c93Pbfh2E4t0QvvyYE8TwpeuLDEcSL86wVFhXHkAaDt0e8m3/Q+oT5N8erMf1o
-	 ObNtWxj6kXNpGfVGNVpuHdfNOTOhCst4bS/+tiGo=
+	b=rondybkzsybEgAHnZr+DttN1ffDH0qqsTn0zTHsoHBujKYqo8W6RigO/6WcmzieXP
+	 9wPXYnGtaHOzEvi1B4vX/+/baph4SilCZGPI8nQMKtUw+Y2rAC5VwBMvl5UxbASvmg
+	 gD0u6FF3BjWuCFr3nJ6rdy0OmhB7yVzhCsoCQS6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuntao Wang <yuntao.wang@linux.dev>,
-	Jan Kara <jack@suse.cz>,
-	Christian Brauner <brauner@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/87] fs/file: fix the check in find_next_fd()
-Date: Thu, 25 Jul 2024 16:37:01 +0200
-Message-ID: <20240725142739.498300448@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH 5.15 03/87] ARM: 9324/1: fix get_user() broken with veneer
+Date: Thu, 25 Jul 2024 16:36:36 +0200
+Message-ID: <20240725142738.556287262@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -52,51 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuntao Wang <yuntao.wang@linux.dev>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit ed8c7fbdfe117abbef81f65428ba263118ef298a ]
+commit 24d3ba0a7b44c1617c27f5045eecc4f34752ab03 upstream.
 
-The maximum possible return value of find_next_zero_bit(fdt->full_fds_bits,
-maxbit, bitbit) is maxbit. This return value, multiplied by BITS_PER_LONG,
-gives the value of bitbit, which can never be greater than maxfd, it can
-only be equal to maxfd at most, so the following check 'if (bitbit > maxfd)'
-will never be true.
+The 32-bit ARM kernel stops working if the kernel grows to the point
+where veneers for __get_user_* are created.
 
-Moreover, when bitbit equals maxfd, it indicates that there are no unused
-fds, and the function can directly return.
+AAPCS32 [1] states, "Register r12 (IP) may be used by a linker as a
+scratch register between a routine and any subroutine it calls. It
+can also be used within a routine to hold intermediate values between
+subroutine calls."
 
-Fix this check.
+However, bl instructions buried within the inline asm are unpredictable
+for compilers; hence, "ip" must be added to the clobber list.
 
-Signed-off-by: Yuntao Wang <yuntao.wang@linux.dev>
-Link: https://lore.kernel.org/r/20240529160656.209352-1-yuntao.wang@linux.dev
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This becomes critical when veneers for __get_user_* are created because
+veneers use the ip register since commit 02e541db0540 ("ARM: 8323/1:
+force linker to use PIC veneers").
+
+[1]: https://github.com/ARM-software/abi-aa/blob/2023Q1/aapcs32/aapcs32.rst
+
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: John Stultz <jstultz@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/include/asm/uaccess.h |   14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/fs/file.c b/fs/file.c
-index 69a51d37b66d9..b46a4a725a0ef 100644
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -481,12 +481,12 @@ struct files_struct init_files = {
+--- a/arch/arm/include/asm/uaccess.h
++++ b/arch/arm/include/asm/uaccess.h
+@@ -124,16 +124,6 @@ extern int __get_user_64t_1(void *);
+ extern int __get_user_64t_2(void *);
+ extern int __get_user_64t_4(void *);
  
- static unsigned int find_next_fd(struct fdtable *fdt, unsigned int start)
- {
--	unsigned int maxfd = fdt->max_fds;
-+	unsigned int maxfd = fdt->max_fds; /* always multiple of BITS_PER_LONG */
- 	unsigned int maxbit = maxfd / BITS_PER_LONG;
- 	unsigned int bitbit = start / BITS_PER_LONG;
+-#define __GUP_CLOBBER_1	"lr", "cc"
+-#ifdef CONFIG_CPU_USE_DOMAINS
+-#define __GUP_CLOBBER_2	"ip", "lr", "cc"
+-#else
+-#define __GUP_CLOBBER_2 "lr", "cc"
+-#endif
+-#define __GUP_CLOBBER_4	"lr", "cc"
+-#define __GUP_CLOBBER_32t_8 "lr", "cc"
+-#define __GUP_CLOBBER_8	"lr", "cc"
+-
+ #define __get_user_x(__r2, __p, __e, __l, __s)				\
+ 	   __asm__ __volatile__ (					\
+ 		__asmeq("%0", "r0") __asmeq("%1", "r2")			\
+@@ -141,7 +131,7 @@ extern int __get_user_64t_4(void *);
+ 		"bl	__get_user_" #__s				\
+ 		: "=&r" (__e), "=r" (__r2)				\
+ 		: "0" (__p), "r" (__l)					\
+-		: __GUP_CLOBBER_##__s)
++		: "ip", "lr", "cc")
  
- 	bitbit = find_next_zero_bit(fdt->full_fds_bits, maxbit, bitbit) * BITS_PER_LONG;
--	if (bitbit > maxfd)
-+	if (bitbit >= maxfd)
- 		return maxfd;
- 	if (bitbit > start)
- 		start = bitbit;
--- 
-2.43.0
-
+ /* narrowing a double-word get into a single 32bit word register: */
+ #ifdef __ARMEB__
+@@ -163,7 +153,7 @@ extern int __get_user_64t_4(void *);
+ 		"bl	__get_user_64t_" #__s				\
+ 		: "=&r" (__e), "=r" (__r2)				\
+ 		: "0" (__p), "r" (__l)					\
+-		: __GUP_CLOBBER_##__s)
++		: "ip", "lr", "cc")
+ #else
+ #define __get_user_x_64t __get_user_x
+ #endif
 
 
