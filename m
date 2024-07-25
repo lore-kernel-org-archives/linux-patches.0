@@ -1,121 +1,115 @@
-Received: from mail-40133.protonmail.ch (mail-40133.protonmail.ch [185.70.40.133])
+Received: from omta038.useast.a.cloudfilter.net (omta038.useast.a.cloudfilter.net [44.202.169.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE5613A252
-	for <patches@lists.linux.dev>; Wed, 24 Jul 2024 21:52:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA36D12B72
+	for <patches@lists.linux.dev>; Thu, 25 Jul 2024 05:19:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721857929; cv=none; b=m0VvfAFdPmJa/N6emOIJGbrwo/KxPgimsYtVdM2hrb5U6B2X3rh8mwz4X+wuPlioY5G06gpDNrSUrcVvNAF3TpRTclpwXVUrQ1AiIF8kcMVArmBQPFdguZ5vC/OHX0i1t2t1BEtKkFuuyvY6YXcoBwRmnWW039NKrh745N1dH6A=
+	t=1721884782; cv=none; b=l+7jlOJbBob/sc/E5FuPtDEOCtY/qNNWDYobdTrG6XyumtIuzr5VUujwUCzE+QhBF3y1lbIFisMJ+pB+zblyEaLmHW+vubrBWieXcqp5aJl55Lrupq8s7GcwZYEaMevaDE2LdgL0HPTHlAsgfRklRXoy4OPNcZNwKbB6oTYm/wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721857929; c=relaxed/simple;
-	bh=oEOmOlfz6CpQP8CwygJ/qQgE6bITPukNt50FQUhP2N8=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=B+5Eo0naXUmTFD2BQFZmAxzChbEjegxz3ebTOGW/UQyTx9Mldki9d+ktplyDmfHlCPrdTIO8dF1QE63PshyoNn2uJd3CbIbpnw0Edg3I+2uggHbX5mKFtny0VB2VsdIWD9cETvBMpGmIGBCvVX1pibZpJ9N2OfoGvMEccFDcV6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=f690Mp/H; arc=none smtp.client-ip=185.70.40.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
+	s=arc-20240116; t=1721884782; c=relaxed/simple;
+	bh=ZHjpwkTDyz7BEoQAQ6I+4a+ZAdQUlWW45v7hAWCnCNs=;
+	h=Subject:To:Cc:References:In-Reply-To:From:Message-ID:Date:
+	 MIME-Version:Content-Type; b=ZQCf84n+upNxF+OwYM04DK7nLA78jX5frfagwF4YMzTbaok8jXmXxZ0MaN7VfGfE8E643feWNemSk9yW3cD2Tn8YtFsbjt9XUs6pXKZgBBKqHcFrvVO2b9aFATczSR4tAqcsH2Rip1gUo294M/md52rHRb1UQgiS6YHkjAbd2cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=TMCTFQUd; arc=none smtp.client-ip=44.202.169.37
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="f690Mp/H"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=protonmail; t=1721857924; x=1722117124;
-	bh=9wT9nGk/Kl4gZK0Tax5hk03ECjrHn3Gb2YCLJm9dH3M=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=f690Mp/HqT5J3u5HaDV08jrxv8C/kMBNcWHBh51benkj26V9zDr5FEZIi8Er6gOW0
-	 aVbQSNlkLGegZu9RoGuv+hosNnTKiENbyC/js6rE5aWJYtAD2hg6pD5BRhC+M+mZBE
-	 mRWhmSXDgbEeN0dal1v/tiEr9hbvgOdVW1c28qYy8prkG03iYTHn+QA+EnM+aELZp1
-	 aSg0Cbdae0xTP5/peyYM97iutSGteAU6l1Efc97G7R3toarBivkNrx/1vjlunbeXBT
-	 eCK2g4/jHZ0ojc8MHz2ap1jfeqglC+drOxqzOgTp9kOGBW1VesIsVYwqEVCV6XSwfT
-	 dzJYzhoCTIzAg==
-Date: Wed, 24 Jul 2024 21:51:57 +0000
-To: Miguel Ojeda <ojeda@kernel.org>, Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, Masahiro Yamada <masahiroy@kernel.org>
-From: Benno Lossin <benno.lossin@proton.me>
-Cc: x86@kernel.org, "H. Peter Anvin" <hpa@zytor.com>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev, linux-kbuild@vger.kernel.org
-Subject: Re: [PATCH v2 0/6] Rust: support `CPU_MITIGATIONS` and enable `objtool`
-Message-ID: <e51f3b91-690d-4b72-9841-75a61684777d@proton.me>
-In-Reply-To: <20240724161501.1319115-1-ojeda@kernel.org>
-References: <20240724161501.1319115-1-ojeda@kernel.org>
-Feedback-ID: 71780778:user:proton
-X-Pm-Message-ID: 6af68a83f926bf6d26972ff1532292b9d003c3a4
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="TMCTFQUd"
+Received: from eig-obgw-5002a.ext.cloudfilter.net ([10.0.29.215])
+	by cmsmtp with ESMTPS
+	id Wq3csu0Uvg2lzWqrasLOpP; Thu, 25 Jul 2024 05:18:02 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id WqrZsb08YeieBWqrZsYgra; Thu, 25 Jul 2024 05:18:01 +0000
+X-Authority-Analysis: v=2.4 cv=BoBWwpX5 c=1 sm=1 tr=0 ts=66a1e009
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=4kmOji7k6h8A:10 a=VwQbUJbxAAAA:8 a=HaFmDPmJAAAA:8
+ a=TJP467otscr4N1wxSb4A:9 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
+ a=nmWuMzfKamIsx3l42hEX:22 a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=+7+8NFJBZn07NjChmXzieuGlhr6iVn598euCshwhFA8=; b=TMCTFQUdzAtzSAkiaNhJp9j1jU
+	Gskh2/JkafUIWgCCbilD41hm2z0LZnib246GW2Q1VESJVc+3i9xNLMYwgJRu0MxKsbmqwq1dkieaP
+	opO4pHhaKWStLBGEkjpp5oAQ0s7zjVz10Q1nUIk5ZazLsLkwCWBaSbFsIWUjXVMqy6mtQL6aTwyQt
+	GZAWKEVZ1cF+9EkVMmtxNPn+ycUaLvBTwRWcmdbxrZ8mbkMAInyXws1Z2aRJYe02O5ZqpGg//duy8
+	RydY2sW+5msk0tJW/+1ViJiAzgJpht4zoufOgtpSJKMatF7rDe8Lzjt/5+urEhM32ybnCzoDYOQeL
+	ErL25aKg==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:59058 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1sWqrU-002vxC-1s;
+	Wed, 24 Jul 2024 23:17:56 -0600
+Subject: Re: [PATCH 6.9 000/163] 6.9.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240723180143.461739294@linuxfoundation.org>
+In-Reply-To: <20240723180143.461739294@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <81d445ce-9881-414b-010e-3d2d34f75274@w6rz.net>
+Date: Wed, 24 Jul 2024 22:17:50 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1sWqrU-002vxC-1s
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:59058
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfF10EmatjfS5g7JDBbTKJuG6QSwsQZ9E0nTxVm0nRkZp8drEk4BDQPR5u1xQ59BIThOUTKFzm8od7TEWslXr72/BovEqE33wAdshsZHCV+/GLi0eh95j
+ emxiONugYRIJ5UgWWm0RJY/WrhA28E1CTzhzb2djDu/GcuShtBx2IOVq2ojMrH4fEDqJN/+qVy6KZA==
 
-On 24.07.24 18:14, Miguel Ojeda wrote:
-> Hi,
->=20
-> This is an updated series to the CPU mitigations support for Rust. It
-> also has the patch to enable `objtool`, so that we can start running it
-> for Rust.
->=20
-> It would be nice to get this applied soon, so that we start being
-> warning-free (since we already get warnings under IBT builds via
-> `vmlinux.o`). I am happy to take it through the Rust tree if the x86 and
-> objtool maintainers give an Acked-by, or through any of the other trees,
-> as you prefer. Otherwise, I think at this point we would need to make
-> Rust exclusive to the mitigations, which isn't great.
->=20
-> With this series, again, x86_64 is warning-free with `objtool` enabled. I
-> tested `-O2`/`-Os` and the Rust versions we support under `-O2` (mainly
-> for the `noreturn` patch, which uses heuristics), as well as IBT vs. no
-> IBT (i.e.  running on individual object files vs. in `vmlinux`). I also
-> did an arm64 build.
->=20
-> Testing is very welcome for this one!
->=20
-> Cheers,
-> Miguel
->=20
-> v2:
->   - Add patch to enable `objtool` for Rust.
->=20
->   - Add patch to list `noreturn` Rust functions (via heuristics) to avoid
->     warnings related to that.
->=20
->   - Make the `RETHUNK` patch not an RFC since the Rust compiler has
->   support for
->     it now.
->=20
->   - Update the names of the migitation config symbols, given the changes
->   at e.g.
->     commit 7b75782ffd82 ("x86/bugs: Rename CONFIG_MITIGATION_SLS =3D>
->     CONFIG_MITIGATION_SLS").
->=20
-> Miguel Ojeda (6):
->   rust: module: add static pointer to `{init,cleanup}_module()`
->   x86/rust: support MITIGATION_RETPOLINE
->   x86/rust: support MITIGATION_RETHUNK
->   x86/rust: support MITIGATION_SLS
->   objtool: list `noreturn` Rust functions
->   objtool/kbuild/rust: enable objtool for Rust
->=20
->  arch/x86/Makefile               |  7 ++++++-
->  rust/Makefile                   | 22 ++++++++++++--------
->  rust/macros/module.rs           | 12 +++++++++++
->  scripts/Makefile.build          |  9 +++++++--
->  scripts/generate_rust_target.rs | 15 ++++++++++++++
->  tools/objtool/check.c           | 36 ++++++++++++++++++++++++++++++++-
->  tools/objtool/noreturns.h       |  2 ++
->  7 files changed, 91 insertions(+), 12 deletions(-)
->=20
->=20
-> base-commit: b1263411112305acf2af728728591465becb45b0
-> --
-> 2.45.2
->=20
+On 7/23/24 11:22 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.9.11 release.
+> There are 163 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 25 Jul 2024 18:01:03 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.11-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-I tested this series with a config that produces the objtool warnings on
-b126341 and it worked flawlessly. I also tried `-O2` and `-Os`:
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Tested-by: Benno Lossin <benno.lossin@proton.me>
-
----
-Cheers,
-Benno
+Tested-by: Ron Economos <re@w6rz.net>
 
