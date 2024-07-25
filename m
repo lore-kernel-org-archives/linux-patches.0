@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5247E19AA5F;
-	Thu, 25 Jul 2024 14:42:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D1C19D06A;
+	Thu, 25 Jul 2024 14:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918568; cv=none; b=G9eW5IUHP8of2uI62nKfwz5WmHDHvsQHGH97wOMcuXzz7GNLwwcIPdmVbx7rL/+J4+MEaej5Q4tZcdpzWjYhxC+Tzw3TYjvNj2hWCjpjHunDWOOEXwA4RhwAoEsarqwLmKWnH/U0luEYy7Is4qYsLRTMuFrbqWm96bJGnJWqTeY=
+	t=1721918572; cv=none; b=j3SKFstN9XTcsv0Bt+OhE7RgovH8DNKlpMHA2Bt2H72hZY8Ak67rGhsvJUferpl/s1thWwJJ0p+QvnsczvSQCkztSIIyzxR+TMe+i36QQFrS/y3EsV+qVfLi89Z0qAGWvkuwGRVAWrQb3uyAAiTLMBE5m+KDAhz1i66G6muzteE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918568; c=relaxed/simple;
-	bh=MYYPFTKVNPOXoDYiow/biUyHTpUOL/Seg8cPWtW4OqA=;
+	s=arc-20240116; t=1721918572; c=relaxed/simple;
+	bh=lzvBI48LlXvylKfUOLek5hU9kjfQU+UXrIDXji6S+Ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3y4J5ltLjwT1TCHrNdADSitSrZkAtKgyBD/JKzxCIlHLoneEcIQnt8v6Ym8gxtUAjuHiYqveqB3lwyD1Dm5BBUPle5tSBiIgNbGO2F6ZlydBdTMfHkNEK4at+N2mcP+Hwrd8YQbdmheEd0DX/bQglPhjcZrhxcu94ea2OWO4Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tf4qYGpt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WMm1BELB+dtISJe/lje8OuARPhrCV2EACFgiRvdU+YssP24UBW6o7pR4U0sF6lkTAz07s+TimXf6dIInjTJ4357Y3Fv1o4FnzVDVTYQcRHyFeGrVGuRrtPJZpznSN+Cnu6Buqzm0+daDHQcPsjqIumbCYiLqfmSnsss7EwK34lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gro9Yc2u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tf4qYGpt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDC32C116B1;
-	Thu, 25 Jul 2024 14:42:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gro9Yc2u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A404C116B1;
+	Thu, 25 Jul 2024 14:42:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918568;
-	bh=MYYPFTKVNPOXoDYiow/biUyHTpUOL/Seg8cPWtW4OqA=;
+	s=korg; t=1721918571;
+	bh=lzvBI48LlXvylKfUOLek5hU9kjfQU+UXrIDXji6S+Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tf4qYGpt5xrz3SZSj44KxH4zpCr2p0Vp0c42dIN7phvIr6WiqwCpqjhcBrwltQD6w
-	 j5Qac2DNx4MW6LLMlAHizAXkOqmw49mpA8x1hilxkQsJfISQtf0HVXUw/e6RF8ZBwy
-	 FlpNa8WJDQEDBoM7dwDt2mSI0CL3jJ+UWKQOiZ6Q=
+	b=Gro9Yc2ujIo5qvHrpqN9eTxT12ia1q7VVF19d1YmBlq0N9sz7R/Tl4p9+PbcwGAxP
+	 Xp91pZdCd7lZvBaJrfFQ9/b69+pbKrV4KteMnJ6i39VLArJvN6S6xLq1ETND9cNWoK
+	 C0E+ww5KX9fezN/LcM5jXpcCd3mSl25wXL8jojr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Daniele Palmas <dnlplm@gmail.com>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 25/43] ALSA: dmaengine_pcm: terminate dmaengine before synchronize
-Date: Thu, 25 Jul 2024 16:36:48 +0200
-Message-ID: <20240725142731.423457545@linuxfoundation.org>
+Subject: [PATCH 5.4 26/43] net: usb: qmi_wwan: add Telit FN912 compositions
+Date: Thu, 25 Jul 2024 16:36:49 +0200
+Message-ID: <20240725142731.460222984@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -45,70 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 6a7db25aad8ce6512b366d2ce1d0e60bac00a09d ]
+[ Upstream commit 77453e2b015b5ced5b3f45364dd5a72dfc3bdecb ]
 
-When dmaengine supports pause function, in suspend state,
-dmaengine_pause() is called instead of dmaengine_terminate_async(),
+Add the following Telit FN912 compositions:
 
-In end of playback stream, the runtime->state will go to
-SNDRV_PCM_STATE_DRAINING, if system suspend & resume happen
-at this time, application will not resume playback stream, the
-stream will be closed directly, the dmaengine_terminate_async()
-will not be called before the dmaengine_synchronize(), which
-violates the call sequence for dmaengine_synchronize().
+0x3000: rmnet + tty (AT/NMEA) + tty (AT) + tty (diag)
+T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  8 Spd=480  MxCh= 0
+D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=3000 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN912
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=60 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=86(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-This behavior also happens for capture streams, but there is no
-SNDRV_PCM_STATE_DRAINING state for capture. So use
-dmaengine_tx_status() to check the DMA status if the status is
-DMA_PAUSED, then call dmaengine_terminate_async() to terminate
-dmaengine before dmaengine_synchronize().
+0x3001: rmnet + tty (AT) + tty (diag) + DPL (data packet logging) + adb
+T:  Bus=03 Lev=01 Prnt=03 Port=07 Cnt=01 Dev#=  7 Spd=480  MxCh= 0
+D:  Ver= 2.01 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1bc7 ProdID=3001 Rev=05.15
+S:  Manufacturer=Telit Cinterion
+S:  Product=FN912
+S:  SerialNumber=92c4c4d8
+C:  #Ifs= 5 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=50 Driver=qmi_wwan
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=82(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=40 Driver=option
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=83(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=84(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+I:  If#= 2 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=30 Driver=option
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 3 Alt= 0 #EPs= 1 Cls=ff(vend.) Sub=ff Prot=80 Driver=(none)
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:  If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=42 Prot=01 Driver=usbfs
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Link: https://patch.msgid.link/1718851218-27803-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Acked-by: Bjørn Mork <bjorn@mork.no>
+Link: https://patch.msgid.link/20240625102236.69539-1-dnlplm@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_dmaengine.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/net/usb/qmi_wwan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/core/pcm_dmaengine.c b/sound/core/pcm_dmaengine.c
-index 5d9a24ca6f3ec..6c0d0a43baa11 100644
---- a/sound/core/pcm_dmaengine.c
-+++ b/sound/core/pcm_dmaengine.c
-@@ -345,6 +345,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_open_request_chan);
- int snd_dmaengine_pcm_close(struct snd_pcm_substream *substream)
- {
- 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
-+	struct dma_tx_state state;
-+	enum dma_status status;
-+
-+	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
-+	if (status == DMA_PAUSED)
-+		dmaengine_terminate_async(prtd->dma_chan);
- 
- 	dmaengine_synchronize(prtd->dma_chan);
- 	kfree(prtd);
-@@ -362,6 +368,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_close);
- int snd_dmaengine_pcm_close_release_chan(struct snd_pcm_substream *substream)
- {
- 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
-+	struct dma_tx_state state;
-+	enum dma_status status;
-+
-+	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
-+	if (status == DMA_PAUSED)
-+		dmaengine_terminate_async(prtd->dma_chan);
- 
- 	dmaengine_synchronize(prtd->dma_chan);
- 	dma_release_channel(prtd->dma_chan);
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 7cad9850e6f15..17aa52ed892b5 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -1334,6 +1334,8 @@ static const struct usb_device_id products[] = {
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1260, 2)},	/* Telit LE910Cx */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1261, 2)},	/* Telit LE910Cx */
+ 	{QMI_QUIRK_SET_DTR(0x1bc7, 0x1900, 1)},	/* Telit LN940 series */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x3000, 0)},	/* Telit FN912 series */
++	{QMI_QUIRK_SET_DTR(0x1bc7, 0x3001, 0)},	/* Telit FN912 series */
+ 	{QMI_FIXED_INTF(0x1c9e, 0x9801, 3)},	/* Telewell TW-3G HSPA+ */
+ 	{QMI_FIXED_INTF(0x1c9e, 0x9803, 4)},	/* Telewell TW-3G HSPA+ */
+ 	{QMI_FIXED_INTF(0x1c9e, 0x9b01, 3)},	/* XS Stick W100-2 from 4G Systems */
 -- 
 2.43.0
 
