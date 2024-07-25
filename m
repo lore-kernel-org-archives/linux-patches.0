@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9224D19A29C;
-	Thu, 25 Jul 2024 14:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F8D19A29C;
+	Thu, 25 Jul 2024 14:38:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918329; cv=none; b=D3qdmQjQNk5iGmK+n/W1puUML4sYta3Czy2mGvO7SpmC+l3bCdPHmzGNgQXBQHDKyxWp6FZ5nM+QtAESeb9PH3UKIdbTWAf7BeTmuRjGEj2lnkRD2BsUA4QJDiSedvLT1qNMSpC+1ENLx7zohBtCu/aM2gJ7UHkaaxKwQFEolgM=
+	t=1721918333; cv=none; b=ji139W76mK2ChBu0TeHQudQp/dKLAhdmE3wAGcfRzlg8rhve/I1MYGI7dSi6SoMISzny6SW/r/gWIBG+M0KKDvBmM5v4L6vmcLJEV9QDynFi26B3dgx42jHJA1OoSoDMOYCsImDK7KjFvbn8x9BeWlGUdVqyp2se1XCJavVgQck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918329; c=relaxed/simple;
-	bh=uioX+3JVJBQGG45Q6yXDF4ydlbWyehuXOlI5MLvgMO8=;
+	s=arc-20240116; t=1721918333; c=relaxed/simple;
+	bh=ZkYomi9prToHUItq08EV0Xq1UZUD8WFshmhPbN8PUNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dfi/4Ws0yaKxaP5U1H/ZqQf5j3SbaLUZWWTY4HfDEq3x1lOxAXmskPkXNoC3I60+qIdiEPw/HW66nQq+dssOEpBHN6JD5vTU6Q19FmWCCoWX7qGYTefrCayrFf04gbPd/pCsqNSPvPAh5rXxK0ZpPxdinhiXn93/g7wfpGodwTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdeZ5Be4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ju1IWDnFG4noK4lx/giFvnvhVdmE9okMOYVcelZ74cl4qv0ovZAc4bwIyS4TMmkIEb+xtzQtOaHlHdQBpHqCPx25uihaeIMKmtAk1IieAPILchVpopnQVZ5kpAo1jH6GDOBvClwj/ywUKgQN9va2+7EizcyzndNL9UEi+nS1yKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IhP4FVOU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdeZ5Be4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 197E5C116B1;
-	Thu, 25 Jul 2024 14:38:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IhP4FVOU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A10C116B1;
+	Thu, 25 Jul 2024 14:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918329;
-	bh=uioX+3JVJBQGG45Q6yXDF4ydlbWyehuXOlI5MLvgMO8=;
+	s=korg; t=1721918332;
+	bh=ZkYomi9prToHUItq08EV0Xq1UZUD8WFshmhPbN8PUNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdeZ5Be4GbkEq5S25h/tCHWYRg96qTdm6BuGhoyBoC5VYIKVxJFTjOSGaDY0kvqgK
-	 Ig48YfYYL/Dx6k+CYCRQCs6sPWKWzYwdz86ZYew26faqcYWrmfDX4n4+K9dzVOXmEf
-	 T4akaXjrCW0QnTTmu+c5I5N3LkpaNekjl0Wfoywo=
+	b=IhP4FVOUZRxTTVuplpGDynABvrNyTdPMk0d2MXmvZ+wUjsPVqqeIWos4yHelIBgTa
+	 F/OjElZgYfaCXKffhJrzd28T/iKg+v66IPdybXYAK3mG25jd8fVvrVk4Fgp/GfzUZh
+	 iF2kQmrXkQxB3BSM3vz2erJWMyTnc6gP99ZXwVb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 17/29] arm64: dts: qcom: x1e80100-qcp: Fix the PHY regulator for PCIe 6a
-Date: Thu, 25 Jul 2024 16:36:33 +0200
-Message-ID: <20240725142732.463820675@linuxfoundation.org>
+Subject: [PATCH 6.10 18/29] arm64: dts: qcom: x1e80100-crd: Fix USB PHYs regulators
+Date: Thu, 25 Jul 2024 16:36:34 +0200
+Message-ID: <20240725142732.502258126@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -53,31 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 87042003f6ea7d075784db98da6903738a38f3cf upstream.
+commit ae5cee8e7349d7e5deff4cf90a08cbd738287155 upstream.
 
-The actual PHY regulator is L1d instead of L3j, so fix it accordingly.
+The 1.2v HS PHY shared regulator is actually LDO2 from PM8550ve id J.
+Also add the missing supplies to QMP PHYs.
 
-Fixes: f9a9c11471da ("arm64: dts: qcom: x1e80100-qcp: Enable more support")
+Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc: stable@vger.kernel.org      # 6.9
-Link: https://lore.kernel.org/r/20240530-x1e80100-dts-pcie6a-v1-2-ee17a9939ba5@linaro.org
+Link: https://lore.kernel.org/r/20240530-x1e80100-dts-fix-usb-phy-supplies-v1-1-6eb72a546227@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -470,7 +470,7 @@
+--- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
+@@ -841,7 +841,7 @@
+ 
+ &usb_1_ss0_hsphy {
+ 	vdd-supply = <&vreg_l2e_0p8>;
+-	vdda12-supply = <&vreg_l3e_1p2>;
++	vdda12-supply = <&vreg_l2j_1p2>;
+ 
+ 	phys = <&smb2360_0_eusb2_repeater>;
+ 
+@@ -849,6 +849,9 @@
  };
  
- &pcie6a_phy {
--	vdda-phy-supply = <&vreg_l3j_0p8>;
-+	vdda-phy-supply = <&vreg_l1d_0p8>;
- 	vdda-pll-supply = <&vreg_l2j_1p2>;
- 
+ &usb_1_ss0_qmpphy {
++	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-pll-supply = <&vreg_l1j_0p8>;
++
  	status = "okay";
+ };
+ 
+@@ -863,7 +866,7 @@
+ 
+ &usb_1_ss1_hsphy {
+ 	vdd-supply = <&vreg_l2e_0p8>;
+-	vdda12-supply = <&vreg_l3e_1p2>;
++	vdda12-supply = <&vreg_l2j_1p2>;
+ 
+ 	phys = <&smb2360_1_eusb2_repeater>;
+ 
+@@ -871,6 +874,9 @@
+ };
+ 
+ &usb_1_ss1_qmpphy {
++	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-pll-supply = <&vreg_l2d_0p9>;
++
+ 	status = "okay";
+ };
+ 
+@@ -885,7 +891,7 @@
+ 
+ &usb_1_ss2_hsphy {
+ 	vdd-supply = <&vreg_l2e_0p8>;
+-	vdda12-supply = <&vreg_l3e_1p2>;
++	vdda12-supply = <&vreg_l2j_1p2>;
+ 
+ 	phys = <&smb2360_2_eusb2_repeater>;
+ 
+@@ -893,6 +899,9 @@
+ };
+ 
+ &usb_1_ss2_qmpphy {
++	vdda-phy-supply = <&vreg_l3e_1p2>;
++	vdda-pll-supply = <&vreg_l2d_0p9>;
++
+ 	status = "okay";
+ };
+ 
 
 
