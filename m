@@ -1,209 +1,90 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8AB13C816;
-	Thu, 25 Jul 2024 14:46:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C265919D8AE;
+	Thu, 25 Jul 2024 14:46:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918815; cv=none; b=RRaMZQkbIzlsbDnPg1AEunkSZH4DmVaVBKtB5z2bLrylPWz1eTDAsDHmbsFZwmho+rH0RSvSVj0tWfq6Z+OPXDLyqgv/6D7+n/AAjcj4tJUDv3QELGBZ7WV+YALJCiKh0JvM2EAzjALJATT6CMZyctbaN1uEQpgJSJPbdcvq6jE=
+	t=1721918818; cv=none; b=pL1t6uUP0pn6moh1flOZHctXEHUDCQry0G5yuY8c5CZrMjahMB0Dm2FBdsG+DNlTWssOL/MXPLGQTri21iirUWZd4uV/O2M9ZJLu7AbLQZIIWRBZ6ClK/nyOm4Rwb/usHDMKVfukd1Cg6CfYUHoug+Ilovo6qDiUFEuYKK220AY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918815; c=relaxed/simple;
-	bh=HoKSbsIf8MHpcYcgfedMDU9CVcxBwnFZH/e8vIInTM8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KEZj1Ytuw83AVAuAPqFQSyukv6OdeYbd8JuMvupfiKZgXzgCuj5sutqfooMmrZO6sqUFSJAmZKmFwpjpe4e3x+W/vgzJ1ZALmqGCOA/dmtnyjuQbMpe/ub1qgAr3RXPNWzSH/Oc2C8PD3wv+OB55ZJRJbFxgPNec7EE0pksNpm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rms967v7; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721918818; c=relaxed/simple;
+	bh=MVI5+D1U77I5nOO3J3CwNC3FVZNfxRh9UmXVuTZN/Fo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=P5tXenp9xQnif0eaVi1H+ujuQb1WIgfsj3ZhWRTr0bxZiJShSuJtwyYh5xhrs0EblKgeBjxmqKwHpDCI0BVDEJSrEBsfG/xIAwm8RRNvPig6DrKwWWgCZRl91kTVq3C+k/DqGQPgkaeTp+GuR3Mpob0H6tQ+mEHO2voWULlgHgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ONdYOAHW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rms967v7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE57C116B1;
-	Thu, 25 Jul 2024 14:46:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ONdYOAHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D44C4AF07;
+	Thu, 25 Jul 2024 14:46:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918815;
-	bh=HoKSbsIf8MHpcYcgfedMDU9CVcxBwnFZH/e8vIInTM8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=rms967v7eqI9AEAoxICMXVmVGoEHS+VOsdP7WR1lizu2No5TY++9wD8PzGHJsFLZN
-	 aWgfd9MsCzpU4r3P6taEdnWrvvaZmRVPKvLfVu7hEXV8VLUnsHiflmwHGUD6DkMgVE
-	 zHEkECRLzHRBkrtdvvV5vXtoJe0BPzv71EfIjFSQ=
+	s=korg; t=1721918818;
+	bh=MVI5+D1U77I5nOO3J3CwNC3FVZNfxRh9UmXVuTZN/Fo=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ONdYOAHWbAVwiQTCoBieSLTrUwWPZAq5wfpQqaBHA1Qcn1Q4i607fLAVkWzyLUI6s
+	 YgvPMnqc5expE6IHtHOzm/ro/Td/gMGVZN0ualJny0V/7V/yQVffNLr+qOO289C6HP
+	 PIDVx/kSNCF2jMavelaXMSoj/XCcgB44WiwNmAlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 6.9 00/29] 6.9.12-rc1 review
-Date: Thu, 25 Jul 2024 16:37:10 +0200
-Message-ID: <20240725142731.678993846@linuxfoundation.org>
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.9 20/29] arm64: dts: qcom: sm6350: Disable SS instance in Parkmode for USB
+Date: Thu, 25 Jul 2024 16:37:30 +0200
+Message-ID: <20240725142732.438300228@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240725142731.678993846@linuxfoundation.org>
+References: <20240725142731.678993846@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.12-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.9.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.9.12-rc1
-X-KernelTest-Deadline: 2024-07-27T14:27+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.9.12 release.
-There are 29 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.9-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.9.12-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.9.y
-and the diffstat can be found below.
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-thanks,
+commit c5d57eb7d06df16c07037cea5dacfd74d49d1833 upstream.
 
-greg k-h
+For Gen-1 targets like SM6350, it is seen that stressing out the
+controller in host mode results in HC died error:
 
--------------
-Pseudo-Shortlog of commits:
+ xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
+ xhci-hcd.12.auto: xHCI host controller not responding, assume dead
+ xhci-hcd.12.auto: HC died; cleaning up
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.9.12-rc1
+And at this instant only restarting the host mode fixes it. Disable
+SuperSpeed instance in park mode for SM6350 to mitigate this issue.
 
-Jann Horn <jannh@google.com>
-    filelock: Fix fcntl/close race recovery compat path
+Cc: stable@vger.kernel.org
+Fixes: 23737b9557fe ("arm64: dts: qcom: sm6350: Add USB1 nodes")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240704152848.3380602-7-quic_kriskura@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ arch/arm64/boot/dts/qcom/sm6350.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
-Takashi Iwai <tiwai@suse.de>
-    ALSA: seq: ump: Skip useless ports for static blocks
-
-Shengjiu Wang <shengjiu.wang@nxp.com>
-    ALSA: pcm_dmaengine: Don't synchronize DMA channel when DMA is paused
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: sm6115: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: sdm845: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: ipq8074: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: sdm630: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: ipq6018: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: msm8998: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: sm6350: Disable SS instance in Parkmode for USB
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: msm8996: Disable SS instance in Parkmode for USB
-
-Abel Vesa <abel.vesa@linaro.org>
-    arm64: dts: qcom: x1e80100-crd: Fix USB PHYs regulators
-
-Abel Vesa <abel.vesa@linaro.org>
-    arm64: dts: qcom: x1e80100-qcp: Fix the PHY regulator for PCIe 6a
-
-Abel Vesa <abel.vesa@linaro.org>
-    arm64: dts: qcom: x1e80100-crd: Fix the PHY regulator for PCIe 6a
-
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-    arm64: dts: qcom: qrb4210-rb2: switch I2C2 to i2c-gpio
-
-Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-    arm64: dts: qcom: qrb2210-rb1: switch I2C2 to i2c-gpio
-
-Abel Vesa <abel.vesa@linaro.org>
-    arm64: dts: qcom: x1e80100-qcp: Fix USB PHYs regulators
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: sc7280: Disable SuperSpeed instances in park mode
-
-Krishna Kurapati <quic_kriskura@quicinc.com>
-    arm64: dts: qcom: sc7180: Disable SuperSpeed instances in park mode
-
-Seunghun Han <kkamagui@gmail.com>
-    ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
-
-Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-    ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
-
-Shenghao Ding <shenghao-ding@ti.com>
-    ALSA: hda/tas2781: Add new quirk for Lenovo Hera2 Laptop
-
-Takashi Iwai <tiwai@suse.de>
-    usb: gadget: midi2: Fix incorrect default MIDI2 protocol setup
-
-lei lu <llfamsec@gmail.com>
-    fs/ntfs3: Validate ff offset
-
-Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-    fs/ntfs3: Add a check for attr_names and oatbl
-
-lei lu <llfamsec@gmail.com>
-    jfs: don't walk off the end of ealist
-
-lei lu <llfamsec@gmail.com>
-    ocfs2: add bounds checking to ocfs2_check_dir_entry()
-
-Gerald Schaefer <gerald.schaefer@linux.ibm.com>
-    s390/mm: Fix VM_FAULT_HWPOISON handling in do_exception()
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
-
-
--------------
-
-Diffstat:
-
- Makefile                                  |  4 +--
- arch/arm64/boot/dts/qcom/ipq6018.dtsi     |  1 +
- arch/arm64/boot/dts/qcom/ipq8074.dtsi     |  2 ++
- arch/arm64/boot/dts/qcom/msm8996.dtsi     |  1 +
- arch/arm64/boot/dts/qcom/msm8998.dtsi     |  1 +
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts  | 13 ++++++++-
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts  | 13 ++++++++-
- arch/arm64/boot/dts/qcom/sc7180.dtsi      |  1 +
- arch/arm64/boot/dts/qcom/sc7280.dtsi      |  1 +
- arch/arm64/boot/dts/qcom/sdm630.dtsi      |  1 +
- arch/arm64/boot/dts/qcom/sdm845.dtsi      |  2 ++
- arch/arm64/boot/dts/qcom/sm6115.dtsi      |  1 +
- arch/arm64/boot/dts/qcom/sm6350.dtsi      |  1 +
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 17 +++++++++---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 17 +++++++++---
- arch/s390/mm/fault.c                      |  3 +-
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c    |  2 +-
- drivers/usb/gadget/function/f_midi2.c     | 19 +++++++------
- fs/jfs/xattr.c                            | 23 +++++++++++++---
- fs/locks.c                                |  9 +++---
- fs/ntfs3/fslog.c                          | 44 ++++++++++++++++++++++++-----
- fs/ocfs2/dir.c                            | 46 +++++++++++++++++++------------
- sound/core/pcm_dmaengine.c                |  6 +++-
- sound/core/seq/seq_ump_client.c           | 16 +++++++++++
- sound/pci/hda/patch_realtek.c             |  3 ++
- 25 files changed, 191 insertions(+), 56 deletions(-)
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1859,6 +1859,7 @@
+ 				snps,dis_enblslpm_quirk;
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
++				snps,parkmode-disable-ss-quirk;
+ 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
+ 				phy-names = "usb2-phy", "usb3-phy";
+ 			};
 
 
