@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BA213DDB8;
-	Thu, 25 Jul 2024 14:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 529B0199E9F;
+	Thu, 25 Jul 2024 14:43:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918592; cv=none; b=mH1oGQBj/+pE7Eb4MTV73OowTuEc6/zK8kyRkPzgx5bkEKY5kBM13vTwF7M4d0whmtDfgWh5TDDUOOE8WKas05CcCTiZVjQZOn+tranwy9pEfHZT0aZ1CUQqmRD/Q1Jzzry8XmOySrPCZyC1qb33tiFvnUxjZTD0ELkt/LgdjCw=
+	t=1721918595; cv=none; b=PBqQ7uAx9DXx6YB1/v/JUj5uXWnSPIRI532BmujK9tyPHdeurMKFrZq8oIee2ropj/rBbmtSt9ZxOFikNzW+f9brjeJE9L6hTILiiDDpEGYrvVMnfvOp5JXR2nXEp+/HmMMfzP3tv+OAOqgz7baK5dBczcxXzovd2nRefsHHTQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918592; c=relaxed/simple;
-	bh=F6LFQVZyFJ5bE7r/4EavVn8ZX0LJOYT4egPQNz8CSRs=;
+	s=arc-20240116; t=1721918595; c=relaxed/simple;
+	bh=Gth+mzlgr3bAYrKlYnKx6PhuvPzCkAQDotdRSY/NoBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=js3pgtt4pqAjMt/066y7gm+M0e31fagq+XnItExPk4WGxZccQsbw6DNbSLbT004cnoGrKlQTrCb+PfUqcUP88lJ97OH+Jk4A/QEbbpnziUauXoE5NlXufRWGzQjnqRZKn74saaiGBX/0BeH9MjaAeRfhLxQvppSPPENtziB80zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhcNa6Hz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kUCKkarAp48qS5uA1xWfEBBiMgt+5KLXwvzNxAkh+f1nft+EAriewOC+XIDceAm8KeiYbAGHmXhp49eLZB35QfCSnuZt2wwnVF9lgSyPYfTrW2ZMPrs3Vun2bUiskOZvzFfXc2G/P/pUduYPEV+su8ELmHIpe5zE/MDPPFg60Qw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Np7dBXd6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhcNa6Hz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D38AC116B1;
-	Thu, 25 Jul 2024 14:43:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Np7dBXd6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E87C116B1;
+	Thu, 25 Jul 2024 14:43:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918591;
-	bh=F6LFQVZyFJ5bE7r/4EavVn8ZX0LJOYT4egPQNz8CSRs=;
+	s=korg; t=1721918595;
+	bh=Gth+mzlgr3bAYrKlYnKx6PhuvPzCkAQDotdRSY/NoBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhcNa6HzU0JjtRoChRSl682a1LC/DMycTpZhwnPLHvIUuEeV2V3Elp8aGB6Wodp8O
-	 vgpSZ1BpOlFeEO9Ecqg0Gudrgrl5BjCMy1KKrxdbk5kxwBRC0yKo8JOkwRKv0sHvSm
-	 LHM04zivs6KJ8TKc9KNJS7r4zDRWTUMLIQmEEKNA=
+	b=Np7dBXd6SFeAayW3BAS7MDKq8/g0dZsUTNohDp0BJyios6Hdoz4Jhb8iuEV2rN+Vd
+	 sQGTg47wThOLUtIjRvkY4q71FharZd2dMSePYCWUfpvXEACfQChvAQWTv5FM8giqvU
+	 gboiGKwNffFAqqerFoRlSw8ngSxpTMjQEfegKqfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jan Kara <jack@suse.cz>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 31/43] Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
-Date: Thu, 25 Jul 2024 16:36:54 +0200
-Message-ID: <20240725142731.647915022@linuxfoundation.org>
+Subject: [PATCH 5.4 32/43] fs: better handle deep ancestor chains in is_subdir()
+Date: Thu, 25 Jul 2024 16:36:55 +0200
+Message-ID: <20240725142731.684955510@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -52,51 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 0d151a103775dd9645c78c97f77d6e2a5298d913 ]
+[ Upstream commit 391b59b045004d5b985d033263ccba3e941a7740 ]
 
-syzbot is reporting that calling hci_release_dev() from hci_error_reset()
-due to hci_dev_put() from hci_error_reset() can cause deadlock at
-destroy_workqueue(), for hci_error_reset() is called from
-hdev->req_workqueue which destroy_workqueue() needs to flush.
+Jan reported that 'cd ..' may take a long time in deep directory
+hierarchies under a bind-mount. If concurrent renames happen it is
+possible to livelock in is_subdir() because it will keep retrying.
 
-We need to make sure that hdev->{rx_work,cmd_work,tx_work} which are
-queued into hdev->workqueue and hdev->{power_on,error_reset} which are
-queued into hdev->req_workqueue are no longer running by the moment
+Change is_subdir() from simply retrying over and over to retry once and
+then acquire the rename lock to handle deep ancestor chains better. The
+list of alternatives to this approach were less then pleasant. Change
+the scope of rcu lock to cover the whole walk while at it.
 
-       destroy_workqueue(hdev->workqueue);
-       destroy_workqueue(hdev->req_workqueue);
+A big thanks to Jan and Linus. Both Jan and Linus had proposed
+effectively the same thing just that one version ended up being slightly
+more elegant.
 
-are called from hci_release_dev().
-
-Call cancel_work_sync() on these work items from hci_unregister_dev()
-as soon as hdev->list is removed from hci_dev_list.
-
-Reported-by: syzbot <syzbot+da0a9c9721e36db712e8@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=da0a9c9721e36db712e8
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/dcache.c | 31 ++++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 17 deletions(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index c60204b639ab7..71a7e42097cc0 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3412,7 +3412,11 @@ void hci_unregister_dev(struct hci_dev *hdev)
- 	list_del(&hdev->list);
- 	write_unlock(&hci_dev_list_lock);
+diff --git a/fs/dcache.c b/fs/dcache.c
+index c58b5e5cb045d..78081bdc49311 100644
+--- a/fs/dcache.c
++++ b/fs/dcache.c
+@@ -3073,28 +3073,25 @@ EXPORT_SYMBOL(d_splice_alias);
+   
+ bool is_subdir(struct dentry *new_dentry, struct dentry *old_dentry)
+ {
+-	bool result;
++	bool subdir;
+ 	unsigned seq;
  
-+	cancel_work_sync(&hdev->rx_work);
-+	cancel_work_sync(&hdev->cmd_work);
-+	cancel_work_sync(&hdev->tx_work);
- 	cancel_work_sync(&hdev->power_on);
-+	cancel_work_sync(&hdev->error_reset);
+ 	if (new_dentry == old_dentry)
+ 		return true;
  
- 	hci_dev_do_close(hdev);
+-	do {
+-		/* for restarting inner loop in case of seq retry */
+-		seq = read_seqbegin(&rename_lock);
+-		/*
+-		 * Need rcu_readlock to protect against the d_parent trashing
+-		 * due to d_move
+-		 */
+-		rcu_read_lock();
+-		if (d_ancestor(old_dentry, new_dentry))
+-			result = true;
+-		else
+-			result = false;
+-		rcu_read_unlock();
+-	} while (read_seqretry(&rename_lock, seq));
+-
+-	return result;
++	/* Access d_parent under rcu as d_move() may change it. */
++	rcu_read_lock();
++	seq = read_seqbegin(&rename_lock);
++	subdir = d_ancestor(old_dentry, new_dentry);
++	 /* Try lockless once... */
++	if (read_seqretry(&rename_lock, seq)) {
++		/* ...else acquire lock for progress even on deep chains. */
++		read_seqlock_excl(&rename_lock);
++		subdir = d_ancestor(old_dentry, new_dentry);
++		read_sequnlock_excl(&rename_lock);
++	}
++	rcu_read_unlock();
++	return subdir;
+ }
+ EXPORT_SYMBOL(is_subdir);
  
 -- 
 2.43.0
