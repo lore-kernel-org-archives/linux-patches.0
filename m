@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043F013DDB8;
-	Thu, 25 Jul 2024 14:43:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F4519A29C;
+	Thu, 25 Jul 2024 14:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918631; cv=none; b=SrZCGJ3bSDhMU/sGqpHzqJtBl85PypMpxOGz+lyxF2hfeYLRtwRBBvvfMkwtrOLBfo7XTiumdZ0ew1TZePzTz5OGSVB+JY+u5ZYU/DhfAgibNBiJKISsbhAeQezZvX9Q/zBwwQ9kB902lcJf1KYx7V0GsTf9+Zae+YDAz0xfqOU=
+	t=1721918634; cv=none; b=FGddEDPkjB04fkHKoKwlgDIFH7XZuXtQpKxdE+8MeBV70nyND8AcYfx1LRccHcC/K8FPZtLTd6D061FCdpz0FTY44NdAp14BO7ZmFhQeTtQA87M2LsXvfR9hAduWw0VMc68jerKFru+AIprFCAOVuJ91Q16UGNeYrkhRuxWbE/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918631; c=relaxed/simple;
-	bh=Y21+UGsgNlb3qbtk+dRx7049Vkf6M7/vrvy9hstq55w=;
+	s=arc-20240116; t=1721918634; c=relaxed/simple;
+	bh=WjvFOJAXtSnG7iBN3cjyR8sufReDkGkV/Q5vwmYAl7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sOhaUpE5cKwu2P7iGbYyUWkDNLFauJj/uiCcDfhJCAiZCn+oItXF2Lbz/ciedDM8NsDjoAO5SoPkrZD3a+EEz86fyCNhVw2emzGJ38bwH9vja84WRlZOLU134qnO7D0FwiHqta+D3UWcE5OfBte4rxN/iGm/r24Nrbmh7QsTCjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRUsJ88M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGSHjJPNHG8qeDoGFWjJss/po57vHiKq1DDqJ5B4CGsFzpRZHw0geS1CzQUE53+XsJmaV7ZkexKgWDEs5wTCqPy+3r7Da1ip+yoMvBL1um9GT3HteovIIKr7mPts6E/79q88YpFlqEHfHYUFrrXyo+tVWLj97Dqr2dTzN+wyeOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqDmTNCL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRUsJ88M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7777AC116B1;
-	Thu, 25 Jul 2024 14:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqDmTNCL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B888CC116B1;
+	Thu, 25 Jul 2024 14:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918630;
-	bh=Y21+UGsgNlb3qbtk+dRx7049Vkf6M7/vrvy9hstq55w=;
+	s=korg; t=1721918634;
+	bh=WjvFOJAXtSnG7iBN3cjyR8sufReDkGkV/Q5vwmYAl7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pRUsJ88MJrrkNKeZjU5XpVnvp+ulsUZl2jogJgsx4qydOrbGoG6m5le6ZhWWdgAuA
-	 vAACGxe5Ba+OuuS9x6KiqhCyxjEkMFwSsNUXh8bVXP2z7eigTrf1csKTwSl397Gvno
-	 hoC619o+Fk/vxv2ICi39laswM+6FroK2S/LtYFiA=
+	b=eqDmTNCLogMm5GafUt+X0ay8fKGOxDlfjowBiV4T5FTMijtsOvDhVhkeKn5gqoE79
+	 4OvWafq9ib7JBJd05U6z4PScUeNGF3ZWe/6Vnuzc/JcEwHU+HUQFCS0eB+5uP6Mw6h
+	 wdC8ojrC5c0rkW+aRScyABN9H9kToVJUCifJAdcc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 42/43] ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
-Date: Thu, 25 Jul 2024 16:37:05 +0200
-Message-ID: <20240725142732.059661696@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 13/43] mei: demote client disconnect warning on suspend to debug
+Date: Thu, 25 Jul 2024 16:36:36 +0200
+Message-ID: <20240725142730.974970740@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -50,31 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 8fc1e8b230771442133d5cf5fa4313277aa2bb8b upstream.
+[ Upstream commit 1db5322b7e6b58e1b304ce69a50e9dca798ca95b ]
 
-Positivo SU C1400 is equipped with ALC256, and it needs
-ALC269_FIXUP_ASPIRE_HEADSET_MIC quirk to make its headset mic work.
+Change level for the "not connected" client message in the write
+callback from error to debug.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240712180642.22564-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+The MEI driver currently disconnects all clients upon system suspend.
+This behavior is by design and user-space applications with
+open connections before the suspend are expected to handle errors upon
+resume, by reopening their handles, reconnecting,
+and retrying their operations.
+
+However, the current driver implementation logs an error message every
+time a write operation is attempted on a disconnected client.
+Since this is a normal and expected flow after system resume
+logging this as an error can be misleading.
+
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20240530091415.725247-1-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/mei/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8335,6 +8335,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
- 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
- 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
-+	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
- 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
- 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+diff --git a/drivers/misc/mei/main.c b/drivers/misc/mei/main.c
+index 7310b476323c2..5cd29deb79858 100644
+--- a/drivers/misc/mei/main.c
++++ b/drivers/misc/mei/main.c
+@@ -268,7 +268,7 @@ static ssize_t mei_write(struct file *file, const char __user *ubuf,
+ 	}
+ 
+ 	if (!mei_cl_is_connected(cl)) {
+-		cl_err(dev, cl, "is not connected");
++		cl_dbg(dev, cl, "is not connected");
+ 		rets = -ENODEV;
+ 		goto out;
+ 	}
+-- 
+2.43.0
+
 
 
