@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1253A1E895;
-	Thu, 25 Jul 2024 14:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790221E895;
+	Thu, 25 Jul 2024 14:48:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918880; cv=none; b=kjJYLRTFHKlpvJUA6a7AdqffbZh41XnSEoJWIGTFfkEx4FqA61YwcW4s/2H/921O2niW1RDT5L+tnqTZNwIx81QRRl1rlBOLuw1Q86Hdv519a+U5DbvnuQ6dUIodimqn74SvPVVEhzRen7bNVEm+5aBPKYYIbIAN4aJ/wObcUVk=
+	t=1721918883; cv=none; b=dfs4cKF+hYjcqfCv1cUuVUPU19Eis6AWEFjTR2qpjHbMzOy3xG92DOJFFsw2nDRV1jiNKP+1XAuXzgUPiuXGJ6K9vmjxdlB5LkEaZkddywJM5K9rWNQEoFVDunIdhKC9GZOWcGDZNjgWCgHu/XTVNWT0SHtBEVn4k/3H8cwVOO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918880; c=relaxed/simple;
-	bh=Gapd9Qt0rUOeNlGdv4lheTZOZvhakcASdA9lfj+e0Jk=;
+	s=arc-20240116; t=1721918883; c=relaxed/simple;
+	bh=N8o6B+n0icmMuQdhX3GdBhNy/+haXmedepCAg5DR3XM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ow0PWrnBEU6QvSrQbQJNsTH3HDFoUDfdUI8trGRmnPOnAsCvk+Vn/3XwNQvS5Jl9tMjTL2Qlt/iyF9iGhHvPcbFvZraGQj+AJAK4oOQO1EcykGgQ8l54oHGqdvpzeSoR8aFdrzbpKL24wTW7sFPs/qXtdfjpd9XR+g2lHHCHLMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ocuA/1mm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F9SwNva1fnavxR+w3XtubD5OBwU+lmQLzVVdeCXvTgET8olSJ9cHIvolc/Nz458iFtM4ZPjrd41d4Ew3s9vKZqna3GV+mMS3Ec1WHCAXPsNQzM/bMJBD1+uKobtjwtOoIlxlbud0tzUIZv8WojtV8Kyser8eO8rcGcwgjKz2Opk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ft5o+yEa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ocuA/1mm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3951EC116B1;
-	Thu, 25 Jul 2024 14:47:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ft5o+yEa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BA3C116B1;
+	Thu, 25 Jul 2024 14:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918879;
-	bh=Gapd9Qt0rUOeNlGdv4lheTZOZvhakcASdA9lfj+e0Jk=;
+	s=korg; t=1721918883;
+	bh=N8o6B+n0icmMuQdhX3GdBhNy/+haXmedepCAg5DR3XM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocuA/1mm36DtUfLGcHra94U+iPlSgPdzbySTfUQrT4pKyDidmfpIVhsErHcEZF0oh
-	 VPVhfI6tf5TUKSOqhPclTPwvK41sTE3G5Hw5yxxTiqlxYB/1yOTnsqB9UYYZYNHQTg
-	 iDGO8m0kSTYtPXfPvY64AsgBgz7O5+E8KZBZywR4=
+	b=Ft5o+yEaPgba46YCR38U5C0SQ4+zpDWitzHZ3kQLvxPet1FqBgypA5YONP9kKf389
+	 NexaxygaOOn6lSwgB3hhZjx6ww0/m3Se1uTrQyNSNZEftJgMZ6D8GSVMaIUtEZiFKD
+	 dbuMi61XL8pM+9InyCxGSlQInOYfrcN27QW/KrqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
+	syzbot+253cd2d2491df77c93ac@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/59] mei: demote client disconnect warning on suspend to debug
-Date: Thu, 25 Jul 2024 16:37:07 +0200
-Message-ID: <20240725142733.915332783@linuxfoundation.org>
+Subject: [PATCH 5.10 18/59] wifi: cfg80211: wext: add extra SIOCSIWSCAN data check
+Date: Thu, 25 Jul 2024 16:37:08 +0200
+Message-ID: <20240725142733.952032153@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142733.262322603@linuxfoundation.org>
 References: <20240725142733.262322603@linuxfoundation.org>
@@ -51,46 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 1db5322b7e6b58e1b304ce69a50e9dca798ca95b ]
+[ Upstream commit 6ef09cdc5ba0f93826c09d810c141a8d103a80fc ]
 
-Change level for the "not connected" client message in the write
-callback from error to debug.
+In 'cfg80211_wext_siwscan()', add extra check whether number of
+channels passed via 'ioctl(sock, SIOCSIWSCAN, ...)' doesn't exceed
+IW_MAX_FREQUENCIES and reject invalid request with -EINVAL otherwise.
 
-The MEI driver currently disconnects all clients upon system suspend.
-This behavior is by design and user-space applications with
-open connections before the suspend are expected to handle errors upon
-resume, by reopening their handles, reconnecting,
-and retrying their operations.
-
-However, the current driver implementation logs an error message every
-time a write operation is attempted on a disconnected client.
-Since this is a normal and expected flow after system resume
-logging this as an error can be misleading.
-
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20240530091415.725247-1-tomas.winkler@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+253cd2d2491df77c93ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=253cd2d2491df77c93ac
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Link: https://msgid.link/20240531032010.451295-1-dmantipov@yandex.ru
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/mei/main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/scan.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/mei/main.c b/drivers/misc/mei/main.c
-index 9f6682033ed7e..d8311d41f0a7b 100644
---- a/drivers/misc/mei/main.c
-+++ b/drivers/misc/mei/main.c
-@@ -329,7 +329,7 @@ static ssize_t mei_write(struct file *file, const char __user *ubuf,
- 	}
+diff --git a/net/wireless/scan.c b/net/wireless/scan.c
+index a6c289a61d30c..76a27b6d45d28 100644
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -2772,10 +2772,14 @@ int cfg80211_wext_siwscan(struct net_device *dev,
+ 	wiphy = &rdev->wiphy;
  
- 	if (!mei_cl_is_connected(cl)) {
--		cl_err(dev, cl, "is not connected");
-+		cl_dbg(dev, cl, "is not connected");
- 		rets = -ENODEV;
- 		goto out;
- 	}
+ 	/* Determine number of channels, needed to allocate creq */
+-	if (wreq && wreq->num_channels)
++	if (wreq && wreq->num_channels) {
++		/* Passed from userspace so should be checked */
++		if (unlikely(wreq->num_channels > IW_MAX_FREQUENCIES))
++			return -EINVAL;
+ 		n_channels = wreq->num_channels;
+-	else
++	} else {
+ 		n_channels = ieee80211_get_num_supported_channels(wiphy);
++	}
+ 
+ 	creq = kzalloc(sizeof(*creq) + sizeof(struct cfg80211_ssid) +
+ 		       n_channels * sizeof(void *),
 -- 
 2.43.0
 
