@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC68C13DDB8;
-	Thu, 25 Jul 2024 14:43:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 043F013DDB8;
+	Thu, 25 Jul 2024 14:43:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918627; cv=none; b=MPa61CfdqoihDj+OBOI+zaAc5XTE7fJNI69N9rEWEffhuxTMJqut8Cxi2bcxyUQT9GRtoSiqXsFiiPFo2w0QKJnOk1h0E4SaZjOd2twYgd01XL9xqLTF8+cXQTqamSH6v/jLsts+fYokvdkGR81g+flrvRY7PzmQyumHLPnRJVc=
+	t=1721918631; cv=none; b=SrZCGJ3bSDhMU/sGqpHzqJtBl85PypMpxOGz+lyxF2hfeYLRtwRBBvvfMkwtrOLBfo7XTiumdZ0ew1TZePzTz5OGSVB+JY+u5ZYU/DhfAgibNBiJKISsbhAeQezZvX9Q/zBwwQ9kB902lcJf1KYx7V0GsTf9+Zae+YDAz0xfqOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918627; c=relaxed/simple;
-	bh=tisQIEsNX6VJt+NioDcdKj91xng5Ol1IHQnQgDyr9zo=;
+	s=arc-20240116; t=1721918631; c=relaxed/simple;
+	bh=Y21+UGsgNlb3qbtk+dRx7049Vkf6M7/vrvy9hstq55w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9UEpAkuZjQaOgC0MgHigIWzgDcR45Qk9BpVLwW2F/3rZGuR2htL4wq9kPErbJJ/fOmL4nAdTstQJxrtSqpbCZOZ7MYdqwcxD9Y8Hx7cNsg6BtjwnmRxbA1d+7d9iW2cZXlNTg9bMu+7OkpKNCXiPXab7O9XRbkcejsZuE5Fphs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cViJHOFc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sOhaUpE5cKwu2P7iGbYyUWkDNLFauJj/uiCcDfhJCAiZCn+oItXF2Lbz/ciedDM8NsDjoAO5SoPkrZD3a+EEz86fyCNhVw2emzGJ38bwH9vja84WRlZOLU134qnO7D0FwiHqta+D3UWcE5OfBte4rxN/iGm/r24Nrbmh7QsTCjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pRUsJ88M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cViJHOFc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B81C32782;
-	Thu, 25 Jul 2024 14:43:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pRUsJ88M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7777AC116B1;
+	Thu, 25 Jul 2024 14:43:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918627;
-	bh=tisQIEsNX6VJt+NioDcdKj91xng5Ol1IHQnQgDyr9zo=;
+	s=korg; t=1721918630;
+	bh=Y21+UGsgNlb3qbtk+dRx7049Vkf6M7/vrvy9hstq55w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cViJHOFcIyaFIXrm+AB8laL0SDwZDAIw+sYVUrpGhwsh/fePXszm6X9BZmn6hjxzC
-	 nPOZUs6WDTx4KKS/psiO8F4J5r8WaBnPpV4d/Y2C3iQUSzz5Uw/Zh0jIewE8y0M7a3
-	 H+5GFxEQgEnrL+q33O31yW2+SLwi+PT6fzH3g3+E=
+	b=pRUsJ88MJrrkNKeZjU5XpVnvp+ulsUZl2jogJgsx4qydOrbGoG6m5le6ZhWWdgAuA
+	 vAACGxe5Ba+OuuS9x6KiqhCyxjEkMFwSsNUXh8bVXP2z7eigTrf1csKTwSl397Gvno
+	 hoC619o+Fk/vxv2ICi39laswM+6FroK2S/LtYFiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lei lu <llfamsec@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 5.4 41/43] jfs: dont walk off the end of ealist
-Date: Thu, 25 Jul 2024 16:37:04 +0200
-Message-ID: <20240725142732.022014891@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 42/43] ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
+Date: Thu, 25 Jul 2024 16:37:05 +0200
+Message-ID: <20240725142732.059661696@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142730.471190017@linuxfoundation.org>
 References: <20240725142730.471190017@linuxfoundation.org>
@@ -50,83 +50,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: lei lu <llfamsec@gmail.com>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-commit d0fa70aca54c8643248e89061da23752506ec0d4 upstream.
+commit 8fc1e8b230771442133d5cf5fa4313277aa2bb8b upstream.
 
-Add a check before visiting the members of ea to
-make sure each ea stays within the ealist.
+Positivo SU C1400 is equipped with ALC256, and it needs
+ALC269_FIXUP_ASPIRE_HEADSET_MIC quirk to make its headset mic work.
 
-Signed-off-by: lei lu <llfamsec@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240712180642.22564-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -797,7 +797,7 @@ ssize_t __jfs_getxattr(struct inode *ino
- 		       size_t buf_size)
- {
- 	struct jfs_ea_list *ealist;
--	struct jfs_ea *ea;
-+	struct jfs_ea *ea, *ealist_end;
- 	struct ea_buffer ea_buf;
- 	int xattr_size;
- 	ssize_t size;
-@@ -817,9 +817,16 @@ ssize_t __jfs_getxattr(struct inode *ino
- 		goto not_found;
- 
- 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
-+	ealist_end = END_EALIST(ealist);
- 
- 	/* Find the named attribute */
--	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea))
-+	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
-+		if (unlikely(ea + 1 > ealist_end) ||
-+		    unlikely(NEXT_EA(ea) > ealist_end)) {
-+			size = -EUCLEAN;
-+			goto release;
-+		}
-+
- 		if ((namelen == ea->namelen) &&
- 		    memcmp(name, ea->name, namelen) == 0) {
- 			/* Found it */
-@@ -834,6 +841,7 @@ ssize_t __jfs_getxattr(struct inode *ino
- 			memcpy(data, value, size);
- 			goto release;
- 		}
-+	}
-       not_found:
- 	size = -ENODATA;
-       release:
-@@ -861,7 +869,7 @@ ssize_t jfs_listxattr(struct dentry * de
- 	ssize_t size = 0;
- 	int xattr_size;
- 	struct jfs_ea_list *ealist;
--	struct jfs_ea *ea;
-+	struct jfs_ea *ea, *ealist_end;
- 	struct ea_buffer ea_buf;
- 
- 	down_read(&JFS_IP(inode)->xattr_sem);
-@@ -876,9 +884,16 @@ ssize_t jfs_listxattr(struct dentry * de
- 		goto release;
- 
- 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
-+	ealist_end = END_EALIST(ealist);
- 
- 	/* compute required size of list */
--	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea)) {
-+	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
-+		if (unlikely(ea + 1 > ealist_end) ||
-+		    unlikely(NEXT_EA(ea) > ealist_end)) {
-+			size = -EUCLEAN;
-+			goto release;
-+		}
-+
- 		if (can_list(ea))
- 			size += name_size(ea) + 1;
- 	}
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8335,6 +8335,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x10cf, 0x1845, "Lifebook U904", ALC269_FIXUP_LIFEBOOK_EXTMIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x10f2, "Intel Reference board", ALC700_FIXUP_INTEL_REFERENCE),
+ 	SND_PCI_QUIRK(0x10ec, 0x118c, "Medion EE4254 MD62100", ALC256_FIXUP_MEDION_HEADSET_NO_PRESENCE),
++	SND_PCI_QUIRK(0x10ec, 0x119e, "Positivo SU C1400", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x10ec, 0x11bc, "VAIO VJFE-IL", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x10ec, 0x1230, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0x10ec, 0x124c, "Intel Reference board", ALC295_FIXUP_CHROME_BOOK),
 
 
