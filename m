@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A419D091;
-	Thu, 25 Jul 2024 14:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EDA519D06D;
+	Thu, 25 Jul 2024 14:39:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918383; cv=none; b=c/1MK9zmTMYt1kd3OOBxS0aXSGG0rdzMKqBM5h0L05D4Zp9NesI2CivgvWom21Jea8dzV8zvL9D0i+5ZJLxM6Am1U611VgAdOcqJ20Jpj813eguMmb3kFDyG3bvmhUJA+9tJSU/TAMGrR+jSMj6UdTbfGOeXQQAGx+BW1ychw+g=
+	t=1721918386; cv=none; b=EqbgyhVKy1EPsdXjYiPpGxx+I4He2vfN7n5KLGf+zWwt58w7tSMesGWzi0PppSXVsyRiEbxlyo7VW9Ng3peIBmpB/xjn9gp1mTmguqhpYhrE8WBwUhUFT45H6naChveepxAKD1FDvUq8ZPEfOvfPsRHAL3PqWT/AbGmHyFDtSyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918383; c=relaxed/simple;
-	bh=nRn/VNrGriYNszX7+YAWvOpFLc6vt2eM3sYfnumTf58=;
+	s=arc-20240116; t=1721918386; c=relaxed/simple;
+	bh=MEA4/yeKHW+6wmwKisn51uofiORZGpN5e66y0I0O4Yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qW3v8wcMJoQtyGQrecCUyUdHHyw4ZqrI6oIJRaqW+5NLUsbEBB7ZTfPFFw+J1Hj78ciU5ZsmFLA1IiMxa0WrnP75nUeg5jgHdE0+BzkdN7F3/XiZ6xWATsD+iqmMhij3eiNgaJHuRtIR7opg4ZZI7XcRVC+PhUlBbB4YGFlOipc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeHbbsin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eMwvGKWc0Sdb1rWfMV58eu7E1qWEh5TIaUhiDneROCTzDQzjqgex+XOSQKBraXrp/tsePNDP/4iNzQemnLxR+kCzmswZe+U/sw3GQImhZ04fk15ewOXzFc6fOdaP+BsLyQFLzZDJVpCMcfD2WZ7dDq6dbkhkec/UYJtlsvQUV9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qUB8pluf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeHbbsin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53BECC116B1;
-	Thu, 25 Jul 2024 14:39:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qUB8pluf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E9C4AF07;
+	Thu, 25 Jul 2024 14:39:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918382;
-	bh=nRn/VNrGriYNszX7+YAWvOpFLc6vt2eM3sYfnumTf58=;
+	s=korg; t=1721918386;
+	bh=MEA4/yeKHW+6wmwKisn51uofiORZGpN5e66y0I0O4Yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeHbbsinyUIcQJbP8/KeY8yg0VujPtG0QnyayNzVP7t8kwelMRqMJN7ZZwEibCYpa
-	 7/85TBbvlyWWlH1Wxc/+Jn/1ol7R5pfF9kAiC2HlzSJTpoXSo9qRz8+c4HDGG4/Ex0
-	 unJgq4bxMQyuDP/iq1T0dkBa58l79Uu5aSUjv2WI=
+	b=qUB8pluf7l+KZIzs4dAj1s1mqsDjbsM0zk5KXSc7wjyCMH/w5l/zeBVk2cTzz5//R
+	 GXycSX/uhmcnMJWTXCakhgY+2igvKvBSCayL5RREi5wjeKNtCkoiOOHJlaXsD9hgqi
+	 FUF4S87SzLIUmFy6M5gMwCYH4Hhm0wi+HjMmmXnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Krishna Kurapati <quic_kriskura@quicinc.com>,
 	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 25/29] arm64: dts: qcom: sdm845: Disable SS instance in Parkmode for USB
-Date: Thu, 25 Jul 2024 16:36:41 +0200
-Message-ID: <20240725142732.762041679@linuxfoundation.org>
+Subject: [PATCH 6.10 26/29] arm64: dts: qcom: sm6115: Disable SS instance in Parkmode for USB
+Date: Thu, 25 Jul 2024 16:36:42 +0200
+Message-ID: <20240725142732.798921569@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-commit cf4d6d54eadb60d2ee4d31c9d92299f5e8dcb55c upstream.
+commit 074992a1163295d717faa21d1818c4c19ef6e676 upstream.
 
-For Gen-1 targets like SDM845, it is seen that stressing out the
+For Gen-1 targets like SM6115, it is seen that stressing out the
 controller in host mode results in HC died error:
 
  xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
@@ -63,36 +63,28 @@ controller in host mode results in HC died error:
  xhci-hcd.12.auto: HC died; cleaning up
 
 And at this instant only restarting the host mode fixes it. Disable
-SuperSpeed instance in park mode for SDM845 to mitigate this issue.
+SuperSpeed instance in park mode for SM6115 to mitigate this issue.
 
 Cc: stable@vger.kernel.org
-Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
+Fixes: 97e563bf5ba1 ("arm64: dts: qcom: sm6115: Add basic soc dtsi")
 Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
 Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240704152848.3380602-9-quic_kriskura@quicinc.com
+Link: https://lore.kernel.org/r/20240704152848.3380602-6-quic_kriskura@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6115.dtsi |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4106,6 +4106,7 @@
- 				iommus = <&apps_smmu 0x740 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
+--- a/arch/arm64/boot/dts/qcom/sm6115.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6115.dtsi
+@@ -1656,6 +1656,7 @@
+ 				snps,has-lpm-erratum;
+ 				snps,hird-threshold = /bits/ 8 <0x10>;
+ 				snps,usb3_lpm_capable;
 +				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
-@@ -4161,6 +4162,7 @@
- 				iommus = <&apps_smmu 0x760 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_2_hsphy>, <&usb_2_qmpphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
+ 
+ 				usb-role-switch;
+ 
 
 
