@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3495419CCF7;
-	Thu, 25 Jul 2024 14:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B3D13C816;
+	Thu, 25 Jul 2024 14:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919308; cv=none; b=Yjofqqhtt2RHRF0iKnoUwftfWiof4seBamZr9iqCX8MgURSi3aml++kUXw3Ct90aARAKFuTn49h2krgWp21Jfn+cUfoKQTqIALGBO6kJQOnjDXb7ceBGKOx9otVr397aQ96ytxIlDNB2tLrIyILR2eb+qT8gp3CGjgGRyaq7zKU=
+	t=1721919311; cv=none; b=phO6svx0MGFLf/+RZp06aeBeKcDR+YHFwZvHZueRTSJ3EoRrpfL7oO3o5WVVbS9NcYpDVRpOAAs+7KwJT7E7ZuNjM7g2CNd9stUPOD8PAPT2fbi6TjJQciABBIVTt3YiJXWVRDln79uAPhypkGg49rd1gFFwbjcZ8XHQnd94XQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919308; c=relaxed/simple;
-	bh=zoEtUUu+RiqmdyQ9o4Z2z1ydHz7ItovSsHtaHe+RDZs=;
+	s=arc-20240116; t=1721919311; c=relaxed/simple;
+	bh=qJNKfbwTA7yq6EPsfk00M59c/juUNNqPG2iiLZNghuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CCuvnVtfmWnpPQkSNJ+LnPON9KaHuG2TomY0OBOumSYBMKoLkNC7pFSOYeGRVEClp16wr6UhM58MGpTZ0XeW92pa68fU2+S3Nb28fvSdWDQtDtkm3QRanOtkj8lSxtbAzFAlaCzRGhnHcCN5Cz5mxWxJY5DDb2z5pVxsvvu5aUk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2czUr/T8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OhaRC+AJqcEeUBicbZSQwYICIiopDRFBcc8gqHwU2z/hf6jx+zhCc/S7iMWUBR6REO0qF7I6oy77MTNmABnL67YWhLU3gJhBYVAnB6kP4n4FDqYKAJ69VrCjS/eexI68rW7f5LgpVN5HzzJy6naLljkIslkqoV9mGXkexhh42Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mVz+d0tx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2czUr/T8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B272BC116B1;
-	Thu, 25 Jul 2024 14:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mVz+d0tx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17F0C4AF07;
+	Thu, 25 Jul 2024 14:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919308;
-	bh=zoEtUUu+RiqmdyQ9o4Z2z1ydHz7ItovSsHtaHe+RDZs=;
+	s=korg; t=1721919311;
+	bh=qJNKfbwTA7yq6EPsfk00M59c/juUNNqPG2iiLZNghuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2czUr/T8nwkUU+YEJu7r+LEBze+huD3kRvrmaOef9kerV9WE00KzeZNySlhQZGYQY
-	 XJjnjcq+VV7N3IC7yiJ5YAE2bHpMF6ZAdg0cAezTBwZl4Ht9Qc3b8RZk2pT4K85MXE
-	 jJgFuGFesj+9g9Hq5wl/xhYPejgmw7dM1bSchsaw=
+	b=mVz+d0tx6r/5vd68nQ18hZNQaqklwAIs041uQqNhe76dldNfStcmTLLl/8/iC8q3z
+	 SbtbD42+gXq49ZO9ohJ77YynZh6FvestYKuylDnXSsa9BnAJkLi9tleU2X5C/eriOW
+	 qnj6x0EVEiTlAQ0B1Wn3qlRNbezGyuRZvVv2S2Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 5.15 87/87] filelock: Fix fcntl/close race recovery compat path
-Date: Thu, 25 Jul 2024 16:38:00 +0200
-Message-ID: <20240725142741.717840717@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	SeongJae Park <sj@kernel.org>
+Subject: [PATCH 5.15 66/87] minmax: clamp more efficiently by avoiding extra comparison
+Date: Thu, 25 Jul 2024 16:37:39 +0200
+Message-ID: <20240725142740.922824102@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -51,54 +53,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
 
-commit f8138f2ad2f745b9a1c696a05b749eabe44337ea upstream.
+commit 2122e2a4efc2cd139474079e11939b6e07adfacd upstream.
 
-When I wrote commit 3cad1bc01041 ("filelock: Remove locks reliably when
-fcntl/close race is detected"), I missed that there are two copies of the
-code I was patching: The normal version, and the version for 64-bit offsets
-on 32-bit kernels.
-Thanks to Greg KH for stumbling over this while doing the stable
-backport...
+Currently the clamp algorithm does:
 
-Apply exactly the same fix to the compat path for 32-bit kernels.
+    if (val > hi)
+        val = hi;
+    if (val < lo)
+        val = lo;
 
-Fixes: c293621bbf67 ("[PATCH] stale POSIX lock handling")
-Cc: stable@kernel.org
-Link: https://bugs.chromium.org/p/project-zero/issues/detail?id=2563
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20240723-fs-lock-recover-compatfix-v1-1-148096719529@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+But since hi > lo by definition, this can be made more efficient with:
+
+    if (val > hi)
+        val = hi;
+    else if (val < lo)
+        val = lo;
+
+So fix up the clamp and clamp_t functions to do this, adding the same
+argument checking as for min and min_t.
+
+For simple cases, code generation on x86_64 and aarch64 stay about the
+same:
+
+    before:
+            cmp     edi, edx
+            mov     eax, esi
+            cmova   edi, edx
+            cmp     edi, esi
+            cmovnb  eax, edi
+            ret
+    after:
+            cmp     edi, esi
+            mov     eax, edx
+            cmovnb  esi, edi
+            cmp     edi, edx
+            cmovb   eax, esi
+            ret
+
+    before:
+            cmp     w0, w2
+            csel    w8, w0, w2, lo
+            cmp     w8, w1
+            csel    w0, w8, w1, hi
+            ret
+    after:
+            cmp     w0, w1
+            csel    w8, w0, w1, hi
+            cmp     w0, w2
+            csel    w0, w8, w2, lo
+            ret
+
+On MIPS64, however, code generation improves, by removing arithmetic in
+the second branch:
+
+    before:
+            sltu    $3,$6,$4
+            bne     $3,$0,.L2
+            move    $2,$6
+
+            move    $2,$4
+    .L2:
+            sltu    $3,$2,$5
+            bnel    $3,$0,.L7
+            move    $2,$5
+
+    .L7:
+            jr      $31
+            nop
+    after:
+            sltu    $3,$4,$6
+            beq     $3,$0,.L13
+            move    $2,$6
+
+            sltu    $3,$4,$5
+            bne     $3,$0,.L12
+            move    $2,$4
+
+    .L13:
+            jr      $31
+            nop
+
+    .L12:
+            jr      $31
+            move    $2,$5
+
+For more complex cases with surrounding code, the effects are a bit
+more complicated. For example, consider this simplified version of
+timestamp_truncate() from fs/inode.c on x86_64:
+
+    struct timespec64 timestamp_truncate(struct timespec64 t, struct inode *inode)
+    {
+        struct super_block *sb = inode->i_sb;
+        unsigned int gran = sb->s_time_gran;
+
+        t.tv_sec = clamp(t.tv_sec, sb->s_time_min, sb->s_time_max);
+        if (t.tv_sec == sb->s_time_max || t.tv_sec == sb->s_time_min)
+            t.tv_nsec = 0;
+        return t;
+    }
+
+    before:
+            mov     r8, rdx
+            mov     rdx, rsi
+            mov     rcx, QWORD PTR [r8]
+            mov     rax, QWORD PTR [rcx+8]
+            mov     rcx, QWORD PTR [rcx+16]
+            cmp     rax, rdi
+            mov     r8, rcx
+            cmovge  rdi, rax
+            cmp     rdi, rcx
+            cmovle  r8, rdi
+            cmp     rax, r8
+            je      .L4
+            cmp     rdi, rcx
+            jge     .L4
+            mov     rax, r8
+            ret
+    .L4:
+            xor     edx, edx
+            mov     rax, r8
+            ret
+
+    after:
+            mov     rax, QWORD PTR [rdx]
+            mov     rdx, QWORD PTR [rax+8]
+            mov     rax, QWORD PTR [rax+16]
+            cmp     rax, rdi
+            jg      .L6
+            mov     r8, rax
+            xor     edx, edx
+    .L2:
+            mov     rax, r8
+            ret
+    .L6:
+            cmp     rdx, rdi
+            mov     r8, rdi
+            cmovge  r8, rdx
+            cmp     rax, r8
+            je      .L4
+            xor     eax, eax
+            cmp     rdx, rdi
+            cmovl   rax, rsi
+            mov     rdx, rax
+            mov     rax, r8
+            ret
+    .L4:
+            xor     edx, edx
+            jmp     .L2
+
+In this case, we actually gain a branch, unfortunately, because the
+compiler's replacement axioms no longer as cleanly apply.
+
+So all and all, this change is a bit of a mixed bag.
+
+Link: https://lkml.kernel.org/r/20220926133435.1333846-2-Jason@zx2c4.com
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 2122e2a4efc2cd139474079e11939b6e07adfacd)
+Signed-off-by: SeongJae Park <sj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/locks.c |    9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ include/linux/minmax.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -2605,8 +2605,9 @@ int fcntl_setlk64(unsigned int fd, struc
- 	error = do_lock_file_wait(filp, cmd, file_lock);
+--- a/include/linux/minmax.h
++++ b/include/linux/minmax.h
+@@ -38,7 +38,7 @@
+ 		__cmp_once(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), op))
  
- 	/*
--	 * Attempt to detect a close/fcntl race and recover by releasing the
--	 * lock that was just acquired. There is no need to do that when we're
-+	 * Detect close/fcntl races and recover by zapping all POSIX locks
-+	 * associated with this file and our files_struct, just like on
-+	 * filp_flush(). There is no need to do that when we're
- 	 * unlocking though, or for OFD locks.
- 	 */
- 	if (!error && file_lock->fl_type != F_UNLCK &&
-@@ -2621,9 +2622,7 @@ int fcntl_setlk64(unsigned int fd, struc
- 		f = files_lookup_fd_locked(files, fd);
- 		spin_unlock(&files->file_lock);
- 		if (f != filp) {
--			file_lock->fl_type = F_UNLCK;
--			error = do_lock_file_wait(filp, cmd, file_lock);
--			WARN_ON_ONCE(error);
-+			locks_remove_posix(filp, files);
- 			error = -EBADF;
- 		}
- 	}
+ #define __clamp(val, lo, hi)	\
+-	__cmp(__cmp(val, lo, >), hi, <)
++	((val) >= (hi) ? (hi) : ((val) <= (lo) ? (lo) : (val)))
+ 
+ #define __clamp_once(val, lo, hi, unique_val, unique_lo, unique_hi) ({	\
+ 		typeof(val) unique_val = (val);				\
 
 
