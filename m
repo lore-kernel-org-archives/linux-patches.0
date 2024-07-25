@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4436619D07A;
-	Thu, 25 Jul 2024 14:54:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D82119AD9B;
+	Thu, 25 Jul 2024 14:54:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919283; cv=none; b=n+QewHLMoxH7KwRmCLnv0xlbmToLdRhgMsgjlX3sh+h0PaYcPk+lYmaT92knNIn0Qiy+24X91RjQlu4L/mGYpCkrdkJO5RYiJ71U+SY5286XMaJh0YGMZN8+kh6g0A+IEp/F1uUtl5uvh+VZT0zYIRVYqhiQrx+fSnV4HvQibAU=
+	t=1721919287; cv=none; b=ItsH+9J6yDHSot49li3YvXvW00/wmjwwB+zoE3oRXkHZP7HNm7p8h0s1ljZ//XluUIoaBiA6hxw2IUswWSxoPetdwOaJxxrMNlY82o6wBpveQkPrKVWl9NM9nt5LZCkd4GO/Jvl0OMTmbcR0yJRvJLZhDLaR8Iwc5FuIEr04Yf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919283; c=relaxed/simple;
-	bh=iwEqguH2nky5TOxE6GPl6kikgzuAZ5fBamu20wQ07e8=;
+	s=arc-20240116; t=1721919287; c=relaxed/simple;
+	bh=fSZ93AvCaPs4rfHBFHb+cfMjDtqADjnMICjU+PfeY+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V61NbTKbFQT3YQSWrevhi85QbEDfhtp8/mpmO/2dijzn6P+0wVVbXrz8IN00iFT+wP2DDzELgV8zBEoCKLpGJYjL9VZDAZHt+FmxofWKpJV4Fwca6dChSYUsbgdmdeoniGpw6YkYpnBUmQU5wSD/p0vJbblwbwQCQ+yO18/A1zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rod+GjR+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o/b5H8xMmd70p6Bmasg2IwYuxHNYyYNfhS7oXlNhxAFbOej9y9e1OcOkLx71ZHXiH22EBro9pM3fMMMrDGDQM5J1TNfmj2UYCZDGBY4XiWG2nHVR65WD7h3BCeWI2zXRl0RuLE5MEc5Gy8UFkNRWxNU3DNlBmWQ46SA6wJNpd5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u4VFqPYI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rod+GjR+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8684C116B1;
-	Thu, 25 Jul 2024 14:54:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u4VFqPYI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B32C116B1;
+	Thu, 25 Jul 2024 14:54:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919283;
-	bh=iwEqguH2nky5TOxE6GPl6kikgzuAZ5fBamu20wQ07e8=;
+	s=korg; t=1721919286;
+	bh=fSZ93AvCaPs4rfHBFHb+cfMjDtqADjnMICjU+PfeY+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rod+GjR+oGXYd4MKCa3yOyMm5gqiCDMH1EHW+cZIWY7dHXXDN+L3vypxlVDzo0OP6
-	 3F5dN/zUh9gfJOMgkPlFdBSGXa9C3yb2IH2ZrXwhoJgRW/tMW+rqwKv+vfjxgdD12w
-	 1n1de/eLE2wKioFxAFGfoEwheqICh1CS+vGAHmz0=
+	b=u4VFqPYImeomljHCSV6GnDT6kzf022t6gNUNpCefuNuIClpOOCYhR1gOgBUKTnSE3
+	 9P4Ilz3ChLhAM6SN/uvwrBArkCMbXQSNAW3gJJw5HP4Qi0jYAbopnYDNDIII7yHQAa
+	 mqPwFIqsktHyyZ9tcj2rDiRBTK2ZP9igGFx9zXDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	lei lu <llfamsec@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>
-Subject: [PATCH 5.15 80/87] jfs: dont walk off the end of ealist
-Date: Thu, 25 Jul 2024 16:37:53 +0200
-Message-ID: <20240725142741.459251457@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 81/87] fs/ntfs3: Validate ff offset
+Date: Thu, 25 Jul 2024 16:37:54 +0200
+Message-ID: <20240725142741.495931258@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -52,81 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 From: lei lu <llfamsec@gmail.com>
 
-commit d0fa70aca54c8643248e89061da23752506ec0d4 upstream.
+commit 50c47879650b4c97836a0086632b3a2e300b0f06 upstream.
 
-Add a check before visiting the members of ea to
-make sure each ea stays within the ealist.
+This adds sanity checks for ff offset. There is a check
+on rt->first_free at first, but walking through by ff
+without any check. If the second ff is a large offset.
+We may encounter an out-of-bound read.
 
 Signed-off-by: lei lu <llfamsec@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/jfs/xattr.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ fs/ntfs3/fslog.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/jfs/xattr.c
-+++ b/fs/jfs/xattr.c
-@@ -797,7 +797,7 @@ ssize_t __jfs_getxattr(struct inode *ino
- 		       size_t buf_size)
- {
- 	struct jfs_ea_list *ealist;
--	struct jfs_ea *ea;
-+	struct jfs_ea *ea, *ealist_end;
- 	struct ea_buffer ea_buf;
- 	int xattr_size;
- 	ssize_t size;
-@@ -817,9 +817,16 @@ ssize_t __jfs_getxattr(struct inode *ino
- 		goto not_found;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -724,7 +724,8 @@ static bool check_rstbl(const struct RES
  
- 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
-+	ealist_end = END_EALIST(ealist);
+ 	if (!rsize || rsize > bytes ||
+ 	    rsize + sizeof(struct RESTART_TABLE) > bytes || bytes < ts ||
+-	    le16_to_cpu(rt->total) > ne || ff > ts || lf > ts ||
++	    le16_to_cpu(rt->total) > ne ||
++			ff > ts - sizeof(__le32) || lf > ts - sizeof(__le32) ||
+ 	    (ff && ff < sizeof(struct RESTART_TABLE)) ||
+ 	    (lf && lf < sizeof(struct RESTART_TABLE))) {
+ 		return false;
+@@ -754,6 +755,9 @@ static bool check_rstbl(const struct RES
+ 			return false;
  
- 	/* Find the named attribute */
--	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea))
-+	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
-+		if (unlikely(ea + 1 > ealist_end) ||
-+		    unlikely(NEXT_EA(ea) > ealist_end)) {
-+			size = -EUCLEAN;
-+			goto release;
-+		}
+ 		off = le32_to_cpu(*(__le32 *)Add2Ptr(rt, off));
 +
- 		if ((namelen == ea->namelen) &&
- 		    memcmp(name, ea->name, namelen) == 0) {
- 			/* Found it */
-@@ -834,6 +841,7 @@ ssize_t __jfs_getxattr(struct inode *ino
- 			memcpy(data, value, size);
- 			goto release;
- 		}
-+	}
-       not_found:
- 	size = -ENODATA;
-       release:
-@@ -861,7 +869,7 @@ ssize_t jfs_listxattr(struct dentry * de
- 	ssize_t size = 0;
- 	int xattr_size;
- 	struct jfs_ea_list *ealist;
--	struct jfs_ea *ea;
-+	struct jfs_ea *ea, *ealist_end;
- 	struct ea_buffer ea_buf;
- 
- 	down_read(&JFS_IP(inode)->xattr_sem);
-@@ -876,9 +884,16 @@ ssize_t jfs_listxattr(struct dentry * de
- 		goto release;
- 
- 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
-+	ealist_end = END_EALIST(ealist);
- 
- 	/* compute required size of list */
--	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea)) {
-+	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
-+		if (unlikely(ea + 1 > ealist_end) ||
-+		    unlikely(NEXT_EA(ea) > ealist_end)) {
-+			size = -EUCLEAN;
-+			goto release;
-+		}
-+
- 		if (can_list(ea))
- 			size += name_size(ea) + 1;
++		if (off > ts - sizeof(__le32))
++			return false;
  	}
+ 
+ 	return true;
 
 
