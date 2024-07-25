@@ -1,45 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73C719A29C;
-	Thu, 25 Jul 2024 14:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F4A19D066;
+	Thu, 25 Jul 2024 14:41:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918479; cv=none; b=ZiCM8ibOZ2+LDR+n+2gTv90/JBDsBXIjgAkQwaaEjGDCeh5VgVxMyfB6Rj68UqY3rbeHF8SXen5iYA4LiBnL35M/US36nkwZyinhH3qGpeuGiUNkj+c5OUc/D+whjT3MHwJesHq94H/V8MuU6Yxuwe0l9vozqVKOYPZEIgRg9mA=
+	t=1721918482; cv=none; b=BGUGCSNJm9I+6R6hn42OdgqqYoSdpILGS15PUV+LC8wImR+57Yaul+7sOylJ+PlNf2sOnvpbLtRvGjYBV/eug6zSRwGHlmNsazRxxntfE0wnSyfjP+SMVJ0Wd27XYreb9+Q1bCqWszr3p5WmLwViioPWRsE+fd87F/nEta7IOZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918479; c=relaxed/simple;
-	bh=kKIvqr9pxTGs6zmPJJt+5S29leuEi0acGJ1DUUgqly0=;
+	s=arc-20240116; t=1721918482; c=relaxed/simple;
+	bh=9Ghd4oHg/lTCJxAL3jQ4KIPwWU2s2UA5NuH3Rh5ZEG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGrE+dsHYdty+2vO8Zb4HZBPFbjHuq6K+ncQlMcs+VqnZs0TBdk1BfPywI8HRpT1PYipljW7ZljoGvvRz4pRY0mkinXz+pA2oZt+7j8c09C6JZZrZHNfgGo3JCWBQY6yIivd1OpDcr7Om2drfnAm0ZUS171G5RaVeKvzhSl8QSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHtfcioO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PcHU96A/kch/upV0lJ+RTqqmsxGDTf7G+TObz9yuDrEqxae0rr2h8UEH73K7Lk3NPPYd9fzZI7qSiKPEq7BL6P8RuUFHOLxohwxzY6XJqnkksT4UPliRmj6xF8L+39E/uYUbRePnMpKQEHZm1EKgcoGIYq6I0nFnsdgeS2FPMz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wlDJmqJN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHtfcioO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF67C116B1;
-	Thu, 25 Jul 2024 14:41:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wlDJmqJN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27119C116B1;
+	Thu, 25 Jul 2024 14:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918479;
-	bh=kKIvqr9pxTGs6zmPJJt+5S29leuEi0acGJ1DUUgqly0=;
+	s=korg; t=1721918482;
+	bh=9Ghd4oHg/lTCJxAL3jQ4KIPwWU2s2UA5NuH3Rh5ZEG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHtfcioOnp57hC09NEFxmhYKptXqYDQui3VbsG6aZFUuqEg6XuK0mJ2gvyKy3V7Wd
-	 ArDMt7Ledbgxyhsvz/GP+pPJk18o+7aXDunieWhZZoKJkDbjkXhCS97vfWytMYXnGb
-	 17mmiY54ezAwLJn4gTS18IvC1OvrIM5GDzhkHFY8=
+	b=wlDJmqJN6/ui1ywqAVT3Y8QwljY01jixF/PgJ2JT8dVoPhCzp4oM0Yu5HpgNTBVoz
+	 L8UhT98Ko4dk1pbIYW63gExEjs0ltelZcn2fvzqFoA1ZTuRfX4hsojijAsGV1cHUPY
+	 CM6Jx/kNT0z62quZMHO/SSyCjtKqWyD64/8dETgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	lei lu <llfamsec@gmail.com>,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 31/33] ocfs2: add bounds checking to ocfs2_check_dir_entry()
-Date: Thu, 25 Jul 2024 16:36:54 +0200
-Message-ID: <20240725142729.683806352@linuxfoundation.org>
+	Dave Kleikamp <dave.kleikamp@oracle.com>
+Subject: [PATCH 4.19 32/33] jfs: dont walk off the end of ealist
+Date: Thu, 25 Jul 2024 16:36:55 +0200
+Message-ID: <20240725142729.721362407@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142728.511303502@linuxfoundation.org>
 References: <20240725142728.511303502@linuxfoundation.org>
@@ -60,161 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 From: lei lu <llfamsec@gmail.com>
 
-commit 255547c6bb8940a97eea94ef9d464ea5967763fb upstream.
+commit d0fa70aca54c8643248e89061da23752506ec0d4 upstream.
 
-This adds sanity checks for ocfs2_dir_entry to make sure all members of
-ocfs2_dir_entry don't stray beyond valid memory region.
+Add a check before visiting the members of ea to
+make sure each ea stays within the ealist.
 
-Link: https://lkml.kernel.org/r/20240626104433.163270-1-llfamsec@gmail.com
 Signed-off-by: lei lu <llfamsec@gmail.com>
-Reviewed-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ocfs2/dir.c |   46 +++++++++++++++++++++++++++++-----------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ fs/jfs/xattr.c |   23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
---- a/fs/ocfs2/dir.c
-+++ b/fs/ocfs2/dir.c
-@@ -314,13 +314,16 @@ out:
-  * bh passed here can be an inode block or a dir data block, depending
-  * on the inode inline data flag.
-  */
--static int ocfs2_check_dir_entry(struct inode * dir,
--				 struct ocfs2_dir_entry * de,
--				 struct buffer_head * bh,
-+static int ocfs2_check_dir_entry(struct inode *dir,
-+				 struct ocfs2_dir_entry *de,
-+				 struct buffer_head *bh,
-+				 char *buf,
-+				 unsigned int size,
- 				 unsigned long offset)
+--- a/fs/jfs/xattr.c
++++ b/fs/jfs/xattr.c
+@@ -810,7 +810,7 @@ ssize_t __jfs_getxattr(struct inode *ino
+ 		       size_t buf_size)
  {
- 	const char *error_msg = NULL;
- 	const int rlen = le16_to_cpu(de->rec_len);
-+	const unsigned long next_offset = ((char *) de - buf) + rlen;
+ 	struct jfs_ea_list *ealist;
+-	struct jfs_ea *ea;
++	struct jfs_ea *ea, *ealist_end;
+ 	struct ea_buffer ea_buf;
+ 	int xattr_size;
+ 	ssize_t size;
+@@ -830,9 +830,16 @@ ssize_t __jfs_getxattr(struct inode *ino
+ 		goto not_found;
  
- 	if (unlikely(rlen < OCFS2_DIR_REC_LEN(1)))
- 		error_msg = "rec_len is smaller than minimal";
-@@ -328,9 +331,11 @@ static int ocfs2_check_dir_entry(struct
- 		error_msg = "rec_len % 4 != 0";
- 	else if (unlikely(rlen < OCFS2_DIR_REC_LEN(de->name_len)))
- 		error_msg = "rec_len is too small for name_len";
--	else if (unlikely(
--		 ((char *) de - bh->b_data) + rlen > dir->i_sb->s_blocksize))
--		error_msg = "directory entry across blocks";
-+	else if (unlikely(next_offset > size))
-+		error_msg = "directory entry overrun";
-+	else if (unlikely(next_offset > size - OCFS2_DIR_REC_LEN(1)) &&
-+		 next_offset != size)
-+		error_msg = "directory entry too close to end";
+ 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
++	ealist_end = END_EALIST(ealist);
  
- 	if (unlikely(error_msg != NULL))
- 		mlog(ML_ERROR, "bad entry in directory #%llu: %s - "
-@@ -372,16 +377,17 @@ static inline int ocfs2_search_dirblock(
- 	de_buf = first_de;
- 	dlimit = de_buf + bytes;
- 
--	while (de_buf < dlimit) {
-+	while (de_buf < dlimit - OCFS2_DIR_MEMBER_LEN) {
- 		/* this code is executed quadratically often */
- 		/* do minimal checking `by hand' */
- 
- 		de = (struct ocfs2_dir_entry *) de_buf;
- 
--		if (de_buf + namelen <= dlimit &&
-+		if (de->name + namelen <= dlimit &&
- 		    ocfs2_match(namelen, name, de)) {
- 			/* found a match - just to be sure, do a full check */
--			if (!ocfs2_check_dir_entry(dir, de, bh, offset)) {
-+			if (!ocfs2_check_dir_entry(dir, de, bh, first_de,
-+						   bytes, offset)) {
- 				ret = -1;
- 				goto bail;
- 			}
-@@ -1158,7 +1164,7 @@ static int __ocfs2_delete_entry(handle_t
- 	pde = NULL;
- 	de = (struct ocfs2_dir_entry *) first_de;
- 	while (i < bytes) {
--		if (!ocfs2_check_dir_entry(dir, de, bh, i)) {
-+		if (!ocfs2_check_dir_entry(dir, de, bh, first_de, bytes, i)) {
- 			status = -EIO;
- 			mlog_errno(status);
- 			goto bail;
-@@ -1658,7 +1664,8 @@ int __ocfs2_add_entry(handle_t *handle,
- 		/* These checks should've already been passed by the
- 		 * prepare function, but I guess we can leave them
- 		 * here anyway. */
--		if (!ocfs2_check_dir_entry(dir, de, insert_bh, offset)) {
-+		if (!ocfs2_check_dir_entry(dir, de, insert_bh, data_start,
-+					   size, offset)) {
- 			retval = -ENOENT;
- 			goto bail;
+ 	/* Find the named attribute */
+-	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea))
++	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
++		if (unlikely(ea + 1 > ealist_end) ||
++		    unlikely(NEXT_EA(ea) > ealist_end)) {
++			size = -EUCLEAN;
++			goto release;
++		}
++
+ 		if ((namelen == ea->namelen) &&
+ 		    memcmp(name, ea->name, namelen) == 0) {
+ 			/* Found it */
+@@ -847,6 +854,7 @@ ssize_t __jfs_getxattr(struct inode *ino
+ 			memcpy(data, value, size);
+ 			goto release;
  		}
-@@ -1796,7 +1803,8 @@ static int ocfs2_dir_foreach_blk_id(stru
- 		}
++	}
+       not_found:
+ 	size = -ENODATA;
+       release:
+@@ -874,7 +882,7 @@ ssize_t jfs_listxattr(struct dentry * de
+ 	ssize_t size = 0;
+ 	int xattr_size;
+ 	struct jfs_ea_list *ealist;
+-	struct jfs_ea *ea;
++	struct jfs_ea *ea, *ealist_end;
+ 	struct ea_buffer ea_buf;
  
- 		de = (struct ocfs2_dir_entry *) (data->id_data + ctx->pos);
--		if (!ocfs2_check_dir_entry(inode, de, di_bh, ctx->pos)) {
-+		if (!ocfs2_check_dir_entry(inode, de, di_bh, (char *)data->id_data,
-+					   i_size_read(inode), ctx->pos)) {
- 			/* On error, skip the f_pos to the end. */
- 			ctx->pos = i_size_read(inode);
- 			break;
-@@ -1893,7 +1901,8 @@ static int ocfs2_dir_foreach_blk_el(stru
- 		while (ctx->pos < i_size_read(inode)
- 		       && offset < sb->s_blocksize) {
- 			de = (struct ocfs2_dir_entry *) (bh->b_data + offset);
--			if (!ocfs2_check_dir_entry(inode, de, bh, offset)) {
-+			if (!ocfs2_check_dir_entry(inode, de, bh, bh->b_data,
-+						   sb->s_blocksize, offset)) {
- 				/* On error, skip the f_pos to the
- 				   next block. */
- 				ctx->pos = (ctx->pos | (sb->s_blocksize - 1)) + 1;
-@@ -3369,7 +3378,7 @@ static int ocfs2_find_dir_space_id(struc
- 	struct super_block *sb = dir->i_sb;
- 	struct ocfs2_dinode *di = (struct ocfs2_dinode *)di_bh->b_data;
- 	struct ocfs2_dir_entry *de, *last_de = NULL;
--	char *de_buf, *limit;
-+	char *first_de, *de_buf, *limit;
- 	unsigned long offset = 0;
- 	unsigned int rec_len, new_rec_len, free_space = dir->i_sb->s_blocksize;
+ 	down_read(&JFS_IP(inode)->xattr_sem);
+@@ -889,9 +897,16 @@ ssize_t jfs_listxattr(struct dentry * de
+ 		goto release;
  
-@@ -3382,14 +3391,16 @@ static int ocfs2_find_dir_space_id(struc
- 	else
- 		free_space = dir->i_sb->s_blocksize - i_size_read(dir);
+ 	ealist = (struct jfs_ea_list *) ea_buf.xattr;
++	ealist_end = END_EALIST(ealist);
  
--	de_buf = di->id2.i_data.id_data;
-+	first_de = di->id2.i_data.id_data;
-+	de_buf = first_de;
- 	limit = de_buf + i_size_read(dir);
- 	rec_len = OCFS2_DIR_REC_LEN(namelen);
- 
- 	while (de_buf < limit) {
- 		de = (struct ocfs2_dir_entry *)de_buf;
- 
--		if (!ocfs2_check_dir_entry(dir, de, di_bh, offset)) {
-+		if (!ocfs2_check_dir_entry(dir, de, di_bh, first_de,
-+					   i_size_read(dir), offset)) {
- 			ret = -ENOENT;
- 			goto out;
- 		}
-@@ -3471,7 +3482,8 @@ static int ocfs2_find_dir_space_el(struc
- 			/* move to next block */
- 			de = (struct ocfs2_dir_entry *) bh->b_data;
- 		}
--		if (!ocfs2_check_dir_entry(dir, de, bh, offset)) {
-+		if (!ocfs2_check_dir_entry(dir, de, bh, bh->b_data, blocksize,
-+					   offset)) {
- 			status = -ENOENT;
- 			goto bail;
- 		}
+ 	/* compute required size of list */
+-	for (ea = FIRST_EA(ealist); ea < END_EALIST(ealist); ea = NEXT_EA(ea)) {
++	for (ea = FIRST_EA(ealist); ea < ealist_end; ea = NEXT_EA(ea)) {
++		if (unlikely(ea + 1 > ealist_end) ||
++		    unlikely(NEXT_EA(ea) > ealist_end)) {
++			size = -EUCLEAN;
++			goto release;
++		}
++
+ 		if (can_list(ea))
+ 			size += name_size(ea) + 1;
+ 	}
 
 
