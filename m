@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1454519CCF7;
-	Thu, 25 Jul 2024 14:54:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578F919AD9B;
+	Thu, 25 Jul 2024 14:54:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919296; cv=none; b=J4/gwjSvQysEWyeyh1QUXJPy4WBfUyWu20JwqzUQaYfRpKkDkUtXoUPmbohZkw0CB0RtVrbZ7W+R0aD8zX1t/aXgHNL3k9cOtYuar/D+f+qGUaQ5rI/Ga/LManOsElEQta1r/AbwqowWdJX/ukg+TI390vpyX8CMLOYqoIzHDPk=
+	t=1721919299; cv=none; b=M0VO6UX7O95ehC1x/Zy69TqClRQU2GmHh28BZlh7r98vTqrDTF3RGHsxm+lA8iSMPxB9bg1uvr/2YMWiARff3EKsqYQypdAkZd7gMkGhPKy7uXnM0P5x6LShL5rUC4wQwUiiLwVdWs/vd3BY8VYKleCJPK1SfebYemkULlUjJzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919296; c=relaxed/simple;
-	bh=GTiSRRhSt3XaeT0J/CLWykICNBRlR2O3uvp3mFToY2I=;
+	s=arc-20240116; t=1721919299; c=relaxed/simple;
+	bh=zp0rdzUJiZkGBT2tozcvSORvMCheqhU3SyTqDXz3sLo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dp2238bDU/Rn9mzZ0/vJpguF4Q1bF8kvyofnmJQxZRtZhjDq/DG7NFkbYx7ux1RkgURACpivgFn4/rMcFikSDo248qDZerd1nSLZ+PU7F17uolJGODTwWnhhvws5eHfPdtuKJI8xtH0cLzUkbbskCW/ffsy9K2njKkR7lrWuC/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvUxaiJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NIgW/J/Js2OXKxS44jDde0n1rg8omX+xXWf5WLds8nGlcZzyPxC3Vtw1SquNYymUH/TY4p3ccZj3RPXDflY7vdpnywZVyBf2Ax0CibgHlMhlE4MsGjI+Fg49d7xtmYDZNvqYeePIrKMWVxMUis5+4JmdLYKQ84Hq7XobycGXHok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H6w3H0lI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvUxaiJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA9FC116B1;
-	Thu, 25 Jul 2024 14:54:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H6w3H0lI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88338C116B1;
+	Thu, 25 Jul 2024 14:54:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919296;
-	bh=GTiSRRhSt3XaeT0J/CLWykICNBRlR2O3uvp3mFToY2I=;
+	s=korg; t=1721919299;
+	bh=zp0rdzUJiZkGBT2tozcvSORvMCheqhU3SyTqDXz3sLo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvUxaiJUmHr3LDJ12JHEGjZlvQRvvqZzErt35nF0QkRilH3eJ6Jo+Etmyqv8iLbJu
-	 dpqsVbl0JMXa6MLZG84o6pxUl4IRBOuGavWCZUhtTWyXvarmt4wnRULqHZ6eVSKNzL
-	 xbP/vbtLRStlLw04eTbtIjdG5nThZbXN1Ykqy4NI=
+	b=H6w3H0lIWvxxtRWHrwAmbPFexglXXumELSORpjEqEd41ltbiJuuC/BDb5Ncahn9+b
+	 c+hTfwbNYQlzXznT+Jglq12Sz4qAmP2IRWgIPbmNnfbqaQZzjKj7fk0uqVfkZaaAVM
+	 GSruR3ZBY5GPRMDIyf/1pgbY824Qz8VzM/VX2p9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seunghun Han <kkamagui@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 83/87] ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book Pro 360
-Date: Thu, 25 Jul 2024 16:37:56 +0200
-Message-ID: <20240725142741.569335318@linuxfoundation.org>
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.15 84/87] arm64: dts: qcom: msm8996: Disable SS instance in Parkmode for USB
+Date: Thu, 25 Jul 2024 16:37:57 +0200
+Message-ID: <20240725142741.606197987@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -50,32 +51,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seunghun Han <kkamagui@gmail.com>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-commit d7063c08738573fc2f3296da6d31a22fa8aa843a upstream.
+commit 44ea1ae3cf95db97e10d6ce17527948121f1dd4b upstream.
 
-Samsung Galaxy Book Pro 360 (13" 2022 NT935QDB-KC71S) with codec SSID
-144d:c1a4 requires the same workaround to enable the speaker amp
-as other Samsung models with the ALC298 codec.
+For Gen-1 targets like MSM8996, it is seen that stressing out the
+controller in host mode results in HC died error:
 
-Signed-off-by: Seunghun Han <kkamagui@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240718080908.8677-1-kkamagui@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
+ xhci-hcd.12.auto: xHCI host controller not responding, assume dead
+ xhci-hcd.12.auto: HC died; cleaning up
+
+And at this instant only restarting the host mode fixes it. Disable
+SuperSpeed instance in park mode for MSM8996 to mitigate this issue.
+
+Cc: stable@vger.kernel.org
+Fixes: 1e39255ed29d ("arm64: dts: msm8996: Add device node for qcom,dwc3")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240704152848.3380602-8-quic_kriskura@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
+ arch/arm64/boot/dts/qcom/msm8996.dtsi |    1 +
  1 file changed, 1 insertion(+)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9286,6 +9286,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
-+	SND_PCI_QUIRK(0x144d, 0xc1a4, "Samsung Galaxy Book Pro 360 (NT935QBD)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc1a6, "Samsung Galaxy Book Pro 360 (NP930QBD)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc740, "Samsung Ativ book 8 (NP870Z5G)", ALC269_FIXUP_ATIV_BOOK_8),
- 	SND_PCI_QUIRK(0x144d, 0xc812, "Samsung Notebook Pen S (NT950SBE-X58)", ALC298_FIXUP_SAMSUNG_AMP),
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -2634,6 +2634,7 @@
+ 				snps,dis_u2_susphy_quirk;
+ 				snps,dis_enblslpm_quirk;
+ 				snps,is-utmi-l1-suspend;
++				snps,parkmode-disable-ss-quirk;
+ 				tx-fifo-resize;
+ 			};
+ 		};
 
 
