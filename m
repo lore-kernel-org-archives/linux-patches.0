@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C84C619A29C;
-	Thu, 25 Jul 2024 14:39:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F6AE19D894;
+	Thu, 25 Jul 2024 14:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721918389; cv=none; b=GDRFP/yFsxXLVibpBGt/+EJEzgiTf7gpNCjyH62ue+OuqiYcGdWHVAbvhV7ipoTdg+kQ+W9WpLD0Nzlgbt9tBOTboxUvePWAvXsUbroVqta34yu0I7DPr+Yx2MxOLJu5U8YVTum+oui1+TsEcndRj2h/uQi0LBVv4Od8jk9+pGs=
+	t=1721918393; cv=none; b=E/UI5VXBq2kIFiuOzLNNwPi6jNQlucr+2fBP6AydrZ5XjLG24mPdgGQp0Hr8jakfydgBwWLLXiuZpJIrDW9qgtUjGHMpK5+7BrAXYe60MUaWdiCgRBa2x7+lBepi4akEC2sCz/C/HaIBJzoY3PRHX3OVawmT0pHokFmtFf3F+KE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721918389; c=relaxed/simple;
-	bh=QsG3dx0mBl8GtHmVd18FQH4nn5+oU887JRhCdFH/TPU=;
+	s=arc-20240116; t=1721918393; c=relaxed/simple;
+	bh=3R23GLmo5/Haigox82N2tyMOqfitAECHGGe3caSiK2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HQw+kLC0tJczUR2OVkWd9Ozt6psVdQ3hf4cm3lHPeCZIPvNPzpUx+1aTizUw/hbrwU6xE2If64zyHxyOXyjUR6FiMQ6EpkpX/6xbPoRB9zMqThwkrRW3AXHCFc9MHZZRkjEOKaOXhEi+HEO+rzZFP5utLRU+GzxA9nUNaVyIJgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UAey/UxE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NfyHdMCmE0dtyqT+s+oDyiBEk4W4DC6NemyN+TYiTUZ8HURa27hBZWXsr2d/xaJo2By+uVJ7PYFU1AW0ki+JHhZGW46PFHYcxUREmFCzRdj3DF0ergzgNicsKJRxCEsxGQtJdAKWTksfKpJ1V1kci58PYd8MP/sThOTgj6oOeAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N0R6L797; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UAey/UxE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357D1C32782;
-	Thu, 25 Jul 2024 14:39:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N0R6L797"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8DDC4AF10;
+	Thu, 25 Jul 2024 14:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721918389;
-	bh=QsG3dx0mBl8GtHmVd18FQH4nn5+oU887JRhCdFH/TPU=;
+	s=korg; t=1721918393;
+	bh=3R23GLmo5/Haigox82N2tyMOqfitAECHGGe3caSiK2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAey/UxEKDsSMk2S9W1BirqXZDR1PfKVZD761npLRvDzf98yerUQdLwGlUl/92e1d
-	 OnQ/b3sCnckRsrWFCHwIFGjPEEa1FX2QLcbNFa8zBQ4EcfXMt5g+MuqRXpwVmD/Wv0
-	 +f6yc+ku0rBes20HOJX2cbwstAOq2C8cUBUk93G4=
+	b=N0R6L797aLmpveJssERMGrWu9rSC6Vb8RaQqljKmBQTZI0kTuKeeHYKLrUgE5eP8g
+	 /FnD//+8DGGqnegY7xWHJUeoLVfAXJivK3Z6RAmj3vVmIzgo0zjJ5+jr+OHxEG+eIi
+	 g3VwYPHSxB2USCT3Vkjp7bYTdKIW2g8geu8nm2Sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 27/29] ALSA: pcm_dmaengine: Dont synchronize DMA channel when DMA is paused
-Date: Thu, 25 Jul 2024 16:36:43 +0200
-Message-ID: <20240725142732.835497220@linuxfoundation.org>
+Subject: [PATCH 6.10 28/29] ALSA: seq: ump: Skip useless ports for static blocks
+Date: Thu, 25 Jul 2024 16:36:44 +0200
+Message-ID: <20240725142732.873167295@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
 References: <20240725142731.814288796@linuxfoundation.org>
@@ -50,40 +49,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 88e98af9f4b5b0d60c1fe7f7f2701b5467691e75 upstream.
+commit 3bfd7c0ba184de99e9f5083b29e5308f30767265 upstream.
 
-When suspended, the DMA channel may enter PAUSE state if dmaengine_pause()
-is supported by DMA.
-At this state, dmaengine_synchronize() should not be called, otherwise
-the DMA channel can't be resumed successfully.
+When the UMP Endpoint is configured with static blocks, the block
+configuration will never change, hence the unused ports will be
+unchanged as well.  Creating sequencer ports for those unused ports
+is simply useless, and it might be rather confusing for users.
+The idea behind the inactive ports was for allowing connections
+from/to ports that can become usable later, but this will never
+happen for inactive groups in static blocks.
 
-Fixes: e8343410ddf0 ("ALSA: dmaengine: Synchronize dma channel after drop()")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Let's change the sequencer UMP binding to skip those unused ports when
+the UMP EP is with static blocks.
+
+Fixes: 81fd444aa371 ("ALSA: seq: Bind UMP device")
 Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/1721198693-27636-1-git-send-email-shengjiu.wang@nxp.com
+Link: https://patch.msgid.link/20240717083322.25892-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_dmaengine.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/core/seq/seq_ump_client.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/sound/core/pcm_dmaengine.c
-+++ b/sound/core/pcm_dmaengine.c
-@@ -352,8 +352,12 @@ EXPORT_SYMBOL_GPL(snd_dmaengine_pcm_open
- int snd_dmaengine_pcm_sync_stop(struct snd_pcm_substream *substream)
- {
- 	struct dmaengine_pcm_runtime_data *prtd = substream_to_prtd(substream);
-+	struct dma_tx_state state;
-+	enum dma_status status;
+--- a/sound/core/seq/seq_ump_client.c
++++ b/sound/core/seq/seq_ump_client.c
+@@ -28,6 +28,7 @@ struct seq_ump_group {
+ 	int group;			/* group index (0-based) */
+ 	unsigned int dir_bits;		/* directions */
+ 	bool active;			/* activeness */
++	bool valid;			/* valid group (referred by blocks) */
+ 	char name[64];			/* seq port name */
+ };
  
--	dmaengine_synchronize(prtd->dma_chan);
-+	status = dmaengine_tx_status(prtd->dma_chan, prtd->cookie, &state);
-+	if (status != DMA_PAUSED)
-+		dmaengine_synchronize(prtd->dma_chan);
- 
- 	return 0;
+@@ -210,6 +211,13 @@ static void fill_port_info(struct snd_se
+ 		sprintf(port->name, "Group %d", group->group + 1);
  }
+ 
++/* skip non-existing group for static blocks */
++static bool skip_group(struct seq_ump_client *client, struct seq_ump_group *group)
++{
++	return !group->valid &&
++		(client->ump->info.flags & SNDRV_UMP_EP_INFO_STATIC_BLOCKS);
++}
++
+ /* create a new sequencer port per UMP group */
+ static int seq_ump_group_init(struct seq_ump_client *client, int group_index)
+ {
+@@ -217,6 +225,9 @@ static int seq_ump_group_init(struct seq
+ 	struct snd_seq_port_info *port __free(kfree) = NULL;
+ 	struct snd_seq_port_callback pcallbacks;
+ 
++	if (skip_group(client, group))
++		return 0;
++
+ 	port = kzalloc(sizeof(*port), GFP_KERNEL);
+ 	if (!port)
+ 		return -ENOMEM;
+@@ -250,6 +261,9 @@ static void update_port_infos(struct seq
+ 		return;
+ 
+ 	for (i = 0; i < SNDRV_UMP_MAX_GROUPS; i++) {
++		if (skip_group(client, &client->groups[i]))
++			continue;
++
+ 		old->addr.client = client->seq_client;
+ 		old->addr.port = i;
+ 		err = snd_seq_kernel_client_ctl(client->seq_client,
+@@ -284,6 +298,7 @@ static void update_group_attrs(struct se
+ 		group->dir_bits = 0;
+ 		group->active = 0;
+ 		group->group = i;
++		group->valid = false;
+ 	}
+ 
+ 	list_for_each_entry(fb, &client->ump->block_list, list) {
+@@ -291,6 +306,7 @@ static void update_group_attrs(struct se
+ 			break;
+ 		group = &client->groups[fb->info.first_group];
+ 		for (i = 0; i < fb->info.num_groups; i++, group++) {
++			group->valid = true;
+ 			if (fb->info.active)
+ 				group->active = 1;
+ 			switch (fb->info.direction) {
 
 
