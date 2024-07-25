@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9A48468;
-	Thu, 25 Jul 2024 14:52:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27ADD8468;
+	Thu, 25 Jul 2024 14:52:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721919161; cv=none; b=NZCa8oSXUTcVE3k/q15ABHiNJUtRS8K8RN+Xt3QkRCYLlt9FMDRowMedjA/U/RX6qtapNrGwrovG1YFs2pyTJVTPnVXuUpf5akZu5IzVheKMToLpIEdOO6GKQis89HIauW7ZGTfGkKxr7poYIMaZ2ClLT6lwTR4GD8slO7lH3aw=
+	t=1721919164; cv=none; b=ZKbMo3VKSNFPZe0Op3VZgPNVNr3v0aYYGPflRr3VZtXhn23wKPQptFVQN8HKHGRCocKNl5oNN+zB0gwT1430N8HRo/hR2Ko7WcAaZpRDftKbYwLFWpOSm0Ia7ZHpMPzGDiBExnQyOAH4QGQInhpmtRpYlNs/7+KNr0ppPHZWbug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721919161; c=relaxed/simple;
-	bh=Vu27ivGp2SXV1/KfEE9p2uPtmFPWRibVXZU7e6EAckk=;
+	s=arc-20240116; t=1721919164; c=relaxed/simple;
+	bh=5QpvStDwTq2xnbwS4g3BZ2BDPp7Lo1vSLL5YxR2AmXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qPMMNMU0antsYTXYp3UHfx9jHodnoTSKwsmAzYt5tOWG7B1evJ31mbjR3BhoC36Ht9cLOXc5jBV8ANN/K5GOZJSpHvGOahveom17kxhzwBJrIkbrb/usDHLsaZ8EdK6emJmXRGq1m12fWN1jRtSF2wkUDceflCo4AzsLfjeHTIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nFyT3LhU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BnihKiXbMJxfn+UukwxImuCYWJxCVIaoNb4UX7hkrOu4+rsM3euLDooUFs2TEwQ754W0ah0WtGHo/88oXUR8a8mgBs0sWC8M7P24CAknbKE8X/7l2wRCz9mMvCIwzwNYNepTnhTMiyuAiuSaGVyrAa0W8yTyTa5daASie/M2kIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKvfukuh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nFyT3LhU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E866C116B1;
-	Thu, 25 Jul 2024 14:52:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKvfukuh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC46C32782;
+	Thu, 25 Jul 2024 14:52:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721919160;
-	bh=Vu27ivGp2SXV1/KfEE9p2uPtmFPWRibVXZU7e6EAckk=;
+	s=korg; t=1721919164;
+	bh=5QpvStDwTq2xnbwS4g3BZ2BDPp7Lo1vSLL5YxR2AmXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nFyT3LhUrbPUfwGmn0PyXfP/92H72ILNJMnx2cF+VtBbsj9V9MuIZH4iUHwBdk4uV
-	 25ntPMhPislasKuHnhBPPTtAkQ5zJ9zpeyT6ZNs34EgGiyxd3LkBeKPOzpdWuY2s3a
-	 qFihKa6patolF+TBa+wb/GoBDa1RSZv059jyPN68=
+	b=jKvfukuhxhiQ2SGenRxmmLSdTQIRvzXeOqNXjIszJ7epUaRNSI/zJ9M79Odn4BftK
+	 J/L/5iNqvleqRsAXMtYkCuoFSIggGGjEwpvBLnDMciM5zdnu+MRzZxV1sBhAQEGcia
+	 E4N0LNkzhNGIuWW/MsWkQn6PdMLCDz8f6Rw/iAC8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Agathe Boutmy <agathe@boutmy.com>,
+	Armin Wolf <W_Armin@gmx.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 43/87] s390/sclp: Fix sclp_init() cleanup on failure
-Date: Thu, 25 Jul 2024 16:37:16 +0200
-Message-ID: <20240725142740.058367572@linuxfoundation.org>
+Subject: [PATCH 5.15 44/87] platform/x86: wireless-hotkey: Add support for LG Airplane Button
+Date: Thu, 25 Jul 2024 16:37:17 +0200
+Message-ID: <20240725142740.094966602@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240725142738.422724252@linuxfoundation.org>
 References: <20240725142738.422724252@linuxfoundation.org>
@@ -46,61 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Armin Wolf <W_Armin@gmx.de>
 
-[ Upstream commit 6434b33faaa063df500af355ee6c3942e0f8d982 ]
+[ Upstream commit 151e78a0b89ee6dec93382dbdf5b1ef83f9c4716 ]
 
-If sclp_init() fails it only partially cleans up: if there are multiple
-failing calls to sclp_init() sclp_state_change_event will be added several
-times to sclp_reg_list, which results in the following warning:
+The LGEX0815 ACPI device is used by the "LG Airplane Mode Button"
+Windows driver for handling rfkill requests. When the ACPI device
+receives an 0x80 ACPI notification, an rfkill event is to be
+send to userspace.
 
-------------[ cut here ]------------
-list_add double add: new=000003ffe1598c10, prev=000003ffe1598bf0, next=000003ffe1598c10.
-WARNING: CPU: 0 PID: 1 at lib/list_debug.c:35 __list_add_valid_or_report+0xde/0xf8
-CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.10.0-rc3
-Krnl PSW : 0404c00180000000 000003ffe0d6076a (__list_add_valid_or_report+0xe2/0xf8)
-           R:0 T:1 IO:0 EX:0 Key:0 M:1 W:0 P:0 AS:3 CC:0 PM:0 RI:0 EA:3
-...
-Call Trace:
- [<000003ffe0d6076a>] __list_add_valid_or_report+0xe2/0xf8
-([<000003ffe0d60766>] __list_add_valid_or_report+0xde/0xf8)
- [<000003ffe0a8d37e>] sclp_init+0x40e/0x450
- [<000003ffe00009f2>] do_one_initcall+0x42/0x1e0
- [<000003ffe15b77a6>] do_initcalls+0x126/0x150
- [<000003ffe15b7a0a>] kernel_init_freeable+0x1ba/0x1f8
- [<000003ffe0d6650e>] kernel_init+0x2e/0x180
- [<000003ffe000301c>] __ret_from_fork+0x3c/0x60
- [<000003ffe0d759ca>] ret_from_fork+0xa/0x30
+Add support for the LGEX0815 ACPI device to the driver.
 
-Fix this by removing sclp_state_change_event from sclp_reg_list when
-sclp_init() fails.
-
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Tested-by: Agathe Boutmy <agathe@boutmy.com>
+Signed-off-by: Armin Wolf <W_Armin@gmx.de>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240606233540.9774-2-W_Armin@gmx.de
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/char/sclp.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/wireless-hotkey.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/s390/char/sclp.c b/drivers/s390/char/sclp.c
-index 2cf7fe131ecec..0830ea42e7c80 100644
---- a/drivers/s390/char/sclp.c
-+++ b/drivers/s390/char/sclp.c
-@@ -1292,6 +1292,7 @@ sclp_init(void)
- fail_unregister_reboot_notifier:
- 	unregister_reboot_notifier(&sclp_reboot_notifier);
- fail_init_state_uninitialized:
-+	list_del(&sclp_state_change_event.list);
- 	sclp_init_state = sclp_init_state_uninitialized;
- 	free_page((unsigned long) sclp_read_sccb);
- 	free_page((unsigned long) sclp_init_sccb);
+diff --git a/drivers/platform/x86/wireless-hotkey.c b/drivers/platform/x86/wireless-hotkey.c
+index 11c60a2734468..61ae722643e5a 100644
+--- a/drivers/platform/x86/wireless-hotkey.c
++++ b/drivers/platform/x86/wireless-hotkey.c
+@@ -19,6 +19,7 @@ MODULE_AUTHOR("Alex Hung");
+ MODULE_ALIAS("acpi*:HPQ6001:*");
+ MODULE_ALIAS("acpi*:WSTADEF:*");
+ MODULE_ALIAS("acpi*:AMDI0051:*");
++MODULE_ALIAS("acpi*:LGEX0815:*");
+ 
+ static struct input_dev *wl_input_dev;
+ 
+@@ -26,6 +27,7 @@ static const struct acpi_device_id wl_ids[] = {
+ 	{"HPQ6001", 0},
+ 	{"WSTADEF", 0},
+ 	{"AMDI0051", 0},
++	{"LGEX0815", 0},
+ 	{"", 0},
+ };
+ 
 -- 
 2.43.0
 
