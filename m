@@ -1,219 +1,118 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E57439FC6
-	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 17:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6E018AEA
+	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 17:51:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722016119; cv=none; b=rLUtJL/wq+9zIYQn8bQXATVKRwkDSkViOmlPTWUeGg7yHyM+P3jkvthExV0gzrbuPSvX96rKfHidkbLycs+7/OC/v9o58DgG76VGX35peVzvERaaiFj9Xfdfag4hGmcjftM8eJWy2c6VbbVLrkpXGYfGNiCYZJSvoGSW2hBqLqI=
+	t=1722016280; cv=none; b=aq3PzwHuTLl0s+lTnT5EtXPAeI+wOXijWigmctsq9FyyE+ShXqCU6IN9h2XhxB3wuRClYIgZH6JgWRe/cTv7MJsmTOoPiztUAnIQu/NQl9PM4hdiwPs2JkR0nh0Ex3zLwU5WF80j3Cfr4U5pVx5rK6VwmBm0aYQHC+TXOhorRRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722016119; c=relaxed/simple;
-	bh=otPRFuTabGDQ7DAsdpT0OWXU/0cXxSp4T04CdGaalzo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rUqZxK3PXLr9UosCwt1ewU26Zup5rDB1/FpHLjShq1eIiBTwPXA8D7iX5fM55OehtbOMtGUEQMHE8vfOdZBOsTm+wog2+TDBTEAOPboh5RDkMf3oZ5xkuTGFGezI4/keKGxl9NYHzQ6xaw2pit/Nk5B0FZwZtciK5weHbamudhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cLTvznjh; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cLTvznjh"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-8333a5dc765so237496241.0
-        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 10:48:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722016115; x=1722620915; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=spa65CuiZdVRxM1p2T1rZfFElb+ut95jd1snNIKOAkk=;
-        b=cLTvznjhyEnyb82eV/MDQHP9a/LiEgL4/iIP3YJ2ewlu0yJ4ErRViXJ7IVbmMIsMUG
-         trcsbsPCSP4ZTMh+UA91ST4TJWoAsrxSRlZb+Jwa9haXjLG8GhZP9Jx/0xGNhfIRnT+k
-         DIAvSkHOqEL9N/MWbAswsku54YvKVoDkmqJxmZScnQiklaLkE2MRh/8HHU42JcAwzRTT
-         gJRcoAs0OvFOpPD1I2rATLIka78iMwQcIADlStoxhwEOkudSedJYHx9+6ziBkr34pJ0q
-         9VQx6girv1WtwUt7UlF+ygf3XvXTNsz0y5kkT6vqCg4cozaOu5FrGio2b17ymy93WWF7
-         IBOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722016115; x=1722620915;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=spa65CuiZdVRxM1p2T1rZfFElb+ut95jd1snNIKOAkk=;
-        b=LTrONzVzXPboRRPK/UTapZ7kxZTE1pGcPvLFqm36FGMfR7hCvh61Sa4Z1xlut5C3vG
-         BxgyhqtANEmv419j2AugMBjUDSCzzdEZx0jWdp9BktxrOg7BFy52Z8x3OPxtwYH7Defh
-         aXZC+b/wfRma9TgDV54sbiUATwKu2CXx4lFJZfbIhesFEXtXQNsKQvYrPD+/sxn3TRF6
-         tgDDJUecJ7wqAOgZPg/pp3r+du1lbvsZM+vVJUcEJGuUHTJpcmLVXywResisJg9b2wCq
-         6os34sjKd9tDdcGXY9ELLpRhc1heEXPVca7tIH/A9z7EQoZeTD/cNSyrt8tAnl3RhIPr
-         ekKA==
-X-Forwarded-Encrypted: i=1; AJvYcCVDV/MiRf87gXadI9KiMpTTMrjH5V5iEcaRgTbRd66ZWRLvbp8wA0rbVqlwU8fN/vDR0seuLs7qIGNFz3qkzClz1o9jXBQUtw==
-X-Gm-Message-State: AOJu0YzP8tfUToxthot4vagHPzpLVgt7dUZjQxrb5GHweIO59Qqy5Xr6
-	CZ1KenS93oXC77bJJcF9tC2oZOHQgkoj2trfnKNiK8yzQLLrkUd0UeMmYXqY5AoRcyTGQQMo/eM
-	M+NYnb4vMk2Y0YUUKWsYYxrlEvVmQ0b1s2eW+Kw==
-X-Google-Smtp-Source: AGHT+IFRdvMqwnaaR8cmizGpd3HnNZS5sihGiiwBkO1giU7j3tM3LeR+KNWh/P3+PouzbuRNKJYHM9i+w74yRiGMJL4=
-X-Received: by 2002:a05:6102:442b:b0:48f:e683:7b46 with SMTP id
- ada2fe7eead31-493fa15eadcmr656628137.3.1722016114971; Fri, 26 Jul 2024
- 10:48:34 -0700 (PDT)
+	s=arc-20240116; t=1722016280; c=relaxed/simple;
+	bh=swHYojslKRZrYvYSpfXsgW3+8SF1RW/G017862frP0k=;
+	h=From:To:Cc:Date:Message-Id:Subject; b=H9fYbBdUph8mP/W0dTMnMII2WU1p7+ewkFcVl3uj76Q1s1+LyNSFCvv3BUES+6zB2yamboa4y8XnheNi5Cd2QUIvwK444oal4XSLEIzighbW112r3pyes5gNlwBmgVyL+8hC0dew2aG8OTcp36FAciwVIzyZDTB0e7yipLawFj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35399C32782
+	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 17:51:18 +0000 (UTC)
+Resent-From: Mark Brown <broonie@kernel.org>
+Resent-Date: Fri, 26 Jul 2024 18:51:15 +0100
+Resent-Message-ID: <ZqPiE7vsP5z1Gs_3@sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Fri, 26 Jul 2024 04:12:49 +0100
+Received: from sin.source.kernel.org ([145.40.73.55])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=xwDg=O2=everest-semi.com=zhangyi@kernel.org>)
+	id 1sXBNu-009So7-TW
+	for broonie@sirena.co.uk; Fri, 26 Jul 2024 04:12:49 +0100
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id EC3D1CE14E4
+	for <broonie@sirena.co.uk>; Fri, 26 Jul 2024 03:12:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id D937BC32782; Fri, 26 Jul 2024 03:12:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id B31F3C116B1
+	for <broonie@kernel.org>; Fri, 26 Jul 2024 03:12:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B31F3C116B1
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
+Received: from unknown (HELO zy-virtual-machine.localdomain)([180.158.30.43])
+	by sina.net (10.185.250.29) with ESMTP
+	id 66A3138700005ABC; Fri, 26 Jul 2024 11:10:01 +0800 (CST)
+X-Sender: zhangyi@everest-semi.com
+X-Auth-ID: zhangyi@everest-semi.com
+Authentication-Results: sina.net;
+	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=zhangyi@everest-semi.com
+X-SMAIL-MID: 67593C547E44403DAA068D793FFD423A
+X-SMAIL-UIID: 67593C547E44403DAA068D793FFD423A-20240726-111001
+From: Zhang Yi <zhangyi@everest-semi.com>
+To: alsa-devel@alsa-project.org,
+	broonie@kernel.org
+Cc: tiwai@suse.com,
+	amadeuszx.slawinski@linux.intel.com,
+	yangxiaohua@everest-semi.com,
+	zhuning@everest-semi.com,
+	zhangyi@everest-semi.com
+Date: Fri, 26 Jul 2024 11:10:02 +0800
+Message-Id: <20240726031002.35055-1-zhangyi@everest-semi.com>
+X-Mailer: git-send-email 2.17.1
+X-SA-Exim-Connect-IP: 145.40.73.55
+X-SA-Exim-Mail-From: SRS0=xwDg=O2=everest-semi.com=zhangyi@kernel.org
+Subject: [RESEND] ASoC: codecs: ES8326: suspend issue
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: UUsAK/MAMdKm
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-References: <20240725142731.814288796@linuxfoundation.org>
-In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 26 Jul 2024 23:18:23 +0530
-Message-ID: <CA+G9fYt-NsFzBhULi-JqQLXSKO123pAvrLTyGqx2eXeLyFJ3yQ@mail.gmail.com>
-Subject: Re: [PATCH 6.10 00/29] 6.10.2-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, 25 Jul 2024 at 20:09, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.10.2 release.
-> There are 29 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.10.2-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+We find that we need to disable micbias for the codec to enter suspend
+So We modify the trigger conditions for enable_micbias and disable_micbias
 
+Signed-off-by: Zhang Yi <zhangyi@everest-semi.com>
+---
+ sound/soc/codecs/es8326.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+diff --git a/sound/soc/codecs/es8326.c b/sound/soc/codecs/es8326.c
+index b246694ebb4f..60877116c0ef 100755
+--- a/sound/soc/codecs/es8326.c
++++ b/sound/soc/codecs/es8326.c
+@@ -805,6 +805,7 @@ static void es8326_jack_button_handler(struct work_struct *work)
+ 				    SND_JACK_BTN_0 | SND_JACK_BTN_1 | SND_JACK_BTN_2);
+ 			button_to_report = 0;
+ 		}
++		es8326_disable_micbias(es8326->component);
+ 	}
+ 	mutex_unlock(&es8326->lock);
+ }
+@@ -878,7 +879,6 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			regmap_write(es8326->regmap, ES8326_INT_SOURCE, 0x00);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x01);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x10, 0x00);
+-			es8326_enable_micbias(es8326->component);
+ 			usleep_range(50000, 70000);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x03, 0x00);
+ 			regmap_update_bits(es8326->regmap, ES8326_HPDET_TYPE, 0x10, 0x10);
+@@ -897,6 +897,7 @@ static void es8326_jack_detect_handler(struct work_struct *work)
+ 			dev_dbg(comp->dev, "button pressed\n");
+ 			regmap_write(es8326->regmap, ES8326_INT_SOURCE,
+ 					(ES8326_INT_SRC_PIN9 | ES8326_INT_SRC_BUTTON));
++			es8326_enable_micbias(es8326->component);
+ 			queue_delayed_work(system_wq, &es8326->button_press_work, 10);
+ 			goto exit;
+ 		}
+@@ -1067,6 +1068,7 @@ static void es8326_init(struct snd_soc_component *component)
+ 
+ 	regmap_write(es8326->regmap, ES8326_ADC_MUTE, 0x0f);
+ 	regmap_write(es8326->regmap, ES8326_CLK_DIV_LRCK, 0xff);
++	es8326_disable_micbias(es8326->component);
+ 
+ 	msleep(200);
+ 	regmap_write(es8326->regmap, ES8326_INT_SOURCE, ES8326_INT_SRC_PIN9);
+-- 
+2.17.1
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 6.10.2-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: bdc32598d900724563b4f84ff564b8b2273bf298
-* git describe: v6.10.1-30-gbdc32598d900
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.10.y/build/v6.10=
-.1-30-gbdc32598d900
-
-## Test Regressions (compared to v6.10.1)
-
-## Metric Regressions (compared to v6.10.1)
-
-## Test Fixes (compared to v6.10.1)
-
-## Metric Fixes (compared to v6.10.1)
-
-## Test result summary
-total: 257000, pass: 223352, fail: 5079, skip: 28035, xfail: 534
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 127 total, 127 passed, 0 failed
-* arm64: 36 total, 36 passed, 0 failed
-* i386: 27 total, 27 passed, 0 failed
-* mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 34 total, 34 passed, 0 failed
-* riscv: 17 total, 17 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 31 total, 31 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-smoketest
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
