@@ -1,82 +1,117 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4094213C661;
-	Fri, 26 Jul 2024 11:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808BC225D4
+	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 12:32:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721993949; cv=none; b=AIf84g1MXrz8Pg4TOFmUvJ+PW6Ahs8gUsLERym6zBCTZu2VE5GJAPkcJD/qIQYrkjhydYz2Nlp5NB471jnXcCtGaZ+N5r/CVmU+sWaiY7JTbKensJEAP5AJVBNvt3aNvDnxdH/diPwTTIsAXsle8AB8mZTE38/p95j1Cx5x2sjU=
+	t=1721997147; cv=none; b=EmWpdgjBYtwTBKyUJTsbwmIv1V8gOtYxNmC9kXX/e91qjsEIN0tAAmWdVkGJLhtgtWvLK1wKKvKODeIaIHsKlxtd79oOcHGeyfHAbHI3/GFtPzM3pQ6JAtCa7thMvRi0tp08O1NaJfMwrNn3miEZNAz2FmIvsUFyuCg1ns1ZR0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721993949; c=relaxed/simple;
-	bh=L28HDqLuspdoX5XmE49vLAZY5+6UVZN4anSGw6I9yuc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tyx4IGL8HpWy5ho60N6OuJOvVLCvuYMPlZ9qw5nFsQY8pTtAKr87wVqtraZCdM7NntpdLvTw1Ue7aNubPGPAW76SadzcA1S7a8rMGct0pShuG7fxK68k2h4kg0UCIrF3IMaiErRQp/qKlk+7zzs1XgHuW424m+NVM8OFWTbj9cI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AgglUKL4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721997147; c=relaxed/simple;
+	bh=Ow0lF4PR1W4zPn5dnOxQWbvpWyIhvhfyYRUku7Phcrs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=H/QFdojBNhHRSLcyYUnXgjJZGNjtcwr0eXjoi7gTa1b7jgUZGbPqjbmK8HW+u5B74GLo0oBOvgHNybigTc5iy52pcCi+SYEj4UH8+7ue2ZLqZ+LDcKqJQpqWvHCeyX5nu2BYbe1r6RhgONWxcV4t8eHBfOxiNSPsMn51fPvhqqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b=ODvVX5v7; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AgglUKL4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D39E8C32782;
-	Fri, 26 Jul 2024 11:39:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1721993948;
-	bh=L28HDqLuspdoX5XmE49vLAZY5+6UVZN4anSGw6I9yuc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AgglUKL46Sb871WDW4NyoTmt26igipX0PNg3JjAy4tmeTvQoEDZTzI5zsQpI7nPTW
-	 1gubEyB99Larr7smFIkZiS+XZCk6h612GbIiFx9UBHtYxhPL9QBxVV3i7TLliodvJS
-	 k8SArUGluRJWdDIGTPPMU86yCSv8J/frFejKLORtMmCble/hdvuMiL/ibNLMtS07zh
-	 f/myNKGqHL9XKoucX1YkTcWJVMICbOHsM0TYBJMOX8bum2/TnzqfpDAOFGTJPU3qMM
-	 tGD4QSZWKpJgJGiTXEY3/adIj2tMzfcQE37cS4wLkMH3ZecLJp55N6ZJUWZs7iDy+I
-	 umW/oEvTaaQTw==
-Date: Fri, 26 Jul 2024 12:39:00 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 00/16] 6.6.43-rc1 review
-Message-ID: <e9f41f04-47cb-48e7-bc1a-b3de793930ca@sirena.org.uk>
-References: <20240725142728.905379352@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=futuring-girl-com.20230601.gappssmtp.com header.i=@futuring-girl-com.20230601.gappssmtp.com header.b="ODvVX5v7"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7a1d48e0a5fso618089a12.3
+        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 05:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20230601.gappssmtp.com; s=20230601; t=1721997145; x=1722601945; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=l2CXarSgTnQy4ZvMHuo03qNRpFcxWzwsegdi47MF0qg=;
+        b=ODvVX5v7vxnFLYUY6wxPVBUHz91tc7CDunZKH1ZVE7KrIc30yQ0k2QHWhwi9DdjL9H
+         WUmmfiIydM3QyXAtZ/dtf53vOYmlJm4m0JL2nEhOYmZPVo2sKiLA3IwsjjnEaUYr0u6n
+         yoZiZt70XtrpmkPP+eWPgJsCPIk5eRANPF4DIG4rct/0XGf3GqtZrDaE9hqLCZ19T+Qf
+         CLakAa/ZxRCE4lGc67FRJ+2zqkFT+qivTACpX3uJJpRZVcQH3DVkr6HEWgRvwMcm6yZv
+         5nWEprKVJZix4nijgt/+W5/slr6mBZW9MRxya8UcmNBO6ZYXlAnoiTmoQKJMEPN8tJbq
+         Iwcg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721997145; x=1722601945;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=l2CXarSgTnQy4ZvMHuo03qNRpFcxWzwsegdi47MF0qg=;
+        b=K0wzIgepExvHk95gDzVmzjCqs+z0yKwLll6yFK5zLBCZ68dptEhvniZNe2YudWdr+O
+         Y6qDycb/n58q5bN75nDuzVoloN1GsFGKQV2AuxTsLyTHlyE8rwfD4+qSRQgsyBnwMiMZ
+         fQNGphd0C6Xyhr/LFj6lpQvBXCMeVATNi+lfxTn0sjXv5LAv2NN75en/GdRiyuD2WtCl
+         qodfdlE0k3dEaqFJ+OL6D8+Y2WUUWvTrfgnFlIQv6dPXiiJ6HDRCI7//onKEb3cqQnjg
+         Fu4VEfPszgG8xhOWS5D3UzSMTwL3P+xC0t0peDdsFCyhbUvCqJpMxqj9DyHWFCcF9ioh
+         JTLA==
+X-Forwarded-Encrypted: i=1; AJvYcCVgCLVmlIXbgdP+BoCT7NA/wILBUozHbwRpl+OcbbZ+1PTf+Sz0oD3qvwcf9hLxnGOEIHS6Nh7PJQ8PdVbSaEzTSvYH0YLWaw==
+X-Gm-Message-State: AOJu0Yx3rziKEgX/BfFyzfN/F0rCH39fnvpy+E+bfTcxA0u4v2Cns5xh
+	cYGN+xl6JWJcQIrD/RV9CdF0FqNkim8A6Sekyc4vJL1g1Swd/IpWlOGEPv+1SCRNAD59D8xlmXI
+	3jjzpz9pUTEbvmAnHvA//SUj8tZ1WyurmcpBDNg==
+X-Google-Smtp-Source: AGHT+IECb8woF2lIKmHKOjmufAD4JhhxypYA+icIANC3xTm1uDphLcOwr+ij+DGnOuZ/K/cor76RApG76j1tmrVHkmQ=
+X-Received: by 2002:a17:90b:164d:b0:2c8:f3b4:a3df with SMTP id
+ 98e67ed59e1d1-2cf2395832dmr6365849a91.42.1721997144677; Fri, 26 Jul 2024
+ 05:32:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="GhImBUIWkY6FcqNz"
-Content-Disposition: inline
+References: <20240725142728.905379352@linuxfoundation.org>
 In-Reply-To: <20240725142728.905379352@linuxfoundation.org>
-X-Cookie: It is your destiny.
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 26 Jul 2024 21:32:13 +0900
+Message-ID: <CAKL4bV46vNSzkJQXBH8xOOSY70Q2PCoKoyJpmFBHPQzs4cdL0Q@mail.gmail.com>
+Subject: Re: [PATCH 6.6 00/16] 6.6.43-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Greg
 
---GhImBUIWkY6FcqNz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Thu, Jul 25, 2024 at 04:37:13PM +0200, Greg Kroah-Hartman wrote:
+On Thu, Jul 25, 2024 at 11:45=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.6.43 release.
 > There are 16 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
+>
+> Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.6.43-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.6.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Tested-by: Mark Brown <broonie@kernel.org>
+6.6.43-rc1 tested.
 
---GhImBUIWkY6FcqNz
-Content-Type: application/pgp-signature; name="signature.asc"
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
 
------BEGIN PGP SIGNATURE-----
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmajitQACgkQJNaLcl1U
-h9DExQf7BgAYWYxr+k9ol+qIWkwM+fSN+rkPdvq6X4UzAoevT1kBuvkhl3jLK5z5
-7RdGFfOHctRlbHWjO13QHumx31ioEZuSDbbZoUWNjC4cNo9edQ3kic9BZDSVRNfh
-AcbigLB6hQ2JpaNCjtb7mQ1cGKm9V5d+jWpCP5RJTU7thQ2cnhz7ySohHMXx/czq
-mmFsrzXowP7+E5tm44QudlfkkKMHQ/04eGuE/oHvE1+KfV59JQK8WmUqjjyYYGuo
-MyNAzGIafAYMu0J2sKZOji7xGf7iM1Ziawg30UYs/qxiB8yjHKbuCJBSTsu1pZyQ
-AO0nP6xkCnOJI9e1OLRwc/mVU+zL+A==
-=8Y0/
------END PGP SIGNATURE-----
+[    0.000000] Linux version 6.6.43-rc1rv
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 14.1.1 20240720, GNU ld (GNU
+Binutils) 2.42.0) #1 SMP PREEMPT_DYNAMIC Fri Jul 26 20:55:25 JST 2024
 
---GhImBUIWkY6FcqNz--
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
