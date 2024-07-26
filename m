@@ -1,81 +1,82 @@
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com [209.85.128.72])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FB3428377
-	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 11:35:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.72
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D977217A5AF;
+	Fri, 26 Jul 2024 11:36:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721993760; cv=none; b=nNi15Aj9Q9O6MEAM4QJMuLXDsIU1oHoKBTn2hrkiA5swzp+QK7ZPa4JnPQjsqPiJtGaJ1bT0NQOCA1N1W8jSOKlz83fFgSN1Jt4adGESD6a43D4kGWgyI6YqYASMggHLM6NpP6e/sv0k/wTxWwfjnJbR00/eehuZf4ecfgp8+/U=
+	t=1721993807; cv=none; b=b780+INFctPScHOwA8U27UMIgwNB7O4yJjht+mUd2WJFVYfSszChX3L/DLw2nYLBb/0KK4SgMA5GE0ucbhDLoybjrPF06FprJ7GYFlZ5/tOfOxjKpzgJFWc2kQZIefOQ+JeRGeBSrksqgZTs8wOLiDveVtoCC+VhtWPLl1TkuLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721993760; c=relaxed/simple;
-	bh=TzRuI9BJXXHCTrsFK9Fk41X3bqtA/JeMDjPkBXoIO2E=;
-	h=MIME-Version:In-Reply-To:Message-ID:Date:Subject:From:To:Cc:
-	 Content-Type; b=kk+tznqjAgwxXvjCq2g1Y6I3qz7VuwJ743SufHzBrxOxQetxTdY+1jWksvj6Savl0mLEIz9kkrh7+XYO4OeWEvutFpQZcnhbUv2t9TwhOeFZjQYVD4FNmzXI7Fa/SeLTzTcoA/hl5LTLAEW5atvnnyO3wu3/GNDftQSh6oFWk78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=cros-rc-feedback.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=eSqMm/5y; arc=none smtp.client-ip=209.85.128.72
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cros-rc-feedback.bounces.google.com
+	s=arc-20240116; t=1721993807; c=relaxed/simple;
+	bh=FQT7ZDieWdwu7snT6cXtT/QU2JjKN0nQBOPD4g8XfeM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bfMo+orrZBI93TcvO7jy0axy61YBwVYJtPYIJuxDoFBselDxsKi4WzSYT1ipNTe2rIyLElcsWcCGn/X9qmCJI+XUwkeTlmZ35Ho38fH3Rt9l597yjYoM2V0Lm3bH3usJ1WFqLoQGlHlKXbNYSuTFVSwz1fNYKuSoEG91OeT4nYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=me/WaghA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="eSqMm/5y"
-Received: by mail-wm1-f72.google.com with SMTP id 5b1f17b1804b1-4280f233115so1668735e9.2
-        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 04:35:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1721993757; x=1722598557; darn=lists.linux.dev;
-        h=cc:to:from:subject:date:message-id:in-reply-to:mime-version:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=TzRuI9BJXXHCTrsFK9Fk41X3bqtA/JeMDjPkBXoIO2E=;
-        b=eSqMm/5yuJS65qjR5+EqtdPn9Iy7FD7rwNF4zGsFxrOoqtz9G8zzQwYZzXXOe2lQ+Y
-         zHYwRH3aRLsCuG31ZjoB6wc+UG7qw3G9mFQP1KSqFswLAvsU42QmsyBj/Q3EGdUtpgqY
-         WTr4nCZYI1hn0RxBoXAtjbJOQCeXGstljRL9wJ9/mHDpKTH4CwcL+rZBBuhDw1ionfdi
-         LcyyBl4msyOtuywhbkxNw2nTAU+ZiV0jFgXKZ31imOzTctAkd2uIKqB8yix7zNs0MH66
-         jAIFQxz9YcpI25eCaiLIe40FxZqe0I9tXj5MDB9o5w8OjnDe1ObWsIAI4dUHdPoi0rFA
-         LKog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721993757; x=1722598557;
-        h=cc:to:from:subject:date:message-id:in-reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=TzRuI9BJXXHCTrsFK9Fk41X3bqtA/JeMDjPkBXoIO2E=;
-        b=qb+ALb85/Gh8EwjzE/EoTdBhpn7rbr3YHcKcLG+7eGKUR7dgMPBO+p04xhzNMibE90
-         yIz05IdopAqxZWl4Uy8FoJG9xZU1dFmUq58mnp9UpIo++vqrzZDJ91HQsMXi3noofSIh
-         ZN7njePHqFVAXf7DS3T4TKE+8WO3dpXKDj+Hv+aO6mTlE1XOmoVdeZReJ9vxawSkVWPB
-         Fh3jHMPDMWAkuDVZ0+cH8/hRrbqxP6Hf7wK2qt7oeO1K924E5PtaiJZO+BDykPLunZ6g
-         fCpGhcRZ2EA2oRPhZ6gmOtjC0swL+YpwTt/CDrulGoL/oGVmRr568aEsoDuY394SGGqL
-         pkvg==
-X-Forwarded-Encrypted: i=1; AJvYcCWv+twPGxhW0uN5lk+L09FHdmZfV1RRqTxHdS/Z7tDh30TxpsZtfEhZ7kmEEWWep82JKYRXz1RFuRgH2sbJx6ST0uXrPqbnFQ==
-X-Gm-Message-State: AOJu0YzPIyKwRYiyMCQwfPUwhjbyrvVcLgZw8J5lqqh1t/oyg/bUQJYh
-	RDx7siIdVN2/baYlptW+je4GU3kdsn0Gn8TeMgh0fdXfWHbirSOuKaiWCSvC7cRAQ0yhrSKOEZd
-	fttrF8JeXubLQ2626CyK/DP9mm3IOqtKE4pBse1A8JmWXFLVbDVDEX7iXXBbFM6H8EZ2j++sPzW
-	k19pg7i2A7Oi1Ah7VNlcSKr9L2Kq4X
-X-Google-Smtp-Source: AGHT+IGiadTh98VAUtpHbSHjcUWiOYFrxzuuG76Qk5r5rjKHJQHQi1GZorwkAMhX20xoSJEbEQymWR5mUT0f0xRI1jrqHk4zrUYAbq9eaGUJ3nHlVg==
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="me/WaghA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39960C4AF0B;
+	Fri, 26 Jul 2024 11:36:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1721993805;
+	bh=FQT7ZDieWdwu7snT6cXtT/QU2JjKN0nQBOPD4g8XfeM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=me/WaghAEMocbStc6QRXqc0bOccmTLVb76U8iVEVx18goeT9g1dxxB1yCxTXpRnxg
+	 xUBmc4p1LPBLAWRJ0XcAjWp8rQFcOviou/pyACr3E9GmtO18QrwjRAw+KDaDiLuBJO
+	 5HsuqVrPzqLkc9ZQ9JCCT7VUwAUs//6kqcpxj5in0TII9RS9Y220TZyihx3fjHOWJ0
+	 iRAG/3ipOKmNBVGqz+heJ8GL9lf9qMNNVnsCWBfVYE9SM+RyJrP7xdEPrsx3oce9UY
+	 6cPfZTkP/lgKkexYgaNbPfgQV5p0VQ0K+82+r0+ldAFMIZpMo7C3VJ4RC77teb9shF
+	 /5V6wjCySpInA==
+Date: Fri, 26 Jul 2024 12:36:39 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 00/13] 6.1.102-rc1 review
+Message-ID: <bec5a8bc-6d40-452b-b985-5184c8145651@sirena.org.uk>
+References: <20240725142728.029052310@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:a05:600c:3d15:b0:426:4920:2851 with SMTP id
- 5b1f17b1804b1-42805707cd2mr162785e9.8.1721993756707; Fri, 26 Jul 2024
- 04:35:56 -0700 (PDT)
-In-Reply-To: <20240726070557.506802053@linuxfoundation.org>
-Message-ID: <0000000000002d1ee2061e24eaf9@google.com>
-Date: Fri, 26 Jul 2024 11:35:56 +0000
-Subject: Re: [PATCH 5.15 00/90] 5.15.164-rc2 review
-From: ChromeOS Kernel Stable Merge <mdb.chromeos-kernel-auto-merge+noreply@google.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: chromeos-kernel-stable-merge@google.com, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DaC5PyC1/9nkiTKa"
+Content-Disposition: inline
+In-Reply-To: <20240725142728.029052310@linuxfoundation.org>
+X-Cookie: It is your destiny.
 
-Hello,
 
-This rc kernel passed ChromeOS CQ tests:
-https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/5739840/2?tab=checks
+--DaC5PyC1/9nkiTKa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Thanks,
+On Thu, Jul 25, 2024 at 04:37:09PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.102 release.
+> There are 13 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Tested-by: ChromeOS CQ Test <chromeos-kernel-stable-merge@google.com>
+Tested-by: Mark Brown <broonie@kernel.org>
+
+--DaC5PyC1/9nkiTKa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmajikYACgkQJNaLcl1U
+h9DueAf7BoUcPcyRDj+EngYY9NTpxf7Lml9BmLFUa1QZO1Mpr6Sx8/FrbFqs1sno
+YMFL3aft4oJ+XY5LRf5pUgfwa8KM0hKUH8d4b8+dVK9i6UnzB8dZivUHFEvCboeG
+QNYgrvVT1RDEOleDQ3iy4i3s/m5kPJYMiccj3l29v9rlD5C8zj+V40QUQlD0JJq4
+2oTVdiqIECbTZNgPUya7jvSyKyPvTUvBSd0/piB11pxLygZT0DJAwUrePws+WZrs
+HOPn0OTp8KM7snyudnKz6k9u8QuOCDWfZHE0vOte0DFBEUyZXB8VBzV/On81NYQ+
+Vf4kzKUyq+8NUPny/9QNgR7CbClghA==
+=oKKi
+-----END PGP SIGNATURE-----
+
+--DaC5PyC1/9nkiTKa--
