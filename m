@@ -1,81 +1,77 @@
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com [209.85.221.69])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from madrid.collaboradmins.com (madrid.collaboradmins.com [46.235.227.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFA713B7AE
-	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 09:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.69
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6948176AAC
+	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 09:58:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.235.227.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721986571; cv=none; b=XchKoGIMjJtHj+rFocGmYEKMyKy8AvUFpk4ksmPHLHEsSjlkIQaRkAEWZDVlyRTQSBJfQYwZEk1Zedcwadu9er+AAoqKJ27++7nWwl8m4lI+cF/AvVJs21PvbencwyTwMW/WZ/2LTEi1S4zjOZRzdDIO7VGkuzfqU9ZdVnE1YKc=
+	t=1721987906; cv=none; b=BXzTFEaPmriqKYNizv8CukZEYtl1AHqVb8qRlwgTfdSPBXhIpKvOnEqzlVwZXJ7E6jD2V9mQhYVSYNvL/RI39IxgkKrnlyv+1ext1fR91xSlUJG/ALJwf5TP0ID14MlmvigmrDKP3jE+okMu6bBMcRTi9NVbk3+f6Xm/QMaVm1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721986571; c=relaxed/simple;
-	bh=ZM4ZHJ+gLc4NGQEezhgfCtyM1nPFEMWwQ+B6avDdykk=;
-	h=MIME-Version:In-Reply-To:Message-ID:Date:Subject:From:To:Cc:
-	 Content-Type; b=LeoVw4m+w+EHT8UWbutHtvjq1tF5DFq8o+GfxRlVFJxe1vP/oOU4hfyu8ZpjkyjAJjokmDC19U6e5jSuT2GJOuU1RiE0Y+dc3Ur2iAJE0AuCLAkLBeTlV1tXO42BMySzEmlBVJy0IFWAh4hP9LJm4eTtjTZcB9NNvmdKsQ4R4qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=cros-rc-feedback.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=kGZmZGs7; arc=none smtp.client-ip=209.85.221.69
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cros-rc-feedback.bounces.google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="kGZmZGs7"
-Received: by mail-wr1-f69.google.com with SMTP id ffacd0b85a97d-36875698d0dso1167406f8f.3
-        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 02:36:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1721986569; x=1722591369; darn=lists.linux.dev;
-        h=cc:to:from:subject:date:message-id:in-reply-to:mime-version:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZM4ZHJ+gLc4NGQEezhgfCtyM1nPFEMWwQ+B6avDdykk=;
-        b=kGZmZGs7Qaa83uqm/Wactt64uLh5xcQkijIj1Y4NeF7fHv2T3nLCaovZNHB3Dh4Tpi
-         VctieFqkuwC5gTw1gOSVZ+mnxacDcUo0Z+JdFNIFm354gpon+MbEar7Q7hPmVymyPlpU
-         8PvwqLkjioI5fcJcRyRubSmevfTdDeA61sGlvWgrKby2b0v3okHB9n0WzrHbN9b7IvBZ
-         nLFQnNWRsEGjTnCB6yLKBCP1dcselsGhpsxIG7TNErPsZsTiXqbIw9N7QVvJBgjioSb7
-         Ofn02PemTP4RNqg06g9Grn0NfB9MqD7sr0OLJHJ+xb7qNpXPpKaCqkBCXUlu4VHBOf+E
-         NoEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1721986569; x=1722591369;
-        h=cc:to:from:subject:date:message-id:in-reply-to:mime-version
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZM4ZHJ+gLc4NGQEezhgfCtyM1nPFEMWwQ+B6avDdykk=;
-        b=FRluG7JBVR/SvGvg6IJ6NmHOI9LYi8FPkNdsndMtMSqCKuzrboHgK0n0TkSt9nh1bT
-         CuX5y0Wz8XTcM/6LLHsUDAut4V6BXHAeHIctKFqCwIEiZd2mQcbWUJ9S7Z0jpldaYqsG
-         STvQehASW3bOYf8XlTQ9xCkKXvsQVQHS8em3sVdGA8gyk6YoMQQdXz+r7LSEgwHmafHY
-         5u8zKUNMVRFgCjsT5rvKu+xDesfeyC0QEB/rMxQn9dStgpRrznl4kVglX+mY1r1fHwCj
-         hNcv3sSStdU9kZEWXQ+dA5kernI0ye9pRNyqzMs1pcxItEhN+kwU8PWSPV8ZHItLhVaZ
-         vdQg==
-X-Forwarded-Encrypted: i=1; AJvYcCXRGuK6deoSvPDf7s41vdS38xguJ+TbAWa8hMKmVwvIfD+M+GbN1DObXWZtZfpdw/ueS91fTkqq8gvpVtB+lDgrqIJTnxva5Q==
-X-Gm-Message-State: AOJu0YzQADbBb2UeTmjZ5RLCxbcKVl/vfAnkvZp4GGYRa0KMVTe685ex
-	wUWHfROUhl8MMHi9SfLPrR6Mk0IcmNReH7ZKKus1VSCvhpf4inajMwfxWhET3XfcFTHkhr92nPJ
-	XWmJw0eyT58UGqKWoUKdcbS/1yqb6QE3I9YMONlC/W/klrv7U8XDS5sAH7H0Sc8U8sWawe00b89
-	X2WF/UnQL/ZZSa7ThwqpuI9d4e2lbn
-X-Google-Smtp-Source: AGHT+IHeaC9wwCYLg75NtyF4Q156l0440NtvZq2b2MNU3GCWnyeOj5qYUftH/nDa8eRxbtxE/5yx6yU7o97CTYHZu9WeoXtBq1Ux+4+E+1B7jcpgeg==
+	s=arc-20240116; t=1721987906; c=relaxed/simple;
+	bh=a5fsmHyz15tQy/3OOPLv+7kQliCu+QKJQFAeb81W+1I=;
+	h=From:In-Reply-To:Content-Type:References:Date:Cc:To:MIME-Version:
+	 Message-ID:Subject; b=sgdohDdHVaDqBdmRBzsssN8RjXByRMgqTVYyfI7+ihFRn/DsQ+Ej76jSknslztxVIqzpwB0/tityxziE21Wz/vxAGwQrIPa+NZ2z9K1fZafDBXkSFIHwq3LVtpzmXMdeYJ8W0m+w93l1nwBYu3tcni6N2cs1c4K/76thlg1pwiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; arc=none smtp.client-ip=46.235.227.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+Received: from harlem.collaboradmins.com (harlem.collaboradmins.com [IPv6:2a01:4f8:1c0c:5936::1])
+	by madrid.collaboradmins.com (Postfix) with ESMTP id 222173780BDB;
+	Fri, 26 Jul 2024 09:58:21 +0000 (UTC)
+From: "Shreeya Patel" <shreeya.patel@collabora.com>
+In-Reply-To: <20240726070548.312552217@linuxfoundation.org>
+Content-Type: text/plain; charset="utf-8"
+X-Forward: 127.0.0.1
+References: <20240726070548.312552217@linuxfoundation.org>
+Date: Fri, 26 Jul 2024 10:58:20 +0100
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org, "kernelci-regressions mailing list" <kernelci-regressions@lists.collabora.co.uk>
+To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-Received: by 2002:adf:fc4e:0:b0:367:9450:5075 with SMTP id
- ffacd0b85a97d-36b31a01648mr7732f8f.2.1721986568547; Fri, 26 Jul 2024 02:36:08
- -0700 (PDT)
-In-Reply-To: <20240726070548.312552217@linuxfoundation.org>
-Message-ID: <000000000000ba629b061e233db2@google.com>
-Date: Fri, 26 Jul 2024 09:36:08 +0000
-Subject: Re: [PATCH 5.4 00/44] 5.4.281-rc2 review
-From: ChromeOS Kernel Stable Merge <mdb.chromeos-kernel-auto-merge+noreply@google.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: chromeos-kernel-stable-merge@google.com, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
+Message-ID: <139956-66a37300-3-31dab100@42066243>
+Subject: =?utf-8?q?Re=3A?= [PATCH =?utf-8?q?5=2E4?= 00/44] 
+ =?utf-8?q?5=2E4=2E281-rc2?= review
+User-Agent: SOGoMail 5.10.0
+Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On Friday, July 26, 2024 12:43 IST, Greg Kroah-Hartman <gregkh@linuxfou=
+ndation.org> wrote:
 
-This rc kernel passed ChromeOS CQ tests:
-https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/5741618/2?tab=checks
+> This is the start of the stable review cycle for the 5.4.281 release.
+> There are 44 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, plea=
+se
+> let me know.
+>=20
+> Responses should be made by Sun, 28 Jul 2024 07:05:34 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4=
+.281-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+.git linux-5.4.y
+> and the diffstat can be found below.
+>=20
+
+KernelCI report for stable-rc/linux-5.4.y for this week.
+
+## stable-rc HEAD for linux-5.4.y:
+Date: 2024-07-26
+
+## Build failures:
+No build failures seen for the stable-rc/linux-5.4.y commit head \o/
+
+## Boot failures:
+No **new** boot failures seen for the stable-rc/linux-5.4.y commit head=
+ \o/
+
+Tested-by: kernelci.org bot <bot@kernelci.org>
 
 Thanks,
+Shreeya Patel
 
-Tested-by: ChromeOS CQ Test <chromeos-kernel-stable-merge@google.com>
