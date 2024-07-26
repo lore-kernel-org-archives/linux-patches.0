@@ -1,161 +1,101 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f45.google.com (mail-io1-f45.google.com [209.85.166.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3331F17B4E8
-	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 16:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AE57494
+	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 16:28:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722010220; cv=none; b=Hq54z59cyKLKhy6QlitbT4MtQqZS132G69NIFVmAzfX84LUIvC4bpaVsLbh6TjMi8BOkhqvv4eCpT95U4gAlUGNPJfltdQAP0ZeporFyOV6en1gbwWBQWVRG41DzB3r3mzgZDbgbHtIVt+KCplbzwXLZQsQyl568w/lu+6YBO9M=
+	t=1722011333; cv=none; b=eCimFncte2on1bjbwcBGhZJsN2CzrxZNW9vdPKdD5mjuXtT1QdY3gHQyK0f90+cF4KmoTToOWW1hfEdecY3j8FLEkiU/gQMqVz3pBGqDw8goojTyPXGUJv2kUXRloo6s21a35UG1fbLnWzAMftlI43k6bn1SZFcgHqtesQtXEM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722010220; c=relaxed/simple;
-	bh=YKgmSzZlu4BIydzWn7bGVh7bITwoK6YWkJlzgZoKcWs=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NA6GwEA1hfDCaj3uyyHMHQpqAOcMo8f9GLzW0t0cLaasnnfE0eD8GiYgB7TgavO9k2l1nJ+7jxwcPMyR3WXr8XZS+shxdC6/vxRTD8SNhNvuPbdTC8TCM8aXqJHvxesGkCj/x/bbSmEFGgLT1pmR1UyxgwDe1bbu2JkizdhddgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.216])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WVt2C0zlDz6K9Kk;
-	Sat, 27 Jul 2024 00:07:47 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id D2AAB1404FC;
-	Sat, 27 Jul 2024 00:10:14 +0800 (CST)
-Received: from localhost (10.203.174.77) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 26 Jul
- 2024 17:10:14 +0100
-Date: Fri, 26 Jul 2024 17:10:13 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, Jakub
- Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
-	<linux-doc@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
-	<saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
-	<andrew.gospodarek@broadcom.com>, Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>, David Ahern <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>, Leonid
- Bloch <lbloch@nvidia.com>, "Leon Romanovsky" <leonro@nvidia.com>,
-	<linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v2 7/8] fwctl/mlx5: Support for communicating with mlx5
- fw
-Message-ID: <20240726171013.00006e67@Huawei.com>
-In-Reply-To: <7-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<7-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1722011333; c=relaxed/simple;
+	bh=mquU6ywnjz4JDQ/DDkE2Uz2Wzsol6GCYyxCGq3HowUI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oaFYEifobR9pdX2bPBtlpgnBXlqpkhMMvYb1VnYxzzUTfUCn/JuKFaGLO9aermCXzS5gB0938qZHuiOoHUATmCZzcaGVWgUlyjOj829davBstJzNBsDenVAHRowYcH7UToyDLYb7nuHAk7dGB9WzSzbQunowIguW0+Snhxegt3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=atwVous5; arc=none smtp.client-ip=209.85.166.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="atwVous5"
+Received: by mail-io1-f45.google.com with SMTP id ca18e2360f4ac-81f8add99b6so7147639f.2
+        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 09:28:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1722011331; x=1722616131; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6LSLb+GcNXv5+p/rTuMG1Nke3iHiL3wBoVAeG+q1+uQ=;
+        b=atwVous5jK2E1KfvzdXrMSQ1MmZOjr1pO0hecjbVVBH08KKe6PVuNNdHD8QtoHqzNY
+         7knqfUjFNVRWDTA8GobC0manEl79TuZXlHDNBLjh92450RCEE7JIt6fbHFjdd8//IYY8
+         2Qc3B6xxEXoOEUzAo8wA28SEb4TZtA9Vy2pT0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722011331; x=1722616131;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6LSLb+GcNXv5+p/rTuMG1Nke3iHiL3wBoVAeG+q1+uQ=;
+        b=lKxeIZPMp7Wmu67Ku+7bio978bMQGQIjHcATAdJAw9R718byWa0tghFBxB+dq70db3
+         Z+7op8Cd81BMI4AlKyRh6KJYAJrwItMXgCLXozK8Ou+QQBbiXPcJxIDNv2f5/HdjD6p+
+         baeUsF2RTY32SosDesIM+0MHEL/7J2v+AFhTGVb3lGbxnKsHey05hXxfysfKyzTXSyRR
+         2svLW00oAQ0Tr373TAzadHVOWHLRcLc2AIa1ZoRTwnRAQWnU7jXhjOwfsEtahgyorMAi
+         Z5AxUr0iQ35UjRPjK6Oi134gKGNkNgQTFxlM67CtEA0HaNRXLkZkcNnKN4NbRB4LPxAJ
+         /DOw==
+X-Gm-Message-State: AOJu0YxHcy4r6e6BJWLG1IZZL15mCzbQW1pqi1r/CZtcfxXyNU4i0kNV
+	C+s7FZ6SybF1bnSPiCXNXfU0fWT7sYqJTGX/25KqMlnHEeek1z57c/namxZg2gM=
+X-Google-Smtp-Source: AGHT+IG36a6KJseR67jskiTVIquUkz1PMahA2GURB1GVgedlRkR4qMbhMAV7SV+PVwv0fsN/5IOfpw==
+X-Received: by 2002:a05:6602:4f88:b0:81f:8295:fec5 with SMTP id ca18e2360f4ac-81f82a54258mr357558539f.1.1722011330710;
+        Fri, 26 Jul 2024 09:28:50 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4c29fa40509sm905994173.7.2024.07.26.09.28.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 26 Jul 2024 09:28:50 -0700 (PDT)
+Message-ID: <bc28c629-5710-4fd4-b477-1fb9eff21cef@linuxfoundation.org>
+Date: Fri, 26 Jul 2024 10:28:49 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.10 00/29] 6.10.2-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+ Shuah Khan <skhan@linuxfoundation.org>
+References: <20240725142731.814288796@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20240725142731.814288796@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml500005.china.huawei.com (7.191.163.240) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
 
-On Mon, 24 Jun 2024 19:47:31 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
-
-> From: Saeed Mahameed <saeedm@nvidia.com>
+On 7/25/24 08:36, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.2 release.
+> There are 29 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> mlx5's fw has long provided a User Context concept. This has a long
-> history in RDMA as part of the devx extended verbs programming
-> interface. A User Context is a security envelope that contains objects and
-> controls access. It contains the Protection Domain object from the
-> InfiniBand Architecture and both togther provide the OS with the necessary
-> tools to bind a security context like a process to the device.
+> Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
+> Anything received after that time might be too late.
 > 
-> The security context is restricted to not be able to touch the kernel or
-> other processes. In the RDMA verbs case it is also restricted to not touch
-> global device resources.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
 > 
-> The fwctl_mlx5 takes this approach and builds a User Context per fwctl
-> file descriptor and uses a FW security capability on the User Context to
-> enable access to global device resources. This makes the context useful
-> for provisioning and debugging the global device state.
+> thanks,
 > 
-> mlx5 already has a robust infrastructure for delivering RPC messages to
-> fw. Trivially connect fwctl's RPC mechanism to mlx5_cmd_do(). Enforce the
-> User Context ID in every RPC header so the FW knows the security context
-> of the issuing ID.
+> greg k-h
 > 
-> Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-A few minor comments + a reference counting question.
+Compiled and booted on my test system. No dmesg regressions.
 
-> diff --git a/drivers/fwctl/Kconfig b/drivers/fwctl/Kconfig
-> index 37147a695add9a..e5ee2d46d43126 100644
-> --- a/drivers/fwctl/Kconfig
-> +++ b/drivers/fwctl/Kconfig
-> @@ -7,3 +7,17 @@ menuconfig FWCTL
->  	  support a wide range of lockdown compatible device behaviors including
->  	  manipulating device FLASH, debugging, and other activities that don't
->  	  fit neatly into an existing subsystem.
-> +
-> +if FWCTL
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Why not use depends on FWCTL?
-
-> +config FWCTL_MLX5
-> +	tristate "mlx5 ConnectX control fwctl driver"
-> +	depends on MLX5_CORE
-> +	help
-> +	  MLX5CTL provides interface for the user process to access the debug and
-> +	  configuration registers of the ConnectX hardware family
-> +	  (NICs, PCI switches and SmartNIC SoCs).
-> +	  This will allow configuration and debug tools to work out of the box on
-> +	  mainstream kernel.
-> +
-> +	  If you don't know what to do here, say N.
-> +endif
-
-> diff --git a/drivers/fwctl/mlx5/main.c b/drivers/fwctl/mlx5/main.c
-> new file mode 100644
-> index 00000000000000..5e64371d7e5508
-> --- /dev/null
-> +++ b/drivers/fwctl/mlx5/main.c
-
-
-
-> +static void mlx5ctl_remove(struct auxiliary_device *adev)
-> +{
-> +	struct mlx5ctl_dev *mcdev __free(mlx5ctl) = auxiliary_get_drvdata(adev);
-
-So this is calling fwctl_put(&mcdev->fwctl) on scope exit.
-
-Why do you need to drop a reference beyond the one fwctl_unregister() is dropping
-in cdev_device_del()?  Where am I missing a reference get?
-
-> +
-> +	fwctl_unregister(&mcdev->fwctl);
-> +}
-> +
-> +static const struct auxiliary_device_id mlx5ctl_id_table[] = {
-> +	{.name = MLX5_ADEV_NAME ".fwctl",},
-> +	{},
-
-No point in comma after terminating entries
-
-> +};
-> +MODULE_DEVICE_TABLE(auxiliary, mlx5ctl_id_table);
-> +
-> +static struct auxiliary_driver mlx5ctl_driver = {
-> +	.name = "mlx5_fwctl",
-> +	.probe = mlx5ctl_probe,
-> +	.remove = mlx5ctl_remove,
-> +	.id_table = mlx5ctl_id_table,
-> +};
-> +
-> +module_auxiliary_driver(mlx5ctl_driver);
-> +
-> +MODULE_IMPORT_NS(FWCTL);
-> +MODULE_DESCRIPTION("mlx5 ConnectX fwctl driver");
-> +MODULE_AUTHOR("Saeed Mahameed <saeedm@nvidia.com>");
-> +MODULE_LICENSE("Dual BSD/GPL");
-
-> +#endif
-
+thanks,
+-- Shuah
