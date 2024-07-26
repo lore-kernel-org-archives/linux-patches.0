@@ -1,219 +1,125 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5111D3BBC2
-	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 17:52:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08C83987B;
+	Fri, 26 Jul 2024 18:05:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722016377; cv=none; b=Qty1NscQL87G3r1AW9skMh8g70muxsjFmzczgayhVoKbTkkRMWaxlCkNybr3fDgcjI/pPM8HHGBuVYVfAyf0rCyi2ZMF9mJe5hg3fhlntDvDJDTzWnY5j7Oe31v2JXxMlQJR8NWk6VUuGP6bHhPHKxyiLnQOoPf7iC3Mhm7RLpg=
+	t=1722017107; cv=none; b=CYLcOOTWKSjUnMP8kGOYP+ERQCHtkMr6iVJRp6KdaK3j6L0u45ROU+wmPhIE2zXMmckv/N6Vnh1tU1juFAnoYJDByAW080ASj7TZz3c1pU2AdBk2RA5R7deOrHUR6PS25+upGQsPz5UIg8iNpgjVcNSKZmcE8yU7adJzTX2oT58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722016377; c=relaxed/simple;
-	bh=mkF+Pee6lb1ToWKFNH60jhVzkBYIt8qW1uZTFxDZ+zM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d6EiKFFMraKsoOrMrHSeKYPPsBHz8golaV/8CYjuPeMvZHKOYpCkSy0PT8yWuKb3xoPcMeTVpgcL0D75z90tdbx+V8CauRhYb9cCsgkaVkrvJFKAyBcBPHqZ/VuVQovkyGqisu/UbjmHhjlRjJGEN4ht007VxmzFuSPbHguYfsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KiUl2pAy; arc=none smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1722017107; c=relaxed/simple;
+	bh=yEu+Ejhs5AKsucdiH5kbZXMTvd1G+uUl0hNcc8ETyh8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=XOHWfyDUT4X1HbBSUJN5/HU5Q1PmTERuSEAYJleO5HEPO4EHhJLeCYsmMcXrM2UyIeZJk47WLF6YXpE6s9X60IN2TbORf9RZyC26gbJEsEPv7QhPAaMU5nXpTmk4cmHUzqd/dZaNzTiQavVjKD3rCnNfQ/SeC5sJbX1NywShBXA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EdWW1wA9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KiUl2pAy"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-82c30468266so251057241.0
-        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 10:52:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722016375; x=1722621175; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=x12eU06nk/b6qPGqlVPTZBZDUnzaXcNsls/AJe1ig14=;
-        b=KiUl2pAyfpsmC8XvVUICrwoYIZuAuB+0/kyPQZ2GpHwX2SW0ownaZwfm8hqFuMkt20
-         izMme7OWwMUhAOTN+JAINDBawj0D8JUuBs9Qvd1w9c9WQzUzh0CHQY+JxuQzrRPfpEdQ
-         u1ca8J4l4jQ6FFwx4h8OOTjbD/hdychR0TmejLPtTs5Hdx22nulzXsAJn67N3ROLkwAI
-         w8LokzVY+aqevWqes/N1xu9YpqceqqfuczeVqlXsJXmwCKK/Qj4shAKONq2jy0udBRKa
-         MQVQmGwFV8EBFiSZloGPVtRDwJXjxIoSqAh7jjPNInOvcjK8M/2Tsse/bpV+mUujw+L4
-         KOiw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722016375; x=1722621175;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=x12eU06nk/b6qPGqlVPTZBZDUnzaXcNsls/AJe1ig14=;
-        b=J9WmQfom8yDHtH1UncMyl5KCxUugBUxc1L7M2QG2Wkyz0sVgf+HXUUi65B2YDtlv2E
-         BaTqD0ao12P9nEY4H1miYVbHZW+hBvpSqIV7cfaKDSevdsVu+cjuQTkLFqn0JDIqzB91
-         vi93Nw68mOiNQnZJ0QMp/a/SY1KW2yGdJFxPA1KAaCeti8AUB7Rui6SdEHj3hL43x1Dl
-         +HoqcrcvpSQ8f2mFpoRhv/sc01MGtaj6UpoqaT8uwC1E4T5c5baai2FrcCEjksbOEV36
-         jKrg5J/Mb0IKvi7klRVdqyRcAApgg9ZnBut2bjoHzrq1Ep6aa9I4f+mhWaOrS2IsRHQW
-         SX+w==
-X-Forwarded-Encrypted: i=1; AJvYcCWIeP9o4E6UGwPV3obQ1kwkyCLW97QrkHr1gmhORSd8ZU5AR2O4zQ+nJcn5L7LNvtIzCpS8q3FYdJTIozr6q/Q+fLfqB7Lkfg==
-X-Gm-Message-State: AOJu0YzaL4x/NOxB055WrSGIheX2hUjjR4bdY687ApKYZf2lEh/92SXI
-	WxSUczBZvptVcrmPgMKIi/03Zw6lsDQjaTug1mMvzcZNKPxPj52460sTkx9XGc5X6N3KLNmzxR4
-	67RSkr/WIwKVB0b5j+2pq7SLNmkav0D6R+qwsmA==
-X-Google-Smtp-Source: AGHT+IHDXp+ujHJusVxUfPG9lAeVWXV/StaxhOMcw3TgC/hxKR4ZDDwvx8aoDwvUl59nBDgOmeRr6zb1PPKijFBH3E8=
-X-Received: by 2002:a05:6102:4425:b0:493:be92:d1f1 with SMTP id
- ada2fe7eead31-493fa607925mr719766137.28.1722016374981; Fri, 26 Jul 2024
- 10:52:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EdWW1wA9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D402C32782;
+	Fri, 26 Jul 2024 18:05:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722017106;
+	bh=yEu+Ejhs5AKsucdiH5kbZXMTvd1G+uUl0hNcc8ETyh8=;
+	h=From:Date:Subject:To:Cc:From;
+	b=EdWW1wA9QZNXT/UVUELvf62hHOUdCjYwjMdPJwI9I2gBhSBWVOD1cF8oX2FiH4e8A
+	 DFnpaSdb5nUEInKZVjl4hgRHhrKmSHuFYGyrbZWhE2wNhqNWwZTAp+9OfxtwRszV3H
+	 TrioCEsZI/mG1WsckrfqSfL8LOVgIBmrG5NOTjNYSo9y87vxLq21qy+NtX8daOB0bx
+	 haOa9YkIZowSNmWn3D/mDlTwvKx4GcXZDGu6M8Bz1JE4y2ZbPIFs/JazZ0Yz7T7Q3v
+	 rRsUGryZg+fSNI4k+aesBoJpgBpswkGOtcVbUOE41vRT1DHTa1qBMRyGY5BYyFk7VH
+	 iXIJg26tSFGHQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Fri, 26 Jul 2024 11:05:00 -0700
+Subject: [PATCH] kbuild: Fix '-S -c' in x86 stack protector scripts
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240725142731.678993846@linuxfoundation.org>
-In-Reply-To: <20240725142731.678993846@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 26 Jul 2024 23:22:43 +0530
-Message-ID: <CA+G9fYs+KxD_vOFwndGQNHfC8bE5f9-eiCiL6dO0aux7H1ugLA@mail.gmail.com>
-Subject: Re: [PATCH 6.9 00/29] 6.9.12-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAEvlo2YC/x3MwQqDMAyA4VeRnA3Y0tXpq8gOtstmGFhJwhDEd
+ 7d4/A7/f4CSMCmMzQFCf1Yua4VrG8jLvH4J+V0NvvOh633ED++4PyOqzfmHmxSjbEXQSE0xPYJ
+ PLg3BxQT1sQnV4P5Pr/O8AM9w/gZvAAAA
+To: masahiroy@kernel.org, tglx@linutronix.de, mingo@redhat.com, 
+ bp@alien8.de, dave.hansen@linux.intel.com, x86@kernel.org
+Cc: nicolas@fjasle.eu, maskray@google.com, morbo@google.com, 
+ justinstitt@google.com, kees@kernel.org, linux-kernel@vger.kernel.org, 
+ linux-kbuild@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev, 
+ stable@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3474; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=yEu+Ejhs5AKsucdiH5kbZXMTvd1G+uUl0hNcc8ETyh8=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDGmLnwYGJKV3Pj8/rXm3yK6m5HMWHL9/qUy8veRi3lVOt
+ x+rvzzb1VHKwiDGxSArpshS/Vj1uKHhnLOMN05NgpnDygQyhIGLUwAmovaDkWF5Xorp0rPJ50pY
+ Z9bPKjijvpJTNZOp8K1eWILiSY39Yn6MDEtnh+Yd6Dw1+RijLdMO56xrUp/ORbx028lr490raWh
+ TygcA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On Thu, 25 Jul 2024 at 20:17, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.9.12 release.
-> There are 29 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 27 Jul 2024 14:27:16 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.9.12-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.9.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+After a recent change in clang to stop consuming all instances of '-S'
+and '-c' [1], the stack protector scripts break due to the kernel's use
+of -Werror=unused-command-line-argument to catch cases where flags are
+not being properly consumed by the compiler driver:
 
+  $ echo | clang -o - -x c - -S -c -Werror=unused-command-line-argument
+  clang: error: argument unused during compilation: '-c' [-Werror,-Wunused-command-line-argument]
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+This results in CONFIG_STACKPROTECTOR getting disabled because
+CONFIG_CC_HAS_SANE_STACKPROTECTOR is no longer set.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+'-c' and '-S' both instruct the compiler to stop at different stages of
+the pipeline ('-S' after compiling, '-c' after assembling), so having
+them present together in the same command makes little sense. In this
+case, the test wants to stop before assembling because it is looking at
+the textual assembly output of the compiler for either '%fs' or '%gs',
+so remove '-c' from the list of arguments to resolve the error.
 
-## Build
-* kernel: 6.9.12-rc1
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
-rc.git
-* git commit: 692f6ed6607e027dbe476c8301112605c72385b2
-* git describe: v6.9.11-30-g692f6ed6607e
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.9.y/build/v6.9.1=
-1-30-g692f6ed6607e
+All versions of GCC continue to work after this change, along with
+versions of clang that do or do not contain the change mentioned above.
 
-## Test Regressions (compared to v6.9.10-164-gebb35f61e5d3)
+Cc: stable@vger.kernel.org
+Fixes: 4f7fd4d7a791 ("[PATCH] Add the -fstack-protector option to the CFLAGS")
+Fixes: 60a5317ff0f4 ("x86: implement x86_32 stack protector")
+Link: https://github.com/llvm/llvm-project/commit/6461e537815f7fa68cef06842505353cf5600e9c [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+I think this could go via either -tip or Kbuild?
 
-## Metric Regressions (compared to v6.9.10-164-gebb35f61e5d3)
+Perhaps this is an issue in the clang commit mentioned in the message
+above since it deviates from GCC (Fangrui is on CC here) but I think the
+combination of these options is a little dubious to begin with, hence
+this change.
+---
+ scripts/gcc-x86_32-has-stack-protector.sh | 2 +-
+ scripts/gcc-x86_64-has-stack-protector.sh | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-## Test Fixes (compared to v6.9.10-164-gebb35f61e5d3)
+diff --git a/scripts/gcc-x86_32-has-stack-protector.sh b/scripts/gcc-x86_32-has-stack-protector.sh
+index 825c75c5b715..9459ca4f0f11 100755
+--- a/scripts/gcc-x86_32-has-stack-protector.sh
++++ b/scripts/gcc-x86_32-has-stack-protector.sh
+@@ -5,4 +5,4 @@
+ # -mstack-protector-guard-reg, added by
+ # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81708
+ 
+-echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m32 -O0 -fstack-protector -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
++echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m32 -O0 -fstack-protector -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
+diff --git a/scripts/gcc-x86_64-has-stack-protector.sh b/scripts/gcc-x86_64-has-stack-protector.sh
+index 75e4e22b986a..f680bb01aeeb 100755
+--- a/scripts/gcc-x86_64-has-stack-protector.sh
++++ b/scripts/gcc-x86_64-has-stack-protector.sh
+@@ -1,4 +1,4 @@
+ #!/bin/sh
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m64 -O0 -mcmodel=kernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%gs"
++echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m64 -O0 -mcmodel=kernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%gs"
 
-## Metric Fixes (compared to v6.9.10-164-gebb35f61e5d3)
+---
+base-commit: 1722389b0d863056d78287a120a1d6cadb8d4f7b
+change-id: 20240726-fix-x86-stack-protector-tests-b542b1b9416b
 
-## Test result summary
-total: 253976, pass: 218579, fail: 5284, skip: 29585, xfail: 528
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 127 total, 127 passed, 0 failed
-* arm64: 36 total, 36 passed, 0 failed
-* i386: 27 total, 27 passed, 0 failed
-* mips: 24 total, 24 passed, 0 failed
-* parisc: 3 total, 3 passed, 0 failed
-* powerpc: 34 total, 34 passed, 0 failed
-* riscv: 17 total, 17 passed, 0 failed
-* s390: 12 total, 12 passed, 0 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 6 total, 6 passed, 0 failed
-* x86_64: 31 total, 31 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-smoketest
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
---
-Linaro LKFT
-https://lkft.linaro.org
