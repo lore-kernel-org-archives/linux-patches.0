@@ -1,275 +1,128 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA2B16F85B;
-	Fri, 26 Jul 2024 07:13:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72770176AB9
+	for <patches@lists.linux.dev>; Fri, 26 Jul 2024 07:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721977984; cv=none; b=XQy3vCHQe6UTIxNj+I6Mxsc7OuAj/s0Ex9OO9jl2f0e4Cq0TRvoWVPD5H3TmeMRoko/RtCjPv75FD5bLeFh2eOKEYbZOKsb+Q8IMv9NIG7tmFyf1PKZ1DlpSmzOWoujtk1QC4z5/Do5CVo+R8Q5cRcGKp24fRUZWHK4Ih3dcy/E=
+	t=1721979683; cv=none; b=Jhf5a1Xoig8x36cenL3UOcoA0yWBDZE0nu1E/YtyIKRQZKuQhYdvJcoPIoEQ+j8PqpDaYh4dXGLR/2I6B7CHxywbXn88hqZ8AfBn0evTmQP9CwjV59n61MJraydNSw00vQke60v/ogPdpdf14k9v53xFfEtYh3LILbKbNdyBPUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721977984; c=relaxed/simple;
-	bh=wh0OJGTRDs1l3yOJWO2X7RyyUp4t2t1JbQNhSxPlarg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Y9zmDn8RQShoYrOo0NEX6LP1pGaEhG5NgN+Bbk6gjS7ud6qpviVWnIUWvZAlFA6uSJndEhBxQm5Qxt/9krOeuVNa9+jjiUxNVUtX0s6lFmjKg1iBuh/ns+KGSNkh+jsAyAR6czfwWUn25wo8O0C13mfWoSZwBXGjkRgT3vWxZeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d61wr32y; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1721979683; c=relaxed/simple;
+	bh=MqAset8Nc45mgIXZhKbsEINkaYQKExHjMptHz97Z1lM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dzBN0IpEpIh+ojsvp4WkgV15Dd0di+K584p+MDt45HC79cXNRjKV6QhvbVrCqyD7XYSTIv7Y45uEd+0h/O/WzsqgmjF510yAyEEgnK4k1Pt7J3GsW09Uj6gvlDFeNHyzoIwqtywSiScPmAn59bWVvJ9EXevm2y0U1gwT0yjXNYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qMrmK2jq; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d61wr32y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84B41C32782;
-	Fri, 26 Jul 2024 07:13:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1721977984;
-	bh=wh0OJGTRDs1l3yOJWO2X7RyyUp4t2t1JbQNhSxPlarg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=d61wr32yE2+BiAc1KhTwqflv+cEE9gudU2BQurp6quNvI1QwJtDkeo7uN9FAGAuAy
-	 9q8z9k9lm9n2a6CXqt4xDCy78btTz66AiJcKyahil+f1hv36hNuqhyBRZ/QIAsme1j
-	 nj4e9Gq/9YOGO6WT0XYCzeCP8JTQXr4cEDgtavjw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	allen.lkml@gmail.com,
-	broonie@kernel.org
-Subject: [PATCH 5.4 00/44] 5.4.281-rc2 review
-Date: Fri, 26 Jul 2024 09:13:00 +0200
-Message-ID: <20240726070548.312552217@linuxfoundation.org>
-X-Mailer: git-send-email 2.45.2
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qMrmK2jq"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3683f56b9bdso987116f8f.1
+        for <patches@lists.linux.dev>; Fri, 26 Jul 2024 00:41:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1721979680; x=1722584480; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dGuZ9gW9s8hbzxTk97NuO72bufoRV/MO+7ZPtq4qR3Y=;
+        b=qMrmK2jqg7MnsUN/+kMzE71PIDP+BX7wqJlj1YffMWNK7lO2QdQuSB5PYc3fwABV/p
+         Vg1nJl0LHaiBFQdQyR4vvpOLKzQF+tcPC0nXXHYF2mHKljUubSYEzD/sXQ/7cbneuenj
+         5YI5zbfXBkzZRDRyP44fsY/Vc7C011R0wURsOMwnTWu5bo+0O23k9U8Q0oUMGnepclMy
+         4QoO4BPmKHDxaJkrtgjMQnmKQ2ICwL2kmW14vnyS1TKiyXgrmRHcsbfCeCjjG7WAQKy1
+         WhzgH/POFroBIWoLoDABv29M+3H563xWXw4ixtQI3J8YbFI1RgNRAk1YTU1u5xMgkaV+
+         EhAQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1721979680; x=1722584480;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dGuZ9gW9s8hbzxTk97NuO72bufoRV/MO+7ZPtq4qR3Y=;
+        b=tM5LfdL/G7YeVAAc3d0IxigCP6hGOxIH29WLwdhGjwF4fQxo0lTOdf7UrwZ/Yf+sJk
+         lFCvv5AmbAFVV/WWyozyYruSjglKP6jn1rAEaeTT+ScHvM+tntoxyzj4KMZcEVRNhpLv
+         CS0hZt01ifzEeeJkWljBJW4F0KNASaJyYckozC4ZgAPExfVjqLxlCu12nKq/+JUnAwfk
+         EctF0X8PehWdUcpm3ed0jCHkqPHOB/o2iwxsfHbkilZl50aq0nIsbQwJC1BV/kUV8yJB
+         KlM6TkFq20pB6mCtbuDJkjZApa00bK9SAQH+9aCE0S+zYx0PeBBM7I/pcopy5fhHGZ8X
+         +5pg==
+X-Forwarded-Encrypted: i=1; AJvYcCUS/WlJCZWhKVA7Agctf1zOab1VK9Yb0tJB8Pwnu3m6bCQjXgM6u2eT1dTGFKcPYKf93y50wcIW/Lhydcycvsl7JkH0NSgp0g==
+X-Gm-Message-State: AOJu0YzG8RKaaxN+N4Tc1bIdrGqWrAydjGZP52fxqUhaDSSOkCEhSGUT
+	x3JOG8vx1l1gl219I4uA5anGX3kszcb4bEOBygF4lv8HSi7ix5S4zgKC4998VRaeiRptiqrkAGa
+	z39CeerzwFVhbHCi3WOLEDpD3vEMLnxgYQPa5
+X-Google-Smtp-Source: AGHT+IGVZMl8k8xJUMNdGuAqO6mUXeTU9uHBwsDRosmfkRv3V8tmsmQD2SxE1zeG5jOc3UIamFGu5cu1XFJeRldXWMY=
+X-Received: by 2002:adf:f642:0:b0:368:4e38:790c with SMTP id
+ ffacd0b85a97d-36b319deb2dmr3199790f8f.14.1721979679422; Fri, 26 Jul 2024
+ 00:41:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.281-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.281-rc2
-X-KernelTest-Deadline: 2024-07-28T07:05+00:00
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240725183325.122827-1-ojeda@kernel.org> <20240725183325.122827-6-ojeda@kernel.org>
+In-Reply-To: <20240725183325.122827-6-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Fri, 26 Jul 2024 09:41:05 +0200
+Message-ID: <CAH5fLgi9xN2igQK4Y8ZCU+iPVMH2RaWGQ7OO2OV-XROJba_2fw@mail.gmail.com>
+Subject: Re: [PATCH v3 5/6] objtool/rust: list `noreturn` Rust functions
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra <peterz@infradead.org>, 
+	Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, 
+	Dave Hansen <dave.hansen@linux.intel.com>, Masahiro Yamada <masahiroy@kernel.org>, x86@kernel.org, 
+	"H. Peter Anvin" <hpa@zytor.com>, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is the start of the stable review cycle for the 5.4.281 release.
-There are 44 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+On Thu, Jul 25, 2024 at 8:35=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> Rust functions may be `noreturn` (i.e. diverging) by returning the
+> "never" type, `!`, e.g.
+>
+>     fn f() -> ! {
+>         loop {}
+>     }
+>
+> Thus list the known `noreturn` functions to avoid such warnings.
+>
+> Without this, `objtool` would complain if enabled for Rust, e.g.:
+>
+>     rust/core.o: warning: objtool:
+>     _R...9panic_fmt() falls through to next function _R...18panic_nounwin=
+d_fmt()
+>
+>     rust/alloc.o: warning: objtool:
+>     .text: unexpected end of section
+>
+> In order to do so, we cannot match symbols' names exactly, for two
+> reasons:
+>
+>   - Rust mangling scheme [1] contains disambiguators [2] which we
+>     cannot predict (e.g. they may vary depending on the compiler version)=
+.
+>
+>     One possibility to solve this would be to parse v0 and ignore/zero
+>     those before comparison.
+>
+>   - Some of the diverging functions come from `core`, i.e. the Rust
+>     standard library, which may change with each compiler version
+>     since they are implementation details (e.g. `panic_internals`).
+>
+> Thus, to workaround both issues, only part of the symbols are matched,
+> instead of using the `NORETURN` macro in `noreturns.h`.
+>
+> Ideally, just like for the C side, we should have a better solution. For
+> instance, the compiler could give us the list via something like:
+>
+>     $ rustc --emit=3Dnoreturns ...
+>
+> Link: https://rust-lang.github.io/rfcs/2603-rust-symbol-name-mangling-v0.=
+html [1]
+> Link: https://doc.rust-lang.org/rustc/symbol-mangling/v0.html#disambiguat=
+or [2]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Responses should be made by Sun, 28 Jul 2024 07:05:34 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.281-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.281-rc2
-
-Si-Wei Liu <si-wei.liu@oracle.com>
-    tap: add missing verification for short frame
-
-Dongli Zhang <dongli.zhang@oracle.com>
-    tun: add missing verification for short frame
-
-Jann Horn <jannh@google.com>
-    filelock: Fix fcntl/close race recovery compat path
-
-Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
-    ALSA: hda/realtek: Enable headset mic on Positivo SU C1400
-
-lei lu <llfamsec@gmail.com>
-    jfs: don't walk off the end of ealist
-
-lei lu <llfamsec@gmail.com>
-    ocfs2: add bounds checking to ocfs2_check_dir_entry()
-
-Paolo Abeni <pabeni@redhat.com>
-    net: relax socket state check at accept time.
-
-Dan Carpenter <dan.carpenter@linaro.org>
-    drm/amdgpu: Fix signedness bug in sdma_v4_0_process_trap_irq()
-
-Kuan-Wei Chiu <visitorckw@gmail.com>
-    ACPI: processor_idle: Fix invalid comparison with insertion sort for latency
-
-Masahiro Yamada <masahiroy@kernel.org>
-    ARM: 9324/1: fix get_user() broken with veneer
-
-Edward Adam Davis <eadavis@qq.com>
-    hfsplus: fix uninit-value in copy_name
-
-John Hubbard <jhubbard@nvidia.com>
-    selftests/vDSO: fix clang build errors and warnings
-
-Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-    spi: imx: Don't expect DMA for i.MX{25,35,50,51,53} cspi devices
-
-Christian Brauner <brauner@kernel.org>
-    fs: better handle deep ancestor chains in is_subdir()
-
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
-
-Xingui Yang <yangxingui@huawei.com>
-    scsi: libsas: Fix exp-attached device scan after probe failure scanned in again after probe failed
-
-Ganesh Goudar <ganeshgr@linux.ibm.com>
-    powerpc/eeh: avoid possible crash when edev->pdev changes
-
-Anjali K <anjalik@linux.ibm.com>
-    powerpc/pseries: Whitelist dtl slub object for copying to userspace
-
-Yunshui Jiang <jiangyunshui@kylinos.cn>
-    net: mac802154: Fix racy device stats updates by DEV_STATS_INC() and DEV_STATS_ADD()
-
-Daniele Palmas <dnlplm@gmail.com>
-    net: usb: qmi_wwan: add Telit FN912 compositions
-
-Shengjiu Wang <shengjiu.wang@nxp.com>
-    ALSA: dmaengine_pcm: terminate dmaengine before synchronize
-
-Heiko Carstens <hca@linux.ibm.com>
-    s390/sclp: Fix sclp_init() cleanup on failure
-
-Chen Ni <nichen@iscas.ac.cn>
-    can: kvaser_usb: fix return value for hif_usb_send_regout
-
-Primoz Fiser <primoz.fiser@norik.com>
-    ASoC: ti: omap-hdmi: Fix too long driver name
-
-Jai Luthra <j-luthra@ti.com>
-    ASoC: ti: davinci-mcasp: Set min period size using FIFO config
-
-Thomas GENTY <tomlohave@gmail.com>
-    bytcr_rt5640 : inverse jack detect for Archos 101 cesium
-
-Jonathan Denose <jdenose@google.com>
-    Input: elantech - fix touchpad state on resume for Lenovo N24
-
-Arnd Bergmann <arnd@arndb.de>
-    mips: fix compat_sys_lseek syscall
-
-Kailang Yang <kailang@realtek.com>
-    ALSA: hda/realtek: Add more codec ID to no shutup pins list
-
-Michael Ellerman <mpe@ellerman.id.au>
-    KVM: PPC: Book3S HV: Prevent UAF in kvm_spapr_tce_attach_iommu_group()
-
-Dmitry Antipov <dmantipov@yandex.ru>
-    wifi: cfg80211: wext: add extra SIOCSIWSCAN data check
-
-Alexander Usyskin <alexander.usyskin@intel.com>
-    mei: demote client disconnect warning on suspend to debug
-
-Yuntao Wang <yuntao.wang@linux.dev>
-    fs/file: fix the check in find_next_fd()
-
-Masahiro Yamada <masahiroy@kernel.org>
-    kconfig: remove wrong expr_trans_bool()
-
-Masahiro Yamada <masahiroy@kernel.org>
-    kconfig: gconf: give a proper initial state to the Save button
-
-Eric Dumazet <edumazet@google.com>
-    ila: block BH in ila_output()
-
-Hans de Goede <hdegoede@redhat.com>
-    Input: silead - Always support 10 fingers
-
-Dmitry Antipov <dmantipov@yandex.ru>
-    wifi: mac80211: fix UBSAN noise in ieee80211_prep_hw_scan()
-
-Nicolas Escande <nico.escande@gmail.com>
-    wifi: mac80211: mesh: init nonpeer_pm to active by default in mesh sdata
-
-Armin Wolf <W_Armin@gmx.de>
-    ACPI: EC: Avoid returning AE_OK on errors in address space handler
-
-Armin Wolf <W_Armin@gmx.de>
-    ACPI: EC: Abort address space access upon error
-
-Saurav Kashyap <skashyap@marvell.com>
-    scsi: qedf: Set qed_slowpath_params to zero before use
-
-Jann Horn <jannh@google.com>
-    filelock: Remove locks reliably when fcntl/close race is detected
-
-Kees Cook <keescook@chromium.org>
-    gcc-plugins: Rename last_stmt() for GCC 14+
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +-
- arch/arm/include/asm/uaccess.h                     | 14 +------
- arch/mips/kernel/syscalls/syscall_o32.tbl          |  2 +-
- arch/powerpc/kernel/eeh_pe.c                       |  7 +++-
- arch/powerpc/kvm/book3s_64_vio.c                   | 18 ++++++---
- arch/powerpc/platforms/pseries/setup.c             |  4 +-
- drivers/acpi/ec.c                                  |  9 ++++-
- drivers/acpi/processor_idle.c                      | 40 ++++++++-----------
- drivers/gpu/drm/amd/amdgpu/sdma_v4_0.c             |  2 +-
- drivers/input/mouse/elantech.c                     | 31 +++++++++++++++
- drivers/input/touchscreen/silead.c                 | 19 +++------
- drivers/misc/mei/main.c                            |  2 +-
- drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c   |  2 +-
- drivers/net/tap.c                                  |  5 +++
- drivers/net/tun.c                                  |  3 ++
- drivers/net/usb/qmi_wwan.c                         |  2 +
- drivers/s390/char/sclp.c                           |  1 +
- drivers/scsi/libsas/sas_internal.h                 | 14 +++++++
- drivers/scsi/qedf/qedf_main.c                      |  1 +
- drivers/spi/spi-imx.c                              |  2 +-
- fs/dcache.c                                        | 31 +++++++--------
- fs/file.c                                          |  4 +-
- fs/hfsplus/xattr.c                                 |  2 +-
- fs/jfs/xattr.c                                     | 23 +++++++++--
- fs/locks.c                                         | 18 ++++-----
- fs/ocfs2/dir.c                                     | 46 ++++++++++++++--------
- net/bluetooth/hci_core.c                           |  4 ++
- net/ipv4/af_inet.c                                 |  4 +-
- net/ipv6/ila/ila_lwt.c                             |  7 +++-
- net/mac80211/mesh.c                                |  1 +
- net/mac80211/scan.c                                | 14 +++++--
- net/mac802154/tx.c                                 |  8 ++--
- net/wireless/scan.c                                |  8 +++-
- scripts/gcc-plugins/gcc-common.h                   |  4 ++
- scripts/kconfig/expr.c                             | 29 --------------
- scripts/kconfig/expr.h                             |  1 -
- scripts/kconfig/gconf.c                            |  3 +-
- scripts/kconfig/menu.c                             |  2 -
- sound/core/pcm_dmaengine.c                         | 12 ++++++
- sound/pci/hda/patch_realtek.c                      |  5 +++
- sound/soc/intel/boards/bytcr_rt5640.c              | 11 ++++++
- sound/soc/ti/davinci-mcasp.c                       |  9 ++++-
- sound/soc/ti/omap-hdmi.c                           |  6 +--
- tools/testing/selftests/vDSO/parse_vdso.c          | 16 +++++---
- .../selftests/vDSO/vdso_standalone_test_x86.c      | 18 ++++++++-
- 45 files changed, 290 insertions(+), 178 deletions(-)
-
-
+Tested-by: Alice Ryhl <aliceryhl@google.com>
