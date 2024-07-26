@@ -1,202 +1,228 @@
-Received: from desiato.infradead.org (desiato.infradead.org [90.155.92.199])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BC22C9A;
-	Fri, 26 Jul 2024 07:05:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.92.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FE8848C;
+	Fri, 26 Jul 2024 07:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1721977516; cv=none; b=TrHJVaTL6zLs3AKhlYRaRNDnwkokETLbRPUVilRKEd9C6cPHLhkbbMFqGpCFbakgpMD8OSFTvVJg6g3t9S17xHD8QFG2aYfL0rU2T3OMLz3sCREPGVvFIbStSAXhuZAlBQCKiA752J6/UyhQYlevgE5BRyPeZrHL/nT0+mx3Oow=
+	t=1721977957; cv=none; b=dvl7EyGcHJQ3jMs065qVzE4bo5SN5e9WNfO8yTgECkECEP7dVt+rs80BRTe0DV59iqVnWnFRffpz+QKRnCn1WqVJnpRqPZpos7EEzHAX8nPQUoRoyvG3xM1Tb+1yby1hIfHMOBjtX5UMTmMovePjqzVbWWefcgeYc8TyfwlY8Cs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1721977516; c=relaxed/simple;
-	bh=ml6HP+6LfD59Fkfz1qNcCtWxVdIfLHDonze6Pqk7QOI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JbKKdugsCnWbw0mmb3Lsasyl/yOswgkXJKlFYQK2R0LXDdIYvCwKAo9pAB7NACh0odeK73E7xmtzVyvLf4k5Qigow//V27tYadIwijTBumtg/TO3Xmb1JnOOrgjBr0HRuKDK8F5BKQyETbQkLacFI514B068TY26uDmhihxsXSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=rOQD7OGF; arc=none smtp.client-ip=90.155.92.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+	s=arc-20240116; t=1721977957; c=relaxed/simple;
+	bh=hO41aEvDpe3kFwWXA1EQktafC9Q/HJYwzg5MQhyfmtI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=VFoBhw7y3UZyDGK2m11MtkaMhQZgDnvr6jphTmRgeW3HzJ4/o5p2ea4NvZrU8KdGj1j0H7CM2P/xiC7ZGGaMaDjIj/LDKgMvXdxA7Pof1Tcqn/vZwIbIVUpoNCItlT37qo8X9DIAvLHJANNJxFLkm0lTHISTq5tA/e29kfXgSqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A9njb7wV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="rOQD7OGF"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=desiato.20200630; h=In-Reply-To:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description;
-	bh=SrTVy4x1Acj+yuiVNbKqu99rXGrRGkIxeQTS8hcwktE=; b=rOQD7OGF5eqTc4LWb/NQqpGw5t
-	SMNMAYLnaVAi4Cu9mkO5jCxK2FYQIZZdi2RHcf4RuCgRQ5mKKLhSoUMwYzmzH/ocRfmG3cPZXXVTd
-	6ywgmI1OCvNBu2v/+rxBV85BdEak+uvoizNPKNsesVQhfZMMiSdk8cN0HALgj5gHcb466tS0UTuDf
-	aftOAj766tG+NrXqAeyBl2DP++ru47WGpH8k/ULzluWTI67Q3h8HbZftnbc1Yrp7FBXz8VGHU5hHs
-	0De0FygraCxW2wbv5cQ5iO6gMdoerBMl0yhMQSDm++f8TqiBu4TTe4A3A5YxtSSAz+w0G3uFAjUKH
-	8StlGJvA==;
-Received: from j130084.upc-j.chello.nl ([24.132.130.84] helo=noisy.programming.kicks-ass.net)
-	by desiato.infradead.org with esmtpsa (Exim 4.97.1 #2 (Red Hat Linux))
-	id 1sXF0S-00000004AtA-1lJI;
-	Fri, 26 Jul 2024 07:04:55 +0000
-Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
-	id 5EDB630068B; Fri, 26 Jul 2024 09:04:47 +0200 (CEST)
-Date: Fri, 26 Jul 2024 09:04:47 +0200
-From: Peter Zijlstra <peterz@infradead.org>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Masahiro Yamada <masahiroy@kernel.org>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
-	Alex Gaynor <alex.gaynor@gmail.com>,
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
-	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
-	Benno Lossin <benno.lossin@proton.me>,
-	Andreas Hindborg <a.hindborg@samsung.com>,
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Subject: Re: [PATCH v3 5/6] objtool/rust: list `noreturn` Rust functions
-Message-ID: <20240726070447.GL13387@noisy.programming.kicks-ass.net>
-References: <20240725183325.122827-1-ojeda@kernel.org>
- <20240725183325.122827-6-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A9njb7wV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2855CC32782;
+	Fri, 26 Jul 2024 07:12:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1721977956;
+	bh=hO41aEvDpe3kFwWXA1EQktafC9Q/HJYwzg5MQhyfmtI=;
+	h=From:To:Cc:Subject:Date:From;
+	b=A9njb7wVIcHN6zQ0VOH6wwJ8rbhbiHDRAKJdqz+7r0m6IrPD4yYPnH/ieKhlqLxHD
+	 0sS5quL1wfG3oiAhTzmYOL8yGSpgFa5HbscxnocpE5I6YycDjzF9YyXBBfzmmX+jbA
+	 1ktRYf43gdAtSeBi5BfqU9xBwaLRUngbZJ1nuAKg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	allen.lkml@gmail.com,
+	broonie@kernel.org
+Subject: [PATCH 4.19 00/32] 4.19.319-rc2 review
+Date: Fri, 26 Jul 2024 09:12:32 +0200
+Message-ID: <20240726070533.519347705@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240725183325.122827-6-ojeda@kernel.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.319-rc2.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.19.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.19.319-rc2
+X-KernelTest-Deadline: 2024-07-28T07:05+00:00
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jul 25, 2024 at 08:33:22PM +0200, Miguel Ojeda wrote:
-> Rust functions may be `noreturn` (i.e. diverging) by returning the
-> "never" type, `!`, e.g.
-> 
->     fn f() -> ! {
->         loop {}
->     }
-> 
-> Thus list the known `noreturn` functions to avoid such warnings.
-> 
-> Without this, `objtool` would complain if enabled for Rust, e.g.:
-> 
->     rust/core.o: warning: objtool:
->     _R...9panic_fmt() falls through to next function _R...18panic_nounwind_fmt()
-> 
->     rust/alloc.o: warning: objtool:
->     .text: unexpected end of section
-> 
-> In order to do so, we cannot match symbols' names exactly, for two
-> reasons:
-> 
->   - Rust mangling scheme [1] contains disambiguators [2] which we
->     cannot predict (e.g. they may vary depending on the compiler version).
-> 
->     One possibility to solve this would be to parse v0 and ignore/zero
->     those before comparison.
-> 
->   - Some of the diverging functions come from `core`, i.e. the Rust
->     standard library, which may change with each compiler version
->     since they are implementation details (e.g. `panic_internals`).
-> 
-> Thus, to workaround both issues, only part of the symbols are matched,
-> instead of using the `NORETURN` macro in `noreturns.h`.
-> 
-> Ideally, just like for the C side, we should have a better solution. For
-> instance, the compiler could give us the list via something like:
-> 
->     $ rustc --emit=noreturns ...
-> 
-> Link: https://rust-lang.github.io/rfcs/2603-rust-symbol-name-mangling-v0.html [1]
-> Link: https://doc.rust-lang.org/rustc/symbol-mangling/v0.html#disambiguator [2]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+This is the start of the stable review cycle for the 4.19.319 release.
+There are 32 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Responses should be made by Sun, 28 Jul 2024 07:05:18 +0000.
+Anything received after that time might be too late.
 
-> ---
->  tools/objtool/check.c     | 48 ++++++++++++++++++++++++++++++++++++++-
->  tools/objtool/noreturns.h |  2 ++
->  2 files changed, 49 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-> index 0a33d9195b7a..deace6fca2ed 100644
-> --- a/tools/objtool/check.c
-> +++ b/tools/objtool/check.c
-> @@ -177,6 +177,48 @@ static bool is_sibling_call(struct instruction *insn)
->  	return (is_static_jump(insn) && insn_call_dest(insn));
->  }
->  
-> +/*
-> + * Checks if a string ends with another.
-> + */
-> +static bool str_ends_with(const char *s, const char *sub)
-> +{
-> +	const int slen = strlen(s);
-> +	const int sublen = strlen(sub);
-> +
-> +	if (sublen > slen)
-> +		return 0;
-> +
-> +	return !memcmp(s + slen - sublen, sub, sublen);
-> +}
-> +
-> +/*
-> + * Checks if a function is a Rust "noreturn" one.
-> + */
-> +static bool is_rust_noreturn(const struct symbol *func)
-> +{
-> +	/*
-> +	 * If it does not start with "_R", then it is not a Rust symbol.
-> +	 */
-> +	if (strncmp(func->name, "_R", 2))
-> +		return false;
-> +
-> +	/*
-> +	 * These are just heuristics -- we do not control the precise symbol
-> +	 * name, due to the crate disambiguators (which depend on the compiler)
-> +	 * as well as changes to the source code itself between versions (since
-> +	 * these come from the Rust standard library).
-> +	 */
-> +	return str_ends_with(func->name, "_4core6option13unwrap_failed")			||
-> +	       str_ends_with(func->name, "_4core6result13unwrap_failed")			||
-> +	       str_ends_with(func->name, "_4core9panicking5panic")				||
-> +	       str_ends_with(func->name, "_4core9panicking9panic_fmt")				||
-> +	       str_ends_with(func->name, "_4core9panicking14panic_explicit")			||
-> +	       str_ends_with(func->name, "_4core9panicking18panic_bounds_check")		||
-> +	       strstr(func->name, "_4core9panicking11panic_const24panic_const_")		||
-> +	       (strstr(func->name, "_4core5slice5index24slice_") &&
-> +		str_ends_with(func->name, "_fail"));
-> +}
-> +
->  /*
->   * This checks to see if the given function is a "noreturn" function.
->   *
-> @@ -202,10 +244,14 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
->  	if (!func)
->  		return false;
->  
-> -	if (func->bind == STB_GLOBAL || func->bind == STB_WEAK)
-> +	if (func->bind == STB_GLOBAL || func->bind == STB_WEAK) {
-> +		if (is_rust_noreturn(func))
-> +			return true;
-> +
->  		for (i = 0; i < ARRAY_SIZE(global_noreturns); i++)
->  			if (!strcmp(func->name, global_noreturns[i]))
->  				return true;
-> +	}
->  
->  	if (func->bind == STB_WEAK)
->  		return false;
-> diff --git a/tools/objtool/noreturns.h b/tools/objtool/noreturns.h
-> index 7ebf29c91184..82a001ac433b 100644
-> --- a/tools/objtool/noreturns.h
-> +++ b/tools/objtool/noreturns.h
-> @@ -35,6 +35,8 @@ NORETURN(panic)
->  NORETURN(panic_smp_self_stop)
->  NORETURN(rest_init)
->  NORETURN(rewind_stack_and_make_dead)
-> +NORETURN(rust_begin_unwind)
-> +NORETURN(rust_helper_BUG)
->  NORETURN(sev_es_terminate)
->  NORETURN(snp_abort)
->  NORETURN(start_kernel)
-> -- 
-> 2.45.2
-> 
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.319-rc2.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.19.319-rc2
+
+Jann Horn <jannh@google.com>
+    filelock: Fix fcntl/close race recovery compat path
+
+lei lu <llfamsec@gmail.com>
+    jfs: don't walk off the end of ealist
+
+lei lu <llfamsec@gmail.com>
+    ocfs2: add bounds checking to ocfs2_check_dir_entry()
+
+Paolo Abeni <pabeni@redhat.com>
+    net: relax socket state check at accept time.
+
+Kuan-Wei Chiu <visitorckw@gmail.com>
+    ACPI: processor_idle: Fix invalid comparison with insertion sort for latency
+
+Masahiro Yamada <masahiroy@kernel.org>
+    ARM: 9324/1: fix get_user() broken with veneer
+
+Jann Horn <jannh@google.com>
+    filelock: Remove locks reliably when fcntl/close race is detected
+
+Edward Adam Davis <eadavis@qq.com>
+    hfsplus: fix uninit-value in copy_name
+
+John Hubbard <jhubbard@nvidia.com>
+    selftests/vDSO: fix clang build errors and warnings
+
+Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+    spi: imx: Don't expect DMA for i.MX{25,35,50,51,53} cspi devices
+
+Christian Brauner <brauner@kernel.org>
+    fs: better handle deep ancestor chains in is_subdir()
+
+Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+    Bluetooth: hci_core: cancel all works upon hci_unregister_dev()
+
+Yunshui Jiang <jiangyunshui@kylinos.cn>
+    net: mac802154: Fix racy device stats updates by DEV_STATS_INC() and DEV_STATS_ADD()
+
+Daniele Palmas <dnlplm@gmail.com>
+    net: usb: qmi_wwan: add Telit FN912 compositions
+
+Shengjiu Wang <shengjiu.wang@nxp.com>
+    ALSA: dmaengine_pcm: terminate dmaengine before synchronize
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390/sclp: Fix sclp_init() cleanup on failure
+
+Chen Ni <nichen@iscas.ac.cn>
+    can: kvaser_usb: fix return value for hif_usb_send_regout
+
+Thomas GENTY <tomlohave@gmail.com>
+    bytcr_rt5640 : inverse jack detect for Archos 101 cesium
+
+Jonathan Denose <jdenose@google.com>
+    Input: elantech - fix touchpad state on resume for Lenovo N24
+
+Dmitry Antipov <dmantipov@yandex.ru>
+    wifi: cfg80211: wext: add extra SIOCSIWSCAN data check
+
+Alexander Usyskin <alexander.usyskin@intel.com>
+    mei: demote client disconnect warning on suspend to debug
+
+Yuntao Wang <yuntao.wang@linux.dev>
+    fs/file: fix the check in find_next_fd()
+
+Masahiro Yamada <masahiroy@kernel.org>
+    kconfig: remove wrong expr_trans_bool()
+
+Masahiro Yamada <masahiroy@kernel.org>
+    kconfig: gconf: give a proper initial state to the Save button
+
+Eric Dumazet <edumazet@google.com>
+    ila: block BH in ila_output()
+
+Hans de Goede <hdegoede@redhat.com>
+    Input: silead - Always support 10 fingers
+
+Dmitry Antipov <dmantipov@yandex.ru>
+    wifi: mac80211: fix UBSAN noise in ieee80211_prep_hw_scan()
+
+Nicolas Escande <nico.escande@gmail.com>
+    wifi: mac80211: mesh: init nonpeer_pm to active by default in mesh sdata
+
+Armin Wolf <W_Armin@gmx.de>
+    ACPI: EC: Avoid returning AE_OK on errors in address space handler
+
+Armin Wolf <W_Armin@gmx.de>
+    ACPI: EC: Abort address space access upon error
+
+Saurav Kashyap <skashyap@marvell.com>
+    scsi: qedf: Set qed_slowpath_params to zero before use
+
+Kees Cook <keescook@chromium.org>
+    gcc-plugins: Rename last_stmt() for GCC 14+
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ arch/arm/include/asm/uaccess.h                     | 14 +------
+ drivers/acpi/ec.c                                  |  9 ++++-
+ drivers/acpi/processor_idle.c                      | 40 ++++++++-----------
+ drivers/input/mouse/elantech.c                     | 31 +++++++++++++++
+ drivers/input/touchscreen/silead.c                 | 19 +++------
+ drivers/misc/mei/main.c                            |  2 +-
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c   |  2 +-
+ drivers/net/usb/qmi_wwan.c                         |  2 +
+ drivers/s390/char/sclp.c                           |  1 +
+ drivers/scsi/qedf/qedf_main.c                      |  1 +
+ drivers/spi/spi-imx.c                              |  2 +-
+ fs/dcache.c                                        | 31 +++++++--------
+ fs/file.c                                          |  4 +-
+ fs/hfsplus/xattr.c                                 |  2 +-
+ fs/jfs/xattr.c                                     | 23 +++++++++--
+ fs/locks.c                                         | 18 ++++-----
+ fs/ocfs2/dir.c                                     | 46 ++++++++++++++--------
+ net/bluetooth/hci_core.c                           |  4 ++
+ net/ipv4/af_inet.c                                 |  4 +-
+ net/ipv6/ila/ila_lwt.c                             |  7 +++-
+ net/mac80211/mesh.c                                |  1 +
+ net/mac80211/scan.c                                | 14 +++++--
+ net/mac802154/tx.c                                 |  8 ++--
+ net/wireless/scan.c                                |  8 +++-
+ scripts/gcc-plugins/gcc-common.h                   |  4 ++
+ scripts/kconfig/expr.c                             | 29 --------------
+ scripts/kconfig/expr.h                             |  1 -
+ scripts/kconfig/gconf.c                            |  3 +-
+ scripts/kconfig/menu.c                             |  2 -
+ sound/core/pcm_dmaengine.c                         | 12 ++++++
+ sound/soc/intel/boards/bytcr_rt5640.c              | 11 ++++++
+ tools/testing/selftests/vDSO/parse_vdso.c          | 16 +++++---
+ .../selftests/vDSO/vdso_standalone_test_x86.c      | 18 ++++++++-
+ 34 files changed, 233 insertions(+), 160 deletions(-)
+
+
