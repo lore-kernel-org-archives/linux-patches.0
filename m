@@ -1,83 +1,120 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CA9469D;
-	Sat, 27 Jul 2024 05:08:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE7358A7;
+	Sat, 27 Jul 2024 20:43:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722056898; cv=none; b=U2e2NoyziKr5cwidi5cMy9myrVJzKsVbC+DhzKw8nVhQoxvIMZDxIqsNKFbppo1Css/HTv5gyabamutlRwM8/MPJ1bWM0XOS8aMJo2DbjQB4sczik51ZmEePH+Oya3DaFDRNwyOEABN7wUVqw/Bh9c3oeQ4e7w2KiYeqHblA4Oo=
+	t=1722112995; cv=none; b=o3GAfFZFTK99xf2Qrm0omN03CLJ3maekBejTR6x3/h7r9rl3FXcvsJa9rLqEn0OouE+7X60HRsrcQmIgDWPZEMjIsIaa0usdY3Nt+AlNTBYd6TYB0vf8UqLGILFOiQH7s3VpKyAiduEBILmm05vsNJtIoAg2TILr7akbO9wvaEc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722056898; c=relaxed/simple;
-	bh=cYEQjfMS9TKWHaK0IUBF4BGLTapY91GGZeGMQ+Df4MA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SicFo5AexMHBSq/3Y57tKsPEbD+v6Gko/VlOuC0vXFvS7L/JyeMOStXj6svYYEjDMbpK8p6MDsjMgnlmql2zamHmmuMhWdRzOB+Wx5K6lroPstBqmIuZn/ca1PnJFUttmkvo1njvBT4kYKqzV3QpuBIln7/AfmRaFBFzra5rgUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DLAK8r4p; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1722112995; c=relaxed/simple;
+	bh=pCLrAC0c7kI1WPvw+F3AOPdqNfHw/TdcPzhDI1T0wGU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=abDA6NZgDlYS9MxRQsi+biQw/t9ygowrXGW0Nkm1RH674U7gxUjLN14OgbSk/aHCrv3nNj2eVRDIONqXSiTj+m7mFQGhuiBgNd+ENEyw5r/ayhebeMTcHEIMU9+PNac/L6klxIuY6n1lxjAphcZmhr4BwgRcMqg0tgfwSsrCxk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eAeOyj9g; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DLAK8r4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F104C32781;
-	Sat, 27 Jul 2024 05:08:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722056898;
-	bh=cYEQjfMS9TKWHaK0IUBF4BGLTapY91GGZeGMQ+Df4MA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DLAK8r4pj+vq0hkzgB7JkfRB0AzsoiMMrdu10PLkaNgVqV2Kf5zfTzaiUdYzaUZpJ
-	 DLiCl4JElWtBNd43CNo7I3pXsunaM9Zg7aFxDNnNEhqY070ltHmLIK23l/250rJ2XZ
-	 aDsKvjFvTDgTF7OvpiZG+aGWO1SqGYq9cbzWqO8M=
-Date: Sat, 27 Jul 2024 07:08:14 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: SeongJae Park <sj@kernel.org>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, David Laight <david.laight@aculab.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: Re: [PATCH 5.15 70/87] minmax: relax check to allow comparison
- between unsigned arguments and signed constants
-Message-ID: <2024072710-proven-routing-7e63@gregkh>
-References: <2024072659-edging-sloped-1a51@gregkh>
- <20240726160513.52282-1-sj@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eAeOyj9g"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52efef496ccso2291465e87.1;
+        Sat, 27 Jul 2024 13:43:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722112992; x=1722717792; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bv4ok3GIewx2d9Yx1/BgjuhSzkHnMJiT1FqXF1qlCKw=;
+        b=eAeOyj9gLOn8cXcmzt3MA7Zip1vn37/JELYZGhXP1vLOOXqkA3ZlgTSk5Q7tKcP4+r
+         ByKCzhdzQP/8avT2wzjw4k5UulHLFwsSeFx4DjSUhF8vle0wVSo2StdDJ5XbFU8/U4yr
+         1psVph6jpVu/1/5Yhh9viTAurh+AxipmpW61ulzxkcvuDzUAvDasoJNUpnWKTTFfSfrZ
+         DP2be0+yfUAW/ZIvu4Yg0u+8amA0M+TlIQZc7BCPX+I75NdlpaQXGQ41OcuNHweNsNSc
+         kqlp2GLlO0X8g1aXMkISw+57Qzuom049qWfZX1PHeVLJ8WSI2Hx03flinHWUoKLnEtxm
+         NCmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722112992; x=1722717792;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bv4ok3GIewx2d9Yx1/BgjuhSzkHnMJiT1FqXF1qlCKw=;
+        b=EwGqViliMKFt8UHBYBH96+D1D+RK1CVJP8aJtSOB+OoXiZjVve4RulaB6B9gWYyYDA
+         z2+aXRtW6v0Y4N/MnEfTaYpJo5mTjvv1WpRw42mdmJefU0FBD9r41VmBC3SFEG5Jcul1
+         pq5XtDW7YuZilC9xaPKgrPjSSOn9H796ZW1AIT55atAMr1IUb/jvf6qm54UzXX99tgET
+         NxYUjomNxaN2+l9nft65+R8oIdHLD1QK10uKpaj9D6eHz4cmPC1XkZ9QPIyogUSv7IW8
+         oIwr9fcP+wQAKly77nyfzDE/WcA3BtwKistf4Guow2VLo9UnouXR73ywGm+eA34cntTM
+         Fjwg==
+X-Forwarded-Encrypted: i=1; AJvYcCVXd1KcQbtvWgYnC1jf5bWkHJ4SRoY62uFVcGhH7gnOviJT5nDYTg1JsQBn3jv187OrQHnUG+x63VHwHQ1Cxg89SnGVJ4J/tnhot1x0yxSgG/FK0/KpoWQckJJ2eMo=
+X-Gm-Message-State: AOJu0YwJcCiap/pWA/ar6XIaWomWQxvyOM9ie2ckpEXl/6IGy8oY7w1f
+	YguQ66iFJZQPSxMwZ4rtcKY9az4qpV2ThRUnIM0hbd/BAHpT8pAZFPITQUKNGFaiP9lYea5BtMV
+	qr296RFV+a9bd4Fu5XVPDakh/jw==
+X-Google-Smtp-Source: AGHT+IGP71xKWMKOJHw+6eAC+0bfS2GCggw5OubOUU2ooeGmpjLgTwO9dToD28ptkFTPF8afYXAbZ5d0nh1LLHWoUjg=
+X-Received: by 2002:a05:6512:3ca9:b0:52e:8161:4ce6 with SMTP id
+ 2adb3069b0e04-5309b718bebmr1011788e87.25.1722112991729; Sat, 27 Jul 2024
+ 13:43:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240726160513.52282-1-sj@kernel.org>
+References: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
+In-Reply-To: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
+From: Brian Gerst <brgerst@gmail.com>
+Date: Sat, 27 Jul 2024 16:43:00 -0400
+Message-ID: <CAMzpN2hRVzWOF5YDvE8pPKfogdcuou8REsY+uXzkdORnFn=buQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: Fix '-S -c' in x86 stack protector scripts
+To: Nathan Chancellor <nathan@kernel.org>
+Cc: masahiroy@kernel.org, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+	dave.hansen@linux.intel.com, x86@kernel.org, nicolas@fjasle.eu, 
+	maskray@google.com, morbo@google.com, justinstitt@google.com, kees@kernel.org, 
+	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
+	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 26, 2024 at 09:05:13AM -0700, SeongJae Park wrote:
-> On Fri, 26 Jul 2024 07:21:30 +0200 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> 
-> > On Thu, Jul 25, 2024 at 09:58:51AM -0700, Linus Torvalds wrote:
-> > > On Thu, 25 Jul 2024 at 07:55, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > 5.15-stable review patch.  If anyone has any objections, please let me know.
-> > > 
-> > > I assume the min/max patches had some reason to be backported that is
-> > > probably mentioned somewhere in the forest of patches, but I missed
-> > > it.
-> > 
-> > It wasn't specifically called out here, but yes, they were needed for
-> > the DAEMON fix.  And they will be needed in the future probably as well
-> > because we have run into this problem many times when backporting
-> > patches (i.e. the backport throws tons of warnings because the min/max
-> > changes are not there.)
-> 
-> For others' information, the original backporting request including the detail
-> is available at https://lore.kernel.org/20240716183333.138498-1-sj@kernel.org
-> 
-> Also, s/DAEMON/DAMON/ ;)
+On Fri, Jul 26, 2024 at 2:05=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
+g> wrote:
+>
+> After a recent change in clang to stop consuming all instances of '-S'
+> and '-c' [1], the stack protector scripts break due to the kernel's use
+> of -Werror=3Dunused-command-line-argument to catch cases where flags are
+> not being properly consumed by the compiler driver:
+>
+>   $ echo | clang -o - -x c - -S -c -Werror=3Dunused-command-line-argument
+>   clang: error: argument unused during compilation: '-c' [-Werror,-Wunuse=
+d-command-line-argument]
+>
+> This results in CONFIG_STACKPROTECTOR getting disabled because
+> CONFIG_CC_HAS_SANE_STACKPROTECTOR is no longer set.
+>
+> '-c' and '-S' both instruct the compiler to stop at different stages of
+> the pipeline ('-S' after compiling, '-c' after assembling), so having
+> them present together in the same command makes little sense. In this
+> case, the test wants to stop before assembling because it is looking at
+> the textual assembly output of the compiler for either '%fs' or '%gs',
+> so remove '-c' from the list of arguments to resolve the error.
+>
+> All versions of GCC continue to work after this change, along with
+> versions of clang that do or do not contain the change mentioned above.
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 4f7fd4d7a791 ("[PATCH] Add the -fstack-protector option to the CFL=
+AGS")
+> Fixes: 60a5317ff0f4 ("x86: implement x86_32 stack protector")
+> Link: https://github.com/llvm/llvm-project/commit/6461e537815f7fa68cef068=
+42505353cf5600e9c [1]
+> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> ---
+> I think this could go via either -tip or Kbuild?
+>
+> Perhaps this is an issue in the clang commit mentioned in the message
+> above since it deviates from GCC (Fangrui is on CC here) but I think the
+> combination of these options is a little dubious to begin with, hence
+> this change.
 
-Sorry about that, correct names are important :)
+As part of my stack protector cleanup series, I found that these
+scripts can simply be removed.  I can repost those patches as a
+standalone cleanup.
 
-I see Linus just committed 2 min/max "fixes" for this type of "the
-preprocessor went mad!" issues to his tree so I'll look at backporting
-them if people have build issues with the stable trees as well.
+https://lore.kernel.org/lkml/20240322165233.71698-1-brgerst@gmail.com/
 
-thanks,
-
-greg k-h
+Brian Gerst
