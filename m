@@ -1,55 +1,41 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AE7358A7;
-	Sat, 27 Jul 2024 20:43:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89D882570;
+	Sun, 28 Jul 2024 02:33:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722112995; cv=none; b=o3GAfFZFTK99xf2Qrm0omN03CLJ3maekBejTR6x3/h7r9rl3FXcvsJa9rLqEn0OouE+7X60HRsrcQmIgDWPZEMjIsIaa0usdY3Nt+AlNTBYd6TYB0vf8UqLGILFOiQH7s3VpKyAiduEBILmm05vsNJtIoAg2TILr7akbO9wvaEc=
+	t=1722134004; cv=none; b=Xs69yIFVjoIDPBWoEP2oeBKN9iyRzgRzhEEmVwgxj+WxhaR3EFtPqPkJb0wy3Q4bXxgia4TSa7Ko8/utd/e3T8BAeD0ur3G+ClBKWU5S4b8/5yHcW2wkHb8/jm7uPLA6RBRd6R6XG8xKy0jR2yUSE/5TDtTftDZFKXzzxSL9Ei4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722112995; c=relaxed/simple;
-	bh=pCLrAC0c7kI1WPvw+F3AOPdqNfHw/TdcPzhDI1T0wGU=;
+	s=arc-20240116; t=1722134004; c=relaxed/simple;
+	bh=dvLYb2AwjmxROoaz81uFJ5THSLzFLGjVRrpOpr4/xIQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=abDA6NZgDlYS9MxRQsi+biQw/t9ygowrXGW0Nkm1RH674U7gxUjLN14OgbSk/aHCrv3nNj2eVRDIONqXSiTj+m7mFQGhuiBgNd+ENEyw5r/ayhebeMTcHEIMU9+PNac/L6klxIuY6n1lxjAphcZmhr4BwgRcMqg0tgfwSsrCxk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eAeOyj9g; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=mmwjBB8X7Y3EJuPVJPgIhwjIjxG8x1D20BNvz8HlGYfoHRiduVK9NbUKTzsqm+Q0MZPZLl9hrA1Gf3rPGLBFeZIN2oXHeKEB0gLlWFGW+DcuFZd6zFw+QJVBOL8XvRolLu5eHyktWeRZtODGMVmvT8lCIxPVycHiLDieEv/3/AA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sWYY1JO2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eAeOyj9g"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-52efef496ccso2291465e87.1;
-        Sat, 27 Jul 2024 13:43:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722112992; x=1722717792; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bv4ok3GIewx2d9Yx1/BgjuhSzkHnMJiT1FqXF1qlCKw=;
-        b=eAeOyj9gLOn8cXcmzt3MA7Zip1vn37/JELYZGhXP1vLOOXqkA3ZlgTSk5Q7tKcP4+r
-         ByKCzhdzQP/8avT2wzjw4k5UulHLFwsSeFx4DjSUhF8vle0wVSo2StdDJ5XbFU8/U4yr
-         1psVph6jpVu/1/5Yhh9viTAurh+AxipmpW61ulzxkcvuDzUAvDasoJNUpnWKTTFfSfrZ
-         DP2be0+yfUAW/ZIvu4Yg0u+8amA0M+TlIQZc7BCPX+I75NdlpaQXGQ41OcuNHweNsNSc
-         kqlp2GLlO0X8g1aXMkISw+57Qzuom049qWfZX1PHeVLJ8WSI2Hx03flinHWUoKLnEtxm
-         NCmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722112992; x=1722717792;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bv4ok3GIewx2d9Yx1/BgjuhSzkHnMJiT1FqXF1qlCKw=;
-        b=EwGqViliMKFt8UHBYBH96+D1D+RK1CVJP8aJtSOB+OoXiZjVve4RulaB6B9gWYyYDA
-         z2+aXRtW6v0Y4N/MnEfTaYpJo5mTjvv1WpRw42mdmJefU0FBD9r41VmBC3SFEG5Jcul1
-         pq5XtDW7YuZilC9xaPKgrPjSSOn9H796ZW1AIT55atAMr1IUb/jvf6qm54UzXX99tgET
-         NxYUjomNxaN2+l9nft65+R8oIdHLD1QK10uKpaj9D6eHz4cmPC1XkZ9QPIyogUSv7IW8
-         oIwr9fcP+wQAKly77nyfzDE/WcA3BtwKistf4Guow2VLo9UnouXR73ywGm+eA34cntTM
-         Fjwg==
-X-Forwarded-Encrypted: i=1; AJvYcCVXd1KcQbtvWgYnC1jf5bWkHJ4SRoY62uFVcGhH7gnOviJT5nDYTg1JsQBn3jv187OrQHnUG+x63VHwHQ1Cxg89SnGVJ4J/tnhot1x0yxSgG/FK0/KpoWQckJJ2eMo=
-X-Gm-Message-State: AOJu0YwJcCiap/pWA/ar6XIaWomWQxvyOM9ie2ckpEXl/6IGy8oY7w1f
-	YguQ66iFJZQPSxMwZ4rtcKY9az4qpV2ThRUnIM0hbd/BAHpT8pAZFPITQUKNGFaiP9lYea5BtMV
-	qr296RFV+a9bd4Fu5XVPDakh/jw==
-X-Google-Smtp-Source: AGHT+IGP71xKWMKOJHw+6eAC+0bfS2GCggw5OubOUU2ooeGmpjLgTwO9dToD28ptkFTPF8afYXAbZ5d0nh1LLHWoUjg=
-X-Received: by 2002:a05:6512:3ca9:b0:52e:8161:4ce6 with SMTP id
- 2adb3069b0e04-5309b718bebmr1011788e87.25.1722112991729; Sat, 27 Jul 2024
- 13:43:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sWYY1JO2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C2FC4AF09;
+	Sun, 28 Jul 2024 02:33:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722134004;
+	bh=dvLYb2AwjmxROoaz81uFJ5THSLzFLGjVRrpOpr4/xIQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=sWYY1JO2TwB0Cg6/ZQiz90RAdgAul5x+S86ZarZXdT+wFisp0SVUUvUHeMWRgF7/S
+	 V81/7RKwDFZj3G45dsYBUtrM/DYV9ZSfOAU2Xe/odkAn1RfCS/lanAzNQcRBVgQfEX
+	 mWIi2/Awt9Q3GtnNYIT5bltTJdCvRJjhdui1NXwuryv/9sKwuJPQZqVBmgwMuHMY0o
+	 iLGf9kb8GzgpPEr14yM5sFdLVVP8lDBNACuT1q7hf9Ra2ODFqcB/oS8YM7mGSH5pa4
+	 qxoq3O8zZq30wk4CZz+4u9oizw8qORAeQEKCsDUA4hG4Mi8dL4cazYfKR6AyhT46Up
+	 KdHVGHica/6FA==
+Received: by mail-lf1-f50.google.com with SMTP id 2adb3069b0e04-52efba36802so4117975e87.2;
+        Sat, 27 Jul 2024 19:33:24 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVdiRCly0pYnfX4gj5Tcr91Io0XO2gqzAb2ul0HtYk1oOODfH2CDkeIBFrLHa3z9kj0cTsi/+V1pAZAi/FNnMedcuiazQq/IYjt3zQCLmtePoHdxdnlIqgnWQt23IE=
+X-Gm-Message-State: AOJu0YxxAX2JWU6Bic14WniMTLQWij0liVZ8SB8svRodsaHTsjCh20Qx
+	BiCE3CcxBNbAkI5bvjUjQr7CvyljnnSveQ7otEa4r7vyAi0e8xZzxqg2g5cn6AKqI8Tvq3OEmlG
+	+mM1tDPEZTywwAtNE/+eT3qg9lwk=
+X-Google-Smtp-Source: AGHT+IF59mcPwmvHW5QIoNaU+VzASfC7TmJjeT9xXOw59vY0+rH1OwuY+pAGrYokLOLpn1+H+PfOljD/LCA+qPuGRKc=
+X-Received: by 2002:a05:6512:3611:b0:52c:dd3d:85af with SMTP id
+ 2adb3069b0e04-5309b27a53emr2456906e87.25.1722134002858; Sat, 27 Jul 2024
+ 19:33:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -58,12 +44,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
 In-Reply-To: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
-From: Brian Gerst <brgerst@gmail.com>
-Date: Sat, 27 Jul 2024 16:43:00 -0400
-Message-ID: <CAMzpN2hRVzWOF5YDvE8pPKfogdcuou8REsY+uXzkdORnFn=buQ@mail.gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 28 Jul 2024 11:32:46 +0900
+X-Gmail-Original-Message-ID: <CAK7LNASdVHz4961=NWxiXuxj-wEFozLMaXivBwse96PVO=49LA@mail.gmail.com>
+Message-ID: <CAK7LNASdVHz4961=NWxiXuxj-wEFozLMaXivBwse96PVO=49LA@mail.gmail.com>
 Subject: Re: [PATCH] kbuild: Fix '-S -c' in x86 stack protector scripts
 To: Nathan Chancellor <nathan@kernel.org>
-Cc: masahiroy@kernel.org, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
 	dave.hansen@linux.intel.com, x86@kernel.org, nicolas@fjasle.eu, 
 	maskray@google.com, morbo@google.com, justinstitt@google.com, kees@kernel.org, 
 	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
@@ -71,7 +58,7 @@ Cc: masahiroy@kernel.org, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 26, 2024 at 2:05=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
+On Sat, Jul 27, 2024 at 3:05=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
 g> wrote:
 >
 > After a recent change in clang to stop consuming all instances of '-S'
@@ -111,10 +98,63 @@ AGS")
 > combination of these options is a little dubious to begin with, hence
 > this change.
 
-As part of my stack protector cleanup series, I found that these
-scripts can simply be removed.  I can repost those patches as a
-standalone cleanup.
 
-https://lore.kernel.org/lkml/20240322165233.71698-1-brgerst@gmail.com/
+I agree.
 
-Brian Gerst
+I can offer to pick up this to kbuild/fixes.
+
+
+If this goes somewhere else,
+Reviewed-by: Masahiro Yamada <masahiroy@kernel.org>
+
+
+> ---
+>  scripts/gcc-x86_32-has-stack-protector.sh | 2 +-
+>  scripts/gcc-x86_64-has-stack-protector.sh | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/scripts/gcc-x86_32-has-stack-protector.sh b/scripts/gcc-x86_=
+32-has-stack-protector.sh
+> index 825c75c5b715..9459ca4f0f11 100755
+> --- a/scripts/gcc-x86_32-has-stack-protector.sh
+> +++ b/scripts/gcc-x86_32-has-stack-protector.sh
+> @@ -5,4 +5,4 @@
+>  # -mstack-protector-guard-reg, added by
+>  # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=3D81708
+>
+> -echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m32 -O0=
+ -fstack-protector -mstack-protector-guard-reg=3Dfs -mstack-protector-guard=
+-symbol=3D__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
+> +echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m32 -O0 -f=
+stack-protector -mstack-protector-guard-reg=3Dfs -mstack-protector-guard-sy=
+mbol=3D__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
+> diff --git a/scripts/gcc-x86_64-has-stack-protector.sh b/scripts/gcc-x86_=
+64-has-stack-protector.sh
+> index 75e4e22b986a..f680bb01aeeb 100755
+> --- a/scripts/gcc-x86_64-has-stack-protector.sh
+> +++ b/scripts/gcc-x86_64-has-stack-protector.sh
+> @@ -1,4 +1,4 @@
+>  #!/bin/sh
+>  # SPDX-License-Identifier: GPL-2.0
+>
+> -echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m64 -O0=
+ -mcmodel=3Dkernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q=
+ "%gs"
+> +echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m64 -O0 -m=
+cmodel=3Dkernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%=
+gs"
+>
+> ---
+> base-commit: 1722389b0d863056d78287a120a1d6cadb8d4f7b
+> change-id: 20240726-fix-x86-stack-protector-tests-b542b1b9416b
+>
+> Best regards,
+> --
+> Nathan Chancellor <nathan@kernel.org>
+>
+>
+
+
+--=20
+Best Regards
+Masahiro Yamada
