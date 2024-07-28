@@ -1,192 +1,103 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661068F77;
-	Sun, 28 Jul 2024 07:21:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AB8208C4;
+	Sun, 28 Jul 2024 12:55:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722151266; cv=none; b=az3Sj/s3DBUk3HI9vjY2NBF8utrVPoId8SVstbjzXDb1llaadu4+4cRrMVNFaKO+2d0Hkdj/iGbdfzXTC6xvOp3857oX+SGHRIMibUc0+LQZ4CkIBZaEG6ezGfvrM9Yce+HtStC2D2BDHyFeE2Waugd4LkA26p7p2JaMKTngaSY=
+	t=1722171339; cv=none; b=qCqc2NBCFsWiNuNriT4soph7VFM3yPRwKib1MVFSWXHzTApTZ9nhONYxH7wrAEfzqQCvGcky7/SM6oUffaOOdcPxPan7NSUo6HT2ysJXX81dj1KG0L3MDP3AN2ywLmXURwB0XeCP+VCYxDC4VlFPAc6gmK80w4IW4tDq0TmPMxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722151266; c=relaxed/simple;
-	bh=GG5jFH9fLcS8G24YwDi2MBNErZaorWB+Mf6iZebzfCg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UvP8XYlHOK0Q256ZUebn7Z616jtSsd9alWg02iR1wcHTftA+3UrbbQScOvB5dsF08WpNzV1azwMxigcutFwKjX5dj2WJYJjj5S2slq6xA2UR5UFVrTYCQWnWMWrLB88htZO2Ryu6EgdSQnwIy7gsw0GN8Y3VAaSZzK42dg0A+WY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GNFKmuQ4; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722171339; c=relaxed/simple;
+	bh=JioBmylOb34B+co4W08oDCq6CBN2Fyp2/xuM6TUCWbk=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YpnGijyPPeRZOPwRc6YbI9wq9snjwvaNoX9yn+q1UozfLllEOHdBlnT+7vdbg1AdJ8X5/BLRbfz7qiO2ZzDoUfObIJT9WsDox+P8m/JiDuWZ+iwiR3EpVY9uEcRNTJTiyCT4ulkynQl833NRPjxNh8469cn5mpBNLcTnZxhWb0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KVH2NLpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GNFKmuQ4"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-52efdf02d13so3932356e87.2;
-        Sun, 28 Jul 2024 00:21:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722151262; x=1722756062; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p4zxJCQGItJM4cJnL8e4bqJxqyn3oTDAKU3y3PFgwvo=;
-        b=GNFKmuQ4MxWVRYhfH4+eym7vdFJNK06QpgDMachsggqfPfiMi1x1A/IPtkK7+ZIhVS
-         qwiUAVO9I3F2JhIaiO6AV1QWBucc/2cxhjg6+kLgghqMiKQzeC6VOK0QHXqQz9WC3S1z
-         aXRVcmnKK+rVmz8dZJ4ht7qN/GxYRp2/O7ll5MsDoou13ehlKqBqTIuW99QsBDeY/76P
-         Vr8aeSwKHYyh3E+sHHVpUtJro8RR5x4LAPujwSn6hV7gwszlWJNRyt/+FYW/qxEcoDR8
-         j8CtuGWLxJHZOCSHt6tTUr6Y0vbWtSgXyLyzHPB27zi2MzMSiDiwqwqIeubPT2hfwhR5
-         9nsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722151262; x=1722756062;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p4zxJCQGItJM4cJnL8e4bqJxqyn3oTDAKU3y3PFgwvo=;
-        b=PKNMbuBt0aoakGCqIudluLAE9riHGC/mvvvLbUrR7eZUGGC8CE4myyi7KBbaZT2+XA
-         xVxUKUClWLUSAyigKfrQn8uB2jYEKm1vmSNGaOA3IzcSz+hGqNymtPN3+a+R3IcRH6m2
-         SRjcNDvClmnc7RNa235x7NX/9Zu1p27wDfvBeDQwRNMVa4y5CJNS/5V9M1zekwZfAdmO
-         hAL1tTF/CMuU0/KYcXpCbHGrqoc0kMZzV/zH+HjvihQQEw2gXRwlvxHGaCK2ujluM7EC
-         uZ6KEUUC2tmrejk0BfS1w6kl75urIh8IS7qYOpi2tf/5c0jppqxIedp5cwvhvG57FXMW
-         Wznw==
-X-Forwarded-Encrypted: i=1; AJvYcCXyYcS2Cfd3qR+sCQUg/ElvXDxTBPMpLTXS01dDP4zBJfv4cxaiFYvy6hh4TS4f1hWbwO8i7u1R9Pq+TJokkR//db8bAWYie71QjB1qpvarrRGv6ma0stC3isP+8Uw=
-X-Gm-Message-State: AOJu0Yx0EjDCPODisug4wXAyeH2BQclkpT2WrzEVNomtdYxlivbLFneH
-	hlD/LfhfFR3fpNJcb6i5URkzaolAotz/p0iRp1rf0zs/MJ7ENKRq33k+kQAXsjxKTpWeE5AC1hE
-	M1kDHprek7g4axzkBmB4reTyN4A==
-X-Google-Smtp-Source: AGHT+IE3KZlyMjLAe5MDRiJ4zEfUTV2a7YgnW8Wfv+fDZR89gbai9KqCjOPG0O2c7Dd4ZVvhaLaqM/KPOJ60tRdSeL8=
-X-Received: by 2002:a05:6512:2c0f:b0:52c:deea:57cb with SMTP id
- 2adb3069b0e04-5309b269215mr3547186e87.3.1722151262076; Sun, 28 Jul 2024
- 00:21:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KVH2NLpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C82C116B1;
+	Sun, 28 Jul 2024 12:55:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722171338;
+	bh=JioBmylOb34B+co4W08oDCq6CBN2Fyp2/xuM6TUCWbk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=KVH2NLpp4frRQVpGyUl3VIn5biWiIC0nriPNC32OGBJC/LJ8FuE2m0hjOXMUJdmCt
+	 r+XUD70N02RQ7fJ0SZFGIOw45TQCN0SCLJcfUjVvbdsDhuNLDnNf3yuQFLgAbcMdaE
+	 wcaCNIL2hh8S1GBOhQTLts3xuBhiQvCTqpomztLYR+UovQ0EwIM6FXsuQsiSlb5FR9
+	 1TgSprJ0iSmmD+LpN31I0t3FIlaJj/qwr94V9arEcfjX9raHbdo+emFRN/HFNcJUc6
+	 pwmlg4RJy58E5sDf+iTMRmv6pJi5VUOq1vuPNFyr22CkDGV4XBfwK/uc8vn0uBm8Lo
+	 f3gfuyeyn3iSw==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Hao Luo <haoluo@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	bpf@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH] kbuild: pahole-version: avoid errors if executing fails
+Date: Sun, 28 Jul 2024 14:55:27 +0200
+Message-ID: <20240728125527.690726-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
- <CAMzpN2hRVzWOF5YDvE8pPKfogdcuou8REsY+uXzkdORnFn=buQ@mail.gmail.com>
- <CAK7LNARjggcomzGMgHxuYE=Lm0_zsZS5dvjo3g4tjKJaM2oydg@mail.gmail.com>
- <CAMzpN2i6_-tiYKuXgq0ppowtfB8JipZvkMLmT8Mn02YE5shC5g@mail.gmail.com> <CAK7LNAQiL=swKikuquFW9BrTftxNGHkwhLZVqQq3oNTYByEDxA@mail.gmail.com>
-In-Reply-To: <CAK7LNAQiL=swKikuquFW9BrTftxNGHkwhLZVqQq3oNTYByEDxA@mail.gmail.com>
-From: Brian Gerst <brgerst@gmail.com>
-Date: Sun, 28 Jul 2024 03:20:50 -0400
-Message-ID: <CAMzpN2iXMtzvyvwjLHMDz2DR-Me8exU_DtQpfO3MJS5BzTnJfg@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Fix '-S -c' in x86 stack protector scripts
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-	dave.hansen@linux.intel.com, x86@kernel.org, nicolas@fjasle.eu, 
-	maskray@google.com, morbo@google.com, justinstitt@google.com, kees@kernel.org, 
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jul 28, 2024 at 2:24=E2=80=AFAM Masahiro Yamada <masahiroy@kernel.o=
-rg> wrote:
->
-> On Sun, Jul 28, 2024 at 12:13=E2=80=AFPM Brian Gerst <brgerst@gmail.com> =
-wrote:
-> >
-> > On Sat, Jul 27, 2024 at 10:36=E2=80=AFPM Masahiro Yamada <masahiroy@ker=
-nel.org> wrote:
-> > >
-> > > On Sun, Jul 28, 2024 at 5:43=E2=80=AFAM Brian Gerst <brgerst@gmail.co=
-m> wrote:
-> > > >
-> > > > On Fri, Jul 26, 2024 at 2:05=E2=80=AFPM Nathan Chancellor <nathan@k=
-ernel.org> wrote:
-> > > > >
-> > > > > After a recent change in clang to stop consuming all instances of=
- '-S'
-> > > > > and '-c' [1], the stack protector scripts break due to the kernel=
-'s use
-> > > > > of -Werror=3Dunused-command-line-argument to catch cases where fl=
-ags are
-> > > > > not being properly consumed by the compiler driver:
-> > > > >
-> > > > >   $ echo | clang -o - -x c - -S -c -Werror=3Dunused-command-line-=
-argument
-> > > > >   clang: error: argument unused during compilation: '-c' [-Werror=
-,-Wunused-command-line-argument]
-> > > > >
-> > > > > This results in CONFIG_STACKPROTECTOR getting disabled because
-> > > > > CONFIG_CC_HAS_SANE_STACKPROTECTOR is no longer set.
-> > > > >
-> > > > > '-c' and '-S' both instruct the compiler to stop at different sta=
-ges of
-> > > > > the pipeline ('-S' after compiling, '-c' after assembling), so ha=
-ving
-> > > > > them present together in the same command makes little sense. In =
-this
-> > > > > case, the test wants to stop before assembling because it is look=
-ing at
-> > > > > the textual assembly output of the compiler for either '%fs' or '=
-%gs',
-> > > > > so remove '-c' from the list of arguments to resolve the error.
-> > > > >
-> > > > > All versions of GCC continue to work after this change, along wit=
-h
-> > > > > versions of clang that do or do not contain the change mentioned =
-above.
-> > > > >
-> > > > > Cc: stable@vger.kernel.org
-> > > > > Fixes: 4f7fd4d7a791 ("[PATCH] Add the -fstack-protector option to=
- the CFLAGS")
-> > > > > Fixes: 60a5317ff0f4 ("x86: implement x86_32 stack protector")
-> > > > > Link: https://github.com/llvm/llvm-project/commit/6461e537815f7fa=
-68cef06842505353cf5600e9c [1]
-> > > > > Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> > > > > ---
-> > > > > I think this could go via either -tip or Kbuild?
-> > > > >
-> > > > > Perhaps this is an issue in the clang commit mentioned in the mes=
-sage
-> > > > > above since it deviates from GCC (Fangrui is on CC here) but I th=
-ink the
-> > > > > combination of these options is a little dubious to begin with, h=
-ence
-> > > > > this change.
-> > > >
-> > > > As part of my stack protector cleanup series, I found that these
-> > > > scripts can simply be removed.  I can repost those patches as a
-> > > > standalone cleanup.
-> > > >
-> > > > https://lore.kernel.org/lkml/20240322165233.71698-1-brgerst@gmail.c=
-om/
-> > > >
-> > > > Brian Gerst
-> > >
-> > > Judging from the Fixes tags, Nathan meant this patch is
-> > > a back-port candidate so that the latest LLVM can be used for stable =
-kernels.
-> > >
-> > > You are making big changes, and do you mean they can be back-ported?
-> >
-> > I was referring to just the first two patches of that series.  That
-> > said, it would be simpler to take Nathan's fix for backporting.
->
->
->
-> Even the first two patches are not trivial.
->
-> The second patch 02/16:
-> https://lore.kernel.org/lkml/20240322165233.71698-3-brgerst@gmail.com/
->
-> is completely removing scripts/gcc-x86_64-has-stack-protector.sh,
->
->
-> In fact, I also noticed it was a workaround for old buggy compilers.
-> I attempted to do the equivalent clean up, then it was rejected.
-> https://lore.kernel.org/lkml/1541992013-18657-1-git-send-email-yamada.mas=
-ahiro@socionext.com/
->
-> It was 6 years ago, so the situation might have changed.
-> Good luck.
+Like patch "rust: suppress error messages from
+CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT" [1], do not assume the file existing
+and being executable implies executing it will succeed. Instead, bail
+out if executing it fails for any reason.
 
-It's a workaround for an old buggy compiler that isn't even supported
-by the kernel anymore.
+For instance, `pahole` may be built for another architecture, may be a
+program we do not expect or may be completely broken:
 
-Brian Gerst
->
->
->
->
->
->
->
-> --
-> Best Regards
-> Masahiro Yamada
+    $ echo 'bad' > bad-pahole
+    $ chmod u+x bad-pahole
+    $ make PAHOLE=./bad-pahole defconfig
+    ...
+    ./bad-pahole: 1: bad: not found
+    init/Kconfig:112: syntax error
+    init/Kconfig:112: invalid statement
+
+Link: https://lore.kernel.org/rust-for-linux/20240727140302.1806011-1-masahiroy@kernel.org/ [1]
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ scripts/pahole-version.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/scripts/pahole-version.sh b/scripts/pahole-version.sh
+index f8a32ab93ad1..a35b557f1901 100755
+--- a/scripts/pahole-version.sh
++++ b/scripts/pahole-version.sh
+@@ -5,9 +5,9 @@
+ #
+ # Prints pahole's version in a 3-digit form, such as 119 for v1.19.
+ 
+-if [ ! -x "$(command -v "$@")" ]; then
++if output=$("$@" --version 2>/dev/null); then
++	echo "$output" | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/'
++else
+ 	echo 0
+ 	exit 1
+ fi
+-
+-"$@" --version | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/'
+
+base-commit: 256abd8e550ce977b728be79a74e1729438b4948
+-- 
+2.45.2
+
