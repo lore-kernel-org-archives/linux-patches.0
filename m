@@ -1,104 +1,87 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CC2125C1;
-	Sun, 28 Jul 2024 19:14:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD5E2148826
+	for <patches@lists.linux.dev>; Mon, 29 Jul 2024 12:47:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722194044; cv=none; b=I4oYpXkSYHbc4s9DtCBinXYLgpr1IMKdoNO39qrJa8pa09LhDBwQZcS+A6oTqhww0REsrJ7pjRMKpenBOsHI3TVUYnOo+44+Kxi7XbmAJPGrI1x/POrNi+YgmFDiVCLqJNMwndKECqA2/BX4pcTlOlnJaONIOCfGvks+nh9mgsY=
+	t=1722257247; cv=none; b=AM3H9fF8V20BBacYU0PxE1oyNNYEaCRq1MlVGVBsxUW9qktMdLdNk1q8a13AAwwHWNQM7/ApeMk1igsTXtQRqWTRTJ7Kw4f31Lf9xIay5qEQPpZtc2aorvecgrrkV6p/dQuZb3OYshsTrQE+mhTJDa+D0J0kCo+HmiUBUOI6IVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722194044; c=relaxed/simple;
-	bh=sMmbh7cUTqqovrR2AT6BBqOajFBHUkdjDZtKSwNRZH8=;
+	s=arc-20240116; t=1722257247; c=relaxed/simple;
+	bh=xybrMFv0tLvK9ZzP0ZErhnNVRB+K6vPelKBUKtae6+Q=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IVNL/4RUqJmXzfqLCGUxgyh6gO3A/MqoGsTbXWYxoJoZNpDFoRmpeVWukwIUte2aJ658TQSWR3TarXcXUqIz4CszGpEpfkO9/eN3FwLyejrjbydw3NqlA/z+5jaDEsEFF7Z8p82b/c98u94ZOs45LtajYNsbY/VLUDBQi3zmwUM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+rOGDyC; arc=none smtp.client-ip=10.30.226.201
+	 To:Cc:Content-Type; b=oZS91Jmt95oQStsZWAW3kKAFkvqYcU0Hw7ijKIvI3hZphNsKvvughSMxzpvaHyToJDrMoCcxcAdwzOsEfJFdH2fUyTexnaLv8XiCRJj0f8Pz0lQCX1tM/t/RIQxQLfx2yDG1KeMFNiC6q/mZLLfMJwXchW4/MeqNEZAR5xIUIFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=irW8Twkq; arc=none smtp.client-ip=209.85.215.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+rOGDyC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA25C4AF0A;
-	Sun, 28 Jul 2024 19:14:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722194043;
-	bh=sMmbh7cUTqqovrR2AT6BBqOajFBHUkdjDZtKSwNRZH8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=R+rOGDyCe/5nYkHqIkfoDxNCUuoXBD0w/ddqWWoF1jhS+B0Kyyuk2m3W5Q7WwKFWV
-	 HbXJ3Kegb1sa2iHUflKafhsKDBBrSjNfcZOxQmrCmqsRXuDtLezhnPmzBaeYri/RA3
-	 avGCIFWWgJX9vQri9/mHE74oVZ+ao9vDhuVVZsrPQeKzmHZ/pAd180RTlLCb2MYBXz
-	 v1JbHi8QMBQ4b5WT/KcNvvgrF8gwEhmrr3sjnfEemv8lOFspEzRQNO5IldgpTGfQX7
-	 k8aJDu0T5XZr7GDlnvV75DaOGAl+fpgBrzWXxtAqxH82LAVa4mWcwlgtcukGhKwyto
-	 u0y1ulq4tUitg==
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-52fc4388a64so4604913e87.1;
-        Sun, 28 Jul 2024 12:14:03 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUlWc3PqhNnSyui1C+G5Q3BIrxZ/1bBY9rSZYlsIBOk84TC1Yyy4emEVFJqNL8e1jxtxH/shgwc0I8snL+rpbYiv2+oR+eJSszZX6sv+kbgsEVpPgMTSvc7yzfebnA=
-X-Gm-Message-State: AOJu0Yx6N7Q8rzecShDMEjMiFD2rTFxDcY4hQ6JJTwd5PsiJL1cS2kTC
-	Vvy8Vo4ENjAuyboRm2eCiNwqbaO1XhAEgCuDAdtsVkfzdDtrLNWbuukh8cdBPa2A6G5F4U5DYnz
-	TfS+KwvEtJbV+6eTanZlkPLS0gCw=
-X-Google-Smtp-Source: AGHT+IEkz1TnHDlE9ler9A80e9defPOv4OL1EPJyuZN5JVOtMoef4fgodh9s71/x3g0iffQ+5rn3J1ZmWw+wvfxkaGI=
-X-Received: by 2002:a05:6512:1289:b0:52e:f95c:8b with SMTP id
- 2adb3069b0e04-5309b279f98mr4853691e87.16.1722194042594; Sun, 28 Jul 2024
- 12:14:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="irW8Twkq"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-79b530ba612so1882668a12.2
+        for <patches@lists.linux.dev>; Mon, 29 Jul 2024 05:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1722257245; x=1722862045; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xybrMFv0tLvK9ZzP0ZErhnNVRB+K6vPelKBUKtae6+Q=;
+        b=irW8Twkq33A+IhKYpegxrwLlPSnoAzdw5t5pUQvNz85ac+HPTQvDzqvr0PSrQIFVMK
+         TYISEdQfxqLlwEyRz7Q66D/8N0t5saTpPu6GWgkxIJWHByBYpNkj+KTWFqeTr43nMRTK
+         DCrG+PbYsfT1WuSSTLrGucX1RnZTGlg/UrL2baufurt0PmSwvk4mzQ2xu73TFjMQT/WD
+         fNYTnuZBuJ+Y4Sr2VxJWwkYwRQj8fB+uvXGC3KgBPQPnX5yYd7tWz4PuX6e2CeOjzv/q
+         e7s+FSr9fvJ9XS1cNn4ofS/86q/82+5pp4CIQIBD8zyrLCwCur5kliQdg6i4YCeL3w4Z
+         gc9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722257245; x=1722862045;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xybrMFv0tLvK9ZzP0ZErhnNVRB+K6vPelKBUKtae6+Q=;
+        b=L8XQNgPsa5RRSLG4AjOlpW/PkTXdCZZt/gXk/HTZFuVMNZTQyqgfnHhaIoQdy+sv4Q
+         ZCOxC3NwtccHennNwe1PT47XqBnUZVOqUS80g3PsUt254eIkNuw4DM82/wpmc4C9eAjW
+         jfLTQFi/MCbUTIND0xtmzHDZ6970pVvN2exG+mYD5fhxvKWpRM/vo4rgRPbPNeVVCCn6
+         +euaXjfnx0JcGaTvWQfbwUoARtniTK0EFy7qksOs5MTaaC/3MhwWTxSETa7FIJ5Iblpu
+         p/ZNLOuStWLZ8Vn8PQr0NvkwLhVwmo1I0tIs/mU9De7dY840HJV4sO5gdfuQuDNUr+p9
+         sALg==
+X-Forwarded-Encrypted: i=1; AJvYcCWsHvQxNYA+WLmLbUffkCIazs9UlXnZnKYv3dt3z5Eq6CrvUiJviSy3YoKcjoJEkYs4Y1Iu7LBDnVgQ6Bx78nBbDKeXMUuLcg==
+X-Gm-Message-State: AOJu0YwLswcNZrka8nbpIfb/rY9GDplbxtD+q9SbnAhNgp0/ls0Z8cIN
+	SIuIHTCiChw9TbII0wW6BrYrwcykW3HlmkWwIED4Stnf+5//EVO7CJoc6swtwlx6tyYsTVr66V8
+	nvGj6bA4ptnim8br9RLQxBX4Qvms=
+X-Google-Smtp-Source: AGHT+IEnmV87/lZZE/9HhfyMADvh6qBGRtFi0cyC1KcMUMEI73XyuibiYqA3Ia9nZODzBMO7wFPNvBfiyCXyd9IAf1Q=
+X-Received: by 2002:a05:6a21:788e:b0:1c4:23f1:114 with SMTP id
+ adf61e73a8af0-1c4a12aeaf0mr6026445637.20.1722257244884; Mon, 29 Jul 2024
+ 05:47:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
-In-Reply-To: <20240726-fix-x86-stack-protector-tests-v1-1-a30fe80e8925@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Mon, 29 Jul 2024 04:13:26 +0900
-X-Gmail-Original-Message-ID: <CAK7LNATWv-OJM0oW8qbMk-HL0GgRkYKcRt+yZadhHB3NGR22uQ@mail.gmail.com>
-Message-ID: <CAK7LNATWv-OJM0oW8qbMk-HL0GgRkYKcRt+yZadhHB3NGR22uQ@mail.gmail.com>
-Subject: Re: [PATCH] kbuild: Fix '-S -c' in x86 stack protector scripts
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, 
-	dave.hansen@linux.intel.com, x86@kernel.org, nicolas@fjasle.eu, 
-	maskray@google.com, morbo@google.com, justinstitt@google.com, kees@kernel.org, 
-	linux-kernel@vger.kernel.org, linux-kbuild@vger.kernel.org, 
-	llvm@lists.linux.dev, patches@lists.linux.dev, stable@vger.kernel.org
+References: <20240725184644.135185-1-ojeda@kernel.org> <CALNs47sFD_GqhXNa7v+eC=O96A+SpPm4QtZ3=GbSxZ4zkTm3Zg@mail.gmail.com>
+In-Reply-To: <CALNs47sFD_GqhXNa7v+eC=O96A+SpPm4QtZ3=GbSxZ4zkTm3Zg@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 29 Jul 2024 14:47:11 +0200
+Message-ID: <CANiq72k1H_LzugFju23UdNEzcYHV5xaqVSL2Xan__Jiyvi-_Mg@mail.gmail.com>
+Subject: Re: [PATCH] rust: macros: indent list item in `module!`'s docs
+To: Trevor Gross <tmgross@umich.edu>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 27, 2024 at 3:05=E2=80=AFAM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
+On Fri, Jul 26, 2024 at 1:06=E2=80=AFPM Trevor Gross <tmgross@umich.edu> wr=
+ote:
 >
-> After a recent change in clang to stop consuming all instances of '-S'
-> and '-c' [1], the stack protector scripts break due to the kernel's use
-> of -Werror=3Dunused-command-line-argument to catch cases where flags are
-> not being properly consumed by the compiler driver:
+> Not much needing review here, but
 >
->   $ echo | clang -o - -x c - -S -c -Werror=3Dunused-command-line-argument
->   clang: error: argument unused during compilation: '-c' [-Werror,-Wunuse=
-d-command-line-argument]
->
-> This results in CONFIG_STACKPROTECTOR getting disabled because
-> CONFIG_CC_HAS_SANE_STACKPROTECTOR is no longer set.
->
-> '-c' and '-S' both instruct the compiler to stop at different stages of
-> the pipeline ('-S' after compiling, '-c' after assembling), so having
-> them present together in the same command makes little sense. In this
-> case, the test wants to stop before assembling because it is looking at
-> the textual assembly output of the compiler for either '%fs' or '%gs',
-> so remove '-c' from the list of arguments to resolve the error.
->
-> All versions of GCC continue to work after this change, along with
-> versions of clang that do or do not contain the change mentioned above.
->
-> Cc: stable@vger.kernel.org
-> Fixes: 4f7fd4d7a791 ("[PATCH] Add the -fstack-protector option to the CFL=
-AGS")
-> Fixes: 60a5317ff0f4 ("x86: implement x86_32 stack protector")
-> Link: https://github.com/llvm/llvm-project/commit/6461e537815f7fa68cef068=
-42505353cf5600e9c [1]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-> ---
-> I think this could go via either -tip or Kbuild?
+> Reviewed-by: Trevor Gross <tmgross@umich.edu>
 
+Thanks Trevor :)
 
-Applied to linux-kbuild/fixes, and included in the pull request.
-Thanks!
+Applied to `rust-fixes`.
 
-
-
---=20
-Best Regards
-Masahiro Yamada
+Cheers,
+Miguel
