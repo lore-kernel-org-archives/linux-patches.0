@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7968618F2EB;
-	Mon, 29 Jul 2024 22:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989FF18F2FD;
+	Mon, 29 Jul 2024 22:37:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722292653; cv=none; b=ADFHvcGg9narh0MG3+oUQF2O1RuwHAjuHlr7eQ7Uvz/AGrBR1gXlgFtdfTtgg1H42C7JNNCum5I5Je9X9gIByUH+exuKmq0qpqbuPLr0MKNvLKHbRU//w3+9HzmWu8c4QbRb0gNK0cKSsmkSuW7n+2GTm7mAhMGCutUd61+jF90=
+	t=1722292660; cv=none; b=eTxU1+aMZunRb4Nj2ucr70KlCylT97a1g5cD+aYmRdhFkbPf4XEaqU5yOQsfSasuz0k2fGL/0kCqryZSch3i9cPUxtTRgCkDCK3sVJenfLBMNZNy74SIsLUwQZSVMRGwPxAofSPVXcPF1/sTN2jXA5Nf+lsxmS8RZxuzo3k/pMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722292653; c=relaxed/simple;
-	bh=vrwLUBu5A8/eYxSGpMfELEQ3sckpVi5r/TFZT+9Vn8Q=;
+	s=arc-20240116; t=1722292660; c=relaxed/simple;
+	bh=D6mwweKmN8jdrEMRzN0PVB7taUVfH02s8ZKzYztglK0=;
 	h=Message-ID:Content-Type:MIME-Version:In-Reply-To:References:
-	 Subject:From:Cc:To:Date; b=QZ8W2QHycLmG+/TG4ixcQV4/KLDAdR0Fg7WAVdb4SmWf5hBYHKinKdRcW/plTu0/95qmKTNXOWvCrvb27ffencLtTNUp0pN6277+YIb5QdpgaCGIanMDrMxM+cBVPaeQjJiXt4GAetJJtozk7drYiEic6b6DGpEoP5ZLgaODYhU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ub3RJpr6; arc=none smtp.client-ip=10.30.226.201
+	 Subject:From:Cc:To:Date; b=egWWh04HZaT1wbjA1jpmeJE9LUX1sw9Z/0U4AHaxgvUKYfFvsD9vAfs9zJbeof+5oxFW/W/Y1pVokv+RaLnJTnYFTVB8kqIY5FyH5NsQbrcvqXvf+AC05vgRO0Xk0N4HWDabU59SJhLT7eiMvu6KJGgBWZOBEnYzYSPAFT0kj0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UnRl7cWK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ub3RJpr6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9B74C32786;
-	Mon, 29 Jul 2024 22:37:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UnRl7cWK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64581C32786;
+	Mon, 29 Jul 2024 22:37:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722292653;
-	bh=vrwLUBu5A8/eYxSGpMfELEQ3sckpVi5r/TFZT+9Vn8Q=;
+	s=k20201202; t=1722292660;
+	bh=D6mwweKmN8jdrEMRzN0PVB7taUVfH02s8ZKzYztglK0=;
 	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=Ub3RJpr6jo3JoYebqNqB1tCPFBjCSPZ38PI6Qa1nYQJnTf+/rpvZ8MdR4+k4QuCz8
-	 7jZ9iP7swl87vK8iw9tSq480uuqNS6BsV4BMIgL0iarIlJ/joYm6/+1Lmg33UqMYRO
-	 bc+qr8OCgFAauameOAcOYYuUKGhtUcB2dqP2f/V5vf0BwUV2DZqM1GfNkXMUzufbgx
-	 s6aX0aA1gYgegYLhrbldieQq2hRNYPssyJfOSQ64FoRs4Dnxg9ti0SV0ufwOOzD+wE
-	 BsVW4XSeWPoErmVdBqTB6lc9cIju9FHlUN/RN+uCadPRQBAwvoVFu9+pS1XSotprea
-	 wdMvYYpM8dSKQ==
-Message-ID: <d44ead4a178fb029d4239d30c99c44bc.sboyd@kernel.org>
+	b=UnRl7cWK/dALs/MmxWM0sGFOIZGaAS66HvROtgjNEmUSOPoj23fvApw5NPl+CSJ6e
+	 digPOBU8kE60wtcmncwtpnFmnf00rXR3V+4jKNCtr9tB4F2+rI6c/kYl2PNvNJH8Qy
+	 NSvcINAru96l7DOPL0iItTWz0hMAuGE/yNbgtMuyflFEs8i84gXmuJdSghXE3wRcY6
+	 Q/XA/oxU2hX3d9P21PTpgJZzpkHxrXxF+6q6QaKbQWoXkyC19fddpRrxH5yZXsZLqr
+	 aVUL3hDOtMnofOkrLd8ppfxWqTehU1jr4KRKsvVSyq8kJ6Vl0WZd+gUhTKE6ZY6o6f
+	 z+3UAvP2hSinw==
+Message-ID: <1c25853ce67aa1b169ecd41e4283ad4e.sboyd@kernel.org>
 Content-Type: text/plain; charset="utf-8"
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,29 +35,30 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20240718210513.3801024-5-sboyd@kernel.org>
-References: <20240718210513.3801024-1-sboyd@kernel.org> <20240718210513.3801024-5-sboyd@kernel.org>
-Subject: Re: [PATCH v8 4/8] of: Add a KUnit test for overlays and test managed APIs
+In-Reply-To: <20240718210513.3801024-6-sboyd@kernel.org>
+References: <20240718210513.3801024-1-sboyd@kernel.org> <20240718210513.3801024-6-sboyd@kernel.org>
+Subject: Re: [PATCH v8 5/8] platform: Add test managed platform_device/driver APIs
 From: Stephen Boyd <sboyd@kernel.org>
 Cc: linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, kunit-dev@googlegroups.com, linux-kselftest@vger.kernel.org, devicetree@vger.kernel.org, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Rae Moar <rmoar@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Rob Herring <robh@kernel.org>, Saravana Kannan <saravanak@google.com>, Daniel Latypov <dlatypov@google.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Conor Dooley <conor+dt@kernel.org>, Maxime Ripard <maxime@cerno.tech>, Geert Uytterhoeven <geert+renesas@glider.be>
 To: Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>
-Date: Mon, 29 Jul 2024 15:37:30 -0700
+Date: Mon, 29 Jul 2024 15:37:38 -0700
 User-Agent: alot/0.10
 
-Quoting Stephen Boyd (2024-07-18 14:05:03)
-> Test the KUnit test managed overlay APIs. Confirm that platform devices
-> are created and destroyed properly. This provides us confidence that the
-> test managed APIs work correctly and can be relied upon to provide tests
-> with fake platform devices and device nodes via overlays compiled into
-> the kernel image.
+Quoting Stephen Boyd (2024-07-18 14:05:04)
+> Introduce KUnit resource wrappers around platform_driver_register(),
+> platform_device_alloc(), and platform_device_add() so that test authors
+> can register platform drivers/devices from their tests and have the
+> drivers/devices automatically be unregistered when the test is done.
 >=20
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Daniel Latypov <dlatypov@google.com>
+> This makes test setup code simpler when a platform driver or platform
+> device is needed. Add a few test cases at the same time to make sure the
+> APIs work as intended.
+>=20
 > Cc: Brendan Higgins <brendan.higgins@linux.dev>
 > Reviewed-by: David Gow <davidgow@google.com>
 > Cc: Rae Moar <rmoar@google.com>
-> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
 > Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 > ---
 
