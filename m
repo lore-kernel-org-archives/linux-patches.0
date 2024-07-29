@@ -1,48 +1,48 @@
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2062.outbound.protection.outlook.com [40.107.236.62])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2086.outbound.protection.outlook.com [40.107.237.86])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F5A15ECDB
-	for <patches@lists.linux.dev>; Mon, 29 Jul 2024 17:05:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.62
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9F3815ECCD
+	for <patches@lists.linux.dev>; Mon, 29 Jul 2024 17:30:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.86
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722272761; cv=fail; b=NxBmljciB9XjP8uUaX60tExebzOn9i8xoXHRQwBq02I9ciyvhNnRD8GY/A3jzV1M5/NB1Ek/Zw83EPen4q4LRYYA5fhvUS8km3hnsYq/tK+KEpFoOcHptPhfB4ao64XoVolzAtikfuzGytDRwlpoeYsl44iO6Tp4K341/lW38yE=
+	t=1722274245; cv=fail; b=jXB0IsFaKfi3RyqT63efeIn1r9v+tWIa6nfJtZxtJKb0SP88lI8jsd1uoOI3HIY1UV652nbJxkE5/UDwQXfjffPCt3/VTbp1t4cliGFJL8IP4HbxlGzAPnlyZqtT+EjgUk2KovrreITQa9aCAfzh5lPXLJN5ZKp+lLwaCG8tyFI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722272761; c=relaxed/simple;
-	bh=VsTe9i6womu1m2EBQihm2SzEOWLDOndjo4yweK+rWVg=;
+	s=arc-20240116; t=1722274245; c=relaxed/simple;
+	bh=W1bi6Ve0Pha/ER3j6//arr3PCNhlgKXh6T7tP0/tM7c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=dJU8nuAX+HFFvApDRjtI4VczY4q7H00iMEtt3tHo2cGDTmm7KEhueujxxB3H6x93A2q34+vQyeEZ83kkDWv/MHBwD6JQOvJrXAAEQtuZiBbPE02ENSm2ul4EjegHxuI5wBbT/o+2qDtT3+ywAsAUt5Mslfvt9sozZfyqUyDdTrE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=mAXdNPbW; arc=fail smtp.client-ip=40.107.236.62
+	 Content-Disposition:In-Reply-To:MIME-Version; b=ASpkrTSEdZCRXaJKFiknBP6XBGOTuDIT+gVGOWcOIJArFBr6dt58XnWa0XBF/YldPGL066j5zp8wbGVE3aKNiwKNm07iVsAZQlp69BqPn1/o0BtIZ4CoeIHEPNOsHHlKD4ALecwk4oSMW7VL/KQ9xcun2bEWJ2tvDf8zm9gaC94=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=up+bEe9P; arc=fail smtp.client-ip=40.107.237.86
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="mAXdNPbW"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="up+bEe9P"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gJ+18oODpZCU3pZzWN6H1vYYZLqq3IHqi4iOhWigeqCwXArDxORHaEcY6pXhtysKoXQl8MLs6oesOjXjtOcsbuA0rk8JdXZmzoS435IUa4TXHG6BEDRhgCg8XlXL8aXj9PYDE8sJy36LwQ7jpyf1U7iv4hLADFakc4BjRHJo04kHWa2B2b61viuRDBEbpe57cW85z3GL5tHRQZKeYVfaP8yG+0MQJyfodaaA5gh/vEFT/KUKKeYgopU6xIWuThoQtOwkutwRxEtqnwB8EVyBW3hWLqEcyM+t+XFEfecXKarV6v4wvg5W4OVEN2PIh033MJGlZE8fXN5Pe+gJR7XIAA==
+ b=RJCTYp2CnwKYVwtgvqQ9WGQ480wvfvq7rDVg18Bjln7DV0LN3PpCVbHl7LSM70xeHi271dhporIiCJXvDBWLr2+xfnuSJuT74vWkL0yR7oFuXG5scT/La+zhI4GApcCBbzZQ1wbnXnMTDOsaeNxLEuWVCvjKduUjzc8b4BImXoIcqE+LwGUe+xike6lUMUdZeAJ7rbV/pwT+Yoqb4c88WP6Kr01OYgr5X6mbLyZI1H8DxA6BQxTQqZrB62zwotHQ8cEOViUqu+EM0ut3I5qf+ptf+bsCsHd14o88yb+28T7dSCYUCMN/qt1flTDVKgPuEqC8puIqvo89pIxpup47YQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ceLbXwdpk3s7MKsBLriqA0+2kDBA9bwyj1meM4593OQ=;
- b=psFE4qMYjnqeBHW9RmosY1e6EfgF6bnKwtmr/hnHot2E5LZFwVS8+ZIYI6TPbl/TZQJwx0+cKLbAfWUPMScRK2eIGqoD1Rt4gaWy1wjApkWaU7MbOhVIllIMZEpO9K5eEsmpXOdjPHk6fjtbfCwobCi/gq1xuAtSZI+YeIoOYEs1FVsCiymkny0GhXOkhqTGzRjUQsrbH5cv2hZnYZmf6mI5+j7pdPRh7Oiy0txo4x7G+5XZwX7zEmkQGR0rG1OPjDV7iZT7IWbzw3BuEdmCETZVp69P3vXgOWiHSokUl+pUF9IpFmEfHl86B3L1pdGw8UWOjR2ZabycvmDuodxGjA==
+ bh=bPEQSjUgbWAFUm9Uet6WXXYCVydzE8f7TX7UvNCTBsY=;
+ b=v+m9IVWploe5j5OD1QzdUXkxwnlIAESyDJKAw0xANfv77x0TwYi/0qkmt+dUP5teHSIypZPoqvhgR50Vpsaw4AEnFepW9ydx0bKkyv/F3BWOF7QozUqXLnGNtuSfCQzLYdudCJ6QqUI3eKbNUgRIZYswvQucMLV9hXNu4GoZw5Z8WsUoqcjHcFj1sajTn4XiDq5ItEiMrZmeG9mAdfUSZXOe5iWiv6ktdCHwauLM3SdsRJqSZcFFAC1JJMgkkN34VVldXa+xGh6AFd/C+Lz1J+1dH3SoxEiuv2nvZjXQ/OpuXWfnXEuywTkEu2dnf8wTtKrGnBQ7qc9lnf37czFhSw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ceLbXwdpk3s7MKsBLriqA0+2kDBA9bwyj1meM4593OQ=;
- b=mAXdNPbWgP2BnbxCztn74Ui4C9B+RcsJcojQUfFJcciIeDZ5vpTLEulGFVR6zN0yxlPG7VkPELuOXDRN+4pO3nzgsrQbJZRZRrhRtP6hQTtRfArCtyXYwmw1tiCWlFIhmRmg2l+05R5hwHHcJwVXlwQCGvZNznakd1OojL6b1HWMMpFIe9UjNWfnw8/t0Sfn0RCRvSsEtQ4g8OfdIClWygs1qqUWLghYawkPWiT7e+q0bwh8H+YZKgLa2HP9mz3p1M6aZ5R13A4PSXlKent06b09cPf731MyQs/FASkPV3WHIsSdxetXRSlhrFSXV4mQati+MkyznMG2U4r4RGa+bw==
+ bh=bPEQSjUgbWAFUm9Uet6WXXYCVydzE8f7TX7UvNCTBsY=;
+ b=up+bEe9P5WlCn64nbxpK4z+f8vHVNHFwwxh9lztZsEiHHQwiSKmw+CKq+bbnNfWnL9iz7fZ8stVE0pEL3cZ10Q/mczeSOHMG38i87rHkVghOUbKvmSTFrqPCxqv7+m1V0delK788rnacI6T6hetr7YV4Cl2c24H4ULOgdWDN2UJyo0JJmIYfiQR2jY9eJBG68QGFHCKITNazhdpieWbBlMupOPsQlJPtMfNJlKDcvcIQBgPk8qLzt2ou4V+SdkDuX07QeSgTmSNt/PUJLbx9GNx+KxzisCza+hLARuhgNl7UsIiaWCs3HUZt0d5DuoUohIsV+vnoKHpCqotVQCS55Q==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from DM6PR12MB3849.namprd12.prod.outlook.com (2603:10b6:5:1c7::26)
- by CH2PR12MB4326.namprd12.prod.outlook.com (2603:10b6:610:af::11) with
+ by IA1PR12MB8586.namprd12.prod.outlook.com (2603:10b6:208:44e::9) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7807.28; Mon, 29 Jul
- 2024 17:05:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7807.27; Mon, 29 Jul
+ 2024 17:30:39 +0000
 Received: from DM6PR12MB3849.namprd12.prod.outlook.com
  ([fe80::c296:774b:a5fc:965e]) by DM6PR12MB3849.namprd12.prod.outlook.com
  ([fe80::c296:774b:a5fc:965e%4]) with mapi id 15.20.7807.026; Mon, 29 Jul 2024
- 17:05:55 +0000
-Date: Mon, 29 Jul 2024 14:05:53 -0300
+ 17:30:39 +0000
+Date: Mon, 29 Jul 2024 14:30:38 -0300
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
@@ -59,17 +59,17 @@ Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
 	Leonid Bloch <lbloch@nvidia.com>,
 	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: Re: [PATCH v2 2/8] fwctl: Basic ioctl dispatch for the character
- device
-Message-ID: <20240729170553.GE3625856@nvidia.com>
+Subject: Re: [PATCH v2 1/8] fwctl: Add basic structure for a class subsystem
+ with a cdev
+Message-ID: <20240729173038.GF3625856@nvidia.com>
 References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <2-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <20240726160157.0000797d@Huawei.com>
+ <1-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
+ <20240726153042.00002749@Huawei.com>
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240726160157.0000797d@Huawei.com>
-X-ClientProxiedBy: BL1PR13CA0172.namprd13.prod.outlook.com
- (2603:10b6:208:2bd::27) To DM6PR12MB3849.namprd12.prod.outlook.com
+In-Reply-To: <20240726153042.00002749@Huawei.com>
+X-ClientProxiedBy: BL1PR13CA0068.namprd13.prod.outlook.com
+ (2603:10b6:208:2b8::13) To DM6PR12MB3849.namprd12.prod.outlook.com
  (2603:10b6:5:1c7::26)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -78,295 +78,265 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|CH2PR12MB4326:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7c602f44-4e5d-400d-ef37-08dcaff0b589
+X-MS-TrafficTypeDiagnostic: DM6PR12MB3849:EE_|IA1PR12MB8586:EE_
+X-MS-Office365-Filtering-Correlation-Id: a7551b03-160d-4916-ab5a-08dcaff429f3
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?bYr3OVJCQLK1SE9STPOHvpIMKdAeISIPKpUlZezd9kjiusOwId+3erDivuNH?=
- =?us-ascii?Q?atTXyeZ7ya0058Et2Uon3E0g+Ct5rdEP0AeYfMtQKmvCTXqxi2tL1ATTBwEY?=
- =?us-ascii?Q?ZXL6UHPf5cs126vCkOPfBT26q+QXB3iEnRqvErKSrdUSHqvyXxS9HrZPOFRG?=
- =?us-ascii?Q?B88t2TPlgFlrWfS/GP62Ib15RoQGwJfza/WFdhyJD1IRX6xUImrqvF5bl2ZE?=
- =?us-ascii?Q?HeJUZn70zG92dWwilTaJrZ3rzlhcwShKM4tvvcElDTbIm7WhAqk2XmhXI/b+?=
- =?us-ascii?Q?M2DiNKc3Rs6515ttkxUt6iYX4a+hqO+Jl5JNCbyePRJZzYQDq8zJS1ZG+t8T?=
- =?us-ascii?Q?mQd/lCfcajwwfjD8QgWCrfwLolyKCPlEoP8v3saEZoLpEv/TBK9T7LEFSfjq?=
- =?us-ascii?Q?aG/7HXjO0hcePtndOjdddy1iaVNqZ1L9p66J6SIYuibeXJ9T/K0qpkkr4Ww+?=
- =?us-ascii?Q?fJgP0ybOuC+dGc097dzJKB57BgVRPIchQdDSsZFdOQOEYczCj1Q7JPUnSzuv?=
- =?us-ascii?Q?VIfc4RRR1IR9XFC1DbS8kbkarop4AV0KBZG8sMVIOu++psfhOrJGRmNwJsLZ?=
- =?us-ascii?Q?63Fm0KhWwXEoZuZRu4501gW59TT4Mg5xhiyqcuhyH/BYs0ilCLy4Q+xb+kze?=
- =?us-ascii?Q?Ul2atnE6y0nw1otgVgPUktGtnlyllvwFRESPJuGH4EkSmkQ7VGbpnPtBGjOI?=
- =?us-ascii?Q?KWqf3KifawV505fAXRhNnKEiJSBAS+E0+qp6nbDs4+JGKLwFEECD5tDKEdaS?=
- =?us-ascii?Q?snjA4QPypv05hhWfH60vhmVSK4Hx6VAOzCSRBKoLiPPPpOXnWuevDaz2Qzmx?=
- =?us-ascii?Q?1MM+ziwvlB2bQDLAQZ+ajKN5/zoKCUux/IolHrGWRH67tlhqfp/1x0MZmHbj?=
- =?us-ascii?Q?KVaLSaQ3sHtv28jRU4yY6azzBPsZ+T26FLWx/JeCq0wuGoLeIquTzRY3m+sN?=
- =?us-ascii?Q?1CaUV3dIV1SaDDlD/rgcud0La3DwkmuNFvF4ShfHQcU5nPu7asR1HBGp2Y36?=
- =?us-ascii?Q?AzPBl1fb1om0/EA53y1pmMSTie3kN1RO1SnASK72+J4PjiROjB58HJti11ec?=
- =?us-ascii?Q?MSoZFqPOY/AlkUECPk28R/47ycS9/3yIH3QJPTc/zB/gDYpwy5XOGNT1N1eH?=
- =?us-ascii?Q?h6CvO6xynrPD4n2xamPACreTN1/oKuTxYoT9oqICdBZbgeYNhlTfiXBJrT1Y?=
- =?us-ascii?Q?wcXw1lkI95rqcl1aUmGRRo5BQS84jHLVHPH8WgLcbiTnvlKssJWtVln/YF7P?=
- =?us-ascii?Q?uxqgIhtuxuO79P8xlAKMwsNA53p55ffvioUdnp/sZ248TPZR68jynJCGqyMe?=
- =?us-ascii?Q?s6BFj9N2+s5RhNgT1iUSWAEuS3f/1VTeQj17JNZwLxDAaw=3D=3D?=
+	=?us-ascii?Q?UgNeihnJ1eAhfXy53vyiTUAf+k3OgruF6oSK64uPmNvr1PCQdTfJ/INitrRn?=
+ =?us-ascii?Q?LqEcVOioZVTrPdJusv7tme4JRMOCSjjC+Q1BKSHL0mYtGl7aOQbd6sp82qyl?=
+ =?us-ascii?Q?Wq/U79pChHjgxnfKykd8S+vvLwRj6ZpftJmSh8qua+T4jD6bVoREyv4KF2Wn?=
+ =?us-ascii?Q?riBeDW6fu1wlBJWOee+WfXHLMyqATenKtkCqafcBDmH/bpagDECDhT41Hnn7?=
+ =?us-ascii?Q?gNn5Ul8MhO40BIWHXutPEjIXf+yVbJWbbaTI1bUUTqvbQPzYsWXrB+XXZn/q?=
+ =?us-ascii?Q?exO7YtZoRtpuE0SNoOJelQRl4KOBxd/jB6mzpUqMgS3O0P4mvhAncM7OVc0a?=
+ =?us-ascii?Q?L4M1VcleGWWopdz8Bo9DDp+moAh1cp5o+KBYbl9GkK2+c1V8QP16PCAc1UAJ?=
+ =?us-ascii?Q?JYx9nqOgJChuKBzt2YA1ynWf2cZmPoJJXNjFia9ywb7VF435OtKdzUx0fW/k?=
+ =?us-ascii?Q?nX1tGXPqteeYewbJ/RAAOk9CnKgGzFoAOjWuFk3skL/q2gxNq5yqtMKKIUov?=
+ =?us-ascii?Q?SEwL5axofmjs3oeP2OdytN2lOeQ8UFgt8GPNWzZqATTb7W5UoXtsJSoCdLGX?=
+ =?us-ascii?Q?/cpxGocd3ziXgJ4PgLAYPCNJMGH2Lq/MoeFIzudEFJFvl+/P4wECJFbK/Kx3?=
+ =?us-ascii?Q?P6Uw2vGuy/Vleb7zkGGMPXiQPzp6tJ31BGWuxwYuEbInmZi1cR8ynm+lzhdJ?=
+ =?us-ascii?Q?KR53sldR4X/4JZtXwQ5TLt2IOsMzJBnpKdWkd+5837IKokYfwl+Y0BJ2yNi8?=
+ =?us-ascii?Q?ysvrbENFz2xQ02apZ/k8P4i+gwG1Ob+HDfEc8wHoRig6F8v/VIVCG8HQDbim?=
+ =?us-ascii?Q?pSDGKhqPSr4edZMgRZuh499DQiHrh/tYA8DzDqQ7kyFDichTatYLDmyHLlDM?=
+ =?us-ascii?Q?H3aNzhEAd0w9Gk8H4OXxxfcT+U6vBfXPAGyj+1tXf9CKd+rrfBlUXK2xxIEy?=
+ =?us-ascii?Q?xLj/TwsMwCCgSvrqEoylPfzddRwYsc7xBm+fLqgl3QE1g2XsrrzfFCp/szSa?=
+ =?us-ascii?Q?qsIZmIu219DQ/Uyfc1YlgW6dRpmHZ1sCBavR6YnXoB0X7UNiYB7g5FO4Hu4n?=
+ =?us-ascii?Q?eFkd46HxkoaL+YUkxHAsSaFwItVXInHar+2t2aK/ItzWZDQYVe9BfDDP41TX?=
+ =?us-ascii?Q?d94CImLOU08rLPBXB6ydVXZoFxXypKWArLjlmU3i8U/wfJSwolCaZxQ3ozVr?=
+ =?us-ascii?Q?AumXcPp7E8NB6CijABXElSboOvaiR/srozPoLDVymjkNsyMTLd3a7gemHK0P?=
+ =?us-ascii?Q?u06thg06UcON6EBflMGv8Vl19M4LQ0+xzguChhnlohmFW7/tsAkrTd1ZRdHi?=
+ =?us-ascii?Q?o3x3a79bNncjCFXpgwUEbTL/TO+SW46fd6Rj4o1TpVeF9Q=3D=3D?=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR12MB3849.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?srNhLUZxHWdc+qMTkhKz5ZN+ziSNbXOkCIgtnb+1UWTYhvHvnNJRv5/tLliA?=
- =?us-ascii?Q?EedzCN918QlsEwNVXgGF9WPj9QJthIDw8wEeIx1WPWrYsTEsrJVuPtZV25M6?=
- =?us-ascii?Q?ECs4JUHj5B2M2umxS+e253Cg7pw+Qd4MPFXQfuear5ZcSDF/LgLW5BGWGGDW?=
- =?us-ascii?Q?8IErISZ9ryChxN/Vf0n0uIdoL+WCwe0xjDdI3Zw7UBvdB1iG39Ktaz9BJWer?=
- =?us-ascii?Q?PFkEknEK8+IT+V/o6eCnfQUun9NUyTENFrgMpva0mOrNvfGEXBYojagjV6PM?=
- =?us-ascii?Q?GkKOXmY2g8KyXN0qrFAXC+ZVhtLmrL9EBTGHCwUCTNOGXqnxvuWUmQWdr8WW?=
- =?us-ascii?Q?Holl9rHhsHibGg1T3fyqVsRbRUBPL5AeFb/5HcjWzBIS4RcnCQaz8iSLYW5Y?=
- =?us-ascii?Q?A0VKMGqdcjYXpC7HGzzger9WA5BlHluo9yWEZdNSMjmjdCVRSF/h+8W48JMl?=
- =?us-ascii?Q?53rVzgjP6MsHuLH5ZSTuEW+WVrmar+XAa/bK0F/kvhLt3p3fleWUE8N+uzxE?=
- =?us-ascii?Q?cIWxT6NFluyNhDunqtN86YDo1mpwiRzlsAdhb9Qdpmu0uhmyZ1Y5j7EC53uf?=
- =?us-ascii?Q?Mhkr4PKJ0ozbCm4k+OhTjO9z39LcrJeYfGVRfPBfR7lykzGeGPDt7BSX97wn?=
- =?us-ascii?Q?kJpxtuLjbq98w3gqcTwPW5wdpKDD2047Br1FmF5pAy9a3DAX8CQI9vQaXOMa?=
- =?us-ascii?Q?QH1lU0W3k5D/3c7akZhedPsmdTtlstjmPdXqN12xEvbyc0CieUQwWjSofmhE?=
- =?us-ascii?Q?G8FMwwRgSzuUlZbQ9urMCXb3sCCAPa6Ljp7sLR+QgqnqFsl2MID8d6HVx0je?=
- =?us-ascii?Q?0zz1KE4kMa/0v7Ro3at2nb3k7q6LMfdGTOq6pHlnPUxml68OGbEW7k63Q/Zh?=
- =?us-ascii?Q?y/dQM1fcpIKolQ5g+usFIvG1NFvGNzmv0haZH0WSCco3PaIsh8aY96vVER1k?=
- =?us-ascii?Q?KcMLVzdibxWlDTPO0gAUeyGBEfSEppsPGA1/d/zh3eJ20QMG0A55bF0rtBHw?=
- =?us-ascii?Q?eVEROubNdErBtXdRJ0p1/HeHFRhxxZ7R1WLrkp8PUVS/e7TKSnVQsBbt+uS7?=
- =?us-ascii?Q?EqtflInEkS2/uoPpnBTyvK2fmYv6shtcvAbLV3XaM+qSpza/d31ugagA3+54?=
- =?us-ascii?Q?VNIXem7CLD/4so5eli586Ho8Z8k5UrOB8jNGbElnTzdkPiFSQUr2fThUhUpG?=
- =?us-ascii?Q?V3oGik8c3u64KtPmCm0p2GDwPxzazQq0iN6rApkUXdixtVKtp7HXLw/VQ8fo?=
- =?us-ascii?Q?711LuH2rIn1XVWDgvhuD8XDpagvywEZg632kBdKwDarxh7X81+/jMD5t+ILd?=
- =?us-ascii?Q?yWMAwEbBSWCnpqi/QAetdjV9tGAy788XpeF7Rw3GhLGxujQ6F3X72WaqQaQd?=
- =?us-ascii?Q?pY5XCNRnwT07t+ho51M/G1yLlLoDuTsY5g6NX9gSnrzYD14v67/PaSxApVfy?=
- =?us-ascii?Q?3xvyJny28bU0GqaY3F6XylwXNgSXxMFT9RzdQ6/khUKNpbGhMJr3e4bMQCtL?=
- =?us-ascii?Q?v4VawzPZ30/eMI2r5NxFJvOSf76OM08xY48SE3Ne8p3kXsuYwNJqDPjml8GL?=
- =?us-ascii?Q?7IXliSSzfos/1dV2la7Pwzd20hS7iEFXKzwtxQGq?=
+	=?us-ascii?Q?vvgCljCzizhd1fVC2ExHqjWZzp3PrxBq4idVXHqzojMw63XL1AIkNjYqVxTo?=
+ =?us-ascii?Q?7G22MiR8EyjyFzGW8hjL0GI2COUNWx6UzOYC+XmK7T78yiDJHmAAZcF6oWqC?=
+ =?us-ascii?Q?IklY5HhbJblkr67rmwLLCw9z12ynz43BFlXBJeln0S2zXg+whF5EF+Q3dk13?=
+ =?us-ascii?Q?ZvcfpuprhM1hnrndLpCx7JlUYxVff0vuiYsBldYPK9a1LLCq0rbGcONfSm1T?=
+ =?us-ascii?Q?yIafc3mTCwEFW7ydMcKu+AD+da9TVHyCHMr7VzXmtLHdUQnziO6Kp2aBba5L?=
+ =?us-ascii?Q?VHf4C0ZOYSUjUqo/1bLUnElqsNLXq0ETOYXBxLhAtuaVlzESKEvsVGpZUZkU?=
+ =?us-ascii?Q?1hO6faTMxNQHR3IwaIWC2a2IfLZ5oxLeNdwEPqg+oygd8puF/N2eN2Z5HgZE?=
+ =?us-ascii?Q?o+g207t5vFpryMz2OKCG05ANv6yebOawXbrNQ5UUjchKdncUELKRGRe+gMxl?=
+ =?us-ascii?Q?WrqVB9mznc5dIrs9s2JSjx5eOg52Bduw7FbP7ewmDAuVaGdc500lfYkp+hFn?=
+ =?us-ascii?Q?P4pSn9+my0LlpVEOHDoPWoff1OlyN/yQRhp8T1zs6ZMF9rlAgK9F6m00QPX2?=
+ =?us-ascii?Q?LOk6XqmNb8s0T3XBfCbFeWoBX62wuI5CGogtSvWy7E0dT4ZF1un44D2Ofrx4?=
+ =?us-ascii?Q?wl6G9t79fAeFEWymX02w1XWZX973z3sTiWeHiL1K27ESvl6jdtc5z8hZe3dl?=
+ =?us-ascii?Q?97Rlbj/bltQt8IYCW0RaDmWlKXZUiCVl6OJRvw9DIKivzYIvZPcIUzshKmWW?=
+ =?us-ascii?Q?dt0eykmk+83K5Ld6IYPMcjEnXXsv3ajvWY1VJNJ0PURFxEPnn6pHbAp/a46z?=
+ =?us-ascii?Q?/tSihln1iZgozmiE568GtaaRN8PFEM9+Zgsemj9H+Yo7VKEI4NzW4Cnf8PDM?=
+ =?us-ascii?Q?MnVeiDNeRAkcHtu1rJu4ty1HZ2Jd3Sfz569rJJ1KVSw9c20wiTTIVNfclAnm?=
+ =?us-ascii?Q?otgFAZvb8BrZVdx4YN4xIlfssSQifhQ5h64HazH5KST2A2/X0J8hXvPFCWHs?=
+ =?us-ascii?Q?XVxxiKRBdaTBHBaYOmroTXn4w1bnOsy6ICYp5alle7IfE/6ksk1mG0NJIM5K?=
+ =?us-ascii?Q?3mjDIc4ouPjmNNd1W0vLa4lPTgtex61aKl2PtPmho+LkOI0/6rvuM73gGrKn?=
+ =?us-ascii?Q?FFMZj/AluhI33zlMM+mn8J2TRs5FCvXgVUIBrcpclr6A9DFwG6QoxPbfo1hw?=
+ =?us-ascii?Q?F2M5hMHcDSkK4lv8dixXusomps1sVAJzYcEM3W8caUjBRG7AbWe0MNMEk6Ol?=
+ =?us-ascii?Q?2yNPlizFx1m5VzbWU+ADua9+ioefU5LPlFl+huk6B9OWqyUG377PBkF22C6C?=
+ =?us-ascii?Q?0Yli4oxAcFgb8fy/P8pj/nkCWDXZWq5HZlTA+VD08e/wNsvBb69yzOUFqjvu?=
+ =?us-ascii?Q?uRg88NXrTO3A1TrZgEtwOy+OS1FQXevlbQ0qm/Fvg8vDyyrtDH4GTQGzPv6q?=
+ =?us-ascii?Q?s/ldzIP8f13osCzXM7drRMFmfVb73JIBBPlYVeVn4jQV8tIQqq3X9foK2uj2?=
+ =?us-ascii?Q?mQ3eSSTWnTmSAYldpGb4zqfO5c/xFCAd9EjyOkTTHN/EHHlc3XUICJIRupzK?=
+ =?us-ascii?Q?rBjSestad217KaftzCDIzTmMUP/gCAy274FY8l/P?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7c602f44-4e5d-400d-ef37-08dcaff0b589
+X-MS-Exchange-CrossTenant-Network-Message-Id: a7551b03-160d-4916-ab5a-08dcaff429f3
 X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB3849.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2024 17:05:55.4047
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Jul 2024 17:30:39.1729
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wDQmT5ecrOwBE0oXpnhYssKPD3jelepRc4sRXtEDMrvyyG0kvh6f9JoXchoYEz2W
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4326
+X-MS-Exchange-CrossTenant-UserPrincipalName: MBw/fk6AMDjyaY4DjmoZeBCxYjsvUuXqmXYQXIylxscXPeZDZQp9km2ZthgKuIt0
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB8586
 
-On Fri, Jul 26, 2024 at 04:01:57PM +0100, Jonathan Cameron wrote:
+On Fri, Jul 26, 2024 at 03:30:42PM +0100, Jonathan Cameron wrote:
 
-> > +struct fwctl_ioctl_op {
-> > +	unsigned int size;
-> > +	unsigned int min_size;
-> > +	unsigned int ioctl_num;
-> > +	int (*execute)(struct fwctl_ucmd *ucmd);
-> > +};
-> > +
-> > +#define IOCTL_OP(_ioctl, _fn, _struct, _last)                         \
-> > +	[_IOC_NR(_ioctl) - FWCTL_CMD_BASE] = {                        \
+> Mostly looking at this to get my head around what the details are,
+> but whilst I'm reading might as well offer some review comments.
+
+Thanks!
+ 
+> I'm not a fan of too many mini patches as it makes it harder
+> to review rather than easier, but meh, I know others prefer
+> it this way.  If you are going to do it though, comments
+> need to be carefully tracking what they are talking about.
+
+Yeah, I don't like it so much either, but given the debate on this
+series I structured it so you can read the commit messages only and
+have a pretty good idea what is inside.
+
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) 2024, NVIDIA CORPORATION & AFFILIATES
+> > + */
+> > +#define pr_fmt(fmt) "fwctl: " fmt
+> > +#include <linux/fwctl.h>
+> > +#include <linux/module.h>
+> > +#include <linux/slab.h>
+> > +#include <linux/container_of.h>
+> > +#include <linux/fs.h>
 > 
-> If this is always zero indexed, maybe just drop the - FWCTL_CMD_BASE here
-> and elsewhere?  Maybe through in a BUILD_BUG to confirm it is always 0.
+> Trivial: Pick an ordering scheme perhaps as then we know where you'd
+> like new headers to be added.
 
-I left it like this in case someone had different ideas for the number
-space (iommufd uses a non 0 base also). I think either is fine, and I
-slightly prefer keeping it rather than a static_assert.
+Heh, I think it is random ordered :) But sure lets sort by name,
+though linux/fwctl.h does go first. Putting headers first in at least
+one c file is a neat trick to ensure they self-compile and don't miss
+their own #includess
 
-> > +static long fwctl_fops_ioctl(struct file *filp, unsigned int cmd,
-> > +			       unsigned long arg)
+#define pr_fmt(fmt) "fwctl: " fmt
+#include <linux/fwctl.h>
+
+#include <linux/container_of.h>
+#include <linux/fs.h>
+#include <linux/module.h>
+#include <linux/slab.h>
+
+> > +static struct fwctl_device *
+> > +_alloc_device(struct device *parent, const struct fwctl_ops *ops, size_t size)
 > > +{
-> > +	struct fwctl_uctx *uctx = filp->private_data;
-> > +	const struct fwctl_ioctl_op *op;
-> > +	struct fwctl_ucmd ucmd = {};
-> > +	union ucmd_buffer buf;
-> > +	unsigned int nr;
-> > +	int ret;
+> > +	struct fwctl_device *fwctl __free(kfree) = kzalloc(size, GFP_KERNEL);
+> > +	int devnum;
 > > +
-> > +	nr = _IOC_NR(cmd);
-> > +	if ((nr - FWCTL_CMD_BASE) >= ARRAY_SIZE(fwctl_ioctl_ops))
-> > +		return -ENOIOCTLCMD;
+> > +	if (!fwctl)
+> > +		return NULL;
 > 
-> I'd add a blank line here as two unconnected set and error check
-> blocks.
+> I'd put a blank line here.
 
 Done
-
-> >  static int fwctl_fops_open(struct inode *inode, struct file *filp)
-> >  {
-> >  	struct fwctl_device *fwctl =
-> >  		container_of(inode->i_cdev, struct fwctl_device, cdev);
-> > +	int ret;
+> > +/* Drivers use the fwctl_alloc_device() wrapper */
+> > +struct fwctl_device *_fwctl_alloc_device(struct device *parent,
+> > +					 const struct fwctl_ops *ops,
+> > +					 size_t size)
+> > +{
+> > +	struct fwctl_device *fwctl __free(fwctl) =
+> > +		_alloc_device(parent, ops, size);
 > > +
-> > +	guard(rwsem_read)(&fwctl->registration_lock);
-> > +	if (!fwctl->ops)
-> > +		return -ENODEV;
+> > +	if (!fwctl)
+> > +		return NULL;
 > > +
-> > +	struct fwctl_uctx *uctx __free(kfree) =
-> > +		kzalloc(fwctl->ops->uctx_size, GFP_KERNEL | GFP_KERNEL_ACCOUNT);
+> > +	cdev_init(&fwctl->cdev, &fwctl_fops);
+> > +	fwctl->cdev.owner = THIS_MODULE;
 > 
-> GFP_KERNEL_ACCOUNT seems to include GFP_KERNEL already.
-> Did I miss some racing change?
+> Owned by fwctl core, not the parent driver?  Perhaps a comment on why.
+> I guess related to the lifetime being independent of parent driver.
 
-I'm sure I copy and pasted this carelessly from someplace else
- 
-> > +	if (!uctx)
-> > +		return -ENOMEM;
-> > +
-> > +	uctx->fwctl = fwctl;
-> > +	ret = fwctl->ops->open_uctx(uctx);
-> > +	if (ret)
-> > +		return ret;
-> > +
-> > +	scoped_guard(mutex, &fwctl->uctx_list_lock) {
-> > +		list_add_tail(&uctx->uctx_list_entry, &fwctl->uctx_list);
-> > +	}
-> 
-> I guess more may come later but do we need {}?
-
-I guessed the extra {} would be style guide for this construct?
-
-> >  static int fwctl_fops_release(struct inode *inode, struct file *filp)
-> >  {
-> > -	struct fwctl_device *fwctl = filp->private_data;
-> > +	struct fwctl_uctx *uctx = filp->private_data;
-> > +	struct fwctl_device *fwctl = uctx->fwctl;
-> >  
-> > +	scoped_guard(rwsem_read, &fwctl->registration_lock) {
-> > +		if (fwctl->ops) {
-> 
-> Maybe a comment on when this path happens to help the reader
-> along. (when the file is closed and device is still alive).
-> Otherwise was cleaned up already in fwctl_unregister()
-
-	scoped_guard(rwsem_read, &fwctl->registration_lock) {
-		/*
-		 * fwctl_unregister() has already removed the driver and
-		 * destroyed the uctx.
-		 */
-		if (fwctl->ops) {
-
-> >  void fwctl_unregister(struct fwctl_device *fwctl)
-> >  {
-> > +	struct fwctl_uctx *uctx;
-> > +
-> >  	cdev_device_del(&fwctl->cdev, &fwctl->dev);
-> >  
-> > +	/* Disable and free the driver's resources for any still open FDs. */
-> > +	guard(rwsem_write)(&fwctl->registration_lock);
-> > +	guard(mutex)(&fwctl->uctx_list_lock);
-> > +	while ((uctx = list_first_entry_or_null(&fwctl->uctx_list,
-> > +						struct fwctl_uctx,
-> > +						uctx_list_entry)))
-> > +		fwctl_destroy_uctx(uctx);
-> > +
-> 
-> Obviously it's a little more heavy weight but I'd just use
-> list_for_each_entry_safe()
-> 
-> Less effort for reviewers than consider the custom iteration
-> you are doing instead.
-
-For these constructs the goal is the make the list empty, it is a
-tinsy bit safer/clearer to drive the list to empty purposefully rather
-than iterate over it and hope it is empty once done.
-
-However there is no possible way that list_for_each_entry_safe() would
-be an unsafe construct here. I can change it if you feel strongly
-
-> > @@ -26,6 +39,10 @@ struct fwctl_device {
-> >  	struct device dev;
-> >  	/* private: */
-> >  	struct cdev cdev;
-> > +
-> > +	struct rw_semaphore registration_lock;
-> > +	struct mutex uctx_list_lock;
-> 
-> Even for private locks, a scope statement would
-> be good to have.
-
-Like so?
+Yes.
 
 	/*
-	 * Protect ops, held for write when ops becomes NULL during unregister,
-	 * held for read whenver ops is loaded or an ops function is running.
+	 * The driver module is protected by fwctl_register/unregister(),
+	 * unregister won't complete until we are done with the driver's module. 
 	 */
-	struct rw_semaphore registration_lock;
-	/* Protect uctx_list */
-	struct mutex uctx_list_lock;
+	fwctl->cdev.owner = THIS_MODULE;
 
-> > +#ifndef _UAPI_FWCTL_H
-> > +#define _UAPI_FWCTL_H
+
+> > +int fwctl_register(struct fwctl_device *fwctl)
+> > +{
+> > +	int ret;
 > > +
-> > +#include <linux/types.h>
+> > +	ret = cdev_device_add(&fwctl->cdev, &fwctl->dev);
+> > +	if (ret)
+> > +		return ret;
+> > +	return 0;
 > 
-> Not used yet.
+> Doesn't look like this ever gets more complex so 
 > 
-> > +#include <linux/ioctl.h>
+> 	return cdev_device_add(...)
 > 
-> Arguably nor is this, but at least this related to the code
-> here.
+> If you expect to see more here in near future maybe fair enough
+> to keep the handling as is.
 
-Sure, lets move them
+Sure, I was expecting more when I wrote it then it turned out there
+wasn't
+
+> > + * fwctl_unregister - Unregister a device from the subsystem
+> > + * @fwctl: Previously allocated and registered fwctl_device
+> > + *
+> > + * Undoes fwctl_register(). On return no driver ops will be called. The
+> > + * caller must still call fwctl_put() to free the fwctl.
+> > + *
+> > + * Unregister will return even if userspace still has file descriptors open.
+> > + * This will call ops->close_uctx() on any open FDs and after return no driver
+> > + * op will be called. The FDs remain open but all fops will return -ENODEV.
+> 
+> Perhaps bring the docs in with the support?  I got (briefly) confused
+> by the lack of a path to close_uctx() in here.
+
+Okay, that paragraph can be shifted
+
+> > + *
+> > + * The design of fwctl allows this sort of disassociation of the driver from the
+> > + * subsystem primarily by keeping memory allocations owned by the core subsytem.
+> > + * The fwctl_device and fwctl_uctx can both be freed without requiring a driver
+> > + * callback. This allows the module to remain unlocked while FDs are open.
+> > + */
+
+And this explains the above a 2nd way
+
+> > +void fwctl_unregister(struct fwctl_device *fwctl)
+> > +{
+> > +	cdev_device_del(&fwctl->cdev, &fwctl->dev);
+> > +
+> > +	/*
+> > +	 * The driver module may unload after this returns, the op pointer will
+> > +	 * not be valid.
+> > +	 */
+> > +	fwctl->ops = NULL;
+> I'd bring that in with the logic doing close_uctx() etc as then it will align
+> with the comments that I'd also suggest only adding there (patch 2 I think).
+
+Ok
 
 > > +/**
-> > + * DOC: General ioctl format
+> > + * fwctl_alloc_device - Allocate a fwctl
+> > + * @parent: Physical device that provides the FW interface
+> > + * @ops: Driver ops to register
+> > + * @drv_struct: 'struct driver_fwctl' that holds the struct fwctl_device
+> > + * @member: Name of the struct fwctl_device in @drv_struct
 > > + *
-> > + * The ioctl interface follows a general format to allow for extensibility. Each
-> > + * ioctl is passed in a structure pointer as the argument providing the size of
-> > + * the structure in the first u32. The kernel checks that any structure space
-> > + * beyond what it understands is 0. This allows userspace to use the backward
-> > + * compatible portion while consistently using the newer, larger, structures.
-> 
-> Is that particularly helpful?  Userspace needs to know not to put anything in
-> those fields, not hard for it to also know what the size it should send is?
-> The two will change together.
+> > + * This allocates and initializes the fwctl_device embedded in the drv_struct.
+> > + * Upon success the pointer must be freed via fwctl_put(). Returns NULL on
+> > + * failure. Returns a 'drv_struct *' on success, NULL on error.
+> > + */
+> > +#define fwctl_alloc_device(parent, ops, drv_struct, member)                  \
+> > +	container_of(_fwctl_alloc_device(                                    \
+> > +			     parent, ops,                                    \
+> > +			     sizeof(drv_struct) +                            \
+> > +				     BUILD_BUG_ON_ZERO(                      \
+> > +					     offsetof(drv_struct, member))), \
+> Doesn't that fire a build_bug when the member is at the start of drv_struct?
+> Or do I have that backwards?
 
-It is very helpful for a practical userspace.
+BUILD_BUG_ON(true) == failure, evaluates to void
+BUILD_BUG_ON_ZERO(true) == fails, evaluates to 0
+BUILD_BUG_ON_ZERO(false) == false, evaluates to 0
 
-Lets say we have an ioctl struct:
+It is a bit confusing name, it is not ON_ZERO it is BUG_ON return ZERO
 
-struct fwctl_info {
-	__u32 size;
-	__u32 flags;
-	__u32 out_device_type;
-	__u32 device_data_len;
-	__aligned_u64 out_device_data;
-};
+> Does container_of() safely handle a NULL?
 
-And the basic userspace pattern is:
+Generally no, nor does it handle ERR_PTR, but it does work for both if
+the offset is 0.
 
-  struct fwctl_info info = {.size = sizeof(info), ...);
-  ioctl(fd, FWCTL_INFO, &info);
+The BUILD_BUG guarentees the 0 offset both so that the casting inside
+_fwctl_alloc_device() works and we can use safely use container_of()
+to enforce the type check.
 
-This works today and generates the 24 byte command.
+What do you think about writing it like this instead:
 
-Tomorrow the kernel adds a new member:
+#define fwctl_alloc_device(parent, ops, drv_struct, member)               \
+	({                                                                \
+		static_assert(__same_type(struct fwctl_device,            \
+					  ((drv_struct *)NULL)->member)); \
+		static_assert(offsetof(drv_struct, member) == 0);         \
+		(drv_struct *)_fwctl_alloc_device(parent, ops,            \
+						  sizeof(drv_struct));    \
+	})
 
-struct fwctl_info {
-	__u32 size;
-	__u32 flags;
-	__u32 out_device_type;
-	__u32 device_data_len;
-	__aligned_u64 out_device_data;
-	__aligned_u64 new_thing;
-};
+?
 
-Current builds of the userpace use a 24 byte command. A new kernel
-will see the 24 bytes and behave as before.
-
-When I recompile the userspace with the updated header it will issue a
-32 byte command with no source change.
-
-Old kernel will see a 32 byte command with the trailing bytes it
-doesn't understand as 0 and keep working.
-
-The new kernel will see the new_thing bytes are zero and behave the
-same as before.
-
-If then the userspace decides to set new_thing the old kernel will
-stop working. Userspace can use some 'try and fail' approach to try
-again with new_thing = 0.
-
-It gives a whole bunch of easy paths for userspace, otherwise
-userspace has to be very careful to match the size of the struct to
-the ABI it is targetting. Realistically nobody will do that right.
+In some ways I like it better..
 
 Thanks,
 Jason
