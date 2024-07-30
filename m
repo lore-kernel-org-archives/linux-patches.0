@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A365189504;
-	Tue, 30 Jul 2024 16:36:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30F9D1A6192;
+	Tue, 30 Jul 2024 16:36:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357370; cv=none; b=mLC8+4Ae2W7MlMxb6y/Txn7279sQk5Zq9k5NS1eM4nor4T32/jDZh3tc4f+Gnu0UgvzFWHkLf9oV3pC+mNXNjS9VMxV1sMzsjtoOeSfQEDnzFd+d+TxBYxxzEF2/tFqgmpgpzKBHPirZzhu2iSs4cjkoDxDKCFBjXhPJy6ObbpM=
+	t=1722357374; cv=none; b=cfnf+RuuYl7Q/CncQqcbf29y4o8DYkXo3KR5h0i1LBASFji3t8LjLFkS2NyuYRHp8Bl7sbDENuabsuRbBzHdyGasOUKRlzmXwLqWE7eyVyrWmeFIBP6doXPc8VdMOdteA58kyqBZvgMQoGHStLv0/+SydC1mawKNufaINMXdp+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357370; c=relaxed/simple;
-	bh=QXBGMxcqU4AUbsY0Oz/wY5+nnTnLx5bG78reF3hkePQ=;
+	s=arc-20240116; t=1722357374; c=relaxed/simple;
+	bh=nPwIxx1/iPDF2NlmRKy+13iQufvFjeg5cKdg24xWx4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OKsp9dH5u6yqcKqo78RvdMWzGwZXpEF+BPOYvce5m7tN113Uzt7gWdoJtn/kSnoVhz54OU150YE4QKwrwZEtqXXa2bWX52DXjiV7JlKtELl4XitpnweO7pzYX9jBflRr0fa1j2B7XBdb2DqLA0UdEu6S1LJvPth8mmgZ0o9TcPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QaiplNYa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QL8vLHrS3BuxPwTmV+Upx7K8F72/5f/YNDIv2BBaG3QGmFlyLqKJZWuvu9DhzF8m9NpGkkY0i+6Y/imx1n28fQfnUeDglctnj4Zt4LlBNQsh5yVPlnMDW687Nk54WV3CGqn6h5iAXDYgLKWB+efP1MHMjZJy3TPSdaeJbBygUIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TjyopVvQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QaiplNYa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB80C32782;
-	Tue, 30 Jul 2024 16:36:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TjyopVvQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DC88C4AF0A;
+	Tue, 30 Jul 2024 16:36:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357370;
-	bh=QXBGMxcqU4AUbsY0Oz/wY5+nnTnLx5bG78reF3hkePQ=;
+	s=korg; t=1722357373;
+	bh=nPwIxx1/iPDF2NlmRKy+13iQufvFjeg5cKdg24xWx4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QaiplNYaMQDfk67NfZRyQVF6LacX8sWS8zgfsJEPekAbhPtfe41+HNCQ8/JMoFeBH
-	 v6XdWtsXjo4EnPf8cUnDJMjgh5gVSQOYy+VRfx0Ilb5L4xVDWnBzYuGeO6W+aspx0p
-	 LRPZEoyzRlnEA2fCedm9ro35iRL90bwj8/vIKtaU=
+	b=TjyopVvQSeRpANN/g23CVmc0Pw46YGRaguNIhP95hjvFFvvMxAy6L4sP73+o9Eij+
+	 St0K3eIrQWURFMUR2DKIhuNv76wLokvmoLXjiFjNEXtYyXy4ifuNT0UVdpyrl5lGql
+	 KeMun86hry1WQGcCrVkQ/tqv/R8B2aqSDY3z2KyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 286/440] media: venus: fix use after free in vdec_close
-Date: Tue, 30 Jul 2024 17:48:39 +0200
-Message-ID: <20240730151627.002479016@linuxfoundation.org>
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Ben Hutchings <benh@debian.org>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 242/568] ext4: dont track ranges in fast_commit if inode has inlined data
+Date: Tue, 30 Jul 2024 17:45:49 +0200
+Message-ID: <20240730151649.340715664@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit a0157b5aa34eb43ec4c5510f9c260bbb03be937e upstream.
+[ Upstream commit 7882b0187bbeb647967a7b5998ce4ad26ef68a9a ]
 
-There appears to be a possible use after free with vdec_close().
-The firmware will add buffer release work to the work queue through
-HFI callbacks as a normal part of decoding. Randomly closing the
-decoder device from userspace during normal decoding can incur
-a read after free for inst.
+When fast-commit needs to track ranges, it has to handle inodes that have
+inlined data in a different way because ext4_fc_write_inode_data(), in the
+actual commit path, will attempt to map the required blocks for the range.
+However, inodes that have inlined data will have it's data stored in
+inode->i_block and, eventually, in the extended attribute space.
 
-Fix it by cancelling the work in vdec_close.
+Unfortunately, because fast commit doesn't currently support extended
+attributes, the solution is to mark this commit as ineligible.
 
-Cc: stable@vger.kernel.org
-Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1039883
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Tested-by: Ben Hutchings <benh@debian.org>
+Fixes: 9725958bb75c ("ext4: fast commit may miss tracking unwritten range during ftruncate")
+Link: https://patch.msgid.link/20240618144312.17786-1-luis.henriques@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/fast_commit.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1705,6 +1705,7 @@ static int vdec_close(struct file *file)
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index b06de728b3b6c..5d473e50598f9 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -649,6 +649,12 @@ void ext4_fc_track_range(handle_t *handle, struct inode *inode, ext4_lblk_t star
+ 	if (ext4_test_mount_flag(inode->i_sb, EXT4_MF_FC_INELIGIBLE))
+ 		return;
  
- 	vdec_pm_get(inst);
++	if (ext4_has_inline_data(inode)) {
++		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_XATTR,
++					handle);
++		return;
++	}
++
+ 	args.start = start;
+ 	args.end = end;
  
-+	cancel_work_sync(&inst->delayed_process_work);
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	vdec_ctrl_deinit(inst);
+-- 
+2.43.0
+
 
 
