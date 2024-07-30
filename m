@@ -1,51 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14DED1078F;
-	Tue, 30 Jul 2024 16:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12CF1A6160;
+	Tue, 30 Jul 2024 16:18:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356322; cv=none; b=Gr1eBgQuVdaJjVqWfbOXHTeOD1uaYMRfWBSAwc6jIDi/7rX41xE2MMF6uSwUITKTPCeaim1yPQ0CVnIbSVBNIqoy6uXL+zBkMyM1GVih3GCi4OppimtG68NiRKGLNaNLG0sfbHVa37Pwr12tuzH7j4biNPrn4CHLyUavLJv9C+A=
+	t=1722356325; cv=none; b=fEf161nL0grtALZWmdTOGa535OKHo0yJ3XqB7IcpG/wJ6wEkbha5hopz6rbnYoN4NEhh4SURM/hU/DTWI+Lgj+ZIqoKOF0mW3Rjw1P7Q3/+PvJ4vfAnUH60leEQgXL+WRU60vs8VKGhhnx5asPr1VXvAW2N4nhKJqhxTmK0mJDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356322; c=relaxed/simple;
-	bh=5z2HoRxusPJSv4Oykv6QP48FIfz8hNXUNPgUJtqII+Q=;
+	s=arc-20240116; t=1722356325; c=relaxed/simple;
+	bh=QixTVG/27NqhSMoQ0Onhc69TzxyCcX+ipDuB4uUKBTM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oLpIOkQHy0f39rR+lCtIGrl3en4Ie24awtKQecY9BCqvHuADoJ5SfJmgeSqwCfHHcx5R0Q0C/ybldmyAz4o+YzjPxtBNJkuFbX9x22ZWagQHw5twqTM9vYmJL/2XsmKV2e1JwYciCSD4/o2/T6WN1pTmu5MzkS0wt495VHPkY1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnON4vQY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gy1zYt6TWX6dBd8TRC4mSK3TwmiLoqhtzm8vkVXxx6pC/tQBnT/xu9XIjzZC1OciQ+WjxGQdLrYITzBhX01tXN9sSMsUvWCk8VMUw3925Rissr7bdGG829hQHh+++5+fWV7zizd+iFw5oG/3Kn33Ajw+/4eN0WLMg3i1pWm9huY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Of5zWIgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnON4vQY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1507FC4AF0A;
-	Tue, 30 Jul 2024 16:18:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Of5zWIgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B795C32782;
+	Tue, 30 Jul 2024 16:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356321;
-	bh=5z2HoRxusPJSv4Oykv6QP48FIfz8hNXUNPgUJtqII+Q=;
+	s=korg; t=1722356325;
+	bh=QixTVG/27NqhSMoQ0Onhc69TzxyCcX+ipDuB4uUKBTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnON4vQYs+3eReu9BMrspf8OWxWagiZwnBF4hH/Ix3KH4y35fAY/C7Rj3ZeGvm7oC
-	 8gl3OvW5wqjXk9MNENlK/UsS1pcJ00SgQlHGOdXEX6yhM05fNvFadpR1yErrE7tM3j
-	 WhiedKR71EZhqaYBwHjmq8hKsmRY3baq8MqG5Ya0=
+	b=Of5zWIgLpaqJxtTLbq8jm6vg1/NaYw33ZkSmZnHw22G/Ey19Z2ljbSj5i/SRFlcsu
+	 HDQxEY/fUfju0WM1YNbPajhew3nY6CpgExR4NYBUYh7HdSNGVt+fk8TfyFwpYFNsUO
+	 048rGYA8Jcx5yALc8lJz44t5MEOTMdsqOicWIo50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	James Clark <james.clark@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Athira Jajeev <atrajeev@linux.vnet.ibm.com>,
-	German Gomez <german.gomez@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Zhengjun Xing <zhengjun.xing@linux.intel.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 156/440] perf test: Replace arm callgraph fp test workload with leafloop
-Date: Tue, 30 Jul 2024 17:46:29 +0200
-Message-ID: <20240730151621.970390194@linuxfoundation.org>
+Subject: [PATCH 6.6 134/568] wifi: cfg80211: fix typo in cfg80211_calculate_bitrate_he()
+Date: Tue, 30 Jul 2024 17:44:01 +0200
+Message-ID: <20240730151645.109771012@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,99 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 7cf0b4a73a4a4f36bb4ef53d066b811b7621c635 ]
+[ Upstream commit 9ee0d44f055276fe2802b2f65058e920853f4f99 ]
 
-So that it can get rid of requirement of a compiler.
+rates_996 is mistakenly written as rates_969, fix it.
 
-Reviewed-by: Leo Yan <leo.yan@linaro.org>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: James Clark <james.clark@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Athira Jajeev <atrajeev@linux.vnet.ibm.com>
-Cc: German Gomez <german.gomez@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Zhengjun Xing <zhengjun.xing@linux.intel.com>
-Link: https://lore.kernel.org/r/20221116233854.1596378-7-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: ff16aeb9b834 ("perf test: Make test_arm_callgraph_fp.sh more robust")
+Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://msgid.link/20240606020653.33205-2-quic_bqiang@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../perf/tests/shell/test_arm_callgraph_fp.sh | 34 ++-----------------
- 1 file changed, 3 insertions(+), 31 deletions(-)
+ net/wireless/util.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_arm_callgraph_fp.sh b/tools/perf/tests/shell/test_arm_callgraph_fp.sh
-index ec108d45d3c61..e61d8deaa0c41 100755
---- a/tools/perf/tests/shell/test_arm_callgraph_fp.sh
-+++ b/tools/perf/tests/shell/test_arm_callgraph_fp.sh
-@@ -4,44 +4,16 @@
- 
- lscpu | grep -q "aarch64" || exit 2
- 
--if ! [ -x "$(command -v cc)" ]; then
--	echo "failed: no compiler, install gcc"
--	exit 2
--fi
--
- PERF_DATA=$(mktemp /tmp/__perf_test.perf.data.XXXXX)
--TEST_PROGRAM_SOURCE=$(mktemp /tmp/test_program.XXXXX.c)
--TEST_PROGRAM=$(mktemp /tmp/test_program.XXXXX)
-+TEST_PROGRAM="perf test -w leafloop"
- 
- cleanup_files()
- {
- 	rm -f $PERF_DATA
--	rm -f $TEST_PROGRAM_SOURCE
--	rm -f $TEST_PROGRAM
- }
- 
- trap cleanup_files exit term int
- 
--cat << EOF > $TEST_PROGRAM_SOURCE
--int a = 0;
--void leaf(void) {
--  for (;;)
--    a += a;
--}
--void parent(void) {
--  leaf();
--}
--int main(void) {
--  parent();
--  return 0;
--}
--EOF
--
--echo " + Compiling test program ($TEST_PROGRAM)..."
--
--CFLAGS="-g -O0 -fno-inline -fno-omit-frame-pointer"
--cc $CFLAGS $TEST_PROGRAM_SOURCE -o $TEST_PROGRAM || exit 1
--
- # Add a 1 second delay to skip samples that are not in the leaf() function
- perf record -o $PERF_DATA --call-graph fp -e cycles//u -D 1000 --user-callchains -- $TEST_PROGRAM 2> /dev/null &
- PID=$!
-@@ -58,11 +30,11 @@ wait $PID
- # program
- # 	728 leaf
- # 	753 parent
--# 	76c main
-+# 	76c leafloop
- # ...
- 
- perf script -i $PERF_DATA -F comm,ip,sym | head -n4
- perf script -i $PERF_DATA -F comm,ip,sym | head -n4 | \
- 	awk '{ if ($2 != "") sym[i++] = $2 } END { if (sym[0] != "leaf" ||
- 						       sym[1] != "parent" ||
--						       sym[2] != "main") exit 1 }'
-+						       sym[2] != "leafloop") exit 1 }'
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 57ea6d5b092d4..187e29a30c2af 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1460,7 +1460,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 		  5120, /*  0.833333... */
+ 	};
+ 	u32 rates_160M[3] = { 960777777, 907400000, 816666666 };
+-	u32 rates_969[3] =  { 480388888, 453700000, 408333333 };
++	u32 rates_996[3] =  { 480388888, 453700000, 408333333 };
+ 	u32 rates_484[3] =  { 229411111, 216666666, 195000000 };
+ 	u32 rates_242[3] =  { 114711111, 108333333,  97500000 };
+ 	u32 rates_106[3] =  {  40000000,  37777777,  34000000 };
+@@ -1485,7 +1485,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	else if (rate->bw == RATE_INFO_BW_80 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+ 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_996))
+-		result = rates_969[rate->he_gi];
++		result = rates_996[rate->he_gi];
+ 	else if (rate->bw == RATE_INFO_BW_40 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+ 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_484))
 -- 
 2.43.0
 
