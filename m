@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB0518455C;
-	Tue, 30 Jul 2024 17:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00BD18455C;
+	Tue, 30 Jul 2024 17:33:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360788; cv=none; b=o8IVMlIy9JIFg1E/yLp/NB1rUTOUYQNNYlXGuxW9kwCh7yF/dFfoaYbAopsQext2qsf3d83eiFNo1/7q9Bftw2tDKDSZbqQ4zdwEKOOvyoGZqR4Y6ZW5zNcpYm3EQYTjgp/m6Cl5M9XQ5grXpsYHv0BVpChyP90AIKvdjcm5r5Y=
+	t=1722360791; cv=none; b=eRrxEu84v5sAA9YxMDQJUyD7ue7dEFR4nAxgQAHWhiJYx7hYMM91CfIekNLpvW6UQA1v3LFnb9jEC8jN2sX2pvoduk6y7f1yQlKpIExUWRaX9GptGIVInBgzkVN4ycqjM2cytDxKqmsVEVMjyvlCyWNp/RTh+32efQ1qa4DBMOg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360788; c=relaxed/simple;
-	bh=6cgal9M/Awp3VOLKKqqzUr8UzHXZ6Ci555kc7NiT0tI=;
+	s=arc-20240116; t=1722360791; c=relaxed/simple;
+	bh=n8gSz+XG1IFFRNwCKFTCkeVO9VCGKNyiAf10S1xqE4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qWsVGPdnOO+irfETWlkHoQFs3LY++6erADPE4012k5cDFpafGOPidWYAZhY99Pg+ZJu3Pxk9Nja3MVHT52rBQwXQzYR8vZKo7jqPfG9mGfom8kg/PSsAs7aDH0ljoXb6at8y8SquMpRxXxU/hnQINGo3e36Q1DRF8HrGoNqoEtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeX4ENn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eBmtbOMuMUYBEf/rnN8GxP43oKNZES0oHWAucqjW7yCFnCNYc222aqXUkx7JrGCXQG1VuuoL+UuPJna/RdVXAFj7Dh96FmGgLuyiEgJfyKJSb5dkgarTCyjimjwFBEHJjG+zy5l73B6dRYGlPsVWrlI1ak9pc0piwZNAd/VJkJI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NtaY/jhr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeX4ENn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7175C32782;
-	Tue, 30 Jul 2024 17:33:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NtaY/jhr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2959C32782;
+	Tue, 30 Jul 2024 17:33:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360788;
-	bh=6cgal9M/Awp3VOLKKqqzUr8UzHXZ6Ci555kc7NiT0tI=;
+	s=korg; t=1722360791;
+	bh=n8gSz+XG1IFFRNwCKFTCkeVO9VCGKNyiAf10S1xqE4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LeX4ENn3Ekf0BZV0jUfoAn2+3sQ3PU6LnItTUuaHxraaaMeEm4EeLCx/Y59qcncQu
-	 Ukmlh9ChkWS4+P7Wh0xi2w1/NA5oeIPVnibg+DDeSqps7faFNmMOyq39Uav7NyMGyz
-	 XKphGWAd63CfE9y/BtlppeKcShKpo9gHMkHb6EPc=
+	b=NtaY/jhrFCY7nfPk0I6DvHlmKJ4y6Q/hbmzmSp+kfzTOp+faQiJvyLUVnJfVW4Mlx
+	 T0/uRceTLrjymaE+/UKy3GpSMFRNpmpD9AatDW2KGrvcj/ZLui1zWR5eQbWfy0m2wu
+	 2w7CMqogh+6VASQq8476grhfWUe8ET5pYmAp2Gkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	James Clark <james.clark@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Leo Yan <leo.yan@arm.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Yunseong Kim <yskelg@gmail.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 808/809] wifi: ath12k: fix mbssid max interface advertisement
-Date: Tue, 30 Jul 2024 17:51:24 +0200
-Message-ID: <20240730151756.895526362@linuxfoundation.org>
+Subject: [PATCH 6.10 809/809] perf dso: Fix build when libunwind is enabled
+Date: Tue, 30 Jul 2024 17:51:25 +0200
+Message-ID: <20240730151756.934862307@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -45,64 +50,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+From: James Clark <james.clark@linaro.org>
 
-[ Upstream commit 253ec89c9013b0e61f5c54344df7c065d54934d1 ]
+[ Upstream commit 92717bc077892d1ce60fee07aee3a33f33909b85 ]
 
-The Current method for advertising the maximum MBSSID interface count
-assumes single radio per wiphy (multi wiphy model). However, this
-assumption is incorrect for multi radio per wiphy (single wiphy model).
-Therefore, populate the parameter for each radio present in the MAC
-abstraction layer (ah). This approach ensure scalability for both single
-wiphy and multi wiphy models.
+Now that symsrc_filename is always accessed through an accessor, we also
+need a free() function for it to avoid the following compilation error:
 
-Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+  util/unwind-libunwind-local.c:416:12: error: lvalue required as unary
+    ‘&’ operand
+  416 |      zfree(&dso__symsrc_filename(dso));
 
-Fixes: 519a545cfee7 ("wifi: ath12k: advertise driver capabilities for MBSSID and EMA")
-Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://patch.msgid.link/20240613153813.3509837-1-quic_periyasa@quicinc.com
+Fixes: 1553419c3c10 ("perf dso: Fix address sanitizer build")
+Signed-off-by: James Clark <james.clark@linaro.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Tested-by: Leo Yan <leo.yan@arm.com>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Yunseong Kim <yskelg@gmail.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Link: https://lore.kernel.org/r/20240715094715.3914813-1-james.clark@linaro.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/mac.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/dso.c                    | 2 +-
+ tools/perf/util/dso.h                    | 5 +++++
+ tools/perf/util/unwind-libunwind-local.c | 2 +-
+ 3 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
-index 0ed388a6fc804..ead37a4e002a2 100644
---- a/drivers/net/wireless/ath/ath12k/mac.c
-+++ b/drivers/net/wireless/ath/ath12k/mac.c
-@@ -8610,6 +8610,7 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
- 	u32 ht_cap = U32_MAX, antennas_rx = 0, antennas_tx = 0;
- 	bool is_6ghz = false, is_raw_mode = false, is_monitor_disable = false;
- 	u8 *mac_addr = NULL;
-+	u8 mbssid_max_interfaces = 0;
+diff --git a/tools/perf/util/dso.c b/tools/perf/util/dso.c
+index 2340c4f6d0c24..67414944f2457 100644
+--- a/tools/perf/util/dso.c
++++ b/tools/perf/util/dso.c
+@@ -1501,7 +1501,7 @@ void dso__delete(struct dso *dso)
+ 	auxtrace_cache__free(RC_CHK_ACCESS(dso)->auxtrace_cache);
+ 	dso_cache__free(dso);
+ 	dso__free_a2l(dso);
+-	zfree(&RC_CHK_ACCESS(dso)->symsrc_filename);
++	dso__free_symsrc_filename(dso);
+ 	nsinfo__zput(RC_CHK_ACCESS(dso)->nsinfo);
+ 	mutex_destroy(dso__lock(dso));
+ 	RC_CHK_FREE(dso);
+diff --git a/tools/perf/util/dso.h b/tools/perf/util/dso.h
+index 878c1f441868b..ed0068251c655 100644
+--- a/tools/perf/util/dso.h
++++ b/tools/perf/util/dso.h
+@@ -602,6 +602,11 @@ static inline void dso__set_symsrc_filename(struct dso *dso, char *val)
+ 	RC_CHK_ACCESS(dso)->symsrc_filename = val;
+ }
  
- 	wiphy->max_ap_assoc_sta = 0;
- 
-@@ -8653,6 +8654,8 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
- 			mac_addr = ar->mac_addr;
- 		else
- 			mac_addr = ab->mac_addr;
++static inline void dso__free_symsrc_filename(struct dso *dso)
++{
++	zfree(&RC_CHK_ACCESS(dso)->symsrc_filename);
++}
 +
-+		mbssid_max_interfaces += TARGET_NUM_VDEVS;
- 	}
- 
- 	wiphy->available_antennas_rx = antennas_rx;
-@@ -8744,7 +8747,7 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
- 	wiphy->iftype_ext_capab = ath12k_iftypes_ext_capa;
- 	wiphy->num_iftype_ext_capab = ARRAY_SIZE(ath12k_iftypes_ext_capa);
- 
--	wiphy->mbssid_max_interfaces = TARGET_NUM_VDEVS;
-+	wiphy->mbssid_max_interfaces = mbssid_max_interfaces;
- 	wiphy->ema_max_profile_periodicity = TARGET_EMA_MAX_PROFILE_PERIOD;
- 
- 	if (is_6ghz) {
+ static inline enum dso_binary_type dso__symtab_type(const struct dso *dso)
+ {
+ 	return RC_CHK_ACCESS(dso)->symtab_type;
+diff --git a/tools/perf/util/unwind-libunwind-local.c b/tools/perf/util/unwind-libunwind-local.c
+index 5c073d815ba2b..7460bb96bd225 100644
+--- a/tools/perf/util/unwind-libunwind-local.c
++++ b/tools/perf/util/unwind-libunwind-local.c
+@@ -408,7 +408,7 @@ static int read_unwind_spec_debug_frame(struct dso *dso,
+ 							__func__,
+ 							dso__symsrc_filename(dso),
+ 							debuglink);
+-					zfree(&dso__symsrc_filename(dso));
++					dso__free_symsrc_filename(dso);
+ 				}
+ 				dso__set_symsrc_filename(dso, debuglink);
+ 			} else {
 -- 
 2.43.0
 
