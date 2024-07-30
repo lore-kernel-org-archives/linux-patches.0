@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDA01A619E;
-	Tue, 30 Jul 2024 16:43:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05601552E7;
+	Tue, 30 Jul 2024 16:43:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357809; cv=none; b=ZCiJ+VEPpCu4cdNkRudkYSqzT1gbHrTq5zwQ0OcDd6vGLMPkmpVldXfIVJbWurCvgM9CmqY2z980oEbBNLf7oTRfivVOC1ZibgjIVOPKOGYGKZSxSchpEjiFL+7NLVkBDNzclNMEEDIPhvuq9q4MQQzcOc5RBD77Ojnz9vRNL9E=
+	t=1722357812; cv=none; b=H22N8toLiD0QWndoVebTKWfFrd5i9VGbkuScSEx9cd477pThrL2WCCk9wFKW0UOLQVUyA+PU5XySGajAQnAppko+utMI/W2BW8BFxDP0E5m6IX/PFl8/4jIALT09epU7xIGpLc3SpjD96wuevCeEfpxRhanuTCBtdZAh07Xa5RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357809; c=relaxed/simple;
-	bh=SFtIKmLOYfLsgP02N3EtBFY+8pgi2zWRqrh/l7VvvrU=;
+	s=arc-20240116; t=1722357812; c=relaxed/simple;
+	bh=zmvU5tnUxy204EleOlGCEkI1rLhH0idM0ZozTBvnxb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DVIZUFlDje+Cw8ojIwVYfJnEks/5pLnw6sv4TgJDMwKPMW7U9GB5AHAiMjD3btcVMWaaW2+lDSPhM8eOlLnhB2IOXxxEd/hL6xRtFyPtA8E1H2ls51wKAZwrS8HbwXBHMRMLWaoo0jYUXKV4ZN8i1kf4shpkZuooSfDb7ce92d8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGsCOPnX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=A9l/hnqtCsdBnQXwPaqpclaHONShtFp7sZGGXOSz1k3Bg1XwRSFjr4ZGI+SJk825GstjiRcXvab+BogblZcd/HkqWwrLyVZSiPksClzjJmdyt1npIAldfuqonSGmAslYzYvms/TlFPLSv4BPOpOAy1sTtzJ5XuzF8QSodjuPylk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF8uoWgo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGsCOPnX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C010FC4AF0A;
-	Tue, 30 Jul 2024 16:43:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF8uoWgo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C09C4AF0E;
+	Tue, 30 Jul 2024 16:43:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357809;
-	bh=SFtIKmLOYfLsgP02N3EtBFY+8pgi2zWRqrh/l7VvvrU=;
+	s=korg; t=1722357812;
+	bh=zmvU5tnUxy204EleOlGCEkI1rLhH0idM0ZozTBvnxb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGsCOPnXykNWkQnFLO2jvM8cnbAoKEXdC+CRen156L1Lk2NkwNP4UjOjHcQZBQSKf
-	 oINDHW0Qte1Nirx1LbdrjWhGmRXwEA6DvwKW4DYVJZgTW7fC7lFcOfRitI8VvoFMfK
-	 ay0ye6YqGQSDsn3erMojGp1vzdhPKn+Sy4mDKg/Y=
+	b=PF8uoWgo9w6lvmjKOdykkHZOoFpyvIGg4kPXWCbVNvZrNEX3LpFtZymBUraJK4j8h
+	 ibkfAcZGlrU4E/QY/HREARE3fM0tYB7kVciYq710FKS/YW3kznEBzch565Yc2Rdxdh
+	 Pd+EJNLDT69W5VlwLC4VjrAVenSKDMv2E2oDTkFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 329/440] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
-Date: Tue, 30 Jul 2024 17:49:22 +0200
-Message-ID: <20240730151628.668331035@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 320/440] hwrng: amd - Convert PCIBIOS_* return codes to errnos
+Date: Tue, 30 Jul 2024 17:49:13 +0200
+Message-ID: <20240730151628.317699778@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -46,45 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
+commit 14cba6ace79627a57fb9058582b03f0ed3832390 upstream.
 
-Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
-is decided by the SCSI ML. User is not aware of the cause of an acutal
-error.
+amd_rng_mod_init() uses pci_read_config_dword() that returns PCIBIOS_*
+codes. The return code is then returned as is but amd_rng_mod_init() is
+a module_init() function that should return normal errnos.
 
-Return the appropriate return code that will be decoded by API and
-application and proper error message will be displayed to user.
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning it.
 
-Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
+Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/hw_random/amd-rng.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -324,7 +324,7 @@ qla2x00_process_els(struct bsg_job *bsg_
- 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
- 		    bsg_job->request_payload.sg_cnt,
- 		    bsg_job->reply_payload.sg_cnt);
--		rval = -EPERM;
-+		rval = -ENOBUFS;
- 		goto done;
- 	}
+--- a/drivers/char/hw_random/amd-rng.c
++++ b/drivers/char/hw_random/amd-rng.c
+@@ -142,8 +142,10 @@ static int __init amd_rng_mod_init(void)
  
+ found:
+ 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
+-	if (err)
++	if (err) {
++		err = pcibios_err_to_errno(err);
+ 		goto put_dev;
++	}
+ 
+ 	pmbase &= 0x0000FF00;
+ 	if (pmbase == 0) {
 
 
