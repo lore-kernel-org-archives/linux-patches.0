@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0FA729A2;
-	Tue, 30 Jul 2024 15:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B88A29A2;
+	Tue, 30 Jul 2024 15:56:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354966; cv=none; b=BfXk+4G7RY6jRJ5oI46tCWjbig65bzIc6CMXMtBfqbs9cGiUdTCGHfUmM+MKIwuwh5GFGrs1k6dWs4cvQoMXPQVjrxS/gxUeKlBLD+h5axo4vDSS10Nm19HxbXO+LuLbUZ44x9sY3SIztFe5VZOcBRt/MSP/5XHVr2MqLyU5DcE=
+	t=1722354969; cv=none; b=FMHrcPzDT8O7tasZNgEBpb1ERASLVr3zAcefyxXe3nhGi8OtBHg2mY6Q4b7dSY4BI2uCxHUV5POrcFaou9LxZsXq2XyBT7KBgqOWL1jBVP+glu2e1qbmdHOoKLTU4EpXooReirrbCoa1vXlzm4Qsey1b9owZJWWjOmcXmsBPeAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354966; c=relaxed/simple;
-	bh=pszE8/Jpf5vBjUVYn4wSH8U/eiUoYd/aAK3YpygVe4w=;
+	s=arc-20240116; t=1722354969; c=relaxed/simple;
+	bh=6bJrMYJOPHqyJJKWiIvzvpKLTKVLKzMt023hVVfVRV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/bYARIJxuid0ormZk1utiGBVKr4GqRKtIkA01U9WFKfJVuSasxHJpNyU0pk4gKIjTOp91XIilUXnDxeqj2fvivQVZN80nLAC9ZSqXWIat/xiL3ssEODOk7a+bNx4KCaKrKc2u4QP+aa+/JGbZJMDvs5vHnA7l1M9hTB9uapg6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rt3wiIgb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mhinr0d8D/7jJ3UuxsF30I4D7WXJmcWzuEA6tWxOWIFEuYqIQY1KTBt8W7DxSL1BY2t+bUSfjbIVw3mOkxCFwCBEsg2wElg8tecfIMDxAtqImtR1tg7Sm5gvW6rCydhur7LX4RmIJZz9VX2oXHbs8SPP86Lx6pA1aYiWsu7y7ak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ve0eYoaH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rt3wiIgb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E002AC4AF0C;
-	Tue, 30 Jul 2024 15:56:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ve0eYoaH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D63C4AF0C;
+	Tue, 30 Jul 2024 15:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354966;
-	bh=pszE8/Jpf5vBjUVYn4wSH8U/eiUoYd/aAK3YpygVe4w=;
+	s=korg; t=1722354969;
+	bh=6bJrMYJOPHqyJJKWiIvzvpKLTKVLKzMt023hVVfVRV0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rt3wiIgbhAKEksgfvtlj4RVzkgok4qowADrQUOcsf3w0ASp5QN8jGj7y/GMU5AZfJ
-	 g81DZbTc+Ruk2EU77KqaGgVCPgDvFKiLqeeH8jaytlr8ss+Hv1zMop26dFbUK3ltyW
-	 5QylVKTMqTHa4GrqtK/pgz7wEQBqMBiuvuM1sgyA=
+	b=ve0eYoaHIJWt8DQF/YQiOc6ckel5X5sIne0eXw5TRzYlvDdRwSYhluOad2QD0EPjW
+	 0CzK9P1vkOpU2lsCKYH8aMJ0lwxvEpjcUUJcUmZDcXoVTZTCvFIZovld0YczOux0as
+	 C5SACnzHjnCAq7d7cG/RMwF1aFkn0AATDlRWMaEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 042/440] arm64: dts: rockchip: Update WIFi/BT related nodes on rk3308-rock-pi-s
-Date: Tue, 30 Jul 2024 17:44:35 +0200
-Message-ID: <20240730151617.406434827@linuxfoundation.org>
+Subject: [PATCH 6.10 006/809] md/raid0: dont free conf on raid0_run failure
+Date: Tue, 30 Jul 2024 17:38:02 +0200
+Message-ID: <20240730151724.902520899@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,108 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 12c3ec878cbe3709782e85b88124abecc3bb8617 ]
+[ Upstream commit 35f20acaa3585f25f8356da0ee6bc143e0256522 ]
 
-Update WiFi SDIO and BT UART related props to better reflect details
-about the optional onboard RTL8723DS WiFi/BT module.
+The core md code calls the ->free method which already frees conf.
 
-Also correct the compatible used for bluetooth to match the WiFi/BT
-module used on the board.
-
-Fixes: bc3753aed81f ("arm64: dts: rockchip: rock-pi-s add more peripherals")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240521211029.1236094-14-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 0c031fd37f69 ("md: Move alloc/free acct bioset in to personality")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240604172607.3185916-2-hch@lst.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3308-rock-pi-s.dts    | 40 +++++++++++++++++--
- 1 file changed, 36 insertions(+), 4 deletions(-)
+ drivers/md/raid0.c | 21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-index 6b4afdde6e94c..bc9e98fe0f013 100644
---- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-@@ -17,6 +17,7 @@ aliases {
- 		ethernet0 = &gmac;
- 		mmc0 = &emmc;
- 		mmc1 = &sdmmc;
-+		mmc2 = &sdio;
- 	};
+diff --git a/drivers/md/raid0.c b/drivers/md/raid0.c
+index c5d4aeb68404c..81c01347cd24e 100644
+--- a/drivers/md/raid0.c
++++ b/drivers/md/raid0.c
+@@ -365,18 +365,13 @@ static sector_t raid0_size(struct mddev *mddev, sector_t sectors, int raid_disks
+ 	return array_sectors;
+ }
  
- 	chosen {
-@@ -174,6 +175,20 @@ &pinctrl {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&rtc_32k>;
+-static void free_conf(struct mddev *mddev, struct r0conf *conf)
+-{
+-	kfree(conf->strip_zone);
+-	kfree(conf->devlist);
+-	kfree(conf);
+-}
+-
+ static void raid0_free(struct mddev *mddev, void *priv)
+ {
+ 	struct r0conf *conf = priv;
  
-+	bluetooth {
-+		bt_reg_on: bt-reg-on {
-+			rockchip,pins = <4 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+
-+		bt_wake_host: bt-wake-host {
-+			rockchip,pins = <4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_down>;
-+		};
-+
-+		host_wake_bt: host-wake-bt {
-+			rockchip,pins = <4 RK_PB2 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
- 	gmac {
- 		mac_rst: mac-rst {
- 			rockchip,pins = <0 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
-@@ -223,11 +238,24 @@ &sdio {
- 	cap-sd-highspeed;
- 	cap-sdio-irq;
- 	keep-power-in-suspend;
--	max-frequency = <1000000>;
-+	max-frequency = <100000000>;
- 	mmc-pwrseq = <&sdio_pwrseq>;
-+	no-mmc;
-+	no-sd;
- 	non-removable;
--	sd-uhs-sdr104;
-+	sd-uhs-sdr50;
-+	vmmc-supply = <&vcc_io>;
-+	vqmmc-supply = <&vcc_1v8>;
- 	status = "okay";
-+
-+	rtl8723ds: wifi@1 {
-+		reg = <1>;
-+		interrupt-parent = <&gpio0>;
-+		interrupts = <RK_PA0 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupt-names = "host-wake";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&wifi_host_wake>;
-+	};
- };
+-	free_conf(mddev, conf);
++	kfree(conf->strip_zone);
++	kfree(conf->devlist);
++	kfree(conf);
+ }
  
- &sdmmc {
-@@ -259,12 +287,16 @@ &uart0 {
- };
+ static int raid0_set_limits(struct mddev *mddev)
+@@ -415,7 +410,7 @@ static int raid0_run(struct mddev *mddev)
+ 	if (!mddev_is_dm(mddev)) {
+ 		ret = raid0_set_limits(mddev);
+ 		if (ret)
+-			goto out_free_conf;
++			return ret;
+ 	}
  
- &uart4 {
-+	uart-has-rtscts;
- 	status = "okay";
+ 	/* calculate array device size */
+@@ -427,13 +422,7 @@ static int raid0_run(struct mddev *mddev)
  
- 	bluetooth {
--		compatible = "realtek,rtl8723bs-bt";
--		device-wake-gpios = <&gpio4 RK_PB3 GPIO_ACTIVE_HIGH>;
-+		compatible = "realtek,rtl8723ds-bt";
-+		device-wake-gpios = <&gpio4 RK_PB2 GPIO_ACTIVE_HIGH>;
-+		enable-gpios = <&gpio4 RK_PB3 GPIO_ACTIVE_HIGH>;
- 		host-wake-gpios = <&gpio4 RK_PB4 GPIO_ACTIVE_HIGH>;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&bt_reg_on &bt_wake_host &host_wake_bt>;
- 	};
- };
+ 	dump_zones(mddev);
  
+-	ret = md_integrity_register(mddev);
+-	if (ret)
+-		goto out_free_conf;
+-	return 0;
+-out_free_conf:
+-	free_conf(mddev, conf);
+-	return ret;
++	return md_integrity_register(mddev);
+ }
+ 
+ /*
 -- 
 2.43.0
 
