@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910A51A3024;
-	Tue, 30 Jul 2024 16:12:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95711A3024;
+	Tue, 30 Jul 2024 16:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355926; cv=none; b=SVjwzjF24bS0njiH2n7lYRfO7yhp3cDuvtnKHVUNWXZ1LxWdj6jySgr6gFBqMynByuT5YINfuaTvI5x2d7xpZGaMwfdU0w9a4IQCKQ0PW2pihFJKH8OevkUf7OascWHfbAvtWSd1X5tMVl77uYhPCTafF8s6rqm682gkNgp27FI=
+	t=1722355929; cv=none; b=pBikgNNHRrquo7nyR527qQzTi5pnsBGz8KLeki5CHRWHWAlnQYb948QVlwtZIVURKza3OKg8WtnC8A8l9knWc5WK9bDgTQQrSJzSj1zxeKkEg4BY1E5S6RLwjvE+diajjze6iO8ZeRGC21+MTUWSlCRmVE3HQXm/ClZ129RxO+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355926; c=relaxed/simple;
-	bh=VZGpgR/BqS7ZXsQDLOcR/0pxGt+vOsEVRrEa90KtyPk=;
+	s=arc-20240116; t=1722355929; c=relaxed/simple;
+	bh=e3maEF8aa/f4DgA1aHrFLBJ9Tju/W0/88hi0k1kpgkw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHoQPTvsb7HNrQVYSNyOs0q79wbZ9nClef+dqn5NBmbFvknXgFjSTZIPY5caMTxm4qOtBOHQ7HCkf/dx3t4ZJqMSoYXt6h9P/UVmlItfrWx4+8IGsq9MhhmeG9E5yDQ4L1CMVN67pP8sVe/VnYgjpGec4BV6bAz4hPAWRUfXRZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NInkhyZj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KMue/A0JLieCtEB4ZPSEDDXIL/EuJ7sCkUo3yrRoGlIkKP7gfo3NbSX1jJ/b7+HsiGkhL3wyW31aFyIDHaghor9hT4eG1vZwuUX6tlltTFby2PtjObFA/4bCiM/JjQCGWU/PPqf+nWqVO8NFiTi1upItgWRvipJjleNQ9vQ0hb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZVLs2O4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NInkhyZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6DAC32782;
-	Tue, 30 Jul 2024 16:12:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZVLs2O4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D092C32782;
+	Tue, 30 Jul 2024 16:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355926;
-	bh=VZGpgR/BqS7ZXsQDLOcR/0pxGt+vOsEVRrEa90KtyPk=;
+	s=korg; t=1722355929;
+	bh=e3maEF8aa/f4DgA1aHrFLBJ9Tju/W0/88hi0k1kpgkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NInkhyZjhae8DhpeYEwzNHwRafSShaef65tDkBSF0hsPeiCg1i1rM9OOcu7nI74f2
-	 nbcHd5+Jxt9SyTH2nrhxwmfpf3TseoeOMIt8ocfwwC1PRg8KjyHeL+N/ROov3Grq+m
-	 gHP838g1kN+ml8aQcGvopKKXKqHzsBnlVnjGPma4=
+	b=jZVLs2O4Q5j2PVMO/hdsOGwCG/v59NBZWvMdMJfyWU+XiS2msDj2kfJ1SRZ+b8P7v
+	 7728ESfdkELol8aNTTEZSLYbGwOeFYQmHOEUBtXbdM+2D4nOma+NEBpBBbMbPHuWDD
+	 tqJuqNWa4nJNs1K1IkoNu7Fcf2hnL/f0vzq1hZ0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arcari <darcari@redhat.com>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Daniel Schaefer <dhs@frame.work>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 103/568] cpufreq/amd-pstate: Fix the scaling_max_freq setting on shared memory CPPC systems
-Date: Tue, 30 Jul 2024 17:43:30 +0200
-Message-ID: <20240730151643.901751962@linuxfoundation.org>
+Subject: [PATCH 6.1 145/440] media: uvcvideo: Override default flags
+Date: Tue, 30 Jul 2024 17:46:18 +0200
+Message-ID: <20240730151621.545617402@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,106 +48,70 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit 738d7d03571c7e38565bd245c0815a2c74665018 ]
+[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
 
-On shared memory CPPC systems, with amd_pstate=active mode, the change
-in scaling_max_freq doesn't get written to the shared memory
-region. Due to this, the writes to the scaling_max_freq sysfs file
-don't take effect. Fix this by propagating the scaling_max_freq
-changes to the shared memory region.
+When the UVC device has a control that is readonly it doesn't set the
+SET_CUR flag. For example the privacy control has SET_CUR flag set in
+the defaults in the `uvc_ctrls` variable. Even if the device does not
+have it set, it's not cleared by uvc_ctrl_get_flags().
 
-Fixes: ffa5096a7c33 ("cpufreq: amd-pstate: implement Pstate EPP support for the AMD processors")
-Reported-by: David Arcari <darcari@redhat.com>
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240702081413.5688-3-Dhananjay.Ugwekar@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Originally written with assignment in commit 859086ae3636 ("media:
+uvcvideo: Apply flags from device to actual properties"). But changed to
+|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
+flags"). It would not clear the default flags.
+
+With this patch applied the correct flags are reported to user space.
+Tested with:
+
+```
+> v4l2-ctl --list-ctrls | grep privacy
+privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
+```
+
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 43 +++++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 20 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 3efc2aef31ce4..23c74e9f04c48 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -175,6 +175,26 @@ static int amd_pstate_get_energy_pref_index(struct amd_cpudata *cpudata)
- 	return index;
- }
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 6d7535efc09de..dffc9d03235c4 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1959,7 +1959,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 	else
+ 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
+ 				     dev->intfnum, info->selector, data, 1);
+-	if (!ret)
++
++	if (!ret) {
++		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
++				 UVC_CTRL_FLAG_SET_CUR |
++				 UVC_CTRL_FLAG_AUTO_UPDATE |
++				 UVC_CTRL_FLAG_ASYNCHRONOUS);
++
+ 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
+ 				UVC_CTRL_FLAG_GET_CUR : 0)
+ 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
+@@ -1968,6 +1974,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
+ 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
+ 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
++	}
  
-+static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
-+			       u32 des_perf, u32 max_perf, bool fast_switch)
-+{
-+	if (fast_switch)
-+		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
-+	else
-+		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
-+			      READ_ONCE(cpudata->cppc_req_cached));
-+}
-+
-+DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
-+
-+static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
-+					  u32 min_perf, u32 des_perf,
-+					  u32 max_perf, bool fast_switch)
-+{
-+	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
-+					    max_perf, fast_switch);
-+}
-+
- static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
- {
- 	int ret;
-@@ -191,6 +211,9 @@ static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
- 		if (!ret)
- 			cpudata->epp_cached = epp;
- 	} else {
-+		amd_pstate_update_perf(cpudata, cpudata->min_limit_perf, 0U,
-+					     cpudata->max_limit_perf, false);
-+
- 		perf_ctrls.energy_perf = epp;
- 		ret = cppc_set_epp_perf(cpudata->cpu, &perf_ctrls, 1);
- 		if (ret) {
-@@ -361,16 +384,6 @@ static inline int amd_pstate_init_perf(struct amd_cpudata *cpudata)
- 	return static_call(amd_pstate_init_perf)(cpudata);
- }
- 
--static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
--			       u32 des_perf, u32 max_perf, bool fast_switch)
--{
--	if (fast_switch)
--		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
--	else
--		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
--			      READ_ONCE(cpudata->cppc_req_cached));
--}
--
- static void cppc_update_perf(struct amd_cpudata *cpudata,
- 			     u32 min_perf, u32 des_perf,
- 			     u32 max_perf, bool fast_switch)
-@@ -384,16 +397,6 @@ static void cppc_update_perf(struct amd_cpudata *cpudata,
- 	cppc_set_perf(cpudata->cpu, &perf_ctrls);
- }
- 
--DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
--
--static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
--					  u32 min_perf, u32 des_perf,
--					  u32 max_perf, bool fast_switch)
--{
--	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
--					    max_perf, fast_switch);
--}
--
- static inline bool amd_pstate_sample(struct amd_cpudata *cpudata)
- {
- 	u64 aperf, mperf, tsc;
+ 	kfree(data);
+ 	return ret;
 -- 
 2.43.0
 
