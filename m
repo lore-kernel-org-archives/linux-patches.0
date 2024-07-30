@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED93C1A76A1;
-	Tue, 30 Jul 2024 17:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389D51A76A1;
+	Tue, 30 Jul 2024 17:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360215; cv=none; b=L7MJYsz7j0AqrX0cYCm+QGoUm5zTc7q77tMXQ1ti4CkKfz/K+HWd+eVR3hktBNnFAzLFkDHm07jc9nBV0LZf7ZP0ERou/YW0jsDHoU/tHluf9t+B7V/ktCUD9n5ixq8Dr53uzvvHiSYo+IU68/Vy4EaMahSK1mNuf7fOw+HLdpk=
+	t=1722360218; cv=none; b=hUPitmSwrKyA6/IzE/VS/c80P6JTCDO98+sGCH+srsuSiL+hMYmvmyehDFipEHPq3QYXudoYyuKhyfBI1+DnNPNwwRC4bYzKAAO3EleaP7oDpXJUnjbU3d43aL0mH6MR7IHFZJ1VzeUxdgPO2ctZ+wBl3nrgE64yatcY/uCDoWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360215; c=relaxed/simple;
-	bh=EeB+W5DSevJLGwAuh9OLlmC+wS9HPYaxZI9zj5QC+rI=;
+	s=arc-20240116; t=1722360218; c=relaxed/simple;
+	bh=nPUPu5wGxfRQb4HnpJEHyIikwg4MmVJWxd2rtxOBKeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QXxQVZBmVa1UJ01ThiiD5VxGxscUGBem2/cbfYcs58HFQxYG+NAEfzeEKDJWUE/pZoOas6bFx3uZJ55l9gMAUlRtl0/lm9Zv1/2hx3C4VpqPm4Q1siOVBiEQfTBPoItXuu7BcDhSmst3gSj8DQD3i50H5/FXqNX/5w1pu7CXf7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvkDG4vH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JjElbOUq4ItCwQ8g0Y/9/+ylmNnp32d9nYZzcAqW085HGBtsU43BcTeapDD48hOKiGUxueQ/WgP0bGvT6EP/1wNpclp0RbotuHq84XqIGyI1Y3yhSyYCnkxfCOxHOHAkwKO5L7j1xvnn/w3ap/5JGbQ2PaZCEbPJEX6FP/W2yoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm8XvNKr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvkDG4vH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6C9C32782;
-	Tue, 30 Jul 2024 17:23:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm8XvNKr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B465EC32782;
+	Tue, 30 Jul 2024 17:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360214;
-	bh=EeB+W5DSevJLGwAuh9OLlmC+wS9HPYaxZI9zj5QC+rI=;
+	s=korg; t=1722360218;
+	bh=nPUPu5wGxfRQb4HnpJEHyIikwg4MmVJWxd2rtxOBKeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HvkDG4vHfJSn08PKsVth2VeD2KcPnPqd8A72z4OEK299aMIq6LOdaNUE5kwpyyfu/
-	 sY7ldDT2fHpO/im9D8I8lEjgK0PkTQkmnp1X8cq1MLO1PW77wmsIoOUAPo98alHEps
-	 0H/XYi4xbMRGBPY3mm5lhoDdHdhWj8vX1cg6sX8s=
+	b=Fm8XvNKrfCr0vthE722Alg/iIfJEEd8gDvq6JQk9qY5q4uVoyPK7kf71uV9K42oM2
+	 OEa7u+6FFSIKfaUdLLODOwLWSgqWw02yUMjmM4r4F9JbnHalctPLlQFRP69zvxJiRK
+	 F6IiRwWca4v9yYMELq0o2I+wRdZyGkHbPeLmElWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Paolo Pisati <p.pisati@gmail.com>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: [PATCH 6.10 590/809] m68k: amiga: Turn off Warp1260 interrupts during boot
-Date: Tue, 30 Jul 2024 17:47:46 +0200
-Message-ID: <20240730151748.133399136@linuxfoundation.org>
+	"Luke D. Jones" <luke@ljones.dev>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 625/809] ALSA: hda/realtek: cs35l41: Fixup remaining asus strix models
+Date: Tue, 30 Jul 2024 17:48:21 +0200
+Message-ID: <20240730151749.526887049@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,57 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Pisati <p.pisati@gmail.com>
+From: Luke D. Jones <luke@ljones.dev>
 
-commit 1d8491d3e726984343dd8c3cdbe2f2b47cfdd928 upstream.
+commit e6e18021ddd0dc5af487fb86b6d7c964e062d692 upstream.
 
-On an Amiga 1200 equipped with a Warp1260 accelerator, an interrupt
-storm coming from the accelerator board causes the machine to crash in
-local_irq_enable() or auto_irq_enable().  Disabling interrupts for the
-Warp1260 in amiga_parse_bootinfo() fixes the problem.
+Adjust quirks for 0x3a20, 0x3a30, 0x3a50 to match the 0x3a60. This
+set has now been confirmed to work with this patch.
 
-Link: https://lore.kernel.org/r/ZkjwzVwYeQtyAPrL@amaterasu.local
-Cc: stable <stable@kernel.org>
-Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
-Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/r/20240601153254.186225-1-p.pisati@gmail.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Fixes: 811dd426a9b1 ("ALSA: hda/realtek: Add quirks for Asus ROG 2024 laptops using CS35L41")
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240723011224.115579-1-luke@ljones.dev
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/m68k/amiga/config.c       |    9 +++++++++
- include/uapi/linux/zorro_ids.h |    3 +++
- 2 files changed, 12 insertions(+)
+ sound/pci/hda/patch_realtek.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/m68k/amiga/config.c
-+++ b/arch/m68k/amiga/config.c
-@@ -180,6 +180,15 @@ int __init amiga_parse_bootinfo(const st
- 			dev->slotsize = be16_to_cpu(cd->cd_SlotSize);
- 			dev->boardaddr = be32_to_cpu(cd->cd_BoardAddr);
- 			dev->boardsize = be32_to_cpu(cd->cd_BoardSize);
-+
-+			/* CS-LAB Warp 1260 workaround */
-+			if (be16_to_cpu(dev->rom.er_Manufacturer) == ZORRO_MANUF(ZORRO_PROD_CSLAB_WARP_1260) &&
-+			    dev->rom.er_Product == ZORRO_PROD(ZORRO_PROD_CSLAB_WARP_1260)) {
-+
-+				/* turn off all interrupts */
-+				pr_info("Warp 1260 card detected: applying interrupt storm workaround\n");
-+				*(uint32_t *)(dev->boardaddr + 0x1000) = 0xfff;
-+			}
- 		} else
- 			pr_warn("amiga_parse_bootinfo: too many AutoConfig devices\n");
- #endif /* CONFIG_ZORRO */
---- a/include/uapi/linux/zorro_ids.h
-+++ b/include/uapi/linux/zorro_ids.h
-@@ -449,6 +449,9 @@
- #define  ZORRO_PROD_VMC_ISDN_BLASTER_Z2				ZORRO_ID(VMC, 0x01, 0)
- #define  ZORRO_PROD_VMC_HYPERCOM_4				ZORRO_ID(VMC, 0x02, 0)
- 
-+#define ZORRO_MANUF_CSLAB					0x1400
-+#define  ZORRO_PROD_CSLAB_WARP_1260				ZORRO_ID(CSLAB, 0x65, 0)
-+
- #define ZORRO_MANUF_INFORMATION					0x157C
- #define  ZORRO_PROD_INFORMATION_ISDN_ENGINE_I			ZORRO_ID(INFORMATION, 0x64, 0)
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10360,10 +10360,10 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1043, 0x1f62, "ASUS UX7602ZM", ALC245_FIXUP_CS35L41_SPI_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1f92, "ASUS ROG Flow X16", ALC289_FIXUP_ASUS_GA401),
+ 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
+-	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC245_FIXUP_CS35L41_SPI_2),
+-	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
++	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+-	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC245_FIXUP_CS35L41_SPI_2),
++	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x3a60, "ASUS G634JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1043, 0x831a, "ASUS P901", ALC269_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1043, 0x834a, "ASUS S101", ALC269_FIXUP_STEREO_DMIC),
 
 
