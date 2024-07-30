@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674F71E86F;
-	Tue, 30 Jul 2024 17:05:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCDEC1A6192;
+	Tue, 30 Jul 2024 17:05:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359108; cv=none; b=t+dTHKbs4FIhgrbtruy1nWZFTsqKd8FSapOx5mqoqeHIZqR6lswYLfaTB8Ri5kneDKEsY2OXIzcjt4ZZHlw3HdWdAHTdHDrKrfnXsNAssdlWH+RySO0b61BPrAsiTevfyFH0J1E3Pw2hTs1frbTYEMFw3v+PVCxIpr0nucOQyCY=
+	t=1722359112; cv=none; b=A7vgpC7RQ4XfGsy99NpKtqTDR28U3EojiLt3xTzH6tN0+KEyz/uBpgExgyRPyJ3RGscJ0Ybx8s5KpZu0g3dYIx0TznIubCgaGV7HRKbNz9pNPvnAMuuIRQRb2/CC68wZ+woJRo1IJAq/E8hxJQhux5HiwiRmWbUxl817nPGWI9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359108; c=relaxed/simple;
-	bh=U+Ek3Bcs76dEdLg3k6rJhVWDe/uRtpKgudrbqzN9RdA=;
+	s=arc-20240116; t=1722359112; c=relaxed/simple;
+	bh=IjpcMMqTanEQqA/WGmBiZ6796PMwPO82nlZW94RZZpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LaRFt2pfWGLuLznOHynGEut5Vnx7l36YQyG6sifEeRWvF1XI82wYCWNBRhIL8iPCVouIf1WaHQJPrvLUUQDA/qTY7ZO6916T9/mRCeT4Zu/akAqjYGS8Um3sAzHZuBDNJY+yOq6uQmHBE0XU5nNIg/dv6/fUCCVGn5gdx/fO3OM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A18vKCOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AwKL3q34hkR+xcog6lkFAE3O6liUrTIWJqwK4VQqPTXfZyqb9ngoYvpzuUghonoh9z4VkA1lJXhipip2PhUyo7fVf34deWUz/guxOTTw9EzN94zIZh9DQPTITqWkXWSG7TMWAKeVgoNS5gWD6UH0aRgLODilvDbpUZ1aa1X1Bjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt9/NOg/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A18vKCOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39CAC32782;
-	Tue, 30 Jul 2024 17:05:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt9/NOg/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6597DC32782;
+	Tue, 30 Jul 2024 17:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359108;
-	bh=U+Ek3Bcs76dEdLg3k6rJhVWDe/uRtpKgudrbqzN9RdA=;
+	s=korg; t=1722359111;
+	bh=IjpcMMqTanEQqA/WGmBiZ6796PMwPO82nlZW94RZZpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A18vKCOJAqFG5diaciFOA3MXNf5UKD0eTDKsuzK+tjnRtiNT27gXXZLwvbEHNQXkr
-	 sOO8Eca5NjCriyfyAR9LfGg+Sheqe/9Ptf6/S0JYpLqfr3cpiR68t9ozQ0VBm6aTKW
-	 hNPTd443wsmzqshwJ3qX9Op3cZy/O7yqXp/ERrnU=
+	b=Pt9/NOg/6JALkOHYT/9+h/KqVWhHGBf9oB7QCZGUfcvdDwOsyp269o5zXddu5e7A4
+	 8nnBbYh2zrOY4dyNqtZQor69N/MdzwG1ryRBmZLewKf6btovYQq36Occ/+tl76ZrMB
+	 wVRV4JLTh+ADQOOdKceAGpMdoSuBxpyq1VeojPtc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 434/809] RDMA/device: Return error earlier if port in not valid
-Date: Tue, 30 Jul 2024 17:45:10 +0200
-Message-ID: <20240730151741.845372756@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 6.6 433/568] fs/ntfs3: Update log->page_{mask,bits} if log->page_size changed
+Date: Tue, 30 Jul 2024 17:49:00 +0200
+Message-ID: <20240730151656.794717018@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,50 +46,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-[ Upstream commit 917918f57a7b139c043e78c502876f2c286f4f0a ]
+commit 2fef55d8f78383c8e6d6d4c014b9597375132696 upstream.
 
-There is no need to allocate port data if port provided is not valid.
+If an NTFS file system is mounted to another system with different
+PAGE_SIZE from the original system, log->page_size will change in
+log_replay(), but log->page_{mask,bits} don't change correspondingly.
+This will cause a panic because "u32 bytes = log->page_size - page_off"
+will get a negative value in the later read_log_page().
 
-Fixes: c2261dd76b54 ("RDMA/device: Add ib_device_set_netdev() as an alternative to get_netdev")
-Link: https://lore.kernel.org/r/022047a8b16988fc88d4426da50bf60a4833311b.1719235449.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b46acd6a6a627d876898e ("fs/ntfs3: Add NTFS journal")
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/ntfs3/fslog.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 55aa7aa32d4ab..e0cff28bb0ef1 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2146,6 +2146,9 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
- 	unsigned long flags;
- 	int ret;
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3922,6 +3922,9 @@ check_restart_area:
+ 		goto out;
+ 	}
  
-+	if (!rdma_is_port_valid(ib_dev, port))
-+		return -EINVAL;
++	log->page_mask = log->page_size - 1;
++	log->page_bits = blksize_bits(log->page_size);
 +
- 	/*
- 	 * Drivers wish to call this before ib_register_driver, so we have to
- 	 * setup the port data early.
-@@ -2154,9 +2157,6 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
- 	if (ret)
- 		return ret;
- 
--	if (!rdma_is_port_valid(ib_dev, port))
--		return -EINVAL;
--
- 	pdata = &ib_dev->port_data[port];
- 	spin_lock_irqsave(&pdata->netdev_lock, flags);
- 	old_ndev = rcu_dereference_protected(
--- 
-2.43.0
-
+ 	/* If the file size has shrunk then we won't mount it. */
+ 	if (log->l_size < le64_to_cpu(ra2->l_size)) {
+ 		err = -EINVAL;
 
 
