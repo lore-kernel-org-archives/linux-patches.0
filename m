@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DBA187FF2;
-	Tue, 30 Jul 2024 16:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2537187FF2;
+	Tue, 30 Jul 2024 16:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355397; cv=none; b=agRm0YMMENaFLF/MMAJsU9Hmbb3MIX/JrE5Syflxi8pasm6QJ639kVuitHnddDpy8lLDNYFxnnSQs0EJNbF0pl65234XXBBY4RY8QXaMPSkngRE63oOunvv/nEhpYHAknoJHK6e7GEyMaumkiNEawAtgBpGtCpbNizqAyyGoidI=
+	t=1722355401; cv=none; b=OKQmYUDXi1bQYdnSocWqJGYGODo/M3xsHwBTmxFszQq3biE7aTSyO+5l1XauswBt1t+2xG2rTnOJo9UKiY4iEENO+g741L/7U/fJ06D3QI/hRYbdUZ0lJDZpDVSCRcxCxVqEiQv22ER07KK0WeRfPA35mi0GFFN5BuAfrZswMOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355397; c=relaxed/simple;
-	bh=j3r9W+GJQT3i6p1SFSO8BXvj4iGJhEECjMlaVf6T7dM=;
+	s=arc-20240116; t=1722355401; c=relaxed/simple;
+	bh=nHkUvoVkv2J1EI872uSSaeQ5HemuwbXWEci6GEt7Mg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDL7KUA/ptDnxBPPigQa8ECfr4U1p32quH9xW0Z8v2l7wYnxHANn5+OapST/PyVJ7+jQcKiqlpPB0sqrhxNVNb0kzCnbOUqIt6h87CAJ3sDo3WeM6OaH3lpebOusL9xfYMqikIqs8cR46Q/fE/V7UOKosMelB6C1d8bGYzB5D/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QvhL2mCi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k/OK5ls2y4bY7qs9+eUEZ9qfs9rtDHLK2eD6l8QipLV+dfZNhNMJOku3tsrnCuRUm0ed94ToJUT04tdURgkye0cKKgZ+O9JIc8obsKGmajNWRP1hWwypVNiOJQJwv4yjA0mTwBV2CBiOV1wWE58W+CE1z9p+GhF/aEa1Wtui2Eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OBA3cKiL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QvhL2mCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04572C32782;
-	Tue, 30 Jul 2024 16:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OBA3cKiL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60D41C4AF0A;
+	Tue, 30 Jul 2024 16:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355397;
-	bh=j3r9W+GJQT3i6p1SFSO8BXvj4iGJhEECjMlaVf6T7dM=;
+	s=korg; t=1722355400;
+	bh=nHkUvoVkv2J1EI872uSSaeQ5HemuwbXWEci6GEt7Mg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QvhL2mCid4xEkFmecFD1H1rGedwBoYEChEX3gi/+KB0WzJVpTsWg4EDujGvxQRoYP
-	 bkjnADmfpaKakLTEcsJAjysXnfkg0G/Yw6Xu9zD7qbc2wL+oq8dhBVFFaltv8fCm1E
-	 sU9C9DI4jhfb5QHQwVMmKeVfH0aaIMbhsdsJlaYk=
+	b=OBA3cKiLO2ytJmWvD8Xpmg/nRU/qhEOvOajH7fL93G1Ll8UOPU2iL60edoS6uKRWU
+	 fIrsdVEXftOmxDEdF7QEiuYkHRkM0RWKfiV3G9asC3UF65NvPRLeUUtkLY2sunnfhB
+	 rvCiZOJ6/6SIs4FSYmJj5/d7W8TCKrDDRvD4muk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 047/809] arm64: dts: qcom: sdm845: add power-domain to UFS PHY
-Date: Tue, 30 Jul 2024 17:38:43 +0200
-Message-ID: <20240730151726.510080268@linuxfoundation.org>
+Subject: [PATCH 6.1 090/440] tcp: fix races in tcp_v[46]_err()
+Date: Tue, 30 Jul 2024 17:45:23 +0200
+Message-ID: <20240730151619.274604754@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +48,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fd39ae8b9bc10419b1e4b849cdbc6755a967ade1 ]
+[ Upstream commit fde6f897f2a184546bf5516ac736523ef24dc6a7 ]
 
-The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
-corresponding power-domain the the PHY node.
+These functions have races when they:
 
-Fixes: cc16687fbd74 ("arm64: dts: qcom: sdm845: add UFS controller")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-6-f1fd15c33fb3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+1) Write sk->sk_err
+2) call sk_error_report(sk)
+3) call tcp_done(sk)
+
+As described in prior patches in this series:
+
+An smp_wmb() is missing.
+We should call tcp_done() before sk_error_report(sk)
+to have consistent tcp_poll() results on SMP hosts.
+
+Use tcp_done_with_error() where we centralized the
+correct sequence.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240528125253.1966136-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/tcp_ipv4.c | 11 +++--------
+ net/ipv6/tcp_ipv6.c | 10 +++-------
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index d817a7751086e..4ad82b0eb1139 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2666,6 +2666,8 @@ ufs_mem_phy: phy@1d87000 {
- 				      "ref_aux",
- 				      "qref";
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index 16098fcafde2b..c64ba4f8ddaa9 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -602,15 +602,10 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
  
-+			power-domains = <&gcc UFS_PHY_GDSC>;
-+
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
+ 		ip_icmp_error(sk, skb, err, th->dest, info, (u8 *)th);
  
+-		if (!sock_owned_by_user(sk)) {
+-			WRITE_ONCE(sk->sk_err, err);
+-
+-			sk_error_report(sk);
+-
+-			tcp_done(sk);
+-		} else {
++		if (!sock_owned_by_user(sk))
++			tcp_done_with_error(sk, err);
++		else
+ 			WRITE_ONCE(sk->sk_err_soft, err);
+-		}
+ 		goto out;
+ 	}
+ 
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 35bfca93af6ad..eb6fc0e2a4533 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -492,14 +492,10 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 
+ 		ipv6_icmp_error(sk, skb, err, th->dest, ntohl(info), (u8 *)th);
+ 
+-		if (!sock_owned_by_user(sk)) {
+-			WRITE_ONCE(sk->sk_err, err);
+-			sk_error_report(sk);		/* Wake people up to see the error (see connect in sock.c) */
+-
+-			tcp_done(sk);
+-		} else {
++		if (!sock_owned_by_user(sk))
++			tcp_done_with_error(sk, err);
++		else
+ 			WRITE_ONCE(sk->sk_err_soft, err);
+-		}
+ 		goto out;
+ 	case TCP_LISTEN:
+ 		break;
 -- 
 2.43.0
 
