@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9EF183CD5;
-	Tue, 30 Jul 2024 16:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086BB188006;
+	Tue, 30 Jul 2024 16:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355439; cv=none; b=fnBOHp3OJfdyOfSRJRO8msbGv2iujYtSUlC1gSCPcUUjQPQ9A/XztVBams1MNBGZHDZqVhLsiq+GxHR5ZiJUi6vU4iqj61F7XGV+40r3dsVYjzH4TIhEj/dBnNRGH2CmtZqm/8F+NX2GUQqeupphNeRK198qOTM2UpjYHcLyGp4=
+	t=1722355442; cv=none; b=J4d8EybG4Oo1zyjDkO9lig25dt/IjZS50cDsOAX6pZVdVme32eIvoFr7z7Q1x3ubOK35PeNAsSrtQc11y0ZJwPz8IZuKFxtEUrzyIOP4hOGrtdJFtp4QwR4WkKcr3KDJXbMiwYEbX7vty1ihylnIVjGKIe7iSqByGw9vLPkkZNE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355439; c=relaxed/simple;
-	bh=i6e9CGiXEeoDMWjoBlzCb8SOnw3yjthSZLqjfLWUJ/U=;
+	s=arc-20240116; t=1722355442; c=relaxed/simple;
+	bh=OXj9XmOEUHjam04WHPEFIVywM70TsfQ6IQYwYkc4rOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eu0CvvK0I848lu4MqhZdg6ckVGOJoYJLKviL96qpEfzHL7zkav+mqkgDarMuUcolvly/kVPCntwdnV6FfZXmx7UtBUktiasXLWdfIhpTGre91GI9n9/LP9gA1XNfnNud54L4/YaWMLCXY2e3jVLqv9xyN6u8v+wXF7DoTYKuZGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4WkahI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=skaQMCbwWm9m3ORegZVGe+T3jSLqOkmuGR2Z0Eyc4GtfQuE7hcH5b0Pup6ThwFdV+JxjAIgdb1L5sHrLShPQTo8f4ysPhqUq+vJTSmpLOzumXWzT/VVD2NKenNk4wug+47cwnS7ra4rIaOt6ETDfIAbe9Nnf/wcEeq3DtoPEcCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gghLdWIk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4WkahI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9A3C32782;
-	Tue, 30 Jul 2024 16:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gghLdWIk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7015DC32782;
+	Tue, 30 Jul 2024 16:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355438;
-	bh=i6e9CGiXEeoDMWjoBlzCb8SOnw3yjthSZLqjfLWUJ/U=;
+	s=korg; t=1722355441;
+	bh=OXj9XmOEUHjam04WHPEFIVywM70TsfQ6IQYwYkc4rOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P4WkahI4mpPaB5YJUtZXwRn8T88HtMfOKLqNMgANkTjYoQRfDfeWBhrRjLnpxHoyi
-	 J36T16p+614X2C8g+hf23XdXazAc5E+0jBPg1p2X+5mbVHCeyFtLL3FaqxuQeG5j1N
-	 D+Nczttj0Ae5ja+n0cvdIpr4ZFZGk4JHGcXQ3FTU=
+	b=gghLdWIkXSL4A0tCNkkoQKM7dx0KKIRtEAz5+Eh3QpJAVdyKAIiYJvYYX+IK3S8Lu
+	 cKZDnJs0SQErtYnFC7UoBCmib/Xdc6QcSFzcKlRbslJDO4YPcPNlC6eQFeCNkZfCnB
+	 rqmbCOYSzdaRon7Eze5Q+u0FNwC1lSUYWS/IWnUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/440] arm64: dts: qcom: sm6350: Add missing qcom,non-secure-domain property
-Date: Tue, 30 Jul 2024 17:45:08 +0200
-Message-ID: <20240730151618.690867625@linuxfoundation.org>
+Subject: [PATCH 6.1 069/440] arm64: dts: renesas: r9a07g043u: Add missing hypervisor virtual timer IRQ
+Date: Tue, 30 Jul 2024 17:45:02 +0200
+Message-ID: <20240730151618.460023600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -52,43 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 81008068ee4f2c4c26e97a0404405bb4b450241b ]
+[ Upstream commit 4036bae6dfd782d414040e7d714abc525b2e8792 ]
 
-By default the DSP domains are secure, add the missing
-qcom,non-secure-domain property to mark them as non-secure.
+Add the missing fifth interrupt to the device node that represents the
+ARM architected timer.  While at it, add an interrupt-names property for
+clarity,
 
-Fixes: efc33c969f23 ("arm64: dts: qcom: sm6350: Add ADSP nodes")
-Fixes: 8eb5287e8a42 ("arm64: dts: qcom: sm6350: Add CDSP nodes")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20240705-sm6350-fastrpc-fix-v2-1-89a43166c9bb@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: cf40c9689e5109bf ("arm64: dts: renesas: Add initial DTSI for RZ/G2UL SoC")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Link: https://lore.kernel.org/15cc7a7522b1658327a2bd0c4990d0131bbcb4d7.1718890849.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/renesas/r9a07g043u.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 66998df053d52..ba078099b8054 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -895,6 +895,7 @@ fastrpc {
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
-@@ -1002,6 +1003,7 @@ fastrpc {
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi b/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi
+index beab2bfd253b8..2e7db48462e1f 100644
+--- a/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a07g043u.dtsi
+@@ -44,7 +44,10 @@ timer {
+ 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+-				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
++				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
++				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
++		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
++				  "hyp-virt";
+ 	};
+ };
  
 -- 
 2.43.0
