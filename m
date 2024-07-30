@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348C91A76A7;
-	Tue, 30 Jul 2024 17:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C74D1A76A4;
+	Tue, 30 Jul 2024 17:16:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359790; cv=none; b=rlgvjUbXEHvyAP1Iu0Yh7apDer9e+M6NLA18CpCtL++tTORP6SsUSQqAPSDHIBvq/NUa5fzoXz4SAynNr3su2Yb8rrYboOedcJl5wdPbHVe2zXtdI13mGjCZ9M+p10K+cXUu5NasoQIk7E/xu+W4DfNd7R4LxGZ7YmWPDdv3FEs=
+	t=1722359793; cv=none; b=l4jI/xiAAuiN11WFWv38gtxXeQtnv5+MkkJIW6fZ1+dKF0V3QPw3RZzPbgBfZHcl3ax1saavGnlhk0rCjLw4JhtEqZSL/oaXlqWBL++CnF7E0H6EqeLp/Auc0bQjHKR2kdHFSauJvatJK08EQJ/EvGIPBi0Wl7N57mVbJ3My/Ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359790; c=relaxed/simple;
-	bh=zXA+Ekarzfms4edwPT9+oDFp4STHBLLzug/k7/kxYiw=;
+	s=arc-20240116; t=1722359793; c=relaxed/simple;
+	bh=at5BfkMCpDB6671ZCkKObazn5St1iYE7tnvpOEvSra0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p23GnXu9pBZ/jvEXfbcfftCVUojDigN2YWFMSLa7ZaU3Cei2wRfPyVzOX+ZH0dCj+3CXy+FJU5J0VTxTO6tvsDDWLBxRT8CsptmNjaEHdPsIzesnDUZ8IbixGRwmNoDp4k5wNRh87f8u83GKKsnS46MWSXCsnbSU43VfzYWrtwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sj0+LVks; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VXfioIwEkIBWGhKhrLyfChYXvrPN2CjfgRR31aRelnmSXD4mqMzfqqggNqjkEjrBmlmruD60X6tbivIUWNDgx0cztM7ow0WpkS222Ab92SYxFjOoOLGFDpDJQJ+AFydV9ZfwuhPXijfaABWJoB3E/wkmmYbRTGqnwEW/BTBZtXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lt/9f6SH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sj0+LVks"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB440C32782;
-	Tue, 30 Jul 2024 17:16:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt/9f6SH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC11EC32782;
+	Tue, 30 Jul 2024 17:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359790;
-	bh=zXA+Ekarzfms4edwPT9+oDFp4STHBLLzug/k7/kxYiw=;
+	s=korg; t=1722359793;
+	bh=at5BfkMCpDB6671ZCkKObazn5St1iYE7tnvpOEvSra0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sj0+LVksHtsd3h4EUgz4SYtH1BknB2L43iAhPZGg4b6drtYR08L4kjPqUAtv7Lx1F
-	 j5v1R/VX0mAPEOOmUK6SUPMTtVPOtZLUwi6/8jeMNtqgGBlErPZQQ6eLbR30rCExB1
-	 7551KMVOaoMjG8yOZyu+UYYJHUuj7ZE8LhdHPTzA=
+	b=Lt/9f6SHCiDg69dOJSveVXqI1h0P5fM+i9ARyoWeS7KzYmEF7wpQn5h+ePETLcGP9
+	 J4KnQ8PgQ9fVMB5qBd1Q7SfHcHaxuRwEIVC/ycjPY4LWYBjBi5qn8qXIfGzaOqRL+/
+	 GlQM/ZDuOrPvjhS/pA3OnkndBn//q1D8JVmmgbNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 536/568] ipv4: Fix incorrect source address in Record Route option
-Date: Tue, 30 Jul 2024 17:50:43 +0200
-Message-ID: <20240730151701.103254766@linuxfoundation.org>
+	stable@kernel.org,
+	Jann Horn <jannh@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.10 533/809] landlock: Dont lose track of restrictions on cred_transfer
+Date: Tue, 30 Jul 2024 17:46:49 +0200
+Message-ID: <20240730151745.790173727@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +45,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit cc73bbab4b1fb8a4f53a24645871dafa5f81266a ]
+commit 39705a6c29f8a2b93cf5b99528a55366c50014d1 upstream.
 
-The Record Route IP option records the addresses of the routers that
-routed the packet. In the case of forwarded packets, the kernel performs
-a route lookup via fib_lookup() and fills in the preferred source
-address of the matched route.
+When a process' cred struct is replaced, this _almost_ always invokes
+the cred_prepare LSM hook; but in one special case (when
+KEYCTL_SESSION_TO_PARENT updates the parent's credentials), the
+cred_transfer LSM hook is used instead.  Landlock only implements the
+cred_prepare hook, not cred_transfer, so KEYCTL_SESSION_TO_PARENT causes
+all information on Landlock restrictions to be lost.
 
-The lookup is performed with the DS field of the forwarded packet, but
-using the RT_TOS() macro which only masks one of the two ECN bits. If
-the packet is ECT(0) or CE, the matched route might be different than
-the route via which the packet was forwarded as the input path masks
-both of the ECN bits, resulting in the wrong address being filled in the
-Record Route option.
+This basically means that a process with the ability to use the fork()
+and keyctl() syscalls can get rid of all Landlock restrictions on
+itself.
 
-Fix by masking both of the ECN bits.
+Fix it by adding a cred_transfer hook that does the same thing as the
+existing cred_prepare hook. (Implemented by having hook_cred_prepare()
+call hook_cred_transfer() so that the two functions are less likely to
+accidentally diverge in the future.)
 
-Fixes: 8e36360ae876 ("ipv4: Remove route key identity dependencies in ip_rt_get_source().")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20240718123407.434778-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@kernel.org
+Fixes: 385975dca53e ("landlock: Set up the security framework and manage credentials")
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20240724-landlock-houdini-fix-v1-1-df89a4560ca3@google.com
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/landlock/cred.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index 4d169573148f6..285482060082f 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1275,7 +1275,7 @@ void ip_rt_get_source(u8 *addr, struct sk_buff *skb, struct rtable *rt)
- 		struct flowi4 fl4 = {
- 			.daddr = iph->daddr,
- 			.saddr = iph->saddr,
--			.flowi4_tos = RT_TOS(iph->tos),
-+			.flowi4_tos = iph->tos & IPTOS_RT_MASK,
- 			.flowi4_oif = rt->dst.dev->ifindex,
- 			.flowi4_iif = skb->dev->ifindex,
- 			.flowi4_mark = skb->mark,
--- 
-2.43.0
-
+--- a/security/landlock/cred.c
++++ b/security/landlock/cred.c
+@@ -14,8 +14,8 @@
+ #include "ruleset.h"
+ #include "setup.h"
+ 
+-static int hook_cred_prepare(struct cred *const new,
+-			     const struct cred *const old, const gfp_t gfp)
++static void hook_cred_transfer(struct cred *const new,
++			       const struct cred *const old)
+ {
+ 	struct landlock_ruleset *const old_dom = landlock_cred(old)->domain;
+ 
+@@ -23,6 +23,12 @@ static int hook_cred_prepare(struct cred
+ 		landlock_get_ruleset(old_dom);
+ 		landlock_cred(new)->domain = old_dom;
+ 	}
++}
++
++static int hook_cred_prepare(struct cred *const new,
++			     const struct cred *const old, const gfp_t gfp)
++{
++	hook_cred_transfer(new, old);
+ 	return 0;
+ }
+ 
+@@ -36,6 +42,7 @@ static void hook_cred_free(struct cred *
+ 
+ static struct security_hook_list landlock_hooks[] __ro_after_init = {
+ 	LSM_HOOK_INIT(cred_prepare, hook_cred_prepare),
++	LSM_HOOK_INIT(cred_transfer, hook_cred_transfer),
+ 	LSM_HOOK_INIT(cred_free, hook_cred_free),
+ };
+ 
 
 
