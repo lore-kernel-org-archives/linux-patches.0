@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7640F1A76C1;
-	Tue, 30 Jul 2024 17:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FDAF1A76C1;
+	Tue, 30 Jul 2024 17:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360569; cv=none; b=I0+cs/HRpF+rykE1/IFfJjz5JRovLP4LsrO9QzLayk92T++8MqmW1QtZiDvqNwpjcW98hlrIUlmFiklSh6cafSKSbEqi+WEQg4an6YGbAcO+5Zd/Q992j8asSf5+rFpqEhWiv1jUvZvUZ14NgULRHqWAijUU5Pa1pdtS1UaFHyc=
+	t=1722360573; cv=none; b=qV4wRpEPtHowJ/zbeNP5p3/POUzNSNODKPe7oyTWkT9Pe+TQOw3PJAC8OlpcUyqttC02xmTHUQFoXb6zcREVQtjN83GlG0DqqxUAXkAuCi5Yt0cAzRjFMBW1YRY0RXt6djVtLyMRwKQdyO+cZVJh1kDJr7dUqgGwqOBYeeTDf60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360569; c=relaxed/simple;
-	bh=gwfzc6fz1+YQr6CcPG6GkPKEkq4xfx7r8YrzfcQ4tCM=;
+	s=arc-20240116; t=1722360573; c=relaxed/simple;
+	bh=MuWov+FlJUxLi3nVt9kkwwvgqVlWol8/RkJf+7/geXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ey4+SBXmAXE4JOCXAD8WeJtXptXlhSLkOATBvyfXVclK9LQUBj20xsQLkpIdHUWTRmY12NFYkg5pOM9zEtgyEhjxnHvXlEEHAenNOYUhwCkhJgc2kMRAphxr8HStXYJhIQ4uB9LAv6txMG+Sp5WFHybasUvfjTdw+G7BLx3F17Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sCDBHqZY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dLFSooR+EI0r43/Z+Mvlj+PFpkvanUrkGObFW3oYUnFjLHyZHR584BJuowAWrWZzqxqK//iEB15wrCWsh4bwBMhxTPx/WCo12UjUDwck2gMGsPRpV2UjhcfpKtiE+0ar3lm/IUXApJxkXUtjrcvrXDVFlPEMU8bpzPc+jVi6vWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qu6qjL2I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sCDBHqZY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D81C9C32782;
-	Tue, 30 Jul 2024 17:29:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qu6qjL2I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28055C32782;
+	Tue, 30 Jul 2024 17:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360569;
-	bh=gwfzc6fz1+YQr6CcPG6GkPKEkq4xfx7r8YrzfcQ4tCM=;
+	s=korg; t=1722360572;
+	bh=MuWov+FlJUxLi3nVt9kkwwvgqVlWol8/RkJf+7/geXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCDBHqZYLqIHUpiPwTDiQpV5SOuolgDaRvfh5XDoY/rkGkNkbqvcv7U91XBQb+SGq
-	 oemEnVSHZmpWo0PipVhG9s/ezMgjJNVBzPRJ3ucb6WoUEeedoa+JBwFbQo5BZB6Q9E
-	 JSn+m7n3MOym3AgzGp+a3VxqN1qZpkpzERfSdgDE=
+	b=Qu6qjL2I7rF/L5Ypndj1mD5oq3pz5vCekXu7j2qBNtmeiidkVeReTJtiNzl5HSxYo
+	 0EFtgQmUu4HMHJmnQJcZ8ZieAmkGfTubp2h6SNWFWAu1VNpyAZR6Q26KLv2gLzH0Hw
+	 PsupemAP3WtLOpN+M20QCexg8JOhI0021daFUnAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+241c815bda521982cb49@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 740/809] jfs: Fix array-index-out-of-bounds in diFree
-Date: Tue, 30 Jul 2024 17:50:16 +0200
-Message-ID: <20240730151754.176736710@linuxfoundation.org>
+Subject: [PATCH 6.10 741/809] dmaengine: ti: k3-udma: Fix BCHAN count with UHC and HC channels
+Date: Tue, 30 Jul 2024 17:50:17 +0200
+Message-ID: <20240730151754.217299608@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,44 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Vignesh Raghavendra <vigneshr@ti.com>
 
-[ Upstream commit f73f969b2eb39ad8056f6c7f3a295fa2f85e313a ]
+[ Upstream commit 372f8b3621294173f539b32976e41e6e12f5decf ]
 
-Reported-by: syzbot+241c815bda521982cb49@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Unlike other channel counts in CAPx registers, BCDMA BCHAN CNT doesn't
+include UHC and HC BC channels. So include them explicitly to arrive at
+total BC channel in the instance.
+
+Fixes: 8844898028d4 ("dmaengine: ti: k3-udma: Add support for BCDMA channel TPL handling")
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
+Link: https://lore.kernel.org/r/20240607-bcdma_chan_cnt-v2-1-bf1a55529d91@ti.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/ti/k3-udma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index 2ec35889ad24e..1407feccbc2d0 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -290,7 +290,7 @@ int diSync(struct inode *ipimap)
- int diRead(struct inode *ip)
- {
- 	struct jfs_sb_info *sbi = JFS_SBI(ip->i_sb);
--	int iagno, ino, extno, rc;
-+	int iagno, ino, extno, rc, agno;
- 	struct inode *ipimap;
- 	struct dinode *dp;
- 	struct iag *iagp;
-@@ -339,8 +339,11 @@ int diRead(struct inode *ip)
- 
- 	/* get the ag for the iag */
- 	agstart = le64_to_cpu(iagp->agstart);
-+	agno = BLKTOAG(agstart, JFS_SBI(ip->i_sb));
- 
- 	release_metapage(mp);
-+	if (agno >= MAXAG || agno < 0)
-+		return -EIO;
- 
- 	rel_inode = (ino & (INOSPERPAGE - 1));
- 	pageno = blkno >> sbi->l2nbperpage;
+diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
+index 6400d06588a24..df507d96660b9 100644
+--- a/drivers/dma/ti/k3-udma.c
++++ b/drivers/dma/ti/k3-udma.c
+@@ -4472,7 +4472,9 @@ static int udma_get_mmrs(struct platform_device *pdev, struct udma_dev *ud)
+ 		ud->rchan_cnt = UDMA_CAP2_RCHAN_CNT(cap2);
+ 		break;
+ 	case DMA_TYPE_BCDMA:
+-		ud->bchan_cnt = BCDMA_CAP2_BCHAN_CNT(cap2);
++		ud->bchan_cnt = BCDMA_CAP2_BCHAN_CNT(cap2) +
++				BCDMA_CAP3_HBCHAN_CNT(cap3) +
++				BCDMA_CAP3_UBCHAN_CNT(cap3);
+ 		ud->tchan_cnt = BCDMA_CAP2_TCHAN_CNT(cap2);
+ 		ud->rchan_cnt = BCDMA_CAP2_RCHAN_CNT(cap2);
+ 		ud->rflow_cnt = ud->rchan_cnt;
 -- 
 2.43.0
 
