@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809EC1A619B;
-	Tue, 30 Jul 2024 16:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FCA1898FF;
+	Tue, 30 Jul 2024 16:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357587; cv=none; b=Sp77fGUOG9gkJlCyTyaQyjUE+REockz41K9SO7iBMksbwKhCGrObVSCCq2f1tfsNBO5sQQOD8mn3VM9V5risFityHI/JlxKUETtfeYctJujcfQYwVKnwn14KX7LqVnOrolcxLhpQyUAmivxB0FMFoT5JTIB94nsUohZA4VIAzVo=
+	t=1722357590; cv=none; b=dLyzkxrkjbdUX6muL/r+a1UhkUp1AGj4sy/y/5oj74dlPMSE2ljWwgvplGAKLq7L72aj3HrSHsQZlzx7dRr1RhjLcYKYzz/FlRVz6YB7u/0hWVBJ5K14+qwi3ic7S59Hui3+mdN7wqQcZXIqC0HB0mA5EsnOtXTB6IsbZSUwAkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357587; c=relaxed/simple;
-	bh=iSC1P+jUzrJ9jM4/APPyIhKeV7OwXjZMl1kuJ72+5HA=;
+	s=arc-20240116; t=1722357590; c=relaxed/simple;
+	bh=Q2vQ6m0fCWgC23nz+HO3dM5gax88mM214JP0akfmSCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FvFWMVOR1FWq+TXLcnDkkUU/3zseRmDbKr9QOp2ck7DIdh3SrYLrQgLhRbGCGgV0e9Yxf5M2U2OlBjVVrXCMexV0bFsz0Ego6lxSnltQ1UkuKkH1H9Rstpe+uiUkosmb6/5kbiOTnozTHQUHDNEi7Lgq6qQrk0RbR+05k8EMcVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LzuNyckc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZzeOEWA1ZtJgNIPbGDNIlMR08dXk2cq5l7thFMmMrWs8v0xy3dOdxBt8zNmA3ASm2gOtg6Sd74eaZRcswyH8imSXpZCrZC44WMk5mbiZdAVeO6yDmGKU/yVNfU0GUo2AT0Av2Y0Fw2EtTjRT/G0aHMAJ5PfBsonf5RqSZsshue0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F8XmW2Q/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LzuNyckc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B57C32782;
-	Tue, 30 Jul 2024 16:39:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F8XmW2Q/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A1E8C32782;
+	Tue, 30 Jul 2024 16:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357587;
-	bh=iSC1P+jUzrJ9jM4/APPyIhKeV7OwXjZMl1kuJ72+5HA=;
+	s=korg; t=1722357590;
+	bh=Q2vQ6m0fCWgC23nz+HO3dM5gax88mM214JP0akfmSCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzuNyckcq2tM8wFJ/Yn6DM8mtXlwl6cgpiy/6+dh2AsZFm2HGAFIo4NsogD2vXTLo
-	 +I4QoHLvFFkCD8ODdWwrzM8Myi7fczaNiDraHz8MN0rpCYQpfY3V1R9Y3yRghEmy6C
-	 LvFN7rtByAlL0XZtYQ6zD4J+VF6jx+FZoOVfx+jE=
+	b=F8XmW2Q/s1U5KY5rMKLxs7UDpMQPIneAfwu4uIwIr1xie4j2bzx5mXVVePfdYKsuG
+	 Wgs5V8has76E1/t3LUdUzfMvz2bk4Aoga74ZH+7UbSZlRSE5gklAywqFupfMdwE2n4
+	 hgIdkUqPI068Z0tDPttSm9hrwjrIhZkvxf5qFslA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 272/568] RDMA/mlx4: Fix truncated output warning in mad.c
-Date: Tue, 30 Jul 2024 17:46:19 +0200
-Message-ID: <20240730151650.512847099@linuxfoundation.org>
+Subject: [PATCH 6.10 270/809] drm/mipi-dsi: Fix theoretical int overflow in mipi_dsi_dcs_write_seq()
+Date: Tue, 30 Jul 2024 17:42:26 +0200
+Message-ID: <20240730151735.259513384@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,84 +46,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 0d2e6992fc956e3308cd5376c18567def4cb3967 ]
+[ Upstream commit 0b03829fdece47beba9ecb7dbcbde4585ee3663e ]
 
-Increase size of the name array to avoid truncated output warning.
+The mipi_dsi_dcs_write_seq() macro makes a call to
+mipi_dsi_dcs_write_buffer() which returns a type ssize_t. The macro
+then stores it in an int and checks to see if it's negative. This
+could theoretically be a problem if "ssize_t" is larger than "int".
 
-drivers/infiniband/hw/mlx4/mad.c: In function ‘mlx4_ib_alloc_demux_ctx’:
-drivers/infiniband/hw/mlx4/mad.c:2197:47: error: ‘%d’ directive output
-may be truncated writing between 1 and 11 bytes into a region of size 4
-[-Werror=format-truncation=]
- 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
-      |                                               ^~
-drivers/infiniband/hw/mlx4/mad.c:2197:38: note: directive argument in
-the range [-2147483645, 2147483647]
- 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
-      |                                      ^~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2197:9: note: ‘snprintf’ output between
-10 and 20 bytes into a destination of size 12
- 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2205:48: error: ‘%d’ directive output
-may be truncated writing between 1 and 11 bytes into a region of size 3
-[-Werror=format-truncation=]
- 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
-      |                                                ^~
-drivers/infiniband/hw/mlx4/mad.c:2205:38: note: directive argument in
-the range [-2147483645, 2147483647]
- 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
-      |                                      ^~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2205:9: note: ‘snprintf’ output between
-11 and 21 bytes into a destination of size 12
- 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2213:48: error: ‘%d’ directive output
-may be truncated writing between 1 and 11 bytes into a region of size 3
-[-Werror=format-truncation=]
- 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
-      |                                                ^~
-drivers/infiniband/hw/mlx4/mad.c:2213:38: note: directive argument in
-the range [-2147483645, 2147483647]
- 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
-      |                                      ^~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/mad.c:2213:9: note: ‘snprintf’ output between
-11 and 21 bytes into a destination of size 12
- 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
-make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/hw/mlx4/mad.o] Error 1
+To see the issue, imagine that "ssize_t" is 32-bits and "int" is
+16-bits, you could see a problem if there was some code out there that
+looked like:
 
-Fixes: fc06573dfaf8 ("IB/mlx4: Initialize SR-IOV IB support for slaves in master context")
-Link: https://lore.kernel.org/r/f3798b3ce9a410257d7e1ec7c9e285f1352e256a.1718554569.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+  mipi_dsi_dcs_write_seq(dsi, cmd, <32767 bytes as arguments>);
+
+...since we'd get back that 32768 bytes were transferred and 32768
+stored in a 16-bit int would look negative.
+
+Though there are no callsites where we'd actually hit this (even if
+"int" was only 16-bit), it's cleaner to make the types match so let's
+fix it.
+
+Fixes: 2a9e9daf7523 ("drm/mipi-dsi: Introduce mipi_dsi_dcs_write_seq macro")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240514102056.v5.1.I30fa4c8348ea316c886ef8a522a52fed617f930d@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240514102056.v5.1.I30fa4c8348ea316c886ef8a522a52fed617f930d@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/mad.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/drm/drm_mipi_dsi.h | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/mad.c b/drivers/infiniband/hw/mlx4/mad.c
-index a37cfac5e23f9..dc9cf45d2d320 100644
---- a/drivers/infiniband/hw/mlx4/mad.c
-+++ b/drivers/infiniband/hw/mlx4/mad.c
-@@ -2158,7 +2158,7 @@ static int mlx4_ib_alloc_demux_ctx(struct mlx4_ib_dev *dev,
- 				       struct mlx4_ib_demux_ctx *ctx,
- 				       int port)
- {
--	char name[12];
-+	char name[21];
- 	int ret = 0;
- 	int i;
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 82b1cc434ea3f..70ce0b8cbc68e 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -333,18 +333,18 @@ int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
+  * @cmd: Command
+  * @seq: buffer containing data to be transmitted
+  */
+-#define mipi_dsi_dcs_write_seq(dsi, cmd, seq...)                           \
+-	do {                                                               \
+-		static const u8 d[] = { cmd, seq };                        \
+-		struct device *dev = &dsi->dev;                            \
+-		int ret;                                                   \
+-		ret = mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d));    \
+-		if (ret < 0) {                                             \
+-			dev_err_ratelimited(                               \
+-				dev, "sending command %#02x failed: %d\n", \
+-				cmd, ret);                                 \
+-			return ret;                                        \
+-		}                                                          \
++#define mipi_dsi_dcs_write_seq(dsi, cmd, seq...)                            \
++	do {                                                                \
++		static const u8 d[] = { cmd, seq };                         \
++		struct device *dev = &dsi->dev;                             \
++		ssize_t ret;                                                \
++		ret = mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d));     \
++		if (ret < 0) {                                              \
++			dev_err_ratelimited(                                \
++				dev, "sending command %#02x failed: %zd\n", \
++				cmd, ret);                                  \
++			return ret;                                         \
++		}                                                           \
+ 	} while (0)
  
+ /**
 -- 
 2.43.0
 
