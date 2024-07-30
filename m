@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF9CB1A76C5;
-	Tue, 30 Jul 2024 17:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC9518B47F;
+	Tue, 30 Jul 2024 17:07:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359233; cv=none; b=Wb59MC+CP8pkuZAfAq8woOKlLbpvhHt9dZFR8Asrd3gblmRZ2ETuM2pJ2qZoZkcFl6dY9zEEW4FzNjWJx0J/Ngt/Y6mfv1qXYRmrTWqbdyLZzexcRrD2WAiNsHyxuaRpiCaJWvJE8dqYFKFBnAJO31n+wOwbvPNdoFd3K4Di6cU=
+	t=1722359236; cv=none; b=P97cmTN6i8wjjk73MX451f00QFuUlXBB42LPsDU7wb1Pz+LQc/35Jxy0gBG9E8srT+2cm8qSMjv+/wspFqeJTECNKsoKxEYPQZwsem0BuZlhL+lPkq36PWFIkL/rAeYAJjhvDM0FFyrukRc2hovOFsilB1QglOYNP01oaYV2ZE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359233; c=relaxed/simple;
-	bh=QWMgcWHb1PHTjH5quZDgYq9nfsGbBg5hquUQvoZchoQ=;
+	s=arc-20240116; t=1722359236; c=relaxed/simple;
+	bh=muM7QsJRcLC6IWQ5EOuX3AMn1YBYWLlOVfp5HoHNCD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bmS4avKWZxF41LXCrp2rixlvu2KSSacrUHEyIlUf/DuY6UXdBI77fw0nNVGjRq4Uug0K0mZaLrESNPQKz7KBnvF0x/eZvVlS7d2uArv4PNbizOA21iRmvng5LkfKGaAsHJICn2mLwSgNcFcf0ZXVxFQo9Ybe4wD1A5pSI5l+JYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ToRGMWiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EuZkIrg1+C9L0mAwT6OFlSb46ZQ7ptXpRIXWU6r52/BDxlBoYhW5SeL/RPfIpDt/q9XrfbLR/VMopRQopV92gxXkB/ejOyQD0LOKQ/qT6SqsuchIgo6keUGYLb8ftc/zMHsX2qhDOD67GR69RtembrjPByOVN2b8qsDuEHOzfTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xL7uuDDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ToRGMWiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569F0C32782;
-	Tue, 30 Jul 2024 17:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xL7uuDDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8023CC32782;
+	Tue, 30 Jul 2024 17:07:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359232;
-	bh=QWMgcWHb1PHTjH5quZDgYq9nfsGbBg5hquUQvoZchoQ=;
+	s=korg; t=1722359236;
+	bh=muM7QsJRcLC6IWQ5EOuX3AMn1YBYWLlOVfp5HoHNCD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToRGMWiIeEzlktZAJSIxhzJcv7mj7NpspxVafjn2qQtNayNSa+NW1hETMU3PE5U9T
-	 8tYpi/aBvORDon2nvdrjE8JrCXz0fwnbBSnCa4k6ashA2PpdRC/Jbk05AqzmHKB7VQ
-	 DqXnKORs0pLIhdH+VJjBIHpI3INX+3RrkdpagLU4=
+	b=xL7uuDDXiDR12V4TLd2g9V1LDSSD9WDaa58VZFbcGD02wPIdlCisKgNNe7AWrVM4P
+	 gUkiH1eG6mc3TnkNSGzAZGqxR4GIJXNb3IW9hGV4lZlVly+j20bKolJ5qV9MmHhW7C
+	 WKLf2Ko9VFmLXIlWSQwbtQx6/l4kZoxb49WjYR+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.6 451/568] ice: Add a per-VF limit on number of FDIR filters
-Date: Tue, 30 Jul 2024 17:49:18 +0200
-Message-ID: <20240730151657.640438637@linuxfoundation.org>
+	Niklas Cassel <Niklas.Cassel@wdc.com>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 455/809] PCI: dwc: Fix index 0 incorrectly being interpreted as a free ATU slot
+Date: Tue, 30 Jul 2024 17:45:31 +0200
+Message-ID: <20240730151742.700424950@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,130 +49,103 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Zaki <ahmed.zaki@intel.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-commit 6ebbe97a488179f5dc85f2f1e0c89b486e99ee97 upstream.
+[ Upstream commit c2a57ee0f2f1ad8c970ff58b78a43e85abbdeb7f ]
 
-While the iavf driver adds a s/w limit (128) on the number of FDIR
-filters that the VF can request, a malicious VF driver can request more
-than that and exhaust the resources for other VFs.
+When PERST# assert and deassert happens on the PERST# supported platforms,
+both iATU0 and iATU6 will map inbound window to BAR0. DMA will access the
+area that was previously allocated (iATU0) for BAR0, instead of the new
+area (iATU6) for BAR0.
 
-Add a similar limit in ice.
+Right now, this isn't an issue because both iATU0 and iATU6 should
+translate inbound accesses to BAR0 to the same allocated memory area.
+However, having two separate inbound mappings for the same BAR is a
+disaster waiting to happen.
 
-CC: stable@vger.kernel.org
-Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Suggested-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The mappings between PCI BAR and iATU inbound window are maintained in the
+dw_pcie_ep::bar_to_atu[] array. While allocating a new inbound iATU map for
+a BAR, dw_pcie_ep_inbound_atu() API checks for the availability of the
+existing mapping in the array and if it is not found (i.e., value in the
+array indexed by the BAR is found to be 0), it allocates a new map value
+using find_first_zero_bit().
+
+The issue is the existing logic failed to consider the fact that the map
+value '0' is a valid value for BAR0, so find_first_zero_bit() will return
+'0' as the map value for BAR0 (note that it returns the first zero bit
+position).
+
+Due to this, when PERST# assert + deassert happens on the PERST# supported
+platforms, the inbound window allocation restarts from BAR0 and the
+existing logic to find the BAR mapping will return '6' for BAR0 instead of
+'0' due to the fact that it considers '0' as an invalid map value.
+
+Fix this issue by always incrementing the map value before assigning to
+bar_to_atu[] array and then decrementing it while fetching. This will make
+sure that the map value '0' always represents the invalid mapping."
+
+Fixes: 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update inbound map address")
+Closes: https://lore.kernel.org/linux-pci/ZXsRp+Lzg3x%2Fnhk3@x1-carbon/
+Link: https://lore.kernel.org/linux-pci/20240412160841.925927-1-Frank.Li@nxp.com
+Reported-by: Niklas Cassel <Niklas.Cassel@wdc.com>
+Tested-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c  |    2 +-
- drivers/net/ethernet/intel/ice/ice_fdir.h          |    3 +++
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c |   16 ++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h |    1 +
- 4 files changed, 21 insertions(+), 1 deletion(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-@@ -531,7 +531,7 @@ ice_parse_rx_flow_user_data(struct ethto
-  *
-  * Returns the number of available flow director filters to this VSI
-  */
--static int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
-+int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
- {
- 	u16 vsi_num = ice_get_hw_vsi_num(hw, vsi->idx);
- 	u16 num_guar;
---- a/drivers/net/ethernet/intel/ice/ice_fdir.h
-+++ b/drivers/net/ethernet/intel/ice/ice_fdir.h
-@@ -202,6 +202,8 @@ struct ice_fdir_base_pkt {
- 	const u8 *tun_pkt;
- };
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 47391d7d3a734..769e848246870 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -161,7 +161,7 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
+ 	if (!ep->bar_to_atu[bar])
+ 		free_win = find_first_zero_bit(ep->ib_window_map, pci->num_ib_windows);
+ 	else
+-		free_win = ep->bar_to_atu[bar];
++		free_win = ep->bar_to_atu[bar] - 1;
  
-+struct ice_vsi;
-+
- int ice_alloc_fd_res_cntr(struct ice_hw *hw, u16 *cntr_id);
- int ice_free_fd_res_cntr(struct ice_hw *hw, u16 cntr_id);
- int ice_alloc_fd_guar_item(struct ice_hw *hw, u16 *cntr_id, u16 num_fltr);
-@@ -213,6 +215,7 @@ int
- ice_fdir_get_gen_prgm_pkt(struct ice_hw *hw, struct ice_fdir_fltr *input,
- 			  u8 *pkt, bool frag, bool tun);
- int ice_get_fdir_cnt_all(struct ice_hw *hw);
-+int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi);
- bool ice_fdir_is_dup_fltr(struct ice_hw *hw, struct ice_fdir_fltr *input);
- bool ice_fdir_has_frag(enum ice_fltr_ptype flow);
- struct ice_fdir_fltr *
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -551,6 +551,8 @@ static void ice_vc_fdir_reset_cnt_all(st
- 		fdir->fdir_fltr_cnt[flow][0] = 0;
- 		fdir->fdir_fltr_cnt[flow][1] = 0;
+ 	if (free_win >= pci->num_ib_windows) {
+ 		dev_err(pci->dev, "No free inbound window\n");
+@@ -175,7 +175,11 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
+ 		return ret;
  	}
+ 
+-	ep->bar_to_atu[bar] = free_win;
++	/*
++	 * Always increment free_win before assignment, since value 0 is used to identify
++	 * unallocated mapping.
++	 */
++	ep->bar_to_atu[bar] = free_win + 1;
+ 	set_bit(free_win, ep->ib_window_map);
+ 
+ 	return 0;
+@@ -212,7 +216,10 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+ 	enum pci_barno bar = epf_bar->barno;
+-	u32 atu_index = ep->bar_to_atu[bar];
++	u32 atu_index = ep->bar_to_atu[bar] - 1;
 +
-+	fdir->fdir_fltr_cnt_total = 0;
- }
++	if (!ep->bar_to_atu[bar])
++		return;
  
- /**
-@@ -1567,6 +1569,7 @@ ice_vc_add_fdir_fltr_post(struct ice_vf
- 	resp->status = status;
- 	resp->flow_id = conf->flow_id;
- 	vf->fdir.fdir_fltr_cnt[conf->input.flow_type][is_tun]++;
-+	vf->fdir.fdir_fltr_cnt_total++;
+ 	__dw_pcie_ep_reset_bar(pci, func_no, bar, epf_bar->flags);
  
- 	ret = ice_vc_send_msg_to_vf(vf, ctx->v_opcode, v_ret,
- 				    (u8 *)resp, len);
-@@ -1631,6 +1634,7 @@ ice_vc_del_fdir_fltr_post(struct ice_vf
- 	resp->status = status;
- 	ice_vc_fdir_remove_entry(vf, conf, conf->flow_id);
- 	vf->fdir.fdir_fltr_cnt[conf->input.flow_type][is_tun]--;
-+	vf->fdir.fdir_fltr_cnt_total--;
- 
- 	ret = ice_vc_send_msg_to_vf(vf, ctx->v_opcode, v_ret,
- 				    (u8 *)resp, len);
-@@ -1797,6 +1801,7 @@ int ice_vc_add_fdir_fltr(struct ice_vf *
- 	struct virtchnl_fdir_add *stat = NULL;
- 	struct virtchnl_fdir_fltr_conf *conf;
- 	enum virtchnl_status_code v_ret;
-+	struct ice_vsi *vf_vsi;
- 	struct device *dev;
- 	struct ice_pf *pf;
- 	int is_tun = 0;
-@@ -1805,6 +1810,17 @@ int ice_vc_add_fdir_fltr(struct ice_vf *
- 
- 	pf = vf->pf;
- 	dev = ice_pf_to_dev(pf);
-+	vf_vsi = ice_get_vf_vsi(vf);
-+
-+#define ICE_VF_MAX_FDIR_FILTERS	128
-+	if (!ice_fdir_num_avail_fltr(&pf->hw, vf_vsi) ||
-+	    vf->fdir.fdir_fltr_cnt_total >= ICE_VF_MAX_FDIR_FILTERS) {
-+		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
-+		dev_err(dev, "Max number of FDIR filters for VF %d is reached\n",
-+			vf->vf_id);
-+		goto err_exit;
-+	}
-+
- 	ret = ice_vc_fdir_param_check(vf, fltr->vsi_id);
- 	if (ret) {
- 		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h
-@@ -29,6 +29,7 @@ struct ice_vf_fdir_ctx {
- struct ice_vf_fdir {
- 	u16 fdir_fltr_cnt[ICE_FLTR_PTYPE_MAX][ICE_FD_HW_SEG_MAX];
- 	int prof_entry_cnt[ICE_FLTR_PTYPE_MAX][ICE_FD_HW_SEG_MAX];
-+	u16 fdir_fltr_cnt_total;
- 	struct ice_fd_hw_prof **fdir_prof;
- 
- 	struct idr fdir_rule_idr;
+-- 
+2.43.0
+
 
 
