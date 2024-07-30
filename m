@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF8818455C;
-	Tue, 30 Jul 2024 16:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B0A1A6192;
+	Tue, 30 Jul 2024 16:36:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357389; cv=none; b=LJeMUMSbRYHjvURBxUniD52nRKJM7SYNWUgfNpvkVDJCPP6LWioOg8vstLhTIiSBB+qpJ4FUlI4gX55W8Y3T+qIDCjk+FKiOwBjqpxpUWEiRkCD+Mp9SujDqLMaaV8oUg3ispxzT+XkG+LhfzUtSj8Dx0tQSXS4KWTDRwjWXMtc=
+	t=1722357392; cv=none; b=cXrVotQUZj75QjiBWLIVws3d2fV+bQS8fDE1f2ijnT9TML502MiqNttkvNltAM71ReqK8BeLQBMN0j1V68WL7WAVFE6vKp3VUE7tkNOEl4aR7gauMFeWCbN28cv8lbnpOMynEGZmd/Pn6j3wPYWgkdZgc/lXiTA4+Qfiqa8FxqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357389; c=relaxed/simple;
-	bh=YpPApXoc+me1LdfbuZBAP/PGXZNi5K26Qu8veRI4dqo=;
+	s=arc-20240116; t=1722357392; c=relaxed/simple;
+	bh=aqClissULQSbK3ZKYoObLpFT9BcJQiyaMiI6T83wgbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cmGR1niUYhgzrqUco8h83xzBSNisfnJOBFHHZvXUTQFQ2PFmmtPK6vufSZd3/o4BYMDAnWrtvyQwAC9EiDR4fAIczq6pw7GaujNU37Om36wrXlpkOoVHFDIqY/yR5d6b6KLj7tbptrfTLguvz7jVKAeWOGz6457Kb2z/PagFJWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8bnz3ai; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iao6i637/TPkTfl/SOfVLCwxG0cYmxXiLQBLW5p3cACb6xvOVyZl9QisJBw3wE5VjSTOgnylD+7RpPTyJyuCxTMnUS5xn8LeOilrLteMQl4FaFvcUeYp9+KhHgVi2EYY4xg42bIV7P8m0LCGWeYeCcEzIsT6KN6Ni306845a4MU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tK2touUL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8bnz3ai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AA9C32782;
-	Tue, 30 Jul 2024 16:36:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tK2touUL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CC1EC4AF0F;
+	Tue, 30 Jul 2024 16:36:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357389;
-	bh=YpPApXoc+me1LdfbuZBAP/PGXZNi5K26Qu8veRI4dqo=;
+	s=korg; t=1722357392;
+	bh=aqClissULQSbK3ZKYoObLpFT9BcJQiyaMiI6T83wgbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8bnz3aigRmDUIL+bsljgrZYKhFXtp9KUlKnd0Zb88vMNuyIbezIUI6FHMnHWAgaf
-	 HdBPa2EFmHGm4wr59bX825bu6zskZxGQQclsRrA4vAHXo8UvaREn0wVTAEjuqcWRjn
-	 G6Qy2x9/mZJ+Y1rGGu0ye+ji3wemF4Syfvn2GJOU=
+	b=tK2touULvNcPl7yG6l7KnvfqoFYqrySXeERMkgpFooqL4D1faemwGTOyYZbp/y1PQ
+	 nW9ceOGQeQdGh5FkVEYdtp9biK+e+0bZuU0fLx/T+AROcUX/P40oWWxqzw2nEmNmIe
+	 C88WYkAdcvFoXUTuIJe67tQjjfVmuz86N598i7Io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <kafai@fb.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 249/809] bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT
-Date: Tue, 30 Jul 2024 17:42:05 +0200
-Message-ID: <20240730151734.432761680@linuxfoundation.org>
+	syzbot+3ae6be33a50b5aae4dab@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 288/440] hfs: fix to initialize fields of hfs_inode_info after hfs_alloc_inode()
+Date: Tue, 30 Jul 2024 17:48:41 +0200
+Message-ID: <20240730151627.081224660@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,113 +47,126 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit f7866c35873377313ff94398f17d425b28b71de1 ]
+commit 26a2ed107929a855155429b11e1293b83e6b2a8b upstream.
 
-When loading a EXT program without specifying `attr->attach_prog_fd`,
-the `prog->aux->dst_prog` will be null. At this time, calling
-resolve_prog_type() anywhere will result in a null pointer dereference.
+Syzbot reports uninitialized value access issue as below:
 
-Example stack trace:
+loop0: detected capacity change from 0 to 64
+=====================================================
+BUG: KMSAN: uninit-value in hfs_revalidate_dentry+0x307/0x3f0 fs/hfs/sysdep.c:30
+ hfs_revalidate_dentry+0x307/0x3f0 fs/hfs/sysdep.c:30
+ d_revalidate fs/namei.c:862 [inline]
+ lookup_fast+0x89e/0x8e0 fs/namei.c:1649
+ walk_component fs/namei.c:2001 [inline]
+ link_path_walk+0x817/0x1480 fs/namei.c:2332
+ path_lookupat+0xd9/0x6f0 fs/namei.c:2485
+ filename_lookup+0x22e/0x740 fs/namei.c:2515
+ user_path_at_empty+0x8b/0x390 fs/namei.c:2924
+ user_path_at include/linux/namei.h:57 [inline]
+ do_mount fs/namespace.c:3689 [inline]
+ __do_sys_mount fs/namespace.c:3898 [inline]
+ __se_sys_mount+0x66b/0x810 fs/namespace.c:3875
+ __x64_sys_mount+0xe4/0x140 fs/namespace.c:3875
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-[    8.107863] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-[    8.108262] Mem abort info:
-[    8.108384]   ESR = 0x0000000096000004
-[    8.108547]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    8.108722]   SET = 0, FnV = 0
-[    8.108827]   EA = 0, S1PTW = 0
-[    8.108939]   FSC = 0x04: level 0 translation fault
-[    8.109102] Data abort info:
-[    8.109203]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[    8.109399]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    8.109614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    8.109836] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000101354000
-[    8.110011] [0000000000000004] pgd=0000000000000000, p4d=0000000000000000
-[    8.112624] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[    8.112783] Modules linked in:
-[    8.113120] CPU: 0 PID: 99 Comm: may_access_dire Not tainted 6.10.0-rc3-next-20240613-dirty #1
-[    8.113230] Hardware name: linux,dummy-virt (DT)
-[    8.113390] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    8.113429] pc : may_access_direct_pkt_data+0x24/0xa0
-[    8.113746] lr : add_subprog_and_kfunc+0x634/0x8e8
-[    8.113798] sp : ffff80008283b9f0
-[    8.113813] x29: ffff80008283b9f0 x28: ffff800082795048 x27: 0000000000000001
-[    8.113881] x26: ffff0000c0bb2600 x25: 0000000000000000 x24: 0000000000000000
-[    8.113897] x23: ffff0000c1134000 x22: 000000000001864f x21: ffff0000c1138000
-[    8.113912] x20: 0000000000000001 x19: ffff0000c12b8000 x18: ffffffffffffffff
-[    8.113929] x17: 0000000000000000 x16: 0000000000000000 x15: 0720072007200720
-[    8.113944] x14: 0720072007200720 x13: 0720072007200720 x12: 0720072007200720
-[    8.113958] x11: 0720072007200720 x10: 0000000000f9fca4 x9 : ffff80008021f4e4
-[    8.113991] x8 : 0101010101010101 x7 : 746f72705f6d656d x6 : 000000001e0e0f5f
-[    8.114006] x5 : 000000000001864f x4 : ffff0000c12b8000 x3 : 000000000000001c
-[    8.114020] x2 : 0000000000000002 x1 : 0000000000000000 x0 : 0000000000000000
-[    8.114126] Call trace:
-[    8.114159]  may_access_direct_pkt_data+0x24/0xa0
-[    8.114202]  bpf_check+0x3bc/0x28c0
-[    8.114214]  bpf_prog_load+0x658/0xa58
-[    8.114227]  __sys_bpf+0xc50/0x2250
-[    8.114240]  __arm64_sys_bpf+0x28/0x40
-[    8.114254]  invoke_syscall.constprop.0+0x54/0xf0
-[    8.114273]  do_el0_svc+0x4c/0xd8
-[    8.114289]  el0_svc+0x3c/0x140
-[    8.114305]  el0t_64_sync_handler+0x134/0x150
-[    8.114331]  el0t_64_sync+0x168/0x170
-[    8.114477] Code: 7100707f 54000081 f9401c00 f9403800 (b9400403)
-[    8.118672] ---[ end trace 0000000000000000 ]---
+BUG: KMSAN: uninit-value in hfs_ext_read_extent fs/hfs/extent.c:196 [inline]
+BUG: KMSAN: uninit-value in hfs_get_block+0x92d/0x1620 fs/hfs/extent.c:366
+ hfs_ext_read_extent fs/hfs/extent.c:196 [inline]
+ hfs_get_block+0x92d/0x1620 fs/hfs/extent.c:366
+ block_read_full_folio+0x4ff/0x11b0 fs/buffer.c:2271
+ hfs_read_folio+0x55/0x60 fs/hfs/inode.c:39
+ filemap_read_folio+0x148/0x4f0 mm/filemap.c:2426
+ do_read_cache_folio+0x7c8/0xd90 mm/filemap.c:3553
+ do_read_cache_page mm/filemap.c:3595 [inline]
+ read_cache_page+0xfb/0x2f0 mm/filemap.c:3604
+ read_mapping_page include/linux/pagemap.h:755 [inline]
+ hfs_btree_open+0x928/0x1ae0 fs/hfs/btree.c:78
+ hfs_mdb_get+0x260c/0x3000 fs/hfs/mdb.c:204
+ hfs_fill_super+0x1fb1/0x2790 fs/hfs/super.c:406
+ mount_bdev+0x628/0x920 fs/super.c:1359
+ hfs_mount+0xcd/0xe0 fs/hfs/super.c:456
+ legacy_get_tree+0x167/0x2e0 fs/fs_context.c:610
+ vfs_get_tree+0xdc/0x5d0 fs/super.c:1489
+ do_new_mount+0x7a9/0x16f0 fs/namespace.c:3145
+ path_mount+0xf98/0x26a0 fs/namespace.c:3475
+ do_mount fs/namespace.c:3488 [inline]
+ __do_sys_mount fs/namespace.c:3697 [inline]
+ __se_sys_mount+0x919/0x9e0 fs/namespace.c:3674
+ __ia32_sys_mount+0x15b/0x1b0 fs/namespace.c:3674
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-One way to fix it is by forcing `attach_prog_fd` non-empty when
-bpf_prog_load(). But this will lead to `libbpf_probe_bpf_prog_type`
-API broken which use verifier log to probe prog type and will log
-nothing if we reject invalid EXT prog before bpf_check().
+Uninit was created at:
+ __alloc_pages+0x9a6/0xe00 mm/page_alloc.c:4590
+ __alloc_pages_node include/linux/gfp.h:238 [inline]
+ alloc_pages_node include/linux/gfp.h:261 [inline]
+ alloc_slab_page mm/slub.c:2190 [inline]
+ allocate_slab mm/slub.c:2354 [inline]
+ new_slab+0x2d7/0x1400 mm/slub.c:2407
+ ___slab_alloc+0x16b5/0x3970 mm/slub.c:3540
+ __slab_alloc mm/slub.c:3625 [inline]
+ __slab_alloc_node mm/slub.c:3678 [inline]
+ slab_alloc_node mm/slub.c:3850 [inline]
+ kmem_cache_alloc_lru+0x64d/0xb30 mm/slub.c:3879
+ alloc_inode_sb include/linux/fs.h:3018 [inline]
+ hfs_alloc_inode+0x5a/0xc0 fs/hfs/super.c:165
+ alloc_inode+0x83/0x440 fs/inode.c:260
+ new_inode_pseudo fs/inode.c:1005 [inline]
+ new_inode+0x38/0x4f0 fs/inode.c:1031
+ hfs_new_inode+0x61/0x1010 fs/hfs/inode.c:186
+ hfs_mkdir+0x54/0x250 fs/hfs/dir.c:228
+ vfs_mkdir+0x49a/0x700 fs/namei.c:4126
+ do_mkdirat+0x529/0x810 fs/namei.c:4149
+ __do_sys_mkdirat fs/namei.c:4164 [inline]
+ __se_sys_mkdirat fs/namei.c:4162 [inline]
+ __x64_sys_mkdirat+0xc8/0x120 fs/namei.c:4162
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-Another way is by adding null check in resolve_prog_type().
+It missed to initialize .tz_secondswest, .cached_start and .cached_blocks
+fields in struct hfs_inode_info after hfs_alloc_inode(), fix it.
 
-The issue was introduced by commit 4a9c7bbe2ed4 ("bpf: Resolve to
-prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT") which wanted
-to correct type resolution for BPF_PROG_TYPE_TRACING programs. Before
-that, the type resolution of BPF_PROG_TYPE_EXT prog actually follows
-the logic below:
-
-  prog->aux->dst_prog ? prog->aux->dst_prog->type : prog->type;
-
-It implies that when EXT program is not yet attached to `dst_prog`,
-the prog type should be EXT itself. This code worked fine in the past.
-So just keep using it.
-
-Fix this by returning `prog->type` for BPF_PROG_TYPE_EXT if `dst_prog`
-is not present in resolve_prog_type().
-
-Fixes: 4a9c7bbe2ed4 ("bpf: Resolve to prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/bpf/20240711145819.254178-2-wutengda@huaweicloud.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+3ae6be33a50b5aae4dab@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-fsdevel/0000000000005ad04005ee48897f@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20240616013841.2217-1-chao@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/bpf_verifier.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index e4070fb02b110..ff2a6cdb1fa3f 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -846,7 +846,7 @@ static inline u32 type_flag(u32 type)
- /* only use after check_attach_btf_id() */
- static inline enum bpf_prog_type resolve_prog_type(const struct bpf_prog *prog)
- {
--	return prog->type == BPF_PROG_TYPE_EXT ?
-+	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->dst_prog) ?
- 		prog->aux->dst_prog->type : prog->type;
- }
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -204,6 +204,7 @@ struct inode *hfs_new_inode(struct inode
+ 	HFS_I(inode)->flags = 0;
+ 	HFS_I(inode)->rsrc_inode = NULL;
+ 	HFS_I(inode)->fs_blocks = 0;
++	HFS_I(inode)->tz_secondswest = sys_tz.tz_minuteswest * 60;
+ 	if (S_ISDIR(mode)) {
+ 		inode->i_size = 2;
+ 		HFS_SB(sb)->folder_count++;
+@@ -279,6 +280,8 @@ void hfs_inode_read_fork(struct inode *i
+ 	for (count = 0, i = 0; i < 3; i++)
+ 		count += be16_to_cpu(ext[i].count);
+ 	HFS_I(inode)->first_blocks = count;
++	HFS_I(inode)->cached_start = 0;
++	HFS_I(inode)->cached_blocks = 0;
  
--- 
-2.43.0
-
+ 	inode->i_size = HFS_I(inode)->phys_size = log_size;
+ 	HFS_I(inode)->fs_blocks = (log_size + sb->s_blocksize - 1) >> sb->s_blocksize_bits;
 
 
