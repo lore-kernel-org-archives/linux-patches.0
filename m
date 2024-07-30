@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDB1A6193;
-	Tue, 30 Jul 2024 16:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B18E1A6193;
+	Tue, 30 Jul 2024 16:19:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356354; cv=none; b=ikhFF/2KB9Af6+IK6La5OJ5ggyn0aWLjAL/Clb5SaP61yKPPoXiy8bF3f06xxCilgFm0GKvgZq5FBR7FQu9AHeAVyz7oFdgwUm3EvJ+xY1iJs+L1SnILPN9PqAkmjyap6uZab67sEqOs4dRjHyV8Wc/B27fOcK0jy37EuWGm+30=
+	t=1722356358; cv=none; b=rMWahxDAg4kXmSxhoXf59d7H5gogQ23Mawzi887o44JtLQ+z+Nuna3y+lnsPxft4EYjRXgrvW9J565BfeMSt55umqBCrLLyavPkuoSVB9NtNkbk+660gnxeJRS6GvQFqKS9aCUhE5cyw1McBM0/4HzbUW711YYFXMu0gvD8JcNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356354; c=relaxed/simple;
-	bh=YvEZPkJZGaSFuZeeETxXbMSoi9IkpzjzXivusfKvn2o=;
+	s=arc-20240116; t=1722356358; c=relaxed/simple;
+	bh=caIMO3bTK2MoZVibbg8JO102clWWfH7Zr8BMYEjA69I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RppSKYzxiHgPqfQccMFgXFP3RIpaD8VPU+1EDaLi5U7tCm1RFT8CKcrxUOqDUowdF3eANFDhaZoB0LwBX5UQ3voVqqE0TSiHzl+SU2gPs1VhgT4wYnftusRdNafv+piXmcK2yxINsfzt4j8Mb8UjbFGvcHddtL5BRW26squNzA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+xNJiO4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IpYt0Gq7NTfcxSeKV+igDTYT6f6TTnh//zQTNcyKqzprbjzZvhtcL4+ZGbhO9jPd5AN+IPPkjekTrIorvwm1WZUl4u/xvBS9xQ9GIZmDn72ntWCfoWyssvTn+fb0Lls6SOsnlairSfb78R76/th0Olz3J9DdCaTlGDs45VFy3u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmRwLR+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+xNJiO4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F7BC32782;
-	Tue, 30 Jul 2024 16:19:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmRwLR+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD50BC32782;
+	Tue, 30 Jul 2024 16:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356354;
-	bh=YvEZPkJZGaSFuZeeETxXbMSoi9IkpzjzXivusfKvn2o=;
+	s=korg; t=1722356358;
+	bh=caIMO3bTK2MoZVibbg8JO102clWWfH7Zr8BMYEjA69I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+xNJiO4QJ+ymylLlz+uyh3KcTHsKIr7xESsXzJ9truquHgt0Uw3vsL0G8NF/RKGy
-	 /Vr0UEE8sMonXAwmvi5TtWibzo4H0UVo5j59C7FnSmQA5uXILKC3+47Y7IjmnSHiu3
-	 tIa1XGDOZWzaxbloetuqsbGj+i84fE4d/UmCroSU=
+	b=CmRwLR+on328mY0eRDAs9iZ3zNbcsRENHz3ksPUW1ZG/X1f95Yu4DZZ5OQAZixCTH
+	 upXtWv9bU/h7d0VKbZggXzUczKMc6nl33t/pljGuNbT14TTRj5qwkUz5BxHAQ0fmj2
+	 oVDEQoGLUe7u3uIKrHdAuB+zsCMc2i8efWKxwDFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ismael Luceno <iluceno@suse.de>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 184/440] clk: qcom: camcc-sc7280: Add parent dependency to all camera GDSCs
-Date: Tue, 30 Jul 2024 17:46:57 +0200
-Message-ID: <20240730151623.061371216@linuxfoundation.org>
+Subject: [PATCH 6.6 141/568] ipvs: Avoid unnecessary calls to skb_is_gso_sctp
+Date: Tue, 30 Jul 2024 17:44:08 +0200
+Message-ID: <20240730151645.388732367@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,75 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Ismael Luceno <iluceno@suse.de>
 
-[ Upstream commit 63aec3e4d987fd43237f557460345bca3b51e530 ]
+[ Upstream commit 53796b03295cf7ab1fc8600016fa6dfbf4a494a0 ]
 
-Camera titan top GDSC is a parent supply to all other camera GDSCs. Titan
-top GDSC is required to be enabled before enabling any other camera GDSCs
-and it should be disabled only after all other camera GDSCs are disabled.
-Ensure this behavior by marking titan top GDSC as parent of all other
-camera GDSCs.
+In the context of the SCTP SNAT/DNAT handler, these calls can only
+return true.
 
-Fixes: 1daec8cfebc2 ("clk: qcom: camcc: Add camera clock controller driver for SC7280")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240531095142.9688-4-quic_tdas@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e10d3ba4d434 ("ipvs: Fix checksumming on GSO of SCTP packets")
+Signed-off-by: Ismael Luceno <iluceno@suse.de>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/camcc-sc7280.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc7280.c b/drivers/clk/qcom/camcc-sc7280.c
-index ec163ea769f59..932096a972bc3 100644
---- a/drivers/clk/qcom/camcc-sc7280.c
-+++ b/drivers/clk/qcom/camcc-sc7280.c
-@@ -2260,6 +2260,7 @@ static struct gdsc cam_cc_bps_gdsc = {
- 		.name = "cam_cc_bps_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
- };
- 
-@@ -2269,6 +2270,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
- 		.name = "cam_cc_ife_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = RETAIN_FF_ENABLE,
- };
- 
-@@ -2278,6 +2280,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
- 		.name = "cam_cc_ife_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = RETAIN_FF_ENABLE,
- };
- 
-@@ -2287,6 +2290,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
- 		.name = "cam_cc_ife_2_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = RETAIN_FF_ENABLE,
- };
- 
-@@ -2296,6 +2300,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
- 		.name = "cam_cc_ipe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
- };
- 
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index 1e689c7141271..83e452916403d 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -126,7 +126,7 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	if (sctph->source != cp->vport || payload_csum ||
+ 	    skb->ip_summed == CHECKSUM_PARTIAL) {
+ 		sctph->source = cp->vport;
+-		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++		if (!skb_is_gso(skb))
+ 			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+@@ -175,7 +175,7 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	    (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 	     !(skb_dst(skb)->dev->features & NETIF_F_SCTP_CRC))) {
+ 		sctph->dest = cp->dport;
+-		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++		if (!skb_is_gso(skb))
+ 			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else if (skb->ip_summed != CHECKSUM_PARTIAL) {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
 -- 
 2.43.0
 
