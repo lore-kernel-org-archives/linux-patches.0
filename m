@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCCD1A6160;
-	Tue, 30 Jul 2024 16:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B54A1078F;
+	Tue, 30 Jul 2024 16:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356805; cv=none; b=lw3EykhJ9u7a1rTh8tNESLZdQb8zPo3CSLmCriXLzhSCOQX8k6mk5jwzwlrGzNtDY/gjffqTliQYm4VzNbiRQbJ0Wck1DYWsvET84rS47QlE2xzvlj3M0BX8JWB7rXx8hfbdEUHSCC310vjkEXPL4zFrAYsHS72/S4OVXQNKRlc=
+	t=1722356809; cv=none; b=I5cLdOvmHDlsnfN1F9mwaKM3avpSDYNwuvICqLHgy6Ss3fyaIU+C9BQqaxhVBhBdicJlMst55aqlqXl1pkuPhSGe42hqfus4SkG4OXKgY3i+E5vq2fPHTcQWhAtjs+fxnCyH/Ap8lkYXezNi2SIHa5AtYDlJK812/WpQ/0NG7yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356805; c=relaxed/simple;
-	bh=7BzC81eZabl4DPcK1JMV2Y0+WeL1ko5EAg0IjOrUKk8=;
+	s=arc-20240116; t=1722356809; c=relaxed/simple;
+	bh=hqAccKhctMg1Sp4HjDiEExcxBaLSG7DDYUhIMvMp5bw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HLNxghsyZYo8JNreMdjkx1hLGKCIuw2rrwbsacnGjNTR8h3itOHqFUNz1pNsixnO/DdTOI99KAvNxGe/dxy3LDNwdzXwzpwOWCAPRk6ZO0gQz/5DiUQO85r0n+Eiw9weILd2rwRqgJXHCvjO8SkxEReFYr4FHmB+jYSNXA6r/OQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BPc1A/g9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NO83VWCW1YGcToHbtmXvMo4xrbzxibtvm6Vky8ugyFKN5mRCn9EkdreOyYkrjxC5kleUtJN2efk/fhduB3iPW3ATtbgOlfEaBDb5XU2/40CB/17F8eWMSkrP8RrF21RPlqJLQP1XQzCtAY5pYgjBaU08ln+Pg9gG4OZI3bqMq6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8TRNv8T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BPc1A/g9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B22C32782;
-	Tue, 30 Jul 2024 16:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8TRNv8T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CE0C32782;
+	Tue, 30 Jul 2024 16:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356805;
-	bh=7BzC81eZabl4DPcK1JMV2Y0+WeL1ko5EAg0IjOrUKk8=;
+	s=korg; t=1722356809;
+	bh=hqAccKhctMg1Sp4HjDiEExcxBaLSG7DDYUhIMvMp5bw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BPc1A/g9845/oKxMTJ1Lv2f0lsSjUXh7u1pGmyerG5zUfh9e2aLoaGOYcIeBoJBkr
-	 3FmiyGmBJsLPei4OO7aK8bXOn9fMtFq/omiT0pSHiF3KoOj+5ll2DPLjCM8DWtSPPc
-	 CYGMI/KT7X2E8gcR+isn9rTWUqSYePZnVieh9BtI=
+	b=Y8TRNv8TYq5bKOxwS3C9m0ewb39PfEk+ime6fOqBPkgbWT4NquQ4uwETgYlIvOTm9
+	 6/1nYubkSvYFfxWm3hOCufM3VbyzLCIgpYN3y1yx5+UvNW7zGRPB+soqoP10TUkNjn
+	 pYRG0Wn6lHh16akyBW6zpGpumntskKh0fM0ItQYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mukul Joshi <mukul.joshi@amd.com>,
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 186/568] drm/panel: boe-tv101wum-nl6: Check for errors on the NOP in prepare()
-Date: Tue, 30 Jul 2024 17:44:53 +0200
-Message-ID: <20240730151647.148736001@linuxfoundation.org>
+Subject: [PATCH 6.6 177/568] drm/amdkfd: Fix CU Masking for GFX 9.4.3
+Date: Tue, 30 Jul 2024 17:44:44 +0200
+Message-ID: <20240730151646.798385788@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -54,47 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Mukul Joshi <mukul.joshi@amd.com>
 
-[ Upstream commit 6320b9199dd99622668649c234d4e8a99e44a9c8 ]
+[ Upstream commit 85cf43c554e438e2e12b0fe109688c9533e4d93f ]
 
-The mipi_dsi_dcs_nop() function returns an error but we weren't
-checking it in boe_panel_prepare(). Add a check. This is highly
-unlikely to matter in practice. If the NOP failed then likely later
-MIPI commands would fail too.
+We are incorrectly passing the first XCC's MQD when
+updating CU masks for other XCCs in the partition. Fix
+this by passing the MQD for the XCC currently being
+updated with CU mask to update_cu_mask function.
 
-Found by code inspection.
-
-Fixes: 812562b8d881 ("drm/panel: boe-tv101wum-nl6: Fine tune the panel power sequence")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240517143643.3.Ibffbaa5b4999ac0e55f43bf353144433b099d727@changeid
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.3.Ibffbaa5b4999ac0e55f43bf353144433b099d727@changeid
+Fixes: fc6efed2c728 ("drm/amdkfd: Update CU masking for GFX 9.4.3")
+Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-index 688efb2253a16..cfa5b54ed6fe7 100644
---- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-+++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-@@ -1847,7 +1847,11 @@ static int boe_panel_prepare(struct drm_panel *panel)
- 	usleep_range(10000, 11000);
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+index 42d881809dc70..1ac66c5337df4 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
+@@ -686,7 +686,7 @@ static void update_mqd_v9_4_3(struct mqd_manager *mm, void *mqd,
+ 		m = get_mqd(mqd + size * xcc);
+ 		update_mqd(mm, m, q, minfo);
  
- 	if (boe->desc->lp11_before_reset) {
--		mipi_dsi_dcs_nop(boe->dsi);
-+		ret = mipi_dsi_dcs_nop(boe->dsi);
-+		if (ret < 0) {
-+			dev_err(&boe->dsi->dev, "Failed to send NOP: %d\n", ret);
-+			goto poweroff;
-+		}
- 		usleep_range(1000, 2000);
- 	}
- 	gpiod_set_value(boe->enable_gpio, 1);
+-		update_cu_mask(mm, mqd, minfo, xcc);
++		update_cu_mask(mm, m, minfo, xcc);
+ 
+ 		if (q->format == KFD_QUEUE_FORMAT_AQL) {
+ 			switch (xcc) {
 -- 
 2.43.0
 
