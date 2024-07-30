@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A71F18C902;
-	Tue, 30 Jul 2024 17:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44FB7189B85;
+	Tue, 30 Jul 2024 17:09:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359349; cv=none; b=heSss12iX4VS5ooTlgOqNOtlFLSb8/8VkLuj3JkWgbXjsMS9w0m3UH5qbrO1sdU/U6KJtGjnysFKViA9YJ2SaPjboeyDZnWgNWAw4X+cMPkTiyyFsVBMetZemetw+6TJdHbD8FIBhuVGAtDv04fwjSL9pdfvWvtYftS6TCaN9Ew=
+	t=1722359352; cv=none; b=sGDorDI7r5buPmQ5nA3BLBIMbGfnh0x+KMiq5G0apaqiirqNAVhDGuo78tyaDjxo3KFyCdbw0UvVaBRKP80Yop0T3J+Ub5zHTTtz6HnDJ4AeueyLMM1WFU5Ym0SARwZYQ6SMm+Bm221lOOkF6LnoCb2VEeQCTEXu0T+fL+ZBMx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359349; c=relaxed/simple;
-	bh=0ylTgy9H6njHfFTtMoLZSMWdl1nh0T4AJtRN+5Ey3Z8=;
+	s=arc-20240116; t=1722359352; c=relaxed/simple;
+	bh=k6CRQEC5EWVdFPgUIKhJdowCMfTB8GbErKSMnvWtPOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DHccbPp0tpQt01Hl7ofym897WVg06f2cqPHdbj0Ek4toa9jKeQgEMQ9rxFa3LglqXjWnwV8+TEmM2bPZsGNNvWrIYno5QKeS1EZWswEFQlXJUSdrjJaYIjAEfUlqXVHoHwS7YN2+Syx1q+XQDxey4b0KV34CBuvEIX1M/kB5DSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wahbWiJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ipqfue7+8gXCHHO2KXxzVPbDz1ELfOOnJPaEcZ+nI8BSaXThOiwVAuSE3psLsjYtqgoKwvcf18aa12CzQHhTktvo24dQrKD3POeGOkV81qpruHMFyqkGWNATl3ztClG/yg0snbo2JeluQICnFlesW3RNBOEMXH2p+mbWw9GLo60=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MiPtYRDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wahbWiJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D40C4AF0C;
-	Tue, 30 Jul 2024 17:09:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MiPtYRDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50FC9C32782;
+	Tue, 30 Jul 2024 17:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359348;
-	bh=0ylTgy9H6njHfFTtMoLZSMWdl1nh0T4AJtRN+5Ey3Z8=;
+	s=korg; t=1722359351;
+	bh=k6CRQEC5EWVdFPgUIKhJdowCMfTB8GbErKSMnvWtPOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wahbWiJK2ojKbFT2GT8bWlVM0hzbXhvrZixIDOpWEbx7S+YyPS9g3umR4ObEIDv9B
-	 V70h/Pe04NeldWK3qR9kARWhq5FLLGwpxgtDE4eROeCfqBS/jBVCI7PXEsx9SlFooX
-	 oWlGlA1UuK/YRHO21anK0ffIP48oHHjrLesSD8VA=
+	b=MiPtYRDg2gg92dB7cwmiopnkkmWPso71SIJwxRBmDbNpj5s88tKBtks2VRPNPOUX9
+	 CWkwMLQKobad0urld182HB7twqB2Xf9KJfIZiD7WkQKytg+neKZf858BdZZxTARzb5
+	 El80sT/iYXUJ01AjVLxCI7tO9eNfJagEMrzOUNks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ian Rogers <irogers@google.com>
-Subject: [PATCH 6.6 470/568] perf/x86/intel/uncore: Fix the bits of the CHA extended umask for SPR
-Date: Tue, 30 Jul 2024 17:49:37 +0200
-Message-ID: <20240730151658.395677895@linuxfoundation.org>
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Long Li <longli@microsoft.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 472/809] RDMA/mana_ib: set node_guid
+Date: Tue, 30 Jul 2024 17:45:48 +0200
+Message-ID: <20240730151743.379640955@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,74 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Konstantin Taranov <kotaranov@microsoft.com>
 
-commit a5a6ff3d639d088d4af7e2935e1ee0d8b4e817d4 upstream.
+[ Upstream commit 65357e2c164a08bf20849dd55f46aa71e00334fa ]
 
-The perf stat errors out with UNC_CHA_TOR_INSERTS.IA_HIT_CXL_ACC_LOCAL
-event.
+Use the mac address for the node_guid of the IB device.
 
- $perf stat -e uncore_cha_55/event=0x35,umask=0x10c0008101/ -a -- ls
-    event syntax error: '..0x35,umask=0x10c0008101/'
-                                      \___ Bad event or PMU
-
-The definition of the CHA umask is config:8-15,32-55, which is 32bit.
-However, the umask of the event is bigger than 32bit.
-This is an error in the original uncore spec.
-
-Add a new umask_ext5 for the new CHA umask range.
-
-Fixes: 949b11381f81 ("perf/x86/intel/uncore: Add Sapphire Rapids server CHA support")
-Closes: https://lore.kernel.org/linux-perf-users/alpine.LRH.2.20.2401300733310.11354@Diego/
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Ian Rogers <irogers@google.com>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20240708185524.1185505-1-kan.liang@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
+Link: https://lore.kernel.org/r/1717070117-1234-2-git-send-email-kotaranov@linux.microsoft.com
+Reviewed-by: Long Li <longli@microsoft.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 1df03a4b4414 ("RDMA/mana_ib: Set correct device into ib")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mana/device.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -461,6 +461,7 @@
- #define SPR_UBOX_DID				0x3250
+diff --git a/drivers/infiniband/hw/mana/device.c b/drivers/infiniband/hw/mana/device.c
+index 7e09ceb3da537..9a7da2ec9cdbb 100644
+--- a/drivers/infiniband/hw/mana/device.c
++++ b/drivers/infiniband/hw/mana/device.c
+@@ -5,6 +5,7 @@
  
- /* SPR CHA */
-+#define SPR_CHA_EVENT_MASK_EXT			0xffffffff
- #define SPR_CHA_PMON_CTL_TID_EN			(1 << 16)
- #define SPR_CHA_PMON_EVENT_MASK			(SNBEP_PMON_RAW_EVENT_MASK | \
- 						 SPR_CHA_PMON_CTL_TID_EN)
-@@ -477,6 +478,7 @@ DEFINE_UNCORE_FORMAT_ATTR(umask_ext, uma
- DEFINE_UNCORE_FORMAT_ATTR(umask_ext2, umask, "config:8-15,32-57");
- DEFINE_UNCORE_FORMAT_ATTR(umask_ext3, umask, "config:8-15,32-39");
- DEFINE_UNCORE_FORMAT_ATTR(umask_ext4, umask, "config:8-15,32-55");
-+DEFINE_UNCORE_FORMAT_ATTR(umask_ext5, umask, "config:8-15,32-63");
- DEFINE_UNCORE_FORMAT_ATTR(qor, qor, "config:16");
- DEFINE_UNCORE_FORMAT_ATTR(edge, edge, "config:18");
- DEFINE_UNCORE_FORMAT_ATTR(tid_en, tid_en, "config:19");
-@@ -5954,7 +5956,7 @@ static struct intel_uncore_ops spr_uncor
+ #include "mana_ib.h"
+ #include <net/mana/mana_auxiliary.h>
++#include <net/addrconf.h>
  
- static struct attribute *spr_uncore_cha_formats_attr[] = {
- 	&format_attr_event.attr,
--	&format_attr_umask_ext4.attr,
-+	&format_attr_umask_ext5.attr,
- 	&format_attr_tid_en2.attr,
- 	&format_attr_edge.attr,
- 	&format_attr_inv.attr,
-@@ -5990,7 +5992,7 @@ ATTRIBUTE_GROUPS(uncore_alias);
- static struct intel_uncore_type spr_uncore_chabox = {
- 	.name			= "cha",
- 	.event_mask		= SPR_CHA_PMON_EVENT_MASK,
--	.event_mask_ext		= SPR_RAW_EVENT_MASK_EXT,
-+	.event_mask_ext		= SPR_CHA_EVENT_MASK_EXT,
- 	.num_shared_regs	= 1,
- 	.constraints		= skx_uncore_chabox_constraints,
- 	.ops			= &spr_uncore_chabox_ops,
+ MODULE_DESCRIPTION("Microsoft Azure Network Adapter IB driver");
+ MODULE_LICENSE("GPL");
+@@ -92,6 +93,7 @@ static int mana_ib_probe(struct auxiliary_device *adev,
+ 		goto free_ib_device;
+ 	}
+ 	ether_addr_copy(mac_addr, upper_ndev->dev_addr);
++	addrconf_addr_eui48((u8 *)&dev->ib_dev.node_guid, upper_ndev->dev_addr);
+ 	ret = ib_device_set_netdev(&dev->ib_dev, upper_ndev, 1);
+ 	rcu_read_unlock();
+ 	if (ret) {
+-- 
+2.43.0
+
 
 
