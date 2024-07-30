@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6784F18A6B6;
-	Tue, 30 Jul 2024 17:10:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B7618C919;
+	Tue, 30 Jul 2024 17:10:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359415; cv=none; b=RkeLJXNyJ9cEH+E276+xjURQDjE08CrbW1+8GvH+dOHJEdp9HKgLaVVuOj6ImpvZhUaZPZxg0QrnsAUdW94ilozYEO6APMAJpzPL9Q0dPLxTaTJAM1GKF7m8bwMJx+cDdOT6B9j46V+QjaLenDFeT4iABNbemZ8avwTAGnJCtW4=
+	t=1722359418; cv=none; b=WWQGGzow53qDZ8iQ88z3NNyvMG0xm3TTUPeJxFUPf4MUUVnUE8AwA4MnjWpZO2cfi5HPVD/YdXrriWu5gcyRh3Pv7uOoTCinEXB6nIuHi4k0U+qCifVXjEHkEfgRJ+LskKCjWdNDUMvRYmcjypEustHh3Wwh+kGA7xPVo7hLqzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359415; c=relaxed/simple;
-	bh=NRTtn2M89b/jdx38CY8MiF+EMkm7sQminjojwtLkoYg=;
+	s=arc-20240116; t=1722359418; c=relaxed/simple;
+	bh=+Q63Ak6IIuHZE9nXGqFfrqTO8zRTelX7my5NjfB67e8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WhsS5l2IKiAVoRCMA1GfUNfWPoeDuw336cpMSZBHDIwqT0DYtggPuTLZadQkuRV/hvaTUjjtA6DfjqHRdhQksHma2o6NRACpYD0tqtNJhMYBHxCeEDsv88zebksznTGcfnZoGFyEXRupGe1hJRsmWeHPww82gb/iGYDuvTtR0as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hkPpwehu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BuyPMwilaW7zLOBZMIfV36nBHLgs0bQaNmM9Neoqj0t5zIr1NMY2n/koi4lx+g5EMdCCKpbNjGTZUJrIJHxLJe6UuTYGDTJmNUVlh7gbOmWX0ckTHFxTgIMRCn4d7CPeh8dpFk4KzUMz/Qizilj7KxpzvmbviXqpcbG7T16cq30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KGxaNYqB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hkPpwehu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FC0C32782;
-	Tue, 30 Jul 2024 17:10:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KGxaNYqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A899AC32782;
+	Tue, 30 Jul 2024 17:10:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359414;
-	bh=NRTtn2M89b/jdx38CY8MiF+EMkm7sQminjojwtLkoYg=;
+	s=korg; t=1722359418;
+	bh=+Q63Ak6IIuHZE9nXGqFfrqTO8zRTelX7my5NjfB67e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hkPpwehuuYcO3BCpDGyJqTI8I+aRVvth2/4uCsYpSDijbmgEuQLnTT86SMI+/GgW3
-	 YHseEE5bRXEqEScZYegECJG5e/ykByhsnf+GM0KCgcby4B0B0UXIbGwxymbJTKkJLX
-	 VOUknl135XemhrI7SLpT8pESc3ViCSdjR9Qy23E4=
+	b=KGxaNYqBlFtWD/LiE2pJzaUJrSwUl/Kr3J5mEza0xsa/Yp6k4hGt1TqjTIY4eOXxr
+	 MYXDhB+rLMAkhLRmSzD0j4pU+32SfyKF6f5Crje/pmEGPl7clzc8/k9ltpUfNGX5KD
+	 mHEWgOeBx2S65uQJ7FmhDBG+DaDguu9uS6udT1QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 479/568] drm/amd/amdgpu: Fix uninitialized variable warnings
-Date: Tue, 30 Jul 2024 17:49:46 +0200
-Message-ID: <20240730151658.748846764@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 481/809] ipv4: Fix incorrect TOS in fibmatch route get reply
+Date: Tue, 30 Jul 2024 17:45:57 +0200
+Message-ID: <20240730151743.735613743@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,36 +49,139 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit df65aabef3c0327c23b840ab5520150df4db6b5f upstream.
+[ Upstream commit f036e68212c11e5a7edbb59b5e25299341829485 ]
 
-Return 0 to avoid returning an uninitialized variable r.
+The TOS value that is returned to user space in the route get reply is
+the one with which the lookup was performed ('fl4->flowi4_tos'). This is
+fine when the matched route is configured with a TOS as it would not
+match if its TOS value did not match the one with which the lookup was
+performed.
 
-Cc: stable@vger.kernel.org
-Fixes: 230dd6bb6117 ("drm/amd/amdgpu: implement mode2 reset on smu_v13_0_10")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6472de66c0aa18d50a4b5ca85f8272e88a737676)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, matching on TOS is only performed when the route's TOS is not
+zero. It is therefore possible to have the kernel incorrectly return a
+non-zero TOS:
+
+ # ip link add name dummy1 up type dummy
+ # ip address add 192.0.2.1/24 dev dummy1
+ # ip route get fibmatch 192.0.2.2 tos 0xfc
+ 192.0.2.0/24 tos 0x1c dev dummy1 proto kernel scope link src 192.0.2.1
+
+Fix by instead returning the DSCP field from the FIB result structure
+which was populated during the route lookup.
+
+Output after the patch:
+
+ # ip link add name dummy1 up type dummy
+ # ip address add 192.0.2.1/24 dev dummy1
+ # ip route get fibmatch 192.0.2.2 tos 0xfc
+ 192.0.2.0/24 dev dummy1 proto kernel scope link src 192.0.2.1
+
+Extend the existing selftests to not only verify that the correct route
+is returned, but that it is also returned with correct "tos" value (or
+without it).
+
+Fixes: b61798130f1b ("net: ipv4: RTM_GETROUTE: return matched fib result when requested")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/smu_v13_0_10.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/route.c                         |  2 +-
+ tools/testing/selftests/net/fib_tests.sh | 24 ++++++++++++------------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/smu_v13_0_10.c
-+++ b/drivers/gpu/drm/amd/amdgpu/smu_v13_0_10.c
-@@ -92,7 +92,7 @@ static int smu_v13_0_10_mode2_suspend_ip
- 		adev->ip_blocks[i].status.hw = false;
- 	}
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 7790a83474618..3473e0105e299 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -3332,7 +3332,7 @@ static int inet_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 		fri.tb_id = table_id;
+ 		fri.dst = res.prefix;
+ 		fri.dst_len = res.prefixlen;
+-		fri.dscp = inet_dsfield_to_dscp(fl4.flowi4_tos);
++		fri.dscp = res.dscp;
+ 		fri.type = rt->rt_type;
+ 		fri.offload = 0;
+ 		fri.trap = 0;
+diff --git a/tools/testing/selftests/net/fib_tests.sh b/tools/testing/selftests/net/fib_tests.sh
+index 73895711cdf42..5f3c28fc86249 100755
+--- a/tools/testing/selftests/net/fib_tests.sh
++++ b/tools/testing/selftests/net/fib_tests.sh
+@@ -1737,53 +1737,53 @@ ipv4_rt_dsfield()
  
--	return r;
-+	return 0;
+ 	# DSCP 0x10 should match the specific route, no matter the ECN bits
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x10 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:Not-ECT"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x11 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:ECT(1)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x12 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:ECT(0)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x13 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:CE"
+ 
+ 	# Unknown DSCP should match the generic route, no matter the ECN bits
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x14 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:Not-ECT"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x15 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:ECT(1)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x16 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:ECT(0)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x17 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:CE"
+ 
+ 	# Null DSCP should match the generic route, no matter the ECN bits
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x00 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:Not-ECT"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x01 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:ECT(1)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x02 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:ECT(0)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x03 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:CE"
  }
  
- static int
+-- 
+2.43.0
+
 
 
