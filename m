@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED84189900;
-	Tue, 30 Jul 2024 16:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9A11898EF;
+	Tue, 30 Jul 2024 16:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355575; cv=none; b=DG9ctEI/tnN0hGWk+K2/qVoNlfB4XgUn9rxtFOTPiI+m53jZAmeYHVtgGV2Y9sBHIMcXUUFQfKt8i4IX6kxe/fgXiBrg6K6W+gyahO1kumyCmib65/yzdTGlGe9USRHIwmjnLE57a/tshTNF/A/Dg3kWHIe4aWAIl5nltY3Th/Y=
+	t=1722355578; cv=none; b=Xpt2BvB9GhgY9e+FDpdwQ7eY6Ly8BfSDCQpG2Qdf57ynFcd40yNX5aGdxi3QlsgNX8k6Lw35y/030zRu+WeaJSKNnvwTplTWE2yYOLpx/NOcL8Y32svTPEfZpWBVOP8Mq30Rm332wi+VkUVB91hFmXj8CzQuGywQ6TwJjOEWW4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355575; c=relaxed/simple;
-	bh=XILw5by/BYZHvCQZtUcb5VI3UNFAUAwVQs9uLu8AiGI=;
+	s=arc-20240116; t=1722355578; c=relaxed/simple;
+	bh=ibvzwIPBfmd2p00NfrZH2Wy5526sZxyz+txw0OejCqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GecKg5eIQUuT1Yltl/+7lZHajU2bRu0CHVVaRGX4HnumQZTdbRdDj7q6taXtEZOV+8FFUWj8kOHc/yzmNOImmiQjJJZbgm7/KKwZm+3rofWjNG8eYeqJLgmZYCwRUVjO9GHy1f9kI3t46wA9WKbEll9mOuTSIhMPMOsEPmnfRz8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5COjNaK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mJsCW408zMgxlq0jwCzRRkpEEkdkFnni7m4CNYHBmIxHf0S4sk5wUZi11xjVCicZj9q61Fj+MgqUHfK6uXT0tXx7sYoArP/Q7GjaBqjXKUTvu/a0/iwkpP5XT+nNEkJyqG8KS33S+X5owFSwFje4Y5sfJ2/7Nwwb4l6crWaKFW8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=He4X8gKk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5COjNaK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1535DC32782;
-	Tue, 30 Jul 2024 16:06:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="He4X8gKk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251C7C32782;
+	Tue, 30 Jul 2024 16:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355575;
-	bh=XILw5by/BYZHvCQZtUcb5VI3UNFAUAwVQs9uLu8AiGI=;
+	s=korg; t=1722355578;
+	bh=ibvzwIPBfmd2p00NfrZH2Wy5526sZxyz+txw0OejCqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5COjNaKcHyzz75NjKnyaZ/xGAIHM8fvoztDfoAYM2kOUa5ibi8622NRCSF6y1VAw
-	 0UZ4sGuaPivhPJ0TCiTtHZXr+ap177jWIyzSP7WTK/wHLcFsf7tFZ8YA0PMvKYsR0R
-	 BYTt7lezRPy3UX09s3SZWN4hhOuo954vD7vz5u1c=
+	b=He4X8gKkxM2g4K1VPIYR90xgZifQuYq9RN8XAUNAwh6OEY4fef3b77ZC/KBV2HUIH
+	 FOC0jfXPHOsSLbRzd3fJfnjYyoD4mxExZu0yra1QNWrmbcNN7X56jv9FgKjUDI2P5P
+	 3Yx68/UuEK7opSVSEIu4qAHoMbKZuXQAblFWE+Ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/440] netfilter: nf_tables: rise cap on SELinux secmark context
-Date: Tue, 30 Jul 2024 17:45:40 +0200
-Message-ID: <20240730151620.069116296@linuxfoundation.org>
+Subject: [PATCH 6.10 068/809] ARM: dts: stm32: Add arm,no-tick-in-suspend to STM32MP15xx STGEN timer
+Date: Tue, 30 Jul 2024 17:39:04 +0200
+Message-ID: <20240730151727.328357910@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,36 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit e29630247be24c3987e2b048f8e152771b32d38b ]
+[ Upstream commit 4306c047415a227bc72f0e7ba9bde1ccdac10435 ]
 
-secmark context is artificially limited 256 bytes, rise it to 4Kbytes.
+STM32MP15xx RM0436 Rev 6 section 46.3 System timer generator (STGEN) states
+"
+Arm recommends that the system counter is in an always-on power domain.
+This is not supported in the current implementation, therefore STGEN should
+be saved and restored before Standby mode entry, and restored at Standby
+exit by secure software.
+...
+"
+Instead of piling up workarounds in the firmware which is difficult to
+update, add "arm,no-tick-in-suspend" DT property into the timer node to
+indicate the timer is stopped in suspend, and let the kernel fix the
+timer up.
 
-Fixes: fb961945457f ("netfilter: nf_tables: add SECMARK support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 8471a20253eb ("ARM: dts: stm32: add stm32mp157c initial support")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/netfilter/nf_tables.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/st/stm32mp151.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/uapi/linux/netfilter/nf_tables.h b/include/uapi/linux/netfilter/nf_tables.h
-index 707af820f1a97..672b2e1b47f24 100644
---- a/include/uapi/linux/netfilter/nf_tables.h
-+++ b/include/uapi/linux/netfilter/nf_tables.h
-@@ -1324,7 +1324,7 @@ enum nft_secmark_attributes {
- #define NFTA_SECMARK_MAX	(__NFTA_SECMARK_MAX - 1)
+diff --git a/arch/arm/boot/dts/st/stm32mp151.dtsi b/arch/arm/boot/dts/st/stm32mp151.dtsi
+index 90c5c72c87ab7..4f878ec102c1f 100644
+--- a/arch/arm/boot/dts/st/stm32mp151.dtsi
++++ b/arch/arm/boot/dts/st/stm32mp151.dtsi
+@@ -50,6 +50,7 @@ timer {
+ 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>;
+ 		interrupt-parent = <&intc>;
++		arm,no-tick-in-suspend;
+ 	};
  
- /* Max security context length */
--#define NFT_SECMARK_CTX_MAXLEN		256
-+#define NFT_SECMARK_CTX_MAXLEN		4096
- 
- /**
-  * enum nft_reject_types - nf_tables reject expression reject types
+ 	clocks {
 -- 
 2.43.0
 
