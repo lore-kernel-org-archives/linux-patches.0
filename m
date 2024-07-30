@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A6F01A76B2;
-	Tue, 30 Jul 2024 17:28:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DD081A76B2;
+	Tue, 30 Jul 2024 17:28:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360480; cv=none; b=efBg6HKyK3Gh2iahuypbaUNWWTRnnTr17sg86yB5z4alK/g0euhjYTeYNZ4vNk7Z1yMqSDBD3rp6jqIRtNWK+Ck6PCAR9akVbBT3GAFHozRqFs8PHhBglY2ODWE8vEkOST0UWD6qb9ILqvNVUxREo067Mfxtzvl2qqxEAV+3Q3c=
+	t=1722360483; cv=none; b=TJLcRRR7mud2enf7JFFqiSTfVK1JAAPfI3JsdsBkNT2C5oOuwdzgB6SPGmIL7ogYNWSBF/LBQ9xD3RtpfA5S1vC6vdAT0STMCeiER1K5GvoG5VCZUtU7GBojkCzz+o9AcgmVIiLk5ePWy3VrH1ZRq3d5pDTaKbGYohkHqhXEGCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360480; c=relaxed/simple;
-	bh=n8Y5SqSYYabcl7KOyGqOfant0VivXjZop2lqsgSgVJY=;
+	s=arc-20240116; t=1722360483; c=relaxed/simple;
+	bh=FiBdSTIFeuATbaes2F4vzqlYZA/U6/CrXJSadvFkur4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Saky7V9HHcn7gexfotI/mW10A/9n+odc7CSDgz+2HW4ejT37345PDi+LvskC6RAbXf3psa6VtubKXaaj6CzRjxDoZVglHCkYOe7pluqskdC8+JY5tqEJ7u2uN9nR/F1hs8aINCKHKm2HWflk3HC293uvPerIP8gTO+zDfLPOFRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FlTmaPus; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiGFR7S6mc+WjmSmJlMX8KqdnlfXHmdb4dfKKLfMNk6pxTFPjt7HsQPDmytD/YfVYUosbUvplXSAIlBObLUHvZTUcsaiMnlYFGLzKN4OBK98NFspoPrO/9OgnJAtJsY0f/g/nPEL9dDR482pRG77KT9ZqB3M+rJO6fU+mYSpuuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm7MrqGA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FlTmaPus"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9105CC32782;
-	Tue, 30 Jul 2024 17:27:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm7MrqGA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30DBC4AF0C;
+	Tue, 30 Jul 2024 17:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360480;
-	bh=n8Y5SqSYYabcl7KOyGqOfant0VivXjZop2lqsgSgVJY=;
+	s=korg; t=1722360483;
+	bh=FiBdSTIFeuATbaes2F4vzqlYZA/U6/CrXJSadvFkur4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FlTmaPusdjbfP2SX86twqqk4DYKEWpSmluTrUtRnizu/od4wEzbLrdtwSuS3P+uc5
-	 tNrTQXfNixy+nk+t1WtYw0yvpGf91vmuIn+NpDwUsp96ClJBMH7QH5MhAEIwzRAYkN
-	 84yhiPrmaaWKWMSUPKb9PPT5P86NDdbQ9FP8HbSg=
+	b=Lm7MrqGA1yKnzlFwSPFeEnPsOaNeS4Y+dydxlQt+SI/xXcriZgiRf0+/A75xaH/gy
+	 JIQqUzeNZSfLwnjW5FsDp87LyKkJybgWMZL4wIRiCoESHs3x9LK9QzFTV+KwSShrZz
+	 OnSTlbu4tLe2hS3wyqU61AnbTDDTRpnyMNP/EqBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.10 711/809] ASoC: codecs: wcd939x: Fix typec mux and switch leak during device removal
-Date: Tue, 30 Jul 2024 17:49:47 +0200
-Message-ID: <20240730151753.014962280@linuxfoundation.org>
+Subject: [PATCH 6.10 712/809] ASoC: SOF: ipc4-topology: Use correct queue_id for requesting input pin format
+Date: Tue, 30 Jul 2024 17:49:48 +0200
+Message-ID: <20240730151753.054372425@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,174 +54,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-commit 9f3ae72c5dbca9ba558c752f1ef969ed6908be01 upstream.
+commit fe836c78ef1ff16da32912c22348091a0d67bda1 upstream.
 
-Driver does not unregister typec structures (typec_mux_dev and
-typec_switch_desc) during removal leading to leaks.  Fix this by moving
-typec registering parts to separate function and using devm interface to
-release them.  This also makes code a bit simpler:
- - Smaller probe() function with less error paths and no #ifdefs,
- - No need to store typec_mux_dev and typec_switch_desc in driver state
-   container structure.
+It is incorrect to request the input pin format of the destination widget
+using the output pin index of the source module as the indexes are not
+necessarily matching.
+moduleA.out_pin1 can be connected to moduleB.in_pin0 for example.
 
-Cc: stable@vger.kernel.org
-Fixes: 10f514bd172a ("ASoC: codecs: Add WCD939x Codec driver")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patch.msgid.link/20240701122616.414158-1-krzysztof.kozlowski@linaro.org
+Use the dst_queue_id to request the input format of the destination module.
+
+This bug remained unnoticed likely because in nocodec topologies we don't
+have process modules after a module copier, thus the pin/queue index is
+ignored.
+For the process module case, the code was likely have been tested in a
+controlled way where all the pin/queue/format properties were present to
+work.
+
+Update the debug prints to have better information.
+
+Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Cc: stable@vger.kernel.org # v6.8+
+Link: https://patch.msgid.link/20240624121519.91703-3-pierre-louis.bossart@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/wcd939x.c |  113 ++++++++++++++++++++++++++-------------------
- 1 file changed, 66 insertions(+), 47 deletions(-)
+ sound/soc/sof/ipc4-topology.c |   28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
---- a/sound/soc/codecs/wcd939x.c
-+++ b/sound/soc/codecs/wcd939x.c
-@@ -182,8 +182,6 @@ struct wcd939x_priv {
- 	/* typec handling */
- 	bool typec_analog_mux;
- #if IS_ENABLED(CONFIG_TYPEC)
--	struct typec_mux_dev *typec_mux;
--	struct typec_switch_dev *typec_sw;
- 	enum typec_orientation typec_orientation;
- 	unsigned long typec_mode;
- 	struct typec_switch *typec_switch;
-@@ -3528,6 +3526,68 @@ static const struct component_master_ops
- 	.unbind = wcd939x_unbind,
- };
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -2875,7 +2875,7 @@ static void sof_ipc4_put_queue_id(struct
+ static int sof_ipc4_set_copier_sink_format(struct snd_sof_dev *sdev,
+ 					   struct snd_sof_widget *src_widget,
+ 					   struct snd_sof_widget *sink_widget,
+-					   int sink_id)
++					   struct snd_sof_route *sroute)
+ {
+ 	struct sof_ipc4_copier_config_set_sink_format format;
+ 	const struct sof_ipc_ops *iops = sdev->ipc->ops;
+@@ -2884,9 +2884,6 @@ static int sof_ipc4_set_copier_sink_form
+ 	struct sof_ipc4_fw_module *fw_module;
+ 	struct sof_ipc4_msg msg = {{ 0 }};
  
-+static void __maybe_unused wcd939x_typec_mux_unregister(void *data)
-+{
-+	struct typec_mux_dev *typec_mux = data;
-+
-+	typec_mux_unregister(typec_mux);
-+}
-+
-+static void __maybe_unused wcd939x_typec_switch_unregister(void *data)
-+{
-+	struct typec_switch_dev *typec_sw = data;
-+
-+	typec_switch_unregister(typec_sw);
-+}
-+
-+static int wcd939x_add_typec(struct wcd939x_priv *wcd939x, struct device *dev)
-+{
-+#if IS_ENABLED(CONFIG_TYPEC)
-+	int ret;
-+	struct typec_mux_dev *typec_mux;
-+	struct typec_switch_dev *typec_sw;
-+	struct typec_mux_desc mux_desc = {
-+		.drvdata = wcd939x,
-+		.fwnode = dev_fwnode(dev),
-+		.set = wcd939x_typec_mux_set,
-+	};
-+	struct typec_switch_desc sw_desc = {
-+		.drvdata = wcd939x,
-+		.fwnode = dev_fwnode(dev),
-+		.set = wcd939x_typec_switch_set,
-+	};
-+
-+	/*
-+	 * Is USBSS is used to mux analog lines,
-+	 * register a typec mux/switch to get typec events
-+	 */
-+	if (!wcd939x->typec_analog_mux)
-+		return 0;
-+
-+	typec_mux = typec_mux_register(dev, &mux_desc);
-+	if (IS_ERR(typec_mux))
-+		return dev_err_probe(dev, PTR_ERR(typec_mux),
-+				     "failed to register typec mux\n");
-+
-+	ret = devm_add_action_or_reset(dev, wcd939x_typec_mux_unregister,
-+				       typec_mux);
-+	if (ret)
-+		return ret;
-+
-+	typec_sw = typec_switch_register(dev, &sw_desc);
-+	if (IS_ERR(typec_sw))
-+		return dev_err_probe(dev, PTR_ERR(typec_sw),
-+				     "failed to register typec switch\n");
-+
-+	ret = devm_add_action_or_reset(dev, wcd939x_typec_switch_unregister,
-+				       typec_sw);
-+	if (ret)
-+		return ret;
-+#endif
-+
-+	return 0;
-+}
-+
- static int wcd939x_add_slave_components(struct wcd939x_priv *wcd939x,
- 					struct device *dev,
- 					struct component_match **matchptr)
-@@ -3576,42 +3636,13 @@ static int wcd939x_probe(struct platform
+-	dev_dbg(sdev->dev, "%s set copier sink %d format\n",
+-		src_widget->widget->name, sink_id);
+-
+ 	if (WIDGET_IS_DAI(src_widget->id)) {
+ 		struct snd_sof_dai *dai = src_widget->private;
+ 
+@@ -2897,13 +2894,15 @@ static int sof_ipc4_set_copier_sink_form
+ 
+ 	fw_module = src_widget->module_info;
+ 
+-	format.sink_id = sink_id;
++	format.sink_id = sroute->src_queue_id;
+ 	memcpy(&format.source_fmt, &src_config->audio_fmt, sizeof(format.source_fmt));
+ 
+-	pin_fmt = sof_ipc4_get_input_pin_audio_fmt(sink_widget, sink_id);
++	pin_fmt = sof_ipc4_get_input_pin_audio_fmt(sink_widget, sroute->dst_queue_id);
+ 	if (!pin_fmt) {
+-		dev_err(sdev->dev, "Unable to get pin %d format for %s",
+-			sink_id, sink_widget->widget->name);
++		dev_err(sdev->dev,
++			"Failed to get input audio format of %s:%d for output of %s:%d\n",
++			sink_widget->widget->name, sroute->dst_queue_id,
++			src_widget->widget->name, sroute->src_queue_id);
  		return -EINVAL;
  	}
  
--#if IS_ENABLED(CONFIG_TYPEC)
--	/*
--	 * Is USBSS is used to mux analog lines,
--	 * register a typec mux/switch to get typec events
--	 */
--	if (wcd939x->typec_analog_mux) {
--		struct typec_mux_desc mux_desc = {
--			.drvdata = wcd939x,
--			.fwnode = dev_fwnode(dev),
--			.set = wcd939x_typec_mux_set,
--		};
--		struct typec_switch_desc sw_desc = {
--			.drvdata = wcd939x,
--			.fwnode = dev_fwnode(dev),
--			.set = wcd939x_typec_switch_set,
--		};
--
--		wcd939x->typec_mux = typec_mux_register(dev, &mux_desc);
--		if (IS_ERR(wcd939x->typec_mux)) {
--			ret = dev_err_probe(dev, PTR_ERR(wcd939x->typec_mux),
--					    "failed to register typec mux\n");
--			goto err_disable_regulators;
--		}
--
--		wcd939x->typec_sw = typec_switch_register(dev, &sw_desc);
--		if (IS_ERR(wcd939x->typec_sw)) {
--			ret = dev_err_probe(dev, PTR_ERR(wcd939x->typec_sw),
--					    "failed to register typec switch\n");
--			goto err_unregister_typec_mux;
--		}
--	}
--#endif /* CONFIG_TYPEC */
-+	ret = wcd939x_add_typec(wcd939x, dev);
-+	if (ret)
-+		goto err_disable_regulators;
+@@ -2961,7 +2960,8 @@ static int sof_ipc4_route_setup(struct s
+ 	sroute->src_queue_id = sof_ipc4_get_queue_id(src_widget, sink_widget,
+ 						     SOF_PIN_TYPE_OUTPUT);
+ 	if (sroute->src_queue_id < 0) {
+-		dev_err(sdev->dev, "failed to get queue ID for source widget: %s\n",
++		dev_err(sdev->dev,
++			"failed to get src_queue_id ID from source widget %s\n",
+ 			src_widget->widget->name);
+ 		return sroute->src_queue_id;
+ 	}
+@@ -2969,7 +2969,8 @@ static int sof_ipc4_route_setup(struct s
+ 	sroute->dst_queue_id = sof_ipc4_get_queue_id(src_widget, sink_widget,
+ 						     SOF_PIN_TYPE_INPUT);
+ 	if (sroute->dst_queue_id < 0) {
+-		dev_err(sdev->dev, "failed to get queue ID for sink widget: %s\n",
++		dev_err(sdev->dev,
++			"failed to get dst_queue_id ID from sink widget %s\n",
+ 			sink_widget->widget->name);
+ 		sof_ipc4_put_queue_id(src_widget, sroute->src_queue_id,
+ 				      SOF_PIN_TYPE_OUTPUT);
+@@ -2978,10 +2979,11 @@ static int sof_ipc4_route_setup(struct s
  
- 	ret = wcd939x_add_slave_components(wcd939x, dev, &match);
- 	if (ret)
--		goto err_unregister_typec_switch;
-+		goto err_disable_regulators;
- 
- 	wcd939x_reset(wcd939x);
- 
-@@ -3628,18 +3659,6 @@ static int wcd939x_probe(struct platform
- 
- 	return 0;
- 
--#if IS_ENABLED(CONFIG_TYPEC)
--err_unregister_typec_mux:
--	if (wcd939x->typec_analog_mux)
--		typec_mux_unregister(wcd939x->typec_mux);
--#endif /* CONFIG_TYPEC */
--
--err_unregister_typec_switch:
--#if IS_ENABLED(CONFIG_TYPEC)
--	if (wcd939x->typec_analog_mux)
--		typec_switch_unregister(wcd939x->typec_sw);
--#endif /* CONFIG_TYPEC */
--
- err_disable_regulators:
- 	regulator_bulk_disable(WCD939X_MAX_SUPPLY, wcd939x->supplies);
- 	regulator_bulk_free(WCD939X_MAX_SUPPLY, wcd939x->supplies);
+ 	/* Pin 0 format is already set during copier module init */
+ 	if (sroute->src_queue_id > 0 && WIDGET_IS_COPIER(src_widget->id)) {
+-		ret = sof_ipc4_set_copier_sink_format(sdev, src_widget, sink_widget,
+-						      sroute->src_queue_id);
++		ret = sof_ipc4_set_copier_sink_format(sdev, src_widget,
++						      sink_widget, sroute);
+ 		if (ret < 0) {
+-			dev_err(sdev->dev, "failed to set sink format for %s source queue ID %d\n",
++			dev_err(sdev->dev,
++				"failed to set sink format for source %s:%d\n",
+ 				src_widget->widget->name, sroute->src_queue_id);
+ 			goto out;
+ 		}
 
 
