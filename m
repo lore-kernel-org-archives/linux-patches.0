@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A4A1BD027;
-	Tue, 30 Jul 2024 16:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F4D1BD4E0;
+	Tue, 30 Jul 2024 16:00:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355212; cv=none; b=JWP1GdJ1XBrZ0RD1M5QUe/t14YpLUyei1uBILHzp31H39jz/6GqxRhfE2F7ABMGoTmDygHd6ErbeAcGqIiDiNkz+NEuTIAijHgRxvASYig3T8i6X1O6B1M98sJRFcZvuRR31GLsVPt3w4+I36RMKsEqb3tvJzGaeORSZj0bK3UY=
+	t=1722355216; cv=none; b=PCOyFG9bWKBkJnUlTBXfiP2gGTcygIcjKOURLOID2TnfYDZk6nyb5MdH5s1qK96Rt7W9wdStKQKXYectz4spbD25iXzs369A9iGat+fkgb7re6fpORUCuZlsVQ4ah/cgnCQClxINHAjemhtjdLefoEch0kPR0f+Z4YbEyiKZIow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355212; c=relaxed/simple;
-	bh=r/F6xzZj2RfatddyzrVQnFgJJhkd72+qMWFcPeuYp44=;
+	s=arc-20240116; t=1722355216; c=relaxed/simple;
+	bh=s9PApbZb8URqwGDkcWJvL6i0eZMlrVr9urPM6xOFi7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SeNKjDbn8tRnambruZiSt6yXEuQPMA1QnhBdKmzkTdnwPj4XV117x7DKw7md/lp6wmUqpCmkq/xDqnHK8D2Z8DmxI/D6bos6Ng7NmltD7XVYRHydZ3UdURmKtsM8m7dq59f1wNYWvPwGkm70qVG5DVEb0t0RL9cBPCVUP7sycJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYlUfNHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dGKnjBVbNJkATRIdaI5zdiYAn7scEU6sXUiJ80fwsRH386sttZwSCYIFe/SLZPmajzlS7LkkxAKRcq8O1vMcxKlywTixJDzGUHXNBN0wUsKtkgitFPhtspBPneojU2CvfY6i9L/js4mudQTvMJK0ljLXXTL/7NicMonLUuPHBj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NEFSJNTV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYlUfNHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEB96C32782;
-	Tue, 30 Jul 2024 16:00:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NEFSJNTV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 547F1C32782;
+	Tue, 30 Jul 2024 16:00:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355212;
-	bh=r/F6xzZj2RfatddyzrVQnFgJJhkd72+qMWFcPeuYp44=;
+	s=korg; t=1722355215;
+	bh=s9PApbZb8URqwGDkcWJvL6i0eZMlrVr9urPM6xOFi7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kYlUfNHtH5eEpJ7XCnXLmxrlwpAAxw1os0AyMJOhXrUt//6Z2kEZco/yhaquYmdbF
-	 oSvX66hef/W0SR/VY3O9t6u/rnEq4ECdHlSexoXkTVFTPnhUX1fPJUeb9qIG+pzo4s
-	 AhW0mHKn8V4kgY3/Rio7yz/MTIRxwt/OvglkmCeI=
+	b=NEFSJNTVii/RR879N/iV0yygjf1uU2mDBEi/x5CEQZJ1JuExgieNpcqlviYrXeuJc
+	 A0h8yOJDcnCBoLx+s2UWBYsG8UEYfx3ely5Kzu3+O2gXg4sL83jFfZxZDoxSFzs4c5
+	 LF24pS/wbo7USYCfey/vvAdXO+vu/QGGnNE9mfA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/568] block/mq-deadline: Fix the tag reservation code
-Date: Tue, 30 Jul 2024 17:42:07 +0200
-Message-ID: <20240730151640.621682706@linuxfoundation.org>
+Subject: [PATCH 6.1 068/440] arm64: dts: renesas: r8a779g0: Add missing hypervisor virtual timer IRQ
+Date: Tue, 30 Jul 2024 17:45:01 +0200
+Message-ID: <20240730151618.419095804@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,85 +46,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 39823b47bbd40502632ffba90ebb34fff7c8b5e8 ]
+[ Upstream commit 6775165fc95052a03acc91e25bc20fcf286910a7 ]
 
-The current tag reservation code is based on a misunderstanding of the
-meaning of data->shallow_depth. Fix the tag reservation code as follows:
-* By default, do not reserve any tags for synchronous requests because
-  for certain use cases reserving tags reduces performance. See also
-  Harshit Mogalapalli, [bug-report] Performance regression with fio
-  sequential-write on a multipath setup, 2024-03-07
-  (https://lore.kernel.org/linux-block/5ce2ae5d-61e2-4ede-ad55-551112602401@oracle.com/)
-* Reduce min_shallow_depth to one because min_shallow_depth must be less
-  than or equal any shallow_depth value.
-* Scale dd->async_depth from the range [1, nr_requests] to [1,
-  bits_per_sbitmap_word].
+Add the missing fifth interrupt to the device node that represents the
+ARM architected timer.  While at it, add an interrupt-names property for
+clarity,
 
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Fixes: 07757588e507 ("block/mq-deadline: Reserve 25% of scheduler tags for synchronous requests")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240509170149.7639-3-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 987da486d84a5643 ("arm64: dts: renesas: Add Renesas R8A779G0 SoC support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/5eeabbeaea1c5fd518a608f2e8013d260b00fd7e.1718890849.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/mq-deadline.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/renesas/r8a779g0.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/block/mq-deadline.c b/block/mq-deadline.c
-index 02a916ba62ee7..78a8aa204c156 100644
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -621,6 +621,20 @@ static struct request *dd_dispatch_request(struct blk_mq_hw_ctx *hctx)
- 	return rq;
- }
- 
-+/*
-+ * 'depth' is a number in the range 1..INT_MAX representing a number of
-+ * requests. Scale it with a factor (1 << bt->sb.shift) / q->nr_requests since
-+ * 1..(1 << bt->sb.shift) is the range expected by sbitmap_get_shallow().
-+ * Values larger than q->nr_requests have the same effect as q->nr_requests.
-+ */
-+static int dd_to_word_depth(struct blk_mq_hw_ctx *hctx, unsigned int qdepth)
-+{
-+	struct sbitmap_queue *bt = &hctx->sched_tags->bitmap_tags;
-+	const unsigned int nrr = hctx->queue->nr_requests;
-+
-+	return ((qdepth << bt->sb.shift) + nrr - 1) / nrr;
-+}
-+
- /*
-  * Called by __blk_mq_alloc_request(). The shallow_depth value set by this
-  * function is used by __blk_mq_get_tag().
-@@ -637,7 +651,7 @@ static void dd_limit_depth(blk_opf_t opf, struct blk_mq_alloc_data *data)
- 	 * Throttle asynchronous requests and writes such that these requests
- 	 * do not block the allocation of synchronous requests.
- 	 */
--	data->shallow_depth = dd->async_depth;
-+	data->shallow_depth = dd_to_word_depth(data->hctx, dd->async_depth);
- }
- 
- /* Called by blk_mq_update_nr_requests(). */
-@@ -647,9 +661,9 @@ static void dd_depth_updated(struct blk_mq_hw_ctx *hctx)
- 	struct deadline_data *dd = q->elevator->elevator_data;
- 	struct blk_mq_tags *tags = hctx->sched_tags;
- 
--	dd->async_depth = max(1UL, 3 * q->nr_requests / 4);
-+	dd->async_depth = q->nr_requests;
- 
--	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, dd->async_depth);
-+	sbitmap_queue_min_shallow_depth(&tags->bitmap_tags, 1);
- }
- 
- /* Called by blk_mq_init_hctx() and blk_mq_init_sched(). */
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+index 369370c0a61e3..3de3ea0073c3e 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+@@ -564,6 +564,9 @@ timer {
+ 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+-				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
++				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
++				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
++		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
++				  "hyp-virt";
+ 	};
+ };
 -- 
 2.43.0
 
