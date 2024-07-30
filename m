@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C131A76A1;
-	Tue, 30 Jul 2024 17:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483031A76A1;
+	Tue, 30 Jul 2024 17:25:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360322; cv=none; b=kDcFdv78/hqNnTkTz/ehvYsMu2Ol4zKuQz6hUfDrQaLlyfC3pfAN+mNG1rDBmgOwgJWQ4Pv5Aj936e7ne2YtFNnzNQ4zdhjM1hNjNOe+en+vjQEVpev0xzQ4V609WSVdFi9xrExUzertUly6d2MjMVScRqmpmt7T6lJkorLp0wc=
+	t=1722360325; cv=none; b=CfOU3UQCrTGOtk40pt/zd8lL9bGoccwQHOS3Arn12YJbROCq76sj4229WP6Km+ORYQ4YtSQUf8OD6PkB5XepicKymNOR/SOMGg9+iSJVl5/EMq58hwcCWhVq5z7Ucf6o//cdr3N+tqM+FrwnClcUa8jq72cf9STgruVqaJNpcbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360322; c=relaxed/simple;
-	bh=qX/vwAGsYcgG+px7o7SrEaowgLtihWQuD84ws6oKAhM=;
+	s=arc-20240116; t=1722360325; c=relaxed/simple;
+	bh=LunbCZIHiLyel9aX/hrjUe0wLeqwA87ukeEJz4pmckw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kk/LVNQqiA7Agku/4clLdaCN4nnF9Jyzg0fGGac/apLYyf9zSmo/11WxonTeuX6SHEn1WvVbvmLDyOWAsOVtSl3+j6dBVqkcqbgrwXltPUjHXCIu30Id/l9tem8p/KxN/CMji0+aJXW06IPoOkr57Ium6e6mwViNgSC1oEiQxqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ulfo8xNj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H7+a3bzViSJhnN4jKr99C/2f54WLK55CIV1Wd8CekxqCq/D001AJ9z87AuZn6zaKPW5QuiDroFF8Ysyp+DNTWxeCsiYpzEVLXiGCSUx6trVB1aIqm8elaV3YY0HrzNgXRTBnEBb3zQfGaU0RZH5cf4LQAHzuxjdIDFR8cijiJfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdE4oMth; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ulfo8xNj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF0DC4AF0C;
-	Tue, 30 Jul 2024 17:25:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdE4oMth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FC4C4AF12;
+	Tue, 30 Jul 2024 17:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360321;
-	bh=qX/vwAGsYcgG+px7o7SrEaowgLtihWQuD84ws6oKAhM=;
+	s=korg; t=1722360325;
+	bh=LunbCZIHiLyel9aX/hrjUe0wLeqwA87ukeEJz4pmckw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ulfo8xNjbQfEfkItLnNMTNdFSzxxJIRklIAkyfTQ0uozNLmzYwvoyxE8AKo5PBYC0
-	 fmvlmnO+Q3dqa9w3ooruC9VzDlHb361f1N35s8fkaaZfFN8tal5Sp3G1iOxc4ZPAVm
-	 ADA5WCEB+Ld7waUUlLlFuKFBWtBLoNoMZDnHgWlU=
+	b=YdE4oMthiMoFBNk2rNyhTIjtZ99FggwQHibkDpdKuX1p6VkGeG4d6IaN0m9Ft5496
+	 qm3RTo50ahgenKVsjAgH8N0U55+FeIkl4ArU5T+WXhOQZwiVZhcnz8o0hWFEsw5Stt
+	 2t93Vp7ApzVzpylui5qrIGQDZY94h4b5fHydtJbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.10 632/809] tools/memory-model: Fix bug in lock.cat
-Date: Tue, 30 Jul 2024 17:48:28 +0200
-Message-ID: <20240730151749.804868319@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.10 633/809] fbdev: vesafb: Detect VGA compatibility from screen infos VESA attributes
+Date: Tue, 30 Jul 2024 17:48:29 +0200
+Message-ID: <20240730151749.843861066@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,98 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 4c830eef806679dc243e191f962c488dd9d00708 upstream.
+commit c2bc958b2b03e361f14df99983bc64a39a7323a3 upstream.
 
-Andrea reported that the following innocuous litmus test:
+Test the vesa_attributes field in struct screen_info for compatibility
+with VGA hardware. Vesafb currently tests bit 1 in screen_info's
+capabilities field which indicates a 64-bit lfb address and is
+unrelated to VGA compatibility.
 
-C T
+Section 4.4 of the Vesa VBE 2.0 specifications defines that bit 5 in
+the mode's attributes field signals VGA compatibility. The mode is
+compatible with VGA hardware if the bit is clear. In that case, the
+driver can access VGA state of the VBE's underlying hardware. The
+vesafb driver uses this feature to program the color LUT in palette
+modes. Without, colors might be incorrect.
 
-{}
+The problem got introduced in commit 89ec4c238e7a ("[PATCH] vesafb: Fix
+incorrect logo colors in x86_64"). It incorrectly stores the mode
+attributes in the screen_info's capabilities field and updates vesafb
+accordingly. Later, commit 5e8ddcbe8692 ("Video mode probing support for
+the new x86 setup code") fixed the screen_info, but did not update vesafb.
+Color output still tends to work, because bit 1 in capabilities is
+usually 0.
 
-P0(spinlock_t *x)
-{
-	int r0;
+Besides fixing the bug in vesafb, this commit introduces a helper that
+reads the correct bit from screen_info.
 
-	spin_lock(x);
-	spin_unlock(x);
-	r0 = spin_is_locked(x);
-}
-
-gives rise to a nonsensical empty result with no executions:
-
-$ herd7 -conf linux-kernel.cfg T.litmus
-Test T Required
-States 0
-Ok
-Witnesses
-Positive: 0 Negative: 0
-Condition forall (true)
-Observation T Never 0 0
-Time T 0.00
-Hash=6fa204e139ddddf2cb6fa963bad117c0
-
-The problem is caused by a bug in the lock.cat part of the LKMM.  Its
-computation of the rf relation for RU (read-unlocked) events is
-faulty; it implicitly assumes that every RU event must read from
-either a UL (unlock) event in another thread or from the lock's
-initial state.  Neither is true in the litmus test above, so the
-computation yields no possible executions.
-
-The lock.cat code tries to make up for this deficiency by allowing RU
-events outside of critical sections to read from the last po-previous
-UL event.  But it does this incorrectly, trying to keep these rfi links
-separate from the rfe links that might also be needed, and passing only
-the latter to herd7's cross() macro.
-
-The problem is fixed by merging the two sets of possible rf links for
-RU events and using them all in the call to cross().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-by: Andrea Parri <parri.andrea@gmail.com>
-Closes: https://lore.kernel.org/linux-arch/ZlC0IkzpQdeGj+a3@andrea/
-Tested-by: Andrea Parri <parri.andrea@gmail.com>
-Acked-by: Andrea Parri <parri.andrea@gmail.com>
-Fixes: 15553dcbca06 ("tools/memory-model: Add model support for spin_is_locked()")
-CC: <stable@vger.kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 5e8ddcbe8692 ("Video mode probing support for the new x86 setup code")
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Cc: <stable@vger.kernel.org> # v2.6.23+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/memory-model/lock.cat |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/video/fbdev/vesafb.c |    2 +-
+ include/linux/screen_info.h  |   10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
---- a/tools/memory-model/lock.cat
-+++ b/tools/memory-model/lock.cat
-@@ -102,19 +102,19 @@ let rf-lf = rfe-lf | rfi-lf
-  * within one of the lock's critical sections returns False.
-  *)
+--- a/drivers/video/fbdev/vesafb.c
++++ b/drivers/video/fbdev/vesafb.c
+@@ -271,7 +271,7 @@ static int vesafb_probe(struct platform_
+ 	if (si->orig_video_isVGA != VIDEO_TYPE_VLFB)
+ 		return -ENODEV;
  
--(* rfi for RU events: an RU may read from the last po-previous UL *)
--let rfi-ru = ([UL] ; po-loc ; [RU]) \ ([UL] ; po-loc ; [LKW] ; po-loc)
--
--(* rfe for RU events: an RU may read from an external UL or the initial write *)
--let all-possible-rfe-ru =
--	let possible-rfe-ru r =
-+(*
-+ * rf for RU events: an RU may read from an external UL or the initial write,
-+ * or from the last po-previous UL
-+ *)
-+let all-possible-rf-ru =
-+	let possible-rf-ru r =
- 		let pair-to-relation p = p ++ 0
--		in map pair-to-relation (((UL | IW) * {r}) & loc & ext)
--	in map possible-rfe-ru RU
-+		in map pair-to-relation ((((UL | IW) * {r}) & loc & ext) |
-+			(((UL * {r}) & po-loc) \ ([UL] ; po-loc ; [LKW] ; po-loc)))
-+	in map possible-rf-ru RU
+-	vga_compat = (si->capabilities & 2) ? 0 : 1;
++	vga_compat = !__screen_info_vbe_mode_nonvga(si);
+ 	vesafb_fix.smem_start = si->lfb_base;
+ 	vesafb_defined.bits_per_pixel = si->lfb_depth;
+ 	if (15 == vesafb_defined.bits_per_pixel)
+--- a/include/linux/screen_info.h
++++ b/include/linux/screen_info.h
+@@ -49,6 +49,16 @@ static inline u64 __screen_info_lfb_size
+ 	return lfb_size;
+ }
  
- (* Generate all rf relations for RU events *)
--with rfe-ru from cross(all-possible-rfe-ru)
--let rf-ru = rfe-ru | rfi-ru
-+with rf-ru from cross(all-possible-rf-ru)
- 
- (* Final rf relation *)
- let rf = rf | rf-lf | rf-ru
++static inline bool __screen_info_vbe_mode_nonvga(const struct screen_info *si)
++{
++	/*
++	 * VESA modes typically run on VGA hardware. Set bit 5 signals that this
++	 * is not the case. Drivers can then not make use of VGA resources. See
++	 * Sec 4.4 of the VBE 2.0 spec.
++	 */
++	return si->vesa_attributes & BIT(5);
++}
++
+ static inline unsigned int __screen_info_video_type(unsigned int type)
+ {
+ 	switch (type) {
 
 
