@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2296C183CA1;
-	Tue, 30 Jul 2024 16:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3FB18B483;
+	Tue, 30 Jul 2024 16:16:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356201; cv=none; b=gdPMXXum2v2VQ3XonsjRMR3vapoXv2vc1MbsAyE7SjkoRCjQdF2kSgdnGRedZrMMwkkC3D9Qia3Vm5mVhH9aDX2rZUtlxHunYxUQq9RqtkAZ5qZ+MHuHsOjdD/YOBhVVBvqSHxPmMQc61PC1sZ5d5iV1sgNLh80n9Kl/d/EjYq4=
+	t=1722356204; cv=none; b=pwvAeH/HtK30zKml24b5tFreVcWG/al8FOdEi8ZFFtm2g+nZV2ZVQwLxfTG3a84Aqu2pYdVXYVoM4y9XHEKVMyo3V4ob1uV1yKjtCZCrubcNNEj2cfZUhE6kmUsbcUfvmTjeCZaYvVmGpnrcDPqyFsIgNwZRGf3ouFrvTChj6LA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356201; c=relaxed/simple;
-	bh=/RXngYNjbZb8oerpv/Pq1bmWag9SS2DptyNpLx7o3QA=;
+	s=arc-20240116; t=1722356204; c=relaxed/simple;
+	bh=uaxnvbV7kdVRZXKGniXv7A3bNJJ4/qRr3vGUX55MzA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iuHwXGGYVTU2Lu2S9OXVLzRRu0cTx7suSJhJ1l2WyKmHUyhk/xeZWbTz3TAPs42Xe4yqWdqD9ZA3ef39fVqnr29cmYC/ANDaxBUEE/tnJfCno3rFXCM0h4kHUX4dO15LAUtty4z4IYPwf0j23ItNUYm2r1p/FbFpILxe9vy5yQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ttAP1Jca; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TuoNArM6Unrf5EX53HRwAHLZOBFpaP+1tA0mVVWageEQ1LzANnAB5jUY1zaz0pcg93Ja4BzeYiGRMNpWA9d435IMdImab2D+8uW6vBJPnyFstpdohTxWOGZJaMNLVM6ALgNMIKRQMsd9rdSIgGq99fljrGceN9dM4/DS0gF7ClU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvVi2iHZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ttAP1Jca"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86B02C32782;
-	Tue, 30 Jul 2024 16:16:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvVi2iHZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E497CC32782;
+	Tue, 30 Jul 2024 16:16:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356201;
-	bh=/RXngYNjbZb8oerpv/Pq1bmWag9SS2DptyNpLx7o3QA=;
+	s=korg; t=1722356204;
+	bh=uaxnvbV7kdVRZXKGniXv7A3bNJJ4/qRr3vGUX55MzA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ttAP1JcaW7fTMfUDX1kY11nsKJCaJAEf4rnDG7HvD+GXeruzS3XNQ0rfrSvakxE51
-	 sSbhLIzHodNMJHm2Fyo8fvzrvT0GabYRDVj6W21qoV+dl5jdjLq+H0DxyqvnW/ulnV
-	 Ga+Fx2xOZ+wWaKhma4rhEnK/zPYZ/qXQNnly3+68=
+	b=AvVi2iHZtKkRD7+MAkq6HlowFFcBVNewxuYi4pN54XyHsOIvrXCaW4GsehgZ9COOB
+	 1yK9PtQAXrr1IyeTSoF1qpxGe5vJiZXFlz9r19trbPAswauaznGMRbSA5jyVRgMWs1
+	 wn3APrgI2tLvEM2EdXLkLYYLyE4kg4Cy2eoQr36Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 123/568] tcp: fix race in tcp_write_err()
-Date: Tue, 30 Jul 2024 17:43:50 +0200
-Message-ID: <20240730151644.682675476@linuxfoundation.org>
+Subject: [PATCH 6.1 168/440] mfd: rsmu: Split core code into separate module
+Date: Tue, 30 Jul 2024 17:46:41 +0200
+Message-ID: <20240730151622.431716063@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +47,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 853c3bd7b7917670224c9fe5245bd045cac411dd ]
+[ Upstream commit c879a8c39dd55e7fabdd8d13341f7bc5200db377 ]
 
-I noticed flakes in a packetdrill test, expecting an epoll_wait()
-to return EPOLLERR | EPOLLHUP on a failed connect() attempt,
-after multiple SYN retransmits. It sometimes return EPOLLERR only.
+Linking a file into two modules can have unintended side-effects
+and produces a W=1 warning:
 
-The issue is that tcp_write_err():
- 1) writes an error in sk->sk_err,
- 2) calls sk_error_report(),
- 3) then calls tcp_done().
+scripts/Makefile.build:236: drivers/mfd/Makefile: rsmu_core.o is added to multiple modules: rsmu-i2c rsmu-spi
 
-tcp_done() is writing SHUTDOWN_MASK into sk->sk_shutdown,
-among other things.
+Make this one a separate module instead.
 
-Problem is that the awaken user thread (from 2) sk_error_report())
-might call tcp_poll() before tcp_done() has written sk->sk_shutdown.
-
-tcp_poll() only sees a non zero sk->sk_err and returns EPOLLERR.
-
-This patch fixes the issue by making sure to call sk_error_report()
-after tcp_done().
-
-tcp_write_err() also lacks an smp_wmb().
-
-We can reuse tcp_done_with_error() to factor out the details,
-as Neal suggested.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240528125253.1966136-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a1867f85e06e ("mfd: Add Renesas Synchronization Management Unit (SMU) support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240529094856.1869543-1-arnd@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_timer.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/mfd/Makefile    | 6 ++----
+ drivers/mfd/rsmu_core.c | 2 ++
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
-index 87ebe958a642f..64bcf384e9ddc 100644
---- a/net/ipv4/tcp_timer.c
-+++ b/net/ipv4/tcp_timer.c
-@@ -69,11 +69,7 @@ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
+diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+index 7ed3ef4a698cf..e26c64bf7cb77 100644
+--- a/drivers/mfd/Makefile
++++ b/drivers/mfd/Makefile
+@@ -276,7 +276,5 @@ obj-$(CONFIG_MFD_INTEL_M10_BMC)   += intel-m10-bmc.o
+ obj-$(CONFIG_MFD_ATC260X)	+= atc260x-core.o
+ obj-$(CONFIG_MFD_ATC260X_I2C)	+= atc260x-i2c.o
  
- static void tcp_write_err(struct sock *sk)
- {
--	WRITE_ONCE(sk->sk_err, READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT);
--	sk_error_report(sk);
--
--	tcp_write_queue_purge(sk);
--	tcp_done(sk);
-+	tcp_done_with_error(sk, READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT);
- 	__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONTIMEOUT);
+-rsmu-i2c-objs			:= rsmu_core.o rsmu_i2c.o
+-rsmu-spi-objs			:= rsmu_core.o rsmu_spi.o
+-obj-$(CONFIG_MFD_RSMU_I2C)	+= rsmu-i2c.o
+-obj-$(CONFIG_MFD_RSMU_SPI)	+= rsmu-spi.o
++obj-$(CONFIG_MFD_RSMU_I2C)	+= rsmu_i2c.o rsmu_core.o
++obj-$(CONFIG_MFD_RSMU_SPI)	+= rsmu_spi.o rsmu_core.o
+diff --git a/drivers/mfd/rsmu_core.c b/drivers/mfd/rsmu_core.c
+index 29437fd0bd5bf..fd04a6e5dfa31 100644
+--- a/drivers/mfd/rsmu_core.c
++++ b/drivers/mfd/rsmu_core.c
+@@ -78,11 +78,13 @@ int rsmu_core_init(struct rsmu_ddata *rsmu)
+ 
+ 	return ret;
  }
++EXPORT_SYMBOL_GPL(rsmu_core_init);
  
+ void rsmu_core_exit(struct rsmu_ddata *rsmu)
+ {
+ 	mutex_destroy(&rsmu->lock);
+ }
++EXPORT_SYMBOL_GPL(rsmu_core_exit);
+ 
+ MODULE_DESCRIPTION("Renesas SMU core driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
