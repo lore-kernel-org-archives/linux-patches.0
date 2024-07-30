@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5283618454A;
-	Tue, 30 Jul 2024 17:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F89D18454A;
+	Tue, 30 Jul 2024 17:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359385; cv=none; b=OQoUIl5rlFpVgUkegXyrUTsPoHWZuedrWx2SwHmFZFVKvcFWsZH+amQz8Orb9fA9GW2CUOI7qA6G9S7uZMofOc2ezmjJZVeJHoSis8B/F7Jmd4oOWIwME6Gk1sy9BHJPp11YCqkDcgYBUvJ6CvAwBTwdxJ3XdCm12og7j88OJK8=
+	t=1722359388; cv=none; b=NvWNHdi6rFhOr4g9qm4juYGBAs93f89Dw8SzbrU9FeemDcUjRbnIL/lR733zInkalpG65Zv41GkQmhTpKc9ScTV/mxfGoTKWI3w/TI8njFy7KKuz9bNr/zOj40ArUREjrnklMWmTVgvengElUTM3W2/eNxPgEhcRXMAYKSMLkqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359385; c=relaxed/simple;
-	bh=FaS5drBGMDCFVrMu31Cbpxuy1sr0xUCLj3jj6XeSHYE=;
+	s=arc-20240116; t=1722359388; c=relaxed/simple;
+	bh=zN3vu+5quAQMCNDCtnmSKfLYV9LCRk+BpM9ikwxLkyU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fyr33R4eH3uL/FGurlcM1dvl9zCuRTtZTjkIZfUpFi7PFYMg+kdKn7qlgm/3TFjN9MtSbxFLO94ps02YI3yKshqFDyBez+HeR5Q2AVQQXKrlD0z+tvBH8t9mO2R8dmbC3oYakWOrH2hJ48D4E25EzsOFvbSDFzQzS6s9hMkEI7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qPXEzZCg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hFyKtBF24fgbRaEbpUiVz0TStL4nGKCR3ytvovya+LBVo9R/HqZQt3EOqMys6MwRHqfOCfK5tJetjjub7KFEpe8zj7GpS59ppqviJXXAQS08gvcPsaL0Y7hSyFST53R3Yo4jl4xhPjWXCGpIPchJEj8YlUiaFv5ymv6xZPdP9F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p9q8wcjS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qPXEzZCg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77D69C32782;
-	Tue, 30 Jul 2024 17:09:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p9q8wcjS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76FE0C32782;
+	Tue, 30 Jul 2024 17:09:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359384;
-	bh=FaS5drBGMDCFVrMu31Cbpxuy1sr0xUCLj3jj6XeSHYE=;
+	s=korg; t=1722359387;
+	bh=zN3vu+5quAQMCNDCtnmSKfLYV9LCRk+BpM9ikwxLkyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPXEzZCgaFESnEwI+RSqzfTnPQaeob8k375CngL+WSD5os3ymKjDgKULbT0rKexVs
-	 5ZNzDVB9ST22ARpsOREhV14dUb+6R/QcU8O9DX1EHc6znOSUwIUlPUyxY+uattWnA6
-	 eDJYn+xDxnSVWLGGNV3EXdT7tCaMKJqP02n3R8ZU=
+	b=p9q8wcjS4E32+vA8vJ3axjDvRBqYDoloeC+EyLKefwHIrktx1tCLU0/IdNuLB+3/9
+	 unt5XhqVQpw5iQwmwce9i+YKaWpdYW7EfvAZUlFi0tek5TfErP8/sCL501kfTzRl8V
+	 59P0ILq5w+GNzMX+yu3oJXdb5P0hbjkJpLwjaMZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Friedrich Vock <friedrich.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 475/568] drm/amdgpu/sdma5.2: Update wptr registers as well as doorbell
-Date: Tue, 30 Jul 2024 17:49:42 +0200
-Message-ID: <20240730151658.592504111@linuxfoundation.org>
+	Chen Hanxiao <chenhx.fnst@fujitsu.com>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 477/809] ipvs: properly dereference pe in ip_vs_add_service
+Date: Tue, 30 Jul 2024 17:45:53 +0200
+Message-ID: <20240730151743.575550136@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +49,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Chen Hanxiao <chenhx.fnst@fujitsu.com>
 
-commit a03ebf116303e5d13ba9a2b65726b106cb1e96f6 upstream.
+[ Upstream commit cbd070a4ae62f119058973f6d2c984e325bce6e7 ]
 
-We seem to have a case where SDMA will sometimes miss a doorbell
-if GFX is entering the powergating state when the doorbell comes in.
-To workaround this, we can update the wptr via MMIO, however,
-this is only safe because we disallow gfxoff in begin_ring() for
-SDMA 5.2 and then allow it again in end_ring().
+Use pe directly to resolve sparse warning:
 
-Enable this workaround while we are root causing the issue with
-the HW team.
+  net/netfilter/ipvs/ip_vs_ctl.c:1471:27: warning: dereference of noderef expression
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/3440
-Tested-by: Friedrich Vock <friedrich.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-(cherry picked from commit f2ac52634963fc38e4935e11077b6f7854e5d700)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 39b972231536 ("ipvs: handle connections started by real-servers")
+Signed-off-by: Chen Hanxiao <chenhx.fnst@fujitsu.com>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ net/netfilter/ipvs/ip_vs_ctl.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
-@@ -188,6 +188,14 @@ static void sdma_v5_2_ring_set_wptr(stru
- 		DRM_DEBUG("calling WDOORBELL64(0x%08x, 0x%016llx)\n",
- 				ring->doorbell_index, ring->wptr << 2);
- 		WDOORBELL64(ring->doorbell_index, ring->wptr << 2);
-+		/* SDMA seems to miss doorbells sometimes when powergating kicks in.
-+		 * Updating the wptr directly will wake it. This is only safe because
-+		 * we disallow gfxoff in begin_use() and then allow it again in end_use().
-+		 */
-+		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR),
-+		       lower_32_bits(ring->wptr << 2));
-+		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR_HI),
-+		       upper_32_bits(ring->wptr << 2));
- 	} else {
- 		DRM_DEBUG("Not using doorbell -- "
- 				"mmSDMA%i_GFX_RB_WPTR == 0x%08x "
-@@ -1666,6 +1674,10 @@ static void sdma_v5_2_ring_begin_use(str
- 	 * but it shouldn't hurt for other parts since
- 	 * this GFXOFF will be disallowed anyway when SDMA is
- 	 * active, this just makes it explicit.
-+	 * sdma_v5_2_ring_set_wptr() takes advantage of this
-+	 * to update the wptr because sometimes SDMA seems to miss
-+	 * doorbells when entering PG.  If you remove this, update
-+	 * sdma_v5_2_ring_set_wptr() as well!
- 	 */
- 	amdgpu_gfx_off_ctrl(adev, false);
- }
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index b6d0dcf3a5c34..f4384e147ee16 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -1459,18 +1459,18 @@ ip_vs_add_service(struct netns_ipvs *ipvs, struct ip_vs_service_user_kern *u,
+ 	if (ret < 0)
+ 		goto out_err;
+ 
+-	/* Bind the ct retriever */
+-	RCU_INIT_POINTER(svc->pe, pe);
+-	pe = NULL;
+-
+ 	/* Update the virtual service counters */
+ 	if (svc->port == FTPPORT)
+ 		atomic_inc(&ipvs->ftpsvc_counter);
+ 	else if (svc->port == 0)
+ 		atomic_inc(&ipvs->nullsvc_counter);
+-	if (svc->pe && svc->pe->conn_out)
++	if (pe && pe->conn_out)
+ 		atomic_inc(&ipvs->conn_out_counter);
+ 
++	/* Bind the ct retriever */
++	RCU_INIT_POINTER(svc->pe, pe);
++	pe = NULL;
++
+ 	/* Count only IPv4 services for old get/setsockopt interface */
+ 	if (svc->af == AF_INET)
+ 		ipvs->num_services++;
+-- 
+2.43.0
+
 
 
