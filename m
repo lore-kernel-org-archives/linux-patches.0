@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E961A76A1;
-	Tue, 30 Jul 2024 17:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C131A76A1;
+	Tue, 30 Jul 2024 17:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360318; cv=none; b=CTswYIF7NsxCbJkj0pI5p46j3zBsTp13ESsVFyCXV2rqqpROG9O4sboHun1ztnJyYhUegN6wUzQvG64N8pWaiDsRuS3lUu6QmtzvTVO6XNK/c6ss2UF9qTYx2u3VnSOHA6PWheUPURKvk+SgzC74Faf18/X2ZK5orI3apv5X8pk=
+	t=1722360322; cv=none; b=kDcFdv78/hqNnTkTz/ehvYsMu2Ol4zKuQz6hUfDrQaLlyfC3pfAN+mNG1rDBmgOwgJWQ4Pv5Aj936e7ne2YtFNnzNQ4zdhjM1hNjNOe+en+vjQEVpev0xzQ4V609WSVdFi9xrExUzertUly6d2MjMVScRqmpmt7T6lJkorLp0wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360318; c=relaxed/simple;
-	bh=1m6g02FkhlN8NZiGu+MVXIKUMXsz9EHRPKQN/ZrFVuk=;
+	s=arc-20240116; t=1722360322; c=relaxed/simple;
+	bh=qX/vwAGsYcgG+px7o7SrEaowgLtihWQuD84ws6oKAhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FqlPy/V1B1sPfoK8QDw4RR6BI43TuLUYmNJI56udaWk7+CH5V8rGoUEPv/dFfXyI9w2FOHmfuP4b5YSVZq4rAYMnFml1G+NW+Th8+iX3RWvGBlcKX5225z8ZGyCfyKYIl1ZLeQJbLwcUjaLu1LFyTDaTO8evG3mvvoH0KrIkOp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J5E+0he9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kk/LVNQqiA7Agku/4clLdaCN4nnF9Jyzg0fGGac/apLYyf9zSmo/11WxonTeuX6SHEn1WvVbvmLDyOWAsOVtSl3+j6dBVqkcqbgrwXltPUjHXCIu30Id/l9tem8p/KxN/CMji0+aJXW06IPoOkr57Ium6e6mwViNgSC1oEiQxqE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ulfo8xNj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J5E+0he9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B05DC4AF0E;
-	Tue, 30 Jul 2024 17:25:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ulfo8xNj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF0DC4AF0C;
+	Tue, 30 Jul 2024 17:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360318;
-	bh=1m6g02FkhlN8NZiGu+MVXIKUMXsz9EHRPKQN/ZrFVuk=;
+	s=korg; t=1722360321;
+	bh=qX/vwAGsYcgG+px7o7SrEaowgLtihWQuD84ws6oKAhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J5E+0he94tJA8fIZNT6YsmnNRlsmlcKQkKM3WnKoVtrZTj0438qpf99fJC1wPpY73
-	 1zLEXvF/mVdCN6Xkrk2Y23oQdjSQSniUnKP9C5bvWRSQ7DoI7W8rpMnv8sampc+A5C
-	 mG9zlxtQDYeqJXgD7S1vTRBaD05TeMabo5QB+EMg=
+	b=Ulfo8xNjbQfEfkItLnNMTNdFSzxxJIRklIAkyfTQ0uozNLmzYwvoyxE8AKo5PBYC0
+	 fmvlmnO+Q3dqa9w3ooruC9VzDlHb361f1N35s8fkaaZfFN8tal5Sp3G1iOxc4ZPAVm
+	 ADA5WCEB+Ld7waUUlLlFuKFBWtBLoNoMZDnHgWlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 631/809] ALSA: usb-audio: Add a quirk for Sonix HD USB Camera
-Date: Tue, 30 Jul 2024 17:48:27 +0200
-Message-ID: <20240730151749.765211266@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 6.10 632/809] tools/memory-model: Fix bug in lock.cat
+Date: Tue, 30 Jul 2024 17:48:28 +0200
+Message-ID: <20240730151749.804868319@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -50,43 +51,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 21451dfd853e7d8e6e3fbd7ef1fbdb2f2ead12f5 upstream.
+commit 4c830eef806679dc243e191f962c488dd9d00708 upstream.
 
-Sonix HD USB Camera does not support reading the sample rate which leads
-to many lines of "cannot get freq at ep 0x84".
-This patch adds the USB ID to quirks.c and avoids those error messages.
+Andrea reported that the following innocuous litmus test:
 
-(snip)
-[1.789698] usb 3-3: new high-speed USB device number 2 using xhci_hcd
-[1.984121] usb 3-3: New USB device found, idVendor=0c45, idProduct=6340, bcdDevice= 0.00
-[1.984124] usb 3-3: New USB device strings: Mfr=2, Product=1, SerialNumber=0
-[1.984127] usb 3-3: Product: USB 2.0 Camera
-[1.984128] usb 3-3: Manufacturer: Sonix Technology Co., Ltd.
-[5.440957] usb 3-3: 3:1: cannot get freq at ep 0x84
-[12.130679] usb 3-3: 3:1: cannot get freq at ep 0x84
-[12.175065] usb 3-3: 3:1: cannot get freq at ep 0x84
+C T
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240722084822.31620-1-wangdich9700@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+{}
+
+P0(spinlock_t *x)
+{
+	int r0;
+
+	spin_lock(x);
+	spin_unlock(x);
+	r0 = spin_is_locked(x);
+}
+
+gives rise to a nonsensical empty result with no executions:
+
+$ herd7 -conf linux-kernel.cfg T.litmus
+Test T Required
+States 0
+Ok
+Witnesses
+Positive: 0 Negative: 0
+Condition forall (true)
+Observation T Never 0 0
+Time T 0.00
+Hash=6fa204e139ddddf2cb6fa963bad117c0
+
+The problem is caused by a bug in the lock.cat part of the LKMM.  Its
+computation of the rf relation for RU (read-unlocked) events is
+faulty; it implicitly assumes that every RU event must read from
+either a UL (unlock) event in another thread or from the lock's
+initial state.  Neither is true in the litmus test above, so the
+computation yields no possible executions.
+
+The lock.cat code tries to make up for this deficiency by allowing RU
+events outside of critical sections to read from the last po-previous
+UL event.  But it does this incorrectly, trying to keep these rfi links
+separate from the rfe links that might also be needed, and passing only
+the latter to herd7's cross() macro.
+
+The problem is fixed by merging the two sets of possible rf links for
+RU events and using them all in the call to cross().
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-by: Andrea Parri <parri.andrea@gmail.com>
+Closes: https://lore.kernel.org/linux-arch/ZlC0IkzpQdeGj+a3@andrea/
+Tested-by: Andrea Parri <parri.andrea@gmail.com>
+Acked-by: Andrea Parri <parri.andrea@gmail.com>
+Fixes: 15553dcbca06 ("tools/memory-model: Add model support for spin_is_locked()")
+CC: <stable@vger.kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/quirks.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/memory-model/lock.cat |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2125,6 +2125,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
- 	DEVICE_FLG(0x0b0e, 0x0349, /* Jabra 550a */
- 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
-+	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
- 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
- 		   QUIRK_FLAG_FIXED_RATE),
- 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
+--- a/tools/memory-model/lock.cat
++++ b/tools/memory-model/lock.cat
+@@ -102,19 +102,19 @@ let rf-lf = rfe-lf | rfi-lf
+  * within one of the lock's critical sections returns False.
+  *)
+ 
+-(* rfi for RU events: an RU may read from the last po-previous UL *)
+-let rfi-ru = ([UL] ; po-loc ; [RU]) \ ([UL] ; po-loc ; [LKW] ; po-loc)
+-
+-(* rfe for RU events: an RU may read from an external UL or the initial write *)
+-let all-possible-rfe-ru =
+-	let possible-rfe-ru r =
++(*
++ * rf for RU events: an RU may read from an external UL or the initial write,
++ * or from the last po-previous UL
++ *)
++let all-possible-rf-ru =
++	let possible-rf-ru r =
+ 		let pair-to-relation p = p ++ 0
+-		in map pair-to-relation (((UL | IW) * {r}) & loc & ext)
+-	in map possible-rfe-ru RU
++		in map pair-to-relation ((((UL | IW) * {r}) & loc & ext) |
++			(((UL * {r}) & po-loc) \ ([UL] ; po-loc ; [LKW] ; po-loc)))
++	in map possible-rf-ru RU
+ 
+ (* Generate all rf relations for RU events *)
+-with rfe-ru from cross(all-possible-rfe-ru)
+-let rf-ru = rfe-ru | rfi-ru
++with rf-ru from cross(all-possible-rf-ru)
+ 
+ (* Final rf relation *)
+ let rf = rf | rf-lf | rf-ru
 
 
