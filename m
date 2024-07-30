@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EA21A618F;
-	Tue, 30 Jul 2024 16:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC571A6186;
+	Tue, 30 Jul 2024 16:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356746; cv=none; b=lohfV7pSe2x1ie/VgiByRq1KRUd4AaZ/DTo/PzkGITI+eyNBJmtwOiYQqqoMcf4+0rsJHsTLMoOZtDgGzPwLNhtLXbZB/t33JAy0HyZGQOcML6Ai432uqEAHiM5oGqsaROZ7brdyFnfVJ2EjTzxw+CDQHf0ETyiYSCBY4WwD2us=
+	t=1722356749; cv=none; b=k3jkSxjlt5dxU5S9CF3uHWVLPLH0Oqmbxl7gOK8gJv/rymU5onZmZHQlLPDwtDKqpV1/iBr1O0DemZ1DpTxoB5VTAnU+qONPDjik9Qk7oL95jJPKMnkpweF6gE2l1SjQzGzL4fj6Ujn/cIXmqyIjNOyJy/zs0cRMa6batb/Ay3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356746; c=relaxed/simple;
-	bh=Og2s7msII++0rDHy9u2ffAo1zI5iobW3M56lReIvoUU=;
+	s=arc-20240116; t=1722356749; c=relaxed/simple;
+	bh=JH4s/yhWp/+98X7XYRD9o6f+b8QAekrFQhtvde//lrE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mDgl34WNEJOBb4OaQpHODBlWI+OYU0f4fJ0kTWisHdKAaPfXgWxTvHASFSBV1jZjMxhELRyol0cp9BAQv/jLtFSgiAKODbCeBh4cZf+km+7Be6LZNvfRYNAb8wG5P7IskOkluyB7kPvC27O6OXz8aYugZXKQi0xEaYOMPxM/uFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=flP91TGP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FHSkL8XTVW1QvleZNczTSsQN37L01/XiyD9Eybg/bGaGGHW/s5Ykqu0FC4IPTsStG05hwoJSyzcLw1qUBSfJP8qBdhKOe48Mb6JXZtMjnrqbjfvGY1CM13ZTnhEsoQHESipzNtsbfRVhcEXV7ab6mArTIBMx4NBGUDQWQUUWSso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hTTtjxn6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="flP91TGP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37ED5C32782;
-	Tue, 30 Jul 2024 16:25:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hTTtjxn6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4DFC32782;
+	Tue, 30 Jul 2024 16:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356746;
-	bh=Og2s7msII++0rDHy9u2ffAo1zI5iobW3M56lReIvoUU=;
+	s=korg; t=1722356749;
+	bh=JH4s/yhWp/+98X7XYRD9o6f+b8QAekrFQhtvde//lrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=flP91TGPCsBXc2FQjsY8RFK8GTtIDol2AHpcOI4dgISbILaVPsjckqal+J4oLJFcB
-	 VlaxJMFXzvLgy20X4mysfh3vCCdpVrF0idVINFWwGiphqQsZ1aj6Q87GJAqsIdNtMc
-	 J7unXEHH80MKfk3SeaIDHt2xt942BvNI76jGuueY=
+	b=hTTtjxn65PrDTPxlxjhPpaIXqy7IEvZhOfbQocX96T2fFOvZYUR8GIIP9Lu9wBIP0
+	 wEwgSF3oSGiZ6hObVxyMXmJkIlb+AjsukGBlAjnjc6pCb/MhKA9OtpjeHNpzIiEU0O
+	 28ocfa3omGPVs1dBdv/+o8TqKG+Xs/Lr2v635lgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Asad Kamal <asad.kamal@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sean Christopherson <seanjc@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ankur Arora <ankur.a.arora@oracle.com>,
+	Chen Yu <yu.c.chen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 180/568] drm/amd/pm: Fix aldebaran pcie speed reporting
-Date: Tue, 30 Jul 2024 17:44:47 +0200
-Message-ID: <20240730151646.915415695@linuxfoundation.org>
+Subject: [PATCH 6.10 183/809] sched/core: Drop spinlocks on contention iff kernel is preemptible
+Date: Tue, 30 Jul 2024 17:40:59 +0200
+Message-ID: <20240730151731.837995462@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,41 +49,103 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit b6420021e17e262c57bb289d0556ee181b014f9c ]
+[ Upstream commit c793a62823d1ce8f70d9cfc7803e3ea436277cda ]
 
-Fix the field definitions for LC_CURRENT_DATA_RATE.
+Use preempt_model_preemptible() to detect a preemptible kernel when
+deciding whether or not to reschedule in order to drop a contended
+spinlock or rwlock.  Because PREEMPT_DYNAMIC selects PREEMPTION, kernels
+built with PREEMPT_DYNAMIC=y will yield contended locks even if the live
+preemption model is "none" or "voluntary".  In short, make kernels with
+dynamically selected models behave the same as kernels with statically
+selected models.
 
-Fixes: c05d1c401572 ("drm/amd/swsmu: add aldebaran smu13 ip support (v3)")
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Asad Kamal <asad.kamal@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Somewhat counter-intuitively, NOT yielding a lock can provide better
+latency for the relevant tasks/processes.  E.g. KVM x86's mmu_lock, a
+rwlock, is often contended between an invalidation event (takes mmu_lock
+for write) and a vCPU servicing a guest page fault (takes mmu_lock for
+read).  For _some_ setups, letting the invalidation task complete even
+if there is mmu_lock contention provides lower latency for *all* tasks,
+i.e. the invalidation completes sooner *and* the vCPU services the guest
+page fault sooner.
+
+But even KVM's mmu_lock behavior isn't uniform, e.g. the "best" behavior
+can vary depending on the host VMM, the guest workload, the number of
+vCPUs, the number of pCPUs in the host, why there is lock contention, etc.
+
+In other words, simply deleting the CONFIG_PREEMPTION guard (or doing the
+opposite and removing contention yielding entirely) needs to come with a
+big pile of data proving that changing the status quo is a net positive.
+
+Opportunistically document this side effect of preempt=full, as yielding
+contended spinlocks can have significant, user-visible impact.
+
+Fixes: c597bfddc9e9 ("sched: Provide Kconfig support for default dynamic preempt mode")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ankur Arora <ankur.a.arora@oracle.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Link: https://lore.kernel.org/kvm/ef81ff36-64bb-4cfe-ae9b-e3acf47bff24@proxmox.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |  4 +++-
+ include/linux/spinlock.h                        | 14 ++++++--------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-index c097aed4722b9..c0adfa46ac789 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -79,8 +79,8 @@ MODULE_FIRMWARE("amdgpu/smu_13_0_10.bin");
- #define PCIE_LC_LINK_WIDTH_CNTL__LC_LINK_WIDTH_RD_MASK 0x00000070L
- #define PCIE_LC_LINK_WIDTH_CNTL__LC_LINK_WIDTH_RD__SHIFT 0x4
- #define smnPCIE_LC_SPEED_CNTL			0x11140290
--#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE_MASK 0xC000
--#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE__SHIFT 0xE
-+#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE_MASK 0xE0
-+#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE__SHIFT 0x5
+diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
+index 27ec49af1bf27..2569e7f19b476 100644
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -4749,7 +4749,9 @@
+ 			none - Limited to cond_resched() calls
+ 			voluntary - Limited to cond_resched() and might_sleep() calls
+ 			full - Any section that isn't explicitly preempt disabled
+-			       can be preempted anytime.
++			       can be preempted anytime.  Tasks will also yield
++			       contended spinlocks (if the critical section isn't
++			       explicitly preempt disabled beyond the lock itself).
  
- static const int link_width[] = {0, 1, 2, 4, 8, 12, 16};
+ 	print-fatal-signals=
+ 			[KNL] debug: print fatal signals
+diff --git a/include/linux/spinlock.h b/include/linux/spinlock.h
+index 3fcd20de6ca88..63dd8cf3c3c2b 100644
+--- a/include/linux/spinlock.h
++++ b/include/linux/spinlock.h
+@@ -462,11 +462,10 @@ static __always_inline int spin_is_contended(spinlock_t *lock)
+  */
+ static inline int spin_needbreak(spinlock_t *lock)
+ {
+-#ifdef CONFIG_PREEMPTION
++	if (!preempt_model_preemptible())
++		return 0;
++
+ 	return spin_is_contended(lock);
+-#else
+-	return 0;
+-#endif
+ }
  
+ /*
+@@ -479,11 +478,10 @@ static inline int spin_needbreak(spinlock_t *lock)
+  */
+ static inline int rwlock_needbreak(rwlock_t *lock)
+ {
+-#ifdef CONFIG_PREEMPTION
++	if (!preempt_model_preemptible())
++		return 0;
++
+ 	return rwlock_is_contended(lock);
+-#else
+-	return 0;
+-#endif
+ }
+ 
+ /*
 -- 
 2.43.0
 
