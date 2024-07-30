@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD72189520;
-	Tue, 30 Jul 2024 16:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E020C188012;
+	Tue, 30 Jul 2024 16:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355415; cv=none; b=FNRGtv9mTLiTLQGOcx+5MxjUSEg6nipvYBortAHLLHNW1QWhYbc86BwURc56aHo3Dai4+CB8CnHpuLW0OCFFHQmrMyd62tb5m80QnK+1m27ipDYZqN4NSGfrcGHpWhl1fUPsjTj/aKMD7vImaWmtcJWSYWBFO+WpTyfVxFd3LsQ=
+	t=1722355419; cv=none; b=HB304wFsN2yh+ZA0oGjcxGyQZkHeWS8KG33vV42DzZLyxcsCkriNbRTUxyH1mfQdFrkq3t1LnhfW3HLPIivpWv2PBBpAJ60NMO9W0DxaFGS4Ra3YFUMmWxGi5WWS6wKYgZtVnmkKz5hIA57c9ubXn3M4KdhN2se+Db21UsxiiHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355415; c=relaxed/simple;
-	bh=7CTZwIU8mu9MjllYbo8HuTNfuDmc8RkO0ayIGC4JbsA=;
+	s=arc-20240116; t=1722355419; c=relaxed/simple;
+	bh=ylx6X/pmRENpfhsqOnRKD2JUbLCJMpBkFv33Vuznl44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O5RG31ivAovptCl7hnX2nFxMxppUIfgYIjiP3tysrcHOuo8LZAfc/vnsACPyVpNBu3rIfbUCWaPVPwyMUGpji7CxObW/kKr9ACUQdldTKhURYBafMKvwjOydU5iMRLCLq7knm4DtxDtgg1M4l87J0D7xMFHjF3m7bCI+Sg31xeQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEB9XZGV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ur+E5a2VDpNSLbAhB+2CAyCeMAwo8B2tr5tabQh5/cPnSMkxEI7lxJdDfN/o1HkieDKbbfwze2PZLJW3iI6LJ02tHOMW2vQlacROJoRqXJVkFKG7opFYPEcnYwnnjUKDeJt7I3vRepa0+cXoOxjR7R5BNbJGK9PZK1FXWSzcClc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tj0bC0Q9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEB9XZGV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA104C4AF0E;
-	Tue, 30 Jul 2024 16:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tj0bC0Q9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46F28C4AF0F;
+	Tue, 30 Jul 2024 16:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355415;
-	bh=7CTZwIU8mu9MjllYbo8HuTNfuDmc8RkO0ayIGC4JbsA=;
+	s=korg; t=1722355418;
+	bh=ylx6X/pmRENpfhsqOnRKD2JUbLCJMpBkFv33Vuznl44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEB9XZGVatgnNK6Rv0eS2emAFUkQxVYkco6pdHOFs6TVPicXyxBtPF5NrQvw5449g
-	 2uvsirLeZnt0K1AEx6fyNVmaQD58auO67TNdurjdvJ+UxvkdRHgyCfQhNoifR196mU
-	 r+KlBvu6ehctaTdRh+QRcqThWRRLFI973L+7p5+A=
+	b=Tj0bC0Q9gie8ayGNIWIXXdc8qQiTmzFnJ0CjQqKwnEzG4vKB1s7/ZQB3/5D0Lr6ey
+	 YBa2ZQFyW69fVHu9Lc7Vp2faFr+PRI5x+mRH/F8kjnzNYhg7UPA6yger8TlELa66oB
+	 fQJy398mcqiVP0Nft4U96zjtPNZdDHS7HBXBazu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <j-luthra@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/568] arm64: dts: ti: k3-am62x: Drop McASP AFIFOs
-Date: Tue, 30 Jul 2024 17:42:43 +0200
-Message-ID: <20240730151642.045549662@linuxfoundation.org>
+Subject: [PATCH 6.10 049/809] arm64: dts: qcom: sm6350: add power-domain to UFS PHY
+Date: Tue, 30 Jul 2024 17:38:45 +0200
+Message-ID: <20240730151726.586938571@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,39 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 6ee3ca0ec7fabc63603afdb3485da04164dc8747 ]
+[ Upstream commit 18c2727282c5264ff5502daac26c43000e8eb202 ]
 
-McASP AFIFOs are not necessary with UDMA-P/BCDMA as there is buffering
-on the DMA IP. Drop these for better audio latency.
+The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
+corresponding power-domain the the PHY node.
 
-Fixes: b94b43715e91 ("arm64: dts: ti: Enable audio on SK-AM62(-LP)")
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Link: https://lore.kernel.org/r/20240606-mcasp_fifo_drop-v2-1-8c317dabdd0a@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+Fixes: 5a814af5fc22 ("arm64: dts: qcom: sm6350: Add UFS nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-8-f1fd15c33fb3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-index 677ff8de4b6ec..0f8c0f6a0f573 100644
---- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
-@@ -481,8 +481,6 @@ &mcasp1 {
- 	       0 0 0 0
- 	       0 0 0 0
- 	>;
--	tx-num-evt = <32>;
--	rx-num-evt = <32>;
- };
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 6c7eac0110ba1..5f862cf8858a7 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1197,6 +1197,8 @@ ufs_mem_phy: phy@1d87000 {
+ 				      "ref_aux",
+ 				      "qref";
  
- &dss {
++			power-domains = <&gcc UFS_PHY_GDSC>;
++
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
+ 
 -- 
 2.43.0
 
