@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29CD1A6192;
-	Tue, 30 Jul 2024 16:34:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EDC71A6192;
+	Tue, 30 Jul 2024 16:34:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357282; cv=none; b=RVs+KGPqgrswdeKdQLUIQPf7WsmpR3MZjrT68Pr6o2llHE2GIO5R1WOVgpnDN9jut0ezVc4uUkp9kmk0aE1yNkNL9y9pF+BT7Aj387nPCV7gPmiu9VtbWt4LW67bau0QVTUV0fZLxjrAQHUEQicJmSNNCSGzoLFfEJep/FpGpc0=
+	t=1722357285; cv=none; b=UDMpWe8pc4bcGAV5ejJA0lBl7fxRzac3yvZY74SWBAzZsr1KAjqns4k0igud7VjYSCu3v4Xj6rhqwH3O6l9RNdQ8HuhPdZYnm9Q8FC0nJozS5pOupv3SGrdHE0jxk8YqYnig3m8VUCcfQlexgCvcsQyJ3w+jastfBuy/glv9mfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357282; c=relaxed/simple;
-	bh=OsJEvKi60Yp2Y9olnG2BaO8B+/XpHOzztMnRCu5VTKg=;
+	s=arc-20240116; t=1722357285; c=relaxed/simple;
+	bh=0rMPVFbqmITQ8WLvFLvWfJyOCGazRfngCap8oog5YU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bTKLzkezMcb0Gd861r7YPitri9l3V1njz8IMNT4+I34ic4yQe7H3ExnRninilrThBigNY/rWtFAIXcUmyB2MxLn/KeoG9QhCnkL0LbBjOsbhBAoZBOdcy/h8nHjGSnM94KFA8zamb2fWTSni+hqG94nAyaxJxJ0bLYSoBOxi7tc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d1zxtTYZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=du/Oy/exI+bsogQMGx3R1sMQlYKSQOFcjGmCqOLeN9rFz766df/sJWziOy73ljuBVE3J4qfoBZQ81pNxXC4+7B/7tV7MLEiFWGoq3t1d305Hcy4Y7PXh6Cg+SS/063wkEhDiUKtSADOAg8fFwPWiS32RKX531/lXkRh3/jHfvNI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVg+L4+U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d1zxtTYZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C00C4AF0C;
-	Tue, 30 Jul 2024 16:34:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVg+L4+U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A65C3C32782;
+	Tue, 30 Jul 2024 16:34:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357281;
-	bh=OsJEvKi60Yp2Y9olnG2BaO8B+/XpHOzztMnRCu5VTKg=;
+	s=korg; t=1722357285;
+	bh=0rMPVFbqmITQ8WLvFLvWfJyOCGazRfngCap8oog5YU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1zxtTYZC/z6GM0BN69/MmGRyrshwKUrEDoAU3VemllBLTk1KF6hfbhQVAL971POA
-	 bVkE7ioIBFfqk+TiJNK+xSmfCTPBFsw+MdYdJIwoWVSSSIRr6t2ZyrrDdNmAnXYfeC
-	 ST3NOftnZekgVptZainLBWF32bLOKAMT9RMy6Cas=
+	b=dVg+L4+USeccg1522Wppn2cxCKndc1l3Yn8UeIAtA0vrVABqgPiEd7t+TAGEUt98T
+	 QIvLBgssaM3VyS7YT2cD1BWH10vgno+HS2Zd38FcylsJGZrKjr9Eof86q/I5FZM69N
+	 c789kPMLTbi0nx6wYuZtRxH+1vCgCu9+sbLikGq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 236/568] perf intel-pt: Fix exclude_guest setting
-Date: Tue, 30 Jul 2024 17:45:43 +0200
-Message-ID: <20240730151649.105734337@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.1 276/440] dt-bindings: thermal: correct thermal zone node name limit
+Date: Tue, 30 Jul 2024 17:48:29 +0200
+Message-ID: <20240730151626.612807313@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit b40934ae32232140e85dc7dc1c3ea0e296986723 ]
+commit 97e32381d0fc6c2602a767b0c46e15eb2b75971d upstream.
 
-In the past, the exclude_guest setting has had no effect on Intel PT
-tracing, but that may not be the case in the future.
+Linux kernel uses thermal zone node name during registering thermal
+zones and has a hard-coded limit of 20 characters, including terminating
+NUL byte.  The bindings expect node names to finish with '-thermal'
+which is eight bytes long, thus we have only 11 characters for the reset
+of the node name (thus 10 for the pattern after leading fixed character).
 
-Set the flag correctly based upon whether KVM is using Intel PT
-"Host/Guest" mode, which is determined by the kvm_intel module
-parameter pt_mode:
-
- pt_mode=0	System-wide mode : host and guest output to host buffer
- pt_mode=1	Host/Guest mode : host/guest output to host/guest
-                buffers respectively
-
-Fixes: 6e86bfdc4a60 ("perf intel-pt: Support decoding of guest kernel")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240625104532.11990-3-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/all/CAL_JsqKogbT_4DPd1n94xqeHaU_J8ve5K09WOyVsRX3jxxUW3w@mail.gmail.com/
+Fixes: 1202a442a31f ("dt-bindings: thermal: Add yaml bindings for thermal zones")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240702145248.47184-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/arch/x86/util/intel-pt.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ Documentation/devicetree/bindings/thermal/thermal-zones.yaml |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/arch/x86/util/intel-pt.c b/tools/perf/arch/x86/util/intel-pt.c
-index 5161a9a6b853a..aaa2c641e7871 100644
---- a/tools/perf/arch/x86/util/intel-pt.c
-+++ b/tools/perf/arch/x86/util/intel-pt.c
-@@ -32,6 +32,7 @@
- #include "../../../util/tsc.h"
- #include <internal/lib.h> // page_size
- #include "../../../util/intel-pt.h"
-+#include <api/fs/fs.h>
+--- a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
++++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+@@ -49,7 +49,10 @@ properties:
+       to take when the temperature crosses those thresholds.
  
- #define KiB(x) ((x) * 1024)
- #define MiB(x) ((x) * 1024 * 1024)
-@@ -436,6 +437,16 @@ static int intel_pt_track_switches(struct evlist *evlist)
- }
- #endif
- 
-+static bool intel_pt_exclude_guest(void)
-+{
-+	int pt_mode;
-+
-+	if (sysfs__read_int("module/kvm_intel/parameters/pt_mode", &pt_mode))
-+		pt_mode = 0;
-+
-+	return pt_mode == 1;
-+}
-+
- static void intel_pt_valid_str(char *str, size_t len, u64 valid)
- {
- 	unsigned int val, last = 0, state = 1;
-@@ -628,6 +639,7 @@ static int intel_pt_recording_options(struct auxtrace_record *itr,
- 			}
- 			evsel->core.attr.freq = 0;
- 			evsel->core.attr.sample_period = 1;
-+			evsel->core.attr.exclude_guest = intel_pt_exclude_guest();
- 			evsel->no_aux_samples = true;
- 			evsel->needs_auxtrace_mmap = true;
- 			intel_pt_evsel = evsel;
--- 
-2.43.0
-
+ patternProperties:
+-  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
++  # Node name is limited in size due to Linux kernel requirements - 19
++  # characters in total (see THERMAL_NAME_LENGTH, including terminating NUL
++  # byte):
++  "^[a-zA-Z][a-zA-Z0-9\\-]{1,10}-thermal$":
+     type: object
+     description:
+       Each thermal zone node contains information about how frequently it
 
 
