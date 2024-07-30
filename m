@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89C49189516;
-	Tue, 30 Jul 2024 16:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B325F18991E;
+	Tue, 30 Jul 2024 16:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356269; cv=none; b=GisgFUiDJxACn1iquhqcLaSsKu0K/+vJZIQlxwSmxjaNZZYKUgVrNw0GR7LplttHDll+YsQdoQUG1Tm/aZk99uayjPvquhEMsfU/bfaShHFkoSybMXSH6+eRIhvbzar/7cXOUhwSz0fIzhPBW9ahR1FAY8j/Lgs8irZkjdQl/yM=
+	t=1722356272; cv=none; b=Gl57NEEa6waYCgd/aOa8EOfWHhtZUWnpF0nPEbyoMD53ilyEpntZ7ac6o3Mb74BJ9fNzu36ndITmPbmpsTJucQ0j/wbogadE+s++RjnW81e7nGqCAoFVQl04I00SZPp1kDcHPAQmbKuAMp9aVdRPqLuUrWMFtgsiacXc4YCQYtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356269; c=relaxed/simple;
-	bh=KznpQmPVfPCQUjV+ktD4gJkEQQHUuj2gk0395HsrzzA=;
+	s=arc-20240116; t=1722356272; c=relaxed/simple;
+	bh=qmr1I/hZkWfVN14X/3jE9GRjYQgfoOKqhiX/xvQXyFs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0Ea2MrWL0XWMCv9dk1tbrH+YGHM1Gp8vjaoQPCjPTRDCHsPbV//H3aSh9a4Nu/Z8VzeQKih64OSSuCaLWMkHhwgb5KQxV8ggbvP7lkyCW2NK+2I1C6sAeO3b//9a8/Do/WUY2O6xl3ugNq6m+xQJKGkv1nfTKU9ueK0d82eUoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHTeF3q0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QB+W0Jo9FRFscvcvJ8j6MsPIaDDt3hdI5j3m5JV4n7wXIwX1ELFrGzFRqYWbM3D6rRszho+fTXrrF/RoIuIkQHr8et9/JPGfvZOzVRCzgoqZTRud7TfUeXksqrjLOKhameA9UiWaFR31HTVe5vtJBBh0uLV1KdbWj7rVT3S90G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhYcwyU5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHTeF3q0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E386C32782;
-	Tue, 30 Jul 2024 16:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhYcwyU5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20A75C32782;
+	Tue, 30 Jul 2024 16:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356269;
-	bh=KznpQmPVfPCQUjV+ktD4gJkEQQHUuj2gk0395HsrzzA=;
+	s=korg; t=1722356272;
+	bh=qmr1I/hZkWfVN14X/3jE9GRjYQgfoOKqhiX/xvQXyFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHTeF3q03cwSn5p40wxafARhb4zev8i1EPSOoBUfjvOhEyXIE8p+ChrcAUSj7lc+S
-	 sFjF90x1d+/tU+sgTu6aAlrPUNQfpGMwee2o+afFG4rQxX7e9qAfOQn7xGohuWKlQX
-	 ei/ZSHq8en2illvVW1d3b6P98y1m4gayLgj5IAPs=
+	b=uhYcwyU5Vc1hbx6ybfj0eWnaDSZL9D+tHo1smF15NaIymb1Oo+Q5o9HEfqaSwpsS6
+	 ge4JsJLn7yyaDB5zjcVNqdgfVwKHPXqiJFwBOLuhyIsVyqc8sXT6XsrcwLE2R11LPd
+	 Citndqn+NYIJNbJUd9QtcCtMQl11S6zPfjgVSelY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com,
-	Hugh Dickins <hughd@google.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/440] ext4: avoid writing unitialized memory to disk in EA inodes
-Date: Tue, 30 Jul 2024 17:46:47 +0200
-Message-ID: <20240730151622.670961763@linuxfoundation.org>
+Subject: [PATCH 6.10 135/809] arm64: dts: rockchip: disable display subsystem for Lunzn Fastrhino R6xS
+Date: Tue, 30 Jul 2024 17:40:11 +0200
+Message-ID: <20240730151729.946642632@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,48 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit 65121eff3e4c8c90f8126debf3c369228691c591 ]
+[ Upstream commit 2bf5d445df2ec89689d15ea259a916260c936959 ]
 
-If the extended attribute size is not a multiple of block size, the last
-block in the EA inode will have uninitialized tail which will get
-written to disk. We will never expose the data to userspace but still
-this is not a good practice so just zero out the tail of the block as it
-isn't going to cause a noticeable performance overhead.
+The R66S and R68S boards do not have HDMI output, so disable
+the display subsystem.
 
-Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
-Reported-by: syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com
-Reported-by: Hugh Dickins <hughd@google.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240613150234.25176-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20240701143028.1203997-3-amadeus@jmu.edu.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 28d00ed833db4..f0a45d3ec4ebb 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1384,6 +1384,12 @@ static int ext4_xattr_inode_write(handle_t *handle, struct inode *ea_inode,
- 			goto out;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+index e08c9eab6f170..25c49bdbadbcb 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+@@ -115,6 +115,10 @@ &cpu3 {
+ 	cpu-supply = <&vdd_cpu>;
+ };
  
- 		memcpy(bh->b_data, buf, csize);
-+		/*
-+		 * Zero out block tail to avoid writing uninitialized memory
-+		 * to disk.
-+		 */
-+		if (csize < blocksize)
-+			memset(bh->b_data + csize, 0, blocksize - csize);
- 		set_buffer_uptodate(bh);
- 		ext4_handle_dirty_metadata(handle, ea_inode, bh);
- 
++&display_subsystem {
++	status = "disabled";
++};
++
+ &gpu {
+ 	mali-supply = <&vdd_gpu>;
+ 	status = "okay";
 -- 
 2.43.0
 
