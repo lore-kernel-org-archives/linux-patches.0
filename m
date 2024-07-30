@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C3A1A76A2;
-	Tue, 30 Jul 2024 17:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B901A76D4;
+	Tue, 30 Jul 2024 17:15:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359752; cv=none; b=N8I7j6dDWJucZdcAfk6eviN6wkTG/iHBJkdAQGCx9gvStvPBNBsmT5Kajwzis3Peju0VY2fYOo6ZFiw3Zhq0aHO5jSDDatJfJq0cD/jofElQzOLSDwzTQ6SyyqTG/ZWNCQItBnCV1RN/APX13aSMz2BD6x9QT7TyXE1bPyF5CL8=
+	t=1722359759; cv=none; b=Ly99UwcPPiSj+VQ2uw/da3CmuNXJxMU53ylb6yKVQScs2bC+BJit6fercdhxW5ljPPX2j0LM8TRkxhwq+zAr0B3nVsFC8UGmgFlCr1d5WfJ2V1oLtbLcQ61gMsy8Kfii/bCh2e1R+h3NwBP0Tg49gxEHtOVS/e9wgdUSTuFKYjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359752; c=relaxed/simple;
-	bh=OWuTQSqFyaRpJpgswl+gJYF6AI9Lbzf04ajOYPNU5v0=;
+	s=arc-20240116; t=1722359759; c=relaxed/simple;
+	bh=Lsfg/ozjT8i9nkSo15K47TIz6EPEaPDkx5V9XoiL/Dk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uilxE/VAyhilkCygGOaPqMbL4BQ5gDcyRi5l48dt41ESJ26A8u8l1u1jx/X3SKmmE6UnQzHDSiJIxE70fw1xZbhy05hyeZKO4i+aUJJYJWZZJ9DjX4y0SvV4QG7f3JdnA36sSqO1R1QE+iY7B/F/Y6+IjQVTxo9llg6JsP6eqQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIS57b5B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dvnNmE+OHmx2cfULrZn4luiol0CuerMmuKxNGBsvVdauhJRETMwXr6Mwx98aZX75say21hTlwHJbKGv3pDIhzV9LgrUFeBk06gwE7ViPzgrERKwgiLOgc1o04YemOR9UCMxM/Aqr19Q1F8gy9Geh6J9jwAR27Yc7UZqfIUFOiLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODILG4jN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIS57b5B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 327BCC4AF0C;
-	Tue, 30 Jul 2024 17:15:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODILG4jN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DB82C32782;
+	Tue, 30 Jul 2024 17:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359752;
-	bh=OWuTQSqFyaRpJpgswl+gJYF6AI9Lbzf04ajOYPNU5v0=;
+	s=korg; t=1722359759;
+	bh=Lsfg/ozjT8i9nkSo15K47TIz6EPEaPDkx5V9XoiL/Dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JIS57b5BXlr2PNJdrrl4nsxlNHC6HuFMUvOaTCI4GlL15IQi94W4jeopeQKdjut+A
-	 guIgKyI9ATDvRCAOBHCJUhq4xtL5E6eZXXSyZbc90NXPjgbmqSHiJ9gZQJuiv/HR45
-	 An4nTpIl8NzT8Rl84dw3dvJhcJ+Vp08JjTYBFmW8=
+	b=ODILG4jNlWkpyKCozlJiohXJ67bdVpWHOi00CjTWcx27UPENwH5yDPC8P8pLav+RA
+	 eMwocxbJjCTUHN0LBk+3dyq/YhoPnvVEPujQhpoI2ZXN4DtoTNoctltOEpOdEy0e27
+	 OJtYRNrBfFOoR1bK7HgLB9RfJsGVIlIg8A77Edcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	Hari Nagalla <hnagalla@ti.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Lance Richardson <rlance@google.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 528/809] remoteproc: k3-r5: Fix IPC-only mode detection
-Date: Tue, 30 Jul 2024 17:46:44 +0200
-Message-ID: <20240730151745.593152873@linuxfoundation.org>
+Subject: [PATCH 6.6 532/568] dma: fix call order in dmam_free_coherent
+Date: Tue, 30 Jul 2024 17:50:39 +0200
+Message-ID: <20240730151700.949506082@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,90 +47,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Richard Genoud <richard.genoud@bootlin.com>
+From: Lance Richardson <rlance@google.com>
 
-[ Upstream commit a8631f6d6344d976096b1efafdb2fbb3111bd790 ]
+[ Upstream commit 28e8b7406d3a1f5329a03aa25a43aa28e087cb20 ]
 
-ret variable was used to test reset status, get from
-reset_control_status() call. But this variable was overwritten by
-ti_sci_proc_get_status() a few lines bellow.
-And as ti_sci_proc_get_status() returns 0 or a negative value (in this
-latter case, followed by a return), the expression !ret was always true,
+dmam_free_coherent() frees a DMA allocation, which makes the
+freed vaddr available for reuse, then calls devres_destroy()
+to remove and free the data structure used to track the DMA
+allocation. Between the two calls, it is possible for a
+concurrent task to make an allocation with the same vaddr
+and add it to the devres list.
 
-Clearly, this was not what was intended:
-In the comment above it's said that "requires both local and module
-resets to be deasserted"; if reset_control_status() returns 0 it means
-that the reset line is deasserted.
-So, it's pretty clear that the return value of reset_control_status()
-was intended to be used instead of ti_sci_proc_get_status() return
-value.
+If this happens, there will be two entries in the devres list
+with the same vaddr and devres_destroy() can free the wrong
+entry, triggering the WARN_ON() in dmam_match.
 
-This could lead in an incorrect IPC-only mode detection if reset line is
-asserted (so reset_control_status() return > 0) and c_state != 0 and
-halted == 0.
-In this case, the old code would have detected an IPC-only mode instead
-of a mismatched mode.
+Fix by destroying the devres entry before freeing the DMA
+allocation.
 
-Fixes: 1168af40b1ad ("remoteproc: k3-r5: Add support for IPC-only mode for all R5Fs")
-Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
-Reviewed-by: Hari Nagalla <hnagalla@ti.com>
-Link: https://lore.kernel.org/r/20240621150058.319524-2-richard.genoud@bootlin.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Tested:
+  kokonut //net/encryption
+    http://sponge2/b9145fe6-0f72-4325-ac2f-a84d81075b03
+
+Fixes: 9ac7849e35f7 ("devres: device resource management")
+Signed-off-by: Lance Richardson <rlance@google.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/ti_k3_r5_remoteproc.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ kernel/dma/mapping.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/ti_k3_r5_remoteproc.c b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-index 50e486bcfa103..39a47540c5900 100644
---- a/drivers/remoteproc/ti_k3_r5_remoteproc.c
-+++ b/drivers/remoteproc/ti_k3_r5_remoteproc.c
-@@ -1144,6 +1144,7 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
- 	u32 atcm_enable, btcm_enable, loczrama;
- 	struct k3_r5_core *core0;
- 	enum cluster_mode mode = cluster->mode;
-+	int reset_ctrl_status;
- 	int ret;
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index e323ca48f7f2a..f1d9f01b283d7 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -67,8 +67,8 @@ void dmam_free_coherent(struct device *dev, size_t size, void *vaddr,
+ {
+ 	struct dma_devres match_data = { size, vaddr, dma_handle };
  
- 	core0 = list_first_entry(&cluster->cores, struct k3_r5_core, elem);
-@@ -1160,11 +1161,11 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
- 			 r_state, c_state);
- 	}
+-	dma_free_coherent(dev, size, vaddr, dma_handle);
+ 	WARN_ON(devres_destroy(dev, dmam_release, dmam_match, &match_data));
++	dma_free_coherent(dev, size, vaddr, dma_handle);
+ }
+ EXPORT_SYMBOL(dmam_free_coherent);
  
--	ret = reset_control_status(core->reset);
--	if (ret < 0) {
-+	reset_ctrl_status = reset_control_status(core->reset);
-+	if (reset_ctrl_status < 0) {
- 		dev_err(cdev, "failed to get initial local reset status, ret = %d\n",
--			ret);
--		return ret;
-+			reset_ctrl_status);
-+		return reset_ctrl_status;
- 	}
- 
- 	/*
-@@ -1199,7 +1200,7 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
- 	 * irrelevant if module reset is asserted (POR value has local reset
- 	 * deasserted), and is deemed as remoteproc mode
- 	 */
--	if (c_state && !ret && !halted) {
-+	if (c_state && !reset_ctrl_status && !halted) {
- 		dev_info(cdev, "configured R5F for IPC-only mode\n");
- 		kproc->rproc->state = RPROC_DETACHED;
- 		ret = 1;
-@@ -1217,7 +1218,7 @@ static int k3_r5_rproc_configure_mode(struct k3_r5_rproc *kproc)
- 		ret = 0;
- 	} else {
- 		dev_err(cdev, "mismatched mode: local_reset = %s, module_reset = %s, core_state = %s\n",
--			!ret ? "deasserted" : "asserted",
-+			!reset_ctrl_status ? "deasserted" : "asserted",
- 			c_state ? "deasserted" : "asserted",
- 			halted ? "halted" : "unhalted");
- 		ret = -EINVAL;
 -- 
 2.43.0
 
