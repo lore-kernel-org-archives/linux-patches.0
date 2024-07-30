@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 226DF1A76A1;
-	Tue, 30 Jul 2024 17:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65671A76AF;
+	Tue, 30 Jul 2024 17:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360128; cv=none; b=iUzykRbaGHsPgI89rlvfOsHxpXvbEOP/RbAKi6lYPeLEm08DVtHHWPG2uwe+XZsfGKXTyq1zNRBAagu81hlScCDNpAneEagDZuzojWR/hAL+aWBs5F6WydYo3Tluad7mrqcymr4JFHBlAxjo0H4AcjO5X5WfBmVjhP8BoenzONA=
+	t=1722360132; cv=none; b=EaCTy4+kWDw8iez1JIfJThWNOWaSYWJc/CD7GVnZkkA+wbGxAjUs9cSAgrcN67p9siQDdBSyI9JF1YJEt3oVAJrlYDKCYK0E4pwFhmZq2ZVOXZhXkduH7HVK7RIiA8Ke2OJcL0c87K0ZMrsDUTaSliB23wsNefGkIsEF4BgbnvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360128; c=relaxed/simple;
-	bh=p9GL39TNNOGFUydRIDt1Bcm9G0UPsCsfFTkGjwyHdTU=;
+	s=arc-20240116; t=1722360132; c=relaxed/simple;
+	bh=pCc+jRz0Fs/cF8m2sUZng7Xb/7btWKtFnLDTFFbou5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FFlbOmyjKETenyTEaWiwNwJpKFNqeby97VCWG9QtpL9yQbosrJeiLRK7wk3/edpzjzbnP+/T7vh2oSVrVbRBaPQyXDX3T+DqDV2o0mN7p8X8LdturU5NSMNgj8gzMxorhYhvgUNqiDgen8Rxnl8aQFQLAQWTHuXfTQlEgLK+JxM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFJMd3iZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RNdJ9FSGyyDOG+07+iAkLzdHR6UgdRswq0OjpZ5r3YFOVfGwGd4B722UDKzbj71aadFhjCmEpa9iAUf95eidjpFCIIcxdkcqsUzab+TzPMMnNYTmuEmzITVG2RLdEr7u9VZlF5RPwkPnLcbP81k8CiX8Lm6voY1vOjYpKuzP/mA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p1Ckj0UP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFJMd3iZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D3FCC32782;
-	Tue, 30 Jul 2024 17:22:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p1Ckj0UP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82D33C32782;
+	Tue, 30 Jul 2024 17:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360128;
-	bh=p9GL39TNNOGFUydRIDt1Bcm9G0UPsCsfFTkGjwyHdTU=;
+	s=korg; t=1722360132;
+	bh=pCc+jRz0Fs/cF8m2sUZng7Xb/7btWKtFnLDTFFbou5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFJMd3iZuzDR24XXi9rkM+AMAtTncANZoPdrEOcD0lY2Ww2FZ5eJdteL2Fz2rig0+
-	 V1sDn8bVQga4EB/xfpyJJP7J6JiNqWd14PpRKQfE+5htf1cOnJqZoaBl5ZS8Wqi8ns
-	 6R7qOOCa4Hvne48WE/wQO6S9DQJpz40LpE9I3fYU=
+	b=p1Ckj0UPH+j62j2bsM7LthZxSdg4/+9YUXApyon6e6aq2LtmZ+TKFCZ7a/zE2FZiY
+	 +uFg+JcOd2N0FiyRotjRmkZR0s0JZA/fGuvEy28dbVskvjFg7PISmlVvIo76yCfxLG
+	 /n/UFVb6U/7lYRmNfdpsHBiHUgR+v0jgU2RgH8sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ofir Gal <ofir.gal@volumez.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.10 606/809] md/md-bitmap: fix writing non bitmap pages
-Date: Tue, 30 Jul 2024 17:48:02 +0200
-Message-ID: <20240730151748.769964597@linuxfoundation.org>
+	"Dustin L. Howett" <dustin@howett.net>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.10 607/809] leds: triggers: Flush pending brightness before activating trigger
+Date: Tue, 30 Jul 2024 17:48:03 +0200
+Message-ID: <20240730151748.810030938@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -45,106 +45,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ofir Gal <ofir.gal@volumez.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit ab99a87542f194f28e2364a42afbf9fb48b1c724 upstream.
+commit ab477b766edd3bfb6321a6e3df4c790612613fae upstream.
 
-__write_sb_page() rounds up the io size to the optimal io size if it
-doesn't exceed the data offset, but it doesn't check the final size
-exceeds the bitmap length.
+The race fixed in timer_trig_activate() between a blocking
+set_brightness() call and trigger->activate() can affect any trigger.
+So move the call to flush_work() into led_trigger_set() where it can
+avoid the race for all triggers.
 
-For example:
-page count      - 1
-page size       - 4K
-data offset     - 1M
-optimal io size - 256K
-
-The final io size would be 256K (64 pages) but md_bitmap_storage_alloc()
-allocated 1 page, the IO would write 1 valid page and 63 pages that
-happens to be allocated afterwards. This leaks memory to the raid device
-superblock.
-
-This issue caused a data transfer failure in nvme-tcp. The network
-drivers checks the first page of an IO with sendpage_ok(), it returns
-true if the page isn't a slabpage and refcount >= 1. If the page
-!sendpage_ok() the network driver disables MSG_SPLICE_PAGES.
-
-As of now the network layer assumes all the pages of the IO are
-sendpage_ok() when MSG_SPLICE_PAGES is on.
-
-The bitmap pages aren't slab pages, the first page of the IO is
-sendpage_ok(), but the additional pages that happens to be allocated
-after the bitmap pages might be !sendpage_ok(). That cause
-skb_splice_from_iter() to stop the data transfer, in the case below it
-hangs 'mdadm --create'.
-
-The bug is reproducible, in order to reproduce we need nvme-over-tcp
-controllers with optimal IO size bigger than PAGE_SIZE. Creating a raid
-with bitmap over those devices reproduces the bug.
-
-In order to simulate large optimal IO size you can use dm-stripe with a
-single device.
-Script to reproduce the issue on top of brd devices using dm-stripe is
-attached below (will be added to blktest).
-
-I have added some logs to test the theory:
-...
-md: created bitmap (1 pages) for device md127
-__write_sb_page before md_super_write offset: 16, size: 262144. pfn: 0x53ee
-=== __write_sb_page before md_super_write. logging pages ===
-pfn: 0x53ee, slab: 0 <-- the only page that allocated for the bitmap
-pfn: 0x53ef, slab: 1
-pfn: 0x53f0, slab: 0
-pfn: 0x53f1, slab: 0
-pfn: 0x53f2, slab: 0
-pfn: 0x53f3, slab: 1
-...
-nvme_tcp: sendpage_ok - pfn: 0x53ee, len: 262144, offset: 0
-skbuff: before sendpage_ok() - pfn: 0x53ee
-skbuff: before sendpage_ok() - pfn: 0x53ef
-WARNING at net/core/skbuff.c:6848 skb_splice_from_iter+0x142/0x450
-skbuff: !sendpage_ok - pfn: 0x53ef. is_slab: 1, page_count: 1
-...
-
+Fixes: 0db37915d912 ("leds: avoid races with workqueue")
+Fixes: 8c0f693c6eff ("leds: avoid flush_work in atomic context")
 Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ofir Gal <ofir.gal@volumez.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240607072748.3182199-1-ofir.gal@volumez.com
+Tested-by: Dustin L. Howett <dustin@howett.net>
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20240613-led-trigger-flush-v2-1-f4f970799d77@weissschuh.net
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/leds/led-triggers.c          |    6 ++++++
+ drivers/leds/trigger/ledtrig-timer.c |    5 -----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -227,6 +227,8 @@ static int __write_sb_page(struct md_rde
- 	struct block_device *bdev;
- 	struct mddev *mddev = bitmap->mddev;
- 	struct bitmap_storage *store = &bitmap->storage;
-+	unsigned int bitmap_limit = (bitmap->storage.file_pages - pg_index) <<
-+		PAGE_SHIFT;
- 	loff_t sboff, offset = mddev->bitmap_info.offset;
- 	sector_t ps = pg_index * PAGE_SIZE / SECTOR_SIZE;
- 	unsigned int size = PAGE_SIZE;
-@@ -269,11 +271,9 @@ static int __write_sb_page(struct md_rde
- 		if (size == 0)
- 			/* bitmap runs in to data */
- 			return -EINVAL;
--	} else {
--		/* DATA METADATA BITMAP - no problems */
+--- a/drivers/leds/led-triggers.c
++++ b/drivers/leds/led-triggers.c
+@@ -194,6 +194,12 @@ int led_trigger_set(struct led_classdev
+ 		spin_unlock(&trig->leddev_list_lock);
+ 		led_cdev->trigger = trig;
+ 
++		/*
++		 * If "set brightness to 0" is pending in workqueue,
++		 * we don't want that to be reordered after ->activate()
++		 */
++		flush_work(&led_cdev->set_brightness_work);
++
+ 		ret = 0;
+ 		if (trig->activate)
+ 			ret = trig->activate(led_cdev);
+--- a/drivers/leds/trigger/ledtrig-timer.c
++++ b/drivers/leds/trigger/ledtrig-timer.c
+@@ -110,11 +110,6 @@ static int timer_trig_activate(struct le
+ 		led_cdev->flags &= ~LED_INIT_DEFAULT_TRIGGER;
  	}
  
--	md_super_write(mddev, rdev, sboff + ps, (int) size, page);
-+	md_super_write(mddev, rdev, sboff + ps, (int)min(size, bitmap_limit), page);
- 	return 0;
- }
+-	/*
+-	 * If "set brightness to 0" is pending in workqueue, we don't
+-	 * want that to be reordered after blink_set()
+-	 */
+-	flush_work(&led_cdev->set_brightness_work);
+ 	led_blink_set(led_cdev, &led_cdev->blink_delay_on,
+ 		      &led_cdev->blink_delay_off);
  
 
 
