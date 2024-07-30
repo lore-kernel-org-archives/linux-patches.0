@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71C31898F7;
-	Tue, 30 Jul 2024 16:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9811898EC;
+	Tue, 30 Jul 2024 16:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357895; cv=none; b=lDcpVgGoDOy1ftPdNSdPViRtRbYx5ODw6JATE1NT1UT2Bf+7/qNTR7ToFQLRmGRgzl4OOxaxs9bMPqstc3v1095HH0mZj5ljPhbwZRCCGTDBmDtreLrBXlUO8Q91Cireh5xvNbp1pMKxPe5a8PoHc8lbGkDaLl9L17ZjZh4UZrA=
+	t=1722357899; cv=none; b=OR59X2bf7XpqVIWxqBpaXG0tYWyxd9lEF+8UEanG/C0ZM8eu4Iizm2Y+1Zs9dthgyRwyUZYsqFCv2lMcZFZRr+WCztVo/yW5jGYFDiKeDTCLm6fPNe5b0BOg1F3JlApM/vZQQXqgx3XuFq76ygBowfg/QiGRMt+obYRi6PCCGks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357895; c=relaxed/simple;
-	bh=ul0QVal0vhk0mydQTql5mLwWQ5yZsBEGWYDB2o9S9AE=;
+	s=arc-20240116; t=1722357899; c=relaxed/simple;
+	bh=eXt7XDmK9g8v7PMP8s9e8niACEfRkjQDJh7c2LU87oY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HAKedOeBNH50xuFfSG83tXY0LoYaunUJ1P9+qpELtAkhuJ0DA8JboqVRqsBoW1lAqYjnRg3aXmHkTF3WbWSLNFiphqlP3czZjLCcPXyT3x140cyDTaLpGG7QaQtmTNdqQhHf5U9iuZfHDqLUHgY8TIf8GxFOzFbVg4JbMqY77Ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dt65+sTJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSyv9WWJL3loH4A26W7xJ0zejuzsvddopXT2QoYv+8rLHWL4D5vrSm8PkWMHUbmC73si9YZzoakir9s3YgyJwDFPPDkjOGiA3JcB9kw2cAPyVuFFZ0JnBBEE9CiH/bjbn76hsbsO+RhY4YfIQYQZgD2nvH9s2T6kNaRHpguIK3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s3zktypf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dt65+sTJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242F5C32782;
-	Tue, 30 Jul 2024 16:44:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s3zktypf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82805C32782;
+	Tue, 30 Jul 2024 16:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357895;
-	bh=ul0QVal0vhk0mydQTql5mLwWQ5yZsBEGWYDB2o9S9AE=;
+	s=korg; t=1722357898;
+	bh=eXt7XDmK9g8v7PMP8s9e8niACEfRkjQDJh7c2LU87oY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dt65+sTJKoO5y/UPYRYGp3PaIEN3ROc4G5/xoIsCGgZ3F6If/RCgrtZhbD7DZNmYs
-	 bBZ2arL+l4LbzyO24l7Bas4/kniBMzwacLSO0ULYNLNu8AFwM79D230V31g0Pvz3Wt
-	 zE5clphKmfYIBRlesBSUJizGvllecfWqIisccv3E=
+	b=s3zktypfcJuNOIWPru16iVUtNzli+Gzkc0KwuFURGA1jOo1ZIIl9LsDTRnBymBP+a
+	 WVKf216x1ylYufLqdM256gyKo5e5jkejf3V6BwUHP3gJ21E5cwkXCOWRFcWhvJp9vX
+	 8DFz71w2ABlI/K2WkQw96h2t6QaF9T8FvhxMMQxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 302/809] media: mediatek: vcodec: Fix unreasonable data conversion
-Date: Tue, 30 Jul 2024 17:42:58 +0200
-Message-ID: <20240730151736.521906686@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 337/440] ASoC: amd: yc: Support mic on Lenovo Thinkpad E16 Gen 2
+Date: Tue, 30 Jul 2024 17:49:30 +0200
+Message-ID: <20240730151628.981131741@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 48d85de244047eabe07c5040af12dfa736d61d6c ]
+commit 1d9ce4440414c92acb17eece3218fe5c92b141e3 upstream.
 
-Both 'bs_dma' and 'dma_addr' are integers. No need to convert the
-type from dma_addr_t to uint64_t again.
+Lenovo Thinkpad E16 Gen 2 AMD model (model 21M5) needs a corresponding
+quirk entry for making the internal mic working.
 
-Fixes: d353c3c34af0 ("media: mediatek: vcodec: support 36 bits physical address")
-
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1228269
+Cc: stable@vger.kernel.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20240725065442.9293-1-tiwai@suse.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_if.c   | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_if.c
-index 4bc89c8644fec..5f848691cea44 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec/vdec_vp8_if.c
-@@ -449,7 +449,7 @@ static int vdec_vp8_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 		       inst->frm_cnt, y_fb_dma, c_fb_dma, fb);
- 
- 	inst->cur_fb = fb;
--	dec->bs_dma = (uint64_t)bs->dma_addr;
-+	dec->bs_dma = bs->dma_addr;
- 	dec->bs_sz = bs->size;
- 	dec->cur_y_fb_dma = y_fb_dma;
- 	dec->cur_c_fb_dma = c_fb_dma;
--- 
-2.43.0
-
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -224,6 +224,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "21M5"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "82TL"),
+ 		}
+ 	},
 
 
