@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5024E1A6176;
-	Tue, 30 Jul 2024 16:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C3A1A616E;
+	Tue, 30 Jul 2024 16:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355894; cv=none; b=keUlPBYQ2WR13bSD6fFu330EjEmzLhujinOIjpeSDhKYEzapSRS9qkQMvdNzQp1BOAygnHif0ic0hf8GwsS2y7W3R0Dnwrx0D7BJl6usDlCdSE12rlYlZOKZtZSxhvgZpiKg5Tx3PRU9cL7iekF9ApJUH+n9Gq7TcN9l6X6PjvM=
+	t=1722355897; cv=none; b=EHyN6jXUmKawCZi6RA69tip8sxybkREfXx7klTiXX1vHvP9/kuug63NjZaCv0Ou9YDerHWZR6h8JUZA+3RZREeNc2zuXzPt6sDImRC7JQpS+S2ovG2pA/56OEizneepEzro03XKr+aVzi1Dp8nRic+273JOKBGVc5yA+KI84Rh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355894; c=relaxed/simple;
-	bh=tbORv7XTZAC4YidNxwM7AJyAncAkT65Z9+SdeG+KZq4=;
+	s=arc-20240116; t=1722355897; c=relaxed/simple;
+	bh=jPhC5ffCH55ThZJ+o8B+6ZZnbYYf8sLFBnQTrYhNdjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vFh71m3UnQdM3BSjYliuclHLUrlUHFpaZ1Ge7Xj1y01iZjT1cloEBFu6ahwPyYbMIAi5Rx/C9CJoA29rWaCHb3M9eg61UJ1x3TizEz8WZAVa17xO/ls7H7lh2BQZD+WRJ9XVqzP01yUUaLbCG7IostJ/iZ0izxliB6Izl21AoX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfT8lxbN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bTjYu/oZ+/o0G4n7hawPg0FK8CUclxK/bSJM1WEScYk0qq6F6ThEHEbLlYmL8PT9NpTbI5wUbnROeZW2udBgHU2e8zfnUBD3BuGEfxt4AYtnJ66vjrmY4LbDWc6en7Vsokl3lGx9myj00tnMclkobpp2i1k/pHT/Ije3qJAOEdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0fJVi0Ds; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfT8lxbN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FCBC4AF0C;
-	Tue, 30 Jul 2024 16:11:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0fJVi0Ds"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3E91C4AF0C;
+	Tue, 30 Jul 2024 16:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355894;
-	bh=tbORv7XTZAC4YidNxwM7AJyAncAkT65Z9+SdeG+KZq4=;
+	s=korg; t=1722355897;
+	bh=jPhC5ffCH55ThZJ+o8B+6ZZnbYYf8sLFBnQTrYhNdjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfT8lxbNHUppIZ3zTaU5/vPO9YypwYt1tOE2xcIqYJaUtUrZcpHl8bUSQOfH+kw+Y
-	 I9ATJzW6sohrjYlyw3pTvAtLXFiuiG2ObRfKBNTZzSx0DXF46LFRvU5YhM0xYERzMo
-	 ywfqXTlXD5nRDeB5QBTJbLbvUzTyZhFN351gw8F8=
+	b=0fJVi0DsCngzkCt6G3ket9+AxwQjiyjpXhfJR8wd5X/DmV7c2uQnkfMsWPGWPGqOB
+	 x/WxloSxHdUbm1OJUQWIE+6IZkGSRUcGHYLw/5yCi5iVBL+9AzqIcF8vYcLIVzuSlM
+	 qu42c4WhV/9L5k1TyuKaB5h72WHSJHygJt/TVxhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Michael Walle <mwalle@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 100/568] arm64: dts: rockchip: disable display subsystem for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:43:27 +0200
-Message-ID: <20240730151643.784491007@linuxfoundation.org>
+Subject: [PATCH 6.10 096/809] ARM: dts: imx6qdl-kontron-samx6i: fix board reset
+Date: Tue, 30 Jul 2024 17:39:32 +0200
+Message-ID: <20240730151728.426850952@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,41 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 2bf5d445df2ec89689d15ea259a916260c936959 ]
+[ Upstream commit b972d6b3b46345023aee56a95df8e2c137aa4ee4 ]
 
-The R66S and R68S boards do not have HDMI output, so disable
-the display subsystem.
+On i.MX6 the board is reset by the watchdog. But in turn to do a
+complete board reset, we have to assert the WDOG_B output which is
+routed also to the CPLD which then do a complete power-cycle of the
+board.
 
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240701143028.1203997-3-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 2125212785c9 ("ARM: dts: imx6qdl-kontron-samx6i: add Kontron SMARC SoM Support")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index e08c9eab6f170..25c49bdbadbcb 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -115,6 +115,10 @@ &cpu3 {
- 	cpu-supply = <&vdd_cpu>;
- };
- 
-+&display_subsystem {
-+	status = "disabled";
-+};
-+
- &gpu {
- 	mali-supply = <&vdd_gpu>;
+diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
+index d6c049b9a9c69..700780bf64f58 100644
+--- a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
++++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
+@@ -817,5 +817,6 @@ &wdog1 {
+ 	/* CPLD is feeded by watchdog (hardwired) */
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_wdog1>;
++	fsl,ext-reset-output;
  	status = "okay";
+ };
 -- 
 2.43.0
 
