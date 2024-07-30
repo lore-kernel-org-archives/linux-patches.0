@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96FF1917EC;
-	Tue, 30 Jul 2024 16:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C8371A0724;
+	Tue, 30 Jul 2024 16:16:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356168; cv=none; b=G8ixIYJL/zdk5vhaRvll7YvEKQUujP8ZzP2CRU0F+GAayhvzBA+Sked8m1MH8CTwXha4VZW0GF/6FD0m/mkmPJtMZfO50ADniwoiq8fjkLBV2XZ8/NQJXAEcpZQi7nCzeX0gKpyrVNGUwo3Djq2hxuzEfAjS/DCWTVFWdSEK118=
+	t=1722356171; cv=none; b=EymXcxoO/Aj+cI1y91X1MDJIuUXuXDgNI0Ow3YxwAVbbzhUmjhrH6hVgrXsic1Aoz5viGGIqkYTRwmsdsMe1hyZw04OZYQvvcio0NHTrADaU49yPHwxSSf0XP8nNUOor9hDSzZNUh2+JsVbZlkm+NeuSn8DxPnD3tOHFHFF3vvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356168; c=relaxed/simple;
-	bh=iPcodd5ejGTo2aII8bjhhP2KsSXc7oRLuDZlolU49pg=;
+	s=arc-20240116; t=1722356171; c=relaxed/simple;
+	bh=KVexSoLEnKHpzM9ZYZ5kzb53SkGaYK6aUMAKhb47lDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qI1GLkT470u1TetCc5ysQ83zfZjGhXt7UHNUifSPqdXi8ikmvYzpMwsZHnaEE+hyr4BISp5qzKFs5vDae4THxjfbtePgdTmHjqLoApEyWojWKmuSfIezEY/fku+LVRf6k9fg57Jtmfm04+0DgUR0BLrEOw+bg7YQ69saCCjw4Gk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+IkqSrL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KVIJEKA7p3jI/nBnilG+UyAGuaCCbwlBAAmzbtuB+xDbBpLgOHV0iSeuvsSdkhd0hvSyKWgzbQWuACd+08HYHQ/85FrPT5Jn5h/AMDGtgDaW8XDXVKBGAYW9HA8Ss60oooz+rN0/SghcR8+07tLw6S/i6feno8dN48C/HsH66DU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b6CphrpU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+IkqSrL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69804C32782;
-	Tue, 30 Jul 2024 16:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b6CphrpU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C69CC32782;
+	Tue, 30 Jul 2024 16:16:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356167;
-	bh=iPcodd5ejGTo2aII8bjhhP2KsSXc7oRLuDZlolU49pg=;
+	s=korg; t=1722356171;
+	bh=KVexSoLEnKHpzM9ZYZ5kzb53SkGaYK6aUMAKhb47lDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+IkqSrLh7/OI2TrmC/ym8AN/Td5nyhUBApiq4XfDAfpT50QtrVZlYcyWKpnYA4KS
-	 AkkEn0LfSlFQOwiwzcfgjpm+shrX06fCfIXcZ9lLNjcMwozCniFbyT5O0FImTfb1yE
-	 QEv2t8PXLQdkebNfkLAAFEVVWS3dKH5618P9MKio=
+	b=b6CphrpUfcBW3InKtd0eQ27ok+50g1o2T1PO38cuzHm2hPpqDsI7dNf3bfG2PhKJZ
+	 tIo0H+XuEmELpbEpYQpCZUM9TCV1o/ICku9VWA2GkjEYfFMN2Mq5vUylA80A2rUFOO
+	 kXADpuFSi4seQCsVyVp0zpT3y/GiuPUpAtjcMeNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Nathan Hebert <nhebert@chromium.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 120/568] wifi: ath11k: fix wrong definition of CE rings base address
-Date: Tue, 30 Jul 2024 17:43:47 +0200
-Message-ID: <20240730151644.567159601@linuxfoundation.org>
+Subject: [PATCH 6.1 165/440] media: venus: flush all buffers in output plane streamoff
+Date: Tue, 30 Jul 2024 17:46:38 +0200
+Message-ID: <20240730151622.316468970@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +50,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-[ Upstream commit 5714e25f1d1875b300fb337dadfaa75324c1161a ]
+[ Upstream commit e750a4b1224142bd8dd057b0d5adf8a5608b7e77 ]
 
-Base address of CE ring is defined as u32, currently this works
-because coherent DMA mask configured as 32 bit:
+For scenarios, when source change is followed by VIDIOC_STREAMOFF
+on output plane, driver should discard any queued OUTPUT
+buffers, which are not decoded or dequeued.
+Flush with HFI_FLUSH_INPUT does not have any actual impact.
+So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+queued buffers.
 
-	#define ATH11K_PCI_COHERENT_DMA_MASK	32
-
-However this mask could be changed once firmware bugs are fixed
-to fully support 36 bit DMA addressing. So to protect against any
-future changes to the DMA mask, change the type of the fields that
-are dependent upon it.
-
-This is found during code review. Compile tested only.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240524021558.34452-1-quic_bqiang@quicinc.com
+Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Nathan Hebert <nhebert@chromium.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ce.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ce.h b/drivers/net/wireless/ath/ath11k/ce.h
-index 69946fc700777..bcde2fcf02cf7 100644
---- a/drivers/net/wireless/ath/ath11k/ce.h
-+++ b/drivers/net/wireless/ath/ath11k/ce.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef ATH11K_CE_H
-@@ -146,7 +146,7 @@ struct ath11k_ce_ring {
- 	/* Host address space */
- 	void *base_addr_owner_space_unaligned;
- 	/* CE address space */
--	u32 base_addr_ce_space_unaligned;
-+	dma_addr_t base_addr_ce_space_unaligned;
- 
- 	/* Actual start of descriptors.
- 	 * Aligned to descriptor-size boundary.
-@@ -156,7 +156,7 @@ struct ath11k_ce_ring {
- 	void *base_addr_owner_space;
- 
- 	/* CE address space */
--	u32 base_addr_ce_space;
-+	dma_addr_t base_addr_ce_space;
- 
- 	/* HAL ring id */
- 	u32 hal_ring_id;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 1a52c2ea2da5b..9c00afd261aa3 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1221,7 +1221,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+ 		break;
+ 	case VENUS_DEC_STATE_INIT:
+ 	case VENUS_DEC_STATE_CAPTURE_SETUP:
+-		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
++		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+ 		break;
+ 	default:
+ 		break;
 -- 
 2.43.0
 
