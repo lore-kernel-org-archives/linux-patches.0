@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9811A76A5;
-	Tue, 30 Jul 2024 17:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40131A76B4;
+	Tue, 30 Jul 2024 17:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359483; cv=none; b=q1n/+SHDcOmOsiBRlsxD2b7+mXmouDHFotfjfpDHLRbnZP4qUsdsiVKJP7ogn/utSFQGeMTRmfjC1Gk8SwhHpSfVoeauU4Q6giFyXBMLj8ZFn6y8ZrPo/7xQvzYtkiYJnVBzdzQa3oC+JtVgjiux/5y4rt6bBofWsJFurJkbxw8=
+	t=1722359485; cv=none; b=o61SAUmbjYqPEsfrXSx/CHxUhfakPiG/4qPbThPY9lt7DB6RaE5YSvDE4b0AfqRKtIR53W4zhLKqXgl/o1pdYnNnZccsOxz96B6yqLvLABcGmbNxtZbni8omqt2EgPyqa9sPsECEnoPztM7U8gTJbOxGgkbKtP1zkmDt+ZvRogc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359483; c=relaxed/simple;
-	bh=ZDfKi6kLaSY1NRnxkHICKbDoNW/V5CGMFa3UG+yVPDU=;
+	s=arc-20240116; t=1722359485; c=relaxed/simple;
+	bh=uLleGvMyyirLyk4rSCl/A9LlE5GSoBwQXUhRRtMwxEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EHH8oJzuSGAErvdT/GvnvI5p8eB5eSsNcumx2qhC22+6G3pyhSkP30GYVEUNS2vTXuiTJVooYitpTiG5Q0iPRPmjU9zE9zbkXRrGJcZMKhYNNwkr5VoMDCtUwLiu93n9aW47y5Lgcm+7XMrgjyB9rMWubIJxPBbqJAp66cR3Y0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwMTewVa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUxn0hgAWeVAKdSKxJHPzYCQ6BCEqYeEsLdBjLN6L9aspURdfHb7lV9W0uoILKyZgYOy6oZZ9O2aqFC2AFalGH3sg15wa8UK+cAtaQXywQOMmtZKOrVTusz7bKjbMgN5grFnx8XHn1KjwM4pXbnxuNkMCiNebFBt3iDDPlqZVLk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tfyty211; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwMTewVa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A01BC32782;
-	Tue, 30 Jul 2024 17:11:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tfyty211"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43984C32782;
+	Tue, 30 Jul 2024 17:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359482;
-	bh=ZDfKi6kLaSY1NRnxkHICKbDoNW/V5CGMFa3UG+yVPDU=;
+	s=korg; t=1722359485;
+	bh=uLleGvMyyirLyk4rSCl/A9LlE5GSoBwQXUhRRtMwxEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pwMTewVaGZNxPACw0zcGNElGdXboFBBdqN4df+p8uThhQltrE1BZ3ptw0Fpa0wcI7
-	 Jeu8v7KmrWV37GZuWyUO7uBwS6T+rBTFQLoP+7EID5z1JrF1ySc0jXAqdO69joeyEk
-	 GEAOOWsBBeHHQIZWax2QKNM1P2n1IUdeO4E5o2Tw=
+	b=tfyty21189DTyajUUvLw5A8al0+jfz42Jjdb4N8FH0UUVkLI16g+EATB6Qnm2gntI
+	 nWMqNwH+a1hK/oXLfjRO5WxkAKGAPisJgR5BFVPjeN22udt26oIvOC34ZSciMC7IUw
+	 wdpzGr9VePM26Z87wobJk8woKcFhh4915ohPft5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 467/809] RDMA/hns: Fix mbx timing out before CMD execution is completed
-Date: Tue, 30 Jul 2024 17:45:43 +0200
-Message-ID: <20240730151743.179473617@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 460/568] scsi: qla2xxx: Unable to act on RSCN for port online
+Date: Tue, 30 Jul 2024 17:49:27 +0200
+Message-ID: <20240730151658.001006408@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,114 +49,238 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit bbddfa2255dd0800209697fd12378e02ed05f833 ]
+commit c3d98b12eef8db436e32f1a8c5478be57dc15621 upstream.
 
-When a large number of tasks are issued, the speed of HW processing
-mbx will slow down. The standard for judging mbx timeout in the current
-firmware is 30ms, and the current timeout standard for the driver is also
-30ms.
+The device does not come online when the target port is online. There were
+multiple RSCNs indicating multiple devices were affected. Driver is in the
+process of finishing a fabric scan. A new RSCN (device up) arrived at the
+tail end of the last fabric scan. Driver mistakenly thinks the new RSCN is
+being taken care of by the previous fabric scan, where this notification is
+cleared and not acted on. The laser needs to be blinked again to get the
+device to show up.
 
-Considering that firmware scheduling in multi-function scenarios takes a
-certain amount of time, this will cause the driver to time out too early
-and report a failure before mbx execution times out.
+To prevent driver from accidentally clearing the RSCN notification, each
+RSCN is given a generation value.  A fabric scan will scan for that
+generation(s).  Any new RSCN arrive after the scan start will have a new
+generation value. This will trigger another scan to get latest data. The
+RSCN notification flag will be cleared when the scan is associate to that
+generation.
 
-This patch introduces a new mechanism that can set different timeouts for
-different cmds and extends the timeout of mbx to 35ms.
-
-Fixes: a04ff739f2a9 ("RDMA/hns: Add command queue support for hip08 RoCE driver")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240710133705.896445-9-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202406210538.w875N70K-lkp@intel.com/
+Fixes: bb2ca6b3f09a ("scsi: qla2xxx: Relogin during fabric disturbance")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 35 +++++++++++++++++-----
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  6 ++++
- 2 files changed, 34 insertions(+), 7 deletions(-)
+ drivers/scsi/qla2xxx/qla_def.h    |    3 +++
+ drivers/scsi/qla2xxx/qla_gs.c     |   33 ++++++++++++++++++++++++++++++---
+ drivers/scsi/qla2xxx/qla_init.c   |   24 +++++++++++++++++++-----
+ drivers/scsi/qla2xxx/qla_inline.h |    8 ++++++++
+ 4 files changed, 60 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index aecd137c1e605..621b057fb9daa 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -1275,12 +1275,38 @@ static int hns_roce_cmd_err_convert_errno(u16 desc_ret)
- 	return -EIO;
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -3312,6 +3312,8 @@ struct fab_scan_rp {
+ struct fab_scan {
+ 	struct fab_scan_rp *l;
+ 	u32 size;
++	u32 rscn_gen_start;
++	u32 rscn_gen_end;
+ 	u16 scan_retry;
+ #define MAX_SCAN_RETRIES 5
+ 	enum scan_flags_t scan_flags;
+@@ -5030,6 +5032,7 @@ typedef struct scsi_qla_host {
+ 
+ 	/* Counter to detect races between ELS and RSCN events */
+ 	atomic_t		generation_tick;
++	atomic_t		rscn_gen;
+ 	/* Time when global fcport update has been scheduled */
+ 	int			total_fcport_update_gen;
+ 	/* List of pending LOGOs, protected by tgt_mutex */
+--- a/drivers/scsi/qla2xxx/qla_gs.c
++++ b/drivers/scsi/qla2xxx/qla_gs.c
+@@ -3168,6 +3168,29 @@ static int qla2x00_is_a_vp(scsi_qla_host
+ 	return rc;
  }
  
-+static u32 hns_roce_cmdq_tx_timeout(u16 opcode, u32 tx_timeout)
++static bool qla_ok_to_clear_rscn(scsi_qla_host_t *vha, fc_port_t *fcport)
 +{
-+	static const struct hns_roce_cmdq_tx_timeout_map cmdq_tx_timeout[] = {
-+		{HNS_ROCE_OPC_POST_MB, HNS_ROCE_OPC_POST_MB_TIMEOUT},
-+	};
-+	int i;
++	u32 rscn_gen;
 +
-+	for (i = 0; i < ARRAY_SIZE(cmdq_tx_timeout); i++)
-+		if (cmdq_tx_timeout[i].opcode == opcode)
-+			return cmdq_tx_timeout[i].tx_timeout;
++	rscn_gen = atomic_read(&vha->rscn_gen);
++	ql_dbg(ql_dbg_disc + ql_dbg_verbose, vha, 0x2017,
++	    "%s %d %8phC rscn_gen %x start %x end %x current %x\n",
++	    __func__, __LINE__, fcport->port_name, fcport->rscn_gen,
++	    vha->scan.rscn_gen_start, vha->scan.rscn_gen_end, rscn_gen);
 +
-+	return tx_timeout;
++	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_start,
++	    vha->scan.rscn_gen_end))
++		/* rscn came in before fabric scan */
++		return true;
++
++	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_end, rscn_gen))
++		/* rscn came in after fabric scan */
++		return false;
++
++	/* rare: fcport's scan_needed + rscn_gen must be stale */
++	return true;
 +}
 +
-+static void hns_roce_wait_csq_done(struct hns_roce_dev *hr_dev, u16 opcode)
-+{
-+	struct hns_roce_v2_priv *priv = hr_dev->priv;
-+	u32 tx_timeout = hns_roce_cmdq_tx_timeout(opcode, priv->cmq.tx_timeout);
-+	u32 timeout = 0;
-+
-+	do {
-+		if (hns_roce_cmq_csq_done(hr_dev))
-+			break;
-+		udelay(1);
-+	} while (++timeout < tx_timeout);
-+}
-+
- static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 			       struct hns_roce_cmq_desc *desc, int num)
+ void qla24xx_async_gnnft_done(scsi_qla_host_t *vha, srb_t *sp)
  {
- 	struct hns_roce_v2_priv *priv = hr_dev->priv;
- 	struct hns_roce_v2_cmq_ring *csq = &priv->cmq.csq;
--	u32 timeout = 0;
- 	u16 desc_ret;
- 	u32 tail;
- 	int ret;
-@@ -1301,12 +1327,7 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
+ 	fc_port_t *fcport;
+@@ -3281,10 +3304,10 @@ void qla24xx_async_gnnft_done(scsi_qla_h
+ 				   (fcport->scan_needed &&
+ 				    fcport->port_type != FCT_INITIATOR &&
+ 				    fcport->port_type != FCT_NVME_INITIATOR)) {
++				fcport->scan_needed = 0;
+ 				qlt_schedule_sess_for_deletion(fcport);
+ 			}
+ 			fcport->d_id.b24 = rp->id.b24;
+-			fcport->scan_needed = 0;
+ 			break;
+ 		}
  
- 	atomic64_inc(&hr_dev->dfx_cnt[HNS_ROCE_DFX_CMDS_CNT]);
+@@ -3325,7 +3348,9 @@ login_logout:
+ 				do_delete = true;
+ 			}
  
--	do {
--		if (hns_roce_cmq_csq_done(hr_dev))
--			break;
--		udelay(1);
--	} while (++timeout < priv->cmq.tx_timeout);
--
-+	hns_roce_wait_csq_done(hr_dev, le16_to_cpu(desc->opcode));
- 	if (hns_roce_cmq_csq_done(hr_dev)) {
- 		ret = 0;
- 		for (i = 0; i < num; i++) {
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index def1d15a03c7e..c65f68a14a260 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -224,6 +224,12 @@ enum hns_roce_opcode_type {
- 	HNS_SWITCH_PARAMETER_CFG			= 0x1033,
- };
- 
-+#define HNS_ROCE_OPC_POST_MB_TIMEOUT 35000
-+struct hns_roce_cmdq_tx_timeout_map {
-+	u16 opcode;
-+	u32 tx_timeout;
-+};
+-			fcport->scan_needed = 0;
++			if (qla_ok_to_clear_rscn(vha, fcport))
++				fcport->scan_needed = 0;
 +
- enum {
- 	TYPE_CRQ,
- 	TYPE_CSQ,
--- 
-2.43.0
-
+ 			if (((qla_dual_mode_enabled(vha) ||
+ 			      qla_ini_mode_enabled(vha)) &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE) ||
+@@ -3355,7 +3380,9 @@ login_logout:
+ 					    fcport->port_name, fcport->loop_id,
+ 					    fcport->login_retry);
+ 				}
+-				fcport->scan_needed = 0;
++
++				if (qla_ok_to_clear_rscn(vha, fcport))
++					fcport->scan_needed = 0;
+ 				qla24xx_fcport_handle_login(vha, fcport);
+ 			}
+ 		}
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -1842,10 +1842,18 @@ int qla24xx_post_newsess_work(struct scs
+ 	return qla2x00_post_work(vha, e);
+ }
+ 
++static void qla_rscn_gen_tick(scsi_qla_host_t *vha, u32 *ret_rscn_gen)
++{
++	*ret_rscn_gen = atomic_inc_return(&vha->rscn_gen);
++	/* memory barrier */
++	wmb();
++}
++
+ void qla2x00_handle_rscn(scsi_qla_host_t *vha, struct event_arg *ea)
+ {
+ 	fc_port_t *fcport;
+ 	unsigned long flags;
++	u32 rscn_gen;
+ 
+ 	switch (ea->id.b.rsvd_1) {
+ 	case RSCN_PORT_ADDR:
+@@ -1875,15 +1883,16 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 					 * Otherwise we're already in the middle of a relogin
+ 					 */
+ 					fcport->scan_needed = 1;
+-					fcport->rscn_gen++;
++					qla_rscn_gen_tick(vha, &fcport->rscn_gen);
+ 				}
+ 			} else {
+ 				fcport->scan_needed = 1;
+-				fcport->rscn_gen++;
++				qla_rscn_gen_tick(vha, &fcport->rscn_gen);
+ 			}
+ 		}
+ 		break;
+ 	case RSCN_AREA_ADDR:
++		qla_rscn_gen_tick(vha, &rscn_gen);
+ 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+ 			if (fcport->flags & FCF_FCP2_DEVICE &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE)
+@@ -1891,11 +1900,12 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 
+ 			if ((ea->id.b24 & 0xffff00) == (fcport->d_id.b24 & 0xffff00)) {
+ 				fcport->scan_needed = 1;
+-				fcport->rscn_gen++;
++				fcport->rscn_gen = rscn_gen;
+ 			}
+ 		}
+ 		break;
+ 	case RSCN_DOM_ADDR:
++		qla_rscn_gen_tick(vha, &rscn_gen);
+ 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+ 			if (fcport->flags & FCF_FCP2_DEVICE &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE)
+@@ -1903,19 +1913,20 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 
+ 			if ((ea->id.b24 & 0xff0000) == (fcport->d_id.b24 & 0xff0000)) {
+ 				fcport->scan_needed = 1;
+-				fcport->rscn_gen++;
++				fcport->rscn_gen = rscn_gen;
+ 			}
+ 		}
+ 		break;
+ 	case RSCN_FAB_ADDR:
+ 	default:
++		qla_rscn_gen_tick(vha, &rscn_gen);
+ 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+ 			if (fcport->flags & FCF_FCP2_DEVICE &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE)
+ 				continue;
+ 
+ 			fcport->scan_needed = 1;
+-			fcport->rscn_gen++;
++			fcport->rscn_gen = rscn_gen;
+ 		}
+ 		break;
+ 	}
+@@ -1924,6 +1935,7 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 	if (vha->scan.scan_flags == 0) {
+ 		ql_dbg(ql_dbg_disc, vha, 0xffff, "%s: schedule\n", __func__);
+ 		vha->scan.scan_flags |= SF_QUEUED;
++		vha->scan.rscn_gen_start = atomic_read(&vha->rscn_gen);
+ 		schedule_delayed_work(&vha->scan.scan_work, 5);
+ 	}
+ 	spin_unlock_irqrestore(&vha->work_lock, flags);
+@@ -6393,6 +6405,8 @@ qla2x00_configure_fabric(scsi_qla_host_t
+ 		qlt_do_generation_tick(vha, &discovery_gen);
+ 
+ 		if (USE_ASYNC_SCAN(ha)) {
++			/* start of scan begins here */
++			vha->scan.rscn_gen_end = atomic_read(&vha->rscn_gen);
+ 			rval = qla24xx_async_gpnft(vha, FC4_TYPE_FCP_SCSI,
+ 			    NULL);
+ 			if (rval)
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -631,3 +631,11 @@ static inline int qla_mapq_alloc_qp_cpu_
+ 	}
+ 	return 0;
+ }
++
++static inline bool val_is_in_range(u32 val, u32 start, u32 end)
++{
++	if (val >= start && val <= end)
++		return true;
++	else
++		return false;
++}
 
 
