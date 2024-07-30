@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52FF1A618E;
-	Tue, 30 Jul 2024 16:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98C61A618D;
+	Tue, 30 Jul 2024 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356641; cv=none; b=LE0FWpE3Uf7jZIWqjb5oeK8BWU5hGj75qAQvxY8CGPtDZQ4/lruRN9Gf3hdDDt31mggzz26jsjYPaqqCMosQoMPbIrW8y45jTVsQV8fIFZns+mWnTge1rm3xHpZo2xCCYk1oSnsYuHkkSh15nPLx91Lq/201EdE0V4qR2eKPyys=
+	t=1722356646; cv=none; b=uFWR+I1SVihYPim/PNiCIfu9VJGf7pYl6T2Y66rxxrRFrl3PgGSIzBVLYu6oMvKKYFscwY1mLbZrmmCWqH+iHUKhd0/BXqFYNAFmUJAVnw+3++nhsQhmJ1vz+rYZ0N+Tz57P487izVaI50jyfhbgkJjwSrPKUmM6POKQDSXPkt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356641; c=relaxed/simple;
-	bh=SCTSqtRT9pd3mKe4h62r359eYHeiovHdsl4xFlSAG1g=;
+	s=arc-20240116; t=1722356646; c=relaxed/simple;
+	bh=SryfaR+a20mjwJcHS2+s+/VbuOj6XuYKr4qpVg3s7eY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c4gkaAQCSCKiCW8fOAuIU6R0kOAuXkXAv+qXyJYN05mg+/KqIlyLNCVteBHPELjQsqzHbunzcYbZjlNSudYjLZNV7HWa89/IbyNeCEP1bM3dIBccetLeV0tzAONVUNXXbHibkTeiGUM63Sb0rplzAA8tDq3DKYP8LyBy70cVMRY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a72KZbQi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SGc8x+Wz4qutBG7e9w6fxwvwXRpaCWwhkVDHpYi8XnG0bUTqRQIUPO+0rszcJaHKUgdhcnz1OSbU5BB7MPy3fj08YNq3Zm3pF27uJpeqDn4lYOzwktTscQBWl+XEquMSx0ouVljlzFcUt1g/Lw/IeHXKuDN+O4nG4XGTZ/apLD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gV5NvUfe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a72KZbQi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BCCC32782;
-	Tue, 30 Jul 2024 16:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gV5NvUfe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5CBC32782;
+	Tue, 30 Jul 2024 16:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356641;
-	bh=SCTSqtRT9pd3mKe4h62r359eYHeiovHdsl4xFlSAG1g=;
+	s=korg; t=1722356645;
+	bh=SryfaR+a20mjwJcHS2+s+/VbuOj6XuYKr4qpVg3s7eY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a72KZbQiKqdfDGRksdkEcK/qdrkPmp4ulfkXUA9YW+petY9aoRYvmpawiezcuOwZw
-	 wu+yhymM/oBdFvotGUFr8KL2myfbtYgVFzSpUYZxK6E/cklE21fHUGf93nyWU9ea/g
-	 ZI4rmszYfVwg+o3se647pH172+98fL+qC4UbteaQ=
+	b=gV5NvUfeGvj+M/mFu9eQjZTeNv/iXlddi2XCvjwuKRFIzj4U/0R5qStB4HQfOc2BA
+	 QEdtJvLmtWgGCNFYjZCxcadJff/mhJ2V5D0nQIa5HC/+hNiT8KVl7VCcI91J5kfA3C
+	 rs59aUEYXsph74f3uuR4SDLoLNYhhZqEEVHGJHpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Mark Brown <broonie@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 202/440] ASoC: qcom: Adjust issues in case of DT error in asoc_qcom_lpass_cpu_platform_probe()
-Date: Tue, 30 Jul 2024 17:47:15 +0200
-Message-ID: <20240730151623.760960957@linuxfoundation.org>
+Subject: [PATCH 6.1 215/440] clk: en7523: fix rate divider for slic and spi clocks
+Date: Tue, 30 Jul 2024 17:47:28 +0200
+Message-ID: <20240730151624.260897659@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -51,48 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit f9f7f29f64454bb20896c7d918c3abc3a1aa487b ]
+[ Upstream commit 58c53d43142f222221e5a76a7016c4d8f3b84b97 ]
 
-If IORESOURCE_MEM "lpass-rxtx-cdc-dma-lpm" or "lpass-va-cdc-dma-lpm"
-resources is not provided in Device Tree due to any error,
-platform_get_resource_byname() will return NULL which is later
-dereferenced. According to sound/qcom,lpass-cpu.yaml, these resources
-are provided, but DT can be broken due to any error. In such cases driver
-must be able to protect itself, since the DT is external data for the
-driver.
-Adjust this issues by adding NULL return check.
+Introduce div_offset field in en_clk_desc struct in order to fix rate
+divider estimation in en7523_get_div routine for slic and spi fixed
+rate clocks.
+Moreover, fix base_shift for crypto clock.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: b138706225c9 ("ASoC: qcom: Add regmap config support for codec dma driver")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://patch.msgid.link/20240605104953.12072-1-amishin@t-argos.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1e6273179190 ("clk: en7523: Add clock driver for Airoha EN7523 SoC")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://lore.kernel.org/r/c491bdea05d847f1f1294b94f14725d292eb95d0.1718615934.git.lorenzo@kernel.org
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-cpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/clk-en7523.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
-index dbdaaa85ce481..4387cca893c5d 100644
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -1160,9 +1160,13 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
- 		}
+diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
+index 29f0126cbd05b..d22fae24a3dab 100644
+--- a/drivers/clk/clk-en7523.c
++++ b/drivers/clk/clk-en7523.c
+@@ -41,6 +41,7 @@ struct en_clk_desc {
+ 	u8 div_shift;
+ 	u16 div_val0;
+ 	u8 div_step;
++	u8 div_offset;
+ };
  
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-rxtx-cdc-dma-lpm");
-+		if (!res)
-+			return -EINVAL;
- 		drvdata->rxtx_cdc_dma_lpm_buf = res->start;
+ struct en_clk_gate {
+@@ -68,6 +69,7 @@ static const struct en_clk_desc en7523_base_clks[] = {
+ 		.div_bits = 3,
+ 		.div_shift = 0,
+ 		.div_step = 1,
++		.div_offset = 1,
+ 	}, {
+ 		.id = EN7523_CLK_EMI,
+ 		.name = "emi",
+@@ -81,6 +83,7 @@ static const struct en_clk_desc en7523_base_clks[] = {
+ 		.div_bits = 3,
+ 		.div_shift = 0,
+ 		.div_step = 1,
++		.div_offset = 1,
+ 	}, {
+ 		.id = EN7523_CLK_BUS,
+ 		.name = "bus",
+@@ -94,6 +97,7 @@ static const struct en_clk_desc en7523_base_clks[] = {
+ 		.div_bits = 3,
+ 		.div_shift = 0,
+ 		.div_step = 1,
++		.div_offset = 1,
+ 	}, {
+ 		.id = EN7523_CLK_SLIC,
+ 		.name = "slic",
+@@ -134,13 +138,14 @@ static const struct en_clk_desc en7523_base_clks[] = {
+ 		.div_bits = 3,
+ 		.div_shift = 0,
+ 		.div_step = 1,
++		.div_offset = 1,
+ 	}, {
+ 		.id = EN7523_CLK_CRYPTO,
+ 		.name = "crypto",
  
- 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-va-cdc-dma-lpm");
-+		if (!res)
-+			return -EINVAL;
- 		drvdata->va_cdc_dma_lpm_buf = res->start;
+ 		.base_reg = REG_CRYPTO_CLKSRC,
+ 		.base_bits = 1,
+-		.base_shift = 8,
++		.base_shift = 0,
+ 		.base_values = emi_base,
+ 		.n_base_values = ARRAY_SIZE(emi_base),
  	}
+@@ -185,7 +190,7 @@ static u32 en7523_get_div(void __iomem *base, int i)
+ 	if (!val && desc->div_val0)
+ 		return desc->div_val0;
  
+-	return (val + 1) * desc->div_step;
++	return (val + desc->div_offset) * desc->div_step;
+ }
+ 
+ static int en7523_pci_is_enabled(struct clk_hw *hw)
 -- 
 2.43.0
 
