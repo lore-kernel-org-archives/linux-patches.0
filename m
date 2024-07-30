@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 556E38BE8;
-	Tue, 30 Jul 2024 16:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1D7187FF2;
+	Tue, 30 Jul 2024 16:06:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355612; cv=none; b=nzP5mr6aShyZNnSljF3NdxPCsneavSgEHpUkvt+Q0bC37PsZEtWVoQSFtbHiD09zKXsewvpk1dGXk9SYNZGcVibRQUFwFaRb1VgF0wwjnfEFmKfavH7WyadG4ugtqayeEz/0oIAfAV+nI1TZuP7+k+Wj7Ff5NruP/0K5NAsEcbQ=
+	t=1722355615; cv=none; b=pD3/GYU9aMvgZ9jyjRG02lTcM/cRbNPE4Jp4YKSYQQmXBNbz6zgFt8JCycSmMaa2iy1kpu4/uy7WkHQgUIgI/NbmL+wTajTOyHxR8BdRckzPjnBXnTppaJYU0xXVvIae4OwEhc7P/hsv9A+SGpvthYi0OqQCNXslQG2buq3TKdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355612; c=relaxed/simple;
-	bh=PV3J7OaIZsZ04D9RhBNvP4yGPfa0nmsH/thm643Sof4=;
+	s=arc-20240116; t=1722355615; c=relaxed/simple;
+	bh=6/OiqucihDT3HJulfDpe4g8K8B19ExjcTW+QOgbELDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlGIDBZLEnRW1bma1K2OZ+hlkZDI8yY5TiZXvrEjy0lbB3hHfcPiYVlI5bi63U1pi8J0+v2RJeKU9oawDT0T+WQVM170eO4sBX2WiMauxWe6R8gobIbEJSqBoM5d63wmwEvOonpLvg2MtxJ5whznKfQeWvQ8i3qAJSUq1PTZLHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KIdvmgHd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FBOddwEqXMqE3PcQkQ7XcI4/R46g1PI+ApWX01TqLuUPDKWEJ9GExwf9j4hbLVlz0knUqjrnUvmMalpE1tbCM2mflAA66cKKmW74y50uAJazQGOfbgBSkTo0V989tOpnuXteDfQRlXqJ97U9EZ+hXke1dntMLDVW0xiVPaHxScs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+QrumtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KIdvmgHd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BA2C32782;
-	Tue, 30 Jul 2024 16:06:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+QrumtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9ECC32782;
+	Tue, 30 Jul 2024 16:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355612;
-	bh=PV3J7OaIZsZ04D9RhBNvP4yGPfa0nmsH/thm643Sof4=;
+	s=korg; t=1722355615;
+	bh=6/OiqucihDT3HJulfDpe4g8K8B19ExjcTW+QOgbELDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIdvmgHdDR3evIUzq4tQTxpLsb3/39O2Ir9mNiDwPta9O7YO5zqjTLsfi9uX4j31V
-	 1ovCVJC6xpwYiwbVXTzVW6+9XtklpFwYf4D+pWO0CkPteodsyohFpjDivmutUnL6r6
-	 /i+C7yn5xlqjRI73wc2Fuayo3irFyAqJelFzAmg0=
+	b=N+QrumtElnL8MafV7eTdJIOf75zYgQ0Inb34RUrZh712kLleW9uzcFvvwNXPC767z
+	 nRsBMUcDBWycMsP0CgXIBYQP/Mc0FbpT5kJMma9XN90CqKhqSz2Rd1OEJan9g0prx/
+	 ewWSAXoc4qiuVuaveHKEC9D5zYJKed7iUDZJpGUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 071/809] arm64: dts: qcom: sc8280xp-*: Remove thermal zone polling delays
-Date: Tue, 30 Jul 2024 17:39:07 +0200
-Message-ID: <20240730151727.445172156@linuxfoundation.org>
+Subject: [PATCH 6.6 074/568] arm64: dts: mediatek: mt7622: fix "emmc" pinctrl mux
+Date: Tue, 30 Jul 2024 17:43:01 +0200
+Message-ID: <20240730151642.754491322@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,159 +45,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-[ Upstream commit e388421387e8b1b51c507883aaf13f40277fe137 ]
+[ Upstream commit aebba1030a5766cdf894ed4ab0cac7aed5aee9c1 ]
 
-All of the thermal zone suppliers are interrupt-driven, remove the
-bogus and unnecessary polling that only wastes CPU time.
+Value "emmc_rst" is a group name and should be part of the "groups"
+property.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240510-topic-msm-polling-cleanup-v2-19-436ca4218da2@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: f7fd6d04c104 ("arm64: dts: qcom: sc8280xp: Throttle the GPU when overheating")
+This fixes:
+arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
+        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
+arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
+        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
+
+Fixes: 3725ba3f5574 ("arm64: dts: mt7622: add pinctrl related device nodes")
+Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20240604074916.7929-1-zajec5@gmail.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts |  2 +-
- arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi        |  4 ++--
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi              | 13 -------------
- 3 files changed, 3 insertions(+), 16 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts | 4 ++--
+ arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 4bf99b6b6e5fb..6b759e67f4d3d 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -299,7 +299,7 @@ linux,cma {
- 	thermal-zones {
- 		skin-temp-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <0>;
-+
- 			thermal-sensors = <&pmk8280_adc_tm 5>;
- 
- 			trips {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-index 945de77911de1..1e3babf2e40d8 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-pmics.dtsi
-@@ -14,7 +14,7 @@ / {
- 	thermal-zones {
- 		pm8280_1_thermal: pm8280-1-thermal {
- 			polling-delay-passive = <100>;
--			polling-delay = <0>;
-+
- 			thermal-sensors = <&pm8280_1_temp_alarm>;
- 
- 			trips {
-@@ -34,7 +34,7 @@ trip1 {
- 
- 		pm8280_2_thermal: pm8280-2-thermal {
- 			polling-delay-passive = <100>;
--			polling-delay = <0>;
-+
- 			thermal-sensors = <&pm8280_2_temp_alarm>;
- 
- 			trips {
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 59f0a850671a3..de554d5d02010 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -5833,7 +5833,6 @@ sound: sound {
- 	thermal-zones {
- 		cpu0-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 1>;
- 
-@@ -5848,7 +5847,6 @@ cpu-crit {
- 
- 		cpu1-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 2>;
- 
-@@ -5863,7 +5861,6 @@ cpu-crit {
- 
- 		cpu2-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 3>;
- 
-@@ -5878,7 +5875,6 @@ cpu-crit {
- 
- 		cpu3-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 4>;
- 
-@@ -5893,7 +5889,6 @@ cpu-crit {
- 
- 		cpu4-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 5>;
- 
-@@ -5908,7 +5903,6 @@ cpu-crit {
- 
- 		cpu5-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 6>;
- 
-@@ -5923,7 +5917,6 @@ cpu-crit {
- 
- 		cpu6-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 7>;
- 
-@@ -5938,7 +5931,6 @@ cpu-crit {
- 
- 		cpu7-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 8>;
- 
-@@ -5953,7 +5945,6 @@ cpu-crit {
- 
- 		cluster0-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens0 9>;
- 
-@@ -5967,9 +5958,6 @@ cpu-crit {
+diff --git a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
+index 7ef517e9e3746..15838c1ee8cc3 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
+@@ -318,8 +318,8 @@ asm_sel {
+ 	/* eMMC is shared pin with parallel NAND */
+ 	emmc_pins_default: emmc-pins-default {
+ 		mux {
+-			function = "emmc", "emmc_rst";
+-			groups = "emmc";
++			function = "emmc";
++			groups = "emmc", "emmc_rst";
  		};
  
- 		gpu-thermal {
--			polling-delay-passive = <0>;
--			polling-delay = <0>;
--
- 			thermal-sensors = <&tsens2 2>;
+ 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
+diff --git a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
+index a75dc63a1362a..0a14ef1da60de 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
++++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
+@@ -244,8 +244,8 @@ &pio {
+ 	/* eMMC is shared pin with parallel NAND */
+ 	emmc_pins_default: emmc-pins-default {
+ 		mux {
+-			function = "emmc", "emmc_rst";
+-			groups = "emmc";
++			function = "emmc";
++			groups = "emmc", "emmc_rst";
+ 		};
  
- 			trips {
-@@ -5983,7 +5971,6 @@ gpu-crit {
- 
- 		mem-thermal {
- 			polling-delay-passive = <250>;
--			polling-delay = <1000>;
- 
- 			thermal-sensors = <&tsens1 15>;
- 
+ 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
 -- 
 2.43.0
 
