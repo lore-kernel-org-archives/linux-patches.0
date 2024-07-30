@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CCF1898E3;
-	Tue, 30 Jul 2024 16:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ABD1898E3;
+	Tue, 30 Jul 2024 16:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356042; cv=none; b=cHere2S9LBO9+VCj2kYGUgx4Dy0yxJOJhgokopIVvHfP4sFNwdH/U0w+yotkGR5jxtgxB23LsMfUwlm6p9ZHvOEkF8asaEMDj0SfBNh3HD3qTsWtQV2YswgMMJnb+vU2IwTBN1SyO4zYVYjK4E49MW+ZGcKtGL0FGOcH1WnAJgY=
+	t=1722356045; cv=none; b=DF1h1Z8pFlF+CMXC5v7AvpWGau3GuIlXrDvemT7ybQ1Nw2LXcAz/k53+yftVqdTrYwecHhsroblaLclC17dNHBqDgE4+C81aOti2S6tpowXXR77pmCo5E2HJBDF8lo4eOxBZtXv6eKAe+WV3ZQfeKZ0Vw6WRG0hYOAS/8MoRzu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356042; c=relaxed/simple;
-	bh=n7S9gHS0vE0uqdt8qDjU2T8ah+DDRiFcvWxUwjHPcng=;
+	s=arc-20240116; t=1722356045; c=relaxed/simple;
+	bh=fR89XItLoEjqKMj4zOEBkuPDV19QF1IURc0ePdvqT+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rq2uUyNusb5Hpufh/MZsvGj0Bn56Zw30NmgFrC6mv9teUdxphGdTG7MK0hSFAbnsdXVpA0aFA0k4WFQQYTUNA+N1IWZJbGHdfYsijoT5zg2xIHnMJvW+S4A0RzZmGwE7ysmSA8BZCxArosu2/QFqf6VU6aNmneHRr6E94dLGOI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mqrYOkrC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nO9ZNKgXTRFimxuNhTj9nExr8OsOsHJohlZ+DvH4WLFMDSbysYoV6tU+dnGObfDvtg1Y/23gQ1wuWMD8GOMUx03jD+16vJf9e9LhYW0XHW8igQaoogPtoxB4y7Oh3eWJB4bhCC7y0MiBok2LkFKCoB1GMdlrQby99Zj5Er8CW3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CHnt7kj8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mqrYOkrC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67023C32782;
-	Tue, 30 Jul 2024 16:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CHnt7kj8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790DAC32782;
+	Tue, 30 Jul 2024 16:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356041;
-	bh=n7S9gHS0vE0uqdt8qDjU2T8ah+DDRiFcvWxUwjHPcng=;
+	s=korg; t=1722356045;
+	bh=fR89XItLoEjqKMj4zOEBkuPDV19QF1IURc0ePdvqT+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mqrYOkrCpGq7oC5KWpmSm33nMOYyMaT0ImocF1IC4U+JVXKHFlbzmuIdsZlBqsfyg
-	 ACtsEjyt/EtDIq6NTs6uiss6xWMdemIOJFJ4wz9JTiKg69KxnN6a2LDG0B0Eil5673
-	 U7fkz5w+05jXRYNAK4l6Hy6YHfWzmmn1bzmF1T/Y=
+	b=CHnt7kj8XBnnxBgtJINH3ileiCRQrl1kncwkRfNS808q5mCExrTW+ilVrCSDFnvOt
+	 vLuE28+0zrO6akludu3Gp35cg2G7ptInw/KjHXCiN4bmYR0nAjnmySGDdAxr1J1290
+	 YZXL+6GL6rHRP7xbofkfNlO/v0ik+iOvXfSmtTcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 111/809] arm64: dts: amlogic: add power domain to hdmitx
-Date: Tue, 30 Jul 2024 17:39:47 +0200
-Message-ID: <20240730151729.007164292@linuxfoundation.org>
+Subject: [PATCH 6.6 109/568] firmware: turris-mox-rwtm: Initialize completion before mailbox
+Date: Tue, 30 Jul 2024 17:43:36 +0200
+Message-ID: <20240730151644.136118795@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,91 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit f1ab099d6591a353899a2ee09c89de0fc908e2d2 ]
+[ Upstream commit 49e24c80d3c81c43e2a56101449e1eea32fcf292 ]
 
-HDMI Tx needs HDMI Tx memory power domain turned on. This power domain is
-handled under the VPU power domain.
+Initialize the completion before the mailbox channel is requested.
 
-The HDMI Tx currently works because it is enabling the PD by directly
-poking the power controller register. It is should not do that but properly
-use the power domain controller.
-
-Fix this by adding the power domain to HDMI Tx.
-
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20240625145017.1003346-3-jbrunet@baylibre.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Stable-dep-of: 1443b6ea806d ("arm64: dts: amlogic: setup hdmi system clock")
+Fixes: 389711b37493 ("firmware: Add Turris Mox rWTM firmware driver")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-g12.dtsi  | 4 ++++
- arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi | 1 +
- arch/arm64/boot/dts/amlogic/meson-gxl.dtsi  | 1 +
- arch/arm64/boot/dts/amlogic/meson-sm1.dtsi  | 4 ++++
- 4 files changed, 10 insertions(+)
+ drivers/firmware/turris-mox-rwtm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12.dtsi
-index e732df3f3114d..664912d1beaab 100644
---- a/arch/arm64/boot/dts/amlogic/meson-g12.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12.dtsi
-@@ -363,6 +363,10 @@ &ethmac {
- 	power-domains = <&pwrc PWRC_G12A_ETH_ID>;
- };
+diff --git a/drivers/firmware/turris-mox-rwtm.c b/drivers/firmware/turris-mox-rwtm.c
+index 4b92ac3339872..3d354ebd38c28 100644
+--- a/drivers/firmware/turris-mox-rwtm.c
++++ b/drivers/firmware/turris-mox-rwtm.c
+@@ -499,6 +499,7 @@ static int turris_mox_rwtm_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, rwtm);
  
-+&hdmi_tx {
-+	power-domains = <&pwrc PWRC_G12A_VPU_ID>;
-+};
-+
- &vpu {
- 	power-domains = <&pwrc PWRC_G12A_VPU_ID>;
- };
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
-index a15c1ef30a88b..041c37b809f27 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
-@@ -315,6 +315,7 @@ &hdmi_tx {
- 		 <&clkc CLKID_HDMI_PCLK>,
- 		 <&clkc CLKID_GCLK_VENCI_INT0>;
- 	clock-names = "isfr", "iahb", "venci";
-+	power-domains = <&pwrc PWRC_GXBB_VPU_ID>;
- };
+ 	mutex_init(&rwtm->busy);
++	init_completion(&rwtm->cmd_done);
  
- &sysctrl {
-diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-index a53b38045b3d2..067108800a58d 100644
---- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
-@@ -327,6 +327,7 @@ &hdmi_tx {
- 		 <&clkc CLKID_HDMI_PCLK>,
- 		 <&clkc CLKID_GCLK_VENCI_INT0>;
- 	clock-names = "isfr", "iahb", "venci";
-+	power-domains = <&pwrc PWRC_GXBB_VPU_ID>;
- };
+ 	rwtm->mbox_client.dev = dev;
+ 	rwtm->mbox_client.rx_callback = mox_rwtm_rx_callback;
+@@ -512,8 +513,6 @@ static int turris_mox_rwtm_probe(struct platform_device *pdev)
+ 		goto remove_files;
+ 	}
  
- &sysctrl {
-diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi b/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
-index fcaa1a273829c..13e742ba00bea 100644
---- a/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
-@@ -518,6 +518,10 @@ &gpio_intc {
- 		     "amlogic,meson-gpio-intc";
- };
- 
-+&hdmi_tx {
-+	power-domains = <&pwrc PWRC_SM1_VPU_ID>;
-+};
-+
- &pcie {
- 	power-domains = <&pwrc PWRC_SM1_PCIE_ID>;
- };
+-	init_completion(&rwtm->cmd_done);
+-
+ 	ret = mox_get_board_info(rwtm);
+ 	if (ret < 0)
+ 		dev_warn(dev, "Cannot read board information: %i\n", ret);
 -- 
 2.43.0
 
