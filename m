@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEA71A617E;
-	Tue, 30 Jul 2024 16:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C221A617E;
+	Tue, 30 Jul 2024 16:21:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356468; cv=none; b=WCPjZxcs10ZTJOpACBGPVv2EdMMjXxiAe+7s/Uq22lb9MAeS0VIDDGoGQpqd3loGGDiDAMswjRuX7cTzukohWtf+9cjq80jgS6v6V5horm6TVQ2W9/18DXHxNokXmOxlCZ7LWg6byYXUuKw9L84ExEAEDK/AB/wMp/u1SOlnpsc=
+	t=1722356471; cv=none; b=ltipCexs4Bw9RL1SPZQdfW4N912VA3BwPc6PSetnhLzS7/wRR12HQ3pCkJdBFFBAjKK5Oy5DLaNh61cP/VvLxtwDgat6ogdKQIUpa3SM1bGmWItS4GNN4Xvfi0KYYKEafc4LP7DI9zfa1277br+7+UzZMYtPGqKIjYrrZk01CIk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356468; c=relaxed/simple;
-	bh=iw1Da3RteKPLxQ97mzAQojzZ51ef/KGLdJNEO4gm2ZM=;
+	s=arc-20240116; t=1722356471; c=relaxed/simple;
+	bh=ekHbwnfq+iPpcBnREENs2OM2lWW/Kw6Wm2DdG9/N4Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fMqa5gEMp5HB9HJvmAp7ynWDxa57ktiNVKyC0KxQhLskITwzwiKZ+XCR/z65JqA2NgAJzFNz8N22ZeQP7lu4WuLDxYd+Y9029IUDYBnoT2b5eO2/pvA/YVOLYHbcZlQt29S5oWESS1NfrZn3mQiELhFJxm+iMwph5xYQLCgSTNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUxZh81P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hEal0In2rfkAZjI5mrSPy3rRqbqDxyGBXTl9kTDrRoWmvmUym+mvMlZ7zumFvZFi3YMxjiaK/vs4Wrt+qintqRxQdfTaRHMg6KEOxWUVOOOoj7Ek+USc2VebOmAojaL/7figP0b693pCVgWTlw/uSAvWCWmZsEHBw971cVoLvm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F4TeQC5U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUxZh81P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC0BC32782;
-	Tue, 30 Jul 2024 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F4TeQC5U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E41AC32782;
+	Tue, 30 Jul 2024 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356468;
-	bh=iw1Da3RteKPLxQ97mzAQojzZ51ef/KGLdJNEO4gm2ZM=;
+	s=korg; t=1722356471;
+	bh=ekHbwnfq+iPpcBnREENs2OM2lWW/Kw6Wm2DdG9/N4Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UUxZh81P/0FQak7TPgZhJdRbUn8Ek9cpnNrJA4tNKjcnehHaG23PKYqTEJhRfg8+/
-	 GjjZWoHX6H6OjkQ5pyoRZdBPKj4hyhxVDYOCo89bP5LV3sFccdHr9qSnQwlCCkAQPQ
-	 naa9Z1jYXmLUJKYDaA1h7IihVEzwdmqugV8pvwRg=
+	b=F4TeQC5UMaDb5BhqVFjmw5Xqi8aO1g0Q60XjniDk7CmknYO8NmUH5su++tvO86Cdg
+	 oeR2FpBr7//p8jYcFbBgqq0J5BhY2VFCfnSOuP9183ru1touruabIpj6YhIXVjN/1F
+	 4whX5RGbP23ARQJwuaWebWk/mKjs/pMPwc5O2J/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 151/568] perf/x86/intel/cstate: Fix Alderlake/Raptorlake/Meteorlake
-Date: Tue, 30 Jul 2024 17:44:18 +0200
-Message-ID: <20240730151645.779204767@linuxfoundation.org>
+Subject: [PATCH 6.6 136/568] udf: Fix bogus checksum computation in udf_rename()
+Date: Tue, 30 Jul 2024 17:44:03 +0200
+Message-ID: <20240730151645.190551901@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -52,60 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Rui <rui.zhang@intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 2c3aedd9db6295619d21e50ad29efda614023bf1 ]
+[ Upstream commit 27ab33854873e6fb958cb074681a0107cc2ecc4c ]
 
-For Alderlake, the spec changes after the patch submitted and PC7/PC9
-are removed.
+Syzbot reports uninitialized memory access in udf_rename() when updating
+checksum of '..' directory entry of a moved directory. This is indeed
+true as we pass on-stack diriter.fi to the udf_update_tag() and because
+that has only struct fileIdentDesc included in it and not the impUse or
+name fields, the checksumming function is going to checksum random stack
+contents beyond the end of the structure. This is actually harmless
+because the following udf_fiiter_write_fi() will recompute the checksum
+from on-disk buffers where everything is properly included. So all that
+is needed is just removing the bogus calculation.
 
-Raptorlake and Meteorlake, which copy the Alderlake cstate PMU, also
-don't have PC7/PC9.
-
-Remove PC7/PC9 support for Alderlake/Raptorlake/Meteorlake.
-
-Fixes: d0ca946bcf84 ("perf/x86/cstate: Add Alder Lake CPU support")
-Signed-off-by: Zhang Rui <rui.zhang@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20240628031758.43103-2-rui.zhang@intel.com
+Fixes: e9109a92d2a9 ("udf: Convert udf_rename() to new directory iteration code")
+Link: https://lore.kernel.org/all/000000000000cf405f060d8f75a9@google.com/T/
+Link: https://patch.msgid.link/20240617154201.29512-1-jack@suse.cz
+Reported-by: syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/cstate.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ fs/udf/namei.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/x86/events/intel/cstate.c b/arch/x86/events/intel/cstate.c
-index 96fffb2d521d2..cc6609cbfc8da 100644
---- a/arch/x86/events/intel/cstate.c
-+++ b/arch/x86/events/intel/cstate.c
-@@ -80,7 +80,7 @@
-  *	MSR_PKG_C7_RESIDENCY:  Package C7 Residency Counter.
-  *			       perf code: 0x03
-  *			       Available model: NHM,WSM,SNB,IVB,HSW,BDW,SKL,CNL,
-- *						KBL,CML,ICL,TGL,RKL,ADL,RPL,MTL
-+ *						KBL,CML,ICL,TGL,RKL
-  *			       Scope: Package (physical package)
-  *	MSR_PKG_C8_RESIDENCY:  Package C8 Residency Counter.
-  *			       perf code: 0x04
-@@ -89,8 +89,7 @@
-  *			       Scope: Package (physical package)
-  *	MSR_PKG_C9_RESIDENCY:  Package C9 Residency Counter.
-  *			       perf code: 0x05
-- *			       Available model: HSW ULT,KBL,CNL,CML,ICL,TGL,RKL,
-- *						ADL,RPL,MTL
-+ *			       Available model: HSW ULT,KBL,CNL,CML,ICL,TGL,RKL
-  *			       Scope: Package (physical package)
-  *	MSR_PKG_C10_RESIDENCY: Package C10 Residency Counter.
-  *			       perf code: 0x06
-@@ -582,9 +581,7 @@ static const struct cstate_model adl_cstates __initconst = {
- 	.pkg_events		= BIT(PERF_CSTATE_PKG_C2_RES) |
- 				  BIT(PERF_CSTATE_PKG_C3_RES) |
- 				  BIT(PERF_CSTATE_PKG_C6_RES) |
--				  BIT(PERF_CSTATE_PKG_C7_RES) |
- 				  BIT(PERF_CSTATE_PKG_C8_RES) |
--				  BIT(PERF_CSTATE_PKG_C9_RES) |
- 				  BIT(PERF_CSTATE_PKG_C10_RES),
- };
+diff --git a/fs/udf/namei.c b/fs/udf/namei.c
+index ae55ab8859b6d..605f182da42cb 100644
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -874,8 +874,6 @@ static int udf_rename(struct mnt_idmap *idmap, struct inode *old_dir,
+ 	if (has_diriter) {
+ 		diriter.fi.icb.extLocation =
+ 					cpu_to_lelb(UDF_I(new_dir)->i_location);
+-		udf_update_tag((char *)&diriter.fi,
+-			       udf_dir_entry_len(&diriter.fi));
+ 		udf_fiiter_write_fi(&diriter, NULL);
+ 		udf_fiiter_release(&diriter);
  
 -- 
 2.43.0
