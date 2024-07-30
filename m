@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AF21A6166;
-	Tue, 30 Jul 2024 16:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911AB187FF6;
+	Tue, 30 Jul 2024 16:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356673; cv=none; b=tI9D//0Vbsr9NsCsJ4iUoIvRKiHKQLJcsYIFYkdTX4MmV5iaqXfmLH3vKJIp/DAY0Qbgql/pdrJUrElO6c0Z6WLPoHO1wmlqI00kjIyox2ubAQGjerNRo8A5eobAGMjfD55jm6WJ0HbzgFgg3/LckBQ5VVw7aF68Y+EgV+nRXac=
+	t=1722356676; cv=none; b=p1hgZYzxk/dUZ70+B/dBsWoRYBZUMfgWnIjaoNrAFsR2ptWume94dIjjms3JBT9DxXmoiNvrOO3iknNSQy4dOsIQ+nnsXvAcvCx02xxbbD4h95eyCsshMoDgfgI3QO2+yz7Gy3nMo1KwOyXh887vYpWX/8wivl0cDuoEt2rQwhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356673; c=relaxed/simple;
-	bh=glKwbaW3D9RngudbFsL9wkKP5EYJjTq6/ZUodhxLxlA=;
+	s=arc-20240116; t=1722356676; c=relaxed/simple;
+	bh=yaDeEyX9ebkeQ8wksklJv9yZhmqUke4HWQKTyIgr4MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sfTjVrX6f4Yzyk5nlsbOShVEw8yLuEYwmm2yOvtBHth2EnIRNpra1KjMF0jSjxNVKzxBlKwzm0V0JIfKRKw69aVJoWRtx4fvby8ShYuoNzXdKTfDU/67H83OaUvqLeGncFkD2BfUT1j3mFyw1vEGrDvb15LBAOu9Weh9NofSS1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhS57BBW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UQPo9G9yvo9M+53ajr/Tsr0NNoSXiJ8nEPFAjkXihYD3zcWJTWiqRoStnnNszTXQUcHcWDTtoqGpbP/Nxves3hPYnQpNwK/k0eShsMdR+Kd5aDtPH1QTjQ28pLVN2RqWC5hmhOGpn9T96XwXZPpr1ONz0Z30b7b636Xw2ibCXi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gizak6UL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhS57BBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695BBC4AF0A;
-	Tue, 30 Jul 2024 16:24:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gizak6UL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0C9C32782;
+	Tue, 30 Jul 2024 16:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356672;
-	bh=glKwbaW3D9RngudbFsL9wkKP5EYJjTq6/ZUodhxLxlA=;
+	s=korg; t=1722356676;
+	bh=yaDeEyX9ebkeQ8wksklJv9yZhmqUke4HWQKTyIgr4MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhS57BBWEwdvgkTLudGvUrmOR+/K+fi+5x1I2D8MDtC/V5PtURW53d6ejHbBh7wZr
-	 CBUylXaZzaRWjopYLibvmgHRW2s9pzzlVZC53mo7u6rsk3mb/ygVG5s/WqFsbctAux
-	 oohcmuuD03K+zearUS3Mx8GJ4hHzlEuyLepPjgr4=
+	b=Gizak6ULvrCPMyM/NxL6Mdmk6M+Z3sTXgHZpegQiXW5IUivSAo8fB6KqAyJJLAWOu
+	 c8P4n8TWDp/IKkBav7CcFFXtNO8yxnAcdPBFJ5yegH0El27yVo2fcQHB3esLdbeLL7
+	 FE0I1Egb6bZMN339/Mt7kHX2MAuYG2iBMRQ4JoDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Niklas Cassel <Niklas.Cassel@wdc.com>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 172/568] Bluetooth: btnxpuart: Add handling for boot-signature timeout errors
-Date: Tue, 30 Jul 2024 17:44:39 +0200
-Message-ID: <20240730151646.606564332@linuxfoundation.org>
+Subject: [PATCH 6.1 218/440] PCI: dwc: Fix index 0 incorrectly being interpreted as a free ATU slot
+Date: Tue, 30 Jul 2024 17:47:31 +0200
+Message-ID: <20240730151624.375896172@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,141 +49,101 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
+From: Frank Li <Frank.Li@nxp.com>
 
-[ Upstream commit 27489364299a2ddb5c54cd9f29a3f41bd8d151ab ]
+[ Upstream commit c2a57ee0f2f1ad8c970ff58b78a43e85abbdeb7f ]
 
-This handles the timeout error codes sent by the chip as part of the
-bootloader signatures during firmware download process.
+When PERST# assert and deassert happens on the PERST# supported platforms,
+both iATU0 and iATU6 will map inbound window to BAR0. DMA will access the
+area that was previously allocated (iATU0) for BAR0, instead of the new
+area (iATU6) for BAR0.
 
-When the bootloader does not receive a response packet from the host
-within a specific time, it adds an error code to the bootloader
-signature while requesting for the FW chunk from the same offset.
+Right now, this isn't an issue because both iATU0 and iATU6 should
+translate inbound accesses to BAR0 to the same allocated memory area.
+However, having two separate inbound mappings for the same BAR is a
+disaster waiting to happen.
 
-The host is expected to clear this error code with a NAK, and reply to
-only those bootloader signatures which have error code 0.
+The mappings between PCI BAR and iATU inbound window are maintained in the
+dw_pcie_ep::bar_to_atu[] array. While allocating a new inbound iATU map for
+a BAR, dw_pcie_ep_inbound_atu() API checks for the availability of the
+existing mapping in the array and if it is not found (i.e., value in the
+array indexed by the BAR is found to be 0), it allocates a new map value
+using find_first_zero_bit().
 
-However, the driver was ignoring this error code and replying with the
-firmware chunks instead, which is apparently ignored by the chip and the
-chip resends the same bootloader signature with the error code again. This
-happens in a loop until the error code self clears and firmware download
-proceeds ahead, adding a couple of milliseconds to the total firmware
-download time.
+The issue is the existing logic failed to consider the fact that the map
+value '0' is a valid value for BAR0, so find_first_zero_bit() will return
+'0' as the map value for BAR0 (note that it returns the first zero bit
+position).
 
-Commit 689ca16e5232 was an initial implementation which simply printed
-the following line during driver debug:
-- FW Download received err 0x04 from chip
+Due to this, when PERST# assert + deassert happens on the PERST# supported
+platforms, the inbound window allocation restarts from BAR0 and the
+existing logic to find the BAR mapping will return '6' for BAR0 instead of
+'0' due to the fact that it considers '0' as an invalid map value.
 
-This commit adds the expected handling to the error codes.
+Fix this issue by always incrementing the map value before assigning to
+bar_to_atu[] array and then decrementing it while fetching. This will make
+sure that the map value '0' always represents the invalid mapping."
 
-This error handling is valid for data_req bootloader signatures for V3
-and future bootloader versions.
-
-Signed-off-by: Neeraj Sanjay Kale <neeraj.sanjaykale@nxp.com>
-Fixes: 689ca16e5232 ("Bluetooth: NXP: Add protocol support for NXP Bluetooth chipsets")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update inbound map address")
+Closes: https://lore.kernel.org/linux-pci/ZXsRp+Lzg3x%2Fnhk3@x1-carbon/
+Link: https://lore.kernel.org/linux-pci/20240412160841.925927-1-Frank.Li@nxp.com
+Reported-by: Niklas Cassel <Niklas.Cassel@wdc.com>
+Tested-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Frank Li <Frank.Li@nxp.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btnxpuart.c | 52 ++++++++++++++++++++++++++++++++---
- 1 file changed, 48 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware-ep.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btnxpuart.c b/drivers/bluetooth/btnxpuart.c
-index 5c5a5b752419e..83e8e27a5ecec 100644
---- a/drivers/bluetooth/btnxpuart.c
-+++ b/drivers/bluetooth/btnxpuart.c
-@@ -186,6 +186,11 @@ struct btnxpuart_dev {
- #define NXP_NAK_V3		0x7b
- #define NXP_CRC_ERROR_V3	0x7c
+diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
+index 506d6d061d4cd..449ad709495d3 100644
+--- a/drivers/pci/controller/dwc/pcie-designware-ep.c
++++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
+@@ -165,7 +165,7 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
+ 	if (!ep->bar_to_atu[bar])
+ 		free_win = find_first_zero_bit(ep->ib_window_map, pci->num_ib_windows);
+ 	else
+-		free_win = ep->bar_to_atu[bar];
++		free_win = ep->bar_to_atu[bar] - 1;
  
-+/* Bootloader signature error codes */
-+#define NXP_ACK_RX_TIMEOUT	0x0002	/* ACK not received from host */
-+#define NXP_HDR_RX_TIMEOUT	0x0003	/* FW Header chunk not received */
-+#define NXP_DATA_RX_TIMEOUT	0x0004	/* FW Data chunk not received */
-+
- #define HDR_LEN			16
- 
- #define NXP_RECV_CHIP_VER_V1 \
-@@ -276,6 +281,17 @@ struct nxp_bootloader_cmd {
- 	__be32 crc;
- } __packed;
- 
-+struct nxp_v3_rx_timeout_nak {
-+	u8 nak;
-+	__le32 offset;
-+	u8 crc;
-+} __packed;
-+
-+union nxp_v3_rx_timeout_nak_u {
-+	struct nxp_v3_rx_timeout_nak pkt;
-+	u8 buf[6];
-+};
-+
- static u8 crc8_table[CRC8_TABLE_SIZE];
- 
- /* Default configurations */
-@@ -883,6 +899,32 @@ static int nxp_recv_chip_ver_v3(struct hci_dev *hdev, struct sk_buff *skb)
- 	return 0;
- }
- 
-+static void nxp_handle_fw_download_error(struct hci_dev *hdev, struct v3_data_req *req)
-+{
-+	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-+	__u32 offset = __le32_to_cpu(req->offset);
-+	__u16 err = __le16_to_cpu(req->error);
-+	union nxp_v3_rx_timeout_nak_u nak_tx_buf;
-+
-+	switch (err) {
-+	case NXP_ACK_RX_TIMEOUT:
-+	case NXP_HDR_RX_TIMEOUT:
-+	case NXP_DATA_RX_TIMEOUT:
-+		nak_tx_buf.pkt.nak = NXP_NAK_V3;
-+		nak_tx_buf.pkt.offset = __cpu_to_le32(offset);
-+		nak_tx_buf.pkt.crc = crc8(crc8_table, nak_tx_buf.buf,
-+				      sizeof(nak_tx_buf) - 1, 0xff);
-+		serdev_device_write_buf(nxpdev->serdev, nak_tx_buf.buf,
-+					sizeof(nak_tx_buf));
-+		break;
-+	default:
-+		bt_dev_dbg(hdev, "Unknown bootloader error code: %d", err);
-+		break;
-+
-+	}
-+
-+}
-+
- static int nxp_recv_fw_req_v3(struct hci_dev *hdev, struct sk_buff *skb)
- {
- 	struct btnxpuart_dev *nxpdev = hci_get_drvdata(hdev);
-@@ -897,7 +939,12 @@ static int nxp_recv_fw_req_v3(struct hci_dev *hdev, struct sk_buff *skb)
- 	if (!req || !nxpdev->fw)
- 		goto free_skb;
- 
--	nxp_send_ack(NXP_ACK_V3, hdev);
-+	if (!req->error) {
-+		nxp_send_ack(NXP_ACK_V3, hdev);
-+	} else {
-+		nxp_handle_fw_download_error(hdev, req);
-+		goto free_skb;
-+	}
- 
- 	len = __le16_to_cpu(req->len);
- 
-@@ -924,9 +971,6 @@ static int nxp_recv_fw_req_v3(struct hci_dev *hdev, struct sk_buff *skb)
- 		wake_up_interruptible(&nxpdev->fw_dnld_done_wait_q);
- 		goto free_skb;
+ 	if (free_win >= pci->num_ib_windows) {
+ 		dev_err(pci->dev, "No free inbound window\n");
+@@ -179,7 +179,11 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
+ 		return ret;
  	}
--	if (req->error)
--		bt_dev_dbg(hdev, "FW Download received err 0x%02x from chip",
--			   req->error);
  
- 	offset = __le32_to_cpu(req->offset);
- 	if (offset < nxpdev->fw_v3_offset_correction) {
+-	ep->bar_to_atu[bar] = free_win;
++	/*
++	 * Always increment free_win before assignment, since value 0 is used to identify
++	 * unallocated mapping.
++	 */
++	ep->bar_to_atu[bar] = free_win + 1;
+ 	set_bit(free_win, ep->ib_window_map);
+ 
+ 	return 0;
+@@ -216,7 +220,10 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+ 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
+ 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
+ 	enum pci_barno bar = epf_bar->barno;
+-	u32 atu_index = ep->bar_to_atu[bar];
++	u32 atu_index = ep->bar_to_atu[bar] - 1;
++
++	if (!ep->bar_to_atu[bar])
++		return;
+ 
+ 	__dw_pcie_ep_reset_bar(pci, func_no, bar, epf_bar->flags);
+ 
 -- 
 2.43.0
 
