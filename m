@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467D41A6191;
-	Tue, 30 Jul 2024 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 384C718452F;
+	Tue, 30 Jul 2024 16:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356005; cv=none; b=tYlGzTLppNMAr9F7tXqg4fJDtx/1coPDpLnRvPTf0QANm+KnDVr/m7s7xiBt650jSWa7rKjufB+SSQpiyENZDQr2th8pKf8L9aVTb0hiqvtOEzWAz13nqkOTv22GsMvLWT0amitUS2hrezSYcChwvlkCdl8o3Cb6lw59IkOVDYg=
+	t=1722356011; cv=none; b=UqhEy3YU0ztJb7tWwXTzN/KDcUUnImfQ3yLDjm9mMLIVl6Sj9RU5gtBgn35HxBJE0M9emrrHRcbUr8MYHM+kRmLFi/THq0tHJFmcAmKrdSlIKDOGgm0k76q13/cSVM5oS420Q/PnrzK7Jl7ToVk1+zbzCUfY08ApiGPv0golHrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356005; c=relaxed/simple;
-	bh=mROHMihJ/sA756Mw4Y798hN2/JSBwIgz6S6OGmEcHM8=;
+	s=arc-20240116; t=1722356011; c=relaxed/simple;
+	bh=nFDkpDjd2N3NGy2UBbnQtNDqSL3zZCnU/QV2b2DRa5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZD5sU4b53KRA7uuJ1wRIgDv8p9bU1UHZcCvOUlwh6i4mEa16xy6QHT0TFV44iWOYS9vFm+dSddNwCwXTuNcPiP+Jru8/WtYmo+j8dqNKrMjfLKp7TIkcCfSAEqhaDi2xTFOk66HOVJxrRePS/JVU3vWdlWigGb0kAWrzTcFvxB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbOe0YD3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CieWRz6jFI17e45EFTLtNR8fWove9rK9+XJ0drrvw6YBs3v6MCBTcx9ZKmJFGZGBFret07IEgUGywb1UnPVE/gfE+/djmjOPSCFFe/euO8L2yp7aWk3BA7E/Ezjj5OlSacuAdjwx+TmxUHys615XyxGhzPPIlsPMmYAmw8qbQ0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm4dDAtM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbOe0YD3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B735CC32782;
-	Tue, 30 Jul 2024 16:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm4dDAtM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55409C32782;
+	Tue, 30 Jul 2024 16:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356005;
-	bh=mROHMihJ/sA756Mw4Y798hN2/JSBwIgz6S6OGmEcHM8=;
+	s=korg; t=1722356010;
+	bh=nFDkpDjd2N3NGy2UBbnQtNDqSL3zZCnU/QV2b2DRa5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbOe0YD31jJq5CZ8QspO20Nafuwe9ZpOkOZARQXB2pJ6yu/aGfwmctKW68ZYbJMva
-	 plQ69XH6vZQ/19hfZb5Hu3ITAF/c5o1BFPVOjnaUVpLm+sGIyowGtY8MR2i6z6p+Uw
-	 6ye3dYCH6tDozt19jPxLH/fh9J5TrbyMVtvHhp/g=
+	b=zm4dDAtMkkGarQjn3PH78Uq3jbwn4UK097HkIRAQGnumx9SNWIZx+PPjwwrCcSYF3
+	 hcwQYL5XEjzbM/0eFHPbm5l/xCOcbIKcty23kdAVshcDQEUaGoCZ82Lhk+g6P9rX75
+	 7M3Lu3teXFwmhauJQoK3R8ETo5mfKZXsXZrI1+r4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 108/809] arm64: dts: mediatek: mt8183-kukui-jacuzzi: Add ports node for anx7625
-Date: Tue, 30 Jul 2024 17:39:44 +0200
-Message-ID: <20240730151728.890234187@linuxfoundation.org>
+Subject: [PATCH 6.6 106/568] vmlinux.lds.h: catch .bss..L* sections into BSS")
+Date: Tue, 30 Jul 2024 17:43:33 +0200
+Message-ID: <20240730151644.017757845@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 4055416e6c51347e7dd5784065263fe0ced0bb7d ]
+[ Upstream commit 1a7b7326d587c9a5e8ff067e70d6aaf0333f4bb3 ]
 
-The anx7625 binding requires a "ports" node as a container for the
-"port" nodes. The jacuzzi dtsi file is missing it.
+Commit 9a427556fb8e ("vmlinux.lds.h: catch compound literals into
+data and BSS") added catches for .data..L* and .rodata..L* but missed
+.bss..L*
 
-Add a "ports" node under the anx7625 node, and move the port related
-nodes and properties under it.
+Since commit 5431fdd2c181 ("ptrace: Convert ptrace_attach() to use
+lock guards") the following appears at build:
 
-Fixes: cabc71b08eb5 ("arm64: dts: mt8183: Add kukui-jacuzzi-damu board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240131083931.3970388-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+  LD      .tmp_vmlinux.kallsyms1
+powerpc64-linux-ld: warning: orphan section `.bss..Lubsan_data33' from `kernel/ptrace.o' being placed in section `.bss..Lubsan_data33'
+  NM      .tmp_vmlinux.kallsyms1.syms
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+powerpc64-linux-ld: warning: orphan section `.bss..Lubsan_data33' from `kernel/ptrace.o' being placed in section `.bss..Lubsan_data33'
+  NM      .tmp_vmlinux.kallsyms2.syms
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+powerpc64-linux-ld: warning: orphan section `.bss..Lubsan_data33' from `kernel/ptrace.o' being placed in section `.bss..Lubsan_data33'
+
+Lets add .bss..L* to BSS_MAIN macro to catch those sections into BSS.
+
+Fixes: 9a427556fb8e ("vmlinux.lds.h: catch compound literals into data and BSS")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202404031349.nmKhyuUG-lkp@intel.com/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/mediatek/mt8183-kukui-jacuzzi.dtsi    | 25 +++++++++++--------
- 1 file changed, 14 insertions(+), 11 deletions(-)
+ include/asm-generic/vmlinux.lds.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-index 7592e3b860377..fa4ab4d2899f9 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi.dtsi
-@@ -155,21 +155,24 @@ anx_bridge: anx7625@58 {
- 		vdd18-supply = <&pp1800_mipibrdg>;
- 		vdd33-supply = <&vddio_mipibrdg>;
- 
--		#address-cells = <1>;
--		#size-cells = <0>;
--		port@0 {
--			reg = <0>;
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
- 
--			anx7625_in: endpoint {
--				remote-endpoint = <&dsi_out>;
-+			port@0 {
-+				reg = <0>;
-+
-+				anx7625_in: endpoint {
-+					remote-endpoint = <&dsi_out>;
-+				};
- 			};
--		};
- 
--		port@1 {
--			reg = <1>;
-+			port@1 {
-+				reg = <1>;
- 
--			anx7625_out: endpoint {
--				remote-endpoint = <&panel_in>;
-+				anx7625_out: endpoint {
-+					remote-endpoint = <&panel_in>;
-+				};
- 			};
- 		};
- 
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index bae0fe4d499bc..63029bc7c9dd0 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -101,7 +101,7 @@
+ #define DATA_MAIN .data .data.[0-9a-zA-Z_]* .data..L* .data..compoundliteral* .data.$__unnamed_* .data.$L*
+ #define SDATA_MAIN .sdata .sdata.[0-9a-zA-Z_]*
+ #define RODATA_MAIN .rodata .rodata.[0-9a-zA-Z_]* .rodata..L*
+-#define BSS_MAIN .bss .bss.[0-9a-zA-Z_]* .bss..compoundliteral*
++#define BSS_MAIN .bss .bss.[0-9a-zA-Z_]* .bss..L* .bss..compoundliteral*
+ #define SBSS_MAIN .sbss .sbss.[0-9a-zA-Z_]*
+ #else
+ #define TEXT_MAIN .text
 -- 
 2.43.0
 
