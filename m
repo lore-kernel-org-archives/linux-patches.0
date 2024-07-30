@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2E7F1A619B;
-	Tue, 30 Jul 2024 16:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC081A6195;
+	Tue, 30 Jul 2024 16:36:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357376; cv=none; b=ugDSwsLthJYMf6JU3PiNJkj9uyOYZTNQoiQdmCuUmijY7WFn2R4DzQT1Ql/79RvcA2KctB/jU5jaYnlOpw0ilNHJm65vRA1bCqyrbqeW+0cHT2EQ+3oJG+UejEb3IfSEM1sx2Zhh9GzDpJosjsG8337rRnRiiSOS8UdA5c6fXOg=
+	t=1722357379; cv=none; b=hSLSJJBqmxyjX9eQQF9Q+vgBdM8noafyqzf/EMKqtTqJ7mH+ii9jUEk9clzddD35posa1eToW0k8X/exud6AfBejOXWeVsRu/zTSLYdR+FSTZDe7fICU4IknGP2gsH2yhhMuBY8XmQsKr+6NC/TyBo6eLbJf0Rfq7RWRZNSUtIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357376; c=relaxed/simple;
-	bh=l6Ny0XeJjBdf+HLES5MAw1bqKPCAP+EaBcOGtBYVy9w=;
+	s=arc-20240116; t=1722357379; c=relaxed/simple;
+	bh=0hjQrnfGwSTvsIJasNFpuACxWUo91dxi4GYybJjg1u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YIxCzlHuOTCaivVLfSHRTux1sDnnJmoxnjBgJcnQwuuefpZAixWngmjL8fM2cMSgAXckaGuq9IhnlHtAPKPwxHLs2yHVC3v0pm4OMSSVVL25+KdYRQY25FB1p9zyn4JOOnp1t3ORBHbPZXkFg8sORhjZ1PTTi+Zb4uyPzRR5rmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpfKf45f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4pqGHMLXn3QtMxPknenOPo3dWLSoFFMMhO7rKr7aP5DrgcTH5U+Oc5HqDw2vpJvm2Hy+HYfFeRljqUyMmzZpfjhi5tNwL7fvmWZeGhzFAv7IPbFPTpevRgbaN3yudfjTOdY1kDN4wno3ntY7xLrQ576ZYfnfIcrQHL2zHaHRgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qOtjR66t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpfKf45f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A132C32782;
-	Tue, 30 Jul 2024 16:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qOtjR66t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 428AFC4AF0A;
+	Tue, 30 Jul 2024 16:36:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357376;
-	bh=l6Ny0XeJjBdf+HLES5MAw1bqKPCAP+EaBcOGtBYVy9w=;
+	s=korg; t=1722357379;
+	bh=0hjQrnfGwSTvsIJasNFpuACxWUo91dxi4GYybJjg1u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpfKf45fBZ/7ylFgYmz0FI3Qlojd3I+0+OF/Xf1rIk4pQiXrN1BhKgwyGU91RUIHt
-	 GffO6+gSmJ6FavylzBFP2apqZJTb5fnf351K3XR11MguSH2uvgVhZl4VnVbMtCVpAO
-	 l+pPVTxhEAWos0bkuS0Khl2T3pTjd5RwKwyptN/c=
+	b=qOtjR66tX0+dorB3KQCyvd0MyWyjm92FLUaIsrLo1b1j44aWejmdfS7rbRTH4w2AC
+	 hxuFIXruVxys/Og/Db7t90xwmwmHbhN0iyx7fM7/9BQ2jB0+6FZP+EpMXNTlQsZeF5
+	 sCkVQ7/R1RUlv6zm0O7bchPcLk6gQVsHlP33JrI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Florian Evers <florian-evers@gmx.de>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 249/568] PCI: keystone: Relocate ks_pcie_set/clear_dbi_mode()
-Date: Tue, 30 Jul 2024 17:45:56 +0200
-Message-ID: <20240730151649.612850261@linuxfoundation.org>
+Subject: [PATCH 6.10 248/809] nfsd: nfsd_file_lease_notifier_call gets a file_lease as an argument
+Date: Tue, 30 Jul 2024 17:42:04 +0200
+Message-ID: <20240730151734.394145550@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,132 +46,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 5125fdc3292eea20870d4e6cefa62dc1245ce7ec ]
+[ Upstream commit 769d20028f45a4f442cfe558a32faba357a7f5e2 ]
 
-Relocate ks_pcie_set_dbi_mode() and ks_pcie_clear_dbi_mode() to avoid
-forward declaration in a subsequent patch. No functional change intended.
+"data" actually refers to a file_lease and not a file_lock. Both structs
+have their file_lock_core as the first field though, so this bug should
+be harmless without struct randomization in play.
 
-Link: https://lore.kernel.org/linux-pci/20240328085041.2916899-2-s-vadapalli@ti.com
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Stable-dep-of: 9ffa0e70b2da ("PCI: keystone: Don't enable BAR 0 for AM654x")
+Reported-by: Florian Evers <florian-evers@gmx.de>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219008
+Fixes: 05580bbfc6bc ("nfsd: adapt to breakup of struct file_lock")
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Tested-by: Florian Evers <florian-evers@gmx.de>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c | 84 +++++++++++------------
- 1 file changed, 42 insertions(+), 42 deletions(-)
+ fs/nfsd/filecache.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-index cf3836561316d..bf907c8ca25bb 100644
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -246,6 +246,48 @@ static struct irq_chip ks_pcie_msi_irq_chip = {
- 	.irq_unmask = ks_pcie_msi_unmask,
- };
- 
-+/**
-+ * ks_pcie_set_dbi_mode() - Set DBI mode to access overlaid BAR mask registers
-+ * @ks_pcie: A pointer to the keystone_pcie structure which holds the KeyStone
-+ *	     PCIe host controller driver information.
-+ *
-+ * Since modification of dbi_cs2 involves different clock domain, read the
-+ * status back to ensure the transition is complete.
-+ */
-+static void ks_pcie_set_dbi_mode(struct keystone_pcie *ks_pcie)
-+{
-+	u32 val;
-+
-+	val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
-+	val |= DBI_CS2;
-+	ks_pcie_app_writel(ks_pcie, CMD_STATUS, val);
-+
-+	do {
-+		val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
-+	} while (!(val & DBI_CS2));
-+}
-+
-+/**
-+ * ks_pcie_clear_dbi_mode() - Disable DBI mode
-+ * @ks_pcie: A pointer to the keystone_pcie structure which holds the KeyStone
-+ *	     PCIe host controller driver information.
-+ *
-+ * Since modification of dbi_cs2 involves different clock domain, read the
-+ * status back to ensure the transition is complete.
-+ */
-+static void ks_pcie_clear_dbi_mode(struct keystone_pcie *ks_pcie)
-+{
-+	u32 val;
-+
-+	val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
-+	val &= ~DBI_CS2;
-+	ks_pcie_app_writel(ks_pcie, CMD_STATUS, val);
-+
-+	do {
-+		val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
-+	} while (val & DBI_CS2);
-+}
-+
- static int ks_pcie_msi_host_init(struct dw_pcie_rp *pp)
+diff --git a/fs/nfsd/filecache.c b/fs/nfsd/filecache.c
+index ad9083ca144ba..f4704f5d40867 100644
+--- a/fs/nfsd/filecache.c
++++ b/fs/nfsd/filecache.c
+@@ -664,7 +664,7 @@ static int
+ nfsd_file_lease_notifier_call(struct notifier_block *nb, unsigned long arg,
+ 			    void *data)
  {
- 	pp->msi_irq_chip = &ks_pcie_msi_irq_chip;
-@@ -342,48 +384,6 @@ static const struct irq_domain_ops ks_pcie_legacy_irq_domain_ops = {
- 	.xlate = irq_domain_xlate_onetwocell,
- };
+-	struct file_lock *fl = data;
++	struct file_lease *fl = data;
  
--/**
-- * ks_pcie_set_dbi_mode() - Set DBI mode to access overlaid BAR mask registers
-- * @ks_pcie: A pointer to the keystone_pcie structure which holds the KeyStone
-- *	     PCIe host controller driver information.
-- *
-- * Since modification of dbi_cs2 involves different clock domain, read the
-- * status back to ensure the transition is complete.
-- */
--static void ks_pcie_set_dbi_mode(struct keystone_pcie *ks_pcie)
--{
--	u32 val;
--
--	val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
--	val |= DBI_CS2;
--	ks_pcie_app_writel(ks_pcie, CMD_STATUS, val);
--
--	do {
--		val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
--	} while (!(val & DBI_CS2));
--}
--
--/**
-- * ks_pcie_clear_dbi_mode() - Disable DBI mode
-- * @ks_pcie: A pointer to the keystone_pcie structure which holds the KeyStone
-- *	     PCIe host controller driver information.
-- *
-- * Since modification of dbi_cs2 involves different clock domain, read the
-- * status back to ensure the transition is complete.
-- */
--static void ks_pcie_clear_dbi_mode(struct keystone_pcie *ks_pcie)
--{
--	u32 val;
--
--	val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
--	val &= ~DBI_CS2;
--	ks_pcie_app_writel(ks_pcie, CMD_STATUS, val);
--
--	do {
--		val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
--	} while (val & DBI_CS2);
--}
--
- static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
- {
- 	u32 val;
+ 	/* Only close files for F_SETLEASE leases */
+ 	if (fl->c.flc_flags & FL_LEASE)
 -- 
 2.43.0
 
