@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6D918801B;
-	Tue, 30 Jul 2024 16:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E55187FF2;
+	Tue, 30 Jul 2024 16:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355755; cv=none; b=KTtpAWvjOWoIQtcfg74knC2y5KO4a3+cZZEecAAwOQF2JKcG5BS1FUH1mB4fLdWSS4mFLFU9HX5Y14A3P2Fnhni8ica9vAEmpJYZ/+kqCwz8RL1eMYyAAhN5kXzV2K25S8s6tv0IDK72pcFBVj4PLW8tJAvFB7nAagklpJYlaIA=
+	t=1722355759; cv=none; b=t+r66twXLLGoClQW+ZZoYfbffFzHQu9pG52Ps0wud/EJGQon0hA/wO0COHlYeLwDe4STv3gXH6uAqlgDpD91XxD6riq0tglOhXSjOqSNAlNl2KSBUx2Ek7A3YWFy/rQHhCc7TsMCGrc/T6ucKTWybcCufdw0CP2NkZbLTln4+TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355755; c=relaxed/simple;
-	bh=WLRMG9Bnddhdmuc+CrJKvmbukXEySg0f+aaf1AIt2hc=;
+	s=arc-20240116; t=1722355759; c=relaxed/simple;
+	bh=cXzr0t3WgYOfA/+Z/Q4IFfC4nnuyVckZYYhhGXJgHGY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUX8KXZBvaDz3OgKHvrNbK+Zfi9HWiPdvqmzfgMVMP4dWwrvvOCCtuZz3GA9V5BjC9fhYfHzSesH3YZgliGeYeNhSG0kpjAvCeF5rM6pu2mpG2gRl+4cywnbfWpxtbo1srIWr/HcM661oBJmAvmzF+qxBrRXwj3yYQSwdf+ZlQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XnQFgLJB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MaZ9mYIh8wr5zDxRdVCUPx0eXVe8+JT4I+UHq3TX10pC1hkFAk/ToIwUlB6ZAUjkLXhMJD1M3w2v8DRmzXTy1wYL5HNXePp1vphk3kaCZWu2AseeflqLa4aFJwpqk+w4+WgZN9zW8bKf8BDMtmCc4qOEbQ8hHrPolcSBCydkpHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBVuVl81; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XnQFgLJB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01955C32782;
-	Tue, 30 Jul 2024 16:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBVuVl81"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93834C32782;
+	Tue, 30 Jul 2024 16:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355755;
-	bh=WLRMG9Bnddhdmuc+CrJKvmbukXEySg0f+aaf1AIt2hc=;
+	s=korg; t=1722355759;
+	bh=cXzr0t3WgYOfA/+Z/Q4IFfC4nnuyVckZYYhhGXJgHGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XnQFgLJBPBLYlWZpakeiGZabz1oVctU2n4j0kK7Z9yeSbQpGTzycdaz0VLzLLqCyy
-	 fK5ACVNpPIsNuo0BQKeHv7PLaycleF0LIzv0f5lbAOFFGK0Q4nDfJr3cw5zvBYtR7n
-	 iNj76Ot7V7IQEhg0joUWLEFU75sU3fNAqCAwjobU=
+	b=vBVuVl81NerwUDF3KaBvvhqLzVg4e69NF6GW3I3Ia/KMtAqWmWwHj6y2dIzkCv7MM
+	 RrCu+YK+0v7soozBM0KYSbLHy6r5JPmxeStA+oCgY7R092Mqo8sXkQCbE9COTcxfYo
+	 7NhvYRRXWqnTE2rOaK8jRMBX79L9H1uC798NrqDQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Jai Luthra <j-luthra@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/568] arm64: dts: renesas: r9a07g044: Add missing hypervisor virtual timer IRQ
-Date: Tue, 30 Jul 2024 17:43:14 +0200
-Message-ID: <20240730151643.265440165@linuxfoundation.org>
+Subject: [PATCH 6.10 086/809] arm64: dts: ti: k3-am62p5-sk: Fix pinmux for McASP1 TX
+Date: Tue, 30 Jul 2024 17:39:22 +0200
+Message-ID: <20240730151728.034971188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit ecbc5206a1a0532258144a4703cccf4e70f3fe6c ]
+[ Upstream commit e96e36ce1fdcf08a70e3f09cbe2da02b073c58ac ]
 
-Add the missing fifth interrupt to the device node that represents the
-ARM architected timer.  While at it, add an interrupt-names property for
-clarity,
+On SK-AM62P, McASP1 uses two pins for communicating with the codec over
+I2S protocol. One of these pins (AXR0) is used for audio playback (TX)
+so the direction of the pin should be OUTPUT.
 
-Fixes: 68a45525297b2e9a ("arm64: dts: renesas: Add initial DTSI for RZ/G2{L,LC} SoC's")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/21f556eb7e903d5b9f4c96188fd4b6ae0db71856.1718890849.git.geert+renesas@glider.be
+Fixes: c00504ea42c0 ("arm64: dts: ti: k3-am62p5-sk: Updates for SK EVM")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240606-mcasp_fifo_drop-v2-7-8c317dabdd0a@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a07g044.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am62p5-sk.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
-index 081d8f49db879..a877738c30484 100644
---- a/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a07g044.dtsi
-@@ -1288,6 +1288,9 @@ timer {
- 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
- 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
- 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
--				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
-+				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
-+				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
-+				  "hyp-virt";
+diff --git a/arch/arm64/boot/dts/ti/k3-am62p5-sk.dts b/arch/arm64/boot/dts/ti/k3-am62p5-sk.dts
+index 78d4d44e8bd4e..fb980d46e3041 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62p5-sk.dts
++++ b/arch/arm64/boot/dts/ti/k3-am62p5-sk.dts
+@@ -207,7 +207,7 @@ main_mcasp1_pins_default: main-mcasp1-default-pins {
+ 		pinctrl-single,pins = <
+ 			AM62PX_IOPAD(0x0090, PIN_INPUT, 2) /* (U24) GPMC0_BE0n_CLE.MCASP1_ACLKX */
+ 			AM62PX_IOPAD(0x0098, PIN_INPUT, 2) /* (AA24) GPMC0_WAIT0.MCASP1_AFSX */
+-			AM62PX_IOPAD(0x008c, PIN_INPUT, 2) /* (T25) GPMC0_WEn.MCASP1_AXR0 */
++			AM62PX_IOPAD(0x008c, PIN_OUTPUT, 2) /* (T25) GPMC0_WEn.MCASP1_AXR0 */
+ 			AM62PX_IOPAD(0x0084, PIN_INPUT, 2) /* (R25) GPMC0_ADVn_ALE.MCASP1_AXR2 */
+ 		>;
  	};
- };
 -- 
 2.43.0
 
