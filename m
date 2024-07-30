@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23111A6192;
-	Tue, 30 Jul 2024 16:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 224211A619B;
+	Tue, 30 Jul 2024 16:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357473; cv=none; b=GmnCQ+cwkJMYvrkeqxPIgvZ0VKVI7tE1DcaBaSjGxeDEUaKpt/mOyDS5jprFiFHDm05rKv1Y9bf/8oHmtxgePDmOxZzGn8u16iVaP+ShmRzKUuEneLmR6ZlR2o9b3Dv6VGpDo65JBqpVVvyyiH3G/SKWzNe0PRT+HP0q1wfiV14=
+	t=1722357476; cv=none; b=EMIGztQwn3XQSAAuQXK/wTNF6gGeVnsSOoqBllCLm4q7ylPRLxnqIhm/AHwcU2L+u/dTBjP7EzITyqK47vPwx6kCyWOCKca/S8Yq5RUFb4He4yVH/J7aeN/yXOqo1Qs9QbWov3ncAmNOEE0SZa9joJOE7h+UppmvWdtA54QW4H4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357473; c=relaxed/simple;
-	bh=dXitW7tTj8bg0PZGXg7MuMzL6UD572CeB5juD0/vcC8=;
+	s=arc-20240116; t=1722357476; c=relaxed/simple;
+	bh=kzby/A8tUOYuqTdPA+T8PxNPM5DMoNW+UagPD2nGw6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TbimEyoLJxfPzzd7aO3TfNcky0a1Ur479GpccZ0XgbkNHLiVMiJtNQi9Jsi/24rUgwpp4HHcB9dyQskOmmvkB0T0+a+FFM6Rxa+wm0jhV2yxp3y+iMLvlAojJUm87flD/5y7xHB1NUCpGiC6cr7WdGbyrv3rtrMeAaEmTan9z+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZzT/5oT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiLnz5KuSelbA1tVAwY2sXqOzL6s6rfZbf3Jw+SAzDjzazxYzJYSa7Xezdp44eJZthb0aAsrn6UVRdBc/P+y8hug6lXyM+5zyQLsfsh+5sxCdEgrdEejSXCSYhCJMbgSKkytDCHGDoznCxsbukLRTecQW9xypmkF4RXviA0TXn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pf1s42dd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZzT/5oT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721F9C4AF0F;
-	Tue, 30 Jul 2024 16:37:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pf1s42dd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879A5C32782;
+	Tue, 30 Jul 2024 16:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357472;
-	bh=dXitW7tTj8bg0PZGXg7MuMzL6UD572CeB5juD0/vcC8=;
+	s=korg; t=1722357476;
+	bh=kzby/A8tUOYuqTdPA+T8PxNPM5DMoNW+UagPD2nGw6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eZzT/5oTe1rn//YNbFPdAttifMEjvjAQmRAMdMHfpcjgNkiFV18Upt8Alr1WKxoJx
-	 twC8bELxx315tMYAV4G5rx9nfUHFoeMJI3dIckb9k8p/G1z0je244w2sMb5dl5nZHR
-	 AC96H1t7wOp3LSn9W3/h92lm6TBTlqWzL7pPozeM=
+	b=Pf1s42ddAH1p/q9A162XAwObDh16eZyJnq4P+pEgWA/9BCZepRGtkesOMl5jCHiaC
+	 fxt4TIRgN17r8BYqrDPdnFAylsU4dcNdB7z33BxjEZkguTT6E7PvItRrFRhMJFn2Da
+	 xraVOzFcubAb331vOhNr+jTknjZV7AovZEnNs/XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Iulia Tanasescu <iulia.tanasescu@nxp.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 257/809] Bluetooth: hci_event: Set QoS encryption from BIGInfo report
-Date: Tue, 30 Jul 2024 17:42:13 +0200
-Message-ID: <20240730151734.747299650@linuxfoundation.org>
+	Ritvik Budhiraja <rbudhiraja@microsoft.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	David Howells <dhowell@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 296/440] cifs: fix potential null pointer use in destroy_workqueue in init_cifs error path
+Date: Tue, 30 Jul 2024 17:48:49 +0200
+Message-ID: <20240730151627.391028245@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Iulia Tanasescu <iulia.tanasescu@nxp.com>
+From: Steve French <stfrench@microsoft.com>
 
-[ Upstream commit 5a820b13db3988122080f8de2920721f770c37a0 ]
+commit 193cc89ea0ca1da311877d2b4bb5e9f03bcc82a2 upstream.
 
-On a Broadcast Sink, after synchronizing to the PA transimitted by a
-Broadcast Source, the BIGInfo advertising reports emitted by the
-Controller hold the encryption field, which indicates whether the
-Broadcast Source is transmitting encrypted streams.
+Dan Carpenter reported a Smack static checker warning:
+   fs/smb/client/cifsfs.c:1981 init_cifs()
+   error: we previously assumed 'serverclose_wq' could be null (see line 1895)
 
-This updates the PA sync hcon QoS with the encryption value reported
-in the BIGInfo report, so that this information is accurate if the
-userspace tries to access the QoS struct via getsockopt.
+The patch which introduced the serverclose workqueue used the wrong
+oredering in error paths in init_cifs() for freeing it on errors.
 
-Fixes: 1d11d70d1f6b ("Bluetooth: ISO: Pass BIG encryption info through QoS")
-Signed-off-by: Iulia Tanasescu <iulia.tanasescu@nxp.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 173217bd7336 ("smb3: retrying on failed server close")
+Cc: stable@vger.kernel.org
+Cc: Ritvik Budhiraja <rbudhiraja@microsoft.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: David Howells <dhowell@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/smb/client/cifsfs.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/hci_event.c b/net/bluetooth/hci_event.c
-index 93f7ac905cece..4611a67d7dcc3 100644
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -6988,6 +6988,8 @@ static void hci_le_big_info_adv_report_evt(struct hci_dev *hdev, void *data,
- 	if (!pa_sync)
- 		goto unlock;
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -1872,12 +1872,12 @@ init_cifs(void)
+ 					   WQ_FREEZABLE|WQ_MEM_RECLAIM, 0);
+ 	if (!serverclose_wq) {
+ 		rc = -ENOMEM;
+-		goto out_destroy_serverclose_wq;
++		goto out_destroy_deferredclose_wq;
+ 	}
  
-+	pa_sync->iso_qos.bcast.encryption = ev->encryption;
-+
- 	/* Notify iso layer */
- 	hci_connect_cfm(pa_sync, 0);
+ 	rc = cifs_init_inodecache();
+ 	if (rc)
+-		goto out_destroy_deferredclose_wq;
++		goto out_destroy_serverclose_wq;
  
--- 
-2.43.0
-
+ 	rc = init_mids();
+ 	if (rc)
+@@ -1939,6 +1939,8 @@ out_destroy_mids:
+ 	destroy_mids();
+ out_destroy_inodecache:
+ 	cifs_destroy_inodecache();
++out_destroy_serverclose_wq:
++	destroy_workqueue(serverclose_wq);
+ out_destroy_deferredclose_wq:
+ 	destroy_workqueue(deferredclose_wq);
+ out_destroy_cifsoplockd_wq:
+@@ -1949,8 +1951,6 @@ out_destroy_decrypt_wq:
+ 	destroy_workqueue(decrypt_wq);
+ out_destroy_cifsiod_wq:
+ 	destroy_workqueue(cifsiod_wq);
+-out_destroy_serverclose_wq:
+-	destroy_workqueue(serverclose_wq);
+ out_clean_proc:
+ 	cifs_proc_clean();
+ 	return rc;
 
 
