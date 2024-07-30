@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CFE1A6186;
-	Tue, 30 Jul 2024 16:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2CB18B46E;
+	Tue, 30 Jul 2024 16:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356290; cv=none; b=ogoj/pq4wYJ2UBd8ZiTTEO2SAF2LfHyYS7QQzsNfZJc74rLoVAY4kg95oLyqmgk0EGLWIkXsA+atdH2pp6Q5kslfDw1NU2CZwhmUwnjzxGl4JA/j8F2CQWuhAf4lWCPtJv17ZOVeDH0E+Vlg+uugw9FqakW4LnKQkYAk68Xir7w=
+	t=1722356293; cv=none; b=B4qpu0ZQK0hlLcOnmZUEFDP3dUzEePjjENp6e/PVp+JEBqi7+41KXWqcfk8LWimivdzykjUljhTzA8ssPgxvslKwqgHbEy7cBfzSVdbnlP4GvhziEsvc8BzJdJdjTMAEPEASWQnL2YUiFU4ky6UsKWn0fINfFbVAf6MJVGaZu48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356290; c=relaxed/simple;
-	bh=o9hWDKhWkJxe/AbVZbWCYgDqA4AztxMs6+woVQLvR8Y=;
+	s=arc-20240116; t=1722356293; c=relaxed/simple;
+	bh=dFPM7ISdTMF75vzkqhAQNJ+wI+6P6c1JsFbKcsMcD3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nw+XNr4T3meYztoxNcz8gK8zP9uDxNvpYjNp9XdRXZPPH8oIMiwH+nz7y6/CbSK7/FQvsLf1Cn6gH79L98d4+o0UEHVkxhoQcZPjmqZsDsstp435z+lQcMLC+XWW+9cxBs0UnPnU+c8tX5kLiL/tkO8MJaiJjbXrkFt556jsVaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uhYYiAbt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ecEa9X5XZpbdvA2DU38j3Z2In6KGLMbtYG+sTXamNTW747boKgyo751STpRFg/OxF9eU4LJpg0DvWklD1q5QbFmr5KVSqtknhLUFSbBBa7FWs7O0ZFNvqOSSZrYQbel2vDMDS+WZGtwP04ZUPJflzmdFCPkkC6oYKbJ2lkE6Z+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV0yalqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uhYYiAbt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55131C32782;
-	Tue, 30 Jul 2024 16:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV0yalqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A82C32782;
+	Tue, 30 Jul 2024 16:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356289;
-	bh=o9hWDKhWkJxe/AbVZbWCYgDqA4AztxMs6+woVQLvR8Y=;
+	s=korg; t=1722356293;
+	bh=dFPM7ISdTMF75vzkqhAQNJ+wI+6P6c1JsFbKcsMcD3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uhYYiAbtTIlAC5EOYLC4KN+Yfj9JaWuUbGFqtWRty2uStQwhKtf/APFI39PDs3tCY
-	 DLZjdrl4cVKLIiBXTq5aHKlQJWdAyNaE+d9T/TYBobxRAzlc/CS8/uLr8N7S7C3ZeE
-	 HcazMAzSkZyVZGMDJCDTcbe6uxTfC9yYUvPUOWuw=
+	b=zV0yalqCVqkMn02ORqYhOhyJ8Yvyd4u/4tQvTLvKMS85QiKtWCThoLGcy6fwMwIDj
+	 6QW93He/cOYPzhNxNqDPSJROcnUgOpflt8tEMK8c8ei5L1iWxxSrcEo6D12mfeHOs7
+	 OsSfJ6MwkqFPczW6z3s+Sroz6+3Cie+9B1cjjl4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/440] SUNRPC: Fixup gss_status tracepoint error output
-Date: Tue, 30 Jul 2024 17:46:49 +0200
-Message-ID: <20240730151622.747404939@linuxfoundation.org>
+Subject: [PATCH 6.10 137/809] arm64: dts: qcom: sm6350: Add missing qcom,non-secure-domain property
+Date: Tue, 30 Jul 2024 17:40:13 +0200
+Message-ID: <20240730151730.023725993@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,38 +48,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit b9fae9f06d84ffab0f3f9118f3a96bbcdc528bf6 ]
+[ Upstream commit 81008068ee4f2c4c26e97a0404405bb4b450241b ]
 
-The GSS routine errors are values, not flags.
+By default the DSP domains are secure, add the missing
+qcom,non-secure-domain property to mark them as non-secure.
 
-Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: efc33c969f23 ("arm64: dts: qcom: sm6350: Add ADSP nodes")
+Fixes: 8eb5287e8a42 ("arm64: dts: qcom: sm6350: Add CDSP nodes")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://lore.kernel.org/r/20240705-sm6350-fastrpc-fix-v2-1-89a43166c9bb@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rpcgss.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/trace/events/rpcgss.h b/include/trace/events/rpcgss.h
-index 894d9fc8bd94a..e228a44af2915 100644
---- a/include/trace/events/rpcgss.h
-+++ b/include/trace/events/rpcgss.h
-@@ -54,7 +54,7 @@ TRACE_DEFINE_ENUM(GSS_S_UNSEQ_TOKEN);
- TRACE_DEFINE_ENUM(GSS_S_GAP_TOKEN);
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 5f862cf8858a7..60383f0d09f32 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1323,6 +1323,7 @@ fastrpc {
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "adsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
  
- #define show_gss_status(x)						\
--	__print_flags(x, "|",						\
-+	__print_symbolic(x, 						\
- 		{ GSS_S_BAD_MECH, "GSS_S_BAD_MECH" },			\
- 		{ GSS_S_BAD_NAME, "GSS_S_BAD_NAME" },			\
- 		{ GSS_S_BAD_NAMETYPE, "GSS_S_BAD_NAMETYPE" },		\
+@@ -1582,6 +1583,7 @@ fastrpc {
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "cdsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
 -- 
 2.43.0
 
