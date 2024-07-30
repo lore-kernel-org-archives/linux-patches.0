@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D35F31A6192;
-	Tue, 30 Jul 2024 16:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369DA1A6192;
+	Tue, 30 Jul 2024 16:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357671; cv=none; b=QAV+rNWxSVauUG6xkD6RN9gQCj85Tcoepz0OqMr8XfhFtSLkxKktzN8zy6r09FhHGj36SkFKVzSs74IpdHj/YGaR0OjNLZVvWYLWL9ZhpJwFiEBK8e1u1qwtGA2w3QL8Pw1vC3ZCbhxmuvEJJFiBfcg83G/aKR+G+yIi35KZSB8=
+	t=1722357675; cv=none; b=GnWoNFMIhhr+beVzggOBWVTh1jYh5zf+GJWVeyRgdgimL1z3HOa7siretQ6xTFh7jcyfbLOKrqXZV5Tng+OaxuoDpWQwh8Av0K+7WYMskDpFUwetxn2BbOIoEYmSomC9DslV1ncD98UbEJSUKO/sEMPzynu0KB0U4hLCRrwqGEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357671; c=relaxed/simple;
-	bh=u8Xm5LH6ul5cKVLQlcOMnBoHKunb/3lM8q8OsRZO7VM=;
+	s=arc-20240116; t=1722357675; c=relaxed/simple;
+	bh=R7MXksLnXTZ90EKwJ6zvz6ezGDgSDNejt7cW8XVeXWo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCdelFc1Aqr7OHw1VYW3i4uqHM1/amHa+fBHO5EuyTM1527uj2/eN3wSGkbOe9AiuIBvTzGmylkyD5QpXgcrRSoC/BgQTgQxyU3wX2sLG9XQb8x5bLW/ZK58zjAXg+QtmisgVEnOIlkdg9r36uzYQ+RGC3REkfVnHSk3c8gDWlU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GQ+h0PGC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVeX2/PU43E/OWnL0LGxHgREl6AsWu6N8zNhc4OVTOZBzc86V1Dk8yrMPVt4tBjCj3z6tCTWQO5vyg+y0ji6w+3zORxMn8x2RPV41RA2h7iK3J1fGkX8m0jS9+GXMHTAzCfPABLgmLtkvwqX0wyzvSkOiBh5c9GD78Ws+UOUfRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtE7CZfX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GQ+h0PGC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48174C32782;
-	Tue, 30 Jul 2024 16:41:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtE7CZfX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9837AC4AF0C;
+	Tue, 30 Jul 2024 16:41:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357671;
-	bh=u8Xm5LH6ul5cKVLQlcOMnBoHKunb/3lM8q8OsRZO7VM=;
+	s=korg; t=1722357675;
+	bh=R7MXksLnXTZ90EKwJ6zvz6ezGDgSDNejt7cW8XVeXWo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ+h0PGCLOBkyoPydzGs/yqL65KE1NER7b9y7JWGu1DDxdyrdxgi1io8WeD3EJqnC
-	 1IhADuyc5BXc4kuMzuKZupB7/adpXTRLbDDkg2sXLBaqY5QRmVA6dFB7REt5ldnN3y
-	 ekECQ6Ua026QSi9FAU5M9u7b2suj6pcirloNBRyE=
+	b=xtE7CZfXwhw+8hyFu1/IHU04YdU4sfbZdXe7fb4P+zDHlkmE5uH2O+VrRFIKNyfpz
+	 y3VZWsySF3ZrUL6Gcw0pygH8wfjI7aEG72Ouzc5vYDtIr0aP0XloBqtauaZuQB5JrB
+	 eVw7qE5uJhkD/GPmynW7oA0UQEfq1fSrdJhacV3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 280/568] ASoC: max98088: Check for clk_prepare_enable() error
-Date: Tue, 30 Jul 2024 17:46:27 +0200
-Message-ID: <20240730151650.819002603@linuxfoundation.org>
+Subject: [PATCH 6.10 278/809] drm/panel: boe-tv101wum-nl6: If prepare fails, disable GPIO before regulators
+Date: Tue, 30 Jul 2024 17:42:34 +0200
+Message-ID: <20240730151735.573370746@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 1a70579723fde3624a72dfea6e79e55be6e36659 ]
+[ Upstream commit 587c48f622374e5d47b1d515c6006a4df4dee882 ]
 
-clk_prepare_enable() may fail, so we should better check its return
-value and propagate it in the case of error.
+The enable GPIO should clearly be set low before turning off
+regulators. That matches both the inverse order that things were
+enabled and also the order in unprepare().
 
-Fixes: 62a7fc32a628 ("ASoC: max98088: Add master clock handling")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Link: https://patch.msgid.link/20240628080534.843815-1-nichen@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/max98088.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/max98088.c b/sound/soc/codecs/max98088.c
-index 8b56ee550c09e..8b0645c634620 100644
---- a/sound/soc/codecs/max98088.c
-+++ b/sound/soc/codecs/max98088.c
-@@ -1318,6 +1318,7 @@ static int max98088_set_bias_level(struct snd_soc_component *component,
-                                   enum snd_soc_bias_level level)
- {
- 	struct max98088_priv *max98088 = snd_soc_component_get_drvdata(component);
-+	int ret;
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index 0ffe8f8c01de8..ce7b4f5ce3fae 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -1528,13 +1528,13 @@ static int boe_panel_prepare(struct drm_panel *panel)
+ 	return 0;
  
- 	switch (level) {
- 	case SND_SOC_BIAS_ON:
-@@ -1333,10 +1334,13 @@ static int max98088_set_bias_level(struct snd_soc_component *component,
- 		 */
- 		if (!IS_ERR(max98088->mclk)) {
- 			if (snd_soc_component_get_bias_level(component) ==
--			    SND_SOC_BIAS_ON)
-+			    SND_SOC_BIAS_ON) {
- 				clk_disable_unprepare(max98088->mclk);
--			else
--				clk_prepare_enable(max98088->mclk);
-+			} else {
-+				ret = clk_prepare_enable(max98088->mclk);
-+				if (ret)
-+					return ret;
-+			}
- 		}
- 		break;
+ poweroff:
++	gpiod_set_value(boe->enable_gpio, 0);
+ 	regulator_disable(boe->avee);
+ poweroffavdd:
+ 	regulator_disable(boe->avdd);
+ poweroff1v8:
+ 	usleep_range(5000, 7000);
+ 	regulator_disable(boe->pp1800);
+-	gpiod_set_value(boe->enable_gpio, 0);
  
+ 	return ret;
+ }
 -- 
 2.43.0
 
