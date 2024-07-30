@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483031A76A1;
-	Tue, 30 Jul 2024 17:25:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33D81A76A1;
+	Tue, 30 Jul 2024 17:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360325; cv=none; b=CfOU3UQCrTGOtk40pt/zd8lL9bGoccwQHOS3Arn12YJbROCq76sj4229WP6Km+ORYQ4YtSQUf8OD6PkB5XepicKymNOR/SOMGg9+iSJVl5/EMq58hwcCWhVq5z7Ucf6o//cdr3N+tqM+FrwnClcUa8jq72cf9STgruVqaJNpcbM=
+	t=1722360328; cv=none; b=miQdxu8pxr2MpksL3XMVaPkZ0vV9q9wIX4RIng3Sz4JNf6wzCWqN/2OSIKFlTV6RiLrCU1efv4c9S6KxVhDSyLDaTD6ZPkCdEJeH7aQU9yvzCRXzr3kHro4sneozyuh9yvN2sSFa3rqzT0Oau8KRAQYDdT3DOCMn8AnRehQfTkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360325; c=relaxed/simple;
-	bh=LunbCZIHiLyel9aX/hrjUe0wLeqwA87ukeEJz4pmckw=;
+	s=arc-20240116; t=1722360328; c=relaxed/simple;
+	bh=EtmjBassc0WXEX5pnEMnbHFFFFAotejW/FJwdvJA3jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H7+a3bzViSJhnN4jKr99C/2f54WLK55CIV1Wd8CekxqCq/D001AJ9z87AuZn6zaKPW5QuiDroFF8Ysyp+DNTWxeCsiYpzEVLXiGCSUx6trVB1aIqm8elaV3YY0HrzNgXRTBnEBb3zQfGaU0RZH5cf4LQAHzuxjdIDFR8cijiJfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdE4oMth; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MlVQvBSxZnmooDn1/fgdm0uiOZFpg8RmAred5gMGFyuVv/78gn1YHX3WehTvfJ9oj75pO+XTL7OX52DGsbUOqnsX64PE6iMaA+hBs2WFMzr8XzWuKR3OzFNNLjOTYu/o7T9n6I+4PKJ2Lnu190T0568kwD0+N35nYZlZc1YvpHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R9BzZBkH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdE4oMth"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FC4C4AF12;
-	Tue, 30 Jul 2024 17:25:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R9BzZBkH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 239F3C32782;
+	Tue, 30 Jul 2024 17:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360325;
-	bh=LunbCZIHiLyel9aX/hrjUe0wLeqwA87ukeEJz4pmckw=;
+	s=korg; t=1722360328;
+	bh=EtmjBassc0WXEX5pnEMnbHFFFFAotejW/FJwdvJA3jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YdE4oMthiMoFBNk2rNyhTIjtZ99FggwQHibkDpdKuX1p6VkGeG4d6IaN0m9Ft5496
-	 qm3RTo50ahgenKVsjAgH8N0U55+FeIkl4ArU5T+WXhOQZwiVZhcnz8o0hWFEsw5Stt
-	 2t93Vp7ApzVzpylui5qrIGQDZY94h4b5fHydtJbU=
+	b=R9BzZBkHSzhodCVP6wYZ0bGHKIFHBU3xInb97F1DcGM0YVYFP211HJ5mbFLd2Uw7O
+	 ZQ/XqoDVdlpFeQ5MAaAkdVyq2otT/DByhE47vignwIs0Ifkuphh/5ah+z+XKSx8z17
+	 zZEAGw1uaWR0o0AcWhLa6lce6oWmsKpaQty2u8sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.10 633/809] fbdev: vesafb: Detect VGA compatibility from screen infos VESA attributes
-Date: Tue, 30 Jul 2024 17:48:29 +0200
-Message-ID: <20240730151749.843861066@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.10 624/809] KVM: nVMX: Fold requested virtual interrupt check into has_nested_events()
+Date: Tue, 30 Jul 2024 17:48:20 +0200
+Message-ID: <20240730151749.486701829@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,73 +49,142 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Sean Christopherson <seanjc@google.com>
 
-commit c2bc958b2b03e361f14df99983bc64a39a7323a3 upstream.
+commit 321ef62b0c5f6f57bb8500a2ca5986052675abbf upstream.
 
-Test the vesa_attributes field in struct screen_info for compatibility
-with VGA hardware. Vesafb currently tests bit 1 in screen_info's
-capabilities field which indicates a 64-bit lfb address and is
-unrelated to VGA compatibility.
+Check for a Requested Virtual Interrupt, i.e. a virtual interrupt that is
+pending delivery, in vmx_has_nested_events() and drop the one-off
+kvm_x86_ops.guest_apic_has_interrupt() hook.
 
-Section 4.4 of the Vesa VBE 2.0 specifications defines that bit 5 in
-the mode's attributes field signals VGA compatibility. The mode is
-compatible with VGA hardware if the bit is clear. In that case, the
-driver can access VGA state of the VBE's underlying hardware. The
-vesafb driver uses this feature to program the color LUT in palette
-modes. Without, colors might be incorrect.
+In addition to dropping a superfluous hook, this fixes a bug where KVM
+would incorrectly treat virtual interrupts _for L2_ as always enabled due
+to kvm_arch_interrupt_allowed(), by way of vmx_interrupt_blocked(),
+treating IRQs as enabled if L2 is active and vmcs12 is configured to exit
+on IRQs, i.e. KVM would treat a virtual interrupt for L2 as a valid wake
+event based on L1's IRQ blocking status.
 
-The problem got introduced in commit 89ec4c238e7a ("[PATCH] vesafb: Fix
-incorrect logo colors in x86_64"). It incorrectly stores the mode
-attributes in the screen_info's capabilities field and updates vesafb
-accordingly. Later, commit 5e8ddcbe8692 ("Video mode probing support for
-the new x86 setup code") fixed the screen_info, but did not update vesafb.
-Color output still tends to work, because bit 1 in capabilities is
-usually 0.
-
-Besides fixing the bug in vesafb, this commit introduces a helper that
-reads the correct bit from screen_info.
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 5e8ddcbe8692 ("Video mode probing support for the new x86 setup code")
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Cc: <stable@vger.kernel.org> # v2.6.23+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240607172609.3205077-6-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/video/fbdev/vesafb.c |    2 +-
- include/linux/screen_info.h  |   10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/kvm-x86-ops.h |    1 -
+ arch/x86/include/asm/kvm_host.h    |    1 -
+ arch/x86/kvm/vmx/main.c            |    1 -
+ arch/x86/kvm/vmx/nested.c          |    4 ++++
+ arch/x86/kvm/vmx/vmx.c             |   20 --------------------
+ arch/x86/kvm/vmx/x86_ops.h         |    1 -
+ arch/x86/kvm/x86.c                 |   10 +---------
+ 7 files changed, 5 insertions(+), 33 deletions(-)
 
---- a/drivers/video/fbdev/vesafb.c
-+++ b/drivers/video/fbdev/vesafb.c
-@@ -271,7 +271,7 @@ static int vesafb_probe(struct platform_
- 	if (si->orig_video_isVGA != VIDEO_TYPE_VLFB)
- 		return -ENODEV;
+--- a/arch/x86/include/asm/kvm-x86-ops.h
++++ b/arch/x86/include/asm/kvm-x86-ops.h
+@@ -85,7 +85,6 @@ KVM_X86_OP_OPTIONAL(update_cr8_intercept
+ KVM_X86_OP(refresh_apicv_exec_ctrl)
+ KVM_X86_OP_OPTIONAL(hwapic_irr_update)
+ KVM_X86_OP_OPTIONAL(hwapic_isr_update)
+-KVM_X86_OP_OPTIONAL_RET0(guest_apic_has_interrupt)
+ KVM_X86_OP_OPTIONAL(load_eoi_exitmap)
+ KVM_X86_OP_OPTIONAL(set_virtual_apic_mode)
+ KVM_X86_OP_OPTIONAL(set_apic_access_page_addr)
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1714,7 +1714,6 @@ struct kvm_x86_ops {
+ 	void (*refresh_apicv_exec_ctrl)(struct kvm_vcpu *vcpu);
+ 	void (*hwapic_irr_update)(struct kvm_vcpu *vcpu, int max_irr);
+ 	void (*hwapic_isr_update)(int isr);
+-	bool (*guest_apic_has_interrupt)(struct kvm_vcpu *vcpu);
+ 	void (*load_eoi_exitmap)(struct kvm_vcpu *vcpu, u64 *eoi_exit_bitmap);
+ 	void (*set_virtual_apic_mode)(struct kvm_vcpu *vcpu);
+ 	void (*set_apic_access_page_addr)(struct kvm_vcpu *vcpu);
+--- a/arch/x86/kvm/vmx/main.c
++++ b/arch/x86/kvm/vmx/main.c
+@@ -97,7 +97,6 @@ struct kvm_x86_ops vt_x86_ops __initdata
+ 	.required_apicv_inhibits = VMX_REQUIRED_APICV_INHIBITS,
+ 	.hwapic_irr_update = vmx_hwapic_irr_update,
+ 	.hwapic_isr_update = vmx_hwapic_isr_update,
+-	.guest_apic_has_interrupt = vmx_guest_apic_has_interrupt,
+ 	.sync_pir_to_irr = vmx_sync_pir_to_irr,
+ 	.deliver_interrupt = vmx_deliver_interrupt,
+ 	.dy_apicv_has_pending_interrupt = pi_has_pending_interrupt,
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4060,6 +4060,10 @@ static bool vmx_has_nested_events(struct
  
--	vga_compat = (si->capabilities & 2) ? 0 : 1;
-+	vga_compat = !__screen_info_vbe_mode_nonvga(si);
- 	vesafb_fix.smem_start = si->lfb_base;
- 	vesafb_defined.bits_per_pixel = si->lfb_depth;
- 	if (15 == vesafb_defined.bits_per_pixel)
---- a/include/linux/screen_info.h
-+++ b/include/linux/screen_info.h
-@@ -49,6 +49,16 @@ static inline u64 __screen_info_lfb_size
- 	return lfb_size;
+ 	vppr = *((u32 *)(vapic + APIC_PROCPRI));
+ 
++	max_irr = vmx_get_rvi();
++	if ((max_irr & 0xf0) > (vppr & 0xf0))
++		return true;
++
+ 	if (vmx->nested.pi_pending && vmx->nested.pi_desc &&
+ 	    pi_test_on(vmx->nested.pi_desc)) {
+ 		max_irr = pi_find_highest_vector(vmx->nested.pi_desc);
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -4108,26 +4108,6 @@ void pt_update_intercept_for_msr(struct
+ 	}
  }
  
-+static inline bool __screen_info_vbe_mode_nonvga(const struct screen_info *si)
-+{
-+	/*
-+	 * VESA modes typically run on VGA hardware. Set bit 5 signals that this
-+	 * is not the case. Drivers can then not make use of VGA resources. See
-+	 * Sec 4.4 of the VBE 2.0 spec.
-+	 */
-+	return si->vesa_attributes & BIT(5);
-+}
-+
- static inline unsigned int __screen_info_video_type(unsigned int type)
+-bool vmx_guest_apic_has_interrupt(struct kvm_vcpu *vcpu)
+-{
+-	struct vcpu_vmx *vmx = to_vmx(vcpu);
+-	void *vapic_page;
+-	u32 vppr;
+-	int rvi;
+-
+-	if (WARN_ON_ONCE(!is_guest_mode(vcpu)) ||
+-		!nested_cpu_has_vid(get_vmcs12(vcpu)) ||
+-		WARN_ON_ONCE(!vmx->nested.virtual_apic_map.gfn))
+-		return false;
+-
+-	rvi = vmx_get_rvi();
+-
+-	vapic_page = vmx->nested.virtual_apic_map.hva;
+-	vppr = *((u32 *)(vapic_page + APIC_PROCPRI));
+-
+-	return ((rvi & 0xf0) > (vppr & 0xf0));
+-}
+-
+ void vmx_msr_filter_changed(struct kvm_vcpu *vcpu)
  {
- 	switch (type) {
+ 	struct vcpu_vmx *vmx = to_vmx(vcpu);
+--- a/arch/x86/kvm/vmx/x86_ops.h
++++ b/arch/x86/kvm/vmx/x86_ops.h
+@@ -49,7 +49,6 @@ void vmx_apicv_pre_state_restore(struct
+ bool vmx_check_apicv_inhibit_reasons(enum kvm_apicv_inhibit reason);
+ void vmx_hwapic_irr_update(struct kvm_vcpu *vcpu, int max_irr);
+ void vmx_hwapic_isr_update(int max_isr);
+-bool vmx_guest_apic_has_interrupt(struct kvm_vcpu *vcpu);
+ int vmx_sync_pir_to_irr(struct kvm_vcpu *vcpu);
+ void vmx_deliver_interrupt(struct kvm_lapic *apic, int delivery_mode,
+ 			   int trig_mode, int vector);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -13100,12 +13100,6 @@ void kvm_arch_commit_memory_region(struc
+ 		kvm_arch_free_memslot(kvm, old);
+ }
+ 
+-static inline bool kvm_guest_apic_has_interrupt(struct kvm_vcpu *vcpu)
+-{
+-	return (is_guest_mode(vcpu) &&
+-		static_call(kvm_x86_guest_apic_has_interrupt)(vcpu));
+-}
+-
+ static inline bool kvm_vcpu_has_events(struct kvm_vcpu *vcpu)
+ {
+ 	if (!list_empty_careful(&vcpu->async_pf.done))
+@@ -13136,9 +13130,7 @@ static inline bool kvm_vcpu_has_events(s
+ 	if (kvm_test_request(KVM_REQ_PMI, vcpu))
+ 		return true;
+ 
+-	if (kvm_arch_interrupt_allowed(vcpu) &&
+-	    (kvm_cpu_has_interrupt(vcpu) ||
+-	    kvm_guest_apic_has_interrupt(vcpu)))
++	if (kvm_arch_interrupt_allowed(vcpu) && kvm_cpu_has_interrupt(vcpu))
+ 		return true;
+ 
+ 	if (kvm_hv_has_stimer_pending(vcpu))
 
 
