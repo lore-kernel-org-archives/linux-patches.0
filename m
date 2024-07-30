@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37621A76A5;
-	Tue, 30 Jul 2024 17:32:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E403D1A76A5;
+	Tue, 30 Jul 2024 17:32:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360751; cv=none; b=HxeuOrgUKaR2o0MuM7Mp2cf6RvQ6lbe8RI+mtC/hOLu3Y4nr8ujRtt6zusb7/4YM5zYfXygwCTcFa8wOagTmVw40XsTvncVn/2kBG1bHGp9ds4Nr1mexO1P/QgVBSLEQi03CCaqVs6zir8OgEf6cJoOl6Bmtlnp15fFXF+vquFc=
+	t=1722360755; cv=none; b=a272pxGaEBVWErKmJBu016n9T+GFS9txwjuBHZpBIXjg4dqjzNpyR3NYNBe3ISsTAuyk1fB7swIf10cGi2a6UFmN6qYPjkniyEEeh91j4IBA3MEVadCNkLWIkrYA4AiJuwHyDBSEVqHQtB9/1Ns1CiKgaeCC4Okm0pW9LRo6iFw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360751; c=relaxed/simple;
-	bh=6HKrVpCh038ALVGKfmwKomASOXh2xU4n+pSFA20jBoE=;
+	s=arc-20240116; t=1722360755; c=relaxed/simple;
+	bh=2xUageQSE0Y9Z28rPhcpMzzRQiF6shxuMPZ6kgIkfJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O8dXhhdPKinS4BI2HHz4uy8gqEhiVNTpQb3xTurU2V6epW1dBhmEv/zDiKwFZix57U4XvLq9fXIzUKpcI/IEhc2ZxnXcfEhKt6ixtvGtveoXQjHUIDcbTj9oIEAcyepTkGpAV/Yc8WW9U/a43OlYED0s9p2ELq6lSXfO9D5Y7Ko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eqV86MCT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U4gtvy2u6HygZm4/j2EkY1s66mSSyTY6elSwjjN2DvZxssjSgQzPybnURgG0TWEtXxZrH8wkT9+aKlsGBxGBCG+z0Kv2EZ+IrdnTL23epoUlmtMH9y3hyA5i2TeV11xoLbY/adyiQfvE0fGiduAvZ93Wcz8pQtQS8fbyyH50bK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JTfzcyI3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eqV86MCT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26C54C32782;
-	Tue, 30 Jul 2024 17:32:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JTfzcyI3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DDCC32782;
+	Tue, 30 Jul 2024 17:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360751;
-	bh=6HKrVpCh038ALVGKfmwKomASOXh2xU4n+pSFA20jBoE=;
+	s=korg; t=1722360754;
+	bh=2xUageQSE0Y9Z28rPhcpMzzRQiF6shxuMPZ6kgIkfJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eqV86MCTJ+hB0ZomRFVF4M80A+tJVsiX05ChH9oMnpxr/TCJ6/0wErjGVEyA/hDyE
-	 2qr7aIWiiP1NjKQZCV2Pp/of35Lq1dmNMQxHTlBvHhVeT+YonphJ7Foa7b58Ph3Ajb
-	 uFylVhPgUqDiIY2Akzbhd/nNXxCKY65wnxJ/NXVY=
+	b=JTfzcyI3LQGf591tAWjUEVpxS2SyoGd4Ov7bYdGb5bG5OvjmqEETmJ1rYGCXR/deY
+	 8qCDm6vpwEdydtyV1CmbJtw30Lra4BFM3L3bcV/AJT8GkTmkEJvRcfASJd240yCiCT
+	 6NBaA5LVvUbJMcrlhsxmeeyC2D94Oyru6ANZMMTQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	netfs@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org,
-	Christian Brauner <brauner@kernel.org>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Tung Nguyen <tung.q.nguyen@endava.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 765/809] netfs: Fix writeback that needs to go to both server and cache
-Date: Tue, 30 Jul 2024 17:50:41 +0200
-Message-ID: <20240730151755.181800045@linuxfoundation.org>
+Subject: [PATCH 6.10 766/809] tipc: Return non-zero value from tipc_udp_addr2str() on error
+Date: Tue, 30 Jul 2024 17:50:42 +0200
+Message-ID: <20240730151755.220573403@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -54,63 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Howells <dhowells@redhat.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 212be98aa19303cbf376d61faf9de3ec9997c1cd ]
+[ Upstream commit fa96c6baef1b5385e2f0c0677b32b3839e716076 ]
 
-When netfslib is performing writeback (ie. ->writepages), it maintains two
-parallel streams of writes, one to the server and one to the cache, but it
-doesn't mark either stream of writes as active until it gets some data that
-needs to be written to that stream.
+tipc_udp_addr2str() should return non-zero value if the UDP media
+address is invalid. Otherwise, a buffer overflow access can occur in
+tipc_media_addr_printf(). Fix this by returning 1 on an invalid UDP
+media address.
 
-This is done because some folios will only be written to the cache
-(e.g. copying to the cache on read is done by marking the folios and
-letting writeback do the actual work) and sometimes we'll only be writing
-to the server (e.g. if there's no cache).
-
-Now, since we don't actually dispatch uploads and cache writes in parallel,
-but rather flip between the streams, depending on which has the lowest
-so-far-issued offset, and don't wait for the subreqs to finish before
-flipping, we can end up in a situation where, say, we issue a write to the
-server and this completes before we start the write to the cache.
-
-But because we only activate a stream when we first add a subreq to it, the
-result collection code may run before we manage to activate the stream -
-resulting in the folio being cleaned and having the writeback-in-progress
-mark removed.  At this point, the folio no longer belongs to us.
-
-This is only really a problem for folios that need to be written to both
-streams - and in that case, the upload to the server is started first,
-followed by the write to the cache - and the cache write may see a bad
-folio.
-
-Fix this by activating the cache stream up front if there's a cache
-available.  If there's a cache, then all data is going to be written to it.
-
-Fixes: 288ace2f57c9 ("netfs: New writeback implementation")
-Signed-off-by: David Howells <dhowells@redhat.com>
-Link: https://lore.kernel.org/r/1599053.1721398818@warthog.procyon.org.uk
-cc: Jeff Layton <jlayton@kernel.org>
-cc: netfs@lists.linux.dev
-cc: linux-fsdevel@vger.kernel.org
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: d0f91938bede ("tipc: add ip/udp media type")
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Tung Nguyen <tung.q.nguyen@endava.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/netfs/write_issue.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/tipc/udp_media.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/netfs/write_issue.c b/fs/netfs/write_issue.c
-index d7c971df88660..32bc88bee5d18 100644
---- a/fs/netfs/write_issue.c
-+++ b/fs/netfs/write_issue.c
-@@ -122,6 +122,7 @@ struct netfs_io_request *netfs_create_write_req(struct address_space *mapping,
- 	wreq->io_streams[1].transferred		= LONG_MAX;
- 	if (fscache_resources_valid(&wreq->cache_resources)) {
- 		wreq->io_streams[1].avail	= true;
-+		wreq->io_streams[1].active	= true;
- 		wreq->io_streams[1].prepare_write = wreq->cache_resources.ops->prepare_write_subreq;
- 		wreq->io_streams[1].issue_write = wreq->cache_resources.ops->issue_write;
- 	}
+diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
+index b849a3d133a01..439f755399772 100644
+--- a/net/tipc/udp_media.c
++++ b/net/tipc/udp_media.c
+@@ -135,8 +135,11 @@ static int tipc_udp_addr2str(struct tipc_media_addr *a, char *buf, int size)
+ 		snprintf(buf, size, "%pI4:%u", &ua->ipv4, ntohs(ua->port));
+ 	else if (ntohs(ua->proto) == ETH_P_IPV6)
+ 		snprintf(buf, size, "%pI6:%u", &ua->ipv6, ntohs(ua->port));
+-	else
++	else {
+ 		pr_err("Invalid UDP media address\n");
++		return 1;
++	}
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
