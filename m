@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31562184549;
-	Tue, 30 Jul 2024 16:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65290184549;
+	Tue, 30 Jul 2024 16:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358605; cv=none; b=UqKPdEFZ+QCLfGxCxOIHvHuoyK9iX+eI7blUqzMzcFgWYxy9fXy5oc8AxhcvxFMkmmE/bE1Vl9GKoCwMs3cBw26GORMMdpTwm9qoBOofeqJvhKBqMkFEg06PriQEXBD6i2/bYx46Ox2FVjbn9Ztu8r3Hlnh/aAaPMYd3OanufDQ=
+	t=1722358608; cv=none; b=Uw79jPvGAnpVuQ0qBklkiL0D8HtpD3nbeTb5bBQqRJdNCbeaT76+0+7pd5GYOv+AIQVtsstaUtQLxE1zJJ+Jk/K9IWTtpRPsaRCVP7GwY2KM/7XdbWhquntDV5KmJUY7edHICFoNRdTNW8GErZm69PpcgJLM3hJtNcmx+steEng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358605; c=relaxed/simple;
-	bh=U81QzIDRW9gJ1TrbbYApO5o5FlYW1ThMCA0Ekltb0Qo=;
+	s=arc-20240116; t=1722358608; c=relaxed/simple;
+	bh=pL7ZAIs+TFJcVewFuOzADS6MncS9bacZVb52YYEqAlc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ri3N62cQ/7u946JTfhEQMSFYUtdqYOG0pIIOCTHzGaZVzDkK4iAXGWJrdhJAIxEeCsY74ipxPhwTg6Cei+/q+MCxBk37Mhl+FZBUejr79eFOcA14mk6eqDRPq/CIUavNjJIXrRHmtqhrhfsXbzIUkFa1npmti3b2OtQPAdwisis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfAfpNja; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbpBdhrdaNnYlKMP7Ksy8rQ4NPyodzdIlPFv96ujLkgUmcyHv20I1FxqwK/hxet0o1NK44MvyD5bdnLP4Dy9122YwD4EbLR6wRGcUaD1nUrjs04mV+9JOaz+FGY78NyT1NI18eYM5IpJJGz3Isa/UgZs4PG6Brtew0YG6gE2RIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aJD+WiB2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfAfpNja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF431C32782;
-	Tue, 30 Jul 2024 16:56:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aJD+WiB2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1467C32782;
+	Tue, 30 Jul 2024 16:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358605;
-	bh=U81QzIDRW9gJ1TrbbYApO5o5FlYW1ThMCA0Ekltb0Qo=;
+	s=korg; t=1722358608;
+	bh=pL7ZAIs+TFJcVewFuOzADS6MncS9bacZVb52YYEqAlc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xfAfpNjaGJuSPIhOWm/BYdIlD8IS7UHJcJir8xWoUoZfBCJSUJhrC78btVe/ZLwuj
-	 IHFh39Sq4YJx4v5OLPObXexaCaFTn51P5m4ZqJlwhmrt3IFM36AlGPNvTb3fzwu8Lq
-	 ekb1KGzhIf2ztoSVtmAsueXfrAtTkfJQ+TO6rueY=
+	b=aJD+WiB2w6LHGt/DVJHrSRZYWAh0LPkKghpf+5wDZ3xpP2hMWqVHyCGRPNI6NCFfJ
+	 wxeiI2o89enEpdmufydOAlZuhU2Z52YvJVr2vqBZgMC8VRax7vOvHjxv5+r25kpo0V
+	 V+NEOhsrsbBoHDk08jqbEHXvTJe+1ug8jUZMcI3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 6.6 378/568] char: tpm: Fix possible memory leak in tpm_bios_measurements_open()
-Date: Tue, 30 Jul 2024 17:48:05 +0200
-Message-ID: <20240730151654.639188160@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Michal Luczaj <mhal@rbox.co>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 406/440] af_unix: Disable MSG_OOB handling for sockets in sockmap/sockhash
+Date: Tue, 30 Jul 2024 17:50:39 +0200
+Message-ID: <20240730151631.654731237@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +49,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Michal Luczaj <mhal@rbox.co>
 
-commit 5d8e2971e817bb64225fc0b6327a78752f58a9aa upstream.
+[ Upstream commit 638f32604385fd23059985da8de918e9c18f0b98 ]
 
-In tpm_bios_measurements_open(), get_device() is called on the device
-embedded in struct tpm_chip. In the error path, however, put_device() is
-not called. This results in a reference count leak, which prevents the
-device from being properly released. This commit makes sure to call
-put_device() when the seq_open() call fails.
+AF_UNIX socket tracks the most recent OOB packet (in its receive queue)
+with an `oob_skb` pointer. BPF redirecting does not account for that: when
+an OOB packet is moved between sockets, `oob_skb` is left outdated. This
+results in a single skb that may be accessed from two different sockets.
 
-Cc: stable@vger.kernel.org # +v4.18
-Fixes: 9b01b5356629 ("tpm: Move shared eventlog functions to common.c")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Take the easy way out: silently drop MSG_OOB data targeting any socket that
+is in a sockmap or a sockhash. Note that such silent drop is akin to the
+fate of redirected skb's scm_fp_list (SCM_RIGHTS, SCM_CREDENTIALS).
+
+For symmetry, forbid MSG_OOB in unix_bpf_recvmsg().
+
+Fixes: 314001f0bf92 ("af_unix: Add OOB support")
+Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Michal Luczaj <mhal@rbox.co>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/20240713200218.2140950-2-mhal@rbox.co
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/eventlog/common.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/unix/af_unix.c  | 41 ++++++++++++++++++++++++++++++++++++++++-
+ net/unix/unix_bpf.c |  3 +++
+ 2 files changed, 43 insertions(+), 1 deletion(-)
 
---- a/drivers/char/tpm/eventlog/common.c
-+++ b/drivers/char/tpm/eventlog/common.c
-@@ -47,6 +47,8 @@ static int tpm_bios_measurements_open(st
- 	if (!err) {
- 		seq = file->private_data;
- 		seq->private = chip;
-+	} else {
-+		put_device(&chip->dev);
- 	}
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 3905cdcaa5184..db71f35b67b86 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -2710,10 +2710,49 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
  
- 	return err;
+ static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+ {
++	struct unix_sock *u = unix_sk(sk);
++	struct sk_buff *skb;
++	int err;
++
+ 	if (unlikely(READ_ONCE(sk->sk_state) != TCP_ESTABLISHED))
+ 		return -ENOTCONN;
+ 
+-	return unix_read_skb(sk, recv_actor);
++	mutex_lock(&u->iolock);
++	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
++	mutex_unlock(&u->iolock);
++	if (!skb)
++		return err;
++
++#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
++	if (unlikely(skb == READ_ONCE(u->oob_skb))) {
++		bool drop = false;
++
++		unix_state_lock(sk);
++
++		if (sock_flag(sk, SOCK_DEAD)) {
++			unix_state_unlock(sk);
++			kfree_skb(skb);
++			return -ECONNRESET;
++		}
++
++		spin_lock(&sk->sk_receive_queue.lock);
++		if (likely(skb == u->oob_skb)) {
++			WRITE_ONCE(u->oob_skb, NULL);
++			drop = true;
++		}
++		spin_unlock(&sk->sk_receive_queue.lock);
++
++		unix_state_unlock(sk);
++
++		if (drop) {
++			WARN_ON_ONCE(skb_unref(skb));
++			kfree_skb(skb);
++			return -EAGAIN;
++		}
++	}
++#endif
++
++	return recv_actor(sk, skb);
+ }
+ 
+ static int unix_stream_read_generic(struct unix_stream_read_state *state,
+diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
+index bd84785bf8d6c..bca2d86ba97d8 100644
+--- a/net/unix/unix_bpf.c
++++ b/net/unix/unix_bpf.c
+@@ -54,6 +54,9 @@ static int unix_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
+ 	struct sk_psock *psock;
+ 	int copied;
+ 
++	if (flags & MSG_OOB)
++		return -EOPNOTSUPP;
++
+ 	if (!len)
+ 		return 0;
+ 
+-- 
+2.43.0
+
 
 
