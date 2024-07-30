@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2F617D8BB;
-	Tue, 30 Jul 2024 16:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D621817D8BB;
+	Tue, 30 Jul 2024 16:58:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358710; cv=none; b=YMqaQVTHippcTiStUu7X8UpgGLuwnHJ6SmVYIWqCPsB+nWGwtwtFsYicoxoA1SH5Giw6TvIqo2I+eZIjMpM1EopwF+MhGOfxGv1xn65OzoTtB8rb6mb9aJynX68LyyUWv5Ln4kgFu84QVgEwFrBb/IbADllUtXAGXVxs6CoXvdE=
+	t=1722358714; cv=none; b=b2BY+l9JDw+bbZNQYKDUCp6HFJW9CilUH0VmaDqoKKXJZ/YzVPfTJRIe7AK0utsWA/6aaGp1ONE+HiHBdQYxUKlVj20097hlCxFiidYZdxmkMDnFX7t0jfDURQFgIELRGEekFw45KYs2e5h0LYtfpSzX8Dve8V/5tGUdTpqOixc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358710; c=relaxed/simple;
-	bh=3Y5vZ2yIYs/m/Nb/x+nOAWh3P70V4cD4Xje0tKmC7K0=;
+	s=arc-20240116; t=1722358714; c=relaxed/simple;
+	bh=eoAeIMOkDzgoMwIOl3Gc3NlK4/nKsWXfYmXDijdl8Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FleFuScRsRpDZd4ZGhg95N+w0t+xuv62OoR13zvCmRCjT9tD+GtcmEIg1jIwCBp6hdiFnumZxTzOUS6+6zGFik8N3mJvcZI+y62Um62NCx5Ll6NGS6BH7K088s2gUtefWG67+o6lFvdwvJBzebCLSZLfcMqBCY+y6ATcwyLVYus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WCIabnXN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FFLw76zkI1jXpU3PttwiThj5mogGWwXtABAogMUBfF82lu9XIuCmsZefVf+XyiTJw+IY47FQNkEqemXfIeqgmB0d5MyiwWz6UMEtAxXhqi9+sgsNRB0QzZnalNetOBDq4Ur6WKu32PbTDoDm+FQ61ZvqBmboanJ/Z+pU86FcTiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zJG/qql3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WCIabnXN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9823C32782;
-	Tue, 30 Jul 2024 16:58:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zJG/qql3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 446B3C32782;
+	Tue, 30 Jul 2024 16:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358710;
-	bh=3Y5vZ2yIYs/m/Nb/x+nOAWh3P70V4cD4Xje0tKmC7K0=;
+	s=korg; t=1722358713;
+	bh=eoAeIMOkDzgoMwIOl3Gc3NlK4/nKsWXfYmXDijdl8Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WCIabnXNQ4OixxVX8crcTAkmxAsmlvbe2+Kp15Nso6rQQDiRcHgd/+mbK3oRj+p02
-	 sy46MrIIP26YxOO4+EjZReYtX2Hmhv4EXQ8BgElM05tII2Wg0n0p49rc5g0S7dUyc5
-	 o+bGTX9+PDHFxdqHJLPWe+eCedvUkFCsHJNycyJQ=
+	b=zJG/qql32FbSvCil6paMFDU7CGpPh7paTZk8dd8WzB+cjTd2FdZgxcWDf/3rBfvu8
+	 4nyIT5oVbL7PjIUclhRG28dgCfKrLJZfllZX+osZHs/aZKOiLXIAdbvjMUH+ffeVYl
+	 uWzi5419EYA5/maVnKbfQP0pg4IW7FBTvWndJeG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Manikanta Maddireddy <mmaddireddy@nvidia.com>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 415/440] net: stmmac: Correct byte order of perfect_match
-Date: Tue, 30 Jul 2024 17:50:48 +0200
-Message-ID: <20240730151631.998937855@linuxfoundation.org>
+Subject: [PATCH 6.10 387/809] PCI: tegra194: Set EP alignment restriction for inbound ATU
+Date: Tue, 30 Jul 2024 17:44:23 +0200
+Message-ID: <20240730151739.955631749@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,114 +48,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Jon Hunter <jonathanh@nvidia.com>
 
-[ Upstream commit e9dbebae2e3c338122716914fe105458f41e3a4a ]
+[ Upstream commit d19a86d584e04191cdab7ced24d7ed791075697a ]
 
-The perfect_match parameter of the update_vlan_hash operation is __le16,
-and is correctly converted from host byte-order in the lone caller,
-stmmac_vlan_update().
+Tegra194 and Tegra234 PCIe EP controllers have 64K alignment restriction
+for the inbound ATU. Set the endpoint inbound ATU alignment to 64kB in the
+Tegra194 PCIe driver.
 
-However, the implementations of this caller, dwxgmac2_update_vlan_hash()
-and dwxgmac2_update_vlan_hash(), both treat this parameter as host byte
-order, using the following pattern:
-
-	u32 value = ...
-	...
-	writel(value | perfect_match, ...);
-
-This is not correct because both:
-1) value is host byte order; and
-2) writel expects a host byte order value as it's first argument
-
-I believe that this will break on big endian systems. And I expect it
-has gone unnoticed by only being exercised on little endian systems.
-
-The approach taken by this patch is to update the callback, and it's
-caller to simply use a host byte order value.
-
-Flagged by Sparse.
-Compile tested only.
-
-Fixes: c7ab0b8088d7 ("net: stmmac: Fallback to VLAN Perfect filtering if HASH is not available")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c57247f940e8 ("PCI: tegra: Add support for PCIe endpoint mode in Tegra194")
+Suggested-by: Manikanta Maddireddy <mmaddireddy@nvidia.com>
+Link: https://lore.kernel.org/linux-pci/20240508092207.337063-1-jonathanh@nvidia.com
+Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   | 2 +-
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c | 2 +-
- drivers/net/ethernet/stmicro/stmmac/hwif.h          | 2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c   | 4 ++--
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/pci/controller/dwc/pcie-tegra194.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 39112d5cb5b80..687eb17e41c6e 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -971,7 +971,7 @@ static void dwmac4_set_mac_loopback(void __iomem *ioaddr, bool enable)
- }
+diff --git a/drivers/pci/controller/dwc/pcie-tegra194.c b/drivers/pci/controller/dwc/pcie-tegra194.c
+index 93f5433c5c550..4537313ef37a9 100644
+--- a/drivers/pci/controller/dwc/pcie-tegra194.c
++++ b/drivers/pci/controller/dwc/pcie-tegra194.c
+@@ -2015,6 +2015,7 @@ static const struct pci_epc_features tegra_pcie_epc_features = {
+ 	.bar[BAR_3] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_4] = { .type = BAR_RESERVED, },
+ 	.bar[BAR_5] = { .type = BAR_RESERVED, },
++	.align = SZ_64K,
+ };
  
- static void dwmac4_update_vlan_hash(struct mac_device_info *hw, u32 hash,
--				    __le16 perfect_match, bool is_double)
-+				    u16 perfect_match, bool is_double)
- {
- 	void __iomem *ioaddr = hw->pcsr;
- 	u32 value;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index dd73f38ec08d8..813327d04c56f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -582,7 +582,7 @@ static int dwxgmac2_rss_configure(struct mac_device_info *hw,
- }
- 
- static void dwxgmac2_update_vlan_hash(struct mac_device_info *hw, u32 hash,
--				      __le16 perfect_match, bool is_double)
-+				      u16 perfect_match, bool is_double)
- {
- 	void __iomem *ioaddr = hw->pcsr;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index b2b9cf04bc726..820e2251b7c88 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -366,7 +366,7 @@ struct stmmac_ops {
- 			     struct stmmac_rss *cfg, u32 num_rxq);
- 	/* VLAN */
- 	void (*update_vlan_hash)(struct mac_device_info *hw, u32 hash,
--				 __le16 perfect_match, bool is_double);
-+				 u16 perfect_match, bool is_double);
- 	void (*enable_vlan)(struct mac_device_info *hw, u32 type);
- 	int (*add_hw_vlan_rx_fltr)(struct net_device *dev,
- 				   struct mac_device_info *hw,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index e2d51014ab4bc..93630840309e7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6311,7 +6311,7 @@ static u32 stmmac_vid_crc32_le(__le16 vid_le)
- static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
- {
- 	u32 crc, hash = 0;
--	__le16 pmatch = 0;
-+	u16 pmatch = 0;
- 	int count = 0;
- 	u16 vid = 0;
- 
-@@ -6326,7 +6326,7 @@ static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
- 		if (count > 2) /* VID = 0 always passes filter */
- 			return -EOPNOTSUPP;
- 
--		pmatch = cpu_to_le16(vid);
-+		pmatch = vid;
- 		hash = 0;
- 	}
- 
+ static const struct pci_epc_features*
 -- 
 2.43.0
 
