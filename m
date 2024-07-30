@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E931218454A;
-	Tue, 30 Jul 2024 16:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C961A619E;
+	Tue, 30 Jul 2024 16:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357754; cv=none; b=Mn/cNRB5nXV8q39yXmeuBY6Z98NMHsu+V4YTJ+BFCtCuiNNsgbuw8OEQ3r2Ijet5i3JK5pS2py7fxGi+E39JEZVnvWutovbG8+W/03+PdTMHk7eC90iOElHsaWcRB/UBwj4dWhXWJbAIOyjX8IGeApwAKXUyOOFFCssJWuFjWZY=
+	t=1722357757; cv=none; b=BpqyA0mcp/kKGpzbp3xbvGpUl087nClwhRkVSQBoUoQjI5F/wXjKnwGSrGQPjRdX0APsDM1L/0VVRcQXFVr/5O3PxVaF64xui8J55aaLSUxM76gJWiJtP7S60+K2QZt8ihfhpyK/LYv/vVMxQJXmlC8iLoVVds5wl78fjtPL8yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357754; c=relaxed/simple;
-	bh=otmqPNp2BfnPorzKH9yREce7dN3vClD7AAjQ7jHxM1c=;
+	s=arc-20240116; t=1722357757; c=relaxed/simple;
+	bh=cicX+gRhW8ZyJdNlu4vVr1n3KtiKd7Qlj7jTT7Ez334=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HqP2J7Vk2hWZMT37+8/PX/vN8VaJK/3XSXTmjIirC9eQgayU4gJn59pF1Jmnor83Z1x9JvkXI4Bpc3b/ttIQtpA0asE5aVoeHHWzy8EuztadMv98dcZm+qSuSkQpkxuZ+ZVR7c5dmaZXjFuzZQpCIdNca62srzL2whoM7Qho0f0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPtn/2IR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HMcNHCllJV+V64n7cExlpjCwj5UZv6jLP9rkOixdqfECCgTaGnXNXV3s8D7kQtFXOX3BciHaE8viiaxRcMiMh23bO+jTkJQyU5SwJ3fVnQK0Xig/LgrnDOcnUMbLGDfACYuVMjUccsVK7gORMdSYXR4uzgrQYy8+f9sF23D4qN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbVMCICL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPtn/2IR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A0C1C4AF0A;
-	Tue, 30 Jul 2024 16:42:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbVMCICL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C9CC32782;
+	Tue, 30 Jul 2024 16:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357753;
-	bh=otmqPNp2BfnPorzKH9yREce7dN3vClD7AAjQ7jHxM1c=;
+	s=korg; t=1722357756;
+	bh=cicX+gRhW8ZyJdNlu4vVr1n3KtiKd7Qlj7jTT7Ez334=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPtn/2IRkj5dzcGoD0gzgH/goRdG6+sqv77fCX4BwCpy9LWgOAP4FrH6ES9jyIEAf
-	 u0dg/Lqe9MIPAR6AV/XI0ZNWoTbIxCA+zEBjnQAthCTTZ8fwzNkWG02hvVIXJWKSEk
-	 MQiYDqor04VQFgba4i5hCXIQNufF2xx9fYnkK2qI=
+	b=tbVMCICLTApcKS/YNvFWRx/TT8cXD98N3qJl7BFYmTUBmXBMeCGjCH2cc9ShbMRby
+	 bn851Bp7uvg+Xpac2Hm9m6n1j9UNAx/Y5B9eKQgBU8jHerMVBERlLIq50uuZyt+yk9
+	 aGAB5nQa9KsB0Reea1NZw95zyCS0bEdlQGrsaY84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 288/568] net: missing check virtio
-Date: Tue, 30 Jul 2024 17:46:35 +0200
-Message-ID: <20240730151651.128957198@linuxfoundation.org>
+Subject: [PATCH 6.10 289/809] media: imon: Fix race getting ictx->lock
+Date: Tue, 30 Jul 2024 17:42:45 +0200
+Message-ID: <20240730151736.006923969@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,121 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit e269d79c7d35aa3808b1f3c1737d63dab504ddc8 ]
+[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
 
-Two missing check in virtio_net_hdr_to_skb() allowed syzbot
-to crash kernels again
+Lets fix a race between mutex_is_lock() and mutex_lock().
 
-1. After the skb_segment function the buffer may become non-linear
-(nr_frags != 0), but since the SKBTX_SHARED_FRAG flag is not set anywhere
-the __skb_linearize function will not be executed, then the buffer will
-remain non-linear. Then the condition (offset >= skb_headlen(skb))
-becomes true, which causes WARN_ON_ONCE in skb_checksum_help.
+<-mutex is not locked
+if (!mutex_is_locked(&ictx->lock)) {
+	unlock = true; <- mutex is locked externaly
+	mutex_lock(&ictx->lock);
+}
 
-2. The struct sk_buff and struct virtio_net_hdr members must be
-mathematically related.
-(gso_size) must be greater than (needed) otherwise WARN_ON_ONCE.
-(remainder) must be greater than (needed) otherwise WARN_ON_ONCE.
-(remainder) may be 0 if division is without remainder.
+Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
+atomically.
 
-offset+2 (4191) > skb_headlen() (1116)
-WARNING: CPU: 1 PID: 5084 at net/core/dev.c:3303 skb_checksum_help+0x5e2/0x740 net/core/dev.c:3303
-Modules linked in:
-CPU: 1 PID: 5084 Comm: syz-executor336 Not tainted 6.7.0-rc3-syzkaller-00014-gdf60cee26a2e #0
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
-RIP: 0010:skb_checksum_help+0x5e2/0x740 net/core/dev.c:3303
-Code: 89 e8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 52 01 00 00 44 89 e2 2b 53 74 4c 89 ee 48 c7 c7 40 57 e9 8b e8 af 8f dd f8 90 <0f> 0b 90 90 e9 87 fe ff ff e8 40 0f 6e f9 e9 4b fa ff ff 48 89 ef
-RSP: 0018:ffffc90003a9f338 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff888025125780 RCX: ffffffff814db209
-RDX: ffff888015393b80 RSI: ffffffff814db216 RDI: 0000000000000001
-RBP: ffff8880251257f4 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 000000000000045c
-R13: 000000000000105f R14: ffff8880251257f0 R15: 000000000000105d
-FS:  0000555555c24380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000002000f000 CR3: 0000000023151000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ip_do_fragment+0xa1b/0x18b0 net/ipv4/ip_output.c:777
- ip_fragment.constprop.0+0x161/0x230 net/ipv4/ip_output.c:584
- ip_finish_output_gso net/ipv4/ip_output.c:286 [inline]
- __ip_finish_output net/ipv4/ip_output.c:308 [inline]
- __ip_finish_output+0x49c/0x650 net/ipv4/ip_output.c:295
- ip_finish_output+0x31/0x310 net/ipv4/ip_output.c:323
- NF_HOOK_COND include/linux/netfilter.h:303 [inline]
- ip_output+0x13b/0x2a0 net/ipv4/ip_output.c:433
- dst_output include/net/dst.h:451 [inline]
- ip_local_out+0xaf/0x1a0 net/ipv4/ip_output.c:129
- iptunnel_xmit+0x5b4/0x9b0 net/ipv4/ip_tunnel_core.c:82
- ipip6_tunnel_xmit net/ipv6/sit.c:1034 [inline]
- sit_tunnel_xmit+0xed2/0x28f0 net/ipv6/sit.c:1076
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3545 [inline]
- dev_hard_start_xmit+0x13d/0x6d0 net/core/dev.c:3561
- __dev_queue_xmit+0x7c1/0x3d60 net/core/dev.c:4346
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- packet_xmit+0x257/0x380 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3087 [inline]
- packet_sendmsg+0x24ca/0x5240 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0xd5/0x180 net/socket.c:745
- __sys_sendto+0x255/0x340 net/socket.c:2190
- __do_sys_sendto net/socket.c:2202 [inline]
- __se_sys_sendto net/socket.c:2198 [inline]
- __x64_sys_sendto+0xe0/0x1b0 net/socket.c:2198
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x40/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
+Fix the following cocci warning:
+drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller
-
-Fixes: 0f6925b3e8da ("virtio_net: Do not pull payload in skb->head")
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Message-Id: <20240613095448.27118-1-arefev@swemel.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/media/rc/imon.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 4dfa9b69ca8d9..d1d7825318c32 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -56,6 +56,7 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 	unsigned int thlen = 0;
- 	unsigned int p_off = 0;
- 	unsigned int ip_proto;
-+	u64 ret, remainder, gso_size;
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 0b55314a80827..8f1361bcce3a6 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -1148,10 +1148,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
  
- 	if (hdr->gso_type != VIRTIO_NET_HDR_GSO_NONE) {
- 		switch (hdr->gso_type & ~VIRTIO_NET_HDR_GSO_ECN) {
-@@ -98,6 +99,16 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 		u32 off = __virtio16_to_cpu(little_endian, hdr->csum_offset);
- 		u32 needed = start + max_t(u32, thlen, off + sizeof(__sum16));
+ 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
  
-+		if (hdr->gso_size) {
-+			gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
-+			ret = div64_u64_rem(skb->len, gso_size, &remainder);
-+			if (!(ret && (hdr->gso_size > needed) &&
-+						((remainder > needed) || (remainder == 0)))) {
-+				return -EINVAL;
-+			}
-+			skb_shinfo(skb)->tx_flags |= SKBFL_SHARED_FRAG;
-+		}
-+
- 		if (!pskb_may_pull(skb, needed))
- 			return -EINVAL;
+-	if (!mutex_is_locked(&ictx->lock)) {
+-		unlock = true;
+-		mutex_lock(&ictx->lock);
+-	}
++	unlock = mutex_trylock(&ictx->lock);
  
+ 	retval = send_packet(ictx);
+ 	if (retval)
 -- 
 2.43.0
 
