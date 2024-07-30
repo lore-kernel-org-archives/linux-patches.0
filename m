@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C301A6192;
-	Tue, 30 Jul 2024 16:39:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9696757FC;
+	Tue, 30 Jul 2024 16:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357571; cv=none; b=NX29z+m9kRhPsCs85va0TcK3AMBaLN+LdoOyu5BP+hY3/4+x4ZD/6VEYGki9P4SFEpc7Q9denrsgGJuf5CgwbRDKgMZeLOuxavAKS1yXQjvIkzMs/qS1LyGtMv92xpS58Dxlx+CANn5SXAz7/PftY+GdCR6z4GJliomYjxR1XkU=
+	t=1722357575; cv=none; b=pPO4DM3BSmTZ63zwfMM2GSB2IlLIWbjaPWwmNsm71iGuoRxI8MOv1eTPWp6LHp+s2Rsdlm6LQTcwqvezRyM+k/1NAtAyXAusug2g5AZO0P3IYg30/pQvNt/JB0fOEa+zwvqwyQT8K15bwvo70It1BfNLKk3EYpD8d9+WzL+eo58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357571; c=relaxed/simple;
-	bh=vKYYdkyu6Sijp23fDx5wJ9DLJ7HM8yrYaRbJq6fFDUk=;
+	s=arc-20240116; t=1722357575; c=relaxed/simple;
+	bh=jXunQIRuMulQDKw4kSWklYT4pnECJqj2bVtifJ1yULY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ifmFDNyhApg1i4owapKVmajx+8J54U1VUCU5YPZa97X5hHOuN81b2YYuyUXYHd3koNCTyUMymIDOHGKv9uo9rvzUDQq1WYsRuWBQ3f4F+BhWNbzIrnkxo9PTAjdFpb+CPstiNQuxdfACRUF8/tWUfiztjQXITYZvYt3ahDj5qsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sRd/a2VU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TX2eqgLshkUay70ln4Gvr7Go+wt/HDUODAr+Kp0vUYVamErvn+3x5lybZ4hHilX2MKyftaQePW9f6sfhxzwLycAf4yTEiKzqo5sk/az4Cdr8e3Y0BWt5tvWRX9OD78fFEm7s5/d57TRqOgbVLiXcsDo6d1/VYlvoMH8Pr8IMEUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAACiqCP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sRd/a2VU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12818C32782;
-	Tue, 30 Jul 2024 16:39:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAACiqCP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64126C4AF0C;
+	Tue, 30 Jul 2024 16:39:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357571;
-	bh=vKYYdkyu6Sijp23fDx5wJ9DLJ7HM8yrYaRbJq6fFDUk=;
+	s=korg; t=1722357574;
+	bh=jXunQIRuMulQDKw4kSWklYT4pnECJqj2bVtifJ1yULY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRd/a2VUirpNHo6hdCxckjBHh24wmTG7Hzng/lRybGdAA8k7+owM3qeGb4hVoMtiu
-	 Dh3GNztEnj9YsbCn3S0UGw7RotfH0aabcPIn8Nh46H7Vod5NNc5jqQlncmuYCFXjtE
-	 O7ePDuvSC7JFPKmOvyM5M+EGjgWzRnWLmAcBXt2Y=
+	b=jAACiqCPBVrbZ+6Tk0Krh1qD8aPS0EzuQq9t7frhw4QSLKpmWiTWi40nARmrEeniy
+	 7Rk3U2ekq1PJrv16UHENQLXP2laH7qPosSh+v60VQnjqfXBEQMNk8BnX8MqVH5lEyM
+	 RjCwnyeIFq9EaswG7eeEM17Cy/HNwCD8Bl2dacgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 305/440] io_uring: tighten task exit cancellations
-Date: Tue, 30 Jul 2024 17:48:58 +0200
-Message-ID: <20240730151627.737121595@linuxfoundation.org>
+	Elliot Ayrey <elliot.ayrey@alliedtelesis.co.nz>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 262/809] net: bridge: mst: Check vlan state for egress decision
+Date: Tue, 30 Jul 2024 17:42:18 +0200
+Message-ID: <20240730151734.941441473@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Elliot Ayrey <elliot.ayrey@alliedtelesis.co.nz>
 
-commit f8b632e89a101dae349a7b212c1771d7925f441b upstream.
+[ Upstream commit 0a1868b93fad5938dbcca77286b25bf211c49f7a ]
 
-io_uring_cancel_generic() should retry if any state changes like a
-request is completed, however in case of a task exit it only goes for
-another loop and avoids schedule() if any tracked (i.e. REQ_F_INFLIGHT)
-request got completed.
+If a port is blocking in the common instance but forwarding in an MST
+instance, traffic egressing the bridge will be dropped because the
+state of the common instance is overriding that of the MST instance.
 
-Let's assume we have a non-tracked request executing in iowq and a
-tracked request linked to it. Let's also assume
-io_uring_cancel_generic() fails to find and cancel the request, i.e.
-via io_run_local_work(), which may happen as io-wq has gaps.
-Next, the request logically completes, io-wq still hold a ref but queues
-it for completion via tw, which happens in
-io_uring_try_cancel_requests(). After, right before prepare_to_wait()
-io-wq puts the request, grabs the linked one and tries executes it, e.g.
-arms polling. Finally the cancellation loop calls prepare_to_wait(),
-there are no tw to run, no tracked request was completed, so the
-tctx_inflight() check passes and the task is put to indefinite sleep.
+Fix this by skipping the port state check in MST mode to allow
+checking the vlan state via br_allowed_egress(). This is similar to
+what happens in br_handle_frame_finish() when checking ingress
+traffic, which was introduced in the change below.
 
-Cc: stable@vger.kernel.org
-Fixes: 3f48cf18f886c ("io_uring: unify files and task cancel")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/acac7311f4e02ce3c43293f8f1fda9c705d158f1.1721819383.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
+Signed-off-by: Elliot Ayrey <elliot.ayrey@alliedtelesis.co.nz>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/bridge/br_forward.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3000,8 +3000,11 @@ __cold void io_uring_cancel_generic(bool
- 		bool loop = false;
+diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
+index d97064d460dc7..e19b583ff2c6d 100644
+--- a/net/bridge/br_forward.c
++++ b/net/bridge/br_forward.c
+@@ -25,8 +25,8 @@ static inline int should_deliver(const struct net_bridge_port *p,
  
- 		io_uring_drop_tctx_refs(current);
-+		if (!tctx_inflight(tctx, !cancel_all))
-+			break;
-+
- 		/* read completions before cancelations */
--		inflight = tctx_inflight(tctx, !cancel_all);
-+		inflight = tctx_inflight(tctx, false);
- 		if (!inflight)
- 			break;
+ 	vg = nbp_vlan_group_rcu(p);
+ 	return ((p->flags & BR_HAIRPIN_MODE) || skb->dev != p->dev) &&
+-		p->state == BR_STATE_FORWARDING && br_allowed_egress(vg, skb) &&
+-		nbp_switchdev_allowed_egress(p, skb) &&
++		(br_mst_is_enabled(p->br) || p->state == BR_STATE_FORWARDING) &&
++		br_allowed_egress(vg, skb) && nbp_switchdev_allowed_egress(p, skb) &&
+ 		!br_skb_isolated(p, skb);
+ }
  
+-- 
+2.43.0
+
 
 
