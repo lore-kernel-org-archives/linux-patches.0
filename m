@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB9D1A6190;
-	Tue, 30 Jul 2024 16:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C524D1A6190;
+	Tue, 30 Jul 2024 16:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356739; cv=none; b=HCabPsrY7/mJKFzC6m0vhA93esFPJmed2feNbksKgTx+XrPtlzBRTAghng4fpyQCw4RYWkKf10gp7GENwztPijbhMl7stztKmpMnuN4us+JOkDqKMBFbzaUY8+H/eVtqC6LYmWjPuJ5iETtLxK9I8II/e5zK/N6H/zPs1Pq8boE=
+	t=1722356742; cv=none; b=fqpeY89fSLohHEG/QA4hHPvsQi9+L3/CFwD09scC/dGaIAJg4pX9T1H+QMFk2OMc0BlFLs5fQQrmQKgxmOCFWbOYdMvQemDXGwdEqJblUqy/XA4OqQfEW57qnWYQbaYCr1r6PGV/bzyL9hZwdxNpOIPS1p3UcanU7/zl9C05/X8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356739; c=relaxed/simple;
-	bh=hiPbXNUBqI+sZPWZ2r0Xfmhm198jhKnyFamvjVtXrHE=;
+	s=arc-20240116; t=1722356742; c=relaxed/simple;
+	bh=4Khfnr7kp8pvYW8cm7dOpR5ZpqBY5LIbT7J/TJouhpY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZxOcv/ugnYImN/TdAEBXp3yQeEnNSkVCDLqXRDTImEhlEt7hSxGPzs5GvhKQUxl2WOPjTlb95amGkTpPZZd8CzDmaFJGBkU2HxGSgNn1Yltf/mRGnxb7tE7kas680/0Zj4qzot397J6DSx+6DfVURjq/hyRI2WQhxwP5YzEgFs8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDMnQFON; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KkdGVlw3d5GJzdWb+kCQUgorF1MH5iGzwM0MlQDiCDO+/hdkPz10/c4QNCtnnH0rwpb23jeTDjzA9zDRq0lMrqPhyCbJsFxN5d+CnKXw7hl8OLfQM8dRyIEwv2gXiDM110ZNCY/ouK/liIMnF/6Sq3kC3ZfbwVSA4JZwHFVlYRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rlA2qEhw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDMnQFON"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149F6C32782;
-	Tue, 30 Jul 2024 16:25:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rlA2qEhw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A54AC32782;
+	Tue, 30 Jul 2024 16:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356739;
-	bh=hiPbXNUBqI+sZPWZ2r0Xfmhm198jhKnyFamvjVtXrHE=;
+	s=korg; t=1722356742;
+	bh=4Khfnr7kp8pvYW8cm7dOpR5ZpqBY5LIbT7J/TJouhpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hDMnQFON8UQ7aqOFM8HKqfou0+5Yp3XlM6yhsbyiagPI1AtlQKP7H0NmYRnKHIW29
-	 7qCipypb8CkOizOOKbZW4edinZB/U4LBpey4BK7aNLdjw1He9lJBGGWSjwpcn2fHOM
-	 r08PrDRk+cM6UjiRmtPMdOm2fZAqTYBGc0IN6SyM=
+	b=rlA2qEhwf+4BVFnzF6NPCrO4emnz5ey+4F+KXSBEbA8MBVznldzN3a8ANNNo4GM1P
+	 URZ6LoTlF3TXnpn5tiBfsc9iug2h898udY6bJEJ7qq1T726BF3XKE0AQaTwc6M6NTN
+	 StgrPDofcQ6wVeHHoSRvjTWDmfEqAgbgCjbZ120s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lennart Poettering <lennart@poettering.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 178/809] libbpf: keep FD_CLOEXEC flag when dup()ing FD
-Date: Tue, 30 Jul 2024 17:40:54 +0200
-Message-ID: <20240730151731.643294331@linuxfoundation.org>
+Subject: [PATCH 6.1 224/440] RDMA/hns: Fix shift-out-bounds when max_inline_data is 0
+Date: Tue, 30 Jul 2024 17:47:37 +0200
+Message-ID: <20240730151624.609490631@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,60 +48,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 531876c80004ecff7bfdbd8ba6c6b48835ef5e22 ]
+[ Upstream commit 24c6291346d98c7ece4f4bfeb5733bec1d6c7b4f ]
 
-Make sure to preserve and/or enforce FD_CLOEXEC flag on duped FDs.
-Use dup3() with O_CLOEXEC flag for that.
+A shift-out-bounds may occur, if the max_inline_data has not been set.
 
-Without this fix libbpf effectively clears FD_CLOEXEC flag on each of BPF
-map/prog FD, which is definitely not the right or expected behavior.
+The related log:
+UBSAN: shift-out-of-bounds in kernel/include/linux/log2.h:57:13
+shift exponent 64 is too large for 64-bit type 'long unsigned int'
+Call trace:
+ dump_backtrace+0xb0/0x118
+ show_stack+0x20/0x38
+ dump_stack_lvl+0xbc/0x120
+ dump_stack+0x1c/0x28
+ __ubsan_handle_shift_out_of_bounds+0x104/0x240
+ set_ext_sge_param+0x40c/0x420 [hns_roce_hw_v2]
+ hns_roce_create_qp+0xf48/0x1c40 [hns_roce_hw_v2]
+ create_qp.part.0+0x294/0x3c0
+ ib_create_qp_kernel+0x7c/0x150
+ create_mad_qp+0x11c/0x1e0
+ ib_mad_init_device+0x834/0xc88
+ add_client_context+0x248/0x318
+ enable_device_and_get+0x158/0x280
+ ib_register_device+0x4ac/0x610
+ hns_roce_init+0x890/0xf98 [hns_roce_hw_v2]
+ __hns_roce_hw_v2_init_instance+0x398/0x720 [hns_roce_hw_v2]
+ hns_roce_hw_v2_init_instance+0x108/0x1e0 [hns_roce_hw_v2]
+ hclge_init_roce_client_instance+0x1a0/0x358 [hclge]
+ hclge_init_client_instance+0xa0/0x508 [hclge]
+ hnae3_register_client+0x18c/0x210 [hnae3]
+ hns_roce_hw_v2_init+0x28/0xff8 [hns_roce_hw_v2]
+ do_one_initcall+0xe0/0x510
+ do_init_module+0x110/0x370
+ load_module+0x2c6c/0x2f20
+ init_module_from_file+0xe0/0x140
+ idempotent_init_module+0x24c/0x350
+ __arm64_sys_finit_module+0x88/0xf8
+ invoke_syscall+0x68/0x1a0
+ el0_svc_common.constprop.0+0x11c/0x150
+ do_el0_svc+0x38/0x50
+ el0_svc+0x50/0xa0
+ el0t_64_sync_handler+0xc0/0xc8
+ el0t_64_sync+0x1a4/0x1a8
 
-Reported-by: Lennart Poettering <lennart@poettering.net>
-Fixes: bc308d011ab8 ("libbpf: call dup2() syscall directly")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20240529223239.504241-1-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 0c5e259b06a8 ("RDMA/hns: Fix incorrect sge nums calculation")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-6-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf_internal.h | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_qp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/libbpf_internal.h b/tools/lib/bpf/libbpf_internal.h
-index a0dcfb82e455d..7e7e686008c62 100644
---- a/tools/lib/bpf/libbpf_internal.h
-+++ b/tools/lib/bpf/libbpf_internal.h
-@@ -597,13 +597,9 @@ static inline int ensure_good_fd(int fd)
- 	return fd;
- }
- 
--static inline int sys_dup2(int oldfd, int newfd)
-+static inline int sys_dup3(int oldfd, int newfd, int flags)
+diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
+index 7b79e6b3f3baa..c97b5dba17728 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_qp.c
++++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
+@@ -538,13 +538,15 @@ static unsigned int get_sge_num_from_max_inl_data(bool is_ud_or_gsi,
  {
--#ifdef __NR_dup2
--	return syscall(__NR_dup2, oldfd, newfd);
--#else
--	return syscall(__NR_dup3, oldfd, newfd, 0);
--#endif
-+	return syscall(__NR_dup3, oldfd, newfd, flags);
- }
+ 	unsigned int inline_sge;
  
- /* Point *fixed_fd* to the same file that *tmp_fd* points to.
-@@ -614,7 +610,7 @@ static inline int reuse_fd(int fixed_fd, int tmp_fd)
- {
- 	int err;
+-	inline_sge = roundup_pow_of_two(max_inline_data) / HNS_ROCE_SGE_SIZE;
++	if (!max_inline_data)
++		return 0;
  
--	err = sys_dup2(tmp_fd, fixed_fd);
-+	err = sys_dup3(tmp_fd, fixed_fd, O_CLOEXEC);
- 	err = err < 0 ? -errno : 0;
- 	close(tmp_fd); /* clean up temporary FD */
- 	return err;
+ 	/*
+ 	 * if max_inline_data less than
+ 	 * HNS_ROCE_SGE_IN_WQE * HNS_ROCE_SGE_SIZE,
+ 	 * In addition to ud's mode, no need to extend sge.
+ 	 */
++	inline_sge = roundup_pow_of_two(max_inline_data) / HNS_ROCE_SGE_SIZE;
+ 	if (!is_ud_or_gsi && inline_sge <= HNS_ROCE_SGE_IN_WQE)
+ 		inline_sge = 0;
+ 
 -- 
 2.43.0
 
