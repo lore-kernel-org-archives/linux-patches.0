@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A4CD1A76B9;
-	Tue, 30 Jul 2024 17:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790B51A76A1;
+	Tue, 30 Jul 2024 17:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359492; cv=none; b=nujRvwbrj2Vfh3t8Uh2qeKhMZAqEujpTk2ezoQ0AlS/Akvu5Nh671/6rAcAyvuZS5mzpe4lYTK11+muuWpHM99vN74FFEhCov6g8Xc7Tsv63Ezkc2+qPGLigSyqGekD8p6M0p2Gtc6uG9i58tJ1c1ZiHqYlp4u7fJ1C5aLV4LTw=
+	t=1722359495; cv=none; b=aNNgvQ7VQCL0D6MhujMOiDx8AOCUCLCNubyJT3UO+NLtAQ8FJwhKo9GRvJdgpQiBeiZz2jy2FnBgQ6qKQnlNAX31y7TvGZnSDYwveUrpZ6oluFRYDJTXbi64zUkUCZk0s6qMRKLaoNEHfg2QdBP+PdTj4VIFJqWFzsDWUEBNbHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359492; c=relaxed/simple;
-	bh=DBgul93pPPSRlhkqWCxkiMC/gO3kcJPEERaCtI4UdJY=;
+	s=arc-20240116; t=1722359495; c=relaxed/simple;
+	bh=o6j/PmCMfsvb+kWEnu29/nT8y1OWcGueSk8Zae55ZFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EMyD6Xg4kCh+7WTT/qVxmigz4d5ho7cyX4PysZRh6rDtqFQl4snJtJGjUrXRy2193uTvY4StfwxzDgUas8CYnbv6gz/3aMbpDv+91KSQDVn0sysPrmldC6FmyeXJFTwqZOxFbqCZMvN2e6XactVg1B46sPKyNSwaSkq7myZxYZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cq4Vav0G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/kwFcfXVkYz3omFlm+Y1uiDXB2m3zgnW+RRD0p+znrSKt94djtWBoVmV9BFN1l23V205YqdVUzOZMTyZZva2SuoabP6Yzewj+soGJxmIP/UQsSKJSY8dC4QC0r9xD6XEja88fmZjrZWmJs5m30pbY7M5+7jr5cz3NWom3I7STU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iJTIrHsc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cq4Vav0G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B451DC32782;
-	Tue, 30 Jul 2024 17:11:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iJTIrHsc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC5BC32782;
+	Tue, 30 Jul 2024 17:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359492;
-	bh=DBgul93pPPSRlhkqWCxkiMC/gO3kcJPEERaCtI4UdJY=;
+	s=korg; t=1722359495;
+	bh=o6j/PmCMfsvb+kWEnu29/nT8y1OWcGueSk8Zae55ZFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cq4Vav0GD5rAuhJvFeu0X6pTocsHOu/618YMIOAzr3lyi4y7DcmPZEDNAWCjC+XQC
-	 OcwqPZXvbo7lYmMs2vcdjFCzwhaJShhMD4mJ29gEYGNLfE0lvbVNnnFbllttaoVOmf
-	 0L9E/74/7JpvuJ6xVRP9Gfsw0DR/Ihw5uDtpFReU=
+	b=iJTIrHscd7J4Ax3hvGhfmKOCpwKcfAiMM3vKqEngiL6fNkWNWa7yBQdEJHlWHQjHA
+	 5Vu6Ypz1oXSgR1t2bHjNs12f/sRLEbBOJMtzF/oS85D7tedt2CcduzY5TXJ3h0Pqr5
+	 j1CEBa2Ewwt+Cd/s9IMyp/1A/NsPTggQ35ohboAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.6 492/568] remoteproc: imx_rproc: Fix refcount mistake in imx_rproc_addr_init
-Date: Tue, 30 Jul 2024 17:49:59 +0200
-Message-ID: <20240730151659.259355549@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 492/809] pinctrl: single: fix possible memory leak when pinctrl_enable() fails
+Date: Tue, 30 Jul 2024 17:46:08 +0200
+Message-ID: <20240730151744.170903618@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,63 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit dce68a49be26abf52712e0ee452a45fa01ab4624 upstream.
+[ Upstream commit 8f773bfbdd428819328a2d185976cfc6ae811cd3 ]
 
-In imx_rproc_addr_init() strcmp() is performed over the node after the
-of_node_put() is performed over it.
-Fix this error by moving of_node_put() calls.
+This driver calls pinctrl_register_and_init() which is not
+devm_ managed, it will leads memory leak if pinctrl_enable()
+fails. Replace it with devm_pinctrl_register_and_init().
+And call pcs_free_resources() if pinctrl_enable() fails.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 5e4c1243071d ("remoteproc: imx_rproc: support remote cores booted before Linux Kernel")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://lore.kernel.org/r/20240612131714.12907-1-amishin@t-argos.ru
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240606023704.3931561-3-yangyingliang@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/pinctrl/pinctrl-single.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -737,25 +737,29 @@ static int imx_rproc_addr_init(struct im
- 			continue;
- 		}
- 		err = of_address_to_resource(node, 0, &res);
--		of_node_put(node);
- 		if (err) {
- 			dev_err(dev, "unable to resolve memory region\n");
-+			of_node_put(node);
- 			return err;
- 		}
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index a798f31d69542..4c6bfabb6bd7d 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1329,7 +1329,6 @@ static void pcs_irq_free(struct pcs_device *pcs)
+ static void pcs_free_resources(struct pcs_device *pcs)
+ {
+ 	pcs_irq_free(pcs);
+-	pinctrl_unregister(pcs->pctl);
  
--		if (b >= IMX_RPROC_MEM_MAX)
-+		if (b >= IMX_RPROC_MEM_MAX) {
-+			of_node_put(node);
- 			break;
-+		}
+ #if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
+ 	if (pcs->missing_nr_pinctrl_cells)
+@@ -1879,7 +1878,7 @@ static int pcs_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto free;
  
- 		/* Not use resource version, because we might share region */
- 		priv->mem[b].cpu_addr = devm_ioremap_wc(&pdev->dev, res.start, resource_size(&res));
- 		if (!priv->mem[b].cpu_addr) {
- 			dev_err(dev, "failed to remap %pr\n", &res);
-+			of_node_put(node);
- 			return -ENOMEM;
- 		}
- 		priv->mem[b].sys_addr = res.start;
- 		priv->mem[b].size = resource_size(&res);
- 		if (!strcmp(node->name, "rsc-table"))
- 			priv->rsc_table = priv->mem[b].cpu_addr;
-+		of_node_put(node);
- 		b++;
- 	}
+-	ret = pinctrl_register_and_init(&pcs->desc, pcs->dev, pcs, &pcs->pctl);
++	ret = devm_pinctrl_register_and_init(pcs->dev, &pcs->desc, pcs, &pcs->pctl);
+ 	if (ret) {
+ 		dev_err(pcs->dev, "could not register single pinctrl driver\n");
+ 		goto free;
+@@ -1912,8 +1911,10 @@ static int pcs_probe(struct platform_device *pdev)
  
+ 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
+ 
+-	return pinctrl_enable(pcs->pctl);
++	if (pinctrl_enable(pcs->pctl))
++		goto free;
+ 
++	return 0;
+ free:
+ 	pcs_free_resources(pcs);
+ 
+-- 
+2.43.0
+
 
 
