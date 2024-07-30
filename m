@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F291D1A6192;
-	Tue, 30 Jul 2024 16:35:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3F71A6192;
+	Tue, 30 Jul 2024 16:35:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357348; cv=none; b=Prky7P7fl0NW6WQW1NyPk7TfWaC2+2AG/RUfahYbvw8VcSfYsEZiKGt0QeyBWDeIxW/GXf2pHhwm8L6kMt/JBaMZV1C9teWuxHabRDVp6kKZB3DBmhogn5wsfUyXO+tBRSFU9G4FR4wK7Ld7DJeqjLw1gxSc6Q3xwK4k/pBzpPg=
+	t=1722357351; cv=none; b=P27qntVWXzU3UtnDW1VblVo0O8MF5LS/JaYAFpREUmek5AMPGxSlc8tDNPiLaqpcr/CzqVuVtEyDLBcSuDwI0X5ea9mt8bm9p2QfKd3bOiovGfIaX8VWh6Ypw5kFKO0Ea54plYirKiNCWCP9uswRZPweDe963CxYmPD24l8ylEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357348; c=relaxed/simple;
-	bh=LnW5AO9PLoDc1XJf2BCO/sPGYx1JqD/7UYdeFjJ0BXA=;
+	s=arc-20240116; t=1722357351; c=relaxed/simple;
+	bh=1EZnVPwormY/oFqntPxkSWz/X+7Wpy7PvPLWOTuBO2k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOqqX+nzXA5nL/l2uu9Ve//gDbDzPewyFGajAj5ilMTPvW4QyHsxaRTsfaCKrHDbx8AN2tXiR3sgR8oDXg9eELZEhjWitbvb/oB/kIxWnRUyYmltp1UWPGhFJQvk68baN4U2HjDCLr51vDFBj47ky28f4sGZPeN0Mh6+O8AQpVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TA7E3NSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcUGPubnQJswmSCjyq6qNPykS35f+mh28TFYTwjlGxRK7pofBWTcf0QywgQuqEFIfAQuM/G7FWu39JisxmrrM1/KBA6aPQlTuVGa0GE89Mp14Zf86XI9gQpWtfysmWnflrRukG392zdKGoowWQGe9oQ7+uryyQmAoldXtpah+Io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxHGqsHu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TA7E3NSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C122C4AF0A;
-	Tue, 30 Jul 2024 16:35:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxHGqsHu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3476CC32782;
+	Tue, 30 Jul 2024 16:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357347;
-	bh=LnW5AO9PLoDc1XJf2BCO/sPGYx1JqD/7UYdeFjJ0BXA=;
+	s=korg; t=1722357350;
+	bh=1EZnVPwormY/oFqntPxkSWz/X+7Wpy7PvPLWOTuBO2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TA7E3NSAcxf/YUjnJv2RYu/aLZAhHEMVOWf10r9Out4gkzMkWjohNMdkQxGI0Yf2V
-	 Avn1Xio6IDTWiRGeR9CrYjk9VfxFwBmr0euvlyr+25v6lkZU9CkG/wYDftwdzzYNbL
-	 Yzzp5eaGEug50edAK0UtH6OjzamJ4WHgkLcY2/+Q=
+	b=uxHGqsHu8vz4z8E5qHgqtiCCisbYuPiDvQQBG5lY0bieCvQXOpx3OS2/b37E7VgBD
+	 eXB4wfQ5KxMlDuqTz9K31gvrmCLzFTqs+Hzmx/AERE0K59yt7lUbgeAb4K/N70dqGC
+	 tnrbIP1Kkz0SujkMTbGqVFBgTObxK1EwcNeX8znE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kodanev <aleksei.kodanev@bell-sw.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 245/809] bna: adjust name buf size of bna_tcb and bna_ccb structures
-Date: Tue, 30 Jul 2024 17:42:01 +0200
-Message-ID: <20240730151734.277368255@linuxfoundation.org>
+	Eric Sandeen <sandeen@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>
+Subject: [PATCH 6.1 284/440] fuse: verify {g,u}id mount options correctly
+Date: Tue, 30 Jul 2024 17:48:37 +0200
+Message-ID: <20240730151626.922633787@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
+From: Eric Sandeen <sandeen@redhat.com>
 
-[ Upstream commit c9741a03dc8e491e57b95fba0058ab46b7e506da ]
+commit 525bd65aa759ec320af1dc06e114ed69733e9e23 upstream.
 
-To have enough space to write all possible sprintf() args. Currently
-'name' size is 16, but the first '%s' specifier may already need at
-least 16 characters, since 'bnad->netdev->name' is used there.
+As was done in
+0200679fc795 ("tmpfs: verify {g,u}id mount options correctly")
+we need to validate that the requested uid and/or gid is representable in
+the filesystem's idmapping.
 
-For '%d' specifiers, assume that they require:
- * 1 char for 'tx_id + tx_info->tcb[i]->id' sum, BNAD_MAX_TXQ_PER_TX is 8
- * 2 chars for 'rx_id + rx_info->rx_ctrl[i].ccb->id', BNAD_MAX_RXP_PER_RX
-   is 16
+Cribbing from the above commit log,
 
-And replace sprintf with snprintf.
+The contract for {g,u}id mount options and {g,u}id values in general set
+from userspace has always been that they are translated according to the
+caller's idmapping. In so far, fuse has been doing the correct thing.
+But since fuse is mountable in unprivileged contexts it is also
+necessary to verify that the resulting {k,g}uid is representable in the
+namespace of the superblock.
 
-Detected using the static analysis tool - Svace.
-
-Fixes: 8b230ed8ec96 ("bna: Brocade 10Gb Ethernet device driver")
-Signed-off-by: Alexey Kodanev <aleksei.kodanev@bell-sw.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c30da2e981a7 ("fuse: convert to use the new mount API")
+Cc: stable@vger.kernel.org # 5.4+
+Signed-off-by: Eric Sandeen <sandeen@redhat.com>
+Link: https://lore.kernel.org/r/8f07d45d-c806-484d-a2e3-7a2199df1cd2@redhat.com
+Reviewed-by: Christian Brauner <brauner@kernel.org>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/brocade/bna/bna_types.h |  2 +-
- drivers/net/ethernet/brocade/bna/bnad.c      | 11 ++++++-----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ fs/fuse/inode.c |   24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/brocade/bna/bna_types.h b/drivers/net/ethernet/brocade/bna/bna_types.h
-index a5ebd7110e073..986f43d277119 100644
---- a/drivers/net/ethernet/brocade/bna/bna_types.h
-+++ b/drivers/net/ethernet/brocade/bna/bna_types.h
-@@ -416,7 +416,7 @@ struct bna_ib {
- /* Tx object */
+--- a/fs/fuse/inode.c
++++ b/fs/fuse/inode.c
+@@ -724,6 +724,8 @@ static int fuse_parse_param(struct fs_co
+ 	struct fs_parse_result result;
+ 	struct fuse_fs_context *ctx = fsc->fs_private;
+ 	int opt;
++	kuid_t kuid;
++	kgid_t kgid;
  
- /* Tx datapath control structure */
--#define BNA_Q_NAME_SIZE		16
-+#define BNA_Q_NAME_SIZE		(IFNAMSIZ + 6)
- struct bna_tcb {
- 	/* Fast path */
- 	void			**sw_qpt;
-diff --git a/drivers/net/ethernet/brocade/bna/bnad.c b/drivers/net/ethernet/brocade/bna/bnad.c
-index fe121d36112d5..ece6f3b483273 100644
---- a/drivers/net/ethernet/brocade/bna/bnad.c
-+++ b/drivers/net/ethernet/brocade/bna/bnad.c
-@@ -1534,8 +1534,9 @@ bnad_tx_msix_register(struct bnad *bnad, struct bnad_tx_info *tx_info,
+ 	if (fsc->purpose == FS_CONTEXT_FOR_RECONFIGURE) {
+ 		/*
+@@ -768,16 +770,30 @@ static int fuse_parse_param(struct fs_co
+ 		break;
  
- 	for (i = 0; i < num_txqs; i++) {
- 		vector_num = tx_info->tcb[i]->intr_vector;
--		sprintf(tx_info->tcb[i]->name, "%s TXQ %d", bnad->netdev->name,
--				tx_id + tx_info->tcb[i]->id);
-+		snprintf(tx_info->tcb[i]->name, BNA_Q_NAME_SIZE, "%s TXQ %d",
-+			 bnad->netdev->name,
-+			 tx_id + tx_info->tcb[i]->id);
- 		err = request_irq(bnad->msix_table[vector_num].vector,
- 				  (irq_handler_t)bnad_msix_tx, 0,
- 				  tx_info->tcb[i]->name,
-@@ -1585,9 +1586,9 @@ bnad_rx_msix_register(struct bnad *bnad, struct bnad_rx_info *rx_info,
+ 	case OPT_USER_ID:
+-		ctx->user_id = make_kuid(fsc->user_ns, result.uint_32);
+-		if (!uid_valid(ctx->user_id))
++		kuid =  make_kuid(fsc->user_ns, result.uint_32);
++		if (!uid_valid(kuid))
+ 			return invalfc(fsc, "Invalid user_id");
++		/*
++		 * The requested uid must be representable in the
++		 * filesystem's idmapping.
++		 */
++		if (!kuid_has_mapping(fsc->user_ns, kuid))
++			return invalfc(fsc, "Invalid user_id");
++		ctx->user_id = kuid;
+ 		ctx->user_id_present = true;
+ 		break;
  
- 	for (i = 0; i < num_rxps; i++) {
- 		vector_num = rx_info->rx_ctrl[i].ccb->intr_vector;
--		sprintf(rx_info->rx_ctrl[i].ccb->name, "%s CQ %d",
--			bnad->netdev->name,
--			rx_id + rx_info->rx_ctrl[i].ccb->id);
-+		snprintf(rx_info->rx_ctrl[i].ccb->name, BNA_Q_NAME_SIZE,
-+			 "%s CQ %d", bnad->netdev->name,
-+			 rx_id + rx_info->rx_ctrl[i].ccb->id);
- 		err = request_irq(bnad->msix_table[vector_num].vector,
- 				  (irq_handler_t)bnad_msix_rx, 0,
- 				  rx_info->rx_ctrl[i].ccb->name,
--- 
-2.43.0
-
+ 	case OPT_GROUP_ID:
+-		ctx->group_id = make_kgid(fsc->user_ns, result.uint_32);
+-		if (!gid_valid(ctx->group_id))
++		kgid = make_kgid(fsc->user_ns, result.uint_32);;
++		if (!gid_valid(kgid))
++			return invalfc(fsc, "Invalid group_id");
++		/*
++		 * The requested gid must be representable in the
++		 * filesystem's idmapping.
++		 */
++		if (!kgid_has_mapping(fsc->user_ns, kgid))
+ 			return invalfc(fsc, "Invalid group_id");
++		ctx->group_id = kgid;
+ 		ctx->group_id_present = true;
+ 		break;
+ 
 
 
