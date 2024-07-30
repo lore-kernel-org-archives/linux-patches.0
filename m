@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB9A187FED;
-	Tue, 30 Jul 2024 16:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013DF1A616E;
+	Tue, 30 Jul 2024 16:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356825; cv=none; b=QfyrLdgwkNXQ0WkpYqmS2AdnMb6ZZNYw/QI+ky6/cRjMw5//90apkatm3gjdj05gBc3cASMzsvjp2HlmtaPMUuDEkBfvPbwKr4PZbrykcqxoj7D6gxD5WB1tezCe32oBUeJqekUgMHsOSUT2rZ5fGzhV8GMsBgeVZnfueAMPHOo=
+	t=1722356828; cv=none; b=vDltLAhjEDyanA8YrO8oL60tDtvWiml4PaGdotMufROhhbk2Q7SF4uQAtLfLzKvkztR4pvAWN5b4nc/7Un2wyYYS3hg88CytA9ucrSaz94qR+M+YwDqEKdS1mZS1uyo1ADTkRctqXWs2duDGfXELORnoViGfErrkp30dKYgqDR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356825; c=relaxed/simple;
-	bh=NGkcpcgOEODnV+PyMBg9LXmfHRKb311aHwud+Z0hHDc=;
+	s=arc-20240116; t=1722356828; c=relaxed/simple;
+	bh=4CoCHLi9i6ufcYuA84GvHbpqN7Y7oWJgWZYP2CWA7wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TI9eNCd8TEA1g3luBFer6jMu/KhL/b5O/L2TkaXCfbVvqkAwFGXmRxAOsQsjvKRXyH5oEgRGwCWCcyb7lSE1Og5G3PUdWkOxC7zYWGjM7Sn7GiJiWy+LYBS2hPLtggzEcUAG8z2Olk5TiQA1Y5QVj6kk6nEs87lhy8zzL7eIs7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJh3q79t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9SJDA+INxZeFb+KXPBmt3P284BcXlxl0oRklf8O2Mt7mSjrxgPBxftpTJjJLAP2rJ/R7csq6MZ7FzQsRGOcbPje8s1PwdfMR9BNEkGbCTr50UaQyn/pkQkH6um2rg7qSpkh/TddNuw83m+xNt9A8xYa00xCOigo2O550SdzEwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3Wc7YCn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJh3q79t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E78AC4AF0C;
-	Tue, 30 Jul 2024 16:27:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3Wc7YCn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D709C32782;
+	Tue, 30 Jul 2024 16:27:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356824;
-	bh=NGkcpcgOEODnV+PyMBg9LXmfHRKb311aHwud+Z0hHDc=;
+	s=korg; t=1722356827;
+	bh=4CoCHLi9i6ufcYuA84GvHbpqN7Y7oWJgWZYP2CWA7wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJh3q79txmtR6Ft9RkwvZxteIB3haY2gYbLQBZ3ArcY1Y79EncX253BPwm7siV+7k
-	 ee9/dpGTU51lfqjhVq5a+6HpFXC8l3hsaQDgj6hU25N4asRoZoJY1VKsoAI1PTakzb
-	 BWP5ArApoDrs2NMU8QRiyxwy7DF8uRdnIWGn4A4Q=
+	b=v3Wc7YCnj5pROOrLsDEWPGtsXhJBoKKjM+hE63wDZQ84aphYd8qdCpKL/0R8NpCO+
+	 JdGmRrK6dXuUuYGzaIsWpyPZziRdGpwcS6KBOI3/ti1CDTfuEVOc9y5uQ3KHRm/EVE
+	 rFACJ+UR7hPpzm/lJwmP3hVN11D9h+417OTf1sQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Chen <yiche@redhat.com>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Kuro Chung <kuro.chung@ite.com.tw>,
+	Hermes Wu <hermes.wu@ite.com.tw>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 232/440] netfilter: nf_set_pipapo: fix initial map fill
-Date: Tue, 30 Jul 2024 17:47:45 +0200
-Message-ID: <20240730151624.919186426@linuxfoundation.org>
+Subject: [PATCH 6.6 188/568] drm/bridge: it6505: fix hibernate to resume no display issue
+Date: Tue, 30 Jul 2024 17:44:55 +0200
+Message-ID: <20240730151647.225523272@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,144 +49,164 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Kuro Chung <kuro.chung@ite.com.tw>
 
-[ Upstream commit 791a615b7ad2258c560f91852be54b0480837c93 ]
+[ Upstream commit 484436ec5c2bffe8f346a09ae1cbc4cbf5e50005 ]
 
-The initial buffer has to be inited to all-ones, but it must restrict
-it to the size of the first field, not the total field size.
+When the system power resumes, the TTL input of IT6505 may experience
+some noise before the video signal stabilizes, necessitating a video
+reset. This patch is implemented to prevent a loop of video error
+interrupts, which can occur when a video reset in the video FIFO error
+interrupt triggers another such interrupt. The patch processes the SCDT
+and FIFO error interrupts simultaneously and ignores any video FIFO
+error interrupts caused by a video reset.
 
-After each round in the map search step, the result and the fill map
-are swapped, so if we have a set where f->bsize of the first element
-is smaller than m->bsize_max, those one-bits are leaked into future
-rounds result map.
-
-This makes pipapo find an incorrect matching results for sets where
-first field size is not the largest.
-
-Followup patch adds a test case to nft_concat_range.sh selftest script.
-
-Thanks to Stefano Brivio for pointing out that we need to zero out
-the remainder explicitly, only correcting memset() argument isn't enough.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Reported-by: Yi Chen <yiche@redhat.com>
-Cc: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Signed-off-by: Kuro Chung <kuro.chung@ite.com.tw>
+Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240522065528.1053439-1-kuro.chung@ite.com.tw
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c      |  4 ++--
- net/netfilter/nft_set_pipapo.h      | 21 +++++++++++++++++++++
- net/netfilter/nft_set_pipapo_avx2.c | 10 ++++++----
- 3 files changed, 29 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 73 +++++++++++++++++++----------
+ 1 file changed, 49 insertions(+), 24 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index 261b505e3b3fa..d9c1c467ea684 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -432,7 +432,7 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
- 	res_map  = scratch->map + (map_index ? m->bsize_max : 0);
- 	fill_map = scratch->map + (map_index ? 0 : m->bsize_max);
- 
--	memset(res_map, 0xff, m->bsize_max * sizeof(*res_map));
-+	pipapo_resmap_init(m, res_map);
- 
- 	nft_pipapo_for_each_field(f, i, m) {
- 		bool last = i == m->field_count - 1;
-@@ -538,7 +538,7 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
- 		goto out;
- 	}
- 
--	memset(res_map, 0xff, m->bsize_max * sizeof(*res_map));
-+	pipapo_resmap_init(m, res_map);
- 
- 	nft_pipapo_for_each_field(f, i, m) {
- 		bool last = i == m->field_count - 1;
-diff --git a/net/netfilter/nft_set_pipapo.h b/net/netfilter/nft_set_pipapo.h
-index 73a4518308be4..519a2e6dc206f 100644
---- a/net/netfilter/nft_set_pipapo.h
-+++ b/net/netfilter/nft_set_pipapo.h
-@@ -285,4 +285,25 @@ static u64 pipapo_estimate_size(const struct nft_set_desc *desc)
- 	return size;
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index b589136ca6da9..4ad527fe04f27 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -1306,9 +1306,15 @@ static void it6505_video_reset(struct it6505 *it6505)
+ 	it6505_link_reset_step_train(it6505);
+ 	it6505_set_bits(it6505, REG_DATA_MUTE_CTRL, EN_VID_MUTE, EN_VID_MUTE);
+ 	it6505_set_bits(it6505, REG_INFOFRAME_CTRL, EN_VID_CTRL_PKT, 0x00);
+-	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, VIDEO_RESET);
++
++	it6505_set_bits(it6505, REG_VID_BUS_CTRL1, TX_FIFO_RESET, TX_FIFO_RESET);
++	it6505_set_bits(it6505, REG_VID_BUS_CTRL1, TX_FIFO_RESET, 0x00);
++
+ 	it6505_set_bits(it6505, REG_501_FIFO_CTRL, RST_501_FIFO, RST_501_FIFO);
+ 	it6505_set_bits(it6505, REG_501_FIFO_CTRL, RST_501_FIFO, 0x00);
++
++	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, VIDEO_RESET);
++	usleep_range(1000, 2000);
+ 	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, 0x00);
  }
  
-+/**
-+ * pipapo_resmap_init() - Initialise result map before first use
-+ * @m:		Matching data, including mapping table
-+ * @res_map:	Result map
-+ *
-+ * Initialize all bits covered by the first field to one, so that after
-+ * the first step, only the matching bits of the first bit group remain.
-+ *
-+ * If other fields have a large bitmap, set remainder of res_map to 0.
-+ */
-+static inline void pipapo_resmap_init(const struct nft_pipapo_match *m, unsigned long *res_map)
-+{
-+	const struct nft_pipapo_field *f = m->f;
-+	int i;
+@@ -2244,12 +2250,11 @@ static void it6505_link_training_work(struct work_struct *work)
+ 	if (ret) {
+ 		it6505->auto_train_retry = AUTO_TRAIN_RETRY;
+ 		it6505_link_train_ok(it6505);
+-		return;
+ 	} else {
+ 		it6505->auto_train_retry--;
++		it6505_dump(it6505);
+ 	}
+ 
+-	it6505_dump(it6505);
+ }
+ 
+ static void it6505_plugged_status_to_codec(struct it6505 *it6505)
+@@ -2470,31 +2475,53 @@ static void it6505_irq_link_train_fail(struct it6505 *it6505)
+ 	schedule_work(&it6505->link_works);
+ }
+ 
+-static void it6505_irq_video_fifo_error(struct it6505 *it6505)
++static bool it6505_test_bit(unsigned int bit, const unsigned int *addr)
+ {
+-	struct device *dev = it6505->dev;
+-
+-	DRM_DEV_DEBUG_DRIVER(dev, "video fifo overflow interrupt");
+-	it6505->auto_train_retry = AUTO_TRAIN_RETRY;
+-	flush_work(&it6505->link_works);
+-	it6505_stop_hdcp(it6505);
+-	it6505_video_reset(it6505);
++	return 1 & (addr[bit / BITS_PER_BYTE] >> (bit % BITS_PER_BYTE));
+ }
+ 
+-static void it6505_irq_io_latch_fifo_overflow(struct it6505 *it6505)
++static void it6505_irq_video_handler(struct it6505 *it6505, const int *int_status)
+ {
+ 	struct device *dev = it6505->dev;
++	int reg_0d, reg_int03;
+ 
+-	DRM_DEV_DEBUG_DRIVER(dev, "IO latch fifo overflow interrupt");
+-	it6505->auto_train_retry = AUTO_TRAIN_RETRY;
+-	flush_work(&it6505->link_works);
+-	it6505_stop_hdcp(it6505);
+-	it6505_video_reset(it6505);
+-}
++	/*
++	 * When video SCDT change with video not stable,
++	 * Or video FIFO error, need video reset
++	 */
+ 
+-static bool it6505_test_bit(unsigned int bit, const unsigned int *addr)
+-{
+-	return 1 & (addr[bit / BITS_PER_BYTE] >> (bit % BITS_PER_BYTE));
++	if ((!it6505_get_video_status(it6505) &&
++	     (it6505_test_bit(INT_SCDT_CHANGE, (unsigned int *)int_status))) ||
++	    (it6505_test_bit(BIT_INT_IO_FIFO_OVERFLOW,
++			     (unsigned int *)int_status)) ||
++	    (it6505_test_bit(BIT_INT_VID_FIFO_ERROR,
++			     (unsigned int *)int_status))) {
++		it6505->auto_train_retry = AUTO_TRAIN_RETRY;
++		flush_work(&it6505->link_works);
++		it6505_stop_hdcp(it6505);
++		it6505_video_reset(it6505);
 +
-+	for (i = 0; i < f->bsize; i++)
-+		res_map[i] = ULONG_MAX;
++		usleep_range(10000, 11000);
 +
-+	for (i = f->bsize; i < m->bsize_max; i++)
-+		res_map[i] = 0ul;
-+}
- #endif /* _NFT_SET_PIPAPO_H */
-diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index d08407d589eac..8910a5ac7ed12 100644
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -1036,6 +1036,7 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
++		/*
++		 * Clear FIFO error IRQ to prevent fifo error -> reset loop
++		 * HW will trigger SCDT change IRQ again when video stable
++		 */
++
++		reg_int03 = it6505_read(it6505, INT_STATUS_03);
++		reg_0d = it6505_read(it6505, REG_SYSTEM_STS);
++
++		reg_int03 &= (BIT(INT_VID_FIFO_ERROR) | BIT(INT_IO_LATCH_FIFO_OVERFLOW));
++		it6505_write(it6505, INT_STATUS_03, reg_int03);
++
++		DRM_DEV_DEBUG_DRIVER(dev, "reg08 = 0x%02x", reg_int03);
++		DRM_DEV_DEBUG_DRIVER(dev, "reg0D = 0x%02x", reg_0d);
++
++		return;
++	}
++
++	if (it6505_test_bit(INT_SCDT_CHANGE, (unsigned int *)int_status))
++		it6505_irq_scdt(it6505);
+ }
  
- /**
-  * nft_pipapo_avx2_lookup_slow() - Fallback function for uncommon field sizes
-+ * @mdata:	Matching data, including mapping table
-  * @map:	Previous match result, used as initial bitmap
-  * @fill:	Destination bitmap to be filled with current match result
-  * @f:		Field, containing lookup and mapping tables
-@@ -1051,7 +1052,8 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
-  * Return: -1 on no match, rule index of match if @last, otherwise first long
-  * word index to be checked next (i.e. first filled word).
-  */
--static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
-+static int nft_pipapo_avx2_lookup_slow(const struct nft_pipapo_match *mdata,
-+					unsigned long *map, unsigned long *fill,
- 					const struct nft_pipapo_field *f,
- 					int offset, const u8 *pkt,
- 					bool first, bool last)
-@@ -1060,7 +1062,7 @@ static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
- 	int i, ret = -1, b;
+ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
+@@ -2507,15 +2534,12 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
+ 	} irq_vec[] = {
+ 		{ BIT_INT_HPD, it6505_irq_hpd },
+ 		{ BIT_INT_HPD_IRQ, it6505_irq_hpd_irq },
+-		{ BIT_INT_SCDT, it6505_irq_scdt },
+ 		{ BIT_INT_HDCP_FAIL, it6505_irq_hdcp_fail },
+ 		{ BIT_INT_HDCP_DONE, it6505_irq_hdcp_done },
+ 		{ BIT_INT_AUX_CMD_FAIL, it6505_irq_aux_cmd_fail },
+ 		{ BIT_INT_HDCP_KSV_CHECK, it6505_irq_hdcp_ksv_check },
+ 		{ BIT_INT_AUDIO_FIFO_ERROR, it6505_irq_audio_fifo_error },
+ 		{ BIT_INT_LINK_TRAIN_FAIL, it6505_irq_link_train_fail },
+-		{ BIT_INT_VID_FIFO_ERROR, it6505_irq_video_fifo_error },
+-		{ BIT_INT_IO_FIFO_OVERFLOW, it6505_irq_io_latch_fifo_overflow },
+ 	};
+ 	int int_status[3], i;
  
- 	if (first)
--		memset(map, 0xff, bsize * sizeof(*map));
-+		pipapo_resmap_init(mdata, map);
+@@ -2545,6 +2569,7 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
+ 			if (it6505_test_bit(irq_vec[i].bit, (unsigned int *)int_status))
+ 				irq_vec[i].handler(it6505);
+ 		}
++		it6505_irq_video_handler(it6505, (unsigned int *)int_status);
+ 	}
  
- 	for (i = offset; i < bsize; i++) {
- 		if (f->bb == 8)
-@@ -1186,7 +1188,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
- 			} else if (f->groups == 16) {
- 				NFT_SET_PIPAPO_AVX2_LOOKUP(8, 16);
- 			} else {
--				ret = nft_pipapo_avx2_lookup_slow(res, fill, f,
-+				ret = nft_pipapo_avx2_lookup_slow(m, res, fill, f,
- 								  ret, rp,
- 								  first, last);
- 			}
-@@ -1202,7 +1204,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
- 			} else if (f->groups == 32) {
- 				NFT_SET_PIPAPO_AVX2_LOOKUP(4, 32);
- 			} else {
--				ret = nft_pipapo_avx2_lookup_slow(res, fill, f,
-+				ret = nft_pipapo_avx2_lookup_slow(m, res, fill, f,
- 								  ret, rp,
- 								  first, last);
- 			}
+ 	pm_runtime_put_sync(dev);
 -- 
 2.43.0
 
