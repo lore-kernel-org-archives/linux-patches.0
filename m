@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A7F1A6195;
-	Tue, 30 Jul 2024 16:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1D1A6192;
+	Tue, 30 Jul 2024 16:36:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357383; cv=none; b=GY1wqLQKpUl4nREXhJsaqpr4Ae3lORZ/Jr/0iUG47I7k1ZK7k94fSvPRceD6349KQNvKAK3Gpj+G0kC/RrEQw926O1utPRwtUG2fqVkWtWdSgyC2TdY1o5cXjmydig+pBxGSC0PKfJNLzylrv5tq5TH6VzQ9USuEJX2rhG2vqOg=
+	t=1722357386; cv=none; b=AtcYjcwTpvj9BAnDVef+pyRY7eWQVIX9DdZ/tjPoVxPPvlELpPdFqftTy9kRIxaCGEyfZccdezkV6d2doC8ZS4Rk4RP0RaTOG2FlxQUAc4VyFGP1ps7EXR4mt05wXkUFn1l3HY39t8a8f2oppysjbf0sHDOgcSVF95Sv/91oNRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357383; c=relaxed/simple;
-	bh=SsQ0kLyOlV23Iar5z3cD2IcYmfyULWF0DTLwQV2sUPI=;
+	s=arc-20240116; t=1722357386; c=relaxed/simple;
+	bh=vB4LXHlHoKtorESnJwxlaLxqx2ZSVZ+lSVwQ/4R8kZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nrm0WI68PaTrTASSnY3lB0t1FtLOkMqx1QByLWbe5IwIUBKYlXX38SZPlb+Hd1gXrdr/6+CdSuiGFbuzJTDVuVVheSBzhWlOH12hzf7NVOnm/mAidKHHyNWhhMqWMPvVxeZjOicpmw7CKFBZi2bMyOqr5XDYfwvz7v9s20FQZZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aVagbC/b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=o0+GWxqOveB06Jf1MiXeuAlY8zyEHDqqpKch/OB9hL4rJ/gR4J9m6LUsuMI4Chha4Mvznht20VebrHvmpISHEDqc4GfLGm8MhHElrf5AsjCayXAc9b4yM51YUuID4kaIdU8JCFnHCZ4zMwomMeI7bYNx0Xy4UkfqZElERkLWYpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHVZWt2i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aVagbC/b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C7C2C4AF0C;
-	Tue, 30 Jul 2024 16:36:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHVZWt2i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2F7C32782;
+	Tue, 30 Jul 2024 16:36:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357383;
-	bh=SsQ0kLyOlV23Iar5z3cD2IcYmfyULWF0DTLwQV2sUPI=;
+	s=korg; t=1722357386;
+	bh=vB4LXHlHoKtorESnJwxlaLxqx2ZSVZ+lSVwQ/4R8kZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVagbC/bnfnWglFW5hnmoc7MlyZpVHnNn7lMHgB2gJ8wMawhtft7iVIfSqKgJi5tG
-	 q1o4snN+3HyDoRIxT1xIGK/gSoSa2szl/BKhWvk1bgIt2a7RCISJhZXBjZryHkDxYk
-	 gkFudPDiZNUD+eeXOLHsvYuOZKugRYoPufUcoi70=
+	b=hHVZWt2iDQ6VTzvTclcpsM56hpgxWTj5VVeSwTAvh2QuQEezOQ5CR0qDJu/a8wxMH
+	 tX6KF2kFTEWCLqJtuNXPHCQEviOyxbWgDtfVDSgkWGZMZjFdal1FBVhBFyhEDpFbvr
+	 a+cR+EWgtKVlse/vMkbgKv+yjanjLWTLkHoh64T0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Bjorn Helgaas <helgaas@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>,
-	Hannes Reinecke <hare@suse.de>
-Subject: [PATCH 6.1 287/440] ata: libata-scsi: Honor the D_SENSE bit for CK_COND=1 and no error
-Date: Tue, 30 Jul 2024 17:48:40 +0200
-Message-ID: <20240730151627.040507186@linuxfoundation.org>
+	Serge Semin <fancer.lancer@gmail.com>,
+	Siddharth Vadapalli <s-vadapalli@ti.com>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 250/568] PCI: keystone: Dont enable BAR 0 for AM654x
+Date: Tue, 30 Jul 2024 17:45:57 +0200
+Message-ID: <20240730151649.651431205@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,71 +49,117 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-commit 28ab9769117ca944cb6eb537af5599aa436287a4 upstream.
+[ Upstream commit 9ffa0e70b2daf9b0271e4960b7c8a2350e2cda08 ]
 
-SAT-5 revision 8 specification removed the text about the ANSI INCITS
-431-2007 compliance which was requiring SCSI/ATA Translation (SAT) to
-return descriptor format sense data for the ATA PASS-THROUGH commands
-regardless of the setting of the D_SENSE bit.
+After 6ab15b5e7057 ("PCI: dwc: keystone: Convert .scan_bus() callback to
+use add_bus"), ks_pcie_v3_65_add_bus() enabled BAR 0 for both v3.65a and
+v4.90a devices.  On the AM654x SoC, which uses v4.90a, enabling BAR 0
+causes Completion Timeouts when setting up MSI-X.  These timeouts delay
+boot of the AM654x by about 45 seconds.
 
-Let's honor the D_SENSE bit for ATA PASS-THROUGH commands while
-generating the "ATA PASS-THROUGH INFORMATION AVAILABLE" sense data.
+Move the BAR 0 initialization to ks_pcie_msi_host_init(), which is only
+used for v3.65a devices, and remove ks_pcie_v3_65_add_bus().
 
-SAT-5 revision 7
-================
-
-12.2.2.8 Fixed format sense data
-
-Table 212 shows the fields returned in the fixed format sense data
-(see SPC-5) for ATA PASS-THROUGH commands. SATLs compliant with ANSI
-INCITS 431-2007, SCSI/ATA Translation (SAT) return descriptor format
-sense data for the ATA PASS-THROUGH commands regardless of the setting
-of the D_SENSE bit.
-
-SAT-5 revision 8
-================
-
-12.2.2.8 Fixed format sense data
-
-Table 211 shows the fields returned in the fixed format sense data
-(see SPC-5) for ATA PASS-THROUGH commands.
-
-Cc: stable@vger.kernel.org # 4.19+
-Reported-by: Niklas Cassel <cassel@kernel.org>
-Closes: https://lore.kernel.org/linux-ide/Zn1WUhmLglM4iais@ryzen.lan
+[bhelgaas: commit log]
+Fixes: 6ab15b5e7057 ("PCI: dwc: keystone: Convert .scan_bus() callback to use add_bus")
+Link: https://lore.kernel.org/linux-pci/20240328085041.2916899-3-s-vadapalli@ti.com
+Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+Suggested-by: Niklas Cassel <cassel@kernel.org>
+Suggested-by: Serge Semin <fancer.lancer@gmail.com>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Link: https://lore.kernel.org/r/20240702024735.1152293-4-ipylypiv@google.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 52 ++++++++---------------
+ 1 file changed, 18 insertions(+), 34 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -900,11 +900,8 @@ static void ata_gen_passthru_sense(struc
- 				   &sense_key, &asc, &ascq, verbose);
- 		ata_scsi_set_sense(qc->dev, cmd, sense_key, asc, ascq);
- 	} else {
--		/*
--		 * ATA PASS-THROUGH INFORMATION AVAILABLE
--		 * Always in descriptor format sense.
--		 */
--		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
-+		/* ATA PASS-THROUGH INFORMATION AVAILABLE */
-+		ata_scsi_set_sense(qc->dev, cmd, RECOVERED_ERROR, 0, 0x1D);
- 	}
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index bf907c8ca25bb..9886fdd415039 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -290,6 +290,24 @@ static void ks_pcie_clear_dbi_mode(struct keystone_pcie *ks_pcie)
  
- 	if ((cmd->sense_buffer[0] & 0x7f) >= 0x72) {
+ static int ks_pcie_msi_host_init(struct dw_pcie_rp *pp)
+ {
++	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
++	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
++
++	/* Configure and set up BAR0 */
++	ks_pcie_set_dbi_mode(ks_pcie);
++
++	/* Enable BAR0 */
++	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, 1);
++	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, SZ_4K - 1);
++
++	ks_pcie_clear_dbi_mode(ks_pcie);
++
++	/*
++	 * For BAR0, just setting bus address for inbound writes (MSI) should
++	 * be sufficient.  Use physical address to avoid any conflicts.
++	 */
++	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, ks_pcie->app.start);
++
+ 	pp->msi_irq_chip = &ks_pcie_msi_irq_chip;
+ 	return dw_pcie_allocate_domains(pp);
+ }
+@@ -447,44 +465,10 @@ static struct pci_ops ks_child_pcie_ops = {
+ 	.write = pci_generic_config_write,
+ };
+ 
+-/**
+- * ks_pcie_v3_65_add_bus() - keystone add_bus post initialization
+- * @bus: A pointer to the PCI bus structure.
+- *
+- * This sets BAR0 to enable inbound access for MSI_IRQ register
+- */
+-static int ks_pcie_v3_65_add_bus(struct pci_bus *bus)
+-{
+-	struct dw_pcie_rp *pp = bus->sysdata;
+-	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+-	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
+-
+-	if (!pci_is_root_bus(bus))
+-		return 0;
+-
+-	/* Configure and set up BAR0 */
+-	ks_pcie_set_dbi_mode(ks_pcie);
+-
+-	/* Enable BAR0 */
+-	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, 1);
+-	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, SZ_4K - 1);
+-
+-	ks_pcie_clear_dbi_mode(ks_pcie);
+-
+-	 /*
+-	  * For BAR0, just setting bus address for inbound writes (MSI) should
+-	  * be sufficient.  Use physical address to avoid any conflicts.
+-	  */
+-	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, ks_pcie->app.start);
+-
+-	return 0;
+-}
+-
+ static struct pci_ops ks_pcie_ops = {
+ 	.map_bus = dw_pcie_own_conf_map_bus,
+ 	.read = pci_generic_config_read,
+ 	.write = pci_generic_config_write,
+-	.add_bus = ks_pcie_v3_65_add_bus,
+ };
+ 
+ /**
+-- 
+2.43.0
+
 
 
