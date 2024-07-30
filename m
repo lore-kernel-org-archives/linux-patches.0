@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12FE818B466;
-	Tue, 30 Jul 2024 17:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21ED18B495;
+	Tue, 30 Jul 2024 17:07:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359243; cv=none; b=jK+cMVsJH1P31WZHb0njp7fwF5YWdAXWfMxu70q4FWAs2XaSaGyN3wdmfQ92smR/bp9+ZLK//JsG9tykI+smwFzzAgm8OAVhtBACu9Zd0OVhEGZJfNF1QEwjSEjthdIjVa5XVPkrIIj11JQKnYKyuM7XsFn0Xc1IIYXnv1FsNKA=
+	t=1722359246; cv=none; b=os+xxxcvtTUAfUwS/SnVKhOnPHJ/y9rnm7luj0JBcjewE126Xo9TDUBio9qEVJm06d15ze3rfbKE+HuyF9jsnvm0R8Rm2rj9dag6KPo2dSuux+OTvwJvfn3zBII3hsW4WLooCa/XZcsnsdIXqQDXzb0PtE0kFbw/68RRHMjVJ+o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359243; c=relaxed/simple;
-	bh=+8IBsdfCXLWlhSnjp/AI8dIitIwLJPW84xxxpzu25so=;
+	s=arc-20240116; t=1722359246; c=relaxed/simple;
+	bh=I6gvBc1D9mF0gy4wnPiaTDvxcJSemGHeCq5KgwJLWMg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=StMzER768XT40hdh9d2YbmV0ZqmEsT+orTvI/zNcptdcSAyqTjhGK7Pd6a1pSedkNNlCCTBytXCtbuPouWbh2NrvN5HfgIYXigze1jG3PKb8CvEmf7fM2U2ad9rwNeTVbEFi2qtWyb3K2UZJoCB49qYw57lllHMt9jjoFDW4Tes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W1udu94B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lXGf/7JIVkdq6ZEU/+ezA60Z2nELQUTD0Ocm0YjiqBkNJZmHkdGZg7qSoQdiEFMfxE34ZeUDfPsVoVxAZFXzbtULuu95v1F+HnpcXe9FACYulbGyQUMI/BKj2D4f1Kts8AkB4oFlbRlMmIWkAb2KD+ufWZ1qzdEGA4i4zYDmfhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zdzfnx3H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W1udu94B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912FCC32782;
-	Tue, 30 Jul 2024 17:07:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zdzfnx3H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF87BC4AF10;
+	Tue, 30 Jul 2024 17:07:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359243;
-	bh=+8IBsdfCXLWlhSnjp/AI8dIitIwLJPW84xxxpzu25so=;
+	s=korg; t=1722359246;
+	bh=I6gvBc1D9mF0gy4wnPiaTDvxcJSemGHeCq5KgwJLWMg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1udu94BrDcSOOdHpz4iGVLmv6J5BxNGVGXq9zSWpOgO1hFHhLLG1wyWVNk34vfsj
-	 bUL8Khtk8bGCtalDsCyhOvk+QkOStioHWE57Pky4DVpWCMZaOVF8kqb0ZAFntnye4S
-	 ABL9o71VaseCThnySbbjlG13cbNzEqe5J+BhofLU=
+	b=Zdzfnx3HD7JTLS5zixOCqUxGc9TbLnZ+iAWkctH8qPPXk/dYhjPc5B7dFOrl/3VSs
+	 JDIonSRT3L2aJGl0XqsNkPWyKeSsHwH/CnUPKZ00/u7RdH/3bpL+KfFL5kPT0EXouH
+	 JM4VBwieOkI1AhjgYRGBSVXwNWZsWz3xnLeoUf30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 456/809] iommu/vt-d: Limit max address mask to MAX_AGAW_PFN_WIDTH
-Date: Tue, 30 Jul 2024 17:45:32 +0200
-Message-ID: <20240730151742.739940613@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>
+Subject: [PATCH 6.6 453/568] devres: Fix memory leakage caused by driver API devm_free_percpu()
+Date: Tue, 30 Jul 2024 17:49:20 +0200
+Message-ID: <20240730151657.717185675@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,55 +45,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lu Baolu <baolu.lu@linux.intel.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit c420a2b4e8be06f16f3305472bd25a1dd12059ec ]
+commit bd50a974097bb82d52a458bd3ee39fb723129a0c upstream.
 
-Address mask specifies the number of low order bits of the address field
-that must be masked for the invalidation operation.
+It will cause memory leakage when use driver API devm_free_percpu()
+to free memory allocated by devm_alloc_percpu(), fixed by using
+devres_release() instead of devres_destroy() within devm_free_percpu().
 
-Since address bits masked start from bit 12, the max address mask should
-be MAX_AGAW_PFN_WIDTH, as defined in Table 19 ("Invalidate Descriptor
-Address Mask Encodings") of the spec.
-
-Limit the max address mask returned from calculate_psi_aligned_address()
-to MAX_AGAW_PFN_WIDTH to prevent potential integer overflow in the
-following code:
-
-qi_flush_dev_iotlb():
-    ...
-    addr |= (1ULL << (VTD_PAGE_SHIFT + mask - 1)) - 1;
-    ...
-
-Fixes: c4d27ffaa8eb ("iommu/vt-d: Add cache tag invalidation helpers")
-Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240709152643.28109-2-baolu.lu@linux.intel.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ff86aae3b411 ("devres: add devm_alloc_percpu()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Link: https://lore.kernel.org/r/1719931914-19035-3-git-send-email-quic_zijuhu@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/devres.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
-index e8418cdd8331b..0a3bb38a52890 100644
---- a/drivers/iommu/intel/cache.c
-+++ b/drivers/iommu/intel/cache.c
-@@ -245,7 +245,7 @@ static unsigned long calculate_psi_aligned_address(unsigned long start,
- 		 * shared_bits are all equal in both pfn and end_pfn.
- 		 */
- 		shared_bits = ~(pfn ^ end_pfn) & ~bitmask;
--		mask = shared_bits ? __ffs(shared_bits) : BITS_PER_LONG;
-+		mask = shared_bits ? __ffs(shared_bits) : MAX_AGAW_PFN_WIDTH;
- 	}
- 
- 	*_pages = aligned_pages;
--- 
-2.43.0
-
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -1225,7 +1225,11 @@ EXPORT_SYMBOL_GPL(__devm_alloc_percpu);
+  */
+ void devm_free_percpu(struct device *dev, void __percpu *pdata)
+ {
+-	WARN_ON(devres_destroy(dev, devm_percpu_release, devm_percpu_match,
++	/*
++	 * Use devres_release() to prevent memory leakage as
++	 * devm_free_pages() does.
++	 */
++	WARN_ON(devres_release(dev, devm_percpu_release, devm_percpu_match,
+ 			       (__force void *)pdata));
+ }
+ EXPORT_SYMBOL_GPL(devm_free_percpu);
 
 
