@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A171A617E;
-	Tue, 30 Jul 2024 16:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 730738BE8;
+	Tue, 30 Jul 2024 16:32:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357174; cv=none; b=pwlAgBrNXuk7idAbZsRJK5KTS7IzVJZcGensfj1Jjq0M3PG1W9C+wMNFNws3+2eXW8DaNZuXhQd13je+oQRma8W0mAMfrq2AX6Hify0tPx0EGXG530PY9sFxH6cFKnRx0RLfqyFk+p4LzZk3NOnY/yjdE1V0+DHFaUZxBLh4ask=
+	t=1722357177; cv=none; b=N2Ko0F7vo+TP4iCoF9VCFyIpJNIjJmavJM8jiSXqtQBe/+6Jo84cm+BJjIEYAFtXTVMgfOQOsqrgcMxIIXMQxnDapgtdeuwQgdBzMb7+9ykO8Oc8yRb1JoScZNm1tQ4w+Vkfah3JPad8RwmLK66Aekp0vNsTu/UHNVGQLpqZN4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357174; c=relaxed/simple;
-	bh=7Ro0TYMIChv1dWNu+o+0bp+BO6qcr0/tGVDoFgdOVEw=;
+	s=arc-20240116; t=1722357177; c=relaxed/simple;
+	bh=UQ/sblWXFAAjbaiIILxHmlXhBov052se6edV5/DsQAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZSaBX9Mz9B7k0eQ1Mb2Afhy28YLbkKdGnmgiBWGhX/U4i9Jt1g3MtLgz8JjZQd+gxvM2nw/sd9M5+F8e1sg4KqUZe0lO4lL718W/w5Eijv8zI+pTEf62nNzpznS4SRaFHeWPag70gvNZf8M/QQZ1aWTXKYhGSA8oSwSYzkkKcxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8icXDqq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bOw7PubU5LemKeJNLkHamArVPw/QfGgrZo8gAewG9z7K4JOKtyKQlK7sqeWkcJ8+gV3ELaIwlUDC3uFz5OqL+POuRWL5rCrtcLm53eQ1ZXgaCEbdJzirLrPG5v9zXnmJ/uLDJDUswABFR6b12Esf4FkOMsTMwENAxpWbRQgi1Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYnI+7Q1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8icXDqq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF60EC32782;
-	Tue, 30 Jul 2024 16:32:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYnI+7Q1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBD1C32782;
+	Tue, 30 Jul 2024 16:32:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357174;
-	bh=7Ro0TYMIChv1dWNu+o+0bp+BO6qcr0/tGVDoFgdOVEw=;
+	s=korg; t=1722357177;
+	bh=UQ/sblWXFAAjbaiIILxHmlXhBov052se6edV5/DsQAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8icXDqquHrIzE2/U8N/htPdndbNMZIeDv6ufZMN7M0RJEi1+pqo+Xt1mNBPKqQU+
-	 jjZTH3XEk/zUVVPN9h2LuTUEx4yd+m2BGwiua6b8bJtBKyG/4FjePVhC/WWdNyHyCT
-	 rijEbMWs+1y1g1KktTgR+hCz5ekl2LRTK7xlED9g=
+	b=NYnI+7Q13tNqIY7MN6kDvYrWdPL/b/M/aoLPEgHc/iwFT3XZ5zC5QoYxYMLo/chfm
+	 kQ24RVhvWjCMWfPzYZLQZWP8eUDxpE1wEhpFmSCHDYvXZdBByxL9J5o3wVG93/x72p
+	 HHdpx3iwOWRK5RYueQarJUw+X1vllloTme8ohbOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 226/568] perf report: Fix condition in sort__sym_cmp()
-Date: Tue, 30 Jul 2024 17:45:33 +0200
-Message-ID: <20240730151648.716750483@linuxfoundation.org>
+Subject: [PATCH 6.1 266/440] sbitmap: remove unnecessary calculation of alloc_hint in __sbitmap_get_shallow
+Date: Tue, 30 Jul 2024 17:48:19 +0200
+Message-ID: <20240730151626.229436870@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit cb39d05e67dc24985ff9f5150e71040fa4d60ab8 ]
+[ Upstream commit f1591a8bb3e02713f4ee2efe20df0d84ed80da48 ]
 
-It's expected that both hist entries are in the same hists when
-comparing two.  But the current code in the function checks one without
-dso sort key and other with the key.  This would make the condition true
-in any case.
+Updates to alloc_hint in the loop in __sbitmap_get_shallow() are mostly
+pointless and equivalent to setting alloc_hint to zero (because
+SB_NR_TO_BIT() considers only low sb->shift bits from alloc_hint). So
+simplify the logic.
 
-I guess the intention of the original commit was to add '!' for the
-right side too.  But as it should be the same, let's just remove it.
-
-Fixes: 69849fc5d2119 ("perf hists: Move sort__has_dso into struct perf_hpp_list")
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240621170528.608772-2-namhyung@kernel.org
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://lore.kernel.org/r/20230116205059.3821738-2-shikemeng@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 72d04bdcf3f7 ("sbitmap: fix io hung due to race on sbitmap_word::cleared")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/sort.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/sbitmap.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/util/sort.c b/tools/perf/util/sort.c
-index 6aa1c7f2b4448..6ab8147a3f870 100644
---- a/tools/perf/util/sort.c
-+++ b/tools/perf/util/sort.c
-@@ -332,7 +332,7 @@ sort__sym_cmp(struct hist_entry *left, struct hist_entry *right)
- 	 * comparing symbol address alone is not enough since it's a
- 	 * relative address within a dso.
- 	 */
--	if (!hists__has(left->hists, dso) || hists__has(right->hists, dso)) {
-+	if (!hists__has(left->hists, dso)) {
- 		ret = sort__dso_cmp(left, right);
- 		if (ret != 0)
- 			return ret;
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index c515072eca296..b9dd0a0a28f89 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -243,6 +243,7 @@ static int __sbitmap_get_shallow(struct sbitmap *sb,
+ 	int nr = -1;
+ 
+ 	index = SB_NR_TO_INDEX(sb, alloc_hint);
++	alloc_hint = SB_NR_TO_BIT(sb, alloc_hint);
+ 
+ 	for (i = 0; i < sb->map_nr; i++) {
+ again:
+@@ -250,7 +251,7 @@ static int __sbitmap_get_shallow(struct sbitmap *sb,
+ 					min_t(unsigned int,
+ 					      __map_depth(sb, index),
+ 					      shallow_depth),
+-					SB_NR_TO_BIT(sb, alloc_hint), true);
++					alloc_hint, true);
+ 		if (nr != -1) {
+ 			nr += index << sb->shift;
+ 			break;
+@@ -260,13 +261,9 @@ static int __sbitmap_get_shallow(struct sbitmap *sb,
+ 			goto again;
+ 
+ 		/* Jump to next index. */
+-		index++;
+-		alloc_hint = index << sb->shift;
+-
+-		if (index >= sb->map_nr) {
++		alloc_hint = 0;
++		if (++index >= sb->map_nr)
+ 			index = 0;
+-			alloc_hint = 0;
+-		}
+ 	}
+ 
+ 	return nr;
 -- 
 2.43.0
 
