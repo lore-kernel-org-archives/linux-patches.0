@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E01A6161;
-	Tue, 30 Jul 2024 16:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E3D1A6160;
+	Tue, 30 Jul 2024 16:25:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356705; cv=none; b=XMtU8II+damvoRlWSS/3nNfVg4BopM2QdQp/HY/5QBzV5W8xop0PZv9QxhrQzXhU33aqABMkafs5QhDO0WMyeCaCMUouqrh10zYL7DgbgD1+cOsmGRsOWBhsnq/quBr6CzsmYETbEU4uDAq3Tj3JgiWHipXL3/ZaNqVlNLzCNYQ=
+	t=1722356709; cv=none; b=pM6M7C6bgq0mRHweKAL6RGjdAjG7AYJjszmTcx47P0IzveCog2gxAsxv1/kZDrIlBH3upWRcEfWIOjuo3CWnt+OB5GWsRelu1CXVuApCaPGr6BG37ObDJ/9IuxfYGM4CgA68Rrkw3qsz3MN2c3xJ7HnloMhGSYLq/U+fFPOhC6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356705; c=relaxed/simple;
-	bh=EKsCygSF8isMd8M0uFj9e7l8HAi6lb+vfFKK23jZJpA=;
+	s=arc-20240116; t=1722356709; c=relaxed/simple;
+	bh=cLCb3FfBzrNFU6aAUsC+wLNjf2A0pf4l0yRuz1tpWo8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=amtwknqA6r3Ze9C7x7I5w+3kQ24zcT3wYSVzDTLkaoG4JdVb4nuWB0DhKsxUmcZLUnZDsEk9Gtw+iNGr5qu9msQwclSdkIjyqrzhZXuYHJxsg+I8NNONqsHIzEbbwN9yDbSofO2912N5cgm/MLVmkAUbOOuvp9Hla/d5LNwzI4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw/5OXNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D4+Fa9f8Hy+Ci0DJHVsAvzVUWyowJG+TU/9mt0IOvOOkxSVIN1llK/g6l3ulwmA4CYIA9p69VnyfRm2XwYKmOm45z1aOUkS7hFXLpyzXU67ZWEmacUVf5iNgkWfLZsgpnNLh4gfKyPD56dcTZrhUjiwtIRH0nlUCgBWeda7ZuOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubw8IUg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw/5OXNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE718C4AF13;
-	Tue, 30 Jul 2024 16:25:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubw8IUg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D3FC32782;
+	Tue, 30 Jul 2024 16:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356705;
-	bh=EKsCygSF8isMd8M0uFj9e7l8HAi6lb+vfFKK23jZJpA=;
+	s=korg; t=1722356708;
+	bh=cLCb3FfBzrNFU6aAUsC+wLNjf2A0pf4l0yRuz1tpWo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qw/5OXNayi4C58bLkdwML+X3jhwDVGoSTFvT+TtwpgKOax5Phl6dvZk2+6Zh791Ym
-	 7OOXz2EKWHBDmgDCxptK9cvEgYRRCbv2igRobOlAVUqLvO1A+patA7G7CKWeSJGb14
-	 b0jhmBo9fsJGfpBwyITc0abxk5ff/tm2Ek4cLGNI=
+	b=ubw8IUg1061AwItPAK8qiNfuSlfUm5qOqPpzvm60ys4zvgKBUPSrdvFzORo/WlzuL
+	 gtYA3xAGL8lm8cQQbB0UROeJ7PyoRx7kiOQeOZwT7YDCByYQOCpMS22QbNzqlOcKiz
+	 8xSaVZtxjhGnw/tKhERSthyY6LL6OycttplfhYPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Yan <andy.yan@rock-chips.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/568] drm/rockchip: vop2: Fix the port mux of VP2
-Date: Tue, 30 Jul 2024 17:44:42 +0200
-Message-ID: <20240730151646.721969027@linuxfoundation.org>
+Subject: [PATCH 6.1 221/440] RDMA/hns: Check atomic wr length
+Date: Tue, 30 Jul 2024 17:47:34 +0200
+Message-ID: <20240730151624.492574117@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Yan <andy.yan@rock-chips.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 2bdb481bf7a93c22b9fea8daefa2834aab23a70f ]
+[ Upstream commit 6afa2c0bfb8ef69f65715ae059e5bd5f9bbaf03b ]
 
-The port mux of VP2 should be RK3568_OVL_PORT_SET__PORT2_MUX.
+8 bytes is the only supported length of atomic. Add this check in
+set_rc_wqe(). Besides, stop processing WQEs and return from
+set_rc_wqe() if there is any error.
 
-Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
-Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
-Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
-Tested-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240422101905.32703-2-andyshrk@163.com
+Fixes: 384f88185112 ("RDMA/hns: Add atomic support")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-2-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h | 2 ++
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 9 +++++++--
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-index c5ec4169616de..f2a956f973613 100644
---- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
-@@ -1927,7 +1927,7 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
- 		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX,
- 			(vp2->nlayers + vp1->nlayers + vp0->nlayers - 1));
- 	else
--		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT1_MUX, 8);
-+		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX, 8);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 8748b65c87ea7..0a4c046cdfac4 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -90,6 +90,8 @@
+ /* Configure to HW for PAGE_SIZE larger than 4KB */
+ #define PG_SHIFT_OFFSET				(PAGE_SHIFT - 12)
  
- 	layer_sel = vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
++#define ATOMIC_WR_LEN				8
++
+ #define HNS_ROCE_IDX_QUE_ENTRY_SZ		4
+ #define SRQ_DB_REG				0x230
  
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index c931cce50d50d..176d75f2514eb 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -602,11 +602,16 @@ static inline int set_rc_wqe(struct hns_roce_qp *qp,
+ 		     (wr->send_flags & IB_SEND_SIGNALED) ? 1 : 0);
+ 
+ 	if (wr->opcode == IB_WR_ATOMIC_CMP_AND_SWP ||
+-	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD)
++	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD) {
++		if (msg_len != ATOMIC_WR_LEN)
++			return -EINVAL;
+ 		set_atomic_seg(wr, rc_sq_wqe, valid_num_sge);
+-	else if (wr->opcode != IB_WR_REG_MR)
++	} else if (wr->opcode != IB_WR_REG_MR) {
+ 		ret = set_rwqe_data_seg(&qp->ibqp, wr, rc_sq_wqe,
+ 					&curr_idx, valid_num_sge);
++		if (ret)
++			return ret;
++	}
+ 
+ 	/*
+ 	 * The pipeline can sequentially post all valid WQEs into WQ buffer,
 -- 
 2.43.0
 
