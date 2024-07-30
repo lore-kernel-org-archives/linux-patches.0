@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13C0157466;
-	Tue, 30 Jul 2024 17:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA9C189522;
+	Tue, 30 Jul 2024 17:33:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360781; cv=none; b=kvUs9TYrOiBQ58dEOXpZ0rNAAJk4RvLnrVrQTXCQCz/vwFUZhWqi0lIO/gu0Ie7giuyvsT6vo3o7H8btXHQXUiKwpAVvbCB6l4cqqORUbYcsLuLOmqSeanjPuu2FZAZuYGGjsnJjT93Xu9pvq4YFPxTc/DaVcbWfZbDXSi/xico=
+	t=1722360785; cv=none; b=TTlzKhXC7JKVpj9Ros2C2/0w/8DLlGYv8mHhzX8T7F6OlAK5urxyhRcl212X/vTVJQSMJGkM85nHV/KVsguDdqtLgVv1dvKImUxxZkVcWVIkQpBDCEozoNvDNA1fYQiS1LWmfo0xUhLeNOtgMtKmUP6lKUF+Hcj+DW68bbUd058=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360781; c=relaxed/simple;
-	bh=1eq57+ZpSnXcqxqV0Ko2uFJKS/MUZxlUIVs6h+r8CGA=;
+	s=arc-20240116; t=1722360785; c=relaxed/simple;
+	bh=18UUie3zcol6gNRSBnNuIx7pKTFF8hsRcazCp/MZ3Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T3ifNnxU6rfTJMP3wxLu2qRcDt/OFAn3MAVJhtK4BRamOpVdrfivh2Ujbsz5Amy1DwpeMe/PRuSQN7R7d0phyPcabil6yHqDBUq/7Eyep3y00qPgICII0MT9IXf5gDELXgQ5twcEa8CHOMN6UCOenCaIJwxMpqZ/lttCIxjQats=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xW7hJxcF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CEkWsb0aqXgSl8jIR/2+4ddIxqNDyXyqbtsLAGS2yr5g34i8ohSpM+CUjl3scVbou07WqDPhpywejtyg8vxu/HzydcKxqg8n+o3yNXfxkI3VxXs9EhFuUsPoYxDEg4oFJWppK+wsC5TxJATubedTk8AXWXzJFR1wJPZo06HPv2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZ1Go2BS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xW7hJxcF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29CA5C32782;
-	Tue, 30 Jul 2024 17:33:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZ1Go2BS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56C39C32782;
+	Tue, 30 Jul 2024 17:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360781;
-	bh=1eq57+ZpSnXcqxqV0Ko2uFJKS/MUZxlUIVs6h+r8CGA=;
+	s=korg; t=1722360784;
+	bh=18UUie3zcol6gNRSBnNuIx7pKTFF8hsRcazCp/MZ3Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xW7hJxcFqx5+jx71xnoXd2JhEZ7yNQ70Zw9JFe6N5z8bNrzf/pTpNldQ2/q30+ubk
-	 w0x9nRYzJuyzLDWDY90isLSlONEfJcOaBRBcK6EhD0oLC12/hHW+WPJq3wAOcFrz1Y
-	 BGcIJlzjrjOch5R0GOknlICiF0vn/vVWBgi0LD34=
+	b=fZ1Go2BS3sMG6v3EJy285NRvPxJyladoCJWIYm6rEix8Lp8AskTXq9haneH6YmMAs
+	 oTa95zfD8gTMhBuboXTkG0MVgiMI4MMH9V+l8layrsPTV3VhVPIMKouToiTQsnC0pz
+	 xh+uyEMUnRbjPOXK3esTa659hnJ9FnqviEzihMjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Christian Brauner <brauner@kernel.org>,
+	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 806/809] i3c: mipi-i3c-hci: Fix number of DAT/DCT entries for HCI versions < 1.1
-Date: Tue, 30 Jul 2024 17:51:22 +0200
-Message-ID: <20240730151756.816668235@linuxfoundation.org>
+Subject: [PATCH 6.10 807/809] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
+Date: Tue, 30 Jul 2024 17:51:23 +0200
+Message-ID: <20240730151756.855568261@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,73 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
 
-[ Upstream commit be90ae1ba14a83962b33c4d4c854ef081186b0e4 ]
+[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
 
-I was wrong about the TABLE_SIZE field description in the
-commit 0676bfebf576 ("i3c: mipi-i3c-hci: Fix DAT/DCT entry sizes").
+Christian noticed that it is possible for a privileged user to mount
+most filesystems with a non-initial user namespace in sb->s_user_ns.
+When fsopen() is called in a non-init namespace the caller's namespace
+is recorded in fs_context->user_ns. If the returned file descriptor is
+then passed to a process priviliged in init_user_ns, that process can
+call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
+with sb->s_user_ns set to the namespace of the process which called
+fsopen().
 
-For the MIPI I3C HCI versions 1.0 and earlier the TABLE_SIZE field in
-the registers DAT_SECTION_OFFSET and DCT_SECTION_OFFSET is indeed defined
-in DWORDs and not number of entries like it is defined in later versions.
+This is problematic. We cannot assume that any filesystem which does not
+set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
+mind, increasing the risk for bugs and security issues.
 
-Where above fix allowed driver initialization to continue the wrongly
-interpreted TABLE_SIZE field leads variables DAT_entries being twice and
-DCT_entries four times as big as they really are.
+Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
+not set for the filesystem and a non-initial user namespace will be
+used. sget() does not need to be updated as it always uses the user
+namespace of the current context, or the initial user namespace if
+SB_SUBMOUNT is set.
 
-That in turn leads clearing the DAT table over the boundary in the
-dat_v1.c: hci_dat_v1_init().
-
-So interprete the TABLE_SIZE field in DWORDs for HCI versions < 1.1 and
-fix number of DAT/DCT entries accordingly.
-
-Fixes: 0676bfebf576 ("i3c: mipi-i3c-hci: Fix DAT/DCT entry sizes")
-Signed-off-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
+Reported-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ fs/super.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/i3c/master/mipi-i3c-hci/core.c b/drivers/i3c/master/mipi-i3c-hci/core.c
-index d7e966a255833..4e7d6a43ee9b3 100644
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -631,6 +631,7 @@ static irqreturn_t i3c_hci_irq_handler(int irq, void *dev_id)
- static int i3c_hci_init(struct i3c_hci *hci)
- {
- 	u32 regval, offset;
-+	bool size_in_dwords;
- 	int ret;
+diff --git a/fs/super.c b/fs/super.c
+index 095ba793e10cf..38d72a3cf6fcf 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -736,6 +736,17 @@ struct super_block *sget_fc(struct fs_context *fc,
+ 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
+ 	int err;
  
- 	/* Validate HCI hardware version */
-@@ -654,11 +655,16 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	hci->caps = reg_read(HC_CAPABILITIES);
- 	DBG("caps = %#x", hci->caps);
- 
-+	size_in_dwords = hci->version_major < 1 ||
-+			 (hci->version_major == 1 && hci->version_minor < 1);
++	/*
++	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
++	 * not set, as the filesystem is likely unprepared to handle it.
++	 * This can happen when fsconfig() is called from init_user_ns with
++	 * an fs_fd opened in another user namespace.
++	 */
++	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
++		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
++		return ERR_PTR(-EPERM);
++	}
 +
- 	regval = reg_read(DAT_SECTION);
- 	offset = FIELD_GET(DAT_TABLE_OFFSET, regval);
- 	hci->DAT_regs = offset ? hci->base_regs + offset : NULL;
- 	hci->DAT_entries = FIELD_GET(DAT_TABLE_SIZE, regval);
- 	hci->DAT_entry_size = FIELD_GET(DAT_ENTRY_SIZE, regval) ? 0 : 8;
-+	if (size_in_dwords)
-+		hci->DAT_entries = 4 * hci->DAT_entries / hci->DAT_entry_size;
- 	dev_info(&hci->master.dev, "DAT: %u %u-bytes entries at offset %#x\n",
- 		 hci->DAT_entries, hci->DAT_entry_size, offset);
- 
-@@ -667,6 +673,8 @@ static int i3c_hci_init(struct i3c_hci *hci)
- 	hci->DCT_regs = offset ? hci->base_regs + offset : NULL;
- 	hci->DCT_entries = FIELD_GET(DCT_TABLE_SIZE, regval);
- 	hci->DCT_entry_size = FIELD_GET(DCT_ENTRY_SIZE, regval) ? 0 : 16;
-+	if (size_in_dwords)
-+		hci->DCT_entries = 4 * hci->DCT_entries / hci->DCT_entry_size;
- 	dev_info(&hci->master.dev, "DCT: %u %u-bytes entries at offset %#x\n",
- 		 hci->DCT_entries, hci->DCT_entry_size, offset);
- 
+ retry:
+ 	spin_lock(&sb_lock);
+ 	if (test) {
 -- 
 2.43.0
 
