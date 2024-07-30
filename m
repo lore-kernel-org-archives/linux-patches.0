@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2CB18B46E;
-	Tue, 30 Jul 2024 16:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB24189516;
+	Tue, 30 Jul 2024 16:18:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356293; cv=none; b=B4qpu0ZQK0hlLcOnmZUEFDP3dUzEePjjENp6e/PVp+JEBqi7+41KXWqcfk8LWimivdzykjUljhTzA8ssPgxvslKwqgHbEy7cBfzSVdbnlP4GvhziEsvc8BzJdJdjTMAEPEASWQnL2YUiFU4ky6UsKWn0fINfFbVAf6MJVGaZu48=
+	t=1722356297; cv=none; b=cFlQ3zYhDQ4+MNzp9mhV8cVOM+PP3IYgIjDkAu2CuoVMH8ZhT/nVNZB2bNQFL+gf0JHU+neARn/U1HiJFLhMmMfxgpILejvFlMdtvDaFo//0AWeJNrbkfKlhLabk0yqR0nGWwl1APcxQ+f1z5sgGlSTvNQHchOFVtwGj966Y8WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356293; c=relaxed/simple;
-	bh=dFPM7ISdTMF75vzkqhAQNJ+wI+6P6c1JsFbKcsMcD3A=;
+	s=arc-20240116; t=1722356297; c=relaxed/simple;
+	bh=b3AP3a4kcqWlJJA67EsPOIkYMvQAvJK0YIwdAnkZ25E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ecEa9X5XZpbdvA2DU38j3Z2In6KGLMbtYG+sTXamNTW747boKgyo751STpRFg/OxF9eU4LJpg0DvWklD1q5QbFmr5KVSqtknhLUFSbBBa7FWs7O0ZFNvqOSSZrYQbel2vDMDS+WZGtwP04ZUPJflzmdFCPkkC6oYKbJ2lkE6Z+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV0yalqC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YkmgLpJqaOFJLAvmbZJQCd4852Xnt40BBtqxh9I8FQvo/qm6nN3z2Uk0fu9Blsi4uWGbTQKh0UsCksibgazLcSFGqLy4WbUjXg7FPmFC8GLL0tKaFH9cyRNoSZUIWnrIgfaRgwu9hm2zczGPALYm9iO+5eJXzKjM9hX4L+mtKrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZauMDdAk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV0yalqC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A82C32782;
-	Tue, 30 Jul 2024 16:18:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZauMDdAk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC83FC4AF0A;
+	Tue, 30 Jul 2024 16:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356293;
-	bh=dFPM7ISdTMF75vzkqhAQNJ+wI+6P6c1JsFbKcsMcD3A=;
+	s=korg; t=1722356297;
+	bh=b3AP3a4kcqWlJJA67EsPOIkYMvQAvJK0YIwdAnkZ25E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zV0yalqCVqkMn02ORqYhOhyJ8Yvyd4u/4tQvTLvKMS85QiKtWCThoLGcy6fwMwIDj
-	 6QW93He/cOYPzhNxNqDPSJROcnUgOpflt8tEMK8c8ei5L1iWxxSrcEo6D12mfeHOs7
-	 OsSfJ6MwkqFPczW6z3s+Sroz6+3Cie+9B1cjjl4E=
+	b=ZauMDdAkcrZrzhNqr3LXDzMc+ZaxZS7G789Ne9ongyI0rbjZxUOLs3VZsOfSmUnFs
+	 QUclKWW8cLbrBHRnboymcudKtltl/cBueQr2m8zlHBBL7L7DRih7Q/4EGUcvLi6hV8
+	 D/Cuq/CScyvuGenYPNyiemMTcW5EkjSm0hjlyJeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yue Sun <samsun1006219@gmail.com>,
+	Xingwei Lee <xrivendell7@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 137/809] arm64: dts: qcom: sm6350: Add missing qcom,non-secure-domain property
-Date: Tue, 30 Jul 2024 17:40:13 +0200
-Message-ID: <20240730151730.023725993@linuxfoundation.org>
+Subject: [PATCH 6.6 132/568] jump_label: Fix concurrency issues in static_key_slow_dec()
+Date: Tue, 30 Jul 2024 17:43:59 +0200
+Message-ID: <20240730151645.030530393@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,48 +49,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 81008068ee4f2c4c26e97a0404405bb4b450241b ]
+[ Upstream commit 83ab38ef0a0b2407d43af9575bb32333fdd74fb2 ]
 
-By default the DSP domains are secure, add the missing
-qcom,non-secure-domain property to mark them as non-secure.
+The commit which tried to fix the concurrency issues of concurrent
+static_key_slow_inc() failed to fix the equivalent issues
+vs. static_key_slow_dec():
 
-Fixes: efc33c969f23 ("arm64: dts: qcom: sm6350: Add ADSP nodes")
-Fixes: 8eb5287e8a42 ("arm64: dts: qcom: sm6350: Add CDSP nodes")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Link: https://lore.kernel.org/r/20240705-sm6350-fastrpc-fix-v2-1-89a43166c9bb@fairphone.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+CPU0                     CPU1
+
+static_key_slow_dec()
+  static_key_slow_try_dec()
+
+	key->enabled == 1
+	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
+	if (val == 1)
+	     return false;
+
+  jump_label_lock();
+  if (atomic_dec_and_test(&key->enabled)) {
+     --> key->enabled == 0
+   __jump_label_update()
+
+			 static_key_slow_dec()
+			   static_key_slow_try_dec()
+
+			     key->enabled == 0
+			     val = atomic_fetch_add_unless(&key->enabled, -1, 1);
+
+			      --> key->enabled == -1 <- FAIL
+
+There is another bug in that code, when there is a concurrent
+static_key_slow_inc() which enables the key as that sets key->enabled to -1
+so on the other CPU
+
+	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
+
+will succeed and decrement to -2, which is invalid.
+
+Cure all of this by replacing the atomic_fetch_add_unless() with a
+atomic_try_cmpxchg() loop similar to static_key_fast_inc_not_disabled().
+
+[peterz: add WARN_ON_ONCE for the -1 race]
+Fixes: 4c5ea0a9cd02 ("locking/static_key: Fix concurrent static_key_slow_inc()")
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Reported-by: Xingwei Lee <xrivendell7@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240610124406.422897838@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/jump_label.c | 45 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 5f862cf8858a7..60383f0d09f32 100644
---- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -1323,6 +1323,7 @@ fastrpc {
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "adsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
+diff --git a/kernel/jump_label.c b/kernel/jump_label.c
+index d9c822bbffb8d..eec802175ccc6 100644
+--- a/kernel/jump_label.c
++++ b/kernel/jump_label.c
+@@ -131,7 +131,7 @@ bool static_key_fast_inc_not_disabled(struct static_key *key)
+ 	STATIC_KEY_CHECK_USE(key);
+ 	/*
+ 	 * Negative key->enabled has a special meaning: it sends
+-	 * static_key_slow_inc() down the slow path, and it is non-zero
++	 * static_key_slow_inc/dec() down the slow path, and it is non-zero
+ 	 * so it counts as "enabled" in jump_label_update().  Note that
+ 	 * atomic_inc_unless_negative() checks >= 0, so roll our own.
+ 	 */
+@@ -150,7 +150,7 @@ bool static_key_slow_inc_cpuslocked(struct static_key *key)
+ 	lockdep_assert_cpus_held();
  
-@@ -1582,6 +1583,7 @@ fastrpc {
- 					compatible = "qcom,fastrpc";
- 					qcom,glink-channels = "fastrpcglink-apps-dsp";
- 					label = "cdsp";
-+					qcom,non-secure-domain;
- 					#address-cells = <1>;
- 					#size-cells = <0>;
+ 	/*
+-	 * Careful if we get concurrent static_key_slow_inc() calls;
++	 * Careful if we get concurrent static_key_slow_inc/dec() calls;
+ 	 * later calls must wait for the first one to _finish_ the
+ 	 * jump_label_update() process.  At the same time, however,
+ 	 * the jump_label_update() call below wants to see
+@@ -247,20 +247,32 @@ EXPORT_SYMBOL_GPL(static_key_disable);
  
+ static bool static_key_slow_try_dec(struct static_key *key)
+ {
+-	int val;
+-
+-	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
+-	if (val == 1)
+-		return false;
++	int v;
+ 
+ 	/*
+-	 * The negative count check is valid even when a negative
+-	 * key->enabled is in use by static_key_slow_inc(); a
+-	 * __static_key_slow_dec() before the first static_key_slow_inc()
+-	 * returns is unbalanced, because all other static_key_slow_inc()
+-	 * instances block while the update is in progress.
++	 * Go into the slow path if key::enabled is less than or equal than
++	 * one. One is valid to shut down the key, anything less than one
++	 * is an imbalance, which is handled at the call site.
++	 *
++	 * That includes the special case of '-1' which is set in
++	 * static_key_slow_inc_cpuslocked(), but that's harmless as it is
++	 * fully serialized in the slow path below. By the time this task
++	 * acquires the jump label lock the value is back to one and the
++	 * retry under the lock must succeed.
+ 	 */
+-	WARN(val < 0, "jump label: negative count!\n");
++	v = atomic_read(&key->enabled);
++	do {
++		/*
++		 * Warn about the '-1' case though; since that means a
++		 * decrement is concurrent with a first (0->1) increment. IOW
++		 * people are trying to disable something that wasn't yet fully
++		 * enabled. This suggests an ordering problem on the user side.
++		 */
++		WARN_ON_ONCE(v < 0);
++		if (v <= 1)
++			return false;
++	} while (!likely(atomic_try_cmpxchg(&key->enabled, &v, v - 1)));
++
+ 	return true;
+ }
+ 
+@@ -271,10 +283,11 @@ static void __static_key_slow_dec_cpuslocked(struct static_key *key)
+ 	if (static_key_slow_try_dec(key))
+ 		return;
+ 
+-	jump_label_lock();
+-	if (atomic_dec_and_test(&key->enabled))
++	guard(mutex)(&jump_label_mutex);
++	if (atomic_cmpxchg(&key->enabled, 1, 0))
+ 		jump_label_update(key);
+-	jump_label_unlock();
++	else
++		WARN_ON_ONCE(!static_key_slow_try_dec(key));
+ }
+ 
+ static void __static_key_slow_dec(struct static_key *key)
 -- 
 2.43.0
 
