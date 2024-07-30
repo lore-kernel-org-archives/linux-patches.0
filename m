@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CD811A617E;
-	Tue, 30 Jul 2024 16:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FEA71A617E;
+	Tue, 30 Jul 2024 16:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356465; cv=none; b=YuV0g5Qdj02BHDABjgcI9cZQ20Rhb0Pkb6MYo136Kq622+/cumvxW9gstzjeKbu3Lbpv0W04lIWpez5MpwYHGIDE4g1z19neBPNGA3piL+oUm7Vloy8HXWKtOgINhZDGSLHEqiHFLhxaPGAL0eVPsiACYQF96kaOlsP8ujeyanw=
+	t=1722356468; cv=none; b=WCPjZxcs10ZTJOpACBGPVv2EdMMjXxiAe+7s/Uq22lb9MAeS0VIDDGoGQpqd3loGGDiDAMswjRuX7cTzukohWtf+9cjq80jgS6v6V5horm6TVQ2W9/18DXHxNokXmOxlCZ7LWg6byYXUuKw9L84ExEAEDK/AB/wMp/u1SOlnpsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356465; c=relaxed/simple;
-	bh=iupP99qE3w6T4VRl7oxiK5i5nb0kizAFML0BEjnfxxg=;
+	s=arc-20240116; t=1722356468; c=relaxed/simple;
+	bh=iw1Da3RteKPLxQ97mzAQojzZ51ef/KGLdJNEO4gm2ZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PQSCLVVfhV45ObuSqbzZtkVE8SCZU5uOSaTBZSMCRAMvph5hWkfpsI/GSA/QESwkmgyD8LsHWxWEM+4lDx2+6IGYZzxZExKNI5LzGxp5WcyIWAty5Wag7pum6muzkAn1yFMlUcY0+76hXFF/iO45TCzDSpADuh/od0CkYMN2wFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CsLUMtdC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fMqa5gEMp5HB9HJvmAp7ynWDxa57ktiNVKyC0KxQhLskITwzwiKZ+XCR/z65JqA2NgAJzFNz8N22ZeQP7lu4WuLDxYd+Y9029IUDYBnoT2b5eO2/pvA/YVOLYHbcZlQt29S5oWESS1NfrZn3mQiELhFJxm+iMwph5xYQLCgSTNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UUxZh81P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CsLUMtdC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE17EC32782;
-	Tue, 30 Jul 2024 16:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UUxZh81P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC0BC32782;
+	Tue, 30 Jul 2024 16:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356465;
-	bh=iupP99qE3w6T4VRl7oxiK5i5nb0kizAFML0BEjnfxxg=;
+	s=korg; t=1722356468;
+	bh=iw1Da3RteKPLxQ97mzAQojzZ51ef/KGLdJNEO4gm2ZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CsLUMtdCe/dCKVLNuBWmQtd3ClCY/Qv9KZi3/2u4H7Anr5arK0ei3r9uMweJMRXnh
-	 LGWKxq8PLNxXNj8pIrVQ061aeMj14MXz2ZyGExwSq2uIUo+Nn1mWbcYVHm/xOHAU1M
-	 AnauMmK6jVr6DzYQl+bqbn62ZbP0jyyXLFxvxj9k=
+	b=UUxZh81P/0FQak7TPgZhJdRbUn8Ek9cpnNrJA4tNKjcnehHaG23PKYqTEJhRfg8+/
+	 GjjZWoHX6H6OjkQ5pyoRZdBPKj4hyhxVDYOCo89bP5LV3sFccdHr9qSnQwlCCkAQPQ
+	 naa9Z1jYXmLUJKYDaA1h7IihVEzwdmqugV8pvwRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leon@kernel.org>,
+	Zhang Rui <rui.zhang@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/440] RDMA/cache: Release GID table even if leak is detected
-Date: Tue, 30 Jul 2024 17:47:07 +0200
-Message-ID: <20240730151623.446618224@linuxfoundation.org>
+Subject: [PATCH 6.6 151/568] perf/x86/intel/cstate: Fix Alderlake/Raptorlake/Meteorlake
+Date: Tue, 30 Jul 2024 17:44:18 +0200
+Message-ID: <20240730151645.779204767@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +48,65 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit a92fbeac7e94a420b55570c10fe1b90e64da4025 ]
+[ Upstream commit 2c3aedd9db6295619d21e50ad29efda614023bf1 ]
 
-When the table is released, we nullify pointer to GID table, it means
-that in case GID entry leak is detected, we will leak table too.
+For Alderlake, the spec changes after the patch submitted and PC7/PC9
+are removed.
 
-Delete code that prevents table destruction.
+Raptorlake and Meteorlake, which copy the Alderlake cstate PMU, also
+don't have PC7/PC9.
 
-Fixes: b150c3862d21 ("IB/core: Introduce GID entry reference counts")
-Link: https://lore.kernel.org/r/a62560af06ba82c88ef9194982bfa63d14768ff9.1716900410.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Remove PC7/PC9 support for Alderlake/Raptorlake/Meteorlake.
+
+Fixes: d0ca946bcf84 ("perf/x86/cstate: Add Alder Lake CPU support")
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20240628031758.43103-2-rui.zhang@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/cache.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ arch/x86/events/intel/cstate.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
-index 4084d05a45102..c319664ca74b3 100644
---- a/drivers/infiniband/core/cache.c
-+++ b/drivers/infiniband/core/cache.c
-@@ -794,7 +794,6 @@ static struct ib_gid_table *alloc_gid_table(int sz)
- static void release_gid_table(struct ib_device *device,
- 			      struct ib_gid_table *table)
- {
--	bool leak = false;
- 	int i;
+diff --git a/arch/x86/events/intel/cstate.c b/arch/x86/events/intel/cstate.c
+index 96fffb2d521d2..cc6609cbfc8da 100644
+--- a/arch/x86/events/intel/cstate.c
++++ b/arch/x86/events/intel/cstate.c
+@@ -80,7 +80,7 @@
+  *	MSR_PKG_C7_RESIDENCY:  Package C7 Residency Counter.
+  *			       perf code: 0x03
+  *			       Available model: NHM,WSM,SNB,IVB,HSW,BDW,SKL,CNL,
+- *						KBL,CML,ICL,TGL,RKL,ADL,RPL,MTL
++ *						KBL,CML,ICL,TGL,RKL
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C8_RESIDENCY:  Package C8 Residency Counter.
+  *			       perf code: 0x04
+@@ -89,8 +89,7 @@
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C9_RESIDENCY:  Package C9 Residency Counter.
+  *			       perf code: 0x05
+- *			       Available model: HSW ULT,KBL,CNL,CML,ICL,TGL,RKL,
+- *						ADL,RPL,MTL
++ *			       Available model: HSW ULT,KBL,CNL,CML,ICL,TGL,RKL
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C10_RESIDENCY: Package C10 Residency Counter.
+  *			       perf code: 0x06
+@@ -582,9 +581,7 @@ static const struct cstate_model adl_cstates __initconst = {
+ 	.pkg_events		= BIT(PERF_CSTATE_PKG_C2_RES) |
+ 				  BIT(PERF_CSTATE_PKG_C3_RES) |
+ 				  BIT(PERF_CSTATE_PKG_C6_RES) |
+-				  BIT(PERF_CSTATE_PKG_C7_RES) |
+ 				  BIT(PERF_CSTATE_PKG_C8_RES) |
+-				  BIT(PERF_CSTATE_PKG_C9_RES) |
+ 				  BIT(PERF_CSTATE_PKG_C10_RES),
+ };
  
- 	if (!table)
-@@ -803,15 +802,12 @@ static void release_gid_table(struct ib_device *device,
- 	for (i = 0; i < table->sz; i++) {
- 		if (is_gid_entry_free(table->data_vec[i]))
- 			continue;
--		if (kref_read(&table->data_vec[i]->kref) > 1) {
--			dev_err(&device->dev,
--				"GID entry ref leak for index %d ref=%u\n", i,
--				kref_read(&table->data_vec[i]->kref));
--			leak = true;
--		}
-+
-+		WARN_ONCE(true,
-+			  "GID entry ref leak for dev %s index %d ref=%u\n",
-+			  dev_name(&device->dev), i,
-+			  kref_read(&table->data_vec[i]->kref));
- 	}
--	if (leak)
--		return;
- 
- 	mutex_destroy(&table->lock);
- 	kfree(table->data_vec);
 -- 
 2.43.0
 
