@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A041A6192;
-	Tue, 30 Jul 2024 16:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF391A6192;
+	Tue, 30 Jul 2024 16:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357084; cv=none; b=a14feBiesETc0audVUaYxdHOHVgbklHoCrj6DD5CFaDzAogFjA2dLKOzl3odIxVDRPDHFMySXP8nDnrqhwGyl1KkPD4QvyIfbUV1yENZ3tSTAH43c/2dLhe2dY+DId3FAWwm9M0scof2cK2uyTYPqD0tsUbnWIrwWZFx0cpMil4=
+	t=1722357088; cv=none; b=RYm7WmBeYIqA41ZO45OjS6J7nJiltVlaz1dZvBVahBBNJOUY5GemLadv37VsStAYMKIzmEwoFmNLdPBIZ4ekgEwxMQ93NZoG+1okwumYfmIFSBv2LQvYEXjuKXQod8L8k0xrGBLpeAUAZ2i6A33M24TQOPJsas8YXVN45Hnh2dw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357084; c=relaxed/simple;
-	bh=c2XttGFEekHPMzmaf9/K2wuP4w9Y8Q94thoL/sFxs+A=;
+	s=arc-20240116; t=1722357088; c=relaxed/simple;
+	bh=RgqRFVSsMa2wnLQRRubgmXSAGuEvxrlQ4Z3LSC+pUWg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqr79mebP1ZeB3VMGcjDnfF4f5Yd9+O4aEDx/icKudwpe50kHS9Dlspj+EpPYBDBoa4SDIb8yNho+iTEXCEIbpkTg19CGpqqP+pk/aMPSAokI9XT+ye/1X5jDxFV5lDQIsVs4x1vWqHeAH8ld8jnBo41bo2Cwjt/gQuHEOvWF4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gF5S2XWZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K9FjGm1IM+y8kJEGEDDJBEwOzfo/FvcATI2TZVfKhCCLca0iicM8+cwt6ozoA+C+bGPS3cCC8NdqF8PkKztHSg5NAg3JTa+FqVT6/XVQk2nQ6gs5viUST9dRcePVD+oUbBKmYdygHZfP0Ik1Ck5urVn+e/z8tyJVfVFoKIEdSr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMvzdjP2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gF5S2XWZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 569B1C32782;
-	Tue, 30 Jul 2024 16:31:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMvzdjP2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B2D6C32782;
+	Tue, 30 Jul 2024 16:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357084;
-	bh=c2XttGFEekHPMzmaf9/K2wuP4w9Y8Q94thoL/sFxs+A=;
+	s=korg; t=1722357087;
+	bh=RgqRFVSsMa2wnLQRRubgmXSAGuEvxrlQ4Z3LSC+pUWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gF5S2XWZm0n3Sa7nVei8elPNuUzK3L6S5V9qGWKn3IUqpYJSEmgR4fFZPlEeR0mO8
-	 56pQenoyxrYUXhF3AIJfMUud6N+GS5UysNEZJDw2MfH7Yb3yvHFmnjewJ/i2FxYSxi
-	 f9RatJNdQ7T72tdU+Z7RUrhVYnBDorVkTMT4EjPw=
+	b=QMvzdjP23JcCjTFROA1Mh0PmN+BNsgSEVsCH8hVEa755ASFwOmvHmr20IUX9D/7K/
+	 yVhRGGSvEEgZhYM9E44Xj2KyjSLszAqqMouySozImc8Pycld3cSqQ2G17FJYYGD0zo
+	 aJWUjRwR8hCAxbsDL5vUat54LkeN7YGV9dXXh36c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hsiao Chien Sung <shawn.sung@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 216/568] drm/mediatek: Fix XRGB setting error in Mixer
-Date: Tue, 30 Jul 2024 17:45:23 +0200
-Message-ID: <20240730151648.314481965@linuxfoundation.org>
+Subject: [PATCH 6.1 257/440] pinctrl: renesas: r8a779g0: FIX PWM suffixes
+Date: Tue, 30 Jul 2024 17:48:10 +0200
+Message-ID: <20240730151625.883742465@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,58 +46,209 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hsiao Chien Sung <shawn.sung@mediatek.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 8e418bee401b7cfd0bc40d187afea2c6b08b44ec ]
+[ Upstream commit 0aabdc9a4d3644fd57d804b283b2ab0f9c28dc6c ]
 
-Although the alpha channel in XRGB formats can be ignored, ALPHA_CON
-must be configured accordingly when using XRGB formats or it will still
-affects CRC generation.
+PWM channels 0, 2, 8, and 9 do not have alternate pins.
+Remove their "_a" or "_b" suffixes to increase uniformity.
 
-Fixes: d886c0009bd0 ("drm/mediatek: Add ETHDR support for MT8195")
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Hsiao Chien Sung <shawn.sung@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240620-igt-v3-4-a9d62d2e2c7e@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: c606c2fde2330547 ("pinctrl: renesas: r8a779g0: Add missing PWM")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/abb748e6e1e4e7d78beac7d96e7a0a3481b32e75.1717754960.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_ethdr.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/pinctrl/renesas/pfc-r8a779g0.c | 76 ++++++++++++--------------
+ 1 file changed, 36 insertions(+), 40 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_ethdr.c b/drivers/gpu/drm/mediatek/mtk_ethdr.c
-index 5b5a0e149e0a3..5a740d85bea65 100644
---- a/drivers/gpu/drm/mediatek/mtk_ethdr.c
-+++ b/drivers/gpu/drm/mediatek/mtk_ethdr.c
-@@ -153,6 +153,7 @@ void mtk_ethdr_layer_config(struct device *dev, unsigned int idx,
- 	unsigned int offset = (pending->x & 1) << 31 | pending->y << 16 | pending->x;
- 	unsigned int align_width = ALIGN_DOWN(pending->width, 2);
- 	unsigned int alpha_con = 0;
-+	bool replace_src_a = false;
+diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
+index c4086f301cfc6..f0c85192c5db5 100644
+--- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
++++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
+@@ -310,9 +310,9 @@
+ #define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_B)		FM(SCK1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR1_15_12	FM(MSIOF0_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR1_19_16	FM(HTX0)		FM(TX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR1_27_24	FM(HRTS0_N)		FM(RTS0_N)		FM(PWM9_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR1_31_28	FM(HSCK0)		FM(SCK0)		FM(PWM0_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR1_27_24	FM(HRTS0_N)		FM(RTS0_N)		FM(PWM9)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR1_31_28	FM(HSCK0)		FM(SCK0)		FM(PWM0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
  
- 	dev_dbg(dev, "%s+ idx:%d", __func__, idx);
+ /* IP2SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
+ #define IP2SR1_3_0	FM(HRX0)		FM(RX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+@@ -349,7 +349,7 @@
+ #define IP1SR2_15_12	FM(CANFD0_RX)		FM(STPWT_EXTFXR)	F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR2_19_16	FM(CANFD2_TX)		FM(TPU0TO2)		F_(0, 0)		FM(TCLK3_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR2_23_20	FM(CANFD2_RX)		FM(TPU0TO3)		FM(PWM1_B)		FM(TCLK4_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR2_27_24	FM(CANFD3_TX)		F_(0, 0)		FM(PWM2_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR2_27_24	FM(CANFD3_TX)		F_(0, 0)		FM(PWM2)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR2_31_28	FM(CANFD3_RX)		F_(0, 0)		FM(PWM3_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
  
-@@ -167,7 +168,15 @@ void mtk_ethdr_layer_config(struct device *dev, unsigned int idx,
- 	if (state->base.fb && state->base.fb->format->has_alpha)
- 		alpha_con = MIXER_ALPHA_AEN | MIXER_ALPHA;
+ /* IP2SR2 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
+@@ -821,15 +821,15 @@ static const u16 pinmux_data[] = {
  
--	mtk_mmsys_mixer_in_config(priv->mmsys_dev, idx + 1, alpha_con ? false : true,
-+	if (state->base.fb && !state->base.fb->format->has_alpha) {
-+		/*
-+		 * Mixer doesn't support CONST_BLD mode,
-+		 * use a trick to make the output equivalent
-+		 */
-+		replace_src_a = true;
-+	}
-+
-+	mtk_mmsys_mixer_in_config(priv->mmsys_dev, idx + 1, replace_src_a,
- 				  MIXER_ALPHA,
- 				  pending->x & 1 ? MIXER_INX_MODE_EVEN_EXTEND :
- 				  MIXER_INX_MODE_BYPASS, align_width / 2 - 1, cmdq_pkt);
+ 	PINMUX_IPSR_GPSR(IP1SR1_23_20,	HCTS0_N),
+ 	PINMUX_IPSR_GPSR(IP1SR1_23_20,	CTS0_N),
+-	PINMUX_IPSR_GPSR(IP1SR1_23_20,	PWM8_A),
++	PINMUX_IPSR_GPSR(IP1SR1_23_20,	PWM8),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR1_27_24,	HRTS0_N),
+ 	PINMUX_IPSR_GPSR(IP1SR1_27_24,	RTS0_N),
+-	PINMUX_IPSR_GPSR(IP1SR1_27_24,	PWM9_A),
++	PINMUX_IPSR_GPSR(IP1SR1_27_24,	PWM9),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR1_31_28,	HSCK0),
+ 	PINMUX_IPSR_GPSR(IP1SR1_31_28,	SCK0),
+-	PINMUX_IPSR_GPSR(IP1SR1_31_28,	PWM0_A),
++	PINMUX_IPSR_GPSR(IP1SR1_31_28,	PWM0),
+ 
+ 	/* IP2SR1 */
+ 	PINMUX_IPSR_GPSR(IP2SR1_3_0,	HRX0),
+@@ -931,7 +931,7 @@ static const u16 pinmux_data[] = {
+ 	PINMUX_IPSR_GPSR(IP1SR2_23_20,	TCLK4_A),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR2_27_24,	CANFD3_TX),
+-	PINMUX_IPSR_GPSR(IP1SR2_27_24,	PWM2_B),
++	PINMUX_IPSR_GPSR(IP1SR2_27_24,	PWM2),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR2_31_28,	CANFD3_RX),
+ 	PINMUX_IPSR_GPSR(IP1SR2_31_28,	PWM3_B),
+@@ -2066,13 +2066,13 @@ static const unsigned int pcie1_clkreq_n_mux[] = {
+ 	PCIE1_CLKREQ_N_MARK,
+ };
+ 
+-/* - PWM0_A ------------------------------------------------------------------- */
+-static const unsigned int pwm0_a_pins[] = {
+-	/* PWM0_A */
++/* - PWM0 ------------------------------------------------------------------- */
++static const unsigned int pwm0_pins[] = {
++	/* PWM0 */
+ 	RCAR_GP_PIN(1, 15),
+ };
+-static const unsigned int pwm0_a_mux[] = {
+-	PWM0_A_MARK,
++static const unsigned int pwm0_mux[] = {
++	PWM0_MARK,
+ };
+ 
+ /* - PWM1_A ------------------------------------------------------------------- */
+@@ -2093,13 +2093,13 @@ static const unsigned int pwm1_b_mux[] = {
+ 	PWM1_B_MARK,
+ };
+ 
+-/* - PWM2_B ------------------------------------------------------------------- */
+-static const unsigned int pwm2_b_pins[] = {
+-	/* PWM2_B */
++/* - PWM2 ------------------------------------------------------------------- */
++static const unsigned int pwm2_pins[] = {
++	/* PWM2 */
+ 	RCAR_GP_PIN(2, 14),
+ };
+-static const unsigned int pwm2_b_mux[] = {
+-	PWM2_B_MARK,
++static const unsigned int pwm2_mux[] = {
++	PWM2_MARK,
+ };
+ 
+ /* - PWM3_A ------------------------------------------------------------------- */
+@@ -2156,22 +2156,22 @@ static const unsigned int pwm7_mux[] = {
+ 	PWM7_MARK,
+ };
+ 
+-/* - PWM8_A ------------------------------------------------------------------- */
+-static const unsigned int pwm8_a_pins[] = {
+-	/* PWM8_A */
++/* - PWM8 ------------------------------------------------------------------- */
++static const unsigned int pwm8_pins[] = {
++	/* PWM8 */
+ 	RCAR_GP_PIN(1, 13),
+ };
+-static const unsigned int pwm8_a_mux[] = {
+-	PWM8_A_MARK,
++static const unsigned int pwm8_mux[] = {
++	PWM8_MARK,
+ };
+ 
+-/* - PWM9_A ------------------------------------------------------------------- */
+-static const unsigned int pwm9_a_pins[] = {
+-	/* PWM9_A */
++/* - PWM9 ------------------------------------------------------------------- */
++static const unsigned int pwm9_pins[] = {
++	/* PWM9 */
+ 	RCAR_GP_PIN(1, 14),
+ };
+-static const unsigned int pwm9_a_mux[] = {
+-	PWM9_A_MARK,
++static const unsigned int pwm9_mux[] = {
++	PWM9_MARK,
+ };
+ 
+ /* - QSPI0 ------------------------------------------------------------------ */
+@@ -2631,18 +2631,18 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
+ 	SH_PFC_PIN_GROUP(pcie0_clkreq_n),
+ 	SH_PFC_PIN_GROUP(pcie1_clkreq_n),
+ 
+-	SH_PFC_PIN_GROUP(pwm0_a),		/* suffix might be updated */
++	SH_PFC_PIN_GROUP(pwm0),
+ 	SH_PFC_PIN_GROUP(pwm1_a),
+ 	SH_PFC_PIN_GROUP(pwm1_b),
+-	SH_PFC_PIN_GROUP(pwm2_b),		/* suffix might be updated */
++	SH_PFC_PIN_GROUP(pwm2),
+ 	SH_PFC_PIN_GROUP(pwm3_a),
+ 	SH_PFC_PIN_GROUP(pwm3_b),
+ 	SH_PFC_PIN_GROUP(pwm4),
+ 	SH_PFC_PIN_GROUP(pwm5),
+ 	SH_PFC_PIN_GROUP(pwm6),
+ 	SH_PFC_PIN_GROUP(pwm7),
+-	SH_PFC_PIN_GROUP(pwm8_a),		/* suffix might be updated */
+-	SH_PFC_PIN_GROUP(pwm9_a),		/* suffix might be updated */
++	SH_PFC_PIN_GROUP(pwm8),
++	SH_PFC_PIN_GROUP(pwm9),
+ 
+ 	SH_PFC_PIN_GROUP(qspi0_ctrl),
+ 	BUS_DATA_PIN_GROUP(qspi0_data, 2),
+@@ -2891,8 +2891,7 @@ static const char * const pcie_groups[] = {
+ };
+ 
+ static const char * const pwm0_groups[] = {
+-	/* suffix might be updated */
+-	"pwm0_a",
++	"pwm0",
+ };
+ 
+ static const char * const pwm1_groups[] = {
+@@ -2901,8 +2900,7 @@ static const char * const pwm1_groups[] = {
+ };
+ 
+ static const char * const pwm2_groups[] = {
+-	/* suffix might be updated */
+-	"pwm2_b",
++	"pwm2",
+ };
+ 
+ static const char * const pwm3_groups[] = {
+@@ -2927,13 +2925,11 @@ static const char * const pwm7_groups[] = {
+ };
+ 
+ static const char * const pwm8_groups[] = {
+-	/* suffix might be updated */
+-	"pwm8_a",
++	"pwm8",
+ };
+ 
+ static const char * const pwm9_groups[] = {
+-	/* suffix might be updated */
+-	"pwm9_a",
++	"pwm9",
+ };
+ 
+ static const char * const qspi0_groups[] = {
 -- 
 2.43.0
 
