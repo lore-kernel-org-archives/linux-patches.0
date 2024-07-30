@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5AB318990B;
-	Tue, 30 Jul 2024 16:56:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD4018801A;
+	Tue, 30 Jul 2024 16:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358580; cv=none; b=TmkTcs0+o4wexA3S+PoRX0vaSrs50Iehwu7a17SoRLYtxBqwp2LHopz+LPTCeOYN7pziBL9krJqU/FHjq3eXsASEaSZp5aMYzhqH+W4/dSQGP5MTBwS7sS3oZ+h/J9s95Q14acd7JwIeacrqNo6Kx/z5JQZdkE1M34bo4DR0CWs=
+	t=1722358584; cv=none; b=bHRrufYLd3NNPxOm9tS9nds0KwdyOFpXp5xCrAdjjCPnumLkK+8pVNS8y300joQ7jR+a3CxLvdsUHeYOTFt6vUFbD0hP84Bmkqscgescu+DKxUeJiFczHotCv6ugIDN6HZiZBxBOsRvheFxB44OFzc3PnFT6jbYWjjPby4of7Iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358580; c=relaxed/simple;
-	bh=BAGqH2SF3DRbAe4Zv0Zt2WM0DqhV+5z6lQaCRcAb6IY=;
+	s=arc-20240116; t=1722358584; c=relaxed/simple;
+	bh=byM563PhxmBytqiq2D+vCBPCWNulBlQCQNo/tRfZaqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=swZcYddLcoIl+unWuNqyNRwqVf6DsV9ABAesvUUrqQIBdDbCQjqk18cxmtP7O8sT9IZp5LjYgqaejvB7NzXUiMXcLFtTtlZKlPwtuC4mZtAbTMYaUwxqeyeALxFHIEJJylV4IN1Wl81MYsv8V8HVaAo/eXICnfjSR52vxc6vi4k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QkKgoc8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MsgjUP0EeXj9Cx/k9mucTtKcoH1rZijafyyuaHafSSWPunqPY/sAEMJ8CcCeRDawqBfezx2pEC58dkEUUTToSUOyVXyhOEyYcpqxj4DqDzohTftMMxJYsiNDtIHHHHa89YxgO8EHlNS44hanLJJEmFtJ1vLZmjgj1jVmqBX2U0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo08a/2a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QkKgoc8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25D3FC32782;
-	Tue, 30 Jul 2024 16:56:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo08a/2a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6989FC32782;
+	Tue, 30 Jul 2024 16:56:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358580;
-	bh=BAGqH2SF3DRbAe4Zv0Zt2WM0DqhV+5z6lQaCRcAb6IY=;
+	s=korg; t=1722358584;
+	bh=byM563PhxmBytqiq2D+vCBPCWNulBlQCQNo/tRfZaqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QkKgoc8xv8BI5Yt7ShOEb7XmUREgx9LY+j00JApmSN84Cl0+BZKnpHXkdgpDkut96
-	 t5G9Hez5qd2tagFrK1lhByzXnUauIhBvjiOic627eNfiHJRwod8KzdQxCzXD24uCjr
-	 RHxAd3yj8KSCiTJ3rs0zuOZSAhxt+bJ+qrU5T/SA=
+	b=zo08a/2aar37W+X13QH61qnhDSIDlti3Mdb0mhXGexgU0QBNAZER40KelG1XOyCgs
+	 7MXesJb3b9/LLyGKJ6RP246m9JfXWW2MNvtz7ozWWT9mU9L39Q7MMVJ2XUJlCeh9Aj
+	 /LGeGdbaO37hHzo1jMY7OPRNRw5bbzOMTqItFPVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 6.6 376/568] fuse: verify {g,u}id mount options correctly
-Date: Tue, 30 Jul 2024 17:48:03 +0200
-Message-ID: <20240730151654.559777043@linuxfoundation.org>
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 404/440] kbuild: avoid build error when single DTB is turned into composite DTB
+Date: Tue, 30 Jul 2024 17:50:37 +0200
+Message-ID: <20240730151631.578911910@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +46,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 525bd65aa759ec320af1dc06e114ed69733e9e23 upstream.
+[ Upstream commit 712aba5543b88996bc4682086471076fbf048927 ]
 
-As was done in
-0200679fc795 ("tmpfs: verify {g,u}id mount options correctly")
-we need to validate that the requested uid and/or gid is representable in
-the filesystem's idmapping.
+As commit afa974b77128 ("kbuild: add real-prereqs shorthand for
+$(filter-out FORCE,$^)") explained, $(real-prereqs) is not just a list
+of objects when linking a multi-object module. If a single-object module
+is turned into a multi-object module, $^ (and therefore $(real-prereqs)
+as well) contains header files recorded in the *.cmd file. Such headers
+must be filtered out.
 
-Cribbing from the above commit log,
+Now that a DTB can be built either from a single source or multiple
+source files, the same issue can occur.
 
-The contract for {g,u}id mount options and {g,u}id values in general set
-from userspace has always been that they are translated according to the
-caller's idmapping. In so far, fuse has been doing the correct thing.
-But since fuse is mountable in unprivileged contexts it is also
-necessary to verify that the resulting {k,g}uid is representable in the
-namespace of the superblock.
+Consider the following scenario:
 
-Fixes: c30da2e981a7 ("fuse: convert to use the new mount API")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://lore.kernel.org/r/8f07d45d-c806-484d-a2e3-7a2199df1cd2@redhat.com
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+First, foo.dtb is implemented as a single-blob device tree.
+
+The code looks something like this:
+
+[Sample Code 1]
+
+  Makefile:
+
+      dtb-y += foo.dtb
+
+  foo.dts:
+
+    #include <dt-bindings/gpio/gpio.h>
+    /dts-v1/;
+    / { };
+
+When it is compiled, .foo.dtb.cmd records that foo.dtb depends on
+scripts/dtc/include-prefixes/dt-bindings/gpio/gpio.h.
+
+Later, foo.dtb is split into a base and an overlay. The code looks
+something like this:
+
+[Sample Code 2]
+
+  Makefile:
+
+      dtb-y += foo.dtb
+      foo-dtbs := foo-base.dtb foo-addon.dtbo
+
+  foo-base.dts:
+
+    #include <dt-bindings/gpio/gpio.h>
+    /dts-v1/;
+    / { };
+
+  foo-addon.dtso:
+
+    /dts-v1/;
+    /plugin/;
+    / { };
+
+If you rebuild foo.dtb without 'make clean', you will get this error:
+
+    Overlay 'scripts/dtc/include-prefixes/dt-bindings/gpio/gpio.h' is incomplete
+
+$(real-prereqs) contains not only foo-base.dtb and foo-addon.dtbo but
+also scripts/dtc/include-prefixes/dt-bindings/gpio/gpio.h, which is
+passed to scripts/dtc/fdtoverlay.
+
+Fixes: 15d16d6dadf6 ("kbuild: Add generic rule to apply fdtoverlay")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/inode.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ scripts/Makefile.lib | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -751,6 +751,8 @@ static int fuse_parse_param(struct fs_co
- 	struct fs_parse_result result;
- 	struct fuse_fs_context *ctx = fsc->fs_private;
- 	int opt;
-+	kuid_t kuid;
-+	kgid_t kgid;
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 3aa384cec76b8..d236e5658f9b1 100644
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -382,8 +382,12 @@ cmd_dtc = $(HOSTCC) -E $(dtc_cpp_flags) -x assembler-with-cpp -o $(dtc-tmp) $< ;
+ 		-d $(depfile).dtc.tmp $(dtc-tmp) ; \
+ 	cat $(depfile).pre.tmp $(depfile).dtc.tmp > $(depfile)
  
- 	if (fsc->purpose == FS_CONTEXT_FOR_RECONFIGURE) {
- 		/*
-@@ -795,16 +797,30 @@ static int fuse_parse_param(struct fs_co
- 		break;
++# NOTE:
++# Do not replace $(filter %.dtb %.dtbo, $^) with $(real-prereqs). When a single
++# DTB is turned into a multi-blob DTB, $^ will contain header file dependencies
++# recorded in the .*.cmd file.
+ quiet_cmd_fdtoverlay = DTOVL   $@
+-      cmd_fdtoverlay = $(objtree)/scripts/dtc/fdtoverlay -o $@ -i $(real-prereqs)
++      cmd_fdtoverlay = $(objtree)/scripts/dtc/fdtoverlay -o $@ -i $(filter %.dtb %.dtbo, $^)
  
- 	case OPT_USER_ID:
--		ctx->user_id = make_kuid(fsc->user_ns, result.uint_32);
--		if (!uid_valid(ctx->user_id))
-+		kuid =  make_kuid(fsc->user_ns, result.uint_32);
-+		if (!uid_valid(kuid))
- 			return invalfc(fsc, "Invalid user_id");
-+		/*
-+		 * The requested uid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kuid_has_mapping(fsc->user_ns, kuid))
-+			return invalfc(fsc, "Invalid user_id");
-+		ctx->user_id = kuid;
- 		ctx->user_id_present = true;
- 		break;
- 
- 	case OPT_GROUP_ID:
--		ctx->group_id = make_kgid(fsc->user_ns, result.uint_32);
--		if (!gid_valid(ctx->group_id))
-+		kgid = make_kgid(fsc->user_ns, result.uint_32);;
-+		if (!gid_valid(kgid))
-+			return invalfc(fsc, "Invalid group_id");
-+		/*
-+		 * The requested gid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kgid_has_mapping(fsc->user_ns, kgid))
- 			return invalfc(fsc, "Invalid group_id");
-+		ctx->group_id = kgid;
- 		ctx->group_id_present = true;
- 		break;
- 
+ $(multi-dtb-y): FORCE
+ 	$(call if_changed,fdtoverlay)
+-- 
+2.43.0
+
 
 
