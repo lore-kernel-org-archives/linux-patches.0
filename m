@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CDD18801C;
-	Tue, 30 Jul 2024 16:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A606F18B475;
+	Tue, 30 Jul 2024 16:47:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358043; cv=none; b=VxjMPUppxFzIFUlls84e4D3Lmj/dlzAtt2O+IXq7GVvw6UsmhHWIUJSd8GyGcRL345SanN59nBAKHKsxd+Y38Da5CROmxElb5vS8kpCY5kyFTA1gmZVvnN525XxocRDeXb9YAhpMRaBgJK/52Ttypf39pJVMM9AtpaPlfQZfmLM=
+	t=1722358046; cv=none; b=ApRN1n1AhP3NxMPNH7uUZflzV4T7r3suzpB4Ip2HFClMbVkkeEjF70LW/f/UMsgdIRgpWw7bMtcQlaCMP4QZ1PcUqSCOAY6nILRo1pytOoyBLVQ+ALajy4GBJelN/tSMzMCukc/m7CG46bgGat6xT+5KViQaFUPqFDMDicWUNc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358043; c=relaxed/simple;
-	bh=kOzxpNXnRcacxQk1aZkEDoITg2iW+X8A9w8/j0GSaGM=;
+	s=arc-20240116; t=1722358046; c=relaxed/simple;
+	bh=HWFtVE54UqW0I7jxp823+wGEr6wdagj/zpRE/tBs5E0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hM9StQ5Acf+aUCUSlw6eXHFmx7IqBgdqolzg6GLfVR2vjEdAy8Q5fXlCJhHTpt5YYVm9WjXffm/JTfptVYbfW5D+RC8n35g40sM97wfh4YwhI8kmqegoz9aLImPKxnjZI3LFMjbUtxQTbI2ZMwDyOWankcT7dt2fw0MnbGvUTZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iUnIEtfG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BxuZHdHC2e5Log0SpdysTSLaICDmyQk/gF/+C4N4wMyQn/t13zM7GpJAPAPMlin+o0+Nnt/w+rIf8WKwoz3zoljwxxe9Zd0TeQeEUzDrcirv5oydcld8XMRESLhG75x1ztEdBRJYQmOABsYyzmqh4tCPffn6bUkV80LGfupl5xQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DseOtQ6p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iUnIEtfG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 042EFC32782;
-	Tue, 30 Jul 2024 16:47:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DseOtQ6p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA0FC4AF0A;
+	Tue, 30 Jul 2024 16:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358043;
-	bh=kOzxpNXnRcacxQk1aZkEDoITg2iW+X8A9w8/j0GSaGM=;
+	s=korg; t=1722358046;
+	bh=HWFtVE54UqW0I7jxp823+wGEr6wdagj/zpRE/tBs5E0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iUnIEtfGafq7iz0cUF0W1Tu/R+eRu7yk1cUVGWAWQDUvxzZA55sDITfXQYnJ/8J3c
-	 h2tBIucrN2U1Qgk8iek7YeZIZe+Cvql9gfZjkFLggwNeMnsolyQFX6bXlIMjn3Jecu
-	 hTGDmmYZ1+A76UkLtqBmmz9Nvgw/WfqMawqq4Bmw=
+	b=DseOtQ6pGyd9wA9cRbKHLPQr2VFPSGk5X3pGATEutX/25wt99aCizY2OHtGAJk7bK
+	 Ir9+YhBF/7AqvKC//BOOz4F35f7z2sQQLlReySzRCYVDFPL1cD+GFuX0TCQLpx4lxP
+	 G7brBhvYrgClo2+A+35w4gwofdz8cfbz39AzKRLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 320/568] fs/ntfs3: Fix transform resident to nonresident for compressed files
-Date: Tue, 30 Jul 2024 17:47:07 +0200
-Message-ID: <20240730151652.383375050@linuxfoundation.org>
+Subject: [PATCH 6.10 318/809] media: rcar-vin: Fix YUYV8_1X16 handling for CSI-2
+Date: Tue, 30 Jul 2024 17:43:14 +0200
+Message-ID: <20240730151737.164928020@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +49,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-[ Upstream commit 25610ff98d4a34e6a85cbe4fd8671be6b0829f8f ]
+[ Upstream commit 9caf253e8ad6f4c66f5591bac900f9f68b6b6620 ]
 
-Сorrected calculation of required space len (in clusters)
-for attribute data storage in case of compression.
+The YUYV8_1X16 and UYVY8_1X16 formats are treated as 'ITU-R
+BT.601/BT.1358 16-bit YCbCr-422 input' (YUV16 - 0x5) in the R-Car VIN
+driver and are thus disallowed when capturing frames from the R-Car
+CSI-2 interface according to the hardware manual.
 
-Fixes: be71b5cba2e64 ("fs/ntfs3: Add attrib operations")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+As the 1X16 format variants are meant to be used with serial busses they
+have to be treated as 'YCbCr-422 8-bit data input' (0x1) when capturing
+from CSI-2, which is a valid setting for CSI-2.
+
+Commit 78b3f9d75a62 ("media: rcar-vin: Add check that input interface
+and format are valid") disallowed capturing YUV16 when using the CSI-2
+interface. Fix this by using YUV8_BT601 for YCbCr422 when CSI-2 is in
+use.
+
+Fixes: 78b3f9d75a62 ("media: rcar-vin: Add check that input interface and format are valid")
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://lore.kernel.org/r/20240617161135.130719-2-jacopo.mondi@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ .../media/platform/renesas/rcar-vin/rcar-dma.c   | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 47d388699f5f0..e6c0e12d1380b 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -231,7 +231,7 @@ int attr_make_nonresident(struct ntfs_inode *ni, struct ATTRIB *attr,
- 	struct ntfs_sb_info *sbi;
- 	struct ATTRIB *attr_s;
- 	struct MFT_REC *rec;
--	u32 used, asize, rsize, aoff, align;
-+	u32 used, asize, rsize, aoff;
- 	bool is_data;
- 	CLST len, alen;
- 	char *next;
-@@ -252,10 +252,13 @@ int attr_make_nonresident(struct ntfs_inode *ni, struct ATTRIB *attr,
- 	rsize = le32_to_cpu(attr->res.data_size);
- 	is_data = attr->type == ATTR_DATA && !attr->name_len;
- 
--	align = sbi->cluster_size;
--	if (is_attr_compressed(attr))
--		align <<= NTFS_LZNT_CUNIT;
--	len = (rsize + align - 1) >> sbi->cluster_bits;
-+	/* len - how many clusters required to store 'rsize' bytes */
-+	if (is_attr_compressed(attr)) {
-+		u8 shift = sbi->cluster_bits + NTFS_LZNT_CUNIT;
-+		len = ((rsize + (1u << shift) - 1) >> shift) << NTFS_LZNT_CUNIT;
-+	} else {
-+		len = bytes_to_cluster(sbi, rsize);
-+	}
- 
- 	run_init(run);
- 
+diff --git a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+index e2c40abc6d3d1..21d5b2815e86a 100644
+--- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
++++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+@@ -742,12 +742,22 @@ static int rvin_setup(struct rvin_dev *vin)
+ 	 */
+ 	switch (vin->mbus_code) {
+ 	case MEDIA_BUS_FMT_YUYV8_1X16:
+-		/* BT.601/BT.1358 16bit YCbCr422 */
+-		vnmc |= VNMC_INF_YUV16;
++		if (vin->is_csi)
++			/* YCbCr422 8-bit */
++			vnmc |= VNMC_INF_YUV8_BT601;
++		else
++			/* BT.601/BT.1358 16bit YCbCr422 */
++			vnmc |= VNMC_INF_YUV16;
+ 		input_is_yuv = true;
+ 		break;
+ 	case MEDIA_BUS_FMT_UYVY8_1X16:
+-		vnmc |= VNMC_INF_YUV16 | VNMC_YCAL;
++		if (vin->is_csi)
++			/* YCbCr422 8-bit */
++			vnmc |= VNMC_INF_YUV8_BT601;
++		else
++			/* BT.601/BT.1358 16bit YCbCr422 */
++			vnmc |= VNMC_INF_YUV16;
++		vnmc |= VNMC_YCAL;
+ 		input_is_yuv = true;
+ 		break;
+ 	case MEDIA_BUS_FMT_UYVY8_2X8:
 -- 
 2.43.0
 
