@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD52155CB3;
-	Tue, 30 Jul 2024 16:51:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F82E1078F;
+	Tue, 30 Jul 2024 16:51:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358278; cv=none; b=bQ+TKeMxEwadwjgJjlhkE2qRMXOUy/jBepTKX28Qv+qOKeYA9gN/mOEUubQF30dmkAQdptb22tGJDmhALjNx7W21bITRfi1zIpd9uayERQdv9ZBmHEpza7B+cb4RM9/A8mZEvs7FGjvUvFY7uFyDp71WMRetitkl/sI6wiE1cTM=
+	t=1722358281; cv=none; b=FoqCfCqQUfJchm8woj0DTBjd3zI1Nl4jyJ81PIuHtNaKqDo4y+J0bhy6Wgy9FG9wul5y4sGZfg2dhJYXDFulADMELryrFWxWhKKCDeWguQcq2tofEjlRg463zd6fjl6kT58PG5RazpZR8wPTIqUHNv0BW+9+8Tu2vjZtjDmGpvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358278; c=relaxed/simple;
-	bh=Q1SWv/bBBFtD6YaOUZgZz8DWIWGjRMWE+o/kzC7qSF4=;
+	s=arc-20240116; t=1722358281; c=relaxed/simple;
+	bh=0gv660sC7xLkzvVhcIr/x86XIVzGEqZ6SoAeeu2kWko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eT7H9hLoKQBYDttj9aBsg1/vauRwku0E7Ce+AIPp3ctbEpshem+ksS92w7VBBdDGu/syvR01a4pccUBzmqlA4/XQ0oul0Gl++U3dufs3iizJypZzq49ow25moD8wJ8tLYWFJX2A7Vhjdq598AIYScOUiEf/LCNVpS+7NeORIg+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuC17Mys; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=akLlz/Mq98WMYCQBFdfzVKBLtSOgigKbzcIIELF7RW1ycz0YXT3q62NH9FgFe/++cnytafk6TdNpmkCvyq5YYrp7MM1bqxIseWl4WUxOR04o+Er088GQJLmFNQ2QzkIVszHnBXuxNQRJ3ECp/VV/vnFqiwVkmSl6PL7l/I4kHyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBl3DgLh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuC17Mys"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70689C32782;
-	Tue, 30 Jul 2024 16:51:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBl3DgLh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 846F4C4AF0E;
+	Tue, 30 Jul 2024 16:51:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358277;
-	bh=Q1SWv/bBBFtD6YaOUZgZz8DWIWGjRMWE+o/kzC7qSF4=;
+	s=korg; t=1722358281;
+	bh=0gv660sC7xLkzvVhcIr/x86XIVzGEqZ6SoAeeu2kWko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuC17MysMieCH/ILPpfwT07aWzdHjp+/Ias+pJSv4x1Y2ZoRlvgHIvOHNPYsKfAX+
-	 0UKyRFcxiQrMTOUGlTdINXwb5tTh7I4qO2AIR2sOGBTPgko6DxHBX4Mx6QAyOZF0an
-	 KUJ7YbfHu3fpNBS7c4GziH7PQep6Y68HdBrEhHQs=
+	b=DBl3DgLhJRAA00hCc4RIuLAbdnVDkUZspqTIKj6DX6zpUWmYFfZo7t1dmJXRJVcF8
+	 wG5K3c5GkRGS4JLXeLv20aDfnM4h4bdtNuHzBadzPvLFJ1bk6OFlsgKsUDNn5K7wsV
+	 ouTTKSZciu0k+hQnlPZfKvFe7U70tcIN/ejnFPhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 373/440] MIPS: ip30: ip30-console: Add missing include
-Date: Tue, 30 Jul 2024 17:50:06 +0200
-Message-ID: <20240730151630.382598472@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 347/568] nilfs2: avoid undefined behavior in nilfs_cnt32_ge macro
+Date: Tue, 30 Jul 2024 17:47:34 +0200
+Message-ID: <20240730151653.432793750@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,40 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 8de4ed75bd14ed197119ac509c6902a8561e0c1c upstream.
+[ Upstream commit 0f3819e8c483771a59cf9d3190cd68a7a990083c ]
 
-Include linux/processor.h to fix build error:
+According to the C standard 3.4.3p3, the result of signed integer overflow
+is undefined.  The macro nilfs_cnt32_ge(), which compares two sequence
+numbers, uses signed integer subtraction that can overflow, and therefore
+the result of the calculation may differ from what is expected due to
+undefined behavior in different environments.
 
-arch/mips/sgi-ip30/ip30-console.c: In function ‘prom_putchar’:
-arch/mips/sgi-ip30/ip30-console.c:21:17: error: implicit declaration of function ‘cpu_relax’ [-Werror=implicit-function-declaration]
-   21 |                 cpu_relax();
+Similar to an earlier change to the jiffies-related comparison macros in
+commit 5a581b367b5d ("jiffies: Avoid undefined behavior from signed
+overflow"), avoid this potential issue by changing the definition of the
+macro to perform the subtraction as unsigned integers, then cast the
+result to a signed integer for comparison.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20130727225828.GA11864@linux.vnet.ibm.com
+Link: https://lkml.kernel.org/r/20240702183512.6390-1-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/sgi-ip30/ip30-console.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/nilfs2/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/mips/sgi-ip30/ip30-console.c
-+++ b/arch/mips/sgi-ip30/ip30-console.c
-@@ -1,6 +1,7 @@
- // SPDX-License-Identifier: GPL-2.0
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 5783efafbabda..e10f8a777ab06 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -136,7 +136,7 @@ static void nilfs_dispose_list(struct the_nilfs *, struct list_head *, int);
  
- #include <linux/io.h>
-+#include <linux/processor.h>
+ #define nilfs_cnt32_ge(a, b)   \
+ 	(typecheck(__u32, a) && typecheck(__u32, b) && \
+-	 ((__s32)(a) - (__s32)(b) >= 0))
++	 ((__s32)((a) - (b)) >= 0))
  
- #include <asm/sn/ioc3.h>
- 
+ static int nilfs_prepare_segment_lock(struct super_block *sb,
+ 				      struct nilfs_transaction_info *ti)
+-- 
+2.43.0
+
 
 
