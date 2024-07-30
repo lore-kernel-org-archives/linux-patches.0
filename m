@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8A21A6192;
-	Tue, 30 Jul 2024 16:36:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F06D1A6192;
+	Tue, 30 Jul 2024 16:37:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357418; cv=none; b=Pzs8z5qTkduCVnF94gXikH1bHsFL/6QNqASzsY3H3DqBdYPOfTGqEZ9jmvjiwgi4MBBvwAEEfeTV5LMOuAKo9Z6M5c8ZzFmlNgKLlDkV9A5g3NWNnsgSp5FMAdfSMQeN9+PEV4JwucQDnjFPhC83GccvSRJV83eNLEgtfRvWTrU=
+	t=1722357421; cv=none; b=uthhekyHmqrzqSYDWa8r6RUD+CQHgJTxhJyHNXSc9jlZSGpnPBptomg+i5n2OLpsj/7q4V45tgWsEu6mzpHDJLwzB8UmcicQwaV3jYmh8hh9FFp8LjQ+9tEvUHTkji+4sQ9oX790eVeGzbqfE/NjNqtevOKN7dNUS4GLP6GY67U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357418; c=relaxed/simple;
-	bh=3wZIDg2WfY8ePF0xx2wFgRGmUfIr0nlUVWybplN+Y3Q=;
+	s=arc-20240116; t=1722357421; c=relaxed/simple;
+	bh=hlk5dZfo8xFhztYgrLHBvJeZqYs/0tZS8d34Nhfiyig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=drhU2XedL7/3nnDGItyowpuZB93iCL1ohacDdh157Pnqf0ILS9eBj7Qboan+Cc3ppx/l4+55Uz0N14Asb7aOGZL8VtjV2vop047lFY007Q6+RAPBC+KCg0Zvz6LAiiZAJ3MdHoUGZnnEB+ttyFMlQAYfU2SJ3bJO/exMJFo0IG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EJCQyKTM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wj8p8pkOkAzc4UqEBolzPKKhWJtesj8HpuPL2J+Tg2qzdUqkBc4dtGlMzm4jP8KwU/II+CjNLH6v+iczgXx/eoxy/sTSjF9VtXyaq+Jqi6fb/VtQLlEQeQF4gxxB9TOGxBqRq2dMgo/D+HjvgchsphJtnlI6EJPgYdEFYMEbDaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sKlxvwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EJCQyKTM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DCD6C32782;
-	Tue, 30 Jul 2024 16:36:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sKlxvwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899E7C32782;
+	Tue, 30 Jul 2024 16:37:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357417;
-	bh=3wZIDg2WfY8ePF0xx2wFgRGmUfIr0nlUVWybplN+Y3Q=;
+	s=korg; t=1722357420;
+	bh=hlk5dZfo8xFhztYgrLHBvJeZqYs/0tZS8d34Nhfiyig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EJCQyKTMyCbrfc5JGnry2MhFTsOiP/yfKb42X0WWv1vlj8Cd3s47lanqWM6O/qtV5
-	 TrT9CDcXnlmmvyotIzF1agwKT84grsaysWlGGMcloiZzSoCgs46NHRQRK92k4Z/1Jy
-	 QY7GZWoRAikp9UIGOM4VDad+/C+6WQnHK9JVamq0=
+	b=2sKlxvwACFaTJSy8JHs1EUoZmmQxQm60LBb1foqkXSgPDghPwIOmLuoqGDg9//0ky
+	 iz6Ewc2g204+IrvbP1oiRBZSk5it3jYpjBi3ISPFFDFMuT0ECY3c0Al5TVUJnPePe7
+	 QEQsFNUjZRNTvsLCd3UY8gHJe7vTpRGAk8mv6IaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Asutosh Das <quic_asutoshd@quicinc.com>,
-	Minwoo Im <minwoo.im@samsung.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 253/568] scsi: ufs: mcq: Fix missing argument hba in MCQ_OPR_OFFSET_n
-Date: Tue, 30 Jul 2024 17:46:00 +0200
-Message-ID: <20240730151649.769202278@linuxfoundation.org>
+Subject: [PATCH 6.10 252/809] selftests: forwarding: devlink_lib: Wait for udev events after reloading
+Date: Tue, 30 Jul 2024 17:42:08 +0200
+Message-ID: <20240730151734.549511135@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,86 +49,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Minwoo Im <minwoo.im@samsung.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 2fc39848952dfb91a9233563cc1444669b8e79c3 ]
+[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
 
-The MCQ_OPR_OFFSET_n macro takes 'hba' in the caller context without
-receiving 'hba' instance as an argument.  To prevent potential bugs in
-future use cases, add an argument 'hba'.
+Lately, an additional locking was added by commit c0a40097f0bc
+("drivers: core: synchronize really_probe() and dev_uevent()"). The
+locking protects dev_uevent() calling. This function is used to send
+messages from the kernel to user space. Uevent messages notify user space
+about changes in device states, such as when a device is added, removed,
+or changed. These messages are used by udev (or other similar user-space
+tools) to apply device-specific rules.
 
-Fixes: 2468da61ea09 ("scsi: ufs: core: mcq: Configure operation and runtime interface")
-Cc: Asutosh Das <quic_asutoshd@quicinc.com>
-Signed-off-by: Minwoo Im <minwoo.im@samsung.com>
-Link: https://lore.kernel.org/r/20240519221457.772346-2-minwoo.im@samsung.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+After reloading devlink instance, udev events should be processed. This
+locking causes a short delay of udev events handling.
+
+One example for useful udev rule is renaming ports. 'forwading.config'
+can be configured to use names after udev rules are applied. Some tests run
+devlink_reload() and immediately use the updated names. This worked before
+the above mentioned commit was pushed, but now the delay of uevent messages
+causes that devlink_reload() returns before udev events are handled and
+tests fail.
+
+Adjust devlink_reload() to not assume that udev events are already
+processed when devlink reload is done, instead, wait for udev events to
+ensure they are processed before returning from the function.
+
+Without this patch:
+TESTS='rif_mac_profile' ./resource_scale.sh
+TEST: 'rif_mac_profile' 4                                           [ OK ]
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
+Cannot find device "swp1"
+Cannot find device "swp2"
+TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
+
+With this patch:
+$ TESTS='rif_mac_profile' ./resource_scale.sh
+TEST: 'rif_mac_profile' 4                                           [ OK ]
+TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
+
+This is relevant not only for this test.
+
+Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufs-mcq.c | 10 ++++------
- include/ufs/ufshcd.h       |  6 ++++++
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/ufs/core/ufs-mcq.c b/drivers/ufs/core/ufs-mcq.c
-index a10fc7a697109..af5ce45315b3c 100644
---- a/drivers/ufs/core/ufs-mcq.c
-+++ b/drivers/ufs/core/ufs-mcq.c
-@@ -230,8 +230,6 @@ int ufshcd_mcq_memory_alloc(struct ufs_hba *hba)
- 
- /* Operation and runtime registers configuration */
- #define MCQ_CFG_n(r, i)	((r) + MCQ_QCFG_SIZE * (i))
--#define MCQ_OPR_OFFSET_n(p, i) \
--	(hba->mcq_opr[(p)].offset + hba->mcq_opr[(p)].stride * (i))
- 
- static void __iomem *mcq_opr_base(struct ufs_hba *hba,
- 					 enum ufshcd_mcq_opr n, int i)
-@@ -344,10 +342,10 @@ void ufshcd_mcq_make_queues_operational(struct ufs_hba *hba)
- 		ufsmcq_writelx(hba, upper_32_bits(hwq->sqe_dma_addr),
- 			      MCQ_CFG_n(REG_SQUBA, i));
- 		/* Submission Queue Doorbell Address Offset */
--		ufsmcq_writelx(hba, MCQ_OPR_OFFSET_n(OPR_SQD, i),
-+		ufsmcq_writelx(hba, ufshcd_mcq_opr_offset(hba, OPR_SQD, i),
- 			      MCQ_CFG_n(REG_SQDAO, i));
- 		/* Submission Queue Interrupt Status Address Offset */
--		ufsmcq_writelx(hba, MCQ_OPR_OFFSET_n(OPR_SQIS, i),
-+		ufsmcq_writelx(hba, ufshcd_mcq_opr_offset(hba, OPR_SQIS, i),
- 			      MCQ_CFG_n(REG_SQISAO, i));
- 
- 		/* Completion Queue Lower Base Address */
-@@ -357,10 +355,10 @@ void ufshcd_mcq_make_queues_operational(struct ufs_hba *hba)
- 		ufsmcq_writelx(hba, upper_32_bits(hwq->cqe_dma_addr),
- 			      MCQ_CFG_n(REG_CQUBA, i));
- 		/* Completion Queue Doorbell Address Offset */
--		ufsmcq_writelx(hba, MCQ_OPR_OFFSET_n(OPR_CQD, i),
-+		ufsmcq_writelx(hba, ufshcd_mcq_opr_offset(hba, OPR_CQD, i),
- 			      MCQ_CFG_n(REG_CQDAO, i));
- 		/* Completion Queue Interrupt Status Address Offset */
--		ufsmcq_writelx(hba, MCQ_OPR_OFFSET_n(OPR_CQIS, i),
-+		ufsmcq_writelx(hba, ufshcd_mcq_opr_offset(hba, OPR_CQIS, i),
- 			      MCQ_CFG_n(REG_CQISAO, i));
- 
- 		/* Save the base addresses for quicker access */
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 7d07b256e906b..e4da397360682 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -1117,6 +1117,12 @@ static inline bool is_mcq_enabled(struct ufs_hba *hba)
- 	return hba->mcq_enabled;
+diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
+index f1de525cfa55b..62a05bca1e825 100644
+--- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
++++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
+@@ -122,6 +122,8 @@ devlink_reload()
+ 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
+ 			grep -c "size_new")
+ 	check_err $still_pending "Failed reload - There are still unset sizes"
++
++	udevadm settle
  }
  
-+static inline unsigned int ufshcd_mcq_opr_offset(struct ufs_hba *hba,
-+		enum ufshcd_mcq_opr opr, int idx)
-+{
-+	return hba->mcq_opr[opr].offset + hba->mcq_opr[opr].stride * idx;
-+}
-+
- #ifdef CONFIG_SCSI_UFS_VARIABLE_SG_ENTRY_SIZE
- static inline size_t ufshcd_sg_entry_size(const struct ufs_hba *hba)
- {
+ declare -A DEVLINK_ORIG
 -- 
 2.43.0
 
