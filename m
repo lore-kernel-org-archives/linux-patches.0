@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4110683A17;
-	Tue, 30 Jul 2024 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ACFF183CC3;
+	Tue, 30 Jul 2024 17:00:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358810; cv=none; b=bVAOgB0ZryzfDvybHfvFUpPi1C28QW9+iCRsZp5ARQrxJWElji/XP68hhFIzquz5jHlyPhCqemMJ7RRv9dF8bj9KysFdNBlbu/7+a+yqUsRKwrRb+Veepk5tzOm8Gk/dXjjMRqTmPQ31kMUX13m6pAueMFrv5vvHgUfu1xI9eJQ=
+	t=1722358813; cv=none; b=DVHNohhqfbb0xJIHbnHSM5wODk3+/yLTO03lZVgH19ACLV4Rqn6FrBzQVF4uwsB1qtf0gl9n0CDgHLcowyTy6DiDe4ZxEhsN9Vn9LJ/MTlxPSFVFO02sJpT8TMzR4pkgcG4ogvrSbNpJ4MQfKWCrLAu4MIBNWP5vd502OkeKUpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358810; c=relaxed/simple;
-	bh=jcRAIyOfGVSpiavZbIEwlD19NF/Q8+PkeqYkWhU1dQI=;
+	s=arc-20240116; t=1722358813; c=relaxed/simple;
+	bh=/JMNEozdpW+oxDyO18SeEgdooVKZ1UwgJS1bW8oTgn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZK+jWXS3EaLZIK2XgCIRg+sahhc57ZSmPQKB4UuGRL9rGhsvi7R4IQhX6fhUb0tWzVAhHe1u36L/D2Qg1/GjxtMm3Reydk0S6qEwhbn9pBd33aoGfVhfROI0qi9rDX/6lG5BS2COVcx9Hm+COZVUS1eMmhCsiZL9kTbZbLoios=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txmypWLG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NT5ghTN/xGIYneP9TjI1pZYBlKHNdw6DrkxcJJLOfn+jSAqfkpIAdAnaks+byEdElJwz4YArt6pZ0xCfhqzVgHWTSTd8QdlWplI9pZgoV0BkBhsvI54iq0CnsY7LvK3YQHLDGHRBlopn829SJTo3y938H5Abba3ipRn4Z3d7RR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rh+ICCo7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txmypWLG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D567C32782;
-	Tue, 30 Jul 2024 17:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rh+ICCo7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D870C32782;
+	Tue, 30 Jul 2024 17:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358810;
-	bh=jcRAIyOfGVSpiavZbIEwlD19NF/Q8+PkeqYkWhU1dQI=;
+	s=korg; t=1722358813;
+	bh=/JMNEozdpW+oxDyO18SeEgdooVKZ1UwgJS1bW8oTgn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txmypWLG5cp558nIQv3k6VKYRuOCmQTsHUzdIGNey4dNqaqTk6XJPC9xv+BM2CR3d
-	 CtNdRx98W1Ghkc1hu/YiEHK9UuyyVuQ18fhKCYCsf9chbkYMIxehR6l39bs751wl4D
-	 YGriyLJmAuOhGDNYyFsbJlpSNfTiu/FlDsKLgKuY=
+	b=rh+ICCo7mUVICMo60w69CWkcWEITElivB0ScH5M1hamevmZ9wMNgLegzSKt4zn1Dm
+	 8uvbdjL7mPrpTGs2EA0igYqQi/+ay1npyLMYAGETAPclKXLiajyeSqVD7xyRUcFFbg
+	 OhhYcIRDC/mivNO00mYkJVZi9il0sPXNt8FgkWh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 399/568] io_uring: tighten task exit cancellations
-Date: Tue, 30 Jul 2024 17:48:26 +0200
-Message-ID: <20240730151655.466465966@linuxfoundation.org>
+	Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 424/440] spi: microchip-core: fix the issues in the isr
+Date: Tue, 30 Jul 2024 17:50:57 +0200
+Message-ID: <20240730151632.343728807@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,55 +48,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>
 
-commit f8b632e89a101dae349a7b212c1771d7925f441b upstream.
+[ Upstream commit 502a582b8dd897d9282db47c0911d5320ef2e6b9 ]
 
-io_uring_cancel_generic() should retry if any state changes like a
-request is completed, however in case of a task exit it only goes for
-another loop and avoids schedule() if any tracked (i.e. REQ_F_INFLIGHT)
-request got completed.
+It is possible for the TXDONE interrupt be raised if the tx FIFO becomes
+temporarily empty while transmitting, resulting in recursive calls to
+mchp_corespi_write_fifo() and therefore a garbage message might be
+transmitted depending on when the interrupt is triggered. Moving all of
+the tx FIFO writes out of the TXDONE portion of the interrupt handler
+avoids this problem.
 
-Let's assume we have a non-tracked request executing in iowq and a
-tracked request linked to it. Let's also assume
-io_uring_cancel_generic() fails to find and cancel the request, i.e.
-via io_run_local_work(), which may happen as io-wq has gaps.
-Next, the request logically completes, io-wq still hold a ref but queues
-it for completion via tw, which happens in
-io_uring_try_cancel_requests(). After, right before prepare_to_wait()
-io-wq puts the request, grabs the linked one and tries executes it, e.g.
-arms polling. Finally the cancellation loop calls prepare_to_wait(),
-there are no tw to run, no tracked request was completed, so the
-tctx_inflight() check passes and the task is put to indefinite sleep.
+Most of rest of the TXDONE portion of the handler is problematic too.
+Only reading the rx FIFO (and finalising the transfer) when the TXDONE
+interrupt is raised can cause the transfer to stall, if the final bytes
+of rx data are not available in the rx FIFO when the final TXDONE
+interrupt is raised. The transfer should be finalised regardless of
+which interrupt is raised, provided that all tx data has been set and
+all rx data received.
 
-Cc: stable@vger.kernel.org
-Fixes: 3f48cf18f886c ("io_uring: unify files and task cancel")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/acac7311f4e02ce3c43293f8f1fda9c705d158f1.1721819383.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The first issue was encountered "in the wild", the second is
+theoretical.
+
+Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
+Signed-off-by: Naga Sureshkumar Relli <nagasuresh.relli@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20240715-candied-deforest-585685ef3c8a@wendy
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/spi/spi-microchip-core.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3350,8 +3350,11 @@ __cold void io_uring_cancel_generic(bool
- 		bool loop = false;
+diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
+index d4c08d3668741..202ac889b5ae2 100644
+--- a/drivers/spi/spi-microchip-core.c
++++ b/drivers/spi/spi-microchip-core.c
+@@ -389,21 +389,18 @@ static irqreturn_t mchp_corespi_interrupt(int irq, void *dev_id)
+ 	if (intfield == 0)
+ 		return IRQ_NONE;
  
- 		io_uring_drop_tctx_refs(current);
-+		if (!tctx_inflight(tctx, !cancel_all))
-+			break;
+-	if (intfield & INT_TXDONE) {
++	if (intfield & INT_TXDONE)
+ 		mchp_corespi_write(spi, REG_INT_CLEAR, INT_TXDONE);
+ 
++	if (intfield & INT_RXRDY) {
++		mchp_corespi_write(spi, REG_INT_CLEAR, INT_RXRDY);
 +
- 		/* read completions before cancelations */
--		inflight = tctx_inflight(tctx, !cancel_all);
-+		inflight = tctx_inflight(tctx, false);
- 		if (!inflight)
- 			break;
+ 		if (spi->rx_len)
+ 			mchp_corespi_read_fifo(spi);
+-
+-		if (spi->tx_len)
+-			mchp_corespi_write_fifo(spi);
+-
+-		if (!spi->rx_len)
+-			finalise = true;
+ 	}
  
+-	if (intfield & INT_RXRDY)
+-		mchp_corespi_write(spi, REG_INT_CLEAR, INT_RXRDY);
++	if (!spi->rx_len && !spi->tx_len)
++		finalise = true;
+ 
+ 	if (intfield & INT_RX_CHANNEL_OVERFLOW) {
+ 		mchp_corespi_write(spi, REG_INT_CLEAR, INT_RX_CHANNEL_OVERFLOW);
+@@ -488,8 +485,9 @@ static int mchp_corespi_transfer_one(struct spi_master *master,
+ 	mchp_corespi_set_xfer_size(spi, (spi->tx_len > FIFO_DEPTH)
+ 				   ? FIFO_DEPTH : spi->tx_len);
+ 
+-	if (spi->tx_len)
++	while (spi->tx_len)
+ 		mchp_corespi_write_fifo(spi);
++
+ 	return 1;
+ }
+ 
+-- 
+2.43.0
+
 
 
