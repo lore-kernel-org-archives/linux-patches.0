@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A95711A3024;
-	Tue, 30 Jul 2024 16:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BB41A3024;
+	Tue, 30 Jul 2024 16:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355929; cv=none; b=pBikgNNHRrquo7nyR527qQzTi5pnsBGz8KLeki5CHRWHWAlnQYb948QVlwtZIVURKza3OKg8WtnC8A8l9knWc5WK9bDgTQQrSJzSj1zxeKkEg4BY1E5S6RLwjvE+diajjze6iO8ZeRGC21+MTUWSlCRmVE3HQXm/ClZ129RxO+s=
+	t=1722355933; cv=none; b=qdyiWbwRXDlU+6f9wRYxinJ3z2T5tG+cYNfisRaKyq2JXJ9GcWu6wRE3HpMGxPylsqxZhuhpldA0Eb4s/cFqg09l/CmRmGNCOYYiGWQEgC4Va+Q+UztV2niXk2p67h+WMd29XQ3g4SZItW2JE5I+mswGrenNaZ4AxlgbEBP1S4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355929; c=relaxed/simple;
-	bh=e3maEF8aa/f4DgA1aHrFLBJ9Tju/W0/88hi0k1kpgkw=;
+	s=arc-20240116; t=1722355933; c=relaxed/simple;
+	bh=lvoWrWEoXu7P/6qCfR0WWH2nC1QutuevkB/XvBCSNFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KMue/A0JLieCtEB4ZPSEDDXIL/EuJ7sCkUo3yrRoGlIkKP7gfo3NbSX1jJ/b7+HsiGkhL3wyW31aFyIDHaghor9hT4eG1vZwuUX6tlltTFby2PtjObFA/4bCiM/JjQCGWU/PPqf+nWqVO8NFiTi1upItgWRvipJjleNQ9vQ0hb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jZVLs2O4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iYCFa53sPtoCfWD9/PRlsRxpAcHK5peSQ4kY9WE3nkjpXkfT0PnYofPw2mJdeQ5udKx7kGTbSLB34z6IoYYNidNjBebJBJAYArWpHawoG2cL1z+26FPVfMnPsTiIFnLzNKsq3P3gVYg914kC5fKxBoHo7AbaGKlLAaHfsuZ7JRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7TWdi0x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jZVLs2O4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D092C32782;
-	Tue, 30 Jul 2024 16:12:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7TWdi0x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F374C4AF0C;
+	Tue, 30 Jul 2024 16:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355929;
-	bh=e3maEF8aa/f4DgA1aHrFLBJ9Tju/W0/88hi0k1kpgkw=;
+	s=korg; t=1722355932;
+	bh=lvoWrWEoXu7P/6qCfR0WWH2nC1QutuevkB/XvBCSNFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jZVLs2O4Q5j2PVMO/hdsOGwCG/v59NBZWvMdMJfyWU+XiS2msDj2kfJ1SRZ+b8P7v
-	 7728ESfdkELol8aNTTEZSLYbGwOeFYQmHOEUBtXbdM+2D4nOma+NEBpBBbMbPHuWDD
-	 tqJuqNWa4nJNs1K1IkoNu7Fcf2hnL/f0vzq1hZ0w=
+	b=i7TWdi0x4HRLbYwWP0lt6cBlxxBN8ksj8JQowbsSO/FM+raV1bJYAzI3nhi+Y59gl
+	 /ksgAqFPpE5oSA4o9J0LClGc9+6kpvKHGz6E954b33md1BIhC4KkiVF56ZK9Y66oad
+	 e+4HL2dQdFISnpIwFXe/R4lT+2WI3LHH06+BUcMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Schaefer <dhs@frame.work>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 145/440] media: uvcvideo: Override default flags
-Date: Tue, 30 Jul 2024 17:46:18 +0200
-Message-ID: <20240730151621.545617402@linuxfoundation.org>
+Subject: [PATCH 6.1 136/440] media: pci: ivtv: Add check for DMA map result
+Date: Tue, 30 Jul 2024 17:46:09 +0200
+Message-ID: <20240730151621.195570416@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -52,66 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Mikhail Kobuk <m.kobuk@ispras.ru>
 
-[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
+[ Upstream commit 629913d6d79508b166c66e07e4857e20233d85a9 ]
 
-When the UVC device has a control that is readonly it doesn't set the
-SET_CUR flag. For example the privacy control has SET_CUR flag set in
-the defaults in the `uvc_ctrls` variable. Even if the device does not
-have it set, it's not cleared by uvc_ctrl_get_flags().
+In case DMA fails, 'dma->SG_length' is 0. This value is later used to
+access 'dma->SGarray[dma->SG_length - 1]', which will cause out of
+bounds access.
 
-Originally written with assignment in commit 859086ae3636 ("media:
-uvcvideo: Apply flags from device to actual properties"). But changed to
-|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
-flags"). It would not clear the default flags.
+Add check to return early on invalid value. Adjust warnings accordingly.
 
-With this patch applied the correct flags are reported to user space.
-Tested with:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-```
-> v4l2-ctl --list-ctrls | grep privacy
-privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
-```
-
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
-Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 1932dc2f4cf6 ("media: pci/ivtv: switch from 'pci_' to 'dma_' API")
+Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/media/pci/ivtv/ivtv-udma.c | 8 ++++++++
+ drivers/media/pci/ivtv/ivtv-yuv.c  | 6 ++++++
+ drivers/media/pci/ivtv/ivtvfb.c    | 6 +++---
+ 3 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index 6d7535efc09de..dffc9d03235c4 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1959,7 +1959,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 	else
- 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
- 				     dev->intfnum, info->selector, data, 1);
--	if (!ret)
-+
-+	if (!ret) {
-+		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
-+				 UVC_CTRL_FLAG_SET_CUR |
-+				 UVC_CTRL_FLAG_AUTO_UPDATE |
-+				 UVC_CTRL_FLAG_ASYNCHRONOUS);
-+
- 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
- 				UVC_CTRL_FLAG_GET_CUR : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
-@@ -1968,6 +1974,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
- 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
+diff --git a/drivers/media/pci/ivtv/ivtv-udma.c b/drivers/media/pci/ivtv/ivtv-udma.c
+index 210be8290f24d..fd76f88975ae3 100644
+--- a/drivers/media/pci/ivtv/ivtv-udma.c
++++ b/drivers/media/pci/ivtv/ivtv-udma.c
+@@ -131,6 +131,8 @@ int ivtv_udma_setup(struct ivtv *itv, unsigned long ivtv_dest_addr,
+ 
+ 	/* Fill SG List with new values */
+ 	if (ivtv_udma_fill_sg_list(dma, &user_dma, 0) < 0) {
++		IVTV_DEBUG_WARN("%s: could not allocate bounce buffers for highmem userspace buffers\n",
++				__func__);
+ 		unpin_user_pages(dma->map, dma->page_count);
+ 		dma->page_count = 0;
+ 		return -ENOMEM;
+@@ -139,6 +141,12 @@ int ivtv_udma_setup(struct ivtv *itv, unsigned long ivtv_dest_addr,
+ 	/* Map SG List */
+ 	dma->SG_length = dma_map_sg(&itv->pdev->dev, dma->SGlist,
+ 				    dma->page_count, DMA_TO_DEVICE);
++	if (!dma->SG_length) {
++		IVTV_DEBUG_WARN("%s: DMA map error, SG_length is 0\n", __func__);
++		unpin_user_pages(dma->map, dma->page_count);
++		dma->page_count = 0;
++		return -EINVAL;
 +	}
  
- 	kfree(data);
- 	return ret;
+ 	/* Fill SG Array with new values */
+ 	ivtv_udma_fill_sg_array (dma, ivtv_dest_addr, 0, -1);
+diff --git a/drivers/media/pci/ivtv/ivtv-yuv.c b/drivers/media/pci/ivtv/ivtv-yuv.c
+index 4ba10c34a16a4..bd0b80331602d 100644
+--- a/drivers/media/pci/ivtv/ivtv-yuv.c
++++ b/drivers/media/pci/ivtv/ivtv-yuv.c
+@@ -115,6 +115,12 @@ static int ivtv_yuv_prep_user_dma(struct ivtv *itv, struct ivtv_user_dma *dma,
+ 	}
+ 	dma->SG_length = dma_map_sg(&itv->pdev->dev, dma->SGlist,
+ 				    dma->page_count, DMA_TO_DEVICE);
++	if (!dma->SG_length) {
++		IVTV_DEBUG_WARN("%s: DMA map error, SG_length is 0\n", __func__);
++		unpin_user_pages(dma->map, dma->page_count);
++		dma->page_count = 0;
++		return -EINVAL;
++	}
+ 
+ 	/* Fill SG Array with new values */
+ 	ivtv_udma_fill_sg_array(dma, y_buffer_offset, uv_buffer_offset, y_size);
+diff --git a/drivers/media/pci/ivtv/ivtvfb.c b/drivers/media/pci/ivtv/ivtvfb.c
+index 00ac94d4ab19d..a642becdc0d73 100644
+--- a/drivers/media/pci/ivtv/ivtvfb.c
++++ b/drivers/media/pci/ivtv/ivtvfb.c
+@@ -281,10 +281,10 @@ static int ivtvfb_prep_dec_dma_to_device(struct ivtv *itv,
+ 	/* Map User DMA */
+ 	if (ivtv_udma_setup(itv, ivtv_dest_addr, userbuf, size_in_bytes) <= 0) {
+ 		mutex_unlock(&itv->udma.lock);
+-		IVTVFB_WARN("ivtvfb_prep_dec_dma_to_device, Error with pin_user_pages: %d bytes, %d pages returned\n",
+-			       size_in_bytes, itv->udma.page_count);
++		IVTVFB_WARN("%s, Error in ivtv_udma_setup: %d bytes, %d pages returned\n",
++			       __func__, size_in_bytes, itv->udma.page_count);
+ 
+-		/* pin_user_pages must have failed completely */
++		/* pin_user_pages or DMA must have failed completely */
+ 		return -EIO;
+ 	}
+ 
 -- 
 2.43.0
 
