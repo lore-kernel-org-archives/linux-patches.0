@@ -1,41 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04CB1A76BF;
-	Tue, 30 Jul 2024 17:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AAC31A76B6;
+	Tue, 30 Jul 2024 17:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360492; cv=none; b=pSH8ns9cqlJ8TCjMHHdxao8171fp2glN4CIVK9lGFFpSDrRNAw0GKksG0rQT47wnH8WjvybtsvQR4Aa6qAw0DcnTAq2QGQLcCvyNU3HRV18E1HoSDDJ66SrcsUWaFtAH/anRjZYuLH4TZceVy60Ai5fUZaeOms2H/70SLJVpzTw=
+	t=1722360496; cv=none; b=rgRqruvXQYO4JFxqscJI8HnrRslw8nswXxoaVtouUFdaxbcKCnkQNjb/Hrmrbn9qVW3EyaADuZZlfAHcrbJJDwqtGIw+lXSl7UhkXxhwm45XipGo6Mf6XjBX6PNICPg2/u9TB6t/uAcVHXsysLEcUj+0lnrqNzop+RuIuE5cqoU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360492; c=relaxed/simple;
-	bh=kO7wDDJ1y5yl2qg2c3nQpeg13qyVqr4NBPJP4qpnBP8=;
+	s=arc-20240116; t=1722360496; c=relaxed/simple;
+	bh=3hpi32gFloyuox/MaKoGRcaylG0DN8aV1l/iF1uvdc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pNLX4pAWkmL2dsDA93FTNOojJxBW6JNgnVMBYHrU682FMdq/WV4/uIKhQpjh4kOyNg/BP/5hK2o35Z2oqOZwAHFxolAPmNerkSVX4laqC0avRIk0p3r/A79moO4Hck0iADENXsKF3As53cuH3Zty0MjiXZ4e6iCju/l6fiCBB74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYZBg53S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NxpKsnkdQcJOAedMYqEjBuMafMMA9ZrWrU0gi2crqpVMMZ9FRwfh5nb4BwSxLM/fNy8/UgVNLh9mk2CuwygRn9Mv0hLE+LuAc2qLap6i/oJTAS1AiHSmBinUKNO5uaDTvkH1JK+MmYGkA3o1BH0VFpKtDSWi5rmU4q94KejhC9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MWySVfUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYZBg53S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A17C4AF0A;
-	Tue, 30 Jul 2024 17:28:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MWySVfUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59CE0C4AF0C;
+	Tue, 30 Jul 2024 17:28:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360492;
-	bh=kO7wDDJ1y5yl2qg2c3nQpeg13qyVqr4NBPJP4qpnBP8=;
+	s=korg; t=1722360495;
+	bh=3hpi32gFloyuox/MaKoGRcaylG0DN8aV1l/iF1uvdc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYZBg53SCO5fJVFdIJIqyyvpo5uacop0nLA6RKTZ7fYYk3E0cwhxWHLg1CUlnMqUF
-	 QAwFlhoHyrG/ZhjbdBEfgO4Vqw9arU5Mn/wAD7LO56IY5VzBr9n6/NUIAEIuYFCArH
-	 eiZ7efxQBlsmOpPPUluhL+MH6NLZ6OBEh1zp0STg=
+	b=MWySVfUveHwjrX/0jnKXBqQTn13KQO4uCDcTacxw2mpUss6DSh9MAh2/x4I/1WwpR
+	 9eYqIvQvpaMvCPOPy9Oi1dV/hirHAHlFucX1+DXiVj0dLUiBpYlP3llR4vroGOU+py
+	 +oWsXcP06/gCRl5d5wEkJv3/rZ8NaOmO3MH4YNnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Liam Merwick <liam.merwick@oracle.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	John Allen <john.allen@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.10 715/809] crypto: ccp - Fix null pointer dereference in __sev_snp_shutdown_locked
-Date: Tue, 30 Jul 2024 17:49:51 +0200
-Message-ID: <20240730151753.175192243@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.10 716/809] selftests/sigaltstack: Fix ppc64 GCC build
+Date: Tue, 30 Jul 2024 17:49:52 +0200
+Message-ID: <20240730151753.217238514@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -48,157 +43,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 468e3295774d0edce15f4ae475913b5076dd4f40 upstream.
+commit 17c743b9da9e0d073ff19fd5313f521744514939 upstream.
 
-Fix a null pointer dereference induced by DEBUG_TEST_DRIVER_REMOVE.
-Return from __sev_snp_shutdown_locked() if the psp_device or the
-sev_device structs are not initialized. Without the fix, the driver will
-produce the following splat:
+Building the sigaltstack test with GCC on 64-bit powerpc errors with:
 
-   ccp 0000:55:00.5: enabling device (0000 -> 0002)
-   ccp 0000:55:00.5: sev enabled
-   ccp 0000:55:00.5: psp enabled
-   BUG: kernel NULL pointer dereference, address: 00000000000000f0
-   #PF: supervisor read access in kernel mode
-   #PF: error_code(0x0000) - not-present page
-   PGD 0 P4D 0
-   Oops: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC NOPTI
-   CPU: 262 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc1+ #29
-   RIP: 0010:__sev_snp_shutdown_locked+0x2e/0x150
-   Code: 00 55 48 89 e5 41 57 41 56 41 54 53 48 83 ec 10 41 89 f7 49 89 fe 65 48 8b 04 25 28 00 00 00 48 89 45 d8 48 8b 05 6a 5a 7f 06 <4c> 8b a0 f0 00 00 00 41 0f b6 9c 24 a2 00 00 00 48 83 fb 02 0f 83
-   RSP: 0018:ffffb2ea4014b7b8 EFLAGS: 00010286
-   RAX: 0000000000000000 RBX: ffff9e4acd2e0a28 RCX: 0000000000000000
-   RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffb2ea4014b808
-   RBP: ffffb2ea4014b7e8 R08: 0000000000000106 R09: 000000000003d9c0
-   R10: 0000000000000001 R11: ffffffffa39ff070 R12: ffff9e49d40590c8
-   R13: 0000000000000000 R14: ffffb2ea4014b808 R15: 0000000000000000
-   FS:  0000000000000000(0000) GS:ffff9e58b1e00000(0000) knlGS:0000000000000000
-   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-   CR2: 00000000000000f0 CR3: 0000000418a3e001 CR4: 0000000000770ef0
-   PKRU: 55555554
-   Call Trace:
-    <TASK>
-    ? __die_body+0x6f/0xb0
-    ? __die+0xcc/0xf0
-    ? page_fault_oops+0x330/0x3a0
-    ? save_trace+0x2a5/0x360
-    ? do_user_addr_fault+0x583/0x630
-    ? exc_page_fault+0x81/0x120
-    ? asm_exc_page_fault+0x2b/0x30
-    ? __sev_snp_shutdown_locked+0x2e/0x150
-    __sev_firmware_shutdown+0x349/0x5b0
-    ? pm_runtime_barrier+0x66/0xe0
-    sev_dev_destroy+0x34/0xb0
-    psp_dev_destroy+0x27/0x60
-    sp_destroy+0x39/0x90
-    sp_pci_remove+0x22/0x60
-    pci_device_remove+0x4e/0x110
-    really_probe+0x271/0x4e0
-    __driver_probe_device+0x8f/0x160
-    driver_probe_device+0x24/0x120
-    __driver_attach+0xc7/0x280
-    ? driver_attach+0x30/0x30
-    bus_for_each_dev+0x10d/0x130
-    driver_attach+0x22/0x30
-    bus_add_driver+0x171/0x2b0
-    ? unaccepted_memory_init_kdump+0x20/0x20
-    driver_register+0x67/0x100
-    __pci_register_driver+0x83/0x90
-    sp_pci_init+0x22/0x30
-    sp_mod_init+0x13/0x30
-    do_one_initcall+0xb8/0x290
-    ? sched_clock_noinstr+0xd/0x10
-    ? local_clock_noinstr+0x3e/0x100
-    ? stack_depot_save_flags+0x21e/0x6a0
-    ? local_clock+0x1c/0x60
-    ? stack_depot_save_flags+0x21e/0x6a0
-    ? sched_clock_noinstr+0xd/0x10
-    ? local_clock_noinstr+0x3e/0x100
-    ? __lock_acquire+0xd90/0xe30
-    ? sched_clock_noinstr+0xd/0x10
-    ? local_clock_noinstr+0x3e/0x100
-    ? __create_object+0x66/0x100
-    ? local_clock+0x1c/0x60
-    ? __create_object+0x66/0x100
-    ? parameq+0x1b/0x90
-    ? parse_one+0x6d/0x1d0
-    ? parse_args+0xd7/0x1f0
-    ? do_initcall_level+0x180/0x180
-    do_initcall_level+0xb0/0x180
-    do_initcalls+0x60/0xa0
-    ? kernel_init+0x1f/0x1d0
-    do_basic_setup+0x41/0x50
-    kernel_init_freeable+0x1ac/0x230
-    ? rest_init+0x1f0/0x1f0
-    kernel_init+0x1f/0x1d0
-    ? rest_init+0x1f0/0x1f0
-    ret_from_fork+0x3d/0x50
-    ? rest_init+0x1f0/0x1f0
-    ret_from_fork_asm+0x11/0x20
-    </TASK>
-   Modules linked in:
-   CR2: 00000000000000f0
-   ---[ end trace 0000000000000000 ]---
-   RIP: 0010:__sev_snp_shutdown_locked+0x2e/0x150
-   Code: 00 55 48 89 e5 41 57 41 56 41 54 53 48 83 ec 10 41 89 f7 49 89 fe 65 48 8b 04 25 28 00 00 00 48 89 45 d8 48 8b 05 6a 5a 7f 06 <4c> 8b a0 f0 00 00 00 41 0f b6 9c 24 a2 00 00 00 48 83 fb 02 0f 83
-   RSP: 0018:ffffb2ea4014b7b8 EFLAGS: 00010286
-   RAX: 0000000000000000 RBX: ffff9e4acd2e0a28 RCX: 0000000000000000
-   RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffb2ea4014b808
-   RBP: ffffb2ea4014b7e8 R08: 0000000000000106 R09: 000000000003d9c0
-   R10: 0000000000000001 R11: ffffffffa39ff070 R12: ffff9e49d40590c8
-   R13: 0000000000000000 R14: ffffb2ea4014b808 R15: 0000000000000000
-   FS:  0000000000000000(0000) GS:ffff9e58b1e00000(0000) knlGS:0000000000000000
-   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-   CR2: 00000000000000f0 CR3: 0000000418a3e001 CR4: 0000000000770ef0
-   PKRU: 55555554
-   Kernel panic - not syncing: Fatal exception
-   Kernel Offset: 0x1fc00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+  gcc -Wall     sas.c  -o /home/michael/linux/.build/kselftest/sigaltstack/sas
+  In file included from sas.c:23:
+  current_stack_pointer.h:22:2: error: #error "implement current_stack_pointer equivalent"
+     22 | #error "implement current_stack_pointer equivalent"
+        |  ^~~~~
+  sas.c: In function ‘my_usr1’:
+  sas.c:50:13: error: ‘sp’ undeclared (first use in this function); did you mean ‘p’?
+     50 |         if (sp < (unsigned long)sstack ||
+        |             ^~
 
-Fixes: 1ca5614b84ee ("crypto: ccp: Add support to initialize the AMD-SP for SEV-SNP")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: John Allen <john.allen@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This happens because GCC doesn't define __ppc__ for 64-bit builds, only
+32-bit builds. Instead use __powerpc__ to detect powerpc builds, which
+is defined by clang and GCC for 64-bit and 32-bit builds.
+
+Fixes: 05107edc9101 ("selftests: sigaltstack: fix -Wuninitialized")
+Cc: stable@vger.kernel.org # v6.3+
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240520062647.688667-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/testing/selftests/sigaltstack/current_stack_pointer.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
-index 2102377f727b..1912bee22dd4 100644
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1642,10 +1642,16 @@ static int sev_update_firmware(struct device *dev)
- 
- static int __sev_snp_shutdown_locked(int *error, bool panic)
- {
--	struct sev_device *sev = psp_master->sev_data;
-+	struct psp_device *psp = psp_master;
-+	struct sev_device *sev;
- 	struct sev_data_snp_shutdown_ex data;
- 	int ret;
- 
-+	if (!psp || !psp->sev_data)
-+		return 0;
-+
-+	sev = psp->sev_data;
-+
- 	if (!sev->snp_initialized)
- 		return 0;
- 
--- 
-2.45.2
-
+--- a/tools/testing/selftests/sigaltstack/current_stack_pointer.h
++++ b/tools/testing/selftests/sigaltstack/current_stack_pointer.h
+@@ -8,7 +8,7 @@ register unsigned long sp asm("sp");
+ register unsigned long sp asm("esp");
+ #elif __loongarch64
+ register unsigned long sp asm("$sp");
+-#elif __ppc__
++#elif __powerpc__
+ register unsigned long sp asm("r1");
+ #elif __s390x__
+ register unsigned long sp asm("%15");
 
 
