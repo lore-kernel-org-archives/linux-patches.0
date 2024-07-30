@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A6F29A2;
-	Tue, 30 Jul 2024 15:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7617929A2;
+	Tue, 30 Jul 2024 15:55:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354908; cv=none; b=iO6RiItjU3pcX7B9DMcuauGk763xpXLOxZHudLsB1Lv9B0/9QaEw3v4GJCxVoiBywGPeSCQrWnCPI9OHOUAEcEufXnDZ3BbnnnA/3s1d2IH0Vj6NAFpCHH9Qc8RKjor+clfy5LWZOzvTXL3DuJg1+wDshpC+BcS+6dwI0gXPup4=
+	t=1722354911; cv=none; b=H+02l+/Sj/lluIGjDHa0Hi/W5+jT5+3P+aoQzN87MhJyWF/U5y3ylGWMbPUPZ1cd8J6NZCcZsKI3eSptky80pO2wMpWGgNWDIyLRXyxidonMyct/GTOTz29P7BT8Qj7nM29JFFuj9eE/hONacMdiL7PmOPQigm5BthtSJy4w+GE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354908; c=relaxed/simple;
-	bh=CavXqUAO0mF2bx6rvs0qenlui9+5id8kVPrtvdni+DA=;
+	s=arc-20240116; t=1722354911; c=relaxed/simple;
+	bh=3a0E9fgLxT72Kn35ryQRojh6UvnfxtvynYmsKLeAARY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QBTdLkCC/4b+PfYUrvWoYVAclNJZpMK9UF5zpSRIL9ZM8+atnRJR1W5BiS7sUgrKN09gqQ7DMeivH0riJWNYvaZxvYdqsrk+SYBHxoI9YRClUUKIU5ZNB+UrA52bXYf1SF2fyaYOpwO6BWTPGArYO5lmPBBL1B0lRURU/9lhC/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OOeAjNwD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiXL24rwMWMUwbJMDUjWJnXAhggGjDdkD5dc9FwanJ9/LIUwy05zvdktxeQ28e6OuJNyuWbbbdtWZn2uyk9bdho3ITitz8QZiIjoHudwLAks4bjE6FcpLUrvbXTcnZ8514sMrIQgn6xAyVM2nGoe8i8pwQsepTbuVImbU7PVb4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKh1mSD+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OOeAjNwD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E4B8C32782;
-	Tue, 30 Jul 2024 15:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKh1mSD+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2506C32782;
+	Tue, 30 Jul 2024 15:55:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354908;
-	bh=CavXqUAO0mF2bx6rvs0qenlui9+5id8kVPrtvdni+DA=;
+	s=korg; t=1722354911;
+	bh=3a0E9fgLxT72Kn35ryQRojh6UvnfxtvynYmsKLeAARY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OOeAjNwDkCSZNBTm3yh1JV1Cm0KZHGS1lB/Wn7GTEwnjsNczM+13GJ9Gsnn/xRWxc
-	 7iiel6XwKlKMmq5imBOQ3cHaLguFeQxtp/4sWgIqZhmw/SQAokw9Uc40XnwFzvTGzf
-	 FFwDzZO0e2H0mIxlpmAx0TA2jSy2ytUSQ8Di15xk=
+	b=wKh1mSD+5lU5Cp17fPHq2vwwVEB16PV2cubpdLIo0yBkrPbGGLOSDWz0KO/LGY1fU
+	 jq9u/Ik3cKOf937x2cCN4pHDFYfARABqVcsNuXuf98vjn4uvc3rckvUVUmG1zgh8sd
+	 2Ff6w8j7w9/HWU/KjRo2fCpzOtFZeRU8n1swkJoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/568] block: initialize integrity buffer to zero before writing it to media
-Date: Tue, 30 Jul 2024 17:41:56 +0200
-Message-ID: <20240730151640.181680931@linuxfoundation.org>
+Subject: [PATCH 6.1 035/440] arm64: dts: qcom: sm8450: add power-domain to UFS PHY
+Date: Tue, 30 Jul 2024 17:44:28 +0200
+Message-ID: <20240730151617.135530602@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,66 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 899ee2c3829c5ac14bfc7d3c4a5846c0b709b78f ]
+[ Upstream commit 27d3f57cf5a71484ea38770d4bfd10f6ef035cf4 ]
 
-Metadata added by bio_integrity_prep is using plain kmalloc, which leads
-to random kernel memory being written media.  For PI metadata this is
-limited to the app tag that isn't used by kernel generated metadata,
-but for non-PI metadata the entire buffer leaks kernel memory.
+The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
+corresponding power-domain the the PHY node.
 
-Fix this by adding the __GFP_ZERO flag to allocations for writes.
-
-Fixes: 7ba1ba12eeef ("block: Block layer data integrity support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Link: https://lore.kernel.org/r/20240613084839.1044015-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-11-f1fd15c33fb3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bio-integrity.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/bio-integrity.c b/block/bio-integrity.c
-index ec8ac8cf6e1b9..15e444b2fcc12 100644
---- a/block/bio-integrity.c
-+++ b/block/bio-integrity.c
-@@ -217,6 +217,7 @@ bool bio_integrity_prep(struct bio *bio)
- 	unsigned long start, end;
- 	unsigned int len, nr_pages;
- 	unsigned int bytes, offset, i;
-+	gfp_t gfp = GFP_NOIO;
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 128542582b3d8..aa0977af9411a 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -3153,6 +3153,8 @@ ufs_mem_phy: phy@1d87000 {
+ 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+ 				 <&gcc GCC_UFS_0_CLKREF_EN>;
  
- 	if (!bi)
- 		return true;
-@@ -239,11 +240,19 @@ bool bio_integrity_prep(struct bio *bio)
- 		if (!bi->profile->generate_fn ||
- 		    !(bi->flags & BLK_INTEGRITY_GENERATE))
- 			return true;
++			power-domains = <&gcc UFS_PHY_GDSC>;
 +
-+		/*
-+		 * Zero the memory allocated to not leak uninitialized kernel
-+		 * memory to disk.  For PI this only affects the app tag, but
-+		 * for non-integrity metadata it affects the entire metadata
-+		 * buffer.
-+		 */
-+		gfp |= __GFP_ZERO;
- 	}
- 
- 	/* Allocate kernel buffer for protection data */
- 	len = bio_integrity_bytes(bi, bio_sectors(bio));
--	buf = kmalloc(len, GFP_NOIO);
-+	buf = kmalloc(len, gfp);
- 	if (unlikely(buf == NULL)) {
- 		printk(KERN_ERR "could not allocate integrity buffer\n");
- 		goto err_end_io;
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
+ 			status = "disabled";
 -- 
 2.43.0
 
