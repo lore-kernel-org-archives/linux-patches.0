@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C961A619E;
-	Tue, 30 Jul 2024 16:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA89A14831F;
+	Tue, 30 Jul 2024 16:42:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357757; cv=none; b=BpqyA0mcp/kKGpzbp3xbvGpUl087nClwhRkVSQBoUoQjI5F/wXjKnwGSrGQPjRdX0APsDM1L/0VVRcQXFVr/5O3PxVaF64xui8J55aaLSUxM76gJWiJtP7S60+K2QZt8ihfhpyK/LYv/vVMxQJXmlC8iLoVVds5wl78fjtPL8yA=
+	t=1722357759; cv=none; b=rfr9yeNsCmCYEibSDbV/dHvgBrB0wU+sOpq107E4MvjsVVams18kv5lra+ZEt/7YfYEZLj8wZMc58mNnq33OBz2WZ9LW35DU+QIZYr6dW7azSJ0h45IQrTDRvcufont1tah0+BXYmqP51ZuwsbRY0F4gTj6Yl7mZqC2aZ4UTS0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357757; c=relaxed/simple;
-	bh=cicX+gRhW8ZyJdNlu4vVr1n3KtiKd7Qlj7jTT7Ez334=;
+	s=arc-20240116; t=1722357759; c=relaxed/simple;
+	bh=8WtGrDPvoiPaeqTkIKpJac6Nq1zlX11bi3WBOob6a3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HMcNHCllJV+V64n7cExlpjCwj5UZv6jLP9rkOixdqfECCgTaGnXNXV3s8D7kQtFXOX3BciHaE8viiaxRcMiMh23bO+jTkJQyU5SwJ3fVnQK0Xig/LgrnDOcnUMbLGDfACYuVMjUccsVK7gORMdSYXR4uzgrQYy8+f9sF23D4qN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tbVMCICL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Iidk0y54XJbjnqXSWs70LzSz1St2nUaRU8lhgKzDrNbOj6QfXtE8QuGS+sGYfCAmK7OOwVBiMczIBrRW3U6JlWtad+daYN5wp4rFmlyNyNJ9DmgogjhzAWM748GYJRl/kB+2uYwuM03GBtpA3PErunZrVaCwPQpK8QU2ltf41Cc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qjJVjG8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tbVMCICL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C9CC32782;
-	Tue, 30 Jul 2024 16:42:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qjJVjG8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A40C32782;
+	Tue, 30 Jul 2024 16:42:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357756;
-	bh=cicX+gRhW8ZyJdNlu4vVr1n3KtiKd7Qlj7jTT7Ez334=;
+	s=korg; t=1722357759;
+	bh=8WtGrDPvoiPaeqTkIKpJac6Nq1zlX11bi3WBOob6a3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbVMCICLTApcKS/YNvFWRx/TT8cXD98N3qJl7BFYmTUBmXBMeCGjCH2cc9ShbMRby
-	 bn851Bp7uvg+Xpac2Hm9m6n1j9UNAx/Y5B9eKQgBU8jHerMVBERlLIq50uuZyt+yk9
-	 aGAB5nQa9KsB0Reea1NZw95zyCS0bEdlQGrsaY84=
+	b=qjJVjG8tHh7fIDiUY8bo6ptxWdC5lqBOE+ZDFv0sInqTTYutlhSPdu4aFJ4QPoza0
+	 isNUWfu6rpxlsU8Yd2RRMfD8ZsoutxFi5jOv10O94awjltByo4luvIvJp/LOnO2jqK
+	 UNXN5m//dUqqxV3JnG9uci/WGXtiuwN/nu/T333k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 289/809] media: imon: Fix race getting ictx->lock
-Date: Tue, 30 Jul 2024 17:42:45 +0200
-Message-ID: <20240730151736.006923969@linuxfoundation.org>
+	Slark Xiao <slark_xiao@163.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.1 324/440] PCI: rockchip: Use GPIOD_OUT_LOW flag while requesting ep_gpio
+Date: Tue, 30 Jul 2024 17:49:17 +0200
+Message-ID: <20240730151628.474163330@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +47,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
+commit 840b7a5edf88fe678c60dee88a135647c0ea4375 upstream.
 
-Lets fix a race between mutex_is_lock() and mutex_lock().
+Rockchip platforms use 'GPIO_ACTIVE_HIGH' flag in the devicetree definition
+for ep_gpio. This means, whatever the logical value set by the driver for
+the ep_gpio, physical line will output the same logic level.
 
-<-mutex is not locked
-if (!mutex_is_locked(&ictx->lock)) {
-	unlock = true; <- mutex is locked externaly
-	mutex_lock(&ictx->lock);
-}
+For instance,
 
-Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
-atomically.
+  gpiod_set_value_cansleep(rockchip->ep_gpio, 0); --> Level low
+  gpiod_set_value_cansleep(rockchip->ep_gpio, 1); --> Level high
 
-Fix the following cocci warning:
-drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
+But while requesting the ep_gpio, GPIOD_OUT_HIGH flag is currently used.
+Now, this also causes the physical line to output 'high' creating trouble
+for endpoint devices during host reboot.
 
-Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When host reboot happens, the ep_gpio will initially output 'low' due to
+the GPIO getting reset to its POR value. Then during host controller probe,
+it will output 'high' due to GPIOD_OUT_HIGH flag. Then during
+rockchip_pcie_host_init_port(), it will first output 'low' and then 'high'
+indicating the completion of controller initialization.
+
+On the endpoint side, each output 'low' of ep_gpio is accounted for PERST#
+assert and 'high' for PERST# deassert. With the above mentioned flow during
+host reboot, endpoint will witness below state changes for PERST#:
+
+  (1) PERST# assert - GPIO POR state
+  (2) PERST# deassert - GPIOD_OUT_HIGH while requesting GPIO
+  (3) PERST# assert - rockchip_pcie_host_init_port()
+  (4) PERST# deassert - rockchip_pcie_host_init_port()
+
+Now the time interval between (2) and (3) is very short as both happen
+during the driver probe(), and this results in a race in the endpoint.
+Because, before completing the PERST# deassertion in (2), endpoint got
+another PERST# assert in (3).
+
+A proper way to fix this issue is to change the GPIOD_OUT_HIGH flag in (2)
+to GPIOD_OUT_LOW. Because the usual convention is to request the GPIO with
+a state corresponding to its 'initial/default' value and let the driver
+change the state of the GPIO when required.
+
+As per that, the ep_gpio should be requested with GPIOD_OUT_LOW as it
+corresponds to the POR value of '0' (PERST# assert in the endpoint). Then
+the driver can change the state of the ep_gpio later in
+rockchip_pcie_host_init_port() as per the initialization sequence.
+
+This fixes the firmware crash issue in Qcom based modems connected to
+Rockpro64 based board.
+
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Closes: https://lore.kernel.org/mhi/20240402045647.GG2933@thinkpad/
+Link: https://lore.kernel.org/linux-pci/20240416-pci-rockchip-perst-fix-v1-1-4800b1d4d954@linaro.org
+Reported-by: Slark Xiao <slark_xiao@163.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Cc: stable@vger.kernel.org	# v4.9
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/rc/imon.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/pci/controller/pcie-rockchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 0b55314a80827..8f1361bcce3a6 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -1148,10 +1148,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -120,7 +120,7 @@ int rockchip_pcie_parse_dt(struct rockch
  
- 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
- 
--	if (!mutex_is_locked(&ictx->lock)) {
--		unlock = true;
--		mutex_lock(&ictx->lock);
--	}
-+	unlock = mutex_trylock(&ictx->lock);
- 
- 	retval = send_packet(ictx);
- 	if (retval)
--- 
-2.43.0
-
+ 	if (rockchip->is_rc) {
+ 		rockchip->ep_gpio = devm_gpiod_get_optional(dev, "ep",
+-							    GPIOD_OUT_HIGH);
++							    GPIOD_OUT_LOW);
+ 		if (IS_ERR(rockchip->ep_gpio))
+ 			return dev_err_probe(dev, PTR_ERR(rockchip->ep_gpio),
+ 					     "failed to get ep GPIO\n");
 
 
