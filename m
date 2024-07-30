@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88349183CD5;
-	Tue, 30 Jul 2024 16:47:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273DD18B465;
+	Tue, 30 Jul 2024 16:47:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358022; cv=none; b=A5GpaiUCg/5Dd1ZVUppVWdGSKHqREUdhhonA4Ag09Tt+2QaRtCtQOFyQRglM2UaiDJDHVCWdJzYNceDTPjXn52GQUnp2PAThF1fDliPfljbmjOp+vQohD6vYkZWvYay/TBRb6R5cRajdeUvTY5BvaNlG1IBsTOuWavQmPfF6V4Y=
+	t=1722358025; cv=none; b=uK1w8eaSfwz/ojPF3mdad+9dOZZKaGRL6fWHeV0/mpk8hbVDLDXbaszXb8PdoJ7HgwNC5Pe3fip88HCp7NMkLyWE+ExMNnn7oN3DXXVc/UB0Ng9335tsNx1Y5rmdIQ+EvfzZBWUWYdeiSjnVnGbdepCJ1JJ2p3GCP5uNsBaCxto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358022; c=relaxed/simple;
-	bh=yZJnf8et525kgGftER6eYFQc1J8vI96EDviips4mmZI=;
+	s=arc-20240116; t=1722358025; c=relaxed/simple;
+	bh=1HqYrBjpv6LjmK14oweDYJSDW+/pfnYVDsQMSTqOk7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e4fA23i+evnaX1v05ZXNFk7WsSqaX9iajHJKP2CQjc5lEkiCg7qUfqvGeaR34NHDvR8sEEdUMomxDewcuGrpfeVVfjD+B5iv2oDQy3arriBVEBXtF2/PmUw6/FLvIY5jLO375+w+RZL8OPAhFIshbkwJrkqahCRGFgLvH6yhXlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTPcuzs+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvz3kbJxykIFkBAs3ZSrJBYlQfAUOT9bCDAGhquDPkU3SDTKVAWo3JYUZQdEHxWIP0fMpPHwRKLm8nDXvED9wc0lj/5P1CRBHahk7srz8bFKbM+rLB0q3LsxOAUEFr09EN3bce930nB3oBmJ3hAKz6sKzhm3YSdiz5vz89Mt8YM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P3sdeh8x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTPcuzs+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7F3C32782;
-	Tue, 30 Jul 2024 16:47:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P3sdeh8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 995ABC4AF1C;
+	Tue, 30 Jul 2024 16:47:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358022;
-	bh=yZJnf8et525kgGftER6eYFQc1J8vI96EDviips4mmZI=;
+	s=korg; t=1722358025;
+	bh=1HqYrBjpv6LjmK14oweDYJSDW+/pfnYVDsQMSTqOk7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTPcuzs+99yBhx8dx7Xr+uQYUr/vwVQY9JlOvq68VLd2DvQ2nAjuKUN4SL9chpIEg
-	 YwV9j9WvjtC1Fa06+aqD09/yQbg/pT+6heyPei+aXqUtCqb+o3Cx03noGAVV9XL2eh
-	 onn/SulTTRwx5qw8P7/OfSUMAmyb65UWH8Gevjh4=
+	b=P3sdeh8xWrKSO34+wLyk1qGf0kNcqtKNFUimcbIW7ZZMG3KIr/YysPvFcGy2PV8gQ
+	 osvsD+RaTGFtZ6zQ7XrK3JqJhoFg5NliMqoS50rflOxe4bDn7n13XToyFuvjM3oMtw
+	 ibLkQKhdoIXM9QhM9PbcTyMtGrtwuRfWIIgR0AAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 349/440] scsi: qla2xxx: Use QP lock to search for bsg
-Date: Tue, 30 Jul 2024 17:49:42 +0200
-Message-ID: <20240730151629.442148043@linuxfoundation.org>
+	Vladimir Oltean <olteanv@gmail.com>,
+	Martin Willi <martin@strongswan.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 318/568] net: dsa: b53: Limit chip-wide jumbo frame config to CPU ports
+Date: Tue, 30 Jul 2024 17:47:05 +0200
+Message-ID: <20240730151652.305711424@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,153 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Martin Willi <martin@strongswan.org>
 
-commit c449b4198701d828e40d60a2abd30970b74a1d75 upstream.
+[ Upstream commit c5118072e228e7e4385fc5ac46b2e31cf6c4f2d3 ]
 
-On bsg timeout, hardware_lock is used as part of search for the srb.
-Instead, qpair lock should be used to iterate through different qpair.
+Broadcom switches supported by the b53 driver use a chip-wide jumbo frame
+configuration. In the commit referenced with the Fixes tag, the setting
+is applied just for the last port changing its MTU.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-11-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While configuring CPU ports accounts for tagger overhead, user ports do
+not. When setting the MTU for a user port, the chip-wide setting is
+reduced to not include the tagger overhead, resulting in an potentially
+insufficient chip-wide maximum frame size for the CPU port.
+
+As, by design, the CPU port MTU is adjusted for any user port change,
+apply the chip-wide setting only for CPU ports. This aligns the driver
+to the behavior of other switch drivers.
+
+Fixes: 6ae5834b983a ("net: dsa: b53: add MTU configuration support")
+Suggested-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Martin Willi <martin@strongswan.org>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   96 ++++++++++++++++++++++++-----------------
- 1 file changed, 57 insertions(+), 39 deletions(-)
+ drivers/net/dsa/b53/b53_common.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -3059,17 +3059,61 @@ skip_chip_chk:
- 	return ret;
- }
+diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
+index 4e27dc913cf71..ae1c4dc35fe33 100644
+--- a/drivers/net/dsa/b53/b53_common.c
++++ b/drivers/net/dsa/b53/b53_common.c
+@@ -2265,6 +2265,9 @@ static int b53_change_mtu(struct dsa_switch *ds, int port, int mtu)
+ 	if (is5325(dev) || is5365(dev))
+ 		return -EOPNOTSUPP;
  
--int
--qla24xx_bsg_timeout(struct bsg_job *bsg_job)
-+static bool qla_bsg_found(struct qla_qpair *qpair, struct bsg_job *bsg_job)
- {
-+	bool found = false;
- 	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
- 	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
- 	struct qla_hw_data *ha = vha->hw;
--	srb_t *sp;
--	int cnt, que;
-+	srb_t *sp = NULL;
-+	int cnt;
- 	unsigned long flags;
- 	struct req_que *req;
++	if (!dsa_is_cpu_port(ds, port))
++		return 0;
++
+ 	enable_jumbo = (mtu >= JMS_MIN_SIZE);
+ 	allow_10_100 = (dev->chip_id == BCM583XX_DEVICE_ID);
  
-+	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
-+	req = qpair->req;
-+
-+	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
-+		sp = req->outstanding_cmds[cnt];
-+		if (sp &&
-+		    (sp->type == SRB_CT_CMD ||
-+		     sp->type == SRB_ELS_CMD_HST ||
-+		     sp->type == SRB_ELS_CMD_HST_NOLOGIN) &&
-+		    sp->u.bsg_job == bsg_job) {
-+			req->outstanding_cmds[cnt] = NULL;
-+			spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+			if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
-+				ql_log(ql_log_warn, vha, 0x7089,
-+						"mbx abort_command failed.\n");
-+				bsg_reply->result = -EIO;
-+			} else {
-+				ql_dbg(ql_dbg_user, vha, 0x708a,
-+						"mbx abort_command success.\n");
-+				bsg_reply->result = 0;
-+			}
-+			/* ref: INIT */
-+			kref_put(&sp->cmd_kref, qla2x00_sp_release);
-+
-+			found = true;
-+			goto done;
-+		}
-+	}
-+	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+done:
-+	return found;
-+}
-+
-+int
-+qla24xx_bsg_timeout(struct bsg_job *bsg_job)
-+{
-+	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
-+	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
-+	struct qla_hw_data *ha = vha->hw;
-+	int i;
-+	struct qla_qpair *qpair;
-+
- 	ql_log(ql_log_info, vha, 0x708b, "%s CMD timeout. bsg ptr %p.\n",
- 	    __func__, bsg_job);
- 
-@@ -3079,48 +3123,22 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_
- 		qla_pci_set_eeh_busy(vha);
- 	}
- 
-+	if (qla_bsg_found(ha->base_qpair, bsg_job))
-+		goto done;
-+
- 	/* find the bsg job from the active list of commands */
--	spin_lock_irqsave(&ha->hardware_lock, flags);
--	for (que = 0; que < ha->max_req_queues; que++) {
--		req = ha->req_q_map[que];
--		if (!req)
-+	for (i = 0; i < ha->max_qpairs; i++) {
-+		qpair = vha->hw->queue_pair_map[i];
-+		if (!qpair)
- 			continue;
--
--		for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
--			sp = req->outstanding_cmds[cnt];
--			if (sp &&
--			    (sp->type == SRB_CT_CMD ||
--			     sp->type == SRB_ELS_CMD_HST ||
--			     sp->type == SRB_ELS_CMD_HST_NOLOGIN ||
--			     sp->type == SRB_FXIOCB_BCMD) &&
--			    sp->u.bsg_job == bsg_job) {
--				req->outstanding_cmds[cnt] = NULL;
--				spin_unlock_irqrestore(&ha->hardware_lock, flags);
--
--				if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
--					ql_log(ql_log_warn, vha, 0x7089,
--					    "mbx abort_command failed.\n");
--					bsg_reply->result = -EIO;
--				} else {
--					ql_dbg(ql_dbg_user, vha, 0x708a,
--					    "mbx abort_command success.\n");
--					bsg_reply->result = 0;
--				}
--				spin_lock_irqsave(&ha->hardware_lock, flags);
--				goto done;
--
--			}
--		}
-+		if (qla_bsg_found(qpair, bsg_job))
-+			goto done;
- 	}
--	spin_unlock_irqrestore(&ha->hardware_lock, flags);
-+
- 	ql_log(ql_log_info, vha, 0x708b, "SRB not found to abort.\n");
- 	bsg_reply->result = -ENXIO;
--	return 0;
- 
- done:
--	spin_unlock_irqrestore(&ha->hardware_lock, flags);
--	/* ref: INIT */
--	kref_put(&sp->cmd_kref, qla2x00_sp_release);
- 	return 0;
- }
- 
+-- 
+2.43.0
+
 
 
