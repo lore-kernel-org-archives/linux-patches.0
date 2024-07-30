@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF594184535;
-	Tue, 30 Jul 2024 16:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC7B184535;
+	Tue, 30 Jul 2024 16:10:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355800; cv=none; b=Owr5v1mNrbV5MfWS0yfr5zM7u/p8CukJbcvGveRr4WRVfzhmvbGUVHdCa/Dc5G3KLFnJhVl51hdAhRstXbQKOolFNdjkON5QfGs6M0c5zaEmFdAldvD6i4Fl6avykUrIkT9cAIi4wHNXsjAftYzbTOmpRvA73+kvnfrWXXKfbIg=
+	t=1722355803; cv=none; b=At3GbPsO1umEobxxcvFSFwftY7/eToL+jUNZ9SQ4FGREfjxJjVldSSixnZnbKZfQ9Fz3Nno3WCbuD8oYNCXQi2YyP8K4OtfdFhpzIKrCcenj4cewixOV5iMsE8GilmPrF2lBdG1NXS1zcRGU3aDdl65JIlSxM/jO203VFnADz9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355800; c=relaxed/simple;
-	bh=WMEzaU4StKvWpBSEjx0pK908N9TNLQL/wmSLGay3ri8=;
+	s=arc-20240116; t=1722355803; c=relaxed/simple;
+	bh=4mnUT5v9UOp0Als1+snwfqczucg9LZ6AXg77oswU87Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sdtAqmgEtOX5A3UxS2Q7sLQnvJcbJo2HIElCbHvBzSYgxBzuwkAaiVqhsLAEG9vjQ2O22XOT6kaEcYZw56/EF4V+vBhh1tnH7t30Ap+KjYdZ+ms7VsNUQuEY25xGvGsViWVG7Jh0MYKi7Sapkbeeo4sXy3tPyaBOzOd8LEM27/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRCxE6H1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5I5+CI8SDuN5QrS1L7ck+pHB3WIgCS2gqi6oRZr8ol9UqV2DqO2ZNBFFGsqnkQVFkG5QQJ7grGIpA5GsuNFu8WWy6ln6PhLxBce0XGanE1qHOwvHIce8p9rqe3Esomo9ujI7Xye9m8wOibdxeOh5/44qxdhjpv6YdvEAbjfkP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSo3wMHp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRCxE6H1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D4EC32782;
-	Tue, 30 Jul 2024 16:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSo3wMHp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B53EFC32782;
+	Tue, 30 Jul 2024 16:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355799;
-	bh=WMEzaU4StKvWpBSEjx0pK908N9TNLQL/wmSLGay3ri8=;
+	s=korg; t=1722355803;
+	bh=4mnUT5v9UOp0Als1+snwfqczucg9LZ6AXg77oswU87Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRCxE6H1EXcONoMn7DviFV9HFLqPY1w8dKxxo0hy4boYRzJOw2YJIeJY2WxKS+NCf
-	 M3tpMNOMhkGvnVtR8wxiZdyy9Sqgjd3YiZdo4oq9p/cgI3jlxU4KAEZI3sJTxtgHKq
-	 IjC3LtVLdF8fhHoiMyVrUObcasCvtz4n0in36Puk=
+	b=PSo3wMHp/ugK9p3o31REjGiLb0ZhzTXhY9Ax6Ox32xJqQEEzv8GMYNUgEsMylqa2J
+	 /vB3Lfn5qvoq+whbfEwYpGR2si0yI4/iY8lJCwh7WGu2FdDDXMNh2mjfG4g0S9FohA
+	 Jr7ZZBYZD6vLbutHCrLSjYmTy8h7Zv59FN5oMUmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Marek Vasut <marex@denx.de>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jayesh Choudhary <j-choudhary@ti.com>,
+	Udit Kumar <u-kumar1@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 091/568] arm64: dts: imx8mp: Fix pgc_mlmix location
-Date: Tue, 30 Jul 2024 17:43:18 +0200
-Message-ID: <20240730151643.428618699@linuxfoundation.org>
+Subject: [PATCH 6.10 075/809] arm64: dts: ti: k3-am62-main: Fix the reg-range for main_pktdma
+Date: Tue, 30 Jul 2024 17:39:11 +0200
+Message-ID: <20240730151727.602836591@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,84 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Jayesh Choudhary <j-choudhary@ti.com>
 
-[ Upstream commit 106f68fc9da3d4835070b55a2229d2c54ef5cba1 ]
+[ Upstream commit 6edad223553c7f1680fcaca25ded59eba7c6d82d ]
 
-The pgc_mlmix shows a power-domain@24, but the reg value is
-IMX8MP_POWER_DOMAIN_MLMIX which is set to 4.
+For main_pktdma node, the TX Channel Realtime Register region 'tchanrt'
+is 128KB and Ring Realtime Register region 'ringrt' is 2MB as shown in
+memory map in the TRM[0] (Table 2-1).
+So fix ranges for those register regions.
 
-The stuff after the @ symbol should match the stuff referenced
-by 'reg' so reorder the pgc_mlmix so it to appear as power-domain@4.
+[0]: <https://www.ti.com/lit/pdf/spruiv7>
 
-Fixes: 834464c8504c ("arm64: dts: imx8mp: add mlmix power domain")
-Fixes: 4bedc468b725 ("arm64: dts: imx8mp: Add NPU Node")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: c37c58fdeb8a ("arm64: dts: ti: k3-am62: Add more peripheral nodes")
+Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
+Reviewed-by: Udit Kumar <u-kumar1@ti.com>
+Link: https://lore.kernel.org/r/20240430105253.203750-2-j-choudhary@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 34 +++++++++++------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-main.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 56f72d264eee8..0b824120d5488 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -785,6 +785,23 @@ pgc_usb2_phy: power-domain@3 {
- 						reg = <IMX8MP_POWER_DOMAIN_USB2_PHY>;
- 					};
- 
-+					pgc_mlmix: power-domain@4 {
-+						#power-domain-cells = <0>;
-+						reg = <IMX8MP_POWER_DOMAIN_MLMIX>;
-+						clocks = <&clk IMX8MP_CLK_ML_AXI>,
-+							 <&clk IMX8MP_CLK_ML_AHB>,
-+							 <&clk IMX8MP_CLK_NPU_ROOT>;
-+						assigned-clocks = <&clk IMX8MP_CLK_ML_CORE>,
-+								  <&clk IMX8MP_CLK_ML_AXI>,
-+								  <&clk IMX8MP_CLK_ML_AHB>;
-+						assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_800M>,
-+									 <&clk IMX8MP_SYS_PLL1_800M>,
-+									 <&clk IMX8MP_SYS_PLL1_800M>;
-+						assigned-clock-rates = <800000000>,
-+								       <800000000>,
-+								       <300000000>;
-+					};
-+
- 					pgc_audio: power-domain@5 {
- 						#power-domain-cells = <0>;
- 						reg = <IMX8MP_POWER_DOMAIN_AUDIOMIX>;
-@@ -879,23 +896,6 @@ pgc_vpu_vc8000e: power-domain@22 {
- 						reg = <IMX8MP_POWER_DOMAIN_VPU_VC8000E>;
- 						clocks = <&clk IMX8MP_CLK_VPU_VC8KE_ROOT>;
- 					};
--
--					pgc_mlmix: power-domain@24 {
--						#power-domain-cells = <0>;
--						reg = <IMX8MP_POWER_DOMAIN_MLMIX>;
--						clocks = <&clk IMX8MP_CLK_ML_AXI>,
--							 <&clk IMX8MP_CLK_ML_AHB>,
--							 <&clk IMX8MP_CLK_NPU_ROOT>;
--						assigned-clocks = <&clk IMX8MP_CLK_ML_CORE>,
--								  <&clk IMX8MP_CLK_ML_AXI>,
--								  <&clk IMX8MP_CLK_ML_AHB>;
--						assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_800M>,
--									 <&clk IMX8MP_SYS_PLL1_800M>,
--									 <&clk IMX8MP_SYS_PLL1_800M>;
--						assigned-clock-rates = <800000000>,
--								       <800000000>,
--								       <300000000>;
--					};
- 				};
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+index 448a59dc53a77..0f2722c4bcc32 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-main.dtsi
+@@ -141,8 +141,8 @@ main_pktdma: dma-controller@485c0000 {
+ 			compatible = "ti,am64-dmss-pktdma";
+ 			reg = <0x00 0x485c0000 0x00 0x100>,
+ 			      <0x00 0x4a800000 0x00 0x20000>,
+-			      <0x00 0x4aa00000 0x00 0x40000>,
+-			      <0x00 0x4b800000 0x00 0x400000>,
++			      <0x00 0x4aa00000 0x00 0x20000>,
++			      <0x00 0x4b800000 0x00 0x200000>,
+ 			      <0x00 0x485e0000 0x00 0x10000>,
+ 			      <0x00 0x484a0000 0x00 0x2000>,
+ 			      <0x00 0x484c0000 0x00 0x2000>,
 -- 
 2.43.0
 
