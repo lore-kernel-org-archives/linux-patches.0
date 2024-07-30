@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E55E189503;
-	Tue, 30 Jul 2024 16:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25ACA18801C;
+	Tue, 30 Jul 2024 16:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356401; cv=none; b=KGNuWD8ato5TNXZNvl1vGkdvMNBshuPb9QC0EvUSHFYy9T2LarjomIHej0BOpPnb/Fkw/SDux2O3KbV9H4OL9p6+2sj0BHM+NlbWLz4WeRbmCj4FVQD14pp6GdtL0K2I/BdUlQzhq5dn8yfrJ4+7L/G0AUoM3TtdVJ97SCEcs0s=
+	t=1722356405; cv=none; b=hHyVkGg1Re+AfBCpopUlSU0O3spl/PIhoapvn4+OzpyEAOIj5f+yKGYPr5seUqQpLfW8Z72tihFt/BH9xqQPrW41fjTYfzjHQXrmK83KJs7xmqLdLc8rsYOZ+idwOEgOTeot9wXZvGxz+bWFiQNqp0Oq91KtwgZjNGmxjtwG2mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356401; c=relaxed/simple;
-	bh=PJyBwxIxh4dWqkpdxlZyxwqrJex1L7O9MVJ04LHKHFw=;
+	s=arc-20240116; t=1722356405; c=relaxed/simple;
+	bh=oz+XLSIGacZXkoeJVVUcpjOC1pX2YQuJA9Vavjupnc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O/QhJyYNFtrUlMH6cUWfKaViNUD3frHBv5ahl2tZUW9Z+7BsHT3gIvPNw2ZBexMQFWeQnFwaOuuFTGL0dhQq1lF/suWusMpD2dyTkZVPB8BbOFaZsJnoMy/oxA/hpdi4FWDpIL7NQFU2DSPjY+U07NKx0suYe+TSSj/9bax0+Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfBRe25h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lk1RwEWjOsmk+YIPG7GVG6+AH0c3xcZPy3uwh5wjM1E9ceatFz9xnii1/iNbkutkNldrLVkuXLYBnc0Onp+8I1qtxRJ8cFq+Sz2j2GVQVezODkwPrWuIlE8cDiSXuP4mv16geaCVEoI/LFYgWrY+eRQPIDL/uPojKKs9VurWRGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUeIfART; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfBRe25h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FACC32782;
-	Tue, 30 Jul 2024 16:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUeIfART"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 519E2C32782;
+	Tue, 30 Jul 2024 16:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356401;
-	bh=PJyBwxIxh4dWqkpdxlZyxwqrJex1L7O9MVJ04LHKHFw=;
+	s=korg; t=1722356405;
+	bh=oz+XLSIGacZXkoeJVVUcpjOC1pX2YQuJA9Vavjupnc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RfBRe25hdtGq8wXnE1v5nuGRHi6EExvkATcsGJiH8ncqQvUX0UdeBpoZcVOCwx2GU
-	 NVzJywO7PE1cV2CcyndM3c5f2bpY5nZT+Fn+S4T9/Rt5hCayQyIaecI6GbddNRlNnp
-	 Q9CuZ7MwaiLKLJK1ngK5f2ZdhsHoow+CeFdurDb8=
+	b=GUeIfARTOKjh39I0W7mJyxFcEPNrLinXZGLe5YTi1TYATdJN3ZAUjRtTDWrDHj7UT
+	 8K6ShFhCX70yab3m2QDNNaoNwwtIK1G/EeNpQsJBFAyol2kvxm3J7BghQqqqyqWEba
+	 Ck2nPo8FaaSZG+XNt3zVNAMtyEi8eyGGRvrVfRvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Gray <bgray@linux.ibm.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Russell Currey <ruscur@russell.cc>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Mark Brown <broonie@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 188/440] powerpc/pseries: Fix alignment of PLPKS structures and buffers
-Date: Tue, 30 Jul 2024 17:47:01 +0200
-Message-ID: <20240730151623.217205054@linuxfoundation.org>
+Subject: [PATCH 6.6 145/568] xfrm: Export symbol xfrm_dev_state_delete.
+Date: Tue, 30 Jul 2024 17:44:12 +0200
+Message-ID: <20240730151645.545675691@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,77 +48,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Donnellan <ajd@linux.ibm.com>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit fcf63d6b8ab9b12c2ce1b4bde12a3c391029c998 ]
+[ Upstream commit 2d5317753e5f02a66e6d0afb9b25105d0beab1be ]
 
-A number of structures and buffers passed to PKS hcalls have alignment
-requirements, which could on occasion cause problems:
+This fixes a build failure if xfrm_user is build as a module.
 
-- Authorisation structures must be 16-byte aligned and must not cross a
-  page boundary
-
-- Label structures must not cross page boundaries
-
-- Password output buffers must not cross page boundaries
-
-To ensure correct alignment, we adjust the allocation size of each of
-these structures/buffers to be the closest power of 2 that is at least the
-size of the structure/buffer (since kmalloc() guarantees that an
-allocation of a power of 2 size will be aligned to at least that size).
-
-Reported-by: Benjamin Gray <bgray@linux.ibm.com>
-Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
-Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-Reviewed-by: Russell Currey <ruscur@russell.cc>
-Signed-off-by: Russell Currey <ruscur@russell.cc>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230210080401.345462-3-ajd@linux.ibm.com
-Stable-dep-of: 932bed412170 ("powerpc/kexec_file: fix cpus node update to FDT")
+Fixes: 07b87f9eea0c ("xfrm: Fix unregister netdevice hang on hardware offload.")
+Reported-by: Mark Brown <broonie@kernel.org>
+Tested-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/xfrm/xfrm_state.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index 25f95440a773b..d54188a355c9c 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -113,7 +113,8 @@ static int plpks_gen_password(void)
- 	u8 *password, consumer = PLPKS_OS_OWNER;
- 	int rc;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index e5308bb75eea2..7692d587e59b8 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -698,6 +698,7 @@ void xfrm_dev_state_delete(struct xfrm_state *x)
+ 		spin_unlock_bh(&xfrm_state_dev_gc_lock);
+ 	}
+ }
++EXPORT_SYMBOL_GPL(xfrm_dev_state_delete);
  
--	password = kzalloc(maxpwsize, GFP_KERNEL);
-+	// The password must not cross a page boundary, so we align to the next power of 2
-+	password = kzalloc(roundup_pow_of_two(maxpwsize), GFP_KERNEL);
- 	if (!password)
- 		return -ENOMEM;
- 
-@@ -149,7 +150,9 @@ static struct plpks_auth *construct_auth(u8 consumer)
- 	if (consumer > PLPKS_OS_OWNER)
- 		return ERR_PTR(-EINVAL);
- 
--	auth = kzalloc(struct_size(auth, password, maxpwsize), GFP_KERNEL);
-+	// The auth structure must not cross a page boundary and must be
-+	// 16 byte aligned. We align to the next largest power of 2
-+	auth = kzalloc(roundup_pow_of_two(struct_size(auth, password, maxpwsize)), GFP_KERNEL);
- 	if (!auth)
- 		return ERR_PTR(-ENOMEM);
- 
-@@ -183,7 +186,8 @@ static struct label *construct_label(char *component, u8 varos, u8 *name,
- 	if (component && slen > sizeof(label->attr.prefix))
- 		return ERR_PTR(-EINVAL);
- 
--	label = kzalloc(sizeof(*label), GFP_KERNEL);
-+	// The label structure must not cross a page boundary, so we align to the next power of 2
-+	label = kzalloc(roundup_pow_of_two(sizeof(*label)), GFP_KERNEL);
- 	if (!label)
- 		return ERR_PTR(-ENOMEM);
- 
+ void xfrm_dev_state_free(struct xfrm_state *x)
+ {
 -- 
 2.43.0
 
