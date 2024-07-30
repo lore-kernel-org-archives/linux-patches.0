@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ABC1A6169;
-	Tue, 30 Jul 2024 16:42:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08E291A619E;
+	Tue, 30 Jul 2024 16:42:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357740; cv=none; b=lEOpDVmG5ThnqGiVVRYUG/cNEHfzFXAFz233bO6fSqta/5dyr+4qa+XMP/ApDPte2DIlJoeFW9ndwxuyv9FqSTDS09SSCV1Vr2LEIbtXxJvpWbIFR2EUST8LNtuL3xyi52uTYxAyWcA212uyb6SComi04P5E17jkyckFPCWbrBM=
+	t=1722357744; cv=none; b=jDIE/Nm0qOwZOuGqUm1C/gNlkYr4Y3qNSE4O5RarrGeLqt896jsTmIKyMWNP3Lk2apnfJxK0A3IVNwTBiueDSgifsLGh0l3dBNvzVRsd5X1h1qR4+CYKWfEX02Mto/SCpckCZHKOCBifiRTKNqPPrYxSs3fY77sXirl5BVh4vB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357740; c=relaxed/simple;
-	bh=/RKHR3GcrgrZYyb1Z2ntPa1SzEYPY9xb8kR0IBgCJok=;
+	s=arc-20240116; t=1722357744; c=relaxed/simple;
+	bh=Lhy/Ufx4hqCZ3ifbj3nvLOGk2qKJl971yjXDS+1LdfA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GjcY4cWr2wTQMBXC0JHotd+6zDcincBpZC3aBOHgDgwXVoDuNJDxNk40JSxD/GqgSqbK4GzbsBeQkoRLKl0VqZSITNCi8lY3rwRNNVMZsgbn1WC5ujaMOVxSNIpT4RG2OmDKd6ok/dbt7AtNvU3cje1XOH9wINjQDuKkXOnWG4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XvsJXnDG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aHQNVp4jMdKc+U3XH+eOPrJ2/TL8oLieHA1/1Z5dKoW/97x8oQPe60WUkwYh8ruYaAOSP16DCm+AZWhW/qM+7B7Cepg9P1ubtJqXXYk+Y+Avbj14AEpif8vg8S+ORFzUdwPBIK4s2oTnJ/2J17z1FuOrcQkrnGZdUe37ENDzEqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0cIA9oh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XvsJXnDG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E03C32782;
-	Tue, 30 Jul 2024 16:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0cIA9oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C1BC32782;
+	Tue, 30 Jul 2024 16:42:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357740;
-	bh=/RKHR3GcrgrZYyb1Z2ntPa1SzEYPY9xb8kR0IBgCJok=;
+	s=korg; t=1722357743;
+	bh=Lhy/Ufx4hqCZ3ifbj3nvLOGk2qKJl971yjXDS+1LdfA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvsJXnDGrkMMNQqZCvoRAwV09DADs/Fzy3Dc9U62J0Av1chURikay2ra1+J0J4Lrr
-	 LizlfcUOMIyjg9yhbD/8cToqktHMIFOXsyZSSE8i771YbcWTPtC5jFvCcR5wssLUSw
-	 /wOfv0KwBEdJLl5DQoVKRgdKE/Itg7IQU2swg/fA=
+	b=S0cIA9ohGhcCdTu39iQQhEIg7llCVf8nzEHQWQ4i3RRjURPT5rDqXUhkFR3P1LITN
+	 HKMZFNzFisOkJp/sXmQnnxBgfkOJJyVDAubGAgpSgeCsIF50oVapjT5c6LDrZ1lE70
+	 zczkKbjYWtaQJ1OCxYaudqyVw1rQX8hT4AYtkp0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 263/568] usb: typec-mux: nb7vpq904m: unregister typec switch on probe error and remove
-Date: Tue, 30 Jul 2024 17:46:10 +0200
-Message-ID: <20240730151650.155815873@linuxfoundation.org>
+Subject: [PATCH 6.10 284/809] drm/amd/display: dynamically allocate dml2_configuration_options structures
+Date: Tue, 30 Jul 2024 17:42:40 +0200
+Message-ID: <20240730151735.811175844@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,110 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 74b64e760ee3433c0f8d95715038c869bcddacf7 ]
+[ Upstream commit 88c61827cedc14cd305d4266dc18ff0fdb3f8d4c ]
 
-Add the missing call to typec_switch_put() when probe fails and
-the nb7vpq904m_remove() call is called.
+This structure is too large to fit on a stack, as shown by the
+newly introduced warnings from a recent code change:
 
-Fixes: 348359e7c232 ("usb: typec: nb7vpq904m: Add an error handling path in nb7vpq904m_probe()")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Fixes: 88d8f3ac9c67 ("usb: typec: add support for the nb7vpq904m Type-C Linear Redriver")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-2-c6f6eae479c3@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn32/dcn32_resource.c: In function 'dcn32_update_bw_bounding_box':
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn32/dcn32_resource.c:2019:1: error: the frame size of 1180 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn321/dcn321_resource.c: In function 'dcn321_update_bw_bounding_box':
+drivers/gpu/drm/amd/amdgpu/../display/dc/resource/dcn321/dcn321_resource.c:1597:1: error: the frame size of 1180 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_state.c: In function 'dc_state_create':
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_state.c:219:1: error: the frame size of 1184 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
+
+Instead of open-coding the assignment of a large structure to a stack
+variable, use an explicit kmemdup() in each case to move it off the stack.
+
+Fixes: e779f4587f61 ("drm/amd/display: Add handling for DC power mode")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux/nb7vpq904m.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../display/dc/resource/dcn32/dcn32_resource.c   | 16 +++++++++++-----
+ .../display/dc/resource/dcn321/dcn321_resource.c | 16 +++++++++++-----
+ 2 files changed, 22 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/usb/typec/mux/nb7vpq904m.c b/drivers/usb/typec/mux/nb7vpq904m.c
-index cda206cf0c387..596639dad31d7 100644
---- a/drivers/usb/typec/mux/nb7vpq904m.c
-+++ b/drivers/usb/typec/mux/nb7vpq904m.c
-@@ -453,7 +453,7 @@ static int nb7vpq904m_probe(struct i2c_client *client)
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+index abd76345d1e43..957002967d691 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
+@@ -2006,21 +2006,27 @@ void dcn32_calculate_wm_and_dlg(struct dc *dc, struct dc_state *context,
  
- 	ret = nb7vpq904m_parse_data_lanes_mapping(nb7);
- 	if (ret)
--		return ret;
-+		goto err_switch_put;
- 
- 	ret = regulator_enable(nb7->vcc_supply);
- 	if (ret)
-@@ -496,6 +496,9 @@ static int nb7vpq904m_probe(struct i2c_client *client)
- 	gpiod_set_value(nb7->enable_gpio, 0);
- 	regulator_disable(nb7->vcc_supply);
- 
-+err_switch_put:
-+	typec_switch_put(nb7->typec_switch);
+ static void dcn32_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params)
+ {
+-	struct dml2_configuration_options dml2_opt = dc->dml2_options;
++	struct dml2_configuration_options *dml2_opt;
 +
- 	return ret;
++	dml2_opt = kmemdup(&dc->dml2_options, sizeof(dc->dml2_options), GFP_KERNEL);
++	if (!dml2_opt)
++		return;
+ 
+ 	DC_FP_START();
+ 
+ 	dcn32_update_bw_bounding_box_fpu(dc, bw_params);
+ 
+-	dml2_opt.use_clock_dc_limits = false;
++	dml2_opt->use_clock_dc_limits = false;
+ 	if (dc->debug.using_dml2 && dc->current_state && dc->current_state->bw_ctx.dml2)
+-		dml2_reinit(dc, &dml2_opt, &dc->current_state->bw_ctx.dml2);
++		dml2_reinit(dc, dml2_opt, &dc->current_state->bw_ctx.dml2);
+ 
+-	dml2_opt.use_clock_dc_limits = true;
++	dml2_opt->use_clock_dc_limits = true;
+ 	if (dc->debug.using_dml2 && dc->current_state && dc->current_state->bw_ctx.dml2_dc_power_source)
+-		dml2_reinit(dc, &dml2_opt, &dc->current_state->bw_ctx.dml2_dc_power_source);
++		dml2_reinit(dc, dml2_opt, &dc->current_state->bw_ctx.dml2_dc_power_source);
+ 
+ 	DC_FP_END();
++
++	kfree(dml2_opt);
  }
  
-@@ -509,6 +512,8 @@ static void nb7vpq904m_remove(struct i2c_client *client)
- 	gpiod_set_value(nb7->enable_gpio, 0);
+ static struct resource_funcs dcn32_res_pool_funcs = {
+diff --git a/drivers/gpu/drm/amd/display/dc/resource/dcn321/dcn321_resource.c b/drivers/gpu/drm/amd/display/dc/resource/dcn321/dcn321_resource.c
+index e4b360d89b3be..07ca6f58447d6 100644
+--- a/drivers/gpu/drm/amd/display/dc/resource/dcn321/dcn321_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/resource/dcn321/dcn321_resource.c
+@@ -1581,21 +1581,27 @@ static struct dc_cap_funcs cap_funcs = {
  
- 	regulator_disable(nb7->vcc_supply);
+ static void dcn321_update_bw_bounding_box(struct dc *dc, struct clk_bw_params *bw_params)
+ {
+-	struct dml2_configuration_options dml2_opt = dc->dml2_options;
++	struct dml2_configuration_options *dml2_opt;
 +
-+	typec_switch_put(nb7->typec_switch);
++	dml2_opt = kmemdup(&dc->dml2_options, sizeof(dc->dml2_options), GFP_KERNEL);
++	if (!dml2_opt)
++		return;
+ 
+ 	DC_FP_START();
+ 
+ 	dcn321_update_bw_bounding_box_fpu(dc, bw_params);
+ 
+-	dml2_opt.use_clock_dc_limits = false;
++	dml2_opt->use_clock_dc_limits = false;
+ 	if (dc->debug.using_dml2 && dc->current_state && dc->current_state->bw_ctx.dml2)
+-		dml2_reinit(dc, &dml2_opt, &dc->current_state->bw_ctx.dml2);
++		dml2_reinit(dc, dml2_opt, &dc->current_state->bw_ctx.dml2);
+ 
+-	dml2_opt.use_clock_dc_limits = true;
++	dml2_opt->use_clock_dc_limits = true;
+ 	if (dc->debug.using_dml2 && dc->current_state && dc->current_state->bw_ctx.dml2_dc_power_source)
+-		dml2_reinit(dc, &dml2_opt, &dc->current_state->bw_ctx.dml2_dc_power_source);
++		dml2_reinit(dc, dml2_opt, &dc->current_state->bw_ctx.dml2_dc_power_source);
+ 
+ 	DC_FP_END();
++
++	kfree(dml2_opt);
  }
  
- static const struct i2c_device_id nb7vpq904m_table[] = {
+ static struct resource_funcs dcn321_res_pool_funcs = {
 -- 
 2.43.0
 
