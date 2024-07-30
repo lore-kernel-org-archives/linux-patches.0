@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3887E187FED;
-	Tue, 30 Jul 2024 16:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883BA187FEC;
+	Tue, 30 Jul 2024 16:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355330; cv=none; b=diTdGyXOh4BvnA1pC3qlNlhVjhZ/YP9zmWP8HDcMEq3BgID5iLc12DXGe8gizc1PohjYHAuqLgZYhbuKUTaiT7AjEa6Wpj4FZKCuu+Z8N0UbfM/fJr/bqRd6gifMpEvMOGfXoLmD5U3A1rr1vc1VjJK8jEI49B7XBa4Zk/s0BzA=
+	t=1722355333; cv=none; b=QsDiRy8cyebm2M4xYrnCUdyZZyBjQDehAmPUBr3ea2rU3i9Yp8H88m1tKNp1uWhAYbXOC0zwaNkA9yXKJDuW+8MgmBkj+A51UqrxJGWThyvrxAQnoLNA1dkdeP8sbs5GhKX2dU1atyTxcSdaF3eX2mfgkF1t2/a2alSAbzhdL3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355330; c=relaxed/simple;
-	bh=19jz7nuKmqrVRu1ab9vtmJwGsl50NjIr49LlWIJFd94=;
+	s=arc-20240116; t=1722355333; c=relaxed/simple;
+	bh=MdZViQBFv2l9bmAH26x7kRk901pl8mRRWPFHBOOoUGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i+dOjOrHsw3bOjSJyFS5ITiTPmuDEs17lMu4iABChWfOi/o+h3LV7xpvUcwiBSnbOAGZOpbBIHHEeSikLvnuVhHS0Xf0p4yWOWRLl2mlV5FUWOwsc7o/+zmW7VAsHQ1fHoxzY/iGco3zcX7ajMEDArc4zPIvSqbTGeQM38I383c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPlwt8rE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BK3sF8lqxjapK/IuXiPSG9vnWqWGXT2DcOIOIyBjLHT8qlWO2Fi8DtJ6fhr/ScQjQp843N46s2BR1v+4nJz+r5fFEVRp0Xckl/w50JopwNGWZRSOKo5L0EK6JUWtwkoqpGYDHeoKY0jxnjWyuJnXs2upVz6hPszmDSX/P9WKz+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBitkGXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPlwt8rE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994C7C32782;
-	Tue, 30 Jul 2024 16:02:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBitkGXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB7CC32782;
+	Tue, 30 Jul 2024 16:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355330;
-	bh=19jz7nuKmqrVRu1ab9vtmJwGsl50NjIr49LlWIJFd94=;
+	s=korg; t=1722355333;
+	bh=MdZViQBFv2l9bmAH26x7kRk901pl8mRRWPFHBOOoUGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPlwt8rEbwPty/CFD8tK1dRxksee/fp59xzjkIKMZJdXMjbbu94MbcmPrKECp709/
-	 ZMuM+nanTvxzPuTmdKeanVnHvf0ZATQKiHJEFWdYm0WCN/Ft2DJmpm7t77UCZzbnS0
-	 2HfkbnjaQTA7cLladPCyp3LFxX3mF6GToMoOOq/I=
+	b=RBitkGXMAH6Z+GIOfhNVwDiZfhfUyxstjCjYK9IH6KOcYUTTA4olcJHoNxjEvbrlS
+	 5GErDFCmOiKaMFI6apjzXdjBjgOko4pgHN5293AgLyclpzivngK4b0COTidUZGNOOS
+	 I1JuQfHYUpS/zfhIGYsVX0GrwdQQR7DVz7x4DReo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 041/809] soc: qcom: socinfo: Update X1E PMICs
-Date: Tue, 30 Jul 2024 17:38:37 +0200
-Message-ID: <20240730151726.271557790@linuxfoundation.org>
+Subject: [PATCH 6.1 084/440] selftests/bpf: Fix prog numbers in test_sockmap
+Date: Tue, 30 Jul 2024 17:45:17 +0200
+Message-ID: <20240730151619.041182233@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +47,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 85f5656a4f3f188cb950cf8dc88f3f0e4e656bae ]
+[ Upstream commit 6c8d7598dfed759bf1d9d0322b4c2b42eb7252d8 ]
 
-Assign the correct name to ID 82 and fix the ID of SMB2360.
+bpf_prog5 and bpf_prog7 are removed from progs/test_sockmap_kern.h in
+commit d79a32129b21 ("bpf: Selftests, remove prints from sockmap tests"),
+now there are only 9 progs in it, not 11:
 
-Fixes: e025171d1ab1 ("soc: qcom: socinfo: Add SMB2360 PMIC")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+	SEC("sk_skb1")
+	int bpf_prog1(struct __sk_buff *skb)
+	SEC("sk_skb2")
+	int bpf_prog2(struct __sk_buff *skb)
+	SEC("sk_skb3")
+	int bpf_prog3(struct __sk_buff *skb)
+	SEC("sockops")
+	int bpf_sockmap(struct bpf_sock_ops *skops)
+	SEC("sk_msg1")
+	int bpf_prog4(struct sk_msg_md *msg)
+	SEC("sk_msg2")
+	int bpf_prog6(struct sk_msg_md *msg)
+	SEC("sk_msg3")
+	int bpf_prog8(struct sk_msg_md *msg)
+	SEC("sk_msg4")
+	int bpf_prog9(struct sk_msg_md *msg)
+	SEC("sk_msg5")
+	int bpf_prog10(struct sk_msg_md *msg)
+
+This patch updates the array sizes of prog_fd[], prog_attach_type[] and
+prog_type[] from 11 to 9 accordingly.
+
+Fixes: d79a32129b21 ("bpf: Selftests, remove prints from sockmap tests")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/9c10d9f974f07fcb354a43a8eca67acb2fafc587.1715926605.git.tanggeliang@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/socinfo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-index 277c07a6603d4..41342c37916ae 100644
---- a/drivers/soc/qcom/socinfo.c
-+++ b/drivers/soc/qcom/socinfo.c
-@@ -133,7 +133,8 @@ static const char *const pmic_models[] = {
- 	[72] = "PMR735D",
- 	[73] = "PM8550",
- 	[74] = "PMK8550",
--	[82] = "SMB2360",
-+	[82] = "PMC8380",
-+	[83] = "SMB2360",
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index d56f521b8aaa2..2417300abf36c 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -63,7 +63,7 @@ int passed;
+ int failed;
+ int map_fd[9];
+ struct bpf_map *maps[9];
+-int prog_fd[11];
++int prog_fd[9];
+ 
+ int txmsg_pass;
+ int txmsg_redir;
+@@ -1775,8 +1775,6 @@ int prog_attach_type[] = {
+ 	BPF_SK_MSG_VERDICT,
+ 	BPF_SK_MSG_VERDICT,
+ 	BPF_SK_MSG_VERDICT,
+-	BPF_SK_MSG_VERDICT,
+-	BPF_SK_MSG_VERDICT,
  };
  
- struct socinfo_params {
+ int prog_type[] = {
+@@ -1789,8 +1787,6 @@ int prog_type[] = {
+ 	BPF_PROG_TYPE_SK_MSG,
+ 	BPF_PROG_TYPE_SK_MSG,
+ 	BPF_PROG_TYPE_SK_MSG,
+-	BPF_PROG_TYPE_SK_MSG,
+-	BPF_PROG_TYPE_SK_MSG,
+ };
+ 
+ static int populate_progs(char *bpf_file)
 -- 
 2.43.0
 
