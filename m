@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3991A76A9;
-	Tue, 30 Jul 2024 17:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14621A76A9;
+	Tue, 30 Jul 2024 17:18:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359889; cv=none; b=q/hLsY7KWy7tyMjPmeXfYIorwTwPD1xFEc0Op7vK2yqFMddfNh0BBoKBxvP7ktt4aeGk1232o22G1rlnB2Bu+jjxz8VCyOh3ZzWSkLk4oSiPbN5HnxAbVSudPJpeikcm89zkLh+ZF75gNndiiQvK0ZnPUosJqasOAVWoifm8s7w=
+	t=1722359893; cv=none; b=ZYfy5pRROBuhf0JGk1vBYFuN8cSLLWQ0QZNCD5Jq9X8CxJq5UnyVqRCGivNtbNwLL+i05duJqTooQa93i3cwoZYdvF+emX3989vn/3mRLGfoQnOX12xciApdxVWfyf5E4aiQH6Yl5kcwHJdx7rusmHiBI1FKSVagDzgL96Da6dU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359889; c=relaxed/simple;
-	bh=IIDrOk0YDGeud7FXo8rJFSzZMs4aSHwB+zv84F9tKiw=;
+	s=arc-20240116; t=1722359893; c=relaxed/simple;
+	bh=gVX3qinZyvg5YOv8ipDii20q32rPo6FTR4v5sh4dbGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DDRVu8OMxndT9TnVog9U6MXBv0/mTGVL3mGeDFMbdJLu87cRjgGFZCPtT2mY8c8biqEK9mdlzOCEKFBCHX2D4XqhQIJ5zkid+YGh8umMGSrR5Jsh0aK5Andf+KcoT9pYDmM/0hRzx+Hn62c9bN8Fv7deA4/ikS0/QCiEYTo9cOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1o4M8/GC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fPCG6HbmQCdzbluA6pUmUQx3jEHHdJSHQKUsXN05icWtjW3+CvgFwEFE9hhetWr0cWVerA5C+QEvX8dgm1vyxc4cf+Jz5N2R56A3bUumqrw2wfS37OSdi3YEK+sIaf8kTAD8ck0ZeMCm98F3H1S3t4fE2lboRPJOug4U1naWyRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jwbuz0IE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1o4M8/GC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6C4C4AF0E;
-	Tue, 30 Jul 2024 17:18:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jwbuz0IE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CB59C32782;
+	Tue, 30 Jul 2024 17:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359889;
-	bh=IIDrOk0YDGeud7FXo8rJFSzZMs4aSHwB+zv84F9tKiw=;
+	s=korg; t=1722359892;
+	bh=gVX3qinZyvg5YOv8ipDii20q32rPo6FTR4v5sh4dbGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1o4M8/GCZ+Fs/+J9hNiALCl6H30/PQU+cErng9/Z2dqzWpV3ZzGryp9C6VPg6Ylrg
-	 v8TOQrATvkwNSAqL3uNOvqUVyp6CBXMLVl9TVu9xg7tIerP07bNVD7EreoSxMryF4f
-	 ssnfTBeG/X1lB1f7NoO2cx+kc0pKYX49J0FwlX3U=
+	b=jwbuz0IE8Npp7oP6skqtL/JtgN0DFNejFSGwLY8frImBJTCQhW9l8HuiiSPZWUax+
+	 gFXySn3GGqAqUuj4LRY6UuFMShLKUh68waCxkKdWztJaMhsvLokyX1Gt07QiEXIE7r
+	 pmvJrkw0MhCDY//uVvcxjKiY2IXLqU1OVl9yMN2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengen Du <chengen.du@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 550/809] af_packet: Handle outgoing VLAN packets without hardware offloading
-Date: Tue, 30 Jul 2024 17:47:06 +0200
-Message-ID: <20240730151746.479299467@linuxfoundation.org>
+	Steve Wilkins <steve.wilkins@raymarine.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 552/568] spi: microchip-core: only disable SPI controller when register value change requires it
+Date: Tue, 30 Jul 2024 17:50:59 +0200
+Message-ID: <20240730151701.735712876@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,177 +48,213 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengen Du <chengen.du@canonical.com>
+From: Steve Wilkins <steve.wilkins@raymarine.com>
 
-commit 79eecf631c14e7f4057186570ac20e2cfac3802e upstream.
+[ Upstream commit de9850b5c606b754dd7861678d6e2874b96b04f8 ]
 
-The issue initially stems from libpcap. The ethertype will be overwritten
-as the VLAN TPID if the network interface lacks hardware VLAN offloading.
-In the outbound packet path, if hardware VLAN offloading is unavailable,
-the VLAN tag is inserted into the payload but then cleared from the sk_buff
-struct. Consequently, this can lead to a false negative when checking for
-the presence of a VLAN tag, causing the packet sniffing outcome to lack
-VLAN tag information (i.e., TCI-TPID). As a result, the packet capturing
-tool may be unable to parse packets as expected.
+Setting up many of the registers for a new SPI transfer involves
+unconditionally disabling the SPI controller, writing the register
+value and re-enabling the controller. This is being done for registers
+even when the value is unchanged and is also done for registers that
+don't require the controller to be disabled for the change to take
+effect. Make an effort to detect changes to the register values, and
+only disables the controller if the new register value is different
+and disabling the controller is required. This stops the controller
+being repeated disabled and the bus going tristate before every
+transfer.
 
-The TCI-TPID is missing because the prb_fill_vlan_info() function does not
-modify the tp_vlan_tci/tp_vlan_tpid values, as the information is in the
-payload and not in the sk_buff struct. The skb_vlan_tag_present() function
-only checks vlan_all in the sk_buff struct. In cooked mode, the L2 header
-is stripped, preventing the packet capturing tool from determining the
-correct TCI-TPID value. Additionally, the protocol in SLL is incorrect,
-which means the packet capturing tool cannot parse the L3 header correctly.
-
-Link: https://github.com/the-tcpdump-group/libpcap/issues/1105
-Link: https://lore.kernel.org/netdev/20240520070348.26725-1-chengen.du@canonical.com/T/#u
-Fixes: 393e52e33c6c ("packet: deliver VLAN TCI to userspace")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chengen Du <chengen.du@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240713114735.62360-1-chengen.du@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
+Signed-off-by: Steve Wilkins <steve.wilkins@raymarine.com>
+Co-developed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20240715-depict-twirl-7e592eeabaad@wendy
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c |   86 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 84 insertions(+), 2 deletions(-)
+ drivers/spi/spi-microchip-core.c | 79 +++++++++++++++++---------------
+ 1 file changed, 41 insertions(+), 38 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -538,6 +538,61 @@ static void *packet_current_frame(struct
- 	return packet_lookup_frame(po, rb, rb->head, status);
+diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
+index b49843f0c2e8e..cd624872dafb8 100644
+--- a/drivers/spi/spi-microchip-core.c
++++ b/drivers/spi/spi-microchip-core.c
+@@ -75,6 +75,7 @@
+ 
+ #define REG_CONTROL		(0x00)
+ #define REG_FRAME_SIZE		(0x04)
++#define  FRAME_SIZE_MASK	GENMASK(5, 0)
+ #define REG_STATUS		(0x08)
+ #define REG_INT_CLEAR		(0x0c)
+ #define REG_RX_DATA		(0x10)
+@@ -89,6 +90,7 @@
+ #define REG_RIS			(0x24)
+ #define REG_CONTROL2		(0x28)
+ #define REG_COMMAND		(0x2c)
++#define  COMMAND_CLRFRAMECNT	BIT(4)
+ #define REG_PKTSIZE		(0x30)
+ #define REG_CMD_SIZE		(0x34)
+ #define REG_HWSTATUS		(0x38)
+@@ -149,62 +151,59 @@ static inline void mchp_corespi_read_fifo(struct mchp_corespi *spi)
+ 
+ static void mchp_corespi_enable_ints(struct mchp_corespi *spi)
+ {
+-	u32 control, mask = INT_ENABLE_MASK;
+-
+-	mchp_corespi_disable(spi);
+-
+-	control = mchp_corespi_read(spi, REG_CONTROL);
+-
+-	control |= mask;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	u32 control = mchp_corespi_read(spi, REG_CONTROL);
+ 
+-	control |= CONTROL_ENABLE;
++	control |= INT_ENABLE_MASK;
+ 	mchp_corespi_write(spi, REG_CONTROL, control);
  }
  
-+static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
-+{
-+	u8 *skb_orig_data = skb->data;
-+	int skb_orig_len = skb->len;
-+	struct vlan_hdr vhdr, *vh;
-+	unsigned int header_len;
-+
-+	if (!dev)
-+		return 0;
-+
-+	/* In the SOCK_DGRAM scenario, skb data starts at the network
-+	 * protocol, which is after the VLAN headers. The outer VLAN
-+	 * header is at the hard_header_len offset in non-variable
-+	 * length link layer headers. If it's a VLAN device, the
-+	 * min_header_len should be used to exclude the VLAN header
-+	 * size.
-+	 */
-+	if (dev->min_header_len == dev->hard_header_len)
-+		header_len = dev->hard_header_len;
-+	else if (is_vlan_dev(dev))
-+		header_len = dev->min_header_len;
-+	else
-+		return 0;
-+
-+	skb_push(skb, skb->data - skb_mac_header(skb));
-+	vh = skb_header_pointer(skb, header_len, sizeof(vhdr), &vhdr);
-+	if (skb_orig_data != skb->data) {
-+		skb->data = skb_orig_data;
-+		skb->len = skb_orig_len;
-+	}
-+	if (unlikely(!vh))
-+		return 0;
-+
-+	return ntohs(vh->h_vlan_TCI);
-+}
-+
-+static __be16 vlan_get_protocol_dgram(struct sk_buff *skb)
-+{
-+	__be16 proto = skb->protocol;
-+
-+	if (unlikely(eth_type_vlan(proto))) {
-+		u8 *skb_orig_data = skb->data;
-+		int skb_orig_len = skb->len;
-+
-+		skb_push(skb, skb->data - skb_mac_header(skb));
-+		proto = __vlan_get_protocol(skb, proto, NULL);
-+		if (skb_orig_data != skb->data) {
-+			skb->data = skb_orig_data;
-+			skb->len = skb_orig_len;
-+		}
-+	}
-+
-+	return proto;
-+}
-+
- static void prb_del_retire_blk_timer(struct tpacket_kbdq_core *pkc)
+ static void mchp_corespi_disable_ints(struct mchp_corespi *spi)
  {
- 	del_timer_sync(&pkc->retire_blk_timer);
-@@ -1007,10 +1062,16 @@ static void prb_clear_rxhash(struct tpac
- static void prb_fill_vlan_info(struct tpacket_kbdq_core *pkc,
- 			struct tpacket3_hdr *ppd)
+-	u32 control, mask = INT_ENABLE_MASK;
+-
+-	mchp_corespi_disable(spi);
+-
+-	control = mchp_corespi_read(spi, REG_CONTROL);
+-	control &= ~mask;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	u32 control = mchp_corespi_read(spi, REG_CONTROL);
+ 
+-	control |= CONTROL_ENABLE;
++	control &= ~INT_ENABLE_MASK;
+ 	mchp_corespi_write(spi, REG_CONTROL, control);
+ }
+ 
+ static inline void mchp_corespi_set_xfer_size(struct mchp_corespi *spi, int len)
  {
-+	struct packet_sock *po = container_of(pkc, struct packet_sock, rx_ring.prb_bdqc);
+ 	u32 control;
+-	u16 lenpart;
++	u32 lenpart;
++	u32 frames = mchp_corespi_read(spi, REG_FRAMESUP);
+ 
+ 	/*
+-	 * Disable the SPI controller. Writes to transfer length have
+-	 * no effect when the controller is enabled.
++	 * Writing to FRAMECNT in REG_CONTROL will reset the frame count, taking
++	 * a shortcut requires an explicit clear.
+ 	 */
+-	mchp_corespi_disable(spi);
++	if (frames == len) {
++		mchp_corespi_write(spi, REG_COMMAND, COMMAND_CLRFRAMECNT);
++		return;
++	}
+ 
+ 	/*
+ 	 * The lower 16 bits of the frame count are stored in the control reg
+ 	 * for legacy reasons, but the upper 16 written to a different register:
+ 	 * FRAMESUP. While both the upper and lower bits can be *READ* from the
+-	 * FRAMESUP register, writing to the lower 16 bits is a NOP
++	 * FRAMESUP register, writing to the lower 16 bits is (supposedly) a NOP.
++	 *
++	 * The driver used to disable the controller while modifying the frame
++	 * count, and mask off the lower 16 bits of len while writing to
++	 * FRAMES_UP. When the driver was changed to disable the controller as
++	 * infrequently as possible, it was discovered that the logic of
++	 * lenpart = len & 0xffff_0000
++	 * write(REG_FRAMESUP, lenpart)
++	 * would actually write zeros into the lower 16 bits on an mpfs250t-es,
++	 * despite documentation stating these bits were read-only.
++	 * Writing len unmasked into FRAMES_UP ensures those bits aren't zeroed
++	 * on an mpfs250t-es and will be a NOP for the lower 16 bits on hardware
++	 * that matches the documentation.
+ 	 */
+ 	lenpart = len & 0xffff;
+-
+ 	control = mchp_corespi_read(spi, REG_CONTROL);
+ 	control &= ~CONTROL_FRAMECNT_MASK;
+ 	control |= lenpart << CONTROL_FRAMECNT_SHIFT;
+ 	mchp_corespi_write(spi, REG_CONTROL, control);
+-
+-	lenpart = len & 0xffff0000;
+-	mchp_corespi_write(spi, REG_FRAMESUP, lenpart);
+-
+-	control |= CONTROL_ENABLE;
+-	mchp_corespi_write(spi, REG_CONTROL, control);
++	mchp_corespi_write(spi, REG_FRAMESUP, len);
+ }
+ 
+ static inline void mchp_corespi_write_fifo(struct mchp_corespi *spi)
+@@ -227,17 +226,22 @@ static inline void mchp_corespi_write_fifo(struct mchp_corespi *spi)
+ 
+ static inline void mchp_corespi_set_framesize(struct mchp_corespi *spi, int bt)
+ {
++	u32 frame_size = mchp_corespi_read(spi, REG_FRAME_SIZE);
+ 	u32 control;
+ 
++	if ((frame_size & FRAME_SIZE_MASK) == bt)
++		return;
 +
- 	if (skb_vlan_tag_present(pkc->skb)) {
- 		ppd->hv1.tp_vlan_tci = skb_vlan_tag_get(pkc->skb);
- 		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->vlan_proto);
- 		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+	} else if (unlikely(po->sk.sk_type == SOCK_DGRAM && eth_type_vlan(pkc->skb->protocol))) {
-+		ppd->hv1.tp_vlan_tci = vlan_get_tci(pkc->skb, pkc->skb->dev);
-+		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->protocol);
-+		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
- 	} else {
- 		ppd->hv1.tp_vlan_tci = 0;
- 		ppd->hv1.tp_vlan_tpid = 0;
-@@ -2428,6 +2489,10 @@ static int tpacket_rcv(struct sk_buff *s
- 			h.h2->tp_vlan_tci = skb_vlan_tag_get(skb);
- 			h.h2->tp_vlan_tpid = ntohs(skb->vlan_proto);
- 			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+		} else if (unlikely(sk->sk_type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
-+			h.h2->tp_vlan_tci = vlan_get_tci(skb, skb->dev);
-+			h.h2->tp_vlan_tpid = ntohs(skb->protocol);
-+			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
- 		} else {
- 			h.h2->tp_vlan_tci = 0;
- 			h.h2->tp_vlan_tpid = 0;
-@@ -2457,7 +2522,8 @@ static int tpacket_rcv(struct sk_buff *s
- 	sll->sll_halen = dev_parse_header(skb, sll->sll_addr);
- 	sll->sll_family = AF_PACKET;
- 	sll->sll_hatype = dev->type;
--	sll->sll_protocol = skb->protocol;
-+	sll->sll_protocol = (sk->sk_type == SOCK_DGRAM) ?
-+		vlan_get_protocol_dgram(skb) : skb->protocol;
- 	sll->sll_pkttype = skb->pkt_type;
- 	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
- 		sll->sll_ifindex = orig_dev->ifindex;
-@@ -3482,7 +3548,8 @@ static int packet_recvmsg(struct socket
- 		/* Original length was stored in sockaddr_ll fields */
- 		origlen = PACKET_SKB_CB(skb)->sa.origlen;
- 		sll->sll_family = AF_PACKET;
--		sll->sll_protocol = skb->protocol;
-+		sll->sll_protocol = (sock->type == SOCK_DGRAM) ?
-+			vlan_get_protocol_dgram(skb) : skb->protocol;
+ 	/*
+ 	 * Disable the SPI controller. Writes to the frame size have
+ 	 * no effect when the controller is enabled.
+ 	 */
+-	mchp_corespi_disable(spi);
++	control = mchp_corespi_read(spi, REG_CONTROL);
++	control &= ~CONTROL_ENABLE;
++	mchp_corespi_write(spi, REG_CONTROL, control);
+ 
+ 	mchp_corespi_write(spi, REG_FRAME_SIZE, bt);
+ 
+-	control = mchp_corespi_read(spi, REG_CONTROL);
+ 	control |= CONTROL_ENABLE;
+ 	mchp_corespi_write(spi, REG_CONTROL, control);
+ }
+@@ -334,8 +338,6 @@ static inline void mchp_corespi_set_clk_gen(struct mchp_corespi *spi)
+ {
+ 	u32 control;
+ 
+-	mchp_corespi_disable(spi);
+-
+ 	control = mchp_corespi_read(spi, REG_CONTROL);
+ 	if (spi->clk_mode)
+ 		control |= CONTROL_CLKMODE;
+@@ -344,12 +346,12 @@ static inline void mchp_corespi_set_clk_gen(struct mchp_corespi *spi)
+ 
+ 	mchp_corespi_write(spi, REG_CLK_GEN, spi->clk_gen);
+ 	mchp_corespi_write(spi, REG_CONTROL, control);
+-	mchp_corespi_write(spi, REG_CONTROL, control | CONTROL_ENABLE);
+ }
+ 
+ static inline void mchp_corespi_set_mode(struct mchp_corespi *spi, unsigned int mode)
+ {
+-	u32 control, mode_val;
++	u32 mode_val;
++	u32 control = mchp_corespi_read(spi, REG_CONTROL);
+ 
+ 	switch (mode & SPI_MODE_X_MASK) {
+ 	case SPI_MODE_0:
+@@ -367,12 +369,13 @@ static inline void mchp_corespi_set_mode(struct mchp_corespi *spi, unsigned int
  	}
  
- 	sock_recv_cmsgs(msg, sk, skb);
-@@ -3539,6 +3606,21 @@ static int packet_recvmsg(struct socket
- 			aux.tp_vlan_tci = skb_vlan_tag_get(skb);
- 			aux.tp_vlan_tpid = ntohs(skb->vlan_proto);
- 			aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+		} else if (unlikely(sock->type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
-+			struct sockaddr_ll *sll = &PACKET_SKB_CB(skb)->sa.ll;
-+			struct net_device *dev;
+ 	/*
+-	 * Disable the SPI controller. Writes to the frame size have
++	 * Disable the SPI controller. Writes to the frame protocol have
+ 	 * no effect when the controller is enabled.
+ 	 */
+-	mchp_corespi_disable(spi);
+ 
+-	control = mchp_corespi_read(spi, REG_CONTROL);
++	control &= ~CONTROL_ENABLE;
++	mchp_corespi_write(spi, REG_CONTROL, control);
 +
-+			rcu_read_lock();
-+			dev = dev_get_by_index_rcu(sock_net(sk), sll->sll_ifindex);
-+			if (dev) {
-+				aux.tp_vlan_tci = vlan_get_tci(skb, dev);
-+				aux.tp_vlan_tpid = ntohs(skb->protocol);
-+				aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+			} else {
-+				aux.tp_vlan_tci = 0;
-+				aux.tp_vlan_tpid = 0;
-+			}
-+			rcu_read_unlock();
- 		} else {
- 			aux.tp_vlan_tci = 0;
- 			aux.tp_vlan_tpid = 0;
+ 	control &= ~(SPI_MODE_X_MASK << MODE_X_MASK_SHIFT);
+ 	control |= mode_val;
+ 
+-- 
+2.43.0
+
 
 
