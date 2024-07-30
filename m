@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58EA14831F;
-	Tue, 30 Jul 2024 16:49:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4322114831F;
+	Tue, 30 Jul 2024 16:49:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358158; cv=none; b=EhbYCsdbmdpxk9JwAWHOS4KJBt8f6nRHLgBNAFFJu+mku90B+/kL2lSGpHx9j5JLr2oCowXqAYoL3hgfprebXtkYUT93H4RaZC+q6uGnuT+5fPjH9fbUREKn0TvqYhkFlU52wLlbR+lRV9EjGnZolMU9oRx6D2zBKNT41D0tqeQ=
+	t=1722358162; cv=none; b=ENCmAVYJH7XItr4HImxMelFguo3L7DufrRHNbEQo9ZmZFVZXPxVsCcCPyETX2qIZlhkl1oWCkEt0VpwQXqyYMz6d5YIuQRa/cQAYN7g9XrlspICnUWU3Ym0GOpQNBn2hRaYoK/+t73pgbuZAA+XHKsbS+Loee8Q9VC5QCMnX2Uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358158; c=relaxed/simple;
-	bh=XJanFXhNs3fm4m05ECeonMW5fBbG5L077jU3OZO4A+M=;
+	s=arc-20240116; t=1722358162; c=relaxed/simple;
+	bh=2S9rpcZr1Qi7AsHu/lB+TJXRNzjFxj+Era6vfMoru6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mD3fivMZdxxymqNIW13dNBKvfqLLu0GQu0FBr8AN904d9PCK4pmSkTy7fzUX8axcTX+UitU+qS142tSh+5Q1DtLU/G7z65Ws5wFoFGAS5Kt48b/oH8TZSZgnCRrc1jxtZ/ZewB+DRFIuyzyAjmajOlWP6C+aG40IInjFuUTu3es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p6hk7l3a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sqjusf/wBOW8O5czDrqK5BtAOp1JrYNIBJDLMS2g0pJpKiuF+acknQh+rSQ4uUQ2NTQ4hCidGslwjx2LseFxnj3qdJYLmpAkSLegQxZ9o3vIW1k67O4NacVaj7XXMgWhH8Mp8c1iONCS+rQRmFKcV2isbCBH6UcHpgBJV0f94rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/DCiLF9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p6hk7l3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4193AC4AF0E;
-	Tue, 30 Jul 2024 16:49:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/DCiLF9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0A7C4AF0C;
+	Tue, 30 Jul 2024 16:49:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358158;
-	bh=XJanFXhNs3fm4m05ECeonMW5fBbG5L077jU3OZO4A+M=;
+	s=korg; t=1722358161;
+	bh=2S9rpcZr1Qi7AsHu/lB+TJXRNzjFxj+Era6vfMoru6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p6hk7l3aRrG7WcxGyLhyS+LbRUuL4QyFMH/Df1rp+k6MiH9FwAH2CMDBHqScOqeIE
-	 G/j7P6+Q+j7zHKADwi7Iemz2W0+195/GKpsj/trUrR4QJ4WECLk8b3egS0H7q1Tudc
-	 IeSiBus6nFJGV/8uH/cf3y/kJOYIgNkQ/+NeI+kU=
+	b=0/DCiLF9DRlNnRGC1jMGOmiBu6Ecxj4XQMWlj1/Je5n/u/eVZoZIyUnmHiS3Qzxnm
+	 lo63a7n7w0aHwhLojh7L7gnbcCdeO3oOarPN4x5xyFpUA6pJ/ZQKt5rmnM+c4y2PqV
+	 eVm14Y4IYTk/oAfomFH/0XwMxripp2ReaW3auXQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	CK Hu <ck.hu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Hsiao Chien Sung <shawn.sung@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 330/809] drm/mediatek: Add OVL compatible name for MT8195
-Date: Tue, 30 Jul 2024 17:43:26 +0200
-Message-ID: <20240730151737.650015362@linuxfoundation.org>
+	Joy Chakraborty <joychakr@google.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 362/440] rtc: isl1208: Fix return value of nvmem callbacks
+Date: Tue, 30 Jul 2024 17:49:55 +0200
+Message-ID: <20240730151629.953748839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,43 +46,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hsiao Chien Sung <shawn.sung@mediatek.com>
+From: Joy Chakraborty <joychakr@google.com>
 
-[ Upstream commit 6fb7a0985fd16868b5d72eb3e3de7524a6000e6e ]
+commit 70f1ae5f0e7f44edf842444044615da7b59838c1 upstream.
 
-Add OVL compatible name for MT8195.
-Without this commit, DRM won't work after modifying the device tree.
+Read/write callbacks registered with nvmem core expect 0 to be returned
+on success and a negative value to be returned on failure.
 
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
-Signed-off-by: Hsiao Chien Sung <shawn.sung@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240620-igt-v3-7-a9d62d2e2c7e@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+isl1208_nvmem_read()/isl1208_nvmem_write() currently return the number of
+bytes read/written on success, fix to return 0 on success and negative on
+failure.
+
+Fixes: c3544f6f51ed ("rtc: isl1208: Add new style nvmem support to driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Joy Chakraborty <joychakr@google.com>
+Link: https://lore.kernel.org/r/20240612080831.1227131-1-joychakr@google.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_drv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/rtc/rtc-isl1208.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_drm_drv.c b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-index de811e2265da7..8c403bf566856 100644
---- a/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-+++ b/drivers/gpu/drm/mediatek/mtk_drm_drv.c
-@@ -743,6 +743,8 @@ static const struct of_device_id mtk_ddp_comp_dt_ids[] = {
- 	  .data = (void *)MTK_DISP_OVL },
- 	{ .compatible = "mediatek,mt8192-disp-ovl",
- 	  .data = (void *)MTK_DISP_OVL },
-+	{ .compatible = "mediatek,mt8195-disp-ovl",
-+	  .data = (void *)MTK_DISP_OVL },
- 	{ .compatible = "mediatek,mt8183-disp-ovl-2l",
- 	  .data = (void *)MTK_DISP_OVL_2L },
- 	{ .compatible = "mediatek,mt8192-disp-ovl-2l",
--- 
-2.43.0
-
+--- a/drivers/rtc/rtc-isl1208.c
++++ b/drivers/rtc/rtc-isl1208.c
+@@ -743,14 +743,13 @@ static int isl1208_nvmem_read(void *priv
+ {
+ 	struct isl1208_state *isl1208 = priv;
+ 	struct i2c_client *client = to_i2c_client(isl1208->rtc->dev.parent);
+-	int ret;
+ 
+ 	/* nvmem sanitizes offset/count for us, but count==0 is possible */
+ 	if (!count)
+ 		return count;
+-	ret = isl1208_i2c_read_regs(client, ISL1208_REG_USR1 + off, buf,
++
++	return isl1208_i2c_read_regs(client, ISL1208_REG_USR1 + off, buf,
+ 				    count);
+-	return ret == 0 ? count : ret;
+ }
+ 
+ static int isl1208_nvmem_write(void *priv, unsigned int off, void *buf,
+@@ -758,15 +757,13 @@ static int isl1208_nvmem_write(void *pri
+ {
+ 	struct isl1208_state *isl1208 = priv;
+ 	struct i2c_client *client = to_i2c_client(isl1208->rtc->dev.parent);
+-	int ret;
+ 
+ 	/* nvmem sanitizes off/count for us, but count==0 is possible */
+ 	if (!count)
+ 		return count;
+-	ret = isl1208_i2c_set_regs(client, ISL1208_REG_USR1 + off, buf,
+-				   count);
+ 
+-	return ret == 0 ? count : ret;
++	return isl1208_i2c_set_regs(client, ISL1208_REG_USR1 + off, buf,
++				   count);
+ }
+ 
+ static const struct nvmem_config isl1208_nvmem_config = {
 
 
