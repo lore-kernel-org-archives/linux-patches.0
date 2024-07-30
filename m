@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0BB1A76A1;
-	Tue, 30 Jul 2024 17:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9811A76A5;
+	Tue, 30 Jul 2024 17:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359479; cv=none; b=I1TYjBtyMIJrWEyvstMENgDwQrCeYWDVshjKpfIVLfaUP7n8YeGHZCn/ZnfGLEjJh9o0EhHUs2YEoGTNjmLOcRBctBVzwT6qwxLvn8kHTWtcptqpZ5KzlD0oyxuxs0R81zsMVcAOfHHy8HMj4yMUnifkhsKXF8O77EzXZJjUjhk=
+	t=1722359483; cv=none; b=q1n/+SHDcOmOsiBRlsxD2b7+mXmouDHFotfjfpDHLRbnZP4qUsdsiVKJP7ogn/utSFQGeMTRmfjC1Gk8SwhHpSfVoeauU4Q6giFyXBMLj8ZFn6y8ZrPo/7xQvzYtkiYJnVBzdzQa3oC+JtVgjiux/5y4rt6bBofWsJFurJkbxw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359479; c=relaxed/simple;
-	bh=OIFrUfEZpmjaoTqT05HMjcvzT1HpdXeIORdW38+hEdo=;
+	s=arc-20240116; t=1722359483; c=relaxed/simple;
+	bh=ZDfKi6kLaSY1NRnxkHICKbDoNW/V5CGMFa3UG+yVPDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m/JCjvBnb1BE+EtI3dY+JxYKvuG2Eif9QbCJTL6Wu11zBfUcsQXU1mK0afeoPE0puC0yaGT27gtdH14z6GQ5s02BprApSzEx9+O12uByPc6ZkVUOEQ4Ihp87/dossTwdkz8sAEWkHVmU0NzRXNjoUZkIvh3/vHhut3ZzzriSSp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VH77UQma; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EHH8oJzuSGAErvdT/GvnvI5p8eB5eSsNcumx2qhC22+6G3pyhSkP30GYVEUNS2vTXuiTJVooYitpTiG5Q0iPRPmjU9zE9zbkXRrGJcZMKhYNNwkr5VoMDCtUwLiu93n9aW47y5Lgcm+7XMrgjyB9rMWubIJxPBbqJAp66cR3Y0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pwMTewVa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VH77UQma"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E57C5C4AF0E;
-	Tue, 30 Jul 2024 17:11:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pwMTewVa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A01BC32782;
+	Tue, 30 Jul 2024 17:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359479;
-	bh=OIFrUfEZpmjaoTqT05HMjcvzT1HpdXeIORdW38+hEdo=;
+	s=korg; t=1722359482;
+	bh=ZDfKi6kLaSY1NRnxkHICKbDoNW/V5CGMFa3UG+yVPDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VH77UQmaLzZcYhHSagYrwU37FbQkXJQiOG3BijhzgxV7wn1yzrSGsNzriZDpMcOjV
-	 UaetRW7i39BIra55pOm/GdbKJZKl3HlnEz9eyEePpenEPlyCCXZf1XNX0QyOHyYOAr
-	 bQzT0UsPf8Lf3lvZyXah7U4yaUSIoS3PCM8jkaJs=
+	b=pwMTewVaGZNxPACw0zcGNElGdXboFBBdqN4df+p8uThhQltrE1BZ3ptw0Fpa0wcI7
+	 Jeu8v7KmrWV37GZuWyUO7uBwS6T+rBTFQLoP+7EID5z1JrF1ySc0jXAqdO69joeyEk
+	 GEAOOWsBBeHHQIZWax2QKNM1P2n1IUdeO4E5o2Tw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shreyas Deodhar <sdeodhar@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 465/568] scsi: qla2xxx: Complete command early within lock
-Date: Tue, 30 Jul 2024 17:49:32 +0200
-Message-ID: <20240730151658.195618606@linuxfoundation.org>
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 467/809] RDMA/hns: Fix mbx timing out before CMD execution is completed
+Date: Tue, 30 Jul 2024 17:45:43 +0200
+Message-ID: <20240730151743.179473617@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,83 +48,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shreyas Deodhar <sdeodhar@marvell.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-commit 4475afa2646d3fec176fc4d011d3879b26cb26e3 upstream.
+[ Upstream commit bbddfa2255dd0800209697fd12378e02ed05f833 ]
 
-A crash was observed while performing NPIV and FW reset,
+When a large number of tasks are issued, the speed of HW processing
+mbx will slow down. The standard for judging mbx timeout in the current
+firmware is 30ms, and the current timeout standard for the driver is also
+30ms.
 
- BUG: kernel NULL pointer dereference, address: 000000000000001c
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: 0000 1 PREEMPT_RT SMP NOPTI
- RIP: 0010:dma_direct_unmap_sg+0x51/0x1e0
- RSP: 0018:ffffc90026f47b88 EFLAGS: 00010246
- RAX: 0000000000000000 RBX: 0000000000000021 RCX: 0000000000000002
- RDX: 0000000000000021 RSI: 0000000000000000 RDI: ffff8881041130d0
- RBP: ffff8881041130d0 R08: 0000000000000000 R09: 0000000000000034
- R10: ffffc90026f47c48 R11: 0000000000000031 R12: 0000000000000000
- R13: 0000000000000000 R14: ffff8881565e4a20 R15: 0000000000000000
- FS: 00007f4c69ed3d00(0000) GS:ffff889faac80000(0000) knlGS:0000000000000000
- CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000000000000001c CR3: 0000000288a50002 CR4: 00000000007706e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- PKRU: 55555554
- Call Trace:
- <TASK>
- ? __die_body+0x1a/0x60
- ? page_fault_oops+0x16f/0x4a0
- ? do_user_addr_fault+0x174/0x7f0
- ? exc_page_fault+0x69/0x1a0
- ? asm_exc_page_fault+0x22/0x30
- ? dma_direct_unmap_sg+0x51/0x1e0
- ? preempt_count_sub+0x96/0xe0
- qla2xxx_qpair_sp_free_dma+0x29f/0x3b0 [qla2xxx]
- qla2xxx_qpair_sp_compl+0x60/0x80 [qla2xxx]
- __qla2x00_abort_all_cmds+0xa2/0x450 [qla2xxx]
+Considering that firmware scheduling in multi-function scenarios takes a
+certain amount of time, this will cause the driver to time out too early
+and report a failure before mbx execution times out.
 
-The command completion was done early while aborting the commands in driver
-unload path but outside lock to avoid the WARN_ON condition of performing
-dma_free_attr within the lock. However this caused race condition while
-command completion via multiple paths causing system crash.
+This patch introduces a new mechanism that can set different timeouts for
+different cmds and extends the timeout of mbx to 35ms.
 
-Hence complete the command early in unload path but within the lock to
-avoid race condition.
-
-Fixes: 0367076b0817 ("scsi: qla2xxx: Perform lockless command completion in abort path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Shreyas Deodhar <sdeodhar@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-7-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a04ff739f2a9 ("RDMA/hns: Add command queue support for hip08 RoCE driver")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-9-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_os.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 35 +++++++++++++++++-----
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  6 ++++
+ 2 files changed, 34 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_os.c
-+++ b/drivers/scsi/qla2xxx/qla_os.c
-@@ -1874,14 +1874,9 @@ __qla2x00_abort_all_cmds(struct qla_qpai
- 	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
- 		sp = req->outstanding_cmds[cnt];
- 		if (sp) {
--			/*
--			 * perform lockless completion during driver unload
--			 */
- 			if (qla2x00_chip_is_down(vha)) {
- 				req->outstanding_cmds[cnt] = NULL;
--				spin_unlock_irqrestore(qp->qp_lock_ptr, flags);
- 				sp->done(sp, res);
--				spin_lock_irqsave(qp->qp_lock_ptr, flags);
- 				continue;
- 			}
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index aecd137c1e605..621b057fb9daa 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -1275,12 +1275,38 @@ static int hns_roce_cmd_err_convert_errno(u16 desc_ret)
+ 	return -EIO;
+ }
  
++static u32 hns_roce_cmdq_tx_timeout(u16 opcode, u32 tx_timeout)
++{
++	static const struct hns_roce_cmdq_tx_timeout_map cmdq_tx_timeout[] = {
++		{HNS_ROCE_OPC_POST_MB, HNS_ROCE_OPC_POST_MB_TIMEOUT},
++	};
++	int i;
++
++	for (i = 0; i < ARRAY_SIZE(cmdq_tx_timeout); i++)
++		if (cmdq_tx_timeout[i].opcode == opcode)
++			return cmdq_tx_timeout[i].tx_timeout;
++
++	return tx_timeout;
++}
++
++static void hns_roce_wait_csq_done(struct hns_roce_dev *hr_dev, u16 opcode)
++{
++	struct hns_roce_v2_priv *priv = hr_dev->priv;
++	u32 tx_timeout = hns_roce_cmdq_tx_timeout(opcode, priv->cmq.tx_timeout);
++	u32 timeout = 0;
++
++	do {
++		if (hns_roce_cmq_csq_done(hr_dev))
++			break;
++		udelay(1);
++	} while (++timeout < tx_timeout);
++}
++
+ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
+ 			       struct hns_roce_cmq_desc *desc, int num)
+ {
+ 	struct hns_roce_v2_priv *priv = hr_dev->priv;
+ 	struct hns_roce_v2_cmq_ring *csq = &priv->cmq.csq;
+-	u32 timeout = 0;
+ 	u16 desc_ret;
+ 	u32 tail;
+ 	int ret;
+@@ -1301,12 +1327,7 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
+ 
+ 	atomic64_inc(&hr_dev->dfx_cnt[HNS_ROCE_DFX_CMDS_CNT]);
+ 
+-	do {
+-		if (hns_roce_cmq_csq_done(hr_dev))
+-			break;
+-		udelay(1);
+-	} while (++timeout < priv->cmq.tx_timeout);
+-
++	hns_roce_wait_csq_done(hr_dev, le16_to_cpu(desc->opcode));
+ 	if (hns_roce_cmq_csq_done(hr_dev)) {
+ 		ret = 0;
+ 		for (i = 0; i < num; i++) {
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+index def1d15a03c7e..c65f68a14a260 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+@@ -224,6 +224,12 @@ enum hns_roce_opcode_type {
+ 	HNS_SWITCH_PARAMETER_CFG			= 0x1033,
+ };
+ 
++#define HNS_ROCE_OPC_POST_MB_TIMEOUT 35000
++struct hns_roce_cmdq_tx_timeout_map {
++	u16 opcode;
++	u32 tx_timeout;
++};
++
+ enum {
+ 	TYPE_CRQ,
+ 	TYPE_CSQ,
+-- 
+2.43.0
+
 
 
