@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A35189514;
-	Tue, 30 Jul 2024 16:53:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C053A18801A;
+	Tue, 30 Jul 2024 16:53:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358424; cv=none; b=DtjllP1Y7CsEfNXWVZbNyYGJT17nl/LagfmbkM9/KtTOfC29j1BAmthsTI9gDtciCPVe6uS3LQ3sH1MrDVhO9sE1NrporQnSJUftZnAT8l9N9s8JHT4NnM1ocCKuh7Ex8Xz5qJFMZ5CRkMcyj344keemK1BhjqlGqa9gJ1P0vXo=
+	t=1722358427; cv=none; b=a3JO74U6evZ+OY3TqGf3GNbiAaIW6V1Qlg+R3vZXQAdoCejEwOZdgbgKambSO4dlpfTpfUVbcT+F0UwSh9QFSyXTShbd+rradxBZlkBzROIPGQjRVL/AcOlmMfdzrNGJmoBVfLPWnG4GTdQ6Q9XlGK0EDkI9uYWaODdFnEyIjpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358424; c=relaxed/simple;
-	bh=bww2lvIpPvlhbh2okKnk8MWGW8w4XXWoIbhpk0orjUE=;
+	s=arc-20240116; t=1722358427; c=relaxed/simple;
+	bh=/xKMJ/n70afPwS2m2dKbkTd+ngjcxbB3I0HIDD8bIqY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TLjzlKVCpDin6pIYK1KhGi57xmI5wwr+qZu3KzTA/scXqwvYxRjnLqkoSBy0dkic6D5x915ZHsz+oZ3jJDmbC806v35itdME9eP8jG9kgvrKQTolwtp2IZtBF562gjFrPI9pG0mxYyEyVaq9yxG4ay7HMkjrixw/wm+CA3+Dewk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mrNr+qUA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YzJbW75814yH8Zd3zo4pSxIjaN4E+AgcJyF8bU8bUeePJohAJiYuHOibqDs4Kj5cwm2C+xECIEOo1rP94THofzIMOLQqxWjhuHROrTklW9Jube3F0B/5+y+oiqsGjchEV30BExrHjq7+3vZSzQrgTRTkipICh8ma7T2bAsIWaiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKoWm3nH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mrNr+qUA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4B2C32782;
-	Tue, 30 Jul 2024 16:53:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKoWm3nH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D600DC32782;
+	Tue, 30 Jul 2024 16:53:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358424;
-	bh=bww2lvIpPvlhbh2okKnk8MWGW8w4XXWoIbhpk0orjUE=;
+	s=korg; t=1722358427;
+	bh=/xKMJ/n70afPwS2m2dKbkTd+ngjcxbB3I0HIDD8bIqY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mrNr+qUArnVUOYaWRJbbNqtFoDYRZRP7FiiVFzL1Mbn3a+PwtzgTCoXU1zMPS0p2k
-	 aoZE0FJ+m9BusvMwB2OyBK0MikgVVjpOfOfTEg/TkpYB2Xj+WcK1tcEJQJJtE0JYry
-	 l6zMbV5GLscIcYaOHcbhv5wt/2o7Usmvjnykurpw=
+	b=jKoWm3nHfQJFZE4q7rcZOlYM1TAEB+DfSd7ActcdQ06kaAWCF26VEsLwIXhh7cNvv
+	 PGjUIwd5e6bfWeIzg0PfJqoVI2PpVu7l7uITOm9CC5W5RHaraXWCW8UCM/MCfLty2R
+	 CJiaZg9W3m11az0wgaydAbSmn4h+VI0TNzyADd5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Orth <ju.orth@gmail.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 389/440] io_uring/io-wq: limit retrying worker initialisation
-Date: Tue, 30 Jul 2024 17:50:22 +0200
-Message-ID: <20240730151630.998156434@linuxfoundation.org>
+	James Clark <james.clark@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	robin.murphy@arm.com,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 358/809] perf pmu: Restore full PMU name wildcard support
+Date: Tue, 30 Jul 2024 17:43:54 +0200
+Message-ID: <20240730151738.785389417@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,88 +49,157 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: James Clark <james.clark@arm.com>
 
-commit 0453aad676ff99787124b9b3af4a5f59fbe808e2 upstream.
+[ Upstream commit 3e0bf9fde29844694ad9912aa290fbdb2c3fa767 ]
 
-If io-wq worker creation fails, we retry it by queueing up a task_work.
-tasK_work is needed because it should be done from the user process
-context. The problem is that retries are not limited, and if queueing a
-task_work is the reason for the failure, we might get into an infinite
-loop.
+Commit b2b9d3a3f021 ("perf pmu: Support wildcards on pmu name in dynamic
+pmu events") gives the following example for wildcarding a subset of
+PMUs:
 
-It doesn't seem to happen now but it would with the following patch
-executing task_work in the freezer's loop. For now, arbitrarily limit the
-number of attempts to create a worker.
+  E.g., in a system with the following dynamic pmus:
 
-Cc: stable@vger.kernel.org
-Fixes: 3146cba99aa28 ("io-wq: make worker creation resilient against signals")
-Reported-by: Julian Orth <ju.orth@gmail.com>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/8280436925db88448c7c85c6656edee1a43029ea.1720634146.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+        mypmu_0
+        mypmu_1
+        mypmu_2
+        mypmu_4
+
+  perf stat -e mypmu_[01]/<config>/
+
+Since commit f91fa2ae6360 ("perf pmu: Refactor perf_pmu__match()"), only
+"*" has been supported, removing the ability to subset PMUs, even though
+parse-events.l still supports ? and [] characters.
+
+Fix it by using fnmatch() when any glob character is detected and add a
+test which covers that and other scenarios of
+perf_pmu__match_ignoring_suffix().
+
+Fixes: f91fa2ae6360 ("perf pmu: Refactor perf_pmu__match()")
+Signed-off-by: James Clark <james.clark@arm.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: robin.murphy@arm.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240626145448.896746-2-james.clark@arm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c |   10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ tools/perf/tests/pmu.c | 78 ++++++++++++++++++++++++++++++++++++++++++
+ tools/perf/util/pmu.c  |  2 +-
+ 2 files changed, 79 insertions(+), 1 deletion(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -22,6 +22,7 @@
- #include "io_uring.h"
- 
- #define WORKER_IDLE_TIMEOUT	(5 * HZ)
-+#define WORKER_INIT_LIMIT	3
- 
- enum {
- 	IO_WORKER_F_UP		= 1,	/* up and active */
-@@ -58,6 +59,7 @@ struct io_worker {
- 	unsigned long create_state;
- 	struct callback_head create_work;
- 	int create_index;
-+	int init_retries;
- 
- 	union {
- 		struct rcu_head rcu;
-@@ -729,7 +731,7 @@ static bool io_wq_work_match_all(struct
- 	return true;
+diff --git a/tools/perf/tests/pmu.c b/tools/perf/tests/pmu.c
+index cc88b5920c3e2..fd07331b2d6e6 100644
+--- a/tools/perf/tests/pmu.c
++++ b/tools/perf/tests/pmu.c
+@@ -437,12 +437,90 @@ static int test__name_cmp(struct test_suite *test __maybe_unused, int subtest __
+ 	return TEST_OK;
  }
  
--static inline bool io_should_retry_thread(long err)
-+static inline bool io_should_retry_thread(struct io_worker *worker, long err)
++/**
++ * Test perf_pmu__match() that's used to search for a PMU given a name passed
++ * on the command line. The name that's passed may also be a filename type glob
++ * match.
++ */
++static int test__pmu_match(struct test_suite *test __maybe_unused, int subtest __maybe_unused)
++{
++	struct perf_pmu test_pmu;
++
++	test_pmu.name = "pmuname";
++	TEST_ASSERT_EQUAL("Exact match", perf_pmu__match(&test_pmu, "pmuname"),	     true);
++	TEST_ASSERT_EQUAL("Longer token", perf_pmu__match(&test_pmu, "longertoken"), false);
++	TEST_ASSERT_EQUAL("Shorter token", perf_pmu__match(&test_pmu, "pmu"),	     false);
++
++	test_pmu.name = "pmuname_10";
++	TEST_ASSERT_EQUAL("Diff suffix_", perf_pmu__match(&test_pmu, "pmuname_2"),  false);
++	TEST_ASSERT_EQUAL("Sub suffix_",  perf_pmu__match(&test_pmu, "pmuname_1"),  true);
++	TEST_ASSERT_EQUAL("Same suffix_", perf_pmu__match(&test_pmu, "pmuname_10"), true);
++	TEST_ASSERT_EQUAL("No suffix_",   perf_pmu__match(&test_pmu, "pmuname"),    true);
++	TEST_ASSERT_EQUAL("Underscore_",  perf_pmu__match(&test_pmu, "pmuname_"),   true);
++	TEST_ASSERT_EQUAL("Substring_",   perf_pmu__match(&test_pmu, "pmuna"),      false);
++
++	test_pmu.name = "pmuname_ab23";
++	TEST_ASSERT_EQUAL("Diff suffix hex_", perf_pmu__match(&test_pmu, "pmuname_2"),    false);
++	TEST_ASSERT_EQUAL("Sub suffix hex_",  perf_pmu__match(&test_pmu, "pmuname_ab"),   true);
++	TEST_ASSERT_EQUAL("Same suffix hex_", perf_pmu__match(&test_pmu, "pmuname_ab23"), true);
++	TEST_ASSERT_EQUAL("No suffix hex_",   perf_pmu__match(&test_pmu, "pmuname"),      true);
++	TEST_ASSERT_EQUAL("Underscore hex_",  perf_pmu__match(&test_pmu, "pmuname_"),     true);
++	TEST_ASSERT_EQUAL("Substring hex_",   perf_pmu__match(&test_pmu, "pmuna"),	 false);
++
++	test_pmu.name = "pmuname10";
++	TEST_ASSERT_EQUAL("Diff suffix", perf_pmu__match(&test_pmu, "pmuname2"),  false);
++	TEST_ASSERT_EQUAL("Sub suffix",  perf_pmu__match(&test_pmu, "pmuname1"),  true);
++	TEST_ASSERT_EQUAL("Same suffix", perf_pmu__match(&test_pmu, "pmuname10"), true);
++	TEST_ASSERT_EQUAL("No suffix",   perf_pmu__match(&test_pmu, "pmuname"),   true);
++	TEST_ASSERT_EQUAL("Underscore",  perf_pmu__match(&test_pmu, "pmuname_"),  false);
++	TEST_ASSERT_EQUAL("Substring",   perf_pmu__match(&test_pmu, "pmuna"),     false);
++
++	test_pmu.name = "pmunameab23";
++	TEST_ASSERT_EQUAL("Diff suffix hex", perf_pmu__match(&test_pmu, "pmuname2"),    false);
++	TEST_ASSERT_EQUAL("Sub suffix hex",  perf_pmu__match(&test_pmu, "pmunameab"),   true);
++	TEST_ASSERT_EQUAL("Same suffix hex", perf_pmu__match(&test_pmu, "pmunameab23"), true);
++	TEST_ASSERT_EQUAL("No suffix hex",   perf_pmu__match(&test_pmu, "pmuname"),     true);
++	TEST_ASSERT_EQUAL("Underscore hex",  perf_pmu__match(&test_pmu, "pmuname_"),    false);
++	TEST_ASSERT_EQUAL("Substring hex",   perf_pmu__match(&test_pmu, "pmuna"),	false);
++
++	/*
++	 * 2 hex chars or less are not considered suffixes so it shouldn't be
++	 * possible to wildcard by skipping the suffix. Therefore there are more
++	 * false results here than above.
++	 */
++	test_pmu.name = "pmuname_a3";
++	TEST_ASSERT_EQUAL("Diff suffix 2 hex_", perf_pmu__match(&test_pmu, "pmuname_2"),  false);
++	/*
++	 * This one should be false, but because pmuname_a3 ends in 3 which is
++	 * decimal, it's not possible to determine if it's a short hex suffix or
++	 * a normal decimal suffix following text. And we want to match on any
++	 * length of decimal suffix. Run the test anyway and expect the wrong
++	 * result. And slightly fuzzy matching shouldn't do too much harm.
++	 */
++	TEST_ASSERT_EQUAL("Sub suffix 2 hex_",  perf_pmu__match(&test_pmu, "pmuname_a"),  true);
++	TEST_ASSERT_EQUAL("Same suffix 2 hex_", perf_pmu__match(&test_pmu, "pmuname_a3"), true);
++	TEST_ASSERT_EQUAL("No suffix 2 hex_",   perf_pmu__match(&test_pmu, "pmuname"),    false);
++	TEST_ASSERT_EQUAL("Underscore 2 hex_",  perf_pmu__match(&test_pmu, "pmuname_"),   false);
++	TEST_ASSERT_EQUAL("Substring 2 hex_",   perf_pmu__match(&test_pmu, "pmuna"),	  false);
++
++	test_pmu.name = "pmuname_5";
++	TEST_ASSERT_EQUAL("Glob 1", perf_pmu__match(&test_pmu, "pmu*"),		   true);
++	TEST_ASSERT_EQUAL("Glob 2", perf_pmu__match(&test_pmu, "nomatch*"),	   false);
++	TEST_ASSERT_EQUAL("Seq 1",  perf_pmu__match(&test_pmu, "pmuname_[12345]"), true);
++	TEST_ASSERT_EQUAL("Seq 2",  perf_pmu__match(&test_pmu, "pmuname_[67890]"), false);
++	TEST_ASSERT_EQUAL("? 1",    perf_pmu__match(&test_pmu, "pmuname_?"),	   true);
++	TEST_ASSERT_EQUAL("? 2",    perf_pmu__match(&test_pmu, "pmuname_1?"),	   false);
++
++	return TEST_OK;
++}
++
+ static struct test_case tests__pmu[] = {
+ 	TEST_CASE("Parsing with PMU format directory", pmu_format),
+ 	TEST_CASE("Parsing with PMU event", pmu_events),
+ 	TEST_CASE("PMU event names", pmu_event_names),
+ 	TEST_CASE("PMU name combining", name_len),
+ 	TEST_CASE("PMU name comparison", name_cmp),
++	TEST_CASE("PMU cmdline match", pmu_match),
+ 	{	.name = NULL, }
+ };
+ 
+diff --git a/tools/perf/util/pmu.c b/tools/perf/util/pmu.c
+index 888ce99122759..22291f48e4da1 100644
+--- a/tools/perf/util/pmu.c
++++ b/tools/perf/util/pmu.c
+@@ -2143,7 +2143,7 @@ void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
+ bool perf_pmu__match(const struct perf_pmu *pmu, const char *tok)
  {
- 	/*
- 	 * Prevent perpetual task_work retry, if the task (or its group) is
-@@ -737,6 +739,8 @@ static inline bool io_should_retry_threa
- 	 */
- 	if (fatal_signal_pending(current))
- 		return false;
-+	if (worker->init_retries++ >= WORKER_INIT_LIMIT)
-+		return false;
+ 	const char *name = pmu->name;
+-	bool need_fnmatch = strchr(tok, '*') != NULL;
++	bool need_fnmatch = strisglob(tok);
  
- 	switch (err) {
- 	case -EAGAIN:
-@@ -763,7 +767,7 @@ static void create_worker_cont(struct ca
- 		io_init_new_worker(wqe, worker, tsk);
- 		io_worker_release(worker);
- 		return;
--	} else if (!io_should_retry_thread(PTR_ERR(tsk))) {
-+	} else if (!io_should_retry_thread(worker, PTR_ERR(tsk))) {
- 		struct io_wqe_acct *acct = io_wqe_get_acct(worker);
- 
- 		atomic_dec(&acct->nr_running);
-@@ -830,7 +834,7 @@ fail:
- 	tsk = create_io_thread(io_wqe_worker, worker, wqe->node);
- 	if (!IS_ERR(tsk)) {
- 		io_init_new_worker(wqe, worker, tsk);
--	} else if (!io_should_retry_thread(PTR_ERR(tsk))) {
-+	} else if (!io_should_retry_thread(worker, PTR_ERR(tsk))) {
- 		kfree(worker);
- 		goto fail;
- 	} else {
+ 	if (!strncmp(tok, "uncore_", 7))
+ 		tok += 7;
+-- 
+2.43.0
+
 
 
