@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C8F29A2;
-	Tue, 30 Jul 2024 15:56:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E30A1BA86C;
+	Tue, 30 Jul 2024 15:56:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355008; cv=none; b=l2v+eCG8JCqvJZFHUo3pg0yDOZRZGx3IjRwM95+f1pV7oQxeuJrkaKN33AGugW/D1RwA7zVANPhoORbsQ143QjMCtP332vkU60c7/Vo9AQeScfDo2+zB5Uk6HO+rkzqOAGlQOpY451/7EA9HAgApp6+zs8Z83J0wDk0+20S9Dno=
+	t=1722355011; cv=none; b=Z/twl3+h7NrpZl2m6vjtSqb+IVH4LQDEIIekoUyS9QmiUcBuQatEm4uuI+2vKJeZ+V0Tkm+NG+dIaMcCjHabotD/AiBVwn+easFTbDjapLRc1iIKbMXHNqs1R36fzfWO9xn/zdaN5QLeGm+qfBpxc630UwfU8Cvq5l8oJYSnv60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355008; c=relaxed/simple;
-	bh=EDrzYtPAihkmbKQ8HViqnRjaCCinFdcZPfPDNVuINr8=;
+	s=arc-20240116; t=1722355011; c=relaxed/simple;
+	bh=25jUiS6Jo76fEuupoPz7IMdIhBK2i17S7evuMdYTi1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zc4WF/OPx89lpPf8aHsupFRSOn545EvzA/YNDMEucb+KLWTWLf0fAt59NbkiYl0lLBfiQBGpUmxTgcunQgHgjFXL0fEpWXz9jb4tuf4kgcwKXFwPePERhFPSPis2MjzqbJXIA+jgPlymA+rYXYFx0Bb9oNL6dhjx2oMdBWP1PiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkDp9YB7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gc0AJ7M7x7KJGsGyKPDHZnKyCej6XhsuZOZ8SJeR9kvKnPOzUU/EBmyuydwy+CB07II4zJ+l+na+R+4J9hPaPh9ZF4HojBemUkk7VIHLsjTP0sN/awGS09BHE7k0nyGRiBgRHRxgeZXdlJb0DBCgHbNnY5MJcqNhPpBB4nD9bKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xrY3gISS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkDp9YB7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74BE3C32782;
-	Tue, 30 Jul 2024 15:56:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xrY3gISS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18BDC4AF0C;
+	Tue, 30 Jul 2024 15:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355007;
-	bh=EDrzYtPAihkmbKQ8HViqnRjaCCinFdcZPfPDNVuINr8=;
+	s=korg; t=1722355011;
+	bh=25jUiS6Jo76fEuupoPz7IMdIhBK2i17S7evuMdYTi1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkDp9YB7o1+koI5cysXOU5gq0VpP7laqm5orl+XpXTKzMIuZZlFL9B1lJr7wHuFhg
-	 ctXM62K03AVk0tyXvDsINI6VQv+hdT3XTZHhJtz9NAqeqsW2O3elwRpgwmtUFzIUVn
-	 wOOVDxhTqP0MrxofmBF2sf1K6SS5ofcew+cvx4cs=
+	b=xrY3gISSRm4kwwhh4nhaFFgkiQ0664dystqRZJcG3LVKpwIF5RI+7s4yqbhrOI9mJ
+	 4e+t5wOdjfwjrhGelj8JWG5xMn7KluzgU9nLOPMdvR3s0YIuWhdMgrcbglz75cXuNo
+	 /5CJqE8Mbf5INS+tYf+nFonRKAOB/EuyqMVPNtGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/440] pwm: stm32: Always do lazy disabling
-Date: Tue, 30 Jul 2024 17:44:15 +0200
-Message-ID: <20240730151616.632418257@linuxfoundation.org>
+Subject: [PATCH 6.1 023/440] nvmet-auth: fix nvmet_auth hash error handling
+Date: Tue, 30 Jul 2024 17:44:16 +0200
+Message-ID: <20240730151616.670578016@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -45,58 +47,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 7346e7a058a2c9aa9ff1cc699c7bf18a402d9f84 ]
+[ Upstream commit 89f58f96d1e2357601c092d85b40a2109cf25ef3 ]
 
-When the state changes from enabled to disabled, polarity, duty_cycle
-and period are not configured in hardware and TIM_CCER_CCxE is just
-cleared. However if the state changes from one disabled state to
-another, all parameters are written to hardware because the early exit
-from stm32_pwm_apply() is only taken if the pwm is currently enabled.
+If we fail to call nvme_auth_augmented_challenge, or fail to kmalloc
+for shash, we should free the memory allocation for challenge, so add
+err path out_free_challenge to fix the memory leak.
 
-This yields surprises like: Applying
-
-	{ .period = 1, .duty_cycle = 0, .enabled = false }
-
-succeeds if the pwm is initially on, but fails if it's already off
-because 1 is a too small period.
-
-Update the check for lazy disable to always exit early if the target
-state is disabled, no matter what is currently configured.
-
-Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20240703110010.672654-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 7a277c37d352 ("nvmet-auth: Diffie-Hellman key exchange support")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/nvme/target/auth.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index c40a6548ce7d4..2070d107c6328 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -452,8 +452,9 @@ static int stm32_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
- 
- 	enabled = pwm->state.enabled;
- 
--	if (enabled && !state->enabled) {
--		stm32_pwm_disable(priv, pwm->hwpwm);
-+	if (!state->enabled) {
-+		if (enabled)
-+			stm32_pwm_disable(priv, pwm->hwpwm);
- 		return 0;
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index e900525b78665..aacc05ec00c2b 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -314,7 +314,7 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 						    req->sq->dhchap_c1,
+ 						    challenge, shash_len);
+ 		if (ret)
+-			goto out_free_response;
++			goto out_free_challenge;
  	}
  
+ 	pr_debug("ctrl %d qid %d host response seq %u transaction %d\n",
+@@ -325,7 +325,7 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 			GFP_KERNEL);
+ 	if (!shash) {
+ 		ret = -ENOMEM;
+-		goto out_free_response;
++		goto out_free_challenge;
+ 	}
+ 	shash->tfm = shash_tfm;
+ 	ret = crypto_shash_init(shash);
+@@ -361,9 +361,10 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 		goto out;
+ 	ret = crypto_shash_final(shash, response);
+ out:
++	kfree(shash);
++out_free_challenge:
+ 	if (challenge != req->sq->dhchap_c1)
+ 		kfree(challenge);
+-	kfree(shash);
+ out_free_response:
+ 	kfree_sensitive(host_response);
+ out_free_tfm:
+@@ -426,14 +427,14 @@ int nvmet_auth_ctrl_hash(struct nvmet_req *req, u8 *response,
+ 						    req->sq->dhchap_c2,
+ 						    challenge, shash_len);
+ 		if (ret)
+-			goto out_free_response;
++			goto out_free_challenge;
+ 	}
+ 
+ 	shash = kzalloc(sizeof(*shash) + crypto_shash_descsize(shash_tfm),
+ 			GFP_KERNEL);
+ 	if (!shash) {
+ 		ret = -ENOMEM;
+-		goto out_free_response;
++		goto out_free_challenge;
+ 	}
+ 	shash->tfm = shash_tfm;
+ 
+@@ -470,9 +471,10 @@ int nvmet_auth_ctrl_hash(struct nvmet_req *req, u8 *response,
+ 		goto out;
+ 	ret = crypto_shash_final(shash, response);
+ out:
++	kfree(shash);
++out_free_challenge:
+ 	if (challenge != req->sq->dhchap_c2)
+ 		kfree(challenge);
+-	kfree(shash);
+ out_free_response:
+ 	kfree_sensitive(ctrl_response);
+ out_free_tfm:
 -- 
 2.43.0
 
