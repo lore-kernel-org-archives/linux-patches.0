@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F080183CDB;
-	Tue, 30 Jul 2024 16:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9C71898EC;
+	Tue, 30 Jul 2024 16:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357734; cv=none; b=O9mdb+ByLqS2wqVcGRHdh7ZEvFZMFJqBxjIdlEyTr5C0X+iz3aRc8w+07tJY/WSFr7zxwIUqVXrDupt9iGgEF6LkXyKH15fDnYH/4gzlUVrpgXuTf/dF4y/8NWs/3czIBrki56bNvUs2CrtjPPW/6fx+I5mXjdZi7CJZWjsWDrA=
+	t=1722357737; cv=none; b=pyrWAiaNqUqJYqfdcremlYaQqnmAPauQcJwcKhAddjmbXs0pVn5pSXLyqMUAPYKnLOAFN+FtvcVEt6SGl8/Y4q8nLVRnXi0I1RaEb2YNx/lNcYi9Szl2xxA2zbye7SB9fWJdP/6d6mqvMGz42Uhyv/XidsXfW+/aZlPQWICJPOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357734; c=relaxed/simple;
-	bh=jEs40l/hcbPsS4mJGKxhLj/m4+GSYOR+W4B1KxzCgbA=;
+	s=arc-20240116; t=1722357737; c=relaxed/simple;
+	bh=Vwx1ZgODKzaXqfUx+5mmi9Ok8dzqTBa/gV0W5q0g750=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fUV/VAo2YpDBsgQIhI+te5zuZXhruIK1VjpDs+B14l3U+bS2nLsRVI1YI7OMi8klKC5UHYk/xYk+S0vWmGX847uZyVHyQ1uQ7Xs6v/RKbOqps6b6A+OdVV6lrS3vCQF/S3s379OV27N5OynM9AByCM6yjetANiGemjUjubGgzNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=adKRXAY0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O6buSxeyn5+c8y+I9ts02RW7ZateTKA6H80em9qW8n4zMD36vYae0e+xJJ1K8y0LfrY/qngKzOijhqfMAlFI1vx5R5NFOsrwqaEMgjV36ieqXiK0cmhsJqWrTwM8KkLmBIZ0PhyyOfLLyRw25B6LfYFaI8Eai46ZtJnQDIKO/d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o81845wT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="adKRXAY0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4E9C4AF0A;
-	Tue, 30 Jul 2024 16:42:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o81845wT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0616C32782;
+	Tue, 30 Jul 2024 16:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357734;
-	bh=jEs40l/hcbPsS4mJGKxhLj/m4+GSYOR+W4B1KxzCgbA=;
+	s=korg; t=1722357737;
+	bh=Vwx1ZgODKzaXqfUx+5mmi9Ok8dzqTBa/gV0W5q0g750=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adKRXAY0E9rbwSw/0QIc10F1LsSyA96T/jCIMFGGgI6jCPDCE4PzS7B/v5oKpl5PV
-	 XgaHODzxmPWJMJWg0nEX/AhoezBZnSFELT9DsjTJ4OqsldGE17wkDFgtZq8L11fu6U
-	 mkaN3bDKz+YtDHodP3vU64obuQjdqekaHfgr/Mek=
+	b=o81845wTv3PXMmidy/2hH/XDzS85uMWCUh+4mh5hqRdMUb2V3AHLQSS40K5yEOVNC
+	 8AbUxje2RuNyYH4DM5be1d079oblgcTr3qCICCkOdYxrY0wmmgcoHIl+4UH3+fJorv
+	 Sk1PYeQJwbQxQSn2kk9ZC5AaASGEYT6d/4TJijP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 267/568] clk: qcom: gpucc-sa8775p: Remove the CLK_IS_CRITICAL and ALWAYS_ON flags
-Date: Tue, 30 Jul 2024 17:46:14 +0200
-Message-ID: <20240730151650.316511167@linuxfoundation.org>
+Subject: [PATCH 6.10 265/809] drm/rockchip: vop2: Fix the port mux of VP2
+Date: Tue, 30 Jul 2024 17:42:21 +0200
+Message-ID: <20240730151735.057949919@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,172 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit e69386d4a42afa5da6bfdcd4ac5ec61e1db04c61 ]
+[ Upstream commit 2bdb481bf7a93c22b9fea8daefa2834aab23a70f ]
 
-The GPU clocks/GDSCs have been marked critical from the clock driver
-but the GPU driver votes on these resources as per the HW requirement.
-In the case where these clocks & GDSCs are left enabled, would have
-power impact and also cause GPU stability/corruptions.
-Fix the same by removing the CLK_IS_CRITICAL for clocks and ALWAYS_ON
-flags for the GPU GDSCs.
+The port mux of VP2 should be RK3568_OVL_PORT_SET__PORT2_MUX.
 
-Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-4-adcc756a23df@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240422101905.32703-2-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gpucc-sa8775p.c | 27 +++++++++++----------------
- 1 file changed, 11 insertions(+), 16 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
-index 26ecfa63be193..3f05b44c13c53 100644
---- a/drivers/clk/qcom/gpucc-sa8775p.c
-+++ b/drivers/clk/qcom/gpucc-sa8775p.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2022, 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-  * Copyright (c) 2023, Linaro Limited
-  */
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index 62ebbdb16253d..9873172e3fd33 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -2344,7 +2344,7 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX,
+ 			(vp2->nlayers + vp1->nlayers + vp0->nlayers - 1));
+ 	else
+-		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT1_MUX, 8);
++		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX, 8);
  
-@@ -280,7 +280,7 @@ static struct clk_branch gpu_cc_ahb_clk = {
- 				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -294,7 +294,6 @@ static struct clk_branch gpu_cc_cb_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_cb_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -312,7 +311,7 @@ static struct clk_branch gpu_cc_crc_ahb_clk = {
- 				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -330,7 +329,7 @@ static struct clk_branch gpu_cc_cx_ff_clk = {
- 				&gpu_cc_ff_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -348,7 +347,7 @@ static struct clk_branch gpu_cc_cx_gmu_clk = {
- 				&gpu_cc_gmu_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags =  CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -362,7 +361,6 @@ static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_cx_snoc_dvm_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -380,7 +378,7 @@ static struct clk_branch gpu_cc_cxo_aon_clk = {
- 				&gpu_cc_xo_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -398,7 +396,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
- 				&gpu_cc_xo_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags =  CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -416,7 +414,7 @@ static struct clk_branch gpu_cc_demet_clk = {
- 				&gpu_cc_demet_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -430,7 +428,6 @@ static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -448,7 +445,7 @@ static struct clk_branch gpu_cc_hub_aon_clk = {
- 				&gpu_cc_hub_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -466,7 +463,7 @@ static struct clk_branch gpu_cc_hub_cx_int_clk = {
- 				&gpu_cc_hub_cx_int_div_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
--			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
-+			.flags =  CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_aon_ops,
- 		},
- 	},
-@@ -480,7 +477,6 @@ static struct clk_branch gpu_cc_memnoc_gfx_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_memnoc_gfx_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -494,7 +490,6 @@ static struct clk_branch gpu_cc_sleep_clk = {
- 		.enable_mask = BIT(0),
- 		.hw.init = &(const struct clk_init_data){
- 			.name = "gpu_cc_sleep_clk",
--			.flags = CLK_IS_CRITICAL,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -533,7 +528,7 @@ static struct gdsc cx_gdsc = {
- 		.name = "cx_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
--	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
-+	.flags = VOTABLE | RETAIN_FF_ENABLE,
- };
+ 	layer_sel = vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
  
- static struct gdsc gx_gdsc = {
 -- 
 2.43.0
 
