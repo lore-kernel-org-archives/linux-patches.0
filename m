@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911AB187FF6;
-	Tue, 30 Jul 2024 16:24:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE3A189905;
+	Tue, 30 Jul 2024 16:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356676; cv=none; b=p1hgZYzxk/dUZ70+B/dBsWoRYBZUMfgWnIjaoNrAFsR2ptWume94dIjjms3JBT9DxXmoiNvrOO3iknNSQy4dOsIQ+nnsXvAcvCx02xxbbD4h95eyCsshMoDgfgI3QO2+yz7Gy3nMo1KwOyXh887vYpWX/8wivl0cDuoEt2rQwhc=
+	t=1722356679; cv=none; b=r99Z4Oeo1CGIE0Ad65WFghdUqS3JIti2pCCoDyQ4f4xg3ujMKvhH0FwF/K/3p7MXmCZzNOOSMrU4gpZbZCW1pFT8+gZiSLJuvz8fOXqf/AJRSMCdzsm4wzGy6Rw1ATQIgROARRwFp67bfEerAfnqfNDYRWKytnyXF66Gecr1kic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356676; c=relaxed/simple;
-	bh=yaDeEyX9ebkeQ8wksklJv9yZhmqUke4HWQKTyIgr4MQ=;
+	s=arc-20240116; t=1722356679; c=relaxed/simple;
+	bh=XfY+MbGHBns2OF4nOwSgmxC64k/57dYmmx4quuia6+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UQPo9G9yvo9M+53ajr/Tsr0NNoSXiJ8nEPFAjkXihYD3zcWJTWiqRoStnnNszTXQUcHcWDTtoqGpbP/Nxves3hPYnQpNwK/k0eShsMdR+Kd5aDtPH1QTjQ28pLVN2RqWC5hmhOGpn9T96XwXZPpr1ONz0Z30b7b636Xw2ibCXi8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gizak6UL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q9eWA+MiK0s2Nxn/CclDoE3ckc6E915Z13D9oZJsWE5M57FKL333cWm9vMLIEcHmo1bBNY4fn1mR92PilanKLb9azAfk0Pfoy4vVU6++KiwlQwH4yM9sHaqEblLmOn1RaAzF7J88wSeIhoIkfEpLepn5VH3DS6P337wtVjG48+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XXTatBRV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gizak6UL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE0C9C32782;
-	Tue, 30 Jul 2024 16:24:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XXTatBRV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECEDAC4AF0E;
+	Tue, 30 Jul 2024 16:24:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356676;
-	bh=yaDeEyX9ebkeQ8wksklJv9yZhmqUke4HWQKTyIgr4MQ=;
+	s=korg; t=1722356679;
+	bh=XfY+MbGHBns2OF4nOwSgmxC64k/57dYmmx4quuia6+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gizak6ULvrCPMyM/NxL6Mdmk6M+Z3sTXgHZpegQiXW5IUivSAo8fB6KqAyJJLAWOu
-	 c8P4n8TWDp/IKkBav7CcFFXtNO8yxnAcdPBFJ5yegH0El27yVo2fcQHB3esLdbeLL7
-	 FE0I1Egb6bZMN339/Mt7kHX2MAuYG2iBMRQ4JoDk=
+	b=XXTatBRVmC0v4IC6XLfPJ0O8zl/t2/ZxLUSplTiSijOB/5IOINRr6/VdXTscM/p/M
+	 us4e3BLgpO2Y3P1RupX7QOyo5PhT0BDbvAJaYmZx1MWvfrcepBRN15s4pkbIgbn4p8
+	 kbJJ7q/2GxAcgM0hZOqsldsU0cxwx5NWznQE0WaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <Niklas.Cassel@wdc.com>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 218/440] PCI: dwc: Fix index 0 incorrectly being interpreted as a free ATU slot
-Date: Tue, 30 Jul 2024 17:47:31 +0200
-Message-ID: <20240730151624.375896172@linuxfoundation.org>
+Subject: [PATCH 6.6 157/568] wifi: virt_wifi: dont use strlen() in const context
+Date: Tue, 30 Jul 2024 17:44:24 +0200
+Message-ID: <20240730151646.016011557@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,101 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frank Li <Frank.Li@nxp.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit c2a57ee0f2f1ad8c970ff58b78a43e85abbdeb7f ]
+[ Upstream commit 6e909f489191b365364e9d636dec33b5dfd4e5eb ]
 
-When PERST# assert and deassert happens on the PERST# supported platforms,
-both iATU0 and iATU6 will map inbound window to BAR0. DMA will access the
-area that was previously allocated (iATU0) for BAR0, instead of the new
-area (iATU6) for BAR0.
+Looks like not all compilers allow strlen(constant) as
+a constant, so don't do that. Instead, revert back to
+defining the length as the first submission had it.
 
-Right now, this isn't an issue because both iATU0 and iATU6 should
-translate inbound accesses to BAR0 to the same allocated memory area.
-However, having two separate inbound mappings for the same BAR is a
-disaster waiting to happen.
-
-The mappings between PCI BAR and iATU inbound window are maintained in the
-dw_pcie_ep::bar_to_atu[] array. While allocating a new inbound iATU map for
-a BAR, dw_pcie_ep_inbound_atu() API checks for the availability of the
-existing mapping in the array and if it is not found (i.e., value in the
-array indexed by the BAR is found to be 0), it allocates a new map value
-using find_first_zero_bit().
-
-The issue is the existing logic failed to consider the fact that the map
-value '0' is a valid value for BAR0, so find_first_zero_bit() will return
-'0' as the map value for BAR0 (note that it returns the first zero bit
-position).
-
-Due to this, when PERST# assert + deassert happens on the PERST# supported
-platforms, the inbound window allocation restarts from BAR0 and the
-existing logic to find the BAR mapping will return '6' for BAR0 instead of
-'0' due to the fact that it considers '0' as an invalid map value.
-
-Fix this issue by always incrementing the map value before assigning to
-bar_to_atu[] array and then decrementing it while fetching. This will make
-sure that the map value '0' always represents the invalid mapping."
-
-Fixes: 4284c88fff0e ("PCI: designware-ep: Allow pci_epc_set_bar() update inbound map address")
-Closes: https://lore.kernel.org/linux-pci/ZXsRp+Lzg3x%2Fnhk3@x1-carbon/
-Link: https://lore.kernel.org/linux-pci/20240412160841.925927-1-Frank.Li@nxp.com
-Reported-by: Niklas Cassel <Niklas.Cassel@wdc.com>
-Tested-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Frank Li <Frank.Li@nxp.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Fixes: b5d14b0c6716 ("wifi: virt_wifi: avoid reporting connection success with wrong SSID")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407090934.NnR1TUbW-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202407090944.mpwLHGt9-lkp@intel.com/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware-ep.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/wireless/virtual/virt_wifi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 506d6d061d4cd..449ad709495d3 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -165,7 +165,7 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
- 	if (!ep->bar_to_atu[bar])
- 		free_win = find_first_zero_bit(ep->ib_window_map, pci->num_ib_windows);
- 	else
--		free_win = ep->bar_to_atu[bar];
-+		free_win = ep->bar_to_atu[bar] - 1;
+diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
+index cf1eb41e282a9..fb4d95a027fef 100644
+--- a/drivers/net/wireless/virtual/virt_wifi.c
++++ b/drivers/net/wireless/virtual/virt_wifi.c
+@@ -137,6 +137,7 @@ static struct ieee80211_supported_band band_5ghz = {
+ static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
  
- 	if (free_win >= pci->num_ib_windows) {
- 		dev_err(pci->dev, "No free inbound window\n");
-@@ -179,7 +179,11 @@ static int dw_pcie_ep_inbound_atu(struct dw_pcie_ep *ep, u8 func_no, int type,
- 		return ret;
- 	}
+ #define VIRT_WIFI_SSID "VirtWifi"
++#define VIRT_WIFI_SSID_LEN 8
  
--	ep->bar_to_atu[bar] = free_win;
-+	/*
-+	 * Always increment free_win before assignment, since value 0 is used to identify
-+	 * unallocated mapping.
-+	 */
-+	ep->bar_to_atu[bar] = free_win + 1;
- 	set_bit(free_win, ep->ib_window_map);
+ static void virt_wifi_inform_bss(struct wiphy *wiphy)
+ {
+@@ -148,7 +149,7 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
+ 		u8 ssid[8];
+ 	} __packed ssid = {
+ 		.tag = WLAN_EID_SSID,
+-		.len = strlen(VIRT_WIFI_SSID),
++		.len = VIRT_WIFI_SSID_LEN,
+ 		.ssid = VIRT_WIFI_SSID,
+ 	};
  
- 	return 0;
-@@ -216,7 +220,10 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	struct dw_pcie_ep *ep = epc_get_drvdata(epc);
- 	struct dw_pcie *pci = to_dw_pcie_from_ep(ep);
- 	enum pci_barno bar = epf_bar->barno;
--	u32 atu_index = ep->bar_to_atu[bar];
-+	u32 atu_index = ep->bar_to_atu[bar] - 1;
-+
-+	if (!ep->bar_to_atu[bar])
-+		return;
- 
- 	__dw_pcie_ep_reset_bar(pci, func_no, bar, epf_bar->flags);
- 
+@@ -262,7 +263,7 @@ static void virt_wifi_connect_complete(struct work_struct *work)
+ 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
+ 	u8 *requested_bss = priv->connect_requested_bss;
+ 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
+-	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
++	bool right_ssid = priv->connect_requested_ssid_len == VIRT_WIFI_SSID_LEN &&
+ 			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
+ 				  priv->connect_requested_ssid_len);
+ 	u16 status = WLAN_STATUS_SUCCESS;
 -- 
 2.43.0
 
