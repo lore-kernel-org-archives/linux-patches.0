@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18021A6192;
-	Tue, 30 Jul 2024 16:36:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2A5183CD5;
+	Tue, 30 Jul 2024 16:36:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357411; cv=none; b=BmKFxxT8J7klIgvKA06T0s3zd7ua3SMCjpNx7GEtC69B0SbERr9CZ4Or80wuu2UqQ3nEPFOiWPqfdPgTemRewnuZZXr4JlBMBBWsoJWkUhcMhw3CBag+G9ce9zNVu5NQsinP3bP+ui+H3G61pk5QjdipGfojvFEt4S4RvveXkx0=
+	t=1722357415; cv=none; b=ow1Sj5v5CK73OTB0f2XSWPcbgVLbp9d2ozsLNGte7ywR8vd1onb3e4nHDXXVa+HqwQN81pSLkZqGJ9p1pxev/4ifDY82K5KjaeuFHrGTekIJGejmh46ek504AZB5g+HRTrl54QQTmIuo1GHN4JS6OMbjSWHDhoXxw4rwKMGpFx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357411; c=relaxed/simple;
-	bh=J78UyL3nQUOVxG9YnLglybDfF2wJBiN//9cqudzmFcw=;
+	s=arc-20240116; t=1722357415; c=relaxed/simple;
+	bh=rKrLZpqolH+WMlyy3Jx+2jxnwiYddSa5jI0gLqwreBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nfxb9LzNCnrlGOQIuPK7whRAVt8St5wiHXB8j1SAHUb0to61QoSBDvAtueANBc1/KKlpKxDOml4DEE95iCwn12ejFGd2VAIUSSCDLYhS7oTA02e0VBNhMTmogNTEzD7IkEnVoroTVFjD1s22NuD66RQShtJu4znULhhCHct7KW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xkp/fYSf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehmP80QR5MViP1k/0x+KBIcMF4OYGT0uBRaPldPac3mqO2QuYHjLHDLQdYs1spJuDd87QcGEsJEBIZpqx1mM30UH62rCqyQAbUKFCwz70dNqsZ/HwmZAWa6WbltuGHy1zg+z4c0+05DaUrY3yYrm507kYspcD/0dJ7vUHPSkIKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cdcGKZOz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xkp/fYSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30591C32782;
-	Tue, 30 Jul 2024 16:36:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cdcGKZOz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B12C4AF0A;
+	Tue, 30 Jul 2024 16:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357411;
-	bh=J78UyL3nQUOVxG9YnLglybDfF2wJBiN//9cqudzmFcw=;
+	s=korg; t=1722357414;
+	bh=rKrLZpqolH+WMlyy3Jx+2jxnwiYddSa5jI0gLqwreBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xkp/fYSfAAsvEQ9gQqdhfqIJpms+38pwAaelUSVk/aWK1tIUzxDs3HnM25BhrkWM2
-	 Snd9ARrjl90wWbXJCxRA3L3s3y5m0MXlYazTRReIUkmr6hg4k0mj0UpgAQb5RnZ6V6
-	 CIibCoZ6mZnS3UC+UQbE3KBV2BTnc1rQyc6ldvvw=
+	b=cdcGKZOzG7KLqk5pHSHwTyaXPwgPKco9p+7lBFFcF8C5YnYhbP1XwOUuUZB9W5L28
+	 p4Wfk87iA35JwxMQCi4q7extkzaLflWYv5dZz+5d/qGu+ByX+yxKqIGogM9CP/HWvg
+	 83VlFnA7U3SHXsR7jGUDrhOeY5UUdiBc18yBiR68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 251/809] net: ethtool: pse-pd: Fix possible null-deref
-Date: Tue, 30 Jul 2024 17:42:07 +0200
-Message-ID: <20240730151734.510121999@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Subject: [PATCH 6.1 290/440] drm/gma500: fix null pointer dereference in cdv_intel_lvds_get_modes
+Date: Tue, 30 Jul 2024 17:48:43 +0200
+Message-ID: <20240730151627.160149524@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit 4cddb0f15ea9c62f81b4889ea69a99368cc63a86 ]
+commit cb520c3f366c77e8d69e4e2e2781a8ce48d98e79 upstream.
 
-Fix a possible null dereference when a PSE supports both c33 and PoDL, but
-only one of the netlink attributes is specified. The c33 or PoDL PSE
-capabilities are already validated in the ethnl_set_pse_validate() call.
+In cdv_intel_lvds_get_modes(), the return value of drm_mode_duplicate()
+is assigned to mode, which will lead to a NULL pointer dereference on
+failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Closes: https://lore.kernel.org/netdev/20240705184116.13d8235a@kernel.org/
-Fixes: 4d18e3ddf427 ("net: ethtool: pse-pd: Expand pse commands with the PSE PoE interface")
-Link: https://patch.msgid.link/20240711-fix_pse_pd_deref-v3-2-edd78fc4fe42@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6a227d5fd6c4 ("gma500: Add support for Cedarview")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240709113311.37168-1-make24@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ethtool/pse-pd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/gma500/cdv_intel_lvds.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/ethtool/pse-pd.c b/net/ethtool/pse-pd.c
-index 982995ff16280..776ac96cdadc9 100644
---- a/net/ethtool/pse-pd.c
-+++ b/net/ethtool/pse-pd.c
-@@ -178,9 +178,9 @@ ethnl_set_pse(struct ethnl_req_info *req_info, struct genl_info *info)
- 
- 	phydev = dev->phydev;
- 	/* These values are already validated by the ethnl_pse_set_policy */
--	if (pse_has_podl(phydev->psec))
-+	if (tb[ETHTOOL_A_PODL_PSE_ADMIN_CONTROL])
- 		config.podl_admin_control = nla_get_u32(tb[ETHTOOL_A_PODL_PSE_ADMIN_CONTROL]);
--	if (pse_has_c33(phydev->psec))
-+	if (tb[ETHTOOL_A_C33_PSE_ADMIN_CONTROL])
- 		config.c33_admin_control = nla_get_u32(tb[ETHTOOL_A_C33_PSE_ADMIN_CONTROL]);
- 
- 	/* Return errno directly - PSE has no notification
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/gma500/cdv_intel_lvds.c
++++ b/drivers/gpu/drm/gma500/cdv_intel_lvds.c
+@@ -309,6 +309,9 @@ static int cdv_intel_lvds_get_modes(stru
+ 	if (mode_dev->panel_fixed_mode != NULL) {
+ 		struct drm_display_mode *mode =
+ 		    drm_mode_duplicate(dev, mode_dev->panel_fixed_mode);
++		if (!mode)
++			return 0;
++
+ 		drm_mode_probed_add(connector, mode);
+ 		return 1;
+ 	}
 
 
