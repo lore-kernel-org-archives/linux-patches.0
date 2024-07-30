@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1960717D8BB;
-	Tue, 30 Jul 2024 16:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0DA189537;
+	Tue, 30 Jul 2024 16:59:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358748; cv=none; b=Yv4jJFV4eBPm0aGfPA1csWZxNRrVdKyUZqHU96AQh+/Y1UFJV9HDWVbqMP5WOW/85xdVwKWL6F9mTw1yUdNXGeKkgRlSfw3w0xJL1ABabmcb+Jqlc6RpNCdQ3Ehu61nhsugk/IMq9nZRahkdN1vtFMd64vDdOeJ/t30TfdRED0c=
+	t=1722358751; cv=none; b=HurqmJU+QosOr8TjGAfwTg2WyaF4/4MuCLDZrLFu7e4xnDftSd1VwzGAxpimMpbSZHhgKPTWwxYyY0uQCQ3+stwgkZN5FOQl1pPd4/b0tFJNXE2KlqLielnPGe5NzGDkP3OqQmon7z6ZeUwzX4BvrhczKhYK1BWLOr2IRHvaBR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358748; c=relaxed/simple;
-	bh=f06Xkzmeal5EvaiI34vuKSVZWzT1uNvb8nYmLbWlHfs=;
+	s=arc-20240116; t=1722358751; c=relaxed/simple;
+	bh=dnBSZLiYe0rcJXblxn5NVVDXHhxucpBP9dXUfv99yLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egt3l50dLR7Cl/7+DPF62PFyou1jZaLq8es3s9s3RRxTIGsE6PMKD49A7SkeAkMaQA9Ho07Jv49yuORhm4GJ2Zjinr8I8Uyp3aCXSHkas4rhek4oKZHuUjsTOCuLySvRPuyikkCop2Rpm66I681kvWfcvlv88+5bGJUAmnGwBW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8ip2RXk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A2kiB5asgSHPgra9ekooUuK5TXxmP1XehyU/fGC12JYyKYi7wbHryMmKAwHdxPk8ig47pDseLgXGjVjX7no/xvnOGRiuR+E225WaZMUdHASrOMKwTyFtwAC936M+HmwgqTB76gJQ5OnPIVjHA1KlXGEfNx3QdW4OHVhnb2oL9vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PFGUrDFv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8ip2RXk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B9BC32782;
-	Tue, 30 Jul 2024 16:59:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PFGUrDFv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABB6C32782;
+	Tue, 30 Jul 2024 16:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358747;
-	bh=f06Xkzmeal5EvaiI34vuKSVZWzT1uNvb8nYmLbWlHfs=;
+	s=korg; t=1722358751;
+	bh=dnBSZLiYe0rcJXblxn5NVVDXHhxucpBP9dXUfv99yLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8ip2RXkW06dY/4Ntkje+WU8ZMLji7a2mlECNl3hFgPiwCjCa7hELfKJqexpYcQe4
-	 FZV3kkg/LE+GhpU72IjFJVl3eE5yuss7a/aNP9NMvP7sO/BAWatEDG6CnLY0uf96Xp
-	 0VyzX2sZZX7PGp9xRpeep12a489aDXDGdutagYuQ=
+	b=PFGUrDFvWwM3yNIkX/BELCAYjiOPpHzuyxq46o7Km8TKTFfxdyaUMcXbvqYYVtpEb
+	 oGLCGJszw65DIS7Pd3+y0BCqpDvRsdbxKtGr6o96z1z8fUMrA7Owg1RDy7g0js/5kP
+	 X0ys/Q59T6l5zKIDN0763V2EMM78eCQi9ax7zdp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheng Yong <shengyong@oppo.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/440] f2fs: fix start segno of large section
-Date: Tue, 30 Jul 2024 17:50:33 +0200
-Message-ID: <20240730151631.424791626@linuxfoundation.org>
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 373/568] ipv6: take care of scope when choosing the src addr
+Date: Tue, 30 Jul 2024 17:48:00 +0200
+Message-ID: <20240730151654.441932644@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sheng Yong <shengyong@oppo.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-[ Upstream commit 8c409989678e92e4a737e7cd2bb04f3efb81071a ]
+commit abb9a68d2c64dd9b128ae1f2e635e4d805e7ce64 upstream.
 
-get_ckpt_valid_blocks() checks valid ckpt blocks in current section.
-It counts all vblocks from the first to the last segment in the
-large section. However, START_SEGNO() is used to get the first segno
-in an SIT block. This patch fixes that to get the correct start segno.
+When the source address is selected, the scope must be checked. For
+example, if a loopback address is assigned to the vrf device, it must not
+be chosen for packets sent outside.
 
-Fixes: 61461fc921b7 ("f2fs: fix to avoid touching checkpointed data in get_victim()")
-Signed-off-by: Sheng Yong <shengyong@oppo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Fixes: afbac6010aec ("net: ipv6: Address selection needs to consider L3 domains")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20240710081521.3809742-4-nicolas.dichtel@6wind.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/segment.h | 3 ++-
+ net/ipv6/addrconf.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
-index aa9ad85e0901d..17d1723d98a0b 100644
---- a/fs/f2fs/segment.h
-+++ b/fs/f2fs/segment.h
-@@ -373,7 +373,8 @@ static inline unsigned int get_ckpt_valid_blocks(struct f2fs_sb_info *sbi,
- 				unsigned int segno, bool use_section)
- {
- 	if (use_section && __is_large_section(sbi)) {
--		unsigned int start_segno = START_SEGNO(segno);
-+		unsigned int secno = GET_SEC_FROM_SEG(sbi, segno);
-+		unsigned int start_segno = GET_SEG_FROM_SEC(sbi, secno);
- 		unsigned int blocks = 0;
- 		int i;
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1839,7 +1839,8 @@ int ipv6_dev_get_saddr(struct net *net,
+ 							    master, &dst,
+ 							    scores, hiscore_idx);
  
--- 
-2.43.0
-
+-			if (scores[hiscore_idx].ifa)
++			if (scores[hiscore_idx].ifa &&
++			    scores[hiscore_idx].scopedist >= 0)
+ 				goto out;
+ 		}
+ 
 
 
