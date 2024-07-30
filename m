@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15371A6166;
-	Tue, 30 Jul 2024 16:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED95A1A6166;
+	Tue, 30 Jul 2024 16:47:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358049; cv=none; b=ExmfByyZDEOu2oRf4/CiBUU+INDeyyUYC/7qhR4ijvP6ZEtc/uFJqs1kjZNPog8jJhN2Jnuf04Vomzd46MdfK5osl4y+c2fAMeC90II7AEWIVKgoTyf6Sw8tNv7u35Xq7tUFn0MaJ+9LggUbJ2o+uRPkjRGCUSFSbZdDEpV3dfM=
+	t=1722358053; cv=none; b=KYAM9gforBbIwAOx0nKi8PMYb1ouyfA0vLjzcx0Gvg88ckshOilXcmxqYWs9ysObdsG65OE8iyT4m4H7wTVfqcP7R/BV6mvBA4XLQvE2KNaSKZgsoCgWH/hD2ftlO+IQXepTeXrjp1f403xo5Hd/0LXOcw2MA3Nu8BRksBRVlSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358049; c=relaxed/simple;
-	bh=yxZ/QvOFh/EXWVikLmOyTtbzX48m+3KhMFjD0tR3cOg=;
+	s=arc-20240116; t=1722358053; c=relaxed/simple;
+	bh=3Bpmbg6EBA4FPfdKu7lOxVVu7k/FVnZ52zL3CkCoofI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k7Ql4AMXPzRMBqPAey2uRpya+LZk0oZgapZrM4giC8a566OV2S4iTEi4hEbFAyp8WdSZA2/H2+iZSqv0ibeGJlXdWiBNqj1eoaaBqFxraPl1hZLuEu58HKbpNy6vYtDo5hDz6aDx9Rm25MXLHc9C81zuUEiBfOgFGSYPy2okyr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8a1pxOP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=So5maeIvGm8A6xSfAPemel5fc6Z90VF6+uEjx+DItCDvUwe6EpCyBcGkSr7J+TNC0DWETER+1AXMjzOdMF0jkP9zwWuGL7TgAYDLlTwbRLS7Xom9qkzwI/OjH2PUyTS+0YfsjE2Uf5e/thQKLsXwEQIkErfatWsbgdDijwGBiFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vM/KklAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8a1pxOP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468C6C32782;
-	Tue, 30 Jul 2024 16:47:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vM/KklAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C17BC32782;
+	Tue, 30 Jul 2024 16:47:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358049;
-	bh=yxZ/QvOFh/EXWVikLmOyTtbzX48m+3KhMFjD0tR3cOg=;
+	s=korg; t=1722358052;
+	bh=3Bpmbg6EBA4FPfdKu7lOxVVu7k/FVnZ52zL3CkCoofI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f8a1pxOPy3ZoJQFEnPovq6Lw2LqRy46u5VHplUdOaoFb0VEfQw0VPknNvXqpzcMJZ
-	 jb5x/9zTKyX/RntDWKHvcIGzHsKZeqEORRKjThoLPQ9jyzOEkImDnEPJA2E/TSHW8I
-	 VHY1wvyujsEXayikanyczou4b32kewpykEAj92cA=
+	b=vM/KklAFLYEf+DlZI+sIZnJiXWkn+YZZrS7ThaWGYWxpc3vIQspUZt+I99K5k48wY
+	 YUEShUCSc8CDvg+uZqdK9wmy1UdMdZCeKL9ExqbczfuyXcYxgE3JQZaT6ZqCoWv0uz
+	 qRRbGGYwno0F24NvUWFAWCu6lw6Ov+V7AiFVORdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Rick Edgecombe <rick.p.edgecombe@intel.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 306/809] x86/shstk: Make return uprobe work with shadow stack
-Date: Tue, 30 Jul 2024 17:43:02 +0200
-Message-ID: <20240730151736.685236949@linuxfoundation.org>
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 352/440] scsi: qla2xxx: validate nvme_local_port correctly
+Date: Tue, 30 Jul 2024 17:49:45 +0200
+Message-ID: <20240730151629.568251128@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,98 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Nilesh Javali <njavali@marvell.com>
 
-[ Upstream commit 1713b63a07a28a475de94664f783b4cfd2e4fa90 ]
+commit eb1d4ce2609584eeb7694866f34d4b213caa3af9 upstream.
 
-Currently the application with enabled shadow stack will crash
-if it sets up return uprobe. The reason is the uretprobe kernel
-code changes the user space task's stack, but does not update
-shadow stack accordingly.
+The driver load failed with error message,
 
-Adding new functions to update values on shadow stack and using
-them in uprobe code to keep shadow stack in sync with uretprobe
-changes to user stack.
+qla2xxx [0000:04:00.0]-ffff:0: register_localport failed: ret=ffffffef
 
-Link: https://lore.kernel.org/all/20240611112158.40795-2-jolsa@kernel.org/
+and with a kernel crash,
 
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Fixes: 488af8ea7131 ("x86/shstk: Wire in shadow stack interface")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	BUG: unable to handle kernel NULL pointer dereference at 0000000000000070
+	Workqueue: events_unbound qla_register_fcport_fn [qla2xxx]
+	RIP: 0010:nvme_fc_register_remoteport+0x16/0x430 [nvme_fc]
+	RSP: 0018:ffffaaa040eb3d98 EFLAGS: 00010282
+	RAX: 0000000000000000 RBX: ffff9dfb46b78c00 RCX: 0000000000000000
+	RDX: ffff9dfb46b78da8 RSI: ffffaaa040eb3e08 RDI: 0000000000000000
+	RBP: ffff9dfb612a0a58 R08: ffffffffaf1d6270 R09: 3a34303a30303030
+	R10: 34303a303030305b R11: 2078787832616c71 R12: ffff9dfb46b78dd4
+	R13: ffff9dfb46b78c24 R14: ffff9dfb41525300 R15: ffff9dfb46b78da8
+	FS:  0000000000000000(0000) GS:ffff9dfc67c00000(0000) knlGS:0000000000000000
+	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+	CR2: 0000000000000070 CR3: 000000018da10004 CR4: 00000000000206f0
+	Call Trace:
+	qla_nvme_register_remote+0xeb/0x1f0 [qla2xxx]
+	? qla2x00_dfs_create_rport+0x231/0x270 [qla2xxx]
+	qla2x00_update_fcport+0x2a1/0x3c0 [qla2xxx]
+	qla_register_fcport_fn+0x54/0xc0 [qla2xxx]
+
+Exit the qla_nvme_register_remote() function when qla_nvme_register_hba()
+fails and correctly validate nvme_local_port.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-3-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/shstk.h |  2 ++
- arch/x86/kernel/shstk.c      | 11 +++++++++++
- arch/x86/kernel/uprobes.c    |  7 ++++++-
- 3 files changed, 19 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_nvme.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/shstk.h b/arch/x86/include/asm/shstk.h
-index 42fee8959df7b..896909f306e30 100644
---- a/arch/x86/include/asm/shstk.h
-+++ b/arch/x86/include/asm/shstk.h
-@@ -21,6 +21,7 @@ unsigned long shstk_alloc_thread_stack(struct task_struct *p, unsigned long clon
- void shstk_free(struct task_struct *p);
- int setup_signal_shadow_stack(struct ksignal *ksig);
- int restore_signal_shadow_stack(void);
-+int shstk_update_last_frame(unsigned long val);
- #else
- static inline long shstk_prctl(struct task_struct *task, int option,
- 			       unsigned long arg2) { return -EINVAL; }
-@@ -31,6 +32,7 @@ static inline unsigned long shstk_alloc_thread_stack(struct task_struct *p,
- static inline void shstk_free(struct task_struct *p) {}
- static inline int setup_signal_shadow_stack(struct ksignal *ksig) { return 0; }
- static inline int restore_signal_shadow_stack(void) { return 0; }
-+static inline int shstk_update_last_frame(unsigned long val) { return 0; }
- #endif /* CONFIG_X86_USER_SHADOW_STACK */
+--- a/drivers/scsi/qla2xxx/qla_nvme.c
++++ b/drivers/scsi/qla2xxx/qla_nvme.c
+@@ -29,7 +29,10 @@ int qla_nvme_register_remote(struct scsi
+ 		return 0;
+ 	}
  
- #endif /* __ASSEMBLY__ */
-diff --git a/arch/x86/kernel/shstk.c b/arch/x86/kernel/shstk.c
-index 6f1e9883f0742..9797d4cdb78a2 100644
---- a/arch/x86/kernel/shstk.c
-+++ b/arch/x86/kernel/shstk.c
-@@ -577,3 +577,14 @@ long shstk_prctl(struct task_struct *task, int option, unsigned long arg2)
- 		return wrss_control(true);
- 	return -EINVAL;
- }
-+
-+int shstk_update_last_frame(unsigned long val)
-+{
-+	unsigned long ssp;
-+
-+	if (!features_enabled(ARCH_SHSTK_SHSTK))
+-	if (!vha->nvme_local_port && qla_nvme_register_hba(vha))
++	if (qla_nvme_register_hba(vha))
 +		return 0;
 +
-+	ssp = get_user_shstk_addr();
-+	return write_user_shstk_64((u64 __user *)ssp, (u64)val);
-+}
-diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index 6c07f6daaa227..6402fb3089d26 100644
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -1076,8 +1076,13 @@ arch_uretprobe_hijack_return_addr(unsigned long trampoline_vaddr, struct pt_regs
- 		return orig_ret_vaddr;
++	if (!vha->nvme_local_port)
+ 		return 0;
  
- 	nleft = copy_to_user((void __user *)regs->sp, &trampoline_vaddr, rasize);
--	if (likely(!nleft))
-+	if (likely(!nleft)) {
-+		if (shstk_update_last_frame(trampoline_vaddr)) {
-+			force_sig(SIGSEGV);
-+			return -1;
-+		}
- 		return orig_ret_vaddr;
-+	}
- 
- 	if (nleft != rasize) {
- 		pr_err("return address clobbered: pid=%d, %%sp=%#lx, %%ip=%#lx\n",
--- 
-2.43.0
-
+ 	if (!(fcport->nvme_prli_service_param &
 
 
