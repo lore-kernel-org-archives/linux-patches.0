@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED2EB183CBF;
-	Tue, 30 Jul 2024 16:24:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C8B188012;
+	Tue, 30 Jul 2024 16:24:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356683; cv=none; b=mu+phzUSezRGBuKV0OBaomQ7bO96IKJifSD/n8GN19HB7mT6WtV/AUdT4C9b2ffb9lYJx+fEvq6X7N+piIA9ZRb0EZ5G8RpUdqQmmbdq9lCBFHIub9szTEgRAh6Mzmu0Jx9z1AwWSlV5MwW9XLCDkWlrYPTCVYD0bjAS8Wx/MhM=
+	t=1722356686; cv=none; b=VpXxbK+zXLbLDLJE6HTdEf/yOitVjhlKJWQ7lin++4v7NXtN8bFU1Fyxwc/gX4j/E8pr5Jx1zAMbmzEhpZ/Sy9EcX+hsIldsQs477C/b2iq6xR+wNdj9txzoHRXb2KFjJ3oih39ssFQsa33vevGh7ULQZNS2y/hbqSnR1EyVh/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356683; c=relaxed/simple;
-	bh=ezIarHBKyazCGDRJbdPoMDluoWBAy3cr4p8oII+nMyo=;
+	s=arc-20240116; t=1722356686; c=relaxed/simple;
+	bh=ngTY9ln4zDuNKjnfYr+tDE3kBPSLLIXGP6QUYYdjqNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XymGGKuC3y8cp70LAfHclKkFsLSTy5TCeGfm4tKhG6zv0/jG2L9Johliztgz8TVauj4qGxGHVi2+T3nxVBOCk46kCvX8lID+yAweyqZktOxxZkOQDZBKrD+sKoU5RlPOWCyJqBgZ5UzKKyrUPvj7xoJY58ryu5zkRzGMUMN8HHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l/71BWgX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fu9SO+zp6bDRZFsudCLbpuYaWRT37BPn1gmycZ3R45JZqs67kSewryuqafwj3Bk2K1/6HBkC94m4ONDl20IU2TY+r5dzWwdSvXLS3tdMqegnYmi5DaduPwRSs+yXPv5j5YWuN3BXBo4rIemQuGTFUhwj8QXd7LHeSBj05Q3vJ4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YpAGHkub; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l/71BWgX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 101D1C32782;
-	Tue, 30 Jul 2024 16:24:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YpAGHkub"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67971C32782;
+	Tue, 30 Jul 2024 16:24:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356682;
-	bh=ezIarHBKyazCGDRJbdPoMDluoWBAy3cr4p8oII+nMyo=;
+	s=korg; t=1722356685;
+	bh=ngTY9ln4zDuNKjnfYr+tDE3kBPSLLIXGP6QUYYdjqNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/71BWgXeFD7WmUVy7en5XnIce+RxQv0/T74L5afqyhuC66wx5S9djjEr1AjaKGKX
-	 MATI/dSVSjGPQaku90MzATMzmjtOShaDHDNgzpUnZbA3tm9knkTH3KJBaBPSO7o1Co
-	 cV64cJg5WVOeoge36H5ZzVe2rzQ4hvlsazFX5w6k=
+	b=YpAGHkubwFD24e1hmVox69/W1bJvwLBaoBsZZpesrhfOqoWH6Bp2n5hMd/281c+9E
+	 LSA2Grp19dNFcEq4NcsNL3vRs35JBAxnE0EeRu1fx4B9O5RRLFhMsr374nZJiSzoeM
+	 PqNBD/OlqpLXTRGIHS9+icQfAMAGw/8TF7t8ZPAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Taehee Yoo <ap420073@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 173/809] tcp: add tcp_done_with_error() helper
-Date: Tue, 30 Jul 2024 17:40:49 +0200
-Message-ID: <20240730151731.437691895@linuxfoundation.org>
+Subject: [PATCH 6.6 173/568] xdp: fix invalid wait context of page_pool_destroy()
+Date: Tue, 30 Jul 2024 17:44:40 +0200
+Message-ID: <20240730151646.644936517@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,117 +47,144 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Taehee Yoo <ap420073@gmail.com>
 
-[ Upstream commit 5e514f1cba090e1c8fff03e92a175eccfe46305f ]
+[ Upstream commit 59a931c5b732ca5fc2ca727f5a72aeabaafa85ec ]
 
-tcp_reset() ends with a sequence that is carefuly ordered.
+If the driver uses a page pool, it creates a page pool with
+page_pool_create().
+The reference count of page pool is 1 as default.
+A page pool will be destroyed only when a reference count reaches 0.
+page_pool_destroy() is used to destroy page pool, it decreases a
+reference count.
+When a page pool is destroyed, ->disconnect() is called, which is
+mem_allocator_disconnect().
+This function internally acquires mutex_lock().
 
-We need to fix [e]poll bugs in the following patches,
-it makes sense to use a common helper.
+If the driver uses XDP, it registers a memory model with
+xdp_rxq_info_reg_mem_model().
+The xdp_rxq_info_reg_mem_model() internally increases a page pool
+reference count if a memory model is a page pool.
+Now the reference count is 2.
 
-Suggested-by: Neal Cardwell <ncardwell@google.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240528125253.1966136-2-edumazet@google.com
+To destroy a page pool, the driver should call both page_pool_destroy()
+and xdp_unreg_mem_model().
+The xdp_unreg_mem_model() internally calls page_pool_destroy().
+Only page_pool_destroy() decreases a reference count.
+
+If a driver calls page_pool_destroy() then xdp_unreg_mem_model(), we
+will face an invalid wait context warning.
+Because xdp_unreg_mem_model() calls page_pool_destroy() with
+rcu_read_lock().
+The page_pool_destroy() internally acquires mutex_lock().
+
+Splat looks like:
+=============================
+[ BUG: Invalid wait context ]
+6.10.0-rc6+ #4 Tainted: G W
+-----------------------------
+ethtool/1806 is trying to lock:
+ffffffff90387b90 (mem_id_lock){+.+.}-{4:4}, at: mem_allocator_disconnect+0x73/0x150
+other info that might help us debug this:
+context-{5:5}
+3 locks held by ethtool/1806:
+stack backtrace:
+CPU: 0 PID: 1806 Comm: ethtool Tainted: G W 6.10.0-rc6+ #4 f916f41f172891c800f2fed
+Hardware name: ASUS System Product Name/PRIME Z690-P D4, BIOS 0603 11/01/2021
+Call Trace:
+<TASK>
+dump_stack_lvl+0x7e/0xc0
+__lock_acquire+0x1681/0x4de0
+? _printk+0x64/0xe0
+? __pfx_mark_lock.part.0+0x10/0x10
+? __pfx___lock_acquire+0x10/0x10
+lock_acquire+0x1b3/0x580
+? mem_allocator_disconnect+0x73/0x150
+? __wake_up_klogd.part.0+0x16/0xc0
+? __pfx_lock_acquire+0x10/0x10
+? dump_stack_lvl+0x91/0xc0
+__mutex_lock+0x15c/0x1690
+? mem_allocator_disconnect+0x73/0x150
+? __pfx_prb_read_valid+0x10/0x10
+? mem_allocator_disconnect+0x73/0x150
+? __pfx_llist_add_batch+0x10/0x10
+? console_unlock+0x193/0x1b0
+? lockdep_hardirqs_on+0xbe/0x140
+? __pfx___mutex_lock+0x10/0x10
+? tick_nohz_tick_stopped+0x16/0x90
+? __irq_work_queue_local+0x1e5/0x330
+? irq_work_queue+0x39/0x50
+? __wake_up_klogd.part.0+0x79/0xc0
+? mem_allocator_disconnect+0x73/0x150
+mem_allocator_disconnect+0x73/0x150
+? __pfx_mem_allocator_disconnect+0x10/0x10
+? mark_held_locks+0xa5/0xf0
+? rcu_is_watching+0x11/0xb0
+page_pool_release+0x36e/0x6d0
+page_pool_destroy+0xd7/0x440
+xdp_unreg_mem_model+0x1a7/0x2a0
+? __pfx_xdp_unreg_mem_model+0x10/0x10
+? kfree+0x125/0x370
+? bnxt_free_ring.isra.0+0x2eb/0x500
+? bnxt_free_mem+0x5ac/0x2500
+xdp_rxq_info_unreg+0x4a/0xd0
+bnxt_free_mem+0x1356/0x2500
+bnxt_close_nic+0xf0/0x3b0
+? __pfx_bnxt_close_nic+0x10/0x10
+? ethnl_parse_bit+0x2c6/0x6d0
+? __pfx___nla_validate_parse+0x10/0x10
+? __pfx_ethnl_parse_bit+0x10/0x10
+bnxt_set_features+0x2a8/0x3e0
+__netdev_update_features+0x4dc/0x1370
+? ethnl_parse_bitset+0x4ff/0x750
+? __pfx_ethnl_parse_bitset+0x10/0x10
+? __pfx___netdev_update_features+0x10/0x10
+? mark_held_locks+0xa5/0xf0
+? _raw_spin_unlock_irqrestore+0x42/0x70
+? __pm_runtime_resume+0x7d/0x110
+ethnl_set_features+0x32d/0xa20
+
+To fix this problem, it uses rhashtable_lookup_fast() instead of
+rhashtable_lookup() with rcu_read_lock().
+Using xa without rcu_read_lock() here is safe.
+xa is freed by __xdp_mem_allocator_rcu_free() and this is called by
+call_rcu() of mem_xa_remove().
+The mem_xa_remove() is called by page_pool_destroy() if a reference
+count reaches 0.
+The xa is already protected by the reference count mechanism well in the
+control plane.
+So removing rcu_read_lock() for page_pool_destroy() is safe.
+
+Fixes: c3f812cea0d7 ("page_pool: do not release pool until inflight == 0.")
+Signed-off-by: Taehee Yoo <ap420073@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20240712095116.3801586-1-ap420073@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 853c3bd7b791 ("tcp: fix race in tcp_write_err()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/tcp.h    |  1 +
- net/ipv4/tcp.c       |  2 +-
- net/ipv4/tcp_input.c | 32 +++++++++++++++++++++-----------
- 3 files changed, 23 insertions(+), 12 deletions(-)
+ net/core/xdp.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/include/net/tcp.h b/include/net/tcp.h
-index 060e95b331a28..32815a40dea16 100644
---- a/include/net/tcp.h
-+++ b/include/net/tcp.h
-@@ -677,6 +677,7 @@ void tcp_skb_collapse_tstamp(struct sk_buff *skb,
- /* tcp_input.c */
- void tcp_rearm_rto(struct sock *sk);
- void tcp_synack_rtt_meas(struct sock *sk, struct request_sock *req);
-+void tcp_done_with_error(struct sock *sk, int err);
- void tcp_reset(struct sock *sk, struct sk_buff *skb);
- void tcp_fin(struct sock *sk);
- void tcp_check_space(struct sock *sk);
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index e6790ea748773..cc36ff797484b 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -598,7 +598,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
- 		 */
- 		mask |= EPOLLOUT | EPOLLWRNORM;
- 	}
--	/* This barrier is coupled with smp_wmb() in tcp_reset() */
-+	/* This barrier is coupled with smp_wmb() in tcp_done_with_error() */
- 	smp_rmb();
- 	if (READ_ONCE(sk->sk_err) ||
- 	    !skb_queue_empty_lockless(&sk->sk_error_queue))
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index 38da23f991d60..570e87ad9a56e 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -4469,9 +4469,26 @@ static enum skb_drop_reason tcp_sequence(const struct tcp_sock *tp,
- 	return SKB_NOT_DROPPED_YET;
- }
- 
-+
-+void tcp_done_with_error(struct sock *sk, int err)
-+{
-+	/* This barrier is coupled with smp_rmb() in tcp_poll() */
-+	WRITE_ONCE(sk->sk_err, err);
-+	smp_wmb();
-+
-+	tcp_write_queue_purge(sk);
-+	tcp_done(sk);
-+
-+	if (!sock_flag(sk, SOCK_DEAD))
-+		sk_error_report(sk);
-+}
-+EXPORT_SYMBOL(tcp_done_with_error);
-+
- /* When we get a reset we do this. */
- void tcp_reset(struct sock *sk, struct sk_buff *skb)
- {
-+	int err;
-+
- 	trace_tcp_receive_reset(sk);
- 
- 	/* mptcp can't tell us to ignore reset pkts,
-@@ -4483,24 +4500,17 @@ void tcp_reset(struct sock *sk, struct sk_buff *skb)
- 	/* We want the right error as BSD sees it (and indeed as we do). */
- 	switch (sk->sk_state) {
- 	case TCP_SYN_SENT:
--		WRITE_ONCE(sk->sk_err, ECONNREFUSED);
-+		err = ECONNREFUSED;
- 		break;
- 	case TCP_CLOSE_WAIT:
--		WRITE_ONCE(sk->sk_err, EPIPE);
-+		err = EPIPE;
- 		break;
- 	case TCP_CLOSE:
+diff --git a/net/core/xdp.c b/net/core/xdp.c
+index 5fe4c099f30a3..5ee3f8f165e5a 100644
+--- a/net/core/xdp.c
++++ b/net/core/xdp.c
+@@ -126,10 +126,8 @@ void xdp_unreg_mem_model(struct xdp_mem_info *mem)
  		return;
- 	default:
--		WRITE_ONCE(sk->sk_err, ECONNRESET);
-+		err = ECONNRESET;
- 	}
--	/* This barrier is coupled with smp_rmb() in tcp_poll() */
--	smp_wmb();
--
--	tcp_write_queue_purge(sk);
--	tcp_done(sk);
--
--	if (!sock_flag(sk, SOCK_DEAD))
--		sk_error_report(sk);
-+	tcp_done_with_error(sk, err);
- }
  
- /*
+ 	if (type == MEM_TYPE_PAGE_POOL) {
+-		rcu_read_lock();
+-		xa = rhashtable_lookup(mem_id_ht, &id, mem_id_rht_params);
++		xa = rhashtable_lookup_fast(mem_id_ht, &id, mem_id_rht_params);
+ 		page_pool_destroy(xa->page_pool);
+-		rcu_read_unlock();
+ 	}
+ }
+ EXPORT_SYMBOL_GPL(xdp_unreg_mem_model);
 -- 
 2.43.0
 
