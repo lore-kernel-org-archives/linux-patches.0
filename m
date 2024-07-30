@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8004187FF2;
-	Tue, 30 Jul 2024 16:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9EF183CD5;
+	Tue, 30 Jul 2024 16:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355435; cv=none; b=CKzfB+HbbZqHy9fsfs8IhXXh/axrwDbCYmJr695PcBMWa1nDKIT8vOyX7qqvA83wptzLKeuqek0QJSO5u7tyxYBn7wFiNxEsjFvDXByxR1UiIE3L/nG3DZuMnYUggnb3fbSmg97h7FVSl4baW0/JvWlolJ28D7nhrzvh486ExHg=
+	t=1722355439; cv=none; b=fnBOHp3OJfdyOfSRJRO8msbGv2iujYtSUlC1gSCPcUUjQPQ9A/XztVBams1MNBGZHDZqVhLsiq+GxHR5ZiJUi6vU4iqj61F7XGV+40r3dsVYjzH4TIhEj/dBnNRGH2CmtZqm/8F+NX2GUQqeupphNeRK198qOTM2UpjYHcLyGp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355435; c=relaxed/simple;
-	bh=Q/Gw6D1y3oNxY5jCmaac1LfqJGTryASSxOyT82kj6/c=;
+	s=arc-20240116; t=1722355439; c=relaxed/simple;
+	bh=i6e9CGiXEeoDMWjoBlzCb8SOnw3yjthSZLqjfLWUJ/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=c3A4huXWYbmwJ+7IkKXB2QC6zKBFxHkhEAaF1362wqqrB1KcEQv0IXgbubmXAgf7J2spWwMrrREJTfFegHv1xuojyGWHcsn8+uW6Hk7bjH4AovAuJPNUwwdwoVNeiAnUjnl1GtUCugT+GWdCVn4OC8/cBFBXJAhy7yON3knda+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dsv3lJcv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Eu0CvvK0I848lu4MqhZdg6ckVGOJoYJLKviL96qpEfzHL7zkav+mqkgDarMuUcolvly/kVPCntwdnV6FfZXmx7UtBUktiasXLWdfIhpTGre91GI9n9/LP9gA1XNfnNud54L4/YaWMLCXY2e3jVLqv9xyN6u8v+wXF7DoTYKuZGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P4WkahI4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dsv3lJcv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A2FC32782;
-	Tue, 30 Jul 2024 16:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P4WkahI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9A3C32782;
+	Tue, 30 Jul 2024 16:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355435;
-	bh=Q/Gw6D1y3oNxY5jCmaac1LfqJGTryASSxOyT82kj6/c=;
+	s=korg; t=1722355438;
+	bh=i6e9CGiXEeoDMWjoBlzCb8SOnw3yjthSZLqjfLWUJ/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dsv3lJcvGF0xzHDRW2ODqWZlO+Ny9F2fqzsKRGhdqVCjdLMa/kQ9HmW5BpiHauINV
-	 r28YVacFMir7Wxg6T9FCY1pf/7zAQ8EJlvOAyKoAEAkqmTtBDIqdCnlg1+WL9B7WjT
-	 vYlnD8a5jzbHTudYfAAGuZhJBZnmRXoL+TfJnlCg=
+	b=P4WkahI4mpPaB5YJUtZXwRn8T88HtMfOKLqNMgANkTjYoQRfDfeWBhrRjLnpxHoyi
+	 J36T16p+614X2C8g+hf23XdXazAc5E+0jBPg1p2X+5mbVHCeyFtLL3FaqxuQeG5j1N
+	 D+Nczttj0Ae5ja+n0cvdIpr4ZFZGk4JHGcXQ3FTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 032/809] pwm: stm32: Always do lazy disabling
-Date: Tue, 30 Jul 2024 17:38:28 +0200
-Message-ID: <20240730151725.922374173@linuxfoundation.org>
+Subject: [PATCH 6.1 075/440] arm64: dts: qcom: sm6350: Add missing qcom,non-secure-domain property
+Date: Tue, 30 Jul 2024 17:45:08 +0200
+Message-ID: <20240730151618.690867625@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,57 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 7346e7a058a2c9aa9ff1cc699c7bf18a402d9f84 ]
+[ Upstream commit 81008068ee4f2c4c26e97a0404405bb4b450241b ]
 
-When the state changes from enabled to disabled, polarity, duty_cycle
-and period are not configured in hardware and TIM_CCER_CCxE is just
-cleared. However if the state changes from one disabled state to
-another, all parameters are written to hardware because the early exit
-from stm32_pwm_apply() is only taken if the pwm is currently enabled.
+By default the DSP domains are secure, add the missing
+qcom,non-secure-domain property to mark them as non-secure.
 
-This yields surprises like: Applying
-
-	{ .period = 1, .duty_cycle = 0, .enabled = false }
-
-succeeds if the pwm is initially on, but fails if it's already off
-because 1 is a too small period.
-
-Update the check for lazy disable to always exit early if the target
-state is disabled, no matter what is currently configured.
-
-Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20240703110010.672654-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: efc33c969f23 ("arm64: dts: qcom: sm6350: Add ADSP nodes")
+Fixes: 8eb5287e8a42 ("arm64: dts: qcom: sm6350: Add CDSP nodes")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Link: https://lore.kernel.org/r/20240705-sm6350-fastrpc-fix-v2-1-89a43166c9bb@fairphone.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 8bae3fd2b3306..c586029caf233 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -452,8 +452,9 @@ static int stm32_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index 66998df053d52..ba078099b8054 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -895,6 +895,7 @@ fastrpc {
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "adsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
  
- 	enabled = pwm->state.enabled;
- 
--	if (enabled && !state->enabled) {
--		stm32_pwm_disable(priv, pwm->hwpwm);
-+	if (!state->enabled) {
-+		if (enabled)
-+			stm32_pwm_disable(priv, pwm->hwpwm);
- 		return 0;
- 	}
+@@ -1002,6 +1003,7 @@ fastrpc {
+ 					compatible = "qcom,fastrpc";
+ 					qcom,glink-channels = "fastrpcglink-apps-dsp";
+ 					label = "cdsp";
++					qcom,non-secure-domain;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
  
 -- 
 2.43.0
