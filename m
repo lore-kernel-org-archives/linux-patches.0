@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBB41A619E;
-	Tue, 30 Jul 2024 16:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5575183CDB;
+	Tue, 30 Jul 2024 16:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357725; cv=none; b=YmGjgEyHZeBCgq73pDEA2XwRRzSm1JdMIoXj5FZS49fy09fWIQpfqokit6Ej1M+UM+pA+nvHXDAnG6wLwIRFRr45UVnrnYAS0Cd6mlvAnTDC8ytUG1KSp2smRlE/ybpOhoUa8E3xWDD93QNhlVht8u7f7YVZFRl6M4H17RM85YM=
+	t=1722357727; cv=none; b=BTArI93erpsU3ktq2kaFaN3g3ZfJPoBWSkdLtoTdmVkd70WrVNXu4SIncpL1O4Uujr+hpX87nawhpr76Qn0VrYzSqAocGRHx3+3UJ22aSq6UoWQb+D3pAPh3abaARoQO59Rc8p3y6yfcCXtbIcexsVUH3kRLJlgDv3343D24IzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357725; c=relaxed/simple;
-	bh=mKyr8Sm9U7DqpSQsYtV2EgqNRRSc6sMnMlakDkXVN9U=;
+	s=arc-20240116; t=1722357727; c=relaxed/simple;
+	bh=W0DpEdr8VbpyoephpFVJLYoNEu0P4D9sIMuUhJFkHM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WMh/rXm9RdAnGtqh2ETfwxShdD9q1GuopdLAAmyQ3mpaTUYasP6SZCOcmvyaU/HB00r+yW3xf4FgNTbngWX61c9/NzOJm7YbWH63tagKpVR8ffDkYywgTkSD4F40fNiMBYH2IIx9Htn05EI/MjdrhQZIYQ6kmjI++vexQu4LX9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4FHXdtf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UBwRSvx0ZEwwy021exYfhm9r7eug7fjmLYoLuV2b9scuadMKjJ3wupK7H3kCQSktm7obW9r2/2sY9xFoV+zxIGt8Wnz/UaafhwkoWzRG0a+EnfPFfs2NlUeJR/WJyaCuDcSdEnAdpvCABRzJP56FW5K9ZnlsDSSaOoL8a1yoTdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMMyiQHH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4FHXdtf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BF3C32782;
-	Tue, 30 Jul 2024 16:42:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMMyiQHH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350CBC4AF0A;
+	Tue, 30 Jul 2024 16:42:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357724;
-	bh=mKyr8Sm9U7DqpSQsYtV2EgqNRRSc6sMnMlakDkXVN9U=;
+	s=korg; t=1722357727;
+	bh=W0DpEdr8VbpyoephpFVJLYoNEu0P4D9sIMuUhJFkHM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r4FHXdtfKKDQYfghPyBvV5010ZRR5aNo5ZgVoIlKmewztpI/Mfiuo0o4rU+tf0Qc/
-	 hRa+I0F+Z19dJ546Gq2ctRUIAxQPN5mEMLGRu0HpP1+h7xXNM+74TZcu+stb0Upw0h
-	 E/ZdUM/IFhQZUjxh2QC8hACtCBuACm/jaiJZ8hr4=
+	b=OMMyiQHHb6S88gb4LVEu1+8aZ32a7nYH4KhBkagLJ5vHIlGc29tgMnMymbeG+auXX
+	 6CX1+fucHhFHPZMSx1VsC2ZkyxOpC5TAvFqqYW8+gpachy2kFRdwyw4WXTTOOyHTK2
+	 w/F8vFI+Nwnh8lw01UKC22bt5dcYN8vbxPV0A204=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Andrea Parri <parri.andrea@gmail.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.1 319/440] tools/memory-model: Fix bug in lock.cat
-Date: Tue, 30 Jul 2024 17:49:12 +0200
-Message-ID: <20240730151628.279427569@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 285/568] PCI: endpoint: Clean up error handling in vpci_scan_bus()
+Date: Tue, 30 Jul 2024 17:46:32 +0200
+Message-ID: <20240730151651.012875849@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,104 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 4c830eef806679dc243e191f962c488dd9d00708 upstream.
+[ Upstream commit 8e0f5a96c534f781e8c57ca30459448b3bfe5429 ]
 
-Andrea reported that the following innocuous litmus test:
+Smatch complains about inconsistent NULL checking in vpci_scan_bus():
 
-C T
+    drivers/pci/endpoint/functions/pci-epf-vntb.c:1024 vpci_scan_bus() error: we previously assumed 'vpci_bus' could be null (see line 1021)
 
-{}
+Instead of printing an error message and then crashing we should return
+an error code and clean up.
 
-P0(spinlock_t *x)
-{
-	int r0;
+Also the NULL check is reversed so it prints an error for success
+instead of failure.
 
-	spin_lock(x);
-	spin_unlock(x);
-	r0 = spin_is_locked(x);
-}
-
-gives rise to a nonsensical empty result with no executions:
-
-$ herd7 -conf linux-kernel.cfg T.litmus
-Test T Required
-States 0
-Ok
-Witnesses
-Positive: 0 Negative: 0
-Condition forall (true)
-Observation T Never 0 0
-Time T 0.00
-Hash=6fa204e139ddddf2cb6fa963bad117c0
-
-The problem is caused by a bug in the lock.cat part of the LKMM.  Its
-computation of the rf relation for RU (read-unlocked) events is
-faulty; it implicitly assumes that every RU event must read from
-either a UL (unlock) event in another thread or from the lock's
-initial state.  Neither is true in the litmus test above, so the
-computation yields no possible executions.
-
-The lock.cat code tries to make up for this deficiency by allowing RU
-events outside of critical sections to read from the last po-previous
-UL event.  But it does this incorrectly, trying to keep these rfi links
-separate from the rfe links that might also be needed, and passing only
-the latter to herd7's cross() macro.
-
-The problem is fixed by merging the two sets of possible rf links for
-RU events and using them all in the call to cross().
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-by: Andrea Parri <parri.andrea@gmail.com>
-Closes: https://lore.kernel.org/linux-arch/ZlC0IkzpQdeGj+a3@andrea/
-Tested-by: Andrea Parri <parri.andrea@gmail.com>
-Acked-by: Andrea Parri <parri.andrea@gmail.com>
-Fixes: 15553dcbca06 ("tools/memory-model: Add model support for spin_is_locked()")
-CC: <stable@vger.kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Link: https://lore.kernel.org/linux-pci/68e0f6a4-fd57-45d0-945b-0876f2c8cb86@moroto.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/memory-model/lock.cat |   20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/tools/memory-model/lock.cat
-+++ b/tools/memory-model/lock.cat
-@@ -102,19 +102,19 @@ let rf-lf = rfe-lf | rfi-lf
-  * within one of the lock's critical sections returns False.
-  *)
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 2b7bc5a731dd6..1a4cdf98df703 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -1029,8 +1029,10 @@ static int vpci_scan_bus(void *sysdata)
+ 	struct epf_ntb *ndev = sysdata;
  
--(* rfi for RU events: an RU may read from the last po-previous UL *)
--let rfi-ru = ([UL] ; po-loc ; [RU]) \ ([UL] ; po-loc ; [LKW] ; po-loc)
--
--(* rfe for RU events: an RU may read from an external UL or the initial write *)
--let all-possible-rfe-ru =
--	let possible-rfe-ru r =
-+(*
-+ * rf for RU events: an RU may read from an external UL or the initial write,
-+ * or from the last po-previous UL
-+ *)
-+let all-possible-rf-ru =
-+	let possible-rf-ru r =
- 		let pair-to-relation p = p ++ 0
--		in map pair-to-relation (((UL | IW) * {r}) & loc & ext)
--	in map possible-rfe-ru RU
-+		in map pair-to-relation ((((UL | IW) * {r}) & loc & ext) |
-+			(((UL * {r}) & po-loc) \ ([UL] ; po-loc ; [LKW] ; po-loc)))
-+	in map possible-rf-ru RU
+ 	vpci_bus = pci_scan_bus(ndev->vbus_number, &vpci_ops, sysdata);
+-	if (vpci_bus)
+-		pr_err("create pci bus\n");
++	if (!vpci_bus) {
++		pr_err("create pci bus failed\n");
++		return -EINVAL;
++	}
  
- (* Generate all rf relations for RU events *)
--with rfe-ru from cross(all-possible-rfe-ru)
--let rf-ru = rfe-ru | rfi-ru
-+with rf-ru from cross(all-possible-rf-ru)
+ 	pci_bus_add_devices(vpci_bus);
  
- (* Final rf relation *)
- let rf = rf | rf-lf | rf-ru
+@@ -1352,10 +1354,14 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ 		goto err_bar_alloc;
+ 	}
+ 
+-	vpci_scan_bus(ntb);
++	ret = vpci_scan_bus(ntb);
++	if (ret)
++		goto err_unregister;
+ 
+ 	return 0;
+ 
++err_unregister:
++	pci_unregister_driver(&vntb_pci_driver);
+ err_bar_alloc:
+ 	epf_ntb_config_spad_bar_free(ntb);
+ 
+-- 
+2.43.0
+
 
 
