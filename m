@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FD71A619E;
-	Tue, 30 Jul 2024 16:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C57214831F;
+	Tue, 30 Jul 2024 16:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357784; cv=none; b=I6l1m3ogsehVuakFmqwmEQMs/gMDdfd49nuaFyQ6KGcOCouoPcDqyOSZ3E7fFKDxRcx2fnkEnCPLtrp8jpZ5RlLv40ABS1Geo0XSHCd+9S20hmclhDMbxTn2dSPLQX7fFdK/3gRt8sqiXhyIoDmDzf+KX2O/KD4kdBTeBcLwkNk=
+	t=1722357787; cv=none; b=KjkWVKfrIEFImUvFIvFmUwh19bFzmo7ZgIZkbw8KyCXi/J8QzTK8EdpuEfF+hQf58DlBJEtTYBIAPPtdlnPdBQQvmXF3O0Qxpj+2QKcLnSEiBo7VAWkpUe3kv5B08kwbwJx49nGM2RMhyfY6qoN0J93T5gQeoRjkPHK2EBUYBjg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357784; c=relaxed/simple;
-	bh=JTCs2ZyDvyG9w0XHGRY/g55fnNWjkLMB2C6jeTl4+/E=;
+	s=arc-20240116; t=1722357787; c=relaxed/simple;
+	bh=wQzA39+30kyPS4Sz7OhZhECIZ4hu2XYrlPt/CdJ+HBk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PvajayHANqdFMNHGq/WAHNQfxwYgylchIvjET6HDaXlCR3zIfzuIRA8O6J8z7PsVph///A15pdWi8kxnCY1NSqkG1mRt/MRiM/uPxQ46e+k1WtsWn06e6mQxkmo5OVWhIi51ESTJBsJkEq8crKgimSsbj8B8OjjfWW+WPxAPJSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y987XWa0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uspyUQZpMjvNb4okjLgv3lw5OwVnMPbMY3AgPOtMcJVRQHCn4TAgjASMwE12u0dbFJhY1gh+nvtqm895s9ujxAW513p1n5psxyYvOTlxpsDeRs6e6XwINIE1trHpNSsfMvlmAPxZg0b6/bgZ66gmISQfGBhWfgPjCIawz3g4ghc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0nYS1t1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y987XWa0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF68C32782;
-	Tue, 30 Jul 2024 16:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0nYS1t1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2455EC32782;
+	Tue, 30 Jul 2024 16:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357784;
-	bh=JTCs2ZyDvyG9w0XHGRY/g55fnNWjkLMB2C6jeTl4+/E=;
+	s=korg; t=1722357787;
+	bh=wQzA39+30kyPS4Sz7OhZhECIZ4hu2XYrlPt/CdJ+HBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y987XWa0D15hZ4Myz9DcE8LVK18aqdocaQQqFtWkGI52eUFmkSyUE34Hc1gx0RrfJ
-	 4FzVKjERWRGfY78Uy6Fb71PVIdcyuvSmzL7MLnNOmtjyThY3Nb92aM/eRQyCgn68r3
-	 rTPx+TbwAgOPq4v9soWVyBy18qaaav4fBkYOKxaQ=
+	b=z0nYS1t1TCHezW8UkcIdpVEeBtc+MInN2CzjiiM7bCxcIL3OqfaTIjgCgpcTbM92k
+	 L36/uq5L2/fKCK913zOAm4437ilky/Dn3gSSBdWt9yNiWtlzzvzj1o5qXoeI/uNXX0
+	 ePxsvP1lUKH5hUX0STiXyku05bPluR/dq1EfAIz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 291/568] clk: qcom: kpss-xcc: Return of_clk_add_hw_provider to transfer the error
-Date: Tue, 30 Jul 2024 17:46:38 +0200
-Message-ID: <20240730151651.247908083@linuxfoundation.org>
+Subject: [PATCH 6.10 292/809] media: i2c: hi846: Fix V4L2_SUBDEV_FORMAT_TRY get_selection()
+Date: Tue, 30 Jul 2024 17:42:48 +0200
+Message-ID: <20240730151736.124892796@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 9db4585eca22fcd0422a94ac792f87dcbf74b643 ]
+[ Upstream commit 984abe0b5794a2aca359bb61555351d2ec520d2a ]
 
-Return of_clk_add_hw_provider() in order to transfer the error if it
-fails.
+The current code does not return anything to the user.
 
-Fixes: 09be1a39e685 ("clk: qcom: kpss-xcc: register it as clk provider")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240704073606.1976936-1-nichen@iscas.ac.cn
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Although the code looks a bit dangerous (using a pointer without
+checking if it is valid), it should be fine. The core validates that
+sel->pad has a valid value.
+
+Fix the following smatch error:
+drivers/media/i2c/hi846.c:1854 hi846_get_selection() warn: statement has no effect 31
+
+Fixes: e8c0882685f9 ("media: i2c: add driver for the SK Hynix Hi-846 8M pixel camera")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+[Sakari Ailus: code -> core.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/kpss-xcc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/media/i2c/hi846.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/kpss-xcc.c b/drivers/clk/qcom/kpss-xcc.c
-index 97358c98c6c98..d8c1f2b41eeb3 100644
---- a/drivers/clk/qcom/kpss-xcc.c
-+++ b/drivers/clk/qcom/kpss-xcc.c
-@@ -63,9 +63,7 @@ static int kpss_xcc_driver_probe(struct platform_device *pdev)
- 	if (IS_ERR(hw))
- 		return PTR_ERR(hw);
- 
--	of_clk_add_hw_provider(dev->of_node, of_clk_hw_simple_get, hw);
--
--	return 0;
-+	return of_clk_add_hw_provider(dev->of_node, of_clk_hw_simple_get, hw);
- }
- 
- static struct platform_driver kpss_xcc_driver = {
+diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
+index 9c565ec033d4e..52d9ca68a86c8 100644
+--- a/drivers/media/i2c/hi846.c
++++ b/drivers/media/i2c/hi846.c
+@@ -1851,7 +1851,7 @@ static int hi846_get_selection(struct v4l2_subdev *sd,
+ 		mutex_lock(&hi846->mutex);
+ 		switch (sel->which) {
+ 		case V4L2_SUBDEV_FORMAT_TRY:
+-			v4l2_subdev_state_get_crop(sd_state, sel->pad);
++			sel->r = *v4l2_subdev_state_get_crop(sd_state, sel->pad);
+ 			break;
+ 		case V4L2_SUBDEV_FORMAT_ACTIVE:
+ 			sel->r = hi846->cur_mode->crop;
 -- 
 2.43.0
 
