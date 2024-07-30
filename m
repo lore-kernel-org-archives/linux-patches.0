@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627F71A617E;
-	Tue, 30 Jul 2024 16:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53DB8BE8;
+	Tue, 30 Jul 2024 16:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357190; cv=none; b=BvEFIoxl9Opk1p6krxKi+4RaBSgEMRO0mNtV3BfYQgkM5nXdvZ3NIWF5H1xdrNcpuGZfpWfk0l93q8rUSSYJBGu7nQjxXpEvgpSEOXJTi976YtexGT3ORyrxRWkfmSs6rgni8kN9YhzVk3N4xG8Xy9GWx9Ju3jCs8DrtG4qrwIU=
+	t=1722357194; cv=none; b=InGjrzBGx99V1hjIvEXG+sfxp5YDWxbL7fj80eT/UzSGP/woO6ZphdFbbEXK2cbhQxYWjFdkAYTDhUteH0v9vkglN+7/DlXUOSPadmTBxZwvbIt+Ka+bfcZjQ0gVDqBPASB6scDtaggJb3ZTMPR+chYkc8xJ10kdGqx3gItL4K8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357190; c=relaxed/simple;
-	bh=l2g4YjY6FS0dXfS+1vTCN4BshcT12srYe665In2wvOo=;
+	s=arc-20240116; t=1722357194; c=relaxed/simple;
+	bh=C7uXrt9uCLEubTlnWAQr/ssICyqRW+G6oonkDzsqDT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LW+CJWic4uoWR/Gm8f/iXmlZGkJuANHTE1147FdwWf3kHc3FrM7Egv/Z+LVI2rR+/yFveDehcHjVXyVIh/KiMiNbKpukswvTx6c3K1C+/wdKFMIKU8WgLlHU9fm0x73zwh+drJpp3QGws3aAxDjjlMh924HjWtKMaSedSj57iig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TWMhXpL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uXOyB/ihSZfwhMFMESy/J3N9e54l7ScIdBp2vQR5Evvw5eC95j7wHSBYo0XTA+aPUBnC3QYcgKZ7c6C+bViQBCAseETeEigwyF6h33xI4J3VnSRwywxH5Xf24g+xRBh3WMtBrbrmlMAjdWF+CAwrIveAZ+L4iDwsK0GcIO0dOvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JbtGyMQh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TWMhXpL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09A0C32782;
-	Tue, 30 Jul 2024 16:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JbtGyMQh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E8BFC4AF0A;
+	Tue, 30 Jul 2024 16:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357190;
-	bh=l2g4YjY6FS0dXfS+1vTCN4BshcT12srYe665In2wvOo=;
+	s=korg; t=1722357193;
+	bh=C7uXrt9uCLEubTlnWAQr/ssICyqRW+G6oonkDzsqDT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1TWMhXpL7bPjqkAHzymnYhwFNHveth+IZVqngpJGFhknOM/vyZcb3We2uHTb/3pc/
-	 60H2VYze7aJvoIDUm9UX1rDrSvBk13zxtE2K/Q2aMm61273Il9EouLl3t8ZBc1eruc
-	 1/6vcJLT59enDF76rRPy5NRbmk3UmDji7DAvVnOY=
+	b=JbtGyMQharPSyWCDbsXNDKxjO2iSfqogY2OzQTtzPIN51fPXVMjuBAvdHJ+r44UYf
+	 Ue7TA+b1AMKRyUKkB25cooRV8XzCWtMg8ovc9ES5CQsR722EM3z2KCI5ROZW9xh6u/
+	 +2uzC7nyf0mrwuBXDUQ/SW9oN8UXsLmvA4QdQNHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 231/809] xfrm: call xfrm_dev_policy_delete when kill policy
-Date: Tue, 30 Jul 2024 17:41:47 +0200
-Message-ID: <20240730151733.730771449@linuxfoundation.org>
+Subject: [PATCH 6.6 228/568] drm/qxl: Add check for drm_cvt_mode
+Date: Tue, 30 Jul 2024 17:45:35 +0200
+Message-ID: <20240730151648.794309458@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,92 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 89a2aefe4b084686c2ffc1ee939585111ea4fc0f ]
+[ Upstream commit 7bd09a2db0f617377027a2bb0b9179e6959edff3 ]
 
-xfrm_policy_kill() is called at different places to delete xfrm
-policy. It will call xfrm_pol_put(). But xfrm_dev_policy_delete() is
-not called to free the policy offloaded to hardware.
+Add check for the return value of drm_cvt_mode() and return the error if
+it fails in order to avoid NULL pointer dereference.
 
-The three commits cited here are to handle this issue by calling
-xfrm_dev_policy_delete() outside xfrm_get_policy(). But they didn't
-cover all the cases. An example, which is not handled for now, is
-xfrm_policy_insert(). It is called when XFRM_MSG_UPDPOLICY request is
-received. Old policy is replaced by new one, but the offloaded policy
-is not deleted, so driver doesn't have the chance to release hardware
-resources.
-
-To resolve this issue for all cases, move xfrm_dev_policy_delete()
-into xfrm_policy_kill(), so the offloaded policy can be deleted from
-hardware when it is called, which avoids hardware resources leakage.
-
-Fixes: 919e43fad516 ("xfrm: add an interface to offload policy")
-Fixes: bf06fcf4be0f ("xfrm: add missed call to delete offloaded policies")
-Fixes: 982c3aca8bac ("xfrm: delete offloaded policy")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Fixes: 1b043677d4be ("drm/qxl: add qxl_add_mode helper function")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240621071031.1987974-1-nichen@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/xfrm/xfrm_policy.c | 5 ++---
- net/xfrm/xfrm_user.c   | 1 -
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/qxl/qxl_display.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
-index 66e07de2de35c..56b88ad88db6f 100644
---- a/net/xfrm/xfrm_policy.c
-+++ b/net/xfrm/xfrm_policy.c
-@@ -452,6 +452,8 @@ EXPORT_SYMBOL(xfrm_policy_destroy);
- 
- static void xfrm_policy_kill(struct xfrm_policy *policy)
- {
-+	xfrm_dev_policy_delete(policy);
-+
- 	write_lock_bh(&policy->lock);
- 	policy->walk.dead = 1;
- 	write_unlock_bh(&policy->lock);
-@@ -1850,7 +1852,6 @@ int xfrm_policy_flush(struct net *net, u8 type, bool task_valid)
- 
- 		__xfrm_policy_unlink(pol, dir);
- 		spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
--		xfrm_dev_policy_delete(pol);
- 		cnt++;
- 		xfrm_audit_policy_delete(pol, 1, task_valid);
- 		xfrm_policy_kill(pol);
-@@ -1891,7 +1892,6 @@ int xfrm_dev_policy_flush(struct net *net, struct net_device *dev,
- 
- 		__xfrm_policy_unlink(pol, dir);
- 		spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
--		xfrm_dev_policy_delete(pol);
- 		cnt++;
- 		xfrm_audit_policy_delete(pol, 1, task_valid);
- 		xfrm_policy_kill(pol);
-@@ -2342,7 +2342,6 @@ int xfrm_policy_delete(struct xfrm_policy *pol, int dir)
- 	pol = __xfrm_policy_unlink(pol, dir);
- 	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
- 	if (pol) {
--		xfrm_dev_policy_delete(pol);
- 		xfrm_policy_kill(pol);
+diff --git a/drivers/gpu/drm/qxl/qxl_display.c b/drivers/gpu/drm/qxl/qxl_display.c
+index 404b0483bb7cb..8ee614be9adf3 100644
+--- a/drivers/gpu/drm/qxl/qxl_display.c
++++ b/drivers/gpu/drm/qxl/qxl_display.c
+@@ -236,6 +236,9 @@ static int qxl_add_mode(struct drm_connector *connector,
  		return 0;
- 	}
-diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
-index e83c687bd64ee..77355422ce82a 100644
---- a/net/xfrm/xfrm_user.c
-+++ b/net/xfrm/xfrm_user.c
-@@ -2455,7 +2455,6 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
- 					    NETLINK_CB(skb).portid);
- 		}
- 	} else {
--		xfrm_dev_policy_delete(xp);
- 		xfrm_audit_policy_delete(xp, err ? 0 : 1, true);
  
- 		if (err != 0)
+ 	mode = drm_cvt_mode(dev, width, height, 60, false, false, false);
++	if (!mode)
++		return 0;
++
+ 	if (preferred)
+ 		mode->type |= DRM_MODE_TYPE_PREFERRED;
+ 	mode->hdisplay = width;
 -- 
 2.43.0
 
