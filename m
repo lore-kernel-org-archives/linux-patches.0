@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49F5757FC;
-	Tue, 30 Jul 2024 16:40:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A0D1A6192;
+	Tue, 30 Jul 2024 16:40:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357621; cv=none; b=lFtpqImuFLN90Y1Ga7d2xSz481Wc0ntHtIkVstIqc4EN9vMo/lBExLz7REQ1/YegQjIEAR9WPwdF8TTq3Jwr5InnO0Vp7zKIcN8oMmxYMNK2TIV5+QdtoqjxB1hBvxpE7HBUKsZl4d9yy9Tl+EBRhAsezRmSszK0ZYai7ZOXi8k=
+	t=1722357624; cv=none; b=oX8203CmmEKiKSFj04n+Gn9DVfABqRgTyRQDNFsyWpBuDsrYYwkz788QG7y1MOzYsIN+VLtXuELLHFpDrVdF659Kiff7+fjqWKQorj2CWVgFB5PVZrGtGaB+va9l2mxqt1WPX35NfHYGGl7mhVL+cbcreCcnNRxvRXSzepOg5gE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357621; c=relaxed/simple;
-	bh=IPukiD+J9QE//2ceDIfhAI/yNC2PzjMSEop79wYWISw=;
+	s=arc-20240116; t=1722357624; c=relaxed/simple;
+	bh=2o4JDjY15iMI2kGkvR5CeuLdlswqkU32uCd3RNHK+fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KXa/Uulgsk/R5nmCNISpx2gsja1yHKyx557JmGlJ2IllTYVLfOzJ+cvVOpuwQyCoJRY8KfLB9GVsbkX0VlInHW+Y5+H3OSX1P063UrSGhj97EqwhzlqoHsK/KBN2bhzR7TZQFvRR2ab09+sRaUgjkadQQ9pzkf8G8obQli8jhc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xJkaFQfh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aWy6mzDVwb9PisK41cmPZQc2FUcMHKg4LEXEDsIpL273TLJT0FaVyET3eQ9q0WJARJ5Sf5oNXX9EHdLWzQBBgjMK46UtLC1bROXs1/pUy3LP5ItXpy3WRKhJUO142suwzbPRGqi7idXAMLz4g05jkEmnczMxWvhzEZa8QJZnH8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBCacuHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xJkaFQfh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9598BC4AF0C;
-	Tue, 30 Jul 2024 16:40:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBCacuHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08ACFC32782;
+	Tue, 30 Jul 2024 16:40:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357621;
-	bh=IPukiD+J9QE//2ceDIfhAI/yNC2PzjMSEop79wYWISw=;
+	s=korg; t=1722357624;
+	bh=2o4JDjY15iMI2kGkvR5CeuLdlswqkU32uCd3RNHK+fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xJkaFQfhhJAciyBxFB0w7AsblY6lhfOFUuCr8YJqTnTD/8hCwji9kG3Zj/QL8YgNN
-	 rswMrReOmnAnjjD/EB0MJZE7LTmG/SIgMwVv8QTI+UaprW1u0vuTJ+M+ceyYKEkHaY
-	 jy8LYnkPmLkJINMQWpz4RooM3I7Wv+DAwE/e+ljA=
+	b=QBCacuHhBFMBao67h307tK9kXMre8gwrMXZhr0fYs2hLhX9KV0c9ZdPikSk7tiS/K
+	 Eg4DSwGUdAQ3JuYjxgJyaO01Iuf/USM+HywYUIjDSxfB3kMY+bQoZu7p1y+hCLH4f8
+	 G2HKqq5EY5n1wWjFA+Ej149irPHn7ZMsepGToFDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Honggang LI <honggangli@163.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Asad Kamal <asad.kamal@amd.com>,
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 275/568] RDMA/rxe: Dont set BTH_ACK_MASK for UC or UD QPs
-Date: Tue, 30 Jul 2024 17:46:22 +0200
-Message-ID: <20240730151650.629015709@linuxfoundation.org>
+Subject: [PATCH 6.10 273/809] drm/amd/pm: Fix aldebaran pcie speed reporting
+Date: Tue, 30 Jul 2024 17:42:29 +0200
+Message-ID: <20240730151735.374959955@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +49,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Honggang LI <honggangli@163.com>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 4adcaf969d77d3d3aa3871bbadc196258a38aec6 ]
+[ Upstream commit b6420021e17e262c57bb289d0556ee181b014f9c ]
 
-BTH_ACK_MASK bit is used to indicate that an acknowledge
-(for this packet) should be scheduled by the responder.
-Both UC and UD QPs are unacknowledged, so don't set
-BTH_ACK_MASK for UC or UD QPs.
+Fix the field definitions for LC_CURRENT_DATA_RATE.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Honggang LI <honggangli@163.com>
-Link: https://lore.kernel.org/r/20240624020348.494338-1-honggangli@163.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: c05d1c401572 ("drm/amd/swsmu: add aldebaran smu13 ip support (v3)")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Asad Kamal <asad.kamal@amd.com>
+Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_req.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index d8c41fd626a94..7a36080d2baef 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -424,7 +424,7 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
- 	int			paylen;
- 	int			solicited;
- 	u32			qp_num;
--	int			ack_req;
-+	int			ack_req = 0;
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+index a8d34adc7d3f1..b63ad9cb24bfd 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
+@@ -79,8 +79,8 @@ MODULE_FIRMWARE("amdgpu/smu_13_0_10.bin");
+ #define PCIE_LC_LINK_WIDTH_CNTL__LC_LINK_WIDTH_RD_MASK 0x00000070L
+ #define PCIE_LC_LINK_WIDTH_CNTL__LC_LINK_WIDTH_RD__SHIFT 0x4
+ #define smnPCIE_LC_SPEED_CNTL			0x11140290
+-#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE_MASK 0xC000
+-#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE__SHIFT 0xE
++#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE_MASK 0xE0
++#define PCIE_LC_SPEED_CNTL__LC_CURRENT_DATA_RATE__SHIFT 0x5
  
- 	/* length from start of bth to end of icrc */
- 	paylen = rxe_opcode[opcode].length + payload + pad + RXE_ICRC_SIZE;
-@@ -445,8 +445,9 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
- 	qp_num = (pkt->mask & RXE_DETH_MASK) ? ibwr->wr.ud.remote_qpn :
- 					 qp->attr.dest_qp_num;
- 
--	ack_req = ((pkt->mask & RXE_END_MASK) ||
--		(qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
-+	if (qp_type(qp) != IB_QPT_UD && qp_type(qp) != IB_QPT_UC)
-+		ack_req = ((pkt->mask & RXE_END_MASK) ||
-+			   (qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
- 	if (ack_req)
- 		qp->req.noack_pkts = 0;
+ #define ENABLE_IMU_ARG_GFXOFF_ENABLE		1
  
 -- 
 2.43.0
