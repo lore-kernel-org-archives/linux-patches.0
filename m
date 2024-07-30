@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B76431A76BD;
-	Tue, 30 Jul 2024 17:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1D301A76AE;
+	Tue, 30 Jul 2024 17:21:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360099; cv=none; b=VaBfK2BqjtTd5q4u/uyC0kxaAsC93DsX5/i4zhxbA2BUfjbsq2a6jUMjKnDTd1lznbw0vM0qdg//i60LNjV1jxnaR6tG6pBUfnUHVrzBpz79gb9uhXq8uKBVQpc16S6PT8M7zjPJfow3UsHayOHDXmYepI7M418654T17URhSJA=
+	t=1722360102; cv=none; b=djm5CXKFHNBcDFtZ8doGx8Df+KNe/SZEgHxMfh9MnIvVhZeMED0Ki5jXMI9ui2bFpCSOiSlTiZ/jYDBWPAOWFmw3YWDXKZsFpmLEaUAk3FZp6xMmdwuELaOaratsbySK4L7hF77ECTzFBHYOdZdO/h3hVYExOeytzpZxMZc5HEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360099; c=relaxed/simple;
-	bh=Vvhkqryfytxq+75kPq5UQUKSI5fckhvHD0016/jJ81c=;
+	s=arc-20240116; t=1722360102; c=relaxed/simple;
+	bh=Jbu80bt96eU9/POuZHtutcAWgNLD8ZhpZxXDnEMWOXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Df3o5N50JlZNaWVgRKtYlWk8XSDy/+lpR05+3mEe/pnzMKBgrWtYKBIRI9tqmi44vTh4N/XgOpoJN7PAKWLTDEVjt3wIj7XbtX7T8HylUsxQvFBQMIvPp2mNdrOUEEnaoaYhr1lKzqYPfeEECaafU3kqAUkUwOtF3j7oSRfy9FQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jt7k/HTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OpGiNkDL4iXK4JGYIoByO6V0tpEG4N7GaT+h8FNWe6Bbi2iVkNVlwcIrWY4M463N0WTndVAhqEHO+eNAVBSAJci1yRvYjjJQE2sYyrEj3VbEbxS8e9Sh/mJCeILLypDtuJq0SpfrXz6Z1zLCQd+//w8JjTnOQb/KlnHBWX6Acow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c+m8RKsK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jt7k/HTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12025C32782;
-	Tue, 30 Jul 2024 17:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c+m8RKsK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3949AC4AF0C;
+	Tue, 30 Jul 2024 17:21:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360099;
-	bh=Vvhkqryfytxq+75kPq5UQUKSI5fckhvHD0016/jJ81c=;
+	s=korg; t=1722360102;
+	bh=Jbu80bt96eU9/POuZHtutcAWgNLD8ZhpZxXDnEMWOXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jt7k/HTd0W/T2nnE3ezLYusX/NmW56cOefnKHHJyufcEkFwKGpHK+yQjJIGSpV3yt
-	 1JIsGbwf5HkB72z7xgEyfnTUe7eKSIvP2gtvjCkjp7VtsNu2ggEeLNAOFAEtpcKM/K
-	 N1GVs5zaSFabQxvjQ0ofL48kefXxxZPhPFXcW9Kw=
+	b=c+m8RKsKHRiolPnxkfmeUqM7VuitIpc/xtnNQR2wmL2TwK0Q+8u1JVmrrxfT+deQp
+	 dcRyaYVL1ix/1nRcA9IepQRztptZ/8r0rZLRq0Km51y+SPGe9nXMFGlDJv0p1U6YUF
+	 xDciBOnfeyzOIs+G+93hq5Y5nbKcKgW48QcrsBPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akshat Jain <akshatzen@google.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>
-Subject: [PATCH 6.10 565/809] ata: libata-scsi: Fix offsets for the fixed format sense data
-Date: Tue, 30 Jul 2024 17:47:21 +0200
-Message-ID: <20240730151747.084906011@linuxfoundation.org>
+	Gerd Bayer <gbayer@linux.ibm.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 563/568] s390/pci: Allow allocation of more than 1 MSI interrupt
+Date: Tue, 30 Jul 2024 17:51:10 +0200
+Message-ID: <20240730151702.162934433@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,145 +46,174 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Gerd Bayer <gbayer@linux.ibm.com>
 
-commit 38dab832c3f4154968f95b267a3bb789e87554b0 upstream.
+[ Upstream commit ab42fcb511fd9d241bbab7cc3ca04e34e9fc0666 ]
 
-Correct the ATA PASS-THROUGH fixed format sense data offsets to conform
-to SPC-6 and SAT-5 specifications. Additionally, set the VALID bit to
-indicate that the INFORMATION field contains valid information.
+On a PCI adapter that provides up to 8 MSI interrupt sources the s390
+implementation of PCI interrupts rejected to accommodate them, although
+the underlying hardware is able to support that.
 
-INFORMATION
-===========
+For MSI-X it is sufficient to allocate a single irq_desc per msi_desc,
+but for MSI multiple irq descriptors are attached to and controlled by
+a single msi descriptor. Add the appropriate loops to maintain multiple
+irq descriptors and tie/untie them to/from the appropriate AIBV bit, if
+a device driver allocates more than 1 MSI interrupt.
 
-SAT-5 Table 212 — "Fixed format sense data INFORMATION field for the ATA
-PASS-THROUGH commands" defines the following format:
+Common PCI code passes on requests to allocate a number of interrupt
+vectors based on the device drivers' demand and the PCI functions'
+capabilities. However, the root-complex of s390 systems support just a
+limited number of interrupt vectors per PCI function.
+Produce a kernel log message to inform about any architecture-specific
+capping that might be done.
 
-+------+------------+
-| Byte |   Field    |
-+------+------------+
-|    0 | ERROR      |
-|    1 | STATUS     |
-|    2 | DEVICE     |
-|    3 | COUNT(7:0) |
-+------+------------+
+With this change, we had a PCI adapter successfully raising
+interrupts to its device driver via all 8 sources.
 
-SPC-6 Table 48 - "Fixed format sense data" specifies that the INFORMATION
-field starts at byte 3 in sense buffer resulting in the following offsets
-for the ATA PASS-THROUGH commands:
-
-+------------+-------------------------+
-|   Field    |  Offset in sense buffer |
-+------------+-------------------------+
-| ERROR      |  3                      |
-| STATUS     |  4                      |
-| DEVICE     |  5                      |
-| COUNT(7:0) |  6                      |
-+------------+-------------------------+
-
-COMMAND-SPECIFIC INFORMATION
-============================
-
-SAT-5 Table 213 - "Fixed format sense data COMMAND-SPECIFIC INFORMATION
-field for ATA PASS-THROUGH" defines the following format:
-
-+------+-------------------+
-| Byte |        Field      |
-+------+-------------------+
-|    0 | FLAGS | LOG INDEX |
-|    1 | LBA (7:0)         |
-|    2 | LBA (15:8)        |
-|    3 | LBA (23:16)       |
-+------+-------------------+
-
-SPC-6 Table 48 - "Fixed format sense data" specifies that
-the COMMAND-SPECIFIC-INFORMATION field starts at byte 8
-in sense buffer resulting in the following offsets for
-the ATA PASS-THROUGH commands:
-
-Offsets of these fields in the fixed sense format are as follows:
-
-+-------------------+-------------------------+
-|       Field       |  Offset in sense buffer |
-+-------------------+-------------------------+
-| FLAGS | LOG INDEX |  8                      |
-| LBA (7:0)         |  9                      |
-| LBA (15:8)        |  10                     |
-| LBA (23:16)       |  11                     |
-+-------------------+-------------------------+
-
-Reported-by: Akshat Jain <akshatzen@google.com>
-Fixes: 11093cb1ef56 ("libata-scsi: generate correct ATA pass-through sense")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Link: https://lore.kernel.org/r/20240702024735.1152293-2-ipylypiv@google.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a384c8924a8b ("s390/PCI: Fix single MSI only check")
+Signed-off-by: Gerd Bayer <gbayer@linux.ibm.com>
+Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ arch/s390/pci/pci_irq.c | 62 ++++++++++++++++++++++++++++-------------
+ 1 file changed, 42 insertions(+), 20 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -855,7 +855,6 @@ static void ata_gen_passthru_sense(struc
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 	struct ata_taskfile *tf = &qc->result_tf;
- 	unsigned char *sb = cmd->sense_buffer;
--	unsigned char *desc = sb + 8;
- 	u8 sense_key, asc, ascq;
+diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
+index 979f776b09b8d..84482a9213322 100644
+--- a/arch/s390/pci/pci_irq.c
++++ b/arch/s390/pci/pci_irq.c
+@@ -298,8 +298,8 @@ static int __alloc_airq(struct zpci_dev *zdev, int msi_vecs,
  
- 	memset(sb, 0, SCSI_SENSE_BUFFERSIZE);
-@@ -877,7 +876,8 @@ static void ata_gen_passthru_sense(struc
- 		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
+ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
+ {
++	unsigned int hwirq, msi_vecs, irqs_per_msi, i, cpu;
+ 	struct zpci_dev *zdev = to_zpci(pdev);
+-	unsigned int hwirq, msi_vecs, cpu;
+ 	struct msi_desc *msi;
+ 	struct msi_msg msg;
+ 	unsigned long bit;
+@@ -309,30 +309,46 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
+ 	zdev->aisb = -1UL;
+ 	zdev->msi_first_bit = -1U;
+ 
+-	if (type == PCI_CAP_ID_MSI && nvec > 1)
+-		return 1;
+ 	msi_vecs = min_t(unsigned int, nvec, zdev->max_msi);
++	if (msi_vecs < nvec) {
++		pr_info("%s requested %d irqs, allocate system limit of %d",
++			pci_name(pdev), nvec, zdev->max_msi);
++	}
+ 
+ 	rc = __alloc_airq(zdev, msi_vecs, &bit);
+ 	if (rc < 0)
+ 		return rc;
+ 
+-	/* Request MSI interrupts */
++	/*
++	 * Request MSI interrupts:
++	 * When using MSI, nvec_used interrupt sources and their irq
++	 * descriptors are controlled through one msi descriptor.
++	 * Thus the outer loop over msi descriptors shall run only once,
++	 * while two inner loops iterate over the interrupt vectors.
++	 * When using MSI-X, each interrupt vector/irq descriptor
++	 * is bound to exactly one msi descriptor (nvec_used is one).
++	 * So the inner loops are executed once, while the outer iterates
++	 * over the MSI-X descriptors.
++	 */
+ 	hwirq = bit;
+ 	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
+-		rc = -EIO;
+ 		if (hwirq - bit >= msi_vecs)
+ 			break;
+-		irq = __irq_alloc_descs(-1, 0, 1, 0, THIS_MODULE,
+-				(irq_delivery == DIRECTED) ?
+-				msi->affinity : NULL);
++		irqs_per_msi = min_t(unsigned int, msi_vecs, msi->nvec_used);
++		irq = __irq_alloc_descs(-1, 0, irqs_per_msi, 0, THIS_MODULE,
++					(irq_delivery == DIRECTED) ?
++					msi->affinity : NULL);
+ 		if (irq < 0)
+ 			return -ENOMEM;
+-		rc = irq_set_msi_desc(irq, msi);
+-		if (rc)
+-			return rc;
+-		irq_set_chip_and_handler(irq, &zpci_irq_chip,
+-					 handle_percpu_irq);
++
++		for (i = 0; i < irqs_per_msi; i++) {
++			rc = irq_set_msi_desc_off(irq, i, msi);
++			if (rc)
++				return rc;
++			irq_set_chip_and_handler(irq + i, &zpci_irq_chip,
++						 handle_percpu_irq);
++		}
++
+ 		msg.data = hwirq - bit;
+ 		if (irq_delivery == DIRECTED) {
+ 			if (msi->affinity)
+@@ -345,31 +361,35 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
+ 			msg.address_lo |= (cpu_addr << 8);
+ 
+ 			for_each_possible_cpu(cpu) {
+-				airq_iv_set_data(zpci_ibv[cpu], hwirq, irq);
++				for (i = 0; i < irqs_per_msi; i++)
++					airq_iv_set_data(zpci_ibv[cpu],
++							 hwirq + i, irq + i);
+ 			}
+ 		} else {
+ 			msg.address_lo = zdev->msi_addr & 0xffffffff;
+-			airq_iv_set_data(zdev->aibv, hwirq, irq);
++			for (i = 0; i < irqs_per_msi; i++)
++				airq_iv_set_data(zdev->aibv, hwirq + i, irq + i);
+ 		}
+ 		msg.address_hi = zdev->msi_addr >> 32;
+ 		pci_write_msi_msg(irq, &msg);
+-		hwirq++;
++		hwirq += irqs_per_msi;
  	}
  
--	if ((cmd->sense_buffer[0] & 0x7f) >= 0x72) {
-+	if ((sb[0] & 0x7f) >= 0x72) {
-+		unsigned char *desc;
- 		u8 len;
+ 	zdev->msi_first_bit = bit;
+-	zdev->msi_nr_irqs = msi_vecs;
++	zdev->msi_nr_irqs = hwirq - bit;
  
- 		/* descriptor format */
-@@ -916,21 +916,21 @@ static void ata_gen_passthru_sense(struc
- 		}
- 	} else {
- 		/* Fixed sense format */
--		desc[0] = tf->error;
--		desc[1] = tf->status;
--		desc[2] = tf->device;
--		desc[3] = tf->nsect;
--		desc[7] = 0;
-+		sb[0] |= 0x80;
-+		sb[3] = tf->error;
-+		sb[4] = tf->status;
-+		sb[5] = tf->device;
-+		sb[6] = tf->nsect;
- 		if (tf->flags & ATA_TFLAG_LBA48)  {
--			desc[8] |= 0x80;
-+			sb[8] |= 0x80;
- 			if (tf->hob_nsect)
--				desc[8] |= 0x40;
-+				sb[8] |= 0x40;
- 			if (tf->hob_lbal || tf->hob_lbam || tf->hob_lbah)
--				desc[8] |= 0x20;
-+				sb[8] |= 0x20;
- 		}
--		desc[9] = tf->lbal;
--		desc[10] = tf->lbam;
--		desc[11] = tf->lbah;
-+		sb[9] = tf->lbal;
-+		sb[10] = tf->lbam;
-+		sb[11] = tf->lbah;
- 	}
+ 	rc = zpci_set_irq(zdev);
+ 	if (rc)
+ 		return rc;
+ 
+-	return (msi_vecs == nvec) ? 0 : msi_vecs;
++	return (zdev->msi_nr_irqs == nvec) ? 0 : zdev->msi_nr_irqs;
  }
  
+ void arch_teardown_msi_irqs(struct pci_dev *pdev)
+ {
+ 	struct zpci_dev *zdev = to_zpci(pdev);
+ 	struct msi_desc *msi;
++	unsigned int i;
+ 	int rc;
+ 
+ 	/* Disable interrupts */
+@@ -379,8 +399,10 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
+ 
+ 	/* Release MSI interrupts */
+ 	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
+-		irq_set_msi_desc(msi->irq, NULL);
+-		irq_free_desc(msi->irq);
++		for (i = 0; i < msi->nvec_used; i++) {
++			irq_set_msi_desc(msi->irq + i, NULL);
++			irq_free_desc(msi->irq + i);
++		}
+ 		msi->msg.address_lo = 0;
+ 		msi->msg.address_hi = 0;
+ 		msi->msg.data = 0;
+-- 
+2.43.0
+
 
 
