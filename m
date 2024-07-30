@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700741BA885;
-	Tue, 30 Jul 2024 15:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDEE11BA885;
+	Tue, 30 Jul 2024 15:58:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355117; cv=none; b=DYp4bEbKpur/e9ggAZCIsoENZL0R8MQhQH9DEzbtVKCx7w4dOkjBNr2VASSONKIJQtwhLcWFFJU0vZwy9lmcgkddD3ROBqmFasMsU6bvVwd/4S/WMMaGtmcAfjYJxmtKNoZqtOWlEb/2Uw4Tf3Mmey1UKSQl40xWsGk9NKivlFo=
+	t=1722355121; cv=none; b=azzMExgOTHajXGan9Tyy6P5Hv36PRfnd305yWXWaqk2WbKvCCMMt4UkihRS1E8l/+ROXjCw9mfqCQEEU1dJkv8oCv0sYSBPYDxnsRDG3Rq83VmPHkvWnZVQd/Xl7CnGlOwvVdPNH4nOvWF6VZKb+kGXdTmbzn98SI/DxQR25f+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355117; c=relaxed/simple;
-	bh=rhBKG2lfOVi2aDgqSbNb65rGkolN7IH2btmmVka6RlY=;
+	s=arc-20240116; t=1722355121; c=relaxed/simple;
+	bh=GzS+jdv1M180B2Qj+UeyHyNQ0S1EeacX1gsBHTKAWoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9hPThruxQ9GFXLVUG7H1GOIIoZD1ibGHyEscKPSuxjzzdeMMk1UZs/M2j4vE/OnvCzFD6jSDVoWDa8Wv9Z24YV4nMs6dPMnCMoX6YlldorRQl4LMJMA+sbE29zz6V8Fq48x5MTaUWotPfHxiHN/YhB2SyCIvpSa6Icm1Oaqq+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Hd8iSvR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=uGi1JSSP6rPBaR5FBd3tqFzJM8yvtrKuHzIscHaavaUCanZfWACQEQDZAxVqpcYv56jCEeW4/FZshW+Ns+sPuRIjmsKlpiCDQncjJsVMP+DqSo4A4seKPC7w2YRwMjn3A0FOjoZ3bnFEzktI2U6CKchz9Kv1S75aFCp2cagwsUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNN61/GQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Hd8iSvR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D276DC4AF0F;
-	Tue, 30 Jul 2024 15:58:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNN61/GQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E400C4AF0A;
+	Tue, 30 Jul 2024 15:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355117;
-	bh=rhBKG2lfOVi2aDgqSbNb65rGkolN7IH2btmmVka6RlY=;
+	s=korg; t=1722355120;
+	bh=GzS+jdv1M180B2Qj+UeyHyNQ0S1EeacX1gsBHTKAWoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Hd8iSvR+x9owvaLPEf5/hrHegL6fIBH9mxY4DLKJIHaM6DhGqmwHNM9ce5Kf1Uti
-	 s6auxV5peyKMt6SeLihYUYrZZ8Y6j4rI5kBOou2xI09YycuN5JVhFPuq2STcUfSLjo
-	 cmaEoiGLcrDM35MvOFERJgAyzBagDC0R/oNNCChw=
+	b=TNN61/GQZB2qHc/50kumZ+fr+R1Ovro59eERyJlaWzeco2Ldc3xG4TRWc0w4FNTqt
+	 ylDYqtlOlzDppJtIBDnwUE1htCWx4acWZkCFbSIoTwOunEwxLSzR+Cb7TTCMVTgjb6
+	 PGW/pLaa3/aSTdLf+OxPwG0gfBji9jK/ey326H8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 029/568] arm64: dts: qcom: sc8180x: switch UFS QMP PHY to new style of bindings
-Date: Tue, 30 Jul 2024 17:42:16 +0200
-Message-ID: <20240730151640.977647845@linuxfoundation.org>
+Subject: [PATCH 6.10 021/809] x86/platform/iosf_mbi: Convert PCIBIOS_* return codes to errnos
+Date: Tue, 30 Jul 2024 17:38:17 +0200
+Message-ID: <20240730151725.496206914@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,75 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit 916b5916f228a9f83a22ad91ad8c5bf788a456d7 ]
+[ Upstream commit 7821fa101eab529521aa4b724bf708149d70820c ]
 
-Change the UFS QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+iosf_mbi_pci_{read,write}_mdr() use pci_{read,write}_config_dword()
+that return PCIBIOS_* codes but functions also return -ENODEV which are
+not compatible error codes. As neither of the functions are related to
+PCI read/write functions, they should return normal errnos.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20230731111158.3998107-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 9a80ecce60bd ("arm64: dts: qcom: sc8180x: add power-domain to UFS PHY")
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning it.
+
+Fixes: 46184415368a ("arch: x86: New MailBox support driver for Intel SOC's")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Link: https://lore.kernel.org/r/20240527125538.13620-4-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 20 ++++++--------------
- 1 file changed, 6 insertions(+), 14 deletions(-)
+ arch/x86/platform/intel/iosf_mbi.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 9163c1419cc12..d310d4c4d0953 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -2093,7 +2093,7 @@ ufs_mem_hc: ufshc@1d84000 {
- 				     "jedec,ufs-2.0";
- 			reg = <0 0x01d84000 0 0x2500>;
- 			interrupts = <GIC_SPI 265 IRQ_TYPE_LEVEL_HIGH>;
--			phys = <&ufs_mem_phy_lanes>;
-+			phys = <&ufs_mem_phy>;
- 			phy-names = "ufsphy";
- 			lanes-per-direction = <2>;
- 			#reset-cells = <1>;
-@@ -2132,10 +2132,8 @@ ufs_mem_hc: ufshc@1d84000 {
+diff --git a/arch/x86/platform/intel/iosf_mbi.c b/arch/x86/platform/intel/iosf_mbi.c
+index fdd49d70b4373..c81cea208c2c4 100644
+--- a/arch/x86/platform/intel/iosf_mbi.c
++++ b/arch/x86/platform/intel/iosf_mbi.c
+@@ -62,7 +62,7 @@ static int iosf_mbi_pci_read_mdr(u32 mcrx, u32 mcr, u32 *mdr)
  
- 		ufs_mem_phy: phy-wrapper@1d87000 {
- 			compatible = "qcom,sc8180x-qmp-ufs-phy";
--			reg = <0 0x01d87000 0 0x1c0>;
--			#address-cells = <2>;
--			#size-cells = <2>;
--			ranges;
-+			reg = <0 0x01d87000 0 0x1000>;
-+
- 			clocks = <&rpmhcc RPMH_CXO_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
- 			clock-names = "ref",
-@@ -2143,16 +2141,10 @@ ufs_mem_phy: phy-wrapper@1d87000 {
+ fail_read:
+ 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
+-	return result;
++	return pcibios_err_to_errno(result);
+ }
  
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
--			status = "disabled";
+ static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
+@@ -91,7 +91,7 @@ static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
  
--			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
--				#phy-cells = <0>;
--			};
-+			#phy-cells = <0>;
-+
-+			status = "disabled";
- 		};
+ fail_write:
+ 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
+-	return result;
++	return pcibios_err_to_errno(result);
+ }
  
- 		ipa_virt: interconnect@1e00000 {
+ int iosf_mbi_read(u8 port, u8 opcode, u32 offset, u32 *mdr)
 -- 
 2.43.0
 
