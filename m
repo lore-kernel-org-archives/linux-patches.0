@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369DA1A6192;
-	Tue, 30 Jul 2024 16:41:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B104B183CD5;
+	Tue, 30 Jul 2024 16:41:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357675; cv=none; b=GnWoNFMIhhr+beVzggOBWVTh1jYh5zf+GJWVeyRgdgimL1z3HOa7siretQ6xTFh7jcyfbLOKrqXZV5Tng+OaxuoDpWQwh8Av0K+7WYMskDpFUwetxn2BbOIoEYmSomC9DslV1ncD98UbEJSUKO/sEMPzynu0KB0U4hLCRrwqGEg=
+	t=1722357679; cv=none; b=G7mIfoUzss7MiA1aYzKk/grOxWMgL6pT7VmGxofsV/i7dmZ+F0IM6988D7AW9PeVk6ocLjZ5DTy19z0t21tKANOdOlKfas9hvmOayvVMkNRyOQ4DX3bBg7eCdAc4rFNflH8tZ6RkShWgjTEDttDwu5+2ouuNgMCkQnYW5RU93wc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357675; c=relaxed/simple;
-	bh=R7MXksLnXTZ90EKwJ6zvz6ezGDgSDNejt7cW8XVeXWo=;
+	s=arc-20240116; t=1722357679; c=relaxed/simple;
+	bh=+caJ2JWR7urpEHEBsXA2ZHg17lbcFsmKI+dKilw4UWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZVeX2/PU43E/OWnL0LGxHgREl6AsWu6N8zNhc4OVTOZBzc86V1Dk8yrMPVt4tBjCj3z6tCTWQO5vyg+y0ji6w+3zORxMn8x2RPV41RA2h7iK3J1fGkX8m0jS9+GXMHTAzCfPABLgmLtkvwqX0wyzvSkOiBh5c9GD78Ws+UOUfRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtE7CZfX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rOKLQiHGqc3ctl+ABA0+mXG0F/svdecQDkbggmUZPIKucynTd9XRXNQ+O+IW3/F/DU/DQGi+EmPbd3JO2kKXOA9Dkd9ZQKuBElKOTYxqzFK0jZS3YY5UkrIZUmrKUR/0xhQMJ0dmbuXL95Wb7Ji4BUFNI4iSrIzZNGbfzfBUMxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0QMYioj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtE7CZfX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9837AC4AF0C;
-	Tue, 30 Jul 2024 16:41:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0QMYioj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340DEC32782;
+	Tue, 30 Jul 2024 16:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357675;
-	bh=R7MXksLnXTZ90EKwJ6zvz6ezGDgSDNejt7cW8XVeXWo=;
+	s=korg; t=1722357679;
+	bh=+caJ2JWR7urpEHEBsXA2ZHg17lbcFsmKI+dKilw4UWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtE7CZfXwhw+8hyFu1/IHU04YdU4sfbZdXe7fb4P+zDHlkmE5uH2O+VrRFIKNyfpz
-	 y3VZWsySF3ZrUL6Gcw0pygH8wfjI7aEG72Ouzc5vYDtIr0aP0XloBqtauaZuQB5JrB
-	 eVw7qE5uJhkD/GPmynW7oA0UQEfq1fSrdJhacV3o=
+	b=s0QMYiojXVbDI6CYUl2X944CtcFQydTtq27JV54pvMDD3bULuPHYiGb6BlUnil9zC
+	 QEA2qayEjyvzrGQyGNB3sypq2ELid5E6UjRtTmk/8e8+65WbolRXeVEOlA1CQMi1x2
+	 hq27ckNPTjy4XUI9mGvQlrDOvRLidKIQ5FHlXGlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 278/809] drm/panel: boe-tv101wum-nl6: If prepare fails, disable GPIO before regulators
-Date: Tue, 30 Jul 2024 17:42:34 +0200
-Message-ID: <20240730151735.573370746@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.1 315/440] KVM: nVMX: Request immediate exit iff pending nested event needs injection
+Date: Tue, 30 Jul 2024 17:49:08 +0200
+Message-ID: <20240730151628.125542613@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,51 +45,84 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 587c48f622374e5d47b1d515c6006a4df4dee882 ]
+commit 32f55e475ce2c4b8b124d335fcfaf1152ba977a1 upstream.
 
-The enable GPIO should clearly be set low before turning off
-regulators. That matches both the inverse order that things were
-enabled and also the order in unprepare().
+When requesting an immediate exit from L2 in order to inject a pending
+event, do so only if the pending event actually requires manual injection,
+i.e. if and only if KVM actually needs to regain control in order to
+deliver the event.
 
-Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Avoiding the "immediate exit" isn't simply an optimization, it's necessary
+to make forward progress, as the "already expired" VMX preemption timer
+trick that KVM uses to force a VM-Exit has higher priority than events
+that aren't directly injected.
+
+At present time, this is a glorified nop as all events processed by
+vmx_has_nested_events() require injection, but that will not hold true in
+the future, e.g. if there's a pending virtual interrupt in vmcs02.RVI.
+I.e. if KVM is trying to deliver a virtual interrupt to L2, the expired
+VMX preemption timer will trigger VM-Exit before the virtual interrupt is
+delivered, and KVM will effectively hang the vCPU in an endless loop of
+forced immediate VM-Exits (because the pending virtual interrupt never
+goes away).
+
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240607172609.3205077-3-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/kvm_host.h |    2 +-
+ arch/x86/kvm/vmx/nested.c       |    2 +-
+ arch/x86/kvm/x86.c              |    4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-index 0ffe8f8c01de8..ce7b4f5ce3fae 100644
---- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-+++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-@@ -1528,13 +1528,13 @@ static int boe_panel_prepare(struct drm_panel *panel)
- 	return 0;
- 
- poweroff:
-+	gpiod_set_value(boe->enable_gpio, 0);
- 	regulator_disable(boe->avee);
- poweroffavdd:
- 	regulator_disable(boe->avdd);
- poweroff1v8:
- 	usleep_range(5000, 7000);
- 	regulator_disable(boe->pp1800);
--	gpiod_set_value(boe->enable_gpio, 0);
- 
- 	return ret;
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1651,7 +1651,7 @@ struct kvm_x86_nested_ops {
+ 	bool (*is_exception_vmexit)(struct kvm_vcpu *vcpu, u8 vector,
+ 				    u32 error_code);
+ 	int (*check_events)(struct kvm_vcpu *vcpu);
+-	bool (*has_events)(struct kvm_vcpu *vcpu);
++	bool (*has_events)(struct kvm_vcpu *vcpu, bool for_injection);
+ 	void (*triple_fault)(struct kvm_vcpu *vcpu);
+ 	int (*get_state)(struct kvm_vcpu *vcpu,
+ 			 struct kvm_nested_state __user *user_kvm_nested_state,
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3934,7 +3934,7 @@ static bool nested_vmx_preemption_timer_
+ 	       to_vmx(vcpu)->nested.preemption_timer_expired;
  }
--- 
-2.43.0
-
+ 
+-static bool vmx_has_nested_events(struct kvm_vcpu *vcpu)
++static bool vmx_has_nested_events(struct kvm_vcpu *vcpu, bool for_injection)
+ {
+ 	return nested_vmx_preemption_timer_pending(vcpu) ||
+ 	       to_vmx(vcpu)->nested.mtf_pending;
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -10131,7 +10131,7 @@ static int kvm_check_and_inject_events(s
+ 
+ 	if (is_guest_mode(vcpu) &&
+ 	    kvm_x86_ops.nested_ops->has_events &&
+-	    kvm_x86_ops.nested_ops->has_events(vcpu))
++	    kvm_x86_ops.nested_ops->has_events(vcpu, true))
+ 		*req_immediate_exit = true;
+ 
+ 	/*
+@@ -13013,7 +13013,7 @@ static inline bool kvm_vcpu_has_events(s
+ 
+ 	if (is_guest_mode(vcpu) &&
+ 	    kvm_x86_ops.nested_ops->has_events &&
+-	    kvm_x86_ops.nested_ops->has_events(vcpu))
++	    kvm_x86_ops.nested_ops->has_events(vcpu, false))
+ 		return true;
+ 
+ 	if (kvm_xen_has_pending_events(vcpu))
 
 
