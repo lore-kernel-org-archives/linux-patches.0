@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92B6C1448FA;
-	Tue, 30 Jul 2024 16:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF90189900;
+	Tue, 30 Jul 2024 16:46:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357987; cv=none; b=kO09bLnmOw3KRzeq2UEZDc1ZvBejTWsKXTZU635R+9uAIdyFTsRj65ZUL1KHLtGVqjWmCsTN/fgZJQ9ySZCcJaGEJ5UaONVC6Od44b6J0Mfhmyrf/b+gGL8HJ0sjra6J/BxDMtzg/c0PeIatYmivcb7jnm3eO3YXNueeFx0qE34=
+	t=1722357990; cv=none; b=f51/M3wnTxWwl31+4LvutJQBIedGQtjP8IPsJjjwawhNkAvRrVYjqeyBWM/OwR8fvFg7ms5C9FWXJxkAQkO5Zl3fYKSeqxe6CyLik2gfg39iUo73vFuQCbPr3wSGznwor7YfgZoTf+D1HstbHi5hWeFvNt9w21LGRwnSqNeIvEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357987; c=relaxed/simple;
-	bh=mvxzVybavdSSsMRV4sQtZvsJ4dBb8Vrth+jse4IUN8M=;
+	s=arc-20240116; t=1722357990; c=relaxed/simple;
+	bh=X02JMxkCf0C0CWdyoDy6BBSxucBRhuhZScYKwlMRuME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mB9/Xe/ofgrxrkm6W9x2SUoFai5tSYvLIWQOAHAZFU3NVddtPF5J/F9MlSEvngTcvng2TBvpocTziHCbR6/vdFjSgpwwkV+m6zVovim63edi5W3ttvwvKZD9NannNFrV1L/3Gx6LhKSE6776K7Co994Ejpa6KtxGKpKpnIj7y1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfwKgfiO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cng15wGXoVx2KED/NK8Rvf+NBwtAR9daJZoELTqE4645S3YJDqAxMmPaLKhFKBnKYEb+rhME43LH9+08zhCkBF8i0uLhGyk+LONTX1uEobLKdvEsuD2nUjlSx29SISZWqIOY/75oVygvtqdH/8R5ZGi3wpczaku8iqZSMsZb3fQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1VVXYvw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfwKgfiO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD82C4AF0A;
-	Tue, 30 Jul 2024 16:46:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1VVXYvw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C9DAC4AF0E;
+	Tue, 30 Jul 2024 16:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357987;
-	bh=mvxzVybavdSSsMRV4sQtZvsJ4dBb8Vrth+jse4IUN8M=;
+	s=korg; t=1722357990;
+	bh=X02JMxkCf0C0CWdyoDy6BBSxucBRhuhZScYKwlMRuME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NfwKgfiOXuqsrmRg4l8DaDbR/GgA9cYuKOpP4NVh28oMGrRDNMVEOzcCjF/ihQr0C
-	 XweMPVVhmBKgL5kYPwqWoCGXsFywWW174Q+le04J0+T/N7U8Y2QUaFm8P0IhpkLbJ/
-	 k+XPZh0bQTdtn5L8ewtWfAAJjfK5uSPd8T65I/M0=
+	b=y1VVXYvwjfEwYnLEivdmib0MnYGTylbmQXhDES4ls+bg5M5oGrysAYi0KCrI3jRP1
+	 YisIlh6+cHkBx9mWIq8jqKxoB6/C5dYLp34NOFS7lqwTJwqzVACtS/MTScX0eQg24t
+	 oOwywun2s1cLBNtOEpA+DDswznN5lhLm/w7q2bsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Tomasz Figa <tfiga@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 312/809] media: uvcvideo: Quirk for invalid dev_sof in Logitech C922
-Date: Tue, 30 Jul 2024 17:43:08 +0200
-Message-ID: <20240730151736.921233985@linuxfoundation.org>
+	Manish Rangankar <mrangankar@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 346/440] scsi: qla2xxx: During vport delete send async logout explicitly
+Date: Tue, 30 Jul 2024 17:49:39 +0200
+Message-ID: <20240730151629.326716544@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,145 +48,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Manish Rangankar <mrangankar@marvell.com>
 
-[ Upstream commit 9183c6f1a21e0da4415762c504e2d7f784304d12 ]
+commit 76f480d7c717368f29a3870f7d64471ce0ff8fb2 upstream.
 
-Logitech C922 internal SOF does not increases at a stable rate of 1kHz.
-This causes that the device_sof and the host_sof run at different rates,
-breaking the clock domain conversion algorithm. Eg:
+During vport delete, it is observed that during unload we hit a crash
+because of stale entries in outstanding command array.  For all these stale
+I/O entries, eh_abort was issued and aborted (fast_fail_io = 2009h) but
+I/Os could not complete while vport delete is in process of deleting.
 
-30 (6) [-] none 30 614400 B 21.245557 21.395214 34.133 fps ts mono/SoE
-31 (7) [-] none 31 614400 B 21.275327 21.427246 33.591 fps ts mono/SoE
-32 (0) [-] none 32 614400 B 21.304739 21.459256 34.000 fps ts mono/SoE
-33 (1) [-] none 33 614400 B 21.334324 21.495274 33.801 fps ts mono/SoE
-* 34 (2) [-] none 34 614400 B 21.529237 21.527297 5.130 fps ts mono/SoE
-* 35 (3) [-] none 35 614400 B 21.649416 21.559306 8.321 fps ts mono/SoE
-36 (4) [-] none 36 614400 B 21.678789 21.595320 34.045 fps ts mono/SoE
-...
-99 (3) [-] none 99 614400 B 23.542226 23.696352 33.541 fps ts mono/SoE
-100 (4) [-] none 100 614400 B 23.571578 23.728404 34.069 fps ts mono/SoE
-101 (5) [-] none 101 614400 B 23.601425 23.760420 33.504 fps ts mono/SoE
-* 102 (6) [-] none 102 614400 B 23.798324 23.796428 5.079 fps ts mono/SoE
-* 103 (7) [-] none 103 614400 B 23.916271 23.828450 8.478 fps ts mono/SoE
-104 (0) [-] none 104 614400 B 23.945720 23.860479 33.957 fps ts mono/SoE
+  BUG: kernel NULL pointer dereference, address: 000000000000001c
+  #PF: supervisor read access in kernel mode
+  #PF: error_code(0x0000) - not-present page
+  PGD 0 P4D 0
+  Oops: 0000 [#1] PREEMPT SMP NOPTI
+  Workqueue: qla2xxx_wq qla_do_work [qla2xxx]
+  RIP: 0010:dma_direct_unmap_sg+0x51/0x1e0
+  RSP: 0018:ffffa1e1e150fc68 EFLAGS: 00010046
+  RAX: 0000000000000000 RBX: 0000000000000021 RCX: 0000000000000001
+  RDX: 0000000000000021 RSI: 0000000000000000 RDI: ffff8ce208a7a0d0
+  RBP: ffff8ce208a7a0d0 R08: 0000000000000000 R09: ffff8ce378aac9c8
+  R10: ffff8ce378aac8a0 R11: ffffa1e1e150f9d8 R12: 0000000000000000
+  R13: 0000000000000000 R14: ffff8ce378aac9c8 R15: 0000000000000000
+  FS:  0000000000000000(0000) GS:ffff8d217f000000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 000000000000001c CR3: 0000002089acc000 CR4: 0000000000350ee0
+  Call Trace:
+  <TASK>
+  qla2xxx_qpair_sp_free_dma+0x417/0x4e0
+  ? qla2xxx_qpair_sp_compl+0x10d/0x1a0
+  ? qla2x00_status_entry+0x768/0x2830
+  ? newidle_balance+0x2f0/0x430
+  ? dequeue_entity+0x100/0x3c0
+  ? qla24xx_process_response_queue+0x6a1/0x19e0
+  ? __schedule+0x2d5/0x1140
+  ? qla_do_work+0x47/0x60
+  ? process_one_work+0x267/0x440
+  ? process_one_work+0x440/0x440
+  ? worker_thread+0x2d/0x3d0
+  ? process_one_work+0x440/0x440
+  ? kthread+0x156/0x180
+  ? set_kthread_struct+0x50/0x50
+  ? ret_from_fork+0x22/0x30
+  </TASK>
 
-Instead of disabling completely the hardware timestamping for such
-hardware we take the assumption that the packet handling jitter is
-under 2ms and use the host_sof as dev_sof.
+Send out async logout explicitly for all the ports during vport delete.
 
-We can think of the UVC hardware clock as a system with a coarse clock
-(the SOF) and a fine clock (the PTS). The coarse clock can be replaced
-with a clock on the same frequency, if the jitter of such clock is
-smaller than its sampling rate. That way we can save some of the
-precision of the fine clock.
-
-To probe this point we have run three experiments on the Logitech C922.
-On that experiment we run the camera at 33fps and we analyse the
-difference in msec between a frame and its predecessor. If we display
-the histogram of that value, a thinner histogram will mean a better
-meassurement. The results for:
-- original hw timestamp: https://ibb.co/D1HJJ4x
-- pure software timestamp: https://ibb.co/QC9MgVK
-- modified hw timestamp: https://ibb.co/8s9dBdk
-
-This bug in the camera firmware has been confirmed by the vendor.
-
-lsusb -v
-
-Bus 001 Device 044: ID 046d:085c Logitech, Inc. C922 Pro Stream Webcam
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.00
-  bDeviceClass          239 Miscellaneous Device
-  bDeviceSubClass         2
-  bDeviceProtocol         1 Interface Association
-  bMaxPacketSize0        64
-  idVendor           0x046d Logitech, Inc.
-  idProduct          0x085c C922 Pro Stream Webcam
-  bcdDevice            0.16
-  iManufacturer           0
-  iProduct                2 C922 Pro Stream Webcam
-  iSerial                 1 80B912DF
-  bNumConfigurations      1
-
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20240323-resend-hwtimestamp-v10-3-b08e590d97c7@chromium.org
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Stable-dep-of: 85fbe91a7c92 ("media: uvcvideo: Add quirk for invalid dev_sof in Logitech C920")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Manish Rangankar <mrangankar@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-8-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c |  9 +++++++++
- drivers/media/usb/uvc/uvc_video.c  | 11 +++++++++++
- drivers/media/usb/uvc/uvcvideo.h   |  1 +
- 3 files changed, 21 insertions(+)
+ drivers/scsi/qla2xxx/qla_mid.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 8fe24c98087e6..6e55f91ac17fe 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2581,6 +2581,15 @@ static const struct usb_device_id uvc_ids[] = {
- 	  .bInterfaceSubClass	= 1,
- 	  .bInterfaceProtocol	= 0,
- 	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT) },
-+	/* Logitech HD Pro Webcam C922 */
-+	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
-+				| USB_DEVICE_ID_MATCH_INT_INFO,
-+	  .idVendor		= 0x046d,
-+	  .idProduct		= 0x085c,
-+	  .bInterfaceClass	= USB_CLASS_VIDEO,
-+	  .bInterfaceSubClass	= 1,
-+	  .bInterfaceProtocol	= 0,
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_INVALID_DEVICE_SOF) },
- 	/* Logitech Rally Bar Huddle */
- 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
- 				| USB_DEVICE_ID_MATCH_INT_INFO,
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 7cbf4692bd875..b41c7b6d1b2fc 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -529,6 +529,17 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
- 	stream->clock.last_sof = dev_sof;
+--- a/drivers/scsi/qla2xxx/qla_mid.c
++++ b/drivers/scsi/qla2xxx/qla_mid.c
+@@ -180,7 +180,7 @@ qla24xx_disable_vp(scsi_qla_host_t *vha)
+ 	atomic_set(&vha->loop_state, LOOP_DOWN);
+ 	atomic_set(&vha->loop_down_timer, LOOP_DOWN_TIME);
+ 	list_for_each_entry(fcport, &vha->vp_fcports, list)
+-		fcport->logout_on_delete = 0;
++		fcport->logout_on_delete = 1;
  
- 	host_sof = usb_get_current_frame_number(stream->dev->udev);
-+
-+	/*
-+	 * On some devices, like the Logitech C922, the device SOF does not run
-+	 * at a stable rate of 1kHz. For those devices use the host SOF instead.
-+	 * In the tests performed so far, this improves the timestamp precision.
-+	 * This is probably explained by a small packet handling jitter from the
-+	 * host, but the exact reason hasn't been fully determined.
-+	 */
-+	if (stream->dev->quirks & UVC_QUIRK_INVALID_DEVICE_SOF)
-+		dev_sof = host_sof;
-+
- 	time = uvc_video_get_time();
- 
- 	/*
-diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
-index 3653b2c8a86cb..e5b12717016fa 100644
---- a/drivers/media/usb/uvc/uvcvideo.h
-+++ b/drivers/media/usb/uvc/uvcvideo.h
-@@ -75,6 +75,7 @@
- #define UVC_QUIRK_WAKE_AUTOSUSPEND	0x00002000
- #define UVC_QUIRK_NO_RESET_RESUME	0x00004000
- #define UVC_QUIRK_DISABLE_AUTOSUSPEND	0x00008000
-+#define UVC_QUIRK_INVALID_DEVICE_SOF	0x00010000
- 
- /* Format flags */
- #define UVC_FMT_FLAG_COMPRESSED		0x00000001
--- 
-2.43.0
-
+ 	if (!vha->hw->flags.edif_enabled)
+ 		qla2x00_wait_for_sess_deletion(vha);
 
 
