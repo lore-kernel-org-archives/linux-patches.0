@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BBA18801A;
-	Tue, 30 Jul 2024 16:56:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9D6184549;
+	Tue, 30 Jul 2024 16:56:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358567; cv=none; b=p2gOQBFmq/gYUWPfUOsAph8TbK1TlwdbZgx5ziIT3MqCAb3UW3CGyNSHhSN1wRzkN+WiR8OcHsDgve85/5EmfBCiregjo9j5AD3Sadqq5ZzSrDhlC4jHMXT2noFvBe4D1oyaHpgyO/wsmcxCxuH8vWirRjbGBMKp8opNWggIQXM=
+	t=1722358570; cv=none; b=FdFCpdNX/0HNScjzl46J7o9xb5BfG4QJqBk4i1TBCt39zftBAtlA+x3VpG++j5l/7VehyY2JSKCZ830hAFclelPKQW5gHDqrGEZmRd6jFENw2o/7FScEe5IPZiWEumVsIfONmMfToL6G+f9f/br4Hso47NXKAMJDGTs+0caoE0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358567; c=relaxed/simple;
-	bh=WNL24qwYSq4A0MhYoNJU0qQeLyN2SbsPSB/fE6CyY7Q=;
+	s=arc-20240116; t=1722358570; c=relaxed/simple;
+	bh=25Ie7mdrX1mE4IjC4Gd/yXeEl/qplN2rhRODNSMXeDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BI22rLAmuH9YjmToPSHdfKH8Px2am9OrdHB5J3Y7haCiAlLV80nJHUzNcCwcuH+pkOetclr8HKQAN1KCX4EhdZnKBJ17KSSqtFyLzDMsuRbM6TqGS+V5ZL+35Xd2dtzF7vdHkcdacq+O/Txi2P9bd+JYDFzB8up6uMLCBDiBGq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHCGBEBN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CAw7IbOl7KasNnKHKBnorcRj5fQm5X4IPfAcdJiVoPchCl10squx4o4rXtLh46SzMoXTdlO+4PPcGC/OsPH9nWdrKcUZ8S7fNC6YsRgunHRy7ntBq1PTqaacpskcTREEo+nHMjfdnR20zEkyvheAAsI1ZbW0qQSukkgH12BIr+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHrdY3hv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHCGBEBN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8437EC32782;
-	Tue, 30 Jul 2024 16:56:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHrdY3hv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0546C32782;
+	Tue, 30 Jul 2024 16:56:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358567;
-	bh=WNL24qwYSq4A0MhYoNJU0qQeLyN2SbsPSB/fE6CyY7Q=;
+	s=korg; t=1722358570;
+	bh=25Ie7mdrX1mE4IjC4Gd/yXeEl/qplN2rhRODNSMXeDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kHCGBEBNLgpKWIgU+EN7IBXNIazvZzqy7I/wEo5SzACSXSi9RoeL9Z9V0Ctun0BU1
-	 K38tSjFoVEF8TmySwozk1J+4s6wP/YexvaVc3VioFGraygZxKJ0iIex5ufdsVosf+k
-	 muCrhssx/oK68lqLmnTkWdM3fUrccq0PEKJrKJMs=
+	b=hHrdY3hvGRaU7/F2WSPVgNBpoLHsLLe4nLPZzA24pDITfyAuEpX5YUU8FiCoEt5sa
+	 YTs4dYpfJ5QmzT6apjIdesQ/X4UyxEKY15t6PaXP5IiR9Pne93hP2s97DSPLyeeLZB
+	 UbmhhL6Uty6zhK5SgHcnuehgPdP2SAvaz9u3VMTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 374/809] leds: flash: leds-qcom-flash: Test the correct variable in init
-Date: Tue, 30 Jul 2024 17:44:10 +0200
-Message-ID: <20240730151739.433120863@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.6 375/568] sched/fair: set_load_weight() must also call reweight_task() for SCHED_IDLE tasks
+Date: Tue, 30 Jul 2024 17:48:02 +0200
+Message-ID: <20240730151654.520601922@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +46,111 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 87e552ad654554be73e62dd43c923bcee215287d ]
+commit d329605287020c3d1c3b0dadc63d8208e7251382 upstream.
 
-This code was passing the incorrect pointer to PTR_ERR_OR_ZERO() so it
-always returned success.  It should have been checking the array element
-instead of the array itself.
+When a task's weight is being changed, set_load_weight() is called with
+@update_load set. As weight changes aren't trivial for the fair class,
+set_load_weight() calls fair.c::reweight_task() for fair class tasks.
 
-Fixes: 96a2e242a5dc ("leds: flash: Add driver to support flash LED module in QCOM PMICs")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/ZoWJS_epjIMCYITg@stanley.mountain
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, set_load_weight() first tests task_has_idle_policy() on entry and
+skips calling reweight_task() for SCHED_IDLE tasks. This is buggy as
+SCHED_IDLE tasks are just fair tasks with a very low weight and they would
+incorrectly skip load, vlag and position updates.
+
+Fix it by updating reweight_task() to take struct load_weight as idle weight
+can't be expressed with prio and making set_load_weight() call
+reweight_task() for SCHED_IDLE tasks too when @update_load is set.
+
+Fixes: 9059393e4ec1 ("sched/fair: Use reweight_entity() for set_user_nice()")
+Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org # v4.15+
+Link: http://lkml.kernel.org/r/20240624102331.GI31592@noisy.programming.kicks-ass.net
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/flash/leds-qcom-flash.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/sched/core.c  |   23 ++++++++++-------------
+ kernel/sched/fair.c  |    7 +++----
+ kernel/sched/sched.h |    2 +-
+ 3 files changed, 14 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/leds/flash/leds-qcom-flash.c b/drivers/leds/flash/leds-qcom-flash.c
-index 7c99a30391716..bf70bf6fb0d59 100644
---- a/drivers/leds/flash/leds-qcom-flash.c
-+++ b/drivers/leds/flash/leds-qcom-flash.c
-@@ -505,6 +505,7 @@ qcom_flash_v4l2_init(struct device *dev, struct qcom_flash_led *led, struct fwno
- 	struct qcom_flash_data *flash_data = led->flash_data;
- 	struct v4l2_flash_config v4l2_cfg = { 0 };
- 	struct led_flash_setting *intensity = &v4l2_cfg.intensity;
-+	struct v4l2_flash *v4l2_flash;
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -1304,27 +1304,24 @@ int tg_nop(struct task_group *tg, void *
+ static void set_load_weight(struct task_struct *p, bool update_load)
+ {
+ 	int prio = p->static_prio - MAX_RT_PRIO;
+-	struct load_weight *load = &p->se.load;
++	struct load_weight lw;
  
- 	if (!(led->flash.led_cdev.flags & LED_DEV_CAP_FLASH))
- 		return 0;
-@@ -523,9 +524,12 @@ qcom_flash_v4l2_init(struct device *dev, struct qcom_flash_led *led, struct fwno
- 				LED_FAULT_OVER_TEMPERATURE |
- 				LED_FAULT_TIMEOUT;
+-	/*
+-	 * SCHED_IDLE tasks get minimal weight:
+-	 */
+ 	if (task_has_idle_policy(p)) {
+-		load->weight = scale_load(WEIGHT_IDLEPRIO);
+-		load->inv_weight = WMULT_IDLEPRIO;
+-		return;
++		lw.weight = scale_load(WEIGHT_IDLEPRIO);
++		lw.inv_weight = WMULT_IDLEPRIO;
++	} else {
++		lw.weight = scale_load(sched_prio_to_weight[prio]);
++		lw.inv_weight = sched_prio_to_wmult[prio];
+ 	}
  
--	flash_data->v4l2_flash[flash_data->leds_count] =
--		v4l2_flash_init(dev, fwnode, &led->flash, &qcom_v4l2_flash_ops, &v4l2_cfg);
--	return PTR_ERR_OR_ZERO(flash_data->v4l2_flash);
-+	v4l2_flash = v4l2_flash_init(dev, fwnode, &led->flash, &qcom_v4l2_flash_ops, &v4l2_cfg);
-+	if (IS_ERR(v4l2_flash))
-+		return PTR_ERR(v4l2_flash);
-+
-+	flash_data->v4l2_flash[flash_data->leds_count] = v4l2_flash;
-+	return 0;
+ 	/*
+ 	 * SCHED_OTHER tasks have to update their load when changing their
+ 	 * weight
+ 	 */
+-	if (update_load && p->sched_class == &fair_sched_class) {
+-		reweight_task(p, prio);
+-	} else {
+-		load->weight = scale_load(sched_prio_to_weight[prio]);
+-		load->inv_weight = sched_prio_to_wmult[prio];
+-	}
++	if (update_load && p->sched_class == &fair_sched_class)
++		reweight_task(p, &lw);
++	else
++		p->se.load = lw;
  }
- # else
- static int
--- 
-2.43.0
-
+ 
+ #ifdef CONFIG_UCLAMP_TASK
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -3791,15 +3791,14 @@ static void reweight_entity(struct cfs_r
+ 	}
+ }
+ 
+-void reweight_task(struct task_struct *p, int prio)
++void reweight_task(struct task_struct *p, const struct load_weight *lw)
+ {
+ 	struct sched_entity *se = &p->se;
+ 	struct cfs_rq *cfs_rq = cfs_rq_of(se);
+ 	struct load_weight *load = &se->load;
+-	unsigned long weight = scale_load(sched_prio_to_weight[prio]);
+ 
+-	reweight_entity(cfs_rq, se, weight);
+-	load->inv_weight = sched_prio_to_wmult[prio];
++	reweight_entity(cfs_rq, se, lw->weight);
++	load->inv_weight = lw->inv_weight;
+ }
+ 
+ static inline int throttled_hierarchy(struct cfs_rq *cfs_rq);
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -2435,7 +2435,7 @@ extern void init_sched_dl_class(void);
+ extern void init_sched_rt_class(void);
+ extern void init_sched_fair_class(void);
+ 
+-extern void reweight_task(struct task_struct *p, int prio);
++extern void reweight_task(struct task_struct *p, const struct load_weight *lw);
+ 
+ extern void resched_curr(struct rq *rq);
+ extern void resched_cpu(int cpu);
 
 
