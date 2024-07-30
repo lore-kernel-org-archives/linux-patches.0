@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7C518801A;
-	Tue, 30 Jul 2024 16:59:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF8217D8BB;
+	Tue, 30 Jul 2024 16:59:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358769; cv=none; b=oah84gU1X8jAlzRk4L85iXZ74kWEy0ztWQmUOvrmYt2VITMtgNiX9Re12b1KnD0FBD2/yBDF8Jvf2KoNcxs/2argDhBsom3ueYwraUNy3Y3Pfi8AETocd5fCzrwltVggQENMtcCgSS/p/nA9+n1wIpd3cJRszGcwOe6d6U28FzI=
+	t=1722358773; cv=none; b=WrfcGdUx4ncA/UBTrXvViCffWtOumwQ89nZ1SuLJrxxiVoW5AcvRh5ti8bS3v8HJzFGRmjrzkGbRTrRGwPcf3nqC7xVtBSJAWNbnvAjZ5CedPTQGiIO1IU1ztlViYHQrDFzXFRDs2MhHMLz/2LhDhk0s4fNXTrjAwp8eCyjS9lU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358769; c=relaxed/simple;
-	bh=cUpt7kxihs1o2i+tmiCFOL69wFQEvmItj7GDKIFmuIU=;
+	s=arc-20240116; t=1722358773; c=relaxed/simple;
+	bh=onQdc2POXCs1w7Qmq+TDYwmXeZaq/jCFA3cpaQ8ao9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MdpVj8Mh5/8wqh4P/CZDJIozQ1uNoJVndaWQ8H3icCjoYaZR2Mf1e8ydVpWWWidKSAawvh1rvN3kXxVS6SXppQZ49UVHqpuHRZDZB9AI3ZEtaHq3OB8P+pxy3eAGY4Os+9EChKdiFFE/PjndZEzQZ/63C/Ac5NmqWl/aSg1sLBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YtfXLtf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZ27nJUSK5Ozg9irC9XbdAYWNr5Flwy0/hLZulzuxkv8ePCeo7ho2LLvC6OfvTJYeLMRA0D0bDnlksgIwc2fnEcT/tCtWV+wJm7fbYtbhPm6VkmRJPPX7h8kxOLUBU0A4IK+0Ir125xtNvSKdDWQxzozkrseICO3T97pRFf0siE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Abtr1dtb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YtfXLtf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0579C4AF0A;
-	Tue, 30 Jul 2024 16:59:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Abtr1dtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DB7C4AF0A;
+	Tue, 30 Jul 2024 16:59:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358769;
-	bh=cUpt7kxihs1o2i+tmiCFOL69wFQEvmItj7GDKIFmuIU=;
+	s=korg; t=1722358772;
+	bh=onQdc2POXCs1w7Qmq+TDYwmXeZaq/jCFA3cpaQ8ao9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtfXLtf8m8JEabfPp8fnis+m4bAB7PriTEpQBoICMFZQqNSNenBzYLRd2pi5r56Za
-	 3/w0zeUzpfssQoIUEEyhJphUSOo3vGywawUe3NCvuGQ6cz64PIvAVwG6o9sPQ99RGN
-	 WOBGrffjxoyzaCtgOSuonJTV0BzMM/sScpLb3Ifs=
+	b=Abtr1dtb1voSLyylN29hZGppB79Dr8CH5upZ56A1DCaB4nhDJl6ijW7LHg47d1YQB
+	 LCkPST+PlcTfmujUgduZOiKByjnv5R+Oo9BhnFKyreto6rQomtWQ3MmtgIPtYsCTU0
+	 bFfUjyBg9jK7Yfl6oL9nC1lI1EVxqsiXJlnys/P8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Xianwei Zhao <xianwei.zhao@amlogic.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 420/440] powerpc: fix a file leak in kvm_vcpu_ioctl_enable_cap()
-Date: Tue, 30 Jul 2024 17:50:53 +0200
-Message-ID: <20240730151632.190022653@linuxfoundation.org>
+Subject: [PATCH 6.10 395/809] clk: meson: s4: fix pwm_j_div parent clock
+Date: Tue, 30 Jul 2024 17:44:31 +0200
+Message-ID: <20240730151740.282898439@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,39 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Xianwei Zhao <xianwei.zhao@amlogic.com>
 
-[ Upstream commit b4cf5fc01ce83e5c0bcf3dbb9f929428646b9098 ]
+[ Upstream commit c591745831e75b11ef19fb33c5c5a16e4d3f7fbf ]
 
-missing fdput() on one of the failure exits
+Update peripherals pwm_j_div's parent clock to pwm_j_mux
 
-Fixes: eacc56bb9de3e # v5.2
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 57b55c76aaf1 ("clk: meson: S4: add support for Amlogic S4 SoC peripheral clock controller")
+Signed-off-by: Xianwei Zhao <xianwei.zhao@amlogic.com>
+Link: https://lore.kernel.org/r/20240516071612.2978201-1-xianwei.zhao@amlogic.com
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kvm/powerpc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/meson/s4-peripherals.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kvm/powerpc.c b/arch/powerpc/kvm/powerpc.c
-index b850b0efa201a..98ac5d39ad9cf 100644
---- a/arch/powerpc/kvm/powerpc.c
-+++ b/arch/powerpc/kvm/powerpc.c
-@@ -1998,8 +1998,10 @@ static int kvm_vcpu_ioctl_enable_cap(struct kvm_vcpu *vcpu,
- 			break;
- 
- 		r = -ENXIO;
--		if (!xive_enabled())
-+		if (!xive_enabled()) {
-+			fdput(f);
- 			break;
-+		}
- 
- 		r = -EPERM;
- 		dev = kvm_device_from_filp(f.file);
+diff --git a/drivers/clk/meson/s4-peripherals.c b/drivers/clk/meson/s4-peripherals.c
+index 5e17ca50ab091..73340c7e815e7 100644
+--- a/drivers/clk/meson/s4-peripherals.c
++++ b/drivers/clk/meson/s4-peripherals.c
+@@ -2978,7 +2978,7 @@ static struct clk_regmap s4_pwm_j_div = {
+ 		.name = "pwm_j_div",
+ 		.ops = &clk_regmap_divider_ops,
+ 		.parent_hws = (const struct clk_hw *[]) {
+-			&s4_pwm_h_mux.hw
++			&s4_pwm_j_mux.hw
+ 		},
+ 		.num_parents = 1,
+ 		.flags = CLK_SET_RATE_PARENT,
 -- 
 2.43.0
 
