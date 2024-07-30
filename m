@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8FF1A76A9;
-	Tue, 30 Jul 2024 17:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A621A76A9;
+	Tue, 30 Jul 2024 17:22:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360168; cv=none; b=WBIcVeFFQQC79URk3vP0qm/v0TydoFrFeYH99OQPqRzoyFIZTwEZkhV3Zmr1uywUPfMrqPJHN5U1oE7I8isXwBFUeIMgh87IlmAe6owoYpBAml6R0KnwO3SdBfocYELP87xxgJ6GnhuaJT59856rikIvO9A4oC/32OGp/AbDCxU=
+	t=1722360171; cv=none; b=aL5KRrs8O+7faQLpVPaBJksvTPQhNkFIQ1dHc44tuLLxjEQasDRjoeDN/Cylux+HEjw6EeNktyJThon8NPnKPwQjYBXx7zfhbVZSowD9xLSsW/JqhWmKnP22vPkRAsihw02XV/3Hn6I0UHkPnnd8+IN1RVXZutAr+jDZ8oP0nyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360168; c=relaxed/simple;
-	bh=gPztSG5j899hDQKRvN/pSUUyk0iWTzZQGlKThEafXss=;
+	s=arc-20240116; t=1722360171; c=relaxed/simple;
+	bh=df56HXy2M8cY18rj59i8gCvsr7ahf928b/sV+YxxnwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G+J3GGo+Il96XHxbffUF7MRs23VNjk0L3Y4oYPbft3N3B+033am7ssV+0odfBmLE0pl9GYNoBG9efmX9jVx+Xium8bg0YIIgCDdLerE6w4TC3BJgbQ1wBDXbzNLH8nyZsJVwrPXLgYdkjOR59MANoMD622vFSrDqmy1i+/aaT9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR4C/JCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YHeRabHxw7LatFcRfyC3d3UzLAEP9Jx6F3IFNWWxY4synt8dAvPMZZLMVqPSmYp0gGJ/+UUibVv6Pp0kDHCk+IkHAeTZlPhZbw9o9/Cr9k9jx0pGQlugrNoluR2SL6JXP9lvg97FqEQcr3OOlGS4YVpgEfDZNUn/C2Zk0gdNJqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDVCBgMt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR4C/JCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FF9C32782;
-	Tue, 30 Jul 2024 17:22:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDVCBgMt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82C1C4AF0E;
+	Tue, 30 Jul 2024 17:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360168;
-	bh=gPztSG5j899hDQKRvN/pSUUyk0iWTzZQGlKThEafXss=;
+	s=korg; t=1722360171;
+	bh=df56HXy2M8cY18rj59i8gCvsr7ahf928b/sV+YxxnwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QR4C/JCcNUL70QZDUdWvOIadUcG0S2UwM6VLa/9qPMRrFqgfSyRmBccqQyaR4e9f1
-	 P2sdkvrK6sXmutr91Fil1IUo9zBpszY1RMqVfuw9W+1+fKh7LXesjHZSp3vu3MHI9f
-	 2F5n36/3VKhngfhOCs1qh6Vtae3O7wXek7ujIms8=
+	b=yDVCBgMtorGZ7xlC5R+h+plzoQoseQbWg9NxSSzBc7RggRL/okg0dDtF554dRppFq
+	 5IkdI9gDutcwkAp9D37CVuNDGlsNvCWluFIW/mYEapBm1LTCAaQ7dJqG65S/GyA/gl
+	 kCe07uOghVYKChEXqX7I1K1sfAwgMsfn0wLZKB6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Chen <Jason-ch.Chen@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.10 617/809] remoteproc: mediatek: Increase MT8188/MT8195 SCP core0 DRAM size
-Date: Tue, 30 Jul 2024 17:48:13 +0200
-Message-ID: <20240730151749.210137921@linuxfoundation.org>
+	Gautam Menghani <gautam@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.10 618/809] KVM: PPC: Book3S HV nestedv2: Fix doorbell emulation
+Date: Tue, 30 Jul 2024 17:48:14 +0200
+Message-ID: <20240730151749.249856693@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,55 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Chen <Jason-ch.Chen@mediatek.com>
+From: Gautam Menghani <gautam@linux.ibm.com>
 
-commit 19cb6058620620e68f1a9aed99393be5c3629db4 upstream.
+commit 54ec2bd9e0173b75daf84675d07c56584f96564b upstream.
 
-The current DRAM size is insufficient for the HEVC feature, which
-requires more memory for proper functionality. This change ensures the
-feature has the necessary resources.
+Doorbell emulation is broken for KVM on PAPR guests as support for DPDES
+was not added in the initial patch series. Due to this, a KVM on PAPR
+guest with SMT > 1 cannot be booted with the XICS interrupt controller
+as doorbells are setup in the initial probe path when using XICS
+(pSeries_smp_probe()).
 
-Signed-off-by: Jason Chen <Jason-ch.Chen@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240703034409.698-1-Jason-ch.Chen@mediatek.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Command to replicate the above bug:
+
+qemu-system-ppc64 \
+	-drive file=rhel.qcow2,format=qcow2 \
+	-m 20G \
+	-smp 8,cores=1,threads=8 \
+	-cpu  host \
+	-nographic \
+	-machine pseries,ic-mode=xics -accel kvm
+
+Add doorbell state handling support in the host KVM code to fix doorbell
+emulation.
+
+Fixes: 19d31c5f1157 ("KVM: PPC: Add support for nestedv2 guests")
+Cc: stable@vger.kernel.org # v6.7+
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240605113913.83715-3-gautam@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/mtk_scp.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ arch/powerpc/kvm/book3s_hv.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -1388,7 +1388,7 @@ static const struct mtk_scp_sizes_data d
- };
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -4116,6 +4116,11 @@ static int kvmhv_vcpu_entry_nestedv2(str
+ 	int trap;
+ 	long rc;
  
- static const struct mtk_scp_sizes_data mt8188_scp_sizes = {
--	.max_dram_size = 0x500000,
-+	.max_dram_size = 0x800000,
- 	.ipi_share_buffer_size = 600,
- };
- 
-@@ -1397,6 +1397,11 @@ static const struct mtk_scp_sizes_data m
- 	.ipi_share_buffer_size = 600,
- };
- 
-+static const struct mtk_scp_sizes_data mt8195_scp_sizes = {
-+	.max_dram_size = 0x800000,
-+	.ipi_share_buffer_size = 288,
-+};
++	if (vcpu->arch.doorbell_request) {
++		vcpu->arch.doorbell_request = 0;
++		kvmppc_set_dpdes(vcpu, 1);
++	}
 +
- static const struct mtk_scp_of_data mt8183_of_data = {
- 	.scp_clk_get = mt8183_scp_clk_get,
- 	.scp_before_load = mt8183_scp_before_load,
-@@ -1474,7 +1479,7 @@ static const struct mtk_scp_of_data mt81
- 	.scp_da_to_va = mt8192_scp_da_to_va,
- 	.host_to_scp_reg = MT8192_GIPC_IN_SET,
- 	.host_to_scp_int_bit = MT8192_HOST_IPC_INT_BIT,
--	.scp_sizes = &default_scp_sizes,
-+	.scp_sizes = &mt8195_scp_sizes,
- };
+ 	io = &vcpu->arch.nestedv2_io;
  
- static const struct mtk_scp_of_data mt8195_of_data_c1 = {
+ 	msr = mfmsr();
 
 
