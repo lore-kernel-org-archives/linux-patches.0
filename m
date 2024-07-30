@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F007183CBF;
-	Tue, 30 Jul 2024 16:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C181187FF2;
+	Tue, 30 Jul 2024 16:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355429; cv=none; b=mOfVlfy5WA4snRT/QbEFPN61TdjddRn8Ys7nrkfRqyZ7RB+tLQpm+OY2IIcWisucKzdPuP+/oPEXgEQ3g94wdT0XXeFZQX4VsmPsUYs9TJygNzsfzi4eDdcerVSfSh1ernqyvDG5ek7ToQE0Ky7QlTk86o2xm52dW/O+ezscyb8=
+	t=1722355432; cv=none; b=CdwxX0fKvF3bSXOB/UKD2jkiw/a8cIb7yjEX3rFYRpr8yL4v/hp3Qh/hmHW6Ch2IAttEFB/C5DPuhAasX3pRQ5ofDPUPL2B3JBd/P44B2UQr71MsdSnfOOi5ysLIXqyfHHBfWXeyp+jBMD+DtglqswMuEdV8hb0MZr22nc3GShk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355429; c=relaxed/simple;
-	bh=Sih6RoXnVAHcbGgPsvjWRG1wsl8a1fN9ku0R8IZIfxU=;
+	s=arc-20240116; t=1722355432; c=relaxed/simple;
+	bh=Rchq3S7/6eow97VhCB7G1KaEUtqLT+pVNP5S6IbUBFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fsz4xugB81hEB9Hw1iwhquNLBb2xQgoPNG6YMPmXp4yjchAOONPo8cQTEHIYSvt51NDL9bU5zx+DlOF83KyqS6RjFnzEacQ0H9W9pLdGceycyMJKDe557Kg7hNEPvhHmJpsiPeGUVVScR1Ll5EVBjbVa2AOFdx9hJcnoY/pj+dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=US3uFuC4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NySlrL7fpJdBGOl45324rUJC+f1Fl1qI8sQ7R9KD1Cr8zQTbCMI7vuzoWD1ZB2uIC/+ut28rTwpq6OPLkdkVw4dK9kU6qjVZ6wTwqHPnykeEFMId8bvyyMLYI2LGGy03nRVnt8pAT3gAI7GhXvQV0wGWXO0W0E1QgRK2STBEe1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kYof5cno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="US3uFuC4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D42BC32782;
-	Tue, 30 Jul 2024 16:03:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kYof5cno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5164C32782;
+	Tue, 30 Jul 2024 16:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355428;
-	bh=Sih6RoXnVAHcbGgPsvjWRG1wsl8a1fN9ku0R8IZIfxU=;
+	s=korg; t=1722355432;
+	bh=Rchq3S7/6eow97VhCB7G1KaEUtqLT+pVNP5S6IbUBFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=US3uFuC4de1606ddveRbZ8jFK7pnqw26ekMwd+PnC/lJYqoPr1ZC9EYPEkl2pZUGO
-	 EiRX/C8cRUW58skQngAJ2jp64pq1U+Z9WYJu4hv4QlWPjQN9Ntu0YDqdM+4JFJ6ylq
-	 nTAE+21725WXdcAzrry77NJ2N65+6woLf2u4Hd9w=
+	b=kYof5cnolOeYVUEdIJO4rw8ioA8bXWC848G7Cny/K3+ShuU+jI9dVTdy5z9N5QQSu
+	 knEXfL716ZE4Rr3ttWGJtD7En11T+S29xKgKaKeJ1W5xEAdw8DCbMnl2TNF7t7lA4U
+	 yIgpduhS41aFUwq06eebMK6DUn6jnE1/qo7OvTUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jai Luthra <j-luthra@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/568] arm64: dts: ti: k3-am625-beagleplay: Drop McASP AFIFOs
-Date: Tue, 30 Jul 2024 17:42:44 +0200
-Message-ID: <20240730151642.087832427@linuxfoundation.org>
+Subject: [PATCH 6.1 074/440] arm64: dts: rockchip: Add missing power-domains for rk356x vop_mmu
+Date: Tue, 30 Jul 2024 17:45:07 +0200
+Message-ID: <20240730151618.653091824@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,37 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jai Luthra <j-luthra@ti.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 3b4a03357aee07a32a44a49bb6a71f5e82b1ecc1 ]
+[ Upstream commit 9d42c3ee3ce37cdad6f98c9e77bfbd0d791ac7da ]
 
-McASP AFIFOs are not necessary with UDMA-P/BCDMA as there is buffering
-on the DMA IP. Drop these for better audio latency.
+The iommu@fe043e00 on RK356x SoC shares the VOP power domain, but the
+power-domains property was not provided when the node has been added.
 
-Fixes: 1f7226a5e52c ("arm64: dts: ti: k3-am625-beagleplay: Add HDMI support")
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Link: https://lore.kernel.org/r/20240606-mcasp_fifo_drop-v2-4-8c317dabdd0a@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+The consequence is that an attempt to reload the rockchipdrm module will
+freeze the entire system.  That is because on probe time,
+pm_runtime_get_suppliers() gets called for vop@fe040000, which blocks
+when pm_runtime_get_sync() is being invoked for iommu@fe043e00.
+
+Fix the issue by adding the missing property.
+
+Fixes: 9d6c6d978f97 ("arm64: dts: rockchip: rk356x: Add VOP2 nodes")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20240702-rk356x-fix-vop-mmu-v1-1-a66d1a0c45ea@collabora.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts | 2 --
- 1 file changed, 2 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk356x.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-index 2de74428a8bde..3560349d63051 100644
---- a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-+++ b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
-@@ -903,6 +903,4 @@ &mcasp1 {
- 	       0 0 0 0
- 	       0 0 0 0
- 	>;
--	tx-num-evt = <32>;
--	rx-num-evt = <32>;
- };
+diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+index 99ad6fc51b584..e5c88f0007253 100644
+--- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
+@@ -737,6 +737,7 @@ vop_mmu: iommu@fe043e00 {
+ 		clocks = <&cru ACLK_VOP>, <&cru HCLK_VOP>;
+ 		clock-names = "aclk", "iface";
+ 		#iommu-cells = <0>;
++		power-domains = <&power RK3568_PD_VO>;
+ 		status = "disabled";
+ 	};
+ 
 -- 
 2.43.0
 
