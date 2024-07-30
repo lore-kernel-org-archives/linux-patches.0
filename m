@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1518801A;
-	Tue, 30 Jul 2024 16:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEA118801A;
+	Tue, 30 Jul 2024 16:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358658; cv=none; b=gvIrBZRsUrTDyRNVW+5FNFBpTKUbtk2BYy/CVgdBsOk6GkBMsuRaFGBshznPlAn79HdxCWLjz5iVQVZAGVHPLDUTyTjgdHcasRJhjYsB2eo6zD6YI0sbsfInIOipeJISeofBlG2vUtb0MgsoT4fUb+Muu0NO/WzSgAomS7Fx+QY=
+	t=1722358661; cv=none; b=Vvbp5UTAjcIv1S03pW3UoaRnZO/OZ7GTf9sdmRaksm7psGCeDFW7VMOyHfnCcD+NEWgrLnK+Wk5s6SaKbghCZ85cdDPLiFwHwfujd135bmyMnYEEZ6L8pOO6irUP4BijLqi2W4eMYQCAuDNwZfvZRizDopsKiWauY0sd3eD8/bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358658; c=relaxed/simple;
-	bh=zWOL9LQCiSqHSgm1W+TMkmheMq4YSNRW07p5InAMG3k=;
+	s=arc-20240116; t=1722358661; c=relaxed/simple;
+	bh=5KFz7BC5A5eghGGgmeLwh4kUwkszbGod5NwuZwhx3gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OdCF7QW3kclTsKtQKVHr/1UWZ+YgCl6xmoczFdbJ3IkSvtWlTlcfOo4bV+xUeakZyH3rNcxd/wE56sXbq++BFz+7yqafBoIG339SUM1uq6fu7Fo93gkDyUMcQS8Mu0s9br6O5xCOfVQG4V6m3izC/cvQfiHYBAMoWYAoMlUTm74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo6rcs+D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XW/CiQzYkQ+mR/2szMvUMPr9G+qy46ld5DwZ5uHkScMYXdBjozOv4vjYNC6ynWom+t4hI/9Dza72jbyJdVjPEsolCK62u1Ip8ucHtu1wlVSaFjSoMDIvRbB6sYJqs9oPp5U58Luup0r1RJJ1+2ZBls/fSFCCA2VmpcCX41EteO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIVLkEIJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo6rcs+D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40864C32782;
-	Tue, 30 Jul 2024 16:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIVLkEIJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89B3C32782;
+	Tue, 30 Jul 2024 16:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358657;
-	bh=zWOL9LQCiSqHSgm1W+TMkmheMq4YSNRW07p5InAMG3k=;
+	s=korg; t=1722358661;
+	bh=5KFz7BC5A5eghGGgmeLwh4kUwkszbGod5NwuZwhx3gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qo6rcs+Dk57ZrFbRy/czuKj/ExITSkiDqX7jqjmy3tx17MKQK/1tcbmR5BxJU2GTi
-	 Vm9cf6hIbCD3En143Tkfd6xtA3AMDDehkTYIZojOeSgb1jVWz41LQXv3HLL6h7IkO/
-	 4fDIZTGTza4tn/0tnThLTRrg8ljXlhmQvW3Nnbmc=
+	b=VIVLkEIJOekuotm8SJt3FsN5ShyxPcFkHaPuYg7u2s4GIHOh3Wnqnqoupuczgro+1
+	 bYLQ/zAO7Yz94TFHCQIkJ3eR3nkd3iNmF/DXVe1XUEifSmDTN3cnjz9M5grL5TUPpv
+	 SfyqmSHdG5nhg+vKogBiCQZNrRmrz0xKb6e3PoBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.6 383/568] ext2: Verify bitmap and itable block numbers before using them
-Date: Tue, 30 Jul 2024 17:48:10 +0200
-Message-ID: <20240730151654.837178041@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 411/440] ipv4: Fix incorrect source address in Record Route option
+Date: Tue, 30 Jul 2024 17:50:44 +0200
+Message-ID: <20240730151631.846418343@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,61 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit 322a6aff03937aa1ece33b4e46c298eafaf9ac41 upstream.
+[ Upstream commit cc73bbab4b1fb8a4f53a24645871dafa5f81266a ]
 
-Verify bitmap block numbers and inode table blocks are sane before using
-them for checking bits in the block bitmap.
+The Record Route IP option records the addresses of the routers that
+routed the packet. In the case of forwarded packets, the kernel performs
+a route lookup via fib_lookup() and fills in the preferred source
+address of the matched route.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The lookup is performed with the DS field of the forwarded packet, but
+using the RT_TOS() macro which only masks one of the two ECN bits. If
+the packet is ECT(0) or CE, the matched route might be different than
+the route via which the packet was forwarded as the input path masks
+both of the ECN bits, resulting in the wrong address being filled in the
+Record Route option.
+
+Fix by masking both of the ECN bits.
+
+Fixes: 8e36360ae876 ("ipv4: Remove route key identity dependencies in ip_rt_get_source().")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20240718123407.434778-1-idosch@nvidia.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/balloc.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ net/ipv4/route.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext2/balloc.c
-+++ b/fs/ext2/balloc.c
-@@ -77,26 +77,33 @@ static int ext2_valid_block_bitmap(struc
- 	ext2_grpblk_t next_zero_bit;
- 	ext2_fsblk_t bitmap_blk;
- 	ext2_fsblk_t group_first_block;
-+	ext2_grpblk_t max_bit;
- 
- 	group_first_block = ext2_group_first_block_no(sb, block_group);
-+	max_bit = ext2_group_last_block_no(sb, block_group) - group_first_block;
- 
- 	/* check whether block bitmap block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_block_bitmap);
- 	offset = bitmap_blk - group_first_block;
--	if (!ext2_test_bit(offset, bh->b_data))
-+	if (offset < 0 || offset > max_bit ||
-+	    !ext2_test_bit(offset, bh->b_data))
- 		/* bad block bitmap */
- 		goto err_out;
- 
- 	/* check whether the inode bitmap block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_inode_bitmap);
- 	offset = bitmap_blk - group_first_block;
--	if (!ext2_test_bit(offset, bh->b_data))
-+	if (offset < 0 || offset > max_bit ||
-+	    !ext2_test_bit(offset, bh->b_data))
- 		/* bad block bitmap */
- 		goto err_out;
- 
- 	/* check whether the inode table block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_inode_table);
- 	offset = bitmap_blk - group_first_block;
-+	if (offset < 0 || offset > max_bit ||
-+	    offset + EXT2_SB(sb)->s_itb_per_group - 1 > max_bit)
-+		goto err_out;
- 	next_zero_bit = ext2_find_next_zero_bit(bh->b_data,
- 				offset + EXT2_SB(sb)->s_itb_per_group,
- 				offset);
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index da193840fc007..fda88894d0205 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -1275,7 +1275,7 @@ void ip_rt_get_source(u8 *addr, struct sk_buff *skb, struct rtable *rt)
+ 		struct flowi4 fl4 = {
+ 			.daddr = iph->daddr,
+ 			.saddr = iph->saddr,
+-			.flowi4_tos = RT_TOS(iph->tos),
++			.flowi4_tos = iph->tos & IPTOS_RT_MASK,
+ 			.flowi4_oif = rt->dst.dev->ifindex,
+ 			.flowi4_iif = skb->dev->ifindex,
+ 			.flowi4_mark = skb->mark,
+-- 
+2.43.0
+
 
 
