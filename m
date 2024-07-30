@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B65C1FBA;
-	Tue, 30 Jul 2024 17:01:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D5611FBA;
+	Tue, 30 Jul 2024 17:01:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358895; cv=none; b=mLXKp56nnD7ZOGq8nzO/0sAxOis65+yncgkaUeoBgSk5OT78I8naVWuLS3OuF33+LQO9ale928WVB1lm+9DD3yoej5Z58NTyBR6xMJxVBGQ1h0vlbX2v/j0Ow0WyN6TlmdO904vZ1+XKQZ17mroXQvCJOdaoftkAloh7RAbrACo=
+	t=1722358899; cv=none; b=XI50lX9p+Jp6+1oNjB48zkA7eZ0R8Apu2QIrkIi1hYOdVk5rt5pMRrWYpS7T8RKol97Za4v7HNsCCKQ8I1lA5M6HMu9yMSOJPE3f1/Dhk2XoVHi5mjZGDZIfth1zWfx8vg/LgkrOUoWLYtcz/lcZC0zy33/HWXOOK+Mew+MB4So=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358895; c=relaxed/simple;
-	bh=vqSfzYhpPWoR0OBz4dHtmJsL/f6yxSavefuFcx5EM1w=;
+	s=arc-20240116; t=1722358899; c=relaxed/simple;
+	bh=15v6Fi9+rb7//beacaS6f+aNalro3IaoX5NTigCl5JU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nHG1WJB/xn4EBT1sahOuxuAPleCpcie0i4iK5Jc9pHrx0wvgBIcyKI5TJKg2HN0PTJOcV5yXYD7ukPQEEdYTScznOYfsFk1F2v8aanEM2iE3xJOCfHyZX82LnfhifpyDckVYyZCAjHaqFY9Q1PY1Y7+zFVP88k18quNuUT7qaa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btWLi9kl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ORnF6g/9WhZswJkZG57ObyCoTp7BNgey4tDdGxhMEJTxWpIj43pI3PRsfXUNAsLIeSX/WZnkb4EVy+hiGl7JI7S8gaPfEgoxcatlEOw01/kB3J+nTDjulDuxUNvYQTWcmDLf5LpRrnalIoOdDSNWOqLaGiYbhbBLP/ZGOCRANQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/li+IRY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btWLi9kl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F6FC4AF0A;
-	Tue, 30 Jul 2024 17:01:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/li+IRY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F6FC32782;
+	Tue, 30 Jul 2024 17:01:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358895;
-	bh=vqSfzYhpPWoR0OBz4dHtmJsL/f6yxSavefuFcx5EM1w=;
+	s=korg; t=1722358899;
+	bh=15v6Fi9+rb7//beacaS6f+aNalro3IaoX5NTigCl5JU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=btWLi9klLyfanN5opby0ntx3S9RWhfiUvHJ/sOOKMZ8wNPgObSRhOV6IieZuIVaiJ
-	 Dm+E9TAcGoTNq4hHP/XfDUcv7jJW/3O4Z1w4jxUay0F5In34HoOtB7DeuJUXm4n5xG
-	 4AdxLv2Q8e41k07R7+7DB4wzcFrcvaiMj105mX9Y=
+	b=Q/li+IRYjlXn2kplKgFdUwk1Az3O6az6f7gLaV6Mf4SxkXn0OUnQwKuQkiZa3mC6k
+	 3l3rPvoauw3cA5UKUfCKKIxFZa7PsgFqw++o4LfPILxKpKMjMJlP0JdR+VkWL0yWUU
+	 PnhGLJWJIo8jx+M/yp4LfKs3akRXrNJMHegx59lU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Simon Trimmer <simont@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 431/440] spi: spidev: add correct compatible for Rohm BH2228FV
-Date: Tue, 30 Jul 2024 17:51:04 +0200
-Message-ID: <20240730151632.611325680@linuxfoundation.org>
+Subject: [PATCH 6.10 406/809] ASoC: cs35l56: Accept values greater than 0 as IRQ numbers
+Date: Tue, 30 Jul 2024 17:44:42 +0200
+Message-ID: <20240730151740.724859211@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Simon Trimmer <simont@opensource.cirrus.com>
 
-[ Upstream commit fc28d1c1fe3b3e2fbc50834c8f73dda72f6af9fc ]
+[ Upstream commit 3ec1428d7b7c519d757a013cef908d7e33dee882 ]
 
-When Maxime originally added the BH2228FV to the spidev driver, he spelt
-it incorrectly - the d should have been a b. Add the correctly spelt
-compatible to the driver. Although the majority of users of this
-compatible are abusers, there is at least one board that validly uses
-the incorrect spelt compatible, so keep it in the driver to avoid
-breaking the few real users it has.
+IRQ lookup functions such as those in ACPI can return error values when
+an IRQ is not defined. The i2c core driver converts the error codes to a
+value of 0 and the SPI bus driver passes them unaltered to client device
+drivers.
 
-Fixes: 8fad805bdc52 ("spi: spidev: Add Rohm DH2228FV DAC compatible string")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patch.msgid.link/20240717-ventricle-strewn-a7678c509e85@spud
+The cs35l56 driver should only accept positive non-zero values as IRQ
+numbers.
+
+Signed-off-by: Simon Trimmer <simont@opensource.cirrus.com>
+Fixes: 8a731fd37f8b ("ASoC: cs35l56: Move utility functions to shared file")
+Link: https://msgid.link/r/20240617135338.82006-1-simont@opensource.cirrus.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/cs35l56-shared.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 5241785266153..00612efc2277f 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -725,6 +725,7 @@ static const struct of_device_id spidev_dt_ids[] = {
- 	{ .compatible = "lwn,bk4", .data = &spidev_of_check },
- 	{ .compatible = "menlo,m53cpld", .data = &spidev_of_check },
- 	{ .compatible = "micron,spi-authenta", .data = &spidev_of_check },
-+	{ .compatible = "rohm,bh2228fv", .data = &spidev_of_check },
- 	{ .compatible = "rohm,dh2228fv", .data = &spidev_of_check },
- 	{ .compatible = "semtech,sx1301", .data = &spidev_of_check },
- 	{ .compatible = "silabs,em3581", .data = &spidev_of_check },
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index 30497152e02a7..f609cade805d7 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -397,7 +397,7 @@ int cs35l56_irq_request(struct cs35l56_base *cs35l56_base, int irq)
+ {
+ 	int ret;
+ 
+-	if (!irq)
++	if (irq < 1)
+ 		return 0;
+ 
+ 	ret = devm_request_threaded_irq(cs35l56_base->dev, irq, NULL, cs35l56_irq,
 -- 
 2.43.0
 
