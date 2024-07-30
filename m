@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A92E189522;
-	Tue, 30 Jul 2024 17:12:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A75C01898E0;
+	Tue, 30 Jul 2024 17:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359564; cv=none; b=mnTxVpSdQjqyW7bOqGawiTJoEI1N8eFe60olDPSnDCgpZ5WCMUwhuydVg+s1nDlT3evI/w/c9HIw+m/rb4euOUWnOJfmgdyKi/Y1iOjbJqkQbYRMiOzXFjh0SoD7VtQNpJS4aA2qW71bIh4p0m8pYIYy+Zr5iSfJzAz4adHUjK8=
+	t=1722359567; cv=none; b=hx4PB66qS1NhBIx6dPk8KUm+dz15tGSIltMURbgnBwD0K8Mh4Mtw6kdbfPh4OaOizpECq3HHFHfV7RGLcuCB6idptnFdSKh3cmI6leXysJiA4c6+lmUCdwCjaCmF4g6lIWcuRCbGvjTZTt6KHyFOh9oJMKn8Yvd6GyIWOGaTlCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359564; c=relaxed/simple;
-	bh=wPQcR854A52znuobzisHWB8Yvagcacc9eSNdA97zADg=;
+	s=arc-20240116; t=1722359567; c=relaxed/simple;
+	bh=gZyhuLlzHbsg1AGbuEr5LmHsGmmiqYpkUautUhpzRG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AcxzOz56/VuuVtOoTcCi0D7wycXCKpcx5LlvZsls6Vb4ALC42P9DdK6bCH1UAdRCd0YGtNj1G+hVobNmxK8xKtB2BggpAFKQr6K6MF4AGD5UwZt6xY+t8cwy2gvc7txvTmq3gm4zkeTuTF8VzRDBiGgeGGVAXA4BBt+e0+OEOm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y+H7ijv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=so1Lsl/m4hHSsYpD+YtmBo3HTQAq6zcLcw+fTDO6z6BIK6jjJpDKK1jZd0BcYV6SYxgRoALYAdw6+H2DBLaiSyDS7v+okDmp4ShlxaacRTtG4Jn0x15lFb8JoO5KborPjWv7mZLrLB/op3VqF2S9XX9Zt2uYv2ajrl1OxGOMMnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O8pvq6Gm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y+H7ijv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C99E4C32782;
-	Tue, 30 Jul 2024 17:12:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O8pvq6Gm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6F6C32782;
+	Tue, 30 Jul 2024 17:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359564;
-	bh=wPQcR854A52znuobzisHWB8Yvagcacc9eSNdA97zADg=;
+	s=korg; t=1722359567;
+	bh=gZyhuLlzHbsg1AGbuEr5LmHsGmmiqYpkUautUhpzRG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Y+H7ijvWLzHBQFgrfrmecPToCiF3/wMDV0gLr9shtLQqCRmMzqPcvxOXayLca0hD
-	 YV+LxjDdOL7Yzm3z0kupDRuRFBWRbCGPYX0+tK0xj8W8ohSOslOeb5SD1+jvijVBEQ
-	 T/RrFTTkJAY1hgMUTXaLbYuzXqBLqcWltj8u1e3w=
+	b=O8pvq6Gm2OBk9scPV8uJDcjuDtFMoNnfKEax8oa+IkC/Xi8yHsoaKyuVVPnCwqY/O
+	 8m3ovXZHM1kPkTQtOP2NA1byO8ZpkQNBZQc1fFHLqWGSJNmZaY8Pz6uH9Yqso78ebG
+	 NMmNQiEJuIRpsIF3NWuhyU3tE32NWgmF1RNseGtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 488/809] fs/ntfs3: Fix getting file type
-Date: Tue, 30 Jul 2024 17:46:04 +0200
-Message-ID: <20240730151744.013793745@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.6 502/568] rbd: rename RBD_LOCK_STATE_RELEASING and releasing_wait
+Date: Tue, 30 Jul 2024 17:50:09 +0200
+Message-ID: <20240730151659.648144045@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +46,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit 24c5100aceedcd47af89aaa404d4c96cd2837523 ]
+commit f5c466a0fdb2d9f3650d2e3911b0735f17ba00cf upstream.
 
-An additional condition causes the mft record to be read from disk
-and get the file type dt_type.
+... to RBD_LOCK_STATE_QUIESCING and quiescing_wait to recognize that
+this state and the associated completion are backing rbd_quiesce_lock(),
+which isn't specific to releasing the lock.
 
-Fixes: 22457c047ed97 ("fs/ntfs3: Modified fix directory element type detection")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+While exclusive lock does get quiesced before it's released, it also
+gets quiesced before an attempt to update the cookie is made and there
+the lock is not released as long as ceph_cls_set_cookie() succeeds.
+
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/dir.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/block/rbd.c |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/fs/ntfs3/dir.c b/fs/ntfs3/dir.c
-index 1937e8e612f87..858efe255f6f3 100644
---- a/fs/ntfs3/dir.c
-+++ b/fs/ntfs3/dir.c
-@@ -326,7 +326,8 @@ static inline int ntfs_filldir(struct ntfs_sb_info *sbi, struct ntfs_inode *ni,
- 	 * It does additional locks/reads just to get the type of name.
- 	 * Should we use additional mount option to enable branch below?
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -362,7 +362,7 @@ enum rbd_watch_state {
+ enum rbd_lock_state {
+ 	RBD_LOCK_STATE_UNLOCKED,
+ 	RBD_LOCK_STATE_LOCKED,
+-	RBD_LOCK_STATE_RELEASING,
++	RBD_LOCK_STATE_QUIESCING,
+ };
+ 
+ /* WatchNotify::ClientId */
+@@ -422,7 +422,7 @@ struct rbd_device {
+ 	struct list_head	running_list;
+ 	struct completion	acquire_wait;
+ 	int			acquire_err;
+-	struct completion	releasing_wait;
++	struct completion	quiescing_wait;
+ 
+ 	spinlock_t		object_map_lock;
+ 	u8			*object_map;
+@@ -525,7 +525,7 @@ static bool __rbd_is_lock_owner(struct r
+ 	lockdep_assert_held(&rbd_dev->lock_rwsem);
+ 
+ 	return rbd_dev->lock_state == RBD_LOCK_STATE_LOCKED ||
+-	       rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING;
++	       rbd_dev->lock_state == RBD_LOCK_STATE_QUIESCING;
+ }
+ 
+ static bool rbd_is_lock_owner(struct rbd_device *rbd_dev)
+@@ -3458,12 +3458,12 @@ static void rbd_lock_del_request(struct
+ 	spin_lock(&rbd_dev->lock_lists_lock);
+ 	if (!list_empty(&img_req->lock_item)) {
+ 		list_del_init(&img_req->lock_item);
+-		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_RELEASING &&
++		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_QUIESCING &&
+ 			       list_empty(&rbd_dev->running_list));
+ 	}
+ 	spin_unlock(&rbd_dev->lock_lists_lock);
+ 	if (need_wakeup)
+-		complete(&rbd_dev->releasing_wait);
++		complete(&rbd_dev->quiescing_wait);
+ }
+ 
+ static int rbd_img_exclusive_lock(struct rbd_img_request *img_req)
+@@ -4181,16 +4181,16 @@ static bool rbd_quiesce_lock(struct rbd_
+ 	/*
+ 	 * Ensure that all in-flight IO is flushed.
  	 */
--	if ((fname->dup.fa & FILE_ATTRIBUTE_REPARSE_POINT) &&
-+	if (((fname->dup.fa & FILE_ATTRIBUTE_REPARSE_POINT) ||
-+	     fname->dup.ea_size) &&
- 	    ino != ni->mi.rno) {
- 		struct inode *inode = ntfs_iget5(sbi->sb, &e->ref, NULL);
- 		if (!IS_ERR_OR_NULL(inode)) {
--- 
-2.43.0
-
+-	rbd_dev->lock_state = RBD_LOCK_STATE_RELEASING;
+-	rbd_assert(!completion_done(&rbd_dev->releasing_wait));
++	rbd_dev->lock_state = RBD_LOCK_STATE_QUIESCING;
++	rbd_assert(!completion_done(&rbd_dev->quiescing_wait));
+ 	if (list_empty(&rbd_dev->running_list))
+ 		return true;
+ 
+ 	up_write(&rbd_dev->lock_rwsem);
+-	wait_for_completion(&rbd_dev->releasing_wait);
++	wait_for_completion(&rbd_dev->quiescing_wait);
+ 
+ 	down_write(&rbd_dev->lock_rwsem);
+-	if (rbd_dev->lock_state != RBD_LOCK_STATE_RELEASING)
++	if (rbd_dev->lock_state != RBD_LOCK_STATE_QUIESCING)
+ 		return false;
+ 
+ 	rbd_assert(list_empty(&rbd_dev->running_list));
+@@ -5382,7 +5382,7 @@ static struct rbd_device *__rbd_dev_crea
+ 	INIT_LIST_HEAD(&rbd_dev->acquiring_list);
+ 	INIT_LIST_HEAD(&rbd_dev->running_list);
+ 	init_completion(&rbd_dev->acquire_wait);
+-	init_completion(&rbd_dev->releasing_wait);
++	init_completion(&rbd_dev->quiescing_wait);
+ 
+ 	spin_lock_init(&rbd_dev->object_map_lock);
+ 
 
 
