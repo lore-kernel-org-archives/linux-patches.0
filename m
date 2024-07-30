@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6821A6192;
-	Tue, 30 Jul 2024 16:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8F891A6192;
+	Tue, 30 Jul 2024 16:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357662; cv=none; b=YGUTdijHYZIxPqjPnUHzZmrPampH6O0NK1Vgb5guSct1RtqMAuRctcXF7zL/VL8knjigWRAx/s+55aZZYftR5EUy4yi6gSfiLq6U+v5VSRUaTm5rBeiyENfxnTIGKh3GJlGUEiWr49ngZX1Fb/puAsmYqPTgcTe6J6G63zpXWMg=
+	t=1722357665; cv=none; b=aYoZhEuMwvcyTzAedAs1RC3AJHUJUtVtnpX28g1RWGEYdoFLNrDDIqC+xAgaGiMNcLcSQCTGyLU5XpK8t6nRuPZndq6ru42g6oHpoHZOXEYXlT9vXKg2LaalKQ8TySIbV2GR9b3Lxs7X7GD6wfkw9y8Ga+t9RAMywiepAXnX2P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357662; c=relaxed/simple;
-	bh=jR2V1zeeA9lAuftav9GmiOzbj4hGNlBn6JWZq2legFc=;
+	s=arc-20240116; t=1722357665; c=relaxed/simple;
+	bh=1v+GZLxUcF5DpCPPZT3MAn5jjw2fR7unnsYkhJsnLn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SohDPU5tJabJo4cw6UEtX+Hq5dOX6tgkXCKpXLihYOcysKYgLZ2H0ZHAM6tLWIDcxMTUE8IGysAy7uultqwV681Fq4DylWS+n3atctIpLsKKlY9uT1wZT5rlZW5iUDPDQiD9ai4+LdWh2X3x8Tk/6HKz+s7MxDUrR2ZovR4rJ6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0RSETiJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W4bDgLvJdRYcvxSQzIfLHbMEZUZnvtIgvQeAM3uzVdUyBwA4U9usz3bO02d1an+MVLawpdnCuWzmUuWb2NSSZ7TKnICQl72wVXFTFpIYP4VWYFPz5ExSz5Ht3IduXswHuhWiqRGlPvsgWfgoSZMadXyOX3yuTiIAgi5tMpiJpeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j/bszulR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0RSETiJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209ABC32782;
-	Tue, 30 Jul 2024 16:41:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j/bszulR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1824EC32782;
+	Tue, 30 Jul 2024 16:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357662;
-	bh=jR2V1zeeA9lAuftav9GmiOzbj4hGNlBn6JWZq2legFc=;
+	s=korg; t=1722357665;
+	bh=1v+GZLxUcF5DpCPPZT3MAn5jjw2fR7unnsYkhJsnLn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0RSETiJo+FivbuM+V/D1JG+McE0zb+g4B/Wcq2po+pGjQwH7hkLwwUbrv9T903Yb
-	 2AaR88Ct04OeUp/dhpKc68NpP3LbIeHAUZR3u6X9Ka502exnwp4aU9k4fOuyWolp2N
-	 OMcU2Zk4p7peh8H4hpB/AgJKgNJTtwbtpWCVYzwg=
+	b=j/bszulRRsZYM3RHJvwixhZHS8O9tM8Kq+cNe2tV/WXXsDn4wTLcEwX+HJh0UA8xG
+	 IonkvsK1PRXoA/R5ZPcHbn0lJc99vgTxOI/BrVeMN3zGb8b0I5cHRZ6O04dvDLxKT9
+	 d/gb88n6Fw/LzTzyAMhcMoPEJCxPOm9g4GzJdyO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 279/568] powerpc/prom: Add CPU info to hardware description string later
-Date: Tue, 30 Jul 2024 17:46:26 +0200
-Message-ID: <20240730151650.781243905@linuxfoundation.org>
+Subject: [PATCH 6.10 277/809] drm/panel: himax-hx8394: Handle errors from mipi_dsi_dcs_set_display_on() better
+Date: Tue, 30 Jul 2024 17:42:33 +0200
+Message-ID: <20240730151735.534552007@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,88 +49,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 7bdd1c6c87de758750d419eedab7285b95b66417 ]
+[ Upstream commit cc2db2ef8d9eebc0df03808ac0dadbdb96733499 ]
 
-cur_cpu_spec->cpu_name is appended to ppc_hw_desc before cur_cpu_spec
-has taken on its final value. This is illustrated on pseries by
-comparing the CPU name as reported at boot ("POWER8E (raw)") to the
-contents of /proc/cpuinfo ("POWER8 (architected)"):
+If mipi_dsi_dcs_set_display_on() returned an error then we'd store
+that in the "ret" variable and jump to error handling. We'd then
+attempt an orderly poweroff. Unfortunately we then blew away the value
+stored in "ret". That means that if the orderly poweroff actually
+worked then we're return 0 (no error) from hx8394_enable() even though
+the panel wasn't enabled.
 
-  $ dmesg | grep Hardware
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 \
-    of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
+Fix this by not blowing away "ret".
 
-  $ grep -m 1 ^cpu /proc/cpuinfo
-  cpu             : POWER8 (architected), altivec supported
+Found by code inspection.
 
-Some 44x models would appear to be affected as well; see
-identical_pvr_fixup().
-
-This results in incorrect CPU information in stack dumps --
-ppc_hw_desc is an input to dump_stack_set_arch_desc().
-
-Delay gathering the CPU name until after all potential calls to
-identify_cpu().
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Fixes: bd649d40e0f2 ("powerpc: Add PVR & CPU name to hardware description")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240603-fix-cpu-hwdesc-v1-1-945f2850fcaa@linux.ibm.com
+Fixes: 65dc9360f741 ("drm: panel: Add Himax HX8394 panel controller driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240517143643.1.I0a6836fffd8d7620f353becb3df2370d2898f803@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.1.I0a6836fffd8d7620f353becb3df2370d2898f803@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/prom.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panel/panel-himax-hx8394.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
-index 77364729a1b61..bf6d8ad3819e9 100644
---- a/arch/powerpc/kernel/prom.c
-+++ b/arch/powerpc/kernel/prom.c
-@@ -327,6 +327,7 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 					  void *data)
- {
- 	const char *type = of_get_flat_dt_prop(node, "device_type", NULL);
-+	const __be32 *cpu_version = NULL;
- 	const __be32 *prop;
- 	const __be32 *intserv;
- 	int i, nthreads;
-@@ -410,7 +411,7 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 		prop = of_get_flat_dt_prop(node, "cpu-version", NULL);
- 		if (prop && (be32_to_cpup(prop) & 0xff000000) == 0x0f000000) {
- 			identify_cpu(0, be32_to_cpup(prop));
--			seq_buf_printf(&ppc_hw_desc, "0x%04x ", be32_to_cpup(prop));
-+			cpu_version = prop;
- 		}
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+index ff0dc08b98297..cb9f46e853de4 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+@@ -370,8 +370,7 @@ static int hx8394_enable(struct drm_panel *panel)
  
- 		check_cpu_feature_properties(node);
-@@ -421,6 +422,12 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 	}
+ sleep_in:
+ 	/* This will probably fail, but let's try orderly power off anyway. */
+-	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
+-	if (!ret)
++	if (!mipi_dsi_dcs_enter_sleep_mode(dsi))
+ 		msleep(50);
  
- 	identical_pvr_fixup(node);
-+
-+	// We can now add the CPU name & PVR to the hardware description
-+	seq_buf_printf(&ppc_hw_desc, "%s 0x%04lx ", cur_cpu_spec->cpu_name, mfspr(SPRN_PVR));
-+	if (cpu_version)
-+		seq_buf_printf(&ppc_hw_desc, "0x%04x ", be32_to_cpup(cpu_version));
-+
- 	init_mmu_slb_size(node);
- 
- #ifdef CONFIG_PPC64
-@@ -858,9 +865,6 @@ void __init early_init_devtree(void *params)
- 
- 	dt_cpu_ftrs_scan();
- 
--	// We can now add the CPU name & PVR to the hardware description
--	seq_buf_printf(&ppc_hw_desc, "%s 0x%04lx ", cur_cpu_spec->cpu_name, mfspr(SPRN_PVR));
--
- 	/* Retrieve CPU related informations from the flat tree
- 	 * (altivec support, boot CPU ID, ...)
- 	 */
+ 	return ret;
 -- 
 2.43.0
 
