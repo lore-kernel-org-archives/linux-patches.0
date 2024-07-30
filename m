@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360DD18A6A2;
-	Tue, 30 Jul 2024 17:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E307189537;
+	Tue, 30 Jul 2024 17:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359571; cv=none; b=CF/jhqdjJJJ4eea5DdY8SS2kYTiEISkAepVd47rW4auRWcZ2klwVrdFQa9N9qJoI4Cw0cNPjWp61M0BBvhUV5h/rw+Rb/yrRH1jtNaZ3XxSdeIPrVm6LJYWnkkxzw7Vc6T6SDD8gf78Quo3pPQnTfb7egfKw910wuVY5QPBs6jk=
+	t=1722359574; cv=none; b=PYq6ztBVtEZa/mJKtiVvGI9EBuo/zIaolbKBOw7trRxLompE2aYjFjPEmQA/pw87EBe6TK1X5B4xIzDGJ5k+lsCn+SYRFk1TIDrF/nnEUId+KwD/iY81DTbqtP8KWPWt8QiL1GbfVWkNVS1MPi16x1brj+yX4qyIa1aNvRqARM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359571; c=relaxed/simple;
-	bh=zch/VnRr6cK8g13wJ16rTHs/I/rMjv1R6tTjoqUU9mU=;
+	s=arc-20240116; t=1722359574; c=relaxed/simple;
+	bh=Hz+5JaZZy07xLFs3fUyMluOnkqDe7lVFYfJTYItVIrQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oitP0r2WY0ORiKr2P5587/jh/r9HPElyE1VcTwDYypUWAAhwQw2K5RwLQIPHavrvg35SbwpqXg6WTKvBHjtCV/cnJFpWGZtd8/LCLD7W+yp3uQk3CXYbsdJcSygH0RhyUK8rY8aig/EDSEN4Wvq8J+jTq+D7UqpxYiuqzgMMv0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gLqkjm3U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQ1+sPmP99HH0DjaeKxezAVTXUof2TE5bfUtAHbVKFb1qUEbC04hwCxefHy6jNl1PkzHi68Rmc4Cky3mOjUJKqOH6e5e8+ULeuBrZYVKTt5C+DJlUZc0LH8eBakkNhBnVaQaHKPWLwzdAiCONPqK4tLm65DbkAMsc92zZTUowCg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X1lFvGcr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gLqkjm3U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C83FC32782;
-	Tue, 30 Jul 2024 17:12:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X1lFvGcr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE6ABC32782;
+	Tue, 30 Jul 2024 17:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359570;
-	bh=zch/VnRr6cK8g13wJ16rTHs/I/rMjv1R6tTjoqUU9mU=;
+	s=korg; t=1722359574;
+	bh=Hz+5JaZZy07xLFs3fUyMluOnkqDe7lVFYfJTYItVIrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLqkjm3UiRcmkma8T5Zhd+w+t/Ry7RvQbdzoMpqXRuyqsLQOiSlbgYv0szoFHSbqL
-	 EiW6/DC6bikf6stwg7ViGTACb1COeQy8kKcKWnkOx8YzhGP/eUmkVWGwp+50MAuKKm
-	 eo7OvMGRcbbEWdaJUhjdepL8RUCeQkSyJVSZgiDw=
+	b=X1lFvGcrvGjeQLIpnLtDzCaPViJ+jxmQoUFiwZv7uPDaljlXmIAV94/iKL7wDizKD
+	 T8jzItCraqXc18ZMFs9UjotsC1LUf+E+6jdzSbCyd3Fg6r/0llIGXyKjj3j8hJn+Q7
+	 Zrs6DRpGDOLqBEEOh6w8M56lvKDze2NivhieFIoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 502/809] pinctrl: renesas: r8a779g0: Fix (H)SCIF1 suffixes
-Date: Tue, 30 Jul 2024 17:46:18 +0200
-Message-ID: <20240730151744.563842202@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.6 503/568] rbd: dont assume RBD_LOCK_STATE_LOCKED for exclusive mappings
+Date: Tue, 30 Jul 2024 17:50:10 +0200
+Message-ID: <20240730151659.687402174@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,384 +46,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit 3cf834a1669ea433aeee4c82c642776899c87451 ]
+commit 2237ceb71f89837ac47c5dce2aaa2c2b3a337a3c upstream.
 
-The Pin Multiplex attachment in Rev.1.10 of the R-Car V4H Series
-Hardware User's Manual still has two alternate pin groups (GP0_14-18
-and GP1_6-10) each named both HSCIF1 and SCIF1.  To differentiate, the
-pin control driver uses "(h)scif1" and "(h)scif1_x", which were
-considered temporary names until the conflict was sorted out.
+Every time a watch is reestablished after getting lost, we need to
+update the cookie which involves quiescing exclusive lock.  For this,
+we transition from RBD_LOCK_STATE_LOCKED to RBD_LOCK_STATE_QUIESCING
+roughly for the duration of rbd_reacquire_lock() call.  If the mapping
+is exclusive and I/O happens to arrive in this time window, it's failed
+with EROFS (later translated to EIO) based on the wrong assumption in
+rbd_img_exclusive_lock() -- "lock got released?" check there stopped
+making sense with commit a2b1da09793d ("rbd: lock should be quiesced on
+reacquire").
 
-Fix this by adopting R-Car V4M naming:
-  - Rename "(h)scif1" to "(h)scif1_a",
-  - Rename "(h)scif1_x" to "(h)scif1_b".
+To make it worse, any such I/O is added to the acquiring list before
+EROFS is returned and this sets up for violating rbd_lock_del_request()
+precondition that the request is either on the running list or not on
+any list at all -- see commit ded080c86b3f ("rbd: don't move requests
+to the running list on errors").  rbd_lock_del_request() ends up
+processing these requests as if they were on the running list which
+screws up quiescing_wait completion counter and ultimately leads to
 
-Adopt the R-Car V4M naming "(h)scif1_a" and "(h)scif1_b" to increase
-uniformity.
+    rbd_assert(!completion_done(&rbd_dev->quiescing_wait));
 
-While at it, remove unneeded separators.
+being triggered on the next watch error.
 
-Fixes: ad9bb2fec66262b0 ("pinctrl: renesas: Initial R8A779G0 (R-Car V4H) PFC support")
-Fixes: 050442ae4c74f830 ("pinctrl: renesas: r8a779g0: Add pins, groups and functions")
-Fixes: cf4f7891847bc558 ("pinctrl: renesas: r8a779g0: Add missing HSCIF1_X")
-Fixes: 9c151c2be92becf2 ("pinctrl: renesas: r8a779g0: Add missing SCIF1_X")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/5009130d1867e12abf9b231c8838fd05e2b28bee.1717754960.git.geert+renesas@glider.be
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 06ef84c4e9c4: rbd: rename RBD_LOCK_STATE_RELEASING and releasing_wait
+Cc: stable@vger.kernel.org
+Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779g0.c | 208 ++++++++++++-------------
- 1 file changed, 102 insertions(+), 106 deletions(-)
+ drivers/block/rbd.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-index ba2ec8e042119..7b64429c35ad3 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-@@ -291,13 +291,13 @@
- #define IP1SR0_15_12	FM(MSIOF5_SCK)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR0_19_16	FM(MSIOF5_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR0_23_20	FM(MSIOF2_SS2)		FM(TCLK1)		FM(IRQ2_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR0_27_24	FM(MSIOF2_SS1)		FM(HTX1)		FM(TX1)			F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR0_31_28	FM(MSIOF2_SYNC)		FM(HRX1)		FM(RX1)			F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR0_27_24	FM(MSIOF2_SS1)		FM(HTX1_A)		FM(TX1_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR0_31_28	FM(MSIOF2_SYNC)		FM(HRX1_A)		FM(RX1_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -3457,6 +3457,7 @@ static void rbd_lock_del_request(struct
+ 	lockdep_assert_held(&rbd_dev->lock_rwsem);
+ 	spin_lock(&rbd_dev->lock_lists_lock);
+ 	if (!list_empty(&img_req->lock_item)) {
++		rbd_assert(!list_empty(&rbd_dev->running_list));
+ 		list_del_init(&img_req->lock_item);
+ 		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_QUIESCING &&
+ 			       list_empty(&rbd_dev->running_list));
+@@ -3476,11 +3477,6 @@ static int rbd_img_exclusive_lock(struct
+ 	if (rbd_lock_add_request(img_req))
+ 		return 1;
  
- /* IP2SR0 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
--#define IP2SR0_3_0	FM(MSIOF2_TXD)		FM(HCTS1_N)		FM(CTS1_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP2SR0_7_4	FM(MSIOF2_SCK)		FM(HRTS1_N)		FM(RTS1_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP2SR0_11_8	FM(MSIOF2_RXD)		FM(HSCK1)		FM(SCK1)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP2SR0_3_0	FM(MSIOF2_TXD)		FM(HCTS1_N_A)		FM(CTS1_N_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP2SR0_7_4	FM(MSIOF2_SCK)		FM(HRTS1_N_A)		FM(RTS1_N_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP2SR0_11_8	FM(MSIOF2_RXD)		FM(HSCK1_A)		FM(SCK1_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-	if (rbd_dev->opts->exclusive) {
+-		WARN_ON(1); /* lock got released? */
+-		return -EROFS;
+-	}
+-
+ 	/*
+ 	 * Note the use of mod_delayed_work() in rbd_acquire_lock()
+ 	 * and cancel_delayed_work() in wake_lock_waiters().
+@@ -4601,6 +4597,10 @@ static void rbd_reacquire_lock(struct rb
+ 			rbd_warn(rbd_dev, "failed to update lock cookie: %d",
+ 				 ret);
  
- /* SR1 */
- /* IP0SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
-@@ -307,13 +307,13 @@
- #define IP0SR1_15_12	FM(MSIOF1_SCK)		FM(HSCK3_A)		FM(CTS3_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_19_16	FM(MSIOF1_TXD)		FM(HRX3_A)		FM(SCK3)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_23_20	FM(MSIOF1_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_27_24	FM(MSIOF0_SS2)		FM(HTX1_X)		FM(TX1_X)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_31_28	FM(MSIOF0_SS1)		FM(HRX1_X)		FM(RX1_X)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_27_24	FM(MSIOF0_SS2)		FM(HTX1_B)		FM(TX1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_31_28	FM(MSIOF0_SS1)		FM(HRX1_B)		FM(RX1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- 
- /* IP1SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
--#define IP1SR1_3_0	FM(MSIOF0_SYNC)		FM(HCTS1_N_X)		FM(CTS1_N_X)		FM(CANFD5_TX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_7_4	FM(MSIOF0_TXD)		FM(HRTS1_N_X)		FM(RTS1_N_X)		FM(CANFD5_RX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_X)		FM(SCK1_X)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_3_0	FM(MSIOF0_SYNC)		FM(HCTS1_N_B)		FM(CTS1_N_B)		FM(CANFD5_TX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_7_4	FM(MSIOF0_TXD)		FM(HRTS1_N_B)		FM(RTS1_N_B)		FM(CANFD5_RX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_B)		FM(SCK1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_15_12	FM(MSIOF0_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_19_16	FM(HTX0)		FM(TX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-@@ -754,25 +754,25 @@ static const u16 pinmux_data[] = {
- 	PINMUX_IPSR_GPSR(IP1SR0_23_20,	IRQ2_A),
- 
- 	PINMUX_IPSR_GPSR(IP1SR0_27_24,	MSIOF2_SS1),
--	PINMUX_IPSR_GPSR(IP1SR0_27_24,	HTX1),
--	PINMUX_IPSR_GPSR(IP1SR0_27_24,	TX1),
-+	PINMUX_IPSR_GPSR(IP1SR0_27_24,	HTX1_A),
-+	PINMUX_IPSR_GPSR(IP1SR0_27_24,	TX1_A),
- 
- 	PINMUX_IPSR_GPSR(IP1SR0_31_28,	MSIOF2_SYNC),
--	PINMUX_IPSR_GPSR(IP1SR0_31_28,	HRX1),
--	PINMUX_IPSR_GPSR(IP1SR0_31_28,	RX1),
-+	PINMUX_IPSR_GPSR(IP1SR0_31_28,	HRX1_A),
-+	PINMUX_IPSR_GPSR(IP1SR0_31_28,	RX1_A),
- 
- 	/* IP2SR0 */
- 	PINMUX_IPSR_GPSR(IP2SR0_3_0,	MSIOF2_TXD),
--	PINMUX_IPSR_GPSR(IP2SR0_3_0,	HCTS1_N),
--	PINMUX_IPSR_GPSR(IP2SR0_3_0,	CTS1_N),
-+	PINMUX_IPSR_GPSR(IP2SR0_3_0,	HCTS1_N_A),
-+	PINMUX_IPSR_GPSR(IP2SR0_3_0,	CTS1_N_A),
- 
- 	PINMUX_IPSR_GPSR(IP2SR0_7_4,	MSIOF2_SCK),
--	PINMUX_IPSR_GPSR(IP2SR0_7_4,	HRTS1_N),
--	PINMUX_IPSR_GPSR(IP2SR0_7_4,	RTS1_N),
-+	PINMUX_IPSR_GPSR(IP2SR0_7_4,	HRTS1_N_A),
-+	PINMUX_IPSR_GPSR(IP2SR0_7_4,	RTS1_N_A),
- 
- 	PINMUX_IPSR_GPSR(IP2SR0_11_8,	MSIOF2_RXD),
--	PINMUX_IPSR_GPSR(IP2SR0_11_8,	HSCK1),
--	PINMUX_IPSR_GPSR(IP2SR0_11_8,	SCK1),
-+	PINMUX_IPSR_GPSR(IP2SR0_11_8,	HSCK1_A),
-+	PINMUX_IPSR_GPSR(IP2SR0_11_8,	SCK1_A),
- 
- 	/* IP0SR1 */
- 	PINMUX_IPSR_GPSR(IP0SR1_3_0,	MSIOF1_SS2),
-@@ -798,27 +798,27 @@ static const u16 pinmux_data[] = {
- 	PINMUX_IPSR_GPSR(IP0SR1_23_20,	MSIOF1_RXD),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_27_24,	MSIOF0_SS2),
--	PINMUX_IPSR_GPSR(IP0SR1_27_24,	HTX1_X),
--	PINMUX_IPSR_GPSR(IP0SR1_27_24,	TX1_X),
-+	PINMUX_IPSR_GPSR(IP0SR1_27_24,	HTX1_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_27_24,	TX1_B),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_31_28,	MSIOF0_SS1),
--	PINMUX_IPSR_GPSR(IP0SR1_31_28,	HRX1_X),
--	PINMUX_IPSR_GPSR(IP0SR1_31_28,	RX1_X),
-+	PINMUX_IPSR_GPSR(IP0SR1_31_28,	HRX1_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_31_28,	RX1_B),
- 
- 	/* IP1SR1 */
- 	PINMUX_IPSR_GPSR(IP1SR1_3_0,	MSIOF0_SYNC),
--	PINMUX_IPSR_GPSR(IP1SR1_3_0,	HCTS1_N_X),
--	PINMUX_IPSR_GPSR(IP1SR1_3_0,	CTS1_N_X),
-+	PINMUX_IPSR_GPSR(IP1SR1_3_0,	HCTS1_N_B),
-+	PINMUX_IPSR_GPSR(IP1SR1_3_0,	CTS1_N_B),
- 	PINMUX_IPSR_GPSR(IP1SR1_3_0,	CANFD5_TX_B),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_7_4,	MSIOF0_TXD),
--	PINMUX_IPSR_GPSR(IP1SR1_7_4,	HRTS1_N_X),
--	PINMUX_IPSR_GPSR(IP1SR1_7_4,	RTS1_N_X),
-+	PINMUX_IPSR_GPSR(IP1SR1_7_4,	HRTS1_N_B),
-+	PINMUX_IPSR_GPSR(IP1SR1_7_4,	RTS1_N_B),
- 	PINMUX_IPSR_GPSR(IP1SR1_7_4,	CANFD5_RX_B),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_11_8,	MSIOF0_SCK),
--	PINMUX_IPSR_GPSR(IP1SR1_11_8,	HSCK1_X),
--	PINMUX_IPSR_GPSR(IP1SR1_11_8,	SCK1_X),
-+	PINMUX_IPSR_GPSR(IP1SR1_11_8,	HSCK1_B),
-+	PINMUX_IPSR_GPSR(IP1SR1_11_8,	SCK1_B),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_15_12,	MSIOF0_RXD),
- 
-@@ -1598,49 +1598,48 @@ static const unsigned int hscif0_ctrl_mux[] = {
- };
- 
- /* - HSCIF1 ----------------------------------------------------------------- */
--static const unsigned int hscif1_data_pins[] = {
--	/* HRX1, HTX1 */
-+static const unsigned int hscif1_data_a_pins[] = {
-+	/* HRX1_A, HTX1_A */
- 	RCAR_GP_PIN(0, 15), RCAR_GP_PIN(0, 14),
- };
--static const unsigned int hscif1_data_mux[] = {
--	HRX1_MARK, HTX1_MARK,
-+static const unsigned int hscif1_data_a_mux[] = {
-+	HRX1_A_MARK, HTX1_A_MARK,
- };
--static const unsigned int hscif1_clk_pins[] = {
--	/* HSCK1 */
-+static const unsigned int hscif1_clk_a_pins[] = {
-+	/* HSCK1_A */
- 	RCAR_GP_PIN(0, 18),
- };
--static const unsigned int hscif1_clk_mux[] = {
--	HSCK1_MARK,
-+static const unsigned int hscif1_clk_a_mux[] = {
-+	HSCK1_A_MARK,
- };
--static const unsigned int hscif1_ctrl_pins[] = {
--	/* HRTS1_N, HCTS1_N */
-+static const unsigned int hscif1_ctrl_a_pins[] = {
-+	/* HRTS1_N_A, HCTS1_N_A */
- 	RCAR_GP_PIN(0, 17), RCAR_GP_PIN(0, 16),
- };
--static const unsigned int hscif1_ctrl_mux[] = {
--	HRTS1_N_MARK, HCTS1_N_MARK,
-+static const unsigned int hscif1_ctrl_a_mux[] = {
-+	HRTS1_N_A_MARK, HCTS1_N_A_MARK,
- };
- 
--/* - HSCIF1_X---------------------------------------------------------------- */
--static const unsigned int hscif1_data_x_pins[] = {
--	/* HRX1_X, HTX1_X */
-+static const unsigned int hscif1_data_b_pins[] = {
-+	/* HRX1_B, HTX1_B */
- 	RCAR_GP_PIN(1, 7), RCAR_GP_PIN(1, 6),
- };
--static const unsigned int hscif1_data_x_mux[] = {
--	HRX1_X_MARK, HTX1_X_MARK,
-+static const unsigned int hscif1_data_b_mux[] = {
-+	HRX1_B_MARK, HTX1_B_MARK,
- };
--static const unsigned int hscif1_clk_x_pins[] = {
--	/* HSCK1_X */
-+static const unsigned int hscif1_clk_b_pins[] = {
-+	/* HSCK1_B */
- 	RCAR_GP_PIN(1, 10),
- };
--static const unsigned int hscif1_clk_x_mux[] = {
--	HSCK1_X_MARK,
-+static const unsigned int hscif1_clk_b_mux[] = {
-+	HSCK1_B_MARK,
- };
--static const unsigned int hscif1_ctrl_x_pins[] = {
--	/* HRTS1_N_X, HCTS1_N_X */
-+static const unsigned int hscif1_ctrl_b_pins[] = {
-+	/* HRTS1_N_B, HCTS1_N_B */
- 	RCAR_GP_PIN(1, 9), RCAR_GP_PIN(1, 8),
- };
--static const unsigned int hscif1_ctrl_x_mux[] = {
--	HRTS1_N_X_MARK, HCTS1_N_X_MARK,
-+static const unsigned int hscif1_ctrl_b_mux[] = {
-+	HRTS1_N_B_MARK, HCTS1_N_B_MARK,
- };
- 
- /* - HSCIF2 ----------------------------------------------------------------- */
-@@ -2260,49 +2259,48 @@ static const unsigned int scif0_ctrl_mux[] = {
- };
- 
- /* - SCIF1 ------------------------------------------------------------------ */
--static const unsigned int scif1_data_pins[] = {
--	/* RX1, TX1 */
-+static const unsigned int scif1_data_a_pins[] = {
-+	/* RX1_A, TX1_A */
- 	RCAR_GP_PIN(0, 15), RCAR_GP_PIN(0, 14),
- };
--static const unsigned int scif1_data_mux[] = {
--	RX1_MARK, TX1_MARK,
-+static const unsigned int scif1_data_a_mux[] = {
-+	RX1_A_MARK, TX1_A_MARK,
- };
--static const unsigned int scif1_clk_pins[] = {
--	/* SCK1 */
-+static const unsigned int scif1_clk_a_pins[] = {
-+	/* SCK1_A */
- 	RCAR_GP_PIN(0, 18),
- };
--static const unsigned int scif1_clk_mux[] = {
--	SCK1_MARK,
-+static const unsigned int scif1_clk_a_mux[] = {
-+	SCK1_A_MARK,
- };
--static const unsigned int scif1_ctrl_pins[] = {
--	/* RTS1_N, CTS1_N */
-+static const unsigned int scif1_ctrl_a_pins[] = {
-+	/* RTS1_N_A, CTS1_N_A */
- 	RCAR_GP_PIN(0, 17), RCAR_GP_PIN(0, 16),
- };
--static const unsigned int scif1_ctrl_mux[] = {
--	RTS1_N_MARK, CTS1_N_MARK,
-+static const unsigned int scif1_ctrl_a_mux[] = {
-+	RTS1_N_A_MARK, CTS1_N_A_MARK,
- };
- 
--/* - SCIF1_X ------------------------------------------------------------------ */
--static const unsigned int scif1_data_x_pins[] = {
--	/* RX1_X, TX1_X */
-+static const unsigned int scif1_data_b_pins[] = {
-+	/* RX1_B, TX1_B */
- 	RCAR_GP_PIN(1, 7), RCAR_GP_PIN(1, 6),
- };
--static const unsigned int scif1_data_x_mux[] = {
--	RX1_X_MARK, TX1_X_MARK,
-+static const unsigned int scif1_data_b_mux[] = {
-+	RX1_B_MARK, TX1_B_MARK,
- };
--static const unsigned int scif1_clk_x_pins[] = {
--	/* SCK1_X */
-+static const unsigned int scif1_clk_b_pins[] = {
-+	/* SCK1_B */
- 	RCAR_GP_PIN(1, 10),
- };
--static const unsigned int scif1_clk_x_mux[] = {
--	SCK1_X_MARK,
-+static const unsigned int scif1_clk_b_mux[] = {
-+	SCK1_B_MARK,
- };
--static const unsigned int scif1_ctrl_x_pins[] = {
--	/* RTS1_N_X, CTS1_N_X */
-+static const unsigned int scif1_ctrl_b_pins[] = {
-+	/* RTS1_N_B, CTS1_N_B */
- 	RCAR_GP_PIN(1, 9), RCAR_GP_PIN(1, 8),
- };
--static const unsigned int scif1_ctrl_x_mux[] = {
--	RTS1_N_X_MARK, CTS1_N_X_MARK,
-+static const unsigned int scif1_ctrl_b_mux[] = {
-+	RTS1_N_B_MARK, CTS1_N_B_MARK,
- };
- 
- /* - SCIF3 ------------------------------------------------------------------ */
-@@ -2586,12 +2584,12 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(hscif0_data),
- 	SH_PFC_PIN_GROUP(hscif0_clk),
- 	SH_PFC_PIN_GROUP(hscif0_ctrl),
--	SH_PFC_PIN_GROUP(hscif1_data),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_clk),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_ctrl),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_data_x),	/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_clk_x),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_ctrl_x),	/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(hscif1_data_a),
-+	SH_PFC_PIN_GROUP(hscif1_clk_a),
-+	SH_PFC_PIN_GROUP(hscif1_ctrl_a),
-+	SH_PFC_PIN_GROUP(hscif1_data_b),
-+	SH_PFC_PIN_GROUP(hscif1_clk_b),
-+	SH_PFC_PIN_GROUP(hscif1_ctrl_b),
- 	SH_PFC_PIN_GROUP(hscif2_data),
- 	SH_PFC_PIN_GROUP(hscif2_clk),
- 	SH_PFC_PIN_GROUP(hscif2_ctrl),
-@@ -2685,12 +2683,12 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(scif0_data),
- 	SH_PFC_PIN_GROUP(scif0_clk),
- 	SH_PFC_PIN_GROUP(scif0_ctrl),
--	SH_PFC_PIN_GROUP(scif1_data),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_clk),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_ctrl),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_data_x),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_clk_x),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_ctrl_x),		/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(scif1_data_a),
-+	SH_PFC_PIN_GROUP(scif1_clk_a),
-+	SH_PFC_PIN_GROUP(scif1_ctrl_a),
-+	SH_PFC_PIN_GROUP(scif1_data_b),
-+	SH_PFC_PIN_GROUP(scif1_clk_b),
-+	SH_PFC_PIN_GROUP(scif1_ctrl_b),
- 	SH_PFC_PIN_GROUP(scif3_data),		/* suffix might be updated */
- 	SH_PFC_PIN_GROUP(scif3_clk),		/* suffix might be updated */
- 	SH_PFC_PIN_GROUP(scif3_ctrl),		/* suffix might be updated */
-@@ -2810,13 +2808,12 @@ static const char * const hscif0_groups[] = {
- };
- 
- static const char * const hscif1_groups[] = {
--	/* suffix might be updated */
--	"hscif1_data",
--	"hscif1_clk",
--	"hscif1_ctrl",
--	"hscif1_data_x",
--	"hscif1_clk_x",
--	"hscif1_ctrl_x",
-+	"hscif1_data_a",
-+	"hscif1_clk_a",
-+	"hscif1_ctrl_a",
-+	"hscif1_data_b",
-+	"hscif1_clk_b",
-+	"hscif1_ctrl_b",
- };
- 
- static const char * const hscif2_groups[] = {
-@@ -2993,13 +2990,12 @@ static const char * const scif0_groups[] = {
- };
- 
- static const char * const scif1_groups[] = {
--	/* suffix might be updated */
--	"scif1_data",
--	"scif1_clk",
--	"scif1_ctrl",
--	"scif1_data_x",
--	"scif1_clk_x",
--	"scif1_ctrl_x",
-+	"scif1_data_a",
-+	"scif1_clk_a",
-+	"scif1_ctrl_a",
-+	"scif1_data_b",
-+	"scif1_clk_b",
-+	"scif1_ctrl_b",
- };
- 
- static const char * const scif3_groups[] = {
--- 
-2.43.0
-
++		if (rbd_dev->opts->exclusive)
++			rbd_warn(rbd_dev,
++			     "temporarily releasing lock on exclusive mapping");
++
+ 		/*
+ 		 * Lock cookie cannot be updated on older OSDs, so do
+ 		 * a manual release and queue an acquire.
 
 
