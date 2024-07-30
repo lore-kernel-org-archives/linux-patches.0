@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85C21A616E;
-	Tue, 30 Jul 2024 16:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE66187FF6;
+	Tue, 30 Jul 2024 16:17:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356239; cv=none; b=RtdUyeu9+iu4IwHuI/a44GOTPwYr4LdAwNqmisO16ye8iuG9zNEbGk8silYaHRjMAgal/beS60jOCgpqfQ5/U/NTm3RO9F5OMywBOtRAd/qakKqsZSoctYu1AOe+bTxjyzCkadcZWWtRiwYeqgxFYlD/NEW0X7dMNju0jaQySNM=
+	t=1722356243; cv=none; b=dwNSdQGp5IkMHyywa9nB7QDYusgXv14PkorIfTLFTYuzyYLFENJMqg2SbJuAMyyP07xPZBLI19gj/W0FbAMomqcobhdTIK8kcXW0G/A+CNGG23uNYU4HMnjGSeHOVndDcEIHKBnKUd0I7ev4rOHnwClKQNIKn9EUG91oPGr/CrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356239; c=relaxed/simple;
-	bh=aYGLLEVU7xAWUsbM0uZG8w0CNiq5K0Cy312lxp/+VMk=;
+	s=arc-20240116; t=1722356243; c=relaxed/simple;
+	bh=PfvuOJQl6CgvHaGSvOL3Cpg2VORwwRrUElaL97TGnhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCpGeoHaA5aAupPS30QGReuO5ncHzs4NDIc2FKZGkxK4zHCAEFO1LS74Adhquncm9c+/VEj7V9SndnLd+4WE87zxYhGKu+s62EINJ7aSmCdm3NfoCZ3ipiJHc8/94JaEe9VbyVcAj2ELcIZnoSsaz9qSLvJmX8VDNbMkWwPcyqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yK1ZDR9q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LvJsqwAvi8NRStoyLCVqKE6uBAl4OxiiKlzuHWnSu3nABLtXsDnrDTexa47r985wAE2ftbx//7i/hHscc6dEfJsXG8o6QRXDAsBQ+CJVkFzT22oBrJ+xJl9ewvWZrNByxvTnGNwx11nXi1B9RfCjPcZm+n4CSwiyBL2EfEUKyKs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wLUWfLiG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yK1ZDR9q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2ABC4AF0A;
-	Tue, 30 Jul 2024 16:17:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wLUWfLiG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52037C32782;
+	Tue, 30 Jul 2024 16:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356239;
-	bh=aYGLLEVU7xAWUsbM0uZG8w0CNiq5K0Cy312lxp/+VMk=;
+	s=korg; t=1722356242;
+	bh=PfvuOJQl6CgvHaGSvOL3Cpg2VORwwRrUElaL97TGnhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yK1ZDR9qX7YTMRT9+oQcaJ9NC5UWFod77GrEaaR9vGujuJn2b7Chzg/13TlYxLcoV
-	 GAFiH3d0YAhtfB+OqAJO7mfPYT1ioop4Ms6vgoz5jSSLaV+RXxJ3CSxV9nJ8bsXq9x
-	 72Hc0xFQ86Zy2n+uRYzXsiZGSbIvvjm61FZn9Fkk=
+	b=wLUWfLiGtT9hU+/K8OlOSuIE9GoUsYzIYbZshoArGuVeREbHFoFGAmUps2s0VKjSJ
+	 NgAJUzX39n0gIOoLPkljlyCkvf75eXJc0CcXckpzGF2QP2kvkdvx7lFpD3QIb2webv
+	 vmILosjJxYRHmOFr0x7Az81JfVHfPfI3e68sxmeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	syzbot+0333a6f4b88bcd68a62f@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 132/809] arm64: dts: rockchip: fix usb regulator for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:40:08 +0200
-Message-ID: <20240730151729.830191385@linuxfoundation.org>
+Subject: [PATCH 6.6 127/568] udf: Fix lock ordering in udf_evict_inode()
+Date: Tue, 30 Jul 2024 17:43:54 +0200
+Message-ID: <20240730151644.835778750@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,100 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 9e823ba92118510c0d1c050b67bb000f9b9a73d7 ]
+[ Upstream commit 8832fc1e502687869606bb0a7b79848ed3bf036f ]
 
-Remove the non-existent usb_host regulator and fix the supply according
-to the schematic. Also remove the unnecessary always-on and boot-on for
-the usb_otg regulator.
+udf_evict_inode() calls udf_setsize() to truncate deleted inode.
+However inode deletion through udf_evict_inode() can happen from inode
+reclaim context and udf_setsize() grabs mapping->invalidate_lock which
+isn't generally safe to acquire from fs reclaim context since we
+allocate pages under mapping->invalidate_lock for example in a page
+fault path.  This is however not a real deadlock possibility as by the
+time udf_evict_inode() is called, nobody can be accessing the inode,
+even less work with its page cache. So this is just a lockdep triggering
+false positive. Fix the problem by moving mapping->invalidate_lock
+locking outsize of udf_setsize() into udf_setattr() as grabbing
+mapping->invalidate_lock from udf_evict_inode() is pointless.
 
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240701143028.1203997-2-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Reported-by: syzbot+0333a6f4b88bcd68a62f@syzkaller.appspotmail.com
+Fixes: b9a861fd527a ("udf: Protect truncate and file type conversion with invalidate_lock")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ fs/udf/file.c  |  2 ++
+ fs/udf/inode.c | 11 ++++-------
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index 93987c8740f7b..8f587978fa3b6 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -78,15 +78,6 @@ vcc5v0_sys: vcc5v0-sys-regulator {
- 		vin-supply = <&vcc12v_dcin>;
- 	};
+diff --git a/fs/udf/file.c b/fs/udf/file.c
+index 0ceac4b5937c7..94daaaf76f71c 100644
+--- a/fs/udf/file.c
++++ b/fs/udf/file.c
+@@ -232,7 +232,9 @@ static int udf_setattr(struct mnt_idmap *idmap, struct dentry *dentry,
  
--	vcc5v0_usb_host: vcc5v0-usb-host-regulator {
--		compatible = "regulator-fixed";
--		regulator-name = "vcc5v0_usb_host";
--		regulator-always-on;
--		regulator-boot-on;
--		regulator-min-microvolt = <5000000>;
--		regulator-max-microvolt = <5000000>;
--	};
--
- 	vcc5v0_usb_otg: vcc5v0-usb-otg-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -94,8 +85,9 @@ vcc5v0_usb_otg: vcc5v0-usb-otg-regulator {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vcc5v0_usb_otg_en>;
- 		regulator-name = "vcc5v0_usb_otg";
--		regulator-always-on;
--		regulator-boot-on;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		vin-supply = <&vcc5v0_sys>;
- 	};
- };
+ 	if ((attr->ia_valid & ATTR_SIZE) &&
+ 	    attr->ia_size != i_size_read(inode)) {
++		filemap_invalidate_lock(inode->i_mapping);
+ 		error = udf_setsize(inode, attr->ia_size);
++		filemap_invalidate_unlock(inode->i_mapping);
+ 		if (error)
+ 			return error;
+ 	}
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 1ff8c1f17f9e6..8db07d1f56bc9 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -1252,7 +1252,6 @@ int udf_setsize(struct inode *inode, loff_t newsize)
+ 	if (IS_APPEND(inode) || IS_IMMUTABLE(inode))
+ 		return -EPERM;
  
-@@ -460,7 +452,7 @@ &usb2phy0 {
- };
- 
- &usb2phy0_host {
--	phy-supply = <&vcc5v0_usb_host>;
-+	phy-supply = <&vcc5v0_sys>;
- 	status = "okay";
- };
+-	filemap_invalidate_lock(inode->i_mapping);
+ 	iinfo = UDF_I(inode);
+ 	if (newsize > inode->i_size) {
+ 		if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB) {
+@@ -1265,11 +1264,11 @@ int udf_setsize(struct inode *inode, loff_t newsize)
+ 			}
+ 			err = udf_expand_file_adinicb(inode);
+ 			if (err)
+-				goto out_unlock;
++				return err;
+ 		}
+ 		err = udf_extend_file(inode, newsize);
+ 		if (err)
+-			goto out_unlock;
++			return err;
+ set_size:
+ 		truncate_setsize(inode, newsize);
+ 	} else {
+@@ -1287,14 +1286,14 @@ int udf_setsize(struct inode *inode, loff_t newsize)
+ 		err = block_truncate_page(inode->i_mapping, newsize,
+ 					  udf_get_block);
+ 		if (err)
+-			goto out_unlock;
++			return err;
+ 		truncate_setsize(inode, newsize);
+ 		down_write(&iinfo->i_data_sem);
+ 		udf_clear_extent_cache(inode);
+ 		err = udf_truncate_extents(inode);
+ 		up_write(&iinfo->i_data_sem);
+ 		if (err)
+-			goto out_unlock;
++			return err;
+ 	}
+ update_time:
+ 	inode->i_mtime = inode_set_ctime_current(inode);
+@@ -1302,8 +1301,6 @@ int udf_setsize(struct inode *inode, loff_t newsize)
+ 		udf_sync_inode(inode);
+ 	else
+ 		mark_inode_dirty(inode);
+-out_unlock:
+-	filemap_invalidate_unlock(inode->i_mapping);
+ 	return err;
+ }
  
 -- 
 2.43.0
