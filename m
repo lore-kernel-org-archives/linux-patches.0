@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FEB1A76A4;
-	Tue, 30 Jul 2024 17:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5751A76A4;
+	Tue, 30 Jul 2024 17:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359979; cv=none; b=n1uKUeyg3fAtDv3zCAjDaxb1xeWBbdBUt3EH7vmS/JPowhq1+rmvuw4PXrCM9Y2nVQYRU5FPQqvNeDnNIy3qHcXKuu2cHhjKW9EHxSs0FOEzDWogNTYjI4wHA5D59su/3RA2OYQ8AEJ6XwE5jrXZCHseGNeKTXoVUCfeCNCf5XQ=
+	t=1722359982; cv=none; b=YkTucvPBTm6Nh/rfyS1A5mnPPyshi8R6UmqhEU4cFpA87ZZ5OzQbYcbWScHq3jNJRxuCf4Yo3E3LthJy3nzqEvh06MRWTd7rQ8AR8JRke2VFK2GpbhBv8JjDvo1tNVnp53GoRwemjJo+mEnbk7klp2CLdevZqxUJHXWeG/n0k6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359979; c=relaxed/simple;
-	bh=mzjwltDuiIsoptHPalgKB3qsyo1T+CurgdxO8CK3ykg=;
+	s=arc-20240116; t=1722359982; c=relaxed/simple;
+	bh=dLf63wSIvIu3rqqUwLKCVUQrCC8TfpKHKWU9QSlM0PE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KcrelvoCVIj46xeg1LpQ/T5RTwX9BU4gQ5H/Bn0cj0eKEpq2PT9xxZpzy0gn2oNynfM3x0WmLeYp0ZL1D6TE/wFob9MdU21DfinE54fZuR4LPFKxmfQxgYKUaxpQL9h9n2xmzbsfgoAtzAIowl87O9v8JvkXw1UeE9P1BPnCllU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qTP9Bacl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eESXF3k2WxplUck36XdxO41BOCdnMyyz/HN84jz76unnXVZNWmCfrD1E1DCmXhRXtfwvOKlmvN0+z7NV7VQdgKolYJTO4V/eV8oPENhoMkvoW3zJEVbANfsYWrZlHJ+FBpeQ57421qBsVyL3C4tIB4BnMIKdF+vXb9PbCiYXQdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrewbjBw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qTP9Bacl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F6EC32782;
-	Tue, 30 Jul 2024 17:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrewbjBw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9824EC32782;
+	Tue, 30 Jul 2024 17:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359978;
-	bh=mzjwltDuiIsoptHPalgKB3qsyo1T+CurgdxO8CK3ykg=;
+	s=korg; t=1722359982;
+	bh=dLf63wSIvIu3rqqUwLKCVUQrCC8TfpKHKWU9QSlM0PE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qTP9Bacl+H7oD+642ifeYw3PQdXzRiOp3V14UqWZmimvCsAEwu+7dCIHjTGHGCIQs
-	 9J5GaOu4ks2wFLLkWE1FRfbUzjMj5CR2TPPIynPRntl9ITdeMXQRTTlfFFsc/Ey1rN
-	 ZATcsM/uEr+ir9CtjPkHLWgtB1mmrdlIDaCUZOMA=
+	b=NrewbjBwI8p9eW/Az9P5iRgtvMg/epW6Pvq7jSmg+Qvlap+jqSml9JX6jpxjsxPq4
+	 X6qadgjltmxA5lW0N9ErVv5Na3vY1Hn5fbs+aeebfNq7gfuCXTJ3ICX48sI06HHTbD
+	 lDMGyChZ8VKe1t2pGLPhFsMYVyQ3anpLquPimzxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+40905bca570ae6784745@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Nicolas Saenz Julienne <nsaenzju@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 539/809] mm: mmap_lock: replace get_memcg_path_buf() with on-stack buffer
-Date: Tue, 30 Jul 2024 17:46:55 +0200
-Message-ID: <20240730151746.035689298@linuxfoundation.org>
+	Simon Horman <horms@kernel.org>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 541/568] net: stmmac: Correct byte order of perfect_match
+Date: Tue, 30 Jul 2024 17:50:48 +0200
+Message-ID: <20240730151701.304062331@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,266 +48,114 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Simon Horman <horms@kernel.org>
 
-commit 7d6be67cfdd4a53cea7147313ca13c531e3a470f upstream.
+[ Upstream commit e9dbebae2e3c338122716914fe105458f41e3a4a ]
 
-Commit 2b5067a8143e ("mm: mmap_lock: add tracepoints around lock
-acquisition") introduced TRACE_MMAP_LOCK_EVENT() macro using
-preempt_disable() in order to let get_mm_memcg_path() return a percpu
-buffer exclusively used by normal, softirq, irq and NMI contexts
-respectively.
+The perfect_match parameter of the update_vlan_hash operation is __le16,
+and is correctly converted from host byte-order in the lone caller,
+stmmac_vlan_update().
 
-Commit 832b50725373 ("mm: mmap_lock: use local locks instead of disabling
-preemption") replaced preempt_disable() with local_lock(&memcg_paths.lock)
-based on an argument that preempt_disable() has to be avoided because
-get_mm_memcg_path() might sleep if PREEMPT_RT=y.
+However, the implementations of this caller, dwxgmac2_update_vlan_hash()
+and dwxgmac2_update_vlan_hash(), both treat this parameter as host byte
+order, using the following pattern:
 
-But syzbot started reporting
+	u32 value = ...
+	...
+	writel(value | perfect_match, ...);
 
-  inconsistent {HARDIRQ-ON-W} -> {IN-HARDIRQ-W} usage.
+This is not correct because both:
+1) value is host byte order; and
+2) writel expects a host byte order value as it's first argument
 
-and
+I believe that this will break on big endian systems. And I expect it
+has gone unnoticed by only being exercised on little endian systems.
 
-  inconsistent {SOFTIRQ-ON-W} -> {IN-SOFTIRQ-W} usage.
+The approach taken by this patch is to update the callback, and it's
+caller to simply use a host byte order value.
 
-messages, for local_lock() does not disable IRQ.
+Flagged by Sparse.
+Compile tested only.
 
-We could replace local_lock() with local_lock_irqsave() in order to
-suppress these messages.  But this patch instead replaces percpu buffers
-with on-stack buffer, for the size of each buffer returned by
-get_memcg_path_buf() is only 256 bytes which is tolerable for allocating
-from current thread's kernel stack memory.
-
-Link: https://lkml.kernel.org/r/ef22d289-eadb-4ed9-863b-fbc922b33d8d@I-love.SAKURA.ne.jp
-Reported-by: syzbot <syzbot+40905bca570ae6784745@syzkaller.appspotmail.com>
-Closes: https://syzkaller.appspot.com/bug?extid=40905bca570ae6784745
-Fixes: 832b50725373 ("mm: mmap_lock: use local locks instead of disabling preemption")
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reviewed-by: Axel Rasmussen <axelrasmussen@google.com>
-Cc: Nicolas Saenz Julienne <nsaenzju@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c7ab0b8088d7 ("net: stmmac: Fallback to VLAN Perfect filtering if HASH is not available")
+Signed-off-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mmap_lock.c |  175 ++++++---------------------------------------------------
- 1 file changed, 20 insertions(+), 155 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/hwif.h          | 2 +-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c   | 4 ++--
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/mm/mmap_lock.c
-+++ b/mm/mmap_lock.c
-@@ -19,14 +19,7 @@ EXPORT_TRACEPOINT_SYMBOL(mmap_lock_relea
- 
- #ifdef CONFIG_MEMCG
- 
--/*
-- * Our various events all share the same buffer (because we don't want or need
-- * to allocate a set of buffers *per event type*), so we need to protect against
-- * concurrent _reg() and _unreg() calls, and count how many _reg() calls have
-- * been made.
-- */
--static DEFINE_MUTEX(reg_lock);
--static int reg_refcount; /* Protected by reg_lock. */
-+static atomic_t reg_refcount;
- 
- /*
-  * Size of the buffer for memcg path names. Ignoring stack trace support,
-@@ -34,136 +27,22 @@ static int reg_refcount; /* Protected by
-  */
- #define MEMCG_PATH_BUF_SIZE MAX_FILTER_STR_VAL
- 
--/*
-- * How many contexts our trace events might be called in: normal, softirq, irq,
-- * and NMI.
-- */
--#define CONTEXT_COUNT 4
--
--struct memcg_path {
--	local_lock_t lock;
--	char __rcu *buf;
--	local_t buf_idx;
--};
--static DEFINE_PER_CPU(struct memcg_path, memcg_paths) = {
--	.lock = INIT_LOCAL_LOCK(lock),
--	.buf_idx = LOCAL_INIT(0),
--};
--
--static char **tmp_bufs;
--
--/* Called with reg_lock held. */
--static void free_memcg_path_bufs(void)
--{
--	struct memcg_path *memcg_path;
--	int cpu;
--	char **old = tmp_bufs;
--
--	for_each_possible_cpu(cpu) {
--		memcg_path = per_cpu_ptr(&memcg_paths, cpu);
--		*(old++) = rcu_dereference_protected(memcg_path->buf,
--			lockdep_is_held(&reg_lock));
--		rcu_assign_pointer(memcg_path->buf, NULL);
--	}
--
--	/* Wait for inflight memcg_path_buf users to finish. */
--	synchronize_rcu();
--
--	old = tmp_bufs;
--	for_each_possible_cpu(cpu) {
--		kfree(*(old++));
--	}
--
--	kfree(tmp_bufs);
--	tmp_bufs = NULL;
--}
--
- int trace_mmap_lock_reg(void)
- {
--	int cpu;
--	char *new;
--
--	mutex_lock(&reg_lock);
--
--	/* If the refcount is going 0->1, proceed with allocating buffers. */
--	if (reg_refcount++)
--		goto out;
--
--	tmp_bufs = kmalloc_array(num_possible_cpus(), sizeof(*tmp_bufs),
--				 GFP_KERNEL);
--	if (tmp_bufs == NULL)
--		goto out_fail;
--
--	for_each_possible_cpu(cpu) {
--		new = kmalloc(MEMCG_PATH_BUF_SIZE * CONTEXT_COUNT, GFP_KERNEL);
--		if (new == NULL)
--			goto out_fail_free;
--		rcu_assign_pointer(per_cpu_ptr(&memcg_paths, cpu)->buf, new);
--		/* Don't need to wait for inflights, they'd have gotten NULL. */
--	}
--
--out:
--	mutex_unlock(&reg_lock);
-+	atomic_inc(&reg_refcount);
- 	return 0;
--
--out_fail_free:
--	free_memcg_path_bufs();
--out_fail:
--	/* Since we failed, undo the earlier ref increment. */
--	--reg_refcount;
--
--	mutex_unlock(&reg_lock);
--	return -ENOMEM;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+index 4ead0ddf43a7a..bf99495b51a9c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
+@@ -982,7 +982,7 @@ static void dwmac4_set_mac_loopback(void __iomem *ioaddr, bool enable)
  }
  
- void trace_mmap_lock_unreg(void)
+ static void dwmac4_update_vlan_hash(struct mac_device_info *hw, u32 hash,
+-				    __le16 perfect_match, bool is_double)
++				    u16 perfect_match, bool is_double)
  {
--	mutex_lock(&reg_lock);
--
--	/* If the refcount is going 1->0, proceed with freeing buffers. */
--	if (--reg_refcount)
--		goto out;
--
--	free_memcg_path_bufs();
--
--out:
--	mutex_unlock(&reg_lock);
--}
--
--static inline char *get_memcg_path_buf(void)
--{
--	struct memcg_path *memcg_path = this_cpu_ptr(&memcg_paths);
--	char *buf;
--	int idx;
--
--	rcu_read_lock();
--	buf = rcu_dereference(memcg_path->buf);
--	if (buf == NULL) {
--		rcu_read_unlock();
--		return NULL;
--	}
--	idx = local_add_return(MEMCG_PATH_BUF_SIZE, &memcg_path->buf_idx) -
--	      MEMCG_PATH_BUF_SIZE;
--	return &buf[idx];
-+	atomic_dec(&reg_refcount);
+ 	void __iomem *ioaddr = hw->pcsr;
+ 	u32 value;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+index 8bc317d2f7a61..052566f5b7f36 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -615,7 +615,7 @@ static int dwxgmac2_rss_configure(struct mac_device_info *hw,
  }
  
--static inline void put_memcg_path_buf(void)
--{
--	local_sub(MEMCG_PATH_BUF_SIZE, &this_cpu_ptr(&memcg_paths)->buf_idx);
--	rcu_read_unlock();
--}
--
--#define TRACE_MMAP_LOCK_EVENT(type, mm, ...)                                   \
--	do {                                                                   \
--		const char *memcg_path;                                        \
--		local_lock(&memcg_paths.lock);                                 \
--		memcg_path = get_mm_memcg_path(mm);                            \
--		trace_mmap_lock_##type(mm,                                     \
--				       memcg_path != NULL ? memcg_path : "",   \
--				       ##__VA_ARGS__);                         \
--		if (likely(memcg_path != NULL))                                \
--			put_memcg_path_buf();                                  \
--		local_unlock(&memcg_paths.lock);                               \
-+#define TRACE_MMAP_LOCK_EVENT(type, mm, ...)                    \
-+	do {                                                    \
-+		char buf[MEMCG_PATH_BUF_SIZE];                  \
-+		get_mm_memcg_path(mm, buf, sizeof(buf));        \
-+		trace_mmap_lock_##type(mm, buf, ##__VA_ARGS__); \
- 	} while (0)
- 
- #else /* !CONFIG_MEMCG */
-@@ -185,37 +64,23 @@ void trace_mmap_lock_unreg(void)
- #ifdef CONFIG_TRACING
- #ifdef CONFIG_MEMCG
- /*
-- * Write the given mm_struct's memcg path to a percpu buffer, and return a
-- * pointer to it. If the path cannot be determined, or no buffer was available
-- * (because the trace event is being unregistered), NULL is returned.
-- *
-- * Note: buffers are allocated per-cpu to avoid locking, so preemption must be
-- * disabled by the caller before calling us, and re-enabled only after the
-- * caller is done with the pointer.
-- *
-- * The caller must call put_memcg_path_buf() once the buffer is no longer
-- * needed. This must be done while preemption is still disabled.
-+ * Write the given mm_struct's memcg path to a buffer. If the path cannot be
-+ * determined or the trace event is being unregistered, empty string is written.
-  */
--static const char *get_mm_memcg_path(struct mm_struct *mm)
-+static void get_mm_memcg_path(struct mm_struct *mm, char *buf, size_t buflen)
+ static void dwxgmac2_update_vlan_hash(struct mac_device_info *hw, u32 hash,
+-				      __le16 perfect_match, bool is_double)
++				      u16 perfect_match, bool is_double)
  {
--	char *buf = NULL;
--	struct mem_cgroup *memcg = get_mem_cgroup_from_mm(mm);
-+	struct mem_cgroup *memcg;
+ 	void __iomem *ioaddr = hw->pcsr;
  
-+	buf[0] = '\0';
-+	/* No need to get path if no trace event is registered. */
-+	if (!atomic_read(&reg_refcount))
-+		return;
-+	memcg = get_mem_cgroup_from_mm(mm);
- 	if (memcg == NULL)
--		goto out;
--	if (unlikely(memcg->css.cgroup == NULL))
--		goto out_put;
--
--	buf = get_memcg_path_buf();
--	if (buf == NULL)
--		goto out_put;
--
--	cgroup_path(memcg->css.cgroup, buf, MEMCG_PATH_BUF_SIZE);
--
--out_put:
-+		return;
-+	if (memcg->css.cgroup)
-+		cgroup_path(memcg->css.cgroup, buf, buflen);
- 	css_put(&memcg->css);
--out:
--	return buf;
- }
+diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+index 68aa2d5ca6e56..47fb8e1646c2e 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
++++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
+@@ -386,7 +386,7 @@ struct stmmac_ops {
+ 			     struct stmmac_rss *cfg, u32 num_rxq);
+ 	/* VLAN */
+ 	void (*update_vlan_hash)(struct mac_device_info *hw, u32 hash,
+-				 __le16 perfect_match, bool is_double);
++				 u16 perfect_match, bool is_double);
+ 	void (*enable_vlan)(struct mac_device_info *hw, u32 type);
+ 	int (*add_hw_vlan_rx_fltr)(struct net_device *dev,
+ 				   struct mac_device_info *hw,
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 19c58ad8df345..d6167a7b19f21 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -6473,7 +6473,7 @@ static u32 stmmac_vid_crc32_le(__le16 vid_le)
+ static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
+ {
+ 	u32 crc, hash = 0;
+-	__le16 pmatch = 0;
++	u16 pmatch = 0;
+ 	int count = 0;
+ 	u16 vid = 0;
  
- #endif /* CONFIG_MEMCG */
+@@ -6488,7 +6488,7 @@ static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
+ 		if (count > 2) /* VID = 0 always passes filter */
+ 			return -EOPNOTSUPP;
+ 
+-		pmatch = cpu_to_le16(vid);
++		pmatch = vid;
+ 		hash = 0;
+ 	}
+ 
+-- 
+2.43.0
+
 
 
