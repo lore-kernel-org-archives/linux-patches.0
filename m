@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA5E18C903;
-	Tue, 30 Jul 2024 17:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA3518C909;
+	Tue, 30 Jul 2024 17:07:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359263; cv=none; b=qcnx5ah1D5wGbXgJQ2TdtBXp0bbkIlQ42xhZHRL8qXFAZG7JYmPReRhRA14QXb2zt5ESRykNOzvAqoKrxesw8agoaeQblZYFmq/H0OhJmnlki7ETKiwywZfYdgStBPvYRLDuNRlX/sBHKTuysccBZyrgJWAXbmgUnlRb8/WVvMI=
+	t=1722359267; cv=none; b=a9ZWY04Pukr/TdhAiL1aI/2G1VTcz8fjae1CXufZxY9fKKG/gtY/G5w0FRITsc3GqOrGmhP1F6xhybce637Pf2ruohH398/xOsDGlVVu9xv3w0iTjVcbvyAKefns9IpAMDaYRzO298TIo3q5wwE/L95XwDDOxYq8YQJ9rSdFN3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359263; c=relaxed/simple;
-	bh=ItUpoBNRIa66cCZGhitCxAsHVF8cbrT4mFj4vsb/3wc=;
+	s=arc-20240116; t=1722359267; c=relaxed/simple;
+	bh=CX6txlQYiDeM8G+MJlMIvV23Jpa9zeq4BYqnxL3QU0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tJ8YaYM8Rleak2BdHL4xNvuPGvr/uhK19M0ErmuYLP+OALXkOMwbrMFnrJDf5c1dltpcvrPI6cHxRrDkQOq9XmAk347LoQKgyBbcVZfpCUElyLGYdEluEuRAtXNV2VdXNV9WJHIKrbYr3hk53LABXWdyc2OBci2uAwmrb6GyCxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qhzWQY/x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZdRmHMlWbJVtr/1O7mLBSCBCUb5dlLMrO95oqZy2858aRXBC96Eb8t5plGDF6F8l/ZDTI3vDoXFt7AVh9CRl82P9Dg1UMOrZaeuWSAvd3zRgU74eDc4hl/80MF9YC5oMBAbg7QDdtajLff/KAEcB9oOoBaOrH8j/I+j8bllcQDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cID5nqga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qhzWQY/x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A83C32782;
-	Tue, 30 Jul 2024 17:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cID5nqga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57567C32782;
+	Tue, 30 Jul 2024 17:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359263;
-	bh=ItUpoBNRIa66cCZGhitCxAsHVF8cbrT4mFj4vsb/3wc=;
+	s=korg; t=1722359266;
+	bh=CX6txlQYiDeM8G+MJlMIvV23Jpa9zeq4BYqnxL3QU0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhzWQY/x+4UME4oZY7IOsQxTna5mImTmgs1OqThczsL2UvqSdlN99wI7eYfcqjzmu
-	 1cFNjQFJ2F266I3bCaJ76lCPV/nfPcXxFVCH+zTMzx088rJBcfTNKZN8aqSWsVl8yO
-	 5cvnRu7qfv/cPKDq3aWkCIzuExli8BFc3Bm/dXmE=
+	b=cID5nqgaDcPVAm2OKMytPLJLIPKYbZhiU2YWzxX39uojb9w3jumEm/hQfabTCTfZq
+	 5WbDuPu5CVfrk0477YwE9TiACayaVX6yP+g79XN+b30Mf5rivwcIc8wPKeF33q+jnP
+	 logEdgnQq+91FFxF1KGwCn8i4l5boixj25PVPvcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 455/568] irqchip/imx-irqsteer: Handle runtime power management correctly
-Date: Tue, 30 Jul 2024 17:49:22 +0200
-Message-ID: <20240730151657.794601950@linuxfoundation.org>
+	Nick Bowler <nbowler@draconx.ca>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 459/809] macintosh/therm_windtunnel: fix module unload.
+Date: Tue, 30 Jul 2024 17:45:35 +0200
+Message-ID: <20240730151742.856545157@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,106 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Nick Bowler <nbowler@draconx.ca>
 
-commit 33b1c47d1fc0b5f06a393bb915db85baacba18ea upstream.
+[ Upstream commit fd748e177194ebcbbaf98df75152a30e08230cc6 ]
 
-The power domain is automatically activated from clk_prepare(). However, on
-certain platforms like i.MX8QM and i.MX8QXP, the power-on handling invokes
-sleeping functions, which triggers the 'scheduling while atomic' bug in the
-context switch path during device probing:
+The of_device_unregister call in therm_windtunnel's module_exit procedure
+does not fully reverse the effects of of_platform_device_create in the
+module_init prodedure.  Once you unload this module, it is impossible
+to load it ever again since only the first of_platform_device_create
+call on the fan node succeeds.
 
- BUG: scheduling while atomic: kworker/u13:1/48/0x00000002
- Call trace:
-  __schedule_bug+0x54/0x6c
-  __schedule+0x7f0/0xa94
-  schedule+0x5c/0xc4
-  schedule_preempt_disabled+0x24/0x40
-  __mutex_lock.constprop.0+0x2c0/0x540
-  __mutex_lock_slowpath+0x14/0x20
-  mutex_lock+0x48/0x54
-  clk_prepare_lock+0x44/0xa0
-  clk_prepare+0x20/0x44
-  imx_irqsteer_resume+0x28/0xe0
-  pm_generic_runtime_resume+0x2c/0x44
-  __genpd_runtime_resume+0x30/0x80
-  genpd_runtime_resume+0xc8/0x2c0
-  __rpm_callback+0x48/0x1d8
-  rpm_callback+0x6c/0x78
-  rpm_resume+0x490/0x6b4
-  __pm_runtime_resume+0x50/0x94
-  irq_chip_pm_get+0x2c/0xa0
-  __irq_do_set_handler+0x178/0x24c
-  irq_set_chained_handler_and_data+0x60/0xa4
-  mxc_gpio_probe+0x160/0x4b0
+This driver predates first git commit, and it turns out back then
+of_platform_device_create worked differently than it does today.
+So this is actually an old regression.
 
-Cure this by implementing the irq_bus_lock/sync_unlock() interrupt chip
-callbacks and handle power management in them as they are invoked from
-non-atomic context.
+The appropriate function to undo of_platform_device_create now appears
+to be of_platform_device_destroy, and switching to use this makes it
+possible to unload and load the module as expected.
 
-[ tglx: Rewrote change log, added Fixes tag ]
-
-Fixes: 0136afa08967 ("irqchip: Add driver for imx-irqsteer controller")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240703163250.47887-1-shenwei.wang@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nick Bowler <nbowler@draconx.ca>
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240711035428.16696-1-nbowler@draconx.ca
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imx-irqsteer.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/macintosh/therm_windtunnel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-imx-irqsteer.c
-+++ b/drivers/irqchip/irq-imx-irqsteer.c
-@@ -36,6 +36,7 @@ struct irqsteer_data {
- 	int			channel;
- 	struct irq_domain	*domain;
- 	u32			*saved_reg;
-+	struct device		*dev;
- };
+diff --git a/drivers/macintosh/therm_windtunnel.c b/drivers/macintosh/therm_windtunnel.c
+index 37cdc6931f6d0..2576a53f247ea 100644
+--- a/drivers/macintosh/therm_windtunnel.c
++++ b/drivers/macintosh/therm_windtunnel.c
+@@ -549,7 +549,7 @@ g4fan_exit( void )
+ 	platform_driver_unregister( &therm_of_driver );
  
- static int imx_irqsteer_get_reg_index(struct irqsteer_data *data,
-@@ -72,10 +73,26 @@ static void imx_irqsteer_irq_mask(struct
- 	raw_spin_unlock_irqrestore(&data->lock, flags);
+ 	if( x.of_dev )
+-		of_device_unregister( x.of_dev );
++		of_platform_device_destroy(&x.of_dev->dev, NULL);
  }
  
-+static void imx_irqsteer_irq_bus_lock(struct irq_data *d)
-+{
-+	struct irqsteer_data *data = d->chip_data;
-+
-+	pm_runtime_get_sync(data->dev);
-+}
-+
-+static void imx_irqsteer_irq_bus_sync_unlock(struct irq_data *d)
-+{
-+	struct irqsteer_data *data = d->chip_data;
-+
-+	pm_runtime_put_autosuspend(data->dev);
-+}
-+
- static const struct irq_chip imx_irqsteer_irq_chip = {
--	.name		= "irqsteer",
--	.irq_mask	= imx_irqsteer_irq_mask,
--	.irq_unmask	= imx_irqsteer_irq_unmask,
-+	.name			= "irqsteer",
-+	.irq_mask		= imx_irqsteer_irq_mask,
-+	.irq_unmask		= imx_irqsteer_irq_unmask,
-+	.irq_bus_lock		= imx_irqsteer_irq_bus_lock,
-+	.irq_bus_sync_unlock	= imx_irqsteer_irq_bus_sync_unlock,
- };
- 
- static int imx_irqsteer_irq_map(struct irq_domain *h, unsigned int irq,
-@@ -150,6 +167,7 @@ static int imx_irqsteer_probe(struct pla
- 	if (!data)
- 		return -ENOMEM;
- 
-+	data->dev = &pdev->dev;
- 	data->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(data->regs)) {
- 		dev_err(&pdev->dev, "failed to initialize reg\n");
+ module_init(g4fan_init);
+-- 
+2.43.0
+
 
 
