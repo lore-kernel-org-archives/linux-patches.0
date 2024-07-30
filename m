@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7B91A616E;
-	Tue, 30 Jul 2024 16:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4163E1A616E;
+	Tue, 30 Jul 2024 16:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356252; cv=none; b=mWI3ZogDmIFkIOscJCHP9IqzbANGrxFg/kkBMh8f+qmSiUsG0VnzCD4qWEc5yudtz1HklHCOwx9OuiuaxQe584Ber+X8Gch/fCsb1E0YRunhQPBafYj37ZzIDCvFdEVre4inuGYGYigsbB/Gk4LH+uTtZkS7HDjOcU+zjzu2Qns=
+	t=1722356256; cv=none; b=E6L3NXe1iyiTXzXyCOiFqkUZRT0nJVH8SBpbyA2Wm7ZnSQ9afliMDk/CiRsKQ0GXnpELn+BjP6w2V4ePYbadMi8a74kSsRDOgPXSfz04iNNuL+OQ3dJSPKMyX8GoLdaua2i9Sfli0W0YmMwEixn3kzyQbMSBkPl7pKnN0nx3QAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356252; c=relaxed/simple;
-	bh=kJv8hKUPVBgmnIbKIqEz8CGLzuQQj1Ec1UlBFCjW5sQ=;
+	s=arc-20240116; t=1722356256; c=relaxed/simple;
+	bh=Fb7iM616dWw310G4Q016cMtycSwVkLvDm80nJ3ySMCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FSKxO0/0bEqwaODqoXH/kUzSzfEvML0FZVXrKrRUBHLfJoHdO+NBqbOf1sBVMH2h+PdAju66EonUuaukEg+w1ennbQZgYvnctedMIgvm1a50puvRpsG+HWteRoJRLXNIu+8D2Rsw7SUkpf/VKP80O5Nozwc9Ch7oOcqwbVh5ZNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCR4R3jg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GLqjZhXfCo6UBi3jqSeA6A6eFaVljkNbTI6zwD2qN0t39oqHehISot4ykoxxn3zxJTN8WsdML9+ZmlYS2624tjCd56ZTP4i3oQegpK23WB1wVxBB1JFu9x7mSHOB4GYAr2yOUiNQm+vYSKOkM6YD5TLprhp/FYyMYyX8yGnkSLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrVuYZwS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCR4R3jg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0917EC32782;
-	Tue, 30 Jul 2024 16:17:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrVuYZwS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B2B8C32782;
+	Tue, 30 Jul 2024 16:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356252;
-	bh=kJv8hKUPVBgmnIbKIqEz8CGLzuQQj1Ec1UlBFCjW5sQ=;
+	s=korg; t=1722356255;
+	bh=Fb7iM616dWw310G4Q016cMtycSwVkLvDm80nJ3ySMCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCR4R3jgGrJl6D1nL622UrOuVCrRKgBCEAEr/xXIgBNSH+1XFv3+agJduFbFwtcGX
-	 RMIhsE6Ts6tE/uDwLFUoOcIJzYXx74ofW55ZloBT76HRsNcGVb1aveukqcKDVT17gL
-	 NLllVf9RLOpBjAw+3iX6Sah9T4Rx43Ol/JqpUgSM=
+	b=YrVuYZwSNz1d53SwTrEWef/XS28KAKQNQ7PezS2NllQa/DEnf3f6HKmugC88famLN
+	 92zuDDQurnqKMuyZkscMsZJBMhNwN+yKuCS4xsNGcLQg8mFki4Jsg8eUJCkJvrxwEp
+	 xWpyaBVjZ/6f0EzK9QcKc2kVIxrFS8QmXmWStGrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Zubkov <green@qrator.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Ben Hutchings <benh@debian.org>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 128/568] lib: objagg: Fix general protection fault
-Date: Tue, 30 Jul 2024 17:43:55 +0200
-Message-ID: <20240730151644.874917222@linuxfoundation.org>
+Subject: [PATCH 6.1 173/440] ext4: dont track ranges in fast_commit if inode has inlined data
+Date: Tue, 30 Jul 2024 17:46:46 +0200
+Message-ID: <20240730151622.631986828@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,77 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-[ Upstream commit b4a3a89fffcdf09702b1f161b914e52abca1894d ]
+[ Upstream commit 7882b0187bbeb647967a7b5998ce4ad26ef68a9a ]
 
-The library supports aggregation of objects into other objects only if
-the parent object does not have a parent itself. That is, nesting is not
-supported.
+When fast-commit needs to track ranges, it has to handle inodes that have
+inlined data in a different way because ext4_fc_write_inode_data(), in the
+actual commit path, will attempt to map the required blocks for the range.
+However, inodes that have inlined data will have it's data stored in
+inode->i_block and, eventually, in the extended attribute space.
 
-Aggregation happens in two cases: Without and with hints, where hints
-are a pre-computed recommendation on how to aggregate the provided
-objects.
+Unfortunately, because fast commit doesn't currently support extended
+attributes, the solution is to mark this commit as ineligible.
 
-Nesting is not possible in the first case due to a check that prevents
-it, but in the second case there is no check because the assumption is
-that nesting cannot happen when creating objects based on hints. The
-violation of this assumption leads to various warnings and eventually to
-a general protection fault [1].
-
-Before fixing the root cause, error out when nesting happens and warn.
-
-[1]
-general protection fault, probably for non-canonical address 0xdead000000000d90: 0000 [#1] PREEMPT SMP PTI
-CPU: 1 PID: 1083 Comm: kworker/1:9 Tainted: G        W          6.9.0-rc6-custom-gd9b4f1cca7fb #7
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-RIP: 0010:mlxsw_sp_acl_erp_bf_insert+0x25/0x80
-[...]
-Call Trace:
- <TASK>
- mlxsw_sp_acl_atcam_entry_add+0x256/0x3c0
- mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
- mlxsw_sp_acl_tcam_vchunk_migrate_one+0x16b/0x270
- mlxsw_sp_acl_tcam_vregion_rehash_work+0xbe/0x510
- process_one_work+0x151/0x370
- worker_thread+0x2cb/0x3e0
- kthread+0xd0/0x100
- ret_from_fork+0x34/0x50
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Fixes: 9069a3817d82 ("lib: objagg: implement optimization hints assembly and use hints for object creation")
-Reported-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Amit Cohen <amcohen@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1039883
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Tested-by: Ben Hutchings <benh@debian.org>
+Fixes: 9725958bb75c ("ext4: fast commit may miss tracking unwritten range during ftruncate")
+Link: https://patch.msgid.link/20240618144312.17786-1-luis.henriques@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/objagg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/fast_commit.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/lib/objagg.c b/lib/objagg.c
-index 1e248629ed643..90f3aa68c30a0 100644
---- a/lib/objagg.c
-+++ b/lib/objagg.c
-@@ -167,6 +167,9 @@ static int objagg_obj_parent_assign(struct objagg *objagg,
- {
- 	void *delta_priv;
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index 1110bfa0a5b73..19353a2f44bb3 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -649,6 +649,12 @@ void ext4_fc_track_range(handle_t *handle, struct inode *inode, ext4_lblk_t star
+ 	if (ext4_test_mount_flag(inode->i_sb, EXT4_MF_FC_INELIGIBLE))
+ 		return;
  
-+	if (WARN_ON(!objagg_obj_is_root(parent)))
-+		return -EINVAL;
++	if (ext4_has_inline_data(inode)) {
++		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_XATTR,
++					handle);
++		return;
++	}
 +
- 	delta_priv = objagg->ops->delta_create(objagg->priv, parent->obj,
- 					       objagg_obj->obj);
- 	if (IS_ERR(delta_priv))
+ 	args.start = start;
+ 	args.end = end;
+ 
 -- 
 2.43.0
 
