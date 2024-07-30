@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFCA1A6161;
-	Tue, 30 Jul 2024 16:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7089C1A6160;
+	Tue, 30 Jul 2024 16:21:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356505; cv=none; b=pLhaLLBNkcIvpRyIEMaloJVuodxOVBfb0vTBYZw8T0u2SGDKVg4jEFIULDJ7xmFOuV+oKG32FlS43vKTOiNlvG0vlb8nYuQhs4TWQNtzyZeHQ0P+4ZgNTfbZjHucD85pDZxL3OygAEUVm11jhxr7e0HfAwiCz3UvBjdtj8UGRxE=
+	t=1722356508; cv=none; b=BxF5VLwV2M2EtpCI8MCoK4HgUAEsEDyF8TO4TmznWFmQj4BpzYCNibzk2Ly5C8MvbHk1WYggfniq8cPG1juDythHeQMPaR6UVnxLHeTyC0QX9IA1L2QRcd59AcNoguhfdqlZJznQqjCaXJ5ztBHm8XUU/Kyy8QCu+xsq6Lh/TJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356505; c=relaxed/simple;
-	bh=Kb3Aks5rAV02CK9/4Fgc0S7/rE7V2h2fO1UHRU/iS1o=;
+	s=arc-20240116; t=1722356508; c=relaxed/simple;
+	bh=yEfwp6WD5ijJETqGjl9J0P/xOp8B64i7f8qQ8H+zQWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CVQRDbW2RQMCHw80BNJF62Bb2wgJ52cxC0wk8Shp5cJNvDv1YfqqYfhoWJzdCTwFbepmrI+COuhfJfJJIecbIMFQku9/7jaVa8tknfHUimlpdlOgX8V9XwD9K4HCeFqOzIw1j54W3MMih6mHwzdASJTbWLPQpJDAi3x/pT3f4Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbdztDhX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Jiy3h5NWtEloLo/uUfX+2XGeGWeQC67AlSMQNbigv1k4nzGY+74sTYvkXKWPSTQJxZLGyfSt0IBUeYfY7/7k/UEleKq1O6Xbs2aKo1mRGLo41v0pPLPFm9XhIFg+HkDYByxKZH+02vaHFL9iJYY2LdXt66IgnVOQR7Hokh/KYSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9OpJGPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbdztDhX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9844C32782;
-	Tue, 30 Jul 2024 16:21:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9OpJGPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB0EC32782;
+	Tue, 30 Jul 2024 16:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356505;
-	bh=Kb3Aks5rAV02CK9/4Fgc0S7/rE7V2h2fO1UHRU/iS1o=;
+	s=korg; t=1722356508;
+	bh=yEfwp6WD5ijJETqGjl9J0P/xOp8B64i7f8qQ8H+zQWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbdztDhXVqlW+WWaZOgZ14Vwa2ZOHp38RdDpc9qetnEEkUOpaYrO+IQO2EsWjqCqm
-	 /3W04qU1gmgyXya1E+OF351CO0d9eKyx/9NzFZVxJ/qA4B5hHVexY5Kr8qZcoW3uPo
-	 Kc7Yr+TmSry81FCzBQZ4m0w8S7ibX/KGPOB7KcE8=
+	b=i9OpJGPe17Bx/Fr5PPCDRzCd4dDce26U8XDICYDqSJh9R0+hkeFIEd1m3kxmBC3CQ
+	 BLSrz4Rgy7VhE/Dgrd1bFqNv6OxHteZ4AJdqPVEsaYlhO+usDN7ww5gU3pefWL+QOD
+	 zgBzawZHCGoC55IU21ZQ1ICWZo4ycq4nbmT2d3/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 156/809] selftests/bpf: Fix prog numbers in test_sockmap
-Date: Tue, 30 Jul 2024 17:40:32 +0200
-Message-ID: <20240730151730.764663289@linuxfoundation.org>
+Subject: [PATCH 6.1 180/440] PCI: keystone: Fix NULL pointer dereference in case of DT error in ks_pcie_setup_rc_app_regs()
+Date: Tue, 30 Jul 2024 17:46:53 +0200
+Message-ID: <20240730151622.906261764@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,82 +48,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 6c8d7598dfed759bf1d9d0322b4c2b42eb7252d8 ]
+[ Upstream commit a231707a91f323af1e5d9f1722055ec2fc1c7775 ]
 
-bpf_prog5 and bpf_prog7 are removed from progs/test_sockmap_kern.h in
-commit d79a32129b21 ("bpf: Selftests, remove prints from sockmap tests"),
-now there are only 9 progs in it, not 11:
+If IORESOURCE_MEM is not provided in Device Tree due to
+any error, resource_list_first_type() will return NULL and
+pci_parse_request_of_pci_ranges() will just emit a warning.
 
-	SEC("sk_skb1")
-	int bpf_prog1(struct __sk_buff *skb)
-	SEC("sk_skb2")
-	int bpf_prog2(struct __sk_buff *skb)
-	SEC("sk_skb3")
-	int bpf_prog3(struct __sk_buff *skb)
-	SEC("sockops")
-	int bpf_sockmap(struct bpf_sock_ops *skops)
-	SEC("sk_msg1")
-	int bpf_prog4(struct sk_msg_md *msg)
-	SEC("sk_msg2")
-	int bpf_prog6(struct sk_msg_md *msg)
-	SEC("sk_msg3")
-	int bpf_prog8(struct sk_msg_md *msg)
-	SEC("sk_msg4")
-	int bpf_prog9(struct sk_msg_md *msg)
-	SEC("sk_msg5")
-	int bpf_prog10(struct sk_msg_md *msg)
+This will cause a NULL pointer dereference. Fix this bug by adding NULL
+return check.
 
-This patch updates the array sizes of prog_fd[], prog_attach_type[] and
-prog_type[] from 11 to 9 accordingly.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: d79a32129b21 ("bpf: Selftests, remove prints from sockmap tests")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/9c10d9f974f07fcb354a43a8eca67acb2fafc587.1715926605.git.tanggeliang@kylinos.cn
+Fixes: 0f71c60ffd26 ("PCI: dwc: Remove storing of PCI resources")
+Link: https://lore.kernel.org/linux-pci/20240505061517.11527-1-amishin@t-argos.ru
+Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 92752f5eededf..4499b3cfc3a68 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -63,7 +63,7 @@ int passed;
- int failed;
- int map_fd[9];
- struct bpf_map *maps[9];
--int prog_fd[11];
-+int prog_fd[9];
- 
- int txmsg_pass;
- int txmsg_redir;
-@@ -1793,8 +1793,6 @@ int prog_attach_type[] = {
- 	BPF_SK_MSG_VERDICT,
- 	BPF_SK_MSG_VERDICT,
- 	BPF_SK_MSG_VERDICT,
--	BPF_SK_MSG_VERDICT,
--	BPF_SK_MSG_VERDICT,
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 438aa5fa4c64b..6007ffcb4752a 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -403,17 +403,22 @@ static const struct irq_domain_ops ks_pcie_legacy_irq_domain_ops = {
+ 	.xlate = irq_domain_xlate_onetwocell,
  };
  
- int prog_type[] = {
-@@ -1807,8 +1805,6 @@ int prog_type[] = {
- 	BPF_PROG_TYPE_SK_MSG,
- 	BPF_PROG_TYPE_SK_MSG,
- 	BPF_PROG_TYPE_SK_MSG,
--	BPF_PROG_TYPE_SK_MSG,
--	BPF_PROG_TYPE_SK_MSG,
- };
+-static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
++static int ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+ {
+ 	u32 val;
+ 	u32 num_viewport = ks_pcie->num_viewport;
+ 	struct dw_pcie *pci = ks_pcie->pci;
+ 	struct dw_pcie_rp *pp = &pci->pp;
+-	u64 start, end;
++	struct resource_entry *entry;
+ 	struct resource *mem;
++	u64 start, end;
+ 	int i;
  
- static int populate_progs(char *bpf_file)
+-	mem = resource_list_first_type(&pp->bridge->windows, IORESOURCE_MEM)->res;
++	entry = resource_list_first_type(&pp->bridge->windows, IORESOURCE_MEM);
++	if (!entry)
++		return -ENODEV;
++
++	mem = entry->res;
+ 	start = mem->start;
+ 	end = mem->end;
+ 
+@@ -424,7 +429,7 @@ static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+ 	ks_pcie_clear_dbi_mode(ks_pcie);
+ 
+ 	if (ks_pcie->is_am6)
+-		return;
++		return 0;
+ 
+ 	val = ilog2(OB_WIN_SIZE);
+ 	ks_pcie_app_writel(ks_pcie, OB_SIZE, val);
+@@ -441,6 +446,8 @@ static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+ 	val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
+ 	val |= OB_XLAT_EN_VAL;
+ 	ks_pcie_app_writel(ks_pcie, CMD_STATUS, val);
++
++	return 0;
+ }
+ 
+ static void __iomem *ks_pcie_other_map_bus(struct pci_bus *bus,
+@@ -802,7 +809,10 @@ static int __init ks_pcie_host_init(struct dw_pcie_rp *pp)
+ 		return ret;
+ 
+ 	ks_pcie_stop_link(pci);
+-	ks_pcie_setup_rc_app_regs(ks_pcie);
++	ret = ks_pcie_setup_rc_app_regs(ks_pcie);
++	if (ret)
++		return ret;
++
+ 	writew(PCI_IO_RANGE_TYPE_32 | (PCI_IO_RANGE_TYPE_32 << 8),
+ 			pci->dbi_base + PCI_IO_BASE);
+ 
 -- 
 2.43.0
 
