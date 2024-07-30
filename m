@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1DE318800D;
-	Tue, 30 Jul 2024 16:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5071898FC;
+	Tue, 30 Jul 2024 16:05:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355553; cv=none; b=plBJ724DPovw4yaFFSDeWgFLXkE0fOLqnaJ82CcZu3OzqNRo95pLRaWJ4mDt3eJwYXTQm5sGDDV2TXmlN9RV1Hko+qa9rDTYKweBGQHv5pneNbLWd5VOMtk3eIGmXc6PPjnOnu0EATE3LKjfNISqV9CI70zKSXT5X7WaE+SWrVk=
+	t=1722355557; cv=none; b=Id3cNHGbkPh8rJuSkO6UW0dvbzYIVFTeSyK91j0m3I7D4Y/Q1E1z5/iEvfeekUdvScD5tDDTyglwTRslRq7i66KCK7GKth2jmP6rBKDXal5+zugB4L5sIqvGaWXppv6hhpfrS8raq5DX7c9hyLpSqW9IFsi2sOl2PYN+ca7w1nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355553; c=relaxed/simple;
-	bh=MKVv9jbVJOj7V3SNAqaTPihD8Y9HV0Ztdl5Msc8Cecs=;
+	s=arc-20240116; t=1722355557; c=relaxed/simple;
+	bh=llSyg5IiemXmRq6bX/t9aWkgqeTX7tU6JbWOe9umJVc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Vwz+HQkom4eHHsfWWLIuhe5TF3eDzrGx6XG5gE41jvRWNTzh0SILNgv0k+RNzytpAa8fPqHyrCwLySf67N68fszhxvaN9ULHO1YJnNkdHq7D2LQFTWu1fVpVtfLwc2/ZloSv7HvVjjRoS/UnZ7/dKfT9tMw+M0bNbDfIgHilzu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jH+EvgAn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DreHQLm0Q8SsU5LrpEd5NzA4tN5vbPvgOW+OWCpd3dHG6wfPap59xe8j9EsHjVtLhcHr9I6YVRNGNn5z7TOZrDeqCTuaogzPdV2wWNCa9N8BqqM8gOFkgPoAKfyZLAuD8pBpeNBogeApgUxYJ2AhG1H3Rg9hDFnCo7QDSNxT6oo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qsee2Nq0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jH+EvgAn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55152C4AF0A;
-	Tue, 30 Jul 2024 16:05:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qsee2Nq0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65BA5C32782;
+	Tue, 30 Jul 2024 16:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355553;
-	bh=MKVv9jbVJOj7V3SNAqaTPihD8Y9HV0Ztdl5Msc8Cecs=;
+	s=korg; t=1722355556;
+	bh=llSyg5IiemXmRq6bX/t9aWkgqeTX7tU6JbWOe9umJVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jH+EvgAn+2rKpM97ereAEoSnnhDILnuHgDEmi2dXK2f+YyjZduWVdi8SHrmrK1bC0
-	 hpFS4VDC90/uvNEWG8ileo3NyQtyroc/q3q9xWmk3qelL+j5zpBZ3wOt8e3Fl7ZLk3
-	 WKjz2IZqBfgMDc95CEpk1WQts3TQc4ACsNr/meUk=
+	b=qsee2Nq02eKHCmJ1OaSgM4/Y6/5hqqxsBocm7phO7crGO3Uz7VENNRh3tbY4ZNdQn
+	 mumtai1e8QSR1R/dTr4oOCdb6UXXi7BFSoPkSGWnP4vKOqlvcfypFea3S8dkvjp+RB
+	 HMAV0Y3hLPMMwJDEz9ctS/KSZ29oFG4laAXQ4Da4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Donglin Peng <dolinux.peng@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 105/440] libbpf: Checking the btf_type kind when fixing variable offsets
-Date: Tue, 30 Jul 2024 17:45:38 +0200
-Message-ID: <20240730151619.990462491@linuxfoundation.org>
+Subject: [PATCH 6.1 093/440] lib: objagg: Fix general protection fault
+Date: Tue, 30 Jul 2024 17:45:26 +0200
+Message-ID: <20240730151619.390436584@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -53,76 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Donglin Peng <dolinux.peng@gmail.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit cc5083d1f3881624ad2de1f3cbb3a07e152cb254 ]
+[ Upstream commit b4a3a89fffcdf09702b1f161b914e52abca1894d ]
 
-I encountered an issue when building the test_progs from the repository [1]:
+The library supports aggregation of objects into other objects only if
+the parent object does not have a parent itself. That is, nesting is not
+supported.
 
-  $ pwd
-  /work/Qemu/x86_64/linux-6.10-rc2/tools/testing/selftests/bpf/
+Aggregation happens in two cases: Without and with hints, where hints
+are a pre-computed recommendation on how to aggregate the provided
+objects.
 
-  $ make test_progs V=1
-  [...]
-  ./tools/sbin/bpftool gen object ./ip_check_defrag.bpf.linked2.o ./ip_check_defrag.bpf.linked1.o
-  libbpf: failed to find symbol for variable 'bpf_dynptr_slice' in section '.ksyms'
-  Error: failed to link './ip_check_defrag.bpf.linked1.o': No such file or directory (2)
-  [...]
+Nesting is not possible in the first case due to a check that prevents
+it, but in the second case there is no check because the assumption is
+that nesting cannot happen when creating objects based on hints. The
+violation of this assumption leads to various warnings and eventually to
+a general protection fault [1].
 
-Upon investigation, I discovered that the btf_types referenced in the '.ksyms'
-section had a kind of BTF_KIND_FUNC instead of BTF_KIND_VAR:
+Before fixing the root cause, error out when nesting happens and warn.
 
-  $ bpftool btf dump file ./ip_check_defrag.bpf.linked1.o
-  [...]
-  [2] DATASEC '.ksyms' size=0 vlen=2
-        type_id=16 offset=0 size=0 (FUNC 'bpf_dynptr_from_skb')
-        type_id=17 offset=0 size=0 (FUNC 'bpf_dynptr_slice')
-  [...]
-  [16] FUNC 'bpf_dynptr_from_skb' type_id=82 linkage=extern
-  [17] FUNC 'bpf_dynptr_slice' type_id=85 linkage=extern
-  [...]
+[1]
+general protection fault, probably for non-canonical address 0xdead000000000d90: 0000 [#1] PREEMPT SMP PTI
+CPU: 1 PID: 1083 Comm: kworker/1:9 Tainted: G        W          6.9.0-rc6-custom-gd9b4f1cca7fb #7
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
+RIP: 0010:mlxsw_sp_acl_erp_bf_insert+0x25/0x80
+[...]
+Call Trace:
+ <TASK>
+ mlxsw_sp_acl_atcam_entry_add+0x256/0x3c0
+ mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
+ mlxsw_sp_acl_tcam_vchunk_migrate_one+0x16b/0x270
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0xbe/0x510
+ process_one_work+0x151/0x370
+ worker_thread+0x2cb/0x3e0
+ kthread+0xd0/0x100
+ ret_from_fork+0x34/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-For a detailed analysis, please refer to [2]. We can add a kind checking to
-fix the issue.
-
-  [1] https://github.com/eddyz87/bpf/tree/binsort-btf-dedup
-  [2] https://lore.kernel.org/all/0c0ef20c-c05e-4db9-bad7-2cbc0d6dfae7@oracle.com/
-
-Fixes: 8fd27bf69b86 ("libbpf: Add BPF static linker BTF and BTF.ext support")
-Signed-off-by: Donglin Peng <dolinux.peng@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Alan Maguire <alan.maguire@oracle.com>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/bpf/20240619122355.426405-1-dolinux.peng@gmail.com
+Fixes: 9069a3817d82 ("lib: objagg: implement optimization hints assembly and use hints for object creation")
+Reported-by: Alexander Zubkov <green@qrator.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Amit Cohen <amcohen@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/linker.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ lib/objagg.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
-index 4ac02c28e152a..8a7cb830bff14 100644
---- a/tools/lib/bpf/linker.c
-+++ b/tools/lib/bpf/linker.c
-@@ -2189,10 +2189,17 @@ static int linker_fixup_btf(struct src_obj *obj)
- 		vi = btf_var_secinfos(t);
- 		for (j = 0, m = btf_vlen(t); j < m; j++, vi++) {
- 			const struct btf_type *vt = btf__type_by_id(obj->btf, vi->type);
--			const char *var_name = btf__str_by_offset(obj->btf, vt->name_off);
--			int var_linkage = btf_var(vt)->linkage;
-+			const char *var_name;
-+			int var_linkage;
- 			Elf64_Sym *sym;
+diff --git a/lib/objagg.c b/lib/objagg.c
+index 1e248629ed643..90f3aa68c30a0 100644
+--- a/lib/objagg.c
++++ b/lib/objagg.c
+@@ -167,6 +167,9 @@ static int objagg_obj_parent_assign(struct objagg *objagg,
+ {
+ 	void *delta_priv;
  
-+			/* could be a variable or function */
-+			if (!btf_is_var(vt))
-+				continue;
++	if (WARN_ON(!objagg_obj_is_root(parent)))
++		return -EINVAL;
 +
-+			var_name = btf__str_by_offset(obj->btf, vt->name_off);
-+			var_linkage = btf_var(vt)->linkage;
-+
- 			/* no need to patch up static or extern vars */
- 			if (var_linkage != BTF_VAR_GLOBAL_ALLOCATED)
- 				continue;
+ 	delta_priv = objagg->ops->delta_create(objagg->priv, parent->obj,
+ 					       objagg_obj->obj);
+ 	if (IS_ERR(delta_priv))
 -- 
 2.43.0
 
