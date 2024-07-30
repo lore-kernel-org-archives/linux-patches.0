@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E86418BE8;
-	Tue, 30 Jul 2024 16:35:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CEA8BE8;
+	Tue, 30 Jul 2024 16:35:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357318; cv=none; b=sOatwDI5wLn3MAhhVOOhxzKaXTz9NJvEv0c/Tx2EherqXVIh0TPrsH8jYFElh5YHv6+DKUfVaLXVv4Mq3N8golQfcg5j5GhGDwnrdM/vF+KZNKsfIq6RPQc/L5BrdlaCG9g3BBKa5zoEr93oGDkXpj3rWXGZcwCdzIWQPWm+0LM=
+	t=1722357321; cv=none; b=lh0Vm4YUs7M6livfuYmcfA9UlvovLOtBfRYfIfIFjH315tH1eTEsrnaHi/QcW4pbDAwJW7BGa8G5J/1fe3r8HB/DUjMUOFa+5OWVjtKwioTYB83aPZCiwekqxLXgtCOENTwKCPvnlGPQO49KDXr7PT4E/epnX0DcwlDJ73rxm54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357318; c=relaxed/simple;
-	bh=cfIBG/pK4ysy9P3TWXgWkbu8srsFqpFFhpLrNwaQLmM=;
+	s=arc-20240116; t=1722357321; c=relaxed/simple;
+	bh=4kXuQm+O7YD6d1oPoUFjcFyduLf89GZ/SFXGFBsyOck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMVJGEtC1k865ZZ4m+ravdklKh+cEcX4UHbtZVCtzJVzQ/3eiZoD4KhzLMIkZqt1zsEWA05mist5F7xdRVrSELy6a7MFZN6EL2oq9PaoTNFzz1CcgdZhaFR6MPDp8iumF93A9keaLdO1HBlq2odAO+ZIACedL9cOaCKxlIHug1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjuChnBi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EJbCLlOInyndN+kGsRCs2FFg0QHtsLKo/XTb0JKKgoze9uYrfx8k10Lh3NkifJuldDDx4puycCVxBo7DAxAD9pyRZ1sOiwG9tJ940zWYoFOizH/Eu/zoTU7NIA0BEjJexR5+WUVySdgrOZQfyMWkwxn0IPsOwwWB1HAIKXfiDUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hEV1GLM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjuChnBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C981C32782;
-	Tue, 30 Jul 2024 16:35:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hEV1GLM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F097C32782;
+	Tue, 30 Jul 2024 16:35:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357317;
-	bh=cfIBG/pK4ysy9P3TWXgWkbu8srsFqpFFhpLrNwaQLmM=;
+	s=korg; t=1722357321;
+	bh=4kXuQm+O7YD6d1oPoUFjcFyduLf89GZ/SFXGFBsyOck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjuChnBivmhAFQO555JXjcjXC/aPM9ClSVqHuu8jvXY2QVhFQTavu8OzywMAwILqj
-	 ORtZQK+HrGRfR/Wo2cEEIt/OW0bRU5xBMiaQUzKh5yCwQcEMwRxtwgSSE3RDqgSH7p
-	 mkxqZsA6jXa9QkXX9WO9Nr5yxcNezMAAGHkqQTMs=
+	b=hEV1GLM9gEDFF4jLvvFtiSO22bNqq2OgkZbU7U0OpmUjbmOMq2ef2QGlyql6ZyMgl
+	 f1lk1Ck9hbBrGp1QGazJgHU8dhVRqYx3tMIWNDraXFxls7sJ6hfMvhfid3mNfP5X15
+	 VNACsDNRpB5Zd57r5/VG+PbAj6Sg5eR5YQR8G2Pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengen Du <chengen.du@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 279/440] af_packet: Handle outgoing VLAN packets without hardware offloading
-Date: Tue, 30 Jul 2024 17:48:32 +0200
-Message-ID: <20240730151626.728768231@linuxfoundation.org>
+	Reinette Chatre <reinette.chatre@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Babu Moger <babu.moger@amd.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 243/809] selftests/resctrl: Fix closing IMC fds on error and open-code R+W instead of loops
+Date: Tue, 30 Jul 2024 17:41:59 +0200
+Message-ID: <20240730151734.199661558@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,179 +47,145 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengen Du <chengen.du@canonical.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 79eecf631c14e7f4057186570ac20e2cfac3802e upstream.
+[ Upstream commit c44000b6535dc9806b9128d1aed403862b2adab9 ]
 
-The issue initially stems from libpcap. The ethertype will be overwritten
-as the VLAN TPID if the network interface lacks hardware VLAN offloading.
-In the outbound packet path, if hardware VLAN offloading is unavailable,
-the VLAN tag is inserted into the payload but then cleared from the sk_buff
-struct. Consequently, this can lead to a false negative when checking for
-the presence of a VLAN tag, causing the packet sniffing outcome to lack
-VLAN tag information (i.e., TCI-TPID). As a result, the packet capturing
-tool may be unable to parse packets as expected.
+The imc perf fd close() calls are missing from all error paths. In
+addition, get_mem_bw_imc() handles fds in a for loop but close() is
+based on two fixed indexes READ and WRITE.
 
-The TCI-TPID is missing because the prb_fill_vlan_info() function does not
-modify the tp_vlan_tci/tp_vlan_tpid values, as the information is in the
-payload and not in the sk_buff struct. The skb_vlan_tag_present() function
-only checks vlan_all in the sk_buff struct. In cooked mode, the L2 header
-is stripped, preventing the packet capturing tool from determining the
-correct TCI-TPID value. Additionally, the protocol in SLL is incorrect,
-which means the packet capturing tool cannot parse the L3 header correctly.
+Open code inner for loops to READ+WRITE entries for clarity and add a
+function to close() IMC fds properly in all cases.
 
-Link: https://github.com/the-tcpdump-group/libpcap/issues/1105
-Link: https://lore.kernel.org/netdev/20240520070348.26725-1-chengen.du@canonical.com/T/#u
-Fixes: 393e52e33c6c ("packet: deliver VLAN TCI to userspace")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chengen Du <chengen.du@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240713114735.62360-1-chengen.du@canonical.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7f4d257e3a2a ("selftests/resctrl: Add callback to start a benchmark")
+Suggested-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Babu Moger <babu.moger@amd.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/packet/af_packet.c |   86 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 84 insertions(+), 2 deletions(-)
+ tools/testing/selftests/resctrl/resctrl_val.c | 54 ++++++++++++-------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -541,6 +541,61 @@ static void *packet_current_frame(struct
- 	return packet_lookup_frame(po, rb, rb->head, status);
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index 445f306d4c2fa..f55f5989de72b 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -293,6 +293,18 @@ static int initialize_mem_bw_imc(void)
+ 	return 0;
  }
  
-+static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
++static void perf_close_imc_mem_bw(void)
 +{
-+	u8 *skb_orig_data = skb->data;
-+	int skb_orig_len = skb->len;
-+	struct vlan_hdr vhdr, *vh;
-+	unsigned int header_len;
++	int mc;
 +
-+	if (!dev)
-+		return 0;
-+
-+	/* In the SOCK_DGRAM scenario, skb data starts at the network
-+	 * protocol, which is after the VLAN headers. The outer VLAN
-+	 * header is at the hard_header_len offset in non-variable
-+	 * length link layer headers. If it's a VLAN device, the
-+	 * min_header_len should be used to exclude the VLAN header
-+	 * size.
-+	 */
-+	if (dev->min_header_len == dev->hard_header_len)
-+		header_len = dev->hard_header_len;
-+	else if (is_vlan_dev(dev))
-+		header_len = dev->min_header_len;
-+	else
-+		return 0;
-+
-+	skb_push(skb, skb->data - skb_mac_header(skb));
-+	vh = skb_header_pointer(skb, header_len, sizeof(vhdr), &vhdr);
-+	if (skb_orig_data != skb->data) {
-+		skb->data = skb_orig_data;
-+		skb->len = skb_orig_len;
++	for (mc = 0; mc < imcs; mc++) {
++		if (imc_counters_config[mc][READ].fd != -1)
++			close(imc_counters_config[mc][READ].fd);
++		if (imc_counters_config[mc][WRITE].fd != -1)
++			close(imc_counters_config[mc][WRITE].fd);
 +	}
-+	if (unlikely(!vh))
-+		return 0;
-+
-+	return ntohs(vh->h_vlan_TCI);
 +}
 +
-+static __be16 vlan_get_protocol_dgram(struct sk_buff *skb)
-+{
-+	__be16 proto = skb->protocol;
+ /*
+  * get_mem_bw_imc:	Memory band width as reported by iMC counters
+  * @cpu_no:		CPU number that the benchmark PID is binded to
+@@ -306,26 +318,33 @@ static int initialize_mem_bw_imc(void)
+ static int get_mem_bw_imc(int cpu_no, char *bw_report, float *bw_imc)
+ {
+ 	float reads, writes, of_mul_read, of_mul_write;
+-	int imc, j, ret;
++	int imc, ret;
 +
-+	if (unlikely(eth_type_vlan(proto))) {
-+		u8 *skb_orig_data = skb->data;
-+		int skb_orig_len = skb->len;
-+
-+		skb_push(skb, skb->data - skb_mac_header(skb));
-+		proto = __vlan_get_protocol(skb, proto, NULL);
-+		if (skb_orig_data != skb->data) {
-+			skb->data = skb_orig_data;
-+			skb->len = skb_orig_len;
-+		}
++	for (imc = 0; imc < imcs; imc++) {
++		imc_counters_config[imc][READ].fd = -1;
++		imc_counters_config[imc][WRITE].fd = -1;
 +	}
+ 
+ 	/* Start all iMC counters to log values (both read and write) */
+ 	reads = 0, writes = 0, of_mul_read = 1, of_mul_write = 1;
+ 	for (imc = 0; imc < imcs; imc++) {
+-		for (j = 0; j < 2; j++) {
+-			ret = open_perf_event(imc, cpu_no, j);
+-			if (ret)
+-				return -1;
+-		}
+-		for (j = 0; j < 2; j++)
+-			membw_ioctl_perf_event_ioc_reset_enable(imc, j);
++		ret = open_perf_event(imc, cpu_no, READ);
++		if (ret)
++			goto close_fds;
++		ret = open_perf_event(imc, cpu_no, WRITE);
++		if (ret)
++			goto close_fds;
 +
-+	return proto;
-+}
-+
- static void prb_del_retire_blk_timer(struct tpacket_kbdq_core *pkc)
- {
- 	del_timer_sync(&pkc->retire_blk_timer);
-@@ -1010,10 +1065,16 @@ static void prb_clear_rxhash(struct tpac
- static void prb_fill_vlan_info(struct tpacket_kbdq_core *pkc,
- 			struct tpacket3_hdr *ppd)
- {
-+	struct packet_sock *po = container_of(pkc, struct packet_sock, rx_ring.prb_bdqc);
-+
- 	if (skb_vlan_tag_present(pkc->skb)) {
- 		ppd->hv1.tp_vlan_tci = skb_vlan_tag_get(pkc->skb);
- 		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->vlan_proto);
- 		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+	} else if (unlikely(po->sk.sk_type == SOCK_DGRAM && eth_type_vlan(pkc->skb->protocol))) {
-+		ppd->hv1.tp_vlan_tci = vlan_get_tci(pkc->skb, pkc->skb->dev);
-+		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->protocol);
-+		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
- 	} else {
- 		ppd->hv1.tp_vlan_tci = 0;
- 		ppd->hv1.tp_vlan_tpid = 0;
-@@ -2431,6 +2492,10 @@ static int tpacket_rcv(struct sk_buff *s
- 			h.h2->tp_vlan_tci = skb_vlan_tag_get(skb);
- 			h.h2->tp_vlan_tpid = ntohs(skb->vlan_proto);
- 			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+		} else if (unlikely(sk->sk_type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
-+			h.h2->tp_vlan_tci = vlan_get_tci(skb, skb->dev);
-+			h.h2->tp_vlan_tpid = ntohs(skb->protocol);
-+			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
- 		} else {
- 			h.h2->tp_vlan_tci = 0;
- 			h.h2->tp_vlan_tpid = 0;
-@@ -2460,7 +2525,8 @@ static int tpacket_rcv(struct sk_buff *s
- 	sll->sll_halen = dev_parse_header(skb, sll->sll_addr);
- 	sll->sll_family = AF_PACKET;
- 	sll->sll_hatype = dev->type;
--	sll->sll_protocol = skb->protocol;
-+	sll->sll_protocol = (sk->sk_type == SOCK_DGRAM) ?
-+		vlan_get_protocol_dgram(skb) : skb->protocol;
- 	sll->sll_pkttype = skb->pkt_type;
- 	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
- 		sll->sll_ifindex = orig_dev->ifindex;
-@@ -3481,7 +3547,8 @@ static int packet_recvmsg(struct socket
- 		/* Original length was stored in sockaddr_ll fields */
- 		origlen = PACKET_SKB_CB(skb)->sa.origlen;
- 		sll->sll_family = AF_PACKET;
--		sll->sll_protocol = skb->protocol;
-+		sll->sll_protocol = (sock->type == SOCK_DGRAM) ?
-+			vlan_get_protocol_dgram(skb) : skb->protocol;
++		membw_ioctl_perf_event_ioc_reset_enable(imc, READ);
++		membw_ioctl_perf_event_ioc_reset_enable(imc, WRITE);
  	}
  
- 	sock_recv_cmsgs(msg, sk, skb);
-@@ -3536,6 +3603,21 @@ static int packet_recvmsg(struct socket
- 			aux.tp_vlan_tci = skb_vlan_tag_get(skb);
- 			aux.tp_vlan_tpid = ntohs(skb->vlan_proto);
- 			aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+		} else if (unlikely(sock->type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
-+			struct sockaddr_ll *sll = &PACKET_SKB_CB(skb)->sa.ll;
-+			struct net_device *dev;
+ 	sleep(1);
+ 
+ 	/* Stop counters after a second to get results (both read and write) */
+ 	for (imc = 0; imc < imcs; imc++) {
+-		for (j = 0; j < 2; j++)
+-			membw_ioctl_perf_event_ioc_disable(imc, j);
++		membw_ioctl_perf_event_ioc_disable(imc, READ);
++		membw_ioctl_perf_event_ioc_disable(imc, WRITE);
+ 	}
+ 
+ 	/*
+@@ -341,15 +360,13 @@ static int get_mem_bw_imc(int cpu_no, char *bw_report, float *bw_imc)
+ 		if (read(r->fd, &r->return_value,
+ 			 sizeof(struct membw_read_format)) == -1) {
+ 			ksft_perror("Couldn't get read b/w through iMC");
+-
+-			return -1;
++			goto close_fds;
+ 		}
+ 
+ 		if (read(w->fd, &w->return_value,
+ 			 sizeof(struct membw_read_format)) == -1) {
+ 			ksft_perror("Couldn't get write bw through iMC");
+-
+-			return -1;
++			goto close_fds;
+ 		}
+ 
+ 		__u64 r_time_enabled = r->return_value.time_enabled;
+@@ -369,10 +386,7 @@ static int get_mem_bw_imc(int cpu_no, char *bw_report, float *bw_imc)
+ 		writes += w->return_value.value * of_mul_write * SCALE;
+ 	}
+ 
+-	for (imc = 0; imc < imcs; imc++) {
+-		close(imc_counters_config[imc][READ].fd);
+-		close(imc_counters_config[imc][WRITE].fd);
+-	}
++	perf_close_imc_mem_bw();
+ 
+ 	if (strcmp(bw_report, "reads") == 0) {
+ 		*bw_imc = reads;
+@@ -386,6 +400,10 @@ static int get_mem_bw_imc(int cpu_no, char *bw_report, float *bw_imc)
+ 
+ 	*bw_imc = reads + writes;
+ 	return 0;
 +
-+			rcu_read_lock();
-+			dev = dev_get_by_index_rcu(sock_net(sk), sll->sll_ifindex);
-+			if (dev) {
-+				aux.tp_vlan_tci = vlan_get_tci(skb, dev);
-+				aux.tp_vlan_tpid = ntohs(skb->protocol);
-+				aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+			} else {
-+				aux.tp_vlan_tci = 0;
-+				aux.tp_vlan_tpid = 0;
-+			}
-+			rcu_read_unlock();
- 		} else {
- 			aux.tp_vlan_tci = 0;
- 			aux.tp_vlan_tpid = 0;
++close_fds:
++	perf_close_imc_mem_bw();
++	return -1;
+ }
+ 
+ void set_mbm_path(const char *ctrlgrp, const char *mongrp, int domain_id)
+-- 
+2.43.0
+
 
 
