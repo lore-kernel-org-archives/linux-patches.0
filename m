@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600C01A6166;
-	Tue, 30 Jul 2024 16:46:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88349183CD5;
+	Tue, 30 Jul 2024 16:47:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358019; cv=none; b=R+KKqT0QetXCZuFQZ1doCS8sbYPHh4Z8Xx9CUdhFpedtAK0GuyN5wclWIDmzEv2fuEYElUYuMPBaS/WyREzXRiFE3YsdeVCjtDFMik/sWEb7nWBlcE4NZcOZCAcFrHI5pRlp5PaC3Zb5jX1NKpdcWiBCjJZZ3dxt6YzKmus0n0U=
+	t=1722358022; cv=none; b=A5GpaiUCg/5Dd1ZVUppVWdGSKHqREUdhhonA4Ag09Tt+2QaRtCtQOFyQRglM2UaiDJDHVCWdJzYNceDTPjXn52GQUnp2PAThF1fDliPfljbmjOp+vQohD6vYkZWvYay/TBRb6R5cRajdeUvTY5BvaNlG1IBsTOuWavQmPfF6V4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358019; c=relaxed/simple;
-	bh=q9L3Cnn+8ZCGu91BnoMF9ze2lnGSW/kFd/pppSUPO+k=;
+	s=arc-20240116; t=1722358022; c=relaxed/simple;
+	bh=yZJnf8et525kgGftER6eYFQc1J8vI96EDviips4mmZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ujQRpBUTG4JITAFW6NDjX4gt3kx51LzAuN+rguoFNpBr8OpDeKUVEdhmUAISOM4CgSgmcft06huoU2x0d5zPRcpi/XYIwGbqRfcyWkvEBPySDqI0g8bV7HE9+TadRCbZATCExUjCBR09tvyO6R0i3zwg+/iGG1e3qUr2W1KP1mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QD7R9qxx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4fA23i+evnaX1v05ZXNFk7WsSqaX9iajHJKP2CQjc5lEkiCg7qUfqvGeaR34NHDvR8sEEdUMomxDewcuGrpfeVVfjD+B5iv2oDQy3arriBVEBXtF2/PmUw6/FLvIY5jLO375+w+RZL8OPAhFIshbkwJrkqahCRGFgLvH6yhXlY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTPcuzs+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QD7R9qxx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F9B4C32782;
-	Tue, 30 Jul 2024 16:46:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTPcuzs+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA7F3C32782;
+	Tue, 30 Jul 2024 16:47:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358019;
-	bh=q9L3Cnn+8ZCGu91BnoMF9ze2lnGSW/kFd/pppSUPO+k=;
+	s=korg; t=1722358022;
+	bh=yZJnf8et525kgGftER6eYFQc1J8vI96EDviips4mmZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QD7R9qxxK0cXu4AEnATTlaAGVel/7HHx2jvWssjHlnK/Hxq05EQlz7HTgOkvhZ0Rc
-	 O5TO4VPCiX1JyWDKrrlgmYL5FD2OTNvyyWnHweTQOhRz94Wmtcog0mfvK4fs72zZ6y
-	 sMHr1mofS6pzpcK9Vvn8oRJU/cnKku1SpL3d1FR0=
+	b=bTPcuzs+99yBhx8dx7Xr+uQYUr/vwVQY9JlOvq68VLd2DvQ2nAjuKUN4SL9chpIEg
+	 YwV9j9WvjtC1Fa06+aqD09/yQbg/pT+6heyPei+aXqUtCqb+o3Cx03noGAVV9XL2eh
+	 onn/SulTTRwx5qw8P7/OfSUMAmyb65UWH8Gevjh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Sean Anderson <sean.anderso@linux.dev>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 315/809] drm: zynqmp_dpsub: Fix an error handling path in zynqmp_dpsub_probe()
-Date: Tue, 30 Jul 2024 17:43:11 +0200
-Message-ID: <20240730151737.040236807@linuxfoundation.org>
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 349/440] scsi: qla2xxx: Use QP lock to search for bsg
+Date: Tue, 30 Jul 2024 17:49:42 +0200
+Message-ID: <20240730151629.442148043@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,42 +48,153 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit 4ea3deda1341fef7b923ad9cfe5dd46b1b51bfa8 ]
+commit c449b4198701d828e40d60a2abd30970b74a1d75 upstream.
 
-If zynqmp_dpsub_drm_init() fails, we must undo the previous
-drm_bridge_add() call.
+On bsg timeout, hardware_lock is used as part of search for the srb.
+Instead, qpair lock should be used to iterate through different qpair.
 
-Fixes: be3f3042391d ("drm: zynqmp_dpsub: Always register bridge")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Sean Anderson <sean.anderso@linux.dev>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/974d1b062d7c61ee6db00d16fa7c69aa1218ee02.1716198025.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-11-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xlnx/zynqmp_dpsub.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/qla2xxx/qla_bsg.c |   96 ++++++++++++++++++++++++-----------------
+ 1 file changed, 57 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-index face8d6b2a6fb..f5781939de9c3 100644
---- a/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-+++ b/drivers/gpu/drm/xlnx/zynqmp_dpsub.c
-@@ -269,6 +269,7 @@ static int zynqmp_dpsub_probe(struct platform_device *pdev)
- 	return 0;
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -3059,17 +3059,61 @@ skip_chip_chk:
+ 	return ret;
+ }
  
- err_disp:
-+	drm_bridge_remove(dpsub->bridge);
- 	zynqmp_disp_remove(dpsub);
- err_dp:
- 	zynqmp_dp_remove(dpsub);
--- 
-2.43.0
-
+-int
+-qla24xx_bsg_timeout(struct bsg_job *bsg_job)
++static bool qla_bsg_found(struct qla_qpair *qpair, struct bsg_job *bsg_job)
+ {
++	bool found = false;
+ 	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
+ 	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
+ 	struct qla_hw_data *ha = vha->hw;
+-	srb_t *sp;
+-	int cnt, que;
++	srb_t *sp = NULL;
++	int cnt;
+ 	unsigned long flags;
+ 	struct req_que *req;
+ 
++	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
++	req = qpair->req;
++
++	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
++		sp = req->outstanding_cmds[cnt];
++		if (sp &&
++		    (sp->type == SRB_CT_CMD ||
++		     sp->type == SRB_ELS_CMD_HST ||
++		     sp->type == SRB_ELS_CMD_HST_NOLOGIN) &&
++		    sp->u.bsg_job == bsg_job) {
++			req->outstanding_cmds[cnt] = NULL;
++			spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
++
++			if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
++				ql_log(ql_log_warn, vha, 0x7089,
++						"mbx abort_command failed.\n");
++				bsg_reply->result = -EIO;
++			} else {
++				ql_dbg(ql_dbg_user, vha, 0x708a,
++						"mbx abort_command success.\n");
++				bsg_reply->result = 0;
++			}
++			/* ref: INIT */
++			kref_put(&sp->cmd_kref, qla2x00_sp_release);
++
++			found = true;
++			goto done;
++		}
++	}
++	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
++
++done:
++	return found;
++}
++
++int
++qla24xx_bsg_timeout(struct bsg_job *bsg_job)
++{
++	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
++	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
++	struct qla_hw_data *ha = vha->hw;
++	int i;
++	struct qla_qpair *qpair;
++
+ 	ql_log(ql_log_info, vha, 0x708b, "%s CMD timeout. bsg ptr %p.\n",
+ 	    __func__, bsg_job);
+ 
+@@ -3079,48 +3123,22 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_
+ 		qla_pci_set_eeh_busy(vha);
+ 	}
+ 
++	if (qla_bsg_found(ha->base_qpair, bsg_job))
++		goto done;
++
+ 	/* find the bsg job from the active list of commands */
+-	spin_lock_irqsave(&ha->hardware_lock, flags);
+-	for (que = 0; que < ha->max_req_queues; que++) {
+-		req = ha->req_q_map[que];
+-		if (!req)
++	for (i = 0; i < ha->max_qpairs; i++) {
++		qpair = vha->hw->queue_pair_map[i];
++		if (!qpair)
+ 			continue;
+-
+-		for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
+-			sp = req->outstanding_cmds[cnt];
+-			if (sp &&
+-			    (sp->type == SRB_CT_CMD ||
+-			     sp->type == SRB_ELS_CMD_HST ||
+-			     sp->type == SRB_ELS_CMD_HST_NOLOGIN ||
+-			     sp->type == SRB_FXIOCB_BCMD) &&
+-			    sp->u.bsg_job == bsg_job) {
+-				req->outstanding_cmds[cnt] = NULL;
+-				spin_unlock_irqrestore(&ha->hardware_lock, flags);
+-
+-				if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
+-					ql_log(ql_log_warn, vha, 0x7089,
+-					    "mbx abort_command failed.\n");
+-					bsg_reply->result = -EIO;
+-				} else {
+-					ql_dbg(ql_dbg_user, vha, 0x708a,
+-					    "mbx abort_command success.\n");
+-					bsg_reply->result = 0;
+-				}
+-				spin_lock_irqsave(&ha->hardware_lock, flags);
+-				goto done;
+-
+-			}
+-		}
++		if (qla_bsg_found(qpair, bsg_job))
++			goto done;
+ 	}
+-	spin_unlock_irqrestore(&ha->hardware_lock, flags);
++
+ 	ql_log(ql_log_info, vha, 0x708b, "SRB not found to abort.\n");
+ 	bsg_reply->result = -ENXIO;
+-	return 0;
+ 
+ done:
+-	spin_unlock_irqrestore(&ha->hardware_lock, flags);
+-	/* ref: INIT */
+-	kref_put(&sp->cmd_kref, qla2x00_sp_release);
+ 	return 0;
+ }
+ 
 
 
