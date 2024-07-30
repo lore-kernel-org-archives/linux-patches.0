@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40581E86F;
-	Tue, 30 Jul 2024 17:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB87B1A6192;
+	Tue, 30 Jul 2024 17:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358999; cv=none; b=PowH0vrg6EXfGCvzOZWt/TvEFCxC+QhiIcyHHCRmPYPIsGU42KhycI/lEKrOKsmRYxsrE0dkGkQqcQxhvAKpaUz6XkncqnFEGEoa93996LWfcSStljaLbNckn/a8S7MLwoEm67fa54kApNQ3k9ty9JCMEEREwOw92tHEOMnHSDk=
+	t=1722359003; cv=none; b=U2urEk/c1ZwG4qsKn+ILQuPPLStVMSAbuCgeh1m8gLH2KMxUTIo5J8y9Rz2n2fx3KyOiqx1OA8Lt7bI2Kd5ahY38iwmXTHXj4NRUmFo5jwxSmE0bgnpQI/q8EB0Sv18GcNE7pEnyntQUaNFHVxJKbHHvqVFSpb+c2yv2B1ormbk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358999; c=relaxed/simple;
-	bh=BMJcrvZcLoz5LDjL3ObNBVzCGnDmcbMw89nPI+mEp7w=;
+	s=arc-20240116; t=1722359003; c=relaxed/simple;
+	bh=2punBQ4Kn7RxkYBt1KmDeZn8pyQZy4YpOOEwedJ9zGk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nM+CbS8bvLZFJM6tdPG9OjxxutdLAooU+7kfYhKC2FRKo3XZV7N0nbP/Ilc53aRVeKVZ9gW7ixcabmjdzfpxhm1LXhBZH+0ms0yt5rjh2VED5aCCShCgUIjNomFg0ijWVGJpZB8Ee3YiXgnBjjS8ODRRHcKeSkP0cGV/Yd5l9rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDN7Tt+p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I/Nvsp+cnQnNsxqizSLp81HGt40nknLgm461xonaQij3ddRsbtKnxEBlBWOrPRY2MeHTqCaoExCuZwk+xjUcuuEjjarPQKKFdabeZSfbiKB07RLUw+yPOp/+b0eHvzThVGDj2JQJftBTQajkx2BNAP1pjUC3JEkj/nuXv7QLtlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cfoTqOwb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDN7Tt+p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2162BC4AF0C;
-	Tue, 30 Jul 2024 17:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cfoTqOwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C359C32782;
+	Tue, 30 Jul 2024 17:03:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358999;
-	bh=BMJcrvZcLoz5LDjL3ObNBVzCGnDmcbMw89nPI+mEp7w=;
+	s=korg; t=1722359002;
+	bh=2punBQ4Kn7RxkYBt1KmDeZn8pyQZy4YpOOEwedJ9zGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TDN7Tt+pJX7bvHzISwRvqVU5WdIiyXW0fQkcFMCiGH0ixmw3F3lPurJl51MQB4Q8v
-	 GhYi+J9XXBabgHmLlKjQi8OSNncQJ1V0KcBOyuBVv1vnpbeQVR550lyotSTjSJqfpg
-	 flCZYn6SsjQwuI5YLrLMw/SfurIQn6aR+Nj7NoJ4=
+	b=cfoTqOwbUVj3bDHjblsGRt39Xk3SdsYf9KODvGo6daMuOrt4u/Hs7OBb1YFuoioL/
+	 9/F892n3HZCGZKBCIf9FzoRcnDaerlwLPjjax8ZHFDsrm16XysbmpjGoB6Acx0gJCc
+	 GaE5hYqaVm+S4xA2X5+v+jDJyVHTXZTo5izVYuOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 418/568] ALSA: ump: Force 1 Group for MIDI1 FBs
-Date: Tue, 30 Jul 2024 17:48:45 +0200
-Message-ID: <20240730151656.208622815@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 420/809] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
+Date: Tue, 30 Jul 2024 17:44:56 +0200
+Message-ID: <20240730151741.284143454@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -43,48 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit ac29d8ae05b770ed3f52d7a60908ab9b126f69d7 upstream.
+[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
 
-When a Function Block declares it being a legacy MIDI1 device, it has
-to be only with a single UMP Group.  Correct the attribute when a
-device declares it wrongly.
+drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
+output may be truncated writing between 1 and 11 bytes into a region of
+size 5 [-Werror=format-truncation=]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                                          ^~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                               ^~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
+between 12 and 22 bytes into a destination of size 15
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240722140610.10845-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
+Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/ump.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/core/ump.c b/sound/core/ump.c
-index b325fcfa77d0..0f0d7e895c5a 100644
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -733,6 +733,12 @@ static void fill_fb_info(struct snd_ump_endpoint *ump,
- 		info->block_id, info->direction, info->active,
- 		info->first_group, info->num_groups, info->midi_ci_version,
- 		info->sysex8_streams, info->flags);
-+
-+	if ((info->flags & SNDRV_UMP_BLOCK_IS_MIDI1) && info->num_groups != 1) {
-+		info->num_groups = 1;
-+		ump_dbg(ump, "FB %d: corrected groups to 1 for MIDI1\n",
-+			info->block_id);
-+	}
- }
+diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
+index 111fa88a3be44..9a439569ffcf3 100644
+--- a/drivers/infiniband/hw/mlx4/alias_GUID.c
++++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
+@@ -829,7 +829,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
  
- /* check whether the FB info gets updated by the current message */
+ int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
+ {
+-	char alias_wq_name[15];
++	char alias_wq_name[22];
+ 	int ret = 0;
+ 	int i, j;
+ 	union ib_gid gid;
 -- 
-2.45.2
+2.43.0
 
 
 
