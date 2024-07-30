@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07F641A618F;
-	Tue, 30 Jul 2024 16:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DD41A6166;
+	Tue, 30 Jul 2024 16:45:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357928; cv=none; b=R907ohne/De258Y5t9p9cO/SZ2RS9Ewq45GYBtRvQUsdfIjLWEJkuVHUEFQhkyMeZzaO1+QMutiuA0DpPr6Gv+P8hK8LnwTZ+9dSN3VWbj3/oJfZ550/toiZ8Y0W6UhoyPwma/t7ubwjt0zYUnjXSWrxzWpB8wNmG/4bbICDcTY=
+	t=1722357931; cv=none; b=JPtwPPclqiFrGQoAPGbmFNwmTK3CojwBKlbFhESu6jceAgQMqjKCXGQzRNjOS2zuHxfSY3UHm5S/tL3ulJ5UhuthdgFIJCkvgHendLERINSZW7+jQ8YIO20qpnhi0+c3TycHkBSzEf6fQDPIA8U2Rqc6Id1QyUNn9rGMfBEo1g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357928; c=relaxed/simple;
-	bh=M6oewx1rLCoECeCGCs1N1JLMZKuib6heUU1ZVRkxWBA=;
+	s=arc-20240116; t=1722357931; c=relaxed/simple;
+	bh=35jQ8mJAONIFePkPHNUTT6fiGea48KRKfg6lrdjEOHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QpgYNix45oKbhT7pvegMnjC1zKvXKQl/dMuy49JSSPF97E+7aAZirallNlR87IrlvCD37mflQOiMDYbIFKM/l+7UMkElr4vNJvHnICE94KAPioMo0SMA1cRFze5rQLQtYySX6J5OU1TRVPnv37nI/F0f4REI8UJ4tqle2EL1veg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpPPqJJo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFqvLeMCdcrMNIThmT/4PzPXiOLtm631qTphvGZTO3UCvKw0d6a38PZalTvVNwhF5rQJAq+1OXHMRc9zMRVSd0LiyJYXbj1zY5dtL354upVrhAuISvJ7iTfS+4Z2fQrT+5/GzysU57lPO9kpaX8xTRb2q/63zoXysXDYzmZgn+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJsPdvq7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpPPqJJo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ECA3C32782;
-	Tue, 30 Jul 2024 16:45:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJsPdvq7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE534C32782;
+	Tue, 30 Jul 2024 16:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357927;
-	bh=M6oewx1rLCoECeCGCs1N1JLMZKuib6heUU1ZVRkxWBA=;
+	s=korg; t=1722357931;
+	bh=35jQ8mJAONIFePkPHNUTT6fiGea48KRKfg6lrdjEOHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpPPqJJoVqOc/zC92NTAxq5J/KYXYPheHXqTkyKyWTgsnNjn8XGgzWQ92SRMA50gb
-	 NPDSoduiXcayqNE1QnRzyYxRgmWmI8UgZ63IY0oHNDEL3amD/nZIiATK0AhpT5y98A
-	 S+U5WnsC390w1hskaX8hYZQAB4KlQSr/32iwCwdM=
+	b=hJsPdvq7p/YxsOR7Mm4D8u6cGzPfxej3zb4fngdhAmtm9t9Oq9VawZdv9aMyJrWta
+	 rpoks3iyuEoZO8UwsPKiOkkyPuChUacEQh8iAWiEqJ/ItxsKBa/dYjXaP01n16fQz/
+	 Rui+0eRjiMkffHMTYn+N/UGKxndoDlzk9X1oVY4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Animesh Manna <animesh.manna@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 305/809] drm/i915/psr: Print Panel Replay status instead of frame lock status
-Date: Tue, 30 Jul 2024 17:43:01 +0200
-Message-ID: <20240730151736.638217913@linuxfoundation.org>
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Sridhar Samudrala <sridhar.samudrala@intel.com>,
+	Ahmed Zaki <ahmed.zaki@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.1 340/440] ice: Add a per-VF limit on number of FDIR filters
+Date: Tue, 30 Jul 2024 17:49:33 +0200
+Message-ID: <20240730151629.095193848@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,75 +48,130 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Ahmed Zaki <ahmed.zaki@intel.com>
 
-[ Upstream commit 51ee1f29a9aceb8a52037ba4759d44c70e966fe5 ]
+commit 6ebbe97a488179f5dc85f2f1e0c89b486e99ee97 upstream.
 
-Currently Panel Replay status printout is printing frame lock status. It
-should print Panel Replay status instead. Panel Replay status register
-field follows PSR status register field. Use existing PSR code for that.
+While the iavf driver adds a s/w limit (128) on the number of FDIR
+filters that the VF can request, a malicious VF driver can request more
+than that and exhaust the resources for other VFs.
 
-Fixes: ef75c25e8fed ("drm/i915/panelreplay: Debugfs support for panel replay")
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Animesh Manna <animesh.manna@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240607134917.1327574-10-jouni.hogander@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add a similar limit in ice.
+
+CC: stable@vger.kernel.org
+Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Suggested-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
+Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_psr.c | 22 +++++-----------------
- 1 file changed, 5 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c  |    2 +-
+ drivers/net/ethernet/intel/ice/ice_fdir.h          |    3 +++
+ drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c |   16 ++++++++++++++++
+ drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h |    1 +
+ 4 files changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_psr.c b/drivers/gpu/drm/i915/display/intel_psr.c
-index 58769197a1277..2b4512bd5b595 100644
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -3694,16 +3694,9 @@ static int i915_psr_sink_status_show(struct seq_file *m, void *data)
- 		"reserved",
- 		"sink internal error",
- 	};
--	static const char * const panel_replay_status[] = {
--		"Sink device frame is locked to the Source device",
--		"Sink device is coasting, using the VTotal target",
--		"Sink device is governing the frame rate (frame rate unlock is granted)",
--		"Sink device in the process of re-locking with the Source device",
--	};
- 	const char *str;
- 	int ret;
- 	u8 status, error_status;
--	u32 idx;
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
+@@ -531,7 +531,7 @@ ice_parse_rx_flow_user_data(struct ethto
+  *
+  * Returns the number of available flow director filters to this VSI
+  */
+-static int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
++int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
+ {
+ 	u16 vsi_num = ice_get_hw_vsi_num(hw, vsi->idx);
+ 	u16 num_guar;
+--- a/drivers/net/ethernet/intel/ice/ice_fdir.h
++++ b/drivers/net/ethernet/intel/ice/ice_fdir.h
+@@ -202,6 +202,8 @@ struct ice_fdir_base_pkt {
+ 	const u8 *tun_pkt;
+ };
  
- 	if (!(CAN_PSR(intel_dp) || CAN_PANEL_REPLAY(intel_dp))) {
- 		seq_puts(m, "PSR/Panel-Replay Unsupported\n");
-@@ -3717,16 +3710,11 @@ static int i915_psr_sink_status_show(struct seq_file *m, void *data)
- 	if (ret)
- 		return ret;
++struct ice_vsi;
++
+ int ice_alloc_fd_res_cntr(struct ice_hw *hw, u16 *cntr_id);
+ int ice_free_fd_res_cntr(struct ice_hw *hw, u16 cntr_id);
+ int ice_alloc_fd_guar_item(struct ice_hw *hw, u16 *cntr_id, u16 num_fltr);
+@@ -213,6 +215,7 @@ int
+ ice_fdir_get_gen_prgm_pkt(struct ice_hw *hw, struct ice_fdir_fltr *input,
+ 			  u8 *pkt, bool frag, bool tun);
+ int ice_get_fdir_cnt_all(struct ice_hw *hw);
++int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi);
+ bool ice_fdir_is_dup_fltr(struct ice_hw *hw, struct ice_fdir_fltr *input);
+ bool ice_fdir_has_frag(enum ice_fltr_ptype flow);
+ struct ice_fdir_fltr *
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
+@@ -551,6 +551,8 @@ static void ice_vc_fdir_reset_cnt_all(st
+ 		fdir->fdir_fltr_cnt[flow][0] = 0;
+ 		fdir->fdir_fltr_cnt[flow][1] = 0;
+ 	}
++
++	fdir->fdir_fltr_cnt_total = 0;
+ }
  
--	str = "unknown";
--	if (intel_dp->psr.panel_replay_enabled) {
--		idx = (status & DP_SINK_FRAME_LOCKED_MASK) >> DP_SINK_FRAME_LOCKED_SHIFT;
--		if (idx < ARRAY_SIZE(panel_replay_status))
--			str = panel_replay_status[idx];
--	} else if (intel_dp->psr.enabled) {
--		idx = status & DP_PSR_SINK_STATE_MASK;
--		if (idx < ARRAY_SIZE(sink_status))
--			str = sink_status[idx];
--	}
-+	status &= DP_PSR_SINK_STATE_MASK;
-+	if (status < ARRAY_SIZE(sink_status))
-+		str = sink_status[status];
-+	else
-+		str = "unknown";
+ /**
+@@ -1567,6 +1569,7 @@ ice_vc_add_fdir_fltr_post(struct ice_vf
+ 	resp->status = status;
+ 	resp->flow_id = conf->flow_id;
+ 	vf->fdir.fdir_fltr_cnt[conf->input.flow_type][is_tun]++;
++	vf->fdir.fdir_fltr_cnt_total++;
  
- 	seq_printf(m, "Sink %s status: 0x%x [%s]\n", psr_mode_str(intel_dp), status, str);
+ 	ret = ice_vc_send_msg_to_vf(vf, ctx->v_opcode, v_ret,
+ 				    (u8 *)resp, len);
+@@ -1631,6 +1634,7 @@ ice_vc_del_fdir_fltr_post(struct ice_vf
+ 	resp->status = status;
+ 	ice_vc_fdir_remove_entry(vf, conf, conf->flow_id);
+ 	vf->fdir.fdir_fltr_cnt[conf->input.flow_type][is_tun]--;
++	vf->fdir.fdir_fltr_cnt_total--;
  
--- 
-2.43.0
-
+ 	ret = ice_vc_send_msg_to_vf(vf, ctx->v_opcode, v_ret,
+ 				    (u8 *)resp, len);
+@@ -1797,6 +1801,7 @@ int ice_vc_add_fdir_fltr(struct ice_vf *
+ 	struct virtchnl_fdir_add *stat = NULL;
+ 	struct virtchnl_fdir_fltr_conf *conf;
+ 	enum virtchnl_status_code v_ret;
++	struct ice_vsi *vf_vsi;
+ 	struct device *dev;
+ 	struct ice_pf *pf;
+ 	int is_tun = 0;
+@@ -1805,6 +1810,17 @@ int ice_vc_add_fdir_fltr(struct ice_vf *
+ 
+ 	pf = vf->pf;
+ 	dev = ice_pf_to_dev(pf);
++	vf_vsi = ice_get_vf_vsi(vf);
++
++#define ICE_VF_MAX_FDIR_FILTERS	128
++	if (!ice_fdir_num_avail_fltr(&pf->hw, vf_vsi) ||
++	    vf->fdir.fdir_fltr_cnt_total >= ICE_VF_MAX_FDIR_FILTERS) {
++		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
++		dev_err(dev, "Max number of FDIR filters for VF %d is reached\n",
++			vf->vf_id);
++		goto err_exit;
++	}
++
+ 	ret = ice_vc_fdir_param_check(vf, fltr->vsi_id);
+ 	if (ret) {
+ 		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
+--- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h
++++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h
+@@ -29,6 +29,7 @@ struct ice_vf_fdir_ctx {
+ struct ice_vf_fdir {
+ 	u16 fdir_fltr_cnt[ICE_FLTR_PTYPE_MAX][ICE_FD_HW_SEG_MAX];
+ 	int prof_entry_cnt[ICE_FLTR_PTYPE_MAX][ICE_FD_HW_SEG_MAX];
++	u16 fdir_fltr_cnt_total;
+ 	struct ice_fd_hw_prof **fdir_prof;
+ 
+ 	struct idr fdir_rule_idr;
 
 
