@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EAC433A9;
-	Tue, 30 Jul 2024 16:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABE01A6192;
+	Tue, 30 Jul 2024 16:33:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357200; cv=none; b=XNYRoPJmV1G/fq75dPpJf7iD7sYWyrRgJb66nkWc6KvTLcJZMZ4pKsdwpz9LAStjdx+mAD1/ct1RNY+wVPECB5WLfOBsaJ68IJJsqADYPLWQ4XCpTzhOmUp+8URd376Vozpz6eYLUNTFsTIbbaWZY6zdTADDlYVMClyngHxc4eQ=
+	t=1722357203; cv=none; b=bGqRHuYvjfLmYlBVixV27NuCjv30JFCf8JKohvGEsR9hsWoLbdn7+FtzZh/xdSDP5PUdGMdbiSdcVpck6PTk55bd8BRH/101GhE96vQfqNrprR6chJoD/JL+DEPnemAM24Xg3oFbLGB1D2UCMCzelSNEPl/BAeRu8PmwC4vUXQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357200; c=relaxed/simple;
-	bh=vs7GslxtXpjFhnHiYymjhMtZ21if8PyUxMqcuUbWlSU=;
+	s=arc-20240116; t=1722357203; c=relaxed/simple;
+	bh=cuta3MJXN1rjRClJwf7qpa4JwnPF0gSwZ/pumn6UOTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D3mx9n/w1/Aurbv2qpKquiGvvnh6yxkJgVba/fN/fcFxJsxCh3fQxh4sXRsJXAJzR09hSgeV5+HMkv/emhoT9bF0BP7Fh8OEcTOIMEwprbBoCtGCzTk669fMK2s0xGn7amIWUN/o4LekIMwlSJLRcGOTN0KEHt+vCCl3AN/6ol0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nXlI4VOg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oz6IHIGT0x99Of73ZTi6wh6eghNvY5vvUJTyhCT3kDDTiJp5kAFXrx4SrLk28VwsBoLbFnr7QsBAUpXLTqxF8+s6A/l47SgsSzoLkgHxQu2sfcn0KgCwDc3tqo2IInfZEYb4C+TF7K/Luuz0hEFitD1CO3Onl1cMc3/hx62cq7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jeRNVdzU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nXlI4VOg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACC59C4AF0C;
-	Tue, 30 Jul 2024 16:33:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jeRNVdzU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1BA2C4AF0C;
+	Tue, 30 Jul 2024 16:33:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357200;
-	bh=vs7GslxtXpjFhnHiYymjhMtZ21if8PyUxMqcuUbWlSU=;
+	s=korg; t=1722357203;
+	bh=cuta3MJXN1rjRClJwf7qpa4JwnPF0gSwZ/pumn6UOTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXlI4VOgBgGwfZkftcj617v+s7TmKdMBsyP4QrLm6O/xPYGTZYe1IVvnR6dLCZW/x
-	 rw9XoIFtrPwVkq2uQlxoy7DoM8x3KRjSAIYri0ymSYX8tMgt7wmWrjlZ5yyngn4wnL
-	 Z/ClEZGw8TPAF12LaTWUz53BfVdtpbzwQnSZlR6s=
+	b=jeRNVdzUhO0CqnNDDm+4F992cNlbR1V9pDUSjJRUHUPJ6z0lJof+LLX3ER6VjxMjo
+	 PC94OA0zQumdWSOEttnyMlsbt1A7o+Au67A3uZ/Y7fCp9CNT1cpkiSRkoTJ8yv45HC
+	 Mj4IKbc21rDAume6qBAPHjtzc9hhHLI5x0QuCpiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Herv=C3=A9=20Codina?= <herve.codina@bootlin.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 232/809] wifi: virt_wifi: avoid reporting connection success with wrong SSID
-Date: Tue, 30 Jul 2024 17:41:48 +0200
-Message-ID: <20240730151733.771137239@linuxfoundation.org>
+Subject: [PATCH 6.6 229/568] Revert "leds: led-core: Fix refcount leak in of_led_get()"
+Date: Tue, 30 Jul 2024 17:45:36 +0200
+Message-ID: <20240730151648.833433690@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,102 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit b5d14b0c6716fad7f0c94ac6e1d6f60a49f985c7 ]
+[ Upstream commit 940b27161afc6ec53fc66245a4fb3518394cdc92 ]
 
-When user issues a connection with a different SSID than the one
-virt_wifi has advertised, the __cfg80211_connect_result() will
-trigger the warning: WARN_ON(bss_not_found).
+This reverts commit da1afe8e6099980fe1e2fd7436dca284af9d3f29.
 
-The issue is because the connection code in virt_wifi does not
-check the SSID from user space (it only checks the BSSID), and
-virt_wifi will call cfg80211_connect_result() with WLAN_STATUS_SUCCESS
-even if the SSID is different from the one virt_wifi has advertised.
-Eventually cfg80211 won't be able to find the cfg80211_bss and generate
-the warning.
+Commit 699a8c7c4bd3 ("leds: Add of_led_get() and led_put()"), introduced in
+5.5, added of_led_get() and led_put() but missed a put_device() in
+led_put(), thus creating a leak in case the consumer device is removed.
 
-Fixed it by checking the SSID (from user space) in the connection code.
+Arguably device removal was not very popular, so this went apparently
+unnoticed until 2022. In January 2023 two different patches got merged to
+fix the same bug:
 
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Reported-by: syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
-Link: https://patch.msgid.link/20240705023756.10954-1-en-wei.wu@canonical.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+ - commit da1afe8e6099 ("leds: led-core: Fix refcount leak in of_led_get()")
+ - commit 445110941eb9 ("leds: led-class: Add missing put_device() to led_put()")
+
+They fix the bug in two different ways, which creates no patch conflicts,
+and both were merged in v6.2. The result is that now there is one more
+put_device() than get_device()s, instead of one less.
+
+Arguably device removal is not very popular yet, so this apparently hasn't
+been noticed as well up to now. But it blew up here while I'm working with
+device tree overlay insertion and removal. The symptom is an apparently
+unrelated list of oopses on device removal, with reasons:
+
+  kernfs: can not remove 'uevent', no directory
+  kernfs: can not remove 'brightness', no directory
+  kernfs: can not remove 'max_brightness', no directory
+  ...
+
+Here sysfs fails removing attribute files, which is because the device name
+changed and so the sysfs path. This is because the device name string got
+corrupted, which is because it got freed too early and its memory reused.
+
+Different symptoms could appear in different use cases.
+
+Fix by removing one of the two fixes.
+
+The choice was to remove commit da1afe8e6099 because:
+
+ * it is calling put_device() inside of_led_get() just after getting the
+   device, thus it is basically not refcounting the LED device at all
+   during its entire lifetime
+ * it does not add a corresponding put_device() in led_get(), so it fixes
+   only the OF case
+
+The other fix (445110941eb9) is adding the put_device() in led_put() so it
+covers the entire lifetime, and it works even in the non-DT case.
+
+Fixes: da1afe8e6099 ("leds: led-core: Fix refcount leak in of_led_get()")
+Co-developed-by: Hervé Codina <herve.codina@bootlin.com>
+Signed-off-by: Hervé Codina <herve.codina@bootlin.com>
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://lore.kernel.org/r/20240625-led-class-device-leak-v2-1-75fdccf47421@bootlin.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/virt_wifi.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/leds/led-class.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
-index 6a84ec58d618b..d2271a7644a01 100644
---- a/drivers/net/wireless/virtual/virt_wifi.c
-+++ b/drivers/net/wireless/virtual/virt_wifi.c
-@@ -136,6 +136,8 @@ static struct ieee80211_supported_band band_5ghz = {
- /* Assigned at module init. Guaranteed locally-administered and unicast. */
- static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
+diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+index ba1be15cfd8ea..c66d1bead0a4a 100644
+--- a/drivers/leds/led-class.c
++++ b/drivers/leds/led-class.c
+@@ -258,7 +258,6 @@ struct led_classdev *of_led_get(struct device_node *np, int index)
  
-+#define VIRT_WIFI_SSID "VirtWifi"
-+
- static void virt_wifi_inform_bss(struct wiphy *wiphy)
- {
- 	u64 tsf = div_u64(ktime_get_boottime_ns(), 1000);
-@@ -146,8 +148,8 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
- 		u8 ssid[8];
- 	} __packed ssid = {
- 		.tag = WLAN_EID_SSID,
--		.len = 8,
--		.ssid = "VirtWifi",
-+		.len = strlen(VIRT_WIFI_SSID),
-+		.ssid = VIRT_WIFI_SSID,
- 	};
+ 	led_dev = class_find_device_by_of_node(&leds_class, led_node);
+ 	of_node_put(led_node);
+-	put_device(led_dev);
  
- 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
-@@ -213,6 +215,8 @@ struct virt_wifi_netdev_priv {
- 	struct net_device *upperdev;
- 	u32 tx_packets;
- 	u32 tx_failed;
-+	u32 connect_requested_ssid_len;
-+	u8 connect_requested_ssid[IEEE80211_MAX_SSID_LEN];
- 	u8 connect_requested_bss[ETH_ALEN];
- 	bool is_up;
- 	bool is_connected;
-@@ -229,6 +233,12 @@ static int virt_wifi_connect(struct wiphy *wiphy, struct net_device *netdev,
- 	if (priv->being_deleted || !priv->is_up)
- 		return -EBUSY;
- 
-+	if (!sme->ssid)
-+		return -EINVAL;
-+
-+	priv->connect_requested_ssid_len = sme->ssid_len;
-+	memcpy(priv->connect_requested_ssid, sme->ssid, sme->ssid_len);
-+
- 	could_schedule = schedule_delayed_work(&priv->connect, HZ * 2);
- 	if (!could_schedule)
- 		return -EBUSY;
-@@ -252,12 +262,15 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
- 	u8 *requested_bss = priv->connect_requested_bss;
- 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
-+	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
-+			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
-+				  priv->connect_requested_ssid_len);
- 	u16 status = WLAN_STATUS_SUCCESS;
- 
- 	if (is_zero_ether_addr(requested_bss))
- 		requested_bss = NULL;
- 
--	if (!priv->is_up || (requested_bss && !right_addr))
-+	if (!priv->is_up || (requested_bss && !right_addr) || !right_ssid)
- 		status = WLAN_STATUS_UNSPECIFIED_FAILURE;
- 	else
- 		priv->is_connected = true;
+ 	return led_module_get(led_dev);
+ }
 -- 
 2.43.0
 
