@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4111A619B;
-	Tue, 30 Jul 2024 16:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1CB51A6161;
+	Tue, 30 Jul 2024 16:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356947; cv=none; b=neKmwffNDX8qX61QjgQMGIh0xEhcjemNrIVxftfsDu+YoCwDarAt8ml1CXFOF2ky7ovDtaPDINvM6aaG2RfF6eObXcF7rf6BtQXXzzn74LVC/h0JLrAEjORt5QHXJEUDJ+kxjlHculKP0L8C4vKjouJlZN4iTJ6ZSh0pPHluSWw=
+	t=1722356951; cv=none; b=Xtyx9lmUheUIYpxJfSQ2Xo3E00Zapa04bMkZs+XWQE7IMghBdK13Kg7DlkwTEcs6rCGu600C1cAOpeipE5aB27jc250vW33vAgZM6+o0KuTr+m3ToAnHTAOZmRHQiD6TK8dpKenMvu+QQUjs/HjU9pxMbukY6A4vV/mkXioETsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356947; c=relaxed/simple;
-	bh=X/4S1RI71JrcOKSz/u3PqqSLtkrH0+Mlo8zm0F/b3kQ=;
+	s=arc-20240116; t=1722356951; c=relaxed/simple;
+	bh=THVp247Wgl0yfNHxqmgxjMtGBuFBdiZAVapElEku5Gg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gtZJEOE9gaJRsA+gEVwN4Hql2PWdDJ7mT48yuwFUvi7GsNSHFHzLNChzrfiWWvsonxTnQG2tIwi4aoOoMe3zK3jjQe0MMx9JYvsC1dpakcVZ3oEn6K1dOFUG4BS6JWVSrNYlFPT7RUL3CY4P/D/VVJNwNRsG3cEyi1KhYKWPbzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WKGrAa18; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=edZ9UUqDeFHXtMJ8PnQglT4tVe6MPLhIacLtOlBwo+07xNPQ7QRUMcE6yGlyrTNNh5oJE5EFe6gQJuS/TezVnSA2QclZM70MoD+G3AmZSOBnyNROuG2i+X4dJ0vsk2vv4lO1WFxXlkBP0uVOkEQSSckTpIHgOr2vPBFI1d+kXbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoLM5civ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WKGrAa18"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F4BC32782;
-	Tue, 30 Jul 2024 16:29:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoLM5civ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53855C32782;
+	Tue, 30 Jul 2024 16:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356947;
-	bh=X/4S1RI71JrcOKSz/u3PqqSLtkrH0+Mlo8zm0F/b3kQ=;
+	s=korg; t=1722356950;
+	bh=THVp247Wgl0yfNHxqmgxjMtGBuFBdiZAVapElEku5Gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WKGrAa18HdLB84ZYuC47I0hh5VLkkKLWBu3BF0w0ZcBTUYQW1uy4PUYTKRGzx0xio
-	 VZzQPiL0LFWf1tDg5eJJRoda1NfGxjGbax0OYwg7raeIwYwQHCqkMocMNRTDPiDz5s
-	 Mr3SPqJ/9DPa3MDY8RFk4GMYyOJfvsBuI6SP31Nk=
+	b=GoLM5civCYOL7jcVC0gyjpYS6pAfysaER4A/eA2el9vnTyOhdRk3bszn+TgwrxioH
+	 P2TUjlu7aSkXF3OpRpqqq59VoyGVsRBWuUkpVyA6r4BDd/9xKshj1o/798g9YgO92r
+	 3gkzs3/4wwvJBSPLZidGd0KBpk07suvcVNmykF/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Yashin <dmt.yashin@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Donglin Peng <dolinux.peng@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 244/440] pinctrl: rockchip: update rk3308 iomux routes
-Date: Tue, 30 Jul 2024 17:47:57 +0200
-Message-ID: <20240730151625.382517231@linuxfoundation.org>
+Subject: [PATCH 6.10 204/809] libbpf: Checking the btf_type kind when fixing variable offsets
+Date: Tue, 30 Jul 2024 17:41:20 +0200
+Message-ID: <20240730151732.664895750@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +49,80 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Yashin <dmt.yashin@gmail.com>
+From: Donglin Peng <dolinux.peng@gmail.com>
 
-[ Upstream commit a8f2548548584549ea29d43431781d67c4afa42b ]
+[ Upstream commit cc5083d1f3881624ad2de1f3cbb3a07e152cb254 ]
 
-Some of the rk3308 iomux routes in rk3308_mux_route_data belong to
-the rk3308b SoC. Remove them and correct i2c3 routes.
+I encountered an issue when building the test_progs from the repository [1]:
 
-Fixes: 7825aeb7b208 ("pinctrl: rockchip: add rk3308 SoC support")
-Signed-off-by: Dmitry Yashin <dmt.yashin@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20240515121634.23945-2-dmt.yashin@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+  $ pwd
+  /work/Qemu/x86_64/linux-6.10-rc2/tools/testing/selftests/bpf/
+
+  $ make test_progs V=1
+  [...]
+  ./tools/sbin/bpftool gen object ./ip_check_defrag.bpf.linked2.o ./ip_check_defrag.bpf.linked1.o
+  libbpf: failed to find symbol for variable 'bpf_dynptr_slice' in section '.ksyms'
+  Error: failed to link './ip_check_defrag.bpf.linked1.o': No such file or directory (2)
+  [...]
+
+Upon investigation, I discovered that the btf_types referenced in the '.ksyms'
+section had a kind of BTF_KIND_FUNC instead of BTF_KIND_VAR:
+
+  $ bpftool btf dump file ./ip_check_defrag.bpf.linked1.o
+  [...]
+  [2] DATASEC '.ksyms' size=0 vlen=2
+        type_id=16 offset=0 size=0 (FUNC 'bpf_dynptr_from_skb')
+        type_id=17 offset=0 size=0 (FUNC 'bpf_dynptr_slice')
+  [...]
+  [16] FUNC 'bpf_dynptr_from_skb' type_id=82 linkage=extern
+  [17] FUNC 'bpf_dynptr_slice' type_id=85 linkage=extern
+  [...]
+
+For a detailed analysis, please refer to [2]. We can add a kind checking to
+fix the issue.
+
+  [1] https://github.com/eddyz87/bpf/tree/binsort-btf-dedup
+  [2] https://lore.kernel.org/all/0c0ef20c-c05e-4db9-bad7-2cbc0d6dfae7@oracle.com/
+
+Fixes: 8fd27bf69b86 ("libbpf: Add BPF static linker BTF and BTF.ext support")
+Signed-off-by: Donglin Peng <dolinux.peng@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Alan Maguire <alan.maguire@oracle.com>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/bpf/20240619122355.426405-1-dolinux.peng@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ tools/lib/bpf/linker.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index d26682f21ad1e..6d140a60888c2 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -916,9 +916,8 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(0, RK_PC3, 1, 0x314, BIT(16 + 0) | BIT(0)), /* rtc_clk */
- 	RK_MUXROUTE_SAME(1, RK_PC6, 2, 0x314, BIT(16 + 2) | BIT(16 + 3)), /* uart2_rxm0 */
- 	RK_MUXROUTE_SAME(4, RK_PD2, 2, 0x314, BIT(16 + 2) | BIT(16 + 3) | BIT(2)), /* uart2_rxm1 */
--	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x608, BIT(16 + 8) | BIT(16 + 9)), /* i2c3_sdam0 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(8)), /* i2c3_sdam1 */
--	RK_MUXROUTE_SAME(2, RK_PA0, 3, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(9)), /* i2c3_sdam2 */
-+	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x314, BIT(16 + 4)), /* i2c3_sdam0 */
-+	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x314, BIT(16 + 4) | BIT(4)), /* i2c3_sdam1 */
- 	RK_MUXROUTE_SAME(1, RK_PA3, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclktxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PA4, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclkrxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x308, BIT(16 + 3) | BIT(3)), /* i2s-8ch-1-sclktxm1 */
-@@ -927,18 +926,6 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(1, RK_PB6, 4, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* pdm-clkm1 */
- 	RK_MUXROUTE_SAME(2, RK_PA6, 2, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* pdm-clkm2 */
- 	RK_MUXROUTE_SAME(2, RK_PA4, 3, 0x600, BIT(16 + 2) | BIT(2)), /* pdm-clkm-m2 */
--	RK_MUXROUTE_SAME(3, RK_PB2, 3, 0x314, BIT(16 + 9)), /* spi1_miso */
--	RK_MUXROUTE_SAME(2, RK_PA4, 2, 0x314, BIT(16 + 9) | BIT(9)), /* spi1_miso_m1 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 3, 0x314, BIT(16 + 10) | BIT(16 + 11)), /* owire_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 7, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(10)), /* owire_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 5, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(11)), /* owire_m2 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 2, 0x314, BIT(16 + 12) | BIT(16 + 13)), /* can_rxd_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 5, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* can_rxd_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 4, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* can_rxd_m2 */
--	RK_MUXROUTE_SAME(1, RK_PC4, 3, 0x314, BIT(16 + 14)), /* mac_rxd0_m0 */
--	RK_MUXROUTE_SAME(4, RK_PA2, 2, 0x314, BIT(16 + 14) | BIT(14)), /* mac_rxd0_m1 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 4, 0x314, BIT(16 + 15)), /* uart3_rx */
--	RK_MUXROUTE_SAME(0, RK_PC1, 3, 0x314, BIT(16 + 15) | BIT(15)), /* uart3_rx_m1 */
- };
+diff --git a/tools/lib/bpf/linker.c b/tools/lib/bpf/linker.c
+index 0d4be829551b5..5a583053e3119 100644
+--- a/tools/lib/bpf/linker.c
++++ b/tools/lib/bpf/linker.c
+@@ -2213,10 +2213,17 @@ static int linker_fixup_btf(struct src_obj *obj)
+ 		vi = btf_var_secinfos(t);
+ 		for (j = 0, m = btf_vlen(t); j < m; j++, vi++) {
+ 			const struct btf_type *vt = btf__type_by_id(obj->btf, vi->type);
+-			const char *var_name = btf__str_by_offset(obj->btf, vt->name_off);
+-			int var_linkage = btf_var(vt)->linkage;
++			const char *var_name;
++			int var_linkage;
+ 			Elf64_Sym *sym;
  
- static struct rockchip_mux_route_data rk3328_mux_route_data[] = {
++			/* could be a variable or function */
++			if (!btf_is_var(vt))
++				continue;
++
++			var_name = btf__str_by_offset(obj->btf, vt->name_off);
++			var_linkage = btf_var(vt)->linkage;
++
+ 			/* no need to patch up static or extern vars */
+ 			if (var_linkage != BTF_VAR_GLOBAL_ALLOCATED)
+ 				continue;
 -- 
 2.43.0
 
