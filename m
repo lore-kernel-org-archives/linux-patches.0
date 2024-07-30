@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7BA1A76B1;
-	Tue, 30 Jul 2024 17:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75EA1A76B4;
+	Tue, 30 Jul 2024 17:18:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359910; cv=none; b=TObDhxI8rvg2WgK0FQHEocJAnG5PcxsuBxWTYU1y9rU2PL/YsE5j7XLIBFRV687t5EGp+oRv/tITri+gUStfSudAcHBaSFCtvMrQjHoUmoEKTg9lK4NuH2HACMV9hP5FRlun4DzqgckTTFAev6ahZCNMcVa1yO7mjjrXAN8S7bc=
+	t=1722359913; cv=none; b=dyWVRv5PQQWmuCG0ZRNj/smuBO4UZQaUkvHcUHzLMu5mqticwyYp1BYdJhTAoR9E182Yu9O5Rht/uBaji5KSEvZ3nsYOinxjtPRE1FDysH1gLqUScCZ4MEx+jYFoo7hQsf/Hh4YD0Ouy55bP1ugaBayyiJhtbPNWoZJre3kSC7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359910; c=relaxed/simple;
-	bh=Sug49TSx59Hgs99bPnXR4LdY1W8qa1rHlut1kCxZbsE=;
+	s=arc-20240116; t=1722359913; c=relaxed/simple;
+	bh=YhKxCORgQ8IWfbE2IWXqdoK59ruktKgk2+t2ALqt8qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nEy9Ld7aR1fgGpBb7EnDXyhPv9jHFn4diAD4NVPTmAVfzctY4tSNkMVmpmtsoPcCGOtYAQQc9plrmi3Czmv8RkH1K9H2u0DGPXVv2Jghqjm9G6vSgBcAA3A8G+hxaMMLgWrX+iiZg7IFEskfHYbLaI1IDVm0AVz5EkuYhWysCEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtlmVQ6v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WBQSqjJmOQ4PeCJjZWbsZxx1A3adpOUoO4mKBh7RhTeLD9ArYodVMnIcWyODPYVo/Y7bP8wWcYAJowcNucQFc/g8iffXeS+ywUKMZtu+mjHMmJ1jU1vpJ4EBPWDiGqX4PmTt65YIykW7GykXNZ17OJ+DKtmKeUX8QTbKM7jZVko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuc/03iH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtlmVQ6v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97567C32782;
-	Tue, 30 Jul 2024 17:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuc/03iH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1C3C4AF0A;
+	Tue, 30 Jul 2024 17:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359910;
-	bh=Sug49TSx59Hgs99bPnXR4LdY1W8qa1rHlut1kCxZbsE=;
+	s=korg; t=1722359913;
+	bh=YhKxCORgQ8IWfbE2IWXqdoK59ruktKgk2+t2ALqt8qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtlmVQ6vQ7dNC5uvFp7AwDFyzLuKUUFgbfmxjZTqaUA81h7sfdxI5tRwM6j8iXm9a
-	 +7PDdjPS+9I7hSnuOLeN4L28PGkObZHs06FhtzW7OxYmCl3e62M/YoDfVwZ5JSwPvT
-	 wwtQeQpbGGJEfEZLKIlcqTeODwpmLrNjwbtLS4/Q=
+	b=zuc/03iHb3wc7AJVe5VSZbjcyr+Y1M7GOTwJx/bZl6+UfSd8PHgGoohPSWAogM6j7
+	 pIhESMnxY+xadpqcZe4hlBxtCBO8g8Kt4RbvvSx8EqAWdHnoKXyh+zvCFwf0YVwMnb
+	 4F6rgItCVq/DvMW6+jYkQbrea7w0G9Iv22aIREH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wilkins <steve.wilkins@raymarine.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 554/568] spi: microchip-core: fix init function not setting the master and motorola modes
-Date: Tue, 30 Jul 2024 17:51:01 +0200
-Message-ID: <20240730151701.813434998@linuxfoundation.org>
+	Julian Orth <ju.orth@gmail.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Tejun Heo <tj@kernel.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.10 553/809] kernel: rerun task_work while freezing in get_signal()
+Date: Tue, 30 Jul 2024 17:47:09 +0200
+Message-ID: <20240730151746.600516925@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,76 +49,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steve Wilkins <steve.wilkins@raymarine.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 3a5e76283672efddf47cea39ccfe9f5735cc91d5 ]
+commit 943ad0b62e3c21f324c4884caa6cb4a871bca05c upstream.
 
-mchp_corespi_init() reads the CONTROL register, sets the master and
-motorola bits, but doesn't write the value back to the register. The
-function also doesn't ensure the controller is disabled at the start,
-which may present a problem if the controller was used by an
-earlier boot stage as some settings (including the mode) can only be
-modified while the controller is disabled.
+io_uring can asynchronously add a task_work while the task is getting
+freezed. TIF_NOTIFY_SIGNAL will prevent the task from sleeping in
+do_freezer_trap(), and since the get_signal()'s relock loop doesn't
+retry task_work, the task will spin there not being able to sleep
+until the freezing is cancelled / the task is killed / etc.
 
-Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
-Signed-off-by: Steve Wilkins <steve.wilkins@raymarine.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20240715-designing-thus-05f7c26e1da7@wendy
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Run task_works in the freezer path. Keep the patch small and simple
+so it can be easily back ported, but we might need to do some cleaning
+after and look if there are other places with similar problems.
+
+Cc: stable@vger.kernel.org
+Link: https://github.com/systemd/systemd/issues/33626
+Fixes: 12db8b690010c ("entry: Add support for TIF_NOTIFY_SIGNAL")
+Reported-by: Julian Orth <ju.orth@gmail.com>
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/89ed3a52933370deaaf61a0a620a6ac91f1e754d.1720634146.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-microchip-core.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ kernel/signal.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
-index 096008d006009..6f59754c33472 100644
---- a/drivers/spi/spi-microchip-core.c
-+++ b/drivers/spi/spi-microchip-core.c
-@@ -292,17 +292,13 @@ static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *
- 	unsigned long clk_hz;
- 	u32 control = mchp_corespi_read(spi, REG_CONTROL);
- 
--	control |= CONTROL_MASTER;
-+	control &= ~CONTROL_ENABLE;
-+	mchp_corespi_write(spi, REG_CONTROL, control);
- 
-+	control |= CONTROL_MASTER;
- 	control &= ~CONTROL_MODE_MASK;
- 	control |= MOTOROLA_MODE;
- 
--	mchp_corespi_set_framesize(spi, DEFAULT_FRAMESIZE);
--
--	/* max. possible spi clock rate is the apb clock rate */
--	clk_hz = clk_get_rate(spi->clk);
--	host->max_speed_hz = clk_hz;
--
- 	/*
- 	 * The controller must be configured so that it doesn't remove Chip
- 	 * Select until the entire message has been transferred, even if at
-@@ -311,11 +307,16 @@ static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *
- 	 * BIGFIFO mode is also enabled, which sets the fifo depth to 32 frames
- 	 * for the 8 bit transfers that this driver uses.
- 	 */
--	control = mchp_corespi_read(spi, REG_CONTROL);
- 	control |= CONTROL_SPS | CONTROL_BIGFIFO;
- 
- 	mchp_corespi_write(spi, REG_CONTROL, control);
- 
-+	mchp_corespi_set_framesize(spi, DEFAULT_FRAMESIZE);
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -2600,6 +2600,14 @@ static void do_freezer_trap(void)
+ 	spin_unlock_irq(&current->sighand->siglock);
+ 	cgroup_enter_frozen();
+ 	schedule();
 +
-+	/* max. possible spi clock rate is the apb clock rate */
-+	clk_hz = clk_get_rate(spi->clk);
-+	host->max_speed_hz = clk_hz;
-+
- 	mchp_corespi_enable_ints(spi);
++	/*
++	 * We could've been woken by task_work, run it to clear
++	 * TIF_NOTIFY_SIGNAL. The caller will retry if necessary.
++	 */
++	clear_notify_signal();
++	if (unlikely(task_work_pending(current)))
++		task_work_run();
+ }
  
- 	/*
--- 
-2.43.0
-
+ static int ptrace_signal(int signr, kernel_siginfo_t *info, enum pid_type type)
 
 
