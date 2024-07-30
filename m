@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2AD1A6195;
-	Tue, 30 Jul 2024 16:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0891A6195;
+	Tue, 30 Jul 2024 16:54:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358464; cv=none; b=knneozUr8ENfy01E8CH4cLRQvB9OXhc/Yc3RhK511lfZVJ0Vj2uzutfhDFQu1d8mu9TIWMi1q5HTjuSqjvwW4KuUascUMpDAB6HA4G/t2ZvXO5Q3BoCEKMmVbx8x2QOLr7sSIVuqJvGc9sqxQ/UKgXt6juXZcpYwGGq7Wm4Syw4=
+	t=1722358468; cv=none; b=DCtqHxcpZk+anrkMZ0bu/rVhKxtVFbCP+FZIsJgOduZkDQ3wE4cjiZ6JQGW6MCEu1gPo9lvlQcqhlWqbwZvrlNnNoui/MkyfrC+LbeP/0faR9M6r5aD+goioqbey4vsylWD89y3xN5bLjmx1a4I8wlHLvn7BQeXfrK5NB6vr2Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358464; c=relaxed/simple;
-	bh=5yXoxf8bi9Kn4wsxDHq4/yyeWc7w+R4Tgm7miYNcsSk=;
+	s=arc-20240116; t=1722358468; c=relaxed/simple;
+	bh=8nS4yOd/GEyt4TsYwRzHnyGWqqrTrrLKaFI7+fzYKXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hz5nksLiYALJFgs293gxQCvnnX25uRrq5ubSsLScrhnUusXJ0m4X8Gmc1l3EgHFEyoK3wZ/D0jbnSgYg1P6R8GrzfGmsZkYe2rqNUEb8W/qM7WI4iqKha7dfnbeKcnF8CeNmO1yuTjIxzp7kSjBerJ9OfRjvI6uDVN2bSmtZ6n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G+iTjo0F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eVKkLCdjLQsnrY2Y908LFu9LD6D2y9PR4ml3ajeGmzAST6p5WcsS1nAYLVvlv3Z4EdZskdWJlILB0JPWBHu+QqtwKM0DbE05A4S/9+acfZd1lFhlKUt0px5A59jzFlF8Ns4/fsM+1yuiPhN5XEBZ1A61aaUP8QZv5Rk8/mHChQM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYBp7+Pv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G+iTjo0F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06B53C32782;
-	Tue, 30 Jul 2024 16:54:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYBp7+Pv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE36C32782;
+	Tue, 30 Jul 2024 16:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358464;
-	bh=5yXoxf8bi9Kn4wsxDHq4/yyeWc7w+R4Tgm7miYNcsSk=;
+	s=korg; t=1722358467;
+	bh=8nS4yOd/GEyt4TsYwRzHnyGWqqrTrrLKaFI7+fzYKXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G+iTjo0FYgmTxCZJC6eJtkHiTVG8aBzH+qRk1I2JTk8Ou0FD8zYHUhtyWQehc+yBX
-	 l5LkjMsQPMqir70pljTE9LoP01+/8dF7oPa77k8jOr31MsNE+hQ3QQOVrcL8+D9dZo
-	 AS77bWGOpm3PKumkDjjNeyBP3DArykDbD/0izqZ8=
+	b=LYBp7+PvAl7KAhymVfFm2/M/9YmEaj877Z3J0xPbtPBOUnXcAAWwQ5Rq7igKzGaOu
+	 ulVvS6lI8SZBOw0xvZDeHj7VFrSUKl+TOthj4ANNskxY6SeJsJrfGMcgXqbj9jAmon
+	 qxvf/ZnAGW0/3i6fu2b0ym5chONtL5sOyOaIOsZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Heusel <christian@heusel.eu>,
-	mavrix#kernel@simplelogin.com,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 364/568] x86/efistub: Revert to heap allocated boot_params for PE entrypoint
-Date: Tue, 30 Jul 2024 17:47:51 +0200
-Message-ID: <20240730151654.088255404@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 393/440] kdb: address -Wformat-security warnings
+Date: Tue, 30 Jul 2024 17:50:26 +0200
+Message-ID: <20240730151631.155264233@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit ae835a96d72cd025421910edb0e8faf706998727 upstream.
+[ Upstream commit 70867efacf4370b6c7cdfc7a5b11300e9ef7de64 ]
 
-This is a partial revert of commit
+When -Wformat-security is not disabled, using a string pointer
+as a format causes a warning:
 
-  8117961d98f ("x86/efi: Disregard setup header of loaded image")
+kernel/debug/kdb/kdb_io.c: In function 'kdb_read':
+kernel/debug/kdb/kdb_io.c:365:36: error: format not a string literal and no format arguments [-Werror=format-security]
+  365 |                         kdb_printf(kdb_prompt_str);
+      |                                    ^~~~~~~~~~~~~~
+kernel/debug/kdb/kdb_io.c: In function 'kdb_getstr':
+kernel/debug/kdb/kdb_io.c:456:20: error: format not a string literal and no format arguments [-Werror=format-security]
+  456 |         kdb_printf(kdb_prompt_str);
+      |                    ^~~~~~~~~~~~~~
 
-which triggers boot issues on older Dell laptops. As it turns out,
-switching back to a heap allocation for the struct boot_params
-constructed by the EFI stub works around this, even though it is unclear
-why.
+Use an explcit "%s" format instead.
 
-Cc: Christian Heusel <christian@heusel.eu>
-Reported-by: <mavrix#kernel@simplelogin.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240528121154.3662553-1-arnd@kernel.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/x86-stub.c |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ kernel/debug/kdb/kdb_io.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -469,11 +469,12 @@ void __noreturn efi_stub_entry(efi_handl
- efi_status_t __efiapi efi_pe_entry(efi_handle_t handle,
- 				   efi_system_table_t *sys_table_arg)
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index b1f79d5a5a60e..fbbe198b056d4 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -357,7 +357,7 @@ static char *kdb_read(char *buffer, size_t bufsize)
+ 			if (i >= dtab_count)
+ 				kdb_printf("...");
+ 			kdb_printf("\n");
+-			kdb_printf(kdb_prompt_str);
++			kdb_printf("%s",  kdb_prompt_str);
+ 			kdb_printf("%s", buffer);
+ 			if (cp != lastchar)
+ 				kdb_position_cursor(kdb_prompt_str, buffer, cp);
+@@ -449,7 +449,7 @@ char *kdb_getstr(char *buffer, size_t bufsize, const char *prompt)
  {
--	static struct boot_params boot_params __page_aligned_bss;
--	struct setup_header *hdr = &boot_params.hdr;
- 	efi_guid_t proto = LOADED_IMAGE_PROTOCOL_GUID;
-+	struct boot_params *boot_params;
-+	struct setup_header *hdr;
- 	int options_size = 0;
- 	efi_status_t status;
-+	unsigned long alloc;
- 	char *cmdline_ptr;
- 
- 	if (efi_is_native())
-@@ -491,6 +492,13 @@ efi_status_t __efiapi efi_pe_entry(efi_h
- 		efi_exit(handle, status);
- 	}
- 
-+	status = efi_allocate_pages(PARAM_SIZE, &alloc, ULONG_MAX);
-+	if (status != EFI_SUCCESS)
-+		efi_exit(handle, status);
-+
-+	boot_params = memset((void *)alloc, 0x0, PARAM_SIZE);
-+	hdr	    = &boot_params->hdr;
-+
- 	/* Assign the setup_header fields that the kernel actually cares about */
- 	hdr->root_flags	= 1;
- 	hdr->vid_mode	= 0xffff;
-@@ -500,13 +508,15 @@ efi_status_t __efiapi efi_pe_entry(efi_h
- 
- 	/* Convert unicode cmdline to ascii */
- 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
--	if (!cmdline_ptr)
-+	if (!cmdline_ptr) {
-+		efi_free(PARAM_SIZE, alloc);
- 		efi_exit(handle, EFI_OUT_OF_RESOURCES);
-+	}
- 
- 	efi_set_u64_split((unsigned long)cmdline_ptr, &hdr->cmd_line_ptr,
--			  &boot_params.ext_cmd_line_ptr);
-+			  &boot_params->ext_cmd_line_ptr);
- 
--	efi_stub_entry(handle, sys_table_arg, &boot_params);
-+	efi_stub_entry(handle, sys_table_arg, boot_params);
- 	/* not reached */
+ 	if (prompt && kdb_prompt_str != prompt)
+ 		strscpy(kdb_prompt_str, prompt, CMD_BUFLEN);
+-	kdb_printf(kdb_prompt_str);
++	kdb_printf("%s", kdb_prompt_str);
+ 	kdb_nextline = 1;	/* Prompt and input resets line number */
+ 	return kdb_read(buffer, bufsize);
  }
- 
+-- 
+2.43.0
+
 
 
