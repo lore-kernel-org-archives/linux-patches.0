@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA2118B480;
-	Tue, 30 Jul 2024 16:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B22118B482;
+	Tue, 30 Jul 2024 16:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355598; cv=none; b=juGF227LLNt8terpB3HqhNiE0MRwepy0xRTJ0bdQfgzad8vCp/hGlkbxB1et/RDEEuSQBk1OY2rV0dwOBi0sgIuc95KMqHNlQrWa0XOuGAhI8siNq+L9hb8CLua6LsyiozTQ5cY9CGOFqMzyXP24nhvWuMPZ+1XY00fm11hi8fs=
+	t=1722355602; cv=none; b=PKhgSsDP4S7DICd4RqlkrhIdt2UgIOpQeG4nwyO59h+R3q23pa37MrV2VG8VzDqctJdlXAF+om+uNBkCgiC65NzdYRJI2X2u6gtBpOQA/zrmxwW+kuJp0/RjmrnIUInqwdhiqid2dAkW8C/yrobL2/EimaVQ6pKiwiu2ENUVNQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355598; c=relaxed/simple;
-	bh=ZU2rEGjOYJLaNZC40oIZuEPH2JEvtAUNhTXhR4+/py0=;
+	s=arc-20240116; t=1722355602; c=relaxed/simple;
+	bh=SnCCYiLMc7fyZv8bhK3kyVH/Aj9SDdVB5zdcp2wKWZk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pw9Ra6dQDE5vtT7gHorcn/wyCKFoiYN4t+6J6Ll1bAR2R3LmmzCxf+8G6iB90NAcMsMwTOyS8CrZvWeMd48gyRTsUIERLuaCGFADg6Apl+LcUOemqztzNpZHvuy1q7zkmF0xzdFQ/zvc0SuKUr2m8IlWsd+NC8RDhVeJyKhryAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=058U8msW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alPlOloiXcI/iGCHl58/bbWZINV4MKBIc4H2n2KaKLZtJdiVXY+V9zodnvR7dZ1VfTst5yABPxzVp8P2G4k1QUK5A+wJaEV6U3oCfiKpxXIvXOmQLnkeWgigm2EEhRKk8JYb/wv6vsrtFPnm4+27hL+8UcrIu008VEH9R0lVtlA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skP3hWzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="058U8msW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE598C32782;
-	Tue, 30 Jul 2024 16:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skP3hWzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B5A0C32782;
+	Tue, 30 Jul 2024 16:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355598;
-	bh=ZU2rEGjOYJLaNZC40oIZuEPH2JEvtAUNhTXhR4+/py0=;
+	s=korg; t=1722355601;
+	bh=SnCCYiLMc7fyZv8bhK3kyVH/Aj9SDdVB5zdcp2wKWZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=058U8msWIZ8FmKCfL0/Pq5unibfkuE99ehBekyCHCWjGGGbbp0Dp/Nvp6pWeQx4YW
-	 bDBT95eqhcieLBlRL7hGs7Uyb7Rzn7ai6RBpoX1xP6Dk6b3ECSlSpmhOE6YpT2hTso
-	 dkx/ij5P1SMJQxo+PbmdHnngQaCrSePDPbKdkAEQ=
+	b=skP3hWzVaR4c67gZsSJ6hC1zCEJ23foeWpCLGG6B7a0sK+BM1lHPXjgZ6IVO5ZW+o
+	 nqqnFWnPGTuIfIK0eBXQ4MknNzHJXI/nrKwGmeLc8I1Lyxwsq5WGn+Gv2gDdqq3G6Y
+	 lmxhl5qKRhHPmD+QU3j7TDNlS+gmamqdf3KL+n6E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Primoz Fiser <primoz.fiser@norik.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/440] perf/x86/intel/pt: Fix pt_topa_entry_for_page() address calculation
-Date: Tue, 30 Jul 2024 17:45:42 +0200
-Message-ID: <20240730151620.151342484@linuxfoundation.org>
+Subject: [PATCH 6.10 070/809] cpufreq: ti-cpufreq: Handle deferred probe with dev_err_probe()
+Date: Tue, 30 Jul 2024 17:39:06 +0200
+Message-ID: <20240730151727.406604456@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,36 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Primoz Fiser <primoz.fiser@norik.com>
 
-[ Upstream commit 3520b251dcae2b4a27b95cd6f745c54fd658bda5 ]
+[ Upstream commit 101388b8ef1027be72e399beeb97293cce67bb24 ]
 
-Currently, perf allocates an array of page pointers which is limited in
-size by MAX_PAGE_ORDER. That in turn limits the maximum Intel PT buffer
-size to 2GiB. Should that limitation be lifted, the Intel PT driver can
-support larger sizes, except for one calculation in
-pt_topa_entry_for_page(), which is limited to 32-bits.
+Handle deferred probing gracefully by using dev_err_probe() to not
+spam console with unnecessary error messages.
 
-Fix pt_topa_entry_for_page() address calculation by adding a cast.
-
-Fixes: 39152ee51b77 ("perf/x86/intel/pt: Get rid of reverse lookup table for ToPA")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240624201101.60186-4-adrian.hunter@intel.com
+Fixes: f88d152dc739 ("cpufreq: ti: Migrate to dev_pm_opp_set_config()")
+Signed-off-by: Primoz Fiser <primoz.fiser@norik.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/pt.c | 2 +-
+ drivers/cpufreq/ti-cpufreq.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
-index 42a55794004a7..e347e56030fd9 100644
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -989,7 +989,7 @@ pt_topa_entry_for_page(struct pt_buffer *buf, unsigned int pg)
- 	 * order allocations, there shouldn't be many of these.
- 	 */
- 	list_for_each_entry(topa, &buf->tables, list) {
--		if (topa->offset + topa->size > pg << PAGE_SHIFT)
-+		if (topa->offset + topa->size > (unsigned long)pg << PAGE_SHIFT)
- 			goto found;
+diff --git a/drivers/cpufreq/ti-cpufreq.c b/drivers/cpufreq/ti-cpufreq.c
+index 714ed53753fa5..5af85c4cbad0c 100644
+--- a/drivers/cpufreq/ti-cpufreq.c
++++ b/drivers/cpufreq/ti-cpufreq.c
+@@ -417,7 +417,7 @@ static int ti_cpufreq_probe(struct platform_device *pdev)
+ 
+ 	ret = dev_pm_opp_set_config(opp_data->cpu_dev, &config);
+ 	if (ret < 0) {
+-		dev_err(opp_data->cpu_dev, "Failed to set OPP config\n");
++		dev_err_probe(opp_data->cpu_dev, ret, "Failed to set OPP config\n");
+ 		goto fail_put_node;
  	}
  
 -- 
