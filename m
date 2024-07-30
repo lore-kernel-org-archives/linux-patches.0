@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0E115699E;
-	Tue, 30 Jul 2024 16:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747B5148848;
+	Tue, 30 Jul 2024 16:30:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357056; cv=none; b=smSZ5/m8g0/YvgTnOQK/LPmjCD/1MndEhCuQttQCP/L6/X2gg5gOiFMl2ALGOXv8GCysUumXZ1UVPfDG3jEh3p+NnFE+WOgBiR6vCgvcWCmx15aYWOK13wlfZ5CL3XPvShKAXkuVKmVdEBbQDqSiq1+E5gUxPZwjxrpYEe1G8Yc=
+	t=1722357059; cv=none; b=HwVebQER4VUaIUXwV52mBth+ZCZwvkdncgXANUDDZbeLIRtD08KFbVmwgv3iYfeeD7f/J0dsf324Q428RJWx58o9WkB7CuJ2Rma6gvlSlBtAWK47YiOZ9WrOkyBRwBDDM4yXDUn0TTYYCuuSFMK0Cyya2HPPl6I8p/fQNrPP5y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357056; c=relaxed/simple;
-	bh=Qs9VvpHpObE9sYH3JEH4Hev/ds9CVWaT5TdgPErfMWU=;
+	s=arc-20240116; t=1722357059; c=relaxed/simple;
+	bh=bWxkTcqcdLgkgXbe6sZAKL1e92AURLQE1GhWshTE51c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/4qLgK3nbbE17y2lsbN7r3825ByuM2+Wm/czuWmECSfKro6L3+0IUSSRvmO2FA6hvxHNwKXbkmxFiM829uZ6fO1FLD2eeZx7xweMb/xacpKZn7IfqsUVVcftGf9fDP0WmIMmKiSijGe4PyTj5CmrkQxaZdskUcRqA49RMPAXRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IkIkJmBU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HCD5SoeIdzPn0D3pMMI9GW5KfVeytbfTuHvMe7oNfMtWHdFXcbugfU6C2ZcMAOIkMieMw7FTMSOH8pdikyHsWndukIRbeuzozWC4UpaJtjBD8w2QfxE3LSf+u0GLMTqnk9Rj4Dv045RSTBHqz8DZcL0jd+L47zQaC+NVK2lylps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKQITE18; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IkIkJmBU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941E4C4AF0A;
-	Tue, 30 Jul 2024 16:30:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKQITE18"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D99BAC4AF0C;
+	Tue, 30 Jul 2024 16:30:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357056;
-	bh=Qs9VvpHpObE9sYH3JEH4Hev/ds9CVWaT5TdgPErfMWU=;
+	s=korg; t=1722357059;
+	bh=bWxkTcqcdLgkgXbe6sZAKL1e92AURLQE1GhWshTE51c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IkIkJmBURVd32AdCkvjTeKWzw2G1TRUE0J67fKr3C7AnjeFYvmxvKJzP/nlkovuOu
-	 9AokIZcu2VX+jrpxeZK/S9LCd/s9sHJfjGb06PWoSK4AyMbhVPgpWeKv8UmtMQfC7P
-	 CsL+3T+7atxPCmDSdhidLoc46koG/GY4AKGGeqpM=
+	b=wKQITE18uI12HmBEmpUFcLzRHGNVyZxhW719rCVeRMdQ7FnosF0ngqDC+lomSj8Z5
+	 MlYy6YecYpDOdRr0tZihxkatn8gFoS4F1ljC+ncZkBZstvW+Rn3TCIKv7LX4IrooLe
+	 vgufevz4KLUEt2p27GZtahtRUhSdpaWJTRboPD2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Karthikeyan Periyasamy <quic_periyasa@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 254/440] pinctrl: renesas: r8a779g0: Fix (H)SCIF1 suffixes
-Date: Tue, 30 Jul 2024 17:48:07 +0200
-Message-ID: <20240730151625.767527458@linuxfoundation.org>
+Subject: [PATCH 6.10 214/809] wifi: ath12k: fix peer metadata parsing
+Date: Tue, 30 Jul 2024 17:41:30 +0200
+Message-ID: <20240730151733.056050265@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,382 +48,231 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
 
-[ Upstream commit 3cf834a1669ea433aeee4c82c642776899c87451 ]
+[ Upstream commit 1eeafd64c7b455381b77c546e41bc267e13e2809 ]
 
-The Pin Multiplex attachment in Rev.1.10 of the R-Car V4H Series
-Hardware User's Manual still has two alternate pin groups (GP0_14-18
-and GP1_6-10) each named both HSCIF1 and SCIF1.  To differentiate, the
-pin control driver uses "(h)scif1" and "(h)scif1_x", which were
-considered temporary names until the conflict was sorted out.
+Currently, the Rx data path only supports parsing peer metadata of version
+zero. However, the QCN9274 platform configures the peer metadata version
+as V1B. When V1B peer metadata is parsed using the version zero logic,
+invalid data is populated, causing valid packets to be dropped. To address
+this issue, refactor the peer metadata version and add the version based
+parsing to populate the data from peer metadata correctly.
 
-Fix this by adopting R-Car V4M naming:
-  - Rename "(h)scif1" to "(h)scif1_a",
-  - Rename "(h)scif1_x" to "(h)scif1_b".
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
 
-Adopt the R-Car V4M naming "(h)scif1_a" and "(h)scif1_b" to increase
-uniformity.
-
-While at it, remove unneeded separators.
-
-Fixes: ad9bb2fec66262b0 ("pinctrl: renesas: Initial R8A779G0 (R-Car V4H) PFC support")
-Fixes: 050442ae4c74f830 ("pinctrl: renesas: r8a779g0: Add pins, groups and functions")
-Fixes: cf4f7891847bc558 ("pinctrl: renesas: r8a779g0: Add missing HSCIF1_X")
-Fixes: 9c151c2be92becf2 ("pinctrl: renesas: r8a779g0: Add missing SCIF1_X")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/5009130d1867e12abf9b231c8838fd05e2b28bee.1717754960.git.geert+renesas@glider.be
+Fixes: 287033810990 ("wifi: ath12k: add support for peer meta data version")
+Signed-off-by: Karthikeyan Periyasamy <quic_periyasa@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://patch.msgid.link/20240624145418.2043461-1-quic_periyasa@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779g0.c | 208 ++++++++++++-------------
- 1 file changed, 102 insertions(+), 106 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp.h       |  1 +
+ drivers/net/wireless/ath/ath12k/dp_rx.c    | 40 ++++++++++++++++++----
+ drivers/net/wireless/ath/ath12k/hal_desc.h | 26 ++++++++++++--
+ drivers/net/wireless/ath/ath12k/hw.h       |  2 --
+ drivers/net/wireless/ath/ath12k/wmi.c      |  6 ++--
+ drivers/net/wireless/ath/ath12k/wmi.h      | 11 ++++--
+ 6 files changed, 72 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-index 1f64aeab186fc..36e043cff9441 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-@@ -285,13 +285,13 @@
- #define IP1SR0_15_12	FM(MSIOF5_SCK)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR0_19_16	FM(MSIOF5_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR0_23_20	FM(MSIOF2_SS2)		FM(TCLK1)		FM(IRQ2_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR0_27_24	FM(MSIOF2_SS1)		FM(HTX1)		FM(TX1)			F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR0_31_28	FM(MSIOF2_SYNC)		FM(HRX1)		FM(RX1)			F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR0_27_24	FM(MSIOF2_SS1)		FM(HTX1_A)		FM(TX1_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR0_31_28	FM(MSIOF2_SYNC)		FM(HRX1_A)		FM(RX1_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+diff --git a/drivers/net/wireless/ath/ath12k/dp.h b/drivers/net/wireless/ath/ath12k/dp.h
+index 5cf0d21ef184b..4dfbff326030e 100644
+--- a/drivers/net/wireless/ath/ath12k/dp.h
++++ b/drivers/net/wireless/ath/ath12k/dp.h
+@@ -334,6 +334,7 @@ struct ath12k_dp {
+ 	struct dp_srng reo_except_ring;
+ 	struct dp_srng reo_cmd_ring;
+ 	struct dp_srng reo_status_ring;
++	enum ath12k_peer_metadata_version peer_metadata_ver;
+ 	struct dp_srng reo_dst_ring[DP_REO_DST_RING_MAX];
+ 	struct dp_tx_ring tx_ring[DP_TCL_NUM_RING_MAX];
+ 	struct hal_wbm_idle_scatter_list scatter_list[DP_IDLE_SCATTER_BUFS_MAX];
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 44e8d9d7834c4..121f27284be59 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2607,6 +2607,29 @@ static void ath12k_dp_rx_process_received_packets(struct ath12k_base *ab,
+ 	rcu_read_unlock();
+ }
  
- /* IP2SR0 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
--#define IP2SR0_3_0	FM(MSIOF2_TXD)		FM(HCTS1_N)		FM(CTS1_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP2SR0_7_4	FM(MSIOF2_SCK)		FM(HRTS1_N)		FM(RTS1_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP2SR0_11_8	FM(MSIOF2_RXD)		FM(HSCK1)		FM(SCK1)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP2SR0_3_0	FM(MSIOF2_TXD)		FM(HCTS1_N_A)		FM(CTS1_N_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP2SR0_7_4	FM(MSIOF2_SCK)		FM(HRTS1_N_A)		FM(RTS1_N_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP2SR0_11_8	FM(MSIOF2_RXD)		FM(HSCK1_A)		FM(SCK1_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++static u16 ath12k_dp_rx_get_peer_id(struct ath12k_base *ab,
++				    enum ath12k_peer_metadata_version ver,
++				    __le32 peer_metadata)
++{
++	switch (ver) {
++	default:
++		ath12k_warn(ab, "Unknown peer metadata version: %d", ver);
++		fallthrough;
++	case ATH12K_PEER_METADATA_V0:
++		return le32_get_bits(peer_metadata,
++				     RX_MPDU_DESC_META_DATA_V0_PEER_ID);
++	case ATH12K_PEER_METADATA_V1:
++		return le32_get_bits(peer_metadata,
++				     RX_MPDU_DESC_META_DATA_V1_PEER_ID);
++	case ATH12K_PEER_METADATA_V1A:
++		return le32_get_bits(peer_metadata,
++				     RX_MPDU_DESC_META_DATA_V1A_PEER_ID);
++	case ATH12K_PEER_METADATA_V1B:
++		return le32_get_bits(peer_metadata,
++				     RX_MPDU_DESC_META_DATA_V1B_PEER_ID);
++	}
++}
++
+ int ath12k_dp_rx_process(struct ath12k_base *ab, int ring_id,
+ 			 struct napi_struct *napi, int budget)
+ {
+@@ -2635,6 +2658,8 @@ int ath12k_dp_rx_process(struct ath12k_base *ab, int ring_id,
+ 	ath12k_hal_srng_access_begin(ab, srng);
  
- /* SR1 */
- /* IP0SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
-@@ -301,13 +301,13 @@
- #define IP0SR1_15_12	FM(MSIOF1_SCK)		FM(HSCK3_A)		FM(CTS3_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_19_16	FM(MSIOF1_TXD)		FM(HRX3_A)		FM(SCK3)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_23_20	FM(MSIOF1_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_27_24	FM(MSIOF0_SS2)		FM(HTX1_X)		FM(TX1_X)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_31_28	FM(MSIOF0_SS1)		FM(HRX1_X)		FM(RX1_X)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_27_24	FM(MSIOF0_SS2)		FM(HTX1_B)		FM(TX1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_31_28	FM(MSIOF0_SS1)		FM(HRX1_B)		FM(RX1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ 	while ((desc = ath12k_hal_srng_dst_get_next_entry(ab, srng))) {
++		struct rx_mpdu_desc *mpdu_info;
++		struct rx_msdu_desc *msdu_info;
+ 		enum hal_reo_dest_ring_push_reason push_reason;
+ 		u32 cookie;
  
- /* IP1SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
--#define IP1SR1_3_0	FM(MSIOF0_SYNC)		FM(HCTS1_N_X)		FM(CTS1_N_X)		FM(CANFD5_TX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_7_4	FM(MSIOF0_TXD)		FM(HRTS1_N_X)		FM(RTS1_N_X)		FM(CANFD5_RX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_X)		FM(SCK1_X)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_3_0	FM(MSIOF0_SYNC)		FM(HCTS1_N_B)		FM(CTS1_N_B)		FM(CANFD5_TX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_7_4	FM(MSIOF0_TXD)		FM(HRTS1_N_B)		FM(RTS1_N_B)		FM(CANFD5_RX_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_B)		FM(SCK1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_15_12	FM(MSIOF0_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_19_16	FM(HTX0)		FM(TX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-@@ -748,25 +748,25 @@ static const u16 pinmux_data[] = {
- 	PINMUX_IPSR_GPSR(IP1SR0_23_20,	IRQ2_A),
+@@ -2681,16 +2706,19 @@ int ath12k_dp_rx_process(struct ath12k_base *ab, int ring_id,
+ 			continue;
+ 		}
  
- 	PINMUX_IPSR_GPSR(IP1SR0_27_24,	MSIOF2_SS1),
--	PINMUX_IPSR_GPSR(IP1SR0_27_24,	HTX1),
--	PINMUX_IPSR_GPSR(IP1SR0_27_24,	TX1),
-+	PINMUX_IPSR_GPSR(IP1SR0_27_24,	HTX1_A),
-+	PINMUX_IPSR_GPSR(IP1SR0_27_24,	TX1_A),
+-		rxcb->is_first_msdu = !!(le32_to_cpu(desc->rx_msdu_info.info0) &
++		msdu_info = &desc->rx_msdu_info;
++		mpdu_info = &desc->rx_mpdu_info;
++
++		rxcb->is_first_msdu = !!(le32_to_cpu(msdu_info->info0) &
+ 					 RX_MSDU_DESC_INFO0_FIRST_MSDU_IN_MPDU);
+-		rxcb->is_last_msdu = !!(le32_to_cpu(desc->rx_msdu_info.info0) &
++		rxcb->is_last_msdu = !!(le32_to_cpu(msdu_info->info0) &
+ 					RX_MSDU_DESC_INFO0_LAST_MSDU_IN_MPDU);
+-		rxcb->is_continuation = !!(le32_to_cpu(desc->rx_msdu_info.info0) &
++		rxcb->is_continuation = !!(le32_to_cpu(msdu_info->info0) &
+ 					   RX_MSDU_DESC_INFO0_MSDU_CONTINUATION);
+ 		rxcb->mac_id = mac_id;
+-		rxcb->peer_id = le32_get_bits(desc->rx_mpdu_info.peer_meta_data,
+-					      RX_MPDU_DESC_META_DATA_PEER_ID);
+-		rxcb->tid = le32_get_bits(desc->rx_mpdu_info.info0,
++		rxcb->peer_id = ath12k_dp_rx_get_peer_id(ab, dp->peer_metadata_ver,
++							 mpdu_info->peer_meta_data);
++		rxcb->tid = le32_get_bits(mpdu_info->info0,
+ 					  RX_MPDU_DESC_INFO0_TID);
  
- 	PINMUX_IPSR_GPSR(IP1SR0_31_28,	MSIOF2_SYNC),
--	PINMUX_IPSR_GPSR(IP1SR0_31_28,	HRX1),
--	PINMUX_IPSR_GPSR(IP1SR0_31_28,	RX1),
-+	PINMUX_IPSR_GPSR(IP1SR0_31_28,	HRX1_A),
-+	PINMUX_IPSR_GPSR(IP1SR0_31_28,	RX1_A),
+ 		__skb_queue_tail(&msdu_list, msdu);
+diff --git a/drivers/net/wireless/ath/ath12k/hal_desc.h b/drivers/net/wireless/ath/ath12k/hal_desc.h
+index 814c02f876d64..072e36365808e 100644
+--- a/drivers/net/wireless/ath/ath12k/hal_desc.h
++++ b/drivers/net/wireless/ath/ath12k/hal_desc.h
+@@ -597,8 +597,30 @@ struct hal_tlv_64_hdr {
+ #define RX_MPDU_DESC_INFO0_MPDU_QOS_CTRL_VALID	BIT(27)
+ #define RX_MPDU_DESC_INFO0_TID			GENMASK(31, 28)
  
- 	/* IP2SR0 */
- 	PINMUX_IPSR_GPSR(IP2SR0_3_0,	MSIOF2_TXD),
--	PINMUX_IPSR_GPSR(IP2SR0_3_0,	HCTS1_N),
--	PINMUX_IPSR_GPSR(IP2SR0_3_0,	CTS1_N),
-+	PINMUX_IPSR_GPSR(IP2SR0_3_0,	HCTS1_N_A),
-+	PINMUX_IPSR_GPSR(IP2SR0_3_0,	CTS1_N_A),
+-/* TODO revisit after meta data is concluded */
+-#define RX_MPDU_DESC_META_DATA_PEER_ID		GENMASK(15, 0)
++/* Peer Metadata classification */
++
++/* Version 0 */
++#define RX_MPDU_DESC_META_DATA_V0_PEER_ID	GENMASK(15, 0)
++#define RX_MPDU_DESC_META_DATA_V0_VDEV_ID	GENMASK(23, 16)
++
++/* Version 1 */
++#define RX_MPDU_DESC_META_DATA_V1_PEER_ID		GENMASK(13, 0)
++#define RX_MPDU_DESC_META_DATA_V1_LOGICAL_LINK_ID	GENMASK(15, 14)
++#define RX_MPDU_DESC_META_DATA_V1_VDEV_ID		GENMASK(23, 16)
++#define RX_MPDU_DESC_META_DATA_V1_LMAC_ID		GENMASK(25, 24)
++#define RX_MPDU_DESC_META_DATA_V1_DEVICE_ID		GENMASK(28, 26)
++
++/* Version 1A */
++#define RX_MPDU_DESC_META_DATA_V1A_PEER_ID		GENMASK(13, 0)
++#define RX_MPDU_DESC_META_DATA_V1A_VDEV_ID		GENMASK(21, 14)
++#define RX_MPDU_DESC_META_DATA_V1A_LOGICAL_LINK_ID	GENMASK(25, 22)
++#define RX_MPDU_DESC_META_DATA_V1A_DEVICE_ID		GENMASK(28, 26)
++
++/* Version 1B */
++#define RX_MPDU_DESC_META_DATA_V1B_PEER_ID	GENMASK(13, 0)
++#define RX_MPDU_DESC_META_DATA_V1B_VDEV_ID	GENMASK(21, 14)
++#define RX_MPDU_DESC_META_DATA_V1B_HW_LINK_ID	GENMASK(25, 22)
++#define RX_MPDU_DESC_META_DATA_V1B_DEVICE_ID	GENMASK(28, 26)
  
- 	PINMUX_IPSR_GPSR(IP2SR0_7_4,	MSIOF2_SCK),
--	PINMUX_IPSR_GPSR(IP2SR0_7_4,	HRTS1_N),
--	PINMUX_IPSR_GPSR(IP2SR0_7_4,	RTS1_N),
-+	PINMUX_IPSR_GPSR(IP2SR0_7_4,	HRTS1_N_A),
-+	PINMUX_IPSR_GPSR(IP2SR0_7_4,	RTS1_N_A),
+ struct rx_mpdu_desc {
+ 	__le32 info0; /* %RX_MPDU_DESC_INFO */
+diff --git a/drivers/net/wireless/ath/ath12k/hw.h b/drivers/net/wireless/ath/ath12k/hw.h
+index 2745bde0502c6..2a314cfc8cb84 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.h
++++ b/drivers/net/wireless/ath/ath12k/hw.h
+@@ -78,8 +78,6 @@
+ #define TARGET_NUM_WDS_ENTRIES		32
+ #define TARGET_DMA_BURST_SIZE		1
+ #define TARGET_RX_BATCHMODE		1
+-#define TARGET_RX_PEER_METADATA_VER_V1A	2
+-#define TARGET_RX_PEER_METADATA_VER_V1B	3
+ #define TARGET_EMA_MAX_PROFILE_PERIOD	8
  
- 	PINMUX_IPSR_GPSR(IP2SR0_11_8,	MSIOF2_RXD),
--	PINMUX_IPSR_GPSR(IP2SR0_11_8,	HSCK1),
--	PINMUX_IPSR_GPSR(IP2SR0_11_8,	SCK1),
-+	PINMUX_IPSR_GPSR(IP2SR0_11_8,	HSCK1_A),
-+	PINMUX_IPSR_GPSR(IP2SR0_11_8,	SCK1_A),
+ #define ATH12K_HW_DEFAULT_QUEUE		0
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.c b/drivers/net/wireless/ath/ath12k/wmi.c
+index bf33767af2c87..ef775af25093c 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.c
++++ b/drivers/net/wireless/ath/ath12k/wmi.c
+@@ -233,7 +233,7 @@ void ath12k_wmi_init_qcn9274(struct ath12k_base *ab,
+ 	config->beacon_tx_offload_max_vdev += config->ema_max_vap_cnt;
  
- 	/* IP0SR1 */
- 	PINMUX_IPSR_GPSR(IP0SR1_3_0,	MSIOF1_SS2),
-@@ -792,27 +792,27 @@ static const u16 pinmux_data[] = {
- 	PINMUX_IPSR_GPSR(IP0SR1_23_20,	MSIOF1_RXD),
+ 	if (test_bit(WMI_TLV_SERVICE_PEER_METADATA_V1A_V1B_SUPPORT, ab->wmi_ab.svc_map))
+-		config->dp_peer_meta_data_ver = TARGET_RX_PEER_METADATA_VER_V1B;
++		config->peer_metadata_ver = ATH12K_PEER_METADATA_V1B;
+ }
  
- 	PINMUX_IPSR_GPSR(IP0SR1_27_24,	MSIOF0_SS2),
--	PINMUX_IPSR_GPSR(IP0SR1_27_24,	HTX1_X),
--	PINMUX_IPSR_GPSR(IP0SR1_27_24,	TX1_X),
-+	PINMUX_IPSR_GPSR(IP0SR1_27_24,	HTX1_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_27_24,	TX1_B),
+ void ath12k_wmi_init_wcn7850(struct ath12k_base *ab,
+@@ -3476,7 +3476,7 @@ ath12k_wmi_copy_resource_config(struct ath12k_wmi_resource_config_params *wmi_cf
+ 	wmi_cfg->sched_params = cpu_to_le32(tg_cfg->sched_params);
+ 	wmi_cfg->twt_ap_pdev_count = cpu_to_le32(tg_cfg->twt_ap_pdev_count);
+ 	wmi_cfg->twt_ap_sta_count = cpu_to_le32(tg_cfg->twt_ap_sta_count);
+-	wmi_cfg->flags2 = le32_encode_bits(tg_cfg->dp_peer_meta_data_ver,
++	wmi_cfg->flags2 = le32_encode_bits(tg_cfg->peer_metadata_ver,
+ 					   WMI_RSRC_CFG_FLAGS2_RX_PEER_METADATA_VERSION);
+ 	wmi_cfg->host_service_flags = cpu_to_le32(tg_cfg->is_reg_cc_ext_event_supported <<
+ 				WMI_RSRC_CFG_HOST_SVC_FLAG_REG_CC_EXT_SUPPORT_BIT);
+@@ -3706,6 +3706,8 @@ int ath12k_wmi_cmd_init(struct ath12k_base *ab)
+ 	arg.num_band_to_mac = ab->num_radios;
+ 	ath12k_fill_band_to_mac_param(ab, arg.band_to_mac);
  
- 	PINMUX_IPSR_GPSR(IP0SR1_31_28,	MSIOF0_SS1),
--	PINMUX_IPSR_GPSR(IP0SR1_31_28,	HRX1_X),
--	PINMUX_IPSR_GPSR(IP0SR1_31_28,	RX1_X),
-+	PINMUX_IPSR_GPSR(IP0SR1_31_28,	HRX1_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_31_28,	RX1_B),
++	ab->dp.peer_metadata_ver = arg.res_cfg.peer_metadata_ver;
++
+ 	return ath12k_init_cmd_send(&wmi_ab->wmi[0], &arg);
+ }
  
- 	/* IP1SR1 */
- 	PINMUX_IPSR_GPSR(IP1SR1_3_0,	MSIOF0_SYNC),
--	PINMUX_IPSR_GPSR(IP1SR1_3_0,	HCTS1_N_X),
--	PINMUX_IPSR_GPSR(IP1SR1_3_0,	CTS1_N_X),
-+	PINMUX_IPSR_GPSR(IP1SR1_3_0,	HCTS1_N_B),
-+	PINMUX_IPSR_GPSR(IP1SR1_3_0,	CTS1_N_B),
- 	PINMUX_IPSR_GPSR(IP1SR1_3_0,	CANFD5_TX_B),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_7_4,	MSIOF0_TXD),
--	PINMUX_IPSR_GPSR(IP1SR1_7_4,	HRTS1_N_X),
--	PINMUX_IPSR_GPSR(IP1SR1_7_4,	RTS1_N_X),
-+	PINMUX_IPSR_GPSR(IP1SR1_7_4,	HRTS1_N_B),
-+	PINMUX_IPSR_GPSR(IP1SR1_7_4,	RTS1_N_B),
- 	PINMUX_IPSR_GPSR(IP1SR1_7_4,	CANFD5_RX_B),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_11_8,	MSIOF0_SCK),
--	PINMUX_IPSR_GPSR(IP1SR1_11_8,	HSCK1_X),
--	PINMUX_IPSR_GPSR(IP1SR1_11_8,	SCK1_X),
-+	PINMUX_IPSR_GPSR(IP1SR1_11_8,	HSCK1_B),
-+	PINMUX_IPSR_GPSR(IP1SR1_11_8,	SCK1_B),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_15_12,	MSIOF0_RXD),
- 
-@@ -1574,49 +1574,48 @@ static const unsigned int hscif0_ctrl_mux[] = {
- };
- 
- /* - HSCIF1 ----------------------------------------------------------------- */
--static const unsigned int hscif1_data_pins[] = {
--	/* HRX1, HTX1 */
-+static const unsigned int hscif1_data_a_pins[] = {
-+	/* HRX1_A, HTX1_A */
- 	RCAR_GP_PIN(0, 15), RCAR_GP_PIN(0, 14),
- };
--static const unsigned int hscif1_data_mux[] = {
--	HRX1_MARK, HTX1_MARK,
-+static const unsigned int hscif1_data_a_mux[] = {
-+	HRX1_A_MARK, HTX1_A_MARK,
- };
--static const unsigned int hscif1_clk_pins[] = {
--	/* HSCK1 */
-+static const unsigned int hscif1_clk_a_pins[] = {
-+	/* HSCK1_A */
- 	RCAR_GP_PIN(0, 18),
- };
--static const unsigned int hscif1_clk_mux[] = {
--	HSCK1_MARK,
-+static const unsigned int hscif1_clk_a_mux[] = {
-+	HSCK1_A_MARK,
- };
--static const unsigned int hscif1_ctrl_pins[] = {
--	/* HRTS1_N, HCTS1_N */
-+static const unsigned int hscif1_ctrl_a_pins[] = {
-+	/* HRTS1_N_A, HCTS1_N_A */
- 	RCAR_GP_PIN(0, 17), RCAR_GP_PIN(0, 16),
- };
--static const unsigned int hscif1_ctrl_mux[] = {
--	HRTS1_N_MARK, HCTS1_N_MARK,
-+static const unsigned int hscif1_ctrl_a_mux[] = {
-+	HRTS1_N_A_MARK, HCTS1_N_A_MARK,
- };
- 
--/* - HSCIF1_X---------------------------------------------------------------- */
--static const unsigned int hscif1_data_x_pins[] = {
--	/* HRX1_X, HTX1_X */
-+static const unsigned int hscif1_data_b_pins[] = {
-+	/* HRX1_B, HTX1_B */
- 	RCAR_GP_PIN(1, 7), RCAR_GP_PIN(1, 6),
- };
--static const unsigned int hscif1_data_x_mux[] = {
--	HRX1_X_MARK, HTX1_X_MARK,
-+static const unsigned int hscif1_data_b_mux[] = {
-+	HRX1_B_MARK, HTX1_B_MARK,
- };
--static const unsigned int hscif1_clk_x_pins[] = {
--	/* HSCK1_X */
-+static const unsigned int hscif1_clk_b_pins[] = {
-+	/* HSCK1_B */
- 	RCAR_GP_PIN(1, 10),
- };
--static const unsigned int hscif1_clk_x_mux[] = {
--	HSCK1_X_MARK,
-+static const unsigned int hscif1_clk_b_mux[] = {
-+	HSCK1_B_MARK,
- };
--static const unsigned int hscif1_ctrl_x_pins[] = {
--	/* HRTS1_N_X, HCTS1_N_X */
-+static const unsigned int hscif1_ctrl_b_pins[] = {
-+	/* HRTS1_N_B, HCTS1_N_B */
- 	RCAR_GP_PIN(1, 9), RCAR_GP_PIN(1, 8),
- };
--static const unsigned int hscif1_ctrl_x_mux[] = {
--	HRTS1_N_X_MARK, HCTS1_N_X_MARK,
-+static const unsigned int hscif1_ctrl_b_mux[] = {
-+	HRTS1_N_B_MARK, HCTS1_N_B_MARK,
+diff --git a/drivers/net/wireless/ath/ath12k/wmi.h b/drivers/net/wireless/ath/ath12k/wmi.h
+index e71e6c73f2495..742fe0b36cf20 100644
+--- a/drivers/net/wireless/ath/ath12k/wmi.h
++++ b/drivers/net/wireless/ath/ath12k/wmi.h
+@@ -2292,6 +2292,13 @@ struct ath12k_wmi_host_mem_chunk_arg {
+ 	u32 req_id;
  };
  
- /* - HSCIF2 ----------------------------------------------------------------- */
-@@ -2236,49 +2235,48 @@ static const unsigned int scif0_ctrl_mux[] = {
++enum ath12k_peer_metadata_version {
++	ATH12K_PEER_METADATA_V0,
++	ATH12K_PEER_METADATA_V1,
++	ATH12K_PEER_METADATA_V1A,
++	ATH12K_PEER_METADATA_V1B
++};
++
+ struct ath12k_wmi_resource_config_arg {
+ 	u32 num_vdevs;
+ 	u32 num_peers;
+@@ -2354,10 +2361,10 @@ struct ath12k_wmi_resource_config_arg {
+ 	u32 sched_params;
+ 	u32 twt_ap_pdev_count;
+ 	u32 twt_ap_sta_count;
+-	bool is_reg_cc_ext_event_supported;
+-	u8  dp_peer_meta_data_ver;
++	enum ath12k_peer_metadata_version peer_metadata_ver;
+ 	u32 ema_max_vap_cnt;
+ 	u32 ema_max_profile_period;
++	bool is_reg_cc_ext_event_supported;
  };
  
- /* - SCIF1 ------------------------------------------------------------------ */
--static const unsigned int scif1_data_pins[] = {
--	/* RX1, TX1 */
-+static const unsigned int scif1_data_a_pins[] = {
-+	/* RX1_A, TX1_A */
- 	RCAR_GP_PIN(0, 15), RCAR_GP_PIN(0, 14),
- };
--static const unsigned int scif1_data_mux[] = {
--	RX1_MARK, TX1_MARK,
-+static const unsigned int scif1_data_a_mux[] = {
-+	RX1_A_MARK, TX1_A_MARK,
- };
--static const unsigned int scif1_clk_pins[] = {
--	/* SCK1 */
-+static const unsigned int scif1_clk_a_pins[] = {
-+	/* SCK1_A */
- 	RCAR_GP_PIN(0, 18),
- };
--static const unsigned int scif1_clk_mux[] = {
--	SCK1_MARK,
-+static const unsigned int scif1_clk_a_mux[] = {
-+	SCK1_A_MARK,
- };
--static const unsigned int scif1_ctrl_pins[] = {
--	/* RTS1_N, CTS1_N */
-+static const unsigned int scif1_ctrl_a_pins[] = {
-+	/* RTS1_N_A, CTS1_N_A */
- 	RCAR_GP_PIN(0, 17), RCAR_GP_PIN(0, 16),
- };
--static const unsigned int scif1_ctrl_mux[] = {
--	RTS1_N_MARK, CTS1_N_MARK,
-+static const unsigned int scif1_ctrl_a_mux[] = {
-+	RTS1_N_A_MARK, CTS1_N_A_MARK,
- };
- 
--/* - SCIF1_X ------------------------------------------------------------------ */
--static const unsigned int scif1_data_x_pins[] = {
--	/* RX1_X, TX1_X */
-+static const unsigned int scif1_data_b_pins[] = {
-+	/* RX1_B, TX1_B */
- 	RCAR_GP_PIN(1, 7), RCAR_GP_PIN(1, 6),
- };
--static const unsigned int scif1_data_x_mux[] = {
--	RX1_X_MARK, TX1_X_MARK,
-+static const unsigned int scif1_data_b_mux[] = {
-+	RX1_B_MARK, TX1_B_MARK,
- };
--static const unsigned int scif1_clk_x_pins[] = {
--	/* SCK1_X */
-+static const unsigned int scif1_clk_b_pins[] = {
-+	/* SCK1_B */
- 	RCAR_GP_PIN(1, 10),
- };
--static const unsigned int scif1_clk_x_mux[] = {
--	SCK1_X_MARK,
-+static const unsigned int scif1_clk_b_mux[] = {
-+	SCK1_B_MARK,
- };
--static const unsigned int scif1_ctrl_x_pins[] = {
--	/* RTS1_N_X, CTS1_N_X */
-+static const unsigned int scif1_ctrl_b_pins[] = {
-+	/* RTS1_N_B, CTS1_N_B */
- 	RCAR_GP_PIN(1, 9), RCAR_GP_PIN(1, 8),
- };
--static const unsigned int scif1_ctrl_x_mux[] = {
--	RTS1_N_X_MARK, CTS1_N_X_MARK,
-+static const unsigned int scif1_ctrl_b_mux[] = {
-+	RTS1_N_B_MARK, CTS1_N_B_MARK,
- };
- 
- /* - SCIF3 ------------------------------------------------------------------ */
-@@ -2559,12 +2557,12 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(hscif0_data),
- 	SH_PFC_PIN_GROUP(hscif0_clk),
- 	SH_PFC_PIN_GROUP(hscif0_ctrl),
--	SH_PFC_PIN_GROUP(hscif1_data),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_clk),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_ctrl),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_data_x),	/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_clk_x),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif1_ctrl_x),	/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(hscif1_data_a),
-+	SH_PFC_PIN_GROUP(hscif1_clk_a),
-+	SH_PFC_PIN_GROUP(hscif1_ctrl_a),
-+	SH_PFC_PIN_GROUP(hscif1_data_b),
-+	SH_PFC_PIN_GROUP(hscif1_clk_b),
-+	SH_PFC_PIN_GROUP(hscif1_ctrl_b),
- 	SH_PFC_PIN_GROUP(hscif2_data),
- 	SH_PFC_PIN_GROUP(hscif2_clk),
- 	SH_PFC_PIN_GROUP(hscif2_ctrl),
-@@ -2658,12 +2656,12 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(scif0_data),
- 	SH_PFC_PIN_GROUP(scif0_clk),
- 	SH_PFC_PIN_GROUP(scif0_ctrl),
--	SH_PFC_PIN_GROUP(scif1_data),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_clk),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_ctrl),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_data_x),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_clk_x),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif1_ctrl_x),		/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(scif1_data_a),
-+	SH_PFC_PIN_GROUP(scif1_clk_a),
-+	SH_PFC_PIN_GROUP(scif1_ctrl_a),
-+	SH_PFC_PIN_GROUP(scif1_data_b),
-+	SH_PFC_PIN_GROUP(scif1_clk_b),
-+	SH_PFC_PIN_GROUP(scif1_ctrl_b),
- 	SH_PFC_PIN_GROUP(scif3_data),		/* suffix might be updated */
- 	SH_PFC_PIN_GROUP(scif3_clk),		/* suffix might be updated */
- 	SH_PFC_PIN_GROUP(scif3_ctrl),		/* suffix might be updated */
-@@ -2778,13 +2776,12 @@ static const char * const hscif0_groups[] = {
- };
- 
- static const char * const hscif1_groups[] = {
--	/* suffix might be updated */
--	"hscif1_data",
--	"hscif1_clk",
--	"hscif1_ctrl",
--	"hscif1_data_x",
--	"hscif1_clk_x",
--	"hscif1_ctrl_x",
-+	"hscif1_data_a",
-+	"hscif1_clk_a",
-+	"hscif1_ctrl_a",
-+	"hscif1_data_b",
-+	"hscif1_clk_b",
-+	"hscif1_ctrl_b",
- };
- 
- static const char * const hscif2_groups[] = {
-@@ -2961,13 +2958,12 @@ static const char * const scif0_groups[] = {
- };
- 
- static const char * const scif1_groups[] = {
--	/* suffix might be updated */
--	"scif1_data",
--	"scif1_clk",
--	"scif1_ctrl",
--	"scif1_data_x",
--	"scif1_clk_x",
--	"scif1_ctrl_x",
-+	"scif1_data_a",
-+	"scif1_clk_a",
-+	"scif1_ctrl_a",
-+	"scif1_data_b",
-+	"scif1_clk_b",
-+	"scif1_ctrl_b",
- };
- 
- static const char * const scif3_groups[] = {
+ struct ath12k_wmi_init_cmd_arg {
 -- 
 2.43.0
 
