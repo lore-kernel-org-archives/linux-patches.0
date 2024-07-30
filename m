@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF9B1A6160;
-	Tue, 30 Jul 2024 16:25:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94EA1A6160;
+	Tue, 30 Jul 2024 16:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356715; cv=none; b=F+k7V63yPoCf5roPba9j63xZIIacQXXBaa49novWBqz4RzNrMuKhmmaCRGNmsQxcCglYTkVS9bBee9QtZjcJdq+TZkBupSYTsYAVl5+sQUVJet4dJ9VN75RsNMcNv8FXrN/EWr3PWg67jCKXZFBM/n6ocnf6PGaDJfaB1lvOds4=
+	t=1722356718; cv=none; b=e7ksyqHOdsBTtd3BCminQbZDIW10GCrruO6GYULWzDFWhjwuyAB4CaBvaecQMETHEmfj99a/C2X7oOiJ1BCvtTATCKGZUHDkr8oozTkj+c/HRPvkqTGidmVgGdLNwWd0Jc2NmNffXIG5IecjhAT4KoVqC/SmMeVTtMUQ526iuP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356715; c=relaxed/simple;
-	bh=KcpAaH95uQ02thuR/XppWSQGbic739iFf0bd9AsjQoA=;
+	s=arc-20240116; t=1722356718; c=relaxed/simple;
+	bh=njzlPlunTj+ux/EiRfaDLyUKB2iuei0vGSk1jtg8mqw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HaSHSfPdavUlFpkrjV7QteDxKMTKZTEt5uoIZ+myA3PRtPirOph1gS2xo2NowcgzJiv1dJdvr+a/LPePbTWTLUzFHbGCImOx9NzzDbHzQhXvKVRjDgtvnZgtxULwVHvog8PUIbmVgoJHgsubxh3B1V8cwZ4UL7fRA9XCJ9ARYNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWzdee8N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ihrsgKLfveaKq5bq+dXob+9A5BaM3Y2//vMiKZhMBbcZr7yRTopCKyvd14HdGMOXsATS1WFhL2zuL5byJSZ3FShFcdJ5urLmj0TicBk95uvJFo1VvDBPL0dsJKXtILnTVq/1nsHyAsqmp43ezq/d7sd/nF7Jk4rhIIu6xfnZ/Mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whsmKt9D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWzdee8N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFED9C4AF0A;
-	Tue, 30 Jul 2024 16:25:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whsmKt9D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619F2C32782;
+	Tue, 30 Jul 2024 16:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356715;
-	bh=KcpAaH95uQ02thuR/XppWSQGbic739iFf0bd9AsjQoA=;
+	s=korg; t=1722356718;
+	bh=njzlPlunTj+ux/EiRfaDLyUKB2iuei0vGSk1jtg8mqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWzdee8N1SkXbar+nFHxfrtuf6Z5lQXAFk+HCvon6+TyvZ5T1R2xhzF3n5RzWJXCO
-	 ANKnuj7mMgPrTJuW4cA2ZpY4AxIcQqf3/OUHfo8sBfjQ7IMY4+PSnXUgUp5g3eIe1O
-	 y2dbw5IkzBcHOqkRRQIs535k33byXL6G6u08XgiE=
+	b=whsmKt9DvDxjXZsqT2SUpVrD2ySrPcA44H2IJvesN/YF/tXjhVcDG3UTJ5IjHbMpA
+	 5Ehl8ThKCb1X60K9YeA1l61HOO/tr/LltjLsWE32ARcxE9ahdDnG3zYXVLVIRTFFrw
+	 wGphbD5NNXZt7asvLEebv6XDK4vp9HQzWHqBMC0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Faiz Abbas <faiz.abbas@arm.com>,
+	Liviu Dudau <liviu.dudau@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 203/440] powerpc/prom: Add CPU info to hardware description string later
-Date: Tue, 30 Jul 2024 17:47:16 +0200
-Message-ID: <20240730151623.798867587@linuxfoundation.org>
+Subject: [PATCH 6.6 176/568] drm/arm/komeda: Fix komeda probe failing if there are no links in the secondary pipeline
+Date: Tue, 30 Jul 2024 17:44:43 +0200
+Message-ID: <20240730151646.760405661@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,88 +47,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Faiz Abbas <faiz.abbas@arm.com>
 
-[ Upstream commit 7bdd1c6c87de758750d419eedab7285b95b66417 ]
+[ Upstream commit 9054c46d479b55768adae31031a1afa1b7d62228 ]
 
-cur_cpu_spec->cpu_name is appended to ppc_hw_desc before cur_cpu_spec
-has taken on its final value. This is illustrated on pseries by
-comparing the CPU name as reported at boot ("POWER8E (raw)") to the
-contents of /proc/cpuinfo ("POWER8 (architected)"):
+Since commit 4cfe5cc02e3f ("drm/arm/komeda: Remove component framework and
+add a simple encoder"), the devm_drm_of_get_bridge() call happens
+regardless of whether any remote nodes are available on the pipeline. Fix
+this by moving the bridge attach to its own function and calling it
+conditional on there being an output link.
 
-  $ dmesg | grep Hardware
-  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 \
-    of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
-
-  $ grep -m 1 ^cpu /proc/cpuinfo
-  cpu             : POWER8 (architected), altivec supported
-
-Some 44x models would appear to be affected as well; see
-identical_pvr_fixup().
-
-This results in incorrect CPU information in stack dumps --
-ppc_hw_desc is an input to dump_stack_set_arch_desc().
-
-Delay gathering the CPU name until after all potential calls to
-identify_cpu().
-
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Fixes: bd649d40e0f2 ("powerpc: Add PVR & CPU name to hardware description")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240603-fix-cpu-hwdesc-v1-1-945f2850fcaa@linux.ibm.com
+Fixes: 4cfe5cc02e3f ("drm/arm/komeda: Remove component framework and add a simple encoder")
+Signed-off-by: Faiz Abbas <faiz.abbas@arm.com>
+[Corrected Commit-id of the fixed patch to match mainline]
+Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
+Acked-by: Liviu Dudau <liviu.dudau@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240219100915.192475-2-faiz.abbas@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/prom.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ .../gpu/drm/arm/display/komeda/komeda_crtc.c  | 43 ++++++++++++++-----
+ 1 file changed, 32 insertions(+), 11 deletions(-)
 
-diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
-index 9531ab90feb8a..e5b90d67cd536 100644
---- a/arch/powerpc/kernel/prom.c
-+++ b/arch/powerpc/kernel/prom.c
-@@ -324,6 +324,7 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 					  void *data)
+diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c b/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
+index 2c661f28410ed..b645c5998230b 100644
+--- a/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
++++ b/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
+@@ -5,6 +5,7 @@
+  *
+  */
+ #include <linux/clk.h>
++#include <linux/of.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/spinlock.h>
+ 
+@@ -610,12 +611,34 @@ get_crtc_primary(struct komeda_kms_dev *kms, struct komeda_crtc *crtc)
+ 	return NULL;
+ }
+ 
++static int komeda_attach_bridge(struct device *dev,
++				struct komeda_pipeline *pipe,
++				struct drm_encoder *encoder)
++{
++	struct drm_bridge *bridge;
++	int err;
++
++	bridge = devm_drm_of_get_bridge(dev, pipe->of_node,
++					KOMEDA_OF_PORT_OUTPUT, 0);
++	if (IS_ERR(bridge))
++		return dev_err_probe(dev, PTR_ERR(bridge), "remote bridge not found for pipe: %s\n",
++				     of_node_full_name(pipe->of_node));
++
++	err = drm_bridge_attach(encoder, bridge, NULL, 0);
++	if (err)
++		dev_err(dev, "bridge_attach() failed for pipe: %s\n",
++			of_node_full_name(pipe->of_node));
++
++	return err;
++}
++
+ static int komeda_crtc_add(struct komeda_kms_dev *kms,
+ 			   struct komeda_crtc *kcrtc)
  {
- 	const char *type = of_get_flat_dt_prop(node, "device_type", NULL);
-+	const __be32 *cpu_version = NULL;
- 	const __be32 *prop;
- 	const __be32 *intserv;
- 	int i, nthreads;
-@@ -404,7 +405,7 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 		prop = of_get_flat_dt_prop(node, "cpu-version", NULL);
- 		if (prop && (be32_to_cpup(prop) & 0xff000000) == 0x0f000000) {
- 			identify_cpu(0, be32_to_cpup(prop));
--			seq_buf_printf(&ppc_hw_desc, "0x%04x ", be32_to_cpup(prop));
-+			cpu_version = prop;
- 		}
+ 	struct drm_crtc *crtc = &kcrtc->base;
+ 	struct drm_device *base = &kms->base;
+-	struct drm_bridge *bridge;
++	struct komeda_pipeline *pipe = kcrtc->master;
++	struct drm_encoder *encoder = &kcrtc->encoder;
+ 	int err;
  
- 		check_cpu_feature_properties(node);
-@@ -415,6 +416,12 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
- 	}
+ 	err = drm_crtc_init_with_planes(base, crtc,
+@@ -626,27 +649,25 @@ static int komeda_crtc_add(struct komeda_kms_dev *kms,
  
- 	identical_pvr_fixup(node);
-+
-+	// We can now add the CPU name & PVR to the hardware description
-+	seq_buf_printf(&ppc_hw_desc, "%s 0x%04lx ", cur_cpu_spec->cpu_name, mfspr(SPRN_PVR));
-+	if (cpu_version)
-+		seq_buf_printf(&ppc_hw_desc, "0x%04x ", be32_to_cpup(cpu_version));
-+
- 	init_mmu_slb_size(node);
+ 	drm_crtc_helper_add(crtc, &komeda_crtc_helper_funcs);
  
- #ifdef CONFIG_PPC64
-@@ -852,9 +859,6 @@ void __init early_init_devtree(void *params)
+-	crtc->port = kcrtc->master->of_output_port;
++	crtc->port = pipe->of_output_port;
  
- 	dt_cpu_ftrs_scan();
- 
--	// We can now add the CPU name & PVR to the hardware description
--	seq_buf_printf(&ppc_hw_desc, "%s 0x%04lx ", cur_cpu_spec->cpu_name, mfspr(SPRN_PVR));
--
- 	/* Retrieve CPU related informations from the flat tree
- 	 * (altivec support, boot CPU ID, ...)
+ 	/* Construct an encoder for each pipeline and attach it to the remote
+ 	 * bridge
  	 */
+ 	kcrtc->encoder.possible_crtcs = drm_crtc_mask(crtc);
+-	err = drm_simple_encoder_init(base, &kcrtc->encoder,
+-				      DRM_MODE_ENCODER_TMDS);
++	err = drm_simple_encoder_init(base, encoder, DRM_MODE_ENCODER_TMDS);
+ 	if (err)
+ 		return err;
+ 
+-	bridge = devm_drm_of_get_bridge(base->dev, kcrtc->master->of_node,
+-					KOMEDA_OF_PORT_OUTPUT, 0);
+-	if (IS_ERR(bridge))
+-		return PTR_ERR(bridge);
+-
+-	err = drm_bridge_attach(&kcrtc->encoder, bridge, NULL, 0);
++	if (pipe->of_output_links[0]) {
++		err = komeda_attach_bridge(base->dev, pipe, encoder);
++		if (err)
++			return err;
++	}
+ 
+ 	drm_crtc_enable_color_mgmt(crtc, 0, true, KOMEDA_COLOR_LUT_SIZE);
+ 
+-	return err;
++	return 0;
+ }
+ 
+ int komeda_kms_add_crtcs(struct komeda_kms_dev *kms, struct komeda_dev *mdev)
 -- 
 2.43.0
 
