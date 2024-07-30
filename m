@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2CD1A3020;
-	Tue, 30 Jul 2024 16:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3C11A4B4C;
+	Tue, 30 Jul 2024 16:08:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355720; cv=none; b=gtpCRiflDztC5fAwkKy0f6whRWmChSBjkfnJ66JOtlt7VAQc5vM9HwIWa1RZB7vbV5uOtqr2X/AVdXg1Sy8xcshD60uaPOVkXoOWGgpJNIJAANAsG51CgN5ULOkMe8fbWhduZmks6V7HLXWGLsKYWjVBzMsV5k0YN+JelH7Q7Bg=
+	t=1722355724; cv=none; b=fEp6U89w8OdOSkXm4JuJKcx+EawhbZ+wOBjbkLAAbcVAUThabO64zK2XzmEBt/auUF1zlwkVzY21l/bDX4jgjc5Wf6Cl7OqEHrv16W4x/aTH9VSisyRpv8SULtWtVwl6vCmUjMz3Jz04gyPCoojsUd+psY4ZjBKw5h8i4T7sSLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355720; c=relaxed/simple;
-	bh=uvObUKRLVFk6TYmqSxnFk1qzbdcKvgL9TwH02JDuaHM=;
+	s=arc-20240116; t=1722355724; c=relaxed/simple;
+	bh=cG5uwKxjpJXrKeSEhmaeI2z6n1ImmeI9nQDBOHhRrMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Axa5CR8Cpenqn7elvg4zLRtJp5vghFx2ssr0IgevsSz1P45C2uVLE4J1afsB3c6LdbEy1iE0KrBs73QjuAEXPpYjs0sgNW6I6gCSq5W/hhcDR7hMFYmYD7x5Z6w+4Xvgk9AEEXj7eio1baB+f+q3FnSksIxF7CZwpF7Lb3no8TE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayNYMU7r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R/nayCej5Yv0ztkvvnNL9bOPpQKg8+UmKYwMgearyMGzRDHffXL7cZoxzeUliXQ4p9vdZSXiyt/Rm8upfsvg1u2xyqoQUp1OKb19ucE5pAcqS/4hav1UOukk/irjE2DGc7FCj3X01RXsAQFW5UgqY5LaezYyBklZiYW0jipgDmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xirSU5W6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayNYMU7r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B77C32782;
-	Tue, 30 Jul 2024 16:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xirSU5W6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3BE1C32782;
+	Tue, 30 Jul 2024 16:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355720;
-	bh=uvObUKRLVFk6TYmqSxnFk1qzbdcKvgL9TwH02JDuaHM=;
+	s=korg; t=1722355724;
+	bh=cG5uwKxjpJXrKeSEhmaeI2z6n1ImmeI9nQDBOHhRrMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ayNYMU7rDLshM44eW//fhIPkeOT01fYW3GNZCLa9O+7i3T1n3C5bVOI7EwWsj2G7K
-	 uRkx+B9ZVwjd7IEBNEQXYLjcQz14SCoWtKbz1wd8v6FdLT2GTfgWoAjDRwBnrlg2Z/
-	 7tadyRRAfdsW/qcy9joZSwvlQetFWcIIq4T8bG5c=
+	b=xirSU5W6wjWxmptkhrXi8XVFkaoMfyhua1qH1GH04hdCjIXqDmjuDEWTuubJ6t6BC
+	 wFGspaWxrmHsi0p2LJSirgxBHiDmHfHXRZz4YfiDw4RVXT82EcEs2kBGvsT/WZWJUB
+	 NzCiHJE+O17Xw6JWMqvoRyQotqs1NZYPXHnpihPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jai Luthra <j-luthra@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 084/568] arm64: dts: renesas: r8a779f0: Add missing hypervisor virtual timer IRQ
-Date: Tue, 30 Jul 2024 17:43:11 +0200
-Message-ID: <20240730151643.148523387@linuxfoundation.org>
+Subject: [PATCH 6.10 083/809] arm64: dts: ti: k3-am625-beagleplay: Drop McASP AFIFOs
+Date: Tue, 30 Jul 2024 17:39:19 +0200
+Message-ID: <20240730151727.917277327@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,42 +47,37 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit b1c34567aebe300f9a0f70320eaeef0b3d56ffc7 ]
+[ Upstream commit 3b4a03357aee07a32a44a49bb6a71f5e82b1ecc1 ]
 
-Add the missing fifth interrupt to the device node that represents the
-ARM architected timer.  While at it, add an interrupt-names property for
-clarity,
+McASP AFIFOs are not necessary with UDMA-P/BCDMA as there is buffering
+on the DMA IP. Drop these for better audio latency.
 
-Fixes: c62331e8222f8f21 ("arm64: dts: renesas: Add Renesas R8A779F0 SoC support")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/46deba1008f73e4b6864f937642d17f9d4ae7205.1718890849.git.geert+renesas@glider.be
+Fixes: 1f7226a5e52c ("arm64: dts: ti: k3-am625-beagleplay: Add HDMI support")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240606-mcasp_fifo_drop-v2-4-8c317dabdd0a@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779f0.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-index ecdd5a523fa34..555fff9364e35 100644
---- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-@@ -1181,7 +1181,10 @@ timer {
- 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
- 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
- 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
--				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
-+				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
-+				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
-+				  "hyp-virt";
- 	};
- 
- 	ufs30_clk: ufs30-clk {
+diff --git a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
+index 18e3070a86839..70de288d728e4 100644
+--- a/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
++++ b/arch/arm64/boot/dts/ti/k3-am625-beagleplay.dts
+@@ -924,6 +924,4 @@ &mcasp1 {
+ 	       0 0 0 0
+ 	       0 0 0 0
+ 	>;
+-	tx-num-evt = <32>;
+-	rx-num-evt = <32>;
+ };
 -- 
 2.43.0
 
