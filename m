@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3380A1A76A1;
-	Tue, 30 Jul 2024 17:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E661A76A1;
+	Tue, 30 Jul 2024 17:23:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360178; cv=none; b=p2aZgqpq0fIZS+JaYFC9ZnvrCS3238ZL1ocFgpU8oTr2bQ4K5FE+NL1Px1H73OigY9YXq9ZbcdO2hlUC0hyvLq1LnBRmziyFm2G7Z+zXY7auw28VATI2yK1zjSt47w0/8H138K1Yaki+zPLgxtt1QwpMWRPksXEwxpzKqtqYD18=
+	t=1722360182; cv=none; b=IROzayMom57bFEkcectSDF9MrXvvR1Wp2iLZxV9RYAJ2N3Muu22oKLdiaCIAW3R8K0Ou30kGcI8f7sUyWwiLYotzbmEMupCPx0qEBtS3eHAB1KRKJzult/NCSRLJp9CjlEEXJq8fAIqoWdZWwgcqA+WRUxZKpI+TtlaqaW/qvls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360178; c=relaxed/simple;
-	bh=pOe861v5Wj8y60QgxC4ijOJLMJ3FoHaZpyfKppbfl+I=;
+	s=arc-20240116; t=1722360182; c=relaxed/simple;
+	bh=SFmNJp3ug2FsIzR1B+DY7EIb++L4pLncWhMNGd+OQwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QgqEDgfrYVNMzRgHi4DKtb4jGOBEDb7Cv9vOS8fkR5HdOn8BtQreCHqLMrlP0iiCFSmCBv+AEQXksFQTXW3jRZ3kfjsj+3yiK1WC+XUPqq2Qj0q02YOJhXLkq42Mm6ss/6hKKQBx4vtAO/5of6r9xhrJCHhB+s9zSTmAbbE4Fo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7f2kbfv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oti2NbtmpO5sA8MxSyxrTx5h7fysidv3CoJrw1ARZ3pG5YPeT1/ESBrS2w9kK+1BqFh7FyhC7nIBlBPPYL5sZUyf1N7EyrY3LGRFrbLAXX+xh1L4uQi4l+trb09m5zWH8BIKr7RbaNPRtsCGmTb8MwMame1xJxZOCnUThAZ1g+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SAlopz+6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7f2kbfv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C4CC32782;
-	Tue, 30 Jul 2024 17:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SAlopz+6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8815AC32782;
+	Tue, 30 Jul 2024 17:23:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360178;
-	bh=pOe861v5Wj8y60QgxC4ijOJLMJ3FoHaZpyfKppbfl+I=;
+	s=korg; t=1722360182;
+	bh=SFmNJp3ug2FsIzR1B+DY7EIb++L4pLncWhMNGd+OQwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7f2kbfvobSK4pcDif9O7XBMBj/bI9tHvN5AVGUqt4smERzCy/0+MvlsLYaVGwOxo
-	 csq7MAiktDZGEMCLjabiHwpbctlcnu/BpM5U2x6au+q8SZxx5H+L7r3PUwMynoSZ4u
-	 Ub2iYJlg/Pc6r7omAon39iuOD0S++KI0XhdlFcYI=
+	b=SAlopz+6tTQZ5w5/WKAj419G32EP50AbxDjH9hCPtjPmMETSK+6oXHkoKYG6yZd/u
+	 K13Leyspl//rSRxKU1N0wQbLlwqS76FWDf7PtPEhwBC6hlXGqAB41aYwDvY5YrnhsA
+	 edjbMKBSzFFL/vhY0HSPlwMMh8eOvTBVDKAW/+us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.10 593/809] ext4: make sure the first directory block is not a hole
-Date: Tue, 30 Jul 2024 17:47:49 +0200
-Message-ID: <20240730151748.252196817@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.10 620/809] KVM: VMX: Split out the non-virtualization part of vmx_interrupt_blocked()
+Date: Tue, 30 Jul 2024 17:48:16 +0200
+Message-ID: <20240730151749.331261330@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,85 +49,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit f9ca51596bbfd0f9c386dd1c613c394c78d9e5e6 upstream.
+commit 322a569c4b4188a0da2812f9e952780ce09b74ba upstream.
 
-The syzbot constructs a directory that has no dirblock but is non-inline,
-i.e. the first directory block is a hole. And no errors are reported when
-creating files in this directory in the following flow.
+Move the non-VMX chunk of the "interrupt blocked" checks to a separate
+helper so that KVM can reuse the code to detect if interrupts are blocked
+for L2, e.g. to determine if a virtual interrupt _for L2_ is a valid wake
+event.  If L1 disables HLT-exiting for L2, nested APICv is enabled, and L2
+HLTs, then L2 virtual interrupts are valid wake events, but if and only if
+interrupts are unblocked for L2.
 
-    ext4_mknod
-     ...
-      ext4_add_entry
-        // Read block 0
-        ext4_read_dirblock(dir, block, DIRENT)
-          bh = ext4_bread(NULL, inode, block, 0)
-          if (!bh && (type == INDEX || type == DIRENT_HTREE))
-          // The first directory block is a hole
-          // But type == DIRENT, so no error is reported.
-
-After that, we get a directory block without '.' and '..' but with a valid
-dentry. This may cause some code that relies on dot or dotdot (such as
-make_indexed_dir()) to crash.
-
-Therefore when ext4_read_dirblock() finds that the first directory block
-is a hole report that the filesystem is corrupted and return an error to
-avoid loading corrupted data from disk causing something bad.
-
-Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
-Fixes: 4e19d6b65fb4 ("ext4: allow directory holes")
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240702132349.2600605-3-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240607172609.3205077-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |   17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ arch/x86/kvm/vmx/vmx.c |   11 ++++++++---
+ arch/x86/kvm/vmx/vmx.h |    1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -151,10 +151,11 @@ static struct buffer_head *__ext4_read_d
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -5052,14 +5052,19 @@ int vmx_nmi_allowed(struct kvm_vcpu *vcp
+ 	return !vmx_nmi_blocked(vcpu);
+ }
  
- 		return bh;
- 	}
--	if (!bh && (type == INDEX || type == DIRENT_HTREE)) {
-+	/* The first directory block must not be a hole. */
-+	if (!bh && (type == INDEX || type == DIRENT_HTREE || block == 0)) {
- 		ext4_error_inode(inode, func, line, block,
--				 "Directory hole found for htree %s block",
--				 (type == INDEX) ? "index" : "leaf");
-+				 "Directory hole found for htree %s block %u",
-+				 (type == INDEX) ? "index" : "leaf", block);
- 		return ERR_PTR(-EFSCORRUPTED);
- 	}
- 	if (!bh)
-@@ -3129,10 +3130,7 @@ bool ext4_empty_dir(struct inode *inode)
- 		EXT4_ERROR_INODE(inode, "invalid size");
- 		return false;
- 	}
--	/* The first directory block must not be a hole,
--	 * so treat it as DIRENT_HTREE
--	 */
--	bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
-+	bh = ext4_read_dirblock(inode, 0, EITHER);
- 	if (IS_ERR(bh))
++bool __vmx_interrupt_blocked(struct kvm_vcpu *vcpu)
++{
++	return !(vmx_get_rflags(vcpu) & X86_EFLAGS_IF) ||
++	       (vmcs_read32(GUEST_INTERRUPTIBILITY_INFO) &
++		(GUEST_INTR_STATE_STI | GUEST_INTR_STATE_MOV_SS));
++}
++
+ bool vmx_interrupt_blocked(struct kvm_vcpu *vcpu)
+ {
+ 	if (is_guest_mode(vcpu) && nested_exit_on_intr(vcpu))
  		return false;
  
-@@ -3577,10 +3575,7 @@ static struct buffer_head *ext4_get_firs
- 		struct ext4_dir_entry_2 *de;
- 		unsigned int offset;
+-	return !(vmx_get_rflags(vcpu) & X86_EFLAGS_IF) ||
+-	       (vmcs_read32(GUEST_INTERRUPTIBILITY_INFO) &
+-		(GUEST_INTR_STATE_STI | GUEST_INTR_STATE_MOV_SS));
++	return __vmx_interrupt_blocked(vcpu);
+ }
  
--		/* The first directory block must not be a hole, so
--		 * treat it as DIRENT_HTREE
--		 */
--		bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
-+		bh = ext4_read_dirblock(inode, 0, EITHER);
- 		if (IS_ERR(bh)) {
- 			*retval = PTR_ERR(bh);
- 			return NULL;
+ int vmx_interrupt_allowed(struct kvm_vcpu *vcpu, bool for_injection)
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -406,6 +406,7 @@ u64 construct_eptp(struct kvm_vcpu *vcpu
+ bool vmx_guest_inject_ac(struct kvm_vcpu *vcpu);
+ void vmx_update_exception_bitmap(struct kvm_vcpu *vcpu);
+ bool vmx_nmi_blocked(struct kvm_vcpu *vcpu);
++bool __vmx_interrupt_blocked(struct kvm_vcpu *vcpu);
+ bool vmx_interrupt_blocked(struct kvm_vcpu *vcpu);
+ bool vmx_get_nmi_mask(struct kvm_vcpu *vcpu);
+ void vmx_set_nmi_mask(struct kvm_vcpu *vcpu, bool masked);
 
 
