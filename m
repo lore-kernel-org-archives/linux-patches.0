@@ -1,39 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784B918801A;
-	Tue, 30 Jul 2024 16:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC841A6195;
+	Tue, 30 Jul 2024 16:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358547; cv=none; b=rLm9Q6TyOTVCPTesUTPrLLuP5iWqVb6E///zLLx2KmWILECg61pDUvQL9DiNE+T0Zcwc8zvCuSVooba2EFj0zGPkBFJX/3RO9FjiE8LNPRBiI1ffSdzIFMyG1Cj4CYIIEgThddpcdcWKaPFsMS+u93Fxu23reuNCrgnGLz1kfDA=
+	t=1722358550; cv=none; b=gUmA9enTpT3gey/SQ+wLvo+7AuFqnvNdOcYZybK3dtb4AzctTY4YlS8NxXfiDytW6YTogBPvhU+G3rdlzeyKXz5zGZdP5KnJmJzRVsbqCglStRPiWZquMl1w8WJdJtCB9gtaoEa2cxtcq0AtkccfMgicycTAKkb+3Ts/ykb6jaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358547; c=relaxed/simple;
-	bh=IQfRzZL0GmHVQ4o/nLrMWZYb6llT/1ehKBNR2Onx9to=;
+	s=arc-20240116; t=1722358550; c=relaxed/simple;
+	bh=Ny9QKlxxydlA7elX9dnZeEETRH/WaqkUIsi3HQ0M/wY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TcA/uBAGHNk8MdnbJvKYuUyawc8KamNZ4TFjfjJxGrxecNy75/xsZlo8mb1/mHRAllWNMaP7jtx/NqAGC+g9a/mBF3LH5/n79paha6ajidYmCTCNaOqw6wLlcc4hgvrcb0TgzmJXxzeEhhI2Zu3O7tM5j1GtAlxm4l4n29gtk2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ht4TcCrn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPIQCoMsvpeNUgxvb8kb1cuJAcO2RZlw2zBZFRKTigsA6gySaub1+1hOKDRu5YvHnovDdi0sfG4cEuLDIoQejbZ16O+HrUSZTb95VtKOXnPqIPraCukm72ZDyP8yW9hTW4LLqtFXdms7FgRmC04KA4mDfjktL1y8+RtvP82Jvmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZCeQcQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ht4TcCrn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B887DC32782;
-	Tue, 30 Jul 2024 16:55:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZCeQcQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7751C32782;
+	Tue, 30 Jul 2024 16:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358547;
-	bh=IQfRzZL0GmHVQ4o/nLrMWZYb6llT/1ehKBNR2Onx9to=;
+	s=korg; t=1722358550;
+	bh=Ny9QKlxxydlA7elX9dnZeEETRH/WaqkUIsi3HQ0M/wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ht4TcCrnJN+jRWovoUsgrPbnpzZ7INUFjFYxH5O7GR6NIcoR1rv6uLj5NspiI/5hY
-	 28Joppaym5zKHF5P6OYQKVQgWKaqSWy3DgU+KSgjD29H68lBu+f8HPuYAdbov06+47
-	 hhihMml72/tt1ut648bsl0f1cxk/LGsFI3OqiM1k=
+	b=QZCeQcQcIqb+Z9kMuQ0D5fq8wU8CKSOuWzzqF3t388BeU/5LRx6WUzwUXGRtFdirr
+	 BlswTcmCzZtARAjm1zMCr2WkPcfR337uwZb3AXYoL7KDrbxgYnxRCokiIgTqkZqWSi
+	 j4JRaezuNP/6p0qQP6KsJwSkxqlQJeVh+H6Gb65o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjelique Melendez <quic_amelende@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Lee Jones <lee@kernel.org>,
+	Junhao He <hejunhao3@huawei.com>,
+	ravi.bangoria@amd.com,
+	james.clark@arm.com,
+	prime.zeng@hisilicon.com,
+	cuigaosheng1@huawei.com,
+	jonathan.cameron@huawei.com,
+	linuxarm@huawei.com,
+	yangyicong@huawei.com,
+	robh@kernel.org,
+	renyu.zj@linux.alibaba.com,
+	kjain@linux.ibm.com,
+	john.g.garry@oracle.com,
+	linux-arm-kernel@lists.infradead.org,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 350/809] leds: rgb: leds-qcom-lpg: Add PPG check for setting/clearing PBS triggers
-Date: Tue, 30 Jul 2024 17:43:46 +0200
-Message-ID: <20240730151738.458952092@linuxfoundation.org>
+Subject: [PATCH 6.10 346/809] perf pmus: Fixes always false when compare duplicates aliases
+Date: Tue, 30 Jul 2024 17:43:42 +0200
+Message-ID: <20240730151738.300105397@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,59 +63,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anjelique Melendez <quic_amelende@quicinc.com>
+From: Junhao He <hejunhao3@huawei.com>
 
-[ Upstream commit 7e776e21255bf4c271e0df0a7d289a4963580e61 ]
+[ Upstream commit dd9a426eade634bf794c7e0f1b0c6659f556942f ]
 
-Currently, all LED LPG devices will call lpg_{set,clear}_pbs_trigger()
-when setting brightness regardless of if they support PPG and have PBS
-triggers. Check if device supports PPG before setting/clearing PBS
-triggers.
+In the previous loop, all the members in the aliases[j-1] have been freed
+and set to NULL. But in this loop, the function pmu_alias_is_duplicate()
+compares the aliases[j] with the aliases[j-1] that has already been
+disposed, so the function will always return false and duplicate aliases
+will never be discarded.
 
-Fixes: 6ab1f766a80a ("leds: rgb: leds-qcom-lpg: Add support for PPG through single SDAM")
-Fixes: 5e9ff626861a ("leds: rgb: leds-qcom-lpg: Include support for PPG with dedicated LUT SDAM")
-Signed-off-by: Anjelique Melendez <quic_amelende@quicinc.com>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20240607005250.4047135-1-quic_amelende@quicinc.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+If we find duplicate aliases, it skips the zfree aliases[j], which is
+accompanied by a memory leak.
+
+We can use the next aliases[j+1] to theck for duplicate aliases to
+fixes the aliases NULL pointer dereference, then goto zfree code snippet
+to release it.
+
+After patch testing:
+ $ perf list --unit=hisi_sicl,cpa pmu
+
+ uncore cpa:
+   cpa_p0_rd_dat_32b
+        [Number of read ops transmitted by the P0 port which size is 32 bytes.
+         Unit: hisi_sicl,cpa]
+   cpa_p0_rd_dat_64b
+        [Number of read ops transmitted by the P0 port which size is 64 bytes.
+         Unit: hisi_sicl,cpa]
+
+Fixes: c3245d2093c1 ("perf pmu: Abstract alias/event struct")
+Signed-off-by: Junhao He <hejunhao3@huawei.com>
+Cc: ravi.bangoria@amd.com
+Cc: james.clark@arm.com
+Cc: prime.zeng@hisilicon.com
+Cc: cuigaosheng1@huawei.com
+Cc: jonathan.cameron@huawei.com
+Cc: linuxarm@huawei.com
+Cc: yangyicong@huawei.com
+Cc: robh@kernel.org
+Cc: renyu.zj@linux.alibaba.com
+Cc: kjain@linux.ibm.com
+Cc: john.g.garry@oracle.com
+Cc: linux-arm-kernel@lists.infradead.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240614094318.11607-1-hejunhao3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/util/pmus.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 9467c796bd041..e74b2ceed1c26 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -2,7 +2,7 @@
- /*
-  * Copyright (c) 2017-2022 Linaro Ltd
-  * Copyright (c) 2010-2012, The Linux Foundation. All rights reserved.
-- * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2023-2024, Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #include <linux/bits.h>
- #include <linux/bitfield.h>
-@@ -254,6 +254,9 @@ static int lpg_clear_pbs_trigger(struct lpg *lpg, unsigned int lut_mask)
- 	u8 val = 0;
- 	int rc;
+diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
+index b9b4c5eb50027..6907e3e7fbd16 100644
+--- a/tools/perf/util/pmus.c
++++ b/tools/perf/util/pmus.c
+@@ -477,8 +477,8 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
+ 	qsort(aliases, len, sizeof(struct sevent), cmp_sevent);
+ 	for (int j = 0; j < len; j++) {
+ 		/* Skip duplicates */
+-		if (j > 0 && pmu_alias_is_duplicate(&aliases[j], &aliases[j - 1]))
+-			continue;
++		if (j < len - 1 && pmu_alias_is_duplicate(&aliases[j], &aliases[j + 1]))
++			goto free;
  
-+	if (!lpg->lpg_chan_sdam)
-+		return 0;
-+
- 	lpg->pbs_en_bitmap &= (~lut_mask);
- 	if (!lpg->pbs_en_bitmap) {
- 		rc = nvmem_device_write(lpg->lpg_chan_sdam, SDAM_REG_PBS_SEQ_EN, 1, &val);
-@@ -276,6 +279,9 @@ static int lpg_set_pbs_trigger(struct lpg *lpg, unsigned int lut_mask)
- 	u8 val = PBS_SW_TRIG_BIT;
- 	int rc;
- 
-+	if (!lpg->lpg_chan_sdam)
-+		return 0;
-+
- 	if (!lpg->pbs_en_bitmap) {
- 		rc = nvmem_device_write(lpg->lpg_chan_sdam, SDAM_REG_PBS_SEQ_EN, 1, &val);
- 		if (rc < 0)
+ 		print_cb->print_event(print_state,
+ 				aliases[j].pmu_name,
+@@ -491,6 +491,7 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
+ 				aliases[j].desc,
+ 				aliases[j].long_desc,
+ 				aliases[j].encoding_desc);
++free:
+ 		zfree(&aliases[j].name);
+ 		zfree(&aliases[j].alias);
+ 		zfree(&aliases[j].scale_unit);
 -- 
 2.43.0
 
