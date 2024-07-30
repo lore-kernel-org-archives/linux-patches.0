@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8B41A616E;
-	Tue, 30 Jul 2024 16:11:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A901A6191;
+	Tue, 30 Jul 2024 16:11:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355906; cv=none; b=m37q9k1S6AtdzIGBnHUO7dEpmjYojzhrCTqK16w6IKc0B5IVUEO4gHhp6zu7FAu22MO5SNMBdevEuAYgRGSzF2YNTZwmQYsE3++g6oZWyCkS4oaEYcQpSFBErDVJRSPj7LlSehKzG9os2T9A6eChVd51jeqjrd3o4JgAxK+H5lE=
+	t=1722355909; cv=none; b=oOvsF6xSr1Uykq5WfdBZT8Ri/QcyOJSdoHsbt0y4OHjBFNQNdUUObEhKSlhCng3pF+gU625R5O8D4VqRJZitirmDcddLBEFA6GZx3s0d/VRmyADPPbXrI+S7CIDmNbqCps/L76dhaxujoHUZ0LIpuXDhpA3npzDaMUEF5iJCSdo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355906; c=relaxed/simple;
-	bh=SOmeLuxaucqjj4qKPPIXd4OLAKwTyrGAjnL1zl1HJKc=;
+	s=arc-20240116; t=1722355909; c=relaxed/simple;
+	bh=+R/sRYoFJ6ShnHou7IVIe9SCw5QLmbJ4tc7eVIO83u0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u5BDHwzOJNW/icK0AJacvI0T2oLMxy3wqC+3kyDBgVg4A1+mI50AZYdU2tnBmMQNbfUQgFn6lSt6b44hL3GzdT3RTleiIjJpp60hRGbPUZ9rk0ZJ3X/nIbOncTnG/rBDP0g1gX5F7Pb4udYH0AsgpHHUSFaydrIkud1i6smoqeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmgVP4bJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gH1ro8no2WeTG4Jkg1gJPb/RVKVcKOe4BAIejsmyLZjewhI4JgG4rfuzLypA7u9TmU67a5EyX9zHRyCCdEO+C59Rwa4Hc7zfO+l4EfbtU/xWBHQNS1Q4V2ygcZciuwomcVNArAg/OXOQgQzQ3UGKOK596Ro02iC0VpvPfcMZZEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0p86qYT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmgVP4bJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50896C4AF0C;
-	Tue, 30 Jul 2024 16:11:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0p86qYT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA74C32782;
+	Tue, 30 Jul 2024 16:11:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355906;
-	bh=SOmeLuxaucqjj4qKPPIXd4OLAKwTyrGAjnL1zl1HJKc=;
+	s=korg; t=1722355909;
+	bh=+R/sRYoFJ6ShnHou7IVIe9SCw5QLmbJ4tc7eVIO83u0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmgVP4bJT32q5o1UrkgluiMng9nBIc1wJS7egjvA4KMOTlSehBvWDGSRna9DKHnAN
-	 RPraL6xfTWNXLAIjN9yBn0ZiRjI5m/p7bRGt8SBh/3zYq9CdwHE3Sf18/WVkuX78MZ
-	 UrxDOTu7w2E9rbvqYK0gDJ2Alsm5lz0LGmbkhflc=
+	b=y0p86qYT3KDmfWok6QW4lp8Ai7OyQlRapFNBUbaGrhDFvxShCKsmCEI5Tl7qIZRaX
+	 iKNImhUrZn/OlcvDJkwd+Qo6T9OG5Ehf+Z7nbtKZttDc8FJdkHTs8+v7DZH9IfxOky
+	 1sHtVjQ6zCm/ucfTm3uMxG9vkAUlLkoeAJWqF+oQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	David Hildenbrand <david@redhat.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 101/568] arm64: dts: rockchip: fixes PHY reset for Lunzn Fastrhino R68S
-Date: Tue, 30 Jul 2024 17:43:28 +0200
-Message-ID: <20240730151643.823006741@linuxfoundation.org>
+Subject: [PATCH 6.1 143/440] s390/uv: Dont call folio_wait_writeback() without a folio reference
+Date: Tue, 30 Jul 2024 17:46:16 +0200
+Message-ID: <20240730151621.466344439@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +49,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit e261bd74000ca80e5483ba8a8bda509de8cbe7fd ]
+[ Upstream commit 3f29f6537f54d74e64bac0a390fb2e26da25800d ]
 
-Fixed the PHY address and reset GPIOs (does not match the corresponding
-pinctrl) for gmac0 and gmac1.
+folio_wait_writeback() requires that no spinlocks are held and that
+a folio reference is held, as documented. After we dropped the PTL, the
+folio could get freed concurrently. So grab a temporary reference.
 
-Fixes: b9f8ca655d80 ("arm64: dts: rockchip: Add Lunzn Fastrhino R68S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240630150010.55729-7-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 214d9bbcd3a6 ("s390/mm: provide memory management functions for protected KVM guests")
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20240508182955.358628-2-david@redhat.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3568-fastrhino-r68s.dts      | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/s390/kernel/uv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
-index a3339186e89c8..ce2a5e1ccefc3 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
-@@ -39,7 +39,7 @@ &gmac0_tx_bus2
- 		     &gmac0_rx_bus2
- 		     &gmac0_rgmii_clk
- 		     &gmac0_rgmii_bus>;
--	snps,reset-gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_LOW>;
-+	snps,reset-gpio = <&gpio1 RK_PB0 GPIO_ACTIVE_LOW>;
- 	snps,reset-active-low;
- 	/* Reset time is 15ms, 50ms for rtl8211f */
- 	snps,reset-delays-us = <0 15000 50000>;
-@@ -61,7 +61,7 @@ &gmac1m1_tx_bus2
- 		     &gmac1m1_rx_bus2
- 		     &gmac1m1_rgmii_clk
- 		     &gmac1m1_rgmii_bus>;
--	snps,reset-gpio = <&gpio0 RK_PB1 GPIO_ACTIVE_LOW>;
-+	snps,reset-gpio = <&gpio1 RK_PB1 GPIO_ACTIVE_LOW>;
- 	snps,reset-active-low;
- 	/* Reset time is 15ms, 50ms for rtl8211f */
- 	snps,reset-delays-us = <0 15000 50000>;
-@@ -71,18 +71,18 @@ &gmac1m1_rgmii_clk
- };
- 
- &mdio0 {
--	rgmii_phy0: ethernet-phy@0 {
-+	rgmii_phy0: ethernet-phy@1 {
- 		compatible = "ethernet-phy-ieee802.3-c22";
--		reg = <0>;
-+		reg = <0x1>;
- 		pinctrl-0 = <&eth_phy0_reset_pin>;
- 		pinctrl-names = "default";
- 	};
- };
- 
- &mdio1 {
--	rgmii_phy1: ethernet-phy@0 {
-+	rgmii_phy1: ethernet-phy@1 {
- 		compatible = "ethernet-phy-ieee802.3-c22";
--		reg = <0>;
-+		reg = <0x1>;
- 		pinctrl-0 = <&eth_phy1_reset_pin>;
- 		pinctrl-names = "default";
- 	};
+diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
+index 6f661add0a5d6..1ae7a04038049 100644
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -299,6 +299,13 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 			rc = make_folio_secure(folio, uvcb);
+ 			folio_unlock(folio);
+ 		}
++
++		/*
++		 * Once we drop the PTL, the folio may get unmapped and
++		 * freed immediately. We need a temporary reference.
++		 */
++		if (rc == -EAGAIN)
++			folio_get(folio);
+ 	}
+ unlock:
+ 	pte_unmap_unlock(ptep, ptelock);
+@@ -311,6 +318,7 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 		 * completion, this is just a useless check, but it is safe.
+ 		 */
+ 		folio_wait_writeback(folio);
++		folio_put(folio);
+ 	} else if (rc == -EBUSY) {
+ 		/*
+ 		 * If we have tried a local drain and the folio refcount
 -- 
 2.43.0
 
