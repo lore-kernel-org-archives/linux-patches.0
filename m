@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B90187FFB;
-	Tue, 30 Jul 2024 16:04:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E8218951A;
+	Tue, 30 Jul 2024 16:04:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355490; cv=none; b=rlvN+tMKpZNAYmfdOELxBaFPUcVxkP63lpKyipe+4+O7omppNR+45kqw+JLDZhAbDbX7277PB8fHuycfVpTwlgyMKnIyKbx64n/P2BbDjSjwaGeXwKx6C5dzHWqmnTRGh5bEGmUoYssOwITtGW58P3+SNt8g2BMQX94nPZWbY1w=
+	t=1722355494; cv=none; b=dk49odgNNfebKktuavOWDzFHtjK8PLoT8NKYmgNuZxCo7CkEF78uAEIVxu9yIjI7WKv1FM/oRBXVklXT/G7gQKNrd5ccq4IjBR1H6Ts10eNMdzEFuLaNVE8kjkWqVm1ssEAtOysKc5yg+YMrFPAZwmqAgqv/bgDp62jicAZDWHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355490; c=relaxed/simple;
-	bh=ivRllV5663+MgRxBlNVeFwexOpt12L4Jl2ek9YEKYLA=;
+	s=arc-20240116; t=1722355494; c=relaxed/simple;
+	bh=+s0kxuUp9Uza4XCXJJLGQT9VnieUIXhBlZ/kDu73KMw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZKiRTdT654q1hu4NE4JlaFefKujw656DBTKWBHJyd4bU4+mT9UlbeH/sMOVdLEhjhBoLiTbPhqOjl5XJKrQoRa7BwChRfPHMDydlpG8eLN7OOdhYyLurZd0dWavETqsQVty/gozW+pOkSR0ITdUdRilAQ4TrhDsiLbIIE5vpUZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dVlR0bZs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qF8Io5EYiRLJi/Xt3pTLBS3umfQw2pmF79PzEg93AoAVXAHt8FxUe5HTxEmzExKOm6IszAyu4d+YJOSiYaTNkkAjc4rJh5P3+r1/4x/Bq7SqabN/d+SNbN6BR86b6myXwirw5oT6qMHj1D1bm+l1If0uAVhTUUiFpD/T/WtPGt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiQvdm2Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dVlR0bZs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA73C4AF0E;
-	Tue, 30 Jul 2024 16:04:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiQvdm2Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F164CC4AF17;
+	Tue, 30 Jul 2024 16:04:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355490;
-	bh=ivRllV5663+MgRxBlNVeFwexOpt12L4Jl2ek9YEKYLA=;
+	s=korg; t=1722355493;
+	bh=+s0kxuUp9Uza4XCXJJLGQT9VnieUIXhBlZ/kDu73KMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVlR0bZs8D2w9jcD9dINykIQqaa5NkzNstXW7EF/xtdhZvntuv7IeqnDOCsCxkyCN
-	 ljn9j8xrFEaw4M8ZQuBiUBFiBPO7U45Kxnk3q77A0+rQVNXLDD1jTWGzkxKiUNt7k8
-	 CXqoo67xoOfmtN82qGc9cI//jDhKHLS49mRx0SP8=
+	b=YiQvdm2Y8ly/mDXQvGduZmyK6dD3ogkciVk5+1hD2Nu1OuRX8ETZqQ7nBANgxcFpE
+	 EwlC5r/HeO7R5ymjeyq1RHTx6jC6Bzjk+6JxfFulOdJ31KbYE2XP3WDuB921+Ruk+7
+	 ROG5zMGoHakh/z+/cdMjG8VYgWw8VA4XcAhTCwpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Sun <samsun1006219@gmail.com>,
-	Xingwei Lee <xrivendell7@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/440] jump_label: Fix concurrency issues in static_key_slow_dec()
-Date: Tue, 30 Jul 2024 17:45:32 +0200
-Message-ID: <20240730151619.753507378@linuxfoundation.org>
+Subject: [PATCH 6.10 060/809] arm64: dts: rockchip: Add mdio and ethernet-phy nodes to rk3308-rock-pi-s
+Date: Tue, 30 Jul 2024 17:38:56 +0200
+Message-ID: <20240730151727.014648521@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,145 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 83ab38ef0a0b2407d43af9575bb32333fdd74fb2 ]
+[ Upstream commit 4b64ed510ed946a4e4ca6d51d6512bf5361f6a04 ]
 
-The commit which tried to fix the concurrency issues of concurrent
-static_key_slow_inc() failed to fix the equivalent issues
-vs. static_key_slow_dec():
+Be explicit about the Ethernet port and define mdio and ethernet-phy
+nodes in the device tree for ROCK Pi S.
 
-CPU0                     CPU1
-
-static_key_slow_dec()
-  static_key_slow_try_dec()
-
-	key->enabled == 1
-	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
-	if (val == 1)
-	     return false;
-
-  jump_label_lock();
-  if (atomic_dec_and_test(&key->enabled)) {
-     --> key->enabled == 0
-   __jump_label_update()
-
-			 static_key_slow_dec()
-			   static_key_slow_try_dec()
-
-			     key->enabled == 0
-			     val = atomic_fetch_add_unless(&key->enabled, -1, 1);
-
-			      --> key->enabled == -1 <- FAIL
-
-There is another bug in that code, when there is a concurrent
-static_key_slow_inc() which enables the key as that sets key->enabled to -1
-so on the other CPU
-
-	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
-
-will succeed and decrement to -2, which is invalid.
-
-Cure all of this by replacing the atomic_fetch_add_unless() with a
-atomic_try_cmpxchg() loop similar to static_key_fast_inc_not_disabled().
-
-[peterz: add WARN_ON_ONCE for the -1 race]
-Fixes: 4c5ea0a9cd02 ("locking/static_key: Fix concurrent static_key_slow_inc()")
-Reported-by: Yue Sun <samsun1006219@gmail.com>
-Reported-by: Xingwei Lee <xrivendell7@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240610124406.422897838@linutronix.de
+Fixes: bc3753aed81f ("arm64: dts: rockchip: rock-pi-s add more peripherals")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20240521211029.1236094-8-jonas@kwiboo.se
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/jump_label.c | 45 +++++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ .../boot/dts/rockchip/rk3308-rock-pi-s.dts    | 26 ++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/jump_label.c b/kernel/jump_label.c
-index d9c822bbffb8d..eec802175ccc6 100644
---- a/kernel/jump_label.c
-+++ b/kernel/jump_label.c
-@@ -131,7 +131,7 @@ bool static_key_fast_inc_not_disabled(struct static_key *key)
- 	STATIC_KEY_CHECK_USE(key);
- 	/*
- 	 * Negative key->enabled has a special meaning: it sends
--	 * static_key_slow_inc() down the slow path, and it is non-zero
-+	 * static_key_slow_inc/dec() down the slow path, and it is non-zero
- 	 * so it counts as "enabled" in jump_label_update().  Note that
- 	 * atomic_inc_unless_negative() checks >= 0, so roll our own.
- 	 */
-@@ -150,7 +150,7 @@ bool static_key_slow_inc_cpuslocked(struct static_key *key)
- 	lockdep_assert_cpus_held();
+diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
+index d4cf6026241c4..f6fb90e13ad01 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
+@@ -144,11 +144,25 @@ &emmc {
  
- 	/*
--	 * Careful if we get concurrent static_key_slow_inc() calls;
-+	 * Careful if we get concurrent static_key_slow_inc/dec() calls;
- 	 * later calls must wait for the first one to _finish_ the
- 	 * jump_label_update() process.  At the same time, however,
- 	 * the jump_label_update() call below wants to see
-@@ -247,20 +247,32 @@ EXPORT_SYMBOL_GPL(static_key_disable);
- 
- static bool static_key_slow_try_dec(struct static_key *key)
- {
--	int val;
--
--	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
--	if (val == 1)
--		return false;
-+	int v;
- 
- 	/*
--	 * The negative count check is valid even when a negative
--	 * key->enabled is in use by static_key_slow_inc(); a
--	 * __static_key_slow_dec() before the first static_key_slow_inc()
--	 * returns is unbalanced, because all other static_key_slow_inc()
--	 * instances block while the update is in progress.
-+	 * Go into the slow path if key::enabled is less than or equal than
-+	 * one. One is valid to shut down the key, anything less than one
-+	 * is an imbalance, which is handled at the call site.
-+	 *
-+	 * That includes the special case of '-1' which is set in
-+	 * static_key_slow_inc_cpuslocked(), but that's harmless as it is
-+	 * fully serialized in the slow path below. By the time this task
-+	 * acquires the jump label lock the value is back to one and the
-+	 * retry under the lock must succeed.
- 	 */
--	WARN(val < 0, "jump label: negative count!\n");
-+	v = atomic_read(&key->enabled);
-+	do {
-+		/*
-+		 * Warn about the '-1' case though; since that means a
-+		 * decrement is concurrent with a first (0->1) increment. IOW
-+		 * people are trying to disable something that wasn't yet fully
-+		 * enabled. This suggests an ordering problem on the user side.
-+		 */
-+		WARN_ON_ONCE(v < 0);
-+		if (v <= 1)
-+			return false;
-+	} while (!likely(atomic_try_cmpxchg(&key->enabled, &v, v - 1)));
+ &gmac {
+ 	clock_in_out = "output";
++	phy-handle = <&rtl8201f>;
+ 	phy-supply = <&vcc_io>;
+-	snps,reset-gpio = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+-	snps,reset-active-low;
+-	snps,reset-delays-us = <0 50000 50000>;
+ 	status = "okay";
 +
- 	return true;
- }
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		rtl8201f: ethernet-phy@1 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <1>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&mac_rst>;
++			reset-assert-us = <20000>;
++			reset-deassert-us = <50000>;
++			reset-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
++		};
++	};
+ };
  
-@@ -271,10 +283,11 @@ static void __static_key_slow_dec_cpuslocked(struct static_key *key)
- 	if (static_key_slow_try_dec(key))
- 		return;
+ &gpio0 {
+@@ -221,6 +235,12 @@ &pinctrl {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&rtc_32k>;
  
--	jump_label_lock();
--	if (atomic_dec_and_test(&key->enabled))
-+	guard(mutex)(&jump_label_mutex);
-+	if (atomic_cmpxchg(&key->enabled, 1, 0))
- 		jump_label_update(key);
--	jump_label_unlock();
-+	else
-+		WARN_ON_ONCE(!static_key_slow_try_dec(key));
- }
- 
- static void __static_key_slow_dec(struct static_key *key)
++	gmac {
++		mac_rst: mac-rst {
++			rockchip,pins = <0 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
+ 	leds {
+ 		green_led: green-led {
+ 			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
 -- 
 2.43.0
 
