@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61B04154C18;
-	Tue, 30 Jul 2024 17:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24BE1A76AD;
+	Tue, 30 Jul 2024 17:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360628; cv=none; b=hkep7jbc/6AehaSdldkwNXig/myHAMqwG3HtvOjajuSl23qPY8pOeLWl4/9tj50KDr6PlFRInL16KVJRBYvsbve/Lq22Sy0neMcuITHsGOwobpS26vNB9SkJ5Ve/qWO4a5BTEhZ3pC7hdIg8yKyKe8XSqa5aqTZvHDzYQP2u5UY=
+	t=1722360631; cv=none; b=PmkeqfMVxIhe+7GJLiAzdlk3X4l/N73u0S8uGtVMpqpYu5owUxNSOAO2OcAzqmUxrwiqtOwiBBw6mwA5VdaF/F0kd2NxJqx3DdnAF9qpsxt2cuFhGCgdhkbCIR47qm20MTFg3p7AupaPgSchP1Dob5IiaSF0NhdlEysX7mx3uug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360628; c=relaxed/simple;
-	bh=lb1DY+WBj3mUdpgNgMFp32wUwKvQs7awsSDwd6FS8XU=;
+	s=arc-20240116; t=1722360631; c=relaxed/simple;
+	bh=d8KQelsp+4Gm2TVu0wv72jY1sYG6pMrjV2ennU1u9p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EwfBL6TfgZnLkuoKgSG8mx9LewtVJB8MsLo748W6F3xZfYsAPw1eS/37kAI8Tr7Bihn9NxuT2kGd5hEiEqXqJMXXl7ua9j3fdUbwaXizzlBKN/PjX8jPTd0Cc1e/zGvUFnMuMdvtECYY+gZMYuG5eZ9f0G9/jaB/WNFWDouciDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k9FnwtLn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KqxoG5C9PAPynBvhXcyP0byyj01+3XZZyhgejP66r9UkjMWJm8LGc7yPpHZ0f9yYxB99MhanqgEvEICBRP+sCnaEU+dqVRZoBUTntz4ok9NOPT/VvllMK6Rz9tRU5QyykckpiFRqQnVs2qZYteeNjw336dgR3N/QRr9AoRriIrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+BXycJ4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k9FnwtLn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD35BC32782;
-	Tue, 30 Jul 2024 17:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+BXycJ4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D901C32782;
+	Tue, 30 Jul 2024 17:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360628;
-	bh=lb1DY+WBj3mUdpgNgMFp32wUwKvQs7awsSDwd6FS8XU=;
+	s=korg; t=1722360631;
+	bh=d8KQelsp+4Gm2TVu0wv72jY1sYG6pMrjV2ennU1u9p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9FnwtLnKf2c0Iy3dV0ulD0aTJObgvtDVimlYMLVwdUg68j1CrRItnJyu7BTMlTIO
-	 F1Z5tvHEXzJHMZe5tfqN2q14cd53BeXIbBlfNnnY/1+ZxIzVgl6KM3X8h6TNbK5ZnE
-	 z15LeR7wkwaOKKXzQiTxxeuykF8k3XPYZCDvLv68=
+	b=o+BXycJ4+ULJJl7/JIGipTvrXMfHWQ1kfnMPJ+lBeMM5QjFo4sBRcVWxMfA/QVATg
+	 dtWiNxLS+4LkAQghrFQxPdTLkcZSsSGTNwYZXN+dCZN6Rhy9xsMj2sDGy0AB9xhQF3
+	 C81Oi6Tv0T0ow+cEHJ4cXA0LxQSPwuEObZ7GIgxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Michal Luczaj <mhal@rbox.co>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Lance Richardson <rlance@google.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 756/809] af_unix: Disable MSG_OOB handling for sockets in sockmap/sockhash
-Date: Tue, 30 Jul 2024 17:50:32 +0200
-Message-ID: <20240730151754.819929938@linuxfoundation.org>
+Subject: [PATCH 6.10 757/809] dma: fix call order in dmam_free_coherent
+Date: Tue, 30 Jul 2024 17:50:33 +0200
+Message-ID: <20240730151754.860039249@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,103 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Luczaj <mhal@rbox.co>
+From: Lance Richardson <rlance@google.com>
 
-[ Upstream commit 638f32604385fd23059985da8de918e9c18f0b98 ]
+[ Upstream commit 28e8b7406d3a1f5329a03aa25a43aa28e087cb20 ]
 
-AF_UNIX socket tracks the most recent OOB packet (in its receive queue)
-with an `oob_skb` pointer. BPF redirecting does not account for that: when
-an OOB packet is moved between sockets, `oob_skb` is left outdated. This
-results in a single skb that may be accessed from two different sockets.
+dmam_free_coherent() frees a DMA allocation, which makes the
+freed vaddr available for reuse, then calls devres_destroy()
+to remove and free the data structure used to track the DMA
+allocation. Between the two calls, it is possible for a
+concurrent task to make an allocation with the same vaddr
+and add it to the devres list.
 
-Take the easy way out: silently drop MSG_OOB data targeting any socket that
-is in a sockmap or a sockhash. Note that such silent drop is akin to the
-fate of redirected skb's scm_fp_list (SCM_RIGHTS, SCM_CREDENTIALS).
+If this happens, there will be two entries in the devres list
+with the same vaddr and devres_destroy() can free the wrong
+entry, triggering the WARN_ON() in dmam_match.
 
-For symmetry, forbid MSG_OOB in unix_bpf_recvmsg().
+Fix by destroying the devres entry before freeing the DMA
+allocation.
 
-Fixes: 314001f0bf92 ("af_unix: Add OOB support")
-Suggested-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Michal Luczaj <mhal@rbox.co>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/20240713200218.2140950-2-mhal@rbox.co
+Tested:
+  kokonut //net/encryption
+    http://sponge2/b9145fe6-0f72-4325-ac2f-a84d81075b03
+
+Fixes: 9ac7849e35f7 ("devres: device resource management")
+Signed-off-by: Lance Richardson <rlance@google.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c  | 41 ++++++++++++++++++++++++++++++++++++++++-
- net/unix/unix_bpf.c |  3 +++
- 2 files changed, 43 insertions(+), 1 deletion(-)
+ kernel/dma/mapping.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 142f56770b77f..11cb5badafb6d 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -2667,10 +2667,49 @@ static struct sk_buff *manage_oob(struct sk_buff *skb, struct sock *sk,
- 
- static int unix_stream_read_skb(struct sock *sk, skb_read_actor_t recv_actor)
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index 81de84318ccc7..b1c18058d55f8 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -67,8 +67,8 @@ void dmam_free_coherent(struct device *dev, size_t size, void *vaddr,
  {
-+	struct unix_sock *u = unix_sk(sk);
-+	struct sk_buff *skb;
-+	int err;
-+
- 	if (unlikely(READ_ONCE(sk->sk_state) != TCP_ESTABLISHED))
- 		return -ENOTCONN;
+ 	struct dma_devres match_data = { size, vaddr, dma_handle };
  
--	return unix_read_skb(sk, recv_actor);
-+	mutex_lock(&u->iolock);
-+	skb = skb_recv_datagram(sk, MSG_DONTWAIT, &err);
-+	mutex_unlock(&u->iolock);
-+	if (!skb)
-+		return err;
-+
-+#if IS_ENABLED(CONFIG_AF_UNIX_OOB)
-+	if (unlikely(skb == READ_ONCE(u->oob_skb))) {
-+		bool drop = false;
-+
-+		unix_state_lock(sk);
-+
-+		if (sock_flag(sk, SOCK_DEAD)) {
-+			unix_state_unlock(sk);
-+			kfree_skb(skb);
-+			return -ECONNRESET;
-+		}
-+
-+		spin_lock(&sk->sk_receive_queue.lock);
-+		if (likely(skb == u->oob_skb)) {
-+			WRITE_ONCE(u->oob_skb, NULL);
-+			drop = true;
-+		}
-+		spin_unlock(&sk->sk_receive_queue.lock);
-+
-+		unix_state_unlock(sk);
-+
-+		if (drop) {
-+			WARN_ON_ONCE(skb_unref(skb));
-+			kfree_skb(skb);
-+			return -EAGAIN;
-+		}
-+	}
-+#endif
-+
-+	return recv_actor(sk, skb);
+-	dma_free_coherent(dev, size, vaddr, dma_handle);
+ 	WARN_ON(devres_destroy(dev, dmam_release, dmam_match, &match_data));
++	dma_free_coherent(dev, size, vaddr, dma_handle);
  }
- 
- static int unix_stream_read_generic(struct unix_stream_read_state *state,
-diff --git a/net/unix/unix_bpf.c b/net/unix/unix_bpf.c
-index bd84785bf8d6c..bca2d86ba97d8 100644
---- a/net/unix/unix_bpf.c
-+++ b/net/unix/unix_bpf.c
-@@ -54,6 +54,9 @@ static int unix_bpf_recvmsg(struct sock *sk, struct msghdr *msg,
- 	struct sk_psock *psock;
- 	int copied;
- 
-+	if (flags & MSG_OOB)
-+		return -EOPNOTSUPP;
-+
- 	if (!len)
- 		return 0;
+ EXPORT_SYMBOL(dmam_free_coherent);
  
 -- 
 2.43.0
