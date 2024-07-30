@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAAFC1A76AF;
-	Tue, 30 Jul 2024 17:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056FE1A76AE;
+	Tue, 30 Jul 2024 17:22:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360145; cv=none; b=FyCNcRVgD7qHPSnw1wKHfF71q/iEm5jeVAuQk1GT+3SKr8d4q9zDnvgQrkm2MskdAakltsE9jcoYjTAbSnYhndXGcowrWGkrTR6MB3gnHOBJ47MDqJfvtzPKdmxFuHDLvi5hUwikt1L8s7ruP2tCc2PEJGV/KDBJSFW2KpL4ybw=
+	t=1722360149; cv=none; b=e4SVX5OeYDpnP8X1mR0HsYgRDLi9FhxGmPTHjfwotMen4Tc84fRYpANXsSzht0h7AHLhg/pPP29lLgISD92B7T3Q6yKnTSLTFldVo/chb1Q1VEKRPr6DYa4RQr8h8ljmXby/FnIFAcs9YwvxM7Ks7y0xXhcgTcaEJ4bJXYxzt50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360145; c=relaxed/simple;
-	bh=I4gRRdwpB/551XUtpja6zR4A89eGU6CsuvDc1RBVtss=;
+	s=arc-20240116; t=1722360149; c=relaxed/simple;
+	bh=Wohn2bEDfdYIoBGzQMmGE/+4+L+vKnfBSgMqACIZfrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fshay985Ehao++VFHs6PT3t94SGwtFh/XU1drVLgytAVBOTqraKFowFMxuNIqIBtkknLN3bUpeL0iyFIXXPLuljI8unjdgaOpYJC+nVVGFX+0oOSlxth59EwP1ZZMnf2+Q01sqrgFVcfywzOIC97X9NdyR/SDXmvKmLuzkKSXU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lWNvKVFb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AC7rahLtbzRPYl6XJvyap8pkoGiIDmrndKvFA8KmXTT1GwCqhiIhjlfaMmKUqnj9t3q74ULvl/GIE1EcDNSo0MTFUggVKMOTBSGloP6vnjzUrDn2c2DUkUehOU9yCHKDNfj9fKLltDGL9RlF6f0f8Rnsobu0/QdEzUITeMBfSOo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nn4u6M0E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lWNvKVFb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51621C32782;
-	Tue, 30 Jul 2024 17:22:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nn4u6M0E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8310DC32782;
+	Tue, 30 Jul 2024 17:22:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360145;
-	bh=I4gRRdwpB/551XUtpja6zR4A89eGU6CsuvDc1RBVtss=;
+	s=korg; t=1722360148;
+	bh=Wohn2bEDfdYIoBGzQMmGE/+4+L+vKnfBSgMqACIZfrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWNvKVFbgys1VDlVVbPjAZLHHri5b0uCqeMQ03vUP4XgyFyLK3bwnwWc05FRCStgH
-	 rnnC+OQuHzpuaKCwLnKMss9ckhLMLdy1rSyAHN60vdBaQsHMKJVxyxIBR1HBkDDePY
-	 zIgh26SyjXgc0YjN3gR7cVeZfS1ujcdUAwoQF5C8=
+	b=Nn4u6M0EtJ7gdxaumrk5TyR5q0GMp0swulJ7ICAIuOmoloPq7CfVQNEJm3dBw6NnT
+	 WOQX5glmkx2UCUy3LmwzdX2N5Ed9J3ZArXa5wAwEanWTAKNzovcp80AtTlUnEr+98x
+	 681bP4ilHet1FqG5/UG+OGkvJzIpPCX4uG8DGICs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tommaso Merciai <tomm.merciai@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 610/809] media: i2c: alvium: Move V4L2_CID_GAIN to V4L2_CID_ANALOG_GAIN
-Date: Tue, 30 Jul 2024 17:48:06 +0200
-Message-ID: <20240730151748.931825333@linuxfoundation.org>
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 6.10 611/809] media: imx-pxp: Fix ERR_PTR dereference in pxp_probe()
+Date: Tue, 30 Jul 2024 17:48:07 +0200
+Message-ID: <20240730151748.971273527@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,51 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tommaso Merciai <tomm.merciai@gmail.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-commit a50a2a3242f35dd551d89a6bad17255a410ba955 upstream.
+commit 57e9ce68ae98551da9c161aaab12b41fe8601856 upstream.
 
-Into alvium cameras REG_BCRM_GAIN_RW control the analog gain.
-Let's use the right V4L2_CID_ANALOGUE_GAIN ctrl.
+devm_regmap_init_mmio() can fail, add a check and bail out in case of
+error.
 
-Fixes: 0a7af872915e ("media: i2c: Add support for alvium camera")
+Fixes: 4e5bd3fdbeb3 ("media: imx-pxp: convert to regmap")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tommaso Merciai <tomm.merciai@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240514095038.3464191-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/alvium-csi2.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/nxp/imx-pxp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/media/i2c/alvium-csi2.c
-+++ b/drivers/media/i2c/alvium-csi2.c
-@@ -1962,7 +1962,7 @@ static int alvium_g_volatile_ctrl(struct
- 	int val;
+--- a/drivers/media/platform/nxp/imx-pxp.c
++++ b/drivers/media/platform/nxp/imx-pxp.c
+@@ -1805,6 +1805,9 @@ static int pxp_probe(struct platform_dev
+ 		return PTR_ERR(mmio);
+ 	dev->regmap = devm_regmap_init_mmio(&pdev->dev, mmio,
+ 					    &pxp_regmap_config);
++	if (IS_ERR(dev->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(dev->regmap),
++				     "Failed to init regmap\n");
  
- 	switch (ctrl->id) {
--	case V4L2_CID_GAIN:
-+	case V4L2_CID_ANALOGUE_GAIN:
- 		val = alvium_get_gain(alvium);
- 		if (val < 0)
- 			return val;
-@@ -1994,7 +1994,7 @@ static int alvium_s_ctrl(struct v4l2_ctr
- 		return 0;
- 
- 	switch (ctrl->id) {
--	case V4L2_CID_GAIN:
-+	case V4L2_CID_ANALOGUE_GAIN:
- 		ret = alvium_set_ctrl_gain(alvium, ctrl->val);
- 		break;
- 	case V4L2_CID_AUTOGAIN:
-@@ -2123,7 +2123,7 @@ static int alvium_ctrl_init(struct alviu
- 
- 	if (alvium->avail_ft.gain) {
- 		ctrls->gain = v4l2_ctrl_new_std(hdl, ops,
--						V4L2_CID_GAIN,
-+						V4L2_CID_ANALOGUE_GAIN,
- 						alvium->min_gain,
- 						alvium->max_gain,
- 						alvium->inc_gain,
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
 
 
