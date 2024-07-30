@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2190C1B5839;
-	Tue, 30 Jul 2024 15:55:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 327AA29A2;
+	Tue, 30 Jul 2024 15:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354950; cv=none; b=O3MsCuaTTxowXOkBCe0c4ldjKlHGxwCZETcvVd7gNofd7LJw7IZlBOcGFmm6hSyv/y7hzEkn1YJVCmZ/jgehwQu0I8+55A4HQreVfbmOPUVedFfrqiA3UISBc/i7vLpUTvwZUZvN3Xd2Egs9MJImA2VLCRFJhrdMXjqKIco3mQg=
+	t=1722354953; cv=none; b=tSIRDePaCX8srxsWNKGmth5cZmxzY1fxjXeKvNWxLze8rGxWaGrCPvbp6WpeXMysjTHP5UoJkr2WJJidxLnXSb9IGbnmLBTDKI3ix8CSjEJ2FJKcYIiu3y870rtZ+m6YlgoFLwAGxdlnUFMztH1lauhwopSiy5JiEWIfTHq4oSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354950; c=relaxed/simple;
-	bh=yEl6OkIskANjQMZZwIid/WEV7lqQEO8Gdj+pRyGTnkQ=;
+	s=arc-20240116; t=1722354953; c=relaxed/simple;
+	bh=t/w6xrl3adiiNOoDu9E3QHTIPoY/RGrP3w/xHaF7ios=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nkVuZUBS3Li74ouuap5XCoxUAECk1QS6Hc3bqUM/fsILFY2ap6zhIprNohrDpxAMQoAVNcSmC2blpxfS9A4iMRiAkAq3Qhl+pb9bhgFxuCoZ0diCBNNPrJGXQYN9ywfv9kYHgerhXpWQDAL5hIOXf6wzkJRYhkYHCKQu4Kmv6Zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PfobwK03; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KxyHwM/cbKr06A6d8MsH/mbZ7R0Qmyvk6u7n3N1YI6EOxSzQfKN7ygezecyHHPjLDQKBpsDkfNPTt6ZmPExLgfIMcbFp46TJQOZKGuBRQyuRfmxPQfrstUwSFa9DvzjbNRI5t37AO7yzBfeVHjE52bdcB4XWj5WpoB5Dd1ipGPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ycmrJ/QJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PfobwK03"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9868BC32782;
-	Tue, 30 Jul 2024 15:55:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ycmrJ/QJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA44BC32782;
+	Tue, 30 Jul 2024 15:55:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354950;
-	bh=yEl6OkIskANjQMZZwIid/WEV7lqQEO8Gdj+pRyGTnkQ=;
+	s=korg; t=1722354953;
+	bh=t/w6xrl3adiiNOoDu9E3QHTIPoY/RGrP3w/xHaF7ios=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PfobwK03hv0NvW454/g478wbK513kH5Ofy2N1S3R6aY9AsNDlO4NCOcAYDk7oCQt4
-	 ecFXcn3wqS3HLF7re6Cob9tO8g74DhGirZdHOUNjsT2C3xSuRwgQB3Df99SDuN/ngE
-	 zUCbhv/kHLwUZqDjKFmUP/x5jZ3NpCDv/YSm9WAI=
+	b=ycmrJ/QJK14y4C4/lZeSazTq8R8hCrNjSpGhY+nPZJEhSMvHVBJ3IlGNliQ5MPhJs
+	 PkTfABOu+xi5KDR+KDnpkV0PRyllqWcpkepDS1paznIX1cB3OUsNEf1GqCcesZV830
+	 pYnZrsFmAxiKzZUjLx0bR5ih0pzjtL1KQq4qWBgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Juergen Gross <jgross@suse.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/568] x86/pci/xen: Fix PCIBIOS_* return code handling
-Date: Tue, 30 Jul 2024 17:42:01 +0200
-Message-ID: <20240730151640.386545295@linuxfoundation.org>
+Subject: [PATCH 6.1 041/440] arm64: dts: rockchip: Add mdio and ethernet-phy nodes to rk3308-rock-pi-s
+Date: Tue, 30 Jul 2024 17:44:34 +0200
+Message-ID: <20240730151617.367687441@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit e9d7b435dfaec58432f4106aaa632bf39f52ce9f ]
+[ Upstream commit 4b64ed510ed946a4e4ca6d51d6512bf5361f6a04 ]
 
-xen_pcifront_enable_irq() uses pci_read_config_byte() that returns
-PCIBIOS_* codes. The error handling, however, assumes the codes are
-normal errnos because it checks for < 0.
+Be explicit about the Ethernet port and define mdio and ethernet-phy
+nodes in the device tree for ROCK Pi S.
 
-xen_pcifront_enable_irq() also returns the PCIBIOS_* code back to the
-caller but the function is used as the (*pcibios_enable_irq) function
-which should return normal errnos.
-
-Convert the error check to plain non-zero check which works for
-PCIBIOS_* return codes and convert the PCIBIOS_* return code using
-pcibios_err_to_errno() into normal errno before returning it.
-
-Fixes: 3f2a230caf21 ("xen: handled remapped IRQs when enabling a pcifront PCI device.")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20240527125538.13620-3-ilpo.jarvinen@linux.intel.com
+Fixes: bc3753aed81f ("arm64: dts: rockchip: rock-pi-s add more peripherals")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20240521211029.1236094-8-jonas@kwiboo.se
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/xen.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../boot/dts/rockchip/rk3308-rock-pi-s.dts    | 26 ++++++++++++++++---
+ 1 file changed, 23 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/pci/xen.c b/arch/x86/pci/xen.c
-index 652cd53e77f64..0f2fe524f60dc 100644
---- a/arch/x86/pci/xen.c
-+++ b/arch/x86/pci/xen.c
-@@ -38,10 +38,10 @@ static int xen_pcifront_enable_irq(struct pci_dev *dev)
- 	u8 gsi;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
+index a78e76c865e8e..6b4afdde6e94c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
+@@ -145,11 +145,25 @@ &emmc {
  
- 	rc = pci_read_config_byte(dev, PCI_INTERRUPT_LINE, &gsi);
--	if (rc < 0) {
-+	if (rc) {
- 		dev_warn(&dev->dev, "Xen PCI: failed to read interrupt line: %d\n",
- 			 rc);
--		return rc;
-+		return pcibios_err_to_errno(rc);
- 	}
- 	/* In PV DomU the Xen PCI backend puts the PIRQ in the interrupt line.*/
- 	pirq = gsi;
+ &gmac {
+ 	clock_in_out = "output";
++	phy-handle = <&rtl8201f>;
+ 	phy-supply = <&vcc_io>;
+-	snps,reset-gpio = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
+-	snps,reset-active-low;
+-	snps,reset-delays-us = <0 50000 50000>;
+ 	status = "okay";
++
++	mdio {
++		compatible = "snps,dwmac-mdio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		rtl8201f: ethernet-phy@1 {
++			compatible = "ethernet-phy-ieee802.3-c22";
++			reg = <1>;
++			pinctrl-names = "default";
++			pinctrl-0 = <&mac_rst>;
++			reset-assert-us = <20000>;
++			reset-deassert-us = <50000>;
++			reset-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
++		};
++	};
+ };
+ 
+ &i2c1 {
+@@ -160,6 +174,12 @@ &pinctrl {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&rtc_32k>;
+ 
++	gmac {
++		mac_rst: mac-rst {
++			rockchip,pins = <0 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
+ 	leds {
+ 		green_led: green-led {
+ 			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
 -- 
 2.43.0
 
