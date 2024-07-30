@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701311A6166;
-	Tue, 30 Jul 2024 16:23:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1331898E0;
+	Tue, 30 Jul 2024 16:23:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356589; cv=none; b=ZNf+nD3H5EeuKX1dD0vpBUqrnEHHAsvW2RpxOjTOqoIanlDPd54znDzQD4phxxlVszE31X2pmsbeTG/Fvv3BzmZTmRKmfNYg/nj102FVb/L5U3whdqVLwqa91XeGCSW6TcZwKT8J3FQiUy6DwxOORymcy1hvl3XfU4VlkRQ9hcw=
+	t=1722356592; cv=none; b=QjXvEOuNjHe4qQwXt1S3eoKfoVcVvwW925DUE7g4ztcYBCNVn8kVN7jd2u8Jj8TOK6DlUQfs8pC5Hh4sLcMyzv1JFn0eZBaESSEHk6808tU2uTYFPVMu6dL9T0OSlmDSrQGYLTpb3dfoWU0H3oZWIa4z029zBZm/+VEit1rFuig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356589; c=relaxed/simple;
-	bh=4g/11zIT4BspPKYLwG8yQ8Ng3MMV2Pfq3LJSP4diT3g=;
+	s=arc-20240116; t=1722356592; c=relaxed/simple;
+	bh=ussxRMrdVVNBWZhbbyvedjHCffzPvFJdWjSUGldjEaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sEwBZzgpodYGdYL/GHn0ivKVXskNGFoj4ktrcZjTggQPWLTOIxN4l7xVxVZo9U7xx7PB1rB0npYFIm0hZF/oR7pXRJS2LOiEh4AEJl/QJxKnqqb53QoIb3clbDOO3R+HUd8v8jgkQTUndFvuB1N8906XXRjri0tnoQ14MbYefl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwQfwJGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O0+mYUpXmVG4OeAdFrmtdLMjg01W4mFOnX6yT/2WL6HFkXTUEiSekW8ehI3vJjNVkL+q6ACHxx5ZHr/7m0Ph5sq9sc4hvg/jd5rEqfo5a15R2Sa479galu+8v2Q/qwh0Z4NjD81fZ8ECFnaqN1WUVaVs8vYhtbw6rsNSPhBJ7P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dhw3S3+n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwQfwJGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBDFAC4AF0E;
-	Tue, 30 Jul 2024 16:23:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dhw3S3+n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2389DC4AF0E;
+	Tue, 30 Jul 2024 16:23:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356589;
-	bh=4g/11zIT4BspPKYLwG8yQ8Ng3MMV2Pfq3LJSP4diT3g=;
+	s=korg; t=1722356592;
+	bh=ussxRMrdVVNBWZhbbyvedjHCffzPvFJdWjSUGldjEaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwQfwJGMi/vSosTbK6QKIRuO5kYoOeBNHQlryzC4aaqWUVTNjTgjFy+2dJfxFBR+K
-	 AdB/mvun5cKSmv+27JkC5Po9UJ674GaDAWPBJsPwxDSaMY+wWCmwGuOCnvikre7EXb
-	 o65Bo7fEoOVMrNSf9cDpXUneNog9JcXyx2/tUCJw=
+	b=Dhw3S3+n9ZmVznDmdb4vsWQDJ9/QJxblVxaYh+mPpSLL8sXr6rB9ry/NcyQCsqNBf
+	 HB0O74Ew+WGq5mG110DmxK46PnpGxcOr33tPWY+Ng17UunFcrilFm9mmp0T0s0x9Do
+	 s7rBuft18296gkyTkI+i0Ri0UG0IAd2OBFDhnl8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 210/440] PCI: endpoint: Fix error handling in epf_ntb_epc_cleanup()
-Date: Tue, 30 Jul 2024 17:47:23 +0200
-Message-ID: <20240730151624.067640950@linuxfoundation.org>
+Subject: [PATCH 6.10 165/809] wifi: ath11k: restore country code during resume
+Date: Tue, 30 Jul 2024 17:40:41 +0200
+Message-ID: <20240730151731.123577781@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,69 +45,82 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 6bba3c0ac5dc54737998a0982b2e272242c87e0f ]
+[ Upstream commit 7f0343b7b8710436c1e6355c71782d32ada47e0c ]
 
-There are two issues related to epf_ntb_epc_cleanup():
+We got report that regdomain is not correct after
+return from hibernation:
 
-  1) It should call epf_ntb_config_sspad_bar_clear()
-  2) The epf_ntb_bind() function should call epf_ntb_epc_cleanup()
-     to cleanup.
+Before hibernation:
+% iw reg get
+[...]
+phy#0 (self-managed)
+country CH: DFS-ETSI
+        (2402 - 2482 @ 40), (N/A, 20), (N/A)
+        (5170 - 5250 @ 80), (N/A, 23), (N/A), NO-OUTDOOR, AUTO-BW
+        (5250 - 5330 @ 80), (N/A, 23), (0 ms), NO-OUTDOOR, DFS, AUTO-BW
+        (5490 - 5590 @ 80), (N/A, 30), (0 ms), DFS, AUTO-BW
+        (5590 - 5650 @ 40), (N/A, 30), (600000 ms), DFS, AUTO-BW
+        (5650 - 5730 @ 80), (N/A, 30), (0 ms), DFS, AUTO-BW
+        (5735 - 5875 @ 80), (N/A, 14), (N/A), AUTO-BW
 
-I also changed the ordering a bit.  Unwinding should be done in the
-mirror order from how they are allocated.
+After hibernation:
+% iw reg get
+[...]
+phy#0 (self-managed)
+country na: DFS-UNSET
+        (2402 - 2472 @ 40), (N/A, 20), (N/A)
+        (2457 - 2482 @ 20), (N/A, 20), (N/A), PASSIVE-SCAN
+        (5170 - 5330 @ 160), (N/A, 20), (N/A), AUTO-BW, PASSIVE-SCAN
+        (5490 - 5730 @ 160), (N/A, 20), (N/A), AUTO-BW, PASSIVE-SCAN
+        (5735 - 5895 @ 160), (N/A, 20), (N/A), AUTO-BW, PASSIVE-SCAN
+        (5945 - 7125 @ 160), (N/A, 30), (N/A), AUTO-BW, PASSIVE-SCAN
 
-Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
-Link: https://lore.kernel.org/linux-pci/aaffbe8d-7094-4083-8146-185f4a84e8a1@moroto.mountain
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+The reason is, during resume, firmware is reinitialized but host does
+not send current country code to firmware. So default reg rules with
+country code set to 'na' is uploaded to host, as shown above.
+
+Fix it by restoring country code to firmware during resume.
+
+Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
+
+Fixes: 166a490f59ac ("wifi: ath11k: support hibernation")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240520024148.5472-3-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-vntb.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath11k/core.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-index 3725cdfae1efa..6708d2e789cb4 100644
---- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
-@@ -813,8 +813,9 @@ static int epf_ntb_epc_init(struct epf_ntb *ntb)
-  */
- static void epf_ntb_epc_cleanup(struct epf_ntb *ntb)
- {
--	epf_ntb_db_bar_clear(ntb);
- 	epf_ntb_mw_bar_clear(ntb, ntb->num_mws);
-+	epf_ntb_db_bar_clear(ntb);
-+	epf_ntb_config_sspad_bar_clear(ntb);
- }
- 
- #define EPF_NTB_R(_name)						\
-@@ -1354,7 +1355,7 @@ static int epf_ntb_bind(struct pci_epf *epf)
- 	ret = pci_register_driver(&vntb_pci_driver);
- 	if (ret) {
- 		dev_err(dev, "failure register vntb pci driver\n");
--		goto err_bar_alloc;
-+		goto err_epc_cleanup;
+diff --git a/drivers/net/wireless/ath/ath11k/core.c b/drivers/net/wireless/ath/ath11k/core.c
+index a14d0c65000ad..47554c3619633 100644
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -1009,6 +1009,16 @@ int ath11k_core_resume(struct ath11k_base *ab)
+ 		return -ETIMEDOUT;
  	}
  
- 	ret = vpci_scan_bus(ntb);
-@@ -1365,6 +1366,8 @@ static int epf_ntb_bind(struct pci_epf *epf)
- 
- err_unregister:
- 	pci_unregister_driver(&vntb_pci_driver);
-+err_epc_cleanup:
-+	epf_ntb_epc_cleanup(ntb);
- err_bar_alloc:
- 	epf_ntb_config_spad_bar_free(ntb);
- 
++	if (ab->hw_params.current_cc_support &&
++	    ar->alpha2[0] != 0 && ar->alpha2[1] != 0) {
++		ret = ath11k_reg_set_cc(ar);
++		if (ret) {
++			ath11k_warn(ab, "failed to set country code during resume: %d\n",
++				    ret);
++			return ret;
++		}
++	}
++
+ 	ret = ath11k_dp_rx_pktlog_start(ab);
+ 	if (ret)
+ 		ath11k_warn(ab, "failed to start rx pktlog during resume: %d\n",
 -- 
 2.43.0
 
