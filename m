@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69B2718A6D6;
-	Tue, 30 Jul 2024 17:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7827018A6D6;
+	Tue, 30 Jul 2024 17:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359628; cv=none; b=LupGwdh7AXUEPQpUg79jWv7YJi7Ar+/SATbKiOLGcqZiojjq0Km8l1MR7B8hoYc4Lq3I9WoRHb+UDkYJXUOEo3ZxdMNsb4nzd73DJAOW1AuLWua5FU6KOdEbjQjkPTBKy0ISpZhy14grwUOlYfXwzfmqe7+poz2P32TWVGOgQDs=
+	t=1722359631; cv=none; b=XXNt2Ag2/zLewsdstRr67VI2CfSK6lXp+SZxU8qQs0ILTnsmtnpMRTuax2USZzHdicK4oV1DaO0yTdMmCcY/EiaGJuIvQ7eOFxrEBR+ycd0/sW0dflTg+VH/OkpTGRODhCADiKgE3cINNGiD9Z2i0sSi6qzTOml04PDxoSjptcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359628; c=relaxed/simple;
-	bh=53CF6ij41Fb8W8yyj3TeENXQ3XidxvxyezL1Pk7dV6g=;
+	s=arc-20240116; t=1722359631; c=relaxed/simple;
+	bh=GIn5jxpjhwR81L265Vkn80WcqaHgOQb28lnvyP0PNjU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txdlbEQR0Z/CzVe0uYJhdB/+WKgBqNOgqGRNUngt3EH3NBhSo7uEgR7dVly75c1LHip4JVNbcFG5q+z6Vv7eNgUk4tROQRERARztKFcOKT1QoBRJauMpMcNi7sUEiALaj20YcLAR9Y+kRFW6AQ7fgHerDKscHAV9KpWL7Mqodfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDSvMgTf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=keL5ornrwMfXkV+VkfEX8p9O0mXYfvGJR0/XzYD0MI3zocvO24twCmG0Op9XTUBZr0q6YaCNS+zFA5w8dxDS5eVgwpdxABmbu8FsSvfRhRaZHSwikjarlRHOd0/EiwpFZjk0gJmNEIl+i5yjvJwnEYYtNJlpd4NmAdB1ZMr36o8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rg1rQVHh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDSvMgTf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9384C32782;
-	Tue, 30 Jul 2024 17:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rg1rQVHh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EFAC32782;
+	Tue, 30 Jul 2024 17:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359628;
-	bh=53CF6ij41Fb8W8yyj3TeENXQ3XidxvxyezL1Pk7dV6g=;
+	s=korg; t=1722359631;
+	bh=GIn5jxpjhwR81L265Vkn80WcqaHgOQb28lnvyP0PNjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDSvMgTfL8n2QrlhYELcKaYYa/aBP1XNe0ORrbRyyBRULEphHz2no9vv/8meTAZCW
-	 /hlaVBNWl0xY7E0wXnQ2DGWcuAfK2shODiXqk8t1XjjiDuhRufdpYECzDQbrAriqlb
-	 2z5vn5PWCuPICJl5oCZBnWO8YDof2g3NMWK8uJ3o=
+	b=Rg1rQVHhDSEs00mLmIms1lVTOXMQFpM7DXlenBp2pwdG7+9uMJcOoM2m+Tsgkv+Uw
+	 teNSXNcS2CXtZ4E3Z5VT6UUUgGPo15A5LLshXtseucNK8s1aWyDuEF3smhLiuL0I2U
+	 5h8Z3GZom6gkk1u0C5hU7gao2VSiDHLTcdAvBQKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Lance Yang <ioworker0@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 510/809] fs/proc/task_mmu: properly detect PM_MMAP_EXCLUSIVE per page of PMD-mapped THPs
-Date: Tue, 30 Jul 2024 17:46:26 +0200
-Message-ID: <20240730151744.878236166@linuxfoundation.org>
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 6.6 511/568] wifi: mac80211: track capability/opmode NSS separately
+Date: Tue, 30 Jul 2024 17:50:18 +0200
+Message-ID: <20240730151659.996531707@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,102 +47,195 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 2c1f057e5be63e890f2dd89e4c25ab5eef084a91 ]
+commit a8bca3e9371dc5e276af4168be099b2a05554c2a upstream.
 
-We added PM_MMAP_EXCLUSIVE in 2015 via commit 77bb499bb60f ("pagemap: add
-mmap-exclusive bit for marking pages mapped only here"), when THPs could
-not be partially mapped and page_mapcount() returned something that was
-true for all pages of the THP.
+We're currently tracking rx_nss for each station, and that
+is meant to be initialized to the capability NSS and later
+reduced by the operating mode notification NSS.
 
-In 2016, we added support for partially mapping THPs via commit
-53f9263baba6 ("mm: rework mapcount accounting to enable 4k mapping of
-THPs") but missed to determine PM_MMAP_EXCLUSIVE as well per page.
+However, we're mixing up capabilities and operating mode
+NSS in the same variable. This forces us to recalculate
+the NSS capability on operating mode notification RX,
+which is a bit strange; due to the previous fix I had to
+never keep rx_nss as zero, it also means that the capa is
+never taken into account properly.
 
-Checking page_mapcount() on the head page does not tell the whole story.
+Fix all this by storing the capability value, that can be
+recalculated unconditionally whenever needed, and storing
+the operating mode notification NSS separately, taking it
+into account when assigning the final rx_nss value.
 
-We should check each individual page.  In a future without per-page
-mapcounts it will be different, but we'll change that to be consistent
-with PTE-mapped THPs once we deal with that.
-
-Link: https://lkml.kernel.org/r/20240607122357.115423-4-david@redhat.com
-Fixes: 53f9263baba6 ("mm: rework mapcount accounting to enable 4k mapping of THPs")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Lance Yang <ioworker0@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: dd6c064cfc3f ("wifi: mac80211: set station RX-NSS on reconfig")
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240228120157.0e1c41924d1d.I0acaa234e0267227b7e3ef81a59117c8792116bc@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[Fixed trivial merge conflict in copyright year net/mac80211/sta_info.h]
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ net/mac80211/cfg.c         |    2 -
+ net/mac80211/ieee80211_i.h |    2 -
+ net/mac80211/rate.c        |    2 -
+ net/mac80211/sta_info.h    |    6 ++++-
+ net/mac80211/vht.c         |   46 +++++++++++++++++++++------------------------
+ 5 files changed, 30 insertions(+), 28 deletions(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index 22892cdb74cef..a45f2da0ada0d 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -1477,6 +1477,7 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1887,7 +1887,7 @@ static int sta_link_apply_parameters(str
+ 					      sband->band);
+ 	}
  
- 	ptl = pmd_trans_huge_lock(pmdp, vma);
- 	if (ptl) {
-+		unsigned int idx = (addr & ~PMD_MASK) >> PAGE_SHIFT;
- 		u64 flags = 0, frame = 0;
- 		pmd_t pmd = *pmdp;
- 		struct page *page = NULL;
-@@ -1493,8 +1494,7 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
- 			if (pmd_uffd_wp(pmd))
- 				flags |= PM_UFFD_WP;
- 			if (pm->show_pfn)
--				frame = pmd_pfn(pmd) +
--					((addr & ~PMD_MASK) >> PAGE_SHIFT);
-+				frame = pmd_pfn(pmd) + idx;
- 		}
- #ifdef CONFIG_ARCH_ENABLE_THP_MIGRATION
- 		else if (is_swap_pmd(pmd)) {
-@@ -1503,11 +1503,9 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+-	ieee80211_sta_set_rx_nss(link_sta);
++	ieee80211_sta_init_nss(link_sta);
  
- 			if (pm->show_pfn) {
- 				if (is_pfn_swap_entry(entry))
--					offset = swp_offset_pfn(entry);
-+					offset = swp_offset_pfn(entry) + idx;
- 				else
--					offset = swp_offset(entry);
--				offset = offset +
--					((addr & ~PMD_MASK) >> PAGE_SHIFT);
-+					offset = swp_offset(entry) + idx;
- 				frame = swp_type(entry) |
- 					(offset << MAX_SWAPFILES_SHIFT);
- 			}
-@@ -1523,12 +1521,16 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 	return ret;
+ }
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -2150,7 +2150,7 @@ enum ieee80211_sta_rx_bandwidth
+ ieee80211_sta_cap_rx_bw(struct link_sta_info *link_sta);
+ enum ieee80211_sta_rx_bandwidth
+ ieee80211_sta_cur_vht_bw(struct link_sta_info *link_sta);
+-void ieee80211_sta_set_rx_nss(struct link_sta_info *link_sta);
++void ieee80211_sta_init_nss(struct link_sta_info *link_sta);
+ enum ieee80211_sta_rx_bandwidth
+ ieee80211_chan_width_to_rx_bw(enum nl80211_chan_width width);
+ enum nl80211_chan_width
+--- a/net/mac80211/rate.c
++++ b/net/mac80211/rate.c
+@@ -37,7 +37,7 @@ void rate_control_rate_init(struct sta_i
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee80211_chanctx_conf *chanctx_conf;
  
- 		if (page && !PageAnon(page))
- 			flags |= PM_FILE;
--		if (page && (flags & PM_PRESENT) && page_mapcount(page) == 1)
--			flags |= PM_MMAP_EXCLUSIVE;
+-	ieee80211_sta_set_rx_nss(&sta->deflink);
++	ieee80211_sta_init_nss(&sta->deflink);
  
--		for (; addr != end; addr += PAGE_SIZE) {
--			pagemap_entry_t pme = make_pme(frame, flags);
-+		for (; addr != end; addr += PAGE_SIZE, idx++) {
-+			unsigned long cur_flags = flags;
-+			pagemap_entry_t pme;
+ 	if (!ref)
+ 		return;
+--- a/net/mac80211/sta_info.h
++++ b/net/mac80211/sta_info.h
+@@ -3,7 +3,7 @@
+  * Copyright 2002-2005, Devicescape Software, Inc.
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright(c) 2015-2017 Intel Deutschland GmbH
+- * Copyright(c) 2020-2022 Intel Corporation
++ * Copyright(c) 2020-2024 Intel Corporation
+  */
+ 
+ #ifndef STA_INFO_H
+@@ -485,6 +485,8 @@ struct ieee80211_fragment_cache {
+  *	same for non-MLD STA. This is used as key for searching link STA
+  * @link_id: Link ID uniquely identifying the link STA. This is 0 for non-MLD
+  *	and set to the corresponding vif LinkId for MLD STA
++ * @op_mode_nss: NSS limit as set by operating mode notification, or 0
++ * @capa_nss: NSS limit as determined by local and peer capabilities
+  * @link_hash_node: hash node for rhashtable
+  * @sta: Points to the STA info
+  * @gtk: group keys negotiated with this station, if any
+@@ -521,6 +523,8 @@ struct link_sta_info {
+ 	u8 addr[ETH_ALEN];
+ 	u8 link_id;
+ 
++	u8 op_mode_nss, capa_nss;
 +
-+			if (page && (flags & PM_PRESENT) &&
-+			    page_mapcount(page + idx) == 1)
-+				cur_flags |= PM_MMAP_EXCLUSIVE;
+ 	struct rhlist_head link_hash_node;
  
-+			pme = make_pme(frame, cur_flags);
- 			err = add_to_pagemap(&pme, pm);
- 			if (err)
- 				break;
--- 
-2.43.0
-
+ 	struct sta_info *sta;
+--- a/net/mac80211/vht.c
++++ b/net/mac80211/vht.c
+@@ -4,7 +4,7 @@
+  *
+  * Portions of this file
+  * Copyright(c) 2015 - 2016 Intel Deutschland GmbH
+- * Copyright (C) 2018 - 2023 Intel Corporation
++ * Copyright (C) 2018 - 2024 Intel Corporation
+  */
+ 
+ #include <linux/ieee80211.h>
+@@ -541,15 +541,11 @@ ieee80211_sta_cur_vht_bw(struct link_sta
+ 	return bw;
+ }
+ 
+-void ieee80211_sta_set_rx_nss(struct link_sta_info *link_sta)
++void ieee80211_sta_init_nss(struct link_sta_info *link_sta)
+ {
+ 	u8 ht_rx_nss = 0, vht_rx_nss = 0, he_rx_nss = 0, eht_rx_nss = 0, rx_nss;
+ 	bool support_160;
+ 
+-	/* if we received a notification already don't overwrite it */
+-	if (link_sta->pub->rx_nss)
+-		return;
+-
+ 	if (link_sta->pub->eht_cap.has_eht) {
+ 		int i;
+ 		const u8 *rx_nss_mcs = (void *)&link_sta->pub->eht_cap.eht_mcs_nss_supp;
+@@ -627,7 +623,15 @@ void ieee80211_sta_set_rx_nss(struct lin
+ 	rx_nss = max(vht_rx_nss, ht_rx_nss);
+ 	rx_nss = max(he_rx_nss, rx_nss);
+ 	rx_nss = max(eht_rx_nss, rx_nss);
+-	link_sta->pub->rx_nss = max_t(u8, 1, rx_nss);
++	rx_nss = max_t(u8, 1, rx_nss);
++	link_sta->capa_nss = rx_nss;
++
++	/* that shouldn't be set yet, but we can handle it anyway */
++	if (link_sta->op_mode_nss)
++		link_sta->pub->rx_nss =
++			min_t(u8, rx_nss, link_sta->op_mode_nss);
++	else
++		link_sta->pub->rx_nss = rx_nss;
+ }
+ 
+ u32 __ieee80211_vht_handle_opmode(struct ieee80211_sub_if_data *sdata,
+@@ -637,7 +641,7 @@ u32 __ieee80211_vht_handle_opmode(struct
+ 	enum ieee80211_sta_rx_bandwidth new_bw;
+ 	struct sta_opmode_info sta_opmode = {};
+ 	u32 changed = 0;
+-	u8 nss, cur_nss;
++	u8 nss;
+ 
+ 	/* ignore - no support for BF yet */
+ 	if (opmode & IEEE80211_OPMODE_NOTIF_RX_NSS_TYPE_BF)
+@@ -647,23 +651,17 @@ u32 __ieee80211_vht_handle_opmode(struct
+ 	nss >>= IEEE80211_OPMODE_NOTIF_RX_NSS_SHIFT;
+ 	nss += 1;
+ 
+-	if (link_sta->pub->rx_nss != nss) {
+-		cur_nss = link_sta->pub->rx_nss;
+-		/* Reset rx_nss and call ieee80211_sta_set_rx_nss() which
+-		 * will set the same to max nss value calculated based on capability.
+-		 */
+-		link_sta->pub->rx_nss = 0;
+-		ieee80211_sta_set_rx_nss(link_sta);
+-		/* Do not allow an nss change to rx_nss greater than max_nss
+-		 * negotiated and capped to APs capability during association.
+-		 */
+-		if (nss <= link_sta->pub->rx_nss) {
+-			link_sta->pub->rx_nss = nss;
+-			sta_opmode.rx_nss = nss;
+-			changed |= IEEE80211_RC_NSS_CHANGED;
+-			sta_opmode.changed |= STA_OPMODE_N_SS_CHANGED;
++	if (link_sta->op_mode_nss != nss) {
++		if (nss <= link_sta->capa_nss) {
++			link_sta->op_mode_nss = nss;
++
++			if (nss != link_sta->pub->rx_nss) {
++				link_sta->pub->rx_nss = nss;
++				changed |= IEEE80211_RC_NSS_CHANGED;
++				sta_opmode.rx_nss = link_sta->pub->rx_nss;
++				sta_opmode.changed |= STA_OPMODE_N_SS_CHANGED;
++			}
+ 		} else {
+-			link_sta->pub->rx_nss = cur_nss;
+ 			pr_warn_ratelimited("Ignoring NSS change in VHT Operating Mode Notification from %pM with invalid nss %d",
+ 					    link_sta->pub->addr, nss);
+ 		}
 
 
