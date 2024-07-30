@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF9A1A76A1;
-	Tue, 30 Jul 2024 17:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA811A76A1;
+	Tue, 30 Jul 2024 17:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360284; cv=none; b=sUH2jyhXViaOtzpad5/I6L7vRSHgrkTLMgwr7DpvBcmzNyUiIiQNle1eBhtbBXmWwEOJ6IGjj8cnyVVdszrp+19d8MJTGApqiLUCR1/V5sbLkNnGp9EzBaajni5CRydd8yIU0oU4Ev41QSrL5RURFWBiBd3+ZXSP8fzhrIW6oTY=
+	t=1722360288; cv=none; b=iJSDSlUIn1Zjnqtoda+nxyXTWGdKz++aClUVvaOk8QttbmmvE2OJV13yeDWoOw6n0jPgjtwTkYe45t1WwWBWjwUvQaSwl+4mtiz2FpDMlGMIRa9VO97GRMMr7LAWpHH2VeQLSJfwrBg5hJPYCvaF0IC61zn1+KvxYmI55cW+JwM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360284; c=relaxed/simple;
-	bh=6edjGVvVG/DyUtvoqodck3o+OWKJ2ajGYueAU7ERVpo=;
+	s=arc-20240116; t=1722360288; c=relaxed/simple;
+	bh=wVLudJPZpQCFZpqcq3vacVJbMP5NFsW8pFYv1EaolbY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k4ejGI8Lc/EIPJwzdFiQUFSf3LpwaBbhjJqJaJJ1Tlg22Omwr/cQmhK1a+BZAVSpv1Hpb0Rkir7ooIG+vkVrFWkECLnep7g8XWC75n6KJcyEX15b0RJ6D7vHWVgo1i97bbAQsb6U+/SBflt8wyIfzIvmBR7BxYlMvcJcRnp4J1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wg3mS6Ui; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dJYndd3r21gDY6ZGiA6HmilSfawtutjXWjyMeNLRTdeL2V1Q3jacRfFRoE27eI7dwH0SzS1ElCg94Ot9zYk14f6JZ/OssC4WRpFBQL+r1ST//2AQYr6KJoASG4kgEvaKUDzXo6kalESYbRD2bkpmh1FnHeBP8QdvmQbRDQ73BBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtGLdaVy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wg3mS6Ui"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BDB9C32782;
-	Tue, 30 Jul 2024 17:24:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtGLdaVy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB334C32782;
+	Tue, 30 Jul 2024 17:24:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360284;
-	bh=6edjGVvVG/DyUtvoqodck3o+OWKJ2ajGYueAU7ERVpo=;
+	s=korg; t=1722360288;
+	bh=wVLudJPZpQCFZpqcq3vacVJbMP5NFsW8pFYv1EaolbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wg3mS6UilX0Xn6hC/Im6qEMQnDBT209hw8GaNv1iHVxVGLNefpgPj0rhqz/e0yRkw
-	 WiI0aPt6iQ1UBCGMsUNdHMzzfhsL5Yd6gs3e4Sj8WqXEOUda2wErFt6bvmJ/6WIzgW
-	 okuhGRJpKRjcPEWSzYqm8Dx/uj+GAa02T2Balb88=
+	b=VtGLdaVyW2pjCHSKMk1QkOx+0J643dhd3u9VYPrmShwcgF0u6mD3hZRULJYewgbFv
+	 FkvCN0tXFT97BPcYDNeMAg0euy03PFDQ5De+k86gRjXzMBDvza1FONHsYR1mUJWG/8
+	 OILUAmNrX6fHNxW2jugpOVPuww+/0biyncRncJt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barry Song <v-songbaohua@oppo.com>,
+	syzbot+31e4659a3fe953aec2f4@syzkaller.appspotmail.com,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.10 652/809] f2fs: fix to force buffered IO on inline_data inode
-Date: Tue, 30 Jul 2024 17:48:48 +0200
-Message-ID: <20240730151750.630494801@linuxfoundation.org>
+Subject: [PATCH 6.10 653/809] f2fs: fix to dont dirty inode for readonly filesystem
+Date: Tue, 30 Jul 2024 17:48:49 +0200
+Message-ID: <20240730151750.671340648@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,37 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 From: Chao Yu <chao@kernel.org>
 
-commit 5c8764f8679e659c5cb295af7d32279002d13735 upstream.
+commit 192b8fb8d1c8ca3c87366ebbef599fa80bb626b8 upstream.
 
-It will return all zero data when DIO reading from inline_data inode, it
-is because f2fs_iomap_begin() assign iomap->type w/ IOMAP_HOLE incorrectly
-for this case.
+syzbot reports f2fs bug as below:
 
-We can let iomap framework handle inline data via assigning iomap->type
-and iomap->inline_data correctly, however, it will be a little bit
-complicated when handling race case in between direct IO and buffered IO.
+kernel BUG at fs/f2fs/inode.c:933!
+RIP: 0010:f2fs_evict_inode+0x1576/0x1590 fs/f2fs/inode.c:933
+Call Trace:
+ evict+0x2a4/0x620 fs/inode.c:664
+ dispose_list fs/inode.c:697 [inline]
+ evict_inodes+0x5f8/0x690 fs/inode.c:747
+ generic_shutdown_super+0x9d/0x2c0 fs/super.c:675
+ kill_block_super+0x44/0x90 fs/super.c:1667
+ kill_f2fs_super+0x303/0x3b0 fs/f2fs/super.c:4894
+ deactivate_locked_super+0xc1/0x130 fs/super.c:484
+ cleanup_mnt+0x426/0x4c0 fs/namespace.c:1256
+ task_work_run+0x24a/0x300 kernel/task_work.c:180
+ ptrace_notify+0x2cd/0x380 kernel/signal.c:2399
+ ptrace_report_syscall include/linux/ptrace.h:411 [inline]
+ ptrace_report_syscall_exit include/linux/ptrace.h:473 [inline]
+ syscall_exit_work kernel/entry/common.c:251 [inline]
+ syscall_exit_to_user_mode_prepare kernel/entry/common.c:278 [inline]
+ __syscall_exit_to_user_mode_work kernel/entry/common.c:283 [inline]
+ syscall_exit_to_user_mode+0x15c/0x280 kernel/entry/common.c:296
+ do_syscall_64+0x50/0x110 arch/x86/entry/common.c:88
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-So, let's force to use buffered IO to fix this issue.
+The root cause is:
+- do_sys_open
+ - f2fs_lookup
+  - __f2fs_find_entry
+   - f2fs_i_depth_write
+    - f2fs_mark_inode_dirty_sync
+     - f2fs_dirty_inode
+      - set_inode_flag(inode, FI_DIRTY_INODE)
+
+- umount
+ - kill_f2fs_super
+  - kill_block_super
+   - generic_shutdown_super
+    - sync_filesystem
+    : sb is readonly, skip sync_filesystem()
+    - evict_inodes
+     - iput
+      - f2fs_evict_inode
+       - f2fs_bug_on(sbi, is_inode_flag_set(inode, FI_DIRTY_INODE))
+       : trigger kernel panic
+
+When we try to repair i_current_depth in readonly filesystem, let's
+skip dirty inode to avoid panic in later f2fs_evict_inode().
 
 Cc: stable@vger.kernel.org
-Reported-by: Barry Song <v-songbaohua@oppo.com>
+Reported-by: syzbot+31e4659a3fe953aec2f4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000e890bc0609a55cff@google.com
 Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/file.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/f2fs/file.c
-+++ b/fs/f2fs/file.c
-@@ -825,6 +825,8 @@ static bool f2fs_force_buffered_io(struc
- 		return true;
- 	if (f2fs_compressed_file(inode))
- 		return true;
-+	if (f2fs_has_inline_data(inode))
-+		return true;
+--- a/fs/f2fs/inode.c
++++ b/fs/f2fs/inode.c
+@@ -29,6 +29,9 @@ void f2fs_mark_inode_dirty_sync(struct i
+ 	if (is_inode_flag_set(inode, FI_NEW_INODE))
+ 		return;
  
- 	/* disallow direct IO if any of devices has unaligned blksize */
- 	if (f2fs_is_multi_device(sbi) && !sbi->aligned_blksize)
++	if (f2fs_readonly(F2FS_I_SB(inode)->sb))
++		return;
++
+ 	if (f2fs_inode_dirtied(inode, sync))
+ 		return;
+ 
 
 
