@@ -1,47 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0718214831F;
-	Tue, 30 Jul 2024 16:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C23D1A619E;
+	Tue, 30 Jul 2024 16:43:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357794; cv=none; b=oaVZcYrh1VqHXZb1tqpk99YyJX6NpUmCNOMsSvqo57UeLDXuexpgqB5gyLfQuzWuKg9culkZ0eootP/bT5vUwAV7k5x6afDvcvCOtzTgAI4we30QsyeMn6LWoS+ux2L4OjRJDPwamGkCE0e47gYkbddeLbuzhzcP4pGtobEl1kQ=
+	t=1722357797; cv=none; b=p9iKMdLg9z72zjpFwl3MCxfR+5YfEZ7oUQnqn5HChCpItfnz5NO1M0YA+hg7pcgZd/WjjvnFQaE+QqiEHJAjUzTM1A06U/54NZ/6aUBHCD/b/sSK1QNC5NTIcfZ5/rNKKgqJI5p4uAcR81qQ+D547mHEfYtJrXyh0qi/ItDDu7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357794; c=relaxed/simple;
-	bh=/Qd7QavPxtYx9efvgNVHe6hq0abTapXd/Xd0ikZPSjU=;
+	s=arc-20240116; t=1722357797; c=relaxed/simple;
+	bh=/vt93KaJL+UMPmTSx+ZNwTuw5IXgwl2WWJssgyEd2oM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=phrrvLyyTAGMIwbFUznG2SETQQWglN0EK7jN6ikyJQwRU6TxN1FZhdCGhgpIfYSG2HBfMkYyHjjR5wmZ4DR6MHxNp2UPq75u2GOlbQgxj1XzCI82LTMmfqDXw+cvX5rzzDxTIcp9tMzFCYO68r2q1kvvcQUgV3+fU8MTu4WXAyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8I3VvBC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n5Pp7D3f2rworfxdCeurTOCO62C4zyEI8mrOrPfCZKrX6gQ7Cgzhl+SiUtYVZIC/Hh9qRJuF7PjvqYXZQ7pED4TgAN4DKHAts9GUXD2ncDLkfYxSKeTwbc6vZxG22UsN4CAe/SeTVsSB+76FxaJlwxYghF4bryxOK35Z9mp1jjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BUWyBZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8I3VvBC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E550C32782;
-	Tue, 30 Jul 2024 16:43:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BUWyBZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6B0C32782;
+	Tue, 30 Jul 2024 16:43:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357793;
-	bh=/Qd7QavPxtYx9efvgNVHe6hq0abTapXd/Xd0ikZPSjU=;
+	s=korg; t=1722357797;
+	bh=/vt93KaJL+UMPmTSx+ZNwTuw5IXgwl2WWJssgyEd2oM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d8I3VvBC/Ypq3AGARBAbLipm+MnPvpYKSJN0GhD47uxk9nAFPftOjw8s4qDVlur23
-	 B/u0x/6JcpxNwH1TvSbNJxkUBeHK+ktvRMfQYdOrLk+kcKiBRa5g/p/12QA1MJcIuB
-	 C9jddbP6Z01e/f3l8Cr4TUCKq5sqPmwKTpSDDn8E=
+	b=0BUWyBZctFYTB5uTUOQm6E2OrHcZYFUmgl6IEchkdJSCu1pbD1PEoD47eGff4aV2D
+	 utfsl4cyf13EOaRogzdtQQws+OdnBCj+7jedOkDeiL+hOyttpcE9bdS2gVb01GvYQ9
+	 td1tc9ZEGsR9sTekvwkyLXBFNKxEyX3SNsCi9p/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephen Boyd <sboyd@kernel.org>,
-	Laura Nao <laura.nao@collabora.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Stephen Boyd <swboyd@chromium.org>,
-	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
+	ChiYuan Huang <cy_huang@richtek.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 292/568] clk: qcom: Park shared RCGs upon registration
-Date: Tue, 30 Jul 2024 17:46:39 +0200
-Message-ID: <20240730151651.286521287@linuxfoundation.org>
+Subject: [PATCH 6.10 293/809] media: v4l: async: Fix NULL pointer dereference in adding ancillary links
+Date: Tue, 30 Jul 2024 17:42:49 +0200
+Message-ID: <20240730151736.165510835@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,187 +46,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: ChiYuan Huang <cy_huang@richtek.com>
 
-[ Upstream commit 01a0a6cc8cfd9952e72677d48d56cf6bc4e3a561 ]
+[ Upstream commit 9b4667ea67854f0b116fe22ad11ef5628c5b5b5f ]
 
-There's two problems with shared RCGs.
+In v4l2_async_create_ancillary_links(), ancillary links are created for
+lens and flash sub-devices. These are sub-device to sub-device links and
+if the async notifier is related to a V4L2 device, the source sub-device
+of the ancillary link is NULL, leading to a NULL pointer dereference.
+Check the notifier's sd field is non-NULL in
+v4l2_async_create_ancillary_links().
 
-The first problem is that they incorrectly report the parent after
-commit 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for
-parked RCGs"). That's because the cached CFG register value needs to be
-populated when the clk is registered. clk_rcg2_shared_enable() writes
-the cached CFG register value 'parked_cfg'. This value is initially zero
-due to static initializers. If a driver calls clk_enable() before
-setting a rate or parent, it will set the parent to '0' which is
-(almost?) always XO, and may not reflect the parent at registration. In
-the worst case, this switches the RCG from sourcing a fast PLL to the
-slow crystal speed.
-
-The second problem is that the force enable bit isn't cleared. The force
-enable bit is only used during parking and unparking of shared RCGs.
-Otherwise it shouldn't be set because it keeps the RCG enabled even when
-all the branches on the output of the RCG are disabled (the hardware has
-a feedback mechanism so that any child branches keep the RCG enabled
-when the branch enable bit is set). This problem wastes power if the clk
-is unused, and is harmful in the case that the clk framework disables
-the parent of the force enabled RCG. In the latter case, the GDSC the
-shared RCG is associated with will get wedged if the RCG's source clk is
-disabled and the GDSC tries to enable the RCG to do "housekeeping" while
-powering on.
-
-Both of these problems combined with incorrect runtime PM usage in the
-display driver lead to a black screen on Qualcomm sc7180 Trogdor
-chromebooks. What happens is that the bootloader leaves the
-'disp_cc_mdss_rot_clk' enabled and the 'disp_cc_mdss_rot_clk_src' force
-enabled and parented to 'disp_cc_pll0'. The mdss driver probes and
-runtime suspends, disabling the mdss_gdsc which uses the
-'disp_cc_mdss_rot_clk_src' for "housekeeping". The
-'disp_cc_mdss_rot_clk' is disabled during late init because the clk is
-unused, but the parent 'disp_cc_mdss_rot_clk_src' is still force enabled
-because the force enable bit was never cleared. Then 'disp_cc_pll0' is
-disabled because it is also unused. That's because the clk framework
-believes the parent of the RCG is XO when it isn't. A child device of
-the mdss device (e.g. DSI) runtime resumes mdss which powers on the
-mdss_gdsc. This wedges the GDSC because 'disp_cc_mdss_rot_clk_src' is
-parented to 'disp_cc_pll0' and that PLL is off. With the GDSC wedged,
-mdss_runtime_resume() tries to enable 'disp_cc_mdss_mdp_clk' but it
-can't because the GDSC has wedged all the clks associated with the GDSC
-causing clks to stay stuck off.
-
-This leads to the following warning seen at boot and a black screen
-because the display driver fails to probe.
-
- disp_cc_mdss_mdp_clk status stuck at 'off'
- WARNING: CPU: 1 PID: 81 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x114/0x168
- Modules linked in:
- CPU: 1 PID: 81 Comm: kworker/u16:4 Not tainted 6.7.0-g0dd3ee311255 #1 f5757d475795053fd2ad52247a070cd50dd046f2
- Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
- Workqueue: events_unbound deferred_probe_work_func
- pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : clk_branch_toggle+0x114/0x168
- lr : clk_branch_toggle+0x110/0x168
- sp : ffffffc08084b670
- pmr_save: 00000060
- x29: ffffffc08084b680 x28: ffffff808006de00 x27: 0000000000000001
- x26: ffffff8080dbd4f4 x25: 0000000000000000 x24: 0000000000000000
- x23: 0000000000000000 x22: ffffffd838461198 x21: ffffffd838007997
- x20: ffffffd837541d5c x19: 0000000000000001 x18: 0000000000000004
- x17: 0000000000000000 x16: 0000000000000010 x15: ffffffd837070fac
- x14: 0000000000000003 x13: 0000000000000004 x12: 0000000000000001
- x11: c0000000ffffdfff x10: ffffffd838347aa0 x9 : 08dadf92e516c000
- x8 : 08dadf92e516c000 x7 : 0000000000000000 x6 : 0000000000000027
- x5 : ffffffd8385a61f2 x4 : 0000000000000000 x3 : ffffffc08084b398
- x2 : ffffffc08084b3a0 x1 : 00000000ffffdfff x0 : 00000000fffffff0
- Call trace:
-  clk_branch_toggle+0x114/0x168
-  clk_branch2_enable+0x24/0x30
-  clk_core_enable+0x5c/0x1c8
-  clk_enable+0x38/0x58
-  clk_bulk_enable+0x40/0xb0
-  mdss_runtime_resume+0x68/0x258
-  pm_generic_runtime_resume+0x30/0x44
-  __genpd_runtime_resume+0x30/0x80
-  genpd_runtime_resume+0x124/0x214
-  __rpm_callback+0x7c/0x15c
-  rpm_callback+0x30/0x88
-  rpm_resume+0x390/0x4d8
-  rpm_resume+0x43c/0x4d8
-  __pm_runtime_resume+0x54/0x98
-  __device_attach+0xe0/0x170
-  device_initial_probe+0x1c/0x28
-  bus_probe_device+0x48/0xa4
-  device_add+0x52c/0x6fc
-  mipi_dsi_device_register_full+0x104/0x1a8
-  devm_mipi_dsi_device_register_full+0x28/0x78
-  ti_sn_bridge_probe+0x1dc/0x2bc
-  auxiliary_bus_probe+0x4c/0x94
-  really_probe+0xf8/0x270
-  __driver_probe_device+0xa8/0x130
-  driver_probe_device+0x44/0x104
-  __device_attach_driver+0xa4/0xcc
-  bus_for_each_drv+0x94/0xe8
-  __device_attach+0xf8/0x170
-  device_initial_probe+0x1c/0x28
-  bus_probe_device+0x48/0xa4
-  deferred_probe_work_func+0x9c/0xd8
-
-Fix these problems by parking shared RCGs at boot. This will properly
-initialize the parked_cfg struct member so that the parent is reported
-properly and ensure that the clk won't get stuck on or off because the
-RCG is parented to the safe source (XO).
-
-Fixes: 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for parked RCGs")
-Reported-by: Stephen Boyd <sboyd@kernel.org>
-Closes: https://lore.kernel.org/r/1290a5a0f7f584fcce722eeb2a1fd898.sboyd@kernel.org
-Closes: https://issuetracker.google.com/319956935
-Reported-by: Laura Nao <laura.nao@collabora.com>
-Closes: https://lore.kernel.org/r/20231218091806.7155-1-laura.nao@collabora.com
-Cc: Bjorn Andersson <andersson@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Douglas Anderson <dianders@chromium.org>
-Cc: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Link: https://lore.kernel.org/r/20240502224703.103150-1-swboyd@chromium.org
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: aa4faf6eb271 ("media: v4l2-async: Create links during v4l2_async_match_notify()")
+Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
+[Sakari Ailus: Reword the subject and commit messages slightly.]
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-rcg2.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/media/v4l2-core/v4l2-async.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
-index 5183c74b074f8..b9f2a29be927c 100644
---- a/drivers/clk/qcom/clk-rcg2.c
-+++ b/drivers/clk/qcom/clk-rcg2.c
-@@ -1138,7 +1138,39 @@ clk_rcg2_shared_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
- 	return clk_rcg2_recalc_rate(hw, parent_rate);
- }
+diff --git a/drivers/media/v4l2-core/v4l2-async.c b/drivers/media/v4l2-core/v4l2-async.c
+index 222f01665f7ce..c477723c07bf8 100644
+--- a/drivers/media/v4l2-core/v4l2-async.c
++++ b/drivers/media/v4l2-core/v4l2-async.c
+@@ -323,6 +323,9 @@ static int v4l2_async_create_ancillary_links(struct v4l2_async_notifier *n,
+ 	    sd->entity.function != MEDIA_ENT_F_FLASH)
+ 		return 0;
  
-+static int clk_rcg2_shared_init(struct clk_hw *hw)
-+{
-+	/*
-+	 * This does a few things:
-+	 *
-+	 *  1. Sets rcg->parked_cfg to reflect the value at probe so that the
-+	 *     proper parent is reported from clk_rcg2_shared_get_parent().
-+	 *
-+	 *  2. Clears the force enable bit of the RCG because we rely on child
-+	 *     clks (branches) to turn the RCG on/off with a hardware feedback
-+	 *     mechanism and only set the force enable bit in the RCG when we
-+	 *     want to make sure the clk stays on for parent switches or
-+	 *     parking.
-+	 *
-+	 *  3. Parks shared RCGs on the safe source at registration because we
-+	 *     can't be certain that the parent clk will stay on during boot,
-+	 *     especially if the parent is shared. If this RCG is enabled at
-+	 *     boot, and the parent is turned off, the RCG will get stuck on. A
-+	 *     GDSC can wedge if is turned on and the RCG is stuck on because
-+	 *     the GDSC's controller will hang waiting for the clk status to
-+	 *     toggle on when it never does.
-+	 *
-+	 * The safest option here is to "park" the RCG at init so that the clk
-+	 * can never get stuck on or off. This ensures the GDSC can't get
-+	 * wedged.
-+	 */
-+	clk_rcg2_shared_disable(hw);
++	if (!n->sd)
++		return 0;
 +
-+	return 0;
-+}
-+
- const struct clk_ops clk_rcg2_shared_ops = {
-+	.init = clk_rcg2_shared_init,
- 	.enable = clk_rcg2_shared_enable,
- 	.disable = clk_rcg2_shared_disable,
- 	.get_parent = clk_rcg2_shared_get_parent,
+ 	link = media_create_ancillary_link(&n->sd->entity, &sd->entity);
+ 
+ 	return IS_ERR(link) ? PTR_ERR(link) : 0;
 -- 
 2.43.0
 
