@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1504C18455E;
-	Tue, 30 Jul 2024 16:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339A018455B;
+	Tue, 30 Jul 2024 16:50:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358201; cv=none; b=lNLWVMn6ZOmfrXJT3HLdK/08+jzA4G+SDFOKgfBBwZOZtTmjjvs9QDdgplpIJxgfSbtaGnnqeHdKieVocd1qZ+0z5zCZB+IAofxoLOkbtaj+Wgp+wU40FOzQ0gYllbPekUmOWentVhRR4mKPnqvh52cdtLsVB3uUVCKuAIMgto4=
+	t=1722358204; cv=none; b=pHjed5f8UhZNtUrklhTvshXDiDb1sJ/KIcFV1QxXvL2cXYj5SKzKl/pgsbXcU3AN0ka7oEtNRtBzKdNT69qAK2NKG7TTew471dEMz1ET/VKw1XehW0lmGXogbVhTM4TWuXgXMzI95Aal+kDrm4aSKL51Y64oWqHvFzNHVDj9c7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358201; c=relaxed/simple;
-	bh=Wn6m4c9XzqDJBw/AdorFUt44GQ4eoCAA9DA13BokzIk=;
+	s=arc-20240116; t=1722358204; c=relaxed/simple;
+	bh=JUIq2yYW7FZ9qA7+KoD0H55blhchXwQqBPj8t9haAco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sxbs3qt+40Be0XPDSfEyUepJdbOE9r63VCNJEpPaSFRvpcrqA/aPI6ia1qFt80cP/tD9q91MhXV2zNtr8rRAILlj9Bvo0Q8Nz0MkCxajx6tZjdsV9/pgDwgaRuUcqAAA8OkrLepIKwCkKE43XySO2JKCv5PN+uI4c3LT07COa3s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bSzDWT0l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=I/C1vIGQHnA75FiVNO8IXMLBiJ5pSxOiJr+KzVzcPcE+xq1PnZ9u9VVb6Sb3LNognzJQm5/JgfW/SuPuYb+KyG0Q836cIjpztp6Q3EyhdmEXBVfli6+cRUcU//+VZMPFIR8OAoRcrG3oWW4nG/TAhbF0xPL1dTLltlfLOQOE3ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0eZ8EA2r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bSzDWT0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 875F9C4AF10;
-	Tue, 30 Jul 2024 16:50:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0eZ8EA2r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE699C32782;
+	Tue, 30 Jul 2024 16:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358200;
-	bh=Wn6m4c9XzqDJBw/AdorFUt44GQ4eoCAA9DA13BokzIk=;
+	s=korg; t=1722358204;
+	bh=JUIq2yYW7FZ9qA7+KoD0H55blhchXwQqBPj8t9haAco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSzDWT0lsMjI8FPpf8qdUyP7BTwTL4iQrWsQQnmZH0Hhrn7zzCG5O2zxBdIW4HGEq
-	 FI4nwdzHmQKf4n/8zApbtHakuKYCbkayLGxkamfGbb2sPbKljHVwoYTITnRQ0WNqi9
-	 HOcefb/hbbD/nGxFrFIb4OY1c6mRB41LSTXp7E/M=
+	b=0eZ8EA2rivNIvxGKMqZLx6pgTD+ApaQxnPilULY1Nwp5aUq2a9k73h6U377O5DCT0
+	 M4jBHJsf8Enftvc9YpNAix3S0dlsdY53ncpSyIuGgUoxQjFuzMxUdbC5vUyAJKaEzV
+	 Znp9pwQ/qjGvsN+zCweeh97RjajEt44qCp+H/Q1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Connor Abbott <cwabbott0@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Rob Clark <robdclark@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 334/809] drm/msm/a6xx: Fix A702 UBWC mode
-Date: Tue, 30 Jul 2024 17:43:30 +0200
-Message-ID: <20240730151737.812322640@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 366/440] selftests/sigaltstack: Fix ppc64 GCC build
+Date: Tue, 30 Jul 2024 17:49:59 +0200
+Message-ID: <20240730151630.112633499@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +43,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 593f1dd4c81f6932042508a80186dbdea90312a5 ]
+commit 17c743b9da9e0d073ff19fd5313f521744514939 upstream.
 
-UBWC_MODE is a one-bit-wide field, so a value of 2 is obviously bogus.
+Building the sigaltstack test with GCC on 64-bit powerpc errors with:
 
-Replace it with the correct value (0).
+  gcc -Wall     sas.c  -o /home/michael/linux/.build/kselftest/sigaltstack/sas
+  In file included from sas.c:23:
+  current_stack_pointer.h:22:2: error: #error "implement current_stack_pointer equivalent"
+     22 | #error "implement current_stack_pointer equivalent"
+        |  ^~~~~
+  sas.c: In function ‘my_usr1’:
+  sas.c:50:13: error: ‘sp’ undeclared (first use in this function); did you mean ‘p’?
+     50 |         if (sp < (unsigned long)sstack ||
+        |             ^~
 
-Fixes: 18397519cb62 ("drm/msm/adreno: Add A702 support")
-Reported-by: Connor Abbott <cwabbott0@gmail.com>
-Closes: https://lore.kernel.org/linux-arm-msm/CACu1E7FTN=kwaDJMNiTmFspALzj2+Q-nvsN5ugi=vz4RdUGvGw@mail.gmail.com/
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/597359/
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This happens because GCC doesn't define __ppc__ for 64-bit builds, only
+32-bit builds. Instead use __powerpc__ to detect powerpc builds, which
+is defined by clang and GCC for 64-bit and 32-bit builds.
+
+Fixes: 05107edc9101 ("selftests: sigaltstack: fix -Wuninitialized")
+Cc: stable@vger.kernel.org # v6.3+
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240520062647.688667-1-mpe@ellerman.id.au
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 2 +-
+ tools/testing/selftests/sigaltstack/current_stack_pointer.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 973872ad0474e..5383aff848300 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1409,7 +1409,7 @@ static void a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
- 	if (adreno_is_a702(gpu)) {
- 		gpu->ubwc_config.highest_bank_bit = 14;
- 		gpu->ubwc_config.min_acc_len = 1;
--		gpu->ubwc_config.ubwc_mode = 2;
-+		gpu->ubwc_config.ubwc_mode = 0;
- 	}
- }
- 
--- 
-2.43.0
-
+--- a/tools/testing/selftests/sigaltstack/current_stack_pointer.h
++++ b/tools/testing/selftests/sigaltstack/current_stack_pointer.h
+@@ -8,7 +8,7 @@ register unsigned long sp asm("sp");
+ register unsigned long sp asm("esp");
+ #elif __loongarch64
+ register unsigned long sp asm("$sp");
+-#elif __ppc__
++#elif __powerpc__
+ register unsigned long sp asm("r1");
+ #elif __s390x__
+ register unsigned long sp asm("%15");
 
 
