@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5CC91A616E;
-	Tue, 30 Jul 2024 16:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8B41A616E;
+	Tue, 30 Jul 2024 16:11:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355904; cv=none; b=NaIOQF64clbkN1J9SJHtKb2qK/gOM9eb8KmLSRXIjj3+YtIcbXvGAFgljntsei28FZeIZnh7ClcNEedEZqFIiuaFApXqv+sEvXwxvMAZ7qTM32seyTLiifNmOU3X/kmTdkdTp6DkWjgyu4asy7VBiRDp3vtHZ8rZRSbVgepLW18=
+	t=1722355906; cv=none; b=m37q9k1S6AtdzIGBnHUO7dEpmjYojzhrCTqK16w6IKc0B5IVUEO4gHhp6zu7FAu22MO5SNMBdevEuAYgRGSzF2YNTZwmQYsE3++g6oZWyCkS4oaEYcQpSFBErDVJRSPj7LlSehKzG9os2T9A6eChVd51jeqjrd3o4JgAxK+H5lE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355904; c=relaxed/simple;
-	bh=qmagBXG07vOiRkjYo/APIewVcafigg/BCMDu2VUCucM=;
+	s=arc-20240116; t=1722355906; c=relaxed/simple;
+	bh=SOmeLuxaucqjj4qKPPIXd4OLAKwTyrGAjnL1zl1HJKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XoDJZ364wQSNvQmmAoJvugTgait+M+vga7c7reIIHC2OgBBwP8/yhGQveMGy1f+ttqH0M+iw6Fh4TolQtTkz8NIXVE/fZPyFH+4oH2pvDIG3hjC2oOojfN6UuYCLKIXckJ9LlaTyJjr74m84rHAuQAh4adYdaXSbr0189WUxjks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0/J7nHsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u5BDHwzOJNW/icK0AJacvI0T2oLMxy3wqC+3kyDBgVg4A1+mI50AZYdU2tnBmMQNbfUQgFn6lSt6b44hL3GzdT3RTleiIjJpp60hRGbPUZ9rk0ZJ3X/nIbOncTnG/rBDP0g1gX5F7Pb4udYH0AsgpHHUSFaydrIkud1i6smoqeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FmgVP4bJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0/J7nHsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBA8C32782;
-	Tue, 30 Jul 2024 16:11:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FmgVP4bJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50896C4AF0C;
+	Tue, 30 Jul 2024 16:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355903;
-	bh=qmagBXG07vOiRkjYo/APIewVcafigg/BCMDu2VUCucM=;
+	s=korg; t=1722355906;
+	bh=SOmeLuxaucqjj4qKPPIXd4OLAKwTyrGAjnL1zl1HJKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/J7nHsUnpvPk/Qi5SoSvdU7sudKaT/TiI9UPOWUXreNuhBrdhWKOHUXKWF9DgBdd
-	 ZI3kWn4D6Nw2wjPH41ZVl3vWwWo979dHzn1oF1PV5Kavw4X1D9Hf1RIIjB1HIJ/Bgf
-	 hdMH14Od8e9GWxGCojf00q/SeEfIBPcLKQvEmnlY=
+	b=FmgVP4bJT32q5o1UrkgluiMng9nBIc1wJS7egjvA4KMOTlSehBvWDGSRna9DKHnAN
+	 RPraL6xfTWNXLAIjN9yBn0ZiRjI5m/p7bRGt8SBh/3zYq9CdwHE3Sf18/WVkuX78MZ
+	 UrxDOTu7w2E9rbvqYK0gDJ2Alsm5lz0LGmbkhflc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pin-yen Lin <treapking@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 103/809] arm64: dts: mediatek: mt8192-asurada: Add off-on-delay-us for pp3300_mipibrdg
-Date: Tue, 30 Jul 2024 17:39:39 +0200
-Message-ID: <20240730151728.697489663@linuxfoundation.org>
+Subject: [PATCH 6.6 101/568] arm64: dts: rockchip: fixes PHY reset for Lunzn Fastrhino R68S
+Date: Tue, 30 Jul 2024 17:43:28 +0200
+Message-ID: <20240730151643.823006741@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +47,71 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pin-yen Lin <treapking@chromium.org>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit 897a7edba9330974726c564dfdbf4fb5e203b9ac ]
+[ Upstream commit e261bd74000ca80e5483ba8a8bda509de8cbe7fd ]
 
-Set off-on-delay-us to 500000 us for pp3300_mipibrdg to make sure it
-complies with the panel's unprepare delay (the time to power down
-completely) of the power sequence. Explicit configuration on the
-regulator node is required because mt8192-asurada uses the same power
-supply for the panel and the anx7625 DP bridge.
+Fixed the PHY address and reset GPIOs (does not match the corresponding
+pinctrl) for gmac0 and gmac1.
 
-For example, the power sequence could be violated in this sequence:
-1. Bridge on: panel goes off, but regulator doesn't turn off (refcount=1).
-2. Bridge off: regulator turns off (refcount=0).
-3. Bridge resume -> regulator turns on but the bridge driver doesn't
-   check the delay.
-
-Or in this sequence:
-1. Bridge on: panel goes off. The regulator doesn't turn off (refcount=1),
-   but the .unprepared_time in panel_edp is still updated.
-2. Bridge off, regulator goes off (refcount=0).
-3. Panel on, but the panel driver uses the wrong .unprepared_time to check
-   the unprepare delay.
-
-Fixes: f9f00b1f6b9b ("arm64: dts: mediatek: asurada: Add display regulators")
-Signed-off-by: Pin-yen Lin <treapking@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240502154455.3427793-1-treapking@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: b9f8ca655d80 ("arm64: dts: rockchip: Add Lunzn Fastrhino R68S")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20240630150010.55729-7-amadeus@jmu.edu.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ .../boot/dts/rockchip/rk3568-fastrhino-r68s.dts      | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-index 7a704246678f0..08d71ddf36683 100644
---- a/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8192-asurada.dtsi
-@@ -147,6 +147,7 @@ pp3300_mipibrdg: regulator-3v3-mipibrdg {
- 		regulator-boot-on;
- 		gpio = <&pio 127 GPIO_ACTIVE_HIGH>;
- 		vin-supply = <&pp3300_g>;
-+		off-on-delay-us = <500000>;
- 	};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
+index a3339186e89c8..ce2a5e1ccefc3 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
+@@ -39,7 +39,7 @@ &gmac0_tx_bus2
+ 		     &gmac0_rx_bus2
+ 		     &gmac0_rgmii_clk
+ 		     &gmac0_rgmii_bus>;
+-	snps,reset-gpio = <&gpio0 RK_PB0 GPIO_ACTIVE_LOW>;
++	snps,reset-gpio = <&gpio1 RK_PB0 GPIO_ACTIVE_LOW>;
+ 	snps,reset-active-low;
+ 	/* Reset time is 15ms, 50ms for rtl8211f */
+ 	snps,reset-delays-us = <0 15000 50000>;
+@@ -61,7 +61,7 @@ &gmac1m1_tx_bus2
+ 		     &gmac1m1_rx_bus2
+ 		     &gmac1m1_rgmii_clk
+ 		     &gmac1m1_rgmii_bus>;
+-	snps,reset-gpio = <&gpio0 RK_PB1 GPIO_ACTIVE_LOW>;
++	snps,reset-gpio = <&gpio1 RK_PB1 GPIO_ACTIVE_LOW>;
+ 	snps,reset-active-low;
+ 	/* Reset time is 15ms, 50ms for rtl8211f */
+ 	snps,reset-delays-us = <0 15000 50000>;
+@@ -71,18 +71,18 @@ &gmac1m1_rgmii_clk
+ };
  
- 	/* separately switched 3.3V power rail */
+ &mdio0 {
+-	rgmii_phy0: ethernet-phy@0 {
++	rgmii_phy0: ethernet-phy@1 {
+ 		compatible = "ethernet-phy-ieee802.3-c22";
+-		reg = <0>;
++		reg = <0x1>;
+ 		pinctrl-0 = <&eth_phy0_reset_pin>;
+ 		pinctrl-names = "default";
+ 	};
+ };
+ 
+ &mdio1 {
+-	rgmii_phy1: ethernet-phy@0 {
++	rgmii_phy1: ethernet-phy@1 {
+ 		compatible = "ethernet-phy-ieee802.3-c22";
+-		reg = <0>;
++		reg = <0x1>;
+ 		pinctrl-0 = <&eth_phy1_reset_pin>;
+ 		pinctrl-names = "default";
+ 	};
 -- 
 2.43.0
 
