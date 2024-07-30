@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A737F1A6199;
-	Tue, 30 Jul 2024 16:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BDB1A6193;
+	Tue, 30 Jul 2024 16:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356351; cv=none; b=MywwFPxeNNPl4hAqHspNS1s0VKF8R2WR/yRDY5t+lrtJ/tg10mach24IuTWPE+f5BrKfQpuGp01vHOQb+/jVq9FyQgm5cpIXgO46w3a+P/mPCi8h5KcIrTIKwfTEX2iqRZnJZqsE4zbRjMtZgZUXdXE7KmZn4v5+yNSdNEeyzQs=
+	t=1722356354; cv=none; b=ikhFF/2KB9Af6+IK6La5OJ5ggyn0aWLjAL/Clb5SaP61yKPPoXiy8bF3f06xxCilgFm0GKvgZq5FBR7FQu9AHeAVyz7oFdgwUm3EvJ+xY1iJs+L1SnILPN9PqAkmjyap6uZab67sEqOs4dRjHyV8Wc/B27fOcK0jy37EuWGm+30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356351; c=relaxed/simple;
-	bh=FuLL64HinT/22NkuLu5MxphWWieAo3RohN3E4Fh4cW8=;
+	s=arc-20240116; t=1722356354; c=relaxed/simple;
+	bh=YvEZPkJZGaSFuZeeETxXbMSoi9IkpzjzXivusfKvn2o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WamEU12eugCZP16dSZ6xAuuFbJsFPvWLFWoXN678DrVfRiRyklXp5bAGiYBG6iQe7nt9wz8V6fv+bcon1I6rez6MqqxAxPSe4PmPNCapgcLfDU01al1vCl2r2up+IGK/vHsOPVGws/2Oqu1tYLg5mEMCUsiyXR9K2FY4GjYTWl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=na1L/ABP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RppSKYzxiHgPqfQccMFgXFP3RIpaD8VPU+1EDaLi5U7tCm1RFT8CKcrxUOqDUowdF3eANFDhaZoB0LwBX5UQ3voVqqE0TSiHzl+SU2gPs1VhgT4wYnftusRdNafv+piXmcK2yxINsfzt4j8Mb8UjbFGvcHddtL5BRW26squNzA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p+xNJiO4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="na1L/ABP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 159D6C32782;
-	Tue, 30 Jul 2024 16:19:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p+xNJiO4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F7BC32782;
+	Tue, 30 Jul 2024 16:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356351;
-	bh=FuLL64HinT/22NkuLu5MxphWWieAo3RohN3E4Fh4cW8=;
+	s=korg; t=1722356354;
+	bh=YvEZPkJZGaSFuZeeETxXbMSoi9IkpzjzXivusfKvn2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=na1L/ABPRpodDfPzjnc8zdO4yc4eVLAI8NFaiFMVbsfV6uLsVLygWFGoQGmhoI8Sj
-	 0J44/gHESjEYIJHI7DqEkMiuQFCJ1DC1AQ0X2vogyFkOrh26wWFveWZVVK6Dti81Ux
-	 KxI7eco3FkU3WCruT2fZLLy20tvG3FZfJDifYV00=
+	b=p+xNJiO4QJ+ymylLlz+uyh3KcTHsKIr7xESsXzJ9truquHgt0Uw3vsL0G8NF/RKGy
+	 /Vr0UEE8sMonXAwmvi5TtWibzo4H0UVo5j59C7FnSmQA5uXILKC3+47Y7IjmnSHiu3
+	 tIa1XGDOZWzaxbloetuqsbGj+i84fE4d/UmCroSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yanjun Yang <yangyj.ee@gmail.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Kees Cook <kees@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 142/809] ARM: Remove address checking for MMUless devices
-Date: Tue, 30 Jul 2024 17:40:18 +0200
-Message-ID: <20240730151730.217013703@linuxfoundation.org>
+Subject: [PATCH 6.1 184/440] clk: qcom: camcc-sc7280: Add parent dependency to all camera GDSCs
+Date: Tue, 30 Jul 2024 17:46:57 +0200
+Message-ID: <20240730151623.061371216@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yanjun Yang <yangyj.ee@gmail.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit 3ccea4784fddd96fbd6c4497eb28b45dab638c2a ]
+[ Upstream commit 63aec3e4d987fd43237f557460345bca3b51e530 ]
 
-Commit 169f9102f9198b ("ARM: 9350/1: fault: Implement
-copy_from_kernel_nofault_allowed()") added the function to check address
-before use. However, for devices without MMU, addr > TASK_SIZE will
-always fail.  This patch move this function after the #ifdef CONFIG_MMU
-statement.
+Camera titan top GDSC is a parent supply to all other camera GDSCs. Titan
+top GDSC is required to be enabled before enabling any other camera GDSCs
+and it should be disabled only after all other camera GDSCs are disabled.
+Ensure this behavior by marking titan top GDSC as parent of all other
+camera GDSCs.
 
-Signed-off-by: Yanjun Yang <yangyj.ee@gmail.com>
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218953
-Fixes: 169f9102f9198b ("ARM: 9350/1: fault: Implement copy_from_kernel_nofault_allowed()")
-Link: https://lore.kernel.org/r/20240611100947.32241-1-yangyj.ee@gmail.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 1daec8cfebc2 ("clk: qcom: camcc: Add camera clock controller driver for SC7280")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240531095142.9688-4-quic_tdas@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/fault.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/camcc-sc7280.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm/mm/fault.c b/arch/arm/mm/fault.c
-index 67c425341a951..ab01b51de5590 100644
---- a/arch/arm/mm/fault.c
-+++ b/arch/arm/mm/fault.c
-@@ -25,6 +25,8 @@
+diff --git a/drivers/clk/qcom/camcc-sc7280.c b/drivers/clk/qcom/camcc-sc7280.c
+index ec163ea769f59..932096a972bc3 100644
+--- a/drivers/clk/qcom/camcc-sc7280.c
++++ b/drivers/clk/qcom/camcc-sc7280.c
+@@ -2260,6 +2260,7 @@ static struct gdsc cam_cc_bps_gdsc = {
+ 		.name = "cam_cc_bps_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
- #include "fault.h"
+@@ -2269,6 +2270,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
+ 		.name = "cam_cc_ife_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = RETAIN_FF_ENABLE,
+ };
  
-+#ifdef CONFIG_MMU
-+
- bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
- {
- 	unsigned long addr = (unsigned long)unsafe_src;
-@@ -32,8 +34,6 @@ bool copy_from_kernel_nofault_allowed(const void *unsafe_src, size_t size)
- 	return addr >= TASK_SIZE && ULONG_MAX - addr >= size;
- }
+@@ -2278,6 +2280,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
+ 		.name = "cam_cc_ife_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = RETAIN_FF_ENABLE,
+ };
  
--#ifdef CONFIG_MMU
--
- /*
-  * This is useful to dump out the page tables associated with
-  * 'addr' in mm 'mm'.
+@@ -2287,6 +2290,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
+ 		.name = "cam_cc_ife_2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+@@ -2296,6 +2300,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
+ 		.name = "cam_cc_ipe_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
+ 
 -- 
 2.43.0
 
