@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E581183CDB;
-	Tue, 30 Jul 2024 16:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CFCD18990B;
+	Tue, 30 Jul 2024 16:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357597; cv=none; b=IA9JNI7nXTkJIucoCl8KJa4FnjpiWdpzuzY9TDQDBDWmtJDtXtmcz+Pyyw5BpFCGMlRXbt9RPI7nSv0idnrtuaLBY3Ots+PGu4MPXO7i9XJLmGhtV+7sg0/3vKVEi4ffEDimYBy+Ph+yOzShFg7iKdk5MwUNuls61yFpNyX5ie4=
+	t=1722357600; cv=none; b=oOUljXrsGjkPybpyokInXQejL7IRmp5YNI+m/TsFp8QgQa5LWwAyT7F8klQou6a5X6ftU5hRbmuCiW1nFBOYXKfk59HtN2glD1JkGN+hKMPSo6Px64rlbLWrHgbqFiX6SMh6fbLuGSqkrKMO1fCrkr9O6BYfjHvW/SiDbpogp7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357597; c=relaxed/simple;
-	bh=mZdZkJKYGuSWnh1rKucFBvDEcoZoImeAKNvUQdo7BLc=;
+	s=arc-20240116; t=1722357600; c=relaxed/simple;
+	bh=5kJzp9dD0/Yy6tU9IunpKd9UHMpk3SAjqqfaswpGza0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l5F9Ns0KCL1iXGPxo3tXG1oRI5wvqIhnlpxLhcKaGmY6Slvr3buk9A71UcRAIjbbqkgjj6uzAarsY2QciCmHW3wGneLEBBSsBUXNXFuTxuE9ZtmkEcETdsIPD11EKi/10OJym2QoYdM6cekBp2Q7pwMFcB6AqHZubZN6ATiqGM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLALYPPx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bE6scmS3Xfq0/Ig6cgarm+3WC8/xXg/mscqMCncNgvFTtLz0QZUvfX0riw8oVYJ+Elyp6BGdm0PH3ysO4kiGoWenDe+MkhdjSWoQBeQbHTA6MATvfAhviEQlNvbhBPpHXwec9MXB9adXjU5elvml0OgiF1VND5jManAeEW6KO3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLmU/3L2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLALYPPx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B9DC4AF0C;
-	Tue, 30 Jul 2024 16:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLmU/3L2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EF2C4AF14;
+	Tue, 30 Jul 2024 16:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357597;
-	bh=mZdZkJKYGuSWnh1rKucFBvDEcoZoImeAKNvUQdo7BLc=;
+	s=korg; t=1722357600;
+	bh=5kJzp9dD0/Yy6tU9IunpKd9UHMpk3SAjqqfaswpGza0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vLALYPPxbruRPuNMxUAc4FIgMqQu7WSDkqd3RdwL1z14ylnUr98H8qBA5gTjmbXmo
-	 MhMD4bkQoEh9rfnVKXradp/7o2T/MxtKmQMpWSG4qb9cL69IEw6hpxDRA+SwjLXJ8A
-	 70wBmFScuV/KUR7r3AiYeYolJqJtd15ltEhQZ2YQ=
+	b=GLmU/3L2T3J5W6I1k0BpptZOwyAEAx9Gnj+HEqCY3X6gn6vHcC17/lA9j+wZYbHJP
+	 TKruSh586l8+7cEjsYkRiD3D3358W7rIF6x0MC/U6+5yjm688ne3U23gN4d4YHRWiC
+	 RidrwOsRQbzKTwu18eJOCeQDQ0C9MnY3+Up1syXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 273/568] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
-Date: Tue, 30 Jul 2024 17:46:20 +0200
-Message-ID: <20240730151650.551485033@linuxfoundation.org>
+Subject: [PATCH 6.10 271/809] drm/mipi-dsi: Fix theoretical int overflow in mipi_dsi_generic_write_seq()
+Date: Tue, 30 Jul 2024 17:42:27 +0200
+Message-ID: <20240730151735.298062674@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
+[ Upstream commit 24acbcce5cc673886c2f4f9b3f6f89a9c6a53b7e ]
 
-drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
-output may be truncated writing between 1 and 11 bytes into a region of
-size 5 [-Werror=format-truncation=]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                                          ^~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                               ^~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
-between 12 and 22 bytes into a destination of size 15
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+The mipi_dsi_generic_write_seq() macro makes a call to
+mipi_dsi_generic_write() which returns a type ssize_t. The macro then
+stores it in an int and checks to see if it's negative. This could
+theoretically be a problem if "ssize_t" is larger than "int".
 
-Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
-Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+To see the issue, imagine that "ssize_t" is 32-bits and "int" is
+16-bits, you could see a problem if there was some code out there that
+looked like:
+
+  mipi_dsi_generic_write_seq(dsi, <32768 bytes as arguments>);
+
+...since we'd get back that 32768 bytes were transferred and 32768
+stored in a 16-bit int would look negative.
+
+Though there are no callsites where we'd actually hit this (even if
+"int" was only 16-bit), it's cleaner to make the types match so let's
+fix it.
+
+Fixes: a9015ce59320 ("drm/mipi-dsi: Add a mipi_dsi_dcs_write_seq() macro")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240514102056.v5.2.Iadb65b8add19ed3ae3ed6425011beb97e380a912@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240514102056.v5.2.Iadb65b8add19ed3ae3ed6425011beb97e380a912@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/drm/drm_mipi_dsi.h | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
-index 111fa88a3be44..9a439569ffcf3 100644
---- a/drivers/infiniband/hw/mlx4/alias_GUID.c
-+++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
-@@ -829,7 +829,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 70ce0b8cbc68e..e0f56564bf975 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -314,17 +314,17 @@ int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
+  * @dsi: DSI peripheral device
+  * @seq: buffer containing the payload
+  */
+-#define mipi_dsi_generic_write_seq(dsi, seq...)                                \
+-	do {                                                                   \
+-		static const u8 d[] = { seq };                                 \
+-		struct device *dev = &dsi->dev;                                \
+-		int ret;                                                       \
+-		ret = mipi_dsi_generic_write(dsi, d, ARRAY_SIZE(d));           \
+-		if (ret < 0) {                                                 \
+-			dev_err_ratelimited(dev, "transmit data failed: %d\n", \
+-					    ret);                              \
+-			return ret;                                            \
+-		}                                                              \
++#define mipi_dsi_generic_write_seq(dsi, seq...)                                 \
++	do {                                                                    \
++		static const u8 d[] = { seq };                                  \
++		struct device *dev = &dsi->dev;                                 \
++		ssize_t ret;                                                    \
++		ret = mipi_dsi_generic_write(dsi, d, ARRAY_SIZE(d));            \
++		if (ret < 0) {                                                  \
++			dev_err_ratelimited(dev, "transmit data failed: %zd\n", \
++					    ret);                               \
++			return ret;                                             \
++		}                                                               \
+ 	} while (0)
  
- int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
- {
--	char alias_wq_name[15];
-+	char alias_wq_name[22];
- 	int ret = 0;
- 	int i, j;
- 	union ib_gid gid;
+ /**
 -- 
 2.43.0
 
