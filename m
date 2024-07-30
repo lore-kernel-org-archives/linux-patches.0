@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A53B29A2;
-	Tue, 30 Jul 2024 15:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9974729A2;
+	Tue, 30 Jul 2024 15:56:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354982; cv=none; b=e3OO1EdsZATdCwGSrziPu2ePhxflkasz3G56RYfkojpSgz4MT0wwnfkT4nmuLk6PSi0cLWDFYTAdbzh44+Y6wjP+3WJHEccKBLxBBHQz1rXww4mtsUAsvrabUl5aTqbFtly2WbUrSPgqM3CFQ7fd0TG9AMBesbLTwNqXB7zM4j8=
+	t=1722354985; cv=none; b=k2/aGzbYvb7Y2DunEVox+XClV1IMhwxfQBJg1RdZb9+iIrqIhq8Kk8gJRuvh64Yacwnb32+AhHM2jG7LwTawKFxcumA4WpJxTpfecLJDykVwEoYM59kZuUYyAgmkFz9gxYfQzKHaIr/CsYGFTfc1rQ1Y3K036TAWn1mSQ1V7YZ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354982; c=relaxed/simple;
-	bh=bYwErlcJuz8+fq8HFCooqWCjNzrD/cVPDrCtVJtwpWE=;
+	s=arc-20240116; t=1722354985; c=relaxed/simple;
+	bh=JfdRxxe2GGqQen7YpzpFiwMOvRabbsCWRWs6dh6VDbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PnVLYcLugeO6fd9BMsO/8DNCZLNfyw3ybGVwFHaJSEk5eT/6x1VxhtqRsBXiEwBFfry+t39nSjH0QfR2OhrErC3XDE55OS/X68LOld+lK8T2mCnO9oPv8qttkr3CWRfqo/ALhO7TqScl8CLDm7bfpgv49tJqfrqY7+XmVcrN7JU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nEOrVKH8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgbTfGwjfjKrcu/TmQdQA9hWSdNzRlPgREUAU9ENhSsh9vFMxx4vG1REqcugsvFMHpIshO7/y37f/RYLxshTdtojntPqb+HPfEwiUfeYVoFQuIPiMIDSL10k17gjSTljpG1kTuPx2cRt2e3J2OwR8MwNp6JbYigSI/HczazOi+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3PkMeJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nEOrVKH8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC3E1C32782;
-	Tue, 30 Jul 2024 15:56:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3PkMeJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA5CFC32782;
+	Tue, 30 Jul 2024 15:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354982;
-	bh=bYwErlcJuz8+fq8HFCooqWCjNzrD/cVPDrCtVJtwpWE=;
+	s=korg; t=1722354985;
+	bh=JfdRxxe2GGqQen7YpzpFiwMOvRabbsCWRWs6dh6VDbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nEOrVKH82BRGLNevuFzq/dkDRXt3L/+k3oZgaXEbS56XMIlOWEjTY0LyaZW98HC/4
-	 jkqqyMw+3kyBHrO75skV7XBsCsL9CzunpifBNcCJNla8b7Jf7RIPQd0fuSSoObIKqQ
-	 TWqSEC5LjbqmGUwjPK/W6MZsBlLJ07lU+/QzzFWI=
+	b=C3PkMeJg+EV58TqavGMfFjcq3HTNKvSOLDunjUDXRuRvFYFPFAt+Kt3nLLo9bVCmm
+	 A9wuWyAPFtCXoRgpgB5u8Kq0u7ZjnrY9VrJTmyEwpec4oIwqPCQXnRPEjsmeptuzX5
+	 GF+8ELOV88cOzcjUN3RPJOD2+1oHk1fBmaW5WLWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
+	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/568] cgroup/cpuset: Prevent UAF in proc_cpuset_show()
-Date: Tue, 30 Jul 2024 17:42:04 +0200
-Message-ID: <20240730151640.503086745@linuxfoundation.org>
+Subject: [PATCH 6.1 044/440] soc: xilinx: rename cpu_number1 to dummy_cpu_number
+Date: Tue, 30 Jul 2024 17:44:37 +0200
+Message-ID: <20240730151617.483645032@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,98 +47,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
 
-[ Upstream commit 1be59c97c83ccd67a519d8a49486b3a8a73ca28a ]
+[ Upstream commit 4a95449dd975e2ea6629a034f3e74b46c9634916 ]
 
-An UAF can happen when /proc/cpuset is read as reported in [1].
+The per cpu variable cpu_number1 is passed to xlnx_event_handler as
+argument "dev_id", but it is not used in this function. So drop the
+initialization of this variable and rename it to dummy_cpu_number.
+This patch is to fix the following call trace when the kernel option
+CONFIG_DEBUG_ATOMIC_SLEEP is enabled:
 
-This can be reproduced by the following methods:
-1.add an mdelay(1000) before acquiring the cgroup_lock In the
- cgroup_path_ns function.
-2.$cat /proc/<pid>/cpuset   repeatly.
-3.$mount -t cgroup -o cpuset cpuset /sys/fs/cgroup/cpuset/
-$umount /sys/fs/cgroup/cpuset/   repeatly.
+BUG: sleeping function called from invalid context at include/linux/sched/mm.h:274
+    in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
+    preempt_count: 1, expected: 0
+    CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.0 #53
+    Hardware name: Xilinx Versal vmk180 Eval board rev1.1 (QSPI) (DT)
+    Call trace:
+     dump_backtrace+0xd0/0xe0
+     show_stack+0x18/0x40
+     dump_stack_lvl+0x7c/0xa0
+     dump_stack+0x18/0x34
+     __might_resched+0x10c/0x140
+     __might_sleep+0x4c/0xa0
+     __kmem_cache_alloc_node+0xf4/0x168
+     kmalloc_trace+0x28/0x38
+     __request_percpu_irq+0x74/0x138
+     xlnx_event_manager_probe+0xf8/0x298
+     platform_probe+0x68/0xd8
 
-The race that cause this bug can be shown as below:
-
-(umount)		|	(cat /proc/<pid>/cpuset)
-css_release		|	proc_cpuset_show
-css_release_work_fn	|	css = task_get_css(tsk, cpuset_cgrp_id);
-css_free_rwork_fn	|	cgroup_path_ns(css->cgroup, ...);
-cgroup_destroy_root	|	mutex_lock(&cgroup_mutex);
-rebind_subsystems	|
-cgroup_free_root 	|
-			|	// cgrp was freed, UAF
-			|	cgroup_path_ns_locked(cgrp,..);
-
-When the cpuset is initialized, the root node top_cpuset.css.cgrp
-will point to &cgrp_dfl_root.cgrp. In cgroup v1, the mount operation will
-allocate cgroup_root, and top_cpuset.css.cgrp will point to the allocated
-&cgroup_root.cgrp. When the umount operation is executed,
-top_cpuset.css.cgrp will be rebound to &cgrp_dfl_root.cgrp.
-
-The problem is that when rebinding to cgrp_dfl_root, there are cases
-where the cgroup_root allocated by setting up the root for cgroup v1
-is cached. This could lead to a Use-After-Free (UAF) if it is
-subsequently freed. The descendant cgroups of cgroup v1 can only be
-freed after the css is released. However, the css of the root will never
-be released, yet the cgroup_root should be freed when it is unmounted.
-This means that obtaining a reference to the css of the root does
-not guarantee that css.cgrp->root will not be freed.
-
-Fix this problem by using rcu_read_lock in proc_cpuset_show().
-As cgroup_root is kfree_rcu after commit d23b5c577715
-("cgroup: Make operations on the cgroup root_list RCU safe"),
-css->cgroup won't be freed during the critical section.
-To call cgroup_path_ns_locked, css_set_lock is needed, so it is safe to
-replace task_get_css with task_css.
-
-[1] https://syzkaller.appspot.com/bug?extid=9b1ff7be974a403aa4cd
-
-Fixes: a79a908fd2b0 ("cgroup: introduce cgroup namespaces")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: daed80ed0758 ("soc: xilinx: Fix for call trace due to the usage of smp_processor_id()")
+Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+Link: https://lore.kernel.org/r/20240408110610.15676-1-jay.buddhabhatti@amd.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/soc/xilinx/xlnx_event_manager.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index f2025fa5a168d..3646426c69e25 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -21,6 +21,7 @@
-  *  License.  See the file COPYING in the main directory of the Linux
-  *  distribution for more details.
+diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
+index 8293cc40047fa..82e3174740238 100644
+--- a/drivers/soc/xilinx/xlnx_event_manager.c
++++ b/drivers/soc/xilinx/xlnx_event_manager.c
+@@ -3,6 +3,7 @@
+  * Xilinx Event Management Driver
+  *
+  *  Copyright (C) 2021 Xilinx, Inc.
++ *  Copyright (C) 2024 Advanced Micro Devices, Inc.
+  *
+  *  Abhyuday Godhasara <abhyuday.godhasara@xilinx.com>
   */
-+#include "cgroup-internal.h"
+@@ -19,7 +20,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
  
- #include <linux/cpu.h>
- #include <linux/cpumask.h>
-@@ -4293,10 +4294,14 @@ int proc_cpuset_show(struct seq_file *m, struct pid_namespace *ns,
- 	if (!buf)
- 		goto out;
+-static DEFINE_PER_CPU_READ_MOSTLY(int, cpu_number1);
++static DEFINE_PER_CPU_READ_MOSTLY(int, dummy_cpu_number);
  
--	css = task_get_css(tsk, cpuset_cgrp_id);
--	retval = cgroup_path_ns(css->cgroup, buf, PATH_MAX,
--				current->nsproxy->cgroup_ns);
--	css_put(css);
-+	rcu_read_lock();
-+	spin_lock_irq(&css_set_lock);
-+	css = task_css(tsk, cpuset_cgrp_id);
-+	retval = cgroup_path_ns_locked(css->cgroup, buf, PATH_MAX,
-+				       current->nsproxy->cgroup_ns);
-+	spin_unlock_irq(&css_set_lock);
-+	rcu_read_unlock();
-+
- 	if (retval == -E2BIG)
- 		retval = -ENAMETOOLONG;
- 	if (retval < 0)
+ static int virq_sgi;
+ static int event_manager_availability = -EACCES;
+@@ -555,7 +556,6 @@ static void xlnx_disable_percpu_irq(void *data)
+ static int xlnx_event_init_sgi(struct platform_device *pdev)
+ {
+ 	int ret = 0;
+-	int cpu;
+ 	/*
+ 	 * IRQ related structures are used for the following:
+ 	 * for each SGI interrupt ensure its mapped by GIC IRQ domain
+@@ -592,11 +592,8 @@ static int xlnx_event_init_sgi(struct platform_device *pdev)
+ 	sgi_fwspec.param[0] = sgi_num;
+ 	virq_sgi = irq_create_fwspec_mapping(&sgi_fwspec);
+ 
+-	cpu = get_cpu();
+-	per_cpu(cpu_number1, cpu) = cpu;
+ 	ret = request_percpu_irq(virq_sgi, xlnx_event_handler, "xlnx_event_mgmt",
+-				 &cpu_number1);
+-	put_cpu();
++				 &dummy_cpu_number);
+ 
+ 	WARN_ON(ret);
+ 	if (ret) {
+@@ -612,16 +609,12 @@ static int xlnx_event_init_sgi(struct platform_device *pdev)
+ 
+ static void xlnx_event_cleanup_sgi(struct platform_device *pdev)
+ {
+-	int cpu = smp_processor_id();
+-
+-	per_cpu(cpu_number1, cpu) = cpu;
+-
+ 	cpuhp_remove_state(CPUHP_AP_ONLINE_DYN);
+ 
+ 	on_each_cpu(xlnx_disable_percpu_irq, NULL, 1);
+ 
+ 	irq_clear_status_flags(virq_sgi, IRQ_PER_CPU);
+-	free_percpu_irq(virq_sgi, &cpu_number1);
++	free_percpu_irq(virq_sgi, &dummy_cpu_number);
+ 	irq_dispose_mapping(virq_sgi);
+ }
+ 
 -- 
 2.43.0
 
