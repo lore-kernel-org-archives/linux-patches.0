@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB31A6195;
-	Tue, 30 Jul 2024 16:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012CF1A6195;
+	Tue, 30 Jul 2024 16:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358454; cv=none; b=tlBv5KI/lVTD7n37yIlrUK8QdqgiIIWXN9IyJAUgz/eg3Di7oUOaBW+3j20W/1WYTUjixSl8FwynewWS60gB+u1EXwA0watvGRzKRh+JhWuc108pji77ay6OabkaMglIa1kvKCKgvgciXY08YgH6TZuS18W1OWPl3OeyQflXuZs=
+	t=1722358458; cv=none; b=cNvFzCUXzHH7s4B0/3/lvxSuN6nqs+gHF0++rmuXjYfnJ7gEeMRnqEiMo8rCUMG1NCZkkrgBC00MJ4dQQFjirF+Q1ag4oSiIXY4CQvhG552OgDzU4GihZLr58pJ5C+qbnrLDHG9+gPyLEi8R8tTm3i4RcQo8V5RwiQA/QkYQk6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358454; c=relaxed/simple;
-	bh=QVP1rGPeJ3TdujJAA66te517+Pp4Ql9n3UEoIgVqbcI=;
+	s=arc-20240116; t=1722358458; c=relaxed/simple;
+	bh=X/Jlp0LBfmcc3CG+NlO5lXUXid4hIB7qHw9D6jDC3t8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ehKU48O+s/HVO7LaF1ELBuJ5UFcZnnrSmIVS1BUEfgXthCClhBmEKLKS6HVgytVD7ijcd6aSnTe7aYHElBrXoqoNGaAbM5rTIScUxBMdzzuzHlYb7NHJP8O+iHK+qAXlOA/8Cp/kmwiFAUh3iSj9KyN1eU5BzgFmZftEfwlPE80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJmx8uOx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tuJG9KUbuJ8d9P6RQLwmK8Oy/Cc+tyz0p8cj2PRHSVkxDwpsN2zgmFWnuRttUGaBc481nNPgvPGOb76du7HDEH7BXNbCUe/+PSjyK78/SyYOTEs6Zto1+hO6WcKRcJa0thF/wG3x5X/YpzukwIygD/H3QoJrbrHwkZPjl0wyTu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxi8a0Sb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJmx8uOx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22638C32782;
-	Tue, 30 Jul 2024 16:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxi8a0Sb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75653C32782;
+	Tue, 30 Jul 2024 16:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358454;
-	bh=QVP1rGPeJ3TdujJAA66te517+Pp4Ql9n3UEoIgVqbcI=;
+	s=korg; t=1722358457;
+	bh=X/Jlp0LBfmcc3CG+NlO5lXUXid4hIB7qHw9D6jDC3t8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HJmx8uOxweRcD06dJ7hxAMJKykfVKNFS7dwtqMKsJf8JwzB+Q6kBnLDYm8U4qUv/1
-	 lnxMsQvxa+KRb1fACy+XRRMesCncG0mBQryQVgilGJty8n1QUsXYidw4TONrIXQRnY
-	 OBDx6o0eZ0iwc+yT5OA4xcVHx3WlJcQ6pUc5AIuU=
+	b=jxi8a0SbYQtQMuFCZ8P5uGS2sWH8hdjjFLP09hW8SKoPo6ah2zqD976mux6THHONk
+	 dXoekg1iQKqtcyQK/p5wYZPNIAhrP2ZAwC4sAPE66UkjXa26WsLm0xbowJfLAnke9N
+	 LAv978A+eIzxYpbV2ozNsUVmvne4t0k7wuiyRYOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 363/568] x86/efistub: Avoid returning EFI_SUCCESS on error
-Date: Tue, 30 Jul 2024 17:47:50 +0200
-Message-ID: <20240730151654.049948470@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+07bee335584b04e7c2f8@syzkaller.appspotmail.com,
+	Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
+Subject: [PATCH 6.1 392/440] wifi: mac80211: check basic rates validity
+Date: Tue, 30 Jul 2024 17:50:25 +0200
+Message-ID: <20240730151631.116892046@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,44 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit fb318ca0a522295edd6d796fb987e99ec41f0ee5 upstream.
+commit ce04abc3fcc62cd5640af981ebfd7c4dc3bded28 upstream.
 
-The fail label is only used in a situation where the previous EFI API
-call succeeded, and so status will be set to EFI_SUCCESS. Fix this, by
-dropping the goto entirely, and call efi_exit() with the correct error
-code.
+When userspace sets basic rates, it might send us some rates
+list that's empty or consists of invalid values only. We're
+currently ignoring invalid values and then may end up with a
+rates bitmap that's empty, which later results in a warning.
 
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reject the call if there were no valid rates.
+
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reported-by: syzbot+07bee335584b04e7c2f8@syzkaller.appspotmail.com
+Tested-by: syzbot+07bee335584b04e7c2f8@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=07bee335584b04e7c2f8
+Signed-off-by: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/x86-stub.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/mac80211/cfg.c |   21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
 
---- a/drivers/firmware/efi/libstub/x86-stub.c
-+++ b/drivers/firmware/efi/libstub/x86-stub.c
-@@ -501,16 +501,13 @@ efi_status_t __efiapi efi_pe_entry(efi_h
- 	/* Convert unicode cmdline to ascii */
- 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
- 	if (!cmdline_ptr)
--		goto fail;
-+		efi_exit(handle, EFI_OUT_OF_RESOURCES);
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -2577,6 +2577,17 @@ static int ieee80211_change_bss(struct w
+ 	if (!sband)
+ 		return -EINVAL;
  
- 	efi_set_u64_split((unsigned long)cmdline_ptr, &hdr->cmd_line_ptr,
- 			  &boot_params.ext_cmd_line_ptr);
++	if (params->basic_rates) {
++		if (!ieee80211_parse_bitrates(sdata->vif.bss_conf.chandef.width,
++					      wiphy->bands[sband->band],
++					      params->basic_rates,
++					      params->basic_rates_len,
++					      &sdata->vif.bss_conf.basic_rates))
++			return -EINVAL;
++		changed |= BSS_CHANGED_BASIC_RATES;
++		ieee80211_check_rate_mask(&sdata->deflink);
++	}
++
+ 	if (params->use_cts_prot >= 0) {
+ 		sdata->vif.bss_conf.use_cts_prot = params->use_cts_prot;
+ 		changed |= BSS_CHANGED_ERP_CTS_PROT;
+@@ -2600,16 +2611,6 @@ static int ieee80211_change_bss(struct w
+ 		changed |= BSS_CHANGED_ERP_SLOT;
+ 	}
  
- 	efi_stub_entry(handle, sys_table_arg, &boot_params);
- 	/* not reached */
+-	if (params->basic_rates) {
+-		ieee80211_parse_bitrates(sdata->vif.bss_conf.chandef.width,
+-					 wiphy->bands[sband->band],
+-					 params->basic_rates,
+-					 params->basic_rates_len,
+-					 &sdata->vif.bss_conf.basic_rates);
+-		changed |= BSS_CHANGED_BASIC_RATES;
+-		ieee80211_check_rate_mask(&sdata->deflink);
+-	}
 -
--fail:
--	efi_exit(handle, status);
- }
- 
- static void add_e820ext(struct boot_params *params,
+ 	if (params->ap_isolate >= 0) {
+ 		if (params->ap_isolate)
+ 			sdata->flags |= IEEE80211_SDATA_DONT_BRIDGE_PACKETS;
 
 
