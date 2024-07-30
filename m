@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6F184549;
-	Tue, 30 Jul 2024 16:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F61C18801A;
+	Tue, 30 Jul 2024 16:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358618; cv=none; b=RSCcoxPmoWrseCKogl/891st9PacDyti0K9/hMbscprnTcSSk7yWH1o1o6JEv1Rh26jVufmoOfZKSsCI2vJbeFqfq9jpKdz9i161FZ9dW/VP79uq6MzRds0FDXqCTEdPq39dHgLuHuACwijFtqxUEJL3vZ3Ylj2eNO0BJiFQWw4=
+	t=1722358621; cv=none; b=UCteH7gNpppsXrGFdJ156+wZeoPsoDoEiPsPt/l3YkQVCGigfrpVjZG3Iq23bbZQk70mCAE2gRRZgXafulIWJKvMKeGXr+qwRBbYJktHeXT2cIpH52fEaI48tXhtAKsHQhKkfXf22xjO6nJttTBqsCBJ9A2iZJus1D/C9nkW8Sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358618; c=relaxed/simple;
-	bh=96H8SNTIovS7q0TCenF6n7BkRtB/L1HJf/kf93WRcnk=;
+	s=arc-20240116; t=1722358621; c=relaxed/simple;
+	bh=rLjjdjMtDr+X1OtNlleN0C/mGNxe+ocjBIZSiCX4RqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ouFy6a+WMpTIv3mj/PftTzkutSLf4l5Dfb3i7t6wN3Qo/Ur1UbAFj+OjYv9kAPW7e0pj06DyooidAGQ0cmSBqBRbmy10hWADUbiZgvs2JN+nBtOUdxzEghs2xTDFmBPfG+SFHUDZAYioQyLdPssJ0Yv7XBksLxHCnlIEuRyTYPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHSP0ctn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUKlBhJ6jPM0B7sZA94qjTyZo68XigSaofs96zP7DbzIQnH7TwOeO0AlH8dOOw/BT0hZ488dkFvNxtU89aLF+d8NDq7SjVFHuLmNKXDwJoGqBbbD5+XRC67or3gvNI3pOriNBCF3/qjTEG6951uMmQkBULhRxdALo4vTT72Tw9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYvEd626; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHSP0ctn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE58C4AF0A;
-	Tue, 30 Jul 2024 16:56:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYvEd626"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79773C32782;
+	Tue, 30 Jul 2024 16:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358617;
-	bh=96H8SNTIovS7q0TCenF6n7BkRtB/L1HJf/kf93WRcnk=;
+	s=korg; t=1722358621;
+	bh=rLjjdjMtDr+X1OtNlleN0C/mGNxe+ocjBIZSiCX4RqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHSP0ctnKx8rKATWE659drW/qxp9vEXvMqsObSChyYbpxdD3HWYv9Wra2Z81ClHh7
-	 S2yDHseih2N8mb6UfqduR1lFNVE+VKAn7WwKhrRFz4rEDwk/er2B7n1k7AyLsw/+B0
-	 zr+VwGSNVBhXPPJg2pUrPK4vZ8KDzoBrzn8FIGIM=
+	b=mYvEd626o0GQN3SCtFhAKv/xC0BCV8HEVxTxOeAS2Co5upVnnBcpEsMngt4bu1c3r
+	 NfMumtoZTsuyoaxvkAm4V/EF+VlX3kKpwJr+fObG3p7O3A948sYXMwEO25x7t3CzUk
+	 FIp8HaJkrYhIzdlJnjgvKwky9nrxHoeIYtjTdeO8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lance Richardson <rlance@google.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 407/440] dma: fix call order in dmam_free_coherent
-Date: Tue, 30 Jul 2024 17:50:40 +0200
-Message-ID: <20240730151631.693137784@linuxfoundation.org>
+Subject: [PATCH 6.10 379/809] SUNRPC: Fixup gss_status tracepoint error output
+Date: Tue, 30 Jul 2024 17:44:15 +0200
+Message-ID: <20240730151739.633826120@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,54 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lance Richardson <rlance@google.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 28e8b7406d3a1f5329a03aa25a43aa28e087cb20 ]
+[ Upstream commit b9fae9f06d84ffab0f3f9118f3a96bbcdc528bf6 ]
 
-dmam_free_coherent() frees a DMA allocation, which makes the
-freed vaddr available for reuse, then calls devres_destroy()
-to remove and free the data structure used to track the DMA
-allocation. Between the two calls, it is possible for a
-concurrent task to make an allocation with the same vaddr
-and add it to the devres list.
+The GSS routine errors are values, not flags.
 
-If this happens, there will be two entries in the devres list
-with the same vaddr and devres_destroy() can free the wrong
-entry, triggering the WARN_ON() in dmam_match.
-
-Fix by destroying the devres entry before freeing the DMA
-allocation.
-
-Tested:
-  kokonut //net/encryption
-    http://sponge2/b9145fe6-0f72-4325-ac2f-a84d81075b03
-
-Fixes: 9ac7849e35f7 ("devres: device resource management")
-Signed-off-by: Lance Richardson <rlance@google.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/dma/mapping.c | 2 +-
+ include/trace/events/rpcgss.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
-index 33437d6206445..f1051ad0da7cc 100644
---- a/kernel/dma/mapping.c
-+++ b/kernel/dma/mapping.c
-@@ -63,8 +63,8 @@ void dmam_free_coherent(struct device *dev, size_t size, void *vaddr,
- {
- 	struct dma_devres match_data = { size, vaddr, dma_handle };
+diff --git a/include/trace/events/rpcgss.h b/include/trace/events/rpcgss.h
+index 7f0c1ceae726b..b0b6300a0cabd 100644
+--- a/include/trace/events/rpcgss.h
++++ b/include/trace/events/rpcgss.h
+@@ -54,7 +54,7 @@ TRACE_DEFINE_ENUM(GSS_S_UNSEQ_TOKEN);
+ TRACE_DEFINE_ENUM(GSS_S_GAP_TOKEN);
  
--	dma_free_coherent(dev, size, vaddr, dma_handle);
- 	WARN_ON(devres_destroy(dev, dmam_release, dmam_match, &match_data));
-+	dma_free_coherent(dev, size, vaddr, dma_handle);
- }
- EXPORT_SYMBOL(dmam_free_coherent);
- 
+ #define show_gss_status(x)						\
+-	__print_flags(x, "|",						\
++	__print_symbolic(x, 						\
+ 		{ GSS_S_BAD_MECH, "GSS_S_BAD_MECH" },			\
+ 		{ GSS_S_BAD_NAME, "GSS_S_BAD_NAME" },			\
+ 		{ GSS_S_BAD_NAMETYPE, "GSS_S_BAD_NAMETYPE" },		\
 -- 
 2.43.0
 
