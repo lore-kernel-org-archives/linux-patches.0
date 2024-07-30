@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5C8146D6B;
-	Tue, 30 Jul 2024 16:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8011A146D6B;
+	Tue, 30 Jul 2024 16:37:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357450; cv=none; b=KLhCExq7F3P31njhLm7SBFvryNkm4vQqL5TDybty7tVgIxjvCY4KlToIt6DUycUFCkB4+s3SCSvuij2pe+8PFdVxk8ggqoh+S1FP0YIddUGwRMqcFeFot3igZsMFVtHT1g2lgW5uLEXf9AYXfrI3AZ66yQD1Wq+F2S5WrkXPbfs=
+	t=1722357453; cv=none; b=em2EMQJGUmtivI5mmhpylIz0jqS+8L8r+G5iRNN+LFNExgYKRuwgLh9EWFEVpBwLBKi4n5iR2izv3TU5s0Te4hzsiDuXgPU74/Tg9+EUk8OUlh1XTIsFFjnoLliS5SRTj4z0N5YUKE7jN0C8TRveKpvb0GGSle7dB7U/b34iscA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357450; c=relaxed/simple;
-	bh=iiUOnuziFgbIP4l2OFrTVS3MtH2Zja+wgR3ZWYOqB3g=;
+	s=arc-20240116; t=1722357453; c=relaxed/simple;
+	bh=MyNjKRRED3UzTlV0YQkmkTKl3woB7SPnfOWS8G5r+gk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nga+PfPcFDgFuzp60IpVsu04dGPbX8CfBr3W10PY74kDSGTiOwGvq7Xn1QMlsjuinuDMHEtd9KQFRS4tVLUVA/9u1w8hoLmYJm4sUotG/B+TVCxyywCw6/1GcJZYhEYWH0cSQKqMIFf/d/7hP9aZQ+K9IiaT+JcEmdYV7dzteF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7MzIqqa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sLnQYcCKP8PlRFieMO5ONIPkpwMfU8Ssq662RFj+qMTKgkShDrvqUhRDQSS+XN+s1nVp2VprnZORjy7bICUj/IHhd9LPqOxm2YRp76tbN9aodBwrVmw9Q6QwLdCj1klwk/GOf5fCT91uriaZkJ62a9JQgQFkqvAbGpe3NP7845Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qx+A66xx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7MzIqqa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E14C32782;
-	Tue, 30 Jul 2024 16:37:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qx+A66xx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06D88C4AF0C;
+	Tue, 30 Jul 2024 16:37:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357450;
-	bh=iiUOnuziFgbIP4l2OFrTVS3MtH2Zja+wgR3ZWYOqB3g=;
+	s=korg; t=1722357453;
+	bh=MyNjKRRED3UzTlV0YQkmkTKl3woB7SPnfOWS8G5r+gk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7MzIqqa2XIF92zILOulLtpY3JerPz85tgWhHq8vqE3b9ivMIhV2LEdjMXFbaONTf
-	 HH22jrbrM3sGYxDeQKOYCYn5VxUkhM+F/9g+mcmD1/9d6h++4P/YsQmCibtRy2j8dj
-	 lsieECXMnEnLMob6uk62aBr6i59ItQnbo/+PbXz0=
+	b=Qx+A66xxniIW2ugXYsc5Ds90iDiPC0jbAxGzVCe/C+Kycx9V2iaukX+/zFHzyAfFi
+	 oWyCCa+/cwtyARItfgfAQIW248t5MoGhiamPizCp7EpuksiEU95tCjNIfDDhTJTyFE
+	 vl+s6iwb9ZZZDKlDPkS7AvRQmZKgTqkA/rifuM6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 256/568] iio: frequency: adrf6780: rm clk provider include
-Date: Tue, 30 Jul 2024 17:46:03 +0200
-Message-ID: <20240730151649.884656471@linuxfoundation.org>
+Subject: [PATCH 6.10 255/809] Bluetooth: btintel_pcie: Fix irq leak
+Date: Tue, 30 Jul 2024 17:42:11 +0200
+Message-ID: <20240730151734.667623362@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit e2261b4a4de2804698935eb44f98dc897e1c44c3 ]
+[ Upstream commit 041677e7aad6f57020aa271aafd4cb9e2af1536f ]
 
-The driver has no clock provider implementation, therefore remove the
-include.
+Free irq before releasing irq vector.
 
-Fixes: 63aaf6d06d87 ("iio: frequency: adrf6780: add support for ADRF6780")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Link: https://lore.kernel.org/r/20240530092835.36892-1-antoniu.miclaus@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: c2b636b3f788 ("Bluetooth: btintel_pcie: Add support for PCIe transport")
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/frequency/adrf6780.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/bluetooth/btintel_pcie.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/iio/frequency/adrf6780.c b/drivers/iio/frequency/adrf6780.c
-index b4defb82f37e3..3f46032c92752 100644
---- a/drivers/iio/frequency/adrf6780.c
-+++ b/drivers/iio/frequency/adrf6780.c
-@@ -9,7 +9,6 @@
- #include <linux/bits.h>
- #include <linux/clk.h>
- #include <linux/clkdev.h>
--#include <linux/clk-provider.h>
- #include <linux/delay.h>
- #include <linux/device.h>
- #include <linux/iio/iio.h>
+diff --git a/drivers/bluetooth/btintel_pcie.c b/drivers/bluetooth/btintel_pcie.c
+index dd3c0626c72d8..b8120b98a2395 100644
+--- a/drivers/bluetooth/btintel_pcie.c
++++ b/drivers/bluetooth/btintel_pcie.c
+@@ -1327,6 +1327,12 @@ static void btintel_pcie_remove(struct pci_dev *pdev)
+ 	data = pci_get_drvdata(pdev);
+ 
+ 	btintel_pcie_reset_bt(data);
++	for (int i = 0; i < data->alloc_vecs; i++) {
++		struct msix_entry *msix_entry;
++
++		msix_entry = &data->msix_entries[i];
++		free_irq(msix_entry->vector, msix_entry);
++	}
+ 
+ 	pci_free_irq_vectors(pdev);
+ 
 -- 
 2.43.0
 
