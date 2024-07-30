@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C3E1A2C20;
-	Tue, 30 Jul 2024 15:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7561BA869;
+	Tue, 30 Jul 2024 15:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355058; cv=none; b=sSEPJpKPaFFaEVicaJ4dMAJJ1zSLVCJ6FvSeh5pdtdEYlkkKdARL5eVs81oUqy1qzNpI30Gvb2goyeo+/FHa+fkJB8pVoOEUbbpwH4AGACzZjJBo/oYp6eqB06QmnRt676Bqp0hXm/leu6xt0BdUZR0DapK8sQpk9S7aCkV4PJ0=
+	t=1722355061; cv=none; b=tPFF6hxCYuo6WEPlvq/9GIzBIE3hAMIOg1sF9E/UvX3mlZkFHcx9BN/MDasAIa0IpMV+rowtohnjXF3yPHdEiaW8nuPBmzGMpKqJXl+BvLFJnNiHykk3eFr+I9W20gzXfKvCBpr2dOUDcuCPEUVo/w+PHA7nlGQaYYKgxr/d89g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355058; c=relaxed/simple;
-	bh=3+DKqSuCRVxKuua71t/lO5RT9cSZ2P+IQPsKPB3fCog=;
+	s=arc-20240116; t=1722355061; c=relaxed/simple;
+	bh=SyrFHrM6K0vce7BmjNTaMgWYzkrHHP1fc6XkooMW4E8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuL9pAfcdfEBObD2a86wPfStrdDjK5IWKppu5YXKXChTb5pxvEt1AdAwfbjd33GUdnf0rpWROj0BDI9X7lcqt6M4hM0z16M2o3MCUF/dCktN6DxwKsRHUSnjxZjnBcWIWvylqB8gWcL14Xk9DxfPKcIJttNJ7464O7DjHHGfMlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2K+2r6kj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UKP44VGnNMOklI0S7fVGxeQqzt27+y7ToEuu4nnnExHYRPhpwHP4+c8b1hJC2GIKEVDGwrUjhH+XRnX9xsTA0gR/hL3wE0aqoAvVizX2UFcUUiyHIsYykXKOELtCT07tGVn6k5CrjHBsyjrD5H/F38xf1pzZIUhJdKGHn+CgniU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JU0Ci5Uy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2K+2r6kj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64DA7C4AF0C;
-	Tue, 30 Jul 2024 15:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JU0Ci5Uy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04602C32782;
+	Tue, 30 Jul 2024 15:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355057;
-	bh=3+DKqSuCRVxKuua71t/lO5RT9cSZ2P+IQPsKPB3fCog=;
+	s=korg; t=1722355061;
+	bh=SyrFHrM6K0vce7BmjNTaMgWYzkrHHP1fc6XkooMW4E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2K+2r6kj/27h/j7OaERL+V3kdJzDQba9/+72pBLk+pBthsk7Us5w/IkdBaOD5cUIh
-	 qcmEKEemKmj98xJEjLMx8NgNHn77nll/gNaNdis/eqQGCuzJqPB/Tw59uPjXd5nM1F
-	 9X6KiIJop3MwtOJBCqmdzmW4L8Mgzyvzsi+88Dsg=
+	b=JU0Ci5UyzE8Hn/msET901xnfSALrRC14M/deJGw6vTimMBgPG+sVZcc1Z1ttOhPSH
+	 tQPwVRDTLG/o8CC22cCFnV4Uqsh89e5QrcAt6LJFC+wExwHp2/mzKeNlLkG/v4ruWE
+	 e1Icv31xLmwMNZq22ttw4othazDzhbe5uXyqeY/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yao Zi <ziyao@disroot.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/568] drm/meson: fix canvas release in bind function
-Date: Tue, 30 Jul 2024 17:42:11 +0200
-Message-ID: <20240730151640.778286173@linuxfoundation.org>
+	Steev Klimaszewski <steev@kali.org>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.1 048/440] soc: qcom: pdr: protect locator_addr with the main mutex
+Date: Tue, 30 Jul 2024 17:44:41 +0200
+Message-ID: <20240730151617.639448714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,108 +50,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yao Zi <ziyao@disroot.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a695949b2e9bb6b6700a764c704731a306c4bebf ]
+[ Upstream commit 107924c14e3ddd85119ca43c26a4ee1056fa9b84 ]
 
-Allocated canvases may not be released on the error exit path of
-meson_drv_bind_master(), leading to resource leaking. Rewrite exit path
-to release canvases on error.
+If the service locator server is restarted fast enough, the PDR can
+rewrite locator_addr fields concurrently. Protect them by placing
+modification of those fields under the main pdr->lock.
 
-Fixes: 2bf6b5b0e374 ("drm/meson: exclusively use the canvas provider module")
-Signed-off-by: Yao Zi <ziyao@disroot.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20240703155826.10385-2-ziyao@disroot.org
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240703155826.10385-2-ziyao@disroot.org
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240622-qcom-pd-mapper-v9-1-a84ee3591c8e@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_drv.c | 37 +++++++++++++++----------------
- 1 file changed, 18 insertions(+), 19 deletions(-)
+ drivers/soc/qcom/pdr_interface.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
-index cb674966e9aca..095f634ff7c79 100644
---- a/drivers/gpu/drm/meson/meson_drv.c
-+++ b/drivers/gpu/drm/meson/meson_drv.c
-@@ -250,29 +250,20 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
- 	if (ret)
- 		goto free_drm;
- 	ret = meson_canvas_alloc(priv->canvas, &priv->canvas_id_vd1_0);
--	if (ret) {
--		meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
--		goto free_drm;
--	}
-+	if (ret)
-+		goto free_canvas_osd1;
- 	ret = meson_canvas_alloc(priv->canvas, &priv->canvas_id_vd1_1);
--	if (ret) {
--		meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
--		meson_canvas_free(priv->canvas, priv->canvas_id_vd1_0);
--		goto free_drm;
--	}
-+	if (ret)
-+		goto free_canvas_vd1_0;
- 	ret = meson_canvas_alloc(priv->canvas, &priv->canvas_id_vd1_2);
--	if (ret) {
--		meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
--		meson_canvas_free(priv->canvas, priv->canvas_id_vd1_0);
--		meson_canvas_free(priv->canvas, priv->canvas_id_vd1_1);
--		goto free_drm;
--	}
-+	if (ret)
-+		goto free_canvas_vd1_1;
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index 0034af927b488..fbf91d7904482 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+ 					      locator_hdl);
+ 	struct pdr_service *pds;
  
- 	priv->vsync_irq = platform_get_irq(pdev, 0);
++	mutex_lock(&pdr->lock);
+ 	/* Create a local client port for QMI communication */
+ 	pdr->locator_addr.sq_family = AF_QIPCRTR;
+ 	pdr->locator_addr.sq_node = svc->node;
+ 	pdr->locator_addr.sq_port = svc->port;
  
- 	ret = drm_vblank_init(drm, 1);
- 	if (ret)
--		goto free_drm;
-+		goto free_canvas_vd1_2;
+-	mutex_lock(&pdr->lock);
+ 	pdr->locator_init_complete = true;
+ 	mutex_unlock(&pdr->lock);
  
- 	/* Assign limits per soc revision/package */
- 	for (i = 0 ; i < ARRAY_SIZE(meson_drm_soc_attrs) ; ++i) {
-@@ -288,11 +279,11 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
- 	 */
- 	ret = drm_aperture_remove_framebuffers(&meson_driver);
- 	if (ret)
--		goto free_drm;
-+		goto free_canvas_vd1_2;
+@@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
  
- 	ret = drmm_mode_config_init(drm);
- 	if (ret)
--		goto free_drm;
-+		goto free_canvas_vd1_2;
- 	drm->mode_config.max_width = 3840;
- 	drm->mode_config.max_height = 2160;
- 	drm->mode_config.funcs = &meson_mode_config_funcs;
-@@ -307,7 +298,7 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
- 	if (priv->afbcd.ops) {
- 		ret = priv->afbcd.ops->init(priv);
- 		if (ret)
--			goto free_drm;
-+			goto free_canvas_vd1_2;
- 	}
+ 	mutex_lock(&pdr->lock);
+ 	pdr->locator_init_complete = false;
+-	mutex_unlock(&pdr->lock);
  
- 	/* Encoder Initialization */
-@@ -371,6 +362,14 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
- exit_afbcd:
- 	if (priv->afbcd.ops)
- 		priv->afbcd.ops->exit(priv);
-+free_canvas_vd1_2:
-+	meson_canvas_free(priv->canvas, priv->canvas_id_vd1_2);
-+free_canvas_vd1_1:
-+	meson_canvas_free(priv->canvas, priv->canvas_id_vd1_1);
-+free_canvas_vd1_0:
-+	meson_canvas_free(priv->canvas, priv->canvas_id_vd1_0);
-+free_canvas_osd1:
-+	meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
- free_drm:
- 	drm_dev_put(drm);
+ 	pdr->locator_addr.sq_node = 0;
+ 	pdr->locator_addr.sq_port = 0;
++	mutex_unlock(&pdr->lock);
+ }
  
+ static const struct qmi_ops pdr_locator_ops = {
+@@ -365,12 +365,14 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+ 	if (ret < 0)
+ 		return ret;
+ 
++	mutex_lock(&pdr->lock);
+ 	ret = qmi_send_request(&pdr->locator_hdl,
+ 			       &pdr->locator_addr,
+ 			       &txn, SERVREG_GET_DOMAIN_LIST_REQ,
+ 			       SERVREG_GET_DOMAIN_LIST_REQ_MAX_LEN,
+ 			       servreg_get_domain_list_req_ei,
+ 			       req);
++	mutex_unlock(&pdr->lock);
+ 	if (ret < 0) {
+ 		qmi_txn_cancel(&txn);
+ 		return ret;
 -- 
 2.43.0
 
