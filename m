@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BB6B155CB3;
-	Tue, 30 Jul 2024 16:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD4E8155CB3;
+	Tue, 30 Jul 2024 16:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358243; cv=none; b=r9yZOQG4vynz7dL99OKaJvg3z3rZBr2bhcLroIakbQ1J5UaGLhXrTt2JJ9/g4DjTBwgh3mHkaultSLT262DdqHRlstgEnR6SrBNIfXThjC6t8Nw6raxy8upDZBErihtB3oO7eIwJStcB1ghoKd9H46cSPLfIaigXNrFOy02o1Wo=
+	t=1722358246; cv=none; b=rQ36+g06zQV8ujXzunToIOWw7vLmCX2ukVqECfgphMCZUnjFg2fnIGy4PyVNDt+j9GDc4nRJF2Zcoi4HTdnCgrFdjOneT4llQzAygMn0CQHAkjMKp8yE8TeoCAwf65ucy0yOohDVPajJgq9mYmF+vWpdLpkBt7oHKbSwL1LA9UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358243; c=relaxed/simple;
-	bh=sEBUwB5x7PZpISRA7NryPD7dWRr2D1+PmW61EjHqJpI=;
+	s=arc-20240116; t=1722358246; c=relaxed/simple;
+	bh=z3xNWYPw4UR1a2yfawqe5BGqHHx8b0dKDi1uAXnxYIo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iek38xq1OaTE8mnhTqNvcSITTCNjwDQkgzlbLIR1OrM/qgU6VplH9bPhMrLqsjxhA1N6OeUcqE87pi68mRoVhcs/nc3cbCYhl19FrCRR0T4JbfupnBcCBObStZxfMhACxqKIOb/VvS+czsEAa9Ul6mEUD9SFrRlwRfvSt8th1NA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xDKSWcDU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/ouoUKkxCrqAqDtwBwtOyTAdrGl4EbGql1bGAtYqwaAp7bN1YHwj6cIvyOQKgwxtxd9TBhYk017TAd1p0904mQqS38B8qM0rzt83ydOtIeo08f4qmaB2oK6aLuqIQ3Dv9IBRHPvi3mVR2SP+EBZS2hytvkf9e5G4F59q4iTHbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V/ND8q6R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xDKSWcDU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D1FC32782;
-	Tue, 30 Jul 2024 16:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V/ND8q6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E1CC4AF11;
+	Tue, 30 Jul 2024 16:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358243;
-	bh=sEBUwB5x7PZpISRA7NryPD7dWRr2D1+PmW61EjHqJpI=;
+	s=korg; t=1722358246;
+	bh=z3xNWYPw4UR1a2yfawqe5BGqHHx8b0dKDi1uAXnxYIo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xDKSWcDUmef4BZhgJDK3DuHF5GPmr9LgXhj3jBLLHiQ+aeGuNCqlut5efb0gcisRt
-	 GRTTDFu4ybHAoZFYUmMJSWtgzYpYVnSS8spucz3lmUwy4Yunh6zueewguzW/A4lptC
-	 kZHUI5g1RhLksremoy3SPVjHRLb08QCdi7SuHYAg=
+	b=V/ND8q6RQ/xCA2McpCrTToFCPVd9jWkalOsGazjXoNqnbIyuSUB74gf1TKcB0LVDd
+	 oGFqVq8Z6KKsgrat7TBdzsNg0qGma6UuSAxIFr+LX35AjfEfFD36aVwGZMkSBM3gWv
+	 p2Nu2WY5blYcbEiihHtSu4EK6vw1FJl7l1xz3fjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Marek <jonathan@marek.ca>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Jun Nie <jun.nie@linaro.org>,
-	Jessica Zhang <quic_jesszhan@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.10 338/809] drm/msm/dsi: set VIDEO_COMPRESSION_MODE_CTRL_WC
-Date: Tue, 30 Jul 2024 17:43:34 +0200
-Message-ID: <20240730151737.971304394@linuxfoundation.org>
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.1 370/440] remoteproc: imx_rproc: Skip over memory region when node value is NULL
+Date: Tue, 30 Jul 2024 17:50:03 +0200
+Message-ID: <20240730151630.268259747@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,63 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Marek <jonathan@marek.ca>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 9ecd0ddd223b68b4603e4766a1d51f6c6cda346e ]
+commit 2fa26ca8b786888673689ccc9da6094150939982 upstream.
 
-Video mode DSC won't work if this field is not set correctly. Set it to fix
-video mode DSC (for slice_per_pkt==1 cases at least).
+In imx_rproc_addr_init() "nph = of_count_phandle_with_args()" just counts
+number of phandles. But phandles may be empty. So of_parse_phandle() in
+the parsing loop (0 < a < nph) may return NULL which is later dereferenced.
+Adjust this issue by adding NULL-return check.
 
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Signed-off-by: Jonathan Marek <jonathan@marek.ca>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/596234/
-Link: https://lore.kernel.org/r/20240530-msm-drm-dsc-dsi-video-upstream-4-v6-5-2ab1d334c657@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240606075204.12354-1-amishin@t-argos.ru
+[Fixed title to fit within the prescribed 70-75 charcters]
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/remoteproc/imx_rproc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 47f5858334f61..7252d36687e61 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -857,6 +857,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	u32 slice_per_intf, total_bytes_per_intf;
- 	u32 pkt_per_line;
- 	u32 eol_byte_num;
-+	u32 bytes_per_pkt;
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -596,6 +596,8 @@ static int imx_rproc_addr_init(struct im
+ 		struct resource res;
  
- 	/* first calculate dsc parameters and then program
- 	 * compress mode registers
-@@ -864,6 +865,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	slice_per_intf = msm_dsc_get_slices_per_intf(dsc, hdisplay);
- 
- 	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
-+	bytes_per_pkt = dsc->slice_chunk_size; /* * slice_per_pkt; */
- 
- 	eol_byte_num = total_bytes_per_intf % 3;
- 
-@@ -901,6 +903,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg_ctrl);
- 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
- 	} else {
-+		reg |= DSI_VIDEO_COMPRESSION_MODE_CTRL_WC(bytes_per_pkt);
- 		dsi_write(msm_host, REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
- 	}
- }
--- 
-2.43.0
-
+ 		node = of_parse_phandle(np, "memory-region", a);
++		if (!node)
++			continue;
+ 		/* Not map vdevbuffer, vdevring region */
+ 		if (!strncmp(node->name, "vdev", strlen("vdev"))) {
+ 			of_node_put(node);
 
 
