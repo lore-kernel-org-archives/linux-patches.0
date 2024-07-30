@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29EA1189503;
-	Tue, 30 Jul 2024 16:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E55E189503;
+	Tue, 30 Jul 2024 16:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356398; cv=none; b=fku4wLhvwGzVxAkYhKQItEYG4QA8UEekM2vOpCBnD4+5ihYYVhwuoWQiXOLeMGO+0jMdxffdYNhmnbcPE/dQIv1wB4pgRGJevacopEolmMU0sU5zxpCvz8D/cibSNT9372NZBm/Z2AfUD5/0ECZJO5ssNXyZbDcDw8zqKcY3jaQ=
+	t=1722356401; cv=none; b=KGNuWD8ato5TNXZNvl1vGkdvMNBshuPb9QC0EvUSHFYy9T2LarjomIHej0BOpPnb/Fkw/SDux2O3KbV9H4OL9p6+2sj0BHM+NlbWLz4WeRbmCj4FVQD14pp6GdtL0K2I/BdUlQzhq5dn8yfrJ4+7L/G0AUoM3TtdVJ97SCEcs0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356398; c=relaxed/simple;
-	bh=9bQIiTJTColinOsBOUqDTy88nBQutxRSJ6XEyouNB3I=;
+	s=arc-20240116; t=1722356401; c=relaxed/simple;
+	bh=PJyBwxIxh4dWqkpdxlZyxwqrJex1L7O9MVJ04LHKHFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SgubvFMwGO01XEITbx+3InDoyPKxoAyqmFPINpaE8fJ/yhBLcpuBMTh32SdfeaWFKXrbkvQP6BLlA6/kpgVO2qsv/oz/6HmsL4Spiwp53NK5uoOMEUZEmO2I9uQGy5mo5EdCfpxrXQbvkx9DCZK7psX/a0RMqlScyMYR8KKbkfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8c8QiJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O/QhJyYNFtrUlMH6cUWfKaViNUD3frHBv5ahl2tZUW9Z+7BsHT3gIvPNw2ZBexMQFWeQnFwaOuuFTGL0dhQq1lF/suWusMpD2dyTkZVPB8BbOFaZsJnoMy/oxA/hpdi4FWDpIL7NQFU2DSPjY+U07NKx0suYe+TSSj/9bax0+Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RfBRe25h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8c8QiJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E83AC32782;
-	Tue, 30 Jul 2024 16:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RfBRe25h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10FACC32782;
+	Tue, 30 Jul 2024 16:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356398;
-	bh=9bQIiTJTColinOsBOUqDTy88nBQutxRSJ6XEyouNB3I=;
+	s=korg; t=1722356401;
+	bh=PJyBwxIxh4dWqkpdxlZyxwqrJex1L7O9MVJ04LHKHFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8c8QiJRmi/8fC5Hafuqyq4OtCppu7xXeE8XLE9OZKmSsiMVSxXRc8AD+Ci6ej3Zu
-	 sCF6aC2I+Mz9+bCVKC+j9nZFyRboxSK4QcfKPX1olqAXPl5HbXz+LA/DjM6D79YMrM
-	 yWL/U1hJzoBfff/TrK3xMU8b/Nozo8F7IGyE9mtI=
+	b=RfBRe25hdtGq8wXnE1v5nuGRHi6EExvkATcsGJiH8ncqQvUX0UdeBpoZcVOCwx2GU
+	 NVzJywO7PE1cV2CcyndM3c5f2bpY5nZT+Fn+S4T9/Rt5hCayQyIaecI6GbddNRlNnp
+	 Q9CuZ7MwaiLKLJK1ngK5f2ZdhsHoow+CeFdurDb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Benjamin Gray <bgray@linux.ibm.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Russell Currey <ruscur@russell.cc>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 135/568] wifi: cfg80211: handle 2x996 RU allocation in cfg80211_calculate_bitrate_he()
-Date: Tue, 30 Jul 2024 17:44:02 +0200
-Message-ID: <20240730151645.149303431@linuxfoundation.org>
+Subject: [PATCH 6.1 188/440] powerpc/pseries: Fix alignment of PLPKS structures and buffers
+Date: Tue, 30 Jul 2024 17:47:01 +0200
+Message-ID: <20240730151623.217205054@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +49,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Andrew Donnellan <ajd@linux.ibm.com>
 
-[ Upstream commit bcbd771cd5d68c0c52567556097d75f9fc4e7cd6 ]
+[ Upstream commit fcf63d6b8ab9b12c2ce1b4bde12a3c391029c998 ]
 
-Currently NL80211_RATE_INFO_HE_RU_ALLOC_2x996 is not handled in
-cfg80211_calculate_bitrate_he(), leading to below warning:
+A number of structures and buffers passed to PKS hcalls have alignment
+requirements, which could on occasion cause problems:
 
-kernel: invalid HE MCS: bw:6, ru:6
-kernel: WARNING: CPU: 0 PID: 2312 at net/wireless/util.c:1501 cfg80211_calculate_bitrate_he+0x22b/0x270 [cfg80211]
+- Authorisation structures must be 16-byte aligned and must not cross a
+  page boundary
 
-Fix it by handling 2x996 RU allocation in the same way as 160 MHz bandwidth.
+- Label structures must not cross page boundaries
 
-Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Link: https://msgid.link/20240606020653.33205-3-quic_bqiang@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+- Password output buffers must not cross page boundaries
+
+To ensure correct alignment, we adjust the allocation size of each of
+these structures/buffers to be the closest power of 2 that is at least the
+size of the structure/buffer (since kmalloc() guarantees that an
+allocation of a power of 2 size will be aligned to at least that size).
+
+Reported-by: Benjamin Gray <bgray@linux.ibm.com>
+Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
+Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
+Reviewed-by: Russell Currey <ruscur@russell.cc>
+Signed-off-by: Russell Currey <ruscur@russell.cc>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230210080401.345462-3-ajd@linux.ibm.com
+Stable-dep-of: 932bed412170 ("powerpc/kexec_file: fix cpus node update to FDT")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/util.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/plpks.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/wireless/util.c b/net/wireless/util.c
-index 187e29a30c2af..7acd8d0db61a7 100644
---- a/net/wireless/util.c
-+++ b/net/wireless/util.c
-@@ -1480,7 +1480,9 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
- 	if (WARN_ON_ONCE(rate->nss < 1 || rate->nss > 8))
- 		return 0;
+diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
+index 25f95440a773b..d54188a355c9c 100644
+--- a/arch/powerpc/platforms/pseries/plpks.c
++++ b/arch/powerpc/platforms/pseries/plpks.c
+@@ -113,7 +113,8 @@ static int plpks_gen_password(void)
+ 	u8 *password, consumer = PLPKS_OS_OWNER;
+ 	int rc;
  
--	if (rate->bw == RATE_INFO_BW_160)
-+	if (rate->bw == RATE_INFO_BW_160 ||
-+	    (rate->bw == RATE_INFO_BW_HE_RU &&
-+	     rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_2x996))
- 		result = rates_160M[rate->he_gi];
- 	else if (rate->bw == RATE_INFO_BW_80 ||
- 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+-	password = kzalloc(maxpwsize, GFP_KERNEL);
++	// The password must not cross a page boundary, so we align to the next power of 2
++	password = kzalloc(roundup_pow_of_two(maxpwsize), GFP_KERNEL);
+ 	if (!password)
+ 		return -ENOMEM;
+ 
+@@ -149,7 +150,9 @@ static struct plpks_auth *construct_auth(u8 consumer)
+ 	if (consumer > PLPKS_OS_OWNER)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	auth = kzalloc(struct_size(auth, password, maxpwsize), GFP_KERNEL);
++	// The auth structure must not cross a page boundary and must be
++	// 16 byte aligned. We align to the next largest power of 2
++	auth = kzalloc(roundup_pow_of_two(struct_size(auth, password, maxpwsize)), GFP_KERNEL);
+ 	if (!auth)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -183,7 +186,8 @@ static struct label *construct_label(char *component, u8 varos, u8 *name,
+ 	if (component && slen > sizeof(label->attr.prefix))
+ 		return ERR_PTR(-EINVAL);
+ 
+-	label = kzalloc(sizeof(*label), GFP_KERNEL);
++	// The label structure must not cross a page boundary, so we align to the next power of 2
++	label = kzalloc(roundup_pow_of_two(sizeof(*label)), GFP_KERNEL);
+ 	if (!label)
+ 		return ERR_PTR(-ENOMEM);
+ 
 -- 
 2.43.0
 
