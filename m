@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B791A76BE;
-	Tue, 30 Jul 2024 17:29:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29C31A76BE;
+	Tue, 30 Jul 2024 17:29:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360550; cv=none; b=CRgDpD4E6vcferGWh135gjp1Y5Yk9FKTDkEC4wuBfAvIlfZoQ43oPFTzTyFZh/wnhYA+riCzvqexdDX4H9bayQBcqoWgHaLI/59383pm7WmY6rQancKWDbYHQR2Ogzbipuqq2zc47szxmofusuSkThAQw5/hHffqFipHdgYAyDk=
+	t=1722360554; cv=none; b=m/vDoH0xNDiPrJY5g1QFurb4CyBlRnAYslJKw6xTb0ZXnV4QYuEstaLvOFQVmAnkT8csYrN+vEQU1iRjAQ9FsOyMWi96PC79Dir5UOOZXgKgzAQP9k9KlJakLQY1SOSvHd7VQVFXw73JqDsEiq6I0dbiPFAeXNHyB/eX+j5n4r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360550; c=relaxed/simple;
-	bh=gIVEkYy7pyysUDIUEmxdLZ6uRh4IAgfcCksr9OHIy+E=;
+	s=arc-20240116; t=1722360554; c=relaxed/simple;
+	bh=L8j5uBS4NksLtbFfDvWj+aSW1/3acTi7A5BjgwjA6To=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSxhYHjgzb9oCxMyWPaDP2FWjlltxfHnxCNUIXY5IDzHl65rV+vjdTEsU04wGeSmV5aBqw/QCCJtczG5AxPWNl54zHFwdI3pTpiHN9yGdGcAe87oCZ9FwwS2aNX9rhm1k0Z+J/A/wyMi02YN9YyB+tL1MJ+u1eVCDXLiFPXoxkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b2o+SQV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HEBBgheMHWIyTdMTwHyWt5Lq1DPDdV98bn9mj0fFF0p7lVwfWazmppe5i1ErmJzz5q+FG3i0ImwiA6XTRU4y5KVWjtIxpZzceSMzzb6/W6iizYu/Et4BnRMUeizIS7pGT+kzt99HNXpTS19kA8QlQeZNUoB4S5p3JBaBctuAxYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vh/MIlRr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b2o+SQV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8337CC32782;
-	Tue, 30 Jul 2024 17:29:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vh/MIlRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43019C32782;
+	Tue, 30 Jul 2024 17:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360549;
-	bh=gIVEkYy7pyysUDIUEmxdLZ6uRh4IAgfcCksr9OHIy+E=;
+	s=korg; t=1722360553;
+	bh=L8j5uBS4NksLtbFfDvWj+aSW1/3acTi7A5BjgwjA6To=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b2o+SQV2a8ZRqBQfh/KlNVR/uRrNhRWdRdi+TJsMZUktqO1iQAMLcdR1sNlxKAeRT
-	 j3I07WPyenbrxa/baldlKQJMbvq6o8GIwskF8UpjmxDzRixU/FpLRL9ILuTqm8i7Zl
-	 fdEEd39gmP3f/DF1nTmPSrS5z3T84pmW1hDN4ixw=
+	b=vh/MIlRr3HrHT8F5dWa9B0m46nhytnKWSwNVDUaJi4h432nBFrNfUBPoM92eOjupj
+	 1zn1IoaYGWIUJKKmlfjTQIFuyO7vAXIK0UWghPBF2C3X6PsLieI9X3tHaQcE3TcMi1
+	 gESsOKVLK16Hvs0wa3k9clDCMT4QGnCjMHLtEkhU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wentao Guan <guanwentao@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Erpeng Xu <xuerpeng@uniontech.com>
-Subject: [PATCH 6.10 734/809] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x13d3:0x3591
-Date: Tue, 30 Jul 2024 17:50:10 +0200
-Message-ID: <20240730151753.938496845@linuxfoundation.org>
+	Justin Stitt <justinstitt@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: [PATCH 6.10 735/809] minmax: scsi: fix mis-use of clamp() in sr.c
+Date: Tue, 30 Jul 2024 17:50:11 +0200
+Message-ID: <20240730151753.978133858@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,65 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 473a89b4ed7fd52a419340f7c540d5c8fc96fc75 upstream.
+commit 9f499b8c791d2983c0a31a543c51d1b2f15e8755 upstream.
 
-Add the support ID(0x13d3, 0x3591) to usb_device_id table for
-Realtek RTL8852BE.
+While working on simplifying the minmax functions, and avoiding
+excessive macro expansion, it turns out that the sr.c use of the
+'clamp()' macro has the arguments the wrong way around.
 
-The device table is as follows:
+The clamp logic is
 
-T:  Bus=01 Lev=02 Prnt=03 Port=00 Cnt=01 Dev#=  5 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=13d3 ProdID=3591 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+	val = clamp(in, low, high);
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
+and it returns the input clamped to the low/high limits. But sr.c ddid
+
+	speed = clamp(0, speed, 0xffff / 177);
+
+which clamps the value '0' to the range '[speed, 0xffff / 177]' and ends
+up being nonsensical.
+
+Happily, I don't think anybody ever cared.
+
+Fixes: 9fad9d560af5 ("scsi: sr: Fix unintentional arithmetic wraparound")
+Cc: Justin Stitt <justinstitt@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Wentao Guan <guanwentao@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/sr_ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -555,6 +555,8 @@ static const struct usb_device_id quirks
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3572), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x13d3, 0x3591), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
+--- a/drivers/scsi/sr_ioctl.c
++++ b/drivers/scsi/sr_ioctl.c
+@@ -431,7 +431,7 @@ int sr_select_speed(struct cdrom_device_
+ 	struct packet_command cgc;
  
+ 	/* avoid exceeding the max speed or overflowing integer bounds */
+-	speed = clamp(0, speed, 0xffff / 177);
++	speed = clamp(speed, 0, 0xffff / 177);
+ 
+ 	if (speed == 0)
+ 		speed = 0xffff;	/* set to max */
 
 
