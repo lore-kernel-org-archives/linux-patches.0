@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731C81BA87F;
-	Tue, 30 Jul 2024 15:55:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86101BA86D;
+	Tue, 30 Jul 2024 15:55:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354927; cv=none; b=buv9FBOHrErq5be8KdILt/eZ0trM+T9SgL5vxHr798WQC5TZNy8PJy7vSRl1Nsmvvz/CyyHtmsO3MfeWKAnQH8CNncLDif4lzymrGcroqWiyIqC6BWx/BT88cnmpSq8/xEP1Q27NfgYholv2pTdLQnNyvq5E1Wn6WcdXdnAnffo=
+	t=1722354930; cv=none; b=HGpcd2V5BHdrT/81LiY0jl330wjmTe4SGgqO8hyAo8DsUjwpYxeWiwK8P04QuLnmEwM3YiRfokA8ggBALIWS9TsNmEBDjD9AXPT62nt1gZMHDbotA2aafBzpy/PH7u2q+0XDgg8yGJbirUSycDdDnSf4gikszLkLW4wVQH7JGDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354927; c=relaxed/simple;
-	bh=CslAzeLF8K/oCuE9DGtMHgeYGYSBPicqg0vzxA9QybU=;
+	s=arc-20240116; t=1722354930; c=relaxed/simple;
+	bh=gUskEjv3iwPI7V0Sc830sA2nVC4UJbHgmhvtGcLolnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gTF0RSrjSiWzs91+y1vvXIZmZY0UdzJo+E9R/beT71AiTXf3pkxyB+6GDArNaRGTp4Gy94wYc4ha7KQqseL+aCrqJbkdQk1K8xiq8XAj+PPl2xMQia0JJ95b7tSaLuC9EMqifnYG+JcqYZeC1lY1Ha/reTff1szLFuiiPM1w2LU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lAtu2nCM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWeThLutx3Z8IuNyXUzNc65SPtBlSvXQKMEj+jhxzM/7ZysWCaaR0h7SzVctmUcslLW20+HaDzD7BXYeGZgziZ/WivCGUuruIjC4upmxZhXvFR7kRWSqhb4o10bq+tmyuyZTgLMwIXx7UAS/bb24+0aqbB7pxwYVafKuvbeMcgc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KR0FwjJc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lAtu2nCM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C56C4AF0A;
-	Tue, 30 Jul 2024 15:55:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KR0FwjJc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D0DC32782;
+	Tue, 30 Jul 2024 15:55:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354927;
-	bh=CslAzeLF8K/oCuE9DGtMHgeYGYSBPicqg0vzxA9QybU=;
+	s=korg; t=1722354930;
+	bh=gUskEjv3iwPI7V0Sc830sA2nVC4UJbHgmhvtGcLolnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAtu2nCMIVsfxC5MDXXHpubS03Mdph2UjrPm+p2iwweXVOGYxhfUx1lViobkY+VIM
-	 YUV6N0V6wHD06wtkEW0+ZQpaGRzhNVbeHlEyXAD3b+EI/hhVMd7ZXy1dmJl0lxY4eV
-	 7yg5J7hseGn6UjtvO+NCLZbFOS4a9zfe4JEnzkRk=
+	b=KR0FwjJcnDgpnCBr35uI5p8NakzIJ0gwixd3TiALtnZJycGwBGue+tNU8yH81HC14
+	 /fkEMeD0VbciO0y3nxMen6gEIumQc9UI67WK1vpCpd3aZGmbbxcpviLHbK05cNtdD0
+	 n7ufehMn82sBg4IMG55O5W7XvXlvpirnYMrBb3H8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ridong <chenridong@huawei.com>,
-	Tejun Heo <tj@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/440] cgroup/cpuset: Prevent UAF in proc_cpuset_show()
-Date: Tue, 30 Jul 2024 17:44:12 +0200
-Message-ID: <20240730151616.514752574@linuxfoundation.org>
+Subject: [PATCH 6.1 038/440] soc: qcom: rpmh-rsc: Ensure irqs arent disabled by rpmh_rsc_send_data() callers
+Date: Tue, 30 Jul 2024 17:44:31 +0200
+Message-ID: <20240730151617.251298574@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -51,94 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ridong <chenridong@huawei.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit 1be59c97c83ccd67a519d8a49486b3a8a73ca28a ]
+[ Upstream commit e43111f52b9ec5c2d700f89a1d61c8d10dc2d9e9 ]
 
-An UAF can happen when /proc/cpuset is read as reported in [1].
+Dan pointed out that Smatch is concerned about this code because it uses
+spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
+irqs before going to sleep. The comment above the function says it
+should be called with interrupts enabled, but we simply hope that's true
+without really confirming that. Let's add a might_sleep() here to
+confirm that interrupts and preemption aren't disabled. Once we do that,
+we can change the lock to be non-saving, spin_lock_irq(), to clarify
+that we don't expect irqs to be disabled. If irqs are disabled by
+callers they're going to be enabled anyway in the wait_event_lock_irq()
+call which would be bad.
 
-This can be reproduced by the following methods:
-1.add an mdelay(1000) before acquiring the cgroup_lock In the
- cgroup_path_ns function.
-2.$cat /proc/<pid>/cpuset   repeatly.
-3.$mount -t cgroup -o cpuset cpuset /sys/fs/cgroup/cpuset/
-$umount /sys/fs/cgroup/cpuset/   repeatly.
+This should make Smatch happier and find bad callers faster with the
+might_sleep(). We can drop the WARN_ON() in the caller because we have
+the might_sleep() now, simplifying the code.
 
-The race that cause this bug can be shown as below:
-
-(umount)		|	(cat /proc/<pid>/cpuset)
-css_release		|	proc_cpuset_show
-css_release_work_fn	|	css = task_get_css(tsk, cpuset_cgrp_id);
-css_free_rwork_fn	|	cgroup_path_ns(css->cgroup, ...);
-cgroup_destroy_root	|	mutex_lock(&cgroup_mutex);
-rebind_subsystems	|
-cgroup_free_root 	|
-			|	// cgrp was freed, UAF
-			|	cgroup_path_ns_locked(cgrp,..);
-
-When the cpuset is initialized, the root node top_cpuset.css.cgrp
-will point to &cgrp_dfl_root.cgrp. In cgroup v1, the mount operation will
-allocate cgroup_root, and top_cpuset.css.cgrp will point to the allocated
-&cgroup_root.cgrp. When the umount operation is executed,
-top_cpuset.css.cgrp will be rebound to &cgrp_dfl_root.cgrp.
-
-The problem is that when rebinding to cgrp_dfl_root, there are cases
-where the cgroup_root allocated by setting up the root for cgroup v1
-is cached. This could lead to a Use-After-Free (UAF) if it is
-subsequently freed. The descendant cgroups of cgroup v1 can only be
-freed after the css is released. However, the css of the root will never
-be released, yet the cgroup_root should be freed when it is unmounted.
-This means that obtaining a reference to the css of the root does
-not guarantee that css.cgrp->root will not be freed.
-
-Fix this problem by using rcu_read_lock in proc_cpuset_show().
-As cgroup_root is kfree_rcu after commit d23b5c577715
-("cgroup: Make operations on the cgroup root_list RCU safe"),
-css->cgroup won't be freed during the critical section.
-To call cgroup_path_ns_locked, css_set_lock is needed, so it is safe to
-replace task_get_css with task_css.
-
-[1] https://syzkaller.appspot.com/bug?extid=9b1ff7be974a403aa4cd
-
-Fixes: a79a908fd2b0 ("cgroup: introduce cgroup namespaces")
-Signed-off-by: Chen Ridong <chenridong@huawei.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain
+Fixes: 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free")
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240509184129.3924422-1-swboyd@chromium.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/soc/qcom/rpmh-rsc.c | 7 ++++---
+ drivers/soc/qcom/rpmh.c     | 1 -
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index 278248907791f..370a6bce20a80 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -21,6 +21,7 @@
-  *  License.  See the file COPYING in the main directory of the Linux
-  *  distribution for more details.
-  */
-+#include "cgroup-internal.h"
- 
- #include <linux/cpu.h>
- #include <linux/cpumask.h>
-@@ -4213,10 +4214,14 @@ int proc_cpuset_show(struct seq_file *m, struct pid_namespace *ns,
- 	if (!buf)
- 		goto out;
- 
--	css = task_get_css(tsk, cpuset_cgrp_id);
--	retval = cgroup_path_ns(css->cgroup, buf, PATH_MAX,
--				current->nsproxy->cgroup_ns);
--	css_put(css);
-+	rcu_read_lock();
-+	spin_lock_irq(&css_set_lock);
-+	css = task_css(tsk, cpuset_cgrp_id);
-+	retval = cgroup_path_ns_locked(css->cgroup, buf, PATH_MAX,
-+				       current->nsproxy->cgroup_ns);
-+	spin_unlock_irq(&css_set_lock);
-+	rcu_read_unlock();
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index 5e7bb6338707d..ff2b9eb9f669f 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -608,13 +608,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ {
+ 	struct tcs_group *tcs;
+ 	int tcs_id;
+-	unsigned long flags;
 +
- 	if (retval == -E2BIG)
- 		retval = -ENAMETOOLONG;
- 	if (retval < 0)
++	might_sleep();
+ 
+ 	tcs = get_tcs_for_msg(drv, msg);
+ 	if (IS_ERR(tcs))
+ 		return PTR_ERR(tcs);
+ 
+-	spin_lock_irqsave(&drv->lock, flags);
++	spin_lock_irq(&drv->lock);
+ 
+ 	/* Wait forever for a free tcs. It better be there eventually! */
+ 	wait_event_lock_irq(drv->tcs_wait,
+@@ -632,7 +633,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+-	spin_unlock_irqrestore(&drv->lock, flags);
++	spin_unlock_irq(&drv->lock);
+ 
+ 	/*
+ 	 * These two can be done after the lock is released because:
+diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+index 01765ee9cdfb8..c6df7ac0afebc 100644
+--- a/drivers/soc/qcom/rpmh.c
++++ b/drivers/soc/qcom/rpmh.c
+@@ -189,7 +189,6 @@ static int __rpmh_write(const struct device *dev, enum rpmh_state state,
+ 	}
+ 
+ 	if (state == RPMH_ACTIVE_ONLY_STATE) {
+-		WARN_ON(irqs_disabled());
+ 		ret = rpmh_rsc_send_data(ctrlr_to_drv(ctrlr), &rpm_msg->msg);
+ 	} else {
+ 		/* Clean up our call by spoofing tx_done */
 -- 
 2.43.0
 
