@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7D71B583F;
-	Tue, 30 Jul 2024 15:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9D1B583F;
+	Tue, 30 Jul 2024 15:57:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355021; cv=none; b=JAXyTXpUhkfDvVD9aoawHRZOqwHmyNmxZI86EPt98jISx2hqTFhxAxY2TCVbe2B1ZbTpMKgPpgIrvZHkmnIupM4jIMkUnoDe3d8WbV3+rZDbhUM8ldZZo3+gxCZPv00zI3ItfoAKspdS2Z98ytupFeZVDXeZdSXyrQNat6nGCKs=
+	t=1722355024; cv=none; b=G83j1qN7Sk7+O1pVVh0e3xGPPGGCd5d282h0r/mLhSMVRWiCCc8SEq+QiTFbflWHm8uIipyVVj3ijiIlShTNIgWivXPjF/XzlnyhS1KaVNmo5oVK252WgFHKckNpUREJmulvhgjB4vauzo7Fq8sqsw3TKbtbREyXQl8c2UsRHyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355021; c=relaxed/simple;
-	bh=BDavEZB4cStQ4enV+qfFB9AsLcbYKVzzXaY0SzjPT0g=;
+	s=arc-20240116; t=1722355024; c=relaxed/simple;
+	bh=RiP7flSFiHOZoYTsJ8ldG5erSVo3335AUkAXOMpr++g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=n1v/WTFrkuMFTsZiHNi8uWW+w+V7+V0qdLr1QpTTP+UaPfauC549UMt1Ne6+EW30eq0RlnJHFp7bskffhAHba5lD0fEu1YkDlUCgoaTdoF3ovVbrNoc6ZMdOCV3LdwZF44UeBSQG2NmdDOXy8oO4m6gELsQLoOyGJqcO5pxfKR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rxrhgTEP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bvjdLajyKKSH7oILaCw9UxKE+E5OgwWlZWkpuFyAQd7Sv8Kg1b/O0qJJ6mGFshrqWLfRptqt0aR9DZqfj9nvG1qQGHIFjWC/WihsPa1KpsGQtd0wYDDNo44QXfhMAjqkAtnZcLXb0VRLCTFrkc9heJRRwv1Gw+aKAAZWjmsTx0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi4ZMMJh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rxrhgTEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D092C32782;
-	Tue, 30 Jul 2024 15:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi4ZMMJh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8546CC32782;
+	Tue, 30 Jul 2024 15:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355020;
-	bh=BDavEZB4cStQ4enV+qfFB9AsLcbYKVzzXaY0SzjPT0g=;
+	s=korg; t=1722355023;
+	bh=RiP7flSFiHOZoYTsJ8ldG5erSVo3335AUkAXOMpr++g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rxrhgTEP3PJ07wUXc7RhFmgZ3tAbNHhIM1V2KuQl5KwIYrwc1lxnP/8SiU/a7Ydow
-	 HFFehqX6j2k7GJhGRxFsezo0IGDhho9huixa8rJ85Bjh1ns2tonmdn5UOMSAF0mF3i
-	 KA+farE3ji8nF7YGFbktCA9VG/26pjcbxMSjYoZg=
+	b=Gi4ZMMJhj+hoctAez/zI5igR9yQsBB3d7jhepx0zpchv91HKEGNkIjnsJWffrRnqC
+	 +SNcU5ml9DaT0E+SZeV6iw+jmrGe0OZABiUUxjr1ouYbWakfzMrW2x5CoFwHORkxZw
+	 sCAluO3aXnbXf/TieldftoMywKlQ4zakvFNAlOk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Esben Haabendal <esben@geanix.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/440] x86/platform/iosf_mbi: Convert PCIBIOS_* return codes to errnos
-Date: Tue, 30 Jul 2024 17:44:09 +0200
-Message-ID: <20240730151616.396698084@linuxfoundation.org>
+Subject: [PATCH 6.1 047/440] memory: fsl_ifc: Make FSL_IFC config visible and selectable
+Date: Tue, 30 Jul 2024 17:44:40 +0200
+Message-ID: <20240730151617.601582512@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -45,56 +46,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Esben Haabendal <esben@geanix.com>
 
-[ Upstream commit 7821fa101eab529521aa4b724bf708149d70820c ]
+[ Upstream commit 9ba0cae3cac07c21c583f9ff194f74043f90d29c ]
 
-iosf_mbi_pci_{read,write}_mdr() use pci_{read,write}_config_dword()
-that return PCIBIOS_* codes but functions also return -ENODEV which are
-not compatible error codes. As neither of the functions are related to
-PCI read/write functions, they should return normal errnos.
+While use of fsl_ifc driver with NAND flash is fine, as the fsl_ifc_nand
+driver selects FSL_IFC automatically, we need the CONFIG_FSL_IFC option to
+be selectable for platforms using fsl_ifc with NOR flash.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning it.
-
-Fixes: 46184415368a ("arch: x86: New MailBox support driver for Intel SOC's")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240527125538.13620-4-ilpo.jarvinen@linux.intel.com
+Fixes: ea0c0ad6b6eb ("memory: Enable compile testing for most of the drivers")
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Esben Haabendal <esben@geanix.com>
+Link: https://lore.kernel.org/r/20240530-fsl-ifc-config-v3-1-1fd2c3d233dd@geanix.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/intel/iosf_mbi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/memory/Kconfig       | 2 +-
+ drivers/mtd/nand/raw/Kconfig | 3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/platform/intel/iosf_mbi.c b/arch/x86/platform/intel/iosf_mbi.c
-index fdd49d70b4373..c81cea208c2c4 100644
---- a/arch/x86/platform/intel/iosf_mbi.c
-+++ b/arch/x86/platform/intel/iosf_mbi.c
-@@ -62,7 +62,7 @@ static int iosf_mbi_pci_read_mdr(u32 mcrx, u32 mcr, u32 *mdr)
+diff --git a/drivers/memory/Kconfig b/drivers/memory/Kconfig
+index fac290e48e0b8..15a9e66f031d1 100644
+--- a/drivers/memory/Kconfig
++++ b/drivers/memory/Kconfig
+@@ -178,7 +178,7 @@ config FSL_CORENET_CF
+ 	  represents a coherency violation.
  
- fail_read:
- 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
--	return result;
-+	return pcibios_err_to_errno(result);
- }
+ config FSL_IFC
+-	bool "Freescale IFC driver" if COMPILE_TEST
++	bool "Freescale IFC driver"
+ 	depends on FSL_SOC || ARCH_LAYERSCAPE || SOC_LS1021A || COMPILE_TEST
+ 	depends on HAS_IOMEM
  
- static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
-@@ -91,7 +91,7 @@ static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
- 
- fail_write:
- 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
--	return result;
-+	return pcibios_err_to_errno(result);
- }
- 
- int iosf_mbi_read(u8 port, u8 opcode, u32 offset, u32 *mdr)
+diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
+index 4cd40af362de2..900b121219394 100644
+--- a/drivers/mtd/nand/raw/Kconfig
++++ b/drivers/mtd/nand/raw/Kconfig
+@@ -248,8 +248,7 @@ config MTD_NAND_FSL_IFC
+ 	tristate "Freescale IFC NAND controller"
+ 	depends on FSL_SOC || ARCH_LAYERSCAPE || SOC_LS1021A || COMPILE_TEST
+ 	depends on HAS_IOMEM
+-	select FSL_IFC
+-	select MEMORY
++	depends on FSL_IFC
+ 	help
+ 	  Various Freescale chips e.g P1010, include a NAND Flash machine
+ 	  with built-in hardware ECC capabilities.
 -- 
 2.43.0
 
