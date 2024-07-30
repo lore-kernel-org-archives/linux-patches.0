@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B2218951A;
-	Tue, 30 Jul 2024 16:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0057918A92F;
+	Tue, 30 Jul 2024 16:10:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355836; cv=none; b=HfmV4vwUcnIqdMtPOyfA7yDFWZKjDHR3vQQXaGX+GX0iL1PSMsXR+VwFaMyhxr1JQQDqpKQg+YVaHrfZRJ/WCmEGXsvEzh0wyyf4OM+zCYAgG3upQQshW0H/KZ5Xftb3Inq68FR1YG99C5+b9m2bLXgdd74BwjjoMErcaZZlPIw=
+	t=1722355840; cv=none; b=t6px63klpjjrEdLtLp+iNb73xiPfBCgBXkXrYsw5JEfMnTmBeGZhI++HA68+EJYqt/KhTUcqsJfl33vJ6dGi2AJ5E26g/qe6WqIDWk2WVAs7I5jbvdL8DoD0oewkgzkgDIkKML1TgQqQ7DXtmqlGR2uwU38VsPo+b13cA1tj+x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355836; c=relaxed/simple;
-	bh=Rn1z14TjVH6RvsKhJSL+BnTV9R7RvGBExpr/sQU8bQc=;
+	s=arc-20240116; t=1722355840; c=relaxed/simple;
+	bh=YMYqgsBI6zJDjIbLMm6fFUo2s7EbWB/KgsaP35ZZXfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BwHV55CjnPM9GNTbufKdyZF8nXPZDjjxyS1+iBSBmBLjC1dc3h0nHrSNhrpR5xtpmf5BJle+O2iKdCg28R+x+XRJDPad0h0/X/3HKEQ/sKs0/pUKqxdpWKXzYFG9LaPZuMtX7azL17Ac1b3WtNRHR1x/OZKFKMUnFSFjZqbDB3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bs40gNwa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fApzPOgCSTPMeCwjqvtZEy2Oa0ADZaYCJG7A4AF2X/F/Jgs/6obvjxQq5unLXtZAazpyuXXH83PPlmUchHPqbWBFB7gvOq1ArnxtEI00t2noczvaA72GV1pISVDizzT9pl960Ivs+toAxA802nzRzsJ7gp03vBoGOjq324slA7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zFp92soA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bs40gNwa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C397DC32782;
-	Tue, 30 Jul 2024 16:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zFp92soA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13644C32782;
+	Tue, 30 Jul 2024 16:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355836;
-	bh=Rn1z14TjVH6RvsKhJSL+BnTV9R7RvGBExpr/sQU8bQc=;
+	s=korg; t=1722355839;
+	bh=YMYqgsBI6zJDjIbLMm6fFUo2s7EbWB/KgsaP35ZZXfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bs40gNwacsUtaA0CUcg/mLMPyTT2IUiMCDkzoZvnoSf8BzoTS26gKCFug77IkTQNB
-	 YaaHz6tjTB+OxKEfssAk3RB8UUI8/rqvggFTNKJpkEw5+G1DAGBNvMrnJ2h2VPG6B9
-	 R9Ked7EW+9KHMCoVxEZeSqvlsOi7bBETMo5u5Sok=
+	b=zFp92soA/PGJdySNvRh3+qZI5/vgAwpnryhiLKH5awFUVSMndvcP4YQB5uZe0bd7n
+	 UE+SBg/ghNjTbfHPii/rm46nlzhTFnfVlLtXZjd7+LV3L4aKYZQa0ENuyJpF8ST9ag
+	 rJqP7f/UFsPYw/YPmnMjceSrX3rcdm1ZmrGYmtaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 093/809] arm64: dts: amlogic: sm1: fix spdif compatibles
-Date: Tue, 30 Jul 2024 17:39:29 +0200
-Message-ID: <20240730151728.311650108@linuxfoundation.org>
+Subject: [PATCH 6.1 117/440] wifi: virt_wifi: dont use strlen() in const context
+Date: Tue, 30 Jul 2024 17:45:50 +0200
+Message-ID: <20240730151620.460164668@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +47,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit b0aba467c329a89e8b325eda0cf60776958353fe ]
+[ Upstream commit 6e909f489191b365364e9d636dec33b5dfd4e5eb ]
 
-The spdif input and output of g12 and sm1 are compatible but
-sm1 should use the related compatible since it exists.
+Looks like not all compilers allow strlen(constant) as
+a constant, so don't do that. Instead, revert back to
+defining the length as the first submission had it.
 
-Fixes: 86f2159468d5 ("arm64: dts: meson-sm1: add spdifin and pdifout nodes")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20240625111845.928192-1-jbrunet@baylibre.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Fixes: b5d14b0c6716 ("wifi: virt_wifi: avoid reporting connection success with wrong SSID")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407090934.NnR1TUbW-lkp@intel.com/
+Closes: https://lore.kernel.org/oe-kbuild-all/202407090944.mpwLHGt9-lkp@intel.com/
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-sm1.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/virt_wifi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi b/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
-index 643f94d9d08e1..fcaa1a273829c 100644
---- a/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
-@@ -339,7 +339,7 @@ tdmin_lb: audio-controller@3c0 {
- 		};
+diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
+index cf1eb41e282a9..fb4d95a027fef 100644
+--- a/drivers/net/wireless/virt_wifi.c
++++ b/drivers/net/wireless/virt_wifi.c
+@@ -137,6 +137,7 @@ static struct ieee80211_supported_band band_5ghz = {
+ static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
  
- 		spdifin: audio-controller@400 {
--			compatible = "amlogic,g12a-spdifin",
-+			compatible = "amlogic,sm1-spdifin",
- 				     "amlogic,axg-spdifin";
- 			reg = <0x0 0x400 0x0 0x30>;
- 			#sound-dai-cells = <0>;
-@@ -353,7 +353,7 @@ spdifin: audio-controller@400 {
- 		};
+ #define VIRT_WIFI_SSID "VirtWifi"
++#define VIRT_WIFI_SSID_LEN 8
  
- 		spdifout_a: audio-controller@480 {
--			compatible = "amlogic,g12a-spdifout",
-+			compatible = "amlogic,sm1-spdifout",
- 				     "amlogic,axg-spdifout";
- 			reg = <0x0 0x480 0x0 0x50>;
- 			#sound-dai-cells = <0>;
+ static void virt_wifi_inform_bss(struct wiphy *wiphy)
+ {
+@@ -148,7 +149,7 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
+ 		u8 ssid[8];
+ 	} __packed ssid = {
+ 		.tag = WLAN_EID_SSID,
+-		.len = strlen(VIRT_WIFI_SSID),
++		.len = VIRT_WIFI_SSID_LEN,
+ 		.ssid = VIRT_WIFI_SSID,
+ 	};
+ 
+@@ -262,7 +263,7 @@ static void virt_wifi_connect_complete(struct work_struct *work)
+ 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
+ 	u8 *requested_bss = priv->connect_requested_bss;
+ 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
+-	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
++	bool right_ssid = priv->connect_requested_ssid_len == VIRT_WIFI_SSID_LEN &&
+ 			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
+ 				  priv->connect_requested_ssid_len);
+ 	u16 status = WLAN_STATUS_SUCCESS;
 -- 
 2.43.0
 
