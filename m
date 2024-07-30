@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DCA18C909;
-	Tue, 30 Jul 2024 17:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA1283A17;
+	Tue, 30 Jul 2024 17:01:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358909; cv=none; b=RDvzcFEt2Pz3I5N97zBzdrL1DxNG4TcKUN6oZfrFmlRSQAWd8KI8G0qDdrkMBR30IjLw8pZy0S3BzbuZPV9ulpxx1rq9YAiADNiKcArSZH4H45fkckNqY4N2jgBaYrbhJKzxzS/Rw9miYdui8yHJD7HW88AvuARiL1dRrsljXFY=
+	t=1722358911; cv=none; b=AwR13BPDpMlxXrIIeZTbH6mxaHiC+UEqaZCZurnjfeTpO0xX6pS8z4pko5vR2QGjWOdMc0YhcWXEs2Ul40C3BV11oiBhqLD1fv2/MBlpsLKz2d3YJjY6A/M0ms8PE6hwE9tkp1tT07MQanmyC9V6fToSYb0TIU0uiQFYKAZQiLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358909; c=relaxed/simple;
-	bh=pgwq5bU2kTfQ08k8tK8qd5L6rlQlOw5q8bI0k5Je5q8=;
+	s=arc-20240116; t=1722358911; c=relaxed/simple;
+	bh=GvTEXq65clS9lLTpk9F/GN1dweZJSlZqE4DJ0JCx/XY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nghs6HK5MhsJ22/cnLe00+sbr1Gc2/fWkRAJxadN0LH02v5YOnYtJnmCOmpPwIxsN3NZuHh1mNraWyAosgZtT66z1l18/7YuRntNHE8d0UB1ugVlWdjm5xewgKszUpp9VJQXiKSNXep6KZs/FluIMgPCzIv2vgd2OOjbdFmPTF8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JU2+WfMa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dPV//quUUszIGpjLUwAH4FWAD+maremzkP0ji2ig29FvXqpSpYuS42VUGds+cA91cVh+xB2v2oyEuvvwjvJMHzNzqLd7vm3lCByvV3kRAPTwBLyZ3w80h9bm80P8lxR9/dtDljgFsxmssC+C4OP+0sZdoBdhvNChOFLnoMz8beQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnAZiLV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JU2+WfMa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267D7C32782;
-	Tue, 30 Jul 2024 17:01:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnAZiLV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4C3C32782;
+	Tue, 30 Jul 2024 17:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358908;
-	bh=pgwq5bU2kTfQ08k8tK8qd5L6rlQlOw5q8bI0k5Je5q8=;
+	s=korg; t=1722358911;
+	bh=GvTEXq65clS9lLTpk9F/GN1dweZJSlZqE4DJ0JCx/XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JU2+WfMaIjaGvci5gftOcNdNImPNQftab90K8LKLpxCV/Y+9hT8U2QrkMhyXPKWwt
-	 lYSO5XQSU45M4yBNrQSOBxR5kStGgNvwo0LL33iaURwd5q82QRPhsk+9X/5Pah6MXN
-	 pjaN6uLzMdQG1pBkIn6EtrtKdWywoHrFeFdBe33w=
+	b=pnAZiLV7KgrhZubIolX6QO+GT3PV9vI48n8BV4do8dbP+pUhnxBs5x4E6Y83R7zBA
+	 GrglSYE/mE0qj1dFkRWuh08G33Gdlz7B7JiVjlAdK8t84Vk2DAtGpwQh/BT18MH6np
+	 TCE94DUjMuXx0x0WAzr45oNgALavZEAefBy2m3MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 407/809] usb: typec-mux: ptn36502: unregister typec switch on probe error and remove
-Date: Tue, 30 Jul 2024 17:44:43 +0200
-Message-ID: <20240730151740.763877578@linuxfoundation.org>
+	Hao Yao <hao.yao@intel.com>,
+	Wentong Wu <wentong.wu@intel.com>,
+	Jason Chen <jason.z.chen@intel.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.6 408/568] media: ivsc: csi: add separate lock for v4l2 control handler
+Date: Tue, 30 Jul 2024 17:48:35 +0200
+Message-ID: <20240730151655.815500039@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +49,73 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Wentong Wu <wentong.wu@intel.com>
 
-[ Upstream commit 2be53b0436fda455e1bf6968ebae53f5d4f3cb0b ]
+commit c6be6471004e0e4d10d0514146d8c41550823d63 upstream.
 
-Add the missing call to typec_switch_put() when probe fails and
-the ptn36502_remove() call is called.
+There're possibilities that privacy status change notification happens
+in the middle of the ongoing mei command which already takes the command
+lock, but v4l2_ctrl_s_ctrl() would also need the same lock prior to this
+patch, so this may results in circular locking problem. This patch adds
+one dedicated lock for v4l2 control handler to avoid described issue.
 
-Fixes: 8e99dc783648 ("usb: typec: add support for PTN36502 redriver")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-1-c6f6eae479c3@linaro.org
+Fixes: 29006e196a56 ("media: pci: intel: ivsc: Add CSI submodule")
+Cc: stable@vger.kernel.org # for 6.6 and later
+Reported-by: Hao Yao <hao.yao@intel.com>
+Signed-off-by: Wentong Wu <wentong.wu@intel.com>
+Tested-by: Jason Chen <jason.z.chen@intel.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux/ptn36502.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/media/pci/intel/ivsc/mei_csi.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/typec/mux/ptn36502.c b/drivers/usb/typec/mux/ptn36502.c
-index 0ec86ef32a871..88136a6d6f313 100644
---- a/drivers/usb/typec/mux/ptn36502.c
-+++ b/drivers/usb/typec/mux/ptn36502.c
-@@ -322,8 +322,10 @@ static int ptn36502_probe(struct i2c_client *client)
- 				     "Failed to acquire orientation-switch\n");
+--- a/drivers/media/pci/intel/ivsc/mei_csi.c
++++ b/drivers/media/pci/intel/ivsc/mei_csi.c
+@@ -124,6 +124,8 @@ struct mei_csi {
+ 	struct v4l2_ctrl_handler ctrl_handler;
+ 	struct v4l2_ctrl *freq_ctrl;
+ 	struct v4l2_ctrl *privacy_ctrl;
++	/* lock for v4l2 controls */
++	struct mutex ctrl_lock;
+ 	unsigned int remote_pad;
+ 	/* start streaming or not */
+ 	int streaming;
+@@ -609,11 +611,13 @@ static int mei_csi_init_controls(struct
+ 	u32 max;
+ 	int ret;
  
- 	ret = regulator_enable(ptn->vdd18_supply);
--	if (ret)
--		return dev_err_probe(dev, ret, "Failed to enable vdd18\n");
-+	if (ret) {
-+		ret = dev_err_probe(dev, ret, "Failed to enable vdd18\n");
-+		goto err_switch_put;
-+	}
- 
- 	ret = ptn36502_detect(ptn);
++	mutex_init(&csi->ctrl_lock);
++
+ 	ret = v4l2_ctrl_handler_init(&csi->ctrl_handler, 2);
  	if (ret)
-@@ -363,6 +365,9 @@ static int ptn36502_probe(struct i2c_client *client)
- err_disable_regulator:
- 	regulator_disable(ptn->vdd18_supply);
+ 		return ret;
  
-+err_switch_put:
-+	typec_switch_put(ptn->typec_switch);
-+
- 	return ret;
- }
+-	csi->ctrl_handler.lock = &csi->lock;
++	csi->ctrl_handler.lock = &csi->ctrl_lock;
  
-@@ -374,6 +379,8 @@ static void ptn36502_remove(struct i2c_client *client)
- 	typec_switch_unregister(ptn->sw);
+ 	max = ARRAY_SIZE(link_freq_menu_items) - 1;
+ 	csi->freq_ctrl = v4l2_ctrl_new_int_menu(&csi->ctrl_handler,
+@@ -772,6 +776,7 @@ err_entity:
  
- 	regulator_disable(ptn->vdd18_supply);
-+
-+	typec_switch_put(ptn->typec_switch);
- }
+ err_ctrl_handler:
+ 	v4l2_ctrl_handler_free(&csi->ctrl_handler);
++	mutex_destroy(&csi->ctrl_lock);
+ 	v4l2_async_nf_unregister(&csi->notifier);
+ 	v4l2_async_nf_cleanup(&csi->notifier);
  
- static const struct i2c_device_id ptn36502_table[] = {
--- 
-2.43.0
-
+@@ -791,6 +796,7 @@ static void mei_csi_remove(struct mei_cl
+ 	v4l2_async_nf_unregister(&csi->notifier);
+ 	v4l2_async_nf_cleanup(&csi->notifier);
+ 	v4l2_ctrl_handler_free(&csi->ctrl_handler);
++	mutex_destroy(&csi->ctrl_lock);
+ 	v4l2_async_unregister_subdev(&csi->subdev);
+ 	v4l2_subdev_cleanup(&csi->subdev);
+ 	media_entity_cleanup(&csi->subdev.entity);
 
 
