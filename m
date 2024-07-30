@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD0F1A6195;
-	Tue, 30 Jul 2024 16:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB651A6164;
+	Tue, 30 Jul 2024 16:23:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356628; cv=none; b=ocirHQfcLHDLP9Q8tRBaH1jDRppQl51VkcB6LhJjid16A8iBkoaCHz5VddnOCtl3lkcNH/Fnl9p7AnST6ElVRVlQDbpfYy30/KjepP/hzQMjGivKpE2UFm21RdtVTTc8/jA4xAv9+FRZ8NpDjsRlOQwHKUs+FtcG5RxeN6/7Rs0=
+	t=1722356632; cv=none; b=ISAlx40UOVfxcaCYG7r7K76AGroSR4uLTLmgI7Wc3n0NJfPp0aIhmonAHYOSmrjqT7meiS1D1Q3fGVnPTeY72TgWR2lxQEG25bc//Dap5XHN1/1b+4lolDvnQsX8c/dqLJ4ORzcM0KXmjjg0edWBNv2P4d5k4tc6ec47QXmbqKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356628; c=relaxed/simple;
-	bh=xCwL5tQ6YUNXwaj5/MEGYaQHMyfPfQIFV+bBYhyjSrw=;
+	s=arc-20240116; t=1722356632; c=relaxed/simple;
+	bh=CgY+vReWJiHkLEfy4V2A2SmtPlVAkMB1egedj7RbiNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jKUYdnW84ozs60IB/PIMQmSN7bJAdsv+M3gFpk/GCFCcKWLz+oWug+2N2GXKmu11COAZ5bUQFKQXjRSRPZG41W+STAMDeVY0alM61gv4zyg/iPIRXbEok4h0cANm3bDu6/+7KqJj+geNm6Lvq3ZfQnLjkzsfbVYmev96melYVK0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnZk8k+/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NXFm6Jlu42QMIeev7WVuHj4itOhSTb96cbo1JnHKvcKeGs9fUeZzyiVhSW98NYkNW14ocDxDPs6Trsfz7duRwprLDdIYjyt+BOAqDkkc38QLRaK3ueZ+wwLRrAWpyvAT5c3K22+JCFJGvqjjgLi+O0HPVqyUVVRTlM0QNl9ytAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=roG+Tj31; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnZk8k+/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57723C32782;
-	Tue, 30 Jul 2024 16:23:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="roG+Tj31"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 809A4C32782;
+	Tue, 30 Jul 2024 16:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356628;
-	bh=xCwL5tQ6YUNXwaj5/MEGYaQHMyfPfQIFV+bBYhyjSrw=;
+	s=korg; t=1722356631;
+	bh=CgY+vReWJiHkLEfy4V2A2SmtPlVAkMB1egedj7RbiNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnZk8k+/1a9VOmem+IwmTGhhD8585FwLml7T4D16LgRjA+NUFe8fvB/xeTks6HSRb
-	 dlEcMKlIwVt3oAsjn+SD/p+L3zIvo+44GBGvct1/8oTpikUkExGO+IXQIIm36SQBlJ
-	 cHOMkuumEDlkY6iD9RFplZV3ygVCceLtiO+Z0YIU=
+	b=roG+Tj31OEpWgeatMWWY94w1VXWYSxPWxEmND9pgu66RO1f+9HB5zXMS/tIHR4Cw2
+	 PPd2xxJQoUQ5r0bUej83DjvcAZ3B4HQ/uQpQoH3bs8HDs1EzU74Z8VxxCPsrz0scoT
+	 oc+eL+opbsOFM9Z2jz0YbIOKr45G1gtz3usJnDEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <kafai@fb.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Laura Nao <laura.nao@collabora.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Stephen Boyd <swboyd@chromium.org>,
+	"=?UTF-8?q?N=C3=ADcolas=20F . =20R . =20A . =20Prado?=" <nfraprado@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 168/568] bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT
-Date: Tue, 30 Jul 2024 17:44:35 +0200
-Message-ID: <20240730151646.453431859@linuxfoundation.org>
+Subject: [PATCH 6.1 214/440] clk: qcom: Park shared RCGs upon registration
+Date: Tue, 30 Jul 2024 17:47:27 +0200
+Message-ID: <20240730151624.222419002@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,113 +51,187 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit f7866c35873377313ff94398f17d425b28b71de1 ]
+[ Upstream commit 01a0a6cc8cfd9952e72677d48d56cf6bc4e3a561 ]
 
-When loading a EXT program without specifying `attr->attach_prog_fd`,
-the `prog->aux->dst_prog` will be null. At this time, calling
-resolve_prog_type() anywhere will result in a null pointer dereference.
+There's two problems with shared RCGs.
 
-Example stack trace:
+The first problem is that they incorrectly report the parent after
+commit 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for
+parked RCGs"). That's because the cached CFG register value needs to be
+populated when the clk is registered. clk_rcg2_shared_enable() writes
+the cached CFG register value 'parked_cfg'. This value is initially zero
+due to static initializers. If a driver calls clk_enable() before
+setting a rate or parent, it will set the parent to '0' which is
+(almost?) always XO, and may not reflect the parent at registration. In
+the worst case, this switches the RCG from sourcing a fast PLL to the
+slow crystal speed.
 
-[    8.107863] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-[    8.108262] Mem abort info:
-[    8.108384]   ESR = 0x0000000096000004
-[    8.108547]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    8.108722]   SET = 0, FnV = 0
-[    8.108827]   EA = 0, S1PTW = 0
-[    8.108939]   FSC = 0x04: level 0 translation fault
-[    8.109102] Data abort info:
-[    8.109203]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[    8.109399]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    8.109614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    8.109836] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000101354000
-[    8.110011] [0000000000000004] pgd=0000000000000000, p4d=0000000000000000
-[    8.112624] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[    8.112783] Modules linked in:
-[    8.113120] CPU: 0 PID: 99 Comm: may_access_dire Not tainted 6.10.0-rc3-next-20240613-dirty #1
-[    8.113230] Hardware name: linux,dummy-virt (DT)
-[    8.113390] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    8.113429] pc : may_access_direct_pkt_data+0x24/0xa0
-[    8.113746] lr : add_subprog_and_kfunc+0x634/0x8e8
-[    8.113798] sp : ffff80008283b9f0
-[    8.113813] x29: ffff80008283b9f0 x28: ffff800082795048 x27: 0000000000000001
-[    8.113881] x26: ffff0000c0bb2600 x25: 0000000000000000 x24: 0000000000000000
-[    8.113897] x23: ffff0000c1134000 x22: 000000000001864f x21: ffff0000c1138000
-[    8.113912] x20: 0000000000000001 x19: ffff0000c12b8000 x18: ffffffffffffffff
-[    8.113929] x17: 0000000000000000 x16: 0000000000000000 x15: 0720072007200720
-[    8.113944] x14: 0720072007200720 x13: 0720072007200720 x12: 0720072007200720
-[    8.113958] x11: 0720072007200720 x10: 0000000000f9fca4 x9 : ffff80008021f4e4
-[    8.113991] x8 : 0101010101010101 x7 : 746f72705f6d656d x6 : 000000001e0e0f5f
-[    8.114006] x5 : 000000000001864f x4 : ffff0000c12b8000 x3 : 000000000000001c
-[    8.114020] x2 : 0000000000000002 x1 : 0000000000000000 x0 : 0000000000000000
-[    8.114126] Call trace:
-[    8.114159]  may_access_direct_pkt_data+0x24/0xa0
-[    8.114202]  bpf_check+0x3bc/0x28c0
-[    8.114214]  bpf_prog_load+0x658/0xa58
-[    8.114227]  __sys_bpf+0xc50/0x2250
-[    8.114240]  __arm64_sys_bpf+0x28/0x40
-[    8.114254]  invoke_syscall.constprop.0+0x54/0xf0
-[    8.114273]  do_el0_svc+0x4c/0xd8
-[    8.114289]  el0_svc+0x3c/0x140
-[    8.114305]  el0t_64_sync_handler+0x134/0x150
-[    8.114331]  el0t_64_sync+0x168/0x170
-[    8.114477] Code: 7100707f 54000081 f9401c00 f9403800 (b9400403)
-[    8.118672] ---[ end trace 0000000000000000 ]---
+The second problem is that the force enable bit isn't cleared. The force
+enable bit is only used during parking and unparking of shared RCGs.
+Otherwise it shouldn't be set because it keeps the RCG enabled even when
+all the branches on the output of the RCG are disabled (the hardware has
+a feedback mechanism so that any child branches keep the RCG enabled
+when the branch enable bit is set). This problem wastes power if the clk
+is unused, and is harmful in the case that the clk framework disables
+the parent of the force enabled RCG. In the latter case, the GDSC the
+shared RCG is associated with will get wedged if the RCG's source clk is
+disabled and the GDSC tries to enable the RCG to do "housekeeping" while
+powering on.
 
-One way to fix it is by forcing `attach_prog_fd` non-empty when
-bpf_prog_load(). But this will lead to `libbpf_probe_bpf_prog_type`
-API broken which use verifier log to probe prog type and will log
-nothing if we reject invalid EXT prog before bpf_check().
+Both of these problems combined with incorrect runtime PM usage in the
+display driver lead to a black screen on Qualcomm sc7180 Trogdor
+chromebooks. What happens is that the bootloader leaves the
+'disp_cc_mdss_rot_clk' enabled and the 'disp_cc_mdss_rot_clk_src' force
+enabled and parented to 'disp_cc_pll0'. The mdss driver probes and
+runtime suspends, disabling the mdss_gdsc which uses the
+'disp_cc_mdss_rot_clk_src' for "housekeeping". The
+'disp_cc_mdss_rot_clk' is disabled during late init because the clk is
+unused, but the parent 'disp_cc_mdss_rot_clk_src' is still force enabled
+because the force enable bit was never cleared. Then 'disp_cc_pll0' is
+disabled because it is also unused. That's because the clk framework
+believes the parent of the RCG is XO when it isn't. A child device of
+the mdss device (e.g. DSI) runtime resumes mdss which powers on the
+mdss_gdsc. This wedges the GDSC because 'disp_cc_mdss_rot_clk_src' is
+parented to 'disp_cc_pll0' and that PLL is off. With the GDSC wedged,
+mdss_runtime_resume() tries to enable 'disp_cc_mdss_mdp_clk' but it
+can't because the GDSC has wedged all the clks associated with the GDSC
+causing clks to stay stuck off.
 
-Another way is by adding null check in resolve_prog_type().
+This leads to the following warning seen at boot and a black screen
+because the display driver fails to probe.
 
-The issue was introduced by commit 4a9c7bbe2ed4 ("bpf: Resolve to
-prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT") which wanted
-to correct type resolution for BPF_PROG_TYPE_TRACING programs. Before
-that, the type resolution of BPF_PROG_TYPE_EXT prog actually follows
-the logic below:
+ disp_cc_mdss_mdp_clk status stuck at 'off'
+ WARNING: CPU: 1 PID: 81 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x114/0x168
+ Modules linked in:
+ CPU: 1 PID: 81 Comm: kworker/u16:4 Not tainted 6.7.0-g0dd3ee311255 #1 f5757d475795053fd2ad52247a070cd50dd046f2
+ Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
+ Workqueue: events_unbound deferred_probe_work_func
+ pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : clk_branch_toggle+0x114/0x168
+ lr : clk_branch_toggle+0x110/0x168
+ sp : ffffffc08084b670
+ pmr_save: 00000060
+ x29: ffffffc08084b680 x28: ffffff808006de00 x27: 0000000000000001
+ x26: ffffff8080dbd4f4 x25: 0000000000000000 x24: 0000000000000000
+ x23: 0000000000000000 x22: ffffffd838461198 x21: ffffffd838007997
+ x20: ffffffd837541d5c x19: 0000000000000001 x18: 0000000000000004
+ x17: 0000000000000000 x16: 0000000000000010 x15: ffffffd837070fac
+ x14: 0000000000000003 x13: 0000000000000004 x12: 0000000000000001
+ x11: c0000000ffffdfff x10: ffffffd838347aa0 x9 : 08dadf92e516c000
+ x8 : 08dadf92e516c000 x7 : 0000000000000000 x6 : 0000000000000027
+ x5 : ffffffd8385a61f2 x4 : 0000000000000000 x3 : ffffffc08084b398
+ x2 : ffffffc08084b3a0 x1 : 00000000ffffdfff x0 : 00000000fffffff0
+ Call trace:
+  clk_branch_toggle+0x114/0x168
+  clk_branch2_enable+0x24/0x30
+  clk_core_enable+0x5c/0x1c8
+  clk_enable+0x38/0x58
+  clk_bulk_enable+0x40/0xb0
+  mdss_runtime_resume+0x68/0x258
+  pm_generic_runtime_resume+0x30/0x44
+  __genpd_runtime_resume+0x30/0x80
+  genpd_runtime_resume+0x124/0x214
+  __rpm_callback+0x7c/0x15c
+  rpm_callback+0x30/0x88
+  rpm_resume+0x390/0x4d8
+  rpm_resume+0x43c/0x4d8
+  __pm_runtime_resume+0x54/0x98
+  __device_attach+0xe0/0x170
+  device_initial_probe+0x1c/0x28
+  bus_probe_device+0x48/0xa4
+  device_add+0x52c/0x6fc
+  mipi_dsi_device_register_full+0x104/0x1a8
+  devm_mipi_dsi_device_register_full+0x28/0x78
+  ti_sn_bridge_probe+0x1dc/0x2bc
+  auxiliary_bus_probe+0x4c/0x94
+  really_probe+0xf8/0x270
+  __driver_probe_device+0xa8/0x130
+  driver_probe_device+0x44/0x104
+  __device_attach_driver+0xa4/0xcc
+  bus_for_each_drv+0x94/0xe8
+  __device_attach+0xf8/0x170
+  device_initial_probe+0x1c/0x28
+  bus_probe_device+0x48/0xa4
+  deferred_probe_work_func+0x9c/0xd8
 
-  prog->aux->dst_prog ? prog->aux->dst_prog->type : prog->type;
+Fix these problems by parking shared RCGs at boot. This will properly
+initialize the parked_cfg struct member so that the parent is reported
+properly and ensure that the clk won't get stuck on or off because the
+RCG is parented to the safe source (XO).
 
-It implies that when EXT program is not yet attached to `dst_prog`,
-the prog type should be EXT itself. This code worked fine in the past.
-So just keep using it.
-
-Fix this by returning `prog->type` for BPF_PROG_TYPE_EXT if `dst_prog`
-is not present in resolve_prog_type().
-
-Fixes: 4a9c7bbe2ed4 ("bpf: Resolve to prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/bpf/20240711145819.254178-2-wutengda@huaweicloud.com
+Fixes: 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for parked RCGs")
+Reported-by: Stephen Boyd <sboyd@kernel.org>
+Closes: https://lore.kernel.org/r/1290a5a0f7f584fcce722eeb2a1fd898.sboyd@kernel.org
+Closes: https://issuetracker.google.com/319956935
+Reported-by: Laura Nao <laura.nao@collabora.com>
+Closes: https://lore.kernel.org/r/20231218091806.7155-1-laura.nao@collabora.com
+Cc: Bjorn Andersson <andersson@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Link: https://lore.kernel.org/r/20240502224703.103150-1-swboyd@chromium.org
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Tested-by: Nícolas F. R. A. Prado <nfraprado@collabora.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/clk-rcg2.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index 2d84d820a7ba2..b62535fd8de5f 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -760,7 +760,7 @@ static inline u32 type_flag(u32 type)
- /* only use after check_attach_btf_id() */
- static inline enum bpf_prog_type resolve_prog_type(const struct bpf_prog *prog)
- {
--	return prog->type == BPF_PROG_TYPE_EXT ?
-+	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->dst_prog) ?
- 		prog->aux->dst_prog->type : prog->type;
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index dc797bd137caf..e46bb60dcda41 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1136,7 +1136,39 @@ clk_rcg2_shared_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ 	return clk_rcg2_recalc_rate(hw, parent_rate);
  }
  
++static int clk_rcg2_shared_init(struct clk_hw *hw)
++{
++	/*
++	 * This does a few things:
++	 *
++	 *  1. Sets rcg->parked_cfg to reflect the value at probe so that the
++	 *     proper parent is reported from clk_rcg2_shared_get_parent().
++	 *
++	 *  2. Clears the force enable bit of the RCG because we rely on child
++	 *     clks (branches) to turn the RCG on/off with a hardware feedback
++	 *     mechanism and only set the force enable bit in the RCG when we
++	 *     want to make sure the clk stays on for parent switches or
++	 *     parking.
++	 *
++	 *  3. Parks shared RCGs on the safe source at registration because we
++	 *     can't be certain that the parent clk will stay on during boot,
++	 *     especially if the parent is shared. If this RCG is enabled at
++	 *     boot, and the parent is turned off, the RCG will get stuck on. A
++	 *     GDSC can wedge if is turned on and the RCG is stuck on because
++	 *     the GDSC's controller will hang waiting for the clk status to
++	 *     toggle on when it never does.
++	 *
++	 * The safest option here is to "park" the RCG at init so that the clk
++	 * can never get stuck on or off. This ensures the GDSC can't get
++	 * wedged.
++	 */
++	clk_rcg2_shared_disable(hw);
++
++	return 0;
++}
++
+ const struct clk_ops clk_rcg2_shared_ops = {
++	.init = clk_rcg2_shared_init,
+ 	.enable = clk_rcg2_shared_enable,
+ 	.disable = clk_rcg2_shared_disable,
+ 	.get_parent = clk_rcg2_shared_get_parent,
 -- 
 2.43.0
 
