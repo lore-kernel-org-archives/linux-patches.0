@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD341A6169;
-	Tue, 30 Jul 2024 16:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 143C71A6169;
+	Tue, 30 Jul 2024 16:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357482; cv=none; b=lOgV+1sclybPxyK+sb+mhPGcsb2iSkv0YmBHlUb4UB/ckI58GxTkqDNhl9WfUXndKghhHT5ipPaa28/Oabz5w1SWsSSGSno3EDZ7cNOL4PC1P6Jynw0RUO+8LvY7/64QCaZPuo9OkOGL1arJ8sIsefst2HMIadu1Nrw6uCcgawk=
+	t=1722357486; cv=none; b=SCZiaaj5uMlxyOdQ/kW51o+j1IsifIeLj/bUGjkav4KI3dlYYrTkVppYhyhwFPoT60O9YeHTHCaUFHrwWbGDBMVulPhWbPuvC4ED+BFCEU4nDUQTXxmH4Nogrts7q1esYnb9/21OOWq8bTEtyDQlMzizXC0A7a2URVaVdldfX4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357482; c=relaxed/simple;
-	bh=IoJlfuoCV+dctK33VXgRhCJ+rZ/U8cVKWw/JPIc+8Dc=;
+	s=arc-20240116; t=1722357486; c=relaxed/simple;
+	bh=orxPFtQLiwdxOonatrzzIwZFzJkhzXfKz0AZDPK/TlQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mwIx7ymzEzUKftztFGSbIQZyyz5/Zkw29Hl42h3eCMeAAGOYABqmlq1uxuyWFdW3bAsbFHODzZv/xBi8u1Agv7c9QfYNn394gppQTCrmXiW/1wUY79hJhs/klcmfz1y53LyW3/GFw2ykAiBcZncpivIJCNCRNwjxxLfyDDxqa/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yww149be; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LIwFYRZDxsA9RqtJxRZeMweSyjHOUXu91TIqjgwiECbeqYukQ5G9hXA1RbQvcsKmhJt5eJWyYD9UKRUwxhV7loWNIoIVN3/QyBBQxThAPOYdgQonrO/r+qg4WM5gpnaLENRJcf9geBkJdgAvm1I4877vQI8z2gZeZFbvaJR7Jek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLt7qw9E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yww149be"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2BCC4AF0C;
-	Tue, 30 Jul 2024 16:38:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLt7qw9E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FECC32782;
+	Tue, 30 Jul 2024 16:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357482;
-	bh=IoJlfuoCV+dctK33VXgRhCJ+rZ/U8cVKWw/JPIc+8Dc=;
+	s=korg; t=1722357485;
+	bh=orxPFtQLiwdxOonatrzzIwZFzJkhzXfKz0AZDPK/TlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yww149beuF6IhyNaPLS5MVmE+uZbuwsNrmxsDWIrDv//uoWTKrqJOM/Uaa93MeJbS
-	 gWGWbs48Ij1CAGRRpxELgO3JaiODB5c/zDCbusCmFC9pf1ONJUQtPfzBJF8ZWA/EqQ
-	 25uGg3zm3HLI6h8hoVa8/MjhY8PvD4bqKdigd4FY=
+	b=pLt7qw9E+32fcT5tGhvNR3W/vFhYfqvCZqHSJdxFwGsQviZms1kYOt58ppDH+rPqr
+	 WbEWvblRtu2VqQDD8JhSwITeblP1QFYNGcj5kaiDEtOLgCJZD2EWE+EluN0bqSFmkW
+	 stydU7A63cObfjnmFCziATlVE6qkuE+hFxZafd/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 259/568] coresight: Fix ref leak when of_coresight_parse_endpoint() fails
-Date: Tue, 30 Jul 2024 17:46:06 +0200
-Message-ID: <20240730151650.000664672@linuxfoundation.org>
+Subject: [PATCH 6.10 258/809] Bluetooth: hci_core, hci_sync: cleanup struct discovery_state
+Date: Tue, 30 Jul 2024 17:42:14 +0200
+Message-ID: <20240730151734.786639916@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,47 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 7fcb9cb2fe47294e16067c3cfd25332c8662a115 ]
+[ Upstream commit da63f331353c9e1e6dc29e49e28f8f4fe5d642fd ]
 
-of_graph_get_next_endpoint() releases the reference to the previous
-endpoint on each iteration, but when parsing fails the loop exits
-early meaning the last reference is never dropped.
+After commit 78db544b5d27 ("Bluetooth: hci_core: Remove le_restart_scan
+work"), 'scan_start' and 'scan_duration' of 'struct discovery_state'
+are still initialized but actually unused. So remove the aforementioned
+fields and adjust 'hci_discovery_filter_clear()' and 'le_scan_disable()'
+accordingly. Compile tested only.
 
-Fix it by dropping the refcount in the exit condition.
-
-Fixes: d375b356e687 ("coresight: Fix support for sparsely populated ports")
-Signed-off-by: James Clark <james.clark@arm.com>
-Reported-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20240529133626.90080-1-james.clark@arm.com
+Fixes: 78db544b5d27 ("Bluetooth: hci_core: Remove le_restart_scan work")
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-platform.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h | 4 ----
+ net/bluetooth/hci_sync.c         | 2 --
+ 2 files changed, 6 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 9d550f5697fa8..57a009552cc5c 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -297,8 +297,10 @@ static int of_get_coresight_platform_data(struct device *dev,
- 			continue;
+diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
+index c43716edf2056..b15f51ae3bfd9 100644
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -91,8 +91,6 @@ struct discovery_state {
+ 	s8			rssi;
+ 	u16			uuid_count;
+ 	u8			(*uuids)[16];
+-	unsigned long		scan_start;
+-	unsigned long		scan_duration;
+ 	unsigned long		name_resolve_timeout;
+ };
  
- 		ret = of_coresight_parse_endpoint(dev, ep, pdata);
--		if (ret)
-+		if (ret) {
-+			of_node_put(ep);
- 			return ret;
-+		}
+@@ -890,8 +888,6 @@ static inline void hci_discovery_filter_clear(struct hci_dev *hdev)
+ 	hdev->discovery.uuid_count = 0;
+ 	kfree(hdev->discovery.uuids);
+ 	hdev->discovery.uuids = NULL;
+-	hdev->discovery.scan_start = 0;
+-	hdev->discovery.scan_duration = 0;
+ }
+ 
+ bool hci_discovery_active(struct hci_dev *hdev);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index eea34e6a236fd..bb704088559fb 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -371,8 +371,6 @@ static void le_scan_disable(struct work_struct *work)
+ 		goto _return;
  	}
  
- 	return 0;
+-	hdev->discovery.scan_start = 0;
+-
+ 	/* If we were running LE only scan, change discovery state. If
+ 	 * we were running both LE and BR/EDR inquiry simultaneously,
+ 	 * and BR/EDR inquiry is already finished, stop discovery,
 -- 
 2.43.0
 
