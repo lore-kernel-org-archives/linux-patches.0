@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739481A616E;
-	Tue, 30 Jul 2024 16:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7B91A616E;
+	Tue, 30 Jul 2024 16:17:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356249; cv=none; b=qlhDI5nxF1QD8vrpSnHm6Ru6Pon1D+hOL8+MRH3wStV3ZrxlJR9+S9TcCy4jCzPK/1IB9/SBdjIz3ctkBjy+VgRbstKKqvpELfxOxjOm/VVe5Hk8O1NrD8mHqia4FDGYQmimjd3556Xnkzl/DQeF45BGKaJh5lSu8ngr62EtPk0=
+	t=1722356252; cv=none; b=mWI3ZogDmIFkIOscJCHP9IqzbANGrxFg/kkBMh8f+qmSiUsG0VnzCD4qWEc5yudtz1HklHCOwx9OuiuaxQe584Ber+X8Gch/fCsb1E0YRunhQPBafYj37ZzIDCvFdEVre4inuGYGYigsbB/Gk4LH+uTtZkS7HDjOcU+zjzu2Qns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356249; c=relaxed/simple;
-	bh=VaYpcPmBKjAWYTq0hiU42527OuOwm3Nq9nkDRjB5fNw=;
+	s=arc-20240116; t=1722356252; c=relaxed/simple;
+	bh=kJv8hKUPVBgmnIbKIqEz8CGLzuQQj1Ec1UlBFCjW5sQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RI5gNz2ZO+lnzmKuJlQW2SppJwlzmqb8oOfYhxoDeNkModOdoP7QjtnJz0duAnMPxfKnBFHFZt2VtgFtZkloooOqpdd7C+j/cOhJ59/7E4X1bgpjvOKJeWQ1iqtXyJkBnrycTnC9fWqJFAGEnEij8M6BL7D+ZMgUbQTTMlwgfEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbiARWno; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSKxO0/0bEqwaODqoXH/kUzSzfEvML0FZVXrKrRUBHLfJoHdO+NBqbOf1sBVMH2h+PdAju66EonUuaukEg+w1ennbQZgYvnctedMIgvm1a50puvRpsG+HWteRoJRLXNIu+8D2Rsw7SUkpf/VKP80O5Nozwc9Ch7oOcqwbVh5ZNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCR4R3jg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbiARWno"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10C5C32782;
-	Tue, 30 Jul 2024 16:17:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCR4R3jg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0917EC32782;
+	Tue, 30 Jul 2024 16:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356249;
-	bh=VaYpcPmBKjAWYTq0hiU42527OuOwm3Nq9nkDRjB5fNw=;
+	s=korg; t=1722356252;
+	bh=kJv8hKUPVBgmnIbKIqEz8CGLzuQQj1Ec1UlBFCjW5sQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TbiARWnoXgj2C3aGDfmmlhLeWj4sqQOsJESXIOtzcbFwkjfouVW1AJcE0hiNx/OJt
-	 dZhXXRzb5v8rV19SuhCbBEXL/N5p2agcsK8nlXhVOu03Lf5iOBvYkarpJ7k/22e1I7
-	 l2Zups9ooxwBsVn4G+bX78o4H381v344p8sO4Cbs=
+	b=dCR4R3jgGrJl6D1nL622UrOuVCrRKgBCEAEr/xXIgBNSH+1XFv3+agJduFbFwtcGX
+	 RMIhsE6Ts6tE/uDwLFUoOcIJzYXx74ofW55ZloBT76HRsNcGVb1aveukqcKDVT17gL
+	 NLllVf9RLOpBjAw+3iX6Sah9T4Rx43Ol/JqpUgSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Alexander Zubkov <green@qrator.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 133/809] arm64: dts: rockchip: fix pmu_io supply for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:40:09 +0200
-Message-ID: <20240730151729.869000714@linuxfoundation.org>
+Subject: [PATCH 6.6 128/568] lib: objagg: Fix general protection fault
+Date: Tue, 30 Jul 2024 17:43:55 +0200
+Message-ID: <20240730151644.874917222@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,76 +51,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit cfeac8e5d05815521f5c5568680735a92ee91fe4 ]
+[ Upstream commit b4a3a89fffcdf09702b1f161b914e52abca1894d ]
 
-Fixes pmu_io_domains supply according to the schematic. Among them,
-the vccio3 is responsible for the io voltage of sdcard. There is no
-sdcard slot on the R68S, and it's connected to vcc_3v3, so describe
-the supply of vccio3 separately.
+The library supports aggregation of objects into other objects only if
+the parent object does not have a parent itself. That is, nesting is not
+supported.
 
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Fixes: b9f8ca655d80 ("arm64: dts: rockchip: Add Lunzn Fastrhino R68S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240630150010.55729-4-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Aggregation happens in two cases: Without and with hints, where hints
+are a pre-computed recommendation on how to aggregate the provided
+objects.
+
+Nesting is not possible in the first case due to a check that prevents
+it, but in the second case there is no check because the assumption is
+that nesting cannot happen when creating objects based on hints. The
+violation of this assumption leads to various warnings and eventually to
+a general protection fault [1].
+
+Before fixing the root cause, error out when nesting happens and warn.
+
+[1]
+general protection fault, probably for non-canonical address 0xdead000000000d90: 0000 [#1] PREEMPT SMP PTI
+CPU: 1 PID: 1083 Comm: kworker/1:9 Tainted: G        W          6.9.0-rc6-custom-gd9b4f1cca7fb #7
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
+RIP: 0010:mlxsw_sp_acl_erp_bf_insert+0x25/0x80
+[...]
+Call Trace:
+ <TASK>
+ mlxsw_sp_acl_atcam_entry_add+0x256/0x3c0
+ mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
+ mlxsw_sp_acl_tcam_vchunk_migrate_one+0x16b/0x270
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0xbe/0x510
+ process_one_work+0x151/0x370
+ worker_thread+0x2cb/0x3e0
+ kthread+0xd0/0x100
+ ret_from_fork+0x34/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Fixes: 9069a3817d82 ("lib: objagg: implement optimization hints assembly and use hints for object creation")
+Reported-by: Alexander Zubkov <green@qrator.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Amit Cohen <amcohen@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts  | 4 ++++
- arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 4 ++--
- arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts  | 4 ++++
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ lib/objagg.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts
-index 58ab7e9971dbc..b5e67990dd0f8 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts
-@@ -11,6 +11,10 @@ aliases {
- 	};
- };
+diff --git a/lib/objagg.c b/lib/objagg.c
+index 1e248629ed643..90f3aa68c30a0 100644
+--- a/lib/objagg.c
++++ b/lib/objagg.c
+@@ -167,6 +167,9 @@ static int objagg_obj_parent_assign(struct objagg *objagg,
+ {
+ 	void *delta_priv;
  
-+&pmu_io_domains {
-+	vccio3-supply = <&vccio_sd>;
-+};
++	if (WARN_ON(!objagg_obj_is_root(parent)))
++		return -EINVAL;
 +
- &sdmmc0 {
- 	bus-width = <4>;
- 	cap-mmc-highspeed;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index 8f587978fa3b6..82577eba31eb5 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -397,8 +397,8 @@ vcc5v0_usb_otg_en: vcc5v0-usb-otg-en {
- &pmu_io_domains {
- 	pmuio1-supply = <&vcc3v3_pmu>;
- 	pmuio2-supply = <&vcc3v3_pmu>;
--	vccio1-supply = <&vccio_acodec>;
--	vccio3-supply = <&vccio_sd>;
-+	vccio1-supply = <&vcc_3v3>;
-+	vccio2-supply = <&vcc_1v8>;
- 	vccio4-supply = <&vcc_1v8>;
- 	vccio5-supply = <&vcc_3v3>;
- 	vccio6-supply = <&vcc_1v8>;
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
-index e1fe5e442689a..a3339186e89c8 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
-@@ -102,6 +102,10 @@ eth_phy1_reset_pin: eth-phy1-reset-pin {
- 	};
- };
- 
-+&pmu_io_domains {
-+	vccio3-supply = <&vcc_3v3>;
-+};
-+
- &sdhci {
- 	bus-width = <8>;
- 	max-frequency = <200000000>;
+ 	delta_priv = objagg->ops->delta_create(objagg->priv, parent->obj,
+ 					       objagg_obj->obj);
+ 	if (IS_ERR(delta_priv))
 -- 
 2.43.0
 
