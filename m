@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08B981A6192;
-	Tue, 30 Jul 2024 16:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2021A6192;
+	Tue, 30 Jul 2024 16:39:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357559; cv=none; b=HjO8yZn7unrZXpmvV7ohEM72Mu5sncd3rc91dxTHmug715OsoFWhAenNCNE9aQKWukeEaIK5sQsHN6an9zAk35Pibab40JCPfxzkQcG21CbNQUeYKqNXszCvm8XvvDSkiQ9yrAuBDKfPDWtMtbeHm2+KlO7ONQ7fwGP6rLqHyhw=
+	t=1722357562; cv=none; b=GH7deRfDmOroYhekFxxmHOObkOm6Ld5PXxtoXsXOIIrdJ68ie+xEmESt/rILDKRyR0UNPDPSmUtdLNG578ddEu46wOTEpcJEIb6CeQshs9FOforv9lJNbQwBPtM919zjFmsoNTSfucNfyvqxe1fqTBRp0P127n29XSkU3GW90J0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357559; c=relaxed/simple;
-	bh=NNuseBoGgaTb8OGY2iECfFOlQ1B7voN+va/qHwvnB1o=;
+	s=arc-20240116; t=1722357562; c=relaxed/simple;
+	bh=xtC+cXXj6Rn35pbpBH0eswFfQj7YI7NidXBFDOdmEpk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbPOPE782ID0r44VIHBpLv8GvMXVvNcte4WPuqvSTA4ZKFUrUJFJGMkdYDBTIoYq2uCOJKMz7LvCmPbMsPDKIJPCF6sOct0orE7Gl9bdNVzVNINfkbk9I4M918apIC2qkhjK2QqXCUCoS9ofarVnZz87OUKwW9Q7hNSPTgD5eNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gH9uTuk4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wdk6EiZaKbsIlHdEPsBCjOtSKsuFPXTSv0GjnJpnkyvvfB5qy/yTOFtWX0MmJWScxS3JrcBNC3PBFEMl7745S15teXnPI5LpBMTLdgDZnGO71krmHh5RuBCwxazheAaqaMT880P4gnkWSSP3wz1IEhnjRzVgE0ihAmdutYNPcR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYdzpM7B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gH9uTuk4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E28C32782;
-	Tue, 30 Jul 2024 16:39:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYdzpM7B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71B55C32782;
+	Tue, 30 Jul 2024 16:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357558;
-	bh=NNuseBoGgaTb8OGY2iECfFOlQ1B7voN+va/qHwvnB1o=;
+	s=korg; t=1722357561;
+	bh=xtC+cXXj6Rn35pbpBH0eswFfQj7YI7NidXBFDOdmEpk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gH9uTuk4wxs5BQA5UG66Xx8+TIDWR9BbNrju7/IPWTlUGlR/NaEJ53tTQpaHQIe4V
-	 5T8SVoingxz3Lv/9hpfB74znamfcRRRWm0TcwM5wGEuNP5apMid6ntz4UOpXUuPU/w
-	 kziQSKB7GpuQKAiSPlN/pVrUPz5+zPKPor0LMmdY=
+	b=mYdzpM7BRfkmbDgcVOVnDu5Xx7X2t4xF0+xbIV7I8/QOZZuqoc9JpnxlrYir/hwln
+	 NqA38ZoFmSaWBathDqNGpDC+OXeLNyCxJhZKmYB0M+U2HvYP8th/tJ5bwmv1R9h/bE
+	 MBUPAgPTI3YZRohl+UZZwXyLY9m5gLtyyfc2aadU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukul Joshi <mukul.joshi@amd.com>,
-	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 267/809] drm/amdkfd: Fix CU Masking for GFX 9.4.3
-Date: Tue, 30 Jul 2024 17:42:23 +0200
-Message-ID: <20240730151735.142709710@linuxfoundation.org>
+	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 304/440] ext4: make sure the first directory block is not a hole
+Date: Tue, 30 Jul 2024 17:48:57 +0200
+Message-ID: <20240730151627.698900538@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,43 +49,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mukul Joshi <mukul.joshi@amd.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 85cf43c554e438e2e12b0fe109688c9533e4d93f ]
+commit f9ca51596bbfd0f9c386dd1c613c394c78d9e5e6 upstream.
 
-We are incorrectly passing the first XCC's MQD when
-updating CU masks for other XCCs in the partition. Fix
-this by passing the MQD for the XCC currently being
-updated with CU mask to update_cu_mask function.
+The syzbot constructs a directory that has no dirblock but is non-inline,
+i.e. the first directory block is a hole. And no errors are reported when
+creating files in this directory in the following flow.
 
-Fixes: fc6efed2c728 ("drm/amdkfd: Update CU masking for GFX 9.4.3")
-Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
-Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+    ext4_mknod
+     ...
+      ext4_add_entry
+        // Read block 0
+        ext4_read_dirblock(dir, block, DIRENT)
+          bh = ext4_bread(NULL, inode, block, 0)
+          if (!bh && (type == INDEX || type == DIRENT_HTREE))
+          // The first directory block is a hole
+          // But type == DIRENT, so no error is reported.
+
+After that, we get a directory block without '.' and '..' but with a valid
+dentry. This may cause some code that relies on dot or dotdot (such as
+make_indexed_dir()) to crash.
+
+Therefore when ext4_read_dirblock() finds that the first directory block
+is a hole report that the filesystem is corrupted and return an error to
+avoid loading corrupted data from disk causing something bad.
+
+Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
+Fixes: 4e19d6b65fb4 ("ext4: allow directory holes")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240702132349.2600605-3-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/namei.c |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-index 6bddc16808d7a..8ec136eba54a9 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_mqd_manager_v9.c
-@@ -713,7 +713,7 @@ static void update_mqd_v9_4_3(struct mqd_manager *mm, void *mqd,
- 		m = get_mqd(mqd + size * xcc);
- 		update_mqd(mm, m, q, minfo);
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -151,10 +151,11 @@ static struct buffer_head *__ext4_read_d
  
--		update_cu_mask(mm, mqd, minfo, xcc);
-+		update_cu_mask(mm, m, minfo, xcc);
+ 		return bh;
+ 	}
+-	if (!bh && (type == INDEX || type == DIRENT_HTREE)) {
++	/* The first directory block must not be a hole. */
++	if (!bh && (type == INDEX || type == DIRENT_HTREE || block == 0)) {
+ 		ext4_error_inode(inode, func, line, block,
+-				 "Directory hole found for htree %s block",
+-				 (type == INDEX) ? "index" : "leaf");
++				 "Directory hole found for htree %s block %u",
++				 (type == INDEX) ? "index" : "leaf", block);
+ 		return ERR_PTR(-EFSCORRUPTED);
+ 	}
+ 	if (!bh)
+@@ -3133,10 +3134,7 @@ bool ext4_empty_dir(struct inode *inode)
+ 		EXT4_ERROR_INODE(inode, "invalid size");
+ 		return false;
+ 	}
+-	/* The first directory block must not be a hole,
+-	 * so treat it as DIRENT_HTREE
+-	 */
+-	bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
++	bh = ext4_read_dirblock(inode, 0, EITHER);
+ 	if (IS_ERR(bh))
+ 		return false;
  
- 		if (q->format == KFD_QUEUE_FORMAT_AQL) {
- 			switch (xcc) {
--- 
-2.43.0
-
+@@ -3580,10 +3578,7 @@ static struct buffer_head *ext4_get_firs
+ 		struct ext4_dir_entry_2 *de;
+ 		unsigned int offset;
+ 
+-		/* The first directory block must not be a hole, so
+-		 * treat it as DIRENT_HTREE
+-		 */
+-		bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
++		bh = ext4_read_dirblock(inode, 0, EITHER);
+ 		if (IS_ERR(bh)) {
+ 			*retval = PTR_ERR(bh);
+ 			return NULL;
 
 
