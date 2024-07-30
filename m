@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812621A6160;
-	Tue, 30 Jul 2024 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D3B1A6160;
+	Tue, 30 Jul 2024 16:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356524; cv=none; b=GfBtzR4wSE2bxVR6wrTQBKZ3bQzdZn/qk0V1ZjpCKqN0fFJ18MCoozgb2avmbehCkzI7+395rWpfGU/K94j9CDT4aHbpICVxK1aVDjHmJD40OS24AgXquCE/zymQg9W4VmsD7nVuB/exnKLN9CwdGWoXCBC+B9A8evyYVM7S6vs=
+	t=1722356527; cv=none; b=GQUppAHoio6pMtd58M23UiL+BDOD9nfBvZY91I+HbupNVWvBs4BcPGDzvWXuK84Ke+lxFEkkvk2yWFhHChiQPsIb8AEG5CctnEt7iSzJqzNvDwt/wQg2/ZdJlA11x4r1tMOxN9V7QswmiQCZHDT2HdWHBdc/6WDqFVY517+nIeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356524; c=relaxed/simple;
-	bh=B3d5gyojsmSE3GzX2AR8HOOYqxBD+SZ4hz6nXDXMIOY=;
+	s=arc-20240116; t=1722356527; c=relaxed/simple;
+	bh=oczPFCM4TcQT15x9gA6WfGua9ilYkgjYWzyJPyDd6/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FAYYauzjbULa1YZxX2W24Q5h23V6KWaDyAGf3fA5yheA95il9kt6y0mTS8B//fOTvdrry8m1B4VRJ4lLDtgCzbrwXAfOAAV1/DdCJSsf/Ccqs+PVIcZNFOx4fPokzbBGpllv0bCe1zVqTqMSrdm3E7euG0PSIvsgNz4lm75EzLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyBhPWZX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tuIpMo2bIajrrWgzZWk3SmYuVtwx8SXrmxiSkiEIgUG/W4p20Fzs7f4Edq7kJomkdu6YUU+E8rDVHV5Ce4RZR0nA2/OudNbL5cso54iWuJ+X0tTGtHT4Qf8rCUwRrqyajq4LgOTu+pP3bnswxFpp4um1EMyQXj3nKPunIz3cSpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=axtfv0n3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyBhPWZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5AFC4AF0C;
-	Tue, 30 Jul 2024 16:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="axtfv0n3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34987C32782;
+	Tue, 30 Jul 2024 16:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356524;
-	bh=B3d5gyojsmSE3GzX2AR8HOOYqxBD+SZ4hz6nXDXMIOY=;
+	s=korg; t=1722356527;
+	bh=oczPFCM4TcQT15x9gA6WfGua9ilYkgjYWzyJPyDd6/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyBhPWZXRmEk1/miJ9tyNhgiqNN7LKoYhl9z6X11j66/CBP7HUnDJKdEwcKnVyrIL
-	 5NNHyt6Rgh26/NQtMABWwa3brS6RPDl3rEeGATuw5GGMjHLsk5T2j5Dz4Gvmdn/d0E
-	 m4YENvJthcuT+yKG6iLB4cfyboSbm/stQ+b93B3g=
+	b=axtfv0n3K04j0D7T9i2+y4FmrOrTUGK5esOYsvnMwlyhwCflRrlV6dmdSNFRIo2Fi
+	 E3cJx1d9i9PCvTNr9vJbVE1JkvtZX5nVatZHJu2D+WqFNEWlcoBkmtkUqi/ULTL7mv
+	 MoMsaOPCZxqi1hcEiUKAwPe3jbrnyLtj3tLi5npQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arcari <darcari@redhat.com>,
-	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 139/809] cpufreq/amd-pstate: Fix the scaling_max_freq setting on shared memory CPPC systems
-Date: Tue, 30 Jul 2024 17:40:15 +0200
-Message-ID: <20240730151730.100854434@linuxfoundation.org>
+Subject: [PATCH 6.1 181/440] PCI: rcar: Demote WARN() to dev_warn_ratelimited() in rcar_pcie_wakeup()
+Date: Tue, 30 Jul 2024 17:46:54 +0200
+Message-ID: <20240730151622.944970070@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,108 +46,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit 738d7d03571c7e38565bd245c0815a2c74665018 ]
+[ Upstream commit c93637e6a4c4e1d0e85ef7efac78d066bbb24d96 ]
 
-On shared memory CPPC systems, with amd_pstate=active mode, the change
-in scaling_max_freq doesn't get written to the shared memory
-region. Due to this, the writes to the scaling_max_freq sysfs file
-don't take effect. Fix this by propagating the scaling_max_freq
-changes to the shared memory region.
+Avoid large backtrace, it is sufficient to warn the user that there has
+been a link problem. Either the link has failed and the system is in need
+of maintenance, or the link continues to work and user has been informed.
+The message from the warning can be looked up in the sources.
 
-Fixes: ffa5096a7c33 ("cpufreq: amd-pstate: implement Pstate EPP support for the AMD processors")
-Reported-by: David Arcari <darcari@redhat.com>
-Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20240702081413.5688-3-Dhananjay.Ugwekar@amd.com
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+This makes an actual link issue less verbose.
+
+First of all, this controller has a limitation in that the controller
+driver has to assist the hardware with transition to L1 link state by
+writing L1IATN to PMCTRL register, the L1 and L0 link state switching
+is not fully automatic on this controller.
+
+In case of an ASMedia ASM1062 PCIe SATA controller which does not support
+ASPM, on entry to suspend or during platform pm_test, the SATA controller
+enters D3hot state and the link enters L1 state. If the SATA controller
+wakes up before rcar_pcie_wakeup() was called and returns to D0, the link
+returns to L0 before the controller driver even started its transition to
+L1 link state. At this point, the SATA controller did send an PM_ENTER_L1
+DLLP to the PCIe controller and the PCIe controller received it, and the
+PCIe controller did set PMSR PMEL1RX bit.
+
+Once rcar_pcie_wakeup() is called, if the link is already back in L0 state
+and PMEL1RX bit is set, the controller driver has no way to determine if
+it should perform the link transition to L1 state, or treat the link as if
+it is in L0 state. Currently the driver attempts to perform the transition
+to L1 link state unconditionally, which in this specific case fails with a
+PMSR L1FAEG poll timeout, however the link still works as it is already
+back in L0 state.
+
+Reduce this warning verbosity. In case the link is really broken, the
+rcar_pcie_config_access() would fail, otherwise it will succeed and any
+system with this controller and ASM1062 can suspend without generating
+a backtrace.
+
+Fixes: 84b576146294 ("PCI: rcar: Finish transition to L1 state in rcar_pcie_config_access()")
+Link: https://lore.kernel.org/linux-pci/20240511235513.77301-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd-pstate.c | 43 +++++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 20 deletions(-)
+ drivers/pci/controller/pcie-rcar-host.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
-index 9ad62dbe8bfbf..a092b13ffbc2f 100644
---- a/drivers/cpufreq/amd-pstate.c
-+++ b/drivers/cpufreq/amd-pstate.c
-@@ -247,6 +247,26 @@ static int amd_pstate_get_energy_pref_index(struct amd_cpudata *cpudata)
- 	return index;
- }
+diff --git a/drivers/pci/controller/pcie-rcar-host.c b/drivers/pci/controller/pcie-rcar-host.c
+index e4faf90feaf5c..d0fe5076d9777 100644
+--- a/drivers/pci/controller/pcie-rcar-host.c
++++ b/drivers/pci/controller/pcie-rcar-host.c
+@@ -92,7 +92,11 @@ static int rcar_pcie_wakeup(struct device *pcie_dev, void __iomem *pcie_base)
+ 		writel(L1IATN, pcie_base + PMCTLR);
+ 		ret = readl_poll_timeout_atomic(pcie_base + PMSR, val,
+ 						val & L1FAEG, 10, 1000);
+-		WARN(ret, "Timeout waiting for L1 link state, ret=%d\n", ret);
++		if (ret) {
++			dev_warn_ratelimited(pcie_dev,
++					     "Timeout waiting for L1 link state, ret=%d\n",
++					     ret);
++		}
+ 		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
+ 	}
  
-+static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
-+			       u32 des_perf, u32 max_perf, bool fast_switch)
-+{
-+	if (fast_switch)
-+		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
-+	else
-+		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
-+			      READ_ONCE(cpudata->cppc_req_cached));
-+}
-+
-+DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
-+
-+static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
-+					  u32 min_perf, u32 des_perf,
-+					  u32 max_perf, bool fast_switch)
-+{
-+	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
-+					    max_perf, fast_switch);
-+}
-+
- static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
- {
- 	int ret;
-@@ -263,6 +283,9 @@ static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
- 		if (!ret)
- 			cpudata->epp_cached = epp;
- 	} else {
-+		amd_pstate_update_perf(cpudata, cpudata->min_limit_perf, 0U,
-+					     cpudata->max_limit_perf, false);
-+
- 		perf_ctrls.energy_perf = epp;
- 		ret = cppc_set_epp_perf(cpudata->cpu, &perf_ctrls, 1);
- 		if (ret) {
-@@ -452,16 +475,6 @@ static inline int amd_pstate_init_perf(struct amd_cpudata *cpudata)
- 	return static_call(amd_pstate_init_perf)(cpudata);
- }
- 
--static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
--			       u32 des_perf, u32 max_perf, bool fast_switch)
--{
--	if (fast_switch)
--		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
--	else
--		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
--			      READ_ONCE(cpudata->cppc_req_cached));
--}
--
- static void cppc_update_perf(struct amd_cpudata *cpudata,
- 			     u32 min_perf, u32 des_perf,
- 			     u32 max_perf, bool fast_switch)
-@@ -475,16 +488,6 @@ static void cppc_update_perf(struct amd_cpudata *cpudata,
- 	cppc_set_perf(cpudata->cpu, &perf_ctrls);
- }
- 
--DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
--
--static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
--					  u32 min_perf, u32 des_perf,
--					  u32 max_perf, bool fast_switch)
--{
--	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
--					    max_perf, fast_switch);
--}
--
- static inline bool amd_pstate_sample(struct amd_cpudata *cpudata)
- {
- 	u64 aperf, mperf, tsc;
 -- 
 2.43.0
 
