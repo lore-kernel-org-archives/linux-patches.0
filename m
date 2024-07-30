@@ -1,45 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B1D1A6192;
-	Tue, 30 Jul 2024 16:36:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF8818455C;
+	Tue, 30 Jul 2024 16:36:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357386; cv=none; b=AtcYjcwTpvj9BAnDVef+pyRY7eWQVIX9DdZ/tjPoVxPPvlELpPdFqftTy9kRIxaCGEyfZccdezkV6d2doC8ZS4Rk4RP0RaTOG2FlxQUAc4VyFGP1ps7EXR4mt05wXkUFn1l3HY39t8a8f2oppysjbf0sHDOgcSVF95Sv/91oNRE=
+	t=1722357389; cv=none; b=LJeMUMSbRYHjvURBxUniD52nRKJM7SYNWUgfNpvkVDJCPP6LWioOg8vstLhTIiSBB+qpJ4FUlI4gX55W8Y3T+qIDCjk+FKiOwBjqpxpUWEiRkCD+Mp9SujDqLMaaV8oUg3ispxzT+XkG+LhfzUtSj8Dx0tQSXS4KWTDRwjWXMtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357386; c=relaxed/simple;
-	bh=vB4LXHlHoKtorESnJwxlaLxqx2ZSVZ+lSVwQ/4R8kZ4=;
+	s=arc-20240116; t=1722357389; c=relaxed/simple;
+	bh=YpPApXoc+me1LdfbuZBAP/PGXZNi5K26Qu8veRI4dqo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=o0+GWxqOveB06Jf1MiXeuAlY8zyEHDqqpKch/OB9hL4rJ/gR4J9m6LUsuMI4Chha4Mvznht20VebrHvmpISHEDqc4GfLGm8MhHElrf5AsjCayXAc9b4yM51YUuID4kaIdU8JCFnHCZ4zMwomMeI7bYNx0Xy4UkfqZElERkLWYpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHVZWt2i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cmGR1niUYhgzrqUco8h83xzBSNisfnJOBFHHZvXUTQFQ2PFmmtPK6vufSZd3/o4BYMDAnWrtvyQwAC9EiDR4fAIczq6pw7GaujNU37Om36wrXlpkOoVHFDIqY/yR5d6b6KLj7tbptrfTLguvz7jVKAeWOGz6457Kb2z/PagFJWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f8bnz3ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHVZWt2i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF2F7C32782;
-	Tue, 30 Jul 2024 16:36:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f8bnz3ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AA9C32782;
+	Tue, 30 Jul 2024 16:36:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357386;
-	bh=vB4LXHlHoKtorESnJwxlaLxqx2ZSVZ+lSVwQ/4R8kZ4=;
+	s=korg; t=1722357389;
+	bh=YpPApXoc+me1LdfbuZBAP/PGXZNi5K26Qu8veRI4dqo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHVZWt2iDQ6VTzvTclcpsM56hpgxWTj5VVeSwTAvh2QuQEezOQ5CR0qDJu/a8wxMH
-	 tX6KF2kFTEWCLqJtuNXPHCQEviOyxbWgDtfVDSgkWGZMZjFdal1FBVhBFyhEDpFbvr
-	 a+cR+EWgtKVlse/vMkbgKv+yjanjLWTLkHoh64T0=
+	b=f8bnz3aigRmDUIL+bsljgrZYKhFXtp9KUlKnd0Zb88vMNuyIbezIUI6FHMnHWAgaf
+	 HdBPa2EFmHGm4wr59bX825bu6zskZxGQQclsRrA4vAHXo8UvaREn0wVTAEjuqcWRjn
+	 G6Qy2x9/mZJ+Y1rGGu0ye+ji3wemF4Syfvn2GJOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Helgaas <helgaas@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>,
-	Serge Semin <fancer.lancer@gmail.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
+	Tengda Wu <wutengda@huaweicloud.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <kafai@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 250/568] PCI: keystone: Dont enable BAR 0 for AM654x
-Date: Tue, 30 Jul 2024 17:45:57 +0200
-Message-ID: <20240730151649.651431205@linuxfoundation.org>
+Subject: [PATCH 6.10 249/809] bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT
+Date: Tue, 30 Jul 2024 17:42:05 +0200
+Message-ID: <20240730151734.432761680@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,115 +46,113 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Tengda Wu <wutengda@huaweicloud.com>
 
-[ Upstream commit 9ffa0e70b2daf9b0271e4960b7c8a2350e2cda08 ]
+[ Upstream commit f7866c35873377313ff94398f17d425b28b71de1 ]
 
-After 6ab15b5e7057 ("PCI: dwc: keystone: Convert .scan_bus() callback to
-use add_bus"), ks_pcie_v3_65_add_bus() enabled BAR 0 for both v3.65a and
-v4.90a devices.  On the AM654x SoC, which uses v4.90a, enabling BAR 0
-causes Completion Timeouts when setting up MSI-X.  These timeouts delay
-boot of the AM654x by about 45 seconds.
+When loading a EXT program without specifying `attr->attach_prog_fd`,
+the `prog->aux->dst_prog` will be null. At this time, calling
+resolve_prog_type() anywhere will result in a null pointer dereference.
 
-Move the BAR 0 initialization to ks_pcie_msi_host_init(), which is only
-used for v3.65a devices, and remove ks_pcie_v3_65_add_bus().
+Example stack trace:
 
-[bhelgaas: commit log]
-Fixes: 6ab15b5e7057 ("PCI: dwc: keystone: Convert .scan_bus() callback to use add_bus")
-Link: https://lore.kernel.org/linux-pci/20240328085041.2916899-3-s-vadapalli@ti.com
-Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
-Suggested-by: Niklas Cassel <cassel@kernel.org>
-Suggested-by: Serge Semin <fancer.lancer@gmail.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+[    8.107863] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+[    8.108262] Mem abort info:
+[    8.108384]   ESR = 0x0000000096000004
+[    8.108547]   EC = 0x25: DABT (current EL), IL = 32 bits
+[    8.108722]   SET = 0, FnV = 0
+[    8.108827]   EA = 0, S1PTW = 0
+[    8.108939]   FSC = 0x04: level 0 translation fault
+[    8.109102] Data abort info:
+[    8.109203]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[    8.109399]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[    8.109614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[    8.109836] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000101354000
+[    8.110011] [0000000000000004] pgd=0000000000000000, p4d=0000000000000000
+[    8.112624] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
+[    8.112783] Modules linked in:
+[    8.113120] CPU: 0 PID: 99 Comm: may_access_dire Not tainted 6.10.0-rc3-next-20240613-dirty #1
+[    8.113230] Hardware name: linux,dummy-virt (DT)
+[    8.113390] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+[    8.113429] pc : may_access_direct_pkt_data+0x24/0xa0
+[    8.113746] lr : add_subprog_and_kfunc+0x634/0x8e8
+[    8.113798] sp : ffff80008283b9f0
+[    8.113813] x29: ffff80008283b9f0 x28: ffff800082795048 x27: 0000000000000001
+[    8.113881] x26: ffff0000c0bb2600 x25: 0000000000000000 x24: 0000000000000000
+[    8.113897] x23: ffff0000c1134000 x22: 000000000001864f x21: ffff0000c1138000
+[    8.113912] x20: 0000000000000001 x19: ffff0000c12b8000 x18: ffffffffffffffff
+[    8.113929] x17: 0000000000000000 x16: 0000000000000000 x15: 0720072007200720
+[    8.113944] x14: 0720072007200720 x13: 0720072007200720 x12: 0720072007200720
+[    8.113958] x11: 0720072007200720 x10: 0000000000f9fca4 x9 : ffff80008021f4e4
+[    8.113991] x8 : 0101010101010101 x7 : 746f72705f6d656d x6 : 000000001e0e0f5f
+[    8.114006] x5 : 000000000001864f x4 : ffff0000c12b8000 x3 : 000000000000001c
+[    8.114020] x2 : 0000000000000002 x1 : 0000000000000000 x0 : 0000000000000000
+[    8.114126] Call trace:
+[    8.114159]  may_access_direct_pkt_data+0x24/0xa0
+[    8.114202]  bpf_check+0x3bc/0x28c0
+[    8.114214]  bpf_prog_load+0x658/0xa58
+[    8.114227]  __sys_bpf+0xc50/0x2250
+[    8.114240]  __arm64_sys_bpf+0x28/0x40
+[    8.114254]  invoke_syscall.constprop.0+0x54/0xf0
+[    8.114273]  do_el0_svc+0x4c/0xd8
+[    8.114289]  el0_svc+0x3c/0x140
+[    8.114305]  el0t_64_sync_handler+0x134/0x150
+[    8.114331]  el0t_64_sync+0x168/0x170
+[    8.114477] Code: 7100707f 54000081 f9401c00 f9403800 (b9400403)
+[    8.118672] ---[ end trace 0000000000000000 ]---
+
+One way to fix it is by forcing `attach_prog_fd` non-empty when
+bpf_prog_load(). But this will lead to `libbpf_probe_bpf_prog_type`
+API broken which use verifier log to probe prog type and will log
+nothing if we reject invalid EXT prog before bpf_check().
+
+Another way is by adding null check in resolve_prog_type().
+
+The issue was introduced by commit 4a9c7bbe2ed4 ("bpf: Resolve to
+prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT") which wanted
+to correct type resolution for BPF_PROG_TYPE_TRACING programs. Before
+that, the type resolution of BPF_PROG_TYPE_EXT prog actually follows
+the logic below:
+
+  prog->aux->dst_prog ? prog->aux->dst_prog->type : prog->type;
+
+It implies that when EXT program is not yet attached to `dst_prog`,
+the prog type should be EXT itself. This code worked fine in the past.
+So just keep using it.
+
+Fix this by returning `prog->type` for BPF_PROG_TYPE_EXT if `dst_prog`
+is not present in resolve_prog_type().
+
+Fixes: 4a9c7bbe2ed4 ("bpf: Resolve to prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT")
+Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Martin KaFai Lau <kafai@fb.com>
+Link: https://lore.kernel.org/bpf/20240711145819.254178-2-wutengda@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pci-keystone.c | 52 ++++++++---------------
- 1 file changed, 18 insertions(+), 34 deletions(-)
+ include/linux/bpf_verifier.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
-index bf907c8ca25bb..9886fdd415039 100644
---- a/drivers/pci/controller/dwc/pci-keystone.c
-+++ b/drivers/pci/controller/dwc/pci-keystone.c
-@@ -290,6 +290,24 @@ static void ks_pcie_clear_dbi_mode(struct keystone_pcie *ks_pcie)
- 
- static int ks_pcie_msi_host_init(struct dw_pcie_rp *pp)
+diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
+index e4070fb02b110..ff2a6cdb1fa3f 100644
+--- a/include/linux/bpf_verifier.h
++++ b/include/linux/bpf_verifier.h
+@@ -846,7 +846,7 @@ static inline u32 type_flag(u32 type)
+ /* only use after check_attach_btf_id() */
+ static inline enum bpf_prog_type resolve_prog_type(const struct bpf_prog *prog)
  {
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
-+
-+	/* Configure and set up BAR0 */
-+	ks_pcie_set_dbi_mode(ks_pcie);
-+
-+	/* Enable BAR0 */
-+	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, 1);
-+	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, SZ_4K - 1);
-+
-+	ks_pcie_clear_dbi_mode(ks_pcie);
-+
-+	/*
-+	 * For BAR0, just setting bus address for inbound writes (MSI) should
-+	 * be sufficient.  Use physical address to avoid any conflicts.
-+	 */
-+	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, ks_pcie->app.start);
-+
- 	pp->msi_irq_chip = &ks_pcie_msi_irq_chip;
- 	return dw_pcie_allocate_domains(pp);
+-	return prog->type == BPF_PROG_TYPE_EXT ?
++	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->dst_prog) ?
+ 		prog->aux->dst_prog->type : prog->type;
  }
-@@ -447,44 +465,10 @@ static struct pci_ops ks_child_pcie_ops = {
- 	.write = pci_generic_config_write,
- };
  
--/**
-- * ks_pcie_v3_65_add_bus() - keystone add_bus post initialization
-- * @bus: A pointer to the PCI bus structure.
-- *
-- * This sets BAR0 to enable inbound access for MSI_IRQ register
-- */
--static int ks_pcie_v3_65_add_bus(struct pci_bus *bus)
--{
--	struct dw_pcie_rp *pp = bus->sysdata;
--	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
--	struct keystone_pcie *ks_pcie = to_keystone_pcie(pci);
--
--	if (!pci_is_root_bus(bus))
--		return 0;
--
--	/* Configure and set up BAR0 */
--	ks_pcie_set_dbi_mode(ks_pcie);
--
--	/* Enable BAR0 */
--	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, 1);
--	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, SZ_4K - 1);
--
--	ks_pcie_clear_dbi_mode(ks_pcie);
--
--	 /*
--	  * For BAR0, just setting bus address for inbound writes (MSI) should
--	  * be sufficient.  Use physical address to avoid any conflicts.
--	  */
--	dw_pcie_writel_dbi(pci, PCI_BASE_ADDRESS_0, ks_pcie->app.start);
--
--	return 0;
--}
--
- static struct pci_ops ks_pcie_ops = {
- 	.map_bus = dw_pcie_own_conf_map_bus,
- 	.read = pci_generic_config_read,
- 	.write = pci_generic_config_write,
--	.add_bus = ks_pcie_v3_65_add_bus,
- };
- 
- /**
 -- 
 2.43.0
 
