@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5CD1A6195;
-	Tue, 30 Jul 2024 16:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2AD1A6195;
+	Tue, 30 Jul 2024 16:54:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358444; cv=none; b=PvB5/Gd8yhTGPOpiMe+rvkOm/ZKjbDXUa0zfi4Fx5lHfdNqKzE+E0OAh3SyYfozazSryLLvE5lWYyoYh47GKNo2+vX/Wf6swN/hfD4rn+gHiqON+hdA78qDO8uuq+4M+V5vEP4DmgZN5Zq5iqicgY3p9iVo+yv0Vl/9jfBZaP3A=
+	t=1722358448; cv=none; b=evrQAuBn53pe/e6ppG0YX+/qzWuPOXwaTgMv0+tk9p0IaDRkrhf/qtEzPjTh9ScdcAwLDjhIhg2UPcoQXBpTH3V9M8L8DGh78PZyN/6g4or3YL2iiyPjNRRKsHDM43P1/MEOojkJrQ/OfAgm0349vrOOlVt0kliESOcDqj/oHtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358444; c=relaxed/simple;
-	bh=pbuY3n2kGsGgtGNWjUuFNS1TZB2waQlSqCms2Qcv0VU=;
+	s=arc-20240116; t=1722358448; c=relaxed/simple;
+	bh=Xd5Lf4vnHCoG4pWj4R/wTekavn0LiR6pzTOgUk+iWQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AEDOjv76y3QFe9aOK7MQ0NiPqwsWnwF4IC1ob5/QLu7cD50SoXBg96UDRNs7JKEtdlyvVIAp9mdfFJwNUX6hoV7NUakOu1o6XI8Wxd64UVsPRxbBt6QpIk7KFKp9vM2ndWqiElmo8iU33UPEN80iM0pJkAsuM0tjRjwf2GWjmZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avxiBVc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VdWsrB3i4Bq6PojLGXEDbNAaH4Nuut/Tc5Y0rVgLb4XCaPGCWY+ZLJ3cZAy8RMSk5Nn0yQW8myD9MF1g+VcBKBTzb1ruyvvaQvKUzC59VNl6ILLv0NGuImGZBDHhY2DN/FOyiK8lP5MAoiD3fSwkjiY666bbiP3IAKrImIhOL8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jLSK8+65; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avxiBVc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FA1C32782;
-	Tue, 30 Jul 2024 16:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jLSK8+65"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AF3FC32782;
+	Tue, 30 Jul 2024 16:54:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358444;
-	bh=pbuY3n2kGsGgtGNWjUuFNS1TZB2waQlSqCms2Qcv0VU=;
+	s=korg; t=1722358448;
+	bh=Xd5Lf4vnHCoG4pWj4R/wTekavn0LiR6pzTOgUk+iWQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avxiBVc565ngAtAdEIg9M5ttl4go0Xh9c2F8m6RBDbtccuQONzA5WC/E071AOvHro
-	 /gF0k+GAA5AZ/FqHUZIXvfbToavMOlCMZlhkzqQjYPVoO+fxFuHSMCKNWBBO1G6UVr
-	 g6dUFFtume30oHP2v6XgG9NWt8Pe11u8AVXMOSaU=
+	b=jLSK8+65ENyMFt0JpGQYOkZNoojbpIEMhi9eZTSMhd/Ib9ht6hQJ+IIovhr417bJS
+	 qPVLzU/+N4NkygdpJkKyUDHkmE6AYzJFGyAXjHLpswUveCTyx2p30n/Dyia3WvXwTd
+	 NY/2G25A7bM1XPDRWcaGygv3kk4nf6vAvjAHan3E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Hauke Mehrtens <hauke@hauke-m.de>
-Subject: [PATCH 6.1 391/440] wifi: mac80211: track capability/opmode NSS separately
-Date: Tue, 30 Jul 2024 17:50:24 +0200
-Message-ID: <20240730151631.078259170@linuxfoundation.org>
+	Michael Walle <mwalle@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 360/809] drm/mediatek/dp: Fix spurious kfree()
+Date: Tue, 30 Jul 2024 17:43:56 +0200
+Message-ID: <20240730151738.866543556@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,195 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Michael Walle <mwalle@kernel.org>
 
-commit a8bca3e9371dc5e276af4168be099b2a05554c2a upstream.
+[ Upstream commit 8ad49a92cff4bab13eb2f2725243f5f31eff3f3b ]
 
-We're currently tracking rx_nss for each station, and that
-is meant to be initialized to the capability NSS and later
-reduced by the operating mode notification NSS.
+drm_edid_to_sad() might return an error or just zero. If that is the
+case, we must not free the SADs because there was no allocation in
+the first place.
 
-However, we're mixing up capabilities and operating mode
-NSS in the same variable. This forces us to recalculate
-the NSS capability on operating mode notification RX,
-which is a bit strange; due to the previous fix I had to
-never keep rx_nss as zero, it also means that the capa is
-never taken into account properly.
-
-Fix all this by storing the capability value, that can be
-recalculated unconditionally whenever needed, and storing
-the operating mode notification NSS separately, taking it
-into account when assigning the final rx_nss value.
-
-Cc: stable@vger.kernel.org
-Fixes: dd6c064cfc3f ("wifi: mac80211: set station RX-NSS on reconfig")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://msgid.link/20240228120157.0e1c41924d1d.I0acaa234e0267227b7e3ef81a59117c8792116bc@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[Fixed trivial merge conflict in copyright year net/mac80211/sta_info.h]
-Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: dab12fa8d2bd ("drm/mediatek/dp: fix memory leak on ->get_edid callback audio detection")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20240604083337.1879188-1-mwalle@kernel.org/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c         |    2 -
- net/mac80211/ieee80211_i.h |    2 -
- net/mac80211/rate.c        |    2 -
- net/mac80211/sta_info.h    |    6 ++++-
- net/mac80211/vht.c         |   46 +++++++++++++++++++++------------------------
- 5 files changed, 30 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_dp.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1775,7 +1775,7 @@ static int sta_link_apply_parameters(str
- 					      sband->band);
- 	}
+diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
+index 536366956447a..ada12927bbacf 100644
+--- a/drivers/gpu/drm/mediatek/mtk_dp.c
++++ b/drivers/gpu/drm/mediatek/mtk_dp.c
+@@ -2073,9 +2073,15 @@ static const struct drm_edid *mtk_dp_edid_read(struct drm_bridge *bridge,
+ 		 */
+ 		const struct edid *edid = drm_edid_raw(drm_edid);
+ 		struct cea_sad *sads;
++		int ret;
  
--	ieee80211_sta_set_rx_nss(link_sta);
-+	ieee80211_sta_init_nss(link_sta);
+-		audio_caps->sad_count = drm_edid_to_sad(edid, &sads);
+-		kfree(sads);
++		ret = drm_edid_to_sad(edid, &sads);
++		/* Ignore any errors */
++		if (ret < 0)
++			ret = 0;
++		if (ret)
++			kfree(sads);
++		audio_caps->sad_count = ret;
  
- 	return ret;
- }
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -2071,7 +2071,7 @@ enum ieee80211_sta_rx_bandwidth
- ieee80211_sta_cap_rx_bw(struct link_sta_info *link_sta);
- enum ieee80211_sta_rx_bandwidth
- ieee80211_sta_cur_vht_bw(struct link_sta_info *link_sta);
--void ieee80211_sta_set_rx_nss(struct link_sta_info *link_sta);
-+void ieee80211_sta_init_nss(struct link_sta_info *link_sta);
- enum ieee80211_sta_rx_bandwidth
- ieee80211_chan_width_to_rx_bw(enum nl80211_chan_width width);
- enum nl80211_chan_width
---- a/net/mac80211/rate.c
-+++ b/net/mac80211/rate.c
-@@ -37,7 +37,7 @@ void rate_control_rate_init(struct sta_i
- 	struct ieee80211_supported_band *sband;
- 	struct ieee80211_chanctx_conf *chanctx_conf;
- 
--	ieee80211_sta_set_rx_nss(&sta->deflink);
-+	ieee80211_sta_init_nss(&sta->deflink);
- 
- 	if (!ref)
- 		return;
---- a/net/mac80211/sta_info.h
-+++ b/net/mac80211/sta_info.h
-@@ -3,7 +3,7 @@
-  * Copyright 2002-2005, Devicescape Software, Inc.
-  * Copyright 2013-2014  Intel Mobile Communications GmbH
-  * Copyright(c) 2015-2017 Intel Deutschland GmbH
-- * Copyright(c) 2020-2022 Intel Corporation
-+ * Copyright(c) 2020-2024 Intel Corporation
-  */
- 
- #ifndef STA_INFO_H
-@@ -485,6 +485,8 @@ struct ieee80211_fragment_cache {
-  *	same for non-MLD STA. This is used as key for searching link STA
-  * @link_id: Link ID uniquely identifying the link STA. This is 0 for non-MLD
-  *	and set to the corresponding vif LinkId for MLD STA
-+ * @op_mode_nss: NSS limit as set by operating mode notification, or 0
-+ * @capa_nss: NSS limit as determined by local and peer capabilities
-  * @link_hash_node: hash node for rhashtable
-  * @sta: Points to the STA info
-  * @gtk: group keys negotiated with this station, if any
-@@ -520,6 +522,8 @@ struct link_sta_info {
- 	u8 addr[ETH_ALEN];
- 	u8 link_id;
- 
-+	u8 op_mode_nss, capa_nss;
-+
- 	struct rhlist_head link_hash_node;
- 
- 	struct sta_info *sta;
---- a/net/mac80211/vht.c
-+++ b/net/mac80211/vht.c
-@@ -4,7 +4,7 @@
-  *
-  * Portions of this file
-  * Copyright(c) 2015 - 2016 Intel Deutschland GmbH
-- * Copyright (C) 2018 - 2023 Intel Corporation
-+ * Copyright (C) 2018 - 2024 Intel Corporation
-  */
- 
- #include <linux/ieee80211.h>
-@@ -541,15 +541,11 @@ ieee80211_sta_cur_vht_bw(struct link_sta
- 	return bw;
- }
- 
--void ieee80211_sta_set_rx_nss(struct link_sta_info *link_sta)
-+void ieee80211_sta_init_nss(struct link_sta_info *link_sta)
- {
- 	u8 ht_rx_nss = 0, vht_rx_nss = 0, he_rx_nss = 0, eht_rx_nss = 0, rx_nss;
- 	bool support_160;
- 
--	/* if we received a notification already don't overwrite it */
--	if (link_sta->pub->rx_nss)
--		return;
--
- 	if (link_sta->pub->eht_cap.has_eht) {
- 		int i;
- 		const u8 *rx_nss_mcs = (void *)&link_sta->pub->eht_cap.eht_mcs_nss_supp;
-@@ -627,7 +623,15 @@ void ieee80211_sta_set_rx_nss(struct lin
- 	rx_nss = max(vht_rx_nss, ht_rx_nss);
- 	rx_nss = max(he_rx_nss, rx_nss);
- 	rx_nss = max(eht_rx_nss, rx_nss);
--	link_sta->pub->rx_nss = max_t(u8, 1, rx_nss);
-+	rx_nss = max_t(u8, 1, rx_nss);
-+	link_sta->capa_nss = rx_nss;
-+
-+	/* that shouldn't be set yet, but we can handle it anyway */
-+	if (link_sta->op_mode_nss)
-+		link_sta->pub->rx_nss =
-+			min_t(u8, rx_nss, link_sta->op_mode_nss);
-+	else
-+		link_sta->pub->rx_nss = rx_nss;
- }
- 
- u32 __ieee80211_vht_handle_opmode(struct ieee80211_sub_if_data *sdata,
-@@ -637,7 +641,7 @@ u32 __ieee80211_vht_handle_opmode(struct
- 	enum ieee80211_sta_rx_bandwidth new_bw;
- 	struct sta_opmode_info sta_opmode = {};
- 	u32 changed = 0;
--	u8 nss, cur_nss;
-+	u8 nss;
- 
- 	/* ignore - no support for BF yet */
- 	if (opmode & IEEE80211_OPMODE_NOTIF_RX_NSS_TYPE_BF)
-@@ -647,23 +651,17 @@ u32 __ieee80211_vht_handle_opmode(struct
- 	nss >>= IEEE80211_OPMODE_NOTIF_RX_NSS_SHIFT;
- 	nss += 1;
- 
--	if (link_sta->pub->rx_nss != nss) {
--		cur_nss = link_sta->pub->rx_nss;
--		/* Reset rx_nss and call ieee80211_sta_set_rx_nss() which
--		 * will set the same to max nss value calculated based on capability.
--		 */
--		link_sta->pub->rx_nss = 0;
--		ieee80211_sta_set_rx_nss(link_sta);
--		/* Do not allow an nss change to rx_nss greater than max_nss
--		 * negotiated and capped to APs capability during association.
--		 */
--		if (nss <= link_sta->pub->rx_nss) {
--			link_sta->pub->rx_nss = nss;
--			sta_opmode.rx_nss = nss;
--			changed |= IEEE80211_RC_NSS_CHANGED;
--			sta_opmode.changed |= STA_OPMODE_N_SS_CHANGED;
-+	if (link_sta->op_mode_nss != nss) {
-+		if (nss <= link_sta->capa_nss) {
-+			link_sta->op_mode_nss = nss;
-+
-+			if (nss != link_sta->pub->rx_nss) {
-+				link_sta->pub->rx_nss = nss;
-+				changed |= IEEE80211_RC_NSS_CHANGED;
-+				sta_opmode.rx_nss = link_sta->pub->rx_nss;
-+				sta_opmode.changed |= STA_OPMODE_N_SS_CHANGED;
-+			}
- 		} else {
--			link_sta->pub->rx_nss = cur_nss;
- 			pr_warn_ratelimited("Ignoring NSS change in VHT Operating Mode Notification from %pM with invalid nss %d",
- 					    link_sta->pub->addr, nss);
- 		}
+ 		/*
+ 		 * FIXME: This should use connector->display_info.has_audio from
+-- 
+2.43.0
+
 
 
