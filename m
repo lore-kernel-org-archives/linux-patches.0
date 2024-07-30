@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191B41A6192;
-	Tue, 30 Jul 2024 17:05:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588B51A6192;
+	Tue, 30 Jul 2024 17:05:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359133; cv=none; b=qyxrVkl7pNTKp9RUxvUKbUiqbZMspUorwvmRcs0c0gu3A4tJVgM0kAGjOxW9k6902i9ShSzfW93QKomLMZNnR9y4i7roSNWPntYbMsk7UVuLzo2opxvorm9I2aA3vCFuc9K2RiFuZ1eHI3XbWDtatSWEH9Z7iHVhKx0PtSxA2dQ=
+	t=1722359136; cv=none; b=LdRUMQyhN4yLgODq1CM5JioYGqf26s15/Q+c36nDiD7ChtdTCDzTUuFDviFwFvJgRulDP0S0AeGzKp6LphUo8kMzn7iUJZa5KufgzXko2I6tzFy18TDw8KYU/HNWHglFUkg2I9BxaVORMuA3PZPqLdfnZU7N2XPHt8//zxQw5r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359133; c=relaxed/simple;
-	bh=w0Oj7KzR6oBJkPhFxeLHaA8gpxtLGp0bzIwy8uxFUdk=;
+	s=arc-20240116; t=1722359136; c=relaxed/simple;
+	bh=coh/iGgDO0f/42m29oDdeuwmQHtACBWYiQgowOXfD84=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o6oyJDJ4J8Sv3K64K5msq2Zoy6y29c60OWY+Z5omgfagAU+jI2vLRn0lUfDaeQeUpXfbYOA7AvCPHWwB6t3kBPgdXscbiRDIBVrt01S+HW2FZ422S6k0cdoT3NucLJjdOgVhhaj5x+3te6hzk1kgK41HMqa9hdTcxb9poda9PJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rn+vD0g6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EPQZcWgc7rZWDl6zO+rbdcI5/0jixMhnH98ZaMcaMjB1mtpDWURMJ4D/uEPcDM+4y844RgnuxHfUL+G6yhTGXrxBEfdbuBGQ9sAX54mvYPRmw40lWD9hbfieGUPIPApONOV5IMlKsAjtQdj24EbXc8OZwiTGkLC3DD+CzPJMESc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPqB52kU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rn+vD0g6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1FBC32782;
-	Tue, 30 Jul 2024 17:05:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPqB52kU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD3A4C32782;
+	Tue, 30 Jul 2024 17:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359133;
-	bh=w0Oj7KzR6oBJkPhFxeLHaA8gpxtLGp0bzIwy8uxFUdk=;
+	s=korg; t=1722359136;
+	bh=coh/iGgDO0f/42m29oDdeuwmQHtACBWYiQgowOXfD84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn+vD0g6Lrd3wTBSeItexA8xljbwox7Fca5DqJsovVIT57rgflBZIfz78g7kwClnK
-	 3AGg/Y7Slho8ifavxJGg8igHj2mQ9CVNsV/BwrQaOlmn7Vid4h1akN4ch3UeuS0GcQ
-	 a+qV+fcwIGs5PHXSi5DdMNoXSeVgg+gdA+U33xIw=
+	b=mPqB52kUC43uEOf5ARgwoe+k9YYeOHke5jdMSpPhByN9XBaRegnp6upT32AIlNsDr
+	 yOToshxFhZJIaIhd4ZQXAuDjZeGjT5ds7DTyyrLNHFE3t3iIXwNhV7QUdnM+okJbcJ
+	 G1jPtbmG0Ajryx2Kv3HyvrTknxbmxN0EzpglN200=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 416/809] clk: qcom: gpucc-sa8775p: Update wait_val fields for GPU GDSCs
-Date: Tue, 30 Jul 2024 17:44:52 +0200
-Message-ID: <20240730151741.126793172@linuxfoundation.org>
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.6 415/568] KVM: VMX: Split out the non-virtualization part of vmx_interrupt_blocked()
+Date: Tue, 30 Jul 2024 17:48:42 +0200
+Message-ID: <20240730151656.093389952@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,54 +45,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 211681998d706d1e0fff6b62f89efcdf29c24978 ]
+commit 322a569c4b4188a0da2812f9e952780ce09b74ba upstream.
 
-Update wait_val fields as per the default hardware values of the GDSC as
-otherwise it would lead to GDSC FSM state stuck causing power on/off
-failures of the GSDC.
+Move the non-VMX chunk of the "interrupt blocked" checks to a separate
+helper so that KVM can reuse the code to detect if interrupts are blocked
+for L2, e.g. to determine if a virtual interrupt _for L2_ is a valid wake
+event.  If L1 disables HLT-exiting for L2, nested APICv is enabled, and L2
+HLTs, then L2 virtual interrupts are valid wake events, but if and only if
+interrupts are unblocked for L2.
 
-Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-6-adcc756a23df@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240607172609.3205077-4-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gpucc-sa8775p.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kvm/vmx/vmx.c |   11 ++++++++---
+ arch/x86/kvm/vmx/vmx.h |    1 +
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
-index 1f7a02a7503d4..3deabf8333883 100644
---- a/drivers/clk/qcom/gpucc-sa8775p.c
-+++ b/drivers/clk/qcom/gpucc-sa8775p.c
-@@ -523,6 +523,9 @@ static struct clk_regmap *gpu_cc_sa8775p_clocks[] = {
+--- a/arch/x86/kvm/vmx/vmx.c
++++ b/arch/x86/kvm/vmx/vmx.c
+@@ -5048,14 +5048,19 @@ static int vmx_nmi_allowed(struct kvm_vc
+ 	return !vmx_nmi_blocked(vcpu);
+ }
  
- static struct gdsc cx_gdsc = {
- 	.gdscr = 0x9108,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.gds_hw_ctrl = 0x953c,
- 	.pd = {
- 		.name = "cx_gdsc",
-@@ -533,6 +536,9 @@ static struct gdsc cx_gdsc = {
++bool __vmx_interrupt_blocked(struct kvm_vcpu *vcpu)
++{
++	return !(vmx_get_rflags(vcpu) & X86_EFLAGS_IF) ||
++	       (vmcs_read32(GUEST_INTERRUPTIBILITY_INFO) &
++		(GUEST_INTR_STATE_STI | GUEST_INTR_STATE_MOV_SS));
++}
++
+ bool vmx_interrupt_blocked(struct kvm_vcpu *vcpu)
+ {
+ 	if (is_guest_mode(vcpu) && nested_exit_on_intr(vcpu))
+ 		return false;
  
- static struct gdsc gx_gdsc = {
- 	.gdscr = 0x905c,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "gx_gdsc",
- 		.power_on = gdsc_gx_do_nothing_enable,
--- 
-2.43.0
-
+-	return !(vmx_get_rflags(vcpu) & X86_EFLAGS_IF) ||
+-	       (vmcs_read32(GUEST_INTERRUPTIBILITY_INFO) &
+-		(GUEST_INTR_STATE_STI | GUEST_INTR_STATE_MOV_SS));
++	return __vmx_interrupt_blocked(vcpu);
+ }
+ 
+ static int vmx_interrupt_allowed(struct kvm_vcpu *vcpu, bool for_injection)
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -400,6 +400,7 @@ u64 construct_eptp(struct kvm_vcpu *vcpu
+ bool vmx_guest_inject_ac(struct kvm_vcpu *vcpu);
+ void vmx_update_exception_bitmap(struct kvm_vcpu *vcpu);
+ bool vmx_nmi_blocked(struct kvm_vcpu *vcpu);
++bool __vmx_interrupt_blocked(struct kvm_vcpu *vcpu);
+ bool vmx_interrupt_blocked(struct kvm_vcpu *vcpu);
+ bool vmx_get_nmi_mask(struct kvm_vcpu *vcpu);
+ void vmx_set_nmi_mask(struct kvm_vcpu *vcpu, bool masked);
 
 
