@@ -1,53 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC977188012;
-	Tue, 30 Jul 2024 16:32:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271C58BE8;
+	Tue, 30 Jul 2024 16:32:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357162; cv=none; b=du1ZZlqZi6zE9TSqgY+MlTAZ8Uta4q+f+/MpAU9YPlBNd439TrZY4vAEl0wSm6byq1qnsLrVQGaQ0fW/iEzCfvqvxE9tvxAOOuo8d6tZWA03vY4f8aT9NQ6+zOXRyuxFomOGiwybU52iokiJ64qspuyFef8Q4ayMCY6nglpywwE=
+	t=1722357165; cv=none; b=mUgtYZR/YkKOceNd3U39F01sB2f3GOsZM9kDK8E7Ygou60d/PF61mV8NcktRd40C4Z19BWcSUZHxmYsEK1IEchycT3YX3zPhnvsYcw5Qf7F2Uxfo+M/n3+eXp4yKqQEo0L3nmBfYhxmSNef67i8b4+0skTo/cKnDKa3b+qypA7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357162; c=relaxed/simple;
-	bh=k+MPZvISK33eEfEnAyDAQiMSWgCq9VwvvA+EaA5iDb4=;
+	s=arc-20240116; t=1722357165; c=relaxed/simple;
+	bh=UTxYB8KIecEcOueIKsAF9qrYyWOamen8DAUxKaMi+RE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KiBabxb5ox5DdL4+FlBfu7mfJRZprFLdY1n/JWYqWbG/ujxFHZ6j40cDMkAeL+04na4HokdtwgPz2VumTgNGrYK1P1WgorV8AYnj/FKFuGQchW3DigMUdQR1oQnizdxymVjOp18G8Yu5Sv+qZGoLtu27OgLKdqy8Ctypd0YOsTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esjcqGxP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cTcauhd+mktxJPpWCySIldIK42l5Uf/kGFZkoHvQPGvlhHMMmw+5saepXlVxuL2xXsOjQanmR8jpfeo49Oxg+WLSXUrgLzSm48PyGBCNal/qB8e2x3gaE6C09mSuUYYleib7WXSv8R/GjJnbpfRlla6nbFdGh9oAuZbYW+WYX/E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HerHzkTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esjcqGxP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F74BC32782;
-	Tue, 30 Jul 2024 16:32:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HerHzkTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D69C32782;
+	Tue, 30 Jul 2024 16:32:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357161;
-	bh=k+MPZvISK33eEfEnAyDAQiMSWgCq9VwvvA+EaA5iDb4=;
+	s=korg; t=1722357165;
+	bh=UTxYB8KIecEcOueIKsAF9qrYyWOamen8DAUxKaMi+RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esjcqGxPizT1l+zJ1TaItlPGaH6dOvOaRZ8zyLdXesgRYACdwlVG7AS0P/74x0j1K
-	 Y9Xz2suy/DbPK/QpOhavjxlvrx6QflGmrJk1Q7fW+WpFHvqtGm1ZzutioDEOMbBKCR
-	 eRpwMI3MYrfjVG3n9NooS+CdONWQieCMGYNThsuM=
+	b=HerHzkTd8BhnKDPpKt8o0LJu5K99nXeTlZRiZH1t6FleEoOGfjaHAZ2p6QUav4ryR
+	 uO2pIDuH/423geFuP4bxu1K9z5GCKUiIXMpL/KJwpdIuLYI/Dc/FtiGXkoRFsYS9vI
+	 lOEYZvHtDjZHfsNWhyXkAlxLULFXX+PMhoGaQU/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junhao He <hejunhao3@huawei.com>,
-	ravi.bangoria@amd.com,
-	james.clark@arm.com,
-	prime.zeng@hisilicon.com,
-	cuigaosheng1@huawei.com,
-	jonathan.cameron@huawei.com,
-	linuxarm@huawei.com,
-	yangyicong@huawei.com,
-	robh@kernel.org,
-	renyu.zj@linux.alibaba.com,
-	kjain@linux.ibm.com,
-	john.g.garry@oracle.com,
-	linux-arm-kernel@lists.infradead.org,
-	Namhyung Kim <namhyung@kernel.org>,
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 225/568] perf pmus: Fixes always false when compare duplicates aliases
-Date: Tue, 30 Jul 2024 17:45:32 +0200
-Message-ID: <20240730151648.676260568@linuxfoundation.org>
+Subject: [PATCH 6.1 265/440] s390/dasd: fix error checks in dasd_copy_pair_store()
+Date: Tue, 30 Jul 2024 17:48:18 +0200
+Message-ID: <20240730151626.191087202@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -57,84 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junhao He <hejunhao3@huawei.com>
+From: Carlos López <clopez@suse.de>
 
-[ Upstream commit dd9a426eade634bf794c7e0f1b0c6659f556942f ]
+[ Upstream commit 8e64d2356cbc800b4cd0e3e614797f76bcf0cdb8 ]
 
-In the previous loop, all the members in the aliases[j-1] have been freed
-and set to NULL. But in this loop, the function pmu_alias_is_duplicate()
-compares the aliases[j] with the aliases[j-1] that has already been
-disposed, so the function will always return false and duplicate aliases
-will never be discarded.
+dasd_add_busid() can return an error via ERR_PTR() if an allocation
+fails. However, two callsites in dasd_copy_pair_store() do not check
+the result, potentially resulting in a NULL pointer dereference. Fix
+this by checking the result with IS_ERR() and returning the error up
+the stack.
 
-If we find duplicate aliases, it skips the zfree aliases[j], which is
-accompanied by a memory leak.
-
-We can use the next aliases[j+1] to theck for duplicate aliases to
-fixes the aliases NULL pointer dereference, then goto zfree code snippet
-to release it.
-
-After patch testing:
- $ perf list --unit=hisi_sicl,cpa pmu
-
- uncore cpa:
-   cpa_p0_rd_dat_32b
-        [Number of read ops transmitted by the P0 port which size is 32 bytes.
-         Unit: hisi_sicl,cpa]
-   cpa_p0_rd_dat_64b
-        [Number of read ops transmitted by the P0 port which size is 64 bytes.
-         Unit: hisi_sicl,cpa]
-
-Fixes: c3245d2093c1 ("perf pmu: Abstract alias/event struct")
-Signed-off-by: Junhao He <hejunhao3@huawei.com>
-Cc: ravi.bangoria@amd.com
-Cc: james.clark@arm.com
-Cc: prime.zeng@hisilicon.com
-Cc: cuigaosheng1@huawei.com
-Cc: jonathan.cameron@huawei.com
-Cc: linuxarm@huawei.com
-Cc: yangyicong@huawei.com
-Cc: robh@kernel.org
-Cc: renyu.zj@linux.alibaba.com
-Cc: kjain@linux.ibm.com
-Cc: john.g.garry@oracle.com
-Cc: linux-arm-kernel@lists.infradead.org
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Link: https://lore.kernel.org/r/20240614094318.11607-1-hejunhao3@huawei.com
+Fixes: a91ff09d39f9b ("s390/dasd: add copy pair setup")
+Signed-off-by: Carlos López <clopez@suse.de>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240715112434.2111291-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/pmus.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd_devmap.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
-index cec869cbe163a..54a237b2b8538 100644
---- a/tools/perf/util/pmus.c
-+++ b/tools/perf/util/pmus.c
-@@ -470,8 +470,8 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
- 	qsort(aliases, len, sizeof(struct sevent), cmp_sevent);
- 	for (int j = 0; j < len; j++) {
- 		/* Skip duplicates */
--		if (j > 0 && pmu_alias_is_duplicate(&aliases[j], &aliases[j - 1]))
--			continue;
-+		if (j < len - 1 && pmu_alias_is_duplicate(&aliases[j], &aliases[j + 1]))
-+			goto free;
+diff --git a/drivers/s390/block/dasd_devmap.c b/drivers/s390/block/dasd_devmap.c
+index b2a4c34330573..1129f6ae98b57 100644
+--- a/drivers/s390/block/dasd_devmap.c
++++ b/drivers/s390/block/dasd_devmap.c
+@@ -2135,13 +2135,19 @@ static ssize_t dasd_copy_pair_store(struct device *dev,
  
- 		print_cb->print_event(print_state,
- 				aliases[j].pmu_name,
-@@ -484,6 +484,7 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
- 				aliases[j].desc,
- 				aliases[j].long_desc,
- 				aliases[j].encoding_desc);
-+free:
- 		zfree(&aliases[j].name);
- 		zfree(&aliases[j].alias);
- 		zfree(&aliases[j].scale_unit);
+ 	/* allocate primary devmap if needed */
+ 	prim_devmap = dasd_find_busid(prim_busid);
+-	if (IS_ERR(prim_devmap))
++	if (IS_ERR(prim_devmap)) {
+ 		prim_devmap = dasd_add_busid(prim_busid, DASD_FEATURE_DEFAULT);
++		if (IS_ERR(prim_devmap))
++			return PTR_ERR(prim_devmap);
++	}
+ 
+ 	/* allocate secondary devmap if needed */
+ 	sec_devmap = dasd_find_busid(sec_busid);
+-	if (IS_ERR(sec_devmap))
++	if (IS_ERR(sec_devmap)) {
+ 		sec_devmap = dasd_add_busid(sec_busid, DASD_FEATURE_DEFAULT);
++		if (IS_ERR(sec_devmap))
++			return PTR_ERR(sec_devmap);
++	}
+ 
+ 	/* setting copy relation is only allowed for offline secondary */
+ 	if (sec_devmap->device)
 -- 
 2.43.0
 
