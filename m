@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F98F184549;
-	Tue, 30 Jul 2024 16:56:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31562184549;
+	Tue, 30 Jul 2024 16:56:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358601; cv=none; b=hUp+HV5+pD7tUTMDtejAL023de42E70jrf/EIdLZrO80CDisS3Nm0PXuee19x/71SNZfaaIZJTGtJl348/jew1rI3wbgicjPhYRtC7UD1bxJWtVXLT+R7Otd81ke8k4D3XOssdbMsjPuw+j44LwvX6ohkVjb7Om4nckuY+g1qh4=
+	t=1722358605; cv=none; b=UqKPdEFZ+QCLfGxCxOIHvHuoyK9iX+eI7blUqzMzcFgWYxy9fXy5oc8AxhcvxFMkmmE/bE1Vl9GKoCwMs3cBw26GORMMdpTwm9qoBOofeqJvhKBqMkFEg06PriQEXBD6i2/bYx46Ox2FVjbn9Ztu8r3Hlnh/aAaPMYd3OanufDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358601; c=relaxed/simple;
-	bh=HvllZ+pJQ+1UfBQEoIrU7FoNIEVc4HQFTLMeNgNYnhk=;
+	s=arc-20240116; t=1722358605; c=relaxed/simple;
+	bh=U81QzIDRW9gJ1TrbbYApO5o5FlYW1ThMCA0Ekltb0Qo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dg1UfBrlyaNk7RzH6KcVw5vNt0cmC6pNR9DyH37v+TxbUO6STBo7GTweJ3gXN9AGaCO/XhRNDbgyY5pSTt3dp6u1AeGCpbdKGIhroX/iapaRwmqunteinO4/wmxae6MN3Q+uV4MyDQETTqNeqvFiXEpLwkXYPzAWwHzvP+fJaso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K10ltQCh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ri3N62cQ/7u946JTfhEQMSFYUtdqYOG0pIIOCTHzGaZVzDkK4iAXGWJrdhJAIxEeCsY74ipxPhwTg6Cei+/q+MCxBk37Mhl+FZBUejr79eFOcA14mk6eqDRPq/CIUavNjJIXrRHmtqhrhfsXbzIUkFa1npmti3b2OtQPAdwisis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xfAfpNja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K10ltQCh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B314C32782;
-	Tue, 30 Jul 2024 16:56:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xfAfpNja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF431C32782;
+	Tue, 30 Jul 2024 16:56:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358601;
-	bh=HvllZ+pJQ+1UfBQEoIrU7FoNIEVc4HQFTLMeNgNYnhk=;
+	s=korg; t=1722358605;
+	bh=U81QzIDRW9gJ1TrbbYApO5o5FlYW1ThMCA0Ekltb0Qo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K10ltQCh5zMYFEySEQ/gZZ40QFSReXXjejtlyORV13oSn/nC86yWCLp/T/nxRYV20
-	 dtWVkwTuCGePwuM+WQWjPiEYZEkZYLn77h2KvPrlL3o5O2k8W6sceMKpPZWhgKENvJ
-	 meZzhppkHeSHKgpnXzjv8c7S/hoZuM2vMdMeJF8Q=
+	b=xfAfpNjaGJuSPIhOWm/BYdIlD8IS7UHJcJir8xWoUoZfBCJSUJhrC78btVe/ZLwuj
+	 IHFh39Sq4YJx4v5OLPObXexaCaFTn51P5m4ZqJlwhmrt3IFM36AlGPNvTb3fzwu8Lq
+	 ekb1KGzhIf2ztoSVtmAsueXfrAtTkfJQ+TO6rueY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Benato <benato.denis96@gmail.com>,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 377/809] platform/x86: asus-wmi: fix TUF laptop RGB variant
-Date: Tue, 30 Jul 2024 17:44:13 +0200
-Message-ID: <20240730151739.552097065@linuxfoundation.org>
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 6.6 378/568] char: tpm: Fix possible memory leak in tpm_bios_measurements_open()
+Date: Tue, 30 Jul 2024 17:48:05 +0200
+Message-ID: <20240730151654.639188160@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,57 +44,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit d8b17a364ec48239fccb65efe74bb485e79e6743 ]
+commit 5d8e2971e817bb64225fc0b6327a78752f58a9aa upstream.
 
-In kbd_rgb_mode_store the dev_get_drvdata() call was assuming the device
-data was asus_wmi when it was actually led_classdev.
+In tpm_bios_measurements_open(), get_device() is called on the device
+embedded in struct tpm_chip. In the error path, however, put_device() is
+not called. This results in a reference count leak, which prevents the
+device from being properly released. This commit makes sure to call
+put_device() when the seq_open() call fails.
 
-This patch corrects this by making the correct chain of calls to get the
-asus_wmi driver data.
-
-Fixes: ae834a549ec1 ("platform/x86: asus-wmi: add support variant of TUF RGB")
-Tested-by: Denis Benato <benato.denis96@gmail.com>
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240716011130.17464-2-luke@ljones.dev
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # +v4.18
+Fixes: 9b01b5356629 ("tpm: Move shared eventlog functions to common.c")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-wmi.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/char/tpm/eventlog/common.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
-index 3f9b6285c9a66..bc9c5db383244 100644
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -879,10 +879,14 @@ static ssize_t kbd_rgb_mode_store(struct device *dev,
- 				 struct device_attribute *attr,
- 				 const char *buf, size_t count)
- {
--	struct asus_wmi *asus = dev_get_drvdata(dev);
- 	u32 cmd, mode, r, g, b, speed;
-+	struct led_classdev *led;
-+	struct asus_wmi *asus;
- 	int err;
+--- a/drivers/char/tpm/eventlog/common.c
++++ b/drivers/char/tpm/eventlog/common.c
+@@ -47,6 +47,8 @@ static int tpm_bios_measurements_open(st
+ 	if (!err) {
+ 		seq = file->private_data;
+ 		seq->private = chip;
++	} else {
++		put_device(&chip->dev);
+ 	}
  
-+	led = dev_get_drvdata(dev);
-+	asus = container_of(led, struct asus_wmi, kbd_led);
-+
- 	if (sscanf(buf, "%d %d %d %d %d %d", &cmd, &mode, &r, &g, &b, &speed) != 6)
- 		return -EINVAL;
- 
--- 
-2.43.0
-
+ 	return err;
 
 
