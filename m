@@ -1,43 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D83188017;
-	Tue, 30 Jul 2024 17:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A37E188017;
+	Tue, 30 Jul 2024 17:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359611; cv=none; b=tRWRf+Qg4qvQl2+oqqF4O5t09VUJ4ZWSeWQXFHL4iKpYLXm7xOQ8vr154mdrDJ8MkGDPzHAfUQgQs6IFVl1Fre4M7KAmpGrsZHR+GltdHY05ZWu9PYwGLVYjGLlpmBvBs5NjK2kT7e+lJB0aL15EA5T4EX2aXi4YZI+CTKA6uQM=
+	t=1722359614; cv=none; b=txUBAiV68QHL6uXsvNa2qIDBWQY8dA2+TdJ8DuSqhD6ayHFfto4OTE6Dj+98SkDU89qJ6WHKZCxQYxa0hLfcMtjktWoTAsgQpquotWZKD9iN+Lo8kNHoKno0JNr+0IVpo8cjo4aGsea4fe9W4WLCCAlegKyuFqKx596wbs467TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359611; c=relaxed/simple;
-	bh=HXVXF91pb216vefyfuC/Fx0rJ3iwX7leGQIgaPUclnw=;
+	s=arc-20240116; t=1722359614; c=relaxed/simple;
+	bh=I6KwDJ5kT7jY4W6xiKA9RwIk7+Ret+GRum05vpE52mo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTAXwCVcrPi/7PkrpIMLgSrf6v0Z0op1tMTWTg3YnHzVciW2+HLsFFHNS4G2j7m2i/yusdY6DO7vf6/spa1a2jZTr3AgWgXDPiHGrUw6U/gLPwzItwjrCgb3lI9s7nOTV1U++Zm/XKeKlUgdLxCT9BFpUoXmXULVCUi+Et4Rqrw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OXKdnJss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eAzCpolD3JNklsVGj6iKPPDVcsqYagpimSm2+O4BeyfTgXyyKwjpGTk6KyNBVLHlZZg9KpeEuazJac4gE706FCKLD7Um/e26P+2W+1GfgiqIY0nHF5pM4JS/h4pUt2dbFpKol1Jx+AkwvyQcq2R9FUdH/7K7xpEFR8A0OuUHEm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ps321u9e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OXKdnJss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B11C4AF0E;
-	Tue, 30 Jul 2024 17:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ps321u9e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A974FC32782;
+	Tue, 30 Jul 2024 17:13:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359610;
-	bh=HXVXF91pb216vefyfuC/Fx0rJ3iwX7leGQIgaPUclnw=;
+	s=korg; t=1722359614;
+	bh=I6KwDJ5kT7jY4W6xiKA9RwIk7+Ret+GRum05vpE52mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OXKdnJssPwaOXEHdUnga9MZV/EpZ8Xs/3D55ft6vR5xJAQwI1VqigRB+lk5oQiX91
-	 miMYWFGITD5HmlOuWNnkR1wMNycCV+A8MSBo/MKEbjnj6Xur4/ztLRKs67n+O6JakE
-	 nByGj3I6XLmEfOfQYEkcAMKzwDyNTLNBQ2qIdflQ=
+	b=ps321u9eB/xQom7DsTEFM3P2LFnYdpuf6ZbCJMamtSIcDAgPoOcdj076t6H8BxirR
+	 50aur8gpYZ87S29vfHTwYDMYQlsM+2t+zFSvKMPBNV0VjiwUOYt/KutyaAmXgvHrIN
+	 RzRozQHfNw60WcK2t9D4728K1oy7cI7o++xvHJAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: [PATCH 6.6 508/568] minmax: scsi: fix mis-use of clamp() in sr.c
-Date: Tue, 30 Jul 2024 17:50:15 +0200
-Message-ID: <20240730151659.880686349@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 508/809] fs/proc/task_mmu: indicate PM_FILE for PMD-mapped file THP
+Date: Tue, 30 Jul 2024 17:46:24 +0200
+Message-ID: <20240730151744.800512250@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +52,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: David Hildenbrand <david@redhat.com>
 
-commit 9f499b8c791d2983c0a31a543c51d1b2f15e8755 upstream.
+[ Upstream commit 3f9f022e975d930709848a86a1c79775b0585202 ]
 
-While working on simplifying the minmax functions, and avoiding
-excessive macro expansion, it turns out that the sr.c use of the
-'clamp()' macro has the arguments the wrong way around.
+Patch series "fs/proc: move page_mapcount() to fs/proc/internal.h".
 
-The clamp logic is
+With all other page_mapcount() users in the tree gone, move
+page_mapcount() to fs/proc/internal.h, rename it and extend the
+documentation to prevent future (ab)use.
 
-	val = clamp(in, low, high);
+... of course, I find some issues while working on that code that I sort
+first ;)
 
-and it returns the input clamped to the low/high limits. But sr.c ddid
+We'll now only end up calling page_mapcount() [now
+folio_precise_page_mapcount()] on pages mapped via present page table
+entries.  Except for /proc/kpagecount, that still does questionable
+things, but we'll leave that legacy interface as is for now.
 
-	speed = clamp(0, speed, 0xffff / 177);
+Did a quick sanity check.  Likely we would want some better selfestest for
+/proc/$/pagemap + smaps.  I'll see if I can find some time to write some
+more.
 
-which clamps the value '0' to the range '[speed, 0xffff / 177]' and ends
-up being nonsensical.
+This patch (of 6):
 
-Happily, I don't think anybody ever cared.
+Looks like we never taught pagemap_pmd_range() about the existence of
+PMD-mapped file THPs.  Seems to date back to the times when we first added
+support for non-anon THPs in the form of shmem THP.
 
-Fixes: 9fad9d560af5 ("scsi: sr: Fix unintentional arithmetic wraparound")
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20240607122357.115423-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20240607122357.115423-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Fixes: 800d8c63b2e9 ("shmem: add huge pages support")
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Lance Yang <ioworker0@gmail.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/sr_ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/proc/task_mmu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/sr_ioctl.c
-+++ b/drivers/scsi/sr_ioctl.c
-@@ -431,7 +431,7 @@ int sr_select_speed(struct cdrom_device_
- 	struct packet_command cgc;
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index 71e5039d940dc..76ad35df3b1ee 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1525,6 +1525,8 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 		}
+ #endif
  
- 	/* avoid exceeding the max speed or overflowing integer bounds */
--	speed = clamp(0, speed, 0xffff / 177);
-+	speed = clamp(speed, 0, 0xffff / 177);
++		if (page && !PageAnon(page))
++			flags |= PM_FILE;
+ 		if (page && !migration && page_mapcount(page) == 1)
+ 			flags |= PM_MMAP_EXCLUSIVE;
  
- 	if (speed == 0)
- 		speed = 0xffff;	/* set to max */
+-- 
+2.43.0
+
 
 
