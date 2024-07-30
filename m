@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C131B18455E;
-	Tue, 30 Jul 2024 16:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D827918C90A;
+	Tue, 30 Jul 2024 16:05:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355541; cv=none; b=sPFuLtMMsBjSbWdokWtEv/obFWUxeMhCVGOndu88s4Aat7LJ4/pESRQTwgQuVOOsIFqXSUo3cGT9blZUmDfNEcOWHMgQr5ejc9acRFSxBzQ+u1ZKQ1zBO/mUy3md4nUEewV1iotPsMdA7rKmSFNW/Cae1zA/qbzNWW2xXlSYVFo=
+	t=1722355544; cv=none; b=IKxROufk5EOM08IH2y9aVpr1ED64lmyeMd5HATzbQ8PsQua7zOQxpJSN0AQsm+yidtA6ZrSyWmiKoZ1L+fokz1etRy6SCCzmulO8Vz0KQQYykm0sc9TvhpQx8lnnlNfJWxn9iED1u8PcAFxd1CuPUo5fcbItM0r8kcNx0Q/tEG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355541; c=relaxed/simple;
-	bh=bCpkECuQ5c94ztaRNaGmJOv1wIg3YYnOjjVt1U28B8k=;
+	s=arc-20240116; t=1722355544; c=relaxed/simple;
+	bh=PRSTkCIH35jiN0abqRC9ji85868Hle1MbFHiObSaW3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jd++/Dlk1BPps+uBHOZ42ue5hdpBOpIBrEl6rsu6RD5nOXZ+8WOkLQRPuZ1KenOQAWU877z9b+RKKVP5+g/K5EEYHowj8ILPlQjG+KlE/AZeQ8uISIt1vjz3Dgd7RFkqDU/nNjQONhR2muk/b69kGbug07NC20S23X08SDwLhNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVYyIDGy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MDDeOAa3p9l1FKtv5keTTXpFBUrEM8gjePKS/FDi0lotwwAJXV0Vq/I7e6cZrIywp8lbMdzr2ljrfCTdFH4gvtEbAYswDYMYRXRFf10Ds2dyYit3tlW6x9SwpgJfjGN4bRaLhduXpOu3P8qj5JvrqJ01t2FE1v1vR1/TqGHUu6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6B3j+Zv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVYyIDGy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44EC0C32782;
-	Tue, 30 Jul 2024 16:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6B3j+Zv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FD0EC32782;
+	Tue, 30 Jul 2024 16:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355541;
-	bh=bCpkECuQ5c94ztaRNaGmJOv1wIg3YYnOjjVt1U28B8k=;
+	s=korg; t=1722355544;
+	bh=PRSTkCIH35jiN0abqRC9ji85868Hle1MbFHiObSaW3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CVYyIDGy7iz1rK6YwxmZ1WVn10ZQooHgx9+phGjrq0oeWJYEuah3XoM2pqwL8koJj
-	 3qPHB5nZehVl3c5JCbWdhxFKJf50z3l8xYt/8mYNrFaYnXsC1wPTUw3lSZAkRVsjss
-	 lm5A4/tMRbeqFZqz4LsFZXW+MPpJLYDlgECChSOU=
+	b=O6B3j+Zv+MjSEAWGAMsxra0TBI9xs11m70F/NdYkg/7lmxYyOFDlk48CHzTfHMmpe
+	 EU4VLdW/helnQ7BNSwForB2Ojqft+agJWZr4/3CJo0PyKtma37weO4hs110p4yS14m
+	 IueBUgEBQYH1MdRlDwN1L3QDX/KxWeET1j3TVS4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 067/568] ARM: dts: imx6qdl-kontron-samx6i: fix PHY reset
-Date: Tue, 30 Jul 2024 17:42:54 +0200
-Message-ID: <20240730151642.478905868@linuxfoundation.org>
+	Richard Cochran <richardcochran@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Wei Fang <wei.fang@nxp.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	Csókás
+Subject: [PATCH 6.1 104/440] net: fec: Fix FEC_ECR_EN1588 being cleared on link-down
+Date: Tue, 30 Jul 2024 17:45:37 +0200
+Message-ID: <20240730151619.950289122@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +50,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit edfea889a049abe80f0d55c0365bf60fbade272f ]
+[ Upstream commit c32fe1986f27cac329767d3497986e306cad1d5e ]
 
-The PHY reset line is connected to both the SoC (GPIO1_25) and
-the CPLD. We must not use the GPIO1_25 as it will drive against
-the output buffer of the CPLD. Instead there is another GPIO
-(GPIO2_01), an input to the CPLD, which will tell the CPLD to
-assert the PHY reset line.
+FEC_ECR_EN1588 bit gets cleared after MAC reset in `fec_stop()`, which
+makes all 1588 functionality shut down, and all the extended registers
+disappear, on link-down, making the adapter fall back to compatibility
+"dumb mode". However, some functionality needs to be retained (e.g. PPS)
+even without link.
 
-Fixes: 2a51f9dae13d ("ARM: dts: imx6qdl-kontron-samx6i: Add iMX6-based Kontron SMARC-sAMX6i module")
-Fixes: 5694eed98cca ("ARM: dts: imx6qdl-kontron-samx6i: move phy reset into phy-node")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 6605b730c061 ("FEC: Add time stamping code and a PTP hardware clock")
+Cc: Richard Cochran <richardcochran@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/netdev/5fa9fadc-a89d-467a-aae9-c65469ff5fe1@lunn.ch/
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Wei Fang <wei.fang@nxp.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/fec_main.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-index d8c1dfb8c9abb..d6c049b9a9c69 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-@@ -269,7 +269,7 @@ mdio {
- 		ethphy: ethernet-phy@1 {
- 			compatible = "ethernet-phy-ieee802.3-c22";
- 			reg = <1>;
--			reset-gpios = <&gpio1 25 GPIO_ACTIVE_LOW>;
-+			reset-gpios = <&gpio2 1 GPIO_ACTIVE_LOW>;
- 			reset-assert-us = <1000>;
- 		};
- 	};
-@@ -516,7 +516,7 @@ MX6QDL_PAD_RGMII_RX_CTL__RGMII_RX_CTL 0x1b0b0
- 			MX6QDL_PAD_ENET_MDIO__ENET_MDIO       0x1b0b0
- 			MX6QDL_PAD_ENET_MDC__ENET_MDC         0x1b0b0
- 			MX6QDL_PAD_ENET_REF_CLK__ENET_TX_CLK  0x1b0b0
--			MX6QDL_PAD_ENET_CRS_DV__GPIO1_IO25    0x1b0b0 /* RST_GBE0_PHY# */
-+			MX6QDL_PAD_NANDF_D1__GPIO2_IO01       0x1b0b0 /* RST_GBE0_PHY# */
- 		>;
- 	};
+diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
+index ef70290beaeb0..0a5c3d27ed3b0 100644
+--- a/drivers/net/ethernet/freescale/fec_main.c
++++ b/drivers/net/ethernet/freescale/fec_main.c
+@@ -1342,6 +1342,12 @@ fec_stop(struct net_device *ndev)
+ 		writel(FEC_ECR_ETHEREN, fep->hwp + FEC_ECNTRL);
+ 		writel(rmii_mode, fep->hwp + FEC_R_CNTRL);
+ 	}
++
++	if (fep->bufdesc_ex) {
++		val = readl(fep->hwp + FEC_ECNTRL);
++		val |= FEC_ECR_EN1588;
++		writel(val, fep->hwp + FEC_ECNTRL);
++	}
+ }
  
+ static void
 -- 
 2.43.0
 
