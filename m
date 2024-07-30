@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA961A76A0;
-	Tue, 30 Jul 2024 17:14:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C81A76A0;
+	Tue, 30 Jul 2024 17:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359641; cv=none; b=Loi0LdecvPLZddjd6Epqs7o7vvOUdvzECHxfFv8CSES8UKEj06PZwuAGzUIhDoibDgUa3pnD7Hq3c7uOVhACTPV1fliYoah9Q2WIONm1lJVUy73VnZuGHdTNS12N64rwFIh4xxSY9rI7Sn1qTedX2uQbKq4maGQg9beG559csNU=
+	t=1722359645; cv=none; b=HNrbPFchl7m/dMNRprGIVbOiFi7KgjNKg3FZ+9t2UiRMDWTZvXGOl5ZNbmE0+PBNr4+3JTAd7B6A4xd4Z5a+cKBdkHIpFS6igUy1xFXaT0JWWWTbeQrp2on4W0QCOocpNTCzyGELpQl71FcBKMivHm87MIrqRyQPZy7dF4l+Lzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359641; c=relaxed/simple;
-	bh=K5KViGFPpT8zozcFrP0fHxm44FahVRRB6BCqNv5jxHY=;
+	s=arc-20240116; t=1722359645; c=relaxed/simple;
+	bh=ihFYMsB0B1r6dqLQlzQ4eS6OGzOcb5PFccruKORcJDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FBag+wC14XIETs3Q3Sx79BPnk+L1/8stdugs/A3re7PDlPQV1D0R8ryjzLjvJj2B/QZRAv297QWM3rstpq/HbC0kcFdggjPbcYzp5WIFA9R1vEOFcWU8yI1KHWJ0Ll7ovdJp+DuT0EEheBQ+DpM8F4KCJq5yaqRn1Q2dzyhk11w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0QiVw+LB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XDupRRxE7pxIaXP3OBydmrKF7mD8ykZixGutFlbAKashpWWpdwXTPi4WqF0/B7RKdfhHvf/7DUWJHdd6IHwICaKL7+nWNSbBJb2vXop0CHpmen59qJY3rirTS18MPJr7Ug8+KXc6uW7QpaX68EIHeIjXbQspEX95b/fwtpfmDOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKeowjyT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0QiVw+LB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A13C32782;
-	Tue, 30 Jul 2024 17:14:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKeowjyT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C90DC32782;
+	Tue, 30 Jul 2024 17:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359641;
-	bh=K5KViGFPpT8zozcFrP0fHxm44FahVRRB6BCqNv5jxHY=;
+	s=korg; t=1722359645;
+	bh=ihFYMsB0B1r6dqLQlzQ4eS6OGzOcb5PFccruKORcJDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QiVw+LBslxKWhPf2W1Z9i5o0C3nN6e3WNI8Y8g30PGZDAYYBPbEAnJLYHYjnkL4z
-	 AYM4dUH8y9tHMTF4Emac3t7HxPn7NT4n9htnS0nrLY0EIdkxeK69tDF3Qm7LyefFwn
-	 ogfdssmFTl73fgJic3uJrd+uF8/Cch+aOrW1lc5Y=
+	b=QKeowjyTB4BWtFYCOqwKhVLRCmWY/IlejudH1KVRYbABhcb1p6dyRVKeagBykVKfl
+	 H2ZOO3jh/t2DHob2TJmiSHkjlFQzk9iw8kJ5zaSOaTwFE79Ian+afsSjuyNqZWOg6W
+	 cghB22Gr23hCJc2TAZgUrzkKOdKAKUPcDOfaUvuw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gwenael Treuveur <gwenael.treuveur@foss.st.com>,
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.6 490/568] remoteproc: stm32_rproc: Fix mailbox interrupts queuing
-Date: Tue, 30 Jul 2024 17:49:57 +0200
-Message-ID: <20240730151659.181965524@linuxfoundation.org>
+	Dmitry Yashin <dmt.yashin@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 490/809] pinctrl: rockchip: update rk3308 iomux routes
+Date: Tue, 30 Jul 2024 17:46:06 +0200
+Message-ID: <20240730151744.091974008@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,38 +48,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Gwenael Treuveur <gwenael.treuveur@foss.st.com>
+From: Dmitry Yashin <dmt.yashin@gmail.com>
 
-commit c3281abea67c9c0dc6219bbc41d1feae05a16da3 upstream.
+[ Upstream commit a8f2548548584549ea29d43431781d67c4afa42b ]
 
-Manage interrupt coming from coprocessor also when state is
-ATTACHED.
+Some of the rk3308 iomux routes in rk3308_mux_route_data belong to
+the rk3308b SoC. Remove them and correct i2c3 routes.
 
-Fixes: 35bdafda40cc ("remoteproc: stm32_rproc: Add mutex protection for workqueue")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gwenael Treuveur <gwenael.treuveur@foss.st.com>
-Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-Link: https://lore.kernel.org/r/20240521162316.156259-1-gwenael.treuveur@foss.st.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7825aeb7b208 ("pinctrl: rockchip: add rk3308 SoC support")
+Signed-off-by: Dmitry Yashin <dmt.yashin@gmail.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20240515121634.23945-2-dmt.yashin@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/stm32_rproc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-rockchip.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
---- a/drivers/remoteproc/stm32_rproc.c
-+++ b/drivers/remoteproc/stm32_rproc.c
-@@ -294,7 +294,7 @@ static void stm32_rproc_mb_vq_work(struc
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index 3f56991f5b892..6a74619786300 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -915,9 +915,8 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
+ 	RK_MUXROUTE_SAME(0, RK_PC3, 1, 0x314, BIT(16 + 0) | BIT(0)), /* rtc_clk */
+ 	RK_MUXROUTE_SAME(1, RK_PC6, 2, 0x314, BIT(16 + 2) | BIT(16 + 3)), /* uart2_rxm0 */
+ 	RK_MUXROUTE_SAME(4, RK_PD2, 2, 0x314, BIT(16 + 2) | BIT(16 + 3) | BIT(2)), /* uart2_rxm1 */
+-	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x608, BIT(16 + 8) | BIT(16 + 9)), /* i2c3_sdam0 */
+-	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(8)), /* i2c3_sdam1 */
+-	RK_MUXROUTE_SAME(2, RK_PA0, 3, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(9)), /* i2c3_sdam2 */
++	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x314, BIT(16 + 4)), /* i2c3_sdam0 */
++	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x314, BIT(16 + 4) | BIT(4)), /* i2c3_sdam1 */
+ 	RK_MUXROUTE_SAME(1, RK_PA3, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclktxm0 */
+ 	RK_MUXROUTE_SAME(1, RK_PA4, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclkrxm0 */
+ 	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x308, BIT(16 + 3) | BIT(3)), /* i2s-8ch-1-sclktxm1 */
+@@ -926,18 +925,6 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
+ 	RK_MUXROUTE_SAME(1, RK_PB6, 4, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* pdm-clkm1 */
+ 	RK_MUXROUTE_SAME(2, RK_PA6, 2, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* pdm-clkm2 */
+ 	RK_MUXROUTE_SAME(2, RK_PA4, 3, 0x600, BIT(16 + 2) | BIT(2)), /* pdm-clkm-m2 */
+-	RK_MUXROUTE_SAME(3, RK_PB2, 3, 0x314, BIT(16 + 9)), /* spi1_miso */
+-	RK_MUXROUTE_SAME(2, RK_PA4, 2, 0x314, BIT(16 + 9) | BIT(9)), /* spi1_miso_m1 */
+-	RK_MUXROUTE_SAME(0, RK_PB3, 3, 0x314, BIT(16 + 10) | BIT(16 + 11)), /* owire_m0 */
+-	RK_MUXROUTE_SAME(1, RK_PC6, 7, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(10)), /* owire_m1 */
+-	RK_MUXROUTE_SAME(2, RK_PA2, 5, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(11)), /* owire_m2 */
+-	RK_MUXROUTE_SAME(0, RK_PB3, 2, 0x314, BIT(16 + 12) | BIT(16 + 13)), /* can_rxd_m0 */
+-	RK_MUXROUTE_SAME(1, RK_PC6, 5, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* can_rxd_m1 */
+-	RK_MUXROUTE_SAME(2, RK_PA2, 4, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* can_rxd_m2 */
+-	RK_MUXROUTE_SAME(1, RK_PC4, 3, 0x314, BIT(16 + 14)), /* mac_rxd0_m0 */
+-	RK_MUXROUTE_SAME(4, RK_PA2, 2, 0x314, BIT(16 + 14) | BIT(14)), /* mac_rxd0_m1 */
+-	RK_MUXROUTE_SAME(3, RK_PB4, 4, 0x314, BIT(16 + 15)), /* uart3_rx */
+-	RK_MUXROUTE_SAME(0, RK_PC1, 3, 0x314, BIT(16 + 15) | BIT(15)), /* uart3_rx_m1 */
+ };
  
- 	mutex_lock(&rproc->lock);
- 
--	if (rproc->state != RPROC_RUNNING)
-+	if (rproc->state != RPROC_RUNNING && rproc->state != RPROC_ATTACHED)
- 		goto unlock_mutex;
- 
- 	if (rproc_vq_interrupt(rproc, mb->vq_id) == IRQ_NONE)
+ static struct rockchip_mux_route_data rk3328_mux_route_data[] = {
+-- 
+2.43.0
+
 
 
