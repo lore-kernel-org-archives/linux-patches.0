@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7281FBA;
-	Tue, 30 Jul 2024 17:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4110683A17;
+	Tue, 30 Jul 2024 17:00:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358807; cv=none; b=vCWlf0DE00o15b866hnS4uBR1JDpxjiDYCPMk9ZOKjJp0xttrtGGgUL62m7hhUpNjVS4h14c7nAg3tNngPxA4ISw2yTGYgsO1RCg01/qXAci5wLM1W/KOwFmWs3x6T3+qxbBfwj4UsPxfKIzaAYiTd/BdOYJDrF8RertIXEHjGw=
+	t=1722358810; cv=none; b=bVAOgB0ZryzfDvybHfvFUpPi1C28QW9+iCRsZp5ARQrxJWElji/XP68hhFIzquz5jHlyPhCqemMJ7RRv9dF8bj9KysFdNBlbu/7+a+yqUsRKwrRb+Veepk5tzOm8Gk/dXjjMRqTmPQ31kMUX13m6pAueMFrv5vvHgUfu1xI9eJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358807; c=relaxed/simple;
-	bh=hRT1X53jY8hWGkrgXaaV+omSre4UvWUTDO2WPD33xjA=;
+	s=arc-20240116; t=1722358810; c=relaxed/simple;
+	bh=jcRAIyOfGVSpiavZbIEwlD19NF/Q8+PkeqYkWhU1dQI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hb4ggAuzuwevO+/DMNaMVagDwCIvIZHvWwQ/EenYW7QRoScCSfcey6tUhsvCRz4M1HOknMv2brxb0+QpFOGBX5b2deVcH0ttpVXPzi0uHD/+KACarxD7lurKHamDPVOmF3DAH0CH+NyiWTSDKyHKOCW6TM8c+w3gOZtypkXVyhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnkpiMRS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZK+jWXS3EaLZIK2XgCIRg+sahhc57ZSmPQKB4UuGRL9rGhsvi7R4IQhX6fhUb0tWzVAhHe1u36L/D2Qg1/GjxtMm3Reydk0S6qEwhbn9pBd33aoGfVhfROI0qi9rDX/6lG5BS2COVcx9Hm+COZVUS1eMmhCsiZL9kTbZbLoios=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txmypWLG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnkpiMRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590A6C32782;
-	Tue, 30 Jul 2024 17:00:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txmypWLG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D567C32782;
+	Tue, 30 Jul 2024 17:00:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358806;
-	bh=hRT1X53jY8hWGkrgXaaV+omSre4UvWUTDO2WPD33xjA=;
+	s=korg; t=1722358810;
+	bh=jcRAIyOfGVSpiavZbIEwlD19NF/Q8+PkeqYkWhU1dQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnkpiMRSRJyJXv+ooELavbkeVJMUhMpFXDzM8lECRlNR4hsYfA7VW18tX6hzobupr
-	 MRSaARpFyooX8ebXPhny2ufxBBkVNUgaZcYpt5Xii2EcaDbtuBKMwvzQ1pdO9H4K0g
-	 VsVxyCN2PIA46zzzY9wBxwifR7O8hqHYIOVQiLVE=
+	b=txmypWLG5cp558nIQv3k6VKYRuOCmQTsHUzdIGNey4dNqaqTk6XJPC9xv+BM2CR3d
+	 CtNdRx98W1Ghkc1hu/YiEHK9UuyyVuQ18fhKCYCsf9chbkYMIxehR6l39bs751wl4D
+	 YGriyLJmAuOhGDNYyFsbJlpSNfTiu/FlDsKLgKuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nuno Sa <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 398/809] iio: adc: adi-axi-adc: dont allow concurrent enable/disable calls
-Date: Tue, 30 Jul 2024 17:44:34 +0200
-Message-ID: <20240730151740.402273997@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 399/568] io_uring: tighten task exit cancellations
+Date: Tue, 30 Jul 2024 17:48:26 +0200
+Message-ID: <20240730151655.466465966@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,51 +46,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sa <nuno.sa@analog.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 202b89f4b778d86a940f693785600acaccca6a2b ]
+commit f8b632e89a101dae349a7b212c1771d7925f441b upstream.
 
-Add proper mutex guards as we should not be able to disable
-the core in the middle of enabling it.
+io_uring_cancel_generic() should retry if any state changes like a
+request is completed, however in case of a task exit it only goes for
+another loop and avoids schedule() if any tracked (i.e. REQ_F_INFLIGHT)
+request got completed.
 
-Note there's no need to rush in backporting this as the only user of the
-backend does not do anything crazy..
+Let's assume we have a non-tracked request executing in iowq and a
+tracked request linked to it. Let's also assume
+io_uring_cancel_generic() fails to find and cancel the request, i.e.
+via io_run_local_work(), which may happen as io-wq has gaps.
+Next, the request logically completes, io-wq still hold a ref but queues
+it for completion via tw, which happens in
+io_uring_try_cancel_requests(). After, right before prepare_to_wait()
+io-wq puts the request, grabs the linked one and tries executes it, e.g.
+arms polling. Finally the cancellation loop calls prepare_to_wait(),
+there are no tw to run, no tracked request was completed, so the
+tctx_inflight() check passes and the task is put to indefinite sleep.
 
-Fixes: 794ef0e57854 ("iio: adc: adi-axi-adc: move to backend framework")
-Signed-off-by: Nuno Sa <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20240531-dev-axi-adc-drp-v3-1-e3fa79447c67@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 3f48cf18f886c ("io_uring: unify files and task cancel")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/acac7311f4e02ce3c43293f8f1fda9c705d158f1.1721819383.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/adi-axi-adc.c | 2 ++
- 1 file changed, 2 insertions(+)
+ io_uring/io_uring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/adi-axi-adc.c b/drivers/iio/adc/adi-axi-adc.c
-index 0cf0d81358fd5..bf51d619ebbc9 100644
---- a/drivers/iio/adc/adi-axi-adc.c
-+++ b/drivers/iio/adc/adi-axi-adc.c
-@@ -85,6 +85,7 @@ static int axi_adc_enable(struct iio_backend *back)
- 	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
- 	int ret;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3350,8 +3350,11 @@ __cold void io_uring_cancel_generic(bool
+ 		bool loop = false;
  
-+	guard(mutex)(&st->lock);
- 	ret = regmap_set_bits(st->regmap, ADI_AXI_REG_RSTN,
- 			      ADI_AXI_REG_RSTN_MMCM_RSTN);
- 	if (ret)
-@@ -99,6 +100,7 @@ static void axi_adc_disable(struct iio_backend *back)
- {
- 	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 		io_uring_drop_tctx_refs(current);
++		if (!tctx_inflight(tctx, !cancel_all))
++			break;
++
+ 		/* read completions before cancelations */
+-		inflight = tctx_inflight(tctx, !cancel_all);
++		inflight = tctx_inflight(tctx, false);
+ 		if (!inflight)
+ 			break;
  
-+	guard(mutex)(&st->lock);
- 	regmap_write(st->regmap, ADI_AXI_REG_RSTN, 0);
- }
- 
--- 
-2.43.0
-
 
 
