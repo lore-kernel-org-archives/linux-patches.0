@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D45A18455B;
-	Tue, 30 Jul 2024 16:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B94718455B;
+	Tue, 30 Jul 2024 16:50:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358210; cv=none; b=dYlWDe2e/ZkS35SzDB0vTwegdtxS1UDzjlP0TeTvmhYzDQwwQZotjNtq6e4aPcCREHTkF3qHUpGu2BBKv2s++gptAuu6ZvaUNyOr+pyMx+S0xgAirWzagtQHz4HE1QznFgkigZhUVDK0UOlA7MIwCTGAFm0NXvJIdoGR0cafi34=
+	t=1722358214; cv=none; b=pp84Q77CClIDvfAX8j3eMlC1dSvSya5LpOIK1U6/3ikTbF7G9d6FCsfmaLCqQMsMfGnLtdnSDHPJF2+cXRIyT2TAobBRNJpozH1rNY/MbEP/n1Pb+IP4ylmXZdkN7jPvOzo9VzNlpXrBlxsOpqq+uet87l3scb7r2RZNZ24jVok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358210; c=relaxed/simple;
-	bh=/Ps/9J053VdsrQg8TnYfJCDPaUT15O3RmQMeANz5xNY=;
+	s=arc-20240116; t=1722358214; c=relaxed/simple;
+	bh=Tm/jEqf71nQbmXHS3W/qm9luuOvkTMZ0sOG1w/vh/3A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwc3y9dC7RQsZeyUFjHEjuwynuTypZzEd7uZyYD29jeKgsHV8iZIz2wQZm8HYq8whzrA3BRbWx5tvyRNdTn9oNiySzoVbY9jjNc2VO1m3n8YSjxNDNoi1LQvRrn9+9PVH3sb0tzJSZowGBajcYLv+ohC+kQfyGyWhIzOEaAZyls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KMZhyRjN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fsrn+ZfZ7Zi8PZG31LEnnd4/j3paPUcYi7HzCJPHqQJNaq5jFUx9zhbz9zCT7oOilJLCW/M60GUuHkM0n0XLAi8csQqZFnh+cPas/7as82WrtR4pEDv+tnQ7Go6w/Rv3excMZ5L0Gw4jyryUfOqy7fDK0YiMoSY2+8FHBmhETJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2kapwKi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KMZhyRjN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D97C32782;
-	Tue, 30 Jul 2024 16:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2kapwKi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF59C32782;
+	Tue, 30 Jul 2024 16:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358210;
-	bh=/Ps/9J053VdsrQg8TnYfJCDPaUT15O3RmQMeANz5xNY=;
+	s=korg; t=1722358213;
+	bh=Tm/jEqf71nQbmXHS3W/qm9luuOvkTMZ0sOG1w/vh/3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KMZhyRjNUa8u1vTs9h7WcCKfYWscZCuhtYoNiXsgd8/v+eAcQhHMLZQj6expaJnJF
-	 JBhD7f4rUXo0PmOwffjcP5hUA4Z761ww4jLx4j12uX9cy9j4SLW1P82QXBF88mP1pD
-	 Vz7YA56uV0jwhwGOkerh5xtVktO/gDx31a0krsx0=
+	b=a2kapwKihDbSra4IhNYNyP6t5xFUa9GtacMNNFRstJ2B/XebuFv8Uy8TSv9tG0HiO
+	 zZVSXioFWbfKPLSfWfXQa2EnSkDw+Ps3HiIydsf1jgMEimUH4SYTEkPw9FhsJ0wx2b
+	 EQ0ZYLbi0mfDYge9VxcVxxwMPb2hph+0R/wuD+io=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 335/809] media: imx-jpeg: Drop initial source change event if capture has been setup
-Date: Tue, 30 Jul 2024 17:43:31 +0200
-Message-ID: <20240730151737.851100708@linuxfoundation.org>
+Subject: [PATCH 6.6 331/568] fs/ntfs3: Replace inode_trylock with inode_lock
+Date: Tue, 30 Jul 2024 17:47:18 +0200
+Message-ID: <20240730151652.809308003@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit a8fb5fce7a441d37d106c82235e1f1b57f70f5b9 ]
+[ Upstream commit 69505fe98f198ee813898cbcaf6770949636430b ]
 
-In section 4.5.1.5. Initialization, the step 4 may be skipped and
-continue with the Capture Setup sequence, so if the capture has been
-setup, there is no need to trigger the initial source change event, just
-start decoding, and follow the dynamic resolution change flow if the
-configured values do not match those parsed by the decoder.
+The issue was detected due to xfstest 465 failing.
 
-And it won't fail the gstreamer pipeline.
-
-Fixes: b833b178498d ("media: imx-jpeg: notify source chagne event when the first picture parsed")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/ntfs3/file.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-index cc97790ed30f6..b1300f15e5020 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c
-@@ -1634,6 +1634,9 @@ static int mxc_jpeg_start_streaming(struct vb2_queue *q, unsigned int count)
- 	dev_dbg(ctx->mxc_jpeg->dev, "Start streaming ctx=%p", ctx);
- 	q_data->sequence = 0;
+diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
+index dfd5402a42e44..cd69cbd0aaae7 100644
+--- a/fs/ntfs3/file.c
++++ b/fs/ntfs3/file.c
+@@ -299,10 +299,7 @@ static int ntfs_file_mmap(struct file *file, struct vm_area_struct *vma)
+ 		}
  
-+	if (V4L2_TYPE_IS_CAPTURE(q->type))
-+		ctx->need_initial_source_change_evt = false;
-+
- 	ret = pm_runtime_resume_and_get(ctx->mxc_jpeg->dev);
- 	if (ret < 0) {
- 		dev_err(ctx->mxc_jpeg->dev, "Failed to power up jpeg\n");
+ 		if (ni->i_valid < to) {
+-			if (!inode_trylock(inode)) {
+-				err = -EAGAIN;
+-				goto out;
+-			}
++			inode_lock(inode);
+ 			err = ntfs_extend_initialized_size(file, ni,
+ 							   ni->i_valid, to);
+ 			inode_unlock(inode);
 -- 
 2.43.0
 
