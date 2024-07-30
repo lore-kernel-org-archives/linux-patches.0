@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB7EE1A76A1;
-	Tue, 30 Jul 2024 17:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B7291A76A1;
+	Tue, 30 Jul 2024 17:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360267; cv=none; b=r9LQa9LKnT/XiwEpbVlphlNmTxjouH0wUFKG3o1EC0z1okQUkfMNoGLmPae6WzgzHTNww6cCYrNh3epLXOEaC373z6aqYDw+NnLGKF70DokL2mvOhZ2PRulkVhTAia/53wJX+x9Xinn4SdTuDsGmuJzupORSaVrkAR/zAbvo3Rw=
+	t=1722360271; cv=none; b=SC1NliF7p56bfKR8O4+I6rUrtMv2qg4oSWlmKlY8PBVrB5kQ6Nwldd6SZeQfF9yLAPoGB7z+Ni1w3V+jGUG43ayF4vIZ5xE6HHbPiDDWBwrqZLnQ2WJ8fxkTqBu9vr8miVEbcFED0KRKAam1K3vn4wgOcUCMGfuhusu0DIyBGT4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360267; c=relaxed/simple;
-	bh=Ox/QpAXdP7DKcXgaN5DyLefN8AuqX9Do4j5jybUbPd8=;
+	s=arc-20240116; t=1722360271; c=relaxed/simple;
+	bh=vRfJ9OYSSWWq676kr3lTH57GYgCj0qGOVaSmdzzT0ok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VnZSWqmjYhUv59a8Zii9/jAUuKyFw4PcnR3c+w1bbCdUlBxKdmB1CzyqbXa/IbWqINVJvGNFQSbe5M2l7yCveF+hp2EECYSyo/yWStblC9qUaZtfOYvVUmZba9eysjELXOoViKz01VRH4susoY0k4VtY0uXoo990RmGRu0Ht7XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SRakzJWz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k0ZSBR7SOtRaBK1WaaWUf9fth49SYDz0Zo+lA6SdTQwXTUcJKxhXo8XkO9PH57cxQO5o6oQ8mOa3HERYfYsnKZJihI30OxNEQX6N0E3oj41gZdHeOQlnYOP9WxZSEoOwRTFc/eJRFgM6FN/wjFYlNVje2tYwU7RQvyIwj3bS98M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbjNlOtE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SRakzJWz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C53AC32782;
-	Tue, 30 Jul 2024 17:24:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbjNlOtE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92688C32782;
+	Tue, 30 Jul 2024 17:24:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360267;
-	bh=Ox/QpAXdP7DKcXgaN5DyLefN8AuqX9Do4j5jybUbPd8=;
+	s=korg; t=1722360271;
+	bh=vRfJ9OYSSWWq676kr3lTH57GYgCj0qGOVaSmdzzT0ok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRakzJWzYZNz/mMVliW8mH0K9WDk7YOI0YYuM64dVv3DZ/JuKC14Qxr5FvzODkc8A
-	 H+o+2mhQDJwHk8mjo83rqzFbHTwtLIDt9ifJhJSPM7Aj8TBg3xQR4vLZrZFWyo3CKt
-	 VbPs4IBDGXcsThPEKRTXAiFRkQ5GuNWHX8ta4O90=
+	b=AbjNlOtEyLbv+DP/FGH+FJM88ZX4ypeOb2htBSNuG8dfn603n9uaK8o43Kayo75Lr
+	 EsEt/Sn6SswQ9xY7yBuCm0Y+aYDidOzWjAwXmHeyryvJ0zAN6954V/u4779Lq8Z9/Y
+	 bQmj4MJbyjHNmZhYgsOPCC06O5AOMghCkkpe7IJk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunhai Guo <guochunhai@vivo.com>,
-	Sandeep Dhavale <dhavale@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.10 647/809] erofs: fix race in z_erofs_get_gbuf()
-Date: Tue, 30 Jul 2024 17:48:43 +0200
-Message-ID: <20240730151750.427107362@linuxfoundation.org>
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Yao Xingtao <yaoxt.fnst@fujitsu.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	David Hildenbrand <david@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 648/809] mm/page_alloc: fix pcp->count race between drain_pages_zone() vs __rmqueue_pcplist()
+Date: Tue, 30 Jul 2024 17:48:44 +0200
+Message-ID: <20240730151750.467990238@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,74 +53,93 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-commit 7dc5537c3f8be87e005f0844a7626c987914f8fd upstream.
+commit 66eca1021a42856d6af2a9802c99e160278aed91 upstream.
 
-In z_erofs_get_gbuf(), the current task may be migrated to another
-CPU between `z_erofs_gbuf_id()` and `spin_lock(&gbuf->lock)`.
+It's expected that no page should be left in pcp_list after calling
+zone_pcp_disable() in offline_pages().  Previously, it's observed that
+offline_pages() gets stuck [1] due to some pages remaining in pcp_list.
 
-Therefore, z_erofs_put_gbuf() will trigger the following issue
-which was found by stress test:
+Cause:
+There is a race condition between drain_pages_zone() and __rmqueue_pcplist()
+involving the pcp->count variable. See below scenario:
 
-<2>[772156.434168] kernel BUG at fs/erofs/zutil.c:58!
-..
-<4>[772156.435007]
-<4>[772156.439237] CPU: 0 PID: 3078 Comm: stress Kdump: loaded Tainted: G            E      6.10.0-rc7+ #2
-<4>[772156.439239] Hardware name: Alibaba Cloud Alibaba Cloud ECS, BIOS 1.0.0 01/01/2017
-<4>[772156.439241] pstate: 83400005 (Nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-<4>[772156.439243] pc : z_erofs_put_gbuf+0x64/0x70 [erofs]
-<4>[772156.439252] lr : z_erofs_lz4_decompress+0x600/0x6a0 [erofs]
-..
-<6>[772156.445958] stress (3127): drop_caches: 1
-<4>[772156.446120] Call trace:
-<4>[772156.446121]  z_erofs_put_gbuf+0x64/0x70 [erofs]
-<4>[772156.446761]  z_erofs_lz4_decompress+0x600/0x6a0 [erofs]
-<4>[772156.446897]  z_erofs_decompress_queue+0x740/0xa10 [erofs]
-<4>[772156.447036]  z_erofs_runqueue+0x428/0x8c0 [erofs]
-<4>[772156.447160]  z_erofs_readahead+0x224/0x390 [erofs]
-..
+         CPU0                              CPU1
+    ----------------                    ---------------
+                                      spin_lock(&pcp->lock);
+                                      __rmqueue_pcplist() {
+zone_pcp_disable() {
+                                        /* list is empty */
+                                        if (list_empty(list)) {
+                                          /* add pages to pcp_list */
+                                          alloced = rmqueue_bulk()
+  mutex_lock(&pcp_batch_high_lock)
+  ...
+  __drain_all_pages() {
+    drain_pages_zone() {
+      /* read pcp->count, it's 0 here */
+      count = READ_ONCE(pcp->count)
+      /* 0 means nothing to drain */
+                                          /* update pcp->count */
+                                          pcp->count += alloced << order;
+      ...
+                                      ...
+                                      spin_unlock(&pcp->lock);
 
-Fixes: f36f3010f676 ("erofs: rename per-CPU buffers to global buffer pool and make it configurable")
-Cc: <stable@vger.kernel.org> # 6.10+
-Reviewed-by: Chunhai Guo <guochunhai@vivo.com>
-Reviewed-by: Sandeep Dhavale <dhavale@google.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20240722035110.3456740-1-hsiangkao@linux.alibaba.com
+In this case, after calling zone_pcp_disable() though, there are still some
+pages in pcp_list. And these pages in pcp_list are neither movable nor
+isolated, offline_pages() gets stuck as a result.
+
+Solution:
+Expand the scope of the pcp->lock to also protect pcp->count in
+drain_pages_zone(), to ensure no pages are left in the pcp list after
+zone_pcp_disable()
+
+[1] https://lore.kernel.org/linux-mm/6a07125f-e720-404c-b2f9-e55f3f166e85@fujitsu.com/
+
+Link: https://lkml.kernel.org/r/20240723064428.1179519-1-lizhijian@fujitsu.com
+Fixes: 4b23a68f9536 ("mm/page_alloc: protect PCP lists with a spinlock")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Reported-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zutil.c | 3 +++
- 1 file changed, 3 insertions(+)
+ mm/page_alloc.c |   18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/fs/erofs/zutil.c b/fs/erofs/zutil.c
-index b80f612867c2..9b53883e5caf 100644
---- a/fs/erofs/zutil.c
-+++ b/fs/erofs/zutil.c
-@@ -38,11 +38,13 @@ void *z_erofs_get_gbuf(unsigned int requiredpages)
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -2323,16 +2323,20 @@ void drain_zone_pages(struct zone *zone,
+ static void drain_pages_zone(unsigned int cpu, struct zone *zone)
  {
- 	struct z_erofs_gbuf *gbuf;
+ 	struct per_cpu_pages *pcp = per_cpu_ptr(zone->per_cpu_pageset, cpu);
+-	int count = READ_ONCE(pcp->count);
+-
+-	while (count) {
+-		int to_drain = min(count, pcp->batch << CONFIG_PCP_BATCH_SCALE_MAX);
+-		count -= to_drain;
++	int count;
  
-+	migrate_disable();
- 	gbuf = &z_erofs_gbufpool[z_erofs_gbuf_id()];
- 	spin_lock(&gbuf->lock);
- 	/* check if the buffer is too small */
- 	if (requiredpages > gbuf->nrpages) {
- 		spin_unlock(&gbuf->lock);
-+		migrate_enable();
- 		/* (for sparse checker) pretend gbuf->lock is still taken */
- 		__acquire(gbuf->lock);
- 		return NULL;
-@@ -57,6 +59,7 @@ void z_erofs_put_gbuf(void *ptr) __releases(gbuf->lock)
- 	gbuf = &z_erofs_gbufpool[z_erofs_gbuf_id()];
- 	DBG_BUGON(gbuf->ptr != ptr);
- 	spin_unlock(&gbuf->lock);
-+	migrate_enable();
++	do {
+ 		spin_lock(&pcp->lock);
+-		free_pcppages_bulk(zone, to_drain, pcp, 0);
++		count = pcp->count;
++		if (count) {
++			int to_drain = min(count,
++				pcp->batch << CONFIG_PCP_BATCH_SCALE_MAX);
++
++			free_pcppages_bulk(zone, to_drain, pcp, 0);
++			count -= to_drain;
++		}
+ 		spin_unlock(&pcp->lock);
+-	}
++	} while (count);
  }
  
- int z_erofs_gbuf_growsize(unsigned int nrpages)
--- 
-2.45.2
-
+ /*
 
 
