@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B05DA1A6195;
-	Tue, 30 Jul 2024 16:35:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9356C1A619B;
+	Tue, 30 Jul 2024 16:35:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357341; cv=none; b=euRaw89mitIrTMFUYNj+1CYBJVmkDUIja7GxoncDgSD9IaE6Vw1GdWPgcfmo2wnFM6+oZeG8992tfnbmueKqqP0xjpvnKWkzVSCeFXwvaq6QPjkycwYIaao7b+jPNjFJvrltAVWPz2BnXPfW/C9inOaBNRZR+7GATS/PztbvgPc=
+	t=1722357344; cv=none; b=KpbmHqQQ4PMdUlz75bwjSHNE5heVtWlW06//QAbmvNu9Zoz1QxVpATCbOwjrqSH6WtRB1ZVZUsuNjGli77u8SCxtCoQZwwCh6rtflEy6/iZpZ9fdjVHNsGfu3gpHDGOPCk5g9mxpElFYfxVommAnqrhKmbPzJ3DFq2OjmskDUmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357341; c=relaxed/simple;
-	bh=3O/1j4lPRAA8b0Tb7XSCQxMMBMOopXnU1LuCnRmZNMo=;
+	s=arc-20240116; t=1722357344; c=relaxed/simple;
+	bh=jaN4r44kinXzrAzFFIjrWTuK5mU/pmyJFPA3MwMt0yI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KBHybNunDk72WbjgHNh36eF8zeqLndxKPWkLEW7k7D3CG1bzwWnKhBCV3llWCScjOaXqkyfwe2Aj+CSlDWlWZhYcwCDskmTZtt86NWD3nYmdKg2lItXecfRScEfBgyqDln5ck191uePBEWhT69k7FSajAAzgoxtI7+zchTCPXV4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UEpmFigY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nXagKxzfrkPN/baljeBWGa0Sjm+t5sPT7IMW+Yxbf0A0mjrdnKkkx4kEKgAMNoHFA5jl8m6IK8KbNnCN/ONNkNn5A2WMkJU1++Pi4Ncu63jKO26QXW5a+WvzhcWeVqNX/6OY8Y4NRJp1JTLrXSGxbD85K4PwIcZ0udzq0YPXJ5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VOQbnXzZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UEpmFigY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF0FBC32782;
-	Tue, 30 Jul 2024 16:35:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VOQbnXzZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 116DDC32782;
+	Tue, 30 Jul 2024 16:35:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357341;
-	bh=3O/1j4lPRAA8b0Tb7XSCQxMMBMOopXnU1LuCnRmZNMo=;
+	s=korg; t=1722357344;
+	bh=jaN4r44kinXzrAzFFIjrWTuK5mU/pmyJFPA3MwMt0yI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UEpmFigYmwQfsAw1lPCCtoGJGBdQHaZplKDLGwvrLX4zRd9G8L9ouG9sp1BIxHqvC
-	 KFRgyK0dYTiOJGFo6doZbfJsKVLmyGwa40eGHvO3NAPSPZqxhs4QfTkiyvWkg3j7gd
-	 3xd6L7I0G0cyK/Tqr4UVVEYEKymozhWZ3pLq7nnI=
+	b=VOQbnXzZmHH51lX7KzcGpiDvfoNvtucW4ETbKOV2QR8uCepXwvM6skXenO7lLw5uF
+	 osNO1zI74zcKWxe94+QTcY5LfcUVoUVmvHQJsskc0WJwiboAjbwjiFgLtgDmB7SfDn
+	 nIr+esSkGUEcSK/PYdaV8FNxAHj1ehcmDH7+3Rgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.1 283/440] sched/fair: set_load_weight() must also call reweight_task() for SCHED_IDLE tasks
-Date: Tue, 30 Jul 2024 17:48:36 +0200
-Message-ID: <20240730151626.881988562@linuxfoundation.org>
+	Benjamin Coddington <bcodding@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 246/568] SUNRPC: Fixup gss_status tracepoint error output
+Date: Tue, 30 Jul 2024 17:45:53 +0200
+Message-ID: <20240730151649.496744351@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,111 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-commit d329605287020c3d1c3b0dadc63d8208e7251382 upstream.
+[ Upstream commit b9fae9f06d84ffab0f3f9118f3a96bbcdc528bf6 ]
 
-When a task's weight is being changed, set_load_weight() is called with
-@update_load set. As weight changes aren't trivial for the fair class,
-set_load_weight() calls fair.c::reweight_task() for fair class tasks.
+The GSS routine errors are values, not flags.
 
-However, set_load_weight() first tests task_has_idle_policy() on entry and
-skips calling reweight_task() for SCHED_IDLE tasks. This is buggy as
-SCHED_IDLE tasks are just fair tasks with a very low weight and they would
-incorrectly skip load, vlag and position updates.
-
-Fix it by updating reweight_task() to take struct load_weight as idle weight
-can't be expressed with prio and making set_load_weight() call
-reweight_task() for SCHED_IDLE tasks too when @update_load is set.
-
-Fixes: 9059393e4ec1 ("sched/fair: Use reweight_entity() for set_user_nice()")
-Suggested-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org # v4.15+
-Link: http://lkml.kernel.org/r/20240624102331.GI31592@noisy.programming.kicks-ass.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c  |   23 ++++++++++-------------
- kernel/sched/fair.c  |    7 +++----
- kernel/sched/sched.h |    2 +-
- 3 files changed, 14 insertions(+), 18 deletions(-)
+ include/trace/events/rpcgss.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -1259,27 +1259,24 @@ int tg_nop(struct task_group *tg, void *
- static void set_load_weight(struct task_struct *p, bool update_load)
- {
- 	int prio = p->static_prio - MAX_RT_PRIO;
--	struct load_weight *load = &p->se.load;
-+	struct load_weight lw;
+diff --git a/include/trace/events/rpcgss.h b/include/trace/events/rpcgss.h
+index f50fcafc69de2..78704f1209d3e 100644
+--- a/include/trace/events/rpcgss.h
++++ b/include/trace/events/rpcgss.h
+@@ -54,7 +54,7 @@ TRACE_DEFINE_ENUM(GSS_S_UNSEQ_TOKEN);
+ TRACE_DEFINE_ENUM(GSS_S_GAP_TOKEN);
  
--	/*
--	 * SCHED_IDLE tasks get minimal weight:
--	 */
- 	if (task_has_idle_policy(p)) {
--		load->weight = scale_load(WEIGHT_IDLEPRIO);
--		load->inv_weight = WMULT_IDLEPRIO;
--		return;
-+		lw.weight = scale_load(WEIGHT_IDLEPRIO);
-+		lw.inv_weight = WMULT_IDLEPRIO;
-+	} else {
-+		lw.weight = scale_load(sched_prio_to_weight[prio]);
-+		lw.inv_weight = sched_prio_to_wmult[prio];
- 	}
- 
- 	/*
- 	 * SCHED_OTHER tasks have to update their load when changing their
- 	 * weight
- 	 */
--	if (update_load && p->sched_class == &fair_sched_class) {
--		reweight_task(p, prio);
--	} else {
--		load->weight = scale_load(sched_prio_to_weight[prio]);
--		load->inv_weight = sched_prio_to_wmult[prio];
--	}
-+	if (update_load && p->sched_class == &fair_sched_class)
-+		reweight_task(p, &lw);
-+	else
-+		p->se.load = lw;
- }
- 
- #ifdef CONFIG_UCLAMP_TASK
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -3330,15 +3330,14 @@ static void reweight_entity(struct cfs_r
- 
- }
- 
--void reweight_task(struct task_struct *p, int prio)
-+void reweight_task(struct task_struct *p, const struct load_weight *lw)
- {
- 	struct sched_entity *se = &p->se;
- 	struct cfs_rq *cfs_rq = cfs_rq_of(se);
- 	struct load_weight *load = &se->load;
--	unsigned long weight = scale_load(sched_prio_to_weight[prio]);
- 
--	reweight_entity(cfs_rq, se, weight);
--	load->inv_weight = sched_prio_to_wmult[prio];
-+	reweight_entity(cfs_rq, se, lw->weight);
-+	load->inv_weight = lw->inv_weight;
- }
- 
- static inline int throttled_hierarchy(struct cfs_rq *cfs_rq);
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -2346,7 +2346,7 @@ extern void init_sched_dl_class(void);
- extern void init_sched_rt_class(void);
- extern void init_sched_fair_class(void);
- 
--extern void reweight_task(struct task_struct *p, int prio);
-+extern void reweight_task(struct task_struct *p, const struct load_weight *lw);
- 
- extern void resched_curr(struct rq *rq);
- extern void resched_cpu(int cpu);
+ #define show_gss_status(x)						\
+-	__print_flags(x, "|",						\
++	__print_symbolic(x, 						\
+ 		{ GSS_S_BAD_MECH, "GSS_S_BAD_MECH" },			\
+ 		{ GSS_S_BAD_NAME, "GSS_S_BAD_NAME" },			\
+ 		{ GSS_S_BAD_NAMETYPE, "GSS_S_BAD_NAMETYPE" },		\
+-- 
+2.43.0
+
 
 
