@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73835201252;
-	Tue, 30 Jul 2024 16:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1F0201270;
+	Tue, 30 Jul 2024 16:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355274; cv=none; b=AuLP4+YOwEF61KtWoFKgBh8pFZbM2lfLXlkT2czmIbdEJS70/x29AKsu3rP3dEpR6Yv9zIU4bxGkqIHwrVsGS3ALkrZDc3JoMYQjRyZWiV1+LiT5PbarvVbc2XwyZYTPlN7it4GP+yUiUZ124oJVmM0j/905sljzUGT0DuPs42U=
+	t=1722355277; cv=none; b=HUlidI+rAH0wsMmOBjtFe7ntQ2OybFqg9YOREWhNrFAiYR/OQ+6F1ukMTF6CnROOm7yr4lca6+KrVkWJFRH9B+Ga/3bT9+wrR+b1JjMq5Dhg5MfErzKmi9RdZQM95dcga8O6VdZLsCaoxj7fqjelC6hEO7NYF6Z08+Js5XDhuvo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355274; c=relaxed/simple;
-	bh=SevQD5Ci2B1NeXTUFBZBWrQVx1TSnT018elmfh6+4VA=;
+	s=arc-20240116; t=1722355277; c=relaxed/simple;
+	bh=jWAsxuvkehLTmPohvWkaFpQ958o2FlDJHal2HTYsc14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wexnesm3Vy7NM6UUJDHmLCUYgqYi/PB7NvsJxu4X3fR3duM11mwBm5p6MDp6NQm7sB50wbFlOS9qjRc+dn5Hdyq82U7rpQebX3kncmV7HMi9M9ooxv1pziZp1wI5V6ibY+YNsdHIiAhoF3OZc4NK1X2o7CYOQ5Lx8ToXNlKHvfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PI09oAax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k9vz68IYj9KJ4AdS35v7KT8mBCUf3ofOe7WQm1xAeZr7tS4j3n4Y27MjsaKHWuk5vY6q+wC3CrEuGIt5QQ0vtSiju/CyEPbSdIER0aOhjeN4KphZeU0OF0OR3lnr3o0dlzdYzyDbFvTRYN1WGH+7x6kZITyGFSlcG58ZeG2sG2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0ZgzU/o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PI09oAax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9723AC4AF0C;
-	Tue, 30 Jul 2024 16:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0ZgzU/o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6702C32782;
+	Tue, 30 Jul 2024 16:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355274;
-	bh=SevQD5Ci2B1NeXTUFBZBWrQVx1TSnT018elmfh6+4VA=;
+	s=korg; t=1722355277;
+	bh=jWAsxuvkehLTmPohvWkaFpQ958o2FlDJHal2HTYsc14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PI09oAaxxjepqCP1juzE3dOh2gMSYhYmANisyBA1DGpTX42FqYeXR4Kp6Qxbev7Yd
-	 oKym5gcxWFFGjVfP4oY3tPuUebpuOcnUAQciOlpZDvgNZoWKl8s5HuabNV4RGDbnfB
-	 l2Qp3MuzHJx21mj2OUIMk1CJKXOyy9Il6S5aQqW0=
+	b=Z0ZgzU/oXXI7cGQX87Pl9wY/weC3DBWtrbmdFebo6pHTzCzq6D+Kv7hYCdiu6yEDx
+	 NdtACLqkH26NXzNevvHgIcLMpWjc1pYWqbjNNK1wTYvsnAa7wGMPDrSGhkXRvTKtH7
+	 xDEnv6kRlN6wymMyKq2m15j9+r0n0IGEgggCDtGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Yao Zi <ziyao@disroot.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/440] arm64: dts: renesas: r9a07g054: Add missing hypervisor virtual timer IRQ
-Date: Tue, 30 Jul 2024 17:45:04 +0200
-Message-ID: <20240730151618.538732275@linuxfoundation.org>
+Subject: [PATCH 6.10 036/809] drm/meson: fix canvas release in bind function
+Date: Tue, 30 Jul 2024 17:38:32 +0200
+Message-ID: <20240730151726.078226629@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,108 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Yao Zi <ziyao@disroot.org>
 
-[ Upstream commit 2918674704aad620215c41979a331021fe3f1ec4 ]
+[ Upstream commit a695949b2e9bb6b6700a764c704731a306c4bebf ]
 
-Add the missing fifth interrupt to the device node that represents the
-ARM architected timer.  While at it, add an interrupt-names property for
-clarity,
+Allocated canvases may not be released on the error exit path of
+meson_drv_bind_master(), leading to resource leaking. Rewrite exit path
+to release canvases on error.
 
-Fixes: 7c2b8198f4f321df ("arm64: dts: renesas: Add initial DTSI for RZ/V2L SoC")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Link: https://lore.kernel.org/834244e77e5f407ee6fab1ab5c10c98a8a933085.1718890849.git.geert+renesas@glider.be
+Fixes: 2bf6b5b0e374 ("drm/meson: exclusively use the canvas provider module")
+Signed-off-by: Yao Zi <ziyao@disroot.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240703155826.10385-2-ziyao@disroot.org
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240703155826.10385-2-ziyao@disroot.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a07g054.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/meson/meson_drv.c | 37 +++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a07g054.dtsi b/arch/arm64/boot/dts/renesas/r9a07g054.dtsi
-index 0e319cc2460c5..60a20a3ca12e3 100644
---- a/arch/arm64/boot/dts/renesas/r9a07g054.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a07g054.dtsi
-@@ -1100,6 +1100,9 @@ timer {
- 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
- 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
- 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
--				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
-+				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
-+				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
-+				  "hyp-virt";
- 	};
- };
+diff --git a/drivers/gpu/drm/meson/meson_drv.c b/drivers/gpu/drm/meson/meson_drv.c
+index 17a5cca007e29..4bd0baa2a4f55 100644
+--- a/drivers/gpu/drm/meson/meson_drv.c
++++ b/drivers/gpu/drm/meson/meson_drv.c
+@@ -250,29 +250,20 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ 	if (ret)
+ 		goto free_drm;
+ 	ret = meson_canvas_alloc(priv->canvas, &priv->canvas_id_vd1_0);
+-	if (ret) {
+-		meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
+-		goto free_drm;
+-	}
++	if (ret)
++		goto free_canvas_osd1;
+ 	ret = meson_canvas_alloc(priv->canvas, &priv->canvas_id_vd1_1);
+-	if (ret) {
+-		meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
+-		meson_canvas_free(priv->canvas, priv->canvas_id_vd1_0);
+-		goto free_drm;
+-	}
++	if (ret)
++		goto free_canvas_vd1_0;
+ 	ret = meson_canvas_alloc(priv->canvas, &priv->canvas_id_vd1_2);
+-	if (ret) {
+-		meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
+-		meson_canvas_free(priv->canvas, priv->canvas_id_vd1_0);
+-		meson_canvas_free(priv->canvas, priv->canvas_id_vd1_1);
+-		goto free_drm;
+-	}
++	if (ret)
++		goto free_canvas_vd1_1;
+ 
+ 	priv->vsync_irq = platform_get_irq(pdev, 0);
+ 
+ 	ret = drm_vblank_init(drm, 1);
+ 	if (ret)
+-		goto free_drm;
++		goto free_canvas_vd1_2;
+ 
+ 	/* Assign limits per soc revision/package */
+ 	for (i = 0 ; i < ARRAY_SIZE(meson_drm_soc_attrs) ; ++i) {
+@@ -288,11 +279,11 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ 	 */
+ 	ret = drm_aperture_remove_framebuffers(&meson_driver);
+ 	if (ret)
+-		goto free_drm;
++		goto free_canvas_vd1_2;
+ 
+ 	ret = drmm_mode_config_init(drm);
+ 	if (ret)
+-		goto free_drm;
++		goto free_canvas_vd1_2;
+ 	drm->mode_config.max_width = 3840;
+ 	drm->mode_config.max_height = 2160;
+ 	drm->mode_config.funcs = &meson_mode_config_funcs;
+@@ -307,7 +298,7 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ 	if (priv->afbcd.ops) {
+ 		ret = priv->afbcd.ops->init(priv);
+ 		if (ret)
+-			goto free_drm;
++			goto free_canvas_vd1_2;
+ 	}
+ 
+ 	/* Encoder Initialization */
+@@ -371,6 +362,14 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
+ exit_afbcd:
+ 	if (priv->afbcd.ops)
+ 		priv->afbcd.ops->exit(priv);
++free_canvas_vd1_2:
++	meson_canvas_free(priv->canvas, priv->canvas_id_vd1_2);
++free_canvas_vd1_1:
++	meson_canvas_free(priv->canvas, priv->canvas_id_vd1_1);
++free_canvas_vd1_0:
++	meson_canvas_free(priv->canvas, priv->canvas_id_vd1_0);
++free_canvas_osd1:
++	meson_canvas_free(priv->canvas, priv->canvas_id_osd1);
+ free_drm:
+ 	drm_dev_put(drm);
+ 
 -- 
 2.43.0
 
