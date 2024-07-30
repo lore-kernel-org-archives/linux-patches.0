@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6E51A76DD;
-	Tue, 30 Jul 2024 17:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFF91A76D4;
+	Tue, 30 Jul 2024 17:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359779; cv=none; b=STObh2ElfI68Lyjd28yRB4MXhpqGQ5LSv2DGKtFxMYJsS2WB3FV/4VKSIkSRfaiV/BZd3TQuzy1cEJuuPHm1ZH7zH/qV3XPaZ7c9nN/yeR38I0OUFPLK6ZSis4gjK1EBjdixXOgX0ZRjRyJvHROdL7T0r9DqS5sfzHiHbNu/itk=
+	t=1722359783; cv=none; b=C91IESZNDyamaH2ZnNIY9jHdQqers8iy5uhieM/uwIF9v3A8LOjkogqOihtphWI76nKtWw+rZJU8jZx0wC5ijfobJ4bujWwt2kyVisgWkXHphXxmiTL3/pyMHs2YugyYZbDX86Hx51C34so0NEjjqih+hqy7Gaf5bIqWymSYWVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359779; c=relaxed/simple;
-	bh=HSRFZ7A4pdtj+5SRLbcZcFSconct94JKnZ3brLEzs1s=;
+	s=arc-20240116; t=1722359783; c=relaxed/simple;
+	bh=FiWDME2kdaPAFUbpQ5E3RK6Hw4HO+FvwW/DiCQyyLMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gh0a0BxgWJ5AGb8RGgWM6vUeKF8aMX88TV3aLcPTNfq+rIMNw5RN3pe18Yv961fZSscfdPzfJp7T9I5yVQi6PUHO9d+2tMx0plZAl7rOfuS7/4E9vrROLodiTHpiULHKvDMcv0/xqRAuz4JbNiReuEKqySMwm2+nJzsT6V2xn/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lp4Q7Lo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cmOt7fUgJguG6m0Q86C27o6kK7amSbexqVeuVLRNYXvE/xmcOqFMKYiuan9cpD4u8nzlLqJefqtqh4wwUe2RW+d71b4NKr1yo+XR4gnK2tyC29pLOC1KVBoNCHAUox8s+rWdBBKuiUM515o4TOXMBlrDEv3BpOfN/0YrnsZ6kM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrzZZrip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lp4Q7Lo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DD8C32782;
-	Tue, 30 Jul 2024 17:16:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrzZZrip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680A4C32782;
+	Tue, 30 Jul 2024 17:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359779;
-	bh=HSRFZ7A4pdtj+5SRLbcZcFSconct94JKnZ3brLEzs1s=;
+	s=korg; t=1722359782;
+	bh=FiWDME2kdaPAFUbpQ5E3RK6Hw4HO+FvwW/DiCQyyLMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lp4Q7Lo0j+Iwff3054Oo2iS63ioiWCjUU6DSVszhX/XGXTTj9tcgOkdmYWJJVrnXV
-	 SQVhy6sdmr2CjxvFwAHJkhPOLZWAM1+FFJyKJEke0m/roprCeewopk7H5fW3NPu0Fu
-	 xBh3IUzsijP+/cN+Q6YTW2egNtzFBvdvtLc8hvI0=
+	b=nrzZZripYP9xK21HPId1+ySu0evo0x5scMShNz/Lje/pVM1wTO/zjMgBKoXkyP6dv
+	 tgIqhdtrz+2ueVP5J7SCtG5PMrvuIGb2gfKTRs3tUj4KQJeHkd9tgKbWhuQkB8LKCn
+	 PkAKcbOURhV1g6+Lr/iIxgPhEorqkbmj0HZwgMIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason-JH.Lin" <jason-jh.lin@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 531/809] mailbox: mtk-cmdq: Move devm_mbox_controller_register() after devm_pm_runtime_enable()
-Date: Tue, 30 Jul 2024 17:46:47 +0200
-Message-ID: <20240730151745.710533982@linuxfoundation.org>
+Subject: [PATCH 6.6 535/568] MIPS: SMP-CPS: Fix address for GCR_ACCESS register for CM3 and later
+Date: Tue, 30 Jul 2024 17:50:42 +0200
+Message-ID: <20240730151701.065163991@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,81 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jason-JH.Lin <jason-jh.lin@mediatek.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit a8bd68e4329f9a0ad1b878733e0f80be6a971649 ]
+[ Upstream commit a263e5f309f32301e1f3ad113293f4e68a82a646 ]
 
-When mtk-cmdq unbinds, a WARN_ON message with condition
-pm_runtime_get_sync() < 0 occurs.
+When the CM block migrated from CM2.5 to CM3.0, the address offset for
+the Global CSR Access Privilege register was modified. We saw this in
+the "MIPS64 I6500 Multiprocessing System Programmer's Guide," it is
+stated that "the Global CSR Access Privilege register is located at
+offset 0x0120" in section 5.4. It is at least the same for I6400.
 
-According to the call tracei below:
-  cmdq_mbox_shutdown
-  mbox_free_channel
-  mbox_controller_unregister
-  __devm_mbox_controller_unregister
-  ...
+This fix allows to use the VP cores in SMP mode if the reset values
+were modified by the bootloader.
 
-The root cause can be deduced to be calling pm_runtime_get_sync() after
-calling pm_runtime_disable() as observed below:
-1. CMDQ driver uses devm_mbox_controller_register() in cmdq_probe()
-   to bind the cmdq device to the mbox_controller, so
-   devm_mbox_controller_unregister() will automatically unregister
-   the device bound to the mailbox controller when the device-managed
-   resource is removed. That means devm_mbox_controller_unregister()
-   and cmdq_mbox_shoutdown() will be called after cmdq_remove().
-2. CMDQ driver also uses devm_pm_runtime_enable() in cmdq_probe() after
-   devm_mbox_controller_register(), so that devm_pm_runtime_disable()
-   will be called after cmdq_remove(), but before
-   devm_mbox_controller_unregister().
+Based on the work of Vladimir Kondratiev
+<vladimir.kondratiev@mobileye.com> and the feedback from Jiaxun Yang
+<jiaxun.yang@flygoat.com>.
 
-To fix this problem, cmdq_probe() needs to move
-devm_mbox_controller_register() after devm_pm_runtime_enable() to make
-devm_pm_runtime_disable() be called after
-devm_mbox_controller_unregister().
-
-Fixes: 623a6143a845 ("mailbox: mediatek: Add Mediatek CMDQ driver")
-Signed-off-by: Jason-JH.Lin <jason-jh.lin@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
+Fixes: 197e89e0984a ("MIPS: mips-cm: Implement mips_cm_revision")
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mtk-cmdq-mailbox.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/mips/include/asm/mips-cm.h | 4 ++++
+ arch/mips/kernel/smp-cps.c      | 5 ++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/mtk-cmdq-mailbox.c b/drivers/mailbox/mtk-cmdq-mailbox.c
-index 4aa394e91109c..63b5e3fe75281 100644
---- a/drivers/mailbox/mtk-cmdq-mailbox.c
-+++ b/drivers/mailbox/mtk-cmdq-mailbox.c
-@@ -662,12 +662,6 @@ static int cmdq_probe(struct platform_device *pdev)
- 		cmdq->mbox.chans[i].con_priv = (void *)&cmdq->thread[i];
- 	}
+diff --git a/arch/mips/include/asm/mips-cm.h b/arch/mips/include/asm/mips-cm.h
+index 23c67c0871b17..696b40beb774f 100644
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -228,6 +228,10 @@ GCR_ACCESSOR_RO(32, 0x0d0, gic_status)
+ GCR_ACCESSOR_RO(32, 0x0f0, cpc_status)
+ #define CM_GCR_CPC_STATUS_EX			BIT(0)
  
--	err = devm_mbox_controller_register(dev, &cmdq->mbox);
--	if (err < 0) {
--		dev_err(dev, "failed to register mailbox: %d\n", err);
--		return err;
--	}
--
- 	platform_set_drvdata(pdev, cmdq);
- 
- 	WARN_ON(clk_bulk_prepare(cmdq->pdata->gce_num, cmdq->clocks));
-@@ -695,6 +689,12 @@ static int cmdq_probe(struct platform_device *pdev)
- 	pm_runtime_set_autosuspend_delay(dev, CMDQ_MBOX_AUTOSUSPEND_DELAY_MS);
- 	pm_runtime_use_autosuspend(dev);
- 
-+	err = devm_mbox_controller_register(dev, &cmdq->mbox);
-+	if (err < 0) {
-+		dev_err(dev, "failed to register mailbox: %d\n", err);
-+		return err;
-+	}
++/* GCR_ACCESS - Controls core/IOCU access to GCRs */
++GCR_ACCESSOR_RW(32, 0x120, access_cm3)
++#define CM_GCR_ACCESS_ACCESSEN			GENMASK(7, 0)
 +
- 	return 0;
- }
+ /* GCR_L2_CONFIG - Indicates L2 cache configuration when Config5.L2C=1 */
+ GCR_ACCESSOR_RW(32, 0x130, l2_config)
+ #define CM_GCR_L2_CONFIG_BYPASS			BIT(20)
+diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+index dd55d59b88db3..d445f8e849abd 100644
+--- a/arch/mips/kernel/smp-cps.c
++++ b/arch/mips/kernel/smp-cps.c
+@@ -222,7 +222,10 @@ static void boot_core(unsigned int core, unsigned int vpe_id)
+ 	write_gcr_co_reset_ext_base(CM_GCR_Cx_RESET_EXT_BASE_UEB);
  
+ 	/* Ensure the core can access the GCRs */
+-	set_gcr_access(1 << core);
++	if (mips_cm_revision() < CM_REV_CM3)
++		set_gcr_access(1 << core);
++	else
++		set_gcr_access_cm3(1 << core);
+ 
+ 	if (mips_cpc_present()) {
+ 		/* Reset the core */
 -- 
 2.43.0
 
