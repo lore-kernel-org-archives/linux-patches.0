@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273D81B5839;
-	Tue, 30 Jul 2024 15:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CE671BA870;
+	Tue, 30 Jul 2024 15:52:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354718; cv=none; b=Ig2xwLoT8CZuoNAk8wmd9Gk7OgJc+/He/BPi1dZ1KW6xZhHPz/NOGB8xdqxQEBDG9SQCYeddIBWg1JwXmwwOYDQYQCQBLnO+exz6wm/71B1stncymFP/K2RNVfbR+agpTFpBBDr9q27emOmWQuI9WGOvM6M5NWXYzb2XQZ1swVM=
+	t=1722354721; cv=none; b=kFGlHMwUfUyLwSUYjbJHTZDDtrM7XLvygNDbe+BbvxXQLPxa3FrCs5tvej6TUU+PEm5vi4xech/HV0v9uwEwf1bv0OZUwyOjnGfs5uotac+aV9+T5HJrIBcczy178al13AElYoWAsRzOoTOsbKPbvEM6yJtgz2NdrXLbADSn0r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354718; c=relaxed/simple;
-	bh=Hcm8pcZQnBRMivrNaU0j938l26jdooyivhYe32E6nMo=;
+	s=arc-20240116; t=1722354721; c=relaxed/simple;
+	bh=z0xyBXh0MIc+IcFB0XMx638dl9tvXgwGLEcHNWp1luA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEz7Fp8amNw0JAk7/thXR+/MPGDQJRkwrrHnAq1uf7IxXzIkD69Vks8Be3cMaL4KMNEn2wf79L2S8cysSfIbqhRXPdUcUg4gL9+bKQSKC1Yy5vUECNV7bTXnD8eKOI8IeRl2DuuA7Ck1ZmHqe7JiG6MXGSl7l8MW5gPI3oOtc6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyGV6qo0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ooTGa46UXugVPnDGIT2m+3d1HXbny72EROK9d3nNXjbWloOpBui3bwWRossANeCr2gXneHZMIAbLf6x3zmamMTabPTi4F4hGIDdvNLFAmoQW4mPQianFtXg0MPXpdwOMIulc0XEL5LENhkCG1zwm2TaL5TnMRSeLc21E/LELs9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrRNyff3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyGV6qo0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C628C4AF0A;
-	Tue, 30 Jul 2024 15:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrRNyff3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B983CC32782;
+	Tue, 30 Jul 2024 15:52:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354717;
-	bh=Hcm8pcZQnBRMivrNaU0j938l26jdooyivhYe32E6nMo=;
+	s=korg; t=1722354721;
+	bh=z0xyBXh0MIc+IcFB0XMx638dl9tvXgwGLEcHNWp1luA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyGV6qo0nmr2WL/xUEU5Q9hQMY3fuw94PNpzx2FK4KFhSOs0iiMhmab/bl+PdDRQj
-	 1e/qiNS1FraNMROcYp/RawF8+iHy8YqByDoahSX10saZEjVriHEThh90cPjIt5cJav
-	 42n1L3M2cQefhdV2uOzItR+gUGPjS7yaiusPgy2E=
+	b=lrRNyff3dgQZJ9AIpcTKxBAe4Ap9kCx1/apGBZcH5hDyvmvFekK+0I3gUCHQ0w90U
+	 +8TQpjFz8+ElH295ZdTOrT8e6KWBct2Z3LCx+s7WQUAH3hzhlrNRnZG6AUyF7y9s/Y
+	 Pwzsvcjqo0kLSRYNCgoNL0tcm6HOSXzBc03Ypnn4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,12 +31,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/568] spi: spi-microchip-core: Fix the number of chip selects supported
-Date: Tue, 30 Jul 2024 17:41:48 +0200
-Message-ID: <20240730151639.860544225@linuxfoundation.org>
+Subject: [PATCH 6.10 001/809] spi: spi-microchip-core: Fix the number of chip selects supported
+Date: Tue, 30 Jul 2024 17:37:57 +0200
+Message-ID: <20240730151724.707322827@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,7 +48,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
@@ -74,7 +74,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
-index b451cd4860ecb..6092f20f0a607 100644
+index 634364c7cfe61..c10de45aa4729 100644
 --- a/drivers/spi/spi-microchip-core.c
 +++ b/drivers/spi/spi-microchip-core.c
 @@ -21,7 +21,7 @@
