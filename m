@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827691A6160;
-	Tue, 30 Jul 2024 16:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5C1A6166;
+	Tue, 30 Jul 2024 16:28:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356919; cv=none; b=RCiZZ/6GjBcdJmwdWfD68ZlMiRUfokYQuMRz9UKgQEB0fZnpjCIUC2kFjvH8wZc6soHaAbz2Vce7Ev1t+YmdVEaXhOgh5FjXYC8poxlmEW+giaihSoieH8y7yj8JBbDxTGfRALKDcdl8tAc8KcRffyEEunK79WREibxiCMdqUMg=
+	t=1722356922; cv=none; b=K7GQh0Wwy/wM/KFPFKWWMAo7zbsv63a7h+JUwb3Wcksp2qJ313Sx4u4wX1nBLaNwy+Ag7DZM+WZBUBfl+0yJno2k/UTA/TggdUI8YlPJ1I+IvdQbcn9Ey1+dgckcslldQ9hxZX/ka/sXc/AQt3bP4WEJrF4e7zwj2VmEmoq132Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356919; c=relaxed/simple;
-	bh=GNjvcEpaWGNUipVWt9MJ4uKhegnfMmfj2xGURZFNkPE=;
+	s=arc-20240116; t=1722356922; c=relaxed/simple;
+	bh=EDGpkh3TvDgQO8p/imNEgfDMr1eCUpyX2q4cAY1Xt2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o9eLGBRd49NYh2FGH4Lz2jJO8YzFCjODBFtWIlTpwPuNouDJtXp+0VODoqOh9NNdOOm4k4JJnH4qG0gFPNVppLNAm0uJl+E7eUQlpVQ/02EYBNBMGcw3Zr9YTURNTZsQhqp3n4oQpEerFKIgFa6s1BHYInu9NSoFZBKv2A5GUnE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zjtgqkz1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oeBYfXie3l+2YrPx75R1zFxnrH/ZCORnMON/NFCxmk8kuzbiw2SUoBKdVkwSAq72uUgE6CGOJ2kPwmjJawUpTTIICmEEq7nEDV1X3OxQTG9P7/0gwZLvMBvdNBAgHDro2AjQxX6u1u68X6TG6d9RjWxHfnLcxnmKkQ7Rzg3RTnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxqHAIU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zjtgqkz1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD540C32782;
-	Tue, 30 Jul 2024 16:28:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxqHAIU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17DAC32782;
+	Tue, 30 Jul 2024 16:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356919;
-	bh=GNjvcEpaWGNUipVWt9MJ4uKhegnfMmfj2xGURZFNkPE=;
+	s=korg; t=1722356922;
+	bh=EDGpkh3TvDgQO8p/imNEgfDMr1eCUpyX2q4cAY1Xt2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zjtgqkz1SlThdR3IShDpTTzrhHElfuxuuXeJmO2tpwvXR9zhiWbwkWH0Wa/5tcj/U
-	 /wLUfL+CGS9A7+kNm4ZIeKAzcs7K9RIqUXECiK0FkdQv0qUZFA5Co7ln3mrPvm4OKR
-	 sUQT/W+MEIE/lp1KY4vjoKgidutXD1CbrHlK9cRQ=
+	b=hxqHAIU0Y4oXH1T7ZcyEXMY6NOPHgcE+GpvSFKVGGzwtZjhzQuXIClx7W0G3z8E5/
+	 Ed4Q064QPhFYsOcNxKQIMO+iceyJh9M2r5wj3QSat3stiXpsfi1lyNvwFulwmqN27S
+	 UecblPdi4kWdWl+AzJoIxqHF37xfryjpqlHDdguA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 241/440] fs/ntfs3: Missed NI_FLAG_UPDATE_PARENT setting
-Date: Tue, 30 Jul 2024 17:47:54 +0200
-Message-ID: <20240730151625.267547808@linuxfoundation.org>
+Subject: [PATCH 6.1 223/440] RDMA/hns: Fix missing pagesize and alignment check in FRMR
+Date: Tue, 30 Jul 2024 17:47:36 +0200
+Message-ID: <20240730151624.570451417@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -50,29 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 1c308ace1fd6de93bd0b7e1a5e8963ab27e2c016 ]
+[ Upstream commit d387d4b54eb84208bd4ca13572e106851d0a0819 ]
 
-Fixes: be71b5cba2e64 ("fs/ntfs3: Add attrib operations")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+The offset requires 128B alignment and the page size ranges from
+4K to 128M.
+
+Fixes: 68a997c5d28c ("RDMA/hns: Add FRMR support for hip08")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-5-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/hns/hns_roce_device.h | 4 ++++
+ drivers/infiniband/hw/hns/hns_roce_mr.c     | 5 +++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index f39987f080ee1..94b26c951752e 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1640,6 +1640,7 @@ int attr_allocate_frame(struct ntfs_inode *ni, CLST frame, size_t compr_size,
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index 0a4c046cdfac4..a2bdfa026c560 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -82,6 +82,7 @@
+ #define MR_TYPE_DMA				0x03
  
- 	attr_b->nres.total_size = cpu_to_le64(total_size);
- 	inode_set_bytes(&ni->vfs_inode, total_size);
-+	ni->ni_flags |= NI_FLAG_UPDATE_PARENT;
+ #define HNS_ROCE_FRMR_MAX_PA			512
++#define HNS_ROCE_FRMR_ALIGN_SIZE		128
  
- 	mi_b->dirty = true;
- 	mark_inode_dirty(&ni->vfs_inode);
+ #define PKEY_ID					0xffff
+ #define NODE_DESC_SIZE				64
+@@ -182,6 +183,9 @@ enum {
+ #define HNS_HW_PAGE_SHIFT			12
+ #define HNS_HW_PAGE_SIZE			(1 << HNS_HW_PAGE_SHIFT)
+ 
++#define HNS_HW_MAX_PAGE_SHIFT			27
++#define HNS_HW_MAX_PAGE_SIZE			(1 << HNS_HW_MAX_PAGE_SHIFT)
++
+ struct hns_roce_uar {
+ 	u64		pfn;
+ 	unsigned long	index;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 190e62da98e4b..980261969b0c0 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -423,6 +423,11 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
+ 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
+ 	int ret, sg_num = 0;
+ 
++	if (!IS_ALIGNED(*sg_offset, HNS_ROCE_FRMR_ALIGN_SIZE) ||
++	    ibmr->page_size < HNS_HW_PAGE_SIZE ||
++	    ibmr->page_size > HNS_HW_MAX_PAGE_SIZE)
++		return sg_num;
++
+ 	mr->npages = 0;
+ 	mr->page_list = kvcalloc(mr->pbl_mtr.hem_cfg.buf_pg_count,
+ 				 sizeof(dma_addr_t), GFP_KERNEL);
 -- 
 2.43.0
 
