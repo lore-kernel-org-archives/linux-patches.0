@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EC1184535;
-	Tue, 30 Jul 2024 16:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53FB5184535;
+	Tue, 30 Jul 2024 16:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357440; cv=none; b=CSbPGtIDKM8HjGZKx6YU1iyL9RIDz0Xey6tgWCYDZdhuMvUJi5ohePBNc8pPgfll5lYfNmW/z/4g9YrNjYHGDLUuHO7NZqOAXv/h3wFWPk6g3GLYEmzpnInwG7nAONDjtUfqPiKrVQYohpXpiyFu0Ir1BZvP8vNINld+HYeYlXc=
+	t=1722357444; cv=none; b=g0fjDOISaA5ZTqwYDs7c1HeoNjsC5QckgEfFpJ7SLUhkH3eHdwZ5SAgE0qAY/CVIA9Ai3fqu9PedLmBUrBC9Wt4OiStjOjzg6QyjYwCMvX1IsOj0kCSnIZeAlN9voECk6wl98avLQPLy69lgojjs+4CFEuIzZ8mPaaCpSKe/vlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357440; c=relaxed/simple;
-	bh=RbPf29au8m2VZIUu6dE4sehpTOELpLudf31zHxsUg3c=;
+	s=arc-20240116; t=1722357444; c=relaxed/simple;
+	bh=VcOhbNKJsAca+cjNQVVTmyBSk0kIt1oXgVaN+LFEazw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F7rMgHXcRsU1nbFic3MigfkxQ0lkBz8qNpY/djCdDla+96AcEdP5ixgEEoZWgorTAxlcrK9QdqVmlnwdHZYumUvxF4ynPRa/XiA8QLuli1UumwCKOmTCzFx6Wiu/TL4Bebz3AK+xLeOfV7j94RODDJdVi1BWmAW8tdrfEV/hgEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Elcq4Tml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngrXgSzy5v7KCMyufe/QlAU2Cb5IrSQMhhVGgFWgFO4Ol/Ka1LgVHPLta02hcoK1zDDN2ucM0zt8cdUKMH9NGJFBiIPMwF3GXByAGZfjp0Vo0eAR3RCggsCbytkIdAp9ALObGrjGyI6kwLm0QFMIpLPpqC0u9mzmjLavtWIWpcM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MefnXjFD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Elcq4Tml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412C6C4AF0A;
-	Tue, 30 Jul 2024 16:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MefnXjFD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DBA4C32782;
+	Tue, 30 Jul 2024 16:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357440;
-	bh=RbPf29au8m2VZIUu6dE4sehpTOELpLudf31zHxsUg3c=;
+	s=korg; t=1722357444;
+	bh=VcOhbNKJsAca+cjNQVVTmyBSk0kIt1oXgVaN+LFEazw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Elcq4TmlDpKmdesCopdUDq0DUfvlbqA7GMsOGWbi0mbc0NChEWZoeMwoqsIYFQrd8
-	 RexXzgp3Fi+AL3f143aUyDx5Hey1IwGNal5+djR8wFlH4ukv4Y2yoAUFBsx4PcoWG/
-	 1KG082ZCRUDzuOyQf44bOx39CVnQcsEAQaewRztc=
+	b=MefnXjFD6xlTVGxB3OV4evYPzpWyw7XshCfzf5OHERJJXYuBT148ruUetNCqK+ASQ
+	 nzc4x/cntbwh7zqF1RSZn7DfuyBLT9Igk+lbCIE3f9KyOhLoxK4qOhiTv9W0qSA2IY
+	 l0F4JX8l4nh2BAPFeUh/1aN5mPDoEvR4WLA3ALYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com,
+	Hugh Dickins <hughd@google.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 254/809] Bluetooth: btintel: Refactor btintel_set_ppag()
-Date: Tue, 30 Jul 2024 17:42:10 +0200
-Message-ID: <20240730151734.627588630@linuxfoundation.org>
+Subject: [PATCH 6.6 243/568] ext4: avoid writing unitialized memory to disk in EA inodes
+Date: Tue, 30 Jul 2024 17:45:50 +0200
+Message-ID: <20240730151649.378980200@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,205 +49,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 0a3e2eca1daa5627c8ecd1554e3146de82d61dd2 ]
+[ Upstream commit 65121eff3e4c8c90f8126debf3c369228691c591 ]
 
-Current flow iterates the ACPI table associated with Bluetooth
-controller looking for PPAG method. Method name can be directly passed
-to acpi_evaluate_object function instead of iterating the table.
+If the extended attribute size is not a multiple of block size, the last
+block in the EA inode will have uninitialized tail which will get
+written to disk. We will never expose the data to userspace but still
+this is not a good practice so just zero out the tail of the block as it
+isn't going to cause a noticeable performance overhead.
 
-Fixes: c585a92b2f9c ("Bluetooth: btintel: Set Per Platform Antenna Gain(PPAG)")
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
+Reported-by: syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com
+Reported-by: Hugh Dickins <hughd@google.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240613150234.25176-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 119 +++++++++++-------------------------
- 1 file changed, 34 insertions(+), 85 deletions(-)
+ fs/ext4/xattr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 0c855c3ee1c1c..7ecc67deecb09 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -26,21 +26,11 @@
- #define ECDSA_OFFSET		644
- #define ECDSA_HEADER_LEN	320
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index 41b4630b17d64..c58cbe9f7809c 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1433,6 +1433,12 @@ static int ext4_xattr_inode_write(handle_t *handle, struct inode *ea_inode,
+ 			goto out;
  
--#define BTINTEL_PPAG_NAME   "PPAG"
--
- enum {
- 	DSM_SET_WDISABLE2_DELAY = 1,
- 	DSM_SET_RESET_METHOD = 3,
- };
- 
--/* structure to store the PPAG data read from ACPI table */
--struct btintel_ppag {
--	u32	domain;
--	u32     mode;
--	acpi_status status;
--	struct hci_dev *hdev;
--};
--
- #define CMD_WRITE_BOOT_PARAMS	0xfc0e
- struct cmd_write_boot_params {
- 	__le32 boot_addr;
-@@ -1324,65 +1314,6 @@ static int btintel_read_debug_features(struct hci_dev *hdev,
- 	return 0;
- }
- 
--static acpi_status btintel_ppag_callback(acpi_handle handle, u32 lvl, void *data,
--					 void **ret)
--{
--	acpi_status status;
--	size_t len;
--	struct btintel_ppag *ppag = data;
--	union acpi_object *p, *elements;
--	struct acpi_buffer string = {ACPI_ALLOCATE_BUFFER, NULL};
--	struct acpi_buffer buffer = {ACPI_ALLOCATE_BUFFER, NULL};
--	struct hci_dev *hdev = ppag->hdev;
--
--	status = acpi_get_name(handle, ACPI_FULL_PATHNAME, &string);
--	if (ACPI_FAILURE(status)) {
--		bt_dev_warn(hdev, "PPAG-BT: ACPI Failure: %s", acpi_format_exception(status));
--		return status;
--	}
--
--	len = strlen(string.pointer);
--	if (len < strlen(BTINTEL_PPAG_NAME)) {
--		kfree(string.pointer);
--		return AE_OK;
--	}
--
--	if (strncmp((char *)string.pointer + len - 4, BTINTEL_PPAG_NAME, 4)) {
--		kfree(string.pointer);
--		return AE_OK;
--	}
--	kfree(string.pointer);
--
--	status = acpi_evaluate_object(handle, NULL, NULL, &buffer);
--	if (ACPI_FAILURE(status)) {
--		ppag->status = status;
--		bt_dev_warn(hdev, "PPAG-BT: ACPI Failure: %s", acpi_format_exception(status));
--		return status;
--	}
--
--	p = buffer.pointer;
--	ppag = (struct btintel_ppag *)data;
--
--	if (p->type != ACPI_TYPE_PACKAGE || p->package.count != 2) {
--		kfree(buffer.pointer);
--		bt_dev_warn(hdev, "PPAG-BT: Invalid object type: %d or package count: %d",
--			    p->type, p->package.count);
--		ppag->status = AE_ERROR;
--		return AE_ERROR;
--	}
--
--	elements = p->package.elements;
--
--	/* PPAG table is located at element[1] */
--	p = &elements[1];
--
--	ppag->domain = (u32)p->package.elements[0].integer.value;
--	ppag->mode = (u32)p->package.elements[1].integer.value;
--	ppag->status = AE_OK;
--	kfree(buffer.pointer);
--	return AE_CTRL_TERMINATE;
--}
--
- static int btintel_set_debug_features(struct hci_dev *hdev,
- 			       const struct intel_debug_features *features)
- {
-@@ -2427,10 +2358,13 @@ static int btintel_configure_offload(struct hci_dev *hdev)
- 
- static void btintel_set_ppag(struct hci_dev *hdev, struct intel_version_tlv *ver)
- {
--	struct btintel_ppag ppag;
- 	struct sk_buff *skb;
- 	struct hci_ppag_enable_cmd ppag_cmd;
- 	acpi_handle handle;
-+	struct acpi_buffer buffer = {ACPI_ALLOCATE_BUFFER, NULL};
-+	union acpi_object *p, *elements;
-+	u32 domain, mode;
-+	acpi_status status;
- 
- 	/* PPAG is not supported if CRF is HrP2, Jfp2, JfP1 */
- 	switch (ver->cnvr_top & 0xFFF) {
-@@ -2448,22 +2382,34 @@ static void btintel_set_ppag(struct hci_dev *hdev, struct intel_version_tlv *ver
- 		return;
- 	}
- 
--	memset(&ppag, 0, sizeof(ppag));
--
--	ppag.hdev = hdev;
--	ppag.status = AE_NOT_FOUND;
--	acpi_walk_namespace(ACPI_TYPE_PACKAGE, handle, 1, NULL,
--			    btintel_ppag_callback, &ppag, NULL);
--
--	if (ACPI_FAILURE(ppag.status)) {
--		if (ppag.status == AE_NOT_FOUND) {
-+	status = acpi_evaluate_object(handle, "PPAG", NULL, &buffer);
-+	if (ACPI_FAILURE(status)) {
-+		if (status == AE_NOT_FOUND) {
- 			bt_dev_dbg(hdev, "PPAG-BT: ACPI entry not found");
- 			return;
- 		}
-+		bt_dev_warn(hdev, "PPAG-BT: ACPI Failure: %s", acpi_format_exception(status));
-+		return;
-+	}
-+
-+	p = buffer.pointer;
-+	if (p->type != ACPI_TYPE_PACKAGE || p->package.count != 2) {
-+		bt_dev_warn(hdev, "PPAG-BT: Invalid object type: %d or package count: %d",
-+			    p->type, p->package.count);
-+		kfree(buffer.pointer);
- 		return;
- 	}
- 
--	if (ppag.domain != 0x12) {
-+	elements = p->package.elements;
-+
-+	/* PPAG table is located at element[1] */
-+	p = &elements[1];
-+
-+	domain = (u32)p->package.elements[0].integer.value;
-+	mode = (u32)p->package.elements[1].integer.value;
-+	kfree(buffer.pointer);
-+
-+	if (domain != 0x12) {
- 		bt_dev_dbg(hdev, "PPAG-BT: Bluetooth domain is disabled in ACPI firmware");
- 		return;
- 	}
-@@ -2474,19 +2420,22 @@ static void btintel_set_ppag(struct hci_dev *hdev, struct intel_version_tlv *ver
- 	 * BIT 1 : 0 Disabled in China
- 	 *         1 Enabled in China
- 	 */
--	if ((ppag.mode & 0x01) != BIT(0) && (ppag.mode & 0x02) != BIT(1)) {
--		bt_dev_dbg(hdev, "PPAG-BT: EU, China mode are disabled in CB/BIOS");
-+	mode &= 0x03;
-+
-+	if (!mode) {
-+		bt_dev_dbg(hdev, "PPAG-BT: EU, China mode are disabled in BIOS");
- 		return;
- 	}
- 
--	ppag_cmd.ppag_enable_flags = cpu_to_le32(ppag.mode);
-+	ppag_cmd.ppag_enable_flags = cpu_to_le32(mode);
- 
--	skb = __hci_cmd_sync(hdev, INTEL_OP_PPAG_CMD, sizeof(ppag_cmd), &ppag_cmd, HCI_CMD_TIMEOUT);
-+	skb = __hci_cmd_sync(hdev, INTEL_OP_PPAG_CMD, sizeof(ppag_cmd),
-+			     &ppag_cmd, HCI_CMD_TIMEOUT);
- 	if (IS_ERR(skb)) {
- 		bt_dev_warn(hdev, "Failed to send PPAG Enable (%ld)", PTR_ERR(skb));
- 		return;
- 	}
--	bt_dev_info(hdev, "PPAG-BT: Enabled (Mode %d)", ppag.mode);
-+	bt_dev_info(hdev, "PPAG-BT: Enabled (Mode %d)", mode);
- 	kfree_skb(skb);
- }
+ 		memcpy(bh->b_data, buf, csize);
++		/*
++		 * Zero out block tail to avoid writing uninitialized memory
++		 * to disk.
++		 */
++		if (csize < blocksize)
++			memset(bh->b_data + csize, 0, blocksize - csize);
+ 		set_buffer_uptodate(bh);
+ 		ext4_handle_dirty_metadata(handle, ea_inode, bh);
  
 -- 
 2.43.0
