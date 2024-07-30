@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0635A1078F;
-	Tue, 30 Jul 2024 16:28:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5A51A616E;
+	Tue, 30 Jul 2024 16:28:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356891; cv=none; b=EkxFXg/PnG1H2pympui6RG46MFMO2BGSwjuQ583QH3Oitcajy/0APesBC+CltlcvXez2lrj1inW+V/lfd66kUp8f97oeQmpnzfcOhn+oWCYmx1FM3WiEPfZPdfmFHfJJYTn1lzOvgyFyQ+BylN8xuTMheWWY0U3y/qmok4YdIbg=
+	t=1722356894; cv=none; b=mszCB7wlqtkhRq2xbGf/zU0M2B5d0JDc0ybIGVMxttlBht5vKI4Cgt++gBfnD2BCTGBbDvcJT/Mrhe3Xf807sWwaLwW/rWT3PQ9xmSqsh0mgp9DMCiBPB6zfIwyK/lAorTdMhQ3OcylrSYsq5i0nu5afqKnqHO7uLS11UaYfJW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356891; c=relaxed/simple;
-	bh=v9A3/X1qNgGQcp9PjMYjVQUrnHG4EurIta2soTLdElY=;
+	s=arc-20240116; t=1722356894; c=relaxed/simple;
+	bh=kodcwVM/UT6p/xeuxVHE0yJgWrm4iPwqt8Xs1U1cCBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhzO8q4mbfe3Z+8DsHkGmLY/LCUsB3VzieNmYXHLAQ0QLH8ZQkt7NDo2ryeZzkkIkBk4DHJTU9021hX9X1KxmCDOJjLJc2aJ6k4fUcPFrQxZ9+TEZJpGoMQeKVRonkXTaD3HT47ipAHpejXN2sxhktcyZ6K1gUHd+t1YNkXLSIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEerTFJl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eyjaX0DG4fu6W1q+ztlhIPU91VP2RCGwB9erv7fCFOiNA3JOkAcOdEA/Q14znWSapfLLfOu4aNKyiJqD1b3jdwrmnfj2LSk0KDK7wE1xQQ+usy5S51K1GXlkmXCXFNnZWSM+KQo6Tw4Kx2+DQ4bD+vbVnQFGDjOBObHP4fGjahM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvvhG+8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEerTFJl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83640C32782;
-	Tue, 30 Jul 2024 16:28:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvvhG+8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A648BC32782;
+	Tue, 30 Jul 2024 16:28:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356890;
-	bh=v9A3/X1qNgGQcp9PjMYjVQUrnHG4EurIta2soTLdElY=;
+	s=korg; t=1722356894;
+	bh=kodcwVM/UT6p/xeuxVHE0yJgWrm4iPwqt8Xs1U1cCBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEerTFJluKg3p8iQkUGh3d5DYUZ+TNoQy+/hWEgwCeI/AgV0qFGA/MYlcW8OiefoB
-	 Ksco/9Z7tskbX5aFT6G51k0KOz9SYBJSpI26UmP5qgdelhd7Y3xRfV8J5DHUWcTlXz
-	 Fjr44Q1cWKVAYcH1io75tBVobdNWGVLhfDcb3Lho=
+	b=kvvhG+8dVOqeWzuaqsFOCJM8bmO6De39xPqHzS5FjuB8tY20RMOhTkSuMbSeFoWaV
+	 ZVQKsY4ZadZdCR7cQ4FFMxCuqhgaLEmtjRU8N8dI1w9uMki2wVOhaKjv2517633r4L
+	 9O3gGmL5sa6+HOJ9U4XKWRzw4gB8aGnUsBjNvyfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Daniel Xu <dxu@dxuuu.xyz>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 194/568] s390/mm: Convert make_page_secure to use a folio
-Date: Tue, 30 Jul 2024 17:45:01 +0200
-Message-ID: <20240730151647.461912062@linuxfoundation.org>
+Subject: [PATCH 6.10 197/809] bpf: Make bpf_session_cookie() kfunc return long *
+Date: Tue, 30 Jul 2024 17:41:13 +0200
+Message-ID: <20240730151732.386975940@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,95 +47,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Daniel Xu <dxu@dxuuu.xyz>
 
-[ Upstream commit 259e660d91d0e7261ae0ee37bb37266d6006a546 ]
+[ Upstream commit 2b8dd87332cd2782b5b3f0c423bd6693e487ed30 ]
 
-These page APIs are deprecated, so convert the incoming page to a folio
-and use the folio APIs instead.  The ultravisor API cannot handle large
-folios, so return -EINVAL if one has slipped through.
+We will soon be generating kfunc prototypes from BTF. As part of that,
+we need to align the manual signatures in bpf_kfuncs.h with the actual
+kfunc definitions. There is currently a conflicting signature for
+bpf_session_cookie() w.r.t. return type.
 
-Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/r/20240322161149.2327518-2-willy@infradead.org
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: 3f29f6537f54 ("s390/uv: Don't call folio_wait_writeback() without a folio reference")
+The original intent was to return long * and not __u64 *. You can see
+evidence of that intent in a3a5113393cc ("selftests/bpf: Add kprobe
+session cookie test").
+
+Fix conflict by changing kfunc definition.
+
+Fixes: 5c919acef851 ("bpf: Add support for kprobe session cookie")
+Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
+Link: https://lore.kernel.org/r/7043e1c251ab33151d6e3830f8ea1902ed2604ac.1718207789.git.dxu@dxuuu.xyz
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/uv.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ kernel/trace/bpf_trace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
-index fc07bc39e6983..0634448698b03 100644
---- a/arch/s390/kernel/uv.c
-+++ b/arch/s390/kernel/uv.c
-@@ -181,21 +181,21 @@ int uv_convert_owned_from_secure(unsigned long paddr)
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index d1daeab1bbc14..bc16e21a2a443 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -3527,7 +3527,7 @@ __bpf_kfunc bool bpf_session_is_return(void)
+ 	return session_ctx->is_return;
  }
  
- /*
-- * Calculate the expected ref_count for a page that would otherwise have no
-+ * Calculate the expected ref_count for a folio that would otherwise have no
-  * further pins. This was cribbed from similar functions in other places in
-  * the kernel, but with some slight modifications. We know that a secure
-- * page can not be a huge page for example.
-+ * folio can not be a large folio, for example.
-  */
--static int expected_page_refs(struct page *page)
-+static int expected_folio_refs(struct folio *folio)
+-__bpf_kfunc __u64 *bpf_session_cookie(void)
++__bpf_kfunc long *bpf_session_cookie(void)
  {
- 	int res;
+ 	struct bpf_session_run_ctx *session_ctx;
  
--	res = page_mapcount(page);
--	if (PageSwapCache(page)) {
-+	res = folio_mapcount(folio);
-+	if (folio_test_swapcache(folio)) {
- 		res++;
--	} else if (page_mapping(page)) {
-+	} else if (folio_mapping(folio)) {
- 		res++;
--		if (page_has_private(page))
-+		if (folio->private)
- 			res++;
- 	}
- 	return res;
-@@ -203,14 +203,17 @@ static int expected_page_refs(struct page *page)
- 
- static int make_page_secure(struct page *page, struct uv_cb_header *uvcb)
- {
-+	struct folio *folio = page_folio(page);
- 	int expected, cc = 0;
- 
--	if (PageWriteback(page))
-+	if (folio_test_large(folio))
-+		return -EINVAL;
-+	if (folio_test_writeback(folio))
- 		return -EAGAIN;
--	expected = expected_page_refs(page);
--	if (!page_ref_freeze(page, expected))
-+	expected = expected_folio_refs(folio);
-+	if (!folio_ref_freeze(folio, expected))
- 		return -EBUSY;
--	set_bit(PG_arch_1, &page->flags);
-+	set_bit(PG_arch_1, &folio->flags);
- 	/*
- 	 * If the UVC does not succeed or fail immediately, we don't want to
- 	 * loop for long, or we might get stall notifications.
-@@ -220,9 +223,9 @@ static int make_page_secure(struct page *page, struct uv_cb_header *uvcb)
- 	 * -EAGAIN and we let the callers deal with it.
- 	 */
- 	cc = __uv_call(0, (u64)uvcb);
--	page_ref_unfreeze(page, expected);
-+	folio_ref_unfreeze(folio, expected);
- 	/*
--	 * Return -ENXIO if the page was not mapped, -EINVAL for other errors.
-+	 * Return -ENXIO if the folio was not mapped, -EINVAL for other errors.
- 	 * If busy or partially completed, return -EAGAIN.
- 	 */
- 	if (cc == UVC_CC_OK)
 -- 
 2.43.0
 
