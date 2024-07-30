@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 013DF1A616E;
-	Tue, 30 Jul 2024 16:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F016F1A616E;
+	Tue, 30 Jul 2024 16:27:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356828; cv=none; b=vDltLAhjEDyanA8YrO8oL60tDtvWiml4PaGdotMufROhhbk2Q7SF4uQAtLfLzKvkztR4pvAWN5b4nc/7Un2wyYYS3hg88CytA9ucrSaz94qR+M+YwDqEKdS1mZS1uyo1ADTkRctqXWs2duDGfXELORnoViGfErrkp30dKYgqDR8=
+	t=1722356831; cv=none; b=sXzHHRNDaoN4a2tuphfOfPrtoK8VL2WW9x4tkdBiSWgy0R8EQNVNMC6BSSQuGvTYNuKGAfU/IdN1j/vLbssLtxiVkr/9w6xmvCDQNRX40XrmYc/40W3ECmpRjewdMydVCUyBauYK443bBOqRENY42pAa0q5C3d4H2jPlqu7DZc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356828; c=relaxed/simple;
-	bh=4CoCHLi9i6ufcYuA84GvHbpqN7Y7oWJgWZYP2CWA7wc=;
+	s=arc-20240116; t=1722356831; c=relaxed/simple;
+	bh=c5LHCcuU2bM3vRTKLmf1S33oLcBvI1RnjAxmhApjZ6o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k9SJDA+INxZeFb+KXPBmt3P284BcXlxl0oRklf8O2Mt7mSjrxgPBxftpTJjJLAP2rJ/R7csq6MZ7FzQsRGOcbPje8s1PwdfMR9BNEkGbCTr50UaQyn/pkQkH6um2rg7qSpkh/TddNuw83m+xNt9A8xYa00xCOigo2O550SdzEwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v3Wc7YCn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPJPyV8VIqfHGZipolpRETsTBZruxUEsUaSZnFUEBhjYTZhyIWiLcSLJs2xzEoGaFMuZ0jpcWxDcUGR7TYKeZ3Ft/Xr9KMrxsenOd5U3uPN+FmRfuduEEQ3/DNEpo1TvCL7aRI2iDInkpOwhtusgzTjphJhwRnbXoU5t5n2i+xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h1jRj1bY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v3Wc7YCn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D709C32782;
-	Tue, 30 Jul 2024 16:27:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h1jRj1bY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B09DC32782;
+	Tue, 30 Jul 2024 16:27:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356827;
-	bh=4CoCHLi9i6ufcYuA84GvHbpqN7Y7oWJgWZYP2CWA7wc=;
+	s=korg; t=1722356830;
+	bh=c5LHCcuU2bM3vRTKLmf1S33oLcBvI1RnjAxmhApjZ6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v3Wc7YCnj5pROOrLsDEWPGtsXhJBoKKjM+hE63wDZQ84aphYd8qdCpKL/0R8NpCO+
-	 JdGmRrK6dXuUuYGzaIsWpyPZziRdGpwcS6KBOI3/ti1CDTfuEVOc9y5uQ3KHRm/EVE
-	 rFACJ+UR7hPpzm/lJwmP3hVN11D9h+417OTf1sQI=
+	b=h1jRj1bYOGb5raPj8Ob488iZBHKPu2ckqJEwbLdg+adU3ezG96jkqJN7CX+7qXWgO
+	 KipwOuXKcJHyRiFm9KWpKj5GDgiLoahFaFkGKanG59RDegxBRI1da6FJ/2nXnROTFn
+	 wodvQimu9qxyW/okPNC/4t+ECiomvoEqiy1O80dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuro Chung <kuro.chung@ite.com.tw>,
-	Hermes Wu <hermes.wu@ite.com.tw>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Robert Foss <rfoss@kernel.org>,
+	Aditya Kumar Singh <quic_adisi@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 188/568] drm/bridge: it6505: fix hibernate to resume no display issue
-Date: Tue, 30 Jul 2024 17:44:55 +0200
-Message-ID: <20240730151647.225523272@linuxfoundation.org>
+Subject: [PATCH 6.10 191/809] wifi: ath12k: fix per pdev debugfs registration
+Date: Tue, 30 Jul 2024 17:41:07 +0200
+Message-ID: <20240730151732.153853728@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,164 +48,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuro Chung <kuro.chung@ite.com.tw>
+From: Aditya Kumar Singh <quic_adisi@quicinc.com>
 
-[ Upstream commit 484436ec5c2bffe8f346a09ae1cbc4cbf5e50005 ]
+[ Upstream commit 8dd65ccbdf91e2fe3ab6e4da158b38f81746c3b4 ]
 
-When the system power resumes, the TTL input of IT6505 may experience
-some noise before the video signal stabilizes, necessitating a video
-reset. This patch is implemented to prevent a loop of video error
-interrupts, which can occur when a video reset in the video FIFO error
-interrupt triggers another such interrupt. The patch processes the SCDT
-and FIFO error interrupts simultaneously and ignores any video FIFO
-error interrupts caused by a video reset.
+Function ath12k_debugfs_register() is called once inside the function
+ath12k_mac_hw_register(). However, with single wiphy model, there could
+be multiple pdevs registered under single hardware. Hence, need to register
+debugfs for each one of them.
 
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Signed-off-by: Kuro Chung <kuro.chung@ite.com.tw>
-Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240522065528.1053439-1-kuro.chung@ite.com.tw
+Move the caller inside the loop which iterates over all underlying pdevs.
+
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.0.1-00029-QCAHKSWPL_SILICONZ-1
+
+Fixes: f8bde02a26b9 ("wifi: ath12k: initial debugfs support")
+Signed-off-by: Aditya Kumar Singh <quic_adisi@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240529043043.2488031-2-quic_adisi@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 73 +++++++++++++++++++----------
- 1 file changed, 49 insertions(+), 24 deletions(-)
+ drivers/net/wireless/ath/ath12k/mac.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index b589136ca6da9..4ad527fe04f27 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -1306,9 +1306,15 @@ static void it6505_video_reset(struct it6505 *it6505)
- 	it6505_link_reset_step_train(it6505);
- 	it6505_set_bits(it6505, REG_DATA_MUTE_CTRL, EN_VID_MUTE, EN_VID_MUTE);
- 	it6505_set_bits(it6505, REG_INFOFRAME_CTRL, EN_VID_CTRL_PKT, 0x00);
--	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, VIDEO_RESET);
-+
-+	it6505_set_bits(it6505, REG_VID_BUS_CTRL1, TX_FIFO_RESET, TX_FIFO_RESET);
-+	it6505_set_bits(it6505, REG_VID_BUS_CTRL1, TX_FIFO_RESET, 0x00);
-+
- 	it6505_set_bits(it6505, REG_501_FIFO_CTRL, RST_501_FIFO, RST_501_FIFO);
- 	it6505_set_bits(it6505, REG_501_FIFO_CTRL, RST_501_FIFO, 0x00);
-+
-+	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, VIDEO_RESET);
-+	usleep_range(1000, 2000);
- 	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, 0x00);
- }
- 
-@@ -2244,12 +2250,11 @@ static void it6505_link_training_work(struct work_struct *work)
- 	if (ret) {
- 		it6505->auto_train_retry = AUTO_TRAIN_RETRY;
- 		it6505_link_train_ok(it6505);
--		return;
- 	} else {
- 		it6505->auto_train_retry--;
-+		it6505_dump(it6505);
- 	}
- 
--	it6505_dump(it6505);
- }
- 
- static void it6505_plugged_status_to_codec(struct it6505 *it6505)
-@@ -2470,31 +2475,53 @@ static void it6505_irq_link_train_fail(struct it6505 *it6505)
- 	schedule_work(&it6505->link_works);
- }
- 
--static void it6505_irq_video_fifo_error(struct it6505 *it6505)
-+static bool it6505_test_bit(unsigned int bit, const unsigned int *addr)
- {
--	struct device *dev = it6505->dev;
--
--	DRM_DEV_DEBUG_DRIVER(dev, "video fifo overflow interrupt");
--	it6505->auto_train_retry = AUTO_TRAIN_RETRY;
--	flush_work(&it6505->link_works);
--	it6505_stop_hdcp(it6505);
--	it6505_video_reset(it6505);
-+	return 1 & (addr[bit / BITS_PER_BYTE] >> (bit % BITS_PER_BYTE));
- }
- 
--static void it6505_irq_io_latch_fifo_overflow(struct it6505 *it6505)
-+static void it6505_irq_video_handler(struct it6505 *it6505, const int *int_status)
- {
- 	struct device *dev = it6505->dev;
-+	int reg_0d, reg_int03;
- 
--	DRM_DEV_DEBUG_DRIVER(dev, "IO latch fifo overflow interrupt");
--	it6505->auto_train_retry = AUTO_TRAIN_RETRY;
--	flush_work(&it6505->link_works);
--	it6505_stop_hdcp(it6505);
--	it6505_video_reset(it6505);
--}
-+	/*
-+	 * When video SCDT change with video not stable,
-+	 * Or video FIFO error, need video reset
-+	 */
- 
--static bool it6505_test_bit(unsigned int bit, const unsigned int *addr)
--{
--	return 1 & (addr[bit / BITS_PER_BYTE] >> (bit % BITS_PER_BYTE));
-+	if ((!it6505_get_video_status(it6505) &&
-+	     (it6505_test_bit(INT_SCDT_CHANGE, (unsigned int *)int_status))) ||
-+	    (it6505_test_bit(BIT_INT_IO_FIFO_OVERFLOW,
-+			     (unsigned int *)int_status)) ||
-+	    (it6505_test_bit(BIT_INT_VID_FIFO_ERROR,
-+			     (unsigned int *)int_status))) {
-+		it6505->auto_train_retry = AUTO_TRAIN_RETRY;
-+		flush_work(&it6505->link_works);
-+		it6505_stop_hdcp(it6505);
-+		it6505_video_reset(it6505);
-+
-+		usleep_range(10000, 11000);
-+
-+		/*
-+		 * Clear FIFO error IRQ to prevent fifo error -> reset loop
-+		 * HW will trigger SCDT change IRQ again when video stable
-+		 */
-+
-+		reg_int03 = it6505_read(it6505, INT_STATUS_03);
-+		reg_0d = it6505_read(it6505, REG_SYSTEM_STS);
-+
-+		reg_int03 &= (BIT(INT_VID_FIFO_ERROR) | BIT(INT_IO_LATCH_FIFO_OVERFLOW));
-+		it6505_write(it6505, INT_STATUS_03, reg_int03);
-+
-+		DRM_DEV_DEBUG_DRIVER(dev, "reg08 = 0x%02x", reg_int03);
-+		DRM_DEV_DEBUG_DRIVER(dev, "reg0D = 0x%02x", reg_0d);
-+
-+		return;
-+	}
-+
-+	if (it6505_test_bit(INT_SCDT_CHANGE, (unsigned int *)int_status))
-+		it6505_irq_scdt(it6505);
- }
- 
- static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
-@@ -2507,15 +2534,12 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
- 	} irq_vec[] = {
- 		{ BIT_INT_HPD, it6505_irq_hpd },
- 		{ BIT_INT_HPD_IRQ, it6505_irq_hpd_irq },
--		{ BIT_INT_SCDT, it6505_irq_scdt },
- 		{ BIT_INT_HDCP_FAIL, it6505_irq_hdcp_fail },
- 		{ BIT_INT_HDCP_DONE, it6505_irq_hdcp_done },
- 		{ BIT_INT_AUX_CMD_FAIL, it6505_irq_aux_cmd_fail },
- 		{ BIT_INT_HDCP_KSV_CHECK, it6505_irq_hdcp_ksv_check },
- 		{ BIT_INT_AUDIO_FIFO_ERROR, it6505_irq_audio_fifo_error },
- 		{ BIT_INT_LINK_TRAIN_FAIL, it6505_irq_link_train_fail },
--		{ BIT_INT_VID_FIFO_ERROR, it6505_irq_video_fifo_error },
--		{ BIT_INT_IO_FIFO_OVERFLOW, it6505_irq_io_latch_fifo_overflow },
- 	};
- 	int int_status[3], i;
- 
-@@ -2545,6 +2569,7 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
- 			if (it6505_test_bit(irq_vec[i].bit, (unsigned int *)int_status))
- 				irq_vec[i].handler(it6505);
+diff --git a/drivers/net/wireless/ath/ath12k/mac.c b/drivers/net/wireless/ath/ath12k/mac.c
+index b3530d1dd728b..2c68376a39fd3 100644
+--- a/drivers/net/wireless/ath/ath12k/mac.c
++++ b/drivers/net/wireless/ath/ath12k/mac.c
+@@ -8778,9 +8778,9 @@ static int ath12k_mac_hw_register(struct ath12k_hw *ah)
+ 			ath12k_err(ar->ab, "ath12k regd update failed: %d\n", ret);
+ 			goto err_unregister_hw;
  		}
-+		it6505_irq_video_handler(it6505, (unsigned int *)int_status);
- 	}
+-	}
  
- 	pm_runtime_put_sync(dev);
+-	ath12k_debugfs_register(ar);
++		ath12k_debugfs_register(ar);
++	}
+ 
+ 	return 0;
+ 
 -- 
 2.43.0
 
