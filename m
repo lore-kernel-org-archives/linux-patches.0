@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E09E18B494;
-	Tue, 30 Jul 2024 16:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A684B183CC3;
+	Tue, 30 Jul 2024 16:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356622; cv=none; b=Tk53IsUib5YoVgNGSWZUClBCynqdc8fM8u2qoWCqKG2NJa/5Ivj1NHLXnLgo9oG6JHizQJUiftWjlMG4JyMGygTb3HvpBQnl+WakRD54cvWELMrgbuOw6bJUN3LM75rJQMI/fGbFQvHp2n6ac7cn6Tn68yDZZLQZPZdOo25fsvw=
+	t=1722356625; cv=none; b=ToxNTySVmtPRQ7MKbq4NhoCNBEzE1y0FIcMTWVrKZZ6wOphyVmoWmnnJpGCqEBFWFlDtPo5FYTrflF1W8uLai6FupWC0KHn+Nq5no6NPkJ2rJlArE21ZVtYHdUcfCtSoSPhe9WG1Do1dI616gdKqG40wQXkAJUnoYPVFBJY4pgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356622; c=relaxed/simple;
-	bh=yUCeb863krhjEBAlMWakyfYWutlfSqVAR0SjhDI8pc4=;
+	s=arc-20240116; t=1722356625; c=relaxed/simple;
+	bh=p9ed4DaMZBSQYvOAdf1O5Eotwsvh7lL8JkCerYAPHjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZaeUh/2cGyx9ZO1TFTV1I6A+aHHfsCmtPCuSH+htStdRkEzDF5H+z/jqYS8sOQmg0x/B25mIkq4YcStk/bmQbCDBQj5BW+9tx8kWwTDRiz81NvhEzAvvtGdBK+ja8VU+CYkcGfSUQCdKbodTNtVlEl+SwuTalh3Tfa2hv/DrMqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKJxBApK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MFhc8gmGmAEqU5kkWDp1qiLhdFeCHNOvIszMI8+4h4bxgDhm/RBT/zsAZdqkvsTBehmneFVXrmvf1eR8UYnQaYjHDszEcBOdp1crUK3aafdqXB5peluIlc2v4XAMxZzfCj+oYJV4VmI5lJhg4W9xS97rwCCupsPpKxUJhAoqcHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0re0jd0w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKJxBApK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DBDC4AF10;
-	Tue, 30 Jul 2024 16:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0re0jd0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B062C32782;
+	Tue, 30 Jul 2024 16:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356622;
-	bh=yUCeb863krhjEBAlMWakyfYWutlfSqVAR0SjhDI8pc4=;
+	s=korg; t=1722356625;
+	bh=p9ed4DaMZBSQYvOAdf1O5Eotwsvh7lL8JkCerYAPHjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKJxBApKouUcKYGgVHgHQqB4cjqO1uD0IYLru4ZHhS4gaPV7qZ67K0SnFSF/cNjR2
-	 hU3JasALz2ZWGozNwogLxVR3fuMJiEGi5dxkwe0tUO31vB+EPIY0VoyUwcySaMD1Xw
-	 a+V+/NNIXaI+yb+5Gb4Hh1sL2WoEHXJ3PQvTsrW8=
+	b=0re0jd0wT9m0piFkZTyYRJONeyOosb2PF15YkqT4ZuXWcmp5EJYW7x+VhQPWtGCp9
+	 dNejIsucR2DiDBxCBbjZcVWaGHYtnly0vgQ7ZlwBNRvRMqJpy5jw5Lpo178OypETFX
+	 PW43qi5F1G6VwgVbbeUWgKICMr9VoG8amqj9jKdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nivas Varadharajan Mugunthakumar <nivasx.varadharajan.mugunthakumar@intel.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 213/440] crypto: qat - extend scope of lock in adf_cfg_add_key_value_param()
-Date: Tue, 30 Jul 2024 17:47:26 +0200
-Message-ID: <20240730151624.183381879@linuxfoundation.org>
+Subject: [PATCH 6.10 168/809] wifi: ath12k: fix firmware crash during reo reinject
+Date: Tue, 30 Jul 2024 17:40:44 +0200
+Message-ID: <20240730151731.243808949@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,56 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nivas Varadharajan Mugunthakumar <nivasx.varadharajan.mugunthakumar@intel.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 6424da7d8b938fe66e7e771eaa949bc7b6c29c00 ]
+[ Upstream commit a57ab7cced454f69b8ee8aa5f5019ea8de4674da ]
 
-The function adf_cfg_add_key_value_param() attempts to access and modify
-the key value store of the driver without locking.
+When handling fragmented packets, the ath12k driver reassembles each
+fragment into a normal packet and then reinjects it into the HW ring.
+However, a firmware crash occurs during this reinjection process.
+The issue arises because the driver populates peer metadata in
+reo_ent_ring->queue_addr_lo, while the firmware expects the physical
+address obtained from the corresponding peer’s queue descriptor. Fix it
+by filling peer's queue descriptor's physical address in queue_addr_lo.
 
-Extend the scope of cfg->lock to avoid a potential race condition.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00209-QCAHKSWPL_SILICONZ-1
 
-Fixes: 92bf269fbfe9 ("crypto: qat - change behaviour of adf_cfg_add_key_value_param()")
-Signed-off-by: Nivas Varadharajan Mugunthakumar <nivasx.varadharajan.mugunthakumar@intel.com>
-Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240520070045.631029-4-quic_ppranees@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_common/adf_cfg.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_common/adf_cfg.c b/drivers/crypto/qat/qat_common/adf_cfg.c
-index 1931e5b37f2bd..368d14d81503c 100644
---- a/drivers/crypto/qat/qat_common/adf_cfg.c
-+++ b/drivers/crypto/qat/qat_common/adf_cfg.c
-@@ -276,17 +276,19 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
- 	 * 3. if the key exists with the same value, then return without doing
- 	 *    anything (the newly created key_val is freed).
- 	 */
-+	down_write(&cfg->lock);
- 	if (!adf_cfg_key_val_get(accel_dev, section_name, key, temp_val)) {
- 		if (strncmp(temp_val, key_val->val, sizeof(temp_val))) {
- 			adf_cfg_keyval_remove(key, section);
- 		} else {
- 			kfree(key_val);
--			return 0;
-+			goto out;
- 		}
- 	}
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index 37e5bca9570fe..44e8d9d7834c4 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -2994,7 +2994,7 @@ static int ath12k_dp_rx_h_defrag_reo_reinject(struct ath12k *ar,
+ 	struct hal_srng *srng;
+ 	dma_addr_t link_paddr, buf_paddr;
+ 	u32 desc_bank, msdu_info, msdu_ext_info, mpdu_info;
+-	u32 cookie, hal_rx_desc_sz, dest_ring_info0;
++	u32 cookie, hal_rx_desc_sz, dest_ring_info0, queue_addr_hi;
+ 	int ret;
+ 	struct ath12k_rx_desc_info *desc_info;
+ 	u8 dst_ind;
+@@ -3086,13 +3086,11 @@ static int ath12k_dp_rx_h_defrag_reo_reinject(struct ath12k *ar,
+ 	reo_ent_ring->rx_mpdu_info.peer_meta_data =
+ 		reo_dest_ring->rx_mpdu_info.peer_meta_data;
  
--	down_write(&cfg->lock);
- 	adf_cfg_keyval_add(key_val, section);
-+
-+out:
- 	up_write(&cfg->lock);
- 	return 0;
- }
+-	/* Firmware expects physical address to be filled in queue_addr_lo in
+-	 * the MLO scenario and in case of non MLO peer meta data needs to be
+-	 * filled.
+-	 * TODO: Need to handle for MLO scenario.
+-	 */
+-	reo_ent_ring->queue_addr_lo = reo_dest_ring->rx_mpdu_info.peer_meta_data;
+-	reo_ent_ring->info0 = le32_encode_bits(dst_ind,
++	reo_ent_ring->queue_addr_lo = cpu_to_le32(lower_32_bits(rx_tid->paddr));
++	queue_addr_hi = upper_32_bits(rx_tid->paddr);
++	reo_ent_ring->info0 = le32_encode_bits(queue_addr_hi,
++					       HAL_REO_ENTR_RING_INFO0_QUEUE_ADDR_HI) |
++			      le32_encode_bits(dst_ind,
+ 					       HAL_REO_ENTR_RING_INFO0_DEST_IND);
+ 
+ 	reo_ent_ring->info1 = le32_encode_bits(rx_tid->cur_sn,
 -- 
 2.43.0
 
