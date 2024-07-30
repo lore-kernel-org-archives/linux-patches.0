@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3361A76A9;
-	Tue, 30 Jul 2024 17:20:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5A91A76AE;
+	Tue, 30 Jul 2024 17:20:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360026; cv=none; b=rRzGzR1mIxP0LZApJLOMh/Od3X78yJEBsJtwXqDGkvJem/l8D6pDCptGogxZs7r7XwTqnHf2hVsqiIoFU/7gVPHhNyHIWsyfnB7dloTNRgJRlNq6QFiojs3GtUbTke35YYI3L1PlI/t3A0+JHi5wyjcWEQnAz2WZ9ZrHN1XaE7E=
+	t=1722360029; cv=none; b=dr2xEudVW2qXqhFQJrQJqHcjLW21zCnu6FsH8gepsgFdaHMSoypkz3+Gen0WklUBaM/x9bN5fY6KajqYeqgvALQRrmYU0Wf4vqmKymyfQEq4Hw6/WzG8DV9yXQFM9ITP+CN7yVigQL97EeuVe6E2WG7K2T2vToN+U+ymwYh8qwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360026; c=relaxed/simple;
-	bh=5TNc0V/bjIuZM00WnpiHWlavJP4+jwHLL9iytUySZgg=;
+	s=arc-20240116; t=1722360029; c=relaxed/simple;
+	bh=+VkjFeIcX6uTiPm23um3mE94zcppg3BVMUQfAQgTpXE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=scJOP1jGAfysFISwSTKzRj1Azfh3ru3wEYcC3AYvTe3554hXbsJn9FXszAqEoPnKavxLHaRn3yHqGNoH4/E2kHIzPl5OXv3ZxXH3zVbqEf+FQVPIdSzPE3GQQL1mf0xnHN1LQT5yVqqeYSMz4phRs8Tbd3NvZPv+FPximcorVXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ujulpPEi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgqFgY0xXKhrDt+f5BYzj4YF9VMpIWWgCNP/v68KUPf+zNKl9tf5qTxAHT4UQrWq4eR+9T54C5ZT2RBsoWR8p0uN/0frN4764KgOJyR0scQcw/6+cSMknP4skMD5sDOZVY0qVXgBEK+Ua7LuAF0hdT5WCf+dbmm5PO9dykQVkok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wfPdVbSP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ujulpPEi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 548AEC32782;
-	Tue, 30 Jul 2024 17:20:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wfPdVbSP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D421C32782;
+	Tue, 30 Jul 2024 17:20:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360025;
-	bh=5TNc0V/bjIuZM00WnpiHWlavJP4+jwHLL9iytUySZgg=;
+	s=korg; t=1722360029;
+	bh=+VkjFeIcX6uTiPm23um3mE94zcppg3BVMUQfAQgTpXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujulpPEiH2/036LA04OZF3DPgECp5OhK589eKdXigSSzBL7KxkhQRjqsX+NbGJWja
-	 G/TdLOSMpRCNwqOy1hJHbOa3o9Z6eHA06av85IBbpY7RtMEEspX/cvpJIlEIdaDlaE
-	 tbrG3Lvfmp2RCLrWQxD7UeRBHBzYO0xN7q3bRL/w=
+	b=wfPdVbSPX7kaa3fJad5VPj48rzLie5s2c0tOVOFNME98h8bpqRh813wEIeSrROEQW
+	 jsYKwXWYhCZOxrHGLzaavWk9wKbT5DvVmuVijCmlT13Krk2wUuwpp4gMWcbp9Ai1yu
+	 VHTZnuwygLjkYVOqP/ri/Wt7I7nqf0VlPa/mnc2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.10 574/809] ext2: Verify bitmap and itable block numbers before using them
-Date: Tue, 30 Jul 2024 17:47:30 +0200
-Message-ID: <20240730151747.447234243@linuxfoundation.org>
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Paul Elder <paul.elder@ideasonboard.com>
+Subject: [PATCH 6.10 575/809] media: i2c: Kconfig: Fix missing firmware upload config select
+Date: Tue, 30 Jul 2024 17:47:31 +0200
+Message-ID: <20240730151747.488785877@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -49,57 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-commit 322a6aff03937aa1ece33b4e46c298eafaf9ac41 upstream.
+commit fea074e97886b7ee2fe04a17bd60fd41723da1b7 upstream.
 
-Verify bitmap block numbers and inode table blocks are sane before using
-them for checking bits in the block bitmap.
+FW_LOADER config only selects the firmware loader API, but we also need
+the sysfs_upload symbols for firmware_upload_unregister() and
+firmware_upload_register() to function properly.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
+Fixes: 7a52ab415b43 ("media: i2c: Add driver for THine THP7312")
+Cc: stable@vger.kernel.org
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240620102544.1918105-1-kory.maincent@bootlin.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/balloc.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/media/i2c/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext2/balloc.c
-+++ b/fs/ext2/balloc.c
-@@ -77,26 +77,33 @@ static int ext2_valid_block_bitmap(struc
- 	ext2_grpblk_t next_zero_bit;
- 	ext2_fsblk_t bitmap_blk;
- 	ext2_fsblk_t group_first_block;
-+	ext2_grpblk_t max_bit;
- 
- 	group_first_block = ext2_group_first_block_no(sb, block_group);
-+	max_bit = ext2_group_last_block_no(sb, block_group) - group_first_block;
- 
- 	/* check whether block bitmap block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_block_bitmap);
- 	offset = bitmap_blk - group_first_block;
--	if (!ext2_test_bit(offset, bh->b_data))
-+	if (offset < 0 || offset > max_bit ||
-+	    !ext2_test_bit(offset, bh->b_data))
- 		/* bad block bitmap */
- 		goto err_out;
- 
- 	/* check whether the inode bitmap block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_inode_bitmap);
- 	offset = bitmap_blk - group_first_block;
--	if (!ext2_test_bit(offset, bh->b_data))
-+	if (offset < 0 || offset > max_bit ||
-+	    !ext2_test_bit(offset, bh->b_data))
- 		/* bad block bitmap */
- 		goto err_out;
- 
- 	/* check whether the inode table block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_inode_table);
- 	offset = bitmap_blk - group_first_block;
-+	if (offset < 0 || offset > max_bit ||
-+	    offset + EXT2_SB(sb)->s_itb_per_group - 1 > max_bit)
-+		goto err_out;
- 	next_zero_bit = ext2_find_next_zero_bit(bh->b_data,
- 				offset + EXT2_SB(sb)->s_itb_per_group,
- 				offset);
+--- a/drivers/media/i2c/Kconfig
++++ b/drivers/media/i2c/Kconfig
+@@ -679,6 +679,7 @@ config VIDEO_THP7312
+ 	tristate "THine THP7312 support"
+ 	depends on I2C
+ 	select FW_LOADER
++	select FW_UPLOAD
+ 	select MEDIA_CONTROLLER
+ 	select V4L2_CCI_I2C
+ 	select V4L2_FWNODE
 
 
