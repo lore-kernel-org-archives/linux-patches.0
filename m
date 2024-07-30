@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2E31A76B1;
-	Tue, 30 Jul 2024 17:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3CA1A76A1;
+	Tue, 30 Jul 2024 17:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360238; cv=none; b=RMJ5xyNbQPUQuNbjweATuHVJymb6pmqOSDMYRV6RyJK7KbeAUbpzDon/iE7i9dhMtkqWgg7KHJSCJmJhMamr67ukStzA2PiXZNGrkZBeHYOAAlYKBvb4AVnHViFGkUQA6vf70I8h3I0OWt9zKbLysVfsDvBF7ZspgQ39QoFsf/o=
+	t=1722360241; cv=none; b=jhyoDe2OKzer+BzDiiAqrrnQfQh6jQGTyo4QrpiB94eH2JvVRKXUy3kF6rBzTcitMdZWE3Wx7FptC4Z5qlBM1x3Uvh/50pOrY+fiqivHREI6vrquLQEfoM+J3h6nTKjFhdLtyfOYvscfXCd9ClO1psSp9tS1yLGqBFvuU8faXj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360238; c=relaxed/simple;
-	bh=0SrDAYb4AIR6B3R5GsZVzVJoo2lbo8GtdIevzCeyuCU=;
+	s=arc-20240116; t=1722360241; c=relaxed/simple;
+	bh=nnNHPhRLHoDq9hRuvjXAhk6aKc7TB+GOWTqjs9EGX/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rswcbtDFosxvB66zDAwI+o/x4lUcqYshlssqW4wBigcyrEKX7yDjxhpRA39WYVXqeu7xUL3+pKLZx4GvioqfdSSSMB3vcETdCLDbRZlQPjRfCpmahaz+sYyL2b0EoDINVs/uQg4BddwTVZyXt/FZMa+8I4N/hVvcrPCgVmjwkDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yVr8ajix; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j9hTqsA6uh1Fs6ykHhLjSaQzZFLu1264bPhsA0gcnuWuJCPHAfX3Xe9ZqtndD9B7Zod1sOix3+JSSelZMFpZI/R7ZJmkxIlRml9wmIbKrvK7x3ZT7YOolePYDUnsrL2zQ2rVRRDkDjHSXQStlZ6UQgUKjveuPRLWk86tL9BiM8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvo3miRx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yVr8ajix"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D050C32782;
-	Tue, 30 Jul 2024 17:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvo3miRx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932FFC32782;
+	Tue, 30 Jul 2024 17:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360237;
-	bh=0SrDAYb4AIR6B3R5GsZVzVJoo2lbo8GtdIevzCeyuCU=;
+	s=korg; t=1722360241;
+	bh=nnNHPhRLHoDq9hRuvjXAhk6aKc7TB+GOWTqjs9EGX/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yVr8ajixKwVfmtDUowFxWfPNaeWQFkvBpaUg3RVDwHnCe+PXixSsJv6Zdz0J6DENM
-	 HLY3BM2IFsF15+HvIKGnlIv1jmCNtz/VVj6Egcukuj/hK1IOp5NoOQLmHXPcDuTFPt
-	 k5AdYs24OtC15r9pa2fUWQ2EStxec7aeITzb+p6g=
+	b=cvo3miRxYHSe9NIf2jFexYAbskB9rVq986+ovvgL9wVpirRuMH/rUISdWSb7jzLWk
+	 7O+iH+BPDJGvck8eeXLPxW4U60rDZqGFdDqGbe4ma10ERoM2bBg8N3tOntNWcnh8FB
+	 pzxQ5bqxzUs0K1SEDydnUmCILTLdFaKTV4hYyvXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jianfeng Liu <liujianfeng1994@gmail.com>,
-	Niklas Cassel <cassel@kernel.org>,
+	Slark Xiao <slark_xiao@163.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Bjorn Helgaas <bhelgaas@google.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.10 639/809] PCI: dw-rockchip: Fix initial PERST# GPIO value
-Date: Tue, 30 Jul 2024 17:48:35 +0200
-Message-ID: <20240730151750.089056067@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.10 640/809] PCI: rockchip: Use GPIOD_OUT_LOW flag while requesting ep_gpio
+Date: Tue, 30 Jul 2024 17:48:36 +0200
+Message-ID: <20240730151750.132393990@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -55,78 +54,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Niklas Cassel <cassel@kernel.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 28b8d7793b8573563b3d45321376f36168d77b1e upstream.
+commit 840b7a5edf88fe678c60dee88a135647c0ea4375 upstream.
 
-PERST# is active low according to the PCIe specification.
+Rockchip platforms use 'GPIO_ACTIVE_HIGH' flag in the devicetree definition
+for ep_gpio. This means, whatever the logical value set by the driver for
+the ep_gpio, physical line will output the same logic level.
 
-However, the existing pcie-dw-rockchip.c driver does:
+For instance,
 
-  gpiod_set_value(..., 0); msleep(100); gpiod_set_value(..., 1);
+  gpiod_set_value_cansleep(rockchip->ep_gpio, 0); --> Level low
+  gpiod_set_value_cansleep(rockchip->ep_gpio, 1); --> Level high
 
-when asserting + deasserting PERST#.
+But while requesting the ep_gpio, GPIOD_OUT_HIGH flag is currently used.
+Now, this also causes the physical line to output 'high' creating trouble
+for endpoint devices during host reboot.
 
-This is of course wrong, but because all the device trees for this
-compatible string have also incorrectly marked this GPIO as ACTIVE_HIGH:
+When host reboot happens, the ep_gpio will initially output 'low' due to
+the GPIO getting reset to its POR value. Then during host controller probe,
+it will output 'high' due to GPIOD_OUT_HIGH flag. Then during
+rockchip_pcie_host_init_port(), it will first output 'low' and then 'high'
+indicating the completion of controller initialization.
 
-  $ git grep -B 10 reset-gpios arch/arm64/boot/dts/rockchip/rk3568*
-  $ git grep -B 10 reset-gpios arch/arm64/boot/dts/rockchip/rk3588*
+On the endpoint side, each output 'low' of ep_gpio is accounted for PERST#
+assert and 'high' for PERST# deassert. With the above mentioned flow during
+host reboot, endpoint will witness below state changes for PERST#:
 
-The actual toggling of PERST# is correct, and we cannot change it anyway,
-since that would break device tree compatibility.
+  (1) PERST# assert - GPIO POR state
+  (2) PERST# deassert - GPIOD_OUT_HIGH while requesting GPIO
+  (3) PERST# assert - rockchip_pcie_host_init_port()
+  (4) PERST# deassert - rockchip_pcie_host_init_port()
 
-However, this driver does request the GPIO to be initialized as
-GPIOD_OUT_HIGH, which does cause a silly sequence where PERST# gets
-toggled back and forth for no good reason.
+Now the time interval between (2) and (3) is very short as both happen
+during the driver probe(), and this results in a race in the endpoint.
+Because, before completing the PERST# deassertion in (2), endpoint got
+another PERST# assert in (3).
 
-Fix this by requesting the GPIO to be initialized as GPIOD_OUT_LOW (which
-for this driver means PERST# asserted).
+A proper way to fix this issue is to change the GPIOD_OUT_HIGH flag in (2)
+to GPIOD_OUT_LOW. Because the usual convention is to request the GPIO with
+a state corresponding to its 'initial/default' value and let the driver
+change the state of the GPIO when required.
 
-This will avoid an unnecessary signal change where PERST# gets deasserted
-(by devm_gpiod_get_optional()) and then gets asserted (by
-rockchip_pcie_start_link()) just a few instructions later.
+As per that, the ep_gpio should be requested with GPIOD_OUT_LOW as it
+corresponds to the POR value of '0' (PERST# assert in the endpoint). Then
+the driver can change the state of the ep_gpio later in
+rockchip_pcie_host_init_port() as per the initialization sequence.
 
-Before patch, debug prints on EP side, when booting RC:
+This fixes the firmware crash issue in Qcom based modems connected to
+Rockpro64 based board.
 
-  [  845.606810] pci: PERST# asserted by host!
-  [  852.483985] pci: PERST# de-asserted by host!
-  [  852.503041] pci: PERST# asserted by host!
-  [  852.610318] pci: PERST# de-asserted by host!
-
-After patch, debug prints on EP side, when booting RC:
-
-  [  125.107921] pci: PERST# asserted by host!
-  [  132.111429] pci: PERST# de-asserted by host!
-
-This extra, very short, PERST# assertion + deassertion has been reported to
-cause issues with certain WLAN controllers, e.g. RTL8822CE.
-
-Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
-Link: https://lore.kernel.org/linux-pci/20240417164227.398901-1-cassel@kernel.org
-Tested-by: Heiko Stuebner <heiko@sntech.de>
-Tested-by: Jianfeng Liu <liujianfeng1994@gmail.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Closes: https://lore.kernel.org/mhi/20240402045647.GG2933@thinkpad/
+Link: https://lore.kernel.org/linux-pci/20240416-pci-rockchip-perst-fix-v1-1-4800b1d4d954@linaro.org
+Reported-by: Slark Xiao <slark_xiao@163.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc: stable@vger.kernel.org	# v5.15+
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Cc: stable@vger.kernel.org	# v4.9
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/dwc/pcie-dw-rockchip.c |    2 +-
+ drivers/pci/controller/pcie-rockchip.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-+++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -240,7 +240,7 @@ static int rockchip_pcie_resource_get(st
- 		return PTR_ERR(rockchip->apb_base);
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -121,7 +121,7 @@ int rockchip_pcie_parse_dt(struct rockch
  
- 	rockchip->rst_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
--						     GPIOD_OUT_HIGH);
-+						     GPIOD_OUT_LOW);
- 	if (IS_ERR(rockchip->rst_gpio))
- 		return PTR_ERR(rockchip->rst_gpio);
- 
+ 	if (rockchip->is_rc) {
+ 		rockchip->ep_gpio = devm_gpiod_get_optional(dev, "ep",
+-							    GPIOD_OUT_HIGH);
++							    GPIOD_OUT_LOW);
+ 		if (IS_ERR(rockchip->ep_gpio))
+ 			return dev_err_probe(dev, PTR_ERR(rockchip->ep_gpio),
+ 					     "failed to get ep GPIO\n");
 
 
