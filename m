@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0441A6192;
-	Tue, 30 Jul 2024 16:32:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66E5B189535;
+	Tue, 30 Jul 2024 16:32:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357133; cv=none; b=Wpyje2ydT5AX7fh4YTCQbZLt2Xxr6k502QXZo7wg4eDa9xZvS1P14WpR13JwEqIO3TTGE9VVeuV4e9DURnW4hsnc2Nr8taIcd+rbRkwUPPm3SXL50ea9RZecAUq8xJBO6LY9rsAyb2WLsUtp+Zhxc9rGIu/r+tAm4KJc1j/A7Zg=
+	t=1722357136; cv=none; b=D8/FcoXuA+rMqYduRWHR3my1IUy5I5iJ9BGCTAHE+nk/pq2EPW6A13VZ4cHfARjCmsvqsX4L9C5Dtn/Bv39Ao5ORoqt9vDiCKmJuHU12Ti/nAAoNv2s9uwX8ndiSEdE0YodFImC927OsKyB1SiCl98JZRzEKyHUXSfzR9yq2V+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357133; c=relaxed/simple;
-	bh=XCRwtwoTz6MqeH0lfTg2JNY4iVtIvw9XrMRgAJLE9Bk=;
+	s=arc-20240116; t=1722357136; c=relaxed/simple;
+	bh=/GnFvHZ3+oT9tOLeFRwAf9nrDIgHjtC8lJIl0dLdr0g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SJKPni9c3Zij4qZT2zo19G5beSelw9qcW+tVEuqKqX77P3TiUyQSmTaDyJeYVkyGdvHi+Ju754R7mS9CDSxRW2Q7EgSr5axgBK4KvIm6DAqrsmCTRr+hs43rI481gCcFbwlTNLkEkKt8fi1H1vQkCo3Qzf4vVHiT3Tj1MxKKg/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+VADFPW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tUnuH+hBMKhKXLhBTjWxYleiif54exGikxOJMt0JQEk20/vj2NBZeBGcK1ijeHJNzcGYzq5e+ykdhNLOxi1ZNV1QpFu2i63KeSn+hUOmZWZhq3oDS6gKcuwTdMaaEHQe+SYoXJl6GhGEJExzV5DfSUaagE1oNkE4LSrWf+eb4sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HiuHrK9b; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+VADFPW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95611C4AF0C;
-	Tue, 30 Jul 2024 16:32:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HiuHrK9b"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D500BC32782;
+	Tue, 30 Jul 2024 16:32:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357133;
-	bh=XCRwtwoTz6MqeH0lfTg2JNY4iVtIvw9XrMRgAJLE9Bk=;
+	s=korg; t=1722357136;
+	bh=/GnFvHZ3+oT9tOLeFRwAf9nrDIgHjtC8lJIl0dLdr0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L+VADFPWNosiH7ohpLDzaHsTbIoc/Ws79hIUN6hQHoDOhAw1devijAxzxAX7+tcfA
-	 mdr+SQSyT5Rto61/n8SftiQDWwPGyHh6YPHhdH1+xyTgRoe3KuCe1FRKzK6YH/BxjN
-	 tudFLf09EUDXCu9/UqzuK8rWieYaRcDfbtfW+e18=
+	b=HiuHrK9b5THrQ9HLccMCLUfyZ9XCUXcPdtvxcc3d5hgYkX8UyGFlTjcWowXqfnLfn
+	 aIjjAd/PNKCxyybX6WFTmQfjcbTzB2UWVXfcLV6ytglLJOW7Fn8S/Vsey0D/0jMlSp
+	 9UUilTGf37+2oiH/4w4GmFsQaDCyuCh4hSWgtDaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Irui Wang <irui.wang@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Ilya Leoshkevich <iii@linux.ibm.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 197/568] media: mediatek: vcodec: Handle invalid decoder vsi
-Date: Tue, 30 Jul 2024 17:45:04 +0200
-Message-ID: <20240730151647.578091383@linuxfoundation.org>
+Subject: [PATCH 6.10 221/809] bpf: Fix atomic probe zero-extension
+Date: Tue, 30 Jul 2024 17:41:37 +0200
+Message-ID: <20240730151733.336647020@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,45 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Irui Wang <irui.wang@mediatek.com>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
 
-[ Upstream commit 59d438f8e02ca641c58d77e1feffa000ff809e9f ]
+[ Upstream commit df34ec9db6f521118895f22795da49f2ec01f8cf ]
 
-Handle an invalid decoder vsi in vpu_dec_init to ensure the decoder vsi
-is valid for future use.
+Zero-extending results of atomic probe operations fails with:
 
-Fixes: 590577a4e525 ("[media] vcodec: mediatek: Add Mediatek V4L2 Video Decoder Driver")
+    verifier bug. zext_dst is set, but no reg is defined
 
-Signed-off-by: Irui Wang <irui.wang@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The problem is that insn_def_regno() handles BPF_ATOMICs, but not
+BPF_PROBE_ATOMICs. Fix by adding the missing condition.
+
+Fixes: d503a04f8bc0 ("bpf: Add support for certain atomics in bpf_arena to x86 JIT")
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240701234304.14336-2-iii@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c    | 6 ++++++
- 1 file changed, 6 insertions(+)
+ kernel/bpf/verifier.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
-index da6be556727bb..145958206e38a 100644
---- a/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
-@@ -233,6 +233,12 @@ int vpu_dec_init(struct vdec_vpu_inst *vpu)
- 	mtk_vdec_debug(vpu->ctx, "vdec_inst=%p", vpu);
- 
- 	err = vcodec_vpu_send_msg(vpu, (void *)&msg, sizeof(msg));
-+
-+	if (IS_ERR_OR_NULL(vpu->vsi)) {
-+		mtk_vdec_err(vpu->ctx, "invalid vdec vsi, status=%d", err);
-+		return -EINVAL;
-+	}
-+
- 	mtk_vdec_debug(vpu->ctx, "- ret=%d", err);
- 	return err;
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 214a9fa8c6fb7..e1e08e62a2f2f 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3215,7 +3215,8 @@ static int insn_def_regno(const struct bpf_insn *insn)
+ 	case BPF_ST:
+ 		return -1;
+ 	case BPF_STX:
+-		if (BPF_MODE(insn->code) == BPF_ATOMIC &&
++		if ((BPF_MODE(insn->code) == BPF_ATOMIC ||
++		     BPF_MODE(insn->code) == BPF_PROBE_ATOMIC) &&
+ 		    (insn->imm & BPF_FETCH)) {
+ 			if (insn->imm == BPF_CMPXCHG)
+ 				return BPF_REG_0;
 -- 
 2.43.0
 
