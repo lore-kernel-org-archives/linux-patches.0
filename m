@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ECC184549;
-	Tue, 30 Jul 2024 16:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A343B1898EB;
+	Tue, 30 Jul 2024 16:56:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358594; cv=none; b=pKJK0lJPXvCYLUACvI39t/Sfv6xBdHS/JhYZh+cBPZeS/jAOQ/XcXZiJnwliWJZpOgZnxDoXRfv47dHidOc5dJVvqcTpiWmh6wMeRChJ13hcCPgopPzTnx5MjCZ42dkPt0xjr/Rm3duZRVmJMymDxPjHYKOJiWcGjRRs23jJToI=
+	t=1722358597; cv=none; b=MyspQR5Py7KXwwJiKzJnJCbUL5t+CsFMqYo3K3QC/TSJCF+DkIORkDeEGJEAw1CibMiNWiGPjQKkGlh521ZNwTG3raX/XXIZ+ycUM9mtTiCdIijGT99Sx0tMRh/u/deIUUpGJfJeAgNhDTSBxv7p4LjRifeS9a/wK/vtrx0FiyU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358594; c=relaxed/simple;
-	bh=u3Xf2Fu0ExxZvvw4DIWcqx1qwUfvbAaNqaaCnFGdMMQ=;
+	s=arc-20240116; t=1722358597; c=relaxed/simple;
+	bh=Y4F6/uWfNzzKioJtNyD05JluOh7TNQUhzc14Juo1YeI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hMm4zquJgH3ym2b+1QpXNVjQa6kL6hg6YG05jX7eIYAQe5ngfnIBASZSdcu62XXSQL1Iq9hRYJvdLpf/GfDiXbJdUpiYSKfMWMb463U2C7yaWuLhwzGgnFAOIr3nH2/imzIkV3o/Kng03sliH5uzHu3iFo0HdnU9l0JIr6xDlWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C0kINkV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5+VjvRFGlzu+fAsgZhwkfhPjQw9AxHg0kkLLfHABEJKZLMVO1h01Miv1GT1ww5pBxwnuORCqMIBZawDOjg8o6qCYPBBDwViYd5AW3upXRHzrVF5a/lCX/Y4Y3KGm0umNvpqUqTeJFbvyrgIPYDzKkYQSe0dwCWmHiUPF02OFhg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEDdahnr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C0kINkV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F73AC4AF0C;
-	Tue, 30 Jul 2024 16:56:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEDdahnr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9F2C32782;
+	Tue, 30 Jul 2024 16:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358594;
-	bh=u3Xf2Fu0ExxZvvw4DIWcqx1qwUfvbAaNqaaCnFGdMMQ=;
+	s=korg; t=1722358597;
+	bh=Y4F6/uWfNzzKioJtNyD05JluOh7TNQUhzc14Juo1YeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C0kINkV2Nj3fqA7V5E6n/BPZJL/H401aTt+kFAdwvLdNCgrORTFLExoio3nszyneL
-	 G5+IqfJgvHUxNpNb3nbhPXfXrXiXV/Bx7SfGvBaqClpTzbzcdB/jckY/hXkBmk60Ml
-	 amqNE5KCpx4+TnFG8w5k403lbMlrJDkjESvzVCu8=
+	b=uEDdahnr+iCgxTrrk/2uoYXLpRIzJiDP/mEH0EyBVz00TWsK69hCW7dsNZVrok15n
+	 KvAk9eAWPt4/qHaVDuru7QjuDkdUgoeNQQMNO2zOwUDnq/X2I6htHLbM9AeHMJ7EfD
+	 eKmp8NN8KmFzaIp5vyKvfeJSMSsC4Zigp9A7f4kY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akshat Jain <akshatzen@google.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Niklas Cassel <cassel@kernel.org>,
-	Igor Pylypiv <ipylypiv@google.com>
-Subject: [PATCH 6.6 377/568] ata: libata-scsi: Fix offsets for the fixed format sense data
-Date: Tue, 30 Jul 2024 17:48:04 +0200
-Message-ID: <20240730151654.600327197@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@fomichev.me>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 405/440] libbpf: Fix no-args func prototype BTF dumping syntax
+Date: Tue, 30 Jul 2024 17:50:38 +0200
+Message-ID: <20240730151631.616493050@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,145 +47,102 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Igor Pylypiv <ipylypiv@google.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 38dab832c3f4154968f95b267a3bb789e87554b0 upstream.
+[ Upstream commit 189f1a976e426011e6a5588f1d3ceedf71fe2965 ]
 
-Correct the ATA PASS-THROUGH fixed format sense data offsets to conform
-to SPC-6 and SAT-5 specifications. Additionally, set the VALID bit to
-indicate that the INFORMATION field contains valid information.
+For all these years libbpf's BTF dumper has been emitting not strictly
+valid syntax for function prototypes that have no input arguments.
 
-INFORMATION
-===========
+Instead of `int (*blah)()` we should emit `int (*blah)(void)`.
 
-SAT-5 Table 212 — "Fixed format sense data INFORMATION field for the ATA
-PASS-THROUGH commands" defines the following format:
+This is not normally a problem, but it manifests when we get kfuncs in
+vmlinux.h that have no input arguments. Due to compiler internal
+specifics, we get no BTF information for such kfuncs, if they are not
+declared with proper `(void)`.
 
-+------+------------+
-| Byte |   Field    |
-+------+------------+
-|    0 | ERROR      |
-|    1 | STATUS     |
-|    2 | DEVICE     |
-|    3 | COUNT(7:0) |
-+------+------------+
+The fix is trivial. We also need to adjust a few ancient tests that
+happily assumed `()` is correct.
 
-SPC-6 Table 48 - "Fixed format sense data" specifies that the INFORMATION
-field starts at byte 3 in sense buffer resulting in the following offsets
-for the ATA PASS-THROUGH commands:
-
-+------------+-------------------------+
-|   Field    |  Offset in sense buffer |
-+------------+-------------------------+
-| ERROR      |  3                      |
-| STATUS     |  4                      |
-| DEVICE     |  5                      |
-| COUNT(7:0) |  6                      |
-+------------+-------------------------+
-
-COMMAND-SPECIFIC INFORMATION
-============================
-
-SAT-5 Table 213 - "Fixed format sense data COMMAND-SPECIFIC INFORMATION
-field for ATA PASS-THROUGH" defines the following format:
-
-+------+-------------------+
-| Byte |        Field      |
-+------+-------------------+
-|    0 | FLAGS | LOG INDEX |
-|    1 | LBA (7:0)         |
-|    2 | LBA (15:8)        |
-|    3 | LBA (23:16)       |
-+------+-------------------+
-
-SPC-6 Table 48 - "Fixed format sense data" specifies that
-the COMMAND-SPECIFIC-INFORMATION field starts at byte 8
-in sense buffer resulting in the following offsets for
-the ATA PASS-THROUGH commands:
-
-Offsets of these fields in the fixed sense format are as follows:
-
-+-------------------+-------------------------+
-|       Field       |  Offset in sense buffer |
-+-------------------+-------------------------+
-| FLAGS | LOG INDEX |  8                      |
-| LBA (7:0)         |  9                      |
-| LBA (15:8)        |  10                     |
-| LBA (23:16)       |  11                     |
-+-------------------+-------------------------+
-
-Reported-by: Akshat Jain <akshatzen@google.com>
-Fixes: 11093cb1ef56 ("libata-scsi: generate correct ATA pass-through sense")
-Cc: stable@vger.kernel.org
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
-Link: https://lore.kernel.org/r/20240702024735.1152293-2-ipylypiv@google.com
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 351131b51c7a ("libbpf: add btf_dump API for BTF-to-C conversion")
+Reported-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Stanislav Fomichev <sdf@fomichev.me>
+Link: https://lore.kernel.org/bpf/20240712224442.282823-1-andrii@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c |   26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ tools/lib/bpf/btf_dump.c                                  | 8 +++++---
+ .../selftests/bpf/progs/btf_dump_test_case_multidim.c     | 4 ++--
+ .../selftests/bpf/progs/btf_dump_test_case_syntax.c       | 4 ++--
+ 3 files changed, 9 insertions(+), 7 deletions(-)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -855,7 +855,6 @@ static void ata_gen_passthru_sense(struc
- 	struct scsi_cmnd *cmd = qc->scsicmd;
- 	struct ata_taskfile *tf = &qc->result_tf;
- 	unsigned char *sb = cmd->sense_buffer;
--	unsigned char *desc = sb + 8;
- 	u8 sense_key, asc, ascq;
+diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
+index 713264899250a..cfdee656789b2 100644
+--- a/tools/lib/bpf/btf_dump.c
++++ b/tools/lib/bpf/btf_dump.c
+@@ -1521,10 +1521,12 @@ static void btf_dump_emit_type_chain(struct btf_dump *d,
+ 			 * Clang for BPF target generates func_proto with no
+ 			 * args as a func_proto with a single void arg (e.g.,
+ 			 * `int (*f)(void)` vs just `int (*f)()`). We are
+-			 * going to pretend there are no args for such case.
++			 * going to emit valid empty args (void) syntax for
++			 * such case. Similarly and conveniently, valid
++			 * no args case can be special-cased here as well.
+ 			 */
+-			if (vlen == 1 && p->type == 0) {
+-				btf_dump_printf(d, ")");
++			if (vlen == 0 || (vlen == 1 && p->type == 0)) {
++				btf_dump_printf(d, "void)");
+ 				return;
+ 			}
  
- 	memset(sb, 0, SCSI_SENSE_BUFFERSIZE);
-@@ -877,7 +876,8 @@ static void ata_gen_passthru_sense(struc
- 		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
- 	}
+diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
+index ba97165bdb282..a657651eba523 100644
+--- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
++++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
+@@ -14,9 +14,9 @@ typedef int *ptr_arr_t[6];
  
--	if ((cmd->sense_buffer[0] & 0x7f) >= 0x72) {
-+	if ((sb[0] & 0x7f) >= 0x72) {
-+		unsigned char *desc;
- 		u8 len;
+ typedef int *ptr_multiarr_t[7][8][9][10];
  
- 		/* descriptor format */
-@@ -916,21 +916,21 @@ static void ata_gen_passthru_sense(struc
- 		}
- 	} else {
- 		/* Fixed sense format */
--		desc[0] = tf->error;
--		desc[1] = tf->status;
--		desc[2] = tf->device;
--		desc[3] = tf->nsect;
--		desc[7] = 0;
-+		sb[0] |= 0x80;
-+		sb[3] = tf->error;
-+		sb[4] = tf->status;
-+		sb[5] = tf->device;
-+		sb[6] = tf->nsect;
- 		if (tf->flags & ATA_TFLAG_LBA48)  {
--			desc[8] |= 0x80;
-+			sb[8] |= 0x80;
- 			if (tf->hob_nsect)
--				desc[8] |= 0x40;
-+				sb[8] |= 0x40;
- 			if (tf->hob_lbal || tf->hob_lbam || tf->hob_lbah)
--				desc[8] |= 0x20;
-+				sb[8] |= 0x20;
- 		}
--		desc[9] = tf->lbal;
--		desc[10] = tf->lbam;
--		desc[11] = tf->lbah;
-+		sb[9] = tf->lbal;
-+		sb[10] = tf->lbam;
-+		sb[11] = tf->lbah;
- 	}
- }
+-typedef int * (*fn_ptr_arr_t[11])();
++typedef int * (*fn_ptr_arr_t[11])(void);
  
+-typedef int * (*fn_ptr_multiarr_t[12][13])();
++typedef int * (*fn_ptr_multiarr_t[12][13])(void);
+ 
+ struct root_struct {
+ 	arr_t _1;
+diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
+index 4ee4748133fec..9355e323d40cf 100644
+--- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
++++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
+@@ -67,7 +67,7 @@ typedef void (*printf_fn_t)(const char *, ...);
+  *   `int -> char *` function and returns pointer to a char. Equivalent:
+  *   typedef char * (*fn_input_t)(int);
+  *   typedef char * (*fn_output_outer_t)(fn_input_t);
+- *   typedef const fn_output_outer_t (* fn_output_inner_t)();
++ *   typedef const fn_output_outer_t (* fn_output_inner_t)(void);
+  *   typedef const fn_output_inner_t fn_ptr_arr2_t[5];
+  */
+ /* ----- START-EXPECTED-OUTPUT ----- */
+@@ -94,7 +94,7 @@ typedef void (* (*signal_t)(int, void (*)(int)))(int);
+ 
+ typedef char * (*fn_ptr_arr1_t[10])(int **);
+ 
+-typedef char * (* (* const fn_ptr_arr2_t[5])())(char * (*)(int));
++typedef char * (* (* const fn_ptr_arr2_t[5])(void))(char * (*)(int));
+ 
+ struct struct_w_typedefs {
+ 	int_t a;
+-- 
+2.43.0
+
 
 
