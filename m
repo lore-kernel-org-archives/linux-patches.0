@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA9C14831F;
-	Tue, 30 Jul 2024 16:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AC614831F;
+	Tue, 30 Jul 2024 16:49:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358188; cv=none; b=ZtiGNv4pQ/atm1ltHCH7DHNvaQr/fCAb9LIRTmr/zIE5pxKYnCsZJGtjcD43Odx//O2lru2Xs7btkwEipvkFRzOmg5Rjn1FRBhG7PXzOhoRI2n8IfFrrfjp7DGQ1TRLRVBfvf27DS33m1SpO3IQ47XRuln4WaN0fTnz3+u//wp4=
+	t=1722358191; cv=none; b=aSr6aj9H4zlN1A+zT/KEJZAgtMeQs2nEjQdovGPy1w7UG9zTKUmkQVGtcp3jepLfxVKLZLSoJBjKL821m2sUwRpl1rCrSXhAaBu6V7Nod1fi+UCfDuxxcbXjj5EL7CYPAernrtbvREdcyRVrXl2Rd+1s05jXWIv/yQWmSpr1274=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358188; c=relaxed/simple;
-	bh=UvBYVG5ZWy6M+71VpeNUhv6kDAohNbx3/cQf4R4/D5Q=;
+	s=arc-20240116; t=1722358191; c=relaxed/simple;
+	bh=Y0DQsAzH8J1ebdW4QUzKPejjxye7LEG233zg6PFcWJs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=acX2VD/payZOeqINnA793lgh39ltG2bRMEOMYYnRZDn0mRA2+8ffGdk6YTx/FAWXuo9JQmxYhvdZodcufoiTRS3fr9rqay91csVp90CCbzDa57/T1BoBdPIB41Jb+KYkHyEbFCoz/vko29hjVw4JsX+WWeIcmPG42OqcYLUj7jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9WQ1ttv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hhYk/iWT/ZdhRWbF7KC0eInyU1VsbbY/N0USLDvyo+k+jzdYUhpgs+zkuyE+UzcY+bKEtoqHKgnFJ4bqYdAXhBch3ZpJ/HU13kJC67VFuxrf0s5L9DioH+FaEH67NjM8ooJ1nN1jmkbEs3/dfxsMiKRdTpi95P5NG0nYk9h1g3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/YVcd3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9WQ1ttv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C61FC4AF10;
-	Tue, 30 Jul 2024 16:49:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/YVcd3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC90C4AF0A;
+	Tue, 30 Jul 2024 16:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358187;
-	bh=UvBYVG5ZWy6M+71VpeNUhv6kDAohNbx3/cQf4R4/D5Q=;
+	s=korg; t=1722358190;
+	bh=Y0DQsAzH8J1ebdW4QUzKPejjxye7LEG233zg6PFcWJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9WQ1ttvO9x8wnov4a282CWan5JNqqTscjzNEEP6k7xzi0e/WjwHstf7gLRQzMNnS
-	 ToLqaICORTdcH+o1pwc8A/QmhYx4Y5rdS871xGw8WbTnEDtpig8BB3fqJiIGLdQW56
-	 8xjC8i8yG3i9DUVWdbgnblIBaGpH4E3ErzrWOtLg=
+	b=o/YVcd3LwWP/o+TzqHRvVMNgkcAVHUWjCf0rdqurcNN4hpPvI7o5tkpmT6DKyUiTn
+	 CqChweqvPePVV1iAVql6JUmiXgE2OLS6pMFma8AvB3cBqmvCT1tUMiMX8nNtkXmR7E
+	 Oysm0wkfbchJgH5YHNiiLxpv0fH6zXCWvTayyduI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Rob Clark <robdclark@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 338/568] pinctrl: renesas: r8a779g0: Fix (H)SCIF3 suffixes
-Date: Tue, 30 Jul 2024 17:47:25 +0200
-Message-ID: <20240730151653.080138575@linuxfoundation.org>
+Subject: [PATCH 6.10 333/809] drm/msm/a6xx: use __unused__ to fix compiler warnings for gen7_* includes
+Date: Tue, 30 Jul 2024 17:43:29 +0200
+Message-ID: <20240730151737.772956104@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,362 +48,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-[ Upstream commit 5350f38150a171322b50c0a48efa671885f87050 ]
+[ Upstream commit 71d9b458b2bfe79197194d914aa9bada46fb9e14 ]
 
-(H)SCIF instance 3 has two alternate pin groups: "hscif3" and
-"hscif3_a", resp. "scif3" and "scif3_a", but the actual meanings of the
-pins within the groups do not match.
+GCC diagnostic pragma method throws below warnings in some of the versions
 
-Increase uniformity by adopting R-Car V4M naming:
-  - Rename "hscif3_a" to "hscif3_b",
-  - Rename "hscif3" to "hscif3_a",
-  - Rename "scif3" to "scif3_b".
+drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:16:9: warning: unknown
+option after '#pragma GCC diagnostic' kind [-Wpragmas]
+  #pragma GCC diagnostic ignored "-Wunused-const-variable"
+          ^
+In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:18:0:
+drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h:924:19: warning:
+'gen7_0_0_external_core_regs' defined but not used [-Wunused-variable]
+  static const u32 *gen7_0_0_external_core_regs[] = {
+                    ^
+In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:19:0:
+drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h:748:19: warning:
+'gen7_2_0_external_core_regs' defined but not used [-Wunused-variable]
+  static const u32 *gen7_2_0_external_core_regs[] = {
+                    ^
+In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:20:0:
+drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1188:43: warning:
+'gen7_9_0_sptp_clusters' defined but not used [-Wunused-variable]
+  static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
+                                            ^
+drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1438:19: warning:
+'gen7_9_0_external_core_regs' defined but not used [-Wunused-variable]
+  static const u32 *gen7_9_0_external_core_regs[] = {
 
-While at it, remove unneeded separators.
+Remove GCC version dependency by using __unused__ for the unused gen7_* includes.
 
-Fixes: ad9bb2fec66262b0 ("pinctrl: renesas: Initial R8A779G0 (R-Car V4H) PFC support")
-Fixes: 050442ae4c74f830 ("pinctrl: renesas: r8a779g0: Add pins, groups and functions")
-Fixes: 213b713255defaa6 ("pinctrl: renesas: r8a779g0: Add missing HSCIF3_A")
-Fixes: 49e4697656bdd1cd ("pinctrl: renesas: r8a779g0: Add missing SCIF3")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/61fdde58e369e8070ffd3c5811c089e6219c7ecc.1717754960.git.geert+renesas@glider.be
+Changes in v2:
+	- Fix the warnings in the commit text
+	- Use __attribute((__unused__)) instead of local assignment
+
+changes in v3:
+	- drop the Link from the auto add
+
+changes in v4:
+	- replace __attribute((__unused__)) with __always_unused
+
+Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
+Suggested-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/597265/
+[Add gen7_9_0_cx_debugbus_blocks as well]
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779g0.c | 192 ++++++++++++-------------
- 1 file changed, 94 insertions(+), 98 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-index 7b64429c35ad3..e3c720ea76e32 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-@@ -77,11 +77,11 @@
- #define GPSR0_0		F_(GP0_00,		IP0SR0_3_0)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index 0a7717a4fc2fd..789a11416f7a4 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -8,19 +8,16 @@
+ #include "a6xx_gpu_state.h"
+ #include "a6xx_gmu.xml.h"
  
- /* GPSR1 */
--#define GPSR1_28	F_(HTX3,		IP3SR1_19_16)
--#define GPSR1_27	F_(HCTS3_N,		IP3SR1_15_12)
--#define GPSR1_26	F_(HRTS3_N,		IP3SR1_11_8)
--#define GPSR1_25	F_(HSCK3,		IP3SR1_7_4)
--#define GPSR1_24	F_(HRX3,		IP3SR1_3_0)
-+#define GPSR1_28	F_(HTX3_A,		IP3SR1_19_16)
-+#define GPSR1_27	F_(HCTS3_N_A,		IP3SR1_15_12)
-+#define GPSR1_26	F_(HRTS3_N_A,		IP3SR1_11_8)
-+#define GPSR1_25	F_(HSCK3_A,		IP3SR1_7_4)
-+#define GPSR1_24	F_(HRX3_A,		IP3SR1_3_0)
- #define GPSR1_23	F_(GP1_23,		IP2SR1_31_28)
- #define GPSR1_22	F_(AUDIO_CLKIN,		IP2SR1_27_24)
- #define GPSR1_21	F_(AUDIO_CLKOUT,	IP2SR1_23_20)
-@@ -301,11 +301,11 @@
+-/* Ignore diagnostics about register tables that we aren't using yet. We don't
+- * want to modify these headers too much from their original source.
+- */
+-#pragma GCC diagnostic push
+-#pragma GCC diagnostic ignored "-Wunused-variable"
+-#pragma GCC diagnostic ignored "-Wunused-const-variable"
++static const unsigned int *gen7_0_0_external_core_regs[] __always_unused;
++static const unsigned int *gen7_2_0_external_core_regs[] __always_unused;
++static const unsigned int *gen7_9_0_external_core_regs[] __always_unused;
++static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] __always_unused;
++static const u32 gen7_9_0_cx_debugbus_blocks[] __always_unused;
  
- /* SR1 */
- /* IP0SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
--#define IP0SR1_3_0	FM(MSIOF1_SS2)		FM(HTX3_A)		FM(TX3)			F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_7_4	FM(MSIOF1_SS1)		FM(HCTS3_N_A)		FM(RX3)			F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_11_8	FM(MSIOF1_SYNC)		FM(HRTS3_N_A)		FM(RTS3_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_15_12	FM(MSIOF1_SCK)		FM(HSCK3_A)		FM(CTS3_N)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP0SR1_19_16	FM(MSIOF1_TXD)		FM(HRX3_A)		FM(SCK3)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_3_0	FM(MSIOF1_SS2)		FM(HTX3_B)		FM(TX3_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_7_4	FM(MSIOF1_SS1)		FM(HCTS3_N_B)		FM(RX3_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_11_8	FM(MSIOF1_SYNC)		FM(HRTS3_N_B)		FM(RTS3_N_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_15_12	FM(MSIOF1_SCK)		FM(HSCK3_B)		FM(CTS3_N_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP0SR1_19_16	FM(MSIOF1_TXD)		FM(HRX3_B)		FM(SCK3_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_23_20	FM(MSIOF1_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_27_24	FM(MSIOF0_SS2)		FM(HTX1_B)		FM(TX1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP0SR1_31_28	FM(MSIOF0_SS1)		FM(HRX1_B)		FM(RX1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-@@ -331,11 +331,11 @@
- #define IP2SR1_31_28	F_(0, 0)		FM(TCLK2)		FM(MSIOF4_SS1)		FM(IRQ3_B)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #include "adreno_gen7_0_0_snapshot.h"
+ #include "adreno_gen7_2_0_snapshot.h"
+ #include "adreno_gen7_9_0_snapshot.h"
  
- /* IP3SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
--#define IP3SR1_3_0	FM(HRX3)		FM(SCK3_A)		FM(MSIOF4_SS2)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP3SR1_7_4	FM(HSCK3)		FM(CTS3_N_A)		FM(MSIOF4_SCK)		FM(TPU0TO0_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP3SR1_11_8	FM(HRTS3_N)		FM(RTS3_N_A)		FM(MSIOF4_TXD)		FM(TPU0TO1_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP3SR1_15_12	FM(HCTS3_N)		FM(RX3_A)		FM(MSIOF4_RXD)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP3SR1_19_16	FM(HTX3)		FM(TX3_A)		FM(MSIOF4_SYNC)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP3SR1_3_0	FM(HRX3_A)		FM(SCK3_A)		FM(MSIOF4_SS2)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP3SR1_7_4	FM(HSCK3_A)		FM(CTS3_N_A)		FM(MSIOF4_SCK)		FM(TPU0TO0_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP3SR1_11_8	FM(HRTS3_N_A)		FM(RTS3_N_A)		FM(MSIOF4_TXD)		FM(TPU0TO1_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP3SR1_15_12	FM(HCTS3_N_A)		FM(RX3_A)		FM(MSIOF4_RXD)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP3SR1_19_16	FM(HTX3_A)		FM(TX3_A)		FM(MSIOF4_SYNC)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- 
- /* SR2 */
- /* IP0SR2 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
-@@ -776,24 +776,24 @@ static const u16 pinmux_data[] = {
- 
- 	/* IP0SR1 */
- 	PINMUX_IPSR_GPSR(IP0SR1_3_0,	MSIOF1_SS2),
--	PINMUX_IPSR_GPSR(IP0SR1_3_0,	HTX3_A),
--	PINMUX_IPSR_GPSR(IP0SR1_3_0,	TX3),
-+	PINMUX_IPSR_GPSR(IP0SR1_3_0,	HTX3_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_3_0,	TX3_B),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_7_4,	MSIOF1_SS1),
--	PINMUX_IPSR_GPSR(IP0SR1_7_4,	HCTS3_N_A),
--	PINMUX_IPSR_GPSR(IP0SR1_7_4,	RX3),
-+	PINMUX_IPSR_GPSR(IP0SR1_7_4,	HCTS3_N_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_7_4,	RX3_B),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_11_8,	MSIOF1_SYNC),
--	PINMUX_IPSR_GPSR(IP0SR1_11_8,	HRTS3_N_A),
--	PINMUX_IPSR_GPSR(IP0SR1_11_8,	RTS3_N),
-+	PINMUX_IPSR_GPSR(IP0SR1_11_8,	HRTS3_N_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_11_8,	RTS3_N_B),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_15_12,	MSIOF1_SCK),
--	PINMUX_IPSR_GPSR(IP0SR1_15_12,	HSCK3_A),
--	PINMUX_IPSR_GPSR(IP0SR1_15_12,	CTS3_N),
-+	PINMUX_IPSR_GPSR(IP0SR1_15_12,	HSCK3_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_15_12,	CTS3_N_B),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_19_16,	MSIOF1_TXD),
--	PINMUX_IPSR_GPSR(IP0SR1_19_16,	HRX3_A),
--	PINMUX_IPSR_GPSR(IP0SR1_19_16,	SCK3),
-+	PINMUX_IPSR_GPSR(IP0SR1_19_16,	HRX3_B),
-+	PINMUX_IPSR_GPSR(IP0SR1_19_16,	SCK3_B),
- 
- 	PINMUX_IPSR_GPSR(IP0SR1_23_20,	MSIOF1_RXD),
- 
-@@ -864,25 +864,25 @@ static const u16 pinmux_data[] = {
- 	PINMUX_IPSR_GPSR(IP2SR1_31_28,	IRQ3_B),
- 
- 	/* IP3SR1 */
--	PINMUX_IPSR_GPSR(IP3SR1_3_0,	HRX3),
-+	PINMUX_IPSR_GPSR(IP3SR1_3_0,	HRX3_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_3_0,	SCK3_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_3_0,	MSIOF4_SS2),
- 
--	PINMUX_IPSR_GPSR(IP3SR1_7_4,	HSCK3),
-+	PINMUX_IPSR_GPSR(IP3SR1_7_4,	HSCK3_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_7_4,	CTS3_N_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_7_4,	MSIOF4_SCK),
- 	PINMUX_IPSR_GPSR(IP3SR1_7_4,	TPU0TO0_A),
- 
--	PINMUX_IPSR_GPSR(IP3SR1_11_8,	HRTS3_N),
-+	PINMUX_IPSR_GPSR(IP3SR1_11_8,	HRTS3_N_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_11_8,	RTS3_N_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_11_8,	MSIOF4_TXD),
- 	PINMUX_IPSR_GPSR(IP3SR1_11_8,	TPU0TO1_A),
- 
--	PINMUX_IPSR_GPSR(IP3SR1_15_12,	HCTS3_N),
-+	PINMUX_IPSR_GPSR(IP3SR1_15_12,	HCTS3_N_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_15_12,	RX3_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_15_12,	MSIOF4_RXD),
- 
--	PINMUX_IPSR_GPSR(IP3SR1_19_16,	HTX3),
-+	PINMUX_IPSR_GPSR(IP3SR1_19_16,	HTX3_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_19_16,	TX3_A),
- 	PINMUX_IPSR_GPSR(IP3SR1_19_16,	MSIOF4_SYNC),
- 
-@@ -1666,49 +1666,48 @@ static const unsigned int hscif2_ctrl_mux[] = {
- };
- 
- /* - HSCIF3 ----------------------------------------------------------------- */
--static const unsigned int hscif3_data_pins[] = {
--	/* HRX3, HTX3 */
-+static const unsigned int hscif3_data_a_pins[] = {
-+	/* HRX3_A, HTX3_A */
- 	RCAR_GP_PIN(1, 24), RCAR_GP_PIN(1, 28),
- };
--static const unsigned int hscif3_data_mux[] = {
--	HRX3_MARK, HTX3_MARK,
-+static const unsigned int hscif3_data_a_mux[] = {
-+	HRX3_A_MARK, HTX3_A_MARK,
- };
--static const unsigned int hscif3_clk_pins[] = {
--	/* HSCK3 */
-+static const unsigned int hscif3_clk_a_pins[] = {
-+	/* HSCK3_A */
- 	RCAR_GP_PIN(1, 25),
- };
--static const unsigned int hscif3_clk_mux[] = {
--	HSCK3_MARK,
-+static const unsigned int hscif3_clk_a_mux[] = {
-+	HSCK3_A_MARK,
- };
--static const unsigned int hscif3_ctrl_pins[] = {
--	/* HRTS3_N, HCTS3_N */
-+static const unsigned int hscif3_ctrl_a_pins[] = {
-+	/* HRTS3_N_A, HCTS3_N_A */
- 	RCAR_GP_PIN(1, 26), RCAR_GP_PIN(1, 27),
- };
--static const unsigned int hscif3_ctrl_mux[] = {
--	HRTS3_N_MARK, HCTS3_N_MARK,
-+static const unsigned int hscif3_ctrl_a_mux[] = {
-+	HRTS3_N_A_MARK, HCTS3_N_A_MARK,
- };
- 
--/* - HSCIF3_A ----------------------------------------------------------------- */
--static const unsigned int hscif3_data_a_pins[] = {
--	/* HRX3_A, HTX3_A */
-+static const unsigned int hscif3_data_b_pins[] = {
-+	/* HRX3_B, HTX3_B */
- 	RCAR_GP_PIN(1, 4), RCAR_GP_PIN(1, 0),
- };
--static const unsigned int hscif3_data_a_mux[] = {
--	HRX3_A_MARK, HTX3_A_MARK,
-+static const unsigned int hscif3_data_b_mux[] = {
-+	HRX3_B_MARK, HTX3_B_MARK,
- };
--static const unsigned int hscif3_clk_a_pins[] = {
--	/* HSCK3_A */
-+static const unsigned int hscif3_clk_b_pins[] = {
-+	/* HSCK3_B */
- 	RCAR_GP_PIN(1, 3),
- };
--static const unsigned int hscif3_clk_a_mux[] = {
--	HSCK3_A_MARK,
-+static const unsigned int hscif3_clk_b_mux[] = {
-+	HSCK3_B_MARK,
- };
--static const unsigned int hscif3_ctrl_a_pins[] = {
--	/* HRTS3_N_A, HCTS3_N_A */
-+static const unsigned int hscif3_ctrl_b_pins[] = {
-+	/* HRTS3_N_B, HCTS3_N_B */
- 	RCAR_GP_PIN(1, 2), RCAR_GP_PIN(1, 1),
- };
--static const unsigned int hscif3_ctrl_a_mux[] = {
--	HRTS3_N_A_MARK, HCTS3_N_A_MARK,
-+static const unsigned int hscif3_ctrl_b_mux[] = {
-+	HRTS3_N_B_MARK, HCTS3_N_B_MARK,
- };
- 
- /* - I2C0 ------------------------------------------------------------------- */
-@@ -2304,29 +2303,6 @@ static const unsigned int scif1_ctrl_b_mux[] = {
- };
- 
- /* - SCIF3 ------------------------------------------------------------------ */
--static const unsigned int scif3_data_pins[] = {
--	/* RX3, TX3 */
--	RCAR_GP_PIN(1, 1), RCAR_GP_PIN(1, 0),
--};
--static const unsigned int scif3_data_mux[] = {
--	RX3_MARK, TX3_MARK,
--};
--static const unsigned int scif3_clk_pins[] = {
--	/* SCK3 */
--	RCAR_GP_PIN(1, 4),
--};
--static const unsigned int scif3_clk_mux[] = {
--	SCK3_MARK,
--};
--static const unsigned int scif3_ctrl_pins[] = {
--	/* RTS3_N, CTS3_N */
--	RCAR_GP_PIN(1, 2), RCAR_GP_PIN(1, 3),
--};
--static const unsigned int scif3_ctrl_mux[] = {
--	RTS3_N_MARK, CTS3_N_MARK,
--};
+-#pragma GCC diagnostic pop
 -
--/* - SCIF3_A ------------------------------------------------------------------ */
- static const unsigned int scif3_data_a_pins[] = {
- 	/* RX3_A, TX3_A */
- 	RCAR_GP_PIN(1, 27), RCAR_GP_PIN(1, 28),
-@@ -2349,6 +2325,28 @@ static const unsigned int scif3_ctrl_a_mux[] = {
- 	RTS3_N_A_MARK, CTS3_N_A_MARK,
- };
- 
-+static const unsigned int scif3_data_b_pins[] = {
-+	/* RX3_B, TX3_B */
-+	RCAR_GP_PIN(1, 1), RCAR_GP_PIN(1, 0),
-+};
-+static const unsigned int scif3_data_b_mux[] = {
-+	RX3_B_MARK, TX3_B_MARK,
-+};
-+static const unsigned int scif3_clk_b_pins[] = {
-+	/* SCK3_B */
-+	RCAR_GP_PIN(1, 4),
-+};
-+static const unsigned int scif3_clk_b_mux[] = {
-+	SCK3_B_MARK,
-+};
-+static const unsigned int scif3_ctrl_b_pins[] = {
-+	/* RTS3_N_B, CTS3_N_B */
-+	RCAR_GP_PIN(1, 2), RCAR_GP_PIN(1, 3),
-+};
-+static const unsigned int scif3_ctrl_b_mux[] = {
-+	RTS3_N_B_MARK, CTS3_N_B_MARK,
-+};
-+
- /* - SCIF4 ------------------------------------------------------------------ */
- static const unsigned int scif4_data_pins[] = {
- 	/* RX4, TX4 */
-@@ -2593,12 +2591,12 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(hscif2_data),
- 	SH_PFC_PIN_GROUP(hscif2_clk),
- 	SH_PFC_PIN_GROUP(hscif2_ctrl),
--	SH_PFC_PIN_GROUP(hscif3_data),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif3_clk),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif3_ctrl),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif3_data_a),	/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif3_clk_a),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(hscif3_ctrl_a),	/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(hscif3_data_a),
-+	SH_PFC_PIN_GROUP(hscif3_clk_a),
-+	SH_PFC_PIN_GROUP(hscif3_ctrl_a),
-+	SH_PFC_PIN_GROUP(hscif3_data_b),
-+	SH_PFC_PIN_GROUP(hscif3_clk_b),
-+	SH_PFC_PIN_GROUP(hscif3_ctrl_b),
- 
- 	SH_PFC_PIN_GROUP(i2c0),
- 	SH_PFC_PIN_GROUP(i2c1),
-@@ -2689,12 +2687,12 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(scif1_data_b),
- 	SH_PFC_PIN_GROUP(scif1_clk_b),
- 	SH_PFC_PIN_GROUP(scif1_ctrl_b),
--	SH_PFC_PIN_GROUP(scif3_data),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif3_clk),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif3_ctrl),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif3_data_a),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif3_clk_a),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(scif3_ctrl_a),		/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(scif3_data_a),
-+	SH_PFC_PIN_GROUP(scif3_clk_a),
-+	SH_PFC_PIN_GROUP(scif3_ctrl_a),
-+	SH_PFC_PIN_GROUP(scif3_data_b),
-+	SH_PFC_PIN_GROUP(scif3_clk_b),
-+	SH_PFC_PIN_GROUP(scif3_ctrl_b),
- 	SH_PFC_PIN_GROUP(scif4_data),
- 	SH_PFC_PIN_GROUP(scif4_clk),
- 	SH_PFC_PIN_GROUP(scif4_ctrl),
-@@ -2823,13 +2821,12 @@ static const char * const hscif2_groups[] = {
- };
- 
- static const char * const hscif3_groups[] = {
--	/* suffix might be updated */
--	"hscif3_data",
--	"hscif3_clk",
--	"hscif3_ctrl",
- 	"hscif3_data_a",
- 	"hscif3_clk_a",
- 	"hscif3_ctrl_a",
-+	"hscif3_data_b",
-+	"hscif3_clk_b",
-+	"hscif3_ctrl_b",
- };
- 
- static const char * const i2c0_groups[] = {
-@@ -2999,13 +2996,12 @@ static const char * const scif1_groups[] = {
- };
- 
- static const char * const scif3_groups[] = {
--	/* suffix might be updated */
--	"scif3_data",
--	"scif3_clk",
--	"scif3_ctrl",
- 	"scif3_data_a",
- 	"scif3_clk_a",
- 	"scif3_ctrl_a",
-+	"scif3_data_b",
-+	"scif3_clk_b",
-+	"scif3_ctrl_b",
- };
- 
- static const char * const scif4_groups[] = {
+ struct a6xx_gpu_state_obj {
+ 	const void *handle;
+ 	u32 *data;
 -- 
 2.43.0
 
