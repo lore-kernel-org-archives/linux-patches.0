@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373621898FF;
-	Tue, 30 Jul 2024 16:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644F618991C;
+	Tue, 30 Jul 2024 16:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356055; cv=none; b=Iwx1BqZXkQHYEHbn2mbcPOZMarpzQjATF+Omo2ElFJeniyWA6NVwjctK8K2Xdnso91M5CRlDR0nX0XvjnTY9A4TAeZ6F/U8vHBYxpv7T2zt/+6Xt8MvolYjiOCAP40xjmstq0dHcptT2WtHiDwuX1H1kkL8ENaw4fj/zCYFcwtQ=
+	t=1722356058; cv=none; b=YMU1e1OBibdOpPiUnQ8BkS2weCi/pEj+ENnhQUkmG0XRgeW2cx5Ra2RY0qeJTG6K+YGI1D/UQCEn9IM7kozqoXNOgujXimvCejbbcp0o7axoHq/Vh+uEORBown34DRCnp74/R78Nx0u1Sg3y540flvP80BCrAdZTvittMoUC5v8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356055; c=relaxed/simple;
-	bh=+E2+Q6JQTTAU7xNNkVr86ToYeEB5JfyvTSnlSvIL3a4=;
+	s=arc-20240116; t=1722356058; c=relaxed/simple;
+	bh=J4vuVOQpvC5z8ioVagU9tXSmIM/+tPBO8El+2NozX4E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fiV6xLVr7UyTAk9xLWSLZT6g1K69t2UniL+Y74KAbmHuD13pECzlFTSjOmZLNjw+fhojUfHUvwO32Q1s9Fnbsd4JMiPKADC/eBNXyMhVbgfx4UdQ/GdxS9abDOQ8lIRgK5IqTiOZGBvIeg1mhiasINWK+LlNoCTa+T8K78rH2u4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/CQNBaT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKbi7E+7RL/iF7qqb3DGcfZ+AvU5ox+VTRa0ouQJRdd4IfZOi90S3XQjxzMXLLhKtNodhVhGKNiFRLfB8pF+SjIk3+XU0RWI7u0nKnVjNdHJzVziID1M+qD8ndsD0qtHdx3V1Y8CrlgeaUdHJ2Dq/6A74FYN+y2vTQ6MTuAmb0w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X0P2COrO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/CQNBaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCDDC32782;
-	Tue, 30 Jul 2024 16:14:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X0P2COrO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE58FC4AF0E;
+	Tue, 30 Jul 2024 16:14:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356055;
-	bh=+E2+Q6JQTTAU7xNNkVr86ToYeEB5JfyvTSnlSvIL3a4=;
+	s=korg; t=1722356058;
+	bh=J4vuVOQpvC5z8ioVagU9tXSmIM/+tPBO8El+2NozX4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/CQNBaTFKGa40gubWdtGJ/qXAma+jlmsGrJN1ptlX6YRBl87ncxhS6moojQn9wMt
-	 UmeYqjWhNdUENJzUNrukWhtHogEXm58EV4xRx71x3w8x7i58eiGF36QvoDkIxP19ZX
-	 6VG0AdsrRz/vSJs4tCJtdasPjrP09AedlweHbvFc=
+	b=X0P2COrOpaQV9qByYmLd6IlUj3I0UdBF2dTqixmmYEO0/77LeV0sdjMDfvbDZXYD5
+	 ohTLgwcWDHVXWwyfyaU8963l18djiNJ+BmY+4k2KafAYrwA2r5iYLwkLd0oNPnXisB
+	 eqtTpRU5mpjgfpLqyZOFoj7awyhqM1PBMT+myh3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 110/568] wifi: brcmsmac: LCN PHY code is used for BCM4313 2G-only device
-Date: Tue, 30 Jul 2024 17:43:37 +0200
-Message-ID: <20240730151644.173883363@linuxfoundation.org>
+Subject: [PATCH 6.1 137/440] media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()
+Date: Tue, 30 Jul 2024 17:46:10 +0200
+Message-ID: <20240730151621.234094943@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +48,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit c636fa85feb450ca414a10010ed05361a73c93a6 ]
+[ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
 
-The band_idx variable in the function wlc_lcnphy_tx_iqlo_cal() will
-never be set to 1 as BCM4313 is the only device for which the LCN PHY
-code is used. This is a 2G-only device.
+Infinite log printing occurs during fuzz test:
 
-Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
-Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240509231037.2014109-1-samasth.norway.ananda@oracle.com
+  rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
+  ...
+  dvb-usb: schedule remote query interval to 100 msecs.
+  dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
+  dvb-usb: bulk message failed: -22 (1/0)
+  dvb-usb: bulk message failed: -22 (1/0)
+  dvb-usb: bulk message failed: -22 (1/0)
+  ...
+  dvb-usb: bulk message failed: -22 (1/0)
+
+Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
+that is in rc_core_dvb_usb_remote_init() create a work that will call
+dvb_usb_read_remote_control(), and this work will reschedule itself at
+'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
+see following code snippet:
+
+  rc_core_dvb_usb_remote_init() {
+    ...
+    INIT_DELAYED_WORK(&d->rc_query_work, dvb_usb_read_remote_control);
+    schedule_delayed_work(&d->rc_query_work,
+                          msecs_to_jiffies(rc_interval));
+    ...
+  }
+
+  dvb_usb_read_remote_control() {
+    ...
+    err = d->props.rc.core.rc_query(d);
+    if (err)
+      err(...)  // Did not return even if query failed
+    schedule_delayed_work(&d->rc_query_work,
+                          msecs_to_jiffies(rc_interval));
+  }
+
+When the infinite log printing occurs, the query callback
+'d->props.rc.core.rc_query' is cxusb_rc_query(). And the log is due to
+the failure of finding a valid 'generic_bulk_ctrl_endpoint'
+in usb_bulk_msg(), see following code snippet:
+
+  cxusb_rc_query() {
+    cxusb_ctrl_msg() {
+      dvb_usb_generic_rw() {
+        ret = usb_bulk_msg(d->udev, usb_sndbulkpipe(d->udev,
+                           d->props.generic_bulk_ctrl_endpoint),...);
+        if (ret)
+          err("bulk message failed: %d (%d/%d)",ret,wlen,actlen);
+          ...
+      }
+  ...
+  }
+
+By analyzing the corresponding USB descriptor, it shows that the
+bNumEndpoints is 0 in its interface descriptor, but
+the 'generic_bulk_ctrl_endpoint' is 1, that means user don't configure
+a valid endpoint for 'generic_bulk_ctrl_endpoint', therefore this
+'invalid' USB device should be rejected before it calls into
+dvb_usb_read_remote_control().
+
+To fix it, we need to add endpoint check for 'generic_bulk_ctrl_endpoint'.
+And as Sean suggested, the same check and clear halts should be done for
+'generic_bulk_ctrl_endpoint_response'. So introduce
+dvb_usb_check_bulk_endpoint() to do it for both of them.
+
+Fixes: 4d43e13f723e ("V4L/DVB (4643): Multi-input patch for DVB-USB device")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../broadcom/brcm80211/brcmsmac/phy/phy_lcn.c  | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/media/usb/dvb-usb/dvb-usb-init.c | 35 +++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-index 7717eb85a1db6..47c0e8e429e54 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
-@@ -2567,7 +2567,6 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+index 58eea8ab54779..6cf6d08cc4ec9 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+@@ -23,11 +23,40 @@ static int dvb_usb_force_pid_filter_usage;
+ module_param_named(force_pid_filter_usage, dvb_usb_force_pid_filter_usage, int, 0444);
+ MODULE_PARM_DESC(force_pid_filter_usage, "force all dvb-usb-devices to use a PID filter, if any (default: 0).");
  
- 	struct lcnphy_txgains cal_gains, temp_gains;
- 	u16 hash;
--	u8 band_idx;
- 	int j;
- 	u16 ncorr_override[5];
- 	u16 syst_coeffs[] = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-@@ -2599,6 +2598,9 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
- 	u16 *values_to_save;
- 	struct brcms_phy_lcnphy *pi_lcn = pi->u.pi_lcnphy;
- 
-+	if (WARN_ON(CHSPEC_IS5G(pi->radio_chanspec)))
-+		return;
++static int dvb_usb_check_bulk_endpoint(struct dvb_usb_device *d, u8 endpoint)
++{
++	if (endpoint) {
++		int ret;
 +
- 	values_to_save = kmalloc_array(20, sizeof(u16), GFP_ATOMIC);
- 	if (NULL == values_to_save)
- 		return;
-@@ -2662,20 +2664,18 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
- 	hash = (target_gains->gm_gain << 8) |
- 	       (target_gains->pga_gain << 4) | (target_gains->pad_gain);
++		ret = usb_pipe_type_check(d->udev, usb_sndbulkpipe(d->udev, endpoint));
++		if (ret)
++			return ret;
++		ret = usb_pipe_type_check(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
++		if (ret)
++			return ret;
++	}
++	return 0;
++}
++
++static void dvb_usb_clear_halt(struct dvb_usb_device *d, u8 endpoint)
++{
++	if (endpoint) {
++		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, endpoint));
++		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
++	}
++}
++
+ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
+ {
+ 	struct dvb_usb_adapter *adap;
+ 	int ret, n, o;
  
--	band_idx = (CHSPEC_IS5G(pi->radio_chanspec) ? 1 : 0);
--
- 	cal_gains = *target_gains;
- 	memset(ncorr_override, 0, sizeof(ncorr_override));
--	for (j = 0; j < iqcal_gainparams_numgains_lcnphy[band_idx]; j++) {
--		if (hash == tbl_iqcal_gainparams_lcnphy[band_idx][j][0]) {
-+	for (j = 0; j < iqcal_gainparams_numgains_lcnphy[0]; j++) {
-+		if (hash == tbl_iqcal_gainparams_lcnphy[0][j][0]) {
- 			cal_gains.gm_gain =
--				tbl_iqcal_gainparams_lcnphy[band_idx][j][1];
-+				tbl_iqcal_gainparams_lcnphy[0][j][1];
- 			cal_gains.pga_gain =
--				tbl_iqcal_gainparams_lcnphy[band_idx][j][2];
-+				tbl_iqcal_gainparams_lcnphy[0][j][2];
- 			cal_gains.pad_gain =
--				tbl_iqcal_gainparams_lcnphy[band_idx][j][3];
-+				tbl_iqcal_gainparams_lcnphy[0][j][3];
- 			memcpy(ncorr_override,
--			       &tbl_iqcal_gainparams_lcnphy[band_idx][j][3],
-+			       &tbl_iqcal_gainparams_lcnphy[0][j][3],
- 			       sizeof(ncorr_override));
- 			break;
- 		}
++	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint);
++	if (ret)
++		return ret;
++	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint_response);
++	if (ret)
++		return ret;
+ 	for (n = 0; n < d->props.num_adapters; n++) {
+ 		adap = &d->adapter[n];
+ 		adap->dev = d;
+@@ -103,10 +132,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
+ 	 * when reloading the driver w/o replugging the device
+ 	 * sometimes a timeout occurs, this helps
+ 	 */
+-	if (d->props.generic_bulk_ctrl_endpoint != 0) {
+-		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
+-		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
+-	}
++	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint);
++	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint_response);
+ 
+ 	return 0;
+ 
 -- 
 2.43.0
 
