@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BEE1A6162;
-	Tue, 30 Jul 2024 16:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52FF1A618E;
+	Tue, 30 Jul 2024 16:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356638; cv=none; b=LW1SFE/V1UheMdf6Y0xGmamnC+T+RG5aKIGAx1zSo3iYVzyysDo8BEMdAVCJSRKwuXJe0zQliBGNrxQXT18jgHOMhfBS9b2VFbYy0U0cG46HrTMW/WRmhXRR6AgvuF9W3+Psi9cJL7ZBo/iSrnSS9A0a85fK8/Bs7qdPzsExWqs=
+	t=1722356641; cv=none; b=LE0FWpE3Uf7jZIWqjb5oeK8BWU5hGj75qAQvxY8CGPtDZQ4/lruRN9Gf3hdDDt31mggzz26jsjYPaqqCMosQoMPbIrW8y45jTVsQV8fIFZns+mWnTge1rm3xHpZo2xCCYk1oSnsYuHkkSh15nPLx91Lq/201EdE0V4qR2eKPyys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356638; c=relaxed/simple;
-	bh=u9MjgaEGOI2GJsRbhKF2YXGVDJjkQ/MAw2ogNW7K4Tc=;
+	s=arc-20240116; t=1722356641; c=relaxed/simple;
+	bh=SCTSqtRT9pd3mKe4h62r359eYHeiovHdsl4xFlSAG1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BcJ3WWVupwgV5yqtW8FaRv0y5jH95Cp0FN0NVuxpUHh6PQC4NLErxwgXwmSrT/xdKbob8ffc3QR9fEPMkLWkZVNFC4H6h6ibPvP98M6YWfopNG04mbke3sujtMHKvaAcYd3hMlWVsYZYJnF0ipmIqUgAdon9vVHYwP9KE7DWhZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P/a551DP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c4gkaAQCSCKiCW8fOAuIU6R0kOAuXkXAv+qXyJYN05mg+/KqIlyLNCVteBHPELjQsqzHbunzcYbZjlNSudYjLZNV7HWa89/IbyNeCEP1bM3dIBccetLeV0tzAONVUNXXbHibkTeiGUM63Sb0rplzAA8tDq3DKYP8LyBy70cVMRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a72KZbQi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P/a551DP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D4E6C32782;
-	Tue, 30 Jul 2024 16:23:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a72KZbQi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17BCCC32782;
+	Tue, 30 Jul 2024 16:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356638;
-	bh=u9MjgaEGOI2GJsRbhKF2YXGVDJjkQ/MAw2ogNW7K4Tc=;
+	s=korg; t=1722356641;
+	bh=SCTSqtRT9pd3mKe4h62r359eYHeiovHdsl4xFlSAG1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/a551DPkXKyPXBZ9yQZ656SqXIfLBm90bHCeZJoJ9ZJmAxWjpnCYHbgHhuP7sC91
-	 nXE4uJSujhFmzTH9gomEBU3i+fQX9LdIJOgJzIQ3QnE5NMEjaDmvDzu6QHlurxRV5L
-	 yIS/e3KX9EuZLvqW8Y23AkshOSIXQjj7UaZ9wzBY=
+	b=a72KZbQiKqdfDGRksdkEcK/qdrkPmp4ulfkXUA9YW+petY9aoRYvmpawiezcuOwZw
+	 wu+yhymM/oBdFvotGUFr8KL2myfbtYgVFzSpUYZxK6E/cklE21fHUGf93nyWU9ea/g
+	 ZI4rmszYfVwg+o3se647pH172+98fL+qC4UbteaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 169/568] selftests: forwarding: devlink_lib: Wait for udev events after reloading
-Date: Tue, 30 Jul 2024 17:44:36 +0200
-Message-ID: <20240730151646.491585485@linuxfoundation.org>
+Subject: [PATCH 6.1 202/440] ASoC: qcom: Adjust issues in case of DT error in asoc_qcom_lpass_cpu_platform_probe()
+Date: Tue, 30 Jul 2024 17:47:15 +0200
+Message-ID: <20240730151623.760960957@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,78 +47,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
+[ Upstream commit f9f7f29f64454bb20896c7d918c3abc3a1aa487b ]
 
-Lately, an additional locking was added by commit c0a40097f0bc
-("drivers: core: synchronize really_probe() and dev_uevent()"). The
-locking protects dev_uevent() calling. This function is used to send
-messages from the kernel to user space. Uevent messages notify user space
-about changes in device states, such as when a device is added, removed,
-or changed. These messages are used by udev (or other similar user-space
-tools) to apply device-specific rules.
+If IORESOURCE_MEM "lpass-rxtx-cdc-dma-lpm" or "lpass-va-cdc-dma-lpm"
+resources is not provided in Device Tree due to any error,
+platform_get_resource_byname() will return NULL which is later
+dereferenced. According to sound/qcom,lpass-cpu.yaml, these resources
+are provided, but DT can be broken due to any error. In such cases driver
+must be able to protect itself, since the DT is external data for the
+driver.
+Adjust this issues by adding NULL return check.
 
-After reloading devlink instance, udev events should be processed. This
-locking causes a short delay of udev events handling.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-One example for useful udev rule is renaming ports. 'forwading.config'
-can be configured to use names after udev rules are applied. Some tests run
-devlink_reload() and immediately use the updated names. This worked before
-the above mentioned commit was pushed, but now the delay of uevent messages
-causes that devlink_reload() returns before udev events are handled and
-tests fail.
-
-Adjust devlink_reload() to not assume that udev events are already
-processed when devlink reload is done, instead, wait for udev events to
-ensure they are processed before returning from the function.
-
-Without this patch:
-TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-Cannot find device "swp1"
-Cannot find device "swp2"
-TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
-
-With this patch:
-$ TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
-
-This is relevant not only for this test.
-
-Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b138706225c9 ("ASoC: qcom: Add regmap config support for codec dma driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://patch.msgid.link/20240605104953.12072-1-amishin@t-argos.ru
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/qcom/lpass-cpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-index f1de525cfa55b..62a05bca1e825 100644
---- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
-+++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-@@ -122,6 +122,8 @@ devlink_reload()
- 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
- 			grep -c "size_new")
- 	check_err $still_pending "Failed reload - There are still unset sizes"
-+
-+	udevadm settle
- }
+diff --git a/sound/soc/qcom/lpass-cpu.c b/sound/soc/qcom/lpass-cpu.c
+index dbdaaa85ce481..4387cca893c5d 100644
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -1160,9 +1160,13 @@ int asoc_qcom_lpass_cpu_platform_probe(struct platform_device *pdev)
+ 		}
  
- declare -A DEVLINK_ORIG
+ 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-rxtx-cdc-dma-lpm");
++		if (!res)
++			return -EINVAL;
+ 		drvdata->rxtx_cdc_dma_lpm_buf = res->start;
+ 
+ 		res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "lpass-va-cdc-dma-lpm");
++		if (!res)
++			return -EINVAL;
+ 		drvdata->va_cdc_dma_lpm_buf = res->start;
+ 	}
+ 
 -- 
 2.43.0
 
