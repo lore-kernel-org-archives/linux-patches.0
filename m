@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715D0184549;
-	Tue, 30 Jul 2024 16:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5939184549;
+	Tue, 30 Jul 2024 16:57:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358644; cv=none; b=rkOO8gB+zA2LBEPIG1Y3mgdBhvlhdK33tWtAikfp+UO4B0mW3Yf+6Hbv/KoX92GwDLZ9lWBxmxasTsErdrLc4yfN3e03MMb4r3FAdpp+htoKAlkdrgIDoVun+ltJNobvgE+2pbdlJwOy4huFAeXevbzkbpHet4NptoETl7xNwqE=
+	t=1722358647; cv=none; b=SiYTQvqsy4RUtaaItZAw9zMHRS+nWeox/Tw27qrDtP6Y/tdw5kVTDfqb3JS9rbrXnx4/xpn4koDzAdcFOpvvid82K9M54NL2GukuXMRsQ61tgBZ3iRczsBVgeSasFIxhrbzB+fEPU6DAHUec+P44WHIwp99Q5prIkGakNUmN/eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358644; c=relaxed/simple;
-	bh=M0kQz9lXD53w/6kblduJ/9lbAiPpPXEkl+0Lv/Ar8oo=;
+	s=arc-20240116; t=1722358647; c=relaxed/simple;
+	bh=Fuvyx8xdN1s3sIgckmovg//z/Eb8r/qIAwj2Xd2ofaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rkFrwVQGOXQLvymxisPcLN5DDWgSJ4tvosInTpKeMKCq0lnK28OebC4jtZewhSAX6Z/ILXpfhv2uqGVANOJoew2NQkpVt6zlq6jz2SsxJkDtvx1Uqv9gGn0xPecKvo+EYLr2y0yPswB5oLy2IUxA0IeSi4yzZC35Ld0a0XMhgco=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0rx1SCq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TcC7IWVQuvqSYEc/N3PKaJzoth+OcN44c/RSNYLWmQsOjmq3Qbaex0QNrvfhmUT0EJC58kA1DWvoWRNPMOyGVrdO1t3jQ5SshNhaqLMC0Y97Qu8Lz2pEUcDYhQG17TjriGajfZr/4BP91qt8l2S7u61SRNArCJrAyQ1NvSPVmZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a/oxYYPt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0rx1SCq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF126C32782;
-	Tue, 30 Jul 2024 16:57:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a/oxYYPt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B17C32782;
+	Tue, 30 Jul 2024 16:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358644;
-	bh=M0kQz9lXD53w/6kblduJ/9lbAiPpPXEkl+0Lv/Ar8oo=;
+	s=korg; t=1722358647;
+	bh=Fuvyx8xdN1s3sIgckmovg//z/Eb8r/qIAwj2Xd2ofaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0rx1SCqoX0r27NJ+XLWrwOEdtiXDqU4TrMwl2rwd2Gl0BRF794mmNDihM976ifVJ
-	 4qXEWMVVpd5HHCPjXZU31F94oc0LwLDfN7JrNzrgyukN0sjtb3xmXeYovDt0gO2VUP
-	 UTZpE/dz/WBdrr9+wksMkSMuIRDRfroHOEZ+HJNs=
+	b=a/oxYYPt0fVos/Ps/5FCmexnbDa8jFJw7FAqNH1ReqiJojxQTqDDXSTTy8jnXmBX2
+	 IgjTinSclgGJM80Mret07WfdZaCPbhmDhnsQhSlhZw/9HDg8lUNS1eRDTEDNJPkoHa
+	 8Yn2KTVbp1z6OK3JsS9TRX5oEdLnmsOkYy7YLD7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Niklas Cassel <cassel@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 381/809] PCI: endpoint: pci-epf-test: Make use of cached epc_features in pci_epf_test_core_init()
-Date: Tue, 30 Jul 2024 17:44:17 +0200
-Message-ID: <20240730151739.714794750@linuxfoundation.org>
+	syzbot+3ae6be33a50b5aae4dab@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.6 382/568] hfs: fix to initialize fields of hfs_inode_info after hfs_alloc_inode()
+Date: Tue, 30 Jul 2024 17:48:09 +0200
+Message-ID: <20240730151654.799489843@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,93 +45,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 5a5095a8bd1bd349cce1c879e5e44407a34dda8a ]
+commit 26a2ed107929a855155429b11e1293b83e6b2a8b upstream.
 
-Instead of getting the epc_features from pci_epc_get_features() API, use
-the cached pci_epf_test::epc_features value to avoid the NULL check. Since
-the NULL check is already performed in pci_epf_test_bind(), having one more
-check in pci_epf_test_core_init() is redundant and it is not possible to
-hit the NULL pointer dereference.
+Syzbot reports uninitialized value access issue as below:
 
-Also with commit a01e7214bef9 ("PCI: endpoint: Remove "core_init_notifier"
-flag"), 'epc_features' got dereferenced without the NULL check, leading to
-the following false positive Smatch warning:
+loop0: detected capacity change from 0 to 64
+=====================================================
+BUG: KMSAN: uninit-value in hfs_revalidate_dentry+0x307/0x3f0 fs/hfs/sysdep.c:30
+ hfs_revalidate_dentry+0x307/0x3f0 fs/hfs/sysdep.c:30
+ d_revalidate fs/namei.c:862 [inline]
+ lookup_fast+0x89e/0x8e0 fs/namei.c:1649
+ walk_component fs/namei.c:2001 [inline]
+ link_path_walk+0x817/0x1480 fs/namei.c:2332
+ path_lookupat+0xd9/0x6f0 fs/namei.c:2485
+ filename_lookup+0x22e/0x740 fs/namei.c:2515
+ user_path_at_empty+0x8b/0x390 fs/namei.c:2924
+ user_path_at include/linux/namei.h:57 [inline]
+ do_mount fs/namespace.c:3689 [inline]
+ __do_sys_mount fs/namespace.c:3898 [inline]
+ __se_sys_mount+0x66b/0x810 fs/namespace.c:3875
+ __x64_sys_mount+0xe4/0x140 fs/namespace.c:3875
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-  drivers/pci/endpoint/functions/pci-epf-test.c:784 pci_epf_test_core_init() error: we previously assumed 'epc_features' could be null (see line 747)
+BUG: KMSAN: uninit-value in hfs_ext_read_extent fs/hfs/extent.c:196 [inline]
+BUG: KMSAN: uninit-value in hfs_get_block+0x92d/0x1620 fs/hfs/extent.c:366
+ hfs_ext_read_extent fs/hfs/extent.c:196 [inline]
+ hfs_get_block+0x92d/0x1620 fs/hfs/extent.c:366
+ block_read_full_folio+0x4ff/0x11b0 fs/buffer.c:2271
+ hfs_read_folio+0x55/0x60 fs/hfs/inode.c:39
+ filemap_read_folio+0x148/0x4f0 mm/filemap.c:2426
+ do_read_cache_folio+0x7c8/0xd90 mm/filemap.c:3553
+ do_read_cache_page mm/filemap.c:3595 [inline]
+ read_cache_page+0xfb/0x2f0 mm/filemap.c:3604
+ read_mapping_page include/linux/pagemap.h:755 [inline]
+ hfs_btree_open+0x928/0x1ae0 fs/hfs/btree.c:78
+ hfs_mdb_get+0x260c/0x3000 fs/hfs/mdb.c:204
+ hfs_fill_super+0x1fb1/0x2790 fs/hfs/super.c:406
+ mount_bdev+0x628/0x920 fs/super.c:1359
+ hfs_mount+0xcd/0xe0 fs/hfs/super.c:456
+ legacy_get_tree+0x167/0x2e0 fs/fs_context.c:610
+ vfs_get_tree+0xdc/0x5d0 fs/super.c:1489
+ do_new_mount+0x7a9/0x16f0 fs/namespace.c:3145
+ path_mount+0xf98/0x26a0 fs/namespace.c:3475
+ do_mount fs/namespace.c:3488 [inline]
+ __do_sys_mount fs/namespace.c:3697 [inline]
+ __se_sys_mount+0x919/0x9e0 fs/namespace.c:3674
+ __ia32_sys_mount+0x15b/0x1b0 fs/namespace.c:3674
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-Thus, remove the redundant NULL check and also use the epc_features::
-{msix_capable/msi_capable} flags directly to avoid local variables.
+Uninit was created at:
+ __alloc_pages+0x9a6/0xe00 mm/page_alloc.c:4590
+ __alloc_pages_node include/linux/gfp.h:238 [inline]
+ alloc_pages_node include/linux/gfp.h:261 [inline]
+ alloc_slab_page mm/slub.c:2190 [inline]
+ allocate_slab mm/slub.c:2354 [inline]
+ new_slab+0x2d7/0x1400 mm/slub.c:2407
+ ___slab_alloc+0x16b5/0x3970 mm/slub.c:3540
+ __slab_alloc mm/slub.c:3625 [inline]
+ __slab_alloc_node mm/slub.c:3678 [inline]
+ slab_alloc_node mm/slub.c:3850 [inline]
+ kmem_cache_alloc_lru+0x64d/0xb30 mm/slub.c:3879
+ alloc_inode_sb include/linux/fs.h:3018 [inline]
+ hfs_alloc_inode+0x5a/0xc0 fs/hfs/super.c:165
+ alloc_inode+0x83/0x440 fs/inode.c:260
+ new_inode_pseudo fs/inode.c:1005 [inline]
+ new_inode+0x38/0x4f0 fs/inode.c:1031
+ hfs_new_inode+0x61/0x1010 fs/hfs/inode.c:186
+ hfs_mkdir+0x54/0x250 fs/hfs/dir.c:228
+ vfs_mkdir+0x49a/0x700 fs/namei.c:4126
+ do_mkdirat+0x529/0x810 fs/namei.c:4149
+ __do_sys_mkdirat fs/namei.c:4164 [inline]
+ __se_sys_mkdirat fs/namei.c:4162 [inline]
+ __x64_sys_mkdirat+0xc8/0x120 fs/namei.c:4162
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-[kwilczynski: commit log]
-Fixes: 5e50ee27d4a5 ("PCI: pci-epf-test: Add support to defer core initialization")
-Closes: https://lore.kernel.org/linux-pci/024b5826-7180-4076-ae08-57d2584cca3f@moroto.mountain
-Link: https://lore.kernel.org/linux-pci/20240418-pci-epf-test-fix-v2-1-eacd54831444@linaro.org
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+It missed to initialize .tz_secondswest, .cached_start and .cached_blocks
+fields in struct hfs_inode_info after hfs_alloc_inode(), fix it.
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+3ae6be33a50b5aae4dab@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-fsdevel/0000000000005ad04005ee48897f@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20240616013841.2217-1-chao@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ fs/hfs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index 977fb79c15677..546d2a27955cf 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -735,20 +735,12 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
- {
- 	struct pci_epf_test *epf_test = epf_get_drvdata(epf);
- 	struct pci_epf_header *header = epf->header;
--	const struct pci_epc_features *epc_features;
-+	const struct pci_epc_features *epc_features = epf_test->epc_features;
- 	struct pci_epc *epc = epf->epc;
- 	struct device *dev = &epf->dev;
- 	bool linkup_notifier = false;
--	bool msix_capable = false;
--	bool msi_capable = true;
- 	int ret;
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -204,6 +204,7 @@ struct inode *hfs_new_inode(struct inode
+ 	HFS_I(inode)->flags = 0;
+ 	HFS_I(inode)->rsrc_inode = NULL;
+ 	HFS_I(inode)->fs_blocks = 0;
++	HFS_I(inode)->tz_secondswest = sys_tz.tz_minuteswest * 60;
+ 	if (S_ISDIR(mode)) {
+ 		inode->i_size = 2;
+ 		HFS_SB(sb)->folder_count++;
+@@ -279,6 +280,8 @@ void hfs_inode_read_fork(struct inode *i
+ 	for (count = 0, i = 0; i < 3; i++)
+ 		count += be16_to_cpu(ext[i].count);
+ 	HFS_I(inode)->first_blocks = count;
++	HFS_I(inode)->cached_start = 0;
++	HFS_I(inode)->cached_blocks = 0;
  
--	epc_features = pci_epc_get_features(epc, epf->func_no, epf->vfunc_no);
--	if (epc_features) {
--		msix_capable = epc_features->msix_capable;
--		msi_capable = epc_features->msi_capable;
--	}
--
- 	if (epf->vfunc_no <= 1) {
- 		ret = pci_epc_write_header(epc, epf->func_no, epf->vfunc_no, header);
- 		if (ret) {
-@@ -761,7 +753,7 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
- 	if (ret)
- 		return ret;
- 
--	if (msi_capable) {
-+	if (epc_features->msi_capable) {
- 		ret = pci_epc_set_msi(epc, epf->func_no, epf->vfunc_no,
- 				      epf->msi_interrupts);
- 		if (ret) {
-@@ -770,7 +762,7 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
- 		}
- 	}
- 
--	if (msix_capable) {
-+	if (epc_features->msix_capable) {
- 		ret = pci_epc_set_msix(epc, epf->func_no, epf->vfunc_no,
- 				       epf->msix_interrupts,
- 				       epf_test->test_reg_bar,
--- 
-2.43.0
-
+ 	inode->i_size = HFS_I(inode)->phys_size = log_size;
+ 	HFS_I(inode)->fs_blocks = (log_size + sb->s_blocksize - 1) >> sb->s_blocksize_bits;
 
 
