@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F8A1A6186;
-	Tue, 30 Jul 2024 16:25:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7E01A6161;
+	Tue, 30 Jul 2024 16:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356702; cv=none; b=U3F+SvuEf7Pzlbt2OzBSphBRNzyB1cDNx9cPdETEuCaiOYiXUVb/kMdh/05jyMOXRKisaZn393ncCibOyBgoUBtEP3zvfD1r2PIwCmxqEKzNYqZfRYHx1I9FSiwCD9WV+H9AgXkVYpVJxrZ3RSHNc5d/9tMkX8uNse48DrAoOsk=
+	t=1722356705; cv=none; b=XMtU8II+damvoRlWSS/3nNfVg4BopM2QdQp/HY/5QBzV5W8xop0PZv9QxhrQzXhU33aqABMkafs5QhDO0WMyeCaCMUouqrh10zYL7DgbgD1+cOsmGRsOWBhsnq/quBr6CzsmYETbEU4uDAq3Tj3JgiWHipXL3/ZaNqVlNLzCNYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356702; c=relaxed/simple;
-	bh=OY2f/pkRWlPsbj/2yw7jQaMhmcsLuT0wbvy4a04zVCI=;
+	s=arc-20240116; t=1722356705; c=relaxed/simple;
+	bh=EKsCygSF8isMd8M0uFj9e7l8HAi6lb+vfFKK23jZJpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gvuA6U2dFZyoSQmkM0o11dCLpHPPyaQMwekmSsBTJRJVy8CXrGWHKt6Dmzvetag3MMqR96EGl3OEY3fvIXFQbmabwLv6Z/WfvQH8G2qQPpZT+QillJwGwDCC+0kNRzu8fr36kDf6ay4vdcL2UZQOEUcAPhppc+0XSnceJks259o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q74qZrRt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=amtwknqA6r3Ze9C7x7I5w+3kQ24zcT3wYSVzDTLkaoG4JdVb4nuWB0DhKsxUmcZLUnZDsEk9Gtw+iNGr5qu9msQwclSdkIjyqrzhZXuYHJxsg+I8NNONqsHIzEbbwN9yDbSofO2912N5cgm/MLVmkAUbOOuvp9Hla/d5LNwzI4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw/5OXNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q74qZrRt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCECC4AF0A;
-	Tue, 30 Jul 2024 16:25:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw/5OXNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE718C4AF13;
+	Tue, 30 Jul 2024 16:25:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356701;
-	bh=OY2f/pkRWlPsbj/2yw7jQaMhmcsLuT0wbvy4a04zVCI=;
+	s=korg; t=1722356705;
+	bh=EKsCygSF8isMd8M0uFj9e7l8HAi6lb+vfFKK23jZJpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q74qZrRtBevWKICMGI7K8UlvuAjMMhO9AeBv5k9ioFqeNDuw4NfWP/XQO9XFPYazV
-	 VAZ3v4LRe7ofcor+ZrzCVbWNY0+RnJahoIukOv1Zr6ZVnbOgyFyaJrK9SrgQF9gZ5l
-	 ciS0QRtIQMkTWniQ0dFaoUjFFfzVsP508Ff7krNc=
+	b=Qw/5OXNayi4C58bLkdwML+X3jhwDVGoSTFvT+TtwpgKOax5Phl6dvZk2+6Zh791Ym
+	 7OOXz2EKWHBDmgDCxptK9cvEgYRRCbv2igRobOlAVUqLvO1A+patA7G7CKWeSJGb14
+	 b0jhmBo9fsJGfpBwyITc0abxk5ff/tm2Ek4cLGNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Yan <andy.yan@rock-chips.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 175/809] tcp: fix races in tcp_abort()
-Date: Tue, 30 Jul 2024 17:40:51 +0200
-Message-ID: <20240730151731.515616382@linuxfoundation.org>
+Subject: [PATCH 6.6 175/568] drm/rockchip: vop2: Fix the port mux of VP2
+Date: Tue, 30 Jul 2024 17:44:42 +0200
+Message-ID: <20240730151646.721969027@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Andy Yan <andy.yan@rock-chips.com>
 
-[ Upstream commit 5ce4645c23cf5f048eb8e9ce49e514bababdee85 ]
+[ Upstream commit 2bdb481bf7a93c22b9fea8daefa2834aab23a70f ]
 
-tcp_abort() has the same issue than the one fixed in the prior patch
-in tcp_write_err().
+The port mux of VP2 should be RK3568_OVL_PORT_SET__PORT2_MUX.
 
-In order to get consistent results from tcp_poll(), we must call
-sk_error_report() after tcp_done().
-
-We can use tcp_done_with_error() to centralize this logic.
-
-Fixes: c1e64e298b8c ("net: diag: Support destroying TCP sockets.")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Acked-by: Neal Cardwell <ncardwell@google.com>
-Link: https://lore.kernel.org/r/20240528125253.1966136-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 604be85547ce ("drm/rockchip: Add VOP2 driver")
+Signed-off-by: Andy Yan <andy.yan@rock-chips.com>
+Acked-by: Sascha Hauer <s.hauer@pengutronix.de>
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240422101905.32703-2-andyshrk@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index cc36ff797484b..ec6911034138f 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -4583,14 +4583,10 @@ int tcp_abort(struct sock *sk, int err)
- 	bh_lock_sock(sk);
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+index c5ec4169616de..f2a956f973613 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_vop2.c
+@@ -1927,7 +1927,7 @@ static void vop2_setup_layer_mixer(struct vop2_video_port *vp)
+ 		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX,
+ 			(vp2->nlayers + vp1->nlayers + vp0->nlayers - 1));
+ 	else
+-		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT1_MUX, 8);
++		port_sel |= FIELD_PREP(RK3568_OVL_PORT_SET__PORT2_MUX, 8);
  
- 	if (!sock_flag(sk, SOCK_DEAD)) {
--		WRITE_ONCE(sk->sk_err, err);
--		/* This barrier is coupled with smp_rmb() in tcp_poll() */
--		smp_wmb();
--		sk_error_report(sk);
- 		if (tcp_need_reset(sk->sk_state))
- 			tcp_send_active_reset(sk, GFP_ATOMIC,
- 					      SK_RST_REASON_NOT_SPECIFIED);
--		tcp_done(sk);
-+		tcp_done_with_error(sk, err);
- 	}
+ 	layer_sel = vop2_readl(vop2, RK3568_OVL_LAYER_SEL);
  
- 	bh_unlock_sock(sk);
 -- 
 2.43.0
 
