@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCB618455B;
-	Tue, 30 Jul 2024 16:22:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6288518455B;
+	Tue, 30 Jul 2024 16:22:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356538; cv=none; b=agMenHZ+69ha0QknHiOBGmINFlFwb3LafByFFBGtgykoZx69hsYTL8pdEacRAOCL0+kY7FC5zkywooEazrFU3ZKPsK1prw47tovWiEgt3lDhz5v0vdLOMLs1Mh0Hl6ALokKvvF4cQuqSXkCSHOXDpS6jDKrxtV4l2m0c0Kmz40Y=
+	t=1722356541; cv=none; b=G/QdAAk2kNzLh61WLKBAnWa5V9o7fU/HMVnhaEu9sNbulbcONlJG3uJJKr/Zm5qrCBMIuSc2ZCODa+xl/xh8nL9t4LKskiIyCm39NsDXYJh1kFhuVOJU43wNG7BXMs3P7oZ+uCLBp1sOOo2A3slQ0u3yWC4lSlmx+DH6CzDMbJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356538; c=relaxed/simple;
-	bh=XxI731FZMYkFlfPGlquzZcApL17juxveMlb5AV11w08=;
+	s=arc-20240116; t=1722356541; c=relaxed/simple;
+	bh=+XEQh5ySgIOxV/y5agGG7fxhQtBmOLJ3FSniNp8cGpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EhvkyFnZ21AJy2QliRRV7TwMqIaK+oMi2QyuZqr5hymXEqD+tdgzJPPM0i8NeOXcF5TCjP71+J2spZp3anDt0pC8TDG5l4yCZk19urQE1zVwbSXZyq/DEw/rucBBicuC2Jdq+ndfeRsyF6xYRo09/UraRzLBKw9eb24SMrFzmVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS9x2VAW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=acUgOGWVsO3R7t+ZMyPDwRcR7FvAo2+5NhHCxJmIuET16+OP74xLDevNmZOtPDv5J3LpuLoDoMzX2BYxdYXrkhFP4F8rFy4ouZfyR4BCM6o4ihQ/jd4b8qcS+RJh9FZOZPhnc7UsRM3zhSoBUghwN1xQk9RupWL+AyspKOMtx8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1y7BvF7y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS9x2VAW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A950C32782;
-	Tue, 30 Jul 2024 16:22:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1y7BvF7y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D458AC32782;
+	Tue, 30 Jul 2024 16:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356538;
-	bh=XxI731FZMYkFlfPGlquzZcApL17juxveMlb5AV11w08=;
+	s=korg; t=1722356541;
+	bh=+XEQh5ySgIOxV/y5agGG7fxhQtBmOLJ3FSniNp8cGpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YS9x2VAWpckhg+Iry8Efs27E0Dse+z31DOT70YbRV2JpEUesIi19XPU6raIWlK6b8
-	 q52pebS+sAut/y2E2VFJ4zYXwCO05I1qYJ7Xdjsd2EVq+5BJ05WCErq6Pa/cL1n/Z9
-	 LLsHd2O62OeG8trE8EoigQhIUbGjcp2jyKp2n4/U=
+	b=1y7BvF7ysVIyR/bmPoAIAU2GX5LmJg9P1geFlOMZO8JgaJUQz66nIPdIk8RIllfLo
+	 pEI6wkB90vxwICH4Ql+2TPNQLZ4GGJUBy4PyDsEV905b9IIZ+a9e1s/Pegl2KfnBZj
+	 stXXqLb/TTGAdYztJ79z81U0jmxtPgmABDctMYQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/440] mtd: make mtd_test.c a separate module
-Date: Tue, 30 Jul 2024 17:47:18 +0200
-Message-ID: <20240730151623.877083336@linuxfoundation.org>
+Subject: [PATCH 6.10 160/809] wifi: mac80211: fix TTLM teardown work
+Date: Tue, 30 Jul 2024 17:40:36 +0200
+Message-ID: <20240730151730.922247523@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,116 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit a5cf054d325e6f362e82fe6d124a1871a4af8174 ]
+[ Upstream commit 2fe0a605d083b884490ee4de02be071b5b4291b1 ]
 
-This file gets linked into nine different modules, which causes a warning:
+The worker calculates the wrong sdata pointer, so if it ever
+runs, it'll crash. Fix that.
 
-scripts/Makefile.build:236: drivers/mtd/tests/Makefile: mtd_test.o is added to multiple modules: mtd_nandbiterrs mtd_oobtest mtd_pagetest mtd_readtest mtd_speedtest mtd_stresstest mtd_subpagetest mtd_torturetest
-
-Make it a separate module instead.
-
-Fixes: a995c792280d ("mtd: tests: rename sources in order to link a helper object")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240529095049.1915393-1-arnd@kernel.org
+Fixes: a17a58ad2ff2 ("wifi: mac80211: add support for tearing down negotiated TTLM")
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240506211853.e6471800c76d.I8b7c2d6984c89a11cd33d1a610e9645fa965f6e1@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/tests/Makefile   | 34 +++++++++++++++++-----------------
- drivers/mtd/tests/mtd_test.c |  9 +++++++++
- 2 files changed, 26 insertions(+), 17 deletions(-)
+ net/mac80211/mlme.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/tests/Makefile b/drivers/mtd/tests/Makefile
-index 5de0378f90dbd..7dae831ee8b6b 100644
---- a/drivers/mtd/tests/Makefile
-+++ b/drivers/mtd/tests/Makefile
-@@ -1,19 +1,19 @@
- # SPDX-License-Identifier: GPL-2.0
--obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o mtd_test.o
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index a5f2d3cfe60d2..edac1578d425c 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6834,7 +6834,7 @@ static void ieee80211_teardown_ttlm_work(struct wiphy *wiphy,
+ 	u16 new_dormant_links;
+ 	struct ieee80211_sub_if_data *sdata =
+ 		container_of(work, struct ieee80211_sub_if_data,
+-			     u.mgd.neg_ttlm_timeout_work.work);
++			     u.mgd.teardown_ttlm_work);
  
--mtd_oobtest-objs := oobtest.o mtd_test.o
--mtd_pagetest-objs := pagetest.o mtd_test.o
--mtd_readtest-objs := readtest.o mtd_test.o
--mtd_speedtest-objs := speedtest.o mtd_test.o
--mtd_stresstest-objs := stresstest.o mtd_test.o
--mtd_subpagetest-objs := subpagetest.o mtd_test.o
--mtd_torturetest-objs := torturetest.o mtd_test.o
--mtd_nandbiterrs-objs := nandbiterrs.o mtd_test.o
-+mtd_oobtest-objs := oobtest.o
-+mtd_pagetest-objs := pagetest.o
-+mtd_readtest-objs := readtest.o
-+mtd_speedtest-objs := speedtest.o
-+mtd_stresstest-objs := stresstest.o
-+mtd_subpagetest-objs := subpagetest.o
-+mtd_torturetest-objs := torturetest.o
-+mtd_nandbiterrs-objs := nandbiterrs.o
-diff --git a/drivers/mtd/tests/mtd_test.c b/drivers/mtd/tests/mtd_test.c
-index c84250beffdc9..f391e0300cdc9 100644
---- a/drivers/mtd/tests/mtd_test.c
-+++ b/drivers/mtd/tests/mtd_test.c
-@@ -25,6 +25,7 @@ int mtdtest_erase_eraseblock(struct mtd_info *mtd, unsigned int ebnum)
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_erase_eraseblock);
- 
- static int is_block_bad(struct mtd_info *mtd, unsigned int ebnum)
- {
-@@ -57,6 +58,7 @@ int mtdtest_scan_for_bad_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_scan_for_bad_eraseblocks);
- 
- int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
- 				unsigned int eb, int ebcnt)
-@@ -75,6 +77,7 @@ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_erase_good_eraseblocks);
- 
- int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
- {
-@@ -92,6 +95,7 @@ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
- 
- 	return err;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_read);
- 
- int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
- 		const void *buf)
-@@ -107,3 +111,8 @@ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
- 
- 	return err;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_write);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("MTD function test helpers");
-+MODULE_AUTHOR("Akinobu Mita");
+ 	if (!sdata->vif.neg_ttlm.valid)
+ 		return;
 -- 
 2.43.0
 
