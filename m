@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D371A6166;
-	Tue, 30 Jul 2024 16:45:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D371A618F;
+	Tue, 30 Jul 2024 16:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357915; cv=none; b=pDf+eHW3NBNtw3v1aQTxka4rmVrTMuEvXPr1VkaJA+aoQ3dGdVRT647T4F/g2a9iFcz+Zp6YQtgMjZt/G/J/qHWYdeXVjEftDY/tzxSQdFxmvfykLAQl72VRoGc+NmT8io+PyR3FVsuEEsCOaNE9VUEhOt+zZfrjC8NVKUTlYKE=
+	t=1722357918; cv=none; b=iuilmV5/tW9Mcd4Z/9RpwiJwOUAjANGO5gVHd+1+GNMMGhtWIPN1Go/scOcreyRWpcHNWDJ7zNvYBhO5Y2gg94b03ARA10rScHcmLUhxEsTQEVOVAK4NvWN4uFGR+A6VdMPcckMbeeRmhQhXiuqpMDwQFzon10tc29Sock1YyRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357915; c=relaxed/simple;
-	bh=mv3yJ6cJOzAYePagrFevc159N2Z9N9GZwUj2Q95Naqs=;
+	s=arc-20240116; t=1722357918; c=relaxed/simple;
+	bh=5N72RuylBOqx0LcJoQVglTOTBVvB+NGEd28Xql4Q2Og=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A8yUiVMWR9qlSyyuGKyv6ar7BAEfh6YSFThxgm1tyPa5WadLU7rurNQB+i+qL1MOspl1XEC+fB31YKjggb6M1vKFIOtkn6xwlAo9WSlESfWgsj0kLL7biKtzLt1imoCXKyo7IeYoblgewNfnQpoo1EmXuEAszT23k4kjtgkpMTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uCzES58B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZserEYoaJIGXV6gVw03PlYrZRqltw5myWY5gYR+WYms8LejlCfJ4utUixPCACBf4nWces9ob/63lpQ48AKRd8Y7d3hTNJ5hHJCdGDzVi8jaUSekvqCxRY6zr7fruaZSXA/4hpEq12FURZFSwLKSwGswGq8VTDu1iRu6EoU18aHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewpAZ2+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uCzES58B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31B1C32782;
-	Tue, 30 Jul 2024 16:45:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewpAZ2+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07562C32782;
+	Tue, 30 Jul 2024 16:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357915;
-	bh=mv3yJ6cJOzAYePagrFevc159N2Z9N9GZwUj2Q95Naqs=;
+	s=korg; t=1722357918;
+	bh=5N72RuylBOqx0LcJoQVglTOTBVvB+NGEd28Xql4Q2Og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uCzES58BexDMyUGfH9OoIVo+uPvFmzCoJIW3mTzadA6QU/2PL/wYLMz2MQ6ujmjOH
-	 qYg6U5RQOM4bMwivuejqdEQVDpkVpQ3F7UN0nQUIXhPhysmGbhzGLlK7cAGl4FUjwL
-	 F2yMOcAVJg9jtpePx3E61akK1uMLr+fXXYrMgNhw=
+	b=ewpAZ2+RCrL5JcTGrWFXqhY677Ipxa0LoYNwXHLggZJITUDh1/EflxPNRVzYVIpdW
+	 5tju0s/If7349lBQQudyKUGczVJoEbKq3Z8peti6LwTh2VsNhETPsRZQqpiV7AS0dJ
+	 8fEPa5qtq+PxKWYfrOb2jJF3FhcMrCA5ZMJRdH74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Animesh Manna <animesh.manna@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 304/809] drm/i915/display: Skip Panel Replay on pipe comparison if no active planes
-Date: Tue, 30 Jul 2024 17:43:00 +0200
-Message-ID: <20240730151736.599159645@linuxfoundation.org>
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Bailey Forrest <bcf@google.com>,
+	Jeroen de Borst <jeroendb@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 339/440] gve: Fix an edge case for TSO skb validity check
+Date: Tue, 30 Jul 2024 17:49:32 +0200
+Message-ID: <20240730151629.056997970@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,46 +47,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Bailey Forrest <bcf@google.com>
 
-[ Upstream commit 955446ed6e822b86751993bd69022d347b43a99e ]
+commit 36e3b949e35964e22b9a57f960660fc599038dd4 upstream.
 
-Panel Replay is not enabled if there are no active planes. Do not compare
-it on pipe comparison. Otherwise we get pipe mismatch.
+The NIC requires each TSO segment to not span more than 10
+descriptors. NIC further requires each descriptor to not exceed
+16KB - 1 (GVE_TX_MAX_BUF_SIZE_DQO).
 
-Fixes: ac9ef327327b ("drm/i915/psr: Panel replay has to be enabled before link training")
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Animesh Manna <animesh.manna@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240607134917.1327574-5-jouni.hogander@intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The descriptors for an skb are generated by
+gve_tx_add_skb_no_copy_dqo() for DQO RDA queue format.
+gve_tx_add_skb_no_copy_dqo() loops through each skb frag and
+generates a descriptor for the entire frag if the frag size is
+not greater than GVE_TX_MAX_BUF_SIZE_DQO. If the frag size is
+greater than GVE_TX_MAX_BUF_SIZE_DQO, it is split into descriptor(s)
+of size GVE_TX_MAX_BUF_SIZE_DQO and a descriptor is generated for
+the remainder (frag size % GVE_TX_MAX_BUF_SIZE_DQO).
+
+gve_can_send_tso() checks if the descriptors thus generated for an
+skb would meet the requirement that each TSO-segment not span more
+than 10 descriptors. However, the current code misses an edge case
+when a TSO segment spans multiple descriptors within a large frag.
+This change fixes the edge case.
+
+gve_can_send_tso() relies on the assumption that max gso size (9728)
+is less than GVE_TX_MAX_BUF_SIZE_DQO and therefore within an skb
+fragment a TSO segment can never span more than 2 descriptors.
+
+Fixes: a57e5de476be ("gve: DQO: Add TX path")
+Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
+Signed-off-by: Bailey Forrest <bcf@google.com>
+Reviewed-by: Jeroen de Borst <jeroendb@google.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240724143431.3343722-1-pkaligineedi@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/google/gve/gve_tx_dqo.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_display.c b/drivers/gpu/drm/i915/display/intel_display.c
-index 0ae18b07ac87d..e53d3e900b3e4 100644
---- a/drivers/gpu/drm/i915/display/intel_display.c
-+++ b/drivers/gpu/drm/i915/display/intel_display.c
-@@ -5318,7 +5318,9 @@ intel_pipe_config_compare(const struct intel_crtc_state *current_config,
- 	 * Panel replay has to be enabled before link training. PSR doesn't have
- 	 * this requirement -> check these only if using panel replay
- 	 */
--	if (current_config->has_panel_replay || pipe_config->has_panel_replay) {
-+	if (current_config->active_planes &&
-+	    (current_config->has_panel_replay ||
-+	     pipe_config->has_panel_replay)) {
- 		PIPE_CONF_CHECK_BOOL(has_psr);
- 		PIPE_CONF_CHECK_BOOL(has_sel_update);
- 		PIPE_CONF_CHECK_BOOL(enable_psr2_sel_fetch);
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
+@@ -596,22 +596,42 @@ static bool gve_can_send_tso(const struc
+ 	const int header_len = skb_tcp_all_headers(skb);
+ 	const int gso_size = shinfo->gso_size;
+ 	int cur_seg_num_bufs;
++	int prev_frag_size;
+ 	int cur_seg_size;
+ 	int i;
+ 
+ 	cur_seg_size = skb_headlen(skb) - header_len;
++	prev_frag_size = skb_headlen(skb);
+ 	cur_seg_num_bufs = cur_seg_size > 0;
+ 
+ 	for (i = 0; i < shinfo->nr_frags; i++) {
+ 		if (cur_seg_size >= gso_size) {
+ 			cur_seg_size %= gso_size;
+ 			cur_seg_num_bufs = cur_seg_size > 0;
++
++			if (prev_frag_size > GVE_TX_MAX_BUF_SIZE_DQO) {
++				int prev_frag_remain = prev_frag_size %
++					GVE_TX_MAX_BUF_SIZE_DQO;
++
++				/* If the last descriptor of the previous frag
++				 * is less than cur_seg_size, the segment will
++				 * span two descriptors in the previous frag.
++				 * Since max gso size (9728) is less than
++				 * GVE_TX_MAX_BUF_SIZE_DQO, it is impossible
++				 * for the segment to span more than two
++				 * descriptors.
++				 */
++				if (prev_frag_remain &&
++				    cur_seg_size > prev_frag_remain)
++					cur_seg_num_bufs++;
++			}
+ 		}
+ 
+ 		if (unlikely(++cur_seg_num_bufs > max_bufs_per_seg))
+ 			return false;
+ 
+-		cur_seg_size += skb_frag_size(&shinfo->frags[i]);
++		prev_frag_size = skb_frag_size(&shinfo->frags[i]);
++		cur_seg_size += prev_frag_size;
+ 	}
+ 
+ 	return true;
 
 
