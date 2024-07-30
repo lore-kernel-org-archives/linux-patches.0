@@ -1,41 +1,53 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF06A1A6195;
-	Tue, 30 Jul 2024 16:32:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC977188012;
+	Tue, 30 Jul 2024 16:32:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357159; cv=none; b=gPGOMo3zQXCdD/IjnOVULjpwQzPUKpBVRhUB+/lUlnN2FDwsKqi4LtDQ/Vtq0C7tU7jaQCzOQHww8NnKRyDZNgfdex5VZKyiT6JBmQb5zLwLhneYHg0GVCcIoQuIWbHfeuf96bmESKZ9Ayxv/bd7ib/vESMRSycnWtpzNdR4jgg=
+	t=1722357162; cv=none; b=du1ZZlqZi6zE9TSqgY+MlTAZ8Uta4q+f+/MpAU9YPlBNd439TrZY4vAEl0wSm6byq1qnsLrVQGaQ0fW/iEzCfvqvxE9tvxAOOuo8d6tZWA03vY4f8aT9NQ6+zOXRyuxFomOGiwybU52iokiJ64qspuyFef8Q4ayMCY6nglpywwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357159; c=relaxed/simple;
-	bh=3vSH9DHGhVkz9eh/1uCrptbVbtAAaKK+tWU55HeFXjg=;
+	s=arc-20240116; t=1722357162; c=relaxed/simple;
+	bh=k+MPZvISK33eEfEnAyDAQiMSWgCq9VwvvA+EaA5iDb4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQyrUZOcUcciXZzR9VYHCgd8i3bl0+2JeNWR3iXU8lbr5LUE+TGOVHWDW16XyWF7swUn8+ccRd9fs/bNloNOI7c+rGwrh7XRFCQhUuEVIJCa5HSxo5u2UfgRUF+tR+aVHZFiu0KiOULX/E6a7Kqj5B6ZTlCyA/G64jnZJ2TPzfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0hZA5l4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KiBabxb5ox5DdL4+FlBfu7mfJRZprFLdY1n/JWYqWbG/ujxFHZ6j40cDMkAeL+04na4HokdtwgPz2VumTgNGrYK1P1WgorV8AYnj/FKFuGQchW3DigMUdQR1oQnizdxymVjOp18G8Yu5Sv+qZGoLtu27OgLKdqy8Ctypd0YOsTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esjcqGxP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0hZA5l4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D6ADC32782;
-	Tue, 30 Jul 2024 16:32:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esjcqGxP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F74BC32782;
+	Tue, 30 Jul 2024 16:32:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357158;
-	bh=3vSH9DHGhVkz9eh/1uCrptbVbtAAaKK+tWU55HeFXjg=;
+	s=korg; t=1722357161;
+	bh=k+MPZvISK33eEfEnAyDAQiMSWgCq9VwvvA+EaA5iDb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0hZA5l4j+ykQWc8WXJUHHJvSk6me2J48WDaxtR5lr5Ic3+e7HSwgGfk1AnGc1SQc
-	 EIYj0RGC/W51V2ITcM5xuzcD85PQuMcuKA1tkmWDBXwRBcP/5g0EYxd1HrRrdeLUc+
-	 RCSHIfvC1Xsl82BfiOPEeYwwOgMJKsqOO210+70E=
+	b=esjcqGxPizT1l+zJ1TaItlPGaH6dOvOaRZ8zyLdXesgRYACdwlVG7AS0P/74x0j1K
+	 Y9Xz2suy/DbPK/QpOhavjxlvrx6QflGmrJk1Q7fW+WpFHvqtGm1ZzutioDEOMbBKCR
+	 eRpwMI3MYrfjVG3n9NooS+CdONWQieCMGYNThsuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Junhao He <hejunhao3@huawei.com>,
+	ravi.bangoria@amd.com,
+	james.clark@arm.com,
+	prime.zeng@hisilicon.com,
+	cuigaosheng1@huawei.com,
+	jonathan.cameron@huawei.com,
+	linuxarm@huawei.com,
+	yangyicong@huawei.com,
+	robh@kernel.org,
+	renyu.zj@linux.alibaba.com,
+	kjain@linux.ibm.com,
+	john.g.garry@oracle.com,
+	linux-arm-kernel@lists.infradead.org,
+	Namhyung Kim <namhyung@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 228/809] perf/x86/amd/uncore: Fix DF and UMC domain identification
-Date: Tue, 30 Jul 2024 17:41:44 +0200
-Message-ID: <20240730151733.612977408@linuxfoundation.org>
+Subject: [PATCH 6.6 225/568] perf pmus: Fixes always false when compare duplicates aliases
+Date: Tue, 30 Jul 2024 17:45:32 +0200
+Message-ID: <20240730151648.676260568@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +59,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Junhao He <hejunhao3@huawei.com>
 
-[ Upstream commit 57e11990f45f89bc29d0f84dd7b13a4e4263eeb2 ]
+[ Upstream commit dd9a426eade634bf794c7e0f1b0c6659f556942f ]
 
-For uncore PMUs, a single context is shared across all CPUs in a domain.
-The domain can be a CCX, like in the case of the L3 PMU, or a socket,
-like in the case of DF and UMC PMUs. This information is available via
-the PMU's cpumask.
+In the previous loop, all the members in the aliases[j-1] have been freed
+and set to NULL. But in this loop, the function pmu_alias_is_duplicate()
+compares the aliases[j] with the aliases[j-1] that has already been
+disposed, so the function will always return false and duplicate aliases
+will never be discarded.
 
-For contexts shared across a socket, the domain is currently determined
-from topology_die_id() which is incorrect after the introduction of
-commit 63edbaa48a57 ("x86/cpu/topology: Add support for the AMD
-0x80000026 leaf") as it now returns a CCX identifier on Zen 4 and later
-systems which support CPUID leaf 0x80000026.
+If we find duplicate aliases, it skips the zfree aliases[j], which is
+accompanied by a memory leak.
 
-Use topology_logical_package_id() instead as it always returns a socket
-identifier irrespective of the availability of CPUID leaf 0x80000026.
+We can use the next aliases[j+1] to theck for duplicate aliases to
+fixes the aliases NULL pointer dereference, then goto zfree code snippet
+to release it.
 
-Fixes: 63edbaa48a57 ("x86/cpu/topology: Add support for the AMD 0x80000026 leaf")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240626074942.1044818-1-sandipan.das@amd.com
+After patch testing:
+ $ perf list --unit=hisi_sicl,cpa pmu
+
+ uncore cpa:
+   cpa_p0_rd_dat_32b
+        [Number of read ops transmitted by the P0 port which size is 32 bytes.
+         Unit: hisi_sicl,cpa]
+   cpa_p0_rd_dat_64b
+        [Number of read ops transmitted by the P0 port which size is 64 bytes.
+         Unit: hisi_sicl,cpa]
+
+Fixes: c3245d2093c1 ("perf pmu: Abstract alias/event struct")
+Signed-off-by: Junhao He <hejunhao3@huawei.com>
+Cc: ravi.bangoria@amd.com
+Cc: james.clark@arm.com
+Cc: prime.zeng@hisilicon.com
+Cc: cuigaosheng1@huawei.com
+Cc: jonathan.cameron@huawei.com
+Cc: linuxarm@huawei.com
+Cc: yangyicong@huawei.com
+Cc: robh@kernel.org
+Cc: renyu.zj@linux.alibaba.com
+Cc: kjain@linux.ibm.com
+Cc: john.g.garry@oracle.com
+Cc: linux-arm-kernel@lists.infradead.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240614094318.11607-1-hejunhao3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/perf/util/pmus.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index b78e05ab4a737..5a4bfe9aea237 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -639,7 +639,7 @@ void amd_uncore_df_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
- 	info.split.aux_data = 0;
- 	info.split.num_pmcs = NUM_COUNTERS_NB;
- 	info.split.gid = 0;
--	info.split.cid = topology_die_id(cpu);
-+	info.split.cid = topology_logical_package_id(cpu);
+diff --git a/tools/perf/util/pmus.c b/tools/perf/util/pmus.c
+index cec869cbe163a..54a237b2b8538 100644
+--- a/tools/perf/util/pmus.c
++++ b/tools/perf/util/pmus.c
+@@ -470,8 +470,8 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
+ 	qsort(aliases, len, sizeof(struct sevent), cmp_sevent);
+ 	for (int j = 0; j < len; j++) {
+ 		/* Skip duplicates */
+-		if (j > 0 && pmu_alias_is_duplicate(&aliases[j], &aliases[j - 1]))
+-			continue;
++		if (j < len - 1 && pmu_alias_is_duplicate(&aliases[j], &aliases[j + 1]))
++			goto free;
  
- 	if (pmu_version >= 2) {
- 		ebx.full = cpuid_ebx(EXT_PERFMON_DEBUG_FEATURES);
-@@ -899,8 +899,8 @@ void amd_uncore_umc_ctx_scan(struct amd_uncore *uncore, unsigned int cpu)
- 	cpuid(EXT_PERFMON_DEBUG_FEATURES, &eax, &ebx.full, &ecx, &edx);
- 	info.split.aux_data = ecx;	/* stash active mask */
- 	info.split.num_pmcs = ebx.split.num_umc_pmc;
--	info.split.gid = topology_die_id(cpu);
--	info.split.cid = topology_die_id(cpu);
-+	info.split.gid = topology_logical_package_id(cpu);
-+	info.split.cid = topology_logical_package_id(cpu);
- 	*per_cpu_ptr(uncore->info, cpu) = info;
- }
- 
+ 		print_cb->print_event(print_state,
+ 				aliases[j].pmu_name,
+@@ -484,6 +484,7 @@ void perf_pmus__print_pmu_events(const struct print_callbacks *print_cb, void *p
+ 				aliases[j].desc,
+ 				aliases[j].long_desc,
+ 				aliases[j].encoding_desc);
++free:
+ 		zfree(&aliases[j].name);
+ 		zfree(&aliases[j].alias);
+ 		zfree(&aliases[j].scale_unit);
 -- 
 2.43.0
 
