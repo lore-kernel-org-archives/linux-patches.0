@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D3D166315;
-	Tue, 30 Jul 2024 17:30:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619B2187FEC;
+	Tue, 30 Jul 2024 17:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360609; cv=none; b=jk5lTSIoSrWtPZybvxc5fWSRqLWNRPBeiUdrY093oXpqN3XWfjhBpTeJZdTXrZSvWpKV/0up6gH6d5lR75JCIIirwmvEj/pwTqYliaOdohKQqeeUfJri7Oj2v9j8JXL9+tYOHsjxuf65bF+9Hxo+wFBdSXOCi6v2HjJkmoU+0F0=
+	t=1722360612; cv=none; b=G8ZfloIiiGtAlNhKL5CiPsvgH/7AXoSEdVHZDZPSDs46v/Vh7IyJMfaHym7458Q9sP0pPDlnf++dgaPq6sgg8l6eENq2lP0oOuLcsx/Z4rDckglSgaeMz1lG5YdycO6Plak+A9xPH7kZ8byYjUDwcgP8D6wdZ10E97cqqjEJzm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360609; c=relaxed/simple;
-	bh=oZ/dVQxdOG6KQQiRZYKi1dbfh8SKNhozUxA9rngDeFc=;
+	s=arc-20240116; t=1722360612; c=relaxed/simple;
+	bh=5Qa4xiIBfzG5JEgw1CndXignaAZ8F5dViMmLEP0QMjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YVyUSrxV2lUPEq36MOcVFRsFkubPNhmZIi9VrzGzCT1E3Sq1oDfSXpXOJ+INOo8XYCBv/d04PPr/ZNyfgEoMKlSF0AwGPB0gk+PnEboCIMZLcP0zP6lOUGLdkUeY0CrA0MBDzcB3J5gO7VVso5QStx8iT6HHXb7ZtJC5isrWIVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gh5OjsaT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngCnHe3shfGIMv1IiBrQQmhOFfjBfJTo9X07mVi5IrhazCmoSmq9rdz26JWKnQlAUCF2j/qaCxq4AdVeeecqfvV4EJtASr7JNmRwVStbMu3E2mswARdLnl0TEYQKWgKiONOSMHnecFPOljbPhlU6w8/WF+N/zqgFDektNNdu/FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ph/0FXYq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gh5OjsaT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993C7C4AF13;
-	Tue, 30 Jul 2024 17:30:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ph/0FXYq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCA52C32782;
+	Tue, 30 Jul 2024 17:30:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360609;
-	bh=oZ/dVQxdOG6KQQiRZYKi1dbfh8SKNhozUxA9rngDeFc=;
+	s=korg; t=1722360612;
+	bh=5Qa4xiIBfzG5JEgw1CndXignaAZ8F5dViMmLEP0QMjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gh5OjsaTR7H0o3JgSFkS1ruhbLnUyFiyJYqTnUnzth5U27AEEQtu2+hy5c8s/ZBFO
-	 MHbOrG0UAgxUXewN4aho/KqLMjZFUCUn8+uQbutYynFvnvi/+7o2rRGnDefO91zc43
-	 /ajoKAh0QDDbP+zkdbbJOxWHCKy1u5RT7c8fX+/A=
+	b=ph/0FXYq7SwjQN8tXR5xvaJJdFx5SaEuceEZeHOPRfkv+wGEBO8AOSNbBmyvmA5KV
+	 hiqqBbp8uxE4H3u16ym2v6Bvj7L2Y4VcOXNpmLbicZ1AFyOVfDZ+kQbcnQJKZNrQza
+	 AJYJvXKUPGb/FVeA/M0JWdj64LVJGyVPZQ35ZHGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daejun Park <daejun7.park@samsung.com>,
+	Yunlei He <heyunlei@oppo.com>,
 	Chao Yu <chao@kernel.org>,
-	Daeho Jeong <daehojeong@google.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 751/809] f2fs: fix null reference error when checking end of zone
-Date: Tue, 30 Jul 2024 17:50:27 +0200
-Message-ID: <20240730151754.620892439@linuxfoundation.org>
+Subject: [PATCH 6.10 752/809] f2fs: fix to update user block counts in block_operations()
+Date: Tue, 30 Jul 2024 17:50:28 +0200
+Message-ID: <20240730151754.659664436@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,47 +52,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daejun Park <daejun7.park@samsung.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit c82bc1ab2a8a5e73d9728e80c4c2ed87e8921a38 ]
+[ Upstream commit f06c0f82e38bbda7264d6ef3c90045ad2810e0f3 ]
 
-This patch fixes a potentially null pointer being accessed by
-is_end_zone_blkaddr() that checks the last block of a zone
-when f2fs is mounted as a single device.
+Commit 59c9081bc86e ("f2fs: allow write page cache when writting cp")
+allows write() to write data to page cache during checkpoint, so block
+count fields like .total_valid_block_count, .alloc_valid_block_count
+and .rf_node_block_count may encounter race condition as below:
 
-Fixes: e067dc3c6b9c ("f2fs: maintain six open zones for zoned devices")
-Signed-off-by: Daejun Park <daejun7.park@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
+CP				Thread A
+- write_checkpoint
+ - block_operations
+  - f2fs_down_write(&sbi->node_change)
+  - __prepare_cp_block
+  : ckpt->valid_block_count = .total_valid_block_count
+  - f2fs_up_write(&sbi->node_change)
+				- write
+				 - f2fs_preallocate_blocks
+				  - f2fs_map_blocks(,F2FS_GET_BLOCK_PRE_AIO)
+				   - f2fs_map_lock
+				    - f2fs_down_read(&sbi->node_change)
+				   - f2fs_reserve_new_blocks
+				    - inc_valid_block_count
+				    : percpu_counter_add(&sbi->alloc_valid_block_count, count)
+				    : sbi->total_valid_block_count += count
+				    - f2fs_up_read(&sbi->node_change)
+ - do_checkpoint
+ : sbi->last_valid_block_count = sbi->total_valid_block_count
+ : percpu_counter_set(&sbi->alloc_valid_block_count, 0)
+ : percpu_counter_set(&sbi->rf_node_block_count, 0)
+				- fsync
+				 - need_do_checkpoint
+				  - f2fs_space_for_roll_forward
+				  : alloc_valid_block_count was reset to zero,
+				    so, it may missed last data during checkpoint
+
+Let's change to update .total_valid_block_count, .alloc_valid_block_count
+and .rf_node_block_count in block_operations(), then their access can be
+protected by .node_change and .cp_rwsem lock, so that it can avoid above
+race condition.
+
+Fixes: 59c9081bc86e ("f2fs: allow write page cache when writting cp")
+Cc: Yunlei He <heyunlei@oppo.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/data.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/checkpoint.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/f2fs/data.c b/fs/f2fs/data.c
-index b9b0debc6b3d3..1a6873cf9651f 100644
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -925,6 +925,7 @@ int f2fs_merge_page_bio(struct f2fs_io_info *fio)
- #ifdef CONFIG_BLK_DEV_ZONED
- static bool is_end_zone_blkaddr(struct f2fs_sb_info *sbi, block_t blkaddr)
- {
-+	struct block_device *bdev = sbi->sb->s_bdev;
- 	int devi = 0;
- 
- 	if (f2fs_is_multi_device(sbi)) {
-@@ -935,8 +936,9 @@ static bool is_end_zone_blkaddr(struct f2fs_sb_info *sbi, block_t blkaddr)
- 			return false;
- 		}
- 		blkaddr -= FDEV(devi).start_blk;
-+		bdev = FDEV(devi).bdev;
- 	}
--	return bdev_is_zoned(FDEV(devi).bdev) &&
-+	return bdev_is_zoned(bdev) &&
- 		f2fs_blkz_is_seq(sbi, devi, blkaddr) &&
- 		(blkaddr % sbi->blocks_per_blkz == sbi->blocks_per_blkz - 1);
+diff --git a/fs/f2fs/checkpoint.c b/fs/f2fs/checkpoint.c
+index 55d444bec5c06..b52d10b457fe7 100644
+--- a/fs/f2fs/checkpoint.c
++++ b/fs/f2fs/checkpoint.c
+@@ -1186,6 +1186,11 @@ static void __prepare_cp_block(struct f2fs_sb_info *sbi)
+ 	ckpt->valid_node_count = cpu_to_le32(valid_node_count(sbi));
+ 	ckpt->valid_inode_count = cpu_to_le32(valid_inode_count(sbi));
+ 	ckpt->next_free_nid = cpu_to_le32(last_nid);
++
++	/* update user_block_counts */
++	sbi->last_valid_block_count = sbi->total_valid_block_count;
++	percpu_counter_set(&sbi->alloc_valid_block_count, 0);
++	percpu_counter_set(&sbi->rf_node_block_count, 0);
  }
+ 
+ static bool __need_flush_quota(struct f2fs_sb_info *sbi)
+@@ -1575,11 +1580,6 @@ static int do_checkpoint(struct f2fs_sb_info *sbi, struct cp_control *cpc)
+ 		start_blk += NR_CURSEG_NODE_TYPE;
+ 	}
+ 
+-	/* update user_block_counts */
+-	sbi->last_valid_block_count = sbi->total_valid_block_count;
+-	percpu_counter_set(&sbi->alloc_valid_block_count, 0);
+-	percpu_counter_set(&sbi->rf_node_block_count, 0);
+-
+ 	/* Here, we have one bio having CP pack except cp pack 2 page */
+ 	f2fs_sync_meta_pages(sbi, META, LONG_MAX, FS_CP_META_IO);
+ 	/* Wait for all dirty meta pages to be submitted for IO */
 -- 
 2.43.0
 
