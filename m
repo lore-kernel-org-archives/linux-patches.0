@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DD41A6166;
-	Tue, 30 Jul 2024 16:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6731A6166;
+	Tue, 30 Jul 2024 16:45:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357931; cv=none; b=JPtwPPclqiFrGQoAPGbmFNwmTK3CojwBKlbFhESu6jceAgQMqjKCXGQzRNjOS2zuHxfSY3UHm5S/tL3ulJ5UhuthdgFIJCkvgHendLERINSZW7+jQ8YIO20qpnhi0+c3TycHkBSzEf6fQDPIA8U2Rqc6Id1QyUNn9rGMfBEo1g0=
+	t=1722357934; cv=none; b=N+7diUxCV1rF42ivAD69LPJN5IDJf6H0VkiW39sJVXbtDAXEZ6o8rfNMaD+u3F0ZfRylUEDqUqqg2dDxmtXWv5pB4+jHNAoEes2XT2dlqju7dguIx1G5/qD2XLft/oJjyO1O3WCD+1BjeAA832K0iSknQXr9a4SANNUA6GTA+9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357931; c=relaxed/simple;
-	bh=35jQ8mJAONIFePkPHNUTT6fiGea48KRKfg6lrdjEOHQ=;
+	s=arc-20240116; t=1722357934; c=relaxed/simple;
+	bh=A/9hniZrVmr+Wz3pomF39UKYvPLZBtGtEEIvolk2VoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFqvLeMCdcrMNIThmT/4PzPXiOLtm631qTphvGZTO3UCvKw0d6a38PZalTvVNwhF5rQJAq+1OXHMRc9zMRVSd0LiyJYXbj1zY5dtL354upVrhAuISvJ7iTfS+4Z2fQrT+5/GzysU57lPO9kpaX8xTRb2q/63zoXysXDYzmZgn+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hJsPdvq7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4S9bYp+yN2Md0ZQDMR2otGKXBNF75fLm0Vcb1/TSkDUhPlgry++X5lqpBcSHUW3nDGhjzc6nGkpVIWlGp8/OF+9o3QCailCI/1ylr0B0orZ2nomCb2kIVMHYsgwVmaYdKZcGHLnCzhw+9UKtb0E/aSEWMY5C6af6zA+tlkmUHk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y3HduIeF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hJsPdvq7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE534C32782;
-	Tue, 30 Jul 2024 16:45:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y3HduIeF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC81BC4AF0E;
+	Tue, 30 Jul 2024 16:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357931;
-	bh=35jQ8mJAONIFePkPHNUTT6fiGea48KRKfg6lrdjEOHQ=;
+	s=korg; t=1722357934;
+	bh=A/9hniZrVmr+Wz3pomF39UKYvPLZBtGtEEIvolk2VoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hJsPdvq7p/YxsOR7Mm4D8u6cGzPfxej3zb4fngdhAmtm9t9Oq9VawZdv9aMyJrWta
-	 rpoks3iyuEoZO8UwsPKiOkkyPuChUacEQh8iAWiEqJ/ItxsKBa/dYjXaP01n16fQz/
-	 Rui+0eRjiMkffHMTYn+N/UGKxndoDlzk9X1oVY4E=
+	b=Y3HduIeFLeWcEduNQT6lUS5v5MOxEsS0LuSyNyQbzG4iyOGbIZcUEJ9/7VorAlabB
+	 /soWOouwV16yx5cYFxNKE7zDtGxUwQeSqR9InKTL6pZm6cVkZL/hRgKZ/OY30FXNPG
+	 qbiBN2gq7+veCKy2IItF/1ZhgI/uuD/PZkbccIj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Sridhar Samudrala <sridhar.samudrala@intel.com>,
-	Ahmed Zaki <ahmed.zaki@intel.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.1 340/440] ice: Add a per-VF limit on number of FDIR filters
-Date: Tue, 30 Jul 2024 17:49:33 +0200
-Message-ID: <20240730151629.095193848@linuxfoundation.org>
+	Mikhail Kobuk <m.kobuk@ispras.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 287/809] media: pci: ivtv: Add check for DMA map result
+Date: Tue, 30 Jul 2024 17:42:43 +0200
+Message-ID: <20240730151735.929588949@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,128 +47,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ahmed Zaki <ahmed.zaki@intel.com>
+From: Mikhail Kobuk <m.kobuk@ispras.ru>
 
-commit 6ebbe97a488179f5dc85f2f1e0c89b486e99ee97 upstream.
+[ Upstream commit 629913d6d79508b166c66e07e4857e20233d85a9 ]
 
-While the iavf driver adds a s/w limit (128) on the number of FDIR
-filters that the VF can request, a malicious VF driver can request more
-than that and exhaust the resources for other VFs.
+In case DMA fails, 'dma->SG_length' is 0. This value is later used to
+access 'dma->SGarray[dma->SG_length - 1]', which will cause out of
+bounds access.
 
-Add a similar limit in ice.
+Add check to return early on invalid value. Adjust warnings accordingly.
 
-CC: stable@vger.kernel.org
-Fixes: 1f7ea1cd6a37 ("ice: Enable FDIR Configure for AVF")
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Suggested-by: Sridhar Samudrala <sridhar.samudrala@intel.com>
-Signed-off-by: Ahmed Zaki <ahmed.zaki@intel.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 1932dc2f4cf6 ("media: pci/ivtv: switch from 'pci_' to 'dma_' API")
+Signed-off-by: Mikhail Kobuk <m.kobuk@ispras.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c  |    2 +-
- drivers/net/ethernet/intel/ice/ice_fdir.h          |    3 +++
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c |   16 ++++++++++++++++
- drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h |    1 +
- 4 files changed, 21 insertions(+), 1 deletion(-)
+ drivers/media/pci/ivtv/ivtv-udma.c | 8 ++++++++
+ drivers/media/pci/ivtv/ivtv-yuv.c  | 6 ++++++
+ drivers/media/pci/ivtv/ivtvfb.c    | 6 +++---
+ 3 files changed, 17 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool_fdir.c
-@@ -531,7 +531,7 @@ ice_parse_rx_flow_user_data(struct ethto
-  *
-  * Returns the number of available flow director filters to this VSI
-  */
--static int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
-+int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi)
- {
- 	u16 vsi_num = ice_get_hw_vsi_num(hw, vsi->idx);
- 	u16 num_guar;
---- a/drivers/net/ethernet/intel/ice/ice_fdir.h
-+++ b/drivers/net/ethernet/intel/ice/ice_fdir.h
-@@ -202,6 +202,8 @@ struct ice_fdir_base_pkt {
- 	const u8 *tun_pkt;
- };
+diff --git a/drivers/media/pci/ivtv/ivtv-udma.c b/drivers/media/pci/ivtv/ivtv-udma.c
+index 99b9f55ca8292..f467a00492f4b 100644
+--- a/drivers/media/pci/ivtv/ivtv-udma.c
++++ b/drivers/media/pci/ivtv/ivtv-udma.c
+@@ -131,6 +131,8 @@ int ivtv_udma_setup(struct ivtv *itv, unsigned long ivtv_dest_addr,
  
-+struct ice_vsi;
-+
- int ice_alloc_fd_res_cntr(struct ice_hw *hw, u16 *cntr_id);
- int ice_free_fd_res_cntr(struct ice_hw *hw, u16 cntr_id);
- int ice_alloc_fd_guar_item(struct ice_hw *hw, u16 *cntr_id, u16 num_fltr);
-@@ -213,6 +215,7 @@ int
- ice_fdir_get_gen_prgm_pkt(struct ice_hw *hw, struct ice_fdir_fltr *input,
- 			  u8 *pkt, bool frag, bool tun);
- int ice_get_fdir_cnt_all(struct ice_hw *hw);
-+int ice_fdir_num_avail_fltr(struct ice_hw *hw, struct ice_vsi *vsi);
- bool ice_fdir_is_dup_fltr(struct ice_hw *hw, struct ice_fdir_fltr *input);
- bool ice_fdir_has_frag(enum ice_fltr_ptype flow);
- struct ice_fdir_fltr *
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.c
-@@ -551,6 +551,8 @@ static void ice_vc_fdir_reset_cnt_all(st
- 		fdir->fdir_fltr_cnt[flow][0] = 0;
- 		fdir->fdir_fltr_cnt[flow][1] = 0;
- 	}
-+
-+	fdir->fdir_fltr_cnt_total = 0;
- }
- 
- /**
-@@ -1567,6 +1569,7 @@ ice_vc_add_fdir_fltr_post(struct ice_vf
- 	resp->status = status;
- 	resp->flow_id = conf->flow_id;
- 	vf->fdir.fdir_fltr_cnt[conf->input.flow_type][is_tun]++;
-+	vf->fdir.fdir_fltr_cnt_total++;
- 
- 	ret = ice_vc_send_msg_to_vf(vf, ctx->v_opcode, v_ret,
- 				    (u8 *)resp, len);
-@@ -1631,6 +1634,7 @@ ice_vc_del_fdir_fltr_post(struct ice_vf
- 	resp->status = status;
- 	ice_vc_fdir_remove_entry(vf, conf, conf->flow_id);
- 	vf->fdir.fdir_fltr_cnt[conf->input.flow_type][is_tun]--;
-+	vf->fdir.fdir_fltr_cnt_total--;
- 
- 	ret = ice_vc_send_msg_to_vf(vf, ctx->v_opcode, v_ret,
- 				    (u8 *)resp, len);
-@@ -1797,6 +1801,7 @@ int ice_vc_add_fdir_fltr(struct ice_vf *
- 	struct virtchnl_fdir_add *stat = NULL;
- 	struct virtchnl_fdir_fltr_conf *conf;
- 	enum virtchnl_status_code v_ret;
-+	struct ice_vsi *vf_vsi;
- 	struct device *dev;
- 	struct ice_pf *pf;
- 	int is_tun = 0;
-@@ -1805,6 +1810,17 @@ int ice_vc_add_fdir_fltr(struct ice_vf *
- 
- 	pf = vf->pf;
- 	dev = ice_pf_to_dev(pf);
-+	vf_vsi = ice_get_vf_vsi(vf);
-+
-+#define ICE_VF_MAX_FDIR_FILTERS	128
-+	if (!ice_fdir_num_avail_fltr(&pf->hw, vf_vsi) ||
-+	    vf->fdir.fdir_fltr_cnt_total >= ICE_VF_MAX_FDIR_FILTERS) {
-+		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
-+		dev_err(dev, "Max number of FDIR filters for VF %d is reached\n",
-+			vf->vf_id);
-+		goto err_exit;
+ 	/* Fill SG List with new values */
+ 	if (ivtv_udma_fill_sg_list(dma, &user_dma, 0) < 0) {
++		IVTV_DEBUG_WARN("%s: could not allocate bounce buffers for highmem userspace buffers\n",
++				__func__);
+ 		unpin_user_pages(dma->map, dma->page_count);
+ 		dma->page_count = 0;
+ 		return -ENOMEM;
+@@ -139,6 +141,12 @@ int ivtv_udma_setup(struct ivtv *itv, unsigned long ivtv_dest_addr,
+ 	/* Map SG List */
+ 	dma->SG_length = dma_map_sg(&itv->pdev->dev, dma->SGlist,
+ 				    dma->page_count, DMA_TO_DEVICE);
++	if (!dma->SG_length) {
++		IVTV_DEBUG_WARN("%s: DMA map error, SG_length is 0\n", __func__);
++		unpin_user_pages(dma->map, dma->page_count);
++		dma->page_count = 0;
++		return -EINVAL;
 +	}
-+
- 	ret = ice_vc_fdir_param_check(vf, fltr->vsi_id);
- 	if (ret) {
- 		v_ret = VIRTCHNL_STATUS_ERR_PARAM;
---- a/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h
-+++ b/drivers/net/ethernet/intel/ice/ice_virtchnl_fdir.h
-@@ -29,6 +29,7 @@ struct ice_vf_fdir_ctx {
- struct ice_vf_fdir {
- 	u16 fdir_fltr_cnt[ICE_FLTR_PTYPE_MAX][ICE_FD_HW_SEG_MAX];
- 	int prof_entry_cnt[ICE_FLTR_PTYPE_MAX][ICE_FD_HW_SEG_MAX];
-+	u16 fdir_fltr_cnt_total;
- 	struct ice_fd_hw_prof **fdir_prof;
  
- 	struct idr fdir_rule_idr;
+ 	/* Fill SG Array with new values */
+ 	ivtv_udma_fill_sg_array (dma, ivtv_dest_addr, 0, -1);
+diff --git a/drivers/media/pci/ivtv/ivtv-yuv.c b/drivers/media/pci/ivtv/ivtv-yuv.c
+index 582146f8d70d5..2d9274537725a 100644
+--- a/drivers/media/pci/ivtv/ivtv-yuv.c
++++ b/drivers/media/pci/ivtv/ivtv-yuv.c
+@@ -114,6 +114,12 @@ static int ivtv_yuv_prep_user_dma(struct ivtv *itv, struct ivtv_user_dma *dma,
+ 	}
+ 	dma->SG_length = dma_map_sg(&itv->pdev->dev, dma->SGlist,
+ 				    dma->page_count, DMA_TO_DEVICE);
++	if (!dma->SG_length) {
++		IVTV_DEBUG_WARN("%s: DMA map error, SG_length is 0\n", __func__);
++		unpin_user_pages(dma->map, dma->page_count);
++		dma->page_count = 0;
++		return -EINVAL;
++	}
+ 
+ 	/* Fill SG Array with new values */
+ 	ivtv_udma_fill_sg_array(dma, y_buffer_offset, uv_buffer_offset, y_size);
+diff --git a/drivers/media/pci/ivtv/ivtvfb.c b/drivers/media/pci/ivtv/ivtvfb.c
+index 410477e3e6216..d1ab7fee0d057 100644
+--- a/drivers/media/pci/ivtv/ivtvfb.c
++++ b/drivers/media/pci/ivtv/ivtvfb.c
+@@ -281,10 +281,10 @@ static int ivtvfb_prep_dec_dma_to_device(struct ivtv *itv,
+ 	/* Map User DMA */
+ 	if (ivtv_udma_setup(itv, ivtv_dest_addr, userbuf, size_in_bytes) <= 0) {
+ 		mutex_unlock(&itv->udma.lock);
+-		IVTVFB_WARN("ivtvfb_prep_dec_dma_to_device, Error with pin_user_pages: %d bytes, %d pages returned\n",
+-			       size_in_bytes, itv->udma.page_count);
++		IVTVFB_WARN("%s, Error in ivtv_udma_setup: %d bytes, %d pages returned\n",
++			       __func__, size_in_bytes, itv->udma.page_count);
+ 
+-		/* pin_user_pages must have failed completely */
++		/* pin_user_pages or DMA must have failed completely */
+ 		return -EIO;
+ 	}
+ 
+-- 
+2.43.0
+
 
 
