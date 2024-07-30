@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745BF1A6192;
-	Tue, 30 Jul 2024 17:05:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC441A6192;
+	Tue, 30 Jul 2024 17:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359126; cv=none; b=UO7Cy+dizXg1Kl9kuBqGRy+wPM5IZ1Xha85fN+Hssgspzlp5K+OnQ4EZdl+OW/6Yf9nC8XQQndJvImdyH+3O2QKZRN9+RwfnC37AgakCj/Dmy5Sf0dSHKi9hPgv5NIHxPCcUzfo+QYyBnKeBWU9UWulkqm1RA1jydB+Cns9FmT8=
+	t=1722359129; cv=none; b=qHWtUdPNEx113romNu0EyvxN+fGHbP+5658tqwj6DTnhstLn6K4ujglnXmnSgRJv3KEbilJEz3u0BYHfLFu420CdWz0q23mSuSpyYTCsmaS0cR5EFJylB1K4NxvTa0zOPt2NnQBSdM+lzsrN/H/lkD4dobZoVlJMKVofXaUGK/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359126; c=relaxed/simple;
-	bh=eOMTNzoIMO0NpM7l8OIHzfas7SMKTc1YTaHYFXgKghk=;
+	s=arc-20240116; t=1722359129; c=relaxed/simple;
+	bh=Fx+Mq7pl3sUIwLA12lVQpVPXeAdHhbNJ99pJi3V0IsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oADa9vmTCbPIR8PoeR1bbAEfU3fTqTQcABISEcSQP+XGRbMAFFvLfsWQZOn41AhOPR10lfmiKlJqCfx1ibo98gerXEdBapdOcgJ34DfMWVqYi2dTC/jD7x+MrYdLIFgoMKzUA+2OEGq7rxhVOLNiJXPFSj897ria5aelT/+2eWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o0Gs8ADK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qKORA3D6Bd5/8ENPkRhrnn6aAJYp3QNxrUP08vkNYdO/luzZNcJG/7U3jw/UqchfmqSvGpQ4RH6LtbxLN7D7Kgv/9bHHdw4u8fbHM2odFIQS2ldqn4l6hyuqHOXYy4sgiaZKdkoYfyrxrgFMpbBK8SITEOS0uY3HKUXQ4T2Fy04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCzdo72Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o0Gs8ADK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0B23C32782;
-	Tue, 30 Jul 2024 17:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCzdo72Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DB9C32782;
+	Tue, 30 Jul 2024 17:05:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359126;
-	bh=eOMTNzoIMO0NpM7l8OIHzfas7SMKTc1YTaHYFXgKghk=;
+	s=korg; t=1722359129;
+	bh=Fx+Mq7pl3sUIwLA12lVQpVPXeAdHhbNJ99pJi3V0IsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0Gs8ADKB7YjxLGuhMe4rrtSu2o6xL2HilCX86at/ZqokCugVmrVbR/xRPEmQWCov
-	 QUI0Fv/3Y5LobaTJNCrSmBPoIQtugt5lT8xYzHpQtZPs4R3qki5T8ii7kUC5br4J8N
-	 c16eYs7AiZoROpp4ALisrpFas18sRK1JGjwErFhE=
+	b=oCzdo72ZM7fsf+cJTrKab7Bs+HERCrkd8z+3HDMkc3pvQfu7Nq/aGMncX5xXcEVv7
+	 mjK5EVTV2QkRykulwBja9B2Rham6syrqvW3jyR+W2NJehKVyVyZmpd4kyP4Yj66vlb
+	 OfT7fAim/TOh9zNMALEkwv2+DrP9QjbJnnqJTs1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Yao <hao.yao@intel.com>,
-	Wentong Wu <wentong.wu@intel.com>,
-	Jason Chen <jason.z.chen@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 414/568] media: ivsc: csi: dont count privacy on as error
-Date: Tue, 30 Jul 2024 17:48:41 +0200
-Message-ID: <20240730151656.053049728@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 435/568] ASoC: fsl: fsl_qmc_audio: Check devm_kasprintf() returned value
+Date: Tue, 30 Jul 2024 17:49:02 +0200
+Message-ID: <20240730151656.872637842@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -53,42 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentong Wu <wentong.wu@intel.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit a813f168336ec4ef725b836e598cd9dc14f76dd7 upstream.
+commit e62599902327d27687693f6e5253a5d56583db58 upstream.
 
-Prior to the ongoing command privacy is on, it would return -1 to
-indicate the current privacy status, and the ongoing command would
-be well executed by firmware as well, so this is not error. This
-patch changes its behavior to notify privacy on directly by V4L2
-privacy control instead of reporting error.
+devm_kasprintf() can return a NULL pointer on failure but this returned
+value is not checked.
 
-Fixes: 29006e196a56 ("media: pci: intel: ivsc: Add CSI submodule")
-Cc: stable@vger.kernel.org # for 6.6 and later
-Reported-by: Hao Yao <hao.yao@intel.com>
-Signed-off-by: Wentong Wu <wentong.wu@intel.com>
-Tested-by: Jason Chen <jason.z.chen@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fix this lack and check the returned value.
+
+Fixes: 075c7125b11c ("ASoC: fsl: Add support for QMC audio")
+Cc: stable@vger.kernel.org
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://patch.msgid.link/20240701113038.55144-2-herve.codina@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ivsc/mei_csi.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_qmc_audio.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/media/pci/intel/ivsc/mei_csi.c
-+++ b/drivers/media/pci/intel/ivsc/mei_csi.c
-@@ -191,7 +191,11 @@ static int mei_csi_send(struct mei_csi *
+diff --git a/sound/soc/fsl/fsl_qmc_audio.c b/sound/soc/fsl/fsl_qmc_audio.c
+index bfaaa451735b..dd90ef16fa97 100644
+--- a/sound/soc/fsl/fsl_qmc_audio.c
++++ b/sound/soc/fsl/fsl_qmc_audio.c
+@@ -604,6 +604,8 @@ static int qmc_audio_dai_parse(struct qmc_audio *qmc_audio, struct device_node *
  
- 	/* command response status */
- 	ret = csi->cmd_response.status;
--	if (ret) {
-+	if (ret == -1) {
-+		/* notify privacy on instead of reporting error */
-+		ret = 0;
-+		v4l2_ctrl_s_ctrl(csi->privacy_ctrl, 1);
-+	} else if (ret) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ 	qmc_dai->name = devm_kasprintf(qmc_audio->dev, GFP_KERNEL, "%s.%d",
+ 				       np->parent->name, qmc_dai->id);
++	if (!qmc_dai->name)
++		return -ENOMEM;
+ 
+ 	qmc_dai->qmc_chan = devm_qmc_chan_get_byphandle(qmc_audio->dev, np,
+ 							"fsl,qmc-chan");
+-- 
+2.45.2
+
 
 
