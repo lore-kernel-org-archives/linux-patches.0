@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77CD718E044;
-	Tue, 30 Jul 2024 16:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886E318E04D;
+	Tue, 30 Jul 2024 16:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356104; cv=none; b=UNteWB5OZsERryNpMkS1AjecnbIHvNbM7WrRGtqA5CPEsNpxoqxcatIdAHJ0KDJ2t2HYKn00M1iBBbIeh/HdSTAr+vUpyhk95z7qMKsjxaxN2Yf3RQRkRtY6OnsAhymXC/0Q9FWCiMLD8MCIdi9ClkGH7KEdLKuqN3t3O2/50lQ=
+	t=1722356107; cv=none; b=TgL2tn1fBIdTwMwBHbEbLO7MHr+ot08wAOP10atkYNg27fp6PdjyIo9AFbcrsY5gjtkDkBX9CeF+3PFxBfNwD99txSftDiCAb08PjGGBRel7BgN5RbTro2BkzhKscXBiAkB8D7AdGCsOE+hdpxK9mWk3babxY4natjgmL8lxA0M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356104; c=relaxed/simple;
-	bh=W+G/rtZ3CM9If/VANW+RtUIWHlucI9HPljsT1RykWTo=;
+	s=arc-20240116; t=1722356107; c=relaxed/simple;
+	bh=NGQQkWLQgaDqVs3tMK062Ekk7/PFaZo6oN32C5n279s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bnN/e3KwGkDZTg6L319I3D/gCtBAPn0bipJZtLXVk1LadDyv5XCpVt7R74fJo+Y/7xlfG3QZ0G+eAeXWv+pZ1/FrEAhZ6GVPhOZVgmoVvQtU4dY/S7TuGzY7+HqviabF50erAo56yCpdYZN+Ngy3mYuvA3baEh7D+2OAgM5PR2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M9bqtFkP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=to0UTtND+cr9LvKHSdLYTwAFLecScsGv8sTz4Kyj5PqPuFw3VNL6HhOJ/Np9K7kc/8W8guNGNaZ6hjG0efdnZvViKED3FNbwqM5WAUpFRN/4g0mocJXxvuwqc2Ry6w6ebR/FFyW71tfKWqhjJBhpb0uMrjbbj0IFEt+eLkRXWX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otK7y7uE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M9bqtFkP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28AAC32782;
-	Tue, 30 Jul 2024 16:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otK7y7uE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0BBC4AF0C;
+	Tue, 30 Jul 2024 16:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356104;
-	bh=W+G/rtZ3CM9If/VANW+RtUIWHlucI9HPljsT1RykWTo=;
+	s=korg; t=1722356107;
+	bh=NGQQkWLQgaDqVs3tMK062Ekk7/PFaZo6oN32C5n279s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M9bqtFkPG3tIVlbGjW9abyRld0GZBCh40BDTppnTG+8N6NQ7hbE2qWH65Gg1lRHS0
-	 uspYXffXZNGKULXix+RscEI1WgAAhfzSb2tZpLcI9iBeDNVOWJKbNxs6xhiSbUkQiM
-	 f69h4JVFyZoJfi06SkHVnjjQPq9pYcRWFOxXjxRM=
+	b=otK7y7uEfeGdnmugTpOJrijF7dXnF5bhHdDHuQfM+ul7UVb2iXR1d41lke0X75jTe
+	 8dM5usTdOn2auaqGlj1317fHU6YG3EAw5Rljv6ppu8jEsqIAL85kSsFPT153xP6GpK
+	 7hFpDiQoJQMtsmeGQ7DdqqznajQYkHdoT1A1fXkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 096/568] arm64: dts: rockchip: fix regulator name for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:43:23 +0200
-Message-ID: <20240730151643.628777575@linuxfoundation.org>
+Subject: [PATCH 6.1 138/440] media: imon: Fix race getting ictx->lock
+Date: Tue, 30 Jul 2024 17:46:11 +0200
+Message-ID: <20240730151621.272861149@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +48,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 2dad31528de9ea8b05245ce6ac4f76ebf8dae947 ]
+[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
 
-Make the regulator name the same as those marked by schematics.
+Lets fix a race between mutex_is_lock() and mutex_lock().
 
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240630150010.55729-2-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+<-mutex is not locked
+if (!mutex_is_locked(&ictx->lock)) {
+	unlock = true; <- mutex is locked externaly
+	mutex_lock(&ictx->lock);
+}
+
+Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
+atomically.
+
+Fix the following cocci warning:
+drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
+
+Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/rc/imon.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index 89e84e3a92629..93987c8740f7b 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -39,9 +39,9 @@ status_led: led-status {
- 		};
- 	};
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 5719dda6e0f0e..e5590a708f1c5 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -1148,10 +1148,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
  
--	dc_12v: dc-12v-regulator {
-+	vcc12v_dcin: vcc12v-dcin-regulator {
- 		compatible = "regulator-fixed";
--		regulator-name = "dc_12v";
-+		regulator-name = "vcc12v_dcin";
- 		regulator-always-on;
- 		regulator-boot-on;
- 		regulator-min-microvolt = <12000000>;
-@@ -65,7 +65,7 @@ vcc3v3_sys: vcc3v3-sys-regulator {
- 		regulator-boot-on;
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
--		vin-supply = <&dc_12v>;
-+		vin-supply = <&vcc12v_dcin>;
- 	};
+ 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
  
- 	vcc5v0_sys: vcc5v0-sys-regulator {
-@@ -75,7 +75,7 @@ vcc5v0_sys: vcc5v0-sys-regulator {
- 		regulator-boot-on;
- 		regulator-min-microvolt = <5000000>;
- 		regulator-max-microvolt = <5000000>;
--		vin-supply = <&dc_12v>;
-+		vin-supply = <&vcc12v_dcin>;
- 	};
+-	if (!mutex_is_locked(&ictx->lock)) {
+-		unlock = true;
+-		mutex_lock(&ictx->lock);
+-	}
++	unlock = mutex_trylock(&ictx->lock);
  
- 	vcc5v0_usb_host: vcc5v0-usb-host-regulator {
+ 	retval = send_packet(ictx);
+ 	if (retval)
 -- 
 2.43.0
 
