@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8001A76A3;
-	Tue, 30 Jul 2024 17:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E91C1A76A0;
+	Tue, 30 Jul 2024 17:13:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359634; cv=none; b=t4S8ZYoqxsbT+RezEscPwTzRSFQIqTW/KeC7htVg0w43ZDh+h2odhl9fzacUoK5zRqvIs7TNhNjOZT70+06sZhkr9xu9EjVIBNfb3MCrb1jcp5NoT/Iz//Q/a1wgacjL1PHCeiLK8Xy+C9a7ADZrq2XBCgJN3hHVSsPfZ2psO0s=
+	t=1722359638; cv=none; b=MXCOlaouG0dYXOu0BQ4MGo+kuAlwSL85sXyx01SuKurFafBWHWvQqx7115uUiVHwLIN1KrGANxW4ENUk/ppcByHhrFJQDdryrziZNKMOEPVct0EYPjPa66QjrR/XoI36jaPcJStoe6ZT937HgIor1sLuQOBB5xEgdw/TrirRNT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359634; c=relaxed/simple;
-	bh=XgWCA9QhUYuuvC5U9INnZtVaRkZUHGWvqJs+GP4D0GE=;
+	s=arc-20240116; t=1722359638; c=relaxed/simple;
+	bh=nM7r5b+qaJfPiqYGOJ9hlhJGMUxSUnjASup3w7P7cUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TDEHB9CIAKQt6DQpmtoW8zDviXLbv37Ns/dMyiXbZsfqZcnK/WpsEYHyWA1aUghrcg8BHDi/Ywd2GtUjvWcy/vIe3zA2LXTzRdeO2LJ6mfyJW+BJn9BLA9bNKJB8j5d+mijeKSqx/SbyasZKm8RMwmzPaJ+lNtG8HHPVV/8OKJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iOO0nwNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKDvMy77egLt0jLz2nQmsRzOfvhgYRDiRa4bGScivbaO3CFwagdBa5iTEBqZK6Kec1Qgy2mPKVFyOscJ58SDlvBl+SdNMMXz4+J9z6+7WMH2S8a4xiZ23s3QfWwEsXtFM9r6Si2A5BJs+UDNolv9w2lo/pUejJsfErJsVLZgivE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mp0tK6zK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iOO0nwNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42662C32782;
-	Tue, 30 Jul 2024 17:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mp0tK6zK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86C10C32782;
+	Tue, 30 Jul 2024 17:13:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359634;
-	bh=XgWCA9QhUYuuvC5U9INnZtVaRkZUHGWvqJs+GP4D0GE=;
+	s=korg; t=1722359638;
+	bh=nM7r5b+qaJfPiqYGOJ9hlhJGMUxSUnjASup3w7P7cUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iOO0nwNa42/w1oV6mPgJXmi5MTVqV737AgJqftirnLLfUBQOZ7I8rtEwwvksuMAQt
-	 km7XCvA9+LrKl4yN0j3iRnwoOcXHG8+3XvwWGaWXGIXuaRDHUy6v2cu5Bj2K5klkoJ
-	 Ak1a3php5PCRShpKazgF/m67Ll3WaFkNKIFVAroU=
+	b=Mp0tK6zKRK39UnRmTwzNQX+72BOCgNLT322iOGueYlldjeWKp2xJefyvMXLh3jTyc
+	 hDxsfN/3pL0unTPbTKkOo7fdQKwKxsyITdMF364Ep8AR+YRHYxZSRUpguy2qlbAJDC
+	 uLBOkVRWcT1f7GC+g7dgnZEEDVzhLs6r3x9VmVlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 511/809] selftests/damon/access_memory: use user-defined region size
-Date: Tue, 30 Jul 2024 17:46:27 +0200
-Message-ID: <20240730151744.919959789@linuxfoundation.org>
+Subject: [PATCH 6.10 489/809] fs/ntfs3: Add missing .dirty_folio in address_space_operations
+Date: Tue, 30 Jul 2024 17:46:05 +0200
+Message-ID: <20240730151744.052829982@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,63 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 34ec4344a5dabbb39e23e8daf30779892c0211a6 ]
+[ Upstream commit 0f9579d9e0331b6255132ac06bdf2c0a01cceb90 ]
 
-Patch series "selftests/damon: test DAMOS tried regions and
-{min,max}_nr_regions".
+After switching from pages to folio [1], it became evident that
+the initialization of .dirty_folio for page cache operations was missed for
+compressed files.
 
-This patch series fix a minor issue in a program for DAMON selftest, and
-implement new functionality selftests for DAMOS tried regions and
-{min,max}_nr_regions.  The test for max_nr_regions also test the recovery
-from online tuning-caused limit violation, which was fixed by a previous
-patch [1] titled "mm/damon/core: merge regions aggressively when
-max_nr_regions is unmet".
+[1] https://lore.kernel.org/ntfs3/20240422193203.3534108-1-willy@infradead.org
 
-The first patch fixes a minor problem in the articial memory access
-pattern generator for tests.  Following 3 patches (2-4) implement schemes
-tried regions test.  Then a couple of patches (5-6) implementing static
-setup based {min,max}_nr_regions functionality test follows.  Final two
-patches (7-8) implement dynamic max_nr_regions update test.
-
-[1] https://lore.kernel.org/20240624210650.53960C2BBFC@smtp.kernel.org
-
-This patch (of 8):
-
-'access_memory' is an artificial memory access pattern generator for DAMON
-tests.  It creates and accesses memory regions that the user specified the
-number and size via the command line.  However, real access part of the
-program ignores the user-specified size of each region.  Instead, it uses
-a hard-coded value, 10 MiB.  Fix it to use user-defined size.
-
-Note that all existing 'access_memory' users are setting the region size
-as 10 MiB.  Hence no real problem has happened so far.
-
-Link: https://lkml.kernel.org/r/20240625180538.73134-1-sj@kernel.org
-Link: https://lkml.kernel.org/r/20240625180538.73134-2-sj@kernel.org
-Fixes: b5906f5f7359 ("selftests/damon: add a test for update_schemes_tried_regions sysfs command")
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 82cae269cfa95 ("fs/ntfs3: Add initialization of super block")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/damon/access_memory.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/inode.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/testing/selftests/damon/access_memory.c b/tools/testing/selftests/damon/access_memory.c
-index 585a2fa543295..56b17e8fe1be8 100644
---- a/tools/testing/selftests/damon/access_memory.c
-+++ b/tools/testing/selftests/damon/access_memory.c
-@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
- 		start_clock = clock();
- 		while ((clock() - start_clock) * 1000 / CLOCKS_PER_SEC <
- 				access_time_ms)
--			memset(regions[i], i, 1024 * 1024 * 10);
-+			memset(regions[i], i, sz_region);
- 	}
- 	return 0;
- }
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 8521238f5448e..bef3b4a36b750 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -2133,5 +2133,6 @@ const struct address_space_operations ntfs_aops = {
+ const struct address_space_operations ntfs_aops_cmpr = {
+ 	.read_folio	= ntfs_read_folio,
+ 	.readahead	= ntfs_readahead,
++	.dirty_folio	= block_dirty_folio,
+ };
+ // clang-format on
 -- 
 2.43.0
 
