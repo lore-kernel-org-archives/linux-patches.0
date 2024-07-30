@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AEA118801A;
-	Tue, 30 Jul 2024 16:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2D318801A;
+	Tue, 30 Jul 2024 16:57:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358661; cv=none; b=Vvbp5UTAjcIv1S03pW3UoaRnZO/OZ7GTf9sdmRaksm7psGCeDFW7VMOyHfnCcD+NEWgrLnK+Wk5s6SaKbghCZ85cdDPLiFwHwfujd135bmyMnYEEZ6L8pOO6irUP4BijLqi2W4eMYQCAuDNwZfvZRizDopsKiWauY0sd3eD8/bY=
+	t=1722358664; cv=none; b=VRhiveeBJc5XU1dyfrGV/RA1mqSKAy+T36Rmer0xhZN9vq3065fONmwuPvaYfdKtZWSkaDpiT6AnssksO5UQlKePXGFpl+U1ERuc2Zu7xZ+89xLAh1pgOV08EyRG6Y97+Zw/kxRNiaQ4cv86id/PXM/fOM+AU8LlWZvryyIS5H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358661; c=relaxed/simple;
-	bh=5KFz7BC5A5eghGGgmeLwh4kUwkszbGod5NwuZwhx3gI=;
+	s=arc-20240116; t=1722358664; c=relaxed/simple;
+	bh=h/QTKwqImn0KmAVWg1h7DxWoe3ZUNqN+5QxfjuxwsFc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XW/CiQzYkQ+mR/2szMvUMPr9G+qy46ld5DwZ5uHkScMYXdBjozOv4vjYNC6ynWom+t4hI/9Dza72jbyJdVjPEsolCK62u1Ip8ucHtu1wlVSaFjSoMDIvRbB6sYJqs9oPp5U58Luup0r1RJJ1+2ZBls/fSFCCA2VmpcCX41EteO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VIVLkEIJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DBpUEfwgCyNWkIi1cQPN1wPE/1et78i8/93LvmIXly2ddpvAwRV4jaxyQOS94+k8HvgSDvLSRVXwqK6NDt9IJ+AtVLgsJei3uUH/b4TIdK3Yrn8G3VfNIY2d5SfAB90pSVpoXLR8pBu9EvGrhPF7MDg5i89ywR0MqWP57lPNIeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PrAggOg0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VIVLkEIJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B89B3C32782;
-	Tue, 30 Jul 2024 16:57:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PrAggOg0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380BCC32782;
+	Tue, 30 Jul 2024 16:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358661;
-	bh=5KFz7BC5A5eghGGgmeLwh4kUwkszbGod5NwuZwhx3gI=;
+	s=korg; t=1722358664;
+	bh=h/QTKwqImn0KmAVWg1h7DxWoe3ZUNqN+5QxfjuxwsFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIVLkEIJOekuotm8SJt3FsN5ShyxPcFkHaPuYg7u2s4GIHOh3Wnqnqoupuczgro+1
-	 bYLQ/zAO7Yz94TFHCQIkJ3eR3nkd3iNmF/DXVe1XUEifSmDTN3cnjz9M5grL5TUPpv
-	 SfyqmSHdG5nhg+vKogBiCQZNrRmrz0xKb6e3PoBE=
+	b=PrAggOg0ei3+QbbttNJsPkfDvXssuEVVg2l1uMPc1ET8tprxHg91vs4kMMQPqWLkW
+	 vhzOW++ttFm66GvmxdrXQo0fsOwfRQNS7A/gmuSQDEcaX6ZtXG9Ut/oKUDvs6hviVl
+	 9JRjvzFA48aifJ6b54x+EN3HX2CK68TtAQDu0Oa4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Guillaume Nault <gnault@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Ben Hutchings <benh@debian.org>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 411/440] ipv4: Fix incorrect source address in Record Route option
-Date: Tue, 30 Jul 2024 17:50:44 +0200
-Message-ID: <20240730151631.846418343@linuxfoundation.org>
+Subject: [PATCH 6.10 371/809] ext4: dont track ranges in fast_commit if inode has inlined data
+Date: Tue, 30 Jul 2024 17:44:07 +0200
+Message-ID: <20240730151739.313958192@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,51 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-[ Upstream commit cc73bbab4b1fb8a4f53a24645871dafa5f81266a ]
+[ Upstream commit 7882b0187bbeb647967a7b5998ce4ad26ef68a9a ]
 
-The Record Route IP option records the addresses of the routers that
-routed the packet. In the case of forwarded packets, the kernel performs
-a route lookup via fib_lookup() and fills in the preferred source
-address of the matched route.
+When fast-commit needs to track ranges, it has to handle inodes that have
+inlined data in a different way because ext4_fc_write_inode_data(), in the
+actual commit path, will attempt to map the required blocks for the range.
+However, inodes that have inlined data will have it's data stored in
+inode->i_block and, eventually, in the extended attribute space.
 
-The lookup is performed with the DS field of the forwarded packet, but
-using the RT_TOS() macro which only masks one of the two ECN bits. If
-the packet is ECT(0) or CE, the matched route might be different than
-the route via which the packet was forwarded as the input path masks
-both of the ECN bits, resulting in the wrong address being filled in the
-Record Route option.
+Unfortunately, because fast commit doesn't currently support extended
+attributes, the solution is to mark this commit as ineligible.
 
-Fix by masking both of the ECN bits.
-
-Fixes: 8e36360ae876 ("ipv4: Remove route key identity dependencies in ip_rt_get_source().")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Link: https://patch.msgid.link/20240718123407.434778-1-idosch@nvidia.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1039883
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Tested-by: Ben Hutchings <benh@debian.org>
+Fixes: 9725958bb75c ("ext4: fast commit may miss tracking unwritten range during ftruncate")
+Link: https://patch.msgid.link/20240618144312.17786-1-luis.henriques@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/route.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/fast_commit.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index da193840fc007..fda88894d0205 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -1275,7 +1275,7 @@ void ip_rt_get_source(u8 *addr, struct sk_buff *skb, struct rtable *rt)
- 		struct flowi4 fl4 = {
- 			.daddr = iph->daddr,
- 			.saddr = iph->saddr,
--			.flowi4_tos = RT_TOS(iph->tos),
-+			.flowi4_tos = iph->tos & IPTOS_RT_MASK,
- 			.flowi4_oif = rt->dst.dev->ifindex,
- 			.flowi4_iif = skb->dev->ifindex,
- 			.flowi4_mark = skb->mark,
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index 87c009e0c59a5..d3a67bc06d109 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -649,6 +649,12 @@ void ext4_fc_track_range(handle_t *handle, struct inode *inode, ext4_lblk_t star
+ 	if (ext4_test_mount_flag(inode->i_sb, EXT4_MF_FC_INELIGIBLE))
+ 		return;
+ 
++	if (ext4_has_inline_data(inode)) {
++		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_XATTR,
++					handle);
++		return;
++	}
++
+ 	args.start = start;
+ 	args.end = end;
+ 
 -- 
 2.43.0
 
