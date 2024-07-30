@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1511A6190;
-	Tue, 30 Jul 2024 16:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AB9D1A6190;
+	Tue, 30 Jul 2024 16:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356736; cv=none; b=eoiRd6i4hhVlxMlvN1MYfxSyeS7D3VSMxk/dtWkRmBlCVeMoVwEZUSFaHy2kUcO4p2NQiCFiitrbpjd8moGP5KFbHRKggQKo0utqdy4kKl642moX4C8eoPqhPeyZVP3UYtFSuEesoszQBSjs+MVXjx+cFMt6ywVe/m1X6QMkEa0=
+	t=1722356739; cv=none; b=HCabPsrY7/mJKFzC6m0vhA93esFPJmed2feNbksKgTx+XrPtlzBRTAghng4fpyQCw4RYWkKf10gp7GENwztPijbhMl7stztKmpMnuN4us+JOkDqKMBFbzaUY8+H/eVtqC6LYmWjPuJ5iETtLxK9I8II/e5zK/N6H/zPs1Pq8boE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356736; c=relaxed/simple;
-	bh=r1KtwNsca5ZZYOAuXRcu0Q8tPPLj4ev4/JzmS5urC9k=;
+	s=arc-20240116; t=1722356739; c=relaxed/simple;
+	bh=hiPbXNUBqI+sZPWZ2r0Xfmhm198jhKnyFamvjVtXrHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EyNVpqWJnwDYPW8G67jmr3jqqY5uoLQjc0N5QEG+FsPp9G3YwmesMor73/QyI9A8zvUEPHeT4mBK9lz6V8uA1hesA30RVUcDungxrcsTG5NKsHpstw9JyJrk/y1PFq6sGYzYimwfuVPEunGUSxnKjK5CE2bMBU8m/E8aiF2+atE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paW46zKA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZxOcv/ugnYImN/TdAEBXp3yQeEnNSkVCDLqXRDTImEhlEt7hSxGPzs5GvhKQUxl2WOPjTlb95amGkTpPZZd8CzDmaFJGBkU2HxGSgNn1Yltf/mRGnxb7tE7kas680/0Zj4qzot397J6DSx+6DfVURjq/hyRI2WQhxwP5YzEgFs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hDMnQFON; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paW46zKA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16E0C32782;
-	Tue, 30 Jul 2024 16:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hDMnQFON"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149F6C32782;
+	Tue, 30 Jul 2024 16:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356736;
-	bh=r1KtwNsca5ZZYOAuXRcu0Q8tPPLj4ev4/JzmS5urC9k=;
+	s=korg; t=1722356739;
+	bh=hiPbXNUBqI+sZPWZ2r0Xfmhm198jhKnyFamvjVtXrHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paW46zKANNPu2sD85YsOBHQ3MuRBkknNijityv3jnIYg3P0pwpZd3c/nnBueWSSI/
-	 xL4MVbjYnO8/R0e5O/qhZNOIJ2wgEqQg1YxaI6xX1X5IYMPFsKVnJNfD55lTpHRjOY
-	 r5NVzO6yYvRWMpd6YNmQYdSY1XCj9f9wBYzxDTD8=
+	b=hDMnQFON8UQ7aqOFM8HKqfou0+5Yp3XlM6yhsbyiagPI1AtlQKP7H0NmYRnKHIW29
+	 7qCipypb8CkOizOOKbZW4edinZB/U4LBpey4BK7aNLdjw1He9lJBGGWSjwpcn2fHOM
+	 r08PrDRk+cM6UjiRmtPMdOm2fZAqTYBGc0IN6SyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Lennart Poettering <lennart@poettering.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 199/440] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
-Date: Tue, 30 Jul 2024 17:47:12 +0200
-Message-ID: <20240730151623.645721925@linuxfoundation.org>
+Subject: [PATCH 6.10 178/809] libbpf: keep FD_CLOEXEC flag when dup()ing FD
+Date: Tue, 30 Jul 2024 17:40:54 +0200
+Message-ID: <20240730151731.643294331@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,54 +47,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
+[ Upstream commit 531876c80004ecff7bfdbd8ba6c6b48835ef5e22 ]
 
-drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
-output may be truncated writing between 1 and 11 bytes into a region of
-size 5 [-Werror=format-truncation=]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                                          ^~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                               ^~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
-between 12 and 22 bytes into a destination of size 15
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+Make sure to preserve and/or enforce FD_CLOEXEC flag on duped FDs.
+Use dup3() with O_CLOEXEC flag for that.
 
-Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
-Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Without this fix libbpf effectively clears FD_CLOEXEC flag on each of BPF
+map/prog FD, which is definitely not the right or expected behavior.
+
+Reported-by: Lennart Poettering <lennart@poettering.net>
+Fixes: bc308d011ab8 ("libbpf: call dup2() syscall directly")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Link: https://lore.kernel.org/r/20240529223239.504241-1-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/lib/bpf/libbpf_internal.h | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
-index 111fa88a3be44..9a439569ffcf3 100644
---- a/drivers/infiniband/hw/mlx4/alias_GUID.c
-+++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
-@@ -829,7 +829,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
+diff --git a/tools/lib/bpf/libbpf_internal.h b/tools/lib/bpf/libbpf_internal.h
+index a0dcfb82e455d..7e7e686008c62 100644
+--- a/tools/lib/bpf/libbpf_internal.h
++++ b/tools/lib/bpf/libbpf_internal.h
+@@ -597,13 +597,9 @@ static inline int ensure_good_fd(int fd)
+ 	return fd;
+ }
  
- int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
+-static inline int sys_dup2(int oldfd, int newfd)
++static inline int sys_dup3(int oldfd, int newfd, int flags)
  {
--	char alias_wq_name[15];
-+	char alias_wq_name[22];
- 	int ret = 0;
- 	int i, j;
- 	union ib_gid gid;
+-#ifdef __NR_dup2
+-	return syscall(__NR_dup2, oldfd, newfd);
+-#else
+-	return syscall(__NR_dup3, oldfd, newfd, 0);
+-#endif
++	return syscall(__NR_dup3, oldfd, newfd, flags);
+ }
+ 
+ /* Point *fixed_fd* to the same file that *tmp_fd* points to.
+@@ -614,7 +610,7 @@ static inline int reuse_fd(int fixed_fd, int tmp_fd)
+ {
+ 	int err;
+ 
+-	err = sys_dup2(tmp_fd, fixed_fd);
++	err = sys_dup3(tmp_fd, fixed_fd, O_CLOEXEC);
+ 	err = err < 0 ? -errno : 0;
+ 	close(tmp_fd); /* clean up temporary FD */
+ 	return err;
 -- 
 2.43.0
 
