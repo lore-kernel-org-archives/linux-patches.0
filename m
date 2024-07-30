@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530681A6195;
-	Tue, 30 Jul 2024 16:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAB31A6195;
+	Tue, 30 Jul 2024 16:54:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358451; cv=none; b=GPiQhz+Wm8pp5PDQhEiolCetRPbbb25SI80zOiO3mpIfQzi9duGgUGX8kUYWtUVsHBNU2D5vmfjvLm5bPOa9NRDrOcPjyyPrbxdYpvR8yPTmD02BNObl5BTHhyG8leGKeJbE4JCEWjfIkOMtsMlL4cRt3Pvd2+bOHDgiBmEtvQM=
+	t=1722358454; cv=none; b=tlBv5KI/lVTD7n37yIlrUK8QdqgiIIWXN9IyJAUgz/eg3Di7oUOaBW+3j20W/1WYTUjixSl8FwynewWS60gB+u1EXwA0watvGRzKRh+JhWuc108pji77ay6OabkaMglIa1kvKCKgvgciXY08YgH6TZuS18W1OWPl3OeyQflXuZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358451; c=relaxed/simple;
-	bh=RI8b7cusEt5oNG50Ndco6yJGZoDvpMFxxVOivFPAI8c=;
+	s=arc-20240116; t=1722358454; c=relaxed/simple;
+	bh=QVP1rGPeJ3TdujJAA66te517+Pp4Ql9n3UEoIgVqbcI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inmKed1fxa4fb+HUTtAl0B8XlaFkEtjiZOQqfTEiOslbBSy1Ithmu+dCj0ej+lpRM3zmvj9wPglyBStlQcWv0y0vW7nhpN8rhL/PcJQVZfx7V5VN0pPkh7yhnatScnxBpvOwrGhOg4WVEhUQiQVIxpH+QC7FG3qjNpVKtKtE+u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgzwB3Kx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ehKU48O+s/HVO7LaF1ELBuJ5UFcZnnrSmIVS1BUEfgXthCClhBmEKLKS6HVgytVD7ijcd6aSnTe7aYHElBrXoqoNGaAbM5rTIScUxBMdzzuzHlYb7NHJP8O+iHK+qAXlOA/8Cp/kmwiFAUh3iSj9KyN1eU5BzgFmZftEfwlPE80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HJmx8uOx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgzwB3Kx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9375C32782;
-	Tue, 30 Jul 2024 16:54:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HJmx8uOx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22638C32782;
+	Tue, 30 Jul 2024 16:54:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358451;
-	bh=RI8b7cusEt5oNG50Ndco6yJGZoDvpMFxxVOivFPAI8c=;
+	s=korg; t=1722358454;
+	bh=QVP1rGPeJ3TdujJAA66te517+Pp4Ql9n3UEoIgVqbcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DgzwB3KxLAqhaEA1ty/5JFhwQtOBHOd+/9/o068hutiHN9/r5Su9+8sJKgWviG6j8
-	 KDmjpNBIhKfEIxHpJS+1+9YaB4wt49+9kKx8vYaLZmoeTBbr8BFHvJScXdDJktjjcR
-	 LWK07TUvWcK9ScVAUHISiqajOFcNOiv3Hu7j0fzY=
+	b=HJmx8uOxweRcD06dJ7hxAMJKykfVKNFS7dwtqMKsJf8JwzB+Q6kBnLDYm8U4qUv/1
+	 lnxMsQvxa+KRb1fACy+XRRMesCncG0mBQryQVgilGJty8n1QUsXYidw4TONrIXQRnY
+	 OBDx6o0eZ0iwc+yT5OA4xcVHx3WlJcQ6pUc5AIuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 348/809] drm/etnaviv: fix DMA direction handling for cached RW buffers
-Date: Tue, 30 Jul 2024 17:43:44 +0200
-Message-ID: <20240730151738.380461249@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.6 363/568] x86/efistub: Avoid returning EFI_SUCCESS on error
+Date: Tue, 30 Jul 2024 17:47:50 +0200
+Message-ID: <20240730151654.049948470@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +45,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 58979ad6330a70450ed78837be3095107d022ea9 ]
+commit fb318ca0a522295edd6d796fb987e99ec41f0ee5 upstream.
 
-The dma sync operation needs to be done with DMA_BIDIRECTIONAL when
-the BO is prepared for both read and write operations.
+The fail label is only used in a situation where the previous EFI API
+call succeeded, and so status will be set to EFI_SUCCESS. Fix this, by
+dropping the goto entirely, and call efi_exit() with the correct error
+code.
 
-Fixes: a8c21a5451d8 ("drm/etnaviv: add initial etnaviv DRM driver")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/libstub/x86-stub.c |    5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index 71a6d2b1c80f5..5c0c9d4e3be18 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -355,9 +355,11 @@ static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
+--- a/drivers/firmware/efi/libstub/x86-stub.c
++++ b/drivers/firmware/efi/libstub/x86-stub.c
+@@ -501,16 +501,13 @@ efi_status_t __efiapi efi_pe_entry(efi_h
+ 	/* Convert unicode cmdline to ascii */
+ 	cmdline_ptr = efi_convert_cmdline(image, &options_size);
+ 	if (!cmdline_ptr)
+-		goto fail;
++		efi_exit(handle, EFI_OUT_OF_RESOURCES);
  
- static inline enum dma_data_direction etnaviv_op_to_dma_dir(u32 op)
- {
--	if (op & ETNA_PREP_READ)
-+	op &= ETNA_PREP_READ | ETNA_PREP_WRITE;
-+
-+	if (op == ETNA_PREP_READ)
- 		return DMA_FROM_DEVICE;
--	else if (op & ETNA_PREP_WRITE)
-+	else if (op == ETNA_PREP_WRITE)
- 		return DMA_TO_DEVICE;
- 	else
- 		return DMA_BIDIRECTIONAL;
--- 
-2.43.0
-
+ 	efi_set_u64_split((unsigned long)cmdline_ptr, &hdr->cmd_line_ptr,
+ 			  &boot_params.ext_cmd_line_ptr);
+ 
+ 	efi_stub_entry(handle, sys_table_arg, &boot_params);
+ 	/* not reached */
+-
+-fail:
+-	efi_exit(handle, status);
+ }
+ 
+ static void add_e820ext(struct boot_params *params,
 
 
