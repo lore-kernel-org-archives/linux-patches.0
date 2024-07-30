@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90121B5831;
-	Tue, 30 Jul 2024 15:57:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AD2F1B583F;
+	Tue, 30 Jul 2024 15:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355041; cv=none; b=jdNgfpigDqqSaMBeh1KRFpUKa+Sse2rrtdzM1ev47zlLL2rDEnsev/tACltG5Im59mkxjK3SLjxEiZwxoQEu3iIbCPDDJWknMAH2oI8obSbDmzX7zzLe6njAvZCDIz0HbACpT7zlegk6xSn4ObP7U7U/wn1JPJdKEm6hBg6OhxM=
+	t=1722355044; cv=none; b=EhhItVU34h8IBUOvBphYyAABRfDsGL4Gp72IdYegnvhbH0uo4H67k2iTxUkyoq6OnHZxU7pwA0LOxus65JQbTgz8j1jc3UmawHQvnP6EMsww9QxTQ8PjjaW8cV9WMnHX58Os4KfSX8hVZ5RpwiuwB5L5OaFYqDon98xq3nGKCAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355041; c=relaxed/simple;
-	bh=Lx7Mpa9h1DnsYMwWsgpnun6UiW8wEt8Q2uRzTFmmgDY=;
+	s=arc-20240116; t=1722355044; c=relaxed/simple;
+	bh=SO+eOmCXb5zBXGi3RS1E7GwWSUhiPh1lNqH4iq0Lqjc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RUofJci8OXnyaaIFpn6UER+syg6RwshxWSoNs+tq7JdEsbpoEbcLbXfmK4LNtIL1qE0Z7t7uGyeGDUOnvXKp7TZRJb0Yys/tdOPsoaDlpg+8JymZ9dcWF2cc2j7GF1KebEy2oHG0p7Wq5Q/nfCGKPRP+Uo6kPLuio4SzlpvqdqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NDEKbTNJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cC1YYdlmfB3Cgv/TQCia+KrMQ3UBMWVbPHXj/HDrCtcfxGPY7oOCCcx0+F0i6eSB/UMc+rWmzt+pptk/XO+DDuQVxOQRXnle2sII2QnGMdxi+7MTvvDEgZkOjGgmzUCm7yLlLdQjlEIzJ6JtT8wUe+mi8O5VDx0S8ItR0Szptoc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CVaW6h9q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NDEKbTNJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72D1C32782;
-	Tue, 30 Jul 2024 15:57:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CVaW6h9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EE6C32782;
+	Tue, 30 Jul 2024 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355041;
-	bh=Lx7Mpa9h1DnsYMwWsgpnun6UiW8wEt8Q2uRzTFmmgDY=;
+	s=korg; t=1722355044;
+	bh=SO+eOmCXb5zBXGi3RS1E7GwWSUhiPh1lNqH4iq0Lqjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDEKbTNJzRi9hmXokaY8H7ZKGTsjDMywOTmcdsKEifzHrODemdz+5JvlIRFDXsF0P
-	 87V1GWyiyUnGmBie/vuJCpLPXa3jB55aubIgK9bPeaGWike0ElAw8SY87+9Gk+DyN1
-	 +y9KeTZbNkgW2UCyGEOwkFLih6QPcWYnrwXs+Ay8=
+	b=CVaW6h9qDoFL0v89G3Wbkmxd8WDruCtnxPRRBVI/gbwMSGBLjsJ0XmLi8m/U414Ly
+	 05WquykOCAhcUldmwrltDUJwThEH/1NRlrrIJXadyUcTxhxtY13rMN6li+gJC6ZAgO
+	 ZhC7cD0t1q335XCYAviTyMXkLSVimQ80zH9R8xog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+	Michael Walle <mwalle@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 014/809] cgroup/cpuset: Optimize isolated partition only generate_sched_domains() calls
-Date: Tue, 30 Jul 2024 17:38:10 +0200
-Message-ID: <20240730151725.222060259@linuxfoundation.org>
+Subject: [PATCH 6.1 053/440] ARM: dts: imx6qdl-kontron-samx6i: fix PHY reset
+Date: Tue, 30 Jul 2024 17:44:46 +0200
+Message-ID: <20240730151617.833966921@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit 1805c1729f52edaa021288473b09f9c7f74fb1ca ]
+[ Upstream commit edfea889a049abe80f0d55c0365bf60fbade272f ]
 
-If only isolated partitions are being created underneath the cgroup root,
-there will only be one sched domain with top_cpuset.effective_cpus. We can
-skip the unnecessary sched domains scanning code and save some cycles.
+The PHY reset line is connected to both the SoC (GPIO1_25) and
+the CPLD. We must not use the GPIO1_25 as it will drive against
+the output buffer of the CPLD. Instead there is another GPIO
+(GPIO2_01), an input to the CPLD, which will tell the CPLD to
+assert the PHY reset line.
 
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: ccac8e8de99c ("cgroup/cpuset: Fix remote root partition creation problem")
+Fixes: 2a51f9dae13d ("ARM: dts: imx6qdl-kontron-samx6i: Add iMX6-based Kontron SMARC-sAMX6i module")
+Fixes: 5694eed98cca ("ARM: dts: imx6qdl-kontron-samx6i: move phy reset into phy-node")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index c12b9fdb22a4e..73ab45b04c000 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -964,6 +964,7 @@ static int generate_sched_domains(cpumask_var_t **domains,
+diff --git a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
+index d8c1dfb8c9abb..d6c049b9a9c69 100644
+--- a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
+@@ -269,7 +269,7 @@ mdio {
+ 		ethphy: ethernet-phy@1 {
+ 			compatible = "ethernet-phy-ieee802.3-c22";
+ 			reg = <1>;
+-			reset-gpios = <&gpio1 25 GPIO_ACTIVE_LOW>;
++			reset-gpios = <&gpio2 1 GPIO_ACTIVE_LOW>;
+ 			reset-assert-us = <1000>;
+ 		};
+ 	};
+@@ -516,7 +516,7 @@ MX6QDL_PAD_RGMII_RX_CTL__RGMII_RX_CTL 0x1b0b0
+ 			MX6QDL_PAD_ENET_MDIO__ENET_MDIO       0x1b0b0
+ 			MX6QDL_PAD_ENET_MDC__ENET_MDC         0x1b0b0
+ 			MX6QDL_PAD_ENET_REF_CLK__ENET_TX_CLK  0x1b0b0
+-			MX6QDL_PAD_ENET_CRS_DV__GPIO1_IO25    0x1b0b0 /* RST_GBE0_PHY# */
++			MX6QDL_PAD_NANDF_D1__GPIO2_IO01       0x1b0b0 /* RST_GBE0_PHY# */
+ 		>;
+ 	};
  
- 	/* Special case for the 99% of systems with one, full, sched domain */
- 	if (root_load_balance && !top_cpuset.nr_subparts) {
-+single_root_domain:
- 		ndoms = 1;
- 		doms = alloc_sched_domains(ndoms);
- 		if (!doms)
-@@ -1022,6 +1023,13 @@ static int generate_sched_domains(cpumask_var_t **domains,
- 	}
- 	rcu_read_unlock();
- 
-+	/*
-+	 * If there are only isolated partitions underneath the cgroup root,
-+	 * we can optimize out unneeded sched domains scanning.
-+	 */
-+	if (root_load_balance && (csn == 1))
-+		goto single_root_domain;
-+
- 	for (i = 0; i < csn; i++)
- 		csa[i]->pn = i;
- 	ndoms = csn;
 -- 
 2.43.0
 
