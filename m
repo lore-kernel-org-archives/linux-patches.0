@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ABE51A76B4;
-	Tue, 30 Jul 2024 17:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 664901A76BA;
+	Tue, 30 Jul 2024 17:26:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360363; cv=none; b=IfgHypgyH0l5JOiaTZbuPMlsyXAbstvFR4OcWzTYxVjejuEqfub9+SihFAmL6KhVO/BY1VaX3ZoOzYHYoEoC26zA08web72XEfGpNZguIFlo6LCafSUTvnTUVjXIIGmIYawSb0fclOyCXR05TR3dGGxS2e/CcUTFjO0k0N20f6Q=
+	t=1722360366; cv=none; b=IypgwZBvk8/UM//dI9vK0x9JdER5deRDFgn9qbtgUh/ene0l4wd5n75CW+86cnhSYn+70EcJ8LnSm/wD3XvFxdTJ5m8JPSDKT2oD2diz7FPGPJjVhBOfhGn4GiENlw9IYQtAlGeYSEQcYwY2ayanDvL9+iuH2xgnvPERjtMv7mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360363; c=relaxed/simple;
-	bh=6D4gTQXbLee/VikLGjTd9GLI+CgP8shYVGX2obqWX1E=;
+	s=arc-20240116; t=1722360366; c=relaxed/simple;
+	bh=WPKffu0ibB/7NUGxrEHGxwNdTiiQQZfVtgJzEIlrAAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B/NC++8FQvfDllWztAaoE3etnpDnU6zfyh1Pz6LVseoqsIgBkh44LBPor8MoX0PfVSOPlU6clf7cFMx4m0MtZ5YnRSRgs5kOA5puniNl0wWZJunTAGHiwmh0EC4U+I+m940vT7wT23cu17+BIXEd89I63sUTyXGBzpv06voLKaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A/XuaCKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FWdLmiBjikUCiG66Th7bKtQOa1koNtyNEZ5HH7S2j27Ou7JvA1Mfwnrj6yrV/PDEzjDU671EOdfTqHvmN39crSaeCf69L0nflpvJ4nrPZwA6sOOS9g6plSgmfQjY01RO+sgQ2yJ+zfq0zJdS9Wtf71p1zxeRtshahosa0oXqmi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MB9Fk682; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A/XuaCKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A750DC32782;
-	Tue, 30 Jul 2024 17:26:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MB9Fk682"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3694C32782;
+	Tue, 30 Jul 2024 17:26:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360363;
-	bh=6D4gTQXbLee/VikLGjTd9GLI+CgP8shYVGX2obqWX1E=;
+	s=korg; t=1722360366;
+	bh=WPKffu0ibB/7NUGxrEHGxwNdTiiQQZfVtgJzEIlrAAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A/XuaCKMYlbD5bcoqdlSHC/rG3rjljpWC+u//eklIQkHSAyuLuWNmREUl6aQqkTWn
-	 gPfutQG4qOB45nODpmLANBIvXDEERHGBtKPUZhOeKMdU5kLS6naQNrnEDMHj0MNRHH
-	 aKlP/tFfbPOjWsV7KcrbKybWaWqq/2y3L+djj97Y=
+	b=MB9Fk6821GO2WOb0h2RuaYHPtUZvjwXYr5gGYTaS/8N252sxF4cHd8jtq0Wa9A5wH
+	 57l2ErdO48+SoUqs3Qymo3HtXi99VFRQnWfktfr/Rvnuwcy60AS07oVw6G/EkzhMzv
+	 7vbaARU6XeasMXdIhC4JuUnd7l63nfjZRekDRnRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zijun Hu <quic_zijuhu@quicinc.com>
-Subject: [PATCH 6.10 676/809] devres: Fix memory leakage caused by driver API devm_free_percpu()
-Date: Tue, 30 Jul 2024 17:49:12 +0200
-Message-ID: <20240730151751.603986620@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.10 677/809] irqdomain: Fixed unbalanced fwnode get and put
+Date: Tue, 30 Jul 2024 17:49:13 +0200
+Message-ID: <20240730151751.643516823@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -49,37 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zijun Hu <quic_zijuhu@quicinc.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit bd50a974097bb82d52a458bd3ee39fb723129a0c upstream.
+commit 6ce3e98184b625d2870991880bf9586ded7ea7f9 upstream.
 
-It will cause memory leakage when use driver API devm_free_percpu()
-to free memory allocated by devm_alloc_percpu(), fixed by using
-devres_release() instead of devres_destroy() within devm_free_percpu().
+fwnode_handle_get(fwnode) is called when a domain is created with fwnode
+passed as a function parameter. fwnode_handle_put(domain->fwnode) is called
+when the domain is destroyed but during the creation a path exists that
+does not set domain->fwnode.
 
-Fixes: ff86aae3b411 ("devres: add devm_alloc_percpu()")
+If this path is taken, the fwnode get will never be put.
+
+To avoid the unbalanced get and put, set domain->fwnode unconditionally.
+
+Fixes: d59f6617eef0 ("genirq: Allow fwnode to carry name information only")
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
-Link: https://lore.kernel.org/r/1719931914-19035-3-git-send-email-quic_zijuhu@quicinc.com
+Link: https://lore.kernel.org/r/20240614173232.1184015-4-herve.codina@bootlin.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/devres.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/irq/irqdomain.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/base/devres.c
-+++ b/drivers/base/devres.c
-@@ -1225,7 +1225,11 @@ EXPORT_SYMBOL_GPL(__devm_alloc_percpu);
-  */
- void devm_free_percpu(struct device *dev, void __percpu *pdata)
- {
--	WARN_ON(devres_destroy(dev, devm_percpu_release, devm_percpu_match,
-+	/*
-+	 * Use devres_release() to prevent memory leakage as
-+	 * devm_free_pages() does.
-+	 */
-+	WARN_ON(devres_release(dev, devm_percpu_release, devm_percpu_match,
- 			       (__force void *)pdata));
- }
- EXPORT_SYMBOL_GPL(devm_free_percpu);
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -155,7 +155,6 @@ static struct irq_domain *__irq_domain_c
+ 		switch (fwid->type) {
+ 		case IRQCHIP_FWNODE_NAMED:
+ 		case IRQCHIP_FWNODE_NAMED_ID:
+-			domain->fwnode = fwnode;
+ 			domain->name = kstrdup(fwid->name, GFP_KERNEL);
+ 			if (!domain->name) {
+ 				kfree(domain);
+@@ -164,7 +163,6 @@ static struct irq_domain *__irq_domain_c
+ 			domain->flags |= IRQ_DOMAIN_NAME_ALLOCATED;
+ 			break;
+ 		default:
+-			domain->fwnode = fwnode;
+ 			domain->name = fwid->name;
+ 			break;
+ 		}
+@@ -184,7 +182,6 @@ static struct irq_domain *__irq_domain_c
+ 		}
+ 
+ 		domain->name = strreplace(name, '/', ':');
+-		domain->fwnode = fwnode;
+ 		domain->flags |= IRQ_DOMAIN_NAME_ALLOCATED;
+ 	}
+ 
+@@ -200,8 +197,8 @@ static struct irq_domain *__irq_domain_c
+ 		domain->flags |= IRQ_DOMAIN_NAME_ALLOCATED;
+ 	}
+ 
+-	fwnode_handle_get(fwnode);
+-	fwnode_dev_initialized(fwnode, true);
++	domain->fwnode = fwnode_handle_get(fwnode);
++	fwnode_dev_initialized(domain->fwnode, true);
+ 
+ 	/* Fill structure */
+ 	INIT_RADIX_TREE(&domain->revmap_tree, GFP_KERNEL);
 
 
