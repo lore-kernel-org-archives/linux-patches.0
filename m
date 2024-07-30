@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21972154C0C;
-	Tue, 30 Jul 2024 16:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9FE189907;
+	Tue, 30 Jul 2024 16:45:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357902; cv=none; b=Uc9jtMSJxJMd7AYquJmUgsQiZTzBi0zYs0UAGb9ImodWaTCArjregrmd/63fg0n0bub3ojwMopD54kqT6uezfHpbKtRzUnyDQV0Rutg8WrC9ThFhCfbqviOEqyTSSxbdsqbS/7TZaEZvWDppU9suHvxmQo5gK8G1ni0EFn7XWzw=
+	t=1722357905; cv=none; b=lg4v8brPDA5GrWHQnoVRoUuJUJ8LJ0FYCIrrf3JM7EVSZrvShph+kalXgnIis6kswIfKxz2jY8pIYrCm7mVMSVuUmtM4N4sFPmnsQklWhT3mfmGW5cfXBcTQnTXf0k32nRyzjzA8+x2Oiz2tBPB70+C05cPLcyX3gkY0JPCxaNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357902; c=relaxed/simple;
-	bh=Fr2IXoE/fnLQ8QAx6XMtp8LcSWayTR7u7s7RtEKIOWI=;
+	s=arc-20240116; t=1722357905; c=relaxed/simple;
+	bh=1lN5SRC3VE74B2XgwLd1wDXBR4k2EB2B+A1KotlULto=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ee1jqD3azWmaFhjl/d2zgMMe+83zH0S9LU2gCEH7aD+6OlzaFUqHiu4mHYvzUBoot5yNj0jJK0Z6vFwk/+A+nYfQJRWaPJgo9/tODj3Mz7qiHe4vqqR+TD0wx3SHKkcGcdSkJY2WDuX+HzWGQuS87itMcCfqxaaovdJSMWd1ot8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UV2uoSaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sty4C68V3rnBoqqEES9S5uF/wOCH2qz1hryLIQabX8RfGhf8XfEVkXsFEvJutWRUtVMrZpYLAZt5dh/m80IyjdcZ+Yk53Wnn13FMARaLDOb1t7UXo7EsFpED5kbT73M7wudufLRtmfUC13FreFYyHPiv7/dSEoDNJFJdstKmtHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThRmito+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UV2uoSaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96CF5C32782;
-	Tue, 30 Jul 2024 16:45:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThRmito+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCC2C32782;
+	Tue, 30 Jul 2024 16:45:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357902;
-	bh=Fr2IXoE/fnLQ8QAx6XMtp8LcSWayTR7u7s7RtEKIOWI=;
+	s=korg; t=1722357905;
+	bh=1lN5SRC3VE74B2XgwLd1wDXBR4k2EB2B+A1KotlULto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UV2uoSaPQ6h3QZ6FV0d/nnqC6Olob3mG2r1ATMeF5sfTxwZShOhN5ZfMll2IC2mVN
-	 8AvtXuq0HVpNjvb59n24JTKpfe8/vCX6APghTQjnTFJIrmfxJ56Oj0qibpHCybAi38
-	 EtXTFOlAFeV2Re6rCL1CR+Sc9Edebuw81jpdPHqQ=
+	b=ThRmito+hGr4RW9mymmeM9xdORRlPiOiodPt4qhpGtE9hG8NfYv3PO1RW4ser6+/h
+	 5TgXzfJwSHFqbEOPY3b3tVwPQEgAQH7imWYXKOcoqPEYF/SLYp1Xp0gwahpANZ+/00
+	 nz4M0gUoMZ3naXwuT7Rb6sAIxcSUHhOpAJ8QFqeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Adam Ford <aford173@gmail.com>,
+	Frieder Schrempf <frieder.schrempf@kontron.de>,
+	Marek Vasut <marex@denx.de>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Robert Foss <rfoss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 302/568] RDMA/hns: Fix shift-out-bounds when max_inline_data is 0
-Date: Tue, 30 Jul 2024 17:46:49 +0200
-Message-ID: <20240730151651.679198080@linuxfoundation.org>
+Subject: [PATCH 6.10 303/809] drm/bridge: samsung-dsim: Set P divider based on min/max of fin pll
+Date: Tue, 30 Jul 2024 17:42:59 +0200
+Message-ID: <20240730151736.560447186@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,85 +50,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 24c6291346d98c7ece4f4bfeb5733bec1d6c7b4f ]
+[ Upstream commit 78c4c0011bb577a29906d8ca135795af2293c49e ]
 
-A shift-out-bounds may occur, if the max_inline_data has not been set.
+The P divider should be set based on the min and max values of
+the fin pll which may vary between different platforms.
+These ranges are defined per platform, but hard-coded values
+were used instead which resulted in a smaller range available
+on the i.MX8M[MNP] than what was possible.
 
-The related log:
-UBSAN: shift-out-of-bounds in kernel/include/linux/log2.h:57:13
-shift exponent 64 is too large for 64-bit type 'long unsigned int'
-Call trace:
- dump_backtrace+0xb0/0x118
- show_stack+0x20/0x38
- dump_stack_lvl+0xbc/0x120
- dump_stack+0x1c/0x28
- __ubsan_handle_shift_out_of_bounds+0x104/0x240
- set_ext_sge_param+0x40c/0x420 [hns_roce_hw_v2]
- hns_roce_create_qp+0xf48/0x1c40 [hns_roce_hw_v2]
- create_qp.part.0+0x294/0x3c0
- ib_create_qp_kernel+0x7c/0x150
- create_mad_qp+0x11c/0x1e0
- ib_mad_init_device+0x834/0xc88
- add_client_context+0x248/0x318
- enable_device_and_get+0x158/0x280
- ib_register_device+0x4ac/0x610
- hns_roce_init+0x890/0xf98 [hns_roce_hw_v2]
- __hns_roce_hw_v2_init_instance+0x398/0x720 [hns_roce_hw_v2]
- hns_roce_hw_v2_init_instance+0x108/0x1e0 [hns_roce_hw_v2]
- hclge_init_roce_client_instance+0x1a0/0x358 [hclge]
- hclge_init_client_instance+0xa0/0x508 [hclge]
- hnae3_register_client+0x18c/0x210 [hnae3]
- hns_roce_hw_v2_init+0x28/0xff8 [hns_roce_hw_v2]
- do_one_initcall+0xe0/0x510
- do_init_module+0x110/0x370
- load_module+0x2c6c/0x2f20
- init_module_from_file+0xe0/0x140
- idempotent_init_module+0x24c/0x350
- __arm64_sys_finit_module+0x88/0xf8
- invoke_syscall+0x68/0x1a0
- el0_svc_common.constprop.0+0x11c/0x150
- do_el0_svc+0x38/0x50
- el0_svc+0x50/0xa0
- el0t_64_sync_handler+0xc0/0xc8
- el0t_64_sync+0x1a4/0x1a8
+As noted by Frieder, there are descripencies between the reference
+manuals of the Mini, Nano and Plus, so I reached out to my NXP
+rep and got the following response regarding the varing notes
+in the documentation.
 
-Fixes: 0c5e259b06a8 ("RDMA/hns: Fix incorrect sge nums calculation")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240710133705.896445-6-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+"Yes it is definitely wrong, the one that is part of the NOTE in
+MIPI_DPHY_M_PLLPMS register table against PMS_P, PMS_M and PMS_S is
+not correct. I will report this to Doc team, the one customer should
+be take into account is the Table 13-40 DPHY PLL Parameters and the
+Note above."
+
+With this patch, the clock rates now match the values used in NXP's
+downstream kernel.
+
+Fixes: 846307185f0f ("drm/bridge: samsung-dsim: update PLL reference clock")
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Robert Foss <rfoss@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240601144103.198299-1-aford173@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_qp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/samsung-dsim.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_qp.c b/drivers/infiniband/hw/hns/hns_roce_qp.c
-index 828b58534aa97..bff00b3af41fb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_qp.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_qp.c
-@@ -531,13 +531,15 @@ static unsigned int get_sge_num_from_max_inl_data(bool is_ud_or_gsi,
- {
- 	unsigned int inline_sge;
+diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
+index 95fedc68b0ae5..8476650c477c2 100644
+--- a/drivers/gpu/drm/bridge/samsung-dsim.c
++++ b/drivers/gpu/drm/bridge/samsung-dsim.c
+@@ -574,8 +574,8 @@ static unsigned long samsung_dsim_pll_find_pms(struct samsung_dsim *dsi,
+ 	u16 _m, best_m;
+ 	u8 _s, best_s;
  
--	inline_sge = roundup_pow_of_two(max_inline_data) / HNS_ROCE_SGE_SIZE;
-+	if (!max_inline_data)
-+		return 0;
+-	p_min = DIV_ROUND_UP(fin, (12 * MHZ));
+-	p_max = fin / (6 * MHZ);
++	p_min = DIV_ROUND_UP(fin, (driver_data->pll_fin_max * MHZ));
++	p_max = fin / (driver_data->pll_fin_min * MHZ);
  
- 	/*
- 	 * if max_inline_data less than
- 	 * HNS_ROCE_SGE_IN_WQE * HNS_ROCE_SGE_SIZE,
- 	 * In addition to ud's mode, no need to extend sge.
- 	 */
-+	inline_sge = roundup_pow_of_two(max_inline_data) / HNS_ROCE_SGE_SIZE;
- 	if (!is_ud_or_gsi && inline_sge <= HNS_ROCE_SGE_IN_WQE)
- 		inline_sge = 0;
- 
+ 	for (_p = p_min; _p <= p_max; ++_p) {
+ 		for (_s = 0; _s <= 5; ++_s) {
 -- 
 2.43.0
 
