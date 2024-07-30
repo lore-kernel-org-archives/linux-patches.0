@@ -1,46 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DD01A76B7;
-	Tue, 30 Jul 2024 17:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCAFC189502;
+	Tue, 30 Jul 2024 17:14:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359680; cv=none; b=MnZ0yXUg1V7Xaov5NPHJHpKyHWgSQXIR1UKogGbySX86hWLQHbatnk/jgGEDhZDbOZFEFIdTbUhzFKBfRmYlt5WvlGOu/aaJ70Eag/B9/yxwGcT2rZPUOsrN5R5/nnL1wuBGSkkwcn45UxjQXc/3DO/FDCPxPY2PJHAh4hc33PI=
+	t=1722359684; cv=none; b=ko5Nig9qKNF/waJMUydEbiZr8nXsEqIv5AXM3BRee+MLV61UPEKM5JVDnfQCBKw/EaoLDoMD5xWOsSnML36eX95uTjgOWNRZNFBnT/AStfkwgD+o4zYJwkX124ReU/j7ogNTrRHZSPA33btL25gXZOUEIq6LexbpkqcYj6tU7wk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359680; c=relaxed/simple;
-	bh=Ptk/tzmgiduHhQWLE+TI3JueN+mzAqSEEp4GQTFqLjQ=;
+	s=arc-20240116; t=1722359684; c=relaxed/simple;
+	bh=lU71u0NM1enL484wunKN/FIjWlOMqFJI1VgqF/8i5Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7l2Mu23775DLp05YyeuDsbIkp1oneXklE6GQA2Bsd2yLmZxtuDsqGvNE8v3EEL8te92+bGvNMndqASKG6Jfgs30a9T1EUJDCfIjPknVO2M16ULlVrbSs4TkR++CVrckv5JYX/RGYh1eOZso+pkCtcBkZ2G0cYz9ofMPEWf0His=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kaEaFeSg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n53XjJIDNYnSvGPLvg4U0OtBamgdQCskJTjvi77L8ujgKCu1Fzb9R0mjh53C2Q+Md1rdIJM4kXvZPOZ4n2DDwWywOTJHziIvIs8WvOCdehHmt9HBWPRW226zo2G/p9OVL/u34WKim3hkF4mYDDOCfIQXBviGwoWlBn4yCgtjlKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x0HMQG6G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kaEaFeSg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CD2DC32782;
-	Tue, 30 Jul 2024 17:14:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x0HMQG6G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B23EC4AF0C;
+	Tue, 30 Jul 2024 17:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359680;
-	bh=Ptk/tzmgiduHhQWLE+TI3JueN+mzAqSEEp4GQTFqLjQ=;
+	s=korg; t=1722359683;
+	bh=lU71u0NM1enL484wunKN/FIjWlOMqFJI1VgqF/8i5Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kaEaFeSgTzqtBS73tODuYfWqnI9pTmjHwK6ztrehGA1qVYzDgE/9lyPZjLBDvqB4h
-	 7dcM8p2ArqaUlyPgK2XiOnMKOMfMXcAzlcZc4014eabN5zxvRUtECF6j4QtcFfP8lx
-	 95M+J+7RR8fvnvAmTY3jQ5DRxLY+hjZhP+DURXg8=
+	b=x0HMQG6GH39u+nFJd3OTA9KKrMQhLTS1OQU5TVNaY9mnC8HpuYMLCtAiUsoEWA1mv
+	 MGSzm/xKrVvrhIQe6Ilr+84C2uB2x0eLLflCqTkx2LjSnVCa7OZSrCnuyQgrxd8ZI5
+	 WgpQ9cSuSYb4mJwxAv/kd//dZc3WJmyleOaaqEYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Oscar Salvador <osalvador@suse.de>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 518/809] powerpc/8xx: fix size given to set_huge_pte_at()
-Date: Tue, 30 Jul 2024 17:46:34 +0200
-Message-ID: <20240730151745.199494043@linuxfoundation.org>
+Subject: [PATCH 6.6 522/568] um: time-travel: fix time-travel-start option
+Date: Tue, 30 Jul 2024 17:50:29 +0200
+Message-ID: <20240730151700.558643317@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,45 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 7ea981070fd9ec24bc0111636038193aebb0289c ]
+[ Upstream commit 7d0a8a490aa3a2a82de8826aaf1dfa38575cb77a ]
 
-set_huge_pte_at() expects the size of the hugepage as an int, not the
-psize which is the index of the page definition in table mmu_psize_defs[]
+We need to have the = as part of the option so that the
+value can be parsed properly. Also document that it must
+be given in nanoseconds, not seconds.
 
-Link: https://lkml.kernel.org/r/97f2090011e25d99b6b0aae73e22e1b921c5d1fb.1719928057.git.christophe.leroy@csgroup.eu
-Fixes: 935d4f0c6dc8 ("mm: hugetlb: add huge page size param to set_huge_pte_at()")
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 065038706f77 ("um: Support time travel mode")
+Link: https://patch.msgid.link/20240417102744.14b9a9d4eba0.Ib22e9136513126b2099d932650f55f193120cd97@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/nohash/8xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/um/kernel/time.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/mm/nohash/8xx.c b/arch/powerpc/mm/nohash/8xx.c
-index 43d4842bb1c7a..d93433e26dedb 100644
---- a/arch/powerpc/mm/nohash/8xx.c
-+++ b/arch/powerpc/mm/nohash/8xx.c
-@@ -94,7 +94,8 @@ static int __ref __early_map_kernel_hugepage(unsigned long va, phys_addr_t pa,
- 		return -EINVAL;
- 
- 	set_huge_pte_at(&init_mm, va, ptep,
--			pte_mkhuge(pfn_pte(pa >> PAGE_SHIFT, prot)), psize);
-+			pte_mkhuge(pfn_pte(pa >> PAGE_SHIFT, prot)),
-+			1UL << mmu_psize_to_shift(psize));
- 
- 	return 0;
+diff --git a/arch/um/kernel/time.c b/arch/um/kernel/time.c
+index 3e270da6b6f67..c8c4ef94c753f 100644
+--- a/arch/um/kernel/time.c
++++ b/arch/um/kernel/time.c
+@@ -874,9 +874,9 @@ int setup_time_travel_start(char *str)
+ 	return 1;
  }
+ 
+-__setup("time-travel-start", setup_time_travel_start);
++__setup("time-travel-start=", setup_time_travel_start);
+ __uml_help(setup_time_travel_start,
+-"time-travel-start=<seconds>\n"
++"time-travel-start=<nanoseconds>\n"
+ "Configure the UML instance's wall clock to start at this value rather than\n"
+ "the host's wall clock at the time of UML boot.\n");
+ #endif
 -- 
 2.43.0
 
