@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCD71E86F;
-	Tue, 30 Jul 2024 17:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EE81E86F;
+	Tue, 30 Jul 2024 17:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359143; cv=none; b=bWQW5nTpYKImlYTzhKMMl7eLpbOgfe6gT4a01Gk+qr/mH8rAjnqtd4WW6i07QnOG+d5ZujEF5F58ly1hwrDk1DZRX7dftmLM2O7Ep7lZqUSFnBHAxX9h6S3X5n0JjgavD4YJVkMtTLp9CatxL74p2q6EvEkKFrIennjJpJDTUsI=
+	t=1722359146; cv=none; b=iueG0UiMNBq+VJq+ZnyQ3ByK/ARwU9AqSAUkNh9OQ+gGB9rlfjSos0rZdkEiTxjz1h2I4ezWqXM4Eaw1TXDvcsgYyL8wTD5QGlRlJqSkDD2sJDqxWs96abOfnOZYpsDDUmsh2nxaOCUG6JZsVzO7fYOkRhYfDLhHN2UPpoYvBcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359143; c=relaxed/simple;
-	bh=Fm5NsUkbYtcVtH1C2B2zgKSC545EJro4SeJ+bkRyfxw=;
+	s=arc-20240116; t=1722359146; c=relaxed/simple;
+	bh=/9n9gx1sel7kvmRxjClr6YClerXXAgk8B06kp2fXC1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaorbZ/FrfWSR16CA65/UBSwiVBGBsZxIQZv7+kcwyQV3fJI/VJvfF2+Ou2LWaP75Ah4GUrRyAFcWOmCxqqQ7y7Kn9mqlcElCnBeA5ZKnzSvIqsovv9nfTUB3/q2cQIEcyZ/nKiiWTBo59dN95qM+3Y4UwVQR069+hkc/oL0lUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LobD7arE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u0zoLmlmMm9cU9daBg13RsH5F2l6DA+3AF3LUmommgoeB+7q2mhiMIzsLKOwWcADx+nUE9G6JOwYCVgMq4m+Uj+A4PO9sOQe6cAebgMwpwDGUOwM79CHqh/8afr6EAnEUMfyZVldrFhV3skYiPHyf2G3WZcQLVaPESlhEFpTqzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yue6gxpQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LobD7arE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304A8C32782;
-	Tue, 30 Jul 2024 17:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yue6gxpQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B1AC32782;
+	Tue, 30 Jul 2024 17:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359142;
-	bh=Fm5NsUkbYtcVtH1C2B2zgKSC545EJro4SeJ+bkRyfxw=;
+	s=korg; t=1722359145;
+	bh=/9n9gx1sel7kvmRxjClr6YClerXXAgk8B06kp2fXC1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LobD7arEx3WtrIN57b327LEW72iGPGEfREiO9ZOt6kfwIk0BvZHS/5c8Pk05Kwh29
-	 2VxcpnKhbN4zxrSkni8jmlRhGT89IUCCZYEGzmsYJoD5+Wr5VIoXQmXHV1C9vNWyFU
-	 x+YIi3GnFukBa+TErvbVS0iCun6D8BEuLHZnWnOI=
+	b=yue6gxpQrvfLS4mVjE9DWHBNTgULZKr58PVNxKkuN/Lp1amuwzO59urhlYY2bx7yg
+	 kAQDjst7t94jwwuGSZZN2giWzurb55wQG/vP9bsJ1SWkuzkflt4Ap6hg3pCs2wydBi
+	 2moRZq/3LWQLN2W5Ht3bgqSNmKPYwYsLINSmGj8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Georgi Djakov <djakov@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 417/809] interconnect: qcom: qcm2290: Fix mas_snoc_bimc RPM master ID
-Date: Tue, 30 Jul 2024 17:44:53 +0200
-Message-ID: <20240730151741.166452356@linuxfoundation.org>
+Subject: [PATCH 6.10 412/809] clk: qcom: gpucc-sm8350: Park RCGs clk source at XO during disable
+Date: Tue, 30 Jul 2024 17:44:48 +0200
+Message-ID: <20240730151740.963766050@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,37 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit cd5ce4589081190281cc2537301edd4275fe55eb ]
+[ Upstream commit 313e2909023bef36ef7b6d1d9ff2d98febcaa28d ]
 
-The value was wrong, resulting in misprogramming of the hardware.
-Fix it.
+The RCG's clk src has to be parked at XO while disabling as per the
+HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
 
-Fixes: 1a14b1ac3935 ("interconnect: qcom: Add QCM2290 driver support")
-Reported-by: Stephan Gerhold <stephan@gerhold.net>
-Closes: https://lore.kernel.org/linux-arm-msm/ZgMs_xZVzWH5uK-v@gerhold.net/
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240618-topic-2290_icc_2-v1-1-64446888a133@linaro.org
-Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Fixes: 160758b05ab1 ("clk: qcom: add support for SM8350 GPUCC")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
+Link: https://lore.kernel.org/r/20240621-sm8350-gpucc-fixes-v1-1-22db60c7c5d3@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/interconnect/qcom/qcm2290.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gpucc-sm8350.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/qcm2290.c b/drivers/interconnect/qcom/qcm2290.c
-index ba4cc08684d63..ccbdc6202c07a 100644
---- a/drivers/interconnect/qcom/qcm2290.c
-+++ b/drivers/interconnect/qcom/qcm2290.c
-@@ -166,7 +166,7 @@ static struct qcom_icc_node mas_snoc_bimc = {
- 	.qos.ap_owned = true,
- 	.qos.qos_port = 6,
- 	.qos.qos_mode = NOC_QOS_MODE_BYPASS,
--	.mas_rpm_id = 164,
-+	.mas_rpm_id = 3,
- 	.slv_rpm_id = -1,
- 	.num_links = ARRAY_SIZE(mas_snoc_bimc_links),
- 	.links = mas_snoc_bimc_links,
+diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
+index 38505d1388b67..8d9dcff40dd0b 100644
+--- a/drivers/clk/qcom/gpucc-sm8350.c
++++ b/drivers/clk/qcom/gpucc-sm8350.c
+@@ -2,6 +2,7 @@
+ /*
+  * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2022, Linaro Limited
++ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+  */
+ 
+ #include <linux/clk.h>
+@@ -147,7 +148,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
+@@ -169,7 +170,7 @@ static struct clk_rcg2 gpu_cc_hub_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
+ };
+ 
 -- 
 2.43.0
 
