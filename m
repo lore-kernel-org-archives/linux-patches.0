@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492331A6192;
-	Tue, 30 Jul 2024 17:04:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32DC188017;
+	Tue, 30 Jul 2024 17:04:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359081; cv=none; b=po7n9SB2XLe6nvWpBwZpWxu2ukSpZJjtmyIyqBYPdTuGlrqRmfIXVraVbESPcGgE54yw3Eb0YSrhsxSh13/I871ip790sOneJfDDdova+LLsRss1K+GtxCwvTNUe6zri8f7+fY63pLLq5ms97IzPKAGSinUkaHjkrcki1PlKScI=
+	t=1722359084; cv=none; b=C3XbZw6neWBMsr114dwY0A4//TZV/jxqKqe1+0s7ReBGPtL+OsyCX4nL7OGfv0p0IP5ptwYnrZUVkiGiJM99XfFVg8VC39TdYWgPyEGeshYuVj8nxFpDcvd6d5Jz7GjXCreLeYm7KLvQZ0yULmJxNdNqFh5ORUwvPCxyjNXIBec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359081; c=relaxed/simple;
-	bh=uijEdVMHgPhZ0XepNkwmKdKxdRtTxjw7c2FK/IUshI0=;
+	s=arc-20240116; t=1722359084; c=relaxed/simple;
+	bh=TGDQsg6SRmFPzSk5FBo5oznZr6bu3J8mMcG7fHRekV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXRX49CTrw1rj3a1QK38k9vn06efLmhM1PaxaOBTbUF5woaavQ2YH+FlZTe3O704PwnaW6AXSWfvVSGEIulFyuCyIpnP8MUFFVWgnEySivsWVwUADQcJYq15ZxTUuaydJMzDqTq/xmYLLfed8BKn9MSWXQ00RNfv+7urhTOevBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IdFnS5rF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VyyiLIVOV/S4Ue12PyrMFZabD/GpOYlJY5g0DwUUaQKEhxGdRz8oOnAadnMDaL1JhFB/EKwehxKGG8pZI5G1ogQKBigSPrVoD28CL9gwtNtvDhWm3qxk7B34d+bx5ZZ1g7vk0cXBnOyLdTaXtaLoPbrSDFoTYYSYPqPKtXsZBUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEXECrUq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IdFnS5rF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3484C32782;
-	Tue, 30 Jul 2024 17:04:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEXECrUq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE58C32782;
+	Tue, 30 Jul 2024 17:04:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359081;
-	bh=uijEdVMHgPhZ0XepNkwmKdKxdRtTxjw7c2FK/IUshI0=;
+	s=korg; t=1722359084;
+	bh=TGDQsg6SRmFPzSk5FBo5oznZr6bu3J8mMcG7fHRekV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdFnS5rF/o0salx6WNKxQF58RIeu7pom/1Oj9v3GdDcMwQ8VAyzgchbppp4+FWOQi
-	 LVR0MGHAcqA9xQGzBqi0dUVmHmx37lnLJhCjRv+MhPKmJHSHwk+HkFsCduXMkYERpq
-	 uc8am3r8ZM1bsEZ8TkPUFyDVCGi5v+av9e5inlc4=
+	b=vEXECrUqE15ITn14KzG0aqGLuZd/NmD9s6boPsnj2t9m+QkmDz9kKl7ym9aQMbZXp
+	 W5DQ2j+fHWLzGpnsS85RGnCdukqUaX0jJ+3vNn9zOg+mQhq5wWUs1mHZXTIzZkOq2A
+	 X20op2hcHtt3jP2e99BZNmrY8vHweEE265ljvuBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Tian <kevin.tian@intel.com>,
-	Joao Martins <joao.m.martins@oracle.com>,
-	Matt Ochs <mochs@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 431/809] iommufd/selftest: Fix tests to use MOCK_PAGE_SIZE based buffer sizes
-Date: Tue, 30 Jul 2024 17:45:07 +0200
-Message-ID: <20240730151741.723122561@linuxfoundation.org>
+Subject: [PATCH 6.10 415/809] clk: qcom: gpucc-sa8775p: Park RCGs clk source at XO during disable
+Date: Tue, 30 Jul 2024 17:44:51 +0200
+Message-ID: <20240730151741.084923540@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,100 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joao Martins <joao.m.martins@oracle.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit ffa3c799ce157493615f9f3c2b3c9ba602d320b9 ]
+[ Upstream commit dff68b2f74547617dbb75d0d12f404877ec8f8ce ]
 
-commit a9af47e382a4 ("iommufd/selftest: Test IOMMU_HWPT_GET_DIRTY_BITMAP")
-added tests covering edge cases in the boundaries of iova bitmap. Although
-it used buffer sizes thinking in PAGE_SIZE (4K) as opposed to the
-MOCK_PAGE_SIZE (2K) that is used in iommufd mock selftests. This meant that
-isn't correctly exercising everything specifically the u32 and 4K bitmap
-test cases. Fix selftests buffer sizes to be based on mock page size.
+The RCG's clk src has to be parked at XO while disabling as per the
+HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
+Also gpu_cc_cb_clk is recommended to be kept always ON, hence use
+clk_branch2_aon_ops to keep the clock always ON.
 
-Link: https://lore.kernel.org/r/20240627110105.62325-5-joao.m.martins@oracle.com
-Reported-by: Kevin Tian <kevin.tian@intel.com>
-Closes: https://lore.kernel.org/linux-iommu/96efb6cf-a41c-420f-9673-2f0b682cac8c@oracle.com/
-Fixes: a9af47e382a4 ("iommufd/selftest: Test IOMMU_HWPT_GET_DIRTY_BITMAP")
-Signed-off-by: Joao Martins <joao.m.martins@oracle.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Tested-by: Matt Ochs <mochs@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-5-adcc756a23df@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/iommu/iommufd.c | 36 ++++++++++++-------------
- 1 file changed, 18 insertions(+), 18 deletions(-)
+ drivers/clk/qcom/gpucc-sa8775p.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/iommu/iommufd.c b/tools/testing/selftests/iommu/iommufd.c
-index 61189215e1ab7..5f7d5a5ba89b0 100644
---- a/tools/testing/selftests/iommu/iommufd.c
-+++ b/tools/testing/selftests/iommu/iommufd.c
-@@ -1797,47 +1797,47 @@ FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty16k)
- 	.buffer_size = 16UL * 1024UL,
+diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
+index f965babf4330d..1f7a02a7503d4 100644
+--- a/drivers/clk/qcom/gpucc-sa8775p.c
++++ b/drivers/clk/qcom/gpucc-sa8775p.c
+@@ -161,7 +161,7 @@ static struct clk_rcg2 gpu_cc_ff_clk_src = {
+ 		.name = "gpu_cc_ff_clk_src",
+ 		.parent_data = gpu_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
  };
  
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty128k)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty64k)
- {
- 	/* one u32 index bitmap */
--	.buffer_size = 128UL * 1024UL,
-+	.buffer_size = 64UL * 1024UL,
+@@ -181,7 +181,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
  };
  
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty256k)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty128k)
- {
- 	/* one u64 index bitmap */
--	.buffer_size = 256UL * 1024UL,
-+	.buffer_size = 128UL * 1024UL,
+@@ -200,7 +200,7 @@ static struct clk_rcg2 gpu_cc_hub_clk_src = {
+ 		.name = "gpu_cc_hub_clk_src",
+ 		.parent_data = gpu_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_2),
+-		.ops = &clk_rcg2_ops,
++		.ops = &clk_rcg2_shared_ops,
+ 	},
  };
  
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty640k)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty320k)
- {
- 	/* two u64 index and trailing end bitmap */
--	.buffer_size = 640UL * 1024UL,
-+	.buffer_size = 320UL * 1024UL,
+@@ -294,7 +294,7 @@ static struct clk_branch gpu_cc_cb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data){
+ 			.name = "gpu_cc_cb_clk",
+-			.ops = &clk_branch2_ops,
++			.ops = &clk_branch2_aon_ops,
+ 		},
+ 	},
  };
- 
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty128M)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty64M)
- {
--	/* 4K bitmap (128M IOVA range) */
--	.buffer_size = 128UL * 1024UL * 1024UL,
-+	/* 4K bitmap (64M IOVA range) */
-+	.buffer_size = 64UL * 1024UL * 1024UL,
- };
- 
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty128M_huge)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty64M_huge)
- {
--	/* 4K bitmap (128M IOVA range) */
--	.buffer_size = 128UL * 1024UL * 1024UL,
-+	/* 4K bitmap (64M IOVA range) */
-+	.buffer_size = 64UL * 1024UL * 1024UL,
- 	.hugepages = true,
- };
- 
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty256M)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty128M)
- {
--	/* 8K bitmap (256M IOVA range) */
--	.buffer_size = 256UL * 1024UL * 1024UL,
-+	/* 8K bitmap (128M IOVA range) */
-+	.buffer_size = 128UL * 1024UL * 1024UL,
- };
- 
--FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty256M_huge)
-+FIXTURE_VARIANT_ADD(iommufd_dirty_tracking, domain_dirty128M_huge)
- {
--	/* 8K bitmap (256M IOVA range) */
--	.buffer_size = 256UL * 1024UL * 1024UL,
-+	/* 8K bitmap (128M IOVA range) */
-+	.buffer_size = 128UL * 1024UL * 1024UL,
- 	.hugepages = true,
- };
- 
 -- 
 2.43.0
 
