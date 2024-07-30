@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B37081A76B0;
-	Tue, 30 Jul 2024 17:21:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0671A76D3;
+	Tue, 30 Jul 2024 17:21:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360076; cv=none; b=jm/p3cQW6k+wUF0dy+apec1vFGOfRcoKq1tQQRRKtDllGPt5D9Uk81FrDHftqnFT1Ha3E1cOQiEKcaJANh0m1ZbvriuvgUUgjtitoyX07dqqe/VXerM/xF5rHYT6rVsmTPm+owkx42M88oUcIkHx0RUDj+2BYJLVBcDhWweMbKA=
+	t=1722360080; cv=none; b=Ig011wQBVnI0tghOEgjf4cb8jR5Enmfhv90FpfGSoDbVQcOS+pjFrXOqtbfVtxMgmwvaFC21lF0be46ZxTgvfqtw2nPJlxQzwtnnVCnra75tNmbtMRSw0v2MSKfLIWvey/Dw93DVOPLstE78xIIfIJ6mc65h5AZcPRFaWSHebjQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360076; c=relaxed/simple;
-	bh=I3n5d1xc9kaYeLl1krHMi/gtlBWQuh+Cmyr54pLWvIM=;
+	s=arc-20240116; t=1722360080; c=relaxed/simple;
+	bh=0G3flut2/Gf9IIN+KtaM7C0X3QviYWMNkRy9piriT48=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m32SYfX00KzVO5kvJcH03DSDc8htXeDbcSdv5fWB1YI13CH/NgdvdHBl+YR4nMZBurT0lu7TI/1VbrRnDCiafM9wc0701H49P7Mi22UG4NGGPF7FvkyQ852t71F5UUlVfig9TFd+89fk/KMhd8Nz6IDvflDPilMRcPWC5h8EMPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrEuEAzW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UY8A3LlyegCjuBmH5a5o2abBoedt281OfrfTfiPXzKvD6IyEkDWiACU6QadDAWGi4icodiYn5r1GJvBbgoLUCKEIfbaJFjSq8TlPfDORPqthjx7CWKay2YT6InBlk0hAx0rB9UHotAboUZ0J/6K+O0017WvHI4qDy2+7aRPh3d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWZTmonf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrEuEAzW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC8CC4AF0C;
-	Tue, 30 Jul 2024 17:21:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWZTmonf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A837AC32782;
+	Tue, 30 Jul 2024 17:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360076;
-	bh=I3n5d1xc9kaYeLl1krHMi/gtlBWQuh+Cmyr54pLWvIM=;
+	s=korg; t=1722360080;
+	bh=0G3flut2/Gf9IIN+KtaM7C0X3QviYWMNkRy9piriT48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrEuEAzW91U6hgDunEzX9bNDXjcLyVfEykHj+B4+ySn9iXJ25roHxxB+6OB2qJ109
-	 OrlU6i5ANFYA57w0x2oD9TkZoRkfdQSWCe6O6K8F9pucuv2L6Xc7WT5MLGVt3DNNia
-	 lDPaHKEQI04Iz5DC6NmBikmr01NMuuIMgA6HnGAM=
+	b=FWZTmonfRgr6LfJOyY8ZORbAeM0lHYAg64DSDLAvzUR7O8Joqxp1L/A05Pb3YR1EZ
+	 k62ImzYKC5KT+KBWvgh1INq++iK8r/ptsET/f08GH6Y76SfJtgWsHRiMjNNO/51uXL
+	 zSEg0K+cfciK9ga8j7Qtm8WQsGAXmWbpPyrbKn4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.10 588/809] task_work: Introduce task_work_cancel() again
-Date: Tue, 30 Jul 2024 17:47:44 +0200
-Message-ID: <20240730151748.056545857@linuxfoundation.org>
+	syzbot+5f682cd029581f9edfd1@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.10 589/809] udf: Avoid using corrupted block bitmap buffer
+Date: Tue, 30 Jul 2024 17:47:45 +0200
+Message-ID: <20240730151748.095331625@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -50,66 +50,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-commit f409530e4db9dd11b88cb7703c97c8f326ff6566 upstream.
+commit a90d4471146de21745980cba51ce88e7926bcc4f upstream.
 
-Re-introduce task_work_cancel(), this time to cancel an actual callback
-and not *any* callback pointing to a given function. This is going to be
-needed for perf events event freeing.
+When the filesystem block bitmap is corrupted, we detect the corruption
+while loading the bitmap and fail the allocation with error. However the
+next allocation from the same bitmap will notice the bitmap buffer is
+already loaded and tries to allocate from the bitmap with mixed results
+(depending on the exact nature of the bitmap corruption). Fix the
+problem by using BH_verified bit to indicate whether the bitmap is valid
+or not.
 
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240621091601.18227-3-frederic@kernel.org
+Reported-by: syzbot+5f682cd029581f9edfd1@syzkaller.appspotmail.com
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/20240617154201.29512-2-jack@suse.cz
+Fixes: 1e0d4adf17e7 ("udf: Check consistency of Space Bitmap Descriptor")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/task_work.h |    1 +
- kernel/task_work.c        |   24 ++++++++++++++++++++++++
- 2 files changed, 25 insertions(+)
+ fs/udf/balloc.c |   15 +++++++++++++--
+ fs/udf/super.c  |    3 ++-
+ 2 files changed, 15 insertions(+), 3 deletions(-)
 
---- a/include/linux/task_work.h
-+++ b/include/linux/task_work.h
-@@ -31,6 +31,7 @@ int task_work_add(struct task_struct *ta
- struct callback_head *task_work_cancel_match(struct task_struct *task,
- 	bool (*match)(struct callback_head *, void *data), void *data);
- struct callback_head *task_work_cancel_func(struct task_struct *, task_work_func_t);
-+bool task_work_cancel(struct task_struct *task, struct callback_head *cb);
- void task_work_run(void);
+--- a/fs/udf/balloc.c
++++ b/fs/udf/balloc.c
+@@ -64,8 +64,12 @@ static int read_block_bitmap(struct supe
+ 	}
  
- static inline void exit_task_work(struct task_struct *task)
---- a/kernel/task_work.c
-+++ b/kernel/task_work.c
-@@ -136,6 +136,30 @@ task_work_cancel_func(struct task_struct
- 	return task_work_cancel_match(task, task_work_func_match, func);
+ 	for (i = 0; i < count; i++)
+-		if (udf_test_bit(i + off, bh->b_data))
++		if (udf_test_bit(i + off, bh->b_data)) {
++			bitmap->s_block_bitmap[bitmap_nr] =
++							ERR_PTR(-EFSCORRUPTED);
++			brelse(bh);
+ 			return -EFSCORRUPTED;
++		}
+ 	return 0;
  }
  
-+static bool task_work_match(struct callback_head *cb, void *data)
-+{
-+	return cb == data;
-+}
-+
-+/**
-+ * task_work_cancel - cancel a pending work added by task_work_add()
-+ * @task: the task which should execute the work
-+ * @cb: the callback to remove if queued
-+ *
-+ * Remove a callback from a task's queue if queued.
-+ *
-+ * RETURNS:
-+ * True if the callback was queued and got cancelled, false otherwise.
-+ */
-+bool task_work_cancel(struct task_struct *task, struct callback_head *cb)
-+{
-+	struct callback_head *ret;
-+
-+	ret = task_work_cancel_match(task, task_work_match, cb);
-+
-+	return ret == cb;
-+}
-+
- /**
-  * task_work_run - execute the works added by task_work_add()
-  *
+@@ -81,8 +85,15 @@ static int __load_block_bitmap(struct su
+ 			  block_group, nr_groups);
+ 	}
+ 
+-	if (bitmap->s_block_bitmap[block_group])
++	if (bitmap->s_block_bitmap[block_group]) {
++		/*
++		 * The bitmap failed verification in the past. No point in
++		 * trying again.
++		 */
++		if (IS_ERR(bitmap->s_block_bitmap[block_group]))
++			return PTR_ERR(bitmap->s_block_bitmap[block_group]);
+ 		return block_group;
++	}
+ 
+ 	retval = read_block_bitmap(sb, bitmap, block_group, block_group);
+ 	if (retval < 0)
+--- a/fs/udf/super.c
++++ b/fs/udf/super.c
+@@ -336,7 +336,8 @@ static void udf_sb_free_bitmap(struct ud
+ 	int nr_groups = bitmap->s_nr_groups;
+ 
+ 	for (i = 0; i < nr_groups; i++)
+-		brelse(bitmap->s_block_bitmap[i]);
++		if (!IS_ERR_OR_NULL(bitmap->s_block_bitmap[i]))
++			brelse(bitmap->s_block_bitmap[i]);
+ 
+ 	kvfree(bitmap);
+ }
 
 
