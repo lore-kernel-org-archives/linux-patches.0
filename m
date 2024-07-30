@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3322D1917E1;
-	Tue, 30 Jul 2024 17:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BF0189B85;
+	Tue, 30 Jul 2024 17:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359355; cv=none; b=XU7ziX/V6Q2eOqg0cFLYmOSTvYa71nfNdKrYTRaxgD38+/7jlzbiJP3tdiuMz5vHHl/UFG9zQOaB8tU8PSCwL/lD6WcJuebCorxE1mIXJ7q94JW2GWM/M+oyPwXXhaO/tyIKsaHHBIO8TmiVQfdgQHzhJ8vkq2uFxUeDqxtLZfk=
+	t=1722359359; cv=none; b=hDvBrl+HP9ey1wOqLx5EVzRTE6i/9GZjsH3S07X1qMMvf9xjfvqCg9eNYqDgmXRUg71VtQWk543SGF9p4g4qs36B7zxczWb7qJkkos8eC0v9uPLFoiCxAibZlj1vkCRhVYcSjTfP4yY28YSi+MVMpNj1fa/gfUSwgSiUeCpl7Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359355; c=relaxed/simple;
-	bh=yzFcYEaAIvdgWD2JdQgbITumAzDfBWbRbvCnbNb7mUQ=;
+	s=arc-20240116; t=1722359359; c=relaxed/simple;
+	bh=J/4K/MeeDSIyYflvIXjZ/UEkuoUbZ6lL4F5om+h6gEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d0rsj6rlxVjuUu8tYHTsQfhOFF1r2Wk5XIEhHSm1xVu+/bDswR8O5OJWwstyOmxq4mBJE+5P189Q98ZBvFtfYNPMeWjPVZlXwBpWhyV4euFrH5zEqXoZ8ZS+UJxU+k1DdXcUnHBqYhNdYK0HAOCyh2Yz1l9C8696pF6W/O/k9Qk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hZ5Y/VR9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XNy2bIvemrpApWzC+tDZU6MlbG95g3VdIbqfaL6R6baCuQK69/4Q8bzkr1t7JCQ6rMUWp1eMtDu/hyg+ipdoO8/T5H9Xl7Ks3MzejqJLT6u4Jx1Eht0PSsaj6Nfio6zreW3GTjFBIGQ/yIJi4tU17Kaw8xgp8dtTU9JPfiHWXyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TLFXfbWl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hZ5Y/VR9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97217C32782;
-	Tue, 30 Jul 2024 17:09:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TLFXfbWl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A08C32782;
+	Tue, 30 Jul 2024 17:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359355;
-	bh=yzFcYEaAIvdgWD2JdQgbITumAzDfBWbRbvCnbNb7mUQ=;
+	s=korg; t=1722359358;
+	bh=J/4K/MeeDSIyYflvIXjZ/UEkuoUbZ6lL4F5om+h6gEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZ5Y/VR908bVoM2LC2OCpx5L8aETj2Z4h/Li5ZYxPiBtwH7bX4/OPpk+r0w1ou/Bo
-	 frGKxdu1vi1KJoei8voBQjwWTCsXpC9e+56lWQZZhNooMSwukkAKOZMj6PVS5fxBG2
-	 1v9aVerQ3YsxLn96Gr44qw3YgjQXTysioIsvkXo8=
+	b=TLFXfbWlv/UsVhwvQPkVozRfrJacz14+ldqUqK2+tZXKRBExMBbA3Co8QG9jixRn+
+	 TxuX7LafdpdUkZk80eRDx85KIsddMrRmbUqvGuY/HKeV1cvZ155RQ50hmr4Qh8PjZn
+	 rSbuOGIrvDp+CkfbyfYJ/k7N/pgzaG2adpUlJkp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 462/568] scsi: qla2xxx: Use QP lock to search for bsg
-Date: Tue, 30 Jul 2024 17:49:29 +0200
-Message-ID: <20240730151658.077729898@linuxfoundation.org>
+	"Bayduraev, Alexey V" <alexey.v.bayduraev@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.6 471/568] perf/x86/intel/ds: Fix non 0 retire latency on Raptorlake
+Date: Tue, 30 Jul 2024 17:49:38 +0200
+Message-ID: <20240730151658.434234169@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -46,155 +45,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-commit c449b4198701d828e40d60a2abd30970b74a1d75 upstream.
+commit e5f32ad56b22ebe384a6e7ddad6e9520c5495563 upstream.
 
-On bsg timeout, hardware_lock is used as part of search for the srb.
-Instead, qpair lock should be used to iterate through different qpair.
+A non-0 retire latency can be observed on a Raptorlake which doesn't
+support the retire latency feature.
+By design, the retire latency shares the PERF_SAMPLE_WEIGHT_STRUCT
+sample type with other types of latency. That could avoid adding too
+many different sample types to support all kinds of latency. For the
+machine which doesn't support some kind of latency, 0 should be
+returned.
 
+Perf doesn’t clear/init all the fields of a sample data for the sake
+of performance. It expects the later perf_{prepare,output}_sample() to
+update the uninitialized field. However, the current implementation
+doesn't touch the field of the retire latency if the feature is not
+supported. The memory garbage is dumped into the perf data.
+
+Clear the retire latency if the feature is not supported.
+
+Fixes: c87a31093c70 ("perf/x86: Support Retire Latency")
+Reported-by: "Bayduraev, Alexey V" <alexey.v.bayduraev@intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: "Bayduraev, Alexey V" <alexey.v.bayduraev@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-11-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lkml.kernel.org/r/20240708193336.1192217-4-kan.liang@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |   96 ++++++++++++++++++++++++-----------------
- 1 file changed, 57 insertions(+), 39 deletions(-)
+ arch/x86/events/intel/ds.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -3059,17 +3059,61 @@ skip_chip_chk:
- 	return ret;
- }
+--- a/arch/x86/events/intel/ds.c
++++ b/arch/x86/events/intel/ds.c
+@@ -1830,8 +1830,12 @@ static void setup_pebs_adaptive_sample_d
+ 	set_linear_ip(regs, basic->ip);
+ 	regs->flags = PERF_EFLAGS_EXACT;
  
--int
--qla24xx_bsg_timeout(struct bsg_job *bsg_job)
-+static bool qla_bsg_found(struct qla_qpair *qpair, struct bsg_job *bsg_job)
- {
-+	bool found = false;
- 	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
- 	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
- 	struct qla_hw_data *ha = vha->hw;
--	srb_t *sp;
--	int cnt, que;
-+	srb_t *sp = NULL;
-+	int cnt;
- 	unsigned long flags;
- 	struct req_que *req;
- 
-+	spin_lock_irqsave(qpair->qp_lock_ptr, flags);
-+	req = qpair->req;
-+
-+	for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
-+		sp = req->outstanding_cmds[cnt];
-+		if (sp &&
-+		    (sp->type == SRB_CT_CMD ||
-+		     sp->type == SRB_ELS_CMD_HST ||
-+		     sp->type == SRB_ELS_CMD_HST_NOLOGIN) &&
-+		    sp->u.bsg_job == bsg_job) {
-+			req->outstanding_cmds[cnt] = NULL;
-+			spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+			if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
-+				ql_log(ql_log_warn, vha, 0x7089,
-+						"mbx abort_command failed.\n");
-+				bsg_reply->result = -EIO;
-+			} else {
-+				ql_dbg(ql_dbg_user, vha, 0x708a,
-+						"mbx abort_command success.\n");
-+				bsg_reply->result = 0;
-+			}
-+			/* ref: INIT */
-+			kref_put(&sp->cmd_kref, qla2x00_sp_release);
-+
-+			found = true;
-+			goto done;
-+		}
+-	if ((sample_type & PERF_SAMPLE_WEIGHT_STRUCT) && (x86_pmu.flags & PMU_FL_RETIRE_LATENCY))
+-		data->weight.var3_w = format_size >> PEBS_RETIRE_LATENCY_OFFSET & PEBS_LATENCY_MASK;
++	if (sample_type & PERF_SAMPLE_WEIGHT_STRUCT) {
++		if (x86_pmu.flags & PMU_FL_RETIRE_LATENCY)
++			data->weight.var3_w = format_size >> PEBS_RETIRE_LATENCY_OFFSET & PEBS_LATENCY_MASK;
++		else
++			data->weight.var3_w = 0;
 +	}
-+	spin_unlock_irqrestore(qpair->qp_lock_ptr, flags);
-+
-+done:
-+	return found;
-+}
-+
-+int
-+qla24xx_bsg_timeout(struct bsg_job *bsg_job)
-+{
-+	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
-+	scsi_qla_host_t *vha = shost_priv(fc_bsg_to_shost(bsg_job));
-+	struct qla_hw_data *ha = vha->hw;
-+	int i;
-+	struct qla_qpair *qpair;
-+
- 	ql_log(ql_log_info, vha, 0x708b, "%s CMD timeout. bsg ptr %p.\n",
- 	    __func__, bsg_job);
  
-@@ -3079,48 +3123,22 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_
- 		qla_pci_set_eeh_busy(vha);
- 	}
- 
-+	if (qla_bsg_found(ha->base_qpair, bsg_job))
-+		goto done;
-+
- 	/* find the bsg job from the active list of commands */
--	spin_lock_irqsave(&ha->hardware_lock, flags);
--	for (que = 0; que < ha->max_req_queues; que++) {
--		req = ha->req_q_map[que];
--		if (!req)
-+	for (i = 0; i < ha->max_qpairs; i++) {
-+		qpair = vha->hw->queue_pair_map[i];
-+		if (!qpair)
- 			continue;
--
--		for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
--			sp = req->outstanding_cmds[cnt];
--			if (sp &&
--			    (sp->type == SRB_CT_CMD ||
--			     sp->type == SRB_ELS_CMD_HST ||
--			     sp->type == SRB_ELS_CMD_HST_NOLOGIN ||
--			     sp->type == SRB_FXIOCB_BCMD) &&
--			    sp->u.bsg_job == bsg_job) {
--				req->outstanding_cmds[cnt] = NULL;
--				spin_unlock_irqrestore(&ha->hardware_lock, flags);
--
--				if (!ha->flags.eeh_busy && ha->isp_ops->abort_command(sp)) {
--					ql_log(ql_log_warn, vha, 0x7089,
--					    "mbx abort_command failed.\n");
--					bsg_reply->result = -EIO;
--				} else {
--					ql_dbg(ql_dbg_user, vha, 0x708a,
--					    "mbx abort_command success.\n");
--					bsg_reply->result = 0;
--				}
--				spin_lock_irqsave(&ha->hardware_lock, flags);
--				goto done;
--
--			}
--		}
-+		if (qla_bsg_found(qpair, bsg_job))
-+			goto done;
- 	}
--	spin_unlock_irqrestore(&ha->hardware_lock, flags);
-+
- 	ql_log(ql_log_info, vha, 0x708b, "SRB not found to abort.\n");
- 	bsg_reply->result = -ENXIO;
--	return 0;
- 
- done:
--	spin_unlock_irqrestore(&ha->hardware_lock, flags);
--	/* ref: INIT */
--	kref_put(&sp->cmd_kref, qla2x00_sp_release);
- 	return 0;
- }
- 
+ 	/*
+ 	 * The record for MEMINFO is in front of GP
 
 
