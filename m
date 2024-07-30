@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FEF41A76D9;
-	Tue, 30 Jul 2024 17:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55D51A76B6;
+	Tue, 30 Jul 2024 17:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360437; cv=none; b=DtEBvbQSMsjpLxJ/kwQd1K0Jvudhfm9QdRNDKkDeMvt7mlAXSabwy5hqwIhsonbfJutQEyMDNgiu7q//K7IWWdypu7kCjt9PXCnes5YlI890OuWR3zsG/ft9zwecjFC8Ljr6euK4bcgr5shkiCqur15rV1X57MckIKiDlm05yGs=
+	t=1722360440; cv=none; b=TIsy43A1OAqrT4qqiwMMbHqsLavg0psX7mKVSw0ua9aWsAwkzEKwyAdsusPc+b8vO+aHmUz9wF6BGEfSyLk1EReyX3K5g5239pF611+qt1XBEsj6OVld3zg3+NfjXPYyyJ0/8xstfHC/HajziPns+x57BXgJ4nGzMRBcG1d+3Hs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360437; c=relaxed/simple;
-	bh=bAUu+vb47xmKDHMXKVxRr++CVOLpxUWhCOz1zhfFazY=;
+	s=arc-20240116; t=1722360440; c=relaxed/simple;
+	bh=aOmTaFlyPl6T2UWOSEpTIsis0ur7i7/uULEvW8jkAiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=joZv1pxSXh5jP3JQG/626qrZCP4BOPseP5ktOZ3UjLdMDVHGTI5P+1ZByz03vFchpssIKiYOZL2n+OA20+gu8pNjT3Jzja3Lvs3pT38q6amJy2VzEhbuoC5MEAwwHRTxJTnpyXfu0w5Ix1BcSXTci1nDSROy/jlxioQPE42S1vE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLiPgM9s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hWeCCZZysI53cMEiLYGjwFINvlwjP8bOGsLhpGL+lg9IxPSjZRvFuUO3SLdj8qB/lJirwCd9mRBaRxlDSGo7UnApAQaQkEivYqepN5mMCis6/rrKl8O16VJ+vcGxrbcfzSXmbTsxAfJTHDv27n0BUmqRE2XOQkbogq5lVVonwhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DaE3YBzk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLiPgM9s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F407CC4AF0E;
-	Tue, 30 Jul 2024 17:27:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DaE3YBzk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D2A8C32782;
+	Tue, 30 Jul 2024 17:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360437;
-	bh=bAUu+vb47xmKDHMXKVxRr++CVOLpxUWhCOz1zhfFazY=;
+	s=korg; t=1722360440;
+	bh=aOmTaFlyPl6T2UWOSEpTIsis0ur7i7/uULEvW8jkAiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLiPgM9s6GfeWdirkf0HYzUXrtQUreaNHZqxvOPIPCB1wP6BbwVe6WnyuoYGpUaGX
-	 rLqjxaIcCWTJ7UglstxCVZ1fGyzNCPe5XUBESfNFgtVXobLeIATjgr6u1TL2Q4RRmg
-	 y8HnYEAaEeuM/SOkz3gq75NhzHAEQJWg0dZWZvBI=
+	b=DaE3YBzkiphW1DZ2uc062X8wlohruso92WvgoyQ5M/KHD6i77yBJ8b9b6ry3eymnE
+	 PgMosPC5cDBZ+D1qCxNFvTq1nYwRsSFaxLUbAxh56um/f0019vY2NZufHNEYr1tCfH
+	 slRC4hy+hFWMh8j8py4l8BmruJzEbcgYBpqIhOTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 658/809] nilfs2: handle inconsistent state in nilfs_btnode_create_block()
-Date: Tue, 30 Jul 2024 17:48:54 +0200
-Message-ID: <20240730151750.880620976@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.10 692/809] perf: Fix event leak upon exec and file release
+Date: Tue, 30 Jul 2024 17:49:28 +0200
+Message-ID: <20240730151752.245757448@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,97 +50,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit 4811f7af6090e8f5a398fbdd766f903ef6c0d787 upstream.
+commit 3a5465418f5fd970e86a86c7f4075be262682840 upstream.
 
-Syzbot reported that a buffer state inconsistency was detected in
-nilfs_btnode_create_block(), triggering a kernel bug.
+The perf pending task work is never waited upon the matching event
+release. In the case of a child event, released via free_event()
+directly, this can potentially result in a leaked event, such as in the
+following scenario that doesn't even require a weak IRQ work
+implementation to trigger:
 
-It is not appropriate to treat this inconsistency as a bug; it can occur
-if the argument block address (the buffer index of the newly created
-block) is a virtual block number and has been reallocated due to
-corruption of the bitmap used to manage its allocation state.
+schedule()
+   prepare_task_switch()
+=======> <NMI>
+      perf_event_overflow()
+         event->pending_sigtrap = ...
+         irq_work_queue(&event->pending_irq)
+<======= </NMI>
+      perf_event_task_sched_out()
+          event_sched_out()
+              event->pending_sigtrap = 0;
+              atomic_long_inc_not_zero(&event->refcount)
+              task_work_add(&event->pending_task)
+   finish_lock_switch()
+=======> <IRQ>
+   perf_pending_irq()
+      //do nothing, rely on pending task work
+<======= </IRQ>
 
-So, modify nilfs_btnode_create_block() and its callers to treat it as a
-possible filesystem error, rather than triggering a kernel bug.
+begin_new_exec()
+   perf_event_exit_task()
+      perf_event_exit_event()
+         // If is child event
+         free_event()
+            WARN(atomic_long_cmpxchg(&event->refcount, 1, 0) != 1)
+            // event is leaked
 
-Link: https://lkml.kernel.org/r/20240725052007.4562-1-konishi.ryusuke@gmail.com
-Fixes: a60be987d45d ("nilfs2: B-tree node cache")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=89cc4f2324ed37988b60
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Similar scenarios can also happen with perf_event_remove_on_exec() or
+simply against concurrent perf_event_release().
+
+Fix this with synchonizing against the possibly remaining pending task
+work while freeing the event, just like is done with remaining pending
+IRQ work. This means that the pending task callback neither need nor
+should hold a reference to the event, preventing it from ever beeing
+freed.
+
+Fixes: 517e6a301f34 ("perf: Fix perf_pending_task() UaF")
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240621091601.18227-5-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/btnode.c |   25 ++++++++++++++++++++-----
- fs/nilfs2/btree.c  |    4 ++--
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ include/linux/perf_event.h |    1 +
+ kernel/events/core.c       |   38 ++++++++++++++++++++++++++++++++++----
+ 2 files changed, 35 insertions(+), 4 deletions(-)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -51,12 +51,21 @@ nilfs_btnode_create_block(struct address
+--- a/include/linux/perf_event.h
++++ b/include/linux/perf_event.h
+@@ -786,6 +786,7 @@ struct perf_event {
+ 	struct irq_work			pending_irq;
+ 	struct callback_head		pending_task;
+ 	unsigned int			pending_work;
++	struct rcuwait			pending_work_wait;
  
- 	bh = nilfs_grab_buffer(inode, btnc, blocknr, BIT(BH_NILFS_Node));
- 	if (unlikely(!bh))
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
+ 	atomic_t			event_limit;
  
- 	if (unlikely(buffer_mapped(bh) || buffer_uptodate(bh) ||
- 		     buffer_dirty(bh))) {
--		brelse(bh);
--		BUG();
-+		/*
-+		 * The block buffer at the specified new address was already
-+		 * in use.  This can happen if it is a virtual block number
-+		 * and has been reallocated due to corruption of the bitmap
-+		 * used to manage its allocation state (if not, the buffer
-+		 * clearing of an abandoned b-tree node is missing somewhere).
-+		 */
-+		nilfs_error(inode->i_sb,
-+			    "state inconsistency probably due to duplicate use of b-tree node block address %llu (ino=%lu)",
-+			    (unsigned long long)blocknr, inode->i_ino);
-+		goto failed;
- 	}
- 	memset(bh->b_data, 0, i_blocksize(inode));
- 	bh->b_bdev = inode->i_sb->s_bdev;
-@@ -67,6 +76,12 @@ nilfs_btnode_create_block(struct address
- 	folio_unlock(bh->b_folio);
- 	folio_put(bh->b_folio);
- 	return bh;
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -2288,7 +2288,6 @@ event_sched_out(struct perf_event *event
+ 		if (state != PERF_EVENT_STATE_OFF &&
+ 		    !event->pending_work &&
+ 		    !task_work_add(current, &event->pending_task, TWA_RESUME)) {
+-			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
+ 			event->pending_work = 1;
+ 		} else {
+ 			local_dec(&event->ctx->nr_pending);
+@@ -5203,9 +5202,35 @@ static bool exclusive_event_installable(
+ static void perf_addr_filters_splice(struct perf_event *event,
+ 				       struct list_head *head);
+ 
++static void perf_pending_task_sync(struct perf_event *event)
++{
++	struct callback_head *head = &event->pending_task;
 +
-+failed:
-+	folio_unlock(bh->b_folio);
-+	folio_put(bh->b_folio);
-+	brelse(bh);
-+	return ERR_PTR(-EIO);
++	if (!event->pending_work)
++		return;
++	/*
++	 * If the task is queued to the current task's queue, we
++	 * obviously can't wait for it to complete. Simply cancel it.
++	 */
++	if (task_work_cancel(current, head)) {
++		event->pending_work = 0;
++		local_dec(&event->ctx->nr_pending);
++		return;
++	}
++
++	/*
++	 * All accesses related to the event are within the same
++	 * non-preemptible section in perf_pending_task(). The RCU
++	 * grace period before the event is freed will make sure all
++	 * those accesses are complete by then.
++	 */
++	rcuwait_wait_event(&event->pending_work_wait, !event->pending_work, TASK_UNINTERRUPTIBLE);
++}
++
+ static void _free_event(struct perf_event *event)
+ {
+ 	irq_work_sync(&event->pending_irq);
++	perf_pending_task_sync(event);
+ 
+ 	unaccount_event(event);
+ 
+@@ -6831,23 +6856,27 @@ static void perf_pending_task(struct cal
+ 	int rctx;
+ 
+ 	/*
++	 * All accesses to the event must belong to the same implicit RCU read-side
++	 * critical section as the ->pending_work reset. See comment in
++	 * perf_pending_task_sync().
++	 */
++	preempt_disable_notrace();
++	/*
+ 	 * If we 'fail' here, that's OK, it means recursion is already disabled
+ 	 * and we won't recurse 'further'.
+ 	 */
+-	preempt_disable_notrace();
+ 	rctx = perf_swevent_get_recursion_context();
+ 
+ 	if (event->pending_work) {
+ 		event->pending_work = 0;
+ 		perf_sigtrap(event);
+ 		local_dec(&event->ctx->nr_pending);
++		rcuwait_wake_up(&event->pending_work_wait);
+ 	}
+ 
+ 	if (rctx >= 0)
+ 		perf_swevent_put_recursion_context(rctx);
+ 	preempt_enable_notrace();
+-
+-	put_event(event);
  }
  
- int nilfs_btnode_submit_block(struct address_space *btnc, __u64 blocknr,
-@@ -217,8 +232,8 @@ retry:
- 	}
+ #ifdef CONFIG_GUEST_PERF_EVENTS
+@@ -11961,6 +11990,7 @@ perf_event_alloc(struct perf_event_attr
+ 	init_waitqueue_head(&event->waitq);
+ 	init_irq_work(&event->pending_irq, perf_pending_irq);
+ 	init_task_work(&event->pending_task, perf_pending_task);
++	rcuwait_init(&event->pending_work_wait);
  
- 	nbh = nilfs_btnode_create_block(btnc, newkey);
--	if (!nbh)
--		return -ENOMEM;
-+	if (IS_ERR(nbh))
-+		return PTR_ERR(nbh);
- 
- 	BUG_ON(nbh == obh);
- 	ctxt->newbh = nbh;
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -63,8 +63,8 @@ static int nilfs_btree_get_new_block(con
- 	struct buffer_head *bh;
- 
- 	bh = nilfs_btnode_create_block(btnc, ptr);
--	if (!bh)
--		return -ENOMEM;
-+	if (IS_ERR(bh))
-+		return PTR_ERR(bh);
- 
- 	set_buffer_nilfs_volatile(bh);
- 	*bhp = bh;
+ 	mutex_init(&event->mmap_mutex);
+ 	raw_spin_lock_init(&event->addr_filters.lock);
 
 
