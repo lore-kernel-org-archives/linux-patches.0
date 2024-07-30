@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867501A76DA;
-	Tue, 30 Jul 2024 17:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F1B1A76DA;
+	Tue, 30 Jul 2024 17:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359536; cv=none; b=EYtyVhxildJe7My/mYUy8nT+ywAdG7bCGTBf8jFN7figDVIijCkBI5aj0F85J118kkLXq9YPYHkwQD6u7ouw8rqkpkRK7c9rck+Uv4hDR4C7whtng0jqKTLQ/WVBr9oqRxiaFSM0ZFZlshVSax5AMFaUncHPUnwszhrLa7Owgh0=
+	t=1722359540; cv=none; b=AkccgPR9cfnbiE9qe6ZIBWyuMdKJeE+FO6hNd7UWL+Dun/XfuTh6memf8HQOQ7ZRaqqdA0wQ24hLprxsgJZzRhfM8hVarJj/kZ6i/JVsWucn38EFLdItI61xx8eFpMSZL2s7CKvXrXS+sNhQ+OyIQ5wCvk7Axc4tADdIzdd3ako=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359536; c=relaxed/simple;
-	bh=NybNroNDh4xoDNTZ1HG8cyfdn9c876o5ZdTNvyu4FqQ=;
+	s=arc-20240116; t=1722359540; c=relaxed/simple;
+	bh=6UOes3l9T0t3013cA9M0Yt9N/ElPhp7RwZpUD0ancDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I65wgNBpfW35YZ9Vl0AOrtZLzuo0F+JRKfacpHGM5SCLsCe3OMf4zdAJVdQbiy5TBj5hVcQke3fbW1ogxrj1Uh8IHYvPXv2qJ6rRwXbZqRvpPNjZiVPYoYDzJ24uQ3SpthefrB6Ew4/rdVkqRc5y/8PD5bu7zVn7pv55C4NFmdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/EXeFt1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QyMg4p+UE+f5+lMYN8uj71FhgVf1l7cKHDFntuxccI6SHx04ua+M9yFFzJl/pPs/rwtV2dRFWNerMhy9DSF9m1olatbOSINC0WFNX2+AFRqCgf56gpxm6+hqFtyWlRIFpNrDfxhbIZvtYFwZysiBwH7LXMO9q6Kc31u2o7ItaAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl3sp06k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/EXeFt1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6D3C4AF0E;
-	Tue, 30 Jul 2024 17:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl3sp06k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A18C32782;
+	Tue, 30 Jul 2024 17:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359536;
-	bh=NybNroNDh4xoDNTZ1HG8cyfdn9c876o5ZdTNvyu4FqQ=;
+	s=korg; t=1722359539;
+	bh=6UOes3l9T0t3013cA9M0Yt9N/ElPhp7RwZpUD0ancDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/EXeFt1sMv7flRSrB5gOzHkOS/1AcmFWal/jT2tVOzuMLta4/5rePBVfvLXwlOD1
-	 1jwgl8eR4cCiwNjV+5g7N9bzQtz2OT4lsCo2SuOAvyZ9/zKQPqVcKhMRAQ2jnrF7V9
-	 gmQTS/du7t4ZV76uLOrIORLsb2N7RRmIzQjJeumw=
+	b=bl3sp06kZaF+/XoTcsXEt4UlKX6ATNVDeIJq/smq6wxWiNzmjuKCMuazvmBid6Q5X
+	 oPyhUm/hqaQ/sRTN1/RM24kZVOnTiZlrTn5Sfqp8JfG509Atr5RtMpj9swJ0CpCq2V
+	 1XhYMx5diRdKvJzWGsAUEMCt9XbUQldwmuWpDUv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.6 498/568] MIPS: Loongson64: reset: Prioritise firmware service
-Date: Tue, 30 Jul 2024 17:50:05 +0200
-Message-ID: <20240730151659.491521164@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 498/809] fs/ntfs3: Fix field-spanning write in INDEX_HDR
+Date: Tue, 30 Jul 2024 17:46:14 +0200
+Message-ID: <20240730151744.405408847@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,106 +46,88 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit 4e7ca0b57f3bc09ba3e4ab86bf6b7c35134bfd04 upstream.
+[ Upstream commit 2f3e176fee66ac86ae387787bf06457b101d9f7a ]
 
-We should always use firmware's poweroff & reboot service
-if it's available as firmware may need to perform more task
-than platform's syscon etc.
+Fields flags and res[3] replaced with one 4 byte flags.
 
-However _machine_restart & poweroff hooks are registered at
-low priority, which means platform reboot driver can override
-them.
-
-Register firmware based reboot/poweroff implementation with
-register_sys_off_handler with appropriate priority so that
-they will be prioritised. Remove _machine_halt hook as it's
-deemed to be unnecessary.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4534a70b7056 ("fs/ntfs3: Add headers and misc files")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/loongson64/reset.c |   38 ++++++++++++++++----------------------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+ fs/ntfs3/index.c | 4 ++--
+ fs/ntfs3/ntfs.h  | 9 +++++----
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
---- a/arch/mips/loongson64/reset.c
-+++ b/arch/mips/loongson64/reset.c
-@@ -11,6 +11,7 @@
- #include <linux/init.h>
- #include <linux/kexec.h>
- #include <linux/pm.h>
-+#include <linux/reboot.h>
- #include <linux/slab.h>
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index d0f15bbf78f6c..9089c58a005ce 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -978,7 +978,7 @@ static struct indx_node *indx_new(struct ntfs_index *indx,
+ 		hdr->used =
+ 			cpu_to_le32(eo + sizeof(struct NTFS_DE) + sizeof(u64));
+ 		de_set_vbn_le(e, *sub_vbn);
+-		hdr->flags = 1;
++		hdr->flags = NTFS_INDEX_HDR_HAS_SUBNODES;
+ 	} else {
+ 		e->size = cpu_to_le16(sizeof(struct NTFS_DE));
+ 		hdr->used = cpu_to_le32(eo + sizeof(struct NTFS_DE));
+@@ -1683,7 +1683,7 @@ static int indx_insert_into_root(struct ntfs_index *indx, struct ntfs_inode *ni,
+ 	e->size = cpu_to_le16(sizeof(struct NTFS_DE) + sizeof(u64));
+ 	e->flags = NTFS_IE_HAS_SUBNODES | NTFS_IE_LAST;
  
- #include <asm/bootinfo.h>
-@@ -21,36 +22,21 @@
- #include <loongson.h>
- #include <boot_param.h>
+-	hdr->flags = 1;
++	hdr->flags = NTFS_INDEX_HDR_HAS_SUBNODES;
+ 	hdr->used = hdr->total =
+ 		cpu_to_le32(new_root_size - offsetof(struct INDEX_ROOT, ihdr));
  
--static void loongson_restart(char *command)
-+static int firmware_restart(struct sys_off_data *unusedd)
- {
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 1f2cdb0dbbe1d..e1889ad092304 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -693,14 +693,15 @@ static inline bool de_has_vcn_ex(const struct NTFS_DE *e)
+ 	      offsetof(struct ATTR_FILE_NAME, name) + \
+ 	      NTFS_NAME_LEN * sizeof(short), 8)
  
- 	void (*fw_restart)(void) = (void *)loongson_sysconf.restart_addr;
- 
- 	fw_restart();
--	while (1) {
--		if (cpu_wait)
--			cpu_wait();
--	}
-+	return NOTIFY_DONE;
- }
- 
--static void loongson_poweroff(void)
-+static int firmware_poweroff(struct sys_off_data *unused)
- {
- 	void (*fw_poweroff)(void) = (void *)loongson_sysconf.poweroff_addr;
- 
- 	fw_poweroff();
--	while (1) {
--		if (cpu_wait)
--			cpu_wait();
--	}
--}
--
--static void loongson_halt(void)
--{
--	pr_notice("\n\n** You can safely turn off the power now **\n\n");
--	while (1) {
--		if (cpu_wait)
--			cpu_wait();
--	}
-+	return NOTIFY_DONE;
- }
- 
- #ifdef CONFIG_KEXEC
-@@ -154,9 +140,17 @@ static void loongson_crash_shutdown(stru
- 
- static int __init mips_reboot_setup(void)
- {
--	_machine_restart = loongson_restart;
--	_machine_halt = loongson_halt;
--	pm_power_off = loongson_poweroff;
-+	if (loongson_sysconf.restart_addr) {
-+		register_sys_off_handler(SYS_OFF_MODE_RESTART,
-+				 SYS_OFF_PRIO_FIRMWARE,
-+				 firmware_restart, NULL);
-+	}
++#define NTFS_INDEX_HDR_HAS_SUBNODES cpu_to_le32(1)
 +
-+	if (loongson_sysconf.poweroff_addr) {
-+		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
-+				 SYS_OFF_PRIO_FIRMWARE,
-+				 firmware_poweroff, NULL);
-+	}
+ struct INDEX_HDR {
+ 	__le32 de_off;	// 0x00: The offset from the start of this structure
+ 			// to the first NTFS_DE.
+ 	__le32 used;	// 0x04: The size of this structure plus all
+ 			// entries (quad-word aligned).
+ 	__le32 total;	// 0x08: The allocated size of for this structure plus all entries.
+-	u8 flags;	// 0x0C: 0x00 = Small directory, 0x01 = Large directory.
+-	u8 res[3];
++	__le32 flags;	// 0x0C: 0x00 = Small directory, 0x01 = Large directory.
  
- #ifdef CONFIG_KEXEC
- 	kexec_argv = kmalloc(KEXEC_ARGV_SIZE, GFP_KERNEL);
+ 	//
+ 	// de_off + used <= total
+@@ -748,7 +749,7 @@ static inline struct NTFS_DE *hdr_next_de(const struct INDEX_HDR *hdr,
+ 
+ static inline bool hdr_has_subnode(const struct INDEX_HDR *hdr)
+ {
+-	return hdr->flags & 1;
++	return hdr->flags & NTFS_INDEX_HDR_HAS_SUBNODES;
+ }
+ 
+ struct INDEX_BUFFER {
+@@ -768,7 +769,7 @@ static inline bool ib_is_empty(const struct INDEX_BUFFER *ib)
+ 
+ static inline bool ib_is_leaf(const struct INDEX_BUFFER *ib)
+ {
+-	return !(ib->ihdr.flags & 1);
++	return !(ib->ihdr.flags & NTFS_INDEX_HDR_HAS_SUBNODES);
+ }
+ 
+ /* Index root structure ( 0x90 ). */
+-- 
+2.43.0
+
 
 
