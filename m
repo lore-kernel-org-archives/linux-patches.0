@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318CA1A6192;
-	Tue, 30 Jul 2024 16:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBEE1A6192;
+	Tue, 30 Jul 2024 16:41:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357683; cv=none; b=XL98k0BFkmmaOAA+vaNYhwvTp9qNtQZ7GGW0HvUZzFCdnr3qxqoP5eNFIi6/SlvVmNXx9/BIhqBC700TPcknDy6myJWEr2LLh5KQG1a4kiRs6+Xehpfgd0tnAB3R1Od+9RTdQtZLF6+/dsIN1T67VUqRjU8xV8fE9BQzBIWEC/g=
+	t=1722357686; cv=none; b=MKY++1rhI9uOR9VPiJ2f1T9cq9+MYQQEVaBQiYwzLlRz3hjzRpXe+/HDHtHKwwLKqTanEwgmIx5cW1VX3tr740hSCa2g261RbBYnnGmvOqPWnLrYqmAT1egeUOUFIxx0HExJZTRnQa43eXkwWH041LooszkF9QlTviOZ9/8r9zw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357683; c=relaxed/simple;
-	bh=4qhnkMyQ2Ty1XZEItvlUcHfF/hgjNbZp+1aSqE0wvzc=;
+	s=arc-20240116; t=1722357686; c=relaxed/simple;
+	bh=OLuDiMZDrbBtj2/U5Fmzk0dcyO3E7S0rRIsBMJEW+Qg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mbqPB+m6dYR3l3+2KK3ogE6LDip8oX3GOmf0g1QZVehF9ITf7SrJMlXQw5TZ3fl6XDb1ZEpXkuYWzLjNE7ViIQGmhlnbBUGj3GYV6v5mYm1arz0EC6I76sATM094geZc7dfwph1p5NTqOOyN21HoFsCXJJS79pMo7X1EV/tDJhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qGPMHw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RuVHEGBikWou1x8v8+ENWN2PmGZ/Lyo3fKFiGMQ5nWXugExQVH7nxg/jAi4GkLFI+J+Wl4hANGjdwXkj8tjO7gCkRFx8cvgYKP/OgopXUv5QJtISSYoRIzoB2U360tXXwqjIIV2aVlST17JgaKQS4LKi5GcYtM2Gq42gY6LV2QM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJ//xtWL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qGPMHw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC2DC4AF0E;
-	Tue, 30 Jul 2024 16:41:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJ//xtWL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF39EC32782;
+	Tue, 30 Jul 2024 16:41:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357683;
-	bh=4qhnkMyQ2Ty1XZEItvlUcHfF/hgjNbZp+1aSqE0wvzc=;
+	s=korg; t=1722357686;
+	bh=OLuDiMZDrbBtj2/U5Fmzk0dcyO3E7S0rRIsBMJEW+Qg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1qGPMHw1i/pcgg4iroT7QTjDa3kmaV0/QT4twlPR88Eab6Rw6YTuxZUcWwLbA15r1
-	 0aUPqw/IdjnDfBg1sANQI0rbu4hQC7smZrZkkWTnDj+2jTEsirDGnHDXsTmyuuDkB4
-	 wtrq5x2ufxMwiA1o1zRjM+RuztsiilCn6Sh5itkg=
+	b=jJ//xtWLDRcpVefhPnIoFKH+kaM4ZpO7+1vWbHi2sMFB2rAUegi0qnLh4n28UiLDR
+	 NvKTMt3XYG6vENTqYDMCqUkjzaoYFN27lHXuRUceklTERJQkNjmD7M8gl6y445rmmZ
+	 UQRIwww9P6Wm+dfOQdQ+ai1gg6hFqCfrBkHEJnQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 266/568] clk: qcom: gcc-sa8775p: Update the GDSC wait_val fields and flags
-Date: Tue, 30 Jul 2024 17:46:13 +0200
-Message-ID: <20240730151650.271847023@linuxfoundation.org>
+Subject: [PATCH 6.6 281/568] mtd: make mtd_test.c a separate module
+Date: Tue, 30 Jul 2024 17:46:28 +0200
+Message-ID: <20240730151650.857775187@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -51,143 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit be208c0ccf7d861fc6109ca06c1a773512739af9 ]
+[ Upstream commit a5cf054d325e6f362e82fe6d124a1871a4af8174 ]
 
-Update the GDSC wait_val fields as per the default hardware values as
-otherwise they would lead to GDSC FSM state to be stuck and causing
-failures to power on/off. Also add the GDSC flags as applicable and
-add support to control PCIE GDSC's using collapse vote registers.
+This file gets linked into nine different modules, which causes a warning:
 
-Fixes: 08c51ceb12f7 ("clk: qcom: add the GCC driver for sa8775p")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-2-adcc756a23df@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+scripts/Makefile.build:236: drivers/mtd/tests/Makefile: mtd_test.o is added to multiple modules: mtd_nandbiterrs mtd_oobtest mtd_pagetest mtd_readtest mtd_speedtest mtd_stresstest mtd_subpagetest mtd_torturetest
+
+Make it a separate module instead.
+
+Fixes: a995c792280d ("mtd: tests: rename sources in order to link a helper object")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240529095049.1915393-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-sa8775p.c | 40 ++++++++++++++++++++++++++++++++++
- 1 file changed, 40 insertions(+)
+ drivers/mtd/tests/Makefile   | 34 +++++++++++++++++-----------------
+ drivers/mtd/tests/mtd_test.c |  9 +++++++++
+ 2 files changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/clk/qcom/gcc-sa8775p.c b/drivers/clk/qcom/gcc-sa8775p.c
-index 8171d23c96e64..a54438205698c 100644
---- a/drivers/clk/qcom/gcc-sa8775p.c
-+++ b/drivers/clk/qcom/gcc-sa8775p.c
-@@ -4305,74 +4305,114 @@ static struct clk_branch gcc_video_axi1_clk = {
+diff --git a/drivers/mtd/tests/Makefile b/drivers/mtd/tests/Makefile
+index 5de0378f90dbd..7dae831ee8b6b 100644
+--- a/drivers/mtd/tests/Makefile
++++ b/drivers/mtd/tests/Makefile
+@@ -1,19 +1,19 @@
+ # SPDX-License-Identifier: GPL-2.0
+-obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o
++obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o mtd_test.o
  
- static struct gdsc pcie_0_gdsc = {
- 	.gdscr = 0xa9004,
-+	.collapse_ctrl = 0x4b104,
-+	.collapse_mask = BIT(0),
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "pcie_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+-mtd_oobtest-objs := oobtest.o mtd_test.o
+-mtd_pagetest-objs := pagetest.o mtd_test.o
+-mtd_readtest-objs := readtest.o mtd_test.o
+-mtd_speedtest-objs := speedtest.o mtd_test.o
+-mtd_stresstest-objs := stresstest.o mtd_test.o
+-mtd_subpagetest-objs := subpagetest.o mtd_test.o
+-mtd_torturetest-objs := torturetest.o mtd_test.o
+-mtd_nandbiterrs-objs := nandbiterrs.o mtd_test.o
++mtd_oobtest-objs := oobtest.o
++mtd_pagetest-objs := pagetest.o
++mtd_readtest-objs := readtest.o
++mtd_speedtest-objs := speedtest.o
++mtd_stresstest-objs := stresstest.o
++mtd_subpagetest-objs := subpagetest.o
++mtd_torturetest-objs := torturetest.o
++mtd_nandbiterrs-objs := nandbiterrs.o
+diff --git a/drivers/mtd/tests/mtd_test.c b/drivers/mtd/tests/mtd_test.c
+index c84250beffdc9..f391e0300cdc9 100644
+--- a/drivers/mtd/tests/mtd_test.c
++++ b/drivers/mtd/tests/mtd_test.c
+@@ -25,6 +25,7 @@ int mtdtest_erase_eraseblock(struct mtd_info *mtd, unsigned int ebnum)
  
- static struct gdsc pcie_1_gdsc = {
- 	.gdscr = 0x77004,
-+	.collapse_ctrl = 0x4b104,
-+	.collapse_mask = BIT(1),
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "pcie_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_erase_eraseblock);
  
- static struct gdsc ufs_card_gdsc = {
- 	.gdscr = 0x81004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ufs_card_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ static int is_block_bad(struct mtd_info *mtd, unsigned int ebnum)
+ {
+@@ -57,6 +58,7 @@ int mtdtest_scan_for_bad_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
  
- static struct gdsc ufs_phy_gdsc = {
- 	.gdscr = 0x83004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "ufs_phy_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_scan_for_bad_eraseblocks);
  
- static struct gdsc usb20_prim_gdsc = {
- 	.gdscr = 0x1c004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "usb20_prim_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 				unsigned int eb, int ebcnt)
+@@ -75,6 +77,7 @@ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
  
- static struct gdsc usb30_prim_gdsc = {
- 	.gdscr = 0x1b004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "usb30_prim_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_erase_good_eraseblocks);
  
- static struct gdsc usb30_sec_gdsc = {
- 	.gdscr = 0x2f004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "usb30_sec_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
+ {
+@@ -92,6 +95,7 @@ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
  
- static struct gdsc emac0_gdsc = {
- 	.gdscr = 0xb6004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "emac0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_read);
  
- static struct gdsc emac1_gdsc = {
- 	.gdscr = 0xb4004,
-+	.en_rest_wait_val = 0x2,
-+	.en_few_wait_val = 0x2,
-+	.clk_dis_wait_val = 0xf,
- 	.pd = {
- 		.name = "emac1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
- };
+ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
+ 		const void *buf)
+@@ -107,3 +111,8 @@ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
  
- static struct clk_regmap *gcc_sa8775p_clocks[] = {
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_write);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("MTD function test helpers");
++MODULE_AUTHOR("Akinobu Mita");
 -- 
 2.43.0
 
