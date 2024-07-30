@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EAFF1A6192;
-	Tue, 30 Jul 2024 17:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F441A6192;
+	Tue, 30 Jul 2024 17:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358948; cv=none; b=R5RCbMolvI+MAbAOe8P1rfLci1jVPl8Z8w9wn+uu6pif000XybLIVNMvMVp9AjZAT0XN4zS5tm3bqFpKc6ka3NE7Z1ckZyTFcz6xKja8LksgQBJT8rpOUcUzqbIpxJavJrILSpE73GpWhur8EqZ6zNPWkL2XMXUhIP+UXTSW7yY=
+	t=1722358951; cv=none; b=BiLsWaPxyo3bMfwKkhzGj8QhT1ttBCiTl1y4abOE1EyMwB4orOgsxdzI57heEJgh/XbHqVkqlvVL6HBR9qFHhllTfD75c4iAjmqnVFJhflUi7CoejjhZosnpg1womBAqSdHyXCW0p3V6SaBstIRIXfSZ5TZTyyXWbHP/sGbEQaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358948; c=relaxed/simple;
-	bh=4xwP4fk8ptiU/sbiqxIGcEvi+KSwT3A3xySWuOAC4Vg=;
+	s=arc-20240116; t=1722358951; c=relaxed/simple;
+	bh=FWuH4YEPt032dBg1xlf7MR6WRWcA0bHh7eVjlQCXHf0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mj5COxvqiMMF9iJM9kW/XFaS+/4wWZnxYCMj8eh82z+Okzvyt21QBuADZLaQJB9Wtu0hSNBRdg+vTyRF/7J1n7gZ+cR2ZQLhUh5zWIZBjSVe+pfvNKg4Fx6UVr2ZmIHDYiBeHzOg1PwJmCU9WrGFax21tu8C7c8PnT6xufiHY1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2DyDoQnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LR3MwWZpcTDP0sFTGO3yVc1mdE9qPp3Huem6P4FYVZz+JhjKyDCNVXxsT8pGN/JhLYRnj2SK2yg6Xvd5bCtAB3uMzG7NFVguSv436UYfOPUdbxvlgArLqRFMIU6eURZJKs7a9MWqvHhEgO+hlOKGM2VCTS5eEvYwQ0BD+QnDEs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AUBIVeVx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2DyDoQnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B75C32782;
-	Tue, 30 Jul 2024 17:02:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AUBIVeVx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33EAC32782;
+	Tue, 30 Jul 2024 17:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358947;
-	bh=4xwP4fk8ptiU/sbiqxIGcEvi+KSwT3A3xySWuOAC4Vg=;
+	s=korg; t=1722358951;
+	bh=FWuH4YEPt032dBg1xlf7MR6WRWcA0bHh7eVjlQCXHf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2DyDoQnZqlxdadJycs9n2aCLKgJfVcJkMySa1JoRd7JZVJl6l8LOAirX829RE0gRf
-	 8IffLx2zbZuVYhUhedqPW6XHIlEhMHRNnPOPQd2uB4xghYInlyVaoCCj/8ei+QmgHH
-	 FIFPNBZ0HqbHoQo+WKxEEDX+NLD+gXXPDrL8oiIg=
+	b=AUBIVeVxlPdVENfwDPEtXOD67IuIOPAdquu7gW9v/byrmaO+HgBXH97M2aCJvQtdU
+	 ONdoBSexeFCtSnN6j2KtUAYOrPMiHNr2Qrw8v9bAwHsHh5A9JimawO8XBAiI5zOnHV
+	 r1+8Q24fOKbYFyua9oNTI1gQmoerJWCFJdPcesmY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 436/440] s390/cpum_cf: Fix endless loop in CF_DIAG event stop
-Date: Tue, 30 Jul 2024 17:51:09 +0200
-Message-ID: <20240730151632.803572481@linuxfoundation.org>
+Subject: [PATCH 6.10 393/809] clk: qcom: camcc-sc7280: Add parent dependency to all camera GDSCs
+Date: Tue, 30 Jul 2024 17:44:29 +0200
+Message-ID: <20240730151740.204113377@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,89 +49,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Richter <tmricht@linux.ibm.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit e6ce1f12d777f6ee22b20e10ae6a771e7e6f44f5 ]
+[ Upstream commit 63aec3e4d987fd43237f557460345bca3b51e530 ]
 
-Event CF_DIAG reads out complete counter sets using stcctm
-instruction. This is done at event start time when the process
-starts execution and at event stop time when the process is
-removed from the CPU. During removal the difference of each
-counter in the counter sets is calculated and saved as raw data
-in the ring buffer. This works fine unless the number of counters
-in a counter set is zero. This may happen for the extended counter
-set. This set is machine specific and the size of the counter
-set can be zero even when extended counter set is authorized for
-read access.
+Camera titan top GDSC is a parent supply to all other camera GDSCs. Titan
+top GDSC is required to be enabled before enabling any other camera GDSCs
+and it should be disabled only after all other camera GDSCs are disabled.
+Ensure this behavior by marking titan top GDSC as parent of all other
+camera GDSCs.
 
-This case is not handled. cfdiag_diffctr() checks authorization
-of the extended counter set. If true the functions assumes
-the extended counter set has been saved in a data buffer. However
-this is not the case, cfdiag_getctrset() does not save a counter
-set with counter set size of zero. This mismatch causes an endless
-loop in the counter set readout during event stop handling.
-
-The calculation of the difference of the counters in each counter
-now verifies the size of the counter set is non-zero. A counter set
-with size zero is skipped.
-
-Fixes: a029a4eab39e ("s390/cpumf: Allow concurrent access for CPU Measurement Counter Facility")
-Signed-off-by: Thomas Richter <tmricht@linux.ibm.com>
-Acked-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Cc: Heiko Carstens <hca@linux.ibm.com>
-Cc: Vasily Gorbik <gor@linux.ibm.com>
-Cc: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Fixes: 1daec8cfebc2 ("clk: qcom: camcc: Add camera clock controller driver for SC7280")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240531095142.9688-4-quic_tdas@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/perf_cpum_cf.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/camcc-sc7280.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
-index 28fa80fd69fa0..3b7fbc14aa4a4 100644
---- a/arch/s390/kernel/perf_cpum_cf.c
-+++ b/arch/s390/kernel/perf_cpum_cf.c
-@@ -213,25 +213,31 @@ static int cfdiag_diffctr(struct cpu_cf_events *cpuhw, unsigned long auth)
- 	struct cf_trailer_entry *trailer_start, *trailer_stop;
- 	struct cf_ctrset_entry *ctrstart, *ctrstop;
- 	size_t offset = 0;
-+	int i;
+diff --git a/drivers/clk/qcom/camcc-sc7280.c b/drivers/clk/qcom/camcc-sc7280.c
+index d89ddb2298e32..582fb3ba9c895 100644
+--- a/drivers/clk/qcom/camcc-sc7280.c
++++ b/drivers/clk/qcom/camcc-sc7280.c
+@@ -2260,6 +2260,7 @@ static struct gdsc cam_cc_bps_gdsc = {
+ 		.name = "cam_cc_bps_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
  
--	auth &= (1 << CPUMF_LCCTL_ENABLE_SHIFT) - 1;
--	do {
-+	for (i = CPUMF_CTR_SET_BASIC; i < CPUMF_CTR_SET_MAX; ++i) {
- 		ctrstart = (struct cf_ctrset_entry *)(cpuhw->start + offset);
- 		ctrstop = (struct cf_ctrset_entry *)(cpuhw->stop + offset);
+@@ -2269,6 +2270,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
+ 		.name = "cam_cc_ife_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = RETAIN_FF_ENABLE,
+ };
  
-+		/* Counter set not authorized */
-+		if (!(auth & cpumf_ctr_ctl[i]))
-+			continue;
-+		/* Counter set size zero was not saved */
-+		if (!cpum_cf_read_setsize(i))
-+			continue;
-+
- 		if (memcmp(ctrstop, ctrstart, sizeof(*ctrstop))) {
- 			pr_err_once("cpum_cf_diag counter set compare error "
- 				    "in set %i\n", ctrstart->set);
- 			return 0;
- 		}
--		auth &= ~cpumf_ctr_ctl[ctrstart->set];
- 		if (ctrstart->def == CF_DIAG_CTRSET_DEF) {
- 			cfdiag_diffctrset((u64 *)(ctrstart + 1),
- 					  (u64 *)(ctrstop + 1), ctrstart->ctr);
- 			offset += ctrstart->ctr * sizeof(u64) +
- 							sizeof(*ctrstart);
- 		}
--	} while (ctrstart->def && auth);
-+	}
+@@ -2278,6 +2280,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
+ 		.name = "cam_cc_ife_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = RETAIN_FF_ENABLE,
+ };
  
- 	/* Save time_stamp from start of event in stop's trailer */
- 	trailer_start = (struct cf_trailer_entry *)(cpuhw->start + offset);
+@@ -2287,6 +2290,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
+ 		.name = "cam_cc_ife_2_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = RETAIN_FF_ENABLE,
+ };
+ 
+@@ -2296,6 +2300,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
+ 		.name = "cam_cc_ipe_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.parent = &cam_cc_titan_top_gdsc.pd,
+ 	.flags = HW_CTRL | RETAIN_FF_ENABLE,
+ };
+ 
 -- 
 2.43.0
 
