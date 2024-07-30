@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94EA1A6160;
-	Tue, 30 Jul 2024 16:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53F31A6166;
+	Tue, 30 Jul 2024 16:25:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356718; cv=none; b=e7ksyqHOdsBTtd3BCminQbZDIW10GCrruO6GYULWzDFWhjwuyAB4CaBvaecQMETHEmfj99a/C2X7oOiJ1BCvtTATCKGZUHDkr8oozTkj+c/HRPvkqTGidmVgGdLNwWd0Jc2NmNffXIG5IecjhAT4KoVqC/SmMeVTtMUQ526iuP0=
+	t=1722356722; cv=none; b=XxJ6kkjTVHFff1jQAvbeN2QPS/+D/aPIwzjP7IU3cWheUUk0jN2ptdXXYfPy12WTeAagI/auDaKrktdCHpiGHNj0R5CMv0gV5HF8GpvMEvPPw2J5DonylHjA8qeLa/3lFTv4XPewa9TUfJc6PHHHJeyJeY+QBc/D/iXEiKYkT58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356718; c=relaxed/simple;
-	bh=njzlPlunTj+ux/EiRfaDLyUKB2iuei0vGSk1jtg8mqw=;
+	s=arc-20240116; t=1722356722; c=relaxed/simple;
+	bh=0/qF3Rp6nQXVQtkFAACPJkekXRF/VVzXHxY4rzORC54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihrsgKLfveaKq5bq+dXob+9A5BaM3Y2//vMiKZhMBbcZr7yRTopCKyvd14HdGMOXsATS1WFhL2zuL5byJSZ3FShFcdJ5urLmj0TicBk95uvJFo1VvDBPL0dsJKXtILnTVq/1nsHyAsqmp43ezq/d7sd/nF7Jk4rhIIu6xfnZ/Mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whsmKt9D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mvT60RWp7EjKcv4JC4FnhQiT3L/JQ8T1GCntQjOYjkSRfFz3fwYblGaOAXg76dPJNoxgEoflAC8/Z3InVnTz0arg6r0Nl9TjBui4G1GNr9KTvCfRRQTXKJHaDTs418+j/u50WAxEDasKvYIxjr0TxNHvhbDTFjWpyesVK9vWvIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LC0xMFWD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whsmKt9D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619F2C32782;
-	Tue, 30 Jul 2024 16:25:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LC0xMFWD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA301C4AF0C;
+	Tue, 30 Jul 2024 16:25:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356718;
-	bh=njzlPlunTj+ux/EiRfaDLyUKB2iuei0vGSk1jtg8mqw=;
+	s=korg; t=1722356722;
+	bh=0/qF3Rp6nQXVQtkFAACPJkekXRF/VVzXHxY4rzORC54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=whsmKt9DvDxjXZsqT2SUpVrD2ySrPcA44H2IJvesN/YF/tXjhVcDG3UTJ5IjHbMpA
-	 5Ehl8ThKCb1X60K9YeA1l61HOO/tr/LltjLsWE32ARcxE9ahdDnG3zYXVLVIRTFFrw
-	 wGphbD5NNXZt7asvLEebv6XDK4vp9HQzWHqBMC0s=
+	b=LC0xMFWDgasrBExy3WmVl9oOH9ZWPNKBRDwSz7Rd6aoQn6DfW2YQwNxM2aJMG+I7q
+	 sgpO7Hz/r7vp9hucqvGjlRrbXvXgLta8raYdIIYVXJK1KvTSt85DV2k6NTFA5Ihi8a
+	 BKX2uPHdH9x3DeSEYq9CjciSwcHG4DIqpZLQquuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faiz Abbas <faiz.abbas@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 176/568] drm/arm/komeda: Fix komeda probe failing if there are no links in the secondary pipeline
-Date: Tue, 30 Jul 2024 17:44:43 +0200
-Message-ID: <20240730151646.760405661@linuxfoundation.org>
+Subject: [PATCH 6.1 222/440] RDMA/hns: Fix unmatch exception handling when init eq table fails
+Date: Tue, 30 Jul 2024 17:47:35 +0200
+Message-ID: <20240730151624.531389722@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,115 +47,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faiz Abbas <faiz.abbas@arm.com>
+From: Junxian Huang <huangjunxian6@hisilicon.com>
 
-[ Upstream commit 9054c46d479b55768adae31031a1afa1b7d62228 ]
+[ Upstream commit 543fb987bd63ed27409b5dea3d3eec27b9c1eac9 ]
 
-Since commit 4cfe5cc02e3f ("drm/arm/komeda: Remove component framework and
-add a simple encoder"), the devm_drm_of_get_bridge() call happens
-regardless of whether any remote nodes are available on the pipeline. Fix
-this by moving the bridge attach to its own function and calling it
-conditional on there being an output link.
+The hw ctx should be destroyed when init eq table fails.
 
-Fixes: 4cfe5cc02e3f ("drm/arm/komeda: Remove component framework and add a simple encoder")
-Signed-off-by: Faiz Abbas <faiz.abbas@arm.com>
-[Corrected Commit-id of the fixed patch to match mainline]
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240219100915.192475-2-faiz.abbas@arm.com
+Fixes: a5073d6054f7 ("RDMA/hns: Add eq support of hip08")
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-4-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/arm/display/komeda/komeda_crtc.c  | 43 ++++++++++++++-----
- 1 file changed, 32 insertions(+), 11 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 25 +++++++++++-----------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c b/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
-index 2c661f28410ed..b645c5998230b 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
-@@ -5,6 +5,7 @@
-  *
-  */
- #include <linux/clk.h>
-+#include <linux/of.h>
- #include <linux/pm_runtime.h>
- #include <linux/spinlock.h>
- 
-@@ -610,12 +611,34 @@ get_crtc_primary(struct komeda_kms_dev *kms, struct komeda_crtc *crtc)
- 	return NULL;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 176d75f2514eb..b592f1c1e2f5b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -6418,9 +6418,16 @@ static void hns_roce_v2_int_mask_enable(struct hns_roce_dev *hr_dev,
+ 	roce_write(hr_dev, ROCEE_VF_ABN_INT_CFG_REG, enable_flag);
  }
  
-+static int komeda_attach_bridge(struct device *dev,
-+				struct komeda_pipeline *pipe,
-+				struct drm_encoder *encoder)
+-static void hns_roce_v2_destroy_eqc(struct hns_roce_dev *hr_dev, u32 eqn)
++static void free_eq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq)
 +{
-+	struct drm_bridge *bridge;
-+	int err;
-+
-+	bridge = devm_drm_of_get_bridge(dev, pipe->of_node,
-+					KOMEDA_OF_PORT_OUTPUT, 0);
-+	if (IS_ERR(bridge))
-+		return dev_err_probe(dev, PTR_ERR(bridge), "remote bridge not found for pipe: %s\n",
-+				     of_node_full_name(pipe->of_node));
-+
-+	err = drm_bridge_attach(encoder, bridge, NULL, 0);
-+	if (err)
-+		dev_err(dev, "bridge_attach() failed for pipe: %s\n",
-+			of_node_full_name(pipe->of_node));
-+
-+	return err;
++	hns_roce_mtr_destroy(hr_dev, &eq->mtr);
 +}
 +
- static int komeda_crtc_add(struct komeda_kms_dev *kms,
- 			   struct komeda_crtc *kcrtc)
++static void hns_roce_v2_destroy_eqc(struct hns_roce_dev *hr_dev,
++				    struct hns_roce_eq *eq)
  {
- 	struct drm_crtc *crtc = &kcrtc->base;
- 	struct drm_device *base = &kms->base;
--	struct drm_bridge *bridge;
-+	struct komeda_pipeline *pipe = kcrtc->master;
-+	struct drm_encoder *encoder = &kcrtc->encoder;
- 	int err;
+ 	struct device *dev = hr_dev->dev;
++	int eqn = eq->eqn;
+ 	int ret;
+ 	u8 cmd;
  
- 	err = drm_crtc_init_with_planes(base, crtc,
-@@ -626,27 +649,25 @@ static int komeda_crtc_add(struct komeda_kms_dev *kms,
+@@ -6431,12 +6438,9 @@ static void hns_roce_v2_destroy_eqc(struct hns_roce_dev *hr_dev, u32 eqn)
  
- 	drm_crtc_helper_add(crtc, &komeda_crtc_helper_funcs);
+ 	ret = hns_roce_destroy_hw_ctx(hr_dev, cmd, eqn & HNS_ROCE_V2_EQN_M);
+ 	if (ret)
+-		dev_err(dev, "[mailbox cmd] destroy eqc(%u) failed.\n", eqn);
+-}
++		dev_err(dev, "[mailbox cmd] destroy eqc(%d) failed.\n", eqn);
  
--	crtc->port = kcrtc->master->of_output_port;
-+	crtc->port = pipe->of_output_port;
- 
- 	/* Construct an encoder for each pipeline and attach it to the remote
- 	 * bridge
- 	 */
- 	kcrtc->encoder.possible_crtcs = drm_crtc_mask(crtc);
--	err = drm_simple_encoder_init(base, &kcrtc->encoder,
--				      DRM_MODE_ENCODER_TMDS);
-+	err = drm_simple_encoder_init(base, encoder, DRM_MODE_ENCODER_TMDS);
- 	if (err)
- 		return err;
- 
--	bridge = devm_drm_of_get_bridge(base->dev, kcrtc->master->of_node,
--					KOMEDA_OF_PORT_OUTPUT, 0);
--	if (IS_ERR(bridge))
--		return PTR_ERR(bridge);
--
--	err = drm_bridge_attach(&kcrtc->encoder, bridge, NULL, 0);
-+	if (pipe->of_output_links[0]) {
-+		err = komeda_attach_bridge(base->dev, pipe, encoder);
-+		if (err)
-+			return err;
-+	}
- 
- 	drm_crtc_enable_color_mgmt(crtc, 0, true, KOMEDA_COLOR_LUT_SIZE);
- 
--	return err;
-+	return 0;
+-static void free_eq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq)
+-{
+-	hns_roce_mtr_destroy(hr_dev, &eq->mtr);
++	free_eq_buf(hr_dev, eq);
  }
  
- int komeda_kms_add_crtcs(struct komeda_kms_dev *kms, struct komeda_dev *mdev)
+ static void init_eq_config(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq)
+@@ -6742,7 +6746,7 @@ static int hns_roce_v2_init_eq_table(struct hns_roce_dev *hr_dev)
+ 
+ err_create_eq_fail:
+ 	for (i -= 1; i >= 0; i--)
+-		free_eq_buf(hr_dev, &eq_table->eq[i]);
++		hns_roce_v2_destroy_eqc(hr_dev, &eq_table->eq[i]);
+ 	kfree(eq_table->eq);
+ 
+ 	return ret;
+@@ -6762,11 +6766,8 @@ static void hns_roce_v2_cleanup_eq_table(struct hns_roce_dev *hr_dev)
+ 	__hns_roce_free_irq(hr_dev);
+ 	destroy_workqueue(hr_dev->irq_workq);
+ 
+-	for (i = 0; i < eq_num; i++) {
+-		hns_roce_v2_destroy_eqc(hr_dev, i);
+-
+-		free_eq_buf(hr_dev, &eq_table->eq[i]);
+-	}
++	for (i = 0; i < eq_num; i++)
++		hns_roce_v2_destroy_eqc(hr_dev, &eq_table->eq[i]);
+ 
+ 	kfree(eq_table->eq);
+ }
 -- 
 2.43.0
 
