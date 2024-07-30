@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174AB1A616E;
-	Tue, 30 Jul 2024 16:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520BB1898E9;
+	Tue, 30 Jul 2024 16:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356259; cv=none; b=VKFgGdg7ZiMlsPV/am3Y6uJ2mgFsyANK38ZKBOaYv02l676wBcueOcjS0DHidWpEShCNcFkX3KWZWXOuVjntZwUPEiPrP3FRljSyLPy3w+lcUIE5+LAuzZ6uvXCQkyJm3vNMan2rDqhI8cZrZow1+u43EjOQ33oLqBk9kWBw3LY=
+	t=1722356263; cv=none; b=WYckk/Z9YsiKI6Q/FWxwj+WWfFCJisWZ2dWvJJcTaIjGr6C2c9eF6TKUyHT1CN9SQXnm8IcUcrIy3lxyp0ofoKv9s7cmL7DM3P8vJZqaf7gV4Uvkv6vFE2xYpX5S95eZ1KE1eB0B4Xa0/fabwIMuBGf/wsM5AijdpmwglRJ823g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356259; c=relaxed/simple;
-	bh=ooB6tx2AYkrlMX5bR5AsRStDXGaXWgsvTkRq3UphsEI=;
+	s=arc-20240116; t=1722356263; c=relaxed/simple;
+	bh=C2m3fvzqMzNwPH5dTUK4wmoFcuvoH/t+NmUsEPh9VYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uz9AHwh2YGHUG4+5C8kBNMlcu5pkor0KsmeNDvof27UgndpdO5ffALyIEdKQGSbLyyAxnga8ZUDuw1eSSKxGn5cAOwR8Cn9iVfqHupRBLHlqnAquw/zRkZXPOrT+ZWst1ctbS6tBn1Y/a02Z8AnRByvjDFs7D1ZwLlqHuvEtS2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGiqRmEH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ndDbC5xgCFAxc67A5wK4k+8OqcycwNwqq8XyiG9lWezYIVJmP8QjH+Hsp6ORT0/wmkBt5pgT6vakrIVDuvyvHnukcMEL3XJIgk1GrjENDL1UYAZMNHbfi0avUcWEw5i9bPoR+HYxPEXnBCFZezgjflvjc1drUHUVSDS3thuZ1a4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8jJKR7p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGiqRmEH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79BCFC32782;
-	Tue, 30 Jul 2024 16:17:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8jJKR7p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626BBC32782;
+	Tue, 30 Jul 2024 16:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356259;
-	bh=ooB6tx2AYkrlMX5bR5AsRStDXGaXWgsvTkRq3UphsEI=;
+	s=korg; t=1722356262;
+	bh=C2m3fvzqMzNwPH5dTUK4wmoFcuvoH/t+NmUsEPh9VYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xGiqRmEH377essHNwANVNxDon9gW3EZ7h5EXXbJyolTM8WabEmylgvHhzyKIGTYpP
-	 DI5glDC36UepFHGvrjRqYmgqdpvU3tfVsMaQ9LhKKpW9rU5/G/2CGLZsK5zjmonLBH
-	 YE3U7IXu+ORytOgPt/8Koiad4WoH9hJhbv5qsUSM=
+	b=w8jJKR7p9kstyxdWE8nd30ww17wp/5EizCn5XqdDvibAKu936totWnX+ase5+xio7
+	 7lppds7hfaCExTVXIiopQ1KLR3Fu/z/eSlN0EpuoKWXCEbdGuPdE4hMxRtLTQ7MRJy
+	 6rBw0MOdtz8T6pCqpR+G2G36+o7i/Rv4I4XoLbY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 134/809] arm64: dts: rockchip: remove unused usb2 nodes for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:40:10 +0200
-Message-ID: <20240730151729.907324935@linuxfoundation.org>
+Subject: [PATCH 6.10 119/809] arm64: dts: renesas: r8a779g0: Add missing hypervisor virtual timer IRQ
+Date: Tue, 30 Jul 2024 17:39:55 +0200
+Message-ID: <20240730151729.318711060@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,59 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit cd77139a307fbabe75e6b5cb8a3753e3c700f394 ]
+[ Upstream commit 6775165fc95052a03acc91e25bc20fcf286910a7 ]
 
-Fix the following error when booting:
-[   15.851853] platform fd800000.usb: deferred probe pending
-[   15.852384] platform fd840000.usb: deferred probe pending
-[   15.852881] platform fd880000.usb: deferred probe pending
+Add the missing fifth interrupt to the device node that represents the
+ARM architected timer.  While at it, add an interrupt-names property for
+clarity,
 
-This is due to usb2phy1 is not enabled. There is no USB 2.0
-port on the board, just remove it.
-
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240630150010.55729-5-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 987da486d84a5643 ("arm64: dts: renesas: Add Renesas R8A779G0 SoC support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/5eeabbeaea1c5fd518a608f2e8013d260b00fd7e.1718890849.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 16 ----------------
- 1 file changed, 16 deletions(-)
+ arch/arm64/boot/dts/renesas/r8a779g0.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index 82577eba31eb5..e08c9eab6f170 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -421,28 +421,12 @@ &uart2 {
- 	status = "okay";
- };
- 
--&usb_host0_ehci {
--	status = "okay";
--};
--
--&usb_host0_ohci {
--	status = "okay";
--};
--
- &usb_host0_xhci {
- 	dr_mode = "host";
- 	extcon = <&usb2phy0>;
- 	status = "okay";
- };
- 
--&usb_host1_ehci {
--	status = "okay";
--};
--
--&usb_host1_ohci {
--	status = "okay";
--};
--
- &usb_host1_xhci {
- 	status = "okay";
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+index 9bc542bc61690..873588a84e15f 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+@@ -2359,6 +2359,9 @@ timer {
+ 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+-				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
++				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
++				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
++		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
++				  "hyp-virt";
+ 	};
  };
 -- 
 2.43.0
