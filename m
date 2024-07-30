@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0008D18800A;
-	Tue, 30 Jul 2024 16:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5CD1A6195;
+	Tue, 30 Jul 2024 16:54:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358441; cv=none; b=OB35bk0V2lnr1uQD1KRBfAlQiGXFz4A45urxcQAfc0UuX/SczGCTsou5d3Mfm432am1U9HrYKwoWfH+D0WNqL5Po6pfOakhFZITDtENiUBmJ05t30Hz8TLv3NNbZixg4XXHfXvSC4OEwuFQxsO24+KPZLASNDLN5mzf5JJDK1UQ=
+	t=1722358444; cv=none; b=PvB5/Gd8yhTGPOpiMe+rvkOm/ZKjbDXUa0zfi4Fx5lHfdNqKzE+E0OAh3SyYfozazSryLLvE5lWYyoYh47GKNo2+vX/Wf6swN/hfD4rn+gHiqON+hdA78qDO8uuq+4M+V5vEP4DmgZN5Zq5iqicgY3p9iVo+yv0Vl/9jfBZaP3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358441; c=relaxed/simple;
-	bh=GvujTPpyv6JiI1/79aIaCvt89P1Ca67tsZXFnXv66/I=;
+	s=arc-20240116; t=1722358444; c=relaxed/simple;
+	bh=pbuY3n2kGsGgtGNWjUuFNS1TZB2waQlSqCms2Qcv0VU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WX5HArCKybeHtAsf506hHotxFePd9GIdY5ON6au05Vl3RdBwAT3f4OpfOouHUdlCb1FJDc1BupByad5idGwL34FguUGfoxj13uFXsspbF8xEBxTOOABTCvpwuTN0juc+jf/4M7Bgv2Dcm+h/TzaCrLi6/uo73jNeZEymER6Sz2A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lO/J6kM+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEDOjv76y3QFe9aOK7MQ0NiPqwsWnwF4IC1ob5/QLu7cD50SoXBg96UDRNs7JKEtdlyvVIAp9mdfFJwNUX6hoV7NUakOu1o6XI8Wxd64UVsPRxbBt6QpIk7KFKp9vM2ndWqiElmo8iU33UPEN80iM0pJkAsuM0tjRjwf2GWjmZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=avxiBVc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lO/J6kM+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A962C4AF0C;
-	Tue, 30 Jul 2024 16:54:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="avxiBVc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0FA1C32782;
+	Tue, 30 Jul 2024 16:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358440;
-	bh=GvujTPpyv6JiI1/79aIaCvt89P1Ca67tsZXFnXv66/I=;
+	s=korg; t=1722358444;
+	bh=pbuY3n2kGsGgtGNWjUuFNS1TZB2waQlSqCms2Qcv0VU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lO/J6kM+e6kl0kj4O8WSxxx6xgGkl9JsEYCI/kHs4Jj3riN3mTdPJ6s/uHVPp3/P+
-	 9dl2vQ/uc4eCouhCV++LDtAVwZNzqouTfPwoDwOja61ev//mjxtTfuLW/a+qpcZYnt
-	 BG1D4TbhR+KSdngaMPK2nrne9djkSwkfLdCVsgqM=
+	b=avxiBVc565ngAtAdEIg9M5ttl4go0Xh9c2F8m6RBDbtccuQONzA5WC/E071AOvHro
+	 /gF0k+GAA5AZ/FqHUZIXvfbToavMOlCMZlhkzqQjYPVoO+fxFuHSMCKNWBBO1G6UVr
+	 g6dUFFtume30oHP2v6XgG9NWt8Pe11u8AVXMOSaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhao <yuzhao@google.com>,
-	Alexander Motin <mav@ixsystems.com>,
-	Wei Xu <weixugc@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 362/568] mm/mglru: fix overshooting shrinker memory
-Date: Tue, 30 Jul 2024 17:47:49 +0200
-Message-ID: <20240730151654.010222742@linuxfoundation.org>
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Hauke Mehrtens <hauke@hauke-m.de>
+Subject: [PATCH 6.1 391/440] wifi: mac80211: track capability/opmode NSS separately
+Date: Tue, 30 Jul 2024 17:50:24 +0200
+Message-ID: <20240730151631.078259170@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,93 +47,195 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Zhao <yuzhao@google.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 3f74e6bd3b84a8b6bb3cc51609c89e5b9d58eed7 upstream.
+commit a8bca3e9371dc5e276af4168be099b2a05554c2a upstream.
 
-set_initial_priority() tries to jump-start global reclaim by estimating
-the priority based on cold/hot LRU pages.  The estimation does not account
-for shrinker objects, and it cannot do so because their sizes can be in
-different units other than page.
+We're currently tracking rx_nss for each station, and that
+is meant to be initialized to the capability NSS and later
+reduced by the operating mode notification NSS.
 
-If shrinker objects are the majority, e.g., on TrueNAS SCALE 24.04.0 where
-ZFS ARC can use almost all system memory, set_initial_priority() can
-vastly underestimate how much memory ARC shrinker can evict and assign
-extreme low values to scan_control->priority, resulting in overshoots of
-shrinker objects.
+However, we're mixing up capabilities and operating mode
+NSS in the same variable. This forces us to recalculate
+the NSS capability on operating mode notification RX,
+which is a bit strange; due to the previous fix I had to
+never keep rx_nss as zero, it also means that the capa is
+never taken into account properly.
 
-To reproduce the problem, using TrueNAS SCALE 24.04.0 with 32GB DRAM, a
-test ZFS pool and the following commands:
+Fix all this by storing the capability value, that can be
+recalculated unconditionally whenever needed, and storing
+the operating mode notification NSS separately, taking it
+into account when assigning the final rx_nss value.
 
-  fio --name=mglru.file --numjobs=36 --ioengine=io_uring \
-      --directory=/root/test-zfs-pool/ --size=1024m --buffered=1 \
-      --rw=randread --random_distribution=random \
-      --time_based --runtime=1h &
-
-  for ((i = 0; i < 20; i++))
-  do
-    sleep 120
-    fio --name=mglru.anon --numjobs=16 --ioengine=mmap \
-      --filename=/dev/zero --size=1024m --fadvise_hint=0 \
-      --rw=randrw --random_distribution=random \
-      --time_based --runtime=1m
-  done
-
-To fix the problem:
-1. Cap scan_control->priority at or above DEF_PRIORITY/2, to prevent
-   the jump-start from being overly aggressive.
-2. Account for the progress from mm_account_reclaimed_pages(), to
-   prevent kswapd_shrink_node() from raising the priority
-   unnecessarily.
-
-Link: https://lkml.kernel.org/r/20240711191957.939105-2-yuzhao@google.com
-Fixes: e4dde56cd208 ("mm: multi-gen LRU: per-node lru_gen_folio lists")
-Signed-off-by: Yu Zhao <yuzhao@google.com>
-Reported-by: Alexander Motin <mav@ixsystems.com>
-Cc: Wei Xu <weixugc@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: dd6c064cfc3f ("wifi: mac80211: set station RX-NSS on reconfig")
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240228120157.0e1c41924d1d.I0acaa234e0267227b7e3ef81a59117c8792116bc@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[Fixed trivial merge conflict in copyright year net/mac80211/sta_info.h]
+Signed-off-by: Hauke Mehrtens <hauke@hauke-m.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ net/mac80211/cfg.c         |    2 -
+ net/mac80211/ieee80211_i.h |    2 -
+ net/mac80211/rate.c        |    2 -
+ net/mac80211/sta_info.h    |    6 ++++-
+ net/mac80211/vht.c         |   46 +++++++++++++++++++++------------------------
+ 5 files changed, 30 insertions(+), 28 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -5585,7 +5585,11 @@ static void set_initial_priority(struct
- 	/* round down reclaimable and round up sc->nr_to_reclaim */
- 	priority = fls_long(reclaimable) - 1 - fls_long(sc->nr_to_reclaim - 1);
+--- a/net/mac80211/cfg.c
++++ b/net/mac80211/cfg.c
+@@ -1775,7 +1775,7 @@ static int sta_link_apply_parameters(str
+ 					      sband->band);
+ 	}
  
--	sc->priority = clamp(priority, 0, DEF_PRIORITY);
-+	/*
-+	 * The estimation is based on LRU pages only, so cap it to prevent
-+	 * overshoots of shrinker objects by large margins.
-+	 */
-+	sc->priority = clamp(priority, DEF_PRIORITY / 2, DEF_PRIORITY);
+-	ieee80211_sta_set_rx_nss(link_sta);
++	ieee80211_sta_init_nss(link_sta);
+ 
+ 	return ret;
+ }
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -2071,7 +2071,7 @@ enum ieee80211_sta_rx_bandwidth
+ ieee80211_sta_cap_rx_bw(struct link_sta_info *link_sta);
+ enum ieee80211_sta_rx_bandwidth
+ ieee80211_sta_cur_vht_bw(struct link_sta_info *link_sta);
+-void ieee80211_sta_set_rx_nss(struct link_sta_info *link_sta);
++void ieee80211_sta_init_nss(struct link_sta_info *link_sta);
+ enum ieee80211_sta_rx_bandwidth
+ ieee80211_chan_width_to_rx_bw(enum nl80211_chan_width width);
+ enum nl80211_chan_width
+--- a/net/mac80211/rate.c
++++ b/net/mac80211/rate.c
+@@ -37,7 +37,7 @@ void rate_control_rate_init(struct sta_i
+ 	struct ieee80211_supported_band *sband;
+ 	struct ieee80211_chanctx_conf *chanctx_conf;
+ 
+-	ieee80211_sta_set_rx_nss(&sta->deflink);
++	ieee80211_sta_init_nss(&sta->deflink);
+ 
+ 	if (!ref)
+ 		return;
+--- a/net/mac80211/sta_info.h
++++ b/net/mac80211/sta_info.h
+@@ -3,7 +3,7 @@
+  * Copyright 2002-2005, Devicescape Software, Inc.
+  * Copyright 2013-2014  Intel Mobile Communications GmbH
+  * Copyright(c) 2015-2017 Intel Deutschland GmbH
+- * Copyright(c) 2020-2022 Intel Corporation
++ * Copyright(c) 2020-2024 Intel Corporation
+  */
+ 
+ #ifndef STA_INFO_H
+@@ -485,6 +485,8 @@ struct ieee80211_fragment_cache {
+  *	same for non-MLD STA. This is used as key for searching link STA
+  * @link_id: Link ID uniquely identifying the link STA. This is 0 for non-MLD
+  *	and set to the corresponding vif LinkId for MLD STA
++ * @op_mode_nss: NSS limit as set by operating mode notification, or 0
++ * @capa_nss: NSS limit as determined by local and peer capabilities
+  * @link_hash_node: hash node for rhashtable
+  * @sta: Points to the STA info
+  * @gtk: group keys negotiated with this station, if any
+@@ -520,6 +522,8 @@ struct link_sta_info {
+ 	u8 addr[ETH_ALEN];
+ 	u8 link_id;
+ 
++	u8 op_mode_nss, capa_nss;
++
+ 	struct rhlist_head link_hash_node;
+ 
+ 	struct sta_info *sta;
+--- a/net/mac80211/vht.c
++++ b/net/mac80211/vht.c
+@@ -4,7 +4,7 @@
+  *
+  * Portions of this file
+  * Copyright(c) 2015 - 2016 Intel Deutschland GmbH
+- * Copyright (C) 2018 - 2023 Intel Corporation
++ * Copyright (C) 2018 - 2024 Intel Corporation
+  */
+ 
+ #include <linux/ieee80211.h>
+@@ -541,15 +541,11 @@ ieee80211_sta_cur_vht_bw(struct link_sta
+ 	return bw;
  }
  
- static void lru_gen_shrink_node(struct pglist_data *pgdat, struct scan_control *sc)
-@@ -7350,6 +7354,7 @@ static bool kswapd_shrink_node(pg_data_t
+-void ieee80211_sta_set_rx_nss(struct link_sta_info *link_sta)
++void ieee80211_sta_init_nss(struct link_sta_info *link_sta)
  {
- 	struct zone *zone;
- 	int z;
-+	unsigned long nr_reclaimed = sc->nr_reclaimed;
+ 	u8 ht_rx_nss = 0, vht_rx_nss = 0, he_rx_nss = 0, eht_rx_nss = 0, rx_nss;
+ 	bool support_160;
  
- 	/* Reclaim a number of pages proportional to the number of zones */
- 	sc->nr_to_reclaim = 0;
-@@ -7377,7 +7382,8 @@ static bool kswapd_shrink_node(pg_data_t
- 	if (sc->order && sc->nr_reclaimed >= compact_gap(sc->order))
- 		sc->order = 0;
- 
--	return sc->nr_scanned >= sc->nr_to_reclaim;
-+	/* account for progress from mm_account_reclaimed_pages() */
-+	return max(sc->nr_scanned, sc->nr_reclaimed - nr_reclaimed) >= sc->nr_to_reclaim;
+-	/* if we received a notification already don't overwrite it */
+-	if (link_sta->pub->rx_nss)
+-		return;
+-
+ 	if (link_sta->pub->eht_cap.has_eht) {
+ 		int i;
+ 		const u8 *rx_nss_mcs = (void *)&link_sta->pub->eht_cap.eht_mcs_nss_supp;
+@@ -627,7 +623,15 @@ void ieee80211_sta_set_rx_nss(struct lin
+ 	rx_nss = max(vht_rx_nss, ht_rx_nss);
+ 	rx_nss = max(he_rx_nss, rx_nss);
+ 	rx_nss = max(eht_rx_nss, rx_nss);
+-	link_sta->pub->rx_nss = max_t(u8, 1, rx_nss);
++	rx_nss = max_t(u8, 1, rx_nss);
++	link_sta->capa_nss = rx_nss;
++
++	/* that shouldn't be set yet, but we can handle it anyway */
++	if (link_sta->op_mode_nss)
++		link_sta->pub->rx_nss =
++			min_t(u8, rx_nss, link_sta->op_mode_nss);
++	else
++		link_sta->pub->rx_nss = rx_nss;
  }
  
- /* Page allocator PCP high watermark is lowered if reclaim is active. */
+ u32 __ieee80211_vht_handle_opmode(struct ieee80211_sub_if_data *sdata,
+@@ -637,7 +641,7 @@ u32 __ieee80211_vht_handle_opmode(struct
+ 	enum ieee80211_sta_rx_bandwidth new_bw;
+ 	struct sta_opmode_info sta_opmode = {};
+ 	u32 changed = 0;
+-	u8 nss, cur_nss;
++	u8 nss;
+ 
+ 	/* ignore - no support for BF yet */
+ 	if (opmode & IEEE80211_OPMODE_NOTIF_RX_NSS_TYPE_BF)
+@@ -647,23 +651,17 @@ u32 __ieee80211_vht_handle_opmode(struct
+ 	nss >>= IEEE80211_OPMODE_NOTIF_RX_NSS_SHIFT;
+ 	nss += 1;
+ 
+-	if (link_sta->pub->rx_nss != nss) {
+-		cur_nss = link_sta->pub->rx_nss;
+-		/* Reset rx_nss and call ieee80211_sta_set_rx_nss() which
+-		 * will set the same to max nss value calculated based on capability.
+-		 */
+-		link_sta->pub->rx_nss = 0;
+-		ieee80211_sta_set_rx_nss(link_sta);
+-		/* Do not allow an nss change to rx_nss greater than max_nss
+-		 * negotiated and capped to APs capability during association.
+-		 */
+-		if (nss <= link_sta->pub->rx_nss) {
+-			link_sta->pub->rx_nss = nss;
+-			sta_opmode.rx_nss = nss;
+-			changed |= IEEE80211_RC_NSS_CHANGED;
+-			sta_opmode.changed |= STA_OPMODE_N_SS_CHANGED;
++	if (link_sta->op_mode_nss != nss) {
++		if (nss <= link_sta->capa_nss) {
++			link_sta->op_mode_nss = nss;
++
++			if (nss != link_sta->pub->rx_nss) {
++				link_sta->pub->rx_nss = nss;
++				changed |= IEEE80211_RC_NSS_CHANGED;
++				sta_opmode.rx_nss = link_sta->pub->rx_nss;
++				sta_opmode.changed |= STA_OPMODE_N_SS_CHANGED;
++			}
+ 		} else {
+-			link_sta->pub->rx_nss = cur_nss;
+ 			pr_warn_ratelimited("Ignoring NSS change in VHT Operating Mode Notification from %pM with invalid nss %d",
+ 					    link_sta->pub->addr, nss);
+ 		}
 
 
