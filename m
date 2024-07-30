@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80B4184549;
-	Tue, 30 Jul 2024 16:56:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A6F184549;
+	Tue, 30 Jul 2024 16:56:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358615; cv=none; b=HDlvkhgcPlEcVXUOIrKLArXasmtfsIcGCbf3M3vN+DzW/7JIYc2iqiLSI/cbOyn8aI/GGvbnpXyF3QZXeoY2GVNyA3lo+Ke0WXZtIFcDAXEdQKyqQKCCabGEP2sL7dShE2JOUgcbOq22vjakrRZOGCmnsbC2BP5QW4qYq3pK6YA=
+	t=1722358618; cv=none; b=RSCcoxPmoWrseCKogl/891st9PacDyti0K9/hMbscprnTcSSk7yWH1o1o6JEv1Rh26jVufmoOfZKSsCI2vJbeFqfq9jpKdz9i161FZ9dW/VP79uq6MzRds0FDXqCTEdPq39dHgLuHuACwijFtqxUEJL3vZ3Ylj2eNO0BJiFQWw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358615; c=relaxed/simple;
-	bh=M1DvRi1PiKKvsLtaoemoYAG2gmDggzhXU0zbTGsTobU=;
+	s=arc-20240116; t=1722358618; c=relaxed/simple;
+	bh=96H8SNTIovS7q0TCenF6n7BkRtB/L1HJf/kf93WRcnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXkYZWSsdiwcYIWTw2bVZMNuAt6BrJPXZtn6tOWwARBUfYdFbuYAdF9Ms0IYbJZypMr+NSX2YWx9geAuoC1i9VPbG4vz93bduZu7JgG7bgbmeuJWopvTOtHXeRHP2RORBeUXjB43gihnMuoWSB4eOoJjBuhqD0I9Ht+YwMXQ17k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2r7AiZC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ouFy6a+WMpTIv3mj/PftTzkutSLf4l5Dfb3i7t6wN3Qo/Ur1UbAFj+OjYv9kAPW7e0pj06DyooidAGQ0cmSBqBRbmy10hWADUbiZgvs2JN+nBtOUdxzEghs2xTDFmBPfG+SFHUDZAYioQyLdPssJ0Yv7XBksLxHCnlIEuRyTYPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zHSP0ctn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2r7AiZC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24609C4AF0F;
-	Tue, 30 Jul 2024 16:56:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zHSP0ctn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE58C4AF0A;
+	Tue, 30 Jul 2024 16:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358614;
-	bh=M1DvRi1PiKKvsLtaoemoYAG2gmDggzhXU0zbTGsTobU=;
+	s=korg; t=1722358617;
+	bh=96H8SNTIovS7q0TCenF6n7BkRtB/L1HJf/kf93WRcnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2r7AiZCy47d8LPmLwkJij07S/ffJHT9Mu2/ye2WujgxVCtMJWFQkNQ6hfgGWfVFO
-	 4+9Pk74vGMT3dJ9Y89qJC3BEYlwjiE7zWxxKZK/RZmogqT8/ftkfdkb07xBxd+FziR
-	 C0sbygGrxn9VAWkeefKWc6eiMzXLL0XX0/R4cJ04=
+	b=zHSP0ctnKx8rKATWE659drW/qxp9vEXvMqsObSChyYbpxdD3HWYv9Wra2Z81ClHh7
+	 S2yDHseih2N8mb6UfqduR1lFNVE+VKAn7WwKhrRFz4rEDwk/er2B7n1k7AyLsw/+B0
+	 zr+VwGSNVBhXPPJg2pUrPK4vZ8KDzoBrzn8FIGIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 379/568] media: venus: fix use after free in vdec_close
-Date: Tue, 30 Jul 2024 17:48:06 +0200
-Message-ID: <20240730151654.680197290@linuxfoundation.org>
+	Lance Richardson <rlance@google.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 407/440] dma: fix call order in dmam_free_coherent
+Date: Tue, 30 Jul 2024 17:50:40 +0200
+Message-ID: <20240730151631.693137784@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Lance Richardson <rlance@google.com>
 
-commit a0157b5aa34eb43ec4c5510f9c260bbb03be937e upstream.
+[ Upstream commit 28e8b7406d3a1f5329a03aa25a43aa28e087cb20 ]
 
-There appears to be a possible use after free with vdec_close().
-The firmware will add buffer release work to the work queue through
-HFI callbacks as a normal part of decoding. Randomly closing the
-decoder device from userspace during normal decoding can incur
-a read after free for inst.
+dmam_free_coherent() frees a DMA allocation, which makes the
+freed vaddr available for reuse, then calls devres_destroy()
+to remove and free the data structure used to track the DMA
+allocation. Between the two calls, it is possible for a
+concurrent task to make an allocation with the same vaddr
+and add it to the devres list.
 
-Fix it by cancelling the work in vdec_close.
+If this happens, there will be two entries in the devres list
+with the same vaddr and devres_destroy() can free the wrong
+entry, triggering the WARN_ON() in dmam_match.
 
-Cc: stable@vger.kernel.org
-Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by destroying the devres entry before freeing the DMA
+allocation.
+
+Tested:
+  kokonut //net/encryption
+    http://sponge2/b9145fe6-0f72-4325-ac2f-a84d81075b03
+
+Fixes: 9ac7849e35f7 ("devres: device resource management")
+Signed-off-by: Lance Richardson <rlance@google.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/dma/mapping.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1747,6 +1747,7 @@ static int vdec_close(struct file *file)
+diff --git a/kernel/dma/mapping.c b/kernel/dma/mapping.c
+index 33437d6206445..f1051ad0da7cc 100644
+--- a/kernel/dma/mapping.c
++++ b/kernel/dma/mapping.c
+@@ -63,8 +63,8 @@ void dmam_free_coherent(struct device *dev, size_t size, void *vaddr,
+ {
+ 	struct dma_devres match_data = { size, vaddr, dma_handle };
  
- 	vdec_pm_get(inst);
+-	dma_free_coherent(dev, size, vaddr, dma_handle);
+ 	WARN_ON(devres_destroy(dev, dmam_release, dmam_match, &match_data));
++	dma_free_coherent(dev, size, vaddr, dma_handle);
+ }
+ EXPORT_SYMBOL(dmam_free_coherent);
  
-+	cancel_work_sync(&inst->delayed_process_work);
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	vdec_ctrl_deinit(inst);
+-- 
+2.43.0
+
 
 
