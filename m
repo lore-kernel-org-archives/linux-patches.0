@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B021A6161;
-	Tue, 30 Jul 2024 16:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C631A6161;
+	Tue, 30 Jul 2024 16:30:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357027; cv=none; b=MxfDlM3ZSIUSiEHC6wFNdCASPtu4n7DCcNvh5DUOWJ1j8eLJUfT7Df5jlzahWDCRvseKmtexPl5j9YQd+e1HnL+FbPKZZNRx8jO+YI2oZs+uDNlAku7NTQWEj1SDmthL8Z1FmKKz8kBYYpIlI466HJkNTgEQOUP8/FaQ6X+2Isc=
+	t=1722357030; cv=none; b=OcfFVAsVwzHanKggRBruls410Al/MW7cGJn9vOEDmJb/3midD6gfZ6x4orP4yDn1craO+rtcBtvYWRlRivGRjHwvuMz+YwuxiPTKfNMs+qOwFlAwHHlLhYUmoxcC9FaCFx78EdwyBtlufcu+vT0iQI1iQCP7p/OhHHrYOxBYsV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357027; c=relaxed/simple;
-	bh=Ubp10UyruLnmI5cOFXpL9zvp6AjulhryhH8x3bl/AkU=;
+	s=arc-20240116; t=1722357030; c=relaxed/simple;
+	bh=H25K7Q5HR4YduEhBm6l/AWjVhQqlVA7agysHq4nz1Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmd3H+mtjW5rva+dd2Uh+J1IrOsJ212zU/JKgiG8HhCy2cVI+kOCGtv/wbMbAU3choGrAqmfdi5fwR2/8giVAulnCXiJFBH907jRSYO5Nd+Twug9K/DKHA9XGJdwhV3RPBZEDjR4iAbppqPlJRhI19NuQhW8SM9xsGN1qcDyKUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PNpm2tOo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dM4ibTYRJw6tNg5+e4oKOsnHV+s7zv12qgsR3qc5G1boOa7WYpmIK9+eou4BJy+7DbwQ8acA9OOayOkSnJ4sHec9HlhRww9Z04FSZXgfkLiT8Uo61czZgCaf72pDQ4BEhjlIBDyBTFt61yKnK7P3gwHBDnqRpRYn1cIO6j7apo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ue72Rnhj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PNpm2tOo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B27B0C32782;
-	Tue, 30 Jul 2024 16:30:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue72Rnhj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4A0C32782;
+	Tue, 30 Jul 2024 16:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357027;
-	bh=Ubp10UyruLnmI5cOFXpL9zvp6AjulhryhH8x3bl/AkU=;
+	s=korg; t=1722357030;
+	bh=H25K7Q5HR4YduEhBm6l/AWjVhQqlVA7agysHq4nz1Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNpm2tOoZt+e8bpt2ZXcDUrszdz8UNCN7plUis8s3Y2rzHF8SGXx5Y7MFcNJxJdZg
-	 o6aGnkDg9uzgKVYXMLTXkJ1WdMO986VfxXIqTUoT3cTR4PRLAo+BzIIWvSzEta34+h
-	 nh43gcQKUUhjBkQkp3Z7Tg7RAJbu0HYhhr+h+HZA=
+	b=Ue72Rnhjvty19e/s+roZzf9bsjeKKyycjd2A0QdnLFKoRxLn2F6L1eTjYtKJvy1HD
+	 hIoDrZ46mQor4ja9CB3FVM4D9+5iyNb9sYH0IFZ3x+oYmCngXKnbJN68LsOKDnI+Ae
+	 KqUeM0SEh2stUoumPSG7X2a1geYU21NJm89r3u8A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Gabay <daniel.gabay@intel.com>,
-	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 211/809] wifi: iwlwifi: fix iwl_mvm_get_valid_rx_ant()
-Date: Tue, 30 Jul 2024 17:41:27 +0200
-Message-ID: <20240730151732.939525558@linuxfoundation.org>
+Subject: [PATCH 6.6 211/568] media: renesas: vsp1: Fix _irqsave and _irq mix
+Date: Tue, 30 Jul 2024 17:45:18 +0200
+Message-ID: <20240730151648.121137947@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,44 +48,119 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Gabay <daniel.gabay@intel.com>
+From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit 0091eda01412805e0d2c8025638ac0992102a7fc ]
+[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
 
-Fix incorrect use of _tx_ valid ant data in the function.
+The histogram support mixes _irqsave and _irq, causing the following
+smatch warning:
 
-Fixes: 4ea1ed1d14d8 ("wifi: iwlwifi: mvm: support set_antenna()")
-Signed-off-by: Daniel Gabay <daniel.gabay@intel.com>
-Reviewed-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240618200104.b7c6a320c7dc.I3092eb5275056f2162b9694e583c310c38568b2a@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
+     warn: mixing irqsave and irq
+
+The histo_stop_streaming() calls spin_lock_irqsave() followed by
+wait_event_lock_irq(). The former hints that interrupts may be disabled
+by the caller, while the latter reenables interrupts unconditionally.
+This doesn't cause any real bug, as the function is always called with
+interrupts enabled, but the pattern is still incorrect.
+
+Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
+in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
+spin_lock() as appropriate elsewhere.
+
+Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/mvm.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../media/platform/renesas/vsp1/vsp1_histo.c  | 20 ++++++++-----------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-index 6837d8afb9877..ded094b6b63df 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/mvm.h
-@@ -1863,10 +1863,10 @@ static inline u8 iwl_mvm_get_valid_tx_ant(struct iwl_mvm *mvm)
- 
- static inline u8 iwl_mvm_get_valid_rx_ant(struct iwl_mvm *mvm)
+diff --git a/drivers/media/platform/renesas/vsp1/vsp1_histo.c b/drivers/media/platform/renesas/vsp1/vsp1_histo.c
+index f22449dd654cb..c0f1002f4ecf1 100644
+--- a/drivers/media/platform/renesas/vsp1/vsp1_histo.c
++++ b/drivers/media/platform/renesas/vsp1/vsp1_histo.c
+@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
+ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
  {
--	u8 rx_ant = mvm->fw->valid_tx_ant;
-+	u8 rx_ant = mvm->fw->valid_rx_ant;
+ 	struct vsp1_histogram_buffer *buf = NULL;
+-	unsigned long flags;
  
- 	if (mvm->nvm_data && mvm->nvm_data->valid_rx_ant)
--		rx_ant &= mvm->nvm_data->valid_tx_ant;
-+		rx_ant &= mvm->nvm_data->valid_rx_ant;
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock(&histo->irqlock);
  
- 	if (mvm->set_rx_ant)
- 		rx_ant &= mvm->set_rx_ant;
+ 	if (list_empty(&histo->irqqueue))
+ 		goto done;
+@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
+ 	histo->readout = true;
+ 
+ done:
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock(&histo->irqlock);
+ 	return buf;
+ }
+ 
+@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
+ 				    size_t size)
+ {
+ 	struct vsp1_pipeline *pipe = histo->entity.pipe;
+-	unsigned long flags;
+ 
+ 	/*
+ 	 * The pipeline pointer is guaranteed to be valid as this function is
+@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
+ 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
+ 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock(&histo->irqlock);
+ 	histo->readout = false;
+ 	wake_up(&histo->wait_queue);
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock(&histo->irqlock);
+ }
+ 
+ /* -----------------------------------------------------------------------------
+@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
+ 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+ 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
+ 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock_irq(&histo->irqlock);
+ 	list_add_tail(&buf->queue, &histo->irqqueue);
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock_irq(&histo->irqlock);
+ }
+ 
+ static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
+@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
+ {
+ 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
+ 	struct vsp1_histogram_buffer *buffer;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&histo->irqlock, flags);
++	spin_lock_irq(&histo->irqlock);
+ 
+ 	/* Remove all buffers from the IRQ queue. */
+ 	list_for_each_entry(buffer, &histo->irqqueue, queue)
+@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
+ 	/* Wait for the buffer being read out (if any) to complete. */
+ 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
+ 
+-	spin_unlock_irqrestore(&histo->irqlock, flags);
++	spin_unlock_irq(&histo->irqlock);
+ }
+ 
+ static const struct vb2_ops histo_video_queue_qops = {
 -- 
 2.43.0
 
