@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC441A6192;
-	Tue, 30 Jul 2024 17:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 191B41A6192;
+	Tue, 30 Jul 2024 17:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359129; cv=none; b=qHWtUdPNEx113romNu0EyvxN+fGHbP+5658tqwj6DTnhstLn6K4ujglnXmnSgRJv3KEbilJEz3u0BYHfLFu420CdWz0q23mSuSpyYTCsmaS0cR5EFJylB1K4NxvTa0zOPt2NnQBSdM+lzsrN/H/lkD4dobZoVlJMKVofXaUGK/g=
+	t=1722359133; cv=none; b=qyxrVkl7pNTKp9RUxvUKbUiqbZMspUorwvmRcs0c0gu3A4tJVgM0kAGjOxW9k6902i9ShSzfW93QKomLMZNnR9y4i7roSNWPntYbMsk7UVuLzo2opxvorm9I2aA3vCFuc9K2RiFuZ1eHI3XbWDtatSWEH9Z7iHVhKx0PtSxA2dQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359129; c=relaxed/simple;
-	bh=Fx+Mq7pl3sUIwLA12lVQpVPXeAdHhbNJ99pJi3V0IsQ=;
+	s=arc-20240116; t=1722359133; c=relaxed/simple;
+	bh=w0Oj7KzR6oBJkPhFxeLHaA8gpxtLGp0bzIwy8uxFUdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qKORA3D6Bd5/8ENPkRhrnn6aAJYp3QNxrUP08vkNYdO/luzZNcJG/7U3jw/UqchfmqSvGpQ4RH6LtbxLN7D7Kgv/9bHHdw4u8fbHM2odFIQS2ldqn4l6hyuqHOXYy4sgiaZKdkoYfyrxrgFMpbBK8SITEOS0uY3HKUXQ4T2Fy04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oCzdo72Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6oyJDJ4J8Sv3K64K5msq2Zoy6y29c60OWY+Z5omgfagAU+jI2vLRn0lUfDaeQeUpXfbYOA7AvCPHWwB6t3kBPgdXscbiRDIBVrt01S+HW2FZ422S6k0cdoT3NucLJjdOgVhhaj5x+3te6hzk1kgK41HMqa9hdTcxb9poda9PJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rn+vD0g6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oCzdo72Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DB9C32782;
-	Tue, 30 Jul 2024 17:05:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rn+vD0g6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1FBC32782;
+	Tue, 30 Jul 2024 17:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359129;
-	bh=Fx+Mq7pl3sUIwLA12lVQpVPXeAdHhbNJ99pJi3V0IsQ=;
+	s=korg; t=1722359133;
+	bh=w0Oj7KzR6oBJkPhFxeLHaA8gpxtLGp0bzIwy8uxFUdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oCzdo72ZM7fsf+cJTrKab7Bs+HERCrkd8z+3HDMkc3pvQfu7Nq/aGMncX5xXcEVv7
-	 mjK5EVTV2QkRykulwBja9B2Rham6syrqvW3jyR+W2NJehKVyVyZmpd4kyP4Yj66vlb
-	 OfT7fAim/TOh9zNMALEkwv2+DrP9QjbJnnqJTs1k=
+	b=Rn+vD0g6Lrd3wTBSeItexA8xljbwox7Fca5DqJsovVIT57rgflBZIfz78g7kwClnK
+	 3AGg/Y7Slho8ifavxJGg8igHj2mQ9CVNsV/BwrQaOlmn7Vid4h1akN4ch3UeuS0GcQ
+	 a+qV+fcwIGs5PHXSi5DdMNoXSeVgg+gdA+U33xIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.6 435/568] ASoC: fsl: fsl_qmc_audio: Check devm_kasprintf() returned value
-Date: Tue, 30 Jul 2024 17:49:02 +0200
-Message-ID: <20240730151656.872637842@linuxfoundation.org>
+	Taniya Das <quic_tdas@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 416/809] clk: qcom: gpucc-sa8775p: Update wait_val fields for GPU GDSCs
+Date: Tue, 30 Jul 2024 17:44:52 +0200
+Message-ID: <20240730151741.126793172@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-commit e62599902327d27687693f6e5253a5d56583db58 upstream.
+[ Upstream commit 211681998d706d1e0fff6b62f89efcdf29c24978 ]
 
-devm_kasprintf() can return a NULL pointer on failure but this returned
-value is not checked.
+Update wait_val fields as per the default hardware values of the GDSC as
+otherwise it would lead to GDSC FSM state stuck causing power on/off
+failures of the GSDC.
 
-Fix this lack and check the returned value.
-
-Fixes: 075c7125b11c ("ASoC: fsl: Add support for QMC audio")
-Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Link: https://patch.msgid.link/20240701113038.55144-2-herve.codina@bootlin.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Acked-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-6-adcc756a23df@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl_qmc_audio.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/qcom/gpucc-sa8775p.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_qmc_audio.c b/sound/soc/fsl/fsl_qmc_audio.c
-index bfaaa451735b..dd90ef16fa97 100644
---- a/sound/soc/fsl/fsl_qmc_audio.c
-+++ b/sound/soc/fsl/fsl_qmc_audio.c
-@@ -604,6 +604,8 @@ static int qmc_audio_dai_parse(struct qmc_audio *qmc_audio, struct device_node *
+diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
+index 1f7a02a7503d4..3deabf8333883 100644
+--- a/drivers/clk/qcom/gpucc-sa8775p.c
++++ b/drivers/clk/qcom/gpucc-sa8775p.c
+@@ -523,6 +523,9 @@ static struct clk_regmap *gpu_cc_sa8775p_clocks[] = {
  
- 	qmc_dai->name = devm_kasprintf(qmc_audio->dev, GFP_KERNEL, "%s.%d",
- 				       np->parent->name, qmc_dai->id);
-+	if (!qmc_dai->name)
-+		return -ENOMEM;
+ static struct gdsc cx_gdsc = {
+ 	.gdscr = 0x9108,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.gds_hw_ctrl = 0x953c,
+ 	.pd = {
+ 		.name = "cx_gdsc",
+@@ -533,6 +536,9 @@ static struct gdsc cx_gdsc = {
  
- 	qmc_dai->qmc_chan = devm_qmc_chan_get_byphandle(qmc_audio->dev, np,
- 							"fsl,qmc-chan");
+ static struct gdsc gx_gdsc = {
+ 	.gdscr = 0x905c,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "gx_gdsc",
+ 		.power_on = gdsc_gx_do_nothing_enable,
 -- 
-2.45.2
+2.43.0
 
 
 
