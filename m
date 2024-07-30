@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85B21A76A4;
-	Tue, 30 Jul 2024 17:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1291A76A4;
+	Tue, 30 Jul 2024 17:16:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359809; cv=none; b=Ob9uudv19oB7WeeVxVyvJuaUVSKCtbWGg4PGm6BzuXDUKs0KQb6AT/o/TqfXdkq1spEj978FtuFG5V9dg+WMOBmwEQM0aajXzvCjcVGMbSPTFhVW4Ega7UCpRidmUVSfQroOnfUv7ITW8Bzj6xJjjFrR+1eMOAfO2SMKE5TDA0o=
+	t=1722359812; cv=none; b=V1b63nsaIPHtcXOt4JbvxAVfcH+Yf2QMnxqSiysrKa+H80hrlFMuN//sy/y3yZL0f2x/f+Lahnl1tTSHKQHr1H6Tc1CoTobAIG1bWN0eEwdHEQ+hPuJ/qbBEmBCE3oM9lt28+fRdXinEYJGrr8Rd2RY0O3JkJOMDsolWeHGfnCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359809; c=relaxed/simple;
-	bh=pGbBrexbyea6SbFFQFvw+5MtneppeL60d4/2gIeP2A0=;
+	s=arc-20240116; t=1722359812; c=relaxed/simple;
+	bh=zGF3yf+rSGc01y27kGuSInQgZlZ+3SqAmJkMcD8PvIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RM7hPsdyoUaJ6vK145mXApGzPzQMqoAHDwWWz0BoqZiAhpbARaQhCcyrwWIW9fyOrLZkabTuCDURHtYghZ0F+hfrW2jJ5+da6In0iZVD8no7N/c45Rn+QmrAO9YJdcSL/v8+Ur8d0thT8XmdWAEuH4iGxgzpGBsPNXyGS5nPsW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j24jsTYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KnIOwNx3B8puNZ5vrbKi8UNUr9OOcIRpIhVv6on6EFCqGxKtIXXuqhG1R6i8wwiGwRbBIoiuB4ll699EeHFvm5zS/g6XQ5lXhCO2lqBwb3nQQPQOpLOpS3OXIuOq6vp0v0iEM7RY8MSkW54KcHQVkvNF+fz+d0WXC+CxSEFiyPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F37qHFVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j24jsTYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70269C32782;
-	Tue, 30 Jul 2024 17:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F37qHFVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4BEC4AF0A;
+	Tue, 30 Jul 2024 17:16:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359808;
-	bh=pGbBrexbyea6SbFFQFvw+5MtneppeL60d4/2gIeP2A0=;
+	s=korg; t=1722359812;
+	bh=zGF3yf+rSGc01y27kGuSInQgZlZ+3SqAmJkMcD8PvIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j24jsTYE+3h9QSFVMzHKuIXjxAlv/W3pwy1n6jrY9eRlhtJvGUaWaPTCxdE01ClnX
-	 UjWDYdSY06bzmcdMO6g1PBJy/yCx0fXLi6Bkr3ScGwh8ICQ/gYJ2HR1p7nBc3hr97T
-	 CIIfW+vPVhnd9QpIz9EqVynijZkPc65bACtuouKo=
+	b=F37qHFVD1q85iRvXpN/tXuxvmZK5I83AJ9KT4kc19XnH41u68VAMwUEjPcJY4Ox+X
+	 QELocDSWaYKBySWZ7iT85HZIq5Uz4SyOH0Ko3IKKQqTi48DpuITd8Y8RKYTnaJXLs2
+	 SSIKuVE9XSDcBxA2nCMOD+OpVii+nwn560TcRm3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Csókás
-Subject: [PATCH 6.10 513/809] rtc: interface: Add RTC offset to alarm after fix-up
-Date: Tue, 30 Jul 2024 17:46:29 +0200
-Message-ID: <20240730151744.997765883@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 517/568] kdb: Use the passed prompt in kdb_position_cursor()
+Date: Tue, 30 Jul 2024 17:50:24 +0200
+Message-ID: <20240730151700.363215695@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +45,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 463927a8902a9f22c3633960119410f57d4c8920 ]
+[ Upstream commit e2e821095949cde46256034975a90f88626a2a73 ]
 
-`rtc_add_offset()` is called by `__rtc_read_time()`
-and `__rtc_read_alarm()` to add the RTC's offset to
-the raw read-outs from the device drivers. However,
-in the latter case, a fix-up algorithm is run if
-the RTC device does not report a full `struct rtc_time`
-alarm value. In that case, the offset was forgot to be
-added.
+The function kdb_position_cursor() takes in a "prompt" parameter but
+never uses it. This doesn't _really_ matter since all current callers
+of the function pass the same value and it's a global variable, but
+it's a bit ugly. Let's clean it up.
 
-Fixes: fd6792bb022e ("rtc: fix alarm read and set offset")
+Found by code inspection. This patch is expected to functionally be a
+no-op.
 
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Link: https://lore.kernel.org/r/20240619140451.2800578-1-csokas.bence@prolan.hu
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 09b35989421d ("kdb: Use format-strings rather than '\0' injection in kdb_read()")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240528071144.1.I0feb49839c6b6f4f2c4bf34764f5e95de3f55a66@changeid
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/interface.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ kernel/debug/kdb/kdb_io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
-index 5faafb4aa55cc..cca650b2e0b94 100644
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -274,10 +274,9 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
- 			return err;
- 
- 		/* full-function RTCs won't have such missing fields */
--		if (rtc_valid_tm(&alarm->time) == 0) {
--			rtc_add_offset(rtc, &alarm->time);
--			return 0;
--		}
-+		err = rtc_valid_tm(&alarm->time);
-+		if (!err)
-+			goto done;
- 
- 		/* get the "after" timestamp, to detect wrapped fields */
- 		err = rtc_read_time(rtc, &now);
-@@ -379,6 +378,8 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
- 	if (err && alarm->enabled)
- 		dev_warn(&rtc->dev, "invalid alarm value: %ptR\n",
- 			 &alarm->time);
-+	else
-+		rtc_add_offset(rtc, &alarm->time);
- 
- 	return err;
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index 2d65da509f699..4799f6250bb26 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -206,7 +206,7 @@ char kdb_getchar(void)
+  */
+ static void kdb_position_cursor(char *prompt, char *buffer, char *cp)
+ {
+-	kdb_printf("\r%s", kdb_prompt_str);
++	kdb_printf("\r%s", prompt);
+ 	if (cp > buffer)
+ 		kdb_printf("%.*s", (int)(cp - buffer), buffer);
  }
 -- 
 2.43.0
