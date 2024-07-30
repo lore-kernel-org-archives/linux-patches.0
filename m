@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B95F1A6193;
-	Tue, 30 Jul 2024 16:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401291A6185;
+	Tue, 30 Jul 2024 16:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356185; cv=none; b=Pa+k4WzGwL/MuYNQJCaUtnMtoz6eGMTfI+EhwQVPiAAxmkYccYFSJisii6PUkzoLEyGhRPASAFfnaQovhvsqphGk66XFBDVSmD8XmO9adMFO61fsdWhAfzFSOHnLtAY88ZecPNw8VtfQzSMTkadcKF/D4ED12QfKyDF6VkT5MAc=
+	t=1722356188; cv=none; b=kEeXq1VtJ/HJdEGSscHsrtiOFCAQWOL+9wq26IoY2IPUAo0s5t/cqyAjHp7dy9EHG6WQ0mHPJghfiYpnLUMMAsYPREEbNz4hxRLZ1yRwee7Vqn/gyjCHCqwYTzNuQE3JYcKXJuxAJO6MIBiv56YWjvQbQ0BTQJo8/PoQ9MuSA9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356185; c=relaxed/simple;
-	bh=guowVK68/GYabnF2dt3i+PabfvSOYnnGf/hL+XBUWsY=;
+	s=arc-20240116; t=1722356188; c=relaxed/simple;
+	bh=CcM5Vno4UcJ3bwjEPaEnUaKrSSV6zet93WHakwSo/8M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F28Po20+B2K/O4/+zoGauEuKvuQH/215N78aQWNU5PcZnV8dt9nEKEP21oxhuBvkjNbBxlSLd4b2rcugNCoywz/UwwYh12vMxYdk2WtzMwo998IXpM9SA+mHp5MP5YXKQucF1LpDlUtMUfla6Fz/Yr+mrnQkS2+mvS8lxgB68zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0JYl3GE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q5HlECrTEVYr/odSMQDJIxUKCp/iweU39BZZwGlsTyHKoGkqQhncugDoaBVdU4yCOSyFm2VrJbKIjlGmzhSB9aOb1N78j0mAl66uJ73GfmTfcOaDdS4kmCtkV2hPhVMq3s3zfr7cSZCFn6gRT8eQRRkO8k/XtqZhFZ6sdvs58w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ctb45qp+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0JYl3GE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D5FEC32782;
-	Tue, 30 Jul 2024 16:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ctb45qp+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8554C32782;
+	Tue, 30 Jul 2024 16:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356185;
-	bh=guowVK68/GYabnF2dt3i+PabfvSOYnnGf/hL+XBUWsY=;
+	s=korg; t=1722356188;
+	bh=CcM5Vno4UcJ3bwjEPaEnUaKrSSV6zet93WHakwSo/8M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0JYl3GEJy3r2gNTtnz12WczrB4enfbK1ZcSKcE+EeF+yLAHMuOwgBtp/amG1njfi
-	 oHS8k+grsG7lf9b8BFAa8arBcC+LTG6hU9TIAGdV/K/DvpdE1N3aA+27Xlkaue4Ols
-	 kHu6SffXC2muDn8VXd74y+B3b3vELFJAWLzAI3+k=
+	b=ctb45qp+TygUXiBh81D9/Rhs59edx+nI7ZJe+3Qt6RHrF/7r2dOIJMKDvdTmWpi+G
+	 QdP/cwMF2ICg20eeusAO+h865HAPawfoJ1YF8nxAcFGzwyNH/iby0k0na6z7L/MMo0
+	 p7Kklv437JP8asngUJ5AAO/812VDxDyzvCLufh1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 127/809] arm64: dts: qcom: x1e80100: Fix USB HS PHY 0.8V supply
-Date: Tue, 30 Jul 2024 17:40:03 +0200
-Message-ID: <20240730151729.634914085@linuxfoundation.org>
+Subject: [PATCH 6.6 122/568] tcp: add tcp_done_with_error() helper
+Date: Tue, 30 Jul 2024 17:43:49 +0200
+Message-ID: <20240730151644.643289825@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,91 +48,117 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 9c99c33a904c86d95ecf4e2690de6a826b88671c ]
+[ Upstream commit 5e514f1cba090e1c8fff03e92a175eccfe46305f ]
 
-According to the power grid documentation, the 0.8v HS PHY shared
-regulator is actually LDO3 from PM8550ve id J. Fix both CRD and QCP
-boards.
+tcp_reset() ends with a sequence that is carefuly ordered.
 
-Fixes: d7e03cce0400 ("arm64: dts: qcom: x1e80100-crd: Enable more support")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240629-x1e80100-dts-fix-hsphy-0-8v-supplies-v1-1-de99ee030b27@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+We need to fix [e]poll bugs in the following patches,
+it makes sense to use a common helper.
+
+Suggested-by: Neal Cardwell <ncardwell@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240528125253.1966136-2-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 853c3bd7b791 ("tcp: fix race in tcp_write_err()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts | 6 +++---
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts | 6 +++---
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ include/net/tcp.h    |  1 +
+ net/ipv4/tcp.c       |  2 +-
+ net/ipv4/tcp_input.c | 32 +++++++++++++++++++++-----------
+ 3 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-index 7618ae1f8b1c9..b063dd28149e7 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-crd.dts
-@@ -840,7 +840,7 @@ &uart21 {
- };
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 690770321a6e3..71af244104433 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -624,6 +624,7 @@ void tcp_skb_collapse_tstamp(struct sk_buff *skb,
+ /* tcp_input.c */
+ void tcp_rearm_rto(struct sock *sk);
+ void tcp_synack_rtt_meas(struct sock *sk, struct request_sock *req);
++void tcp_done_with_error(struct sock *sk, int err);
+ void tcp_reset(struct sock *sk, struct sk_buff *skb);
+ void tcp_fin(struct sock *sk);
+ void tcp_check_space(struct sock *sk);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 2df05ea2e00fe..91c3d8264059d 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -591,7 +591,7 @@ __poll_t tcp_poll(struct file *file, struct socket *sock, poll_table *wait)
+ 		 */
+ 		mask |= EPOLLOUT | EPOLLWRNORM;
+ 	}
+-	/* This barrier is coupled with smp_wmb() in tcp_reset() */
++	/* This barrier is coupled with smp_wmb() in tcp_done_with_error() */
+ 	smp_rmb();
+ 	if (READ_ONCE(sk->sk_err) ||
+ 	    !skb_queue_empty_lockless(&sk->sk_error_queue))
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index b9133c0972d38..c2e4dac42453b 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -4367,9 +4367,26 @@ static enum skb_drop_reason tcp_sequence(const struct tcp_sock *tp,
+ 	return SKB_NOT_DROPPED_YET;
+ }
  
- &usb_1_ss0_hsphy {
--	vdd-supply = <&vreg_l2e_0p8>;
-+	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
++
++void tcp_done_with_error(struct sock *sk, int err)
++{
++	/* This barrier is coupled with smp_rmb() in tcp_poll() */
++	WRITE_ONCE(sk->sk_err, err);
++	smp_wmb();
++
++	tcp_write_queue_purge(sk);
++	tcp_done(sk);
++
++	if (!sock_flag(sk, SOCK_DEAD))
++		sk_error_report(sk);
++}
++EXPORT_SYMBOL(tcp_done_with_error);
++
+ /* When we get a reset we do this. */
+ void tcp_reset(struct sock *sk, struct sk_buff *skb)
+ {
++	int err;
++
+ 	trace_tcp_receive_reset(sk);
  
- 	phys = <&smb2360_0_eusb2_repeater>;
-@@ -865,7 +865,7 @@ &usb_1_ss0_dwc3 {
- };
+ 	/* mptcp can't tell us to ignore reset pkts,
+@@ -4381,24 +4398,17 @@ void tcp_reset(struct sock *sk, struct sk_buff *skb)
+ 	/* We want the right error as BSD sees it (and indeed as we do). */
+ 	switch (sk->sk_state) {
+ 	case TCP_SYN_SENT:
+-		WRITE_ONCE(sk->sk_err, ECONNREFUSED);
++		err = ECONNREFUSED;
+ 		break;
+ 	case TCP_CLOSE_WAIT:
+-		WRITE_ONCE(sk->sk_err, EPIPE);
++		err = EPIPE;
+ 		break;
+ 	case TCP_CLOSE:
+ 		return;
+ 	default:
+-		WRITE_ONCE(sk->sk_err, ECONNRESET);
++		err = ECONNRESET;
+ 	}
+-	/* This barrier is coupled with smp_rmb() in tcp_poll() */
+-	smp_wmb();
+-
+-	tcp_write_queue_purge(sk);
+-	tcp_done(sk);
+-
+-	if (!sock_flag(sk, SOCK_DEAD))
+-		sk_error_report(sk);
++	tcp_done_with_error(sk, err);
+ }
  
- &usb_1_ss1_hsphy {
--	vdd-supply = <&vreg_l2e_0p8>;
-+	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_1_eusb2_repeater>;
-@@ -890,7 +890,7 @@ &usb_1_ss1_dwc3 {
- };
- 
- &usb_1_ss2_hsphy {
--	vdd-supply = <&vreg_l2e_0p8>;
-+	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_2_eusb2_repeater>;
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-index 5567636c8b27f..df3577fcd93c9 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-qcp.dts
-@@ -536,7 +536,7 @@ &uart21 {
- };
- 
- &usb_1_ss0_hsphy {
--	vdd-supply = <&vreg_l2e_0p8>;
-+	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_0_eusb2_repeater>;
-@@ -561,7 +561,7 @@ &usb_1_ss0_dwc3 {
- };
- 
- &usb_1_ss1_hsphy {
--	vdd-supply = <&vreg_l2e_0p8>;
-+	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_1_eusb2_repeater>;
-@@ -586,7 +586,7 @@ &usb_1_ss1_dwc3 {
- };
- 
- &usb_1_ss2_hsphy {
--	vdd-supply = <&vreg_l2e_0p8>;
-+	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
- 
- 	phys = <&smb2360_2_eusb2_repeater>;
+ /*
 -- 
 2.43.0
 
