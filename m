@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE081A76B7;
-	Tue, 30 Jul 2024 17:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5007189B93;
+	Tue, 30 Jul 2024 17:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359687; cv=none; b=n3/cFqp8PbYvRBMjDDRsNzsemEHY2CjsDJfd1SncCZWPkiXWShkbbqQdctFTJbMmp9iMej8KHhXHKnsVr6xITmRtiNjousrYPq8veVnmiJJffvjLktPOoVvV90i0nNTcbFVJ/MfsVelUKQPLcoHxoXY4h2Hl/NERCdc4+ken0Pk=
+	t=1722359690; cv=none; b=lmVAQpnyet2yLqFmnwxa6xuNHaFMcCPuMwWc8WFX/an4w4sEMyTtexigL/gPdqS5u67COqq3KmN0q157wGgrC5QJl0uwkyYdzeHwhFtKqg6kP2EMxoW4S1C+jeStvangO6uzKHIo2v1qVOHJ2hcjJ5QvrKTp3OoixFhMVFXsZj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359687; c=relaxed/simple;
-	bh=z7d6vbBYTaV46UYni5NUFmSsnarpkAmvSd0IZ6YNU+I=;
+	s=arc-20240116; t=1722359690; c=relaxed/simple;
+	bh=jS9fiycaKj3hJB/NshAuGyLW0dnvzCAgtzhUXFXN76M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jSrBU6s6QDzIiNlFmXkc6n1PkPOwtqgXwXmRDiHlVi0sT0X+wrSUkklW9waB13hu9fwHk/LugdZgNakEyZdq8cS0ug9sBtCbeQMcaXQltMlTm5eTMGXwZJcRzecXur2fDOHj4p+Jb6bks3xL8UKxDgxQ+Qd6wNquYbeFG8r7Xe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFXa1gPZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QSdPnOe6RYN+nkHcy6hbxQK0u6tjlNH8apxt/XszPH8IhBFe1/IvTm8yTFf6RsZVC6b2WfO5gErLvJozQ/KBk+rnR99ZJwAQ0UqSGfUPOKV+mDlBeL33+WpMkzEdRA1Xr3PtMJM/S4t7Lk1lNEy2bXgKS9/BnwWJE1qe2cJGxlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xL4YoqYP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFXa1gPZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D1FC32782;
-	Tue, 30 Jul 2024 17:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xL4YoqYP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCCF1C4AF0A;
+	Tue, 30 Jul 2024 17:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359687;
-	bh=z7d6vbBYTaV46UYni5NUFmSsnarpkAmvSd0IZ6YNU+I=;
+	s=korg; t=1722359690;
+	bh=jS9fiycaKj3hJB/NshAuGyLW0dnvzCAgtzhUXFXN76M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mFXa1gPZ661JU0ks6il4rLaB8FTpcpoGj+yqZSP05S3V1PCFXWJ5EOMg45bTgNYqB
-	 o5s0wvx/msV6h4OHhpZT0lZ1hncIN1Iq67A7ZK51Idr8CJ6GZI1npotjnUJGTw+3nt
-	 c+Q0lxgSbsRMm1PtKpDdD862Oj0i5tdCHaud/FPQ=
+	b=xL4YoqYP8ERDLXrjYPlQIeBnWCAFZBsNbarDROEUDjSonLFIBt54k0ERqGvRFVqwF
+	 zaYD2zmxUvcPq0uGVk/30/QNCzWAhJEj+z3k4eFhazlSeAZleW2I0qG0OHuFlBUBUO
+	 KefyHPTG5zjb8tbK9mt3NqG+qMc9fUgFWqZ6oAfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 519/809] s390/dasd: fix error checks in dasd_copy_pair_store()
-Date: Tue, 30 Jul 2024 17:46:35 +0200
-Message-ID: <20240730151745.238459210@linuxfoundation.org>
+Subject: [PATCH 6.6 523/568] um: time-travel: fix signal blocking race/hang
+Date: Tue, 30 Jul 2024 17:50:30 +0200
+Message-ID: <20240730151700.600764351@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +44,258 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos López <clopez@suse.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 8e64d2356cbc800b4cd0e3e614797f76bcf0cdb8 ]
+[ Upstream commit 2cf3a3c4b84def5406b830452b1cb8bbfffe0ebe ]
 
-dasd_add_busid() can return an error via ERR_PTR() if an allocation
-fails. However, two callsites in dasd_copy_pair_store() do not check
-the result, potentially resulting in a NULL pointer dereference. Fix
-this by checking the result with IS_ERR() and returning the error up
-the stack.
+When signals are hard-blocked in order to do time-travel
+socket processing, we set signals_blocked and then handle
+SIGIO signals by setting the SIGIO bit in signals_pending.
+When unblocking, we first set signals_blocked to 0, and
+then handle all pending signals. We have to set it first,
+so that we can again properly block/unblock inside the
+unblock, if the time-travel handlers need to be processed.
 
-Fixes: a91ff09d39f9b ("s390/dasd: add copy pair setup")
-Signed-off-by: Carlos López <clopez@suse.de>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240715112434.2111291-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Unfortunately, this is racy. We can get into this situation:
+
+// signals_pending = SIGIO_MASK
+
+unblock_signals_hard()
+   signals_blocked = 0;
+   if (signals_pending && signals_enabled) {
+     block_signals();
+     unblock_signals()
+       ...
+       sig_handler_common(SIGIO, NULL, NULL);
+         sigio_handler()
+           ...
+           sigio_reg_handler()
+             irq_do_timetravel_handler()
+               reg->timetravel_handler() ==
+               vu_req_interrupt_comm_handler()
+                 vu_req_read_message()
+                   vhost_user_recv_req()
+                     vhost_user_recv()
+                       vhost_user_recv_header()
+                         // reads 12 bytes header of
+                         // 20 bytes message
+<-- receive SIGIO here <--
+sig_handler()
+   int enabled = signals_enabled; // 1
+   if ((signals_blocked || !enabled) && (sig == SIGIO)) {
+     if (!signals_blocked && time_travel_mode == TT_MODE_EXTERNAL)
+       sigio_run_timetravel_handlers()
+         _sigio_handler()
+           sigio_reg_handler()
+             ... as above ...
+               vhost_user_recv_header()
+                 // reads 8 bytes that were message payload
+                 // as if it were header - but aborts since
+                 // it then gets -EAGAIN
+...
+--> end signal handler -->
+                       // continue in vhost_user_recv()
+                       // full_read() for 8 bytes payload busy loops
+                       // entire process hangs here
+
+Conceptually, to fix this, we need to ensure that the
+signal handler cannot run while we hard-unblock signals.
+The thing that makes this more complex is that we can be
+doing hard-block/unblock while unblocking. Introduce a
+new signals_blocked_pending variable that we can keep at
+non-zero as long as pending signals are being processed,
+then we only need to ensure it's decremented safely and
+the signal handler will only increment it if it's already
+non-zero (or signals_blocked is set, of course.)
+
+Note also that only the outermost call to hard-unblock is
+allowed to decrement signals_blocked_pending, since it
+could otherwise reach zero in an inner call, and leave
+the same race happening if the timetravel_handler loops,
+but that's basically required of it.
+
+Fixes: d6b399a0e02a ("um: time-travel/signals: fix ndelay() in interrupt")
+Link: https://patch.msgid.link/20240703110144.28034-2-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_devmap.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ arch/um/os-Linux/signal.c | 118 +++++++++++++++++++++++++++++++-------
+ 1 file changed, 98 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/s390/block/dasd_devmap.c b/drivers/s390/block/dasd_devmap.c
-index 0316c20823eec..6adaeb985dde1 100644
---- a/drivers/s390/block/dasd_devmap.c
-+++ b/drivers/s390/block/dasd_devmap.c
-@@ -2248,13 +2248,19 @@ static ssize_t dasd_copy_pair_store(struct device *dev,
+diff --git a/arch/um/os-Linux/signal.c b/arch/um/os-Linux/signal.c
+index 24a403a70a020..850d21e6473ee 100644
+--- a/arch/um/os-Linux/signal.c
++++ b/arch/um/os-Linux/signal.c
+@@ -8,6 +8,7 @@
  
- 	/* allocate primary devmap if needed */
- 	prim_devmap = dasd_find_busid(prim_busid);
--	if (IS_ERR(prim_devmap))
-+	if (IS_ERR(prim_devmap)) {
- 		prim_devmap = dasd_add_busid(prim_busid, DASD_FEATURE_DEFAULT);
-+		if (IS_ERR(prim_devmap))
-+			return PTR_ERR(prim_devmap);
+ #include <stdlib.h>
+ #include <stdarg.h>
++#include <stdbool.h>
+ #include <errno.h>
+ #include <signal.h>
+ #include <string.h>
+@@ -65,9 +66,7 @@ static void sig_handler_common(int sig, struct siginfo *si, mcontext_t *mc)
+ 
+ int signals_enabled;
+ #ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
+-static int signals_blocked;
+-#else
+-#define signals_blocked 0
++static int signals_blocked, signals_blocked_pending;
+ #endif
+ static unsigned int signals_pending;
+ static unsigned int signals_active = 0;
+@@ -76,14 +75,27 @@ void sig_handler(int sig, struct siginfo *si, mcontext_t *mc)
+ {
+ 	int enabled = signals_enabled;
+ 
+-	if ((signals_blocked || !enabled) && (sig == SIGIO)) {
++#ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
++	if ((signals_blocked ||
++	     __atomic_load_n(&signals_blocked_pending, __ATOMIC_SEQ_CST)) &&
++	    (sig == SIGIO)) {
++		/* increment so unblock will do another round */
++		__atomic_add_fetch(&signals_blocked_pending, 1,
++				   __ATOMIC_SEQ_CST);
++		return;
 +	}
++#endif
++
++	if (!enabled && (sig == SIGIO)) {
+ 		/*
+ 		 * In TT_MODE_EXTERNAL, need to still call time-travel
+-		 * handlers unless signals are also blocked for the
+-		 * external time message processing. This will mark
+-		 * signals_pending by itself (only if necessary.)
++		 * handlers. This will mark signals_pending by itself
++		 * (only if necessary.)
++		 * Note we won't get here if signals are hard-blocked
++		 * (which is handled above), in that case the hard-
++		 * unblock will handle things.
+ 		 */
+-		if (!signals_blocked && time_travel_mode == TT_MODE_EXTERNAL)
++		if (time_travel_mode == TT_MODE_EXTERNAL)
+ 			sigio_run_timetravel_handlers();
+ 		else
+ 			signals_pending |= SIGIO_MASK;
+@@ -380,33 +392,99 @@ int um_set_signals_trace(int enable)
+ #ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
+ void mark_sigio_pending(void)
+ {
++	/*
++	 * It would seem that this should be atomic so
++	 * it isn't a read-modify-write with a signal
++	 * that could happen in the middle, losing the
++	 * value set by the signal.
++	 *
++	 * However, this function is only called when in
++	 * time-travel=ext simulation mode, in which case
++	 * the only signal ever pending is SIGIO, which
++	 * is blocked while this can be called, and the
++	 * timer signal (SIGALRM) cannot happen.
++	 */
+ 	signals_pending |= SIGIO_MASK;
+ }
  
- 	/* allocate secondary devmap if needed */
- 	sec_devmap = dasd_find_busid(sec_busid);
--	if (IS_ERR(sec_devmap))
-+	if (IS_ERR(sec_devmap)) {
- 		sec_devmap = dasd_add_busid(sec_busid, DASD_FEATURE_DEFAULT);
-+		if (IS_ERR(sec_devmap))
-+			return PTR_ERR(sec_devmap);
-+	}
+ void block_signals_hard(void)
+ {
+-	if (signals_blocked)
+-		return;
+-	signals_blocked = 1;
++	signals_blocked++;
+ 	barrier();
+ }
  
- 	/* setting copy relation is only allowed for offline secondary */
- 	if (sec_devmap->device)
+ void unblock_signals_hard(void)
+ {
++	static bool unblocking;
++
+ 	if (!signals_blocked)
++		panic("unblocking signals while not blocked");
++
++	if (--signals_blocked)
+ 		return;
+-	/* Must be set to 0 before we check the pending bits etc. */
+-	signals_blocked = 0;
++	/*
++	 * Must be set to 0 before we check pending so the
++	 * SIGIO handler will run as normal unless we're still
++	 * going to process signals_blocked_pending.
++	 */
+ 	barrier();
+ 
+-	if (signals_pending && signals_enabled) {
+-		/* this is a bit inefficient, but that's not really important */
+-		block_signals();
+-		unblock_signals();
+-	} else if (signals_pending & SIGIO_MASK) {
+-		/* we need to run time-travel handlers even if not enabled */
+-		sigio_run_timetravel_handlers();
++	/*
++	 * Note that block_signals_hard()/unblock_signals_hard() can be called
++	 * within the unblock_signals()/sigio_run_timetravel_handlers() below.
++	 * This would still be prone to race conditions since it's actually a
++	 * call _within_ e.g. vu_req_read_message(), where we observed this
++	 * issue, which loops. Thus, if the inner call handles the recorded
++	 * pending signals, we can get out of the inner call with the real
++	 * signal hander no longer blocked, and still have a race. Thus don't
++	 * handle unblocking in the inner call, if it happens, but only in
++	 * the outermost call - 'unblocking' serves as an ownership for the
++	 * signals_blocked_pending decrement.
++	 */
++	if (unblocking)
++		return;
++	unblocking = true;
++
++	while (__atomic_load_n(&signals_blocked_pending, __ATOMIC_SEQ_CST)) {
++		if (signals_enabled) {
++			/* signals are enabled so we can touch this */
++			signals_pending |= SIGIO_MASK;
++			/*
++			 * this is a bit inefficient, but that's
++			 * not really important
++			 */
++			block_signals();
++			unblock_signals();
++		} else {
++			/*
++			 * we need to run time-travel handlers even
++			 * if not enabled
++			 */
++			sigio_run_timetravel_handlers();
++		}
++
++		/*
++		 * The decrement of signals_blocked_pending must be atomic so
++		 * that the signal handler will either happen before or after
++		 * the decrement, not during a read-modify-write:
++		 *  - If it happens before, it can increment it and we'll
++		 *    decrement it and do another round in the loop.
++		 *  - If it happens after it'll see 0 for both signals_blocked
++		 *    and signals_blocked_pending and thus run the handler as
++		 *    usual (subject to signals_enabled, but that's unrelated.)
++		 *
++		 * Note that a call to unblock_signals_hard() within the calls
++		 * to unblock_signals() or sigio_run_timetravel_handlers() above
++		 * will do nothing due to the 'unblocking' state, so this cannot
++		 * underflow as the only one decrementing will be the outermost
++		 * one.
++		 */
++		if (__atomic_sub_fetch(&signals_blocked_pending, 1,
++				       __ATOMIC_SEQ_CST) < 0)
++			panic("signals_blocked_pending underflow");
+ 	}
++
++	unblocking = false;
+ }
+ #endif
+ 
 -- 
 2.43.0
 
