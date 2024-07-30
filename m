@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E8218951A;
-	Tue, 30 Jul 2024 16:04:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C6371898FA;
+	Tue, 30 Jul 2024 16:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355494; cv=none; b=dk49odgNNfebKktuavOWDzFHtjK8PLoT8NKYmgNuZxCo7CkEF78uAEIVxu9yIjI7WKv1FM/oRBXVklXT/G7gQKNrd5ccq4IjBR1H6Ts10eNMdzEFuLaNVE8kjkWqVm1ssEAtOysKc5yg+YMrFPAZwmqAgqv/bgDp62jicAZDWHs=
+	t=1722355497; cv=none; b=Xx+20LmPWyRkziypq/VbrAB8I67f5Szh/OldqxOHvyHibGycvwWWay3z4tZeI5cblntx3mmUGlMcFxBDuV1jeT2zkpuuuv+kxEK0ZIRanA687O2NTIFfdp8WNg9QYKinbzvzGEdoxtonkbhJzl0zSbiuv9yAKu52jPgktHEewXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355494; c=relaxed/simple;
-	bh=+s0kxuUp9Uza4XCXJJLGQT9VnieUIXhBlZ/kDu73KMw=;
+	s=arc-20240116; t=1722355497; c=relaxed/simple;
+	bh=vrhvoVakcQlHdYVRCh6XgFdMtKQ2EH5NB2UYhE7Gcas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qF8Io5EYiRLJi/Xt3pTLBS3umfQw2pmF79PzEg93AoAVXAHt8FxUe5HTxEmzExKOm6IszAyu4d+YJOSiYaTNkkAjc4rJh5P3+r1/4x/Bq7SqabN/d+SNbN6BR86b6myXwirw5oT6qMHj1D1bm+l1If0uAVhTUUiFpD/T/WtPGt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YiQvdm2Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GH1JBdQzE3+5lMrQhVFLZ1Zmpi6ahMBYACWuVvDv1J9BjLBK39197acEjXSMqhCEm3TtHsNPk1qbMXSB7xfsgdbOPmjvJr5Rd3lPg06wuGElu1adVoG47cPlW4PCjig7K0i1OkFGZY4Uk5iuQS+bvtEEvWNQDzRzatznw9pimI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RSmBzPty; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YiQvdm2Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F164CC4AF17;
-	Tue, 30 Jul 2024 16:04:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RSmBzPty"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0C3C4AF52;
+	Tue, 30 Jul 2024 16:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355493;
-	bh=+s0kxuUp9Uza4XCXJJLGQT9VnieUIXhBlZ/kDu73KMw=;
+	s=korg; t=1722355497;
+	bh=vrhvoVakcQlHdYVRCh6XgFdMtKQ2EH5NB2UYhE7Gcas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YiQvdm2Y8ly/mDXQvGduZmyK6dD3ogkciVk5+1hD2Nu1OuRX8ETZqQ7nBANgxcFpE
-	 EwlC5r/HeO7R5ymjeyq1RHTx6jC6Bzjk+6JxfFulOdJ31KbYE2XP3WDuB921+Ruk+7
-	 ROG5zMGoHakh/z+/cdMjG8VYgWw8VA4XcAhTCwpM=
+	b=RSmBzPtyii3tQzJcBMU0RhhbLGEIFN2kkqS6lSZYEIwzQyGD5a4Fg4h6vym3GL8P2
+	 jDBJDAa2/WBxdpln7eYRxkz84HApRMZfRJrjl5cwzNB+vv8ItCdNIpajkR7GWZWCp8
+	 A0gIoZs6ss+jq7OQVCbgetHYYGpUNkVrOgnblB+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 060/809] arm64: dts: rockchip: Add mdio and ethernet-phy nodes to rk3308-rock-pi-s
-Date: Tue, 30 Jul 2024 17:38:56 +0200
-Message-ID: <20240730151727.014648521@linuxfoundation.org>
+	Steev Klimaszewski <steev@kali.org>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Chris Lew <quic_clew@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 6.6 063/568] soc: qcom: pdr: fix parsing of domains lists
+Date: Tue, 30 Jul 2024 17:42:50 +0200
+Message-ID: <20240730151642.322696738@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,72 +51,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 4b64ed510ed946a4e4ca6d51d6512bf5361f6a04 ]
+[ Upstream commit 57f20d51f35780f240ecf39d81cda23612800a92 ]
 
-Be explicit about the Ethernet port and define mdio and ethernet-phy
-nodes in the device tree for ROCK Pi S.
+While parsing the domains list, start offsets from 0 rather than from
+domains_read. The domains_read is equal to the total count of the
+domains we have seen, while the domains list in the message starts from
+offset 0.
 
-Fixes: bc3753aed81f ("arm64: dts: rockchip: rock-pi-s add more peripherals")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240521211029.1236094-8-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Reviewed-by: Chris Lew <quic_clew@quicinc.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240622-qcom-pd-mapper-v9-2-a84ee3591c8e@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3308-rock-pi-s.dts    | 26 ++++++++++++++++---
- 1 file changed, 23 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/pdr_interface.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-index d4cf6026241c4..f6fb90e13ad01 100644
---- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-@@ -144,11 +144,25 @@ &emmc {
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index fbf91d7904482..c7cd4daa10b0f 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -417,7 +417,7 @@ static int pdr_locate_service(struct pdr_handle *pdr, struct pdr_service *pds)
+ 		if (ret < 0)
+ 			goto out;
  
- &gmac {
- 	clock_in_out = "output";
-+	phy-handle = <&rtl8201f>;
- 	phy-supply = <&vcc_io>;
--	snps,reset-gpio = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
--	snps,reset-active-low;
--	snps,reset-delays-us = <0 50000 50000>;
- 	status = "okay";
-+
-+	mdio {
-+		compatible = "snps,dwmac-mdio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		rtl8201f: ethernet-phy@1 {
-+			compatible = "ethernet-phy-ieee802.3-c22";
-+			reg = <1>;
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&mac_rst>;
-+			reset-assert-us = <20000>;
-+			reset-deassert-us = <50000>;
-+			reset-gpios = <&gpio0 RK_PA7 GPIO_ACTIVE_LOW>;
-+		};
-+	};
- };
+-		for (i = domains_read; i < resp->domain_list_len; i++) {
++		for (i = 0; i < resp->domain_list_len; i++) {
+ 			entry = &resp->domain_list[i];
  
- &gpio0 {
-@@ -221,6 +235,12 @@ &pinctrl {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&rtc_32k>;
- 
-+	gmac {
-+		mac_rst: mac-rst {
-+			rockchip,pins = <0 RK_PA7 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
- 	leds {
- 		green_led: green-led {
- 			rockchip,pins = <0 RK_PA6 RK_FUNC_GPIO &pcfg_pull_none>;
+ 			if (strnlen(entry->name, sizeof(entry->name)) == sizeof(entry->name))
 -- 
 2.43.0
 
