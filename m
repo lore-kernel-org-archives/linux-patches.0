@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC298BE8;
-	Tue, 30 Jul 2024 16:34:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8E38BE8;
+	Tue, 30 Jul 2024 16:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357256; cv=none; b=emsF1IfYq8zMfqytsqewIhZK8fgDdghIJjSnN7AP1cZ59EMfO8OfJRFupmhLA9DWpU3egaP9FXQp4KrHhSYrUDi/XZhdMwL0a7Jrc+69GCRv7uupxEl1KXyrmImc9MbYK34sZRkbXmFd/MoBMp7ndInNkmGT192NBIUR/VYGCjw=
+	t=1722357259; cv=none; b=cgbjY/nWr/oCVcDBRmLH0mahRgRpDZWtinKfzbx2dmhyGFn9Zh2nQpByn331q92P6r/yKhM9EBFkcVrmDSSE9Wlu/YaYax8MtaOzXRJ6H12qa93E8y40uhRM5/O+xjXqgxqueoyZn0HpdY9mIplm0GfZM3iJDU3AypLKIkLce0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357256; c=relaxed/simple;
-	bh=pZRpqMqMYdT93C1Xh566H5TWjxu1aaMa4J5zL41eNt8=;
+	s=arc-20240116; t=1722357259; c=relaxed/simple;
+	bh=NsLgrLxXX3LaTlDWBQxijqzdwTMFai8LoUzzuCfMm0c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o2xcrREm76zkbxGnrKmcOG1g1pZaz52PzAWuGnOhGU4LkUL81BjCLsqV1fKf3hNf41MbxX3P17muFaP1hw2FV7omNX11c0FXn93O/paEbW7oMtInfjtjv2/nQOpKdHNR2RC8Zfj9ZCn6iiuLvl74vACKOFACICVmpNPf1TOME0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLKH/gxo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ofT5QGkz+N18ad3xnoSpnB4eXehpqgv2YGFXd8NgAa3g/KDeyI20EENjJWmDR43yZTNPRF8QSRVYeYHZmrwKMfZiYptuAfQcYZK7v11Lxyy0Dq6BnV0TzuysP1hDDTpgt0m3WPjQ2ISvsIZAOZRg73OMIo7Ulkofc82i0R6670w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Egb2BBjO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLKH/gxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FA81C32782;
-	Tue, 30 Jul 2024 16:34:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Egb2BBjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C98B2C32782;
+	Tue, 30 Jul 2024 16:34:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357255;
-	bh=pZRpqMqMYdT93C1Xh566H5TWjxu1aaMa4J5zL41eNt8=;
+	s=korg; t=1722357259;
+	bh=NsLgrLxXX3LaTlDWBQxijqzdwTMFai8LoUzzuCfMm0c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLKH/gxoFWZrw+qLf01fFVqgOPxWf3IS9iqzVp9C92kOMkDf5xkxbsDvnw0r1eZJs
-	 SXMWUIwYqlI58V8W2jAORCk967/KCEa/h9CQpQLIrqn1H81uDRsVHG6DefSU3kR4v9
-	 YP2Ea8QaoaD2oJZF7SGFKpbiBkzD0LVaFJs0yLt8=
+	b=Egb2BBjO869gyBrYGDEEVVl03cfVTSTJRlQrhbPgWwVSVWKulP8xcH/FeX+MfzVWu
+	 YMix9j0rE6z/ukMaNRHxzQohG9SvlRRG+1Y6Us4Ipb9cx2cUJFwg1GcgRd843/cL72
+	 Rgfv/Vqgkw0x1XD/NOl871KBvE90qd8WnyJADZh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Nathan Hebert <nhebert@chromium.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 237/809] wifi: virt_wifi: dont use strlen() in const context
-Date: Tue, 30 Jul 2024 17:41:53 +0200
-Message-ID: <20240730151733.965182284@linuxfoundation.org>
+Subject: [PATCH 6.6 234/568] media: venus: flush all buffers in output plane streamoff
+Date: Tue, 30 Jul 2024 17:45:41 +0200
+Message-ID: <20240730151649.026101242@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,58 +50,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-[ Upstream commit 6e909f489191b365364e9d636dec33b5dfd4e5eb ]
+[ Upstream commit e750a4b1224142bd8dd057b0d5adf8a5608b7e77 ]
 
-Looks like not all compilers allow strlen(constant) as
-a constant, so don't do that. Instead, revert back to
-defining the length as the first submission had it.
+For scenarios, when source change is followed by VIDIOC_STREAMOFF
+on output plane, driver should discard any queued OUTPUT
+buffers, which are not decoded or dequeued.
+Flush with HFI_FLUSH_INPUT does not have any actual impact.
+So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+queued buffers.
 
-Fixes: b5d14b0c6716 ("wifi: virt_wifi: avoid reporting connection success with wrong SSID")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202407090934.NnR1TUbW-lkp@intel.com/
-Closes: https://lore.kernel.org/oe-kbuild-all/202407090944.mpwLHGt9-lkp@intel.com/
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Nathan Hebert <nhebert@chromium.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virtual/virt_wifi.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/venus/vdec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/virtual/virt_wifi.c b/drivers/net/wireless/virtual/virt_wifi.c
-index d2271a7644a01..4ee3740804667 100644
---- a/drivers/net/wireless/virtual/virt_wifi.c
-+++ b/drivers/net/wireless/virtual/virt_wifi.c
-@@ -137,6 +137,7 @@ static struct ieee80211_supported_band band_5ghz = {
- static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
- 
- #define VIRT_WIFI_SSID "VirtWifi"
-+#define VIRT_WIFI_SSID_LEN 8
- 
- static void virt_wifi_inform_bss(struct wiphy *wiphy)
- {
-@@ -148,7 +149,7 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
- 		u8 ssid[8];
- 	} __packed ssid = {
- 		.tag = WLAN_EID_SSID,
--		.len = strlen(VIRT_WIFI_SSID),
-+		.len = VIRT_WIFI_SSID_LEN,
- 		.ssid = VIRT_WIFI_SSID,
- 	};
- 
-@@ -262,7 +263,7 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
- 	u8 *requested_bss = priv->connect_requested_bss;
- 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
--	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
-+	bool right_ssid = priv->connect_requested_ssid_len == VIRT_WIFI_SSID_LEN &&
- 			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
- 				  priv->connect_requested_ssid_len);
- 	u16 status = WLAN_STATUS_SUCCESS;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index dbf305cec1202..c57187283b012 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+ 		break;
+ 	case VENUS_DEC_STATE_INIT:
+ 	case VENUS_DEC_STATE_CAPTURE_SETUP:
+-		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
++		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+ 		break;
+ 	default:
+ 		break;
 -- 
 2.43.0
 
