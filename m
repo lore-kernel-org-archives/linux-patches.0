@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 199AF183CA0;
-	Tue, 30 Jul 2024 16:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DE54188006;
+	Tue, 30 Jul 2024 16:02:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355354; cv=none; b=XP6NBYzkJevXhOh6TxD00+91QXuEJl/PjKUA/ByEDpbkpWDRppZ7lrDykMZ9HBo/uFHMY3Ohbfo2uFbHC/OYwPKGTIHZbbbwDlKLt/YJFZfvNaA6SzF6s6OKSYE7/8xMFiAVT2Ugn88mF6e6G+dA+TOByUk0pfo3Cot3TrwinL8=
+	t=1722355357; cv=none; b=YVmytMbZhm4HEqEiZ/EWyLyWF/2d05z8yN9VbL8nWKb/d4dU89hJuJqxY11TKYOSgXu8YgsTk4cJPQn9q3C213D7/p6+bhlRkvKguFDzpDDR10hFzUzA6x0z+BtsPI+xpVptoymz3CA+PQ8vWnazGFRaI6Cw+U1ikTHFqTA7HtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355354; c=relaxed/simple;
-	bh=fmFKTtRRieYv5TJm1WDbHCZCHQvmsaoiVHo92bxXIuk=;
+	s=arc-20240116; t=1722355357; c=relaxed/simple;
+	bh=4HhONRtE7Z4tMfE4BesTF79sf8gl6aSCQU9edkCt4Zg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcQNWOnIreyMrGANEGpAlzOJrWhXVijse022bDIxOvECmsm5EL7aR38AYWtJRoOdU3Q2NmCadIqmMUoYirTdNIchmXWUUPeZ2jHFyq3P7lLN80pYIJWBcQictNPk2kIc0XmuTlzmYgMk2Vk5DTcGieZoUpH2aGrfg2vKU29nzNo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaxUJudF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXLdqPcBYU65NIr6xM2HAD+Kxw3NQ73uDEDI5Xgfba/PARGtZXLcMSLBq/mHb2K6wEUNcYZNYq2kRswretAxqrURUOu8vzRF4EUsOvJ0pysmAs/FHzO1mB+29Mozw1bz0vgD1a6iEidvBw3KzH1rKHkCrnme4/Vt1L1XVptk3sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0BUvxkAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaxUJudF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78075C32782;
-	Tue, 30 Jul 2024 16:02:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0BUvxkAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC611C32782;
+	Tue, 30 Jul 2024 16:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355354;
-	bh=fmFKTtRRieYv5TJm1WDbHCZCHQvmsaoiVHo92bxXIuk=;
+	s=korg; t=1722355357;
+	bh=4HhONRtE7Z4tMfE4BesTF79sf8gl6aSCQU9edkCt4Zg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaxUJudFvFpPNg0mzRFf99Kh06tONEWzT+KFkyfkrUFvKf77KseU4kDtJgg/BmDbI
-	 z+7S7IYM51vPY9TMHRn7c5j798ONKkwsQ1ZIUExOJXb6IlrWq3HpF3lGWED5Qr6964
-	 kGg/YWs+GopPLvqScHl5QJBDCsdtDtEUk3eV1/Cw=
+	b=0BUvxkAiJaf/GDHBI/2hL0NcsCHxuyQkJ51xS+TSqU6h11D6XBcvaa3BAb+169xlE
+	 xAG0+0JioHhJzEnsHXzHlOKFoB0ET41ZWLFLQGNhcndBeqDYz1t1mW/KLgGF3D+2ID
+	 NlgGrZ8hyPdMXcOfoUR1SuEX6aqRuOGeaEC3mcuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 043/809] arm64: dts: qcom: sc7280: Remove CTS/RTS configuration
-Date: Tue, 30 Jul 2024 17:38:39 +0200
-Message-ID: <20240730151726.353815935@linuxfoundation.org>
+Subject: [PATCH 6.1 086/440] tcp: annotate lockless accesses to sk->sk_err_soft
+Date: Tue, 30 Jul 2024 17:45:19 +0200
+Message-ID: <20240730151619.118594375@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,138 +47,131 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Viken Dadhaniya <quic_vdadhani@quicinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 2b96407b8f10f1d71b58cb35704eb91b8ea78db1 ]
+[ Upstream commit cee1af825d65b8122627fc2efbc36c1bd51ee103 ]
 
-For IDP variant, GPIO 20/21 is used by camera use case and camera
-driver is not able acquire these GPIOs as it is acquired by UART5
-driver as RTS/CTS pin.
+This field can be read/written without lock synchronization.
 
-UART5 is designed for debug UART for all the board variants of the
-sc7280 chipset and RTS/CTS configuration is not required for debug
-uart usecase.
-
-Remove CTS/RTS configuration for UART5 instance and change compatible
-string to debug UART.
-
-Remove overwriting compatible property from individual target specific
-file as it is not required.
-
-Fixes: 38cd93f413fd ("arm64: dts: qcom: sc7280: Update QUPv3 UART5 DT node")
-Signed-off-by: Viken Dadhaniya <quic_vdadhani@quicinc.com>
-Link: https://lore.kernel.org/r/20240424075853.11445-1-quic_vdadhani@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 853c3bd7b791 ("tcp: fix race in tcp_write_err()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts |  1 -
- arch/arm64/boot/dts/qcom/qcm6490-idp.dts           |  1 -
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts       |  1 -
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  1 -
- arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi         |  1 -
- arch/arm64/boot/dts/qcom/sc7280.dtsi               | 14 ++------------
- 6 files changed, 2 insertions(+), 17 deletions(-)
+ net/ipv4/tcp_input.c |  2 +-
+ net/ipv4/tcp_ipv4.c  |  6 +++---
+ net/ipv4/tcp_timer.c |  6 +++---
+ net/ipv6/tcp_ipv6.c  | 11 ++++++-----
+ 4 files changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-index f3432701945f7..8cd2fe80dbb2c 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
-@@ -864,7 +864,6 @@ sw_ctrl_default: sw-ctrl-default-state {
- };
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 359ffda9b736b..fa15c6951cd78 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -3922,7 +3922,7 @@ static int tcp_ack(struct sock *sk, const struct sk_buff *skb, int flag)
+ 	/* We passed data and got it acked, remove any soft error
+ 	 * log. Something worked...
+ 	 */
+-	sk->sk_err_soft = 0;
++	WRITE_ONCE(sk->sk_err_soft, 0);
+ 	icsk->icsk_probes_out = 0;
+ 	tp->rcv_tstamp = tcp_jiffies32;
+ 	if (!prior_packets)
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index befa848fb820c..8fbb6deed3216 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -368,7 +368,7 @@ void tcp_v4_mtu_reduced(struct sock *sk)
+ 	 * for the case, if this connection will not able to recover.
+ 	 */
+ 	if (mtu < dst_mtu(dst) && ip_dont_fragment(sk, dst))
+-		sk->sk_err_soft = EMSGSIZE;
++		WRITE_ONCE(sk->sk_err_soft, EMSGSIZE);
  
- &uart5 {
--	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
- };
+ 	mtu = dst_mtu(dst);
  
-diff --git a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-index 47ca2d0003414..107302680f562 100644
---- a/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/qcm6490-idp.dts
-@@ -658,7 +658,6 @@ &tlmm {
- };
+@@ -609,7 +609,7 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
  
- &uart5 {
--	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
- };
+ 			tcp_done(sk);
+ 		} else {
+-			sk->sk_err_soft = err;
++			WRITE_ONCE(sk->sk_err_soft, err);
+ 		}
+ 		goto out;
+ 	}
+@@ -635,7 +635,7 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
+ 		sk->sk_err = err;
+ 		sk_error_report(sk);
+ 	} else	{ /* Only an error on timeout */
+-		sk->sk_err_soft = err;
++		WRITE_ONCE(sk->sk_err_soft, err);
+ 	}
  
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index a085ff5b5fb21..7256b51eb08f9 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -632,7 +632,6 @@ &tlmm {
- };
+ out:
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 016f9eff49b40..fe23a427f6a9d 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -67,7 +67,7 @@ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
  
- &uart5 {
--	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
- };
+ static void tcp_write_err(struct sock *sk)
+ {
+-	sk->sk_err = sk->sk_err_soft ? : ETIMEDOUT;
++	sk->sk_err = READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT;
+ 	sk_error_report(sk);
  
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index a0059527d9e48..7370aa0dbf0e3 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -495,7 +495,6 @@ wcd_tx: codec@0,3 {
- };
+ 	tcp_write_queue_purge(sk);
+@@ -110,7 +110,7 @@ static int tcp_out_of_resources(struct sock *sk, bool do_reset)
+ 		shift++;
  
- &uart5 {
--	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
- };
+ 	/* If some dubious ICMP arrived, penalize even more. */
+-	if (sk->sk_err_soft)
++	if (READ_ONCE(sk->sk_err_soft))
+ 		shift++;
  
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-index f9b96bd2477ea..7d1d5bbbbbd95 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-qcard.dtsi
-@@ -427,7 +427,6 @@ wcd_tx: codec@0,3 {
- };
+ 	if (tcp_check_oom(sk, shift)) {
+@@ -146,7 +146,7 @@ static int tcp_orphan_retries(struct sock *sk, bool alive)
+ 	int retries = READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_orphan_retries); /* May be zero. */
  
- uart_dbg: &uart5 {
--	compatible = "qcom,geni-debug-uart";
- 	status = "okay";
- };
+ 	/* We know from an ICMP that something is wrong. */
+-	if (sk->sk_err_soft && !alive)
++	if (READ_ONCE(sk->sk_err_soft) && !alive)
+ 		retries = 0;
  
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 2f7780f629ac5..c4a05d7b7ce65 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1440,12 +1440,12 @@ spi5: spi@994000 {
- 			};
+ 	/* However, if socket sent something recently, select some safe
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 4b0e05349862d..848175e0be081 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -497,8 +497,9 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 			sk_error_report(sk);		/* Wake people up to see the error (see connect in sock.c) */
  
- 			uart5: serial@994000 {
--				compatible = "qcom,geni-uart";
-+				compatible = "qcom,geni-debug-uart";
- 				reg = <0 0x00994000 0 0x4000>;
- 				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
- 				clock-names = "se";
- 				pinctrl-names = "default";
--				pinctrl-0 = <&qup_uart5_cts>, <&qup_uart5_rts>, <&qup_uart5_tx>, <&qup_uart5_rx>;
-+				pinctrl-0 = <&qup_uart5_tx>, <&qup_uart5_rx>;
- 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
- 				power-domains = <&rpmhpd SC7280_CX>;
- 				operating-points-v2 = <&qup_opp_table>;
-@@ -5408,16 +5408,6 @@ qup_uart4_rx: qup-uart4-rx-state {
- 				function = "qup04";
- 			};
- 
--			qup_uart5_cts: qup-uart5-cts-state {
--				pins = "gpio20";
--				function = "qup05";
--			};
+ 			tcp_done(sk);
+-		} else
+-			sk->sk_err_soft = err;
++		} else {
++			WRITE_ONCE(sk->sk_err_soft, err);
++		}
+ 		goto out;
+ 	case TCP_LISTEN:
+ 		break;
+@@ -514,9 +515,9 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
+ 	if (!sock_owned_by_user(sk) && np->recverr) {
+ 		sk->sk_err = err;
+ 		sk_error_report(sk);
+-	} else
+-		sk->sk_err_soft = err;
 -
--			qup_uart5_rts: qup-uart5-rts-state {
--				pins = "gpio21";
--				function = "qup05";
--			};
--
- 			qup_uart5_tx: qup-uart5-tx-state {
- 				pins = "gpio22";
- 				function = "qup05";
++	} else {
++		WRITE_ONCE(sk->sk_err_soft, err);
++	}
+ out:
+ 	bh_unlock_sock(sk);
+ 	sock_put(sk);
 -- 
 2.43.0
 
