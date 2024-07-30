@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A021D183CDB;
-	Tue, 30 Jul 2024 16:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCB618455B;
+	Tue, 30 Jul 2024 16:22:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356534; cv=none; b=FdCvS6ErX3Ozpxb1gPbsg7Z5l4y4dsM5o/YcZqs/hFQBZNPS053JauXAuWhxqCDpseMlteY2nbvxJB+BXEms1m5kyKDn7xpAV34Jw8hHlilAUbM+tz9Op6jxyfZTwLVcdvH2jgWZsawMZbGWaDZcwpAqy6V7s31xiYL1W6mwCtU=
+	t=1722356538; cv=none; b=agMenHZ+69ha0QknHiOBGmINFlFwb3LafByFFBGtgykoZx69hsYTL8pdEacRAOCL0+kY7FC5zkywooEazrFU3ZKPsK1prw47tovWiEgt3lDhz5v0vdLOMLs1Mh0Hl6ALokKvvF4cQuqSXkCSHOXDpS6jDKrxtV4l2m0c0Kmz40Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356534; c=relaxed/simple;
-	bh=WMd0wKByz8DEspVXXWO23q1aSu2eiHRvs2ITxFEuWvA=;
+	s=arc-20240116; t=1722356538; c=relaxed/simple;
+	bh=XxI731FZMYkFlfPGlquzZcApL17juxveMlb5AV11w08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxnM5t+0zvc+qaRS+NC4WE5reBB3N5ZYFQVIf9P+mqMSzET8wR4eL/kZMnA4JER9AKxkasLZAnsfS1UA7G+ATd7JjF7YT1XRg7GGG3TKLJuAyQQiRYyehW6mxtOI5gLV38RtgjWhmRmfwsOELR+z6AYRWFWsHuX1vTz3TT/EcXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAOhF2hn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EhvkyFnZ21AJy2QliRRV7TwMqIaK+oMi2QyuZqr5hymXEqD+tdgzJPPM0i8NeOXcF5TCjP71+J2spZp3anDt0pC8TDG5l4yCZk19urQE1zVwbSXZyq/DEw/rucBBicuC2Jdq+ndfeRsyF6xYRo09/UraRzLBKw9eb24SMrFzmVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YS9x2VAW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAOhF2hn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1394AC4AF0A;
-	Tue, 30 Jul 2024 16:22:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YS9x2VAW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A950C32782;
+	Tue, 30 Jul 2024 16:22:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356534;
-	bh=WMd0wKByz8DEspVXXWO23q1aSu2eiHRvs2ITxFEuWvA=;
+	s=korg; t=1722356538;
+	bh=XxI731FZMYkFlfPGlquzZcApL17juxveMlb5AV11w08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAOhF2hn7yH4s7FjKiihK3wjad7Rhu7dkkdjaVz1kBMhAjfGtVa8r19RKTh59KR7p
-	 X4ZYPFouqDKiSfyY6yMaZYkrJWo4byhPdOp2SfSUcE0Ac2JFdTkR7gJSUo5X/H2xAS
-	 EkpVzIqM/zp35l4X5dJpyVBjZzFso+b8GXeGV8n0=
+	b=YS9x2VAWpckhg+Iry8Efs27E0Dse+z31DOT70YbRV2JpEUesIi19XPU6raIWlK6b8
+	 q52pebS+sAut/y2E2VFJ4zYXwCO05I1qYJ7Xdjsd2EVq+5BJ05WCErq6Pa/cL1n/Z9
+	 LLsHd2O62OeG8trE8EoigQhIUbGjcp2jyKp2n4/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 200/440] RDMA/mlx5: Use sq timestamp as QP timestamp when RoCE is disabled
-Date: Tue, 30 Jul 2024 17:47:13 +0200
-Message-ID: <20240730151623.684340692@linuxfoundation.org>
+Subject: [PATCH 6.1 205/440] mtd: make mtd_test.c a separate module
+Date: Tue, 30 Jul 2024 17:47:18 +0200
+Message-ID: <20240730151623.877083336@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -54,60 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 0c5275bf75ec3708d95654195ae4ed80d946d088 ]
+[ Upstream commit a5cf054d325e6f362e82fe6d124a1871a4af8174 ]
 
-When creating a QP, one of the attributes is TS format (timestamp).
-In some devices, we have a limitation that all QPs should have the same
-ts_format. The ts_format is chosen based on the device's capability.
-The qp_ts_format cap resides under the RoCE caps table, and the
-cap will be 0 when RoCE is disabled. So when RoCE is disabled, the
-value that should be queried is sq_ts_format under HCA caps.
+This file gets linked into nine different modules, which causes a warning:
 
-Consider the case when the system supports REAL_TIME_TS format (0x2),
-some QPs are created with REAL_TIME_TS as ts_format, and afterwards
-RoCE gets disabled. When trying to construct a new QP, we can't use
-the qp_ts_format, that is queried from the RoCE caps table, Since it
-leads to passing 0x0 (FREE_RUNNING_TS) as the value of the qp_ts_format,
-which is different than the ts_format of the previously allocated
-QPs REAL_TIME_TS format (0x2).
+scripts/Makefile.build:236: drivers/mtd/tests/Makefile: mtd_test.o is added to multiple modules: mtd_nandbiterrs mtd_oobtest mtd_pagetest mtd_readtest mtd_speedtest mtd_stresstest mtd_subpagetest mtd_torturetest
 
-Thus, to resolve this, read the sq_ts_format, which also reflect
-the supported ts format for the QP when RoCE is disabled.
+Make it a separate module instead.
 
-Fixes: 4806f1e2fee8 ("net/mlx5: Set QP timestamp mode to default")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Link: https://lore.kernel.org/r/32801966eb767c7fd62b8dea3b63991d5fbfe213.1718554199.git.leon@kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: a995c792280d ("mtd: tests: rename sources in order to link a helper object")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240529095049.1915393-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mlx5/qp.h | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/mtd/tests/Makefile   | 34 +++++++++++++++++-----------------
+ drivers/mtd/tests/mtd_test.c |  9 +++++++++
+ 2 files changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/include/linux/mlx5/qp.h b/include/linux/mlx5/qp.h
-index ca0eee571ad7b..15e8d7fd3879f 100644
---- a/include/linux/mlx5/qp.h
-+++ b/include/linux/mlx5/qp.h
-@@ -566,9 +566,12 @@ static inline const char *mlx5_qp_state_str(int state)
+diff --git a/drivers/mtd/tests/Makefile b/drivers/mtd/tests/Makefile
+index 5de0378f90dbd..7dae831ee8b6b 100644
+--- a/drivers/mtd/tests/Makefile
++++ b/drivers/mtd/tests/Makefile
+@@ -1,19 +1,19 @@
+ # SPDX-License-Identifier: GPL-2.0
+-obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o
++obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o mtd_test.o
  
- static inline int mlx5_get_qp_default_ts(struct mlx5_core_dev *dev)
- {
--	return !MLX5_CAP_ROCE(dev, qp_ts_format) ?
--		       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING :
--		       MLX5_TIMESTAMP_FORMAT_DEFAULT;
-+	u8 supported_ts_cap = mlx5_get_roce_state(dev) ?
-+			      MLX5_CAP_ROCE(dev, qp_ts_format) :
-+			      MLX5_CAP_GEN(dev, sq_ts_format);
-+
-+	return supported_ts_cap ? MLX5_TIMESTAMP_FORMAT_DEFAULT :
-+	       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING;
+-mtd_oobtest-objs := oobtest.o mtd_test.o
+-mtd_pagetest-objs := pagetest.o mtd_test.o
+-mtd_readtest-objs := readtest.o mtd_test.o
+-mtd_speedtest-objs := speedtest.o mtd_test.o
+-mtd_stresstest-objs := stresstest.o mtd_test.o
+-mtd_subpagetest-objs := subpagetest.o mtd_test.o
+-mtd_torturetest-objs := torturetest.o mtd_test.o
+-mtd_nandbiterrs-objs := nandbiterrs.o mtd_test.o
++mtd_oobtest-objs := oobtest.o
++mtd_pagetest-objs := pagetest.o
++mtd_readtest-objs := readtest.o
++mtd_speedtest-objs := speedtest.o
++mtd_stresstest-objs := stresstest.o
++mtd_subpagetest-objs := subpagetest.o
++mtd_torturetest-objs := torturetest.o
++mtd_nandbiterrs-objs := nandbiterrs.o
+diff --git a/drivers/mtd/tests/mtd_test.c b/drivers/mtd/tests/mtd_test.c
+index c84250beffdc9..f391e0300cdc9 100644
+--- a/drivers/mtd/tests/mtd_test.c
++++ b/drivers/mtd/tests/mtd_test.c
+@@ -25,6 +25,7 @@ int mtdtest_erase_eraseblock(struct mtd_info *mtd, unsigned int ebnum)
+ 
+ 	return 0;
  }
++EXPORT_SYMBOL_GPL(mtdtest_erase_eraseblock);
  
- #endif /* MLX5_QP_H */
+ static int is_block_bad(struct mtd_info *mtd, unsigned int ebnum)
+ {
+@@ -57,6 +58,7 @@ int mtdtest_scan_for_bad_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_scan_for_bad_eraseblocks);
+ 
+ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 				unsigned int eb, int ebcnt)
+@@ -75,6 +77,7 @@ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_erase_good_eraseblocks);
+ 
+ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
+ {
+@@ -92,6 +95,7 @@ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
+ 
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_read);
+ 
+ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
+ 		const void *buf)
+@@ -107,3 +111,8 @@ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
+ 
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_write);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("MTD function test helpers");
++MODULE_AUTHOR("Akinobu Mita");
 -- 
 2.43.0
 
