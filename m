@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675481BC063;
-	Tue, 30 Jul 2024 15:58:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5ED41BC07A;
+	Tue, 30 Jul 2024 15:58:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355103; cv=none; b=A0niNLBvOu/Rq2NGaHFxbQztm91Gk9vAyZC83HK+u/aoBNZ48apk+GdqQoSQpiuWZTk4MYMsetFef9Gx1xP4vcfnXGT7Dd5wzlEu2+0iM4JH2RhxSijlSe3huUhScxhjPkufi6IQRHivGnxKCr3eKnMjZVyw3p2Jx5SdPT7MGxg=
+	t=1722355107; cv=none; b=WjK56CTVzxrtpqFrsoSrSHd25/h0Fz846m1m5JWzAvnjIa6yjltaCRqVDr0MRnEoUyx67LtA8jQD0A+HAvb9y7OkRgEwpnVc1MJE6Z9kSJeKfEXwK6WSF219HjSIx3Q1fuI0SHBtAilV/BUS5TSX761/iN99eWFckFjVLcfUqtI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355103; c=relaxed/simple;
-	bh=LOSefknzvkzEgkp/zZ3DobxSkewelVeP9yW0kBmkjjk=;
+	s=arc-20240116; t=1722355107; c=relaxed/simple;
+	bh=68tWB734qiod7TeOYJ33vi7NrSooXIrVD3kau6SwDlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V0Ww3FAXI+yXWE7hjvHU9uhirT0A4DReHjJP5M8Bsvm6RPC07EhbAUYu37yjkTQr1rcbomH8FiUDB4lHMWIyLk3S5B4hluDEYvaePFAg1fYgP+eh7RugmKNULCTIThDilTunOtbdk4kISZ7xK8jMHfoN9AOEauajsDsScri/0sY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T20ajA1r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GCV1/IjcbQa7aLivd9IDeX7mroMu+SQ2l2wB9KDIwsr8R54XHXWFoMBmpsJqebQDO/iJS6kSbTwHHnwwpudb64FMzcU0rgOBlHNib4Mf8w13IQDdZVbzjrobHJbj3EnFlAwuYYqRz5Fv4hvV8BAdDdHQn5TM0VyNflnozVNHgMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gQAqo/f8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T20ajA1r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B9BC4AF0A;
-	Tue, 30 Jul 2024 15:58:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gQAqo/f8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11967C32782;
+	Tue, 30 Jul 2024 15:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355103;
-	bh=LOSefknzvkzEgkp/zZ3DobxSkewelVeP9yW0kBmkjjk=;
+	s=korg; t=1722355106;
+	bh=68tWB734qiod7TeOYJ33vi7NrSooXIrVD3kau6SwDlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T20ajA1rVNX54pFsJh7J2sTMfOPBw4NdRJeDphqIhHlWHqsA9LiK1E9omt3zi4pk8
-	 e2ZpOmRf2izkxavVtowOVeNVdAMfSIgp3zIMNV/QjIpQB9jlLeHm3dtqt/knGYPWsU
-	 hnxyWz5CrUloYjSCkLvWqxaTVzSjucmYL/opsHjA=
+	b=gQAqo/f8v5RXOEHc/XFWL0elr02tztl4rWo1yH9KJYeiw3y9GAZfk17TzBDnGDzy2
+	 fEBA/zSs395QgKVzRQ0MqfCGrZg+ONuxFFfhHk22LPp8+IhunihGzlkzsej1mpn7tK
+	 zH4yoKF+eg7RofMtp7JzoAPaU8YjMbNWxFfbqdv4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Bjorn Andersson <quic_bjorande@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/440] arm64: dts: mediatek: mt7622: fix "emmc" pinctrl mux
-Date: Tue, 30 Jul 2024 17:44:51 +0200
-Message-ID: <20240730151618.032566098@linuxfoundation.org>
+Subject: [PATCH 6.6 028/568] arm64: dts: qcom: sc8180x: Correct PCIe slave ports
+Date: Tue, 30 Jul 2024 17:42:15 +0200
+Message-ID: <20240730151640.938107005@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,68 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Bjorn Andersson <quic_bjorande@quicinc.com>
 
-[ Upstream commit aebba1030a5766cdf894ed4ab0cac7aed5aee9c1 ]
+[ Upstream commit dc402e084a9e0cc714ffd6008dce3c63281b8142 ]
 
-Value "emmc_rst" is a group name and should be part of the "groups"
-property.
+The interconnects property was clearly copy-pasted between the 4 PCIe
+controllers, giving all four the cpu-pcie path destination of SLAVE_0.
 
-This fixes:
-arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
-        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
-arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
-        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
+The four ports are all associated with CN0, but update the property for
+correctness sake.
 
-Fixes: 3725ba3f5574 ("arm64: dts: mt7622: add pinctrl related device nodes")
-Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240604074916.7929-1-zajec5@gmail.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: d20b6c84f56a ("arm64: dts: qcom: sc8180x: Add PCIe instances")
+Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240525-sc8180x-pcie-interconnect-port-fix-v1-1-f86affa02392@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts | 4 ++--
- arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-index b1ddc491d2936..9c9431455f854 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-@@ -286,8 +286,8 @@ asm_sel {
- 	/* eMMC is shared pin with parallel NAND */
- 	emmc_pins_default: emmc-pins-default {
- 		mux {
--			function = "emmc", "emmc_rst";
--			groups = "emmc";
-+			function = "emmc";
-+			groups = "emmc", "emmc_rst";
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+index dd207eb81360a..9163c1419cc12 100644
+--- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
+@@ -1853,7 +1853,7 @@ pcie3: pci@1c08000 {
+ 			power-domains = <&gcc PCIE_3_GDSC>;
  
- 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-index 527dcb279ba52..f4bb9c6521c65 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-@@ -244,8 +244,8 @@ &pio {
- 	/* eMMC is shared pin with parallel NAND */
- 	emmc_pins_default: emmc-pins-default {
- 		mux {
--			function = "emmc", "emmc_rst";
--			groups = "emmc";
-+			function = "emmc";
-+			groups = "emmc", "emmc_rst";
- 		};
+ 			interconnects = <&aggre2_noc MASTER_PCIE_3 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_0 0>;
++					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_3 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
  
- 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
+ 			phys = <&pcie3_phy>;
+@@ -1952,7 +1952,7 @@ pcie1: pci@1c10000 {
+ 			power-domains = <&gcc PCIE_1_GDSC>;
+ 
+ 			interconnects = <&aggre2_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_0 0>;
++					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_1 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
+ 			phys = <&pcie1_phy>;
+@@ -2051,7 +2051,7 @@ pcie2: pci@1c18000 {
+ 			power-domains = <&gcc PCIE_2_GDSC>;
+ 
+ 			interconnects = <&aggre2_noc MASTER_PCIE_2 0 &mc_virt SLAVE_EBI_CH0 0>,
+-					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_0 0>;
++					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_2 0>;
+ 			interconnect-names = "pcie-mem", "cpu-pcie";
+ 
+ 			phys = <&pcie2_phy>;
 -- 
 2.43.0
 
