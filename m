@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D53F1A76C1;
-	Tue, 30 Jul 2024 17:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4351A76BE;
+	Tue, 30 Jul 2024 17:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360563; cv=none; b=nvEcSM6QtXpckclHPD2/OID6fxiSCOfnPScr2NGR2IhpdKhr9eZ7N5sQCL1XXbuZcgp5PFD68yNNcPa7YFhiTnQIcZYoBTWS8wYYJE7nEZ8/mFnJLysnkyq4OpJufry3w2LnFXn7iaXInXFW/rSy9m6DSqYfHvszFmEdpvQLuWE=
+	t=1722360566; cv=none; b=dP6VMyB+eaq9NTr38o+PnZwkGoV1qWCXaFGC3beVhyfq+NQbOC6XJpnWuxjhxn90rPQ4WX7P7F5Aw+OMZaTvlBpK7IPrWoBMYZun9lpJO1RYEaeuf+xOkQEe0+M4JkkdGSIDwncW1yKbAqHa0ToshXf4xq6or7BYqSeFoWbac1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360563; c=relaxed/simple;
-	bh=Wm/T0kuJ2jCGQh3JBq/ZlAvyF29vbJPEnryLrWZfpWI=;
+	s=arc-20240116; t=1722360566; c=relaxed/simple;
+	bh=XueRPMNswUv+Vw1S1lT7p5YQzBgW4PpRscGDmk7DlTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U79gEtGkb9qgdnoN9RV4P18eS5hhjG6yPqib3KBaIhjDm/VuE82pGpvY4totTAJeLOzBkztf9WQz6BYwT0X0/2xHa5jVvW1OD1CrxXJ2AgExwlLQkXG7mKHZx66WFwCh2QQg4dqDq3paV58dt1lQytahBcGZGdOZWGwO+wzhm48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D9knMAtY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6aTuEssQTIUYxwN8zWhtWJo3Tx5pogZNplVPAO7ZxJ8hjGGB/pELcGt81paMNMNtB1cYgNFkoUrYE8gffGzh1D78rlcuKed1dhaoxFv/LpVBZSg+i0z84INiXWJGupAAJwXyrejyjp8b9WDAuhQVdG8ySM3vjBRmM2vjA+SWpA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SSqKev9z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D9knMAtY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B676DC32782;
-	Tue, 30 Jul 2024 17:29:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SSqKev9z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D004CC32782;
+	Tue, 30 Jul 2024 17:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360563;
-	bh=Wm/T0kuJ2jCGQh3JBq/ZlAvyF29vbJPEnryLrWZfpWI=;
+	s=korg; t=1722360566;
+	bh=XueRPMNswUv+Vw1S1lT7p5YQzBgW4PpRscGDmk7DlTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9knMAtYVHnyKQZT+AlEHOHrvRTatBxj/ZpIS7+KTT9zt2nstnJNcRGH6cnx6SxSN
-	 kw6UfECn7sbpOzMq5s+MZvYbiUFc4njbMIXHZX+8tSmlU2CD6xkgh6aD3i5DeJbFNV
-	 b/daDRq34itKnFtoozOUFWJNRdaLAqpEakBk+kc4=
+	b=SSqKev9z0oK+2SpA2nKbPbRTo1WpDgVWzEG3SxMvtn2SCZgbJFqV8EKE8P52InyMs
+	 Oa2bH6KyQYE7aAaKIP1Tp7+yD+VEoqOU6/ppWZUivHGRa4hNUBAJfVwXDRRuznJqHO
+	 GrTLMGc3CZMvN8lGeoblM8tsS7Wt0eSUMiD6vqqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
 	Douglas Anderson <dianders@chromium.org>,
 	Daniel Thompson <daniel.thompson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 738/809] kdb: address -Wformat-security warnings
-Date: Tue, 30 Jul 2024 17:50:14 +0200
-Message-ID: <20240730151754.097325425@linuxfoundation.org>
+Subject: [PATCH 6.10 739/809] kdb: Use the passed prompt in kdb_position_cursor()
+Date: Tue, 30 Jul 2024 17:50:15 +0200
+Message-ID: <20240730151754.137919043@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,55 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 70867efacf4370b6c7cdfc7a5b11300e9ef7de64 ]
+[ Upstream commit e2e821095949cde46256034975a90f88626a2a73 ]
 
-When -Wformat-security is not disabled, using a string pointer
-as a format causes a warning:
+The function kdb_position_cursor() takes in a "prompt" parameter but
+never uses it. This doesn't _really_ matter since all current callers
+of the function pass the same value and it's a global variable, but
+it's a bit ugly. Let's clean it up.
 
-kernel/debug/kdb/kdb_io.c: In function 'kdb_read':
-kernel/debug/kdb/kdb_io.c:365:36: error: format not a string literal and no format arguments [-Werror=format-security]
-  365 |                         kdb_printf(kdb_prompt_str);
-      |                                    ^~~~~~~~~~~~~~
-kernel/debug/kdb/kdb_io.c: In function 'kdb_getstr':
-kernel/debug/kdb/kdb_io.c:456:20: error: format not a string literal and no format arguments [-Werror=format-security]
-  456 |         kdb_printf(kdb_prompt_str);
-      |                    ^~~~~~~~~~~~~~
+Found by code inspection. This patch is expected to functionally be a
+no-op.
 
-Use an explcit "%s" format instead.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240528121154.3662553-1-arnd@kernel.org
+Fixes: 09b35989421d ("kdb: Use format-strings rather than '\0' injection in kdb_read()")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240528071144.1.I0feb49839c6b6f4f2c4bf34764f5e95de3f55a66@changeid
 Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/debug/kdb/kdb_io.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/debug/kdb/kdb_io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
-index 3131334d7a81c..7da3fa7beffd0 100644
+index 7da3fa7beffd0..6a77f1c779c4c 100644
 --- a/kernel/debug/kdb/kdb_io.c
 +++ b/kernel/debug/kdb/kdb_io.c
-@@ -362,7 +362,7 @@ static char *kdb_read(char *buffer, size_t bufsize)
- 			if (i >= dtab_count)
- 				kdb_printf("...");
- 			kdb_printf("\n");
--			kdb_printf(kdb_prompt_str);
-+			kdb_printf("%s",  kdb_prompt_str);
- 			kdb_printf("%s", buffer);
- 			if (cp != lastchar)
- 				kdb_position_cursor(kdb_prompt_str, buffer, cp);
-@@ -453,7 +453,7 @@ char *kdb_getstr(char *buffer, size_t bufsize, const char *prompt)
+@@ -206,7 +206,7 @@ char kdb_getchar(void)
+  */
+ static void kdb_position_cursor(char *prompt, char *buffer, char *cp)
  {
- 	if (prompt && kdb_prompt_str != prompt)
- 		strscpy(kdb_prompt_str, prompt, CMD_BUFLEN);
--	kdb_printf(kdb_prompt_str);
-+	kdb_printf("%s", kdb_prompt_str);
- 	kdb_nextline = 1;	/* Prompt and input resets line number */
- 	return kdb_read(buffer, bufsize);
+-	kdb_printf("\r%s", kdb_prompt_str);
++	kdb_printf("\r%s", prompt);
+ 	if (cp > buffer)
+ 		kdb_printf("%.*s", (int)(cp - buffer), buffer);
  }
 -- 
 2.43.0
