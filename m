@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F06D1A6192;
-	Tue, 30 Jul 2024 16:37:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D1A4433A9;
+	Tue, 30 Jul 2024 16:37:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357421; cv=none; b=uthhekyHmqrzqSYDWa8r6RUD+CQHgJTxhJyHNXSc9jlZSGpnPBptomg+i5n2OLpsj/7q4V45tgWsEu6mzpHDJLwzB8UmcicQwaV3jYmh8hh9FFp8LjQ+9tEvUHTkji+4sQ9oX790eVeGzbqfE/NjNqtevOKN7dNUS4GLP6GY67U=
+	t=1722357425; cv=none; b=JmOGUEhSFcORdi+BM3YRJPrY87eq5zS1yBk399PhyE57K76PQtmIdfoZbjikBTmRWlg59M/A0IL4y9INuW1bBG4poOoZuoZ9g+S0/1xTOeMIBlWVtGskNnJPMPnTY5Kv02EVBCN+GK4gKz/8W4pyTJhqR2s/vDSxTCXlYxloTLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357421; c=relaxed/simple;
-	bh=hlk5dZfo8xFhztYgrLHBvJeZqYs/0tZS8d34Nhfiyig=;
+	s=arc-20240116; t=1722357425; c=relaxed/simple;
+	bh=6nnXBmCiwQZUl6EL9nrfyxw3locsw1M48D6Ec1CznhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wj8p8pkOkAzc4UqEBolzPKKhWJtesj8HpuPL2J+Tg2qzdUqkBc4dtGlMzm4jP8KwU/II+CjNLH6v+iczgXx/eoxy/sTSjF9VtXyaq+Jqi6fb/VtQLlEQeQF4gxxB9TOGxBqRq2dMgo/D+HjvgchsphJtnlI6EJPgYdEFYMEbDaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2sKlxvwA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOu7S5m0zdiJ21KMRXJwILIe6xo2KQ/gecdUTOuW2VYT6jpL89gTsuitglEyhmwP3tJZ7JI+ZHjUtyR8izTtrBAhtpQUx44CgeF7WpKK+orlN/6A1KGLIajzqO5FhjRFBzRaSwbZUntGG7SIcatciD66TfOS1euXxqZ82fzhQog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K4L9J8nF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2sKlxvwA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 899E7C32782;
-	Tue, 30 Jul 2024 16:37:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K4L9J8nF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA631C32782;
+	Tue, 30 Jul 2024 16:37:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357420;
-	bh=hlk5dZfo8xFhztYgrLHBvJeZqYs/0tZS8d34Nhfiyig=;
+	s=korg; t=1722357425;
+	bh=6nnXBmCiwQZUl6EL9nrfyxw3locsw1M48D6Ec1CznhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2sKlxvwACFaTJSy8JHs1EUoZmmQxQm60LBb1foqkXSgPDghPwIOmLuoqGDg9//0ky
-	 iz6Ewc2g204+IrvbP1oiRBZSk5it3jYpjBi3ISPFFDFMuT0ECY3c0Al5TVUJnPePe7
-	 QEQsFNUjZRNTvsLCd3UY8gHJe7vTpRGAk8mv6IaY=
+	b=K4L9J8nFdiPhUu66gjnrcbSMJCQji0DD2qU2oGZpOK4kxjV6KZe4WckTo0E82x6Bj
+	 v4uw/Ms+wGF56+AF+9pbwmIdOH132Ex0CeA5iXKonIfQvmduz/5mxCj5gZ86OGVkYJ
+	 jC7p1ZWLU4ueU3eI0kCEUmOm2xQvrsZEHlCrJ8Fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 252/809] selftests: forwarding: devlink_lib: Wait for udev events after reloading
-Date: Tue, 30 Jul 2024 17:42:08 +0200
-Message-ID: <20240730151734.549511135@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Subject: [PATCH 6.1 291/440] drm/gma500: fix null pointer dereference in psb_intel_lvds_get_modes
+Date: Tue, 30 Jul 2024 17:48:44 +0200
+Message-ID: <20240730151627.198182273@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,80 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
+commit 2df7aac81070987b0f052985856aa325a38debf6 upstream.
 
-Lately, an additional locking was added by commit c0a40097f0bc
-("drivers: core: synchronize really_probe() and dev_uevent()"). The
-locking protects dev_uevent() calling. This function is used to send
-messages from the kernel to user space. Uevent messages notify user space
-about changes in device states, such as when a device is added, removed,
-or changed. These messages are used by udev (or other similar user-space
-tools) to apply device-specific rules.
+In psb_intel_lvds_get_modes(), the return value of drm_mode_duplicate() is
+assigned to mode, which will lead to a possible NULL pointer dereference
+on failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-After reloading devlink instance, udev events should be processed. This
-locking causes a short delay of udev events handling.
-
-One example for useful udev rule is renaming ports. 'forwading.config'
-can be configured to use names after udev rules are applied. Some tests run
-devlink_reload() and immediately use the updated names. This worked before
-the above mentioned commit was pushed, but now the delay of uevent messages
-causes that devlink_reload() returns before udev events are handled and
-tests fail.
-
-Adjust devlink_reload() to not assume that udev events are already
-processed when devlink reload is done, instead, wait for udev events to
-ensure they are processed before returning from the function.
-
-Without this patch:
-TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-Cannot find device "swp1"
-Cannot find device "swp2"
-TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
-
-With this patch:
-$ TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
-
-This is relevant not only for this test.
-
-Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 89c78134cc54 ("gma500: Add Poulsbo support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240709092011.3204970-1-make24@iscas.ac.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/gma500/psb_intel_lvds.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-index f1de525cfa55b..62a05bca1e825 100644
---- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
-+++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-@@ -122,6 +122,8 @@ devlink_reload()
- 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
- 			grep -c "size_new")
- 	check_err $still_pending "Failed reload - There are still unset sizes"
+--- a/drivers/gpu/drm/gma500/psb_intel_lvds.c
++++ b/drivers/gpu/drm/gma500/psb_intel_lvds.c
+@@ -502,6 +502,9 @@ static int psb_intel_lvds_get_modes(stru
+ 	if (mode_dev->panel_fixed_mode != NULL) {
+ 		struct drm_display_mode *mode =
+ 		    drm_mode_duplicate(dev, mode_dev->panel_fixed_mode);
++		if (!mode)
++			return 0;
 +
-+	udevadm settle
- }
- 
- declare -A DEVLINK_ORIG
--- 
-2.43.0
-
+ 		drm_mode_probed_add(connector, mode);
+ 		return 1;
+ 	}
 
 
