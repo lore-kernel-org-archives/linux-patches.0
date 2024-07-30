@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C41D1A616E;
-	Tue, 30 Jul 2024 16:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85C21A616E;
+	Tue, 30 Jul 2024 16:17:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356237; cv=none; b=eWtCOOL5lT6fGbAqJeP9fG+P7nSfzAnB5GBCiAaVi9kVRLfqPvTCAOrC12e/4MllgkpUW1+N9SkapOaOACZTz03rRNcMuLYTNs/1W2DLBGdLYJwEI0wGqexygcwDSgs+rBlQTIpv6E1fHlMHMWQGODOOXmDGGifagCDwLFmnSTo=
+	t=1722356239; cv=none; b=RtdUyeu9+iu4IwHuI/a44GOTPwYr4LdAwNqmisO16ye8iuG9zNEbGk8silYaHRjMAgal/beS60jOCgpqfQ5/U/NTm3RO9F5OMywBOtRAd/qakKqsZSoctYu1AOe+bTxjyzCkadcZWWtRiwYeqgxFYlD/NEW0X7dMNju0jaQySNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356237; c=relaxed/simple;
-	bh=pg554TLCTfrWxNUfw7a8F0sJVGGylGAIWNNXmapmY9M=;
+	s=arc-20240116; t=1722356239; c=relaxed/simple;
+	bh=aYGLLEVU7xAWUsbM0uZG8w0CNiq5K0Cy312lxp/+VMk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XYnhjOufKXHsNN3IILt5d89J0gQYPWNMf3Jz/9IMwKv3PNnzqu0+0UBDeroDehic4u6W2sHfZ+z4KlwpNikJXzQ1VClvIKtl/yeENxxkZ7PEK9feI3nYw6hbIRwMavm2gcWsxWvkY9QrlWftT8b1AJR+kteAhn2uWaL6bLCLvz0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVN67I5C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCpGeoHaA5aAupPS30QGReuO5ncHzs4NDIc2FKZGkxK4zHCAEFO1LS74Adhquncm9c+/VEj7V9SndnLd+4WE87zxYhGKu+s62EINJ7aSmCdm3NfoCZ3ipiJHc8/94JaEe9VbyVcAj2ELcIZnoSsaz9qSLvJmX8VDNbMkWwPcyqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yK1ZDR9q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVN67I5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E10C4AF0E;
-	Tue, 30 Jul 2024 16:17:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yK1ZDR9q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E2ABC4AF0A;
+	Tue, 30 Jul 2024 16:17:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356236;
-	bh=pg554TLCTfrWxNUfw7a8F0sJVGGylGAIWNNXmapmY9M=;
+	s=korg; t=1722356239;
+	bh=aYGLLEVU7xAWUsbM0uZG8w0CNiq5K0Cy312lxp/+VMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVN67I5CR0aylRbkykC4gbP6+h5/mw7YkmQQ9+fp9KmxHyxZ5D5/F5+/PoZ6bsQa3
-	 s07f6LrlldqFsNtSmp6pjHb9NtG9lCpdTCWlheSQ+DarEJlxHtcaDl9s4GkDICw1au
-	 73QI+6dhsjQYC26urkjU7w4LQUmHXvcdZfWcFFyI=
+	b=yK1ZDR9qX7YTMRT9+oQcaJ9NC5UWFod77GrEaaR9vGujuJn2b7Chzg/13TlYxLcoV
+	 GAFiH3d0YAhtfB+OqAJO7mfPYT1ioop4Ms6vgoz5jSSLaV+RXxJ3CSxV9nJ8bsXq9x
+	 72Hc0xFQ86Zy2n+uRYzXsiZGSbIvvjm61FZn9Fkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 171/440] SUNRPC: avoid soft lockup when transmitting UDP to reachable server.
-Date: Tue, 30 Jul 2024 17:46:44 +0200
-Message-ID: <20240730151622.551857130@linuxfoundation.org>
+Subject: [PATCH 6.10 132/809] arm64: dts: rockchip: fix usb regulator for Lunzn Fastrhino R6xS
+Date: Tue, 30 Jul 2024 17:40:08 +0200
+Message-ID: <20240730151729.830191385@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +47,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit 6258cf25d5e3155c3219ab5a79b970eef7996356 ]
+[ Upstream commit 9e823ba92118510c0d1c050b67bb000f9b9a73d7 ]
 
-Prior to the commit identified below, call_transmit_status() would
-handle -EPERM and other errors related to an unreachable server by
-falling through to call_status() which added a 3-second delay and
-handled the failure as a timeout.
+Remove the non-existent usb_host regulator and fix the supply according
+to the schematic. Also remove the unnecessary always-on and boot-on for
+the usb_otg regulator.
 
-Since that commit, call_transmit_status() falls through to
-handle_bind().  For UDP this moves straight on to handle_connect() and
-handle_transmit() so we immediately retransmit - and likely get the same
-error.
-
-This results in an indefinite loop in __rpc_execute() which triggers a
-soft-lockup warning.
-
-For the errors that indicate an unreachable server,
-call_transmit_status() should fall back to call_status() as it did
-before.  This cannot cause the thundering herd that the previous patch
-was avoiding, as the call_status() will insert a delay.
-
-Fixes: ed7dc973bd91 ("SUNRPC: Prevent thundering herd when the socket is not connected")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20240701143028.1203997-2-amadeus@jmu.edu.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 1dbad41c46145..b6529a9d37d37 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2296,12 +2296,13 @@ call_transmit_status(struct rpc_task *task)
- 		task->tk_action = call_transmit;
- 		task->tk_status = 0;
- 		break;
--	case -ECONNREFUSED:
- 	case -EHOSTDOWN:
- 	case -ENETDOWN:
- 	case -EHOSTUNREACH:
- 	case -ENETUNREACH:
- 	case -EPERM:
-+		break;
-+	case -ECONNREFUSED:
- 		if (RPC_IS_SOFTCONN(task)) {
- 			if (!task->tk_msg.rpc_proc->p_proc)
- 				trace_xprt_ping(task->tk_xprt,
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+index 93987c8740f7b..8f587978fa3b6 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+@@ -78,15 +78,6 @@ vcc5v0_sys: vcc5v0-sys-regulator {
+ 		vin-supply = <&vcc12v_dcin>;
+ 	};
+ 
+-	vcc5v0_usb_host: vcc5v0-usb-host-regulator {
+-		compatible = "regulator-fixed";
+-		regulator-name = "vcc5v0_usb_host";
+-		regulator-always-on;
+-		regulator-boot-on;
+-		regulator-min-microvolt = <5000000>;
+-		regulator-max-microvolt = <5000000>;
+-	};
+-
+ 	vcc5v0_usb_otg: vcc5v0-usb-otg-regulator {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
+@@ -94,8 +85,9 @@ vcc5v0_usb_otg: vcc5v0-usb-otg-regulator {
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vcc5v0_usb_otg_en>;
+ 		regulator-name = "vcc5v0_usb_otg";
+-		regulator-always-on;
+-		regulator-boot-on;
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		vin-supply = <&vcc5v0_sys>;
+ 	};
+ };
+ 
+@@ -460,7 +452,7 @@ &usb2phy0 {
+ };
+ 
+ &usb2phy0_host {
+-	phy-supply = <&vcc5v0_usb_host>;
++	phy-supply = <&vcc5v0_sys>;
+ 	status = "okay";
+ };
+ 
 -- 
 2.43.0
 
