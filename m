@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AB114831F;
-	Tue, 30 Jul 2024 16:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F2214831F;
+	Tue, 30 Jul 2024 16:49:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358139; cv=none; b=tIlpg1r0tXhe6F26K+nou++T+7QLdeInZce74Nkh+9oYK7S7+t+4bin41iv6GEB9jtEQy4Fq0eLXogSCycNjHJDdLrblbq5yI1hbQo66bCg6o5Fs2X548GITPUECdcho2LZy9avELSedFUBBznb2LBkQkiB5AJaGAIMaeNDg4nQ=
+	t=1722358142; cv=none; b=fPUMronJGQQuvdDSmwR5wjo1e7xiH0t+9XlJ7sCNX2dF6Cj8oOXyXRGV/RfMoYEZrhMr+pZ4zYOsaq5GmasxN4yU9vdPdAz6OVIDNz8bNzHESyusmImo5UtZ3YZBZJdpvDXg48To+Sr8dwUJZvUDKej+jx7ULqX0oCQHEFVIVt0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358139; c=relaxed/simple;
-	bh=JF+f3nGfwMXP+QuXF8P/D11J+imsCd5OCrs+/n9ZsZc=;
+	s=arc-20240116; t=1722358142; c=relaxed/simple;
+	bh=798deU0TpUVTuU3CdlNG+39REZq1aBnDvwDtvSxeqA0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qAcXwgrK7Q2BnJe5bl25rccLkoKCD75X1cc5+1/zMd4s9n2rrLqOfBm8Cn8RGDkaks044GlNRgrW5sLIEsiyEGVyk/Y+YBsPaL8N+LzRP+s9MAv6Y+AcJB4CDkuiQYTHwmJu/RJzIxXQj0MeNCDFjpOSJe7aC3BkcntIHhXicYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMvn4qri; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bLo1XnVHjEwr+Entajj2G3ILZL3N+BwgWNPuoO4vsnv4AVgxd2iQ/LeBXZrxXGB8kpeHnx4dotW86CJekEmNI8a96CQ5zf5/W2bdubke+rg45Hig8W055/w7ZmSuTTz2M2d1zGXmeWzkpliQjIgbZbI0+QSrQozww8cTJQND+xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nZO8tLFb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMvn4qri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7D4C32782;
-	Tue, 30 Jul 2024 16:48:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nZO8tLFb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4D9C32782;
+	Tue, 30 Jul 2024 16:49:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358138;
-	bh=JF+f3nGfwMXP+QuXF8P/D11J+imsCd5OCrs+/n9ZsZc=;
+	s=korg; t=1722358141;
+	bh=798deU0TpUVTuU3CdlNG+39REZq1aBnDvwDtvSxeqA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMvn4qriU6HYZ/oI4oDZDbgFFYLKCVqE1aMRa1tBInDcXZ5qKVrkQ1rP19EmLWSzW
-	 EaBFpVHi+yCpaFojWLncEOMOKLZsl+1ZeEWEI/QoitR16QWfv6TqJHztUkSAqwSk2W
-	 X9EAjwh/++9FQo4TQ8LqlJMUHmT+CnR1HgzjwRWk=
+	b=nZO8tLFbItyZWsK/nJG4AvxBen1DyR2lcZf+xRCWhYNSltJU971ZNrwgJ3Rxw3rgl
+	 wiSa0Jqi+ab/mVVmB1suR5Gt7fFiegIouG5vu4C9qG1YcpYehUkWMsWg9dGj6gGhcl
+	 xcKeEMyf28RKsuT0WG/iXn06ZIQBNN4RhIq/x0g4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Pan-Doh <pandoh@google.com>,
-	Sudheer Dantuluri <dantuluris@google.com>,
-	Gary Zibrat <gzibrat@google.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Will Deacon <will@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 305/568] iommu/vt-d: Fix identity map bounds in si_domain_init()
-Date: Tue, 30 Jul 2024 17:46:52 +0200
-Message-ID: <20240730151651.796893522@linuxfoundation.org>
+Subject: [PATCH 6.6 329/568] pinctrl: ti: ti-iodelay: fix possible memory leak when pinctrl_enable() fails
+Date: Tue, 30 Jul 2024 17:47:16 +0200
+Message-ID: <20240730151652.732310365@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -55,41 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jon Pan-Doh <pandoh@google.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 31000732d56b43765d51e08cccb68818fbc0032c ]
+[ Upstream commit 9b401f4a7170125365160c9af267a41ff6b39001 ]
 
-Intel IOMMU operates on inclusive bounds (both generally aas well as
-iommu_domain_identity_map()). Meanwhile, for_each_mem_pfn_range() uses
-exclusive bounds for end_pfn. This creates an off-by-one error when
-switching between the two.
+This driver calls pinctrl_register_and_init() which is not
+devm_ managed, it will leads memory leak if pinctrl_enable()
+fails. Replace it with devm_pinctrl_register_and_init().
+And add missing of_node_put() in the error path.
 
-Fixes: c5395d5c4a82 ("intel-iommu: Clean up iommu_domain_identity_map()")
-Signed-off-by: Jon Pan-Doh <pandoh@google.com>
-Tested-by: Sudheer Dantuluri <dantuluris@google.com>
-Suggested-by: Gary Zibrat <gzibrat@google.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240709234913.2749386-1-pandoh@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240606023704.3931561-4-yangyingliang@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 744e4e6b8d72d..9918af222c516 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -2411,7 +2411,7 @@ static int __init si_domain_init(int hw)
- 		for_each_mem_pfn_range(i, nid, &start_pfn, &end_pfn, NULL) {
- 			ret = iommu_domain_identity_map(si_domain,
- 					mm_to_dma_pfn_start(start_pfn),
--					mm_to_dma_pfn_end(end_pfn));
-+					mm_to_dma_pfn_end(end_pfn-1));
- 			if (ret)
- 				return ret;
- 		}
+diff --git a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+index f3a2735620955..5370bbdf2e1a1 100644
+--- a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
++++ b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+@@ -878,7 +878,7 @@ static int ti_iodelay_probe(struct platform_device *pdev)
+ 	iod->desc.name = dev_name(dev);
+ 	iod->desc.owner = THIS_MODULE;
+ 
+-	ret = pinctrl_register_and_init(&iod->desc, dev, iod, &iod->pctl);
++	ret = devm_pinctrl_register_and_init(dev, &iod->desc, iod, &iod->pctl);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register pinctrl\n");
+ 		goto exit_out;
+@@ -886,7 +886,11 @@ static int ti_iodelay_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, iod);
+ 
+-	return pinctrl_enable(iod->pctl);
++	ret = pinctrl_enable(iod->pctl);
++	if (ret)
++		goto exit_out;
++
++	return 0;
+ 
+ exit_out:
+ 	of_node_put(np);
+@@ -903,9 +907,6 @@ static int ti_iodelay_remove(struct platform_device *pdev)
+ {
+ 	struct ti_iodelay_device *iod = platform_get_drvdata(pdev);
+ 
+-	if (iod->pctl)
+-		pinctrl_unregister(iod->pctl);
+-
+ 	ti_iodelay_pinconf_deinit_dev(iod);
+ 
+ 	/* Expect other allocations to be freed by devm */
 -- 
 2.43.0
 
