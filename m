@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B4A1A76AE;
-	Tue, 30 Jul 2024 17:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10701A76AE;
+	Tue, 30 Jul 2024 17:20:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360018; cv=none; b=JFgsT0albWZoSV5qW98tGuI2oxE8Y52mrb/yBKOSECSWTPC1acDopIyAz70QPMMVN1nYsRN/2wgOEfSeNAcxhUGtwZ43PclMA3W057/qAXWH7saB2HsOk1r9Ujqxd59H8uhgCn+V4I/d4Guy4BJ8RCxUSEXScvuM98DWBW4dOVI=
+	t=1722360023; cv=none; b=O4n1dluDzc/Gc+DJGdW2f8eFCttwaTlhcxTC1X3roYE/Rt5En1FRHUyDSpwZ2Zv1ZuZtTt+3cbu26TcQ6zF9TJ813Drnxvp05GNjNpv8/YebSFsKhjru07FyQ6C87OyU2nFSqrtpffnq5v48WggATNe0Y9WQxTccSag2tPKBeco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360018; c=relaxed/simple;
-	bh=oNAvr7N3d8Hn1h4mPBIwDSsrdCjNrUQvMyRShU2f6Ws=;
+	s=arc-20240116; t=1722360023; c=relaxed/simple;
+	bh=PPrePIxLhDPpoIKU7ibelMbUEOsB5zBWB/IIeSX82wQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gEA2DX7bTsuVKfZPyaj7dBX2kttFza6CAeD60NBiUN1WXXgk2HuJbomsgVYUZY5P3gRa61hBPnRvNaMoI7+YmeFmkY4qS80PwSFZCvGYXLdIwLVo42doCQV8XQoKrBoJul8mI8Z4BnuLOvci+0b2qA9ziz9SU3Or7lryNPXg9e4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=puLXMwfJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nP6qyyyUeXviPtWj6Qukv5i6L3OXfFW0FDxmWQyElapUD+xE69IYqmLljDd2pctTNw8sL6QSn4FBBUJf93vB1zFBIQrqSp7h7c6nIRuUO0gq0/E7VIlnb/TYJ68PyiIsDVhXToGitRxjyY357QW26o7xrxCH4QiuYin2lN8PTlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFHmaKct; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="puLXMwfJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13F6DC32782;
-	Tue, 30 Jul 2024 17:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFHmaKct"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C96C32782;
+	Tue, 30 Jul 2024 17:20:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360018;
-	bh=oNAvr7N3d8Hn1h4mPBIwDSsrdCjNrUQvMyRShU2f6Ws=;
+	s=korg; t=1722360022;
+	bh=PPrePIxLhDPpoIKU7ibelMbUEOsB5zBWB/IIeSX82wQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puLXMwfJe8+HF2khM/TwbO1yX2WdbZeBaQCFVjTAvX0wb9vPNfWjPmvYmhsh2IgxE
-	 UUcPIcycmmDK6zcd5cHrbzhIO9e2kWYFFz9eV+UItCkorpIHTDZDrxNOh4yX3bxEnH
-	 YniGkXtpSzttRd7EUnZti9sc+5Us80ChvG3boN7s=
+	b=gFHmaKctRjz/B/xQFpu9wS5QOubu+s/IIr4vT6Y6JKHLAcrmNg8mX97xvnXJIqS51
+	 U7klWWlsr/TQdJc2VciveA1NIkoh6dhADdwtxggVWfTiN6gkxgWtQjmKv3us4LtJaU
+	 BV0cekRE4nlq45ap8GVrFVmbaYAbjUHOpu4KAzkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Joel Granados <j.granados@samsung.com>
-Subject: [PATCH 6.10 572/809] sysctl: always initialize i_uid/i_gid
-Date: Tue, 30 Jul 2024 17:47:28 +0200
-Message-ID: <20240730151747.369180850@linuxfoundation.org>
+	syzbot+3ae6be33a50b5aae4dab@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.10 573/809] hfs: fix to initialize fields of hfs_inode_info after hfs_alloc_inode()
+Date: Tue, 30 Jul 2024 17:47:29 +0200
+Message-ID: <20240730151747.407835978@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -44,51 +45,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Chao Yu <chao@kernel.org>
 
-commit 98ca62ba9e2be5863c7d069f84f7166b45a5b2f4 upstream.
+commit 26a2ed107929a855155429b11e1293b83e6b2a8b upstream.
 
-Always initialize i_uid/i_gid inside the sysfs core so set_ownership()
-can safely skip setting them.
+Syzbot reports uninitialized value access issue as below:
 
-Commit 5ec27ec735ba ("fs/proc/proc_sysctl.c: fix the default values of
-i_uid/i_gid on /proc/sys inodes.") added defaults for i_uid/i_gid when
-set_ownership() was not implemented. It also missed adjusting
-net_ctl_set_ownership() to use the same default values in case the
-computation of a better value failed.
+loop0: detected capacity change from 0 to 64
+=====================================================
+BUG: KMSAN: uninit-value in hfs_revalidate_dentry+0x307/0x3f0 fs/hfs/sysdep.c:30
+ hfs_revalidate_dentry+0x307/0x3f0 fs/hfs/sysdep.c:30
+ d_revalidate fs/namei.c:862 [inline]
+ lookup_fast+0x89e/0x8e0 fs/namei.c:1649
+ walk_component fs/namei.c:2001 [inline]
+ link_path_walk+0x817/0x1480 fs/namei.c:2332
+ path_lookupat+0xd9/0x6f0 fs/namei.c:2485
+ filename_lookup+0x22e/0x740 fs/namei.c:2515
+ user_path_at_empty+0x8b/0x390 fs/namei.c:2924
+ user_path_at include/linux/namei.h:57 [inline]
+ do_mount fs/namespace.c:3689 [inline]
+ __do_sys_mount fs/namespace.c:3898 [inline]
+ __se_sys_mount+0x66b/0x810 fs/namespace.c:3875
+ __x64_sys_mount+0xe4/0x140 fs/namespace.c:3875
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
 
-Fixes: 5ec27ec735ba ("fs/proc/proc_sysctl.c: fix the default values of i_uid/i_gid on /proc/sys inodes.")
+BUG: KMSAN: uninit-value in hfs_ext_read_extent fs/hfs/extent.c:196 [inline]
+BUG: KMSAN: uninit-value in hfs_get_block+0x92d/0x1620 fs/hfs/extent.c:366
+ hfs_ext_read_extent fs/hfs/extent.c:196 [inline]
+ hfs_get_block+0x92d/0x1620 fs/hfs/extent.c:366
+ block_read_full_folio+0x4ff/0x11b0 fs/buffer.c:2271
+ hfs_read_folio+0x55/0x60 fs/hfs/inode.c:39
+ filemap_read_folio+0x148/0x4f0 mm/filemap.c:2426
+ do_read_cache_folio+0x7c8/0xd90 mm/filemap.c:3553
+ do_read_cache_page mm/filemap.c:3595 [inline]
+ read_cache_page+0xfb/0x2f0 mm/filemap.c:3604
+ read_mapping_page include/linux/pagemap.h:755 [inline]
+ hfs_btree_open+0x928/0x1ae0 fs/hfs/btree.c:78
+ hfs_mdb_get+0x260c/0x3000 fs/hfs/mdb.c:204
+ hfs_fill_super+0x1fb1/0x2790 fs/hfs/super.c:406
+ mount_bdev+0x628/0x920 fs/super.c:1359
+ hfs_mount+0xcd/0xe0 fs/hfs/super.c:456
+ legacy_get_tree+0x167/0x2e0 fs/fs_context.c:610
+ vfs_get_tree+0xdc/0x5d0 fs/super.c:1489
+ do_new_mount+0x7a9/0x16f0 fs/namespace.c:3145
+ path_mount+0xf98/0x26a0 fs/namespace.c:3475
+ do_mount fs/namespace.c:3488 [inline]
+ __do_sys_mount fs/namespace.c:3697 [inline]
+ __se_sys_mount+0x919/0x9e0 fs/namespace.c:3674
+ __ia32_sys_mount+0x15b/0x1b0 fs/namespace.c:3674
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x37/0x80 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1f/0x30 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+Uninit was created at:
+ __alloc_pages+0x9a6/0xe00 mm/page_alloc.c:4590
+ __alloc_pages_node include/linux/gfp.h:238 [inline]
+ alloc_pages_node include/linux/gfp.h:261 [inline]
+ alloc_slab_page mm/slub.c:2190 [inline]
+ allocate_slab mm/slub.c:2354 [inline]
+ new_slab+0x2d7/0x1400 mm/slub.c:2407
+ ___slab_alloc+0x16b5/0x3970 mm/slub.c:3540
+ __slab_alloc mm/slub.c:3625 [inline]
+ __slab_alloc_node mm/slub.c:3678 [inline]
+ slab_alloc_node mm/slub.c:3850 [inline]
+ kmem_cache_alloc_lru+0x64d/0xb30 mm/slub.c:3879
+ alloc_inode_sb include/linux/fs.h:3018 [inline]
+ hfs_alloc_inode+0x5a/0xc0 fs/hfs/super.c:165
+ alloc_inode+0x83/0x440 fs/inode.c:260
+ new_inode_pseudo fs/inode.c:1005 [inline]
+ new_inode+0x38/0x4f0 fs/inode.c:1031
+ hfs_new_inode+0x61/0x1010 fs/hfs/inode.c:186
+ hfs_mkdir+0x54/0x250 fs/hfs/dir.c:228
+ vfs_mkdir+0x49a/0x700 fs/namei.c:4126
+ do_mkdirat+0x529/0x810 fs/namei.c:4149
+ __do_sys_mkdirat fs/namei.c:4164 [inline]
+ __se_sys_mkdirat fs/namei.c:4162 [inline]
+ __x64_sys_mkdirat+0xc8/0x120 fs/namei.c:4162
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xcf/0x1e0 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x63/0x6b
+
+It missed to initialize .tz_secondswest, .cached_start and .cached_blocks
+fields in struct hfs_inode_info after hfs_alloc_inode(), fix it.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Joel Granados <j.granados@samsung.com>
+Reported-by: syzbot+3ae6be33a50b5aae4dab@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-fsdevel/0000000000005ad04005ee48897f@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Link: https://lore.kernel.org/r/20240616013841.2217-1-chao@kernel.org
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/proc_sysctl.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/hfs/inode.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -476,12 +476,10 @@ static struct inode *proc_sys_make_inode
- 			make_empty_dir_inode(inode);
- 	}
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -200,6 +200,7 @@ struct inode *hfs_new_inode(struct inode
+ 	HFS_I(inode)->flags = 0;
+ 	HFS_I(inode)->rsrc_inode = NULL;
+ 	HFS_I(inode)->fs_blocks = 0;
++	HFS_I(inode)->tz_secondswest = sys_tz.tz_minuteswest * 60;
+ 	if (S_ISDIR(mode)) {
+ 		inode->i_size = 2;
+ 		HFS_SB(sb)->folder_count++;
+@@ -275,6 +276,8 @@ void hfs_inode_read_fork(struct inode *i
+ 	for (count = 0, i = 0; i < 3; i++)
+ 		count += be16_to_cpu(ext[i].count);
+ 	HFS_I(inode)->first_blocks = count;
++	HFS_I(inode)->cached_start = 0;
++	HFS_I(inode)->cached_blocks = 0;
  
-+	inode->i_uid = GLOBAL_ROOT_UID;
-+	inode->i_gid = GLOBAL_ROOT_GID;
- 	if (root->set_ownership)
- 		root->set_ownership(head, &inode->i_uid, &inode->i_gid);
--	else {
--		inode->i_uid = GLOBAL_ROOT_UID;
--		inode->i_gid = GLOBAL_ROOT_GID;
--	}
- 
- 	return inode;
- }
+ 	inode->i_size = HFS_I(inode)->phys_size = log_size;
+ 	HFS_I(inode)->fs_blocks = (log_size + sb->s_blocksize - 1) >> sb->s_blocksize_bits;
 
 
