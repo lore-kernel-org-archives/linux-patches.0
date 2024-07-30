@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0705C1A618E;
-	Tue, 30 Jul 2024 16:29:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE4E189502;
+	Tue, 30 Jul 2024 16:29:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356964; cv=none; b=gB9KnKEVenHEAFOpfDbE0EDaAoE52LWw+ZJgDlPnKnHwmOwcO3bFA06brzclljIuO/otODjJbCB0KierRDAkf9iHrcH5OMi7qm7De7cUt+9ep12LYh4SPWFLBBZWB4lOxX1jqHILXFcnbMlY6GvE30Z+Lz7io0lPOC1Y0zy5qOs=
+	t=1722356967; cv=none; b=hOl09YxmMrWcoiVnUazJAIhbwaZAdE4K5QjTtbiTYNBBjiEycWF4fqO1WF/vgli9cH/WTRpkny+EduNHcg2WcM9oCD6zA0QIm5sZAPZmCZ/Q9MeK9DSIns9lMPBXBwZKGfQwYFVSh7HvT35J/1WnPfbe0j5CJsPPNfBj3XnFx+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356964; c=relaxed/simple;
-	bh=uzg9PcyPKyZ0zCdvZ+YxGzDDMgDbWx2Q6qlZGB2Jzsg=;
+	s=arc-20240116; t=1722356967; c=relaxed/simple;
+	bh=m6RGFLRZenry8iywf42LasaxQQ8H1vpNYIXI2N4JwE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LpgTvzY1pekAjNYuUya5SGMqlpCH3MZOLlVqxl4cHgaS7HlXhyoF+UN7KyJiPwFnZdZXzWqT/8BrE0s3iqRnwgMDyo3FSPQjfJvE/+aPmx+P+rrwVPwwI3iOsj92PAjPIM2WzMAmjwXScXXdZ6+PCZkZQmBcyXA5b0iumLr1Ew0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I/uyGgGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n88bpNqBmFhdAisdFF94yrPfEzPjCypKYEdpWHp4vucVeX5VnCOp9kgWihiIPznbssEo1CoQHveNVVEU/BBEtqdHpVPgLQTjD/lCkYEiXkS+50tBtaymaHI+yAl0whb7wS42ggP3xEA11arI6JzQhKmIJm+LQNvHM/qGKbNqaQE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkwYM0na; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I/uyGgGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E74C32782;
-	Tue, 30 Jul 2024 16:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkwYM0na"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E33BC4AF0A;
+	Tue, 30 Jul 2024 16:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356963;
-	bh=uzg9PcyPKyZ0zCdvZ+YxGzDDMgDbWx2Q6qlZGB2Jzsg=;
+	s=korg; t=1722356967;
+	bh=m6RGFLRZenry8iywf42LasaxQQ8H1vpNYIXI2N4JwE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/uyGgGMzCC5JYHFIY9F5fSX+vJFA9fQvKdaZ9T3nfoTGEOYrj/JMJyGMW6nONYCg
-	 0MMiuNmWzDb71+bu24aIzuKgzQaprnIXbZXFNALVNbyGev67ixKu/3bki773cH8Cwz
-	 LKUKj7Dohepfq2QPQIwPCTdQ33jMxxMKQzhWQygY=
+	b=tkwYM0naB09RoRTxLFsdXqvw87HjlhEFkp5pUFRg1LZfFNGO9+Scd+EB56POqJO6l
+	 9GOc2ARbGiTkVRdKWyVBtV/Cjx61HObXONzu2wn4t/z+ZlCgmd5fo5xlBCX90poApz
+	 nHKPoxNZeKsJmDgbFUygQ/eASrOoORvee2IpQe4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Schaefer <dhs@frame.work>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 205/568] media: uvcvideo: Override default flags
-Date: Tue, 30 Jul 2024 17:45:12 +0200
-Message-ID: <20240730151647.887459782@linuxfoundation.org>
+Subject: [PATCH 6.1 246/440] pinctrl: single: fix possible memory leak when pinctrl_enable() fails
+Date: Tue, 30 Jul 2024 17:47:59 +0200
+Message-ID: <20240730151625.459281956@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,70 +48,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
+[ Upstream commit 8f773bfbdd428819328a2d185976cfc6ae811cd3 ]
 
-When the UVC device has a control that is readonly it doesn't set the
-SET_CUR flag. For example the privacy control has SET_CUR flag set in
-the defaults in the `uvc_ctrls` variable. Even if the device does not
-have it set, it's not cleared by uvc_ctrl_get_flags().
+This driver calls pinctrl_register_and_init() which is not
+devm_ managed, it will leads memory leak if pinctrl_enable()
+fails. Replace it with devm_pinctrl_register_and_init().
+And call pcs_free_resources() if pinctrl_enable() fails.
 
-Originally written with assignment in commit 859086ae3636 ("media:
-uvcvideo: Apply flags from device to actual properties"). But changed to
-|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
-flags"). It would not clear the default flags.
-
-With this patch applied the correct flags are reported to user space.
-Tested with:
-
-```
-> v4l2-ctl --list-ctrls | grep privacy
-privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
-```
-
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
-Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240606023704.3931561-3-yangyingliang@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index e59a463c27618..07158e9451fed 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -2029,7 +2029,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 	else
- 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
- 				     dev->intfnum, info->selector, data, 1);
--	if (!ret)
-+
-+	if (!ret) {
-+		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
-+				 UVC_CTRL_FLAG_SET_CUR |
-+				 UVC_CTRL_FLAG_AUTO_UPDATE |
-+				 UVC_CTRL_FLAG_ASYNCHRONOUS);
-+
- 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
- 				UVC_CTRL_FLAG_GET_CUR : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
-@@ -2038,6 +2044,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
- 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
-+	}
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 9ad8f70206142..cd23479f352a2 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -1328,7 +1328,6 @@ static void pcs_irq_free(struct pcs_device *pcs)
+ static void pcs_free_resources(struct pcs_device *pcs)
+ {
+ 	pcs_irq_free(pcs);
+-	pinctrl_unregister(pcs->pctl);
  
- 	kfree(data);
- 	return ret;
+ #if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
+ 	if (pcs->missing_nr_pinctrl_cells)
+@@ -1885,7 +1884,7 @@ static int pcs_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		goto free;
+ 
+-	ret = pinctrl_register_and_init(&pcs->desc, pcs->dev, pcs, &pcs->pctl);
++	ret = devm_pinctrl_register_and_init(pcs->dev, &pcs->desc, pcs, &pcs->pctl);
+ 	if (ret) {
+ 		dev_err(pcs->dev, "could not register single pinctrl driver\n");
+ 		goto free;
+@@ -1918,8 +1917,10 @@ static int pcs_probe(struct platform_device *pdev)
+ 
+ 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
+ 
+-	return pinctrl_enable(pcs->pctl);
++	if (pinctrl_enable(pcs->pctl))
++		goto free;
+ 
++	return 0;
+ free:
+ 	pcs_free_resources(pcs);
+ 
 -- 
 2.43.0
 
