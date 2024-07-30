@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C454C1A619E;
-	Tue, 30 Jul 2024 16:37:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF7A1A619E;
+	Tue, 30 Jul 2024 16:37:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357466; cv=none; b=F5gKoHXECLsye3HGUBG5AMIRb/zXOjkouWlCHxl8Wcj0Ng9DYMXhD4nXnSdHtNyzOxMuHLJ0ZNaISHksAf6czhsIvn4wQ8qZ+U/rAF5N60r/dZvjxEbAAp2uzhoy6RYrhTnEdrjlSlrIJz34+Jh/d5z94O080MkvHQal4V87WcY=
+	t=1722357470; cv=none; b=F05Pvq8lR5laiIxCTovurJccHsWTdXq6VSK6HYu673tpSOS2YTEkPRfkLBsf7tGvf/2W5HtY5sWLgt9PLEgB5JInSQdI+Eq4G65NaBhryqeAUs39pZIsUKJ02n0jidSTWUX9MKIy2xtRMPEPFl7MnvBltg8XHQQ+bw6qvttqjMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357466; c=relaxed/simple;
-	bh=ldDOgJY/7chqjIxSfHDmrnFEzbR3PkuHOW72bWytBDU=;
+	s=arc-20240116; t=1722357470; c=relaxed/simple;
+	bh=mnh2fBvmE+Y/+kJh5P7gBnGOppYaH2ECI28tvQkJbNQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I82c9XlYQwg/73sIneGwuG6F70i1vA5qxJMdX5gNulF3eVighputXceOjYoWMrGzsInIeBhSA2p9jP5dR6bOljLwORtlVxBWasq2fIH2bpvxCUHPkul9Hi+zkHQZfiZOnkb+DV8oOiTBaJ5vPLhFjX3tdqw7+ftT50CYsNSb1w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bTSUGsG9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ckBgVpg5qeW8hH1quIk07kqss6Jdac2D5KrICPHq6BTwzmNp/TbqduF3r/J+sRuiMpSA0CMDtZy5qf+A8rMCDelX7aA5MpPSLBvYbW6hsyBOpk+q1x9S/X4J0IIgSSdl7XRcHlOW1Z9Zbnu4rynfDu9lBNp/WYpH7K8qVA/RhQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tOUahgOA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bTSUGsG9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 071BAC4AF0C;
-	Tue, 30 Jul 2024 16:37:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tOUahgOA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B1D4C32782;
+	Tue, 30 Jul 2024 16:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357466;
-	bh=ldDOgJY/7chqjIxSfHDmrnFEzbR3PkuHOW72bWytBDU=;
+	s=korg; t=1722357469;
+	bh=mnh2fBvmE+Y/+kJh5P7gBnGOppYaH2ECI28tvQkJbNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bTSUGsG9W/GSd0O+CUkjZYLhpm06Ao4iLFwIIuF6sCLGE45jvjHBGlMzyY5C/RPvN
-	 cFA1cVUI91K7/8TXLE943j9jE7gfRwUzHfSE0PbHR3WVgXJu8jgOBdaGh9JramaOKt
-	 I98BF3tG5fUQKDKfFDoN4ZgbuTUNLlj6Nv6RTqcE=
+	b=tOUahgOAgpWBhhjqT5ypRnImjd+mZSsRfqZbjc1rajlvZuXHwLIsEHEMufxJ9fS6a
+	 NMqLHbfQbw0mFf5QIodzT5ujp2asid65Ew0Pu+bUXojmw97wISgtubsY55oVYps7s8
+	 KGTMVNTgNi6n8fzKbArZ7WaOM5vvH9T/At6ECN8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.1 295/440] apparmor: use kvfree_sensitive to free data->data
-Date: Tue, 30 Jul 2024 17:48:48 +0200
-Message-ID: <20240730151627.352319869@linuxfoundation.org>
+	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 258/568] KVM: PPC: Book3S HV: Fix the get_one_reg of SDAR
+Date: Tue, 30 Jul 2024 17:46:05 +0200
+Message-ID: <20240730151649.961821709@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,52 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
 
-commit 2bc73505a5cd2a18a7a542022722f136c19e3b87 upstream.
+[ Upstream commit 009f6f42c67e9de737d6d3d199f92b21a8cb9622 ]
 
-Inside unpack_profile() data->data is allocated using kvmemdup() so it
-should be freed with the corresponding kvfree_sensitive().
+The kvmppc_get_one_reg_hv() for SDAR is wrongly getting the SIAR
+instead of SDAR, possibly a paste error emanating from the previous
+refactoring.
 
-Also add missing data->data release for rhashtable insertion failure path
-in unpack_profile().
+Patch fixes the wrong get_one_reg() for the same.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: e025be0f26d5 ("apparmor: support querying extended trusted helper extra data")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ebc88ea7a6ad ("KVM: PPC: Book3S HV: Use accessors for VCPU registers")
+Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/171759278410.1480.16404209606556979576.stgit@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c        |    2 +-
- security/apparmor/policy_unpack.c |    1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/powerpc/kvm/book3s_hv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -187,7 +187,7 @@ static void aa_free_data(void *ptr, void
- {
- 	struct aa_data *data = ptr;
- 
--	kfree_sensitive(data->data);
-+	kvfree_sensitive(data->data, data->size);
- 	kfree_sensitive(data->key);
- 	kfree_sensitive(data);
- }
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -898,6 +898,7 @@ static struct aa_profile *unpack_profile
- 
- 			if (rhashtable_insert_fast(profile->data, &data->head,
- 						   profile->data->p)) {
-+				kvfree_sensitive(data->data, data->size);
- 				kfree_sensitive(data->key);
- 				kfree_sensitive(data);
- 				info = "failed to insert data to table";
+diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
+index 1e668e238a288..1bb00c7215440 100644
+--- a/arch/powerpc/kvm/book3s_hv.c
++++ b/arch/powerpc/kvm/book3s_hv.c
+@@ -2249,7 +2249,7 @@ static int kvmppc_get_one_reg_hv(struct kvm_vcpu *vcpu, u64 id,
+ 		*val = get_reg_val(id, kvmppc_get_siar_hv(vcpu));
+ 		break;
+ 	case KVM_REG_PPC_SDAR:
+-		*val = get_reg_val(id, kvmppc_get_siar_hv(vcpu));
++		*val = get_reg_val(id, kvmppc_get_sdar_hv(vcpu));
+ 		break;
+ 	case KVM_REG_PPC_SIER:
+ 		*val = get_reg_val(id, kvmppc_get_sier_hv(vcpu, 0));
+-- 
+2.43.0
+
 
 
