@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86539183CD5;
-	Tue, 30 Jul 2024 16:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9870D1A619E;
+	Tue, 30 Jul 2024 16:41:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357715; cv=none; b=J/2Haj4xQ/45JuUVpglU5T/01s5eQzip9doCwKJJJxUnJ3yEtkkLEp5d7PmFm4+rviv5TJdVpJHQtRDyACOX5pX+AMjRCh1YLeqIEJc3TyH/PlQLIv1FJx88XYLo/d/5ZxlDWcDQ8RViCrES0MHVc3JxnLlF9ii2bS2N9cnHKkE=
+	t=1722357718; cv=none; b=IE6jXAp4y7JG3y6hkqSaDaaAII30hKRs+OkaHYAye6yG69RFmdJjrPwxYijNvQu35ExA+6MLYVvK5hLTurGyMROdA16VQGtcxO/6geRMzcAnnKouQ5XqHtO3E5ivMiZe4WhfJfuG63TJyjEK3QNCWLiZ4k2p5EuYvU7Tade+6Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357715; c=relaxed/simple;
-	bh=VDnLcQzDmEU7cPA5HsUqkfJKgQW6wDS2y2A5FL61U+M=;
+	s=arc-20240116; t=1722357718; c=relaxed/simple;
+	bh=Qv9PXlEzIVe2NMOjKCao2wfra3napqpPwmSCdWlL1Ys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hVV5Bn8dmBeG0Cthl22x48Jc8VHgWG3K12hzTV0KmZ+KRq6Ti7Fe1sccxWDrnDc01wpJVwydfobuMLO2E3jMZORw6nIjrP+kr6OFa70NkPnY5mGo1WxvL09lkVw3D09Rq1KqH7ulPT7HfHfdtPhV7PZ6/Julf3V9udEJ2bP2e6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=spVxkVyw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I3BBaaoPuXu9laEEssDeijhjl8K7tGiGAuLBxTqRHeAdjCWB4+4+Nxz1R4ng35DKPMMsgry+ZZ3p/owFeuefoDaXLTfhD/tJBoapY862sec9bUDVR4c6AXN+uweDdtAgNR6kP/W0agXK8Iodv20V3jP2BvVGl2sKGKgO6ksgnRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V0UiVSzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="spVxkVyw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A43C32782;
-	Tue, 30 Jul 2024 16:41:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V0UiVSzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B09CC4AF0C;
+	Tue, 30 Jul 2024 16:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357715;
-	bh=VDnLcQzDmEU7cPA5HsUqkfJKgQW6wDS2y2A5FL61U+M=;
+	s=korg; t=1722357718;
+	bh=Qv9PXlEzIVe2NMOjKCao2wfra3napqpPwmSCdWlL1Ys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=spVxkVywuG20LeZdhnvH6F2YGzViSXR3g+T+zNhO72Np3TC8v0uHU6uIL0jLxo4sE
-	 l6WPnjDsMOiOrLGkXuMlkaI/6H+nFRy+sbhyA3vD3TCOi4Bjs0SgUAtZ2VqCOkZDCB
-	 cqHe2lUORgO8mum10r4uazg5wRO7JNkjJjE9FWjI=
+	b=V0UiVSzmelCzPE5NuI0/gyL6KlRo8V66zxlxAChxsd+aV3YIYCLZ3R5KoX335v0dd
+	 3mo8gIuFi0bhJm+6IG4DedSS6FImKm2dV9+F3ODDFP9TeKKxNZ+73008lNrQWYnCVQ
+	 jNfm7ERvpCQvVCo12eSVwrJsb8mEImFoPVhsMZZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Mark Brown <broonie@kernel.org>,
+	syzkaller <syzkaller@googlegroups.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 284/568] ASoC: amd: Adjust error handling in case of absent codec device
-Date: Tue, 30 Jul 2024 17:46:31 +0200
-Message-ID: <20240730151650.974501123@linuxfoundation.org>
+Subject: [PATCH 6.10 264/809] tcp: Dont access uninit tcp_rsk(req)->ao_keyid in tcp_create_openreq_child().
+Date: Tue, 30 Jul 2024 17:42:20 +0200
+Message-ID: <20240730151735.018832002@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,49 +50,203 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 5080808c3339de2220c602ab7c7fa23dc6c1a5a3 ]
+[ Upstream commit 3f45181358e4df50a40ea1bb51b00a1f295f915e ]
 
-acpi_get_first_physical_node() can return NULL in several cases (no such
-device, ACPI table error, reference count drop to 0, etc).
-Existing check just emit error message, but doesn't perform return.
-Then this NULL pointer is passed to devm_acpi_dev_add_driver_gpios()
-where it is dereferenced.
+syzkaller reported KMSAN splat in tcp_create_openreq_child(). [0]
 
-Adjust this error handling by adding error code return.
+The uninit variable is tcp_rsk(req)->ao_keyid.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+tcp_rsk(req)->ao_keyid is initialised only when tcp_conn_request() finds
+a valid TCP AO option in SYN.  Then, tcp_rsk(req)->used_tcp_ao is set
+accordingly.
 
-Fixes: 02527c3f2300 ("ASoC: amd: add Machine driver for Jadeite platform")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://patch.msgid.link/20240703191007.8524-1-amishin@t-argos.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Let's not read tcp_rsk(req)->ao_keyid when tcp_rsk(req)->used_tcp_ao is
+false.
+
+[0]:
+BUG: KMSAN: uninit-value in tcp_create_openreq_child+0x198b/0x1ff0 net/ipv4/tcp_minisocks.c:610
+ tcp_create_openreq_child+0x198b/0x1ff0 net/ipv4/tcp_minisocks.c:610
+ tcp_v4_syn_recv_sock+0x18e/0x2170 net/ipv4/tcp_ipv4.c:1754
+ tcp_check_req+0x1a3e/0x20c0 net/ipv4/tcp_minisocks.c:852
+ tcp_v4_rcv+0x26a4/0x53a0 net/ipv4/tcp_ipv4.c:2265
+ ip_protocol_deliver_rcu+0x884/0x1270 net/ipv4/ip_input.c:205
+ ip_local_deliver_finish+0x30f/0x530 net/ipv4/ip_input.c:233
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ ip_local_deliver+0x230/0x4c0 net/ipv4/ip_input.c:254
+ dst_input include/net/dst.h:460 [inline]
+ ip_sublist_rcv_finish net/ipv4/ip_input.c:580 [inline]
+ ip_list_rcv_finish net/ipv4/ip_input.c:631 [inline]
+ ip_sublist_rcv+0x10f7/0x13e0 net/ipv4/ip_input.c:639
+ ip_list_rcv+0x952/0x9c0 net/ipv4/ip_input.c:674
+ __netif_receive_skb_list_ptype net/core/dev.c:5703 [inline]
+ __netif_receive_skb_list_core+0xd92/0x11d0 net/core/dev.c:5751
+ __netif_receive_skb_list net/core/dev.c:5803 [inline]
+ netif_receive_skb_list_internal+0xd8f/0x1350 net/core/dev.c:5895
+ gro_normal_list include/net/gro.h:515 [inline]
+ napi_complete_done+0x3f2/0x990 net/core/dev.c:6246
+ e1000_clean+0x1fa4/0x5e50 drivers/net/ethernet/intel/e1000/e1000_main.c:3808
+ __napi_poll+0xd9/0x990 net/core/dev.c:6771
+ napi_poll net/core/dev.c:6840 [inline]
+ net_rx_action+0x90f/0x17e0 net/core/dev.c:6962
+ handle_softirqs+0x152/0x6b0 kernel/softirq.c:554
+ __do_softirq kernel/softirq.c:588 [inline]
+ invoke_softirq kernel/softirq.c:428 [inline]
+ __irq_exit_rcu kernel/softirq.c:637 [inline]
+ irq_exit_rcu+0x5d/0x120 kernel/softirq.c:649
+ common_interrupt+0x83/0x90 arch/x86/kernel/irq.c:278
+ asm_common_interrupt+0x26/0x40 arch/x86/include/asm/idtentry.h:693
+ __msan_instrument_asm_store+0xd6/0xe0
+ arch_atomic_inc arch/x86/include/asm/atomic.h:53 [inline]
+ raw_atomic_inc include/linux/atomic/atomic-arch-fallback.h:992 [inline]
+ atomic_inc include/linux/atomic/atomic-instrumented.h:436 [inline]
+ page_ref_inc include/linux/page_ref.h:153 [inline]
+ folio_ref_inc include/linux/page_ref.h:160 [inline]
+ filemap_map_order0_folio mm/filemap.c:3596 [inline]
+ filemap_map_pages+0x11c7/0x2270 mm/filemap.c:3644
+ do_fault_around mm/memory.c:4879 [inline]
+ do_read_fault mm/memory.c:4912 [inline]
+ do_fault mm/memory.c:5051 [inline]
+ do_pte_missing mm/memory.c:3897 [inline]
+ handle_pte_fault mm/memory.c:5381 [inline]
+ __handle_mm_fault mm/memory.c:5524 [inline]
+ handle_mm_fault+0x3677/0x6f00 mm/memory.c:5689
+ do_user_addr_fault+0x1373/0x2b20 arch/x86/mm/fault.c:1338
+ handle_page_fault arch/x86/mm/fault.c:1481 [inline]
+ exc_page_fault+0x54/0xc0 arch/x86/mm/fault.c:1539
+ asm_exc_page_fault+0x26/0x30 arch/x86/include/asm/idtentry.h:623
+
+Uninit was stored to memory at:
+ tcp_create_openreq_child+0x1984/0x1ff0 net/ipv4/tcp_minisocks.c:611
+ tcp_v4_syn_recv_sock+0x18e/0x2170 net/ipv4/tcp_ipv4.c:1754
+ tcp_check_req+0x1a3e/0x20c0 net/ipv4/tcp_minisocks.c:852
+ tcp_v4_rcv+0x26a4/0x53a0 net/ipv4/tcp_ipv4.c:2265
+ ip_protocol_deliver_rcu+0x884/0x1270 net/ipv4/ip_input.c:205
+ ip_local_deliver_finish+0x30f/0x530 net/ipv4/ip_input.c:233
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ ip_local_deliver+0x230/0x4c0 net/ipv4/ip_input.c:254
+ dst_input include/net/dst.h:460 [inline]
+ ip_sublist_rcv_finish net/ipv4/ip_input.c:580 [inline]
+ ip_list_rcv_finish net/ipv4/ip_input.c:631 [inline]
+ ip_sublist_rcv+0x10f7/0x13e0 net/ipv4/ip_input.c:639
+ ip_list_rcv+0x952/0x9c0 net/ipv4/ip_input.c:674
+ __netif_receive_skb_list_ptype net/core/dev.c:5703 [inline]
+ __netif_receive_skb_list_core+0xd92/0x11d0 net/core/dev.c:5751
+ __netif_receive_skb_list net/core/dev.c:5803 [inline]
+ netif_receive_skb_list_internal+0xd8f/0x1350 net/core/dev.c:5895
+ gro_normal_list include/net/gro.h:515 [inline]
+ napi_complete_done+0x3f2/0x990 net/core/dev.c:6246
+ e1000_clean+0x1fa4/0x5e50 drivers/net/ethernet/intel/e1000/e1000_main.c:3808
+ __napi_poll+0xd9/0x990 net/core/dev.c:6771
+ napi_poll net/core/dev.c:6840 [inline]
+ net_rx_action+0x90f/0x17e0 net/core/dev.c:6962
+ handle_softirqs+0x152/0x6b0 kernel/softirq.c:554
+ __do_softirq kernel/softirq.c:588 [inline]
+ invoke_softirq kernel/softirq.c:428 [inline]
+ __irq_exit_rcu kernel/softirq.c:637 [inline]
+ irq_exit_rcu+0x5d/0x120 kernel/softirq.c:649
+ common_interrupt+0x83/0x90 arch/x86/kernel/irq.c:278
+ asm_common_interrupt+0x26/0x40 arch/x86/include/asm/idtentry.h:693
+
+Uninit was created at:
+ __alloc_pages_noprof+0x82d/0xcb0 mm/page_alloc.c:4706
+ __alloc_pages_node_noprof include/linux/gfp.h:269 [inline]
+ alloc_pages_node_noprof include/linux/gfp.h:296 [inline]
+ alloc_slab_page mm/slub.c:2265 [inline]
+ allocate_slab mm/slub.c:2428 [inline]
+ new_slab+0x2af/0x14e0 mm/slub.c:2481
+ ___slab_alloc+0xf73/0x3150 mm/slub.c:3667
+ __slab_alloc mm/slub.c:3757 [inline]
+ __slab_alloc_node mm/slub.c:3810 [inline]
+ slab_alloc_node mm/slub.c:3990 [inline]
+ kmem_cache_alloc_noprof+0x53a/0x9f0 mm/slub.c:4009
+ reqsk_alloc_noprof net/ipv4/inet_connection_sock.c:920 [inline]
+ inet_reqsk_alloc+0x63/0x700 net/ipv4/inet_connection_sock.c:951
+ tcp_conn_request+0x339/0x4860 net/ipv4/tcp_input.c:7177
+ tcp_v4_conn_request+0x13b/0x190 net/ipv4/tcp_ipv4.c:1719
+ tcp_rcv_state_process+0x2dd/0x4a10 net/ipv4/tcp_input.c:6711
+ tcp_v4_do_rcv+0xbee/0x10d0 net/ipv4/tcp_ipv4.c:1932
+ tcp_v4_rcv+0x3fad/0x53a0 net/ipv4/tcp_ipv4.c:2334
+ ip_protocol_deliver_rcu+0x884/0x1270 net/ipv4/ip_input.c:205
+ ip_local_deliver_finish+0x30f/0x530 net/ipv4/ip_input.c:233
+ NF_HOOK include/linux/netfilter.h:314 [inline]
+ ip_local_deliver+0x230/0x4c0 net/ipv4/ip_input.c:254
+ dst_input include/net/dst.h:460 [inline]
+ ip_sublist_rcv_finish net/ipv4/ip_input.c:580 [inline]
+ ip_list_rcv_finish net/ipv4/ip_input.c:631 [inline]
+ ip_sublist_rcv+0x10f7/0x13e0 net/ipv4/ip_input.c:639
+ ip_list_rcv+0x952/0x9c0 net/ipv4/ip_input.c:674
+ __netif_receive_skb_list_ptype net/core/dev.c:5703 [inline]
+ __netif_receive_skb_list_core+0xd92/0x11d0 net/core/dev.c:5751
+ __netif_receive_skb_list net/core/dev.c:5803 [inline]
+ netif_receive_skb_list_internal+0xd8f/0x1350 net/core/dev.c:5895
+ gro_normal_list include/net/gro.h:515 [inline]
+ napi_complete_done+0x3f2/0x990 net/core/dev.c:6246
+ e1000_clean+0x1fa4/0x5e50 drivers/net/ethernet/intel/e1000/e1000_main.c:3808
+ __napi_poll+0xd9/0x990 net/core/dev.c:6771
+ napi_poll net/core/dev.c:6840 [inline]
+ net_rx_action+0x90f/0x17e0 net/core/dev.c:6962
+ handle_softirqs+0x152/0x6b0 kernel/softirq.c:554
+ __do_softirq kernel/softirq.c:588 [inline]
+ invoke_softirq kernel/softirq.c:428 [inline]
+ __irq_exit_rcu kernel/softirq.c:637 [inline]
+ irq_exit_rcu+0x5d/0x120 kernel/softirq.c:649
+ common_interrupt+0x83/0x90 arch/x86/kernel/irq.c:278
+ asm_common_interrupt+0x26/0x40 arch/x86/include/asm/idtentry.h:693
+
+CPU: 0 PID: 239 Comm: modprobe Tainted: G    B              6.10.0-rc7-01816-g852e42cc2dd4 #3 1107521f0c7b55c9309062382d0bda9f604dbb6d
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+
+Fixes: 06b22ef29591 ("net/tcp: Wire TCP-AO to request sockets")
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://patch.msgid.link/20240714161719.6528-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp-es8336.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_minisocks.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/amd/acp-es8336.c b/sound/soc/amd/acp-es8336.c
-index 5e56d3a53be78..49bffc567e68d 100644
---- a/sound/soc/amd/acp-es8336.c
-+++ b/sound/soc/amd/acp-es8336.c
-@@ -203,8 +203,10 @@ static int st_es8336_late_probe(struct snd_soc_card *card)
+diff --git a/net/ipv4/tcp_minisocks.c b/net/ipv4/tcp_minisocks.c
+index 538c06f95918d..0fbebf6266e91 100644
+--- a/net/ipv4/tcp_minisocks.c
++++ b/net/ipv4/tcp_minisocks.c
+@@ -515,9 +515,6 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
+ 	const struct tcp_sock *oldtp;
+ 	struct tcp_sock *newtp;
+ 	u32 seq;
+-#ifdef CONFIG_TCP_AO
+-	struct tcp_ao_key *ao_key;
+-#endif
  
- 	codec_dev = acpi_get_first_physical_node(adev);
- 	acpi_dev_put(adev);
--	if (!codec_dev)
-+	if (!codec_dev) {
- 		dev_err(card->dev, "can not find codec dev\n");
-+		return -ENODEV;
+ 	if (!newsk)
+ 		return NULL;
+@@ -608,10 +605,14 @@ struct sock *tcp_create_openreq_child(const struct sock *sk,
+ #endif
+ #ifdef CONFIG_TCP_AO
+ 	newtp->ao_info = NULL;
+-	ao_key = treq->af_specific->ao_lookup(sk, req,
+-				tcp_rsk(req)->ao_keyid, -1);
+-	if (ao_key)
+-		newtp->tcp_header_len += tcp_ao_len_aligned(ao_key);
++
++	if (tcp_rsk_used_ao(req)) {
++		struct tcp_ao_key *ao_key;
++
++		ao_key = treq->af_specific->ao_lookup(sk, req, tcp_rsk(req)->ao_keyid, -1);
++		if (ao_key)
++			newtp->tcp_header_len += tcp_ao_len_aligned(ao_key);
 +	}
- 
- 	ret = devm_acpi_dev_add_driver_gpios(codec_dev, acpi_es8336_gpios);
- 	if (ret)
+  #endif
+ 	if (skb->len >= TCP_MSS_DEFAULT + newtp->tcp_header_len)
+ 		newicsk->icsk_ack.last_seg_size = skb->len - newtp->tcp_header_len;
 -- 
 2.43.0
 
