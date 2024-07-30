@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F0671A76D3;
-	Tue, 30 Jul 2024 17:21:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453531A76AE;
+	Tue, 30 Jul 2024 17:21:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360080; cv=none; b=Ig011wQBVnI0tghOEgjf4cb8jR5Enmfhv90FpfGSoDbVQcOS+pjFrXOqtbfVtxMgmwvaFC21lF0be46ZxTgvfqtw2nPJlxQzwtnnVCnra75tNmbtMRSw0v2MSKfLIWvey/Dw93DVOPLstE78xIIfIJ6mc65h5AZcPRFaWSHebjQ=
+	t=1722360083; cv=none; b=Q8dGmSkcMasd+k/gWrP6/qx2Od1wXL4fv1uQ0GkzB5/36HBoV0ksx1ybuNdK9maCswu2r+MPS1sA2h0auyfanlwrIJbmJ8x2ARuEbhP01La6VFMyvNPvm0iWzAfgOA6aYO6qxtrtjfM+3M9yFDTvBTIN72mhGRwjHUp92yZVGWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360080; c=relaxed/simple;
-	bh=0G3flut2/Gf9IIN+KtaM7C0X3QviYWMNkRy9piriT48=;
+	s=arc-20240116; t=1722360083; c=relaxed/simple;
+	bh=EqppSayDNs6k9OhVIL780PFVfIGFNoNIkolzO+KweHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UY8A3LlyegCjuBmH5a5o2abBoedt281OfrfTfiPXzKvD6IyEkDWiACU6QadDAWGi4icodiYn5r1GJvBbgoLUCKEIfbaJFjSq8TlPfDORPqthjx7CWKay2YT6InBlk0hAx0rB9UHotAboUZ0J/6K+O0017WvHI4qDy2+7aRPh3d4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FWZTmonf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxQsRf3ZD2efbyH6NBQ1DY7oYRRGnJksRKs6dyu6axUTEGGJXKVmsqKIB5NnaOY+fng4PaD24/bWEdn8EpdunAioT2htVeYDVqlFYBIEYoRooG0kqGF0GGsN0XhcGPNxz7u4C16K4oWMP9iIQwOlgTzAEQKRsuMu1ItU/dZkcaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfL2Cf22; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FWZTmonf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A837AC32782;
-	Tue, 30 Jul 2024 17:21:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfL2Cf22"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A39C4AF0F;
+	Tue, 30 Jul 2024 17:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360080;
-	bh=0G3flut2/Gf9IIN+KtaM7C0X3QviYWMNkRy9piriT48=;
+	s=korg; t=1722360083;
+	bh=EqppSayDNs6k9OhVIL780PFVfIGFNoNIkolzO+KweHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FWZTmonfRgr6LfJOyY8ZORbAeM0lHYAg64DSDLAvzUR7O8Joqxp1L/A05Pb3YR1EZ
-	 k62ImzYKC5KT+KBWvgh1INq++iK8r/ptsET/f08GH6Y76SfJtgWsHRiMjNNO/51uXL
-	 zSEg0K+cfciK9ga8j7Qtm8WQsGAXmWbpPyrbKn4o=
+	b=zfL2Cf22onc8CM8AFkrufpGVoc89oTZbRajqlOgr36v9zI5ONovV88WFnmDbHgkhg
+	 in6vtleCpW0Fw+tnbJe5uFD+7+KWrW7HmCV7fxHKI99MSY+oN+Hp7ZU8LmuBB5o5FV
+	 W7b5zq90sIxee8htArTUqOKkQPxnhY8Q4gAmDZ/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5f682cd029581f9edfd1@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.10 589/809] udf: Avoid using corrupted block bitmap buffer
-Date: Tue, 30 Jul 2024 17:47:45 +0200
-Message-ID: <20240730151748.095331625@linuxfoundation.org>
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.10 562/809] md/raid5: fix spares errors about rcu usage
+Date: Tue, 30 Jul 2024 17:47:18 +0200
+Message-ID: <20240730151746.960964067@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -50,73 +50,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Yu Kuai <yukuai3@huawei.com>
 
-commit a90d4471146de21745980cba51ce88e7926bcc4f upstream.
+commit 2314c2e3a70521f055dd011245dccf6fd97c7ee0 upstream.
 
-When the filesystem block bitmap is corrupted, we detect the corruption
-while loading the bitmap and fail the allocation with error. However the
-next allocation from the same bitmap will notice the bitmap buffer is
-already loaded and tries to allocate from the bitmap with mixed results
-(depending on the exact nature of the bitmap corruption). Fix the
-problem by using BH_verified bit to indicate whether the bitmap is valid
-or not.
+As commit ad8606702f26 ("md/raid5: remove rcu protection to access rdev
+from conf") explains, rcu protection can be removed, however, there are
+three places left, there won't be any real problems.
 
-Reported-by: syzbot+5f682cd029581f9edfd1@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/20240617154201.29512-2-jack@suse.cz
-Fixes: 1e0d4adf17e7 ("udf: Check consistency of Space Bitmap Descriptor")
-Signed-off-by: Jan Kara <jack@suse.cz>
+drivers/md/raid5.c:8071:24: error: incompatible types in comparison expression (different address spaces):
+drivers/md/raid5.c:8071:24:    struct md_rdev [noderef] __rcu *
+drivers/md/raid5.c:8071:24:    struct md_rdev *
+drivers/md/raid5.c:7569:25: error: incompatible types in comparison expression (different address spaces):
+drivers/md/raid5.c:7569:25:    struct md_rdev [noderef] __rcu *
+drivers/md/raid5.c:7569:25:    struct md_rdev *
+drivers/md/raid5.c:7573:25: error: incompatible types in comparison expression (different address spaces):
+drivers/md/raid5.c:7573:25:    struct md_rdev [noderef] __rcu *
+drivers/md/raid5.c:7573:25:    struct md_rdev *
+
+Fixes: ad8606702f26 ("md/raid5: remove rcu protection to access rdev from conf")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240615085143.1648223-1-yukuai1@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/balloc.c |   15 +++++++++++++--
- fs/udf/super.c  |    3 ++-
- 2 files changed, 15 insertions(+), 3 deletions(-)
+ drivers/md/raid5.c |   12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -64,8 +64,12 @@ static int read_block_bitmap(struct supe
- 	}
- 
- 	for (i = 0; i < count; i++)
--		if (udf_test_bit(i + off, bh->b_data))
-+		if (udf_test_bit(i + off, bh->b_data)) {
-+			bitmap->s_block_bitmap[bitmap_nr] =
-+							ERR_PTR(-EFSCORRUPTED);
-+			brelse(bh);
- 			return -EFSCORRUPTED;
-+		}
- 	return 0;
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -155,7 +155,7 @@ static int raid6_idx_to_slot(int idx, st
+ 	return slot;
  }
  
-@@ -81,8 +85,15 @@ static int __load_block_bitmap(struct su
- 			  block_group, nr_groups);
- 	}
+-static void print_raid5_conf (struct r5conf *conf);
++static void print_raid5_conf(struct r5conf *conf);
  
--	if (bitmap->s_block_bitmap[block_group])
-+	if (bitmap->s_block_bitmap[block_group]) {
-+		/*
-+		 * The bitmap failed verification in the past. No point in
-+		 * trying again.
-+		 */
-+		if (IS_ERR(bitmap->s_block_bitmap[block_group]))
-+			return PTR_ERR(bitmap->s_block_bitmap[block_group]);
- 		return block_group;
-+	}
+ static int stripe_operations_active(struct stripe_head *sh)
+ {
+@@ -7580,11 +7580,11 @@ static struct r5conf *setup_conf(struct
+ 		if (test_bit(Replacement, &rdev->flags)) {
+ 			if (disk->replacement)
+ 				goto abort;
+-			RCU_INIT_POINTER(disk->replacement, rdev);
++			disk->replacement = rdev;
+ 		} else {
+ 			if (disk->rdev)
+ 				goto abort;
+-			RCU_INIT_POINTER(disk->rdev, rdev);
++			disk->rdev = rdev;
+ 		}
  
- 	retval = read_block_bitmap(sb, bitmap, block_group, block_group);
- 	if (retval < 0)
---- a/fs/udf/super.c
-+++ b/fs/udf/super.c
-@@ -336,7 +336,8 @@ static void udf_sb_free_bitmap(struct ud
- 	int nr_groups = bitmap->s_nr_groups;
- 
- 	for (i = 0; i < nr_groups; i++)
--		brelse(bitmap->s_block_bitmap[i]);
-+		if (!IS_ERR_OR_NULL(bitmap->s_block_bitmap[i]))
-+			brelse(bitmap->s_block_bitmap[i]);
- 
- 	kvfree(bitmap);
+ 		if (test_bit(In_sync, &rdev->flags)) {
+@@ -8066,7 +8066,7 @@ static void raid5_status(struct seq_file
+ 	seq_printf (seq, "]");
  }
+ 
+-static void print_raid5_conf (struct r5conf *conf)
++static void print_raid5_conf(struct r5conf *conf)
+ {
+ 	struct md_rdev *rdev;
+ 	int i;
+@@ -8080,15 +8080,13 @@ static void print_raid5_conf (struct r5c
+ 	       conf->raid_disks,
+ 	       conf->raid_disks - conf->mddev->degraded);
+ 
+-	rcu_read_lock();
+ 	for (i = 0; i < conf->raid_disks; i++) {
+-		rdev = rcu_dereference(conf->disks[i].rdev);
++		rdev = conf->disks[i].rdev;
+ 		if (rdev)
+ 			pr_debug(" disk %d, o:%d, dev:%pg\n",
+ 			       i, !test_bit(Faulty, &rdev->flags),
+ 			       rdev->bdev);
+ 	}
+-	rcu_read_unlock();
+ }
+ 
+ static int raid5_spare_active(struct mddev *mddev)
 
 
