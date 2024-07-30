@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E891A6192;
-	Tue, 30 Jul 2024 17:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5D01A6192;
+	Tue, 30 Jul 2024 17:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359042; cv=none; b=QI98Z7+ya+lNff6eA5Mt8aMYYri5BKgzHsDC0+mnDsUcUmwXaQ5uVm/4sJZ4Q4sKplHnU/VEo041I1OpHfmfqZ4bHMowIxMZxH2il9pufQJRJuU2JFCdixWKVUY/d/V8dSghyg1lwjmi4c+7al/SQdpK6RBYbiQZpvZSSw/Uy5k=
+	t=1722359045; cv=none; b=TmB8ceyxGxelGLMWXjeNHgWMh+WxXF7CZ/bW2lpamfw04xwZrSsPdvb5VQDGsywhjhEMqR+7bk4EQtr7maPARuXm10LzP0V+UA4gK6BH+ht7Z5MENOlMBUclJAZnHOqelsuonCMDHhFeHA4No6kux2ejQgtJkxcTzajgRdtU3Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359042; c=relaxed/simple;
-	bh=6r1T7BMXOHkU6MSPpb2BS3c5xuIvmGqPYPC7dXVh1ls=;
+	s=arc-20240116; t=1722359045; c=relaxed/simple;
+	bh=B0b1ieHt1y1n3wjmzFQ2IA8TI9KLafZSt8gGlwH6AVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U/eAEXfod9OXiVUPjOEAjrdbUtQcdrU2JeQCthRB72C1uQoms9Um6+3oFnPzBbn8DHrIB0wwrlJJqNedIx3Qnxe/TATp8WawsYhG/lkV1rMlfi5umqIwTOBqu75rH0G9v4ObTVZHdD6eaS4Cdbqu0g3oeDMofX1dYPMKbYa5Xs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5hl/4v3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URCPlzyvJfGLb7wg1Ec+KWJ6T+0qa4sXEtoOnZnIPwm7jXFsSBiwv3oldtoxU32hnafflaqwZvD4ifh+sNCZePunY3F798wW1ajncqLjiuJnHWrxuiRrg0Izo9gz/9U28/wUyUlY73MrxpIXV+mzCZbPmVjnUGeVV/VEM3Dxw0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CAzcV6xE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5hl/4v3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D302FC4AF0A;
-	Tue, 30 Jul 2024 17:04:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CAzcV6xE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0CBC32782;
+	Tue, 30 Jul 2024 17:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359042;
-	bh=6r1T7BMXOHkU6MSPpb2BS3c5xuIvmGqPYPC7dXVh1ls=;
+	s=korg; t=1722359045;
+	bh=B0b1ieHt1y1n3wjmzFQ2IA8TI9KLafZSt8gGlwH6AVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g5hl/4v3hsd7dRgquYEMmggULDwDOagqHEWSs8kS61DQdWEyIJg7LydZoPysEuhhw
-	 A0qGl9A5AXs7zxlL0dq06VYTtOMGgJsbCrzVaP06KJw3TPYK0I0/zYmF9lVkvIFL/v
-	 9EJIDgm62S351Br6jcBcMzkJNOhXBJSEr+L6xMT4=
+	b=CAzcV6xEvU/kMAdo9m1gw9WhqmZGhytR903RilRDh2L5jxpor2rR5vyAYAd8Jtc3w
+	 5p5NwRYLuFVaQs7h9iIFJMFTfri+WZG9CtiYgN5gYEzTdZucfrpkovfNMKIvstIgOx
+	 +u0zljrRIDskadCNrVsHyHnjrm/GTeJiiLOXbVB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 424/568] parisc: Fix warning at drivers/pci/msi/msi.h:121
-Date: Tue, 30 Jul 2024 17:48:51 +0200
-Message-ID: <20240730151656.438286325@linuxfoundation.org>
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 426/809] powerpc/prom: Add CPU info to hardware description string later
+Date: Tue, 30 Jul 2024 17:45:02 +0200
+Message-ID: <20240730151741.521785918@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,43 +47,90 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John David Anglin <dave@mx3210.local>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-commit 4c29ab84cfec17081aae7a7a28f8d2c93c42dcae upstream.
+[ Upstream commit 7bdd1c6c87de758750d419eedab7285b95b66417 ]
 
-Fix warning at drivers/pci/msi/msi.h:121.
+cur_cpu_spec->cpu_name is appended to ppc_hw_desc before cur_cpu_spec
+has taken on its final value. This is illustrated on pseries by
+comparing the CPU name as reported at boot ("POWER8E (raw)") to the
+contents of /proc/cpuinfo ("POWER8 (architected)"):
 
-Recently, I added a PCI to PCIe bridge adaptor and a PCIe NVME card
-to my rp3440. Then, I noticed this warning at boot:
+  $ dmesg | grep Hardware
+  Hardware name: IBM,8408-E8E POWER8E (raw) 0x4b0201 0xf000004 \
+    of:IBM,FW860.50 (SV860_146) hv:phyp pSeries
 
- WARNING: CPU: 0 PID: 10 at drivers/pci/msi/msi.h:121 pci_msi_setup_msi_irqs+0x68/0x90
- CPU: 0 PID: 10 Comm: kworker/u32:0 Not tainted 6.9.7-parisc64 #1  Debian 6.9.7-1
- Hardware name: 9000/800/rp3440
- Workqueue: async async_run_entry_fn
+  $ grep -m 1 ^cpu /proc/cpuinfo
+  cpu             : POWER8 (architected), altivec supported
 
-We need to select PCI_MSI_ARCH_FALLBACKS when PCI_MSI is selected.
+Some 44x models would appear to be affected as well; see
+identical_pvr_fixup().
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Cc: stable@vger.kernel.org	# v6.0+
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This results in incorrect CPU information in stack dumps --
+ppc_hw_desc is an input to dump_stack_set_arch_desc().
+
+Delay gathering the CPU name until after all potential calls to
+identify_cpu().
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Fixes: bd649d40e0f2 ("powerpc: Add PVR & CPU name to hardware description")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240603-fix-cpu-hwdesc-v1-1-945f2850fcaa@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/kernel/prom.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -83,6 +83,7 @@ config PARISC
- 	select HAVE_SOFTIRQ_ON_OWN_STACK if IRQSTACKS
- 	select TRACE_IRQFLAGS_SUPPORT
- 	select HAVE_FUNCTION_DESCRIPTORS if 64BIT
-+	select PCI_MSI_ARCH_FALLBACKS if PCI_MSI
+diff --git a/arch/powerpc/kernel/prom.c b/arch/powerpc/kernel/prom.c
+index 60819751e55e6..0be07ed407c70 100644
+--- a/arch/powerpc/kernel/prom.c
++++ b/arch/powerpc/kernel/prom.c
+@@ -331,6 +331,7 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
+ 					  void *data)
+ {
+ 	const char *type = of_get_flat_dt_prop(node, "device_type", NULL);
++	const __be32 *cpu_version = NULL;
+ 	const __be32 *prop;
+ 	const __be32 *intserv;
+ 	int i, nthreads;
+@@ -420,7 +421,7 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
+ 		prop = of_get_flat_dt_prop(node, "cpu-version", NULL);
+ 		if (prop && (be32_to_cpup(prop) & 0xff000000) == 0x0f000000) {
+ 			identify_cpu(0, be32_to_cpup(prop));
+-			seq_buf_printf(&ppc_hw_desc, "0x%04x ", be32_to_cpup(prop));
++			cpu_version = prop;
+ 		}
  
- 	help
- 	  The PA-RISC microprocessor is designed by Hewlett-Packard and used
+ 		check_cpu_feature_properties(node);
+@@ -431,6 +432,12 @@ static int __init early_init_dt_scan_cpus(unsigned long node,
+ 	}
+ 
+ 	identical_pvr_fixup(node);
++
++	// We can now add the CPU name & PVR to the hardware description
++	seq_buf_printf(&ppc_hw_desc, "%s 0x%04lx ", cur_cpu_spec->cpu_name, mfspr(SPRN_PVR));
++	if (cpu_version)
++		seq_buf_printf(&ppc_hw_desc, "0x%04x ", be32_to_cpup(cpu_version));
++
+ 	init_mmu_slb_size(node);
+ 
+ #ifdef CONFIG_PPC64
+@@ -881,9 +888,6 @@ void __init early_init_devtree(void *params)
+ 
+ 	dt_cpu_ftrs_scan();
+ 
+-	// We can now add the CPU name & PVR to the hardware description
+-	seq_buf_printf(&ppc_hw_desc, "%s 0x%04lx ", cur_cpu_spec->cpu_name, mfspr(SPRN_PVR));
+-
+ 	/* Retrieve CPU related informations from the flat tree
+ 	 * (altivec support, boot CPU ID, ...)
+ 	 */
+-- 
+2.43.0
+
 
 
