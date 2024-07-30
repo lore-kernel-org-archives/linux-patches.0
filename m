@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3CD1C2324;
-	Tue, 30 Jul 2024 16:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81E0B1C233B;
+	Tue, 30 Jul 2024 16:00:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355232; cv=none; b=LAe98kbfqGyCL2r4ZrSO6/X/jS8dPn5ZEEgFyUS8Ei/mh2IfXzqh6FFq9nToxG51VjBksZ4ciUuXx630hl5GcVoz88QPFIgWbBNTKun4ZwdioyE2l5im2o7txWasZFx0cF7Zk0uAP7a3fRS0CzuDeFI0VMJe9x6+5yJgQBO8alo=
+	t=1722355235; cv=none; b=hlHvwz207Fb8u0nY1L69UL+CTituer128z+2npkPVMnhkII+yGxNMuM0dim6on8Dj0vU0TAYbruPh+1UkBbQsFtF1Ro/ipDkzCTxGuBIokjhvstlU4NiAGNONhDW1CYyyXxDbzt22ysIzeNRJ8zAlAhwyopP5iIMkpzGZH0ZqwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355232; c=relaxed/simple;
-	bh=3/F8P7hLPWkhl6tgX1PKq7keR+6dy9M5yXSggO1LEXc=;
+	s=arc-20240116; t=1722355235; c=relaxed/simple;
+	bh=+rj99h8neC34Mpalh6QK7jZA18couID+aNCwWdGYiec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rld3v+Y3a8rkUqe9oUrKYNhF82RzS/yroBdjKmZ9oSqprgHvWbfAwRJgXkPGNNpvQwL774dEDm7eR8ik1eYnjy5syTVDroRuAuzcc7df67yp5UVtFiyMgcyJYEUispY7TiZxpZHMbnh2Vop5T9SzeweX9iv9bTnGLOL32puI+Ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vuZxdUf8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qFvwhXNrbQhgRYrQ5uNi9hui299wqCCNhhF5IQanyfCTaZK7qL4gX0xhEGJ25j59sgLw35Cu0B5Nj+9mtbU7nSQrWLkhfeTGLnWywBi32kLAcIVDEodZPkjodA3QBYOvRqR5HmpL8hQmXZ75443Pv3bkcKSgkxnpvZwB/TrDVw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0ZnZGtX+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vuZxdUf8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D72EC4AF0C;
-	Tue, 30 Jul 2024 16:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0ZnZGtX+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0400C32782;
+	Tue, 30 Jul 2024 16:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355232;
-	bh=3/F8P7hLPWkhl6tgX1PKq7keR+6dy9M5yXSggO1LEXc=;
+	s=korg; t=1722355235;
+	bh=+rj99h8neC34Mpalh6QK7jZA18couID+aNCwWdGYiec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vuZxdUf847CqMn+BtKV8RY7f5BLqbeewJxqjPRxuVJxRq7KVVrbvFvDb4Hlf+fAwP
-	 RteBuEePDTdazT5p7egt/nzPBHOT6k5L71L3TFp6cak+5F5iuI4NoUiEPAEDIfiUm9
-	 CbciwRzpuh8y8OiCRLA9nptMzi3Kb3pMLYBqeTm8=
+	b=0ZnZGtX+imHb4DWhzivzqdSd5EQoKfaGTOgNhqg+h3ngPnh5I0sJbR6UKaAkxkAkH
+	 ki8OWBZGvAxDHnO43n0XNsUH1QCALyxwH8yG1pmY6no7SG3jeUnhPB54GeeeAyStI6
+	 XaGh9hBlQtlrMgIaOgDx94U3NYMAjzuMlgV8SeH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Kusiak <mateusz.kusiak@linux.intel.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Primoz Fiser <primoz.fiser@norik.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 021/568] md: Dont wait for MD_RECOVERY_NEEDED for HOT_REMOVE_DISK ioctl
-Date: Tue, 30 Jul 2024 17:42:08 +0200
-Message-ID: <20240730151640.661304354@linuxfoundation.org>
+Subject: [PATCH 6.1 046/440] OPP: ti: Fix ti_opp_supply_probe wrong return values
+Date: Tue, 30 Jul 2024 17:44:39 +0200
+Message-ID: <20240730151617.562469218@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Primoz Fiser <primoz.fiser@norik.com>
 
-[ Upstream commit a1fd37f97808db4fa1bf55da0275790c42521e45 ]
+[ Upstream commit 3a1ac6b8f603a9310274990a0ad563a5fb709f59 ]
 
-Commit 90f5f7ad4f38 ("md: Wait for md_check_recovery before attempting
-device removal.") explained in the commit message that failed device
-must be reomoved from the personality first by md_check_recovery(),
-before it can be removed from the array. That's the reason the commit
-add the code to wait for MD_RECOVERY_NEEDED.
+Function ti_opp_supply_probe() since commit 6baee034cb55 ("OPP: ti:
+Migrate to dev_pm_opp_set_config_regulators()") returns wrong values
+when all goes well and hence driver probing eventually fails.
 
-However, this is not the case now, because remove_and_add_spares() is
-called directly from hot_remove_disk() from ioctl path, hence failed
-device(marked faulty) can be removed from the personality by ioctl.
-
-On the other hand, the commit introduced a performance problem that
-if MD_RECOVERY_NEEDED is set and the array is not running, ioctl will
-wait for 5s before it can return failure to user.
-
-Since the waiting is not needed now, fix the problem by removing the
-waiting.
-
-Fixes: 90f5f7ad4f38 ("md: Wait for md_check_recovery before attempting device removal.")
-Reported-by: Mateusz Kusiak <mateusz.kusiak@linux.intel.com>
-Closes: https://lore.kernel.org/all/814ff6ee-47a2-4ba0-963e-cf256ee4ecfa@linux.intel.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240627112321.3044744-1-yukuai1@huaweicloud.com
+Fixes: 6baee034cb55 ("OPP: ti: Migrate to dev_pm_opp_set_config_regulators()")
+Signed-off-by: Primoz Fiser <primoz.fiser@norik.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/opp/ti-opp-supply.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index ba732b1d00b5b..b5dea664f946d 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -7684,12 +7684,6 @@ static int md_ioctl(struct block_device *bdev, blk_mode_t mode,
- 
+diff --git a/drivers/opp/ti-opp-supply.c b/drivers/opp/ti-opp-supply.c
+index 8f3f13fbbb25a..a8a696d2e03ab 100644
+--- a/drivers/opp/ti-opp-supply.c
++++ b/drivers/opp/ti-opp-supply.c
+@@ -400,10 +400,12 @@ static int ti_opp_supply_probe(struct platform_device *pdev)
  	}
  
--	if (cmd == HOT_REMOVE_DISK)
--		/* need to ensure recovery thread has run */
--		wait_event_interruptible_timeout(mddev->sb_wait,
--						 !test_bit(MD_RECOVERY_NEEDED,
--							   &mddev->recovery),
--						 msecs_to_jiffies(5000));
- 	if (cmd == STOP_ARRAY || cmd == STOP_ARRAY_RO) {
- 		/* Need to flush page cache, and ensure no-one else opens
- 		 * and writes
+ 	ret = dev_pm_opp_set_config_regulators(cpu_dev, ti_opp_config_regulators);
+-	if (ret < 0)
++	if (ret < 0) {
+ 		_free_optimized_voltages(dev, &opp_data);
++		return ret;
++	}
+ 
+-	return ret;
++	return 0;
+ }
+ 
+ static struct platform_driver ti_opp_supply_driver = {
 -- 
 2.43.0
 
