@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3CA1A76A1;
-	Tue, 30 Jul 2024 17:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D8F1A76A1;
+	Tue, 30 Jul 2024 17:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360241; cv=none; b=jhyoDe2OKzer+BzDiiAqrrnQfQh6jQGTyo4QrpiB94eH2JvVRKXUy3kF6rBzTcitMdZWE3Wx7FptC4Z5qlBM1x3Uvh/50pOrY+fiqivHREI6vrquLQEfoM+J3h6nTKjFhdLtyfOYvscfXCd9ClO1psSp9tS1yLGqBFvuU8faXj4=
+	t=1722360244; cv=none; b=AwcOLvrGscpaJPIsA9kJ3RPLi8BorsnAZM3LCJdPFA6z3H23j0nMr2zfxg5Z38pLLACdgLJda+FyJ43Z33Udt95XJg5iqhJ/cGc3to8A1mQexnqr2EcfYVwucBiTiWEQ7fTD2VMJ6iN+HD4So6CCzoTMyxp6zYcJ+ij/2L4O20w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360241; c=relaxed/simple;
-	bh=nnNHPhRLHoDq9hRuvjXAhk6aKc7TB+GOWTqjs9EGX/Y=;
+	s=arc-20240116; t=1722360244; c=relaxed/simple;
+	bh=1E4pItoU0nhb/D7AtIw/W/ZHdaecy60uJwjpZzblnNI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j9hTqsA6uh1Fs6ykHhLjSaQzZFLu1264bPhsA0gcnuWuJCPHAfX3Xe9ZqtndD9B7Zod1sOix3+JSSelZMFpZI/R7ZJmkxIlRml9wmIbKrvK7x3ZT7YOolePYDUnsrL2zQ2rVRRDkDjHSXQStlZ6UQgUKjveuPRLWk86tL9BiM8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cvo3miRx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gUujzRiLyIzrTHMwi7IGVZU2SeIwSKDwgpFJY/XADJ7Hk8fu9trEDaB9nKhVqI2e+B/nI2EieHJs4dRNoI9KDrOVNKZKoSBdKbFpQOCqocmNGpkmRhLjrhGVGzuMvYhi7jxb+W2FllfLAO9X9VZxaktrQqq6Rkbt6RsUHhMW/SI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M/Nm72pL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cvo3miRx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932FFC32782;
-	Tue, 30 Jul 2024 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M/Nm72pL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF827C32782;
+	Tue, 30 Jul 2024 17:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360241;
-	bh=nnNHPhRLHoDq9hRuvjXAhk6aKc7TB+GOWTqjs9EGX/Y=;
+	s=korg; t=1722360244;
+	bh=1E4pItoU0nhb/D7AtIw/W/ZHdaecy60uJwjpZzblnNI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvo3miRxYHSe9NIf2jFexYAbskB9rVq986+ovvgL9wVpirRuMH/rUISdWSb7jzLWk
-	 7O+iH+BPDJGvck8eeXLPxW4U60rDZqGFdDqGbe4ma10ERoM2bBg8N3tOntNWcnh8FB
-	 pzxQ5bqxzUs0K1SEDydnUmCILTLdFaKTV4hYyvXU=
+	b=M/Nm72pLOIyR9IO0hsisY0Yy7bSbybI71jH2RlAvrtSPVMPbToQpZyIZYrcfOZSrO
+	 Fqg1RPJaShqiXXsFTAuIALgUai4VtqYvOAs3k8zH1p8PokggrNn0nH+4aXfBU5gdbl
+	 A24mA8A1iKCiZ2vJtNbQbdokcB8qGS56BC6OllmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Slark Xiao <slark_xiao@163.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Sheng Wu <wusheng@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.10 640/809] PCI: rockchip: Use GPIOD_OUT_LOW flag while requesting ep_gpio
-Date: Tue, 30 Jul 2024 17:48:36 +0200
-Message-ID: <20240730151750.132393990@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.10 641/809] PCI: loongson: Enable MSI in LS7A Root Complex
+Date: Tue, 30 Jul 2024 17:48:37 +0200
+Message-ID: <20240730151750.181431735@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -54,80 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 840b7a5edf88fe678c60dee88a135647c0ea4375 upstream.
+commit a4bbcac11d3cea85822af8b40daed7e96bca5068 upstream.
 
-Rockchip platforms use 'GPIO_ACTIVE_HIGH' flag in the devicetree definition
-for ep_gpio. This means, whatever the logical value set by the driver for
-the ep_gpio, physical line will output the same logic level.
+The LS7A chipset can be used as part of a PCIe Root Complex with
+Loongson-3C6000 and similar CPUs.  In this case, DEV_LS7A_PCIE_PORT5 has a
+PCI_CLASS_BRIDGE_HOST class code, and it is a Type 0 Function whose config
+space provides access to Root Complex registers.
 
-For instance,
+The DEV_LS7A_PCIE_PORT5 has an MSI Capability, and its MSI Enable bit must
+be set before other devices below the Root Complex can use MSI.  This is
+not the standard PCI behavior of MSI Enable, so the normal PCI MSI code
+does not set it.
 
-  gpiod_set_value_cansleep(rockchip->ep_gpio, 0); --> Level low
-  gpiod_set_value_cansleep(rockchip->ep_gpio, 1); --> Level high
+Set the DEV_LS7A_PCIE_PORT5 MSI Enable bit via a quirk so other devices
+below the Root Complex can use MSI.
 
-But while requesting the ep_gpio, GPIOD_OUT_HIGH flag is currently used.
-Now, this also causes the physical line to output 'high' creating trouble
-for endpoint devices during host reboot.
-
-When host reboot happens, the ep_gpio will initially output 'low' due to
-the GPIO getting reset to its POR value. Then during host controller probe,
-it will output 'high' due to GPIOD_OUT_HIGH flag. Then during
-rockchip_pcie_host_init_port(), it will first output 'low' and then 'high'
-indicating the completion of controller initialization.
-
-On the endpoint side, each output 'low' of ep_gpio is accounted for PERST#
-assert and 'high' for PERST# deassert. With the above mentioned flow during
-host reboot, endpoint will witness below state changes for PERST#:
-
-  (1) PERST# assert - GPIO POR state
-  (2) PERST# deassert - GPIOD_OUT_HIGH while requesting GPIO
-  (3) PERST# assert - rockchip_pcie_host_init_port()
-  (4) PERST# deassert - rockchip_pcie_host_init_port()
-
-Now the time interval between (2) and (3) is very short as both happen
-during the driver probe(), and this results in a race in the endpoint.
-Because, before completing the PERST# deassertion in (2), endpoint got
-another PERST# assert in (3).
-
-A proper way to fix this issue is to change the GPIOD_OUT_HIGH flag in (2)
-to GPIOD_OUT_LOW. Because the usual convention is to request the GPIO with
-a state corresponding to its 'initial/default' value and let the driver
-change the state of the GPIO when required.
-
-As per that, the ep_gpio should be requested with GPIOD_OUT_LOW as it
-corresponds to the POR value of '0' (PERST# assert in the endpoint). Then
-the driver can change the state of the ep_gpio later in
-rockchip_pcie_host_init_port() as per the initialization sequence.
-
-This fixes the firmware crash issue in Qcom based modems connected to
-Rockpro64 based board.
-
-Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
-Closes: https://lore.kernel.org/mhi/20240402045647.GG2933@thinkpad/
-Link: https://lore.kernel.org/linux-pci/20240416-pci-rockchip-perst-fix-v1-1-4800b1d4d954@linaro.org
-Reported-by: Slark Xiao <slark_xiao@163.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+[kwilczynski: exit early to reduce indentation; commit log]
+Link: https://lore.kernel.org/linux-pci/20240612065315.2048110-1-chenhuacai@loongson.cn
+Signed-off-by: Sheng Wu <wusheng@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+[bhelgaas: commit log]
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
-Cc: stable@vger.kernel.org	# v4.9
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pcie-rockchip.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/controller/pci-loongson.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/pci/controller/pcie-rockchip.c
-+++ b/drivers/pci/controller/pcie-rockchip.c
-@@ -121,7 +121,7 @@ int rockchip_pcie_parse_dt(struct rockch
+--- a/drivers/pci/controller/pci-loongson.c
++++ b/drivers/pci/controller/pci-loongson.c
+@@ -163,6 +163,19 @@ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LO
+ DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON,
+ 			DEV_LS7A_HDMI, loongson_pci_pin_quirk);
  
- 	if (rockchip->is_rc) {
- 		rockchip->ep_gpio = devm_gpiod_get_optional(dev, "ep",
--							    GPIOD_OUT_HIGH);
-+							    GPIOD_OUT_LOW);
- 		if (IS_ERR(rockchip->ep_gpio))
- 			return dev_err_probe(dev, PTR_ERR(rockchip->ep_gpio),
- 					     "failed to get ep GPIO\n");
++static void loongson_pci_msi_quirk(struct pci_dev *dev)
++{
++	u16 val, class = dev->class >> 8;
++
++	if (class != PCI_CLASS_BRIDGE_HOST)
++		return;
++
++	pci_read_config_word(dev, dev->msi_cap + PCI_MSI_FLAGS, &val);
++	val |= PCI_MSI_FLAGS_ENABLE;
++	pci_write_config_word(dev, dev->msi_cap + PCI_MSI_FLAGS, val);
++}
++DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LOONGSON, DEV_LS7A_PCIE_PORT5, loongson_pci_msi_quirk);
++
+ static struct loongson_pci *pci_bus_to_loongson_pci(struct pci_bus *bus)
+ {
+ 	struct pci_config_window *cfg;
 
 
