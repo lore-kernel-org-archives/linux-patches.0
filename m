@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9531A6166;
-	Tue, 30 Jul 2024 16:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63C231A6161;
+	Tue, 30 Jul 2024 16:27:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356849; cv=none; b=q7JDtIQ83oUnE4UazlPiapcYCRTWrH+druyDC9aFPDjEAPDdtmOzG/PA02R0+AEbC5Nj7uMcN9iauPRK4/Kgwg3R8UULqnRjig5gvzaVja4/o44JdLOIeybGrY+XBb0bBVPZP8z5WkxQVfkRQXqr0gWE2TBqtiIpfdkmc1otAnk=
+	t=1722356852; cv=none; b=rP9nGh7uWDqzOAsmufBePYsul4Yk32WuMWfkrV5Y138IwluvM+5/sk5+RfbVQmqHu7aZIHq+iKRKP4s4KO+BtVfk82+rmvMk6tGqLKfpoat0HTjqNXJo/IqzLf02jdTmEImvG4Y/d9un/hKyqeufWvCtqhtAgdase6tAXoMQABk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356849; c=relaxed/simple;
-	bh=jo8IuULDXzkqbYUKKP3RosyNbfa0IlNKEb32rTr9MVk=;
+	s=arc-20240116; t=1722356852; c=relaxed/simple;
+	bh=56f5E2qv9Q+7o5TUcbc+v5duY0KFW5vEo8lEuOJr3ag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+e/coEB7p5poCptW4gvvCptfQ2dRKw3jQ6LxsWe0G2jbCaTTPJbk9RlwZ2CGoRhJNmdkSfn4iREsUBeJ44NU9QiPcL1K9pdPaDn+po9473kJ0n1LcxoF6N/6F3BGmHNlban8YWebXKEd6XIgOL0Lj2SlN7s4z5lz8yebKio1zY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+WU8xkt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SYQ8vMqlfNG6hyCPqzLy/W0LNQ3OWn1+NhYKtZpogmoi77j/WqD70aJsfCRyffT3Blkxv+e/RzLAQ45DM2AG3Ze+zKMFAPlYcdDqSdcbxaeKvKp62wOJI2K5EC7YaPhcHSRoQ5+BO2Qo/keNDJZzuYKGKVLQyHecgnOC3tdjtDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfWO1rzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+WU8xkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CDBC32782;
-	Tue, 30 Jul 2024 16:27:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfWO1rzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0814C32782;
+	Tue, 30 Jul 2024 16:27:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356849;
-	bh=jo8IuULDXzkqbYUKKP3RosyNbfa0IlNKEb32rTr9MVk=;
+	s=korg; t=1722356852;
+	bh=56f5E2qv9Q+7o5TUcbc+v5duY0KFW5vEo8lEuOJr3ag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+WU8xktzjfBUmOtMssFyhUirlk8mXFNQZMF0uBcWAmIuJ9CFTt7vx3u5ONxMZPKy
-	 2ypIkPteUgC/fzQ95icwMD/rfJx86IZc0jOCzPBjpBkD8URpwhNj8Tvsg0r0BJ3rG4
-	 ozLuzWYqioMLbNbzcqhC6xYJ4zVGthEStLi8VnZw=
+	b=vfWO1rzTq56W77Wu9yI2wQ8LKBkR3YLN0k/+JPPpfXaMuPDrxD6rZ+toxOXLJe7Hp
+	 iqUCCY79wWnQ2UWj/+eHyWB7k0OxzuCqDa4uCTNdBzNawVSteDQeM2HJcYMr7gObV5
+	 CJ1cgDKiIe7mrfALlCxZhvOSBJZ2axxz8kRowMmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 190/568] media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()
-Date: Tue, 30 Jul 2024 17:44:57 +0200
-Message-ID: <20240730151647.304071003@linuxfoundation.org>
+Subject: [PATCH 6.10 193/809] wifi: cfg80211: handle 2x996 RU allocation in cfg80211_calculate_bitrate_he()
+Date: Tue, 30 Jul 2024 17:41:09 +0200
+Message-ID: <20240730151732.231812954@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,145 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
+[ Upstream commit bcbd771cd5d68c0c52567556097d75f9fc4e7cd6 ]
 
-Infinite log printing occurs during fuzz test:
+Currently NL80211_RATE_INFO_HE_RU_ALLOC_2x996 is not handled in
+cfg80211_calculate_bitrate_he(), leading to below warning:
 
-  rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
-  ...
-  dvb-usb: schedule remote query interval to 100 msecs.
-  dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
-  dvb-usb: bulk message failed: -22 (1/0)
-  dvb-usb: bulk message failed: -22 (1/0)
-  dvb-usb: bulk message failed: -22 (1/0)
-  ...
-  dvb-usb: bulk message failed: -22 (1/0)
+kernel: invalid HE MCS: bw:6, ru:6
+kernel: WARNING: CPU: 0 PID: 2312 at net/wireless/util.c:1501 cfg80211_calculate_bitrate_he+0x22b/0x270 [cfg80211]
 
-Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
-that is in rc_core_dvb_usb_remote_init() create a work that will call
-dvb_usb_read_remote_control(), and this work will reschedule itself at
-'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
-see following code snippet:
+Fix it by handling 2x996 RU allocation in the same way as 160 MHz bandwidth.
 
-  rc_core_dvb_usb_remote_init() {
-    ...
-    INIT_DELAYED_WORK(&d->rc_query_work, dvb_usb_read_remote_control);
-    schedule_delayed_work(&d->rc_query_work,
-                          msecs_to_jiffies(rc_interval));
-    ...
-  }
-
-  dvb_usb_read_remote_control() {
-    ...
-    err = d->props.rc.core.rc_query(d);
-    if (err)
-      err(...)  // Did not return even if query failed
-    schedule_delayed_work(&d->rc_query_work,
-                          msecs_to_jiffies(rc_interval));
-  }
-
-When the infinite log printing occurs, the query callback
-'d->props.rc.core.rc_query' is cxusb_rc_query(). And the log is due to
-the failure of finding a valid 'generic_bulk_ctrl_endpoint'
-in usb_bulk_msg(), see following code snippet:
-
-  cxusb_rc_query() {
-    cxusb_ctrl_msg() {
-      dvb_usb_generic_rw() {
-        ret = usb_bulk_msg(d->udev, usb_sndbulkpipe(d->udev,
-                           d->props.generic_bulk_ctrl_endpoint),...);
-        if (ret)
-          err("bulk message failed: %d (%d/%d)",ret,wlen,actlen);
-          ...
-      }
-  ...
-  }
-
-By analyzing the corresponding USB descriptor, it shows that the
-bNumEndpoints is 0 in its interface descriptor, but
-the 'generic_bulk_ctrl_endpoint' is 1, that means user don't configure
-a valid endpoint for 'generic_bulk_ctrl_endpoint', therefore this
-'invalid' USB device should be rejected before it calls into
-dvb_usb_read_remote_control().
-
-To fix it, we need to add endpoint check for 'generic_bulk_ctrl_endpoint'.
-And as Sean suggested, the same check and clear halts should be done for
-'generic_bulk_ctrl_endpoint_response'. So introduce
-dvb_usb_check_bulk_endpoint() to do it for both of them.
-
-Fixes: 4d43e13f723e ("V4L/DVB (4643): Multi-input patch for DVB-USB device")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://msgid.link/20240606020653.33205-3-quic_bqiang@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dvb-usb-init.c | 35 +++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ net/wireless/util.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
-index fbf58012becdf..22d83ac18eb73 100644
---- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
-+++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
-@@ -23,11 +23,40 @@ static int dvb_usb_force_pid_filter_usage;
- module_param_named(force_pid_filter_usage, dvb_usb_force_pid_filter_usage, int, 0444);
- MODULE_PARM_DESC(force_pid_filter_usage, "force all dvb-usb-devices to use a PID filter, if any (default: 0).");
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index d262d37c15193..af6ec719567fc 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1524,7 +1524,9 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	if (WARN_ON_ONCE(rate->nss < 1 || rate->nss > 8))
+ 		return 0;
  
-+static int dvb_usb_check_bulk_endpoint(struct dvb_usb_device *d, u8 endpoint)
-+{
-+	if (endpoint) {
-+		int ret;
-+
-+		ret = usb_pipe_type_check(d->udev, usb_sndbulkpipe(d->udev, endpoint));
-+		if (ret)
-+			return ret;
-+		ret = usb_pipe_type_check(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-+
-+static void dvb_usb_clear_halt(struct dvb_usb_device *d, u8 endpoint)
-+{
-+	if (endpoint) {
-+		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, endpoint));
-+		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
-+	}
-+}
-+
- static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
- {
- 	struct dvb_usb_adapter *adap;
- 	int ret, n, o;
- 
-+	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint);
-+	if (ret)
-+		return ret;
-+	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint_response);
-+	if (ret)
-+		return ret;
- 	for (n = 0; n < d->props.num_adapters; n++) {
- 		adap = &d->adapter[n];
- 		adap->dev = d;
-@@ -103,10 +132,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
- 	 * when reloading the driver w/o replugging the device
- 	 * sometimes a timeout occurs, this helps
- 	 */
--	if (d->props.generic_bulk_ctrl_endpoint != 0) {
--		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
--		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
--	}
-+	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint);
-+	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint_response);
- 
- 	return 0;
- 
+-	if (rate->bw == RATE_INFO_BW_160)
++	if (rate->bw == RATE_INFO_BW_160 ||
++	    (rate->bw == RATE_INFO_BW_HE_RU &&
++	     rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_2x996))
+ 		result = rates_160M[rate->he_gi];
+ 	else if (rate->bw == RATE_INFO_BW_80 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
 -- 
 2.43.0
 
