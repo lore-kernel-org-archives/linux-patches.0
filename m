@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7531078F;
-	Tue, 30 Jul 2024 16:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155711078F;
+	Tue, 30 Jul 2024 16:51:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358262; cv=none; b=iF3pS36f7TFSl6xfINwqfUfPW9EsEuymLxHcbPCBLo07qQ5rh8jSrIlAVxcf37nik8bexu/bzgUEJinAok6ki6F5YnJ2MxE5aXmR+pDzIijazt6FadsXNt8UAFUWNuUWfdhAxcI4iASwY3jmG0mIHmd4XMdiElowz4c49UgAohk=
+	t=1722358265; cv=none; b=r/Tl0hX/m29ijTun5DfYA3JXb3yGLDlU+OFNsfD5a1nnekEwlNrzb3r1/je8jIHK6LOuszh7u6J3/CGZGF858ZPkOuTiXnIZ4cZOVMNuyZ++Xz6zM58mSPeSJ1AL4SAbW1E8C5MneJiio+VqeOl+FSd8uEtuuHQEIChy1OmVIbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358262; c=relaxed/simple;
-	bh=I/pDbbsKu8Av00kSoMzb3JpNSTssC2rMvOtsbN9LpiQ=;
+	s=arc-20240116; t=1722358265; c=relaxed/simple;
+	bh=xSv+0jaAXEy8/VFUu4Bs6eJe5cvP6oYx3tVWbWlhi74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WnD6ihfJfDxlyS5f1JyWOyFrKpXX6nLtuNpCCJVfon5oM9WD8wSQ57PuiHgDV0b2bpI+/ue0w5huEaX00/ZoeQLndfotETgWfMZMvZAey/0lH5vWRnZQ3Qyy4rDPI11AEqSHv9W5YD2c/DCxODgyBQ5KTOzAPdigFJNR3TsPyYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Ke2hUWr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZWPK/tmHsSP4jY+vRQ9Wt0X5vTi6j/IlOClFCR47uZIC4++TcNRJ7aBaz5uqZJwgVXmacFxDpjLNoj3ggkYFIFPVqL/gxn9Qw2lZ5h5aIno1uwnnnGFWIu8UsD5DiPwlEec/ksCFMIDgqCCWw+f0t7Ai9U7kSm1RAdDD9aiDDGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/ZUE6gb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Ke2hUWr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 591BAC32782;
-	Tue, 30 Jul 2024 16:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/ZUE6gb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89034C32782;
+	Tue, 30 Jul 2024 16:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358261;
-	bh=I/pDbbsKu8Av00kSoMzb3JpNSTssC2rMvOtsbN9LpiQ=;
+	s=korg; t=1722358264;
+	bh=xSv+0jaAXEy8/VFUu4Bs6eJe5cvP6oYx3tVWbWlhi74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Ke2hUWrDH3B6xiTerPZpdeNdwUI9ayEsNDZaIlSPZYeNqVm8krw7wRxMxzVsUveV
-	 dzYp4LHQkvmOkdNjlYZqxOsGqvsVh2RjPTQ2AtSeQ16vAqSXPozU1xJHx1Meor+aFm
-	 +s4NEVdo4ipBhljiAU2aOqs3RLvGHwb4kTKzNjTc=
+	b=x/ZUE6gbLitAWwlkWgiiNeilQIx0i5Bo/fGS91wcpC/lX++0TrKAIszzAj+YGX16X
+	 GU49w2Faj1uQ+r+YE47euHiMWCJZuLJqolOPIimKaZ9JGZIjmJSMxJPbGyKqZcnnnR
+	 fmsQbe76tbSTpjdPNwM1EE2EdgHL52MJkMHVGPvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Lance Yang <ioworker0@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Karolina Stolarek <karolina.stolarek@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 345/568] fs/proc/task_mmu: dont indicate PM_MMAP_EXCLUSIVE without PM_PRESENT
-Date: Tue, 30 Jul 2024 17:47:32 +0200
-Message-ID: <20240730151653.355304145@linuxfoundation.org>
+Subject: [PATCH 6.10 340/809] drm/ttm/tests: Fix a warning in ttm_bo_unreserve_bulk
+Date: Tue, 30 Jul 2024 17:43:36 +0200
+Message-ID: <20240730151738.063906003@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,98 +47,367 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Karolina Stolarek <karolina.stolarek@intel.com>
 
-[ Upstream commit da7f31ed0f4df8f61e8195e527aa83dd54896ba3 ]
+[ Upstream commit 588c4c8d58c413b52c68193bdb741cfbf1040a77 ]
 
-Relying on the mapcount for non-present PTEs that reference pages doesn't
-make any sense: they are not accounted in the mapcount, so page_mapcount()
-== 1 won't return the result we actually want to know.
+BOs in a bulk move have to share the same reservation object. That is
+not the case in the ttm_bo_unreserve_bulk subtest. Update
+ttm_bo_kunit_init() helper to accept dma_resv object so we can define
+buffer objects that share the same resv. Update calls to that helper
+accordingly.
 
-While we don't check the mapcount for migration entries already, we could
-end up checking it for swap, hwpoison, device exclusive, ...  entries,
-which we really shouldn't.
-
-There is one exception: device private entries, which we consider
-fake-present (e.g., incremented the mapcount).  But we won't care about
-that for now for PM_MMAP_EXCLUSIVE, because indicating PM_SWAP for them
-although they are fake-present already sounds suspiciously wrong.
-
-Let's never indicate PM_MMAP_EXCLUSIVE without PM_PRESENT.
-
-Link: https://lkml.kernel.org/r/20240607122357.115423-3-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Cc: Lance Yang <ioworker0@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 2c1f057e5be6 ("fs/proc/task_mmu: properly detect PM_MMAP_EXCLUSIVE per page of PMD-mapped THPs")
+Fixes: 995279d280d1 ("drm/ttm/tests: Add tests for ttm_bo functions")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Karolina Stolarek <karolina.stolarek@intel.com>
+Reviewed-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/c5bd2df114781b4eb5c1e8295b2ae4ac2c30a179.1718192625.git.karolina.stolarek@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/task_mmu.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/ttm/tests/ttm_bo_test.c       | 40 +++++++++++--------
+ drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.c |  7 +++-
+ drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.h |  3 +-
+ drivers/gpu/drm/ttm/tests/ttm_pool_test.c     |  4 +-
+ drivers/gpu/drm/ttm/tests/ttm_resource_test.c |  2 +-
+ drivers/gpu/drm/ttm/tests/ttm_tt_test.c       | 20 +++++-----
+ 6 files changed, 45 insertions(+), 31 deletions(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index e327d1c77de88..a5a946bef0ac4 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -1411,7 +1411,6 @@ static pagemap_entry_t pte_to_pagemap_entry(struct pagemapread *pm,
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
+index 9cc367a795341..801bb139075f3 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
+@@ -62,7 +62,7 @@ static void ttm_bo_reserve_optimistic_no_ticket(struct kunit *test)
+ 	struct ttm_buffer_object *bo;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_bo_reserve(bo, params->interruptible, params->no_wait, NULL);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -77,7 +77,7 @@ static void ttm_bo_reserve_locked_no_sleep(struct kunit *test)
+ 	bool no_wait = true;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	/* Let's lock it beforehand */
+ 	dma_resv_lock(bo->base.resv, NULL);
+@@ -98,7 +98,7 @@ static void ttm_bo_reserve_no_wait_ticket(struct kunit *test)
+ 
+ 	ww_acquire_init(&ctx, &reservation_ww_class);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_bo_reserve(bo, interruptible, no_wait, &ctx);
+ 	KUNIT_ASSERT_EQ(test, err, -EBUSY);
+@@ -116,7 +116,7 @@ static void ttm_bo_reserve_double_resv(struct kunit *test)
+ 
+ 	ww_acquire_init(&ctx, &reservation_ww_class);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_bo_reserve(bo, interruptible, no_wait, &ctx);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -144,8 +144,8 @@ static void ttm_bo_reserve_deadlock(struct kunit *test)
+ 	bool no_wait = false;
+ 	int err;
+ 
+-	bo1 = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
+-	bo2 = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo1 = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
++	bo2 = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	ww_acquire_init(&ctx1, &reservation_ww_class);
+ 	ww_mutex_base_lock(&bo2->base.resv->lock.base);
+@@ -214,7 +214,7 @@ static void ttm_bo_reserve_interrupted(struct kunit *test)
+ 	struct task_struct *task;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	task = kthread_create(threaded_ttm_bo_reserve, bo, "ttm-bo-reserve");
+ 
+@@ -255,7 +255,7 @@ static void ttm_bo_unreserve_basic(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 	bo->priority = bo_prio;
+ 
+ 	err = ttm_resource_alloc(bo, place, &res1);
+@@ -294,7 +294,7 @@ static void ttm_bo_unreserve_pinned(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 	place = ttm_place_kunit_init(test, mem_type, 0);
+ 
+ 	dma_resv_lock(bo->base.resv, NULL);
+@@ -327,6 +327,7 @@ static void ttm_bo_unreserve_bulk(struct kunit *test)
+ 	struct ttm_resource *res1, *res2;
+ 	struct ttm_device *ttm_dev;
+ 	struct ttm_place *place;
++	struct dma_resv *resv;
+ 	uint32_t mem_type = TTM_PL_SYSTEM;
+ 	unsigned int bo_priority = 0;
+ 	int err;
+@@ -338,12 +339,17 @@ static void ttm_bo_unreserve_bulk(struct kunit *test)
+ 	ttm_dev = kunit_kzalloc(test, sizeof(*ttm_dev), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, ttm_dev);
+ 
++	resv = kunit_kzalloc(test, sizeof(*resv), GFP_KERNEL);
++	KUNIT_ASSERT_NOT_NULL(test, ttm_dev);
++
+ 	err = ttm_device_kunit_init(priv, ttm_dev, false, false);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo1 = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
+-	bo2 = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	dma_resv_init(resv);
++
++	bo1 = ttm_bo_kunit_init(test, test->priv, BO_SIZE, resv);
++	bo2 = ttm_bo_kunit_init(test, test->priv, BO_SIZE, resv);
+ 
+ 	dma_resv_lock(bo1->base.resv, NULL);
+ 	ttm_bo_set_bulk_move(bo1, &lru_bulk_move);
+@@ -369,6 +375,8 @@ static void ttm_bo_unreserve_bulk(struct kunit *test)
+ 
+ 	ttm_resource_free(bo1, &res1);
+ 	ttm_resource_free(bo2, &res2);
++
++	dma_resv_fini(resv);
+ }
+ 
+ static void ttm_bo_put_basic(struct kunit *test)
+@@ -390,7 +398,7 @@ static void ttm_bo_put_basic(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 	bo->type = ttm_bo_type_device;
+ 
+ 	err = ttm_resource_alloc(bo, place, &res);
+@@ -451,7 +459,7 @@ static void ttm_bo_put_shared_resv(struct kunit *test)
+ 
+ 	dma_fence_signal(fence);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 	bo->type = ttm_bo_type_device;
+ 	bo->base.resv = external_resv;
+ 
+@@ -473,7 +481,7 @@ static void ttm_bo_pin_basic(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	for (int i = 0; i < no_pins; i++) {
+ 		dma_resv_lock(bo->base.resv, NULL);
+@@ -508,7 +516,7 @@ static void ttm_bo_pin_unpin_resource(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_resource_alloc(bo, place, &res);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -559,7 +567,7 @@ static void ttm_bo_multiple_pin_one_unpin(struct kunit *test)
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+ 	priv->ttm_dev = ttm_dev;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_resource_alloc(bo, place, &res);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.c b/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.c
+index 7b7c1fa805fcb..5be317a0af56b 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.c
+@@ -51,7 +51,8 @@ EXPORT_SYMBOL_GPL(ttm_device_kunit_init);
+ 
+ struct ttm_buffer_object *ttm_bo_kunit_init(struct kunit *test,
+ 					    struct ttm_test_devices *devs,
+-					    size_t size)
++					    size_t size,
++					    struct dma_resv *obj)
  {
- 	u64 frame = 0, flags = 0;
- 	struct page *page = NULL;
--	bool migration = false;
+ 	struct drm_gem_object gem_obj = { };
+ 	struct ttm_buffer_object *bo;
+@@ -61,6 +62,10 @@ struct ttm_buffer_object *ttm_bo_kunit_init(struct kunit *test,
+ 	KUNIT_ASSERT_NOT_NULL(test, bo);
  
- 	if (pte_present(pte)) {
- 		if (pm->show_pfn)
-@@ -1443,7 +1442,6 @@ static pagemap_entry_t pte_to_pagemap_entry(struct pagemapread *pm,
- 			    (offset << MAX_SWAPFILES_SHIFT);
- 		}
- 		flags |= PM_SWAP;
--		migration = is_migration_entry(entry);
- 		if (is_pfn_swap_entry(entry))
- 			page = pfn_swap_entry_to_page(entry);
- 		if (pte_marker_entry_uffd_wp(entry))
-@@ -1452,7 +1450,7 @@ static pagemap_entry_t pte_to_pagemap_entry(struct pagemapread *pm,
+ 	bo->base = gem_obj;
++
++	if (obj)
++		bo->base.resv = obj;
++
+ 	err = drm_gem_object_init(devs->drm, &bo->base, size);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
  
- 	if (page && !PageAnon(page))
- 		flags |= PM_FILE;
--	if (page && !migration && page_mapcount(page) == 1)
-+	if (page && (flags & PM_PRESENT) && page_mapcount(page) == 1)
- 		flags |= PM_MMAP_EXCLUSIVE;
- 	if (vma->vm_flags & VM_SOFTDIRTY)
- 		flags |= PM_SOFT_DIRTY;
-@@ -1469,7 +1467,6 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
- 	pte_t *pte, *orig_pte;
- 	int err = 0;
- #ifdef CONFIG_TRANSPARENT_HUGEPAGE
--	bool migration = false;
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.h b/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.h
+index 2f51c833a5367..c83d31b23c9aa 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.h
++++ b/drivers/gpu/drm/ttm/tests/ttm_kunit_helpers.h
+@@ -28,7 +28,8 @@ int ttm_device_kunit_init(struct ttm_test_devices *priv,
+ 			  bool use_dma32);
+ struct ttm_buffer_object *ttm_bo_kunit_init(struct kunit *test,
+ 					    struct ttm_test_devices *devs,
+-					    size_t size);
++					    size_t size,
++					    struct dma_resv *obj);
+ struct ttm_place *ttm_place_kunit_init(struct kunit *test,
+ 				       uint32_t mem_type, uint32_t flags);
  
- 	ptl = pmd_trans_huge_lock(pmdp, vma);
- 	if (ptl) {
-@@ -1513,14 +1510,13 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
- 			if (pmd_swp_uffd_wp(pmd))
- 				flags |= PM_UFFD_WP;
- 			VM_BUG_ON(!is_pmd_migration_entry(pmd));
--			migration = is_migration_entry(entry);
- 			page = pfn_swap_entry_to_page(entry);
- 		}
- #endif
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_pool_test.c b/drivers/gpu/drm/ttm/tests/ttm_pool_test.c
+index 0a3fede84da92..4643f91c6bd59 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_pool_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_pool_test.c
+@@ -57,7 +57,7 @@ static struct ttm_tt *ttm_tt_kunit_init(struct kunit *test,
+ 	struct ttm_tt *tt;
+ 	int err;
  
- 		if (page && !PageAnon(page))
- 			flags |= PM_FILE;
--		if (page && !migration && page_mapcount(page) == 1)
-+		if (page && (flags & PM_PRESENT) && page_mapcount(page) == 1)
- 			flags |= PM_MMAP_EXCLUSIVE;
+-	bo = ttm_bo_kunit_init(test, priv->devs, size);
++	bo = ttm_bo_kunit_init(test, priv->devs, size, NULL);
+ 	KUNIT_ASSERT_NOT_NULL(test, bo);
+ 	priv->mock_bo = bo;
  
- 		for (; addr != end; addr += PAGE_SIZE) {
+@@ -209,7 +209,7 @@ static void ttm_pool_alloc_basic_dma_addr(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, devs, size);
++	bo = ttm_bo_kunit_init(test, devs, size, NULL);
+ 	KUNIT_ASSERT_NOT_NULL(test, bo);
+ 
+ 	err = ttm_sg_tt_init(tt, bo, 0, caching);
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_resource_test.c b/drivers/gpu/drm/ttm/tests/ttm_resource_test.c
+index 029e1f094bb08..67584058dadbc 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_resource_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_resource_test.c
+@@ -54,7 +54,7 @@ static void ttm_init_test_mocks(struct kunit *test,
+ 	/* Make sure we have what we need for a good BO mock */
+ 	KUNIT_ASSERT_NOT_NULL(test, priv->devs->ttm_dev);
+ 
+-	priv->bo = ttm_bo_kunit_init(test, priv->devs, size);
++	priv->bo = ttm_bo_kunit_init(test, priv->devs, size, NULL);
+ 	priv->place = ttm_place_kunit_init(test, mem_type, flags);
+ }
+ 
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_tt_test.c b/drivers/gpu/drm/ttm/tests/ttm_tt_test.c
+index fd4502c18de67..67bf51723c92f 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_tt_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_tt_test.c
+@@ -63,7 +63,7 @@ static void ttm_tt_init_basic(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, params->size);
++	bo = ttm_bo_kunit_init(test, test->priv, params->size, NULL);
+ 
+ 	err = ttm_tt_init(tt, bo, page_flags, caching, extra_pages);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -89,7 +89,7 @@ static void ttm_tt_init_misaligned(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, size);
++	bo = ttm_bo_kunit_init(test, test->priv, size, NULL);
+ 
+ 	/* Make the object size misaligned */
+ 	bo->base.size += 1;
+@@ -110,7 +110,7 @@ static void ttm_tt_fini_basic(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_tt_init(tt, bo, 0, caching, 0);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -130,7 +130,7 @@ static void ttm_tt_fini_sg(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_sg_tt_init(tt, bo, 0, caching);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -151,7 +151,7 @@ static void ttm_tt_fini_shmem(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_tt_init(tt, bo, 0, caching, 0);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -168,7 +168,7 @@ static void ttm_tt_create_basic(struct kunit *test)
+ 	struct ttm_buffer_object *bo;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 	bo->type = ttm_bo_type_device;
+ 
+ 	dma_resv_lock(bo->base.resv, NULL);
+@@ -187,7 +187,7 @@ static void ttm_tt_create_invalid_bo_type(struct kunit *test)
+ 	struct ttm_buffer_object *bo;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 	bo->type = ttm_bo_type_sg + 1;
+ 
+ 	dma_resv_lock(bo->base.resv, NULL);
+@@ -208,7 +208,7 @@ static void ttm_tt_create_ttm_exists(struct kunit *test)
+ 	tt = kunit_kzalloc(test, sizeof(*tt), GFP_KERNEL);
+ 	KUNIT_ASSERT_NOT_NULL(test, tt);
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	err = ttm_tt_init(tt, bo, 0, caching, 0);
+ 	KUNIT_ASSERT_EQ(test, err, 0);
+@@ -239,7 +239,7 @@ static void ttm_tt_create_failed(struct kunit *test)
+ 	struct ttm_buffer_object *bo;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	/* Update ttm_device_funcs so we don't alloc ttm_tt */
+ 	devs->ttm_dev->funcs = &ttm_dev_empty_funcs;
+@@ -257,7 +257,7 @@ static void ttm_tt_destroy_basic(struct kunit *test)
+ 	struct ttm_buffer_object *bo;
+ 	int err;
+ 
+-	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
++	bo = ttm_bo_kunit_init(test, test->priv, BO_SIZE, NULL);
+ 
+ 	dma_resv_lock(bo->base.resv, NULL);
+ 	err = ttm_tt_create(bo, false);
 -- 
 2.43.0
 
