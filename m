@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722E81A616B;
-	Tue, 30 Jul 2024 16:22:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE38E1A6161;
+	Tue, 30 Jul 2024 16:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356547; cv=none; b=imkPcgVHIx0iMNJ9xrjBspn/feVvPM4JAqiaJqpDmwLhc9s5Wev8XVbEKjd/QRZNXlXK2jCyaMhL7NTAqcseXhh/Rk27oSib1U1CpA7U1s3M+TZxqPl8UJGv9IK8OD2IcfWg4jbY+jJaMprnqqLptfBFfKspWlQk7gE4Djguz5I=
+	t=1722356551; cv=none; b=tRKqicCDS+ot5Qv7RUHkSzZtClLpd3+kuTThSEKQVzggOufxH97aDs/QdRaPQ+BdDlwnSWYzbSBO5NYkaYh2f9RzI//WD44nT9GkaAaBHW4UgGTsC12hxBitzQCoTxI5LVhjdaYOF/hhxi5KHOvCf2BoqMBDzVnObbNC4J1eHV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356547; c=relaxed/simple;
-	bh=CPnnry+PswEsrwadX4iRz20QvZKXLtQFw3srJymms8M=;
+	s=arc-20240116; t=1722356551; c=relaxed/simple;
+	bh=6aXKSVCmi/odxqDI5rWCYMvVop61gQ2EVo8w/7+g3kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jIXY+AjHmfC6Vy13j4dtBxtjX5RjTjG/mdcSHjSfTdHMrHk1heEebcy7PS0kiKDXc6+yhzytkHMPVa5Jia96yUZMLkLxd56fnGAQ+0hB1e55eTinj7T7Xy4TxtAhGaF2orPPZl3zHtwJi3XzLKrYb6FyBiS7JG+wrsA7Oj8F1go=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JX+z1RKW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lQRIAbnV/6x0X6HLcFmrAHHoqgk2ybGBaSvSLfIgb3BM5c8t6xee/P9IUFfqKZxVfSDHlY1apbHLcCL8KjCBM/fr8d86H4lFlJ0tuOvAzo9I+iICxtdUQvP+jo8KWugGh1hlg6HHWYmSm/PnvkgH2giEORqH2Dx+OESddpma34A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mb/Nlh1p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JX+z1RKW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0916C32782;
-	Tue, 30 Jul 2024 16:22:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mb/Nlh1p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C27C32782;
+	Tue, 30 Jul 2024 16:22:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356547;
-	bh=CPnnry+PswEsrwadX4iRz20QvZKXLtQFw3srJymms8M=;
+	s=korg; t=1722356550;
+	bh=6aXKSVCmi/odxqDI5rWCYMvVop61gQ2EVo8w/7+g3kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JX+z1RKWQ3sYKHv9C0KMaxLCHIaM4bPuUg7QCITVeVDw99Kac50VHZor2wyyzF09J
-	 /GjnDh+OaMAG5dl+rXGiOAYzqi6Xndb1SsGFLqzKA506WHlqgs947TYA/0WGbUDlbi
-	 uGDkwBKD5tfin1zxyllqYTG8gstm4puQDSW0DfII=
+	b=Mb/Nlh1pA9aztZvvFFRTz9XNlKHqSfDOjM38e6WkZtGlUe0Pab7LWSrbgTjWLmJQk
+	 S0koFkfVSSsDoesL9TSLlNsZKqfZ3sydB7dI9N/6/nUO9MqQptskd0A7NDff0ja9rt
+	 Bz4BGzd3Y96Zkf1xFtA/PfJDlN92RRqvN0jkLpSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/440] RDMA/device: Return error earlier if port in not valid
-Date: Tue, 30 Jul 2024 17:47:19 +0200
-Message-ID: <20240730151623.915675711@linuxfoundation.org>
+Subject: [PATCH 6.10 161/809] wifi: mac80211: cancel multi-link reconf work on disconnect
+Date: Tue, 30 Jul 2024 17:40:37 +0200
+Message-ID: <20240730151730.961909069@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,48 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 917918f57a7b139c043e78c502876f2c286f4f0a ]
+[ Upstream commit 53b739fd46462dc40fd18390d76f2ee05c18ea3a ]
 
-There is no need to allocate port data if port provided is not valid.
+This work shouldn't run after we're disconnecting. Cancel it earlier
+(and then don't cancel it in stop later.)
 
-Fixes: c2261dd76b54 ("RDMA/device: Add ib_device_set_netdev() as an alternative to get_netdev")
-Link: https://lore.kernel.org/r/022047a8b16988fc88d4426da50bf60a4833311b.1719235449.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: 8eb8dd2ffbbb ("wifi: mac80211: Support link removal using Reconfiguration ML element")
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Link: https://msgid.link/20240506211034.ac754794279f.Ib9fbb1dab50c6b67f6de9be09a6c452ce89bbd50@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/device.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/mlme.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
-index 453188db39d83..291ded20934c8 100644
---- a/drivers/infiniband/core/device.c
-+++ b/drivers/infiniband/core/device.c
-@@ -2146,6 +2146,9 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
- 	unsigned long flags;
- 	int ret;
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index edac1578d425c..72e38e42f6da0 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -3289,6 +3289,11 @@ static void ieee80211_set_disassoc(struct ieee80211_sub_if_data *sdata,
  
-+	if (!rdma_is_port_valid(ib_dev, port))
-+		return -EINVAL;
+ 	wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
+ 				  &ifmgd->neg_ttlm_timeout_work);
 +
- 	/*
- 	 * Drivers wish to call this before ib_register_driver, so we have to
- 	 * setup the port data early.
-@@ -2154,9 +2157,6 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
- 	if (ret)
- 		return ret;
++	sdata->u.mgd.removed_links = 0;
++	wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
++				  &sdata->u.mgd.ml_reconf_work);
++
+ 	ieee80211_vif_set_links(sdata, 0, 0);
  
--	if (!rdma_is_port_valid(ib_dev, port))
--		return -EINVAL;
--
- 	pdata = &ib_dev->port_data[port];
- 	spin_lock_irqsave(&pdata->netdev_lock, flags);
- 	old_ndev = rcu_dereference_protected(
+ 	ifmgd->mcast_seq_last = IEEE80211_SN_MODULO;
+@@ -8708,8 +8713,6 @@ void ieee80211_mgd_stop(struct ieee80211_sub_if_data *sdata)
+ 			  &ifmgd->teardown_ttlm_work);
+ 	wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
+ 				  &ifmgd->tdls_peer_del_work);
+-	wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
+-				  &ifmgd->ml_reconf_work);
+ 	wiphy_delayed_work_cancel(sdata->local->hw.wiphy, &ifmgd->ttlm_work);
+ 	wiphy_delayed_work_cancel(sdata->local->hw.wiphy,
+ 				  &ifmgd->neg_ttlm_timeout_work);
 -- 
 2.43.0
 
