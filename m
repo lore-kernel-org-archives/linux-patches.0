@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5D51A6195;
-	Tue, 30 Jul 2024 16:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE091A6195;
+	Tue, 30 Jul 2024 16:54:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358474; cv=none; b=Dw18X1h5/RGVavAYUI0VvTATY70eImAx9HCZnyoA58xp2Z4dRWQ7aIfQifgbf44atfY+R16fC3Cm1N4pkPDXP+4N54iNo3tU19yAvxV7XtzGpkQYK4XnsUuiVNlixfMBPeI/qHLUXaeu2VOfLqHD2xsGJJsFlFlCmd3JZOkOg3I=
+	t=1722358478; cv=none; b=Rp0gD0RsZ+Xdh8xykU/cFOcWK0+mHkgHMyispdZNFABwzgbGdXXvae1nx3ZicugivJvancItqqWU1ajZ5Q+ngS54uogcOoPrByOC6xPNACfJLmZKrf1ixyVVCL+atDnupJ2tRMdfSy+MulpbwtTY7mch7kIupeNP9POYku/H6yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358474; c=relaxed/simple;
-	bh=fuVksvIHhXtE3jbER/w6GXrHJaWrxlBvEUBQ39NBm9I=;
+	s=arc-20240116; t=1722358478; c=relaxed/simple;
+	bh=6arCJgFr3DhUtOVG2e/si+fouwI5P9oV40+DkifwVLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guC+T+gVP8Ft9lfhNvKlplC6TaAJZLdHUzW/CL4CvDiEVTpehjtLkwzcGLoGZ+Pgkkg2ZqeCjGL9uOiqfoTzscLboCqEPPCtUc5zo+aYprdXLW21vBMT4EqKMyj8ZYeSzj736gdVbkAKEphlSzlzoIw+VhkVOcMCBcokyptLrAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgB1crV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbsus+3KXgvyq/5aqm7xpgPb+XK5Rz/smO/ecskUW1j919N4jWtdQzc0lsZR7FLZw+w2sF6EUHaYAvBaTSa6FNcqjRyIUF/mCvdIa3CiQNjYAohgj/L7v2U8t+yCQv0F3UucwWbDykOCMAOC4N1bPDEXYzKW8len/UoKg3+ftFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MVKz3rUv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgB1crV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9D7C32782;
-	Tue, 30 Jul 2024 16:54:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MVKz3rUv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 549ADC32782;
+	Tue, 30 Jul 2024 16:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358474;
-	bh=fuVksvIHhXtE3jbER/w6GXrHJaWrxlBvEUBQ39NBm9I=;
+	s=korg; t=1722358477;
+	bh=6arCJgFr3DhUtOVG2e/si+fouwI5P9oV40+DkifwVLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wgB1crV3pxKZg9dCsZ7x80coOYi8E10bRjrobPEj3i/4Vyd3tTM76ZGN1HGODuOOP
-	 xu1hfday56RTkTORoKiO/9+QaLxbgw3g8Q49YJXw8WM3EYYcVwk+2OLG8ajgSHtPR5
-	 j81Hoqtl9t+QItkikcgMGEOcUOhV/K9lYqxbFcys=
+	b=MVKz3rUvUYo6wv6QFUg4QgHsQ9l+c5p4OTG7E4trBChdJORVtvBWWqsMNtVb+53rh
+	 +w5ib36V7xaWk2mOoGNVzlE7vfegieVy3z6VTDH/g6tS3CCq7y7l9B34afA5F9JqmK
+	 DtBv7Jlz150MZqD+lXeMMM7GY8a42WEWsTJxVRjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+412a392a2cd4a65e71db@syzkaller.appspotmail.com,
-	Sungjong Seo <sj1557.seo@samsung.com>,
-	Namjae Jeon <linkinjeon@kernel.org>
-Subject: [PATCH 6.6 365/568] exfat: fix potential deadlock on __exfat_get_dentry_set
-Date: Tue, 30 Jul 2024 17:47:52 +0200
-Message-ID: <20240730151654.127289235@linuxfoundation.org>
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 394/440] kdb: Use the passed prompt in kdb_position_cursor()
+Date: Tue, 30 Jul 2024 17:50:27 +0200
+Message-ID: <20240730151631.193422870@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sungjong Seo <sj1557.seo@samsung.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-commit 89fc548767a2155231128cb98726d6d2ea1256c9 upstream.
+[ Upstream commit e2e821095949cde46256034975a90f88626a2a73 ]
 
-When accessing a file with more entries than ES_MAX_ENTRY_NUM, the bh-array
-is allocated in __exfat_get_entry_set. The problem is that the bh-array is
-allocated with GFP_KERNEL. It does not make sense. In the following cases,
-a deadlock for sbi->s_lock between the two processes may occur.
+The function kdb_position_cursor() takes in a "prompt" parameter but
+never uses it. This doesn't _really_ matter since all current callers
+of the function pass the same value and it's a global variable, but
+it's a bit ugly. Let's clean it up.
 
-       CPU0                CPU1
-       ----                ----
-  kswapd
-   balance_pgdat
-    lock(fs_reclaim)
-                      exfat_iterate
-                       lock(&sbi->s_lock)
-                       exfat_readdir
-                        exfat_get_uniname_from_ext_entry
-                         exfat_get_dentry_set
-                          __exfat_get_dentry_set
-                           kmalloc_array
-                            ...
-                            lock(fs_reclaim)
-    ...
-    evict
-     exfat_evict_inode
-      lock(&sbi->s_lock)
+Found by code inspection. This patch is expected to functionally be a
+no-op.
 
-To fix this, let's allocate bh-array with GFP_NOFS.
-
-Fixes: a3ff29a95fde ("exfat: support dynamic allocate bh for exfat_entry_set_cache")
-Cc: stable@vger.kernel.org # v6.2+
-Reported-by: syzbot+412a392a2cd4a65e71db@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/lkml/000000000000fef47e0618c0327f@google.com
-Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 09b35989421d ("kdb: Use format-strings rather than '\0' injection in kdb_read()")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240528071144.1.I0feb49839c6b6f4f2c4bf34764f5e95de3f55a66@changeid
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/exfat/dir.c |    2 +-
+ kernel/debug/kdb/kdb_io.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/exfat/dir.c
-+++ b/fs/exfat/dir.c
-@@ -890,7 +890,7 @@ int exfat_get_dentry_set(struct exfat_en
- 
- 	num_bh = EXFAT_B_TO_BLK_ROUND_UP(off + num_entries * DENTRY_SIZE, sb);
- 	if (num_bh > ARRAY_SIZE(es->__bh)) {
--		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_KERNEL);
-+		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_NOFS);
- 		if (!es->bh) {
- 			brelse(bh);
- 			return -ENOMEM;
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index fbbe198b056d4..d545abe080876 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -193,7 +193,7 @@ char kdb_getchar(void)
+  */
+ static void kdb_position_cursor(char *prompt, char *buffer, char *cp)
+ {
+-	kdb_printf("\r%s", kdb_prompt_str);
++	kdb_printf("\r%s", prompt);
+ 	if (cp > buffer)
+ 		kdb_printf("%.*s", (int)(cp - buffer), buffer);
+ }
+-- 
+2.43.0
+
 
 
