@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03B31A76AE;
-	Tue, 30 Jul 2024 17:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A48B1A76B3;
+	Tue, 30 Jul 2024 17:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360093; cv=none; b=IKW9+zGDTfzt6Hd+BSIpEJ8EkTg8TAoDLTM84XFTeS9TIor8G8litUXl52tk/zR91Ybd0H4JrrOGsr8USvDkqMXbp5a/Alu7vmkwNBRE4a4dk6kODcZVZkH2p8N+F49cIqTj5MGPze5Mu0tVEgVlNifQhinQbTYs1ECqbt2f+UE=
+	t=1722360096; cv=none; b=kjMNtanK7U79V07ARaaAvLPKfN2aRTysDEqdvmURdb4MEadO9vs1R0H+oTlbRZ1TJP4yD12hbpQKfDMXBfNZ98fv+zVaMt5KsQSXVVjstZVs0sZHimnXKdZTj1Vd+bNv2kf80OAaa3ARyluhmndg/hAXJJKnBKzxr51GdI4kc5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360093; c=relaxed/simple;
-	bh=jALQrV5/zi6mjKxPEvd5xjLTnI0FEHw/BUneTx3nrcc=;
+	s=arc-20240116; t=1722360096; c=relaxed/simple;
+	bh=UDA6KJWPsk6BZmAnXlX3fArIE7FnsVa8hRAWjRkqDCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ohflvv7MLTTQWAAYxDBj7dzijOmN6/RHlaR+IfcrUFtI/0cJaPMuIbgTWxzUzwFjopfKntZRemxHjt7svrG7AhlQwhLzLF/JTc+mS/vOUxV3MMageuaO7VfzCjz8dz9vrh4MwK1QzZ8OHV3ZncdiwPl87qqvx1j/rxz3vxPgTbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjaoYe9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VmmkQG5VJYSxNFgu3QMFsIdC2eApMSTtY639w2EiPNqKonsYwzUud92VXsDUxbIKBYoEYNZnaaEkY9K44UWdjNDeHSAhoNPzNZNs1PZDMzkuilD69lDYhmSRy5REbwfBf6JkDP9q86bx3BqoHw74cm8fKpBuTkBvWaWSs+X4f4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTFC0k3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjaoYe9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664BFC32782;
-	Tue, 30 Jul 2024 17:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTFC0k3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C46BBC32782;
+	Tue, 30 Jul 2024 17:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360092;
-	bh=jALQrV5/zi6mjKxPEvd5xjLTnI0FEHw/BUneTx3nrcc=;
+	s=korg; t=1722360096;
+	bh=UDA6KJWPsk6BZmAnXlX3fArIE7FnsVa8hRAWjRkqDCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WjaoYe9Tj54yyeE9a+4Y30+czdZCEXWXsDG5UDeThl8xVFk/EIDhPv0PhRaahoTRi
-	 OP/qAt8nAtgFlDjR49yWiOTzyyKus27v1BPzn0BPHKskwGzCSa1fi41WFZ5/jnKcnj
-	 fP60oVu8hLCzvy08uHiXpKy18UiAKSJL2ZFxhL4Y=
+	b=WTFC0k3wWtvXsHHxeLTeNZ7CPE8ZfytuPNYYXqHndXcA+wnNYAUH/ewgFc3wdNtZx
+	 ABskA7kxw6DGlKoh9N16eG8RZpfofzAzU1Vxf8f2Vdm8DXpBeBt8zyKxTC5iuj6x56
+	 nQCE6sJ085ljTog5AM2k/mXaA1ERtegFL5d60p9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 568/568] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
-Date: Tue, 30 Jul 2024 17:51:15 +0200
-Message-ID: <20240730151702.357758677@linuxfoundation.org>
+	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.10 564/809] null_blk: Fix description of the fua parameter
+Date: Tue, 30 Jul 2024 17:47:20 +0200
+Message-ID: <20240730151747.043062600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,68 +48,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
+commit 1c0b3fca381bf879e2168b362692f83808677f95 upstream.
 
-Christian noticed that it is possible for a privileged user to mount
-most filesystems with a non-initial user namespace in sb->s_user_ns.
-When fsopen() is called in a non-init namespace the caller's namespace
-is recorded in fs_context->user_ns. If the returned file descriptor is
-then passed to a process priviliged in init_user_ns, that process can
-call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
-with sb->s_user_ns set to the namespace of the process which called
-fsopen().
+The description of the fua module parameter is defined using
+MODULE_PARM_DESC() with the first argument passed being "zoned". That is
+the wrong name, obviously. Fix that by using the correct "fua" parameter
+name so that "modinfo null_blk" displays correct information.
 
-This is problematic. We cannot assume that any filesystem which does not
-set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
-mind, increasing the risk for bugs and security issues.
-
-Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
-not set for the filesystem and a non-initial user namespace will be
-used. sget() does not need to be updated as it always uses the user
-namespace of the current context, or the initial user namespace if
-SB_SUBMOUNT is set.
-
-Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
-Reported-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
-Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: f4f84586c8b9 ("null_blk: Introduce fua attribute")
+Cc: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Link: https://lore.kernel.org/r/20240702073234.206458-1-dlemoal@kernel.org
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/super.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/block/null_blk/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/super.c b/fs/super.c
-index 2d762ce67f6e6..576abb1ff0403 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -781,6 +781,17 @@ struct super_block *sget_fc(struct fs_context *fc,
- 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
- 	int err;
+diff --git a/drivers/block/null_blk/main.c b/drivers/block/null_blk/main.c
+index 83a4ebe4763a..5de9ca4eceb4 100644
+--- a/drivers/block/null_blk/main.c
++++ b/drivers/block/null_blk/main.c
+@@ -227,7 +227,7 @@ MODULE_PARM_DESC(mbps, "Cache size in MiB for memory-backed device. Default: 0 (
  
-+	/*
-+	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
-+	 * not set, as the filesystem is likely unprepared to handle it.
-+	 * This can happen when fsconfig() is called from init_user_ns with
-+	 * an fs_fd opened in another user namespace.
-+	 */
-+	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
-+		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
-+		return ERR_PTR(-EPERM);
-+	}
-+
- retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
+ static bool g_fua = true;
+ module_param_named(fua, g_fua, bool, 0444);
+-MODULE_PARM_DESC(zoned, "Enable/disable FUA support when cache_size is used. Default: true");
++MODULE_PARM_DESC(fua, "Enable/disable FUA support when cache_size is used. Default: true");
+ 
+ static unsigned int g_mbps;
+ module_param_named(mbps, g_mbps, uint, 0444);
 -- 
-2.43.0
+2.45.2
 
 
 
