@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF6718E028;
-	Tue, 30 Jul 2024 16:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2901E18B477;
+	Tue, 30 Jul 2024 16:14:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356095; cv=none; b=cW9eOwQdsNJjUUz5pJRg0xpmgISfoSgMT1EttLtpSYOhtIsh8f98SQdGxcd89MkROb1zvTFLmdW/LJnUi49XW5MDzC81QxPGc1QtJqAaxLQ9nIRrfECpg9CcxyQGlLYE4Wl9CqIHck8VQGL3VWG+t5e5zt7GqKU0w2O4QJhUhrI=
+	t=1722356098; cv=none; b=hgdz26ucl1Gd4SGmtzn0QX91uSM1jRO2SeAq8aOSoS1v7RRIGSsuyNqSkac/uyMcx508z4DZjRktBbwRAuPclp4wnvDLGTjvkaPz/LAuYMVVk3ScV/dUGEhA0mZfKauk06cVT2ToXifB6lDVRWzwx7R4MZ8BPvnQDbsmYTSBC5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356095; c=relaxed/simple;
-	bh=YmvbVkV+PUVlbp5CfGGrgSAzwDvEpCwqRgp5gSKzofM=;
+	s=arc-20240116; t=1722356098; c=relaxed/simple;
+	bh=hHzEawoxQT75p3DRdLVnMp32Y7fyLl8Oc0EZacSKzwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJbl9Tt/sk1OEPA0tGVslw5l1aTJ4w/x/qFYeFdkpaj+8CSBIQWi52jxq6zGA6VivQIS5bNdXR+NNbxCU526th+J3DODo/ePJ5jFwJHvyTX7azGTi8QfUAR+4Xa7fixwhcEoMu8FBceXVSZ0ep7A7yHhyYImcIZM9jeGn7g4JJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwVuEf53; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fkb7D/xbvPvileHWCp0V23zfyO+kMYizooaxnh6E2W9qDIh7VMar3fHxk5xYbBD0LSQRL5mFxkYjeHP/8XzINJSJX0Dbdi8f6+O8f5m6MGmGlteuYca9AcIu8u3StMkwPeTrrAuA8EFj5eb1mjR+b68nGk+CDmhcdcfe5241IJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gau13MZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwVuEf53"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F05C32782;
-	Tue, 30 Jul 2024 16:14:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gau13MZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B9AAC32782;
+	Tue, 30 Jul 2024 16:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356094;
-	bh=YmvbVkV+PUVlbp5CfGGrgSAzwDvEpCwqRgp5gSKzofM=;
+	s=korg; t=1722356097;
+	bh=hHzEawoxQT75p3DRdLVnMp32Y7fyLl8Oc0EZacSKzwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwVuEf53ZUkKH9eSjUPtRY+UGkcKRfeqUc3dqJFVF4+Z+gOa/H0yl4CViYv0hBFVB
-	 339VeYftqqeUZ6m0kMQOtFkYnjmPUA6Wmd+ETROs0tJr/6VI7zNa/4twq0KJuBB1EZ
-	 vmZxcv3EUbgbOBa3TnhDZH8VJlWYS+2Fw1dLQOFc=
+	b=Gau13MZcOUfP0UHzYPLoFRV/0DVOvmfS2HYVYEhXEZHIO4LbTVUpZbJ05fivDhYNY
+	 PYfUacJbUBSCimX5UMBCZoNJ2vCL2TKmlNtt4l5TfMqwT9PPEXB7uxyeUa4jPr4JbN
+	 JOnNDppH04bAvFfW5VtE5uWjqgtqKG1WRU+/REiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 098/809] ARM: dts: imx6qdl-kontron-samx6i: fix PCIe reset polarity
-Date: Tue, 30 Jul 2024 17:39:34 +0200
-Message-ID: <20240730151728.503556736@linuxfoundation.org>
+Subject: [PATCH 6.10 116/809] arm64: dts: renesas: r8a779h0: Drop "opp-shared" from opp-table-0
+Date: Tue, 30 Jul 2024 17:39:52 +0200
+Message-ID: <20240730151729.203163717@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,33 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit df35c6e9027cf9affe699e632a48082ab1bbba4c ]
+[ Upstream commit f3acb237a17962349b61eed813f62dddf7aead29 ]
 
-The PCIe reset line is active low. Fix it.
+The four Cortex-A76 CPU cores on R-Car V4M share their Operating
+Performance Points (OPP) table, but they have independent clocks.
+All cores in the cluster can switch DVFS states independently, hence
+the cluster's OPP table should not have an "opp-shared" property.
 
-Fixes: 2a51f9dae13d ("ARM: dts: imx6qdl-kontron-samx6i: Add iMX6-based Kontron SMARC-sAMX6i module")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 6bd8b0bc444eae56 ("arm64: dts: renesas: r8a779h0: Add CA76 operating points")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/4e0227ff4388485cdb1ca2855ee6df92754e756e.1718890585.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a779h0.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-index 78cbc2df279e6..668d33d1ff0c1 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-@@ -732,7 +732,7 @@ &pcie {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_pcie>;
- 	wake-up-gpio = <&gpio6 18 GPIO_ACTIVE_HIGH>;
--	reset-gpio = <&gpio3 13 GPIO_ACTIVE_HIGH>;
-+	reset-gpio = <&gpio3 13 GPIO_ACTIVE_LOW>;
- };
+diff --git a/arch/arm64/boot/dts/renesas/r8a779h0.dtsi b/arch/arm64/boot/dts/renesas/r8a779h0.dtsi
+index 6d791024cabe1..792afe1a45747 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779h0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779h0.dtsi
+@@ -16,7 +16,6 @@ / {
  
- /* LCD_BKLT_PWM */
+ 	cluster0_opp: opp-table-0 {
+ 		compatible = "operating-points-v2";
+-		opp-shared;
+ 
+ 		opp-500000000 {
+ 			opp-hz = /bits/ 64 <500000000>;
 -- 
 2.43.0
 
