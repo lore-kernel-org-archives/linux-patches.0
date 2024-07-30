@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 520611A6161;
-	Tue, 30 Jul 2024 16:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9531A6166;
+	Tue, 30 Jul 2024 16:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356846; cv=none; b=Bhrl0yz3fkNiAqShMK8OTQAyrthFsdMSW9pnY6U7p9RvMRpW08dbqrDuwVGnngLXpBCkT9k33up8/oe0nzrdDbbHTe8lCHcRyGAO1d61/RTa/ba0i8lQ1bNl26i8AbvvRSm27Pawu3ZYtW9NL2jyJ4xzOzQfXlexvJwodcG7jxg=
+	t=1722356849; cv=none; b=q7JDtIQ83oUnE4UazlPiapcYCRTWrH+druyDC9aFPDjEAPDdtmOzG/PA02R0+AEbC5Nj7uMcN9iauPRK4/Kgwg3R8UULqnRjig5gvzaVja4/o44JdLOIeybGrY+XBb0bBVPZP8z5WkxQVfkRQXqr0gWE2TBqtiIpfdkmc1otAnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356846; c=relaxed/simple;
-	bh=U9oTC/x7NECOK+f7R7+mEaT4Kx0SBTKfPpjyRzChTXo=;
+	s=arc-20240116; t=1722356849; c=relaxed/simple;
+	bh=jo8IuULDXzkqbYUKKP3RosyNbfa0IlNKEb32rTr9MVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwAbhWZuyr1QiJ0zsh6Z2feZ4Gun9uxjl3LepZfQpJl9LK6YAB3JPoUykbnQtyfRHBrWuD/k7d+Eu+/3FH15bFd5S0Y0sTMDEdGGTS/Y/Jj5kccp0W1kXZUFLpX15wdO4MF2ZBz46tDjfY1HgUBnbMo19YT4wdAAlZgiDylF4NY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/fh0cIP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I+e/coEB7p5poCptW4gvvCptfQ2dRKw3jQ6LxsWe0G2jbCaTTPJbk9RlwZ2CGoRhJNmdkSfn4iREsUBeJ44NU9QiPcL1K9pdPaDn+po9473kJ0n1LcxoF6N/6F3BGmHNlban8YWebXKEd6XIgOL0Lj2SlN7s4z5lz8yebKio1zY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+WU8xkt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/fh0cIP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93FB6C32782;
-	Tue, 30 Jul 2024 16:27:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+WU8xkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CDBC32782;
+	Tue, 30 Jul 2024 16:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356846;
-	bh=U9oTC/x7NECOK+f7R7+mEaT4Kx0SBTKfPpjyRzChTXo=;
+	s=korg; t=1722356849;
+	bh=jo8IuULDXzkqbYUKKP3RosyNbfa0IlNKEb32rTr9MVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/fh0cIPYjK+TON2jhk2wUfUydBEXaNOzbTF4yfdK+OEh4H1j93gE1vyojx33loiP
-	 PrMHUTW33bS4TUwVusL53CyvK4EDKC2JpmxqxAImQIXVALfFxEqHK3hFJySHsx1R7+
-	 sft/psfyaxuZ995zH9OEnbBfFcGnTxE0mnezRGug=
+	b=t+WU8xktzjfBUmOtMssFyhUirlk8mXFNQZMF0uBcWAmIuJ9CFTt7vx3u5ONxMZPKy
+	 2ypIkPteUgC/fzQ95icwMD/rfJx86IZc0jOCzPBjpBkD8URpwhNj8Tvsg0r0BJ3rG4
+	 ozLuzWYqioMLbNbzcqhC6xYJ4zVGthEStLi8VnZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	David Ahern <dsahern@kernel.org>,
-	Guillaume Nault <gnault@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 234/440] ipv4: Fix incorrect TOS in route get reply
-Date: Tue, 30 Jul 2024 17:47:47 +0200
-Message-ID: <20240730151624.997085306@linuxfoundation.org>
+Subject: [PATCH 6.6 190/568] media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()
+Date: Tue, 30 Jul 2024 17:44:57 +0200
+Message-ID: <20240730151647.304071003@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,124 +48,145 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 338bb57e4c2a1c2c6fc92f9c0bd35be7587adca7 ]
+[ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
 
-The TOS value that is returned to user space in the route get reply is
-the one with which the lookup was performed ('fl4->flowi4_tos'). This is
-fine when the matched route is configured with a TOS as it would not
-match if its TOS value did not match the one with which the lookup was
-performed.
+Infinite log printing occurs during fuzz test:
 
-However, matching on TOS is only performed when the route's TOS is not
-zero. It is therefore possible to have the kernel incorrectly return a
-non-zero TOS:
+  rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
+  ...
+  dvb-usb: schedule remote query interval to 100 msecs.
+  dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
+  dvb-usb: bulk message failed: -22 (1/0)
+  dvb-usb: bulk message failed: -22 (1/0)
+  dvb-usb: bulk message failed: -22 (1/0)
+  ...
+  dvb-usb: bulk message failed: -22 (1/0)
 
- # ip link add name dummy1 up type dummy
- # ip address add 192.0.2.1/24 dev dummy1
- # ip route get 192.0.2.2 tos 0xfc
- 192.0.2.2 tos 0x1c dev dummy1 src 192.0.2.1 uid 0
-     cache
+Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
+that is in rc_core_dvb_usb_remote_init() create a work that will call
+dvb_usb_read_remote_control(), and this work will reschedule itself at
+'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
+see following code snippet:
 
-Fix by adding a DSCP field to the FIB result structure (inside an
-existing 4 bytes hole), populating it in the route lookup and using it
-when filling the route get reply.
+  rc_core_dvb_usb_remote_init() {
+    ...
+    INIT_DELAYED_WORK(&d->rc_query_work, dvb_usb_read_remote_control);
+    schedule_delayed_work(&d->rc_query_work,
+                          msecs_to_jiffies(rc_interval));
+    ...
+  }
 
-Output after the patch:
+  dvb_usb_read_remote_control() {
+    ...
+    err = d->props.rc.core.rc_query(d);
+    if (err)
+      err(...)  // Did not return even if query failed
+    schedule_delayed_work(&d->rc_query_work,
+                          msecs_to_jiffies(rc_interval));
+  }
 
- # ip link add name dummy1 up type dummy
- # ip address add 192.0.2.1/24 dev dummy1
- # ip route get 192.0.2.2 tos 0xfc
- 192.0.2.2 dev dummy1 src 192.0.2.1 uid 0
-     cache
+When the infinite log printing occurs, the query callback
+'d->props.rc.core.rc_query' is cxusb_rc_query(). And the log is due to
+the failure of finding a valid 'generic_bulk_ctrl_endpoint'
+in usb_bulk_msg(), see following code snippet:
 
-Fixes: 1a00fee4ffb2 ("ipv4: Remove rt_key_{src,dst,tos} from struct rtable.")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+  cxusb_rc_query() {
+    cxusb_ctrl_msg() {
+      dvb_usb_generic_rw() {
+        ret = usb_bulk_msg(d->udev, usb_sndbulkpipe(d->udev,
+                           d->props.generic_bulk_ctrl_endpoint),...);
+        if (ret)
+          err("bulk message failed: %d (%d/%d)",ret,wlen,actlen);
+          ...
+      }
+  ...
+  }
+
+By analyzing the corresponding USB descriptor, it shows that the
+bNumEndpoints is 0 in its interface descriptor, but
+the 'generic_bulk_ctrl_endpoint' is 1, that means user don't configure
+a valid endpoint for 'generic_bulk_ctrl_endpoint', therefore this
+'invalid' USB device should be rejected before it calls into
+dvb_usb_read_remote_control().
+
+To fix it, we need to add endpoint check for 'generic_bulk_ctrl_endpoint'.
+And as Sean suggested, the same check and clear halts should be done for
+'generic_bulk_ctrl_endpoint_response'. So introduce
+dvb_usb_check_bulk_endpoint() to do it for both of them.
+
+Fixes: 4d43e13f723e ("V4L/DVB (4643): Multi-input patch for DVB-USB device")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_fib.h |  1 +
- net/ipv4/fib_trie.c  |  1 +
- net/ipv4/route.c     | 14 +++++++-------
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/media/usb/dvb-usb/dvb-usb-init.c | 35 +++++++++++++++++++++---
+ 1 file changed, 31 insertions(+), 4 deletions(-)
 
-diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
-index 15de07d365405..ca1700c2a5733 100644
---- a/include/net/ip_fib.h
-+++ b/include/net/ip_fib.h
-@@ -173,6 +173,7 @@ struct fib_result {
- 	unsigned char		type;
- 	unsigned char		scope;
- 	u32			tclassid;
-+	dscp_t			dscp;
- 	struct fib_nh_common	*nhc;
- 	struct fib_info		*fi;
- 	struct fib_table	*table;
-diff --git a/net/ipv4/fib_trie.c b/net/ipv4/fib_trie.c
-index 9bdfdab906fe0..77b97c48da5ea 100644
---- a/net/ipv4/fib_trie.c
-+++ b/net/ipv4/fib_trie.c
-@@ -1628,6 +1628,7 @@ int fib_table_lookup(struct fib_table *tb, const struct flowi4 *flp,
- 			res->nhc = nhc;
- 			res->type = fa->fa_type;
- 			res->scope = fi->fib_scope;
-+			res->dscp = fa->fa_dscp;
- 			res->fi = fi;
- 			res->table = tb;
- 			res->fa_head = &n->leaf;
-diff --git a/net/ipv4/route.c b/net/ipv4/route.c
-index fcbacd39febe0..01b98590591db 100644
---- a/net/ipv4/route.c
-+++ b/net/ipv4/route.c
-@@ -2934,9 +2934,9 @@ EXPORT_SYMBOL_GPL(ip_route_output_tunnel);
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+index fbf58012becdf..22d83ac18eb73 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+@@ -23,11 +23,40 @@ static int dvb_usb_force_pid_filter_usage;
+ module_param_named(force_pid_filter_usage, dvb_usb_force_pid_filter_usage, int, 0444);
+ MODULE_PARM_DESC(force_pid_filter_usage, "force all dvb-usb-devices to use a PID filter, if any (default: 0).");
  
- /* called with rcu_read_lock held */
- static int rt_fill_info(struct net *net, __be32 dst, __be32 src,
--			struct rtable *rt, u32 table_id, struct flowi4 *fl4,
--			struct sk_buff *skb, u32 portid, u32 seq,
--			unsigned int flags)
-+			struct rtable *rt, u32 table_id, dscp_t dscp,
-+			struct flowi4 *fl4, struct sk_buff *skb, u32 portid,
-+			u32 seq, unsigned int flags)
++static int dvb_usb_check_bulk_endpoint(struct dvb_usb_device *d, u8 endpoint)
++{
++	if (endpoint) {
++		int ret;
++
++		ret = usb_pipe_type_check(d->udev, usb_sndbulkpipe(d->udev, endpoint));
++		if (ret)
++			return ret;
++		ret = usb_pipe_type_check(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
++		if (ret)
++			return ret;
++	}
++	return 0;
++}
++
++static void dvb_usb_clear_halt(struct dvb_usb_device *d, u8 endpoint)
++{
++	if (endpoint) {
++		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, endpoint));
++		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
++	}
++}
++
+ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
  {
- 	struct rtmsg *r;
- 	struct nlmsghdr *nlh;
-@@ -2952,7 +2952,7 @@ static int rt_fill_info(struct net *net, __be32 dst, __be32 src,
- 	r->rtm_family	 = AF_INET;
- 	r->rtm_dst_len	= 32;
- 	r->rtm_src_len	= 0;
--	r->rtm_tos	= fl4 ? fl4->flowi4_tos : 0;
-+	r->rtm_tos	= inet_dscp_to_dsfield(dscp);
- 	r->rtm_table	= table_id < 256 ? table_id : RT_TABLE_COMPAT;
- 	if (nla_put_u32(skb, RTA_TABLE, table_id))
- 		goto nla_put_failure;
-@@ -3102,7 +3102,7 @@ static int fnhe_dump_bucket(struct net *net, struct sk_buff *skb,
- 				goto next;
+ 	struct dvb_usb_adapter *adap;
+ 	int ret, n, o;
  
- 			err = rt_fill_info(net, fnhe->fnhe_daddr, 0, rt,
--					   table_id, NULL, skb,
-+					   table_id, 0, NULL, skb,
- 					   NETLINK_CB(cb->skb).portid,
- 					   cb->nlh->nlmsg_seq, flags);
- 			if (err)
-@@ -3425,8 +3425,8 @@ static int inet_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
- 		err = fib_dump_info(skb, NETLINK_CB(in_skb).portid,
- 				    nlh->nlmsg_seq, RTM_NEWROUTE, &fri, 0);
- 	} else {
--		err = rt_fill_info(net, dst, src, rt, table_id, &fl4, skb,
--				   NETLINK_CB(in_skb).portid,
-+		err = rt_fill_info(net, dst, src, rt, table_id, res.dscp, &fl4,
-+				   skb, NETLINK_CB(in_skb).portid,
- 				   nlh->nlmsg_seq, 0);
- 	}
- 	if (err < 0)
++	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint);
++	if (ret)
++		return ret;
++	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint_response);
++	if (ret)
++		return ret;
+ 	for (n = 0; n < d->props.num_adapters; n++) {
+ 		adap = &d->adapter[n];
+ 		adap->dev = d;
+@@ -103,10 +132,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
+ 	 * when reloading the driver w/o replugging the device
+ 	 * sometimes a timeout occurs, this helps
+ 	 */
+-	if (d->props.generic_bulk_ctrl_endpoint != 0) {
+-		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
+-		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
+-	}
++	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint);
++	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint_response);
+ 
+ 	return 0;
+ 
 -- 
 2.43.0
 
