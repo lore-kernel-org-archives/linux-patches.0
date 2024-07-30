@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0AD1A6161;
-	Tue, 30 Jul 2024 16:18:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886681A6161;
+	Tue, 30 Jul 2024 16:18:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356329; cv=none; b=W+B3tBCtocu6MAK7k7O80poj1QGg33PQmiDUaaeRr1R1lHzFAarJUBFNQyQIDZ9Bo5A/+7HAwB8KzjWYmGhOEc43Fb9uHRIQmSFjWjbcw/5wUjYsSF4N9FvFcgp4uO62GJ4di0tgtq1wy5BstD1TgtmEGMUOD6CaHf4ysjFiI5Q=
+	t=1722356332; cv=none; b=dUkbWRktOzRR5vrcgEWrwcTJVp5kwXESY/elNTw6Ee+mo7hC48jIl4b+k2Dt8S8foSfL8dZvKgbzLgzz3DNjW+uK9KdDCE4AWVDigr7MRofj6KSRUsmcfI56AM4zY7MnrrImwVWI1BKacgvpowJ9nOfW63RU5NlqKM4Z1gZ3lr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356329; c=relaxed/simple;
-	bh=adxDEgmL1/jD03Gr6Oc6PRf6xoLUZ2QluFSWn8wwldE=;
+	s=arc-20240116; t=1722356332; c=relaxed/simple;
+	bh=70cgeueA2Vs9ZopmZvpafSR2HStbNJcEPI5b16NkqZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TJ4QZLldZfNBW30ez8oizWiG2AGgIsDg2uXpo9aclbwTqJQR85GE+SQtUi7YiJO51GhjlglC1tmw0uPv4kFfH5a0UHktR6Iyf+vtO3L8r317SLO84EHV6AOhjemzqM6P6uTkdyaFhmfZOjDVGOVOsR9qTlgbS2DAMKdT7ISfpfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lZYfixri; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aL7k0OAltmIBCQqD30l6SkfdmwQT8vQdzRQB0RYJW8cS64vXdFcr3PfBl7I6HrSFON9KR3+eUrnug61LcoX7HXaG5w7x8IUAJCCf4i1A6p1dhuP+sGLUcEkg3qIeyEo1QOyDzkjPonP5fVy/tda7hSH3+e0y2pmgEqe7+U2MhBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pl94/Qgv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lZYfixri"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8838DC32782;
-	Tue, 30 Jul 2024 16:18:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pl94/Qgv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBEADC32782;
+	Tue, 30 Jul 2024 16:18:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356329;
-	bh=adxDEgmL1/jD03Gr6Oc6PRf6xoLUZ2QluFSWn8wwldE=;
+	s=korg; t=1722356332;
+	bh=70cgeueA2Vs9ZopmZvpafSR2HStbNJcEPI5b16NkqZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lZYfixrilStO5ezt6WZz+vRdtmQtRJJDKSz9+3jukxvXzBG7id97EtHRl6lJun87T
-	 kmiScgkjkTf8CLJv708PEor4Ky7ksDvQqG2mt6x6eq3e72gRN1ncWa0sWr3cc860rI
-	 ygFDPJ0ozcd4SGG8IxJexKLu/qOTUK+xg6QOblgM=
+	b=pl94/QgvxP8h79NoCphPRteg+/W5GNyctdlpUnWUwRZGDRYsOp2uTlJqcBmsFw7yR
+	 FNygbvOgz7dsivRPhMjKlHiJbtjqli1fbA+gc+1d37Kz/F2ky3Ix7hCItFGdiOgz0X
+	 zq5fcjTARLI/5aQCzfJ+mvzsx4V2xcuSnPaKJZm4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Cochran <richardcochran@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Wei Fang <wei.fang@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Csókás
-Subject: [PATCH 6.6 138/568] net: fec: Fix FEC_ECR_EN1588 being cleared on link-down
-Date: Tue, 30 Jul 2024 17:44:05 +0200
-Message-ID: <20240730151645.269861590@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@toblux.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 140/809] m68k: cmpxchg: Fix return value for default case in __arch_xchg()
+Date: Tue, 30 Jul 2024 17:40:16 +0200
+Message-ID: <20240730151730.140194251@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,52 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Thorsten Blum <thorsten.blum@toblux.com>
 
-[ Upstream commit c32fe1986f27cac329767d3497986e306cad1d5e ]
+[ Upstream commit 21b9e722ad28c19c2bc83f18f540b3dbd89bf762 ]
 
-FEC_ECR_EN1588 bit gets cleared after MAC reset in `fec_stop()`, which
-makes all 1588 functionality shut down, and all the extended registers
-disappear, on link-down, making the adapter fall back to compatibility
-"dumb mode". However, some functionality needs to be retained (e.g. PPS)
-even without link.
+The return value of __invalid_xchg_size() is assigned to tmp instead of
+the return variable x. Assign it to x instead.
 
-Fixes: 6605b730c061 ("FEC: Add time stamping code and a PTP hardware clock")
-Cc: Richard Cochran <richardcochran@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/netdev/5fa9fadc-a89d-467a-aae9-c65469ff5fe1@lunn.ch/
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Reviewed-by: Wei Fang <wei.fang@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2501cf768e4009a0 ("m68k: Fix xchg/cmpxchg to fail to link if given an inappropriate pointer")
+Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/20240702034116.140234-2-thorsten.blum@toblux.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/m68k/include/asm/cmpxchg.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index 08d6d7a6ac42e..5604a47b35b2a 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -1342,6 +1342,12 @@ fec_stop(struct net_device *ndev)
- 		writel(FEC_ECR_ETHEREN, fep->hwp + FEC_ECNTRL);
- 		writel(rmii_mode, fep->hwp + FEC_R_CNTRL);
+diff --git a/arch/m68k/include/asm/cmpxchg.h b/arch/m68k/include/asm/cmpxchg.h
+index d7f3de9c5d6f7..4ba14f3535fcb 100644
+--- a/arch/m68k/include/asm/cmpxchg.h
++++ b/arch/m68k/include/asm/cmpxchg.h
+@@ -32,7 +32,7 @@ static inline unsigned long __arch_xchg(unsigned long x, volatile void * ptr, in
+ 		x = tmp;
+ 		break;
+ 	default:
+-		tmp = __invalid_xchg_size(x, ptr, size);
++		x = __invalid_xchg_size(x, ptr, size);
+ 		break;
  	}
-+
-+	if (fep->bufdesc_ex) {
-+		val = readl(fep->hwp + FEC_ECNTRL);
-+		val |= FEC_ECR_EN1588;
-+		writel(val, fep->hwp + FEC_ECNTRL);
-+	}
- }
  
- static void
 -- 
 2.43.0
 
