@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23ADA1A6166;
-	Tue, 30 Jul 2024 16:24:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87EE11A618D;
+	Tue, 30 Jul 2024 16:24:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356649; cv=none; b=myiwILElYPmzLaQ0LEWQ7tlpWdgDo6AptAJBXyTOwpTYwnpppCi7zsG3LcaArHrVFekVXwrhx4s5Qxslnp3IB3S9v0NlKPHNhX56YuvkSMiBDHUrlqna2UgzMb8WSas1DLDgi6NJefa4dUtGLbMihsSkpCDJWed9ktuCLiXmwf0=
+	t=1722356653; cv=none; b=sIeOJpOgh5pjmcqDz2p4d2Jry7in9AceLdlSo/3OV8+H8tlW3j0GhfgYomSHR+1c3zDGb6VSlrqvM4Nn4sixzI0H/Z16u99AQUsHRWFmjBnWu+u6eDDKg6pP1x43WIGejyHRY4WjGKHbtvlGWWxr1QSGC2eoCP3w3+0Od7weQMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356649; c=relaxed/simple;
-	bh=LMATVipR7PguQNDfGkqjuO8BtGkVjnqiXDt1o0oiLmo=;
+	s=arc-20240116; t=1722356653; c=relaxed/simple;
+	bh=InpgMew2tWuRXwi0qLsWU6SqYYFTdUd3uEQfSyYH8b0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4IjaRsqxGdXYZ8frtFUxXsbK8sRz3cjyWAaPvD6AdZ32U2ywokRu2ZHsSnJb4ZDfr3Sz4cNKcu9bopChvFkHq13J+6598agOB1kW6kEOoAg97lvLQtFiM6I+ZJM4xWNJVUu3xgMAhE7+ChZ9ppea1Sh8Msnjblhu3CmOY8/01M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNHvgZIk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FfHUZWsJVlawvrAJdSyPM9Oykq7ZZkB68GkRUzdTVIV+z2dC0zwd4PQ3voHW+H4JKCwFenFaIffmWhfMVcOH10gAdPdsTKujNMrGcjzPmDlxV69D+spNDY8j3N0Yo0ISgPOtUfwZ/iVxQ4vHpw79b1hzqqRLsq4+InpxSeMwJ48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J98TTxTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNHvgZIk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 890DCC32782;
-	Tue, 30 Jul 2024 16:24:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J98TTxTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F159C4AF0A;
+	Tue, 30 Jul 2024 16:24:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356649;
-	bh=LMATVipR7PguQNDfGkqjuO8BtGkVjnqiXDt1o0oiLmo=;
+	s=korg; t=1722356653;
+	bh=InpgMew2tWuRXwi0qLsWU6SqYYFTdUd3uEQfSyYH8b0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNHvgZIk16YJIbvPkGqUGYb85pbDqQbTx9V3kh9ng7Uaudt1lM+rxhExL8xUoe3jI
-	 w8YDyi47TviRECjdE/mr9PCFMTcMFlaAKjVHFdF+4mLAC+W8KJREHHmb76uDf92TCb
-	 S+LEuJv58VGFTp8dyu3gWgXvhmB7XV+i7ET7BnB4=
+	b=J98TTxTdxKScSyRjJe+YS0uOx3dmZZiSfxupaIXIqBqVUxMU4TbwD7j1IXg6kQDX7
+	 zovC2sQem1Kkn2O0Ql9ZI+F07/IPNSeGI/jC5ohVx9kMwGJ8D6KFTZrfafIzt5BpA9
+	 97pnMN3Gn7gqpROYBO2ujiqmw3WK+LoKjQVNYNPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 170/809] wifi: ath11k: fix wrong definition of CE rings base address
-Date: Tue, 30 Jul 2024 17:40:46 +0200
-Message-ID: <20240730151731.320778840@linuxfoundation.org>
+Subject: [PATCH 6.6 170/568] Bluetooth: hci_bcm4377: Use correct unit for timeouts
+Date: Tue, 30 Jul 2024 17:44:37 +0200
+Message-ID: <20240730151646.529698431@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +47,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit 5714e25f1d1875b300fb337dadfaa75324c1161a ]
+[ Upstream commit 56c695a823e4ee1e5294a8340d5afe5de73828ec ]
 
-Base address of CE ring is defined as u32, currently this works
-because coherent DMA mask configured as 32 bit:
+BCM4377_TIMEOUT is always used to wait for completitions and their API
+expects a timeout in jiffies instead of msecs.
 
-	#define ATH11K_PCI_COHERENT_DMA_MASK	32
-
-However this mask could be changed once firmware bugs are fixed
-to fully support 36 bit DMA addressing. So to protect against any
-future changes to the DMA mask, change the type of the fields that
-are dependent upon it.
-
-This is found during code review. Compile tested only.
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240524021558.34452-1-quic_bqiang@quicinc.com
+Fixes: 8a06127602de ("Bluetooth: hci_bcm4377: Add new driver for BCM4377 PCIe boards")
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/ce.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_bcm4377.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/ce.h b/drivers/net/wireless/ath/ath11k/ce.h
-index 69946fc700777..bcde2fcf02cf7 100644
---- a/drivers/net/wireless/ath/ath11k/ce.h
-+++ b/drivers/net/wireless/ath/ath11k/ce.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+diff --git a/drivers/bluetooth/hci_bcm4377.c b/drivers/bluetooth/hci_bcm4377.c
+index cf36cdac652d6..0dc3ca3d41073 100644
+--- a/drivers/bluetooth/hci_bcm4377.c
++++ b/drivers/bluetooth/hci_bcm4377.c
+@@ -32,7 +32,7 @@ enum bcm4377_chip {
+ #define BCM4378_DEVICE_ID 0x5f69
+ #define BCM4387_DEVICE_ID 0x5f71
+ 
+-#define BCM4377_TIMEOUT 1000
++#define BCM4377_TIMEOUT msecs_to_jiffies(1000)
+ 
  /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #ifndef ATH11K_CE_H
-@@ -146,7 +146,7 @@ struct ath11k_ce_ring {
- 	/* Host address space */
- 	void *base_addr_owner_space_unaligned;
- 	/* CE address space */
--	u32 base_addr_ce_space_unaligned;
-+	dma_addr_t base_addr_ce_space_unaligned;
- 
- 	/* Actual start of descriptors.
- 	 * Aligned to descriptor-size boundary.
-@@ -156,7 +156,7 @@ struct ath11k_ce_ring {
- 	void *base_addr_owner_space;
- 
- 	/* CE address space */
--	u32 base_addr_ce_space;
-+	dma_addr_t base_addr_ce_space;
- 
- 	/* HAL ring id */
- 	u32 hal_ring_id;
+  * These devices only support DMA transactions inside a 32bit window
 -- 
 2.43.0
 
