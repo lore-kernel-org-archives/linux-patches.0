@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34743183CD5;
-	Tue, 30 Jul 2024 16:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC1B183CD5;
+	Tue, 30 Jul 2024 16:42:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357747; cv=none; b=eptW3xaBOd6DBn5pU0bB/WIkvr46PojXjCMs4wic9nYrvnp2RjLTW6O0+5e/orL0+el5plhWFy8CJyB6uaMuEbcFSm3hfYXuwK/xGvS3UjG06SLch3n8e2KSrizP61r8n5u7V0eyMnP13wjmUjSgWL4YavAzjG7MLHPunn7PN4Q=
+	t=1722357750; cv=none; b=QLnvsipmaaHFqZSbQnFkqADdpt97UDlUcpsfKsvC+saHEPJKpvN3qHaTKy7RUICh5jp0fX0NwWL5wpM0tGCMOKZbXpjffUA2n0ZpOQyXCsY4/ed9gh+GvQ1NhFOd8R72fOeVuhu0i0jn1PtP6i/QG6ttZHKSOU5lz8ywuvE0Y/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357747; c=relaxed/simple;
-	bh=XGG1lGHGsYlh98t+3fMZ9mbe0RHDyCg99Xkm8c7D6s8=;
+	s=arc-20240116; t=1722357750; c=relaxed/simple;
+	bh=0hiLsT0tC9EoUu9m2toFTFbqYBzwRo8DiKtHRaiwWW0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=obw5zS2K+VLSLyO1SxNBq6UU+Q/K4In6TOe2U8wPbGhha9kdHK3ANgJjoP+ylRgf/bXQbK4axjnmX84v3HilzCWX2UdZBOqbX/UhC6hzv3yyEVED11dQNd9cgPQtPjtgap+zM+2IMdeGysafG/sjUAbT5hgXEm1NLnveLW3A1+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kSgYSRvL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DVIr3gx3Cru5JBmNxluVHmXb8ypfK+3vmj2NV/zAoYGBKNPOYfNkMgXAFHzPRH1oC5/pNbCtZ91dE4xZzBkc1MBHER2B2bCw9z3OW5JOD1vcDYm3OpVusJoT9rtykS2xdzb8rDR9//7P7TeNRGiw+xdLl6QdKWBCgPzWwNT99Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GyFhFSaL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kSgYSRvL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF58EC32782;
-	Tue, 30 Jul 2024 16:42:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GyFhFSaL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 167E9C32782;
+	Tue, 30 Jul 2024 16:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357747;
-	bh=XGG1lGHGsYlh98t+3fMZ9mbe0RHDyCg99Xkm8c7D6s8=;
+	s=korg; t=1722357750;
+	bh=0hiLsT0tC9EoUu9m2toFTFbqYBzwRo8DiKtHRaiwWW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kSgYSRvLEuSCwQbhkgdoA0u+iQjnWKfxEOOt8bB5SKR4YeGLOwswcBFboAvp+DKsM
-	 UarrPhzqwYWoS34daOMhxVS7tlyyXOXKHxvzajm7lswfI+3zAsNVWxpqogb+ZN0QrK
-	 PnGjK9NeF9MzrUQYeJvSD0RQixvzTy+5RXoMhW8E=
+	b=GyFhFSaL7iiH3/ZEFbyz7HTbrOzFGSyyIK+Bk2eOy9f0UCIvrntLq+4GMZxfJM4DH
+	 oi0w22Y3b/mPGlxRRNgE9UUvvS5+kThir650yrE/5GePn7rwHrKEDVv5R8ET4lkow1
+	 SsFs/10l5KP11hpQfbvhm05c7S44UZ8SxymWznXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 288/809] media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()
-Date: Tue, 30 Jul 2024 17:42:44 +0200
-Message-ID: <20240730151735.968317438@linuxfoundation.org>
+	Heiko Stuebner <heiko@sntech.de>,
+	Jianfeng Liu <liujianfeng1994@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.1 323/440] PCI: dw-rockchip: Fix initial PERST# GPIO value
+Date: Tue, 30 Jul 2024 17:49:16 +0200
+Message-ID: <20240730151628.435038197@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,149 +48,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
+commit 28b8d7793b8573563b3d45321376f36168d77b1e upstream.
 
-Infinite log printing occurs during fuzz test:
+PERST# is active low according to the PCIe specification.
 
-  rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
-  ...
-  dvb-usb: schedule remote query interval to 100 msecs.
-  dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
-  dvb-usb: bulk message failed: -22 (1/0)
-  dvb-usb: bulk message failed: -22 (1/0)
-  dvb-usb: bulk message failed: -22 (1/0)
-  ...
-  dvb-usb: bulk message failed: -22 (1/0)
+However, the existing pcie-dw-rockchip.c driver does:
 
-Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
-that is in rc_core_dvb_usb_remote_init() create a work that will call
-dvb_usb_read_remote_control(), and this work will reschedule itself at
-'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
-see following code snippet:
+  gpiod_set_value(..., 0); msleep(100); gpiod_set_value(..., 1);
 
-  rc_core_dvb_usb_remote_init() {
-    ...
-    INIT_DELAYED_WORK(&d->rc_query_work, dvb_usb_read_remote_control);
-    schedule_delayed_work(&d->rc_query_work,
-                          msecs_to_jiffies(rc_interval));
-    ...
-  }
+when asserting + deasserting PERST#.
 
-  dvb_usb_read_remote_control() {
-    ...
-    err = d->props.rc.core.rc_query(d);
-    if (err)
-      err(...)  // Did not return even if query failed
-    schedule_delayed_work(&d->rc_query_work,
-                          msecs_to_jiffies(rc_interval));
-  }
+This is of course wrong, but because all the device trees for this
+compatible string have also incorrectly marked this GPIO as ACTIVE_HIGH:
 
-When the infinite log printing occurs, the query callback
-'d->props.rc.core.rc_query' is cxusb_rc_query(). And the log is due to
-the failure of finding a valid 'generic_bulk_ctrl_endpoint'
-in usb_bulk_msg(), see following code snippet:
+  $ git grep -B 10 reset-gpios arch/arm64/boot/dts/rockchip/rk3568*
+  $ git grep -B 10 reset-gpios arch/arm64/boot/dts/rockchip/rk3588*
 
-  cxusb_rc_query() {
-    cxusb_ctrl_msg() {
-      dvb_usb_generic_rw() {
-        ret = usb_bulk_msg(d->udev, usb_sndbulkpipe(d->udev,
-                           d->props.generic_bulk_ctrl_endpoint),...);
-        if (ret)
-          err("bulk message failed: %d (%d/%d)",ret,wlen,actlen);
-          ...
-      }
-  ...
-  }
+The actual toggling of PERST# is correct, and we cannot change it anyway,
+since that would break device tree compatibility.
 
-By analyzing the corresponding USB descriptor, it shows that the
-bNumEndpoints is 0 in its interface descriptor, but
-the 'generic_bulk_ctrl_endpoint' is 1, that means user don't configure
-a valid endpoint for 'generic_bulk_ctrl_endpoint', therefore this
-'invalid' USB device should be rejected before it calls into
-dvb_usb_read_remote_control().
+However, this driver does request the GPIO to be initialized as
+GPIOD_OUT_HIGH, which does cause a silly sequence where PERST# gets
+toggled back and forth for no good reason.
 
-To fix it, we need to add endpoint check for 'generic_bulk_ctrl_endpoint'.
-And as Sean suggested, the same check and clear halts should be done for
-'generic_bulk_ctrl_endpoint_response'. So introduce
-dvb_usb_check_bulk_endpoint() to do it for both of them.
+Fix this by requesting the GPIO to be initialized as GPIOD_OUT_LOW (which
+for this driver means PERST# asserted).
 
-Fixes: 4d43e13f723e ("V4L/DVB (4643): Multi-input patch for DVB-USB device")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This will avoid an unnecessary signal change where PERST# gets deasserted
+(by devm_gpiod_get_optional()) and then gets asserted (by
+rockchip_pcie_start_link()) just a few instructions later.
+
+Before patch, debug prints on EP side, when booting RC:
+
+  [  845.606810] pci: PERST# asserted by host!
+  [  852.483985] pci: PERST# de-asserted by host!
+  [  852.503041] pci: PERST# asserted by host!
+  [  852.610318] pci: PERST# de-asserted by host!
+
+After patch, debug prints on EP side, when booting RC:
+
+  [  125.107921] pci: PERST# asserted by host!
+  [  132.111429] pci: PERST# de-asserted by host!
+
+This extra, very short, PERST# assertion + deassertion has been reported to
+cause issues with certain WLAN controllers, e.g. RTL8822CE.
+
+Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
+Link: https://lore.kernel.org/linux-pci/20240417164227.398901-1-cassel@kernel.org
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: stable@vger.kernel.org	# v5.15+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/dvb-usb/dvb-usb-init.c | 35 +++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
-index fbf58012becdf..22d83ac18eb73 100644
---- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
-+++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
-@@ -23,11 +23,40 @@ static int dvb_usb_force_pid_filter_usage;
- module_param_named(force_pid_filter_usage, dvb_usb_force_pid_filter_usage, int, 0444);
- MODULE_PARM_DESC(force_pid_filter_usage, "force all dvb-usb-devices to use a PID filter, if any (default: 0).");
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -240,7 +240,7 @@ static int rockchip_pcie_resource_get(st
+ 		return PTR_ERR(rockchip->apb_base);
  
-+static int dvb_usb_check_bulk_endpoint(struct dvb_usb_device *d, u8 endpoint)
-+{
-+	if (endpoint) {
-+		int ret;
-+
-+		ret = usb_pipe_type_check(d->udev, usb_sndbulkpipe(d->udev, endpoint));
-+		if (ret)
-+			return ret;
-+		ret = usb_pipe_type_check(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-+
-+static void dvb_usb_clear_halt(struct dvb_usb_device *d, u8 endpoint)
-+{
-+	if (endpoint) {
-+		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, endpoint));
-+		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
-+	}
-+}
-+
- static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
- {
- 	struct dvb_usb_adapter *adap;
- 	int ret, n, o;
+ 	rockchip->rst_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
+-						     GPIOD_OUT_HIGH);
++						     GPIOD_OUT_LOW);
+ 	if (IS_ERR(rockchip->rst_gpio))
+ 		return PTR_ERR(rockchip->rst_gpio);
  
-+	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint);
-+	if (ret)
-+		return ret;
-+	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint_response);
-+	if (ret)
-+		return ret;
- 	for (n = 0; n < d->props.num_adapters; n++) {
- 		adap = &d->adapter[n];
- 		adap->dev = d;
-@@ -103,10 +132,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
- 	 * when reloading the driver w/o replugging the device
- 	 * sometimes a timeout occurs, this helps
- 	 */
--	if (d->props.generic_bulk_ctrl_endpoint != 0) {
--		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
--		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
--	}
-+	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint);
-+	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint_response);
- 
- 	return 0;
- 
--- 
-2.43.0
-
 
 
