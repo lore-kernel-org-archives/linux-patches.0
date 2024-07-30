@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CBEE1A6192;
-	Tue, 30 Jul 2024 16:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2491A6192;
+	Tue, 30 Jul 2024 16:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357686; cv=none; b=MKY++1rhI9uOR9VPiJ2f1T9cq9+MYQQEVaBQiYwzLlRz3hjzRpXe+/HDHtHKwwLKqTanEwgmIx5cW1VX3tr740hSCa2g261RbBYnnGmvOqPWnLrYqmAT1egeUOUFIxx0HExJZTRnQa43eXkwWH041LooszkF9QlTviOZ9/8r9zw=
+	t=1722357689; cv=none; b=IENzOV6wOa8LVasZLFuAqDFqgdw/Wsu4Co4xtkdCa47QsC2hWcjaqG3GqOQ2Rqlq2lIZLCokmXFeLybYZoJiQtW096j1Xptuw69DshwYnQkgMkCf2FgxCnQEUVuESkaCAezRlHUjJefjXqSKUhWdYu9mpEdcjUcAs4xOHhYAatA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357686; c=relaxed/simple;
-	bh=OLuDiMZDrbBtj2/U5Fmzk0dcyO3E7S0rRIsBMJEW+Qg=;
+	s=arc-20240116; t=1722357689; c=relaxed/simple;
+	bh=++jhZAwowutQcsAYKhQrKin2oGn+3BSoQv91Gghf3hU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RuVHEGBikWou1x8v8+ENWN2PmGZ/Lyo3fKFiGMQ5nWXugExQVH7nxg/jAi4GkLFI+J+Wl4hANGjdwXkj8tjO7gCkRFx8cvgYKP/OgopXUv5QJtISSYoRIzoB2U360tXXwqjIIV2aVlST17JgaKQS4LKi5GcYtM2Gq42gY6LV2QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJ//xtWL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FSCEGUclaD6O5oC+lKtgxZYREJiLBrJRJDuj6jAht42yXjJ4tpT//qIP/Kst6ggFGUvVO0HMOLWvxjYS4L8pJfMU+ELUCsn4UAb/ase5X1euUtgxlkL+mAsDpA3YrwjHqG5odgmREBaBnbW56hFVZg65nLjG3YGLwcfOfN+hW1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NyiCqOwV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJ//xtWL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF39EC32782;
-	Tue, 30 Jul 2024 16:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NyiCqOwV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC07AC32782;
+	Tue, 30 Jul 2024 16:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357686;
-	bh=OLuDiMZDrbBtj2/U5Fmzk0dcyO3E7S0rRIsBMJEW+Qg=;
+	s=korg; t=1722357689;
+	bh=++jhZAwowutQcsAYKhQrKin2oGn+3BSoQv91Gghf3hU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJ//xtWLDRcpVefhPnIoFKH+kaM4ZpO7+1vWbHi2sMFB2rAUegi0qnLh4n28UiLDR
-	 NvKTMt3XYG6vENTqYDMCqUkjzaoYFN27lHXuRUceklTERJQkNjmD7M8gl6y445rmmZ
-	 UQRIwww9P6Wm+dfOQdQ+ai1gg6hFqCfrBkHEJnQ4=
+	b=NyiCqOwVqtEQHl0I8npObMLPuw2xqmTyy9/1xf14MWdNFBIaKlTFAwSO+vfFd4rlQ
+	 JX6xhA9u5B3eCjNUNslg1eesrMekdZhKiv4Z5hzbKf60XydZKI5FAkr1/ZEn1xpVy2
+	 jCKRUq6OB7i/sbjdE9wGdse0dmbtKvXluNvBleY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 281/568] mtd: make mtd_test.c a separate module
-Date: Tue, 30 Jul 2024 17:46:28 +0200
-Message-ID: <20240730151650.857775187@linuxfoundation.org>
+Subject: [PATCH 6.10 279/809] drm/panel: boe-tv101wum-nl6: Check for errors on the NOP in prepare()
+Date: Tue, 30 Jul 2024 17:42:35 +0200
+Message-ID: <20240730151735.611650798@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,116 +50,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit a5cf054d325e6f362e82fe6d124a1871a4af8174 ]
+[ Upstream commit 6320b9199dd99622668649c234d4e8a99e44a9c8 ]
 
-This file gets linked into nine different modules, which causes a warning:
+The mipi_dsi_dcs_nop() function returns an error but we weren't
+checking it in boe_panel_prepare(). Add a check. This is highly
+unlikely to matter in practice. If the NOP failed then likely later
+MIPI commands would fail too.
 
-scripts/Makefile.build:236: drivers/mtd/tests/Makefile: mtd_test.o is added to multiple modules: mtd_nandbiterrs mtd_oobtest mtd_pagetest mtd_readtest mtd_speedtest mtd_stresstest mtd_subpagetest mtd_torturetest
+Found by code inspection.
 
-Make it a separate module instead.
-
-Fixes: a995c792280d ("mtd: tests: rename sources in order to link a helper object")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20240529095049.1915393-1-arnd@kernel.org
+Fixes: 812562b8d881 ("drm/panel: boe-tv101wum-nl6: Fine tune the panel power sequence")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240517143643.3.Ibffbaa5b4999ac0e55f43bf353144433b099d727@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.3.Ibffbaa5b4999ac0e55f43bf353144433b099d727@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/tests/Makefile   | 34 +++++++++++++++++-----------------
- drivers/mtd/tests/mtd_test.c |  9 +++++++++
- 2 files changed, 26 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/tests/Makefile b/drivers/mtd/tests/Makefile
-index 5de0378f90dbd..7dae831ee8b6b 100644
---- a/drivers/mtd/tests/Makefile
-+++ b/drivers/mtd/tests/Makefile
-@@ -1,19 +1,19 @@
- # SPDX-License-Identifier: GPL-2.0
--obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o
--obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o mtd_test.o
-+obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o mtd_test.o
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index ce7b4f5ce3fae..83c604ba3ee1c 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -1507,7 +1507,11 @@ static int boe_panel_prepare(struct drm_panel *panel)
+ 	usleep_range(10000, 11000);
  
--mtd_oobtest-objs := oobtest.o mtd_test.o
--mtd_pagetest-objs := pagetest.o mtd_test.o
--mtd_readtest-objs := readtest.o mtd_test.o
--mtd_speedtest-objs := speedtest.o mtd_test.o
--mtd_stresstest-objs := stresstest.o mtd_test.o
--mtd_subpagetest-objs := subpagetest.o mtd_test.o
--mtd_torturetest-objs := torturetest.o mtd_test.o
--mtd_nandbiterrs-objs := nandbiterrs.o mtd_test.o
-+mtd_oobtest-objs := oobtest.o
-+mtd_pagetest-objs := pagetest.o
-+mtd_readtest-objs := readtest.o
-+mtd_speedtest-objs := speedtest.o
-+mtd_stresstest-objs := stresstest.o
-+mtd_subpagetest-objs := subpagetest.o
-+mtd_torturetest-objs := torturetest.o
-+mtd_nandbiterrs-objs := nandbiterrs.o
-diff --git a/drivers/mtd/tests/mtd_test.c b/drivers/mtd/tests/mtd_test.c
-index c84250beffdc9..f391e0300cdc9 100644
---- a/drivers/mtd/tests/mtd_test.c
-+++ b/drivers/mtd/tests/mtd_test.c
-@@ -25,6 +25,7 @@ int mtdtest_erase_eraseblock(struct mtd_info *mtd, unsigned int ebnum)
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_erase_eraseblock);
- 
- static int is_block_bad(struct mtd_info *mtd, unsigned int ebnum)
- {
-@@ -57,6 +58,7 @@ int mtdtest_scan_for_bad_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_scan_for_bad_eraseblocks);
- 
- int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
- 				unsigned int eb, int ebcnt)
-@@ -75,6 +77,7 @@ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_erase_good_eraseblocks);
- 
- int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
- {
-@@ -92,6 +95,7 @@ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
- 
- 	return err;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_read);
- 
- int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
- 		const void *buf)
-@@ -107,3 +111,8 @@ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
- 
- 	return err;
- }
-+EXPORT_SYMBOL_GPL(mtdtest_write);
-+
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("MTD function test helpers");
-+MODULE_AUTHOR("Akinobu Mita");
+ 	if (boe->desc->lp11_before_reset) {
+-		mipi_dsi_dcs_nop(boe->dsi);
++		ret = mipi_dsi_dcs_nop(boe->dsi);
++		if (ret < 0) {
++			dev_err(&boe->dsi->dev, "Failed to send NOP: %d\n", ret);
++			goto poweroff;
++		}
+ 		usleep_range(1000, 2000);
+ 	}
+ 	gpiod_set_value(boe->enable_gpio, 1);
 -- 
 2.43.0
 
