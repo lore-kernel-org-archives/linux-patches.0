@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75EA1A76B4;
-	Tue, 30 Jul 2024 17:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06001184556;
+	Tue, 30 Jul 2024 17:18:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359913; cv=none; b=dyWVRv5PQQWmuCG0ZRNj/smuBO4UZQaUkvHcUHzLMu5mqticwyYp1BYdJhTAoR9E182Yu9O5Rht/uBaji5KSEvZ3nsYOinxjtPRE1FDysH1gLqUScCZ4MEx+jYFoo7hQsf/Hh4YD0Ouy55bP1ugaBayyiJhtbPNWoZJre3kSC7A=
+	t=1722359917; cv=none; b=E+o0Vx44/IQ7nXrMvPY7dv+CP9D8oFP0lugPZ35RGZksnWUPYjHiRT3SCfvCei4bn61vJyGVD+LGOhfzKWj00vu5cTUtR3hQ/um+gQPspQe6Wqt+mtkaqu5OmxCK1a0rJ7rTIO3UkNLbA/tsZQxIJrnua+5RbePkWLpQH1e5SDo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359913; c=relaxed/simple;
-	bh=YhKxCORgQ8IWfbE2IWXqdoK59ruktKgk2+t2ALqt8qo=;
+	s=arc-20240116; t=1722359917; c=relaxed/simple;
+	bh=gyZiBnueBe51sbRO7zaUcAuIROHLnkf4WCE7olvg4ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WBQSqjJmOQ4PeCJjZWbsZxx1A3adpOUoO4mKBh7RhTeLD9ArYodVMnIcWyODPYVo/Y7bP8wWcYAJowcNucQFc/g8iffXeS+ywUKMZtu+mjHMmJ1jU1vpJ4EBPWDiGqX4PmTt65YIykW7GykXNZ17OJ+DKtmKeUX8QTbKM7jZVko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zuc/03iH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cTpUwnc14nV9Z77yWVTkDlaeNTnAg3PCvb8ZLKkzbv1UViyQ+kuWZkbqtwVx4NlN0SP4a/IpaW18b2pj231ImgOgiklD42Tu3ZQosb8bArGO+KBLcVoAGFYL25dTfnNGoLXkAQFCKLBh947oInN8eofC6NvNhhS0BxSciWLYWG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Y0nnXlz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zuc/03iH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1C3C4AF0A;
-	Tue, 30 Jul 2024 17:18:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Y0nnXlz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D800C4AF0C;
+	Tue, 30 Jul 2024 17:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359913;
-	bh=YhKxCORgQ8IWfbE2IWXqdoK59ruktKgk2+t2ALqt8qo=;
+	s=korg; t=1722359916;
+	bh=gyZiBnueBe51sbRO7zaUcAuIROHLnkf4WCE7olvg4ms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuc/03iHb3wc7AJVe5VSZbjcyr+Y1M7GOTwJx/bZl6+UfSd8PHgGoohPSWAogM6j7
-	 pIhESMnxY+xadpqcZe4hlBxtCBO8g8Kt4RbvvSx8EqAWdHnoKXyh+zvCFwf0YVwMnb
-	 4F6rgItCVq/DvMW6+jYkQbrea7w0G9Iv22aIREH4=
+	b=2Y0nnXlzM0AecBeqopmvPUjywBJDdKlnHQtECBxcogjtyZaDMK058LeNPVB5bJt/U
+	 3iHCn1eaUMuKFs142Agc0UrzWzQG2/nmwFo5+AEnLzDyddbpPzBkCeJM3MgGJxrZIl
+	 0RcAKjcUY3GM/QFAkdbk18pClE0eZwXuqIysl2VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Orth <ju.orth@gmail.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.10 553/809] kernel: rerun task_work while freezing in get_signal()
-Date: Tue, 30 Jul 2024 17:47:09 +0200
-Message-ID: <20240730151746.600516925@linuxfoundation.org>
+	Steve Wilkins <steve.wilkins@raymarine.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 555/568] spi: microchip-core: ensure TX and RX FIFOs are empty at start of a transfer
+Date: Tue, 30 Jul 2024 17:51:02 +0200
+Message-ID: <20240730151701.852127991@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,54 +48,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Steve Wilkins <steve.wilkins@raymarine.com>
 
-commit 943ad0b62e3c21f324c4884caa6cb4a871bca05c upstream.
+[ Upstream commit 9cf71eb0faef4bff01df4264841b8465382d7927 ]
 
-io_uring can asynchronously add a task_work while the task is getting
-freezed. TIF_NOTIFY_SIGNAL will prevent the task from sleeping in
-do_freezer_trap(), and since the get_signal()'s relock loop doesn't
-retry task_work, the task will spin there not being able to sleep
-until the freezing is cancelled / the task is killed / etc.
+While transmitting with rx_len == 0, the RX FIFO is not going to be
+emptied in the interrupt handler. A subsequent transfer could then
+read crap from the previous transfer out of the RX FIFO into the
+start RX buffer. The core provides a register that will empty the RX and
+TX FIFOs, so do that before each transfer.
 
-Run task_works in the freezer path. Keep the patch small and simple
-so it can be easily back ported, but we might need to do some cleaning
-after and look if there are other places with similar problems.
-
-Cc: stable@vger.kernel.org
-Link: https://github.com/systemd/systemd/issues/33626
-Fixes: 12db8b690010c ("entry: Add support for TIF_NOTIFY_SIGNAL")
-Reported-by: Julian Orth <ju.orth@gmail.com>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/89ed3a52933370deaaf61a0a620a6ac91f1e754d.1720634146.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
+Signed-off-by: Steve Wilkins <steve.wilkins@raymarine.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20240715-flammable-provoke-459226d08e70@wendy
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/signal.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/spi/spi-microchip-core.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -2600,6 +2600,14 @@ static void do_freezer_trap(void)
- 	spin_unlock_irq(&current->sighand->siglock);
- 	cgroup_enter_frozen();
- 	schedule();
-+
-+	/*
-+	 * We could've been woken by task_work, run it to clear
-+	 * TIF_NOTIFY_SIGNAL. The caller will retry if necessary.
-+	 */
-+	clear_notify_signal();
-+	if (unlikely(task_work_pending(current)))
-+		task_work_run();
- }
+diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
+index 6f59754c33472..aa05127c8696c 100644
+--- a/drivers/spi/spi-microchip-core.c
++++ b/drivers/spi/spi-microchip-core.c
+@@ -91,6 +91,8 @@
+ #define REG_CONTROL2		(0x28)
+ #define REG_COMMAND		(0x2c)
+ #define  COMMAND_CLRFRAMECNT	BIT(4)
++#define  COMMAND_TXFIFORST		BIT(3)
++#define  COMMAND_RXFIFORST		BIT(2)
+ #define REG_PKTSIZE		(0x30)
+ #define REG_CMD_SIZE		(0x34)
+ #define REG_HWSTATUS		(0x38)
+@@ -493,6 +495,8 @@ static int mchp_corespi_transfer_one(struct spi_controller *host,
+ 	mchp_corespi_set_xfer_size(spi, (spi->tx_len > FIFO_DEPTH)
+ 				   ? FIFO_DEPTH : spi->tx_len);
  
- static int ptrace_signal(int signr, kernel_siginfo_t *info, enum pid_type type)
++	mchp_corespi_write(spi, REG_COMMAND, COMMAND_RXFIFORST | COMMAND_TXFIFORST);
++
+ 	mchp_corespi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
+ 
+ 	while (spi->tx_len)
+-- 
+2.43.0
+
 
 
