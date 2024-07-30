@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3A1757FC;
-	Tue, 30 Jul 2024 16:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 560B5757FC;
+	Tue, 30 Jul 2024 16:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357879; cv=none; b=XAc2ZF9kiko0GoXiisH05qCv60hrJRLKb2qVUkIdKY7KIUc8gd751Npp0JwZr9EcU8qXySPwP0oJwmktpT+VvHUbRm/+7rYlHDH+mgcwKJ6wfU4Txw3b4eMmyjIQ6mrPgM5R8IOkv4VBZl0LDTU011+mIqYPFiMtGNOINr7bVCo=
+	t=1722357882; cv=none; b=E+wkDh4VZ0t/AEaeS8MvK7r51SSNL5gkARq2N5hCHJuOSKKIi6ZTgv1wWvibbIcLa/fUWuDL/z9HsPtff7l+4+e63a6/M0zMRejcfXf2DTZlWeFf/EImRlRe6/Tjnx5ulKIbnLV+YEyfy8wphzkDLcn3kecWyloD3ArEoH/yO2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357879; c=relaxed/simple;
-	bh=jMjDfOw+EWzoVo88yxpOJ8ak7RKJ9q7YXHNemZOHtcE=;
+	s=arc-20240116; t=1722357882; c=relaxed/simple;
+	bh=oB/3dtC5deqGw9jkVY5xk/NOPpI1FnJlBjeVMJB0aNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OlIeYvq5fxukeAx+HUV9w8ngRRdF5ud/+41Y+3NtWc4Da6T88s3wYUxDB6S8kyuvUHo67RuyYh2PkjNhpCpjCSRzXnJhyXrxG4Z4lL42xReYUH/rKtLY7xqfwGBcPWxrfigsLR5CJ9ZdObyNYwXkekGW/SsAPdoJlK98o8cSask=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=alGOfJVV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LEmGXKYp9Xl5pjuQ9zL19zl1OLML8KZ4a+o7tgNZbPV42AYTXvevDuLPiNVNDDdf93R2D7Rs42IcYGJPe4C6m092cUq8xqG4C3LlUTaTpT2gOzGTDh02Td8dRfzZufK1QbZZPPxmf5aBFWxIwh7HmLwheoyCgMA41mLOtSR2h0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRzFyIy+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="alGOfJVV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DF2C32782;
-	Tue, 30 Jul 2024 16:44:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRzFyIy+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEC34C32782;
+	Tue, 30 Jul 2024 16:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357879;
-	bh=jMjDfOw+EWzoVo88yxpOJ8ak7RKJ9q7YXHNemZOHtcE=;
+	s=korg; t=1722357882;
+	bh=oB/3dtC5deqGw9jkVY5xk/NOPpI1FnJlBjeVMJB0aNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=alGOfJVVd4z7cebiJSTlBm2hCkphYl58yJDPo5NXpYNdA7Fcz+QGHU0N3iOE+LmL5
-	 SkOAWurBbtmPWllL3Fjfa3keiJ8mFi1ulSjp7+QDGUJGr4ne0kHyQSgtTWxZGOjGXZ
-	 l/A14YHTb50oomAwRyGl2uMCwLS68nUJX1AC5J2k=
+	b=DRzFyIy+XlY7aWVPyfHi51Rob4DJgVMjWlIA4SFFXJKmO5kriix8UuQGh06G0rEWi
+	 BdO/y9hC9bfTswj/urW9uuy5WJoFU5BaeM7ZgIBSSb88KMAFC5z4RQF1HsKb5cwePm
+	 EXZW26AICWrxdkWT13SrchOkDYeCKN+zjfMwyJNk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Irui Wang <irui.wang@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Sebastian Fricke <sebastian.fricke@collabora.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 300/568] RDMA/hns: Fix unmatch exception handling when init eq table fails
-Date: Tue, 30 Jul 2024 17:46:47 +0200
-Message-ID: <20240730151651.600286822@linuxfoundation.org>
+Subject: [PATCH 6.10 301/809] media: mediatek: vcodec: Handle invalid decoder vsi
+Date: Tue, 30 Jul 2024 17:42:57 +0200
+Message-ID: <20240730151736.483123408@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,84 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Irui Wang <irui.wang@mediatek.com>
 
-[ Upstream commit 543fb987bd63ed27409b5dea3d3eec27b9c1eac9 ]
+[ Upstream commit 59d438f8e02ca641c58d77e1feffa000ff809e9f ]
 
-The hw ctx should be destroyed when init eq table fails.
+Handle an invalid decoder vsi in vpu_dec_init to ensure the decoder vsi
+is valid for future use.
 
-Fixes: a5073d6054f7 ("RDMA/hns: Add eq support of hip08")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240710133705.896445-4-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 590577a4e525 ("[media] vcodec: mediatek: Add Mediatek V4L2 Video Decoder Driver")
+
+Signed-off-by: Irui Wang <irui.wang@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 25 +++++++++++-----------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ .../media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c    | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 8c90391fd3524..680fe2bdda09d 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -6261,9 +6261,16 @@ static void hns_roce_v2_int_mask_enable(struct hns_roce_dev *hr_dev,
- 	roce_write(hr_dev, ROCEE_VF_ABN_INT_CFG_REG, enable_flag);
- }
+diff --git a/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c b/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
+index da6be556727bb..145958206e38a 100644
+--- a/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
++++ b/drivers/media/platform/mediatek/vcodec/decoder/vdec_vpu_if.c
+@@ -233,6 +233,12 @@ int vpu_dec_init(struct vdec_vpu_inst *vpu)
+ 	mtk_vdec_debug(vpu->ctx, "vdec_inst=%p", vpu);
  
--static void hns_roce_v2_destroy_eqc(struct hns_roce_dev *hr_dev, u32 eqn)
-+static void free_eq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq)
-+{
-+	hns_roce_mtr_destroy(hr_dev, &eq->mtr);
-+}
+ 	err = vcodec_vpu_send_msg(vpu, (void *)&msg, sizeof(msg));
 +
-+static void hns_roce_v2_destroy_eqc(struct hns_roce_dev *hr_dev,
-+				    struct hns_roce_eq *eq)
- {
- 	struct device *dev = hr_dev->dev;
-+	int eqn = eq->eqn;
- 	int ret;
- 	u8 cmd;
- 
-@@ -6274,12 +6281,9 @@ static void hns_roce_v2_destroy_eqc(struct hns_roce_dev *hr_dev, u32 eqn)
- 
- 	ret = hns_roce_destroy_hw_ctx(hr_dev, cmd, eqn & HNS_ROCE_V2_EQN_M);
- 	if (ret)
--		dev_err(dev, "[mailbox cmd] destroy eqc(%u) failed.\n", eqn);
--}
-+		dev_err(dev, "[mailbox cmd] destroy eqc(%d) failed.\n", eqn);
- 
--static void free_eq_buf(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq)
--{
--	hns_roce_mtr_destroy(hr_dev, &eq->mtr);
-+	free_eq_buf(hr_dev, eq);
- }
- 
- static void init_eq_config(struct hns_roce_dev *hr_dev, struct hns_roce_eq *eq)
-@@ -6585,7 +6589,7 @@ static int hns_roce_v2_init_eq_table(struct hns_roce_dev *hr_dev)
- 
- err_create_eq_fail:
- 	for (i -= 1; i >= 0; i--)
--		free_eq_buf(hr_dev, &eq_table->eq[i]);
-+		hns_roce_v2_destroy_eqc(hr_dev, &eq_table->eq[i]);
- 	kfree(eq_table->eq);
- 
- 	return ret;
-@@ -6605,11 +6609,8 @@ static void hns_roce_v2_cleanup_eq_table(struct hns_roce_dev *hr_dev)
- 	__hns_roce_free_irq(hr_dev);
- 	destroy_workqueue(hr_dev->irq_workq);
- 
--	for (i = 0; i < eq_num; i++) {
--		hns_roce_v2_destroy_eqc(hr_dev, i);
--
--		free_eq_buf(hr_dev, &eq_table->eq[i]);
--	}
-+	for (i = 0; i < eq_num; i++)
-+		hns_roce_v2_destroy_eqc(hr_dev, &eq_table->eq[i]);
- 
- 	kfree(eq_table->eq);
++	if (IS_ERR_OR_NULL(vpu->vsi)) {
++		mtk_vdec_err(vpu->ctx, "invalid vdec vsi, status=%d", err);
++		return -EINVAL;
++	}
++
+ 	mtk_vdec_debug(vpu->ctx, "- ret=%d", err);
+ 	return err;
  }
 -- 
 2.43.0
