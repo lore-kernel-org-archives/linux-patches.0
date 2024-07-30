@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78A518454A;
-	Tue, 30 Jul 2024 17:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AE0C18A6B0;
+	Tue, 30 Jul 2024 17:13:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359591; cv=none; b=ZzT2bzZ1oy0swENsC4E2OfY8PxVZDaMinY7woN6p3hiltOkSYdyFcWDZAzU36JDLiVi+gcYqRRdPaFFSyY1iUaW/ekJo1B3R5DfShnvJ+5U3b4DFwRLS37IUveoeKdDAYkUR50zMmN3mT9G26lW32AqLs9ky1lQ3CJn/B1z0lRI=
+	t=1722359594; cv=none; b=rx9C/I4sQJ09eaH0KrG9tXvveZBXjPVpPRIE3Hopd+5m6LHryvLeflMloK6A74mjagZb1KCBA/2ZgqqUM0GJ+2InbpK7a5IjCOBn/Na7HJ9Mglp2AGXcHcG3xiKEwWRHUkqT6EPZP+cm0FHnFgVWpWu0m0p8pvkXIvReaEWv6iw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359591; c=relaxed/simple;
-	bh=CkkN5X/g3U3mX+2tcs57RYacQ14faEjqq67dThCIVCk=;
+	s=arc-20240116; t=1722359594; c=relaxed/simple;
+	bh=fQQpQWH9atYBbYdEhJ/tlKs/TLazm7aQ9ZGpDlLNl34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dHPfZhaOS/BHXxAKfDMy4QI0mZjqPpaqMqNpiesU37sjtUYMpU+PgSa8A19T/D81wuipQW7NT3hHfYfOqNar+FBfMgYO0kuB8lWR9XEybBOJK/9yb3sBzbJuaedMlnC4XNHDx+Z339Kdzz/lIaQOxYQLbkHz4URtL6GpMR9Rfyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omaoFwKv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5tJD0Wf2ixfcP6j5OZpOlrxtFBPpELq8+NhMslcjj8lSjbqY5PgoO0UQegnTr6wH0kfi+sJhbIK7WK0Dg197C+mtwB1LyNTC6u5iIWkhzxQTId4xnMuEudd4SfdYKyetyzkXwfwotmZDNBFh/BIruesi7Wxta8YPAu1Z1XkQiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZIMWCnB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omaoFwKv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D88DC32782;
-	Tue, 30 Jul 2024 17:13:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZIMWCnB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB98DC32782;
+	Tue, 30 Jul 2024 17:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359590;
-	bh=CkkN5X/g3U3mX+2tcs57RYacQ14faEjqq67dThCIVCk=;
+	s=korg; t=1722359594;
+	bh=fQQpQWH9atYBbYdEhJ/tlKs/TLazm7aQ9ZGpDlLNl34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omaoFwKvY4qh1MiV9Xa053Z/NdYItEEfaKHgYMlYxZNnS7W38oRzAoKI4+kyc9Huf
-	 4BmF+aDC0H6pb6RjdKIXGwzwdwwebh9qFcwjJOIro5LhKqEWotUffdBjomLVunTRKG
-	 NzEHca0wI56i2eGsa+JdEvudYlEKykdwy7EYceYw=
+	b=CZIMWCnBRM9ZR5gIEJ2PvpCg35uY38/k96RF2sFVBVw0gC2ZTi1YjpPco9Ju8nksZ
+	 tz9C181AgctGPjH5+7JFIZhDb+zbTaaKAg1pLah2j2EeDmlZ+yzHLRHt+2MdrkkTbD
+	 advfGhC8zIdMl3iQ2cEjN3hvWSlRuugWPJHT8q3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 505/809] pinctrl: renesas: r8a779g0: FIX PWM suffixes
-Date: Tue, 30 Jul 2024 17:46:21 +0200
-Message-ID: <20240730151744.683439210@linuxfoundation.org>
+	Hilda Wu <hildawu@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Erpeng Xu <xuerpeng@uniontech.com>
+Subject: [PATCH 6.6 506/568] Bluetooth: btusb: Add RTL8852BE device 0489:e125 to device tables
+Date: Tue, 30 Jul 2024 17:50:13 +0200
+Message-ID: <20240730151659.803456483@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,211 +47,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Hilda Wu <hildawu@realtek.com>
 
-[ Upstream commit 0aabdc9a4d3644fd57d804b283b2ab0f9c28dc6c ]
+commit 295ef07a9dae6182ad4b689aa8c6a7dbba21474c upstream.
 
-PWM channels 0, 2, 8, and 9 do not have alternate pins.
-Remove their "_a" or "_b" suffixes to increase uniformity.
+Add the support ID 0489:e125 to usb_device_id table for
+Realtek RTL8852B chip.
 
-Fixes: c606c2fde2330547 ("pinctrl: renesas: r8a779g0: Add missing PWM")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://lore.kernel.org/abb748e6e1e4e7d78beac7d96e7a0a3481b32e75.1717754960.git.geert+renesas@glider.be
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The device info from /sys/kernel/debug/usb/devices as below.
+
+T:  Bus=01 Lev=01 Prnt=01 Port=07 Cnt=03 Dev#=  5 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e125 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/renesas/pfc-r8a779g0.c | 76 ++++++++++++--------------
- 1 file changed, 36 insertions(+), 40 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-index f9f650f232e6e..3228a61ea4098 100644
---- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
-+++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
-@@ -316,9 +316,9 @@
- #define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_B)		FM(SCK1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_15_12	FM(MSIOF0_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR1_19_16	FM(HTX0)		FM(TX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_27_24	FM(HRTS0_N)		FM(RTS0_N)		FM(PWM9_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR1_31_28	FM(HSCK0)		FM(SCK0)		FM(PWM0_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_27_24	FM(HRTS0_N)		FM(RTS0_N)		FM(PWM9)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR1_31_28	FM(HSCK0)		FM(SCK0)		FM(PWM0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -551,6 +551,8 @@ static const struct usb_device_id quirks
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
- /* IP2SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
- #define IP2SR1_3_0	FM(HRX0)		FM(RX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-@@ -355,7 +355,7 @@
- #define IP1SR2_15_12	FM(CANFD0_RX)		FM(STPWT_EXTFXR)	F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR2_19_16	FM(CANFD2_TX)		FM(TPU0TO2)		F_(0, 0)		FM(TCLK3_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR2_23_20	FM(CANFD2_RX)		FM(TPU0TO3)		FM(PWM1_B)		FM(TCLK4_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
--#define IP1SR2_27_24	FM(CANFD3_TX)		F_(0, 0)		FM(PWM2_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
-+#define IP1SR2_27_24	FM(CANFD3_TX)		F_(0, 0)		FM(PWM2)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- #define IP1SR2_31_28	FM(CANFD3_RX)		F_(0, 0)		FM(PWM3_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
- 
- /* IP2SR2 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
-@@ -827,15 +827,15 @@ static const u16 pinmux_data[] = {
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_23_20,	HCTS0_N),
- 	PINMUX_IPSR_GPSR(IP1SR1_23_20,	CTS0_N),
--	PINMUX_IPSR_GPSR(IP1SR1_23_20,	PWM8_A),
-+	PINMUX_IPSR_GPSR(IP1SR1_23_20,	PWM8),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_27_24,	HRTS0_N),
- 	PINMUX_IPSR_GPSR(IP1SR1_27_24,	RTS0_N),
--	PINMUX_IPSR_GPSR(IP1SR1_27_24,	PWM9_A),
-+	PINMUX_IPSR_GPSR(IP1SR1_27_24,	PWM9),
- 
- 	PINMUX_IPSR_GPSR(IP1SR1_31_28,	HSCK0),
- 	PINMUX_IPSR_GPSR(IP1SR1_31_28,	SCK0),
--	PINMUX_IPSR_GPSR(IP1SR1_31_28,	PWM0_A),
-+	PINMUX_IPSR_GPSR(IP1SR1_31_28,	PWM0),
- 
- 	/* IP2SR1 */
- 	PINMUX_IPSR_GPSR(IP2SR1_3_0,	HRX0),
-@@ -937,7 +937,7 @@ static const u16 pinmux_data[] = {
- 	PINMUX_IPSR_GPSR(IP1SR2_23_20,	TCLK4_A),
- 
- 	PINMUX_IPSR_GPSR(IP1SR2_27_24,	CANFD3_TX),
--	PINMUX_IPSR_GPSR(IP1SR2_27_24,	PWM2_B),
-+	PINMUX_IPSR_GPSR(IP1SR2_27_24,	PWM2),
- 
- 	PINMUX_IPSR_GPSR(IP1SR2_31_28,	CANFD3_RX),
- 	PINMUX_IPSR_GPSR(IP1SR2_31_28,	PWM3_B),
-@@ -2090,13 +2090,13 @@ static const unsigned int pcie1_clkreq_n_mux[] = {
- 	PCIE1_CLKREQ_N_MARK,
- };
- 
--/* - PWM0_A ------------------------------------------------------------------- */
--static const unsigned int pwm0_a_pins[] = {
--	/* PWM0_A */
-+/* - PWM0 ------------------------------------------------------------------- */
-+static const unsigned int pwm0_pins[] = {
-+	/* PWM0 */
- 	RCAR_GP_PIN(1, 15),
- };
--static const unsigned int pwm0_a_mux[] = {
--	PWM0_A_MARK,
-+static const unsigned int pwm0_mux[] = {
-+	PWM0_MARK,
- };
- 
- /* - PWM1_A ------------------------------------------------------------------- */
-@@ -2117,13 +2117,13 @@ static const unsigned int pwm1_b_mux[] = {
- 	PWM1_B_MARK,
- };
- 
--/* - PWM2_B ------------------------------------------------------------------- */
--static const unsigned int pwm2_b_pins[] = {
--	/* PWM2_B */
-+/* - PWM2 ------------------------------------------------------------------- */
-+static const unsigned int pwm2_pins[] = {
-+	/* PWM2 */
- 	RCAR_GP_PIN(2, 14),
- };
--static const unsigned int pwm2_b_mux[] = {
--	PWM2_B_MARK,
-+static const unsigned int pwm2_mux[] = {
-+	PWM2_MARK,
- };
- 
- /* - PWM3_A ------------------------------------------------------------------- */
-@@ -2180,22 +2180,22 @@ static const unsigned int pwm7_mux[] = {
- 	PWM7_MARK,
- };
- 
--/* - PWM8_A ------------------------------------------------------------------- */
--static const unsigned int pwm8_a_pins[] = {
--	/* PWM8_A */
-+/* - PWM8 ------------------------------------------------------------------- */
-+static const unsigned int pwm8_pins[] = {
-+	/* PWM8 */
- 	RCAR_GP_PIN(1, 13),
- };
--static const unsigned int pwm8_a_mux[] = {
--	PWM8_A_MARK,
-+static const unsigned int pwm8_mux[] = {
-+	PWM8_MARK,
- };
- 
--/* - PWM9_A ------------------------------------------------------------------- */
--static const unsigned int pwm9_a_pins[] = {
--	/* PWM9_A */
-+/* - PWM9 ------------------------------------------------------------------- */
-+static const unsigned int pwm9_pins[] = {
-+	/* PWM9 */
- 	RCAR_GP_PIN(1, 14),
- };
--static const unsigned int pwm9_a_mux[] = {
--	PWM9_A_MARK,
-+static const unsigned int pwm9_mux[] = {
-+	PWM9_MARK,
- };
- 
- /* - QSPI0 ------------------------------------------------------------------ */
-@@ -2658,18 +2658,18 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
- 	SH_PFC_PIN_GROUP(pcie0_clkreq_n),
- 	SH_PFC_PIN_GROUP(pcie1_clkreq_n),
- 
--	SH_PFC_PIN_GROUP(pwm0_a),		/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(pwm0),
- 	SH_PFC_PIN_GROUP(pwm1_a),
- 	SH_PFC_PIN_GROUP(pwm1_b),
--	SH_PFC_PIN_GROUP(pwm2_b),		/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(pwm2),
- 	SH_PFC_PIN_GROUP(pwm3_a),
- 	SH_PFC_PIN_GROUP(pwm3_b),
- 	SH_PFC_PIN_GROUP(pwm4),
- 	SH_PFC_PIN_GROUP(pwm5),
- 	SH_PFC_PIN_GROUP(pwm6),
- 	SH_PFC_PIN_GROUP(pwm7),
--	SH_PFC_PIN_GROUP(pwm8_a),		/* suffix might be updated */
--	SH_PFC_PIN_GROUP(pwm9_a),		/* suffix might be updated */
-+	SH_PFC_PIN_GROUP(pwm8),
-+	SH_PFC_PIN_GROUP(pwm9),
- 
- 	SH_PFC_PIN_GROUP(qspi0_ctrl),
- 	BUS_DATA_PIN_GROUP(qspi0_data, 2),
-@@ -2923,8 +2923,7 @@ static const char * const pcie_groups[] = {
- };
- 
- static const char * const pwm0_groups[] = {
--	/* suffix might be updated */
--	"pwm0_a",
-+	"pwm0",
- };
- 
- static const char * const pwm1_groups[] = {
-@@ -2933,8 +2932,7 @@ static const char * const pwm1_groups[] = {
- };
- 
- static const char * const pwm2_groups[] = {
--	/* suffix might be updated */
--	"pwm2_b",
-+	"pwm2",
- };
- 
- static const char * const pwm3_groups[] = {
-@@ -2959,13 +2957,11 @@ static const char * const pwm7_groups[] = {
- };
- 
- static const char * const pwm8_groups[] = {
--	/* suffix might be updated */
--	"pwm8_a",
-+	"pwm8",
- };
- 
- static const char * const pwm9_groups[] = {
--	/* suffix might be updated */
--	"pwm9_a",
-+	"pwm9",
- };
- 
- static const char * const qspi0_groups[] = {
--- 
-2.43.0
-
+ 	/* Realtek Bluetooth devices */
+ 	{ USB_VENDOR_AND_INTERFACE_INFO(0x0bda, 0xe0, 0x01, 0x01),
 
 
