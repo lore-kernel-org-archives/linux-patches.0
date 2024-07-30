@@ -1,255 +1,107 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86391A76B4
-	for <patches@lists.linux.dev>; Tue, 30 Jul 2024 17:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2801A76B6;
+	Tue, 30 Jul 2024 17:28:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360497; cv=none; b=ExJa5nQTngfALh5WJXJdqSlj+DCETdNo2FD8i4ARjHYyx6Ww4xjIONRWZYo7sAGnhQQTW3BsQVsm404U5u7ung7FVVewMosVqForLUFmJhxB354lDYxjKcSY+NiNYX1RUnE0l5+bqucYS1ijNJnXJmH6gQW8YQ+BXjHeHh2TA2Q=
+	t=1722360499; cv=none; b=i6byQFys7RHGRlxTTuamVqbDegEx9rw6oYgOFB6gi3vs1nqg2HGysG3kiWDLkfu+QRoKUnx4he+pco8FkW+cyWYSgTkNTckyXL//M2SUaWm6ZU08BIh49icmN0tn32z4UDzHQOvcQl3NXW2Q4U/2lHr+RRGWONNCNHENHc68zXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360497; c=relaxed/simple;
-	bh=7daEbXGSt0R/2I9y22jF33qxuWpoXdUkkONHXI538qk=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fj4GvLItDzFAcPSAhaXyQxnD4BbkEDD824t8XDsS1uizskF+QM1fZsnBUby/odEhxA4X5Yod3iE66fa6jq1t3X4Ko5o5ehka9aWmFJ0sTLceuCpYF+LUfvJK1jW0c2c9Hh+1EQQ94JpBQhu+yd05iXbQLI4JjETdEGz/nOYzPmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.216])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WYMZ84m1Vz6K8qR;
-	Wed, 31 Jul 2024 01:25:36 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id 056D6140AA7;
-	Wed, 31 Jul 2024 01:28:10 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 30 Jul
- 2024 18:28:09 +0100
-Date: Tue, 30 Jul 2024 18:28:08 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, Jakub
- Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
-	<linux-doc@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
-	<saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
-	<andrew.gospodarek@broadcom.com>, Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>, "David Ahern" <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, "Jiri Pirko" <jiri@nvidia.com>, Leonid
- Bloch <lbloch@nvidia.com>, "Leon Romanovsky" <leonro@nvidia.com>,
-	<linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v2 2/8] fwctl: Basic ioctl dispatch for the character
- device
-Message-ID: <20240730182808.00003af7@Huawei.com>
-In-Reply-To: <20240729170553.GE3625856@nvidia.com>
-References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<2-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<20240726160157.0000797d@Huawei.com>
-	<20240729170553.GE3625856@nvidia.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1722360499; c=relaxed/simple;
+	bh=dw+3KkI9Wu+W+6XsKHVYS7wJiDSQox87yzu8V+BQKZc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MQgXuFqDjEK5giIdevaQky2XqpjUdxRNiNafDL7tnf6GpiR9PJJtRKVziB6cAdlpGr69dcuwh1KBMlv1TZf8VTUbROdmAHtc4+FE+5UF/4tqCtRqe6JpRkGo1unOXSTedfDKjUh/OfjHXSdblLeQSjfb15AH+t9f3zD8ULkEFSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07bkOfw5; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07bkOfw5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C3EC4AF0A;
+	Tue, 30 Jul 2024 17:28:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1722360499;
+	bh=dw+3KkI9Wu+W+6XsKHVYS7wJiDSQox87yzu8V+BQKZc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=07bkOfw5VRb52kI/fUZow96eB5RrFtWHhmUBSwRfxhsBcS3O0yEwaA8mSo+NAAcAJ
+	 +8qI32DCNy2+sJvhCJkzuGdzsUFvfBQMlaAskwXz5ofRLZRqCbiXAv7TfafYYWmuQk
+	 +1dvrhAbrdFq/bupKYn0ekqC6sr7HxR8Aox0QetY=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Matthias Kaehlcke <mka@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Mikulas Patocka <mpatocka@redhat.com>
+Subject: [PATCH 6.10 717/809] dm-verity: fix dm_is_verity_target() when dm-verity is builtin
+Date: Tue, 30 Jul 2024 17:49:53 +0200
+Message-ID: <20240730151753.258753866@linuxfoundation.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
+Content-Transfer-Encoding: 8bit
 
-On Mon, 29 Jul 2024 14:05:53 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
-> On Fri, Jul 26, 2024 at 04:01:57PM +0100, Jonathan Cameron wrote:
-> 
-> > > +struct fwctl_ioctl_op {
-> > > +	unsigned int size;
-> > > +	unsigned int min_size;
-> > > +	unsigned int ioctl_num;
-> > > +	int (*execute)(struct fwctl_ucmd *ucmd);
-> > > +};
-> > > +
-> > > +#define IOCTL_OP(_ioctl, _fn, _struct, _last)                         \
-> > > +	[_IOC_NR(_ioctl) - FWCTL_CMD_BASE] = {                        \  
-> > 
-> > If this is always zero indexed, maybe just drop the - FWCTL_CMD_BASE here
-> > and elsewhere?  Maybe through in a BUILD_BUG to confirm it is always 0.  
-> 
-> I left it like this in case someone had different ideas for the number
-> space (iommufd uses a non 0 base also). I think either is fine, and I
-> slightly prefer keeping it rather than a static_assert.
+------------------
 
-Ok. Feels a little messy to me. But fair enough I guess.
+From: Eric Biggers <ebiggers@kernel.org>
 
+commit 3708c7269593b836b1d684214cd9f5d83e4ed3fd upstream.
 
-> > > +	if (!uctx)
-> > > +		return -ENOMEM;
-> > > +
-> > > +	uctx->fwctl = fwctl;
-> > > +	ret = fwctl->ops->open_uctx(uctx);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	scoped_guard(mutex, &fwctl->uctx_list_lock) {
-> > > +		list_add_tail(&uctx->uctx_list_entry, &fwctl->uctx_list);
-> > > +	}  
-> > 
-> > I guess more may come later but do we need {}?  
-> 
-> I guessed the extra {} would be style guide for this construct?
+When CONFIG_DM_VERITY=y, dm_is_verity_target() returned true for any
+builtin dm target, not just dm-verity.  Fix this by checking for
+verity_target instead of THIS_MODULE (which is NULL for builtin code).
 
-Maybe. Not seen any statements on that yet, and it's becoming
-quite common.
+Fixes: b6c1c5745ccc ("dm: Add verity helpers for LoadPin")
+Cc: stable@vger.kernel.org
+Cc: Matthias Kaehlcke <mka@chromium.org>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/md/dm-verity-target.c |   16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-> 
-> > >  static int fwctl_fops_release(struct inode *inode, struct file *filp)
-> > >  {
-> > > -	struct fwctl_device *fwctl = filp->private_data;
-> > > +	struct fwctl_uctx *uctx = filp->private_data;
-> > > +	struct fwctl_device *fwctl = uctx->fwctl;
-> > >  
-> > > +	scoped_guard(rwsem_read, &fwctl->registration_lock) {
-> > > +		if (fwctl->ops) {  
-> > 
-> > Maybe a comment on when this path happens to help the reader
-> > along. (when the file is closed and device is still alive).
-> > Otherwise was cleaned up already in fwctl_unregister()  
-> 
-> 	scoped_guard(rwsem_read, &fwctl->registration_lock) {
-> 		/*
-> 		 * fwctl_unregister() has already removed the driver and
-> 		 * destroyed the uctx.
-> 		 */
-> 		if (fwctl->ops) {
-> 
+--- a/drivers/md/dm-verity-target.c
++++ b/drivers/md/dm-verity-target.c
+@@ -1539,14 +1539,6 @@ bad:
+ }
+ 
+ /*
+- * Check whether a DM target is a verity target.
+- */
+-bool dm_is_verity_target(struct dm_target *ti)
+-{
+-	return ti->type->module == THIS_MODULE;
+-}
+-
+-/*
+  * Get the verity mode (error behavior) of a verity target.
+  *
+  * Returns the verity mode of the target, or -EINVAL if 'ti' is not a verity
+@@ -1599,6 +1591,14 @@ static struct target_type verity_target
+ };
+ module_dm(verity);
+ 
++/*
++ * Check whether a DM target is a verity target.
++ */
++bool dm_is_verity_target(struct dm_target *ti)
++{
++	return ti->type == &verity_target;
++}
++
+ MODULE_AUTHOR("Mikulas Patocka <mpatocka@redhat.com>");
+ MODULE_AUTHOR("Mandeep Baines <msb@chromium.org>");
+ MODULE_AUTHOR("Will Drewry <wad@chromium.org>");
 
-Good.
-
-> > >  void fwctl_unregister(struct fwctl_device *fwctl)
-> > >  {
-> > > +	struct fwctl_uctx *uctx;
-> > > +
-> > >  	cdev_device_del(&fwctl->cdev, &fwctl->dev);
-> > >  
-> > > +	/* Disable and free the driver's resources for any still open FDs. */
-> > > +	guard(rwsem_write)(&fwctl->registration_lock);
-> > > +	guard(mutex)(&fwctl->uctx_list_lock);
-> > > +	while ((uctx = list_first_entry_or_null(&fwctl->uctx_list,
-> > > +						struct fwctl_uctx,
-> > > +						uctx_list_entry)))
-> > > +		fwctl_destroy_uctx(uctx);
-> > > +  
-> > 
-> > Obviously it's a little more heavy weight but I'd just use
-> > list_for_each_entry_safe()
-> > 
-> > Less effort for reviewers than consider the custom iteration
-> > you are doing instead.  
-> 
-> For these constructs the goal is the make the list empty, it is a
-> tinsy bit safer/clearer to drive the list to empty purposefully rather
-> than iterate over it and hope it is empty once done.
-> 
-> However there is no possible way that list_for_each_entry_safe() would
-> be an unsafe construct here. I can change it if you feel strongly
-
-Meh. You get to maintain this if it flies, so your choice.
-
-> 
-> > > @@ -26,6 +39,10 @@ struct fwctl_device {
-> > >  	struct device dev;
-> > >  	/* private: */
-> > >  	struct cdev cdev;
-> > > +
-> > > +	struct rw_semaphore registration_lock;
-> > > +	struct mutex uctx_list_lock;  
-> > 
-> > Even for private locks, a scope statement would
-> > be good to have.  
-> 
-> Like so?
-> 
-> 	/*
-> 	 * Protect ops, held for write when ops becomes NULL during unregister,
-> 	 * held for read whenver ops is loaded or an ops function is running.
-
-That does the job nicely.
-
-> 	 */
-> 	struct rw_semaphore registration_lock;
-> 	/* Protect uctx_list */
-> 	struct mutex uctx_list_lock;
-
-> 
-> > > +/**
-> > > + * DOC: General ioctl format
-> > > + *
-> > > + * The ioctl interface follows a general format to allow for extensibility. Each
-> > > + * ioctl is passed in a structure pointer as the argument providing the size of
-> > > + * the structure in the first u32. The kernel checks that any structure space
-> > > + * beyond what it understands is 0. This allows userspace to use the backward
-> > > + * compatible portion while consistently using the newer, larger, structures.  
-> > 
-> > Is that particularly helpful?  Userspace needs to know not to put anything in
-> > those fields, not hard for it to also know what the size it should send is?
-> > The two will change together.  
-> 
-> It is very helpful for a practical userspace.
-> 
-> Lets say we have an ioctl struct:
-> 
-> struct fwctl_info {
-> 	__u32 size;
-> 	__u32 flags;
-> 	__u32 out_device_type;
-> 	__u32 device_data_len;
-> 	__aligned_u64 out_device_data;
-> };
-> 
-> And the basic userspace pattern is:
-> 
->   struct fwctl_info info = {.size = sizeof(info), ...);
->   ioctl(fd, FWCTL_INFO, &info);
-> 
-> This works today and generates the 24 byte command.
-> 
-> Tomorrow the kernel adds a new member:
-> 
-> struct fwctl_info {
-> 	__u32 size;
-> 	__u32 flags;
-> 	__u32 out_device_type;
-> 	__u32 device_data_len;
-> 	__aligned_u64 out_device_data;
-> 	__aligned_u64 new_thing;
-> };
-> 
-> Current builds of the userpace use a 24 byte command. A new kernel
-> will see the 24 bytes and behave as before.
-> 
-> When I recompile the userspace with the updated header it will issue a
-> 32 byte command with no source change.
-> 
-> Old kernel will see a 32 byte command with the trailing bytes it
-> doesn't understand as 0 and keep working.
-> 
-> The new kernel will see the new_thing bytes are zero and behave the
-> same as before.
-> 
-> If then the userspace decides to set new_thing the old kernel will
-> stop working. Userspace can use some 'try and fail' approach to try
-> again with new_thing = 0.
-
-I'm not keen on try and fail interfaces because they become messy
-if this has potentially be extended multiple times. Rest
-of argument is fair enough. Thanks for the explanation.
-
-> 
-> It gives a whole bunch of easy paths for userspace, otherwise
-> userspace has to be very careful to match the size of the struct to
-> the ABI it is targetting. Realistically nobody will do that right.
-> 
-> Thanks,
-> Jason
 
