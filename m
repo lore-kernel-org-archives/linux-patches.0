@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E42518801A;
-	Tue, 30 Jul 2024 16:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC6018801A;
+	Tue, 30 Jul 2024 16:58:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358685; cv=none; b=c29hXE0IToPTWPfHpa3KGCz0C8wzo/wTSMAb/yeW8H2DXKxJ4mHFXeav+lq1memRPhzATj/czMtRD9+BWi6e8JPiAX5/OgP4zuiqhzGwX90OZLDleD6o3XUpF1l+icttRR20YPB6DqR7xYyBjr3UL9/I3AyILoujrX5kUDbUXvs=
+	t=1722358688; cv=none; b=gcAOaUI8e4ISdlnlBqb/dXA7k10Nmh1GdvOKiZv0YlghEAMsytNMEOyA4kuI/NDcc/HqgzEM5L9nqheauivXeb3ND+fwCzQJuev/ZMomlsIW1lrz23STa5VeZwAgbQo2KLJ4k/fz/vFRhbVR+v6wKUXilOrliCR9QdG2/u0aomc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358685; c=relaxed/simple;
-	bh=+oHxzLGRHKtpxeEvQOT+hUvGXXytDM+aZ5uJifQG8YU=;
+	s=arc-20240116; t=1722358688; c=relaxed/simple;
+	bh=VPakyLEtFcAbTHg5eNBYximQec0HCkfLkYQtuFrfnEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VIF2llETagR3Nf8jcEpKyHdOtven+AWapJBRuIwMCgv9Jio1owik25Avz0uSrju6xJNRtkTFoe87MI6PrP90qCNiKVA1msLfA6fwqA/AMSiVE5pmjpKYZETf+c18dzFTwYY+LnTNEh2JPXnw+2zXrP6lQZY+oLC2ZYRMqZsYimA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v5ZFGM/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RiWeWVfBwN8zkCWKitoDrV2bFnayu0i00aWZa6Ger2lIsTbLxLbBkplgZ3mW6RRlAPJ0ISOJG+g3SRPOv1RM9R23bqsJwBqc1Q9Qya6ANUf83S48Cas3Ejyu/9EXwIKJ2l19NeoVQuDr9Z64qRLTAHwBaW9kS+Cs3QjY/dtUp4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2CqDyzQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v5ZFGM/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFFEC4AF0A;
-	Tue, 30 Jul 2024 16:58:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2CqDyzQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E4E6C32782;
+	Tue, 30 Jul 2024 16:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358685;
-	bh=+oHxzLGRHKtpxeEvQOT+hUvGXXytDM+aZ5uJifQG8YU=;
+	s=korg; t=1722358688;
+	bh=VPakyLEtFcAbTHg5eNBYximQec0HCkfLkYQtuFrfnEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5ZFGM/AJ0vXPg4iBxUT3u5MEriXYLc0mqoV2+YApUW0W5msK8C6XWpopy3iaBt9X
-	 XaLGNgz/hZSDVyRXvTCX4Wzjd1TKVQL9wv5QkWoZ375jLIphRsReG/Q8ryXkEPaHv3
-	 sh3k+WnOsI1jeTZO1ElNdtuWj9fSMPVqi121NIew=
+	b=F2CqDyzQgIhJDerjVYEQF2nHU1+KvVuXWDMnxhb3YPHGMemnwyN7opvhD43737cVz
+	 H2k+Ax2Ir07HeBWh0qOyeoO9l2mfKOiAZo2PfpdQzrdKIzYZIdri9cMt9kNsqj5m2v
+	 AozUjHrp8cGZDQwtV3rPd41nIMQsOqkarvFTaGgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Bjorn Helgaas <helgaas@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 413/440] netfilter: nft_set_pipapo_avx2: disable softinterrupts
-Date: Tue, 30 Jul 2024 17:50:46 +0200
-Message-ID: <20240730151631.922669378@linuxfoundation.org>
+Subject: [PATCH 6.10 385/809] PCI: keystone: Fix NULL pointer dereference in case of DT error in ks_pcie_setup_rc_app_regs()
+Date: Tue, 30 Jul 2024 17:44:21 +0200
+Message-ID: <20240730151739.876445580@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,75 +48,99 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit a16909ae9982e931841c456061cb57fbaec9c59e ]
+[ Upstream commit a231707a91f323af1e5d9f1722055ec2fc1c7775 ]
 
-We need to disable softinterrupts, else we get following problem:
+If IORESOURCE_MEM is not provided in Device Tree due to
+any error, resource_list_first_type() will return NULL and
+pci_parse_request_of_pci_ranges() will just emit a warning.
 
-1. pipapo_avx2 called from process context; fpu usable
-2. preempt_disable() called, pcpu scratchmap in use
-3. softirq handles rx or tx, we re-enter pipapo_avx2
-4. fpu busy, fallback to generic non-avx version
-5. fallback reuses scratch map and index, which are in use
-   by the preempted process
+This will cause a NULL pointer dereference. Fix this bug by adding NULL
+return check.
 
-Handle this same way as generic version by first disabling
-softinterrupts while the scratchmap is in use.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: f0b3d338064e ("netfilter: nft_set_pipapo_avx2: Add irq_fpu_usable() check, fallback to non-AVX2 version")
-Cc: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 0f71c60ffd26 ("PCI: dwc: Remove storing of PCI resources")
+Link: https://lore.kernel.org/linux-pci/20240505061517.11527-1-amishin@t-argos.ru
+Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+Suggested-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo_avx2.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pci-keystone.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
-index 8910a5ac7ed12..b8d3c3213efee 100644
---- a/net/netfilter/nft_set_pipapo_avx2.c
-+++ b/net/netfilter/nft_set_pipapo_avx2.c
-@@ -1139,8 +1139,14 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
- 	bool map_index;
- 	int i, ret = 0;
+diff --git a/drivers/pci/controller/dwc/pci-keystone.c b/drivers/pci/controller/dwc/pci-keystone.c
+index 57135eee2d7d1..cd0e0022f91d6 100644
+--- a/drivers/pci/controller/dwc/pci-keystone.c
++++ b/drivers/pci/controller/dwc/pci-keystone.c
+@@ -400,17 +400,22 @@ static const struct irq_domain_ops ks_pcie_intx_irq_domain_ops = {
+ 	.xlate = irq_domain_xlate_onetwocell,
+ };
  
--	if (unlikely(!irq_fpu_usable()))
--		return nft_pipapo_lookup(net, set, key, ext);
-+	local_bh_disable();
+-static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
++static int ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+ {
+ 	u32 val;
+ 	u32 num_viewport = ks_pcie->num_viewport;
+ 	struct dw_pcie *pci = ks_pcie->pci;
+ 	struct dw_pcie_rp *pp = &pci->pp;
+-	u64 start, end;
++	struct resource_entry *entry;
+ 	struct resource *mem;
++	u64 start, end;
+ 	int i;
+ 
+-	mem = resource_list_first_type(&pp->bridge->windows, IORESOURCE_MEM)->res;
++	entry = resource_list_first_type(&pp->bridge->windows, IORESOURCE_MEM);
++	if (!entry)
++		return -ENODEV;
 +
-+	if (unlikely(!irq_fpu_usable())) {
-+		bool fallback_res = nft_pipapo_lookup(net, set, key, ext);
++	mem = entry->res;
+ 	start = mem->start;
+ 	end = mem->end;
+ 
+@@ -421,7 +426,7 @@ static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+ 	ks_pcie_clear_dbi_mode(ks_pcie);
+ 
+ 	if (ks_pcie->is_am6)
+-		return;
++		return 0;
+ 
+ 	val = ilog2(OB_WIN_SIZE);
+ 	ks_pcie_app_writel(ks_pcie, OB_SIZE, val);
+@@ -438,6 +443,8 @@ static void ks_pcie_setup_rc_app_regs(struct keystone_pcie *ks_pcie)
+ 	val = ks_pcie_app_readl(ks_pcie, CMD_STATUS);
+ 	val |= OB_XLAT_EN_VAL;
+ 	ks_pcie_app_writel(ks_pcie, CMD_STATUS, val);
 +
-+		local_bh_enable();
-+		return fallback_res;
-+	}
- 
- 	m = rcu_dereference(priv->match);
- 
-@@ -1155,6 +1161,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
- 	scratch = *raw_cpu_ptr(m->scratch);
- 	if (unlikely(!scratch)) {
- 		kernel_fpu_end();
-+		local_bh_enable();
- 		return false;
- 	}
- 
-@@ -1235,6 +1242,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
- 	if (i % 2)
- 		scratch->map_index = !map_index;
- 	kernel_fpu_end();
-+	local_bh_enable();
- 
- 	return ret >= 0;
++	return 0;
  }
+ 
+ static void __iomem *ks_pcie_other_map_bus(struct pci_bus *bus,
+@@ -798,7 +805,10 @@ static int __init ks_pcie_host_init(struct dw_pcie_rp *pp)
+ 		return ret;
+ 
+ 	ks_pcie_stop_link(pci);
+-	ks_pcie_setup_rc_app_regs(ks_pcie);
++	ret = ks_pcie_setup_rc_app_regs(ks_pcie);
++	if (ret)
++		return ret;
++
+ 	writew(PCI_IO_RANGE_TYPE_32 | (PCI_IO_RANGE_TYPE_32 << 8),
+ 			pci->dbi_base + PCI_IO_BASE);
+ 
 -- 
 2.43.0
 
