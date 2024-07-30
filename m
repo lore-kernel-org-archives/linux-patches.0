@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A343B1898EB;
-	Tue, 30 Jul 2024 16:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F98F184549;
+	Tue, 30 Jul 2024 16:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358597; cv=none; b=MyspQR5Py7KXwwJiKzJnJCbUL5t+CsFMqYo3K3QC/TSJCF+DkIORkDeEGJEAw1CibMiNWiGPjQKkGlh521ZNwTG3raX/XXIZ+ycUM9mtTiCdIijGT99Sx0tMRh/u/deIUUpGJfJeAgNhDTSBxv7p4LjRifeS9a/wK/vtrx0FiyU=
+	t=1722358601; cv=none; b=hUp+HV5+pD7tUTMDtejAL023de42E70jrf/EIdLZrO80CDisS3Nm0PXuee19x/71SNZfaaIZJTGtJl348/jew1rI3wbgicjPhYRtC7UD1bxJWtVXLT+R7Otd81ke8k4D3XOssdbMsjPuw+j44LwvX6ohkVjb7Om4nckuY+g1qh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358597; c=relaxed/simple;
-	bh=Y4F6/uWfNzzKioJtNyD05JluOh7TNQUhzc14Juo1YeI=;
+	s=arc-20240116; t=1722358601; c=relaxed/simple;
+	bh=HvllZ+pJQ+1UfBQEoIrU7FoNIEVc4HQFTLMeNgNYnhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D5+VjvRFGlzu+fAsgZhwkfhPjQw9AxHg0kkLLfHABEJKZLMVO1h01Miv1GT1ww5pBxwnuORCqMIBZawDOjg8o6qCYPBBDwViYd5AW3upXRHzrVF5a/lCX/Y4Y3KGm0umNvpqUqTeJFbvyrgIPYDzKkYQSe0dwCWmHiUPF02OFhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uEDdahnr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dg1UfBrlyaNk7RzH6KcVw5vNt0cmC6pNR9DyH37v+TxbUO6STBo7GTweJ3gXN9AGaCO/XhRNDbgyY5pSTt3dp6u1AeGCpbdKGIhroX/iapaRwmqunteinO4/wmxae6MN3Q+uV4MyDQETTqNeqvFiXEpLwkXYPzAWwHzvP+fJaso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K10ltQCh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uEDdahnr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C9F2C32782;
-	Tue, 30 Jul 2024 16:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K10ltQCh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B314C32782;
+	Tue, 30 Jul 2024 16:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358597;
-	bh=Y4F6/uWfNzzKioJtNyD05JluOh7TNQUhzc14Juo1YeI=;
+	s=korg; t=1722358601;
+	bh=HvllZ+pJQ+1UfBQEoIrU7FoNIEVc4HQFTLMeNgNYnhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uEDdahnr+iCgxTrrk/2uoYXLpRIzJiDP/mEH0EyBVz00TWsK69hCW7dsNZVrok15n
-	 KvAk9eAWPt4/qHaVDuru7QjuDkdUgoeNQQMNO2zOwUDnq/X2I6htHLbM9AeHMJ7EfD
-	 eKmp8NN8KmFzaIp5vyKvfeJSMSsC4Zigp9A7f4kY=
+	b=K10ltQCh5zMYFEySEQ/gZZ40QFSReXXjejtlyORV13oSn/nC86yWCLp/T/nxRYV20
+	 dtWVkwTuCGePwuM+WQWjPiEYZEkZYLn77h2KvPrlL3o5O2k8W6sceMKpPZWhgKENvJ
+	 meZzhppkHeSHKgpnXzjv8c7S/hoZuM2vMdMeJF8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@fomichev.me>,
+	Denis Benato <benato.denis96@gmail.com>,
+	"Luke D. Jones" <luke@ljones.dev>,
+	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 405/440] libbpf: Fix no-args func prototype BTF dumping syntax
-Date: Tue, 30 Jul 2024 17:50:38 +0200
-Message-ID: <20240730151631.616493050@linuxfoundation.org>
+Subject: [PATCH 6.10 377/809] platform/x86: asus-wmi: fix TUF laptop RGB variant
+Date: Tue, 30 Jul 2024 17:44:13 +0200
+Message-ID: <20240730151739.552097065@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,100 +47,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Luke D. Jones <luke@ljones.dev>
 
-[ Upstream commit 189f1a976e426011e6a5588f1d3ceedf71fe2965 ]
+[ Upstream commit d8b17a364ec48239fccb65efe74bb485e79e6743 ]
 
-For all these years libbpf's BTF dumper has been emitting not strictly
-valid syntax for function prototypes that have no input arguments.
+In kbd_rgb_mode_store the dev_get_drvdata() call was assuming the device
+data was asus_wmi when it was actually led_classdev.
 
-Instead of `int (*blah)()` we should emit `int (*blah)(void)`.
+This patch corrects this by making the correct chain of calls to get the
+asus_wmi driver data.
 
-This is not normally a problem, but it manifests when we get kfuncs in
-vmlinux.h that have no input arguments. Due to compiler internal
-specifics, we get no BTF information for such kfuncs, if they are not
-declared with proper `(void)`.
-
-The fix is trivial. We also need to adjust a few ancient tests that
-happily assumed `()` is correct.
-
-Fixes: 351131b51c7a ("libbpf: add btf_dump API for BTF-to-C conversion")
-Reported-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@fomichev.me>
-Link: https://lore.kernel.org/bpf/20240712224442.282823-1-andrii@kernel.org
+Fixes: ae834a549ec1 ("platform/x86: asus-wmi: add support variant of TUF RGB")
+Tested-by: Denis Benato <benato.denis96@gmail.com>
+Signed-off-by: Luke D. Jones <luke@ljones.dev>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240716011130.17464-2-luke@ljones.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c                                  | 8 +++++---
- .../selftests/bpf/progs/btf_dump_test_case_multidim.c     | 4 ++--
- .../selftests/bpf/progs/btf_dump_test_case_syntax.c       | 4 ++--
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/platform/x86/asus-wmi.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 713264899250a..cfdee656789b2 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -1521,10 +1521,12 @@ static void btf_dump_emit_type_chain(struct btf_dump *d,
- 			 * Clang for BPF target generates func_proto with no
- 			 * args as a func_proto with a single void arg (e.g.,
- 			 * `int (*f)(void)` vs just `int (*f)()`). We are
--			 * going to pretend there are no args for such case.
-+			 * going to emit valid empty args (void) syntax for
-+			 * such case. Similarly and conveniently, valid
-+			 * no args case can be special-cased here as well.
- 			 */
--			if (vlen == 1 && p->type == 0) {
--				btf_dump_printf(d, ")");
-+			if (vlen == 0 || (vlen == 1 && p->type == 0)) {
-+				btf_dump_printf(d, "void)");
- 				return;
- 			}
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 3f9b6285c9a66..bc9c5db383244 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -879,10 +879,14 @@ static ssize_t kbd_rgb_mode_store(struct device *dev,
+ 				 struct device_attribute *attr,
+ 				 const char *buf, size_t count)
+ {
+-	struct asus_wmi *asus = dev_get_drvdata(dev);
+ 	u32 cmd, mode, r, g, b, speed;
++	struct led_classdev *led;
++	struct asus_wmi *asus;
+ 	int err;
  
-diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
-index ba97165bdb282..a657651eba523 100644
---- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
-+++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_multidim.c
-@@ -14,9 +14,9 @@ typedef int *ptr_arr_t[6];
++	led = dev_get_drvdata(dev);
++	asus = container_of(led, struct asus_wmi, kbd_led);
++
+ 	if (sscanf(buf, "%d %d %d %d %d %d", &cmd, &mode, &r, &g, &b, &speed) != 6)
+ 		return -EINVAL;
  
- typedef int *ptr_multiarr_t[7][8][9][10];
- 
--typedef int * (*fn_ptr_arr_t[11])();
-+typedef int * (*fn_ptr_arr_t[11])(void);
- 
--typedef int * (*fn_ptr_multiarr_t[12][13])();
-+typedef int * (*fn_ptr_multiarr_t[12][13])(void);
- 
- struct root_struct {
- 	arr_t _1;
-diff --git a/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c b/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
-index 4ee4748133fec..9355e323d40cf 100644
---- a/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
-+++ b/tools/testing/selftests/bpf/progs/btf_dump_test_case_syntax.c
-@@ -67,7 +67,7 @@ typedef void (*printf_fn_t)(const char *, ...);
-  *   `int -> char *` function and returns pointer to a char. Equivalent:
-  *   typedef char * (*fn_input_t)(int);
-  *   typedef char * (*fn_output_outer_t)(fn_input_t);
-- *   typedef const fn_output_outer_t (* fn_output_inner_t)();
-+ *   typedef const fn_output_outer_t (* fn_output_inner_t)(void);
-  *   typedef const fn_output_inner_t fn_ptr_arr2_t[5];
-  */
- /* ----- START-EXPECTED-OUTPUT ----- */
-@@ -94,7 +94,7 @@ typedef void (* (*signal_t)(int, void (*)(int)))(int);
- 
- typedef char * (*fn_ptr_arr1_t[10])(int **);
- 
--typedef char * (* (* const fn_ptr_arr2_t[5])())(char * (*)(int));
-+typedef char * (* (* const fn_ptr_arr2_t[5])(void))(char * (*)(int));
- 
- struct struct_w_typedefs {
- 	int_t a;
 -- 
 2.43.0
 
