@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AEA83A17;
-	Tue, 30 Jul 2024 17:01:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC0A156F30;
+	Tue, 30 Jul 2024 17:01:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358872; cv=none; b=RokDACwF1yMQdHs+N+JDxwJPKXwCZ7uKn3ObRoDXsa2hKxbcFgZNeqICwA+pLzCLu8Ads1q8bNUQiIWvfLPpwQ02KSfD8NGMs10wZCr2YoBlGmVHTInFZWHtpqa4QU/RqX1IhTvifbQCXq26I8aDpiDhHriPmuy0bi9X/jlsMyg=
+	t=1722358875; cv=none; b=tTF2tT74qUJx4rlppD4WR27PoVdk88WDz630ud1I158plJwz/1WeqR9PWMeNeEoRW7S0oOhIktMpfxFcDneEymgQUrL59/e5F/xq3gbrcTr3kaWcQj8BsCa55ETaf/RoU/u/NXvADWHQTE6sS0EXUgXB/JNdfaSdsKzPtiaDZ6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358872; c=relaxed/simple;
-	bh=8BEEc+NnXBZsKH4VgEyfddxmj2SAxBf7MsIJDIfpknQ=;
+	s=arc-20240116; t=1722358875; c=relaxed/simple;
+	bh=xdGcYtN8pm/FeQQ1lf7XUZvO7rzt6IPbGdiALeKmDOM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SCCqny8iKZUmBnq3F8szh+WV5Nu3yKGrtYjlm8v66pX79Uz5J0iOW13Pn34JXz0jMVKAfiri0RmYN1WsBch2a2CKelQmyfvh0/ROhUXXf0KeKXucnws8tKeFHfzhGY5I1c2/0YRLdS+al9193ledCC+M56OSoyT2EanDED2cG5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGtdQxG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ve3tnNch5qG3tiseC0uRnf9ZkMajqnw9Lr4tuZXlJeIZ3LGWrqNKiI02712jcNVP40RqWoAJu0FHYoqrc7fNltNNKUxAuSGWj6EK6h0wfzAf/qH07gyCkseXIpmVdQIMWZWBxkKFpYwA1b+JeYv8+JoowoWNu339jl3zcveJpDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6Ai8Rag; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGtdQxG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FE7C4AF0A;
-	Tue, 30 Jul 2024 17:01:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6Ai8Rag"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C323FC32782;
+	Tue, 30 Jul 2024 17:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358871;
-	bh=8BEEc+NnXBZsKH4VgEyfddxmj2SAxBf7MsIJDIfpknQ=;
+	s=korg; t=1722358875;
+	bh=xdGcYtN8pm/FeQQ1lf7XUZvO7rzt6IPbGdiALeKmDOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGtdQxG8CAh9itR6wzn7S9F/wrLS6kuP8cOxcbqofe/mPJ+PgzRMiBsnugsXsy5pO
-	 U1mmSB5gGxCZ5Y/QLy8355+6/N/acf0zSyhtf9YUIHTOGAKb8f5mrsP9uRtzo+ledd
-	 VcCeGaXDFmRoD71mfbYFbwLJNiCxR+aYn8sCBKeo=
+	b=W6Ai8RagPfQrRbsM/i1yuXICX8myD1FFpnuwAd2rPjcpfqBVI5RTdjyXkRPTVpYdV
+	 nZ8TOmxno5gym3XN00QPN6hpHh8CJGTOkTR5zZAaK71VGKEJz7Qe3/oig0h8qbuVk7
+	 FJVr7IY7P5tzAHz9wfE3o5o/f2RNmz8nGYbnz0Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Tremblay <vincent@vtremblay.dev>,
-	Mark Brown <broonie@kernel.org>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 429/440] spidev: Add Silicon Labs EM3581 device compatible
-Date: Tue, 30 Jul 2024 17:51:02 +0200
-Message-ID: <20240730151632.534983164@linuxfoundation.org>
+Subject: [PATCH 6.10 404/809] powerpc/kexec_file: fix cpus node update to FDT
+Date: Tue, 30 Jul 2024 17:44:40 +0200
+Message-ID: <20240730151740.645289585@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +47,121 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vincent Tremblay <vincent@vtremblay.dev>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit c67d90e058550403a3e6f9b05bfcdcfa12b1815c ]
+[ Upstream commit 932bed41217059638c78a75411b7893b121d2162 ]
 
-Add compatible string for Silicon Labs EM3581 device.
+While updating the cpus node, commit 40c753993e3a ("powerpc/kexec_file:
+ Use current CPU info while setting up FDT") first deletes all subnodes
+under the /cpus node. However, while adding sub-nodes back, it missed
+adding cpus subnodes whose device_type != "cpu", such as l2-cache*,
+l3-cache*, ibm,powerpc-cpu-features.
 
-Signed-off-by: Vincent Tremblay <vincent@vtremblay.dev>
-Link: https://lore.kernel.org/r/20221227023550.569547-2-vincent@vtremblay.dev
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: fc28d1c1fe3b ("spi: spidev: add correct compatible for Rohm BH2228FV")
+Fix this by only deleting cpus sub-nodes of device_type == "cpus" and
+then adding all available nodes with device_type == "cpu".
+
+Fixes: 40c753993e3a ("powerpc/kexec_file: Use current CPU info while setting up FDT")
+Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240510102235.2269496-3-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kexec/core_64.c | 53 +++++++++++++++++++++++++-----------
+ 1 file changed, 37 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index 71c3db60e9687..2be7138acc38a 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -700,6 +700,7 @@ static const struct spi_device_id spidev_spi_ids[] = {
- 	{ .name = "m53cpld" },
- 	{ .name = "spi-petra" },
- 	{ .name = "spi-authenta" },
-+	{ .name = "em3581" },
- 	{},
- };
- MODULE_DEVICE_TABLE(spi, spidev_spi_ids);
-@@ -726,6 +727,7 @@ static const struct of_device_id spidev_dt_ids[] = {
- 	{ .compatible = "menlo,m53cpld", .data = &spidev_of_check },
- 	{ .compatible = "cisco,spi-petra", .data = &spidev_of_check },
- 	{ .compatible = "micron,spi-authenta", .data = &spidev_of_check },
-+	{ .compatible = "silabs,em3581", .data = &spidev_of_check },
- 	{},
- };
- MODULE_DEVICE_TABLE(of, spidev_dt_ids);
+diff --git a/arch/powerpc/kexec/core_64.c b/arch/powerpc/kexec/core_64.c
+index 72b12bc10f90b..222aa326dacee 100644
+--- a/arch/powerpc/kexec/core_64.c
++++ b/arch/powerpc/kexec/core_64.c
+@@ -467,9 +467,15 @@ static int add_node_props(void *fdt, int node_offset, const struct device_node *
+  * @fdt:              Flattened device tree of the kernel.
+  *
+  * Returns 0 on success, negative errno on error.
++ *
++ * Note: expecting no subnodes under /cpus/<node> with device_type == "cpu".
++ * If this changes, update this function to include them.
+  */
+ int update_cpus_node(void *fdt)
+ {
++	int prev_node_offset;
++	const char *device_type;
++	const struct fdt_property *prop;
+ 	struct device_node *cpus_node, *dn;
+ 	int cpus_offset, cpus_subnode_offset, ret = 0;
+ 
+@@ -480,30 +486,44 @@ int update_cpus_node(void *fdt)
+ 		return cpus_offset;
+ 	}
+ 
+-	if (cpus_offset > 0) {
+-		ret = fdt_del_node(fdt, cpus_offset);
++	prev_node_offset = cpus_offset;
++	/* Delete sub-nodes of /cpus node with device_type == "cpu" */
++	for (cpus_subnode_offset = fdt_first_subnode(fdt, cpus_offset); cpus_subnode_offset >= 0;) {
++		/* Ignore nodes that do not have a device_type property or device_type != "cpu" */
++		prop = fdt_get_property(fdt, cpus_subnode_offset, "device_type", NULL);
++		if (!prop || strcmp(prop->data, "cpu")) {
++			prev_node_offset = cpus_subnode_offset;
++			goto next_node;
++		}
++
++		ret = fdt_del_node(fdt, cpus_subnode_offset);
+ 		if (ret < 0) {
+-			pr_err("Error deleting /cpus node: %s\n", fdt_strerror(ret));
+-			return -EINVAL;
++			pr_err("Failed to delete a cpus sub-node: %s\n", fdt_strerror(ret));
++			return ret;
+ 		}
++next_node:
++		if (prev_node_offset == cpus_offset)
++			cpus_subnode_offset = fdt_first_subnode(fdt, cpus_offset);
++		else
++			cpus_subnode_offset = fdt_next_subnode(fdt, prev_node_offset);
+ 	}
+ 
+-	/* Add cpus node to fdt */
+-	cpus_offset = fdt_add_subnode(fdt, fdt_path_offset(fdt, "/"), "cpus");
+-	if (cpus_offset < 0) {
+-		pr_err("Error creating /cpus node: %s\n", fdt_strerror(cpus_offset));
++	cpus_node = of_find_node_by_path("/cpus");
++	/* Fail here to avoid kexec/kdump kernel boot hung */
++	if (!cpus_node) {
++		pr_err("No /cpus node found\n");
+ 		return -EINVAL;
+ 	}
+ 
+-	/* Add cpus node properties */
+-	cpus_node = of_find_node_by_path("/cpus");
+-	ret = add_node_props(fdt, cpus_offset, cpus_node);
+-	of_node_put(cpus_node);
+-	if (ret < 0)
+-		return ret;
++	/* Add all /cpus sub-nodes of device_type == "cpu" to FDT */
++	for_each_child_of_node(cpus_node, dn) {
++		/* Ignore device nodes that do not have a device_type property
++		 * or device_type != "cpu".
++		 */
++		device_type = of_get_property(dn, "device_type", NULL);
++		if (!device_type || strcmp(device_type, "cpu"))
++			continue;
+ 
+-	/* Loop through all subnodes of cpus and add them to fdt */
+-	for_each_node_by_type(dn, "cpu") {
+ 		cpus_subnode_offset = fdt_add_subnode(fdt, cpus_offset, dn->full_name);
+ 		if (cpus_subnode_offset < 0) {
+ 			pr_err("Unable to add %s subnode: %s\n", dn->full_name,
+@@ -517,6 +537,7 @@ int update_cpus_node(void *fdt)
+ 			goto out;
+ 	}
+ out:
++	of_node_put(cpus_node);
+ 	of_node_put(dn);
+ 	return ret;
+ }
 -- 
 2.43.0
 
