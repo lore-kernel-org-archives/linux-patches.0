@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614E11A76A7;
-	Tue, 30 Jul 2024 17:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A46621A76B1;
+	Tue, 30 Jul 2024 17:17:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359866; cv=none; b=NNe4byH4EdylgXXDm2+wL05Luc9mnBMpnG5yXH/22A2N8EKwKXmE5NMBmeMbZl9ZJ9l3ORY1eAUixgiW5BKsHftOqfMWlu0TICfwmPfkxk6pHcZ/WvaJtYDomi6xuCz3jeGcZj/z9aTYV49KA/29pw+VtysjtCu3x4q9tWg5rQ0=
+	t=1722359869; cv=none; b=lrbz7MIZDpDjIxso0suGFii3n8lStT8FZQ2vPUWIBfVqjemeFjqlZaTz/xWV/0UBOlDU/DEPC8KfswCBTU9LTTyPJy7feDEtCJpqGBUqC6ew3+v6H8C5B8CRt0dZm3v6tyMw9Xbt+ekGZsQToH6qX8+O9TIbba+tFLmdg9QxC3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359866; c=relaxed/simple;
-	bh=xXJF6qXqUnSNPhhVXd/FvdtOtHV4WNGPEAxWRewBUH4=;
+	s=arc-20240116; t=1722359869; c=relaxed/simple;
+	bh=PM+Jpe9f8/YbFjXYi6+YtkX/I1j6FrclMQMcmNh0Mkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZp8pwOjV5hZyBKezmrkfksHJiCmuP+b9ReWFsSjwSg5ZnxyY3YGOO1ZU4ZjylNxt4UhK5NFfj1hmVlxj+P+0bKur/4/bNpoEayi7BnYJVW9W5jVEmy4ktO4cuCfe0h7K+w/A5KbUGC+c3DX2+rIVf5l+1ZRNnNnD/xI9SV81H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kA6SFYoX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uPzs0oo5U4lfuZCIN0owmi9WmttiqUvGBaDSocJSluedOzuPhphUqEB4s/wD1yqxGF/5PsKfESIZf68rHKblvNKGI9+FyfedzxlRok558DM0zR8Szu3E7iW61qMND/zfCGOpW2uAEGwqIWl08oPjllPL6vl5oAjpSnLmxW89mtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IYtU054O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kA6SFYoX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C015FC4AF0A;
-	Tue, 30 Jul 2024 17:17:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IYtU054O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D34C4AF0C;
+	Tue, 30 Jul 2024 17:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359866;
-	bh=xXJF6qXqUnSNPhhVXd/FvdtOtHV4WNGPEAxWRewBUH4=;
+	s=korg; t=1722359869;
+	bh=PM+Jpe9f8/YbFjXYi6+YtkX/I1j6FrclMQMcmNh0Mkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kA6SFYoXWP/bxRAjk0Mt/SO+yjzpD6MdJ/pTAuypHSayH9k8oSg/3ljyOENzzBO5U
-	 1Zxl/YMuAmnN7AcS1rB+VLvXCy3nM55uOojq7YygbMVO2mXFWzlqLw0W5fGilkSB60
-	 igA3fXKAYLsv4xsgAV925Vt+VS4zdEmtCxDsB1hc=
+	b=IYtU054OLs62WxDUty0Pa4sLdYUpow4Laur8BSLgPd5DJScYqYZypIVkROv3Qb9sW
+	 9pMEpoYKmzjq/cHaV20FcUeu7Z6500/fKP7b+mTYCFf3NAQJHjIzGqVBdGgkJwzrEp
+	 hu1HW2ARbTbHZDYd6VEzHaiega9WLbZWm3vOoTIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Elfring <elfring@users.sourceforge.net>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 548/568] auxdisplay: ht16k33: Drop reference after LED registration
-Date: Tue, 30 Jul 2024 17:50:55 +0200
-Message-ID: <20240730151701.581837082@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.10 547/809] dt-bindings: thermal: correct thermal zone node name limit
+Date: Tue, 30 Jul 2024 17:47:03 +0200
+Message-ID: <20240730151746.359528600@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Markus Elfring <elfring@users.sourceforge.net>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 2ccfe94bc3ac980d2d1df9f7a0b2c6d2137abe55 ]
+commit 97e32381d0fc6c2602a767b0c46e15eb2b75971d upstream.
 
-The reference count is bumped by device_get_named_child_node()
-and never dropped. Since LED APIs do not require it to be
-bumped by the user, drop the reference after LED registration.
+Linux kernel uses thermal zone node name during registering thermal
+zones and has a hard-coded limit of 20 characters, including terminating
+NUL byte.  The bindings expect node names to finish with '-thermal'
+which is eight bytes long, thus we have only 11 characters for the reset
+of the node name (thus 10 for the pattern after leading fixed character).
 
-[andy: rewritten the commit message and amended the change]
-
-Fixes: c223d9c636ed ("auxdisplay: ht16k33: Add LED support")
-Signed-off-by: Markus Elfring <elfring@users.sourceforge.net>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/all/CAL_JsqKogbT_4DPd1n94xqeHaU_J8ve5K09WOyVsRX3jxxUW3w@mail.gmail.com/
+Fixes: 1202a442a31f ("dt-bindings: thermal: Add yaml bindings for thermal zones")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240702145248.47184-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/auxdisplay/ht16k33.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/thermal/thermal-zones.yaml |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/auxdisplay/ht16k33.c b/drivers/auxdisplay/ht16k33.c
-index 3a2d883872249..b360ddefc4238 100644
---- a/drivers/auxdisplay/ht16k33.c
-+++ b/drivers/auxdisplay/ht16k33.c
-@@ -507,6 +507,7 @@ static int ht16k33_led_probe(struct device *dev, struct led_classdev *led,
- 	led->max_brightness = MAX_BRIGHTNESS;
+--- a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
++++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+@@ -49,7 +49,10 @@ properties:
+       to take when the temperature crosses those thresholds.
  
- 	err = devm_led_classdev_register_ext(dev, led, &init_data);
-+	fwnode_handle_put(init_data.fwnode);
- 	if (err)
- 		dev_err(dev, "Failed to register LED\n");
- 
--- 
-2.43.0
-
+ patternProperties:
+-  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
++  # Node name is limited in size due to Linux kernel requirements - 19
++  # characters in total (see THERMAL_NAME_LENGTH, including terminating NUL
++  # byte):
++  "^[a-zA-Z][a-zA-Z0-9\\-]{1,10}-thermal$":
+     type: object
+     description:
+       Each thermal zone node contains information about how frequently it
 
 
