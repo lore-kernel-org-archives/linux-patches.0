@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453531A76AE;
-	Tue, 30 Jul 2024 17:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58F13184556;
+	Tue, 30 Jul 2024 17:21:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360083; cv=none; b=Q8dGmSkcMasd+k/gWrP6/qx2Od1wXL4fv1uQ0GkzB5/36HBoV0ksx1ybuNdK9maCswu2r+MPS1sA2h0auyfanlwrIJbmJ8x2ARuEbhP01La6VFMyvNPvm0iWzAfgOA6aYO6qxtrtjfM+3M9yFDTvBTIN72mhGRwjHUp92yZVGWs=
+	t=1722360086; cv=none; b=YGogADgtkdpyB3ki4W0Cp77nO3XZ5VK7xF2NvQdQwJQfaQ6FIqT3C1furjSvfmwO/XMafejl7mXq2kwfYbFslH1wyvVNuwjB9C1T1l4IHDpohrXsr/FP0I2zXr09Hg/k7QKvmxrU+kIYhFN6fIt1q1h+7wq0zScIMRQD3nv0ptk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360083; c=relaxed/simple;
-	bh=EqppSayDNs6k9OhVIL780PFVfIGFNoNIkolzO+KweHo=;
+	s=arc-20240116; t=1722360086; c=relaxed/simple;
+	bh=oxvlNXz5mLJpqEi/Df1NCC1mzd6TUjkWoHvq/113Qvc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nxQsRf3ZD2efbyH6NBQ1DY7oYRRGnJksRKs6dyu6axUTEGGJXKVmsqKIB5NnaOY+fng4PaD24/bWEdn8EpdunAioT2htVeYDVqlFYBIEYoRooG0kqGF0GGsN0XhcGPNxz7u4C16K4oWMP9iIQwOlgTzAEQKRsuMu1ItU/dZkcaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfL2Cf22; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=taEPVSIWoSPiVxmaflgXnu7MaGXFKV2qTENjo/3+GO17e/HMBy9REIOsc2TEeWAJc6kquhI/t9ECaSvxEJXIUOp/LNeMQBwrI+1qXFe1aELRZ7ExrMe7CNI+Q9h5wTSJb7PuepJZ2ulZKufo3yWXpBSpWBRKG8piDgfHZ6Bk6Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OC9x28PW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfL2Cf22"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A39C4AF0F;
-	Tue, 30 Jul 2024 17:21:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OC9x28PW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54DFC32782;
+	Tue, 30 Jul 2024 17:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360083;
-	bh=EqppSayDNs6k9OhVIL780PFVfIGFNoNIkolzO+KweHo=;
+	s=korg; t=1722360086;
+	bh=oxvlNXz5mLJpqEi/Df1NCC1mzd6TUjkWoHvq/113Qvc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfL2Cf22onc8CM8AFkrufpGVoc89oTZbRajqlOgr36v9zI5ONovV88WFnmDbHgkhg
-	 in6vtleCpW0Fw+tnbJe5uFD+7+KWrW7HmCV7fxHKI99MSY+oN+Hp7ZU8LmuBB5o5FV
-	 W7b5zq90sIxee8htArTUqOKkQPxnhY8Q4gAmDZ/I=
+	b=OC9x28PWmepn0smeTO2R5AcocC1ZXSpJxt1QJM+jG7AgvXsnJAnE15p3FfPDqesFh
+	 5JKaVC+XC3W7AojLkOvD0fdhRtGBeq6NaeqPIpfmh9bio/ZQnGWzPhjYJNY/w+P7qs
+	 bLQ5sdJaCaVPtYg1wV8ntQUuVhYG9GNFkC3EVd4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.10 562/809] md/raid5: fix spares errors about rcu usage
-Date: Tue, 30 Jul 2024 17:47:18 +0200
-Message-ID: <20240730151746.960964067@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 567/568] nvme-pci: add missing condition check for existence of mapped data
+Date: Tue, 30 Jul 2024 17:51:14 +0200
+Message-ID: <20240730151702.318956035@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,88 +49,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit 2314c2e3a70521f055dd011245dccf6fd97c7ee0 upstream.
+[ Upstream commit c31fad1470389666ac7169fe43aa65bf5b7e2cfd ]
 
-As commit ad8606702f26 ("md/raid5: remove rcu protection to access rdev
-from conf") explains, rcu protection can be removed, however, there are
-three places left, there won't be any real problems.
+nvme_map_data() is called when request has physical segments, hence
+the nvme_unmap_data() should have same condition to avoid dereference.
 
-drivers/md/raid5.c:8071:24: error: incompatible types in comparison expression (different address spaces):
-drivers/md/raid5.c:8071:24:    struct md_rdev [noderef] __rcu *
-drivers/md/raid5.c:8071:24:    struct md_rdev *
-drivers/md/raid5.c:7569:25: error: incompatible types in comparison expression (different address spaces):
-drivers/md/raid5.c:7569:25:    struct md_rdev [noderef] __rcu *
-drivers/md/raid5.c:7569:25:    struct md_rdev *
-drivers/md/raid5.c:7573:25: error: incompatible types in comparison expression (different address spaces):
-drivers/md/raid5.c:7573:25:    struct md_rdev [noderef] __rcu *
-drivers/md/raid5.c:7573:25:    struct md_rdev *
-
-Fixes: ad8606702f26 ("md/raid5: remove rcu protection to access rdev from conf")
-Cc: stable@vger.kernel.org
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240615085143.1648223-1-yukuai1@huaweicloud.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4aedb705437f ("nvme-pci: split metadata handling from nvme_map_data / nvme_unmap_data")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/nvme/host/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -155,7 +155,7 @@ static int raid6_idx_to_slot(int idx, st
- 	return slot;
- }
- 
--static void print_raid5_conf (struct r5conf *conf);
-+static void print_raid5_conf(struct r5conf *conf);
- 
- static int stripe_operations_active(struct stripe_head *sh)
- {
-@@ -7580,11 +7580,11 @@ static struct r5conf *setup_conf(struct
- 		if (test_bit(Replacement, &rdev->flags)) {
- 			if (disk->replacement)
- 				goto abort;
--			RCU_INIT_POINTER(disk->replacement, rdev);
-+			disk->replacement = rdev;
- 		} else {
- 			if (disk->rdev)
- 				goto abort;
--			RCU_INIT_POINTER(disk->rdev, rdev);
-+			disk->rdev = rdev;
- 		}
- 
- 		if (test_bit(In_sync, &rdev->flags)) {
-@@ -8066,7 +8066,7 @@ static void raid5_status(struct seq_file
- 	seq_printf (seq, "]");
- }
- 
--static void print_raid5_conf (struct r5conf *conf)
-+static void print_raid5_conf(struct r5conf *conf)
- {
- 	struct md_rdev *rdev;
- 	int i;
-@@ -8080,15 +8080,13 @@ static void print_raid5_conf (struct r5c
- 	       conf->raid_disks,
- 	       conf->raid_disks - conf->mddev->degraded);
- 
--	rcu_read_lock();
- 	for (i = 0; i < conf->raid_disks; i++) {
--		rdev = rcu_dereference(conf->disks[i].rdev);
-+		rdev = conf->disks[i].rdev;
- 		if (rdev)
- 			pr_debug(" disk %d, o:%d, dev:%pg\n",
- 			       i, !test_bit(Faulty, &rdev->flags),
- 			       rdev->bdev);
- 	}
--	rcu_read_unlock();
- }
- 
- static int raid5_spare_active(struct mddev *mddev)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 7c71431dbd6cc..796c2a00fea4a 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -863,7 +863,8 @@ static blk_status_t nvme_prep_rq(struct nvme_dev *dev, struct request *req)
+ 	nvme_start_request(req);
+ 	return BLK_STS_OK;
+ out_unmap_data:
+-	nvme_unmap_data(dev, req);
++	if (blk_rq_nr_phys_segments(req))
++		nvme_unmap_data(dev, req);
+ out_free_cmd:
+ 	nvme_cleanup_cmd(req);
+ 	return ret;
+-- 
+2.43.0
+
 
 
