@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98571A6192;
-	Tue, 30 Jul 2024 16:31:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A47F1A6192;
+	Tue, 30 Jul 2024 16:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357091; cv=none; b=bmFBhVPVU2s6jnGosfuOIKGIox+xFFENLZZfBobIknHDYVWkMSd2rSViYFV+clHJtuXh63cOG7IoaYIJSi45ClpEHk/bt7ZAOqAD8NCbgnUHpP1pYKq01ZhKWpIv3ZhLF/qkyinbFG04RWlVoZ1YgwX7jQD35asNKNVyAKxl11I=
+	t=1722357095; cv=none; b=tWXL3/EqHKhsTvtJtaE3HwWAbnWsi6hjmpgrZmJtPNXpjlS98FXXhIhRAKVfygQ/GybmYijOCzc3QwbVR8iiynWIChv1uQK05DG98XT5M+EDhq4UD/clJi5bq+VIKYUZ92TWpVoIbzzZaHrRA3aXu4VB3v540fnQcB6wjr+7Mhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357091; c=relaxed/simple;
-	bh=3ucQ6l6toXeV63tExeD1QjLFYqwvMstG1+aINJ9k0Qk=;
+	s=arc-20240116; t=1722357095; c=relaxed/simple;
+	bh=RgEOggoP/HO8civrs5ivWlzKnYQ6v9t2QZ273yjMBMQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAaUaseiyGBIOBIB+Mf07uXdKDzbPrHAiotKpKHychOZ4M65jOryEUvHz081cd656dPGY5TvJXXIdGnE74gNWwgQFUMiYqQ9WURLhHW4mBQCam8aqWgrWtXcSsvsDm2ArLYHFgNE1JVbUL1LaeFlwBvv2EuYZND30nIdd8rs9Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T2YSspwH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XywyM1inOanRqI4uPS/tclOgdqRrJQ6eNe2W4D7AZxn0iuE4fmY+bJv/vhtza4II0YHAUw+IkygmkiFTqlyk6Xlo7p+f3/ESLQ8EhuBVQz16Dw1kWWhpYsL2OZvCbW/UN93CncLL8BqeKhv1N6ES9jOgRYB2lRi7olNfTf/uLIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nP3tdXGt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T2YSspwH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFCCC32782;
-	Tue, 30 Jul 2024 16:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nP3tdXGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D56EC32782;
+	Tue, 30 Jul 2024 16:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357091;
-	bh=3ucQ6l6toXeV63tExeD1QjLFYqwvMstG1+aINJ9k0Qk=;
+	s=korg; t=1722357095;
+	bh=RgEOggoP/HO8civrs5ivWlzKnYQ6v9t2QZ273yjMBMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T2YSspwH6mZdg/DwK17jHNc4Ovpbo0iiACc6yCrPR48Vt+/2hJKWh0BxPbuhab5m2
-	 3LL33oywq02SlOKiYKNh8u5O+EtsIFgdVJWtxgb6fOVQnZKxWV0lrRpmniZEgkPDJk
-	 Q2lL2oBJnyIPklRSPgKFcbIQLpzOCIEkxHGVdBqM=
+	b=nP3tdXGtbu7SaCy2bxcip4/Gak+gPBNpRmH+3T/PVzi5pSoPXAtj63JJ/uQW2007J
+	 wpPvUYxLF3qeazwj8Jm1rpkdKJU6fNZ2wMtUsEd5vjx9WEFN3WtUiYxsdJDTFK0OmL
+	 H6fyODLXAoHoKTPtDwTQrjNR8AM8w04ePUkWtVNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Kaistra <martin.kaistra@linutronix.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Hsiao Chien Sung <shawn.sung@mediatek.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 217/809] wifi: rtl8xxxu: 8188f: Limit TX power index
-Date: Tue, 30 Jul 2024 17:41:33 +0200
-Message-ID: <20240730151733.178060662@linuxfoundation.org>
+Subject: [PATCH 6.6 217/568] drm/mediatek: Fix destination alpha error in OVL
+Date: Tue, 30 Jul 2024 17:45:24 +0200
+Message-ID: <20240730151648.352656851@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,71 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Kaistra <martin.kaistra@linutronix.de>
+From: Hsiao Chien Sung <shawn.sung@mediatek.com>
 
-[ Upstream commit d0b4b8ef083ca46d5d318e66a30fb80e0abbb90d ]
+[ Upstream commit 31c0fbf67c8c0bb38d7fb21d404ea3dbd619d99e ]
 
-TX power index is read from the efuse on init, the values get written to
-the TX power registers when the channel gets switched.
+The formula of Coverage alpha blending is:
+dst.a = dst.a * (0xff - src.a * SCA / 0xff) / 0xff
+      + src.a * SCA / 0xff
 
-When the chip has not yet been calibrated, the efuse values are 0xFF,
-which on some boards leads to USB timeouts for reading/writing registers
-after the first frames have been sent.
+dst.a: destination alpha
+src.a: pixel alpha
+SCA  : plane alpha
 
-The vendor driver (v5.11.5-1) checks for these invalid values and sets
-default values instead. Implement something similar in
-rtl8188fu_parse_efuse().
+When SCA = 0xff, the formula becomes:
+dst.a = dst.a * (0xff - src.a) + src.a
 
-Fixes: c888183b21f3 ("wifi: rtl8xxxu: Support new chip RTL8188FU")
-Signed-off-by: Martin Kaistra <martin.kaistra@linutronix.de>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://patch.msgid.link/20240624140037.231657-1-martin.kaistra@linutronix.de
+This patch is to set the destination alpha (background) to 0xff:
+- When dst.a = 0    (before), dst.a = src.a
+- When dst.a = 0xff (after) , dst.a = 0xff * (0xff - src.a) + src.a
+
+According to the fomula above:
+- When src.a = 0   , dst.a = 0
+- When src.a = 0xff, dst.a = 0xff
+This two cases are just still correct. But when src.a is
+between 0 and 0xff, the difference starts to appear
+
+Fixes: 616443ca577e ("drm/mediatek: Move cmdq_reg info from struct mtk_ddp_comp to sub driver private data")
+Signed-off-by: Hsiao Chien Sung <shawn.sung@mediatek.com>
+Link: https://patchwork.kernel.org/project/dri-devel/patch/20240620-igt-v3-5-a9d62d2e2c7e@mediatek.com/
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/8188f.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/mediatek/mtk_disp_ovl.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/8188f.c b/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
-index bd5a0603b4a23..3abf14d7044f3 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/8188f.c
-@@ -697,9 +697,14 @@ static void rtl8188fu_init_statistics(struct rtl8xxxu_priv *priv)
- 	rtl8xxxu_write32(priv, REG_OFDM0_FA_RSTC, val32);
- }
+diff --git a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
+index 6c25fbc3db294..6f15069da8b02 100644
+--- a/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
++++ b/drivers/gpu/drm/mediatek/mtk_disp_ovl.c
+@@ -72,6 +72,8 @@
+ #define	OVL_CON_VIRT_FLIP	BIT(9)
+ #define	OVL_CON_HORZ_FLIP	BIT(10)
  
-+#define TX_POWER_INDEX_MAX 0x3F
-+#define TX_POWER_INDEX_DEFAULT_CCK 0x22
-+#define TX_POWER_INDEX_DEFAULT_HT40 0x27
++#define OVL_COLOR_ALPHA		GENMASK(31, 24)
 +
- static int rtl8188fu_parse_efuse(struct rtl8xxxu_priv *priv)
- {
- 	struct rtl8188fu_efuse *efuse = &priv->efuse_wifi.efuse8188fu;
-+	int i;
- 
- 	if (efuse->rtl_id != cpu_to_le16(0x8129))
- 		return -EINVAL;
-@@ -713,6 +718,16 @@ static int rtl8188fu_parse_efuse(struct rtl8xxxu_priv *priv)
- 	       efuse->tx_power_index_A.ht40_base,
- 	       sizeof(efuse->tx_power_index_A.ht40_base));
- 
-+	for (i = 0; i < ARRAY_SIZE(priv->cck_tx_power_index_A); i++) {
-+		if (priv->cck_tx_power_index_A[i] > TX_POWER_INDEX_MAX)
-+			priv->cck_tx_power_index_A[i] = TX_POWER_INDEX_DEFAULT_CCK;
-+	}
+ static const u32 mt8173_formats[] = {
+ 	DRM_FORMAT_XRGB8888,
+ 	DRM_FORMAT_ARGB8888,
+@@ -274,7 +276,13 @@ void mtk_ovl_config(struct device *dev, unsigned int w,
+ 	if (w != 0 && h != 0)
+ 		mtk_ddp_write_relaxed(cmdq_pkt, h << 16 | w, &ovl->cmdq_reg, ovl->regs,
+ 				      DISP_REG_OVL_ROI_SIZE);
+-	mtk_ddp_write_relaxed(cmdq_pkt, 0x0, &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_ROI_BGCLR);
 +
-+	for (i = 0; i < ARRAY_SIZE(priv->ht40_1s_tx_power_index_A); i++) {
-+		if (priv->ht40_1s_tx_power_index_A[i] > TX_POWER_INDEX_MAX)
-+			priv->ht40_1s_tx_power_index_A[i] = TX_POWER_INDEX_DEFAULT_HT40;
-+	}
-+
- 	priv->ofdm_tx_power_diff[0].a = efuse->tx_power_index_A.ht20_ofdm_1s_diff.a;
- 	priv->ht20_tx_power_diff[0].a = efuse->tx_power_index_A.ht20_ofdm_1s_diff.b;
++	/*
++	 * The background color must be opaque black (ARGB),
++	 * otherwise the alpha blending will have no effect
++	 */
++	mtk_ddp_write_relaxed(cmdq_pkt, OVL_COLOR_ALPHA, &ovl->cmdq_reg,
++			      ovl->regs, DISP_REG_OVL_ROI_BGCLR);
  
+ 	mtk_ddp_write(cmdq_pkt, 0x1, &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_RST);
+ 	mtk_ddp_write(cmdq_pkt, 0x0, &ovl->cmdq_reg, ovl->regs, DISP_REG_OVL_RST);
 -- 
 2.43.0
 
