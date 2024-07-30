@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43EB145A18;
-	Tue, 30 Jul 2024 15:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C26229A2;
+	Tue, 30 Jul 2024 15:54:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354882; cv=none; b=BJozsJhZMZ9j8kb2gc3r5imv6eWj7pe9mt6N6CTR2RmJ01g7jch1o/41hbUmAl+vP5h8u2Q4MYs0AxXdLC+TFIUtWgorktfYtXIVqGbAtBUly58RGwLrarR3ptAuUWPWZdODlQGWi0WegC6cfTDKps5LYtdT7efnabQ/IvIqqwk=
+	t=1722354886; cv=none; b=M9TMwt54TowOLag87NE4wsEIwJ5Ziw1nl/LbehnliFP1qvMm01ozkXQeD+t5LNpzSiwEzTB0Yho1JhqSweb+5NYr8atxoD+StLROhcE1aUOW/7irt0jMDr76jJXT+2+JJKjixiPF9quFcZfO9XqLCDGCM2rPy8Q89HN5shESrD4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354882; c=relaxed/simple;
-	bh=IlKqDMY7UI31FEbCsuUUSq9JLbbmDqdfrksKPsiVLlI=;
+	s=arc-20240116; t=1722354886; c=relaxed/simple;
+	bh=6Qja3WzVJwDtFRE/HJhR2bBuFiMb94/8tBem6jQNHiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T81GRnP3JfEcJivDY3Gqz2fMVoX1axAWKMmrpE6WFZjyR3hpIYmMnh5TC4qjnpZAxle1atmJeTFiQFBAO/uYb5hzZsxFy599bLeHNPlGwMlgzvlJ/3CxAJuwkjBSh9EhSa6hNJiVh0azdRngoo4u5AbRAZhXa+iDiPRuz5xWNRs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J/iyUixx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A0efDFYlU7cSXJjk5l4NcZ3Cpc5n6IS7yRwAqdxiPBNUY613+/kuijrkhGYGqrQ8deK4wZdFx5SwYexQ3CaRO/v4SQIzA6v8MyvdiIUlcfCp01p2Dgx+N5Bl2sLSLi4ayY3SqvsuDIaKL3GuDXAdUu1+2GKoLYkUBkIJiQjMmnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NPCJTyYc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J/iyUixx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFA2C32782;
-	Tue, 30 Jul 2024 15:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NPCJTyYc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 334BFC32782;
+	Tue, 30 Jul 2024 15:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354882;
-	bh=IlKqDMY7UI31FEbCsuUUSq9JLbbmDqdfrksKPsiVLlI=;
+	s=korg; t=1722354885;
+	bh=6Qja3WzVJwDtFRE/HJhR2bBuFiMb94/8tBem6jQNHiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J/iyUixxdanKgvQYeRTEgrvXkTCzrKjaC/eGK5eemuarCtcw8J4xgwO3Nh/3zxXL4
-	 0uw2Qcx2HTTPmM5KUD+EaYfhdskpDRq3CHApYauFTQmJfu2jgSGX9UbkpEI9LkJj9b
-	 2dUNDdvOmk3BJgJ4OwLiwP7S43yN73gGf4H+AGmA=
+	b=NPCJTyYcWVedvNtdoVQ94KzWs6g/8xARQzQo6Ho0gKZRDl3fGuO6azULRWzP3zNUs
+	 K/E2BtMCtIooBHL3yNYGs51iNYyvcSL3ySuyJO/jn63gEB0TXFOkDWbuyuA8wm7dIM
+	 etF/e2/I4M05JkQPz3EemAC8pUk7rgtqXzStBpmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/440] arm64: dts: qcom: sdm845: add power-domain to UFS PHY
-Date: Tue, 30 Jul 2024 17:44:24 +0200
-Message-ID: <20240730151616.981517482@linuxfoundation.org>
+Subject: [PATCH 6.6 006/568] platform/chrome: cros_ec_debugfs: fix wrong EC message version
+Date: Tue, 30 Jul 2024 17:41:53 +0200
+Message-ID: <20240730151640.065078880@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Tzung-Bi Shih <tzungbi@kernel.org>
 
-[ Upstream commit fd39ae8b9bc10419b1e4b849cdbc6755a967ade1 ]
+[ Upstream commit c2a28647bbb4e0894e8824362410f72b06ac57a4 ]
 
-The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
-corresponding power-domain the the PHY node.
+ec_read_version_supported() uses ec_params_get_cmd_versions_v1 but it
+wrongly uses message version 0.
 
-Fixes: cc16687fbd74 ("arm64: dts: qcom: sdm845: add UFS controller")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-6-f1fd15c33fb3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix it.
+
+Fixes: e86264595225 ("mfd: cros_ec: add debugfs, console log file")
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20240611113110.16955-1-tzungbi@kernel.org
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/chrome/cros_ec_debugfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index 95c515da9f2e0..71644b9b8866a 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2537,6 +2537,8 @@ ufs_mem_phy: phy@1d87000 {
- 			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
+index c876120e0ebc9..793c8c4bf35ba 100644
+--- a/drivers/platform/chrome/cros_ec_debugfs.c
++++ b/drivers/platform/chrome/cros_ec_debugfs.c
+@@ -329,6 +329,7 @@ static int ec_read_version_supported(struct cros_ec_dev *ec)
+ 	if (!msg)
+ 		return 0;
  
-+			power-domains = <&gcc UFS_PHY_GDSC>;
-+
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
- 			status = "disabled";
++	msg->version = 1;
+ 	msg->command = EC_CMD_GET_CMD_VERSIONS + ec->cmd_offset;
+ 	msg->outsize = sizeof(*params);
+ 	msg->insize = sizeof(*response);
 -- 
 2.43.0
 
