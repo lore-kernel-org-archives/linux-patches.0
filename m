@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FB41A6195;
-	Tue, 30 Jul 2024 16:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627F71A617E;
+	Tue, 30 Jul 2024 16:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357187; cv=none; b=Peru6hVZPhXF+9jQ8KfMr8mUysuTNYMsZove7SLRujbJPLuwIiv0pmCviTwo1+aF8hEvzhtgv8+wA1LQ3oVx5EoIjQZrJC1TI33s/XWcFtvNIHatNloTPpIpA2didm7OzQAb71VhUruVanpDtH+l8MFk/Dz3TRjFZYa3YQIaZTY=
+	t=1722357190; cv=none; b=BvEFIoxl9Opk1p6krxKi+4RaBSgEMRO0mNtV3BfYQgkM5nXdvZ3NIWF5H1xdrNcpuGZfpWfk0l93q8rUSSYJBGu7nQjxXpEvgpSEOXJTi976YtexGT3ORyrxRWkfmSs6rgni8kN9YhzVk3N4xG8Xy9GWx9Ju3jCs8DrtG4qrwIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357187; c=relaxed/simple;
-	bh=ibVCS+aHQZzIehd3HxS4C3XV2htWSV4Nn6fUEa9jhTc=;
+	s=arc-20240116; t=1722357190; c=relaxed/simple;
+	bh=l2g4YjY6FS0dXfS+1vTCN4BshcT12srYe665In2wvOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpVaUXeN8VZA+/WbG7Td0+9N2u7hw3ZPbK+fbIQ4khHQS48iyJMUwrLl49FOMhPorV3gHSD8Yb8etEJegSSdnbKLjQ+tMLNENCxtL24/sdzO2dOFZvLzp4yB1/N+BHAgsRV9JRMmc+PU26/QEeSGgZzqew7+HTLqRORXXPbTQa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaCdq1eu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LW+CJWic4uoWR/Gm8f/iXmlZGkJuANHTE1147FdwWf3kHc3FrM7Egv/Z+LVI2rR+/yFveDehcHjVXyVIh/KiMiNbKpukswvTx6c3K1C+/wdKFMIKU8WgLlHU9fm0x73zwh+drJpp3QGws3aAxDjjlMh924HjWtKMaSedSj57iig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1TWMhXpL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaCdq1eu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62D3C32782;
-	Tue, 30 Jul 2024 16:33:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1TWMhXpL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09A0C32782;
+	Tue, 30 Jul 2024 16:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357187;
-	bh=ibVCS+aHQZzIehd3HxS4C3XV2htWSV4Nn6fUEa9jhTc=;
+	s=korg; t=1722357190;
+	bh=l2g4YjY6FS0dXfS+1vTCN4BshcT12srYe665In2wvOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vaCdq1eukNwKwJTdiRo5GJIq7ulOU4Enq76TubuDVTKIaBwHGrDfT2BH8j674dqCD
-	 ZZYO3ikFFooZ0aHDWvFR7gVDk1VrrAsOcidrH1r3QQ76zpv/xO+Ca1lZ5cd8EcyVsI
-	 Oo15BbGHoI/QMST+MyeeA8WpSamDXYAW3azGDOFo=
+	b=1TWMhXpL7bPjqkAHzymnYhwFNHveth+IZVqngpJGFhknOM/vyZcb3We2uHTb/3pc/
+	 60H2VYze7aJvoIDUm9UX1rDrSvBk13zxtE2K/Q2aMm61273Il9EouLl3t8ZBc1eruc
+	 1/6vcJLT59enDF76rRPy5NRbmk3UmDji7DAvVnOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Jianbo Liu <jianbol@nvidia.com>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 267/440] sbitmap: rewrite sbitmap_find_bit_in_index to reduce repeat code
-Date: Tue, 30 Jul 2024 17:48:20 +0200
-Message-ID: <20240730151626.267645157@linuxfoundation.org>
+Subject: [PATCH 6.10 231/809] xfrm: call xfrm_dev_policy_delete when kill policy
+Date: Tue, 30 Jul 2024 17:41:47 +0200
+Message-ID: <20240730151733.730771449@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,98 +49,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 08470a98a7d7e32c787b23b87353f13b03c23195 ]
+[ Upstream commit 89a2aefe4b084686c2ffc1ee939585111ea4fc0f ]
 
-Rewrite sbitmap_find_bit_in_index as following:
-1. Rename sbitmap_find_bit_in_index to sbitmap_find_bit_in_word
-2. Accept "struct sbitmap_word *" directly instead of accepting
-"struct sbitmap *" and "int index" to get "struct sbitmap_word *".
-3. Accept depth/shallow_depth and wrap for __sbitmap_get_word from caller
-to support need of both __sbitmap_get_shallow and __sbitmap_get.
+xfrm_policy_kill() is called at different places to delete xfrm
+policy. It will call xfrm_pol_put(). But xfrm_dev_policy_delete() is
+not called to free the policy offloaded to hardware.
 
-With helper function sbitmap_find_bit_in_word, we can remove repeat
-code in __sbitmap_get_shallow to find bit considring deferred clear.
+The three commits cited here are to handle this issue by calling
+xfrm_dev_policy_delete() outside xfrm_get_policy(). But they didn't
+cover all the cases. An example, which is not handled for now, is
+xfrm_policy_insert(). It is called when XFRM_MSG_UPDPOLICY request is
+received. Old policy is replaced by new one, but the offloaded policy
+is not deleted, so driver doesn't have the chance to release hardware
+resources.
 
-Reviewed-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Link: https://lore.kernel.org/r/20230116205059.3821738-4-shikemeng@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 72d04bdcf3f7 ("sbitmap: fix io hung due to race on sbitmap_word::cleared")
+To resolve this issue for all cases, move xfrm_dev_policy_delete()
+into xfrm_policy_kill(), so the offloaded policy can be deleted from
+hardware when it is called, which avoids hardware resources leakage.
+
+Fixes: 919e43fad516 ("xfrm: add an interface to offload policy")
+Fixes: bf06fcf4be0f ("xfrm: add missed call to delete offloaded policies")
+Fixes: 982c3aca8bac ("xfrm: delete offloaded policy")
+Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
+Reviewed-by: Cosmin Ratiu <cratiu@nvidia.com>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/sbitmap.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ net/xfrm/xfrm_policy.c | 5 ++---
+ net/xfrm/xfrm_user.c   | 1 -
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index b9dd0a0a28f89..b942f2ba9a415 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -167,15 +167,16 @@ static int __sbitmap_get_word(unsigned long *word, unsigned long depth,
- 	return nr;
- }
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 66e07de2de35c..56b88ad88db6f 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -452,6 +452,8 @@ EXPORT_SYMBOL(xfrm_policy_destroy);
  
--static int sbitmap_find_bit_in_index(struct sbitmap *sb, int index,
--				     unsigned int alloc_hint)
-+static int sbitmap_find_bit_in_word(struct sbitmap_word *map,
-+				    unsigned int depth,
-+				    unsigned int alloc_hint,
-+				    bool wrap)
+ static void xfrm_policy_kill(struct xfrm_policy *policy)
  {
--	struct sbitmap_word *map = &sb->map[index];
- 	int nr;
- 
- 	do {
--		nr = __sbitmap_get_word(&map->word, __map_depth(sb, index),
--					alloc_hint, !sb->round_robin);
-+		nr = __sbitmap_get_word(&map->word, depth,
-+					alloc_hint, wrap);
- 		if (nr != -1)
- 			break;
- 		if (!sbitmap_deferred_clear(map))
-@@ -203,7 +204,9 @@ static int __sbitmap_get(struct sbitmap *sb, unsigned int alloc_hint)
- 		alloc_hint = 0;
- 
- 	for (i = 0; i < sb->map_nr; i++) {
--		nr = sbitmap_find_bit_in_index(sb, index, alloc_hint);
-+		nr = sbitmap_find_bit_in_word(&sb->map[index],
-+					      __map_depth(sb, index),
-+					      alloc_hint, !sb->round_robin);
- 		if (nr != -1) {
- 			nr += index << sb->shift;
- 			break;
-@@ -246,20 +249,17 @@ static int __sbitmap_get_shallow(struct sbitmap *sb,
- 	alloc_hint = SB_NR_TO_BIT(sb, alloc_hint);
- 
- 	for (i = 0; i < sb->map_nr; i++) {
--again:
--		nr = __sbitmap_get_word(&sb->map[index].word,
--					min_t(unsigned int,
--					      __map_depth(sb, index),
--					      shallow_depth),
--					alloc_hint, true);
-+		nr = sbitmap_find_bit_in_word(&sb->map[index],
-+					      min_t(unsigned int,
-+						    __map_depth(sb, index),
-+						    shallow_depth),
-+					      alloc_hint, true);
++	xfrm_dev_policy_delete(policy);
 +
- 		if (nr != -1) {
- 			nr += index << sb->shift;
- 			break;
- 		}
+ 	write_lock_bh(&policy->lock);
+ 	policy->walk.dead = 1;
+ 	write_unlock_bh(&policy->lock);
+@@ -1850,7 +1852,6 @@ int xfrm_policy_flush(struct net *net, u8 type, bool task_valid)
  
--		if (sbitmap_deferred_clear(&sb->map[index]))
--			goto again;
--
- 		/* Jump to next index. */
- 		alloc_hint = 0;
- 		if (++index >= sb->map_nr)
+ 		__xfrm_policy_unlink(pol, dir);
+ 		spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
+-		xfrm_dev_policy_delete(pol);
+ 		cnt++;
+ 		xfrm_audit_policy_delete(pol, 1, task_valid);
+ 		xfrm_policy_kill(pol);
+@@ -1891,7 +1892,6 @@ int xfrm_dev_policy_flush(struct net *net, struct net_device *dev,
+ 
+ 		__xfrm_policy_unlink(pol, dir);
+ 		spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
+-		xfrm_dev_policy_delete(pol);
+ 		cnt++;
+ 		xfrm_audit_policy_delete(pol, 1, task_valid);
+ 		xfrm_policy_kill(pol);
+@@ -2342,7 +2342,6 @@ int xfrm_policy_delete(struct xfrm_policy *pol, int dir)
+ 	pol = __xfrm_policy_unlink(pol, dir);
+ 	spin_unlock_bh(&net->xfrm.xfrm_policy_lock);
+ 	if (pol) {
+-		xfrm_dev_policy_delete(pol);
+ 		xfrm_policy_kill(pol);
+ 		return 0;
+ 	}
+diff --git a/net/xfrm/xfrm_user.c b/net/xfrm/xfrm_user.c
+index e83c687bd64ee..77355422ce82a 100644
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -2455,7 +2455,6 @@ static int xfrm_get_policy(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 					    NETLINK_CB(skb).portid);
+ 		}
+ 	} else {
+-		xfrm_dev_policy_delete(xp);
+ 		xfrm_audit_policy_delete(xp, err ? 0 : 1, true);
+ 
+ 		if (err != 0)
 -- 
 2.43.0
 
