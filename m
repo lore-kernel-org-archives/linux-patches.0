@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7F41A619B;
-	Tue, 30 Jul 2024 16:38:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F35A81A6192;
+	Tue, 30 Jul 2024 16:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357535; cv=none; b=cD/MA2hb0Jx3nnGeLu9TL5Wj+fZ4S14ABAe7etg9Wf18+MfDDWVT3jZyY71jxyC6ca0zmzHXb+35aOcUjjWlI4Ilf7N7KAMMsr+Dt9+vb2k6NS5Ifk8TZogZ0E1YURTE5I5A8ad9VkaTqvpah6FM3zUeVBeVAZgi7HJy/STKdtQ=
+	t=1722357539; cv=none; b=Gzi6Tw47aRI4fwhHGH9Rld7lzS9mG36zwrOnX4/Wdit3Prv0UoHLfMqrWb8zacJepFnf/z9NE7WZyGrB4QeS6FoL2JLEpDm0G633pRSTGcsNU7O+N+wGJK1HjMPNTnR15+7JACH7mXw7fhgCI15wajz7eA7LA014jEkjsta3/7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357535; c=relaxed/simple;
-	bh=elQof+Dq+bsCyK3OVGXsEPM7uSJLav4vgVcwlbd7LtI=;
+	s=arc-20240116; t=1722357539; c=relaxed/simple;
+	bh=L6VhuMIqd5OQXNFX5C+xGQY7oyq+nFHqIYlpxD1Kyj8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BuoZTLaKqadaGBnNUfoK8oZtS/m0NW7Dv6e3P+ZgmCuOYNNDnrBBBPBDryPlq+9ttaafqI4qxsnPjtg/B5s3jzac3KAx67ake35MBWbzo9rY8AOCp+Z/gSk1ymD1ZkBTfY+4DwIYVdjNLouDWsmWX/idIA1ozjHexX+slLRyvVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f+/o5YHI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NG7H51lW/yexgT+FAmVl5h2+b6t028OtgrG2hYfkY0pxUfGCop+d9s1yk4mMokMP08NBtXgmcy5UnUiPGN2t2BKtQz6GeS50gbJePIOVQrNqamJY9ur5C5dgvEp/fUmQ0fwKmKp7RWZD05qbQilsZ0bAzPYn20dzPQNP7PAzv5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dqP7ICBv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f+/o5YHI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57720C4AF15;
-	Tue, 30 Jul 2024 16:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dqP7ICBv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7702CC4AF0F;
+	Tue, 30 Jul 2024 16:38:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357535;
-	bh=elQof+Dq+bsCyK3OVGXsEPM7uSJLav4vgVcwlbd7LtI=;
+	s=korg; t=1722357538;
+	bh=L6VhuMIqd5OQXNFX5C+xGQY7oyq+nFHqIYlpxD1Kyj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f+/o5YHIBEv3mquN8oR747Iba8ZX9r8AltOtGETN2Q71MbuaW+Y0dve1qSx6ihcAI
-	 whrCqklrP4+2cAJtyTc3Vd37rPlg5jclqMf2bTal61P3htVw84gQhoqr4Jd4oc0Nvv
-	 3bvUuJZ+jjFn1rgKIbe0j6IOeCmTVB7DzQ2/iVUc=
+	b=dqP7ICBv+jPwOd8aHjB9RaVxBKDVfYmyNQtXYBGi7OpNDA1QvAaHQnAf7o9Nt7wV3
+	 Mh4UjGc0ErvIFVg3wCjrul4HkrFN82AMYL0HZ1El/ivtEelfL5W9ePqrY61Gfj4+n+
+	 YuhwXnsXMOmu+fdL7wkjDN87rR3IVLd46Wtbt/eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/568] SUNRPC: avoid soft lockup when transmitting UDP to reachable server.
-Date: Tue, 30 Jul 2024 17:45:47 +0200
-Message-ID: <20240730151649.262010414@linuxfoundation.org>
+Subject: [PATCH 6.6 264/568] RDMA/cache: Release GID table even if leak is detected
+Date: Tue, 30 Jul 2024 17:46:11 +0200
+Message-ID: <20240730151650.193864820@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -51,55 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 6258cf25d5e3155c3219ab5a79b970eef7996356 ]
+[ Upstream commit a92fbeac7e94a420b55570c10fe1b90e64da4025 ]
 
-Prior to the commit identified below, call_transmit_status() would
-handle -EPERM and other errors related to an unreachable server by
-falling through to call_status() which added a 3-second delay and
-handled the failure as a timeout.
+When the table is released, we nullify pointer to GID table, it means
+that in case GID entry leak is detected, we will leak table too.
 
-Since that commit, call_transmit_status() falls through to
-handle_bind().  For UDP this moves straight on to handle_connect() and
-handle_transmit() so we immediately retransmit - and likely get the same
-error.
+Delete code that prevents table destruction.
 
-This results in an indefinite loop in __rpc_execute() which triggers a
-soft-lockup warning.
-
-For the errors that indicate an unreachable server,
-call_transmit_status() should fall back to call_status() as it did
-before.  This cannot cause the thundering herd that the previous patch
-was avoiding, as the call_status() will insert a delay.
-
-Fixes: ed7dc973bd91 ("SUNRPC: Prevent thundering herd when the socket is not connected")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: b150c3862d21 ("IB/core: Introduce GID entry reference counts")
+Link: https://lore.kernel.org/r/a62560af06ba82c88ef9194982bfa63d14768ff9.1716900410.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/cache.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index d3c917c0c8d59..142ee6554848a 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2310,12 +2310,13 @@ call_transmit_status(struct rpc_task *task)
- 		task->tk_action = call_transmit;
- 		task->tk_status = 0;
- 		break;
--	case -ECONNREFUSED:
- 	case -EHOSTDOWN:
- 	case -ENETDOWN:
- 	case -EHOSTUNREACH:
- 	case -ENETUNREACH:
- 	case -EPERM:
-+		break;
-+	case -ECONNREFUSED:
- 		if (RPC_IS_SOFTCONN(task)) {
- 			if (!task->tk_msg.rpc_proc->p_proc)
- 				trace_xprt_ping(task->tk_xprt,
+diff --git a/drivers/infiniband/core/cache.c b/drivers/infiniband/core/cache.c
+index 7acc0f936dad3..b7251ed7a8dfb 100644
+--- a/drivers/infiniband/core/cache.c
++++ b/drivers/infiniband/core/cache.c
+@@ -794,7 +794,6 @@ static struct ib_gid_table *alloc_gid_table(int sz)
+ static void release_gid_table(struct ib_device *device,
+ 			      struct ib_gid_table *table)
+ {
+-	bool leak = false;
+ 	int i;
+ 
+ 	if (!table)
+@@ -803,15 +802,12 @@ static void release_gid_table(struct ib_device *device,
+ 	for (i = 0; i < table->sz; i++) {
+ 		if (is_gid_entry_free(table->data_vec[i]))
+ 			continue;
+-		if (kref_read(&table->data_vec[i]->kref) > 1) {
+-			dev_err(&device->dev,
+-				"GID entry ref leak for index %d ref=%u\n", i,
+-				kref_read(&table->data_vec[i]->kref));
+-			leak = true;
+-		}
++
++		WARN_ONCE(true,
++			  "GID entry ref leak for dev %s index %d ref=%u\n",
++			  dev_name(&device->dev), i,
++			  kref_read(&table->data_vec[i]->kref));
+ 	}
+-	if (leak)
+-		return;
+ 
+ 	mutex_destroy(&table->lock);
+ 	kfree(table->data_vec);
 -- 
 2.43.0
 
