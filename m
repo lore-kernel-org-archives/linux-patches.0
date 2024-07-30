@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4655C1917D9;
-	Tue, 30 Jul 2024 17:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787A5189537;
+	Tue, 30 Jul 2024 17:09:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359375; cv=none; b=sX/CU+zDw/rr/Nxhn5sjXXgLlzivw1Xy/ek1TSmKyoQyFyvshy0Qw5AYRhKozKlRP65ZmWqkKMvvdn7FboSbWHsCwsNTivuVsj7y7276PTY9yy8/AOsozNeljxYBrsA84HHpL5m/x9v2yjePS4/vCbXTlAroCUNhfSLNJhFepN0=
+	t=1722359378; cv=none; b=fWmpwBieRKQLRqSTZP+8HYYo+33PFneh67tpHUx2jYXcYKNU01Nb1Q4UCXT0PcWSXJ7e+qKHYcRNhnRhyz4QfRONRntbjielZA1efWOQxpsC9lHkzCUPMGFc7uIBCw+c6SlT0LPETHfNeDUq5Y4dwmsVqsIZwJJRBwERC+iEwp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359375; c=relaxed/simple;
-	bh=k2HhBaJUTjJM/aRn51bC1zabo1WE8YaKEcwS550rS9k=;
+	s=arc-20240116; t=1722359378; c=relaxed/simple;
+	bh=4EmePcw4FB4FMewVjt7Uhdu8mtAbMfynF9t5PSg8f8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C9uVCl64Gk0q2YASpK3LpafPtr1ZsfsoGiOA4Bd7Mlyg5QmFAnDiYeGVA4Joc3oGxtu5srItrxgH6SCvPswAjOyiKrQ20CKQqPSv2newsm2NOd22OERXuzVIgjS/vPqh4+vzEmxL6nR3ILBN1TwMtg7HX6sIDuHY8cslhNjLSas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1FtZMTpy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jDxVkJRAzkRU4uuRyju2WiiKvRBXJAS9+o4O0QWqZ/uvPeg/HkPqRg/RBcg5p8t2iUWBsnlqgVMdL0RM7OGrqDODfprzjlVYvRUTO0dH4J6Kgf+2zE0cqK/p13QY2cz9IYsMjKlKGHprv5DGo5uYb2jnt6aitRQpV7UNYCiKa7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGuRDjrg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1FtZMTpy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1298C32782;
-	Tue, 30 Jul 2024 17:09:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGuRDjrg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB068C32782;
+	Tue, 30 Jul 2024 17:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359375;
-	bh=k2HhBaJUTjJM/aRn51bC1zabo1WE8YaKEcwS550rS9k=;
+	s=korg; t=1722359378;
+	bh=4EmePcw4FB4FMewVjt7Uhdu8mtAbMfynF9t5PSg8f8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FtZMTpyRlEqH9TY7YWOoJ7/599/LBW9leoL6kIrr43YOjn72J+zIf1hCUDbUdk24
-	 SmtCksD20khfrmKTTMGmk1D0ZYqpEqR9+xJd/fW/HU0+gMb2/zFWDOOsLDHMHR4VUt
-	 q3QCTO38qbPHgeM7jWy4TGs2PlxiIeXDOrQhOrJk=
+	b=zGuRDjrgjeIPLa/e/HGNENoeh1VTL4BjJx5rgEIol1davmFJbtN5nrFIMth+c7eyY
+	 Zdr7WY9dDAQz1F3HQi98ies6RYnaMz/PWIvI4h1HI98jjrpkCJ1kgrxov2QfdW3Z4G
+	 NbZlyGztjIqkh2ERlXqGWRIzTNG3h7Hj5YAU1OVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	zdi-disclosures@trendmicro.com,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 475/809] netfilter: ctnetlink: use helper function to calculate expect ID
-Date: Tue, 30 Jul 2024 17:45:51 +0200
-Message-ID: <20240730151743.496463907@linuxfoundation.org>
+	Andi Shyti <andi.shyti@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.6 474/568] drm/i915/gt: Do not consider preemption during execlists_dequeue for gen8
+Date: Tue, 30 Jul 2024 17:49:41 +0200
+Message-ID: <20240730151658.549692409@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +50,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-[ Upstream commit 782161895eb4ac45cf7cfa8db375bd4766cb8299 ]
+commit 65564157ae64cec0f527583f96e32f484f730f92 upstream.
 
-Delete expectation path is missing a call to the nf_expect_get_id()
-helper function to calculate the expectation ID, otherwise LSB of the
-expectation object address is leaked to userspace.
+We're seeing a GPU hang issue on a CHV platform, which was caused by commit
+bac24f59f454 ("drm/i915/execlists: Enable coarse preemption boundaries for
+Gen8").
 
-Fixes: 3c79107631db ("netfilter: ctnetlink: don't use conntrack/expect object addresses as id")
-Reported-by: zdi-disclosures@trendmicro.com
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The Gen8 platform only supports timeslicing and doesn't have a preemption
+mechanism, as its engines do not have a preemption timer.
+
+Commit 751f82b353a6 ("drm/i915/gt: Only disable preemption on Gen8 render
+engines") addressed this issue only for render engines. This patch extends
+that fix by ensuring that preemption is not considered for all engines on
+Gen8 platforms.
+
+v4:
+ - Use the correct Fixes tag (Rodrigo Vivi)
+ - Reworded commit log (Andi Shyti)
+
+v3:
+ - Inside need_preempt(), condition of can_preempt() is not required
+   as simplified can_preempt() is enough. (Chris Wilson)
+
+v2: Simplify can_preempt() function (Tvrtko Ursulin)
+
+Fixes: 751f82b353a6 ("drm/i915/gt: Only disable preemption on gen8 render engines")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11396
+Suggested-by: Andi Shyti <andi.shyti@intel.com>
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
+CC: <stable@vger.kernel.org> # v5.12+
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240711163208.1355736-1-nitin.r.gote@intel.com
+(cherry picked from commit 7df0be6e6280c6fca01d039864bb123e5e36604b)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_execlists_submission.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 3b846cbdc050d..4cbf71d0786b0 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3420,7 +3420,8 @@ static int ctnetlink_del_expect(struct sk_buff *skb,
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3315,11 +3315,7 @@ static void remove_from_engine(struct i9
  
- 		if (cda[CTA_EXPECT_ID]) {
- 			__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
--			if (ntohl(id) != (u32)(unsigned long)exp) {
-+
-+			if (id != nf_expect_get_id(exp)) {
- 				nf_ct_expect_put(exp);
- 				return -ENOENT;
- 			}
--- 
-2.43.0
-
+ static bool can_preempt(struct intel_engine_cs *engine)
+ {
+-	if (GRAPHICS_VER(engine->i915) > 8)
+-		return true;
+-
+-	/* GPGPU on bdw requires extra w/a; not implemented */
+-	return engine->class != RENDER_CLASS;
++	return GRAPHICS_VER(engine->i915) > 8;
+ }
+ 
+ static void kick_execlists(const struct i915_request *rq, int prio)
 
 
