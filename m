@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F1F1A76A1;
-	Tue, 30 Jul 2024 17:24:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AAC41A76A1;
+	Tue, 30 Jul 2024 17:24:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360278; cv=none; b=QQXLw/SwJgsKZuJr/nZZuzRgBM30X3yYgkVvqHpSKXDZN+TBXvlm28rMIPNu0VwAm9z/yxg1Ota/QWRZwXEFgjdDCa50MxYY1kzi/ZNbm3BoSvvqDyUt6GMNpuEcaR1K5wCrUjUG0/tMyj229ZxT/WpUuMubdhpl6vQhwQXUd4A=
+	t=1722360281; cv=none; b=oMbmQses/zGS0l5GEWmJS2vC3qBj9w5uoAJcma2WhlJEFpbkDC4cPpxYTJGLmCFGMKE7tNUkFYsnNigi3om2jvgSxOXUDGb45wTdFEsgnjKlNIUZ7Zzbb78bOywlZpo2p4lplCQKnLfB3IK3qofLs87PsrOhSE8ovp5vmpTz7F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360278; c=relaxed/simple;
-	bh=k/sUcE+YL36QDOoG5PPP2Ndi6j+y6XBUuFVH52kFMTI=;
+	s=arc-20240116; t=1722360281; c=relaxed/simple;
+	bh=sob2k1ewE6PQQwD2ZSSAqokDco0SphN+Me1erpovU9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ygv0PwSmpgztDIhQ82RPaEtwF4ZJz3rvh9JQHdWaeUDFpjpJq0BpMrzZdb/MHVFdfPfB46/4oXgzfH8wr4UOkt2oyJ5D5efLqyoukLYFRH28NzSpSIIijt2YXT6asqtE4WQ2K3UeCs6604uSU64Nlu3gr+d1G+HeT+4JGt+LeiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oF0nqBaF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=szd+kjuRGmkHIy2zRf6AVV5FY9I9q8jf3vwjh5RI1WwW0gPeTW+2c7KbHf5u516/nC+9ni05MNWckFH2vr79bur6lIFVdQoFslmu1cUSw/o/ZkGr1IygaFxfoBBwzUOIts+Nx7T6Vk58TWG8Kf6S3s9ZWT8ME9Af+O3CVJjbYFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvDegOcb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oF0nqBaF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25C66C32782;
-	Tue, 30 Jul 2024 17:24:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvDegOcb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D755FC32782;
+	Tue, 30 Jul 2024 17:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360278;
-	bh=k/sUcE+YL36QDOoG5PPP2Ndi6j+y6XBUuFVH52kFMTI=;
+	s=korg; t=1722360281;
+	bh=sob2k1ewE6PQQwD2ZSSAqokDco0SphN+Me1erpovU9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oF0nqBaFjoEb6AFl1oebcYLVcBhbwtwa3flOtxCqpevP0sBorbPKRpu7Et3mAIOu8
-	 VhCjg4SCY0R/I8vttnEV49jAyZo12HoQmDHYTKNmBxvC6Yr2RXLN+HXC0GqBgciMA2
-	 kqJRHmwlmhcNYaTrmh99IhhFHiYewllZ7z17hUtw=
+	b=wvDegOcb9HOh14+nGZESfU5WnFMVcO4+ldr+pU35FolK5iFt2KZDMIi7czqY9bkHw
+	 /I/vCVXxVyK/XYhevaBH9AXBJdpb5R2a+Heg9SqGE9+qoy6vl3wtgv2zqQ61Kzr92S
+	 XAR1sfrehW2pV56aJ2dxIzXw0XdZu9lxHKH3/lRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saurav Kashyap <skashyap@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.10 650/809] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
-Date: Tue, 30 Jul 2024 17:48:46 +0200
-Message-ID: <20240730151750.550322429@linuxfoundation.org>
+	Herve Codina <herve.codina@bootlin.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.10 651/809] ASoC: fsl: fsl_qmc_audio: Check devm_kasprintf() returned value
+Date: Tue, 30 Jul 2024 17:48:47 +0200
+Message-ID: <20240730151750.590937578@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,39 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Saurav Kashyap <skashyap@marvell.com>
+From: Herve Codina <herve.codina@bootlin.com>
 
-commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
+commit e62599902327d27687693f6e5253a5d56583db58 upstream.
 
-Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
-is decided by the SCSI ML. User is not aware of the cause of an acutal
-error.
+devm_kasprintf() can return a NULL pointer on failure but this returned
+value is not checked.
 
-Return the appropriate return code that will be decoded by API and
-application and proper error message will be displayed to user.
+Fix this lack and check the returned value.
 
-Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
+Fixes: 075c7125b11c ("ASoC: fsl: Add support for QMC audio")
 Cc: stable@vger.kernel.org
-Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://patch.msgid.link/20240701113038.55144-2-herve.codina@bootlin.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/fsl/fsl_qmc_audio.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/scsi/qla2xxx/qla_bsg.c
-+++ b/drivers/scsi/qla2xxx/qla_bsg.c
-@@ -324,7 +324,7 @@ qla2x00_process_els(struct bsg_job *bsg_
- 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
- 		    bsg_job->request_payload.sg_cnt,
- 		    bsg_job->reply_payload.sg_cnt);
--		rval = -EPERM;
-+		rval = -ENOBUFS;
- 		goto done;
- 	}
+--- a/sound/soc/fsl/fsl_qmc_audio.c
++++ b/sound/soc/fsl/fsl_qmc_audio.c
+@@ -604,6 +604,8 @@ static int qmc_audio_dai_parse(struct qm
  
+ 	qmc_dai->name = devm_kasprintf(qmc_audio->dev, GFP_KERNEL, "%s.%d",
+ 				       np->parent->name, qmc_dai->id);
++	if (!qmc_dai->name)
++		return -ENOMEM;
+ 
+ 	qmc_dai->qmc_chan = devm_qmc_chan_get_byphandle(qmc_audio->dev, np,
+ 							"fsl,qmc-chan");
 
 
