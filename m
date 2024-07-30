@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEF61A76C8;
-	Tue, 30 Jul 2024 17:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3380A1A76A1;
+	Tue, 30 Jul 2024 17:22:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360175; cv=none; b=EFJ79e6J7HkeuobqVeZVSZF+IGiaTqyMf3rHNW7axN0jaBwiehEZGLrRPLHga/EazFcICSkPrbb4bMJmTAk+Um0x17isIeU9HFF/yHmtOdOk6OptQ6R/X5yKBO2oP6pS2hCDgfGJzBT+HJ4578ifmSuQwM8DWFzwUqyAZoF0lWs=
+	t=1722360178; cv=none; b=p2aZgqpq0fIZS+JaYFC9ZnvrCS3238ZL1ocFgpU8oTr2bQ4K5FE+NL1Px1H73OigY9YXq9ZbcdO2hlUC0hyvLq1LnBRmziyFm2G7Z+zXY7auw28VATI2yK1zjSt47w0/8H138K1Yaki+zPLgxtt1QwpMWRPksXEwxpzKqtqYD18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360175; c=relaxed/simple;
-	bh=7LJt7t0ceJn8UjT01S0CzWyYMfLn5yPRx76yka3pU2U=;
+	s=arc-20240116; t=1722360178; c=relaxed/simple;
+	bh=pOe861v5Wj8y60QgxC4ijOJLMJ3FoHaZpyfKppbfl+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jbLxfBetYH29JociS+zHXWTG4ZT0prR3VGluYTh/M4D777A0a3BSpiMSlvQemz4XgHlpcATJIGZ++sXXhE/PavGsEpBJt5dkEynBUMCqlM0K2DdBtP+/6Cxy5ZMW9dnn4l/hEV7Jj5b74VQwXpuDQ61xtNi3iUQWwNBdP/kqkI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NaIRKdRj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QgqEDgfrYVNMzRgHi4DKtb4jGOBEDb7Cv9vOS8fkR5HdOn8BtQreCHqLMrlP0iiCFSmCBv+AEQXksFQTXW3jRZ3kfjsj+3yiK1WC+XUPqq2Qj0q02YOJhXLkq42Mm6ss/6hKKQBx4vtAO/5of6r9xhrJCHhB+s9zSTmAbbE4Fo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7f2kbfv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NaIRKdRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BF9C4AF0F;
-	Tue, 30 Jul 2024 17:22:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7f2kbfv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C4CC32782;
+	Tue, 30 Jul 2024 17:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360174;
-	bh=7LJt7t0ceJn8UjT01S0CzWyYMfLn5yPRx76yka3pU2U=;
+	s=korg; t=1722360178;
+	bh=pOe861v5Wj8y60QgxC4ijOJLMJ3FoHaZpyfKppbfl+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NaIRKdRjqaXpMDH/wEtxx3Os19ko2QLvROln1LKQ3zmAhqgb6cZxcFWyC8tJ4mV3e
-	 7Lk21DZ7gxbUPPYLZIpnKy8zgBa4sNRoT0M34CbF7OpOJujO6JvzUrGltoUVBqZUym
-	 YkRezcoWFQ6JY4ESAAwNem26+bQvZLtQ7s93W9vI=
+	b=u7f2kbfvobSK4pcDif9O7XBMBj/bI9tHvN5AVGUqt4smERzCy/0+MvlsLYaVGwOxo
+	 csq7MAiktDZGEMCLjabiHwpbctlcnu/BpM5U2x6au+q8SZxx5H+L7r3PUwMynoSZ4u
+	 Ub2iYJlg/Pc6r7omAon39iuOD0S++KI0XhdlFcYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gautam Menghani <gautam@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 6.10 619/809] KVM: PPC: Book3S HV nestedv2: Add DPDES support in helper library for Guest state buffer
-Date: Tue, 30 Jul 2024 17:48:15 +0200
-Message-ID: <20240730151749.290642012@linuxfoundation.org>
+	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.10 593/809] ext4: make sure the first directory block is not a hole
+Date: Tue, 30 Jul 2024 17:47:49 +0200
+Message-ID: <20240730151748.252196817@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,104 +53,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gautam Menghani <gautam@linux.ibm.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 55dfb8bed6fe8bda390cc71cca878d11a9407099 upstream.
+commit f9ca51596bbfd0f9c386dd1c613c394c78d9e5e6 upstream.
 
-Add support for using DPDES in the library for using guest state
-buffers. DPDES support is needed for enabling usage of doorbells in a L2
-KVM on PAPR guest.
+The syzbot constructs a directory that has no dirblock but is non-inline,
+i.e. the first directory block is a hole. And no errors are reported when
+creating files in this directory in the following flow.
 
-Fixes: 6ccbbc33f06a ("KVM: PPC: Add helper library for Guest State Buffers")
-Cc: stable@vger.kernel.org # v6.7+
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240605113913.83715-2-gautam@linux.ibm.com
+    ext4_mknod
+     ...
+      ext4_add_entry
+        // Read block 0
+        ext4_read_dirblock(dir, block, DIRENT)
+          bh = ext4_bread(NULL, inode, block, 0)
+          if (!bh && (type == INDEX || type == DIRENT_HTREE))
+          // The first directory block is a hole
+          // But type == DIRENT, so no error is reported.
+
+After that, we get a directory block without '.' and '..' but with a valid
+dentry. This may cause some code that relies on dot or dotdot (such as
+make_indexed_dir()) to crash.
+
+Therefore when ext4_read_dirblock() finds that the first directory block
+is a hole report that the filesystem is corrupted and return an error to
+avoid loading corrupted data from disk causing something bad.
+
+Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
+Fixes: 4e19d6b65fb4 ("ext4: allow directory holes")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240702132349.2600605-3-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/arch/powerpc/kvm-nested.rst     |    4 +++-
- arch/powerpc/include/asm/guest-state-buffer.h |    3 ++-
- arch/powerpc/include/asm/kvm_book3s.h         |    1 +
- arch/powerpc/kvm/book3s_hv_nestedv2.c         |    7 +++++++
- arch/powerpc/kvm/test-guest-state-buffer.c    |    2 +-
- 5 files changed, 14 insertions(+), 3 deletions(-)
+ fs/ext4/namei.c |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/Documentation/arch/powerpc/kvm-nested.rst
-+++ b/Documentation/arch/powerpc/kvm-nested.rst
-@@ -546,7 +546,9 @@ table information.
- +--------+-------+----+--------+----------------------------------+
- | 0x1052 | 0x08  | RW |   T    | CTRL                             |
- +--------+-------+----+--------+----------------------------------+
--| 0x1053-|       |    |        | Reserved                         |
-+| 0x1053 | 0x08  | RW |   T    | DPDES                            |
-++--------+-------+----+--------+----------------------------------+
-+| 0x1054-|       |    |        | Reserved                         |
- | 0x1FFF |       |    |        |                                  |
- +--------+-------+----+--------+----------------------------------+
- | 0x2000 | 0x04  | RW |   T    | CR                               |
---- a/arch/powerpc/include/asm/guest-state-buffer.h
-+++ b/arch/powerpc/include/asm/guest-state-buffer.h
-@@ -81,6 +81,7 @@
- #define KVMPPC_GSID_HASHKEYR			0x1050
- #define KVMPPC_GSID_HASHPKEYR			0x1051
- #define KVMPPC_GSID_CTRL			0x1052
-+#define KVMPPC_GSID_DPDES			0x1053
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -151,10 +151,11 @@ static struct buffer_head *__ext4_read_d
  
- #define KVMPPC_GSID_CR				0x2000
- #define KVMPPC_GSID_PIDR			0x2001
-@@ -110,7 +111,7 @@
- #define KVMPPC_GSE_META_COUNT (KVMPPC_GSE_META_END - KVMPPC_GSE_META_START + 1)
- 
- #define KVMPPC_GSE_DW_REGS_START KVMPPC_GSID_GPR(0)
--#define KVMPPC_GSE_DW_REGS_END KVMPPC_GSID_CTRL
-+#define KVMPPC_GSE_DW_REGS_END KVMPPC_GSID_DPDES
- #define KVMPPC_GSE_DW_REGS_COUNT \
- 	(KVMPPC_GSE_DW_REGS_END - KVMPPC_GSE_DW_REGS_START + 1)
- 
---- a/arch/powerpc/include/asm/kvm_book3s.h
-+++ b/arch/powerpc/include/asm/kvm_book3s.h
-@@ -594,6 +594,7 @@ static inline u##size kvmppc_get_##reg(s
- 
- 
- KVMPPC_BOOK3S_VCORE_ACCESSOR(vtb, 64, KVMPPC_GSID_VTB)
-+KVMPPC_BOOK3S_VCORE_ACCESSOR(dpdes, 64, KVMPPC_GSID_DPDES)
- KVMPPC_BOOK3S_VCORE_ACCESSOR_GET(arch_compat, 32, KVMPPC_GSID_LOGICAL_PVR)
- KVMPPC_BOOK3S_VCORE_ACCESSOR_GET(lpcr, 64, KVMPPC_GSID_LPCR)
- KVMPPC_BOOK3S_VCORE_ACCESSOR_SET(tb_offset, 64, KVMPPC_GSID_TB_OFFSET)
---- a/arch/powerpc/kvm/book3s_hv_nestedv2.c
-+++ b/arch/powerpc/kvm/book3s_hv_nestedv2.c
-@@ -311,6 +311,10 @@ static int gs_msg_ops_vcpu_fill_info(str
- 			rc = kvmppc_gse_put_u64(gsb, iden,
- 						vcpu->arch.vcore->vtb);
- 			break;
-+		case KVMPPC_GSID_DPDES:
-+			rc = kvmppc_gse_put_u64(gsb, iden,
-+						vcpu->arch.vcore->dpdes);
-+			break;
- 		case KVMPPC_GSID_LPCR:
- 			rc = kvmppc_gse_put_u64(gsb, iden,
- 						vcpu->arch.vcore->lpcr);
-@@ -543,6 +547,9 @@ static int gs_msg_ops_vcpu_refresh_info(
- 		case KVMPPC_GSID_VTB:
- 			vcpu->arch.vcore->vtb = kvmppc_gse_get_u64(gse);
- 			break;
-+		case KVMPPC_GSID_DPDES:
-+			vcpu->arch.vcore->dpdes = kvmppc_gse_get_u64(gse);
-+			break;
- 		case KVMPPC_GSID_LPCR:
- 			vcpu->arch.vcore->lpcr = kvmppc_gse_get_u64(gse);
- 			break;
---- a/arch/powerpc/kvm/test-guest-state-buffer.c
-+++ b/arch/powerpc/kvm/test-guest-state-buffer.c
-@@ -151,7 +151,7 @@ static void test_gs_bitmap(struct kunit
- 		i++;
+ 		return bh;
  	}
+-	if (!bh && (type == INDEX || type == DIRENT_HTREE)) {
++	/* The first directory block must not be a hole. */
++	if (!bh && (type == INDEX || type == DIRENT_HTREE || block == 0)) {
+ 		ext4_error_inode(inode, func, line, block,
+-				 "Directory hole found for htree %s block",
+-				 (type == INDEX) ? "index" : "leaf");
++				 "Directory hole found for htree %s block %u",
++				 (type == INDEX) ? "index" : "leaf", block);
+ 		return ERR_PTR(-EFSCORRUPTED);
+ 	}
+ 	if (!bh)
+@@ -3129,10 +3130,7 @@ bool ext4_empty_dir(struct inode *inode)
+ 		EXT4_ERROR_INODE(inode, "invalid size");
+ 		return false;
+ 	}
+-	/* The first directory block must not be a hole,
+-	 * so treat it as DIRENT_HTREE
+-	 */
+-	bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
++	bh = ext4_read_dirblock(inode, 0, EITHER);
+ 	if (IS_ERR(bh))
+ 		return false;
  
--	for (u16 iden = KVMPPC_GSID_GPR(0); iden <= KVMPPC_GSID_CTRL; iden++) {
-+	for (u16 iden = KVMPPC_GSID_GPR(0); iden <= KVMPPC_GSE_DW_REGS_END; iden++) {
- 		kvmppc_gsbm_set(&gsbm, iden);
- 		kvmppc_gsbm_set(&gsbm1, iden);
- 		KUNIT_EXPECT_TRUE(test, kvmppc_gsbm_test(&gsbm, iden));
+@@ -3577,10 +3575,7 @@ static struct buffer_head *ext4_get_firs
+ 		struct ext4_dir_entry_2 *de;
+ 		unsigned int offset;
+ 
+-		/* The first directory block must not be a hole, so
+-		 * treat it as DIRENT_HTREE
+-		 */
+-		bh = ext4_read_dirblock(inode, 0, DIRENT_HTREE);
++		bh = ext4_read_dirblock(inode, 0, EITHER);
+ 		if (IS_ERR(bh)) {
+ 			*retval = PTR_ERR(bh);
+ 			return NULL;
 
 
