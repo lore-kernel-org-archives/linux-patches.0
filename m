@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C57214831F;
-	Tue, 30 Jul 2024 16:43:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E15614831F;
+	Tue, 30 Jul 2024 16:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357787; cv=none; b=KjkWVKfrIEFImUvFIvFmUwh19bFzmo7ZgIZkbw8KyCXi/J8QzTK8EdpuEfF+hQf58DlBJEtTYBIAPPtdlnPdBQQvmXF3O0Qxpj+2QKcLnSEiBo7VAWkpUe3kv5B08kwbwJx49nGM2RMhyfY6qoN0J93T5gQeoRjkPHK2EBUYBjg=
+	t=1722357790; cv=none; b=YXZEz92m00PeJcG7rN0wNKmUljRgYI38fDJgWNd2Y/F6cpgCDhZNJnMxv8/0dIjG9cIDP2un39cKQiLxw1uOK2hM43KcDgz3ZW5OT8BOSkTQptguHIfBZm0H64roUCvgAfS9EGajKfTKK6qt2RnZWHrYE18Qs0dtVRh04mgUUvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357787; c=relaxed/simple;
-	bh=wQzA39+30kyPS4Sz7OhZhECIZ4hu2XYrlPt/CdJ+HBk=;
+	s=arc-20240116; t=1722357790; c=relaxed/simple;
+	bh=Vp4IoufY6ZfgkckKJq94P+xM/fKxxad0a1qJun3RVLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uspyUQZpMjvNb4okjLgv3lw5OwVnMPbMY3AgPOtMcJVRQHCn4TAgjASMwE12u0dbFJhY1gh+nvtqm895s9ujxAW513p1n5psxyYvOTlxpsDeRs6e6XwINIE1trHpNSsfMvlmAPxZg0b6/bgZ66gmISQfGBhWfgPjCIawz3g4ghc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0nYS1t1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CMI/nhAPb3KOo5a6jkZ5WBkyOBlwkX47bpmPFOWVY26Vq66QzSHvLrJeeZ4VkQyiWfGzX0Oa1KavjaqqxpX2qfA5JFCMJ3TL9OCqnM8zZr2CXfq0aX0A4KocOrDqheEmfm46o0+jp0i6GSVzdPUHZ4hOYnXkRd3IGOcO6iCsFn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmw3q8V6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0nYS1t1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2455EC32782;
-	Tue, 30 Jul 2024 16:43:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmw3q8V6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2488AC32782;
+	Tue, 30 Jul 2024 16:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357787;
-	bh=wQzA39+30kyPS4Sz7OhZhECIZ4hu2XYrlPt/CdJ+HBk=;
+	s=korg; t=1722357790;
+	bh=Vp4IoufY6ZfgkckKJq94P+xM/fKxxad0a1qJun3RVLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0nYS1t1TCHezW8UkcIdpVEeBtc+MInN2CzjiiM7bCxcIL3OqfaTIjgCgpcTbM92k
-	 L36/uq5L2/fKCK913zOAm4437ilky/Dn3gSSBdWt9yNiWtlzzvzj1o5qXoeI/uNXX0
-	 ePxsvP1lUKH5hUX0STiXyku05bPluR/dq1EfAIz4=
+	b=bmw3q8V6U9ylR1eCTiUc/R19/qwjbQ3HwFCIiMMASqkHH0TYX/DzDiuPMHgAQmvaD
+	 ZPj2wtc0k05J65M6pwM5/KRyvw3XVofboXnSmO7JYu70gfkIt0AlMVCMYhmpyYyofV
+	 H7tJNE7X0alUe7aD4gBT11zie+2Xo6+R9wlS9QXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 292/809] media: i2c: hi846: Fix V4L2_SUBDEV_FORMAT_TRY get_selection()
-Date: Tue, 30 Jul 2024 17:42:48 +0200
-Message-ID: <20240730151736.124892796@linuxfoundation.org>
+	tuhaowen <tuhaowen@uniontech.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 327/440] dev/parport: fix the array out-of-bounds risk
+Date: Tue, 30 Jul 2024 17:49:20 +0200
+Message-ID: <20240730151628.591681210@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +46,129 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: tuhaowen <tuhaowen@uniontech.com>
 
-[ Upstream commit 984abe0b5794a2aca359bb61555351d2ec520d2a ]
+commit ab11dac93d2d568d151b1918d7b84c2d02bacbd5 upstream.
 
-The current code does not return anything to the user.
+Fixed array out-of-bounds issues caused by sprintf
+by replacing it with snprintf for safer data copying,
+ensuring the destination buffer is not overflowed.
 
-Although the code looks a bit dangerous (using a pointer without
-checking if it is valid), it should be fine. The core validates that
-sel->pad has a valid value.
+Below is the stack trace I encountered during the actual issue:
 
-Fix the following smatch error:
-drivers/media/i2c/hi846.c:1854 hi846_get_selection() warn: statement has no effect 31
+[ 66.575408s] [pid:5118,cpu4,QThread,4]Kernel panic - not syncing: stack-protector:
+Kernel stack is corrupted in: do_hardware_base_addr+0xcc/0xd0 [parport]
+[ 66.575408s] [pid:5118,cpu4,QThread,5]CPU: 4 PID: 5118 Comm:
+QThread Tainted: G S W O 5.10.97-arm64-desktop #7100.57021.2
+[ 66.575439s] [pid:5118,cpu4,QThread,6]TGID: 5087 Comm: EFileApp
+[ 66.575439s] [pid:5118,cpu4,QThread,7]Hardware name: HUAWEI HUAWEI QingYun
+PGUX-W515x-B081/SP1PANGUXM, BIOS 1.00.07 04/29/2024
+[ 66.575439s] [pid:5118,cpu4,QThread,8]Call trace:
+[ 66.575469s] [pid:5118,cpu4,QThread,9] dump_backtrace+0x0/0x1c0
+[ 66.575469s] [pid:5118,cpu4,QThread,0] show_stack+0x14/0x20
+[ 66.575469s] [pid:5118,cpu4,QThread,1] dump_stack+0xd4/0x10c
+[ 66.575500s] [pid:5118,cpu4,QThread,2] panic+0x1d8/0x3bc
+[ 66.575500s] [pid:5118,cpu4,QThread,3] __stack_chk_fail+0x2c/0x38
+[ 66.575500s] [pid:5118,cpu4,QThread,4] do_hardware_base_addr+0xcc/0xd0 [parport]
 
-Fixes: e8c0882685f9 ("media: i2c: add driver for the SK Hynix Hi-846 8M pixel camera")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-[Sakari Ailus: code -> core.]
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20240708080430.8221-1-tuhaowen@uniontech.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/hi846.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/parport/procfs.c |   24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
-index 9c565ec033d4e..52d9ca68a86c8 100644
---- a/drivers/media/i2c/hi846.c
-+++ b/drivers/media/i2c/hi846.c
-@@ -1851,7 +1851,7 @@ static int hi846_get_selection(struct v4l2_subdev *sd,
- 		mutex_lock(&hi846->mutex);
- 		switch (sel->which) {
- 		case V4L2_SUBDEV_FORMAT_TRY:
--			v4l2_subdev_state_get_crop(sd_state, sel->pad);
-+			sel->r = *v4l2_subdev_state_get_crop(sd_state, sel->pad);
- 			break;
- 		case V4L2_SUBDEV_FORMAT_ACTIVE:
- 			sel->r = hi846->cur_mode->crop;
--- 
-2.43.0
-
+--- a/drivers/parport/procfs.c
++++ b/drivers/parport/procfs.c
+@@ -51,12 +51,12 @@ static int do_active_device(struct ctl_t
+ 	
+ 	for (dev = port->devices; dev ; dev = dev->next) {
+ 		if(dev == port->cad) {
+-			len += sprintf(buffer, "%s\n", dev->name);
++			len += snprintf(buffer, sizeof(buffer), "%s\n", dev->name);
+ 		}
+ 	}
+ 
+ 	if(!len) {
+-		len += sprintf(buffer, "%s\n", "none");
++		len += snprintf(buffer, sizeof(buffer), "%s\n", "none");
+ 	}
+ 
+ 	if (len > *lenp)
+@@ -87,19 +87,19 @@ static int do_autoprobe(struct ctl_table
+ 	}
+ 	
+ 	if ((str = info->class_name) != NULL)
+-		len += sprintf (buffer + len, "CLASS:%s;\n", str);
++		len += snprintf (buffer + len, sizeof(buffer) - len, "CLASS:%s;\n", str);
+ 
+ 	if ((str = info->model) != NULL)
+-		len += sprintf (buffer + len, "MODEL:%s;\n", str);
++		len += snprintf (buffer + len, sizeof(buffer) - len, "MODEL:%s;\n", str);
+ 
+ 	if ((str = info->mfr) != NULL)
+-		len += sprintf (buffer + len, "MANUFACTURER:%s;\n", str);
++		len += snprintf (buffer + len, sizeof(buffer) - len, "MANUFACTURER:%s;\n", str);
+ 
+ 	if ((str = info->description) != NULL)
+-		len += sprintf (buffer + len, "DESCRIPTION:%s;\n", str);
++		len += snprintf (buffer + len, sizeof(buffer) - len, "DESCRIPTION:%s;\n", str);
+ 
+ 	if ((str = info->cmdset) != NULL)
+-		len += sprintf (buffer + len, "COMMAND SET:%s;\n", str);
++		len += snprintf (buffer + len, sizeof(buffer) - len, "COMMAND SET:%s;\n", str);
+ 
+ 	if (len > *lenp)
+ 		len = *lenp;
+@@ -117,7 +117,7 @@ static int do_hardware_base_addr(struct
+ 				 void *result, size_t *lenp, loff_t *ppos)
+ {
+ 	struct parport *port = (struct parport *)table->extra1;
+-	char buffer[20];
++	char buffer[64];
+ 	int len = 0;
+ 
+ 	if (*ppos) {
+@@ -128,7 +128,7 @@ static int do_hardware_base_addr(struct
+ 	if (write) /* permissions prevent this anyway */
+ 		return -EACCES;
+ 
+-	len += sprintf (buffer, "%lu\t%lu\n", port->base, port->base_hi);
++	len += snprintf (buffer, sizeof(buffer), "%lu\t%lu\n", port->base, port->base_hi);
+ 
+ 	if (len > *lenp)
+ 		len = *lenp;
+@@ -155,7 +155,7 @@ static int do_hardware_irq(struct ctl_ta
+ 	if (write) /* permissions prevent this anyway */
+ 		return -EACCES;
+ 
+-	len += sprintf (buffer, "%d\n", port->irq);
++	len += snprintf (buffer, sizeof(buffer), "%d\n", port->irq);
+ 
+ 	if (len > *lenp)
+ 		len = *lenp;
+@@ -182,7 +182,7 @@ static int do_hardware_dma(struct ctl_ta
+ 	if (write) /* permissions prevent this anyway */
+ 		return -EACCES;
+ 
+-	len += sprintf (buffer, "%d\n", port->dma);
++	len += snprintf (buffer, sizeof(buffer), "%d\n", port->dma);
+ 
+ 	if (len > *lenp)
+ 		len = *lenp;
+@@ -213,7 +213,7 @@ static int do_hardware_modes(struct ctl_
+ #define printmode(x)							\
+ do {									\
+ 	if (port->modes & PARPORT_MODE_##x)				\
+-		len += sprintf(buffer + len, "%s%s", f++ ? "," : "", #x); \
++		len += snprintf(buffer + len, sizeof(buffer) - len, "%s%s", f++ ? "," : "", #x); \
+ } while (0)
+ 		int f = 0;
+ 		printmode(PCSPP);
 
 
