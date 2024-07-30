@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FDF188000;
-	Tue, 30 Jul 2024 16:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01B6187FF2;
+	Tue, 30 Jul 2024 16:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355448; cv=none; b=vASXud4SLSpavBOBqBDtj6y/WWQpjr8vI2F4OPcZKDmq8kd02dokglPVktnoz1V0pEKWtKScmekIPdzjbpcoSUijHQnynyT5WhnD8cD+iU0LcLbVFXz2fokpTJekoQdDNGE9bxH8Slh8K2DgE/kQlKIEP0LovXenjxSUUZK6CLo=
+	t=1722355451; cv=none; b=eC3kdfuGqZBZO8TvsH8+9iqaP7KYfexJYo2oPy8Va9hwveKQKT45MRMPoaDF40u36uY73yhm9vGxrLOjA34UryrnyPqAnGReft3WN0WSU0andsonZP1t5LLnPsdrDsADPOuiZP8ncBbzCho02PpVYbqTqlHMPka8+E4+5xLjTDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355448; c=relaxed/simple;
-	bh=ie/4MSq+snrkFokIyXghSPOCXWjz4Hf+rPjxlik1kig=;
+	s=arc-20240116; t=1722355451; c=relaxed/simple;
+	bh=xquWXPB5ox80mLe6BSR5C6vhbqKzIrw8yuI5shvNOpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l1XHd/mJLZGhHKRziNoNRsrNlqlzbhIme/RDjsUsYH+xSuD+J9kw0ClXPKuHH0HmPmw6l6p9xsH5iaKSmqgxwmtT2LPyC0iU8S3iU3xlNQ61tT1itfjgMj/eR9AASwJTziNOY2ZQSYBTfz7Jyk6LaiDDY5H+6XaOYdRbWGzucGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AFRJPU3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=khmXZodBQ/en9HicmmeUD37ih4pURAgiLJvY0KzB+JBrJeePj6JMnzBEeV8gfxXdRZBvMWFPfTR6jLxdpdUduraVE/TlVZAnSUcoglA+7e+FfOMfXkpmnbbc7jMeKfKEkUjD1fN+MBXtBg/HNSoMuG7yeMgVLS3/t0G7Hs+VJw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vz6JGfqy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AFRJPU3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE473C4AF0A;
-	Tue, 30 Jul 2024 16:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vz6JGfqy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D119C32782;
+	Tue, 30 Jul 2024 16:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355448;
-	bh=ie/4MSq+snrkFokIyXghSPOCXWjz4Hf+rPjxlik1kig=;
+	s=korg; t=1722355451;
+	bh=xquWXPB5ox80mLe6BSR5C6vhbqKzIrw8yuI5shvNOpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AFRJPU3i7Boihksw9kyuuM/+c2JQY1BVY6+4HqRIYeuWKoiML/H9NOtnzGvq0Fbb
-	 A6dnILBQ/iVaokqy7Z4Nyk5Iu9P61wuBpjmIMAFNS6+FH5LhrOs+8+rlIAzeUGJFpq
-	 yaHo91v2YbsMWpOYeJqp/eDI7OOcRWESo2cKhhJo=
+	b=vz6JGfqy7IUpC82q5rsyYfWdU79khSbpqa4plq97oqSRHc5abxrR2kadKmkMHjg0s
+	 464llr8nbYFA9q3gHPH9HdtC4tDD8RUfEp5AhnRskS+jOBD2RE2HcDRNHiE9S4xYWm
+	 Flk6zA9vsnkpdXl47UW/bLQVcVWVMcUhyDSYfXYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 056/809] soc: qcom: pmic_glink: Handle the return value of pmic_glink_init
-Date: Tue, 30 Jul 2024 17:38:52 +0200
-Message-ID: <20240730151726.858572577@linuxfoundation.org>
+Subject: [PATCH 6.6 059/568] arm64: dts: qcom: qdu1000-idp: drop unused LLCC multi-ch-bit-off
+Date: Tue, 30 Jul 2024 17:42:46 +0200
+Message-ID: <20240730151642.164513069@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,52 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 0780c836673b25f5aad306630afcb1172d694cb4 ]
+[ Upstream commit 468cf125e4796e8ef9815e2d8d018f44cf8f1225 ]
 
-As platform_driver_register() and register_rpmsg_driver() can return
-error numbers, it should be better to check the return value and deal
-with the exception.
+There is no "multi-ch-bit-off" property in LLCC, according to bindings
+and Linux driver:
 
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK  driver")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Link: https://lore.kernel.org/r/20240510083156.1996783-1-nichen@iscas.ac.cn
+  qdu1000-idp.dtb: system-cache-controller@19200000: 'multi-ch-bit-off' does not match any of the regexes: 'pinctrl-[0-9]+'
+
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Link: https://lore.kernel.org/r/20231107080417.16700-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Stable-dep-of: 367fb3f0aaa6 ("arm64: dts: qcom: qdu1000: Add secure qfprom node")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pmic_glink.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index 65279243072c3..9ebc0ba359477 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -373,8 +373,17 @@ static struct platform_driver pmic_glink_driver = {
+diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+index 1c0e5d271e91b..1ef87604549fa 100644
+--- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
++++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
+@@ -1452,7 +1452,6 @@ system-cache-controller@19200000 {
+ 				    "llcc_broadcast_base",
+ 				    "multi_channel_register";
+ 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
+-			multi-ch-bit-off = <24 2>;
+ 		};
+ 	};
  
- static int pmic_glink_init(void)
- {
--	platform_driver_register(&pmic_glink_driver);
--	register_rpmsg_driver(&pmic_glink_rpmsg_driver);
-+	int ret;
-+
-+	ret = platform_driver_register(&pmic_glink_driver);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = register_rpmsg_driver(&pmic_glink_rpmsg_driver);
-+	if (ret < 0) {
-+		platform_driver_unregister(&pmic_glink_driver);
-+		return ret;
-+	}
- 
- 	return 0;
- }
 -- 
 2.43.0
 
