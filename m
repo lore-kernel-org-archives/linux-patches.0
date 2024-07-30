@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B291A6195;
-	Tue, 30 Jul 2024 16:54:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5D51A6195;
+	Tue, 30 Jul 2024 16:54:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358471; cv=none; b=PxlduF4KHYgMcc5cpdXm+o48k/j21nyLZAGEO6ra8G5yA7GEde74UhgNutN5FeNfLep18nmai4SJAeckKN3ain8jQBb8dNT6m93gw5zwRx/LAcXl18VKPFGRqYjNmM+l5hTi/r1tfftcKgj6v42nEbkvN12pyGLJt6uPXhaCwP8=
+	t=1722358474; cv=none; b=Dw18X1h5/RGVavAYUI0VvTATY70eImAx9HCZnyoA58xp2Z4dRWQ7aIfQifgbf44atfY+R16fC3Cm1N4pkPDXP+4N54iNo3tU19yAvxV7XtzGpkQYK4XnsUuiVNlixfMBPeI/qHLUXaeu2VOfLqHD2xsGJJsFlFlCmd3JZOkOg3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358471; c=relaxed/simple;
-	bh=Hd3Jdqo8dupcR9uYXngVVChpPPnePU+NOuL9/eBKQTs=;
+	s=arc-20240116; t=1722358474; c=relaxed/simple;
+	bh=fuVksvIHhXtE3jbER/w6GXrHJaWrxlBvEUBQ39NBm9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prdubS5ysVbXmTi1+Uo0jPamhKs5ld0O7yr/ULua6nYatyqaKC91h6MwKqIME82P4zTYCOFbx6GgXvUx7+IDGFWv+nCg+4lRu+ZdNCSQTCHzSvnlTLeozoajD8wpVuZpd9hS76Z4Tj8uEznJlVanXARmZLNMqvlSqbiEdy2GzOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/TNxvdh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=guC+T+gVP8Ft9lfhNvKlplC6TaAJZLdHUzW/CL4CvDiEVTpehjtLkwzcGLoGZ+Pgkkg2ZqeCjGL9uOiqfoTzscLboCqEPPCtUc5zo+aYprdXLW21vBMT4EqKMyj8ZYeSzj736gdVbkAKEphlSzlzoIw+VhkVOcMCBcokyptLrAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wgB1crV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/TNxvdh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7D13C32782;
-	Tue, 30 Jul 2024 16:54:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wgB1crV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9D7C32782;
+	Tue, 30 Jul 2024 16:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358471;
-	bh=Hd3Jdqo8dupcR9uYXngVVChpPPnePU+NOuL9/eBKQTs=;
+	s=korg; t=1722358474;
+	bh=fuVksvIHhXtE3jbER/w6GXrHJaWrxlBvEUBQ39NBm9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/TNxvdhN8+algcCRlUBn5fDV/fHTGGUCPk23tual3nnt92JD3/2YrJfZ3ZLR7/Vx
-	 ZgLSUbAUVJ6sxAks2iyqR4e4uO8Gq+2YcMjHvimTY8DnmTtpykrLYIylJWRn1aG6f0
-	 fhIdCLObYA0YGJLHCOuKDKSQpjhBxa3yO+4Jk5CU=
+	b=wgB1crV3pxKZg9dCsZ7x80coOYi8E10bRjrobPEj3i/4Vyd3tTM76ZGN1HGODuOOP
+	 xu1hfday56RTkTORoKiO/9+QaLxbgw3g8Q49YJXw8WM3EYYcVwk+2OLG8ajgSHtPR5
+	 j81Hoqtl9t+QItkikcgMGEOcUOhV/K9lYqxbFcys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Nathan Hebert <nhebert@chromium.org>,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 362/809] media: venus: flush all buffers in output plane streamoff
-Date: Tue, 30 Jul 2024 17:43:58 +0200
-Message-ID: <20240730151738.947897084@linuxfoundation.org>
+	syzbot+412a392a2cd4a65e71db@syzkaller.appspotmail.com,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Namjae Jeon <linkinjeon@kernel.org>
+Subject: [PATCH 6.6 365/568] exfat: fix potential deadlock on __exfat_get_dentry_set
+Date: Tue, 30 Jul 2024 17:47:52 +0200
+Message-ID: <20240730151654.127289235@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,47 +47,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+From: Sungjong Seo <sj1557.seo@samsung.com>
 
-[ Upstream commit e750a4b1224142bd8dd057b0d5adf8a5608b7e77 ]
+commit 89fc548767a2155231128cb98726d6d2ea1256c9 upstream.
 
-For scenarios, when source change is followed by VIDIOC_STREAMOFF
-on output plane, driver should discard any queued OUTPUT
-buffers, which are not decoded or dequeued.
-Flush with HFI_FLUSH_INPUT does not have any actual impact.
-So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
-queued buffers.
+When accessing a file with more entries than ES_MAX_ENTRY_NUM, the bh-array
+is allocated in __exfat_get_entry_set. The problem is that the bh-array is
+allocated with GFP_KERNEL. It does not make sense. In the following cases,
+a deadlock for sbi->s_lock between the two processes may occur.
 
-Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Tested-by: Nathan Hebert <nhebert@chromium.org>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+       CPU0                CPU1
+       ----                ----
+  kswapd
+   balance_pgdat
+    lock(fs_reclaim)
+                      exfat_iterate
+                       lock(&sbi->s_lock)
+                       exfat_readdir
+                        exfat_get_uniname_from_ext_entry
+                         exfat_get_dentry_set
+                          __exfat_get_dentry_set
+                           kmalloc_array
+                            ...
+                            lock(fs_reclaim)
+    ...
+    evict
+     exfat_evict_inode
+      lock(&sbi->s_lock)
+
+To fix this, let's allocate bh-array with GFP_NOFS.
+
+Fixes: a3ff29a95fde ("exfat: support dynamic allocate bh for exfat_entry_set_cache")
+Cc: stable@vger.kernel.org # v6.2+
+Reported-by: syzbot+412a392a2cd4a65e71db@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/lkml/000000000000fef47e0618c0327f@google.com
+Signed-off-by: Sungjong Seo <sj1557.seo@samsung.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/qcom/venus/vdec.c | 2 +-
+ fs/exfat/dir.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 29130a9441e70..0d2ab95bec0f6 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1255,7 +1255,7 @@ static int vdec_stop_output(struct venus_inst *inst)
- 		break;
- 	case VENUS_DEC_STATE_INIT:
- 	case VENUS_DEC_STATE_CAPTURE_SETUP:
--		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
-+		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
- 		break;
- 	default:
- 		break;
--- 
-2.43.0
-
+--- a/fs/exfat/dir.c
++++ b/fs/exfat/dir.c
+@@ -890,7 +890,7 @@ int exfat_get_dentry_set(struct exfat_en
+ 
+ 	num_bh = EXFAT_B_TO_BLK_ROUND_UP(off + num_entries * DENTRY_SIZE, sb);
+ 	if (num_bh > ARRAY_SIZE(es->__bh)) {
+-		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_KERNEL);
++		es->bh = kmalloc_array(num_bh, sizeof(*es->bh), GFP_NOFS);
+ 		if (!es->bh) {
+ 			brelse(bh);
+ 			return -ENOMEM;
 
 
