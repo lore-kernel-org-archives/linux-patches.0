@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 891111A76A9;
-	Tue, 30 Jul 2024 17:18:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB14B1A76AC;
+	Tue, 30 Jul 2024 17:18:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359927; cv=none; b=U0XUg26+HVV8HcFLYNnKDGP1w4a9bHhDZrhpI1HL4+hdlhuvGEYev6BSF6VBhu76LpB4obi2XBcfR8SY2Uzak298xR9gEY9rhbfpZUoUfpATJwvnWf2tYDm/Uc6q2bQ6b1eHXSGM2tzA+uucfR9v+ajqnvEgaWOHzdynObYcS0w=
+	t=1722359930; cv=none; b=qyjp5K+v8PP2PkmnpiMBbP47fHCAcJAICkRg/9TIv8yBB0HVcrmmKyKwojyEDZxTiOwZ6Zm2ogUXa6NiMp5fBW4nt0gWVYHys2hNNGpQZm9SeQniP7cPx0+ewQCaW1cmvipY74UoXJiFnyN8gLtYxP+aO/ULxU7JsWzjMcY6/zY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359927; c=relaxed/simple;
-	bh=wPhm8N4ek2/cEdKv1hiw0kFq8SMjOIANbBPAxDzVqm8=;
+	s=arc-20240116; t=1722359930; c=relaxed/simple;
+	bh=UAdiLRXMEGbqOhgW8ZOPU/KcpAq0FYbvI8eEWF+g+PU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aOi6u3E1qYH3UWdT4deeUtrVau3RRu6DiPgEum0Y+CHQS11mY2Qo1l4rMfXuqvFvpGp5g/SVPay1GsoekNgC97bNNqepEgWrgl2DGTcUulLp0oBdxIGM7S/NjniCs8xlcdF8mKglfjsvOShm8jFWgHrpGggzHIODqcdpvBXD288=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/7mtcac; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dxfNFHZQhV9O++HMHxRviQgubdmFMe/qpIrojVxHIYf/K8/9XCfhmuZM579iE7uPL/AYQpvxh+0AHTNAT8xbUO49kFsUnRFjskzCKHiUJqjQR0coRvdkSV1VB70KR7hceWFs5GhYuB3K3Y0t50Ub2N4X2TBk+QEupToyEfYkPdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jWoP5lAu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/7mtcac"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F7DC32782;
-	Tue, 30 Jul 2024 17:18:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jWoP5lAu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD714C4AF0E;
+	Tue, 30 Jul 2024 17:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359927;
-	bh=wPhm8N4ek2/cEdKv1hiw0kFq8SMjOIANbBPAxDzVqm8=;
+	s=korg; t=1722359930;
+	bh=UAdiLRXMEGbqOhgW8ZOPU/KcpAq0FYbvI8eEWF+g+PU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/7mtcacxWQ8BF0iYbJJtU4lv/AVrfv6HG/jD93cIo/UJmzymO7sqdVwsphk2wDC9
-	 21JQdBOZvK6GmopW/LEINs5dYkfoeUExZQ6Bw7OVaWftf/Ot1a/G6y5WlV2hDwmamZ
-	 j/4y6iQBIBJwGpPXdGA7gpnuUUh1CiZeC6aZU09g=
+	b=jWoP5lAukac54tpU21i9wFk+tYLIFMNNw2OxLgUnJCD8YiY7mOmTHAWqw3jJqk5KA
+	 n9zDi0xZ4qhVKtuPQngFSp2VgidgvxFfEM0gZdDVUAK5CutPFvxIhdlGs/GvG+Yvy3
+	 xjq1WYiIKiPXmDg2A6CuMAY3JdsGO+te1RrR6Bow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 555/809] ipv4: fix source address selection with route leak
-Date: Tue, 30 Jul 2024 17:47:11 +0200
-Message-ID: <20240730151746.678294840@linuxfoundation.org>
+	Venkata Prasad Potturu <venkataprasad.potturu@amd.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 557/568] ASoC: sof: amd: fix for firmware reload failure in Vangogh platform
+Date: Tue, 30 Jul 2024 17:51:04 +0200
+Message-ID: <20240730151701.928830339@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,52 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
 
-commit 6807352353561187a718e87204458999dbcbba1b upstream.
+[ Upstream commit f2038c12e8133bf4c6bd4d1127a23310d55d9e21 ]
 
-By default, an address assigned to the output interface is selected when
-the source address is not specified. This is problematic when a route,
-configured in a vrf, uses an interface from another vrf (aka route leak).
-The original vrf does not own the selected source address.
+Setting ACP ACLK as clock source when ACP enters D0 state causing
+firmware load failure, as per design clock source should be internal
+clock.
 
-Let's add a check against the output interface and call the appropriate
-function to select the source address.
+Remove acp_clkmux_sel field so that ACP will use internal clock
+source when ACP enters into D0 state.
 
-CC: stable@vger.kernel.org
-Fixes: 8cbb512c923d ("net: Add source address lookup op for VRF")
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20240710081521.3809742-2-nicolas.dichtel@6wind.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d0dab6b76a9f ("ASoC: SOF: amd: Add sof support for vangogh platform")
+
+Signed-off-by: Venkata Prasad Potturu <venkataprasad.potturu@amd.com>
+Link: https://patch.msgid.link/20240718062004.581685-1-venkataprasad.potturu@amd.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/fib_semantics.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ sound/soc/sof/amd/pci-vangogh.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -2270,6 +2270,15 @@ void fib_select_path(struct net *net, st
- 		fib_select_default(fl4, res);
+diff --git a/sound/soc/sof/amd/pci-vangogh.c b/sound/soc/sof/amd/pci-vangogh.c
+index d8be42fbcb6dd..b035e31fadaba 100644
+--- a/sound/soc/sof/amd/pci-vangogh.c
++++ b/sound/soc/sof/amd/pci-vangogh.c
+@@ -34,7 +34,6 @@ static const struct sof_amd_acp_desc vangogh_chip_info = {
+ 	.dsp_intr_base	= ACP5X_DSP_SW_INTR_BASE,
+ 	.sram_pte_offset = ACP5X_SRAM_PTE_OFFSET,
+ 	.hw_semaphore_offset = ACP5X_AXI2DAGB_SEM_0,
+-	.acp_clkmux_sel = ACP5X_CLKMUX_SEL,
+ 	.probe_reg_offset = ACP5X_FUTURE_REG_ACLK_0,
+ };
  
- check_saddr:
--	if (!fl4->saddr)
--		fl4->saddr = fib_result_prefsrc(net, res);
-+	if (!fl4->saddr) {
-+		struct net_device *l3mdev;
-+
-+		l3mdev = dev_get_by_index_rcu(net, fl4->flowi4_l3mdev);
-+
-+		if (!l3mdev ||
-+		    l3mdev_master_dev_rcu(FIB_RES_DEV(*res)) == l3mdev)
-+			fl4->saddr = fib_result_prefsrc(net, res);
-+		else
-+			fl4->saddr = inet_select_addr(l3mdev, 0, RT_SCOPE_LINK);
-+	}
- }
+-- 
+2.43.0
+
 
 
