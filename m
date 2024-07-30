@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA043154C18;
-	Tue, 30 Jul 2024 16:44:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4222F154C18;
+	Tue, 30 Jul 2024 16:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357885; cv=none; b=H6Nir1vaHaE76vyTSEsjgiv9fFlCCbQXwQ6pP463sEx7I3W0xB4BVV9PdOjoT8HRZQ6wxAzspGwBGEjibryb9c29rPxfp/Ore2RK8OGXeSoWu8cVlj+BB9JnJ1LViuqmSbpZi57jBUodEPo6SH4Rf7/ft5iohczhQU1rMyU7Q18=
+	t=1722357889; cv=none; b=ICG0LR/1c1JbWljeWRM4WYdh2xG4z4R1+r0g40oSmMRPv0Hymqb2xBxta0LtqMtdz30EY+Vsuke7JDEgBUEIukRlUT8kQouK6Ng+O78T9pCWR7VCrUFu2K5SM3A+rcbPCDebjMZWEgY8cea6NofKrkd7i9pFWBvAXa+N8bxY1uY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357885; c=relaxed/simple;
-	bh=/UblkWw53UL+DW2t1XRjjaicnUH+vIJ49s1XwUwo/4s=;
+	s=arc-20240116; t=1722357889; c=relaxed/simple;
+	bh=nKxVN+cOZBEqQtEiS9tfMQ20viknUdzLhM+0scK+Cd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uSLPjc0i+lsNa3h+DtGDQnex5PFzGiXRvRf0SXCHZ+X61AwqW/14IIdpoHeUMjfQ3jSStRzsObb/Z87aoDjD6gydJu3OBFWxSZAO8cUt091NUQhhDRxSvy+pMHY4dFGX5j/jKElDY8BDwi5whR/vMtAKIXX6SDSDa6WvyC5QuA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LYAMFtr1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dVY+WIiEn8YNSeBQlRnzvEJTyI5iYVtnjRf+F7JSH/Tjs5bid9aPS6NefwJ8jp/qmKM1lsiuEkCwRPebZpaWv2acZKeTYz1E7uS889coOIGiGy6awjSqjABHT7ayXdSfENULYHzG2JQ/wVNJHk6Thw1qZkoCHaQ5ta62mgbE/x8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V9zhk5oI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LYAMFtr1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EB3C4AF0E;
-	Tue, 30 Jul 2024 16:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V9zhk5oI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE97C4AF0A;
+	Tue, 30 Jul 2024 16:44:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357885;
-	bh=/UblkWw53UL+DW2t1XRjjaicnUH+vIJ49s1XwUwo/4s=;
+	s=korg; t=1722357888;
+	bh=nKxVN+cOZBEqQtEiS9tfMQ20viknUdzLhM+0scK+Cd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LYAMFtr1H4ZhHPCojXyhTNGB82bwaMHbjegybjqtyjFfign4xrwIbkBZb2oC7b2vw
-	 ZYmNaKIa4Ry7rRuDx5v0XRoY0IZhC7zFjI7SZQPD+zFUFTjQD88hBaNEacLEch0D3r
-	 +yExv2wQ8r2AyD7hCtWd08YV0AFrZfGXIX4Zrgos=
+	b=V9zhk5oIupHiQzfR30b5yt0NoJCyqArYYaQDTJU11U7h/T6p3fA1Ieb+ZV0n/46Tj
+	 dGnT9uxHff1ixGUIhvvAeF3rGoYzeB9ccUq6TndTjDneHUuigCkL79QYXLTHwwRNaK
+	 0IKY+9MM6bYdPK9n+809fvaQuCcxtEe49Emgu32I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John David Anglin <dave.anglin@bell.net>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 321/440] parisc: Fix warning at drivers/pci/msi/msi.h:121
-Date: Tue, 30 Jul 2024 17:49:14 +0200
-Message-ID: <20240730151628.356353633@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Subject: [PATCH 6.1 336/440] kbuild: Fix -S -c in x86 stack protector scripts
+Date: Tue, 30 Jul 2024 17:49:29 +0200
+Message-ID: <20240730151628.943539481@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -50,39 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John David Anglin <dave@mx3210.local>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 4c29ab84cfec17081aae7a7a28f8d2c93c42dcae upstream.
+commit 3415b10a03945b0da4a635e146750dfe5ce0f448 upstream.
 
-Fix warning at drivers/pci/msi/msi.h:121.
+After a recent change in clang to stop consuming all instances of '-S'
+and '-c' [1], the stack protector scripts break due to the kernel's use
+of -Werror=unused-command-line-argument to catch cases where flags are
+not being properly consumed by the compiler driver:
 
-Recently, I added a PCI to PCIe bridge adaptor and a PCIe NVME card
-to my rp3440. Then, I noticed this warning at boot:
+  $ echo | clang -o - -x c - -S -c -Werror=unused-command-line-argument
+  clang: error: argument unused during compilation: '-c' [-Werror,-Wunused-command-line-argument]
 
- WARNING: CPU: 0 PID: 10 at drivers/pci/msi/msi.h:121 pci_msi_setup_msi_irqs+0x68/0x90
- CPU: 0 PID: 10 Comm: kworker/u32:0 Not tainted 6.9.7-parisc64 #1  Debian 6.9.7-1
- Hardware name: 9000/800/rp3440
- Workqueue: async async_run_entry_fn
+This results in CONFIG_STACKPROTECTOR getting disabled because
+CONFIG_CC_HAS_SANE_STACKPROTECTOR is no longer set.
 
-We need to select PCI_MSI_ARCH_FALLBACKS when PCI_MSI is selected.
+'-c' and '-S' both instruct the compiler to stop at different stages of
+the pipeline ('-S' after compiling, '-c' after assembling), so having
+them present together in the same command makes little sense. In this
+case, the test wants to stop before assembling because it is looking at
+the textual assembly output of the compiler for either '%fs' or '%gs',
+so remove '-c' from the list of arguments to resolve the error.
 
-Signed-off-by: John David Anglin <dave.anglin@bell.net>
-Cc: stable@vger.kernel.org	# v6.0+
-Signed-off-by: Helge Deller <deller@gmx.de>
+All versions of GCC continue to work after this change, along with
+versions of clang that do or do not contain the change mentioned above.
+
+Cc: stable@vger.kernel.org
+Fixes: 4f7fd4d7a791 ("[PATCH] Add the -fstack-protector option to the CFLAGS")
+Fixes: 60a5317ff0f4 ("x86: implement x86_32 stack protector")
+Link: https://github.com/llvm/llvm-project/commit/6461e537815f7fa68cef06842505353cf5600e9c [1]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ scripts/gcc-x86_32-has-stack-protector.sh |    2 +-
+ scripts/gcc-x86_64-has-stack-protector.sh |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -75,6 +75,7 @@ config PARISC
- 	select HAVE_SOFTIRQ_ON_OWN_STACK if IRQSTACKS
- 	select TRACE_IRQFLAGS_SUPPORT
- 	select HAVE_FUNCTION_DESCRIPTORS if 64BIT
-+	select PCI_MSI_ARCH_FALLBACKS if PCI_MSI
+--- a/scripts/gcc-x86_32-has-stack-protector.sh
++++ b/scripts/gcc-x86_32-has-stack-protector.sh
+@@ -5,4 +5,4 @@
+ # -mstack-protector-guard-reg, added by
+ # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81708
  
- 	help
- 	  The PA-RISC microprocessor is designed by Hewlett-Packard and used
+-echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m32 -O0 -fstack-protector -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
++echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m32 -O0 -fstack-protector -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
+--- a/scripts/gcc-x86_64-has-stack-protector.sh
++++ b/scripts/gcc-x86_64-has-stack-protector.sh
+@@ -1,4 +1,4 @@
+ #!/bin/sh
+ # SPDX-License-Identifier: GPL-2.0
+ 
+-echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m64 -O0 -mcmodel=kernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%gs"
++echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m64 -O0 -mcmodel=kernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%gs"
 
 
