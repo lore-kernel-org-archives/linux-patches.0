@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8804B1A76B2;
-	Tue, 30 Jul 2024 17:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27541A76B2;
+	Tue, 30 Jul 2024 17:27:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360453; cv=none; b=SBajUQ9dDWTR65h1cJUMsqgGe5KhF0fNU2wsZC/fXhWkHxWxiwaHwjd/JvPwEjr0E+CIS4EtVIaoz7X3iHvYXOhYvKoAJ9C0rX3Eo+0qS8m2CarcTpJ1CX7OVVwXhrR0yTZE/kWNMjv7S+PiM0Mdq0mxSC+SnVZbrB4w2LpsT2E=
+	t=1722360456; cv=none; b=PHGfJHwRLx9bgiwNkf1XWoPq6NcqFjt/+5r1SAWBrADTcUyKVmAEH6P6FSJ7Kgt6b5Gsewa8x9ODcm6iPnfoTyBltIA2Wg1iYolGPGQmH8BEI5Tl6CNd7b9qe6kHCVwilsCPvBbaT0U+zbBu8+Bh9P2DijpLNrK3PC67OLZyEes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360453; c=relaxed/simple;
-	bh=cI46MUclEeH4o35wcWfql6nJb9UFkYUqa1E23WvHamc=;
+	s=arc-20240116; t=1722360456; c=relaxed/simple;
+	bh=kcGP2ZtZkJ0+CX7HWbxvVZ4/l2pAbQB3SpRM9AcsvJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q4sPmAxmX96wZLBfDwENKlPhq+Mg0RIf7U4ynrGnfHlVMjW+EwFGNqVRM8xQDbJy6E3hOzDgGBNMjRbeXyBO+S6vjdWmpbbBo0FvVtqb+Z+6bZVL2gDPaoWnnayNGvLBWwZTR8o91roymjoec0VMEM2Vxpa9ArtL4i/MobEyJ5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxMkyDcw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ctDMXVzdP33gb4cf3TeNxttMSv0RzYlhZqSL+UAWXk5SAiMyeDXtIYO7CNrStQ8yXnJf+BZV/c5sngDQuCOwP8VzdWix+Tahz1xcHqUmq38/U3fsjNOLITF6vVuiD3g6E0QECXNkKaRSn8XuZPlqu3CDMyqlzrS4PP1Gq1fKq0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPyPZfaE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxMkyDcw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC52C32782;
-	Tue, 30 Jul 2024 17:27:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPyPZfaE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABD6C32782;
+	Tue, 30 Jul 2024 17:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360453;
-	bh=cI46MUclEeH4o35wcWfql6nJb9UFkYUqa1E23WvHamc=;
+	s=korg; t=1722360456;
+	bh=kcGP2ZtZkJ0+CX7HWbxvVZ4/l2pAbQB3SpRM9AcsvJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxMkyDcwNAPLzE9P3qBbUhZlJob94335fEdixBEI1pTLk6cANy+xrRKtoGjyKxyAe
-	 98NytdhdrEIANeX8/xGI5wgYtWWf53tz/HJi+YZdOpWdIHtyGDTWOVZq6lck59Vd3T
-	 cE0LwlmmtEoZqQoBtWov4ksI3OICHPmhpsmM3uq4=
+	b=LPyPZfaE68Kn3ve69lI5R+PZY/cnVPUbHsvfTH6QxqLawppdFqzPxaZ/HohZS9Atu
+	 xw9s01y12hVvH9t+KNPs60VghR7asId/vXLn8SurdLDsDLBuT17V0+C3xfKHRIRHyg
+	 TzD8HG/ivjXdSf+n9sDqTmbd4dC2YgU7aGHJhXY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.10 704/809] drm/amd/amdgpu: Fix uninitialized variable warnings
-Date: Tue, 30 Jul 2024 17:49:40 +0200
-Message-ID: <20240730151752.732431676@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.10 705/809] drm/i915/dp: Reset intel_dp->link_trained before retraining the link
+Date: Tue, 30 Jul 2024 17:49:41 +0200
+Message-ID: <20240730151752.770787686@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -44,38 +46,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Imre Deak <imre.deak@intel.com>
 
-commit df65aabef3c0327c23b840ab5520150df4db6b5f upstream.
+commit d13e2a6e95e6b87f571c837c71a3d05691def9bb upstream.
 
-Return 0 to avoid returning an uninitialized variable r.
+Regularly retraining a link during an atomic commit happens with the
+given pipe/link already disabled and hence intel_dp->link_trained being
+false. Ensure this also for retraining a DP SST link via direct calls to
+the link training functions (vs. an actual commit as for DP MST). So far
+nothing depended on this, however the next patch will depend on
+link_trained==false for changing the LTTPR mode to non-transparent.
 
-Cc: stable@vger.kernel.org
-Fixes: 230dd6bb6117 ("drm/amd/amdgpu: implement mode2 reset on smu_v13_0_10")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6472de66c0aa18d50a4b5ca85f8272e88a737676)
+Cc: <stable@vger.kernel.org> # v5.15+
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240708190029.271247-2-imre.deak@intel.com
+(cherry picked from commit a4d5ce61765c08ab364aa4b327f6739b646e6cfa)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/smu_v13_0_10.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_dp.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/smu_v13_0_10.c
-+++ b/drivers/gpu/drm/amd/amdgpu/smu_v13_0_10.c
-@@ -91,7 +91,7 @@ static int smu_v13_0_10_mode2_suspend_ip
- 		adev->ip_blocks[i].status.hw = false;
- 	}
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -5267,6 +5267,8 @@ int intel_dp_retrain_link(struct intel_e
+ 		    !intel_dp_mst_is_master_trans(crtc_state))
+ 			continue;
  
--	return r;
-+	return 0;
- }
- 
- static int
++		intel_dp->link_trained = false;
++
+ 		intel_dp_check_frl_training(intel_dp);
+ 		intel_dp_pcon_dsc_configure(intel_dp, crtc_state);
+ 		intel_dp_start_link_train(intel_dp, crtc_state);
 
 
