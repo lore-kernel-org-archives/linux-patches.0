@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C731A619E;
-	Tue, 30 Jul 2024 16:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC5D1898EE;
+	Tue, 30 Jul 2024 16:35:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357308; cv=none; b=UwQCZebo6GmFx2RvEqk3v38CKJGCEO4uzhK21ugk6c0iqkfeRXas1tYp8cXymccsilw0j3W2MJGaIh/EZtOmDsy0d8w7TcHo3KjUvTkRDALqGHoukz4ErFcrAGe1lDrpSf979gjK5/xJD5j/15RDoup2j8Qx0u6ni3v43FFopC0=
+	t=1722357311; cv=none; b=D7xAFqUC4DCJrZ6Zs5k9UklPQ8/I2cGWQAsEFIL9qna24xI7OLQ3psoLH7umVaMF9o3md2D80Js45nqKZpiKiuFIQnCbmc1t/9enOjddL+tKHFCgYhF8c98jru3B8QE3dcRk7KhGXiVbEZKOmQnlAJincvQb/ZLu4PkBLbVpWqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357308; c=relaxed/simple;
-	bh=hRcldJ48jHOu/XtmBZj3rNbK5GDjcLXH+rtVxsuIAUU=;
+	s=arc-20240116; t=1722357311; c=relaxed/simple;
+	bh=dYpA6YpEXkCM9Pf5IGpZpNmHTxNsZ4iiOPRdMwBZZr0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9MSYhAYZOub8stNtfQV9PmGvKGbFhiLcmutfIEQ3WHJBituXMh0ZnTxh2NtI2gppFO5BXsMaWobPJJnT3SPlPu4FlxYuIBz+6ffh2rALgXEgj3FpYetpD2yMq7wt1EZM6vJ0eE604qZDHAd7F6puaTJrpidznOT4RJ8gWoLaSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Khd1jyLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B08Ql3RS6z030Wk8x4cEBdQbdyj75/sztZIF2qtjiiMrE1XTnroyaemE54Td1oqcHyp/krwFD1+WzoK48zliA7Eegl5MJxbia+4oh1hsrwjiRafqeozjzRQRnykBpZFIw32VtpIDHP6JrtYHYv6xkb4WhxX4RrS016jIolk2cQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZbcAfPmE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Khd1jyLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE071C4AF0C;
-	Tue, 30 Jul 2024 16:35:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZbcAfPmE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0E73C32782;
+	Tue, 30 Jul 2024 16:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357308;
-	bh=hRcldJ48jHOu/XtmBZj3rNbK5GDjcLXH+rtVxsuIAUU=;
+	s=korg; t=1722357311;
+	bh=dYpA6YpEXkCM9Pf5IGpZpNmHTxNsZ4iiOPRdMwBZZr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Khd1jyLyaf17pijPPEQdekFHfxPOrmM6eKJWq8sujAeP0tgx0ntqtDqD6arT8Ju2J
-	 /6SCxQnExKbFQk0Gu23wJHp2tF2zhGjq88MljefphB5HpUBrYFDo4o+XLUcIHKXDbs
-	 pgF1B7xegjDlfsRskvSAvzHekv8qRY78yN8BRaCk=
+	b=ZbcAfPmETmbOq09rI93Z/OggluvA4W9d5V2x25Na0Ko9DGss7bSQGEenGd6dlW3T1
+	 sjSBqvkfXkNmPdjxNzKd9BoXlmWbewjyczwhn5G8DfbCJepRGwRW98jg2/49LSDsvO
+	 q/qF1TndnVM6zLIh7gA85YSNVbYLXGWZOxNDGVVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 242/809] bpf, arm64: Fix trampoline for BPF_TRAMP_F_CALL_ORIG
-Date: Tue, 30 Jul 2024 17:41:58 +0200
-Message-ID: <20240730151734.160280672@linuxfoundation.org>
+Subject: [PATCH 6.6 239/568] xprtrdma: Fix rpcrdma_reqs_reset()
+Date: Tue, 30 Jul 2024 17:45:46 +0200
+Message-ID: <20240730151649.223305691@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,61 +47,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Puranjay Mohan <puranjay@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 19d3c179a37730caf600a97fed3794feac2b197b ]
+[ Upstream commit acd9f2dd23c632568156217aac7a05f5a0313152 ]
 
-When BPF_TRAMP_F_CALL_ORIG is set, the trampoline calls
-__bpf_tramp_enter() and __bpf_tramp_exit() functions, passing them
-the struct bpf_tramp_image *im pointer as an argument in R0.
+Avoid FastReg operations getting MW_BIND_ERR after a reconnect.
 
-The trampoline generation code uses emit_addr_mov_i64() to emit
-instructions for moving the bpf_tramp_image address into R0, but
-emit_addr_mov_i64() assumes the address to be in the vmalloc() space
-and uses only 48 bits. Because bpf_tramp_image is allocated using
-kzalloc(), its address can use more than 48-bits, in this case the
-trampoline will pass an invalid address to __bpf_tramp_enter/exit()
-causing a kernel crash.
+rpcrdma_reqs_reset() is called on transport tear-down to get each
+rpcrdma_req back into a clean state.
 
-Fix this by using emit_a64_mov_i64() in place of emit_addr_mov_i64()
-as it can work with addresses that are greater than 48-bits.
+MRs on req->rl_registered are waiting for a FastReg, are already
+registered, or are waiting for invalidation. If the transport is
+being torn down when reqs_reset() is called, the matching LocalInv
+might never be posted. That leaves these MR registered /and/ on
+req->rl_free_mrs, where they can be re-used for the next
+connection.
 
-Fixes: efc9909fdce0 ("bpf, arm64: Add bpf trampoline for arm64")
-Signed-off-by: Puranjay Mohan <puranjay@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Closes: https://lore.kernel.org/all/SJ0PR15MB461564D3F7E7A763498CA6A8CBDB2@SJ0PR15MB4615.namprd15.prod.outlook.com/
-Link: https://lore.kernel.org/bpf/20240711151838.43469-1-puranjay@kernel.org
+Since xprtrdma does not keep specific track of the MR state, it's
+not possible to know what state these MRs are in, so the only safe
+thing to do is release them immediately.
+
+Fixes: 5de55ce951a1 ("xprtrdma: Release in-flight MRs on disconnect")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/net/bpf_jit_comp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/frwr_ops.c |  3 ++-
+ net/sunrpc/xprtrdma/verbs.c    | 16 +++++++++++++++-
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
-index 720336d288568..1bf483ec971d9 100644
---- a/arch/arm64/net/bpf_jit_comp.c
-+++ b/arch/arm64/net/bpf_jit_comp.c
-@@ -2141,7 +2141,7 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
- 	emit(A64_STR64I(A64_R(20), A64_SP, regs_off + 8), ctx);
+diff --git a/net/sunrpc/xprtrdma/frwr_ops.c b/net/sunrpc/xprtrdma/frwr_ops.c
+index ffbf99894970e..47f33bb7bff81 100644
+--- a/net/sunrpc/xprtrdma/frwr_ops.c
++++ b/net/sunrpc/xprtrdma/frwr_ops.c
+@@ -92,7 +92,8 @@ static void frwr_mr_put(struct rpcrdma_mr *mr)
+ 	rpcrdma_mr_push(mr, &mr->mr_req->rl_free_mrs);
+ }
  
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
--		emit_addr_mov_i64(A64_R(0), (const u64)im, ctx);
-+		emit_a64_mov_i64(A64_R(0), (const u64)im, ctx);
- 		emit_call((const u64)__bpf_tramp_enter, ctx);
- 	}
+-/* frwr_reset - Place MRs back on the free list
++/**
++ * frwr_reset - Place MRs back on @req's free list
+  * @req: request to reset
+  *
+  * Used after a failed marshal. For FRWR, this means the MRs
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 4f71627ba39ce..cb909329a5039 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -897,6 +897,8 @@ static int rpcrdma_reqs_setup(struct rpcrdma_xprt *r_xprt)
  
-@@ -2185,7 +2185,7 @@ static int prepare_trampoline(struct jit_ctx *ctx, struct bpf_tramp_image *im,
+ static void rpcrdma_req_reset(struct rpcrdma_req *req)
+ {
++	struct rpcrdma_mr *mr;
++
+ 	/* Credits are valid for only one connection */
+ 	req->rl_slot.rq_cong = 0;
  
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
- 		im->ip_epilogue = ctx->ro_image + ctx->idx;
--		emit_addr_mov_i64(A64_R(0), (const u64)im, ctx);
-+		emit_a64_mov_i64(A64_R(0), (const u64)im, ctx);
- 		emit_call((const u64)__bpf_tramp_exit, ctx);
- 	}
+@@ -906,7 +908,19 @@ static void rpcrdma_req_reset(struct rpcrdma_req *req)
+ 	rpcrdma_regbuf_dma_unmap(req->rl_sendbuf);
+ 	rpcrdma_regbuf_dma_unmap(req->rl_recvbuf);
  
+-	frwr_reset(req);
++	/* The verbs consumer can't know the state of an MR on the
++	 * req->rl_registered list unless a successful completion
++	 * has occurred, so they cannot be re-used.
++	 */
++	while ((mr = rpcrdma_mr_pop(&req->rl_registered))) {
++		struct rpcrdma_buffer *buf = &mr->mr_xprt->rx_buf;
++
++		spin_lock(&buf->rb_lock);
++		list_del(&mr->mr_all);
++		spin_unlock(&buf->rb_lock);
++
++		frwr_mr_release(mr);
++	}
+ }
+ 
+ /* ASSUMPTION: the rb_allreqs list is stable for the duration,
 -- 
 2.43.0
 
