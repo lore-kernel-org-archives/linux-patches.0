@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2FA1A6166;
-	Tue, 30 Jul 2024 16:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484401898ED;
+	Tue, 30 Jul 2024 16:46:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358000; cv=none; b=cAxNx8MQ9GCMGtNsBRUcIboL0723HyJzi0DCzxb97opQLZDcDnZhjn5VseWmR1myFEXUwg5aBz840B6jiqnXC/zk5XByU04DjA/dK305mBzJJqwoKCzl7yJw9STEql3+Srgjf7X9daEu4zGTKnHw6ZsFtWfbKDzmv9SyqZBBfHo=
+	t=1722358003; cv=none; b=NFV/md3477UmThIIDTxZZIeAH1QEoUUCMGphycXUeEq2yU0JtlDD90GVQQSedyfuNz/zEllGSqzIG8GMVy0XXzmuAMFjlBTPAxI2woY4tJAQtQTeO7pTisFm2XmzNsw0TL9958n9MllxKtKwKW8poSpO+arGERyHZcEXXiKt9Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358000; c=relaxed/simple;
-	bh=nyeeh2SbJpk/KHilAjMox41GLIdBdeGcSblt66E18R0=;
+	s=arc-20240116; t=1722358003; c=relaxed/simple;
+	bh=m3lFJPOC1Te1iMHkZ6ayATaeoMGSiIkptyCxk6OynNo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ERkKLFqMjO53h5UkczyBBIqUYm/1MQeFtwX9PDBzzgy16AG47QGvCt+GAJdZ8lKy6vYbOSipq4epqqtfzyWh4Ot6rEa/XPxDpGqWAk3i2JMYVZJ0qwCkgKoGfylnvZEXT5QPj96VrmMO+M1g284fF+xo3Tnj7+M46/LKml10T8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzXYflcJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N2UoL1iaYH0i4eyRXfbRUzD/PJkbJMOghKRavkOktSss4IAqngCJBfxFeel1LvxmrmWn9Oltlp41JwZLTC761vTRiIDYoWsnYLbkAUI3y/XQQf7fCpirwGfFN2lEQqi3jy0G8++Rv1++GEzCeYCQUztdF4H+w8HLuAk0ki1w1Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XuBq5zjm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzXYflcJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F00C32782;
-	Tue, 30 Jul 2024 16:46:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XuBq5zjm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95BA4C4AF0C;
+	Tue, 30 Jul 2024 16:46:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357999;
-	bh=nyeeh2SbJpk/KHilAjMox41GLIdBdeGcSblt66E18R0=;
+	s=korg; t=1722358003;
+	bh=m3lFJPOC1Te1iMHkZ6ayATaeoMGSiIkptyCxk6OynNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzXYflcJeMpYn9prtTuzS3Kv5CxBYkqZNYhko/cX1Ho7NejiAd19B849V+Y3qrnPr
-	 xY9D2e3oliuWtpiWn2WXJLXDaZW1c1p3/I0g7C8nW2GgYH6dTs3O7Aawd9pV2xBhCl
-	 PdCQecw+nlmWSWN4f85ojWdYwDEu9K/sl0Vzs9XI=
+	b=XuBq5zjmIioJ6duDCpTvEdXgINw39LePrssMSaG0ixrd8sJKWfS6IUZI94NPauuxX
+	 M6GYSSIiFPemv4I6AdaUpSMjlPH/1qWflt/h0zGyW4A3N9LimGAkqu4O2qnCBprzpk
+	 vosw5T5OiYC/i/6Jm+qOfd3XWWuoro4UHI75Do/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Quinn Tran <qutran@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 347/440] scsi: qla2xxx: Unable to act on RSCN for port online
-Date: Tue, 30 Jul 2024 17:49:40 +0200
-Message-ID: <20240730151629.365411388@linuxfoundation.org>
+	Ido Schimmel <idosch@nvidia.com>,
+	David Ahern <dsahern@kernel.org>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 316/568] ipv4: Fix incorrect TOS in fibmatch route get reply
+Date: Tue, 30 Jul 2024 17:47:03 +0200
+Message-ID: <20240730151652.222385988@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,238 +49,139 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit c3d98b12eef8db436e32f1a8c5478be57dc15621 upstream.
+[ Upstream commit f036e68212c11e5a7edbb59b5e25299341829485 ]
 
-The device does not come online when the target port is online. There were
-multiple RSCNs indicating multiple devices were affected. Driver is in the
-process of finishing a fabric scan. A new RSCN (device up) arrived at the
-tail end of the last fabric scan. Driver mistakenly thinks the new RSCN is
-being taken care of by the previous fabric scan, where this notification is
-cleared and not acted on. The laser needs to be blinked again to get the
-device to show up.
+The TOS value that is returned to user space in the route get reply is
+the one with which the lookup was performed ('fl4->flowi4_tos'). This is
+fine when the matched route is configured with a TOS as it would not
+match if its TOS value did not match the one with which the lookup was
+performed.
 
-To prevent driver from accidentally clearing the RSCN notification, each
-RSCN is given a generation value.  A fabric scan will scan for that
-generation(s).  Any new RSCN arrive after the scan start will have a new
-generation value. This will trigger another scan to get latest data. The
-RSCN notification flag will be cleared when the scan is associate to that
-generation.
+However, matching on TOS is only performed when the route's TOS is not
+zero. It is therefore possible to have the kernel incorrectly return a
+non-zero TOS:
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406210538.w875N70K-lkp@intel.com/
-Fixes: bb2ca6b3f09a ("scsi: qla2xxx: Relogin during fabric disturbance")
-Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-2-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ # ip link add name dummy1 up type dummy
+ # ip address add 192.0.2.1/24 dev dummy1
+ # ip route get fibmatch 192.0.2.2 tos 0xfc
+ 192.0.2.0/24 tos 0x1c dev dummy1 proto kernel scope link src 192.0.2.1
+
+Fix by instead returning the DSCP field from the FIB result structure
+which was populated during the route lookup.
+
+Output after the patch:
+
+ # ip link add name dummy1 up type dummy
+ # ip address add 192.0.2.1/24 dev dummy1
+ # ip route get fibmatch 192.0.2.2 tos 0xfc
+ 192.0.2.0/24 dev dummy1 proto kernel scope link src 192.0.2.1
+
+Extend the existing selftests to not only verify that the correct route
+is returned, but that it is also returned with correct "tos" value (or
+without it).
+
+Fixes: b61798130f1b ("net: ipv4: RTM_GETROUTE: return matched fib result when requested")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h    |    3 +++
- drivers/scsi/qla2xxx/qla_gs.c     |   33 ++++++++++++++++++++++++++++++---
- drivers/scsi/qla2xxx/qla_init.c   |   24 +++++++++++++++++++-----
- drivers/scsi/qla2xxx/qla_inline.h |    8 ++++++++
- 4 files changed, 60 insertions(+), 8 deletions(-)
+ net/ipv4/route.c                         |  2 +-
+ tools/testing/selftests/net/fib_tests.sh | 24 ++++++++++++------------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -3278,6 +3278,8 @@ struct fab_scan_rp {
- struct fab_scan {
- 	struct fab_scan_rp *l;
- 	u32 size;
-+	u32 rscn_gen_start;
-+	u32 rscn_gen_end;
- 	u16 scan_retry;
- #define MAX_SCAN_RETRIES 5
- 	enum scan_flags_t scan_flags;
-@@ -4985,6 +4987,7 @@ typedef struct scsi_qla_host {
+diff --git a/net/ipv4/route.c b/net/ipv4/route.c
+index 810779d537bec..4d169573148f6 100644
+--- a/net/ipv4/route.c
++++ b/net/ipv4/route.c
+@@ -3394,7 +3394,7 @@ static int inet_rtm_getroute(struct sk_buff *in_skb, struct nlmsghdr *nlh,
+ 		fri.tb_id = table_id;
+ 		fri.dst = res.prefix;
+ 		fri.dst_len = res.prefixlen;
+-		fri.dscp = inet_dsfield_to_dscp(fl4.flowi4_tos);
++		fri.dscp = res.dscp;
+ 		fri.type = rt->rt_type;
+ 		fri.offload = 0;
+ 		fri.trap = 0;
+diff --git a/tools/testing/selftests/net/fib_tests.sh b/tools/testing/selftests/net/fib_tests.sh
+index 66d0db7a2614d..ede2c0ec2a9dd 100755
+--- a/tools/testing/selftests/net/fib_tests.sh
++++ b/tools/testing/selftests/net/fib_tests.sh
+@@ -1643,53 +1643,53 @@ ipv4_rt_dsfield()
  
- 	/* Counter to detect races between ELS and RSCN events */
- 	atomic_t		generation_tick;
-+	atomic_t		rscn_gen;
- 	/* Time when global fcport update has been scheduled */
- 	int			total_fcport_update_gen;
- 	/* List of pending LOGOs, protected by tgt_mutex */
---- a/drivers/scsi/qla2xxx/qla_gs.c
-+++ b/drivers/scsi/qla2xxx/qla_gs.c
-@@ -3465,6 +3465,29 @@ static int qla2x00_is_a_vp(scsi_qla_host
- 	return rc;
+ 	# DSCP 0x10 should match the specific route, no matter the ECN bits
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x10 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:Not-ECT"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x11 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:ECT(1)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x12 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:ECT(0)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x13 | \
+-		grep -q "via 172.16.103.2"
++		grep -q "172.16.102.0/24 tos 0x10 via 172.16.103.2"
+ 	log_test $? 0 "IPv4 route with DSCP and ECN:CE"
+ 
+ 	# Unknown DSCP should match the generic route, no matter the ECN bits
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x14 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:Not-ECT"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x15 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:ECT(1)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x16 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:ECT(0)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x17 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with unknown DSCP and ECN:CE"
+ 
+ 	# Null DSCP should match the generic route, no matter the ECN bits
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x00 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:Not-ECT"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x01 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:ECT(1)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x02 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:ECT(0)"
+ 
+ 	$IP route get fibmatch 172.16.102.1 dsfield 0x03 | \
+-		grep -q "via 172.16.101.2"
++		grep -q "172.16.102.0/24 via 172.16.101.2"
+ 	log_test $? 0 "IPv4 route with no DSCP and ECN:CE"
  }
  
-+static bool qla_ok_to_clear_rscn(scsi_qla_host_t *vha, fc_port_t *fcport)
-+{
-+	u32 rscn_gen;
-+
-+	rscn_gen = atomic_read(&vha->rscn_gen);
-+	ql_dbg(ql_dbg_disc + ql_dbg_verbose, vha, 0x2017,
-+	    "%s %d %8phC rscn_gen %x start %x end %x current %x\n",
-+	    __func__, __LINE__, fcport->port_name, fcport->rscn_gen,
-+	    vha->scan.rscn_gen_start, vha->scan.rscn_gen_end, rscn_gen);
-+
-+	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_start,
-+	    vha->scan.rscn_gen_end))
-+		/* rscn came in before fabric scan */
-+		return true;
-+
-+	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_end, rscn_gen))
-+		/* rscn came in after fabric scan */
-+		return false;
-+
-+	/* rare: fcport's scan_needed + rscn_gen must be stale */
-+	return true;
-+}
-+
- void qla24xx_async_gnnft_done(scsi_qla_host_t *vha, srb_t *sp)
- {
- 	fc_port_t *fcport;
-@@ -3578,10 +3601,10 @@ void qla24xx_async_gnnft_done(scsi_qla_h
- 				   (fcport->scan_needed &&
- 				    fcport->port_type != FCT_INITIATOR &&
- 				    fcport->port_type != FCT_NVME_INITIATOR)) {
-+				fcport->scan_needed = 0;
- 				qlt_schedule_sess_for_deletion(fcport);
- 			}
- 			fcport->d_id.b24 = rp->id.b24;
--			fcport->scan_needed = 0;
- 			break;
- 		}
- 
-@@ -3622,7 +3645,9 @@ login_logout:
- 				do_delete = true;
- 			}
- 
--			fcport->scan_needed = 0;
-+			if (qla_ok_to_clear_rscn(vha, fcport))
-+				fcport->scan_needed = 0;
-+
- 			if (((qla_dual_mode_enabled(vha) ||
- 			      qla_ini_mode_enabled(vha)) &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE) ||
-@@ -3652,7 +3677,9 @@ login_logout:
- 					    fcport->port_name, fcport->loop_id,
- 					    fcport->login_retry);
- 				}
--				fcport->scan_needed = 0;
-+
-+				if (qla_ok_to_clear_rscn(vha, fcport))
-+					fcport->scan_needed = 0;
- 				qla24xx_fcport_handle_login(vha, fcport);
- 			}
- 		}
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -1843,10 +1843,18 @@ int qla24xx_post_newsess_work(struct scs
- 	return qla2x00_post_work(vha, e);
- }
- 
-+static void qla_rscn_gen_tick(scsi_qla_host_t *vha, u32 *ret_rscn_gen)
-+{
-+	*ret_rscn_gen = atomic_inc_return(&vha->rscn_gen);
-+	/* memory barrier */
-+	wmb();
-+}
-+
- void qla2x00_handle_rscn(scsi_qla_host_t *vha, struct event_arg *ea)
- {
- 	fc_port_t *fcport;
- 	unsigned long flags;
-+	u32 rscn_gen;
- 
- 	switch (ea->id.b.rsvd_1) {
- 	case RSCN_PORT_ADDR:
-@@ -1876,15 +1884,16 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 					 * Otherwise we're already in the middle of a relogin
- 					 */
- 					fcport->scan_needed = 1;
--					fcport->rscn_gen++;
-+					qla_rscn_gen_tick(vha, &fcport->rscn_gen);
- 				}
- 			} else {
- 				fcport->scan_needed = 1;
--				fcport->rscn_gen++;
-+				qla_rscn_gen_tick(vha, &fcport->rscn_gen);
- 			}
- 		}
- 		break;
- 	case RSCN_AREA_ADDR:
-+		qla_rscn_gen_tick(vha, &rscn_gen);
- 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
- 			if (fcport->flags & FCF_FCP2_DEVICE &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE)
-@@ -1892,11 +1901,12 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 
- 			if ((ea->id.b24 & 0xffff00) == (fcport->d_id.b24 & 0xffff00)) {
- 				fcport->scan_needed = 1;
--				fcport->rscn_gen++;
-+				fcport->rscn_gen = rscn_gen;
- 			}
- 		}
- 		break;
- 	case RSCN_DOM_ADDR:
-+		qla_rscn_gen_tick(vha, &rscn_gen);
- 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
- 			if (fcport->flags & FCF_FCP2_DEVICE &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE)
-@@ -1904,19 +1914,20 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 
- 			if ((ea->id.b24 & 0xff0000) == (fcport->d_id.b24 & 0xff0000)) {
- 				fcport->scan_needed = 1;
--				fcport->rscn_gen++;
-+				fcport->rscn_gen = rscn_gen;
- 			}
- 		}
- 		break;
- 	case RSCN_FAB_ADDR:
- 	default:
-+		qla_rscn_gen_tick(vha, &rscn_gen);
- 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
- 			if (fcport->flags & FCF_FCP2_DEVICE &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE)
- 				continue;
- 
- 			fcport->scan_needed = 1;
--			fcport->rscn_gen++;
-+			fcport->rscn_gen = rscn_gen;
- 		}
- 		break;
- 	}
-@@ -1925,6 +1936,7 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 	if (vha->scan.scan_flags == 0) {
- 		ql_dbg(ql_dbg_disc, vha, 0xffff, "%s: schedule\n", __func__);
- 		vha->scan.scan_flags |= SF_QUEUED;
-+		vha->scan.rscn_gen_start = atomic_read(&vha->rscn_gen);
- 		schedule_delayed_work(&vha->scan.scan_work, 5);
- 	}
- 	spin_unlock_irqrestore(&vha->work_lock, flags);
-@@ -6419,6 +6431,8 @@ qla2x00_configure_fabric(scsi_qla_host_t
- 		qlt_do_generation_tick(vha, &discovery_gen);
- 
- 		if (USE_ASYNC_SCAN(ha)) {
-+			/* start of scan begins here */
-+			vha->scan.rscn_gen_end = atomic_read(&vha->rscn_gen);
- 			rval = qla24xx_async_gpnft(vha, FC4_TYPE_FCP_SCSI,
- 			    NULL);
- 			if (rval)
---- a/drivers/scsi/qla2xxx/qla_inline.h
-+++ b/drivers/scsi/qla2xxx/qla_inline.h
-@@ -631,3 +631,11 @@ static inline int qla_mapq_alloc_qp_cpu_
- 	}
- 	return 0;
- }
-+
-+static inline bool val_is_in_range(u32 val, u32 start, u32 end)
-+{
-+	if (val >= start && val <= end)
-+		return true;
-+	else
-+		return false;
-+}
+-- 
+2.43.0
+
 
 
