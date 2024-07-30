@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A521A619E;
-	Tue, 30 Jul 2024 16:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5309D1A619E;
+	Tue, 30 Jul 2024 16:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357803; cv=none; b=LzA+PXm39y8fdGEnQ2Rpb6mdOrpWViiLH9f/ekqugxZSLfSb0YzQdcSqvb9lNzrjgb+191ZBVME3/bAqL1I3pf1AzpTiqnxGLJx3TDDifeqLEj3wkuFtYci4q1qK23a+XyUY2+lBhV33k04upseIymwkJkCoD7YsKK1IGfKAhPo=
+	t=1722357806; cv=none; b=EQZSwpB9DFCS1ZHF0deSXLVPZwdUJcBBUQfLpUrG9/l7XCfChbgrV8S5toRj0z5ZOjZG9Z7SBzhPVzMYZFWV2+CtCyC8GCFXVuRL4eTXB/YBo4oO2GTKAl783d4ttI1XUY1mFS4rMdgFwpifgqVXsyJDfnCkHaGJBkVnYg+oJNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357803; c=relaxed/simple;
-	bh=TV/fn9aUH38tiWI2qzdpm180Dljx2hDLudwNoyBO7ic=;
+	s=arc-20240116; t=1722357806; c=relaxed/simple;
+	bh=kHNuDDc9hHyB+NjNaXTBofctOmnMEkjboZWyt0SS1IY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fPKCdzZw3h6palncnfVaX467z9PNSGMIB1NYkMsY/x7873UHSEyuyYsyvs3qX0nEStm5iR/pYOUAWRZV9p8OPB3AN2NXqSG6XsvvUFnW4P4VmKpKH//TO0Sf/C/Yf9RSbGbbmBtS70IPZlfy0Qp9t2eiNwpvfQCRtdRp3jqysVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyJEyw2j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rBzmk4lRRs+oEX8ladiuEq8Il5ydoAeJCGMcx1eaPItjQimtpJqmZuuVPzDHt/xgK6QcGsVyc1NnqtOrZkvuNd8Ktu9tuaK72fMNFUeeN8GOUFh1hR/yEzzigq4+9BeML5yPs67YYb2muHMR5Rq433JvoX8imYoiM23djSvJ2vI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0ebKW3n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyJEyw2j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0F4BC32782;
-	Tue, 30 Jul 2024 16:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0ebKW3n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB27EC32782;
+	Tue, 30 Jul 2024 16:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357803;
-	bh=TV/fn9aUH38tiWI2qzdpm180Dljx2hDLudwNoyBO7ic=;
+	s=korg; t=1722357806;
+	bh=kHNuDDc9hHyB+NjNaXTBofctOmnMEkjboZWyt0SS1IY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyJEyw2jkHW2uHmivL2i0BrAGeNHSIcjQYTocBxif1ilrx3TSVJLeDy0TbAXEWviX
-	 KMOKanA3vXmSELJJmeiu9Q+GVHFk/tu+g9ZUcIrH09gGFqlt2N5i7BbJaCLhSVeXTG
-	 JHW0FWGPVK201lm7xYTCX2brhbUFldFT2bMs/u40=
+	b=L0ebKW3nAO7PvoMF9W63O4OCoVmeWq8cquVBxhtPFWsmEXFKdJczz0VQi4+xYRzr5
+	 S80uLUTFTI37+rYM/H6365t10sZdEu5dP4XuXz6ivSxnz9UmH1zX46+EKqKSIgGFIe
+	 hSWYUHLE0bdqODf+0WEiCHF/ujM8fKqZmseLF3bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 293/568] clk: en7523: fix rate divider for slic and spi clocks
-Date: Tue, 30 Jul 2024 17:46:40 +0200
-Message-ID: <20240730151651.330381234@linuxfoundation.org>
+Subject: [PATCH 6.10 294/809] drm/amdgpu: Fix type mismatch in amdgpu_gfx_kiq_init_ring
+Date: Tue, 30 Jul 2024 17:42:50 +0200
+Message-ID: <20240730151736.204149364@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,92 +48,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit 58c53d43142f222221e5a76a7016c4d8f3b84b97 ]
+[ Upstream commit 745f7170db4ffd2f2e9751a2c719a97c9a5fc438 ]
 
-Introduce div_offset field in en_clk_desc struct in order to fix rate
-divider estimation in en7523_get_div routine for slic and spi fixed
-rate clocks.
-Moreover, fix base_shift for crypto clock.
+This commit fixes a type mismatch in the amdgpu_gfx_kiq_init_ring
+function triggered by the snprintf function expecting unsigned char
+arguments due to the '%hhu' format specifier, but receiving int and u32
+arguments.
 
-Fixes: 1e6273179190 ("clk: en7523: Add clock driver for Airoha EN7523 SoC")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://lore.kernel.org/r/c491bdea05d847f1f1294b94f14725d292eb95d0.1718615934.git.lorenzo@kernel.org
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+The issue occurred because the arguments xcc_id, ring->me, ring->pipe,
+and ring->queue were of type int and u32, not unsigned char. This led to
+a type mismatch when these arguments were passed to snprintf.
+
+To resolve this, the snprintf line was modified to cast these arguments
+to unsigned char. This ensures that the arguments are of the correct
+type for the '%hhu' format specifier and resolves the warning.
+
+Fixes the below:
+>> drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:4: warning: format
+>> specifies type 'unsigned char' but the argument has type 'int'
+>> [-Wformat]
+                    xcc_id, ring->me, ring->pipe, ring->queue);
+                    ^~~~~~
+>> drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:12: warning: format
+>> specifies type 'unsigned char' but the argument has type 'u32' (aka
+>> 'unsigned int') [-Wformat]
+                    xcc_id, ring->me, ring->pipe, ring->queue);
+                            ^~~~~~~~
+   drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:22: warning: format specifies type 'unsigned char' but the argument has type 'u32' (aka 'unsigned int') [-Wformat]
+                    xcc_id, ring->me, ring->pipe, ring->queue);
+                                      ^~~~~~~~~~
+   drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:34: warning: format specifies type 'unsigned char' but the argument has type 'u32' (aka 'unsigned int') [-Wformat]
+                    xcc_id, ring->me, ring->pipe, ring->queue);
+                                                  ^~~~~~~~~~~
+   4 warnings generated.
+
+Fixes: 0ea554455542 ("drm/amdgpu: Fix snprintf usage in amdgpu_gfx_kiq_init_ring")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202405250446.XeaWe66u-lkp@intel.com/
+Cc: Lijo Lazar <lijo.lazar@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-en7523.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/clk-en7523.c b/drivers/clk/clk-en7523.c
-index 7cde328495e2b..7914e60f3d6c5 100644
---- a/drivers/clk/clk-en7523.c
-+++ b/drivers/clk/clk-en7523.c
-@@ -40,6 +40,7 @@ struct en_clk_desc {
- 	u8 div_shift;
- 	u16 div_val0;
- 	u8 div_step;
-+	u8 div_offset;
- };
- 
- struct en_clk_gate {
-@@ -67,6 +68,7 @@ static const struct en_clk_desc en7523_base_clks[] = {
- 		.div_bits = 3,
- 		.div_shift = 0,
- 		.div_step = 1,
-+		.div_offset = 1,
- 	}, {
- 		.id = EN7523_CLK_EMI,
- 		.name = "emi",
-@@ -80,6 +82,7 @@ static const struct en_clk_desc en7523_base_clks[] = {
- 		.div_bits = 3,
- 		.div_shift = 0,
- 		.div_step = 1,
-+		.div_offset = 1,
- 	}, {
- 		.id = EN7523_CLK_BUS,
- 		.name = "bus",
-@@ -93,6 +96,7 @@ static const struct en_clk_desc en7523_base_clks[] = {
- 		.div_bits = 3,
- 		.div_shift = 0,
- 		.div_step = 1,
-+		.div_offset = 1,
- 	}, {
- 		.id = EN7523_CLK_SLIC,
- 		.name = "slic",
-@@ -133,13 +137,14 @@ static const struct en_clk_desc en7523_base_clks[] = {
- 		.div_bits = 3,
- 		.div_shift = 0,
- 		.div_step = 1,
-+		.div_offset = 1,
- 	}, {
- 		.id = EN7523_CLK_CRYPTO,
- 		.name = "crypto",
- 
- 		.base_reg = REG_CRYPTO_CLKSRC,
- 		.base_bits = 1,
--		.base_shift = 8,
-+		.base_shift = 0,
- 		.base_values = emi_base,
- 		.n_base_values = ARRAY_SIZE(emi_base),
- 	}
-@@ -184,7 +189,7 @@ static u32 en7523_get_div(void __iomem *base, int i)
- 	if (!val && desc->div_val0)
- 		return desc->div_val0;
- 
--	return (val + 1) * desc->div_step;
-+	return (val + desc->div_offset) * desc->div_step;
- }
- 
- static int en7523_pci_is_enabled(struct clk_hw *hw)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+index 2cb8ab86efae8..e92bdc9a39d35 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -330,7 +330,8 @@ int amdgpu_gfx_kiq_init_ring(struct amdgpu_device *adev, int xcc_id)
+ 	ring->eop_gpu_addr = kiq->eop_gpu_addr;
+ 	ring->no_scheduler = true;
+ 	snprintf(ring->name, sizeof(ring->name), "kiq_%hhu.%hhu.%hhu.%hhu",
+-		 xcc_id, ring->me, ring->pipe, ring->queue);
++		 (unsigned char)xcc_id, (unsigned char)ring->me,
++		 (unsigned char)ring->pipe, (unsigned char)ring->queue);
+ 	r = amdgpu_ring_init(adev, ring, 1024, irq, AMDGPU_CP_KIQ_IRQ_DRIVER0,
+ 			     AMDGPU_RING_PRIO_DEFAULT, NULL);
+ 	if (r)
 -- 
 2.43.0
 
