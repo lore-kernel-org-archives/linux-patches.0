@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFEB81A6192;
-	Tue, 30 Jul 2024 17:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FDF41E86F;
+	Tue, 30 Jul 2024 17:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359115; cv=none; b=S10O4Uw+j9NtwXVui0OsuW3F9k0xxwr6VzG8Pic9AsfXWMSE4wWV6DbWUpcrYbWQB4JJIGN6F20eeP2jTfV6zKYcJFvC/rE5PNqHio5dOwq0uHOds8cAbrdRNVqgkLReleNvSj4db+sKbkTK/e4Ow1cdFxMr/mlXeOQwC9CuuFk=
+	t=1722359118; cv=none; b=bMOVnHUVGXP4mAgmsUvb7AohgQpXGk38/N7OH3szkVHyTpRHKGhpp6EikXw0aZVpITdQp75P+qKqH05e4RgT1RbUMcUT/II1qLCY14+unPWxUBuDqhyl6SmPAL0ILnxeMbjVKIKhq4DDKrJBnILxex+mxhsyoY/hBacLSc+E950=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359115; c=relaxed/simple;
-	bh=ChZT42jbFhNDWYgFO8dBUNh1Y9lTVJ2F7Pih0Gv3+uA=;
+	s=arc-20240116; t=1722359118; c=relaxed/simple;
+	bh=t0jVXGLUxiynwLhfytpnKS6s47dyoC7ketMZZgyio9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pl/tkne3rf1sGk6puni1AcldI59R2bJDWpYbuOYIfDa7R5iYmCY9UzmKjN0aYdSlGUnqAI+9jRPT3xcMSowHjbDvEbe7wjRz4Hdb4kzeI2KuiA7dt5Ez7qLyAijGPpD/CVWlRjDopApfSlVBcfru4moDrGqeV+aWZb/nqHzs0PE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBQ9Qqrh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ArYmQO/2dtpU7Sy8yUJsO2ufxP4/ZMS60iZwf/DVkNvrAeaYMN6vPsByWs8nyHU2KuciYFk8n0Eb6gO9PZMoTX8lPqpj5YVlyTbVm5iJHgDFToRlgRNwwhIJ8iUej+l+LdRGeyBKDXVN/+Mq4QGAlRoGIEBFJN9VSangIiCe7cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vyurk4DA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBQ9Qqrh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7653AC32782;
-	Tue, 30 Jul 2024 17:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vyurk4DA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28043C32782;
+	Tue, 30 Jul 2024 17:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359114;
-	bh=ChZT42jbFhNDWYgFO8dBUNh1Y9lTVJ2F7Pih0Gv3+uA=;
+	s=korg; t=1722359118;
+	bh=t0jVXGLUxiynwLhfytpnKS6s47dyoC7ketMZZgyio9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GBQ9Qqrh2O2oCjRW8SaQ6CM8ybz4be0eKySuAF293vhqn8r3Sl/sd1n52ZcRQE7Vp
-	 84qlLXXwB3vSp9T8KJ959pqgoz9TVM4t6UCwoeVmz0VkN1e4KnqkHJUEdP1ZcMk+JJ
-	 tDp9A98dOPIQz4pb3olo4hemmeB/3Uy9o1NPP70w=
+	b=Vyurk4DAvr/5ydDIyHyLPlG/caMJx5v2a3Pm+4uJWDXQY7YpNlqcrasyjZUYKlW22
+	 h8yQTxKfsPUKaSDI000zX78MlIn14eEEYev34LKG4PdovMA0OcpMNEzTvDw4VkdaCH
+	 J4gVhhu0i2L61U78N5BoZ7a+hvs0iVP8yaGtwEgo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 435/809] Input: elan_i2c - do not leave interrupt disabled on suspend failure
-Date: Tue, 30 Jul 2024 17:45:11 +0200
-Message-ID: <20240730151741.884365153@linuxfoundation.org>
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 434/568] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
+Date: Tue, 30 Jul 2024 17:49:01 +0200
+Message-ID: <20240730151656.833039963@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,40 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-[ Upstream commit 5f82c1e04721e7cd98e604eb4e58f0724d8e5a65 ]
+commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
 
-Make sure interrupts are not left disabled when we fail to suspend the
-touch controller.
+Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
+is decided by the SCSI ML. User is not aware of the cause of an acutal
+error.
 
-Fixes: 6696777c6506 ("Input: add driver for Elan I2C/SMbus touchpad")
-Link: https://lore.kernel.org/r/ZmKiiL-1wzKrhqBj@google.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Return the appropriate return code that will be decoded by API and
+application and proper error message will be displayed to user.
+
+Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/elan_i2c_core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/mouse/elan_i2c_core.c b/drivers/input/mouse/elan_i2c_core.c
-index c2aec5c360b3b..ce96513b34f64 100644
---- a/drivers/input/mouse/elan_i2c_core.c
-+++ b/drivers/input/mouse/elan_i2c_core.c
-@@ -1356,6 +1356,8 @@ static int elan_suspend(struct device *dev)
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -324,7 +324,7 @@ qla2x00_process_els(struct bsg_job *bsg_
+ 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
+ 		    bsg_job->request_payload.sg_cnt,
+ 		    bsg_job->reply_payload.sg_cnt);
+-		rval = -EPERM;
++		rval = -ENOBUFS;
+ 		goto done;
  	}
  
- err:
-+	if (ret)
-+		enable_irq(client->irq);
- 	mutex_unlock(&data->sysfs_mutex);
- 	return ret;
- }
--- 
-2.43.0
-
 
 
