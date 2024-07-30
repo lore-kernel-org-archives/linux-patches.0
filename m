@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B0B8BE8;
-	Tue, 30 Jul 2024 16:33:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF7758BE8;
+	Tue, 30 Jul 2024 16:34:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357239; cv=none; b=DEaFQ2it3HP/5rB+K4OfFVyd/Jtp0HejUTvYkYkksuhkHcMLsWO2CNRXMIlohiaFkBS8AqFaz1Ezn/VdAnUL+qLFlDp/P2W9XcuGMXnrpBqoZ3TvE/z571JD+07NM0InfbaS00LOLMBrP3sAyZ/+dIss4bt6+bh5BtoMo2UYd7M=
+	t=1722357243; cv=none; b=NTrv5mcIHCJ8G8rzgVO1FoU+Sk1v+pb0pjPDbmcn378ZsdBjWWLhcjWN1T2ZSrS8lO7rt/xmZtkOWVdnnjsOMMbS/tzlEVTF9MEn9mMC52NZ6zyoibnttvIbHRLXcg+qh54v4RjQXF9YPBDYd5y75gy6l0de2o4eKo00Sct62FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357239; c=relaxed/simple;
-	bh=9jvsUP/qLpuA4Ul36TOMI5HfOaT4z/odrRPdwCNKz2U=;
+	s=arc-20240116; t=1722357243; c=relaxed/simple;
+	bh=oa126hL3r8QGelcOglTNlr3575YiXOWqcUHtQg3DTF0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7I2RX7o2tW0dHRyM1syacFKl57nTcafAkAQCUqLwP6dVR8p2Ah81iGllduhB4hQS6aamgved8kP/zqqhFV8zu9lCJccMocczUIkoKjB9WeJ0ZARR9wR6F5tGmgqUYjvLX0sXErN/MVOMFDjWGNr1sNCeRTgGNh8ylW1I3lcLMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5hEB90E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oAqhl+baOaI5M+I76gR12o9qIx7cfmgVeMlD6vBf/2VSwEdoTFjh/lBbHAvci99U1krCgkLCf6t5wzZJNfaRgcJvl77+6QMQRihQMgrGbrITuKXC5mzvANxtTfxenVI0OUqiJCsy5BNbTDmZk/FkLC7gwwK9OgL+82p1tbHbaaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AlDvxB2x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5hEB90E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AC0C32782;
-	Tue, 30 Jul 2024 16:33:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AlDvxB2x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EA7FC32782;
+	Tue, 30 Jul 2024 16:34:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357239;
-	bh=9jvsUP/qLpuA4Ul36TOMI5HfOaT4z/odrRPdwCNKz2U=;
+	s=korg; t=1722357242;
+	bh=oa126hL3r8QGelcOglTNlr3575YiXOWqcUHtQg3DTF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5hEB90Eu57GgAu3hDc82wY/VQ25zv6UOvwxUHNDXu5KVSkYSHEGXtEVYFuw8dFQw
-	 NHhegh/hsi+KmiHzfcYZ0mDN4pPHoOVcDsksPciY2aJO4ogJd3dtZC+1o0kpzhlanA
-	 sEbZR3P2l42NMepNkdiYs2KZ/9WTwqSr1zBi7YMc=
+	b=AlDvxB2x+ZaIgFEndS1zArc6ZtL9FXg0laMDoRPl51IBGKoeQjDX0gRn15ZbrVKdO
+	 2qPjLmlSFAHjBP1eDxuTT5h+jbaurl82D2MX0o7ZjtjYr0ybGtKdle2ilRdjr6VJqZ
+	 xN2lGtCzbxaRObEdRJtg22y3HWewXB68xaSbB//k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Xu <weixugc@google.com>,
-	Yu Zhao <yuzhao@google.com>,
-	Alexander Motin <mav@ixsystems.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 272/440] mm/mglru: fix div-by-zero in vmpressure_calc_level()
-Date: Tue, 30 Jul 2024 17:48:25 +0200
-Message-ID: <20240730151626.458853987@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Lee Jones <lee@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 221/568] leds: trigger: Unregister sysfs attributes before calling deactivate()
+Date: Tue, 30 Jul 2024 17:45:28 +0200
+Message-ID: <20240730151648.520468839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,57 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Zhao <yuzhao@google.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 8b671fe1a879923ecfb72dda6caf01460dd885ef upstream.
+[ Upstream commit c0dc9adf9474ecb7106e60e5472577375aedaed3 ]
 
-evict_folios() uses a second pass to reclaim folios that have gone through
-page writeback and become clean before it finishes the first pass, since
-folio_rotate_reclaimable() cannot handle those folios due to the
-isolation.
+Triggers which have trigger specific sysfs attributes typically store
+related data in trigger-data allocated by the activate() callback and
+freed by the deactivate() callback.
 
-The second pass tries to avoid potential double counting by deducting
-scan_control->nr_scanned.  However, this can result in underflow of
-nr_scanned, under a condition where shrink_folio_list() does not increment
-nr_scanned, i.e., when folio_trylock() fails.
+Calling device_remove_groups() after calling deactivate() leaves a window
+where the sysfs attributes show/store functions could be called after
+deactivation and then operate on the just freed trigger-data.
 
-The underflow can cause the divisor, i.e., scale=scanned+reclaimed in
-vmpressure_calc_level(), to become zero, resulting in the following crash:
+Move the device_remove_groups() call to before deactivate() to close
+this race window.
 
-  [exception RIP: vmpressure_work_fn+101]
-  process_one_work at ffffffffa3313f2b
+This also makes the deactivation path properly do things in reverse order
+of the activation path which calls the activate() callback before calling
+device_add_groups().
 
-Since scan_control->nr_scanned has no established semantics, the potential
-double counting has minimal risks.  Therefore, fix the problem by not
-deducting scan_control->nr_scanned in evict_folios().
-
-Link: https://lkml.kernel.org/r/20240711191957.939105-1-yuzhao@google.com
-Fixes: 359a5e1416ca ("mm: multi-gen LRU: retry folios written back while isolated")
-Reported-by: Wei Xu <weixugc@google.com>
-Signed-off-by: Yu Zhao <yuzhao@google.com>
-Cc: Alexander Motin <mav@ixsystems.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a7e7a3156300 ("leds: triggers: add device attribute support")
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20240504162533.76780-1-hdegoede@redhat.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/vmscan.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/leds/led-triggers.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -5065,7 +5065,6 @@ retry:
+diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
+index 6a5e1f41f9a45..4f5829b726a75 100644
+--- a/drivers/leds/led-triggers.c
++++ b/drivers/leds/led-triggers.c
+@@ -179,9 +179,9 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
  
- 		/* retry folios that may have missed folio_rotate_reclaimable() */
- 		list_move(&folio->lru, &clean);
--		sc->nr_scanned -= folio_nr_pages(folio);
- 	}
- 
- 	spin_lock_irq(&lruvec->lru_lock);
+ 		cancel_work_sync(&led_cdev->set_brightness_work);
+ 		led_stop_software_blink(led_cdev);
++		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
+ 		if (led_cdev->trigger->deactivate)
+ 			led_cdev->trigger->deactivate(led_cdev);
+-		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
+ 		led_cdev->trigger = NULL;
+ 		led_cdev->trigger_data = NULL;
+ 		led_cdev->activated = false;
+-- 
+2.43.0
+
 
 
