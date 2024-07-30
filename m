@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C739114831F;
-	Tue, 30 Jul 2024 16:48:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205531A6166;
+	Tue, 30 Jul 2024 16:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358097; cv=none; b=CKthiBsLfFzvqunURaqYCEULmNrwVIKkxR7+u17L+8C0ePIKsZtIy3ylfymdVKoPOhIFpoIbhi5/Pqibnfd4K29CGnHKflXKq9CyAduOplD3M/LZc1xuISe7Pq6g41LIxpDje3QGKYqZyd7ztL11Ie5P/57vPFPaRxI/9BiMe4g=
+	t=1722358101; cv=none; b=kcf80aZpBze6c+YtGE5yHpOysIBvuBgGVHbTobu4S7K1zDYjGzrVbGxI40YY6+TSzE6mqWk8Yr+Nz3pKvs2t1aQY2kxEOp0PuJJ9kEcu8G+7I0Ocy4Npu256Ts1/T1Dsp+JzXcnLs79CF5kHR4DrMS6W3QMVgbWJreHP4drqGzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358097; c=relaxed/simple;
-	bh=h2RBh2gxqvMe5+rUcL8V7DSfvkn7WYYSM7zdo1EEfec=;
+	s=arc-20240116; t=1722358101; c=relaxed/simple;
+	bh=K5Ur1T0smxztMsOXq1x08qTFNAqDIhQzSJriWyBNoEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TolTes/sENtzcxvOVnC7xleacQWepPFdJfzuVnwh7sov6kUxllVogS6KnIkb9fD4+hDQTadY4VU9yDxnJaG7IPrHt2E68e9fo2SVzt4jW321ZSap98M4HuyE1Oj2GjmJS5ydAmUsOO031grlGCl/BTW3x0857PoCcFECB4MT68k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUEpjOqj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tDlrhosMOpEGvpfqN3YyFRzdgxrLBZnGS7/StH88dksMHXqqAsH+mQKhP8y0ssbScR9Ob1qUbtM6xsk5zu/+AiPBgTTnNBmqkFYwd1B9rhDECgpIQWqUgzx5fkcOk6xYTa2eEnb5RNJmluDYCnGosFFDZ9qX5C65vIqDxqwRB/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGLp50E+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUEpjOqj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D07C32782;
-	Tue, 30 Jul 2024 16:48:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGLp50E+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78509C4AF0E;
+	Tue, 30 Jul 2024 16:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358097;
-	bh=h2RBh2gxqvMe5+rUcL8V7DSfvkn7WYYSM7zdo1EEfec=;
+	s=korg; t=1722358101;
+	bh=K5Ur1T0smxztMsOXq1x08qTFNAqDIhQzSJriWyBNoEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUEpjOqjVm4S3znjiW/xeU9gUlXAijtbSrcI7sk6yFFiGwkUMRrb8KDUmMYl2iD6J
-	 ZM/VF99sQqeVU7kGoO2G6Aa0GsDmo26o3+w16Rs5gTTlDvlU0sVT9mfO1llgfrBrjB
-	 1P+242OuLq1uub/NdmzR2V5sUXxKPBjY+Ral14L0=
+	b=TGLp50E+UyQK3VDgWM0rd0+4GmieYVQl1wEScDNN9k++2OPfeQ+Jsz/URvYtYyw7b
+	 drJP5+qFbwJaqqNB65O8A7BsDJi+5Kle5P2pixEBb8cWe0LBl8kuzAuisu+8qYqpEQ
+	 /DJoYPZnCn6Ivq/e1BdRBusqEog1WWyzIRcpjHUs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Yashin <dmt.yashin@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Maxime Ripard <mripard@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 325/568] pinctrl: rockchip: update rk3308 iomux routes
-Date: Tue, 30 Jul 2024 17:47:12 +0200
-Message-ID: <20240730151652.577710520@linuxfoundation.org>
+Subject: [PATCH 6.10 323/809] drm/ttm/tests: Let ttm_bo_test consider different ww_mutex implementation.
+Date: Tue, 30 Jul 2024 17:43:19 +0200
+Message-ID: <20240730151737.363816348@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Yashin <dmt.yashin@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit a8f2548548584549ea29d43431781d67c4afa42b ]
+[ Upstream commit f85376c890ef470b64a7fea22eea5af18822f05c ]
 
-Some of the rk3308 iomux routes in rk3308_mux_route_data belong to
-the rk3308b SoC. Remove them and correct i2c3 routes.
+PREEMPT_RT has a different locking implementation for ww_mutex. The
+base mutex of struct ww_mutex is declared as struct WW_MUTEX_BASE. The
+latter is defined as `mutex' for non-PREEMPT_RT builds and `rt_mutex'
+for PREEMPT_RT builds.
 
-Fixes: 7825aeb7b208 ("pinctrl: rockchip: add rk3308 SoC support")
-Signed-off-by: Dmitry Yashin <dmt.yashin@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20240515121634.23945-2-dmt.yashin@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Using mutex_lock() directly on the base mutex in
+ttm_bo_reserve_deadlock() leads to compile error on PREEMPT_RT.
+
+The locking-selftest has its own defines to deal with this and it is
+probably best to defines the needed one within the test program since
+their usefulness is limited outside of well known selftests.
+
+Provide ww_mutex_base_lock() which points to the correct function for
+PREEMPT_RT and non-PREEMPT_RT builds.
+
+Fixes: 995279d280d1e ("drm/ttm/tests: Add tests for ttm_bo functions")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240619144630.4DliKOmr@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/ttm/tests/ttm_bo_test.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index caf8d0a98c327..b02eaba010d10 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -915,9 +915,8 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(0, RK_PC3, 1, 0x314, BIT(16 + 0) | BIT(0)), /* rtc_clk */
- 	RK_MUXROUTE_SAME(1, RK_PC6, 2, 0x314, BIT(16 + 2) | BIT(16 + 3)), /* uart2_rxm0 */
- 	RK_MUXROUTE_SAME(4, RK_PD2, 2, 0x314, BIT(16 + 2) | BIT(16 + 3) | BIT(2)), /* uart2_rxm1 */
--	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x608, BIT(16 + 8) | BIT(16 + 9)), /* i2c3_sdam0 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(8)), /* i2c3_sdam1 */
--	RK_MUXROUTE_SAME(2, RK_PA0, 3, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(9)), /* i2c3_sdam2 */
-+	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x314, BIT(16 + 4)), /* i2c3_sdam0 */
-+	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x314, BIT(16 + 4) | BIT(4)), /* i2c3_sdam1 */
- 	RK_MUXROUTE_SAME(1, RK_PA3, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclktxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PA4, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclkrxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x308, BIT(16 + 3) | BIT(3)), /* i2s-8ch-1-sclktxm1 */
-@@ -926,18 +925,6 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(1, RK_PB6, 4, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* pdm-clkm1 */
- 	RK_MUXROUTE_SAME(2, RK_PA6, 2, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* pdm-clkm2 */
- 	RK_MUXROUTE_SAME(2, RK_PA4, 3, 0x600, BIT(16 + 2) | BIT(2)), /* pdm-clkm-m2 */
--	RK_MUXROUTE_SAME(3, RK_PB2, 3, 0x314, BIT(16 + 9)), /* spi1_miso */
--	RK_MUXROUTE_SAME(2, RK_PA4, 2, 0x314, BIT(16 + 9) | BIT(9)), /* spi1_miso_m1 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 3, 0x314, BIT(16 + 10) | BIT(16 + 11)), /* owire_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 7, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(10)), /* owire_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 5, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(11)), /* owire_m2 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 2, 0x314, BIT(16 + 12) | BIT(16 + 13)), /* can_rxd_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 5, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* can_rxd_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 4, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* can_rxd_m2 */
--	RK_MUXROUTE_SAME(1, RK_PC4, 3, 0x314, BIT(16 + 14)), /* mac_rxd0_m0 */
--	RK_MUXROUTE_SAME(4, RK_PA2, 2, 0x314, BIT(16 + 14) | BIT(14)), /* mac_rxd0_m1 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 4, 0x314, BIT(16 + 15)), /* uart3_rx */
--	RK_MUXROUTE_SAME(0, RK_PC1, 3, 0x314, BIT(16 + 15) | BIT(15)), /* uart3_rx_m1 */
- };
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
+index 1f8a4f8adc929..9cc367a795341 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
+@@ -18,6 +18,12 @@
  
- static struct rockchip_mux_route_data rk3328_mux_route_data[] = {
+ #define BO_SIZE		SZ_8K
+ 
++#ifdef CONFIG_PREEMPT_RT
++#define ww_mutex_base_lock(b)			rt_mutex_lock(b)
++#else
++#define ww_mutex_base_lock(b)			mutex_lock(b)
++#endif
++
+ struct ttm_bo_test_case {
+ 	const char *description;
+ 	bool interruptible;
+@@ -142,7 +148,7 @@ static void ttm_bo_reserve_deadlock(struct kunit *test)
+ 	bo2 = ttm_bo_kunit_init(test, test->priv, BO_SIZE);
+ 
+ 	ww_acquire_init(&ctx1, &reservation_ww_class);
+-	mutex_lock(&bo2->base.resv->lock.base);
++	ww_mutex_base_lock(&bo2->base.resv->lock.base);
+ 
+ 	/* The deadlock will be caught by WW mutex, don't warn about it */
+ 	lock_release(&bo2->base.resv->lock.base.dep_map, 1);
 -- 
 2.43.0
 
