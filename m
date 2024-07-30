@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DA21A6192;
-	Tue, 30 Jul 2024 17:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9701A6192;
+	Tue, 30 Jul 2024 17:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358993; cv=none; b=RqAtEBpFvN9wF58hHbuHZBTWqKGctH9m6eVYPTelRWcTdzg4F6uOUSM7cNwh7Y1fMzIW1qBnRZl/8WApvpY4ak1LRUFrOfsFBtCe8AMaodltsQsddUBFMQqwS2CQVtDNRYipslvWI6iOHxTCBs+KH53LYY+0fq0KeywKqXxlGT8=
+	t=1722358996; cv=none; b=BcJinx7M/AC9mQAVn3vn6pJ2NtV5t6SiMYJQTX1nzULL5TjsqrFXJyluJ6mDwLifUW1aWonceEN2MSgoFRc/gbAm4ublg/bG4Fqz+KqV5G2lwf0Czjh90sQRh66L3kVHGLgSrXojTO9cHva1W/I5qABxbw91JWjWGgjuh3NxdGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358993; c=relaxed/simple;
-	bh=IIeKwlUXm+4S/Q9gswJgQl9zsDpaNey5nEHcPWOtVCg=;
+	s=arc-20240116; t=1722358996; c=relaxed/simple;
+	bh=Kkwn3PfgHSwSKtau51PxWQu4wjVcbvkLJGGVFBSlZdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cEJvpv+Ceph4ymXs7oKz0RRR4heejZdB69NAIFAO+qPxwBOUogBesnQGf9BHrP2U4fdJnKjcP9COsGePgFoVUqvuunAbLjrocbfLDr0ePz53XDg0NFgLrumYvclnDS6MqXEuIJ5FIAVYtn/RQ1U7ENWGYQcuexkQPwNIezxarBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fr8DWNLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=kb/Fos9v6hKTtsD8Jnd4KovL0WiRc2eWRMVvvyAndLau7iKs6nO+MakmVz/gDhzwDGa5kjcW1nd7YpW7s6qJ0xS73Cq5C6fy1txP6sp3bnWSBTNCnLRsKbW8GYj2zAJv9SuPyj/0qoYvX21WJzSd+ACObAcfL3hG7DpFc4oRdbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hYH2y3w+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fr8DWNLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F6FC32782;
-	Tue, 30 Jul 2024 17:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hYH2y3w+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02149C32782;
+	Tue, 30 Jul 2024 17:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358993;
-	bh=IIeKwlUXm+4S/Q9gswJgQl9zsDpaNey5nEHcPWOtVCg=;
+	s=korg; t=1722358996;
+	bh=Kkwn3PfgHSwSKtau51PxWQu4wjVcbvkLJGGVFBSlZdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fr8DWNLeoT05FTlnwSLCqt3NqAsxd5YdZuk9QJhBzSsvIlqoTBgEPB2n6ja48Y1pB
-	 yWe7xWdalcPEE9oSP5ukLsbPTIEq3NCjQW1NNrt2FGlZplDV0a6XCV2pacVst1xMS9
-	 JZMLF3DsEY7hS92n/8S/lFWiV2A5WnxPsds2sB9I=
+	b=hYH2y3w+4NHlPI1Zhj6YlV/XFVCeoVL965AWD4Mb8TyZ4YxX2hJdYnBbHOFGvDC3X
+	 8LtHvQjcX+0sDCouBfUoxA+FbjLAjZXrtpkMym3gFiPY0sgxyrUJt9XTd1k82Xf2Xf
+	 ceqi6L5ZpwS5ZdgL8ZGmnfYeURSMz0K5EMY7wXoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 440/440] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
-Date: Tue, 30 Jul 2024 17:51:13 +0200
-Message-ID: <20240730151632.958183363@linuxfoundation.org>
+Subject: [PATCH 6.10 419/809] RDMA/mlx4: Fix truncated output warning in mad.c
+Date: Tue, 30 Jul 2024 17:44:55 +0200
+Message-ID: <20240730151741.245441995@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,68 +45,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
+[ Upstream commit 0d2e6992fc956e3308cd5376c18567def4cb3967 ]
 
-Christian noticed that it is possible for a privileged user to mount
-most filesystems with a non-initial user namespace in sb->s_user_ns.
-When fsopen() is called in a non-init namespace the caller's namespace
-is recorded in fs_context->user_ns. If the returned file descriptor is
-then passed to a process priviliged in init_user_ns, that process can
-call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
-with sb->s_user_ns set to the namespace of the process which called
-fsopen().
+Increase size of the name array to avoid truncated output warning.
 
-This is problematic. We cannot assume that any filesystem which does not
-set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
-mind, increasing the risk for bugs and security issues.
+drivers/infiniband/hw/mlx4/mad.c: In function ‘mlx4_ib_alloc_demux_ctx’:
+drivers/infiniband/hw/mlx4/mad.c:2197:47: error: ‘%d’ directive output
+may be truncated writing between 1 and 11 bytes into a region of size 4
+[-Werror=format-truncation=]
+ 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
+      |                                               ^~
+drivers/infiniband/hw/mlx4/mad.c:2197:38: note: directive argument in
+the range [-2147483645, 2147483647]
+ 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
+      |                                      ^~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2197:9: note: ‘snprintf’ output between
+10 and 20 bytes into a destination of size 12
+ 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2205:48: error: ‘%d’ directive output
+may be truncated writing between 1 and 11 bytes into a region of size 3
+[-Werror=format-truncation=]
+ 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
+      |                                                ^~
+drivers/infiniband/hw/mlx4/mad.c:2205:38: note: directive argument in
+the range [-2147483645, 2147483647]
+ 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
+      |                                      ^~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2205:9: note: ‘snprintf’ output between
+11 and 21 bytes into a destination of size 12
+ 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2213:48: error: ‘%d’ directive output
+may be truncated writing between 1 and 11 bytes into a region of size 3
+[-Werror=format-truncation=]
+ 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
+      |                                                ^~
+drivers/infiniband/hw/mlx4/mad.c:2213:38: note: directive argument in
+the range [-2147483645, 2147483647]
+ 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
+      |                                      ^~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2213:9: note: ‘snprintf’ output between
+11 and 21 bytes into a destination of size 12
+ 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/hw/mlx4/mad.o] Error 1
 
-Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
-not set for the filesystem and a non-initial user namespace will be
-used. sget() does not need to be updated as it always uses the user
-namespace of the current context, or the initial user namespace if
-SB_SUBMOUNT is set.
-
-Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
-Reported-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
-Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: fc06573dfaf8 ("IB/mlx4: Initialize SR-IOV IB support for slaves in master context")
+Link: https://lore.kernel.org/r/f3798b3ce9a410257d7e1ec7c9e285f1352e256a.1718554569.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/super.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/infiniband/hw/mlx4/mad.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/super.c b/fs/super.c
-index d138332e57a94..b116f72cd122a 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -569,6 +569,17 @@ struct super_block *sget_fc(struct fs_context *fc,
- 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
- 	int err;
+diff --git a/drivers/infiniband/hw/mlx4/mad.c b/drivers/infiniband/hw/mlx4/mad.c
+index a37cfac5e23f9..dc9cf45d2d320 100644
+--- a/drivers/infiniband/hw/mlx4/mad.c
++++ b/drivers/infiniband/hw/mlx4/mad.c
+@@ -2158,7 +2158,7 @@ static int mlx4_ib_alloc_demux_ctx(struct mlx4_ib_dev *dev,
+ 				       struct mlx4_ib_demux_ctx *ctx,
+ 				       int port)
+ {
+-	char name[12];
++	char name[21];
+ 	int ret = 0;
+ 	int i;
  
-+	/*
-+	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
-+	 * not set, as the filesystem is likely unprepared to handle it.
-+	 * This can happen when fsconfig() is called from init_user_ns with
-+	 * an fs_fd opened in another user namespace.
-+	 */
-+	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
-+		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
-+		return ERR_PTR(-EPERM);
-+	}
-+
- retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
 -- 
 2.43.0
 
