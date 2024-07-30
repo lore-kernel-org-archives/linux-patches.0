@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C5A51A616E;
-	Tue, 30 Jul 2024 16:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7527A1A6160;
+	Tue, 30 Jul 2024 16:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356894; cv=none; b=mszCB7wlqtkhRq2xbGf/zU0M2B5d0JDc0ybIGVMxttlBht5vKI4Cgt++gBfnD2BCTGBbDvcJT/Mrhe3Xf807sWwaLwW/rWT3PQ9xmSqsh0mgp9DMCiBPB6zfIwyK/lAorTdMhQ3OcylrSYsq5i0nu5afqKnqHO7uLS11UaYfJW4=
+	t=1722356897; cv=none; b=AyuVeJ7cd+/lBoXMOmGIR4gzQV1hocNY/E7ccPUZQmRS2pr2Dn2XyWcDFWD9joGlFos2HouW7dpHMpdUYYgioosTcIS4037gHH6zqFexRPkDj7cUzOLRAA5JK8g3k15y1/wUC22OhxhQ10r/TJnZKECkKP0WO5DMdGJO+lx/Q6k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356894; c=relaxed/simple;
-	bh=kodcwVM/UT6p/xeuxVHE0yJgWrm4iPwqt8Xs1U1cCBQ=;
+	s=arc-20240116; t=1722356897; c=relaxed/simple;
+	bh=n8C7dLqReV3UF4etA4xb7W59+Hmx5n+sMG33xzzpb40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eyjaX0DG4fu6W1q+ztlhIPU91VP2RCGwB9erv7fCFOiNA3JOkAcOdEA/Q14znWSapfLLfOu4aNKyiJqD1b3jdwrmnfj2LSk0KDK7wE1xQQ+usy5S51K1GXlkmXCXFNnZWSM+KQo6Tw4Kx2+DQ4bD+vbVnQFGDjOBObHP4fGjahM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvvhG+8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sIkFyc8iGhJxIf29mySIQK1BavzuUF90m+qkJkRD6PsmflesTt2pWag1NFFhjvKaIUygC65tjmpjFCMAeiO45jH0iNkYnHavcOCPp3+Rj1K78OeOGgRR85t3gROGBrcV8B6LONBHgvmbztwnOrh147G9bYkO+AS66THCAsN2S0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vWKnC7XO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvvhG+8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A648BC32782;
-	Tue, 30 Jul 2024 16:28:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vWKnC7XO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8152C32782;
+	Tue, 30 Jul 2024 16:28:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356894;
-	bh=kodcwVM/UT6p/xeuxVHE0yJgWrm4iPwqt8Xs1U1cCBQ=;
+	s=korg; t=1722356897;
+	bh=n8C7dLqReV3UF4etA4xb7W59+Hmx5n+sMG33xzzpb40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kvvhG+8dVOqeWzuaqsFOCJM8bmO6De39xPqHzS5FjuB8tY20RMOhTkSuMbSeFoWaV
-	 ZVQKsY4ZadZdCR7cQ4FFMxCuqhgaLEmtjRU8N8dI1w9uMki2wVOhaKjv2517633r4L
-	 9O3gGmL5sa6+HOJ9U4XKWRzw4gB8aGnUsBjNvyfY=
+	b=vWKnC7XODWzjR7gTpn98qQ8PbDe1ohuJcox0juPZDhmPfVCI9zpAtjrrTYfSWii0p
+	 Vcj42sSU0tDxG3bCzfdt59rHRAFSgsYIgg5xijWFcB8rF9U14K346XVcwGgYZaMPBM
+	 k/6ulU5O3j+erLrLNab4bGbtwU4CmaEGEdYbnrUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Xu <dxu@dxuuu.xyz>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 197/809] bpf: Make bpf_session_cookie() kfunc return long *
-Date: Tue, 30 Jul 2024 17:41:13 +0200
-Message-ID: <20240730151732.386975940@linuxfoundation.org>
+Subject: [PATCH 6.1 239/440] fs/ntfs3: Merge synonym COMPRESSION_UNIT and NTFS_LZNT_CUNIT
+Date: Tue, 30 Jul 2024 17:47:52 +0200
+Message-ID: <20240730151625.191185481@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +46,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Xu <dxu@dxuuu.xyz>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 2b8dd87332cd2782b5b3f0c423bd6693e487ed30 ]
+[ Upstream commit 487f8d482a7e51a640b8f955a398f906a4f83951 ]
 
-We will soon be generating kfunc prototypes from BTF. As part of that,
-we need to align the manual signatures in bpf_kfuncs.h with the actual
-kfunc definitions. There is currently a conflicting signature for
-bpf_session_cookie() w.r.t. return type.
+COMPRESSION_UNIT and NTFS_LZNT_CUNIT mean the same thing
+(1u<<NTFS_LZNT_CUNIT) determines the size for compression (in clusters).
 
-The original intent was to return long * and not __u64 *. You can see
-evidence of that intent in a3a5113393cc ("selftests/bpf: Add kprobe
-session cookie test").
+COMPRESS_MAX_CLUSTER is not used in the code.
 
-Fix conflict by changing kfunc definition.
-
-Fixes: 5c919acef851 ("bpf: Add support for kprobe session cookie")
-Signed-off-by: Daniel Xu <dxu@dxuuu.xyz>
-Link: https://lore.kernel.org/r/7043e1c251ab33151d6e3830f8ea1902ed2604ac.1718207789.git.dxu@dxuuu.xyz
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Stable-dep-of: 25610ff98d4a ("fs/ntfs3: Fix transform resident to nonresident for compressed files")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ntfs3/attrib.c  | 2 +-
+ fs/ntfs3/frecord.c | 2 +-
+ fs/ntfs3/fslog.c   | 2 +-
+ fs/ntfs3/inode.c   | 2 +-
+ fs/ntfs3/ntfs.h    | 3 ---
+ 5 files changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index d1daeab1bbc14..bc16e21a2a443 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -3527,7 +3527,7 @@ __bpf_kfunc bool bpf_session_is_return(void)
- 	return session_ctx->is_return;
- }
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 2618bf5a37892..180996c213ccf 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -265,7 +265,7 @@ int attr_make_nonresident(struct ntfs_inode *ni, struct ATTRIB *attr,
  
--__bpf_kfunc __u64 *bpf_session_cookie(void)
-+__bpf_kfunc long *bpf_session_cookie(void)
- {
- 	struct bpf_session_run_ctx *session_ctx;
+ 	align = sbi->cluster_size;
+ 	if (is_attr_compressed(attr))
+-		align <<= COMPRESSION_UNIT;
++		align <<= NTFS_LZNT_CUNIT;
+ 	len = (rsize + align - 1) >> sbi->cluster_bits;
  
+ 	run_init(run);
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index d260260900241..02465ab3f398c 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1501,7 +1501,7 @@ int ni_insert_nonresident(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 
+ 	if (is_ext) {
+ 		if (flags & ATTR_FLAG_COMPRESSED)
+-			attr->nres.c_unit = COMPRESSION_UNIT;
++			attr->nres.c_unit = NTFS_LZNT_CUNIT;
+ 		attr->nres.total_size = attr->nres.alloc_size;
+ 	}
+ 
+diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
+index 6d0d9b1c3b2e7..90ade8965b7e1 100644
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -2999,7 +2999,7 @@ static struct ATTRIB *attr_create_nonres_log(struct ntfs_sb_info *sbi,
+ 	if (is_ext) {
+ 		attr->name_off = SIZEOF_NONRESIDENT_EX_LE;
+ 		if (is_attr_compressed(attr))
+-			attr->nres.c_unit = COMPRESSION_UNIT;
++			attr->nres.c_unit = NTFS_LZNT_CUNIT;
+ 
+ 		attr->nres.run_off =
+ 			cpu_to_le16(SIZEOF_NONRESIDENT_EX + name_size);
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index 2c8c32d9fcaa1..0130b8583bf5a 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -1459,7 +1459,7 @@ struct inode *ntfs_create_inode(struct user_namespace *mnt_userns,
+ 			attr->size = cpu_to_le32(SIZEOF_NONRESIDENT_EX + 8);
+ 			attr->name_off = SIZEOF_NONRESIDENT_EX_LE;
+ 			attr->flags = ATTR_FLAG_COMPRESSED;
+-			attr->nres.c_unit = COMPRESSION_UNIT;
++			attr->nres.c_unit = NTFS_LZNT_CUNIT;
+ 			asize = SIZEOF_NONRESIDENT_EX + 8;
+ 		} else {
+ 			attr->size = cpu_to_le32(SIZEOF_NONRESIDENT + 8);
+diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
+index 1197d1a232962..b992ec42a1d92 100644
+--- a/fs/ntfs3/ntfs.h
++++ b/fs/ntfs3/ntfs.h
+@@ -82,9 +82,6 @@ typedef u32 CLST;
+ #define RESIDENT_LCN   ((CLST)-2)
+ #define COMPRESSED_LCN ((CLST)-3)
+ 
+-#define COMPRESSION_UNIT     4
+-#define COMPRESS_MAX_CLUSTER 0x1000
+-
+ enum RECORD_NUM {
+ 	MFT_REC_MFT		= 0,
+ 	MFT_REC_MIRR		= 1,
 -- 
 2.43.0
 
