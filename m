@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1481A76C5;
-	Tue, 30 Jul 2024 17:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45AF31A76C7;
+	Tue, 30 Jul 2024 17:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359223; cv=none; b=HLJH7HgNoTTGxPHC4tRWHWGoPqsbmGiah6dMlRv7T2lV8Mb+EG1q4XeXcYCRbsK2DgK4Gefvy1b796fYJPHgHsHLKc66SaKMGg/Y5Fe1NUH/gttJM/hbWcapOAJdi0DvZANhLqvu8Oj/aRlaUsMcACnwxlWkU38dQFL6Aix6Hys=
+	t=1722359226; cv=none; b=cRoJfHUWa/oONgp5vpguSqAm23ZQUOIppSVMnw+YQGE8EXn/TOjSsgMJD8ejnVa9AVYN+17mnmuAVlFbct+bDUyTwOYINtNsPbAg//K0hd+gs4t5jh3u1hXLv4jlOO/P+09aV/g8nVb/eNQ09W2DYOyzYxOdWG618BTgxCwAIkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359223; c=relaxed/simple;
-	bh=Xge0ZkupSJjSIOKD1jc7WS7+IPoq405yaZqMyhR9Huk=;
+	s=arc-20240116; t=1722359226; c=relaxed/simple;
+	bh=WskWiRMYw73HGyRD0GHgu6vp/1HYbru6p3KVRjcTWKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fEmlFmPEjBxCKh5DgWDI7C6qmNNyKvGFKsQIns+LmlaYESVk6qK6KQwnW5OCGpM1LT+kFzQ+br/f3AzzOgt0cBArmZFIjjzCPi2dsGKBEGsyRBP/IL7VGpFXMany2YUiaffbNACqSqXZrlY1s0m6Acaqj3I2EJPHZC5Tm3g13D4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HMInluf6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/tPz/8uXz2KRd2yH0btvkkx0i78sF1FY8GU/TGNkPlNgyE0aPFPx4Oc4q8Tcj/ECFPNadXjcqtVA1PvacXLr48/h/Nz9H3G8rsDgsTOwNjwzjZOj3z9KyGdZMYUmjFkGwAftwTFNPK8PJw8M8S6/Hu9HgdKnWefPhsoc0s+A+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUq4odbU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HMInluf6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8125FC32782;
-	Tue, 30 Jul 2024 17:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUq4odbU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6275C4AF0A;
+	Tue, 30 Jul 2024 17:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359223;
-	bh=Xge0ZkupSJjSIOKD1jc7WS7+IPoq405yaZqMyhR9Huk=;
+	s=korg; t=1722359226;
+	bh=WskWiRMYw73HGyRD0GHgu6vp/1HYbru6p3KVRjcTWKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HMInluf6c7j3ea5SuCakX8Tu8kwtq/GbkNv7JtLiJf+s+MVt0OTBU8bPUWMizRZQJ
-	 5B2qVOcTQcJr2/9hPHmgD/Gd0ad8macd/CGGMKUIeDKXh7HisV2+Vq/EcA1+gvjOUl
-	 leeHaVlrZ0P5BJOJmALrcl7srN3JvGIuJRuH+y+s=
+	b=wUq4odbUD1Va/RvyhGx0dzgIlURrgxtLTgQ+GOhramUU1zooufyg1W0VxoK6ZzBb/
+	 EEaZNqNpcWMbjIw0cHrmELmZjDNoSUyLgAFktpcBqaRm/IaqWFsVlcwrmE3Ks3Hcp8
+	 eeWeRMKxgG1WQebtFWfJKRLc8g5BVw0d58YYb8gU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominique Martinet <dominique.martinet@atmark-techno.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 453/809] MIPS: Octeron: remove source file executable bit
-Date: Tue, 30 Jul 2024 17:45:29 +0200
-Message-ID: <20240730151742.600090081@linuxfoundation.org>
+	Praveen Kaligineedi <pkaligineedi@google.com>,
+	Bailey Forrest <bcf@google.com>,
+	Jeroen de Borst <jeroendb@google.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 450/568] gve: Fix an edge case for TSO skb validity check
+Date: Tue, 30 Jul 2024 17:49:17 +0200
+Message-ID: <20240730151657.601510185@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,31 +49,95 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dominique Martinet <dominique.martinet@atmark-techno.com>
+From: Bailey Forrest <bcf@google.com>
 
-[ Upstream commit 89c7f5078935872cf47a713a645affb5037be694 ]
+commit 36e3b949e35964e22b9a57f960660fc599038dd4 upstream.
 
-This does not matter the least, but there is no other .[ch] file in the
-repo that is executable, so clean this up.
+The NIC requires each TSO segment to not span more than 10
+descriptors. NIC further requires each descriptor to not exceed
+16KB - 1 (GVE_TX_MAX_BUF_SIZE_DQO).
 
-Fixes: 29b83a64df3b ("MIPS: Octeon: Add PCIe link status check")
-Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The descriptors for an skb are generated by
+gve_tx_add_skb_no_copy_dqo() for DQO RDA queue format.
+gve_tx_add_skb_no_copy_dqo() loops through each skb frag and
+generates a descriptor for the entire frag if the frag size is
+not greater than GVE_TX_MAX_BUF_SIZE_DQO. If the frag size is
+greater than GVE_TX_MAX_BUF_SIZE_DQO, it is split into descriptor(s)
+of size GVE_TX_MAX_BUF_SIZE_DQO and a descriptor is generated for
+the remainder (frag size % GVE_TX_MAX_BUF_SIZE_DQO).
+
+gve_can_send_tso() checks if the descriptors thus generated for an
+skb would meet the requirement that each TSO-segment not span more
+than 10 descriptors. However, the current code misses an edge case
+when a TSO segment spans multiple descriptors within a large frag.
+This change fixes the edge case.
+
+gve_can_send_tso() relies on the assumption that max gso size (9728)
+is less than GVE_TX_MAX_BUF_SIZE_DQO and therefore within an skb
+fragment a TSO segment can never span more than 2 descriptors.
+
+Fixes: a57e5de476be ("gve: DQO: Add TX path")
+Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
+Signed-off-by: Bailey Forrest <bcf@google.com>
+Reviewed-by: Jeroen de Borst <jeroendb@google.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240724143431.3343722-1-pkaligineedi@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/pci/pcie-octeon.c | 0
- 1 file changed, 0 insertions(+), 0 deletions(-)
- mode change 100755 => 100644 arch/mips/pci/pcie-octeon.c
+ drivers/net/ethernet/google/gve/gve_tx_dqo.c |   22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
 
-diff --git a/arch/mips/pci/pcie-octeon.c b/arch/mips/pci/pcie-octeon.c
-old mode 100755
-new mode 100644
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
++++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
+@@ -812,22 +812,42 @@ static bool gve_can_send_tso(const struc
+ 	const int header_len = skb_tcp_all_headers(skb);
+ 	const int gso_size = shinfo->gso_size;
+ 	int cur_seg_num_bufs;
++	int prev_frag_size;
+ 	int cur_seg_size;
+ 	int i;
+ 
+ 	cur_seg_size = skb_headlen(skb) - header_len;
++	prev_frag_size = skb_headlen(skb);
+ 	cur_seg_num_bufs = cur_seg_size > 0;
+ 
+ 	for (i = 0; i < shinfo->nr_frags; i++) {
+ 		if (cur_seg_size >= gso_size) {
+ 			cur_seg_size %= gso_size;
+ 			cur_seg_num_bufs = cur_seg_size > 0;
++
++			if (prev_frag_size > GVE_TX_MAX_BUF_SIZE_DQO) {
++				int prev_frag_remain = prev_frag_size %
++					GVE_TX_MAX_BUF_SIZE_DQO;
++
++				/* If the last descriptor of the previous frag
++				 * is less than cur_seg_size, the segment will
++				 * span two descriptors in the previous frag.
++				 * Since max gso size (9728) is less than
++				 * GVE_TX_MAX_BUF_SIZE_DQO, it is impossible
++				 * for the segment to span more than two
++				 * descriptors.
++				 */
++				if (prev_frag_remain &&
++				    cur_seg_size > prev_frag_remain)
++					cur_seg_num_bufs++;
++			}
+ 		}
+ 
+ 		if (unlikely(++cur_seg_num_bufs > max_bufs_per_seg))
+ 			return false;
+ 
+-		cur_seg_size += skb_frag_size(&shinfo->frags[i]);
++		prev_frag_size = skb_frag_size(&shinfo->frags[i]);
++		cur_seg_size += prev_frag_size;
+ 	}
+ 
+ 	return true;
 
 
