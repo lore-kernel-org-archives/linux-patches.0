@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7257418C902;
-	Tue, 30 Jul 2024 17:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A71F18C902;
+	Tue, 30 Jul 2024 17:09:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359345; cv=none; b=t35PLTVgC9p5weIx2aYsl/W6M80v7c3ARVMiMbszed3iC/Zz8u6S08tNGcsf7VSiZKUfVxehandxvwlXScM3ER9KD9Zr05pcRoUz3ka2tIMr4mVdFI2lXQv28Qi8wouzKLLM2m5fCumA6eYhx8EDKbu2wmWr9zoN/T96akyqp1I=
+	t=1722359349; cv=none; b=heSss12iX4VS5ooTlgOqNOtlFLSb8/8VkLuj3JkWgbXjsMS9w0m3UH5qbrO1sdU/U6KJtGjnysFKViA9YJ2SaPjboeyDZnWgNWAw4X+cMPkTiyyFsVBMetZemetw+6TJdHbD8FIBhuVGAtDv04fwjSL9pdfvWvtYftS6TCaN9Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359345; c=relaxed/simple;
-	bh=UOLPK+LpC2Ura9+MJdN30os0h/ST6u6BRLlB3qtsbtA=;
+	s=arc-20240116; t=1722359349; c=relaxed/simple;
+	bh=0ylTgy9H6njHfFTtMoLZSMWdl1nh0T4AJtRN+5Ey3Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s0aoHKsdnjQdwH73/rh7KOkn04yIFOxq85cDf9QkuJNofUujbMgj1sA1ZhsKtJB42wMLcW2/XNOJey7agO6yxUhlPoQQOFs5YIRCx/o4wghmFvJpxL42OMII6OrFdMDun4McYQdsTM2wdXIw0Er/+1f3lgb8aPTW0MpBqElPa3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rfqb3Ii; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHccbPp0tpQt01Hl7ofym897WVg06f2cqPHdbj0Ek4toa9jKeQgEMQ9rxFa3LglqXjWnwV8+TEmM2bPZsGNNvWrIYno5QKeS1EZWswEFQlXJUSdrjJaYIjAEfUlqXVHoHwS7YN2+Syx1q+XQDxey4b0KV34CBuvEIX1M/kB5DSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wahbWiJK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rfqb3Ii"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FBDC32782;
-	Tue, 30 Jul 2024 17:09:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wahbWiJK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40D40C4AF0C;
+	Tue, 30 Jul 2024 17:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359345;
-	bh=UOLPK+LpC2Ura9+MJdN30os0h/ST6u6BRLlB3qtsbtA=;
+	s=korg; t=1722359348;
+	bh=0ylTgy9H6njHfFTtMoLZSMWdl1nh0T4AJtRN+5Ey3Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2rfqb3Iioo0Egw6b/9y/8AXKLG7+Zpxbd2cvtZm58dd77ciGH9xRPbRzNsC92cR3g
-	 O2wWqPoaVC/4j1PxMzxVB9hLT3ivVex+elQbKCpb7UVv13ekbKq4zdYObfqQSLXLGC
-	 R4G5Lee7Weg3C870fE5JIvmYRZv4dpxnP7+70XtA=
+	b=wahbWiJK2ojKbFT2GT8bWlVM0hzbXhvrZixIDOpWEbx7S+YyPS9g3umR4ObEIDv9B
+	 V70h/Pe04NeldWK3qR9kARWhq5FLLGwpxgtDE4eROeCfqBS/jBVCI7PXEsx9SlFooX
+	 oWlGlA1UuK/YRHO21anK0ffIP48oHHjrLesSD8VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 471/809] bnxt_re: Fix imm_data endianness
-Date: Tue, 30 Jul 2024 17:45:47 +0200
-Message-ID: <20240730151743.340697988@linuxfoundation.org>
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ian Rogers <irogers@google.com>
+Subject: [PATCH 6.6 470/568] perf/x86/intel/uncore: Fix the bits of the CHA extended umask for SPR
+Date: Tue, 30 Jul 2024 17:49:37 +0200
+Message-ID: <20240730151658.395677895@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +47,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 95b087f87b780daafad1dbb2c84e81b729d5d33f ]
+commit a5a6ff3d639d088d4af7e2935e1ee0d8b4e817d4 upstream.
 
-When map a device between servers with MLX and BCM RoCE nics, RTRS
-server complain about unknown imm type, and can't map the device,
+The perf stat errors out with UNC_CHA_TOR_INSERTS.IA_HIT_CXL_ACC_LOCAL
+event.
 
-After more debug, it seems bnxt_re wrongly handle the
-imm_data, this patch fixed the compat issue with MLX for us.
+ $perf stat -e uncore_cha_55/event=0x35,umask=0x10c0008101/ -a -- ls
+    event syntax error: '..0x35,umask=0x10c0008101/'
+                                      \___ Bad event or PMU
 
-In off list discussion, Selvin confirmed HW is working in little endian format
-and all data needs to be converted to LE while providing.
+The definition of the CHA umask is config:8-15,32-55, which is 32bit.
+However, the umask of the event is bigger than 32bit.
+This is an error in the original uncore spec.
 
-This patch fix the endianness for imm_data
+Add a new umask_ext5 for the new CHA umask range.
 
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://lore.kernel.org/r/20240710122102.37569-1-jinpu.wang@ionos.com
-Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 949b11381f81 ("perf/x86/intel/uncore: Add Sapphire Rapids server CHA support")
+Closes: https://lore.kernel.org/linux-perf-users/alpine.LRH.2.20.2401300733310.11354@Diego/
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20240708185524.1185505-1-kan.liang@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 ++++----
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index ce9c5bae83bf1..582e83a36ccbe 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -2479,7 +2479,7 @@ static int bnxt_re_build_send_wqe(struct bnxt_re_qp *qp,
- 		break;
- 	case IB_WR_SEND_WITH_IMM:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_SEND_WITH_IMM;
--		wqe->send.imm_data = wr->ex.imm_data;
-+		wqe->send.imm_data = be32_to_cpu(wr->ex.imm_data);
- 		break;
- 	case IB_WR_SEND_WITH_INV:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_SEND_WITH_INV;
-@@ -2509,7 +2509,7 @@ static int bnxt_re_build_rdma_wqe(const struct ib_send_wr *wr,
- 		break;
- 	case IB_WR_RDMA_WRITE_WITH_IMM:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_RDMA_WRITE_WITH_IMM;
--		wqe->rdma.imm_data = wr->ex.imm_data;
-+		wqe->rdma.imm_data = be32_to_cpu(wr->ex.imm_data);
- 		break;
- 	case IB_WR_RDMA_READ:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_RDMA_READ;
-@@ -3581,7 +3581,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *gsi_sqp,
- 	wc->byte_len = orig_cqe->length;
- 	wc->qp = &gsi_qp->ib_qp;
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -461,6 +461,7 @@
+ #define SPR_UBOX_DID				0x3250
  
--	wc->ex.imm_data = orig_cqe->immdata;
-+	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
- 	wc->src_qp = orig_cqe->src_qp;
- 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
- 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
-@@ -3726,7 +3726,7 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
- 				 (unsigned long)(cqe->qp_handle),
- 				 struct bnxt_re_qp, qplib_qp);
- 			wc->qp = &qp->ib_qp;
--			wc->ex.imm_data = cqe->immdata;
-+			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
- 			wc->src_qp = cqe->src_qp;
- 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
- 			wc->port_num = 1;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 7fd4506b3584f..244da20d1181f 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -164,7 +164,7 @@ struct bnxt_qplib_swqe {
- 		/* Send, with imm, inval key */
- 		struct {
- 			union {
--				__be32	imm_data;
-+				u32	imm_data;
- 				u32	inv_key;
- 			};
- 			u32		q_key;
-@@ -182,7 +182,7 @@ struct bnxt_qplib_swqe {
- 		/* RDMA write, with imm, read */
- 		struct {
- 			union {
--				__be32	imm_data;
-+				u32	imm_data;
- 				u32	inv_key;
- 			};
- 			u64		remote_va;
-@@ -389,7 +389,7 @@ struct bnxt_qplib_cqe {
- 	u16				cfa_meta;
- 	u64				wr_id;
- 	union {
--		__be32			immdata;
-+		__le32			immdata;
- 		u32			invrkey;
- 	};
- 	u64				qp_handle;
--- 
-2.43.0
-
+ /* SPR CHA */
++#define SPR_CHA_EVENT_MASK_EXT			0xffffffff
+ #define SPR_CHA_PMON_CTL_TID_EN			(1 << 16)
+ #define SPR_CHA_PMON_EVENT_MASK			(SNBEP_PMON_RAW_EVENT_MASK | \
+ 						 SPR_CHA_PMON_CTL_TID_EN)
+@@ -477,6 +478,7 @@ DEFINE_UNCORE_FORMAT_ATTR(umask_ext, uma
+ DEFINE_UNCORE_FORMAT_ATTR(umask_ext2, umask, "config:8-15,32-57");
+ DEFINE_UNCORE_FORMAT_ATTR(umask_ext3, umask, "config:8-15,32-39");
+ DEFINE_UNCORE_FORMAT_ATTR(umask_ext4, umask, "config:8-15,32-55");
++DEFINE_UNCORE_FORMAT_ATTR(umask_ext5, umask, "config:8-15,32-63");
+ DEFINE_UNCORE_FORMAT_ATTR(qor, qor, "config:16");
+ DEFINE_UNCORE_FORMAT_ATTR(edge, edge, "config:18");
+ DEFINE_UNCORE_FORMAT_ATTR(tid_en, tid_en, "config:19");
+@@ -5954,7 +5956,7 @@ static struct intel_uncore_ops spr_uncor
+ 
+ static struct attribute *spr_uncore_cha_formats_attr[] = {
+ 	&format_attr_event.attr,
+-	&format_attr_umask_ext4.attr,
++	&format_attr_umask_ext5.attr,
+ 	&format_attr_tid_en2.attr,
+ 	&format_attr_edge.attr,
+ 	&format_attr_inv.attr,
+@@ -5990,7 +5992,7 @@ ATTRIBUTE_GROUPS(uncore_alias);
+ static struct intel_uncore_type spr_uncore_chabox = {
+ 	.name			= "cha",
+ 	.event_mask		= SPR_CHA_PMON_EVENT_MASK,
+-	.event_mask_ext		= SPR_RAW_EVENT_MASK_EXT,
++	.event_mask_ext		= SPR_CHA_EVENT_MASK_EXT,
+ 	.num_shared_regs	= 1,
+ 	.constraints		= skx_uncore_chabox_constraints,
+ 	.ops			= &spr_uncore_chabox_ops,
 
 
