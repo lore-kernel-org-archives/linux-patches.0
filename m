@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D092D189514;
-	Tue, 30 Jul 2024 16:46:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA2FA1A6166;
+	Tue, 30 Jul 2024 16:46:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357996; cv=none; b=HNTTYr5n9Olmx+vHXONVG7no5mgunuBH8PmmHIHRwoYwE0KHECpziqRZAhki6lsJJStEhvccc10sfz1FkUMVpj/d/Azxcchje2XwDDG3p4evTJIylLwT+XTSzj4z/OW9di2xH4ZCzOxRv5hIfw7rSAasf/K8pj5j9IIYd7HAGFk=
+	t=1722358000; cv=none; b=cAxNx8MQ9GCMGtNsBRUcIboL0723HyJzi0DCzxb97opQLZDcDnZhjn5VseWmR1myFEXUwg5aBz840B6jiqnXC/zk5XByU04DjA/dK305mBzJJqwoKCzl7yJw9STEql3+Srgjf7X9daEu4zGTKnHw6ZsFtWfbKDzmv9SyqZBBfHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357996; c=relaxed/simple;
-	bh=YupZyQBRWykfT2Lg8fTo9DQMsgxex4L4uteAuNupo1M=;
+	s=arc-20240116; t=1722358000; c=relaxed/simple;
+	bh=nyeeh2SbJpk/KHilAjMox41GLIdBdeGcSblt66E18R0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=eJflFg2DBlw0vzcjcaz1sexhGPc68pzoHOPa9ZCHlb/UGlkfDhtsIryIz3+dh3oes+yVdrrX9byNbTMjImXxeUEm7Oqdjn4Ut8q4DJpkgJDCj1N+FxwZNDCvZObAJ2Hi/I9mrFvneeCoKrDva4RmReqeUHjV4DwTSyyVCzR1aeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NYcfZ3j+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERkKLFqMjO53h5UkczyBBIqUYm/1MQeFtwX9PDBzzgy16AG47QGvCt+GAJdZ8lKy6vYbOSipq4epqqtfzyWh4Ot6rEa/XPxDpGqWAk3i2JMYVZJ0qwCkgKoGfylnvZEXT5QPj96VrmMO+M1g284fF+xo3Tnj7+M46/LKml10T8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DzXYflcJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NYcfZ3j+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A375C4AF13;
-	Tue, 30 Jul 2024 16:46:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DzXYflcJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52F00C32782;
+	Tue, 30 Jul 2024 16:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357996;
-	bh=YupZyQBRWykfT2Lg8fTo9DQMsgxex4L4uteAuNupo1M=;
+	s=korg; t=1722357999;
+	bh=nyeeh2SbJpk/KHilAjMox41GLIdBdeGcSblt66E18R0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYcfZ3j+kYLi/AqZTjrLwQEVYW0oIPG28Gn2Ap/3Zi+N+Rv4Z4/7dyDKDOvkXOQjX
-	 xQ4G2U8F2efZ4CZvzwUF6iaFJN4q0IVc2Vi7oxsMOLRIGZkb0DUniwlQvxrl12pthV
-	 S3ECBBwOQg10hiWUXM/Qpt1f2QniQ7X6hc/PfGzY=
+	b=DzXYflcJeMpYn9prtTuzS3Kv5CxBYkqZNYhko/cX1Ho7NejiAd19B849V+Y3qrnPr
+	 xY9D2e3oliuWtpiWn2WXJLXDaZW1c1p3/I0g7C8nW2GgYH6dTs3O7Aawd9pV2xBhCl
+	 PdCQecw+nlmWSWN4f85ojWdYwDEu9K/sl0Vzs9XI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksandr Natalenko <oleksandr@natalenko.name>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 313/809] media: uvcvideo: Add quirk for invalid dev_sof in Logitech C920
-Date: Tue, 30 Jul 2024 17:43:09 +0200
-Message-ID: <20240730151736.959788334@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Quinn Tran <qutran@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 347/440] scsi: qla2xxx: Unable to act on RSCN for port online
+Date: Tue, 30 Jul 2024 17:49:40 +0200
+Message-ID: <20240730151629.365411388@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,74 +47,240 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleksandr Natalenko <oleksandr@natalenko.name>
+From: Quinn Tran <qutran@marvell.com>
 
-[ Upstream commit 85fbe91a7c9210bb30638846b551fa5d3cb7bc4c ]
+commit c3d98b12eef8db436e32f1a8c5478be57dc15621 upstream.
 
-Similarly to Logitech C922, C920 seems to also suffer from a firmware
-bug that breaks hardware timestamping.
+The device does not come online when the target port is online. There were
+multiple RSCNs indicating multiple devices were affected. Driver is in the
+process of finishing a fabric scan. A new RSCN (device up) arrived at the
+tail end of the last fabric scan. Driver mistakenly thinks the new RSCN is
+being taken care of by the previous fabric scan, where this notification is
+cleared and not acted on. The laser needs to be blinked again to get the
+device to show up.
 
-Add a quirk for this camera model too.
+To prevent driver from accidentally clearing the RSCN notification, each
+RSCN is given a generation value.  A fabric scan will scan for that
+generation(s).  Any new RSCN arrive after the scan start will have a new
+generation value. This will trigger another scan to get latest data. The
+RSCN notification flag will be cleared when the scan is associate to that
+generation.
 
-Before applying the quirk:
-
-```
-100 (4) [-] none 100 200717 B 212.919114 213.079004 33.727 fps ts mono/SoE
-101 (5) [-] none 101 200889 B 213.003703 213.114996 11.822 fps ts mono/SoE
-102 (6) [-] none 102 200926 B 213.035571 213.146999 31.379 fps ts mono/SoE
-103 (7) [-] none 103 200839 B 213.067424 213.179003 31.394 fps ts mono/SoE
-104 (0) [-] none 104 200692 B 213.293180 213.214991 4.430 fps ts mono/SoE
-105 (1) [-] none 105 200937 B 213.322374 213.247001 34.254 fps ts mono/SoE
-106 (2) [-] none 106 201013 B 213.352228 213.279005 33.496 fps ts mono/SoE
-…
-```
-
-After applying the quirk:
-
-```
-154 (2) [-] none 154 192417 B 42.199823 42.207788 27.779 fps ts mono/SoE
-155 (3) [-] none 155 192040 B 42.231834 42.239791 31.239 fps ts mono/SoE
-156 (4) [-] none 156 192213 B 42.263823 42.271822 31.261 fps ts mono/SoE
-157 (5) [-] none 157 191981 B 42.299824 42.303827 27.777 fps ts mono/SoE
-158 (6) [-] none 158 191953 B 42.331835 42.339811 31.239 fps ts mono/SoE
-159 (7) [-] none 159 191904 B 42.363824 42.371813 31.261 fps ts mono/SoE
-160 (0) [-] none 160 192210 B 42.399834 42.407801 27.770 fps ts mono/SoE
-```
-
-Fixes: 5d0fd3c806b9 ("[media] uvcvideo: Disable hardware timestamps by default")
-Signed-off-by: Oleksandr Natalenko <oleksandr@natalenko.name>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240325142611.15550-1-oleksandr@natalenko.name
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202406210538.w875N70K-lkp@intel.com/
+Fixes: bb2ca6b3f09a ("scsi: qla2xxx: Relogin during fabric disturbance")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-2-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/usb/uvc/uvc_driver.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_def.h    |    3 +++
+ drivers/scsi/qla2xxx/qla_gs.c     |   33 ++++++++++++++++++++++++++++++---
+ drivers/scsi/qla2xxx/qla_init.c   |   24 +++++++++++++++++++-----
+ drivers/scsi/qla2xxx/qla_inline.h |    8 ++++++++
+ 4 files changed, 60 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_driver.c b/drivers/media/usb/uvc/uvc_driver.c
-index 6e55f91ac17fe..d435b6a6c295d 100644
---- a/drivers/media/usb/uvc/uvc_driver.c
-+++ b/drivers/media/usb/uvc/uvc_driver.c
-@@ -2580,7 +2580,8 @@ static const struct usb_device_id uvc_ids[] = {
- 	  .bInterfaceClass	= USB_CLASS_VIDEO,
- 	  .bInterfaceSubClass	= 1,
- 	  .bInterfaceProtocol	= 0,
--	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT) },
-+	  .driver_info		= UVC_INFO_QUIRK(UVC_QUIRK_RESTORE_CTRLS_ON_INIT
-+					       | UVC_QUIRK_INVALID_DEVICE_SOF) },
- 	/* Logitech HD Pro Webcam C922 */
- 	{ .match_flags		= USB_DEVICE_ID_MATCH_DEVICE
- 				| USB_DEVICE_ID_MATCH_INT_INFO,
--- 
-2.43.0
-
+--- a/drivers/scsi/qla2xxx/qla_def.h
++++ b/drivers/scsi/qla2xxx/qla_def.h
+@@ -3278,6 +3278,8 @@ struct fab_scan_rp {
+ struct fab_scan {
+ 	struct fab_scan_rp *l;
+ 	u32 size;
++	u32 rscn_gen_start;
++	u32 rscn_gen_end;
+ 	u16 scan_retry;
+ #define MAX_SCAN_RETRIES 5
+ 	enum scan_flags_t scan_flags;
+@@ -4985,6 +4987,7 @@ typedef struct scsi_qla_host {
+ 
+ 	/* Counter to detect races between ELS and RSCN events */
+ 	atomic_t		generation_tick;
++	atomic_t		rscn_gen;
+ 	/* Time when global fcport update has been scheduled */
+ 	int			total_fcport_update_gen;
+ 	/* List of pending LOGOs, protected by tgt_mutex */
+--- a/drivers/scsi/qla2xxx/qla_gs.c
++++ b/drivers/scsi/qla2xxx/qla_gs.c
+@@ -3465,6 +3465,29 @@ static int qla2x00_is_a_vp(scsi_qla_host
+ 	return rc;
+ }
+ 
++static bool qla_ok_to_clear_rscn(scsi_qla_host_t *vha, fc_port_t *fcport)
++{
++	u32 rscn_gen;
++
++	rscn_gen = atomic_read(&vha->rscn_gen);
++	ql_dbg(ql_dbg_disc + ql_dbg_verbose, vha, 0x2017,
++	    "%s %d %8phC rscn_gen %x start %x end %x current %x\n",
++	    __func__, __LINE__, fcport->port_name, fcport->rscn_gen,
++	    vha->scan.rscn_gen_start, vha->scan.rscn_gen_end, rscn_gen);
++
++	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_start,
++	    vha->scan.rscn_gen_end))
++		/* rscn came in before fabric scan */
++		return true;
++
++	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_end, rscn_gen))
++		/* rscn came in after fabric scan */
++		return false;
++
++	/* rare: fcport's scan_needed + rscn_gen must be stale */
++	return true;
++}
++
+ void qla24xx_async_gnnft_done(scsi_qla_host_t *vha, srb_t *sp)
+ {
+ 	fc_port_t *fcport;
+@@ -3578,10 +3601,10 @@ void qla24xx_async_gnnft_done(scsi_qla_h
+ 				   (fcport->scan_needed &&
+ 				    fcport->port_type != FCT_INITIATOR &&
+ 				    fcport->port_type != FCT_NVME_INITIATOR)) {
++				fcport->scan_needed = 0;
+ 				qlt_schedule_sess_for_deletion(fcport);
+ 			}
+ 			fcport->d_id.b24 = rp->id.b24;
+-			fcport->scan_needed = 0;
+ 			break;
+ 		}
+ 
+@@ -3622,7 +3645,9 @@ login_logout:
+ 				do_delete = true;
+ 			}
+ 
+-			fcport->scan_needed = 0;
++			if (qla_ok_to_clear_rscn(vha, fcport))
++				fcport->scan_needed = 0;
++
+ 			if (((qla_dual_mode_enabled(vha) ||
+ 			      qla_ini_mode_enabled(vha)) &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE) ||
+@@ -3652,7 +3677,9 @@ login_logout:
+ 					    fcport->port_name, fcport->loop_id,
+ 					    fcport->login_retry);
+ 				}
+-				fcport->scan_needed = 0;
++
++				if (qla_ok_to_clear_rscn(vha, fcport))
++					fcport->scan_needed = 0;
+ 				qla24xx_fcport_handle_login(vha, fcport);
+ 			}
+ 		}
+--- a/drivers/scsi/qla2xxx/qla_init.c
++++ b/drivers/scsi/qla2xxx/qla_init.c
+@@ -1843,10 +1843,18 @@ int qla24xx_post_newsess_work(struct scs
+ 	return qla2x00_post_work(vha, e);
+ }
+ 
++static void qla_rscn_gen_tick(scsi_qla_host_t *vha, u32 *ret_rscn_gen)
++{
++	*ret_rscn_gen = atomic_inc_return(&vha->rscn_gen);
++	/* memory barrier */
++	wmb();
++}
++
+ void qla2x00_handle_rscn(scsi_qla_host_t *vha, struct event_arg *ea)
+ {
+ 	fc_port_t *fcport;
+ 	unsigned long flags;
++	u32 rscn_gen;
+ 
+ 	switch (ea->id.b.rsvd_1) {
+ 	case RSCN_PORT_ADDR:
+@@ -1876,15 +1884,16 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 					 * Otherwise we're already in the middle of a relogin
+ 					 */
+ 					fcport->scan_needed = 1;
+-					fcport->rscn_gen++;
++					qla_rscn_gen_tick(vha, &fcport->rscn_gen);
+ 				}
+ 			} else {
+ 				fcport->scan_needed = 1;
+-				fcport->rscn_gen++;
++				qla_rscn_gen_tick(vha, &fcport->rscn_gen);
+ 			}
+ 		}
+ 		break;
+ 	case RSCN_AREA_ADDR:
++		qla_rscn_gen_tick(vha, &rscn_gen);
+ 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+ 			if (fcport->flags & FCF_FCP2_DEVICE &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE)
+@@ -1892,11 +1901,12 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 
+ 			if ((ea->id.b24 & 0xffff00) == (fcport->d_id.b24 & 0xffff00)) {
+ 				fcport->scan_needed = 1;
+-				fcport->rscn_gen++;
++				fcport->rscn_gen = rscn_gen;
+ 			}
+ 		}
+ 		break;
+ 	case RSCN_DOM_ADDR:
++		qla_rscn_gen_tick(vha, &rscn_gen);
+ 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+ 			if (fcport->flags & FCF_FCP2_DEVICE &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE)
+@@ -1904,19 +1914,20 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 
+ 			if ((ea->id.b24 & 0xff0000) == (fcport->d_id.b24 & 0xff0000)) {
+ 				fcport->scan_needed = 1;
+-				fcport->rscn_gen++;
++				fcport->rscn_gen = rscn_gen;
+ 			}
+ 		}
+ 		break;
+ 	case RSCN_FAB_ADDR:
+ 	default:
++		qla_rscn_gen_tick(vha, &rscn_gen);
+ 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
+ 			if (fcport->flags & FCF_FCP2_DEVICE &&
+ 			    atomic_read(&fcport->state) == FCS_ONLINE)
+ 				continue;
+ 
+ 			fcport->scan_needed = 1;
+-			fcport->rscn_gen++;
++			fcport->rscn_gen = rscn_gen;
+ 		}
+ 		break;
+ 	}
+@@ -1925,6 +1936,7 @@ void qla2x00_handle_rscn(scsi_qla_host_t
+ 	if (vha->scan.scan_flags == 0) {
+ 		ql_dbg(ql_dbg_disc, vha, 0xffff, "%s: schedule\n", __func__);
+ 		vha->scan.scan_flags |= SF_QUEUED;
++		vha->scan.rscn_gen_start = atomic_read(&vha->rscn_gen);
+ 		schedule_delayed_work(&vha->scan.scan_work, 5);
+ 	}
+ 	spin_unlock_irqrestore(&vha->work_lock, flags);
+@@ -6419,6 +6431,8 @@ qla2x00_configure_fabric(scsi_qla_host_t
+ 		qlt_do_generation_tick(vha, &discovery_gen);
+ 
+ 		if (USE_ASYNC_SCAN(ha)) {
++			/* start of scan begins here */
++			vha->scan.rscn_gen_end = atomic_read(&vha->rscn_gen);
+ 			rval = qla24xx_async_gpnft(vha, FC4_TYPE_FCP_SCSI,
+ 			    NULL);
+ 			if (rval)
+--- a/drivers/scsi/qla2xxx/qla_inline.h
++++ b/drivers/scsi/qla2xxx/qla_inline.h
+@@ -631,3 +631,11 @@ static inline int qla_mapq_alloc_qp_cpu_
+ 	}
+ 	return 0;
+ }
++
++static inline bool val_is_in_range(u32 val, u32 start, u32 end)
++{
++	if (val >= start && val <= end)
++		return true;
++	else
++		return false;
++}
 
 
