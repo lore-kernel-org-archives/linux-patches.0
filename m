@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC41418C91F;
-	Tue, 30 Jul 2024 16:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 448C7184535;
+	Tue, 30 Jul 2024 16:09:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355790; cv=none; b=qgmbzSfWU2tNZtM/wfDMkMM9oaPTvcOVUIkqhPGriaJoRKIppWPgZmQcNZj862ArniR4Y2bJDopNRJ7vFdZ8oZY7+9+8KOOlRoB0rQP8K7ebLF2W6WeO3Qu4qJqf739MBn61qz/lwIGslgb43EowYUB4sfow2vF3l862QyeAcsI=
+	t=1722355793; cv=none; b=dA1TDdeNB5yPs04J88L15Q5+ikOAcmvv0hNjgPoKcJ5C2x9QBphIz4GPPMnySprCntiMUB4o3lqPlX11eA8KnXkb70gWT991PT4z9bzZXBqTlr/V6f0Ijvz+rfRMCGDjoBP2CFJxj1iITLSGwL7TuYqxJTm8BCWOzT8NVioITt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355790; c=relaxed/simple;
-	bh=z0FT26++zGwyniWONlbKTcK1RBlB/WK6A/QJwVYLeV8=;
+	s=arc-20240116; t=1722355793; c=relaxed/simple;
+	bh=YTccryd7UbhiKZWcKXu2uFo/wYKpr4WjlL0D8YUDTWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RU+ICDe8Bw3QKziNj+XcmaZ0KbPTSDH2RIicHM8nuoOZW8n730cszeJqIoAsUy7CHuc5gGd8bEDaI037COvm/dENUWwlwzJpc2qpNolKLBgAOfRFkulCA6FOTgD1hXNQE9oQoKbcG7+K69szwngJ5nSJB88VMHXIB/OaZ5TQyxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tx+JlHaD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KgAML+ox3eXddu3OW25xhEvFYKRlKhjV6QhG/3gtYjmWW3ykEe4u9jTyok93nTBT0TVbUR4vHtiDRvGqtaX/+oY1j9PSj6HM1NV2Cf3kwK6k6WYaOD+pDRQYrnL1Mcm7SL8KBN1LtC1rk55pUTgln0tCHl2jWyq4jFYFzsDt6hQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybqIZRKo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tx+JlHaD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CBE3C32782;
-	Tue, 30 Jul 2024 16:09:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybqIZRKo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D0CC32782;
+	Tue, 30 Jul 2024 16:09:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355789;
-	bh=z0FT26++zGwyniWONlbKTcK1RBlB/WK6A/QJwVYLeV8=;
+	s=korg; t=1722355793;
+	bh=YTccryd7UbhiKZWcKXu2uFo/wYKpr4WjlL0D8YUDTWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tx+JlHaDRbLH7unh3CN6vehSMyGLGGB2RyU/1tD3mBl4HYoWO6CyrS5D/4JK9h0Ax
-	 N97Ru7K8CW5ApwHTC2YKTJCPdB92hd4Z9UNOkodTPlMkdEfhYPTzyiRjPEbfpFKhgU
-	 pgGEOaiBcKaPyjiH6m34hrUDjlis/PnFUwTgKh5I=
+	b=ybqIZRKo6jsgDMJ80IEml4h7XTloFdSqh/5Tv12pOdGCH+2oA325Y57ZPDxns1U75
+	 RNaNMIqBCvxfbbpHdAljeOUdwcHjXT1YOtQWq4iR3vOkecPqPMtscXyr7C+qYamQ9n
+	 Mz2VivtSZCTYxXiXy1wKsQNoifg4QL2J7X01Tsmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/568] arm64: dts: imx8mp: Add NPU Node
-Date: Tue, 30 Jul 2024 17:43:17 +0200
-Message-ID: <20240730151643.390591552@linuxfoundation.org>
+Subject: [PATCH 6.10 089/809] soc: qcom: icc-bwmon: Fix refcount imbalance seen during bwmon_remove
+Date: Tue, 30 Jul 2024 17:39:25 +0200
+Message-ID: <20240730151728.152634319@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +48,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Sibi Sankar <quic_sibis@quicinc.com>
 
-[ Upstream commit 4bedc468b725d55655dc8c9f5528932f4d77ccb0 ]
+[ Upstream commit 24086640ab39396eb1a92d1cb1cd2f31b2677c52 ]
 
-The NPU is based on the Vivante GC8000 and its power-domain
-is controlled my pgc_mlmix.  Since the power-domain uses
-some of these clocks, setup the clock parent and rates
-inside the power-domain, and add the NPU node.
+The following warning is seen during bwmon_remove due to refcount
+imbalance, fix this by releasing the OPPs after use.
 
-The data sheet states the CLK_ML_AHB should be 300MHz for
-nominal, but 800MHz clock will divide down to 266 instead.
-Boards which operate in over-drive mode should update the
-clocks on their boards accordingly.  When the driver loads,
-the NPU numerates as:
+Logs:
+WARNING: at drivers/opp/core.c:1640 _opp_table_kref_release+0x150/0x158
+Hardware name: Qualcomm Technologies, Inc. X1E80100 CRD (DT)
+...
+Call trace:
+_opp_table_kref_release+0x150/0x158
+dev_pm_opp_remove_table+0x100/0x1b4
+devm_pm_opp_of_table_release+0x10/0x1c
+devm_action_release+0x14/0x20
+devres_release_all+0xa4/0x104
+device_unbind_cleanup+0x18/0x60
+device_release_driver_internal+0x1ec/0x228
+driver_detach+0x50/0x98
+bus_remove_driver+0x6c/0xbc
+driver_unregister+0x30/0x60
+platform_driver_unregister+0x14/0x20
+bwmon_driver_exit+0x18/0x524 [icc_bwmon]
+__arm64_sys_delete_module+0x184/0x264
+invoke_syscall+0x48/0x118
+el0_svc_common.constprop.0+0xc8/0xe8
+do_el0_svc+0x20/0x2c
+el0_svc+0x34/0xdc
+el0t_64_sync_handler+0x13c/0x158
+el0t_64_sync+0x190/0x194
+--[ end trace 0000000000000000 ]---
 
- etnaviv-gpu 38500000.npu: model: GC8000, revision: 8002
-
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
-Stable-dep-of: 106f68fc9da3 ("arm64: dts: imx8mp: Fix pgc_mlmix location")
+Fixes: 0276f69f13e2 ("soc: qcom: icc-bwmon: Set default thresholds dynamically")
+Fixes: b9c2ae6cac40 ("soc: qcom: icc-bwmon: Add bandwidth monitoring driver")
+Signed-off-by: Sibi Sankar <quic_sibis@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240613164506.982068-1-quic_sibis@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/soc/qcom/icc-bwmon.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 4b50920ac2049..56f72d264eee8 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -886,6 +886,15 @@ pgc_mlmix: power-domain@24 {
- 						clocks = <&clk IMX8MP_CLK_ML_AXI>,
- 							 <&clk IMX8MP_CLK_ML_AHB>,
- 							 <&clk IMX8MP_CLK_NPU_ROOT>;
-+						assigned-clocks = <&clk IMX8MP_CLK_ML_CORE>,
-+								  <&clk IMX8MP_CLK_ML_AXI>,
-+								  <&clk IMX8MP_CLK_ML_AHB>;
-+						assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_800M>,
-+									 <&clk IMX8MP_SYS_PLL1_800M>,
-+									 <&clk IMX8MP_SYS_PLL1_800M>;
-+						assigned-clock-rates = <800000000>,
-+								       <800000000>,
-+								       <300000000>;
- 					};
- 				};
- 			};
-@@ -1970,6 +1979,18 @@ vpumix_blk_ctrl: blk-ctrl@38330000 {
- 			interconnect-names = "g1", "g2", "vc8000e";
- 		};
+diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
+index fb323b3364db4..ecddb60bd6650 100644
+--- a/drivers/soc/qcom/icc-bwmon.c
++++ b/drivers/soc/qcom/icc-bwmon.c
+@@ -565,7 +565,7 @@ static void bwmon_start(struct icc_bwmon *bwmon)
+ 	int window;
  
-+		npu: npu@38500000 {
-+			compatible = "vivante,gc";
-+			reg = <0x38500000 0x200000>;
-+			interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
-+			clocks = <&clk IMX8MP_CLK_NPU_ROOT>,
-+				 <&clk IMX8MP_CLK_NPU_ROOT>,
-+				 <&clk IMX8MP_CLK_ML_AXI>,
-+				 <&clk IMX8MP_CLK_ML_AHB>;
-+			clock-names = "core", "shader", "bus", "reg";
-+			power-domains = <&pgc_mlmix>;
-+		};
-+
- 		gic: interrupt-controller@38800000 {
- 			compatible = "arm,gic-v3";
- 			reg = <0x38800000 0x10000>,
+ 	/* No need to check for errors, as this must have succeeded before. */
+-	dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_low, 0);
++	dev_pm_opp_put(dev_pm_opp_find_bw_ceil(bwmon->dev, &bw_low, 0));
+ 
+ 	bwmon_clear_counters(bwmon, true);
+ 
+@@ -772,11 +772,13 @@ static int bwmon_probe(struct platform_device *pdev)
+ 	opp = dev_pm_opp_find_bw_floor(dev, &bwmon->max_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+ 		return dev_err_probe(dev, PTR_ERR(opp), "failed to find max peak bandwidth\n");
++	dev_pm_opp_put(opp);
+ 
+ 	bwmon->min_bw_kbps = 0;
+ 	opp = dev_pm_opp_find_bw_ceil(dev, &bwmon->min_bw_kbps, 0);
+ 	if (IS_ERR(opp))
+ 		return dev_err_probe(dev, PTR_ERR(opp), "failed to find min peak bandwidth\n");
++	dev_pm_opp_put(opp);
+ 
+ 	bwmon->dev = dev;
+ 
 -- 
 2.43.0
 
