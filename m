@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05601552E7;
-	Tue, 30 Jul 2024 16:43:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C8E1898E4;
+	Tue, 30 Jul 2024 16:43:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357812; cv=none; b=H22N8toLiD0QWndoVebTKWfFrd5i9VGbkuScSEx9cd477pThrL2WCCk9wFKW0UOLQVUyA+PU5XySGajAQnAppko+utMI/W2BW8BFxDP0E5m6IX/PFl8/4jIALT09epU7xIGpLc3SpjD96wuevCeEfpxRhanuTCBtdZAh07Xa5RE=
+	t=1722357815; cv=none; b=ck5a/0fE9pYde5vbA92tpMmlWFt50/Yh9Yu71OQaZTvmer8MykUQu7/foe1v5kaTwIB/QUvRINj1yj+rAvFbAT4cQOwR7UY+onGpwCwKOZdGZGjs0xhfbSMLk5tNbI0dHnj7id9HHqcJENSE6Beg7q5P9BN1cNhi8fJLZgwCtv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357812; c=relaxed/simple;
-	bh=zmvU5tnUxy204EleOlGCEkI1rLhH0idM0ZozTBvnxb4=;
+	s=arc-20240116; t=1722357815; c=relaxed/simple;
+	bh=m8vmfqBqWVYSAs37pNFG5uM2q9pyuaeLsbwtdzECX4k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A9l/hnqtCsdBnQXwPaqpclaHONShtFp7sZGGXOSz1k3Bg1XwRSFjr4ZGI+SJk825GstjiRcXvab+BogblZcd/HkqWwrLyVZSiPksClzjJmdyt1npIAldfuqonSGmAslYzYvms/TlFPLSv4BPOpOAy1sTtzJ5XuzF8QSodjuPylk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PF8uoWgo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRP2aMAByh5XtRzxsGDnS34A0nxR3Gxk+do0xrhkm3j1wpdpUdsHiTnpsGdFzpAHqHeZLtS5h1HhI5Hq1S7qNwAQoRPHuAJr76707y39R9AlI9Hec9Ll7lHbF5ew6ZZrIqUGlHDS6pzVx5mOnT243An5zSUkhOp1eUoBTSmxP6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g451rqaF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PF8uoWgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C09C4AF0E;
-	Tue, 30 Jul 2024 16:43:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g451rqaF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EC4BC4AF0C;
+	Tue, 30 Jul 2024 16:43:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357812;
-	bh=zmvU5tnUxy204EleOlGCEkI1rLhH0idM0ZozTBvnxb4=;
+	s=korg; t=1722357815;
+	bh=m8vmfqBqWVYSAs37pNFG5uM2q9pyuaeLsbwtdzECX4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PF8uoWgo9w6lvmjKOdykkHZOoFpyvIGg4kPXWCbVNvZrNEX3LpFtZymBUraJK4j8h
-	 ibkfAcZGlrU4E/QY/HREARE3fM0tYB7kVciYq710FKS/YW3kznEBzch565Yc2Rdxdh
-	 Pd+EJNLDT69W5VlwLC4VjrAVenSKDMv2E2oDTkFs=
+	b=g451rqaFoJpdgTEJqheX2xP5HgUF4hygEhzuCMUgu1OnsE03YDB3/bhBW1/qeIu9O
+	 Cg1v6E2nTKiS/xK9SfUpWLY/E6holfjfAtOpc5gJDKLISui690bIYhtz1rC4ekW5zi
+	 mHfa77UjsCxAsoTq07z5mJzTCxRCuX/0x3hXnl4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.1 320/440] hwrng: amd - Convert PCIBIOS_* return codes to errnos
-Date: Tue, 30 Jul 2024 17:49:13 +0200
-Message-ID: <20240730151628.317699778@linuxfoundation.org>
+	Dominique Martinet <dominique.martinet@atmark-techno.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 294/568] MIPS: Octeron: remove source file executable bit
+Date: Tue, 30 Jul 2024 17:46:41 +0200
+Message-ID: <20240730151651.369077117@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,46 +45,33 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Dominique Martinet <dominique.martinet@atmark-techno.com>
 
-commit 14cba6ace79627a57fb9058582b03f0ed3832390 upstream.
+[ Upstream commit 89c7f5078935872cf47a713a645affb5037be694 ]
 
-amd_rng_mod_init() uses pci_read_config_dword() that returns PCIBIOS_*
-codes. The return code is then returned as is but amd_rng_mod_init() is
-a module_init() function that should return normal errnos.
+This does not matter the least, but there is no other .[ch] file in the
+repo that is executable, so clean this up.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning it.
-
-Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 29b83a64df3b ("MIPS: Octeon: Add PCIe link status check")
+Signed-off-by: Dominique Martinet <dominique.martinet@atmark-techno.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/amd-rng.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/mips/pci/pcie-octeon.c | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ mode change 100755 => 100644 arch/mips/pci/pcie-octeon.c
 
---- a/drivers/char/hw_random/amd-rng.c
-+++ b/drivers/char/hw_random/amd-rng.c
-@@ -142,8 +142,10 @@ static int __init amd_rng_mod_init(void)
- 
- found:
- 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
--	if (err)
-+	if (err) {
-+		err = pcibios_err_to_errno(err);
- 		goto put_dev;
-+	}
- 
- 	pmbase &= 0x0000FF00;
- 	if (pmbase == 0) {
+diff --git a/arch/mips/pci/pcie-octeon.c b/arch/mips/pci/pcie-octeon.c
+old mode 100755
+new mode 100644
+-- 
+2.43.0
+
 
 
