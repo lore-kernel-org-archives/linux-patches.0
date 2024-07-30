@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300521A6192;
-	Tue, 30 Jul 2024 17:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E891A6192;
+	Tue, 30 Jul 2024 17:04:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359039; cv=none; b=qjZmtPgTtoMD1AOd15W9Zt7QjI+Rb+JGhH0Joou2VXCSXGP4yZXJcRlALKHH4rGXsG7fbZZCelvJcm5xW8VMQgR5otK0yhSpp4Imf6s/sNT4vgmhCkCaZMHd/RtTFBtsQ/YPmphTKPjX69KblGthlGS+nr0Xw/qqlmdod6URAkM=
+	t=1722359042; cv=none; b=QI98Z7+ya+lNff6eA5Mt8aMYYri5BKgzHsDC0+mnDsUcUmwXaQ5uVm/4sJZ4Q4sKplHnU/VEo041I1OpHfmfqZ4bHMowIxMZxH2il9pufQJRJuU2JFCdixWKVUY/d/V8dSghyg1lwjmi4c+7al/SQdpK6RBYbiQZpvZSSw/Uy5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359039; c=relaxed/simple;
-	bh=rvkacaQj+hoLWNKJA1aRi4lSEqPtnUJ+jRM/AGUlc6A=;
+	s=arc-20240116; t=1722359042; c=relaxed/simple;
+	bh=6r1T7BMXOHkU6MSPpb2BS3c5xuIvmGqPYPC7dXVh1ls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsUvBMou08FxL/9sO40FEuZ8vI4E3r7VmHtHkQSMGeAh1kbDwKw077Dih3+uuXAh+AKnQH7HLEPyeRikaTM3T4eEPf7LPtq3WTuONzXmgnq0JJI5SFfpxu71dihIfhQAR+pA89zhJTW5BGzIpVf3YGbj3vH9pZZr1pV7+FW+UIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRIXVLc3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U/eAEXfod9OXiVUPjOEAjrdbUtQcdrU2JeQCthRB72C1uQoms9Um6+3oFnPzBbn8DHrIB0wwrlJJqNedIx3Qnxe/TATp8WawsYhG/lkV1rMlfi5umqIwTOBqu75rH0G9v4ObTVZHdD6eaS4Cdbqu0g3oeDMofX1dYPMKbYa5Xs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g5hl/4v3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRIXVLc3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 946DAC32782;
-	Tue, 30 Jul 2024 17:03:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g5hl/4v3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D302FC4AF0A;
+	Tue, 30 Jul 2024 17:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359039;
-	bh=rvkacaQj+hoLWNKJA1aRi4lSEqPtnUJ+jRM/AGUlc6A=;
+	s=korg; t=1722359042;
+	bh=6r1T7BMXOHkU6MSPpb2BS3c5xuIvmGqPYPC7dXVh1ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRIXVLc3au3t34RPkmYzmLjnfE41ImKm2K4swE882lgaCZRRJc3jPDv7t1AT3vCt4
-	 hGA9eWDJPMtCwMlELoAkOuw3FxSyEQq5s1UsLelaSPyYKDwHOGna+T0WBNGdoMVGeN
-	 LgbGxLc4bxGJkXlsfc3s4HflX5tKAYikanpC6lI8=
+	b=g5hl/4v3hsd7dRgquYEMmggULDwDOagqHEWSs8kS61DQdWEyIJg7LydZoPysEuhhw
+	 A0qGl9A5AXs7zxlL0dq06VYTtOMGgJsbCrzVaP06KJw3TPYK0I0/zYmF9lVkvIFL/v
+	 9EJIDgm62S351Br6jcBcMzkJNOhXBJSEr+L6xMT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Rund <Christian.Rund@de.ibm.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 425/809] hwrng: core - Fix wrong quality calculation at hw rng registration
-Date: Tue, 30 Jul 2024 17:45:01 +0200
-Message-ID: <20240730151741.482557593@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.6 424/568] parisc: Fix warning at drivers/pci/msi/msi.h:121
+Date: Tue, 30 Jul 2024 17:48:51 +0200
+Message-ID: <20240730151656.438286325@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +46,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: John David Anglin <dave@mx3210.local>
 
-[ Upstream commit 95c0f5c3b8bb7acdc5c4f04bc6a7d3f40d319e9e ]
+commit 4c29ab84cfec17081aae7a7a28f8d2c93c42dcae upstream.
 
-When there are rng sources registering at the hwrng core via
-hwrng_register() a struct hwrng is delivered. There is a quality
-field in there which is used to decide which of the registered
-hw rng sources will be used by the hwrng core.
+Fix warning at drivers/pci/msi/msi.h:121.
 
-With commit 16bdbae39428 ("hwrng: core - treat default_quality as
-a maximum and default to 1024") there came in a new default of
-1024 in case this field is empty and all the known hw rng sources
-at that time had been reworked to not fill this field and thus
-use the default of 1024.
+Recently, I added a PCI to PCIe bridge adaptor and a PCIe NVME card
+to my rp3440. Then, I noticed this warning at boot:
 
-The code choosing the 'better' hw rng source during registration
-of a new hw rng source has never been adapted to this and thus
-used 0 if the hw rng implementation does not fill the quality field.
-So when two rng sources register, one with 0 (meaning 1024) and
-the other one with 999, the 999 hw rng will be chosen.
+ WARNING: CPU: 0 PID: 10 at drivers/pci/msi/msi.h:121 pci_msi_setup_msi_irqs+0x68/0x90
+ CPU: 0 PID: 10 Comm: kworker/u32:0 Not tainted 6.9.7-parisc64 #1  Debian 6.9.7-1
+ Hardware name: 9000/800/rp3440
+ Workqueue: async async_run_entry_fn
 
-As the later invoked function hwrng_init() anyway adjusts the
-quality field of the hw rng source, this adjustment is now done
-during registration of this new hw rng source.
+We need to select PCI_MSI_ARCH_FALLBACKS when PCI_MSI is selected.
 
-Tested on s390 with two hardware rng sources: crypto cards and
-trng true random generator device driver.
-
-Fixes: 16bdbae39428 ("hwrng: core - treat default_quality as a maximum and default to 1024")
-Reported-by: Christian Rund <Christian.Rund@de.ibm.com>
-Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Cc: stable@vger.kernel.org	# v6.0+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/parisc/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
-index 4084df65c9fa3..f6122a03ee37c 100644
---- a/drivers/char/hw_random/core.c
-+++ b/drivers/char/hw_random/core.c
-@@ -161,7 +161,6 @@ static int hwrng_init(struct hwrng *rng)
- 	reinit_completion(&rng->cleanup_done);
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -83,6 +83,7 @@ config PARISC
+ 	select HAVE_SOFTIRQ_ON_OWN_STACK if IRQSTACKS
+ 	select TRACE_IRQFLAGS_SUPPORT
+ 	select HAVE_FUNCTION_DESCRIPTORS if 64BIT
++	select PCI_MSI_ARCH_FALLBACKS if PCI_MSI
  
- skip_init:
--	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
- 	current_quality = rng->quality; /* obsolete */
- 
- 	return 0;
-@@ -545,6 +544,9 @@ int hwrng_register(struct hwrng *rng)
- 	complete(&rng->cleanup_done);
- 	init_completion(&rng->dying);
- 
-+	/* Adjust quality field to always have a proper value */
-+	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
-+
- 	if (!current_rng ||
- 	    (!cur_rng_set_by_user && rng->quality > current_rng->quality)) {
- 		/*
--- 
-2.43.0
-
+ 	help
+ 	  The PA-RISC microprocessor is designed by Hewlett-Packard and used
 
 
