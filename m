@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EBBD1A0724;
-	Tue, 30 Jul 2024 16:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6A71A6185;
+	Tue, 30 Jul 2024 16:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356175; cv=none; b=AFGagcVqvAyUUYTKu1n+fuSWAy9jOVZCHY+jeuDt/fKrbKF/zSLUSbYQk5oIQ6MgS1NLUdhLbE9RIwvycg7Fvga30cPIQ4MhrCoEjFrMPj0MyKEZG6Xq9ChrOJF15jF4Bo25p6cskRCtBC9RZF93U/9qbRwMEXq+hdNDTn3TKiE=
+	t=1722356179; cv=none; b=qCSDPJcHHpraubq8+rnb6xQxroh24qiVr8U12eUcPiU/F/efqQeW/oxOnYZ/kIiBqhM73PTfo6dtS281kxWHGmOhHLgEO13MaKWe8+FoLTRuAhvTCnO4HtyZtT6Z2bRZxqCN5pVUrTuszaLYRETywesh8+bPCrtL4W7ScMNJf90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356175; c=relaxed/simple;
-	bh=qPcldIElnBaq5M0HPa+v5K616Tn3BuZIg9vF0hit/a4=;
+	s=arc-20240116; t=1722356179; c=relaxed/simple;
+	bh=h2AyTB45vx5efZpCP6tuvHndhsLihurGnHEKshsyi00=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HghozfofCGIohQvhoZ/3x6iXC05HdqTA7DqcsPUSIqy+jrjBAmkx/gfSxSFOyYsDg2bE61UwoI42ODD7ftSg86hi4iQUoui7yq9Cq06Xll+FfWNyQubyEfLfkWEhz/tfah+OQ6PzqDqZlqsIP0+BrvzyweILLeNXdZE1ioATG8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CmySaFR2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5Sk8HpA8/YFkP7eWXGEVK8LSxxDOZ8jrX2NmND5bvI0X0qbcaFvbCdstgBVteM0z8HrudTY3dzEOxjJ2qZxtkvvdWrp6gaF0DO5qTqnTecQDSfJRSuuDn2+vQP04opygjlIxfSXGO8IubDnSkFFdvVG938D/L2PCoFilGDUp2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGZUzkQ0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CmySaFR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5482DC32782;
-	Tue, 30 Jul 2024 16:16:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGZUzkQ0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15F7C32782;
+	Tue, 30 Jul 2024 16:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356175;
-	bh=qPcldIElnBaq5M0HPa+v5K616Tn3BuZIg9vF0hit/a4=;
+	s=korg; t=1722356178;
+	bh=h2AyTB45vx5efZpCP6tuvHndhsLihurGnHEKshsyi00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmySaFR2peuEDPvGJCMbY9Jrgtj1fIOIpoih7sn0SJHN6pTTMmdQ0Xsv1M0B1hZMF
-	 FXXRmwKW+9G9ZJ206QAzh9Y3x56AKwVo+NWfKOQFp43DaaSXG/stAeUQ1gwCCslVV8
-	 mcT+LG17dMcDECJdG3K4OGFt4CxUPCPaFS9uvamc=
+	b=EGZUzkQ05x/VsO6i5QO2k7s7JmMUEqP1pdO57SGBg7pz+SXVzk+FE6qUX/5F5VJuY
+	 M5dbTYt3CMK2S0+x8QUOBu4HsW7nPclDHRNXXbK2Al2s+WXMbYAmXySTrpIiVTITFN
+	 xq6y4UU45TqnKFvw9AiHkgEUEA/K+sRV4BAOCUuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Adam Ford <aford173@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 126/809] arm64: dts: imx8mp: Fix pgc vpu locations
-Date: Tue, 30 Jul 2024 17:40:02 +0200
-Message-ID: <20240730151729.591810717@linuxfoundation.org>
+Subject: [PATCH 6.6 121/568] wifi: ath12k: fix wrong definition of CE rings base address
+Date: Tue, 30 Jul 2024 17:43:48 +0200
+Message-ID: <20240730151644.605196579@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,108 +48,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 2f8405fb077bcb8e98c8cd87c2a0a238b15d8da8 ]
+[ Upstream commit 0ae570703754858a77cc42b3c9fff42e9f084608 ]
 
-The various pgv_vpu nodes have a mismatch between the value after
-the @ symbol and what is referenced by 'reg' so reorder the nodes
-to align.
+Base address of CE ring is defined as u32, currently this works
+because DMA mask configured as 32 bit:
 
-Fixes: df680992dd62 ("arm64: dts: imx8mp: add vpu pgc nodes")
-Suggested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewd-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+	#define ATH12K_PCI_DMA_MASK	32
+
+However this mask could be changed once firmware bugs are fixed
+to fully support 36 bit DMA addressing. So to protect against any
+future changes to the DMA mask, change the type of the fields that
+are dependent upon it.
+
+This is found during code review. Compile tested only.
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240524024021.37711-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 55 ++++++++++++-----------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ drivers/net/wireless/ath/ath12k/ce.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 3576d2b89b439..ee0c864f27e89 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -838,6 +838,12 @@ pgc_gpumix: power-domain@7 {
- 						assigned-clock-rates = <800000000>, <400000000>;
- 					};
+diff --git a/drivers/net/wireless/ath/ath12k/ce.h b/drivers/net/wireless/ath/ath12k/ce.h
+index 79af3b6159f1c..857bc5f9e946a 100644
+--- a/drivers/net/wireless/ath/ath12k/ce.h
++++ b/drivers/net/wireless/ath/ath12k/ce.h
+@@ -1,7 +1,7 @@
+ /* SPDX-License-Identifier: BSD-3-Clause-Clear */
+ /*
+  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
+- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
+  */
  
-+					pgc_vpumix: power-domain@8 {
-+						#power-domain-cells = <0>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPUMIX>;
-+						clocks = <&clk IMX8MP_CLK_VPU_ROOT>;
-+					};
-+
- 					pgc_gpu3d: power-domain@9 {
- 						#power-domain-cells = <0>;
- 						reg = <IMX8MP_POWER_DOMAIN_GPU3D>;
-@@ -853,6 +859,28 @@ pgc_mediamix: power-domain@10 {
- 							 <&clk IMX8MP_CLK_MEDIA_APB_ROOT>;
- 					};
+ #ifndef ATH12K_CE_H
+@@ -119,7 +119,7 @@ struct ath12k_ce_ring {
+ 	/* Host address space */
+ 	void *base_addr_owner_space_unaligned;
+ 	/* CE address space */
+-	u32 base_addr_ce_space_unaligned;
++	dma_addr_t base_addr_ce_space_unaligned;
  
-+					pgc_vpu_g1: power-domain@11 {
-+						#power-domain-cells = <0>;
-+						power-domains = <&pgc_vpumix>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPU_G1>;
-+						clocks = <&clk IMX8MP_CLK_VPU_G1_ROOT>;
-+					};
-+
-+					pgc_vpu_g2: power-domain@12 {
-+						#power-domain-cells = <0>;
-+						power-domains = <&pgc_vpumix>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPU_G2>;
-+						clocks = <&clk IMX8MP_CLK_VPU_G2_ROOT>;
-+
-+					};
-+
-+					pgc_vpu_vc8000e: power-domain@13 {
-+						#power-domain-cells = <0>;
-+						power-domains = <&pgc_vpumix>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPU_VC8000E>;
-+						clocks = <&clk IMX8MP_CLK_VPU_VC8KE_ROOT>;
-+					};
-+
- 					pgc_hdmimix: power-domain@14 {
- 						#power-domain-cells = <0>;
- 						reg = <IMX8MP_POWER_DOMAIN_HDMIMIX>;
-@@ -890,33 +918,6 @@ pgc_ispdwp: power-domain@18 {
- 						reg = <IMX8MP_POWER_DOMAIN_MEDIAMIX_ISPDWP>;
- 						clocks = <&clk IMX8MP_CLK_MEDIA_ISP_ROOT>;
- 					};
--
--					pgc_vpumix: power-domain@19 {
--						#power-domain-cells = <0>;
--						reg = <IMX8MP_POWER_DOMAIN_VPUMIX>;
--						clocks = <&clk IMX8MP_CLK_VPU_ROOT>;
--					};
--
--					pgc_vpu_g1: power-domain@20 {
--						#power-domain-cells = <0>;
--						power-domains = <&pgc_vpumix>;
--						reg = <IMX8MP_POWER_DOMAIN_VPU_G1>;
--						clocks = <&clk IMX8MP_CLK_VPU_G1_ROOT>;
--					};
--
--					pgc_vpu_g2: power-domain@21 {
--						#power-domain-cells = <0>;
--						power-domains = <&pgc_vpumix>;
--						reg = <IMX8MP_POWER_DOMAIN_VPU_G2>;
--						clocks = <&clk IMX8MP_CLK_VPU_G2_ROOT>;
--					};
--
--					pgc_vpu_vc8000e: power-domain@22 {
--						#power-domain-cells = <0>;
--						power-domains = <&pgc_vpumix>;
--						reg = <IMX8MP_POWER_DOMAIN_VPU_VC8000E>;
--						clocks = <&clk IMX8MP_CLK_VPU_VC8KE_ROOT>;
--					};
- 				};
- 			};
- 		};
+ 	/* Actual start of descriptors.
+ 	 * Aligned to descriptor-size boundary.
+@@ -129,7 +129,7 @@ struct ath12k_ce_ring {
+ 	void *base_addr_owner_space;
+ 
+ 	/* CE address space */
+-	u32 base_addr_ce_space;
++	dma_addr_t base_addr_ce_space;
+ 
+ 	/* HAL ring id */
+ 	u32 hal_ring_id;
 -- 
 2.43.0
 
