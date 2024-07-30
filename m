@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CCFD1A6166;
-	Tue, 30 Jul 2024 16:48:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DDD214831F;
+	Tue, 30 Jul 2024 16:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358123; cv=none; b=C0FwcfuUiZp1RRAOs5f0OvHWESCMeT7VBXl7yzi/u2SaBO/P/oQkAYolnmYx+bPeFVfkbF3/OfLmnpOyCX4SbIrO/VuY24yBY7Dlg9sw1mA1a5WTNqnqKPYUBlLuvaTx61jxh6BV12m7Kc6QarT3plxFdtIIWFJjK87r7J/Ql/Y=
+	t=1722358126; cv=none; b=E8/az0P84XN8qGC9txDwQ5NZGcQ03Fu/H73K81cfchuLPbRwxHVKlnKA1QrMeyALByzPXif9TaAOntYUqnh8eEEs8r3xxNQPtTzTBhSZRMjZtM0xNp78ZSxInUFnAXfQ+nrLkp0vkZlSp3U98D4763DQX07F/2UbjKlDQMfMZjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358123; c=relaxed/simple;
-	bh=fkU3gbX66wVHEkMgtsObgYFOETqeawzfdl/5c48QVOk=;
+	s=arc-20240116; t=1722358126; c=relaxed/simple;
+	bh=Mz5BI1bWeg0IVdOPJNVl/fYCrY7dGJZS3i1S5u0dmQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hv9P/Yws7vlMSCanQzf2izldkI7q/XTEO72QC5i3YwO7n9RSDu4AJytZRAuF1NtBAnE9SG7P62xyeseVAjuUHxdEGH3qxc3LPzmbXqa4U7tsoayqlwNOk7L9j5a2No7BAW6fSa0oAhzie+QbvbWpdYW5t9nj9UKCAqfXzDBt/Dc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns8irEWj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VTmXfNazvPspbYEQTucjfxa3RtU1sqZ89dYVSc56+rEUWFG2CTP5/Seq8bJB7SglHTfkrn/SsfyvE3lm2qXf2QbiLyskcHDqo+C+rY7WJvFvk37+Tk8BStEkikH1zfGy2oUkq24Fv26b+8uagy18lXktxMzW/0tKis7CdpaPK08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s8OppjsA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns8irEWj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20C2C32782;
-	Tue, 30 Jul 2024 16:48:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s8OppjsA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4186C32782;
+	Tue, 30 Jul 2024 16:48:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358123;
-	bh=fkU3gbX66wVHEkMgtsObgYFOETqeawzfdl/5c48QVOk=;
+	s=korg; t=1722358126;
+	bh=Mz5BI1bWeg0IVdOPJNVl/fYCrY7dGJZS3i1S5u0dmQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ns8irEWjJOcz9EuKOMQk36uE55RTXCfX/sJwfg2krq1kISsEmwKIQYz1fDVeVbFY5
-	 XU6RRVl6ht8RRtz+V+x40B5qwSUNq1cHrG0qhae3QIdMv+r5X+n9BYhgeN7agvp8WW
-	 k7oPg357rVpZdR485JLEiZSYYVv3jkbkGLleZolg=
+	b=s8OppjsAy3epO9C3fbCaNjr5ph2VENeWIgCRA6vdlsVmeggWfFjXH2fw6+NHgTrx4
+	 q53QRH24QdqhY1BnUZip1Zm7yolLoVIqImHTnyjg0XWuFFpVMOoyVBY/Sr5CmBGS/W
+	 Aq9OHYWg1pt7h9InypbmVKaU3iqbE/Ypr+IayGug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	CK Hu <ck.hu@mediatek.com>,
-	Hsiao Chien Sung <shawn.sung@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 325/809] drm/mediatek: Use 8-bit alpha in ETHDR
-Date: Tue, 30 Jul 2024 17:43:21 +0200
-Message-ID: <20240730151737.441754233@linuxfoundation.org>
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 359/440] drm/amdgpu/sdma5.2: Update wptr registers as well as doorbell
+Date: Tue, 30 Jul 2024 17:49:52 +0200
+Message-ID: <20240730151629.837603794@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +46,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hsiao Chien Sung <shawn.sung@mediatek.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 231c020141cb150a59f5b28379cad82ff7bad899 ]
+commit a03ebf116303e5d13ba9a2b65726b106cb1e96f6 upstream.
 
-9-bit alpha (max=0x100) is designed for special HDR related
-calculation, which should be disabled by default.
-Change the alpha value from 0x100 to 0xff in 8-bit form.
+We seem to have a case where SDMA will sometimes miss a doorbell
+if GFX is entering the powergating state when the doorbell comes in.
+To workaround this, we can update the wptr via MMIO, however,
+this is only safe because we disallow gfxoff in begin_ring() for
+SDMA 5.2 and then allow it again in end_ring().
 
-Fixes: d886c0009bd0 ("drm/mediatek: Add ETHDR support for MT8195")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: CK Hu <ck.hu@mediatek.com>
-Signed-off-by: Hsiao Chien Sung <shawn.sung@mediatek.com>
-Link: https://patchwork.kernel.org/project/dri-devel/patch/20240620-igt-v3-2-a9d62d2e2c7e@mediatek.com/
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Enable this workaround while we are root causing the issue with
+the HW team.
+
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/3440
+Tested-by: Friedrich Vock <friedrich.vock@gmx.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+(cherry picked from commit f2ac52634963fc38e4935e11077b6f7854e5d700)
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_ethdr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_ethdr.c b/drivers/gpu/drm/mediatek/mtk_ethdr.c
-index 156c6ff547e86..d7d16482c9473 100644
---- a/drivers/gpu/drm/mediatek/mtk_ethdr.c
-+++ b/drivers/gpu/drm/mediatek/mtk_ethdr.c
-@@ -50,7 +50,6 @@
- 
- #define MIXER_INX_MODE_BYPASS			0
- #define MIXER_INX_MODE_EVEN_EXTEND		1
--#define DEFAULT_9BIT_ALPHA			0x100
- #define	MIXER_ALPHA_AEN				BIT(8)
- #define	MIXER_ALPHA				0xff
- #define ETHDR_CLK_NUM				13
-@@ -169,7 +168,7 @@ void mtk_ethdr_layer_config(struct device *dev, unsigned int idx,
- 		alpha_con = MIXER_ALPHA_AEN | MIXER_ALPHA;
- 
- 	mtk_mmsys_mixer_in_config(priv->mmsys_dev, idx + 1, alpha_con ? false : true,
--				  DEFAULT_9BIT_ALPHA,
-+				  MIXER_ALPHA,
- 				  pending->x & 1 ? MIXER_INX_MODE_EVEN_EXTEND :
- 				  MIXER_INX_MODE_BYPASS, align_width / 2 - 1, cmdq_pkt);
- 
--- 
-2.43.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
+@@ -241,6 +241,14 @@ static void sdma_v5_2_ring_set_wptr(stru
+ 		DRM_DEBUG("calling WDOORBELL64(0x%08x, 0x%016llx)\n",
+ 				ring->doorbell_index, ring->wptr << 2);
+ 		WDOORBELL64(ring->doorbell_index, ring->wptr << 2);
++		/* SDMA seems to miss doorbells sometimes when powergating kicks in.
++		 * Updating the wptr directly will wake it. This is only safe because
++		 * we disallow gfxoff in begin_use() and then allow it again in end_use().
++		 */
++		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR),
++		       lower_32_bits(ring->wptr << 2));
++		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR_HI),
++		       upper_32_bits(ring->wptr << 2));
+ 	} else {
+ 		DRM_DEBUG("Not using doorbell -- "
+ 				"mmSDMA%i_GFX_RB_WPTR == 0x%08x "
+@@ -1705,6 +1713,10 @@ static void sdma_v5_2_ring_begin_use(str
+ 	 * but it shouldn't hurt for other parts since
+ 	 * this GFXOFF will be disallowed anyway when SDMA is
+ 	 * active, this just makes it explicit.
++	 * sdma_v5_2_ring_set_wptr() takes advantage of this
++	 * to update the wptr because sometimes SDMA seems to miss
++	 * doorbells when entering PG.  If you remove this, update
++	 * sdma_v5_2_ring_set_wptr() as well!
+ 	 */
+ 	amdgpu_gfx_off_ctrl(adev, false);
+ }
 
 
