@@ -1,42 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0870D18A6CF;
-	Tue, 30 Jul 2024 17:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A57A18A6D9;
+	Tue, 30 Jul 2024 17:15:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359707; cv=none; b=j6dJAV2y0rYfJugDmiI73zxjJ9wzGDg5QvpPns7D4Hg6hz+KHTq/g62ij1QxkFQUbj4lkGN4RmcYNpX5tGc4v0S2Sm1SZgdCAv1TllZoy/OTO/yOZVZdHoBzWvyUaS7Y5dicNNOLN/fWWPcq72wBOmaCw8SkoPsBAgMbtnv5WZA=
+	t=1722359710; cv=none; b=SgjrsUmM+mf5TpiCVC4lNhWr7Ojr5eyU8VtDM57UAqX9aaU/Msoab8ctUiy9WYykIAeTcyVE12z+q0iibklvTjuMrpBgLRvHu0+iJlfH/jClsjGMO+N+0FrhN8PfJt8M4MjHBH4e6+gx2HSq7wQaTTnEcWmYwhZHU6wa684svkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359707; c=relaxed/simple;
-	bh=ju0Ln5311yDUyrK/T2+aeAI54W0efmKz6kYuIvTjFRw=;
+	s=arc-20240116; t=1722359710; c=relaxed/simple;
+	bh=FRvHyH+a19ySFVQRsj8nRj5aGcMASmcUepwXwQblZ8Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhvRRTi1ti6jcwRNQmXdaYO2lGvutKOYEl5n88mhW3EQT9d4JRD9r73Kt7LT/kuecmsQrMkWfVocWLd+gzMhz6GIEsEZInrQupwL9qyJ88FsLqXzeiTeDRKnQOY0vx5GqIMcTB+yemgfCSUA1RiRUler0MfzpugiIk9JDMr99zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Azxb5xfm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZtIhqRCN4YYwv4QR1W6G2Ex4UfJilAcGFB0JkNa6gCEcgoSTgsLi2Jed1IVtEYi0CeOqDlt7C1I0IUxkaAcblNlIEY+521cihfmbP2GCdPurdDxxPA6RNhy7zolrMLV4QcX3v7Ri0Es5QFCXkAuiWDxXAODMO8QRxbaogRLoqr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AmnqEd7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Azxb5xfm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE72C32782;
-	Tue, 30 Jul 2024 17:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AmnqEd7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C666C32782;
+	Tue, 30 Jul 2024 17:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359706;
-	bh=ju0Ln5311yDUyrK/T2+aeAI54W0efmKz6kYuIvTjFRw=;
+	s=korg; t=1722359709;
+	bh=FRvHyH+a19ySFVQRsj8nRj5aGcMASmcUepwXwQblZ8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Azxb5xfmRHPtXNqcjvRG8bNBeDXxqs+t9h7xErCpp18jT6rCA7BBG9xz+qQM5cdcs
-	 9ozddM/SSOu8140T9E7BlmBCCb4siBsh6bMlImc6uy2LeDCoccVnK+vMdfhyhkYfkh
-	 RsSuhG8/3U2Jt5m18GkvVchtfti77z6N/KjUYvZI=
+	b=0AmnqEd7JmgxLfik+zsAxWIgf2xQUF6MawOzqXFeb7fzThOSil4qFXNWqpiarEduW
+	 c6lHSzaR0HAEivxAh0cIpPCarUHol5/D5qUgJeFauH8BaNRINb2Yy5UFgR5EcKf7JU
+	 jMNzgBkRf5LTNMhlz2yFsSmsHUWOp+ukUKqOSLyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Kent Overstreet <kent.overstreet@linux.dev>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Sourav Panda <souravpanda@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 525/568] watchdog: rzg2l_wdt: Use pm_runtime_resume_and_get()
-Date: Tue, 30 Jul 2024 17:50:32 +0200
-Message-ID: <20240730151700.679991387@linuxfoundation.org>
+Subject: [PATCH 6.10 522/809] alloc_tag: fix page_ext_get/page_ext_put sequence during page splitting
+Date: Tue, 30 Jul 2024 17:46:38 +0200
+Message-ID: <20240730151745.356260946@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,71 +52,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Suren Baghdasaryan <surenb@google.com>
 
-[ Upstream commit f0ba0fcdd19943809b1a7f760f77f6673c6aa7f7 ]
+[ Upstream commit 6ab42fe21c84d72da752923b4bd7075344f4a362 ]
 
-pm_runtime_get_sync() may return with error. In case it returns with error
-dev->power.usage_count needs to be decremented. pm_runtime_resume_and_get()
-takes care of this. Thus use it.
+pgalloc_tag_sub() might call page_ext_put() using a page different from
+the one used in page_ext_get() call.  This does not pose an issue since
+page_ext_put() ignores this parameter as long as it's non-NULL but
+technically this is wrong.  Fix it by storing the original page used in
+page_ext_get() and passing it to page_ext_put().
 
-Along with it the rzg2l_wdt_set_timeout() function was updated to
-propagate the result of rzg2l_wdt_start() to its caller.
-
-Fixes: 2cbc5cd0b55f ("watchdog: Add Watchdog Timer driver for RZ/G2L")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240531065723.1085423-4-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Link: https://lkml.kernel.org/r/20240711220457.1751071-3-surenb@google.com
+Fixes: be25d1d4e822 ("mm: create new codetag references during page splitting")
+Signed-off-by: Suren Baghdasaryan <surenb@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Kent Overstreet <kent.overstreet@linux.dev>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Sourav Panda <souravpanda@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rzg2l_wdt.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ include/linux/pgalloc_tag.h | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/watchdog/rzg2l_wdt.c b/drivers/watchdog/rzg2l_wdt.c
-index 1741f98ca67c5..d87d4f50180c5 100644
---- a/drivers/watchdog/rzg2l_wdt.c
-+++ b/drivers/watchdog/rzg2l_wdt.c
-@@ -123,8 +123,11 @@ static void rzg2l_wdt_init_timeout(struct watchdog_device *wdev)
- static int rzg2l_wdt_start(struct watchdog_device *wdev)
+diff --git a/include/linux/pgalloc_tag.h b/include/linux/pgalloc_tag.h
+index acb1e9ce79815..18cd0c0c73d93 100644
+--- a/include/linux/pgalloc_tag.h
++++ b/include/linux/pgalloc_tag.h
+@@ -71,6 +71,7 @@ static inline void pgalloc_tag_sub(struct page *page, unsigned int nr)
+ static inline void pgalloc_tag_split(struct page *page, unsigned int nr)
  {
- 	struct rzg2l_wdt_priv *priv = watchdog_get_drvdata(wdev);
-+	int ret;
+ 	int i;
++	struct page_ext *first_page_ext;
+ 	struct page_ext *page_ext;
+ 	union codetag_ref *ref;
+ 	struct alloc_tag *tag;
+@@ -78,7 +79,7 @@ static inline void pgalloc_tag_split(struct page *page, unsigned int nr)
+ 	if (!mem_alloc_profiling_enabled())
+ 		return;
  
--	pm_runtime_get_sync(wdev->parent);
-+	ret = pm_runtime_resume_and_get(wdev->parent);
-+	if (ret)
-+		return ret;
+-	page_ext = page_ext_get(page);
++	first_page_ext = page_ext = page_ext_get(page);
+ 	if (unlikely(!page_ext))
+ 		return;
  
- 	/* Initialize time out */
- 	rzg2l_wdt_init_timeout(wdev);
-@@ -150,6 +153,8 @@ static int rzg2l_wdt_stop(struct watchdog_device *wdev)
- 
- static int rzg2l_wdt_set_timeout(struct watchdog_device *wdev, unsigned int timeout)
- {
-+	int ret = 0;
-+
- 	wdev->timeout = timeout;
- 
- 	/*
-@@ -159,10 +164,10 @@ static int rzg2l_wdt_set_timeout(struct watchdog_device *wdev, unsigned int time
- 	 */
- 	if (watchdog_active(wdev)) {
- 		rzg2l_wdt_stop(wdev);
--		rzg2l_wdt_start(wdev);
-+		ret = rzg2l_wdt_start(wdev);
+@@ -94,7 +95,7 @@ static inline void pgalloc_tag_split(struct page *page, unsigned int nr)
+ 		page_ext = page_ext_next(page_ext);
  	}
- 
--	return 0;
-+	return ret;
+ out:
+-	page_ext_put(page_ext);
++	page_ext_put(first_page_ext);
  }
  
- static int rzg2l_wdt_restart(struct watchdog_device *wdev,
+ static inline struct alloc_tag *pgalloc_tag_get(struct page *page)
 -- 
 2.43.0
 
