@@ -1,40 +1,56 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF3D1922C9;
-	Tue, 30 Jul 2024 23:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF13190489
+	for <patches@lists.linux.dev>; Tue, 30 Jul 2024 23:52:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722382683; cv=none; b=cKvd9B1zx+2MHRUVayiEv6fWEdHS+Q9XRbJ4p8zINcekzESSxstJEDT2//51aGxm2f7DHtgXUctBEdQDqWW5SPOlxNNRIOshdc8hWe6iIjpV8ZE0VpsGRbqLN1e7jHRResDdVcnzdsfTjKmZsegxBMMQGSh3VYTbZ0/sHOOCBV8=
+	t=1722383550; cv=none; b=n/7PYG1iGL+4AIarij0hwqqRHb6/C2yVTlzoHIATd7tUxIAWsj4gkRJ5d7JCwwmxCnNq9biZfYZrTVeq3p9DReQnd6X5r1+rl4lhgN2sjLYZ2ECKYShcKlMhXt1GYRBD1BZQZsCmeJ4OqJQ+MG5ZteIbpCjiXKMNh6EQPJcLjjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722382683; c=relaxed/simple;
-	bh=pfGOhwlGmouFtMJ0LMMKY43IxW6am2yU3qWY1OWUPmA=;
-	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
-	 In-Reply-To:Content-Type; b=SExvWRL4s87lE9bVYI+f6W99Tp4162s1PRl3yBxzR2mhqgne2/gUg+8DBuo83RKqX7RDbjDgu0lhoVn4qePC1HusLu4DhfazO1CaymDLRMzWFYOFBiQx2BeTMD4Hbf1h/C22+3D4CmCSaatTMk0GwiaOXhPU4srCvoPkhFLn510=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b=LK+65/V1; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1722383550; c=relaxed/simple;
+	bh=vWR7eaB2ziX0DQZ+eFOVqHJGrdk55GJujcwPPE799oY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=g89pClvqu1ALmbLYAXQdIie4sI2Jod/UOldxYpDhS9qRehIMfIGb9agNt4++vdB6TnkI0625h98NW8s7DXJxYLD/Hbl4EzPuNCBYvztAr7yPaSXANRXktKEQ72wnStj/Lw+g9nf5Nq6PSGL71/mLIkHqXtYinXnBeZBKzsf9toQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org; spf=pass smtp.mailfrom=linuxfoundation.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxEBbb2L; arc=none smtp.client-ip=209.85.166.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linuxfoundation.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=frank.scheiner@web.de header.b="LK+65/V1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1722382657; x=1722987457; i=frank.scheiner@web.de;
-	bh=pfGOhwlGmouFtMJ0LMMKY43IxW6am2yU3qWY1OWUPmA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
-	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=LK+65/V1L0pD4HHTDDGP8oMAoHIrKGenItafE4PyYSGtPvbteB4+zOXt2L6qtRHi
-	 BGqvxqF9HcHVkFZ1IE7ElWJcscdGp2N2GkT8446OL4zwQzfZ0gtuebVW1+o26GUXs
-	 6oxBpLoqMAKwa6JCzEhPMo4MSxOEGcmiQAntvI6KiqTh1e1UUV7jUkXy/KDEuaFqG
-	 KdhUIj3bT97CwVz22lorYNuDMW+i7AfweyPIKlcC2rTkDp7j+5qe954ybNo/IHgKg
-	 /yvHrc3GRXoP3coaR/N1S4Fopy9xzLAz6UvCqjB9pwDFxp2YMdWKZZGdGGbqL8/F7
-	 bttn9lIkLOtjl/F+0A==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.30] ([79.200.213.131]) by smtp.web.de (mrweb106
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MWi9q-1sjoN63neS-00WTOJ; Wed, 31
- Jul 2024 01:37:37 +0200
-Message-ID: <017486e3-2132-44a0-ade8-94647de78cef@web.de>
-Date: Wed, 31 Jul 2024 01:37:34 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxEBbb2L"
+Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-396d327b05cso1234195ab.1
+        for <patches@lists.linux.dev>; Tue, 30 Jul 2024 16:52:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google; t=1722383548; x=1722988348; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=vS2WcqLfwwuILiFNO1YcUTH9wMYaCwcHDsqOO6vbtSQ=;
+        b=GxEBbb2LZm0ZBIDRYfg7SLohuiDQ5HgWtoXQERzNwUG+Sosx/QYeu1G5EE5H3Ffoxo
+         XxYieC9CzP8mlzSiGyaZcXKrU1LEeonYBuwCQzl/l8awK6eiM61Dt/NWqb3/mEsHGyrp
+         b8DSqFH3gqNitsO+y4spPKtRADzThDm+fTL+w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722383548; x=1722988348;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=vS2WcqLfwwuILiFNO1YcUTH9wMYaCwcHDsqOO6vbtSQ=;
+        b=gBEvSxuEJodSfp5kS4KXmRmsNUDaJBEFZlQRaeivQwk44CsOl6ZMOsacbpRINk0NfD
+         g91AWeL2lwJThToWfNdTZqMmka7cQEkgiZToMX6JjU1iatcQXIfE8VRxgRvOFjeEH6g2
+         8Zteqg8Q7mYsDQQVFrFbbAY/CdKdbytXTJBFsxGias8XEZ5HVmqHJrJyHjakXfLs1obf
+         49+cE+OSaXnjduLQ6KbIGxrHcGmElq4y29Xwd5IdVBIV6GXgFprz1Ycti31IVC6yMCtY
+         7osHCbsL4fnCjX3I79aaa67XS53a0Y3ZDLY/UpEDqEabzS14I+/7yP750zRYjt7H+gkp
+         b0uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXZFqqxliAE3etHdP+kyS5TvzixO7JYBnvYeeeZFWvIk3jt3LbXf4mETlVKxoXBdl6i+QuwoIoi@lists.linux.dev
+X-Gm-Message-State: AOJu0Yx9j1akz20aDqtItkqrpc+buxRJYWFrBvtr+94+MXy/swaiAYt6
+	34I0CuDjpND+madS/domI70FvIlmamSGZwEV5NnrIaZqspksmZPRJE+AJqg/xUo=
+X-Google-Smtp-Source: AGHT+IGX3WJ0TMHz/80Kr8J8XRAJeVloO4pdMttS6ct5idJVS8UQy6Bnk9x2cGMv+tLMdMuWwyxNgw==
+X-Received: by 2002:a05:6e02:2185:b0:39a:e9a1:92a6 with SMTP id e9e14a558f8ab-39ae9a197a0mr98874205ab.4.1722383547949;
+        Tue, 30 Jul 2024 16:52:27 -0700 (PDT)
+Received: from [192.168.1.128] ([38.175.170.29])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-39b0b51ee4fsm5841605ab.28.2024.07.30.16.52.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 30 Jul 2024 16:52:27 -0700 (PDT)
+Message-ID: <29aa906b-a026-46ca-83a9-43d0e8d6e779@linuxfoundation.org>
+Date: Tue, 30 Jul 2024 17:52:26 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,51 +58,39 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: skhan@linuxfoundation.org
+Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc1 review
+To: Frank Scheiner <frank.scheiner@web.de>
 Cc: akpm@linux-foundation.org, allen.lkml@gmail.com, broonie@kernel.org,
  conor@kernel.org, f.fainelli@gmail.com, gregkh@linuxfoundation.org,
  jonathanh@nvidia.com, linux-kernel@vger.kernel.org, linux@roeck-us.net,
  lkft-triage@lists.linaro.org, patches@kernelci.org, patches@lists.linux.dev,
  pavel@denx.de, rwarsow@gmx.de, shuah@kernel.org, srw@sladewatkins.net,
  stable@vger.kernel.org, sudipm.mukherjee@gmail.com,
- torvalds@linux-foundation.org
+ torvalds@linux-foundation.org, Shuah Khan <skhan@linuxfoundation.org>
 References: <061886f7-c5ec-419b-8505-b57638c5cf31@linuxfoundation.org>
-Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc1 review
+ <017486e3-2132-44a0-ade8-94647de78cef@web.de>
 Content-Language: en-US
-From: Frank Scheiner <frank.scheiner@web.de>
-In-Reply-To: <061886f7-c5ec-419b-8505-b57638c5cf31@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <017486e3-2132-44a0-ade8-94647de78cef@web.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:2dTZdmSWRU/x4dv0xlpSz/d6Dbza/593i4QpMsNA+iJ/2HOu3mF
- Pd6cnDKpBXwT1zHTyiInUyjQGgaJUZGc+EivPfVMd2OLIsWzB3N8vRsUzLQhz2LUNlSErs6
- Lb2YD6GZb92lLvt2BOq6KlU+6QdKKQpt2XUTv2Ycq8c2mhe2pwr7Pp3T+FagTnWMKa5YgSu
- dDlw7TNaZXyhxES/3i1vg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:1+j7zSTl8Vk=;M/4QAP+AGMFNfHB+Ko0N2nOnH5B
- BEY/TTkKCzO1a3q/vOVkPg5hXEjmj5C/fEqpF+W2RbJ+pLcw62sKCi+mVo03MGiGeLXMFWzE4
- oDyiqn1OpXEMkXcLCL1draoeC/nRs+UsBmF92Kq1M6oqqs4G1/oX2Pefn7w/8IPKTDQ/dqC6F
- elnuKRL0PpofHTR7Mo0y3pIWGm1oLGYcJ4ZTz3ttBYThEmvnu3BfgSJPDIE94nf29XUPDpuWL
- lpjhZ3ucCNWCdTO0nLr7c6dmJNN7c34YLjchSPHoOqOjpsOhXfMva6dCVQvvVUPf4ffoRza3l
- 15TxQnZTx2UfdCmnvVnqsTF2lrnmxwMAGzrR9n4Yl+Rq3jCg/dv1xiFW9Z6n9YK0hSM5TCDiR
- b1KMeoLZsTqZt97tOqNlfvddcMMqx421N/hQadlKh9rE8/49WgiV/14NgMZsy0jqSjDGdeKyF
- KBBqYl0TbYmZPHg5Ibny3sSTejDw+xizqAxXaVCDQGQ0Ofocy4LCzZh1fUFiE0TQgoDdIjTp+
- UnGYoSz5nEHA40G3I0fwwJoQLYRbdjyXQFVZdQnULIuCFuq7jMPa+1YJkGmsm996KSEkfPubf
- b7FeN/ZV3hSRM/ow04QzRgxlU0HqKyfk16zfOOCtIiyR8uOq1OvV0//DPm3us290MGwb0JGmX
- OpWsxDYCmMw25VkcYsvhKhnvusDxceIBgH7GT8j+DhyahnOmU0sq/j4+kihI5QivFQg3WnmaK
- DaiyTSavg8LI9Zfu0QmxW6M1obwfM+SUdAHcOIrgPiw/invPJcPHcEusy2AiwwzMoYFcEtLP1
- jHvQfoeI/rQyDu3A3F1vWOlIQxD8I10VdjtQQLAWZt99E=
+Content-Transfer-Encoding: 7bit
 
-Hi,
+On 7/30/24 17:37, Frank Scheiner wrote:
+> Hi,
+> 
+> could be the same issue as for me, see [1] for details.
+> 
+> [1]:
+> https://lore.kernel.org/stable/de6f52bb-c670-4e03-9ce1-b4ee9b981686@web.de/
+> 
+> Does applying 6259151c04d4e0085e00d2dcb471ebdd1778e72e from mainline
+> (adapt hunk #2 to cleanly apply) help in your case, too, or do you maybe
+> detected a different issue?
+> 
 
-could be the same issue as for me, see [1] for details.
+Thank you for the tip. I will try this first to see if this fixes the problem
+for me.
 
-[1]:
-https://lore.kernel.org/stable/de6f52bb-c670-4e03-9ce1-b4ee9b981686@web.de=
-/
+thanks,
+-- Shuah
 
-Does applying 6259151c04d4e0085e00d2dcb471ebdd1778e72e from mainline
-(adapt hunk #2 to cleanly apply) help in your case, too, or do you maybe
-detected a different issue?
-
-Cheers,
-Frank
