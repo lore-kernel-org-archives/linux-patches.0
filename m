@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239251448FA;
-	Tue, 30 Jul 2024 16:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3541A1A6166;
+	Tue, 30 Jul 2024 16:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357975; cv=none; b=aJSlsuKxIvo14qhe1iIHBMOF22cHkz6GHiO7muiVjHrGe2hfU4i181LK327R+aCC0EZkMW3kiUHRcdaxQhd7kZ20Ba0NeDl+MrWH5LaCoXDFQ1yhurp1anotrfB6KAuxTEefGGee4kHZ4Xo4pzIo2egpyNiJPyzHxAtcaJVGqA0=
+	t=1722357978; cv=none; b=SpYFNIus3Ztejq6+/5Q0phA5JCnU/lW70QamozuUFRceMtqO3Uzn/8j1ZUOIR7EZixRetkYVbuLoQakLAcenBVp+IjmaN+LDBCYoLRnhZJEKAoWXbR7wUsJbNx7M9cItZxYZVBArRC0hQ45GZmqa5J3UKol4qQ8brUumGFx3Mr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357975; c=relaxed/simple;
-	bh=x5BM1vmpqTYx8QdHs80E+yOUOJDI1XkskKTWQRR8nnI=;
+	s=arc-20240116; t=1722357978; c=relaxed/simple;
+	bh=0UFDIz3WOiPqwmy43XbC2CY6xa/rDqMwbHvw5qH3Ag0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cigiFyNF09SHY0g2qvMs7AFO6YhVr7B0WMhQ7bOkTUt31ClOcvPZ00NSkJPfLxIv+IpiRdToO4lw+MtCVIt6+VtxFh2Hwe76uv90dgrqGj3RLag/WAliwKkGNpPq23wjJDedTAjdHmSsv+VJ7hRoaSKsoOIFB5C+hN3reRTasck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UecQh91i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z0w9WQ4ubqfY9E2U6IDQ5x/nDqxmZDwRXLM9e6YaHyKUCBrBX5h4CpVQUGxxgL0l4x8U1kLUZ6GmWELbprdL8LNI5E1143Uk//7rz8yjByEB0Tgr8oFaJmw+5dPoadwUO45IUAtGo1/2eJ6ltJU8JCSdt2DPx1+OQ7bjrz38Sw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3kZRozA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UecQh91i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945E4C32782;
-	Tue, 30 Jul 2024 16:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3kZRozA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF41C32782;
+	Tue, 30 Jul 2024 16:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357975;
-	bh=x5BM1vmpqTYx8QdHs80E+yOUOJDI1XkskKTWQRR8nnI=;
+	s=korg; t=1722357978;
+	bh=0UFDIz3WOiPqwmy43XbC2CY6xa/rDqMwbHvw5qH3Ag0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UecQh91iWQW02yw0ywy7Uy23KGLmZhmbIcmCwec0Wu3e+n26kNk7gXpLsN1/uzs70
-	 cGMe5pYsFNqVTrIegc5QudfWqAhgw2I4wakw9JLsdjJi74h1RVwlkGQlEzVzCqZhOT
-	 PrXK4l7N7ljaO8Nx/MYc2c6/r0lVDlkdG6P43KwA=
+	b=k3kZRozASgM6xt72AAP8SjLHoulp/40xmH5mx+bbOm1Uo7SEMsxHT2G2KaKeElEiE
+	 NNusugyvTM5gdPgyjTuVeL+z3kS4ulZKrYRkHpdXNUwXoUTRj3cezvyWCeaK8WcOUY
+	 6xVPvYyLHpWrkh0lqT4rROqQWL9GHf6J+rC2tkDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>,
-	Adam Ford <aford173@gmail.com>
-Subject: [PATCH 6.10 311/809] media: i2c: imx219: fix msr access command sequence
-Date: Tue, 30 Jul 2024 17:43:07 +0200
-Message-ID: <20240730151736.880755814@linuxfoundation.org>
+	Joy Chakraborty <joychakr@google.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 345/440] rtc: cmos: Fix return value of nvmem callbacks
+Date: Tue, 30 Jul 2024 17:49:38 +0200
+Message-ID: <20240730151629.288341896@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,63 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Joy Chakraborty <joychakr@google.com>
 
-[ Upstream commit 3cdc776e0a5f1784c3ae5d3371b64215c228bf1f ]
+commit 1c184baccf0d5e2ef4cc1562261d0e48508a1c2b upstream.
 
-It was reported to me that the imx219 didn't work on one of our
-development kits partly because the access sequence is incorrect.
-The datasheet I could find [1] for this camera has the access sequence:
-Seq. No. Address (Hex) data
-1        30EB          05
-2        30EB          0C
-3        300A          FF
-4        300B          FF
-5        30EB          05
-6        30EB          09
+Read/write callbacks registered with nvmem core expect 0 to be returned
+on success and a negative value to be returned on failure.
 
-but the driver swaps the first two elements. Laurent pointed out on IRC
-that the original code used the correct sequence for 1920x1080 but the
-current sequence for 3280x2464 and 1640x1232. During refactoring of the
-init sequence the current order was used for all formats.
+cmos_nvram_read()/cmos_nvram_write() currently return the number of
+bytes read or written, fix to return 0 on success and -EIO incase number
+of bytes requested was not read or written.
 
-Switch to using the documented sequence.
-
-Link: https://www.opensourceinstruments.com/Electronics/Data/IMX219PQ.pdf [1]
-Fixes: 8508455961d5 ("media: i2c: imx219: Split common registers from mode tables")
-Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Tested-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Tested-by: Adam Ford <aford173@gmail.com>  #imx8mp-beacon-kit
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8b5b7958fd1c ("rtc: cmos: use generic nvmem")
+Cc: stable@vger.kernel.org
+Signed-off-by: Joy Chakraborty <joychakr@google.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240612083635.1253039-1-joychakr@google.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/i2c/imx219.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
-index 51ebf5453fceb..e78a80b2bb2e4 100644
---- a/drivers/media/i2c/imx219.c
-+++ b/drivers/media/i2c/imx219.c
-@@ -162,8 +162,8 @@ static const struct cci_reg_sequence imx219_common_regs[] = {
- 	{ IMX219_REG_MODE_SELECT, 0x00 },	/* Mode Select */
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -643,11 +643,10 @@ static int cmos_nvram_read(void *priv, u
+ 			   size_t count)
+ {
+ 	unsigned char *buf = val;
+-	int	retval;
  
- 	/* To Access Addresses 3000-5fff, send the following commands */
--	{ CCI_REG8(0x30eb), 0x0c },
- 	{ CCI_REG8(0x30eb), 0x05 },
-+	{ CCI_REG8(0x30eb), 0x0c },
- 	{ CCI_REG8(0x300a), 0xff },
- 	{ CCI_REG8(0x300b), 0xff },
- 	{ CCI_REG8(0x30eb), 0x05 },
--- 
-2.43.0
-
+ 	off += NVRAM_OFFSET;
+ 	spin_lock_irq(&rtc_lock);
+-	for (retval = 0; count; count--, off++, retval++) {
++	for (; count; count--, off++) {
+ 		if (off < 128)
+ 			*buf++ = CMOS_READ(off);
+ 		else if (can_bank2)
+@@ -657,7 +656,7 @@ static int cmos_nvram_read(void *priv, u
+ 	}
+ 	spin_unlock_irq(&rtc_lock);
+ 
+-	return retval;
++	return count ? -EIO : 0;
+ }
+ 
+ static int cmos_nvram_write(void *priv, unsigned int off, void *val,
+@@ -665,7 +664,6 @@ static int cmos_nvram_write(void *priv,
+ {
+ 	struct cmos_rtc	*cmos = priv;
+ 	unsigned char	*buf = val;
+-	int		retval;
+ 
+ 	/* NOTE:  on at least PCs and Ataris, the boot firmware uses a
+ 	 * checksum on part of the NVRAM data.  That's currently ignored
+@@ -674,7 +672,7 @@ static int cmos_nvram_write(void *priv,
+ 	 */
+ 	off += NVRAM_OFFSET;
+ 	spin_lock_irq(&rtc_lock);
+-	for (retval = 0; count; count--, off++, retval++) {
++	for (; count; count--, off++) {
+ 		/* don't trash RTC registers */
+ 		if (off == cmos->day_alrm
+ 				|| off == cmos->mon_alrm
+@@ -689,7 +687,7 @@ static int cmos_nvram_write(void *priv,
+ 	}
+ 	spin_unlock_irq(&rtc_lock);
+ 
+-	return retval;
++	return count ? -EIO : 0;
+ }
+ 
+ /*----------------------------------------------------------------*/
 
 
