@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F35D3DABFC;
-	Tue, 30 Jul 2024 16:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2774183CC2;
+	Tue, 30 Jul 2024 16:01:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355310; cv=none; b=Yl1wgcpdDAmoAvlpRu05rOnMux9I6GHCLLDgXa1ppSHP1i7hsNl7oN+FD3DzS1lxcuboEWo0A1Ir6c8+jd5wfGlZ5krYUJ5JmvDHACpZ8j3Vc33t6MLGiKLeeFM2EqCQpe2zD9WhBaD/zaEQBMKSLGBTHyEenpY0uJK+try2WBI=
+	t=1722355313; cv=none; b=qYLUWqGu7gKhOZmowiq8Mielul67fahg+qmKAG+60H34cIUnX8sdnNGY3eNUbE/by5lga7/v5xXNIeOBxUS271y1JaZyTb0DtHPtEexT6A0L5nVrNT5t5ZGUnN/XiN2Y89W69NHzIE5Mck+ykP1tvW8pIc26/Lh4qKcJidDP32A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355310; c=relaxed/simple;
-	bh=Wt33U5aWzpWLkBS0+7dIA8vnZGuLuoYLJPSBZxExBsw=;
+	s=arc-20240116; t=1722355313; c=relaxed/simple;
+	bh=Fr+9JNDhUK0vkNRnyOvLTydcZ7QQyWKa7KNuqe4lKRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A6x3ZD+ufzo/FEWTaM+Q6PuQo8VlnfT4CGGLXw/Kditak80o83n1jhDBF+l0+38r7M8H9LJquxWdJrN2sN0pNGzPqzynnHK/Mlx2Uy6xnDQ4UuyAdAMRMKIZbSA8NxC2Bl7tbBCV4bVIVcNOhSis+RoRJ0MlJkhi3TRNWHS3veQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhfxnGm0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i7x0HnYxKTKN2rZhzpw0lPZCkJ9xP/b31qt0guzAIKf1ilcAs4fxwpbLXsH1BwcvRwGv1lJ+NeLbtE1D+GLP5MpbLg3r7yOkIUgsBA6zMtro5a4PYWnNpo/NEeyiEbMM/KLU2InlpuoJfvn/6Twnj3bYuc9/oJIKOuDAFfm/UA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BVDN9u6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhfxnGm0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E75C32782;
-	Tue, 30 Jul 2024 16:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BVDN9u6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE38C4AF0C;
+	Tue, 30 Jul 2024 16:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355310;
-	bh=Wt33U5aWzpWLkBS0+7dIA8vnZGuLuoYLJPSBZxExBsw=;
+	s=korg; t=1722355313;
+	bh=Fr+9JNDhUK0vkNRnyOvLTydcZ7QQyWKa7KNuqe4lKRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MhfxnGm0GN8gyT2ZNWHpP2Eqq24pl5IwD1ghdu7YdcKMsQwfdufrGXKCdmq278LYA
-	 oDYhB2Y6f7InIRPTHoWitwgpRI3H3M8oVQQOSbozwIuZWUgegoRQnhMv4/W08Z+zBN
-	 XfaEWFK6g/e5XvaTsOFWmrwk9fnvJtgJHngPrUlA=
+	b=BVDN9u6wMetQPGlQyhoUrJHQ7t7oKDSrxnb965rbmXNCTVQNFNAT3exHmLgOCelNF
+	 +8bQEz8H2rGKJ0YHNM1FwzwwU7xuujMQ9DLohDa+pqUoegjLGaLiuHBYa5D0I8L/uK
+	 HijZqceKuBgI15dAvZjWb2VfafYciyYEmHoAIM5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nicolas=20Pomar=C3=A8de?= <npomarede@corp.free.fr>,
-	Christian Zietz <czietz@gmx.net>,
-	Eero Tamminen <oak@helsinkinet.fi>,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Samasth Norway Ananda <samasth.norway.ananda@oracle.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/440] m68k: atari: Fix TT bootup freeze / unexpected (SCU) interrupt messages
-Date: Tue, 30 Jul 2024 17:45:05 +0200
-Message-ID: <20240730151618.577262263@linuxfoundation.org>
+Subject: [PATCH 6.1 082/440] wifi: brcmsmac: LCN PHY code is used for BCM4313 2G-only device
+Date: Tue, 30 Jul 2024 17:45:15 +0200
+Message-ID: <20240730151618.962521127@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -48,59 +46,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eero Tamminen <oak@helsinkinet.fi>
+From: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
 
-[ Upstream commit f70065a9fd988983b2c693631b801f25a615fc04 ]
+[ Upstream commit c636fa85feb450ca414a10010ed05361a73c93a6 ]
 
-Avoid freeze on Atari TT / MegaSTe boot with continuous messages of:
+The band_idx variable in the function wlc_lcnphy_tx_iqlo_cal() will
+never be set to 1 as BCM4313 is the only device for which the LCN PHY
+code is used. This is a 2G-only device.
 
-	unexpected interrupt from 112
-
-Which was due to VBL interrupt being enabled in SCU sys mask, but there
-being no handler for that any more.
-
-(Bug and fix were first verified on real Atari TT HW by Christian,
- this patch later on in Hatari emulator.)
-
-Fixes: 1fa0b29f3a43f9dd ("fbdev: Kill Atari vblank cursor blinking")
-Reported-by: Nicolas Pomarède <npomarede@corp.free.fr>
-Closes: https://listengine.tuxfamily.org/lists.tuxfamily.org/hatari-devel/2024/06/msg00016.html
-Closes: https://lore.kernel.org/all/9aa793d7-82ed-4fbd-bce5-60810d8a9119@helsinkinet.fi
-Tested-by: Christian Zietz <czietz@gmx.net>
-Signed-off-by: Eero Tamminen <oak@helsinkinet.fi>
-Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/20240624144901.5236-1-oak@helsinkinet.fi
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: 5b435de0d786 ("net: wireless: add brcm80211 drivers")
+Signed-off-by: Samasth Norway Ananda <samasth.norway.ananda@oracle.com>
+Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://msgid.link/20240509231037.2014109-1-samasth.norway.ananda@oracle.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/atari/ataints.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ .../broadcom/brcm80211/brcmsmac/phy/phy_lcn.c  | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/m68k/atari/ataints.c b/arch/m68k/atari/ataints.c
-index 56f02ea2c248d..715d1e0d973e6 100644
---- a/arch/m68k/atari/ataints.c
-+++ b/arch/m68k/atari/ataints.c
-@@ -302,11 +302,7 @@ void __init atari_init_IRQ(void)
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+index 7717eb85a1db6..47c0e8e429e54 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmsmac/phy/phy_lcn.c
+@@ -2567,7 +2567,6 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
  
- 	if (ATARIHW_PRESENT(SCU)) {
- 		/* init the SCU if present */
--		tt_scu.sys_mask = 0x10;		/* enable VBL (for the cursor) and
--									 * disable HSYNC interrupts (who
--									 * needs them?)  MFP and SCC are
--									 * enabled in VME mask
--									 */
-+		tt_scu.sys_mask = 0x0;		/* disable all interrupts */
- 		tt_scu.vme_mask = 0x60;		/* enable MFP and SCC ints */
- 	} else {
- 		/* If no SCU and no Hades, the HSYNC interrupt needs to be
+ 	struct lcnphy_txgains cal_gains, temp_gains;
+ 	u16 hash;
+-	u8 band_idx;
+ 	int j;
+ 	u16 ncorr_override[5];
+ 	u16 syst_coeffs[] = { 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+@@ -2599,6 +2598,9 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
+ 	u16 *values_to_save;
+ 	struct brcms_phy_lcnphy *pi_lcn = pi->u.pi_lcnphy;
+ 
++	if (WARN_ON(CHSPEC_IS5G(pi->radio_chanspec)))
++		return;
++
+ 	values_to_save = kmalloc_array(20, sizeof(u16), GFP_ATOMIC);
+ 	if (NULL == values_to_save)
+ 		return;
+@@ -2662,20 +2664,18 @@ wlc_lcnphy_tx_iqlo_cal(struct brcms_phy *pi,
+ 	hash = (target_gains->gm_gain << 8) |
+ 	       (target_gains->pga_gain << 4) | (target_gains->pad_gain);
+ 
+-	band_idx = (CHSPEC_IS5G(pi->radio_chanspec) ? 1 : 0);
+-
+ 	cal_gains = *target_gains;
+ 	memset(ncorr_override, 0, sizeof(ncorr_override));
+-	for (j = 0; j < iqcal_gainparams_numgains_lcnphy[band_idx]; j++) {
+-		if (hash == tbl_iqcal_gainparams_lcnphy[band_idx][j][0]) {
++	for (j = 0; j < iqcal_gainparams_numgains_lcnphy[0]; j++) {
++		if (hash == tbl_iqcal_gainparams_lcnphy[0][j][0]) {
+ 			cal_gains.gm_gain =
+-				tbl_iqcal_gainparams_lcnphy[band_idx][j][1];
++				tbl_iqcal_gainparams_lcnphy[0][j][1];
+ 			cal_gains.pga_gain =
+-				tbl_iqcal_gainparams_lcnphy[band_idx][j][2];
++				tbl_iqcal_gainparams_lcnphy[0][j][2];
+ 			cal_gains.pad_gain =
+-				tbl_iqcal_gainparams_lcnphy[band_idx][j][3];
++				tbl_iqcal_gainparams_lcnphy[0][j][3];
+ 			memcpy(ncorr_override,
+-			       &tbl_iqcal_gainparams_lcnphy[band_idx][j][3],
++			       &tbl_iqcal_gainparams_lcnphy[0][j][3],
+ 			       sizeof(ncorr_override));
+ 			break;
+ 		}
 -- 
 2.43.0
 
