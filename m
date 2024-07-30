@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C7421A619A;
-	Tue, 30 Jul 2024 16:30:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E361A617E;
+	Tue, 30 Jul 2024 16:30:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357040; cv=none; b=UzAtgEDmNWtL0bUM/U6uDrMCmLN1a1htr/3/Ht8PHoPFs/BynTUoDTGVoaPkX0kl9MnD3Jxdv4rwaHCjBYxev8G8iLMMxrwX5eidCELJFUCmiv+ye3cM/sldWVI9L2zrT82Fy2OiyK90dJfsRon+j8gvAa2nBdof3lhCe8H8KlQ=
+	t=1722357043; cv=none; b=hhulNSJzYYVaJqBPCVvP3zSAl++iq1Q/jgtV0xjQtbC0TipGciPLlsnaPxd7LXhUN8SI85OdWZym3IHDYtr36g2VHWv9uNVYco4trfGCvxxIuMuoSVpjv6PpIx1r60gnNkn1bNLvZIwQXVql5mbawYGbX8OB4dSBwmYfPEWX7jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357040; c=relaxed/simple;
-	bh=Eunncti6CP74i9Nnfg1clnoMKkBIL8nYKDHyE6NDBQE=;
+	s=arc-20240116; t=1722357043; c=relaxed/simple;
+	bh=Mv+eBAAQKvyvtzAEgm6ji71tC1/XLdxV7xz5FwxOb4g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aD7cxstPpPPg+KIp3d8SBpvdh9TH9PxGGl0D4KKc3MOiuj82OGlhczii+8mWSNWLuo+d3IXKN/Pn9Rgc91+QR5v490F1TVJMUh+2CYy5vPSn97vMAXCG970QxVDCh4Ny4NxiRwrXg7MuTmKT+nKLbSrRToOtEfQLA/iYKQAKIgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5IoiKiU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYFKUlJOrhvvASLkoS4Nwm3WEFSq9CqTjqwjUqwk4b5IrO8tuBhkd/rITNZF6sVFTsErRqC0P/dpVfWCHGRPlLHUcr1Z1Xwmy9TvF/cL1MOphOP+TsA5DTivGPEfR40PcdbrElHFlZ2QBKLKOTtjq5jy/fgVhrkktquFVzMl1Bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fx37oIHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5IoiKiU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3A3C32782;
-	Tue, 30 Jul 2024 16:30:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fx37oIHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BD41C32782;
+	Tue, 30 Jul 2024 16:30:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357040;
-	bh=Eunncti6CP74i9Nnfg1clnoMKkBIL8nYKDHyE6NDBQE=;
+	s=korg; t=1722357043;
+	bh=Mv+eBAAQKvyvtzAEgm6ji71tC1/XLdxV7xz5FwxOb4g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5IoiKiUNcUgDnMwlI6H+QhpSuY9WqVqpXcWbuv4UY2K8RtaMtDlx4ok5GNL5+npt
-	 zpjDAXWQYcQXfev0IXRNKd4J9BEehOUcOIKfOC0ADkVQXHS4C8/sj5TcTRmkzuIp0O
-	 mZGr1Ea7jTWMWsu62x+zkyQaNOp0l3o0qNGdP9ms=
+	b=fx37oIHniYxw1PnN4K9GzJv6I44RoAkJg/airQ8zok8qLStHHAgbPAGTxnEvsrm10
+	 OES6kJL9s9qqVrxvnzcRnJrETPNEAoaiGmmJEAfgkR6JqYjBjsT8PlA9KTX8ZvBpnb
+	 PkCmz1tYnDYUa6bJcE2wMHhbDnIyopGdxUpNcCQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
+	Aleksandr Burakov <a.burakov@rosalinux.ru>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 212/568] media: renesas: vsp1: Store RPF partition configuration per RPF instance
-Date: Tue, 30 Jul 2024 17:45:19 +0200
-Message-ID: <20240730151648.159336103@linuxfoundation.org>
+Subject: [PATCH 6.6 200/568] saa7134: Unchecked i2c_transfer function result fixed
+Date: Tue, 30 Jul 2024 17:45:07 +0200
+Message-ID: <20240730151647.695047289@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -51,63 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Aleksandr Burakov <a.burakov@rosalinux.ru>
 
-[ Upstream commit a213bc09b1025c771ee722ee341af1d84375db8a ]
+[ Upstream commit 9d8683b3fd93f0e378f24dc3d9604e5d7d3e0a17 ]
 
-The vsp1_partition structure stores the RPF partition configuration in a
-single field for all RPF instances, while each RPF can have its own
-configuration. Fix it by storing the configuration separately for each
-RPF instance.
+Return value of function 'i2c_transfer' is not checked that
+may cause undefined behaviour.
 
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Fixes: ab45e8585182 ("media: v4l: vsp1: Allow entities to participate in the partition algorithm")
-Reviewed-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 2cf36ac44730 ("[PATCH] v4l: 656: added support for the following cards")
+Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/renesas/vsp1/vsp1_pipe.h | 2 +-
- drivers/media/platform/renesas/vsp1/vsp1_rpf.c  | 8 +++++---
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/media/pci/saa7134/saa7134-dvb.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/renesas/vsp1/vsp1_pipe.h b/drivers/media/platform/renesas/vsp1/vsp1_pipe.h
-index 674b5748d929e..85ecd53cda495 100644
---- a/drivers/media/platform/renesas/vsp1/vsp1_pipe.h
-+++ b/drivers/media/platform/renesas/vsp1/vsp1_pipe.h
-@@ -73,7 +73,7 @@ struct vsp1_partition_window {
-  * @wpf: The WPF partition window configuration
-  */
- struct vsp1_partition {
--	struct vsp1_partition_window rpf;
-+	struct vsp1_partition_window rpf[VSP1_MAX_RPF];
- 	struct vsp1_partition_window uds_sink;
- 	struct vsp1_partition_window uds_source;
- 	struct vsp1_partition_window sru;
-diff --git a/drivers/media/platform/renesas/vsp1/vsp1_rpf.c b/drivers/media/platform/renesas/vsp1/vsp1_rpf.c
-index ea12c3f12c92a..78b6cefc5a019 100644
---- a/drivers/media/platform/renesas/vsp1/vsp1_rpf.c
-+++ b/drivers/media/platform/renesas/vsp1/vsp1_rpf.c
-@@ -315,8 +315,8 @@ static void rpf_configure_partition(struct vsp1_entity *entity,
- 	 * 'width' need to be adjusted.
- 	 */
- 	if (pipe->partitions > 1) {
--		crop.width = pipe->partition->rpf.width;
--		crop.left += pipe->partition->rpf.left;
-+		crop.width = pipe->partition->rpf[rpf->entity.index].width;
-+		crop.left += pipe->partition->rpf[rpf->entity.index].left;
- 	}
- 
- 	if (pipe->interlaced) {
-@@ -371,7 +371,9 @@ static void rpf_partition(struct vsp1_entity *entity,
- 			  unsigned int partition_idx,
- 			  struct vsp1_partition_window *window)
- {
--	partition->rpf = *window;
-+	struct vsp1_rwpf *rpf = to_rwpf(&entity->subdev);
+diff --git a/drivers/media/pci/saa7134/saa7134-dvb.c b/drivers/media/pci/saa7134/saa7134-dvb.c
+index 9c6cfef03331d..a66df6adfaad8 100644
+--- a/drivers/media/pci/saa7134/saa7134-dvb.c
++++ b/drivers/media/pci/saa7134/saa7134-dvb.c
+@@ -466,7 +466,9 @@ static int philips_europa_tuner_sleep(struct dvb_frontend *fe)
+ 	/* switch the board to analog mode */
+ 	if (fe->ops.i2c_gate_ctrl)
+ 		fe->ops.i2c_gate_ctrl(fe, 1);
+-	i2c_transfer(&dev->i2c_adap, &analog_msg, 1);
++	if (i2c_transfer(&dev->i2c_adap, &analog_msg, 1) != 1)
++		return -EIO;
 +
-+	partition->rpf[rpf->entity.index] = *window;
+ 	return 0;
  }
  
- static const struct vsp1_entity_operations rpf_entity_ops = {
+@@ -1018,7 +1020,9 @@ static int md8800_set_voltage2(struct dvb_frontend *fe,
+ 	else
+ 		wbuf[1] = rbuf & 0xef;
+ 	msg[0].len = 2;
+-	i2c_transfer(&dev->i2c_adap, msg, 1);
++	if (i2c_transfer(&dev->i2c_adap, msg, 1) != 1)
++		return -EIO;
++
+ 	return 0;
+ }
+ 
 -- 
 2.43.0
 
