@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0FC418B476;
-	Tue, 30 Jul 2024 16:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20B73DAC15;
+	Tue, 30 Jul 2024 16:06:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355588; cv=none; b=tqZBXA6uxs1zAIJLh1hrcwUbm6xP6a0i98hhzVXjnTl6NIeBDieZIUJ1C/iDlDG9tLvlp/V1gku+ta0X1k732nHPbtHnMUHz151wTX8UszxktLR+ckHBfSQ6ch4aznS70R3Zg8bHb9NZyBlF66/avdzaMip/1QkAvaruqLHhIeQ=
+	t=1722355591; cv=none; b=Z/7Nei0s3YoDQD3usOh4CsCMGGhqeHuxqoeuRii+a/PwMXr+mhQKbbcF6R36YPX2e7HAc2mOih+MU3zyX/vCtEJZLM/LqZjT1aapIECxOmpQxtvbaLgF6ane4jwnsfWB2Sg0bNfPnlPbAmwcb1200m4eHU9amctVg98tUVvMrV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355588; c=relaxed/simple;
-	bh=9sZOelVl99EQebGZw6iiHfmW/bXVFykuS4hzfnAJ3IY=;
+	s=arc-20240116; t=1722355591; c=relaxed/simple;
+	bh=4B/x6oOvg44ANdWndCWA0XpnqZh+kwHazcPDQHLflSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KfEvajtJLF3ehv3BviioiQFr/7dmSUSCY/uHYktqn4/FkIoBaKPuE/hnPNP+2miFSKreIMjQCMzeC9xdQzgtCU4iwL0pyXKiiB69YLN1WTNfLYD/QsrTLTU4CAXvlzfcrlwUtMrjNexlBVrl/LH1d8BIauycBU+TEFXBQ8JWQmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMpgz7LX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GMkxTWsygVAxSE0fkw+GQbBSfvEC3Me5svN/hcAoq5Rex41EwO0hks3NseSWzM+rSjXYI2HdSoY24nojoxF0rCVWRFbVhGkxAIESYsyiTN7hTbg8CGIaWY7padLLPTJ1WFihNz2Hna8OvcOObUOSHCnRGe59imLcY6uMT7+CNPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IeGV+9Rq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMpgz7LX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C060AC32782;
-	Tue, 30 Jul 2024 16:06:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IeGV+9Rq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FABC32782;
+	Tue, 30 Jul 2024 16:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355588;
-	bh=9sZOelVl99EQebGZw6iiHfmW/bXVFykuS4hzfnAJ3IY=;
+	s=korg; t=1722355591;
+	bh=4B/x6oOvg44ANdWndCWA0XpnqZh+kwHazcPDQHLflSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aMpgz7LXVHlHJ7yYoruZ9E+zBlf8QJKlv4Hh4mzmSJbRJZq7gShN12t051+DDIGie
-	 uOZE+JGbCm/4n+hHRIjXlXJw9dpeWfAmBYr3JftYnxzFslFPYeblRL+DcriBEhtHpl
-	 ePJRlPxUtbhzO/8rtjWLiLe9f3wi2NgDzbvxEhFI=
+	b=IeGV+9Rq/bTHHFC7daZhGz1KiKHdV5NYv+dx28W1Mz3mcLyhdcrKSw/nRbFZXDhyA
+	 Ry/6QrGKQLbIPcXS1zsvEKgT4PK0kv7LPAQNQ6Uge9qmdAp+fqPSYvMPl0YgEaDn1z
+	 tjFe2bXAsGrJXKjWUVCcd+Saw6YBnBOzQ5s5nVcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 069/809] arm64: dts: qcom: qrb4210-rb2: make L9A always-on
-Date: Tue, 30 Jul 2024 17:39:05 +0200
-Message-ID: <20240730151727.367743567@linuxfoundation.org>
+Subject: [PATCH 6.10 054/809] arm64: dts: qcom: sdm850-lenovo-yoga-c630: fix IPA firmware path
+Date: Tue, 30 Jul 2024 17:38:50 +0200
+Message-ID: <20240730151726.781083598@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -55,37 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit d6c6b85bf5582bbe2efefa9a083178b5f7eef439 ]
+[ Upstream commit cae4c862d8b2d7debb07e6d831e079520163ac4f ]
 
-The L9A regulator is used to further control voltage regulators on the
-board. It can be used to disable VBAT_mains, 1.8V, 3.3V, 5V rails). Make
-sure that is stays always on to prevent undervolting of these volage
-rails.
+Specify firmware path for the IPA network controller on the Lenovo Yoga
+C630 laptop. Without this property IPA tries to load firmware from the
+default location, which likely will fail.
 
-Fixes: 8d58a8c0d930 ("arm64: dts: qcom: Add base qrb4210-rb2 board dts")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fixes: 2e01e0c21459 ("arm64: dts: qcom: sdm850-yoga: Enable IPA")
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240605-rb2-l9a-aon-v2-1-0d493d0d107c@linaro.org
+Link: https://lore.kernel.org/r/20240527-yoga-ipa-fw-v1-1-99ac1f5db283@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-index cb8a62714a302..1c7de7f2db791 100644
---- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
-@@ -414,6 +414,8 @@ vreg_l9a_1p8: l9 {
- 			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <1800000>;
- 			regulator-allow-set-load;
-+			regulator-always-on;
-+			regulator-boot-on;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 47dc42f6e936c..8e30f8cc0916c 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -494,6 +494,7 @@ ecsh: hid@5c {
+ &ipa {
+ 	qcom,gsi-loader = "self";
+ 	memory-region = <&ipa_fw_mem>;
++	firmware-name = "qcom/sdm850/LENOVO/81JL/ipa_fws.elf";
+ 	status = "okay";
+ };
  
- 		vreg_l10a_1p8: l10 {
 -- 
 2.43.0
 
