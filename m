@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B726D1A76A5;
-	Tue, 30 Jul 2024 17:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C91041A76A5;
+	Tue, 30 Jul 2024 17:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360662; cv=none; b=txa+9u39ATpjKh6xaabeLyBHnWQO3RGxXhdHxdmgrTYk5KgAhPOKRr6Jm0ULdG0Qup4yLCzUtZ8Woc8TAu8csXpJddqYKp7HuONrhD5DIgStaF9/9MiHdhwRF5zmTMehQoLI/rN1hwd0FCk4+RIOpr3h7UvJn12ruvvUwUho9ls=
+	t=1722360665; cv=none; b=V7QqsipUfDkeQmey1uUPAVHcjJDEKl2oERHVJBy6sF4lq1pL8Wx/EDT3fY9zoVe5RH1VF5X9MjURQ5oLl+3dgqn37A3vEg7q7GsGedgLJfmIz+cN5mDwe4NGX2Lyx5O5HEr0kNVYL530hmwagSqz/bmAZ1z9CXXzAR261rjAI3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360662; c=relaxed/simple;
-	bh=cYS5dOs7NyhPfpXSn47fAIiFXSlv639fmw/BNv80JmU=;
+	s=arc-20240116; t=1722360665; c=relaxed/simple;
+	bh=yf3E1id5Qyf0iOJSM0yLNd7IbbEPt/dpJC2RGR6mj74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YnWWTpcsTZC22fB1BN6LHWQDT7l2SBx7cIfaONArX/e1u1NOwAjhRY7eXcFbL8EAMVbetp0IbMoNcKrHgNUjk0FkNPTPzh555DkoG5yt8TG0mUFNhwwLoeA3D1RkHPicpDR6WBX2yUbtceA3f+zzJtN0ah//c51XZeqTserEgoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GzToabFx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgEnvTrASpOZDu1J24DfO+blldqeu+aOt4n5ynqlMtLmPU4rs6TxzzvneOu0l+a+GEuQtujKQI6HB86yYwZydliS7YM8w2CbToIKJyca+DM2YJAEGTEVLBZWWCI0M9stYDylsaFunl8HWQW6LYlNW2IjToFtV2+EfauEnJnB0Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DQd8DLWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GzToabFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5CCC32782;
-	Tue, 30 Jul 2024 17:31:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DQd8DLWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C42DC4AF0C;
+	Tue, 30 Jul 2024 17:31:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360662;
-	bh=cYS5dOs7NyhPfpXSn47fAIiFXSlv639fmw/BNv80JmU=;
+	s=korg; t=1722360665;
+	bh=yf3E1id5Qyf0iOJSM0yLNd7IbbEPt/dpJC2RGR6mj74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzToabFxWCg0jbsapRqdI6554OoHV/dpBAmQM5/V+egD/uwwR7kYvlJHSsfwgUK2J
-	 u2ttp+RCERKt6aSKxECQ+WBTuuFwOU4S0HbLSOjBOldXxnS5IZCkmxUNBG0ztynzGX
-	 s2f/X5fXWJijSu6mJFWGhOwUGaOqgU89GKPWC7k8=
+	b=DQd8DLWSgSBsyGIlfCBbJAGQ2hvE5vYOudFvXWWUCv+jh4o9Vaw/SKPD6TJjVKp4r
+	 tqyntlGQ6ybDxOimT2DT94156eTc0/Nw+ZadatdZD+ca9GUCfKMN29E6NH8OG6EOoC
+	 JIRXZo/IYdqONdBsF7Dipz5jm3SJbzlbJ97FDO0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Machata <petrm@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Breno Leitao <leitao@debian.org>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 769/809] net: nexthop: Initialize all fields in dumped nexthops
-Date: Tue, 30 Jul 2024 17:50:45 +0200
-Message-ID: <20240730151755.339330892@linuxfoundation.org>
+Subject: [PATCH 6.10 770/809] net: mediatek: Fix potential NULL pointer dereference in dummy net_device handling
+Date: Tue, 30 Jul 2024 17:50:46 +0200
+Message-ID: <20240730151755.377799711@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,53 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Petr Machata <petrm@nvidia.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 6d745cd0e9720282cd291d36b9db528aea18add2 ]
+[ Upstream commit 16f3a28cf5f876a7f3550d8f4c870a7b41bcfaef ]
 
-struct nexthop_grp contains two reserved fields that are not initialized by
-nla_put_nh_group(), and carry garbage. This can be observed e.g. with
-strace (edited for clarity):
+Move the freeing of the dummy net_device from mtk_free_dev() to
+mtk_remove().
 
-    # ip nexthop add id 1 dev lo
-    # ip nexthop add id 101 group 1
-    # strace -e recvmsg ip nexthop get id 101
-    ...
-    recvmsg(... [{nla_len=12, nla_type=NHA_GROUP},
-                 [{id=1, weight=0, resvd1=0x69, resvd2=0x67}]] ...) = 52
+Previously, if alloc_netdev_dummy() failed in mtk_probe(),
+eth->dummy_dev would be NULL. The error path would then call
+mtk_free_dev(), which in turn called free_netdev() assuming dummy_dev
+was allocated (but it was not), potentially causing a NULL pointer
+dereference.
 
-The fields are reserved and therefore not currently used. But as they are, they
-leak kernel memory, and the fact they are not just zero complicates repurposing
-of the fields for new ends. Initialize the full structure.
+By moving free_netdev() to mtk_remove(), we ensure it's only called when
+mtk_probe() has succeeded and dummy_dev is fully allocated. This
+addresses a potential NULL pointer dereference detected by Smatch[1].
 
-Fixes: 430a049190de ("nexthop: Add support for nexthop groups")
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b209bd6d0bff ("net: mediatek: mtk_eth_sock: allocate dummy net_device dynamically")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/all/4160f4e0-cbef-4a22-8b5d-42c4d399e1f7@stanley.mountain/ [1]
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20240724080524.2734499-1-leitao@debian.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/nexthop.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
-index 535856b0f0edc..6b9787ee86017 100644
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -888,9 +888,10 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nexthop *nh,
- 
- 	p = nla_data(nla);
- 	for (i = 0; i < nhg->num_nh; ++i) {
--		p->id = nhg->nh_entries[i].nh->id;
--		p->weight = nhg->nh_entries[i].weight - 1;
--		p += 1;
-+		*p++ = (struct nexthop_grp) {
-+			.id = nhg->nh_entries[i].nh->id,
-+			.weight = nhg->nh_entries[i].weight - 1,
-+		};
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index c84ce54a84a00..c11bb0f0b8c47 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -4198,8 +4198,6 @@ static int mtk_free_dev(struct mtk_eth *eth)
+ 		metadata_dst_free(eth->dsa_meta[i]);
  	}
  
- 	if (nhg->resilient && nla_put_nh_group_res(skb, nhg))
+-	free_netdev(eth->dummy_dev);
+-
+ 	return 0;
+ }
+ 
+@@ -5048,6 +5046,7 @@ static void mtk_remove(struct platform_device *pdev)
+ 	netif_napi_del(&eth->tx_napi);
+ 	netif_napi_del(&eth->rx_napi);
+ 	mtk_cleanup(eth);
++	free_netdev(eth->dummy_dev);
+ 	mtk_mdio_cleanup(eth);
+ }
+ 
 -- 
 2.43.0
 
