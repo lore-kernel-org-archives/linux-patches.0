@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DEC1A6160;
-	Tue, 30 Jul 2024 16:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A021D183CDB;
+	Tue, 30 Jul 2024 16:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356531; cv=none; b=lzo4HPphLXphZCRvLQInwg5G8FMWnr1RmDUmFanuM+2ifVElKJ59XLhqz59PrYs035AA/9f4JoveoXMmv7sZi+qMs/WeCtYiFARkbDqM9cVUPjk8jC8Zqu8AckL4buCJMzeCNqgR+2HjC2iipamn1dPzX/g9X+16O0lrQ/fyCIE=
+	t=1722356534; cv=none; b=FdCvS6ErX3Ozpxb1gPbsg7Z5l4y4dsM5o/YcZqs/hFQBZNPS053JauXAuWhxqCDpseMlteY2nbvxJB+BXEms1m5kyKDn7xpAV34Jw8hHlilAUbM+tz9Op6jxyfZTwLVcdvH2jgWZsawMZbGWaDZcwpAqy6V7s31xiYL1W6mwCtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356531; c=relaxed/simple;
-	bh=L/VXOMoOkPEekA4YSFDdIAorA4LJreezFUfPgxyhEjc=;
+	s=arc-20240116; t=1722356534; c=relaxed/simple;
+	bh=WMd0wKByz8DEspVXXWO23q1aSu2eiHRvs2ITxFEuWvA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1RWn/TzBE4w9ew+NlJbGF8zDxJDt1ysR7BKXM+QNMFgzku87YUGhXpHYPXX1Z1uZd8nfZ1eqWEFkslLzAy6tAsdAvm7+YZ973sbDURHkVsE/xqgp74tGwUfxhOlw9KhjfTKFUlAuaDKPDD4oOOzdRPlj/XmIiz5L1txne4LlDM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BKy00EAt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxnM5t+0zvc+qaRS+NC4WE5reBB3N5ZYFQVIf9P+mqMSzET8wR4eL/kZMnA4JER9AKxkasLZAnsfS1UA7G+ATd7JjF7YT1XRg7GGG3TKLJuAyQQiRYyehW6mxtOI5gLV38RtgjWhmRmfwsOELR+z6AYRWFWsHuX1vTz3TT/EcXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAOhF2hn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BKy00EAt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00DD2C32782;
-	Tue, 30 Jul 2024 16:22:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAOhF2hn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1394AC4AF0A;
+	Tue, 30 Jul 2024 16:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356531;
-	bh=L/VXOMoOkPEekA4YSFDdIAorA4LJreezFUfPgxyhEjc=;
+	s=korg; t=1722356534;
+	bh=WMd0wKByz8DEspVXXWO23q1aSu2eiHRvs2ITxFEuWvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKy00EAtaNcktMkfQPPxIrVAYIbPGa3YMc/xiLF6zDnFUJvr/5k2dxvsILo8WPQO0
-	 WnSl63dquHsJQRx24R/3PHe+jYnY0YQzPFQ/8QG3EFdtHyPX0Bd29UBgJL+6DU8wFJ
-	 KEgnvQ/sjTvqxPBr4RCb9lt8svkCdYjCCnng00tw=
+	b=cAOhF2hn7yH4s7FjKiihK3wjad7Rhu7dkkdjaVz1kBMhAjfGtVa8r19RKTh59KR7p
+	 X4ZYPFouqDKiSfyY6yMaZYkrJWo4byhPdOp2SfSUcE0Ac2JFdTkR7gJSUo5X/H2xAS
+	 EkpVzIqM/zp35l4X5dJpyVBjZzFso+b8GXeGV8n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaroslav Isakov <yaroslav.isakov@gmail.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
+	Or Har-Toov <ohartoov@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 133/568] wifi: ath11k: fix wrong handling of CCMP256 and GCMP ciphers
-Date: Tue, 30 Jul 2024 17:44:00 +0200
-Message-ID: <20240730151645.068877639@linuxfoundation.org>
+Subject: [PATCH 6.1 200/440] RDMA/mlx5: Use sq timestamp as QP timestamp when RoCE is disabled
+Date: Tue, 30 Jul 2024 17:47:13 +0200
+Message-ID: <20240730151623.684340692@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,135 +50,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Or Har-Toov <ohartoov@nvidia.com>
 
-[ Upstream commit d2b0ca38d362ebf16ca79cd7f309d5bb8b581deb ]
+[ Upstream commit 0c5275bf75ec3708d95654195ae4ed80d946d088 ]
 
-Currently for CCMP256, GCMP128 and GCMP256 ciphers, in ath11k_install_key()
-IEEE80211_KEY_FLAG_GENERATE_IV_MGMT is not set. And in ath11k_mac_mgmt_tx_wmi()
-a length of IEEE80211_CCMP_MIC_LEN is reserved for all ciphers.
+When creating a QP, one of the attributes is TS format (timestamp).
+In some devices, we have a limitation that all QPs should have the same
+ts_format. The ts_format is chosen based on the device's capability.
+The qp_ts_format cap resides under the RoCE caps table, and the
+cap will be 0 when RoCE is disabled. So when RoCE is disabled, the
+value that should be queried is sq_ts_format under HCA caps.
 
-This results in unexpected management frame drop in case either of above 3 ciphers
-is used. The reason is, without IEEE80211_KEY_FLAG_GENERATE_IV_MGMT set, mac80211
-will not generate CCMP/GCMP headers in frame for ath11k. Also MIC length reserved
-is wrong. Such frame is dropped later by hardware:
+Consider the case when the system supports REAL_TIME_TS format (0x2),
+some QPs are created with REAL_TIME_TS as ts_format, and afterwards
+RoCE gets disabled. When trying to construct a new QP, we can't use
+the qp_ts_format, that is queried from the RoCE caps table, Since it
+leads to passing 0x0 (FREE_RUNNING_TS) as the value of the qp_ts_format,
+which is different than the ts_format of the previously allocated
+QPs REAL_TIME_TS format (0x2).
 
-ath11k_pci 0000:5a:00.0: mac tx mgmt frame, buf id 0
-ath11k_pci 0000:5a:00.0: mgmt tx compl ev pdev_id 1, desc_id 0, status 1
+Thus, to resolve this, read the sq_ts_format, which also reflect
+the supported ts format for the QP when RoCE is disabled.
 
->From user point of view, we have observed very low throughput due to this issue:
-action frames are all dropped so ADDBA response from DUT never reaches AP. AP
-can not use aggregation thus throughput is low.
-
-Fix this by setting IEEE80211_KEY_FLAG_GENERATE_IV_MGMT flag and by reserving proper
-MIC length for those ciphers.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Reported-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Tested-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Closes: https://lore.kernel.org/all/CADS+iDX5=JtJr0apAtAQ02WWBxgOFEv8G063vuGYwDTC8AVZaw@mail.gmail.com
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240605014826.22498-1-quic_bqiang@quicinc.com
+Fixes: 4806f1e2fee8 ("net/mlx5: Set QP timestamp mode to default")
+Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
+Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
+Link: https://lore.kernel.org/r/32801966eb767c7fd62b8dea3b63991d5fbfe213.1718554199.git.leon@kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |  3 +--
- drivers/net/wireless/ath/ath11k/dp_rx.h |  3 +++
- drivers/net/wireless/ath/ath11k/mac.c   | 15 +++++++++++----
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ include/linux/mlx5/qp.h | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index 6b21634930efe..b3499f966a9d6 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -1880,8 +1880,7 @@ static void ath11k_dp_rx_h_csum_offload(struct ath11k *ar, struct sk_buff *msdu)
- 			  CHECKSUM_NONE : CHECKSUM_UNNECESSARY;
+diff --git a/include/linux/mlx5/qp.h b/include/linux/mlx5/qp.h
+index ca0eee571ad7b..15e8d7fd3879f 100644
+--- a/include/linux/mlx5/qp.h
++++ b/include/linux/mlx5/qp.h
+@@ -566,9 +566,12 @@ static inline const char *mlx5_qp_state_str(int state)
+ 
+ static inline int mlx5_get_qp_default_ts(struct mlx5_core_dev *dev)
+ {
+-	return !MLX5_CAP_ROCE(dev, qp_ts_format) ?
+-		       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING :
+-		       MLX5_TIMESTAMP_FORMAT_DEFAULT;
++	u8 supported_ts_cap = mlx5_get_roce_state(dev) ?
++			      MLX5_CAP_ROCE(dev, qp_ts_format) :
++			      MLX5_CAP_GEN(dev, sq_ts_format);
++
++	return supported_ts_cap ? MLX5_TIMESTAMP_FORMAT_DEFAULT :
++	       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING;
  }
  
--static int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar,
--				       enum hal_encrypt_type enctype)
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype)
- {
- 	switch (enctype) {
- 	case HAL_ENCRYPT_TYPE_OPEN:
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.h b/drivers/net/wireless/ath/ath11k/dp_rx.h
-index 623da3bf9dc81..c322e30caa968 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.h
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #ifndef ATH11K_DP_RX_H
- #define ATH11K_DP_RX_H
-@@ -95,4 +96,6 @@ int ath11k_peer_rx_frag_setup(struct ath11k *ar, const u8 *peer_mac, int vdev_id
- int ath11k_dp_rx_pktlog_start(struct ath11k_base *ab);
- int ath11k_dp_rx_pktlog_stop(struct ath11k_base *ab, bool stop_timer);
- 
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype);
-+
- #endif /* ATH11K_DP_RX_H */
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 445f59ad1fc08..33f2c189b4d86 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -4130,6 +4130,7 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 
- 	switch (key->cipher) {
- 	case WLAN_CIPHER_SUITE_CCMP:
-+	case WLAN_CIPHER_SUITE_CCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_CCM;
- 		/* TODO: Re-check if flag is valid */
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
-@@ -4139,12 +4140,10 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 		arg.key_txmic_len = 8;
- 		arg.key_rxmic_len = 8;
- 		break;
--	case WLAN_CIPHER_SUITE_CCMP_256:
--		arg.key_cipher = WMI_CIPHER_AES_CCM;
--		break;
- 	case WLAN_CIPHER_SUITE_GCMP:
- 	case WLAN_CIPHER_SUITE_GCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_GCM;
-+		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
- 		break;
- 	default:
- 		ath11k_warn(ar->ab, "cipher %d is not supported\n", key->cipher);
-@@ -6023,7 +6022,10 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- {
- 	struct ath11k_base *ab = ar->ab;
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
-+	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB(skb);
- 	struct ieee80211_tx_info *info;
-+	enum hal_encrypt_type enctype;
-+	unsigned int mic_len;
- 	dma_addr_t paddr;
- 	int buf_id;
- 	int ret;
-@@ -6047,7 +6049,12 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- 		     ieee80211_is_deauth(hdr->frame_control) ||
- 		     ieee80211_is_disassoc(hdr->frame_control)) &&
- 		     ieee80211_has_protected(hdr->frame_control)) {
--			skb_put(skb, IEEE80211_CCMP_MIC_LEN);
-+			if (!(skb_cb->flags & ATH11K_SKB_CIPHER_SET))
-+				ath11k_warn(ab, "WMI management tx frame without ATH11K_SKB_CIPHER_SET");
-+
-+			enctype = ath11k_dp_tx_get_encrypt_type(skb_cb->cipher);
-+			mic_len = ath11k_dp_rx_crypto_mic_len(ar, enctype);
-+			skb_put(skb, mic_len);
- 		}
- 	}
- 
+ #endif /* MLX5_QP_H */
 -- 
 2.43.0
 
