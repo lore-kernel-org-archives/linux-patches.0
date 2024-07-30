@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5348B1A6199;
-	Tue, 30 Jul 2024 16:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FB41A6195;
+	Tue, 30 Jul 2024 16:33:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357184; cv=none; b=GWZNqB1sCGCfUqOQr8N7wxX6IbVbKOoP3LjDIksqjaoxtjAIBx9dK0x/8eUzqv3Mua4ppom54G/9sc5vOeq4uH0rGU72Xma4JK75iuYFgiJIGKzQuAeXW4nb694CJ+D1wAvAsa1f/MJjPckNb7DXZURrWHItYjHND6Z5XhT2FJQ=
+	t=1722357187; cv=none; b=Peru6hVZPhXF+9jQ8KfMr8mUysuTNYMsZove7SLRujbJPLuwIiv0pmCviTwo1+aF8hEvzhtgv8+wA1LQ3oVx5EoIjQZrJC1TI33s/XWcFtvNIHatNloTPpIpA2didm7OzQAb71VhUruVanpDtH+l8MFk/Dz3TRjFZYa3YQIaZTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357184; c=relaxed/simple;
-	bh=NcPfSdRI7wYRSJ2cHMfYcuAh8eR9KLxbe5Uz+F5FnSQ=;
+	s=arc-20240116; t=1722357187; c=relaxed/simple;
+	bh=ibVCS+aHQZzIehd3HxS4C3XV2htWSV4Nn6fUEa9jhTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXZwbvHbdWg0OOmlXkPifeS+IEkZfu1DCBFDMghzT/3vJlafPRu9e0E/XDLuVM1A1VRWEgySfXWiM5lTJrzK2zLML1sCePYX2M2e7YpeRV6g+HULB2H3ouNqEZARyl1HA+qAugHqmWl/+f/ndvyqRTnETlm/RUgIO0D4agsmzOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gkTJSFgR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JpVaUXeN8VZA+/WbG7Td0+9N2u7hw3ZPbK+fbIQ4khHQS48iyJMUwrLl49FOMhPorV3gHSD8Yb8etEJegSSdnbKLjQ+tMLNENCxtL24/sdzO2dOFZvLzp4yB1/N+BHAgsRV9JRMmc+PU26/QEeSGgZzqew7+HTLqRORXXPbTQa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaCdq1eu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gkTJSFgR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8FFC32782;
-	Tue, 30 Jul 2024 16:33:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaCdq1eu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62D3C32782;
+	Tue, 30 Jul 2024 16:33:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357184;
-	bh=NcPfSdRI7wYRSJ2cHMfYcuAh8eR9KLxbe5Uz+F5FnSQ=;
+	s=korg; t=1722357187;
+	bh=ibVCS+aHQZzIehd3HxS4C3XV2htWSV4Nn6fUEa9jhTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkTJSFgRPqBSu+OfIT7vEfRJCErGjalhyE4axIKtbs4DQxm9TDita76Fg2rDYhVPP
-	 nVmQr1iCChkiZBAFPe0KhpQRqREXccT2XePqcma7dawsdiBLarbRkQMG2uFnjfrRy+
-	 1SfeH9KlLyqoSmeuD+Fc8n9SGslSzRkK6JX6RlBw=
+	b=vaCdq1eukNwKwJTdiRo5GJIq7ulOU4Enq76TubuDVTKIaBwHGrDfT2BH8j674dqCD
+	 ZZYO3ikFFooZ0aHDWvFR7gVDk1VrrAsOcidrH1r3QQ76zpv/xO+Ca1lZ5cd8EcyVsI
+	 Oo15BbGHoI/QMST+MyeeA8WpSamDXYAW3azGDOFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Christian Gmeiner <cgmeiner@igalia.com>,
+	Jan Kara <jack@suse.cz>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 227/568] drm/etnaviv: fix DMA direction handling for cached RW buffers
-Date: Tue, 30 Jul 2024 17:45:34 +0200
-Message-ID: <20240730151648.756019523@linuxfoundation.org>
+Subject: [PATCH 6.1 267/440] sbitmap: rewrite sbitmap_find_bit_in_index to reduce repeat code
+Date: Tue, 30 Jul 2024 17:48:20 +0200
+Message-ID: <20240730151626.267645157@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,44 +48,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 58979ad6330a70450ed78837be3095107d022ea9 ]
+[ Upstream commit 08470a98a7d7e32c787b23b87353f13b03c23195 ]
 
-The dma sync operation needs to be done with DMA_BIDIRECTIONAL when
-the BO is prepared for both read and write operations.
+Rewrite sbitmap_find_bit_in_index as following:
+1. Rename sbitmap_find_bit_in_index to sbitmap_find_bit_in_word
+2. Accept "struct sbitmap_word *" directly instead of accepting
+"struct sbitmap *" and "int index" to get "struct sbitmap_word *".
+3. Accept depth/shallow_depth and wrap for __sbitmap_get_word from caller
+to support need of both __sbitmap_get_shallow and __sbitmap_get.
 
-Fixes: a8c21a5451d8 ("drm/etnaviv: add initial etnaviv DRM driver")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
-Reviewed-by: Christian Gmeiner <cgmeiner@igalia.com>
+With helper function sbitmap_find_bit_in_word, we can remove repeat
+code in __sbitmap_get_shallow to find bit considring deferred clear.
+
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Link: https://lore.kernel.org/r/20230116205059.3821738-4-shikemeng@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 72d04bdcf3f7 ("sbitmap: fix io hung due to race on sbitmap_word::cleared")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ lib/sbitmap.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index b5f73502e3dd4..69fccbcd92c62 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -356,9 +356,11 @@ static void *etnaviv_gem_vmap_impl(struct etnaviv_gem_object *obj)
+diff --git a/lib/sbitmap.c b/lib/sbitmap.c
+index b9dd0a0a28f89..b942f2ba9a415 100644
+--- a/lib/sbitmap.c
++++ b/lib/sbitmap.c
+@@ -167,15 +167,16 @@ static int __sbitmap_get_word(unsigned long *word, unsigned long depth,
+ 	return nr;
+ }
  
- static inline enum dma_data_direction etnaviv_op_to_dma_dir(u32 op)
+-static int sbitmap_find_bit_in_index(struct sbitmap *sb, int index,
+-				     unsigned int alloc_hint)
++static int sbitmap_find_bit_in_word(struct sbitmap_word *map,
++				    unsigned int depth,
++				    unsigned int alloc_hint,
++				    bool wrap)
  {
--	if (op & ETNA_PREP_READ)
-+	op &= ETNA_PREP_READ | ETNA_PREP_WRITE;
+-	struct sbitmap_word *map = &sb->map[index];
+ 	int nr;
+ 
+ 	do {
+-		nr = __sbitmap_get_word(&map->word, __map_depth(sb, index),
+-					alloc_hint, !sb->round_robin);
++		nr = __sbitmap_get_word(&map->word, depth,
++					alloc_hint, wrap);
+ 		if (nr != -1)
+ 			break;
+ 		if (!sbitmap_deferred_clear(map))
+@@ -203,7 +204,9 @@ static int __sbitmap_get(struct sbitmap *sb, unsigned int alloc_hint)
+ 		alloc_hint = 0;
+ 
+ 	for (i = 0; i < sb->map_nr; i++) {
+-		nr = sbitmap_find_bit_in_index(sb, index, alloc_hint);
++		nr = sbitmap_find_bit_in_word(&sb->map[index],
++					      __map_depth(sb, index),
++					      alloc_hint, !sb->round_robin);
+ 		if (nr != -1) {
+ 			nr += index << sb->shift;
+ 			break;
+@@ -246,20 +249,17 @@ static int __sbitmap_get_shallow(struct sbitmap *sb,
+ 	alloc_hint = SB_NR_TO_BIT(sb, alloc_hint);
+ 
+ 	for (i = 0; i < sb->map_nr; i++) {
+-again:
+-		nr = __sbitmap_get_word(&sb->map[index].word,
+-					min_t(unsigned int,
+-					      __map_depth(sb, index),
+-					      shallow_depth),
+-					alloc_hint, true);
++		nr = sbitmap_find_bit_in_word(&sb->map[index],
++					      min_t(unsigned int,
++						    __map_depth(sb, index),
++						    shallow_depth),
++					      alloc_hint, true);
 +
-+	if (op == ETNA_PREP_READ)
- 		return DMA_FROM_DEVICE;
--	else if (op & ETNA_PREP_WRITE)
-+	else if (op == ETNA_PREP_WRITE)
- 		return DMA_TO_DEVICE;
- 	else
- 		return DMA_BIDIRECTIONAL;
+ 		if (nr != -1) {
+ 			nr += index << sb->shift;
+ 			break;
+ 		}
+ 
+-		if (sbitmap_deferred_clear(&sb->map[index]))
+-			goto again;
+-
+ 		/* Jump to next index. */
+ 		alloc_hint = 0;
+ 		if (++index >= sb->map_nr)
 -- 
 2.43.0
 
