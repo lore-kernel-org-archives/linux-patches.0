@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5193218801A;
-	Tue, 30 Jul 2024 16:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5C2188013;
+	Tue, 30 Jul 2024 16:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358342; cv=none; b=fEM+SlqxiQqveqe1FYinkUXbPxtmFIj0JeDpu3trmleyHHQ6tMtjmvx4kc66Oh0ix6YttfF/JNtsSAlw0sWpbLvjS7CJbUfQNB057nHk5ijvraQTsUjnea3IqzJTObpFAXhfSZJB1h3Ny3kh2QVbSwp7rXixf1sWyZozZ8eIdTc=
+	t=1722358345; cv=none; b=SKkwbv3cAZjIb1AoHhrBDE2bqZjZzBjAEsbaBqtN5Uv+EQGOG9D+UHAb5ucHoMO+2lCA5dCK9ypmklpBQidzjMwn9Ve2hOdy9KnxOJrKDDH5Xpsuva5pC/E2uIQnwbVSuYiBBxaj46YYkbHaQu0AyE58FyLDFqHpVY7omCFmMuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358342; c=relaxed/simple;
-	bh=UkdqypuN0bnAWiNLEG7p5sepk3nQXUlaeDCqv4FHkJQ=;
+	s=arc-20240116; t=1722358345; c=relaxed/simple;
+	bh=6VDoPMfndl7okxi72wssqNDAO3b2KR+tVaVsomoe0lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G38h2cjsnFkOlgvGu/ocB6edAJgC1I8cnlymQQhMAD8y6g/8v4ayEOJ1MNNWwM83k8MTK4Ixq1e09na3JQnx7T59ZyZuyKDenR5oaDPlfA172w6yLjCI/8JFeTx8ercvqTB6W8cjG0fyZl1dsN4Yxvn+dssPnIrxEp5jnvxSV10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fkqv75Xa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q+kPg7dbzICjSBK1CBHJl1HmhNrUpw2p+9DE41wmiXfvm4bIRipPqTeu2HZCF1ksmVbKVZFq1RRpSTascKId0o2GTDZ5Jdg9lFhvfgVvso3tqbVrdtO5pbBlhutVxMHxznrKzglDz1lqdpiC0zMRGAQbhSbkIEAbTPi/XobOl8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dyHU/LUy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fkqv75Xa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A151C32782;
-	Tue, 30 Jul 2024 16:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dyHU/LUy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C7CC32782;
+	Tue, 30 Jul 2024 16:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358341;
-	bh=UkdqypuN0bnAWiNLEG7p5sepk3nQXUlaeDCqv4FHkJQ=;
+	s=korg; t=1722358345;
+	bh=6VDoPMfndl7okxi72wssqNDAO3b2KR+tVaVsomoe0lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fkqv75XaZF+RxNP4pksVfsUwF/507/dgzHZXcCkqHb7JDc9ZnB5GzH0JkevCBRFdq
-	 JxE1CRBAm+AshyhOlen1jLDXAd9YghaZT52k9AkYpA3kgykMPqjb+infyP4KS5ccji
-	 lYEPr8k5XSRlRrkNnoX5kurLO26f5EeTpBqpYRro=
+	b=dyHU/LUyVGZEfR+T2A0bG4DoMtXIGE96kpH89o+r8hdqqTdOkLxkW+xncbQvGtegD
+	 ASolqDtVJgGa3/fYuXgqGOq5a34AG8psRg656gYf2aqmAMypGaqxF8yHEG7xQUCAOq
+	 /Bt4n5Si4ROfIjpI2TCk5vpI5r2QXuh5JSaAZq78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 378/440] MIPS: Loongson64: Test register availability before use
-Date: Tue, 30 Jul 2024 17:50:11 +0200
-Message-ID: <20240730151630.574488915@linuxfoundation.org>
+	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 353/568] s390/dasd: fix error checks in dasd_copy_pair_store()
+Date: Tue, 30 Jul 2024 17:47:40 +0200
+Message-ID: <20240730151653.664852689@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,91 +46,61 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Carlos López <clopez@suse.de>
 
-commit c04366b1207a036b7de02dfcc1ac7138d3343c9b upstream.
+[ Upstream commit 8e64d2356cbc800b4cd0e3e614797f76bcf0cdb8 ]
 
-Some global register address variable may be missing on
-specific CPU type, test them before use them.
+dasd_add_busid() can return an error via ERR_PTR() if an allocation
+fails. However, two callsites in dasd_copy_pair_store() do not check
+the result, potentially resulting in a NULL pointer dereference. Fix
+this by checking the result with IS_ERR() and returning the error up
+the stack.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a91ff09d39f9b ("s390/dasd: add copy pair setup")
+Signed-off-by: Carlos López <clopez@suse.de>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://lore.kernel.org/r/20240715112434.2111291-3-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/loongson64/smp.c |   23 +++++++++++++++++++++--
- 1 file changed, 21 insertions(+), 2 deletions(-)
+ drivers/s390/block/dasd_devmap.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/mips/loongson64/smp.c
-+++ b/arch/mips/loongson64/smp.c
-@@ -479,12 +479,25 @@ static void loongson3_smp_finish(void)
- static void __init loongson3_smp_setup(void)
- {
- 	int i = 0, num = 0; /* i: physical id, num: logical id */
-+	int max_cpus = 0;
+diff --git a/drivers/s390/block/dasd_devmap.c b/drivers/s390/block/dasd_devmap.c
+index c4e36650c4264..91522dba9fd98 100644
+--- a/drivers/s390/block/dasd_devmap.c
++++ b/drivers/s390/block/dasd_devmap.c
+@@ -2258,13 +2258,19 @@ static ssize_t dasd_copy_pair_store(struct device *dev,
  
- 	init_cpu_possible(cpu_none_mask);
- 
-+	for (i = 0; i < ARRAY_SIZE(smp_group); i++) {
-+		if (!smp_group[i])
-+			break;
-+		max_cpus += loongson_sysconf.cores_per_node;
+ 	/* allocate primary devmap if needed */
+ 	prim_devmap = dasd_find_busid(prim_busid);
+-	if (IS_ERR(prim_devmap))
++	if (IS_ERR(prim_devmap)) {
+ 		prim_devmap = dasd_add_busid(prim_busid, DASD_FEATURE_DEFAULT);
++		if (IS_ERR(prim_devmap))
++			return PTR_ERR(prim_devmap);
 +	}
-+
-+	if (max_cpus < loongson_sysconf.nr_cpus) {
-+		pr_err("SMP Groups are less than the number of CPUs\n");
-+		loongson_sysconf.nr_cpus = max_cpus ? max_cpus : 1;
+ 
+ 	/* allocate secondary devmap if needed */
+ 	sec_devmap = dasd_find_busid(sec_busid);
+-	if (IS_ERR(sec_devmap))
++	if (IS_ERR(sec_devmap)) {
+ 		sec_devmap = dasd_add_busid(sec_busid, DASD_FEATURE_DEFAULT);
++		if (IS_ERR(sec_devmap))
++			return PTR_ERR(sec_devmap);
 +	}
-+
- 	/* For unified kernel, NR_CPUS is the maximum possible value,
- 	 * loongson_sysconf.nr_cpus is the really present value
- 	 */
-+	i = 0;
- 	while (i < loongson_sysconf.nr_cpus) {
- 		if (loongson_sysconf.reserved_cpus_mask & (1<<i)) {
- 			/* Reserved physical CPU cores */
-@@ -505,14 +518,14 @@ static void __init loongson3_smp_setup(v
- 		__cpu_logical_map[num] = -1;
- 		num++;
- 	}
--
- 	csr_ipi_probe();
- 	ipi_set0_regs_init();
- 	ipi_clear0_regs_init();
- 	ipi_status0_regs_init();
- 	ipi_en0_regs_init();
- 	ipi_mailbox_buf_init();
--	ipi_write_enable(0);
-+	if (smp_group[0])
-+		ipi_write_enable(0);
  
- 	cpu_set_core(&cpu_data[0],
- 		     cpu_logical_map(0) % loongson_sysconf.cores_per_package);
-@@ -829,6 +842,9 @@ static int loongson3_disable_clock(unsig
- 	uint64_t core_id = cpu_core(&cpu_data[cpu]);
- 	uint64_t package_id = cpu_data[cpu].package;
- 
-+	if (!loongson_chipcfg[package_id] || !loongson_freqctrl[package_id])
-+		return 0;
-+
- 	if ((read_c0_prid() & PRID_REV_MASK) == PRID_REV_LOONGSON3A_R1) {
- 		LOONGSON_CHIPCFG(package_id) &= ~(1 << (12 + core_id));
- 	} else {
-@@ -843,6 +859,9 @@ static int loongson3_enable_clock(unsign
- 	uint64_t core_id = cpu_core(&cpu_data[cpu]);
- 	uint64_t package_id = cpu_data[cpu].package;
- 
-+	if (!loongson_chipcfg[package_id] || !loongson_freqctrl[package_id])
-+		return 0;
-+
- 	if ((read_c0_prid() & PRID_REV_MASK) == PRID_REV_LOONGSON3A_R1) {
- 		LOONGSON_CHIPCFG(package_id) |= 1 << (12 + core_id);
- 	} else {
+ 	/* setting copy relation is only allowed for offline secondary */
+ 	if (sec_devmap->device)
+-- 
+2.43.0
+
 
 
