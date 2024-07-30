@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A11E18C92B;
-	Tue, 30 Jul 2024 17:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89CCA18C92B;
+	Tue, 30 Jul 2024 17:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359301; cv=none; b=GwtsUdEZFB+hA2Lt/dq7JXHfWiL/sxzB4HovUqzwecMJ2irr4+4ZtN130d0cXdIUwdRfnEFZoNc8rd1SFQemyQdqHnjuHsG64HISpmhnAsXYCmsdX5yTCjgOfm0SrfD9K30eLWNq4PVi6WhRDfSNuZmaN1VHACm1HeDpeqevVoE=
+	t=1722359305; cv=none; b=mX6V28nhq+ta9DXZR3VuH38zyYidwtlwYKY1gjuQqx+ZaPSJECvgdnPTpl3y6VFOeR0XjQkIZa26CRPBL+w39V0rdQxP+N5kUr4eCCMph3bl9uXOI/1j0mxPBg0XR38hhcM/sV+qoZfWfzJnexAMfJ743ZgK08tUoSXRwt5w0ig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359301; c=relaxed/simple;
-	bh=DEwTG81nhJpFxmqTRTihp2rN5tcg3SSrghK7i3o5PT0=;
+	s=arc-20240116; t=1722359305; c=relaxed/simple;
+	bh=JJncERrCrbhl6Nf8rjACeETzC/zzniwBDXP8Rx1CH8g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OFF2kX30I35YEkslJx/RTpchUtcIY/Qh01CbNDlHVhyZJJXgdpeJJabEg8FxtEYTOoyUlkYpfvNs1PdZppjIlcnWH7m62/frL7JYNPycdILuJph6vVTnx99AGPosxnfeL7+0WL36Ht90waB0Ug4JOidJG7uTzTcEcD8XV5UQUs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKwNIpZU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HRjgRqBF9oMmXNfDH+FxEa1qV5Ua9aPCjEES29lZ7gymON6Q27lFnFiL465/1s+A597hzOutkZt0N9tvj24d0uROxto6YeMM2t+FdWtTcGmWTE9oD+lLLqRa8x1GtYeaoH2/7uxyFwRTd39kvm9nRFS0JL79JJqn+Y63IIwJO94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZ69yNVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKwNIpZU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A326C32782;
-	Tue, 30 Jul 2024 17:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZ69yNVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80362C32782;
+	Tue, 30 Jul 2024 17:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359301;
-	bh=DEwTG81nhJpFxmqTRTihp2rN5tcg3SSrghK7i3o5PT0=;
+	s=korg; t=1722359305;
+	bh=JJncERrCrbhl6Nf8rjACeETzC/zzniwBDXP8Rx1CH8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKwNIpZUuLWbiDR4G/Rr//VRHWv925r+nzanJX2NfHuag4MVftWqfIFW0wrKRXW2y
-	 a9kSG098Ajro5v1dX8QQAnVFzuXmbZFh63ovQM+P9cA8tcGOuUztG/ClWgWVe7+9sY
-	 GGXtB7WzFIPsJIrpXxKurFtjRPVwFjYNZMSgqHRY=
+	b=QZ69yNVlmC5+lAISCKznsT00yQP9X3aHTRZ6bUCeqdFVX3x1WUlKjLUtHD0MIxXo2
+	 WIFfcT1WAa/azMS+uXZGJ7ZMYCFfZuZXG56ZadVXwBi208AoSVB4VQRQ6O7dPfGfYa
+	 efjfHqOthH+/lkhydRrMK3cBSUKT4iYpOj7qsjl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Georgi Djakov <quic_c_gdjako@quicinc.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 441/809] iommu/arm-smmu-qcom: Register the TBU driver in qcom_smmu_impl_init
-Date: Tue, 30 Jul 2024 17:45:17 +0200
-Message-ID: <20240730151742.120093637@linuxfoundation.org>
+	syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.6 438/568] f2fs: fix return value of f2fs_convert_inline_inode()
+Date: Tue, 30 Jul 2024 17:49:05 +0200
+Message-ID: <20240730151656.988695260@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,145 +47,62 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Georgi Djakov <quic_c_gdjako@quicinc.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 0b4eeee2876f2b08442eb32081451bf130e01a4c ]
+commit a8eb3de28e7a365690c61161e7a07a4fc7c60bbf upstream.
 
-Currently the TBU driver will only probe when CONFIG_ARM_SMMU_QCOM_DEBUG
-is enabled. The driver not probing would prevent the platform to reach
-sync_state and the system will remain in sub-optimal power consumption
-mode while waiting for all consumer drivers to probe. To address this,
-let's register the TBU driver in qcom_smmu_impl_init(), so that it can
-probe, but still enable its functionality only when the debug option in
-Kconfig is enabled.
+If device is readonly, make f2fs_convert_inline_inode()
+return EROFS instead of zero, otherwise it may trigger
+panic during writeback of inline inode's dirty page as
+below:
 
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Closes: https://lore.kernel.org/r/CAA8EJppcXVu72OSo+OiYEiC1HQjP3qCwKMumOsUhcn6Czj0URg@mail.gmail.com
-Fixes: 414ecb030870 ("iommu/arm-smmu-qcom-debug: Add support for TBUs")
-Signed-off-by: Georgi Djakov <quic_c_gdjako@quicinc.com>
-Link: https://lore.kernel.org/r/20240704010759.507798-1-quic_c_gdjako@quicinc.com
-Signed-off-by: Will Deacon <will@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ f2fs_write_single_data_page+0xbb6/0x1e90 fs/f2fs/data.c:2888
+ f2fs_write_cache_pages fs/f2fs/data.c:3187 [inline]
+ __f2fs_write_data_pages fs/f2fs/data.c:3342 [inline]
+ f2fs_write_data_pages+0x1efe/0x3a90 fs/f2fs/data.c:3369
+ do_writepages+0x359/0x870 mm/page-writeback.c:2634
+ filemap_fdatawrite_wbc+0x125/0x180 mm/filemap.c:397
+ __filemap_fdatawrite_range mm/filemap.c:430 [inline]
+ file_write_and_wait_range+0x1aa/0x290 mm/filemap.c:788
+ f2fs_do_sync_file+0x68a/0x1ae0 fs/f2fs/file.c:276
+ generic_write_sync include/linux/fs.h:2806 [inline]
+ f2fs_file_write_iter+0x7bd/0x24e0 fs/f2fs/file.c:4977
+ call_write_iter include/linux/fs.h:2114 [inline]
+ new_sync_write fs/read_write.c:497 [inline]
+ vfs_write+0xa72/0xc90 fs/read_write.c:590
+ ksys_write+0x1a0/0x2c0 fs/read_write.c:643
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000d103ce06174d7ec3@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../iommu/arm/arm-smmu/arm-smmu-qcom-debug.c  | 17 +-------
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c    | 39 +++++++++++++++++++
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h    |  2 +
- 3 files changed, 42 insertions(+), 16 deletions(-)
+ fs/f2fs/inline.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-index 552199cbd9e25..482c40aa029b4 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom-debug.c
-@@ -488,7 +488,7 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev)
- 	return ret;
- }
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -203,8 +203,10 @@ int f2fs_convert_inline_inode(struct ino
+ 	struct page *ipage, *page;
+ 	int err = 0;
  
--static int qcom_tbu_probe(struct platform_device *pdev)
-+int qcom_tbu_probe(struct platform_device *pdev)
- {
- 	struct of_phandle_args args = { .args_count = 2 };
- 	struct device_node *np = pdev->dev.of_node;
-@@ -530,18 +530,3 @@ static int qcom_tbu_probe(struct platform_device *pdev)
+-	if (!f2fs_has_inline_data(inode) ||
+-			f2fs_hw_is_readonly(sbi) || f2fs_readonly(sbi->sb))
++	if (f2fs_hw_is_readonly(sbi) || f2fs_readonly(sbi->sb))
++		return -EROFS;
++
++	if (!f2fs_has_inline_data(inode))
+ 		return 0;
  
- 	return 0;
- }
--
--static const struct of_device_id qcom_tbu_of_match[] = {
--	{ .compatible = "qcom,sc7280-tbu" },
--	{ .compatible = "qcom,sdm845-tbu" },
--	{ }
--};
--
--static struct platform_driver qcom_tbu_driver = {
--	.driver = {
--		.name           = "qcom_tbu",
--		.of_match_table = qcom_tbu_of_match,
--	},
--	.probe = qcom_tbu_probe,
--};
--builtin_platform_driver(qcom_tbu_driver);
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 25f034677f568..13f3e2efb2ccb 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -8,6 +8,8 @@
- #include <linux/delay.h>
- #include <linux/of_device.h>
- #include <linux/firmware/qcom/qcom_scm.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
- 
- #include "arm-smmu.h"
- #include "arm-smmu-qcom.h"
-@@ -561,10 +563,47 @@ static struct acpi_platform_list qcom_acpi_platlist[] = {
- };
- #endif
- 
-+static int qcom_smmu_tbu_probe(struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM_DEBUG)) {
-+		ret = qcom_tbu_probe(pdev);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	if (dev->pm_domain) {
-+		pm_runtime_set_active(dev);
-+		pm_runtime_enable(dev);
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id qcom_smmu_tbu_of_match[] = {
-+	{ .compatible = "qcom,sc7280-tbu" },
-+	{ .compatible = "qcom,sdm845-tbu" },
-+	{ }
-+};
-+
-+static struct platform_driver qcom_smmu_tbu_driver = {
-+	.driver = {
-+		.name           = "qcom_tbu",
-+		.of_match_table = qcom_smmu_tbu_of_match,
-+	},
-+	.probe = qcom_smmu_tbu_probe,
-+};
-+
- struct arm_smmu_device *qcom_smmu_impl_init(struct arm_smmu_device *smmu)
- {
- 	const struct device_node *np = smmu->dev->of_node;
- 	const struct of_device_id *match;
-+	static u8 tbu_registered;
-+
-+	if (!tbu_registered++)
-+		platform_driver_register(&qcom_smmu_tbu_driver);
- 
- #ifdef CONFIG_ACPI
- 	if (np == NULL) {
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-index 9bb3ae7d62da6..3c134d1a62773 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.h
-@@ -34,8 +34,10 @@ irqreturn_t qcom_smmu_context_fault(int irq, void *dev);
- 
- #ifdef CONFIG_ARM_SMMU_QCOM_DEBUG
- void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu);
-+int qcom_tbu_probe(struct platform_device *pdev);
- #else
- static inline void qcom_smmu_tlb_sync_debug(struct arm_smmu_device *smmu) { }
-+static inline int qcom_tbu_probe(struct platform_device *pdev) { return -EINVAL; }
- #endif
- 
- #endif /* _ARM_SMMU_QCOM_H */
--- 
-2.43.0
-
+ 	err = f2fs_dquot_initialize(inode);
 
 
