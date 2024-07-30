@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271C58BE8;
-	Tue, 30 Jul 2024 16:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475E91A619E;
+	Tue, 30 Jul 2024 16:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357165; cv=none; b=mUgtYZR/YkKOceNd3U39F01sB2f3GOsZM9kDK8E7Ygou60d/PF61mV8NcktRd40C4Z19BWcSUZHxmYsEK1IEchycT3YX3zPhnvsYcw5Qf7F2Uxfo+M/n3+eXp4yKqQEo0L3nmBfYhxmSNef67i8b4+0skTo/cKnDKa3b+qypA7U=
+	t=1722357168; cv=none; b=jZzyJr2aTS/Ozbj0qisgXWG8pmm/3bMZJcsDi+GfAuEV6MgV92LWaCjncD0gWkP38fqREIKWzxnydj6897IEWhOw0Vwh+r/FXD9bFSoHNQfnX3xg70XgBhVJ1fva3ajr0fa3erDw3oJ6tXzHTi4i61VDF1eOFZ3IOoB/GMXwMHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357165; c=relaxed/simple;
-	bh=UTxYB8KIecEcOueIKsAF9qrYyWOamen8DAUxKaMi+RE=;
+	s=arc-20240116; t=1722357168; c=relaxed/simple;
+	bh=vIwZvFOsCeSBw44X6za6+aqUXvCgUlW7vCumqSYmr5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cTcauhd+mktxJPpWCySIldIK42l5Uf/kGFZkoHvQPGvlhHMMmw+5saepXlVxuL2xXsOjQanmR8jpfeo49Oxg+WLSXUrgLzSm48PyGBCNal/qB8e2x3gaE6C09mSuUYYleib7WXSv8R/GjJnbpfRlla6nbFdGh9oAuZbYW+WYX/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HerHzkTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qOtFTH5pmdCc5DAEe4y4fxBKMQDixebC9sVUiccirZ31nfbzl58w0ZAwsOulJOQ0ga5A1YUQt7lnMd+IZ30DebjLqxEFD8IRR8W6zu43RlmOP4qIW/vPDmxcz/MBPTgyVk+yXzGA3e25BCZedF3Diwhe+5LX67SHvJm5F/qeBiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJ6kHD94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HerHzkTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D69C32782;
-	Tue, 30 Jul 2024 16:32:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJ6kHD94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26F1C32782;
+	Tue, 30 Jul 2024 16:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357165;
-	bh=UTxYB8KIecEcOueIKsAF9qrYyWOamen8DAUxKaMi+RE=;
+	s=korg; t=1722357168;
+	bh=vIwZvFOsCeSBw44X6za6+aqUXvCgUlW7vCumqSYmr5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HerHzkTd8BhnKDPpKt8o0LJu5K99nXeTlZRiZH1t6FleEoOGfjaHAZ2p6QUav4ryR
-	 uO2pIDuH/423geFuP4bxu1K9z5GCKUiIXMpL/KJwpdIuLYI/Dc/FtiGXkoRFsYS9vI
-	 lOEYZvHtDjZHfsNWhyXkAlxLULFXX+PMhoGaQU/s=
+	b=MJ6kHD94RbhCqAJ9te/qGixSToXz4rzaGdUWqouEfPyoP+TB9gZNSvcotGr20ebjR
+	 kUFYdhkw9zBEakWuKTGrU/qzYsPJtwQPKHDizPG6EnW01zwzSJDkGC1MBPw5eSYqX3
+	 1wxnOwMDGvuh+0uz+S+u5Gq5gm7QrBtiQSFssEFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Carlos=20L=C3=B3pez?= <clopez@suse.de>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 265/440] s390/dasd: fix error checks in dasd_copy_pair_store()
-Date: Tue, 30 Jul 2024 17:48:18 +0200
-Message-ID: <20240730151626.191087202@linuxfoundation.org>
+Subject: [PATCH 6.10 229/809] wifi: rtw89: Fix array index mistake in rtw89_sta_info_get_iter()
+Date: Tue, 30 Jul 2024 17:41:45 +0200
+Message-ID: <20240730151733.653617789@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,59 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos López <clopez@suse.de>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 8e64d2356cbc800b4cd0e3e614797f76bcf0cdb8 ]
+[ Upstream commit 85099c7ce4f9e64c66aa397cd9a37473637ab891 ]
 
-dasd_add_busid() can return an error via ERR_PTR() if an allocation
-fails. However, two callsites in dasd_copy_pair_store() do not check
-the result, potentially resulting in a NULL pointer dereference. Fix
-this by checking the result with IS_ERR() and returning the error up
-the stack.
+In rtw89_sta_info_get_iter() 'status->he_gi' is compared to array size.
+But then 'rate->he_gi' is used as array index instead of 'status->he_gi'.
+This can lead to go beyond array boundaries in case of 'rate->he_gi' is
+not equal to 'status->he_gi' and is bigger than array size. Looks like
+"copy-paste" mistake.
 
-Fixes: a91ff09d39f9b ("s390/dasd: add copy pair setup")
-Signed-off-by: Carlos López <clopez@suse.de>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://lore.kernel.org/r/20240715112434.2111291-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fix this mistake by replacing 'rate->he_gi' with 'status->he_gi'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240703210510.11089-1-amishin@t-argos.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/block/dasd_devmap.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/s390/block/dasd_devmap.c b/drivers/s390/block/dasd_devmap.c
-index b2a4c34330573..1129f6ae98b57 100644
---- a/drivers/s390/block/dasd_devmap.c
-+++ b/drivers/s390/block/dasd_devmap.c
-@@ -2135,13 +2135,19 @@ static ssize_t dasd_copy_pair_store(struct device *dev,
- 
- 	/* allocate primary devmap if needed */
- 	prim_devmap = dasd_find_busid(prim_busid);
--	if (IS_ERR(prim_devmap))
-+	if (IS_ERR(prim_devmap)) {
- 		prim_devmap = dasd_add_busid(prim_busid, DASD_FEATURE_DEFAULT);
-+		if (IS_ERR(prim_devmap))
-+			return PTR_ERR(prim_devmap);
-+	}
- 
- 	/* allocate secondary devmap if needed */
- 	sec_devmap = dasd_find_busid(sec_busid);
--	if (IS_ERR(sec_devmap))
-+	if (IS_ERR(sec_devmap)) {
- 		sec_devmap = dasd_add_busid(sec_busid, DASD_FEATURE_DEFAULT);
-+		if (IS_ERR(sec_devmap))
-+			return PTR_ERR(sec_devmap);
-+	}
- 
- 	/* setting copy relation is only allowed for offline secondary */
- 	if (sec_devmap->device)
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index affffc4092ba3..5b4077c9fd286 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -3531,7 +3531,7 @@ static void rtw89_sta_info_get_iter(void *data, struct ieee80211_sta *sta)
+ 	case RX_ENC_HE:
+ 		seq_printf(m, "HE %dSS MCS-%d GI:%s", status->nss, status->rate_idx,
+ 			   status->he_gi <= NL80211_RATE_INFO_HE_GI_3_2 ?
+-			   he_gi_str[rate->he_gi] : "N/A");
++			   he_gi_str[status->he_gi] : "N/A");
+ 		break;
+ 	case RX_ENC_EHT:
+ 		seq_printf(m, "EHT %dSS MCS-%d GI:%s", status->nss, status->rate_idx,
 -- 
 2.43.0
 
