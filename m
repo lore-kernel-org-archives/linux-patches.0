@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAA18A6DC;
-	Tue, 30 Jul 2024 17:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E45F1A76A8;
+	Tue, 30 Jul 2024 17:06:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359200; cv=none; b=Bwe7JxCqJdgYJLqJ1d+U2O3RCyc+oCVpHmMwsOzg3r/1pXKQz8bZBpM44OPaxvptnJzdzH8jhBT1OU55DSSWly7EUDdSaIUr9iUQ58XI9A5Fs21WB/xW9Fo834/uLXiQgYG2YddSe/SLRen0DcH/Y+ejz0ceI82RBjiYNNrnFVo=
+	t=1722359204; cv=none; b=ug1l4nT56/6RfnNSTc5w5W8CWhsHYWsNApKmzMfO1LUbB+NvJ+uAUDn5pdhV2n5yNlkuA+GQBQxFlWChAfG/DE97hHy2hLfuCLasJPE54CEhW6nTUJDZQH7Qql7oZZuLmHPLrsm+ruzqPjyWRmKO8YyFrvWnCp/2fA+CCuh6O+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359200; c=relaxed/simple;
-	bh=CVzI89euGw5Bg6BbQZHEHEIdFCVMjPkPNSBRVMib3zc=;
+	s=arc-20240116; t=1722359204; c=relaxed/simple;
+	bh=3a836nm7W/9w4RoseAtQoOxXM3478otoVt2RBIec1Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pIgMlptLtUcTgKKb4bNile0XuCy/tLjU9k96fbMeatVoA0lEZIHjW7vFgZ0sPHXs7DUua5BMp2NutJqbzC7MCChb/BXh5iMAZEbbyzP//cpazW7w5YmCJAAEcz0iLVaogJZ5kF++Jx0dORMTH1LdGbvJ11DysszQLKbZCLCQY/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmA/hJKY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=baKDkwpmMZOxw+d/sCCHU6wVZYVbSeAas3BGiFv0byI7XxsbBQK7JrniCpt9f+OovQStTqYcC0VWP+v3yq1s65pnHvoWUU+kGnnXZhZqBeDZZM3vnQkelbomrmNTVt19VHpftde6EJsfxq9PbDi+uGLgRPM9Fn3E+OZxct5Pvos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UHOSiOK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmA/hJKY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DFFC4AF0A;
-	Tue, 30 Jul 2024 17:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UHOSiOK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72CFDC4AF0F;
+	Tue, 30 Jul 2024 17:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359200;
-	bh=CVzI89euGw5Bg6BbQZHEHEIdFCVMjPkPNSBRVMib3zc=;
+	s=korg; t=1722359203;
+	bh=3a836nm7W/9w4RoseAtQoOxXM3478otoVt2RBIec1Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WmA/hJKYELv2u4xEuvXS0hzByHgAKQWDgtDKAtL5btG1IwFa3Uen4oPwmHNX/LxQb
-	 87d3seYnfWmjzU7J/EkdhhnRD9ECeoDo/vRWK6Lsnleuyk0PP+QSP1HIrnH9LZvjod
-	 MR7/ov0oo95XZb9LLUCYbGsq7IXNdXH1Re1kxMkw=
+	b=2UHOSiOK1izawapSRXdVasQQEOpiY8DR7OGt7jysOYWHFpZrhHP4E4fzyvm1FBh0R
+	 ffA36ZoPRrkT9Bjbwpi94gY2nyA6YXZGZOG+iwo3IZAbnWgx4JJktkqE84A3ZuRJ49
+	 azJxd0L3fVC4zsqsEAC0nc1v04TYwI94sksWpdXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 450/809] clk: qcom: gcc-x1e80100: Set parent rate for USB3 sec and tert PHY pipe clks
-Date: Tue, 30 Jul 2024 17:45:26 +0200
-Message-ID: <20240730151742.480912901@linuxfoundation.org>
+	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 447/568] ASoC: SOF: ipc4-topology: Preserve the DMA Link ID for ChainDMA on unprepare
+Date: Tue, 30 Jul 2024 17:49:14 +0200
+Message-ID: <20240730151657.479374188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,50 +49,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
 
-[ Upstream commit 14539c88972bd984f1f04c9e601c1a2835d3e5d2 ]
+commit e6fc5fcaeffa04a3fa1db8dfccdfd4b6001c0446 upstream.
 
-Allow the USB3 second and third GCC PHY pipe clocks to propagate the
-rate to the pipe clocks provided by the QMP combo PHYs. The first
-instance is already doing that.
+The DMA Link ID is set to the IPC message's primary during dai_config,
+which is only during hw_params.
+During xrun handling the hw_params is not called and the DMA Link ID
+information will be lost.
 
-Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240530-x1e80100-clk-gcc-usb3-sec-tert-set-parent-rate-v1-1-7b2b04cad545@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+All other fields in the message expected to be 0 for re-configuration, only
+the DMA Link ID needs to be preserved and the in case of repeated
+dai_config, it is correctly updated (masked and then set).
+
+Cc: stable@vger.kernel.org
+Fixes: ca5ce0caa67f ("ASoC: SOF: ipc4/intel: Add support for chained DMA")
+Link: https://github.com/thesofproject/linux/issues/5116
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://patch.msgid.link/20240724081932.24542-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/qcom/gcc-x1e80100.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/sof/ipc4-topology.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
-index 7b6c1eb6a61d4..a263f0c412f5a 100644
---- a/drivers/clk/qcom/gcc-x1e80100.c
-+++ b/drivers/clk/qcom/gcc-x1e80100.c
-@@ -5269,6 +5269,7 @@ static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
- 				&gcc_usb3_sec_phy_pipe_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
-@@ -5339,6 +5340,7 @@ static struct clk_branch gcc_usb3_tert_phy_pipe_clk = {
- 				&gcc_usb3_tert_phy_pipe_clk_src.clkr.hw,
- 			},
- 			.num_parents = 1,
-+			.flags = CLK_SET_RATE_PARENT,
- 			.ops = &clk_branch2_ops,
- 		},
- 	},
--- 
-2.43.0
-
+--- a/sound/soc/sof/ipc4-topology.c
++++ b/sound/soc/sof/ipc4-topology.c
+@@ -1254,7 +1254,13 @@ static void sof_ipc4_unprepare_copier_mo
+ 		ipc4_copier = dai->private;
+ 
+ 		if (pipeline->use_chain_dma) {
+-			pipeline->msg.primary = 0;
++			/*
++			 * Preserve the DMA Link ID and clear other bits since
++			 * the DMA Link ID is only configured once during
++			 * dai_config, other fields are expected to be 0 for
++			 * re-configuration
++			 */
++			pipeline->msg.primary &= SOF_IPC4_GLB_CHAIN_DMA_LINK_ID_MASK;
+ 			pipeline->msg.extension = 0;
+ 		}
+ 
 
 
