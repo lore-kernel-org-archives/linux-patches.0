@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62E01A76D8;
-	Tue, 30 Jul 2024 17:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F591A76BE;
+	Tue, 30 Jul 2024 17:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360543; cv=none; b=U9K48M0PKHfgGrBqzmxP6QyDoJTsvBugM9e4qIvOCMgq8ZGNda9+iJur1F0QBZtQI2HModshAcGVHCEUlRRLd/qe4ljv9L7VdSaIfjNvLvyCaVN9UUfSeLqCtw0rPlRWZBGBbxPkkQS4+IlX0XQ9TKA8RSyyoWxN1chHgosFiKo=
+	t=1722360546; cv=none; b=Sj/V7AY4Ee2AUMKYJEYA5qlIBdzF6eywWpSycVvHJ/CHGQYwJYrRpRREwluyRO4kY1LKeEExFd+rY6+W0xUqusOrXEABJEgFUMBm58zbws4Dv4YykcIhNG2brxwVBJ2YBMFypX0NP8ZSNT73oxEMD4o2M3lAdXERTq5gcDI53TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360543; c=relaxed/simple;
-	bh=LPo4RcIpMHmmCh5zHUeEBUqFt2mKDjRRK1hnB8xvKIE=;
+	s=arc-20240116; t=1722360546; c=relaxed/simple;
+	bh=ROJfa4ojSNi7MKNmIUezUdpmfIvNKXk9CKUqbREW9n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfBYwkIeHh430RzPbcvwi/0OJ2BxoMJoDDYLf8HaOTwk81upsH309LqCri93vPWFVU/xFKGmWtlyKktZvSJdk05iPJPMg3AenlRr2igXeffpDXlX/6XxbIOBh8pJZZVAggiyovbyweN1/3mGopeUYtqdURlIZ4ml6v9eG1kDsuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WGKB6K5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiTlfIKtBdfGpZTiNtPVaQoQAt4dz09OPyZHsVAOPCR+kBmS8ubuO/TJApX6P9uVErkbt5HOHqHtLZhrJmnkU0Agr67yRsHCj9gDq0KeQGYdEoQUPjrveleqFph0oJonYozAe0lY0G472fCBhor21dF4Boyby7pVzXZrotPunpU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AEHn+8iy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WGKB6K5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8B2C32782;
-	Tue, 30 Jul 2024 17:29:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AEHn+8iy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B799C4AF0C;
+	Tue, 30 Jul 2024 17:29:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360543;
-	bh=LPo4RcIpMHmmCh5zHUeEBUqFt2mKDjRRK1hnB8xvKIE=;
+	s=korg; t=1722360546;
+	bh=ROJfa4ojSNi7MKNmIUezUdpmfIvNKXk9CKUqbREW9n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGKB6K5ubr+M5MlY+n7m1Ie7pCSEdJUxAYQmBC5534hFOAn+P5oavgnxoRgT4vrMG
-	 vZtT69yjyrSI0DpVpYHJmansQsYaN0mEI1pWBVpWq1bgmkN6Tv4gqIfotdVYXEuu8W
-	 IDI87G6/EZysmfbs+0MdYhVTjk42g7koykPYvg/c=
+	b=AEHn+8iyXcc6T23zbb/Qcsw0ZWuTLC0G4Wbv7Lr3WZHT+TTQefO7wLk0hIytNuZR8
+	 EK2w4G0iFme4ov9r4VigH/xbR1XYqKSNoecJb7z0nK/sb9T5VwGXEwaAOYQbG20Zht
+	 zbFOTPvbIzU5KC2k2ctZCfQ+OdudQb/a7ExJM61Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.10 691/809] perf: Fix event leak upon exit
-Date: Tue, 30 Jul 2024 17:49:27 +0200
-Message-ID: <20240730151752.205859557@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.10 725/809] MIPS: Loongson64: env: Hook up Loongsson-2K
+Date: Tue, 30 Jul 2024 17:50:01 +0200
+Message-ID: <20240730151753.573933570@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -50,88 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 2fd5ad3f310de22836cdacae919dd99d758a1f1b upstream.
+commit 77543269ff23c75bebfb8e6e9a1177b350908ea7 upstream.
 
-When a task is scheduled out, pending sigtrap deliveries are deferred
-to the target task upon resume to userspace via task_work.
+Somehow those enablement bits were left over when we were
+adding initial Loongson-2K support.
 
-However failures while adding an event's callback to the task_work
-engine are ignored. And since the last call for events exit happen
-after task work is eventually closed, there is a small window during
-which pending sigtrap can be queued though ignored, leaking the event
-refcount addition such as in the following scenario:
+Set up basic information and select proper builtin DTB for
+Loongson-2K.
 
-    TASK A
-    -----
-
-    do_exit()
-       exit_task_work(tsk);
-
-       <IRQ>
-       perf_event_overflow()
-          event->pending_sigtrap = pending_id;
-          irq_work_queue(&event->pending_irq);
-       </IRQ>
-    =========> PREEMPTION: TASK A -> TASK B
-       event_sched_out()
-          event->pending_sigtrap = 0;
-          atomic_long_inc_not_zero(&event->refcount)
-          // FAILS: task work has exited
-          task_work_add(&event->pending_task)
-       [...]
-       <IRQ WORK>
-       perf_pending_irq()
-          // early return: event->oncpu = -1
-       </IRQ WORK>
-       [...]
-    =========> TASK B -> TASK A
-       perf_event_exit_task(tsk)
-          perf_event_exit_event()
-             free_event()
-                WARN(atomic_long_cmpxchg(&event->refcount, 1, 0) != 1)
-                // leak event due to unexpected refcount == 2
-
-As a result the event is never released while the task exits.
-
-Fix this with appropriate task_work_add()'s error handling.
-
-Fixes: 517e6a301f34 ("perf: Fix perf_pending_task() UaF")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240621091601.18227-4-frederic@kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |   13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ arch/mips/include/asm/mach-loongson64/boot_param.h |    2 ++
+ arch/mips/loongson64/env.c                         |    8 ++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -2284,18 +2284,15 @@ event_sched_out(struct perf_event *event
- 	}
- 
- 	if (event->pending_sigtrap) {
--		bool dec = true;
--
- 		event->pending_sigtrap = 0;
- 		if (state != PERF_EVENT_STATE_OFF &&
--		    !event->pending_work) {
--			event->pending_work = 1;
--			dec = false;
-+		    !event->pending_work &&
-+		    !task_work_add(current, &event->pending_task, TWA_RESUME)) {
- 			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
--			task_work_add(current, &event->pending_task, TWA_RESUME);
--		}
--		if (dec)
-+			event->pending_work = 1;
-+		} else {
- 			local_dec(&event->ctx->nr_pending);
-+		}
- 	}
- 
- 	perf_event_set_state(event, state);
+--- a/arch/mips/include/asm/mach-loongson64/boot_param.h
++++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
+@@ -42,12 +42,14 @@ enum loongson_cpu_type {
+ 	Legacy_1B = 0x5,
+ 	Legacy_2G = 0x6,
+ 	Legacy_2H = 0x7,
++	Legacy_2K = 0x8,
+ 	Loongson_1A = 0x100,
+ 	Loongson_1B = 0x101,
+ 	Loongson_2E = 0x200,
+ 	Loongson_2F = 0x201,
+ 	Loongson_2G = 0x202,
+ 	Loongson_2H = 0x203,
++	Loongson_2K = 0x204,
+ 	Loongson_3A = 0x300,
+ 	Loongson_3B = 0x301
+ };
+--- a/arch/mips/loongson64/env.c
++++ b/arch/mips/loongson64/env.c
+@@ -88,6 +88,12 @@ void __init prom_lefi_init_env(void)
+ 	cpu_clock_freq = ecpu->cpu_clock_freq;
+ 	loongson_sysconf.cputype = ecpu->cputype;
+ 	switch (ecpu->cputype) {
++	case Legacy_2K:
++	case Loongson_2K:
++		smp_group[0] = 0x900000001fe11000;
++		loongson_sysconf.cores_per_node = 2;
++		loongson_sysconf.cores_per_package = 2;
++		break;
+ 	case Legacy_3A:
+ 	case Loongson_3A:
+ 		loongson_sysconf.cores_per_node = 4;
+@@ -221,6 +227,8 @@ void __init prom_lefi_init_env(void)
+ 		default:
+ 			break;
+ 		}
++	} else if ((read_c0_prid() & PRID_IMP_MASK) == PRID_IMP_LOONGSON_64R) {
++		loongson_fdt_blob = __dtb_loongson64_2core_2k1000_begin;
+ 	} else if ((read_c0_prid() & PRID_IMP_MASK) == PRID_IMP_LOONGSON_64G) {
+ 		if (loongson_sysconf.bridgetype == LS7A)
+ 			loongson_fdt_blob = __dtb_loongson64g_4core_ls7a_begin;
 
 
