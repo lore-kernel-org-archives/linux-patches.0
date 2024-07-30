@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42841184556;
-	Tue, 30 Jul 2024 16:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1CB1552FE;
+	Tue, 30 Jul 2024 16:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357004; cv=none; b=iYk8+En70jHdJnqBrvZNRjevhQKf4Xsf4TQfPvJ2ML1852nxnt+/np9u2ephoKGaFXvzp3fEI3hccOPh7EZHiR8eW1xiavYt2CD25AAcJBnNwbEHawG8PCFY6ETHU0p/keU/ouQGsO9vzvuJIf5kmL/+9VaPjAGRb0B5IF/reyo=
+	t=1722357007; cv=none; b=iAR9/WGObYWv/TuumNmJmZCI6HRKhYK4bIFIW4Ro/VJcPuRzdq5ZTOzKmBnXSpKDW+2OwsR/yCtzy3wjejOSzaGPDupdxX7nAnjC1ESYv0DTpYVKqYIe5A2Vt/b1F0yCpsinF2wDhHn3cxVMLHUS6NB60YRbiRIYlPgH8m5KiVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357004; c=relaxed/simple;
-	bh=Zr+c7zaL9G0H3BT/kJEK1Wq890LxCMK9nLLzaBWbmd0=;
+	s=arc-20240116; t=1722357007; c=relaxed/simple;
+	bh=lWgh1GMR2TBsHM6JKgTtZQwFTurpjaS5KPJKyH7fLug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nB92hBxydCCU2hChWKo14WkBaQNBh3DOzkIFn3f67C4fIg/i0ZuM8glo3sppwMw09/lgUteSdz5bmxNWke0p0I9n5v/aN+L/efFRAbIKY78jK4LZssXX8SX1CvQnlqr6FUfnCMpgggWD78ET7IqSSMPxLP/gvBpM/kNAlGLFnfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfiaFyU2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E2RUtexcd2s0+l0nhHXCQNTUtGXHjpRhA0noYwTxJdndjSy+gAXjhl7360cVGfQjtMPMyVm4Z4mDvVCtY8Exue/JzYJgfaPf7Fg9SynBSjuEryM5eu+aYE8kW8xz8AG/rA0kk3dfBD6T5wkXY49qUAUpxpyCZBvRPjcHHWLTSB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s72Zreew; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfiaFyU2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC00CC4AF0A;
-	Tue, 30 Jul 2024 16:30:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s72Zreew"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8FCC32782;
+	Tue, 30 Jul 2024 16:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357004;
-	bh=Zr+c7zaL9G0H3BT/kJEK1Wq890LxCMK9nLLzaBWbmd0=;
+	s=korg; t=1722357007;
+	bh=lWgh1GMR2TBsHM6JKgTtZQwFTurpjaS5KPJKyH7fLug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfiaFyU2yRFemFxhFA6nzqv6cmn/WCbkYiuc+73y6c2BUhX+lGR/tapT2Rwbba7ET
-	 EZaLhm9GETdonPF6YhN6sILuCbnOc8tFGvS1cwIhJV+/I9jx+A+YBsFrcU95ysNPuc
-	 6CzM0AlDvBxkGayqfiCoeELlprXBRzDwPwLgM9IU=
+	b=s72Zreewwm6KpFCwmjXvegdfGizzRq0/c7fuYG51HM3W73/sAm/4gHviazeZc6aaF
+	 1Jeyscoremq/TyD6TlyKiTUTQQ08reIYJVAdIE/t820CjqKLKbv/0NmR31IfIy6JEc
+	 ILZ8H5OYRvJPv1X2+ijxhKfA4CgCouQhThqvbM24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 209/809] wifi: mac80211: add ieee80211_tdls_sta_link_id()
-Date: Tue, 30 Jul 2024 17:41:25 +0200
-Message-ID: <20240730151732.861315823@linuxfoundation.org>
+Subject: [PATCH 6.10 200/809] udf: Fix bogus checksum computation in udf_rename()
+Date: Tue, 30 Jul 2024 17:41:16 +0200
+Message-ID: <20240730151732.506313272@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,65 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit d42fcaece03654a4b21d2da88d68ed913e0b6c46 ]
+[ Upstream commit 27ab33854873e6fb958cb074681a0107cc2ecc4c ]
 
-We've open-coded this twice and will need it again,
-add ieee80211_tdls_sta_link_id() to get the one link
-ID for a TDLS STA.
+Syzbot reports uninitialized memory access in udf_rename() when updating
+checksum of '..' directory entry of a moved directory. This is indeed
+true as we pass on-stack diriter.fi to the udf_update_tag() and because
+that has only struct fileIdentDesc included in it and not the impUse or
+name fields, the checksumming function is going to checksum random stack
+contents beyond the end of the structure. This is actually harmless
+because the following udf_fiiter_write_fi() will recompute the checksum
+from on-disk buffers where everything is properly included. So all that
+is needed is just removing the bogus calculation.
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240612143707.9f8141ae1725.I343822bbba0ae08dedb2f54a0ce87f2ae5ebeb2b@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Stable-dep-of: 0b2d9d9aec2b ("wifi: mac80211: correcty limit wider BW TDLS STAs")
+Fixes: e9109a92d2a9 ("udf: Convert udf_rename() to new directory iteration code")
+Link: https://lore.kernel.org/all/000000000000cf405f060d8f75a9@google.com/T/
+Link: https://patch.msgid.link/20240617154201.29512-1-jack@suse.cz
+Reported-by: syzbot+d31185aa54170f7fc1f5@syzkaller.appspotmail.com
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/sta_info.h | 6 ++++++
- net/mac80211/tx.c       | 6 ++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ fs/udf/namei.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/mac80211/sta_info.h b/net/mac80211/sta_info.h
-index bd5e2f7146f67..9195d5a2de0a8 100644
---- a/net/mac80211/sta_info.h
-+++ b/net/mac80211/sta_info.h
-@@ -727,6 +727,12 @@ struct sta_info {
- 	struct ieee80211_sta sta;
- };
- 
-+static inline int ieee80211_tdls_sta_link_id(struct sta_info *sta)
-+{
-+	/* TDLS STA can only have a single link */
-+	return sta->sta.valid_links ? __ffs(sta->sta.valid_links) : 0;
-+}
-+
- static inline enum nl80211_plink_state sta_plink_state(struct sta_info *sta)
- {
- #ifdef CONFIG_MAC80211_MESH
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index f861d99e5f055..72a9ba8bc5fd9 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -2774,8 +2774,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
- 
- 		if (tdls_peer) {
- 			/* For TDLS only one link can be valid with peer STA */
--			int tdls_link_id = sta->sta.valid_links ?
--					   __ffs(sta->sta.valid_links) : 0;
-+			int tdls_link_id = ieee80211_tdls_sta_link_id(sta);
- 			struct ieee80211_link_data *link;
- 
- 			/* DA SA BSSID */
-@@ -3101,8 +3100,7 @@ void ieee80211_check_fast_xmit(struct sta_info *sta)
- 	case NL80211_IFTYPE_STATION:
- 		if (test_sta_flag(sta, WLAN_STA_TDLS_PEER)) {
- 			/* For TDLS only one link can be valid with peer STA */
--			int tdls_link_id = sta->sta.valid_links ?
--					   __ffs(sta->sta.valid_links) : 0;
-+			int tdls_link_id = ieee80211_tdls_sta_link_id(sta);
- 			struct ieee80211_link_data *link;
- 
- 			/* DA SA BSSID */
+diff --git a/fs/udf/namei.c b/fs/udf/namei.c
+index 1308109fd42d9..78a603129dd58 100644
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -876,8 +876,6 @@ static int udf_rename(struct mnt_idmap *idmap, struct inode *old_dir,
+ 	if (has_diriter) {
+ 		diriter.fi.icb.extLocation =
+ 					cpu_to_lelb(UDF_I(new_dir)->i_location);
+-		udf_update_tag((char *)&diriter.fi,
+-			       udf_dir_entry_len(&diriter.fi));
+ 		udf_fiiter_write_fi(&diriter, NULL);
+ 		udf_fiiter_release(&diriter);
+ 	}
 -- 
 2.43.0
 
