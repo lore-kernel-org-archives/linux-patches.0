@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1841078F;
-	Tue, 30 Jul 2024 16:51:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11161078F;
+	Tue, 30 Jul 2024 16:51:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358290; cv=none; b=VKPluvXCLb4RY5XksG2Vxu8/R4O+Gvq3E1xE6Ohn/4URz2B3y5fDxDVKC0i3zGC7SZkaGZjDM08vkDgxny/bRtMTVCBzqoraXzJqzA4VPEOB8t2mmVOom5pD3vB5Qf888jPnOyhSkn/ciyCoHOSZSM1aAOS1OTDahhhkodka3Dg=
+	t=1722358294; cv=none; b=N5TCuLl3wkTdpBYjMIa99Jidl+ERFOU/CWPu1y/fFcXqHMRltbsjswvHNpdZ5W59leYtPUhf4y37e8nx+gpw85kDL7r+SwfdNotntN7xa8ky+0MlLVZcJy/WHapjgPYva8b21n4tJaNMvRkTGGsI4MflfnP9xpRCg0ly1QnZst8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358290; c=relaxed/simple;
-	bh=JP0aczD3cjPfHlDdwjz4kk38X3hJBPXt+EC9FDms+pc=;
+	s=arc-20240116; t=1722358294; c=relaxed/simple;
+	bh=He09Z96QXrqAtSVOpxUw2BtXhFIVhUJUuUi8M9dyrqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6Q1m9pQA4mZ8ki7vtlYq85+fb9YVg7ePJJxpYZnT3mIa6OFGtNVviRHPrLo0xh8XPKhMXO+rvMuHM15ElEmome5F02idBMpVllmClFFO0oOlIaJ85TpqsbQ7gLGkFrMQs2n2zVDTwSevGM2WZx5khHfVKAjUQTk0cHgseXYywE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1oYSC5OQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=D97N7xCRtKO4p6U22Pu+rvkBfzSIOhtKiK0Qh6csYgQl9j1tpj1jQl6j9tlUSRaiVPcdUV5P+/0V10sp4YtR6icOD6Usj7LtyiMKxAgSf75q+n/TiegxevS17C2Il4iHQD2LwxTLz/g3/Fi9+id7K24Hex2OsF/5yl8AK1J3LsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLNkQPeB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1oYSC5OQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06F57C32782;
-	Tue, 30 Jul 2024 16:51:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLNkQPeB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 688A7C32782;
+	Tue, 30 Jul 2024 16:51:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358290;
-	bh=JP0aczD3cjPfHlDdwjz4kk38X3hJBPXt+EC9FDms+pc=;
+	s=korg; t=1722358293;
+	bh=He09Z96QXrqAtSVOpxUw2BtXhFIVhUJUuUi8M9dyrqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1oYSC5OQqz6ymkNhjxjajtg1AWebViRRFbaA+xDJ/kbQSp1wspSkqaDqTZxhG3PBx
-	 Lfvds1gUeaXXj18R1XsYbCKaX/Md1pMAnQRkEhuyF7LQD0WwwGOj7ihmlNVqqB7dcm
-	 uO5x5HVyqR15gKaCZG4bMOBtF2iXctHtc0W9ml3c=
+	b=WLNkQPeBLspMSH1sjyg/WXycVX5CoBpl4H4xs3aEcUeCc5HPGYx1v60plNK8CqdAT
+	 igh42zxulfEZTth3l8aBZ4TTYXl0FnZpLOcj6+YOXXJM6FFSwGdi34PRS1BZeUHXDs
+	 qjHLEBhUQ/koKnuwfz+hDqisyEMdISnO0wWaKy4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 6.1 374/440] MIPS: dts: loongson: Fix GMAC phy node
-Date: Tue, 30 Jul 2024 17:50:07 +0200
-Message-ID: <20240730151630.421427896@linuxfoundation.org>
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Csókás
+Subject: [PATCH 6.6 348/568] rtc: interface: Add RTC offset to alarm after fix-up
+Date: Tue, 30 Jul 2024 17:47:35 +0200
+Message-ID: <20240730151653.470589408@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,50 +47,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-commit 813c18d1ca1987afaf47e035152e1baa1375b1b2 upstream.
+[ Upstream commit 463927a8902a9f22c3633960119410f57d4c8920 ]
 
-phy-mode should be rgmii-id to match hardware configuration.
+`rtc_add_offset()` is called by `__rtc_read_time()`
+and `__rtc_read_alarm()` to add the RTC's offset to
+the raw read-outs from the device drivers. However,
+in the latter case, a fix-up algorithm is run if
+the RTC device does not report a full `struct rtc_time`
+alarm value. In that case, the offset was forgot to be
+added.
 
-Also there should be a phy-handle to reference phy node.
+Fixes: fd6792bb022e ("rtc: fix alarm read and set offset")
 
-Fixes: f8a11425075f ("MIPS: Loongson64: Add GMAC support for Loongson-2K1000")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Link: https://lore.kernel.org/r/20240619140451.2800578-1-csokas.bence@prolan.hu
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/rtc/interface.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-+++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-@@ -137,7 +137,8 @@
- 					     <13 IRQ_TYPE_LEVEL_LOW>;
- 				interrupt-names = "macirq", "eth_lpi";
- 				interrupt-parent = <&liointc0>;
--				phy-mode = "rgmii";
-+				phy-mode = "rgmii-id";
-+				phy-handle = <&phy1>;
- 				mdio {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
-@@ -160,7 +161,8 @@
- 					     <15 IRQ_TYPE_LEVEL_LOW>;
- 				interrupt-names = "macirq", "eth_lpi";
- 				interrupt-parent = <&liointc0>;
--				phy-mode = "rgmii";
-+				phy-mode = "rgmii-id";
-+				phy-handle = <&phy1>;
- 				mdio {
- 					#address-cells = <1>;
- 					#size-cells = <0>;
+diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
+index 1b63111cdda2e..0b23706d9fd3c 100644
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -274,10 +274,9 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 			return err;
+ 
+ 		/* full-function RTCs won't have such missing fields */
+-		if (rtc_valid_tm(&alarm->time) == 0) {
+-			rtc_add_offset(rtc, &alarm->time);
+-			return 0;
+-		}
++		err = rtc_valid_tm(&alarm->time);
++		if (!err)
++			goto done;
+ 
+ 		/* get the "after" timestamp, to detect wrapped fields */
+ 		err = rtc_read_time(rtc, &now);
+@@ -379,6 +378,8 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 	if (err && alarm->enabled)
+ 		dev_warn(&rtc->dev, "invalid alarm value: %ptR\n",
+ 			 &alarm->time);
++	else
++		rtc_add_offset(rtc, &alarm->time);
+ 
+ 	return err;
+ }
+-- 
+2.43.0
+
 
 
