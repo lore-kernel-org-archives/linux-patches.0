@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD14418B46A;
-	Tue, 30 Jul 2024 16:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91A41A6199;
+	Tue, 30 Jul 2024 16:31:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357110; cv=none; b=tyTev4RNdlt2eY6k6TqDMl3l6pXW7XJXQY0suvbj57TIA9p3aQRfIpF7TWtZBArfc52fpuu0xRWdnyolTO4Nb5pKiJdzohMNXY79l30yM/KBkjxsxmoe7URNmxL2CKvWoyU6qEcTDhtImfULridKuYAIiWOZBGfCyQBHBUViUHI=
+	t=1722357114; cv=none; b=L01sdLruUeRXnluZD59oYU4vwKVgRJzo/sMrhG0jYrz/5CBkUWLQuWu2DLoDNJVNbLCH+1/eDXzbYzOOHfW4Y3bOSAgjAXB05fBSG4/AFSPRm0F6MWRDsYBRMQT7rUK/IZi2/eqTidq9fxlgbx969UwYsq5niKmbuUI+hbUlj94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357110; c=relaxed/simple;
-	bh=9x/m8hRPQxnn7FWw1rxkzGaiBW9gi23PyxA/iVvFMvg=;
+	s=arc-20240116; t=1722357114; c=relaxed/simple;
+	bh=jH2HVD34jCmJnHSpKEdQbS8qiJCtYbXHb5jLh3NXf3w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGKgjMtLQGUzXfQMp17yTRbuU5qwopIjemxJ1uDtK+H2U4myy+1FiBKnrjYQc9/lmjxhpW3/1AK3qDnzjpnd8klFfaGehoqMqNwYTS3EzVazYPcbJKdoWntkwZO5Pqlny34BlMqH7wQLrUw/uP4tlwJtYy1mCHSgXRHJrCLVFzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDlLQtbi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pypSNJFRSOKQ+dY5ekZxIXOV8j0hvWBhFMwJdKHIrOQ3p3W6PU5dTDFVb8SjoeUp+ij+IcOzqBLo4QzgbEGXfBCKvHiOIf0ctaVtpcMH7vVutOos7wQBqdgovvULBu/HE84YHRJdrcv2TN/gl1EQvO2FX9CuBA0HII5+9EIfVUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CGcD6peF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDlLQtbi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39539C4AF0A;
-	Tue, 30 Jul 2024 16:31:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CGcD6peF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59092C32782;
+	Tue, 30 Jul 2024 16:31:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357110;
-	bh=9x/m8hRPQxnn7FWw1rxkzGaiBW9gi23PyxA/iVvFMvg=;
+	s=korg; t=1722357113;
+	bh=jH2HVD34jCmJnHSpKEdQbS8qiJCtYbXHb5jLh3NXf3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yDlLQtbi+Z1dBJFH6TroKLuIk/eMkyjCH3ftl8FdYnRruDdJUGyW5P1g0JTP6uB/X
-	 OhH3dreSFQbAn4sDPUHmYCcqrutlSEzCvSSZ3opqK28J06ZS1B+E/+s557CZuDF185
-	 OHFmicVkjsObWLwipGVOQx95BBjAq9+YMmcUsmKA=
+	b=CGcD6peF9YHi8fCpVJUSjG79GWtJmeTTF4IYFPcEpKui9bcLCTzTO3HFQEa3x7C0c
+	 rtBZWH2pqo6gFilJU09yd38U5oB50znN67bBy+7/PZmwV2FANB6JEcb5YHYoJ8Zq2P
+	 VKfW3npXKtv0uyT279uDg2XFUkJ/RCEtovSANyLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pu Lehui <pulehui@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 219/809] riscv, bpf: Fix out-of-bounds issue when preparing trampoline image
-Date: Tue, 30 Jul 2024 17:41:35 +0200
-Message-ID: <20240730151733.257087333@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>,
+	Adam Ford <aford173@gmail.com>
+Subject: [PATCH 6.6 201/568] media: i2c: imx219: fix msr access command sequence
+Date: Tue, 30 Jul 2024 17:45:08 +0200
+Message-ID: <20240730151647.732989347@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,92 +51,61 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pu Lehui <pulehui@huawei.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 9f1e16fb1fc9826001c69e0551d51fbbcd2d74e9 ]
+[ Upstream commit 3cdc776e0a5f1784c3ae5d3371b64215c228bf1f ]
 
-We get the size of the trampoline image during the dry run phase and
-allocate memory based on that size. The allocated image will then be
-populated with instructions during the real patch phase. But after
-commit 26ef208c209a ("bpf: Use arch_bpf_trampoline_size"), the `im`
-argument is inconsistent in the dry run and real patch phase. This may
-cause emit_imm in RV64 to generate a different number of instructions
-when generating the 'im' address, potentially causing out-of-bounds
-issues. Let's emit the maximum number of instructions for the "im"
-address during dry run to fix this problem.
+It was reported to me that the imx219 didn't work on one of our
+development kits partly because the access sequence is incorrect.
+The datasheet I could find [1] for this camera has the access sequence:
+Seq. No. Address (Hex) data
+1        30EB          05
+2        30EB          0C
+3        300A          FF
+4        300B          FF
+5        30EB          05
+6        30EB          09
 
-Fixes: 26ef208c209a ("bpf: Use arch_bpf_trampoline_size")
-Signed-off-by: Pu Lehui <pulehui@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240622030437.3973492-3-pulehui@huaweicloud.com
+but the driver swaps the first two elements. Laurent pointed out on IRC
+that the original code used the correct sequence for 1920x1080 but the
+current sequence for 3280x2464 and 1640x1232. During refactoring of the
+init sequence the current order was used for all formats.
+
+Switch to using the documented sequence.
+
+Link: https://www.opensourceinstruments.com/Electronics/Data/IMX219PQ.pdf [1]
+Fixes: 8508455961d5 ("media: i2c: imx219: Split common registers from mode tables")
+Fixes: 1283b3b8f82b ("media: i2c: Add driver for Sony IMX219 sensor")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Tested-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Tested-by: Adam Ford <aford173@gmail.com>  #imx8mp-beacon-kit
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/net/bpf_jit_comp64.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/media/i2c/imx219.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
-index 79a001d5533ea..212b015e09b75 100644
---- a/arch/riscv/net/bpf_jit_comp64.c
-+++ b/arch/riscv/net/bpf_jit_comp64.c
-@@ -16,6 +16,8 @@
- #include "bpf_jit.h"
+diff --git a/drivers/media/i2c/imx219.c b/drivers/media/i2c/imx219.c
+index 3afa3f79c8a26..a9a8cd148f4fc 100644
+--- a/drivers/media/i2c/imx219.c
++++ b/drivers/media/i2c/imx219.c
+@@ -188,8 +188,8 @@ static const struct cci_reg_sequence imx219_common_regs[] = {
+ 	{ IMX219_REG_MODE_SELECT, 0x00 },	/* Mode Select */
  
- #define RV_FENTRY_NINSNS 2
-+/* imm that allows emit_imm to emit max count insns */
-+#define RV_MAX_COUNT_IMM 0x7FFF7FF7FF7FF7FF
- 
- #define RV_REG_TCC RV_REG_A6
- #define RV_REG_TCC_SAVED RV_REG_S6 /* Store A6 in S6 if program do calls */
-@@ -915,7 +917,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
- 		orig_call += RV_FENTRY_NINSNS * 4;
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
--		emit_imm(RV_REG_A0, (const s64)im, ctx);
-+		emit_imm(RV_REG_A0, ctx->insns ? (const s64)im : RV_MAX_COUNT_IMM, ctx);
- 		ret = emit_call((const u64)__bpf_tramp_enter, true, ctx);
- 		if (ret)
- 			return ret;
-@@ -976,7 +978,7 @@ static int __arch_prepare_bpf_trampoline(struct bpf_tramp_image *im,
- 
- 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
- 		im->ip_epilogue = ctx->insns + ctx->ninsns;
--		emit_imm(RV_REG_A0, (const s64)im, ctx);
-+		emit_imm(RV_REG_A0, ctx->insns ? (const s64)im : RV_MAX_COUNT_IMM, ctx);
- 		ret = emit_call((const u64)__bpf_tramp_exit, true, ctx);
- 		if (ret)
- 			goto out;
-@@ -1045,6 +1047,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image,
- {
- 	int ret;
- 	struct rv_jit_context ctx;
-+	u32 size = image_end - image;
- 
- 	ctx.ninsns = 0;
- 	/*
-@@ -1058,11 +1061,16 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image,
- 	ctx.ro_insns = image;
- 	ret = __arch_prepare_bpf_trampoline(im, m, tlinks, func_addr, flags, &ctx);
- 	if (ret < 0)
--		return ret;
-+		goto out;
- 
--	bpf_flush_icache(ctx.insns, ctx.insns + ctx.ninsns);
-+	if (WARN_ON(size < ninsns_rvoff(ctx.ninsns))) {
-+		ret = -E2BIG;
-+		goto out;
-+	}
- 
--	return ninsns_rvoff(ret);
-+	bpf_flush_icache(image, image_end);
-+out:
-+	return ret < 0 ? ret : size;
- }
- 
- int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 	/* To Access Addresses 3000-5fff, send the following commands */
+-	{ CCI_REG8(0x30eb), 0x0c },
+ 	{ CCI_REG8(0x30eb), 0x05 },
++	{ CCI_REG8(0x30eb), 0x0c },
+ 	{ CCI_REG8(0x300a), 0xff },
+ 	{ CCI_REG8(0x300b), 0xff },
+ 	{ CCI_REG8(0x30eb), 0x05 },
 -- 
 2.43.0
 
