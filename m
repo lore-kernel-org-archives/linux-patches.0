@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56200156F30;
-	Tue, 30 Jul 2024 17:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B65C1FBA;
+	Tue, 30 Jul 2024 17:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358892; cv=none; b=c2leCcos5k7qQaiJGOheKX3C9oH6J459UybRgH+yPhcIjSSZIo32nyxoj40H7U/9AS2FO45ddoS93HXPM29y6TCz0sjlIYuvw3vs0P6343lE41EgmMBsowLepFu12/IhipPFzFQdoIsn+4mnlHfv8j902TI+oBufYB+LA//qC6k=
+	t=1722358895; cv=none; b=mLXKp56nnD7ZOGq8nzO/0sAxOis65+yncgkaUeoBgSk5OT78I8naVWuLS3OuF33+LQO9ale928WVB1lm+9DD3yoej5Z58NTyBR6xMJxVBGQ1h0vlbX2v/j0Ow0WyN6TlmdO904vZ1+XKQZ17mroXQvCJOdaoftkAloh7RAbrACo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358892; c=relaxed/simple;
-	bh=8QvjdALhuOHdvXrsVZ5blaPz2kLwPlw/hlLjXvjrliM=;
+	s=arc-20240116; t=1722358895; c=relaxed/simple;
+	bh=vqSfzYhpPWoR0OBz4dHtmJsL/f6yxSavefuFcx5EM1w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=upoNJvqLXBqQKDf8ocD8CRpKeMNDmuedyyWAX/gmOE/nZdL83zds/oGjfHQuKiOwNUVC3kFFGi2/wTx9J3wZEag7a+40JwXcgUWRzI75rVUahTKVY8JGSVkGUDU2l29dDMvaXP0+PSfErA3pGsl5KvJFhnxD5YFY97/QTYXuv7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SfQu+Dmg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nHG1WJB/xn4EBT1sahOuxuAPleCpcie0i4iK5Jc9pHrx0wvgBIcyKI5TJKg2HN0PTJOcV5yXYD7ukPQEEdYTScznOYfsFk1F2v8aanEM2iE3xJOCfHyZX82LnfhifpyDckVYyZCAjHaqFY9Q1PY1Y7+zFVP88k18quNuUT7qaa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btWLi9kl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SfQu+Dmg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12F0C32782;
-	Tue, 30 Jul 2024 17:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btWLi9kl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2F6FC4AF0A;
+	Tue, 30 Jul 2024 17:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358892;
-	bh=8QvjdALhuOHdvXrsVZ5blaPz2kLwPlw/hlLjXvjrliM=;
+	s=korg; t=1722358895;
+	bh=vqSfzYhpPWoR0OBz4dHtmJsL/f6yxSavefuFcx5EM1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SfQu+Dmgg53PnWuO1An7HptV1g+u8SSIDRPncjmqWetqnn5Jbf3EBETvniVrOSq/E
-	 /26W4eRZ9bFTegsl7+eOrSNMUQJg0cTLtnIJW1nDAxce7feTkr4wo0iddS2u/fdXeE
-	 zC7sFVyC0b99m+/ZO4SvyTs2DmO2SIAlKJRhUVeQ=
+	b=btWLi9klLyfanN5opby0ntx3S9RWhfiUvHJ/sOOKMZ8wNPgObSRhOV6IieZuIVaiJ
+	 Dm+E9TAcGoTNq4hHP/XfDUcv7jJW/3O4Z1w4jxUay0F5In34HoOtB7DeuJUXm4n5xG
+	 4AdxLv2Q8e41k07R7+7DB4wzcFrcvaiMj105mX9Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Ofir Gal <ofir.gal@volumez.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.6 406/568] md/md-bitmap: fix writing non bitmap pages
-Date: Tue, 30 Jul 2024 17:48:33 +0200
-Message-ID: <20240730151655.738441011@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 431/440] spi: spidev: add correct compatible for Rohm BH2228FV
+Date: Tue, 30 Jul 2024 17:51:04 +0200
+Message-ID: <20240730151632.611325680@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,104 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ofir Gal <ofir.gal@volumez.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit ab99a87542f194f28e2364a42afbf9fb48b1c724 upstream.
+[ Upstream commit fc28d1c1fe3b3e2fbc50834c8f73dda72f6af9fc ]
 
-__write_sb_page() rounds up the io size to the optimal io size if it
-doesn't exceed the data offset, but it doesn't check the final size
-exceeds the bitmap length.
+When Maxime originally added the BH2228FV to the spidev driver, he spelt
+it incorrectly - the d should have been a b. Add the correctly spelt
+compatible to the driver. Although the majority of users of this
+compatible are abusers, there is at least one board that validly uses
+the incorrect spelt compatible, so keep it in the driver to avoid
+breaking the few real users it has.
 
-For example:
-page count      - 1
-page size       - 4K
-data offset     - 1M
-optimal io size - 256K
-
-The final io size would be 256K (64 pages) but md_bitmap_storage_alloc()
-allocated 1 page, the IO would write 1 valid page and 63 pages that
-happens to be allocated afterwards. This leaks memory to the raid device
-superblock.
-
-This issue caused a data transfer failure in nvme-tcp. The network
-drivers checks the first page of an IO with sendpage_ok(), it returns
-true if the page isn't a slabpage and refcount >= 1. If the page
-!sendpage_ok() the network driver disables MSG_SPLICE_PAGES.
-
-As of now the network layer assumes all the pages of the IO are
-sendpage_ok() when MSG_SPLICE_PAGES is on.
-
-The bitmap pages aren't slab pages, the first page of the IO is
-sendpage_ok(), but the additional pages that happens to be allocated
-after the bitmap pages might be !sendpage_ok(). That cause
-skb_splice_from_iter() to stop the data transfer, in the case below it
-hangs 'mdadm --create'.
-
-The bug is reproducible, in order to reproduce we need nvme-over-tcp
-controllers with optimal IO size bigger than PAGE_SIZE. Creating a raid
-with bitmap over those devices reproduces the bug.
-
-In order to simulate large optimal IO size you can use dm-stripe with a
-single device.
-Script to reproduce the issue on top of brd devices using dm-stripe is
-attached below (will be added to blktest).
-
-I have added some logs to test the theory:
-...
-md: created bitmap (1 pages) for device md127
-__write_sb_page before md_super_write offset: 16, size: 262144. pfn: 0x53ee
-=== __write_sb_page before md_super_write. logging pages ===
-pfn: 0x53ee, slab: 0 <-- the only page that allocated for the bitmap
-pfn: 0x53ef, slab: 1
-pfn: 0x53f0, slab: 0
-pfn: 0x53f1, slab: 0
-pfn: 0x53f2, slab: 0
-pfn: 0x53f3, slab: 1
-...
-nvme_tcp: sendpage_ok - pfn: 0x53ee, len: 262144, offset: 0
-skbuff: before sendpage_ok() - pfn: 0x53ee
-skbuff: before sendpage_ok() - pfn: 0x53ef
-WARNING at net/core/skbuff.c:6848 skb_splice_from_iter+0x142/0x450
-skbuff: !sendpage_ok - pfn: 0x53ef. is_slab: 1, page_count: 1
-...
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Ofir Gal <ofir.gal@volumez.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240607072748.3182199-1-ofir.gal@volumez.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8fad805bdc52 ("spi: spidev: Add Rohm DH2228FV DAC compatible string")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Acked-by: Maxime Ripard <mripard@kernel.org>
+Link: https://patch.msgid.link/20240717-ventricle-strewn-a7678c509e85@spud
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-bitmap.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/spi/spidev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -227,6 +227,8 @@ static int __write_sb_page(struct md_rde
- 	struct block_device *bdev;
- 	struct mddev *mddev = bitmap->mddev;
- 	struct bitmap_storage *store = &bitmap->storage;
-+	unsigned int bitmap_limit = (bitmap->storage.file_pages - pg_index) <<
-+		PAGE_SHIFT;
- 	loff_t sboff, offset = mddev->bitmap_info.offset;
- 	sector_t ps = pg_index * PAGE_SIZE / SECTOR_SIZE;
- 	unsigned int size = PAGE_SIZE;
-@@ -269,11 +271,9 @@ static int __write_sb_page(struct md_rde
- 		if (size == 0)
- 			/* bitmap runs in to data */
- 			return -EINVAL;
--	} else {
--		/* DATA METADATA BITMAP - no problems */
- 	}
- 
--	md_super_write(mddev, rdev, sboff + ps, (int) size, page);
-+	md_super_write(mddev, rdev, sboff + ps, (int)min(size, bitmap_limit), page);
- 	return 0;
- }
- 
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 5241785266153..00612efc2277f 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -725,6 +725,7 @@ static const struct of_device_id spidev_dt_ids[] = {
+ 	{ .compatible = "lwn,bk4", .data = &spidev_of_check },
+ 	{ .compatible = "menlo,m53cpld", .data = &spidev_of_check },
+ 	{ .compatible = "micron,spi-authenta", .data = &spidev_of_check },
++	{ .compatible = "rohm,bh2228fv", .data = &spidev_of_check },
+ 	{ .compatible = "rohm,dh2228fv", .data = &spidev_of_check },
+ 	{ .compatible = "semtech,sx1301", .data = &spidev_of_check },
+ 	{ .compatible = "silabs,em3581", .data = &spidev_of_check },
+-- 
+2.43.0
+
 
 
