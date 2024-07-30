@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DDF189502;
-	Tue, 30 Jul 2024 16:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8133218454A;
+	Tue, 30 Jul 2024 16:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357524; cv=none; b=tF3CGlDhSQQkszWvplhoPtiTressH0KAdl6gKFNkdG/kAe9dfV1BHlMiwyluzEaUD3iioVSmwcXBwYs1D6YD1pYuX+iJTbE2gLtPD41noDWD26stMoPebs0sl095yExd1tvASOT8U7XE2f905kMGW5gCwhW1EYt3HChGszNpPKs=
+	t=1722357528; cv=none; b=WqWJxpWrZVkz9Le4DaPTlNHXD7ujrilbkw0FWBGD+PXmVaYxOk+aS3DPlGeH4ZIyMeUMVptdzv2SrteFYwuCDJFUcOgXdVQwHh6UMG4RGfERzAV+69bKmXCPzWwfX6eDKH8g+mIMUZY1xsR/e+oIiCwdwZrEoR4OFC/Jnr7xcrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357524; c=relaxed/simple;
-	bh=H22xwe7zEgFDaX+NX8UKpZkgZpbvBBLkW7egQxSRrOg=;
+	s=arc-20240116; t=1722357528; c=relaxed/simple;
+	bh=SyOjNUoqSjIHqitopMOVTcm1/Sp6tY4Ml1LTtK2xJ7s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rm2I8cqWRcvuTmazIDiPNmTyW81cYQMkxileFGcQ/VMouhwDr2oXdAKTdCLQ0Gk7/yj2IlRGhFEmv30iTnoeJMW4g+6isa1V8dgyzGWwSiioYjbFlHLKlKvx/d8v3vhym3saML67KR7WDwg7VH9SxkDekJuz6CflHO4Xuy4kEFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FbEqe2gQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Dc+1tQS90MSlAUXlCYnmCqSFGT3EEXuRSiwved99E0lMs8wyDzhYWN3z07nUqVchATOBuuykPEokKjKZ3umauUHJy4vUX/iLHJFCSjtDPu73v/nP5ruftQEmt6qUnDncU2CGA16Wy6RGzO9iTyjJKnO2gjmzHCPIEXGFoh12ppQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTBZY+lm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FbEqe2gQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BF75C4AF0E;
-	Tue, 30 Jul 2024 16:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTBZY+lm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A144EC4AF0E;
+	Tue, 30 Jul 2024 16:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357524;
-	bh=H22xwe7zEgFDaX+NX8UKpZkgZpbvBBLkW7egQxSRrOg=;
+	s=korg; t=1722357528;
+	bh=SyOjNUoqSjIHqitopMOVTcm1/Sp6tY4Ml1LTtK2xJ7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbEqe2gQNkpXJsVPJFdVPjsRekmquRNx+dvLaw1NjjUL6L2FfZIALXDrwJ4KIpz1F
-	 cW9b+CC4874rSa8I6eDJbY0nLdY7tuCiRU1ZUHHtuWnC+BGqbzE6Cc1vl9OMVdQxjW
-	 vfKIHIqbbQZg3rZAUimfU2iQ2Udu7KBV3Xww4ewM=
+	b=dTBZY+lmDEDiHyEskWjtHnBJIB628L33DQuhBCCXaAFLZoXWkKWVCvYvNxd7u2EEl
+	 8Xg+j2/2hUusM0hFp4ud8V6yN7RkCZefIfsdqTkFuazR+4Wto/j+T4Jmkvk4WXoc5j
+	 4VvHCbgk5CB5bNzi93aY07M4X2ivTt7kqhq2WiN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 282/440] ipv6: take care of scope when choosing the src addr
-Date: Tue, 30 Jul 2024 17:48:35 +0200
-Message-ID: <20240730151626.844245111@linuxfoundation.org>
+	Andreas Larsson <andreas@gaisler.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 245/568] sparc64: Fix incorrect function signature and add prototype for prom_cif_init
+Date: Tue, 30 Jul 2024 17:45:52 +0200
+Message-ID: <20240730151649.456116128@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +44,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+From: Andreas Larsson <andreas@gaisler.com>
 
-commit abb9a68d2c64dd9b128ae1f2e635e4d805e7ce64 upstream.
+[ Upstream commit a6c3ea1ec96307dbfbb2f16d96c674c5cc80f445 ]
 
-When the source address is selected, the scope must be checked. For
-example, if a loopback address is assigned to the vrf device, it must not
-be chosen for packets sent outside.
+Remove the unused cif_stack argument and add a protype in oplib_64.h
+Commit ef3e035c3a9b ("sparc64: Fix register corruption in top-most
+kernel stack frame during boot.") removed the cif_stack argument to
+prom_cif init in the declaration at the caller site and the usage of it
+within prom_cif_init, but not in the function signature of the function
+itself.
 
-CC: stable@vger.kernel.org
-Fixes: afbac6010aec ("net: ipv6: Address selection needs to consider L3 domains")
-Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20240710081521.3809742-4-nicolas.dichtel@6wind.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This also fixes the following warning:
+arch/sparc/prom/p1275.c:52:6: warning: no previous prototype for ‘prom_cif_init’
+
+Fixes: ef3e035c3a9b ("sparc64: Fix register corruption in top-most kernel stack frame during boot.")
+Link: https://lore.kernel.org/r/20240710094155.458731-3-andreas@gaisler.com
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/addrconf.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/sparc/include/asm/oplib_64.h | 1 +
+ arch/sparc/prom/init_64.c         | 3 ---
+ arch/sparc/prom/p1275.c           | 2 +-
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
---- a/net/ipv6/addrconf.c
-+++ b/net/ipv6/addrconf.c
-@@ -1831,7 +1831,8 @@ int ipv6_dev_get_saddr(struct net *net,
- 							    master, &dst,
- 							    scores, hiscore_idx);
+diff --git a/arch/sparc/include/asm/oplib_64.h b/arch/sparc/include/asm/oplib_64.h
+index a67abebd43592..1b86d02a84556 100644
+--- a/arch/sparc/include/asm/oplib_64.h
++++ b/arch/sparc/include/asm/oplib_64.h
+@@ -247,6 +247,7 @@ void prom_sun4v_guest_soft_state(void);
+ int prom_ihandle2path(int handle, char *buffer, int bufsize);
  
--			if (scores[hiscore_idx].ifa)
-+			if (scores[hiscore_idx].ifa &&
-+			    scores[hiscore_idx].scopedist >= 0)
- 				goto out;
- 		}
+ /* Client interface level routines. */
++void prom_cif_init(void *cif_handler);
+ void p1275_cmd_direct(unsigned long *);
  
+ #endif /* !(__SPARC64_OPLIB_H) */
+diff --git a/arch/sparc/prom/init_64.c b/arch/sparc/prom/init_64.c
+index 103aa91043185..f7b8a1a865b8f 100644
+--- a/arch/sparc/prom/init_64.c
++++ b/arch/sparc/prom/init_64.c
+@@ -26,9 +26,6 @@ phandle prom_chosen_node;
+  * routines in the prom library.
+  * It gets passed the pointer to the PROM vector.
+  */
+-
+-extern void prom_cif_init(void *);
+-
+ void __init prom_init(void *cif_handler)
+ {
+ 	phandle node;
+diff --git a/arch/sparc/prom/p1275.c b/arch/sparc/prom/p1275.c
+index 889aa602f8d86..51c3f984bbf72 100644
+--- a/arch/sparc/prom/p1275.c
++++ b/arch/sparc/prom/p1275.c
+@@ -49,7 +49,7 @@ void p1275_cmd_direct(unsigned long *args)
+ 	local_irq_restore(flags);
+ }
+ 
+-void prom_cif_init(void *cif_handler, void *cif_stack)
++void prom_cif_init(void *cif_handler)
+ {
+ 	p1275buf.prom_cif_handler = (void (*)(long *))cif_handler;
+ }
+-- 
+2.43.0
+
 
 
