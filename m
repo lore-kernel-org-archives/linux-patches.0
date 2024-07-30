@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB24189516;
-	Tue, 30 Jul 2024 16:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1ADA189502;
+	Tue, 30 Jul 2024 16:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356297; cv=none; b=cFlQ3zYhDQ4+MNzp9mhV8cVOM+PP3IYgIjDkAu2CuoVMH8ZhT/nVNZB2bNQFL+gf0JHU+neARn/U1HiJFLhMmMfxgpILejvFlMdtvDaFo//0AWeJNrbkfKlhLabk0yqR0nGWwl1APcxQ+f1z5sgGlSTvNQHchOFVtwGj966Y8WE=
+	t=1722356300; cv=none; b=dWx5r4tmScLv3c6BsCQQF7ZSrFLQYVqUPtFMTNFvlREf6EILpcppdpi+L9YzHZrIsqbKhv5C9+Z4IVwCRR1QQp79aDGBnmdZqSt68lzvYpqW8Z8t1nDOClP4+CDAR84Lwv9qjlmQw+T4QvpNzvZ7aLk4LHilroRmQz0kYIVGNKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356297; c=relaxed/simple;
-	bh=b3AP3a4kcqWlJJA67EsPOIkYMvQAvJK0YIwdAnkZ25E=;
+	s=arc-20240116; t=1722356300; c=relaxed/simple;
+	bh=uQzamai/xQD+p9efqv4WsaTm5Tl9StxOMO6Oh3lhO9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YkmgLpJqaOFJLAvmbZJQCd4852Xnt40BBtqxh9I8FQvo/qm6nN3z2Uk0fu9Blsi4uWGbTQKh0UsCksibgazLcSFGqLy4WbUjXg7FPmFC8GLL0tKaFH9cyRNoSZUIWnrIgfaRgwu9hm2zczGPALYm9iO+5eJXzKjM9hX4L+mtKrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZauMDdAk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tOl4lw+GFcmd3bZ3nGuKhSlhtTjQhbUQb9buH5nHqUQyFq5N4s/085mogAKJK2Azkg2dpQcty90bVO/J1D3vEoYKZ4ufZ1HNRuNleZFESrk8FpXiTz0/koIgQRicgwVesLi31lNjQRxO5cqZpU5JwY++mt0UMSQnYtxPuQRiEFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G89tStGP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZauMDdAk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC83FC4AF0A;
-	Tue, 30 Jul 2024 16:18:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G89tStGP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A730C4AF0C;
+	Tue, 30 Jul 2024 16:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356297;
-	bh=b3AP3a4kcqWlJJA67EsPOIkYMvQAvJK0YIwdAnkZ25E=;
+	s=korg; t=1722356300;
+	bh=uQzamai/xQD+p9efqv4WsaTm5Tl9StxOMO6Oh3lhO9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZauMDdAkcrZrzhNqr3LXDzMc+ZaxZS7G789Ne9ongyI0rbjZxUOLs3VZsOfSmUnFs
-	 QUclKWW8cLbrBHRnboymcudKtltl/cBueQr2m8zlHBBL7L7DRih7Q/4EGUcvLi6hV8
-	 D/Cuq/CScyvuGenYPNyiemMTcW5EkjSm0hjlyJeI=
+	b=G89tStGP7DC1UtDEMlfM4/1P5uw/vJW5ZM/r1xi7BqQxxzu/0MiSQZsumfVhrbjaU
+	 l3c3d7rFU/EoXp+3/UEjvYnJPzety07au18DCkvfOT0ILeCCoJrby/03YA1LCakGkL
+	 hjis091zIIgEi1do80PrG3lgrQlHDcODuPZSK73k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Sun <samsun1006219@gmail.com>,
-	Xingwei Lee <xrivendell7@gmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	James Clark <james.clark@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	German Gomez <german.gomez@arm.com>,
+	Spoorthy S <spoorts2@in.ibm.com>,
+	Kajol Jain <kjain@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 132/568] jump_label: Fix concurrency issues in static_key_slow_dec()
-Date: Tue, 30 Jul 2024 17:43:59 +0200
-Message-ID: <20240730151645.030530393@linuxfoundation.org>
+Subject: [PATCH 6.1 159/440] perf test: Make test_arm_callgraph_fp.sh more robust
+Date: Tue, 30 Jul 2024 17:46:32 +0200
+Message-ID: <20240730151622.085984355@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,145 +50,133 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: James Clark <james.clark@arm.com>
 
-[ Upstream commit 83ab38ef0a0b2407d43af9575bb32333fdd74fb2 ]
+[ Upstream commit ff16aeb9b83441b8458d4235496cf320189a0c60 ]
 
-The commit which tried to fix the concurrency issues of concurrent
-static_key_slow_inc() failed to fix the equivalent issues
-vs. static_key_slow_dec():
+The 2 second sleep can cause the test to fail on very slow network file
+systems because Perf ends up being killed before it finishes starting
+up.
 
-CPU0                     CPU1
+Fix it by making the leafloop workload end after a fixed time like the
+other workloads so there is no need to kill it after 2 seconds.
 
-static_key_slow_dec()
-  static_key_slow_try_dec()
+Also remove the 1 second start sampling delay because it is similarly
+fragile. Instead, search through all samples for a matching one, rather
+than just checking the first sample and hoping it's in the right place.
 
-	key->enabled == 1
-	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
-	if (val == 1)
-	     return false;
-
-  jump_label_lock();
-  if (atomic_dec_and_test(&key->enabled)) {
-     --> key->enabled == 0
-   __jump_label_update()
-
-			 static_key_slow_dec()
-			   static_key_slow_try_dec()
-
-			     key->enabled == 0
-			     val = atomic_fetch_add_unless(&key->enabled, -1, 1);
-
-			      --> key->enabled == -1 <- FAIL
-
-There is another bug in that code, when there is a concurrent
-static_key_slow_inc() which enables the key as that sets key->enabled to -1
-so on the other CPU
-
-	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
-
-will succeed and decrement to -2, which is invalid.
-
-Cure all of this by replacing the atomic_fetch_add_unless() with a
-atomic_try_cmpxchg() loop similar to static_key_fast_inc_not_disabled().
-
-[peterz: add WARN_ON_ONCE for the -1 race]
-Fixes: 4c5ea0a9cd02 ("locking/static_key: Fix concurrent static_key_slow_inc()")
-Reported-by: Yue Sun <samsun1006219@gmail.com>
-Reported-by: Xingwei Lee <xrivendell7@gmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240610124406.422897838@linutronix.de
+Fixes: cd6382d82752 ("perf test arm64: Test unwinding using fame-pointer (fp) mode")
+Signed-off-by: James Clark <james.clark@arm.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: German Gomez <german.gomez@arm.com>
+Cc: Spoorthy S <spoorts2@in.ibm.com>
+Cc: Kajol Jain <kjain@linux.ibm.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Link: https://lore.kernel.org/r/20240612140316.3006660-1-james.clark@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/jump_label.c | 45 +++++++++++++++++++++++++++++----------------
- 1 file changed, 29 insertions(+), 16 deletions(-)
+ .../perf/tests/shell/test_arm_callgraph_fp.sh | 27 +++++++------------
+ tools/perf/tests/workloads/leafloop.c         | 20 +++++++++++---
+ 2 files changed, 26 insertions(+), 21 deletions(-)
 
-diff --git a/kernel/jump_label.c b/kernel/jump_label.c
-index d9c822bbffb8d..eec802175ccc6 100644
---- a/kernel/jump_label.c
-+++ b/kernel/jump_label.c
-@@ -131,7 +131,7 @@ bool static_key_fast_inc_not_disabled(struct static_key *key)
- 	STATIC_KEY_CHECK_USE(key);
- 	/*
- 	 * Negative key->enabled has a special meaning: it sends
--	 * static_key_slow_inc() down the slow path, and it is non-zero
-+	 * static_key_slow_inc/dec() down the slow path, and it is non-zero
- 	 * so it counts as "enabled" in jump_label_update().  Note that
- 	 * atomic_inc_unless_negative() checks >= 0, so roll our own.
- 	 */
-@@ -150,7 +150,7 @@ bool static_key_slow_inc_cpuslocked(struct static_key *key)
- 	lockdep_assert_cpus_held();
+diff --git a/tools/perf/tests/shell/test_arm_callgraph_fp.sh b/tools/perf/tests/shell/test_arm_callgraph_fp.sh
+index 66dfdfdad553f..60cd35c73e47d 100755
+--- a/tools/perf/tests/shell/test_arm_callgraph_fp.sh
++++ b/tools/perf/tests/shell/test_arm_callgraph_fp.sh
+@@ -14,28 +14,21 @@ cleanup_files()
  
- 	/*
--	 * Careful if we get concurrent static_key_slow_inc() calls;
-+	 * Careful if we get concurrent static_key_slow_inc/dec() calls;
- 	 * later calls must wait for the first one to _finish_ the
- 	 * jump_label_update() process.  At the same time, however,
- 	 * the jump_label_update() call below wants to see
-@@ -247,20 +247,32 @@ EXPORT_SYMBOL_GPL(static_key_disable);
+ trap cleanup_files EXIT TERM INT
  
- static bool static_key_slow_try_dec(struct static_key *key)
- {
--	int val;
+-# Add a 1 second delay to skip samples that are not in the leaf() function
+ # shellcheck disable=SC2086
+-perf record -o "$PERF_DATA" --call-graph fp -e cycles//u -D 1000 --user-callchains -- $TEST_PROGRAM 2> /dev/null &
+-PID=$!
++perf record -o "$PERF_DATA" --call-graph fp -e cycles//u --user-callchains -- $TEST_PROGRAM
+ 
+-echo " + Recording (PID=$PID)..."
+-sleep 2
+-echo " + Stopping perf-record..."
 -
--	val = atomic_fetch_add_unless(&key->enabled, -1, 1);
--	if (val == 1)
--		return false;
-+	int v;
+-kill $PID
+-wait $PID
++# Try opening the file so any immediate errors are visible in the log
++perf script -i "$PERF_DATA" -F comm,ip,sym | head -n4
  
- 	/*
--	 * The negative count check is valid even when a negative
--	 * key->enabled is in use by static_key_slow_inc(); a
--	 * __static_key_slow_dec() before the first static_key_slow_inc()
--	 * returns is unbalanced, because all other static_key_slow_inc()
--	 * instances block while the update is in progress.
-+	 * Go into the slow path if key::enabled is less than or equal than
-+	 * one. One is valid to shut down the key, anything less than one
-+	 * is an imbalance, which is handled at the call site.
-+	 *
-+	 * That includes the special case of '-1' which is set in
-+	 * static_key_slow_inc_cpuslocked(), but that's harmless as it is
-+	 * fully serialized in the slow path below. By the time this task
-+	 * acquires the jump label lock the value is back to one and the
-+	 * retry under the lock must succeed.
- 	 */
--	WARN(val < 0, "jump label: negative count!\n");
-+	v = atomic_read(&key->enabled);
-+	do {
-+		/*
-+		 * Warn about the '-1' case though; since that means a
-+		 * decrement is concurrent with a first (0->1) increment. IOW
-+		 * people are trying to disable something that wasn't yet fully
-+		 * enabled. This suggests an ordering problem on the user side.
-+		 */
-+		WARN_ON_ONCE(v < 0);
-+		if (v <= 1)
-+			return false;
-+	} while (!likely(atomic_try_cmpxchg(&key->enabled, &v, v - 1)));
+-# expected perf-script output:
++# expected perf-script output if 'leaf' has been inserted correctly:
+ #
+-# program
++# perf
+ # 	728 leaf
+ # 	753 parent
+ # 	76c leafloop
+-# ...
++# ... remaining stack to main() ...
+ 
+-perf script -i "$PERF_DATA" -F comm,ip,sym | head -n4
+-perf script -i "$PERF_DATA" -F comm,ip,sym | head -n4 | \
+-	awk '{ if ($2 != "") sym[i++] = $2 } END { if (sym[0] != "leaf" ||
+-						       sym[1] != "parent" ||
+-						       sym[2] != "leafloop") exit 1 }'
++# Each frame is separated by a tab, some spaces and an address
++SEP="[[:space:]]+ [[:xdigit:]]+"
++perf script -i "$PERF_DATA" -F comm,ip,sym | tr '\n' ' ' | \
++	grep -E -q "perf $SEP leaf $SEP parent $SEP leafloop"
+diff --git a/tools/perf/tests/workloads/leafloop.c b/tools/perf/tests/workloads/leafloop.c
+index 1bf5cc97649b0..f7561767e32cd 100644
+--- a/tools/perf/tests/workloads/leafloop.c
++++ b/tools/perf/tests/workloads/leafloop.c
+@@ -1,6 +1,8 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
++#include <signal.h>
+ #include <stdlib.h>
+ #include <linux/compiler.h>
++#include <unistd.h>
+ #include "../tests.h"
+ 
+ /* We want to check these symbols in perf script */
+@@ -8,10 +10,16 @@ noinline void leaf(volatile int b);
+ noinline void parent(volatile int b);
+ 
+ static volatile int a;
++static volatile sig_atomic_t done;
 +
- 	return true;
++static void sighandler(int sig __maybe_unused)
++{
++	done = 1;
++}
+ 
+ noinline void leaf(volatile int b)
+ {
+-	for (;;)
++	while (!done)
+ 		a += b;
  }
  
-@@ -271,10 +283,11 @@ static void __static_key_slow_dec_cpuslocked(struct static_key *key)
- 	if (static_key_slow_try_dec(key))
- 		return;
+@@ -22,12 +30,16 @@ noinline void parent(volatile int b)
  
--	jump_label_lock();
--	if (atomic_dec_and_test(&key->enabled))
-+	guard(mutex)(&jump_label_mutex);
-+	if (atomic_cmpxchg(&key->enabled, 1, 0))
- 		jump_label_update(key);
--	jump_label_unlock();
-+	else
-+		WARN_ON_ONCE(!static_key_slow_try_dec(key));
+ static int leafloop(int argc, const char **argv)
+ {
+-	int c = 1;
++	int sec = 1;
+ 
+ 	if (argc > 0)
+-		c = atoi(argv[0]);
++		sec = atoi(argv[0]);
++
++	signal(SIGINT, sighandler);
++	signal(SIGALRM, sighandler);
++	alarm(sec);
+ 
+-	parent(c);
++	parent(sec);
+ 	return 0;
  }
  
- static void __static_key_slow_dec(struct static_key *key)
 -- 
 2.43.0
 
