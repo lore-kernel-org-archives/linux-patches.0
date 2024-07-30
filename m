@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 886E318E04D;
-	Tue, 30 Jul 2024 16:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C70F1917DF;
+	Tue, 30 Jul 2024 16:15:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356107; cv=none; b=TgL2tn1fBIdTwMwBHbEbLO7MHr+ot08wAOP10atkYNg27fp6PdjyIo9AFbcrsY5gjtkDkBX9CeF+3PFxBfNwD99txSftDiCAb08PjGGBRel7BgN5RbTro2BkzhKscXBiAkB8D7AdGCsOE+hdpxK9mWk3babxY4natjgmL8lxA0M=
+	t=1722356111; cv=none; b=O8bgAI0mtX4N3XhAwYAHmiB+KHexfEgAue6pPvVqY5Nn78IxaFD0XR5iSyKfqr11KqJbb73wruXAXiiB1+tA+FnInFe3wX1ewq24boxGlqzQO5Mnx0XCLufVzCpobl3DNWZSRHmnks8S49RqNc1W9Zmpr++HxD11ausMWBxQlH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356107; c=relaxed/simple;
-	bh=NGQQkWLQgaDqVs3tMK062Ekk7/PFaZo6oN32C5n279s=;
+	s=arc-20240116; t=1722356111; c=relaxed/simple;
+	bh=txyCNnTqPZmG0Cfc6XTAUtr3V78GlXmaBJ1noHDjKRk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=to0UTtND+cr9LvKHSdLYTwAFLecScsGv8sTz4Kyj5PqPuFw3VNL6HhOJ/Np9K7kc/8W8guNGNaZ6hjG0efdnZvViKED3FNbwqM5WAUpFRN/4g0mocJXxvuwqc2Ry6w6ebR/FFyW71tfKWqhjJBhpb0uMrjbbj0IFEt+eLkRXWX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=otK7y7uE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEOMgcydG1xwZxoQkz34pLbui1F8wAl/yosDQ6yTlE86JKsLkF5OdQncYyjGMaXVT/1qCJx3HuDTFkStLSsTgDsnPtpoi5VuGtqujKxRqYE5uLN0Q4Nf2SNP5H8ym4BHv+ZTt8FgH9bCaZProtsvVncaggCP27XDsaYhr6tjRxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yf9qSnaM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="otK7y7uE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F0BBC4AF0C;
-	Tue, 30 Jul 2024 16:15:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yf9qSnaM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B62C32782;
+	Tue, 30 Jul 2024 16:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356107;
-	bh=NGQQkWLQgaDqVs3tMK062Ekk7/PFaZo6oN32C5n279s=;
+	s=korg; t=1722356111;
+	bh=txyCNnTqPZmG0Cfc6XTAUtr3V78GlXmaBJ1noHDjKRk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=otK7y7uEfeGdnmugTpOJrijF7dXnF5bhHdDHuQfM+ul7UVb2iXR1d41lke0X75jTe
-	 8dM5usTdOn2auaqGlj1317fHU6YG3EAw5Rljv6ppu8jEsqIAL85kSsFPT153xP6GpK
-	 7hFpDiQoJQMtsmeGQ7DdqqznajQYkHdoT1A1fXkI=
+	b=Yf9qSnaMKw18y2T4r+z8KxEvvfCyDihxLLNHhiInsoq+3TpsDQAKdGZf8uTSVj2AG
+	 IwFmdfnM9vsYk3eRLwTpiHnn1uWhp8pwtpsJ/aH8qdThVwX97te9rhPzjQcdVzvhXx
+	 oKeSEXsCTfjUldPIdxrcD2xv9maTDIQM+he0AYeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/440] media: imon: Fix race getting ictx->lock
-Date: Tue, 30 Jul 2024 17:46:11 +0200
-Message-ID: <20240730151621.272861149@linuxfoundation.org>
+Subject: [PATCH 6.10 099/809] arm64: dts: mediatek: mt8195: Fix GPU thermal zone name for SVS
+Date: Tue, 30 Jul 2024 17:39:35 +0200
+Message-ID: <20240730151728.541662328@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
+[ Upstream commit b2b6f2edb82a08abe8942535bc77da55a0f43e14 ]
 
-Lets fix a race between mutex_is_lock() and mutex_lock().
+This SoC has two GPU related thermal zones: the primary zone must be
+called "gpu-thermal" for SVS to pick it up.
 
-<-mutex is not locked
-if (!mutex_is_locked(&ictx->lock)) {
-	unlock = true; <- mutex is locked externaly
-	mutex_lock(&ictx->lock);
-}
-
-Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
-atomically.
-
-Fix the following cocci warning:
-drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
-
-Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 1e5b6725199f ("arm64: dts: mediatek: mt8195: Add AP domain thermal zones")
+Link: https://lore.kernel.org/r/20240410083002.1357857-2-angelogioacchino.delregno@collabora.com
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 5719dda6e0f0e..e5590a708f1c5 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -1148,10 +1148,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 5d8b68f86ce44..2ee45752583c0 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -3880,7 +3880,7 @@ vpu1_crit: trip-crit {
+ 			};
+ 		};
  
- 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
- 
--	if (!mutex_is_locked(&ictx->lock)) {
--		unlock = true;
--		mutex_lock(&ictx->lock);
--	}
-+	unlock = mutex_trylock(&ictx->lock);
- 
- 	retval = send_packet(ictx);
- 	if (retval)
+-		gpu0-thermal {
++		gpu-thermal {
+ 			polling-delay = <1000>;
+ 			polling-delay-passive = <250>;
+ 			thermal-sensors = <&lvts_ap MT8195_AP_GPU0>;
 -- 
 2.43.0
 
