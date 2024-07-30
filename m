@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9FE189907;
-	Tue, 30 Jul 2024 16:45:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8C54188013;
+	Tue, 30 Jul 2024 16:45:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357905; cv=none; b=lg4v8brPDA5GrWHQnoVRoUuJUJ8LJ0FYCIrrf3JM7EVSZrvShph+kalXgnIis6kswIfKxz2jY8pIYrCm7mVMSVuUmtM4N4sFPmnsQklWhT3mfmGW5cfXBcTQnTXf0k32nRyzjzA8+x2Oiz2tBPB70+C05cPLcyX3gkY0JPCxaNY=
+	t=1722357908; cv=none; b=XBCReR18DKX5RRUdupeLvmT9HNEkYYbS61d3e2U6sv36Ry4/Uqxp39DHARLUFZGR/GbECqzPL3Wwr5qoHWfaDU/NH2tywVZ71nS8vbwuaeI/f+Tln3shT9CZBGaea34inP5JNZ9vu51xgeBm78RBuGp/ij0mc21LF/zRn7ZZT3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357905; c=relaxed/simple;
-	bh=1lN5SRC3VE74B2XgwLd1wDXBR4k2EB2B+A1KotlULto=;
+	s=arc-20240116; t=1722357908; c=relaxed/simple;
+	bh=gdJnLC/QNTTYUmK/PY/jMRc6JlwKtg0/+RzwtYSKD9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sty4C68V3rnBoqqEES9S5uF/wOCH2qz1hryLIQabX8RfGhf8XfEVkXsFEvJutWRUtVMrZpYLAZt5dh/m80IyjdcZ+Yk53Wnn13FMARaLDOb1t7UXo7EsFpED5kbT73M7wudufLRtmfUC13FreFYyHPiv7/dSEoDNJFJdstKmtHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThRmito+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dzOa3zX5R4RbYGPfVMEDOkUplFHxy38SJyCProR9KZ93PwCZDURHDQWoByhZZlhloiS2kGtiSU4naI/Vw62Harse0kvkglhbI0y4DfUq7GbZWQZz6Bk2l8NhM4utgGSUikEg98zF4uMRXAz0UsXttsjMvPGuukSh4cm/HamNf/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slagj+fk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThRmito+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCC2C32782;
-	Tue, 30 Jul 2024 16:45:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slagj+fk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 180CCC32782;
+	Tue, 30 Jul 2024 16:45:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357905;
-	bh=1lN5SRC3VE74B2XgwLd1wDXBR4k2EB2B+A1KotlULto=;
+	s=korg; t=1722357908;
+	bh=gdJnLC/QNTTYUmK/PY/jMRc6JlwKtg0/+RzwtYSKD9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ThRmito+hGr4RW9mymmeM9xdORRlPiOiodPt4qhpGtE9hG8NfYv3PO1RW4ser6+/h
-	 5TgXzfJwSHFqbEOPY3b3tVwPQEgAQH7imWYXKOcoqPEYF/SLYp1Xp0gwahpANZ+/00
-	 nz4M0gUoMZ3naXwuT7Rb6sAIxcSUHhOpAJ8QFqeY=
+	b=slagj+fksTigVnz7JayMFvvvGHGQ62CNq1vPEz4hXloFfXAlatzzs/hUURXb0Ecuv
+	 9tR8sSRzg1whjbvzFZh3WlCKbUMVWILnbGxqzHN+mVcgWJpMXL3ZtiJq91oht6rqdR
+	 yyNE6sUePSYYCqI3IzviJs8n5XEr4YrGrYs3HDqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	Frieder Schrempf <frieder.schrempf@kontron.de>,
-	Marek Vasut <marex@denx.de>,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 303/809] drm/bridge: samsung-dsim: Set P divider based on min/max of fin pll
-Date: Tue, 30 Jul 2024 17:42:59 +0200
-Message-ID: <20240730151736.560447186@linuxfoundation.org>
+	Zijun Hu <quic_zijuhu@quicinc.com>,
+	Lk Sii <lk_sii@163.com>
+Subject: [PATCH 6.1 338/440] kobject_uevent: Fix OOB access within zap_modalias_env()
+Date: Tue, 30 Jul 2024 17:49:31 +0200
+Message-ID: <20240730151629.019122951@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,64 +46,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Zijun Hu <quic_zijuhu@quicinc.com>
 
-[ Upstream commit 78c4c0011bb577a29906d8ca135795af2293c49e ]
+commit dd6e9894b451e7c85cceb8e9dc5432679a70e7dc upstream.
 
-The P divider should be set based on the min and max values of
-the fin pll which may vary between different platforms.
-These ranges are defined per platform, but hard-coded values
-were used instead which resulted in a smaller range available
-on the i.MX8M[MNP] than what was possible.
+zap_modalias_env() wrongly calculates size of memory block to move, so
+will cause OOB memory access issue if variable MODALIAS is not the last
+one within its @env parameter, fixed by correcting size to memmove.
 
-As noted by Frieder, there are descripencies between the reference
-manuals of the Mini, Nano and Plus, so I reached out to my NXP
-rep and got the following response regarding the varing notes
-in the documentation.
-
-"Yes it is definitely wrong, the one that is part of the NOTE in
-MIPI_DPHY_M_PLLPMS register table against PMS_P, PMS_M and PMS_S is
-not correct. I will report this to Doc team, the one customer should
-be take into account is the Table 13-40 DPHY PLL Parameters and the
-Note above."
-
-With this patch, the clock rates now match the values used in NXP's
-downstream kernel.
-
-Fixes: 846307185f0f ("drm/bridge: samsung-dsim: update PLL reference clock")
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewed-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Tested-by: Frieder Schrempf <frieder.schrempf@kontron.de>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240601144103.198299-1-aford173@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9b3fa47d4a76 ("kobject: fix suppressing modalias in uevents delivered over netlink")
+Cc: stable@vger.kernel.org
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+Reviewed-by: Lk Sii <lk_sii@163.com>
+Link: https://lore.kernel.org/r/1717074877-11352-1-git-send-email-quic_zijuhu@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/samsung-dsim.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ lib/kobject_uevent.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/bridge/samsung-dsim.c b/drivers/gpu/drm/bridge/samsung-dsim.c
-index 95fedc68b0ae5..8476650c477c2 100644
---- a/drivers/gpu/drm/bridge/samsung-dsim.c
-+++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-@@ -574,8 +574,8 @@ static unsigned long samsung_dsim_pll_find_pms(struct samsung_dsim *dsi,
- 	u16 _m, best_m;
- 	u8 _s, best_s;
+--- a/lib/kobject_uevent.c
++++ b/lib/kobject_uevent.c
+@@ -432,8 +432,23 @@ static void zap_modalias_env(struct kobj
+ 		len = strlen(env->envp[i]) + 1;
  
--	p_min = DIV_ROUND_UP(fin, (12 * MHZ));
--	p_max = fin / (6 * MHZ);
-+	p_min = DIV_ROUND_UP(fin, (driver_data->pll_fin_max * MHZ));
-+	p_max = fin / (driver_data->pll_fin_min * MHZ);
+ 		if (i != env->envp_idx - 1) {
++			/* @env->envp[] contains pointers to @env->buf[]
++			 * with @env->buflen chars, and we are removing
++			 * variable MODALIAS here pointed by @env->envp[i]
++			 * with length @len as shown below:
++			 *
++			 * 0               @env->buf[]      @env->buflen
++			 * ---------------------------------------------
++			 * ^             ^              ^              ^
++			 * |             |->   @len   <-| target block |
++			 * @env->envp[0] @env->envp[i]  @env->envp[i + 1]
++			 *
++			 * so the "target block" indicated above is moved
++			 * backward by @len, and its right size is
++			 * @env->buflen - (@env->envp[i + 1] - @env->envp[0]).
++			 */
+ 			memmove(env->envp[i], env->envp[i + 1],
+-				env->buflen - len);
++				env->buflen - (env->envp[i + 1] - env->envp[0]));
  
- 	for (_p = p_min; _p <= p_max; ++_p) {
- 		for (_s = 0; _s <= 5; ++_s) {
--- 
-2.43.0
-
+ 			for (j = i; j < env->envp_idx - 1; j++)
+ 				env->envp[j] = env->envp[j + 1] - len;
 
 
