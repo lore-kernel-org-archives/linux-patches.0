@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713331A6160;
-	Tue, 30 Jul 2024 16:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812621A6160;
+	Tue, 30 Jul 2024 16:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356521; cv=none; b=qtGP8fC2ny9Ho2nxUI4B2Zylap992EzJKZkMs/ayh8c5vWZqzj/SXk//ZYcDiQQUAvKwSiRZifZPJNx1qnvcM0LtMgORcNOVG9clSHB61V99Ut0kD+Zr3seBEwU319sOU1PVv+Cm7gPn+oFkdVOFqMwMAEB6PIHYLB6RkglsgvM=
+	t=1722356524; cv=none; b=GfBtzR4wSE2bxVR6wrTQBKZ3bQzdZn/qk0V1ZjpCKqN0fFJ18MCoozgb2avmbehCkzI7+395rWpfGU/K94j9CDT4aHbpICVxK1aVDjHmJD40OS24AgXquCE/zymQg9W4VmsD7nVuB/exnKLN9CwdGWoXCBC+B9A8evyYVM7S6vs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356521; c=relaxed/simple;
-	bh=IvPKmq9lsOJ7s9u0d6xT7kZZ36myknibkSQw64LjUzA=;
+	s=arc-20240116; t=1722356524; c=relaxed/simple;
+	bh=B3d5gyojsmSE3GzX2AR8HOOYqxBD+SZ4hz6nXDXMIOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A2Jbhbh0xc3KBWjeYd4U2mX4fhcDUMyUBm3kjiIFtciF+GtyyR2S6y4ziu0rqE2LnoYGExp7D73G3niwbhnOwwVqF1jB/U9Of5ymqH7N3d2VnpOMEbZUXqeJ2Nq/v7R3VtngQGUamzJtmqyO5WOOSEztxYV+Y927l9k5IW3z4Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsD2/PTW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FAYYauzjbULa1YZxX2W24Q5h23V6KWaDyAGf3fA5yheA95il9kt6y0mTS8B//fOTvdrry8m1B4VRJ4lLDtgCzbrwXAfOAAV1/DdCJSsf/Ccqs+PVIcZNFOx4fPokzbBGpllv0bCe1zVqTqMSrdm3E7euG0PSIvsgNz4lm75EzLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyBhPWZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsD2/PTW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC7FEC32782;
-	Tue, 30 Jul 2024 16:22:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyBhPWZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A5AFC4AF0C;
+	Tue, 30 Jul 2024 16:22:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356521;
-	bh=IvPKmq9lsOJ7s9u0d6xT7kZZ36myknibkSQw64LjUzA=;
+	s=korg; t=1722356524;
+	bh=B3d5gyojsmSE3GzX2AR8HOOYqxBD+SZ4hz6nXDXMIOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SsD2/PTWILVulMkyF41gHrX/N+bod6keFmASTeTfOkQ/BTvzJQJlp7jAJ54j5mKfM
-	 eB0cKoGPbqk+EzNioDxy2R+mCc2nGvFzRXnT82S17WgqbQIqP9i8f6G9cYF2BvgD1a
-	 UxnKLwpHF5/Zs4XnJbXmiBpckuxqjulIsde6+jrE=
+	b=IyBhPWZXRmEk1/miJ9tyNhgiqNN7LKoYhl9z6X11j66/CBP7HUnDJKdEwcKnVyrIL
+	 5NNHyt6Rgh26/NQtMABWwa3brS6RPDl3rEeGATuw5GGMjHLsk5T2j5Dz4Gvmdn/d0E
+	 m4YENvJthcuT+yKG6iLB4cfyboSbm/stQ+b93B3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s=20Bence?= <csokas.bence@prolan.hu>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Arcari <darcari@redhat.com>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/568] net: fec: Refactor: #define magic constants
-Date: Tue, 30 Jul 2024 17:44:04 +0200
-Message-ID: <20240730151645.230876808@linuxfoundation.org>
+Subject: [PATCH 6.10 139/809] cpufreq/amd-pstate: Fix the scaling_max_freq setting on shared memory CPPC systems
+Date: Tue, 30 Jul 2024 17:40:15 +0200
+Message-ID: <20240730151730.100854434@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,151 +46,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás Bence <csokas.bence@prolan.hu>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit ff049886671ccd4e624a30ec464cb20e4c39a313 ]
+[ Upstream commit 738d7d03571c7e38565bd245c0815a2c74665018 ]
 
-Add defines for bits of ECR, RCR control registers, TX watermark etc.
+On shared memory CPPC systems, with amd_pstate=active mode, the change
+in scaling_max_freq doesn't get written to the shared memory
+region. Due to this, the writes to the scaling_max_freq sysfs file
+don't take effect. Fix this by propagating the scaling_max_freq
+changes to the shared memory region.
 
-Signed-off-by: Csókás Bence <csokas.bence@prolan.hu>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/20240212153717.10023-1-csokas.bence@prolan.hu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c32fe1986f27 ("net: fec: Fix FEC_ECR_EN1588 being cleared on link-down")
+Fixes: ffa5096a7c33 ("cpufreq: amd-pstate: implement Pstate EPP support for the AMD processors")
+Reported-by: David Arcari <darcari@redhat.com>
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20240702081413.5688-3-Dhananjay.Ugwekar@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 46 +++++++++++++++--------
- 1 file changed, 30 insertions(+), 16 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 43 +++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index d675f9d5f3612..08d6d7a6ac42e 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -283,8 +283,8 @@ MODULE_PARM_DESC(macaddr, "FEC Ethernet MAC address");
- #define PKT_MINBUF_SIZE		64
- 
- /* FEC receive acceleration */
--#define FEC_RACC_IPDIS		(1 << 1)
--#define FEC_RACC_PRODIS		(1 << 2)
-+#define FEC_RACC_IPDIS		BIT(1)
-+#define FEC_RACC_PRODIS		BIT(2)
- #define FEC_RACC_SHIFT16	BIT(7)
- #define FEC_RACC_OPTIONS	(FEC_RACC_IPDIS | FEC_RACC_PRODIS)
- 
-@@ -316,8 +316,23 @@ MODULE_PARM_DESC(macaddr, "FEC Ethernet MAC address");
- #define FEC_MMFR_TA		(2 << 16)
- #define FEC_MMFR_DATA(v)	(v & 0xffff)
- /* FEC ECR bits definition */
--#define FEC_ECR_MAGICEN		(1 << 2)
--#define FEC_ECR_SLEEP		(1 << 3)
-+#define FEC_ECR_RESET           BIT(0)
-+#define FEC_ECR_ETHEREN         BIT(1)
-+#define FEC_ECR_MAGICEN         BIT(2)
-+#define FEC_ECR_SLEEP           BIT(3)
-+#define FEC_ECR_EN1588          BIT(4)
-+#define FEC_ECR_BYTESWP         BIT(8)
-+/* FEC RCR bits definition */
-+#define FEC_RCR_LOOP            BIT(0)
-+#define FEC_RCR_HALFDPX         BIT(1)
-+#define FEC_RCR_MII             BIT(2)
-+#define FEC_RCR_PROMISC         BIT(3)
-+#define FEC_RCR_BC_REJ          BIT(4)
-+#define FEC_RCR_FLOWCTL         BIT(5)
-+#define FEC_RCR_RMII            BIT(8)
-+#define FEC_RCR_10BASET         BIT(9)
-+/* TX WMARK bits */
-+#define FEC_TXWMRK_STRFWD       BIT(8)
- 
- #define FEC_MII_TIMEOUT		30000 /* us */
- 
-@@ -1041,7 +1056,7 @@ fec_restart(struct net_device *ndev)
- 	struct fec_enet_private *fep = netdev_priv(ndev);
- 	u32 temp_mac[2];
- 	u32 rcntl = OPT_FRAME_SIZE | 0x04;
--	u32 ecntl = 0x2; /* ETHEREN */
-+	u32 ecntl = FEC_ECR_ETHEREN;
- 
- 	/* Whack a reset.  We should wait for this.
- 	 * For i.MX6SX SOC, enet use AXI bus, we use disable MAC
-@@ -1116,18 +1131,18 @@ fec_restart(struct net_device *ndev)
- 		    fep->phy_interface == PHY_INTERFACE_MODE_RGMII_TXID)
- 			rcntl |= (1 << 6);
- 		else if (fep->phy_interface == PHY_INTERFACE_MODE_RMII)
--			rcntl |= (1 << 8);
-+			rcntl |= FEC_RCR_RMII;
- 		else
--			rcntl &= ~(1 << 8);
-+			rcntl &= ~FEC_RCR_RMII;
- 
- 		/* 1G, 100M or 10M */
- 		if (ndev->phydev) {
- 			if (ndev->phydev->speed == SPEED_1000)
- 				ecntl |= (1 << 5);
- 			else if (ndev->phydev->speed == SPEED_100)
--				rcntl &= ~(1 << 9);
-+				rcntl &= ~FEC_RCR_10BASET;
- 			else
--				rcntl |= (1 << 9);
-+				rcntl |= FEC_RCR_10BASET;
- 		}
- 	} else {
- #ifdef FEC_MIIGSK_ENR
-@@ -1186,13 +1201,13 @@ fec_restart(struct net_device *ndev)
- 
- 	if (fep->quirks & FEC_QUIRK_ENET_MAC) {
- 		/* enable ENET endian swap */
--		ecntl |= (1 << 8);
-+		ecntl |= FEC_ECR_BYTESWP;
- 		/* enable ENET store and forward mode */
--		writel(1 << 8, fep->hwp + FEC_X_WMRK);
-+		writel(FEC_TXWMRK_STRFWD, fep->hwp + FEC_X_WMRK);
- 	}
- 
- 	if (fep->bufdesc_ex)
--		ecntl |= (1 << 4);
-+		ecntl |= FEC_ECR_EN1588;
- 
- 	if (fep->quirks & FEC_QUIRK_DELAYED_CLKS_SUPPORT &&
- 	    fep->rgmii_txc_dly)
-@@ -1291,7 +1306,7 @@ static void
- fec_stop(struct net_device *ndev)
- {
- 	struct fec_enet_private *fep = netdev_priv(ndev);
--	u32 rmii_mode = readl(fep->hwp + FEC_R_CNTRL) & (1 << 8);
-+	u32 rmii_mode = readl(fep->hwp + FEC_R_CNTRL) & FEC_RCR_RMII;
- 	u32 val;
- 
- 	/* We cannot expect a graceful transmit stop without link !!! */
-@@ -1310,7 +1325,7 @@ fec_stop(struct net_device *ndev)
- 		if (fep->quirks & FEC_QUIRK_HAS_MULTI_QUEUES) {
- 			writel(0, fep->hwp + FEC_ECNTRL);
- 		} else {
--			writel(1, fep->hwp + FEC_ECNTRL);
-+			writel(FEC_ECR_RESET, fep->hwp + FEC_ECNTRL);
- 			udelay(10);
- 		}
- 	} else {
-@@ -1324,12 +1339,11 @@ fec_stop(struct net_device *ndev)
- 	/* We have to keep ENET enabled to have MII interrupt stay working */
- 	if (fep->quirks & FEC_QUIRK_ENET_MAC &&
- 		!(fep->wol_flag & FEC_WOL_FLAG_SLEEP_ON)) {
--		writel(2, fep->hwp + FEC_ECNTRL);
-+		writel(FEC_ECR_ETHEREN, fep->hwp + FEC_ECNTRL);
- 		writel(rmii_mode, fep->hwp + FEC_R_CNTRL);
- 	}
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 9ad62dbe8bfbf..a092b13ffbc2f 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -247,6 +247,26 @@ static int amd_pstate_get_energy_pref_index(struct amd_cpudata *cpudata)
+ 	return index;
  }
  
--
- static void
- fec_timeout(struct net_device *ndev, unsigned int txqueue)
++static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
++			       u32 des_perf, u32 max_perf, bool fast_switch)
++{
++	if (fast_switch)
++		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
++	else
++		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
++			      READ_ONCE(cpudata->cppc_req_cached));
++}
++
++DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
++
++static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
++					  u32 min_perf, u32 des_perf,
++					  u32 max_perf, bool fast_switch)
++{
++	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
++					    max_perf, fast_switch);
++}
++
+ static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
  {
+ 	int ret;
+@@ -263,6 +283,9 @@ static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
+ 		if (!ret)
+ 			cpudata->epp_cached = epp;
+ 	} else {
++		amd_pstate_update_perf(cpudata, cpudata->min_limit_perf, 0U,
++					     cpudata->max_limit_perf, false);
++
+ 		perf_ctrls.energy_perf = epp;
+ 		ret = cppc_set_epp_perf(cpudata->cpu, &perf_ctrls, 1);
+ 		if (ret) {
+@@ -452,16 +475,6 @@ static inline int amd_pstate_init_perf(struct amd_cpudata *cpudata)
+ 	return static_call(amd_pstate_init_perf)(cpudata);
+ }
+ 
+-static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
+-			       u32 des_perf, u32 max_perf, bool fast_switch)
+-{
+-	if (fast_switch)
+-		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
+-	else
+-		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
+-			      READ_ONCE(cpudata->cppc_req_cached));
+-}
+-
+ static void cppc_update_perf(struct amd_cpudata *cpudata,
+ 			     u32 min_perf, u32 des_perf,
+ 			     u32 max_perf, bool fast_switch)
+@@ -475,16 +488,6 @@ static void cppc_update_perf(struct amd_cpudata *cpudata,
+ 	cppc_set_perf(cpudata->cpu, &perf_ctrls);
+ }
+ 
+-DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
+-
+-static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
+-					  u32 min_perf, u32 des_perf,
+-					  u32 max_perf, bool fast_switch)
+-{
+-	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
+-					    max_perf, fast_switch);
+-}
+-
+ static inline bool amd_pstate_sample(struct amd_cpudata *cpudata)
+ {
+ 	u64 aperf, mperf, tsc;
 -- 
 2.43.0
 
