@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8081A76A4;
-	Tue, 30 Jul 2024 17:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7252C1A76A4;
+	Tue, 30 Jul 2024 17:19:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359951; cv=none; b=YvDtkqtURWMe5rVU+/1ZAp6Jb+0ZM1MvogBjZc5urxtMdivHE53vUdEX2iWP1XFc02awuFG3CX/HKERoKwX7vUFI6ClrHcJyYYDo8V7+MrRbqKhHnfho6WlXG4wD8k+DvTFbHw9SY3NgyLbUe5tmLtdMB4AMRTWz23XsX95MAI8=
+	t=1722359954; cv=none; b=jP+Ol4nBktSqwPlS9vpupKtPeG06z7hV11csmIFf+1VDDnPDYT7wOa9xsghcrDaooBxHWNVGV5jfRwKaeyiuvE0HrBu1KacS6IfUFTHnUjj6jl19bxk1rj71LyZyoQMn4lGnEBYbsnIuxIvJsZEbwmO0rLoMmkUIpvdmN6acBdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359951; c=relaxed/simple;
-	bh=uUshivuwMt2u8I85yYt8Ra5W/1CzlGGXeQbZYslywd0=;
+	s=arc-20240116; t=1722359954; c=relaxed/simple;
+	bh=MPOZpT/b3ZiDjJVK5ONHJ8dVk7YyZxNYjfZZ/8Fa35k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRduDqflNkH6dgnWfSG5WZ7p6uClH/iUFbF2+3M/cX9vQQBfmIAjUnWkxqsfIUB9ZFo+nMUNVf8vuAlhz49WOpWtDeKB+K7bRNzBUlsDg3lMS/U+CoCSnqsa/OctD7RsfeI8QgS2fOCadw8YaQyll6ekjVBstsd/yc3t9PtjlN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IlovGSNY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmISEL+n+xGZRDMEQm5ogdtHWH/z/tWVcJhQugjw8eONyTrJVBHXFM0FftGBptr8UdKXjoTnTXizgO+ezItOCiYtnAVVtRRSy+WANnv4SOwDbabduxe1RdRgA04lOO2aZbuyQk6ucLNmGl/vLDsjFT/FMHW3kXkjuGt6Tuz0VjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zv4JYzpE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IlovGSNY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDCA8C32782;
-	Tue, 30 Jul 2024 17:19:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zv4JYzpE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFE8C32782;
+	Tue, 30 Jul 2024 17:19:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359950;
-	bh=uUshivuwMt2u8I85yYt8Ra5W/1CzlGGXeQbZYslywd0=;
+	s=korg; t=1722359954;
+	bh=MPOZpT/b3ZiDjJVK5ONHJ8dVk7YyZxNYjfZZ/8Fa35k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IlovGSNY55ycFxrXHtaLLQT47nCd2twDtAfiudXEPTcTWhq43KqRyZHgvQA1ojJzf
-	 IppF/OYvJraCNFO3cGpI4/HAm0rPcLihuAJbAq5eoo8010LjMwwB+80YaYBfkTm7+S
-	 fECirqr7WAJpv3SfrGC7epFxor2cTybiiuOAR7Y4=
+	b=Zv4JYzpEaamdDWklhFx7yKO7BOvobQE4K1QjCEikYwdeVt7KyGI/4PIqDwQNmVids
+	 PQw9k9Glx8Dv+CDmtNMQXJEbxcBP4CvLTKMaBbOnx/vFkFhGB+F42+WLCdMzmYErMk
+	 5DKqACBhu4iYg/0UTNLQ5J52PoZksgnEVvRB7vKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.10 558/809] NFSD: Support write delegations in LAYOUTGET
-Date: Tue, 30 Jul 2024 17:47:14 +0200
-Message-ID: <20240730151746.800250245@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 560/568] ASoC: TAS2781: Fix tasdev_load_calibrated_data()
+Date: Tue, 30 Jul 2024 17:51:07 +0200
+Message-ID: <20240730151702.045452333@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +47,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit abc02e5602f7bf9bbae1e8999570a2ad5114578c upstream.
+[ Upstream commit 92c78222168e9035a9bfb8841c2e56ce23e51f73 ]
 
-I noticed LAYOUTGET(LAYOUTIOMODE4_RW) returning NFS4ERR_ACCESS
-unexpectedly. The NFS client had created a file with mode 0444, and
-the server had returned a write delegation on the OPEN(CREATE). The
-client was requesting a RW layout using the write delegation stateid
-so that it could flush file modifications.
+This function has a reversed if statement so it's either a no-op or it
+leads to a NULL dereference.
 
-Creating a read-only file does not seem to be problematic for
-NFSv4.1 without pNFS, so I began looking at NFSD's implementation of
-LAYOUTGET.
-
-The failure was because fh_verify() was doing a permission check as
-part of verifying the FH presented during the LAYOUTGET. It uses the
-loga_iomode value to specify the @accmode argument to fh_verify().
-fh_verify(MAY_WRITE) on a file whose mode is 0444 fails with -EACCES.
-
-To permit LAYOUT* operations in this case, add OWNER_OVERRIDE when
-checking the access permission of the incoming file handle for
-LAYOUTGET and LAYOUTCOMMIT.
-
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: stable@vger.kernel.org # v6.6+
-Message-Id: 4E9C0D74-A06D-4DC3-A48A-73034DC40395@oracle.com
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b195acf5266d ("ASoC: tas2781: Fix wrong loading calibrated data sequence")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/18a29b68-cc85-4139-b7c7-2514e8409a42@stanley.mountain
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/codecs/tas2781-fmwlib.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -2269,7 +2269,7 @@ nfsd4_layoutget(struct svc_rqst *rqstp,
- 	const struct nfsd4_layout_ops *ops;
- 	struct nfs4_layout_stateid *ls;
- 	__be32 nfserr;
--	int accmode = NFSD_MAY_READ_IF_EXEC;
-+	int accmode = NFSD_MAY_READ_IF_EXEC | NFSD_MAY_OWNER_OVERRIDE;
+diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
+index 32ff4fb14998e..41ad82a429163 100644
+--- a/sound/soc/codecs/tas2781-fmwlib.c
++++ b/sound/soc/codecs/tas2781-fmwlib.c
+@@ -2193,7 +2193,7 @@ static void tasdev_load_calibrated_data(struct tasdevice_priv *priv, int i)
+ 		return;
  
- 	switch (lgp->lg_seg.iomode) {
- 	case IOMODE_READ:
-@@ -2359,7 +2359,8 @@ nfsd4_layoutcommit(struct svc_rqst *rqst
- 	struct nfs4_layout_stateid *ls;
- 	__be32 nfserr;
+ 	cal = cal_fmw->calibrations;
+-	if (cal)
++	if (!cal)
+ 		return;
  
--	nfserr = fh_verify(rqstp, current_fh, 0, NFSD_MAY_WRITE);
-+	nfserr = fh_verify(rqstp, current_fh, 0,
-+			   NFSD_MAY_WRITE | NFSD_MAY_OWNER_OVERRIDE);
- 	if (nfserr)
- 		goto out;
- 
+ 	load_calib_data(priv, &cal->dev_data);
+-- 
+2.43.0
+
 
 
