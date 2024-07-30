@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33361183CCD;
-	Tue, 30 Jul 2024 16:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05786183CD5;
+	Tue, 30 Jul 2024 16:07:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355664; cv=none; b=rppQgoSohgGQ0PEhtPPhPKgdY7ZMD/YZ4zUb9ZySHGCUagkUcAQ4xFk32YIxNgrxr+BupSs594XqY3v99FLfK+MIGY9jbaOrBbsQK5dN4u88G6zQaRhAqdtGXlj37L9E0BEdHFI5Ddzl2Hm2PYlSVmWeLH9gQ5XpAGDR0Nbbuso=
+	t=1722355667; cv=none; b=GdbDuA6R+NWGbqXWI0JqJEg7GUCACuHbzyagaZ6gbs30Txq9GT5Q0ez++P1TFj6DIethSVh4vxMnVO2IUEox3MODb5O6cS4aoEmJgkf7d1ko5CtJrNJiR8OhD9OWxjlV7ooV+ckf5oUvE8AsCd1yWdS7u9trQOgzxNFW+lmIGqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355664; c=relaxed/simple;
-	bh=TDxNT3gzq0vJ3UAiVil0M3rDtE0POjqY7k5G/1QJNqM=;
+	s=arc-20240116; t=1722355667; c=relaxed/simple;
+	bh=kDl+jRaJUSe3t746bjzJXRzDGxUHCeBlZEIPAMvL1UQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSiNXThghRZEU+jhod91KuTF9MTUdUnbsx1mIqUyokaVkPxHQdXS1UD1wiKhWyFB+D61hxJEGjHaXDxBMagEqz9irJBPXqgFKb5WWjW8A7gSzJ6iyVlFbcp+ZF9G9EO+zQkgGtg8m/j8ZMst/j91JkrUx+OVyid4IskvXivhyxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xtbQjDx5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Aj2IBbmW7++iCqGdl61CeTrEIPg7SEkgNsFibPrlt9yQy4y0rpDIC2Utdmo/ppqZRQxqYc7VA3kPoCaGriCgnOFtN6hsL9D9//8+mCO8t58Bx+veacHMWJoIF8cDcRSX3lt/9NNrpHO5E0CApy/5dKxFCBVS8hNd1HJvMV6olYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JeWvnPuO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xtbQjDx5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E6CC32782;
-	Tue, 30 Jul 2024 16:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JeWvnPuO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD50C32782;
+	Tue, 30 Jul 2024 16:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355663;
-	bh=TDxNT3gzq0vJ3UAiVil0M3rDtE0POjqY7k5G/1QJNqM=;
+	s=korg; t=1722355666;
+	bh=kDl+jRaJUSe3t746bjzJXRzDGxUHCeBlZEIPAMvL1UQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtbQjDx5BFnr2/adDaD2P0RCqdzv3wvm+wz0XVf1HK/xDAPls2X2xlpFl0Un/GVku
-	 3CWlIhC2jSsqYGTwyTdtzyplS0OOYUX6BysKiDpUhfgANIYLnWgIotiqRzeA8qxoTc
-	 j3z3KUuU7PzaN1ATAAbm++8bXV7i2dX0wuxZToiM=
+	b=JeWvnPuOg8gM32WY+zzXtTOIrdNRfnqDgGIzW9uRvU/cZMGGfqKglX0Zg4vFDtVZl
+	 vrOsr3ImkUajBGqvGDDqHMdJPPC334P1uzVZgfkAsoz5s/1WDyUBJZGVDEnIRbrvxR
+	 yT3XpUAepcMP0aYWLYdTAASRU2GTurlAdLalHl1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/440] selftests/bpf: Close fd in error path in drop_on_reuseport
-Date: Tue, 30 Jul 2024 17:45:52 +0200
-Message-ID: <20240730151620.536771035@linuxfoundation.org>
+Subject: [PATCH 6.6 079/568] arm64: dts: amlogic: setup hdmi system clock
+Date: Tue, 30 Jul 2024 17:43:06 +0200
+Message-ID: <20240730151642.949895254@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,42 +47,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit adae187ebedcd95d02f045bc37dfecfd5b29434b ]
+[ Upstream commit 1443b6ea806dfcdcee6c894784332c9c947ac319 ]
 
-In the error path when update_lookup_map() fails in drop_on_reuseport in
-prog_tests/sk_lookup.c, "server1", the fd of server 1, should be closed.
-This patch fixes this by using "goto close_srv1" lable instead of "detach"
-to close "server1" in this case.
+HDMI Tx needs the system clock set on the xtal rate.
+This clock is managed by the main clock controller of the related SoCs.
 
-Fixes: 0ab5539f8584 ("selftests/bpf: Tests for BPF_SK_LOOKUP attach point")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Link: https://lore.kernel.org/r/86aed33b4b0ea3f04497c757845cff7e8e621a2d.1720515893.git.tanggeliang@kylinos.cn
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Currently 2 part of the display drivers race to setup the HDMI system
+clock by directly poking the controller register. The clock API should
+be used to setup the rate instead.
+
+Use assigned-clock to setup the HDMI system clock.
+
+Fixes: 6939db7e0dbf ("ARM64: dts: meson-gx: Add support for HDMI output")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20240626152733.1350376-3-jbrunet@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/sk_lookup.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 5 +++++
+ arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi       | 5 +++++
+ arch/arm64/boot/dts/amlogic/meson-gxl.dtsi        | 5 +++++
+ 3 files changed, 15 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-index 597d0467a9267..de2466547efe0 100644
---- a/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-+++ b/tools/testing/selftests/bpf/prog_tests/sk_lookup.c
-@@ -994,7 +994,7 @@ static void drop_on_reuseport(const struct test *t)
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+index ff68b911b7297..0ff0d090548d0 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+@@ -215,6 +215,11 @@ hdmi_tx: hdmi-tx@0 {
+ 				#sound-dai-cells = <0>;
+ 				status = "disabled";
  
- 	err = update_lookup_map(t->sock_map, SERVER_A, server1);
- 	if (err)
--		goto detach;
-+		goto close_srv1;
++				assigned-clocks = <&clkc CLKID_HDMI_SEL>,
++						  <&clkc CLKID_HDMI>;
++				assigned-clock-parents = <&xtal>, <0>;
++				assigned-clock-rates = <0>, <24000000>;
++
+ 				/* VPU VENC Input */
+ 				hdmi_tx_venc_port: port@0 {
+ 					reg = <0>;
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
+index 041c37b809f27..ed00e67e6923a 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
+@@ -316,6 +316,11 @@ &hdmi_tx {
+ 		 <&clkc CLKID_GCLK_VENCI_INT0>;
+ 	clock-names = "isfr", "iahb", "venci";
+ 	power-domains = <&pwrc PWRC_GXBB_VPU_ID>;
++
++	assigned-clocks = <&clkc CLKID_HDMI_SEL>,
++			  <&clkc CLKID_HDMI>;
++	assigned-clock-parents = <&xtal>, <0>;
++	assigned-clock-rates = <0>, <24000000>;
+ };
  
- 	/* second server on destination address we should never reach */
- 	server2 = make_server(t->sotype, t->connect_to.ip, t->connect_to.port,
+ &sysctrl {
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+index 067108800a58d..f58d1790de1cb 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+@@ -328,6 +328,11 @@ &hdmi_tx {
+ 		 <&clkc CLKID_GCLK_VENCI_INT0>;
+ 	clock-names = "isfr", "iahb", "venci";
+ 	power-domains = <&pwrc PWRC_GXBB_VPU_ID>;
++
++	assigned-clocks = <&clkc CLKID_HDMI_SEL>,
++			  <&clkc CLKID_HDMI>;
++	assigned-clock-parents = <&xtal>, <0>;
++	assigned-clock-rates = <0>, <24000000>;
+ };
+ 
+ &sysctrl {
 -- 
 2.43.0
 
