@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9DD1E86F;
-	Tue, 30 Jul 2024 17:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674F71E86F;
+	Tue, 30 Jul 2024 17:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359105; cv=none; b=kV7aen95ra/7KNAwhq8wBZy4Oyry29Rnb5sACH3KxjLgR5q5kv2T+uM3/d9eejBWUu52/uHV/8Yado2uuR/o6Pes+xCQyGkZWci1IVqGpN/vUMwrtnsjSkCx/pFvjxjDHJkJKEIOekifo2n2UsAfJUG0INYmHs4dh9TPExfEOcQ=
+	t=1722359108; cv=none; b=t+dTHKbs4FIhgrbtruy1nWZFTsqKd8FSapOx5mqoqeHIZqR6lswYLfaTB8Ri5kneDKEsY2OXIzcjt4ZZHlw3HdWdAHTdHDrKrfnXsNAssdlWH+RySO0b61BPrAsiTevfyFH0J1E3Pw2hTs1frbTYEMFw3v+PVCxIpr0nucOQyCY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359105; c=relaxed/simple;
-	bh=x93FIBFFlyTx6hsCgiqtJ+NHzashEu5HsErzhVGgpxk=;
+	s=arc-20240116; t=1722359108; c=relaxed/simple;
+	bh=U+Ek3Bcs76dEdLg3k6rJhVWDe/uRtpKgudrbqzN9RdA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7MebZdXBCDBL4vHeofEYVSwYOqgcwm9oyQfzwXcZIggrLSgNDEWEUbeTM1aZSHCFMuEU+o/fIoiJuGH920RDUtxut23Urlsnt3eGrwUs96Jefp3I4MWOZptoCZYROo1YKt4yz/s4GCwDy+hSDOnwu8o/hsm9e8Q8xRVqZ3k8Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNjbVBfr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LaRFt2pfWGLuLznOHynGEut5Vnx7l36YQyG6sifEeRWvF1XI82wYCWNBRhIL8iPCVouIf1WaHQJPrvLUUQDA/qTY7ZO6916T9/mRCeT4Zu/akAqjYGS8Um3sAzHZuBDNJY+yOq6uQmHBE0XU5nNIg/dv6/fUCCVGn5gdx/fO3OM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A18vKCOJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNjbVBfr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77857C4AF17;
-	Tue, 30 Jul 2024 17:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A18vKCOJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39CAC32782;
+	Tue, 30 Jul 2024 17:05:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359105;
-	bh=x93FIBFFlyTx6hsCgiqtJ+NHzashEu5HsErzhVGgpxk=;
+	s=korg; t=1722359108;
+	bh=U+Ek3Bcs76dEdLg3k6rJhVWDe/uRtpKgudrbqzN9RdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNjbVBfrDgEPzfFpDTgNwK+EjLuTzQIfa5hAQ0EjEJswkGgVsE1TDMNDHhZVOOM9B
-	 wnbeQt5lLeZXZ6E+KWbbth0mGK28NMJliN3U9GXQpoY1F7UK3jRmvzAfLPydp/H/99
-	 waFwT7A03cKGjAZoOTE4StmcAYPzilElidQZEda4=
+	b=A18vKCOJAqFG5diaciFOA3MXNf5UKD0eTDKsuzK+tjnRtiNT27gXXZLwvbEHNQXkr
+	 sOO8Eca5NjCriyfyAR9LfGg+Sheqe/9Ptf6/S0JYpLqfr3cpiR68t9ozQ0VBm6aTKW
+	 hNPTd443wsmzqshwJ3qX9Op3cZy/O7yqXp/ERrnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Ma <maqianga@uniontech.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.6 432/568] efi/libstub: Zero initialize heap allocated struct screen_info
-Date: Tue, 30 Jul 2024 17:48:59 +0200
-Message-ID: <20240730151656.753869427@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 434/809] RDMA/device: Return error earlier if port in not valid
+Date: Tue, 30 Jul 2024 17:45:10 +0200
+Message-ID: <20240730151741.845372756@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,36 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qiang Ma <maqianga@uniontech.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit ee8b8f5d83eb2c9caaebcf633310905ee76856e9 upstream.
+[ Upstream commit 917918f57a7b139c043e78c502876f2c286f4f0a ]
 
-After calling uefi interface allocate_pool to apply for memory, we
-should clear 0 to prevent the possibility of using random values.
+There is no need to allocate port data if port provided is not valid.
 
-Signed-off-by: Qiang Ma <maqianga@uniontech.com>
-Cc: <stable@vger.kernel.org> # v6.6+
-Fixes: 732ea9db9d8a ("efi: libstub: Move screen_info handling to common code")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c2261dd76b54 ("RDMA/device: Add ib_device_set_netdev() as an alternative to get_netdev")
+Link: https://lore.kernel.org/r/022047a8b16988fc88d4426da50bf60a4833311b.1719235449.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/libstub/screen_info.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/core/device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/firmware/efi/libstub/screen_info.c
-+++ b/drivers/firmware/efi/libstub/screen_info.c
-@@ -32,6 +32,8 @@ struct screen_info *__alloc_screen_info(
- 	if (status != EFI_SUCCESS)
- 		return NULL;
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 55aa7aa32d4ab..e0cff28bb0ef1 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2146,6 +2146,9 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 	unsigned long flags;
+ 	int ret;
  
-+	memset(si, 0, sizeof(*si));
++	if (!rdma_is_port_valid(ib_dev, port))
++		return -EINVAL;
 +
- 	status = efi_bs_call(install_configuration_table,
- 			     &screen_info_guid, si);
- 	if (status == EFI_SUCCESS)
+ 	/*
+ 	 * Drivers wish to call this before ib_register_driver, so we have to
+ 	 * setup the port data early.
+@@ -2154,9 +2157,6 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 	if (ret)
+ 		return ret;
+ 
+-	if (!rdma_is_port_valid(ib_dev, port))
+-		return -EINVAL;
+-
+ 	pdata = &ib_dev->port_data[port];
+ 	spin_lock_irqsave(&pdata->netdev_lock, flags);
+ 	old_ndev = rcu_dereference_protected(
+-- 
+2.43.0
+
 
 
