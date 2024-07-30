@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D921A76B4;
-	Tue, 30 Jul 2024 17:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04CB1A76BF;
+	Tue, 30 Jul 2024 17:28:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360489; cv=none; b=fAzABBcWkT11+DiiGcCkBZ0dlpnpAjGETm8u78mLlJKSIUGAiI0sS6PMI5VWA3GnGJsUoY8eefKC51L9HCqsN9iefpMQSSH00DPzCFKT+XQAdcAk5xe1X5tBHoayfSoIHosQVtrRXjIckzXfrCvsoYb3SubqeRMTx+8J/q5+iLU=
+	t=1722360492; cv=none; b=pSH8ns9cqlJ8TCjMHHdxao8171fp2glN4CIVK9lGFFpSDrRNAw0GKksG0rQT47wnH8WjvybtsvQR4Aa6qAw0DcnTAq2QGQLcCvyNU3HRV18E1HoSDDJ66SrcsUWaFtAH/anRjZYuLH4TZceVy60Ai5fUZaeOms2H/70SLJVpzTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360489; c=relaxed/simple;
-	bh=cLnBu0zbIEf1G/m7oWoBGuoA24TWAwhYLlgSejXeGQQ=;
+	s=arc-20240116; t=1722360492; c=relaxed/simple;
+	bh=kO7wDDJ1y5yl2qg2c3nQpeg13qyVqr4NBPJP4qpnBP8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUiWh8IXYXzT3z0bcadfysdbjVQTlQzgfwrvL/64xY4dO9tdwxEXCQqcS35xFkb9466A3Bx42PFkqezl4uJiKp4Z6szAIJ/iDur0mM868UNHpzhcRzJ7h7+n0d7RAFl1MBGw6aWqTUasCSW+Uafu9H0c7S1tQ2WbkrAgTRJjQKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXyQvE1B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pNLX4pAWkmL2dsDA93FTNOojJxBW6JNgnVMBYHrU682FMdq/WV4/uIKhQpjh4kOyNg/BP/5hK2o35Z2oqOZwAHFxolAPmNerkSVX4laqC0avRIk0p3r/A79moO4Hck0iADENXsKF3As53cuH3Zty0MjiXZ4e6iCju/l6fiCBB74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UYZBg53S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXyQvE1B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F85C32782;
-	Tue, 30 Jul 2024 17:28:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UYZBg53S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A17C4AF0A;
+	Tue, 30 Jul 2024 17:28:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360489;
-	bh=cLnBu0zbIEf1G/m7oWoBGuoA24TWAwhYLlgSejXeGQQ=;
+	s=korg; t=1722360492;
+	bh=kO7wDDJ1y5yl2qg2c3nQpeg13qyVqr4NBPJP4qpnBP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXyQvE1BjDAyZTRJG9he1qDJ/ZtlbuSE38A2Tg0vL5GCFOayZnnZwSjCzReVmwPi3
-	 8PmyeQsl/7bwymDkXNaOAp47FC+jVx0/mVdJTTP0IlLaoQbs5wHajx6GQCV45cID9W
-	 rojXuA0EW5hk6B2q7PDbs4cY1WlXTZ6ylEkdDug8=
+	b=UYZBg53SCO5fJVFdIJIqyyvpo5uacop0nLA6RKTZ7fYYk3E0cwhxWHLg1CUlnMqUF
+	 QAwFlhoHyrG/ZhjbdBEfgO4Vqw9arU5Mn/wAD7LO56IY5VzBr9n6/NUIAEIuYFCArH
+	 eiZ7efxQBlsmOpPPUluhL+MH6NLZ6OBEh1zp0STg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.10 714/809] RDMA/iwcm: Fix a use-after-free related to destroying CM IDs
-Date: Tue, 30 Jul 2024 17:49:50 +0200
-Message-ID: <20240730151753.135270092@linuxfoundation.org>
+	Kim Phillips <kim.phillips@amd.com>,
+	Liam Merwick <liam.merwick@oracle.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	John Allen <john.allen@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.10 715/809] crypto: ccp - Fix null pointer dereference in __sev_snp_shutdown_locked
+Date: Tue, 30 Jul 2024 17:49:51 +0200
+Message-ID: <20240730151753.175192243@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,74 +54,151 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Kim Phillips <kim.phillips@amd.com>
 
-commit aee2424246f9f1dadc33faa78990c1e2eb7826e4 upstream.
+commit 468e3295774d0edce15f4ae475913b5076dd4f40 upstream.
 
-iw_conn_req_handler() associates a new struct rdma_id_private (conn_id) with
-an existing struct iw_cm_id (cm_id) as follows:
+Fix a null pointer dereference induced by DEBUG_TEST_DRIVER_REMOVE.
+Return from __sev_snp_shutdown_locked() if the psp_device or the
+sev_device structs are not initialized. Without the fix, the driver will
+produce the following splat:
 
-        conn_id->cm_id.iw = cm_id;
-        cm_id->context = conn_id;
-        cm_id->cm_handler = cma_iw_handler;
+   ccp 0000:55:00.5: enabling device (0000 -> 0002)
+   ccp 0000:55:00.5: sev enabled
+   ccp 0000:55:00.5: psp enabled
+   BUG: kernel NULL pointer dereference, address: 00000000000000f0
+   #PF: supervisor read access in kernel mode
+   #PF: error_code(0x0000) - not-present page
+   PGD 0 P4D 0
+   Oops: 0000 [#1] PREEMPT SMP DEBUG_PAGEALLOC NOPTI
+   CPU: 262 PID: 1 Comm: swapper/0 Not tainted 6.9.0-rc1+ #29
+   RIP: 0010:__sev_snp_shutdown_locked+0x2e/0x150
+   Code: 00 55 48 89 e5 41 57 41 56 41 54 53 48 83 ec 10 41 89 f7 49 89 fe 65 48 8b 04 25 28 00 00 00 48 89 45 d8 48 8b 05 6a 5a 7f 06 <4c> 8b a0 f0 00 00 00 41 0f b6 9c 24 a2 00 00 00 48 83 fb 02 0f 83
+   RSP: 0018:ffffb2ea4014b7b8 EFLAGS: 00010286
+   RAX: 0000000000000000 RBX: ffff9e4acd2e0a28 RCX: 0000000000000000
+   RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffb2ea4014b808
+   RBP: ffffb2ea4014b7e8 R08: 0000000000000106 R09: 000000000003d9c0
+   R10: 0000000000000001 R11: ffffffffa39ff070 R12: ffff9e49d40590c8
+   R13: 0000000000000000 R14: ffffb2ea4014b808 R15: 0000000000000000
+   FS:  0000000000000000(0000) GS:ffff9e58b1e00000(0000) knlGS:0000000000000000
+   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   CR2: 00000000000000f0 CR3: 0000000418a3e001 CR4: 0000000000770ef0
+   PKRU: 55555554
+   Call Trace:
+    <TASK>
+    ? __die_body+0x6f/0xb0
+    ? __die+0xcc/0xf0
+    ? page_fault_oops+0x330/0x3a0
+    ? save_trace+0x2a5/0x360
+    ? do_user_addr_fault+0x583/0x630
+    ? exc_page_fault+0x81/0x120
+    ? asm_exc_page_fault+0x2b/0x30
+    ? __sev_snp_shutdown_locked+0x2e/0x150
+    __sev_firmware_shutdown+0x349/0x5b0
+    ? pm_runtime_barrier+0x66/0xe0
+    sev_dev_destroy+0x34/0xb0
+    psp_dev_destroy+0x27/0x60
+    sp_destroy+0x39/0x90
+    sp_pci_remove+0x22/0x60
+    pci_device_remove+0x4e/0x110
+    really_probe+0x271/0x4e0
+    __driver_probe_device+0x8f/0x160
+    driver_probe_device+0x24/0x120
+    __driver_attach+0xc7/0x280
+    ? driver_attach+0x30/0x30
+    bus_for_each_dev+0x10d/0x130
+    driver_attach+0x22/0x30
+    bus_add_driver+0x171/0x2b0
+    ? unaccepted_memory_init_kdump+0x20/0x20
+    driver_register+0x67/0x100
+    __pci_register_driver+0x83/0x90
+    sp_pci_init+0x22/0x30
+    sp_mod_init+0x13/0x30
+    do_one_initcall+0xb8/0x290
+    ? sched_clock_noinstr+0xd/0x10
+    ? local_clock_noinstr+0x3e/0x100
+    ? stack_depot_save_flags+0x21e/0x6a0
+    ? local_clock+0x1c/0x60
+    ? stack_depot_save_flags+0x21e/0x6a0
+    ? sched_clock_noinstr+0xd/0x10
+    ? local_clock_noinstr+0x3e/0x100
+    ? __lock_acquire+0xd90/0xe30
+    ? sched_clock_noinstr+0xd/0x10
+    ? local_clock_noinstr+0x3e/0x100
+    ? __create_object+0x66/0x100
+    ? local_clock+0x1c/0x60
+    ? __create_object+0x66/0x100
+    ? parameq+0x1b/0x90
+    ? parse_one+0x6d/0x1d0
+    ? parse_args+0xd7/0x1f0
+    ? do_initcall_level+0x180/0x180
+    do_initcall_level+0xb0/0x180
+    do_initcalls+0x60/0xa0
+    ? kernel_init+0x1f/0x1d0
+    do_basic_setup+0x41/0x50
+    kernel_init_freeable+0x1ac/0x230
+    ? rest_init+0x1f0/0x1f0
+    kernel_init+0x1f/0x1d0
+    ? rest_init+0x1f0/0x1f0
+    ret_from_fork+0x3d/0x50
+    ? rest_init+0x1f0/0x1f0
+    ret_from_fork_asm+0x11/0x20
+    </TASK>
+   Modules linked in:
+   CR2: 00000000000000f0
+   ---[ end trace 0000000000000000 ]---
+   RIP: 0010:__sev_snp_shutdown_locked+0x2e/0x150
+   Code: 00 55 48 89 e5 41 57 41 56 41 54 53 48 83 ec 10 41 89 f7 49 89 fe 65 48 8b 04 25 28 00 00 00 48 89 45 d8 48 8b 05 6a 5a 7f 06 <4c> 8b a0 f0 00 00 00 41 0f b6 9c 24 a2 00 00 00 48 83 fb 02 0f 83
+   RSP: 0018:ffffb2ea4014b7b8 EFLAGS: 00010286
+   RAX: 0000000000000000 RBX: ffff9e4acd2e0a28 RCX: 0000000000000000
+   RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffb2ea4014b808
+   RBP: ffffb2ea4014b7e8 R08: 0000000000000106 R09: 000000000003d9c0
+   R10: 0000000000000001 R11: ffffffffa39ff070 R12: ffff9e49d40590c8
+   R13: 0000000000000000 R14: ffffb2ea4014b808 R15: 0000000000000000
+   FS:  0000000000000000(0000) GS:ffff9e58b1e00000(0000) knlGS:0000000000000000
+   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   CR2: 00000000000000f0 CR3: 0000000418a3e001 CR4: 0000000000770ef0
+   PKRU: 55555554
+   Kernel panic - not syncing: Fatal exception
+   Kernel Offset: 0x1fc00000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
 
-rdma_destroy_id() frees both the cm_id and the struct rdma_id_private. Make
-sure that cm_work_handler() does not trigger a use-after-free by only
-freeing of the struct rdma_id_private after all pending work has finished.
-
+Fixes: 1ca5614b84ee ("crypto: ccp: Add support to initialize the AMD-SP for SEV-SNP")
 Cc: stable@vger.kernel.org
-Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240605145117.397751-6-bvanassche@acm.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Reviewed-by: Liam Merwick <liam.merwick@oracle.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: John Allen <john.allen@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/core/iwcm.c |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/crypto/ccp/sev-dev.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/infiniband/core/iwcm.c
-+++ b/drivers/infiniband/core/iwcm.c
-@@ -368,8 +368,10 @@ EXPORT_SYMBOL(iw_cm_disconnect);
-  *
-  * Clean up all resources associated with the connection and release
-  * the initial reference taken by iw_create_cm_id.
-+ *
-+ * Returns true if and only if the last cm_id_priv reference has been dropped.
-  */
--static void destroy_cm_id(struct iw_cm_id *cm_id)
-+static bool destroy_cm_id(struct iw_cm_id *cm_id)
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 2102377f727b..1912bee22dd4 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1642,10 +1642,16 @@ static int sev_update_firmware(struct device *dev)
+ 
+ static int __sev_snp_shutdown_locked(int *error, bool panic)
  {
- 	struct iwcm_id_private *cm_id_priv;
- 	struct ib_qp *qp;
-@@ -439,7 +441,7 @@ static void destroy_cm_id(struct iw_cm_i
- 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
- 	}
+-	struct sev_device *sev = psp_master->sev_data;
++	struct psp_device *psp = psp_master;
++	struct sev_device *sev;
+ 	struct sev_data_snp_shutdown_ex data;
+ 	int ret;
  
--	(void)iwcm_deref_id(cm_id_priv);
-+	return iwcm_deref_id(cm_id_priv);
- }
++	if (!psp || !psp->sev_data)
++		return 0;
++
++	sev = psp->sev_data;
++
+ 	if (!sev->snp_initialized)
+ 		return 0;
  
- /*
-@@ -450,7 +452,8 @@ static void destroy_cm_id(struct iw_cm_i
-  */
- void iw_destroy_cm_id(struct iw_cm_id *cm_id)
- {
--	destroy_cm_id(cm_id);
-+	if (!destroy_cm_id(cm_id))
-+		flush_workqueue(iwcm_wq);
- }
- EXPORT_SYMBOL(iw_destroy_cm_id);
- 
-@@ -1034,7 +1037,7 @@ static void cm_work_handler(struct work_
- 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
- 			ret = process_event(cm_id_priv, &levent);
- 			if (ret)
--				destroy_cm_id(&cm_id_priv->id);
-+				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
- 		} else
- 			pr_debug("dropping event %d\n", levent.event);
- 		if (iwcm_deref_id(cm_id_priv))
+-- 
+2.45.2
+
 
 
