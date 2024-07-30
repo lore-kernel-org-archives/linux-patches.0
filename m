@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291151A76AE;
-	Tue, 30 Jul 2024 17:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724941A76D4;
+	Tue, 30 Jul 2024 17:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360109; cv=none; b=onwxsQJXALarDADgbC5thYLPJTwCaAmcoCQKsFyk9ePcLNRRoFFLqkZXtrk+tku5e7NfmyrZTEiMryuIsN878owpihub4YMQEsCIQIeSeo9O1BMOAKOF1w21MU7/drKNVE+wiUA/1FqQtAxEOCg8woAy8oLL8QqPXSM6MMfY7ng=
+	t=1722360112; cv=none; b=c91eWQkzgbte+YXz+6Afhqf50KcN9AfNIX8eTe464Xa7nBlqizvqr47+ZoUbek1QaK49yVkbc3mk6VFzy99ClLUranyXUxl6uHphmHE9sgihMdeVckfnyk5IkIYQQ2AIxehUIUwrJV3CK+ZOP7EB8U5wIr4Y4jaaMkQi2C+/8Fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360109; c=relaxed/simple;
-	bh=xyYPyAMdRmyx8kaTnYGQZiAtKq1KyAtVStohmTwy4GA=;
+	s=arc-20240116; t=1722360112; c=relaxed/simple;
+	bh=a90iyHd2Y/Tj6TripRpmu+LiwnXPsxdN2Rf1qD4XZ3o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pn51pHSXsEt5TGOpsQUtMG4svczCC4Ruo5Fo49izw+9EBqgrBy09ObV90dHMP5+FqrP1DJRuFceai7hXqFluzlXg1RlejGXR08oq/kYdUs1gFjF7DxISje2exkjHYK2NKs1wpxzN71S6FdbfCrs0jpq6m6aCTJuSBJfpb9FPoXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SS2o+cK5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bu8bBnQMXnYzgVzjRZ/hziYzCOk+6jPUFNFYetVLLidvOfeHaFvzvuCVINm/OLDY47erz12hHUpKi9wkree9vvrCphfXYKLY1dfJ9jcjW751m4/V3GxmGVBzzp3WDJdM0LcpGyl/TAVLdKU/itoJMOzZm6CylQrTUy7Y+Jnzy7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QgahCJ+y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SS2o+cK5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBF9C32782;
-	Tue, 30 Jul 2024 17:21:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QgahCJ+y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE7D9C32782;
+	Tue, 30 Jul 2024 17:21:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360109;
-	bh=xyYPyAMdRmyx8kaTnYGQZiAtKq1KyAtVStohmTwy4GA=;
+	s=korg; t=1722360112;
+	bh=a90iyHd2Y/Tj6TripRpmu+LiwnXPsxdN2Rf1qD4XZ3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SS2o+cK5+FteDtVcIH8e2OynXw/fTuOAAGHvSf4eYJvU7OlgZWFGeJSNjpYGFLCwk
-	 JxBaYODaMsKfbuc1L5gV+HBIFJm0fv0Cs8P4CdWqAJPOQteVDhLe/2iT9S18iuB4PA
-	 8LpC3bS3BpopE1e5bkv7e/nlb66Syi5LA88CMR/k=
+	b=QgahCJ+yJKXl6CNYW0MHcaJrE9ihduHwWhmcgKdprXaWg4K0T1QQqmQkeHJwbH2SF
+	 PoWs4FEgK1j2ATtpatnDhivQlNigZj+lX2l8xxgxktgCHPhJE2nIW3JLOv7qfu90ey
+	 BoCqUqfLTixUYKdgN2IuOq6u2Gwiny0E1YdLZdKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chih-Kang Chang <gary.chang@realtek.com>,
-	Po-Hao Huang <phhuang@realtek.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
 	Ping-Ke Shih <pkshih@realtek.com>
-Subject: [PATCH 6.10 600/809] wifi: rtw89: fix HW scan not aborting properly
-Date: Tue, 30 Jul 2024 17:47:56 +0200
-Message-ID: <20240730151748.528011438@linuxfoundation.org>
+Subject: [PATCH 6.10 601/809] wifi: rtw88: usb: Fix disconnection after beacon loss
+Date: Tue, 30 Jul 2024 17:47:57 +0200
+Message-ID: <20240730151748.569708321@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,75 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Po-Hao Huang <phhuang@realtek.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 669b692247d4516e252c898c0e7366a09d84d1be upstream.
+commit 28818b4d871bc93cc4f5c7c7d7c526a6a096c09c upstream.
 
-There is a length limit on the commands we send to firmware, so
-dividing to two commands is sometimes required when scanning.
-When aborting scan, we should not send second scan command to
-firmware after the first one is finished. This could cause some
-unexpected errors when we cannot receive firmware events
-(e.g. in suspend).
+When there is beacon loss, for example due to unrelated Bluetooth
+devices transmitting music nearby, the wifi connection dies soon
+after the first beacon loss message:
 
-Another case is scan happens before suspending, ieee80211_do_stop() is
-called to abort scan and driver indicate scan completion by
-ieee80211_scan_completed(), which queues event to scan work. But scan work
-might be late to execute after ieee80211_do_stop(). To correct this, driver
-indicates ieee80211_scan_completed() before returning, so that
-ieee80211_do_stop() can flush scan work properly.
+Apr 28 20:47:14 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-BEACON-LOSS
+Apr 28 20:47:15 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-DISCONNECTED bssid=... reason=4 locally_generated=1
 
-Fixes: bcbefbd032df ("wifi: rtw89: add wait/completion for abort scan")
+Apr 28 20:47:24 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-BEACON-LOSS
+Apr 28 20:47:25 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-DISCONNECTED bssid=... reason=4 locally_generated=1
+
+Apr 28 20:47:34 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-BEACON-LOSS
+Apr 28 20:47:35 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-DISCONNECTED bssid=... reason=4 locally_generated=1
+
+When the beacon loss happens, mac80211 makes rtw88 transmit a QOS
+NULL frame and asks to confirm the ACK status. Even though rtw88
+confirms to mac80211 that the QOS NULL was transmitted successfully,
+the connection still dies. This is because rtw88 is handing the QOS
+NULL back to mac80211 with skb->data pointing to the headroom (the
+TX descriptor) instead of ieee80211_hdr.
+
+Fix the disconnection by moving skb->data to the correct position
+before ieee80211_tx_status_irqsafe().
+
+The problem was observed with RTL8811AU (TP-Link Archer T2U Nano)
+and the potential future rtw88_8821au driver. Also tested with
+RTL8811CU (Tenda U9).
+
 Cc: stable@vger.kernel.org
-Co-developed-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Chih-Kang Chang <gary.chang@realtek.com>
-Signed-off-by: Po-Hao Huang <phhuang@realtek.com>
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://msgid.link/20240517013350.11278-1-pkshih@realtek.com
+Link: https://msgid.link/ecbf0601-810d-4609-b8fc-8b0e38d2948d@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtw89/fw.c  |    9 ++++++++-
- drivers/net/wireless/realtek/rtw89/mac.c |    5 ++++-
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/wireless/realtek/rtw89/fw.c
-+++ b/drivers/net/wireless/realtek/rtw89/fw.c
-@@ -6245,7 +6245,14 @@ void rtw89_hw_scan_abort(struct rtw89_de
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -273,6 +273,8 @@ static void rtw_usb_write_port_tx_comple
+ 		info = IEEE80211_SKB_CB(skb);
+ 		tx_data = rtw_usb_get_tx_data(skb);
  
- 	ret = rtw89_hw_scan_offload(rtwdev, vif, false);
- 	if (ret)
--		rtw89_hw_scan_complete(rtwdev, vif, true);
-+		rtw89_warn(rtwdev, "rtw89_hw_scan_offload failed ret %d\n", ret);
++		skb_pull(skb, rtwdev->chip->tx_pkt_desc_sz);
 +
-+	/* Indicate ieee80211_scan_completed() before returning, which is safe
-+	 * because scan abort command always waits for completion of
-+	 * RTW89_SCAN_END_SCAN_NOTIFY, so that ieee80211_stop() can flush scan
-+	 * work properly.
-+	 */
-+	rtw89_hw_scan_complete(rtwdev, vif, true);
- }
- 
- static bool rtw89_is_any_vif_connected_or_connecting(struct rtw89_dev *rtwdev)
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -4757,6 +4757,9 @@ rtw89_mac_c2h_scanofld_rsp(struct rtw89_
- 		}
- 		return;
- 	case RTW89_SCAN_END_SCAN_NOTIFY:
-+		if (rtwdev->scan_info.abort)
-+			return;
-+
- 		if (rtwvif && rtwvif->scan_req &&
- 		    last_chan < rtwvif->scan_req->n_channels) {
- 			ret = rtw89_hw_scan_offload(rtwdev, vif, true);
-@@ -4765,7 +4768,7 @@ rtw89_mac_c2h_scanofld_rsp(struct rtw89_
- 				rtw89_warn(rtwdev, "HW scan failed: %d\n", ret);
- 			}
- 		} else {
--			rtw89_hw_scan_complete(rtwdev, vif, rtwdev->scan_info.abort);
-+			rtw89_hw_scan_complete(rtwdev, vif, false);
- 		}
- 		break;
- 	case RTW89_SCAN_ENTER_OP_NOTIFY:
+ 		/* enqueue to wait for tx report */
+ 		if (info->flags & IEEE80211_TX_CTL_REQ_TX_STATUS) {
+ 			rtw_tx_report_enqueue(rtwdev, skb, tx_data->sn);
 
 
