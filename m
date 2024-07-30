@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7247183CBF;
-	Tue, 30 Jul 2024 16:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B75A187FF9;
+	Tue, 30 Jul 2024 16:13:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355995; cv=none; b=h06hU0UXgzq65dBG7nVdKVW41N3omOMc2ckVfgFEER5hq5k/uAJK/ctaQSotuTWymA/P+mojuqhY4vjfcKY0ad5gzparNF8BHPZNOORH6QT8yJqDjL5Qm0YIoIxE7nsPaVn/H0aTgkmqJDdgStNY12OeDL7EaohqLMQdrBmIQuI=
+	t=1722355998; cv=none; b=dArcoOxOwOYk/UpfHS46a0TqInfNcael4XwVv3ZbzYWApPYKEheg/EXVT6CHKJk26DlfCuRwrREKrVPRl6HTAF5/H93CFBfy1JPMgKtbRlJ1KHN6a3d715mDg1sAskOG0q62iIvmPkgUF/XLoVu2DcbAZSLUbQPLa/lfWqSHuMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355995; c=relaxed/simple;
-	bh=uVFNF/blrHjVW/6/wWH/OiCge3kFtfPPOvV+lCBlFVo=;
+	s=arc-20240116; t=1722355998; c=relaxed/simple;
+	bh=3q3M1kBh9HDuMneQrx9V4euPlO5mImnLBAqmuA9XsFg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aD0x97VJFWIvJPvJ2WbF1wPNvzNdvpjwFxywtxXTPZFiAL2A5rFsCe+GwM5GQsgkuyk4KOanOQokTzcv6wMHAknNG3xOO0wx7OLCwxHE3ti7RhOZfk5CQLcnONwUEDIkqBKx4VDtL0/xTMzQdjW69Nz8bEf97PazFqqxm7q3NSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LFp+f+ql; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GlCi/3Tt1Og8sXAot/IUVv6CjvqFcRhWchyZhzWIhfB5JWMmEklkSBc6ofqdClAV+E/BYmBTaprdl5kv6+1cAK21CIcyM0ZQmPJwVIr+ECBjkOrqx9YKEp0NNZ5X+gspBgbcrhDUSD1wOambZulSQbJQuIkDHj5f6ps3T/la/cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NxD/HFEs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LFp+f+ql"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31424C32782;
-	Tue, 30 Jul 2024 16:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NxD/HFEs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FEF9C32782;
+	Tue, 30 Jul 2024 16:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355995;
-	bh=uVFNF/blrHjVW/6/wWH/OiCge3kFtfPPOvV+lCBlFVo=;
+	s=korg; t=1722355998;
+	bh=3q3M1kBh9HDuMneQrx9V4euPlO5mImnLBAqmuA9XsFg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LFp+f+qlaHgQa/Z+D4zJ6cmtPvhDaeD74+gPZgr8BKam+7jvPbLL7/VZ2o9i2C00E
-	 PaXTb2NyVWXyARo+qT4vDF8N9+orH8KVbycdNkJ2tAVFlmg7ay0Zi1fP4ZglpGzPO8
-	 3MoHVBLMhz3OH63IBgEaDXtB9v/xkV4lX6f+7iKI=
+	b=NxD/HFEsPuKfG3uN3cpfo4w8C/eNIgoE1rRcBvKvjJbwUBQtRC+Hsigco28buDff4
+	 JgflJCI9W1VMxR8jFxtjpYyXvbe9cE98x+a6wRjHOdJAGjNaUhDNvOcWmyfmoo7Klr
+	 mBzT/BVF1xW7aJ14mIEdXIzw9mSTS97hPIGUqimY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 107/809] arm64: dts: mediatek: mt8183-pico6: Fix wake-on-X event node names
-Date: Tue, 30 Jul 2024 17:39:43 +0200
-Message-ID: <20240730151728.851620896@linuxfoundation.org>
+Subject: [PATCH 6.6 105/568] ARM: spitz: fix GPIO assignment for backlight
+Date: Tue, 30 Jul 2024 17:43:32 +0200
+Message-ID: <20240730151643.978953671@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,73 +48,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 70bf81dd2c2dedbed1f19dfc5d1d2f22474a5296 ]
+[ Upstream commit 78ab3d352f2982bf3f7e506bfbaba7afee1ed8a9 ]
 
-The wake-on-bt and wake-on-wlan nodes don't have a button- or event-
-prefix that the gpio-keys binding requires.
+GPIOs controlling backlight on Spitz and Akita are coming from GPIO
+expanders, not the pxa27xx-gpio block, correct it.
 
-Fix up the node names to satisfy the binding. While at it, also fix up
-the GPIO overriding structure for the wake-on-wlan node. Instead of
-referencing the gpio-keys node and then open coding the node, add a
-label for the event node, and use that to reference and override the
-GPIO settings.
+Additionally GPIO lookup tables operate with pin numbers rather than
+legacy GPIO numbers, fix that as well. Use raw numbers instead of legacy
+GPIO names to avoid confusion.
 
-Fixes: 055ef10ccdd4 ("arm64: dts: mt8183: Add jacuzzi pico/pico6 board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240131084043.3970576-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: ee0c8e494cc3 ("backlight: corgi: Convert to use GPIO descriptors")
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Link: https://lore.kernel.org/r/20240628180852.1738922-2-dmitry.torokhov@gmail.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts      | 8 +++-----
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi            | 2 +-
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ arch/arm/mach-pxa/spitz.c | 30 ++++++++++--------------------
+ 1 file changed, 10 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts
-index 6a7ae616512d6..0d5a11c93c681 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui-jacuzzi-pico6.dts
-@@ -17,7 +17,7 @@ bt_wakeup: bt-wakeup {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&bt_pins_wakeup>;
- 
--		wobt {
-+		event-wobt {
- 			label = "Wake on BT";
- 			gpios = <&pio 42 GPIO_ACTIVE_HIGH>;
- 			linux,code = <KEY_WAKEUP>;
-@@ -47,10 +47,8 @@ trackpad@2c {
- 	};
+diff --git a/arch/arm/mach-pxa/spitz.c b/arch/arm/mach-pxa/spitz.c
+index cc691b199429c..a42417de53f74 100644
+--- a/arch/arm/mach-pxa/spitz.c
++++ b/arch/arm/mach-pxa/spitz.c
+@@ -520,10 +520,8 @@ static struct gpiod_lookup_table spitz_ads7846_gpio_table = {
+ static struct gpiod_lookup_table spitz_lcdcon_gpio_table = {
+ 	.dev_id = "spi2.1",
+ 	.table = {
+-		GPIO_LOOKUP("gpio-pxa", SPITZ_GPIO_BACKLIGHT_CONT,
+-			    "BL_CONT", GPIO_ACTIVE_LOW),
+-		GPIO_LOOKUP("gpio-pxa", SPITZ_GPIO_BACKLIGHT_ON,
+-			    "BL_ON", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("sharp-scoop.1", 6, "BL_CONT", GPIO_ACTIVE_LOW),
++		GPIO_LOOKUP("sharp-scoop.1", 7, "BL_ON", GPIO_ACTIVE_HIGH),
+ 		{ },
+ 	},
  };
- 
--&wifi_wakeup {
--	wowlan {
--		gpios = <&pio 113 GPIO_ACTIVE_LOW>;
--	};
-+&wifi_wakeup_event {
-+	gpios = <&pio 113 GPIO_ACTIVE_LOW>;
+@@ -531,10 +529,8 @@ static struct gpiod_lookup_table spitz_lcdcon_gpio_table = {
+ static struct gpiod_lookup_table akita_lcdcon_gpio_table = {
+ 	.dev_id = "spi2.1",
+ 	.table = {
+-		GPIO_LOOKUP("gpio-pxa", AKITA_GPIO_BACKLIGHT_CONT,
+-			    "BL_CONT", GPIO_ACTIVE_LOW),
+-		GPIO_LOOKUP("gpio-pxa", AKITA_GPIO_BACKLIGHT_ON,
+-			    "BL_ON", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("i2c-max7310", 3, "BL_ON", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("i2c-max7310", 4, "BL_CONT", GPIO_ACTIVE_LOW),
+ 		{ },
+ 	},
  };
- 
- &wifi_pwrseq {
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index feb8a5acf2cd6..2fbd226bf142c 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -152,7 +152,7 @@ wifi_wakeup: wifi-wakeup {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&wifi_pins_wakeup>;
- 
--		button-wowlan {
-+		wifi_wakeup_event: event-wowlan {
- 			label = "Wake on WiFi";
- 			gpios = <&pio 113 GPIO_ACTIVE_HIGH>;
- 			linux,code = <KEY_WAKEUP>;
+@@ -941,12 +937,9 @@ static inline void spitz_i2c_init(void) {}
+ static struct gpiod_lookup_table spitz_audio_gpio_table = {
+ 	.dev_id = "spitz-audio",
+ 	.table = {
+-		GPIO_LOOKUP("sharp-scoop.0", SPITZ_GPIO_MUTE_L - SPITZ_SCP_GPIO_BASE,
+-			    "mute-l", GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP("sharp-scoop.0", SPITZ_GPIO_MUTE_R - SPITZ_SCP_GPIO_BASE,
+-			    "mute-r", GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP("sharp-scoop.1", SPITZ_GPIO_MIC_BIAS - SPITZ_SCP2_GPIO_BASE,
+-			    "mic", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("sharp-scoop.0", 3, "mute-l", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("sharp-scoop.0", 4, "mute-r", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("sharp-scoop.1", 8, "mic", GPIO_ACTIVE_HIGH),
+ 		{ },
+ 	},
+ };
+@@ -954,12 +947,9 @@ static struct gpiod_lookup_table spitz_audio_gpio_table = {
+ static struct gpiod_lookup_table akita_audio_gpio_table = {
+ 	.dev_id = "spitz-audio",
+ 	.table = {
+-		GPIO_LOOKUP("sharp-scoop.0", SPITZ_GPIO_MUTE_L - SPITZ_SCP_GPIO_BASE,
+-			    "mute-l", GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP("sharp-scoop.0", SPITZ_GPIO_MUTE_R - SPITZ_SCP_GPIO_BASE,
+-			    "mute-r", GPIO_ACTIVE_HIGH),
+-		GPIO_LOOKUP("i2c-max7310", AKITA_GPIO_MIC_BIAS - AKITA_IOEXP_GPIO_BASE,
+-			    "mic", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("sharp-scoop.0", 3, "mute-l", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("sharp-scoop.0", 4, "mute-r", GPIO_ACTIVE_HIGH),
++		GPIO_LOOKUP("i2c-max7310", 2, "mic", GPIO_ACTIVE_HIGH),
+ 		{ },
+ 	},
+ };
 -- 
 2.43.0
 
