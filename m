@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F77D1A76A9;
-	Tue, 30 Jul 2024 17:22:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF59F1A76A1;
+	Tue, 30 Jul 2024 17:22:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360122; cv=none; b=NpQMpK8f1aDzDBDRhn7u1XQXSsG2+Psv1Yjg1vT4H+Uw9jGyljFVgcYtqqx12kUvEpYXl3RFTnMmC/a90uN9ktQci03lKphbNnLEobIrrAZEMP3esLN81mvKtY9yaHNd5/BqpYp5VmLlEa3IRZg8kdW3PN7wKuVnPacePMsmlUc=
+	t=1722360125; cv=none; b=hK1L63WpwjxBugkna6TntMhT2sFbew7HuvESV23iMrQG/i/zrRgWv/qtuEG0NFhb9b+R3RdAlLzFquOKmd/C0NWyG8CEHgNAXnis+BXaJo2jL3OpLA6fXvyGsHDWHIV8QMO2HSWXG2p0LcUzgWHkNHi/rPNizXze++HWGoAW7LY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360122; c=relaxed/simple;
-	bh=0HiTSvT1hwY+Cwq0cfIj3qXIQzq8+V3iyKyRCiVTZvI=;
+	s=arc-20240116; t=1722360125; c=relaxed/simple;
+	bh=U780ATpxarjH1s0v4f6n3B/YCTaLVWLiticoHLIHS4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUSnoyaQN+dfkmi0Z6hbCrue3Tzl4gzMvvXV0KOz1SqLzuzhys9Kc/1HWfDoqXqyRXlVCbxBaCi+Z7BtDzxQQxGH9lVM8hJR3xznmMivLm0IOqquimu8jY796rJzGANEsvlc876+VYdrvtKxirO7TGX+mF/zgM+dbMKpAq68yWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wdCzWl2I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WLBFAVZ2grD5j4Q49iRu6JUd1kHYeg5gD76rtB7A3ERVBn9axc8vdQQ6PdNBHic334bSsluM01DPWt/16QtUnAp60chtBbvY1zQXtEsIO2TPt8VgySqyzncwhwBHbw/6jqFM77QTVMTbR522mOPGIlOslPHrot70odPzrFnXddA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b/g2/jzT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wdCzWl2I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FA4FC32782;
-	Tue, 30 Jul 2024 17:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b/g2/jzT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F01C32782;
+	Tue, 30 Jul 2024 17:22:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360121;
-	bh=0HiTSvT1hwY+Cwq0cfIj3qXIQzq8+V3iyKyRCiVTZvI=;
+	s=korg; t=1722360124;
+	bh=U780ATpxarjH1s0v4f6n3B/YCTaLVWLiticoHLIHS4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdCzWl2IwX5y3piwTPFxyCx6vmh/o7HLYAEYM7hFXlSXYxuw0VLhLVmnM1FMGE4pz
-	 994s0Heok/Ejti93b6BKWmZqxJjjRHUbYvIZpGJYv/ZR5wMR/Qk9wb9VXqACndrkyB
-	 suNYlPfWmuRHBt0a6p+IPxKW3IE+2AXp79taPnO0=
+	b=b/g2/jzTTBm3NjRfnzMV1OWbZG5fAp2A1wxLlPQmUxUvs9NHhTzAnC4wQmiYBKr8D
+	 Ufb9g26R7Q1SW4gArfdxs/lLMiz5SX27jcN/CzjWLFE/sF159VakVmi1KIIzJ/ddwB
+	 Aqi7y3mLiar9wuF1Q1XKVlAyIy/bxkd2LDimf2eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
-	Michal Simek <michal.simek@amd.com>
-Subject: [PATCH 6.10 604/809] drivers: soc: xilinx: check return status of get_api_version()
-Date: Tue, 30 Jul 2024 17:48:00 +0200
-Message-ID: <20240730151748.690527121@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.10 605/809] leds: ss4200: Convert PCIBIOS_* return codes to errnos
+Date: Tue, 30 Jul 2024 17:48:01 +0200
+Message-ID: <20240730151748.731011930@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -44,54 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 9b003e14801cf85a8cebeddc87bc9fc77100fdce upstream.
+commit ce068e83976140badb19c7f1307926b4b562fac4 upstream.
 
-Currently return status is not getting checked for get_api_version
-and because of that for x86 arch we are getting below smatch error.
+ich7_lpc_probe() uses pci_read_config_dword() that returns PCIBIOS_*
+codes. The error handling code assumes incorrectly it's a normal errno
+and checks for < 0. The return code is returned from the probe function
+as is but probe functions should return normal errnos.
 
-    CC      drivers/soc/xilinx/zynqmp_power.o
-drivers/soc/xilinx/zynqmp_power.c: In function 'zynqmp_pm_probe':
-drivers/soc/xilinx/zynqmp_power.c:295:12: warning: 'pm_api_version' is
-used uninitialized [-Wuninitialized]
-    295 |         if (pm_api_version < ZYNQMP_PM_VERSION)
-        |            ^
-    CHECK   drivers/soc/xilinx/zynqmp_power.c
-drivers/soc/xilinx/zynqmp_power.c:295 zynqmp_pm_probe() error:
-uninitialized symbol 'pm_api_version'.
+Remove < 0 from the check and convert PCIBIOS_* returns code using
+pcibios_err_to_errno() into normal errno before returning it.
 
-So, check return status of pm_get_api_version and return error in case
-of failure to avoid checking uninitialized pm_api_version variable.
-
-Fixes: b9b3a8be28b3 ("firmware: xilinx: Remove eemi ops for get_api_version")
-Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240515112345.24673-1-jay.buddhabhatti@amd.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: a328e95b82c1 ("leds: LED driver for Intel NAS SS4200 series (v5)")
+Cc:  <stable@vger.kernel.org>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240527132700.14260-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/xilinx/zynqmp_power.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/leds/leds-ss4200.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/soc/xilinx/zynqmp_power.c
-+++ b/drivers/soc/xilinx/zynqmp_power.c
-@@ -190,7 +190,9 @@ static int zynqmp_pm_probe(struct platfo
- 	u32 pm_api_version;
- 	struct mbox_client *client;
+--- a/drivers/leds/leds-ss4200.c
++++ b/drivers/leds/leds-ss4200.c
+@@ -356,8 +356,10 @@ static int ich7_lpc_probe(struct pci_dev
  
--	zynqmp_pm_get_api_version(&pm_api_version);
-+	ret = zynqmp_pm_get_api_version(&pm_api_version);
-+	if (ret)
-+		return ret;
+ 	nas_gpio_pci_dev = dev;
+ 	status = pci_read_config_dword(dev, PMBASE, &g_pm_io_base);
+-	if (status)
++	if (status) {
++		status = pcibios_err_to_errno(status);
+ 		goto out;
++	}
+ 	g_pm_io_base &= 0x00000ff80;
  
- 	/* Check PM API version number */
- 	if (pm_api_version < ZYNQMP_PM_VERSION)
+ 	status = pci_read_config_dword(dev, GPIO_CTRL, &gc);
+@@ -369,8 +371,9 @@ static int ich7_lpc_probe(struct pci_dev
+ 	}
+ 
+ 	status = pci_read_config_dword(dev, GPIO_BASE, &nas_gpio_io_base);
+-	if (0 > status) {
++	if (status) {
+ 		dev_info(&dev->dev, "Unable to read GPIOBASE.\n");
++		status = pcibios_err_to_errno(status);
+ 		goto out;
+ 	}
+ 	dev_dbg(&dev->dev, ": GPIOBASE = 0x%08x\n", nas_gpio_io_base);
 
 
