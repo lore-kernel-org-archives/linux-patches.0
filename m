@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FF96189900;
-	Tue, 30 Jul 2024 16:06:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D1E1898EF;
+	Tue, 30 Jul 2024 16:06:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355563; cv=none; b=UY6U1bUtAnb3pfFAPWZXfgvgsvbAKZmvSOlxvfDy0X3HBQHS36GSvhW2948RINceUIzjcHVkThcMuwtdOTKi2+xQm0Hk6fuXY5VIKX+Jzeo50rkpVgZRnqJaHUrERNYf7maJHthlLuTDgxU5A2vpQJuLUnOlkwQUXYYGBlQYHOU=
+	t=1722355566; cv=none; b=jDJb0a1DrzNL+Wb6hO3ZhUKc9asDpKMyEpBEunLT1wf6yP2UTspwqRC1H0jnMJhNSTaKNjOpI3adrkrVEJ49OgdrnGeGnK959t0y634LMC/TRpRAU1gJVwmwX3JufSFapJxsBktsek0Z79QihfZKou340T60unlBCW/mre0mB2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355563; c=relaxed/simple;
-	bh=w6vlrWJk8tw9/cJrMxjicLEGExLIoDA8qh1o+jq9B/Y=;
+	s=arc-20240116; t=1722355566; c=relaxed/simple;
+	bh=fIMWShCXcltBdBPi0de4l1LyYoOolwpIDmZEcqEBwrg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYrXqT2i5JQL0qIzUbI7shkhRhNSIc9w4eDdNTRMuYBh38oAFYKdGeoqM8FYkRfy578HXK3pZq9xnKlMTvn8tOV/iFt+sT9Nngc8rzFBlhhUQ6IIRXogjjrwL3YMRQDaDVJMP2kLmwTsWw33tTX4M/wNGVsbAdMf0She4ckwUtE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lF4S1Mn0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cS9Zu7B2EBgZydeNtNMXb3qzpyMudRGSWNLXzeWaC6Nc0+COf77LCN8cdqhm/svXfcbMOZQLQTIemyb1kbGoAUpb8yQ+HgjwbxZYfHTeK50iPisSmSQ5mliEYzpEsyOo7E6Pc2HPUWz0rH5Mh/6sJJpairi2mKOmAQ1E9pJ8ko0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2oQIHdUp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lF4S1Mn0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC92C4AF0A;
-	Tue, 30 Jul 2024 16:06:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2oQIHdUp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB5BC32782;
+	Tue, 30 Jul 2024 16:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355563;
-	bh=w6vlrWJk8tw9/cJrMxjicLEGExLIoDA8qh1o+jq9B/Y=;
+	s=korg; t=1722355566;
+	bh=fIMWShCXcltBdBPi0de4l1LyYoOolwpIDmZEcqEBwrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lF4S1Mn0Ujr9GAZljKaXOkAIlN2QVrG/I/JTrib46YlgzigtqE3H5MXr9b+RxzRw/
-	 HsjIwiQoarkz4FcY1+kTJF86t3tXIis/fYSMXIH8oBEXRDB+s/wHT4yWELABrDhbcl
-	 tgYCLb++aHmj4dpjvYuNMD1vj8jkFrd7OmcXR5sA=
+	b=2oQIHdUpXQ5RQmO9zqr9pR2wO3tuxeT9SaJZVYQr8C4fhsbZLowT//jx/jCwPNH4c
+	 +WpuljptRxdqJTGOrS8pWiXDK0e23OUPojcuyOnVzpzDePDr1DN5AbzQbT6bxnofPe
+	 JV71C3UfnK2lwfoi58LlLPu0XSEpKsYzfQm+3h/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Ismael Luceno <iluceno@suse.de>,
+	Julian Anastasov <ja@ssi.bg>,
+	Simon Horman <horms@kernel.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 069/568] ARM: dts: imx6qdl-kontron-samx6i: fix SPI0 chip selects
-Date: Tue, 30 Jul 2024 17:42:56 +0200
-Message-ID: <20240730151642.556551635@linuxfoundation.org>
+Subject: [PATCH 6.1 106/440] ipvs: Avoid unnecessary calls to skb_is_gso_sctp
+Date: Tue, 30 Jul 2024 17:45:39 +0200
+Message-ID: <20240730151620.029825513@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,90 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Ismael Luceno <iluceno@suse.de>
 
-[ Upstream commit 74e1c956a68a65d642447d852e95b3fbb69bebaa ]
+[ Upstream commit 53796b03295cf7ab1fc8600016fa6dfbf4a494a0 ]
 
-There is a comment in the imx6q variant dtsi claiming that these
-modules will have one more chip select than the imx6dl variant.
-This is wrong. Ordinary GPIOs are used for chip selects and both
-variants of the module share the very same PCB and both have this
-GPIO routed to the SPI0_CS1# pin of the SMARC connector.
+In the context of the SCTP SNAT/DNAT handler, these calls can only
+return true.
 
-Fix it by moving the third chip select description to the common dtsi.
-
-Fixes: 2125212785c9 ("ARM: dts: imx6qdl-kontron-samx6i: add Kontron SMARC SoM Support")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: e10d3ba4d434 ("ipvs: Fix checksumming on GSO of SCTP packets")
+Signed-off-by: Ismael Luceno <iluceno@suse.de>
+Acked-by: Julian Anastasov <ja@ssi.bg>
+Acked-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../dts/nxp/imx/imx6q-kontron-samx6i.dtsi     | 23 -------------------
- .../dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi   |  5 +++-
- 2 files changed, 4 insertions(+), 24 deletions(-)
+ net/netfilter/ipvs/ip_vs_proto_sctp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6q-kontron-samx6i.dtsi b/arch/arm/boot/dts/nxp/imx/imx6q-kontron-samx6i.dtsi
-index 4d6a0c3e8455f..ff062f4fd726e 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6q-kontron-samx6i.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6q-kontron-samx6i.dtsi
-@@ -5,31 +5,8 @@
- 
- #include "imx6q.dtsi"
- #include "imx6qdl-kontron-samx6i.dtsi"
--#include <dt-bindings/gpio/gpio.h>
- 
- / {
- 	model = "Kontron SMARC sAMX6i Quad/Dual";
- 	compatible = "kontron,imx6q-samx6i", "fsl,imx6q";
- };
--
--/* Quad/Dual SoMs have 3 chip-select signals */
--&ecspi4 {
--	cs-gpios = <&gpio3 24 GPIO_ACTIVE_LOW>,
--		   <&gpio3 29 GPIO_ACTIVE_LOW>,
--		   <&gpio3 25 GPIO_ACTIVE_LOW>;
--};
--
--&pinctrl_ecspi4 {
--	fsl,pins = <
--		MX6QDL_PAD_EIM_D21__ECSPI4_SCLK 0x100b1
--		MX6QDL_PAD_EIM_D28__ECSPI4_MOSI 0x100b1
--		MX6QDL_PAD_EIM_D22__ECSPI4_MISO 0x100b1
--
--		/* SPI4_IMX_CS2# - connected to internal flash */
--		MX6QDL_PAD_EIM_D24__GPIO3_IO24 0x1b0b0
--		/* SPI4_IMX_CS0# - connected to SMARC SPI0_CS0# */
--		MX6QDL_PAD_EIM_D29__GPIO3_IO29 0x1b0b0
--		/* SPI4_CS3# - connected to  SMARC SPI0_CS1# */
--		MX6QDL_PAD_EIM_D25__GPIO3_IO25 0x1b0b0
--	>;
--};
-diff --git a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-index 700780bf64f58..78cbc2df279e6 100644
---- a/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-+++ b/arch/arm/boot/dts/nxp/imx/imx6qdl-kontron-samx6i.dtsi
-@@ -244,7 +244,8 @@ &ecspi4 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_ecspi4>;
- 	cs-gpios = <&gpio3 24 GPIO_ACTIVE_LOW>,
--		   <&gpio3 29 GPIO_ACTIVE_LOW>;
-+		   <&gpio3 29 GPIO_ACTIVE_LOW>,
-+		   <&gpio3 25 GPIO_ACTIVE_LOW>;
- 	status = "okay";
- 
- 	/* default boot source: workaround #1 for errata ERR006282 */
-@@ -464,6 +465,8 @@ MX6QDL_PAD_EIM_D22__ECSPI4_MISO 0x100b1
- 			MX6QDL_PAD_EIM_D24__GPIO3_IO24 0x1b0b0
- 			/* SPI_IMX_CS0# - connected to SMARC SPI0_CS0# */
- 			MX6QDL_PAD_EIM_D29__GPIO3_IO29 0x1b0b0
-+			/* SPI4_CS3# - connected to SMARC SPI0_CS1# */
-+			MX6QDL_PAD_EIM_D25__GPIO3_IO25 0x1b0b0
- 		>;
- 	};
- 
+diff --git a/net/netfilter/ipvs/ip_vs_proto_sctp.c b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+index 1e689c7141271..83e452916403d 100644
+--- a/net/netfilter/ipvs/ip_vs_proto_sctp.c
++++ b/net/netfilter/ipvs/ip_vs_proto_sctp.c
+@@ -126,7 +126,7 @@ sctp_snat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	if (sctph->source != cp->vport || payload_csum ||
+ 	    skb->ip_summed == CHECKSUM_PARTIAL) {
+ 		sctph->source = cp->vport;
+-		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++		if (!skb_is_gso(skb))
+ 			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
+@@ -175,7 +175,7 @@ sctp_dnat_handler(struct sk_buff *skb, struct ip_vs_protocol *pp,
+ 	    (skb->ip_summed == CHECKSUM_PARTIAL &&
+ 	     !(skb_dst(skb)->dev->features & NETIF_F_SCTP_CRC))) {
+ 		sctph->dest = cp->dport;
+-		if (!skb_is_gso(skb) || !skb_is_gso_sctp(skb))
++		if (!skb_is_gso(skb))
+ 			sctp_nat_csum(skb, sctph, sctphoff);
+ 	} else if (skb->ip_summed != CHECKSUM_PARTIAL) {
+ 		skb->ip_summed = CHECKSUM_UNNECESSARY;
 -- 
 2.43.0
 
