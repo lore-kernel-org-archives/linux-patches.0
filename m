@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7617929A2;
-	Tue, 30 Jul 2024 15:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3417629A2;
+	Tue, 30 Jul 2024 15:55:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354911; cv=none; b=H+02l+/Sj/lluIGjDHa0Hi/W5+jT5+3P+aoQzN87MhJyWF/U5y3ylGWMbPUPZ1cd8J6NZCcZsKI3eSptky80pO2wMpWGgNWDIyLRXyxidonMyct/GTOTz29P7BT8Qj7nM29JFFuj9eE/hONacMdiL7PmOPQigm5BthtSJy4w+GE=
+	t=1722354914; cv=none; b=b/cMMdtpfcQfWU2sObdH9JAQcx4MgkfRVrpfv7/a4BJAlWKrPSGbn71UAFS8fD7vvf0RVpn3X7832/Hp6XjK/4kQ9UjN3h4j2E+pr2So8IWsFctgZG3Pyn7jGgXIOy7zFCF7Ua7nO7gPlX+Iuo0Y9cgFfhal2R97b+KYm4CDcJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354911; c=relaxed/simple;
-	bh=3a0E9fgLxT72Kn35ryQRojh6UvnfxtvynYmsKLeAARY=;
+	s=arc-20240116; t=1722354914; c=relaxed/simple;
+	bh=8sa2zeYcgvNkNnzuO/URGpJSCOX44pgQBWKxEjZSkMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MiXL24rwMWMUwbJMDUjWJnXAhggGjDdkD5dc9FwanJ9/LIUwy05zvdktxeQ28e6OuJNyuWbbbdtWZn2uyk9bdho3ITitz8QZiIjoHudwLAks4bjE6FcpLUrvbXTcnZ8514sMrIQgn6xAyVM2nGoe8i8pwQsepTbuVImbU7PVb4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKh1mSD+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LbGTNVHyEYijy7/Qi89M3BM3v2AiFr7QO0YsisKvWicuGfWeuX1YCm5I9b0NhAxU1OAsRLv3LSlBX3N+N493iz4Hpp07ycJlzqy8Gfge7HwBc8c1sHA6Up3fUbd4iQCsik15CTsTHpif1O98EfmMSGmbQpoF2K6279kyqUzIX/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pTo/Rqd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKh1mSD+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2506C32782;
-	Tue, 30 Jul 2024 15:55:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pTo/Rqd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4EE2C32782;
+	Tue, 30 Jul 2024 15:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354911;
-	bh=3a0E9fgLxT72Kn35ryQRojh6UvnfxtvynYmsKLeAARY=;
+	s=korg; t=1722354914;
+	bh=8sa2zeYcgvNkNnzuO/URGpJSCOX44pgQBWKxEjZSkMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKh1mSD+5lU5Cp17fPHq2vwwVEB16PV2cubpdLIo0yBkrPbGGLOSDWz0KO/LGY1fU
-	 jq9u/Ik3cKOf937x2cCN4pHDFYfARABqVcsNuXuf98vjn4uvc3rckvUVUmG1zgh8sd
-	 2Ff6w8j7w9/HWU/KjRo2fCpzOtFZeRU8n1swkJoA=
+	b=0pTo/RqdPXu4Nc6BPl9kRHFH5um2iztROtTcQelQ4QsHIkLXcvd2LN4QIiRTh8bXe
+	 sXDJrsVPaNcEE8seHD5nByBxmrphiZSs4MhSE8De3bNBLSlU0Awl8279TSKn2elzS6
+	 GM/pCnfau+VQ4e7IeDhPqaLcIK9FHhW1CiHeGdQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Safonov <0x7f454c46@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/440] arm64: dts: qcom: sm8450: add power-domain to UFS PHY
-Date: Tue, 30 Jul 2024 17:44:28 +0200
-Message-ID: <20240730151617.135530602@linuxfoundation.org>
+Subject: [PATCH 6.6 010/568] x86/kconfig: Add as-instr64 macro to properly evaluate AS_WRUSS
+Date: Tue, 30 Jul 2024 17:41:57 +0200
+Message-ID: <20240730151640.220231506@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,40 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 27d3f57cf5a71484ea38770d4bfd10f6ef035cf4 ]
+[ Upstream commit 469169803d52a5d8f0dc781090638e851a7d22b1 ]
 
-The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
-corresponding power-domain the the PHY node.
+Some instructions are only available on the 64-bit architecture.
 
-Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-11-f1fd15c33fb3@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Bi-arch compilers that default to -m32 need the explicit -m64 option
+to evaluate them properly.
+
+Fixes: 18e66b695e78 ("x86/shstk: Add Kconfig option for shadow stack")
+Closes: https://lore.kernel.org/all/20240612-as-instr-opt-wrussq-v2-1-bd950f7eead7@gmail.com/
+Reported-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Dmitry Safonov <0x7f454c46@gmail.com>
+Link: https://lore.kernel.org/r/20240612050257.3670768-1-masahiroy@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/Kconfig.assembler | 2 +-
+ scripts/Kconfig.include    | 3 ++-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 128542582b3d8..aa0977af9411a 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3153,6 +3153,8 @@ ufs_mem_phy: phy@1d87000 {
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
- 				 <&gcc GCC_UFS_0_CLKREF_EN>;
+diff --git a/arch/x86/Kconfig.assembler b/arch/x86/Kconfig.assembler
+index 8ad41da301e53..16d0b022d6fff 100644
+--- a/arch/x86/Kconfig.assembler
++++ b/arch/x86/Kconfig.assembler
+@@ -26,6 +26,6 @@ config AS_GFNI
+ 	  Supported by binutils >= 2.30 and LLVM integrated assembler
  
-+			power-domains = <&gcc UFS_PHY_GDSC>;
-+
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
- 			status = "disabled";
+ config AS_WRUSS
+-	def_bool $(as-instr,wrussq %rax$(comma)(%rbx))
++	def_bool $(as-instr64,wrussq %rax$(comma)(%rbx))
+ 	help
+ 	  Supported by binutils >= 2.31 and LLVM integrated assembler
+diff --git a/scripts/Kconfig.include b/scripts/Kconfig.include
+index 3ee8ecfb8c044..3500a3d62f0df 100644
+--- a/scripts/Kconfig.include
++++ b/scripts/Kconfig.include
+@@ -33,7 +33,8 @@ ld-option = $(success,$(LD) -v $(1))
+ 
+ # $(as-instr,<instr>)
+ # Return y if the assembler supports <instr>, n otherwise
+-as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) -Wa$(comma)--fatal-warnings -c -x assembler-with-cpp -o /dev/null -)
++as-instr = $(success,printf "%b\n" "$(1)" | $(CC) $(CLANG_FLAGS) $(2) -Wa$(comma)--fatal-warnings -c -x assembler-with-cpp -o /dev/null -)
++as-instr64 = $(as-instr,$(1),$(m64-flag))
+ 
+ # check if $(CC) and $(LD) exist
+ $(error-if,$(failure,command -v $(CC)),C compiler '$(CC)' not found)
 -- 
 2.43.0
 
