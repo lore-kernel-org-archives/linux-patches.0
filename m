@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3541A1A6166;
-	Tue, 30 Jul 2024 16:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607511A6166;
+	Tue, 30 Jul 2024 16:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357978; cv=none; b=SpYFNIus3Ztejq6+/5Q0phA5JCnU/lW70QamozuUFRceMtqO3Uzn/8j1ZUOIR7EZixRetkYVbuLoQakLAcenBVp+IjmaN+LDBCYoLRnhZJEKAoWXbR7wUsJbNx7M9cItZxYZVBArRC0hQ45GZmqa5J3UKol4qQ8brUumGFx3Mr4=
+	t=1722357981; cv=none; b=X64r4mQ3ORXejv6F8/i658zq/MRS6ZXh2rzZLI4scdLICmcUXcAdbDAMRtGJrklMFb/PxQKP909XX2Gt4XfGmbpRs2plGHN1GETI1WeggqAC8ebpgi2doFju9gOXEYSRweF3f9ZwXy3l2IVvDD5ShI2u+kuwua18ZGTDizjmGuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357978; c=relaxed/simple;
-	bh=0UFDIz3WOiPqwmy43XbC2CY6xa/rDqMwbHvw5qH3Ag0=;
+	s=arc-20240116; t=1722357981; c=relaxed/simple;
+	bh=6ii5d7VjRUlPKuZuAnDW1j3mhXCsuW7qASFE7/7k+6E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0w9WQ4ubqfY9E2U6IDQ5x/nDqxmZDwRXLM9e6YaHyKUCBrBX5h4CpVQUGxxgL0l4x8U1kLUZ6GmWELbprdL8LNI5E1143Uk//7rz8yjByEB0Tgr8oFaJmw+5dPoadwUO45IUAtGo1/2eJ6ltJU8JCSdt2DPx1+OQ7bjrz38Sw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k3kZRozA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sljl9K0Egqs4fLYIQs8FvnfaFupS95e88IgLAR5hnm4dJv3s82YVBDPVfJOFufPz4ChUnHWr9VrbW5cLyuTXaVPTOBZh4yQymFEaYSHhyhYsgs0fIopdWTzckZasUDrP/YbOPs1lju+A/E6inAQPPRw1Aq1xLkD82kxY+8rJG30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpqrkkWg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k3kZRozA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADF41C32782;
-	Tue, 30 Jul 2024 16:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpqrkkWg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC3BC32782;
+	Tue, 30 Jul 2024 16:46:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357978;
-	bh=0UFDIz3WOiPqwmy43XbC2CY6xa/rDqMwbHvw5qH3Ag0=;
+	s=korg; t=1722357981;
+	bh=6ii5d7VjRUlPKuZuAnDW1j3mhXCsuW7qASFE7/7k+6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k3kZRozASgM6xt72AAP8SjLHoulp/40xmH5mx+bbOm1Uo7SEMsxHT2G2KaKeElEiE
-	 NNusugyvTM5gdPgyjTuVeL+z3kS4ulZKrYRkHpdXNUwXoUTRj3cezvyWCeaK8WcOUY
-	 6xVPvYyLHpWrkh0lqT4rROqQWL9GHf6J+rC2tkDg=
+	b=rpqrkkWgRErAdbWq6iCD9qjhd/FmYL1UXurwD2s1J8OxkkvyJMyoWyti2DLhOAK2R
+	 0qRXvtIu27/hgzqdGbbbDccwb0a7gk8+1+8uSLX8EinNxFJFKJJTS1jf6cK6VqTIZB
+	 j1EB+fsR2FSmMg4y+WCHIPLPmtsnOpA6rYQfBPlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Chakraborty <joychakr@google.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 345/440] rtc: cmos: Fix return value of nvmem callbacks
-Date: Tue, 30 Jul 2024 17:49:38 +0200
-Message-ID: <20240730151629.288341896@linuxfoundation.org>
+	David Ahern <dsahern@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 307/568] RDMA: Fix netdev tracker in ib_device_set_netdev
+Date: Tue, 30 Jul 2024 17:46:54 +0200
+Message-ID: <20240730151651.874034509@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,81 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Joy Chakraborty <joychakr@google.com>
+From: David Ahern <dsahern@kernel.org>
 
-commit 1c184baccf0d5e2ef4cc1562261d0e48508a1c2b upstream.
+[ Upstream commit 2043a14fb3de9d88440b21590f714306fcbbd55f ]
 
-Read/write callbacks registered with nvmem core expect 0 to be returned
-on success and a negative value to be returned on failure.
+If a netdev has already been assigned, ib_device_set_netdev needs to
+release the reference on the older netdev but it is mistakenly being
+called for the new netdev. Fix it and in the process use netdev_put
+to be symmetrical with the netdev_hold.
 
-cmos_nvram_read()/cmos_nvram_write() currently return the number of
-bytes read or written, fix to return 0 on success and -EIO incase number
-of bytes requested was not read or written.
-
-Fixes: 8b5b7958fd1c ("rtc: cmos: use generic nvmem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joy Chakraborty <joychakr@google.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240612083635.1253039-1-joychakr@google.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 09f530f0c6d6 ("RDMA: Add netdevice_tracker to ib_device_set_netdev()")
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240710203310.19317-1-dsahern@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/infiniband/core/device.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -643,11 +643,10 @@ static int cmos_nvram_read(void *priv, u
- 			   size_t count)
- {
- 	unsigned char *buf = val;
--	int	retval;
- 
- 	off += NVRAM_OFFSET;
- 	spin_lock_irq(&rtc_lock);
--	for (retval = 0; count; count--, off++, retval++) {
-+	for (; count; count--, off++) {
- 		if (off < 128)
- 			*buf++ = CMOS_READ(off);
- 		else if (can_bank2)
-@@ -657,7 +656,7 @@ static int cmos_nvram_read(void *priv, u
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index e70804d8de828..56dd030045a20 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2166,16 +2166,12 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 		return 0;
  	}
- 	spin_unlock_irq(&rtc_lock);
  
--	return retval;
-+	return count ? -EIO : 0;
+-	if (old_ndev)
+-		netdev_tracker_free(ndev, &pdata->netdev_tracker);
+-	if (ndev)
+-		netdev_hold(ndev, &pdata->netdev_tracker, GFP_ATOMIC);
+ 	rcu_assign_pointer(pdata->netdev, ndev);
++	netdev_put(old_ndev, &pdata->netdev_tracker);
++	netdev_hold(ndev, &pdata->netdev_tracker, GFP_ATOMIC);
+ 	spin_unlock_irqrestore(&pdata->netdev_lock, flags);
+ 
+ 	add_ndev_hash(pdata);
+-	__dev_put(old_ndev);
+-
+ 	return 0;
  }
- 
- static int cmos_nvram_write(void *priv, unsigned int off, void *val,
-@@ -665,7 +664,6 @@ static int cmos_nvram_write(void *priv,
- {
- 	struct cmos_rtc	*cmos = priv;
- 	unsigned char	*buf = val;
--	int		retval;
- 
- 	/* NOTE:  on at least PCs and Ataris, the boot firmware uses a
- 	 * checksum on part of the NVRAM data.  That's currently ignored
-@@ -674,7 +672,7 @@ static int cmos_nvram_write(void *priv,
- 	 */
- 	off += NVRAM_OFFSET;
- 	spin_lock_irq(&rtc_lock);
--	for (retval = 0; count; count--, off++, retval++) {
-+	for (; count; count--, off++) {
- 		/* don't trash RTC registers */
- 		if (off == cmos->day_alrm
- 				|| off == cmos->mon_alrm
-@@ -689,7 +687,7 @@ static int cmos_nvram_write(void *priv,
- 	}
- 	spin_unlock_irq(&rtc_lock);
- 
--	return retval;
-+	return count ? -EIO : 0;
- }
- 
- /*----------------------------------------------------------------*/
+ EXPORT_SYMBOL(ib_device_set_netdev);
+-- 
+2.43.0
+
 
 
