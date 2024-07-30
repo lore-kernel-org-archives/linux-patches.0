@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D371A618F;
-	Tue, 30 Jul 2024 16:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB36F757FC;
+	Tue, 30 Jul 2024 16:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357918; cv=none; b=iuilmV5/tW9Mcd4Z/9RpwiJwOUAjANGO5gVHd+1+GNMMGhtWIPN1Go/scOcreyRWpcHNWDJ7zNvYBhO5Y2gg94b03ARA10rScHcmLUhxEsTQEVOVAK4NvWN4uFGR+A6VdMPcckMbeeRmhQhXiuqpMDwQFzon10tc29Sock1YyRk=
+	t=1722357921; cv=none; b=gG72yfTXO6u16sDAOGsPr67yf5EDmqs1NFbXMnZ8enCAuSf/UHIcLTzXWrAfAUodSE7Rv1klEPkVGGgT7mFkm6laV7P14rPeYUZrPizB9euOm77S13ssR4iG7Sj1yNWJHLnDm8pbXnfTc4kylErZGE5aI/j6+0YrR43s9/ZXiOM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357918; c=relaxed/simple;
-	bh=5N72RuylBOqx0LcJoQVglTOTBVvB+NGEd28Xql4Q2Og=;
+	s=arc-20240116; t=1722357921; c=relaxed/simple;
+	bh=E2Bqsep+WYpAplFqRh4LaT/Ssz9rs6aE6CgIkBSEbKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZserEYoaJIGXV6gVw03PlYrZRqltw5myWY5gYR+WYms8LejlCfJ4utUixPCACBf4nWces9ob/63lpQ48AKRd8Y7d3hTNJ5hHJCdGDzVi8jaUSekvqCxRY6zr7fruaZSXA/4hpEq12FURZFSwLKSwGswGq8VTDu1iRu6EoU18aHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewpAZ2+R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bwI1y2mmPxO4C9RIxnSOYW9fkzpxl/8V0gCieS9744PQkOLIFE4US0L4EL0deXQq461FLyU1oT0rKPmIqA5GH+Kaqv/YTE+AJnv8IuXDrYrFtcR1hg8hjcFzrufuyoM+u9rbLJS75+ziK16GHqELAzxCDWPxBKbOEEIItlc8BBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GWT7BNep; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewpAZ2+R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07562C32782;
-	Tue, 30 Jul 2024 16:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GWT7BNep"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 274E4C4AF0C;
+	Tue, 30 Jul 2024 16:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357918;
-	bh=5N72RuylBOqx0LcJoQVglTOTBVvB+NGEd28Xql4Q2Og=;
+	s=korg; t=1722357921;
+	bh=E2Bqsep+WYpAplFqRh4LaT/Ssz9rs6aE6CgIkBSEbKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewpAZ2+RCrL5JcTGrWFXqhY677Ipxa0LoYNwXHLggZJITUDh1/EflxPNRVzYVIpdW
-	 5tju0s/If7349lBQQudyKUGczVJoEbKq3Z8peti6LwTh2VsNhETPsRZQqpiV7AS0dJ
-	 8fEPa5qtq+PxKWYfrOb2jJF3FhcMrCA5ZMJRdH74=
+	b=GWT7BNepz8W8OINOyYgRC5zBEmYNtON9zd/uusD1PBPPo+/sbYT1Rdd9Ejn++5tQh
+	 TA6MHr2McqkmjIaFc3V6ZTV6CM71jB5Pu3GUFIzhklHvAHjdS2hvOhKJxIVLOCrOtz
+	 Qg/Uzoa/dpKDfUQRodH5Oe9RgpjerAYVD3rni0AE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Bailey Forrest <bcf@google.com>,
-	Jeroen de Borst <jeroendb@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 339/440] gve: Fix an edge case for TSO skb validity check
-Date: Tue, 30 Jul 2024 17:49:32 +0200
-Message-ID: <20240730151629.056997970@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 286/568] PCI: endpoint: Fix error handling in epf_ntb_epc_cleanup()
+Date: Tue, 30 Jul 2024 17:46:33 +0200
+Message-ID: <20240730151651.051558142@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,97 +46,71 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bailey Forrest <bcf@google.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-commit 36e3b949e35964e22b9a57f960660fc599038dd4 upstream.
+[ Upstream commit 6bba3c0ac5dc54737998a0982b2e272242c87e0f ]
 
-The NIC requires each TSO segment to not span more than 10
-descriptors. NIC further requires each descriptor to not exceed
-16KB - 1 (GVE_TX_MAX_BUF_SIZE_DQO).
+There are two issues related to epf_ntb_epc_cleanup():
 
-The descriptors for an skb are generated by
-gve_tx_add_skb_no_copy_dqo() for DQO RDA queue format.
-gve_tx_add_skb_no_copy_dqo() loops through each skb frag and
-generates a descriptor for the entire frag if the frag size is
-not greater than GVE_TX_MAX_BUF_SIZE_DQO. If the frag size is
-greater than GVE_TX_MAX_BUF_SIZE_DQO, it is split into descriptor(s)
-of size GVE_TX_MAX_BUF_SIZE_DQO and a descriptor is generated for
-the remainder (frag size % GVE_TX_MAX_BUF_SIZE_DQO).
+  1) It should call epf_ntb_config_sspad_bar_clear()
+  2) The epf_ntb_bind() function should call epf_ntb_epc_cleanup()
+     to cleanup.
 
-gve_can_send_tso() checks if the descriptors thus generated for an
-skb would meet the requirement that each TSO-segment not span more
-than 10 descriptors. However, the current code misses an edge case
-when a TSO segment spans multiple descriptors within a large frag.
-This change fixes the edge case.
+I also changed the ordering a bit.  Unwinding should be done in the
+mirror order from how they are allocated.
 
-gve_can_send_tso() relies on the assumption that max gso size (9728)
-is less than GVE_TX_MAX_BUF_SIZE_DQO and therefore within an skb
-fragment a TSO segment can never span more than 2 descriptors.
-
-Fixes: a57e5de476be ("gve: DQO: Add TX path")
-Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Signed-off-by: Bailey Forrest <bcf@google.com>
-Reviewed-by: Jeroen de Borst <jeroendb@google.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240724143431.3343722-1-pkaligineedi@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e35f56bb0330 ("PCI: endpoint: Support NTB transfer between RC and EP")
+Link: https://lore.kernel.org/linux-pci/aaffbe8d-7094-4083-8146-185f4a84e8a1@moroto.mountain
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_tx_dqo.c |   22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ drivers/pci/endpoint/functions/pci-epf-vntb.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-@@ -596,22 +596,42 @@ static bool gve_can_send_tso(const struc
- 	const int header_len = skb_tcp_all_headers(skb);
- 	const int gso_size = shinfo->gso_size;
- 	int cur_seg_num_bufs;
-+	int prev_frag_size;
- 	int cur_seg_size;
- 	int i;
+diff --git a/drivers/pci/endpoint/functions/pci-epf-vntb.c b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+index 1a4cdf98df703..3368f483f818d 100644
+--- a/drivers/pci/endpoint/functions/pci-epf-vntb.c
++++ b/drivers/pci/endpoint/functions/pci-epf-vntb.c
+@@ -810,8 +810,9 @@ static int epf_ntb_epc_init(struct epf_ntb *ntb)
+  */
+ static void epf_ntb_epc_cleanup(struct epf_ntb *ntb)
+ {
+-	epf_ntb_db_bar_clear(ntb);
+ 	epf_ntb_mw_bar_clear(ntb, ntb->num_mws);
++	epf_ntb_db_bar_clear(ntb);
++	epf_ntb_config_sspad_bar_clear(ntb);
+ }
  
- 	cur_seg_size = skb_headlen(skb) - header_len;
-+	prev_frag_size = skb_headlen(skb);
- 	cur_seg_num_bufs = cur_seg_size > 0;
- 
- 	for (i = 0; i < shinfo->nr_frags; i++) {
- 		if (cur_seg_size >= gso_size) {
- 			cur_seg_size %= gso_size;
- 			cur_seg_num_bufs = cur_seg_size > 0;
-+
-+			if (prev_frag_size > GVE_TX_MAX_BUF_SIZE_DQO) {
-+				int prev_frag_remain = prev_frag_size %
-+					GVE_TX_MAX_BUF_SIZE_DQO;
-+
-+				/* If the last descriptor of the previous frag
-+				 * is less than cur_seg_size, the segment will
-+				 * span two descriptors in the previous frag.
-+				 * Since max gso size (9728) is less than
-+				 * GVE_TX_MAX_BUF_SIZE_DQO, it is impossible
-+				 * for the segment to span more than two
-+				 * descriptors.
-+				 */
-+				if (prev_frag_remain &&
-+				    cur_seg_size > prev_frag_remain)
-+					cur_seg_num_bufs++;
-+			}
- 		}
- 
- 		if (unlikely(++cur_seg_num_bufs > max_bufs_per_seg))
- 			return false;
- 
--		cur_seg_size += skb_frag_size(&shinfo->frags[i]);
-+		prev_frag_size = skb_frag_size(&shinfo->frags[i]);
-+		cur_seg_size += prev_frag_size;
+ #define EPF_NTB_R(_name)						\
+@@ -1351,7 +1352,7 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ 	ret = pci_register_driver(&vntb_pci_driver);
+ 	if (ret) {
+ 		dev_err(dev, "failure register vntb pci driver\n");
+-		goto err_bar_alloc;
++		goto err_epc_cleanup;
  	}
  
- 	return true;
+ 	ret = vpci_scan_bus(ntb);
+@@ -1362,6 +1363,8 @@ static int epf_ntb_bind(struct pci_epf *epf)
+ 
+ err_unregister:
+ 	pci_unregister_driver(&vntb_pci_driver);
++err_epc_cleanup:
++	epf_ntb_epc_cleanup(ntb);
+ err_bar_alloc:
+ 	epf_ntb_config_spad_bar_free(ntb);
+ 
+-- 
+2.43.0
+
 
 
