@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09CE01A3053;
-	Tue, 30 Jul 2024 16:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA2118B480;
+	Tue, 30 Jul 2024 16:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355595; cv=none; b=a7Ns97j8jgOpnCdS2mu3WN44Zzvcj3i0RvRqUOxFEXXr0loEgvES2L56Lb4oB9VTDRCmCbFzQRsYFeAKvpTdFzUmVcxKHyrOIGp9UWf3pz1IbUw29TEezbx9Yb/9hdQlxISrPWXncxe804e4xG6xPWVVM6uCuAY7DLiS82QycKs=
+	t=1722355598; cv=none; b=juGF227LLNt8terpB3HqhNiE0MRwepy0xRTJ0bdQfgzad8vCp/hGlkbxB1et/RDEEuSQBk1OY2rV0dwOBi0sgIuc95KMqHNlQrWa0XOuGAhI8siNq+L9hb8CLua6LsyiozTQ5cY9CGOFqMzyXP24nhvWuMPZ+1XY00fm11hi8fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355595; c=relaxed/simple;
-	bh=3UoIHgLPFT5Ncwbcwg/qw5Uay7vUcpPqc+c35Z1okhU=;
+	s=arc-20240116; t=1722355598; c=relaxed/simple;
+	bh=ZU2rEGjOYJLaNZC40oIZuEPH2JEvtAUNhTXhR4+/py0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FMbBoUfm1kb6gZg12qPPvkbIiMhPp9Z1/wDTgoEfrJwJozsLo8ak3R5FjWvaeVOEV129eACmH9xesBoR8BTV7WRGx0M2sXGPDxxUc4F9698yD27eDDx9GArBZuTK2qYVj+rpLKjgt6VvbXtk+BVUv0IxCR4MkpNHFstHPwTp+hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0o6/jj1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Pw9Ra6dQDE5vtT7gHorcn/wyCKFoiYN4t+6J6Ll1bAR2R3LmmzCxf+8G6iB90NAcMsMwTOyS8CrZvWeMd48gyRTsUIERLuaCGFADg6Apl+LcUOemqztzNpZHvuy1q7zkmF0xzdFQ/zvc0SuKUr2m8IlWsd+NC8RDhVeJyKhryAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=058U8msW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0o6/jj1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851CEC4AF0C;
-	Tue, 30 Jul 2024 16:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="058U8msW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE598C32782;
+	Tue, 30 Jul 2024 16:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355594;
-	bh=3UoIHgLPFT5Ncwbcwg/qw5Uay7vUcpPqc+c35Z1okhU=;
+	s=korg; t=1722355598;
+	bh=ZU2rEGjOYJLaNZC40oIZuEPH2JEvtAUNhTXhR4+/py0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D0o6/jj1vYUTw1HRCrJsx0XJMRvlSBsSIDP4lMnLv32keOkwqE+aWdDMVeZj+G80e
-	 hNZKN03WB/6SR6IXAa1lYy0DumrEAm1dANoaFBvyXZMQeWczb+eRd7sFiJEeuwDvnj
-	 GC5xHKAKvOkBhzB5pJ/w796uGrCUu1DwUtoAGNkE=
+	b=058U8msWIZ8FmKCfL0/Pq5unibfkuE99ehBekyCHCWjGGGbbp0Dp/Nvp6pWeQx4YW
+	 bDBT95eqhcieLBlRL7hGs7Uyb7Rzn7ai6RBpoX1xP6Dk6b3ECSlSpmhOE6YpT2hTso
+	 dkx/ij5P1SMJQxo+PbmdHnngQaCrSePDPbKdkAEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 072/568] arm64: dts: mediatek: mt8183-kukui: Drop bogus output-enable property
-Date: Tue, 30 Jul 2024 17:42:59 +0200
-Message-ID: <20240730151642.674925055@linuxfoundation.org>
+Subject: [PATCH 6.1 109/440] perf/x86/intel/pt: Fix pt_topa_entry_for_page() address calculation
+Date: Tue, 30 Jul 2024 17:45:42 +0200
+Message-ID: <20240730151620.151342484@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,53 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit e9a9055fdcdc1e5a27cef118c5b4f09cdd2fa28e ]
+[ Upstream commit 3520b251dcae2b4a27b95cd6f745c54fd658bda5 ]
 
-The "output-enable" property is set on uart1's RTS pin. This is bogus
-because the hardware does not actually have a controllable output
-buffer. Secondly, the implementation incorrectly treats this property
-as a request to switch the pin to GPIO output. This does not fit the
-intended semantic of "output-enable" and it does not have any affect
-either because the pin is muxed to the UART function, not the GPIO
-function.
+Currently, perf allocates an array of page pointers which is limited in
+size by MAX_PAGE_ORDER. That in turn limits the maximum Intel PT buffer
+size to 2GiB. Should that limitation be lifted, the Intel PT driver can
+support larger sizes, except for one calculation in
+pt_topa_entry_for_page(), which is limited to 32-bits.
 
-Drop the property.
+Fix pt_topa_entry_for_page() address calculation by adding a cast.
 
-Fixes: cd894e274b74 ("arm64: dts: mt8183: Add krane-sku176 board")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Link: https://lore.kernel.org/r/20240412075613.1200048-1-wenst@chromium.org
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: 39152ee51b77 ("perf/x86/intel/pt: Get rid of reverse lookup table for ToPA")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240624201101.60186-4-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi | 2 --
- 1 file changed, 2 deletions(-)
+ arch/x86/events/intel/pt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-index d846342c1d3b2..2c6587f260f82 100644
---- a/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8183-kukui.dtsi
-@@ -775,7 +775,6 @@ pins-tx {
- 		};
- 		pins-rts {
- 			pinmux = <PINMUX_GPIO47__FUNC_URTS1>;
--			output-enable;
- 		};
- 		pins-cts {
- 			pinmux = <PINMUX_GPIO46__FUNC_UCTS1>;
-@@ -794,7 +793,6 @@ pins-tx {
- 		};
- 		pins-rts {
- 			pinmux = <PINMUX_GPIO47__FUNC_URTS1>;
--			output-enable;
- 		};
- 		pins-cts {
- 			pinmux = <PINMUX_GPIO46__FUNC_UCTS1>;
+diff --git a/arch/x86/events/intel/pt.c b/arch/x86/events/intel/pt.c
+index 42a55794004a7..e347e56030fd9 100644
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -989,7 +989,7 @@ pt_topa_entry_for_page(struct pt_buffer *buf, unsigned int pg)
+ 	 * order allocations, there shouldn't be many of these.
+ 	 */
+ 	list_for_each_entry(topa, &buf->tables, list) {
+-		if (topa->offset + topa->size > pg << PAGE_SHIFT)
++		if (topa->offset + topa->size > (unsigned long)pg << PAGE_SHIFT)
+ 			goto found;
+ 	}
+ 
 -- 
 2.43.0
 
