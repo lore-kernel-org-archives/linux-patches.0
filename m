@@ -1,49 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359051A618E;
-	Tue, 30 Jul 2024 16:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8710B1A618C;
+	Tue, 30 Jul 2024 16:23:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356599; cv=none; b=QZDwfRfUocZ/d2R7p2hChAk15rmTQFjV0ODwOQMXNlRo0C1k7fvX+DqZHyMOVFPgFNFednLT1QGmaSVXWoFRyOBktEXD6htS/wBf+gyNzAzJpM3Vee4JBb0drTWwexqsA2a9CTiKjH4JVg3SMz+N4oom67vbvUbTUUjLDPlAC3U=
+	t=1722356602; cv=none; b=ktMOMhMALpH5FMH5eDOJW8FI0wllHZGELsnG0bV3XOBZhDdzljvWmW/7HURn4fK0LpyiDIjTC7Tim7Yp/YuVMzCdtjdJ80X0Udc3UeU4Lbk9lOhGl+VKICUuQZEV73xkotLZaWPlZajjKusbQRsOsmBRisMi2OO+1ErjILSwxHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356599; c=relaxed/simple;
-	bh=Wpg/ri5j+fLytzS3EvqnQKKLmzyMQP+pWYtOss0uk9Y=;
+	s=arc-20240116; t=1722356602; c=relaxed/simple;
+	bh=1SnRJVVU+DOZc778FZ3UOHStS+Oi1JO+jDxxeOfNX4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Go8j8ddzo+Xj4dbYDcx3CuKPDR75/pUY+rLo9ZEtmTobTLvnRcCJSxmXT55nxNQwqbJFd55azF7Blzlvvty3sQiAwEulJJ6mXWeFPTl2ojeA2Tuk/cV/+cQrO84gy0rEroWwrQKHlJ5a8CbMK8r9eqGzpz155V2jDEkjdEaoyhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrghPUI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=jvo1wwZ9F7CxNnZs9648gIEiOgRJtBKpYh8vP7g4qTCjf1F5YbHZL5bpbzxonuTkknY+97iw3d/JwvSo8mx6qyCeJ0RAgo/ZtIYMZkAkt0+xEL/ff6ff2WUQfOR60Pp2IXIO6cjHDswPdWMtzGHfDCfh5rW9QWLBkr6k+NCI9sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FvJR1qax; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrghPUI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7699FC4AF0A;
-	Tue, 30 Jul 2024 16:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FvJR1qax"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD87C32782;
+	Tue, 30 Jul 2024 16:23:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356599;
-	bh=Wpg/ri5j+fLytzS3EvqnQKKLmzyMQP+pWYtOss0uk9Y=;
+	s=korg; t=1722356602;
+	bh=1SnRJVVU+DOZc778FZ3UOHStS+Oi1JO+jDxxeOfNX4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NrghPUI42pIqI9lI9zXcTx0Gb+GIbXNl0DpKrC9TS6xV72CM9oa3zaJPTK7Bwa7KI
-	 2HQCwe28NO8+hrTdiTRnTBdhtvGDFX/UooMqBFcraZ2wwp84TTOeXlAK0NnsH4vOdb
-	 HUa1nHV2vUxC7cLD6kgXasinAvK1IEhO5qF6yXjU=
+	b=FvJR1qaxC9rt0MtZJ8ef9Pw95oc9W8tkMvR9XiRuMkNIekU9y6A675r98zaBaJncK
+	 7T+qGFWmu++PxIYdrYDQc8O6gxeJ8csrHakC8lHRcTUNJhIfAAqhQtcs79kXiF9BAM
+	 i1DZwUHP+h7tLXDUvhJm8aWJIoNYfZoR0d4An+WM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6c21aeb59d0e82eb2782@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Arseny Krasnov <arseny.krasnov@kaspersky.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 211/440] vhost/vsock: always initialize seqpacket_allow
-Date: Tue, 30 Jul 2024 17:47:24 +0200
-Message-ID: <20240730151624.107459159@linuxfoundation.org>
+Subject: [PATCH 6.10 166/809] wifi: ath12k: change DMA direction while mapping reinjected packets
+Date: Tue, 30 Jul 2024 17:40:42 +0200
+Message-ID: <20240730151731.163816062@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -56,67 +50,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit 1e1fdcbdde3b7663e5d8faeb2245b9b151417d22 ]
+[ Upstream commit 33322e3ef07409278a18c6919c448e369d66a18e ]
 
-There are two issues around seqpacket_allow:
-1. seqpacket_allow is not initialized when socket is
-   created. Thus if features are never set, it will be
-   read uninitialized.
-2. if VIRTIO_VSOCK_F_SEQPACKET is set and then cleared,
-   then seqpacket_allow will not be cleared appropriately
-   (existing apps I know about don't usually do this but
-    it's legal and there's no way to be sure no one relies
-    on this).
+For fragmented packets, ath12k reassembles each fragment as a normal
+packet and then reinjects it into HW ring. In this case, the DMA
+direction should be DMA_TO_DEVICE, not DMA_FROM_DEVICE. Otherwise,
+an invalid payload may be reinjected into the HW and
+subsequently delivered to the host.
 
-To fix:
-	- initialize seqpacket_allow after allocation
-	- set it unconditionally in set_features
+Given that arbitrary memory can be allocated to the skb buffer,
+knowledge about the data contained in the reinjected buffer is lacking.
+Consequently, there’s a risk of private information being leaked.
 
-Reported-by: syzbot+6c21aeb59d0e82eb2782@syzkaller.appspotmail.com
-Reported-by: Jeongjun Park <aha310510@gmail.com>
-Fixes: ced7b713711f ("vhost/vsock: support SEQPACKET for transport").
-Tested-by: Arseny Krasnov <arseny.krasnov@kaspersky.com>
-Cc: David S. Miller <davem@davemloft.net>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Message-ID: <20240422100010-mutt-send-email-mst@kernel.org>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
-Acked-by: Jakub Kicinski <kuba@kernel.org>
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00209-QCAHKSWPL_SILICONZ-1
+
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Co-developed-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240520070045.631029-2-quic_ppranees@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vsock.c | 4 ++--
+ drivers/net/wireless/ath/ath12k/dp_rx.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
-index 1f3b89c885cca..c00f5821d6ecb 100644
---- a/drivers/vhost/vsock.c
-+++ b/drivers/vhost/vsock.c
-@@ -654,6 +654,7 @@ static int vhost_vsock_dev_open(struct inode *inode, struct file *file)
- 	}
+diff --git a/drivers/net/wireless/ath/ath12k/dp_rx.c b/drivers/net/wireless/ath/ath12k/dp_rx.c
+index e5fb5cb000f04..37e5bca9570fe 100644
+--- a/drivers/net/wireless/ath/ath12k/dp_rx.c
++++ b/drivers/net/wireless/ath/ath12k/dp_rx.c
+@@ -3030,7 +3030,7 @@ static int ath12k_dp_rx_h_defrag_reo_reinject(struct ath12k *ar,
  
- 	vsock->guest_cid = 0; /* no CID assigned yet */
-+	vsock->seqpacket_allow = false;
+ 	buf_paddr = dma_map_single(ab->dev, defrag_skb->data,
+ 				   defrag_skb->len + skb_tailroom(defrag_skb),
+-				   DMA_FROM_DEVICE);
++				   DMA_TO_DEVICE);
+ 	if (dma_mapping_error(ab->dev, buf_paddr))
+ 		return -ENOMEM;
  
- 	atomic_set(&vsock->queued_replies, 0);
+@@ -3116,7 +3116,7 @@ static int ath12k_dp_rx_h_defrag_reo_reinject(struct ath12k *ar,
+ 	spin_unlock_bh(&dp->rx_desc_lock);
+ err_unmap_dma:
+ 	dma_unmap_single(ab->dev, buf_paddr, defrag_skb->len + skb_tailroom(defrag_skb),
+-			 DMA_FROM_DEVICE);
++			 DMA_TO_DEVICE);
+ 	return ret;
+ }
  
-@@ -797,8 +798,7 @@ static int vhost_vsock_set_features(struct vhost_vsock *vsock, u64 features)
- 			goto err;
- 	}
- 
--	if (features & (1ULL << VIRTIO_VSOCK_F_SEQPACKET))
--		vsock->seqpacket_allow = true;
-+	vsock->seqpacket_allow = features & (1ULL << VIRTIO_VSOCK_F_SEQPACKET);
- 
- 	for (i = 0; i < ARRAY_SIZE(vsock->vqs); i++) {
- 		vq = &vsock->vqs[i];
 -- 
 2.43.0
 
