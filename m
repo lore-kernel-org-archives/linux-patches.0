@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5391F1A6193;
-	Tue, 30 Jul 2024 16:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910A51A3024;
+	Tue, 30 Jul 2024 16:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355923; cv=none; b=o0b6PwsGZDgLDs8j3T4VZhUSpChEujje57TBIs1PCIb3eqLNzIyE3CkNvV+Gp9ksVxwYqM+7eMJ+uTBvPZvmeyq0afO7YszTAO9517ChgkVdfVr4tL2sRcmDeCbShVoUHn1IB8tiII3H5V80ftffo9rfPKiLxbUTRw1ify5w71Y=
+	t=1722355926; cv=none; b=SVjwzjF24bS0njiH2n7lYRfO7yhp3cDuvtnKHVUNWXZ1LxWdj6jySgr6gFBqMynByuT5YINfuaTvI5x2d7xpZGaMwfdU0w9a4IQCKQ0PW2pihFJKH8OevkUf7OascWHfbAvtWSd1X5tMVl77uYhPCTafF8s6rqm682gkNgp27FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355923; c=relaxed/simple;
-	bh=VuadzWiVaRZGhw+uEb1ObGysKiG1QtHCb3BGDspfBRU=;
+	s=arc-20240116; t=1722355926; c=relaxed/simple;
+	bh=VZGpgR/BqS7ZXsQDLOcR/0pxGt+vOsEVRrEa90KtyPk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pfsWh3Ns9d+qVQyMZbRofHDyW+f0h0Zsw5kAJLz9R0yejWgXUbdZ1JrTj0UANme6PpphumXgXw5ic0cEqEpT8ocDcKipSVIvLycEXOdorcp6keqMeP0wL2RUg+cDDuRrhKKxO1hnMEHILd39sCwIfpirbBtB0meRO0bgOtUCf04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MR9s0rmS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LHoQPTvsb7HNrQVYSNyOs0q79wbZ9nClef+dqn5NBmbFvknXgFjSTZIPY5caMTxm4qOtBOHQ7HCkf/dx3t4ZJqMSoYXt6h9P/UVmlItfrWx4+8IGsq9MhhmeG9E5yDQ4L1CMVN67pP8sVe/VnYgjpGec4BV6bAz4hPAWRUfXRZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NInkhyZj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MR9s0rmS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0084C32782;
-	Tue, 30 Jul 2024 16:12:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NInkhyZj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A6DAC32782;
+	Tue, 30 Jul 2024 16:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355923;
-	bh=VuadzWiVaRZGhw+uEb1ObGysKiG1QtHCb3BGDspfBRU=;
+	s=korg; t=1722355926;
+	bh=VZGpgR/BqS7ZXsQDLOcR/0pxGt+vOsEVRrEa90KtyPk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MR9s0rmSngkRG3gd519obcFaMbngU/JkLiiMDTJnXa9Af2/xI0rAGGvLJaW7Q5yya
-	 4NVX3oBVebG71hslM3hy8jOeWl6PYxvnRjXPjefXMlMkWnvaRg9ti7IGHRsmigvG9x
-	 GaUhgzSAaYEVBKfMiaRcm4dsFWYBu+FXYpCkK658=
+	b=NInkhyZjhae8DhpeYEwzNHwRafSShaef65tDkBSF0hsPeiCg1i1rM9OOcu7nI74f2
+	 nbcHd5+Jxt9SyTH2nrhxwmfpf3TseoeOMIt8ocfwwC1PRg8KjyHeL+N/ROov3Grq+m
+	 gHP838g1kN+ml8aQcGvopKKXKqHzsBnlVnjGPma4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	David Arcari <darcari@redhat.com>,
+	Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 105/809] arm64: dts: mediatek: mt7622: fix "emmc" pinctrl mux
-Date: Tue, 30 Jul 2024 17:39:41 +0200
-Message-ID: <20240730151728.774539225@linuxfoundation.org>
+Subject: [PATCH 6.6 103/568] cpufreq/amd-pstate: Fix the scaling_max_freq setting on shared memory CPPC systems
+Date: Tue, 30 Jul 2024 17:43:30 +0200
+Message-ID: <20240730151643.901751962@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,68 +46,108 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
 
-[ Upstream commit aebba1030a5766cdf894ed4ab0cac7aed5aee9c1 ]
+[ Upstream commit 738d7d03571c7e38565bd245c0815a2c74665018 ]
 
-Value "emmc_rst" is a group name and should be part of the "groups"
-property.
+On shared memory CPPC systems, with amd_pstate=active mode, the change
+in scaling_max_freq doesn't get written to the shared memory
+region. Due to this, the writes to the scaling_max_freq sysfs file
+don't take effect. Fix this by propagating the scaling_max_freq
+changes to the shared memory region.
 
-This fixes:
-arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
-        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
-arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
-        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
-
-Fixes: 3725ba3f5574 ("arm64: dts: mt7622: add pinctrl related device nodes")
-Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240604074916.7929-1-zajec5@gmail.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Fixes: ffa5096a7c33 ("cpufreq: amd-pstate: implement Pstate EPP support for the AMD processors")
+Reported-by: David Arcari <darcari@redhat.com>
+Signed-off-by: Dhananjay Ugwekar <Dhananjay.Ugwekar@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20240702081413.5688-3-Dhananjay.Ugwekar@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts | 4 ++--
- arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 43 +++++++++++++++++++-----------------
+ 1 file changed, 23 insertions(+), 20 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-index 224bb289660c0..2791de5b28f6a 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-@@ -329,8 +329,8 @@ asm_sel {
- 	/* eMMC is shared pin with parallel NAND */
- 	emmc_pins_default: emmc-pins-default {
- 		mux {
--			function = "emmc", "emmc_rst";
--			groups = "emmc";
-+			function = "emmc";
-+			groups = "emmc", "emmc_rst";
- 		};
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 3efc2aef31ce4..23c74e9f04c48 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -175,6 +175,26 @@ static int amd_pstate_get_energy_pref_index(struct amd_cpudata *cpudata)
+ 	return index;
+ }
  
- 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-index 41629769bdc85..8c3e2e2578bce 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-@@ -268,8 +268,8 @@ &pio {
- 	/* eMMC is shared pin with parallel NAND */
- 	emmc_pins_default: emmc-pins-default {
- 		mux {
--			function = "emmc", "emmc_rst";
--			groups = "emmc";
-+			function = "emmc";
-+			groups = "emmc", "emmc_rst";
- 		};
++static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
++			       u32 des_perf, u32 max_perf, bool fast_switch)
++{
++	if (fast_switch)
++		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
++	else
++		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
++			      READ_ONCE(cpudata->cppc_req_cached));
++}
++
++DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
++
++static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
++					  u32 min_perf, u32 des_perf,
++					  u32 max_perf, bool fast_switch)
++{
++	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
++					    max_perf, fast_switch);
++}
++
+ static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
+ {
+ 	int ret;
+@@ -191,6 +211,9 @@ static int amd_pstate_set_epp(struct amd_cpudata *cpudata, u32 epp)
+ 		if (!ret)
+ 			cpudata->epp_cached = epp;
+ 	} else {
++		amd_pstate_update_perf(cpudata, cpudata->min_limit_perf, 0U,
++					     cpudata->max_limit_perf, false);
++
+ 		perf_ctrls.energy_perf = epp;
+ 		ret = cppc_set_epp_perf(cpudata->cpu, &perf_ctrls, 1);
+ 		if (ret) {
+@@ -361,16 +384,6 @@ static inline int amd_pstate_init_perf(struct amd_cpudata *cpudata)
+ 	return static_call(amd_pstate_init_perf)(cpudata);
+ }
  
- 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
+-static void pstate_update_perf(struct amd_cpudata *cpudata, u32 min_perf,
+-			       u32 des_perf, u32 max_perf, bool fast_switch)
+-{
+-	if (fast_switch)
+-		wrmsrl(MSR_AMD_CPPC_REQ, READ_ONCE(cpudata->cppc_req_cached));
+-	else
+-		wrmsrl_on_cpu(cpudata->cpu, MSR_AMD_CPPC_REQ,
+-			      READ_ONCE(cpudata->cppc_req_cached));
+-}
+-
+ static void cppc_update_perf(struct amd_cpudata *cpudata,
+ 			     u32 min_perf, u32 des_perf,
+ 			     u32 max_perf, bool fast_switch)
+@@ -384,16 +397,6 @@ static void cppc_update_perf(struct amd_cpudata *cpudata,
+ 	cppc_set_perf(cpudata->cpu, &perf_ctrls);
+ }
+ 
+-DEFINE_STATIC_CALL(amd_pstate_update_perf, pstate_update_perf);
+-
+-static inline void amd_pstate_update_perf(struct amd_cpudata *cpudata,
+-					  u32 min_perf, u32 des_perf,
+-					  u32 max_perf, bool fast_switch)
+-{
+-	static_call(amd_pstate_update_perf)(cpudata, min_perf, des_perf,
+-					    max_perf, fast_switch);
+-}
+-
+ static inline bool amd_pstate_sample(struct amd_cpudata *cpudata)
+ {
+ 	u64 aperf, mperf, tsc;
 -- 
 2.43.0
 
