@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA2D1A6160;
-	Tue, 30 Jul 2024 16:22:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6642C1A6161;
+	Tue, 30 Jul 2024 16:22:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356564; cv=none; b=WnneQ7muS5FbEk+jKfnBg3yFh1pGP4uyb1iDtNZlQZ6OnTMaGIiptevnlRpRUus+D/psyUUO4ghxI+u+aSfRXYHHzQIBzbVKfLrIMzL8hTeVV5xSAIJ+Vt3n2HiI0nKPZtl3f1EaVF5aOlZB6k4aVw23RnDB5hr6vhvjJt66ha4=
+	t=1722356567; cv=none; b=MSQXAFCftfhDYWavUJCFl0XKAyMPdEybgNCbAbsWD84WQsBfHMgX9VYrwsfcut/6JGEW3MT4uuHHAV6BPhFcxQHgM0GccMFUrVKL67YkD0u3qcI8OHbV8N0K65eLYEWpgfyIQRMhbRzpHnYsD3+npW9eg1W/wsQVV8XSZqskJrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356564; c=relaxed/simple;
-	bh=EvqNMh3taTE6PZyh5/48SvI4poRFYNAus5wCvr4CiNY=;
+	s=arc-20240116; t=1722356567; c=relaxed/simple;
+	bh=2cXVfblu19YbPAF7JYJ++s52SMhs7ZAY6z4OAMjjk0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=LWvjsD/icDm3pbupgQump5fuQ/m4d5BqmRhPX6w60XQnYnawxDNdYrhA1vs5c8wrC/hAivRf0/pmqrAJA/BI/LceJloZr4SdPaIX7THrcFZpJ9Rjyb68H8km3WZhqCfMPspT1CqR6vkljdmoa1ZgQJ0Q45CErmuUdWGRHljfzCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FboG5+ok; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kb3kN6G4mq1PG1mwAcahG3rbszbH+woc5YQrB4tBbRWaTRfmyQZTnSAfPVZXXfq57HBK1v5osp0RoNyhqWKPww6AcqZ8dB8fuuG1ahRaRTlND2zxGY8HSnrrVs+Qttt0O0gWqCQxgIk9/Z0lWupPl43wVEMipTov2Fd36f3Wko4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DWJxUXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FboG5+ok"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD114C32782;
-	Tue, 30 Jul 2024 16:22:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DWJxUXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD3FCC4AF0C;
+	Tue, 30 Jul 2024 16:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356564;
-	bh=EvqNMh3taTE6PZyh5/48SvI4poRFYNAus5wCvr4CiNY=;
+	s=korg; t=1722356567;
+	bh=2cXVfblu19YbPAF7JYJ++s52SMhs7ZAY6z4OAMjjk0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FboG5+okN2kQdfBoOVjudN3kRogPBcGX+CYgAN80NIS07wL0XnpQrX+6DacYMIMMN
-	 /XZCfZGKTRl+N/L8PwejaxroihL4FcuvCxn6/DpTVnL0k+bvi5FsCdIktCYewPpqmm
-	 4unzq7vOrAcGY4HKRq+daQktI1ugV4v9X9dYVuJA=
+	b=1DWJxUXPVFg65cQTYZAiv8R7D7i2QPE1FGA5EDsoD5DE/IgyZHUyrvErjBVNLkeBI
+	 FC0IOGekPpFpqci3WIdgtT1dH7u7jHUP44IvsUzsjLiOHt4ecz5iketIAZb1tsUG9E
+	 Ho21dBe8s1VPmXe2brsNgJyAwIMGWjVa5ttw86N0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/568] selftests/resctrl: Move run_benchmark() to a more fitting file
-Date: Tue, 30 Jul 2024 17:44:29 +0200
-Message-ID: <20240730151646.217303746@linuxfoundation.org>
+Subject: [PATCH 6.1 208/440] ASoC: amd: Adjust error handling in case of absent codec device
+Date: Tue, 30 Jul 2024 17:47:21 +0200
+Message-ID: <20240730151623.991887309@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,179 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 508934b5d15ab79fd5895cc2a6063bc9d95f6a55 ]
+[ Upstream commit 5080808c3339de2220c602ab7c7fa23dc6c1a5a3 ]
 
-resctrlfs.c contains mostly functions that interact in some way with
-resctrl FS entries while functions inside resctrl_val.c deal with
-measurements and benchmarking.
+acpi_get_first_physical_node() can return NULL in several cases (no such
+device, ACPI table error, reference count drop to 0, etc).
+Existing check just emit error message, but doesn't perform return.
+Then this NULL pointer is passed to devm_acpi_dev_add_driver_gpios()
+where it is dereferenced.
 
-run_benchmark() is located in resctrlfs.c even though it's purpose
-is not interacting with the resctrl FS but to execute cache checking
-logic.
+Adjust this error handling by adding error code return.
 
-Move run_benchmark() to resctrl_val.c just before resctrl_val() that
-makes use of run_benchmark(). Make run_benchmark() static since it's
-not used between multiple files anymore.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Remove return comment from kernel-doc since the function is type void.
-
-Signed-off-by: Maciej Wieczor-Retman <maciej.wieczor-retman@intel.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: c44000b6535d ("selftests/resctrl: Fix closing IMC fds on error and open-code R+W instead of loops")
+Fixes: 02527c3f2300 ("ASoC: amd: add Machine driver for Jadeite platform")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Link: https://patch.msgid.link/20240703191007.8524-1-amishin@t-argos.ru
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/resctrl/resctrl.h     |  1 -
- tools/testing/selftests/resctrl/resctrl_val.c | 50 ++++++++++++++++++
- tools/testing/selftests/resctrl/resctrlfs.c   | 52 -------------------
- 3 files changed, 50 insertions(+), 53 deletions(-)
+ sound/soc/amd/acp-es8336.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index 8578a8b4e1459..a33f414f60199 100644
---- a/tools/testing/selftests/resctrl/resctrl.h
-+++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -86,7 +86,6 @@ int validate_bw_report_request(char *bw_report);
- bool validate_resctrl_feature_request(const char *resource, const char *feature);
- char *fgrep(FILE *inf, const char *str);
- int taskset_benchmark(pid_t bm_pid, int cpu_no);
--void run_benchmark(int signum, siginfo_t *info, void *ucontext);
- int write_schemata(char *ctrlgrp, char *schemata, int cpu_no,
- 		   char *resctrl_val);
- int write_bm_pid_to_resctrl(pid_t bm_pid, char *ctrlgrp, char *mongrp,
-diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-index b8ca6fa40b3bf..88789678917b6 100644
---- a/tools/testing/selftests/resctrl/resctrl_val.c
-+++ b/tools/testing/selftests/resctrl/resctrl_val.c
-@@ -625,6 +625,56 @@ measure_vals(struct resctrl_val_param *param, unsigned long *bw_resc_start)
- 	return 0;
- }
+diff --git a/sound/soc/amd/acp-es8336.c b/sound/soc/amd/acp-es8336.c
+index 89499542c803f..f91a3c13ac235 100644
+--- a/sound/soc/amd/acp-es8336.c
++++ b/sound/soc/amd/acp-es8336.c
+@@ -203,8 +203,10 @@ static int st_es8336_late_probe(struct snd_soc_card *card)
  
-+/*
-+ * run_benchmark - Run a specified benchmark or fill_buf (default benchmark)
-+ *		   in specified signal. Direct benchmark stdio to /dev/null.
-+ * @signum:	signal number
-+ * @info:	signal info
-+ * @ucontext:	user context in signal handling
-+ */
-+static void run_benchmark(int signum, siginfo_t *info, void *ucontext)
-+{
-+	int operation, ret, memflush;
-+	char **benchmark_cmd;
-+	size_t span;
-+	bool once;
-+	FILE *fp;
-+
-+	benchmark_cmd = info->si_ptr;
-+
-+	/*
-+	 * Direct stdio of child to /dev/null, so that only parent writes to
-+	 * stdio (console)
-+	 */
-+	fp = freopen("/dev/null", "w", stdout);
-+	if (!fp)
-+		PARENT_EXIT("Unable to direct benchmark status to /dev/null");
-+
-+	if (strcmp(benchmark_cmd[0], "fill_buf") == 0) {
-+		/* Execute default fill_buf benchmark */
-+		span = strtoul(benchmark_cmd[1], NULL, 10);
-+		memflush =  atoi(benchmark_cmd[2]);
-+		operation = atoi(benchmark_cmd[3]);
-+		if (!strcmp(benchmark_cmd[4], "true"))
-+			once = true;
-+		else if (!strcmp(benchmark_cmd[4], "false"))
-+			once = false;
-+		else
-+			PARENT_EXIT("Invalid once parameter");
-+
-+		if (run_fill_buf(span, memflush, operation, once))
-+			fprintf(stderr, "Error in running fill buffer\n");
-+	} else {
-+		/* Execute specified benchmark */
-+		ret = execvp(benchmark_cmd[0], benchmark_cmd);
-+		if (ret)
-+			perror("wrong\n");
+ 	codec_dev = acpi_get_first_physical_node(adev);
+ 	acpi_dev_put(adev);
+-	if (!codec_dev)
++	if (!codec_dev) {
+ 		dev_err(card->dev, "can not find codec dev\n");
++		return -ENODEV;
 +	}
-+
-+	fclose(stdout);
-+	PARENT_EXIT("Unable to run specified benchmark");
-+}
-+
- /*
-  * resctrl_val:	execute benchmark and measure memory bandwidth on
-  *			the benchmark
-diff --git a/tools/testing/selftests/resctrl/resctrlfs.c b/tools/testing/selftests/resctrl/resctrlfs.c
-index 3a8111362d262..9ac19acaf781d 100644
---- a/tools/testing/selftests/resctrl/resctrlfs.c
-+++ b/tools/testing/selftests/resctrl/resctrlfs.c
-@@ -293,58 +293,6 @@ int taskset_benchmark(pid_t bm_pid, int cpu_no)
- 	return 0;
- }
  
--/*
-- * run_benchmark - Run a specified benchmark or fill_buf (default benchmark)
-- *		   in specified signal. Direct benchmark stdio to /dev/null.
-- * @signum:	signal number
-- * @info:	signal info
-- * @ucontext:	user context in signal handling
-- *
-- * Return: void
-- */
--void run_benchmark(int signum, siginfo_t *info, void *ucontext)
--{
--	int operation, ret, memflush;
--	char **benchmark_cmd;
--	size_t span;
--	bool once;
--	FILE *fp;
--
--	benchmark_cmd = info->si_ptr;
--
--	/*
--	 * Direct stdio of child to /dev/null, so that only parent writes to
--	 * stdio (console)
--	 */
--	fp = freopen("/dev/null", "w", stdout);
--	if (!fp)
--		PARENT_EXIT("Unable to direct benchmark status to /dev/null");
--
--	if (strcmp(benchmark_cmd[0], "fill_buf") == 0) {
--		/* Execute default fill_buf benchmark */
--		span = strtoul(benchmark_cmd[1], NULL, 10);
--		memflush =  atoi(benchmark_cmd[2]);
--		operation = atoi(benchmark_cmd[3]);
--		if (!strcmp(benchmark_cmd[4], "true"))
--			once = true;
--		else if (!strcmp(benchmark_cmd[4], "false"))
--			once = false;
--		else
--			PARENT_EXIT("Invalid once parameter");
--
--		if (run_fill_buf(span, memflush, operation, once))
--			fprintf(stderr, "Error in running fill buffer\n");
--	} else {
--		/* Execute specified benchmark */
--		ret = execvp(benchmark_cmd[0], benchmark_cmd);
--		if (ret)
--			perror("wrong\n");
--	}
--
--	fclose(stdout);
--	PARENT_EXIT("Unable to run specified benchmark");
--}
--
- /*
-  * create_grp - Create a group only if one doesn't exist
-  * @grp_name:	Name of the group
+ 	ret = devm_acpi_dev_add_driver_gpios(codec_dev, acpi_es8336_gpios);
+ 	if (ret)
 -- 
 2.43.0
 
