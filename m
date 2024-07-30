@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0DF41A6192;
-	Tue, 30 Jul 2024 17:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3E2318454A;
+	Tue, 30 Jul 2024 17:03:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359010; cv=none; b=q29x22EzsPIIscmpclG1M92eOEeTT2UdCMPvEHI4MtEA+zHuWm9XmdR4dadSyG/q3H91LzRSk3bHz2lq9JlgHrZA4G/Pa64U/LkFqGqnmp/bk94j/cW7NNyCUzgSR865L6aO4Nja+d3qVc+sW1nv6Q+NR0vkyh4UbBV8Bgzbs4U=
+	t=1722359013; cv=none; b=qtdA8ufdIlVpmUwTNhHTvYJ7EwdX/iuHkZqKXi83yMZmpMh6SdBv2ACS9+AAMNvwR9rBsC6PGw1OXN2MvexDQvtiWjVhNTESA1YJNCqzG9yj0WZD2WVGD00F4Ijq5DjWWc8fe3NZEYpjyR0IODV1E0i+BqDMlfMYBxwYHcFBy3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359010; c=relaxed/simple;
-	bh=3RnMmXvCTolXoj8pYHPRZTiKNi0Y6IWU7Plmycq3a4w=;
+	s=arc-20240116; t=1722359013; c=relaxed/simple;
+	bh=JgnERLX+uy2BmF8ndJjCm73+YLY4b30MmoyRfm+IBLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=udlkeMMNbYJpiow1ZQFKwTUsPUz/sMz5jj+TKnz0Zcy9SDt3gv9+dnbhjhfO37YnPVZ2Kpnnut/B7DTJ4YNHViD6hralGt2tvi8aS+C5UlKTp3g1GpIUFRY1JhOltYdqC0RFas1vjkHU9+0inxnZXZ5oXm7IOfTVRaY+AThSlLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkuDdxw6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oLc7f0DmJwIPb7N1uFPv/mQO4JAtOupOHtPur+yxgIar6MJi6fMpFfDfTvRPnfnoCQhnm9KRssHETIhT0ev8FOX9MWVKvWKTMKuvLd8HQzAZrNiHPzCMS4g4X8uyVJYK9SIywbTMlcq0RWcLIowtxNbMNUlMyIFCKYn/q3D0EOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=asimi7lD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkuDdxw6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1D9C32782;
-	Tue, 30 Jul 2024 17:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="asimi7lD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A2F8C4AF0F;
+	Tue, 30 Jul 2024 17:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359009;
-	bh=3RnMmXvCTolXoj8pYHPRZTiKNi0Y6IWU7Plmycq3a4w=;
+	s=korg; t=1722359012;
+	bh=JgnERLX+uy2BmF8ndJjCm73+YLY4b30MmoyRfm+IBLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkuDdxw6oE4J4PkUPv3mVa0YjvGQ8QolQShZgmp7YMtWhDK+BMLwe7z/XtheRW+W7
-	 vLXL/1dIcTLLsPbKjSLdqSO+1GlC/eaqLuzBpvVoEk8BAAtI3NjyQKSTr4DzSQR4DY
-	 OpXlgZPvgU/F+f+nHLznW/E+6D7W/g//wnPaw6fs=
+	b=asimi7lDqsEqM/mqdZKO8/N/QHdCm2PcfEpTi0EzFgarIsxsGlFOZymph61QkR1Np
+	 /qaO4Otio2f6H96ugwMxIX7iSTnEGYl8HlNO8EsqX72sYivqSsGf7D8YQycDDZvnht
+	 bVKE60LLT8KLAPou/TdBek0F/9QedjDlNbzsdqTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maher Sanalla <msanalla@nvidia.com>,
-	Or Har-Toov <ohartoov@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 421/809] RDMA/mlx5: Use sq timestamp as QP timestamp when RoCE is disabled
-Date: Tue, 30 Jul 2024 17:44:57 +0200
-Message-ID: <20240730151741.323908828@linuxfoundation.org>
+Subject: [PATCH 6.10 414/809] clk: qcom: gpucc-sa8775p: Remove the CLK_IS_CRITICAL and ALWAYS_ON flags
+Date: Tue, 30 Jul 2024 17:44:50 +0200
+Message-ID: <20240730151741.045055177@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -54,60 +51,168 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Or Har-Toov <ohartoov@nvidia.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit 0c5275bf75ec3708d95654195ae4ed80d946d088 ]
+[ Upstream commit e69386d4a42afa5da6bfdcd4ac5ec61e1db04c61 ]
 
-When creating a QP, one of the attributes is TS format (timestamp).
-In some devices, we have a limitation that all QPs should have the same
-ts_format. The ts_format is chosen based on the device's capability.
-The qp_ts_format cap resides under the RoCE caps table, and the
-cap will be 0 when RoCE is disabled. So when RoCE is disabled, the
-value that should be queried is sq_ts_format under HCA caps.
+The GPU clocks/GDSCs have been marked critical from the clock driver
+but the GPU driver votes on these resources as per the HW requirement.
+In the case where these clocks & GDSCs are left enabled, would have
+power impact and also cause GPU stability/corruptions.
+Fix the same by removing the CLK_IS_CRITICAL for clocks and ALWAYS_ON
+flags for the GPU GDSCs.
 
-Consider the case when the system supports REAL_TIME_TS format (0x2),
-some QPs are created with REAL_TIME_TS as ts_format, and afterwards
-RoCE gets disabled. When trying to construct a new QP, we can't use
-the qp_ts_format, that is queried from the RoCE caps table, Since it
-leads to passing 0x0 (FREE_RUNNING_TS) as the value of the qp_ts_format,
-which is different than the ts_format of the previously allocated
-QPs REAL_TIME_TS format (0x2).
-
-Thus, to resolve this, read the sq_ts_format, which also reflect
-the supported ts format for the QP when RoCE is disabled.
-
-Fixes: 4806f1e2fee8 ("net/mlx5: Set QP timestamp mode to default")
-Signed-off-by: Maher Sanalla <msanalla@nvidia.com>
-Signed-off-by: Or Har-Toov <ohartoov@nvidia.com>
-Link: https://lore.kernel.org/r/32801966eb767c7fd62b8dea3b63991d5fbfe213.1718554199.git.leon@kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 0afa16afc36d ("clk: qcom: add the GPUCC driver for sa8775p")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-4-adcc756a23df@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/mlx5/qp.h | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/clk/qcom/gpucc-sa8775p.c | 27 +++++++++++----------------
+ 1 file changed, 11 insertions(+), 16 deletions(-)
 
-diff --git a/include/linux/mlx5/qp.h b/include/linux/mlx5/qp.h
-index f0e55bf3ec8b5..ad1ce650146cb 100644
---- a/include/linux/mlx5/qp.h
-+++ b/include/linux/mlx5/qp.h
-@@ -576,9 +576,12 @@ static inline const char *mlx5_qp_state_str(int state)
+diff --git a/drivers/clk/qcom/gpucc-sa8775p.c b/drivers/clk/qcom/gpucc-sa8775p.c
+index 1167c42da39db..f965babf4330d 100644
+--- a/drivers/clk/qcom/gpucc-sa8775p.c
++++ b/drivers/clk/qcom/gpucc-sa8775p.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (c) 2021-2022, Qualcomm Innovation Center, Inc. All rights reserved.
++ * Copyright (c) 2021-2022, 2024, Qualcomm Innovation Center, Inc. All rights reserved.
+  * Copyright (c) 2023, Linaro Limited
+  */
  
- static inline int mlx5_get_qp_default_ts(struct mlx5_core_dev *dev)
- {
--	return !MLX5_CAP_ROCE(dev, qp_ts_format) ?
--		       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING :
--		       MLX5_TIMESTAMP_FORMAT_DEFAULT;
-+	u8 supported_ts_cap = mlx5_get_roce_state(dev) ?
-+			      MLX5_CAP_ROCE(dev, qp_ts_format) :
-+			      MLX5_CAP_GEN(dev, sq_ts_format);
-+
-+	return supported_ts_cap ? MLX5_TIMESTAMP_FORMAT_DEFAULT :
-+	       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING;
- }
+@@ -280,7 +280,7 @@ static struct clk_branch gpu_cc_ahb_clk = {
+ 				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -294,7 +294,6 @@ static struct clk_branch gpu_cc_cb_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data){
+ 			.name = "gpu_cc_cb_clk",
+-			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -312,7 +311,7 @@ static struct clk_branch gpu_cc_crc_ahb_clk = {
+ 				&gpu_cc_hub_ahb_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -330,7 +329,7 @@ static struct clk_branch gpu_cc_cx_ff_clk = {
+ 				&gpu_cc_ff_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -348,7 +347,7 @@ static struct clk_branch gpu_cc_cx_gmu_clk = {
+ 				&gpu_cc_gmu_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags =  CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_aon_ops,
+ 		},
+ 	},
+@@ -362,7 +361,6 @@ static struct clk_branch gpu_cc_cx_snoc_dvm_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data){
+ 			.name = "gpu_cc_cx_snoc_dvm_clk",
+-			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -380,7 +378,7 @@ static struct clk_branch gpu_cc_cxo_aon_clk = {
+ 				&gpu_cc_xo_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -398,7 +396,7 @@ static struct clk_branch gpu_cc_cxo_clk = {
+ 				&gpu_cc_xo_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags =  CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -416,7 +414,7 @@ static struct clk_branch gpu_cc_demet_clk = {
+ 				&gpu_cc_demet_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_aon_ops,
+ 		},
+ 	},
+@@ -430,7 +428,6 @@ static struct clk_branch gpu_cc_hlos1_vote_gpu_smmu_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data){
+ 			.name = "gpu_cc_hlos1_vote_gpu_smmu_clk",
+-			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -448,7 +445,7 @@ static struct clk_branch gpu_cc_hub_aon_clk = {
+ 				&gpu_cc_hub_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_aon_ops,
+ 		},
+ 	},
+@@ -466,7 +463,7 @@ static struct clk_branch gpu_cc_hub_cx_int_clk = {
+ 				&gpu_cc_hub_cx_int_div_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags =  CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
++			.flags =  CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_aon_ops,
+ 		},
+ 	},
+@@ -480,7 +477,6 @@ static struct clk_branch gpu_cc_memnoc_gfx_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data){
+ 			.name = "gpu_cc_memnoc_gfx_clk",
+-			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -494,7 +490,6 @@ static struct clk_branch gpu_cc_sleep_clk = {
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(const struct clk_init_data){
+ 			.name = "gpu_cc_sleep_clk",
+-			.flags = CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -533,7 +528,7 @@ static struct gdsc cx_gdsc = {
+ 		.name = "cx_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
+-	.flags = VOTABLE | RETAIN_FF_ENABLE | ALWAYS_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE,
+ };
  
- #endif /* MLX5_QP_H */
+ static struct gdsc gx_gdsc = {
 -- 
 2.43.0
 
