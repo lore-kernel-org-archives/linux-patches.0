@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEB4183CD5;
-	Tue, 30 Jul 2024 16:41:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABEA183CD5;
+	Tue, 30 Jul 2024 16:41:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357693; cv=none; b=HUAUR5TNq5cT4wSmoYDCrb7iroXjNcQYf0PbqEalFyqUlH6YMPwVC/BKia0zNYWXwl/yXiM8qMyTqKhKNQ93n+Vg9YiPbx3VcVLEAaIVPgWc/TxVI1zblxPmYkvGzCpfKo+Fhm+SyRENFkhZmPOg6iAe48ADnVYw67sQjf+eCLU=
+	t=1722357697; cv=none; b=fADdewWvUifstkmm4vn2IxjUVX2gSSPPp5V1tBwVIoXGWTOEUmPegSb5zAUtwZx1DvLGK9qQqE1Lz7ECsfg+RAgJUjUKPPdW8/BN10Y8TAgc7nTDJWHmoNMWEifj+QcDFm29ZvDyfjn+Z42FFh9E1hf7Hyd0Tp/0ZZ3h0mvAzoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357693; c=relaxed/simple;
-	bh=825mCaYCsKoXh82061W8wRJeydpZfcDt6830TTPy4LI=;
+	s=arc-20240116; t=1722357697; c=relaxed/simple;
+	bh=SGfLjqopNp6PSQXV2MbYGBis9U+FB7ihUw9a1otlYZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r42p0cUBVnIIHxhp7YO/XursCB/MQNUyCbaafCRURHIvYDuOlpXNccfDcbnkkTcyljC08tZBX7Rk5X7y9XsXdNeyR4fKGQX15qyQEsbOBkhKya+eLdTBATDarBnMkcAcr14qoohkbvmepboR/s9mYQbpTJ45+ocoN7ncd/+FcAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WyR1Thve; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RUseEaP/TTJTF5JVHhluAvJq+2fnQteoUmsYpj5i8eoMKuixUUSbpkfGXQXI2H/AnBqdk08RaCFLsvRKHfHeJFgibRqO5tVJFTu2FXBr8g6Xn3OFydOxQ2jMeyMj3GYiwgjNcPzLlqiSIbY6m4ZdCbxp1ZToZ2FJ+oQZAO0oXIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wcRWdHDE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WyR1Thve"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC7BC32782;
-	Tue, 30 Jul 2024 16:41:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wcRWdHDE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C5CC4AF0A;
+	Tue, 30 Jul 2024 16:41:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357692;
-	bh=825mCaYCsKoXh82061W8wRJeydpZfcDt6830TTPy4LI=;
+	s=korg; t=1722357697;
+	bh=SGfLjqopNp6PSQXV2MbYGBis9U+FB7ihUw9a1otlYZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WyR1ThvejosqfyjmVXJnXEiT1tb/84yYXciWWMvoizXUSkIf7vy9j+v0eki1W/P2e
-	 9EEFgqqaZyFH7aCs5VI5anRbVDY05hKIXzJGHrPKl22YwkvGzoYa0LYW8jfuj6++kT
-	 aA/xU1EDzdJliTvI8PuuZDDdQsWTuKHl7hzoU5ig=
+	b=wcRWdHDEKYRr+Y6TmwQcEBh2Q1rSiQW0cgEhv2qdpX4gvbgONrzMcqZxkQDs5ZpDK
+	 /R31lNsgSRSMkVen/Wl1gnCxSdqLfB+yQmbBpJaCwpO0Pb048hiipbtRK3zivhCetk
+	 lW47FOZFdgNlPz2djkIVNdR3rnJLv6qdudIgrNJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 316/440] ALSA: usb-audio: Fix microphone sound on HD webcam.
-Date: Tue, 30 Jul 2024 17:49:09 +0200
-Message-ID: <20240730151628.164019080@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 282/568] RDMA/device: Return error earlier if port in not valid
+Date: Tue, 30 Jul 2024 17:46:29 +0200
+Message-ID: <20240730151650.897335005@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,140 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit 74dba240881820b46b9b1c62ef4de3bfff47fbd4 upstream.
+[ Upstream commit 917918f57a7b139c043e78c502876f2c286f4f0a ]
 
-I own an external usb Webcam, HD webcam, which had low mic volume and
-inconsistent sound quality. Video works as expected.
+There is no need to allocate port data if port provided is not valid.
 
-(snip)
-[   95.473820][ 1] [   T73] usb 5-2.2: new high-speed USB device number 7 using xhci_hcd
-[   95.773974][ 1] [   T73] usb 5-2.2: New USB device found, idVendor=1bcf, idProduct=2281, bcdDevice= 0.05
-[   95.783445][ 1] [   T73] usb 5-2.2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[   95.791872][ 1] [   T73] usb 5-2.2: Product: HD webcam
-[   95.797001][ 1] [   T73] usb 5-2.2: Manufacturer: Sunplus IT Co
-[   95.802996][ 1] [   T73] usb 5-2.2: SerialNumber: 20200513
-[   96.092610][ 2] [ T3680] usb 5-2.2: Warning! Unlikely big volume range (=4096), cval->res is probably wrong.
-[   96.102436][ 2] [ T3680] usb 5-2.2: [5] FU [Mic Capture Volume] ch = 1, val = 0/4096/1
-
-Set up quirk cval->res to 16 for 256 levels,
-Set GET_SAMPLE_RATE quirk flag to stop trying to get the sample rate.
-Confirmed that happened anyway later due to the backoff mechanism,
-After 3 failures.
-
-All audio stream on device interfaces share the same values,
-apart from wMaxPacketSize and tSamFreq :
-
-      bLength                 9
-      bDescriptorType         4
-      bInterfaceNumber        3
-      bAlternateSetting       4
-      bNumEndpoints           1
-      bInterfaceClass         1 Audio
-
-Interface Descriptor:
-  bLength                 9
-  bDescriptorType         4
-  bInterfaceNumber        3
-  bAlternateSetting       4
-  bNumEndpoints           1
-  bInterfaceClass         1 Audio
-  bInterfaceSubClass      2 Streaming
-  bInterfaceProtocol      0
-  iInterface              0
-  AudioStreaming Interface Descriptor:
-    bLength                 7
-    bDescriptorType        36
-    bDescriptorSubtype      1 (AS_GENERAL)
-    bTerminalLink           3
-    bDelay                  1 frames
-    wFormatTag         0x0001 PCM
-  AudioStreaming Interface Descriptor:
-    bLength                11
-    bDescriptorType        36
-    bDescriptorSubtype      2 (FORMAT_TYPE)
-    bFormatType             1 (FORMAT_TYPE_I)
-    bNrChannels             1
-    bSubframeSize           2
-    bBitResolution         16
-    bSamFreqType            1 Discrete
-    tSamFreq[ 0]        48000
-  Endpoint Descriptor:
-    bLength                 9
-    bDescriptorType         5
-    bEndpointAddress     0x86  EP 6 IN
-    bmAttributes            5
-      Transfer Type            Isochronous
-      Synch Type               Asynchronous
-      Usage Type               Data
-    wMaxPacketSize     0x0064  1x 100 bytes
-    bInterval               4
-    bRefresh                0
-    bSynchAddress           0
-    AudioStreaming Endpoint Descriptor:
-      bLength                 7
-      bDescriptorType        37
-      bDescriptorSubtype      1 (EP_GENERAL)
-      bmAttributes         0x01
-        Sampling Frequency
-      bLockDelayUnits         0 Undefined
-      wLockDelay         0x0000
-(snip)
-
-Testing patch provides consistent good sound recording quality and volume range.
-
-(snip)
-[   95.473820][ 1] [   T73] usb 5-2.2: new high-speed USB device number 7 using xhci_hcd
-[   95.773974][ 1] [   T73] usb 5-2.2: New USB device found, idVendor=1bcf, idProduct=2281, bcdDevice= 0.05
-[   95.783445][ 1] [   T73] usb 5-2.2: New USB device strings: Mfr=1, Product=2, SerialNumber=3
-[   95.791872][ 1] [   T73] usb 5-2.2: Product: HD webcam
-[   95.797001][ 1] [   T73] usb 5-2.2: Manufacturer: Sunplus IT Co
-[   95.802996][ 1] [   T73] usb 5-2.2: SerialNumber: 20200513
-[   96.110630][ 3] [ T3680] usbcore: registered new interface driver snd-usb-audio
-[   96.114329][ 7] [ T3677] usb 5-2.2: Found UVC 1.00 device HD webcam (1bcf:2281)
-[   96.167555][ 7] [ T3677] usbcore: registered new interface driver uvcvideo
-
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240719020906.8078-1-wangdich9700@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c2261dd76b54 ("RDMA/device: Add ib_device_set_netdev() as an alternative to get_netdev")
+Link: https://lore.kernel.org/r/022047a8b16988fc88d4426da50bf60a4833311b.1719235449.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/mixer.c  |    7 +++++++
- sound/usb/quirks.c |    2 ++
- 2 files changed, 9 insertions(+)
+ drivers/infiniband/core/device.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/sound/usb/mixer.c
-+++ b/sound/usb/mixer.c
-@@ -1211,6 +1211,13 @@ static void volume_control_quirks(struct
- 			cval->res = 16;
- 		}
- 		break;
-+	case USB_ID(0x1bcf, 0x2281): /* HD Webcam */
-+		if (!strcmp(kctl->id.name, "Mic Capture Volume")) {
-+			usb_audio_info(chip,
-+				"set resolution quirk: cval->res = 16\n");
-+			cval->res = 16;
-+		}
-+		break;
- 	}
- }
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index db0a58c82838d..d1b5908c70cdc 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2146,6 +2146,9 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 	unsigned long flags;
+ 	int ret;
  
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2183,6 +2183,8 @@ static const struct usb_audio_quirk_flag
- 		   QUIRK_FLAG_ALIGN_TRANSFER),
- 	DEVICE_FLG(0x534d, 0x2109, /* MacroSilicon MS2109 */
- 		   QUIRK_FLAG_ALIGN_TRANSFER),
-+	DEVICE_FLG(0x1bcf, 0x2281, /* HD Webcam */
-+		   QUIRK_FLAG_GET_SAMPLE_RATE),
++	if (!rdma_is_port_valid(ib_dev, port))
++		return -EINVAL;
++
+ 	/*
+ 	 * Drivers wish to call this before ib_register_driver, so we have to
+ 	 * setup the port data early.
+@@ -2154,9 +2157,6 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 	if (ret)
+ 		return ret;
  
- 	/* Vendor matches */
- 	VENDOR_FLG(0x045e, /* MS Lifecam */
+-	if (!rdma_is_port_valid(ib_dev, port))
+-		return -EINVAL;
+-
+ 	pdata = &ib_dev->port_data[port];
+ 	spin_lock_irqsave(&pdata->netdev_lock, flags);
+ 	old_ndev = rcu_dereference_protected(
+-- 
+2.43.0
+
 
 
