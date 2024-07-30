@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C407D83A17;
-	Tue, 30 Jul 2024 17:03:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F6B1A6192;
+	Tue, 30 Jul 2024 17:03:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358983; cv=none; b=q8JWZ2SsUVqJUxElZMMLpmcHay9gheI3NtLBgu2oVNSLv3Nes7f331hytOx0VOQmuBha9HeSsiT6c1MhnaBtA9gsCvkuYiQjmmNaz+8xfPxH+Wl4d7Hxwh4mC3Cp2OxFnqobRuVdjesNNHV4hL2gL89glj9A8nIKAqJAOmQiyQQ=
+	t=1722358987; cv=none; b=NyNKVGjle8YyWaZT8u+yauAWwOUgUSKK17Gk6nF77fgeSM19xDXAjuM6/mEtKzOpIu8A9aLo2NR9sSje2uGyWkhN5aBVQdBCFXAfWnB6ew7gW5vdfdLpCm4YTginBZU2jSgJiuBN9nPDIvLe3JKE+bfyRisWd6PFDNtWV2SENbo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358983; c=relaxed/simple;
-	bh=PlZ27Z+TM4b2gT4s264HIv6QoPH6uGdYhQofuRRhN6w=;
+	s=arc-20240116; t=1722358987; c=relaxed/simple;
+	bh=hYeKyI7U6wboGgU4c+9/H5T1beKJuAt4AHZr1oQjTXg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRGQiqSkTGZ7cRwzhkwsHE058JLKBZdVgP2dk5asL86jRrs/UG6rO53zike5Q0Lng9eAmloNaFVmuRWQePRJwcZNCEjzDhrVTf8DDikZVSLONLW8u9e9Y3fn3SHlf0stxQB64O5uURgu3vqohvh3F5dbiPkyq9EmZjzpCQORmjk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jrw6wObu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PQvDwIat2tNdgKRZmR9Ky/qj7pw2DOc0IO0I+ezNnERGpD+SjL7LWMJ1pEuVe0jJao8hOFwrdV8L2hxmzcdDelO4OIky3g1INNRnrWxDEAqyIgBRby3+c9fvcTFbMl2WF6LLJwYR4LatssY2YGgEDv45Z7Hn5UKij2NOrNA1ar4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmgxUdof; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jrw6wObu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33FE1C32782;
-	Tue, 30 Jul 2024 17:03:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmgxUdof"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D87AC32782;
+	Tue, 30 Jul 2024 17:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358983;
-	bh=PlZ27Z+TM4b2gT4s264HIv6QoPH6uGdYhQofuRRhN6w=;
+	s=korg; t=1722358987;
+	bh=hYeKyI7U6wboGgU4c+9/H5T1beKJuAt4AHZr1oQjTXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jrw6wObu83zp2VuAkgoBEqrlS1O+SoktC8fQt0dpwPLfbCZreNO93ZkPOYqRGd+tA
-	 iYbevgstm5vlWOids0srcUPmdCtzYsf4V0dhb+/81Dr3WXHcQY24Z9JVRqakirtJzb
-	 NqvS2YPbFuXytC0Br1S+1bOxrlpTu6ntb1O5cxDc=
+	b=tmgxUdof+kSdCnEwctHtB/K5A0gaEqYyfAo/4D7K7ojm/IpwZnw6i4QcGwrfSPfWE
+	 xuaxbl6o6pVmjuJMDy4xVyF1C6tPVoYyQm7wyfDMzkacJ3yKI71BA/KNp5mp2uAMJ/
+	 0ClSK9UpdQjJOM0qId1vXYT5JEsA80AY4LJOni5Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Nitesh Shetty <nj.shetty@samsung.com>,
-	Keith Busch <kbusch@kernel.org>,
+	Andrei Lalaev <andrei.lalaev@anton-paar.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 439/440] nvme-pci: add missing condition check for existence of mapped data
-Date: Tue, 30 Jul 2024 17:51:12 +0200
-Message-ID: <20240730151632.919452327@linuxfoundation.org>
+Subject: [PATCH 6.10 418/809] Input: qt1050 - handle CHIP_ID reading error
+Date: Tue, 30 Jul 2024 17:44:54 +0200
+Message-ID: <20240730151741.206699587@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,41 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Andrei Lalaev <andrei.lalaev@anton-paar.com>
 
-[ Upstream commit c31fad1470389666ac7169fe43aa65bf5b7e2cfd ]
+[ Upstream commit 866a5c7e2781cf1b019072288f1f5c64186dcb63 ]
 
-nvme_map_data() is called when request has physical segments, hence
-the nvme_unmap_data() should have same condition to avoid dereference.
+If the device is missing, we get the following error:
 
-Fixes: 4aedb705437f ("nvme-pci: split metadata handling from nvme_map_data / nvme_unmap_data")
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+  qt1050 3-0041: ID -1340767592 not supported
+
+Let's handle this situation and print more informative error
+when reading of CHIP_ID fails:
+
+  qt1050 3-0041: Failed to read chip ID: -6
+
+Fixes: cbebf5addec1 ("Input: qt1050 - add Microchip AT42QT1050 support")
+Signed-off-by: Andrei Lalaev <andrei.lalaev@anton-paar.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://lore.kernel.org/r/20240617183018.916234-1-andrey.lalaev@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/input/keyboard/qt1050.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 42ef44cc7a852..27446fa847526 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -910,7 +910,8 @@ static blk_status_t nvme_prep_rq(struct nvme_dev *dev, struct request *req)
- 	blk_mq_start_request(req);
- 	return BLK_STS_OK;
- out_unmap_data:
--	nvme_unmap_data(dev, req);
-+	if (blk_rq_nr_phys_segments(req))
-+		nvme_unmap_data(dev, req);
- out_free_cmd:
- 	nvme_cleanup_cmd(req);
- 	return ret;
+diff --git a/drivers/input/keyboard/qt1050.c b/drivers/input/keyboard/qt1050.c
+index b51dfcd760386..056e9bc260262 100644
+--- a/drivers/input/keyboard/qt1050.c
++++ b/drivers/input/keyboard/qt1050.c
+@@ -226,7 +226,12 @@ static bool qt1050_identify(struct qt1050_priv *ts)
+ 	int err;
+ 
+ 	/* Read Chip ID */
+-	regmap_read(ts->regmap, QT1050_CHIP_ID, &val);
++	err = regmap_read(ts->regmap, QT1050_CHIP_ID, &val);
++	if (err) {
++		dev_err(&ts->client->dev, "Failed to read chip ID: %d\n", err);
++		return false;
++	}
++
+ 	if (val != QT1050_CHIP_ID_VER) {
+ 		dev_err(&ts->client->dev, "ID %d not supported\n", val);
+ 		return false;
 -- 
 2.43.0
 
