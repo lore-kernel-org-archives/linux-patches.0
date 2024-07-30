@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A767183CBF;
-	Tue, 30 Jul 2024 16:24:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708831A6195;
+	Tue, 30 Jul 2024 16:24:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356689; cv=none; b=GKoU4uDsG3QsSNW6dyuGDYp7z+KR4D4naFIuPz7FaQVir2bcEaYFAusOMxeAp4aNJ15DnwbFV7+3UnUd7txBIaFxTk3NQywMt+Xh9LGIj6hpOQILpNTx6WBWL+3mZr3azzC6qFMHTjLPj/0bIrVvoJ0ncNbTtGtv3AuptGqruok=
+	t=1722356692; cv=none; b=uEdtgWoBTvqNO0iWDIOh49gNFEModFVhbqolKvd58GNpx6hb+PwuyVwy2ZBNjbz6xn0h3rZOAStzk/FP8a7FPBHLYYTFSafr2Q20Gh5lcpUMV0msAdaobi7hdfZ5ASarcAR9XES4huxVlavTVDmZeHvFiaowPL7CgxT1Px17YHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356689; c=relaxed/simple;
-	bh=obcFoXiZeSWl4XTy2J6bpBPQw+rkvmNAqDh3/tCekIU=;
+	s=arc-20240116; t=1722356692; c=relaxed/simple;
+	bh=GjtMG91SjTlm+yJfjF9hzAgjzm0pjwayhTImiihpROo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=en95chtE40/aQNhHWMAFH/IKExRFFrgqAFvv9Ya3WbN7ktB1VJL4XJUfzQjoWl1CfoRsF57gI+7GaBQH7L+5tjwRGpWQXSUE8X7JY3D3XJvcu/IcgEbE3cS1f3Yn+xcaXKdELpkng3JqQM+4L4EEho7IwRFovhYzgBd53xz7lpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5TYNiJR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHWA0LRQanMP+vipyHWrHiqDuswv9qacs7ii9FcrrrPOV0tT+nTgQdtRfnsqvGidzQLpJ2O3dyD45bx2a3JELlKFez+VRShwYj0fSX/k6G/HarhROVrUfmfQ6oMq3a6tL8nUhOHuI1mJe4SuWJtKP+BX6Cs2EA+klr9oF7jPWWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HCZ1YBFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5TYNiJR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C11DCC32782;
-	Tue, 30 Jul 2024 16:24:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HCZ1YBFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64B7C4AF0A;
+	Tue, 30 Jul 2024 16:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356689;
-	bh=obcFoXiZeSWl4XTy2J6bpBPQw+rkvmNAqDh3/tCekIU=;
+	s=korg; t=1722356692;
+	bh=GjtMG91SjTlm+yJfjF9hzAgjzm0pjwayhTImiihpROo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5TYNiJRwU/WaVVkw9lCKnyKU4kEeksay7U4g1FAx2VtK2mfXAP8MSPZUP4TEOf55
-	 s6H8HBXhQlc8JyYJ8g5u7cJjNvnQNqZklEZ7ESkwMENo6umV793vQaWScdN1MhejnV
-	 Qah+sJK7aZZofrX23NVy67dqgdzLp7vVK1NBqodc=
+	b=HCZ1YBFmkuXbgpPb6/bL6n/+GqwH4UpQQSDa1DkesdYLg4Sl5+jfNEp3cTNl8rXNm
+	 IxiJNrbhg/CFLQNV73drmfVItJITyVIUCnR3jUcUeEylllVL7vPNm+r7Srtz2wBRI2
+	 oDEQniW6kZz5/8u4yfYTR86BEFOl7B3gxrabXRFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 219/440] powerpc/xmon: Fix disassembly CPU feature checks
-Date: Tue, 30 Jul 2024 17:47:32 +0200
-Message-ID: <20240730151624.416889277@linuxfoundation.org>
+Subject: [PATCH 6.10 174/809] tcp: fix race in tcp_write_err()
+Date: Tue, 30 Jul 2024 17:40:50 +0200
+Message-ID: <20240730151731.476813063@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,101 +48,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 14196e47c5ffe32af7ed5a51c9e421c5ea5bccce ]
+[ Upstream commit 853c3bd7b7917670224c9fe5245bd045cac411dd ]
 
-In the xmon disassembly code there are several CPU feature checks to
-determine what dialects should be passed to the disassembler. The
-dialect controls which instructions the disassembler will recognise.
+I noticed flakes in a packetdrill test, expecting an epoll_wait()
+to return EPOLLERR | EPOLLHUP on a failed connect() attempt,
+after multiple SYN retransmits. It sometimes return EPOLLERR only.
 
-Unfortunately the checks are incorrect, because instead of passing a
-single CPU feature they are passing a mask of feature bits.
+The issue is that tcp_write_err():
+ 1) writes an error in sk->sk_err,
+ 2) calls sk_error_report(),
+ 3) then calls tcp_done().
 
-For example the code:
+tcp_done() is writing SHUTDOWN_MASK into sk->sk_shutdown,
+among other things.
 
-  if (cpu_has_feature(CPU_FTRS_POWER5))
-      dialect |= PPC_OPCODE_POWER5;
+Problem is that the awaken user thread (from 2) sk_error_report())
+might call tcp_poll() before tcp_done() has written sk->sk_shutdown.
 
-Is trying to check if the system is running on a Power5 CPU. But
-CPU_FTRS_POWER5 is a mask of *all* the feature bits that are enabled on
-a Power5.
+tcp_poll() only sees a non zero sk->sk_err and returns EPOLLERR.
 
-In practice the test will always return true for any 64-bit CPU, because
-at least one bit in the mask will be present in the CPU_FTRS_ALWAYS
-mask.
+This patch fixes the issue by making sure to call sk_error_report()
+after tcp_done().
 
-Similarly for all the other checks against CPU_FTRS_xx masks.
+tcp_write_err() also lacks an smp_wmb().
 
-Rather than trying to match the disassembly behaviour exactly to the
-current CPU, just differentiate between 32-bit and 64-bit, and Altivec,
-VSX and HTM.
+We can reuse tcp_done_with_error() to factor out the details,
+as Neal suggested.
 
-That will cause some instructions to be shown in disassembly even
-on a CPU that doesn't support them, but that's OK, objdump -d output
-has the same behaviour, and if anything it's less confusing than some
-instructions not being disassembled.
-
-Fixes: 897f112bb42e ("[POWERPC] Import updated version of ppc disassembly code for xmon")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240509121248.270878-2-mpe@ellerman.id.au
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240528125253.1966136-3-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/xmon/ppc-dis.c | 33 +++++++++++----------------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
+ net/ipv4/tcp_timer.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/arch/powerpc/xmon/ppc-dis.c b/arch/powerpc/xmon/ppc-dis.c
-index 75fa98221d485..af105e1bc3fca 100644
---- a/arch/powerpc/xmon/ppc-dis.c
-+++ b/arch/powerpc/xmon/ppc-dis.c
-@@ -122,32 +122,21 @@ int print_insn_powerpc (unsigned long insn, unsigned long memaddr)
-   bool insn_is_short;
-   ppc_cpu_t dialect;
+diff --git a/net/ipv4/tcp_timer.c b/net/ipv4/tcp_timer.c
+index 892c86657fbc2..4d40615dc8fc2 100644
+--- a/net/ipv4/tcp_timer.c
++++ b/net/ipv4/tcp_timer.c
+@@ -74,11 +74,7 @@ u32 tcp_clamp_probe0_to_user_timeout(const struct sock *sk, u32 when)
  
--  dialect = PPC_OPCODE_PPC | PPC_OPCODE_COMMON
--            | PPC_OPCODE_64 | PPC_OPCODE_POWER4 | PPC_OPCODE_ALTIVEC;
-+  dialect = PPC_OPCODE_PPC | PPC_OPCODE_COMMON;
- 
--  if (cpu_has_feature(CPU_FTRS_POWER5))
--    dialect |= PPC_OPCODE_POWER5;
-+  if (IS_ENABLED(CONFIG_PPC64))
-+    dialect |= PPC_OPCODE_64 | PPC_OPCODE_POWER4 | PPC_OPCODE_CELL |
-+	PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7 | PPC_OPCODE_POWER8 |
-+	PPC_OPCODE_POWER9;
- 
--  if (cpu_has_feature(CPU_FTRS_CELL))
--    dialect |= (PPC_OPCODE_CELL | PPC_OPCODE_ALTIVEC);
-+  if (cpu_has_feature(CPU_FTR_TM))
-+    dialect |= PPC_OPCODE_HTM;
- 
--  if (cpu_has_feature(CPU_FTRS_POWER6))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_ALTIVEC);
-+  if (cpu_has_feature(CPU_FTR_ALTIVEC))
-+    dialect |= PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2;
- 
--  if (cpu_has_feature(CPU_FTRS_POWER7))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
--                | PPC_OPCODE_ALTIVEC | PPC_OPCODE_VSX);
+ static void tcp_write_err(struct sock *sk)
+ {
+-	WRITE_ONCE(sk->sk_err, READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT);
+-	sk_error_report(sk);
 -
--  if (cpu_has_feature(CPU_FTRS_POWER8))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
--		| PPC_OPCODE_POWER8 | PPC_OPCODE_HTM
--		| PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2 | PPC_OPCODE_VSX);
--
--  if (cpu_has_feature(CPU_FTRS_POWER9))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
--		| PPC_OPCODE_POWER8 | PPC_OPCODE_POWER9 | PPC_OPCODE_HTM
--		| PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2
--		| PPC_OPCODE_VSX | PPC_OPCODE_VSX3);
-+  if (cpu_has_feature(CPU_FTR_VSX))
-+    dialect |= PPC_OPCODE_VSX | PPC_OPCODE_VSX3;
+-	tcp_write_queue_purge(sk);
+-	tcp_done(sk);
++	tcp_done_with_error(sk, READ_ONCE(sk->sk_err_soft) ? : ETIMEDOUT);
+ 	__NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPABORTONTIMEOUT);
+ }
  
-   /* Get the major opcode of the insn.  */
-   opcode = NULL;
 -- 
 2.43.0
 
