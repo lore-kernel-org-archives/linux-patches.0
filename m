@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D741898F9;
-	Tue, 30 Jul 2024 16:10:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC81898FB;
+	Tue, 30 Jul 2024 16:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355823; cv=none; b=MrB1vqfFhvm81sX0eWIlh9NpqxGVTZQPIXcj2zIEcEqjwH5/iKtNbuzqXItwGxKK2Vq9n3FF/jlPUxYJCKSx6IrZXJYGsvAJewalBGHMK81uoJHg3n2JFz+yfOnxvITiLyWjPHptgIjppPPIAImEVfCp9tOKPxHL96w5vU6TLeA=
+	t=1722355826; cv=none; b=odY1/8+yBZFzNGEAnp2vHHeC2jrae2wQuo4sllF/BKPJtOIipzHBx6Q/bQigTm3PGYDgN128nYt5TU5YPB52ERNcgPWo66MMICM68XtQbU050rJZcNNIKxD2Zp0ieeO75vFkU5cnP2gvYa+IJpLbmGYcgWLYyXYDTENp1eB7SVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355823; c=relaxed/simple;
-	bh=zXYECPFsDUxO+JsGWyRh5YI8F5pkgT1llIgw8Vsf/z0=;
+	s=arc-20240116; t=1722355826; c=relaxed/simple;
+	bh=nATbWaakCyp+NlmFb44A0BF+qxqdwaVoBrqS8+gMzXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mo0U1wugiLAXQ+gpWC9r8AZlgymBS1D0fI0rqyeL2Gu0Pj/OjB17At/NJ/2Pv4vdp4Fi4xcfoolyKgl/khCXkjx4FqNeChp2WH4b7fGYdegIQVOQZk/L0pZY/Lg00ifedtvdvSKEj5VtGR5RoTCq5cNwXbGUaHVrnI043UdnT1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zE4LN+qu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KEpOMxC3WmxJ5J4ViPw1kHqbuHFjCdU9sjPVi2rgwKfFIf09gK1Gxk0F7FI8grNxAsBn1B1crMdhL+1ASpw5LoVm9G1b0YKKEbwOAauydnpSltamNA8zBtZdr806mbEPqf2agJmQUX/v0WfmUUErHTqF3vgSOelVnFX4xAQURIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2niGnfMe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zE4LN+qu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F877C32782;
-	Tue, 30 Jul 2024 16:10:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2niGnfMe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8D9C32782;
+	Tue, 30 Jul 2024 16:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355822;
-	bh=zXYECPFsDUxO+JsGWyRh5YI8F5pkgT1llIgw8Vsf/z0=;
+	s=korg; t=1722355826;
+	bh=nATbWaakCyp+NlmFb44A0BF+qxqdwaVoBrqS8+gMzXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zE4LN+quMiPKQbrDUTvlCrGvEFxPeKPrBOVYKHJqKoxGBzguM01icCzDP2bpXTA8k
-	 +HSOnAD+A0UqP8bK7yzfeszIgH2co/ly2n8GhxQBxO5PNMre41fuL1ruZmh8Onkw6A
-	 pZBab/4mJPRRR9lxwCrPJ0L7Z5BZ9aR5uKDF6iJk=
+	b=2niGnfMe6C7ATVVbRkmGRIaT/yzgYe7MRahDeemJS2IsnpZlVTxSuScDp5Htc9Knc
+	 ZizjW5wsaq+zQ/TbiIO1HywnDNOpZQOPmBSxihExipsj8Y9G9j2C9OgvyeYzbhO4yt
+	 0PxIORk+CrKGGdcXWBzqAIpES0wbY4mtPXDeot9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Adam Ford <aford173@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 093/568] arm64: dts: imx8mp: Fix pgc vpu locations
-Date: Tue, 30 Jul 2024 17:43:20 +0200
-Message-ID: <20240730151643.507059982@linuxfoundation.org>
+Subject: [PATCH 6.10 092/809] arm64: dts: rockchip: Increase VOP clk rate on RK3328
+Date: Tue, 30 Jul 2024 17:39:28 +0200
+Message-ID: <20240730151728.272713348@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,108 +47,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 2f8405fb077bcb8e98c8cd87c2a0a238b15d8da8 ]
+[ Upstream commit 0f2ddb128fa20f8441d903285632f2c69e90fae1 ]
 
-The various pgv_vpu nodes have a mismatch between the value after
-the @ symbol and what is referenced by 'reg' so reorder the nodes
-to align.
+The VOP on RK3328 needs to run at a higher rate in order to produce a
+proper 3840x2160 signal.
 
-Fixes: df680992dd62 ("arm64: dts: imx8mp: add vpu pgc nodes")
-Suggested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Reviewd-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Change to use 300MHz for VIO clk and 400MHz for VOP clk, same rates used
+by vendor 4.4 kernel.
+
+Fixes: 52e02d377a72 ("arm64: dts: rockchip: add core dtsi file for RK3328 SoCs")
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Link: https://lore.kernel.org/r/20240615170417.3134517-2-jonas@kwiboo.se
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi | 55 ++++++++++++-----------
- 1 file changed, 28 insertions(+), 27 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3328.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-index 2de16e3d21d24..d1488ebfef3f0 100644
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -834,6 +834,12 @@ pgc_gpumix: power-domain@7 {
- 						assigned-clock-rates = <800000000>, <400000000>;
- 					};
- 
-+					pgc_vpumix: power-domain@8 {
-+						#power-domain-cells = <0>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPUMIX>;
-+						clocks = <&clk IMX8MP_CLK_VPU_ROOT>;
-+					};
-+
- 					pgc_gpu3d: power-domain@9 {
- 						#power-domain-cells = <0>;
- 						reg = <IMX8MP_POWER_DOMAIN_GPU3D>;
-@@ -849,6 +855,28 @@ pgc_mediamix: power-domain@10 {
- 							 <&clk IMX8MP_CLK_MEDIA_APB_ROOT>;
- 					};
- 
-+					pgc_vpu_g1: power-domain@11 {
-+						#power-domain-cells = <0>;
-+						power-domains = <&pgc_vpumix>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPU_G1>;
-+						clocks = <&clk IMX8MP_CLK_VPU_G1_ROOT>;
-+					};
-+
-+					pgc_vpu_g2: power-domain@12 {
-+						#power-domain-cells = <0>;
-+						power-domains = <&pgc_vpumix>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPU_G2>;
-+						clocks = <&clk IMX8MP_CLK_VPU_G2_ROOT>;
-+
-+					};
-+
-+					pgc_vpu_vc8000e: power-domain@13 {
-+						#power-domain-cells = <0>;
-+						power-domains = <&pgc_vpumix>;
-+						reg = <IMX8MP_POWER_DOMAIN_VPU_VC8000E>;
-+						clocks = <&clk IMX8MP_CLK_VPU_VC8KE_ROOT>;
-+					};
-+
- 					pgc_hdmimix: power-domain@14 {
- 						#power-domain-cells = <0>;
- 						reg = <IMX8MP_POWER_DOMAIN_HDMIMIX>;
-@@ -886,33 +914,6 @@ pgc_ispdwp: power-domain@18 {
- 						reg = <IMX8MP_POWER_DOMAIN_MEDIAMIX_ISPDWP>;
- 						clocks = <&clk IMX8MP_CLK_MEDIA_ISP_ROOT>;
- 					};
--
--					pgc_vpumix: power-domain@19 {
--						#power-domain-cells = <0>;
--						reg = <IMX8MP_POWER_DOMAIN_VPUMIX>;
--						clocks = <&clk IMX8MP_CLK_VPU_ROOT>;
--					};
--
--					pgc_vpu_g1: power-domain@20 {
--						#power-domain-cells = <0>;
--						power-domains = <&pgc_vpumix>;
--						reg = <IMX8MP_POWER_DOMAIN_VPU_G1>;
--						clocks = <&clk IMX8MP_CLK_VPU_G1_ROOT>;
--					};
--
--					pgc_vpu_g2: power-domain@21 {
--						#power-domain-cells = <0>;
--						power-domains = <&pgc_vpumix>;
--						reg = <IMX8MP_POWER_DOMAIN_VPU_G2>;
--						clocks = <&clk IMX8MP_CLK_VPU_G2_ROOT>;
--					};
--
--					pgc_vpu_vc8000e: power-domain@22 {
--						#power-domain-cells = <0>;
--						power-domains = <&pgc_vpumix>;
--						reg = <IMX8MP_POWER_DOMAIN_VPU_VC8000E>;
--						clocks = <&clk IMX8MP_CLK_VPU_VC8KE_ROOT>;
--					};
- 				};
- 			};
- 		};
+diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+index 07dcc949b8997..b01efd6d042c8 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
+@@ -850,8 +850,8 @@ cru: clock-controller@ff440000 {
+ 			<0>, <24000000>,
+ 			<24000000>, <24000000>,
+ 			<15000000>, <15000000>,
+-			<100000000>, <100000000>,
+-			<100000000>, <100000000>,
++			<300000000>, <100000000>,
++			<400000000>, <100000000>,
+ 			<50000000>, <100000000>,
+ 			<100000000>, <100000000>,
+ 			<50000000>, <50000000>,
 -- 
 2.43.0
 
