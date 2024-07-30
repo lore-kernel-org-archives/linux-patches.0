@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1131A6192;
-	Tue, 30 Jul 2024 16:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB9A187FED;
+	Tue, 30 Jul 2024 16:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356822; cv=none; b=jAz0ZDuU9R9jfJts5DixawRYzL3635WeviH/HX6YU0XTo2PzdFUcVs2qR98DofJYSnWtH6kmbnU7iUnNUnZp6ZUYvhIggR22wQ6XCdipML+o8KNG3DakN+XgwOo0vl1dKfFZCZu2E8FCAiFqJrZyuixNEvu/G6Q1cPbatoxqZbY=
+	t=1722356825; cv=none; b=QfyrLdgwkNXQ0WkpYqmS2AdnMb6ZZNYw/QI+ky6/cRjMw5//90apkatm3gjdj05gBc3cASMzsvjp2HlmtaPMUuDEkBfvPbwKr4PZbrykcqxoj7D6gxD5WB1tezCe32oBUeJqekUgMHsOSUT2rZ5fGzhV8GMsBgeVZnfueAMPHOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356822; c=relaxed/simple;
-	bh=WBUeTOYfar2V1MJzIFL1VwKEgcbMyZh07iPTYO0yCeE=;
+	s=arc-20240116; t=1722356825; c=relaxed/simple;
+	bh=NGkcpcgOEODnV+PyMBg9LXmfHRKb311aHwud+Z0hHDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B78G1Tv/LCrU53DrlDXNANdKc8cnHK5h+W1yTMuAOGwM8lCxUB2FqM/CGu0tG0heUoAeBpTsEbWh25Lv0/VY5BNXMkmLNqeiRYzgjwzUg3yYh0EXBvKTOloiGr1L9gpL9jzp2ayZmVnjQ8Gu3iimKy/mWmUkxi5ZflQ+GwBrXTA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EUkrKdiW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TI9eNCd8TEA1g3luBFer6jMu/KhL/b5O/L2TkaXCfbVvqkAwFGXmRxAOsQsjvKRXyH5oEgRGwCWCcyb7lSE1Og5G3PUdWkOxC7zYWGjM7Sn7GiJiWy+LYBS2hPLtggzEcUAG8z2Olk5TiQA1Y5QVj6kk6nEs87lhy8zzL7eIs7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJh3q79t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EUkrKdiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEB9C4AF0F;
-	Tue, 30 Jul 2024 16:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJh3q79t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E78AC4AF0C;
+	Tue, 30 Jul 2024 16:27:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356821;
-	bh=WBUeTOYfar2V1MJzIFL1VwKEgcbMyZh07iPTYO0yCeE=;
+	s=korg; t=1722356824;
+	bh=NGkcpcgOEODnV+PyMBg9LXmfHRKb311aHwud+Z0hHDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUkrKdiWa9U8DLanIynIdJzyTukp3OWthNwf3tAd7tCi34gANITOkA4K0f/PQB3Cg
-	 /LlA1svL5ZTedSeh6LvdkHbz4mUZufLyzV2T4SDoJdqGBvq/j+dt+Oe34YKu9ejeCT
-	 xZUbNWvHJneK4WbEWfWPisdzrmuhT3sfIhebdmmI=
+	b=AJh3q79txmtR6Ft9RkwvZxteIB3haY2gYbLQBZ3ArcY1Y79EncX253BPwm7siV+7k
+	 ee9/dpGTU51lfqjhVq5a+6HpFXC8l3hsaQDgj6hU25N4asRoZoJY1VKsoAI1PTakzb
+	 BWP5ArApoDrs2NMU8QRiyxwy7DF8uRdnIWGn4A4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaroslav Isakov <yaroslav.isakov@gmail.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Yi Chen <yiche@redhat.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 190/809] wifi: ath11k: fix wrong handling of CCMP256 and GCMP ciphers
-Date: Tue, 30 Jul 2024 17:41:06 +0200
-Message-ID: <20240730151732.114562231@linuxfoundation.org>
+Subject: [PATCH 6.1 232/440] netfilter: nf_set_pipapo: fix initial map fill
+Date: Tue, 30 Jul 2024 17:47:45 +0200
+Message-ID: <20240730151624.919186426@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,135 +49,144 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit d2b0ca38d362ebf16ca79cd7f309d5bb8b581deb ]
+[ Upstream commit 791a615b7ad2258c560f91852be54b0480837c93 ]
 
-Currently for CCMP256, GCMP128 and GCMP256 ciphers, in ath11k_install_key()
-IEEE80211_KEY_FLAG_GENERATE_IV_MGMT is not set. And in ath11k_mac_mgmt_tx_wmi()
-a length of IEEE80211_CCMP_MIC_LEN is reserved for all ciphers.
+The initial buffer has to be inited to all-ones, but it must restrict
+it to the size of the first field, not the total field size.
 
-This results in unexpected management frame drop in case either of above 3 ciphers
-is used. The reason is, without IEEE80211_KEY_FLAG_GENERATE_IV_MGMT set, mac80211
-will not generate CCMP/GCMP headers in frame for ath11k. Also MIC length reserved
-is wrong. Such frame is dropped later by hardware:
+After each round in the map search step, the result and the fill map
+are swapped, so if we have a set where f->bsize of the first element
+is smaller than m->bsize_max, those one-bits are leaked into future
+rounds result map.
 
-ath11k_pci 0000:5a:00.0: mac tx mgmt frame, buf id 0
-ath11k_pci 0000:5a:00.0: mgmt tx compl ev pdev_id 1, desc_id 0, status 1
+This makes pipapo find an incorrect matching results for sets where
+first field size is not the largest.
 
->From user point of view, we have observed very low throughput due to this issue:
-action frames are all dropped so ADDBA response from DUT never reaches AP. AP
-can not use aggregation thus throughput is low.
+Followup patch adds a test case to nft_concat_range.sh selftest script.
 
-Fix this by setting IEEE80211_KEY_FLAG_GENERATE_IV_MGMT flag and by reserving proper
-MIC length for those ciphers.
+Thanks to Stefano Brivio for pointing out that we need to zero out
+the remainder explicitly, only correcting memset() argument isn't enough.
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Reported-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Tested-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Closes: https://lore.kernel.org/all/CADS+iDX5=JtJr0apAtAQ02WWBxgOFEv8G063vuGYwDTC8AVZaw@mail.gmail.com
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240605014826.22498-1-quic_bqiang@quicinc.com
+Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
+Reported-by: Yi Chen <yiche@redhat.com>
+Cc: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |  3 +--
- drivers/net/wireless/ath/ath11k/dp_rx.h |  3 +++
- drivers/net/wireless/ath/ath11k/mac.c   | 15 +++++++++++----
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ net/netfilter/nft_set_pipapo.c      |  4 ++--
+ net/netfilter/nft_set_pipapo.h      | 21 +++++++++++++++++++++
+ net/netfilter/nft_set_pipapo_avx2.c | 10 ++++++----
+ 3 files changed, 29 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index afd481f5858f0..aabde24d87632 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -1877,8 +1877,7 @@ static void ath11k_dp_rx_h_csum_offload(struct ath11k *ar, struct sk_buff *msdu)
- 			  CHECKSUM_NONE : CHECKSUM_UNNECESSARY;
- }
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 261b505e3b3fa..d9c1c467ea684 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -432,7 +432,7 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
+ 	res_map  = scratch->map + (map_index ? m->bsize_max : 0);
+ 	fill_map = scratch->map + (map_index ? 0 : m->bsize_max);
  
--static int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar,
--				       enum hal_encrypt_type enctype)
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype)
- {
- 	switch (enctype) {
- 	case HAL_ENCRYPT_TYPE_OPEN:
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.h b/drivers/net/wireless/ath/ath11k/dp_rx.h
-index 623da3bf9dc81..c322e30caa968 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.h
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #ifndef ATH11K_DP_RX_H
- #define ATH11K_DP_RX_H
-@@ -95,4 +96,6 @@ int ath11k_peer_rx_frag_setup(struct ath11k *ar, const u8 *peer_mac, int vdev_id
- int ath11k_dp_rx_pktlog_start(struct ath11k_base *ab);
- int ath11k_dp_rx_pktlog_stop(struct ath11k_base *ab, bool stop_timer);
+-	memset(res_map, 0xff, m->bsize_max * sizeof(*res_map));
++	pipapo_resmap_init(m, res_map);
  
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype);
-+
- #endif /* ATH11K_DP_RX_H */
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 0c0444dc06f69..eaa53bc39ab2c 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -4229,6 +4229,7 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 
- 	switch (key->cipher) {
- 	case WLAN_CIPHER_SUITE_CCMP:
-+	case WLAN_CIPHER_SUITE_CCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_CCM;
- 		/* TODO: Re-check if flag is valid */
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
-@@ -4238,12 +4239,10 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 		arg.key_txmic_len = 8;
- 		arg.key_rxmic_len = 8;
- 		break;
--	case WLAN_CIPHER_SUITE_CCMP_256:
--		arg.key_cipher = WMI_CIPHER_AES_CCM;
--		break;
- 	case WLAN_CIPHER_SUITE_GCMP:
- 	case WLAN_CIPHER_SUITE_GCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_GCM;
-+		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
- 		break;
- 	default:
- 		ath11k_warn(ar->ab, "cipher %d is not supported\n", key->cipher);
-@@ -5903,7 +5902,10 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- {
- 	struct ath11k_base *ab = ar->ab;
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
-+	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB(skb);
- 	struct ieee80211_tx_info *info;
-+	enum hal_encrypt_type enctype;
-+	unsigned int mic_len;
- 	dma_addr_t paddr;
- 	int buf_id;
- 	int ret;
-@@ -5927,7 +5929,12 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- 		     ieee80211_is_deauth(hdr->frame_control) ||
- 		     ieee80211_is_disassoc(hdr->frame_control)) &&
- 		     ieee80211_has_protected(hdr->frame_control)) {
--			skb_put(skb, IEEE80211_CCMP_MIC_LEN);
-+			if (!(skb_cb->flags & ATH11K_SKB_CIPHER_SET))
-+				ath11k_warn(ab, "WMI management tx frame without ATH11K_SKB_CIPHER_SET");
-+
-+			enctype = ath11k_dp_tx_get_encrypt_type(skb_cb->cipher);
-+			mic_len = ath11k_dp_rx_crypto_mic_len(ar, enctype);
-+			skb_put(skb, mic_len);
- 		}
+ 	nft_pipapo_for_each_field(f, i, m) {
+ 		bool last = i == m->field_count - 1;
+@@ -538,7 +538,7 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ 		goto out;
  	}
  
+-	memset(res_map, 0xff, m->bsize_max * sizeof(*res_map));
++	pipapo_resmap_init(m, res_map);
+ 
+ 	nft_pipapo_for_each_field(f, i, m) {
+ 		bool last = i == m->field_count - 1;
+diff --git a/net/netfilter/nft_set_pipapo.h b/net/netfilter/nft_set_pipapo.h
+index 73a4518308be4..519a2e6dc206f 100644
+--- a/net/netfilter/nft_set_pipapo.h
++++ b/net/netfilter/nft_set_pipapo.h
+@@ -285,4 +285,25 @@ static u64 pipapo_estimate_size(const struct nft_set_desc *desc)
+ 	return size;
+ }
+ 
++/**
++ * pipapo_resmap_init() - Initialise result map before first use
++ * @m:		Matching data, including mapping table
++ * @res_map:	Result map
++ *
++ * Initialize all bits covered by the first field to one, so that after
++ * the first step, only the matching bits of the first bit group remain.
++ *
++ * If other fields have a large bitmap, set remainder of res_map to 0.
++ */
++static inline void pipapo_resmap_init(const struct nft_pipapo_match *m, unsigned long *res_map)
++{
++	const struct nft_pipapo_field *f = m->f;
++	int i;
++
++	for (i = 0; i < f->bsize; i++)
++		res_map[i] = ULONG_MAX;
++
++	for (i = f->bsize; i < m->bsize_max; i++)
++		res_map[i] = 0ul;
++}
+ #endif /* _NFT_SET_PIPAPO_H */
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index d08407d589eac..8910a5ac7ed12 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -1036,6 +1036,7 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+ 
+ /**
+  * nft_pipapo_avx2_lookup_slow() - Fallback function for uncommon field sizes
++ * @mdata:	Matching data, including mapping table
+  * @map:	Previous match result, used as initial bitmap
+  * @fill:	Destination bitmap to be filled with current match result
+  * @f:		Field, containing lookup and mapping tables
+@@ -1051,7 +1052,8 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+  * Return: -1 on no match, rule index of match if @last, otherwise first long
+  * word index to be checked next (i.e. first filled word).
+  */
+-static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
++static int nft_pipapo_avx2_lookup_slow(const struct nft_pipapo_match *mdata,
++					unsigned long *map, unsigned long *fill,
+ 					const struct nft_pipapo_field *f,
+ 					int offset, const u8 *pkt,
+ 					bool first, bool last)
+@@ -1060,7 +1062,7 @@ static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
+ 	int i, ret = -1, b;
+ 
+ 	if (first)
+-		memset(map, 0xff, bsize * sizeof(*map));
++		pipapo_resmap_init(mdata, map);
+ 
+ 	for (i = offset; i < bsize; i++) {
+ 		if (f->bb == 8)
+@@ -1186,7 +1188,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 			} else if (f->groups == 16) {
+ 				NFT_SET_PIPAPO_AVX2_LOOKUP(8, 16);
+ 			} else {
+-				ret = nft_pipapo_avx2_lookup_slow(res, fill, f,
++				ret = nft_pipapo_avx2_lookup_slow(m, res, fill, f,
+ 								  ret, rp,
+ 								  first, last);
+ 			}
+@@ -1202,7 +1204,7 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 			} else if (f->groups == 32) {
+ 				NFT_SET_PIPAPO_AVX2_LOOKUP(4, 32);
+ 			} else {
+-				ret = nft_pipapo_avx2_lookup_slow(res, fill, f,
++				ret = nft_pipapo_avx2_lookup_slow(m, res, fill, f,
+ 								  ret, rp,
+ 								  first, last);
+ 			}
 -- 
 2.43.0
 
