@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C3C1A76B2;
-	Tue, 30 Jul 2024 17:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4350D1A76B3;
+	Tue, 30 Jul 2024 17:26:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360392; cv=none; b=Qi9X27flIpTB/5TIZFinHBBBb6o6NmbcJwiWvmi74WHWyDnjTsxAJpJFQQ7vWNsILdm3ZFSRnEuwNMY6Gnx95qi1hEFtX4U5y4sB/8zFe4B4hNzX7z2nsL4M8vyeY+r8WCNDxCG/iAzmuyn7vBodx5qGXIhQ6kNkDq3fBRXZcV8=
+	t=1722360395; cv=none; b=snfts4rLaekHmyCaazeo1H/e/AbiV8/dHsqvtqaGL3lu3Q7UcQLuXzTXt6tX5xPy3ZFRJ2kgajPHdXg6huKOsmssgU8yE+1Ri31dggGtHMe9UK3XZoKwtA7w+xYccYXlxG5BT92N9uYTeLMZb5q1qULqDaD457U3W6u7Zp5Faak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360392; c=relaxed/simple;
-	bh=gokr7DiwM1yanbwvPRyYRnX9xK28UmO5+vra0ZnRdMg=;
+	s=arc-20240116; t=1722360395; c=relaxed/simple;
+	bh=fZbmYiIEqKgDQNW+T687awpaeIB7nWoErv1xV0hcYrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iG7/30xbb0vW7JdPvgKHSkPuXc3pMjd2ZP7U2i90iYRLri7zY92fN8VdhsSBjr3tBfdPdgruJ8xzdYyvM44mBlNenfLNZCEMIlAhK1IiBG/bwGt91XjaJJj178ENxTcD85BGwQznmTjwL9hgtVwqO33fG/OCQXq8rZjG5WgDI3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vsy/2Gxo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DEqblysk5CBH5NxHIxFS5oHsgJvDo5wpQbCLygyUCqRsiZiXm5O9FQcl3Ij0jWxYngEC2q4bXbBXnxgepO96S9nScw8/fph7y/mYPoGR4/49xcI9nXj86sMzy6LU3jUSMKVSgAn95SbQsmwqYpH2VN3gt3yCvreMZKp3OSGvTY0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YdMWMiMR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vsy/2Gxo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69BFFC32782;
-	Tue, 30 Jul 2024 17:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YdMWMiMR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF256C32782;
+	Tue, 30 Jul 2024 17:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360391;
-	bh=gokr7DiwM1yanbwvPRyYRnX9xK28UmO5+vra0ZnRdMg=;
+	s=korg; t=1722360395;
+	bh=fZbmYiIEqKgDQNW+T687awpaeIB7nWoErv1xV0hcYrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vsy/2Gxo14wGHIubfJZboG+3b5JjuvB7ZitRtLre5p0lbHnA3f6+GHo0nMgR60Jbh
-	 Hhw5YF8cUS7lYMoaJiC+Mwh9W1teVJQnabsALJ98n3FmgFqRt0JgLUPnde8f5+ra1K
-	 Tuz80Pbf2kgI7UqipeUqwLVMPH5T1nRiKJuYa0TA=
+	b=YdMWMiMRV0eSCBzDvvuWL0mCBSnrXiLUfNGthl74RetbvMJgpEFJQFJ3IFU4Pdqdp
+	 XVC5aiGBRUXV3MvLTzZ3S1f9TxgfX/s/LW/PNhzCWMesQdK2RvrhchfJDR0rmq3B+h
+	 DxXizZxU8Z7CKABNoeJh0o7soyiBrgC5FzBWMyIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Quinn Tran <qutran@marvell.com>,
+	Shreyas Deodhar <sdeodhar@marvell.com>,
 	Nilesh Javali <njavali@marvell.com>,
 	Himanshu Madhani <himanshu.madhani@oracle.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.10 684/809] scsi: qla2xxx: Unable to act on RSCN for port online
-Date: Tue, 30 Jul 2024 17:49:20 +0200
-Message-ID: <20240730151751.926786984@linuxfoundation.org>
+Subject: [PATCH 6.10 685/809] scsi: qla2xxx: Fix for possible memory corruption
+Date: Tue, 30 Jul 2024 17:49:21 +0200
+Message-ID: <20240730151751.967719780@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,234 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Quinn Tran <qutran@marvell.com>
+From: Shreyas Deodhar <sdeodhar@marvell.com>
 
-commit c3d98b12eef8db436e32f1a8c5478be57dc15621 upstream.
+commit c03d740152f78e86945a75b2ad541bf972fab92a upstream.
 
-The device does not come online when the target port is online. There were
-multiple RSCNs indicating multiple devices were affected. Driver is in the
-process of finishing a fabric scan. A new RSCN (device up) arrived at the
-tail end of the last fabric scan. Driver mistakenly thinks the new RSCN is
-being taken care of by the previous fabric scan, where this notification is
-cleared and not acted on. The laser needs to be blinked again to get the
-device to show up.
+Init Control Block is dereferenced incorrectly.  Correctly dereference ICB
 
-To prevent driver from accidentally clearing the RSCN notification, each
-RSCN is given a generation value.  A fabric scan will scan for that
-generation(s).  Any new RSCN arrive after the scan start will have a new
-generation value. This will trigger another scan to get latest data. The
-RSCN notification flag will be cleared when the scan is associate to that
-generation.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406210538.w875N70K-lkp@intel.com/
-Fixes: bb2ca6b3f09a ("scsi: qla2xxx: Relogin during fabric disturbance")
 Cc: stable@vger.kernel.org
-Signed-off-by: Quinn Tran <qutran@marvell.com>
+Signed-off-by: Shreyas Deodhar <sdeodhar@marvell.com>
 Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-2-njavali@marvell.com
+Link: https://lore.kernel.org/r/20240710171057.35066-4-njavali@marvell.com
 Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_def.h    |    3 +++
- drivers/scsi/qla2xxx/qla_gs.c     |   33 ++++++++++++++++++++++++++++++---
- drivers/scsi/qla2xxx/qla_init.c   |   24 +++++++++++++++++++-----
- drivers/scsi/qla2xxx/qla_inline.h |    8 ++++++++
- 4 files changed, 60 insertions(+), 8 deletions(-)
+ drivers/scsi/qla2xxx/qla_os.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/scsi/qla2xxx/qla_def.h
-+++ b/drivers/scsi/qla2xxx/qla_def.h
-@@ -3312,6 +3312,8 @@ struct fab_scan_rp {
- struct fab_scan {
- 	struct fab_scan_rp *l;
- 	u32 size;
-+	u32 rscn_gen_start;
-+	u32 rscn_gen_end;
- 	u16 scan_retry;
- #define MAX_SCAN_RETRIES 5
- 	enum scan_flags_t scan_flags;
-@@ -5030,6 +5032,7 @@ typedef struct scsi_qla_host {
- 
- 	/* Counter to detect races between ELS and RSCN events */
- 	atomic_t		generation_tick;
-+	atomic_t		rscn_gen;
- 	/* Time when global fcport update has been scheduled */
- 	int			total_fcport_update_gen;
- 	/* List of pending LOGOs, protected by tgt_mutex */
---- a/drivers/scsi/qla2xxx/qla_gs.c
-+++ b/drivers/scsi/qla2xxx/qla_gs.c
-@@ -3168,6 +3168,29 @@ static int qla2x00_is_a_vp(scsi_qla_host
- 	return rc;
- }
- 
-+static bool qla_ok_to_clear_rscn(scsi_qla_host_t *vha, fc_port_t *fcport)
-+{
-+	u32 rscn_gen;
-+
-+	rscn_gen = atomic_read(&vha->rscn_gen);
-+	ql_dbg(ql_dbg_disc + ql_dbg_verbose, vha, 0x2017,
-+	    "%s %d %8phC rscn_gen %x start %x end %x current %x\n",
-+	    __func__, __LINE__, fcport->port_name, fcport->rscn_gen,
-+	    vha->scan.rscn_gen_start, vha->scan.rscn_gen_end, rscn_gen);
-+
-+	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_start,
-+	    vha->scan.rscn_gen_end))
-+		/* rscn came in before fabric scan */
-+		return true;
-+
-+	if (val_is_in_range(fcport->rscn_gen, vha->scan.rscn_gen_end, rscn_gen))
-+		/* rscn came in after fabric scan */
-+		return false;
-+
-+	/* rare: fcport's scan_needed + rscn_gen must be stale */
-+	return true;
-+}
-+
- void qla24xx_async_gnnft_done(scsi_qla_host_t *vha, srb_t *sp)
+--- a/drivers/scsi/qla2xxx/qla_os.c
++++ b/drivers/scsi/qla2xxx/qla_os.c
+@@ -4689,7 +4689,7 @@ static void
+ qla2x00_number_of_exch(scsi_qla_host_t *vha, u32 *ret_cnt, u16 max_cnt)
  {
- 	fc_port_t *fcport;
-@@ -3281,10 +3304,10 @@ void qla24xx_async_gnnft_done(scsi_qla_h
- 				   (fcport->scan_needed &&
- 				    fcport->port_type != FCT_INITIATOR &&
- 				    fcport->port_type != FCT_NVME_INITIATOR)) {
-+				fcport->scan_needed = 0;
- 				qlt_schedule_sess_for_deletion(fcport);
- 			}
- 			fcport->d_id.b24 = rp->id.b24;
--			fcport->scan_needed = 0;
- 			break;
- 		}
+ 	u32 temp;
+-	struct init_cb_81xx *icb = (struct init_cb_81xx *)&vha->hw->init_cb;
++	struct init_cb_81xx *icb = (struct init_cb_81xx *)vha->hw->init_cb;
+ 	*ret_cnt = FW_DEF_EXCHANGES_CNT;
  
-@@ -3325,7 +3348,9 @@ login_logout:
- 				do_delete = true;
- 			}
- 
--			fcport->scan_needed = 0;
-+			if (qla_ok_to_clear_rscn(vha, fcport))
-+				fcport->scan_needed = 0;
-+
- 			if (((qla_dual_mode_enabled(vha) ||
- 			      qla_ini_mode_enabled(vha)) &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE) ||
-@@ -3355,7 +3380,9 @@ login_logout:
- 					    fcport->port_name, fcport->loop_id,
- 					    fcport->login_retry);
- 				}
--				fcport->scan_needed = 0;
-+
-+				if (qla_ok_to_clear_rscn(vha, fcport))
-+					fcport->scan_needed = 0;
- 				qla24xx_fcport_handle_login(vha, fcport);
- 			}
- 		}
---- a/drivers/scsi/qla2xxx/qla_init.c
-+++ b/drivers/scsi/qla2xxx/qla_init.c
-@@ -1842,10 +1842,18 @@ int qla24xx_post_newsess_work(struct scs
- 	return qla2x00_post_work(vha, e);
- }
- 
-+static void qla_rscn_gen_tick(scsi_qla_host_t *vha, u32 *ret_rscn_gen)
-+{
-+	*ret_rscn_gen = atomic_inc_return(&vha->rscn_gen);
-+	/* memory barrier */
-+	wmb();
-+}
-+
- void qla2x00_handle_rscn(scsi_qla_host_t *vha, struct event_arg *ea)
- {
- 	fc_port_t *fcport;
- 	unsigned long flags;
-+	u32 rscn_gen;
- 
- 	switch (ea->id.b.rsvd_1) {
- 	case RSCN_PORT_ADDR:
-@@ -1875,15 +1883,16 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 					 * Otherwise we're already in the middle of a relogin
- 					 */
- 					fcport->scan_needed = 1;
--					fcport->rscn_gen++;
-+					qla_rscn_gen_tick(vha, &fcport->rscn_gen);
- 				}
- 			} else {
- 				fcport->scan_needed = 1;
--				fcport->rscn_gen++;
-+				qla_rscn_gen_tick(vha, &fcport->rscn_gen);
- 			}
- 		}
- 		break;
- 	case RSCN_AREA_ADDR:
-+		qla_rscn_gen_tick(vha, &rscn_gen);
- 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
- 			if (fcport->flags & FCF_FCP2_DEVICE &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE)
-@@ -1891,11 +1900,12 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 
- 			if ((ea->id.b24 & 0xffff00) == (fcport->d_id.b24 & 0xffff00)) {
- 				fcport->scan_needed = 1;
--				fcport->rscn_gen++;
-+				fcport->rscn_gen = rscn_gen;
- 			}
- 		}
- 		break;
- 	case RSCN_DOM_ADDR:
-+		qla_rscn_gen_tick(vha, &rscn_gen);
- 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
- 			if (fcport->flags & FCF_FCP2_DEVICE &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE)
-@@ -1903,19 +1913,20 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 
- 			if ((ea->id.b24 & 0xff0000) == (fcport->d_id.b24 & 0xff0000)) {
- 				fcport->scan_needed = 1;
--				fcport->rscn_gen++;
-+				fcport->rscn_gen = rscn_gen;
- 			}
- 		}
- 		break;
- 	case RSCN_FAB_ADDR:
- 	default:
-+		qla_rscn_gen_tick(vha, &rscn_gen);
- 		list_for_each_entry(fcport, &vha->vp_fcports, list) {
- 			if (fcport->flags & FCF_FCP2_DEVICE &&
- 			    atomic_read(&fcport->state) == FCS_ONLINE)
- 				continue;
- 
- 			fcport->scan_needed = 1;
--			fcport->rscn_gen++;
-+			fcport->rscn_gen = rscn_gen;
- 		}
- 		break;
- 	}
-@@ -1924,6 +1935,7 @@ void qla2x00_handle_rscn(scsi_qla_host_t
- 	if (vha->scan.scan_flags == 0) {
- 		ql_dbg(ql_dbg_disc, vha, 0xffff, "%s: schedule\n", __func__);
- 		vha->scan.scan_flags |= SF_QUEUED;
-+		vha->scan.rscn_gen_start = atomic_read(&vha->rscn_gen);
- 		schedule_delayed_work(&vha->scan.scan_work, 5);
- 	}
- 	spin_unlock_irqrestore(&vha->work_lock, flags);
-@@ -6393,6 +6405,8 @@ qla2x00_configure_fabric(scsi_qla_host_t
- 		qlt_do_generation_tick(vha, &discovery_gen);
- 
- 		if (USE_ASYNC_SCAN(ha)) {
-+			/* start of scan begins here */
-+			vha->scan.rscn_gen_end = atomic_read(&vha->rscn_gen);
- 			rval = qla24xx_async_gpnft(vha, FC4_TYPE_FCP_SCSI,
- 			    NULL);
- 			if (rval)
---- a/drivers/scsi/qla2xxx/qla_inline.h
-+++ b/drivers/scsi/qla2xxx/qla_inline.h
-@@ -631,3 +631,11 @@ static inline int qla_mapq_alloc_qp_cpu_
- 	}
- 	return 0;
- }
-+
-+static inline bool val_is_in_range(u32 val, u32 start, u32 end)
-+{
-+	if (val >= start && val <= end)
-+		return true;
-+	else
-+		return false;
-+}
+ 	if (max_cnt > vha->hw->max_exchg)
 
 
