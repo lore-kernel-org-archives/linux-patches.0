@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B104B183CD5;
-	Tue, 30 Jul 2024 16:41:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 318CA1A6192;
+	Tue, 30 Jul 2024 16:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357679; cv=none; b=G7mIfoUzss7MiA1aYzKk/grOxWMgL6pT7VmGxofsV/i7dmZ+F0IM6988D7AW9PeVk6ocLjZ5DTy19z0t21tKANOdOlKfas9hvmOayvVMkNRyOQ4DX3bBg7eCdAc4rFNflH8tZ6RkShWgjTEDttDwu5+2ouuNgMCkQnYW5RU93wc=
+	t=1722357683; cv=none; b=XL98k0BFkmmaOAA+vaNYhwvTp9qNtQZ7GGW0HvUZzFCdnr3qxqoP5eNFIi6/SlvVmNXx9/BIhqBC700TPcknDy6myJWEr2LLh5KQG1a4kiRs6+Xehpfgd0tnAB3R1Od+9RTdQtZLF6+/dsIN1T67VUqRjU8xV8fE9BQzBIWEC/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357679; c=relaxed/simple;
-	bh=+caJ2JWR7urpEHEBsXA2ZHg17lbcFsmKI+dKilw4UWw=;
+	s=arc-20240116; t=1722357683; c=relaxed/simple;
+	bh=4qhnkMyQ2Ty1XZEItvlUcHfF/hgjNbZp+1aSqE0wvzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOKLQiHGqc3ctl+ABA0+mXG0F/svdecQDkbggmUZPIKucynTd9XRXNQ+O+IW3/F/DU/DQGi+EmPbd3JO2kKXOA9Dkd9ZQKuBElKOTYxqzFK0jZS3YY5UkrIZUmrKUR/0xhQMJ0dmbuXL95Wb7Ji4BUFNI4iSrIzZNGbfzfBUMxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s0QMYioj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mbqPB+m6dYR3l3+2KK3ogE6LDip8oX3GOmf0g1QZVehF9ITf7SrJMlXQw5TZ3fl6XDb1ZEpXkuYWzLjNE7ViIQGmhlnbBUGj3GYV6v5mYm1arz0EC6I76sATM094geZc7dfwph1p5NTqOOyN21HoFsCXJJS79pMo7X1EV/tDJhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1qGPMHw1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s0QMYioj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340DEC32782;
-	Tue, 30 Jul 2024 16:41:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1qGPMHw1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADC2DC4AF0E;
+	Tue, 30 Jul 2024 16:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357679;
-	bh=+caJ2JWR7urpEHEBsXA2ZHg17lbcFsmKI+dKilw4UWw=;
+	s=korg; t=1722357683;
+	bh=4qhnkMyQ2Ty1XZEItvlUcHfF/hgjNbZp+1aSqE0wvzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s0QMYiojXVbDI6CYUl2X944CtcFQydTtq27JV54pvMDD3bULuPHYiGb6BlUnil9zC
-	 QEA2qayEjyvzrGQyGNB3sypq2ELid5E6UjRtTmk/8e8+65WbolRXeVEOlA1CQMi1x2
-	 hq27ckNPTjy4XUI9mGvQlrDOvRLidKIQ5FHlXGlw=
+	b=1qGPMHw1i/pcgg4iroT7QTjDa3kmaV0/QT4twlPR88Eab6Rw6YTuxZUcWwLbA15r1
+	 0aUPqw/IdjnDfBg1sANQI0rbu4hQC7smZrZkkWTnDj+2jTEsirDGnHDXsTmyuuDkB4
+	 wtrq5x2ufxMwiA1o1zRjM+RuztsiilCn6Sh5itkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 315/440] KVM: nVMX: Request immediate exit iff pending nested event needs injection
-Date: Tue, 30 Jul 2024 17:49:08 +0200
-Message-ID: <20240730151628.125542613@linuxfoundation.org>
+	Taniya Das <quic_tdas@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 266/568] clk: qcom: gcc-sa8775p: Update the GDSC wait_val fields and flags
+Date: Tue, 30 Jul 2024 17:46:13 +0200
+Message-ID: <20240730151650.271847023@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,84 +47,149 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-commit 32f55e475ce2c4b8b124d335fcfaf1152ba977a1 upstream.
+[ Upstream commit be208c0ccf7d861fc6109ca06c1a773512739af9 ]
 
-When requesting an immediate exit from L2 in order to inject a pending
-event, do so only if the pending event actually requires manual injection,
-i.e. if and only if KVM actually needs to regain control in order to
-deliver the event.
+Update the GDSC wait_val fields as per the default hardware values as
+otherwise they would lead to GDSC FSM state to be stuck and causing
+failures to power on/off. Also add the GDSC flags as applicable and
+add support to control PCIE GDSC's using collapse vote registers.
 
-Avoiding the "immediate exit" isn't simply an optimization, it's necessary
-to make forward progress, as the "already expired" VMX preemption timer
-trick that KVM uses to force a VM-Exit has higher priority than events
-that aren't directly injected.
-
-At present time, this is a glorified nop as all events processed by
-vmx_has_nested_events() require injection, but that will not hold true in
-the future, e.g. if there's a pending virtual interrupt in vmcs02.RVI.
-I.e. if KVM is trying to deliver a virtual interrupt to L2, the expired
-VMX preemption timer will trigger VM-Exit before the virtual interrupt is
-delivered, and KVM will effectively hang the vCPU in an endless loop of
-forced immediate VM-Exits (because the pending virtual interrupt never
-goes away).
-
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240607172609.3205077-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 08c51ceb12f7 ("clk: qcom: add the GCC driver for sa8775p")
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Link: https://lore.kernel.org/r/20240612-sa8775p-v2-gcc-gpucc-fixes-v2-2-adcc756a23df@quicinc.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/kvm_host.h |    2 +-
- arch/x86/kvm/vmx/nested.c       |    2 +-
- arch/x86/kvm/x86.c              |    4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/qcom/gcc-sa8775p.c | 40 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -1651,7 +1651,7 @@ struct kvm_x86_nested_ops {
- 	bool (*is_exception_vmexit)(struct kvm_vcpu *vcpu, u8 vector,
- 				    u32 error_code);
- 	int (*check_events)(struct kvm_vcpu *vcpu);
--	bool (*has_events)(struct kvm_vcpu *vcpu);
-+	bool (*has_events)(struct kvm_vcpu *vcpu, bool for_injection);
- 	void (*triple_fault)(struct kvm_vcpu *vcpu);
- 	int (*get_state)(struct kvm_vcpu *vcpu,
- 			 struct kvm_nested_state __user *user_kvm_nested_state,
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -3934,7 +3934,7 @@ static bool nested_vmx_preemption_timer_
- 	       to_vmx(vcpu)->nested.preemption_timer_expired;
- }
+diff --git a/drivers/clk/qcom/gcc-sa8775p.c b/drivers/clk/qcom/gcc-sa8775p.c
+index 8171d23c96e64..a54438205698c 100644
+--- a/drivers/clk/qcom/gcc-sa8775p.c
++++ b/drivers/clk/qcom/gcc-sa8775p.c
+@@ -4305,74 +4305,114 @@ static struct clk_branch gcc_video_axi1_clk = {
  
--static bool vmx_has_nested_events(struct kvm_vcpu *vcpu)
-+static bool vmx_has_nested_events(struct kvm_vcpu *vcpu, bool for_injection)
- {
- 	return nested_vmx_preemption_timer_pending(vcpu) ||
- 	       to_vmx(vcpu)->nested.mtf_pending;
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -10131,7 +10131,7 @@ static int kvm_check_and_inject_events(s
+ static struct gdsc pcie_0_gdsc = {
+ 	.gdscr = 0xa9004,
++	.collapse_ctrl = 0x4b104,
++	.collapse_mask = BIT(0),
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "pcie_0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
  
- 	if (is_guest_mode(vcpu) &&
- 	    kvm_x86_ops.nested_ops->has_events &&
--	    kvm_x86_ops.nested_ops->has_events(vcpu))
-+	    kvm_x86_ops.nested_ops->has_events(vcpu, true))
- 		*req_immediate_exit = true;
+ static struct gdsc pcie_1_gdsc = {
+ 	.gdscr = 0x77004,
++	.collapse_ctrl = 0x4b104,
++	.collapse_mask = BIT(1),
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "pcie_1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = VOTABLE | RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
  
- 	/*
-@@ -13013,7 +13013,7 @@ static inline bool kvm_vcpu_has_events(s
+ static struct gdsc ufs_card_gdsc = {
+ 	.gdscr = 0x81004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ufs_card_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
  
- 	if (is_guest_mode(vcpu) &&
- 	    kvm_x86_ops.nested_ops->has_events &&
--	    kvm_x86_ops.nested_ops->has_events(vcpu))
-+	    kvm_x86_ops.nested_ops->has_events(vcpu, false))
- 		return true;
+ static struct gdsc ufs_phy_gdsc = {
+ 	.gdscr = 0x83004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "ufs_phy_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
  
- 	if (kvm_xen_has_pending_events(vcpu))
+ static struct gdsc usb20_prim_gdsc = {
+ 	.gdscr = 0x1c004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "usb20_prim_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
+ 
+ static struct gdsc usb30_prim_gdsc = {
+ 	.gdscr = 0x1b004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
+ 
+ static struct gdsc usb30_sec_gdsc = {
+ 	.gdscr = 0x2f004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "usb30_sec_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
+ 
+ static struct gdsc emac0_gdsc = {
+ 	.gdscr = 0xb6004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "emac0_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
+ 
+ static struct gdsc emac1_gdsc = {
+ 	.gdscr = 0xb4004,
++	.en_rest_wait_val = 0x2,
++	.en_few_wait_val = 0x2,
++	.clk_dis_wait_val = 0xf,
+ 	.pd = {
+ 		.name = "emac1_gdsc",
+ 	},
+ 	.pwrsts = PWRSTS_OFF_ON,
++	.flags = RETAIN_FF_ENABLE | POLL_CFG_GDSCR,
+ };
+ 
+ static struct clk_regmap *gcc_sa8775p_clocks[] = {
+-- 
+2.43.0
+
 
 
