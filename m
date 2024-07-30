@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CC511A6166;
-	Tue, 30 Jul 2024 16:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B14C1A6166;
+	Tue, 30 Jul 2024 16:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356783; cv=none; b=mlOvUKO2TDfqaLgeC/goQIcAbH0tiACzcTRnkz2FI0uU9HUPiC9+hwC7cBxBFxKLRs75rdhe56gbiXf5sfWM0Ma12iuxsTPC42ZQ6+ai5hyQe2MUk5hSUBb9PD8s6kZQ/1ZcB03JLGYQL5H1HRycwoHzYEw6nxrBlC4gAQHg+oo=
+	t=1722356786; cv=none; b=d9u0mYt4t7k0vc6EbK+GG20Wg/GGcoivrt2jpXK/mlaMLtEPQGoLrGDPIiSrGeEMx9zqf2Qiwdp2THammqEMdLX61LU79zs48uSHU3m3kB+pscfGMZuMi4JLYGPiikH/tQyRYXgJLu8Ny9oAYwaIiES/V2Onxs9vTcRnWKjzTUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356783; c=relaxed/simple;
-	bh=wKYghqB33WCKCBrekGvJFnHumSjwRsmY9u5+zhdYnn4=;
+	s=arc-20240116; t=1722356786; c=relaxed/simple;
+	bh=6ioOyHVe54/2hU3nPGTcCCIMeMLkI6ewvzyYq0ZWDDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YxdHpUy0QL849w+C5BtThW7WYyYrHkbMp/DhDJBq6ScbTdzfLPGXb7QJOgWMZ4PS8AzkG9UW2KvjRTMtBIY4TSxAdSxEoz4tn5UjmcQ6o9HDERnn6yOtS1v1T9Kl+A02DmZrq5JQNFAjmkiJhi3mK1Upk6nI/ag8ZnF28/XQ470=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nJ/g09Iq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j7Vlc39XQFB/EXDcDrHqZcJ2U1nET8wFVKHJ1nlzNnwZLzGvPZLGu1fwZH7GdWxIQjF/fWqT3fXVyoyZa83Bw1O55FQr/da4aTiAfKLSiEgZb5dxqW/FWg2guJyMB+0WCZ7yzc+tcoS5nOetrD7sHRR9jAr8CdoQajmtJHs8yN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjCZpgnv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nJ/g09Iq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08717C4AF0C;
-	Tue, 30 Jul 2024 16:26:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjCZpgnv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1089DC32782;
+	Tue, 30 Jul 2024 16:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356783;
-	bh=wKYghqB33WCKCBrekGvJFnHumSjwRsmY9u5+zhdYnn4=;
+	s=korg; t=1722356786;
+	bh=6ioOyHVe54/2hU3nPGTcCCIMeMLkI6ewvzyYq0ZWDDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJ/g09IqBSaHRkf4qjicauj68/STXu6IOLovyTnLcXpTJkgQV9/0HQNb9tTJIH+bA
-	 maX5jaVsM2/Zz/lRMsn8FliQw3S8MP7SlzyMtkHImtBHCEPMa3qNMf9hXR0nqNDehh
-	 jJKSVsaJnzBVP/7D6Ruan07ORu7tXEO3u3XaEg0Q=
+	b=RjCZpgnvB3diMAgC8N5lK4t5KoobVDUgJZJcjOu+xJKvIWR1DZs27s9Dvqd+mTeuA
+	 Xl+Icuf9hqECOOFMWaCyp/pbDE7XicGnV8aZzMh3e0kdItiT4wS30dxN1pQnByF+Q7
+	 kQR5XnaPamaB16zWZNrffrywrLoF9U7f8I40fqko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Pan-Doh <pandoh@google.com>,
-	Sudheer Dantuluri <dantuluris@google.com>,
-	Gary Zibrat <gzibrat@google.com>,
-	Lu Baolu <baolu.lu@linux.intel.com>,
-	Kevin Tian <kevin.tian@intel.com>,
-	Will Deacon <will@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 228/440] iommu/vt-d: Fix identity map bounds in si_domain_init()
-Date: Tue, 30 Jul 2024 17:47:41 +0200
-Message-ID: <20240730151624.763631078@linuxfoundation.org>
+Subject: [PATCH 6.6 184/568] drm/panel: himax-hx8394: Handle errors from mipi_dsi_dcs_set_display_on() better
+Date: Tue, 30 Jul 2024 17:44:51 +0200
+Message-ID: <20240730151647.071131155@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -51,45 +49,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jon Pan-Doh <pandoh@google.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 31000732d56b43765d51e08cccb68818fbc0032c ]
+[ Upstream commit cc2db2ef8d9eebc0df03808ac0dadbdb96733499 ]
 
-Intel IOMMU operates on inclusive bounds (both generally aas well as
-iommu_domain_identity_map()). Meanwhile, for_each_mem_pfn_range() uses
-exclusive bounds for end_pfn. This creates an off-by-one error when
-switching between the two.
+If mipi_dsi_dcs_set_display_on() returned an error then we'd store
+that in the "ret" variable and jump to error handling. We'd then
+attempt an orderly poweroff. Unfortunately we then blew away the value
+stored in "ret". That means that if the orderly poweroff actually
+worked then we're return 0 (no error) from hx8394_enable() even though
+the panel wasn't enabled.
 
-Fixes: c5395d5c4a82 ("intel-iommu: Clean up iommu_domain_identity_map()")
-Signed-off-by: Jon Pan-Doh <pandoh@google.com>
-Tested-by: Sudheer Dantuluri <dantuluris@google.com>
-Suggested-by: Gary Zibrat <gzibrat@google.com>
-Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
-Reviewed-by: Kevin Tian <kevin.tian@intel.com>
-Link: https://lore.kernel.org/r/20240709234913.2749386-1-pandoh@google.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix this by not blowing away "ret".
+
+Found by code inspection.
+
+Fixes: 65dc9360f741 ("drm: panel: Add Himax HX8394 panel controller driver")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240517143643.1.I0a6836fffd8d7620f353becb3df2370d2898f803@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.1.I0a6836fffd8d7620f353becb3df2370d2898f803@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/intel/iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-himax-hx8394.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index e3a95a347c3b9..7b9502c30fe94 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -2444,7 +2444,7 @@ static int __init si_domain_init(int hw)
- 		for_each_mem_pfn_range(i, nid, &start_pfn, &end_pfn, NULL) {
- 			ret = iommu_domain_identity_map(si_domain,
- 					mm_to_dma_pfn_start(start_pfn),
--					mm_to_dma_pfn_end(end_pfn));
-+					mm_to_dma_pfn_end(end_pfn-1));
- 			if (ret)
- 				return ret;
- 		}
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+index c73243d85de71..631420d28be4c 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+@@ -234,8 +234,7 @@ static int hx8394_enable(struct drm_panel *panel)
+ 
+ sleep_in:
+ 	/* This will probably fail, but let's try orderly power off anyway. */
+-	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
+-	if (!ret)
++	if (!mipi_dsi_dcs_enter_sleep_mode(dsi))
+ 		msleep(50);
+ 
+ 	return ret;
 -- 
 2.43.0
 
