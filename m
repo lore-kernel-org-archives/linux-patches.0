@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5309D1A619E;
-	Tue, 30 Jul 2024 16:43:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FDA01A619E;
+	Tue, 30 Jul 2024 16:43:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357806; cv=none; b=EQZSwpB9DFCS1ZHF0deSXLVPZwdUJcBBUQfLpUrG9/l7XCfChbgrV8S5toRj0z5ZOjZG9Z7SBzhPVzMYZFWV2+CtCyC8GCFXVuRL4eTXB/YBo4oO2GTKAl783d4ttI1XUY1mFS4rMdgFwpifgqVXsyJDfnCkHaGJBkVnYg+oJNQ=
+	t=1722357809; cv=none; b=ZCiJ+VEPpCu4cdNkRudkYSqzT1gbHrTq5zwQ0OcDd6vGLMPkmpVldXfIVJbWurCvgM9CmqY2z980oEbBNLf7oTRfivVOC1ZibgjIVOPKOGYGKZSxSchpEjiFL+7NLVkBDNzclNMEEDIPhvuq9q4MQQzcOc5RBD77Ojnz9vRNL9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357806; c=relaxed/simple;
-	bh=kHNuDDc9hHyB+NjNaXTBofctOmnMEkjboZWyt0SS1IY=;
+	s=arc-20240116; t=1722357809; c=relaxed/simple;
+	bh=SFtIKmLOYfLsgP02N3EtBFY+8pgi2zWRqrh/l7VvvrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rBzmk4lRRs+oEX8ladiuEq8Il5ydoAeJCGMcx1eaPItjQimtpJqmZuuVPzDHt/xgK6QcGsVyc1NnqtOrZkvuNd8Ktu9tuaK72fMNFUeeN8GOUFh1hR/yEzzigq4+9BeML5yPs67YYb2muHMR5Rq433JvoX8imYoiM23djSvJ2vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0ebKW3n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DVIZUFlDje+Cw8ojIwVYfJnEks/5pLnw6sv4TgJDMwKPMW7U9GB5AHAiMjD3btcVMWaaW2+lDSPhM8eOlLnhB2IOXxxEd/hL6xRtFyPtA8E1H2ls51wKAZwrS8HbwXBHMRMLWaoo0jYUXKV4ZN8i1kf4shpkZuooSfDb7ce92d8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGsCOPnX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0ebKW3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB27EC32782;
-	Tue, 30 Jul 2024 16:43:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGsCOPnX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C010FC4AF0A;
+	Tue, 30 Jul 2024 16:43:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357806;
-	bh=kHNuDDc9hHyB+NjNaXTBofctOmnMEkjboZWyt0SS1IY=;
+	s=korg; t=1722357809;
+	bh=SFtIKmLOYfLsgP02N3EtBFY+8pgi2zWRqrh/l7VvvrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L0ebKW3nAO7PvoMF9W63O4OCoVmeWq8cquVBxhtPFWsmEXFKdJczz0VQi4+xYRzr5
-	 S80uLUTFTI37+rYM/H6365t10sZdEu5dP4XuXz6ivSxnz9UmH1zX46+EKqKSIgGFIe
-	 hSWYUHLE0bdqODf+0WEiCHF/ujM8fKqZmseLF3bM=
+	b=fGsCOPnXykNWkQnFLO2jvM8cnbAoKEXdC+CRen156L1Lk2NkwNP4UjOjHcQZBQSKf
+	 oINDHW0Qte1Nirx1LbdrjWhGmRXwEA6DvwKW4DYVJZgTW7fC7lFcOfRitI8VvoFMfK
+	 ay0ye6YqGQSDsn3erMojGp1vzdhPKn+Sy4mDKg/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 294/809] drm/amdgpu: Fix type mismatch in amdgpu_gfx_kiq_init_ring
-Date: Tue, 30 Jul 2024 17:42:50 +0200
-Message-ID: <20240730151736.204149364@linuxfoundation.org>
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 329/440] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
+Date: Tue, 30 Jul 2024 17:49:22 +0200
+Message-ID: <20240730151628.668331035@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,79 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-[ Upstream commit 745f7170db4ffd2f2e9751a2c719a97c9a5fc438 ]
+commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
 
-This commit fixes a type mismatch in the amdgpu_gfx_kiq_init_ring
-function triggered by the snprintf function expecting unsigned char
-arguments due to the '%hhu' format specifier, but receiving int and u32
-arguments.
+Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
+is decided by the SCSI ML. User is not aware of the cause of an acutal
+error.
 
-The issue occurred because the arguments xcc_id, ring->me, ring->pipe,
-and ring->queue were of type int and u32, not unsigned char. This led to
-a type mismatch when these arguments were passed to snprintf.
+Return the appropriate return code that will be decoded by API and
+application and proper error message will be displayed to user.
 
-To resolve this, the snprintf line was modified to cast these arguments
-to unsigned char. This ensures that the arguments are of the correct
-type for the '%hhu' format specifier and resolves the warning.
-
-Fixes the below:
->> drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:4: warning: format
->> specifies type 'unsigned char' but the argument has type 'int'
->> [-Wformat]
-                    xcc_id, ring->me, ring->pipe, ring->queue);
-                    ^~~~~~
->> drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:12: warning: format
->> specifies type 'unsigned char' but the argument has type 'u32' (aka
->> 'unsigned int') [-Wformat]
-                    xcc_id, ring->me, ring->pipe, ring->queue);
-                            ^~~~~~~~
-   drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:22: warning: format specifies type 'unsigned char' but the argument has type 'u32' (aka 'unsigned int') [-Wformat]
-                    xcc_id, ring->me, ring->pipe, ring->queue);
-                                      ^~~~~~~~~~
-   drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:333:34: warning: format specifies type 'unsigned char' but the argument has type 'u32' (aka 'unsigned int') [-Wformat]
-                    xcc_id, ring->me, ring->pipe, ring->queue);
-                                                  ^~~~~~~~~~~
-   4 warnings generated.
-
-Fixes: 0ea554455542 ("drm/amdgpu: Fix snprintf usage in amdgpu_gfx_kiq_init_ring")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202405250446.XeaWe66u-lkp@intel.com/
-Cc: Lijo Lazar <lijo.lazar@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-index 2cb8ab86efae8..e92bdc9a39d35 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -330,7 +330,8 @@ int amdgpu_gfx_kiq_init_ring(struct amdgpu_device *adev, int xcc_id)
- 	ring->eop_gpu_addr = kiq->eop_gpu_addr;
- 	ring->no_scheduler = true;
- 	snprintf(ring->name, sizeof(ring->name), "kiq_%hhu.%hhu.%hhu.%hhu",
--		 xcc_id, ring->me, ring->pipe, ring->queue);
-+		 (unsigned char)xcc_id, (unsigned char)ring->me,
-+		 (unsigned char)ring->pipe, (unsigned char)ring->queue);
- 	r = amdgpu_ring_init(adev, ring, 1024, irq, AMDGPU_CP_KIQ_IRQ_DRIVER0,
- 			     AMDGPU_RING_PRIO_DEFAULT, NULL);
- 	if (r)
--- 
-2.43.0
-
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -324,7 +324,7 @@ qla2x00_process_els(struct bsg_job *bsg_
+ 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
+ 		    bsg_job->request_payload.sg_cnt,
+ 		    bsg_job->reply_payload.sg_cnt);
+-		rval = -EPERM;
++		rval = -ENOBUFS;
+ 		goto done;
+ 	}
+ 
 
 
