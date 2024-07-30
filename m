@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B741A76DA;
-	Tue, 30 Jul 2024 17:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867501A76DA;
+	Tue, 30 Jul 2024 17:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359533; cv=none; b=h4j7Eyn2OEdVJAtC6I3o6iSMzfa91GTJCQEtyiIKn8b57g79Ig05qvsewHw3TqNqtHkTP1bGP3sqVJESNsS5mm+BizIgmF4q4K0sDXKN4eb9PYJ6Ty+F02jGNRl/J1cW/8YBSFL9EQ7rz8RWaWcAHrdRZL37z8GLqvWVGO5BJJA=
+	t=1722359536; cv=none; b=EYtyVhxildJe7My/mYUy8nT+ywAdG7bCGTBf8jFN7figDVIijCkBI5aj0F85J118kkLXq9YPYHkwQD6u7ouw8rqkpkRK7c9rck+Uv4hDR4C7whtng0jqKTLQ/WVBr9oqRxiaFSM0ZFZlshVSax5AMFaUncHPUnwszhrLa7Owgh0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359533; c=relaxed/simple;
-	bh=JrHZQGDZjgQlZ3KXbE9XUCxB5BRRnzFOAxU5A+i4UwE=;
+	s=arc-20240116; t=1722359536; c=relaxed/simple;
+	bh=NybNroNDh4xoDNTZ1HG8cyfdn9c876o5ZdTNvyu4FqQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QDqnPkrtIgBNWNvZ10ej4nQ5SrOAbpcMRzFQerLPUBALtjoLz/EJfDmTnk2BBGZwqdSu3Zdj/j8tgPWOoabqiDlXMnwxJYUs+ag07e2fuotrl6Y/RG+WrnyfgH3zPrFQZs8NC9gKROhaqFHdBsbvFLVe4dIxN7ZllJDxEMTpCJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YPfGOjH9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I65wgNBpfW35YZ9Vl0AOrtZLzuo0F+JRKfacpHGM5SCLsCe3OMf4zdAJVdQbiy5TBj5hVcQke3fbW1ogxrj1Uh8IHYvPXv2qJ6rRwXbZqRvpPNjZiVPYoYDzJ24uQ3SpthefrB6Ew4/rdVkqRc5y/8PD5bu7zVn7pv55C4NFmdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/EXeFt1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YPfGOjH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1366BC4AF0A;
-	Tue, 30 Jul 2024 17:12:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/EXeFt1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE6D3C4AF0E;
+	Tue, 30 Jul 2024 17:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359533;
-	bh=JrHZQGDZjgQlZ3KXbE9XUCxB5BRRnzFOAxU5A+i4UwE=;
+	s=korg; t=1722359536;
+	bh=NybNroNDh4xoDNTZ1HG8cyfdn9c876o5ZdTNvyu4FqQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YPfGOjH9L2IhqPLnHWauaMU1N+w2VDkjiU2YaRBfTFEUrq+h/B6ajVD4+C0RVveZ2
-	 yX0RkqXhP4v86HHhDmRUg5AYbKXsHu6WmQ8kcvxndW5txtQIxgBc7oF0pKrlnAPMgl
-	 ZwQ56IYTeMbmLKM2ZfVk8EyHOGQ4nwfFhPKN9WaU=
+	b=u/EXeFt1sMv7flRSrB5gOzHkOS/1AcmFWal/jT2tVOzuMLta4/5rePBVfvLXwlOD1
+	 1jwgl8eR4cCiwNjV+5g7N9bzQtz2OT4lsCo2SuOAvyZ9/zKQPqVcKhMRAQ2jnrF7V9
+	 gmQTS/du7t4ZV76uLOrIORLsb2N7RRmIzQjJeumw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 497/809] fs/ntfs3: Drop stray \ (backslash) in formatting string
-Date: Tue, 30 Jul 2024 17:46:13 +0200
-Message-ID: <20240730151744.367107046@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 498/568] MIPS: Loongson64: reset: Prioritise firmware service
+Date: Tue, 30 Jul 2024 17:50:05 +0200
+Message-ID: <20240730151659.491521164@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +46,106 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit b366809dd151e8abb29decda02fd6a78b498831f ]
+commit 4e7ca0b57f3bc09ba3e4ab86bf6b7c35134bfd04 upstream.
 
-CHECK   /home/andy/prj/linux-topic-uart/fs/ntfs3/super.c
-fs/ntfs3/super.c:471:23: warning: unknown escape sequence: '\%'
+We should always use firmware's poweroff & reboot service
+if it's available as firmware may need to perform more task
+than platform's syscon etc.
 
-Drop stray '\' (backslash) in formatting string.
+However _machine_restart & poweroff hooks are registered at
+low priority, which means platform reboot driver can override
+them.
 
-Fixes: d27e202b9ac4 ("fs/ntfs3: Add more info into /proc/fs/ntfs3/<dev>/volinfo")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Register firmware based reboot/poweroff implementation with
+register_sys_off_handler with appropriate priority so that
+they will be prioritised. Remove _machine_halt hook as it's
+deemed to be unnecessary.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/loongson64/reset.c |   38 ++++++++++++++++----------------------
+ 1 file changed, 16 insertions(+), 22 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 27fbde2701b63..24a134eeb45a2 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -468,7 +468,7 @@ static int ntfs3_volinfo(struct seq_file *m, void *o)
- 	struct super_block *sb = m->private;
- 	struct ntfs_sb_info *sbi = sb->s_fs_info;
+--- a/arch/mips/loongson64/reset.c
++++ b/arch/mips/loongson64/reset.c
+@@ -11,6 +11,7 @@
+ #include <linux/init.h>
+ #include <linux/kexec.h>
+ #include <linux/pm.h>
++#include <linux/reboot.h>
+ #include <linux/slab.h>
  
--	seq_printf(m, "ntfs%d.%d\n%u\n%zu\n\%zu\n%zu\n%s\n%s\n",
-+	seq_printf(m, "ntfs%d.%d\n%u\n%zu\n%zu\n%zu\n%s\n%s\n",
- 		   sbi->volume.major_ver, sbi->volume.minor_ver,
- 		   sbi->cluster_size, sbi->used.bitmap.nbits,
- 		   sbi->mft.bitmap.nbits,
--- 
-2.43.0
-
+ #include <asm/bootinfo.h>
+@@ -21,36 +22,21 @@
+ #include <loongson.h>
+ #include <boot_param.h>
+ 
+-static void loongson_restart(char *command)
++static int firmware_restart(struct sys_off_data *unusedd)
+ {
+ 
+ 	void (*fw_restart)(void) = (void *)loongson_sysconf.restart_addr;
+ 
+ 	fw_restart();
+-	while (1) {
+-		if (cpu_wait)
+-			cpu_wait();
+-	}
++	return NOTIFY_DONE;
+ }
+ 
+-static void loongson_poweroff(void)
++static int firmware_poweroff(struct sys_off_data *unused)
+ {
+ 	void (*fw_poweroff)(void) = (void *)loongson_sysconf.poweroff_addr;
+ 
+ 	fw_poweroff();
+-	while (1) {
+-		if (cpu_wait)
+-			cpu_wait();
+-	}
+-}
+-
+-static void loongson_halt(void)
+-{
+-	pr_notice("\n\n** You can safely turn off the power now **\n\n");
+-	while (1) {
+-		if (cpu_wait)
+-			cpu_wait();
+-	}
++	return NOTIFY_DONE;
+ }
+ 
+ #ifdef CONFIG_KEXEC
+@@ -154,9 +140,17 @@ static void loongson_crash_shutdown(stru
+ 
+ static int __init mips_reboot_setup(void)
+ {
+-	_machine_restart = loongson_restart;
+-	_machine_halt = loongson_halt;
+-	pm_power_off = loongson_poweroff;
++	if (loongson_sysconf.restart_addr) {
++		register_sys_off_handler(SYS_OFF_MODE_RESTART,
++				 SYS_OFF_PRIO_FIRMWARE,
++				 firmware_restart, NULL);
++	}
++
++	if (loongson_sysconf.poweroff_addr) {
++		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
++				 SYS_OFF_PRIO_FIRMWARE,
++				 firmware_poweroff, NULL);
++	}
+ 
+ #ifdef CONFIG_KEXEC
+ 	kexec_argv = kmalloc(KEXEC_ARGV_SIZE, GFP_KERNEL);
 
 
