@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E303184551;
-	Tue, 30 Jul 2024 16:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3887E187FED;
+	Tue, 30 Jul 2024 16:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355327; cv=none; b=JhJGhRrPWq8EwbwwceqgvG9bTadqkehPCd0gq0sx1aLrJqaK60A6q1z58/jeIO8+50QKbRbDVIJUg7mnLVNmaRtKgqdVCDWNNF9sbLUJzPp5uK2dFFgClM5tf4p02aeHkiwGQ/FWJEaWRcCjjGWK1TVjF2PkbLAq+36XE50dnA0=
+	t=1722355330; cv=none; b=diTdGyXOh4BvnA1pC3qlNlhVjhZ/YP9zmWP8HDcMEq3BgID5iLc12DXGe8gizc1PohjYHAuqLgZYhbuKUTaiT7AjEa6Wpj4FZKCuu+Z8N0UbfM/fJr/bqRd6gifMpEvMOGfXoLmD5U3A1rr1vc1VjJK8jEI49B7XBa4Zk/s0BzA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355327; c=relaxed/simple;
-	bh=zFPjQIlTxEC9ZY6kXyrzK4IAaYOBsqsWZSTbl0oIn8w=;
+	s=arc-20240116; t=1722355330; c=relaxed/simple;
+	bh=19jz7nuKmqrVRu1ab9vtmJwGsl50NjIr49LlWIJFd94=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g0OIxDsxbamZzc9cfiBrBLLx+lno1f7BIZGyjiCQQrO5V9+6gHKOnVS4WGqdFozhq+9oWD+vWUPYwZ6hIueN8rZxKUojLIAgbOBFWf/ZJqletotJhiPPGXzxMdJoKusvjA1qNolEpJcYqpeL+980eq8X9bMxaPh7pBCwNOx8w48=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTNk4KrS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+dOjOrHsw3bOjSJyFS5ITiTPmuDEs17lMu4iABChWfOi/o+h3LV7xpvUcwiBSnbOAGZOpbBIHHEeSikLvnuVhHS0Xf0p4yWOWRLl2mlV5FUWOwsc7o/+zmW7VAsHQ1fHoxzY/iGco3zcX7ajMEDArc4zPIvSqbTGeQM38I383c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPlwt8rE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTNk4KrS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B037C4AF0C;
-	Tue, 30 Jul 2024 16:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPlwt8rE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994C7C32782;
+	Tue, 30 Jul 2024 16:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355326;
-	bh=zFPjQIlTxEC9ZY6kXyrzK4IAaYOBsqsWZSTbl0oIn8w=;
+	s=korg; t=1722355330;
+	bh=19jz7nuKmqrVRu1ab9vtmJwGsl50NjIr49LlWIJFd94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iTNk4KrSmozNXhYGnM+H8T9uDKdwi8nR0sNJPhu1W0m/yT2hI23Z6+8/qDqBRmNDO
-	 dTAPaK1pgHiFJVR0m4pMW5mrsivHbSaovaGn3kHKhmN+aRJ+eI6nJ7wqnWxOxlbmr6
-	 t2r6PPO7z/i8p5DwjRTlIbn7jaWKkb/7eyGFVxOA=
+	b=UPlwt8rEbwPty/CFD8tK1dRxksee/fp59xzjkIKMZJdXMjbbu94MbcmPrKECp709/
+	 ZMuM+nanTvxzPuTmdKeanVnHvf0ZATQKiHJEFWdYm0WCN/Ft2DJmpm7t77UCZzbnS0
+	 2HfkbnjaQTA7cLladPCyp3LFxX3mF6GToMoOOq/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sagar Cheluvegowda <quic_scheluve@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/568] arm64: dts: qcom: sa8775p: mark ethernet devices as DMA-coherent
-Date: Tue, 30 Jul 2024 17:42:35 +0200
-Message-ID: <20240730151641.716345168@linuxfoundation.org>
+Subject: [PATCH 6.10 041/809] soc: qcom: socinfo: Update X1E PMICs
+Date: Tue, 30 Jul 2024 17:38:37 +0200
+Message-ID: <20240730151726.271557790@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,46 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 49cc31f8ab44e60d8109da7e18c0983a917d4d74 ]
+[ Upstream commit 85f5656a4f3f188cb950cf8dc88f3f0e4e656bae ]
 
-Ethernet devices are cache coherent, mark it as such in the dtsi.
+Assign the correct name to ID 82 and fix the ID of SMB2360.
 
-Fixes: ff499a0fbb23 ("arm64: dts: qcom: sa8775p: add the first 1Gb ethernet interface")
-Fixes: e952348a7cc7 ("arm64: dts: qcom: sa8775p: add a node for EMAC1")
-Signed-off-by: Sagar Cheluvegowda <quic_scheluve@quicinc.com>
-Link: https://lore.kernel.org/r/20240514-mark_ethernet_devices_dma_coherent-v4-1-04e1198858c5@quicinc.com
+Fixes: e025171d1ab1 ("soc: qcom: socinfo: Add SMB2360 PMIC")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20240522-topic-x1e_pmics_socinfo-v1-1-da8a097e5134@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sa8775p.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/soc/qcom/socinfo.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8775p.dtsi b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-index 88ef3b5d374b3..44bea063aedba 100644
---- a/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sa8775p.dtsi
-@@ -2350,6 +2350,7 @@ ethernet1: ethernet@23000000 {
- 			phy-names = "serdes";
+diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+index 277c07a6603d4..41342c37916ae 100644
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -133,7 +133,8 @@ static const char *const pmic_models[] = {
+ 	[72] = "PMR735D",
+ 	[73] = "PM8550",
+ 	[74] = "PMK8550",
+-	[82] = "SMB2360",
++	[82] = "PMC8380",
++	[83] = "SMB2360",
+ };
  
- 			iommus = <&apps_smmu 0x140 0xf>;
-+			dma-coherent;
- 
- 			snps,tso;
- 			snps,pbl = <32>;
-@@ -2383,6 +2384,7 @@ ethernet0: ethernet@23040000 {
- 			phy-names = "serdes";
- 
- 			iommus = <&apps_smmu 0x120 0xf>;
-+			dma-coherent;
- 
- 			snps,tso;
- 			snps,pbl = <32>;
+ struct socinfo_params {
 -- 
 2.43.0
 
