@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA961898E0;
-	Tue, 30 Jul 2024 17:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E78A518454A;
+	Tue, 30 Jul 2024 17:13:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359587; cv=none; b=epUZBoKeFwuCee3x7IO4YaPkvKI16HA5ZmSB+z6FLKY7/dtOhvyPelmB3t1l52uTVF7Lj+2GIvIh6ATok2hTesYvb2+OwJM8MAt++S0wEJXFg/6WHg2pRVtwwVengR/8BL6EjzdeNVXBeV4lt8sQ7zVaoue8s0vzFxDL6TatZuo=
+	t=1722359591; cv=none; b=ZzT2bzZ1oy0swENsC4E2OfY8PxVZDaMinY7woN6p3hiltOkSYdyFcWDZAzU36JDLiVi+gcYqRRdPaFFSyY1iUaW/ekJo1B3R5DfShnvJ+5U3b4DFwRLS37IUveoeKdDAYkUR50zMmN3mT9G26lW32AqLs9ky1lQ3CJn/B1z0lRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359587; c=relaxed/simple;
-	bh=qfxqXJ6FOtbg9NQY3D4HZbzdNH2LhIrj6YOLsZfgQN4=;
+	s=arc-20240116; t=1722359591; c=relaxed/simple;
+	bh=CkkN5X/g3U3mX+2tcs57RYacQ14faEjqq67dThCIVCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n1ZthQ+RnSIvxfFU9LKpFC7ctAs8V6ALMxcOzyb1BrSOkQR1StA3oFiIJSKeX2+BWxhuzqifFrZMW4UBmY7lyhKZPxcq78j0W3Hyjv9qc+eUE5HAIiwLJS3t/tuaHhF8vR///v0cTy702FXZN/G2ghGev2B+kR3L/ZxgWbxHGxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNScDlSr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dHPfZhaOS/BHXxAKfDMy4QI0mZjqPpaqMqNpiesU37sjtUYMpU+PgSa8A19T/D81wuipQW7NT3hHfYfOqNar+FBfMgYO0kuB8lWR9XEybBOJK/9yb3sBzbJuaedMlnC4XNHDx+Z339Kdzz/lIaQOxYQLbkHz4URtL6GpMR9Rfyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=omaoFwKv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNScDlSr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DE8C32782;
-	Tue, 30 Jul 2024 17:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="omaoFwKv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D88DC32782;
+	Tue, 30 Jul 2024 17:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359587;
-	bh=qfxqXJ6FOtbg9NQY3D4HZbzdNH2LhIrj6YOLsZfgQN4=;
+	s=korg; t=1722359590;
+	bh=CkkN5X/g3U3mX+2tcs57RYacQ14faEjqq67dThCIVCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNScDlSrpomihb8HO+ftJsaCUJyrZuKG3ZqH3q+jbkgfGpm9M3Ec7LLEx9mwRLg1v
-	 zQImU/NJxIzl6eTqtrXAvJNlP7yHxAH777Y13kl2m4nt+MRhgZ4XVwypYf8jnEtO5T
-	 x4tKAw+Ji9Uem3BMdvOhkHs95/lhPO/GlhKK3ErY=
+	b=omaoFwKvY4qh1MiV9Xa053Z/NdYItEEfaKHgYMlYxZNnS7W38oRzAoKI4+kyc9Huf
+	 4BmF+aDC0H6pb6RjdKIXGwzwdwwebh9qFcwjJOIro5LhKqEWotUffdBjomLVunTRKG
+	 NzEHca0wI56i2eGsa+JdEvudYlEKykdwy7EYceYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Helge Deller <deller@gmx.de>,
-	Fabio Estevam <festevam@gmail.com>
-Subject: [PATCH 6.6 505/568] video: logo: Drop full path of the input filename in generated file
-Date: Tue, 30 Jul 2024 17:50:12 +0200
-Message-ID: <20240730151659.765766964@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 505/809] pinctrl: renesas: r8a779g0: FIX PWM suffixes
+Date: Tue, 30 Jul 2024 17:46:21 +0200
+Message-ID: <20240730151744.683439210@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +46,211 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit fb3b9c2d217f1f51fffe19fc0f4eaf55e2d4ea4f upstream.
+[ Upstream commit 0aabdc9a4d3644fd57d804b283b2ab0f9c28dc6c ]
 
-Avoid this Yocto build warning to make build reproducible:
+PWM channels 0, 2, 8, and 9 do not have alternate pins.
+Remove their "_a" or "_b" suffixes to increase uniformity.
 
-    WARNING: linux-foo-6.8-r0 do_package_qa: QA Issue:
-    File /usr/src/debug/linux-foo/6.8-r0/drivers/video/logo/logo_linux_clut224.c
-    in package linux-foo-src contains reference to TMPDIR
-
-Helge modified the patch to drop the whole line.
-
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: Fabio Estevam <festevam@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c606c2fde2330547 ("pinctrl: renesas: r8a779g0: Add missing PWM")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/abb748e6e1e4e7d78beac7d96e7a0a3481b32e75.1717754960.git.geert+renesas@glider.be
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/logo/pnmtologo.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/pinctrl/renesas/pfc-r8a779g0.c | 76 ++++++++++++--------------
+ 1 file changed, 36 insertions(+), 40 deletions(-)
 
---- a/drivers/video/logo/pnmtologo.c
-+++ b/drivers/video/logo/pnmtologo.c
-@@ -235,8 +235,6 @@ static void write_header(void)
- 	fputs("/*\n", out);
- 	fputs(" *  DO NOT EDIT THIS FILE!\n", out);
- 	fputs(" *\n", out);
--	fprintf(out, " *  It was automatically generated from %s\n", filename);
--	fputs(" *\n", out);
- 	fprintf(out, " *  Linux logo %s\n", logoname);
- 	fputs(" */\n\n", out);
- 	fputs("#include <linux/linux_logo.h>\n\n", out);
+diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
+index f9f650f232e6e..3228a61ea4098 100644
+--- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
++++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
+@@ -316,9 +316,9 @@
+ #define IP1SR1_11_8	FM(MSIOF0_SCK)		FM(HSCK1_B)		FM(SCK1_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR1_15_12	FM(MSIOF0_RXD)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR1_19_16	FM(HTX0)		FM(TX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR1_27_24	FM(HRTS0_N)		FM(RTS0_N)		FM(PWM9_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR1_31_28	FM(HSCK0)		FM(SCK0)		FM(PWM0_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR1_23_20	FM(HCTS0_N)		FM(CTS0_N)		FM(PWM8)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR1_27_24	FM(HRTS0_N)		FM(RTS0_N)		FM(PWM9)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR1_31_28	FM(HSCK0)		FM(SCK0)		FM(PWM0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ 
+ /* IP2SR1 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
+ #define IP2SR1_3_0	FM(HRX0)		FM(RX0)			F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+@@ -355,7 +355,7 @@
+ #define IP1SR2_15_12	FM(CANFD0_RX)		FM(STPWT_EXTFXR)	F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR2_19_16	FM(CANFD2_TX)		FM(TPU0TO2)		F_(0, 0)		FM(TCLK3_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR2_23_20	FM(CANFD2_RX)		FM(TPU0TO3)		FM(PWM1_B)		FM(TCLK4_A)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP1SR2_27_24	FM(CANFD3_TX)		F_(0, 0)		FM(PWM2_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP1SR2_27_24	FM(CANFD3_TX)		F_(0, 0)		FM(PWM2)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP1SR2_31_28	FM(CANFD3_RX)		F_(0, 0)		FM(PWM3_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ 
+ /* IP2SR2 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
+@@ -827,15 +827,15 @@ static const u16 pinmux_data[] = {
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR1_23_20,	HCTS0_N),
+ 	PINMUX_IPSR_GPSR(IP1SR1_23_20,	CTS0_N),
+-	PINMUX_IPSR_GPSR(IP1SR1_23_20,	PWM8_A),
++	PINMUX_IPSR_GPSR(IP1SR1_23_20,	PWM8),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR1_27_24,	HRTS0_N),
+ 	PINMUX_IPSR_GPSR(IP1SR1_27_24,	RTS0_N),
+-	PINMUX_IPSR_GPSR(IP1SR1_27_24,	PWM9_A),
++	PINMUX_IPSR_GPSR(IP1SR1_27_24,	PWM9),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR1_31_28,	HSCK0),
+ 	PINMUX_IPSR_GPSR(IP1SR1_31_28,	SCK0),
+-	PINMUX_IPSR_GPSR(IP1SR1_31_28,	PWM0_A),
++	PINMUX_IPSR_GPSR(IP1SR1_31_28,	PWM0),
+ 
+ 	/* IP2SR1 */
+ 	PINMUX_IPSR_GPSR(IP2SR1_3_0,	HRX0),
+@@ -937,7 +937,7 @@ static const u16 pinmux_data[] = {
+ 	PINMUX_IPSR_GPSR(IP1SR2_23_20,	TCLK4_A),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR2_27_24,	CANFD3_TX),
+-	PINMUX_IPSR_GPSR(IP1SR2_27_24,	PWM2_B),
++	PINMUX_IPSR_GPSR(IP1SR2_27_24,	PWM2),
+ 
+ 	PINMUX_IPSR_GPSR(IP1SR2_31_28,	CANFD3_RX),
+ 	PINMUX_IPSR_GPSR(IP1SR2_31_28,	PWM3_B),
+@@ -2090,13 +2090,13 @@ static const unsigned int pcie1_clkreq_n_mux[] = {
+ 	PCIE1_CLKREQ_N_MARK,
+ };
+ 
+-/* - PWM0_A ------------------------------------------------------------------- */
+-static const unsigned int pwm0_a_pins[] = {
+-	/* PWM0_A */
++/* - PWM0 ------------------------------------------------------------------- */
++static const unsigned int pwm0_pins[] = {
++	/* PWM0 */
+ 	RCAR_GP_PIN(1, 15),
+ };
+-static const unsigned int pwm0_a_mux[] = {
+-	PWM0_A_MARK,
++static const unsigned int pwm0_mux[] = {
++	PWM0_MARK,
+ };
+ 
+ /* - PWM1_A ------------------------------------------------------------------- */
+@@ -2117,13 +2117,13 @@ static const unsigned int pwm1_b_mux[] = {
+ 	PWM1_B_MARK,
+ };
+ 
+-/* - PWM2_B ------------------------------------------------------------------- */
+-static const unsigned int pwm2_b_pins[] = {
+-	/* PWM2_B */
++/* - PWM2 ------------------------------------------------------------------- */
++static const unsigned int pwm2_pins[] = {
++	/* PWM2 */
+ 	RCAR_GP_PIN(2, 14),
+ };
+-static const unsigned int pwm2_b_mux[] = {
+-	PWM2_B_MARK,
++static const unsigned int pwm2_mux[] = {
++	PWM2_MARK,
+ };
+ 
+ /* - PWM3_A ------------------------------------------------------------------- */
+@@ -2180,22 +2180,22 @@ static const unsigned int pwm7_mux[] = {
+ 	PWM7_MARK,
+ };
+ 
+-/* - PWM8_A ------------------------------------------------------------------- */
+-static const unsigned int pwm8_a_pins[] = {
+-	/* PWM8_A */
++/* - PWM8 ------------------------------------------------------------------- */
++static const unsigned int pwm8_pins[] = {
++	/* PWM8 */
+ 	RCAR_GP_PIN(1, 13),
+ };
+-static const unsigned int pwm8_a_mux[] = {
+-	PWM8_A_MARK,
++static const unsigned int pwm8_mux[] = {
++	PWM8_MARK,
+ };
+ 
+-/* - PWM9_A ------------------------------------------------------------------- */
+-static const unsigned int pwm9_a_pins[] = {
+-	/* PWM9_A */
++/* - PWM9 ------------------------------------------------------------------- */
++static const unsigned int pwm9_pins[] = {
++	/* PWM9 */
+ 	RCAR_GP_PIN(1, 14),
+ };
+-static const unsigned int pwm9_a_mux[] = {
+-	PWM9_A_MARK,
++static const unsigned int pwm9_mux[] = {
++	PWM9_MARK,
+ };
+ 
+ /* - QSPI0 ------------------------------------------------------------------ */
+@@ -2658,18 +2658,18 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
+ 	SH_PFC_PIN_GROUP(pcie0_clkreq_n),
+ 	SH_PFC_PIN_GROUP(pcie1_clkreq_n),
+ 
+-	SH_PFC_PIN_GROUP(pwm0_a),		/* suffix might be updated */
++	SH_PFC_PIN_GROUP(pwm0),
+ 	SH_PFC_PIN_GROUP(pwm1_a),
+ 	SH_PFC_PIN_GROUP(pwm1_b),
+-	SH_PFC_PIN_GROUP(pwm2_b),		/* suffix might be updated */
++	SH_PFC_PIN_GROUP(pwm2),
+ 	SH_PFC_PIN_GROUP(pwm3_a),
+ 	SH_PFC_PIN_GROUP(pwm3_b),
+ 	SH_PFC_PIN_GROUP(pwm4),
+ 	SH_PFC_PIN_GROUP(pwm5),
+ 	SH_PFC_PIN_GROUP(pwm6),
+ 	SH_PFC_PIN_GROUP(pwm7),
+-	SH_PFC_PIN_GROUP(pwm8_a),		/* suffix might be updated */
+-	SH_PFC_PIN_GROUP(pwm9_a),		/* suffix might be updated */
++	SH_PFC_PIN_GROUP(pwm8),
++	SH_PFC_PIN_GROUP(pwm9),
+ 
+ 	SH_PFC_PIN_GROUP(qspi0_ctrl),
+ 	BUS_DATA_PIN_GROUP(qspi0_data, 2),
+@@ -2923,8 +2923,7 @@ static const char * const pcie_groups[] = {
+ };
+ 
+ static const char * const pwm0_groups[] = {
+-	/* suffix might be updated */
+-	"pwm0_a",
++	"pwm0",
+ };
+ 
+ static const char * const pwm1_groups[] = {
+@@ -2933,8 +2932,7 @@ static const char * const pwm1_groups[] = {
+ };
+ 
+ static const char * const pwm2_groups[] = {
+-	/* suffix might be updated */
+-	"pwm2_b",
++	"pwm2",
+ };
+ 
+ static const char * const pwm3_groups[] = {
+@@ -2959,13 +2957,11 @@ static const char * const pwm7_groups[] = {
+ };
+ 
+ static const char * const pwm8_groups[] = {
+-	/* suffix might be updated */
+-	"pwm8_a",
++	"pwm8",
+ };
+ 
+ static const char * const pwm9_groups[] = {
+-	/* suffix might be updated */
+-	"pwm9_a",
++	"pwm9",
+ };
+ 
+ static const char * const qspi0_groups[] = {
+-- 
+2.43.0
+
 
 
