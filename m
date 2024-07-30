@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6018018801A;
-	Tue, 30 Jul 2024 16:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C1518801A;
+	Tue, 30 Jul 2024 16:57:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358654; cv=none; b=GrgwKzGDJaQ+ASStZndg6xsDAG2ggfoGFgsd6Ed4GXZOLsAd+wiHULSiHzi4QADi+0YziKe7WnutlB5jAR64hjFN5YUttQluXW4oTuw8/Ahqw04mnYJ4dJLoVtvhTAdt3v8BT/EHR8p+gF1NuvcGAgAtKvN0ozGlyPJhzswEWPA=
+	t=1722358658; cv=none; b=gvIrBZRsUrTDyRNVW+5FNFBpTKUbtk2BYy/CVgdBsOk6GkBMsuRaFGBshznPlAn79HdxCWLjz5iVQVZAGVHPLDUTyTjgdHcasRJhjYsB2eo6zD6YI0sbsfInIOipeJISeofBlG2vUtb0MgsoT4fUb+Muu0NO/WzSgAomS7Fx+QY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358654; c=relaxed/simple;
-	bh=8daS3+DknWohxtBMsSL8oFHBtgBL1y4+j/aR+Jo0jmY=;
+	s=arc-20240116; t=1722358658; c=relaxed/simple;
+	bh=zWOL9LQCiSqHSgm1W+TMkmheMq4YSNRW07p5InAMG3k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HFbe647yWk/6+InsWMXferEu1cJylvj2PxznvjgSSWWJnW4ouN+a3NmADvu/A819UzHHhj3ndX7tclx8JVt6FSekP9eRXLgbQ7wp0MTHVNiPiRtNRj4HMab+1yrvLCrl+rYfCeerKUNWG9/B3Gx6556igczipJYAhhPHSp5HnTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o7p6txcG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OdCF7QW3kclTsKtQKVHr/1UWZ+YgCl6xmoczFdbJ3IkSvtWlTlcfOo4bV+xUeakZyH3rNcxd/wE56sXbq++BFz+7yqafBoIG339SUM1uq6fu7Fo93gkDyUMcQS8Mu0s9br6O5xCOfVQG4V6m3izC/cvQfiHYBAMoWYAoMlUTm74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo6rcs+D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o7p6txcG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6EFC32782;
-	Tue, 30 Jul 2024 16:57:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo6rcs+D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40864C32782;
+	Tue, 30 Jul 2024 16:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358654;
-	bh=8daS3+DknWohxtBMsSL8oFHBtgBL1y4+j/aR+Jo0jmY=;
+	s=korg; t=1722358657;
+	bh=zWOL9LQCiSqHSgm1W+TMkmheMq4YSNRW07p5InAMG3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o7p6txcG/e13TzxO+BBFadezekZ5ahIOgiL4AVzFDa5zUu382ZVv/7tH+tLQqCptc
-	 Azuazlu6FI5lTi20lCkwI1bCHs0mrzqveen1l5i1bQ4Zm/dtx+Q7CQhE0EY7Z2RNmx
-	 40pMeD0gtih4OjiYE4lp5R1RQmvBCMQTIV7iXFgI=
+	b=Qo6rcs+Dk57ZrFbRy/czuKj/ExITSkiDqX7jqjmy3tx17MKQK/1tcbmR5BxJU2GTi
+	 Vm9cf6hIbCD3En143Tkfd6xtA3AMDDehkTYIZojOeSgb1jVWz41LQXv3HLL6h7IkO/
+	 4fDIZTGTza4tn/0tnThLTRrg8ljXlhmQvW3Nnbmc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lidong Wang <lidong.wang@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 382/809] PCI: Fix resource double counting on remove & rescan
-Date: Tue, 30 Jul 2024 17:44:18 +0200
-Message-ID: <20240730151739.755401589@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 6.6 383/568] ext2: Verify bitmap and itable block numbers before using them
+Date: Tue, 30 Jul 2024 17:48:10 +0200
+Message-ID: <20240730151654.837178041@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,77 +43,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 903534fa7d30214d8ba840ab1cd9e917e0c88e41 ]
+commit 322a6aff03937aa1ece33b4e46c298eafaf9ac41 upstream.
 
-pbus_size_mem() keeps the size of the optional resources in
-children_add_size. When calculating the PCI bridge window size,
-calculate_memsize() lower bounds size by old_size before adding
-children_add_size and performing the window size alignment. This
-results in double counting for the resources in children_add_size
-because old_size may be based on the previous size of the bridge
-window after it has already included children_add_size (that is,
-size1 in pbus_size_mem() from an earlier invocation of that
-function).
+Verify bitmap block numbers and inode table blocks are sane before using
+them for checking bits in the block bitmap.
 
-As a result, on repeated remove of the bus & rescan cycles the resource
-size keeps increasing when children_add_size is non-zero as can be seen
-from this extract:
-
-  iomem0:  23fffd00000-23fffdfffff : PCI Bus 0000:03    # 1MiB
-  iomem1:  20000000000-200001fffff : PCI Bus 0000:03    # 2MiB
-  iomem2:  20000000000-200002fffff : PCI Bus 0000:03    # 3MiB
-  iomem3:  20000000000-200003fffff : PCI Bus 0000:03    # 4MiB
-  iomem4:  20000000000-200004fffff : PCI Bus 0000:03    # 5MiB
-
-Solve the double counting by moving old_size check later in
-calculate_memsize() so that children_add_size is already accounted for.
-
-After the patch, the bridge window retains its size as expected:
-
-  iomem0:  23fffd00000-23fffdfffff : PCI Bus 0000:03    # 1MiB
-  iomem1:  20000000000-200000fffff : PCI Bus 0000:03    # 1MiB
-  iomem2:  20000000000-200000fffff : PCI Bus 0000:03    # 1MiB
-
-Fixes: a4ac9fea016f ("PCI : Calculate right add_size")
-Link: https://lore.kernel.org/r/20240507102523.57320-2-ilpo.jarvinen@linux.intel.com
-Tested-by: Lidong Wang <lidong.wang@intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/setup-bus.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext2/balloc.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index 909e6a7c3cc31..141d6b31959be 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -829,11 +829,9 @@ static resource_size_t calculate_memsize(resource_size_t size,
- 		size = min_size;
- 	if (old_size == 1)
- 		old_size = 0;
--	if (size < old_size)
--		size = old_size;
+--- a/fs/ext2/balloc.c
++++ b/fs/ext2/balloc.c
+@@ -77,26 +77,33 @@ static int ext2_valid_block_bitmap(struc
+ 	ext2_grpblk_t next_zero_bit;
+ 	ext2_fsblk_t bitmap_blk;
+ 	ext2_fsblk_t group_first_block;
++	ext2_grpblk_t max_bit;
  
--	size = ALIGN(max(size, add_size) + children_add_size, align);
--	return size;
-+	size = max(size, add_size) + children_add_size;
-+	return ALIGN(max(size, old_size), align);
- }
+ 	group_first_block = ext2_group_first_block_no(sb, block_group);
++	max_bit = ext2_group_last_block_no(sb, block_group) - group_first_block;
  
- resource_size_t __weak pcibios_window_alignment(struct pci_bus *bus,
--- 
-2.43.0
-
+ 	/* check whether block bitmap block number is set */
+ 	bitmap_blk = le32_to_cpu(desc->bg_block_bitmap);
+ 	offset = bitmap_blk - group_first_block;
+-	if (!ext2_test_bit(offset, bh->b_data))
++	if (offset < 0 || offset > max_bit ||
++	    !ext2_test_bit(offset, bh->b_data))
+ 		/* bad block bitmap */
+ 		goto err_out;
+ 
+ 	/* check whether the inode bitmap block number is set */
+ 	bitmap_blk = le32_to_cpu(desc->bg_inode_bitmap);
+ 	offset = bitmap_blk - group_first_block;
+-	if (!ext2_test_bit(offset, bh->b_data))
++	if (offset < 0 || offset > max_bit ||
++	    !ext2_test_bit(offset, bh->b_data))
+ 		/* bad block bitmap */
+ 		goto err_out;
+ 
+ 	/* check whether the inode table block number is set */
+ 	bitmap_blk = le32_to_cpu(desc->bg_inode_table);
+ 	offset = bitmap_blk - group_first_block;
++	if (offset < 0 || offset > max_bit ||
++	    offset + EXT2_SB(sb)->s_itb_per_group - 1 > max_bit)
++		goto err_out;
+ 	next_zero_bit = ext2_find_next_zero_bit(bh->b_data,
+ 				offset + EXT2_SB(sb)->s_itb_per_group,
+ 				offset);
 
 
