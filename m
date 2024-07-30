@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA661A6185;
-	Tue, 30 Jul 2024 16:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0357E184556;
+	Tue, 30 Jul 2024 16:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356217; cv=none; b=puBW4pMsrVlg0x4yuxHqygQbPpGxHjqJdY9laXvPxbxTYp4Ze3mBhvvcMyMbx/yC6uUtCKNnzQ8maDTFCALJgur70ow7I6Bzf6vHXtnzNTJdBMQwHBSlV4Mzx8p9YXN4U7X5ULYPphNlPmKwx/OMhd0YRaRH9gvcjeMXCnhVHfU=
+	t=1722356221; cv=none; b=fuoUvGZ9D8tM1cA+NBjykmTNBv/wObRx1+EV5aEitl77SQjjF31C6e08H3iGd3qIPMzPJiDdCJdtSCzfTd9LjWpMn3vKgt37Qy5s82UaT15OofwRSvGwFOcWTgBQAOllKJ4uby/ZCvJTWbagoyEGt6+mmi+8trc4qbkSIpyhNdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356217; c=relaxed/simple;
-	bh=U/rC/4lXNAZDIvDifp0YyC7SMphll2XjdbheYgdpSAE=;
+	s=arc-20240116; t=1722356221; c=relaxed/simple;
+	bh=0o8f3YYG5o4Oq5HZsKAozNn5VyvEzrW2RG12XAIuuqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faiNvJ0RUX6cOiWWfiTIiCJUvEaMGvfNu/nOFZZmwgLT1kHy5KTVrBYSwPh/cIgnD779vuQSqMjeDu6cP/cik7xfbuHQv9g00hiGcHgSuSJSP00b5pfGGMSmHqj7ugKx8ntCS0oNCVKKEwkA6s+upD8poZ9YIPxnFxOOha25t1Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWVuefj8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AkmtcRwsZIA5PYom7EvLuGpzwIh571FfUZLPNGMNyw/E4v9q8Byo1eMeYxCpnBp3lSJ6P8SjwHMHGDMRe5+8N39Gesv0cXIqHbjvWd5daOcYVizIAGFprmj0gqFylm4H+CPmvSeV5tCiJorulblADS+vXwRp3nUC1d4RQVXN468=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IgoUtLad; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWVuefj8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B9DC32782;
-	Tue, 30 Jul 2024 16:16:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IgoUtLad"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1885AC4AF0C;
+	Tue, 30 Jul 2024 16:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356217;
-	bh=U/rC/4lXNAZDIvDifp0YyC7SMphll2XjdbheYgdpSAE=;
+	s=korg; t=1722356220;
+	bh=0o8f3YYG5o4Oq5HZsKAozNn5VyvEzrW2RG12XAIuuqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWVuefj8Vr0tOmmVnPJrYHnh2ZaEsyzd94CMs76J/+KnK7dyNe61wQ9P5Q4LNX1fg
-	 YA7c1uA3lvxyVCmjakqCLG7J5sFr02qauPOxYpHs+opabzviY4xqkDAS9dgYKIiDHN
-	 awetcsrr886QIs1jRt+fZMEMjrwQ7pjsvUmlBOvw=
+	b=IgoUtLadBBRpkfDRJIyNAPgWzkEPQe60NcoG7bzpkNkvRbrSoXHJjg2ne4SlCSVW3
+	 xkgYPgm0JPlaFJ+vGhSKg7KKSBnhoEVBTVGGMD7UH1iF9tTY2SKZy5yH3FclRU78Ay
+	 CtV2wKaSEjpZFtWFaYSfAcDRxGGQ06HZskqYYek8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
+	Wen Gu <guwen@linux.alibaba.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 130/809] arm64: dts: rockchip: Add missing power-domains for rk356x vop_mmu
-Date: Tue, 30 Jul 2024 17:40:06 +0200
-Message-ID: <20240730151729.750927964@linuxfoundation.org>
+Subject: [PATCH 6.6 125/568] net/smc: set rmbs SG_MAX_SINGLE_ALLOC limitation only when CONFIG_ARCH_NO_SG_CHAIN is defined
+Date: Tue, 30 Jul 2024 17:43:52 +0200
+Message-ID: <20240730151644.759063188@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,45 +48,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
 
-[ Upstream commit 9d42c3ee3ce37cdad6f98c9e77bfbd0d791ac7da ]
+[ Upstream commit 3ac14b9dfbd345e891d48d89f6c2fa519848f0f4 ]
 
-The iommu@fe043e00 on RK356x SoC shares the VOP power domain, but the
-power-domains property was not provided when the node has been added.
+SG_MAX_SINGLE_ALLOC is used to limit maximum number of entries that
+will be allocated in one piece of scatterlist. When the entries of
+scatterlist exceeds SG_MAX_SINGLE_ALLOC, sg chain will be used. From
+commit 7c703e54cc71 ("arch: switch the default on ARCH_HAS_SG_CHAIN"),
+we can know that the macro CONFIG_ARCH_NO_SG_CHAIN is used to identify
+whether sg chain is supported. So, SMC-R's rmb buffer should be limited
+by SG_MAX_SINGLE_ALLOC only when the macro CONFIG_ARCH_NO_SG_CHAIN is
+defined.
 
-The consequence is that an attempt to reload the rockchipdrm module will
-freeze the entire system.  That is because on probe time,
-pm_runtime_get_suppliers() gets called for vop@fe040000, which blocks
-when pm_runtime_get_sync() is being invoked for iommu@fe043e00.
-
-Fix the issue by adding the missing property.
-
-Fixes: 9d6c6d978f97 ("arm64: dts: rockchip: rk356x: Add VOP2 nodes")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20240702-rk356x-fix-vop-mmu-v1-1-a66d1a0c45ea@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: a3fe3d01bd0d ("net/smc: introduce sg-logic for RMBs")
+Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+Co-developed-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk356x.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ net/smc/smc_core.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-index d8543b5557ee7..3e2a8bfcafeaa 100644
---- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -790,6 +790,7 @@ vop_mmu: iommu@fe043e00 {
- 		clocks = <&cru ACLK_VOP>, <&cru HCLK_VOP>;
- 		clock-names = "aclk", "iface";
- 		#iommu-cells = <0>;
-+		power-domains = <&power RK3568_PD_VO>;
- 		status = "disabled";
- 	};
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index d520ee62c8ecd..f99bb9d0adcc6 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1974,7 +1974,6 @@ int smc_conn_create(struct smc_sock *smc, struct smc_init_info *ini)
+  */
+ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
+ {
+-	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
+ 	u8 compressed;
  
+ 	if (size <= SMC_BUF_MIN_SIZE)
+@@ -1984,9 +1983,11 @@ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
+ 	compressed = min_t(u8, ilog2(size) + 1,
+ 			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
+ 
++#ifdef CONFIG_ARCH_NO_SG_CHAIN
+ 	if (!is_smcd && is_rmb)
+ 		/* RMBs are backed by & limited to max size of scatterlists */
+-		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
++		compressed = min_t(u8, compressed, ilog2((SG_MAX_SINGLE_ALLOC * PAGE_SIZE) >> 14));
++#endif
+ 
+ 	return compressed;
+ }
 -- 
 2.43.0
 
