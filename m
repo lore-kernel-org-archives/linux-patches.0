@@ -1,46 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986EB18454A;
-	Tue, 30 Jul 2024 17:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24BE18454A;
+	Tue, 30 Jul 2024 17:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359696; cv=none; b=ksmcsWt1Ylr4IsXnylqeCrlMouINavwdJXq1rQlyCvKfJrn87HWPSwG9lJNfYSSIQGWIMrU69EyAlv0YOTmjvb3roMSAtnpL9Wrf36oBYHqm7cGcDv+5BggHQwadEhR3veVllhQ0weO7W0HfYdlZnRvwGaOQfyNpHhpIvnH4BVo=
+	t=1722359699; cv=none; b=GDM0vpmGd3Du2q49lx6L7XZz/Eog3EysgrdfOOLYeKP/BqFl+dYmNF4CIcxYZKwfbvDoPSiuhxSIc9m6pp5StrMsXSxw9ZI+H1eOJLz1oPut6XAhnNjIdgOnU7HA50dmYCGHVqV74+tsF8qSPdpVApLAzk1bUTmq9LLW5FbERkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359696; c=relaxed/simple;
-	bh=QbehZqxMiyZ+4u6EQ5KtmcqhSIDXxpXXmeAySNc3zD8=;
+	s=arc-20240116; t=1722359699; c=relaxed/simple;
+	bh=92sXEXjpVGpTutLx/DWQ+GF2uIMM+u9q2T7zhtGHISg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IcMVACb1U8mM4W5srEmBsJBP/klGPOlfd8D9CQwdOAWG74KrdKXByuxPbsnrf0iMjiSmDmD0RicxLPr4LiJHfXY9pVLu1Dipte6G3W47IuDImk8IpwV4ncS6CnRFt+Mjzcef6Tw4MUlLNaqgVwAF1ypWjNHmDJpiOZB3S/fsAHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKIzCOSJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cz8Su0Pa+iPQyVN5nHfqpCqQbzvfeRD4b6SFKr8SYdu7by4ocqfom0lAoIRM1vet4iFVosmQ3k6prsbWc0NCnbEcjwbGQ3i/wgwVCO0qrudM9qj32p5n1D/W/l0c2KZKnLfyh/6/V6JP7OnbVRLx2zmr2g/gbiH9qx+8gg4UPtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nOf5/7KQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKIzCOSJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDB3C32782;
-	Tue, 30 Jul 2024 17:14:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nOf5/7KQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E7EAC32782;
+	Tue, 30 Jul 2024 17:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359696;
-	bh=QbehZqxMiyZ+4u6EQ5KtmcqhSIDXxpXXmeAySNc3zD8=;
+	s=korg; t=1722359699;
+	bh=92sXEXjpVGpTutLx/DWQ+GF2uIMM+u9q2T7zhtGHISg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKIzCOSJbqKAt0seujUkSS1ZvJ4q6zbresgKWnx5CmZJuzEeHVT+9Z8uEsvJSCUeI
-	 FKpBIteoaGBRFi4QY/TQOuDsQcwHSdl0G3SR4Hs6wi81XfuT/STJbJCpvU/DTFD+ab
-	 YDaPMkcNKgOP/pvWDqxG0LfqQkbC70sc7PMNkIDc=
+	b=nOf5/7KQmdQBiSkj2BbvYxYEg7oVMqBNaAwDmgKQOQ1zsG5mK/0vo5nl/+FpL4VdX
+	 fjDVnLZborvwV8mQwKumVoNW75MHIoOW0f/nHspL5VoJTgyokbmXhnZh0TAu70+qEf
+	 nAr6wm8JAwzabhJ85wLdhoNBSr0u8Cl9rHVRVMbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Suren Baghdasaryan <surenb@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Kent Overstreet <kent.overstreet@linux.dev>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Sourav Panda <souravpanda@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Sheng Yong <shengyong@oppo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 520/809] lib: add missing newline character in the warning message
-Date: Tue, 30 Jul 2024 17:46:36 +0200
-Message-ID: <20240730151745.277909285@linuxfoundation.org>
+Subject: [PATCH 6.6 524/568] f2fs: fix start segno of large section
+Date: Tue, 30 Jul 2024 17:50:31 +0200
+Message-ID: <20240730151700.641628793@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,41 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suren Baghdasaryan <surenb@google.com>
+From: Sheng Yong <shengyong@oppo.com>
 
-[ Upstream commit 4810a82c8a8ae06fe6496a23fcb89a4952603e60 ]
+[ Upstream commit 8c409989678e92e4a737e7cd2bb04f3efb81071a ]
 
-Link: https://lkml.kernel.org/r/20240711220457.1751071-1-surenb@google.com
-Fixes: 22d407b164ff ("lib: add allocation tagging support for memory allocation profiling")
-Signed-off-by: Suren Baghdasaryan <surenb@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Kent Overstreet <kent.overstreet@linux.dev>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
-Cc: Sourav Panda <souravpanda@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+get_ckpt_valid_blocks() checks valid ckpt blocks in current section.
+It counts all vblocks from the first to the last segment in the
+large section. However, START_SEGNO() is used to get the first segno
+in an SIT block. This patch fixes that to get the correct start segno.
+
+Fixes: 61461fc921b7 ("f2fs: fix to avoid touching checkpointed data in get_victim()")
+Signed-off-by: Sheng Yong <shengyong@oppo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/alloc_tag.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/segment.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/alloc_tag.h b/include/linux/alloc_tag.h
-index abd24016a900e..8c61ccd161ba3 100644
---- a/include/linux/alloc_tag.h
-+++ b/include/linux/alloc_tag.h
-@@ -122,7 +122,7 @@ static inline void alloc_tag_add_check(union codetag_ref *ref, struct alloc_tag
- 		  "alloc_tag was not cleared (got tag for %s:%u)\n",
- 		  ref->ct->filename, ref->ct->lineno);
+diff --git a/fs/f2fs/segment.h b/fs/f2fs/segment.h
+index 4595f1cc03828..952970166d5da 100644
+--- a/fs/f2fs/segment.h
++++ b/fs/f2fs/segment.h
+@@ -348,7 +348,8 @@ static inline unsigned int get_ckpt_valid_blocks(struct f2fs_sb_info *sbi,
+ 				unsigned int segno, bool use_section)
+ {
+ 	if (use_section && __is_large_section(sbi)) {
+-		unsigned int start_segno = START_SEGNO(segno);
++		unsigned int secno = GET_SEC_FROM_SEG(sbi, segno);
++		unsigned int start_segno = GET_SEG_FROM_SEC(sbi, secno);
+ 		unsigned int blocks = 0;
+ 		int i;
  
--	WARN_ONCE(!tag, "current->alloc_tag not set");
-+	WARN_ONCE(!tag, "current->alloc_tag not set\n");
- }
- 
- static inline void alloc_tag_sub_check(union codetag_ref *ref)
 -- 
 2.43.0
 
