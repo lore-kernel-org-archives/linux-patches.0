@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7EA17D8BB;
-	Tue, 30 Jul 2024 16:58:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CFE17D8BB;
+	Tue, 30 Jul 2024 16:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358696; cv=none; b=g7M0qbaZbKPY8iwWwEsf/jCcRCjkKlUAdKjogqYOV1E/912My6qv4e12ZMuSh25MA3y+faCUbNQO7O0zIDpLLz++LcvYXux5htzYx3j0BUuAXez9gLifASx/e6Jl7rdChpNx0IN3jHwLNm/hptyngrGf5M/jkXUmOXLDcc7Zy+k=
+	t=1722358699; cv=none; b=rsbV241wYHjV4GkY87oSdcT6IFxHGWrcFR8LmVl7WyDOgWvmAi1vJCzW6fF6rgrdVcYLdXBkPi+OMKSUCeG78xHvEr6+tsxqZpjRkV/dm6CWCqwkUHjl9H05fo7f1yTPLgPj8is5ZTO+zs1JiSrNGa1oTUGuGceDg4EEyKVyUFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358696; c=relaxed/simple;
-	bh=FyD7X8hBX0ceG1wPfYbyr8QYkqJ1oujULrbDyhRXnhs=;
+	s=arc-20240116; t=1722358699; c=relaxed/simple;
+	bh=YAo7b+fRwhWm51AydGnoaIRkM0kPPQ/1eiTLv8wmq/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ibvuua94hKaechJk/L5n6UTWxCMDyycfR8SHMmrzJoyhOFtzaKMULPqphEUayyUl/H8FpBevTGwaSfoOcCDmPINq3mhXWhMm20WlrTe7Sh61KV0KDYeTa9P7qdAMkzYsvKXL4479PQAr0qgiAdcPWr038L6ClUcVTuTuwvcoHCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHzrcMbr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rRMw0K8saA5+Y3NT3BOd40+oZJJUqlGXs7+PpRdLAKvWUF8ARy5F6qdWlkAlM2y5QrOvRsCqWWWjKSftLtUYhEgpHzNO0odHlRHxgvxttGGmaIqQ6O4IiimXMkM//JjM1h8Tg4TGhcJbC3Uo9Mm1VrgObqooJ1pYt+tC+iPsHUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WAc6r4ox; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHzrcMbr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B17C32782;
-	Tue, 30 Jul 2024 16:58:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WAc6r4ox"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD7C7C32782;
+	Tue, 30 Jul 2024 16:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358695;
-	bh=FyD7X8hBX0ceG1wPfYbyr8QYkqJ1oujULrbDyhRXnhs=;
+	s=korg; t=1722358699;
+	bh=YAo7b+fRwhWm51AydGnoaIRkM0kPPQ/1eiTLv8wmq/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHzrcMbromsXwM8WSPOSylYT1qC9ib1Xhp6b0WBtVpzgmz3JvbmA4Pp++YCJjLbV1
-	 LSM9Vb+CpKRVA6gorFnNPxjz3lU0Z85DY54Kz2apvszi5fDYubjoMOQMsZDvs9YfiA
-	 VagS/ByJBAy5F8KEwQ77ajhicub8Qh6/eWMfNqxE=
+	b=WAc6r4ox8Frpee/AJfqkdX11ltOUYcjwPSV3Dko9OTBeqhE4R/wy30sWWIUA6DBCE
+	 9sd0OAOU6TRuRf5TDYGWRR6eZnbUaDuTJa0mddAr17q1KaKoAx9U0RJqk9iIYAOZqZ
+	 8CW0c4+ZCAFLHxolxY96NyWhK6v9CK3wv0BP3iQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Tung Nguyen <tung.q.nguyen@endava.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Marek Vasut <marek.vasut+renesas@mailbox.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 414/440] tipc: Return non-zero value from tipc_udp_addr2str() on error
-Date: Tue, 30 Jul 2024 17:50:47 +0200
-Message-ID: <20240730151631.960892526@linuxfoundation.org>
+Subject: [PATCH 6.10 386/809] PCI: rcar: Demote WARN() to dev_warn_ratelimited() in rcar_pcie_wakeup()
+Date: Tue, 30 Jul 2024 17:44:22 +0200
+Message-ID: <20240730151739.916269693@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,46 +46,77 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Marek Vasut <marek.vasut+renesas@mailbox.org>
 
-[ Upstream commit fa96c6baef1b5385e2f0c0677b32b3839e716076 ]
+[ Upstream commit c93637e6a4c4e1d0e85ef7efac78d066bbb24d96 ]
 
-tipc_udp_addr2str() should return non-zero value if the UDP media
-address is invalid. Otherwise, a buffer overflow access can occur in
-tipc_media_addr_printf(). Fix this by returning 1 on an invalid UDP
-media address.
+Avoid large backtrace, it is sufficient to warn the user that there has
+been a link problem. Either the link has failed and the system is in need
+of maintenance, or the link continues to work and user has been informed.
+The message from the warning can be looked up in the sources.
 
-Fixes: d0f91938bede ("tipc: add ip/udp media type")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@endava.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This makes an actual link issue less verbose.
+
+First of all, this controller has a limitation in that the controller
+driver has to assist the hardware with transition to L1 link state by
+writing L1IATN to PMCTRL register, the L1 and L0 link state switching
+is not fully automatic on this controller.
+
+In case of an ASMedia ASM1062 PCIe SATA controller which does not support
+ASPM, on entry to suspend or during platform pm_test, the SATA controller
+enters D3hot state and the link enters L1 state. If the SATA controller
+wakes up before rcar_pcie_wakeup() was called and returns to D0, the link
+returns to L0 before the controller driver even started its transition to
+L1 link state. At this point, the SATA controller did send an PM_ENTER_L1
+DLLP to the PCIe controller and the PCIe controller received it, and the
+PCIe controller did set PMSR PMEL1RX bit.
+
+Once rcar_pcie_wakeup() is called, if the link is already back in L0 state
+and PMEL1RX bit is set, the controller driver has no way to determine if
+it should perform the link transition to L1 state, or treat the link as if
+it is in L0 state. Currently the driver attempts to perform the transition
+to L1 link state unconditionally, which in this specific case fails with a
+PMSR L1FAEG poll timeout, however the link still works as it is already
+back in L0 state.
+
+Reduce this warning verbosity. In case the link is really broken, the
+rcar_pcie_config_access() would fail, otherwise it will succeed and any
+system with this controller and ASM1062 can suspend without generating
+a backtrace.
+
+Fixes: 84b576146294 ("PCI: rcar: Finish transition to L1 state in rcar_pcie_config_access()")
+Link: https://lore.kernel.org/linux-pci/20240511235513.77301-1-marek.vasut+renesas@mailbox.org
+Signed-off-by: Marek Vasut <marek.vasut+renesas@mailbox.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/udp_media.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pcie-rcar-host.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 0a85244fd6188..73e461dc12d7b 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -135,8 +135,11 @@ static int tipc_udp_addr2str(struct tipc_media_addr *a, char *buf, int size)
- 		snprintf(buf, size, "%pI4:%u", &ua->ipv4, ntohs(ua->port));
- 	else if (ntohs(ua->proto) == ETH_P_IPV6)
- 		snprintf(buf, size, "%pI6:%u", &ua->ipv6, ntohs(ua->port));
--	else
-+	else {
- 		pr_err("Invalid UDP media address\n");
-+		return 1;
-+	}
-+
- 	return 0;
- }
+diff --git a/drivers/pci/controller/pcie-rcar-host.c b/drivers/pci/controller/pcie-rcar-host.c
+index 996077ab7cfdb..c01efc6ea64f6 100644
+--- a/drivers/pci/controller/pcie-rcar-host.c
++++ b/drivers/pci/controller/pcie-rcar-host.c
+@@ -78,7 +78,11 @@ static int rcar_pcie_wakeup(struct device *pcie_dev, void __iomem *pcie_base)
+ 		writel(L1IATN, pcie_base + PMCTLR);
+ 		ret = readl_poll_timeout_atomic(pcie_base + PMSR, val,
+ 						val & L1FAEG, 10, 1000);
+-		WARN(ret, "Timeout waiting for L1 link state, ret=%d\n", ret);
++		if (ret) {
++			dev_warn_ratelimited(pcie_dev,
++					     "Timeout waiting for L1 link state, ret=%d\n",
++					     ret);
++		}
+ 		writel(L1FAEG | PMEL1RX, pcie_base + PMSR);
+ 	}
  
 -- 
 2.43.0
