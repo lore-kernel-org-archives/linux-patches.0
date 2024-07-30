@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2C81A76A0;
-	Tue, 30 Jul 2024 17:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4027B1A76A0;
+	Tue, 30 Jul 2024 17:14:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359645; cv=none; b=HNrbPFchl7m/dMNRprGIVbOiFi7KgjNKg3FZ+9t2UiRMDWTZvXGOl5ZNbmE0+PBNr4+3JTAd7B6A4xd4Z5a+cKBdkHIpFS6igUy1xFXaT0JWWWTbeQrp2on4W0QCOocpNTCzyGELpQl71FcBKMivHm87MIrqRyQPZy7dF4l+Lzk=
+	t=1722359648; cv=none; b=mtxWtfRHGBw2/REupVUr0zWh9/zvzh6mGm8NAukkqZ/QBKxXd/9NkAo1ANq+/Gj2/xMWAzZz7RT4S6wIAPtwp6VjpkW1EmBcoXrv2M1yiRJvsISU4HBXixLoDZyyiUzCna0LKVCC9frD4wHBJRUWbdNj9Vz5V6EkYNuyrKeupV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359645; c=relaxed/simple;
-	bh=ihFYMsB0B1r6dqLQlzQ4eS6OGzOcb5PFccruKORcJDg=;
+	s=arc-20240116; t=1722359648; c=relaxed/simple;
+	bh=LCnxEwuqI/Soy44809sz3phrMGdJuM3SLMBgjAAeGhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XDupRRxE7pxIaXP3OBydmrKF7mD8ykZixGutFlbAKashpWWpdwXTPi4WqF0/B7RKdfhHvf/7DUWJHdd6IHwICaKL7+nWNSbBJb2vXop0CHpmen59qJY3rirTS18MPJr7Ug8+KXc6uW7QpaX68EIHeIjXbQspEX95b/fwtpfmDOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QKeowjyT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ApNGSgV1r1vQLDuKb7B5ndwWcai2thXZqeudSWQhJsZWPsYtgq3ZDi6KfttOOEoyd+IRjy5Vyi9PwRUMoDSJmPBQ8B0Ja8jqkyAKaOv59uZIgcXwPvAAXWP6a6O8uG/Aw2NU6dCW5ZcizCP66J4s0VcIw6RKrMjNdhOajN9zQ9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBMK6Nzm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QKeowjyT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C90DC32782;
-	Tue, 30 Jul 2024 17:14:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBMK6Nzm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B8FC32782;
+	Tue, 30 Jul 2024 17:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359645;
-	bh=ihFYMsB0B1r6dqLQlzQ4eS6OGzOcb5PFccruKORcJDg=;
+	s=korg; t=1722359648;
+	bh=LCnxEwuqI/Soy44809sz3phrMGdJuM3SLMBgjAAeGhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKeowjyTB4BWtFYCOqwKhVLRCmWY/IlejudH1KVRYbABhcb1p6dyRVKeagBykVKfl
-	 H2ZOO3jh/t2DHob2TJmiSHkjlFQzk9iw8kJ5zaSOaTwFE79Ian+afsSjuyNqZWOg6W
-	 cghB22Gr23hCJc2TAZgUrzkKOdKAKUPcDOfaUvuw=
+	b=IBMK6Nzm9bgD95rasBAMZQUy+sEyxl6ClEZbbElmSfNqCzlCVDOoYif405tUMlv4D
+	 HTWNpXEDZOGeKi7/QzkR8B6jVD2WGqGc5WdGgPDEQHfksc6FnBCBH6t0R4FcfOvGLl
+	 B8LdloBM/Ftre0daHy075CSutpadokANNRtVkFqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Yashin <dmt.yashin@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 490/809] pinctrl: rockchip: update rk3308 iomux routes
-Date: Tue, 30 Jul 2024 17:46:06 +0200
-Message-ID: <20240730151744.091974008@linuxfoundation.org>
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.6 491/568] remoteproc: imx_rproc: Skip over memory region when node value is NULL
+Date: Tue, 30 Jul 2024 17:49:58 +0200
+Message-ID: <20240730151659.221145974@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,64 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Yashin <dmt.yashin@gmail.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit a8f2548548584549ea29d43431781d67c4afa42b ]
+commit 2fa26ca8b786888673689ccc9da6094150939982 upstream.
 
-Some of the rk3308 iomux routes in rk3308_mux_route_data belong to
-the rk3308b SoC. Remove them and correct i2c3 routes.
+In imx_rproc_addr_init() "nph = of_count_phandle_with_args()" just counts
+number of phandles. But phandles may be empty. So of_parse_phandle() in
+the parsing loop (0 < a < nph) may return NULL which is later dereferenced.
+Adjust this issue by adding NULL-return check.
 
-Fixes: 7825aeb7b208 ("pinctrl: rockchip: add rk3308 SoC support")
-Signed-off-by: Dmitry Yashin <dmt.yashin@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20240515121634.23945-2-dmt.yashin@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240606075204.12354-1-amishin@t-argos.ru
+[Fixed title to fit within the prescribed 70-75 charcters]
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/remoteproc/imx_rproc.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index 3f56991f5b892..6a74619786300 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -915,9 +915,8 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(0, RK_PC3, 1, 0x314, BIT(16 + 0) | BIT(0)), /* rtc_clk */
- 	RK_MUXROUTE_SAME(1, RK_PC6, 2, 0x314, BIT(16 + 2) | BIT(16 + 3)), /* uart2_rxm0 */
- 	RK_MUXROUTE_SAME(4, RK_PD2, 2, 0x314, BIT(16 + 2) | BIT(16 + 3) | BIT(2)), /* uart2_rxm1 */
--	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x608, BIT(16 + 8) | BIT(16 + 9)), /* i2c3_sdam0 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(8)), /* i2c3_sdam1 */
--	RK_MUXROUTE_SAME(2, RK_PA0, 3, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(9)), /* i2c3_sdam2 */
-+	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x314, BIT(16 + 4)), /* i2c3_sdam0 */
-+	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x314, BIT(16 + 4) | BIT(4)), /* i2c3_sdam1 */
- 	RK_MUXROUTE_SAME(1, RK_PA3, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclktxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PA4, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclkrxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x308, BIT(16 + 3) | BIT(3)), /* i2s-8ch-1-sclktxm1 */
-@@ -926,18 +925,6 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(1, RK_PB6, 4, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* pdm-clkm1 */
- 	RK_MUXROUTE_SAME(2, RK_PA6, 2, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* pdm-clkm2 */
- 	RK_MUXROUTE_SAME(2, RK_PA4, 3, 0x600, BIT(16 + 2) | BIT(2)), /* pdm-clkm-m2 */
--	RK_MUXROUTE_SAME(3, RK_PB2, 3, 0x314, BIT(16 + 9)), /* spi1_miso */
--	RK_MUXROUTE_SAME(2, RK_PA4, 2, 0x314, BIT(16 + 9) | BIT(9)), /* spi1_miso_m1 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 3, 0x314, BIT(16 + 10) | BIT(16 + 11)), /* owire_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 7, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(10)), /* owire_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 5, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(11)), /* owire_m2 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 2, 0x314, BIT(16 + 12) | BIT(16 + 13)), /* can_rxd_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 5, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* can_rxd_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 4, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* can_rxd_m2 */
--	RK_MUXROUTE_SAME(1, RK_PC4, 3, 0x314, BIT(16 + 14)), /* mac_rxd0_m0 */
--	RK_MUXROUTE_SAME(4, RK_PA2, 2, 0x314, BIT(16 + 14) | BIT(14)), /* mac_rxd0_m1 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 4, 0x314, BIT(16 + 15)), /* uart3_rx */
--	RK_MUXROUTE_SAME(0, RK_PC1, 3, 0x314, BIT(16 + 15) | BIT(15)), /* uart3_rx_m1 */
- };
+--- a/drivers/remoteproc/imx_rproc.c
++++ b/drivers/remoteproc/imx_rproc.c
+@@ -729,6 +729,8 @@ static int imx_rproc_addr_init(struct im
+ 		struct resource res;
  
- static struct rockchip_mux_route_data rk3328_mux_route_data[] = {
--- 
-2.43.0
-
+ 		node = of_parse_phandle(np, "memory-region", a);
++		if (!node)
++			continue;
+ 		/* Not map vdevbuffer, vdevring region */
+ 		if (!strncmp(node->name, "vdev", strlen("vdev"))) {
+ 			of_node_put(node);
 
 
