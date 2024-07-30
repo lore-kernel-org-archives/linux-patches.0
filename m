@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAADD1A6191;
-	Tue, 30 Jul 2024 16:17:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD221A616E;
+	Tue, 30 Jul 2024 16:17:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356230; cv=none; b=smpUg/VutgRN69E54d045CYcxpe+OeT/WbC2yXWN9Qr9nycdXDHszH3PZvmE5S7Fo9aSIUNpOfvQuupMethPN+kTbYy/fAjRkJnNQdCpDm1QsAkhdPT+dtl5G/Ft62Fhfs+hwHhdwET+T4V3m55YR8IFAIT0Ckdmas17hdx6Xgg=
+	t=1722356233; cv=none; b=EuTdvdxDO56Jgm3AM9vddCJdFgMa2WFlQmvg2uDWpKv5x3DTxwH4ws8hR0MCgSJY4VgTVcMTyDLVIy9LsXRGA8PmOj8F7IOR+fidvReD4ea6iAv7XdCWGsbsxscWcZ4Wf2okDG5Vk8Ujx6yuroPJH4qccmIH8Kj/F0ujB/q6JUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356230; c=relaxed/simple;
-	bh=K2o/ZHXy994IGLZq7/Pv+ojkyC1MEQ3Iw3D7oQVq3aQ=;
+	s=arc-20240116; t=1722356233; c=relaxed/simple;
+	bh=032EvW4DNicSBoASSpjYIK3/xUhWPEzNfTn6wIW8UH0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VMa3GvoyLFJxciQ2vev8W8Qid6hJkjcqK5Z0qcc6+PWNBrAEJWrhRpqHJQ+Jbu1JfgX+9DwWmL6/fEAhQk6ZgPIcBMMCb8om09ZHtdClvDXbRD1OtDcB64qBlxVPHycuGeLheMx5y0B6F+65dWQioLKNdHMNc/k0u0tpDh/vptQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSyUW4qZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rE7zi5U8O6bjvJTE915a+EpCk7c00/c7Pp0Y5Ui7oTYCD3qR0WlR14IsWtRo56tr3FilDDhCX/caOX6kIEVFbQGbHIgDHT3T7XS9/JGm4fyWu3KXojZAwkkgrJsbRy83pG35/zme7BZjel87/gd+4TgMlMveTrbOiDcDYqGpnlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bd5/myog; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSyUW4qZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D495C32782;
-	Tue, 30 Jul 2024 16:17:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bd5/myog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E37C32782;
+	Tue, 30 Jul 2024 16:17:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356230;
-	bh=K2o/ZHXy994IGLZq7/Pv+ojkyC1MEQ3Iw3D7oQVq3aQ=;
+	s=korg; t=1722356233;
+	bh=032EvW4DNicSBoASSpjYIK3/xUhWPEzNfTn6wIW8UH0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lSyUW4qZeZpDq3nmtmhX6610hO7tWG+qNoq48bgPL4t79YHHrQq0mCWTwQNQvDgSz
-	 1McpeEvy/oAHmxGgzoeZOLz6j+KvCfTOXu22wYuXg7izgik5OzEaf6kAZK5bGv590i
-	 ncL88EtbOd0zbO7fzKC5BHnnUGNFtzCkpXUHN49M=
+	b=Bd5/myogGiGkWRa5FkA8AcMKhDsw7PAfNT97VUsK2e+UyNcNOj3+8YPkAqdZlFV0y
+	 M5/Q1dPxNygSJkKZocX6E4dYeqnu1ebIOJdv7fdpmPnYr+qdaKPScdHN6aZVBNt3Oa
+	 TwdNCTtBHEkDswt1pvTYyeqKUrlbqAmqor2fI5Uo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Geliang Tang <tanggeliang@kylinos.cn>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 131/809] arm64: dts: rockchip: fix regulator name for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:40:07 +0200
-Message-ID: <20240730151729.790299130@linuxfoundation.org>
+Subject: [PATCH 6.6 126/568] selftests/bpf: Check length of recv in test_sockmap
+Date: Tue, 30 Jul 2024 17:43:53 +0200
+Message-ID: <20240730151644.797663933@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,59 +49,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Geliang Tang <tanggeliang@kylinos.cn>
 
-[ Upstream commit 2dad31528de9ea8b05245ce6ac4f76ebf8dae947 ]
+[ Upstream commit de1b5ea789dc28066cc8dc634b6825bd6148f38b ]
 
-Make the regulator name the same as those marked by schematics.
+The value of recv in msg_loop may be negative, like EWOULDBLOCK, so it's
+necessary to check if it is positive before accumulating it to bytes_recvd.
 
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240630150010.55729-2-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 16962b2404ac ("bpf: sockmap, add selftests")
+Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/bpf/5172563f7c7b2a2e953cef02e89fc34664a7b190.1716446893.git.tanggeliang@kylinos.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/testing/selftests/bpf/test_sockmap.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index 89e84e3a92629..93987c8740f7b 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -39,9 +39,9 @@ status_led: led-status {
- 		};
- 	};
+diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
+index e32e49a3eec2c..a181c0ccf98b2 100644
+--- a/tools/testing/selftests/bpf/test_sockmap.c
++++ b/tools/testing/selftests/bpf/test_sockmap.c
+@@ -680,7 +680,8 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
+ 				}
+ 			}
  
--	dc_12v: dc-12v-regulator {
-+	vcc12v_dcin: vcc12v-dcin-regulator {
- 		compatible = "regulator-fixed";
--		regulator-name = "dc_12v";
-+		regulator-name = "vcc12v_dcin";
- 		regulator-always-on;
- 		regulator-boot-on;
- 		regulator-min-microvolt = <12000000>;
-@@ -65,7 +65,7 @@ vcc3v3_sys: vcc3v3-sys-regulator {
- 		regulator-boot-on;
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
--		vin-supply = <&dc_12v>;
-+		vin-supply = <&vcc12v_dcin>;
- 	};
+-			s->bytes_recvd += recv;
++			if (recv > 0)
++				s->bytes_recvd += recv;
  
- 	vcc5v0_sys: vcc5v0-sys-regulator {
-@@ -75,7 +75,7 @@ vcc5v0_sys: vcc5v0-sys-regulator {
- 		regulator-boot-on;
- 		regulator-min-microvolt = <5000000>;
- 		regulator-max-microvolt = <5000000>;
--		vin-supply = <&dc_12v>;
-+		vin-supply = <&vcc12v_dcin>;
- 	};
- 
- 	vcc5v0_usb_host: vcc5v0-usb-host-regulator {
+ 			if (opt->check_recved_len && s->bytes_recvd > total_bytes) {
+ 				errno = EMSGSIZE;
 -- 
 2.43.0
 
