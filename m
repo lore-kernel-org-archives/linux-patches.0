@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5208F1917D9;
-	Tue, 30 Jul 2024 17:09:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FEA192B81;
+	Tue, 30 Jul 2024 17:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359365; cv=none; b=mhy9iFEqH7xfVNnDoPO4tQ8vrhGWRk7s1yAyUvSIiScVvgSUSh02mmMs8cyo06/zaymOB97n4Ppc9IEjCi/bUpXKRGwWBt6/G0F3yONcaujvw7wg6z1FW0dVjqHEusvpmBrcnAV+J0Vk7D488LKwbbaT7oHFiFSA714ACmkxbGw=
+	t=1722359368; cv=none; b=lY+SRW7DNNDn+WoGkb+jwr0eXkcY+KzKMTBJNyQqyJSWflWwpcvn9SEqWIukvn0zKYWi664QG38UBvw3WX1BoUgwKwE4ZfQA3rMFAMrhcsZRgMsahubr8hKdMo0gIfmW9e0k3MxVtJL+vHUvgaoRdIA83EbipA6w/3vltzqSHwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359365; c=relaxed/simple;
-	bh=bB9ciEkVdTOl5/4x/Y32qDeRhqU4gqgBWTcWlm/Iqw8=;
+	s=arc-20240116; t=1722359368; c=relaxed/simple;
+	bh=lusMuYexaR2yZemaSBlgQjkkvmg/yLitTZmLygIG7vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aj2Y7CkqO5lkbWpLUtJ4GU1vhALXmoLDGfWvQO11JSBZfLie85Lvni3zXNzo7QJkjnu6650WZ2OUEPwPAyHTFwdORJ/auvI1PUZrR2AT68jN1P01vCWaYRThy9BKyL0hoKtKX6K+ULLIS3VLWMm3S281+KifoWfjrmSb7AOjv8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QGAoi0Rm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gqMP8HO0EZC3SrJEQFF1KuEma5wdZ7clKmnwHGgqiNcTFzivbgRRKQFpH1CMw94LxAPZ0OKp2icbur5qp2mDqnLuBWdWdBY7RuXpq0i1TZ8XqmqMhpKOl8fwKSB1Q3LrlzD7yhZEAn6cBe6ShYSy/fU1oea03Hk8rCsSVsIpUSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dOfP8tx1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QGAoi0Rm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B960FC32782;
-	Tue, 30 Jul 2024 17:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dOfP8tx1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08116C32782;
+	Tue, 30 Jul 2024 17:09:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359365;
-	bh=bB9ciEkVdTOl5/4x/Y32qDeRhqU4gqgBWTcWlm/Iqw8=;
+	s=korg; t=1722359368;
+	bh=lusMuYexaR2yZemaSBlgQjkkvmg/yLitTZmLygIG7vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QGAoi0RmGoJu47tpU1HGa5qHUTtP9kaCWOkeHJCrdaDZQu9OFs+zHtXFwsCj0vcX8
-	 ya7sHTTay1lrW46LeHCBC3dHpljshopriUB+6Sg4e3fGSbRAlOG1mNs3a0DxFXpUMd
-	 xtq3xLXKvRjAuwfO+u6d7eaLqtTlhMCMUOBEk5Hs=
+	b=dOfP8tx1DAnQyb5WjZ3fGOOIdFnIXmoD0AiGNKpSUb3edX+wVmBKupswr4uhQdJGz
+	 xcfW5Oir+J/uamIr7J7xhDMmTJVj9Ty9Sec5PMUMZHvQPSbSkEzhnJOvDYWaRfYHdN
+	 BAPhNyFPWWXQHjIIyrlqSwxWOUu38yKXQj907Ayc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Cavenati <cavenati.marco@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 472/568] perf/x86/intel/pt: Fix topa_entry base length
-Date: Tue, 30 Jul 2024 17:49:39 +0200
-Message-ID: <20240730151658.473625967@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 474/809] MIPS: Fix fallback march for SB1
+Date: Tue, 30 Jul 2024 17:45:50 +0200
+Message-ID: <20240730151743.457740399@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,41 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marco Cavenati <cavenati.marco@gmail.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 5638bd722a44bbe97c1a7b3fae5b9efddb3e70ff upstream.
+[ Upstream commit 2326c8f2022636a1e47402ffd09a3b28f737275f ]
 
-topa_entry->base needs to store a pfn.  It obviously needs to be
-large enough to store the largest possible x86 pfn which is
-MAXPHYADDR-PAGE_SIZE (52-12).  So it is 4 bits too small.
+Fallback march for SB1 should be mips64 instead of mips64r1.
 
-Increase the size of topa_entry->base from 36 bits to 40 bits.
-
-Note, systems where physical addresses can be 256TiB or more are affected.
-
-[ Adrian: Amend commit message as suggested by Dave Hansen ]
-
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Signed-off-by: Marco Cavenati <cavenati.marco@gmail.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240624201101.60186-2-adrian.hunter@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407111851.LwDasTcp-lkp@intel.com/
+Fixes: bfc0a330c1b4 ("MIPS: Fallback CPU -march flag to ISA level if unsupported")
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/pt.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/mips/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/pt.h
-+++ b/arch/x86/events/intel/pt.h
-@@ -33,8 +33,8 @@ struct topa_entry {
- 	u64	rsvd2	: 1;
- 	u64	size	: 4;
- 	u64	rsvd3	: 2;
--	u64	base	: 36;
--	u64	rsvd4	: 16;
-+	u64	base	: 40;
-+	u64	rsvd4	: 12;
- };
- 
- /* TSC to Core Crystal Clock Ratio */
+diff --git a/arch/mips/Makefile b/arch/mips/Makefile
+index 80aecba248922..5785a3d5ccfbb 100644
+--- a/arch/mips/Makefile
++++ b/arch/mips/Makefile
+@@ -170,7 +170,7 @@ cflags-$(CONFIG_CPU_NEVADA)	+= $(call cc-option,-march=rm5200,-march=mips4) \
+ 			-Wa,--trap
+ cflags-$(CONFIG_CPU_RM7000)	+= $(call cc-option,-march=rm7000,-march=mips4) \
+ 			-Wa,--trap
+-cflags-$(CONFIG_CPU_SB1)	+= $(call cc-option,-march=sb1,-march=mips64r1) \
++cflags-$(CONFIG_CPU_SB1)	+= $(call cc-option,-march=sb1,-march=mips64) \
+ 			-Wa,--trap
+ cflags-$(CONFIG_CPU_SB1)	+= $(call cc-option,-mno-mdmx)
+ cflags-$(CONFIG_CPU_SB1)	+= $(call cc-option,-mno-mips3d)
+-- 
+2.43.0
+
 
 
