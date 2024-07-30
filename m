@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9696757FC;
-	Tue, 30 Jul 2024 16:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9061A6192;
+	Tue, 30 Jul 2024 16:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357575; cv=none; b=pPO4DM3BSmTZ63zwfMM2GSB2IlLIWbjaPWwmNsm71iGuoRxI8MOv1eTPWp6LHp+s2Rsdlm6LQTcwqvezRyM+k/1NAtAyXAusug2g5AZO0P3IYg30/pQvNt/JB0fOEa+zwvqwyQT8K15bwvo70It1BfNLKk3EYpD8d9+WzL+eo58=
+	t=1722357578; cv=none; b=q7PpPYgJR8Rku8U6+FRnWXvQnPw4Oi7y1xngIdS2VILgKMatDMPyjrvOdNc2noK+9GLvWWwElP30BUKEtviPIzcXZuqKRgGeiikIHrLKYPMRd0BSIGeDokEu8yd1rZM3DCSKmGYHYU9Zy72iINZXDXnx8QimRNpSMy4qYUifvgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357575; c=relaxed/simple;
-	bh=jXunQIRuMulQDKw4kSWklYT4pnECJqj2bVtifJ1yULY=;
+	s=arc-20240116; t=1722357578; c=relaxed/simple;
+	bh=GU1avLtTMZxGIxluB4oKBziVkv4iZmXQfRFc5uqHaJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TX2eqgLshkUay70ln4Gvr7Go+wt/HDUODAr+Kp0vUYVamErvn+3x5lybZ4hHilX2MKyftaQePW9f6sfhxzwLycAf4yTEiKzqo5sk/az4Cdr8e3Y0BWt5tvWRX9OD78fFEm7s5/d57TRqOgbVLiXcsDo6d1/VYlvoMH8Pr8IMEUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jAACiqCP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hgJRjDGDcIlQ5YIP+Nc3lsptR4LgPNYiySW6eXcUZIGE2XlP1t7wl58vyBpsAKs34yL70TQQPgFs1ZqmO8adWf5NV2ZKNcoPVAHRbUr6N2N6OVGfkB0ziXDbZuhQFrkEdJCL9lStWPTBQ02G4tdQHq++6BG6UWkiphhbbMXwwtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zJkAKKQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jAACiqCP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64126C4AF0C;
-	Tue, 30 Jul 2024 16:39:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zJkAKKQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C029C32782;
+	Tue, 30 Jul 2024 16:39:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357574;
-	bh=jXunQIRuMulQDKw4kSWklYT4pnECJqj2bVtifJ1yULY=;
+	s=korg; t=1722357578;
+	bh=GU1avLtTMZxGIxluB4oKBziVkv4iZmXQfRFc5uqHaJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jAACiqCPBVrbZ+6Tk0Krh1qD8aPS0EzuQq9t7frhw4QSLKpmWiTWi40nARmrEeniy
-	 7Rk3U2ekq1PJrv16UHENQLXP2laH7qPosSh+v60VQnjqfXBEQMNk8BnX8MqVH5lEyM
-	 RjCwnyeIFq9EaswG7eeEM17Cy/HNwCD8Bl2dacgY=
+	b=1zJkAKKQwYPNoRJoczFZOtmWeLHgURibUcPqEwdzctsM934wUDDcV14Ml7A2ZJAGu
+	 3sDpv8ZnZAuMTzjyKLuKrQ/yhY0qICnumxiQLTgIqbfLVXBOInB+CksLE8evL+ybsX
+	 Brq9IJFNZrakyHCmh9z+WCRTv2ZCW/ZK0wzmzIc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elliot Ayrey <elliot.ayrey@alliedtelesis.co.nz>,
-	Nikolay Aleksandrov <razor@blackwall.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andrei Lalaev <andrei.lalaev@anton-paar.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 262/809] net: bridge: mst: Check vlan state for egress decision
-Date: Tue, 30 Jul 2024 17:42:18 +0200
-Message-ID: <20240730151734.941441473@linuxfoundation.org>
+Subject: [PATCH 6.6 271/568] Input: qt1050 - handle CHIP_ID reading error
+Date: Tue, 30 Jul 2024 17:46:18 +0200
+Message-ID: <20240730151650.474057096@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,47 +48,51 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Elliot Ayrey <elliot.ayrey@alliedtelesis.co.nz>
+From: Andrei Lalaev <andrei.lalaev@anton-paar.com>
 
-[ Upstream commit 0a1868b93fad5938dbcca77286b25bf211c49f7a ]
+[ Upstream commit 866a5c7e2781cf1b019072288f1f5c64186dcb63 ]
 
-If a port is blocking in the common instance but forwarding in an MST
-instance, traffic egressing the bridge will be dropped because the
-state of the common instance is overriding that of the MST instance.
+If the device is missing, we get the following error:
 
-Fix this by skipping the port state check in MST mode to allow
-checking the vlan state via br_allowed_egress(). This is similar to
-what happens in br_handle_frame_finish() when checking ingress
-traffic, which was introduced in the change below.
+  qt1050 3-0041: ID -1340767592 not supported
 
-Fixes: ec7328b59176 ("net: bridge: mst: Multiple Spanning Tree (MST) mode")
-Signed-off-by: Elliot Ayrey <elliot.ayrey@alliedtelesis.co.nz>
-Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Let's handle this situation and print more informative error
+when reading of CHIP_ID fails:
+
+  qt1050 3-0041: Failed to read chip ID: -6
+
+Fixes: cbebf5addec1 ("Input: qt1050 - add Microchip AT42QT1050 support")
+Signed-off-by: Andrei Lalaev <andrei.lalaev@anton-paar.com>
+Reviewed-by: Marco Felsch <m.felsch@pengutronix.de>
+Link: https://lore.kernel.org/r/20240617183018.916234-1-andrey.lalaev@gmail.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_forward.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/input/keyboard/qt1050.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/bridge/br_forward.c b/net/bridge/br_forward.c
-index d97064d460dc7..e19b583ff2c6d 100644
---- a/net/bridge/br_forward.c
-+++ b/net/bridge/br_forward.c
-@@ -25,8 +25,8 @@ static inline int should_deliver(const struct net_bridge_port *p,
+diff --git a/drivers/input/keyboard/qt1050.c b/drivers/input/keyboard/qt1050.c
+index 6953097db4456..cd2f4216daf86 100644
+--- a/drivers/input/keyboard/qt1050.c
++++ b/drivers/input/keyboard/qt1050.c
+@@ -226,7 +226,12 @@ static bool qt1050_identify(struct qt1050_priv *ts)
+ 	int err;
  
- 	vg = nbp_vlan_group_rcu(p);
- 	return ((p->flags & BR_HAIRPIN_MODE) || skb->dev != p->dev) &&
--		p->state == BR_STATE_FORWARDING && br_allowed_egress(vg, skb) &&
--		nbp_switchdev_allowed_egress(p, skb) &&
-+		(br_mst_is_enabled(p->br) || p->state == BR_STATE_FORWARDING) &&
-+		br_allowed_egress(vg, skb) && nbp_switchdev_allowed_egress(p, skb) &&
- 		!br_skb_isolated(p, skb);
- }
- 
+ 	/* Read Chip ID */
+-	regmap_read(ts->regmap, QT1050_CHIP_ID, &val);
++	err = regmap_read(ts->regmap, QT1050_CHIP_ID, &val);
++	if (err) {
++		dev_err(&ts->client->dev, "Failed to read chip ID: %d\n", err);
++		return false;
++	}
++
+ 	if (val != QT1050_CHIP_ID_VER) {
+ 		dev_err(&ts->client->dev, "ID %d not supported\n", val);
+ 		return false;
 -- 
 2.43.0
 
