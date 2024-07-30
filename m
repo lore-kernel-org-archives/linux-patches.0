@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373151A6166;
-	Tue, 30 Jul 2024 16:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CA717D8BB;
+	Tue, 30 Jul 2024 16:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358056; cv=none; b=BaphedaDAIajhLK+u+8pdQTLe/MmtG6AEmUZv6TqF8ASAgCEUkO8juSLlMvjlAEsb2ocpn4Gxj7HhOsQScc0W+wz5WUn1XNtY17E6fZ1hziv2YCPf3HR1Vt0qI14mFNtWrTukoayf50tkKa7uIFLrtQUl5jo+i1wZKTZBCYRKMs=
+	t=1722358059; cv=none; b=BUffc951nxzR7oFZ/Lr/392jzP/yYs/hWsYr+GA4u6+uTafrl06VL93bVC6neTiyr0+IzZ37fKtIGPd6NArRnw5FdDakRXN7wAJJWDW3pF7DxB2Y8BPeL4oYu4ZTKUuAdNiklTtESIHv/V42rKnZz3O9V5qbG2PcamNhaT+cT0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358056; c=relaxed/simple;
-	bh=KMqOYIDLrOPMQnRcvhlUIGD0VQHX3xTqnX7DoTgWVR4=;
+	s=arc-20240116; t=1722358059; c=relaxed/simple;
+	bh=lYozzUB9GJ2ADJxHTJelyRo8HPCOqEXmiHhDGx42HP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HTA6YLd8GYM40x/yiKyTupzE7cK5Ousxq2PUEmO/OHQXcEaFcV/1xFboEDfAPhy+olIfm018SLkD1IYSG3mZcvaBuKkETEoZB+KMjqS0qvNKreRhr00slU9L8W6mSZX1XM2Z62IZZuvvsvVm9Jz2U/AwV3JeyOH8mShe1nYVpW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w09vSypH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JeN77cPnImEKq2elycnqcrCHuJqGBiqxM7j357UAeBnssgSygOlNBIi2u9SGtBzQ+bHDTkr5mFfp+PyjW9qXZscDV9qKyuP0whRIvkapyhj7I1Nra7FkxsaQ+FX/LdDOCCHGqbTrU7vumK76LiQrXhb6Ky6AIjXIQdSJYT3sNPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGM1LlvW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w09vSypH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4C8C4AF0F;
-	Tue, 30 Jul 2024 16:47:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGM1LlvW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA67C4AF0C;
+	Tue, 30 Jul 2024 16:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358056;
-	bh=KMqOYIDLrOPMQnRcvhlUIGD0VQHX3xTqnX7DoTgWVR4=;
+	s=korg; t=1722358059;
+	bh=lYozzUB9GJ2ADJxHTJelyRo8HPCOqEXmiHhDGx42HP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w09vSypH8lhjitcoIHu4P+XjGK9x2TVWJu+/MGCt0rqCO3y20/l+PDZ+ie9yREAxW
-	 bParyT+L0xSaKNBsVAHSMEvUkUCDWWFfhwdQEaVJG7C0y/2KvRyG+e7EyrkcldceE7
-	 E7ufsLtJov0J7Bxf8stNw5yYHTe6r1kkBa5Dwb9c=
+	b=xGM1LlvWcGCg+JxVQJY0QJjpLOvRNEujy+2mkjjbYRdI1Otiwj+NE9K9zFOXWHw7L
+	 t2/CC5Rkp/gWpbMoe4K+J61K2eMdkS5XmLlqbF/JulKNWOWKKIJk7yt1sRyIB7p9n4
+	 HzDydbmPfyh46bhsTcFvUYGEldmCFl/Zprfx5+B8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 321/568] fs/ntfs3: Deny getting attr data block in compressed frame
-Date: Tue, 30 Jul 2024 17:47:08 +0200
-Message-ID: <20240730151652.422261772@linuxfoundation.org>
+Subject: [PATCH 6.10 319/809] media: rcar-csi2: Disable runtime_pm in probe error
+Date: Tue, 30 Jul 2024 17:43:15 +0200
+Message-ID: <20240730151737.203705679@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -44,50 +46,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-[ Upstream commit 69943484b95267c94331cba41e9e64ba7b24f136 ]
+[ Upstream commit e306183628f7c2e95f9bf853d8fcb86288f606de ]
 
-Attempting to retrieve an attribute data block in a compressed frame
-is ignored.
+Disable pm_runtime in the probe() function error path.
 
-Fixes: be71b5cba2e64 ("fs/ntfs3: Add attrib operations")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 769afd212b16 ("media: rcar-csi2: add Renesas R-Car MIPI CSI-2 receiver driver")
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://lore.kernel.org/r/20240617161135.130719-3-jacopo.mondi@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/media/platform/renesas/rcar-csi2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index e6c0e12d1380b..60a764ebaf570 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -975,6 +975,19 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
- 	if (err)
- 		goto out;
+diff --git a/drivers/media/platform/renesas/rcar-csi2.c b/drivers/media/platform/renesas/rcar-csi2.c
+index 582d5e35db0e5..249e58c771761 100644
+--- a/drivers/media/platform/renesas/rcar-csi2.c
++++ b/drivers/media/platform/renesas/rcar-csi2.c
+@@ -1914,12 +1914,14 @@ static int rcsi2_probe(struct platform_device *pdev)
  
-+	/* Check for compressed frame. */
-+	err = attr_is_frame_compressed(ni, attr, vcn >> NTFS_LZNT_CUNIT, &hint);
-+	if (err)
-+		goto out;
-+
-+	if (hint) {
-+		/* if frame is compressed - don't touch it. */
-+		*lcn = COMPRESSED_LCN;
-+		*len = hint;
-+		err = -EOPNOTSUPP;
-+		goto out;
-+	}
-+
- 	if (!*len) {
- 		if (run_lookup_entry(run, vcn, lcn, len, NULL)) {
- 			if (*lcn != SPARSE_LCN || !new)
+ 	ret = v4l2_async_register_subdev(&priv->subdev);
+ 	if (ret < 0)
+-		goto error_async;
++		goto error_pm_runtime;
+ 
+ 	dev_info(priv->dev, "%d lanes found\n", priv->lanes);
+ 
+ 	return 0;
+ 
++error_pm_runtime:
++	pm_runtime_disable(&pdev->dev);
+ error_async:
+ 	v4l2_async_nf_unregister(&priv->notifier);
+ 	v4l2_async_nf_cleanup(&priv->notifier);
 -- 
 2.43.0
 
