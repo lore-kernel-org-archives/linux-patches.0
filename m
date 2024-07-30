@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3FB18B483;
-	Tue, 30 Jul 2024 16:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E968A1A6185;
+	Tue, 30 Jul 2024 16:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356204; cv=none; b=pwvAeH/HtK30zKml24b5tFreVcWG/al8FOdEi8ZFFtm2g+nZV2ZVQwLxfTG3a84Aqu2pYdVXYVoM4y9XHEKVMyo3V4ob1uV1yKjtCZCrubcNNEj2cfZUhE6kmUsbcUfvmTjeCZaYvVmGpnrcDPqyFsIgNwZRGf3ouFrvTChj6LA=
+	t=1722356208; cv=none; b=pLJ9waMCk3+fHyZDVVo+TPaW1JmtsEKjLkw5PiwCj2i33lWl36pm18RzahPs8tnQBC1A3i88j3NqJxcRkPK55L21yUW2R3NxE5e6uytybMNpDXf4k4mMFR+7S4Fcwk18rTnF+ocWWLdVv4JggnrzXHkyGQ1EzWr1ek4cy4l014E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356204; c=relaxed/simple;
-	bh=uaxnvbV7kdVRZXKGniXv7A3bNJJ4/qRr3vGUX55MzA4=;
+	s=arc-20240116; t=1722356208; c=relaxed/simple;
+	bh=q2MO0Oc0uh7KK6E5rs0VQW0tLCxjD0IS02nIWJCrqyQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TuoNArM6Unrf5EX53HRwAHLZOBFpaP+1tA0mVVWageEQ1LzANnAB5jUY1zaz0pcg93Ja4BzeYiGRMNpWA9d435IMdImab2D+8uW6vBJPnyFstpdohTxWOGZJaMNLVM6ALgNMIKRQMsd9rdSIgGq99fljrGceN9dM4/DS0gF7ClU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvVi2iHZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Swhv0JMKU9lne72JgrsJ0uauTcKaXjIMN7B/EgPfbNgbu/DFUrOrU6vz4pvbzanI00dKpIjFrt21OQbMRUdj04oSsMJhjnkMJsLvcwT9nG2zC6s6GtoLvab1qn7bXo5wHpWQlYaXH4+NTlXG0Ztuhny7fTuT9yXnHUcLHXU4m9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C/58oGHi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvVi2iHZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E497CC32782;
-	Tue, 30 Jul 2024 16:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C/58oGHi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A432C32782;
+	Tue, 30 Jul 2024 16:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356204;
-	bh=uaxnvbV7kdVRZXKGniXv7A3bNJJ4/qRr3vGUX55MzA4=;
+	s=korg; t=1722356207;
+	bh=q2MO0Oc0uh7KK6E5rs0VQW0tLCxjD0IS02nIWJCrqyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AvVi2iHZtKkRD7+MAkq6HlowFFcBVNewxuYi4pN54XyHsOIvrXCaW4GsehgZ9COOB
-	 1yK9PtQAXrr1IyeTSoF1qpxGe5vJiZXFlz9r19trbPAswauaznGMRbSA5jyVRgMWs1
-	 wn3APrgI2tLvEM2EdXLkLYYLyE4kg4Cy2eoQr36Q=
+	b=C/58oGHigfQVuPi6kwwzagvTjWvB/a8xDvbaKQ2j9UDxwyyFBgB+csuJ68r3t0Xlj
+	 8brj21/ZYmvs8dLvZpM3ctyTidu290K0ySEjEx4PeHuO3BZIvP+vL6QRB5/ntyBGa8
+	 BH/8noaC1kEo7alKC3YS22yXKBPug++3Zqq7kdFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Lee Jones <lee@kernel.org>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Dang Huynh <danct12@riseup.net>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/440] mfd: rsmu: Split core code into separate module
-Date: Tue, 30 Jul 2024 17:46:41 +0200
-Message-ID: <20240730151622.431716063@linuxfoundation.org>
+Subject: [PATCH 6.10 129/809] arm64: dts: qcom: qrb4210-rb2: Correct max current draw for VBUS
+Date: Tue, 30 Jul 2024 17:40:05 +0200
+Message-ID: <20240730151729.712918061@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,63 +49,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Dang Huynh <danct12@riseup.net>
 
-[ Upstream commit c879a8c39dd55e7fabdd8d13341f7bc5200db377 ]
+[ Upstream commit c6050d45cd372e4a34f9f501b30243caf2e810c6 ]
 
-Linking a file into two modules can have unintended side-effects
-and produces a W=1 warning:
+According to downstream sources, maximum current for PMI632 VBUS
+is 1A.
 
-scripts/Makefile.build:236: drivers/mfd/Makefile: rsmu_core.o is added to multiple modules: rsmu-i2c rsmu-spi
+Taken from msm-4.19 (631561973a034e46ccacd0e53ef65d13a40d87a4)
+Line 685-687 in drivers/power/supply/qcom/qpnp-smb5.c
 
-Make this one a separate module instead.
-
-Fixes: a1867f85e06e ("mfd: Add Renesas Synchronization Management Unit (SMU) support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20240529094856.1869543-1-arnd@kernel.org
-Signed-off-by: Lee Jones <lee@kernel.org>
+Fixes: a06a2f12f9e2 ("arm64: dts: qcom: qrb4210-rb2: enable USB-C port handling")
+Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Dang Huynh <danct12@riseup.net>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240702-qrd4210rb2-vbus-volt-v3-1-fbd24661eec4@riseup.net
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/Makefile    | 6 ++----
- drivers/mfd/rsmu_core.c | 2 ++
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/qrb4210-rb2.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
-index 7ed3ef4a698cf..e26c64bf7cb77 100644
---- a/drivers/mfd/Makefile
-+++ b/drivers/mfd/Makefile
-@@ -276,7 +276,5 @@ obj-$(CONFIG_MFD_INTEL_M10_BMC)   += intel-m10-bmc.o
- obj-$(CONFIG_MFD_ATC260X)	+= atc260x-core.o
- obj-$(CONFIG_MFD_ATC260X_I2C)	+= atc260x-i2c.o
+diff --git a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+index 1c7de7f2db791..1888d99d398b1 100644
+--- a/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
++++ b/arch/arm64/boot/dts/qcom/qrb4210-rb2.dts
+@@ -305,7 +305,7 @@ pmi632_ss_in: endpoint {
  
--rsmu-i2c-objs			:= rsmu_core.o rsmu_i2c.o
--rsmu-spi-objs			:= rsmu_core.o rsmu_spi.o
--obj-$(CONFIG_MFD_RSMU_I2C)	+= rsmu-i2c.o
--obj-$(CONFIG_MFD_RSMU_SPI)	+= rsmu-spi.o
-+obj-$(CONFIG_MFD_RSMU_I2C)	+= rsmu_i2c.o rsmu_core.o
-+obj-$(CONFIG_MFD_RSMU_SPI)	+= rsmu_spi.o rsmu_core.o
-diff --git a/drivers/mfd/rsmu_core.c b/drivers/mfd/rsmu_core.c
-index 29437fd0bd5bf..fd04a6e5dfa31 100644
---- a/drivers/mfd/rsmu_core.c
-+++ b/drivers/mfd/rsmu_core.c
-@@ -78,11 +78,13 @@ int rsmu_core_init(struct rsmu_ddata *rsmu)
+ &pmi632_vbus {
+ 	regulator-min-microamp = <500000>;
+-	regulator-max-microamp = <3000000>;
++	regulator-max-microamp = <1000000>;
+ 	status = "okay";
+ };
  
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(rsmu_core_init);
- 
- void rsmu_core_exit(struct rsmu_ddata *rsmu)
- {
- 	mutex_destroy(&rsmu->lock);
- }
-+EXPORT_SYMBOL_GPL(rsmu_core_exit);
- 
- MODULE_DESCRIPTION("Renesas SMU core driver");
- MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
