@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FF91A6192;
-	Tue, 30 Jul 2024 16:41:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E041A619E;
+	Tue, 30 Jul 2024 16:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357709; cv=none; b=oKpdJNubryd0oKOc3ASDu6Q8SgKrAQOShUanNwaYzLn04bsgqza6/Upnfze5luuEt9IlUDmljPHX+fcykLB04V0rk8mVtMrt1uP7CZmD+iGjN5i/knKEy+3zwqK15IqPUtxwqs5kPjqWtmmYT3wZOoLrS9CWCXfYyxPOfDvxEdM=
+	t=1722357712; cv=none; b=mVczPQlezJEVEZ/tQphC4dLZK0py1sr1hRVSFpyDNhYusOjCNBfTlbt85W82MSjcv2JaEgY5JMlFRfUs9Vio+V/loIcEXRPqPh9Da22gTUbyt+J/2xj5YkKgjZXy6N1ajdOOau2PgZNghK16ngbddMuvcqg8B5R8Me/VslfAVo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357709; c=relaxed/simple;
-	bh=5Gckq29uDa9Wx7PnryvNvf2sff0YSuU3IsFLVV31A8Q=;
+	s=arc-20240116; t=1722357712; c=relaxed/simple;
+	bh=3jYBC/f+W8ABhyE5AOEymT8fqtaQwDbStrD03U811g4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c1EeCKqvFZzbE/h462gw5Mf+VwGi9g0aNUqGlx9kKioXdZOI+M+Z9jZ5XfpgeJLfBXQuhCr7ZXc578um2PgOtzVWiCAQmfHnfICsDiVz9gvEqlXdaUOcLKid4WU/tQqETafT33mA8Uw+yQmj3onfLRaOHs2Yev7aIglG2vTc4VE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rMPZsUg2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C7mIIB3+5pF/ra3QPISjpTTw4OJ6xx7FMgvytOVjejESEW3in6JUGLYFf8UUkGBtFKHkOLkAyGQiF9BPOBN9wUt9Xs9eKiXH39ePps3rFgQGALnT0mBx8uZNuhkUaQkZf1fYlkyCnLnmPq6VJjX36EOu7f2xdVovIoB1y4gnbq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FgqmIaqN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rMPZsUg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10D2C32782;
-	Tue, 30 Jul 2024 16:41:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FgqmIaqN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F35DCC4AF0C;
+	Tue, 30 Jul 2024 16:41:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357709;
-	bh=5Gckq29uDa9Wx7PnryvNvf2sff0YSuU3IsFLVV31A8Q=;
+	s=korg; t=1722357712;
+	bh=3jYBC/f+W8ABhyE5AOEymT8fqtaQwDbStrD03U811g4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMPZsUg2SXHUWauvXFoa6b5HdpbMz+99cAWBHYBeJ7qZ6mTODiO2oeXeGJOKQhVD1
-	 RmYjECM1g9vptkheLbtFeCZJmTuV8rrJ0lFAA6s5YFVa62hW5oabxuVUyYmAgHiczy
-	 kxRWoPXQY0FebChVoDvFIY70hyBo5nuXyEva4WD8=
+	b=FgqmIaqNexenHHd8JSP1+kA3pDfM/DZkYCit+p0UTGoCs8kHDn7BeZTM+1wFGRvwZ
+	 JU5id5QJf4Uekmo8ni40bzYFCOaPpNb7DwHyBX/wvNtQgj7rYkU/VpeesHFB9x2HuM
+	 NiQ4OfJ//XC7JKTQhZ+nePWFt/5U43GjXqskSTeU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 281/809] drm/panel: ilitek-ili9882t: Check for errors on the NOP in prepare()
-Date: Tue, 30 Jul 2024 17:42:37 +0200
-Message-ID: <20240730151735.689867712@linuxfoundation.org>
+	wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 318/440] ALSA: usb-audio: Add a quirk for Sonix HD USB Camera
+Date: Tue, 30 Jul 2024 17:49:11 +0200
+Message-ID: <20240730151628.241200132@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,52 +46,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 6a7bd6cde73f0fb7e5faa964dbdeb45b55c64698 ]
+commit 21451dfd853e7d8e6e3fbd7ef1fbdb2f2ead12f5 upstream.
 
-The mipi_dsi_dcs_nop() function returns an error but we weren't
-checking it in ili9882t_prepare(). Add a check. This is highly
-unlikely to matter in practice. If the NOP failed then likely later
-MIPI commands would fail too.
+Sonix HD USB Camera does not support reading the sample rate which leads
+to many lines of "cannot get freq at ep 0x84".
+This patch adds the USB ID to quirks.c and avoids those error messages.
 
-Found by code inspection.
+(snip)
+[1.789698] usb 3-3: new high-speed USB device number 2 using xhci_hcd
+[1.984121] usb 3-3: New USB device found, idVendor=0c45, idProduct=6340, bcdDevice= 0.00
+[1.984124] usb 3-3: New USB device strings: Mfr=2, Product=1, SerialNumber=0
+[1.984127] usb 3-3: Product: USB 2.0 Camera
+[1.984128] usb 3-3: Manufacturer: Sonix Technology Co., Ltd.
+[5.440957] usb 3-3: 3:1: cannot get freq at ep 0x84
+[12.130679] usb 3-3: 3:1: cannot get freq at ep 0x84
+[12.175065] usb 3-3: 3:1: cannot get freq at ep 0x84
 
-Fixes: e2450d32e5fb ("drm/panel: ili9882t: Break out as separate driver")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240517143643.5.I323476ba9fa8cc7a5adee4c1ec95202785cc5686@changeid
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.5.I323476ba9fa8cc7a5adee4c1ec95202785cc5686@changeid
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240722084822.31620-1-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/panel/panel-ilitek-ili9882t.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/usb/quirks.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-index 5762eba73955c..35ea5494e0eb8 100644
---- a/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-+++ b/drivers/gpu/drm/panel/panel-ilitek-ili9882t.c
-@@ -560,7 +560,11 @@ static int ili9882t_prepare(struct drm_panel *panel)
- 	usleep_range(10000, 11000);
- 
- 	// MIPI needs to keep the LP11 state before the lcm_reset pin is pulled high
--	mipi_dsi_dcs_nop(ili->dsi);
-+	ret = mipi_dsi_dcs_nop(ili->dsi);
-+	if (ret < 0) {
-+		dev_err(&ili->dsi->dev, "Failed to send NOP: %d\n", ret);
-+		goto poweroff;
-+	}
- 	usleep_range(1000, 2000);
- 
- 	gpiod_set_value(ili->enable_gpio, 1);
--- 
-2.43.0
-
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2083,6 +2083,8 @@ static const struct usb_audio_quirk_flag
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
+ 	DEVICE_FLG(0x0b0e, 0x0349, /* Jabra 550a */
+ 		   QUIRK_FLAG_CTL_MSG_DELAY_1M),
++	DEVICE_FLG(0x0c45, 0x6340, /* Sonix HD USB Camera */
++		   QUIRK_FLAG_GET_SAMPLE_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x205c, /* JBL Quantum610 Wireless */
+ 		   QUIRK_FLAG_FIXED_RATE),
+ 	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
 
 
