@@ -1,46 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A37E188017;
-	Tue, 30 Jul 2024 17:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2585188017;
+	Tue, 30 Jul 2024 17:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359614; cv=none; b=txUBAiV68QHL6uXsvNa2qIDBWQY8dA2+TdJ8DuSqhD6ayHFfto4OTE6Dj+98SkDU89qJ6WHKZCxQYxa0hLfcMtjktWoTAsgQpquotWZKD9iN+Lo8kNHoKno0JNr+0IVpo8cjo4aGsea4fe9W4WLCCAlegKyuFqKx596wbs467TE=
+	t=1722359617; cv=none; b=sH3jH2e20ZuI80cU4waOWV8DuW+wkIR7zi0C48r0UyTtXEBVSpddYzaDZvT14v/l1FIlxwXoYBlFhTdW+5l2Q09cbzL0kf+9TUXX+yzWAwO13MHS2EoUY0KYj1CqNu77ZW2mf+dRIL1sY9JuNOHHhAH3l4CQr/8X1dp8eCvwzj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359614; c=relaxed/simple;
-	bh=I6KwDJ5kT7jY4W6xiKA9RwIk7+Ret+GRum05vpE52mo=;
+	s=arc-20240116; t=1722359617; c=relaxed/simple;
+	bh=0gGePQmbddJZBD2B9KeR8PQXu02hgDk5OFZSVbYWNqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eAzCpolD3JNklsVGj6iKPPDVcsqYagpimSm2+O4BeyfTgXyyKwjpGTk6KyNBVLHlZZg9KpeEuazJac4gE706FCKLD7Um/e26P+2W+1GfgiqIY0nHF5pM4JS/h4pUt2dbFpKol1Jx+AkwvyQcq2R9FUdH/7K7xpEFR8A0OuUHEm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ps321u9e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gXohs+lwUqJUIOVUe7QOoj9DXwhNM+3K5hRvjTaTiEENez58lvpXSw2zc301NAwYil7CQhiFugTi12nQBJ2gjGpvNZZBBEB71wh8QZxCRqPeyrx5VLezBbI8a9ihV/ktX/6P+mbEb7DZRA+xuoqHp+hum2Dsd1u2LgfBpeDmFtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EON5Cgt6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ps321u9e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A974FC32782;
-	Tue, 30 Jul 2024 17:13:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EON5Cgt6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C942C32782;
+	Tue, 30 Jul 2024 17:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359614;
-	bh=I6KwDJ5kT7jY4W6xiKA9RwIk7+Ret+GRum05vpE52mo=;
+	s=korg; t=1722359617;
+	bh=0gGePQmbddJZBD2B9KeR8PQXu02hgDk5OFZSVbYWNqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ps321u9eB/xQom7DsTEFM3P2LFnYdpuf6ZbCJMamtSIcDAgPoOcdj076t6H8BxirR
-	 50aur8gpYZ87S29vfHTwYDMYQlsM+2t+zFSvKMPBNV0VjiwUOYt/KutyaAmXgvHrIN
-	 RzRozQHfNw60WcK2t9D4728K1oy7cI7o++xvHJAI=
+	b=EON5Cgt6wPQZAq8CtZ6sUEY5/3VVwssb6zQoUOwRc76IF6Z6VoYeenP91NgK6s5p1
+	 hY9WF5E/N51pVwENn5mH1DEBB4EfDw6IK65aJT4N3YuatMOTudVQuYaE00VuHc3e84
+	 6aFx+b9H3IBBfIiC6twR1cvrrRMo053q7W1O0qg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
-	Lance Yang <ioworker0@gmail.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 508/809] fs/proc/task_mmu: indicate PM_FILE for PMD-mapped file THP
-Date: Tue, 30 Jul 2024 17:46:24 +0200
-Message-ID: <20240730151744.800512250@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 509/568] nilfs2: handle inconsistent state in nilfs_btnode_create_block()
+Date: Tue, 30 Jul 2024 17:50:16 +0200
+Message-ID: <20240730151659.919236701@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -52,69 +47,101 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 3f9f022e975d930709848a86a1c79775b0585202 ]
+commit 4811f7af6090e8f5a398fbdd766f903ef6c0d787 upstream.
 
-Patch series "fs/proc: move page_mapcount() to fs/proc/internal.h".
+Syzbot reported that a buffer state inconsistency was detected in
+nilfs_btnode_create_block(), triggering a kernel bug.
 
-With all other page_mapcount() users in the tree gone, move
-page_mapcount() to fs/proc/internal.h, rename it and extend the
-documentation to prevent future (ab)use.
+It is not appropriate to treat this inconsistency as a bug; it can occur
+if the argument block address (the buffer index of the newly created
+block) is a virtual block number and has been reallocated due to
+corruption of the bitmap used to manage its allocation state.
 
-... of course, I find some issues while working on that code that I sort
-first ;)
+So, modify nilfs_btnode_create_block() and its callers to treat it as a
+possible filesystem error, rather than triggering a kernel bug.
 
-We'll now only end up calling page_mapcount() [now
-folio_precise_page_mapcount()] on pages mapped via present page table
-entries.  Except for /proc/kpagecount, that still does questionable
-things, but we'll leave that legacy interface as is for now.
-
-Did a quick sanity check.  Likely we would want some better selfestest for
-/proc/$/pagemap + smaps.  I'll see if I can find some time to write some
-more.
-
-This patch (of 6):
-
-Looks like we never taught pagemap_pmd_range() about the existence of
-PMD-mapped file THPs.  Seems to date back to the times when we first added
-support for non-anon THPs in the form of shmem THP.
-
-Link: https://lkml.kernel.org/r/20240607122357.115423-1-david@redhat.com
-Link: https://lkml.kernel.org/r/20240607122357.115423-2-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Fixes: 800d8c63b2e9 ("shmem: add huge pages support")
-Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
-Reviewed-by: Lance Yang <ioworker0@gmail.com>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Link: https://lkml.kernel.org/r/20240725052007.4562-1-konishi.ryusuke@gmail.com
+Fixes: a60be987d45d ("nilfs2: B-tree node cache")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=89cc4f2324ed37988b60
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/proc/task_mmu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/nilfs2/btnode.c |   25 ++++++++++++++++++++-----
+ fs/nilfs2/btree.c  |    4 ++--
+ 2 files changed, 22 insertions(+), 7 deletions(-)
 
-diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
-index 71e5039d940dc..76ad35df3b1ee 100644
---- a/fs/proc/task_mmu.c
-+++ b/fs/proc/task_mmu.c
-@@ -1525,6 +1525,8 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
- 		}
- #endif
+--- a/fs/nilfs2/btnode.c
++++ b/fs/nilfs2/btnode.c
+@@ -51,12 +51,21 @@ nilfs_btnode_create_block(struct address
  
-+		if (page && !PageAnon(page))
-+			flags |= PM_FILE;
- 		if (page && !migration && page_mapcount(page) == 1)
- 			flags |= PM_MMAP_EXCLUSIVE;
+ 	bh = nilfs_grab_buffer(inode, btnc, blocknr, BIT(BH_NILFS_Node));
+ 	if (unlikely(!bh))
+-		return NULL;
++		return ERR_PTR(-ENOMEM);
  
--- 
-2.43.0
-
+ 	if (unlikely(buffer_mapped(bh) || buffer_uptodate(bh) ||
+ 		     buffer_dirty(bh))) {
+-		brelse(bh);
+-		BUG();
++		/*
++		 * The block buffer at the specified new address was already
++		 * in use.  This can happen if it is a virtual block number
++		 * and has been reallocated due to corruption of the bitmap
++		 * used to manage its allocation state (if not, the buffer
++		 * clearing of an abandoned b-tree node is missing somewhere).
++		 */
++		nilfs_error(inode->i_sb,
++			    "state inconsistency probably due to duplicate use of b-tree node block address %llu (ino=%lu)",
++			    (unsigned long long)blocknr, inode->i_ino);
++		goto failed;
+ 	}
+ 	memset(bh->b_data, 0, i_blocksize(inode));
+ 	bh->b_bdev = inode->i_sb->s_bdev;
+@@ -67,6 +76,12 @@ nilfs_btnode_create_block(struct address
+ 	unlock_page(bh->b_page);
+ 	put_page(bh->b_page);
+ 	return bh;
++
++failed:
++	unlock_page(bh->b_page);
++	put_page(bh->b_page);
++	brelse(bh);
++	return ERR_PTR(-EIO);
+ }
+ 
+ int nilfs_btnode_submit_block(struct address_space *btnc, __u64 blocknr,
+@@ -217,8 +232,8 @@ retry:
+ 	}
+ 
+ 	nbh = nilfs_btnode_create_block(btnc, newkey);
+-	if (!nbh)
+-		return -ENOMEM;
++	if (IS_ERR(nbh))
++		return PTR_ERR(nbh);
+ 
+ 	BUG_ON(nbh == obh);
+ 	ctxt->newbh = nbh;
+--- a/fs/nilfs2/btree.c
++++ b/fs/nilfs2/btree.c
+@@ -63,8 +63,8 @@ static int nilfs_btree_get_new_block(con
+ 	struct buffer_head *bh;
+ 
+ 	bh = nilfs_btnode_create_block(btnc, ptr);
+-	if (!bh)
+-		return -ENOMEM;
++	if (IS_ERR(bh))
++		return PTR_ERR(bh);
+ 
+ 	set_buffer_nilfs_volatile(bh);
+ 	*bhp = bh;
 
 
