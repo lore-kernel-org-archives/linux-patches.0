@@ -1,41 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2585188017;
-	Tue, 30 Jul 2024 17:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D825188017;
+	Tue, 30 Jul 2024 17:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359617; cv=none; b=sH3jH2e20ZuI80cU4waOWV8DuW+wkIR7zi0C48r0UyTtXEBVSpddYzaDZvT14v/l1FIlxwXoYBlFhTdW+5l2Q09cbzL0kf+9TUXX+yzWAwO13MHS2EoUY0KYj1CqNu77ZW2mf+dRIL1sY9JuNOHHhAH3l4CQr/8X1dp8eCvwzj8=
+	t=1722359621; cv=none; b=qXQqkwP0Iw3+ASTC/K1fMcc76vFjawBlbTGrsfVSTLbKhTIUq38azVT5pweKZrRKMhIhPydyqNVgsq6+QyaYsHhCa8hTeR4YVvNWwlFJVFhTDjz4dXLWxJrIhopAqJHndwE532ilsFpr7pcSfJhPatBHR/qyqeT8xrW0uI4OvGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359617; c=relaxed/simple;
-	bh=0gGePQmbddJZBD2B9KeR8PQXu02hgDk5OFZSVbYWNqc=;
+	s=arc-20240116; t=1722359621; c=relaxed/simple;
+	bh=04FrcmAqCtKs0VT4W2miMjyamEmw74A6W0jFyfpESP0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gXohs+lwUqJUIOVUe7QOoj9DXwhNM+3K5hRvjTaTiEENez58lvpXSw2zc301NAwYil7CQhiFugTi12nQBJ2gjGpvNZZBBEB71wh8QZxCRqPeyrx5VLezBbI8a9ihV/ktX/6P+mbEb7DZRA+xuoqHp+hum2Dsd1u2LgfBpeDmFtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EON5Cgt6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FKhRVgRYKAPVk4GYwNyNtaRndZs2pxzibL3iQsDd09Ni1DfbklVgFAHCzF5HW272Ru+mQwZ0HCFe87G0CMzsIMPlCdggW8ri9f3InsTV79MJed6F42ngMFFrLnDRUv8vbLBVR/1TLozcm4u2r78GV28sjVocqvjFHuzWzln2ajM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=StqESLZl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EON5Cgt6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C942C32782;
-	Tue, 30 Jul 2024 17:13:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="StqESLZl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E0C32782;
+	Tue, 30 Jul 2024 17:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359617;
-	bh=0gGePQmbddJZBD2B9KeR8PQXu02hgDk5OFZSVbYWNqc=;
+	s=korg; t=1722359621;
+	bh=04FrcmAqCtKs0VT4W2miMjyamEmw74A6W0jFyfpESP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EON5Cgt6wPQZAq8CtZ6sUEY5/3VVwssb6zQoUOwRc76IF6Z6VoYeenP91NgK6s5p1
-	 hY9WF5E/N51pVwENn5mH1DEBB4EfDw6IK65aJT4N3YuatMOTudVQuYaE00VuHc3e84
-	 6aFx+b9H3IBBfIiC6twR1cvrrRMo053q7W1O0qg4=
+	b=StqESLZlAd0JEFQ/hHLjDCTY5pZCgnwycPpYiavdjr5jaqy/jTcJg+1mKhSHRwn6S
+	 bikwIwQHcguQ/Hg41uZdyZwFAGDK30ggJ6FEbCCDQBEXl6yRMWMRV0sfWXHSmm/7L2
+	 rfm7LhblZ2sAmKPABy6j+BktfDpFRDCWc+a6KGXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 509/568] nilfs2: handle inconsistent state in nilfs_btnode_create_block()
-Date: Tue, 30 Jul 2024 17:50:16 +0200
-Message-ID: <20240730151659.919236701@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 509/809] fs/proc/task_mmu: dont indicate PM_MMAP_EXCLUSIVE without PM_PRESENT
+Date: Tue, 30 Jul 2024 17:46:25 +0200
+Message-ID: <20240730151744.840004574@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +52,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit 4811f7af6090e8f5a398fbdd766f903ef6c0d787 upstream.
+[ Upstream commit da7f31ed0f4df8f61e8195e527aa83dd54896ba3 ]
 
-Syzbot reported that a buffer state inconsistency was detected in
-nilfs_btnode_create_block(), triggering a kernel bug.
+Relying on the mapcount for non-present PTEs that reference pages doesn't
+make any sense: they are not accounted in the mapcount, so page_mapcount()
+== 1 won't return the result we actually want to know.
 
-It is not appropriate to treat this inconsistency as a bug; it can occur
-if the argument block address (the buffer index of the newly created
-block) is a virtual block number and has been reallocated due to
-corruption of the bitmap used to manage its allocation state.
+While we don't check the mapcount for migration entries already, we could
+end up checking it for swap, hwpoison, device exclusive, ...  entries,
+which we really shouldn't.
 
-So, modify nilfs_btnode_create_block() and its callers to treat it as a
-possible filesystem error, rather than triggering a kernel bug.
+There is one exception: device private entries, which we consider
+fake-present (e.g., incremented the mapcount).  But we won't care about
+that for now for PM_MMAP_EXCLUSIVE, because indicating PM_SWAP for them
+although they are fake-present already sounds suspiciously wrong.
 
-Link: https://lkml.kernel.org/r/20240725052007.4562-1-konishi.ryusuke@gmail.com
-Fixes: a60be987d45d ("nilfs2: B-tree node cache")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=89cc4f2324ed37988b60
-Cc: <stable@vger.kernel.org>
+Let's never indicate PM_MMAP_EXCLUSIVE without PM_PRESENT.
+
+Link: https://lkml.kernel.org/r/20240607122357.115423-3-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Cc: Lance Yang <ioworker0@gmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 2c1f057e5be6 ("fs/proc/task_mmu: properly detect PM_MMAP_EXCLUSIVE per page of PMD-mapped THPs")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btnode.c |   25 ++++++++++++++++++++-----
- fs/nilfs2/btree.c  |    4 ++--
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ fs/proc/task_mmu.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -51,12 +51,21 @@ nilfs_btnode_create_block(struct address
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index 76ad35df3b1ee..22892cdb74cef 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1418,7 +1418,6 @@ static pagemap_entry_t pte_to_pagemap_entry(struct pagemapread *pm,
+ {
+ 	u64 frame = 0, flags = 0;
+ 	struct page *page = NULL;
+-	bool migration = false;
  
- 	bh = nilfs_grab_buffer(inode, btnc, blocknr, BIT(BH_NILFS_Node));
- 	if (unlikely(!bh))
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
+ 	if (pte_present(pte)) {
+ 		if (pm->show_pfn)
+@@ -1450,7 +1449,6 @@ static pagemap_entry_t pte_to_pagemap_entry(struct pagemapread *pm,
+ 			    (offset << MAX_SWAPFILES_SHIFT);
+ 		}
+ 		flags |= PM_SWAP;
+-		migration = is_migration_entry(entry);
+ 		if (is_pfn_swap_entry(entry))
+ 			page = pfn_swap_entry_to_page(entry);
+ 		if (pte_marker_entry_uffd_wp(entry))
+@@ -1459,7 +1457,7 @@ static pagemap_entry_t pte_to_pagemap_entry(struct pagemapread *pm,
  
- 	if (unlikely(buffer_mapped(bh) || buffer_uptodate(bh) ||
- 		     buffer_dirty(bh))) {
--		brelse(bh);
--		BUG();
-+		/*
-+		 * The block buffer at the specified new address was already
-+		 * in use.  This can happen if it is a virtual block number
-+		 * and has been reallocated due to corruption of the bitmap
-+		 * used to manage its allocation state (if not, the buffer
-+		 * clearing of an abandoned b-tree node is missing somewhere).
-+		 */
-+		nilfs_error(inode->i_sb,
-+			    "state inconsistency probably due to duplicate use of b-tree node block address %llu (ino=%lu)",
-+			    (unsigned long long)blocknr, inode->i_ino);
-+		goto failed;
- 	}
- 	memset(bh->b_data, 0, i_blocksize(inode));
- 	bh->b_bdev = inode->i_sb->s_bdev;
-@@ -67,6 +76,12 @@ nilfs_btnode_create_block(struct address
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
- 	return bh;
-+
-+failed:
-+	unlock_page(bh->b_page);
-+	put_page(bh->b_page);
-+	brelse(bh);
-+	return ERR_PTR(-EIO);
- }
+ 	if (page && !PageAnon(page))
+ 		flags |= PM_FILE;
+-	if (page && !migration && page_mapcount(page) == 1)
++	if (page && (flags & PM_PRESENT) && page_mapcount(page) == 1)
+ 		flags |= PM_MMAP_EXCLUSIVE;
+ 	if (vma->vm_flags & VM_SOFTDIRTY)
+ 		flags |= PM_SOFT_DIRTY;
+@@ -1476,7 +1474,6 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 	pte_t *pte, *orig_pte;
+ 	int err = 0;
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE
+-	bool migration = false;
  
- int nilfs_btnode_submit_block(struct address_space *btnc, __u64 blocknr,
-@@ -217,8 +232,8 @@ retry:
- 	}
+ 	ptl = pmd_trans_huge_lock(pmdp, vma);
+ 	if (ptl) {
+@@ -1520,14 +1517,13 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 			if (pmd_swp_uffd_wp(pmd))
+ 				flags |= PM_UFFD_WP;
+ 			VM_BUG_ON(!is_pmd_migration_entry(pmd));
+-			migration = is_migration_entry(entry);
+ 			page = pfn_swap_entry_to_page(entry);
+ 		}
+ #endif
  
- 	nbh = nilfs_btnode_create_block(btnc, newkey);
--	if (!nbh)
--		return -ENOMEM;
-+	if (IS_ERR(nbh))
-+		return PTR_ERR(nbh);
+ 		if (page && !PageAnon(page))
+ 			flags |= PM_FILE;
+-		if (page && !migration && page_mapcount(page) == 1)
++		if (page && (flags & PM_PRESENT) && page_mapcount(page) == 1)
+ 			flags |= PM_MMAP_EXCLUSIVE;
  
- 	BUG_ON(nbh == obh);
- 	ctxt->newbh = nbh;
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -63,8 +63,8 @@ static int nilfs_btree_get_new_block(con
- 	struct buffer_head *bh;
- 
- 	bh = nilfs_btnode_create_block(btnc, ptr);
--	if (!bh)
--		return -ENOMEM;
-+	if (IS_ERR(bh))
-+		return PTR_ERR(bh);
- 
- 	set_buffer_nilfs_volatile(bh);
- 	*bhp = bh;
+ 		for (; addr != end; addr += PAGE_SIZE) {
+-- 
+2.43.0
+
 
 
