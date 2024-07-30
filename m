@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7551A76A5;
-	Tue, 30 Jul 2024 17:32:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 370DE1A76A5;
+	Tue, 30 Jul 2024 17:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360742; cv=none; b=pqkqZyIxfPyztWuhEqZom5XpNfyN7l8cgt/OdVbychBChQYw9yXADkEnZIdMYeV5OofWg/Bkxb3GblK22urIbC5TRHLKiXphI+bjsQDKh7kqarTy5/BGZ55bztbfQb8ItrXgeHlf1Ba1dM+HWOa6cvPlCUukpivBrac2WPot2TQ=
+	t=1722360745; cv=none; b=dQQIUWMlJ707oudfEgxGqc9T+0eEBp3fNBDY3aNsE8bu4ANhOjb07XfUwgM7MNrXuMws8Azox6vPkXwqB4PTBd0TNJNpwUqhiDZae+BvUpIXA3vCFRXgyF4L/XvB67WZhFPdJO+NjaklEN3L1h+kTlhq2pHETJRQEVqfIIn4UEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360742; c=relaxed/simple;
-	bh=k/qQGen56E0Tv6t+JRI1/QRFeVvTHn6BHEco+PqueM4=;
+	s=arc-20240116; t=1722360745; c=relaxed/simple;
+	bh=czgMK5woNJP/ZHAARoL6XZLxoZYxsN93PycWJ9QQ6sU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jdSWvoCp72PI5E3No5n15n8JkitDjZ44aclBz7pNSvBhWIYB85JVUK1LGm0h29OAr/gkfCK/kTmi3hO5hbtj1mQ8GftyxmdnKk0IJ+KqjJAYIfEOwEu4WYFwCuwmB5RTbod4B9GH6fmaDhLoUyfyG+tjMyrHZcTAobilY6sPAHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtKDzHQ3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJofDtneDiotTrSTS7XXas18Dnv95tM5/p/PwhSQwy557yaRF08eOXaQUMcqOlqhRG+KUHOXBYI3saoDk4K+pJWSaTu6Qnuv+toPSOW7AEbR75gAcdyoKZKmuaKuAU56IOSHSC3kqjXSwOthnvw3j+0TIr4rAAD87aHq2pL6H+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hN2kn/jn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtKDzHQ3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5258DC32782;
-	Tue, 30 Jul 2024 17:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hN2kn/jn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB1D8C32782;
+	Tue, 30 Jul 2024 17:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360741;
-	bh=k/qQGen56E0Tv6t+JRI1/QRFeVvTHn6BHEco+PqueM4=;
+	s=korg; t=1722360745;
+	bh=czgMK5woNJP/ZHAARoL6XZLxoZYxsN93PycWJ9QQ6sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VtKDzHQ32DIhauQ2Mu/r5gSNVj1n71i+ysgDcN1dCES3XrlEUEA6S6UnooAM7xjav
-	 2cX9Ix/9xSIlx963eoa7+uWRHGQERSnks/YY09XlCzxxGuUu/5nea28VAL2HTjfKGi
-	 o4sJ7S+tIuD7h33Iy4Mf16uv9MrmVZUt45gSPSsY=
+	b=hN2kn/jnNeNFcE4tjA8LBLISO+wTRFdIER5IHuL3Cd3p17lifMTMgP2eN+qiiDjq0
+	 /XxVUjNkYNuDAhM+zO/Kypt8iOU9BHXeFDbYFC/KxymCCidlOSE177MTeZUlMhjyGc
+	 i2AoclxlZuCOJnw1SxiOX56H5PV4RP8Mqzyzn3PQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Pirko <jiri@nvidia.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Marcin Szycik <marcin.szycik@linux.intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 762/809] net: bonding: correctly annotate RCU in bond_should_notify_peers()
-Date: Tue, 30 Jul 2024 17:50:38 +0200
-Message-ID: <20240730151755.060728009@linuxfoundation.org>
+Subject: [PATCH 6.10 763/809] ice: Fix recipe read procedure
+Date: Tue, 30 Jul 2024 17:50:39 +0200
+Message-ID: <20240730151755.100842630@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,51 +55,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Wojciech Drewek <wojciech.drewek@intel.com>
 
-[ Upstream commit 3ba359c0cd6eb5ea772125a7aededb4a2d516684 ]
+[ Upstream commit 19abb9c2b900bad59e0a9818d6c83bb4cc875437 ]
 
-RCU use in bond_should_notify_peers() looks wrong, since it does
-rcu_dereference(), leaves the critical section, and uses the
-pointer after that.
+When ice driver reads recipes from firmware information about
+need_pass_l2 and allow_pass_l2 flags is not stored correctly.
+Those flags are stored as one bit each in ice_sw_recipe structure.
+Because of that, the result of checking a flag has to be casted to bool.
+Note that the need_pass_l2 flag currently works correctly, because
+it's stored in the first bit.
 
-Luckily, it's called either inside a nested RCU critical section
-or with the RTNL held.
-
-Annotate it with rcu_dereference_rtnl() instead, and remove the
-inner RCU critical section.
-
-Fixes: 4cb4f97b7e36 ("bonding: rebuild the lock use for bond_mii_monitor()")
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Acked-by: Jay Vosburgh <jv@jvosburgh.net>
-Link: https://patch.msgid.link/20240719094119.35c62455087d.I68eb9c0f02545b364b79a59f2110f2cf5682a8e2@changeid
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: bccd9bce29e0 ("ice: Add guard rule when creating FDB in switchdev")
+Reviewed-by: Marcin Szycik <marcin.szycik@linux.intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Signed-off-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index d19aabf5d4fba..2ed0da0684906 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1121,13 +1121,10 @@ static struct slave *bond_find_best_slave(struct bonding *bond)
- 	return bestslave;
- }
- 
-+/* must be called in RCU critical section or with RTNL held */
- static bool bond_should_notify_peers(struct bonding *bond)
- {
--	struct slave *slave;
--
--	rcu_read_lock();
--	slave = rcu_dereference(bond->curr_active_slave);
--	rcu_read_unlock();
-+	struct slave *slave = rcu_dereference_rtnl(bond->curr_active_slave);
- 
- 	if (!slave || !bond->send_peer_notif ||
- 	    bond->send_peer_notif %
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 1191031b2a43d..ffd6c42bda1ed 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -2413,10 +2413,10 @@ ice_get_recp_frm_fw(struct ice_hw *hw, struct ice_sw_recipe *recps, u8 rid,
+ 		/* Propagate some data to the recipe database */
+ 		recps[idx].is_root = !!is_root;
+ 		recps[idx].priority = root_bufs.content.act_ctrl_fwd_priority;
+-		recps[idx].need_pass_l2 = root_bufs.content.act_ctrl &
+-					  ICE_AQ_RECIPE_ACT_NEED_PASS_L2;
+-		recps[idx].allow_pass_l2 = root_bufs.content.act_ctrl &
+-					   ICE_AQ_RECIPE_ACT_ALLOW_PASS_L2;
++		recps[idx].need_pass_l2 = !!(root_bufs.content.act_ctrl &
++					     ICE_AQ_RECIPE_ACT_NEED_PASS_L2);
++		recps[idx].allow_pass_l2 = !!(root_bufs.content.act_ctrl &
++					      ICE_AQ_RECIPE_ACT_ALLOW_PASS_L2);
+ 		bitmap_zero(recps[idx].res_idxs, ICE_MAX_FV_WORDS);
+ 		if (root_bufs.content.result_indx & ICE_AQ_RECIPE_RESULT_EN) {
+ 			recps[idx].chain_idx = root_bufs.content.result_indx &
 -- 
 2.43.0
 
