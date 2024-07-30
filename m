@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479B41BA87E;
-	Tue, 30 Jul 2024 15:59:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05E319F467;
+	Tue, 30 Jul 2024 15:59:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355188; cv=none; b=CF7ZQGaEhIY68c3Qw21KbXTPb28l8YOgZnADEohwZF68V9JjIVbtEBEc97ZHTa0DuWAyY2qL7AWHVJpd+gFqVyTJn+KwY7wMN5I/8IfvC0PERWluBmr305GzRXKu61uZNZPWRaPIvws90L80gy14wHvh1kWL1ENp7Rhh5aZJjJ0=
+	t=1722355191; cv=none; b=qeOgpemga15vD8Ai+TtOYGEVF9JjqKpBTWvGqNYvTION7hbvHfrkn9Bu+hdF0lU33m+asDAM48xgIvGslUz3oJCOCcMeN/Kpn3QY14nDDdN0E+iMjA1LUnrtBfYypXoBDe9WMgu70C9wBKyE7AwGPGurtxzzIGWuyOJ0YXLDDpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355188; c=relaxed/simple;
-	bh=PhXW4m3m8wTrxWINJD6Y0dzs5PxhB9EG+4aXmibQ7xA=;
+	s=arc-20240116; t=1722355191; c=relaxed/simple;
+	bh=ziNMF+rCNCW1Oc1xJibcaZxTIuBrQVp28szqirFBkPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sb9ovfMDP6RoYzBNIcpp38AyVvMYZAfIEa5cCiJUkSX5c+b6fbPHsX83NM1Mq23eRg017/7TD3Tnk0ZUEgVECxqC0rWjPLwA4UFMRw+zzHD6p3LDYDaQYEVcsy+ikXVmQO22UduyFGAa1jIAIwj5KQX6yxcLMTCKKLcwlNVlVjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icOb0SE2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uqvJ2vO9fgaq8SoiHUfxRGTTW1bKXQvA3Jk+zypR+N6fjtX6TKcGAtCqGRrQMQ9zT3z8VwTor9Kknnx/G1KYDxBOvlFl0vPfGPSBRyWCYiEsi2hMHrNxutXxmUmIYGL0DrsS8fVQHBPsvhUszjiI2cH98CU3FwROrKo8e5qS8Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ztyTVuEN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icOb0SE2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA33C32782;
-	Tue, 30 Jul 2024 15:59:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ztyTVuEN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141DBC4AF0A;
+	Tue, 30 Jul 2024 15:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355188;
-	bh=PhXW4m3m8wTrxWINJD6Y0dzs5PxhB9EG+4aXmibQ7xA=;
+	s=korg; t=1722355191;
+	bh=ziNMF+rCNCW1Oc1xJibcaZxTIuBrQVp28szqirFBkPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icOb0SE2UKRlqiN6AM1F/3nGeYArrQooYj8KOcf7EaxS5WyhxCr1S9xhKr98PKaL7
-	 e0Bq5WIdghA6n6ERRdjciuPjLz1S3cXmOldG5l2n16oTxdlCR/qdM8VqTiGYS8XyZS
-	 wqwCGr2VqCnTVE2pz0lXS1/3mgjxzwQuAgLBmdfE=
+	b=ztyTVuENUAj2rGPCLZBu1P7ZtCz1tOg/lxhbf63K8WiAnSKdHzEzDjEpWKHdoHZEP
+	 IUS72t1O+o/VbN99Q5HUe1rOnXey5L1sfkansIUOSGgXjuH2fblLApuWcbZIEFGfy3
+	 WNutfzQEIrIPN+ZHzIs1egzZbxPXxYAeZbtF6PpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rusty Bird <rustybird@net-c.com>,
-	Christoph Hellwig <hch@lst.de>,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 027/809] xen-blkfront: fix sector_size propagation to the block layer
-Date: Tue, 30 Jul 2024 17:38:23 +0200
-Message-ID: <20240730151725.729423470@linuxfoundation.org>
+Subject: [PATCH 6.1 066/440] arm64: dts: renesas: r8a779a0: Add missing hypervisor virtual timer IRQ
+Date: Tue, 30 Jul 2024 17:44:59 +0200
+Message-ID: <20240730151618.342060170@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,98 +44,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 98d34c087249d39838874b83e17671e7d5eb1ca7 ]
+[ Upstream commit 6fca24a07e1de664c3d0b280043302e0387726df ]
 
-Ensure that info->sector_size and info->physical_sector_size are set
-before the call to blkif_set_queue_limits by doing away with the
-local variables and arguments that propagate them.
+Add the missing fifth interrupt to the device node that represents the
+ARM architected timer.  While at it, add an interrupt-names property for
+clarity,
 
-Thanks to Marek Marczykowski-Górecki and Jürgen Groß for root causing
-the issue.
-
-Fixes: ba3f67c11638 ("xen-blkfront: atomically update queue limits")
-Reported-by: Rusty Bird <rustybird@net-c.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Roger Pau Monné <roger.pau@citrix.com>
-Link: https://lore.kernel.org/r/20240625055238.7934-1-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 834c310f541839b6 ("arm64: dts: renesas: Add Renesas R8A779A0 SoC support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/671416fb31e3992101c32fe7e46147fe4cd623ae.1718890849.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/xen-blkfront.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ arch/arm64/boot/dts/renesas/r8a779a0.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/block/xen-blkfront.c b/drivers/block/xen-blkfront.c
-index fd7c0ff2139ce..67aa63dabcff1 100644
---- a/drivers/block/xen-blkfront.c
-+++ b/drivers/block/xen-blkfront.c
-@@ -1063,8 +1063,7 @@ static char *encode_disk_name(char *ptr, unsigned int n)
- }
- 
- static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
--		struct blkfront_info *info, u16 sector_size,
--		unsigned int physical_sector_size)
-+		struct blkfront_info *info)
- {
- 	struct queue_limits lim = {};
- 	struct gendisk *gd;
-@@ -1159,8 +1158,6 @@ static int xlvbd_alloc_gendisk(blkif_sector_t capacity,
- 
- 	info->rq = gd->queue;
- 	info->gd = gd;
--	info->sector_size = sector_size;
--	info->physical_sector_size = physical_sector_size;
- 
- 	xlvbd_flush(info);
- 
-@@ -2315,8 +2312,6 @@ static void blkfront_gather_backend_features(struct blkfront_info *info)
- static void blkfront_connect(struct blkfront_info *info)
- {
- 	unsigned long long sectors;
--	unsigned long sector_size;
--	unsigned int physical_sector_size;
- 	int err, i;
- 	struct blkfront_ring_info *rinfo;
- 
-@@ -2355,7 +2350,7 @@ static void blkfront_connect(struct blkfront_info *info)
- 	err = xenbus_gather(XBT_NIL, info->xbdev->otherend,
- 			    "sectors", "%llu", &sectors,
- 			    "info", "%u", &info->vdisk_info,
--			    "sector-size", "%lu", &sector_size,
-+			    "sector-size", "%lu", &info->sector_size,
- 			    NULL);
- 	if (err) {
- 		xenbus_dev_fatal(info->xbdev, err,
-@@ -2369,9 +2364,9 @@ static void blkfront_connect(struct blkfront_info *info)
- 	 * provide this. Assume physical sector size to be the same as
- 	 * sector_size in that case.
- 	 */
--	physical_sector_size = xenbus_read_unsigned(info->xbdev->otherend,
-+	info->physical_sector_size = xenbus_read_unsigned(info->xbdev->otherend,
- 						    "physical-sector-size",
--						    sector_size);
-+						    info->sector_size);
- 	blkfront_gather_backend_features(info);
- 	for_each_rinfo(info, rinfo, i) {
- 		err = blkfront_setup_indirect(rinfo);
-@@ -2383,8 +2378,7 @@ static void blkfront_connect(struct blkfront_info *info)
- 		}
- 	}
- 
--	err = xlvbd_alloc_gendisk(sectors, info, sector_size,
--				  physical_sector_size);
-+	err = xlvbd_alloc_gendisk(sectors, info);
- 	if (err) {
- 		xenbus_dev_fatal(info->xbdev, err, "xlvbd_add at %s",
- 				 info->xbdev->otherend);
+diff --git a/arch/arm64/boot/dts/renesas/r8a779a0.dtsi b/arch/arm64/boot/dts/renesas/r8a779a0.dtsi
+index fa76827c81c93..158c99b1a7b79 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779a0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779a0.dtsi
+@@ -2859,6 +2859,9 @@ timer {
+ 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+-				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
++				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
++				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
++		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
++				  "hyp-virt";
+ 	};
+ };
 -- 
 2.43.0
 
