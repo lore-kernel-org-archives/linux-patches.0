@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 012CF1A6195;
-	Tue, 30 Jul 2024 16:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C9D81A6195;
+	Tue, 30 Jul 2024 16:54:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358458; cv=none; b=cNvFzCUXzHH7s4B0/3/lvxSuN6nqs+gHF0++rmuXjYfnJ7gEeMRnqEiMo8rCUMG1NCZkkrgBC00MJ4dQQFjirF+Q1ag4oSiIXY4CQvhG552OgDzU4GihZLr58pJ5C+qbnrLDHG9+gPyLEi8R8tTm3i4RcQo8V5RwiQA/QkYQk6w=
+	t=1722358461; cv=none; b=iVZ0+szz/Mj4hh6iUUcfgqZ/6qa7Bk1GoffGNtDz/PP+TD9jjdtCchB801M6iN5j7Z6TKH5W8YfeNmEccckL4hCkNCqNHT7NooOSUpA4v7KkZlcJT1+B2d0bud/4CT1mwAKcxRsdU1o2MlPBVRlgIejf0GhpQdPl0Edgf8zNwp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358458; c=relaxed/simple;
-	bh=X/Jlp0LBfmcc3CG+NlO5lXUXid4hIB7qHw9D6jDC3t8=;
+	s=arc-20240116; t=1722358461; c=relaxed/simple;
+	bh=I9/Y2RZsDBz6SZudIVtCamDaEr+5w5+qXokiWilC4h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tuJG9KUbuJ8d9P6RQLwmK8Oy/Cc+tyz0p8cj2PRHSVkxDwpsN2zgmFWnuRttUGaBc481nNPgvPGOb76du7HDEH7BXNbCUe/+PSjyK78/SyYOTEs6Zto1+hO6WcKRcJa0thF/wG3x5X/YpzukwIygD/H3QoJrbrHwkZPjl0wyTu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jxi8a0Sb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PWsRMUyFX0qXbyZMrsUhzFDzvVDGSbcPhAmEmxS/GoRGdxNPE8YrziojnLtmI+/DzLsQSEDs7RykkJ9z4sFPCFOYS30M6Ywvvt7k1Ta38Bx63tBLZcIYVhMSDxqSGUflgReEK/J6W759N4bNTabqO2QkWbwjsGZPkTQgq02wdC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYxZL7pg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jxi8a0Sb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75653C32782;
-	Tue, 30 Jul 2024 16:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYxZL7pg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B824AC32782;
+	Tue, 30 Jul 2024 16:54:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358457;
-	bh=X/Jlp0LBfmcc3CG+NlO5lXUXid4hIB7qHw9D6jDC3t8=;
+	s=korg; t=1722358461;
+	bh=I9/Y2RZsDBz6SZudIVtCamDaEr+5w5+qXokiWilC4h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxi8a0SbYQtQMuFCZ8P5uGS2sWH8hdjjFLP09hW8SKoPo6ah2zqD976mux6THHONk
-	 dXoekg1iQKqtcyQK/p5wYZPNIAhrP2ZAwC4sAPE66UkjXa26WsLm0xbowJfLAnke9N
-	 LAv978A+eIzxYpbV2ozNsUVmvne4t0k7wuiyRYOc=
+	b=dYxZL7pgQk7XCMG9Roh7iGF2GokVbYaPXVJWqrQsM3TViApmUKgWoTcAp2r2LEgyL
+	 kdDK3J/udrne771erfLmAMvWL2buwK536zZVcYpA8v2NJvU+lAei06ysZ1WWxN4k1p
+	 C4xvlsZ4zqh0dEmh+7Nyh16t6r/JtDEwVtWVF6kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	syzbot+07bee335584b04e7c2f8@syzkaller.appspotmail.com,
-	Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
-Subject: [PATCH 6.1 392/440] wifi: mac80211: check basic rates validity
-Date: Tue, 30 Jul 2024 17:50:25 +0200
-Message-ID: <20240730151631.116892046@linuxfoundation.org>
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 361/809] perf stat: Fix a segfault with --per-cluster --metric-only
+Date: Tue, 30 Jul 2024 17:43:57 +0200
+Message-ID: <20240730151738.908006621@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +48,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-commit ce04abc3fcc62cd5640af981ebfd7c4dc3bded28 upstream.
+[ Upstream commit caa463bb79a82ac5fce05a0dcf7893d94c84fc5e ]
 
-When userspace sets basic rates, it might send us some rates
-list that's empty or consists of invalid values only. We're
-currently ignoring invalid values and then may end up with a
-rates bitmap that's empty, which later results in a warning.
+The new --per-cluster option was added recently but it forgot to update
+the aggr_header fields which are used for --metric-only option.  And it
+resulted in a segfault due to NULL string in fputs().
 
-Reject the call if there were no valid rates.
-
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reported-by: syzbot+07bee335584b04e7c2f8@syzkaller.appspotmail.com
-Tested-by: syzbot+07bee335584b04e7c2f8@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=07bee335584b04e7c2f8
-Signed-off-by: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: cbc917a1b03b ("perf stat: Support per-cluster aggregation")
+Reviewed-by: Yicong Yang <yangyicong@hisilicon.com>
+Tested-by: Yicong Yang <yangyicong@hisilicon.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lore.kernel.org/r/20240628000604.1296808-1-namhyung@kernel.org
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ tools/perf/util/stat-display.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2577,6 +2577,17 @@ static int ieee80211_change_bss(struct w
- 	if (!sband)
- 		return -EINVAL;
- 
-+	if (params->basic_rates) {
-+		if (!ieee80211_parse_bitrates(sdata->vif.bss_conf.chandef.width,
-+					      wiphy->bands[sband->band],
-+					      params->basic_rates,
-+					      params->basic_rates_len,
-+					      &sdata->vif.bss_conf.basic_rates))
-+			return -EINVAL;
-+		changed |= BSS_CHANGED_BASIC_RATES;
-+		ieee80211_check_rate_mask(&sdata->deflink);
-+	}
-+
- 	if (params->use_cts_prot >= 0) {
- 		sdata->vif.bss_conf.use_cts_prot = params->use_cts_prot;
- 		changed |= BSS_CHANGED_ERP_CTS_PROT;
-@@ -2600,16 +2611,6 @@ static int ieee80211_change_bss(struct w
- 		changed |= BSS_CHANGED_ERP_SLOT;
- 	}
- 
--	if (params->basic_rates) {
--		ieee80211_parse_bitrates(sdata->vif.bss_conf.chandef.width,
--					 wiphy->bands[sband->band],
--					 params->basic_rates,
--					 params->basic_rates_len,
--					 &sdata->vif.bss_conf.basic_rates);
--		changed |= BSS_CHANGED_BASIC_RATES;
--		ieee80211_check_rate_mask(&sdata->deflink);
--	}
--
- 	if (params->ap_isolate >= 0) {
- 		if (params->ap_isolate)
- 			sdata->flags |= IEEE80211_SDATA_DONT_BRIDGE_PACKETS;
+diff --git a/tools/perf/util/stat-display.c b/tools/perf/util/stat-display.c
+index 91d2f7f65df74..186305fd2d0ef 100644
+--- a/tools/perf/util/stat-display.c
++++ b/tools/perf/util/stat-display.c
+@@ -38,6 +38,7 @@
+ static int aggr_header_lens[] = {
+ 	[AGGR_CORE] 	= 18,
+ 	[AGGR_CACHE]	= 22,
++	[AGGR_CLUSTER]	= 20,
+ 	[AGGR_DIE] 	= 12,
+ 	[AGGR_SOCKET] 	= 6,
+ 	[AGGR_NODE] 	= 6,
+@@ -49,6 +50,7 @@ static int aggr_header_lens[] = {
+ static const char *aggr_header_csv[] = {
+ 	[AGGR_CORE] 	= 	"core,cpus,",
+ 	[AGGR_CACHE]	= 	"cache,cpus,",
++	[AGGR_CLUSTER]	= 	"cluster,cpus,",
+ 	[AGGR_DIE] 	= 	"die,cpus,",
+ 	[AGGR_SOCKET] 	= 	"socket,cpus,",
+ 	[AGGR_NONE] 	= 	"cpu,",
+@@ -60,6 +62,7 @@ static const char *aggr_header_csv[] = {
+ static const char *aggr_header_std[] = {
+ 	[AGGR_CORE] 	= 	"core",
+ 	[AGGR_CACHE] 	= 	"cache",
++	[AGGR_CLUSTER]	= 	"cluster",
+ 	[AGGR_DIE] 	= 	"die",
+ 	[AGGR_SOCKET] 	= 	"socket",
+ 	[AGGR_NONE] 	= 	"cpu",
+-- 
+2.43.0
+
 
 
