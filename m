@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F9D1B583F;
-	Tue, 30 Jul 2024 15:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6981B1B583F;
+	Tue, 30 Jul 2024 15:57:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355024; cv=none; b=G83j1qN7Sk7+O1pVVh0e3xGPPGGCd5d282h0r/mLhSMVRWiCCc8SEq+QiTFbflWHm8uIipyVVj3ijiIlShTNIgWivXPjF/XzlnyhS1KaVNmo5oVK252WgFHKckNpUREJmulvhgjB4vauzo7Fq8sqsw3TKbtbREyXQl8c2UsRHyo=
+	t=1722355027; cv=none; b=pgzqtOuWwkamPGvW644JtH5aHAu6YaKDB12BK8F006sge5JS2276CrVqAmzA/NViUPSAp0wqgTA3MFxSCrv97xRtlzkOgUkKAgL9xRdUjEtTNJYTOFB4e93txFnn8Ujo9JeRdMl1bSqtyLnzUYPoEXA5QD/PkbTcaQpH8FavCvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355024; c=relaxed/simple;
-	bh=RiP7flSFiHOZoYTsJ8ldG5erSVo3335AUkAXOMpr++g=;
+	s=arc-20240116; t=1722355027; c=relaxed/simple;
+	bh=a1QqjPIujQUT2ZOSoWVi3uE1ZejXXWyACIKSiU7UN34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bvjdLajyKKSH7oILaCw9UxKE+E5OgwWlZWkpuFyAQd7Sv8Kg1b/O0qJJ6mGFshrqWLfRptqt0aR9DZqfj9nvG1qQGHIFjWC/WihsPa1KpsGQtd0wYDDNo44QXfhMAjqkAtnZcLXb0VRLCTFrkc9heJRRwv1Gw+aKAAZWjmsTx0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gi4ZMMJh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D2DfwCHjjlFgfzODSxr8yUuhkCcTbGl/43h1iBK2JOXOHcOUL2sL+eCPGS403+CRKyrr3MeaDyWbD8rTLRRk1uf5hSUI3hq2Z0FhdoZFSpew5D1S4FHYz8lI4kxHG96NDJI+IxjLrssReae7D6bt/+MQACgFDNvbb03/of43Jb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2Y5i/2W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gi4ZMMJh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8546CC32782;
-	Tue, 30 Jul 2024 15:57:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2Y5i/2W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB36BC32782;
+	Tue, 30 Jul 2024 15:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355023;
-	bh=RiP7flSFiHOZoYTsJ8ldG5erSVo3335AUkAXOMpr++g=;
+	s=korg; t=1722355027;
+	bh=a1QqjPIujQUT2ZOSoWVi3uE1ZejXXWyACIKSiU7UN34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gi4ZMMJhj+hoctAez/zI5igR9yQsBB3d7jhepx0zpchv91HKEGNkIjnsJWffrRnqC
-	 +SNcU5ml9DaT0E+SZeV6iw+jmrGe0OZABiUUxjr1ouYbWakfzMrW2x5CoFwHORkxZw
-	 sCAluO3aXnbXf/TieldftoMywKlQ4zakvFNAlOk8=
+	b=c2Y5i/2WJIvb7Y9LVNBkDjXOnMB+dc84AduHwzZgLFK2E9gWPS1VLy7zC2K481l+R
+	 oKEfw22CMnj1jfY6MlS7TE1tgOUzCpSfbLqNvRekLQ2WOiRmtMtHjZo6eGjx5s3RNB
+	 YFyvOVXgJQWPYJaTK/x9cEBWJmbHpe/ypsdoecgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/440] memory: fsl_ifc: Make FSL_IFC config visible and selectable
-Date: Tue, 30 Jul 2024 17:44:40 +0200
-Message-ID: <20240730151617.601582512@linuxfoundation.org>
+Subject: [PATCH 6.1 051/440] arm64: dts: amlogic: sm1: fix spdif compatibles
+Date: Tue, 30 Jul 2024 17:44:44 +0200
+Message-ID: <20240730151617.757087575@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
 References: <20240730151615.753688326@linuxfoundation.org>
@@ -52,52 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 9ba0cae3cac07c21c583f9ff194f74043f90d29c ]
+[ Upstream commit b0aba467c329a89e8b325eda0cf60776958353fe ]
 
-While use of fsl_ifc driver with NAND flash is fine, as the fsl_ifc_nand
-driver selects FSL_IFC automatically, we need the CONFIG_FSL_IFC option to
-be selectable for platforms using fsl_ifc with NOR flash.
+The spdif input and output of g12 and sm1 are compatible but
+sm1 should use the related compatible since it exists.
 
-Fixes: ea0c0ad6b6eb ("memory: Enable compile testing for most of the drivers")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://lore.kernel.org/r/20240530-fsl-ifc-config-v3-1-1fd2c3d233dd@geanix.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: 86f2159468d5 ("arm64: dts: meson-sm1: add spdifin and pdifout nodes")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20240625111845.928192-1-jbrunet@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/Kconfig       | 2 +-
- drivers/mtd/nand/raw/Kconfig | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-sm1.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/memory/Kconfig b/drivers/memory/Kconfig
-index fac290e48e0b8..15a9e66f031d1 100644
---- a/drivers/memory/Kconfig
-+++ b/drivers/memory/Kconfig
-@@ -178,7 +178,7 @@ config FSL_CORENET_CF
- 	  represents a coherency violation.
+diff --git a/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi b/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
+index 80737731af3fe..8bc4ef9d8a61a 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-sm1.dtsi
+@@ -337,7 +337,7 @@ tdmin_lb: audio-controller@3c0 {
+ 		};
  
- config FSL_IFC
--	bool "Freescale IFC driver" if COMPILE_TEST
-+	bool "Freescale IFC driver"
- 	depends on FSL_SOC || ARCH_LAYERSCAPE || SOC_LS1021A || COMPILE_TEST
- 	depends on HAS_IOMEM
+ 		spdifin: audio-controller@400 {
+-			compatible = "amlogic,g12a-spdifin",
++			compatible = "amlogic,sm1-spdifin",
+ 				     "amlogic,axg-spdifin";
+ 			reg = <0x0 0x400 0x0 0x30>;
+ 			#sound-dai-cells = <0>;
+@@ -351,7 +351,7 @@ spdifin: audio-controller@400 {
+ 		};
  
-diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
-index 4cd40af362de2..900b121219394 100644
---- a/drivers/mtd/nand/raw/Kconfig
-+++ b/drivers/mtd/nand/raw/Kconfig
-@@ -248,8 +248,7 @@ config MTD_NAND_FSL_IFC
- 	tristate "Freescale IFC NAND controller"
- 	depends on FSL_SOC || ARCH_LAYERSCAPE || SOC_LS1021A || COMPILE_TEST
- 	depends on HAS_IOMEM
--	select FSL_IFC
--	select MEMORY
-+	depends on FSL_IFC
- 	help
- 	  Various Freescale chips e.g P1010, include a NAND Flash machine
- 	  with built-in hardware ECC capabilities.
+ 		spdifout_a: audio-controller@480 {
+-			compatible = "amlogic,g12a-spdifout",
++			compatible = "amlogic,sm1-spdifout",
+ 				     "amlogic,axg-spdifout";
+ 			reg = <0x0 0x480 0x0 0x50>;
+ 			#sound-dai-cells = <0>;
 -- 
 2.43.0
 
