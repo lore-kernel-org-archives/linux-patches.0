@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2E71A76B2;
-	Tue, 30 Jul 2024 17:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A831A76B6;
+	Tue, 30 Jul 2024 17:26:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360382; cv=none; b=NBpDcsYQ8uDbclo7TCqwNExw30nttjvMYSLyw33uQCf9cLSJaUYqMS1PB3XwuNeaKkVKzE0xbm38OywmbUzylsZdrspKp0ESFFMFkGZAUCnrbk1NwYiF7w/3W5wvLnVC2dQJXO0pPyiL82iN3lnjbbJd+P0Sqg7Xkcf9jUWD4So=
+	t=1722360385; cv=none; b=i8M0KvR2hcOXI0fVqGv5B/SIswdx1Mbx1H9Z1dJa5Rme/WiztdGOGWQG8lfwKD/x53uzUJ0iN6vWULcNMDXELAobB2RYC2PUDUUfBMIrlb/gxXQVUd3Pta82xzMgpYWPeP8PB+GS/HaZxhBHZmp2SNyiFKg92UIoQmGZh/A4WAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360382; c=relaxed/simple;
-	bh=FUVmb281mxuDIx8NkU2nZEhJUKjjsOBjgi1sHBvzl28=;
+	s=arc-20240116; t=1722360385; c=relaxed/simple;
+	bh=38h8FuPXnzYDs/GbhPSJhJoA9I22cMNUFi7u83gFmDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eljtq/q2zLAGlQGjMHdM+5tcmH0tTaeSH92fNUcqcOlo65dGnuglG2JDdoIlwi0nf+FCNQ701rPdzm7hNKepXwBphZBoh1XLE7rrG7Ja794V/k7YjfA2n6geR7DKUo4SAGmzGOASB2DbndbszAO0mb66UxFS3BFvYATPwF0iJYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tB0mHmd+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJQ9/gsiMJlT3fhlwok97f1t+9JkwQSV7Hl8uUVaHTGMBshF+JN5kAySKVr/WyUiAWQq3Ceo2pcsmIOFq9LqDvUHQpA/fFvtt+gaT7R3Q//dVbyMbq4jsldJt32BURujRB5maQ6tJUlvicepyPX9LdIiMsBEK0Yfx8WPBz+Tkmk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DFiTCP7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tB0mHmd+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE62BC32782;
-	Tue, 30 Jul 2024 17:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DFiTCP7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CCBC32782;
+	Tue, 30 Jul 2024 17:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360382;
-	bh=FUVmb281mxuDIx8NkU2nZEhJUKjjsOBjgi1sHBvzl28=;
+	s=korg; t=1722360385;
+	bh=38h8FuPXnzYDs/GbhPSJhJoA9I22cMNUFi7u83gFmDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tB0mHmd+jwSk9MCIk6dKWXilI+STA/5CZkjXMsyt1hT3+uXwex3xsSNwI0/dWolKt
-	 vrP5BmrsCZKVlHXLyBQzNuTjZXrVH/YYWaFavWG5NbHBt7wcd0KiRC0O/qo+tqR6Br
-	 K/7XkV3ULygtze1Q9cTteMAVFdwHSdkeKLQ8HkVQ=
+	b=DFiTCP7NprQnLLrk+rbdkkEndX3plBTabQWIYRl0Kiu7JJyHCrR6YBf9gq49NMm5W
+	 QBy7PKBRtpKXtJViJ8JQAxYkiJ4SBbcwxZs0F/ZW+vGd+pvLkt56J9ujr77QdodNfj
+	 ynAKjmfB08iKWJGJ2IPza/oBIDnKJJUoTvkwbAjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joy Chakraborty <joychakr@google.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.10 681/809] rtc: cmos: Fix return value of nvmem callbacks
-Date: Tue, 30 Jul 2024 17:49:17 +0200
-Message-ID: <20240730151751.806581411@linuxfoundation.org>
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.10 682/809] scsi: lpfc: Allow DEVICE_RECOVERY mode after RSCN receipt if in PRLI_ISSUE state
+Date: Tue, 30 Jul 2024 17:49:18 +0200
+Message-ID: <20240730151751.846214584@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,77 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joy Chakraborty <joychakr@google.com>
+From: Justin Tee <justin.tee@broadcom.com>
 
-commit 1c184baccf0d5e2ef4cc1562261d0e48508a1c2b upstream.
+commit 9609385dd91b26751019b22ca9bfa4bec7602ae1 upstream.
 
-Read/write callbacks registered with nvmem core expect 0 to be returned
-on success and a negative value to be returned on failure.
+Certain vendor specific targets initially register with the fabric as an
+initiator function first and then re-register as a target function
+afterwards.
 
-cmos_nvram_read()/cmos_nvram_write() currently return the number of
-bytes read or written, fix to return 0 on success and -EIO incase number
-of bytes requested was not read or written.
+The timing of the target function re-registration can cause a race
+condition such that the driver is stuck assuming the remote port as an
+initiator function and never discovers the target's hosted LUNs.
 
-Fixes: 8b5b7958fd1c ("rtc: cmos: use generic nvmem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Joy Chakraborty <joychakr@google.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240612083635.1253039-1-joychakr@google.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Expand the nlp_state qualifier to also include NLP_STE_PRLI_ISSUE because
+the state means that PRLI was issued but we have not quite reached
+MAPPED_NODE state yet.  If we received an RSCN in the PRLI_ISSUE state,
+then we should restart discovery again by going into DEVICE_RECOVERY.
+
+Fixes: dded1dc31aa4 ("scsi: lpfc: Modify when a node should be put in device recovery mode during RSCN")
+Cc: <stable@vger.kernel.org> # v6.6+
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Link: https://lore.kernel.org/r/20240628172011.25921-3-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/rtc-cmos.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/scsi/lpfc/lpfc_hbadisc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -643,11 +643,10 @@ static int cmos_nvram_read(void *priv, u
- 			   size_t count)
- {
- 	unsigned char *buf = val;
--	int	retval;
+--- a/drivers/scsi/lpfc/lpfc_hbadisc.c
++++ b/drivers/scsi/lpfc/lpfc_hbadisc.c
+@@ -5725,7 +5725,7 @@ lpfc_setup_disc_node(struct lpfc_vport *
+ 				return ndlp;
  
- 	off += NVRAM_OFFSET;
- 	spin_lock_irq(&rtc_lock);
--	for (retval = 0; count; count--, off++, retval++) {
-+	for (; count; count--, off++) {
- 		if (off < 128)
- 			*buf++ = CMOS_READ(off);
- 		else if (can_bank2)
-@@ -657,7 +656,7 @@ static int cmos_nvram_read(void *priv, u
- 	}
- 	spin_unlock_irq(&rtc_lock);
- 
--	return retval;
-+	return count ? -EIO : 0;
- }
- 
- static int cmos_nvram_write(void *priv, unsigned int off, void *val,
-@@ -665,7 +664,6 @@ static int cmos_nvram_write(void *priv,
- {
- 	struct cmos_rtc	*cmos = priv;
- 	unsigned char	*buf = val;
--	int		retval;
- 
- 	/* NOTE:  on at least PCs and Ataris, the boot firmware uses a
- 	 * checksum on part of the NVRAM data.  That's currently ignored
-@@ -674,7 +672,7 @@ static int cmos_nvram_write(void *priv,
- 	 */
- 	off += NVRAM_OFFSET;
- 	spin_lock_irq(&rtc_lock);
--	for (retval = 0; count; count--, off++, retval++) {
-+	for (; count; count--, off++) {
- 		/* don't trash RTC registers */
- 		if (off == cmos->day_alrm
- 				|| off == cmos->mon_alrm
-@@ -689,7 +687,7 @@ static int cmos_nvram_write(void *priv,
- 	}
- 	spin_unlock_irq(&rtc_lock);
- 
--	return retval;
-+	return count ? -EIO : 0;
- }
- 
- /*----------------------------------------------------------------*/
+ 			if (ndlp->nlp_state > NLP_STE_UNUSED_NODE &&
+-			    ndlp->nlp_state < NLP_STE_PRLI_ISSUE) {
++			    ndlp->nlp_state <= NLP_STE_PRLI_ISSUE) {
+ 				lpfc_disc_state_machine(vport, ndlp, NULL,
+ 							NLP_EVT_DEVICE_RECOVERY);
+ 			}
 
 
