@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A8A1A76B7;
-	Tue, 30 Jul 2024 17:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1668D1A76B7;
+	Tue, 30 Jul 2024 17:14:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359667; cv=none; b=YNq5eo2MzHTj4Xk9Yb3WA10o8LlMoKn7kO+9SO9jFk0s+fPW8Sh/DjUgpIRt5cm8VWgDFN89JuOC//jESGEMqG9EzjEmJtXBVConlosLNBJjkZLJirs0YE82+BpMfC5jc635JBO85FreGwmWEArfF8l0T5XOYsH3mJRSMzHiwXY=
+	t=1722359671; cv=none; b=HpLmi28ilthsWPUY8R7pWc094LzPgJRPboxJtaSjxDf3HuXTUF2XEQeudvnjbSAwVX7ugPOBKeWU8/Ulo9owF3ocu0mQh/5CIYGvT3DQgTF7X8Wm/hpl/uQH9J/omzD6ZlO5xLHgcIDkMnnX3Ni2EE6L7K2xSdS/kCYVT6Pf0aY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359667; c=relaxed/simple;
-	bh=JsaMrhDv9gJNY40F4Utd6g1evt19jfTkmDvM0L5M8s0=;
+	s=arc-20240116; t=1722359671; c=relaxed/simple;
+	bh=dDT7yyOaZEc8XUrYiJrlkYNrOuXzQPBICHrzZCO/LOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iQQoZd1x+YqfqT+U7i5XJYWhlHAIGhiA8eWpGWn1cGInRaGI7ctszllvPxN6vzHAF++YoFeNXVCI/fj/lxgIhV9antp4XbnX5jSOrABfXnZDe3sPTgD1FLXENBhRTuFmMVloBfhWhTwG519AQmlcr7NhzH5NXrTn0Ll4q1x0VfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyTfxA8a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMI0S0C8Rq48KB3gredvV6PwzBzetW24pUFWq+Woki5ujWOvJ/+tePYIqWmzt14y8XFa2j/89Abm6FynRPKYVUeAEkCJGBstZ6EasmrpnqrG0ZK6ptqV5oiwI2zLZNC0wHP3fyLcYqp8lgProBO/bm0CQEN1kxpP/POdYg0vIZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sjo6EPpH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyTfxA8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79CDC32782;
-	Tue, 30 Jul 2024 17:14:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sjo6EPpH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A61DC4AF0A;
+	Tue, 30 Jul 2024 17:14:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359667;
-	bh=JsaMrhDv9gJNY40F4Utd6g1evt19jfTkmDvM0L5M8s0=;
+	s=korg; t=1722359670;
+	bh=dDT7yyOaZEc8XUrYiJrlkYNrOuXzQPBICHrzZCO/LOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyTfxA8acq5TCg+Tswk7Vy7rJRlznQ/DB1QCrdkd7IAtP6BGsS5IuDmdY66qS/HBG
-	 C9OUaPuzdkAHSd15/GzYrjpoWoAvXnZQmDNE9pAG846vHgRC9Zs62s2eyVhrHHC7MU
-	 eoec4EAjBySS/HzMo2XDvf2JxOizX8hvI4Mxxnvo=
+	b=Sjo6EPpH5IsD/FSw8TRn5Oj4F7/UxzPzgCWh9s3th750cxnp0f+Kaj/zR0Ajq839H
+	 RBouRQERhiQbBolGxwoOOqKhQfXyD6tk/GAYVpZvhPOQvPV5RWMso26ty//NPERxFe
+	 lz8rcYdUXKB7GCuzTzgsVA/apTyitOpJTkwlgN58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Ma Ke <make24@iscas.ac.cn>,
+	Roger Quadros <rogerq@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 516/809] fs/ntfs3: Keep runs for $MFT::$ATTR_DATA and $MFT::$ATTR_BITMAP
-Date: Tue, 30 Jul 2024 17:46:32 +0200
-Message-ID: <20240730151745.119113721@linuxfoundation.org>
+Subject: [PATCH 6.6 520/568] phy: cadence-torrent: Check return value on register read
+Date: Tue, 30 Jul 2024 17:50:27 +0200
+Message-ID: <20240730151700.481061913@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,38 +48,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-[ Upstream commit eb95678ee930d67d79fc83f0a700245ae7230455 ]
+[ Upstream commit 967969cf594ed3c1678a9918d6e9bb2d1591cbe9 ]
 
-We skip the run_truncate_head call also for $MFT::$ATTR_BITMAP.
-Otherwise wnd_map()/run_lookup_entry will not find the disk position for the bitmap parts.
+cdns_torrent_dp_set_power_state() does not consider that ret might be
+overwritten. Add return value check of regmap_read_poll_timeout() after
+register read in cdns_torrent_dp_set_power_state().
 
-Fixes: 0e5b044cbf3a ("fs/ntfs3: Refactoring attr_set_size to restore after errors")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: 5b16a790f18d ("phy: cadence-torrent: Reorder few functions to remove function declarations")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240702032042.3993031-1-make24@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/attrib.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/phy/cadence/phy-cadence-torrent.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
-index 0d13da5523b1a..a810ef547501d 100644
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -673,7 +673,8 @@ int attr_set_size(struct ntfs_inode *ni, enum ATTR_TYPE type,
- 			goto undo_2;
- 		}
+diff --git a/drivers/phy/cadence/phy-cadence-torrent.c b/drivers/phy/cadence/phy-cadence-torrent.c
+index a75c96385c57a..a23d7f9b7d10f 100644
+--- a/drivers/phy/cadence/phy-cadence-torrent.c
++++ b/drivers/phy/cadence/phy-cadence-torrent.c
+@@ -1154,6 +1154,9 @@ static int cdns_torrent_dp_set_power_state(struct cdns_torrent_phy *cdns_phy,
+ 	ret = regmap_read_poll_timeout(regmap, PHY_PMA_XCVR_POWER_STATE_ACK,
+ 				       read_val, (read_val & mask) == value, 0,
+ 				       POLL_TIMEOUT_US);
++	if (ret)
++		return ret;
++
+ 	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, 0x00000000);
+ 	ndelay(100);
  
--		if (!is_mft)
-+		/* keep runs for $MFT::$ATTR_DATA and $MFT::$ATTR_BITMAP. */
-+		if (ni->mi.rno != MFT_REC_MFT)
- 			run_truncate_head(run, evcn + 1);
- 
- 		svcn = le64_to_cpu(attr->nres.svcn);
 -- 
 2.43.0
 
