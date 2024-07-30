@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D530A18E03E;
-	Tue, 30 Jul 2024 17:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5809118E04F;
+	Tue, 30 Jul 2024 17:08:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359335; cv=none; b=BFN7q1SkXMVQRZD4UAhvwSbkBIu9y5OWOwA4intN8XQPt2rAlR2NxWvaSJhe4KwDJNxVopXuFZep+IZuXSG2jwdrjteQ/HEmpN1HNIVnQ7VnW3ysYSUNAYOCfNL1uJCACs/JetBv5xr7XnIlY1CHW/eHb1s0iIChL9o11ZQixFA=
+	t=1722359339; cv=none; b=YSzETivkmgR3UNhNfMVbpxhcs43I6o5g6bUpNnYweoPwdFECJyNj0HQ/284eAg5c3X1MdieA3FLMpanK66FEPugNoCW0c5lOH0IMOKKJaXwFJJjS7DGCHHyT5+TOqm+OEypGuIgYT9D/vd/1L6iTL0qkv6JE671/w2JvYuiq+Ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359335; c=relaxed/simple;
-	bh=KUqzBl4fuJitUalGMYXOO+aDZ1MuLqNjPxowxL+UBd4=;
+	s=arc-20240116; t=1722359339; c=relaxed/simple;
+	bh=3FwC84y5n2gSwgfu69PkjsE7MUcYAr0YWjOVx7LZBpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eSJD4c+bew4UTSVIPOhjbezMK+iRUnJHjAMcRI4hIREGGQ638Ui79unfxaRMZU28VyUM/FBPJySTzdUsYCcebwi74V/xw3ZN2CsMZLgZe72au/VO54y551qK/euDvKaX7OF1p6HbQr0yi9Fm8p5mwX59awsGuKojQcIgRz/+XCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GAB9SFJx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mMXnqNXT4cIFlsKSwGuUjp6jX0rlngOSoLtS6X5lNvADKRV7h3/NKJtJyS5vFXAorPz+pQZTWHV6VtK6/i4v2ORHzHtHiIazCZNm++7YAA8LtO6SyKlw5eeH9n4SllbOvgsJynC0jVIUePIGwhQ+8As5CJSJI96YB6MzGF0tFZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X92S3iMD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GAB9SFJx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40751C32782;
-	Tue, 30 Jul 2024 17:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X92S3iMD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA8CC32782;
+	Tue, 30 Jul 2024 17:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359335;
-	bh=KUqzBl4fuJitUalGMYXOO+aDZ1MuLqNjPxowxL+UBd4=;
+	s=korg; t=1722359338;
+	bh=3FwC84y5n2gSwgfu69PkjsE7MUcYAr0YWjOVx7LZBpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GAB9SFJxIbuxdZLkl8xlSYozM2gzFQ2clFGFs/4GL+QH1zkfqTUXJx/qkLX9osIWY
-	 t1OQas6xO97jYaRDdv3JDgmX+YckXPz2YAYGjTLszVWsU29H3kmTXD94I6Pq5Uy7kn
-	 lvmIiE7Ah+7zBB39XAk2YXkOGvsMV1tziF6nWqvI=
+	b=X92S3iMDCiQmNeeWTFCvjcIMvgtd6Eatt55DChQH77z5b2WrWRqjNRjS3emedFIPY
+	 3kSJ4tQJAjCzd4aMYpk5LCKGroQ59nhm5xILKTRGBAzuipz0WfwDmE4ULN3T17D+Aa
+	 4Uy77HPFFrD3/5QKNsIdikbyX4iU2ISAYosSfCZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.6 468/568] perf: Fix event leak upon exec and file release
-Date: Tue, 30 Jul 2024 17:49:35 +0200
-Message-ID: <20240730151658.317938792@linuxfoundation.org>
+	David Ahern <dsahern@kernel.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 470/809] RDMA: Fix netdev tracker in ib_device_set_netdev
+Date: Tue, 30 Jul 2024 17:45:46 +0200
+Message-ID: <20240730151743.300162249@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,160 +47,53 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: David Ahern <dsahern@kernel.org>
 
-commit 3a5465418f5fd970e86a86c7f4075be262682840 upstream.
+[ Upstream commit 2043a14fb3de9d88440b21590f714306fcbbd55f ]
 
-The perf pending task work is never waited upon the matching event
-release. In the case of a child event, released via free_event()
-directly, this can potentially result in a leaked event, such as in the
-following scenario that doesn't even require a weak IRQ work
-implementation to trigger:
+If a netdev has already been assigned, ib_device_set_netdev needs to
+release the reference on the older netdev but it is mistakenly being
+called for the new netdev. Fix it and in the process use netdev_put
+to be symmetrical with the netdev_hold.
 
-schedule()
-   prepare_task_switch()
-=======> <NMI>
-      perf_event_overflow()
-         event->pending_sigtrap = ...
-         irq_work_queue(&event->pending_irq)
-<======= </NMI>
-      perf_event_task_sched_out()
-          event_sched_out()
-              event->pending_sigtrap = 0;
-              atomic_long_inc_not_zero(&event->refcount)
-              task_work_add(&event->pending_task)
-   finish_lock_switch()
-=======> <IRQ>
-   perf_pending_irq()
-      //do nothing, rely on pending task work
-<======= </IRQ>
-
-begin_new_exec()
-   perf_event_exit_task()
-      perf_event_exit_event()
-         // If is child event
-         free_event()
-            WARN(atomic_long_cmpxchg(&event->refcount, 1, 0) != 1)
-            // event is leaked
-
-Similar scenarios can also happen with perf_event_remove_on_exec() or
-simply against concurrent perf_event_release().
-
-Fix this with synchonizing against the possibly remaining pending task
-work while freeing the event, just like is done with remaining pending
-IRQ work. This means that the pending task callback neither need nor
-should hold a reference to the event, preventing it from ever beeing
-freed.
-
-Fixes: 517e6a301f34 ("perf: Fix perf_pending_task() UaF")
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240621091601.18227-5-frederic@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 09f530f0c6d6 ("RDMA: Add netdevice_tracker to ib_device_set_netdev()")
+Signed-off-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20240710203310.19317-1-dsahern@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/perf_event.h |    1 +
- kernel/events/core.c       |   38 ++++++++++++++++++++++++++++++++++----
- 2 files changed, 35 insertions(+), 4 deletions(-)
+ drivers/infiniband/core/device.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/include/linux/perf_event.h
-+++ b/include/linux/perf_event.h
-@@ -786,6 +786,7 @@ struct perf_event {
- 	struct irq_work			pending_irq;
- 	struct callback_head		pending_task;
- 	unsigned int			pending_work;
-+	struct rcuwait			pending_work_wait;
- 
- 	atomic_t			event_limit;
- 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -2288,7 +2288,6 @@ event_sched_out(struct perf_event *event
- 		if (state != PERF_EVENT_STATE_OFF &&
- 		    !event->pending_work &&
- 		    !task_work_add(current, &event->pending_task, TWA_RESUME)) {
--			WARN_ON_ONCE(!atomic_long_inc_not_zero(&event->refcount));
- 			event->pending_work = 1;
- 		} else {
- 			local_dec(&event->ctx->nr_pending);
-@@ -5172,9 +5171,35 @@ static bool exclusive_event_installable(
- static void perf_addr_filters_splice(struct perf_event *event,
- 				       struct list_head *head);
- 
-+static void perf_pending_task_sync(struct perf_event *event)
-+{
-+	struct callback_head *head = &event->pending_task;
-+
-+	if (!event->pending_work)
-+		return;
-+	/*
-+	 * If the task is queued to the current task's queue, we
-+	 * obviously can't wait for it to complete. Simply cancel it.
-+	 */
-+	if (task_work_cancel(current, head)) {
-+		event->pending_work = 0;
-+		local_dec(&event->ctx->nr_pending);
-+		return;
-+	}
-+
-+	/*
-+	 * All accesses related to the event are within the same
-+	 * non-preemptible section in perf_pending_task(). The RCU
-+	 * grace period before the event is freed will make sure all
-+	 * those accesses are complete by then.
-+	 */
-+	rcuwait_wait_event(&event->pending_work_wait, !event->pending_work, TASK_UNINTERRUPTIBLE);
-+}
-+
- static void _free_event(struct perf_event *event)
- {
- 	irq_work_sync(&event->pending_irq);
-+	perf_pending_task_sync(event);
- 
- 	unaccount_event(event);
- 
-@@ -6808,23 +6833,27 @@ static void perf_pending_task(struct cal
- 	int rctx;
- 
- 	/*
-+	 * All accesses to the event must belong to the same implicit RCU read-side
-+	 * critical section as the ->pending_work reset. See comment in
-+	 * perf_pending_task_sync().
-+	 */
-+	preempt_disable_notrace();
-+	/*
- 	 * If we 'fail' here, that's OK, it means recursion is already disabled
- 	 * and we won't recurse 'further'.
- 	 */
--	preempt_disable_notrace();
- 	rctx = perf_swevent_get_recursion_context();
- 
- 	if (event->pending_work) {
- 		event->pending_work = 0;
- 		perf_sigtrap(event);
- 		local_dec(&event->ctx->nr_pending);
-+		rcuwait_wake_up(&event->pending_work_wait);
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index e0cff28bb0ef1..46d1c2c32d719 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2166,16 +2166,12 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 		return 0;
  	}
  
- 	if (rctx >= 0)
- 		perf_swevent_put_recursion_context(rctx);
- 	preempt_enable_notrace();
+-	if (old_ndev)
+-		netdev_tracker_free(ndev, &pdata->netdev_tracker);
+-	if (ndev)
+-		netdev_hold(ndev, &pdata->netdev_tracker, GFP_ATOMIC);
+ 	rcu_assign_pointer(pdata->netdev, ndev);
++	netdev_put(old_ndev, &pdata->netdev_tracker);
++	netdev_hold(ndev, &pdata->netdev_tracker, GFP_ATOMIC);
+ 	spin_unlock_irqrestore(&pdata->netdev_lock, flags);
+ 
+ 	add_ndev_hash(pdata);
+-	__dev_put(old_ndev);
 -
--	put_event(event);
+ 	return 0;
  }
- 
- #ifdef CONFIG_GUEST_PERF_EVENTS
-@@ -11928,6 +11957,7 @@ perf_event_alloc(struct perf_event_attr
- 	init_waitqueue_head(&event->waitq);
- 	init_irq_work(&event->pending_irq, perf_pending_irq);
- 	init_task_work(&event->pending_task, perf_pending_task);
-+	rcuwait_init(&event->pending_work_wait);
- 
- 	mutex_init(&event->mmap_mutex);
- 	raw_spin_lock_init(&event->addr_filters.lock);
+ EXPORT_SYMBOL(ib_device_set_netdev);
+-- 
+2.43.0
+
 
 
