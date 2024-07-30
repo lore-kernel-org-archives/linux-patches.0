@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C978187FFB;
-	Tue, 30 Jul 2024 16:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD72189520;
+	Tue, 30 Jul 2024 16:03:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355412; cv=none; b=CvgsYe850j9dAn7+1MoKgLvTQXUUSttlQt6a9jQNcx2VlAHoMB/5eEBV0kX2q1oAYUv1g8ofHD/kxO43tMmd0/5qE2In1UirggnA1cMmGCWS9EL0277ZUS5VDQyHgs2beBeub40ykqnSFBw6eMBRPg3/ZhEGl6E9LtRad3OXL80=
+	t=1722355415; cv=none; b=FNRGtv9mTLiTLQGOcx+5MxjUSEg6nipvYBortAHLLHNW1QWhYbc86BwURc56aHo3Dai4+CB8CnHpuLW0OCFFHQmrMyd62tb5m80QnK+1m27ipDYZqN4NSGfrcGHpWhl1fUPsjTj/aKMD7vImaWmtcJWSYWBFO+WpTyfVxFd3LsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355412; c=relaxed/simple;
-	bh=bfYFJsLEHotii6BkAZ6zE3suakjk8eXWtblhNLMLIvg=;
+	s=arc-20240116; t=1722355415; c=relaxed/simple;
+	bh=7CTZwIU8mu9MjllYbo8HuTNfuDmc8RkO0ayIGC4JbsA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PLWHGh83GOjbT9HUXuGVwR2LLwlzVsCUonOdLNb2zJ+3kGPVaRag/VxhK76nT5l8192Y8O4fMjbqCBlry666Z2SeU/hUVL32Ndvsfd7xVTDEIz6onCLNVpD1hLJwt4hHK79CeFWvy6iV81tqVRM+gpVG5MtRpg+WvnBDqxepZqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=On/6A0hU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5RG31ivAovptCl7hnX2nFxMxppUIfgYIjiP3tysrcHOuo8LZAfc/vnsACPyVpNBu3rIfbUCWaPVPwyMUGpji7CxObW/kKr9ACUQdldTKhURYBafMKvwjOydU5iMRLCLq7knm4DtxDtgg1M4l87J0D7xMFHjF3m7bCI+Sg31xeQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CEB9XZGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="On/6A0hU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8260FC4AF12;
-	Tue, 30 Jul 2024 16:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CEB9XZGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA104C4AF0E;
+	Tue, 30 Jul 2024 16:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355412;
-	bh=bfYFJsLEHotii6BkAZ6zE3suakjk8eXWtblhNLMLIvg=;
+	s=korg; t=1722355415;
+	bh=7CTZwIU8mu9MjllYbo8HuTNfuDmc8RkO0ayIGC4JbsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=On/6A0hUO4eV5txD7g4Ejd/XICgdAmprp8Vs3JZoypIWfu/703RIRlxDhEWfJ1Mjb
-	 yvorvDzh/Owc7cdKT7tkSr1ZAddJgAdAQLGh/bj8FrulgdIiBqr5sHb9Bp0u4/7yBX
-	 ieF6rnwBo/q1VYzxtf+w47rHSxyEJuTqE7A0TfrU=
+	b=CEB9XZGVatgnNK6Rv0eS2emAFUkQxVYkco6pdHOFs6TVPicXyxBtPF5NrQvw5449g
+	 2uvsirLeZnt0K1AEx6fyNVmaQD58auO67TNdurjdvJ+UxvkdRHgyCfQhNoifR196mU
+	 r+KlBvu6ehctaTdRh+QRcqThWRRLFI973L+7p5+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jai Luthra <j-luthra@ti.com>,
+	Vignesh Raghavendra <vigneshr@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/440] net/smc: set rmbs SG_MAX_SINGLE_ALLOC limitation only when CONFIG_ARCH_NO_SG_CHAIN is defined
-Date: Tue, 30 Jul 2024 17:45:24 +0200
-Message-ID: <20240730151619.313436260@linuxfoundation.org>
+Subject: [PATCH 6.6 056/568] arm64: dts: ti: k3-am62x: Drop McASP AFIFOs
+Date: Tue, 30 Jul 2024 17:42:43 +0200
+Message-ID: <20240730151642.045549662@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +47,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Jai Luthra <j-luthra@ti.com>
 
-[ Upstream commit 3ac14b9dfbd345e891d48d89f6c2fa519848f0f4 ]
+[ Upstream commit 6ee3ca0ec7fabc63603afdb3485da04164dc8747 ]
 
-SG_MAX_SINGLE_ALLOC is used to limit maximum number of entries that
-will be allocated in one piece of scatterlist. When the entries of
-scatterlist exceeds SG_MAX_SINGLE_ALLOC, sg chain will be used. From
-commit 7c703e54cc71 ("arch: switch the default on ARCH_HAS_SG_CHAIN"),
-we can know that the macro CONFIG_ARCH_NO_SG_CHAIN is used to identify
-whether sg chain is supported. So, SMC-R's rmb buffer should be limited
-by SG_MAX_SINGLE_ALLOC only when the macro CONFIG_ARCH_NO_SG_CHAIN is
-defined.
+McASP AFIFOs are not necessary with UDMA-P/BCDMA as there is buffering
+on the DMA IP. Drop these for better audio latency.
 
-Fixes: a3fe3d01bd0d ("net/smc: introduce sg-logic for RMBs")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Co-developed-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b94b43715e91 ("arm64: dts: ti: Enable audio on SK-AM62(-LP)")
+Signed-off-by: Jai Luthra <j-luthra@ti.com>
+Link: https://lore.kernel.org/r/20240606-mcasp_fifo_drop-v2-1-8c317dabdd0a@ti.com
+Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index 64b6dd439938e..10d79cb55528d 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -1959,7 +1959,6 @@ int smc_conn_create(struct smc_sock *smc, struct smc_init_info *ini)
-  */
- static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
- {
--	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
- 	u8 compressed;
+diff --git a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+index 677ff8de4b6ec..0f8c0f6a0f573 100644
+--- a/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62x-sk-common.dtsi
+@@ -481,8 +481,6 @@ &mcasp1 {
+ 	       0 0 0 0
+ 	       0 0 0 0
+ 	>;
+-	tx-num-evt = <32>;
+-	rx-num-evt = <32>;
+ };
  
- 	if (size <= SMC_BUF_MIN_SIZE)
-@@ -1969,9 +1968,11 @@ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
- 	compressed = min_t(u8, ilog2(size) + 1,
- 			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
- 
-+#ifdef CONFIG_ARCH_NO_SG_CHAIN
- 	if (!is_smcd && is_rmb)
- 		/* RMBs are backed by & limited to max size of scatterlists */
--		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
-+		compressed = min_t(u8, compressed, ilog2((SG_MAX_SINGLE_ALLOC * PAGE_SIZE) >> 14));
-+#endif
- 
- 	return compressed;
- }
+ &dss {
 -- 
 2.43.0
 
