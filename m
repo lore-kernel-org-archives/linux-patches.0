@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933E7194C73;
-	Tue, 30 Jul 2024 16:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2CD1A3020;
+	Tue, 30 Jul 2024 16:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355717; cv=none; b=OQu5N9chKjx/78svv5J+lStZ4r9SUYAnCCGu3n2lPVA55OrhElFmHjBcxLWVU7mmGl0yy0H8x8QXsD4vmATWKFNnooUKcXOR48+EmFeDudseIu6m1EJGH1hvxnarNnn+vahZMw5WARAcxNZJkiIIUM9AixKfhSo/fvsinRklGEI=
+	t=1722355720; cv=none; b=gtpCRiflDztC5fAwkKy0f6whRWmChSBjkfnJ66JOtlt7VAQc5vM9HwIWa1RZB7vbV5uOtqr2X/AVdXg1Sy8xcshD60uaPOVkXoOWGgpJNIJAANAsG51CgN5ULOkMe8fbWhduZmks6V7HLXWGLsKYWjVBzMsV5k0YN+JelH7Q7Bg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355717; c=relaxed/simple;
-	bh=/4Jc3RPt85ynXGbLJfbjYfksohSL7Wtn3/zdLrjZtho=;
+	s=arc-20240116; t=1722355720; c=relaxed/simple;
+	bh=uvObUKRLVFk6TYmqSxnFk1qzbdcKvgL9TwH02JDuaHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iF+aJWbNc1lrKcQf06HY47K6mh52nNzZlQh+fGb77pDwcIO7BvKjwcyZyAGE1wGsyeFACbE8uIEeX48FFZxku8O531kTsGKXlP3AlKDifG2lrFjnkXBt/WyNDOzQbUN18TR+xB3bk62LvaHjAKYqPu8rRFfeETtL3OMxYeMUHDI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tNN+LWhK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Axa5CR8Cpenqn7elvg4zLRtJp5vghFx2ssr0IgevsSz1P45C2uVLE4J1afsB3c6LdbEy1iE0KrBs73QjuAEXPpYjs0sgNW6I6gCSq5W/hhcDR7hMFYmYD7x5Z6w+4Xvgk9AEEXj7eio1baB+f+q3FnSksIxF7CZwpF7Lb3no8TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ayNYMU7r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tNN+LWhK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499A3C4AF0C;
-	Tue, 30 Jul 2024 16:08:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ayNYMU7r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10B77C32782;
+	Tue, 30 Jul 2024 16:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355717;
-	bh=/4Jc3RPt85ynXGbLJfbjYfksohSL7Wtn3/zdLrjZtho=;
+	s=korg; t=1722355720;
+	bh=uvObUKRLVFk6TYmqSxnFk1qzbdcKvgL9TwH02JDuaHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNN+LWhKSMd/+8xtJ8mONISV1Y8+QgnsSL7kN5PGEmleKcTiqIcQ46rDSMvpu0idX
-	 Fbe+2LYIp6u1NqzIHr/GzXpUBxjOvRHkwriaEmv1AuzjoT6vXaKBwcXEoVxV/TGCgf
-	 /IxzYH7wqxUWGIsljVZtim5C7UmXFbShNhvdNIq0=
+	b=ayNYMU7rDLshM44eW//fhIPkeOT01fYW3GNZCLa9O+7i3T1n3C5bVOI7EwWsj2G7K
+	 uRkx+B9ZVwjd7IEBNEQXYLjcQz14SCoWtKbz1wd8v6FdLT2GTfgWoAjDRwBnrlg2Z/
+	 7tadyRRAfdsW/qcy9joZSwvlQetFWcIIq4T8bG5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tengda Wu <wutengda@huaweicloud.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <kafai@fb.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 124/440] bpf: Fix null pointer dereference in resolve_prog_type() for BPF_PROG_TYPE_EXT
-Date: Tue, 30 Jul 2024 17:45:57 +0200
-Message-ID: <20240730151620.731036012@linuxfoundation.org>
+Subject: [PATCH 6.6 084/568] arm64: dts: renesas: r8a779f0: Add missing hypervisor virtual timer IRQ
+Date: Tue, 30 Jul 2024 17:43:11 +0200
+Message-ID: <20240730151643.148523387@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,111 +46,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tengda Wu <wutengda@huaweicloud.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit f7866c35873377313ff94398f17d425b28b71de1 ]
+[ Upstream commit b1c34567aebe300f9a0f70320eaeef0b3d56ffc7 ]
 
-When loading a EXT program without specifying `attr->attach_prog_fd`,
-the `prog->aux->dst_prog` will be null. At this time, calling
-resolve_prog_type() anywhere will result in a null pointer dereference.
+Add the missing fifth interrupt to the device node that represents the
+ARM architected timer.  While at it, add an interrupt-names property for
+clarity,
 
-Example stack trace:
-
-[    8.107863] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
-[    8.108262] Mem abort info:
-[    8.108384]   ESR = 0x0000000096000004
-[    8.108547]   EC = 0x25: DABT (current EL), IL = 32 bits
-[    8.108722]   SET = 0, FnV = 0
-[    8.108827]   EA = 0, S1PTW = 0
-[    8.108939]   FSC = 0x04: level 0 translation fault
-[    8.109102] Data abort info:
-[    8.109203]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
-[    8.109399]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-[    8.109614]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[    8.109836] user pgtable: 4k pages, 48-bit VAs, pgdp=0000000101354000
-[    8.110011] [0000000000000004] pgd=0000000000000000, p4d=0000000000000000
-[    8.112624] Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP
-[    8.112783] Modules linked in:
-[    8.113120] CPU: 0 PID: 99 Comm: may_access_dire Not tainted 6.10.0-rc3-next-20240613-dirty #1
-[    8.113230] Hardware name: linux,dummy-virt (DT)
-[    8.113390] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-[    8.113429] pc : may_access_direct_pkt_data+0x24/0xa0
-[    8.113746] lr : add_subprog_and_kfunc+0x634/0x8e8
-[    8.113798] sp : ffff80008283b9f0
-[    8.113813] x29: ffff80008283b9f0 x28: ffff800082795048 x27: 0000000000000001
-[    8.113881] x26: ffff0000c0bb2600 x25: 0000000000000000 x24: 0000000000000000
-[    8.113897] x23: ffff0000c1134000 x22: 000000000001864f x21: ffff0000c1138000
-[    8.113912] x20: 0000000000000001 x19: ffff0000c12b8000 x18: ffffffffffffffff
-[    8.113929] x17: 0000000000000000 x16: 0000000000000000 x15: 0720072007200720
-[    8.113944] x14: 0720072007200720 x13: 0720072007200720 x12: 0720072007200720
-[    8.113958] x11: 0720072007200720 x10: 0000000000f9fca4 x9 : ffff80008021f4e4
-[    8.113991] x8 : 0101010101010101 x7 : 746f72705f6d656d x6 : 000000001e0e0f5f
-[    8.114006] x5 : 000000000001864f x4 : ffff0000c12b8000 x3 : 000000000000001c
-[    8.114020] x2 : 0000000000000002 x1 : 0000000000000000 x0 : 0000000000000000
-[    8.114126] Call trace:
-[    8.114159]  may_access_direct_pkt_data+0x24/0xa0
-[    8.114202]  bpf_check+0x3bc/0x28c0
-[    8.114214]  bpf_prog_load+0x658/0xa58
-[    8.114227]  __sys_bpf+0xc50/0x2250
-[    8.114240]  __arm64_sys_bpf+0x28/0x40
-[    8.114254]  invoke_syscall.constprop.0+0x54/0xf0
-[    8.114273]  do_el0_svc+0x4c/0xd8
-[    8.114289]  el0_svc+0x3c/0x140
-[    8.114305]  el0t_64_sync_handler+0x134/0x150
-[    8.114331]  el0t_64_sync+0x168/0x170
-[    8.114477] Code: 7100707f 54000081 f9401c00 f9403800 (b9400403)
-[    8.118672] ---[ end trace 0000000000000000 ]---
-
-One way to fix it is by forcing `attach_prog_fd` non-empty when
-bpf_prog_load(). But this will lead to `libbpf_probe_bpf_prog_type`
-API broken which use verifier log to probe prog type and will log
-nothing if we reject invalid EXT prog before bpf_check().
-
-Another way is by adding null check in resolve_prog_type().
-
-The issue was introduced by commit 4a9c7bbe2ed4 ("bpf: Resolve to
-prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT") which wanted
-to correct type resolution for BPF_PROG_TYPE_TRACING programs. Before
-that, the type resolution of BPF_PROG_TYPE_EXT prog actually follows
-the logic below:
-
-  prog->aux->dst_prog ? prog->aux->dst_prog->type : prog->type;
-
-It implies that when EXT program is not yet attached to `dst_prog`,
-the prog type should be EXT itself. This code worked fine in the past.
-So just keep using it.
-
-Fix this by returning `prog->type` for BPF_PROG_TYPE_EXT if `dst_prog`
-is not present in resolve_prog_type().
-
-Fixes: 4a9c7bbe2ed4 ("bpf: Resolve to prog->aux->dst_prog->type only for BPF_PROG_TYPE_EXT")
-Signed-off-by: Tengda Wu <wutengda@huaweicloud.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Martin KaFai Lau <kafai@fb.com>
-Link: https://lore.kernel.org/bpf/20240711145819.254178-2-wutengda@huaweicloud.com
+Fixes: c62331e8222f8f21 ("arm64: dts: renesas: Add Renesas R8A779F0 SoC support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/46deba1008f73e4b6864f937642d17f9d4ae7205.1718890849.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/bpf_verifier.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a779f0.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/bpf_verifier.h b/include/linux/bpf_verifier.h
-index f080ccf27d256..6a524c5462a6f 100644
---- a/include/linux/bpf_verifier.h
-+++ b/include/linux/bpf_verifier.h
-@@ -645,7 +645,7 @@ static inline u32 type_flag(u32 type)
- /* only use after check_attach_btf_id() */
- static inline enum bpf_prog_type resolve_prog_type(const struct bpf_prog *prog)
- {
--	return prog->type == BPF_PROG_TYPE_EXT ?
-+	return (prog->type == BPF_PROG_TYPE_EXT && prog->aux->dst_prog) ?
- 		prog->aux->dst_prog->type : prog->type;
- }
+diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+index ecdd5a523fa34..555fff9364e35 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+@@ -1181,7 +1181,10 @@ timer {
+ 		interrupts-extended = <&gic GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
+ 				      <&gic GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
+-				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
++				      <&gic GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>,
++				      <&gic GIC_PPI 12 IRQ_TYPE_LEVEL_LOW>;
++		interrupt-names = "sec-phys", "phys", "virt", "hyp-phys",
++				  "hyp-virt";
+ 	};
  
+ 	ufs30_clk: ufs30-clk {
 -- 
 2.43.0
 
