@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F665166316;
-	Tue, 30 Jul 2024 17:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED7281FBA;
+	Tue, 30 Jul 2024 17:00:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358803; cv=none; b=e7K/Hon1BFxUqx9boUaoKwPImp/Oi78EFT/Nlm9dUSbzmfSShwBWNky8AyoKPx+IJMYqQLaQnONEg+hS2wwSQ83UuP/pPtTlTxh2pw/22nXqXp8kl5bLfq+D/dyAS2rKagiA7+d7l5P48HVe9Ra0Ownsat3J+1KakDnDhSr72XE=
+	t=1722358807; cv=none; b=vCWlf0DE00o15b866hnS4uBR1JDpxjiDYCPMk9ZOKjJp0xttrtGGgUL62m7hhUpNjVS4h14c7nAg3tNngPxA4ISw2yTGYgsO1RCg01/qXAci5wLM1W/KOwFmWs3x6T3+qxbBfwj4UsPxfKIzaAYiTd/BdOYJDrF8RertIXEHjGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358803; c=relaxed/simple;
-	bh=/HIW6jBV73qAFgbTMJosHWFs4l0HIRh1QneHChcicmA=;
+	s=arc-20240116; t=1722358807; c=relaxed/simple;
+	bh=hRT1X53jY8hWGkrgXaaV+omSre4UvWUTDO2WPD33xjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C5FLUAtlyZ2MGmNNxzyauZ117xmxjZ85VgcJIl0su53t8FWWkM0eI5PZ2lahTBztWt/60LHXoyMVc58oe7NWmFNW+ED43mu6lMhh2S8KbgMlMVzOQzC2EMglQd6tTNtJ96sUw42OVhYiV0f8xOg0kZIezXlLuxbGZl0ePMsPgm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FotIc2Yd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hb4ggAuzuwevO+/DMNaMVagDwCIvIZHvWwQ/EenYW7QRoScCSfcey6tUhsvCRz4M1HOknMv2brxb0+QpFOGBX5b2deVcH0ttpVXPzi0uHD/+KACarxD7lurKHamDPVOmF3DAH0CH+NyiWTSDKyHKOCW6TM8c+w3gOZtypkXVyhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnkpiMRS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FotIc2Yd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AB83C32782;
-	Tue, 30 Jul 2024 17:00:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnkpiMRS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 590A6C32782;
+	Tue, 30 Jul 2024 17:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358803;
-	bh=/HIW6jBV73qAFgbTMJosHWFs4l0HIRh1QneHChcicmA=;
+	s=korg; t=1722358806;
+	bh=hRT1X53jY8hWGkrgXaaV+omSre4UvWUTDO2WPD33xjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FotIc2Ydi3SSf3n70CprnGlABT505wUOnv2NZXydNuulwqlAmDgdAYYes+3O/zOya
-	 tL7JEq9WZIrGgbyqYMMOFo5X9eR1W0hOU03/FVyWy4zqFkeZ5N7BMTE5hM0a3V621r
-	 OGWGX9OI4rpWb4fjEfRKR6Xnpp4+pvViPWgfEXu4=
+	b=AnkpiMRSRJyJXv+ooELavbkeVJMUhMpFXDzM8lECRlNR4hsYfA7VW18tX6hzobupr
+	 MRSaARpFyooX8ebXPhny2ufxBBkVNUgaZcYpt5Xii2EcaDbtuBKMwvzQ1pdO9H4K0g
+	 VsVxyCN2PIA46zzzY9wBxwifR7O8hqHYIOVQiLVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Nuno Sa <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 423/440] ASoC: SOF: imx8m: Fix DSP control regmap retrieval
-Date: Tue, 30 Jul 2024 17:50:56 +0200
-Message-ID: <20240730151632.305391470@linuxfoundation.org>
+Subject: [PATCH 6.10 398/809] iio: adc: adi-axi-adc: dont allow concurrent enable/disable calls
+Date: Tue, 30 Jul 2024 17:44:34 +0200
+Message-ID: <20240730151740.402273997@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,43 +47,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniel Baluta <daniel.baluta@nxp.com>
+From: Nuno Sa <nuno.sa@analog.com>
 
-[ Upstream commit 2634f745eac25a33f032df32cf98fca8538a534a ]
+[ Upstream commit 202b89f4b778d86a940f693785600acaccca6a2b ]
 
-According to Documentation/devicetree/bindings/dsp/fsl,dsp.yaml
-fsl,dsp-ctrl is a phandle to syscon block so we need to use correct
-function to retrieve it.
+Add proper mutex guards as we should not be able to disable
+the core in the middle of enabling it.
 
-Currently there is no SOF DSP DTS merged into mainline so there is no
-need to support the old way of retrieving the dsp control node.
+Note there's no need to rush in backporting this as the only user of the
+backend does not do anything crazy..
 
-Fixes: 9ba23717b292 ("ASoC: SOF: imx8m: Implement DSP start")
-Signed-off-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://patch.msgid.link/20240715151653.114751-1-daniel.baluta@oss.nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 794ef0e57854 ("iio: adc: adi-axi-adc: move to backend framework")
+Signed-off-by: Nuno Sa <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240531-dev-axi-adc-drp-v3-1-e3fa79447c67@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/imx/imx8m.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/adi-axi-adc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/sof/imx/imx8m.c b/sound/soc/sof/imx/imx8m.c
-index 1243f8a6141ea..186ba4bbb5b26 100644
---- a/sound/soc/sof/imx/imx8m.c
-+++ b/sound/soc/sof/imx/imx8m.c
-@@ -243,7 +243,7 @@ static int imx8m_probe(struct snd_sof_dev *sdev)
- 	/* set default mailbox offset for FW ready message */
- 	sdev->dsp_box.offset = MBOX_OFFSET;
+diff --git a/drivers/iio/adc/adi-axi-adc.c b/drivers/iio/adc/adi-axi-adc.c
+index 0cf0d81358fd5..bf51d619ebbc9 100644
+--- a/drivers/iio/adc/adi-axi-adc.c
++++ b/drivers/iio/adc/adi-axi-adc.c
+@@ -85,6 +85,7 @@ static int axi_adc_enable(struct iio_backend *back)
+ 	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 	int ret;
  
--	priv->regmap = syscon_regmap_lookup_by_compatible("fsl,dsp-ctrl");
-+	priv->regmap = syscon_regmap_lookup_by_phandle(np, "fsl,dsp-ctrl");
- 	if (IS_ERR(priv->regmap)) {
- 		dev_err(sdev->dev, "cannot find dsp-ctrl registers");
- 		ret = PTR_ERR(priv->regmap);
++	guard(mutex)(&st->lock);
+ 	ret = regmap_set_bits(st->regmap, ADI_AXI_REG_RSTN,
+ 			      ADI_AXI_REG_RSTN_MMCM_RSTN);
+ 	if (ret)
+@@ -99,6 +100,7 @@ static void axi_adc_disable(struct iio_backend *back)
+ {
+ 	struct adi_axi_adc_state *st = iio_backend_get_priv(back);
+ 
++	guard(mutex)(&st->lock);
+ 	regmap_write(st->regmap, ADI_AXI_REG_RSTN, 0);
+ }
+ 
 -- 
 2.43.0
 
