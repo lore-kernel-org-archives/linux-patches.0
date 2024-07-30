@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FF66183CCA;
-	Tue, 30 Jul 2024 16:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72B02187FF2;
+	Tue, 30 Jul 2024 16:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355361; cv=none; b=II79Z7mGJw8ZJVEDv/JEgjud6m4Lg2Cx/TrLkVjPG0Vgn4H1QDkxW3ptSSJPZ544DNDxMX61YlCRql9jMGCmAzdjdey2DLqFfz5CewwXBzBmYhmj0z4Hjv7tDVNbXSGtvrBDVi27+LcbML9aA6OeLY1uc1E35kPXByFWO7D0ORs=
+	t=1722355364; cv=none; b=SAcSTKiyzZsKeHJ48IQvDVqDDLjmJRzdlVcWr+zIunr6k1EeSWOh/TW8jgfhQwNsMntnuCmmHJ/QGA6ZjiXjHUrYhb6CaINSvPI/h3Ogh0YavE69DQtXo1HCIzHtLJhJVVktdp12EEEixRihaCKmFl6ci31TdASQHwMiw3QEOt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355361; c=relaxed/simple;
-	bh=JmqfSiPWK1IEC8X7LpB3NuZAnAEByLdghiIuDoyHa7s=;
+	s=arc-20240116; t=1722355364; c=relaxed/simple;
+	bh=hzVmCNDt94f4cm62y3G5oU87vKKnrqxFhLdyAEOgU7w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTZLGTR7FElzv4IS7yTfgncXbVm0y/Ptfa+uQ7TN6/DLOxWgqsACBcG++cjK4jxun55q4aR+5+7jivfTIR6i5shEBGfJvq9Dd6YlcfEe3YGEtX5Mji7sfqSJmpVhrE99Rk7T9txZ25Cb6MOafVKTGXTnwrQKP9tkRLUsoeAXI84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLLcASN2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=and2P+f5cmN4xiMA5Dcv0QvSmrjFx1YNEnJF88z7cr1JGWAhvcucxqVh/EU/dErJYDaWGXDQWxDNzCFzd1GFtHvSXG6dCXzDhyKbqKEQWrO29Z9tDn9pDRFwdWIJ8BI/sEtNVJQe1nhmpy4ntOSQ7ciI+xmR8Drkv3IPnhnVd7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X/t2LKyU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLLcASN2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D460C32782;
-	Tue, 30 Jul 2024 16:02:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X/t2LKyU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99DE0C32782;
+	Tue, 30 Jul 2024 16:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355360;
-	bh=JmqfSiPWK1IEC8X7LpB3NuZAnAEByLdghiIuDoyHa7s=;
+	s=korg; t=1722355364;
+	bh=hzVmCNDt94f4cm62y3G5oU87vKKnrqxFhLdyAEOgU7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLLcASN2QOaoRvR8QJGDgdPt9dMw4aflS02JhU0Zsh6I7xViuAhwRYoFQ61PPUvDJ
-	 PzIU1KMCMgK1iue0S5qXCbidFDpJMMjcNTXWtEpCgWM7O02ovXEgGFPjskPSZUD27k
-	 Pqg2yAix/NMjFo48uZb40s5dI6I4eAwaCavzwaJQ=
+	b=X/t2LKyU2zu5a3bg02KlxMtOj8qFqruIY4bXHM7I7ELBo9LAidI1cfFCsFVxz+N78
+	 mfYGklhT0DmHJ6hi0Be2Ko8MPdidKBf1cKZfCYEy7PPlANlK/PDcQBoza1RmKQZgha
+	 zKawoS5UvIRod/uAvyOkVqldcn55dhZtcMQclMQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Rayyan Ansari <rayyan@ansari.sh>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/568] ARM: dts: stm32: Add arm,no-tick-in-suspend to STM32MP15xx STGEN timer
-Date: Tue, 30 Jul 2024 17:42:38 +0200
-Message-ID: <20240730151641.834490870@linuxfoundation.org>
+Subject: [PATCH 6.10 044/809] ARM: dts: qcom: msm8226-microsoft-common: Enable smbb explicitly
+Date: Tue, 30 Jul 2024 17:38:40 +0200
+Message-ID: <20240730151726.393141542@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,47 +48,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Vasut <marex@denx.de>
+From: Rayyan Ansari <rayyan@ansari.sh>
 
-[ Upstream commit 4306c047415a227bc72f0e7ba9bde1ccdac10435 ]
+[ Upstream commit 81a0a21b6159c6a9ed1e39c23e755cd05a102ce3 ]
 
-STM32MP15xx RM0436 Rev 6 section 46.3 System timer generator (STGEN) states
-"
-Arm recommends that the system counter is in an always-on power domain.
-This is not supported in the current implementation, therefore STGEN should
-be saved and restored before Standby mode entry, and restored at Standby
-exit by secure software.
-...
-"
-Instead of piling up workarounds in the firmware which is difficult to
-update, add "arm,no-tick-in-suspend" DT property into the timer node to
-indicate the timer is stopped in suspend, and let the kernel fix the
-timer up.
+Enable the smbb node explicitly for MSM8x26 Lumia devices. These devices
+rely on the smbb driver in order to detect USB state.
 
-Fixes: 8471a20253eb ("ARM: dts: stm32: add stm32mp157c initial support")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+It seems that this was accidentally missed in the commit that this
+fixes.
+
+Fixes: c9c8179d0ccd ("ARM: dts: qcom: Disable pm8941 & pm8226 smbb charger by default")
+Signed-off-by: Rayyan Ansari <rayyan@ansari.sh>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240424174206.4220-1-rayyan@ansari.sh
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/st/stm32mp151.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm/boot/dts/st/stm32mp151.dtsi b/arch/arm/boot/dts/st/stm32mp151.dtsi
-index 61508917521c3..aec7fa5ab5d8c 100644
---- a/arch/arm/boot/dts/st/stm32mp151.dtsi
-+++ b/arch/arm/boot/dts/st/stm32mp151.dtsi
-@@ -50,6 +50,7 @@ timer {
- 			     <GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
- 			     <GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>;
- 		interrupt-parent = <&intc>;
-+		arm,no-tick-in-suspend;
- 	};
+diff --git a/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi b/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
+index 525d8c608b06f..8839b23fc6936 100644
+--- a/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
++++ b/arch/arm/boot/dts/qcom/qcom-msm8226-microsoft-common.dtsi
+@@ -287,6 +287,10 @@ &sdhc_2 {
+ 	status = "okay";
+ };
  
- 	clocks {
++&smbb {
++	status = "okay";
++};
++
+ &usb {
+ 	extcon = <&smbb>;
+ 	dr_mode = "peripheral";
 -- 
 2.43.0
 
