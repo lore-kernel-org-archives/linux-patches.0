@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CA001A6195;
-	Tue, 30 Jul 2024 16:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7701A6195;
+	Tue, 30 Jul 2024 16:55:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358509; cv=none; b=JjXmPqU9u1LYUonYMso1+Il6O/fMgrMcZG0d+bExBIdHTKjQdBd9EJmJfQxxui/wJRNMB2kO9FVYlRnQ7NOIguq531dTjsBXe+k8Hh+NxRTHLAoao6YvU9x0Xy+umm5oIDprbrgOBywr/AWPGub/kzUckDkHCTAim6nGd28DaKg=
+	t=1722358512; cv=none; b=olvx07yBHa+lWZBUj0LC6rGX9K3SSyQhdH8kpwqKAcRdXVNSzb+aa4/STXiXWEV3UC40h8oYCX2e7tnSXHQ0zGR7ZdlniSM5jGf8o2bWgNU1D8sWJBr/DZE3rejUnub7S4WZFDTSibF8uUWnz2S/ZiYwLEiNvN+mjxl2c+NYjCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358509; c=relaxed/simple;
-	bh=8TueQuDdOnik5oZfzL0bDZOR2M4W6h40AHXuS1uWkWc=;
+	s=arc-20240116; t=1722358512; c=relaxed/simple;
+	bh=C9joSy2NvxkK3nidKQPNmwgrf8N8FLvEQJTy79+RfEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n69duGhwzYMnt/zOLaKnv6axHD1sv2VKC/HwolU5nRabtULguiN0hicBfTMNv89eB3++CU0gGdi61toRjvogjziV6P5dDL72EPC725la7FQDWF3cioSun8RqQpt7E5eGvG04YH8wS0bz1mG3gO4dG7SdRD9fbqpM8XEIIZHAgHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ur4rvmyo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CdQ8qleDxoNVlfMWuicNVpZTnXh+AgZHwbMU5RcdF1mB1iJ4yFWNb2o3uEJQkJKjoaFHnP4GdR2Twj6650uDTbEDvgfwk/suKq6IIhRymJOFDxEuCS7/F2CFxRnKbUpUpuDdpxsr0pAEQWxcKQE0jEW7zpFkeFU743sYEPzWv8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GaiXA78D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ur4rvmyo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109CBC32782;
-	Tue, 30 Jul 2024 16:55:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GaiXA78D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F2A6C32782;
+	Tue, 30 Jul 2024 16:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358508;
-	bh=8TueQuDdOnik5oZfzL0bDZOR2M4W6h40AHXuS1uWkWc=;
+	s=korg; t=1722358512;
+	bh=C9joSy2NvxkK3nidKQPNmwgrf8N8FLvEQJTy79+RfEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ur4rvmyoz9NzpW45pVadXvHSxMyGon+eUstfPqndkzmfdh2SpPa4SzMno0lUELxFH
-	 mglTsB8JadebdajkIantLIrneFbQQa/BvfpOI5F2y2huCoYWpDkaKv7/Bcj5ps4WUY
-	 ho+Xs/bK2vPovpHBw3GJFRJMEQOFntm30RO5zWp4=
+	b=GaiXA78DfupeCDx0wNk384mBSNnHAnCh1gfACg7p2NtwW/I/rFmCb2Q+XJtbSSroq
+	 Ft3P1myC6k/aOqd84zEF8Smh+G6PxfAZXNH/hCMgpetQEZZE+6GTxrWHxgZRvMdam2
+	 ew45No9yX8q3r2ili8AGnUKVMucPg7ESGq9VjAKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 368/568] net: netconsole: Disable target before netpoll cleanup
-Date: Tue, 30 Jul 2024 17:47:55 +0200
-Message-ID: <20240730151654.244653008@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Roger Quadros <rogerq@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 397/440] phy: cadence-torrent: Check return value on register read
+Date: Tue, 30 Jul 2024 17:50:30 +0200
+Message-ID: <20240730151631.309672495@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,56 +48,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 97d9fba9a812cada5484667a46e14a4c976ca330 upstream.
+[ Upstream commit 967969cf594ed3c1678a9918d6e9bb2d1591cbe9 ]
 
-Currently, netconsole cleans up the netpoll structure before disabling
-the target. This approach can lead to race conditions, as message
-senders (write_ext_msg() and write_msg()) check if the target is
-enabled before using netpoll. The sender can validate that the target is
-enabled, but, the netpoll might be de-allocated already, causing
-undesired behaviours.
+cdns_torrent_dp_set_power_state() does not consider that ret might be
+overwritten. Add return value check of regmap_read_poll_timeout() after
+register read in cdns_torrent_dp_set_power_state().
 
-This patch reverses the order of operations:
-1. Disable the target
-2. Clean up the netpoll structure
-
-This change eliminates the potential race condition, ensuring that
-no messages are sent through a partially cleaned-up netpoll structure.
-
-Fixes: 2382b15bcc39 ("netconsole: take care of NETDEV_UNREGISTER event")
-Cc: stable@vger.kernel.org
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240712143415.1141039-1-leitao@debian.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5b16a790f18d ("phy: cadence-torrent: Reorder few functions to remove function declarations")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Roger Quadros <rogerq@kernel.org>
+Link: https://lore.kernel.org/r/20240702032042.3993031-1-make24@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/netconsole.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/cadence/phy-cadence-torrent.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/netconsole.c
-+++ b/drivers/net/netconsole.c
-@@ -770,6 +770,7 @@ restart:
- 				/* rtnl_lock already held
- 				 * we might sleep in __netpoll_cleanup()
- 				 */
-+				nt->enabled = false;
- 				spin_unlock_irqrestore(&target_list_lock, flags);
+diff --git a/drivers/phy/cadence/phy-cadence-torrent.c b/drivers/phy/cadence/phy-cadence-torrent.c
+index f099053c583c0..34a380ce533a1 100644
+--- a/drivers/phy/cadence/phy-cadence-torrent.c
++++ b/drivers/phy/cadence/phy-cadence-torrent.c
+@@ -1087,6 +1087,9 @@ static int cdns_torrent_dp_set_power_state(struct cdns_torrent_phy *cdns_phy,
+ 	ret = regmap_read_poll_timeout(regmap, PHY_PMA_XCVR_POWER_STATE_ACK,
+ 				       read_val, (read_val & mask) == value, 0,
+ 				       POLL_TIMEOUT_US);
++	if (ret)
++		return ret;
++
+ 	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, 0x00000000);
+ 	ndelay(100);
  
- 				__netpoll_cleanup(&nt->np);
-@@ -777,7 +778,6 @@ restart:
- 				spin_lock_irqsave(&target_list_lock, flags);
- 				netdev_put(nt->np.dev, &nt->np.dev_tracker);
- 				nt->np.dev = NULL;
--				nt->enabled = false;
- 				stopped = true;
- 				netconsole_target_put(nt);
- 				goto restart;
+-- 
+2.43.0
+
 
 
