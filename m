@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F3D1A616E;
-	Tue, 30 Jul 2024 16:17:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 739481A616E;
+	Tue, 30 Jul 2024 16:17:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356246; cv=none; b=E+PepOLMBTXoSOUU7XEQqsE+kLGV2YloeC0/ZuWk1GeZN3y9KuOOJoNCnhr9eV9sIu4yRXy9cIg9PWaRt6FylNiriDRHiP9EHAAWlO6x+0MhFej0W9DhR/rdV0r5sQohIc+pt5wgqaorxNEA/hb2X11uxKTcU0L67Fsf7DeoT/o=
+	t=1722356249; cv=none; b=qlhDI5nxF1QD8vrpSnHm6Ru6Pon1D+hOL8+MRH3wStV3ZrxlJR9+S9TcCy4jCzPK/1IB9/SBdjIz3ctkBjy+VgRbstKKqvpELfxOxjOm/VVe5Hk8O1NrD8mHqia4FDGYQmimjd3556Xnkzl/DQeF45BGKaJh5lSu8ngr62EtPk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356246; c=relaxed/simple;
-	bh=fWPg1TwJyz74PT776KJkXab0fOmgooMnBd8u6XhvF8c=;
+	s=arc-20240116; t=1722356249; c=relaxed/simple;
+	bh=VaYpcPmBKjAWYTq0hiU42527OuOwm3Nq9nkDRjB5fNw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lC3PSDfNX2AsURX8qUKBbtbUC/sUsPyeRK1nrnuafOzuJyHqeMz1RNKgjnFNc9q0TSasMsJ+PWj4FtVyLyfQV+QgsDoLGfwZyRoxu6uNcyITNfXxDklOdRWfST9SfZjKrEso0NTM19ISIszNDalWQ57JpTgNGeYCm089AxlYpLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDN/p2aV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RI5gNz2ZO+lnzmKuJlQW2SppJwlzmqb8oOfYhxoDeNkModOdoP7QjtnJz0duAnMPxfKnBFHFZt2VtgFtZkloooOqpdd7C+j/cOhJ59/7E4X1bgpjvOKJeWQ1iqtXyJkBnrycTnC9fWqJFAGEnEij8M6BL7D+ZMgUbQTTMlwgfEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TbiARWno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDN/p2aV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73530C32782;
-	Tue, 30 Jul 2024 16:17:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TbiARWno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10C5C32782;
+	Tue, 30 Jul 2024 16:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356245;
-	bh=fWPg1TwJyz74PT776KJkXab0fOmgooMnBd8u6XhvF8c=;
+	s=korg; t=1722356249;
+	bh=VaYpcPmBKjAWYTq0hiU42527OuOwm3Nq9nkDRjB5fNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDN/p2aVKGxzoCn2ujkhJqYlJgvW5YjOOiu/SVoC135S8JPzlMKS/nIEs9saLQ4UZ
-	 DzlCbkFylkaFy59aqvvFBCpMGmG8hRYJPlWHeu5apki4NX3VNBQXYFxvclMy7Cyv0J
-	 HeY63c9F/9ylmXSnTjw2MU+a9WcC1biSSOrkr4aQ=
+	b=TbiARWnoXgj2C3aGDfmmlhLeWj4sqQOsJESXIOtzcbFwkjfouVW1AJcE0hiNx/OJt
+	 dZhXXRzb5v8rV19SuhCbBEXL/N5p2agcsK8nlXhVOu03Lf5iOBvYkarpJ7k/22e1I7
+	 l2Zups9ooxwBsVn4G+bX78o4H381v344p8sO4Cbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/440] NFSv4.1 another fix for EXCHGID4_FLAG_USE_PNFS_DS for DS server
-Date: Tue, 30 Jul 2024 17:46:45 +0200
-Message-ID: <20240730151622.591256512@linuxfoundation.org>
+Subject: [PATCH 6.10 133/809] arm64: dts: rockchip: fix pmu_io supply for Lunzn Fastrhino R6xS
+Date: Tue, 30 Jul 2024 17:40:09 +0200
+Message-ID: <20240730151729.869000714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,68 +47,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Olga Kornievskaia <kolga@netapp.com>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit 4840c00003a2275668a13b82c9f5b1aed80183aa ]
+[ Upstream commit cfeac8e5d05815521f5c5568680735a92ee91fe4 ]
 
-Previously in order to mark the communication with the DS server,
-we tried to use NFS_CS_DS in cl_flags. However, this flag would
-only be saved for the DS server and in case where DS equals MDS,
-the client would not find a matching nfs_client in nfs_match_client
-that represents the MDS (but is also a DS).
+Fixes pmu_io_domains supply according to the schematic. Among them,
+the vccio3 is responsible for the io voltage of sdcard. There is no
+sdcard slot on the R68S, and it's connected to vcc_3v3, so describe
+the supply of vccio3 separately.
 
-Instead, don't rely on the NFS_CS_DS but instead use NFS_CS_PNFS.
-
-Fixes: 379e4adfddd6 ("NFSv4.1: fixup use EXCHGID4_FLAG_USE_PNFS_DS for DS server")
-Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
+Fixes: b9f8ca655d80 ("arm64: dts: rockchip: Add Lunzn Fastrhino R68S")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20240630150010.55729-4-amadeus@jmu.edu.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4client.c | 6 ++----
- fs/nfs/nfs4proc.c   | 2 +-
- 2 files changed, 3 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts  | 4 ++++
+ arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 4 ++--
+ arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts  | 4 ++++
+ 3 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/nfs4client.c b/fs/nfs/nfs4client.c
-index 84b345efcec00..02caeec2c1739 100644
---- a/fs/nfs/nfs4client.c
-+++ b/fs/nfs/nfs4client.c
-@@ -230,9 +230,8 @@ struct nfs_client *nfs4_alloc_client(const struct nfs_client_initdata *cl_init)
- 		__set_bit(NFS_CS_INFINITE_SLOTS, &clp->cl_flags);
- 	__set_bit(NFS_CS_DISCRTRY, &clp->cl_flags);
- 	__set_bit(NFS_CS_NO_RETRANS_TIMEOUT, &clp->cl_flags);
--
--	if (test_bit(NFS_CS_DS, &cl_init->init_flags))
--		__set_bit(NFS_CS_DS, &clp->cl_flags);
-+	if (test_bit(NFS_CS_PNFS, &cl_init->init_flags))
-+		__set_bit(NFS_CS_PNFS, &clp->cl_flags);
- 	/*
- 	 * Set up the connection to the server before we add add to the
- 	 * global list.
-@@ -997,7 +996,6 @@ struct nfs_client *nfs4_set_ds_client(struct nfs_server *mds_srv,
- 	if (mds_srv->flags & NFS_MOUNT_NORESVPORT)
- 		__set_bit(NFS_CS_NORESVPORT, &cl_init.init_flags);
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts
+index 58ab7e9971dbc..b5e67990dd0f8 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dts
+@@ -11,6 +11,10 @@ aliases {
+ 	};
+ };
  
--	__set_bit(NFS_CS_DS, &cl_init.init_flags);
- 	__set_bit(NFS_CS_PNFS, &cl_init.init_flags);
- 	cl_init.max_connect = NFS_MAX_TRANSPORTS;
- 	/*
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index cc620fc7aaf7b..467e9439ededb 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -8821,7 +8821,7 @@ nfs4_run_exchange_id(struct nfs_client *clp, const struct cred *cred,
- #ifdef CONFIG_NFS_V4_1_MIGRATION
- 	calldata->args.flags |= EXCHGID4_FLAG_SUPP_MOVED_MIGR;
- #endif
--	if (test_bit(NFS_CS_DS, &clp->cl_flags))
-+	if (test_bit(NFS_CS_PNFS, &clp->cl_flags))
- 		calldata->args.flags |= EXCHGID4_FLAG_USE_PNFS_DS;
- 	msg.rpc_argp = &calldata->args;
- 	msg.rpc_resp = &calldata->res;
++&pmu_io_domains {
++	vccio3-supply = <&vccio_sd>;
++};
++
+ &sdmmc0 {
+ 	bus-width = <4>;
+ 	cap-mmc-highspeed;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+index 8f587978fa3b6..82577eba31eb5 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+@@ -397,8 +397,8 @@ vcc5v0_usb_otg_en: vcc5v0-usb-otg-en {
+ &pmu_io_domains {
+ 	pmuio1-supply = <&vcc3v3_pmu>;
+ 	pmuio2-supply = <&vcc3v3_pmu>;
+-	vccio1-supply = <&vccio_acodec>;
+-	vccio3-supply = <&vccio_sd>;
++	vccio1-supply = <&vcc_3v3>;
++	vccio2-supply = <&vcc_1v8>;
+ 	vccio4-supply = <&vcc_1v8>;
+ 	vccio5-supply = <&vcc_3v3>;
+ 	vccio6-supply = <&vcc_1v8>;
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
+index e1fe5e442689a..a3339186e89c8 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r68s.dts
+@@ -102,6 +102,10 @@ eth_phy1_reset_pin: eth-phy1-reset-pin {
+ 	};
+ };
+ 
++&pmu_io_domains {
++	vccio3-supply = <&vcc_3v3>;
++};
++
+ &sdhci {
+ 	bus-width = <8>;
+ 	max-frequency = <200000000>;
 -- 
 2.43.0
 
