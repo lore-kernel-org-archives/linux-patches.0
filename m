@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F1D156F30;
-	Tue, 30 Jul 2024 17:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6C2183CC3;
+	Tue, 30 Jul 2024 17:00:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358850; cv=none; b=Gwo8JIpatw166bJ7gCXVe7OIu3wOHBFZmyEHZl6HnB1bZPUxF0puqpqoqfd72jnr+sFwJJpKUMf6MOxNcbKN9dznGPqN2jJ9n/MX85IrcG5QWRIknGyp1ieSIkse/rYl6uzJI6/QbaVbjgHwt5snO915EaRkM+ry03KHdQnnAlw=
+	t=1722358853; cv=none; b=uXx5kJWua9AWnqa1FiogGMwqSw9wAUGLsKBUWWfONM9oZElTkcSXrRN8xFfmlTmNNd/iGGX0VEVhBH3pnbcrkUbCA2v5W4xiuSCzHWEifdPtmBJztfispJ+ePysxOM50bo0PvwYYuU0fjoKL12iETewd4Q/W1DiXGNNlxjtXXEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358850; c=relaxed/simple;
-	bh=75UHLmRuJW3nJATfVNcFBFjJs6yOaSZGZgjG3pSPOKE=;
+	s=arc-20240116; t=1722358853; c=relaxed/simple;
+	bh=oYXTDAgXcWAynT89s4onkLbFPaCu5RnzPYBHueZXFbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JDk3CA8VkyFc38GLFGZiIL95Ue2JTzQduUlpVvz/zdNx8J9JBRqq+htP0PljV2Fa9ORNUj9nsTMT6T4NKlbkpW94K2G8PSq1SFneSyioclS1hsOt+pgCG6r2dgbMBE2oeBh3ogFcY2nh4Mo8bd/+Va/ef9E18+Ylw1+pRybJ73g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MslnBZQg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxtAOx4wz0HG6izb/YEwAG5gVUw97KFevbte/hvjcHKBPUS8JRNQnoiQBeJMcQLuA6Qmqt5aasSjCvnDwAaxQHli4jjbxjt9vmPJK1DV05L/ySjv2A8PLX5tasS2ALPZx5uFELdcv5/9PE7dy9zA26e1sPW3Xng2SBD5QgXWJoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkhBfqHx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MslnBZQg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D753C32782;
-	Tue, 30 Jul 2024 17:00:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkhBfqHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 304DBC32782;
+	Tue, 30 Jul 2024 17:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358850;
-	bh=75UHLmRuJW3nJATfVNcFBFjJs6yOaSZGZgjG3pSPOKE=;
+	s=korg; t=1722358853;
+	bh=oYXTDAgXcWAynT89s4onkLbFPaCu5RnzPYBHueZXFbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MslnBZQgx4YrmN24wsRAfBteIqNuEsFheFhIA+6V9lSwqjgGwSeAwpH8RWPYGd00P
-	 bJ9bb9mt2u6wy4bTT5DgrEfNPOvXUAkSzvziANGBH84slHRjcPZOYSrpNzmd8DiNRH
-	 5/s1hDC1lSCd7yfwTMrTrIui0yu2RIUpCHsS5hy8=
+	b=BkhBfqHx6JW9+mouCAGirBx7s8oHQMY3IoCxlLU9q/fblusL1xQhz1Mpc+NO0Lq63
+	 QPWONcnzMHW/nD2vTOCS/nQYE6Rsevv+/O6iJPEp03CP8yIL/Py+tOnemf8KzLCiVe
+	 +MhDrr92Y9UkyMq/d9cwm6oFnSP/jPSvg5JjwzF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 402/809] coresight: Fix ref leak when of_coresight_parse_endpoint() fails
-Date: Tue, 30 Jul 2024 17:44:38 +0200
-Message-ID: <20240730151740.564125726@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>
+Subject: [PATCH 6.6 403/568] wifi: rtw88: usb: Fix disconnection after beacon loss
+Date: Tue, 30 Jul 2024 17:48:30 +0200
+Message-ID: <20240730151655.622112743@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,49 +46,66 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 7fcb9cb2fe47294e16067c3cfd25332c8662a115 ]
+commit 28818b4d871bc93cc4f5c7c7d7c526a6a096c09c upstream.
 
-of_graph_get_next_endpoint() releases the reference to the previous
-endpoint on each iteration, but when parsing fails the loop exits
-early meaning the last reference is never dropped.
+When there is beacon loss, for example due to unrelated Bluetooth
+devices transmitting music nearby, the wifi connection dies soon
+after the first beacon loss message:
 
-Fix it by dropping the refcount in the exit condition.
+Apr 28 20:47:14 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-BEACON-LOSS
+Apr 28 20:47:15 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-DISCONNECTED bssid=... reason=4 locally_generated=1
 
-Fixes: d375b356e687 ("coresight: Fix support for sparsely populated ports")
-Signed-off-by: James Clark <james.clark@arm.com>
-Reported-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20240529133626.90080-1-james.clark@arm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Apr 28 20:47:24 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-BEACON-LOSS
+Apr 28 20:47:25 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-DISCONNECTED bssid=... reason=4 locally_generated=1
+
+Apr 28 20:47:34 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-BEACON-LOSS
+Apr 28 20:47:35 ideapad2 wpa_supplicant[1161]: wlp3s0f3u4:
+ CTRL-EVENT-DISCONNECTED bssid=... reason=4 locally_generated=1
+
+When the beacon loss happens, mac80211 makes rtw88 transmit a QOS
+NULL frame and asks to confirm the ACK status. Even though rtw88
+confirms to mac80211 that the QOS NULL was transmitted successfully,
+the connection still dies. This is because rtw88 is handing the QOS
+NULL back to mac80211 with skb->data pointing to the headroom (the
+TX descriptor) instead of ieee80211_hdr.
+
+Fix the disconnection by moving skb->data to the correct position
+before ieee80211_tx_status_irqsafe().
+
+The problem was observed with RTL8811AU (TP-Link Archer T2U Nano)
+and the potential future rtw88_8821au driver. Also tested with
+RTL8811CU (Tenda U9).
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://msgid.link/ecbf0601-810d-4609-b8fc-8b0e38d2948d@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwtracing/coresight/coresight-platform.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/realtek/rtw88/usb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/hwtracing/coresight/coresight-platform.c b/drivers/hwtracing/coresight/coresight-platform.c
-index 9d550f5697fa8..57a009552cc5c 100644
---- a/drivers/hwtracing/coresight/coresight-platform.c
-+++ b/drivers/hwtracing/coresight/coresight-platform.c
-@@ -297,8 +297,10 @@ static int of_get_coresight_platform_data(struct device *dev,
- 			continue;
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -273,6 +273,8 @@ static void rtw_usb_write_port_tx_comple
+ 		info = IEEE80211_SKB_CB(skb);
+ 		tx_data = rtw_usb_get_tx_data(skb);
  
- 		ret = of_coresight_parse_endpoint(dev, ep, pdata);
--		if (ret)
-+		if (ret) {
-+			of_node_put(ep);
- 			return ret;
-+		}
- 	}
- 
- 	return 0;
--- 
-2.43.0
-
++		skb_pull(skb, rtwdev->chip->tx_pkt_desc_sz);
++
+ 		/* enqueue to wait for tx report */
+ 		if (info->flags & IEEE80211_TX_CTL_REQ_TX_STATUS) {
+ 			rtw_tx_report_enqueue(rtwdev, skb, tx_data->sn);
 
 
