@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E8C188003;
-	Tue, 30 Jul 2024 16:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EE6188006;
+	Tue, 30 Jul 2024 16:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355340; cv=none; b=N+IDpZ4zSmZ/cDt0G0BynEHIYpFotqKmfTNQBIh7BophG9beoTZ2EPgIRdljpavDKdV8NNaL4s8WRTRYd+mWNEmVWjbZ9X39XU1iwlNxppGU6NoL+Lz0RSzX5b/eW8n28W4ZgFtV5PWBREa5SwbhTE2y2sKR/8mj32FOYatQ1EU=
+	t=1722355343; cv=none; b=DKwwqZb/JsLZ0jjqKhFt7bob1KaDlaer0ZPZYuFwd0VuEuE2yZ8rI3XJ0YrvYN5dy9XP+VeZfT9fUqywYe25WRUL16/JPHS8IwOTU+ok2JJcTZvwIuJDBeyZm12fVtADl86RoFmbfQJJhV9D4vr+F3A2YUkPj3fm4pQMnJCbgAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355340; c=relaxed/simple;
-	bh=68slAEprQ+S4Bvmm4ZtZ8yhZj62sYEYC+YybOuhbwKE=;
+	s=arc-20240116; t=1722355343; c=relaxed/simple;
+	bh=IQ3dUP+phDZmSWLv5o85+Xzl3HGtnh3Rc9rDLn4eurY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gmjjKX4kekMGtsE+V6HpAdgouqN8niFPE8sFS5FsHK+jsKYCQm5nkiJQdQ1sNnV6RX6Ic27iBafXsXM2OFae+oMJ91JyxSkHg68XNHi8nIGUTR8EtF8IUnh1lSbLaAsuD+RlNkFSkDeCMz/eag2PKJtv9yPT3IfJ2ajQcTYzfhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eDcbNTjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eovaDdsxnzf3YH2bPDVE6PEiiDGkUP7pWuWiK1/MUjL4NDIwimE534e9EtqSFNwmh81szL70PrCL2vMD6MQBxOKSi025c19TRhboCBnGNe4zHpQMGTUDknvQx7YzpAVZ4GtuievnoEsRgDc7Nb4k/jJoWTK/oEbCuLZBY0YHwTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G102StLp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eDcbNTjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF9AC32782;
-	Tue, 30 Jul 2024 16:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G102StLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2543FC32782;
+	Tue, 30 Jul 2024 16:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355339;
-	bh=68slAEprQ+S4Bvmm4ZtZ8yhZj62sYEYC+YybOuhbwKE=;
+	s=korg; t=1722355343;
+	bh=IQ3dUP+phDZmSWLv5o85+Xzl3HGtnh3Rc9rDLn4eurY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDcbNTjP11ZkenCjmJf6e2cbchzLkf81CeTbjl1NFNuLDrYPj9hkYhxZUYzOeAXyr
-	 +8XnUZF6qoRMI2hZYc3QcwRPxIJp3yBjxdV/XZcxdoHM7V4WoG/vLxThuRuFK0iuUq
-	 9YUlHj+7+7w7ayrgshhDxCUSkZrrGam7E/IhCzLc=
+	b=G102StLp6tf1f608eKqc139SUDj7csnMuNtaLX1YyfMcTF4Z3DcnhnJAyC53YtmNu
+	 AAfTxv7qi20yO5wypozie7XgRzhwBKZn5mlMp7Czaph1BrEo6xpMt9lzrlnLyfyXL1
+	 Vsn1r67vvUumclJDr0uqzLfz32zkNg2Vg9RoVn6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <quic_bjorande@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hagar Hemdan <hagarhem@amazon.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 042/809] arm64: dts: qcom: sc8180x: Correct PCIe slave ports
-Date: Tue, 30 Jul 2024 17:38:38 +0200
-Message-ID: <20240730151726.311228495@linuxfoundation.org>
+Subject: [PATCH 6.1 085/440] net: esp: cleanup esp_output_tail_tcp() in case of unsupported ESPINTCP
+Date: Tue, 30 Jul 2024 17:45:18 +0200
+Message-ID: <20240730151619.079859099@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,64 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bjorn Andersson <quic_bjorande@quicinc.com>
+From: Hagar Hemdan <hagarhem@amazon.com>
 
-[ Upstream commit dc402e084a9e0cc714ffd6008dce3c63281b8142 ]
+[ Upstream commit 96f887a612e4cda89efc3f54bc10c1997e3ab0e9 ]
 
-The interconnects property was clearly copy-pasted between the 4 PCIe
-controllers, giving all four the cpu-pcie path destination of SLAVE_0.
+xmit() functions should consume skb or return error codes in error
+paths.
+When the configuration "CONFIG_INET_ESPINTCP" is not set, the
+implementation of the function "esp_output_tail_tcp" violates this rule.
+The function frees the skb and returns the error code.
+This change removes the kfree_skb from both functions, for both
+esp4 and esp6.
+WARN_ON is added because esp_output_tail_tcp() should never be called if
+CONFIG_INET_ESPINTCP is not set.
 
-The four ports are all associated with CN0, but update the property for
-correctness sake.
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-Fixes: d20b6c84f56a ("arm64: dts: qcom: sc8180x: Add PCIe instances")
-Signed-off-by: Bjorn Andersson <quic_bjorande@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240525-sc8180x-pcie-interconnect-port-fix-v1-1-f86affa02392@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
+Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8180x.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/esp4.c | 3 +--
+ net/ipv6/esp6.c | 3 +--
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8180x.dtsi b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-index 581a70c34fd29..456ec81327021 100644
---- a/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8180x.dtsi
-@@ -1890,7 +1890,7 @@ pcie3: pcie@1c08000 {
- 			power-domains = <&gcc PCIE_3_GDSC>;
- 
- 			interconnects = <&aggre2_noc MASTER_PCIE_3 0 &mc_virt SLAVE_EBI_CH0 0>,
--					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_0 0>;
-+					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_3 0>;
- 			interconnect-names = "pcie-mem", "cpu-pcie";
- 
- 			phys = <&pcie3_phy>;
-@@ -2012,7 +2012,7 @@ pcie1: pcie@1c10000 {
- 			power-domains = <&gcc PCIE_1_GDSC>;
- 
- 			interconnects = <&aggre2_noc MASTER_PCIE_1 0 &mc_virt SLAVE_EBI_CH0 0>,
--					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_0 0>;
-+					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_1 0>;
- 			interconnect-names = "pcie-mem", "cpu-pcie";
- 
- 			phys = <&pcie1_phy>;
-@@ -2134,7 +2134,7 @@ pcie2: pcie@1c18000 {
- 			power-domains = <&gcc PCIE_2_GDSC>;
- 
- 			interconnects = <&aggre2_noc MASTER_PCIE_2 0 &mc_virt SLAVE_EBI_CH0 0>,
--					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_0 0>;
-+					<&gem_noc MASTER_AMPSS_M0 0 &config_noc SLAVE_PCIE_2 0>;
- 			interconnect-names = "pcie-mem", "cpu-pcie";
- 
- 			phys = <&pcie2_phy>;
+diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
+index e2546961add3e..419969b268225 100644
+--- a/net/ipv4/esp4.c
++++ b/net/ipv4/esp4.c
+@@ -238,8 +238,7 @@ static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
+ #else
+ static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
+ {
+-	kfree_skb(skb);
+-
++	WARN_ON(1);
+ 	return -EOPNOTSUPP;
+ }
+ #endif
+diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
+index c2dcb5c613b6b..a021c88d3d9b8 100644
+--- a/net/ipv6/esp6.c
++++ b/net/ipv6/esp6.c
+@@ -255,8 +255,7 @@ static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
+ #else
+ static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
+ {
+-	kfree_skb(skb);
+-
++	WARN_ON(1);
+ 	return -EOPNOTSUPP;
+ }
+ #endif
 -- 
 2.43.0
 
