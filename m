@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B743C1A76A4;
-	Tue, 30 Jul 2024 17:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7BA1A76B1;
+	Tue, 30 Jul 2024 17:18:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359906; cv=none; b=g0WUjHMsPRprHsHlbIqAHtfiGriunMmGvn4OvyPLY5xdMLpQhiMGojEjeZCt/IKwkXWG2kLBVxR+YTs2zuJvDofEO4AGOgNvE2YOQhhyIqDn1OUbpuolAf1VLWXv8xcqQGzFfmKqThxaryBMXQcwLPRrS02Pdk0hacUGWDCzXw8=
+	t=1722359910; cv=none; b=TObDhxI8rvg2WgK0FQHEocJAnG5PcxsuBxWTYU1y9rU2PL/YsE5j7XLIBFRV687t5EGp+oRv/tITri+gUStfSudAcHBaSFCtvMrQjHoUmoEKTg9lK4NuH2HACMV9hP5FRlun4DzqgckTTFAev6ahZCNMcVa1yO7mjjrXAN8S7bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359906; c=relaxed/simple;
-	bh=sGj2YVFjmvK54wXb425TaR8UU37j4RgbebOvZi2g7uE=;
+	s=arc-20240116; t=1722359910; c=relaxed/simple;
+	bh=Sug49TSx59Hgs99bPnXR4LdY1W8qa1rHlut1kCxZbsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YuupRcCZgZ2VJLVQpHRVJeTV9PNugq4LuaErk6d1oon48oRW0QabWu5w7K9MkNWhUM+Fln2/xBa5AjWczjpUAc6/OuCL9ddgEuFrwgWyQ29nBtA5t3etUuMBQs1C/DJ2oDtvvUx8YcSwsWcuDpvrPUW2IHsxSbtcyUVRfYWSuxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xC5o2v1Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nEy9Ld7aR1fgGpBb7EnDXyhPv9jHFn4diAD4NVPTmAVfzctY4tSNkMVmpmtsoPcCGOtYAQQc9plrmi3Czmv8RkH1K9H2u0DGPXVv2Jghqjm9G6vSgBcAA3A8G+hxaMMLgWrX+iiZg7IFEskfHYbLaI1IDVm0AVz5EkuYhWysCEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VtlmVQ6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xC5o2v1Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251BBC32782;
-	Tue, 30 Jul 2024 17:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VtlmVQ6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97567C32782;
+	Tue, 30 Jul 2024 17:18:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359906;
-	bh=sGj2YVFjmvK54wXb425TaR8UU37j4RgbebOvZi2g7uE=;
+	s=korg; t=1722359910;
+	bh=Sug49TSx59Hgs99bPnXR4LdY1W8qa1rHlut1kCxZbsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xC5o2v1QQExNQC8R/Qfal7HTw+4BzXGy1lXWvgsduUyKKTIqCy7jUpuUVTrM4sE9o
-	 VCZgKTU+hmCicTk4t/92PNP2jHrwoKxY5A2EmYMkdaXA4PVPty2hIsKFWQXV8MujmA
-	 KTRR9zaCSIGu7qdKHFI+dCHNw5JRKmFMLk0ToGOw=
+	b=VtlmVQ6vQ7dNC5uvFp7AwDFyzLuKUUFgbfmxjZTqaUA81h7sfdxI5tRwM6j8iXm9a
+	 +7PDdjPS+9I7hSnuOLeN4L28PGkObZHs06FhtzW7OxYmCl3e62M/YoDfVwZ5JSwPvT
+	 wwtQeQpbGGJEfEZLKIlcqTeODwpmLrNjwbtLS4/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+853d80cba98ce1157ae6@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.10 552/809] btrfs: fix extent map use-after-free when adding pages to compressed bio
-Date: Tue, 30 Jul 2024 17:47:08 +0200
-Message-ID: <20240730151746.558908502@linuxfoundation.org>
+	Steve Wilkins <steve.wilkins@raymarine.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 554/568] spi: microchip-core: fix init function not setting the master and motorola modes
+Date: Tue, 30 Jul 2024 17:51:01 +0200
+Message-ID: <20240730151701.813434998@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,48 +48,76 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Steve Wilkins <steve.wilkins@raymarine.com>
 
-commit 8e7860543a94784d744c7ce34b78a2e11beefa5c upstream.
+[ Upstream commit 3a5e76283672efddf47cea39ccfe9f5735cc91d5 ]
 
-At add_ra_bio_pages() we are accessing the extent map to calculate
-'add_size' after we dropped our reference on the extent map, resulting
-in a use-after-free. Fix this by computing 'add_size' before dropping our
-extent map reference.
+mchp_corespi_init() reads the CONTROL register, sets the master and
+motorola bits, but doesn't write the value back to the register. The
+function also doesn't ensure the controller is disabled at the start,
+which may present a problem if the controller was used by an
+earlier boot stage as some settings (including the mode) can only be
+modified while the controller is disabled.
 
-Reported-by: syzbot+853d80cba98ce1157ae6@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/000000000000038144061c6d18f2@google.com/
-Fixes: 6a4049102055 ("btrfs: subpage: make add_ra_bio_pages() compatible")
-CC: stable@vger.kernel.org # 6.1+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
+Signed-off-by: Steve Wilkins <steve.wilkins@raymarine.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://patch.msgid.link/20240715-designing-thus-05f7c26e1da7@wendy
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/compression.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-microchip-core.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
---- a/fs/btrfs/compression.c
-+++ b/fs/btrfs/compression.c
-@@ -514,6 +514,7 @@ static noinline int add_ra_bio_pages(str
- 			put_page(page);
- 			break;
- 		}
-+		add_size = min(em->start + em->len, page_end + 1) - cur;
- 		free_extent_map(em);
+diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
+index 096008d006009..6f59754c33472 100644
+--- a/drivers/spi/spi-microchip-core.c
++++ b/drivers/spi/spi-microchip-core.c
+@@ -292,17 +292,13 @@ static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *
+ 	unsigned long clk_hz;
+ 	u32 control = mchp_corespi_read(spi, REG_CONTROL);
  
- 		if (page->index == end_index) {
-@@ -526,7 +527,6 @@ static noinline int add_ra_bio_pages(str
- 			}
- 		}
+-	control |= CONTROL_MASTER;
++	control &= ~CONTROL_ENABLE;
++	mchp_corespi_write(spi, REG_CONTROL, control);
  
--		add_size = min(em->start + em->len, page_end + 1) - cur;
- 		ret = bio_add_page(orig_bio, page, add_size, offset_in_page(cur));
- 		if (ret != add_size) {
- 			unlock_extent(tree, cur, page_end, NULL);
++	control |= CONTROL_MASTER;
+ 	control &= ~CONTROL_MODE_MASK;
+ 	control |= MOTOROLA_MODE;
+ 
+-	mchp_corespi_set_framesize(spi, DEFAULT_FRAMESIZE);
+-
+-	/* max. possible spi clock rate is the apb clock rate */
+-	clk_hz = clk_get_rate(spi->clk);
+-	host->max_speed_hz = clk_hz;
+-
+ 	/*
+ 	 * The controller must be configured so that it doesn't remove Chip
+ 	 * Select until the entire message has been transferred, even if at
+@@ -311,11 +307,16 @@ static void mchp_corespi_init(struct spi_controller *host, struct mchp_corespi *
+ 	 * BIGFIFO mode is also enabled, which sets the fifo depth to 32 frames
+ 	 * for the 8 bit transfers that this driver uses.
+ 	 */
+-	control = mchp_corespi_read(spi, REG_CONTROL);
+ 	control |= CONTROL_SPS | CONTROL_BIGFIFO;
+ 
+ 	mchp_corespi_write(spi, REG_CONTROL, control);
+ 
++	mchp_corespi_set_framesize(spi, DEFAULT_FRAMESIZE);
++
++	/* max. possible spi clock rate is the apb clock rate */
++	clk_hz = clk_get_rate(spi->clk);
++	host->max_speed_hz = clk_hz;
++
+ 	mchp_corespi_enable_ints(spi);
+ 
+ 	/*
+-- 
+2.43.0
+
 
 
