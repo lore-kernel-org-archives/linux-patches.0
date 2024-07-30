@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0FE0155CB3;
-	Tue, 30 Jul 2024 16:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291C9155CB3;
+	Tue, 30 Jul 2024 16:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358224; cv=none; b=F9rI1GUfijINVyEqzkRqE+TJejiOSmdBK3oePaFMstD1/DDRy0VgAD0dBf5YiUNsWfiLeMmfjZXgHDnzE09oCldD2SYf7Dexo3/wmCoX2DbZ1w4LzqmJnns93mxQuc6snRAkyNg2eJonqiItZvnI49gmbIZVIKMENnHizB2cAlY=
+	t=1722358227; cv=none; b=SJ1YuPsNuuHc/1os8boHjZaXbvv777Del3N1TjI6qLzyZQOcviMfxdPe50EKysDvUTnDpd+ICjvEf6j85l9OK5lkb3C8QXiQOzaF8vmwW9ytDj3k86xIQ5EqbdAr5btJT3UcE14W3GPV80Cp9Ro/Lzz7p1b/wLu2st0RdZO4Ut0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358224; c=relaxed/simple;
-	bh=Qb7LhAj6/u0/VYPrn689WskuckX4HYjqPze7suqTWRM=;
+	s=arc-20240116; t=1722358227; c=relaxed/simple;
+	bh=qokEBZjHQMH66yMTpMELwH13O0Od8+bgJkVW+z7hOCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=V0y7I7JsdY8i8EDLMjWMeTUeCv0Lfb9IK+dre67+otjh6+6CPZ7wZXFhzp/QIGYbyF+K+nTECS5M4p6u5DaOabTyvU66Dq3zN/yYhBGU/ckwUJSsBUjXirEiIP13IkkiyJwx4oVEVf7BfsG8E5ZZi4bOWbi2aZssD5fHtbIIET0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTTHFx5S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKr/6hPwILFdI+sfuovGOjphD6KgdTo2ONdjf7J+FY1/I3tARV8PS/GntMW9RK+vMSdGjREypJBRDe/o9z04UsmpXbubH0TUb7UYIcINQJ8bYcoQqMOf9FWRCAG3Mujm5w1TSh6eUDtR5OFwSJbE8a41nv0zk+MSyJ4oKLjZSBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK1hHN/K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTTHFx5S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A89C4AF0C;
-	Tue, 30 Jul 2024 16:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK1hHN/K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FB1C32782;
+	Tue, 30 Jul 2024 16:50:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358223;
-	bh=Qb7LhAj6/u0/VYPrn689WskuckX4HYjqPze7suqTWRM=;
+	s=korg; t=1722358227;
+	bh=qokEBZjHQMH66yMTpMELwH13O0Od8+bgJkVW+z7hOCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTTHFx5S784oNZamLvaBYuvcqDTRh0J2CasL+tcq9dwF2/sx9cKuvtQl/NlszXHll
-	 QzqDZgqTBkcIxz2UjpftNHW2FOG5N49O4xmFGao1pOCo+VK4hRcBNVksNbWe4Gt+O3
-	 SttM+2JV48WphrhrEHx3Ffsb6WwMD3nrJtVCnznE=
+	b=VK1hHN/KVIg0izdQ5XLaZzih7WYfNbPmYHt3G2fn2lJSs9x97QWAv8SD3YW9ork1A
+	 pIteEh2eDd+NaNma4U2aLKj7NEtkCxP5THNNppprpkDDVb8RrzdWf5zBr070IzCnrl
+	 dU9AZQIv+lJu6oXFjtLadgOYvcF8n3KuV7zJ7ICY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 336/809] leds: trigger: Unregister sysfs attributes before calling deactivate()
-Date: Tue, 30 Jul 2024 17:43:32 +0200
-Message-ID: <20240730151737.891247560@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Dongsheng Yang <dongsheng.yang@easystack.cn>
+Subject: [PATCH 6.1 368/440] rbd: dont assume rbd_is_lock_owner() for exclusive mappings
+Date: Tue, 30 Jul 2024 17:50:01 +0200
+Message-ID: <20240730151630.191402444@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,60 +44,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-[ Upstream commit c0dc9adf9474ecb7106e60e5472577375aedaed3 ]
+commit 3ceccb14f5576e02b81cc8b105ab81f224bd87f6 upstream.
 
-Triggers which have trigger specific sysfs attributes typically store
-related data in trigger-data allocated by the activate() callback and
-freed by the deactivate() callback.
+Expanding on the previous commit, assuming that rbd_is_lock_owner()
+always returns true (i.e. that we are either in RBD_LOCK_STATE_LOCKED
+or RBD_LOCK_STATE_QUIESCING) if the mapping is exclusive is wrong too.
+In case ceph_cls_set_cookie() fails, the lock would be temporarily
+released even if the mapping is exclusive, meaning that we can end up
+even in RBD_LOCK_STATE_UNLOCKED.
 
-Calling device_remove_groups() after calling deactivate() leaves a window
-where the sysfs attributes show/store functions could be called after
-deactivation and then operate on the just freed trigger-data.
+IOW, exclusive mappings are really "just" about disabling automatic
+lock transitions (as documented in the man page), not about grabbing
+the lock and holding on to it whatever it takes.
 
-Move the device_remove_groups() call to before deactivate() to close
-this race window.
-
-This also makes the deactivation path properly do things in reverse order
-of the activation path which calls the activate() callback before calling
-device_add_groups().
-
-Fixes: a7e7a3156300 ("leds: triggers: add device attribute support")
-Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20240504162533.76780-1-hdegoede@redhat.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/leds/led-triggers.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/rbd.c |    5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
-index b1b323b19301d..19e4866b00298 100644
---- a/drivers/leds/led-triggers.c
-+++ b/drivers/leds/led-triggers.c
-@@ -179,9 +179,9 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
+--- a/drivers/block/rbd.c
++++ b/drivers/block/rbd.c
+@@ -6589,11 +6589,6 @@ static int rbd_add_acquire_lock(struct r
+ 	if (ret)
+ 		return ret;
  
- 		cancel_work_sync(&led_cdev->set_brightness_work);
- 		led_stop_software_blink(led_cdev);
-+		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
- 		if (led_cdev->trigger->deactivate)
- 			led_cdev->trigger->deactivate(led_cdev);
--		device_remove_groups(led_cdev->dev, led_cdev->trigger->groups);
- 		led_cdev->trigger = NULL;
- 		led_cdev->trigger_data = NULL;
- 		led_cdev->activated = false;
--- 
-2.43.0
-
+-	/*
+-	 * The lock may have been released by now, unless automatic lock
+-	 * transitions are disabled.
+-	 */
+-	rbd_assert(!rbd_dev->opts->exclusive || rbd_is_lock_owner(rbd_dev));
+ 	return 0;
+ }
+ 
 
 
