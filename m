@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CBE183CC3;
-	Tue, 30 Jul 2024 16:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E0918455D;
+	Tue, 30 Jul 2024 16:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355989; cv=none; b=Y3CAp+XiYLCF3/BrQAK6Q6KPqxjGWJc5GNcG0Xq4WkgKIzf9Lz0qyjII+WZgUW0Gik8ajATOLspQHOIytezzRJLH9xX41EkI2NRlSGCE0NMRtqRvVgzM+ilJt53y57CSd1OxMhpjE2dNbB0Tsv0fyYwMaDLRp2oDxS1hGL8PElE=
+	t=1722355992; cv=none; b=hxUwtvoO+Pi7xsjWZgpvqAMJJQi3KP1BRD5SwLt+MYV0b1WcMVhhJL5M+z5wj1LJlsrutnRjky0BWa+xzjCnG759DSTuV4T9vIJyOYnwerL2TBo9VyE7ayFJSSXs5h8rRSr8pKww7QiY6EOWvlWl4fryUx976myOKzwlqI5eKeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355989; c=relaxed/simple;
-	bh=an2oQn4u7qFOblw/3ZC3b2PsKwpvxx0EqzdugzoV8zo=;
+	s=arc-20240116; t=1722355992; c=relaxed/simple;
+	bh=bRVgDxQU1hWdEIpwvSdKQV/hL8/Dlo1i9a3cyotH/U8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7snYz5471RgeOBPlMbPxka/Iw9a6eQBl0WPibIYx8WX9WAdcd4/72wVTBunIV+3FrXxgyvUWz4tSljtOoRf4k2HUAbSkykJQ813IthRRoBuXK4DntRDplEMuTe32qChkbf+dOyq9jOMUQ4i0gEWmpOPqT2GakfRYYw7uANoML8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NQSfVuJX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rzGNMT4wUimkyLfmollJDl9FmD6CUWGh7Hf55oySYgcw4VEdaqROrPR94iSP3bq6H+nSxForVRLNF7qcvIMbKS5p5Ca2OwVbdU7ko5SNnUjozBJB/XtQQD4o/YL2GCtgxcAllyNGhPKBjgFSn1zl0XJGdZ6F26WLg4uXLVSeymM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfSSUDPK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NQSfVuJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2A0C4AF0C;
-	Tue, 30 Jul 2024 16:13:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfSSUDPK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FADC4AF0A;
+	Tue, 30 Jul 2024 16:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355989;
-	bh=an2oQn4u7qFOblw/3ZC3b2PsKwpvxx0EqzdugzoV8zo=;
+	s=korg; t=1722355992;
+	bh=bRVgDxQU1hWdEIpwvSdKQV/hL8/Dlo1i9a3cyotH/U8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQSfVuJXyZXb6I8leUki0HMtGnz0FroSYGaB8FyU0VU/k9T9mbUie5Epa94xqkGZH
-	 zfUAQqasDtrFu3Wm5JIVRnPjd2VacWjirKVXea4eu4qrIuh6TYz1f6KTMFXRisi83G
-	 hsog2g+S76Ero9X2xvMT3bcXLuhlxH5HGEgQtEac=
+	b=vfSSUDPKJBypdi/pR+6fQPB6Ep3skIol8T1j+VozdxqbQuHX2djSrnE+PJEt/8gxZ
+	 +fePz/Moljz+klZLF/DUMLeCZBlLX2GNl66/eW5wW8hSGCabw6wljlzZYQAp1JR1/K
+	 v9yFNpB1CbBtAONADcJZQZ9Wx4edIeZ1ina7mToc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@toblux.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/568] m68k: cmpxchg: Fix return value for default case in __arch_xchg()
-Date: Tue, 30 Jul 2024 17:43:31 +0200
-Message-ID: <20240730151643.940255438@linuxfoundation.org>
+Subject: [PATCH 6.1 146/440] media: rcar-vin: Fix YUYV8_1X16 handling for CSI-2
+Date: Tue, 30 Jul 2024 17:46:19 +0200
+Message-ID: <20240730151621.583628752@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,42 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@toblux.com>
+From: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
 
-[ Upstream commit 21b9e722ad28c19c2bc83f18f540b3dbd89bf762 ]
+[ Upstream commit 9caf253e8ad6f4c66f5591bac900f9f68b6b6620 ]
 
-The return value of __invalid_xchg_size() is assigned to tmp instead of
-the return variable x. Assign it to x instead.
+The YUYV8_1X16 and UYVY8_1X16 formats are treated as 'ITU-R
+BT.601/BT.1358 16-bit YCbCr-422 input' (YUV16 - 0x5) in the R-Car VIN
+driver and are thus disallowed when capturing frames from the R-Car
+CSI-2 interface according to the hardware manual.
 
-Fixes: 2501cf768e4009a0 ("m68k: Fix xchg/cmpxchg to fail to link if given an inappropriate pointer")
-Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/20240702034116.140234-2-thorsten.blum@toblux.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+As the 1X16 format variants are meant to be used with serial busses they
+have to be treated as 'YCbCr-422 8-bit data input' (0x1) when capturing
+from CSI-2, which is a valid setting for CSI-2.
+
+Commit 78b3f9d75a62 ("media: rcar-vin: Add check that input interface
+and format are valid") disallowed capturing YUV16 when using the CSI-2
+interface. Fix this by using YUV8_BT601 for YCbCr422 when CSI-2 is in
+use.
+
+Fixes: 78b3f9d75a62 ("media: rcar-vin: Add check that input interface and format are valid")
+Signed-off-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Tested-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://lore.kernel.org/r/20240617161135.130719-2-jacopo.mondi@ideasonboard.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/include/asm/cmpxchg.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../media/platform/renesas/rcar-vin/rcar-dma.c   | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/arch/m68k/include/asm/cmpxchg.h b/arch/m68k/include/asm/cmpxchg.h
-index d7f3de9c5d6f7..4ba14f3535fcb 100644
---- a/arch/m68k/include/asm/cmpxchg.h
-+++ b/arch/m68k/include/asm/cmpxchg.h
-@@ -32,7 +32,7 @@ static inline unsigned long __arch_xchg(unsigned long x, volatile void * ptr, in
- 		x = tmp;
+diff --git a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+index ef5adffae1972..8bfb020b2f260 100644
+--- a/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
++++ b/drivers/media/platform/renesas/rcar-vin/rcar-dma.c
+@@ -665,12 +665,22 @@ static int rvin_setup(struct rvin_dev *vin)
+ 	 */
+ 	switch (vin->mbus_code) {
+ 	case MEDIA_BUS_FMT_YUYV8_1X16:
+-		/* BT.601/BT.1358 16bit YCbCr422 */
+-		vnmc |= VNMC_INF_YUV16;
++		if (vin->is_csi)
++			/* YCbCr422 8-bit */
++			vnmc |= VNMC_INF_YUV8_BT601;
++		else
++			/* BT.601/BT.1358 16bit YCbCr422 */
++			vnmc |= VNMC_INF_YUV16;
+ 		input_is_yuv = true;
  		break;
- 	default:
--		tmp = __invalid_xchg_size(x, ptr, size);
-+		x = __invalid_xchg_size(x, ptr, size);
+ 	case MEDIA_BUS_FMT_UYVY8_1X16:
+-		vnmc |= VNMC_INF_YUV16 | VNMC_YCAL;
++		if (vin->is_csi)
++			/* YCbCr422 8-bit */
++			vnmc |= VNMC_INF_YUV8_BT601;
++		else
++			/* BT.601/BT.1358 16bit YCbCr422 */
++			vnmc |= VNMC_INF_YUV16;
++		vnmc |= VNMC_YCAL;
+ 		input_is_yuv = true;
  		break;
- 	}
- 
+ 	case MEDIA_BUS_FMT_UYVY8_2X8:
 -- 
 2.43.0
 
