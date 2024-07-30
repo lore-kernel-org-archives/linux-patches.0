@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103EA183CBF;
-	Tue, 30 Jul 2024 16:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F92F188012;
+	Tue, 30 Jul 2024 16:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356612; cv=none; b=Lv/TaLUTxXWNP8cWzHOjN7cCu6I6rql4XnXpsvLJA25RpiI40Lmqxn/jDi15ikfD/F4Ha34R9faq5vXwCUOvznH/cs1Qp8gkWKekgGUNzwcLXOBltG7WzAF9HWPcEAws+iKX1w1ap4LI+Wcq1/EN019wN0qgCig1IfYQG4TyJoE=
+	t=1722356615; cv=none; b=J7bDZadslMTjCs3aDGs9GI3aJAwOrNsfkc4kUh+/50GcI8cdEPFugJRoz5JI/1DnOhOmNGjDKLtClJjmyCkDuARP6tydDKr71yKNVZqlY+1OUMQm74GNjRu3x3fX4CAoIU19i+k9tNEhHL4yH2cX44rFGa6oiJQPKtNT5RRNG9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356612; c=relaxed/simple;
-	bh=P6FwHRSst7RLksNyUxzps987DQfssJ0DixmNMt/f3oA=;
+	s=arc-20240116; t=1722356615; c=relaxed/simple;
+	bh=aIv9wj+SslTbieHsRshcqb2DLWzk/6uKgQgrYH9JmAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Li1lxFbmTFpfDoeY5m9bDorJNeHUuFsNS/imT8+Hqjf+8B2UOCgDBaOqNcHbLp7D9eBIcaA5Sx/93zG0pqS/hOQmpZzfIQMI3r8HhyvRT7WTJ03du2uT/Mg/16rBHsUMrGAfdEarIKHqC/6hCB3IIPYj79DO6XL+njlGISj7RLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tIrk7FaZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aQINnLP6eh8E8wyXeU2jioeEN4eyVAgKulU5Cs/ncTdAaqB62yY/DAsCIGU3XRGLmInEnFBSskpA/ikSWZ5xLK4BjbvpaJXRNweUg9zlYf/Eo4le1qg7ULEApV2BJO6UC5cSE7Qs5ud+WE6Rp/LeGL2yWxXcGiiDMQS043l9wfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Akl2Oq0D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tIrk7FaZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7884FC4AF0C;
-	Tue, 30 Jul 2024 16:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Akl2Oq0D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FE7C4AF10;
+	Tue, 30 Jul 2024 16:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356611;
-	bh=P6FwHRSst7RLksNyUxzps987DQfssJ0DixmNMt/f3oA=;
+	s=korg; t=1722356615;
+	bh=aIv9wj+SslTbieHsRshcqb2DLWzk/6uKgQgrYH9JmAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tIrk7FaZJgdroP0VD0xQxDxhqeZH6vxUTRK8N1FhUZnekoNHiPEjw3uecEA4dz66w
-	 A4n1yu0l1t1vG4+dtEMWJBbzpPUkaeYsKaiQaQYsli5xguWc4ULKD8pdaIoH3QFuex
-	 +q0iF7HUReYOEBNRvXXHu003VkWr8PrPkmSPnjyE=
+	b=Akl2Oq0D+OPbFVwxlxbBlTxGY6LkWwyF4y8aXnW74PvCLxrZ8DbKg1sb/6NI8MmcD
+	 LkWJO7CtwaKTXY2FhcCgpEuYaxgbXYpexnGmHDdKw4bee33uThNbGCU2iADZ/gul4O
+	 xeycuTNEqxRbYvv5hTZTEgp9Tn8d9nqZZgp8JK78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Arefev <arefev@swemel.ru>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	P Praneesh <quic_ppranees@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 212/440] net: missing check virtio
-Date: Tue, 30 Jul 2024 17:47:25 +0200
-Message-ID: <20240730151624.145677758@linuxfoundation.org>
+Subject: [PATCH 6.10 167/809] wifi: ath12k: fix invalid memory access while processing fragmented packets
+Date: Tue, 30 Jul 2024 17:40:43 +0200
+Message-ID: <20240730151731.204331133@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,120 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Denis Arefev <arefev@swemel.ru>
+From: P Praneesh <quic_ppranees@quicinc.com>
 
-[ Upstream commit e269d79c7d35aa3808b1f3c1737d63dab504ddc8 ]
+[ Upstream commit 073f9f249eecd64ab9d59c91c4a23cfdcc02afe4 ]
 
-Two missing check in virtio_net_hdr_to_skb() allowed syzbot
-to crash kernels again
+The monitor ring and the reo reinject ring share the same ring mask index.
+When the driver receives an interrupt for the reo reinject ring, the
+monitor ring is also processed, leading to invalid memory access. Since
+monitor support is not yet enabled in ath12k, the ring mask for the monitor
+ring should be removed.
 
-1. After the skb_segment function the buffer may become non-linear
-(nr_frags != 0), but since the SKBTX_SHARED_FRAG flag is not set anywhere
-the __skb_linearize function will not be executed, then the buffer will
-remain non-linear. Then the condition (offset >= skb_headlen(skb))
-becomes true, which causes WARN_ON_ONCE in skb_checksum_help.
+Tested-on: QCN9274 hw2.0 PCI WLAN.WBE.1.1.1-00209-QCAHKSWPL_SILICONZ-1
 
-2. The struct sk_buff and struct virtio_net_hdr members must be
-mathematically related.
-(gso_size) must be greater than (needed) otherwise WARN_ON_ONCE.
-(remainder) must be greater than (needed) otherwise WARN_ON_ONCE.
-(remainder) may be 0 if division is without remainder.
-
-offset+2 (4191) > skb_headlen() (1116)
-WARNING: CPU: 1 PID: 5084 at net/core/dev.c:3303 skb_checksum_help+0x5e2/0x740 net/core/dev.c:3303
-Modules linked in:
-CPU: 1 PID: 5084 Comm: syz-executor336 Not tainted 6.7.0-rc3-syzkaller-00014-gdf60cee26a2e #0
-Hardware name: Google Compute Engine/Google Compute Engine, BIOS Google 11/10/2023
-RIP: 0010:skb_checksum_help+0x5e2/0x740 net/core/dev.c:3303
-Code: 89 e8 83 e0 07 83 c0 03 38 d0 7c 08 84 d2 0f 85 52 01 00 00 44 89 e2 2b 53 74 4c 89 ee 48 c7 c7 40 57 e9 8b e8 af 8f dd f8 90 <0f> 0b 90 90 e9 87 fe ff ff e8 40 0f 6e f9 e9 4b fa ff ff 48 89 ef
-RSP: 0018:ffffc90003a9f338 EFLAGS: 00010286
-RAX: 0000000000000000 RBX: ffff888025125780 RCX: ffffffff814db209
-RDX: ffff888015393b80 RSI: ffffffff814db216 RDI: 0000000000000001
-RBP: ffff8880251257f4 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000001 R12: 000000000000045c
-R13: 000000000000105f R14: ffff8880251257f0 R15: 000000000000105d
-FS:  0000555555c24380(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000002000f000 CR3: 0000000023151000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ip_do_fragment+0xa1b/0x18b0 net/ipv4/ip_output.c:777
- ip_fragment.constprop.0+0x161/0x230 net/ipv4/ip_output.c:584
- ip_finish_output_gso net/ipv4/ip_output.c:286 [inline]
- __ip_finish_output net/ipv4/ip_output.c:308 [inline]
- __ip_finish_output+0x49c/0x650 net/ipv4/ip_output.c:295
- ip_finish_output+0x31/0x310 net/ipv4/ip_output.c:323
- NF_HOOK_COND include/linux/netfilter.h:303 [inline]
- ip_output+0x13b/0x2a0 net/ipv4/ip_output.c:433
- dst_output include/net/dst.h:451 [inline]
- ip_local_out+0xaf/0x1a0 net/ipv4/ip_output.c:129
- iptunnel_xmit+0x5b4/0x9b0 net/ipv4/ip_tunnel_core.c:82
- ipip6_tunnel_xmit net/ipv6/sit.c:1034 [inline]
- sit_tunnel_xmit+0xed2/0x28f0 net/ipv6/sit.c:1076
- __netdev_start_xmit include/linux/netdevice.h:4940 [inline]
- netdev_start_xmit include/linux/netdevice.h:4954 [inline]
- xmit_one net/core/dev.c:3545 [inline]
- dev_hard_start_xmit+0x13d/0x6d0 net/core/dev.c:3561
- __dev_queue_xmit+0x7c1/0x3d60 net/core/dev.c:4346
- dev_queue_xmit include/linux/netdevice.h:3134 [inline]
- packet_xmit+0x257/0x380 net/packet/af_packet.c:276
- packet_snd net/packet/af_packet.c:3087 [inline]
- packet_sendmsg+0x24ca/0x5240 net/packet/af_packet.c:3119
- sock_sendmsg_nosec net/socket.c:730 [inline]
- __sock_sendmsg+0xd5/0x180 net/socket.c:745
- __sys_sendto+0x255/0x340 net/socket.c:2190
- __do_sys_sendto net/socket.c:2202 [inline]
- __se_sys_sendto net/socket.c:2198 [inline]
- __x64_sys_sendto+0xe0/0x1b0 net/socket.c:2198
- do_syscall_x64 arch/x86/entry/common.c:51 [inline]
- do_syscall_64+0x40/0x110 arch/x86/entry/common.c:82
- entry_SYSCALL_64_after_hwframe+0x63/0x6b
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller
-
-Fixes: 0f6925b3e8da ("virtio_net: Do not pull payload in skb->head")
-Signed-off-by: Denis Arefev <arefev@swemel.ru>
-Message-Id: <20240613095448.27118-1-arefev@swemel.ru>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
+Signed-off-by: P Praneesh <quic_ppranees@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240520070045.631029-3-quic_ppranees@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/wireless/ath/ath12k/hw.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/linux/virtio_net.h b/include/linux/virtio_net.h
-index 6047058d67037..29b19d0a324c7 100644
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -51,6 +51,7 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 	unsigned int thlen = 0;
- 	unsigned int p_off = 0;
- 	unsigned int ip_proto;
-+	u64 ret, remainder, gso_size;
- 
- 	if (hdr->gso_type != VIRTIO_NET_HDR_GSO_NONE) {
- 		switch (hdr->gso_type & ~VIRTIO_NET_HDR_GSO_ECN) {
-@@ -87,6 +88,16 @@ static inline int virtio_net_hdr_to_skb(struct sk_buff *skb,
- 		u32 off = __virtio16_to_cpu(little_endian, hdr->csum_offset);
- 		u32 needed = start + max_t(u32, thlen, off + sizeof(__sum16));
- 
-+		if (hdr->gso_size) {
-+			gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
-+			ret = div64_u64_rem(skb->len, gso_size, &remainder);
-+			if (!(ret && (hdr->gso_size > needed) &&
-+						((remainder > needed) || (remainder == 0)))) {
-+				return -EINVAL;
-+			}
-+			skb_shinfo(skb)->tx_flags |= SKBFL_SHARED_FRAG;
-+		}
-+
- 		if (!pskb_may_pull(skb, needed))
- 			return -EINVAL;
+diff --git a/drivers/net/wireless/ath/ath12k/hw.c b/drivers/net/wireless/ath/ath12k/hw.c
+index 5ed06c0d90e2b..bff8cf97a18c6 100644
+--- a/drivers/net/wireless/ath/ath12k/hw.c
++++ b/drivers/net/wireless/ath/ath12k/hw.c
+@@ -544,9 +544,6 @@ static const struct ath12k_hw_ring_mask ath12k_hw_ring_mask_qcn9274 = {
+ 	},
+ 	.rx_mon_dest = {
+ 		0, 0, 0,
+-		ATH12K_RX_MON_RING_MASK_0,
+-		ATH12K_RX_MON_RING_MASK_1,
+-		ATH12K_RX_MON_RING_MASK_2,
+ 	},
+ 	.rx = {
+ 		0, 0, 0, 0,
+@@ -572,8 +569,7 @@ static const struct ath12k_hw_ring_mask ath12k_hw_ring_mask_qcn9274 = {
+ 		ATH12K_HOST2RXDMA_RING_MASK_0,
+ 	},
+ 	.tx_mon_dest = {
+-		ATH12K_TX_MON_RING_MASK_0,
+-		ATH12K_TX_MON_RING_MASK_1,
++		0, 0, 0,
+ 	},
+ };
  
 -- 
 2.43.0
