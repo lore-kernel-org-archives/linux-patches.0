@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 668DF1A76A1;
-	Tue, 30 Jul 2024 17:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C10B11A76A1;
+	Tue, 30 Jul 2024 17:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360224; cv=none; b=kv0NRuwbPkWQd4k7uOsNjozWdJxd4Lood2wad9ruJLRiI8sSM2czX6mJRoHoVQlHb9K8jcImryhR73Iuj4B2tX06AEmsiixifezDnQZyuUibr5S7Bhwia9MjP7rOll8rQHwbhxGfAZD5w/kZqmdTcpav9OEKTgLRzdriWLCiTyw=
+	t=1722360227; cv=none; b=F4/7HTFB/XumFcVqIIRdwlDQcxQp80T+leZmi5a1Cg8hI9BcoPG8eFivicZC+/3H9SG2BQ/PFgElnKmtRbFBrH+Ny4xOKwaw7L8DX8xVcPk7mGmOC9Wx+h2yZ1UXcOcIDdNeHCY7QTDdPcoEBqRFSe5L0WBgFIytoGt61TxRJJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360224; c=relaxed/simple;
-	bh=eafieAQvpRzMF+MNzRbcjzzoQL3xJhOdWx+oKvAbpn8=;
+	s=arc-20240116; t=1722360227; c=relaxed/simple;
+	bh=kShYshOLKEqY1KpN4dqxf2ECvMPSpEaPss4hF0MTGKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gQmWinrKo6ZnacXrg/7XwPzaA66QG2MDVvBl6foQwsBRvTnjO0UO8hHKTadaqniyB9qF8eHt9NWfwK1D9qzzqWKmqE7m7yZwWmPbL7gTGtjWskt7c6rPNq4+fUeQ3HSAtmcweILzYD12ZI8ckmdh0Q0RQJtjKck+ImiqLaxl2rY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q3immezD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNqbmcl+QBgSXO+/YW2ClFUEPy6JqCLxxq5FKy5kIoMW83O577OWqUP6HNI7hCG1Vvug0mj4Xx/OpMNqIVZ9EKANxwiRXi3TdctBXa5RCoSw/bqfQ8+4S9bJwCLkEbisHjk3fpPjl4QFmT+gr3u8a8WCHHdWc2gkNKXuLR+Q0+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qBRBsdaq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q3immezD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B22C32782;
-	Tue, 30 Jul 2024 17:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qBRBsdaq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A8AC32782;
+	Tue, 30 Jul 2024 17:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360224;
-	bh=eafieAQvpRzMF+MNzRbcjzzoQL3xJhOdWx+oKvAbpn8=;
+	s=korg; t=1722360227;
+	bh=kShYshOLKEqY1KpN4dqxf2ECvMPSpEaPss4hF0MTGKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3immezD+KLjLh0imrvyU9S4NEyfAZdLtUQ6AA5K55++knIoavyzeO/3za2b0VI8H
-	 okdcYXM+WjAB6eY0nR388iBCnIjE44b69Dm4q0K/IIOZgt3ZUHL7MlCyz0NZdmUcWi
-	 tsZ+7VFNE9y07dVGUTP1u/u5bQApM7k915eIdE5o=
+	b=qBRBsdaqKxoemqMFLR4pSWWiXuvLR7R1tugIQZU5CZLtkaSnKec9JHjJ/zwd3XBpf
+	 SHre+efIvwYb4nJGaI+ni28If61JPZQqnzJdyfMUIWRrltkGZ6vN1QZfou6ZhmRpDs
+	 ziCYs05CtPkV/Adbld4r2Zn0bRf5PLiEjE72KmUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.10 635/809] hwrng: amd - Convert PCIBIOS_* return codes to errnos
-Date: Tue, 30 Jul 2024 17:48:31 +0200
-Message-ID: <20240730151749.924647604@linuxfoundation.org>
+	John David Anglin <dave.anglin@bell.net>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.10 636/809] parisc: Fix warning at drivers/pci/msi/msi.h:121
+Date: Tue, 30 Jul 2024 17:48:32 +0200
+Message-ID: <20240730151749.965565131@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -44,46 +44,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: John David Anglin <dave@mx3210.local>
 
-commit 14cba6ace79627a57fb9058582b03f0ed3832390 upstream.
+commit 4c29ab84cfec17081aae7a7a28f8d2c93c42dcae upstream.
 
-amd_rng_mod_init() uses pci_read_config_dword() that returns PCIBIOS_*
-codes. The return code is then returned as is but amd_rng_mod_init() is
-a module_init() function that should return normal errnos.
+Fix warning at drivers/pci/msi/msi.h:121.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning it.
+Recently, I added a PCI to PCIe bridge adaptor and a PCIe NVME card
+to my rp3440. Then, I noticed this warning at boot:
 
-Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+ WARNING: CPU: 0 PID: 10 at drivers/pci/msi/msi.h:121 pci_msi_setup_msi_irqs+0x68/0x90
+ CPU: 0 PID: 10 Comm: kworker/u32:0 Not tainted 6.9.7-parisc64 #1  Debian 6.9.7-1
+ Hardware name: 9000/800/rp3440
+ Workqueue: async async_run_entry_fn
+
+We need to select PCI_MSI_ARCH_FALLBACKS when PCI_MSI is selected.
+
+Signed-off-by: John David Anglin <dave.anglin@bell.net>
+Cc: stable@vger.kernel.org	# v6.0+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/hw_random/amd-rng.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/parisc/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/hw_random/amd-rng.c
-+++ b/drivers/char/hw_random/amd-rng.c
-@@ -143,8 +143,10 @@ static int __init amd_rng_mod_init(void)
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -86,6 +86,7 @@ config PARISC
+ 	select HAVE_SOFTIRQ_ON_OWN_STACK if IRQSTACKS
+ 	select TRACE_IRQFLAGS_SUPPORT
+ 	select HAVE_FUNCTION_DESCRIPTORS if 64BIT
++	select PCI_MSI_ARCH_FALLBACKS if PCI_MSI
  
- found:
- 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
--	if (err)
-+	if (err) {
-+		err = pcibios_err_to_errno(err);
- 		goto put_dev;
-+	}
- 
- 	pmbase &= 0x0000FF00;
- 	if (pmbase == 0) {
+ 	help
+ 	  The PA-RISC microprocessor is designed by Hewlett-Packard and used
 
 
