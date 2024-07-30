@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801D618E03C;
-	Tue, 30 Jul 2024 16:10:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4E518E044;
+	Tue, 30 Jul 2024 16:10:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355853; cv=none; b=klCM/nhUp4DD2pyFuqinT37+xUnkjmkZVXgbdB1e9/yg+9jMNTK6L86mOzTcYD6ADVKxjMtQiJPkgsOAhzPZic5YBPU5AhujRQWBiLObw2Ug9rX5GpeN3Vzx7pRMhcUia4mICb/vkZBt8A4LadWC1dVQ1+FuiOSJCvxglkL5HZU=
+	t=1722355856; cv=none; b=B08rjTD2xQS9Mkcym9EI6rYYUmpQQAt4kUhIBMdPFmDQJlc8YDshAhNR3bQre/TgaWwaJWBzLe+XxvP6GHwa4DPNGQky6zuwIaelTT+WJePrSNVevYvOwwjHXkhdprMa2jPPqMp6kTzR2ymWJaI8+4fYyjeeOby8MSHrCXjQEnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355853; c=relaxed/simple;
-	bh=R3k1l+tsUV4WmNYRcXSpYI/tE2uHmJczTCgSqXAqp4w=;
+	s=arc-20240116; t=1722355856; c=relaxed/simple;
+	bh=YIIJK/2eRuXgpGQhOsVCXfsptjV/950vqufbaKioJmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWm3KhJZtg4UVUGHDkh6JZDCdAQB3HtbNVVn0yi51iCfuvg6EkEXG3Xp8jDR34lhyaxfOq+hjmdXbT3TwUFk/9CcmdDU78YLAX+J5CrcPamDDuz/YXeTrrblbmLiaONaOZGlvZUgIBlbs6fBJejOZlp9ZCkDTla+cpQxfp7BKS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7VbWuEP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aggiAmMQudXzNUDzQoEuQXC3dfNCWBlhvrkHrlQIBQyJVEiC7koSTOX7nVkjEBawNQo6r1RV0+tUtTtNZYYeNgfjonFDyQRN+gpxQzxbNm+2ovkmTkDCSKDUg6DEeP5zDTh7iBCE8GWgMq5g/pha0e2VjV1EKRuTbGiYL20pmBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFcSsoa1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7VbWuEP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00132C32782;
-	Tue, 30 Jul 2024 16:10:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFcSsoa1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBD4C32782;
+	Tue, 30 Jul 2024 16:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355853;
-	bh=R3k1l+tsUV4WmNYRcXSpYI/tE2uHmJczTCgSqXAqp4w=;
+	s=korg; t=1722355856;
+	bh=YIIJK/2eRuXgpGQhOsVCXfsptjV/950vqufbaKioJmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7VbWuEPGe5wRavH8q9asPYgIdVqUg0BG6W3Kzb/El0s8DVw9rhtybkypnoXDip/l
-	 cCYOJQGcu1Gw0SlI1aCL9/EHbp44b53LlT4k2QHOewjjJi6pNrLV0iGV56aLIKwsI0
-	 IQ9Vo5RliM1AY5KMb6lReSKpfqxqxBRXVwipNiKk=
+	b=bFcSsoa13DWTLyPDXaVovhnqaWfihyUY8ZQfHN+7fn+i62XAZ5GluokpQMpCur3wZ
+	 jAXh/UwIeflZfI2SeOkOjG1Tx6A1UVPbUXB6E4dqIJTUTps6u2JOBX8epBxn4MHPqD
+	 lIZ9/QRlPQfnEeqeR7N8+xRI5Z3MKu5eCSGzqg+4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Udit Kumar <u-kumar1@ti.com>,
-	Vignesh Raghavendra <vigneshr@ti.com>,
+	Tim Murray <timmurray@google.com>,
+	John Stultz <jstultz@google.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Waiman Long <longman@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 076/809] arm64: dts: ti: k3-am62a-main: Fix the reg-range for main_pktdma
-Date: Tue, 30 Jul 2024 17:39:12 +0200
-Message-ID: <20240730151727.641230513@linuxfoundation.org>
+Subject: [PATCH 6.1 118/440] locking/rwsem: Add __always_inline annotation to __down_write_common() and inlined callers
+Date: Tue, 30 Jul 2024 17:45:51 +0200
+Message-ID: <20240730151620.498552956@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,46 +49,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit d007a883a61f55b9b195c4c18bbe29de5b802822 ]
+[ Upstream commit e81859fe64ad42dccefe134d1696e0635f78d763 ]
 
-For main_pktdma node, the TX Channel Realtime Register region 'tchanrt'
-is 128KB and Ring Realtime Register region 'ringrt' is 2MB as shown in
-memory map in the TRM[0] (Table 2-1).
-So fix ranges for those register regions.
+Apparently despite it being marked inline, the compiler
+may not inline __down_write_common() which makes it difficult
+to identify the cause of lock contention, as the wchan of the
+blocked function will always be listed as __down_write_common().
 
-[0]: <https://www.ti.com/lit/pdf/spruj16>
+So add __always_inline annotation to the common function (as
+well as the inlined helper callers) to force it to be inlined
+so a more useful blocking function will be listed (via wchan).
 
-Fixes: 3dad70def7ff ("arm64: dts: ti: k3-am62a-main: Add more peripheral nodes")
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Reviewed-by: Udit Kumar <u-kumar1@ti.com>
-Link: https://lore.kernel.org/r/20240430105253.203750-3-j-choudhary@ti.com
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
+This mirrors commit 92cc5d00a431 ("locking/rwsem: Add
+__always_inline annotation to __down_read_common() and inlined
+callers") which did the same for __down_read_common.
+
+I sort of worry that I'm playing wack-a-mole here, and talking
+with compiler people, they tell me inline means nothing, which
+makes me want to cry a little. So I'm wondering if we need to
+replace all the inlines with __always_inline, or remove them
+because either we mean something by it, or not.
+
+Fixes: c995e638ccbb ("locking/rwsem: Fold __down_{read,write}*()")
+Reported-by: Tim Murray <timmurray@google.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Acked-by: Waiman Long <longman@redhat.com>
+Link: https://lkml.kernel.org/r/20240709060831.495366-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/ti/k3-am62a-main.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/locking/rwsem.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
-index bf9c2d9c6439a..ce4a2f1056300 100644
---- a/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
-+++ b/arch/arm64/boot/dts/ti/k3-am62a-main.dtsi
-@@ -120,8 +120,8 @@ main_pktdma: dma-controller@485c0000 {
- 			compatible = "ti,am64-dmss-pktdma";
- 			reg = <0x00 0x485c0000 0x00 0x100>,
- 			      <0x00 0x4a800000 0x00 0x20000>,
--			      <0x00 0x4aa00000 0x00 0x40000>,
--			      <0x00 0x4b800000 0x00 0x400000>,
-+			      <0x00 0x4aa00000 0x00 0x20000>,
-+			      <0x00 0x4b800000 0x00 0x200000>,
- 			      <0x00 0x485e0000 0x00 0x10000>,
- 			      <0x00 0x484a0000 0x00 0x2000>,
- 			      <0x00 0x484c0000 0x00 0x2000>,
+diff --git a/kernel/locking/rwsem.c b/kernel/locking/rwsem.c
+index 92d8e2c4edda0..ffc2bbe391879 100644
+--- a/kernel/locking/rwsem.c
++++ b/kernel/locking/rwsem.c
+@@ -1308,7 +1308,7 @@ static inline int __down_read_trylock(struct rw_semaphore *sem)
+ /*
+  * lock for writing
+  */
+-static inline int __down_write_common(struct rw_semaphore *sem, int state)
++static __always_inline int __down_write_common(struct rw_semaphore *sem, int state)
+ {
+ 	if (unlikely(!rwsem_write_trylock(sem))) {
+ 		if (IS_ERR(rwsem_down_write_slowpath(sem, state)))
+@@ -1318,12 +1318,12 @@ static inline int __down_write_common(struct rw_semaphore *sem, int state)
+ 	return 0;
+ }
+ 
+-static inline void __down_write(struct rw_semaphore *sem)
++static __always_inline void __down_write(struct rw_semaphore *sem)
+ {
+ 	__down_write_common(sem, TASK_UNINTERRUPTIBLE);
+ }
+ 
+-static inline int __down_write_killable(struct rw_semaphore *sem)
++static __always_inline int __down_write_killable(struct rw_semaphore *sem)
+ {
+ 	return __down_write_common(sem, TASK_KILLABLE);
+ }
 -- 
 2.43.0
 
