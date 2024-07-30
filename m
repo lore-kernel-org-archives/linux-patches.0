@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E351FBA;
-	Tue, 30 Jul 2024 17:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 603921FBA;
+	Tue, 30 Jul 2024 17:00:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358828; cv=none; b=gZHReXDwmiQCjz3BLFeQ28S+nPyHzfDmlCdz7/+0YpS0H5+FXD7RLFTTqox1+8Ui2voXN/PIKCoJslcuXXtdkf69Lj4IOtxdKabcX61ek3Epbpcyn5+54U6wXeOwAsWvt0qC7MvVO2j/58A/qNOBLskz9wB2fE5HEb6MVXX1Ul0=
+	t=1722358831; cv=none; b=B6r1s3y2VSrswVSrsQv8beW4eBuINCRKpoQmY6joZprQb/plbQTFnK09aZ4aZnZ0LMHQmoKh/9wFzEM7uDsJXJVtB3fTJMJR/QtzczcFgJ7DI7L25sQtig0njc4esLduSX1pxhvQpL/EwWWU79Rw3immNKOomT0sHcG79FpWsxg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358828; c=relaxed/simple;
-	bh=QI3XqtrbUxBbJxPGfEUP1G/gRhdSdKpWObPAb+uPDf0=;
+	s=arc-20240116; t=1722358831; c=relaxed/simple;
+	bh=hdWYUP9evZmlF/ZihSZvDGQ9Zi4TWb72IRUT5ONdoZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J+KZrnQvQiGDdN46Oon8KVNMIePmd6gZ0aLtyVyhUzU5LOsw1WgWKHC6Xs7rvuaOsRBr1lU50I6VN0cS66sFy3YjSvHoNK7+12HlKUjrcqZkKzX81Id62RlKPNZz8TIkdgGz4v7554Zvtr+WoX85a+3BH0BIoUp3iMQpSi1fWNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KF8zUcim; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cEz5xp1+N8yjMrXjJkqp+76rb5vPlyFymFMv4r0fK9Wdhew3/zZoSzNSsIXlupSJNZWZ9mvOuxss8uE9qloXEgg2PY4yBFvbW74MaNGPeLcDQHJS6WhHE8FfcmW5u95C4uUVTX3f3NCrGb8W8D1G3MuxEMLqrEgr1Kud8obMJbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+FApuDt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KF8zUcim"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8877AC32782;
-	Tue, 30 Jul 2024 17:00:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+FApuDt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1C9AC32782;
+	Tue, 30 Jul 2024 17:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358828;
-	bh=QI3XqtrbUxBbJxPGfEUP1G/gRhdSdKpWObPAb+uPDf0=;
+	s=korg; t=1722358831;
+	bh=hdWYUP9evZmlF/ZihSZvDGQ9Zi4TWb72IRUT5ONdoZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KF8zUcim5eeiYFDRjfDbIxOpVR/PnkyyT+XFaxJipe+dd73UFEhxgZudy1qasJFJL
-	 QlF00PsrTt0PRCmyR/8tJ8MEy5qaye860RFEh2Mne0JJ4+JbUUZC/Gkq/Hq2uCF6Ft
-	 KRVNE0H+Xj72+DLev+C10Ds6f/ThkOi2z6EqvPJc=
+	b=s+FApuDtYx2Fy+V42tTdCudP5tKLGtZwDGlGWZxlNePB74kHCmG0ZPsrclOeYJjuZ
+	 AB+c9gl8ImtbLetMg2OZd1ZR0VZF7kCPQFly21uw4f/leyYUyFowoPEJdUSHvXUECM
+	 2cF+rIgqUlr1yeN4UNGILiejpwPDNbWfvGRg8JE4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shivaprasad G Bhat <sbhat@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 400/809] KVM: PPC: Book3S HV: Fix the set_one_reg for MMCR3
-Date: Tue, 30 Jul 2024 17:44:36 +0200
-Message-ID: <20240730151740.485087327@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 6.6 401/568] selftests/landlock: Add cred_transfer test
+Date: Tue, 30 Jul 2024 17:48:28 +0200
+Message-ID: <20240730151655.543425835@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,44 +44,127 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-[ Upstream commit f9ca6a10be20479d526f27316cc32cfd1785ed39 ]
+commit cc374782b6ca0fd634482391da977542443d3368 upstream.
 
-The kvmppc_set_one_reg_hv() wrongly get() the value
-instead of set() for MMCR3. Fix the same.
+Check that keyctl(KEYCTL_SESSION_TO_PARENT) preserves the parent's
+restrictions.
 
-Fixes: 5752fe0b811b ("KVM: PPC: Book3S HV: Save/restore new PMU registers")
-Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/171759276847.1480.16387950124201117847.stgit@linux.ibm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e1199815b47b ("selftests/landlock: Add user space tests")
+Co-developed-by: Jann Horn <jannh@google.com>
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://lore.kernel.org/r/20240724.Ood5aige9she@digikod.net
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kvm/book3s_hv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/landlock/base_test.c |   74 +++++++++++++++++++++++++++
+ tools/testing/selftests/landlock/config      |    1 
+ 2 files changed, 75 insertions(+)
 
-diff --git a/arch/powerpc/kvm/book3s_hv.c b/arch/powerpc/kvm/book3s_hv.c
-index daaf7faf21a5e..a4f34f94c86f7 100644
---- a/arch/powerpc/kvm/book3s_hv.c
-+++ b/arch/powerpc/kvm/book3s_hv.c
-@@ -2540,7 +2540,7 @@ static int kvmppc_set_one_reg_hv(struct kvm_vcpu *vcpu, u64 id,
- 		vcpu->arch.mmcrs = set_reg_val(id, *val);
- 		break;
- 	case KVM_REG_PPC_MMCR3:
--		*val = get_reg_val(id, vcpu->arch.mmcr[3]);
-+		kvmppc_set_mmcr_hv(vcpu, 3, set_reg_val(id, *val));
- 		break;
- 	case KVM_REG_PPC_PMC1 ... KVM_REG_PPC_PMC8:
- 		i = id - KVM_REG_PPC_PMC1;
--- 
-2.43.0
-
+--- a/tools/testing/selftests/landlock/base_test.c
++++ b/tools/testing/selftests/landlock/base_test.c
+@@ -9,6 +9,7 @@
+ #define _GNU_SOURCE
+ #include <errno.h>
+ #include <fcntl.h>
++#include <linux/keyctl.h>
+ #include <linux/landlock.h>
+ #include <string.h>
+ #include <sys/prctl.h>
+@@ -326,4 +327,77 @@ TEST(ruleset_fd_transfer)
+ 	ASSERT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
+ }
+ 
++TEST(cred_transfer)
++{
++	struct landlock_ruleset_attr ruleset_attr = {
++		.handled_access_fs = LANDLOCK_ACCESS_FS_READ_DIR,
++	};
++	int ruleset_fd, dir_fd;
++	pid_t child;
++	int status;
++
++	drop_caps(_metadata);
++
++	dir_fd = open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
++	EXPECT_LE(0, dir_fd);
++	EXPECT_EQ(0, close(dir_fd));
++
++	/* Denies opening directories. */
++	ruleset_fd =
++		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
++	ASSERT_LE(0, ruleset_fd);
++	EXPECT_EQ(0, prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0));
++	ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
++	EXPECT_EQ(0, close(ruleset_fd));
++
++	/* Checks ruleset enforcement. */
++	EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++	EXPECT_EQ(EACCES, errno);
++
++	/* Needed for KEYCTL_SESSION_TO_PARENT permission checks */
++	EXPECT_NE(-1, syscall(__NR_keyctl, KEYCTL_JOIN_SESSION_KEYRING, NULL, 0,
++			      0, 0))
++	{
++		TH_LOG("Failed to join session keyring: %s", strerror(errno));
++	}
++
++	child = fork();
++	ASSERT_LE(0, child);
++	if (child == 0) {
++		/* Checks ruleset enforcement. */
++		EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++		EXPECT_EQ(EACCES, errno);
++
++		/*
++		 * KEYCTL_SESSION_TO_PARENT is a no-op unless we have a
++		 * different session keyring in the child, so make that happen.
++		 */
++		EXPECT_NE(-1, syscall(__NR_keyctl, KEYCTL_JOIN_SESSION_KEYRING,
++				      NULL, 0, 0, 0));
++
++		/*
++		 * KEYCTL_SESSION_TO_PARENT installs credentials on the parent
++		 * that never go through the cred_prepare hook, this path uses
++		 * cred_transfer instead.
++		 */
++		EXPECT_EQ(0, syscall(__NR_keyctl, KEYCTL_SESSION_TO_PARENT, 0,
++				     0, 0, 0));
++
++		/* Re-checks ruleset enforcement. */
++		EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++		EXPECT_EQ(EACCES, errno);
++
++		_exit(_metadata->passed ? EXIT_SUCCESS : EXIT_FAILURE);
++		return;
++	}
++
++	EXPECT_EQ(child, waitpid(child, &status, 0));
++	EXPECT_EQ(1, WIFEXITED(status));
++	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
++
++	/* Re-checks ruleset enforcement. */
++	EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
++	EXPECT_EQ(EACCES, errno);
++}
++
+ TEST_HARNESS_MAIN
+--- a/tools/testing/selftests/landlock/config
++++ b/tools/testing/selftests/landlock/config
+@@ -1,5 +1,6 @@
+ CONFIG_CGROUPS=y
+ CONFIG_CGROUP_SCHED=y
++CONFIG_KEYS=y
+ CONFIG_OVERLAY_FS=y
+ CONFIG_PROC_FS=y
+ CONFIG_SECURITY=y
 
 
