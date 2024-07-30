@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CEE1A6166;
-	Tue, 30 Jul 2024 16:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD691A6166;
+	Tue, 30 Jul 2024 16:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358104; cv=none; b=Pt2H0wEx04RqMHlWJNrPlu1BM6SVPVhiDQQGT0PwIjqfWL+0eEkAxPX5ZrWL+lmqaDQkQzJXBg/73LCU6t5fK5dZc/kWVoR0ItWM5PaSIqvK5WlTLArbRcIq22D1qP84MLejPW1er1uFY65RH896XuBJx6QF2CIsy29cvwNnL6k=
+	t=1722358107; cv=none; b=BDtRP2FQ26t/27mxgw0Qk1ftG+/HfFLocb+35dfHNraW40LXUCceyea+StUGZ9tmCPfUwcM3UBbgE19RQWpu0COE0cz55eNLbxKtvRu4EYbBLQVlxIVhKp1EJZ0lzGBEBz1YE4dW8dtgr8NM4S09Uzg+4XEXNfiFKk7434qxoGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358104; c=relaxed/simple;
-	bh=ZVLEh6vdvum+pfWsdSrVZbMrw3x5ovOKEl/gmzoyR2o=;
+	s=arc-20240116; t=1722358107; c=relaxed/simple;
+	bh=GzvxVMbs5PgDJO9ke3uFE9GQNAK0kFbc4wRSUrS73eQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mvKPUQhtkn27ppBRqNCFCqJx3SXsd2dVwxerlkQ3ve9HbO4Y3AWLDhSAJ+B6FD+yd8hpWIncHUK3n5Od3AjVStr3cGh77+rmdM68S//o65JF31HzGtLBYLFelDD0JxCYz7ZxwGuPalPVRbWTT9pvtA4nDli4gSF9vg7XycyejqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AqkpuwV+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SpClrCOjC38pHB855VnUbxH3VruhpisOuRnYspx8Hki9Fd3IQIrZ3mQGgzjofFEbIDRfYQvZdY8bo/ZfTpRfTkOxOkSbNsaEL/UtJdYrFXMTclcMv3H1FM50GsSZ5qIrm8NJSRN4bGmas+LzYBa3/L8f8HFaMOgYOwDBqJWDdEY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ov7KxUua; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AqkpuwV+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCF9C32782;
-	Tue, 30 Jul 2024 16:48:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ov7KxUua"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30FAC4AF0C;
+	Tue, 30 Jul 2024 16:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358104;
-	bh=ZVLEh6vdvum+pfWsdSrVZbMrw3x5ovOKEl/gmzoyR2o=;
+	s=korg; t=1722358107;
+	bh=GzvxVMbs5PgDJO9ke3uFE9GQNAK0kFbc4wRSUrS73eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AqkpuwV+765AkigiyhG3HYQFt+xAWnT3JfIyvTkpgTUoTciABAzYRJD85QEu/HrAO
-	 5FG7tb6KchsbBHVSkEqwlEAz0/Z/jMAbOZVC64FTm5zt1WCwE6+qSB8xT5hcKUBRaZ
-	 huffKDjAooXzrnJwX8di5i5r+AMj4pb0PXBWIutk=
+	b=Ov7KxUuaUUp2rR5eWqquBShPALH6bp30TFL072ZzCfApscP0DRi9JWFgBCkywQoK8
+	 4xpax8uUkJkTxqzrZKuRlgikqEQqUY9trnF3l+LHSi5bNE2PUbTR8+E8obJ1sFw0Mx
+	 bw4FKeBsotBGLJNONvIU8Zvt8Nr3NCz/Q4yI2uPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 357/440] perf/x86/intel/pt: Fix a topa_entry base address calculation
-Date: Tue, 30 Jul 2024 17:49:50 +0200
-Message-ID: <20240730151629.759455897@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 326/568] pinctrl: core: fix possible memory leak when pinctrl_enable() fails
+Date: Tue, 30 Jul 2024 17:47:13 +0200
+Message-ID: <20240730151652.616748522@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,50 +48,63 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit ad97196379d0b8cb24ef3d5006978a6554e6467f upstream.
+[ Upstream commit ae1cf4759972c5fe665ee4c5e0c29de66fe3cf4a ]
 
-topa_entry->base is a bit-field. Bit-fields are not promoted to a 64-bit
-type, even if the underlying type is 64-bit, and so, if necessary, must
-be cast to a larger type when calculations are done.
+In devm_pinctrl_register(), if pinctrl_enable() fails in pinctrl_register(),
+the "pctldev" has not been added to dev resources, so devm_pinctrl_dev_release()
+can not be called, it leads memory leak.
 
-Fix a topa_entry->base address calculation by adding a cast.
+Introduce pinctrl_uninit_controller(), call it in the error path to free memory.
 
-Without the cast, the address was limited to 36-bits i.e. 64GiB.
-
-The address calculation is used on systems that do not support Multiple
-Entry ToPA (only Broadwell), and affects physical addresses on or above
-64GiB. Instead of writing to the correct address, the address comprising
-the first 36 bits would be written to.
-
-Intel PT snapshot and sampling modes are not affected.
-
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Reported-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240624201101.60186-3-adrian.hunter@intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240606023704.3931561-2-yangyingliang@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/pt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/core.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -877,7 +877,7 @@ static void pt_update_head(struct pt *pt
-  */
- static void *pt_buffer_region(struct pt_buffer *buf)
- {
--	return phys_to_virt(TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
-+	return phys_to_virt((phys_addr_t)TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index e19ee66e027bb..88ee086e13763 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -2072,6 +2072,14 @@ pinctrl_init_controller(struct pinctrl_desc *pctldesc, struct device *dev,
+ 	return ERR_PTR(ret);
  }
  
- /**
++static void pinctrl_uninit_controller(struct pinctrl_dev *pctldev, struct pinctrl_desc *pctldesc)
++{
++	pinctrl_free_pindescs(pctldev, pctldesc->pins,
++			      pctldesc->npins);
++	mutex_destroy(&pctldev->mutex);
++	kfree(pctldev);
++}
++
+ static int pinctrl_claim_hogs(struct pinctrl_dev *pctldev)
+ {
+ 	pctldev->p = create_pinctrl(pctldev->dev, pctldev);
+@@ -2152,8 +2160,10 @@ struct pinctrl_dev *pinctrl_register(struct pinctrl_desc *pctldesc,
+ 		return pctldev;
+ 
+ 	error = pinctrl_enable(pctldev);
+-	if (error)
++	if (error) {
++		pinctrl_uninit_controller(pctldev, pctldesc);
+ 		return ERR_PTR(error);
++	}
+ 
+ 	return pctldev;
+ }
+-- 
+2.43.0
+
 
 
