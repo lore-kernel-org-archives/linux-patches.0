@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E3D1A6160;
-	Tue, 30 Jul 2024 16:25:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3821C1A6161;
+	Tue, 30 Jul 2024 16:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356709; cv=none; b=pM6M7C6bgq0mRHweKAL6RGjdAjG7AYJjszmTcx47P0IzveCog2gxAsxv1/kZDrIlBH3upWRcEfWIOjuo3CWnt+OB5GWsRelu1CXVuApCaPGr6BG37ObDJ/9IuxfYGM4CgA68Rrkw3qsz3MN2c3xJ7HnloMhGSYLq/U+fFPOhC6o=
+	t=1722356712; cv=none; b=aqqJei7W6u0R39KmmAQ4pGgI3gfS/nKbQw37Yjf310H13NmeLyzX9FFpaUeXZyFuVpONoVCwQ1FwlrX7ggyjqJLaN1MFavjkthB0EP/gy110Eegkr5B6gYvY5wWyWvOgy4l2s6MjlNbJIlADL5o7ohqYeaKmgHrn+jFaj3LkG28=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356709; c=relaxed/simple;
-	bh=cLCb3FfBzrNFU6aAUsC+wLNjf2A0pf4l0yRuz1tpWo8=;
+	s=arc-20240116; t=1722356712; c=relaxed/simple;
+	bh=8SaPuN4NzdGHKgv8E//+bZYA1N6LVe1uSMB+S3BqMvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D4+Fa9f8Hy+Ci0DJHVsAvzVUWyowJG+TU/9mt0IOvOOkxSVIN1llK/g6l3ulwmA4CYIA9p69VnyfRm2XwYKmOm45z1aOUkS7hFXLpyzXU67ZWEmacUVf5iNgkWfLZsgpnNLh4gfKyPD56dcTZrhUjiwtIRH0nlUCgBWeda7ZuOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ubw8IUg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MgiQ/CWrL5ltc3uNQMJSg1C2/7S3mB6yS9Gk2CzfA6dOlDcyYfQeXsLQ8hJXbO5n+2t2/Ru3CzopLmcP6uVR4kWgBbbOYmsrssIFX9fC7RlFtZSUqnoe/zUHAfrnvE/ocKrjdTbr6vJQJehoOZKEhmNWqp8ufhsli+hIsWbFVU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1tfHPFlp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ubw8IUg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59D3FC32782;
-	Tue, 30 Jul 2024 16:25:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1tfHPFlp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA93C32782;
+	Tue, 30 Jul 2024 16:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356708;
-	bh=cLCb3FfBzrNFU6aAUsC+wLNjf2A0pf4l0yRuz1tpWo8=;
+	s=korg; t=1722356712;
+	bh=8SaPuN4NzdGHKgv8E//+bZYA1N6LVe1uSMB+S3BqMvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ubw8IUg1061AwItPAK8qiNfuSlfUm5qOqPpzvm60ys4zvgKBUPSrdvFzORo/WlzuL
-	 gtYA3xAGL8lm8cQQbB0UROeJ7PyoRx7kiOQeOZwT7YDCByYQOCpMS22QbNzqlOcKiz
-	 8xSaVZtxjhGnw/tKhERSthyY6LL6OycttplfhYPk=
+	b=1tfHPFlphj9CvI3xH0qgoep1AfQsejWn8udr3iY/fA58mQifkZCxZ+WGA1GdLV5ge
+	 CM+F4MiU2Nloi+Z50dp0jvGY/5yTNu1KoiroQfhiLsQp85ZPFnbchjRYTZz7LrjvVQ
+	 XA+rfSDEJ3+QLJeyPffd/ACxyVL8QDEj1vajt94w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 221/440] RDMA/hns: Check atomic wr length
-Date: Tue, 30 Jul 2024 17:47:34 +0200
-Message-ID: <20240730151624.492574117@linuxfoundation.org>
+Subject: [PATCH 6.10 176/809] tcp: fix races in tcp_v[46]_err()
+Date: Tue, 30 Jul 2024 17:40:52 +0200
+Message-ID: <20240730151731.556210382@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,64 +48,85 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Junxian Huang <huangjunxian6@hisilicon.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6afa2c0bfb8ef69f65715ae059e5bd5f9bbaf03b ]
+[ Upstream commit fde6f897f2a184546bf5516ac736523ef24dc6a7 ]
 
-8 bytes is the only supported length of atomic. Add this check in
-set_rc_wqe(). Besides, stop processing WQEs and return from
-set_rc_wqe() if there is any error.
+These functions have races when they:
 
-Fixes: 384f88185112 ("RDMA/hns: Add atomic support")
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240710133705.896445-2-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+1) Write sk->sk_err
+2) call sk_error_report(sk)
+3) call tcp_done(sk)
+
+As described in prior patches in this series:
+
+An smp_wmb() is missing.
+We should call tcp_done() before sk_error_report(sk)
+to have consistent tcp_poll() results on SMP hosts.
+
+Use tcp_done_with_error() where we centralized the
+correct sequence.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Neal Cardwell <ncardwell@google.com>
+Link: https://lore.kernel.org/r/20240528125253.1966136-5-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h | 2 ++
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c  | 9 +++++++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_ipv4.c | 11 +++--------
+ net/ipv6/tcp_ipv6.c | 10 +++-------
+ 2 files changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
-index 8748b65c87ea7..0a4c046cdfac4 100644
---- a/drivers/infiniband/hw/hns/hns_roce_device.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -90,6 +90,8 @@
- /* Configure to HW for PAGE_SIZE larger than 4KB */
- #define PG_SHIFT_OFFSET				(PAGE_SHIFT - 12)
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index b710958393e64..a541659b6562b 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -611,15 +611,10 @@ int tcp_v4_err(struct sk_buff *skb, u32 info)
  
-+#define ATOMIC_WR_LEN				8
-+
- #define HNS_ROCE_IDX_QUE_ENTRY_SZ		4
- #define SRQ_DB_REG				0x230
+ 		ip_icmp_error(sk, skb, err, th->dest, info, (u8 *)th);
  
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index c931cce50d50d..176d75f2514eb 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -602,11 +602,16 @@ static inline int set_rc_wqe(struct hns_roce_qp *qp,
- 		     (wr->send_flags & IB_SEND_SIGNALED) ? 1 : 0);
+-		if (!sock_owned_by_user(sk)) {
+-			WRITE_ONCE(sk->sk_err, err);
+-
+-			sk_error_report(sk);
+-
+-			tcp_done(sk);
+-		} else {
++		if (!sock_owned_by_user(sk))
++			tcp_done_with_error(sk, err);
++		else
+ 			WRITE_ONCE(sk->sk_err_soft, err);
+-		}
+ 		goto out;
+ 	}
  
- 	if (wr->opcode == IB_WR_ATOMIC_CMP_AND_SWP ||
--	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD)
-+	    wr->opcode == IB_WR_ATOMIC_FETCH_AND_ADD) {
-+		if (msg_len != ATOMIC_WR_LEN)
-+			return -EINVAL;
- 		set_atomic_seg(wr, rc_sq_wqe, valid_num_sge);
--	else if (wr->opcode != IB_WR_REG_MR)
-+	} else if (wr->opcode != IB_WR_REG_MR) {
- 		ret = set_rwqe_data_seg(&qp->ibqp, wr, rc_sq_wqe,
- 					&curr_idx, valid_num_sge);
-+		if (ret)
-+			return ret;
-+	}
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 729faf8bd366a..3385faf1d5dcb 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -490,14 +490,10 @@ static int tcp_v6_err(struct sk_buff *skb, struct inet6_skb_parm *opt,
  
- 	/*
- 	 * The pipeline can sequentially post all valid WQEs into WQ buffer,
+ 		ipv6_icmp_error(sk, skb, err, th->dest, ntohl(info), (u8 *)th);
+ 
+-		if (!sock_owned_by_user(sk)) {
+-			WRITE_ONCE(sk->sk_err, err);
+-			sk_error_report(sk);		/* Wake people up to see the error (see connect in sock.c) */
+-
+-			tcp_done(sk);
+-		} else {
++		if (!sock_owned_by_user(sk))
++			tcp_done_with_error(sk, err);
++		else
+ 			WRITE_ONCE(sk->sk_err_soft, err);
+-		}
+ 		goto out;
+ 	case TCP_LISTEN:
+ 		break;
 -- 
 2.43.0
 
