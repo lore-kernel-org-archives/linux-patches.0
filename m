@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E609878276;
-	Tue, 30 Jul 2024 16:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E297778276;
+	Tue, 30 Jul 2024 16:45:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357944; cv=none; b=NuBrlqLzfgsvqVx1vRkNfwVOv8vHXJarjcggURhF950fOTVIMWkV5ftVwY9tXM3aAXNKQp5A13tqo1+fFsDc3245MMXrwdOg4Eks1K5B4kywISfaa+2LejKJfaWD5xr2yV+YtdtRqn9ZMgPMYNIBdjmXyKdtzoa1vTCfzRO+jbs=
+	t=1722357947; cv=none; b=ZLgAP5SEVd/WFeNGOiqzMOhKaCDmbgd26QOaoTIzT+i1dkZw6P1thheR98+8/cZ4NjhvuZ5spwPD7/7VJ9i3r/tArGpdhVPCF3T89TZibwr6zIHH4TrA5s4doESPnI8N9na+Ds8JGJvjj1f3ucJKYtE1qKGMBpIbDH0l+PoulME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357944; c=relaxed/simple;
-	bh=K0m91PcOlPg48vrlUsoLq0NUHMr2DNPYfeQsdPd83xs=;
+	s=arc-20240116; t=1722357947; c=relaxed/simple;
+	bh=P8FgoCmZJrF4tzeRomy1cUWWmUIqmt4mX8+5GgJtYxk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tnNaCHcpe73XCsF+6lF0YchZ4se0PUYgc4jA3j7NkndWHCNOi6GdqiTtSaK1eFJJXrDN4ILmE93j5mx+bEhmbJDJ7p1jdPAPsLV6B7hS+3bTaf/XTij2EgYRPqFK3VGGSaUBs+RozWiSF82Lagt3aWgGIX/QMcE86x5lMQDHBfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LCJBEYoe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NqQ/PLU/eEa08BEGJg+RnzR7Ce9FYQDtrLM2I+GEAaC0euZV9l/nCbOD2VOwLUcEsTpw5+arcoEHdBFseqj4maI8aL/+P2ucUXcS41Wz4lSvk5MYAnt5XWQkuSX5FtIBlcH6HPrMnYL9oN0CqkhtKgAmoHGvh4AUfFOIqsXlua4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8utiGXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LCJBEYoe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 680C6C4AF0F;
-	Tue, 30 Jul 2024 16:45:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8utiGXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B6FC32782;
+	Tue, 30 Jul 2024 16:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357943;
-	bh=K0m91PcOlPg48vrlUsoLq0NUHMr2DNPYfeQsdPd83xs=;
+	s=korg; t=1722357946;
+	bh=P8FgoCmZJrF4tzeRomy1cUWWmUIqmt4mX8+5GgJtYxk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LCJBEYoe0KEs5+QvrcDDUDoCaTvTWFkmLg9dp1m3DVOeoRnlvBufs5rrspu+AFzXO
-	 GWLFOGa4yAAEoC2AZfxq+beCAjE80SVGLvWS9qXbJasbPfXpNDQ0Js6zJIA4G6tzTZ
-	 F2HvYGvy2e+QPluJzImQ1/ID/zR4iXZcG/z0hNvM=
+	b=R8utiGXEndP7WFCUlZ5lcZeWGzx0MR4uqgkNx6ZRiZVhGuRSPI0yqUq5NeCaaPCOo
+	 kSkz0eua+2DW5sEpvsdhYcc5j7L921aVYFIGtYtxDrzUP5nyllI7yxDOWkMjT8q8XE
+	 OHCAByVxAqGqIPuy1vWk0JElw6JluQhOWMO9slSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Lijo Lazar <lijo.lazar@amd.com>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 283/809] drm/amdgpu: Fix snprintf usage in amdgpu_gfx_kiq_init_ring
-Date: Tue, 30 Jul 2024 17:42:39 +0200
-Message-ID: <20240730151735.766443575@linuxfoundation.org>
+Subject: [PATCH 6.6 306/568] RDMA/core: Remove NULL check before dev_{put, hold}
+Date: Tue, 30 Jul 2024 17:46:53 +0200
+Message-ID: <20240730151651.835201557@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +46,98 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Jules Irenge <jbi.octave@gmail.com>
 
-[ Upstream commit 0ea55445554209913a72eab86b60f5788776c4d6 ]
+[ Upstream commit 7a1c2abf9a2be7d969b25e8d65567933335ca88e ]
 
-This commit fixes a format truncation issue arosed by the snprintf
-function potentially writing more characters into the ring->name buffer
-than it can hold, in the amdgpu_gfx_kiq_init_ring function
+The call netdev_{put, hold} of dev_{put, hold} will check NULL,
+so there is no need to check before using dev_{put, hold},
+remove it to silence the warning:
 
-The issue occurred because the '%d' format specifier could write between
-1 and 10 bytes into a region of size between 0 and 8, depending on the
-values of xcc_id, ring->me, ring->pipe, and ring->queue. The snprintf
-function could output between 12 and 41 bytes into a destination of size
-16, leading to potential truncation.
+./drivers/infiniband/core/nldev.c:375:2-9: WARNING: NULL check before dev_{put, hold} functions is not needed.
 
-To resolve this, the snprintf line was modified to use the '%hhu' format
-specifier for xcc_id, ring->me, ring->pipe, and ring->queue. The '%hhu'
-specifier is used for unsigned char variables and ensures that these
-values are printed as unsigned decimal integers.
-
-Fixes the below with gcc W=1:
-drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c: In function ‘amdgpu_gfx_kiq_init_ring’:
-drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:332:61: warning: ‘%d’ directive output may be truncated writing between 1 and 10 bytes into a region of size between 0 and 8 [-Wformat-truncation=]
-  332 |         snprintf(ring->name, sizeof(ring->name), "kiq_%d.%d.%d.%d",
-      |                                                             ^~
-drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:332:50: note: directive argument in the range [0, 2147483647]
-  332 |         snprintf(ring->name, sizeof(ring->name), "kiq_%d.%d.%d.%d",
-      |                                                  ^~~~~~~~~~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c:332:9: note: ‘snprintf’ output between 12 and 41 bytes into a destination of size 16
-  332 |         snprintf(ring->name, sizeof(ring->name), "kiq_%d.%d.%d.%d",
-      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  333 |                  xcc_id, ring->me, ring->pipe, ring->queue);
-      |                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Fixes: 345a36c4f1ba ("drm/amdgpu: prefer snprintf over sprintf")
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Closes: https://bugzilla.openanolis.cn/show_bug.cgi?id=7047
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Link: https://lore.kernel.org/r/20231024003815.89742-1-yang.lee@linux.alibaba.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Stable-dep-of: 2043a14fb3de ("RDMA: Fix netdev tracker in ib_device_set_netdev")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/core/device.c        | 10 +++-------
+ drivers/infiniband/core/lag.c           |  3 +--
+ drivers/infiniband/core/roce_gid_mgmt.c |  3 +--
+ 3 files changed, 5 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-index 1d955652f3ba6..2cb8ab86efae8 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
-@@ -329,7 +329,7 @@ int amdgpu_gfx_kiq_init_ring(struct amdgpu_device *adev, int xcc_id)
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index d1b5908c70cdc..e70804d8de828 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2174,8 +2174,7 @@ int ib_device_set_netdev(struct ib_device *ib_dev, struct net_device *ndev,
+ 	spin_unlock_irqrestore(&pdata->netdev_lock, flags);
  
- 	ring->eop_gpu_addr = kiq->eop_gpu_addr;
- 	ring->no_scheduler = true;
--	snprintf(ring->name, sizeof(ring->name), "kiq_%d.%d.%d.%d",
-+	snprintf(ring->name, sizeof(ring->name), "kiq_%hhu.%hhu.%hhu.%hhu",
- 		 xcc_id, ring->me, ring->pipe, ring->queue);
- 	r = amdgpu_ring_init(adev, ring, 1024, irq, AMDGPU_CP_KIQ_IRQ_DRIVER0,
- 			     AMDGPU_RING_PRIO_DEFAULT, NULL);
+ 	add_ndev_hash(pdata);
+-	if (old_ndev)
+-		__dev_put(old_ndev);
++	__dev_put(old_ndev);
+ 
+ 	return 0;
+ }
+@@ -2235,8 +2234,7 @@ struct net_device *ib_device_get_netdev(struct ib_device *ib_dev,
+ 		spin_lock(&pdata->netdev_lock);
+ 		res = rcu_dereference_protected(
+ 			pdata->netdev, lockdep_is_held(&pdata->netdev_lock));
+-		if (res)
+-			dev_hold(res);
++		dev_hold(res);
+ 		spin_unlock(&pdata->netdev_lock);
+ 	}
+ 
+@@ -2311,9 +2309,7 @@ void ib_enum_roce_netdev(struct ib_device *ib_dev,
+ 
+ 			if (filter(ib_dev, port, idev, filter_cookie))
+ 				cb(ib_dev, port, idev, cookie);
+-
+-			if (idev)
+-				dev_put(idev);
++			dev_put(idev);
+ 		}
+ }
+ 
+diff --git a/drivers/infiniband/core/lag.c b/drivers/infiniband/core/lag.c
+index c77d7d2559a11..66c7e1e6600dc 100644
+--- a/drivers/infiniband/core/lag.c
++++ b/drivers/infiniband/core/lag.c
+@@ -93,8 +93,7 @@ static struct net_device *rdma_get_xmit_slave_udp(struct ib_device *device,
+ 	slave = netdev_get_xmit_slave(master, skb,
+ 				      !!(device->lag_flags &
+ 					 RDMA_LAG_FLAGS_HASH_ALL_SLAVES));
+-	if (slave)
+-		dev_hold(slave);
++	dev_hold(slave);
+ 	rcu_read_unlock();
+ 	kfree_skb(skb);
+ 	return slave;
+diff --git a/drivers/infiniband/core/roce_gid_mgmt.c b/drivers/infiniband/core/roce_gid_mgmt.c
+index e958c43dd28fd..d5131b3ba8ab0 100644
+--- a/drivers/infiniband/core/roce_gid_mgmt.c
++++ b/drivers/infiniband/core/roce_gid_mgmt.c
+@@ -601,8 +601,7 @@ static void del_netdev_default_ips_join(struct ib_device *ib_dev, u32 port,
+ 
+ 	rcu_read_lock();
+ 	master_ndev = netdev_master_upper_dev_get_rcu(rdma_ndev);
+-	if (master_ndev)
+-		dev_hold(master_ndev);
++	dev_hold(master_ndev);
+ 	rcu_read_unlock();
+ 
+ 	if (master_ndev) {
 -- 
 2.43.0
 
