@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40443146D6B;
-	Tue, 30 Jul 2024 16:37:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5C8146D6B;
+	Tue, 30 Jul 2024 16:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357447; cv=none; b=N1DIe794O5M8KY2sPtM/LAp9NqRjhy3QDhFBHPF8SMn2fVFUS7qWMGZ/OglIznrahW4CncK7RhqIi61y/E4LJnH7cK/szLAY+wW88wCyoaqTZWnrMbiPa3QE1Y6IVIL9+GUAF3VuiHn6eb9ouYd/iPUPy+nvmBuQdEexOUEPyoo=
+	t=1722357450; cv=none; b=KLhCExq7F3P31njhLm7SBFvryNkm4vQqL5TDybty7tVgIxjvCY4KlToIt6DUycUFCkB4+s3SCSvuij2pe+8PFdVxk8ggqoh+S1FP0YIddUGwRMqcFeFot3igZsMFVtHT1g2lgW5uLEXf9AYXfrI3AZ66yQD1Wq+F2S5WrkXPbfs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357447; c=relaxed/simple;
-	bh=5/GDnpXJ+kZ7xMBW4XcgjhWJ5rmJQp8moOikH9rVkMc=;
+	s=arc-20240116; t=1722357450; c=relaxed/simple;
+	bh=iiUOnuziFgbIP4l2OFrTVS3MtH2Zja+wgR3ZWYOqB3g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mg3KRHiBWFlvyVBoxH9xqZHVfTNJkgfncdOecH3kADZtT56GRlrBA6LK2G/mn+kb35Pio0DY0jGnEqp0PUvUC8ygRhufqWXny2gVbLADYA5ptuDNgm8sMxWaRDpDnjrYNTkgZ8OB3ujtbTcGoojlUUHCbEUcWewcQyWXH9kwj0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3WOPEoy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nga+PfPcFDgFuzp60IpVsu04dGPbX8CfBr3W10PY74kDSGTiOwGvq7Xn1QMlsjuinuDMHEtd9KQFRS4tVLUVA/9u1w8hoLmYJm4sUotG/B+TVCxyywCw6/1GcJZYhEYWH0cSQKqMIFf/d/7hP9aZQ+K9IiaT+JcEmdYV7dzteF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u7MzIqqa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3WOPEoy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9F9DC32782;
-	Tue, 30 Jul 2024 16:37:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u7MzIqqa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6E14C32782;
+	Tue, 30 Jul 2024 16:37:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357447;
-	bh=5/GDnpXJ+kZ7xMBW4XcgjhWJ5rmJQp8moOikH9rVkMc=;
+	s=korg; t=1722357450;
+	bh=iiUOnuziFgbIP4l2OFrTVS3MtH2Zja+wgR3ZWYOqB3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3WOPEoyTRCEqA7WF1/xPQ+1VUfTdIc6XMv6yb1G2/+WBG+cIz4b+0m0oOX73gVHq
-	 6XFgBjHLE+DwO193HLC0BiTKVTn9E8ZzZygXGm3Em7t+Bvcpusx96p9WUsaS2MsOwa
-	 PHs3YkwLD4iU//Qhw72rj/dfKrMoOKRrxz2KIYY0=
+	b=u7MzIqqa2XIF92zILOulLtpY3JerPz85tgWhHq8vqE3b9ivMIhV2LEdjMXFbaONTf
+	 HH22jrbrM3sGYxDeQKOYCYn5VxUkhM+F/9g+mcmD1/9d6h++4P/YsQmCibtRy2j8dj
+	 lsieECXMnEnLMob6uk62aBr6i59ItQnbo/+PbXz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Xi (Alex) Liu" <xi.liu@amd.com>,
-	Sung Joon Kim <sungjoon.kim@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>
-Subject: [PATCH 6.1 293/440] drm/amd/display: Check for NULL pointer
-Date: Tue, 30 Jul 2024 17:48:46 +0200
-Message-ID: <20240730151627.275124117@linuxfoundation.org>
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 256/568] iio: frequency: adrf6780: rm clk provider include
+Date: Tue, 30 Jul 2024 17:46:03 +0200
+Message-ID: <20240730151649.884656471@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,42 +47,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sung Joon Kim <sungjoon.kim@amd.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 4ab68e168ae1695f7c04fae98930740aaf7c50fa upstream.
+[ Upstream commit e2261b4a4de2804698935eb44f98dc897e1c44c3 ]
 
-[why & how]
-Need to make sure plane_state is initialized
-before accessing its members.
+The driver has no clock provider implementation, therefore remove the
+include.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Xi (Alex) Liu <xi.liu@amd.com>
-Signed-off-by: Sung Joon Kim <sungjoon.kim@amd.com>
-Signed-off-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 295d91cbc700651782a60572f83c24861607b648)
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 63aaf6d06d87 ("iio: frequency: adrf6780: add support for ADRF6780")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Link: https://lore.kernel.org/r/20240530092835.36892-1-antoniu.miclaus@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_surface.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iio/frequency/adrf6780.c | 1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_surface.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_surface.c
-@@ -154,7 +154,8 @@ const struct dc_plane_status *dc_plane_g
- 		if (pipe_ctx->plane_state != plane_state)
- 			continue;
- 
--		pipe_ctx->plane_state->status.is_flip_pending = false;
-+		if (pipe_ctx->plane_state)
-+			pipe_ctx->plane_state->status.is_flip_pending = false;
- 
- 		break;
- 	}
+diff --git a/drivers/iio/frequency/adrf6780.c b/drivers/iio/frequency/adrf6780.c
+index b4defb82f37e3..3f46032c92752 100644
+--- a/drivers/iio/frequency/adrf6780.c
++++ b/drivers/iio/frequency/adrf6780.c
+@@ -9,7 +9,6 @@
+ #include <linux/bits.h>
+ #include <linux/clk.h>
+ #include <linux/clkdev.h>
+-#include <linux/clk-provider.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/iio/iio.h>
+-- 
+2.43.0
+
 
 
