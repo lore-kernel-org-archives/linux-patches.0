@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56FA7188013;
-	Tue, 30 Jul 2024 16:38:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B882A1A6169;
+	Tue, 30 Jul 2024 16:38:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357489; cv=none; b=SBh3TUh+nTTGgr0GHYH1RXrQx6Hl2w5hkG8q6vGoiOUibJntYwLm+NNwJYxoDLfQtPvbYrJ/m/zFb2BgQ+6AByalxkqSr3gchFD0m7SO13lJ6wHnrAl18La7WDdni/FY47Uc4uR9iVcxtrm2gLF6aa/qtyYTEFurPNc7vei0J/c=
+	t=1722357492; cv=none; b=o17p+D4zEqKCu7+JVM3bCKSEOJ+TTGkSA+2REh9Fz/qmPEF9b58+1phoWLn2qeaPf8UZFjgA/Na4FlVLGKLKnBL7hDTuDilh7JexzggzQ4c9mYF3dwCTFP9+3VP7vVS1BNZw1KIOH/9oNPY7kF/yOdBEqD1WnivUzI/wcplP0as=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357489; c=relaxed/simple;
-	bh=dAN6IrJRn1tP7gR1oPk0IlOKpf5pfoHMbTP3lUmnQYo=;
+	s=arc-20240116; t=1722357492; c=relaxed/simple;
+	bh=U++3a3RZ2N/f1tcplWDG/jNgUDca11VPWBXw9p5RSFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ED6UaV3p/e7rJa36s5DN6Y1hUtEBpmJCEbrGsXWh3VLDsH9U3Bj9gV8wM0NGzHVcsvlia36E5Y9Amv4vDRhiGqwOwSwTg+I5JhJjOpAKvVqH2lphDgR6PfhsPddKnFhGt0MQRNMzw5me5ymYrYOiPWS+iun6Xq48Jb6qq8PzFQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVDt7MNV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAcMqdD7HsHlopbHGag/qEgKkTAbaveKhQ9gtWaduHvw4GJ3AGwYooE1ejPKcOWluDj/hNfn6y7SKsSRv8r7lZc1Li2NXEFRxH+v7qW6XTYrRLwoGpFYqC892m91joyfr7M+lD9PPu8Qo1+9avCErq+AF58d8wX0oJlaXCkm/Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AwCZRDGj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVDt7MNV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3B5EC32782;
-	Tue, 30 Jul 2024 16:38:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AwCZRDGj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E26E1C32782;
+	Tue, 30 Jul 2024 16:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357489;
-	bh=dAN6IrJRn1tP7gR1oPk0IlOKpf5pfoHMbTP3lUmnQYo=;
+	s=korg; t=1722357492;
+	bh=U++3a3RZ2N/f1tcplWDG/jNgUDca11VPWBXw9p5RSFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XVDt7MNVY0fwpvBh7YAEF7FG1f2a9tHl2RvrawLlEL4xCIFFaQ1DtmQd9see1cDMW
-	 HVTsL6/LNvKFhzsZvjMlH0wbTMNGQ7O4fqdB38dixYvYvob1nTRm9D4r1jKtCBbrSY
-	 h4iE+Td3tSvKKJkn9mdIov7DpCovCWZ8bSGJ5SxY=
+	b=AwCZRDGjoBu/9d0/Kf3HZs9YnJcvJiLCe6TXuB599covYzfyH1hnCTbaCJtiTczjI
+	 7qVGOcmN5N/XU9gQRN/ymoUeXfXq1De++AHG3TkuS3m54V74JSC6lNNhK/ltvzlV/v
+	 clpAz4l7xz7AU3AIzplxZL85SxVT722sJnWaw/C4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 297/440] cifs: fix reconnect with SMB1 UNIX Extensions
-Date: Tue, 30 Jul 2024 17:48:50 +0200
-Message-ID: <20240730151627.429363771@linuxfoundation.org>
+	Chiara Meiohas <cmeiohas@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 260/568] RDMA/mlx5: Set mkeys for dmabuf at PAGE_SIZE
+Date: Tue, 30 Jul 2024 17:46:07 +0200
+Message-ID: <20240730151650.039669073@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,66 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steve French <stfrench@microsoft.com>
+From: Chiara Meiohas <cmeiohas@nvidia.com>
 
-commit a214384ce26b6111ea8c8d58fa82a1ca63996c38 upstream.
+[ Upstream commit a4e540119be565f47c305f295ed43f8e0bc3f5c3 ]
 
-When mounting with the SMB1 Unix Extensions (e.g. mounts
-to Samba with vers=1.0), reconnects no longer reset the
-Unix Extensions (SetFSInfo SET_FILE_UNIX_BASIC) after tcon so most
-operations (e.g. stat, ls, open, statfs) will fail continuously
-with:
-        "Operation not supported"
-if the connection ever resets (e.g. due to brief network disconnect)
+Set the mkey for dmabuf at PAGE_SIZE to support any SGL
+after a move operation.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ib_umem_find_best_pgsz returns 0 on error, so it is
+incorrect to check the returned page_size against PAGE_SIZE
+
+Fixes: 90da7dc8206a ("RDMA/mlx5: Support dma-buf based userspace memory region")
+Signed-off-by: Chiara Meiohas <cmeiohas@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://lore.kernel.org/r/1e2289b9133e89f273a4e68d459057d032cbc2ce.1718301631.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/mlx5/mlx5_ib.h | 13 +++++++++++++
+ drivers/infiniband/hw/mlx5/odp.c     |  6 ++----
+ 2 files changed, 15 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -3975,6 +3975,7 @@ error:
- }
- #endif
+diff --git a/drivers/infiniband/hw/mlx5/mlx5_ib.h b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+index 6a57af8fa231b..43a963e205eb4 100644
+--- a/drivers/infiniband/hw/mlx5/mlx5_ib.h
++++ b/drivers/infiniband/hw/mlx5/mlx5_ib.h
+@@ -115,6 +115,19 @@ unsigned long __mlx5_umem_find_best_quantized_pgoff(
+ 		__mlx5_bit_sz(typ, page_offset_fld), 0, scale,                 \
+ 		page_offset_quantized)
  
-+#ifdef CONFIG_CIFS_ALLOW_INSECURE_LEGACY
- /*
-  * Issue a TREE_CONNECT request.
-  */
-@@ -4096,11 +4097,25 @@ CIFSTCon(const unsigned int xid, struct
- 		else
- 			tcon->Flags = 0;
- 		cifs_dbg(FYI, "Tcon flags: 0x%x\n", tcon->Flags);
--	}
++static inline unsigned long
++mlx5_umem_dmabuf_find_best_pgsz(struct ib_umem_dmabuf *umem_dmabuf)
++{
++	/*
++	 * mkeys used for dmabuf are fixed at PAGE_SIZE because we must be able
++	 * to hold any sgl after a move operation. Ideally the mkc page size
++	 * could be changed at runtime to be optimal, but right now the driver
++	 * cannot do that.
++	 */
++	return ib_umem_find_best_pgsz(&umem_dmabuf->umem, PAGE_SIZE,
++				      umem_dmabuf->umem.iova);
++}
++
+ enum {
+ 	MLX5_IB_MMAP_OFFSET_START = 9,
+ 	MLX5_IB_MMAP_OFFSET_END = 255,
+diff --git a/drivers/infiniband/hw/mlx5/odp.c b/drivers/infiniband/hw/mlx5/odp.c
+index 4a04cbc5b78a4..a524181f34df9 100644
+--- a/drivers/infiniband/hw/mlx5/odp.c
++++ b/drivers/infiniband/hw/mlx5/odp.c
+@@ -705,10 +705,8 @@ static int pagefault_dmabuf_mr(struct mlx5_ib_mr *mr, size_t bcnt,
+ 		return err;
+ 	}
  
-+		/*
-+		 * reset_cifs_unix_caps calls QFSInfo which requires
-+		 * need_reconnect to be false, but we would not need to call
-+		 * reset_caps if this were not a reconnect case so must check
-+		 * need_reconnect flag here.  The caller will also clear
-+		 * need_reconnect when tcon was successful but needed to be
-+		 * cleared earlier in the case of unix extensions reconnect
-+		 */
-+		if (tcon->need_reconnect && tcon->unix_ext) {
-+			cifs_dbg(FYI, "resetting caps for %s\n", tcon->tree_name);
-+			tcon->need_reconnect = false;
-+			reset_cifs_unix_caps(xid, tcon, NULL, NULL);
-+		}
-+	}
- 	cifs_buf_release(smb_buffer);
- 	return rc;
- }
-+#endif /* CONFIG_CIFS_ALLOW_INSECURE_LEGACY */
- 
- static void delayed_free(struct rcu_head *p)
- {
+-	page_size = mlx5_umem_find_best_pgsz(&umem_dmabuf->umem, mkc,
+-					     log_page_size, 0,
+-					     umem_dmabuf->umem.iova);
+-	if (unlikely(page_size < PAGE_SIZE)) {
++	page_size = mlx5_umem_dmabuf_find_best_pgsz(umem_dmabuf);
++	if (!page_size) {
+ 		ib_umem_dmabuf_unmap_pages(umem_dmabuf);
+ 		err = -EINVAL;
+ 	} else {
+-- 
+2.43.0
+
 
 
