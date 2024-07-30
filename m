@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7934A188006;
-	Tue, 30 Jul 2024 16:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FDF188000;
+	Tue, 30 Jul 2024 16:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355445; cv=none; b=l+3CmD4G1JhNKtZvIOYJvuMPRsrwEyfpsVLro2gLHwIg/coEP2cHUPX0Oi7FirGNOkJGvk1rviF0delHTcYFi+dG2Ed1o78ZLO70tSvHfQCha4FtH9QUja4fFWmsLO2gf2xSTifLL0VX/m6IGftICjJ6uoR29rFodJTh4txyPH4=
+	t=1722355448; cv=none; b=vASXud4SLSpavBOBqBDtj6y/WWQpjr8vI2F4OPcZKDmq8kd02dokglPVktnoz1V0pEKWtKScmekIPdzjbpcoSUijHQnynyT5WhnD8cD+iU0LcLbVFXz2fokpTJekoQdDNGE9bxH8Slh8K2DgE/kQlKIEP0LovXenjxSUUZK6CLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355445; c=relaxed/simple;
-	bh=ojugEbsliIyTHj/w14j3pP8eH7Hg+azQZ33SzGJsnz0=;
+	s=arc-20240116; t=1722355448; c=relaxed/simple;
+	bh=ie/4MSq+snrkFokIyXghSPOCXWjz4Hf+rPjxlik1kig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=msDxthySJVIWR/ATm3t62KtgX7VDFwrhP8oTd6XnOMNaIEwSY53AWNJANgpzEZriESWUDAGm/Cu96Z0HO9qjOEwVl9BfMy0gv5TKUNYBV0Akq5fxrwZREnoHcZqzOwfIqWapNsLgjiLoJohQsasHkq1yYwDiHe2iaekcMeSF6Ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lbq15Iyr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l1XHd/mJLZGhHKRziNoNRsrNlqlzbhIme/RDjsUsYH+xSuD+J9kw0ClXPKuHH0HmPmw6l6p9xsH5iaKSmqgxwmtT2LPyC0iU8S3iU3xlNQ61tT1itfjgMj/eR9AASwJTziNOY2ZQSYBTfz7Jyk6LaiDDY5H+6XaOYdRbWGzucGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2AFRJPU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lbq15Iyr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996FDC32782;
-	Tue, 30 Jul 2024 16:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2AFRJPU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE473C4AF0A;
+	Tue, 30 Jul 2024 16:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355445;
-	bh=ojugEbsliIyTHj/w14j3pP8eH7Hg+azQZ33SzGJsnz0=;
+	s=korg; t=1722355448;
+	bh=ie/4MSq+snrkFokIyXghSPOCXWjz4Hf+rPjxlik1kig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lbq15IyrhB6G2iU2lRaqj5B3WhyIlIDiXw1XO8hCpg0jiOBUxQMINDivEIG+Mldx3
-	 JCj5AoALgWw5H8iwNNv0q1bgX2gHYxpEj8g/ThXzPLYMGTmtzSbtexwiZEi2orh1uo
-	 mFa6ffrJ6kiZkMDBpSIXlbcgvIWmEv2ji0A7A26Y=
+	b=2AFRJPU3i7Boihksw9kyuuM/+c2JQY1BVY6+4HqRIYeuWKoiML/H9NOtnzGvq0Fbb
+	 A6dnILBQ/iVaokqy7Z4Nyk5Iu9P61wuBpjmIMAFNS6+FH5LhrOs+8+rlIAzeUGJFpq
+	 yaHo91v2YbsMWpOYeJqp/eDI7OOcRWESo2cKhhJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 051/809] arm64: dts: qcom: sm8350: add power-domain to UFS PHY
-Date: Tue, 30 Jul 2024 17:38:47 +0200
-Message-ID: <20240730151726.663839134@linuxfoundation.org>
+Subject: [PATCH 6.10 056/809] soc: qcom: pmic_glink: Handle the return value of pmic_glink_init
+Date: Tue, 30 Jul 2024 17:38:52 +0200
+Message-ID: <20240730151726.858572577@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -52,36 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 634acc8cea1584b507801315831a330443f819b4 ]
+[ Upstream commit 0780c836673b25f5aad306630afcb1172d694cb4 ]
 
-The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
-corresponding power-domain the the PHY node.
+As platform_driver_register() and register_rpmsg_driver() can return
+error numbers, it should be better to check the return value and deal
+with the exception.
 
-Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-10-f1fd15c33fb3@linaro.org
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Fixes: 58ef4ece1e41 ("soc: qcom: pmic_glink: Introduce base PMIC GLINK  driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Link: https://lore.kernel.org/r/20240510083156.1996783-1-nichen@iscas.ac.cn
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/soc/qcom/pmic_glink.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index f7c4700f00c36..da936548c2ac3 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -1779,6 +1779,8 @@ ufs_mem_phy: phy@1d87000 {
- 				      "ref_aux",
- 				      "qref";
+diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+index 65279243072c3..9ebc0ba359477 100644
+--- a/drivers/soc/qcom/pmic_glink.c
++++ b/drivers/soc/qcom/pmic_glink.c
+@@ -373,8 +373,17 @@ static struct platform_driver pmic_glink_driver = {
  
-+			power-domains = <&gcc UFS_PHY_GDSC>;
+ static int pmic_glink_init(void)
+ {
+-	platform_driver_register(&pmic_glink_driver);
+-	register_rpmsg_driver(&pmic_glink_rpmsg_driver);
++	int ret;
 +
- 			resets = <&ufs_mem_hc 0>;
- 			reset-names = "ufsphy";
++	ret = platform_driver_register(&pmic_glink_driver);
++	if (ret < 0)
++		return ret;
++
++	ret = register_rpmsg_driver(&pmic_glink_rpmsg_driver);
++	if (ret < 0) {
++		platform_driver_unregister(&pmic_glink_driver);
++		return ret;
++	}
  
+ 	return 0;
+ }
 -- 
 2.43.0
 
