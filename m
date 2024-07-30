@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED49F1A616E;
-	Tue, 30 Jul 2024 16:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D8D01A616E;
+	Tue, 30 Jul 2024 16:29:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356971; cv=none; b=s1hejV4trCQP7SCKt2eAjDxrJg3NT+ixE3Vj79WCnMLMetpar75t+3AOTdkSmrBcg/gptbPJF+HarnBBhbcCSEaKxtdZ2Y81tFnIW6tFNihQ8cHu6yY94aTeGW2G/UqdKD8cQr/PV9ytoRsiRBPhQMk30pgW/aBFCG8t09dM7z8=
+	t=1722356974; cv=none; b=eSHPCvU1yDZjDNChdET8ca2IHL2KHhXFmCX8kam6MwQlp72Cb/DGDJLu0zpaW61t7vHql1vHl3wAtTN/QaazZOwujevGbE5V/4dvdit9zL4Vdwh2h3YN0dPD4WJAG9+V2MlZI4qSHcnl/s1P2bliI/s3uKgq+V3CbVglDGpYPos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356971; c=relaxed/simple;
-	bh=5nMAECznsFeoFL3BaB/Fr8rcEoRvktGRbJs8Iu0nVNM=;
+	s=arc-20240116; t=1722356974; c=relaxed/simple;
+	bh=/llFOH5KYFgURQUWgZFlNf3M9pEl31Jfy1Bkxbua3f0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h3ZOHn7NSJfOVGPBOIBlfx9NySnRiunU3JDsXOt2Ef3WGqF6iFG6VRWDdvoHqCJYmAgS5ZiAUqYmyi2J+aM+vL/3BBzEBY5rw2lU2gsm41j2P9frcmlkGgo75tN8Mezij/Frm1hpRvO4kHev4MThCXzSKYflmV7Apju9FVkDJcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xspapBfS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PrvKxCm0JoH6/nBvUCLDAA+vvJb2svHmnsEKWR9mWrkja4zpa89YEoy1yVEF53CxvC4jTRPX9v3nzvo0I7cpMsbcgyWXTp4PR9Uh5NZ5SDIyJ+7+GD3bmC2kJDdLDqe3Y5ErAd0cYqIajR/cKIUH1B7w4HRFk8OEatu/mmbz5c8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNHFOHjX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xspapBfS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72303C32782;
-	Tue, 30 Jul 2024 16:29:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNHFOHjX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA68C32782;
+	Tue, 30 Jul 2024 16:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356970;
-	bh=5nMAECznsFeoFL3BaB/Fr8rcEoRvktGRbJs8Iu0nVNM=;
+	s=korg; t=1722356974;
+	bh=/llFOH5KYFgURQUWgZFlNf3M9pEl31Jfy1Bkxbua3f0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xspapBfS+bSa24mBKDEe2byG/dUWLefVkhjKWYeR+1Y8+BsnAQ1KWaOhptQu/s3xP
-	 pUw4h4QkKhRngArd/HTl32/cV2lFvZvoGKm0oLpurUHbbW5J0i4PFnwsPOtZpJmI8l
-	 Msx8U3j26tHcb3IKbDg0ZliByPHbsXXMy9tf4nOQ=
+	b=KNHFOHjXjlRUZejLEF8My6Z28jw0W/EJG1n8ChB13oEZ7cJmPfLgGpjpBjnK2HyAt
+	 Y207kP1ybPlKWpS2tb74ko3JOGKtGvmh68051vi3gh9vTlWXqjuYcg45j2/eaTtao9
+	 Slr0KfRXSAuKk0PPJUXXgIwv9MtnvkLU04IunO/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Corey Minyard <corey@minyard.net>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/568] ipmi: ssif_bmc: prevent integer overflow on 32bit systems
-Date: Tue, 30 Jul 2024 17:45:06 +0200
-Message-ID: <20240730151647.654710704@linuxfoundation.org>
+Subject: [PATCH 6.10 206/809] xfrm: Fix unregister netdevice hang on hardware offload.
+Date: Tue, 30 Jul 2024 17:41:22 +0200
+Message-ID: <20240730151732.744187839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,55 +46,220 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Steffen Klassert <steffen.klassert@secunet.com>
 
-[ Upstream commit 0627cef36145c9ff9845bdfd7ddf485bbac1f981 ]
+[ Upstream commit 07b87f9eea0c30675084d50c82532d20168da009 ]
 
-There are actually two bugs here.  First, we need to ensure that count
-is at least sizeof(u32) or msg.len will be uninitialized data.
+When offloading xfrm states to hardware, the offloading
+device is attached to the skbs secpath. If a skb is free
+is deferred, an unregister netdevice hangs because the
+netdevice is still refcounted.
 
-The "msg.len" variable is a u32 that comes from the user.  On 32bit
-systems the "sizeof_field(struct ipmi_ssif_msg, len) + msg.len"
-addition can overflow if "msg.len" is greater than U32_MAX - 4.
+Fix this by removing the netdevice from the xfrm states
+when the netdevice is unregistered. To find all xfrm states
+that need to be cleared we add another list where skbs
+linked to that are unlinked from the lists (deleted)
+but not yet freed.
 
-Valid lengths for "msg.len" are 1-254.  Add a check for that to
-prevent the integer overflow.
-
-Fixes: dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-Id: <1431ca2e-4e9c-4520-bfc0-6879313c30e9@moroto.mountain>
-Signed-off-by: Corey Minyard <corey@minyard.net>
+Fixes: d77e38e612a0 ("xfrm: Add an IPsec hardware offloading API")
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ssif_bmc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ include/net/xfrm.h    | 36 +++++++------------------
+ net/xfrm/xfrm_state.c | 61 +++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 69 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
-index 56346fb328727..ab4e87a99f087 100644
---- a/drivers/char/ipmi/ssif_bmc.c
-+++ b/drivers/char/ipmi/ssif_bmc.c
-@@ -177,13 +177,15 @@ static ssize_t ssif_bmc_write(struct file *file, const char __user *buf, size_t
- 	unsigned long flags;
- 	ssize_t ret;
+diff --git a/include/net/xfrm.h b/include/net/xfrm.h
+index 77ebf5bcf0b90..7d4c2235252c7 100644
+--- a/include/net/xfrm.h
++++ b/include/net/xfrm.h
+@@ -178,7 +178,10 @@ struct xfrm_state {
+ 		struct hlist_node	gclist;
+ 		struct hlist_node	bydst;
+ 	};
+-	struct hlist_node	bysrc;
++	union {
++		struct hlist_node	dev_gclist;
++		struct hlist_node	bysrc;
++	};
+ 	struct hlist_node	byspi;
+ 	struct hlist_node	byseq;
  
--	if (count > sizeof(struct ipmi_ssif_msg))
-+	if (count < sizeof(msg.len) ||
-+	    count > sizeof(struct ipmi_ssif_msg))
- 		return -EINVAL;
+@@ -1588,7 +1591,7 @@ void xfrm_state_update_stats(struct net *net);
+ static inline void xfrm_dev_state_update_stats(struct xfrm_state *x)
+ {
+ 	struct xfrm_dev_offload *xdo = &x->xso;
+-	struct net_device *dev = xdo->dev;
++	struct net_device *dev = READ_ONCE(xdo->dev);
  
- 	if (copy_from_user(&msg, buf, count))
- 		return -EFAULT;
+ 	if (dev && dev->xfrmdev_ops &&
+ 	    dev->xfrmdev_ops->xdo_dev_state_update_stats)
+@@ -1946,13 +1949,16 @@ int xfrm_dev_policy_add(struct net *net, struct xfrm_policy *xp,
+ 			struct xfrm_user_offload *xuo, u8 dir,
+ 			struct netlink_ext_ack *extack);
+ bool xfrm_dev_offload_ok(struct sk_buff *skb, struct xfrm_state *x);
++void xfrm_dev_state_delete(struct xfrm_state *x);
++void xfrm_dev_state_free(struct xfrm_state *x);
  
--	if (!msg.len || count < sizeof_field(struct ipmi_ssif_msg, len) + msg.len)
-+	if (!msg.len || msg.len > IPMI_SSIF_PAYLOAD_MAX ||
-+	    count < sizeof_field(struct ipmi_ssif_msg, len) + msg.len)
- 		return -EINVAL;
+ static inline void xfrm_dev_state_advance_esn(struct xfrm_state *x)
+ {
+ 	struct xfrm_dev_offload *xso = &x->xso;
++	struct net_device *dev = READ_ONCE(xso->dev);
  
- 	spin_lock_irqsave(&ssif_bmc->lock, flags);
+-	if (xso->dev && xso->dev->xfrmdev_ops->xdo_dev_state_advance_esn)
+-		xso->dev->xfrmdev_ops->xdo_dev_state_advance_esn(x);
++	if (dev && dev->xfrmdev_ops->xdo_dev_state_advance_esn)
++		dev->xfrmdev_ops->xdo_dev_state_advance_esn(x);
+ }
+ 
+ static inline bool xfrm_dst_offload_ok(struct dst_entry *dst)
+@@ -1973,28 +1979,6 @@ static inline bool xfrm_dst_offload_ok(struct dst_entry *dst)
+ 	return false;
+ }
+ 
+-static inline void xfrm_dev_state_delete(struct xfrm_state *x)
+-{
+-	struct xfrm_dev_offload *xso = &x->xso;
+-
+-	if (xso->dev)
+-		xso->dev->xfrmdev_ops->xdo_dev_state_delete(x);
+-}
+-
+-static inline void xfrm_dev_state_free(struct xfrm_state *x)
+-{
+-	struct xfrm_dev_offload *xso = &x->xso;
+-	struct net_device *dev = xso->dev;
+-
+-	if (dev && dev->xfrmdev_ops) {
+-		if (dev->xfrmdev_ops->xdo_dev_state_free)
+-			dev->xfrmdev_ops->xdo_dev_state_free(x);
+-		xso->dev = NULL;
+-		xso->type = XFRM_DEV_OFFLOAD_UNSPECIFIED;
+-		netdev_put(dev, &xso->dev_tracker);
+-	}
+-}
+-
+ static inline void xfrm_dev_policy_delete(struct xfrm_policy *x)
+ {
+ 	struct xfrm_dev_offload *xdo = &x->xdo;
+diff --git a/net/xfrm/xfrm_state.c b/net/xfrm/xfrm_state.c
+index 649bb739df0dd..d531d2a1fae28 100644
+--- a/net/xfrm/xfrm_state.c
++++ b/net/xfrm/xfrm_state.c
+@@ -49,6 +49,7 @@ static struct kmem_cache *xfrm_state_cache __ro_after_init;
+ 
+ static DECLARE_WORK(xfrm_state_gc_work, xfrm_state_gc_task);
+ static HLIST_HEAD(xfrm_state_gc_list);
++static HLIST_HEAD(xfrm_state_dev_gc_list);
+ 
+ static inline bool xfrm_state_hold_rcu(struct xfrm_state __rcu *x)
+ {
+@@ -214,6 +215,7 @@ static DEFINE_SPINLOCK(xfrm_state_afinfo_lock);
+ static struct xfrm_state_afinfo __rcu *xfrm_state_afinfo[NPROTO];
+ 
+ static DEFINE_SPINLOCK(xfrm_state_gc_lock);
++static DEFINE_SPINLOCK(xfrm_state_dev_gc_lock);
+ 
+ int __xfrm_state_delete(struct xfrm_state *x);
+ 
+@@ -683,6 +685,40 @@ struct xfrm_state *xfrm_state_alloc(struct net *net)
+ }
+ EXPORT_SYMBOL(xfrm_state_alloc);
+ 
++#ifdef CONFIG_XFRM_OFFLOAD
++void xfrm_dev_state_delete(struct xfrm_state *x)
++{
++	struct xfrm_dev_offload *xso = &x->xso;
++	struct net_device *dev = READ_ONCE(xso->dev);
++
++	if (dev) {
++		dev->xfrmdev_ops->xdo_dev_state_delete(x);
++		spin_lock_bh(&xfrm_state_dev_gc_lock);
++		hlist_add_head(&x->dev_gclist, &xfrm_state_dev_gc_list);
++		spin_unlock_bh(&xfrm_state_dev_gc_lock);
++	}
++}
++
++void xfrm_dev_state_free(struct xfrm_state *x)
++{
++	struct xfrm_dev_offload *xso = &x->xso;
++	struct net_device *dev = READ_ONCE(xso->dev);
++
++	if (dev && dev->xfrmdev_ops) {
++		spin_lock_bh(&xfrm_state_dev_gc_lock);
++		if (!hlist_unhashed(&x->dev_gclist))
++			hlist_del(&x->dev_gclist);
++		spin_unlock_bh(&xfrm_state_dev_gc_lock);
++
++		if (dev->xfrmdev_ops->xdo_dev_state_free)
++			dev->xfrmdev_ops->xdo_dev_state_free(x);
++		WRITE_ONCE(xso->dev, NULL);
++		xso->type = XFRM_DEV_OFFLOAD_UNSPECIFIED;
++		netdev_put(dev, &xso->dev_tracker);
++	}
++}
++#endif
++
+ void __xfrm_state_destroy(struct xfrm_state *x, bool sync)
+ {
+ 	WARN_ON(x->km.state != XFRM_STATE_DEAD);
+@@ -848,6 +884,9 @@ EXPORT_SYMBOL(xfrm_state_flush);
+ 
+ int xfrm_dev_state_flush(struct net *net, struct net_device *dev, bool task_valid)
+ {
++	struct xfrm_state *x;
++	struct hlist_node *tmp;
++	struct xfrm_dev_offload *xso;
+ 	int i, err = 0, cnt = 0;
+ 
+ 	spin_lock_bh(&net->xfrm.xfrm_state_lock);
+@@ -857,8 +896,6 @@ int xfrm_dev_state_flush(struct net *net, struct net_device *dev, bool task_vali
+ 
+ 	err = -ESRCH;
+ 	for (i = 0; i <= net->xfrm.state_hmask; i++) {
+-		struct xfrm_state *x;
+-		struct xfrm_dev_offload *xso;
+ restart:
+ 		hlist_for_each_entry(x, net->xfrm.state_bydst+i, bydst) {
+ 			xso = &x->xso;
+@@ -868,6 +905,8 @@ int xfrm_dev_state_flush(struct net *net, struct net_device *dev, bool task_vali
+ 				spin_unlock_bh(&net->xfrm.xfrm_state_lock);
+ 
+ 				err = xfrm_state_delete(x);
++				xfrm_dev_state_free(x);
++
+ 				xfrm_audit_state_delete(x, err ? 0 : 1,
+ 							task_valid);
+ 				xfrm_state_put(x);
+@@ -884,6 +923,24 @@ int xfrm_dev_state_flush(struct net *net, struct net_device *dev, bool task_vali
+ 
+ out:
+ 	spin_unlock_bh(&net->xfrm.xfrm_state_lock);
++
++	spin_lock_bh(&xfrm_state_dev_gc_lock);
++restart_gc:
++	hlist_for_each_entry_safe(x, tmp, &xfrm_state_dev_gc_list, dev_gclist) {
++		xso = &x->xso;
++
++		if (xso->dev == dev) {
++			spin_unlock_bh(&xfrm_state_dev_gc_lock);
++			xfrm_dev_state_free(x);
++			spin_lock_bh(&xfrm_state_dev_gc_lock);
++			goto restart_gc;
++		}
++
++	}
++	spin_unlock_bh(&xfrm_state_dev_gc_lock);
++
++	xfrm_flush_gc();
++
+ 	return err;
+ }
+ EXPORT_SYMBOL(xfrm_dev_state_flush);
 -- 
 2.43.0
 
