@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DD3B1A76B4;
-	Tue, 30 Jul 2024 17:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3991A76A9;
+	Tue, 30 Jul 2024 17:18:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359886; cv=none; b=cenQ4Fc/X7WF5X4wjzMFg8b3Onj6zQeACWnsiNeke2oFBrXTzUt3Qz+7XAj27Zt0eRwKZpAtOOEc/BlsCVv8/4cJ04hhnikkBrpdYKZNMLZenNTnZZbhd0Pu4FnLkI7zzma2+rZ43AIkYe7LjVTJ7u6FMXzf59xNGmAijAZ8Yio=
+	t=1722359889; cv=none; b=q/hLsY7KWy7tyMjPmeXfYIorwTwPD1xFEc0Op7vK2yqFMddfNh0BBoKBxvP7ktt4aeGk1232o22G1rlnB2Bu+jjxz8VCyOh3ZzWSkLk4oSiPbN5HnxAbVSudPJpeikcm89zkLh+ZF75gNndiiQvK0ZnPUosJqasOAVWoifm8s7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359886; c=relaxed/simple;
-	bh=qJgmBYWAeiuwYfnU5vVWMVSNXxOkn9q7IOkHNANXDpk=;
+	s=arc-20240116; t=1722359889; c=relaxed/simple;
+	bh=IIDrOk0YDGeud7FXo8rJFSzZMs4aSHwB+zv84F9tKiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fm0d9dduFDu3voAuwddvRBmOKtXvsPM4Z0bJPctuwJavzz8iTEB2+DJmBQlwC8tqaL09ov/17CKL8K9PVgHR9kEaflBN8jHdleSRudLajTCJt3gtR+GLM7jdLuT3goPYcmU0T5eKzBT+D0kZSSSEec90dYFRXhohjPuek7PbMow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JDdsb5UT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DDRVu8OMxndT9TnVog9U6MXBv0/mTGVL3mGeDFMbdJLu87cRjgGFZCPtT2mY8c8biqEK9mdlzOCEKFBCHX2D4XqhQIJ5zkid+YGh8umMGSrR5Jsh0aK5Andf+KcoT9pYDmM/0hRzx+Hn62c9bN8Fv7deA4/ikS0/QCiEYTo9cOE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1o4M8/GC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JDdsb5UT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A473DC32782;
-	Tue, 30 Jul 2024 17:18:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1o4M8/GC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6C4C4AF0E;
+	Tue, 30 Jul 2024 17:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359886;
-	bh=qJgmBYWAeiuwYfnU5vVWMVSNXxOkn9q7IOkHNANXDpk=;
+	s=korg; t=1722359889;
+	bh=IIDrOk0YDGeud7FXo8rJFSzZMs4aSHwB+zv84F9tKiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDdsb5UT7DCAsjioUcCB6UGHbLcXibBxsaXVEwhADoMG4Nor2VAyvfAcM+8/SQWFl
-	 9tNqe8eMr0wzRcommSjfluIdvmX7ncTdm+b+ql3iVBjIaDZXGWdFXZ6f2xsUqJl1Cq
-	 g6BmzZ8MEQSOMxsW7a5cXZNpfoaSxk1ktlvQNs00=
+	b=1o4M8/GCZ+Fs/+J9hNiALCl6H30/PQU+cErng9/Z2dqzWpV3ZzGryp9C6VPg6Ylrg
+	 v8TOQrATvkwNSAqL3uNOvqUVyp6CBXMLVl9TVu9xg7tIerP07bNVD7EreoSxMryF4f
+	 ssnfTBeG/X1lB1f7NoO2cx+kc0pKYX49J0FwlX3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Wilkins <steve.wilkins@raymarine.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 551/568] spi: microchip-core: defer asserting chip select until just before write to TX FIFO
-Date: Tue, 30 Jul 2024 17:50:58 +0200
-Message-ID: <20240730151701.696368526@linuxfoundation.org>
+	Chengen Du <chengen.du@canonical.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 550/809] af_packet: Handle outgoing VLAN packets without hardware offloading
+Date: Tue, 30 Jul 2024 17:47:06 +0200
+Message-ID: <20240730151746.479299467@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,94 +47,177 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Steve Wilkins <steve.wilkins@raymarine.com>
+From: Chengen Du <chengen.du@canonical.com>
 
-[ Upstream commit 22fd98c107c792e35db7abe45298bc3a29bf4723 ]
+commit 79eecf631c14e7f4057186570ac20e2cfac3802e upstream.
 
-Setting up many of the registers for a new SPI transfer requires the
-SPI controller to be disabled after set_cs() has been called to assert
-the chip select line. However, disabling the controller results in the
-SCLK and MOSI output pins being tristate, which can cause clock
-transitions to be seen by a slave device whilst SS is active. To fix
-this, the CS is only set to inactive inline, whilst setting it active
-is deferred until all registers are set up and the any controller
-disables have been completed.
+The issue initially stems from libpcap. The ethertype will be overwritten
+as the VLAN TPID if the network interface lacks hardware VLAN offloading.
+In the outbound packet path, if hardware VLAN offloading is unavailable,
+the VLAN tag is inserted into the payload but then cleared from the sk_buff
+struct. Consequently, this can lead to a false negative when checking for
+the presence of a VLAN tag, causing the packet sniffing outcome to lack
+VLAN tag information (i.e., TCI-TPID). As a result, the packet capturing
+tool may be unable to parse packets as expected.
 
-Fixes: 9ac8d17694b6 ("spi: add support for microchip fpga spi controllers")
-Signed-off-by: Steve Wilkins <steve.wilkins@raymarine.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://patch.msgid.link/20240715-sanitizer-recant-dd96b7a97048@wendy
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The TCI-TPID is missing because the prb_fill_vlan_info() function does not
+modify the tp_vlan_tci/tp_vlan_tpid values, as the information is in the
+payload and not in the sk_buff struct. The skb_vlan_tag_present() function
+only checks vlan_all in the sk_buff struct. In cooked mode, the L2 header
+is stripped, preventing the packet capturing tool from determining the
+correct TCI-TPID value. Additionally, the protocol in SLL is incorrect,
+which means the packet capturing tool cannot parse the L3 header correctly.
+
+Link: https://github.com/the-tcpdump-group/libpcap/issues/1105
+Link: https://lore.kernel.org/netdev/20240520070348.26725-1-chengen.du@canonical.com/T/#u
+Fixes: 393e52e33c6c ("packet: deliver VLAN TCI to userspace")
+Cc: stable@vger.kernel.org
+Signed-off-by: Chengen Du <chengen.du@canonical.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://patch.msgid.link/20240713114735.62360-1-chengen.du@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-microchip-core.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c |   86 +++++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 84 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/spi/spi-microchip-core.c b/drivers/spi/spi-microchip-core.c
-index 1a19701cc6118..b49843f0c2e8e 100644
---- a/drivers/spi/spi-microchip-core.c
-+++ b/drivers/spi/spi-microchip-core.c
-@@ -103,6 +103,7 @@ struct mchp_corespi {
- 	u8 *rx_buf;
- 	u32 clk_gen; /* divider for spi output clock generated by the controller */
- 	u32 clk_mode;
-+	u32 pending_slave_select;
- 	int irq;
- 	int tx_len;
- 	int rx_len;
-@@ -249,8 +250,18 @@ static void mchp_corespi_set_cs(struct spi_device *spi, bool disable)
- 	reg = mchp_corespi_read(corespi, REG_SLAVE_SELECT);
- 	reg &= ~BIT(spi_get_chipselect(spi, 0));
- 	reg |= !disable << spi_get_chipselect(spi, 0);
-+	corespi->pending_slave_select = reg;
- 
--	mchp_corespi_write(corespi, REG_SLAVE_SELECT, reg);
-+	/*
-+	 * Only deassert chip select immediately. Writing to some registers
-+	 * requires the controller to be disabled, which results in the
-+	 * output pins being tristated and can cause the SCLK and MOSI lines
-+	 * to transition. Therefore asserting the chip select is deferred
-+	 * until just before writing to the TX FIFO, to ensure the device
-+	 * doesn't see any spurious clock transitions whilst CS is enabled.
-+	 */
-+	if (((spi->mode & SPI_CS_HIGH) == 0) == disable)
-+		mchp_corespi_write(corespi, REG_SLAVE_SELECT, reg);
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -538,6 +538,61 @@ static void *packet_current_frame(struct
+ 	return packet_lookup_frame(po, rb, rb->head, status);
  }
  
- static int mchp_corespi_setup(struct spi_device *spi)
-@@ -266,6 +277,7 @@ static int mchp_corespi_setup(struct spi_device *spi)
- 	if (spi->mode & SPI_CS_HIGH) {
- 		reg = mchp_corespi_read(corespi, REG_SLAVE_SELECT);
- 		reg |= BIT(spi_get_chipselect(spi, 0));
-+		corespi->pending_slave_select = reg;
- 		mchp_corespi_write(corespi, REG_SLAVE_SELECT, reg);
- 	}
- 	return 0;
-@@ -307,7 +319,8 @@ static void mchp_corespi_init(struct spi_master *master, struct mchp_corespi *sp
- 	 * select is relinquished to the hardware. SSELOUT is enabled too so we
- 	 * can deal with active high slaves.
- 	 */
--	mchp_corespi_write(spi, REG_SLAVE_SELECT, SSELOUT | SSEL_DIRECT);
-+	spi->pending_slave_select = SSELOUT | SSEL_DIRECT;
-+	mchp_corespi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
- 
- 	control = mchp_corespi_read(spi, REG_CONTROL);
- 
-@@ -476,6 +489,8 @@ static int mchp_corespi_transfer_one(struct spi_master *master,
- 	mchp_corespi_set_xfer_size(spi, (spi->tx_len > FIFO_DEPTH)
- 				   ? FIFO_DEPTH : spi->tx_len);
- 
-+	mchp_corespi_write(spi, REG_SLAVE_SELECT, spi->pending_slave_select);
++static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
++{
++	u8 *skb_orig_data = skb->data;
++	int skb_orig_len = skb->len;
++	struct vlan_hdr vhdr, *vh;
++	unsigned int header_len;
 +
- 	while (spi->tx_len)
- 		mchp_corespi_write_fifo(spi);
++	if (!dev)
++		return 0;
++
++	/* In the SOCK_DGRAM scenario, skb data starts at the network
++	 * protocol, which is after the VLAN headers. The outer VLAN
++	 * header is at the hard_header_len offset in non-variable
++	 * length link layer headers. If it's a VLAN device, the
++	 * min_header_len should be used to exclude the VLAN header
++	 * size.
++	 */
++	if (dev->min_header_len == dev->hard_header_len)
++		header_len = dev->hard_header_len;
++	else if (is_vlan_dev(dev))
++		header_len = dev->min_header_len;
++	else
++		return 0;
++
++	skb_push(skb, skb->data - skb_mac_header(skb));
++	vh = skb_header_pointer(skb, header_len, sizeof(vhdr), &vhdr);
++	if (skb_orig_data != skb->data) {
++		skb->data = skb_orig_data;
++		skb->len = skb_orig_len;
++	}
++	if (unlikely(!vh))
++		return 0;
++
++	return ntohs(vh->h_vlan_TCI);
++}
++
++static __be16 vlan_get_protocol_dgram(struct sk_buff *skb)
++{
++	__be16 proto = skb->protocol;
++
++	if (unlikely(eth_type_vlan(proto))) {
++		u8 *skb_orig_data = skb->data;
++		int skb_orig_len = skb->len;
++
++		skb_push(skb, skb->data - skb_mac_header(skb));
++		proto = __vlan_get_protocol(skb, proto, NULL);
++		if (skb_orig_data != skb->data) {
++			skb->data = skb_orig_data;
++			skb->len = skb_orig_len;
++		}
++	}
++
++	return proto;
++}
++
+ static void prb_del_retire_blk_timer(struct tpacket_kbdq_core *pkc)
+ {
+ 	del_timer_sync(&pkc->retire_blk_timer);
+@@ -1007,10 +1062,16 @@ static void prb_clear_rxhash(struct tpac
+ static void prb_fill_vlan_info(struct tpacket_kbdq_core *pkc,
+ 			struct tpacket3_hdr *ppd)
+ {
++	struct packet_sock *po = container_of(pkc, struct packet_sock, rx_ring.prb_bdqc);
++
+ 	if (skb_vlan_tag_present(pkc->skb)) {
+ 		ppd->hv1.tp_vlan_tci = skb_vlan_tag_get(pkc->skb);
+ 		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->vlan_proto);
+ 		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
++	} else if (unlikely(po->sk.sk_type == SOCK_DGRAM && eth_type_vlan(pkc->skb->protocol))) {
++		ppd->hv1.tp_vlan_tci = vlan_get_tci(pkc->skb, pkc->skb->dev);
++		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->protocol);
++		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
+ 	} else {
+ 		ppd->hv1.tp_vlan_tci = 0;
+ 		ppd->hv1.tp_vlan_tpid = 0;
+@@ -2428,6 +2489,10 @@ static int tpacket_rcv(struct sk_buff *s
+ 			h.h2->tp_vlan_tci = skb_vlan_tag_get(skb);
+ 			h.h2->tp_vlan_tpid = ntohs(skb->vlan_proto);
+ 			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
++		} else if (unlikely(sk->sk_type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
++			h.h2->tp_vlan_tci = vlan_get_tci(skb, skb->dev);
++			h.h2->tp_vlan_tpid = ntohs(skb->protocol);
++			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
+ 		} else {
+ 			h.h2->tp_vlan_tci = 0;
+ 			h.h2->tp_vlan_tpid = 0;
+@@ -2457,7 +2522,8 @@ static int tpacket_rcv(struct sk_buff *s
+ 	sll->sll_halen = dev_parse_header(skb, sll->sll_addr);
+ 	sll->sll_family = AF_PACKET;
+ 	sll->sll_hatype = dev->type;
+-	sll->sll_protocol = skb->protocol;
++	sll->sll_protocol = (sk->sk_type == SOCK_DGRAM) ?
++		vlan_get_protocol_dgram(skb) : skb->protocol;
+ 	sll->sll_pkttype = skb->pkt_type;
+ 	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
+ 		sll->sll_ifindex = orig_dev->ifindex;
+@@ -3482,7 +3548,8 @@ static int packet_recvmsg(struct socket
+ 		/* Original length was stored in sockaddr_ll fields */
+ 		origlen = PACKET_SKB_CB(skb)->sa.origlen;
+ 		sll->sll_family = AF_PACKET;
+-		sll->sll_protocol = skb->protocol;
++		sll->sll_protocol = (sock->type == SOCK_DGRAM) ?
++			vlan_get_protocol_dgram(skb) : skb->protocol;
+ 	}
  
--- 
-2.43.0
-
+ 	sock_recv_cmsgs(msg, sk, skb);
+@@ -3539,6 +3606,21 @@ static int packet_recvmsg(struct socket
+ 			aux.tp_vlan_tci = skb_vlan_tag_get(skb);
+ 			aux.tp_vlan_tpid = ntohs(skb->vlan_proto);
+ 			aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
++		} else if (unlikely(sock->type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
++			struct sockaddr_ll *sll = &PACKET_SKB_CB(skb)->sa.ll;
++			struct net_device *dev;
++
++			rcu_read_lock();
++			dev = dev_get_by_index_rcu(sock_net(sk), sll->sll_ifindex);
++			if (dev) {
++				aux.tp_vlan_tci = vlan_get_tci(skb, dev);
++				aux.tp_vlan_tpid = ntohs(skb->protocol);
++				aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
++			} else {
++				aux.tp_vlan_tci = 0;
++				aux.tp_vlan_tpid = 0;
++			}
++			rcu_read_unlock();
+ 		} else {
+ 			aux.tp_vlan_tci = 0;
+ 			aux.tp_vlan_tpid = 0;
 
 
