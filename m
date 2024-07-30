@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2B71A6195;
-	Tue, 30 Jul 2024 16:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE071A6195;
+	Tue, 30 Jul 2024 16:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358481; cv=none; b=izsepRziSydnw210e7SgSfXEXfun1UWixKTT6ZWKGq9hqcgiMpgJHPcomVndRfIV0JSCgvpgcDdwWX4NEpGqAFwHS4tbkvasQ8xLLSlGx6RKT7EaG6poqCWASGBa62NnY4puw271t3KLt+OdAbkq+DtfK/kfNApsA6tysIDwkXI=
+	t=1722358485; cv=none; b=MxA+h5TfTJ8yVhe2QxbLTHlcuI3wO+6YaStMXmxKW6MeUV1P6EAvZSxdQGgBcpHBmRdwA45ItHy26KTJp+okjj4K3knF9Yb3VrqPuHLz1pa8qrM4ukQpC7TF/04iWk6BpwpE1Qh2LZXLmB7U1wB/P7NVpskt5mhKzcVwu5fnkKM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358481; c=relaxed/simple;
-	bh=VBaL0HGFT6YsWIPviwKrFoHsZ1A2DU/29Dcq5ggVWFc=;
+	s=arc-20240116; t=1722358485; c=relaxed/simple;
+	bh=mNh62+3wOmyAQRy3drx/TN+WxSLSEHLGQ8rY3dyVRBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QZ/eoHp7lr5+4GRwFkgdHHLV8iAd+1t1K3z1lDzCkIvtZI475+LodpvzBiNJIA3+l3VjHCFd5Oi/gk9w+F/nbELQuWj2Uws39LadJjoKqWHbQo+myIokScELUZD0mlJcAijBfEJqlHAonquAhg0yUwBNkSIjifhnfountHZbq4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPmyN9XK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o9pl+FebH7IUVOD1UKZCUgt7UXmfvCPQxxKImYgvcV2eBIEavyuOr6/ZuYJvKgeCtAwZPP30P6BlBZ+H8GtDcK70Xl8H4JPHVIwSKjUakBE0KvAbuZZg1PKrszpDpTktYOO7ffbbeFtfTn+6aIue8WPLUHxgX/1IAEVz3FY3oho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKMjrlPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPmyN9XK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97DC2C4AF10;
-	Tue, 30 Jul 2024 16:54:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKMjrlPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D768C32782;
+	Tue, 30 Jul 2024 16:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358481;
-	bh=VBaL0HGFT6YsWIPviwKrFoHsZ1A2DU/29Dcq5ggVWFc=;
+	s=korg; t=1722358484;
+	bh=mNh62+3wOmyAQRy3drx/TN+WxSLSEHLGQ8rY3dyVRBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IPmyN9XKmNYyP8Sw+roqgR0zChnTcLffvLVOLSwaVlFfY+CzH4uadmK2oBRxazQCh
-	 Z0u+/KvphW9cS7EbqV3eFz7gn6riRiojs0kGef/IeZo1qMv8K3PeCCjP00h8G8bLb8
-	 tXsF5IgF2SD/w79V7IJyLoo5Zw/Mu4JVoAGbCPXw=
+	b=wKMjrlPSSVI2QEnmga/lh3hcmAFU8evRZxQV/PIl+SH2N+j0cTleo7nmLwEMY+tmO
+	 48V01yzJzajmMSX1Eojcef86KDzlT6RgGEdMbgxkCwJgU95GQgMdHI44jV+Lq61CDa
+	 tzQONh+4H0cZK+uSE8sKLB7uoEXTz068us/S2BMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 363/809] perf intel-pt: Fix aux_watermark calculation for 64-bit size
-Date: Tue, 30 Jul 2024 17:43:59 +0200
-Message-ID: <20240730151738.989145289@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 6.6 366/568] dt-bindings: thermal: correct thermal zone node name limit
+Date: Tue, 30 Jul 2024 17:47:53 +0200
+Message-ID: <20240730151654.166926464@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,42 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 36b4cd990a8fd3f5b748883050e9d8c69fe6398d ]
+commit 97e32381d0fc6c2602a767b0c46e15eb2b75971d upstream.
 
-aux_watermark is a u32. For a 64-bit size, cap the aux_watermark
-calculation at UINT_MAX instead of truncating it to 32-bits.
+Linux kernel uses thermal zone node name during registering thermal
+zones and has a hard-coded limit of 20 characters, including terminating
+NUL byte.  The bindings expect node names to finish with '-thermal'
+which is eight bytes long, thus we have only 11 characters for the reset
+of the node name (thus 10 for the pattern after leading fixed character).
 
-Fixes: 874fc35cdd55 ("perf intel-pt: Use aux_watermark")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240625104532.11990-2-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/all/CAL_JsqKogbT_4DPd1n94xqeHaU_J8ve5K09WOyVsRX3jxxUW3w@mail.gmail.com/
+Fixes: 1202a442a31f ("dt-bindings: thermal: Add yaml bindings for thermal zones")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240702145248.47184-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/arch/x86/util/intel-pt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/thermal/thermal-zones.yaml |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/arch/x86/util/intel-pt.c b/tools/perf/arch/x86/util/intel-pt.c
-index 6de7e2d210756..c8fa15f280d29 100644
---- a/tools/perf/arch/x86/util/intel-pt.c
-+++ b/tools/perf/arch/x86/util/intel-pt.c
-@@ -758,7 +758,8 @@ static int intel_pt_recording_options(struct auxtrace_record *itr,
- 	}
+--- a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
++++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+@@ -49,7 +49,10 @@ properties:
+       to take when the temperature crosses those thresholds.
  
- 	if (!opts->auxtrace_snapshot_mode && !opts->auxtrace_sample_mode) {
--		u32 aux_watermark = opts->auxtrace_mmap_pages * page_size / 4;
-+		size_t aw = opts->auxtrace_mmap_pages * (size_t)page_size / 4;
-+		u32 aux_watermark = aw > UINT_MAX ? UINT_MAX : aw;
- 
- 		intel_pt_evsel->core.attr.aux_watermark = aux_watermark;
- 	}
--- 
-2.43.0
-
+ patternProperties:
+-  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
++  # Node name is limited in size due to Linux kernel requirements - 19
++  # characters in total (see THERMAL_NAME_LENGTH, including terminating NUL
++  # byte):
++  "^[a-zA-Z][a-zA-Z0-9\\-]{1,10}-thermal$":
+     type: object
+     description:
+       Each thermal zone node contains information about how frequently it
 
 
