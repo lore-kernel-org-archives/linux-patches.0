@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10043183CCD;
-	Tue, 30 Jul 2024 16:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E09E18B494;
+	Tue, 30 Jul 2024 16:23:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356619; cv=none; b=YfQ/iQUBmCsSyumeTHX7Q1+d8hS0NA/aBzswRLrsfpcZexBfYdemRJozSd2WJF6DMklvXeyfW/cG7X81XKH5O6BnfGU9cXRF+/TQUnhk1d9hgqn1wgzUYv9DzUkyGZfG0I560qT3wddCqztrnHCcNN0GjmgW0jpwQhNGukwcDZg=
+	t=1722356622; cv=none; b=Tk53IsUib5YoVgNGSWZUClBCynqdc8fM8u2qoWCqKG2NJa/5Ivj1NHLXnLgo9oG6JHizQJUiftWjlMG4JyMGygTb3HvpBQnl+WakRD54cvWELMrgbuOw6bJUN3LM75rJQMI/fGbFQvHp2n6ac7cn6Tn68yDZZLQZPZdOo25fsvw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356619; c=relaxed/simple;
-	bh=aqgXFIpn2ddr3PvYUg0wJvw3aykahUKT3Lvwxu2jX4Y=;
+	s=arc-20240116; t=1722356622; c=relaxed/simple;
+	bh=yUCeb863krhjEBAlMWakyfYWutlfSqVAR0SjhDI8pc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U0yH6pSM3xTxUTqGxTtKgSXwIqyyBb0SBklNukE/4jVhVpYdkheURUj6iHOLkJ4wpW0+2SbjPk/2199MEnEZRJ48LJGRuAuRgG3ukxy3LN85HkCwNeQ5Ri9MEDhKLX5g/i4zofwW9ij+LM+pv082NIk4axmW0rsnPx7T1DG6m0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VEFvw3B5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZaeUh/2cGyx9ZO1TFTV1I6A+aHHfsCmtPCuSH+htStdRkEzDF5H+z/jqYS8sOQmg0x/B25mIkq4YcStk/bmQbCDBQj5BW+9tx8kWwTDRiz81NvhEzAvvtGdBK+ja8VU+CYkcGfSUQCdKbodTNtVlEl+SwuTalh3Tfa2hv/DrMqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKJxBApK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VEFvw3B5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2772BC4AF10;
-	Tue, 30 Jul 2024 16:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKJxBApK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2DBDC4AF10;
+	Tue, 30 Jul 2024 16:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356618;
-	bh=aqgXFIpn2ddr3PvYUg0wJvw3aykahUKT3Lvwxu2jX4Y=;
+	s=korg; t=1722356622;
+	bh=yUCeb863krhjEBAlMWakyfYWutlfSqVAR0SjhDI8pc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VEFvw3B5+teSJax5OqP26HFUsOLApmHh5KmaJgbEgP+ph5iM2EHfkt8p3uwDN6+sA
-	 dzK861nPVDaf4gbFvr+jiCA9a82xozbWFjjE7G6T0kGE3bAM9WZHQTMSoDO4vItx9W
-	 Bhv2cgx1UE4OzGDxloDUY2RbfR83DXvUwQ25pIhY=
+	b=tKJxBApKouUcKYGgVHgHQqB4cjqO1uD0IYLru4ZHhS4gaPV7qZ67K0SnFSF/cNjR2
+	 hU3JasALz2ZWGozNwogLxVR3fuMJiEGi5dxkwe0tUO31vB+EPIY0VoyUwcySaMD1Xw
+	 a+V+/NNIXaI+yb+5Gb4Hh1sL2WoEHXJ3PQvTsrW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Nivas Varadharajan Mugunthakumar <nivasx.varadharajan.mugunthakumar@intel.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 167/568] bpf: Eliminate remaining "make W=1" warnings in kernel/bpf/btf.o
-Date: Tue, 30 Jul 2024 17:44:34 +0200
-Message-ID: <20240730151646.414206237@linuxfoundation.org>
+Subject: [PATCH 6.1 213/440] crypto: qat - extend scope of lock in adf_cfg_add_key_value_param()
+Date: Tue, 30 Jul 2024 17:47:26 +0200
+Message-ID: <20240730151624.183381879@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +46,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Nivas Varadharajan Mugunthakumar <nivasx.varadharajan.mugunthakumar@intel.com>
 
-[ Upstream commit 2454075f8e2915cebbe52a1195631bc7efe2b7e1 ]
+[ Upstream commit 6424da7d8b938fe66e7e771eaa949bc7b6c29c00 ]
 
-As reported by Mirsad [1] we still see format warnings in kernel/bpf/btf.o
-at W=1 warning level:
+The function adf_cfg_add_key_value_param() attempts to access and modify
+the key value store of the driver without locking.
 
-  CC      kernel/bpf/btf.o
-./kernel/bpf/btf.c: In function ‘btf_type_seq_show_flags’:
-./kernel/bpf/btf.c:7553:21: warning: assignment left-hand side might be a candidate for a format attribute [-Wsuggest-attribute=format]
- 7553 |         sseq.showfn = btf_seq_show;
-      |                     ^
-./kernel/bpf/btf.c: In function ‘btf_type_snprintf_show’:
-./kernel/bpf/btf.c:7604:31: warning: assignment left-hand side might be a candidate for a format attribute [-Wsuggest-attribute=format]
- 7604 |         ssnprintf.show.showfn = btf_snprintf_show;
-      |                               ^
+Extend the scope of cfg->lock to avoid a potential race condition.
 
-Combined with CONFIG_WERROR=y these can halt the build.
-
-The fix (annotating the structure field with __printf())
-suggested by Mirsad resolves these. Apologies I missed this last time.
-No other W=1 warnings were observed in kernel/bpf after this fix.
-
-[1] https://lore.kernel.org/bpf/92c9d047-f058-400c-9c7d-81d4dc1ef71b@gmail.com/
-
-Fixes: b3470da314fd ("bpf: annotate BTF show functions with __printf")
-Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Suggested-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240712092859.1390960-1-alan.maguire@oracle.com
+Fixes: 92bf269fbfe9 ("crypto: qat - change behaviour of adf_cfg_add_key_value_param()")
+Signed-off-by: Nivas Varadharajan Mugunthakumar <nivasx.varadharajan.mugunthakumar@intel.com>
+Signed-off-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qat/qat_common/adf_cfg.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 896ac05bf1bd1..fbf9721ba21b6 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -405,7 +405,7 @@ const char *btf_type_str(const struct btf_type *t)
- struct btf_show {
- 	u64 flags;
- 	void *target;	/* target of show operation (seq file, buffer) */
--	void (*showfn)(struct btf_show *show, const char *fmt, va_list args);
-+	__printf(2, 0) void (*showfn)(struct btf_show *show, const char *fmt, va_list args);
- 	const struct btf *btf;
- 	/* below are used during iteration */
- 	struct {
+diff --git a/drivers/crypto/qat/qat_common/adf_cfg.c b/drivers/crypto/qat/qat_common/adf_cfg.c
+index 1931e5b37f2bd..368d14d81503c 100644
+--- a/drivers/crypto/qat/qat_common/adf_cfg.c
++++ b/drivers/crypto/qat/qat_common/adf_cfg.c
+@@ -276,17 +276,19 @@ int adf_cfg_add_key_value_param(struct adf_accel_dev *accel_dev,
+ 	 * 3. if the key exists with the same value, then return without doing
+ 	 *    anything (the newly created key_val is freed).
+ 	 */
++	down_write(&cfg->lock);
+ 	if (!adf_cfg_key_val_get(accel_dev, section_name, key, temp_val)) {
+ 		if (strncmp(temp_val, key_val->val, sizeof(temp_val))) {
+ 			adf_cfg_keyval_remove(key, section);
+ 		} else {
+ 			kfree(key_val);
+-			return 0;
++			goto out;
+ 		}
+ 	}
+ 
+-	down_write(&cfg->lock);
+ 	adf_cfg_keyval_add(key_val, section);
++
++out:
+ 	up_write(&cfg->lock);
+ 	return 0;
+ }
 -- 
 2.43.0
 
