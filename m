@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CDF1898E0;
-	Tue, 30 Jul 2024 16:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1A518801A;
+	Tue, 30 Jul 2024 16:53:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358397; cv=none; b=h5TGQE3IL6HRMc/oIs1F6MuBbcYv2aYJtsPIMyvhWefOdf+Jpcy2viKlEoAPNdm46BuHw1+8EyYHpf9WpdqMPHLedQ4+WH/MnxFrSQA43dw8Hgkx+LymzUCeXSz6G27oCtNWGNK+hCnLSeUsAa4ha7krMwB5Cwx9LDv9stsOrhw=
+	t=1722358400; cv=none; b=l98c3R4Zwy8lFouOUetwZMfUu8GcdfsQHJ0eIl6u49PLBr335q3mKWT3rDG/pF/1jio+hweQQEnP/8GE9gYvn99DCzdUG8ZFw357qknulnkuoSBxXN2OwDd9Crx4cNXXJMHwWKpszy3XqRlzHyjJ1vkgtqkGPR1f4vTI21FbBW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358397; c=relaxed/simple;
-	bh=WIDWKih1JiEJJBkkXv4YuRxvAsjICdNVAFp9gxzzeLg=;
+	s=arc-20240116; t=1722358400; c=relaxed/simple;
+	bh=E0w7jrUOgtiH77thYz280NFyfgAF85RK8cmPux/aMeU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h38mdgSq2YmFsUuJFzVQW/3l3Bsh33NRqWREKoaQLE1bD031IoqUQ8kY5zzB182K5FT/+2H1Osp1HdsL2AxX5YIKxcNrfXop55zbfoJX7F6LBK3DYsUXx7jPBh9V5UhjmlOMezVMenYG+7B3GopOZk+hgqqKcstqLvkB37YlGGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxmsVAPp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eqid4/Voi2NHgn0zRoCnFtcYv4YPeUUWsBbQyFG1sS6HD4+gTgUybVZ/5NOscAk6YY2QM1BEy/jJOeYTcxn1Lj24dYuOJ5F4tB0A46HAZjhanRIxa+LSIZkdJzKuVsBhBMkQIpINj/sjyJvTY0JTrPbUipAkJZ1Qd/KbWlTydvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d4RMTyzr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxmsVAPp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB634C4AF0F;
-	Tue, 30 Jul 2024 16:53:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d4RMTyzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9575C32782;
+	Tue, 30 Jul 2024 16:53:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358397;
-	bh=WIDWKih1JiEJJBkkXv4YuRxvAsjICdNVAFp9gxzzeLg=;
+	s=korg; t=1722358400;
+	bh=E0w7jrUOgtiH77thYz280NFyfgAF85RK8cmPux/aMeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PxmsVAPp8yQCdrnz9m0o4EDAYg+Rqb2ZEZr1+m6XOnSTGnJ29Bl7CC92xZGaN6QCB
-	 a3H5KxqbYASeqgiQp9M5WQjiZmOBVVjEgfer+oSp9aoF8/2JoaXkCfwJU1XCPUCER6
-	 8U6ajeJi9mr7GcuojHQcsOzZuK+2fx+G3GB/RSQc=
+	b=d4RMTyzrPmdYS6Wp9/8BU6T6jb6PKqzgeWe4G/5Uwyf26k4RIcXvhfw/7tmVLlZ6g
+	 Z3fDXydojcJ+YXOy0jpUBJXSFifYAxmuYTslRzClGBmJ+7oheHbWLRJZSG4p6+L9LC
+	 edtuADtAp4vHIsuRQ/Ud7xp9HinJ11NKkgkOzfhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aristeu Rozanski <aris@redhat.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Aristeu Rozanski <aris@ruivo.org>,
-	David Hildenbrand <david@redhat.com>,
-	Vishal Moola <vishal.moola@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 358/568] hugetlb: force allocating surplus hugepages on mempolicy allowed nodes
-Date: Tue, 30 Jul 2024 17:47:45 +0200
-Message-ID: <20240730151653.856834182@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.1 387/440] PCI: Introduce cleanup helpers for device reference counts and locks
+Date: Tue, 30 Jul 2024 17:50:20 +0200
+Message-ID: <20240730151630.920826862@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,135 +50,92 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aristeu Rozanski <aris@redhat.com>
+From: Ira Weiny <ira.weiny@intel.com>
 
-commit 003af997c8a945493859dd1a2d015cc9387ff27a upstream.
+commit ced085ef369af7a2b6da962ec2fbd01339f60693 upstream.
 
-When trying to allocate a hugepage with no reserved ones free, it may be
-allowed in case a number of overcommit hugepages was configured (using
-/proc/sys/vm/nr_overcommit_hugepages) and that number wasn't reached.
-This allows for a behavior of having extra hugepages allocated
-dynamically, if there're resources for it.  Some sysadmins even prefer not
-reserving any hugepages and setting a big number of overcommit hugepages.
+The "goto error" pattern is notorious for introducing subtle resource
+leaks. Use the new cleanup.h helpers for PCI device reference counts and
+locks.
 
-But while attempting to allocate overcommit hugepages in a multi node
-system (either NUMA or mempolicy/cpuset) said allocations might randomly
-fail even when there're resources available for the allocation.
+Similar to the new put_device() and device_lock() cleanup helpers,
+__free(put_device) and guard(device), define the same for PCI devices,
+__free(pci_dev_put) and guard(pci_dev).  These helpers eliminate the
+need for "goto free;" and "goto unlock;" patterns. For example, A
+'struct pci_dev *' instance declared as:
 
-This happens due to allowed_mems_nr() only accounting for the number of
-free hugepages in the nodes the current process belongs to and the surplus
-hugepage allocation is done so it can be allocated in any node.  In case
-one or more of the requested surplus hugepages are allocated in a
-different node, the whole allocation will fail due allowed_mems_nr()
-returning a lower value.
+    struct pci_dev *pdev __free(pci_dev_put) = NULL;
 
-So allocate surplus hugepages in one of the nodes the current process
-belongs to.
+...will automatically call pci_dev_put() if @pdev is non-NULL when @pdev
+goes out of scope (automatic variable scope). If a function wants to
+invoke pci_dev_put() on error, but return @pdev on success, it can do:
 
-Easy way to reproduce this issue is to use a 2+ NUMA nodes system:
+    return no_free_ptr(pdev);
 
-	# echo 0 >/proc/sys/vm/nr_hugepages
-	# echo 1 >/proc/sys/vm/nr_overcommit_hugepages
-	# numactl -m0 ./tools/testing/selftests/mm/map_hugetlb 2
+...or:
 
-Repeating the execution of map_hugetlb test application will eventually
-fail when the hugepage ends up allocated in a different node.
+    return_ptr(pdev);
 
-[aris@ruivo.org: v2]
-  Link: https://lkml.kernel.org/r/20240701212343.GG844599@cathedrallabs.org
-Link: https://lkml.kernel.org/r/20240621190050.mhxwb65zn37doegp@redhat.com
-Signed-off-by: Aristeu Rozanski <aris@redhat.com>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Aristeu Rozanski <aris@ruivo.org>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: Vishal Moola <vishal.moola@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+For potential cleanup opportunity there are 587 open-coded calls to
+pci_dev_put() in the kernel with 65 instances within 10 lines of a goto
+statement with the CXL driver threatening to add another one.
+
+The guard() helper holds the associated lock for the remainder of the
+current scope in which it was invoked. So, for example:
+
+    func(...)
+    {
+        if (...) {
+            ...
+            guard(pci_dev); /* pci_dev_lock() invoked here */
+            ...
+        } /* <- implied pci_dev_unlock() triggered here */
+    }
+
+There are 15 invocations of pci_dev_unlock() in the kernel with 5
+instances within 10 lines of a goto statement. Again, the CXL driver is
+threatening to add another.
+
+Introduce these helpers to preclude the addition of new more error prone
+goto put; / goto unlock; sequences. For now, these helpers are used in
+drivers/cxl/pci.c to allow ACPI error reports to be fed back into the
+CXL driver associated with the PCI device identified in the report.
+
+Cc: Bjorn Helgaas <bhelgaas@google.com>
+Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Link: https://lore.kernel.org/r/20231220-cxl-cper-v5-8-1bb8a4ca2c7a@intel.com
+[djbw: rewrite changelog]
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Acked-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   47 ++++++++++++++++++++++++++++-------------------
- 1 file changed, 28 insertions(+), 19 deletions(-)
+ include/linux/pci.h |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2518,6 +2518,23 @@ struct folio *alloc_hugetlb_folio_vma(st
- 	return folio;
- }
+--- a/include/linux/pci.h
++++ b/include/linux/pci.h
+@@ -1138,6 +1138,7 @@ int pci_get_interrupt_pin(struct pci_dev
+ u8 pci_common_swizzle(struct pci_dev *dev, u8 *pinp);
+ struct pci_dev *pci_dev_get(struct pci_dev *dev);
+ void pci_dev_put(struct pci_dev *dev);
++DEFINE_FREE(pci_dev_put, struct pci_dev *, if (_T) pci_dev_put(_T))
+ void pci_remove_bus(struct pci_bus *b);
+ void pci_stop_and_remove_bus_device(struct pci_dev *dev);
+ void pci_stop_and_remove_bus_device_locked(struct pci_dev *dev);
+@@ -1746,6 +1747,7 @@ void pci_cfg_access_unlock(struct pci_de
+ void pci_dev_lock(struct pci_dev *dev);
+ int pci_dev_trylock(struct pci_dev *dev);
+ void pci_dev_unlock(struct pci_dev *dev);
++DEFINE_GUARD(pci_dev, struct pci_dev *, pci_dev_lock(_T), pci_dev_unlock(_T))
  
-+static nodemask_t *policy_mbind_nodemask(gfp_t gfp)
-+{
-+#ifdef CONFIG_NUMA
-+	struct mempolicy *mpol = get_task_policy(current);
-+
-+	/*
-+	 * Only enforce MPOL_BIND policy which overlaps with cpuset policy
-+	 * (from policy_nodemask) specifically for hugetlb case
-+	 */
-+	if (mpol->mode == MPOL_BIND &&
-+		(apply_policy_zone(mpol, gfp_zone(gfp)) &&
-+		 cpuset_nodemask_valid_mems_allowed(&mpol->nodes)))
-+		return &mpol->nodes;
-+#endif
-+	return NULL;
-+}
-+
  /*
-  * Increase the hugetlb pool such that it can accommodate a reservation
-  * of size 'delta'.
-@@ -2531,6 +2548,8 @@ static int gather_surplus_pages(struct h
- 	long i;
- 	long needed, allocated;
- 	bool alloc_ok = true;
-+	int node;
-+	nodemask_t *mbind_nodemask = policy_mbind_nodemask(htlb_alloc_mask(h));
- 
- 	lockdep_assert_held(&hugetlb_lock);
- 	needed = (h->resv_huge_pages + delta) - h->free_huge_pages;
-@@ -2545,8 +2564,15 @@ static int gather_surplus_pages(struct h
- retry:
- 	spin_unlock_irq(&hugetlb_lock);
- 	for (i = 0; i < needed; i++) {
--		folio = alloc_surplus_hugetlb_folio(h, htlb_alloc_mask(h),
--				NUMA_NO_NODE, NULL);
-+		folio = NULL;
-+		for_each_node_mask(node, cpuset_current_mems_allowed) {
-+			if (!mbind_nodemask || node_isset(node, *mbind_nodemask)) {
-+				folio = alloc_surplus_hugetlb_folio(h, htlb_alloc_mask(h),
-+						node, NULL);
-+				if (folio)
-+					break;
-+			}
-+		}
- 		if (!folio) {
- 			alloc_ok = false;
- 			break;
-@@ -4531,23 +4557,6 @@ static int __init default_hugepagesz_set
- }
- __setup("default_hugepagesz=", default_hugepagesz_setup);
- 
--static nodemask_t *policy_mbind_nodemask(gfp_t gfp)
--{
--#ifdef CONFIG_NUMA
--	struct mempolicy *mpol = get_task_policy(current);
--
--	/*
--	 * Only enforce MPOL_BIND policy which overlaps with cpuset policy
--	 * (from policy_nodemask) specifically for hugetlb case
--	 */
--	if (mpol->mode == MPOL_BIND &&
--		(apply_policy_zone(mpol, gfp_zone(gfp)) &&
--		 cpuset_nodemask_valid_mems_allowed(&mpol->nodes)))
--		return &mpol->nodes;
--#endif
--	return NULL;
--}
--
- static unsigned int allowed_mems_nr(struct hstate *h)
- {
- 	int node;
+  * PCI domain support.  Sometimes called PCI segment (eg by ACPI),
 
 
