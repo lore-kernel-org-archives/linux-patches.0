@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4CB183CD5;
-	Tue, 30 Jul 2024 16:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBB41A619E;
+	Tue, 30 Jul 2024 16:42:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357721; cv=none; b=R40lbCuAvlf72dye6LXGHxMmb5csDKN4EAeJkVfS5qk0nBNVJK85m3KSPJ6FH7qY3pYELHPleik6Yq41lo1DOHLBDOK3EuGaYCY0Y/6v8DlpUM7dd4JgHsoILCM6iwjAI7JvVU+dtGO09q6MasVMnCmjgwmI7JxeS9AEn2g9FmM=
+	t=1722357725; cv=none; b=YmGjgEyHZeBCgq73pDEA2XwRRzSm1JdMIoXj5FZS49fy09fWIQpfqokit6Ej1M+UM+pA+nvHXDAnG6wLwIRFRr45UVnrnYAS0Cd6mlvAnTDC8ytUG1KSp2smRlE/ybpOhoUa8E3xWDD93QNhlVht8u7f7YVZFRl6M4H17RM85YM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357721; c=relaxed/simple;
-	bh=o8fFX44203DWFfZfgKm2EuXpdWfEsJa7/TLRhLouZh0=;
+	s=arc-20240116; t=1722357725; c=relaxed/simple;
+	bh=mKyr8Sm9U7DqpSQsYtV2EgqNRRSc6sMnMlakDkXVN9U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cqnz6HoATxXV8tJduldNqL96jpqqX5A/jHxy3TLxgmCdNTf6lo8cYB7BARZbqtplY/act5KXeEw+LgGI5h/mhjbeu29n7wqOAIcQL0mNuWg6J/+hqRY3poZNNsuV+/P+MQzBLUxRanx3Haqkv8q5G6cS/GhX0dCLaooR6YDJq74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=haN4Erhp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMh/rXm9RdAnGtqh2ETfwxShdD9q1GuopdLAAmyQ3mpaTUYasP6SZCOcmvyaU/HB00r+yW3xf4FgNTbngWX61c9/NzOJm7YbWH63tagKpVR8ffDkYywgTkSD4F40fNiMBYH2IIx9Htn05EI/MjdrhQZIYQ6kmjI++vexQu4LX9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4FHXdtf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="haN4Erhp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347CEC4AF0C;
-	Tue, 30 Jul 2024 16:42:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4FHXdtf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26BF3C32782;
+	Tue, 30 Jul 2024 16:42:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357721;
-	bh=o8fFX44203DWFfZfgKm2EuXpdWfEsJa7/TLRhLouZh0=;
+	s=korg; t=1722357724;
+	bh=mKyr8Sm9U7DqpSQsYtV2EgqNRRSc6sMnMlakDkXVN9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=haN4ErhpMrf7H+CaIVQjTVsGPNUZaAQNB5rQlxfkDaaNprNl+xdws6mKu3iI2RZk/
-	 pKmVOEJxYe5hD5yHibb24CFjWpCCdHunDRjlfJo015hNeBh4tJTu23RL549Cspc9hs
-	 mu5wYA+5wwGcn5Xg0F9b+kS6GBZ37OWW5DrDhrkg=
+	b=r4FHXdtfKKDQYfghPyBvV5010ZRR5aNo5ZgVoIlKmewztpI/Mfiuo0o4rU+tf0Qc/
+	 hRa+I0F+Z19dJ546Gq2ctRUIAxQPN5mEMLGRu0HpP1+h7xXNM+74TZcu+stb0Upw0h
+	 E/ZdUM/IFhQZUjxh2QC8hACtCBuACm/jaiJZ8hr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuro Chung <kuro.chung@ite.com.tw>,
-	Hermes Wu <hermes.wu@ite.com.tw>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 282/809] drm/bridge: it6505: fix hibernate to resume no display issue
-Date: Tue, 30 Jul 2024 17:42:38 +0200
-Message-ID: <20240730151735.728466292@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Andrea Parri <parri.andrea@gmail.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 6.1 319/440] tools/memory-model: Fix bug in lock.cat
+Date: Tue, 30 Jul 2024 17:49:12 +0200
+Message-ID: <20240730151628.279427569@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,166 +47,102 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuro Chung <kuro.chung@ite.com.tw>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 484436ec5c2bffe8f346a09ae1cbc4cbf5e50005 ]
+commit 4c830eef806679dc243e191f962c488dd9d00708 upstream.
 
-When the system power resumes, the TTL input of IT6505 may experience
-some noise before the video signal stabilizes, necessitating a video
-reset. This patch is implemented to prevent a loop of video error
-interrupts, which can occur when a video reset in the video FIFO error
-interrupt triggers another such interrupt. The patch processes the SCDT
-and FIFO error interrupts simultaneously and ignores any video FIFO
-error interrupts caused by a video reset.
+Andrea reported that the following innocuous litmus test:
 
-Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
-Signed-off-by: Kuro Chung <kuro.chung@ite.com.tw>
-Signed-off-by: Hermes Wu <hermes.wu@ite.com.tw>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240522065528.1053439-1-kuro.chung@ite.com.tw
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+C T
+
+{}
+
+P0(spinlock_t *x)
+{
+	int r0;
+
+	spin_lock(x);
+	spin_unlock(x);
+	r0 = spin_is_locked(x);
+}
+
+gives rise to a nonsensical empty result with no executions:
+
+$ herd7 -conf linux-kernel.cfg T.litmus
+Test T Required
+States 0
+Ok
+Witnesses
+Positive: 0 Negative: 0
+Condition forall (true)
+Observation T Never 0 0
+Time T 0.00
+Hash=6fa204e139ddddf2cb6fa963bad117c0
+
+The problem is caused by a bug in the lock.cat part of the LKMM.  Its
+computation of the rf relation for RU (read-unlocked) events is
+faulty; it implicitly assumes that every RU event must read from
+either a UL (unlock) event in another thread or from the lock's
+initial state.  Neither is true in the litmus test above, so the
+computation yields no possible executions.
+
+The lock.cat code tries to make up for this deficiency by allowing RU
+events outside of critical sections to read from the last po-previous
+UL event.  But it does this incorrectly, trying to keep these rfi links
+separate from the rfe links that might also be needed, and passing only
+the latter to herd7's cross() macro.
+
+The problem is fixed by merging the two sets of possible rf links for
+RU events and using them all in the call to cross().
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-by: Andrea Parri <parri.andrea@gmail.com>
+Closes: https://lore.kernel.org/linux-arch/ZlC0IkzpQdeGj+a3@andrea/
+Tested-by: Andrea Parri <parri.andrea@gmail.com>
+Acked-by: Andrea Parri <parri.andrea@gmail.com>
+Fixes: 15553dcbca06 ("tools/memory-model: Add model support for spin_is_locked()")
+CC: <stable@vger.kernel.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ite-it6505.c | 73 +++++++++++++++++++----------
- 1 file changed, 49 insertions(+), 24 deletions(-)
+ tools/memory-model/lock.cat |   20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
-index 3f68c82888c2c..cf59347d3d605 100644
---- a/drivers/gpu/drm/bridge/ite-it6505.c
-+++ b/drivers/gpu/drm/bridge/ite-it6505.c
-@@ -1307,9 +1307,15 @@ static void it6505_video_reset(struct it6505 *it6505)
- 	it6505_link_reset_step_train(it6505);
- 	it6505_set_bits(it6505, REG_DATA_MUTE_CTRL, EN_VID_MUTE, EN_VID_MUTE);
- 	it6505_set_bits(it6505, REG_INFOFRAME_CTRL, EN_VID_CTRL_PKT, 0x00);
--	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, VIDEO_RESET);
-+
-+	it6505_set_bits(it6505, REG_VID_BUS_CTRL1, TX_FIFO_RESET, TX_FIFO_RESET);
-+	it6505_set_bits(it6505, REG_VID_BUS_CTRL1, TX_FIFO_RESET, 0x00);
-+
- 	it6505_set_bits(it6505, REG_501_FIFO_CTRL, RST_501_FIFO, RST_501_FIFO);
- 	it6505_set_bits(it6505, REG_501_FIFO_CTRL, RST_501_FIFO, 0x00);
-+
-+	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, VIDEO_RESET);
-+	usleep_range(1000, 2000);
- 	it6505_set_bits(it6505, REG_RESET_CTRL, VIDEO_RESET, 0x00);
- }
+--- a/tools/memory-model/lock.cat
++++ b/tools/memory-model/lock.cat
+@@ -102,19 +102,19 @@ let rf-lf = rfe-lf | rfi-lf
+  * within one of the lock's critical sections returns False.
+  *)
  
-@@ -2245,12 +2251,11 @@ static void it6505_link_training_work(struct work_struct *work)
- 	if (ret) {
- 		it6505->auto_train_retry = AUTO_TRAIN_RETRY;
- 		it6505_link_train_ok(it6505);
--		return;
- 	} else {
- 		it6505->auto_train_retry--;
-+		it6505_dump(it6505);
- 	}
- 
--	it6505_dump(it6505);
- }
- 
- static void it6505_plugged_status_to_codec(struct it6505 *it6505)
-@@ -2471,31 +2476,53 @@ static void it6505_irq_link_train_fail(struct it6505 *it6505)
- 	schedule_work(&it6505->link_works);
- }
- 
--static void it6505_irq_video_fifo_error(struct it6505 *it6505)
-+static bool it6505_test_bit(unsigned int bit, const unsigned int *addr)
- {
--	struct device *dev = it6505->dev;
+-(* rfi for RU events: an RU may read from the last po-previous UL *)
+-let rfi-ru = ([UL] ; po-loc ; [RU]) \ ([UL] ; po-loc ; [LKW] ; po-loc)
 -
--	DRM_DEV_DEBUG_DRIVER(dev, "video fifo overflow interrupt");
--	it6505->auto_train_retry = AUTO_TRAIN_RETRY;
--	flush_work(&it6505->link_works);
--	it6505_stop_hdcp(it6505);
--	it6505_video_reset(it6505);
-+	return 1 & (addr[bit / BITS_PER_BYTE] >> (bit % BITS_PER_BYTE));
- }
+-(* rfe for RU events: an RU may read from an external UL or the initial write *)
+-let all-possible-rfe-ru =
+-	let possible-rfe-ru r =
++(*
++ * rf for RU events: an RU may read from an external UL or the initial write,
++ * or from the last po-previous UL
++ *)
++let all-possible-rf-ru =
++	let possible-rf-ru r =
+ 		let pair-to-relation p = p ++ 0
+-		in map pair-to-relation (((UL | IW) * {r}) & loc & ext)
+-	in map possible-rfe-ru RU
++		in map pair-to-relation ((((UL | IW) * {r}) & loc & ext) |
++			(((UL * {r}) & po-loc) \ ([UL] ; po-loc ; [LKW] ; po-loc)))
++	in map possible-rf-ru RU
  
--static void it6505_irq_io_latch_fifo_overflow(struct it6505 *it6505)
-+static void it6505_irq_video_handler(struct it6505 *it6505, const int *int_status)
- {
- 	struct device *dev = it6505->dev;
-+	int reg_0d, reg_int03;
+ (* Generate all rf relations for RU events *)
+-with rfe-ru from cross(all-possible-rfe-ru)
+-let rf-ru = rfe-ru | rfi-ru
++with rf-ru from cross(all-possible-rf-ru)
  
--	DRM_DEV_DEBUG_DRIVER(dev, "IO latch fifo overflow interrupt");
--	it6505->auto_train_retry = AUTO_TRAIN_RETRY;
--	flush_work(&it6505->link_works);
--	it6505_stop_hdcp(it6505);
--	it6505_video_reset(it6505);
--}
-+	/*
-+	 * When video SCDT change with video not stable,
-+	 * Or video FIFO error, need video reset
-+	 */
- 
--static bool it6505_test_bit(unsigned int bit, const unsigned int *addr)
--{
--	return 1 & (addr[bit / BITS_PER_BYTE] >> (bit % BITS_PER_BYTE));
-+	if ((!it6505_get_video_status(it6505) &&
-+	     (it6505_test_bit(INT_SCDT_CHANGE, (unsigned int *)int_status))) ||
-+	    (it6505_test_bit(BIT_INT_IO_FIFO_OVERFLOW,
-+			     (unsigned int *)int_status)) ||
-+	    (it6505_test_bit(BIT_INT_VID_FIFO_ERROR,
-+			     (unsigned int *)int_status))) {
-+		it6505->auto_train_retry = AUTO_TRAIN_RETRY;
-+		flush_work(&it6505->link_works);
-+		it6505_stop_hdcp(it6505);
-+		it6505_video_reset(it6505);
-+
-+		usleep_range(10000, 11000);
-+
-+		/*
-+		 * Clear FIFO error IRQ to prevent fifo error -> reset loop
-+		 * HW will trigger SCDT change IRQ again when video stable
-+		 */
-+
-+		reg_int03 = it6505_read(it6505, INT_STATUS_03);
-+		reg_0d = it6505_read(it6505, REG_SYSTEM_STS);
-+
-+		reg_int03 &= (BIT(INT_VID_FIFO_ERROR) | BIT(INT_IO_LATCH_FIFO_OVERFLOW));
-+		it6505_write(it6505, INT_STATUS_03, reg_int03);
-+
-+		DRM_DEV_DEBUG_DRIVER(dev, "reg08 = 0x%02x", reg_int03);
-+		DRM_DEV_DEBUG_DRIVER(dev, "reg0D = 0x%02x", reg_0d);
-+
-+		return;
-+	}
-+
-+	if (it6505_test_bit(INT_SCDT_CHANGE, (unsigned int *)int_status))
-+		it6505_irq_scdt(it6505);
- }
- 
- static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
-@@ -2508,15 +2535,12 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
- 	} irq_vec[] = {
- 		{ BIT_INT_HPD, it6505_irq_hpd },
- 		{ BIT_INT_HPD_IRQ, it6505_irq_hpd_irq },
--		{ BIT_INT_SCDT, it6505_irq_scdt },
- 		{ BIT_INT_HDCP_FAIL, it6505_irq_hdcp_fail },
- 		{ BIT_INT_HDCP_DONE, it6505_irq_hdcp_done },
- 		{ BIT_INT_AUX_CMD_FAIL, it6505_irq_aux_cmd_fail },
- 		{ BIT_INT_HDCP_KSV_CHECK, it6505_irq_hdcp_ksv_check },
- 		{ BIT_INT_AUDIO_FIFO_ERROR, it6505_irq_audio_fifo_error },
- 		{ BIT_INT_LINK_TRAIN_FAIL, it6505_irq_link_train_fail },
--		{ BIT_INT_VID_FIFO_ERROR, it6505_irq_video_fifo_error },
--		{ BIT_INT_IO_FIFO_OVERFLOW, it6505_irq_io_latch_fifo_overflow },
- 	};
- 	int int_status[3], i;
- 
-@@ -2546,6 +2570,7 @@ static irqreturn_t it6505_int_threaded_handler(int unused, void *data)
- 			if (it6505_test_bit(irq_vec[i].bit, (unsigned int *)int_status))
- 				irq_vec[i].handler(it6505);
- 		}
-+		it6505_irq_video_handler(it6505, (unsigned int *)int_status);
- 	}
- 
- 	pm_runtime_put_sync(dev);
--- 
-2.43.0
-
+ (* Final rf relation *)
+ let rf = rf | rf-lf | rf-ru
 
 
