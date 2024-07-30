@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39ED1A6197;
-	Tue, 30 Jul 2024 16:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09EB1A6166;
+	Tue, 30 Jul 2024 16:24:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356659; cv=none; b=RiXxllz0b21w20m3pX9BkL9Y71TMoY7iTY6/xvQg0RTzKvVw/kVXshHe0jmxud1Du2ro3QLrPfz1/S/MO/U2af+d30Q6pC9G/XC4e7kVlSHnkeMJLmdFS9gUiTy6w3fleYAt1NCnZbLjH17DqwZnx52g2yFqqCUyW8WrwGimGP0=
+	t=1722356663; cv=none; b=qH+Vkjq7n/3WquXWhunBjmT/7P9M8gDEo6EGpJQJ+kpFtYdkS2sHu0PiFMyBBefQHFS0wyOeGzf33vNmzi2IGy9qfRS/UQ5wvrWXav5Crt7G1qb7NBKw0Bgm1MIMHcht02/fWOdogvGkfAd66BZ7ajqLEh34chaTXSD8hAFgJdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356659; c=relaxed/simple;
-	bh=cIOLMUfh4SlfhB8yQI5k63AHoBzZIP/LFlCDwtubUow=;
+	s=arc-20240116; t=1722356663; c=relaxed/simple;
+	bh=59Ffrha14k2Z9ls0N5xmWWWnG/slorgKNeLLAKFT+FU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kd1j4GJ5CwkQdGTAx0wQUJ9r0YihSwBouE+2hNRmGEbuBO/82SOpaSMJ8nD2snsTd5FBeU3CkbUK5vhHhe6W9tWki1G5wJ6M6PcP5iPMfc7AMThIoigGE2uBQi24aL03BYpRgowSH9RM+vYUJ84X2PSHYLTGAc/Z001I2Rmgbn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fDk+pB6O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ouD5VfmcOFXR2YUCjEO7WEk9AKkJo6MSVHKYapSBqwlO8fXza1ih7hJeXLfpBBetQ/VsQDo0YrA8sqITYH5cl5/o6dscestWdpGNefmTUu/P/Qbt8+EULcAW0SKquMcINgMzekbLXJIgUzbnpw2O0/J/lVHO9Om+a42NFS5NMJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xsmCou9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fDk+pB6O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33F3FC32782;
-	Tue, 30 Jul 2024 16:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xsmCou9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC15C4AF11;
+	Tue, 30 Jul 2024 16:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356659;
-	bh=cIOLMUfh4SlfhB8yQI5k63AHoBzZIP/LFlCDwtubUow=;
+	s=korg; t=1722356662;
+	bh=59Ffrha14k2Z9ls0N5xmWWWnG/slorgKNeLLAKFT+FU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fDk+pB6O4HBH/+4CT1FTHMvAGnMtvH5GziAWJNom6m3qgOZoHjOZS62m+HWcznI38
-	 rwXcKprMQnA/+UDWVH6Q8GDhQUb79E0uzlmh99mn/w+03pyrQtQ1ac+ZOyLdZLQfKx
-	 Xc84nidsXbkIeB97Zn0K2MTDFTIpkKCMenNuApVI=
+	b=0xsmCou9N1uo8hfSAR9Qrt3sG7++KPrRWx/ur2jwub7jNrfhVDWkiXfDQwuMbYCax
+	 G6zbuXk5xFXoRUwqC2KJRiJ6Wj/fWwBI6Zcd6FfFcwBaOIOsGn+iCrbALnA6o+9OVG
+	 wT0O1DzqnV2SDsRDAfTWSBWE6zdurYY+q9uDMWYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Kiran K <kiran.k@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 171/809] wifi: ath12k: fix wrong definition of CE rings base address
-Date: Tue, 30 Jul 2024 17:40:47 +0200
-Message-ID: <20240730151731.359706039@linuxfoundation.org>
+Subject: [PATCH 6.6 171/568] Bluetooth: btintel: Refactor btintel_set_ppag()
+Date: Tue, 30 Jul 2024 17:44:38 +0200
+Message-ID: <20240730151646.568065367@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,67 +47,206 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Kiran K <kiran.k@intel.com>
 
-[ Upstream commit 0ae570703754858a77cc42b3c9fff42e9f084608 ]
+[ Upstream commit 0a3e2eca1daa5627c8ecd1554e3146de82d61dd2 ]
 
-Base address of CE ring is defined as u32, currently this works
-because DMA mask configured as 32 bit:
+Current flow iterates the ACPI table associated with Bluetooth
+controller looking for PPAG method. Method name can be directly passed
+to acpi_evaluate_object function instead of iterating the table.
 
-	#define ATH12K_PCI_DMA_MASK	32
-
-However this mask could be changed once firmware bugs are fixed
-to fully support 36 bit DMA addressing. So to protect against any
-future changes to the DMA mask, change the type of the fields that
-are dependent upon it.
-
-This is found during code review. Compile tested only.
-
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240524024021.37711-1-quic_bqiang@quicinc.com
+Fixes: c585a92b2f9c ("Bluetooth: btintel: Set Per Platform Antenna Gain(PPAG)")
+Signed-off-by: Kiran K <kiran.k@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/ce.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btintel.c | 119 +++++++++++-------------------------
+ 1 file changed, 34 insertions(+), 85 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/ce.h b/drivers/net/wireless/ath/ath12k/ce.h
-index 79af3b6159f1c..857bc5f9e946a 100644
---- a/drivers/net/wireless/ath/ath12k/ce.h
-+++ b/drivers/net/wireless/ath/ath12k/ce.h
-@@ -1,7 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2021 The Linux Foundation. All rights reserved.
-- * Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
-+ * Copyright (c) 2021-2022, 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index ac1562d9ef26b..3da3c266a66f3 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -26,21 +26,11 @@
+ #define ECDSA_OFFSET		644
+ #define ECDSA_HEADER_LEN	320
  
- #ifndef ATH12K_CE_H
-@@ -119,7 +119,7 @@ struct ath12k_ce_ring {
- 	/* Host address space */
- 	void *base_addr_owner_space_unaligned;
- 	/* CE address space */
--	u32 base_addr_ce_space_unaligned;
-+	dma_addr_t base_addr_ce_space_unaligned;
+-#define BTINTEL_PPAG_NAME   "PPAG"
+-
+ enum {
+ 	DSM_SET_WDISABLE2_DELAY = 1,
+ 	DSM_SET_RESET_METHOD = 3,
+ };
  
- 	/* Actual start of descriptors.
- 	 * Aligned to descriptor-size boundary.
-@@ -129,7 +129,7 @@ struct ath12k_ce_ring {
- 	void *base_addr_owner_space;
+-/* structure to store the PPAG data read from ACPI table */
+-struct btintel_ppag {
+-	u32	domain;
+-	u32     mode;
+-	acpi_status status;
+-	struct hci_dev *hdev;
+-};
+-
+ #define CMD_WRITE_BOOT_PARAMS	0xfc0e
+ struct cmd_write_boot_params {
+ 	__le32 boot_addr;
+@@ -1312,65 +1302,6 @@ static int btintel_read_debug_features(struct hci_dev *hdev,
+ 	return 0;
+ }
  
- 	/* CE address space */
--	u32 base_addr_ce_space;
-+	dma_addr_t base_addr_ce_space;
+-static acpi_status btintel_ppag_callback(acpi_handle handle, u32 lvl, void *data,
+-					 void **ret)
+-{
+-	acpi_status status;
+-	size_t len;
+-	struct btintel_ppag *ppag = data;
+-	union acpi_object *p, *elements;
+-	struct acpi_buffer string = {ACPI_ALLOCATE_BUFFER, NULL};
+-	struct acpi_buffer buffer = {ACPI_ALLOCATE_BUFFER, NULL};
+-	struct hci_dev *hdev = ppag->hdev;
+-
+-	status = acpi_get_name(handle, ACPI_FULL_PATHNAME, &string);
+-	if (ACPI_FAILURE(status)) {
+-		bt_dev_warn(hdev, "PPAG-BT: ACPI Failure: %s", acpi_format_exception(status));
+-		return status;
+-	}
+-
+-	len = strlen(string.pointer);
+-	if (len < strlen(BTINTEL_PPAG_NAME)) {
+-		kfree(string.pointer);
+-		return AE_OK;
+-	}
+-
+-	if (strncmp((char *)string.pointer + len - 4, BTINTEL_PPAG_NAME, 4)) {
+-		kfree(string.pointer);
+-		return AE_OK;
+-	}
+-	kfree(string.pointer);
+-
+-	status = acpi_evaluate_object(handle, NULL, NULL, &buffer);
+-	if (ACPI_FAILURE(status)) {
+-		ppag->status = status;
+-		bt_dev_warn(hdev, "PPAG-BT: ACPI Failure: %s", acpi_format_exception(status));
+-		return status;
+-	}
+-
+-	p = buffer.pointer;
+-	ppag = (struct btintel_ppag *)data;
+-
+-	if (p->type != ACPI_TYPE_PACKAGE || p->package.count != 2) {
+-		kfree(buffer.pointer);
+-		bt_dev_warn(hdev, "PPAG-BT: Invalid object type: %d or package count: %d",
+-			    p->type, p->package.count);
+-		ppag->status = AE_ERROR;
+-		return AE_ERROR;
+-	}
+-
+-	elements = p->package.elements;
+-
+-	/* PPAG table is located at element[1] */
+-	p = &elements[1];
+-
+-	ppag->domain = (u32)p->package.elements[0].integer.value;
+-	ppag->mode = (u32)p->package.elements[1].integer.value;
+-	ppag->status = AE_OK;
+-	kfree(buffer.pointer);
+-	return AE_CTRL_TERMINATE;
+-}
+-
+ static int btintel_set_debug_features(struct hci_dev *hdev,
+ 			       const struct intel_debug_features *features)
+ {
+@@ -2399,10 +2330,13 @@ static int btintel_configure_offload(struct hci_dev *hdev)
  
- 	/* HAL ring id */
- 	u32 hal_ring_id;
+ static void btintel_set_ppag(struct hci_dev *hdev, struct intel_version_tlv *ver)
+ {
+-	struct btintel_ppag ppag;
+ 	struct sk_buff *skb;
+ 	struct hci_ppag_enable_cmd ppag_cmd;
+ 	acpi_handle handle;
++	struct acpi_buffer buffer = {ACPI_ALLOCATE_BUFFER, NULL};
++	union acpi_object *p, *elements;
++	u32 domain, mode;
++	acpi_status status;
+ 
+ 	/* PPAG is not supported if CRF is HrP2, Jfp2, JfP1 */
+ 	switch (ver->cnvr_top & 0xFFF) {
+@@ -2420,22 +2354,34 @@ static void btintel_set_ppag(struct hci_dev *hdev, struct intel_version_tlv *ver
+ 		return;
+ 	}
+ 
+-	memset(&ppag, 0, sizeof(ppag));
+-
+-	ppag.hdev = hdev;
+-	ppag.status = AE_NOT_FOUND;
+-	acpi_walk_namespace(ACPI_TYPE_PACKAGE, handle, 1, NULL,
+-			    btintel_ppag_callback, &ppag, NULL);
+-
+-	if (ACPI_FAILURE(ppag.status)) {
+-		if (ppag.status == AE_NOT_FOUND) {
++	status = acpi_evaluate_object(handle, "PPAG", NULL, &buffer);
++	if (ACPI_FAILURE(status)) {
++		if (status == AE_NOT_FOUND) {
+ 			bt_dev_dbg(hdev, "PPAG-BT: ACPI entry not found");
+ 			return;
+ 		}
++		bt_dev_warn(hdev, "PPAG-BT: ACPI Failure: %s", acpi_format_exception(status));
++		return;
++	}
++
++	p = buffer.pointer;
++	if (p->type != ACPI_TYPE_PACKAGE || p->package.count != 2) {
++		bt_dev_warn(hdev, "PPAG-BT: Invalid object type: %d or package count: %d",
++			    p->type, p->package.count);
++		kfree(buffer.pointer);
+ 		return;
+ 	}
+ 
+-	if (ppag.domain != 0x12) {
++	elements = p->package.elements;
++
++	/* PPAG table is located at element[1] */
++	p = &elements[1];
++
++	domain = (u32)p->package.elements[0].integer.value;
++	mode = (u32)p->package.elements[1].integer.value;
++	kfree(buffer.pointer);
++
++	if (domain != 0x12) {
+ 		bt_dev_dbg(hdev, "PPAG-BT: Bluetooth domain is disabled in ACPI firmware");
+ 		return;
+ 	}
+@@ -2446,19 +2392,22 @@ static void btintel_set_ppag(struct hci_dev *hdev, struct intel_version_tlv *ver
+ 	 * BIT 1 : 0 Disabled in China
+ 	 *         1 Enabled in China
+ 	 */
+-	if ((ppag.mode & 0x01) != BIT(0) && (ppag.mode & 0x02) != BIT(1)) {
+-		bt_dev_dbg(hdev, "PPAG-BT: EU, China mode are disabled in CB/BIOS");
++	mode &= 0x03;
++
++	if (!mode) {
++		bt_dev_dbg(hdev, "PPAG-BT: EU, China mode are disabled in BIOS");
+ 		return;
+ 	}
+ 
+-	ppag_cmd.ppag_enable_flags = cpu_to_le32(ppag.mode);
++	ppag_cmd.ppag_enable_flags = cpu_to_le32(mode);
+ 
+-	skb = __hci_cmd_sync(hdev, INTEL_OP_PPAG_CMD, sizeof(ppag_cmd), &ppag_cmd, HCI_CMD_TIMEOUT);
++	skb = __hci_cmd_sync(hdev, INTEL_OP_PPAG_CMD, sizeof(ppag_cmd),
++			     &ppag_cmd, HCI_CMD_TIMEOUT);
+ 	if (IS_ERR(skb)) {
+ 		bt_dev_warn(hdev, "Failed to send PPAG Enable (%ld)", PTR_ERR(skb));
+ 		return;
+ 	}
+-	bt_dev_info(hdev, "PPAG-BT: Enabled (Mode %d)", ppag.mode);
++	bt_dev_info(hdev, "PPAG-BT: Enabled (Mode %d)", mode);
+ 	kfree_skb(skb);
+ }
+ 
 -- 
 2.43.0
 
