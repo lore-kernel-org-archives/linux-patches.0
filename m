@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B5C1A6166;
-	Tue, 30 Jul 2024 16:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 812141A6160;
+	Tue, 30 Jul 2024 16:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356922; cv=none; b=K7GQh0Wwy/wM/KFPFKWWMAo7zbsv63a7h+JUwb3Wcksp2qJ313Sx4u4wX1nBLaNwy+Ag7DZM+WZBUBfl+0yJno2k/UTA/TggdUI8YlPJ1I+IvdQbcn9Ey1+dgckcslldQ9hxZX/ka/sXc/AQt3bP4WEJrF4e7zwj2VmEmoq132Q=
+	t=1722356925; cv=none; b=rSCM4gSUnETGSrHmz+FbjSkK5yQXLsH9FWXPdpFy5RmIJ7sYsDgQZUbT8HJa99eBfJ/xGyi7xHn6BXEMl9G/krvY7KYexVEJ/DOrk4B4mtx0sDtZsp2KLldUp3+ZreI4mVBcASJKdhfwXN+s8zMMYOrgWTa/w0jac15jTPmx8os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356922; c=relaxed/simple;
-	bh=EDGpkh3TvDgQO8p/imNEgfDMr1eCUpyX2q4cAY1Xt2s=;
+	s=arc-20240116; t=1722356925; c=relaxed/simple;
+	bh=7kzIYoBOl7dyB27txc+a+VMUI7nfWWjmP2wJQD1pz6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oeBYfXie3l+2YrPx75R1zFxnrH/ZCORnMON/NFCxmk8kuzbiw2SUoBKdVkwSAq72uUgE6CGOJ2kPwmjJawUpTTIICmEEq7nEDV1X3OxQTG9P7/0gwZLvMBvdNBAgHDro2AjQxX6u1u68X6TG6d9RjWxHfnLcxnmKkQ7Rzg3RTnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hxqHAIU0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XO748jbY+SGq3mk7cZ+cP56d4+UMJ848kK4ins3Jn2Evw5OKm2wWUmCuez+0Fh/O/t51wAYs9ciedWd2FnaOgdfnfS4ulvkDq9/onj7Lm7oVIx0fbR4PwKc6WnpHCC2uWHsvCc32BhS99KPHZPkCKRl212p188MbH0zEGW9yy3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nzvtEMHK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hxqHAIU0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17DAC32782;
-	Tue, 30 Jul 2024 16:28:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nzvtEMHK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A8AC32782;
+	Tue, 30 Jul 2024 16:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356922;
-	bh=EDGpkh3TvDgQO8p/imNEgfDMr1eCUpyX2q4cAY1Xt2s=;
+	s=korg; t=1722356925;
+	bh=7kzIYoBOl7dyB27txc+a+VMUI7nfWWjmP2wJQD1pz6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hxqHAIU0Y4oXH1T7ZcyEXMY6NOPHgcE+GpvSFKVGGzwtZjhzQuXIClx7W0G3z8E5/
-	 Ed4Q064QPhFYsOcNxKQIMO+iceyJh9M2r5wj3QSat3stiXpsfi1lyNvwFulwmqN27S
-	 UecblPdi4kWdWl+AzJoIxqHF37xfryjpqlHDdguA=
+	b=nzvtEMHK0HYHQu9ypI6FZp6lx+QrwuY/oAwfvxkaMs/1PAtKPNexjZFtDy6rjZDBn
+	 d8vh+YMt9wzmGGT+6Y0/sZMlWyr+SYO5jNMa+/P9L6g0Bn5UqxIfmyGgv8065Ty4Jg
+	 qZZs84tDg/a2Nu7QW63rXIqCkrkPo0bRF2NQizMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Junxian Huang <huangjunxian6@hisilicon.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 223/440] RDMA/hns: Fix missing pagesize and alignment check in FRMR
-Date: Tue, 30 Jul 2024 17:47:36 +0200
-Message-ID: <20240730151624.570451417@linuxfoundation.org>
+Subject: [PATCH 6.6 179/568] drm/mipi-dsi: Fix theoretical int overflow in mipi_dsi_generic_write_seq()
+Date: Tue, 30 Jul 2024 17:44:46 +0200
+Message-ID: <20240730151646.876830181@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,66 +48,77 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit d387d4b54eb84208bd4ca13572e106851d0a0819 ]
+[ Upstream commit 24acbcce5cc673886c2f4f9b3f6f89a9c6a53b7e ]
 
-The offset requires 128B alignment and the page size ranges from
-4K to 128M.
+The mipi_dsi_generic_write_seq() macro makes a call to
+mipi_dsi_generic_write() which returns a type ssize_t. The macro then
+stores it in an int and checks to see if it's negative. This could
+theoretically be a problem if "ssize_t" is larger than "int".
 
-Fixes: 68a997c5d28c ("RDMA/hns: Add FRMR support for hip08")
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
-Link: https://lore.kernel.org/r/20240710133705.896445-5-huangjunxian6@hisilicon.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+To see the issue, imagine that "ssize_t" is 32-bits and "int" is
+16-bits, you could see a problem if there was some code out there that
+looked like:
+
+  mipi_dsi_generic_write_seq(dsi, <32768 bytes as arguments>);
+
+...since we'd get back that 32768 bytes were transferred and 32768
+stored in a 16-bit int would look negative.
+
+Though there are no callsites where we'd actually hit this (even if
+"int" was only 16-bit), it's cleaner to make the types match so let's
+fix it.
+
+Fixes: a9015ce59320 ("drm/mipi-dsi: Add a mipi_dsi_dcs_write_seq() macro")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240514102056.v5.2.Iadb65b8add19ed3ae3ed6425011beb97e380a912@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240514102056.v5.2.Iadb65b8add19ed3ae3ed6425011beb97e380a912@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_device.h | 4 ++++
- drivers/infiniband/hw/hns/hns_roce_mr.c     | 5 +++++
- 2 files changed, 9 insertions(+)
+ include/drm/drm_mipi_dsi.h | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
-index 0a4c046cdfac4..a2bdfa026c560 100644
---- a/drivers/infiniband/hw/hns/hns_roce_device.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_device.h
-@@ -82,6 +82,7 @@
- #define MR_TYPE_DMA				0x03
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index e0e2c17832e89..900262f4c2349 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -305,17 +305,17 @@ int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
+  * @dsi: DSI peripheral device
+  * @seq: buffer containing the payload
+  */
+-#define mipi_dsi_generic_write_seq(dsi, seq...)                                \
+-	do {                                                                   \
+-		static const u8 d[] = { seq };                                 \
+-		struct device *dev = &dsi->dev;                                \
+-		int ret;                                                       \
+-		ret = mipi_dsi_generic_write(dsi, d, ARRAY_SIZE(d));           \
+-		if (ret < 0) {                                                 \
+-			dev_err_ratelimited(dev, "transmit data failed: %d\n", \
+-					    ret);                              \
+-			return ret;                                            \
+-		}                                                              \
++#define mipi_dsi_generic_write_seq(dsi, seq...)                                 \
++	do {                                                                    \
++		static const u8 d[] = { seq };                                  \
++		struct device *dev = &dsi->dev;                                 \
++		ssize_t ret;                                                    \
++		ret = mipi_dsi_generic_write(dsi, d, ARRAY_SIZE(d));            \
++		if (ret < 0) {                                                  \
++			dev_err_ratelimited(dev, "transmit data failed: %zd\n", \
++					    ret);                               \
++			return ret;                                             \
++		}                                                               \
+ 	} while (0)
  
- #define HNS_ROCE_FRMR_MAX_PA			512
-+#define HNS_ROCE_FRMR_ALIGN_SIZE		128
- 
- #define PKEY_ID					0xffff
- #define NODE_DESC_SIZE				64
-@@ -182,6 +183,9 @@ enum {
- #define HNS_HW_PAGE_SHIFT			12
- #define HNS_HW_PAGE_SIZE			(1 << HNS_HW_PAGE_SHIFT)
- 
-+#define HNS_HW_MAX_PAGE_SHIFT			27
-+#define HNS_HW_MAX_PAGE_SIZE			(1 << HNS_HW_MAX_PAGE_SHIFT)
-+
- struct hns_roce_uar {
- 	u64		pfn;
- 	unsigned long	index;
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index 190e62da98e4b..980261969b0c0 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -423,6 +423,11 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
- 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
- 	int ret, sg_num = 0;
- 
-+	if (!IS_ALIGNED(*sg_offset, HNS_ROCE_FRMR_ALIGN_SIZE) ||
-+	    ibmr->page_size < HNS_HW_PAGE_SIZE ||
-+	    ibmr->page_size > HNS_HW_MAX_PAGE_SIZE)
-+		return sg_num;
-+
- 	mr->npages = 0;
- 	mr->page_list = kvcalloc(mr->pbl_mtr.hem_cfg.buf_pg_count,
- 				 sizeof(dma_addr_t), GFP_KERNEL);
+ /**
 -- 
 2.43.0
 
