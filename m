@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDDB1A619E;
-	Tue, 30 Jul 2024 16:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C972D1A619E;
+	Tue, 30 Jul 2024 16:52:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358368; cv=none; b=gY8IAodCaluP8xl+5+dyEaNhhPj6okZU/pZu6aHh03gT5unb3w1l97IsKy/Uc8wpDdWH3V6HLsjpdCrKsEAr1gTqkXajDAYwkXIf9zsv5MC6/VPx2dvZ0YXAuhIPbjd7XcCX5ZVwbG/FgrAGlYNRe2UjEci/Nw678qbhy+ZjCik=
+	t=1722358370; cv=none; b=Zq00EJvF54HptvYjh3Lvb7syScNLHyjdq10WrclN+XoXzJyHamMU47fjp9NmRLoIvjSXer6W+1ZumZjkVJ9SHqAw0g6C1f8vPMRe4xKO3JSiXwrwI9uk8n9Dn8HQoZRVmUGbnprc88au4BEplj9gUVqvRPHdN6F2KrN4dcIhkpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358368; c=relaxed/simple;
-	bh=Biz3RVy3Xbyrhig+WrEGEPfT/rzveQq3SHBvlkN0uZc=;
+	s=arc-20240116; t=1722358370; c=relaxed/simple;
+	bh=lqeyQi4DA7Lb9j75hvuSDSKSM94nCWvNA57peRDZvIk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qOby2IEJwAZZkYVMOnRENVCuMq9AANgghdUTb7GhWdiPBC8QrIgQbqwxXi4BjXlTtwQ5PU6eVWW1FVTsxYDLMuwpexnGSpbkEETR0y6GQvKDzXcFDK6NiKNtZA9Xe6dkgz905zx1Yo/98JhBSPmyWhXDYgDHWMxBgnSZI/ZyVe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5Ask+61; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ribAhs1LdGWPQbyCRIqfS/dcP3Mps4Wo5XFTsOMIH4PDyBQ8/gCV/HTS6wcrN8kph5tAr9yPkFUip7jvbuDLE7kmAGeaovRhKoktHkPRze9rHyz/qNG98BVvBaKoI5mNxYUP/GY0Fh3LtTVCne41qYNce5EqLo5zucgtz5gvQWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=keKCLADk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5Ask+61"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5931BC32782;
-	Tue, 30 Jul 2024 16:52:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="keKCLADk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B87C4AF0E;
+	Tue, 30 Jul 2024 16:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358367;
-	bh=Biz3RVy3Xbyrhig+WrEGEPfT/rzveQq3SHBvlkN0uZc=;
+	s=korg; t=1722358370;
+	bh=lqeyQi4DA7Lb9j75hvuSDSKSM94nCWvNA57peRDZvIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5Ask+61B8HBmsMoc2CU39+vogLo95EdUCIBcY1syYDZtQSGbDyO5R9FKzJw7z6aY
-	 RXtnlHd2XJveeHUdbJrusPMia+d0KNVEJ+veXxSLskgsjTizIl9iZRA1hgBLB8fIII
-	 BAZzri9f0NqiFcK+xHJDdeCfRpqG7FAZKb6MzWrs=
+	b=keKCLADkDqOTyTEGB5rg1bODramCc0dE+PVa6PT6YRhZFiCJUANrosnok4mE0g25q
+	 VSnvipkpw5WligCAngI2mHwHx05cb/bGVhfgZlBnVtImqI70swvBUD80VXinIsnjbt
+	 5rrfYEvT/J+7v2lYUlQConOP3tVfTJXyu17y2yiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hilda Wu <hildawu@realtek.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Erpeng Xu <xuerpeng@uniontech.com>
-Subject: [PATCH 6.1 384/440] Bluetooth: btusb: Add RTL8852BE device 0489:e125 to device tables
-Date: Tue, 30 Jul 2024 17:50:17 +0200
-Message-ID: <20240730151630.805976430@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 353/809] drm/panic: Do not select DRM_KMS_HELPER
+Date: Tue, 30 Jul 2024 17:43:49 +0200
+Message-ID: <20240730151738.579129208@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hilda Wu <hildawu@realtek.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 295ef07a9dae6182ad4b689aa8c6a7dbba21474c upstream.
+[ Upstream commit e044e707fc97dac693691178cdf41fe1a8da928f ]
 
-Add the support ID 0489:e125 to usb_device_id table for
-Realtek RTL8852B chip.
+DRM core code cannot call into DRM helper code, as this would lead to
+circular references in the modular case.  Hence drop the selection of
+DRM_KMS_HELPER.  It was unused anyway, as v10 switched from using
+the DRM format helpers to its own color format conversion, cfr. commit
+9544309775c3 ("drm/panic: Add support for color format conversion").
 
-The device info from /sys/kernel/debug/usb/devices as below.
+Remove the unneeded include of <drm/drm_format_helper.h>.
 
-T:  Bus=01 Lev=01 Prnt=01 Port=07 Cnt=03 Dev#=  5 Spd=12   MxCh= 0
-D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=0489 ProdID=e125 Rev= 0.00
-S:  Manufacturer=Realtek
-S:  Product=Bluetooth Radio
-S:  SerialNumber=00e04c000001
-C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
-I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
-I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
-I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
-I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
-I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
-E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
-
-Signed-off-by: Hilda Wu <hildawu@realtek.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bf9fb17c6672 ("drm/panic: Add a drm panic handler")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Signed-off-by: Jocelyn Falempe <jfalempe@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/60155f8c939ed286e324a7c12a1daa69fe49fcf6.1719391132.git.geert+renesas@glider.be
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/Kconfig     | 1 -
+ drivers/gpu/drm/drm_panic.c | 1 -
+ 2 files changed, 2 deletions(-)
 
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -545,6 +545,8 @@ static const struct usb_device_id blackl
- 						     BTUSB_WIDEBAND_SPEECH },
- 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
- 						     BTUSB_WIDEBAND_SPEECH },
-+	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
-+						     BTUSB_WIDEBAND_SPEECH },
+diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
+index 3e286236aa430..359b68adafc1b 100644
+--- a/drivers/gpu/drm/Kconfig
++++ b/drivers/gpu/drm/Kconfig
+@@ -107,7 +107,6 @@ config DRM_KMS_HELPER
+ config DRM_PANIC
+ 	bool "Display a user-friendly message when a kernel panic occurs"
+ 	depends on DRM && !(FRAMEBUFFER_CONSOLE && VT_CONSOLE)
+-	select DRM_KMS_HELPER
+ 	select FONT_SUPPORT
+ 	help
+ 	  Enable a drm panic handler, which will display a user-friendly message
+diff --git a/drivers/gpu/drm/drm_panic.c b/drivers/gpu/drm/drm_panic.c
+index e1c4796685692..831b214975a51 100644
+--- a/drivers/gpu/drm/drm_panic.c
++++ b/drivers/gpu/drm/drm_panic.c
+@@ -15,7 +15,6 @@
+ #include <linux/types.h>
  
- 	/* Realtek Bluetooth devices */
- 	{ USB_VENDOR_AND_INTERFACE_INFO(0x0bda, 0xe0, 0x01, 0x01),
+ #include <drm/drm_drv.h>
+-#include <drm/drm_format_helper.h>
+ #include <drm/drm_fourcc.h>
+ #include <drm/drm_framebuffer.h>
+ #include <drm/drm_modeset_helper_vtables.h>
+-- 
+2.43.0
+
 
 
