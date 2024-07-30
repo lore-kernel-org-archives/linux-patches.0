@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57AD1A6160;
-	Tue, 30 Jul 2024 16:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6C11A6161;
+	Tue, 30 Jul 2024 16:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356858; cv=none; b=EeFfAcRhYX9d1cdTSFoRNCx1/OxUyd3euEOOHviNnwKvCF5alwysq6ZM3ZEMP4geqv3N2DBdSH7La9uKkNZrg9CeUVkoOHfmfLZ1dSDxvVQ0AjR8FD4SNTyFeyW3gdDi0sFPg0OSQNLfbKgvnWQ2pRIPXikycXhcnrT3MUkp49c=
+	t=1722356861; cv=none; b=XAoMSQGGZNbFmpG8pITVg+qYPjKttcYyHTLkEnxAdmh4QhO1GcvKxGPkGk3DEyk25XNTOyQzDK0ME9Jv+uGzjZ7Wl+XAyC3mI21boBu1VTRNII/ZYwOCTDuFYAh9vwDN9O+uCsUZtDYqfGO4jQFCQOq+mXWkop35lQ2qgHyobVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356858; c=relaxed/simple;
-	bh=qWzAWSkJzlKaow2r5RDnKa6F5l8UZibAgXTYFSJQPOQ=;
+	s=arc-20240116; t=1722356861; c=relaxed/simple;
+	bh=rx7NrnmemLcpkzISaW7tYNcWq7z0lQg5Lx2t2PQMhpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=krZfJ2IJRabw9G4OWiJHeD6NWd6jaCiM7lkl0uJP9AQXa7yJ1tV6f6khBbRRB69RyruG26N5g6uOcCufFO7ZQiD275OcUhxi6zSovVuvydpQPluyfAKJJWkS4sZBcMbxaml+b/T5Kn6kV1hJnd1Wo8dZDwcxvHsks0HMb9Lj16Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wk5VvDaP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=vDS4KZi4mnYrtU+FlX9znn1iMWXq3Ekka84ojxx6JrNOUKr1XyL5nd8E46TuB5VmTU6mlcPBW074pax91/CTuwbP/FyRxufPXX1sDJd4LRk6ZhPEJLkEKYRacgcUNXNg/KkGeFrmlDZ6mkBMJ8SY3tvBBjnDbXt8NYjcN9BpwN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0iC5wG1i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wk5VvDaP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 387F3C32782;
-	Tue, 30 Jul 2024 16:27:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0iC5wG1i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9D3C4AF0A;
+	Tue, 30 Jul 2024 16:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356858;
-	bh=qWzAWSkJzlKaow2r5RDnKa6F5l8UZibAgXTYFSJQPOQ=;
+	s=korg; t=1722356861;
+	bh=rx7NrnmemLcpkzISaW7tYNcWq7z0lQg5Lx2t2PQMhpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wk5VvDaPw/CndJ2tKZIn7K7471NwiRAHkPvGOXdqAtag6phyJk58+DgSjI1mJP8ij
-	 T1yrcKtiNzXT/vQJg6Ho/jcnLWbx0txgxeMpcT6lkh2alDOHBRp0lq1j4M+R8mMI1F
-	 Q3/8DPAOpcBZA0aMYeFamCBHuhg24uRarNqa/Vi8=
+	b=0iC5wG1ipkJMoEmj7IfRSjvxk0duIcGneMWtdOzWIg4bnJ7My6K5BpMwpuVRC7wYW
+	 GgcNqiJSaZw4M+fPvyARA/QRIthC/jDTMdIfqgmqG1AnGMIq4WarLJdJSbSEImkB5j
+	 o8yb07NUzexnHAj4/V8ZYGGvOQt5/Rz3/W06KvGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Ilan Peer <ilan.peer@intel.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 191/568] media: imon: Fix race getting ictx->lock
-Date: Tue, 30 Jul 2024 17:44:58 +0200
-Message-ID: <20240730151647.344732166@linuxfoundation.org>
+Subject: [PATCH 6.10 194/809] wifi: nl80211: expose can-monitor channel property
+Date: Tue, 30 Jul 2024 17:41:10 +0200
+Message-ID: <20240730151732.271155900@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,53 +48,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
+[ Upstream commit f3269b7912f75b6e34926334377ede45656a8950 ]
 
-Lets fix a race between mutex_is_lock() and mutex_lock().
+It may be possible to monitor on disabled channels per the
+can-monitor flag, but evidently I forgot to expose that out
+to userspace. Fix that.
 
-<-mutex is not locked
-if (!mutex_is_locked(&ictx->lock)) {
-	unlock = true; <- mutex is locked externaly
-	mutex_lock(&ictx->lock);
-}
-
-Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
-atomically.
-
-Fix the following cocci warning:
-drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
-
-Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: a110a3b79177 ("wifi: cfg80211: optionally support monitor on disabled channels")
+Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
+Reviewed-by: Ilan Peer <ilan.peer@intel.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://msgid.link/20240523120945.9a2c19a51e53.I50fa1b1a18b70f63a5095131ac23dc2e71f3d426@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ net/wireless/nl80211.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 5719dda6e0f0e..e5590a708f1c5 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -1148,10 +1148,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
+diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
+index 72c7bf5585816..0fd075238fc74 100644
+--- a/net/wireless/nl80211.c
++++ b/net/wireless/nl80211.c
+@@ -1208,6 +1208,9 @@ static int nl80211_msg_put_channel(struct sk_buff *msg, struct wiphy *wiphy,
+ 		if ((chan->flags & IEEE80211_CHAN_NO_6GHZ_AFC_CLIENT) &&
+ 		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_NO_6GHZ_AFC_CLIENT))
+ 			goto nla_put_failure;
++		if ((chan->flags & IEEE80211_CHAN_CAN_MONITOR) &&
++		    nla_put_flag(msg, NL80211_FREQUENCY_ATTR_CAN_MONITOR))
++			goto nla_put_failure;
+ 	}
  
- 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
- 
--	if (!mutex_is_locked(&ictx->lock)) {
--		unlock = true;
--		mutex_lock(&ictx->lock);
--	}
-+	unlock = mutex_trylock(&ictx->lock);
- 
- 	retval = send_packet(ictx);
- 	if (retval)
+ 	if (nla_put_u32(msg, NL80211_FREQUENCY_ATTR_MAX_TX_POWER,
 -- 
 2.43.0
 
