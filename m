@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BD91A38CF;
-	Tue, 30 Jul 2024 16:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CBF1BBBFA;
+	Tue, 30 Jul 2024 16:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355206; cv=none; b=Z+0JN5aJED6LOt4fABT2w7DLSYIkYABdCvfHOSZ3Ldg0iKtoSkae03SH3UjCnCJc/sx1LTFxcGu3eJuH8plVBjn/EHCXGN8E/c4uM+muVgurS9LW30dADZpK3IxHK5eFeTBhl8aZbbn6AWyIfNQIVp6cJEWfQv4c28LKyjBb7ZQ=
+	t=1722355209; cv=none; b=CdgugPeTInAgfRIDn3nWJpn5AGie1l0ZPf517XqcMBSrAqQyWoJmicNAnzv2c64r1ShFm+Fd6QDs+8gh9uW1PY/XN9LoqeqtqKNgWmnNhNgET2u9G5rx0N2kM59FIJVZB5+J1ZA0h6ljpopwXLGC447kUt8C/22RbfmWF8+ypCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355206; c=relaxed/simple;
-	bh=3OXJbIy8+WRGibA1YqmaRbsCWUabRLof9cwCMbkXvRs=;
+	s=arc-20240116; t=1722355209; c=relaxed/simple;
+	bh=ZHhqdF+50qKW8WdOHSCBTShF5ePVPmtdjR8V2sDY8zE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ThZy/qG2DqW810CzVme8tpTIhxZDKEIzag6MJkBWMnkBLsL+NMVn7oTxDc9/cMUJG1pdyFTH1ignOuECzA2UZQBEEagi5z15inQxGVCw9re4mBgWC9wXMfknBf81qRwbZsKgzwSxUfuMxMGMvCPb4dRA3uP+KJGMfRjSg0A9ebA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MEVbktQ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZG5ZhisZo9HKw0Nxm70FPaEnZQsg9rxfjFptar/m96daYylA24MWIVNVrsZlDI6nfhLRiLwdcEQ7L0ShzISEGOp9ga1mFsyKWj7FbAUs8Yfhg2/Zs4OnG39kJ1kReD34KbAh/Ylb0CRHhcar505VPaojBXSPEVemNy1NB2MQ2kI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQ6ljGwx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MEVbktQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4E36C32782;
-	Tue, 30 Jul 2024 16:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQ6ljGwx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63494C32782;
+	Tue, 30 Jul 2024 16:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355205;
-	bh=3OXJbIy8+WRGibA1YqmaRbsCWUabRLof9cwCMbkXvRs=;
+	s=korg; t=1722355208;
+	bh=ZHhqdF+50qKW8WdOHSCBTShF5ePVPmtdjR8V2sDY8zE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MEVbktQ6ik+9RhOf0npV0uaUfuE0JWn+Ll5n2qNZaTbLaRs0USYZE5VF47jfzvT6q
-	 DZCLkgjoxrkOtDGtl2AMuzTdEWtORzjzATiEFFhkcTNGA7hW2JnyoYQtUdRYkVWaeK
-	 52zwHBYlxVZTsx/+JtKyUitJpG6mqT7wXFfDbcxU=
+	b=tQ6ljGwxARiGK3pkTJtRnfL+kMERjHUrftz4nDejPaILK1KC+XXfcK6Ghs3K8QBMN
+	 YtcvoHZa9FGrnq+a0M4sqv8M44VoRgQbvMko1uRrSPGo52k/VWNd7mHeJopM/u+1q4
+	 GKQzUGPKkENijX1z3Hym9gesuWQmbHUTJVa+wpVQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Kusiak <mateusz.kusiak@linux.intel.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 029/809] md: Dont wait for MD_RECOVERY_NEEDED for HOT_REMOVE_DISK ioctl
-Date: Tue, 30 Jul 2024 17:38:25 +0200
-Message-ID: <20240730151725.807475597@linuxfoundation.org>
+Subject: [PATCH 6.6 037/568] arm64: dts: qcom: sm8450: add power-domain to UFS PHY
+Date: Tue, 30 Jul 2024 17:42:24 +0200
+Message-ID: <20240730151641.289295788@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,59 +48,40 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit a1fd37f97808db4fa1bf55da0275790c42521e45 ]
+[ Upstream commit 27d3f57cf5a71484ea38770d4bfd10f6ef035cf4 ]
 
-Commit 90f5f7ad4f38 ("md: Wait for md_check_recovery before attempting
-device removal.") explained in the commit message that failed device
-must be reomoved from the personality first by md_check_recovery(),
-before it can be removed from the array. That's the reason the commit
-add the code to wait for MD_RECOVERY_NEEDED.
+The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
+corresponding power-domain the the PHY node.
 
-However, this is not the case now, because remove_and_add_spares() is
-called directly from hot_remove_disk() from ioctl path, hence failed
-device(marked faulty) can be removed from the personality by ioctl.
-
-On the other hand, the commit introduced a performance problem that
-if MD_RECOVERY_NEEDED is set and the array is not running, ioctl will
-wait for 5s before it can return failure to user.
-
-Since the waiting is not needed now, fix the problem by removing the
-waiting.
-
-Fixes: 90f5f7ad4f38 ("md: Wait for md_check_recovery before attempting device removal.")
-Reported-by: Mateusz Kusiak <mateusz.kusiak@linux.intel.com>
-Closes: https://lore.kernel.org/all/814ff6ee-47a2-4ba0-963e-cf256ee4ecfa@linux.intel.com/
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240627112321.3044744-1-yukuai1@huaweicloud.com
+Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-11-f1fd15c33fb3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 6 ------
- 1 file changed, 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 3a02b8903d626..9c5be016e5073 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -7746,12 +7746,6 @@ static int md_ioctl(struct block_device *bdev, blk_mode_t mode,
- 		return get_bitmap_file(mddev, argp);
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index 0229bd706a2e9..a34f460240a07 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -4200,6 +4200,8 @@ ufs_mem_phy: phy@1d87000 {
+ 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>,
+ 				 <&gcc GCC_UFS_0_CLKREF_EN>;
  
--	if (cmd == HOT_REMOVE_DISK)
--		/* need to ensure recovery thread has run */
--		wait_event_interruptible_timeout(mddev->sb_wait,
--						 !test_bit(MD_RECOVERY_NEEDED,
--							   &mddev->recovery),
--						 msecs_to_jiffies(5000));
- 	if (cmd == STOP_ARRAY || cmd == STOP_ARRAY_RO) {
- 		/* Need to flush page cache, and ensure no-one else opens
- 		 * and writes
++			power-domains = <&gcc UFS_PHY_GDSC>;
++
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
+ 			status = "disabled";
 -- 
 2.43.0
 
