@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E5E1BA872;
-	Tue, 30 Jul 2024 15:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15141BA86D;
+	Tue, 30 Jul 2024 15:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354937; cv=none; b=TtV4nJUBjyBsW68OT27aw7KOF2nRzn+isYbSt6HkKh8Bh9JoTDNPZEdo6yc4l4PT5u5E2ImffDBRRCSctNMNTAToC2RZKymOeX4p4m3+kn3T+cTaHe9jbWzjF2vRTqHVnL8fWiSQeClXf9L9gPwGP51K6HSc2HhtJb8xdNElwos=
+	t=1722354940; cv=none; b=jUV6gOH65biYIr4nIx1uF3sezZVoouJmaiwMP1ETBGNHpwS0YJhccUN5ckSurV6xJVOFQ5SrVqNZZTtcCpQ1lZQcP5I7vDwuLWV9iBhwPB30Ezv5alVTLvH3FZJlMPNy/LFJGiQzghBNyTJ4exiiMwME49fprHIMsNDRJeTuVmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354937; c=relaxed/simple;
-	bh=CWxg65K4eu+nyeTuO71zadU6xED+xoCdHtU7PYdz5B4=;
+	s=arc-20240116; t=1722354940; c=relaxed/simple;
+	bh=V8m5bpAmMwJRLyZx30X0BF1n/RBgbCvwg+lXWxD6mlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UT1aJhdPyylw3+/xLwKzgxgJJjy1LlSZ9LIW1Y6gx8jFKhygvtuvoHv6WCZ+aLrtk/ZwRU2MmiNSwIZ/cGwMr8Mp9HUHx7tS0MhVHWfnWkAm3FSQpfxcLJjYuN67Xf4X4gcwVCSKHKJC/6mo8HjX7mkcHueXFNBfueqftxoHb94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2WqwsW4a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cysx+JVz89p2ylO94b0uwUc3H45BfctacXPgZ9jU0CIa86K1T828Zfy59SWIB5lytx3NNMp8i9mMDVMnbFreC4xB/drQoJl5LRgJ4ASXEuD4AmbEDtwf8ji1Jr3aeV1v+OElOnWfCUsvKFnx1SMcuhqFCZtUuSmHZP9XmVI2+xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v7JsQ3Oi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2WqwsW4a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209B4C4AF0A;
-	Tue, 30 Jul 2024 15:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v7JsQ3Oi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCD7C32782;
+	Tue, 30 Jul 2024 15:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354937;
-	bh=CWxg65K4eu+nyeTuO71zadU6xED+xoCdHtU7PYdz5B4=;
+	s=korg; t=1722354940;
+	bh=V8m5bpAmMwJRLyZx30X0BF1n/RBgbCvwg+lXWxD6mlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2WqwsW4a/XI/SYWBfWeGcdZjzyg3zHk+zztTbYa3WkDq9LfROGtjMcGAcsoUA0UW7
-	 dKesFuzWua/dWkH2UWz1XGGjk2qEduZktGfTVLMt7ERks+1F/ZVkTAV5C5HvRJeu2A
-	 0R6yePtL/U0JlFWgf0TSn3CaMQKYeMArcrZdjp2c=
+	b=v7JsQ3OiNE4yUIqDTAJKit+e8SQLyajV+S19dtBHzIuwx3Ee+Fqvz3wEpGzIqLrc8
+	 319ljXcZZg/44P2EB1KaVp0bIzMzYZETyMgE/9wUGjQMQ73EkRwtr++GBNj1ihruD2
+	 e7tqUGh/uSpmqbIdtR0szox9HXS40n1N4JmrPSSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/440] arm64: dts: rockchip: Add sdmmc related properties on rk3308-rock-pi-s
-Date: Tue, 30 Jul 2024 17:44:32 +0200
-Message-ID: <20240730151617.289919881@linuxfoundation.org>
+Subject: [PATCH 6.6 013/568] x86/pci/intel_mid_pci: Fix PCIBIOS_* return code handling
+Date: Tue, 30 Jul 2024 17:42:00 +0200
+Message-ID: <20240730151640.345002514@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,45 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit fc0daeccc384233eadfa9d5ddbd00159653c6bdc ]
+[ Upstream commit 724852059e97c48557151b3aa4af424614819752 ]
 
-Add cap-mmc-highspeed to allow use of high speed MMC mode using an eMMC
-to uSD board. Use disable-wp to signal that no physical write-protect
-line is present. Also add vcc_io used for card and IO line power as
-vmmc-supply.
+intel_mid_pci_irq_enable() uses pci_read_config_byte() that returns
+PCIBIOS_* codes. The error handling, however, assumes the codes are
+normal errnos because it checks for < 0.
 
-Fixes: 2e04c25b1320 ("arm64: dts: rockchip: add ROCK Pi S DTS support")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240521211029.1236094-5-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+intel_mid_pci_irq_enable() also returns the PCIBIOS_* code back to the
+caller but the function is used as the (*pcibios_enable_irq) function
+which should return normal errnos.
+
+Convert the error check to plain non-zero check which works for
+PCIBIOS_* return codes and convert the PCIBIOS_* return code using
+pcibios_err_to_errno() into normal errno before returning it.
+
+Fixes: 5b395e2be6c4 ("x86/platform/intel-mid: Make IRQ allocation a bit more flexible")
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20240527125538.13620-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/x86/pci/intel_mid_pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-index edc8d2e3980d0..b9115c8828c72 100644
---- a/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3308-rock-pi-s.dts
-@@ -211,7 +211,10 @@ &sdio {
- };
+diff --git a/arch/x86/pci/intel_mid_pci.c b/arch/x86/pci/intel_mid_pci.c
+index 8edd622066044..722a33be08a18 100644
+--- a/arch/x86/pci/intel_mid_pci.c
++++ b/arch/x86/pci/intel_mid_pci.c
+@@ -233,9 +233,9 @@ static int intel_mid_pci_irq_enable(struct pci_dev *dev)
+ 		return 0;
  
- &sdmmc {
-+	cap-mmc-highspeed;
- 	cap-sd-highspeed;
-+	disable-wp;
-+	vmmc-supply = <&vcc_io>;
- 	status = "okay";
- };
+ 	ret = pci_read_config_byte(dev, PCI_INTERRUPT_LINE, &gsi);
+-	if (ret < 0) {
++	if (ret) {
+ 		dev_warn(&dev->dev, "Failed to read interrupt line: %d\n", ret);
+-		return ret;
++		return pcibios_err_to_errno(ret);
+ 	}
  
+ 	id = x86_match_cpu(intel_mid_cpu_ids);
 -- 
 2.43.0
 
