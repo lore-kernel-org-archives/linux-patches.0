@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB311FBA;
-	Tue, 30 Jul 2024 17:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE6118B472;
+	Tue, 30 Jul 2024 17:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358902; cv=none; b=F2HlgrvN2ov9EAGqTfDwAtt3KQhu9F17LEF2MccCkCxjiEY/EUJm2x0lVZ6jmHNejp1lmNBKkUSb9QHSn4qEbYcIWsT9z+hvpzULERsV8Tvg7oIOlDpE36BdyG324HwXBPnYmirXwJZfQHh16n+SdmTlLwauu+VoS6aEJ/VIlto=
+	t=1722358905; cv=none; b=p7XJ+KObaBIQPZ45DqHAdYlBOpDlt0uQXZkwiNXJMkJRzbTudA/rLoIfTu4h/NQLw0oBGX2fUO730B9fwXkzWRR1HuwAut6Od3D8W6fBWuY8bWR74QUAqCLGMLcfp3yRJBGytGxxfQZkiCRPPZK7sn4oJ2LKMwjp9AdeNxm/V6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358902; c=relaxed/simple;
-	bh=wv7wAN4E8/e/vLg5mHs2FmXZIkCjklEig1Glt16iWJc=;
+	s=arc-20240116; t=1722358905; c=relaxed/simple;
+	bh=2fgqSfbBOTumCvgbYhDYcqiVUt0DvR7BxBlV93lbb8Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aeX/PpIJS8HlgURH9fD9KAmSq3Dz+Wy1sXYPBcxSYctn91pQuVTa3ooKwKlomwRdkHR8x8PuO0MmZ9L29oLOJ4LxcrEJ9MgY4uLSqw44owE4HfUme9vpvD8qU0tAlHRTX70NzYgEWd2E74jVIi7e5x4MmidExpQHvRJELURjeuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jfvqR+Qf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dY/loVFkNh9qYHiwWTuM7RYb3zq4iuE/KFOxxiZowTPGD3iw6Bl4+6ykBaAHZvyU/ba6plOk6LMMa34e32KtdLWi7qEQz4ewTgnBv9weWCnpbGV68BnODDSjWY9ziIeGi9Ei0vr1RwOw60O3chptFb4ku3SvouYmvpcdoGMzXWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jEHS38PL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jfvqR+Qf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF3E4C32782;
-	Tue, 30 Jul 2024 17:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jEHS38PL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B3BC4AF0C;
+	Tue, 30 Jul 2024 17:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358902;
-	bh=wv7wAN4E8/e/vLg5mHs2FmXZIkCjklEig1Glt16iWJc=;
+	s=korg; t=1722358905;
+	bh=2fgqSfbBOTumCvgbYhDYcqiVUt0DvR7BxBlV93lbb8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jfvqR+Qf2sZkGr73H8g4tEJvV93UTEdXq2G+Ikw1PI+OufVLpKBu0BNXm/OqBj8wP
-	 ryQrpSW0G0tweiwOvuZFC5kccGyN/7TQnJvcNY+K+o4fSyVAH1qNTz9o/ENgiO2oV8
-	 i3j3v+lTbdG/yn+mNf0UDbVdvC+uoiSj/LWoLNWY=
+	b=jEHS38PLvlJExLlWN6n9lFfoPHGUUrw4xe5m3L4tEXuMe4qaV7Q+uhWkOQ4nZXZZ3
+	 RE1v692L6H5OFwpDqk91fIVwjgEg+2VERHH1Y+gruFtilJBZb5I2dPDtodYdo1Z1sg
+	 WVxzrnOk6a2HHPbIVZ3njY8LWAZ7J7wil5o64FOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Pavel Machek <pavel@ucw.cz>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.6 407/568] leds: mt6360: Fix memory leak in mt6360_init_isnk_properties()
-Date: Tue, 30 Jul 2024 17:48:34 +0200
-Message-ID: <20240730151655.776754716@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 432/440] ASoC: Intel: use soc_intel_is_byt_cr() only when IOSF_MBI is reachable
+Date: Tue, 30 Jul 2024 17:51:05 +0200
+Message-ID: <20240730151632.649786026@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,53 +49,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit e41d574b359ccd8d99be65c6f11502efa2b83136 upstream.
+[ Upstream commit 9931f7d5d251882a147cc5811060097df43e79f5 ]
 
-The fwnode_for_each_child_node() loop requires manual intervention to
-decrement the child refcount in case of an early return.
+the Intel kbuild bot reports a link failure when IOSF_MBI is built-in
+but the Merrifield driver is configured as a module. The
+soc-intel-quirks.h is included for Merrifield platforms, but IOSF_MBI
+is not selected for that platform.
 
-Add the missing calls to fwnode_handle_put(child) to avoid memory leaks
-in the error paths.
+ld.lld: error: undefined symbol: iosf_mbi_read
+>>> referenced by atom.c
+>>>               sound/soc/sof/intel/atom.o:(atom_machine_select) in archive vmlinux.a
 
-Cc: stable@vger.kernel.org
-Fixes: 679f8652064b ("leds: Add mt6360 driver")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Acked-by: Pavel Machek <pavel@ucw.cz>
-Link: https://lore.kernel.org/r/20240611-leds-mt6360-memleak-v1-1-93642eb5011e@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch forces the use of the fallback static inline when IOSF_MBI is not reachable.
+
+Fixes: 536cfd2f375d ("ASoC: Intel: use common helpers to detect CPUs")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407160704.zpdhJ8da-lkp@intel.com/
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20240722083002.10800-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/flash/leds-mt6360.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/intel/common/soc-intel-quirks.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/leds/flash/leds-mt6360.c
-+++ b/drivers/leds/flash/leds-mt6360.c
-@@ -633,14 +633,17 @@ static int mt6360_init_isnk_properties(s
+diff --git a/sound/soc/intel/common/soc-intel-quirks.h b/sound/soc/intel/common/soc-intel-quirks.h
+index de4e550c5b34d..42bd51456b945 100644
+--- a/sound/soc/intel/common/soc-intel-quirks.h
++++ b/sound/soc/intel/common/soc-intel-quirks.h
+@@ -11,7 +11,7 @@
  
- 			ret = fwnode_property_read_u32(child, "reg", &reg);
- 			if (ret || reg > MT6360_LED_ISNK3 ||
--			    priv->leds_active & BIT(reg))
-+			    priv->leds_active & BIT(reg)) {
-+				fwnode_handle_put(child);
- 				return -EINVAL;
-+			}
+ #include <linux/platform_data/x86/soc.h>
  
- 			ret = fwnode_property_read_u32(child, "color", &color);
- 			if (ret) {
- 				dev_err(priv->dev,
- 					"led %d, no color specified\n",
- 					led->led_no);
-+				fwnode_handle_put(child);
- 				return ret;
- 			}
+-#if IS_ENABLED(CONFIG_X86)
++#if IS_REACHABLE(CONFIG_IOSF_MBI)
  
+ #include <linux/dmi.h>
+ #include <asm/iosf_mbi.h>
+-- 
+2.43.0
+
 
 
