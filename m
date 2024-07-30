@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09074189913;
-	Tue, 30 Jul 2024 17:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAA18A6DC;
+	Tue, 30 Jul 2024 17:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359198; cv=none; b=fSY75+N0/nn/Lm+feU/M7OzfBi73ZPcIsjXIn34XouHrlS7HdT3UE2skVgGJ7AT/0XYrqNcmoqu4VizB/1FVGPkxyGpgsAXlfolJ60HLApPRAO6i/tkheR1pWnK9lQeobzU17bzNV9kEwjckXs3nrE50GjWDPmwLqbZu5PteVqM=
+	t=1722359200; cv=none; b=Bwe7JxCqJdgYJLqJ1d+U2O3RCyc+oCVpHmMwsOzg3r/1pXKQz8bZBpM44OPaxvptnJzdzH8jhBT1OU55DSSWly7EUDdSaIUr9iUQ58XI9A5Fs21WB/xW9Fo834/uLXiQgYG2YddSe/SLRen0DcH/Y+ejz0ceI82RBjiYNNrnFVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359198; c=relaxed/simple;
-	bh=04UKq/saKLfE9W3b2kql/L9OROHFuhpix/7nfVcuVkI=;
+	s=arc-20240116; t=1722359200; c=relaxed/simple;
+	bh=CVzI89euGw5Bg6BbQZHEHEIdFCVMjPkPNSBRVMib3zc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K1m256BqiDckOBKzsPo4+RjkEtgPsLeNIKz/ul/DY57b4dvfhXpkTq5wbHBBXrC5IUPm0uRPZOtiaMHOQ4tzzky2DwciSjqWnb1/U15E6woIKvAVhjT/4KfgQlzzOWf+BB37TGOqevWi8SFc+jlNrPrZy1IzFMc4j1SpOcjWmWM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j13mdSQO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pIgMlptLtUcTgKKb4bNile0XuCy/tLjU9k96fbMeatVoA0lEZIHjW7vFgZ0sPHXs7DUua5BMp2NutJqbzC7MCChb/BXh5iMAZEbbyzP//cpazW7w5YmCJAAEcz0iLVaogJZ5kF++Jx0dORMTH1LdGbvJ11DysszQLKbZCLCQY/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WmA/hJKY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j13mdSQO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E13FC4AF10;
-	Tue, 30 Jul 2024 17:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WmA/hJKY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49DFFC4AF0A;
+	Tue, 30 Jul 2024 17:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359197;
-	bh=04UKq/saKLfE9W3b2kql/L9OROHFuhpix/7nfVcuVkI=;
+	s=korg; t=1722359200;
+	bh=CVzI89euGw5Bg6BbQZHEHEIdFCVMjPkPNSBRVMib3zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j13mdSQOwSN+ugO7MdZxLpiqS6HaQdgR3wAZL8aXEEYR651uRF/f5D7PIH7QoDLKx
-	 IaBnb91svTpIc3XWiPchRgDLSe5QbIMofBkh7jutH90Zwv7rns+JC2rZWNMydjWplD
-	 sedLKqUXkf/zQG8/RffkmqP5sZqbiUdPVFAgILHI=
+	b=WmA/hJKYELv2u4xEuvXS0hzByHgAKQWDgtDKAtL5btG1IwFa3Uen4oPwmHNX/LxQb
+	 87d3seYnfWmjzU7J/EkdhhnRD9ECeoDo/vRWK6Lsnleuyk0PP+QSP1HIrnH9LZvjod
+	 MR7/ov0oo95XZb9LLUCYbGsq7IXNdXH1Re1kxMkw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: [PATCH 6.6 446/568] kbuild: Fix -S -c in x86 stack protector scripts
-Date: Tue, 30 Jul 2024 17:49:13 +0200
-Message-ID: <20240730151657.305281956@linuxfoundation.org>
+	Abel Vesa <abel.vesa@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 450/809] clk: qcom: gcc-x1e80100: Set parent rate for USB3 sec and tert PHY pipe clks
+Date: Tue, 30 Jul 2024 17:45:26 +0200
+Message-ID: <20240730151742.480912901@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,62 +48,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit 3415b10a03945b0da4a635e146750dfe5ce0f448 upstream.
+[ Upstream commit 14539c88972bd984f1f04c9e601c1a2835d3e5d2 ]
 
-After a recent change in clang to stop consuming all instances of '-S'
-and '-c' [1], the stack protector scripts break due to the kernel's use
-of -Werror=unused-command-line-argument to catch cases where flags are
-not being properly consumed by the compiler driver:
+Allow the USB3 second and third GCC PHY pipe clocks to propagate the
+rate to the pipe clocks provided by the QMP combo PHYs. The first
+instance is already doing that.
 
-  $ echo | clang -o - -x c - -S -c -Werror=unused-command-line-argument
-  clang: error: argument unused during compilation: '-c' [-Werror,-Wunused-command-line-argument]
-
-This results in CONFIG_STACKPROTECTOR getting disabled because
-CONFIG_CC_HAS_SANE_STACKPROTECTOR is no longer set.
-
-'-c' and '-S' both instruct the compiler to stop at different stages of
-the pipeline ('-S' after compiling, '-c' after assembling), so having
-them present together in the same command makes little sense. In this
-case, the test wants to stop before assembling because it is looking at
-the textual assembly output of the compiler for either '%fs' or '%gs',
-so remove '-c' from the list of arguments to resolve the error.
-
-All versions of GCC continue to work after this change, along with
-versions of clang that do or do not contain the change mentioned above.
-
-Cc: stable@vger.kernel.org
-Fixes: 4f7fd4d7a791 ("[PATCH] Add the -fstack-protector option to the CFLAGS")
-Fixes: 60a5317ff0f4 ("x86: implement x86_32 stack protector")
-Link: https://github.com/llvm/llvm-project/commit/6461e537815f7fa68cef06842505353cf5600e9c [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 161b7c401f4b ("clk: qcom: Add Global Clock controller (GCC) driver for X1E80100")
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240530-x1e80100-clk-gcc-usb3-sec-tert-set-parent-rate-v1-1-7b2b04cad545@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- scripts/gcc-x86_32-has-stack-protector.sh |    2 +-
- scripts/gcc-x86_64-has-stack-protector.sh |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/gcc-x1e80100.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/scripts/gcc-x86_32-has-stack-protector.sh
-+++ b/scripts/gcc-x86_32-has-stack-protector.sh
-@@ -5,4 +5,4 @@
- # -mstack-protector-guard-reg, added by
- # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81708
- 
--echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m32 -O0 -fstack-protector -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
-+echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m32 -O0 -fstack-protector -mstack-protector-guard-reg=fs -mstack-protector-guard-symbol=__stack_chk_guard - -o - 2> /dev/null | grep -q "%fs"
---- a/scripts/gcc-x86_64-has-stack-protector.sh
-+++ b/scripts/gcc-x86_64-has-stack-protector.sh
-@@ -1,4 +1,4 @@
- #!/bin/sh
- # SPDX-License-Identifier: GPL-2.0
- 
--echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -c -m64 -O0 -mcmodel=kernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%gs"
-+echo "int foo(void) { char X[200]; return 3; }" | $* -S -x c -m64 -O0 -mcmodel=kernel -fno-PIE -fstack-protector - -o - 2> /dev/null | grep -q "%gs"
+diff --git a/drivers/clk/qcom/gcc-x1e80100.c b/drivers/clk/qcom/gcc-x1e80100.c
+index 7b6c1eb6a61d4..a263f0c412f5a 100644
+--- a/drivers/clk/qcom/gcc-x1e80100.c
++++ b/drivers/clk/qcom/gcc-x1e80100.c
+@@ -5269,6 +5269,7 @@ static struct clk_branch gcc_usb3_sec_phy_pipe_clk = {
+ 				&gcc_usb3_sec_phy_pipe_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -5339,6 +5340,7 @@ static struct clk_branch gcc_usb3_tert_phy_pipe_clk = {
+ 				&gcc_usb3_tert_phy_pipe_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
++			.flags = CLK_SET_RATE_PARENT,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+-- 
+2.43.0
+
 
 
