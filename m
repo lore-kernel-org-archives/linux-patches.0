@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92C631A6161;
-	Tue, 30 Jul 2024 16:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE8DF1A6161;
+	Tue, 30 Jul 2024 16:30:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357030; cv=none; b=OcfFVAsVwzHanKggRBruls410Al/MW7cGJn9vOEDmJb/3midD6gfZ6x4orP4yDn1craO+rtcBtvYWRlRivGRjHwvuMz+YwuxiPTKfNMs+qOwFlAwHHlLhYUmoxcC9FaCFx78EdwyBtlufcu+vT0iQI1iQCP7p/OhHHrYOxBYsV8=
+	t=1722357034; cv=none; b=Ol9PeRWraExoVZ6T6bvY5wIwr/zbhC0XGkXC9wkJUbqS3Y2/W1SgBisowd448tq0QbiSSnt0kfQKXHAZT49djDm0I77/czc5N+zy0TXNjqJ+cEfiQKKErXBA4Yf2RE1t/5uQitfepjMQrxkpyrHCu16r9mbLz5wolFpJVYsg6Js=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357030; c=relaxed/simple;
-	bh=H25K7Q5HR4YduEhBm6l/AWjVhQqlVA7agysHq4nz1Zk=;
+	s=arc-20240116; t=1722357034; c=relaxed/simple;
+	bh=H/EUxOJ2GRzx8bFzlZohBmCV6Q7TmrACmQTpP661G1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dM4ibTYRJw6tNg5+e4oKOsnHV+s7zv12qgsR3qc5G1boOa7WYpmIK9+eou4BJy+7DbwQ8acA9OOayOkSnJ4sHec9HlhRww9Z04FSZXgfkLiT8Uo61czZgCaf72pDQ4BEhjlIBDyBTFt61yKnK7P3gwHBDnqRpRYn1cIO6j7apo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ue72Rnhj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PoLHRiVZHW5dBlUfr1QEqXOB2SdHN2CK6DJVsH0ovCuuFJaUafNH+ljELSlkxJUPY2XzXJlpR3G1gQZB807Sg4GPPI9yL0dJB5gdT/LX112cEq0/jR0SyE33ICSyajfWK31Oi6Y7HVe81WgJ2TJANi/tuzILFSBAfv/vFhYaUeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RI91htMg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ue72Rnhj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A4A0C32782;
-	Tue, 30 Jul 2024 16:30:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RI91htMg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E00C32782;
+	Tue, 30 Jul 2024 16:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357030;
-	bh=H25K7Q5HR4YduEhBm6l/AWjVhQqlVA7agysHq4nz1Zk=;
+	s=korg; t=1722357033;
+	bh=H/EUxOJ2GRzx8bFzlZohBmCV6Q7TmrACmQTpP661G1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ue72Rnhjvty19e/s+roZzf9bsjeKKyycjd2A0QdnLFKoRxLn2F6L1eTjYtKJvy1HD
-	 hIoDrZ46mQor4ja9CB3FVM4D9+5iyNb9sYH0IFZ3x+oYmCngXKnbJN68LsOKDnI+Ae
-	 KqUeM0SEh2stUoumPSG7X2a1geYU21NJm89r3u8A=
+	b=RI91htMglJB2BdHm4S8Qd0ge61DdP0mM8soAceAo7aTzBFd84OG9X/HFjdZL63LBA
+	 ZHKmTHYf2sjjD1dwqCqUwUwhP2Uc+TEpnmqGwuVRqaTnsYncBmMhaxu+mh1yQWxELh
+	 IJtJKEUpUfRoQhSMbftLoNKa65AbKDkKVVNoesMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/568] media: renesas: vsp1: Fix _irqsave and _irq mix
-Date: Tue, 30 Jul 2024 17:45:18 +0200
-Message-ID: <20240730151648.121137947@linuxfoundation.org>
+Subject: [PATCH 6.1 252/440] pinctrl: renesas: r8a779g0: Fix CANFD5 suffix
+Date: Tue, 30 Jul 2024 17:48:05 +0200
+Message-ID: <20240730151625.691272562@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,119 +46,99 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
+[ Upstream commit 77fa9007ac31e80674beadc452d3f3614f283e18 ]
 
-The histogram support mixes _irqsave and _irq, causing the following
-smatch warning:
+CAN-FD instance 5 has two alternate pin groups: "canfd5" and "canfd5_b".
+Rename the former to "canfd5_a" to increase uniformity.
 
-     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
-     warn: mixing irqsave and irq
+While at it, remove the unneeded separator.
 
-The histo_stop_streaming() calls spin_lock_irqsave() followed by
-wait_event_lock_irq(). The former hints that interrupts may be disabled
-by the caller, while the latter reenables interrupts unconditionally.
-This doesn't cause any real bug, as the function is always called with
-interrupts enabled, but the pattern is still incorrect.
-
-Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
-in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
-spin_lock() as appropriate elsewhere.
-
-Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Fixes: ad9bb2fec66262b0 ("pinctrl: renesas: Initial R8A779G0 (R-Car V4H) PFC support")
+Fixes: 050442ae4c74f830 ("pinctrl: renesas: r8a779g0: Add pins, groups and functions")
+Fixes: c2b4b2cd632d17e7 ("pinctrl: renesas: r8a779g0: Add missing CANFD5_B")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/10b22d54086ed11cdfeb0004583029ccf249bdb9.1717754960.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/platform/renesas/vsp1/vsp1_histo.c  | 20 ++++++++-----------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/pinctrl/renesas/pfc-r8a779g0.c | 24 +++++++++++-------------
+ 1 file changed, 11 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/media/platform/renesas/vsp1/vsp1_histo.c b/drivers/media/platform/renesas/vsp1/vsp1_histo.c
-index f22449dd654cb..c0f1002f4ecf1 100644
---- a/drivers/media/platform/renesas/vsp1/vsp1_histo.c
-+++ b/drivers/media/platform/renesas/vsp1/vsp1_histo.c
-@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
- vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- {
- 	struct vsp1_histogram_buffer *buf = NULL;
--	unsigned long flags;
+diff --git a/drivers/pinctrl/renesas/pfc-r8a779g0.c b/drivers/pinctrl/renesas/pfc-r8a779g0.c
+index acf7664ea835b..245212ebbfc9c 100644
+--- a/drivers/pinctrl/renesas/pfc-r8a779g0.c
++++ b/drivers/pinctrl/renesas/pfc-r8a779g0.c
+@@ -335,8 +335,8 @@
+ /* IP0SR2 */		/* 0 */			/* 1 */			/* 2 */			/* 3		4	 5	  6	   7	    8	     9	      A	       B	C	 D	  E	   F */
+ #define IP0SR2_3_0	FM(FXR_TXDA)		FM(CANFD1_TX)		FM(TPU0TO2_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP0SR2_7_4	FM(FXR_TXENA_N)		FM(CANFD1_RX)		FM(TPU0TO3_A)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP0SR2_11_8	FM(RXDA_EXTFXR)		FM(CANFD5_TX)		FM(IRQ5)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+-#define IP0SR2_15_12	FM(CLK_EXTFXR)		FM(CANFD5_RX)		FM(IRQ4_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP0SR2_11_8	FM(RXDA_EXTFXR)		FM(CANFD5_TX_A)		FM(IRQ5)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
++#define IP0SR2_15_12	FM(CLK_EXTFXR)		FM(CANFD5_RX_A)		FM(IRQ4_B)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP0SR2_19_16	FM(RXDB_EXTFXR)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP0SR2_23_20	FM(FXR_TXENB_N)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+ #define IP0SR2_27_24	FM(FXR_TXDB)		F_(0, 0)		F_(0, 0)		F_(0, 0)	F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0) F_(0, 0)
+@@ -890,11 +890,11 @@ static const u16 pinmux_data[] = {
+ 	PINMUX_IPSR_GPSR(IP0SR2_7_4,	TPU0TO3_A),
  
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
+ 	PINMUX_IPSR_GPSR(IP0SR2_11_8,	RXDA_EXTFXR),
+-	PINMUX_IPSR_GPSR(IP0SR2_11_8,	CANFD5_TX),
++	PINMUX_IPSR_GPSR(IP0SR2_11_8,	CANFD5_TX_A),
+ 	PINMUX_IPSR_GPSR(IP0SR2_11_8,	IRQ5),
  
- 	if (list_empty(&histo->irqqueue))
- 		goto done;
-@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- 	histo->readout = true;
+ 	PINMUX_IPSR_GPSR(IP0SR2_15_12,	CLK_EXTFXR),
+-	PINMUX_IPSR_GPSR(IP0SR2_15_12,	CANFD5_RX),
++	PINMUX_IPSR_GPSR(IP0SR2_15_12,	CANFD5_RX_A),
+ 	PINMUX_IPSR_GPSR(IP0SR2_15_12,	IRQ4_B),
  
- done:
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- 	return buf;
- }
+ 	PINMUX_IPSR_GPSR(IP0SR2_19_16,	RXDB_EXTFXR),
+@@ -1507,15 +1507,14 @@ static const unsigned int canfd4_data_mux[] = {
+ };
  
-@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 				    size_t size)
- {
- 	struct vsp1_pipeline *pipe = histo->entity.pipe;
--	unsigned long flags;
+ /* - CANFD5 ----------------------------------------------------------------- */
+-static const unsigned int canfd5_data_pins[] = {
+-	/* CANFD5_TX, CANFD5_RX */
++static const unsigned int canfd5_data_a_pins[] = {
++	/* CANFD5_TX_A, CANFD5_RX_A */
+ 	RCAR_GP_PIN(2, 2), RCAR_GP_PIN(2, 3),
+ };
+-static const unsigned int canfd5_data_mux[] = {
+-	CANFD5_TX_MARK, CANFD5_RX_MARK,
++static const unsigned int canfd5_data_a_mux[] = {
++	CANFD5_TX_A_MARK, CANFD5_RX_A_MARK,
+ };
  
- 	/*
- 	 * The pipeline pointer is guaranteed to be valid as this function is
-@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
- 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
+-/* - CANFD5_B ----------------------------------------------------------------- */
+ static const unsigned int canfd5_data_b_pins[] = {
+ 	/* CANFD5_TX_B, CANFD5_RX_B */
+ 	RCAR_GP_PIN(1, 8), RCAR_GP_PIN(1, 9),
+@@ -2551,8 +2550,8 @@ static const struct sh_pfc_pin_group pinmux_groups[] = {
+ 	SH_PFC_PIN_GROUP(canfd2_data),
+ 	SH_PFC_PIN_GROUP(canfd3_data),
+ 	SH_PFC_PIN_GROUP(canfd4_data),
+-	SH_PFC_PIN_GROUP(canfd5_data),		/* suffix might be updated */
+-	SH_PFC_PIN_GROUP(canfd5_data_b),	/* suffix might be updated */
++	SH_PFC_PIN_GROUP(canfd5_data_a),
++	SH_PFC_PIN_GROUP(canfd5_data_b),
+ 	SH_PFC_PIN_GROUP(canfd6_data),
+ 	SH_PFC_PIN_GROUP(canfd7_data),
+ 	SH_PFC_PIN_GROUP(can_clk),
+@@ -2756,8 +2755,7 @@ static const char * const canfd4_groups[] = {
+ };
  
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
- 	histo->readout = false;
- 	wake_up(&histo->wait_queue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- }
+ static const char * const canfd5_groups[] = {
+-	/* suffix might be updated */
+-	"canfd5_data",
++	"canfd5_data_a",
+ 	"canfd5_data_b",
+ };
  
- /* -----------------------------------------------------------------------------
-@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
- 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
- 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 	list_add_tail(&buf->queue, &histo->irqqueue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
-@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- {
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
- 	struct vsp1_histogram_buffer *buffer;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 
- 	/* Remove all buffers from the IRQ queue. */
- 	list_for_each_entry(buffer, &histo->irqqueue, queue)
-@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- 	/* Wait for the buffer being read out (if any) to complete. */
- 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
- 
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static const struct vb2_ops histo_video_queue_qops = {
 -- 
 2.43.0
 
