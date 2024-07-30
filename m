@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7EF529A2;
-	Tue, 30 Jul 2024 15:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E6529A2;
+	Tue, 30 Jul 2024 15:56:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722354975; cv=none; b=VztgZFRi3alaLAdqWZ52tM8j2QxE5qZjau1AwzlsOyP2pk3CgcPbV8h97mHP+/5HgSDd8VMdiS1FlwRhO9ZZf0ZYT83IVTg+mYXnWM41YlIRP9gHhmxBBrt967r5t7Xg35Oal52BN74gV1wRrbyMNtN4hEm2yFS1dX8KdIUJ+Qo=
+	t=1722354979; cv=none; b=Z1nryA9vyC7Mmbq9L1J/ibd/RTKmwRDD19QNvu7SBpc8hZnjo5kLrt/guqYkf9twjevB+ewdKgilGYsnxmAyIAqZ49WavvElMgCJ4AGYaPgFsxbmcIXv973VQz6PchDvWb3SYa4UHjTBTtvHx+I6FJRq30x6H+05KXO8QTvPDN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722354975; c=relaxed/simple;
-	bh=tsbCJRm1LB6nKE/w85sV7oXNYHXrxtkniFe1agDLGjc=;
+	s=arc-20240116; t=1722354979; c=relaxed/simple;
+	bh=AN44CGrXuZXp0haZSVaFpgrLgEd8TnqLt2yAVVjwKUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osuJXlidAZYDfcsjJ0RvCj5t8xczaUIpCmVUE49pcpHKzREFRkCJXxIndiKLmGe4+Q8RB3oH++wswAwoTxED7ydrTDvdWx+hCBKMpObmJ5r9W1InlgJ3D8PxHT8TtTkEvg1YsEpBUPNL3sNWO5ApPo//bospJ3A5c7G7lEUlESg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sazOayyp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zu5lGBwyZQgTZJEXg+DXrlddY+xkdKbrnXQqdr7qvJhdjIodXCbm6cSqEF6Swc79jdsxfU4MTav4I2+tZuPjofyQLu13yUccUY24Q4T0YNq0/DffwRw6E9bLd2Uyayeyf7Hyks+QsJcr5jhkie8ySfYVHqHu9h9uj2zvSrDsAkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JSuC+Pry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sazOayyp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F403C32782;
-	Tue, 30 Jul 2024 15:56:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JSuC+Pry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92ACCC4AF0C;
+	Tue, 30 Jul 2024 15:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722354975;
-	bh=tsbCJRm1LB6nKE/w85sV7oXNYHXrxtkniFe1agDLGjc=;
+	s=korg; t=1722354979;
+	bh=AN44CGrXuZXp0haZSVaFpgrLgEd8TnqLt2yAVVjwKUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sazOayypbBBc932aa9FtbpL938VaNRvs74A8fZjgd0m6aVs80kgZHq5dDmHjcuzRe
-	 lD49k68JOPB50sLC0k7aujxRdDUR5jqA53AMSyCZs0Sj/Cdch2V7KbWyFbY61eo/iP
-	 eKxt+cXNI4GFIjpDNPmIYEXWIGIJW/1ZMwTC7Gzs=
+	b=JSuC+PryUIiHORbsU3lJDhnMvNzxHwLSFd2TL4FZORyQZEx2NegIm46l2fZwwbg9Q
+	 w+Z9mvx0Ye42kuS9MyO0CQmeYPWiplC5ju9OkVhpi8MaHevPfCmjfwBklcPHPPxvNZ
+	 GBEXDtXRpxJgkoeI07kd6KEYcO+sj79PZnjj/7yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nitin Rawat <quic_nitirawa@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/440] arm64: dts: qcom: msm8996: specify UFS core_clk frequencies
-Date: Tue, 30 Jul 2024 17:44:36 +0200
-Message-ID: <20240730151617.444516298@linuxfoundation.org>
+Subject: [PATCH 6.10 007/809] md/raid1: dont free conf on raid0_run failure
+Date: Tue, 30 Jul 2024 17:38:03 +0200
+Message-ID: <20240730151724.947032010@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,44 +47,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 02f838b7f8cdfb7a96b7f08e7f6716f230bdecba ]
+[ Upstream commit 17f91ac0843b50462a9c9c8f18df962338bd3db2 ]
 
-Follow the example of other platforms and specify core_clk frequencies
-in the frequency table in addition to the core_clk_src frequencies. The
-driver should be setting the leaf frequency instead of some interim
-clock freq.
+The core md code calls the ->free method which already frees conf.
 
-Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Fixes: 57fc67ef0d35 ("arm64: dts: qcom: msm8996: Add ufs related nodes")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240408-msm8996-fix-ufs-v4-1-ee1a28bf8579@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 07f1a6850c5d ("md/raid1: fail run raid1 array when active disk less than one")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240604172607.3185916-3-hch@lst.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/raid1.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 986a5b5c05e48..3b9a4bf897014 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -2016,7 +2016,7 @@ ufshc: ufshc@624000 {
- 				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>;
- 			freq-table-hz =
- 				<100000000 200000000>,
--				<0 0>,
-+				<100000000 200000000>,
- 				<0 0>,
- 				<0 0>,
- 				<0 0>,
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 7b8a71ca66dde..1f321826ef02b 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3204,7 +3204,6 @@ static int raid1_set_limits(struct mddev *mddev)
+ 	return queue_limits_set(mddev->gendisk->queue, &lim);
+ }
+ 
+-static void raid1_free(struct mddev *mddev, void *priv);
+ static int raid1_run(struct mddev *mddev)
+ {
+ 	struct r1conf *conf;
+@@ -3238,7 +3237,7 @@ static int raid1_run(struct mddev *mddev)
+ 	if (!mddev_is_dm(mddev)) {
+ 		ret = raid1_set_limits(mddev);
+ 		if (ret)
+-			goto abort;
++			return ret;
+ 	}
+ 
+ 	mddev->degraded = 0;
+@@ -3252,8 +3251,7 @@ static int raid1_run(struct mddev *mddev)
+ 	 */
+ 	if (conf->raid_disks - mddev->degraded < 1) {
+ 		md_unregister_thread(mddev, &conf->thread);
+-		ret = -EINVAL;
+-		goto abort;
++		return -EINVAL;
+ 	}
+ 
+ 	if (conf->raid_disks - mddev->degraded == 1)
+@@ -3277,14 +3275,8 @@ static int raid1_run(struct mddev *mddev)
+ 	md_set_array_sectors(mddev, raid1_size(mddev, 0, 0));
+ 
+ 	ret = md_integrity_register(mddev);
+-	if (ret) {
++	if (ret)
+ 		md_unregister_thread(mddev, &mddev->thread);
+-		goto abort;
+-	}
+-	return 0;
+-
+-abort:
+-	raid1_free(mddev, conf);
+ 	return ret;
+ }
+ 
 -- 
 2.43.0
 
