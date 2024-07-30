@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E390E1A76A9;
-	Tue, 30 Jul 2024 17:23:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED93C1A76A1;
+	Tue, 30 Jul 2024 17:23:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360212; cv=none; b=o4OJ0+G/SFkzJM3gHt+dPpoKAl/fJFbT03OMJU7jBZnRQU96rof1qAwQcccFn3NQmGgcczZlnUj/vFNpGDRCHe0E8Y+R58iKaQc1wV7VrfWcC1rCNGDEjbgEVwzad0UnVlPq8wL1s/CFyR4wTWdB+k4nc/qt+EzaA7ppD4haSXI=
+	t=1722360215; cv=none; b=L7MJYsz7j0AqrX0cYCm+QGoUm5zTc7q77tMXQ1ti4CkKfz/K+HWd+eVR3hktBNnFAzLFkDHm07jc9nBV0LZf7ZP0ERou/YW0jsDHoU/tHluf9t+B7V/ktCUD9n5ixq8Dr53uzvvHiSYo+IU68/Vy4EaMahSK1mNuf7fOw+HLdpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360212; c=relaxed/simple;
-	bh=lId9ng286TPYdwzZRlP0gx7rF25sV/ObJtCdmsFceHI=;
+	s=arc-20240116; t=1722360215; c=relaxed/simple;
+	bh=EeB+W5DSevJLGwAuh9OLlmC+wS9HPYaxZI9zj5QC+rI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jGT5vXjGW6ztEBIpOQdbJNv2NinN0J598zKHibK0c1XGamyWhMgp1KScts1XNAoTZ5fiUYfa8r8vAkTSN0V0PKXniblQGCWS0KA7GtOudYNp1RqWjevQqk7q9jLWRHPWbDZCVqK1erJeyhVP4eS/aWGKdZB/ta5CII70nKBT6oU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptl9RBQD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QXxQVZBmVa1UJ01ThiiD5VxGxscUGBem2/cbfYcs58HFQxYG+NAEfzeEKDJWUE/pZoOas6bFx3uZJ55l9gMAUlRtl0/lm9Zv1/2hx3C4VpqPm4Q1siOVBiEQfTBPoItXuu7BcDhSmst3gSj8DQD3i50H5/FXqNX/5w1pu7CXf7U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HvkDG4vH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptl9RBQD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31B96C32782;
-	Tue, 30 Jul 2024 17:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HvkDG4vH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6C9C32782;
+	Tue, 30 Jul 2024 17:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360211;
-	bh=lId9ng286TPYdwzZRlP0gx7rF25sV/ObJtCdmsFceHI=;
+	s=korg; t=1722360214;
+	bh=EeB+W5DSevJLGwAuh9OLlmC+wS9HPYaxZI9zj5QC+rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptl9RBQDPiOyQVO6TW86t63CG25x0zsryR/eroY/8GsJZ9tHBVZ0lJtjrHtakJm+S
-	 BU8ewVY96XQGZEJ2YUXGJ077MoXuaoOntLnmVyzb39TY3FvPIIGNxeI+eL+7IHKb30
-	 M43CX3XhmdPSB6W1NHU9qqSiKWfleKUk29EJBOdc=
+	b=HvkDG4vHfJSn08PKsVth2VeD2KcPnPqd8A72z4OEK299aMIq6LOdaNUE5kwpyyfu/
+	 sY7ldDT2fHpO/im9D8I8lEjgK0PkTQkmnp1X8cq1MLO1PW77wmsIoOUAPo98alHEps
+	 0H/XYi4xbMRGBPY3mm5lhoDdHdhWj8vX1cg6sX8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.10 599/809] wifi: mwifiex: Fix interface type change
-Date: Tue, 30 Jul 2024 17:47:55 +0200
-Message-ID: <20240730151748.488522345@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Paolo Pisati <p.pisati@gmail.com>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 6.10 590/809] m68k: amiga: Turn off Warp1260 interrupts during boot
+Date: Tue, 30 Jul 2024 17:47:46 +0200
+Message-ID: <20240730151748.133399136@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,40 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Paolo Pisati <p.pisati@gmail.com>
 
-commit a17b9f590f6ec2b9f1b12b1db3bf1d181de6b272 upstream.
+commit 1d8491d3e726984343dd8c3cdbe2f2b47cfdd928 upstream.
 
-When changing the interface type we also need to update the bss_num, the
-driver private data is searched based on a unique (bss_type, bss_num)
-tuple, therefore every time bss_type changes, bss_num must also change.
+On an Amiga 1200 equipped with a Warp1260 accelerator, an interrupt
+storm coming from the accelerator board causes the machine to crash in
+local_irq_enable() or auto_irq_enable().  Disabling interrupts for the
+Warp1260 in amiga_parse_bootinfo() fixes the problem.
 
-This fixes for example an issue in which, after the mode changed, a
-wireless scan on the changed interface would not finish, leading to
-repeated -EBUSY messages to userspace when other scan requests were
-sent.
-
-Fixes: c606008b7062 ("mwifiex: Properly initialize private structure on interface type changes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240510110458.15475-1-francesco@dolcini.it
+Link: https://lore.kernel.org/r/ZkjwzVwYeQtyAPrL@amaterasu.local
+Cc: stable <stable@kernel.org>
+Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
+Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240601153254.186225-1-p.pisati@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/m68k/amiga/config.c       |    9 +++++++++
+ include/uapi/linux/zorro_ids.h |    3 +++
+ 2 files changed, 12 insertions(+)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -926,6 +926,8 @@ mwifiex_init_new_priv_params(struct mwif
- 		return -EOPNOTSUPP;
- 	}
- 
-+	priv->bss_num = mwifiex_get_unused_bss_num(adapter, priv->bss_type);
+--- a/arch/m68k/amiga/config.c
++++ b/arch/m68k/amiga/config.c
+@@ -180,6 +180,15 @@ int __init amiga_parse_bootinfo(const st
+ 			dev->slotsize = be16_to_cpu(cd->cd_SlotSize);
+ 			dev->boardaddr = be32_to_cpu(cd->cd_BoardAddr);
+ 			dev->boardsize = be32_to_cpu(cd->cd_BoardSize);
 +
- 	spin_lock_irqsave(&adapter->main_proc_lock, flags);
- 	adapter->main_locked = false;
- 	spin_unlock_irqrestore(&adapter->main_proc_lock, flags);
++			/* CS-LAB Warp 1260 workaround */
++			if (be16_to_cpu(dev->rom.er_Manufacturer) == ZORRO_MANUF(ZORRO_PROD_CSLAB_WARP_1260) &&
++			    dev->rom.er_Product == ZORRO_PROD(ZORRO_PROD_CSLAB_WARP_1260)) {
++
++				/* turn off all interrupts */
++				pr_info("Warp 1260 card detected: applying interrupt storm workaround\n");
++				*(uint32_t *)(dev->boardaddr + 0x1000) = 0xfff;
++			}
+ 		} else
+ 			pr_warn("amiga_parse_bootinfo: too many AutoConfig devices\n");
+ #endif /* CONFIG_ZORRO */
+--- a/include/uapi/linux/zorro_ids.h
++++ b/include/uapi/linux/zorro_ids.h
+@@ -449,6 +449,9 @@
+ #define  ZORRO_PROD_VMC_ISDN_BLASTER_Z2				ZORRO_ID(VMC, 0x01, 0)
+ #define  ZORRO_PROD_VMC_HYPERCOM_4				ZORRO_ID(VMC, 0x02, 0)
+ 
++#define ZORRO_MANUF_CSLAB					0x1400
++#define  ZORRO_PROD_CSLAB_WARP_1260				ZORRO_ID(CSLAB, 0x65, 0)
++
+ #define ZORRO_MANUF_INFORMATION					0x157C
+ #define  ZORRO_PROD_INFORMATION_ISDN_ENGINE_I			ZORRO_ID(INFORMATION, 0x64, 0)
+ 
 
 
