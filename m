@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD091A6192;
-	Tue, 30 Jul 2024 17:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D420D1A6192;
+	Tue, 30 Jul 2024 17:06:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359172; cv=none; b=if8SaCkEfYt1LsnkMKLQPl0f9P5Byc8ckXaumHS0qJpd0nq6kfampIqgvYHJHAZAb3hFCtSdQ3tI8EYqquyp2RtmPS3xHx9a5GoqzXXcCT3f/r7uWxTw8riJ8pXiXkznoHWoQwLwQqIgBvloMI5RpTr+mURTTcNFogQIrXA17zo=
+	t=1722359175; cv=none; b=Myp3/2x+jbivA2TkaMcgqfY1TA93nF6dtxIxbSWFZNEoYhAqxH77NIRH5jB6HXNBapJUkJEPEHI1nifE4Cs6WUKb/bElqx7VxsmQfTBiHFRchvCT4/wkM8I6IZ62blviN8xR5eWSZzNjs3mY/M3Kr2ORFRG3DQ7bnAdr1+guuaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359172; c=relaxed/simple;
-	bh=5bhP6myE7wAJbfLDtQfuSRUWkICRFRhXztCD0Q3OOSg=;
+	s=arc-20240116; t=1722359175; c=relaxed/simple;
+	bh=A3VWFM1YvKJsy4FFzjErVQV8e4bF8C/FnryABbcTk6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FPyMEr2niqLcKI508pGx8z4u1uAQHcY8yBqc5e+F9j8IBJ9ItfDgbeu7tkUU6vS8SXe8/0KTTXmYsod3neRnxVoSVrDZQp15/KH83SzmK6DsLYG/jHfT1V8CIV26ObkdjnGPy+vm1hu37Mr3zzjM2H0Ld+lnHHxUM+knsCNDUzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k72SQhMu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B3qQ1JRJknLqaVkMTyIdhew1cEhANhcOsq+dg94iV3+5XtOT3MK6QO+FWiM+8WPNIZNldKADL43EH66I8ns2ekFSkoqMNZmgNIKQCKgsxLq0Lc6GgHwjLfa9PDe8pIm7jv5jStMVcSi55Xf8xpfe7Fs9PkcxT8tnsnqudp4uBj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KDfP+Q9w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k72SQhMu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99087C4AF12;
-	Tue, 30 Jul 2024 17:06:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KDfP+Q9w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A775C4AF10;
+	Tue, 30 Jul 2024 17:06:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359172;
-	bh=5bhP6myE7wAJbfLDtQfuSRUWkICRFRhXztCD0Q3OOSg=;
+	s=korg; t=1722359175;
+	bh=A3VWFM1YvKJsy4FFzjErVQV8e4bF8C/FnryABbcTk6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k72SQhMuE34t5MGM3hcuJFaHd66nwgP6VTHncGPNCCY8pYzHol3oN7VXuEbLwMEiM
-	 /8bXcsnesFEo51AYl47L8L8G+Wysscjvey9d1Aqa1hk+Lx3Y3GVR8Cc8u4fXQm4xO3
-	 bTs2laR2g7YEGCHcj2YtUgaJwu0Vbh8KC7L0UU9A=
+	b=KDfP+Q9wvCzzqSWnaJ+V+BFUqy/ATjIn1qIrcHdKNAjY2oXIscecuZiCzHzGc9rn/
+	 GYMzd0r3CcngZp3sbgq6ltCAG750PxSaXTjNS0X+l/2nSLNMnM8DY++aM16wUE7qo5
+	 UidiqVfg/hzErEv+YcSHftBZphAk8m3ldNP8jS5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 446/809] scsi: lpfc: Revise lpfc_prep_embed_io routine with proper endian macro usages
-Date: Tue, 30 Jul 2024 17:45:22 +0200
-Message-ID: <20240730151742.321418670@linuxfoundation.org>
+	Yang Yang <yang.yang@vivo.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 443/568] block: fix deadlock between sd_remove & sd_release
+Date: Tue, 30 Jul 2024 17:49:10 +0200
+Message-ID: <20240730151657.187200677@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +49,118 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Yang Yang <yang.yang@vivo.com>
 
-[ Upstream commit 8bc7c617642db6d8d20ee671fb6c4513017e7a7e ]
+commit 7e04da2dc7013af50ed3a2beb698d5168d1e594b upstream.
 
-On big endian architectures, it is possible to run into a memory out of
-bounds pointer dereference when FCP targets are zoned.
+Our test report the following hung task:
 
-In lpfc_prep_embed_io, the memcpy(ptr, fcp_cmnd, sgl->sge_len) is
-referencing a little endian formatted sgl->sge_len value.  So, the memcpy
-can cause big endian systems to crash.
+[ 2538.459400] INFO: task "kworker/0:0":7 blocked for more than 188 seconds.
+[ 2538.459427] Call trace:
+[ 2538.459430]  __switch_to+0x174/0x338
+[ 2538.459436]  __schedule+0x628/0x9c4
+[ 2538.459442]  schedule+0x7c/0xe8
+[ 2538.459447]  schedule_preempt_disabled+0x24/0x40
+[ 2538.459453]  __mutex_lock+0x3ec/0xf04
+[ 2538.459456]  __mutex_lock_slowpath+0x14/0x24
+[ 2538.459459]  mutex_lock+0x30/0xd8
+[ 2538.459462]  del_gendisk+0xdc/0x350
+[ 2538.459466]  sd_remove+0x30/0x60
+[ 2538.459470]  device_release_driver_internal+0x1c4/0x2c4
+[ 2538.459474]  device_release_driver+0x18/0x28
+[ 2538.459478]  bus_remove_device+0x15c/0x174
+[ 2538.459483]  device_del+0x1d0/0x358
+[ 2538.459488]  __scsi_remove_device+0xa8/0x198
+[ 2538.459493]  scsi_forget_host+0x50/0x70
+[ 2538.459497]  scsi_remove_host+0x80/0x180
+[ 2538.459502]  usb_stor_disconnect+0x68/0xf4
+[ 2538.459506]  usb_unbind_interface+0xd4/0x280
+[ 2538.459510]  device_release_driver_internal+0x1c4/0x2c4
+[ 2538.459514]  device_release_driver+0x18/0x28
+[ 2538.459518]  bus_remove_device+0x15c/0x174
+[ 2538.459523]  device_del+0x1d0/0x358
+[ 2538.459528]  usb_disable_device+0x84/0x194
+[ 2538.459532]  usb_disconnect+0xec/0x300
+[ 2538.459537]  hub_event+0xb80/0x1870
+[ 2538.459541]  process_scheduled_works+0x248/0x4dc
+[ 2538.459545]  worker_thread+0x244/0x334
+[ 2538.459549]  kthread+0x114/0x1bc
 
-Redefine the *sgl ptr as a struct sli4_sge_le to make it clear that we are
-referring to a little endian formatted data structure.  And, update the
-routine with proper le32_to_cpu macro usages.
+[ 2538.461001] INFO: task "fsck.":15415 blocked for more than 188 seconds.
+[ 2538.461014] Call trace:
+[ 2538.461016]  __switch_to+0x174/0x338
+[ 2538.461021]  __schedule+0x628/0x9c4
+[ 2538.461025]  schedule+0x7c/0xe8
+[ 2538.461030]  blk_queue_enter+0xc4/0x160
+[ 2538.461034]  blk_mq_alloc_request+0x120/0x1d4
+[ 2538.461037]  scsi_execute_cmd+0x7c/0x23c
+[ 2538.461040]  ioctl_internal_command+0x5c/0x164
+[ 2538.461046]  scsi_set_medium_removal+0x5c/0xb0
+[ 2538.461051]  sd_release+0x50/0x94
+[ 2538.461054]  blkdev_put+0x190/0x28c
+[ 2538.461058]  blkdev_release+0x28/0x40
+[ 2538.461063]  __fput+0xf8/0x2a8
+[ 2538.461066]  __fput_sync+0x28/0x5c
+[ 2538.461070]  __arm64_sys_close+0x84/0xe8
+[ 2538.461073]  invoke_syscall+0x58/0x114
+[ 2538.461078]  el0_svc_common+0xac/0xe0
+[ 2538.461082]  do_el0_svc+0x1c/0x28
+[ 2538.461087]  el0_svc+0x38/0x68
+[ 2538.461090]  el0t_64_sync_handler+0x68/0xbc
+[ 2538.461093]  el0t_64_sync+0x1a8/0x1ac
 
-Fixes: af20bb73ac25 ("scsi: lpfc: Add support for 32 byte CDBs")
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20240628172011.25921-8-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  T1:				T2:
+  sd_remove
+  del_gendisk
+  __blk_mark_disk_dead
+  blk_freeze_queue_start
+  ++q->mq_freeze_depth
+  				bdev_release
+ 				mutex_lock(&disk->open_mutex)
+  				sd_release
+ 				scsi_execute_cmd
+ 				blk_queue_enter
+ 				wait_event(!q->mq_freeze_depth)
+  mutex_lock(&disk->open_mutex)
+
+SCSI does not set GD_OWNS_QUEUE, so QUEUE_FLAG_DYING is not set in
+this scenario. This is a classic ABBA deadlock. To fix the deadlock,
+make sure we don't try to acquire disk->open_mutex after freezing
+the queue.
+
+Cc: stable@vger.kernel.org
+Fixes: eec1be4c30df ("block: delete partitions later in del_gendisk")
+Signed-off-by: Yang Yang <yang.yang@vivo.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: and Cc: stable tags are missing. Otherwise this patch looks fine
+Link: https://lore.kernel.org/r/20240724070412.22521-1-yang.yang@vivo.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ block/genhd.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index f475e7ece41a4..3e55d5edd60ab 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -10579,10 +10579,11 @@ lpfc_prep_embed_io(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd)
- {
- 	struct lpfc_iocbq *piocb = &lpfc_cmd->cur_iocbq;
- 	union lpfc_wqe128 *wqe = &lpfc_cmd->cur_iocbq.wqe;
--	struct sli4_sge *sgl;
-+	struct sli4_sge_le *sgl;
-+	u32 type_size;
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -655,12 +655,12 @@ void del_gendisk(struct gendisk *disk)
+ 	 */
+ 	if (!test_bit(GD_DEAD, &disk->state))
+ 		blk_report_disk_dead(disk, false);
+-	__blk_mark_disk_dead(disk);
  
- 	/* 128 byte wqe support here */
--	sgl = (struct sli4_sge *)lpfc_cmd->dma_sgl;
-+	sgl = (struct sli4_sge_le *)lpfc_cmd->dma_sgl;
- 
- 	if (phba->fcp_embed_io) {
- 		struct fcp_cmnd *fcp_cmnd;
-@@ -10591,9 +10592,9 @@ lpfc_prep_embed_io(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd)
- 		fcp_cmnd = lpfc_cmd->fcp_cmnd;
- 
- 		/* Word 0-2 - FCP_CMND */
--		wqe->generic.bde.tus.f.bdeFlags =
--			BUFF_TYPE_BDE_IMMED;
--		wqe->generic.bde.tus.f.bdeSize = sgl->sge_len;
-+		type_size = le32_to_cpu(sgl->sge_len);
-+		type_size |= ULP_BDE64_TYPE_BDE_IMMED;
-+		wqe->generic.bde.tus.w = type_size;
- 		wqe->generic.bde.addrHigh = 0;
- 		wqe->generic.bde.addrLow =  72;  /* Word 18 */
- 
-@@ -10602,13 +10603,13 @@ lpfc_prep_embed_io(struct lpfc_hba *phba, struct lpfc_io_buf *lpfc_cmd)
- 
- 		/* Word 18-29  FCP CMND Payload */
- 		ptr = &wqe->words[18];
--		memcpy(ptr, fcp_cmnd, sgl->sge_len);
-+		lpfc_sli_pcimem_bcopy(fcp_cmnd, ptr, le32_to_cpu(sgl->sge_len));
- 	} else {
- 		/* Word 0-2 - Inline BDE */
- 		wqe->generic.bde.tus.f.bdeFlags =  BUFF_TYPE_BDE_64;
--		wqe->generic.bde.tus.f.bdeSize = sgl->sge_len;
--		wqe->generic.bde.addrHigh = sgl->addr_hi;
--		wqe->generic.bde.addrLow =  sgl->addr_lo;
-+		wqe->generic.bde.tus.f.bdeSize = le32_to_cpu(sgl->sge_len);
-+		wqe->generic.bde.addrHigh = le32_to_cpu(sgl->addr_hi);
-+		wqe->generic.bde.addrLow = le32_to_cpu(sgl->addr_lo);
- 
- 		/* Word 10 */
- 		bf_set(wqe_dbde, &wqe->generic.wqe_com, 1);
--- 
-2.43.0
-
+ 	/*
+ 	 * Drop all partitions now that the disk is marked dead.
+ 	 */
+ 	mutex_lock(&disk->open_mutex);
++	__blk_mark_disk_dead(disk);
+ 	xa_for_each_start(&disk->part_tbl, idx, part, 1)
+ 		drop_partition(part);
+ 	mutex_unlock(&disk->open_mutex);
 
 
