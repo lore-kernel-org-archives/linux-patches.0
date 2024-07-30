@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE68189B94;
-	Tue, 30 Jul 2024 16:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 060B61A6192;
+	Tue, 30 Jul 2024 16:38:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357501; cv=none; b=M4YeRBN4C7Jy8UgZiV+B0ypJUmb6L3QkcYr7R91W3Yxv0bWr38f1WMkvoRSeNNq4LrjG9laO5xcNEqevFJoUgyFXKXxyTypQ5/TvPfn+2g9QNNxSEcMw0yGyPQUqc05Gj8MJH0OxuDjERj9r9WSqRsMuOICeuncESxo+9cj+IEo=
+	t=1722357505; cv=none; b=buNlmM/yGC9sJpMfrGL8RbnLx5G79g8d0qE3XAbLBeOOJxneJxFs+MJ1061p0/wuDnkoQvCuLhYfipAADs7euHGWm+B+QFMD+XwHDEKKmc3uRUwPRAneQfYrLEwUAG6O2/F0Ulb70UuH2rOtYVbzLHmcDp5zYpOY1F4qWvdDcMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357501; c=relaxed/simple;
-	bh=cID4yMtkbDdXi/VOQ9NWc0er+YMtGpJSteihIyDvxHs=;
+	s=arc-20240116; t=1722357505; c=relaxed/simple;
+	bh=eUTh0t10MyrZNIQJKO8l64Vl34m9Gd7BXQKmZmGcBFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFpmEHI89wF4Rpe4Kl2iKaD6250+P8NaS6ptVMkJmwsj1AzKfuPLi7cs2Kf9vyCf4pRW4prCP1/5LdFAxKse2JdAxt6K9IJScWANUCjqagKD9WEXPMIt/5OKjTAIZRTSWHlbr6XsHWI/iLXsPmrqmryX3YCW51Em4EYLr2cVuaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNVZZqRD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aw0sUJk+G85jUIjqzEiUgmvHy2R0KlNxQuZKN1CNj68qJZJcU7X7mVHCb4UZ5LF6eoMdVp1wCILQgnUfRnEq54eGT/mPEH7KCXchFwKKhC+3m+gXB1Fd5+CmFMwHH0TwcrPWOh6Cu3bIP1/WN7rrNFVy/lG4s5sopbRIsr0bUn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NO0/oRoe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNVZZqRD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D51C4AF0F;
-	Tue, 30 Jul 2024 16:38:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NO0/oRoe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A512C32782;
+	Tue, 30 Jul 2024 16:38:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357501;
-	bh=cID4yMtkbDdXi/VOQ9NWc0er+YMtGpJSteihIyDvxHs=;
+	s=korg; t=1722357504;
+	bh=eUTh0t10MyrZNIQJKO8l64Vl34m9Gd7BXQKmZmGcBFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNVZZqRD0vDAxCinLdkOoIke/kGUt5Oj/+mJHFquB6UATKquNYpGt3ArbfJOVJ96p
-	 yYG6Wi7A6OSNmo8v9u72Li9CHBMiXeLHa99NV8wREWMtXv9nit4aI+MVMKXLC6dbbW
-	 jfD2VfgVWqVhBvaDb0xk3OqJP5t5gRzyPsOD3OOc=
+	b=NO0/oRoe00syV3kVPo71seHhFqlHgsdt+D7Qde06uAHagc3UuzPc1FRMWmBKLN8Dg
+	 GZFoXBQ793rP+yYGXwmxqeNw0fvRvvnj+TnTh4o5VMPbC3KEsIfp1g5ZWkmogvYYzL
+	 14aHf62Mvs/X7Z49TyMcHJv3p8oWSpIwKuNve+KA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenghao Ding <shenghao-ding@ti.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Heng Qi <hengqi@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 261/568] ASoc: tas2781: Enable RCA-based playback without DSP firmware download
-Date: Tue, 30 Jul 2024 17:46:08 +0200
-Message-ID: <20240730151650.079492151@linuxfoundation.org>
+Subject: [PATCH 6.10 260/809] virtio_net: Fix napi_skb_cache_put warning
+Date: Tue, 30 Jul 2024 17:42:16 +0200
+Message-ID: <20240730151734.863466508@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,176 +50,93 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shenghao Ding <shenghao-ding@ti.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 9f774c757e3fb2ac32dc4377e8f21f3364a8df81 ]
+[ Upstream commit f8321fa75102246d7415a6af441872f6637c93ab ]
 
-In only loading RCA (Reconfigurable Architecture) binary case, no DSP
-program will be working inside tas2563/tas2781, that is dsp-bypass mode,
-do not support speaker protection, or audio acoustic algorithms in this
-mode.
+After the commit bdacf3e34945 ("net: Use nested-BH locking for
+napi_alloc_cache.") was merged, the following warning began to appear:
 
-Fixes: ef3bcde75d06 ("ASoC: tas2781: Add tas2781 driver")
-Signed-off-by: Shenghao Ding <shenghao-ding@ti.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://msgid.link/r/20240614133646.910-1-shenghao-ding@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+	 WARNING: CPU: 5 PID: 1 at net/core/skbuff.c:1451 napi_skb_cache_put+0x82/0x4b0
+
+	  __warn+0x12f/0x340
+	  napi_skb_cache_put+0x82/0x4b0
+	  napi_skb_cache_put+0x82/0x4b0
+	  report_bug+0x165/0x370
+	  handle_bug+0x3d/0x80
+	  exc_invalid_op+0x1a/0x50
+	  asm_exc_invalid_op+0x1a/0x20
+	  __free_old_xmit+0x1c8/0x510
+	  napi_skb_cache_put+0x82/0x4b0
+	  __free_old_xmit+0x1c8/0x510
+	  __free_old_xmit+0x1c8/0x510
+	  __pfx___free_old_xmit+0x10/0x10
+
+The issue arises because virtio is assuming it's running in NAPI context
+even when it's not, such as in the netpoll case.
+
+To resolve this, modify virtnet_poll_tx() to only set NAPI when budget
+is available. Same for virtnet_poll_cleantx(), which always assumed that
+it was in a NAPI context.
+
+Fixes: df133f3f9625 ("virtio_net: bulk free tx skbs")
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Heng Qi <hengqi@linux.alibaba.com>
+Link: https://patch.msgid.link/20240712115325.54175-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/tas2781-dsp.h       | 11 +++++++--
- sound/soc/codecs/tas2781-fmwlib.c | 18 ++++++++++----
- sound/soc/codecs/tas2781-i2c.c    | 39 ++++++++++++++++++++-----------
- 3 files changed, 48 insertions(+), 20 deletions(-)
+ drivers/net/virtio_net.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/sound/tas2781-dsp.h b/include/sound/tas2781-dsp.h
-index 4ef0f5c6fe6c0..af3319dab230a 100644
---- a/include/sound/tas2781-dsp.h
-+++ b/include/sound/tas2781-dsp.h
-@@ -112,10 +112,17 @@ struct tasdevice_fw {
- 	struct device *dev;
- };
- 
--enum tasdevice_dsp_fw_state {
--	TASDEVICE_DSP_FW_NONE = 0,
-+enum tasdevice_fw_state {
-+	/* Driver in startup mode, not load any firmware. */
- 	TASDEVICE_DSP_FW_PENDING,
-+	/* DSP firmware in the system, but parsing error. */
- 	TASDEVICE_DSP_FW_FAIL,
-+	/*
-+	 * Only RCA (Reconfigurable Architecture) firmware load
-+	 * successfully.
-+	 */
-+	TASDEVICE_RCA_FW_OK,
-+	/* Both RCA and DSP firmware load successfully. */
- 	TASDEVICE_DSP_FW_ALL_OK,
- };
- 
-diff --git a/sound/soc/codecs/tas2781-fmwlib.c b/sound/soc/codecs/tas2781-fmwlib.c
-index c6c47297a4fe7..32ff4fb14998e 100644
---- a/sound/soc/codecs/tas2781-fmwlib.c
-+++ b/sound/soc/codecs/tas2781-fmwlib.c
-@@ -2354,14 +2354,21 @@ void tasdevice_tuning_switch(void *context, int state)
- 	struct tasdevice_fw *tas_fmw = tas_priv->fmw;
- 	int profile_cfg_id = tas_priv->rcabin.profile_cfg_id;
- 
--	if (tas_priv->fw_state == TASDEVICE_DSP_FW_FAIL) {
--		dev_err(tas_priv->dev, "DSP bin file not loaded\n");
-+	/*
-+	 * Only RCA-based Playback can still work with no dsp program running
-+	 * inside the chip.
-+	 */
-+	switch (tas_priv->fw_state) {
-+	case TASDEVICE_RCA_FW_OK:
-+	case TASDEVICE_DSP_FW_ALL_OK:
-+		break;
-+	default:
- 		return;
- 	}
- 
- 	if (state == 0) {
--		if (tas_priv->cur_prog < tas_fmw->nr_programs) {
--			/*dsp mode or tuning mode*/
-+		if (tas_fmw && tas_priv->cur_prog < tas_fmw->nr_programs) {
-+			/* dsp mode or tuning mode */
- 			profile_cfg_id = tas_priv->rcabin.profile_cfg_id;
- 			tasdevice_select_tuningprm_cfg(tas_priv,
- 				tas_priv->cur_prog, tas_priv->cur_conf,
-@@ -2370,9 +2377,10 @@ void tasdevice_tuning_switch(void *context, int state)
- 
- 		tasdevice_select_cfg_blk(tas_priv, profile_cfg_id,
- 			TASDEVICE_BIN_BLK_PRE_POWER_UP);
--	} else
-+	} else {
- 		tasdevice_select_cfg_blk(tas_priv, profile_cfg_id,
- 			TASDEVICE_BIN_BLK_PRE_SHUTDOWN);
-+	}
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index b1f8b720733e5..cd254a1fd88ec 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -2341,7 +2341,7 @@ static int virtnet_receive(struct receive_queue *rq, int budget,
+ 	return packets;
  }
- EXPORT_SYMBOL_NS_GPL(tasdevice_tuning_switch,
- 	SND_SOC_TAS2781_FMWLIB);
-diff --git a/sound/soc/codecs/tas2781-i2c.c b/sound/soc/codecs/tas2781-i2c.c
-index 7327e9dcc8c02..a9d179e307739 100644
---- a/sound/soc/codecs/tas2781-i2c.c
-+++ b/sound/soc/codecs/tas2781-i2c.c
-@@ -378,23 +378,37 @@ static void tasdevice_fw_ready(const struct firmware *fmw,
- 	mutex_lock(&tas_priv->codec_lock);
  
- 	ret = tasdevice_rca_parser(tas_priv, fmw);
--	if (ret)
-+	if (ret) {
-+		tasdevice_config_info_remove(tas_priv);
- 		goto out;
-+	}
- 	tasdevice_create_control(tas_priv);
- 
- 	tasdevice_dsp_remove(tas_priv);
- 	tasdevice_calbin_remove(tas_priv);
--	tas_priv->fw_state = TASDEVICE_DSP_FW_PENDING;
-+	/*
-+	 * The baseline is the RCA-only case, and then the code attempts to
-+	 * load DSP firmware but in case of failures just keep going, i.e.
-+	 * failing to load DSP firmware is NOT an error.
-+	 */
-+	tas_priv->fw_state = TASDEVICE_RCA_FW_OK;
- 	scnprintf(tas_priv->coef_binaryname, 64, "%s_coef.bin",
- 		tas_priv->dev_name);
- 	ret = tasdevice_dsp_parser(tas_priv);
- 	if (ret) {
- 		dev_err(tas_priv->dev, "dspfw load %s error\n",
- 			tas_priv->coef_binaryname);
--		tas_priv->fw_state = TASDEVICE_DSP_FW_FAIL;
- 		goto out;
- 	}
--	tasdevice_dsp_create_ctrls(tas_priv);
-+
-+	/*
-+	 * If no dsp-related kcontrol created, the dsp resource will be freed.
-+	 */
-+	ret = tasdevice_dsp_create_ctrls(tas_priv);
-+	if (ret) {
-+		dev_err(tas_priv->dev, "dsp controls error\n");
-+		goto out;
-+	}
- 
- 	tas_priv->fw_state = TASDEVICE_DSP_FW_ALL_OK;
- 
-@@ -415,9 +429,8 @@ static void tasdevice_fw_ready(const struct firmware *fmw,
- 	tasdevice_prmg_load(tas_priv, 0);
- 	tas_priv->cur_prog = 0;
- out:
--	if (tas_priv->fw_state == TASDEVICE_DSP_FW_FAIL) {
--		/*If DSP FW fail, kcontrol won't be created */
--		tasdevice_config_info_remove(tas_priv);
-+	if (tas_priv->fw_state == TASDEVICE_RCA_FW_OK) {
-+		/* If DSP FW fail, DSP kcontrol won't be created. */
- 		tasdevice_dsp_remove(tas_priv);
- 	}
- 	mutex_unlock(&tas_priv->codec_lock);
-@@ -464,14 +477,14 @@ static int tasdevice_startup(struct snd_pcm_substream *substream,
+-static void virtnet_poll_cleantx(struct receive_queue *rq)
++static void virtnet_poll_cleantx(struct receive_queue *rq, int budget)
  {
- 	struct snd_soc_component *codec = dai->component;
- 	struct tasdevice_priv *tas_priv = snd_soc_component_get_drvdata(codec);
--	int ret = 0;
+ 	struct virtnet_info *vi = rq->vq->vdev->priv;
+ 	unsigned int index = vq2rxq(rq->vq);
+@@ -2359,7 +2359,7 @@ static void virtnet_poll_cleantx(struct receive_queue *rq)
  
--	if (tas_priv->fw_state != TASDEVICE_DSP_FW_ALL_OK) {
--		dev_err(tas_priv->dev, "DSP bin file not loaded\n");
--		ret = -EINVAL;
-+	switch (tas_priv->fw_state) {
-+	case TASDEVICE_RCA_FW_OK:
-+	case TASDEVICE_DSP_FW_ALL_OK:
-+		return 0;
-+	default:
-+		return -EINVAL;
- 	}
--
--	return ret;
- }
+ 		do {
+ 			virtqueue_disable_cb(sq->vq);
+-			free_old_xmit(sq, txq, true);
++			free_old_xmit(sq, txq, !!budget);
+ 		} while (unlikely(!virtqueue_enable_cb_delayed(sq->vq)));
  
- static int tasdevice_hw_params(struct snd_pcm_substream *substream,
+ 		if (sq->vq->num_free >= 2 + MAX_SKB_FRAGS) {
+@@ -2403,7 +2403,7 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
+ 	unsigned int xdp_xmit = 0;
+ 	bool napi_complete;
+ 
+-	virtnet_poll_cleantx(rq);
++	virtnet_poll_cleantx(rq, budget);
+ 
+ 	received = virtnet_receive(rq, budget, &xdp_xmit);
+ 	rq->packets_in_napi += received;
+@@ -2518,7 +2518,7 @@ static int virtnet_poll_tx(struct napi_struct *napi, int budget)
+ 	txq = netdev_get_tx_queue(vi->dev, index);
+ 	__netif_tx_lock(txq, raw_smp_processor_id());
+ 	virtqueue_disable_cb(sq->vq);
+-	free_old_xmit(sq, txq, true);
++	free_old_xmit(sq, txq, !!budget);
+ 
+ 	if (sq->vq->num_free >= 2 + MAX_SKB_FRAGS) {
+ 		if (netif_tx_queue_stopped(txq)) {
 -- 
 2.43.0
 
