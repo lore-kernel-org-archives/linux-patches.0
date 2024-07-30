@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD041A00EE;
-	Tue, 30 Jul 2024 17:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BCA1A2C35;
+	Tue, 30 Jul 2024 17:10:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359456; cv=none; b=aTXmC8UM21i2yNAtY0+I/C52G9JYFbWQ+x+nloCBXUftNn6RoJ+IZeLH5MFlXxK7d/TNggTQQiCEtEirB9EgCodRCWg4np3pxxfW8XY6plohWEwPqz9nr6PSOAi37zlYifvv5Z8cjvhn63F0awn8Gvn5acm66s4Kjo8oy0fDUUg=
+	t=1722359459; cv=none; b=mvi+P1UKOl02NAXPFH++5/U+65KwfpTJFqZaWQ1E+ne2B/fO2pYYmMAu0yTUe3iO1Htk7/4vkX/N1kOaTicZwFwvyw56N+hHlRIYfS/GGaOPpwhv4n+A5p9YJ0znKSwPSscAq/KseR8/exRhxTobDtx0mB86Kty/Ugw+qz6tAqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359456; c=relaxed/simple;
-	bh=itrXypK1DWVMSnopbF9TIhQYnEXWB6fixk4kUw3Qn1M=;
+	s=arc-20240116; t=1722359459; c=relaxed/simple;
+	bh=Ws4pQ1mcJTOwCI+6XO3eh2PrqnJF9WVXimU4rOPaLmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PT7DR8aE2WI03HtHOwNgEIcuZqnavHDooSukZaF502bJP+W77H3++qIJ/QIH+GN6EEZUuDiwJcJKMTbCAQDCYb1L3qFhGe2ejPlBnM3aC579VL6HkM6NRXwTWFw/L0C5g9L7XTYJSdMfySm4xrT+WWvaYeF6Q+opuWlRYJebI+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VcCeUt2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VP9AjI8jzv2j2M1GpFKdlVnAD7ETt2gndXgok6qE/9XgrJGwGCmi2wIGiOGEocwm71vhnIZRjekfrC+Nl9xaHODUOOhKrqOdrKy0n9LIv+N3GoS4VJiqLYVXOFc8l/ceg4+9ay12eeQ6OnP7rs94V44mDfI+qxvHA1CSMfG7VYk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GuCNnvYN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VcCeUt2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D5B6C32782;
-	Tue, 30 Jul 2024 17:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GuCNnvYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86406C32782;
+	Tue, 30 Jul 2024 17:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359455;
-	bh=itrXypK1DWVMSnopbF9TIhQYnEXWB6fixk4kUw3Qn1M=;
+	s=korg; t=1722359458;
+	bh=Ws4pQ1mcJTOwCI+6XO3eh2PrqnJF9WVXimU4rOPaLmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcCeUt2GB5aL79lnr/nbOXEcV94Iwv3D9Af77wIvmjiRQa/TTOF3xuE70mZ5Go8bK
-	 ljSsunDmECM70UlTLl3zyc9Sw71TIely5XIiqK5ioaeRBqqhV5eVScVd3jBJHcurcm
-	 reJnDjyKhSdAYUxn8Si1YAz5zqpQbSFbAKMfF1WY=
+	b=GuCNnvYNBitSMfGz2lvpqSWztyIjAbgdtJcJkGu3PYSv6mPA3tmkvK0VF40NSjfwI
+	 /FVtAa5hUtn7cBI4IJlxe+r5FkzuBKtZlEfOupVFCzITEbBbs0l2Sil+1bEmDz4kHC
+	 w/FQYLVwOiGcjm0TuRAQNyw0mH2FKIBjmBgswk9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Arjan van de Ven <arjan@linux.intel.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 484/568] watchdog/perf: properly initialize the turbo mode timestamp and rearm counter
-Date: Tue, 30 Jul 2024 17:49:51 +0200
-Message-ID: <20240730151658.946821294@linuxfoundation.org>
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 486/809] fs/ntfs3: Deny getting attr data block in compressed frame
+Date: Tue, 30 Jul 2024 17:46:02 +0200
+Message-ID: <20240730151743.934767307@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,72 +46,50 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-commit f944ffcbc2e1c759764850261670586ddf3bdabb upstream.
+[ Upstream commit 69943484b95267c94331cba41e9e64ba7b24f136 ]
 
-For systems on which the performance counter can expire early due to turbo
-modes the watchdog handler has a safety net in place which validates that
-since the last watchdog event there has at least 4/5th of the watchdog
-period elapsed.
+Attempting to retrieve an attribute data block in a compressed frame
+is ignored.
 
-This works reliably only after the first watchdog event because the per
-CPU variable which holds the timestamp of the last event is never
-initialized.
-
-So a first spurious event will validate against a timestamp of 0 which
-results in a delta which is likely to be way over the 4/5 threshold of the
-period.  As this might happen before the first watchdog hrtimer event
-increments the watchdog counter, this can lead to false positives.
-
-Fix this by initializing the timestamp before enabling the hardware event.
-Reset the rearm counter as well, as that might be non zero after the
-watchdog was disabled and reenabled.
-
-Link: https://lkml.kernel.org/r/87frsfu15a.ffs@tglx
-Fixes: 7edaeb6841df ("kernel/watchdog: Prevent false positives with turbo modes")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Arjan van de Ven <arjan@linux.intel.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: be71b5cba2e64 ("fs/ntfs3: Add attrib operations")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/watchdog_perf.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ fs/ntfs3/attrib.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/kernel/watchdog_perf.c
-+++ b/kernel/watchdog_perf.c
-@@ -75,11 +75,15 @@ static bool watchdog_check_timestamp(voi
- 	__this_cpu_write(last_timestamp, now);
- 	return true;
- }
--#else
--static inline bool watchdog_check_timestamp(void)
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 8638248d80d93..7918ab1a3f354 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -975,6 +975,19 @@ int attr_data_get_block(struct ntfs_inode *ni, CLST vcn, CLST clen, CLST *lcn,
+ 	if (err)
+ 		goto out;
+ 
++	/* Check for compressed frame. */
++	err = attr_is_frame_compressed(ni, attr, vcn >> NTFS_LZNT_CUNIT, &hint);
++	if (err)
++		goto out;
 +
-+static void watchdog_init_timestamp(void)
- {
--	return true;
-+	__this_cpu_write(nmi_rearmed, 0);
-+	__this_cpu_write(last_timestamp, ktime_get_mono_fast_ns());
- }
-+#else
-+static inline bool watchdog_check_timestamp(void) { return true; }
-+static inline void watchdog_init_timestamp(void) { }
- #endif
- 
- static struct perf_event_attr wd_hw_attr = {
-@@ -147,6 +151,7 @@ void watchdog_hardlockup_enable(unsigned
- 	if (!atomic_fetch_inc(&watchdog_cpus))
- 		pr_info("Enabled. Permanently consumes one hw-PMU counter.\n");
- 
-+	watchdog_init_timestamp();
- 	perf_event_enable(this_cpu_read(watchdog_ev));
- }
- 
++	if (hint) {
++		/* if frame is compressed - don't touch it. */
++		*lcn = COMPRESSED_LCN;
++		*len = hint;
++		err = -EOPNOTSUPP;
++		goto out;
++	}
++
+ 	if (!*len) {
+ 		if (run_lookup_entry(run, vcn, lcn, len, NULL)) {
+ 			if (*lcn != SPARSE_LCN || !new)
+-- 
+2.43.0
+
 
 
