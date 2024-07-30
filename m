@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428A418E046;
-	Tue, 30 Jul 2024 16:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABE4E1917CD;
+	Tue, 30 Jul 2024 16:11:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355866; cv=none; b=pikGnaTwAc9SjqnvBdn6HFXomWcyqtmzxVsvfVuNshqh6gIxcx+4aNXAxwTe7WXAlyUSVu5nk+cWsgI54mTo4A6PksEeGZ6MyZ/WbxRnh2kXO+C0wuD4P5/d5LIwFPkBhlX7WzM1EFDA/aOhSIQxrm900NP7ydvPxUBanSSvdQY=
+	t=1722355869; cv=none; b=PQ3uUqDNToztFxOl5TBSdWV1DxqXQrXuo4gZ6l7W16MoPGlSmVK3FIvcyz7lDwRf46GGIOhhFA+p8T1uG+mu6q60KGQwSiFB2yTtnybNxDcJhjiUJ+K78k+AnixdsrSzOBxp/tjGy7GFrHxD/ZErSB1V4Ro0y0ng026T+op6vHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355866; c=relaxed/simple;
-	bh=UZgkvaTq4bR93/r80pQ5f7VCeu1PwUxXBvzjN16L61o=;
+	s=arc-20240116; t=1722355869; c=relaxed/simple;
+	bh=MAgn2A4UpSwM894RfHTd0Icc9QjoNqdGi1HGzmTR3Ns=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bXfzHNv3+2MHOZMeDNOupo/Z+NuGViwTDDMWMkZE84MWWSpMGW4nEv+JZWHI1fWeolMbtTdn7evGfqZLzuYkXn/5PNoAe09O14oQs0BIkzUTsNVTVpr8KH8dZ87s5rDQMefD4NLrquqqQKhxPQ/g3Br/I8ZKyy8NNwJTCnsx1Ag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mYn2eUBW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BbindLOsr/kxWibQ39TLWfGSS60gQ6+gArt8zenvrbu/vchCkpOa1Q4ml2hh+UQSBA+8X0yUIS5St1nNNlnAHFFWtbRxBH+iiSFKRD7UzafFBuseoGWJDoFR5ajVqWOtOgMqLgmhTE4R4pCV2558fHfEcLwWwwu7Yk4k2CJOzmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P64kVqlG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mYn2eUBW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF77C32782;
-	Tue, 30 Jul 2024 16:11:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P64kVqlG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D62BFC32782;
+	Tue, 30 Jul 2024 16:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355866;
-	bh=UZgkvaTq4bR93/r80pQ5f7VCeu1PwUxXBvzjN16L61o=;
+	s=korg; t=1722355869;
+	bh=MAgn2A4UpSwM894RfHTd0Icc9QjoNqdGi1HGzmTR3Ns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mYn2eUBWlr6/rEnecIakTwRXpHEQcYtBBwKr4gp+kM3r7TFcMPKZg1wVfRAdZHYZf
-	 o6tGmmBL12AJs47rYZIRgGcWOamoNCEA81rbWBQ/ykl/O89c2A7QMIPczznpNoIoSz
-	 4Gr9kYoEKQxFRwI4zepmJRj9XQF751fNWPqOnHiA=
+	b=P64kVqlGSXu6ERixq4yx0UDg9zlHmZNGpy3ncEEhVIPzI4IL1v8E9phOpcu+N2g6Q
+	 FRw9aTX9tZEfUhPX0Zyc9rDQcswwxxUHWQf2jQb1ED5A302gQ8thCGWrYDtXZ4LtBm
+	 +iRRfwS62jaysfJQbJ5Y3yhytRE/ZKgaMhk3HTC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chukun Pan <amadeus@jmu.edu.cn>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Gjorgji Rosikopulos <quic_grosikop@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 097/568] arm64: dts: rockchip: fix usb regulator for Lunzn Fastrhino R6xS
-Date: Tue, 30 Jul 2024 17:43:24 +0200
-Message-ID: <20240730151643.666959012@linuxfoundation.org>
+Subject: [PATCH 6.1 139/440] media: i2c: Fix imx412 exposure control
+Date: Tue, 30 Jul 2024 17:46:12 +0200
+Message-ID: <20240730151621.310954107@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,67 +50,98 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chukun Pan <amadeus@jmu.edu.cn>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 9e823ba92118510c0d1c050b67bb000f9b9a73d7 ]
+[ Upstream commit a1956bf53a2774014ee1768b484af2c38c633a25 ]
 
-Remove the non-existent usb_host regulator and fix the supply according
-to the schematic. Also remove the unnecessary always-on and boot-on for
-the usb_otg regulator.
+Currently we have the following algorithm to calculate what value should be
+written to the exposure control of imx412.
 
-Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
-Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
-Link: https://lore.kernel.org/r/20240701143028.1203997-2-amadeus@jmu.edu.cn
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+lpfr = imx412->vblank + imx412->cur_mode->height;
+shutter = lpfr - exposure;
+
+The 'shutter' value is given to IMX412_REG_EXPOSURE_CIT however, the above
+algorithm will result in the value given to IMX412_REG_EXPOSURE_CIT
+decreasing as the requested exposure value from user-space goes up.
+
+e.g.
+[ 2255.713989] imx412 20-001a: Received exp 1608, analog gain 0
+[ 2255.714002] imx412 20-001a: Set exp 1608, analog gain 0, shutter 1938, lpfr 3546
+[ 2256.302770] imx412 20-001a: Received exp 2586, analog gain 100
+[ 2256.302800] imx412 20-001a: Set exp 2586, analog gain 100, shutter 960, lpfr 3546
+[ 2256.753755] imx412 20-001a: Received exp 3524, analog gain 110
+[ 2256.753772] imx412 20-001a: Set exp 3524, analog gain 110, shutter 22, lpfr 3546
+
+This behaviour results in the image having less exposure as the requested
+exposure value from user-space increases.
+
+Other sensor drivers such as ov5675, imx218, hid556 and others take the
+requested exposure value and use the value directly.
+
+Take the example of the above cited sensor drivers and directly apply the
+requested exposure value from user-space. The 'lpfr' variable still
+functions as before but the 'shutter' variable can be dispensed with as a
+result.
+
+Once done a similar run of the test application requesting higher exposure
+looks like this, with 'exp' written directly to the sensor.
+
+[  133.207884] imx412 20-001a: Received exp 1608, analog gain 0
+[  133.207899] imx412 20-001a: Set exp 1608, analog gain 0, lpfr 3546
+[  133.905309] imx412 20-001a: Received exp 2844, analog gain 100
+[  133.905344] imx412 20-001a: Set exp 2844, analog gain 100, lpfr 3546
+[  134.241705] imx412 20-001a: Received exp 3524, analog gain 110
+[  134.241775] imx412 20-001a: Set exp 3524, analog gain 110, lpfr 3546
+
+The result is then setting the sensor exposure to lower values results in
+darker, less exposure images and vice versa with higher exposure values.
+
+Fixes: 9214e86c0cc1 ("media: i2c: Add imx412 camera sensor driver")
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5165-rb5/imx577
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ drivers/media/i2c/imx412.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-index 93987c8740f7b..8f587978fa3b6 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
-@@ -78,15 +78,6 @@ vcc5v0_sys: vcc5v0-sys-regulator {
- 		vin-supply = <&vcc12v_dcin>;
- 	};
+diff --git a/drivers/media/i2c/imx412.c b/drivers/media/i2c/imx412.c
+index 7f6d29e0e7c40..77fa6253ba3e3 100644
+--- a/drivers/media/i2c/imx412.c
++++ b/drivers/media/i2c/imx412.c
+@@ -544,14 +544,13 @@ static int imx412_update_controls(struct imx412 *imx412,
+  */
+ static int imx412_update_exp_gain(struct imx412 *imx412, u32 exposure, u32 gain)
+ {
+-	u32 lpfr, shutter;
++	u32 lpfr;
+ 	int ret;
  
--	vcc5v0_usb_host: vcc5v0-usb-host-regulator {
--		compatible = "regulator-fixed";
--		regulator-name = "vcc5v0_usb_host";
--		regulator-always-on;
--		regulator-boot-on;
--		regulator-min-microvolt = <5000000>;
--		regulator-max-microvolt = <5000000>;
--	};
--
- 	vcc5v0_usb_otg: vcc5v0-usb-otg-regulator {
- 		compatible = "regulator-fixed";
- 		enable-active-high;
-@@ -94,8 +85,9 @@ vcc5v0_usb_otg: vcc5v0-usb-otg-regulator {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&vcc5v0_usb_otg_en>;
- 		regulator-name = "vcc5v0_usb_otg";
--		regulator-always-on;
--		regulator-boot-on;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+		vin-supply = <&vcc5v0_sys>;
- 	};
- };
+ 	lpfr = imx412->vblank + imx412->cur_mode->height;
+-	shutter = lpfr - exposure;
  
-@@ -460,7 +452,7 @@ &usb2phy0 {
- };
+-	dev_dbg(imx412->dev, "Set exp %u, analog gain %u, shutter %u, lpfr %u",
+-		exposure, gain, shutter, lpfr);
++	dev_dbg(imx412->dev, "Set exp %u, analog gain %u, lpfr %u",
++		exposure, gain, lpfr);
  
- &usb2phy0_host {
--	phy-supply = <&vcc5v0_usb_host>;
-+	phy-supply = <&vcc5v0_sys>;
- 	status = "okay";
- };
+ 	ret = imx412_write_reg(imx412, IMX412_REG_HOLD, 1, 1);
+ 	if (ret)
+@@ -561,7 +560,7 @@ static int imx412_update_exp_gain(struct imx412 *imx412, u32 exposure, u32 gain)
+ 	if (ret)
+ 		goto error_release_group_hold;
+ 
+-	ret = imx412_write_reg(imx412, IMX412_REG_EXPOSURE_CIT, 2, shutter);
++	ret = imx412_write_reg(imx412, IMX412_REG_EXPOSURE_CIT, 2, exposure);
+ 	if (ret)
+ 		goto error_release_group_hold;
  
 -- 
 2.43.0
