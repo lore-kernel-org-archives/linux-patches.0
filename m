@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288F31898EB;
-	Tue, 30 Jul 2024 16:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE353189514;
+	Tue, 30 Jul 2024 16:52:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358336; cv=none; b=iGHcTt688SvWLTDtCBv64pq4yiQGHuV51P2VvC7COs7oQ7FxlhS713Ckhr89GXIoWj8DFE21p3dqO7Jj9vQ7j5COluyGZbgQ9pCtJt6NWFwrPPrySvBHe1eo2S6E6kTMo2my+2mOHk+Xd4HCjtMY0OEHk+ABUAKXvqOar4eoFB4=
+	t=1722358338; cv=none; b=ZfZFBfmB3+BciBfdsPRIJIlPEu65Y4SVt8dyuJLWkCY80LZXXmdHXGRie5wdDAXXrGJdHcA0IPURQ34iSVhx2cAhUWE29x2EX5f/3sLJHCsik1bj+HsXYsYergXO7nZHBNskMlzyvWg/NtefW7mQg7j18gbZhOxRUXI5VrkQcSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358336; c=relaxed/simple;
-	bh=8irBEXBJcl3nr448p33z+2cIk7KFx7lCIxvtTPb60JY=;
+	s=arc-20240116; t=1722358338; c=relaxed/simple;
+	bh=Z32c/Cl92NMfBVH38XawzHBGIo5egG8KvidWbcl4M2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JpqlIISS++//qtjpJ9WYIrn+sSxKkVNCg8lWMgN2ffQLmak4JoU0lxcBSpNDFdHZcnuQ7EydjDKhxt1rLELlGb/p59wl3LlbIQ28eLEM1UAuBiRotRORnNEtaOohvC/d2KYsc1t3QbpYRhIr/nsu87zvGYMDEqp9SwE4wZQmfDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvugxLrp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NbpLXyiM8dv3LF7iSpffvuQYbFF8l928cc8bFN8lyKsy2pwpupdwe1Fr28s8lv3yBIBjv1Xv8DYzjz8lH4UhTBgUg8ncDXux09si9h8D9Rd0lo9IzOdE39QCyWXIqSxaZPAugO+elkAtBaVVqIsWdsKLNaJrAlLih90So0TGp3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w/Sv4fGw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvugxLrp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB31DC32782;
-	Tue, 30 Jul 2024 16:52:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w/Sv4fGw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4701DC32782;
+	Tue, 30 Jul 2024 16:52:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358335;
-	bh=8irBEXBJcl3nr448p33z+2cIk7KFx7lCIxvtTPb60JY=;
+	s=korg; t=1722358338;
+	bh=Z32c/Cl92NMfBVH38XawzHBGIo5egG8KvidWbcl4M2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvugxLrpXPx8GKlvvGB0c83HNy2Ou/vOMkoBd09225ITnUAHGS2G27UdBfQxHJxVA
-	 xPjbPxuglpYQW4/enlwdH14M1GhdhNLSE7yD7GhfcSWynJ06eyew7YWgJB8bRfSiTt
-	 ojOWheAv/GdwWKdx9RlFlx0q+zrraV9copjHUKRQ=
+	b=w/Sv4fGwYMBk6XlIXzQ5FnRdgRchg0qLNp09lDj4qzYKsPG3daBkIqmfqu5wfIcG8
+	 io+3qVQbDVLygxQjFpDWPfRMcbiMVEAuvc5D1csto106PEO06cGS+o11U2T7L3idd1
+	 pUptn8eXw+z8IcTUWsK7dNZWikzO026IUlrrVayA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Harry Wentland <hwentlan@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Wayne Lin <Wayne.Lin@amd.com>
-Subject: [PATCH 6.1 360/440] drm/dp_mst: Fix all mstb marked as not probed after suspend/resume
-Date: Tue, 30 Jul 2024 17:49:53 +0200
-Message-ID: <20240730151629.876072220@linuxfoundation.org>
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 328/568] pinctrl: ti: ti-iodelay: Drop if block with always false condition
+Date: Tue, 30 Jul 2024 17:47:15 +0200
+Message-ID: <20240730151652.693362152@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,62 +45,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-commit d63d81094d208abb20fc444514b2d9ec2f4b7c4e upstream.
+[ Upstream commit 88b3f108502bc45e6ebd005702add46759f3f45a ]
 
-[Why]
-After supend/resume, with topology unchanged, observe that
-link_address_sent of all mstb are marked as false even the topology probing
-is done without any error.
+ti_iodelay_remove() is only called after ti_iodelay_probe() completed
+successfully. In this case platform_set_drvdata() was called with a
+non-NULL argument and so platform_get_drvdata() won't return NULL.
 
-It is caused by wrongly also include "ret == 0" case as a probing failure
-case.
+Simplify by removing the if block with the always false condition.
 
-[How]
-Remove inappropriate checking conditions.
-
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Harry Wentland <hwentlan@amd.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: stable@vger.kernel.org
-Fixes: 37dfdc55ffeb ("drm/dp_mst: Cleanup drm_dp_send_link_address() a bit")
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240626084825.878565-2-Wayne.Lin@amd.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231009083856.222030-4-u.kleine-koenig@pengutronix.de
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 9b401f4a7170 ("pinctrl: ti: ti-iodelay: fix possible memory leak when pinctrl_enable() fails")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/ti/pinctrl-ti-iodelay.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -2923,7 +2923,7 @@ static int drm_dp_send_link_address(stru
+diff --git a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+index c1477f6578393..f3a2735620955 100644
+--- a/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
++++ b/drivers/pinctrl/ti/pinctrl-ti-iodelay.c
+@@ -903,9 +903,6 @@ static int ti_iodelay_remove(struct platform_device *pdev)
+ {
+ 	struct ti_iodelay_device *iod = platform_get_drvdata(pdev);
  
- 	/* FIXME: Actually do some real error handling here */
- 	ret = drm_dp_mst_wait_tx_reply(mstb, txmsg);
--	if (ret <= 0) {
-+	if (ret < 0) {
- 		drm_err(mgr->dev, "Sending link address failed with %d\n", ret);
- 		goto out;
- 	}
-@@ -2975,7 +2975,7 @@ static int drm_dp_send_link_address(stru
- 	mutex_unlock(&mgr->lock);
+-	if (!iod)
+-		return 0;
+-
+ 	if (iod->pctl)
+ 		pinctrl_unregister(iod->pctl);
  
- out:
--	if (ret <= 0)
-+	if (ret < 0)
- 		mstb->link_address_sent = false;
- 	kfree(txmsg);
- 	return ret < 0 ? ret : changed;
+-- 
+2.43.0
+
 
 
