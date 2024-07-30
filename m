@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01B6187FF2;
-	Tue, 30 Jul 2024 16:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F36A187FF2;
+	Tue, 30 Jul 2024 16:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355451; cv=none; b=eC3kdfuGqZBZO8TvsH8+9iqaP7KYfexJYo2oPy8Va9hwveKQKT45MRMPoaDF40u36uY73yhm9vGxrLOjA34UryrnyPqAnGReft3WN0WSU0andsonZP1t5LLnPsdrDsADPOuiZP8ncBbzCho02PpVYbqTqlHMPka8+E4+5xLjTDg=
+	t=1722355455; cv=none; b=TBqE4D+k9mkDPZBmYE3i9RF8iDhcy6V6pJ2xpZ00/Vjj56CVGlkflFu5zrUKB30RQSgSRLYI1Sz6Dpf5OSX7WjpjdJnd2lAhbUFRxkDSBKf7c6KqrsKQH2ilCBYbvGit5TaiTYsDmcg2WCLosZ/Lku062yoCry/69pDKvJlEPOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355451; c=relaxed/simple;
-	bh=xquWXPB5ox80mLe6BSR5C6vhbqKzIrw8yuI5shvNOpo=;
+	s=arc-20240116; t=1722355455; c=relaxed/simple;
+	bh=95ROEakC+WFYBkY5BAs8jue2KH+EyEA9FvMbEVrnVY4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=khmXZodBQ/en9HicmmeUD37ih4pURAgiLJvY0KzB+JBrJeePj6JMnzBEeV8gfxXdRZBvMWFPfTR6jLxdpdUduraVE/TlVZAnSUcoglA+7e+FfOMfXkpmnbbc7jMeKfKEkUjD1fN+MBXtBg/HNSoMuG7yeMgVLS3/t0G7Hs+VJw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vz6JGfqy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=es7uKbQfSG0TaroRHD231J5YbDVr62bRVXjnjGIfLVWNSU/bogJA1ZF7tQeDMyqsMvD+geyreCMcYUUbLtdD+0ri2KybMvTu4wD0V/g48UplTSLXPpHtEmBkdGCkkdvDX5eUvszH95iIj34CWkYRu7ZOi/74e2CyufuvwaahfuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DfxhLZFm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vz6JGfqy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D119C32782;
-	Tue, 30 Jul 2024 16:04:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DfxhLZFm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2F07C4AF0C;
+	Tue, 30 Jul 2024 16:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355451;
-	bh=xquWXPB5ox80mLe6BSR5C6vhbqKzIrw8yuI5shvNOpo=;
+	s=korg; t=1722355455;
+	bh=95ROEakC+WFYBkY5BAs8jue2KH+EyEA9FvMbEVrnVY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vz6JGfqy7IUpC82q5rsyYfWdU79khSbpqa4plq97oqSRHc5abxrR2kadKmkMHjg0s
-	 464llr8nbYFA9q3gHPH9HdtC4tDD8RUfEp5AhnRskS+jOBD2RE2HcDRNHiE9S4xYWm
-	 Flk6zA9vsnkpdXl47UW/bLQVcVWVMcUhyDSYfXYU=
+	b=DfxhLZFmg8lBsaejKz3hW1bbRV8gG7Ssv+xn2JXiHKW6jxNGaYKQniSpw2+B5deVu
+	 0ZarnHgbWj27h9V0A3K0ViDUUN4rizVBfdSxuJZtLeNzDL5oIbBHk9u9VWmey8qVG6
+	 HACcwnPBSZl8+LzM6Zp8MSGwtJ5MBLfYG5PIOpoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yue Sun <samsun1006219@gmail.com>,
+	Xingwei Lee <xrivendell7@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 059/568] arm64: dts: qcom: qdu1000-idp: drop unused LLCC multi-ch-bit-off
-Date: Tue, 30 Jul 2024 17:42:46 +0200
-Message-ID: <20240730151642.164513069@linuxfoundation.org>
+Subject: [PATCH 6.1 096/440] perf/x86: Serialize set_attr_rdpmc()
+Date: Tue, 30 Jul 2024 17:45:29 +0200
+Message-ID: <20240730151619.631290100@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,41 +49,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 468cf125e4796e8ef9815e2d8d018f44cf8f1225 ]
+[ Upstream commit bb9bb45f746b0f9457de9c3fc4da143a6351bdc9 ]
 
-There is no "multi-ch-bit-off" property in LLCC, according to bindings
-and Linux driver:
+Yue and Xingwei reported a jump label failure. It's caused by the lack of
+serialization in set_attr_rdpmc():
 
-  qdu1000-idp.dtb: system-cache-controller@19200000: 'multi-ch-bit-off' does not match any of the regexes: 'pinctrl-[0-9]+'
+CPU0                           CPU1
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Acked-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Link: https://lore.kernel.org/r/20231107080417.16700-2-krzysztof.kozlowski@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 367fb3f0aaa6 ("arm64: dts: qcom: qdu1000: Add secure qfprom node")
+Assume: x86_pmu.attr_rdpmc == 0
+
+if (val != x86_pmu.attr_rdpmc) {
+  if (val == 0)
+    ...
+  else if (x86_pmu.attr_rdpmc == 0)
+    static_branch_dec(&rdpmc_never_available_key);
+
+				if (val != x86_pmu.attr_rdpmc) {
+				   if (val == 0)
+				      ...
+				   else if (x86_pmu.attr_rdpmc == 0)
+     FAIL, due to imbalance --->      static_branch_dec(&rdpmc_never_available_key);
+
+The reported BUG() is a consequence of the above and of another bug in the
+jump label core code. The core code needs a separate fix, but that cannot
+prevent the imbalance problem caused by set_attr_rdpmc().
+
+Prevent this by serializing set_attr_rdpmc() locally.
+
+Fixes: a66734297f78 ("perf/x86: Add /sys/devices/cpu/rdpmc=2 to allow rdpmc for all tasks")
+Closes: https://lore.kernel.org/r/CAEkJfYNzfW1vG=ZTMdz_Weoo=RXY1NDunbxnDaLyj8R4kEoE_w@mail.gmail.com
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Reported-by: Xingwei Lee <xrivendell7@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240610124406.359476013@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qdu1000.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/events/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-index 1c0e5d271e91b..1ef87604549fa 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-@@ -1452,7 +1452,6 @@ system-cache-controller@19200000 {
- 				    "llcc_broadcast_base",
- 				    "multi_channel_register";
- 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
--			multi-ch-bit-off = <24 2>;
- 		};
- 	};
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 1394312b732a3..2b2c9fd74ef90 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2573,6 +2573,7 @@ static ssize_t set_attr_rdpmc(struct device *cdev,
+ 			      struct device_attribute *attr,
+ 			      const char *buf, size_t count)
+ {
++	static DEFINE_MUTEX(rdpmc_mutex);
+ 	unsigned long val;
+ 	ssize_t ret;
  
+@@ -2586,6 +2587,8 @@ static ssize_t set_attr_rdpmc(struct device *cdev,
+ 	if (x86_pmu.attr_rdpmc_broken)
+ 		return -ENOTSUPP;
+ 
++	guard(mutex)(&rdpmc_mutex);
++
+ 	if (val != x86_pmu.attr_rdpmc) {
+ 		/*
+ 		 * Changing into or out of never available or always available,
 -- 
 2.43.0
 
