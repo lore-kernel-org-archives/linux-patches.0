@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C74D1A76A4;
-	Tue, 30 Jul 2024 17:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548461A76A4;
+	Tue, 30 Jul 2024 17:16:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359793; cv=none; b=l4jI/xiAAuiN11WFWv38gtxXeQtnv5+MkkJIW6fZ1+dKF0V3QPw3RZzPbgBfZHcl3ax1saavGnlhk0rCjLw4JhtEqZSL/oaXlqWBL++CnF7E0H6EqeLp/Auc0bQjHKR2kdHFSauJvatJK08EQJ/EvGIPBi0Wl7N57mVbJ3My/Ro=
+	t=1722359796; cv=none; b=nQsSRIbUV5XgMp07NNaqF5w6Rq2EXjNBLywV8jPNv0ZU2mSmblZL724kc+gjfG+ppMl1ktVIA0RZEdLDVRGfAKIfJpE6Zlhaw/Hg4ZTSE7x7DFTCyUv/szwr3d908gtaHWxSG/TxVZ9mYB+vtz79ZYWkWncVVJ/C0bygyQ4LMTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359793; c=relaxed/simple;
-	bh=at5BfkMCpDB6671ZCkKObazn5St1iYE7tnvpOEvSra0=;
+	s=arc-20240116; t=1722359796; c=relaxed/simple;
+	bh=ZOQZFea79a5kJlyxP2BMUZ7RdqZVwcUgdkKnqIRjeSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VXfioIwEkIBWGhKhrLyfChYXvrPN2CjfgRR31aRelnmSXD4mqMzfqqggNqjkEjrBmlmruD60X6tbivIUWNDgx0cztM7ow0WpkS222Ab92SYxFjOoOLGFDpDJQJ+AFydV9ZfwuhPXijfaABWJoB3E/wkmmYbRTGqnwEW/BTBZtXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lt/9f6SH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jk8xWDejRMKr67e3sxS5bkGsBADUUUp/6alj8RTX6cYasrqOnl1IbksDLCzhBQXd9leEDZlcNA7ncnzJ1lcANBGj+WqD+Ksb/E4A212t1HOWDrTdxGAvb++mMRA3eFfudhAt6xRY9cddeQPD7fNOrmv2041IVcmcK85jvU8KRzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XRshA8lB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lt/9f6SH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC11EC32782;
-	Tue, 30 Jul 2024 17:16:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XRshA8lB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7197C32782;
+	Tue, 30 Jul 2024 17:16:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359793;
-	bh=at5BfkMCpDB6671ZCkKObazn5St1iYE7tnvpOEvSra0=;
+	s=korg; t=1722359796;
+	bh=ZOQZFea79a5kJlyxP2BMUZ7RdqZVwcUgdkKnqIRjeSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lt/9f6SHCiDg69dOJSveVXqI1h0P5fM+i9ARyoWeS7KzYmEF7wpQn5h+ePETLcGP9
-	 J4KnQ8PgQ9fVMB5qBd1Q7SfHcHaxuRwEIVC/ycjPY4LWYBjBi5qn8qXIfGzaOqRL+/
-	 GlQM/ZDuOrPvjhS/pA3OnkndBn//q1D8JVmmgbNI=
+	b=XRshA8lB7gTo1QF4YTqccBny5FlwwIyn8WDU/jyrYpSkXhGdKnE7b/gQbfPFAzyde
+	 3laAvzKohw5Y5BKHAgXeFpBD0fJQijc4iwZU6B3CMstrtQLoddztpii7oCRLWPMuQc
+	 aBEycveG+K1PnGTG4xUA8IOz07zX7a6cHEqKxz4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jann Horn <jannh@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.10 533/809] landlock: Dont lose track of restrictions on cred_transfer
-Date: Tue, 30 Jul 2024 17:46:49 +0200
-Message-ID: <20240730151745.790173727@linuxfoundation.org>
+	Jiri Pirko <jiri@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 537/568] net: bonding: correctly annotate RCU in bond_should_notify_peers()
+Date: Tue, 30 Jul 2024 17:50:44 +0200
+Message-ID: <20240730151701.142253257@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,76 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 39705a6c29f8a2b93cf5b99528a55366c50014d1 upstream.
+[ Upstream commit 3ba359c0cd6eb5ea772125a7aededb4a2d516684 ]
 
-When a process' cred struct is replaced, this _almost_ always invokes
-the cred_prepare LSM hook; but in one special case (when
-KEYCTL_SESSION_TO_PARENT updates the parent's credentials), the
-cred_transfer LSM hook is used instead.  Landlock only implements the
-cred_prepare hook, not cred_transfer, so KEYCTL_SESSION_TO_PARENT causes
-all information on Landlock restrictions to be lost.
+RCU use in bond_should_notify_peers() looks wrong, since it does
+rcu_dereference(), leaves the critical section, and uses the
+pointer after that.
 
-This basically means that a process with the ability to use the fork()
-and keyctl() syscalls can get rid of all Landlock restrictions on
-itself.
+Luckily, it's called either inside a nested RCU critical section
+or with the RTNL held.
 
-Fix it by adding a cred_transfer hook that does the same thing as the
-existing cred_prepare hook. (Implemented by having hook_cred_prepare()
-call hook_cred_transfer() so that the two functions are less likely to
-accidentally diverge in the future.)
+Annotate it with rcu_dereference_rtnl() instead, and remove the
+inner RCU critical section.
 
-Cc: stable@kernel.org
-Fixes: 385975dca53e ("landlock: Set up the security framework and manage credentials")
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20240724-landlock-houdini-fix-v1-1-df89a4560ca3@google.com
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4cb4f97b7e36 ("bonding: rebuild the lock use for bond_mii_monitor()")
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Acked-by: Jay Vosburgh <jv@jvosburgh.net>
+Link: https://patch.msgid.link/20240719094119.35c62455087d.I68eb9c0f02545b364b79a59f2110f2cf5682a8e2@changeid
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/landlock/cred.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/bonding/bond_main.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/security/landlock/cred.c
-+++ b/security/landlock/cred.c
-@@ -14,8 +14,8 @@
- #include "ruleset.h"
- #include "setup.h"
- 
--static int hook_cred_prepare(struct cred *const new,
--			     const struct cred *const old, const gfp_t gfp)
-+static void hook_cred_transfer(struct cred *const new,
-+			       const struct cred *const old)
- {
- 	struct landlock_ruleset *const old_dom = landlock_cred(old)->domain;
- 
-@@ -23,6 +23,12 @@ static int hook_cred_prepare(struct cred
- 		landlock_get_ruleset(old_dom);
- 		landlock_cred(new)->domain = old_dom;
- 	}
-+}
-+
-+static int hook_cred_prepare(struct cred *const new,
-+			     const struct cred *const old, const gfp_t gfp)
-+{
-+	hook_cred_transfer(new, old);
- 	return 0;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 34880b2db8050..722ac5c4992c9 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1121,13 +1121,10 @@ static struct slave *bond_find_best_slave(struct bonding *bond)
+ 	return bestslave;
  }
  
-@@ -36,6 +42,7 @@ static void hook_cred_free(struct cred *
++/* must be called in RCU critical section or with RTNL held */
+ static bool bond_should_notify_peers(struct bonding *bond)
+ {
+-	struct slave *slave;
+-
+-	rcu_read_lock();
+-	slave = rcu_dereference(bond->curr_active_slave);
+-	rcu_read_unlock();
++	struct slave *slave = rcu_dereference_rtnl(bond->curr_active_slave);
  
- static struct security_hook_list landlock_hooks[] __ro_after_init = {
- 	LSM_HOOK_INIT(cred_prepare, hook_cred_prepare),
-+	LSM_HOOK_INIT(cred_transfer, hook_cred_transfer),
- 	LSM_HOOK_INIT(cred_free, hook_cred_free),
- };
- 
+ 	if (!slave || !bond->send_peer_notif ||
+ 	    bond->send_peer_notif %
+-- 
+2.43.0
+
 
 
