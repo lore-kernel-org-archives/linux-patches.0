@@ -1,125 +1,130 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7178D14F9F9
-	for <patches@lists.linux.dev>; Tue, 30 Jul 2024 17:34:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8AD16A949
+	for <patches@lists.linux.dev>; Tue, 30 Jul 2024 17:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360886; cv=none; b=N42gYNsJ08CR2ACvUWK0QKtuWu5Guc7v/7dZ1yCm/FMfVn7Qga+XtVw4GXmmlHolEEftlua4dkiQvou2+RE4N2aBIVKRIf6QF/L+Tk8vKQZS3/UNeXFG9LQioyF1c8+9r4aCmeZLrh6mlAjSrNPc4SlMbeXVtFtrPNBRhe2LLuU=
+	t=1722362116; cv=none; b=kdGGVuOatIA2LsIEBNMzQyEz6PSRmow9VDhAftmPBB0kPWFzcT/GM9DguTBOjShZLFlhpZDZscfEmVd9AtO+uMGcO70Xj8Rv/VhcM7frIZ5xm4JfU5CTA8gl3HRDXkx0F92NbATYZkhF2hfzkJ53WoRTVVu4wzlxSykCFaHQHyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360886; c=relaxed/simple;
-	bh=IjT0k+OgZaf4w+AiOVwzunIw2usu0Ze/wZgJAFfEWsk=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jCb/fYdA15row+ZkiH83yP7IseZ5STuzvk7Ezf5qqx/IbmhJNLbAOU6d4iJM2bNt7jF5t4BoWu2dfApg/sUphUceEqa0IRQeeV7wqUPy/+5Hb7nP/bTNKDwU01dJTlTvACCtD96ne6r9DQH9WwyHdVHug5Y17MtwyCUMx4xdbpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.31])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WYMjm4hWdz6K606;
-	Wed, 31 Jul 2024 01:32:12 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id 5279A140133;
-	Wed, 31 Jul 2024 01:34:42 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 30 Jul
- 2024 18:34:41 +0100
-Date: Tue, 30 Jul 2024 18:34:41 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, Jakub
- Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
-	<linux-doc@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
-	<saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
-	<andrew.gospodarek@broadcom.com>, Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>, "David Ahern" <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, "Jiri Pirko" <jiri@nvidia.com>, Leonid
- Bloch <lbloch@nvidia.com>, "Leon Romanovsky" <leonro@nvidia.com>,
-	<linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH v2 3/8] fwctl: FWCTL_INFO to return basic information
- about the device
-Message-ID: <20240730183441.00004672@Huawei.com>
-In-Reply-To: <20240729163513.GD3625856@nvidia.com>
-References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<3-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<20240726161503.00001c85@Huawei.com>
-	<20240729163513.GD3625856@nvidia.com>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1722362116; c=relaxed/simple;
+	bh=JH2Cd2lN6IoitPNPrBTESvV7VWxwDFLNLbMvOE9YGkQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hXZ0IRAGlm+sS/k6tEPhmPUWbYz/6IOQKEromWDrc/RwAEuMkJMBQ3mSDdyj1Cizj3uo0kQHxl9GUCQp2GKXjNRlyAfSY9qd+Lq3SrXBF2OCAXZjibQodtJ4Fg6w8tLXMM/7i/zPy0YLoLJE7T58Nxq9ryAWtq6poPWr4SvhU38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=KsgeJqZc; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="KsgeJqZc"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3687fb526b9so2253696f8f.0
+        for <patches@lists.linux.dev>; Tue, 30 Jul 2024 10:55:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1722362113; x=1722966913; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hZVb9b6idPdGqOLlS0LbFKJPOJQMfcfymuIDhlC2e8U=;
+        b=KsgeJqZcdBSOnmly9besvrCrBWYfHBHC5JmB+j2GvGkaH7R/EEVDxFliWQrmgvfCY/
+         xVQI1WG5qu6LlHK7bVGpp7Uo/VlmjdkuCxLLxuO2DFMgiXMNFiiUinSwGGMD6xoHZo/N
+         FkmJ6PVouHF6RJL/3IEO5F49b6AZtVFIo5qcvuvCbEIANkNllq7T5i30TcP+gVJ04rNa
+         T+AO6C2Ry7EcTRYkjmztTK4BeNioxV2zRt/NrLlraZQvng8aTAUtbZmdAJ0BvfDQeqeF
+         9fmBEg/Y/QFCUAsQiWfXi3wSQIP0mSEaJp/3macjQP5U/L4l2Q1FCKQhDsGwf7EAUS6W
+         RSIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722362113; x=1722966913;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hZVb9b6idPdGqOLlS0LbFKJPOJQMfcfymuIDhlC2e8U=;
+        b=dZPDrHy7x0tg29B3M2QWv7jxae0ydobMhAZsFs/qkBm47enRoSa6Mv7dG9KF7sj3dJ
+         wkmjF8OhRq0QaXG8kD/nt+rU4fmuRuFPB9lP/A1KdwO8bI5H/jSRg/J664TahG6rRLKm
+         edogNzL29xBtjQozNPiWpgB6nqwMho30KvTYJMZ1yuccVptxV/Y4AHTkkX84W5psBfDC
+         D/xdMYDiHsSliMZYwUA+e5XoPi+KDjXjpPRLwvShZSDnVPCmyiLz6GXPuLccmo8KLVOC
+         JUmE53OYgRfVoN69itjUZUAdXFmrywdvl0k11N7R50OyejZf0p4vNsElkjJAzrijoj+G
+         U7Xg==
+X-Forwarded-Encrypted: i=1; AJvYcCW8polLnGH4hzz0fNgK7EpK1slcsOV2AAnEYpiDpCq1d07HFhMZKPTvesN1OGqVUr+9X9OaiAoir56F4BbHyqFf2n15jKTLfQ==
+X-Gm-Message-State: AOJu0YxOFlKLGtLBsNUilI6LrcxG90BKaWCg/4rAj+JCinvSiYo3amKJ
+	1S5Sz6v7uDXc3Yx3gK/pJAmak+sgsxZf6p5YVaRl11eJkjWjadLXH+HSZ9NrJ5qBCyhNKL2Ijlk
+	DUBzangvpZc6nTlXZKiWynIZQnfZrEM7Fq2cy
+X-Google-Smtp-Source: AGHT+IGmM1tNNed7IrynwbRJCkV3w6w+USTXC/B0W7HVIfMnsxonH0cqX1VcweXyc+Pt8fczaIJn3PMNd+t6XksY8VY=
+X-Received: by 2002:a05:6000:1e47:b0:367:f0f2:66c1 with SMTP id
+ ffacd0b85a97d-36b5cee9ddcmr6956783f8f.12.1722362112425; Tue, 30 Jul 2024
+ 10:55:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml100004.china.huawei.com (7.191.162.219) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
+References: <20240730155702.1110144-1-ojeda@kernel.org>
+In-Reply-To: <20240730155702.1110144-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Tue, 30 Jul 2024 19:55:00 +0200
+Message-ID: <CAH5fLgj-0EsVjh8xdV1mXZBXPxKGnwUa8-R+Bg1eyjh0Gh_BWg@mail.gmail.com>
+Subject: Re: [PATCH] rust: error: allow `useless_conversion` for 32-bit builds
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Russell King <linux@armlinux.org.uk>, Boqun Feng <boqun.feng@gmail.com>, 
+	Gary Guo <gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Christian Schrefl <chrisi.schrefl@gmail.com>, Jamie Cunliffe <Jamie.Cunliffe@arm.com>, 
+	Sven Van Asbroeck <thesven73@gmail.com>, linux-arm-kernel@lists.infradead.org, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, 29 Jul 2024 13:35:13 -0300
-Jason Gunthorpe <jgg@nvidia.com> wrote:
+On Tue, Jul 30, 2024 at 5:57=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> For the new Rust support for 32-bit arm [1], Clippy warns:
+>
+>     error: useless conversion to the same type: `i32`
+>        --> rust/kernel/error.rs:139:36
+>         |
+>     139 |         unsafe { bindings::ERR_PTR(self.0.into()) as *mut _ }
+>         |                                    ^^^^^^^^^^^^^ help: consider=
+ removing `.into()`: `self.0`
+>         |
+>         =3D help: for further information visit https://rust-lang.github.=
+io/rust-clippy/master/index.html#useless_conversion
+>         =3D note: `-D clippy::useless-conversion` implied by `-D warnings=
+`
+>         =3D help: to override `-D warnings` add `#[allow(clippy::useless_=
+conversion)]`
+>
+> The `self.0.into()` converts an `c_int` into `ERR_PTR`'s parameter
+> which is a `c_long`. Thus, both types are `i32` in 32-bit. Therefore,
+> allow it for those architectures.
+>
+> Link: https://lore.kernel.org/rust-for-linux/2dbd1491-149d-443c-9802-7578=
+6a6a3b73@gmail.com/ [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  rust/kernel/error.rs | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/rust/kernel/error.rs b/rust/kernel/error.rs
+> index 145f5c397009..6f1587a2524e 100644
+> --- a/rust/kernel/error.rs
+> +++ b/rust/kernel/error.rs
+> @@ -135,8 +135,11 @@ pub(crate) fn to_blk_status(self) -> bindings::blk_s=
+tatus_t {
+>      /// Returns the error encoded as a pointer.
+>      #[allow(dead_code)]
+>      pub(crate) fn to_ptr<T>(self) -> *mut T {
+> +        #[cfg_attr(target_pointer_width =3D "32", allow(clippy::useless_=
+conversion))]
+>          // SAFETY: `self.0` is a valid error due to its invariant.
+> -        unsafe { bindings::ERR_PTR(self.0.into()) as *mut _ }
+> +        unsafe {
+> +            bindings::ERR_PTR(self.0.into()) as *mut _
+> +        }
+>      }
 
-> On Fri, Jul 26, 2024 at 04:15:03PM +0100, Jonathan Cameron wrote:
-> > On Mon, 24 Jun 2024 19:47:27 -0300
-> > Jason Gunthorpe <jgg@nvidia.com> wrote:
-> >   
-> > > Userspace will need to know some details about the fwctl interface being
-> > > used to locate the correct userspace code to communicate with the
-> > > kernel. Provide a simple device_type enum indicating what the kernel
-> > > driver is.  
-> > 
-> > As below - maybe consider a UUID?
-> > Would let you decouple allocating those with upstreaming drivers.
-> > We'll just get annoying races on the enum otherwise as multiple
-> > drivers get upstreamed that use this.  
-> 
-> I view the coupling as a feature - controlling uABI number assignment
-> is one of the subtle motivations the kernel community has typically
-> used to encourage upstream participation.
+The formatting here is a bit weird. Perhaps we should swap the cfg and
+the comment?
 
-Hmm. I'm not sure it's worth the possible pain if this becomes
-popular.  Maybe you'll have to run a reservation hotline.
+Either way, it looks good to me.
 
-
-> 
-> > > +/**
-> > > + * struct fwctl_info - ioctl(FWCTL_INFO)
-> > > + * @size: sizeof(struct fwctl_info)
-> > > + * @flags: Must be 0
-> > > + * @out_device_type: Returns the type of the device from enum fwctl_device_type  
-> > 
-> > Maybe a UUID?  Avoid need to synchronize that list for ever.
-> >   
-> > > + * @device_data_len: On input the length of the out_device_data memory. On
-> > > + *	output the size of the kernel's device_data which may be larger or
-> > > + *	smaller than the input. Maybe 0 on input.
-> > > + * @out_device_data: Pointer to a memory of device_data_len bytes. Kernel will
-> > > + *	fill the entire memory, zeroing as required.  
-> > 
-> > Why do we need device in names of these two?  
-> 
-> I'm not sure I understand this question?
-> 
-> out_device_type returns the "name"
-> 
-> out_device_data returns a struct of data, the layout of the struct is
-> defined by out_device_type
-
-What is device in this case?  fwctl struct device, hardware device, something else?
-
-I'm not sure what the names give over
-fwctl_type, out_data_len, out_data
-
-The first one can't just be type as likely as not out_data contains a
-type field specific to the fwctl_device_type.
-
-I don't feel that strongly about this though, so stick to device
-if you like. I'll get used to it.
-
-Jonathan
- 
-> 
-> Jason
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
