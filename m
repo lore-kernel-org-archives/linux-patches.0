@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485F21A76C2;
-	Tue, 30 Jul 2024 17:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4656E1A76CB;
+	Tue, 30 Jul 2024 17:29:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360586; cv=none; b=WxiLSQcM1ngd2RrqLT+pr6E9rJK5cx9MUx9KS5hJUjxP0NwFva2sWrVm0kJiT2lSkubfFbeG+4NWQLW5N1PWnkMDqH8uuZBA2HhqBtQOBt7qdGC62A5v01VMuo96Gxlp+lqcIdPV2uMvX+HHUzNXzRXvC6iazNtl69nqQR19umg=
+	t=1722360589; cv=none; b=IGOfc/GmAvx/1C6IUU4oGH6v8Tgm2N5Uvnw+2y3h1GFY9X77SvrTjc9T5A5z58kKzgKVMp8miAEBLDxCihxesZoKvbxV22FJHFtqRCL3pgFi8yYjf5LUSiIY3QZDm/oFVncQNdSkoNRKxBMlFH/rY5BPfpuTt8C5JZvrFT4vBf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360586; c=relaxed/simple;
-	bh=RuMIp+c8pcrpxJf2L9HZPmUlpKJGmwHiO338x2Q94Nk=;
+	s=arc-20240116; t=1722360589; c=relaxed/simple;
+	bh=tE7cJSEL+QIgK+FA4Gi5e4gqQJSU1Th2sWM37YU0sJc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ofFl1lNe0sZnE37/RtAsVznccO0zSzpduvrBDKKld9LrH0E1wxhFWnM8ZvjAL7hr/JoKaGW6dnm/GKg0/51MjJWzNgmjiITfIBJf7xiNEqcqr/A5iAhRWKxdwT6OvasVvb51gCdHeBuymAA72wioBWjOt+3MFdMlPRvQcQOwlyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2KSugPHP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NaiE4MRiTczGtwtRlLWKhn9ZK56rSVKJWVh0XXr2GumGf6HJeGE/ep3sNgtXUi+Xpu95NcAiI5tRe0qP0xyt3KN+DnlXlg1BbqRF8K9dMwgQUmdQF51QOTVMgbetqznQ0jWZMftVdPIz12IUHMMgNXw57JYsf+U1d7MqrPZH+xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQTopR7N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2KSugPHP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA039C4AF0E;
-	Tue, 30 Jul 2024 17:29:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQTopR7N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8259C4AF0E;
+	Tue, 30 Jul 2024 17:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360586;
-	bh=RuMIp+c8pcrpxJf2L9HZPmUlpKJGmwHiO338x2Q94Nk=;
+	s=korg; t=1722360589;
+	bh=tE7cJSEL+QIgK+FA4Gi5e4gqQJSU1Th2sWM37YU0sJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2KSugPHPJ/1o03Hl6WVntOk8p9jWimDOCsFKIiLceA1vmrvpwtbfqLV6bKzB05wwx
-	 2yqMQzHCGWq4tIF1GsWGnxijpjx9r8lwiiZjGvYeh/cU1OdcL5oMyDjEv022SfMOKd
-	 M91FLJFgI7TR/tyf7hl8nVpV1cHAxkc3UUeNy3IM=
+	b=LQTopR7NYaQutf27oByoGHxyr8kxIl1WtX7iH4dYPLCZ/nj2ebwxXwIkw9oaWaR0m
+	 WhjIjNLkP60JnCkKeI3aVr+ydI/vpcMvgP7bfTys9SZKv/eJAnzqds6oWSs1rb+FqV
+	 iXqbR5lmwo8X3WWiIf4HepNBTEl3FXWiYwxr6aao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@linux.dev>,
-	Vinod Koul <vkoul@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 744/809] phy: zynqmp: Enable reference clock correctly
-Date: Tue, 30 Jul 2024 17:50:20 +0200
-Message-ID: <20240730151754.341720248@linuxfoundation.org>
+Subject: [PATCH 6.10 745/809] um: time-travel: fix time-travel-start option
+Date: Tue, 30 Jul 2024 17:50:21 +0200
+Message-ID: <20240730151754.381069312@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,77 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Anderson <sean.anderson@linux.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 687d6bccb28238fcfa65f7c1badfdfeac498c428 ]
+[ Upstream commit 7d0a8a490aa3a2a82de8826aaf1dfa38575cb77a ]
 
-Lanes can use other lanes' reference clocks, as determined by refclk.
-Use refclk to determine the clock to enable/disable instead of always
-using the lane's own reference clock. This ensures the clock selected in
-xpsgtr_configure_pll is the one enabled.
+We need to have the = as part of the option so that the
+value can be parsed properly. Also document that it must
+be given in nanoseconds, not seconds.
 
-For the other half of the equation, always program REF_CLK_SEL even when
-we are selecting the lane's own clock. This ensures that Linux's idea of
-the reference clock matches the hardware. We use the "local" clock mux
-for this instead of going through the ref clock network.
-
-Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
-Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
-Link: https://lore.kernel.org/r/20240628205540.3098010-2-sean.anderson@linux.dev
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 065038706f77 ("um: Support time travel mode")
+Link: https://patch.msgid.link/20240417102744.14b9a9d4eba0.Ib22e9136513126b2099d932650f55f193120cd97@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/xilinx/phy-zynqmp.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ arch/um/kernel/time.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
-index dc8319bda43d7..f2bff7f25f05a 100644
---- a/drivers/phy/xilinx/phy-zynqmp.c
-+++ b/drivers/phy/xilinx/phy-zynqmp.c
-@@ -80,7 +80,8 @@
- 
- /* Reference clock selection parameters */
- #define L0_Ln_REF_CLK_SEL(n)		(0x2860 + (n) * 4)
--#define L0_REF_CLK_SEL_MASK		0x8f
-+#define L0_REF_CLK_LCL_SEL		BIT(7)
-+#define L0_REF_CLK_SEL_MASK		0x9f
- 
- /* Calibration digital logic parameters */
- #define L3_TM_CALIB_DIG19		0xec4c
-@@ -349,11 +350,12 @@ static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
- 		       PLL_FREQ_MASK, ssc->pll_ref_clk);
- 
- 	/* Enable lane clock sharing, if required */
--	if (gtr_phy->refclk != gtr_phy->lane) {
--		/* Lane3 Ref Clock Selection Register */
-+	if (gtr_phy->refclk == gtr_phy->lane)
-+		xpsgtr_clr_set(gtr_phy->dev, L0_Ln_REF_CLK_SEL(gtr_phy->lane),
-+			       L0_REF_CLK_SEL_MASK, L0_REF_CLK_LCL_SEL);
-+	else
- 		xpsgtr_clr_set(gtr_phy->dev, L0_Ln_REF_CLK_SEL(gtr_phy->lane),
- 			       L0_REF_CLK_SEL_MASK, 1 << gtr_phy->refclk);
--	}
- 
- 	/* SSC step size [7:0] */
- 	xpsgtr_clr_set_phy(gtr_phy, L0_PLL_SS_STEP_SIZE_0_LSB,
-@@ -573,7 +575,7 @@ static int xpsgtr_phy_init(struct phy *phy)
- 	mutex_lock(&gtr_dev->gtr_mutex);
- 
- 	/* Configure and enable the clock when peripheral phy_init call */
--	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->lane]))
-+	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
- 		goto out;
- 
- 	/* Skip initialization if not required. */
-@@ -625,7 +627,7 @@ static int xpsgtr_phy_exit(struct phy *phy)
- 	gtr_phy->skip_phy_init = false;
- 
- 	/* Ensure that disable clock only, which configure for lane */
--	clk_disable_unprepare(gtr_dev->clk[gtr_phy->lane]);
-+	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
- 
- 	return 0;
+diff --git a/arch/um/kernel/time.c b/arch/um/kernel/time.c
+index a8bfe8be15260..5b5fd8f68d9c1 100644
+--- a/arch/um/kernel/time.c
++++ b/arch/um/kernel/time.c
+@@ -875,9 +875,9 @@ static int setup_time_travel_start(char *str)
+ 	return 1;
  }
+ 
+-__setup("time-travel-start", setup_time_travel_start);
++__setup("time-travel-start=", setup_time_travel_start);
+ __uml_help(setup_time_travel_start,
+-"time-travel-start=<seconds>\n"
++"time-travel-start=<nanoseconds>\n"
+ "Configure the UML instance's wall clock to start at this value rather than\n"
+ "the host's wall clock at the time of UML boot.\n");
+ #endif
 -- 
 2.43.0
 
