@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557EC14D29B;
-	Tue, 30 Jul 2024 16:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DBDE1A6195;
+	Tue, 30 Jul 2024 16:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357152; cv=none; b=mnF1fCoIvFaFS5TCo06LCB6FPxFXtT3/kciNhBB+ObGnujp6f9ahfydD1RQkDgWhV8J25C3XQCQ4FPmul/awfJyEucPehq05akSzSl6ha6uKBua/mx7CBMsKPfOxdAOK6c5MZaQyvAnicdl2gkbWwI0p58veI3tfqZe7WvUhAsQ=
+	t=1722357155; cv=none; b=SrMTDyX5R+Ebg8kNuoz/ZjN38BYs38uqb2nt9gwyygsEBLA31qpWQ0/53H1BwFJi1721vqDU6YsDi2vEZ2SqnkJcZoC+CraNIOmEx0SLfA87A7iNaktGCCokMSAACHMpLA7uCBMGI5sDqs33dR1d88gyAC+jcfXVOksG3DtwJ14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357152; c=relaxed/simple;
-	bh=2C+U7WxRt0rJQcwOk+jsEhkCm856GAZvMrVdL5olEsI=;
+	s=arc-20240116; t=1722357155; c=relaxed/simple;
+	bh=z58emz38b2+GinssG/KfUa9g4K0Cdp5qHIMcT2oBOqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZI2VJgdB/w3YobJgqkBLbMDnKW46L+r/FkgitQBcDYVuVuvVaNwOQ2Kwg/wuJ6fGbX0wAtWOm7afRMDsn/Qfvftaw9aeE1kzKfFwG1FU/3GiiPkiX0fFdk+7p4OF7++KNg1GN99811OVrIrbaFmqH7tljsYRMcdBw8/b4jrQE8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r/XFwqX1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XgffmAYE8chmUYSjM+QER2lSErgSDkEf7w133HP1rxF4qs0esVrmoZZ4SCQ8Y6ww40tmVH49+dhG11UBUDB7J1g1OpytkX6kwL4cCRA+unOoc3RNaapeLbg7Jc3500y7grs3otVYT8pC460zTae1Evgpxkn5joMVvpf4K+gdt54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dPm6giEn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r/XFwqX1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D50AFC32782;
-	Tue, 30 Jul 2024 16:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dPm6giEn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B78C32782;
+	Tue, 30 Jul 2024 16:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357152;
-	bh=2C+U7WxRt0rJQcwOk+jsEhkCm856GAZvMrVdL5olEsI=;
+	s=korg; t=1722357155;
+	bh=z58emz38b2+GinssG/KfUa9g4K0Cdp5qHIMcT2oBOqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/XFwqX1HUwSluvMstUhCjwuRV5qz1Vox8VDtfZNZOiW0lNO78K8WQyjfU+KWMmFM
-	 Jq6BVYZxiizC4tmuQPeEkYWBcJy8kWiWpyDOAg39IQjwTOZ4y0Au6H2j9U+8a66PAg
-	 YRCuvhAu+TzyZhQnZVV9HKXfzxLXRCS6s/Up5GgA=
+	b=dPm6giEnRntPVRd0YefiUps/x57TdFNWHJUd8VSo4xPP4CQQq0R2X7A79t7HUn4CZ
+	 PuVyADkDOKEZjN8La6gpG9fZuVEGLIBSv7Dq/8raSUt4B/TZZ9d7vLpODR65L/P36d
+	 /XO12MAhbuKU9ZrRImPQy31YvWKYFNO8zbKXsbRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sandipan Das <sandipan.das@amd.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 227/809] perf/x86/amd/uncore: Avoid PMU registration if counters are unavailable
-Date: Tue, 30 Jul 2024 17:41:43 +0200
-Message-ID: <20240730151733.572300700@linuxfoundation.org>
+Subject: [PATCH 6.1 264/440] fs/ntfs3: Keep runs for $MFT::$ATTR_DATA and $MFT::$ATTR_BITMAP
+Date: Tue, 30 Jul 2024 17:48:17 +0200
+Message-ID: <20240730151626.152834453@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,98 +46,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sandipan Das <sandipan.das@amd.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit f997e208b6c96858a2f6c0855debfbdb9b52f131 ]
+[ Upstream commit eb95678ee930d67d79fc83f0a700245ae7230455 ]
 
-X86_FEATURE_PERFCTR_NB and X86_FEATURE_PERFCTR_LLC are derived from
-CPUID leaf 0x80000001 ECX bits 24 and 28 respectively and denote the
-availability of DF and L3 counters. When these bits are not set, the
-corresponding PMUs have no counters and hence, should not be registered.
+We skip the run_truncate_head call also for $MFT::$ATTR_BITMAP.
+Otherwise wnd_map()/run_lookup_entry will not find the disk position for the bitmap parts.
 
-Fixes: 07888daa056e ("perf/x86/amd/uncore: Move discovery and registration")
-Signed-off-by: Sandipan Das <sandipan.das@amd.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240626074404.1044230-1-sandipan.das@amd.com
+Fixes: 0e5b044cbf3a ("fs/ntfs3: Refactoring attr_set_size to restore after errors")
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/amd/uncore.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ fs/ntfs3/attrib.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/amd/uncore.c b/arch/x86/events/amd/uncore.c
-index 4ccb8fa483e61..b78e05ab4a737 100644
---- a/arch/x86/events/amd/uncore.c
-+++ b/arch/x86/events/amd/uncore.c
-@@ -654,17 +654,20 @@ int amd_uncore_df_ctx_init(struct amd_uncore *uncore, unsigned int cpu)
- {
- 	struct attribute **df_attr = amd_uncore_df_format_attr;
- 	struct amd_uncore_pmu *pmu;
-+	int num_counters;
+diff --git a/fs/ntfs3/attrib.c b/fs/ntfs3/attrib.c
+index 94b26c951752e..0388e6b42100f 100644
+--- a/fs/ntfs3/attrib.c
++++ b/fs/ntfs3/attrib.c
+@@ -681,7 +681,8 @@ int attr_set_size(struct ntfs_inode *ni, enum ATTR_TYPE type,
+ 			goto undo_2;
+ 		}
  
- 	/* Run just once */
- 	if (uncore->init_done)
- 		return amd_uncore_ctx_init(uncore, cpu);
+-		if (!is_mft)
++		/* keep runs for $MFT::$ATTR_DATA and $MFT::$ATTR_BITMAP. */
++		if (ni->mi.rno != MFT_REC_MFT)
+ 			run_truncate_head(run, evcn + 1);
  
-+	num_counters = amd_uncore_ctx_num_pmcs(uncore, cpu);
-+	if (!num_counters)
-+		goto done;
-+
- 	/* No grouping, single instance for a system */
- 	uncore->pmus = kzalloc(sizeof(*uncore->pmus), GFP_KERNEL);
--	if (!uncore->pmus) {
--		uncore->num_pmus = 0;
-+	if (!uncore->pmus)
- 		goto done;
--	}
- 
- 	/*
- 	 * For Family 17h and above, the Northbridge counters are repurposed
-@@ -674,7 +677,7 @@ int amd_uncore_df_ctx_init(struct amd_uncore *uncore, unsigned int cpu)
- 	pmu = &uncore->pmus[0];
- 	strscpy(pmu->name, boot_cpu_data.x86 >= 0x17 ? "amd_df" : "amd_nb",
- 		sizeof(pmu->name));
--	pmu->num_counters = amd_uncore_ctx_num_pmcs(uncore, cpu);
-+	pmu->num_counters = num_counters;
- 	pmu->msr_base = MSR_F15H_NB_PERF_CTL;
- 	pmu->rdpmc_base = RDPMC_BASE_NB;
- 	pmu->group = amd_uncore_ctx_gid(uncore, cpu);
-@@ -785,17 +788,20 @@ int amd_uncore_l3_ctx_init(struct amd_uncore *uncore, unsigned int cpu)
- {
- 	struct attribute **l3_attr = amd_uncore_l3_format_attr;
- 	struct amd_uncore_pmu *pmu;
-+	int num_counters;
- 
- 	/* Run just once */
- 	if (uncore->init_done)
- 		return amd_uncore_ctx_init(uncore, cpu);
- 
-+	num_counters = amd_uncore_ctx_num_pmcs(uncore, cpu);
-+	if (!num_counters)
-+		goto done;
-+
- 	/* No grouping, single instance for a system */
- 	uncore->pmus = kzalloc(sizeof(*uncore->pmus), GFP_KERNEL);
--	if (!uncore->pmus) {
--		uncore->num_pmus = 0;
-+	if (!uncore->pmus)
- 		goto done;
--	}
- 
- 	/*
- 	 * For Family 17h and above, L3 cache counters are available instead
-@@ -805,7 +811,7 @@ int amd_uncore_l3_ctx_init(struct amd_uncore *uncore, unsigned int cpu)
- 	pmu = &uncore->pmus[0];
- 	strscpy(pmu->name, boot_cpu_data.x86 >= 0x17 ? "amd_l3" : "amd_l2",
- 		sizeof(pmu->name));
--	pmu->num_counters = amd_uncore_ctx_num_pmcs(uncore, cpu);
-+	pmu->num_counters = num_counters;
- 	pmu->msr_base = MSR_F16H_L2I_PERF_CTL;
- 	pmu->rdpmc_base = RDPMC_BASE_LLC;
- 	pmu->group = amd_uncore_ctx_gid(uncore, cpu);
+ 		svcn = le64_to_cpu(attr->nres.svcn);
 -- 
 2.43.0
 
