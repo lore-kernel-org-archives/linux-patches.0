@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F1B1A76DA;
-	Tue, 30 Jul 2024 17:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E67A189502;
+	Tue, 30 Jul 2024 17:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359540; cv=none; b=AkccgPR9cfnbiE9qe6ZIBWyuMdKJeE+FO6hNd7UWL+Dun/XfuTh6memf8HQOQ7ZRaqqdA0wQ24hLprxsgJZzRhfM8hVarJj/kZ6i/JVsWucn38EFLdItI61xx8eFpMSZL2s7CKvXrXS+sNhQ+OyIQ5wCvk7Axc4tADdIzdd3ako=
+	t=1722359543; cv=none; b=HId1uT31r8X6iuktnge1EGIeFDoB2NG6wRJ0vfRGvipV7974eH3RtJDIAu26o5bRVvPlRfJaF2NR9eJOiY3F/p1MCpqe0o925yxc+mgGwm50Uj1fvgkrBrJwmUznMADWodS/e6kg8mWzGyJ7FF5It79C92S23SQkCV4S+FNVMaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359540; c=relaxed/simple;
-	bh=6UOes3l9T0t3013cA9M0Yt9N/ElPhp7RwZpUD0ancDY=;
+	s=arc-20240116; t=1722359543; c=relaxed/simple;
+	bh=zjpUQ/km2XjBLi6X+YL80mY/7Konig9Wn8viE6p3hTA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QyMg4p+UE+f5+lMYN8uj71FhgVf1l7cKHDFntuxccI6SHx04ua+M9yFFzJl/pPs/rwtV2dRFWNerMhy9DSF9m1olatbOSINC0WFNX2+AFRqCgf56gpxm6+hqFtyWlRIFpNrDfxhbIZvtYFwZysiBwH7LXMO9q6Kc31u2o7ItaAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bl3sp06k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDRz2CEF6GVbscHhIpynxR6BlLLcQ7d9twCsSXHVY2vjI/KuezaRmuiGysCDewMgme7uqQCz3CFqaM4GPrtynuU7PjFVaXAkCHV3eFL+eDy/gDRI0QFzGRPHXs/WkffvF3qNmOD7h1RxhNtnPEtNciNHoYIAspTM9Vx4zebL1m4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nypyXQja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bl3sp06k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A18C32782;
-	Tue, 30 Jul 2024 17:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nypyXQja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB21DC4AF12;
+	Tue, 30 Jul 2024 17:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359539;
-	bh=6UOes3l9T0t3013cA9M0Yt9N/ElPhp7RwZpUD0ancDY=;
+	s=korg; t=1722359543;
+	bh=zjpUQ/km2XjBLi6X+YL80mY/7Konig9Wn8viE6p3hTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bl3sp06kZaF+/XoTcsXEt4UlKX6ATNVDeIJq/smq6wxWiNzmjuKCMuazvmBid6Q5X
-	 oPyhUm/hqaQ/sRTN1/RM24kZVOnTiZlrTn5Sfqp8JfG509Atr5RtMpj9swJ0CpCq2V
-	 1XhYMx5diRdKvJzWGsAUEMCt9XbUQldwmuWpDUv4=
+	b=nypyXQjaIEaUPhbrbAiT/cUQlw6Je1rdZPOACjSCXONAnd+lzUcUXfq+iesONWHey
+	 dbk5IaHTTxxNK+87YU1g4qYNq03hewYiHgIXVUcIgEvEf+0WcqzShMB0OD+zODMIV4
+	 HhQDvRdwQiizqsBpgXHQw0ipGQ8lovVyxmQfhIPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 498/809] fs/ntfs3: Fix field-spanning write in INDEX_HDR
-Date: Tue, 30 Jul 2024 17:46:14 +0200
-Message-ID: <20240730151744.405408847@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 6.6 499/568] MIPS: Loongson64: Test register availability before use
+Date: Tue, 30 Jul 2024 17:50:06 +0200
+Message-ID: <20240730151659.531635250@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -46,88 +46,89 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 2f3e176fee66ac86ae387787bf06457b101d9f7a ]
+commit c04366b1207a036b7de02dfcc1ac7138d3343c9b upstream.
 
-Fields flags and res[3] replaced with one 4 byte flags.
+Some global register address variable may be missing on
+specific CPU type, test them before use them.
 
-Fixes: 4534a70b7056 ("fs/ntfs3: Add headers and misc files")
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/index.c | 4 ++--
- fs/ntfs3/ntfs.h  | 9 +++++----
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ arch/mips/loongson64/smp.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
-index d0f15bbf78f6c..9089c58a005ce 100644
---- a/fs/ntfs3/index.c
-+++ b/fs/ntfs3/index.c
-@@ -978,7 +978,7 @@ static struct indx_node *indx_new(struct ntfs_index *indx,
- 		hdr->used =
- 			cpu_to_le32(eo + sizeof(struct NTFS_DE) + sizeof(u64));
- 		de_set_vbn_le(e, *sub_vbn);
--		hdr->flags = 1;
-+		hdr->flags = NTFS_INDEX_HDR_HAS_SUBNODES;
- 	} else {
- 		e->size = cpu_to_le16(sizeof(struct NTFS_DE));
- 		hdr->used = cpu_to_le32(eo + sizeof(struct NTFS_DE));
-@@ -1683,7 +1683,7 @@ static int indx_insert_into_root(struct ntfs_index *indx, struct ntfs_inode *ni,
- 	e->size = cpu_to_le16(sizeof(struct NTFS_DE) + sizeof(u64));
- 	e->flags = NTFS_IE_HAS_SUBNODES | NTFS_IE_LAST;
+--- a/arch/mips/loongson64/smp.c
++++ b/arch/mips/loongson64/smp.c
+@@ -466,12 +466,25 @@ static void loongson3_smp_finish(void)
+ static void __init loongson3_smp_setup(void)
+ {
+ 	int i = 0, num = 0; /* i: physical id, num: logical id */
++	int max_cpus = 0;
  
--	hdr->flags = 1;
-+	hdr->flags = NTFS_INDEX_HDR_HAS_SUBNODES;
- 	hdr->used = hdr->total =
- 		cpu_to_le32(new_root_size - offsetof(struct INDEX_ROOT, ihdr));
+ 	init_cpu_possible(cpu_none_mask);
  
-diff --git a/fs/ntfs3/ntfs.h b/fs/ntfs3/ntfs.h
-index 1f2cdb0dbbe1d..e1889ad092304 100644
---- a/fs/ntfs3/ntfs.h
-+++ b/fs/ntfs3/ntfs.h
-@@ -693,14 +693,15 @@ static inline bool de_has_vcn_ex(const struct NTFS_DE *e)
- 	      offsetof(struct ATTR_FILE_NAME, name) + \
- 	      NTFS_NAME_LEN * sizeof(short), 8)
- 
-+#define NTFS_INDEX_HDR_HAS_SUBNODES cpu_to_le32(1)
++	for (i = 0; i < ARRAY_SIZE(smp_group); i++) {
++		if (!smp_group[i])
++			break;
++		max_cpus += loongson_sysconf.cores_per_node;
++	}
 +
- struct INDEX_HDR {
- 	__le32 de_off;	// 0x00: The offset from the start of this structure
- 			// to the first NTFS_DE.
- 	__le32 used;	// 0x04: The size of this structure plus all
- 			// entries (quad-word aligned).
- 	__le32 total;	// 0x08: The allocated size of for this structure plus all entries.
--	u8 flags;	// 0x0C: 0x00 = Small directory, 0x01 = Large directory.
--	u8 res[3];
-+	__le32 flags;	// 0x0C: 0x00 = Small directory, 0x01 = Large directory.
++	if (max_cpus < loongson_sysconf.nr_cpus) {
++		pr_err("SMP Groups are less than the number of CPUs\n");
++		loongson_sysconf.nr_cpus = max_cpus ? max_cpus : 1;
++	}
++
+ 	/* For unified kernel, NR_CPUS is the maximum possible value,
+ 	 * loongson_sysconf.nr_cpus is the really present value
+ 	 */
++	i = 0;
+ 	while (i < loongson_sysconf.nr_cpus) {
+ 		if (loongson_sysconf.reserved_cpus_mask & (1<<i)) {
+ 			/* Reserved physical CPU cores */
+@@ -492,14 +505,14 @@ static void __init loongson3_smp_setup(v
+ 		__cpu_logical_map[num] = -1;
+ 		num++;
+ 	}
+-
+ 	csr_ipi_probe();
+ 	ipi_set0_regs_init();
+ 	ipi_clear0_regs_init();
+ 	ipi_status0_regs_init();
+ 	ipi_en0_regs_init();
+ 	ipi_mailbox_buf_init();
+-	ipi_write_enable(0);
++	if (smp_group[0])
++		ipi_write_enable(0);
  
- 	//
- 	// de_off + used <= total
-@@ -748,7 +749,7 @@ static inline struct NTFS_DE *hdr_next_de(const struct INDEX_HDR *hdr,
+ 	cpu_set_core(&cpu_data[0],
+ 		     cpu_logical_map(0) % loongson_sysconf.cores_per_package);
+@@ -818,6 +831,9 @@ static int loongson3_disable_clock(unsig
+ 	uint64_t core_id = cpu_core(&cpu_data[cpu]);
+ 	uint64_t package_id = cpu_data[cpu].package;
  
- static inline bool hdr_has_subnode(const struct INDEX_HDR *hdr)
- {
--	return hdr->flags & 1;
-+	return hdr->flags & NTFS_INDEX_HDR_HAS_SUBNODES;
- }
++	if (!loongson_chipcfg[package_id] || !loongson_freqctrl[package_id])
++		return 0;
++
+ 	if ((read_c0_prid() & PRID_REV_MASK) == PRID_REV_LOONGSON3A_R1) {
+ 		LOONGSON_CHIPCFG(package_id) &= ~(1 << (12 + core_id));
+ 	} else {
+@@ -832,6 +848,9 @@ static int loongson3_enable_clock(unsign
+ 	uint64_t core_id = cpu_core(&cpu_data[cpu]);
+ 	uint64_t package_id = cpu_data[cpu].package;
  
- struct INDEX_BUFFER {
-@@ -768,7 +769,7 @@ static inline bool ib_is_empty(const struct INDEX_BUFFER *ib)
- 
- static inline bool ib_is_leaf(const struct INDEX_BUFFER *ib)
- {
--	return !(ib->ihdr.flags & 1);
-+	return !(ib->ihdr.flags & NTFS_INDEX_HDR_HAS_SUBNODES);
- }
- 
- /* Index root structure ( 0x90 ). */
--- 
-2.43.0
-
++	if (!loongson_chipcfg[package_id] || !loongson_freqctrl[package_id])
++		return 0;
++
+ 	if ((read_c0_prid() & PRID_REV_MASK) == PRID_REV_LOONGSON3A_R1) {
+ 		LOONGSON_CHIPCFG(package_id) |= 1 << (12 + core_id);
+ 	} else {
 
 
