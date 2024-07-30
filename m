@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA597189514;
-	Tue, 30 Jul 2024 16:53:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F246118801A;
+	Tue, 30 Jul 2024 16:53:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358390; cv=none; b=hq4tVs9XshHU5nL3tXLM7CCLQYx37J01y/pvk3EGwMQSTyBSJoxCjtevUobfnuw4gPurU9z7VSsiKdd5j33RZ8LGIxVsYAqm9X0poxgkGF7oVicACol5kjkECbE/k2TwXU+UQFFWjHeh6CXSsNHpVcHOQx6leLNaHPMfEQYMHh4=
+	t=1722358394; cv=none; b=WUqhMLlUZZrUCC/gdc0G+DZ8Mk8pdsWrxPLtRzkxlGiOuqOnPy1ClmfTWD/Ky3wZFddfMIoLzS0bJQ4PU59rNtSdDwxjdVaZe1a39QHsdi0P1VEX7EPMcp6CooPwytDoG9n8bw4AhPoEe3coxGwrk3/4zhZhqHjA+LdI6/Z0naU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358390; c=relaxed/simple;
-	bh=GBQhNBOBjrC/sPJsnUGsZvOXsZkRWgwo0vEoDnlU0Hw=;
+	s=arc-20240116; t=1722358394; c=relaxed/simple;
+	bh=R8C0Tch6IO/vZCz9z5Fv3ZiPDkLoE685/XueCs0BzZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IdMIAJEJ7H1jwviDqfVwxbJPjQBXQC7jrSETQCCpqjXg/Wb+e8Bs0bqbtXZiPdxO9JGjsMUKjOHO9hV1m5MZMiawLHcuBasv5iDW74XBIJyEi+JvWu9LaZYAj6FVuA0bJm2fBDDSmNt01uf+/Xhswp1uoxqroxrUvTsmGdFRBJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vxBh4PCF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RQGUGzTkStanxZemUlTdufU/W8ILD2PRbSw4BqA0vjZpXqu87Ee0XZsoy24BV3dUGkn5BpQoV7COVPmOomPnhEH54JOVg+WQiw2j5d7+nucDuWoDVf6yPcMUajKsObeEWKUQ/ZOuKgloD1rGGHRxqaDFDpWPmrSGxQPoFp2Ki08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mFt8vKFU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vxBh4PCF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49496C32782;
-	Tue, 30 Jul 2024 16:53:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mFt8vKFU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 682FFC32782;
+	Tue, 30 Jul 2024 16:53:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358390;
-	bh=GBQhNBOBjrC/sPJsnUGsZvOXsZkRWgwo0vEoDnlU0Hw=;
+	s=korg; t=1722358393;
+	bh=R8C0Tch6IO/vZCz9z5Fv3ZiPDkLoE685/XueCs0BzZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vxBh4PCFscbo8gpyi1Cdcuhy/x64XeyGt+H5EWjUPfeLO3aMjD7wwGw2zpMDxaOO5
-	 IYQJ6l8hq48hyJtnnRE1EgMtsYOcXME11xVkdDyhKiogsxCY9BZcIySElRUiwkXKTL
-	 vglKt2T9qggJymIUmsCmCvGIdFmWKInx5BE6Kon0=
+	b=mFt8vKFUpO1mmghGQC/s2b8DECz0ZZkXEaDeNl0D3XH8dPJsnFMxNzqSOGKBalC/V
+	 RE9EupiabXlB+a+vlGNugXTeUhVagxJ1Xzk71coYiZU5IEO26t98Gi8pyx/34VkMbh
+	 nFLMEo0T9rov3cjX7BKthPuFLGeQlymSG9UV48qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 386/440] nilfs2: handle inconsistent state in nilfs_btnode_create_block()
-Date: Tue, 30 Jul 2024 17:50:19 +0200
-Message-ID: <20240730151630.883192662@linuxfoundation.org>
+	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 355/809] ext4: fix infinite loop when replaying fast_commit
+Date: Tue, 30 Jul 2024 17:43:51 +0200
+Message-ID: <20240730151738.664904323@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,101 +48,52 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
 
-commit 4811f7af6090e8f5a398fbdd766f903ef6c0d787 upstream.
+[ Upstream commit 907c3fe532253a6ef4eb9c4d67efb71fab58c706 ]
 
-Syzbot reported that a buffer state inconsistency was detected in
-nilfs_btnode_create_block(), triggering a kernel bug.
+When doing fast_commit replay an infinite loop may occur due to an
+uninitialized extent_status struct.  ext4_ext_determine_insert_hole() does
+not detect the replay and calls ext4_es_find_extent_range(), which will
+return immediately without initializing the 'es' variable.
 
-It is not appropriate to treat this inconsistency as a bug; it can occur
-if the argument block address (the buffer index of the newly created
-block) is a virtual block number and has been reallocated due to
-corruption of the bitmap used to manage its allocation state.
+Because 'es' contains garbage, an integer overflow may happen causing an
+infinite loop in this function, easily reproducible using fstest generic/039.
 
-So, modify nilfs_btnode_create_block() and its callers to treat it as a
-possible filesystem error, rather than triggering a kernel bug.
+This commit fixes this issue by unconditionally initializing the structure
+in function ext4_es_find_extent_range().
 
-Link: https://lkml.kernel.org/r/20240725052007.4562-1-konishi.ryusuke@gmail.com
-Fixes: a60be987d45d ("nilfs2: B-tree node cache")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=89cc4f2324ed37988b60
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Thanks to Zhang Yi, for figuring out the real problem!
+
+Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
+Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20240515082857.32730-1-luis.henriques@linux.dev
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btnode.c |   25 ++++++++++++++++++++-----
- fs/nilfs2/btree.c  |    4 ++--
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ fs/ext4/extents_status.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -51,12 +51,21 @@ nilfs_btnode_create_block(struct address
- 
- 	bh = nilfs_grab_buffer(inode, btnc, blocknr, BIT(BH_NILFS_Node));
- 	if (unlikely(!bh))
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	if (unlikely(buffer_mapped(bh) || buffer_uptodate(bh) ||
- 		     buffer_dirty(bh))) {
--		brelse(bh);
--		BUG();
-+		/*
-+		 * The block buffer at the specified new address was already
-+		 * in use.  This can happen if it is a virtual block number
-+		 * and has been reallocated due to corruption of the bitmap
-+		 * used to manage its allocation state (if not, the buffer
-+		 * clearing of an abandoned b-tree node is missing somewhere).
-+		 */
-+		nilfs_error(inode->i_sb,
-+			    "state inconsistency probably due to duplicate use of b-tree node block address %llu (ino=%lu)",
-+			    (unsigned long long)blocknr, inode->i_ino);
-+		goto failed;
- 	}
- 	memset(bh->b_data, 0, i_blocksize(inode));
- 	bh->b_bdev = inode->i_sb->s_bdev;
-@@ -67,6 +76,12 @@ nilfs_btnode_create_block(struct address
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
- 	return bh;
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index 4a00e2f019d93..3a53dbb85e15b 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -310,6 +310,8 @@ void ext4_es_find_extent_range(struct inode *inode,
+ 			       ext4_lblk_t lblk, ext4_lblk_t end,
+ 			       struct extent_status *es)
+ {
++	es->es_lblk = es->es_len = es->es_pblk = 0;
 +
-+failed:
-+	unlock_page(bh->b_page);
-+	put_page(bh->b_page);
-+	brelse(bh);
-+	return ERR_PTR(-EIO);
- }
+ 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
+ 		return;
  
- int nilfs_btnode_submit_block(struct address_space *btnc, __u64 blocknr,
-@@ -217,8 +232,8 @@ retry:
- 	}
- 
- 	nbh = nilfs_btnode_create_block(btnc, newkey);
--	if (!nbh)
--		return -ENOMEM;
-+	if (IS_ERR(nbh))
-+		return PTR_ERR(nbh);
- 
- 	BUG_ON(nbh == obh);
- 	ctxt->newbh = nbh;
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -63,8 +63,8 @@ static int nilfs_btree_get_new_block(con
- 	struct buffer_head *bh;
- 
- 	bh = nilfs_btnode_create_block(btnc, ptr);
--	if (!bh)
--		return -ENOMEM;
-+	if (IS_ERR(bh))
-+		return PTR_ERR(bh);
- 
- 	set_buffer_nilfs_volatile(bh);
- 	*bhp = bh;
+-- 
+2.43.0
+
 
 
