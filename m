@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC371A305E;
-	Tue, 30 Jul 2024 16:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A21918E03C;
+	Tue, 30 Jul 2024 16:10:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355847; cv=none; b=Xp/5Ws4cD6Uz8LhNLHX+x7ELIMz6IR8G9H8OQLLdoonjV5tQoRfcpjgrdmsNe7uAlcJbR/qutwezeRBVmgJvDHdHZTfwjzuGvraa3oLW15fBQ3HJGbZTBw3mSwbPzt3KYQ7n709BpXl+mTPW5DOIPYFGEVkglhrGyCcdK8u7K5k=
+	t=1722355850; cv=none; b=WeSznjIl7bm1krD9Zz0C6s34q/HN74fF9nabMcrA8wOqw5TNLb+rOr4qnUbRlyf1oxaD/ZRjGzbzaGtcvfxA/wxH84hQRW0HLJ/lXdnvTSx6k8eZjRXRGHPBqRJCFG4wSAo9yKgnUP/hjAbj42rVQ9YGDk7Q+d+Gy0w5SOLETQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355847; c=relaxed/simple;
-	bh=M5r9S0CAUqCayyDBsNroeaEMn31LDDP5dSs0NQ2HoQg=;
+	s=arc-20240116; t=1722355850; c=relaxed/simple;
+	bh=PgbvTgmjHd8ef+qmKcuWLfLrPWLQrxArkyVTRuHjAjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rc9l7I5I6NWrKpFMZAFv8cVKYDL1tzYQcAy+uXrs47E383Qp8/JOAaM4hJ0kowiiNbv5XoXSZeumGlDv/rVrZoErWC44s15fYt0eSe9h5M2D9DWqesd99XK4o82sROKLg2Tf57SyOtV/SFcD8QsdyoEsaIaDWx8xnStnIfbQPVM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZSDHtVk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5jiwSyNDrV5h+f/2trgIfSITnv5t6SXmfMNN7aEo/BBRiFHMM/PUb+inIV/T3ZJXS33gwaUaJP1MBwLaVtOMTQ8rSBhh/WorjLp3mEgkLCMQO7QDhz5FlSqxIfVSqWU/IWQIx8VKKHmvQvOUgTov21kR/PuRxcHVAimHOWHuuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddLHot1R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZSDHtVk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4790FC4AF0E;
-	Tue, 30 Jul 2024 16:10:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddLHot1R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9486C4AF0A;
+	Tue, 30 Jul 2024 16:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355846;
-	bh=M5r9S0CAUqCayyDBsNroeaEMn31LDDP5dSs0NQ2HoQg=;
+	s=korg; t=1722355850;
+	bh=PgbvTgmjHd8ef+qmKcuWLfLrPWLQrxArkyVTRuHjAjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZSDHtVk+y/t03SocS604OX5zo9Vue/UyNCyQY9Jj9czPPVW9q76G2Ubyl+PRonb2
-	 +1sDPiMaxxu/ZfabFfIotLj+OsRgAQ/CuAJR1NbwCKPA2JcFMQp17CnxW4lZ0xs0rP
-	 YslaUnDX3MbBqBY98Rx6ISmhfs9oy/Ps/Oa4ZILI=
+	b=ddLHot1RDJwC42sesrr2IelCHZepj7boIyFsx97VbQ5Aa159r37Fsr1D24dpRYac3
+	 dQ0/QOliWMrE9QlBwIXUZOKL2wkXAqjz69gDSv32aw5Lzsbzzj8xye1clgy9IkEflj
+	 iHulO9C+ofG0y1y3I+HnCZQbIEBZAF3o6Jf9fs8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 095/568] arm64: dts: rockchip: Add missing power-domains for rk356x vop_mmu
-Date: Tue, 30 Jul 2024 17:43:22 +0200
-Message-ID: <20240730151643.589779583@linuxfoundation.org>
+Subject: [PATCH 6.6 077/568] arm64: dts: amlogic: gx: correct hdmi clocks
+Date: Tue, 30 Jul 2024 17:43:04 +0200
+Message-ID: <20240730151642.871845139@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -51,41 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit 9d42c3ee3ce37cdad6f98c9e77bfbd0d791ac7da ]
+[ Upstream commit 0602ba0dcd0e76067a0b7543e92b2de3fb231073 ]
 
-The iommu@fe043e00 on RK356x SoC shares the VOP power domain, but the
-power-domains property was not provided when the node has been added.
+The clocks provided to HDMI tx are not consistent between gx and g12:
+* gx receives the peripheral clock as 'isfr' while g12 receives it as
+  'iahb'
+* g12 gets the HDMI system clock as 'isfr' but gx does not even get it.
+  It surely needs that clock since the driver is directly poking around
+  the clock controller's registers for that clock.
 
-The consequence is that an attempt to reload the rockchipdrm module will
-freeze the entire system.  That is because on probe time,
-pm_runtime_get_suppliers() gets called for vop@fe040000, which blocks
-when pm_runtime_get_sync() is being invoked for iommu@fe043e00.
+Align gx SoCs with g12 and provide:
+ * the HDMI peripheral clock as 'iahb'
+ * the HDMI system clock as 'isfr'
 
-Fix the issue by adding the missing property.
-
-Fixes: 9d6c6d978f97 ("arm64: dts: rockchip: rk356x: Add VOP2 nodes")
-Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://lore.kernel.org/r/20240702-rk356x-fix-vop-mmu-v1-1-a66d1a0c45ea@collabora.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: 6939db7e0dbf ("ARM64: dts: meson-gx: Add support for HDMI output")
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20240626152733.1350376-2-jbrunet@baylibre.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk356x.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi | 4 ++--
+ arch/arm64/boot/dts/amlogic/meson-gxl.dtsi  | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-index 820c98dbccc0a..2f885bc3665b5 100644
---- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -749,6 +749,7 @@ vop_mmu: iommu@fe043e00 {
- 		clocks = <&cru ACLK_VOP>, <&cru HCLK_VOP>;
- 		clock-names = "aclk", "iface";
- 		#iommu-cells = <0>;
-+		power-domains = <&power RK3568_PD_VO>;
- 		status = "disabled";
- 	};
- 
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
+index 12ef6e81c8bd6..a15c1ef30a88b 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxbb.dtsi
+@@ -311,8 +311,8 @@ &hdmi_tx {
+ 		 <&reset RESET_HDMI_SYSTEM_RESET>,
+ 		 <&reset RESET_HDMI_TX>;
+ 	reset-names = "hdmitx_apb", "hdmitx", "hdmitx_phy";
+-	clocks = <&clkc CLKID_HDMI_PCLK>,
+-		 <&clkc CLKID_CLK81>,
++	clocks = <&clkc CLKID_HDMI>,
++		 <&clkc CLKID_HDMI_PCLK>,
+ 		 <&clkc CLKID_GCLK_VENCI_INT0>;
+ 	clock-names = "isfr", "iahb", "venci";
+ };
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+index 17bcfa4702e17..a53b38045b3d2 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl.dtsi
+@@ -323,8 +323,8 @@ &hdmi_tx {
+ 		 <&reset RESET_HDMI_SYSTEM_RESET>,
+ 		 <&reset RESET_HDMI_TX>;
+ 	reset-names = "hdmitx_apb", "hdmitx", "hdmitx_phy";
+-	clocks = <&clkc CLKID_HDMI_PCLK>,
+-		 <&clkc CLKID_CLK81>,
++	clocks = <&clkc CLKID_HDMI>,
++		 <&clkc CLKID_HDMI_PCLK>,
+ 		 <&clkc CLKID_GCLK_VENCI_INT0>;
+ 	clock-names = "isfr", "iahb", "venci";
+ };
 -- 
 2.43.0
 
