@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650FB1A619B;
-	Tue, 30 Jul 2024 16:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0AA31A6192;
+	Tue, 30 Jul 2024 16:40:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357649; cv=none; b=iWpv2Q3cJCh2JgHosxMtXyMj2t8/HHn3TkHDFtSfcs5dPIMyMDtAZMO2E+QX9eQAbIZulqxtu2bhOZQo8Jug5/G1luZULQEE7WJXj7Hn4wBgrv2qZoILV3R8+rWAwEUFEzdHaLP/loPSkE8IeiFhBZsCnrij4u6GAEV9VQhayuU=
+	t=1722357652; cv=none; b=pWU4kOGt4bHzsUOnOmFFD6AnAnaZswi2eOt46ZlQfis5cVanQ+5DePMn3hTpuUUSvH9lEqhpRJAP9O8UVROpFL653k6yxjU1VimaJ6eJL3nsOtPyuSgUCBG61CbWK1CnxkWjs3crirvxMEe/w5o1SUByfmorbV393zbauI5+lsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357649; c=relaxed/simple;
-	bh=7B8O22AoniCIRXftuFI/RcWHrMwnOODh00RqIvLhnb4=;
+	s=arc-20240116; t=1722357652; c=relaxed/simple;
+	bh=+u2mx7wCEMX2F9jIIHIJJpGPvIaDYEV15JZFcL3D0NI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsxjFGJHZ31LMamqwokpPZi21FppBhopEoQMh0C6onPLpq2ZyGEMFpDpFTizjqCDd1tuXMaEBhRNVyxZXzDiwUIaIFkA2fXMTqehG1Dlwsn1zroTw0GM6x7jVkXAgKwdnlL1Pj6qWWGbwptQeqWLeolpm8Qp9d1kTQpUWlWrQXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vUIQRMz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgdYRdCAJ22NhL2e7a74juOrghKwOzPfegZPmtQL66+Hvy7NNTOPYfmh9wUYM80gAoDONWMKxfRfqCFqzZ3X6JFQpvpUmQdv4z3nAapp5UU6kd2n3xCes5yMayZsmsY2N5VfSFm8LbIZNcKWmXRw6f86+qYON+JwLn3qDXd5kqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xwYaVVZB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vUIQRMz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0669C32782;
-	Tue, 30 Jul 2024 16:40:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xwYaVVZB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30051C4AF0A;
+	Tue, 30 Jul 2024 16:40:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357649;
-	bh=7B8O22AoniCIRXftuFI/RcWHrMwnOODh00RqIvLhnb4=;
+	s=korg; t=1722357652;
+	bh=+u2mx7wCEMX2F9jIIHIJJpGPvIaDYEV15JZFcL3D0NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUIQRMz+SBGRjqnV2/wPkKnOf/sDuLSd2yi/z7LAzWCJfbBzAdabd7iBmYPG52FB5
-	 v/GoLxsdoEAft5dAlivH5f/PeNyDU2Dy8eugpP8HDjzYv6GnEiyxBaAZJPhnVBaiQI
-	 iHJ5GbfFJCtgTjNY2PnD9vGyPKBPOXdm5ZORYZUE=
+	b=xwYaVVZBiXoQQLqkCJQBP3y212dcOaTvHcViC2ey2/GbinsaY1EcFaCEqc0i+DFy2
+	 X7BVD/rPOuQA6DubF84ltUDeZa2q9BeLg8ajmR1NhdKQHq9J+WNT7g1n5O7rEhicpY
+	 xcNSmKXWH+cb2mlqIPS0Ungz0oUJJB5D8O4lDoBE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 312/440] jbd2: make jbd2_journal_get_max_txn_bufs() internal
-Date: Tue, 30 Jul 2024 17:49:05 +0200
-Message-ID: <20240730151628.010002584@linuxfoundation.org>
+	Christian Rund <Christian.Rund@de.ibm.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 278/568] hwrng: core - Fix wrong quality calculation at hw rng registration
+Date: Tue, 30 Jul 2024 17:46:25 +0200
+Message-ID: <20240730151650.742974839@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,70 +48,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 4aa99c71e42ad60178c1154ec24e3df9c684fb67 upstream.
+[ Upstream commit 95c0f5c3b8bb7acdc5c4f04bc6a7d3f40d319e9e ]
 
-There's no reason to have jbd2_journal_get_max_txn_bufs() public
-function. Currently all users are internal and can use
-journal->j_max_transaction_buffers instead. This saves some unnecessary
-recomputations of the limit as a bonus which becomes important as this
-function gets more complex in the following patch.
+When there are rng sources registering at the hwrng core via
+hwrng_register() a struct hwrng is delivered. There is a quality
+field in there which is used to decide which of the registered
+hw rng sources will be used by the hwrng core.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20240624170127.3253-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+With commit 16bdbae39428 ("hwrng: core - treat default_quality as
+a maximum and default to 1024") there came in a new default of
+1024 in case this field is empty and all the known hw rng sources
+at that time had been reworked to not fill this field and thus
+use the default of 1024.
+
+The code choosing the 'better' hw rng source during registration
+of a new hw rng source has never been adapted to this and thus
+used 0 if the hw rng implementation does not fill the quality field.
+So when two rng sources register, one with 0 (meaning 1024) and
+the other one with 999, the 999 hw rng will be chosen.
+
+As the later invoked function hwrng_init() anyway adjusts the
+quality field of the hw rng source, this adjustment is now done
+during registration of this new hw rng source.
+
+Tested on s390 with two hardware rng sources: crypto cards and
+trng true random generator device driver.
+
+Fixes: 16bdbae39428 ("hwrng: core - treat default_quality as a maximum and default to 1024")
+Reported-by: Christian Rund <Christian.Rund@de.ibm.com>
+Suggested-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/commit.c     |    2 +-
- fs/jbd2/journal.c    |    5 +++++
- include/linux/jbd2.h |    5 -----
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/char/hw_random/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/jbd2/commit.c
-+++ b/fs/jbd2/commit.c
-@@ -801,7 +801,7 @@ start_journal_io:
- 		if (first_block < journal->j_tail)
- 			freed += journal->j_last - journal->j_first;
- 		/* Update tail only if we free significant amount of space */
--		if (freed < jbd2_journal_get_max_txn_bufs(journal))
-+		if (freed < journal->j_max_transaction_buffers)
- 			update_tail = 0;
- 	}
- 	J_ASSERT(commit_transaction->t_state == T_COMMIT);
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -1532,6 +1532,11 @@ static void journal_fail_superblock(jour
- 	journal->j_sb_buffer = NULL;
- }
+diff --git a/drivers/char/hw_random/core.c b/drivers/char/hw_random/core.c
+index a3bbdd6e60fca..a182fe794f985 100644
+--- a/drivers/char/hw_random/core.c
++++ b/drivers/char/hw_random/core.c
+@@ -174,7 +174,6 @@ static int hwrng_init(struct hwrng *rng)
+ 	reinit_completion(&rng->cleanup_done);
  
-+static int jbd2_journal_get_max_txn_bufs(journal_t *journal)
-+{
-+	return (journal->j_total_len - journal->j_fc_wbufsize) / 4;
-+}
+ skip_init:
+-	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
+ 	current_quality = rng->quality; /* obsolete */
+ 
+ 	return 0;
+@@ -563,6 +562,9 @@ int hwrng_register(struct hwrng *rng)
+ 	complete(&rng->cleanup_done);
+ 	init_completion(&rng->dying);
+ 
++	/* Adjust quality field to always have a proper value */
++	rng->quality = min_t(u16, min_t(u16, default_quality, 1024), rng->quality ?: 1024);
 +
- /*
-  * Given a journal_t structure, initialise the various fields for
-  * startup of a new journaling session.  We use this both when creating
---- a/include/linux/jbd2.h
-+++ b/include/linux/jbd2.h
-@@ -1665,11 +1665,6 @@ int jbd2_wait_inode_data(journal_t *jour
- int jbd2_fc_wait_bufs(journal_t *journal, int num_blks);
- int jbd2_fc_release_bufs(journal_t *journal);
- 
--static inline int jbd2_journal_get_max_txn_bufs(journal_t *journal)
--{
--	return (journal->j_total_len - journal->j_fc_wbufsize) / 4;
--}
--
- /*
-  * is_journal_abort
-  *
+ 	if (!current_rng ||
+ 	    (!cur_rng_set_by_user && rng->quality > current_rng->quality)) {
+ 		/*
+-- 
+2.43.0
+
 
 
