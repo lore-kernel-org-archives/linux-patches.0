@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B14C1A6166;
-	Tue, 30 Jul 2024 16:26:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9626D1A6166;
+	Tue, 30 Jul 2024 16:26:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356786; cv=none; b=d9u0mYt4t7k0vc6EbK+GG20Wg/GGcoivrt2jpXK/mlaMLtEPQGoLrGDPIiSrGeEMx9zqf2Qiwdp2THammqEMdLX61LU79zs48uSHU3m3kB+pscfGMZuMi4JLYGPiikH/tQyRYXgJLu8Ny9oAYwaIiES/V2Onxs9vTcRnWKjzTUM=
+	t=1722356789; cv=none; b=mJyPwFGkgMudP6zTSKYA6FUFg/L8PT7TakY1ufMQBsVRip2mJynHxYLVwNY+5lv7Q5Q3K2/hPvJh5AJfgOHQcfg94fzihLYHM44lMZGxeDc2hxyslCOXR2KRmqj9kuE5NzC3gCzw+urF22aRiO1zJNpzHivDVH09UNA9FC+MUus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356786; c=relaxed/simple;
-	bh=6ioOyHVe54/2hU3nPGTcCCIMeMLkI6ewvzyYq0ZWDDc=;
+	s=arc-20240116; t=1722356789; c=relaxed/simple;
+	bh=IGlmEEAKO3lPQLEj5G5KEzC0qInXf2YLKpVyCPfCvmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j7Vlc39XQFB/EXDcDrHqZcJ2U1nET8wFVKHJ1nlzNnwZLzGvPZLGu1fwZH7GdWxIQjF/fWqT3fXVyoyZa83Bw1O55FQr/da4aTiAfKLSiEgZb5dxqW/FWg2guJyMB+0WCZ7yzc+tcoS5nOetrD7sHRR9jAr8CdoQajmtJHs8yN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RjCZpgnv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f/78We+2137KsKCLMz493typ2ZhCZc+ItoSWJKqKkAAvMIG90j1uqxx33L1qguN5hPeg/tI88Vlf9jXHxvAZrrxtaI63z/BFa8S1+mRCDIHerdkhWZuCymrPg08UZt7Ur0UOmbmie2TRcrOfh2BxNzsgy+t70rpbXZi/6lr+vBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E4OGxS/G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RjCZpgnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1089DC32782;
-	Tue, 30 Jul 2024 16:26:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E4OGxS/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C6F1C32782;
+	Tue, 30 Jul 2024 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356786;
-	bh=6ioOyHVe54/2hU3nPGTcCCIMeMLkI6ewvzyYq0ZWDDc=;
+	s=korg; t=1722356789;
+	bh=IGlmEEAKO3lPQLEj5G5KEzC0qInXf2YLKpVyCPfCvmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjCZpgnvB3diMAgC8N5lK4t5KoobVDUgJZJcjOu+xJKvIWR1DZs27s9Dvqd+mTeuA
-	 Xl+Icuf9hqECOOFMWaCyp/pbDE7XicGnV8aZzMh3e0kdItiT4wS30dxN1pQnByF+Q7
-	 kQR5XnaPamaB16zWZNrffrywrLoF9U7f8I40fqko=
+	b=E4OGxS/GEG+ni2/Dg+FWXAKIiPz2X9nDLTr3EBvHtz34n9EkElsQlBilq+oAmvgoG
+	 ItjI238HxHxya4tk5YOKxcxurJCzKxgT8DGuR1oNfqv9C3yK7Fe8aRTNKp/ZVnSj1i
+	 1TmGwltYSJfWuUZ/atONzILNEEuEz+KKXvIdfqXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Yue Sun <samsun1006219@gmail.com>,
+	Xingwei Lee <xrivendell7@gmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 184/568] drm/panel: himax-hx8394: Handle errors from mipi_dsi_dcs_set_display_on() better
-Date: Tue, 30 Jul 2024 17:44:51 +0200
-Message-ID: <20240730151647.071131155@linuxfoundation.org>
+Subject: [PATCH 6.10 187/809] perf/x86: Serialize set_attr_rdpmc()
+Date: Tue, 30 Jul 2024 17:41:03 +0200
+Message-ID: <20240730151731.996967820@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,51 +49,72 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit cc2db2ef8d9eebc0df03808ac0dadbdb96733499 ]
+[ Upstream commit bb9bb45f746b0f9457de9c3fc4da143a6351bdc9 ]
 
-If mipi_dsi_dcs_set_display_on() returned an error then we'd store
-that in the "ret" variable and jump to error handling. We'd then
-attempt an orderly poweroff. Unfortunately we then blew away the value
-stored in "ret". That means that if the orderly poweroff actually
-worked then we're return 0 (no error) from hx8394_enable() even though
-the panel wasn't enabled.
+Yue and Xingwei reported a jump label failure. It's caused by the lack of
+serialization in set_attr_rdpmc():
 
-Fix this by not blowing away "ret".
+CPU0                           CPU1
 
-Found by code inspection.
+Assume: x86_pmu.attr_rdpmc == 0
 
-Fixes: 65dc9360f741 ("drm: panel: Add Himax HX8394 panel controller driver")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240517143643.1.I0a6836fffd8d7620f353becb3df2370d2898f803@changeid
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.1.I0a6836fffd8d7620f353becb3df2370d2898f803@changeid
+if (val != x86_pmu.attr_rdpmc) {
+  if (val == 0)
+    ...
+  else if (x86_pmu.attr_rdpmc == 0)
+    static_branch_dec(&rdpmc_never_available_key);
+
+				if (val != x86_pmu.attr_rdpmc) {
+				   if (val == 0)
+				      ...
+				   else if (x86_pmu.attr_rdpmc == 0)
+     FAIL, due to imbalance --->      static_branch_dec(&rdpmc_never_available_key);
+
+The reported BUG() is a consequence of the above and of another bug in the
+jump label core code. The core code needs a separate fix, but that cannot
+prevent the imbalance problem caused by set_attr_rdpmc().
+
+Prevent this by serializing set_attr_rdpmc() locally.
+
+Fixes: a66734297f78 ("perf/x86: Add /sys/devices/cpu/rdpmc=2 to allow rdpmc for all tasks")
+Closes: https://lore.kernel.org/r/CAEkJfYNzfW1vG=ZTMdz_Weoo=RXY1NDunbxnDaLyj8R4kEoE_w@mail.gmail.com
+Reported-by: Yue Sun <samsun1006219@gmail.com>
+Reported-by: Xingwei Lee <xrivendell7@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20240610124406.359476013@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-himax-hx8394.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ arch/x86/events/core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
-index c73243d85de71..631420d28be4c 100644
---- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
-+++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
-@@ -234,8 +234,7 @@ static int hx8394_enable(struct drm_panel *panel)
+diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+index 5b0dd07b1ef19..acd367c453341 100644
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -2547,6 +2547,7 @@ static ssize_t set_attr_rdpmc(struct device *cdev,
+ 			      struct device_attribute *attr,
+ 			      const char *buf, size_t count)
+ {
++	static DEFINE_MUTEX(rdpmc_mutex);
+ 	unsigned long val;
+ 	ssize_t ret;
  
- sleep_in:
- 	/* This will probably fail, but let's try orderly power off anyway. */
--	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
--	if (!ret)
-+	if (!mipi_dsi_dcs_enter_sleep_mode(dsi))
- 		msleep(50);
+@@ -2560,6 +2561,8 @@ static ssize_t set_attr_rdpmc(struct device *cdev,
+ 	if (x86_pmu.attr_rdpmc_broken)
+ 		return -ENOTSUPP;
  
- 	return ret;
++	guard(mutex)(&rdpmc_mutex);
++
+ 	if (val != x86_pmu.attr_rdpmc) {
+ 		/*
+ 		 * Changing into or out of never available or always available,
 -- 
 2.43.0
 
