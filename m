@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A71A76A1;
-	Tue, 30 Jul 2024 17:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08AB21A76A1;
+	Tue, 30 Jul 2024 17:24:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360294; cv=none; b=m7szMm9Vsno1hpjDhoXewpVrev5Pi+vmwKG0IUhwp/3i3HtYOoRo6a9FmE0Vf4wQeVx5Rh6KmDira2QC9kt4/tOWuUFofgB6aZSEPpfVOIO5HE0v1pP7J1e+drlpses0SznlVISHT+duWdCNoC6iEmUv7Rn3/bjbEf5wXnY0abQ=
+	t=1722360298; cv=none; b=Fb9cmXZUqG2LMDYHThFDP41ab0zbsTybTBy8AttumH7uRUJcqgJgCxvK4aItNGeb5WtAAaGF7SIoWo2VEv8CXPzTkd5C4Kg0DlaQ75sHrueyvknT6wtuB9OqdMvpn7RKh/tm7f9TEaWDWqvspxvBcWesvKKpf5E4pgmHXJ+cqVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360294; c=relaxed/simple;
-	bh=AT6ueBOuEspHWO+uUOYVMYv5vtUIf4uZ1hMpB28eMOY=;
+	s=arc-20240116; t=1722360298; c=relaxed/simple;
+	bh=NHEzMdUXKqCFo3VKgZ2ivM244ggHxu9BZqp+xG3L3Yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KW8w1p5irfXdc/M1hD963XEhhPMtaGPlVh06Gn1hlMH+0n2GddcdUOWN56J+UoGlPMUDZ3EsNkRtD4JH2fiACqG+215S67CZeBNOq8pztTaR7w5CXHXDtSDSgXnfRk8t+AMjHLBO54Wjkn7ERj/xiWNR5cem78OW0KL2DeauFqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ma9jtMIh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QIY935854uBze9IEh4fkWwSx5lo7Rx0dMTO08MVDSNMi/KL2x/oXhX9Dvk0zP8Iq9m+TVUM1GvB/ech1A7mvqHkGleuYDtoLKdZAAMlsrIpoD35CpR9k2Lw0FJA+iotqnZENClZEcFh09AU5q0pyGp3PAN1ro/auoJGwoZ8Ad7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsSBKG3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ma9jtMIh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F7EC32782;
-	Tue, 30 Jul 2024 17:24:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsSBKG3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F3AC32782;
+	Tue, 30 Jul 2024 17:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360294;
-	bh=AT6ueBOuEspHWO+uUOYVMYv5vtUIf4uZ1hMpB28eMOY=;
+	s=korg; t=1722360297;
+	bh=NHEzMdUXKqCFo3VKgZ2ivM244ggHxu9BZqp+xG3L3Yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ma9jtMIhyNipE2Nu6ofaa8KhUxxAx6cxmE21bemAn6wzget6RKnrMMDd6o9cHA5eu
-	 4nhQHg8fJofSV7CW3STikRjyb2olu78fZ/lGxSCIjWRdhzGtJ5O8UvDEsvOU5ZfVg3
-	 daiRwyaFwjNGDkFNDCdhZK2PTSpH6TicVQaBB84E=
+	b=bsSBKG3EMrHb+Y+Z64x+XHOCbcFV2t5n04ZIF8UNI7KU6JcYLkhxplDmtQYgiixMD
+	 ogKOY31aSYmD1VeGBgU2HWRj868xgcBvQo0GCqhfUixkiPGeFieKOJciRg32ZmemFK
+	 S5gPVnNZLZTboO423Vwe8zWWBrcp2M9r6scIb7OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com,
+	Sungjong Seo <sj1557.seo@samsung.com>,
+	Yeongjin Gil <youngjin.gil@samsung.com>,
+	Sunmin Jeong <s_min.jeong@samsung.com>,
 	Chao Yu <chao@kernel.org>,
 	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.10 654/809] f2fs: fix return value of f2fs_convert_inline_inode()
-Date: Tue, 30 Jul 2024 17:48:50 +0200
-Message-ID: <20240730151750.710472703@linuxfoundation.org>
+Subject: [PATCH 6.10 655/809] f2fs: use meta inode for GC of atomic file
+Date: Tue, 30 Jul 2024 17:48:51 +0200
+Message-ID: <20240730151750.751152280@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -51,58 +53,148 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Sunmin Jeong <s_min.jeong@samsung.com>
 
-commit a8eb3de28e7a365690c61161e7a07a4fc7c60bbf upstream.
+commit b40a2b00370931b0c50148681dd7364573e52e6b upstream.
 
-If device is readonly, make f2fs_convert_inline_inode()
-return EROFS instead of zero, otherwise it may trigger
-panic during writeback of inline inode's dirty page as
-below:
+The page cache of the atomic file keeps new data pages which will be
+stored in the COW file. It can also keep old data pages when GCing the
+atomic file. In this case, new data can be overwritten by old data if a
+GC thread sets the old data page as dirty after new data page was
+evicted.
 
- f2fs_write_single_data_page+0xbb6/0x1e90 fs/f2fs/data.c:2888
- f2fs_write_cache_pages fs/f2fs/data.c:3187 [inline]
- __f2fs_write_data_pages fs/f2fs/data.c:3342 [inline]
- f2fs_write_data_pages+0x1efe/0x3a90 fs/f2fs/data.c:3369
- do_writepages+0x359/0x870 mm/page-writeback.c:2634
- filemap_fdatawrite_wbc+0x125/0x180 mm/filemap.c:397
- __filemap_fdatawrite_range mm/filemap.c:430 [inline]
- file_write_and_wait_range+0x1aa/0x290 mm/filemap.c:788
- f2fs_do_sync_file+0x68a/0x1ae0 fs/f2fs/file.c:276
- generic_write_sync include/linux/fs.h:2806 [inline]
- f2fs_file_write_iter+0x7bd/0x24e0 fs/f2fs/file.c:4977
- call_write_iter include/linux/fs.h:2114 [inline]
- new_sync_write fs/read_write.c:497 [inline]
- vfs_write+0xa72/0xc90 fs/read_write.c:590
- ksys_write+0x1a0/0x2c0 fs/read_write.c:643
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
+Also, since all writes to the atomic file are redirected to COW inodes,
+GC for the atomic file is not working well as below.
 
-Cc: stable@vger.kernel.org
-Reported-by: syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000d103ce06174d7ec3@google.com
-Signed-off-by: Chao Yu <chao@kernel.org>
+f2fs_gc(gc_type=FG_GC)
+  - select A as a victim segment
+  do_garbage_collect
+    - iget atomic file's inode for block B
+    move_data_page
+      f2fs_do_write_data_page
+        - use dn of cow inode
+        - set fio->old_blkaddr from cow inode
+    - seg_freed is 0 since block B is still valid
+  - goto gc_more and A is selected as victim again
+
+To solve the problem, let's separate GC writes and updates in the atomic
+file by using the meta inode for GC writes.
+
+Fixes: 3db1de0e582c ("f2fs: change the current atomic write way")
+Cc: stable@vger.kernel.org #v5.19+
+Reviewed-by: Sungjong Seo <sj1557.seo@samsung.com>
+Reviewed-by: Yeongjin Gil <youngjin.gil@samsung.com>
+Signed-off-by: Sunmin Jeong <s_min.jeong@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/inline.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/f2fs/data.c    |    4 ++--
+ fs/f2fs/f2fs.h    |    7 ++++++-
+ fs/f2fs/gc.c      |    6 +++---
+ fs/f2fs/segment.c |    6 +++---
+ 4 files changed, 14 insertions(+), 9 deletions(-)
 
---- a/fs/f2fs/inline.c
-+++ b/fs/f2fs/inline.c
-@@ -203,8 +203,10 @@ int f2fs_convert_inline_inode(struct ino
- 	struct page *ipage, *page;
- 	int err = 0;
+--- a/fs/f2fs/data.c
++++ b/fs/f2fs/data.c
+@@ -2688,7 +2688,7 @@ got_it:
+ 	}
  
--	if (!f2fs_has_inline_data(inode) ||
--			f2fs_hw_is_readonly(sbi) || f2fs_readonly(sbi->sb))
-+	if (f2fs_hw_is_readonly(sbi) || f2fs_readonly(sbi->sb))
-+		return -EROFS;
+ 	/* wait for GCed page writeback via META_MAPPING */
+-	if (fio->post_read)
++	if (fio->meta_gc)
+ 		f2fs_wait_on_block_writeback(inode, fio->old_blkaddr);
+ 
+ 	/*
+@@ -2783,7 +2783,7 @@ int f2fs_write_single_data_page(struct p
+ 		.submitted = 0,
+ 		.compr_blocks = compr_blocks,
+ 		.need_lock = compr_blocks ? LOCK_DONE : LOCK_RETRY,
+-		.post_read = f2fs_post_read_required(inode) ? 1 : 0,
++		.meta_gc = f2fs_meta_inode_gc_required(inode) ? 1 : 0,
+ 		.io_type = io_type,
+ 		.io_wbc = wbc,
+ 		.bio = bio,
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1210,7 +1210,7 @@ struct f2fs_io_info {
+ 	unsigned int in_list:1;		/* indicate fio is in io_list */
+ 	unsigned int is_por:1;		/* indicate IO is from recovery or not */
+ 	unsigned int encrypted:1;	/* indicate file is encrypted */
+-	unsigned int post_read:1;	/* require post read */
++	unsigned int meta_gc:1;		/* require meta inode GC */
+ 	enum iostat_type io_type;	/* io type */
+ 	struct writeback_control *io_wbc; /* writeback control */
+ 	struct bio **bio;		/* bio for ipu */
+@@ -4261,6 +4261,11 @@ static inline bool f2fs_post_read_requir
+ 		f2fs_compressed_file(inode);
+ }
+ 
++static inline bool f2fs_meta_inode_gc_required(struct inode *inode)
++{
++	return f2fs_post_read_required(inode) || f2fs_is_atomic_file(inode);
++}
 +
-+	if (!f2fs_has_inline_data(inode))
- 		return 0;
+ /*
+  * compress.c
+  */
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1579,7 +1579,7 @@ next_step:
+ 			start_bidx = f2fs_start_bidx_of_node(nofs, inode) +
+ 								ofs_in_node;
  
- 	err = f2fs_dquot_initialize(inode);
+-			if (f2fs_post_read_required(inode)) {
++			if (f2fs_meta_inode_gc_required(inode)) {
+ 				int err = ra_data_block(inode, start_bidx);
+ 
+ 				f2fs_up_write(&F2FS_I(inode)->i_gc_rwsem[WRITE]);
+@@ -1630,7 +1630,7 @@ next_step:
+ 
+ 			start_bidx = f2fs_start_bidx_of_node(nofs, inode)
+ 								+ ofs_in_node;
+-			if (f2fs_post_read_required(inode))
++			if (f2fs_meta_inode_gc_required(inode))
+ 				err = move_data_block(inode, start_bidx,
+ 							gc_type, segno, off);
+ 			else
+@@ -1638,7 +1638,7 @@ next_step:
+ 								segno, off);
+ 
+ 			if (!err && (gc_type == FG_GC ||
+-					f2fs_post_read_required(inode)))
++					f2fs_meta_inode_gc_required(inode)))
+ 				submitted++;
+ 
+ 			if (locked) {
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3828,7 +3828,7 @@ int f2fs_inplace_write_data(struct f2fs_
+ 		goto drop_bio;
+ 	}
+ 
+-	if (fio->post_read)
++	if (fio->meta_gc)
+ 		f2fs_truncate_meta_inode_pages(sbi, fio->new_blkaddr, 1);
+ 
+ 	stat_inc_inplace_blocks(fio->sbi);
+@@ -3998,7 +3998,7 @@ void f2fs_wait_on_block_writeback(struct
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	struct page *cpage;
+ 
+-	if (!f2fs_post_read_required(inode))
++	if (!f2fs_meta_inode_gc_required(inode))
+ 		return;
+ 
+ 	if (!__is_valid_data_blkaddr(blkaddr))
+@@ -4017,7 +4017,7 @@ void f2fs_wait_on_block_writeback_range(
+ 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
+ 	block_t i;
+ 
+-	if (!f2fs_post_read_required(inode))
++	if (!f2fs_meta_inode_gc_required(inode))
+ 		return;
+ 
+ 	for (i = 0; i < len; i++)
 
 
