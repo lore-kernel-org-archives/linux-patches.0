@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B02C1A76A1;
-	Tue, 30 Jul 2024 17:24:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36BE1A76A1;
+	Tue, 30 Jul 2024 17:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360247; cv=none; b=tuWo6Yx4CTrhGe9uhKQwBdJQXFmnb6tC1uY4giJECcN/d2f3ouOENQHjcf6dsgftEnDnO/cSQIg97soCml8FmncmgXg0F87rOtLgcNKDFJhXSpz64uTrr7yPs7QsclHZ6sr7rR3lH/yE0kfQro4YhzAGUrIVYTwwTSHIeHTpw9w=
+	t=1722360251; cv=none; b=ZiJksOgbaCKasQVmxN+fj8jTaKIly1ZO9x+A1tFLnYRmyxL+GXQxLMuSXCrwFZX5WNmPvaWg+l2n8Ia5114ngTjjOW+QpLP5yAzDNohBmvugIf7XL6c5XQy1PwZ7wvOT/bfArDlUCGnPxqLraqvO/HWJIob6l6Jn8BO20rtmtps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360247; c=relaxed/simple;
-	bh=1RtCZw7E0Esj1Ik9ZeA1a6/cZ6SHx8Vh871wSqSpQlI=;
+	s=arc-20240116; t=1722360251; c=relaxed/simple;
+	bh=PrixVi/FU+mOa3iMiqKid+ITNQg4j2dN37tFbtY5suU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NAdkOQyTbc0TWY+Pg3KRKid977rtPT/XFsjkkJME/yVQClKqz+8xW/oKK0nZohhSqR3qQWmnhweN+fF4tj4qT+FbgbBTCdPlr3l5X1VzHpRWRXN1+N/HR1719Vfaen50heSDD9Zurr9p5kJx4ddXXQFD2QoXcFYDM1o/2AuF8Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0flB5jz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjZMl3eG/d2wK+5kcm3uM2MQ4Wgikru3qfQZTuvY4V0eu14jKeK2Dv2JhPszYiwfyl6fNdEOIU/OOSMjuodRJvAbhCk9K3rS+vY7x5Cz5wwhcf98C2GmLxtPTSC/G0lWvfAWkRpbWtpAvzkdsmLxrEUkpImTRuNk+AC5eeM9TyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z8i7+w0q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0flB5jz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ACD0C4AF0E;
-	Tue, 30 Jul 2024 17:24:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z8i7+w0q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6729EC32782;
+	Tue, 30 Jul 2024 17:24:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360247;
-	bh=1RtCZw7E0Esj1Ik9ZeA1a6/cZ6SHx8Vh871wSqSpQlI=;
+	s=korg; t=1722360250;
+	bh=PrixVi/FU+mOa3iMiqKid+ITNQg4j2dN37tFbtY5suU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y0flB5jzu52sjU0iJ57+io1GpKrAJI32RUnCGXgkfJ32IdfbQHtWhVN+0uZdEaqh3
-	 0EjcaUryFmwGFFlCB1v4Ck/Z6paQLEKhnb/7Tp5vkyKYno7/dC9h+ZN3fG3ROHlXQQ
-	 DTeINrw5dGqFboZ2bAhK7pVGwq3qGOuVLDIJrjhk=
+	b=z8i7+w0qGkHVf0EN5/Gb9bzdHuEZ/J5YyeM5GIxJBXDdqgSLEcu5RqiT0+PuxAEGO
+	 tBWFcaX1+EWnwhLG/1nY1ID1FELoCp/lEHOku58GEN8VR/jfwA4NaxJL+LxtmG++0Y
+	 U499eVi2pILIOUgd/4dI1/aym7ct8ovy7QxOfTRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martijn Coenen <maco@google.com>,
-	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.10 642/809] binder: fix hang of unregistered readers
-Date: Tue, 30 Jul 2024 17:48:38 +0200
-Message-ID: <20240730151750.221430575@linuxfoundation.org>
+	Reka Norman <rekanorman@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.10 643/809] xhci: Apply XHCI_RESET_TO_DEFAULT quirk to TGL
+Date: Tue, 30 Jul 2024 17:48:39 +0200
+Message-ID: <20240730151750.262585841@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -45,55 +44,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Reka Norman <rekanorman@chromium.org>
 
-commit 31643d84b8c3d9c846aa0e20bc033e46c68c7e7d upstream.
+commit b4c87bc5ce9292d494d9354e25cc8ea152fbcbbd upstream.
 
-With the introduction of binder_available_for_proc_work_ilocked() in
-commit 1b77e9dcc3da ("ANDROID: binder: remove proc waitqueue") a binder
-thread can only "wait_for_proc_work" after its thread->looper has been
-marked as BINDER_LOOPER_STATE_{ENTERED|REGISTERED}.
+TGL systems have the same issue as ADL, where a large boot firmware
+delay is seen if USB ports are left in U3 at shutdown. So apply the
+XHCI_RESET_TO_DEFAULT quirk to TGL as well.
 
-This means an unregistered reader risks waiting indefinitely for work
-since it never gets added to the proc->waiting_threads. If there are no
-further references to its waitqueue either the task will hang. The same
-applies to readers using the (e)poll interface.
+The issue it fixes is a ~20s boot time delay when booting from S5. It
+affects TGL devices, and TGL support was added starting from v5.3.
 
-I couldn't find the rationale behind this restriction. So this patch
-restores the previous behavior of allowing unregistered threads to
-"wait_for_proc_work". Note that an error message for this scenario,
-which had previously become unreachable, is now re-enabled.
-
-Fixes: 1b77e9dcc3da ("ANDROID: binder: remove proc waitqueue")
 Cc: stable@vger.kernel.org
-Cc: Martijn Coenen <maco@google.com>
-Cc: Arve Hjønnevåg <arve@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20240711201452.2017543-1-cmllamas@google.com
+Signed-off-by: Reka Norman <rekanorman@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20240626124835.1023046-21-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/usb/host/xhci-pci.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -570,9 +570,7 @@ static bool binder_has_work(struct binde
- static bool binder_available_for_proc_work_ilocked(struct binder_thread *thread)
- {
- 	return !thread->transaction_stack &&
--		binder_worklist_empty_ilocked(&thread->todo) &&
--		(thread->looper & (BINDER_LOOPER_STATE_ENTERED |
--				   BINDER_LOOPER_STATE_REGISTERED));
-+		binder_worklist_empty_ilocked(&thread->todo);
- }
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -50,6 +50,7 @@
+ #define PCI_DEVICE_ID_INTEL_DENVERTON_XHCI		0x19d0
+ #define PCI_DEVICE_ID_INTEL_ICE_LAKE_XHCI		0x8a13
+ #define PCI_DEVICE_ID_INTEL_TIGER_LAKE_XHCI		0x9a13
++#define PCI_DEVICE_ID_INTEL_TIGER_LAKE_PCH_XHCI		0xa0ed
+ #define PCI_DEVICE_ID_INTEL_COMET_LAKE_XHCI		0xa3af
+ #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI		0x51ed
+ #define PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI	0x54ed
+@@ -373,7 +374,8 @@ static void xhci_pci_quirks(struct devic
+ 		xhci->quirks |= XHCI_MISSING_CAS;
  
- static void binder_wakeup_poll_threads_ilocked(struct binder_proc *proc,
+ 	if (pdev->vendor == PCI_VENDOR_ID_INTEL &&
+-	    (pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI ||
++	    (pdev->device == PCI_DEVICE_ID_INTEL_TIGER_LAKE_PCH_XHCI ||
++	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_PCH_XHCI ||
+ 	     pdev->device == PCI_DEVICE_ID_INTEL_ALDER_LAKE_N_PCH_XHCI))
+ 		xhci->quirks |= XHCI_RESET_TO_DEFAULT;
+ 
 
 
