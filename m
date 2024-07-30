@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3F71A6192;
-	Tue, 30 Jul 2024 16:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30EC1A6192;
+	Tue, 30 Jul 2024 16:35:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357351; cv=none; b=P27qntVWXzU3UtnDW1VblVo0O8MF5LS/JaYAFpREUmek5AMPGxSlc8tDNPiLaqpcr/CzqVuVtEyDLBcSuDwI0X5ea9mt8bm9p2QfKd3bOiovGfIaX8VWh6Ypw5kFKO0Ea54plYirKiNCWCP9uswRZPweDe963CxYmPD24l8ylEE=
+	t=1722357354; cv=none; b=Ex2dCeeBJWQitUDOoo+QeEln4jI1im9LPZaKIxBysGtBcfXCODYsxC3ew9JOCIbYbuc1Gfb3Qr0/BmEge+KSQ+i/ODmGNSXc4R1BHP+RVX7yPCP2FmUcBhznGq5za45YDXnBYSXz220lD56ZudEGDYsmjHy6eP6SECMpMzQSKo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357351; c=relaxed/simple;
-	bh=1EZnVPwormY/oFqntPxkSWz/X+7Wpy7PvPLWOTuBO2k=;
+	s=arc-20240116; t=1722357354; c=relaxed/simple;
+	bh=ADAoZnEj7i0vgUImVMjA0ntdmKAY6jYb1H+KP9z5CO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hcUGPubnQJswmSCjyq6qNPykS35f+mh28TFYTwjlGxRK7pofBWTcf0QywgQuqEFIfAQuM/G7FWu39JisxmrrM1/KBA6aPQlTuVGa0GE89Mp14Zf86XI9gQpWtfysmWnflrRukG392zdKGoowWQGe9oQ7+uryyQmAoldXtpah+Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uxHGqsHu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACm5sn2hcV/cX7AhwVpsk5bVDT6yVhUkIiZ/0bKwJwR5SAAGk+DhbQWfcbvay2jAOJoGUb6eiIAasIwrGorfuGV0eRraC1KftIeFfk5QClkSKVlM8dNT6NjyWsKKb5SAJSuFSbt29zwtITFCrg3QvQ6BNuRu9Gk8mF++8/k1k78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/ERzRuu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uxHGqsHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3476CC32782;
-	Tue, 30 Jul 2024 16:35:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/ERzRuu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415E9C4AF0C;
+	Tue, 30 Jul 2024 16:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357350;
-	bh=1EZnVPwormY/oFqntPxkSWz/X+7Wpy7PvPLWOTuBO2k=;
+	s=korg; t=1722357353;
+	bh=ADAoZnEj7i0vgUImVMjA0ntdmKAY6jYb1H+KP9z5CO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uxHGqsHu8vz4z8E5qHgqtiCCisbYuPiDvQQBG5lY0bieCvQXOpx3OS2/b37E7VgBD
-	 eXB4wfQ5KxMlDuqTz9K31gvrmCLzFTqs+Hzmx/AERE0K59yt7lUbgeAb4K/N70dqGC
-	 tnrbIP1Kkz0SujkMTbGqVFBgTObxK1EwcNeX8znE=
+	b=i/ERzRuugRgtYJU13sSeGWTys20q4rcWh7eLZV5DjZJrjsIyBDPHSgrYHz5fGLUQQ
+	 nhRXtFfDZEWJ0+pT449+ckayRPTfBJn7ZBo3PT+SG+oCWDR44i2UOB5mHSsCWGcuiJ
+	 sOl7pevRslvqJD0XPTNogU45Kjud8cIyChBs37/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>
-Subject: [PATCH 6.1 284/440] fuse: verify {g,u}id mount options correctly
-Date: Tue, 30 Jul 2024 17:48:37 +0200
-Message-ID: <20240730151626.922633787@linuxfoundation.org>
+	Chenyuan Yang <chenyuan0y@gmail.com>,
+	Matti Vaittinen <mazziesaccount@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 247/568] iio: Fix the sorting functionality in iio_gts_build_avail_time_table
+Date: Tue, 30 Jul 2024 17:45:54 +0200
+Message-ID: <20240730151649.535632144@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,85 +48,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Chenyuan Yang <chenyuan0y@gmail.com>
 
-commit 525bd65aa759ec320af1dc06e114ed69733e9e23 upstream.
+[ Upstream commit 5acc3f971a01be48d5ff4252d8f9cdb87998cdfb ]
 
-As was done in
-0200679fc795 ("tmpfs: verify {g,u}id mount options correctly")
-we need to validate that the requested uid and/or gid is representable in
-the filesystem's idmapping.
+The sorting in iio_gts_build_avail_time_table is not working as intended.
+It could result in an out-of-bounds access when the time is zero.
 
-Cribbing from the above commit log,
+Here are more details:
 
-The contract for {g,u}id mount options and {g,u}id values in general set
-from userspace has always been that they are translated according to the
-caller's idmapping. In so far, fuse has been doing the correct thing.
-But since fuse is mountable in unprivileged contexts it is also
-necessary to verify that the resulting {k,g}uid is representable in the
-namespace of the superblock.
+1. When the gts->itime_table[i].time_us is zero, e.g., the time
+sequence is `3, 0, 1`, the inner for-loop will not terminate and do
+out-of-bound writes. This is because once `times[j] > new`, the value
+`new` will be added in the current position and the `times[j]` will be
+moved to `j+1` position, which makes the if-condition always hold.
+Meanwhile, idx will be added one, making the loop keep running without
+termination and out-of-bound write.
+2. If none of the gts->itime_table[i].time_us is zero, the elements
+will just be copied without being sorted as described in the comment
+"Sort times from all tables to one and remove duplicates".
 
-Fixes: c30da2e981a7 ("fuse: convert to use the new mount API")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://lore.kernel.org/r/8f07d45d-c806-484d-a2e3-7a2199df1cd2@redhat.com
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For more details, please refer to
+https://lore.kernel.org/all/6dd0d822-046c-4dd2-9532-79d7ab96ec05@gmail.com.
+
+Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Suggested-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Fixes: 38416c28e168 ("iio: light: Add gain-time-scale helpers")
+Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
+Co-developed-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
+Link: https://lore.kernel.org/r/d501ade8c1f7b202d34c6404eda423489cab1df5.1714480171.git.mazziesaccount@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/inode.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ drivers/iio/industrialio-gts-helper.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -724,6 +724,8 @@ static int fuse_parse_param(struct fs_co
- 	struct fs_parse_result result;
- 	struct fuse_fs_context *ctx = fsc->fs_private;
- 	int opt;
-+	kuid_t kuid;
-+	kgid_t kgid;
+diff --git a/drivers/iio/industrialio-gts-helper.c b/drivers/iio/industrialio-gts-helper.c
+index b51eb6cb766f3..59d7615c0f565 100644
+--- a/drivers/iio/industrialio-gts-helper.c
++++ b/drivers/iio/industrialio-gts-helper.c
+@@ -362,17 +362,20 @@ static int iio_gts_build_avail_time_table(struct iio_gts *gts)
+ 	for (i = gts->num_itime - 1; i >= 0; i--) {
+ 		int new = gts->itime_table[i].time_us;
  
- 	if (fsc->purpose == FS_CONTEXT_FOR_RECONFIGURE) {
- 		/*
-@@ -768,16 +770,30 @@ static int fuse_parse_param(struct fs_co
- 		break;
+-		if (times[idx] < new) {
++		if (idx == 0 || times[idx - 1] < new) {
+ 			times[idx++] = new;
+ 			continue;
+ 		}
  
- 	case OPT_USER_ID:
--		ctx->user_id = make_kuid(fsc->user_ns, result.uint_32);
--		if (!uid_valid(ctx->user_id))
-+		kuid =  make_kuid(fsc->user_ns, result.uint_32);
-+		if (!uid_valid(kuid))
- 			return invalfc(fsc, "Invalid user_id");
-+		/*
-+		 * The requested uid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kuid_has_mapping(fsc->user_ns, kuid))
-+			return invalfc(fsc, "Invalid user_id");
-+		ctx->user_id = kuid;
- 		ctx->user_id_present = true;
- 		break;
- 
- 	case OPT_GROUP_ID:
--		ctx->group_id = make_kgid(fsc->user_ns, result.uint_32);
--		if (!gid_valid(ctx->group_id))
-+		kgid = make_kgid(fsc->user_ns, result.uint_32);;
-+		if (!gid_valid(kgid))
-+			return invalfc(fsc, "Invalid group_id");
-+		/*
-+		 * The requested gid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kgid_has_mapping(fsc->user_ns, kgid))
- 			return invalfc(fsc, "Invalid group_id");
-+		ctx->group_id = kgid;
- 		ctx->group_id_present = true;
- 		break;
- 
+-		for (j = 0; j <= idx; j++) {
++		for (j = 0; j < idx; j++) {
++			if (times[j] == new)
++				break;
+ 			if (times[j] > new) {
+ 				memmove(&times[j + 1], &times[j],
+ 					(idx - j) * sizeof(int));
+ 				times[j] = new;
+ 				idx++;
++				break;
+ 			}
+ 		}
+ 	}
+-- 
+2.43.0
+
 
 
