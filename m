@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3D091A6192;
-	Tue, 30 Jul 2024 16:39:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 039FE1A6192;
+	Tue, 30 Jul 2024 16:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357548; cv=none; b=juwqCHGpYodyj8e/gtSOSC/V2QpQN6H4mxQxR0e1P63EG2UUizNzdP+i85AkGdZ83eCEu0w6NA+VyGc87UIvnNK93ZMiEd7XJcZXYfo1SFybytQPQsOKibs2Hz+H5wtvxv8iu/i5vFa2QXmUyZ8Q40P6l8llVeF2nFtQnw54uM0=
+	t=1722357552; cv=none; b=BJZMMcjvZfyIlG17FIShH3Z37/EIiwxTFvi8U1guceTFQJKbRFYEJ9f9oY5VcA7rEZSfiXaapoL3zV43qXke9/olzy2kURRJ4de2581bvQ6D+qtk9GWCYVH8UjWJKfrCu9ZuDJRPD3jN0RlNOxtLsNnsXwq4NAMHsdoHYjjySSs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357548; c=relaxed/simple;
-	bh=mjetlmRvkGAnR4y2iq9zshJAJdLZ0KDWZqNp+FYuQZk=;
+	s=arc-20240116; t=1722357552; c=relaxed/simple;
+	bh=LbVtx3DR1d55+CbyKYIOmKXrDUZOvgMGxwhjssv5doA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRCUysEmS2QfZ+nnWDJdfDBqwTy5hnGUIE3wOHFqu8s3DC9kTfnUS0N/yGGunyc6nMKgwHRKIfC+gdC3XSPpYQ/CZJJZZ2Ha1WhvySIsjCr/Exw79pE5c94Ns6XSNba6zDWW8muXdp+wkVH9GDYd4JzsCEQ9kx5Mz+LLoDHPBqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRJ65oXt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bLfIDJpvMeqvWTWXmjtli4ghn+W66dPuXTipfwI6+BfT6ShG5LwXOp/r7q4STpm8bZGbo+i2s+x7NSTiuu2lfVhLTahCWvuRoJgu/DOEhYUSjuNVdZIZqIZivLBMMoI+88WYHLv6mlECxgKXCYy39YkJtpoQECITl9O1N0Ht5t0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iIFVTE+R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRJ65oXt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BD2C4AF0C;
-	Tue, 30 Jul 2024 16:39:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iIFVTE+R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768DCC32782;
+	Tue, 30 Jul 2024 16:39:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357548;
-	bh=mjetlmRvkGAnR4y2iq9zshJAJdLZ0KDWZqNp+FYuQZk=;
+	s=korg; t=1722357551;
+	bh=LbVtx3DR1d55+CbyKYIOmKXrDUZOvgMGxwhjssv5doA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRJ65oXtbKLvscH7TloEAID/kEmY183ie8A6wKvaj60PjVWgpqtuJL3FzKgaDqu5L
-	 V02BK4yQaU386QY4Bh7L63pjicFuZwz9XPGtVeGT+KMTBvQknkreFWejEVxCiF1S8+
-	 bqQ8v55qVO9yZfw2enTc4DMMhn+hrH8KQegxf/jI=
+	b=iIFVTE+R11Qz3Gn1dwkr2sy3NHxmyZxxITJrRYHkjE7kv4oTp6znmcGZhy42k3f77
+	 1/mg1L6NB3fKvFqqBIY9T5t/QktFpMpxbCJn8A5G46G/aNDrj9uUJ+Cva+6V68jqRZ
+	 mw9MTl+pJWHokGDKkoODV3trgp2UMFrTRECW4Y7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faiz Abbas <faiz.abbas@arm.com>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 266/809] drm/arm/komeda: Fix komeda probe failing if there are no links in the secondary pipeline
-Date: Tue, 30 Jul 2024 17:42:22 +0200
-Message-ID: <20240730151735.103695183@linuxfoundation.org>
+	syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 303/440] ext4: check dot and dotdot of dx_root before making dir indexed
+Date: Tue, 30 Jul 2024 17:48:56 +0200
+Message-ID: <20240730151627.660169361@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,117 +49,155 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faiz Abbas <faiz.abbas@arm.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 9054c46d479b55768adae31031a1afa1b7d62228 ]
+commit 50ea741def587a64e08879ce6c6a30131f7111e7 upstream.
 
-Since commit 4cfe5cc02e3f ("drm/arm/komeda: Remove component framework and
-add a simple encoder"), the devm_drm_of_get_bridge() call happens
-regardless of whether any remote nodes are available on the pipeline. Fix
-this by moving the bridge attach to its own function and calling it
-conditional on there being an output link.
+Syzbot reports a issue as follows:
+============================================
+BUG: unable to handle page fault for address: ffffed11022e24fe
+PGD 23ffee067 P4D 23ffee067 PUD 0
+Oops: Oops: 0000 [#1] PREEMPT SMP KASAN PTI
+CPU: 0 PID: 5079 Comm: syz-executor306 Not tainted 6.10.0-rc5-g55027e689933 #0
+Call Trace:
+ <TASK>
+ make_indexed_dir+0xdaf/0x13c0 fs/ext4/namei.c:2341
+ ext4_add_entry+0x222a/0x25d0 fs/ext4/namei.c:2451
+ ext4_rename fs/ext4/namei.c:3936 [inline]
+ ext4_rename2+0x26e5/0x4370 fs/ext4/namei.c:4214
+[...]
+============================================
 
-Fixes: 4cfe5cc02e3f ("drm/arm/komeda: Remove component framework and add a simple encoder")
-Signed-off-by: Faiz Abbas <faiz.abbas@arm.com>
-[Corrected Commit-id of the fixed patch to match mainline]
-Signed-off-by: Liviu Dudau <liviu.dudau@arm.com>
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240219100915.192475-2-faiz.abbas@arm.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The immediate cause of this problem is that there is only one valid dentry
+for the block to be split during do_split, so split==0 results in out of
+bounds accesses to the map triggering the issue.
+
+    do_split
+      unsigned split
+      dx_make_map
+       count = 1
+      split = count/2 = 0;
+      continued = hash2 == map[split - 1].hash;
+       ---> map[4294967295]
+
+The maximum length of a filename is 255 and the minimum block size is 1024,
+so it is always guaranteed that the number of entries is greater than or
+equal to 2 when do_split() is called.
+
+But syzbot's crafted image has no dot and dotdot in dir, and the dentry
+distribution in dirblock is as follows:
+
+  bus     dentry1          hole           dentry2           free
+|xx--|xx-------------|...............|xx-------------|...............|
+0   12 (8+248)=256  268     256     524 (8+256)=264 788     236     1024
+
+So when renaming dentry1 increases its name_len length by 1, neither hole
+nor free is sufficient to hold the new dentry, and make_indexed_dir() is
+called.
+
+In make_indexed_dir() it is assumed that the first two entries of the
+dirblock must be dot and dotdot, so bus and dentry1 are left in dx_root
+because they are treated as dot and dotdot, and only dentry2 is moved
+to the new leaf block. That's why count is equal to 1.
+
+Therefore add the ext4_check_dx_root() helper function to add more sanity
+checks to dot and dotdot before starting the conversion to avoid the above
+issue.
+
+Reported-by: syzbot+ae688d469e36fb5138d0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=ae688d469e36fb5138d0
+Fixes: ac27a0ec112a ("[PATCH] ext4: initial copy of files from ext3")
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240702132349.2600605-2-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../gpu/drm/arm/display/komeda/komeda_crtc.c  | 43 ++++++++++++++-----
- 1 file changed, 32 insertions(+), 11 deletions(-)
+ fs/ext4/namei.c |   56 +++++++++++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 51 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c b/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
-index 2c661f28410ed..b645c5998230b 100644
---- a/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
-+++ b/drivers/gpu/drm/arm/display/komeda/komeda_crtc.c
-@@ -5,6 +5,7 @@
-  *
-  */
- #include <linux/clk.h>
-+#include <linux/of.h>
- #include <linux/pm_runtime.h>
- #include <linux/spinlock.h>
- 
-@@ -610,12 +611,34 @@ get_crtc_primary(struct komeda_kms_dev *kms, struct komeda_crtc *crtc)
- 	return NULL;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -2218,6 +2218,52 @@ static int add_dirent_to_buf(handle_t *h
+ 	return err ? err : err2;
  }
  
-+static int komeda_attach_bridge(struct device *dev,
-+				struct komeda_pipeline *pipe,
-+				struct drm_encoder *encoder)
++static bool ext4_check_dx_root(struct inode *dir, struct dx_root *root)
 +{
-+	struct drm_bridge *bridge;
-+	int err;
++	struct fake_dirent *fde;
++	const char *error_msg;
++	unsigned int rlen;
++	unsigned int blocksize = dir->i_sb->s_blocksize;
++	char *blockend = (char *)root + dir->i_sb->s_blocksize;
 +
-+	bridge = devm_drm_of_get_bridge(dev, pipe->of_node,
-+					KOMEDA_OF_PORT_OUTPUT, 0);
-+	if (IS_ERR(bridge))
-+		return dev_err_probe(dev, PTR_ERR(bridge), "remote bridge not found for pipe: %s\n",
-+				     of_node_full_name(pipe->of_node));
++	fde = &root->dot;
++	if (unlikely(fde->name_len != 1)) {
++		error_msg = "invalid name_len for '.'";
++		goto corrupted;
++	}
++	if (unlikely(strncmp(root->dot_name, ".", fde->name_len))) {
++		error_msg = "invalid name for '.'";
++		goto corrupted;
++	}
++	rlen = ext4_rec_len_from_disk(fde->rec_len, blocksize);
++	if (unlikely((char *)fde + rlen >= blockend)) {
++		error_msg = "invalid rec_len for '.'";
++		goto corrupted;
++	}
 +
-+	err = drm_bridge_attach(encoder, bridge, NULL, 0);
-+	if (err)
-+		dev_err(dev, "bridge_attach() failed for pipe: %s\n",
-+			of_node_full_name(pipe->of_node));
++	fde = &root->dotdot;
++	if (unlikely(fde->name_len != 2)) {
++		error_msg = "invalid name_len for '..'";
++		goto corrupted;
++	}
++	if (unlikely(strncmp(root->dotdot_name, "..", fde->name_len))) {
++		error_msg = "invalid name for '..'";
++		goto corrupted;
++	}
++	rlen = ext4_rec_len_from_disk(fde->rec_len, blocksize);
++	if (unlikely((char *)fde + rlen >= blockend)) {
++		error_msg = "invalid rec_len for '..'";
++		goto corrupted;
++	}
 +
-+	return err;
++	return true;
++
++corrupted:
++	EXT4_ERROR_INODE(dir, "Corrupt dir, %s, running e2fsck is recommended",
++			 error_msg);
++	return false;
 +}
 +
- static int komeda_crtc_add(struct komeda_kms_dev *kms,
- 			   struct komeda_crtc *kcrtc)
- {
- 	struct drm_crtc *crtc = &kcrtc->base;
- 	struct drm_device *base = &kms->base;
--	struct drm_bridge *bridge;
-+	struct komeda_pipeline *pipe = kcrtc->master;
-+	struct drm_encoder *encoder = &kcrtc->encoder;
- 	int err;
- 
- 	err = drm_crtc_init_with_planes(base, crtc,
-@@ -626,27 +649,25 @@ static int komeda_crtc_add(struct komeda_kms_dev *kms,
- 
- 	drm_crtc_helper_add(crtc, &komeda_crtc_helper_funcs);
- 
--	crtc->port = kcrtc->master->of_output_port;
-+	crtc->port = pipe->of_output_port;
- 
- 	/* Construct an encoder for each pipeline and attach it to the remote
- 	 * bridge
- 	 */
- 	kcrtc->encoder.possible_crtcs = drm_crtc_mask(crtc);
--	err = drm_simple_encoder_init(base, &kcrtc->encoder,
--				      DRM_MODE_ENCODER_TMDS);
-+	err = drm_simple_encoder_init(base, encoder, DRM_MODE_ENCODER_TMDS);
- 	if (err)
- 		return err;
- 
--	bridge = devm_drm_of_get_bridge(base->dev, kcrtc->master->of_node,
--					KOMEDA_OF_PORT_OUTPUT, 0);
--	if (IS_ERR(bridge))
--		return PTR_ERR(bridge);
--
--	err = drm_bridge_attach(&kcrtc->encoder, bridge, NULL, 0);
-+	if (pipe->of_output_links[0]) {
-+		err = komeda_attach_bridge(base->dev, pipe, encoder);
-+		if (err)
-+			return err;
+ /*
+  * This converts a one block unindexed directory to a 3 block indexed
+  * directory, and adds the dentry to the indexed directory.
+@@ -2252,17 +2298,17 @@ static int make_indexed_dir(handle_t *ha
+ 		brelse(bh);
+ 		return retval;
+ 	}
++
+ 	root = (struct dx_root *) bh->b_data;
++	if (!ext4_check_dx_root(dir, root)) {
++		brelse(bh);
++		return -EFSCORRUPTED;
 +	}
  
- 	drm_crtc_enable_color_mgmt(crtc, 0, true, KOMEDA_COLOR_LUT_SIZE);
+ 	/* The 0th block becomes the root, move the dirents out */
+ 	fde = &root->dotdot;
+ 	de = (struct ext4_dir_entry_2 *)((char *)fde +
+ 		ext4_rec_len_from_disk(fde->rec_len, blocksize));
+-	if ((char *) de >= (((char *) root) + blocksize)) {
+-		EXT4_ERROR_INODE(dir, "invalid rec_len for '..'");
+-		brelse(bh);
+-		return -EFSCORRUPTED;
+-	}
+ 	len = ((char *) root) + (blocksize - csum_size) - (char *) de;
  
--	return err;
-+	return 0;
- }
- 
- int komeda_kms_add_crtcs(struct komeda_kms_dev *kms, struct komeda_dev *mdev)
--- 
-2.43.0
-
+ 	/* Allocate new block for the 0th block's dirents */
 
 
