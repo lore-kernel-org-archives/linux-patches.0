@@ -1,52 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FE1E183CBF;
-	Tue, 30 Jul 2024 16:17:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAADD1A6191;
+	Tue, 30 Jul 2024 16:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356227; cv=none; b=J85kp+Gzcw9MvjoGmpk9ypYJoQCzGAkmnAMPjJzx6HvAuRtnfnfM903+0nD6FV8zBhrvCMj1X5LysakBd24AoSpf0v90qFHTeEtZufynZcamkd7CDUJyGVSglvN7LzRd77HXD9V69/pgOSdJ+3uSgUmMwc4tUHY+2a51awOkPH0=
+	t=1722356230; cv=none; b=smpUg/VutgRN69E54d045CYcxpe+OeT/WbC2yXWN9Qr9nycdXDHszH3PZvmE5S7Fo9aSIUNpOfvQuupMethPN+kTbYy/fAjRkJnNQdCpDm1QsAkhdPT+dtl5G/Ft62Fhfs+hwHhdwET+T4V3m55YR8IFAIT0Ckdmas17hdx6Xgg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356227; c=relaxed/simple;
-	bh=WZkc0GdqszdnYYx1qOtUDIxLNaTT+9v10IAvkFZMnb4=;
+	s=arc-20240116; t=1722356230; c=relaxed/simple;
+	bh=K2o/ZHXy994IGLZq7/Pv+ojkyC1MEQ3Iw3D7oQVq3aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MMVURK4c77VKzgpUvJjiYLthHvAXqlLsACWHfKn3j7iNlRopPjU2J7zSvccJogHtjLXhf+7HjWFYPe63YpzUVc9+s1PtorSe/Z9x1nIebPS+x1T+4QIsufo9ceYeAivkT7bXpiwN+7OgbeeNhVcTiD9iAxHKMTqT8Xli03+rTGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PmDeD8P7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VMa3GvoyLFJxciQ2vev8W8Qid6hJkjcqK5Z0qcc6+PWNBrAEJWrhRpqHJQ+Jbu1JfgX+9DwWmL6/fEAhQk6ZgPIcBMMCb8om09ZHtdClvDXbRD1OtDcB64qBlxVPHycuGeLheMx5y0B6F+65dWQioLKNdHMNc/k0u0tpDh/vptQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSyUW4qZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PmDeD8P7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E5EC32782;
-	Tue, 30 Jul 2024 16:17:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSyUW4qZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D495C32782;
+	Tue, 30 Jul 2024 16:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356227;
-	bh=WZkc0GdqszdnYYx1qOtUDIxLNaTT+9v10IAvkFZMnb4=;
+	s=korg; t=1722356230;
+	bh=K2o/ZHXy994IGLZq7/Pv+ojkyC1MEQ3Iw3D7oQVq3aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PmDeD8P7V89e/K112dFUfdlWoGyuqs3rA0bPtF5mRTPzq8uyYbU5UnW8NRZHxAJWF
-	 5YxqWfDX0oYKVjkDxWeBZR2oiqorPPa3gTQOr0LLlI0Pke6mmOUXhAfk1oSlHEzLrj
-	 AyvglX3Mkf5Q5xHVqKfstaShz+wzG7y4CyzoSJM4=
+	b=lSyUW4qZeZpDq3nmtmhX6610hO7tWG+qNoq48bgPL4t79YHHrQq0mCWTwQNQvDgSz
+	 1McpeEvy/oAHmxGgzoeZOLz6j+KvCfTOXu22wYuXg7izgik5OzEaf6kAZK5bGv590i
+	 ncL88EtbOd0zbO7fzKC5BHnnUGNFtzCkpXUHN49M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Clark <james.clark@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	spoorts2@in.ibm.com,
-	Peter Zijlstra <peterz@infradead.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Arnaldo Carvalho de Melo <acme@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Ingo Molnar <mingo@redhat.com>,
+	Chukun Pan <amadeus@jmu.edu.cn>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 158/440] perf tests: Fix test_arm_callgraph_fp variable expansion
-Date: Tue, 30 Jul 2024 17:46:31 +0200
-Message-ID: <20240730151622.047214609@linuxfoundation.org>
+Subject: [PATCH 6.10 131/809] arm64: dts: rockchip: fix regulator name for Lunzn Fastrhino R6xS
+Date: Tue, 30 Jul 2024 17:40:07 +0200
+Message-ID: <20240730151729.790299130@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -58,68 +47,59 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: James Clark <james.clark@arm.com>
+From: Chukun Pan <amadeus@jmu.edu.cn>
 
-[ Upstream commit 33fe7c08446af6dda0ff08ff4fa9c921e574477f ]
+[ Upstream commit 2dad31528de9ea8b05245ce6ac4f76ebf8dae947 ]
 
-$TEST_PROGRAM is a command with spaces so it's supposed to be word
-split. The referenced fix to fix the shellcheck warnings incorrectly
-quoted this string so unquote it to fix the test.
+Make the regulator name the same as those marked by schematics.
 
-At the same time silence the shellcheck warning for that line and fix
-two more shellcheck errors at the end of the script.
-
-Fixes: 1bb17b4c6c91 ("perf tests arm_callgraph_fp: Address shellcheck warnings about signal names and adding double quotes for expression")
-Signed-off-by: James Clark <james.clark@arm.com>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: spoorts2@in.ibm.com
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Arnaldo Carvalho de Melo <acme@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kajol Jain <kjain@linux.ibm.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Link: https://lore.kernel.org/r/20230622101809.2431897-1-james.clark@arm.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Stable-dep-of: ff16aeb9b834 ("perf test: Make test_arm_callgraph_fp.sh more robust")
+Fixes: c79dab407afd ("arm64: dts: rockchip: Add Lunzn Fastrhino R66S")
+Signed-off-by: Chukun Pan <amadeus@jmu.edu.cn>
+Link: https://lore.kernel.org/r/20240630150010.55729-2-amadeus@jmu.edu.cn
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/tests/shell/test_arm_callgraph_fp.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/tests/shell/test_arm_callgraph_fp.sh b/tools/perf/tests/shell/test_arm_callgraph_fp.sh
-index 1380e0d12dce3..66dfdfdad553f 100755
---- a/tools/perf/tests/shell/test_arm_callgraph_fp.sh
-+++ b/tools/perf/tests/shell/test_arm_callgraph_fp.sh
-@@ -15,7 +15,8 @@ cleanup_files()
- trap cleanup_files EXIT TERM INT
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+index 89e84e3a92629..93987c8740f7b 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568-fastrhino-r66s.dtsi
+@@ -39,9 +39,9 @@ status_led: led-status {
+ 		};
+ 	};
  
- # Add a 1 second delay to skip samples that are not in the leaf() function
--perf record -o "$PERF_DATA" --call-graph fp -e cycles//u -D 1000 --user-callchains -- "$TEST_PROGRAM" 2> /dev/null &
-+# shellcheck disable=SC2086
-+perf record -o "$PERF_DATA" --call-graph fp -e cycles//u -D 1000 --user-callchains -- $TEST_PROGRAM 2> /dev/null &
- PID=$!
+-	dc_12v: dc-12v-regulator {
++	vcc12v_dcin: vcc12v-dcin-regulator {
+ 		compatible = "regulator-fixed";
+-		regulator-name = "dc_12v";
++		regulator-name = "vcc12v_dcin";
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 		regulator-min-microvolt = <12000000>;
+@@ -65,7 +65,7 @@ vcc3v3_sys: vcc3v3-sys-regulator {
+ 		regulator-boot-on;
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
+-		vin-supply = <&dc_12v>;
++		vin-supply = <&vcc12v_dcin>;
+ 	};
  
- echo " + Recording (PID=$PID)..."
-@@ -33,8 +34,8 @@ wait $PID
- # 	76c leafloop
- # ...
+ 	vcc5v0_sys: vcc5v0-sys-regulator {
+@@ -75,7 +75,7 @@ vcc5v0_sys: vcc5v0-sys-regulator {
+ 		regulator-boot-on;
+ 		regulator-min-microvolt = <5000000>;
+ 		regulator-max-microvolt = <5000000>;
+-		vin-supply = <&dc_12v>;
++		vin-supply = <&vcc12v_dcin>;
+ 	};
  
--perf script -i $PERF_DATA -F comm,ip,sym | head -n4
--perf script -i $PERF_DATA -F comm,ip,sym | head -n4 | \
-+perf script -i "$PERF_DATA" -F comm,ip,sym | head -n4
-+perf script -i "$PERF_DATA" -F comm,ip,sym | head -n4 | \
- 	awk '{ if ($2 != "") sym[i++] = $2 } END { if (sym[0] != "leaf" ||
- 						       sym[1] != "parent" ||
- 						       sym[2] != "leafloop") exit 1 }'
+ 	vcc5v0_usb_host: vcc5v0-usb-host-regulator {
 -- 
 2.43.0
 
