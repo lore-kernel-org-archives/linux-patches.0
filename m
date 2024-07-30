@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6F01A6166;
-	Tue, 30 Jul 2024 16:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F17E61A6166;
+	Tue, 30 Jul 2024 16:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357966; cv=none; b=hTSjYrSuamzvgEY98BSDnBBv0uvElHHU2NUBWbfh9es/fYknlxV/m1uCLNu1/2yFCHXfnyCOgSH0bBtwfutbzj10v26KPaMZm7jtlnZvC7xJ4uKHixp4xryaFD9Fgw7VCbAIVXJ3yWj605pTl0FblT+0DjeEY/xq5VTaclSowuk=
+	t=1722357969; cv=none; b=N075d+jsv19YePHeBLl6/4HGUcd6fMjcbi+7XvtQyuoV1ASOFqItPyDZiJkZxBpylnN+6uFkeKnQB4Wk6nRMnrhwm10k8Hs33uIg6UiePUqsqQOjL1TOGrAz5xroVW9sVrvTLFvg8iWjRk9BQ4WHLrMrwV+9ASBEjwmtogzYJV0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357966; c=relaxed/simple;
-	bh=MLRfugexmh8i5Go62UyfTKxqRCRi5XBMPaKTB0582LQ=;
+	s=arc-20240116; t=1722357969; c=relaxed/simple;
+	bh=deQ4YADL+IIFAOct7w5SxKY3Kl9G8XWSF0D2n1bDDqE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/WbFDC0UKs6c1JD3Wo6gkpfbqNFU+TQgrf0g+TexXRodg5imtdh1zaUhu3gJJ934yq1KSWLVlA8WhX/KQwI9KXKk/omMLIxo0VgNW7QibE2nvMFXwlkrwVZgPUs7DYPmvEJ/GiEkj9n64FoR+b/Ly59zlMG2llEXQWgamRkTLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJsas22W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pPHcde52F5NYr+Ud/lui+7ec93ZOOoDXiavFOmxQRfwsDEh93S6u2NHs9nPLUUK/noyRjdihC+PNN9E6dUJ9Q/xXu7Ch6NsPZPonnNbR7adQ+28SR0M+5mGZXs3ZmgFI1e6VBSN6NMk2sWkDJ9Gp0OFADsFfFOL5VFbbONT9aIA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1vPf/mZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJsas22W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7568EC32782;
-	Tue, 30 Jul 2024 16:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1vPf/mZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502C7C32782;
+	Tue, 30 Jul 2024 16:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357965;
-	bh=MLRfugexmh8i5Go62UyfTKxqRCRi5XBMPaKTB0582LQ=;
+	s=korg; t=1722357968;
+	bh=deQ4YADL+IIFAOct7w5SxKY3Kl9G8XWSF0D2n1bDDqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WJsas22WPdoxPDRMKPWKfM9EgIqwpipHN/hw7Dgtw43IR3JvrRi5HJ7v4ZGikzmH4
-	 w/igig8vxz9zg5wyy0rDa9sxtbGyn15q89KPH4psjhCbHkBy0Cszgawt1YVMV3W0ND
-	 DhSj6QeAbAJAYiCatzqEw+dzkfGaxMszlD+HrRQI=
+	b=C1vPf/mZyZfdirdJ0lvV3aANgRCYAEJOtEWzwgj5NU0IHN079xAv4oKaDz/Ye+Isy
+	 4sP4UX2a3VAsdVpTI/u6SsecLmwOweYAByRUjEXHBhCYcYOuIrroy5ydWJ/1EXck5E
+	 3fijPctYQycrVSOEEF3GqawFe5V4naBVkIRDCzbA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 310/809] media: c8sectpfe: Add missing parameter names
-Date: Tue, 30 Jul 2024 17:43:06 +0200
-Message-ID: <20240730151736.842271824@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Rik van Riel <riel@surriel.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Michal Hocko <mhocko@suse.com>,
+	David Rientjes <rientjes@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 344/440] mm/numa_balancing: teach mpol_to_str about the balancing mode
+Date: Tue, 30 Jul 2024 17:49:37 +0200
+Message-ID: <20240730151629.248896545@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +57,115 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-[ Upstream commit abb7a73b687dc82202f0203a112ef435fb598aa6 ]
+commit af649773fb25250cd22625af021fb6275c56a3ee upstream.
 
-clang 19 complains about the missing parameter name. Let's add it.
+Since balancing mode was added in bda420b98505 ("numa balancing: migrate
+on fault among multiple bound nodes"), it was possible to set this mode
+but it wouldn't be shown in /proc/<pid>/numa_maps since there was no
+support for it in the mpol_to_str() helper.
 
-drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-debugfs.h:19:62: warning: omitting the parameter name in a function definition is a C23 extension [-Wc23-extensions]
+Furthermore, because the balancing mode sets the MPOL_F_MORON flag, it
+would be displayed as 'default' due a workaround introduced a few years
+earlier in 8790c71a18e5 ("mm/mempolicy.c: fix mempolicy printing in
+numa_maps").
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202406050908.1kL1C69p-lkp@intel.com/
-Fixes: e22b4973ee20 ("media: c8sectpfe: Do not depend on DEBUG_FS")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To tidy this up we implement two changes:
+
+Replace the MPOL_F_MORON check by pointer comparison against the
+preferred_node_policy array.  By doing this we generalise the current
+special casing and replace the incorrect 'default' with the correct 'bind'
+for the mode.
+
+Secondly, we add a string representation and corresponding handling for
+the MPOL_F_NUMA_BALANCING flag.
+
+With the two changes together we start showing the balancing flag when it
+is set and therefore complete the fix.
+
+Representation format chosen is to separate multiple flags with vertical
+bars, following what existed long time ago in kernel 2.6.25.  But as
+between then and now there wasn't a way to display multiple flags, this
+patch does not change the format in practice.
+
+Some /proc/<pid>/numa_maps output examples:
+
+ 555559580000 bind=balancing:0-1,3 file=...
+ 555585800000 bind=balancing|static:0,2 file=...
+ 555635240000 prefer=relative:0 file=
+
+Link: https://lkml.kernel.org/r/20240708075632.95857-1-tursulin@igalia.com
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Fixes: bda420b98505 ("numa balancing: migrate on fault among multiple bound nodes")
+References: 8790c71a18e5 ("mm/mempolicy.c: fix mempolicy printing in numa_maps")
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Cc: Dave Hansen <dave.hansen@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: <stable@vger.kernel.org>	[5.12+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-debugfs.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/mempolicy.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-debugfs.h b/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-debugfs.h
-index 8e1bfd8605247..3fe177b59b16d 100644
---- a/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-debugfs.h
-+++ b/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-debugfs.h
-@@ -16,8 +16,8 @@
- void c8sectpfe_debugfs_init(struct c8sectpfei *);
- void c8sectpfe_debugfs_exit(struct c8sectpfei *);
- #else
--static inline void c8sectpfe_debugfs_init(struct c8sectpfei *) {};
--static inline void c8sectpfe_debugfs_exit(struct c8sectpfei *) {};
-+static inline void c8sectpfe_debugfs_init(struct c8sectpfei *fei) {};
-+static inline void c8sectpfe_debugfs_exit(struct c8sectpfei *fei) {};
- #endif
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -3112,8 +3112,9 @@ out:
+  * @pol:  pointer to mempolicy to be formatted
+  *
+  * Convert @pol into a string.  If @buffer is too short, truncate the string.
+- * Recommend a @maxlen of at least 32 for the longest mode, "interleave", the
+- * longest flag, "relative", and to display at least a few node ids.
++ * Recommend a @maxlen of at least 51 for the longest mode, "weighted
++ * interleave", plus the longest flag flags, "relative|balancing", and to
++ * display at least a few node ids.
+  */
+ void mpol_to_str(char *buffer, int maxlen, struct mempolicy *pol)
+ {
+@@ -3122,7 +3123,10 @@ void mpol_to_str(char *buffer, int maxle
+ 	unsigned short mode = MPOL_DEFAULT;
+ 	unsigned short flags = 0;
  
- #endif /* __C8SECTPFE_DEBUG_H */
--- 
-2.43.0
-
+-	if (pol && pol != &default_policy && !(pol->flags & MPOL_F_MORON)) {
++	if (pol &&
++	    pol != &default_policy &&
++	    !(pol >= &preferred_node_policy[0] &&
++	      pol <= &preferred_node_policy[ARRAY_SIZE(preferred_node_policy) - 1])) {
+ 		mode = pol->mode;
+ 		flags = pol->flags;
+ 	}
+@@ -3149,12 +3153,18 @@ void mpol_to_str(char *buffer, int maxle
+ 		p += snprintf(p, buffer + maxlen - p, "=");
+ 
+ 		/*
+-		 * Currently, the only defined flags are mutually exclusive
++		 * Static and relative are mutually exclusive.
+ 		 */
+ 		if (flags & MPOL_F_STATIC_NODES)
+ 			p += snprintf(p, buffer + maxlen - p, "static");
+ 		else if (flags & MPOL_F_RELATIVE_NODES)
+ 			p += snprintf(p, buffer + maxlen - p, "relative");
++
++		if (flags & MPOL_F_NUMA_BALANCING) {
++			if (!is_power_of_2(flags & MPOL_MODE_FLAGS))
++				p += snprintf(p, buffer + maxlen - p, "|");
++			p += snprintf(p, buffer + maxlen - p, "balancing");
++		}
+ 	}
+ 
+ 	if (!nodes_empty(nodes))
 
 
