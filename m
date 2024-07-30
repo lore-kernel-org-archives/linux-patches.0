@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767CA189505;
-	Tue, 30 Jul 2024 16:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47E818952F;
+	Tue, 30 Jul 2024 16:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355806; cv=none; b=KofS22lj5xtDRSIwnPuy7ScSXXlZymMDiESFxX6NpsKd5p+llMdzDeldMpphJsS5tK005enXTniy+aGfU1ORmw4UXueqD7FVmpsib82PpqZsCNpKnkzLVRoQDgGLOJf9ixeE0bYB3upJ9SQomLDhbhfXGNNE/EIEQXaqKXLUlmA=
+	t=1722355809; cv=none; b=Y12dphXJGDjM3V1+16CDTmYQn9WQMNC2sb9tyNwpZfmJrszgTexOkqqvVkC5IVXz8REQMBg1D0HHINC7jt9nXfoaCeVMtHngzL76dhO+ioysucMu0jroCnSQua/tNmhmGNZ21Al2ngDVzWOyPSBFkkDtd+j3cHbGoNU+ST97npI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355806; c=relaxed/simple;
-	bh=fA0JU0Jkkfc1y2TGd58ONug8RLfLIZqtvGGnIsRUtZw=;
+	s=arc-20240116; t=1722355809; c=relaxed/simple;
+	bh=08zS3mtTfmb3jYX7BYgkaayCv+xluqfjPIYi8L582iQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JNjP1xNxRuKqM22sFbXmFhZo6z9Q2L/9WwM+9C355E6IoXit8YtxTkP0FkXj2eSWkBZZlvAtk/kJDo1kx1YH4oMJa5EB2JgotBdwm3A3wHwTC9/4CP45Q2puzKrCzQXwpJstBXge5Cc13LVjcROzorwf0jcQSMBqj92wCYwI1o4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S8jDB4gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VvHHhgmo5HXNwPMvTXABO4SA1Gxvhs7ON+QySeHZJiYC4wNGi1a+hZX4qB0cyVFN07jYvJOQXmYdtZzk9oulb/sXq3Uev5NQyrweXE7e+iL5GAMPdeAm8QezJssvOgqkK/lwWuxVzkPXaJ9QNNTYYJ/jBlT2vJfQ/5PiMIpzh+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zEYu0Uex; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S8jDB4gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB7F4C32782;
-	Tue, 30 Jul 2024 16:10:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zEYu0Uex"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452BAC32782;
+	Tue, 30 Jul 2024 16:10:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355806;
-	bh=fA0JU0Jkkfc1y2TGd58ONug8RLfLIZqtvGGnIsRUtZw=;
+	s=korg; t=1722355809;
+	bh=08zS3mtTfmb3jYX7BYgkaayCv+xluqfjPIYi8L582iQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8jDB4gca9/ACmZAvw+7nO8ZAcTuZ3gGwoe/AI0AkK8lHRqPc4K+M/TLSGngYh9H2
-	 wx3dFIzPBIiLjraJUySiPCV7z7h1FhrHEa51htCO/rR4GRk/PfDs2JW7ZMOjcSnn78
-	 B1Dxhovxl2Pw6nhCd6EwzDXLCXr1Y3HFInCiAxC8=
+	b=zEYu0UexY01w18eYQFQiyzoDuLmkba1t64pkajxHIYOINH3d7aSgZpIVTrk/HhM2F
+	 RRQyo2/DG1HAqT4OgkToG/qPj3rHBImpjNzLunB9Q+4RPGPjKMzo9Igta8Kit07abr
+	 iBUoQ9Y//OjdjHK5RbRnTzMAbiASZEuEnoVhUZ/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Alexey Minnekhanov <alexeymin@postmarketos.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 6.10 090/809] soc: qcom: pdr: protect locator_addr with the main mutex
-Date: Tue, 30 Jul 2024 17:39:26 +0200
-Message-ID: <20240730151728.192455524@linuxfoundation.org>
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 132/440] drm/amdgpu: Check if NBIO funcs are NULL in amdgpu_device_baco_exit
+Date: Tue, 30 Jul 2024 17:46:05 +0200
+Message-ID: <20240730151621.038726681@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,77 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Friedrich Vock <friedrich.vock@gmx.de>
 
-[ Upstream commit 107924c14e3ddd85119ca43c26a4ee1056fa9b84 ]
+[ Upstream commit 0cdb3f9740844b9d95ca413e3fcff11f81223ecf ]
 
-If the service locator server is restarted fast enough, the PDR can
-rewrite locator_addr fields concurrently. Protect them by placing
-modification of those fields under the main pdr->lock.
+The special case for VM passthrough doesn't check adev->nbio.funcs
+before dereferencing it. If GPUs that don't have an NBIO block are
+passed through, this leads to a NULL pointer dereference on startup.
 
-Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
-Tested-by: Steev Klimaszewski <steev@kali.org>
-Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20240622-qcom-pd-mapper-v9-1-a84ee3591c8e@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Friedrich Vock <friedrich.vock@gmx.de>
+Fixes: 1bece222eabe ("drm/amdgpu: Clear doorbell interrupt status for Sienna Cichlid")
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/pdr_interface.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
-index a1b6a4081dea7..76a62c2ecc58a 100644
---- a/drivers/soc/qcom/pdr_interface.c
-+++ b/drivers/soc/qcom/pdr_interface.c
-@@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
- 					      locator_hdl);
- 	struct pdr_service *pds;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index 157441dd07041..d4faa489bd5fa 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5815,7 +5815,7 @@ int amdgpu_device_baco_exit(struct drm_device *dev)
+ 	    adev->nbio.funcs->enable_doorbell_interrupt)
+ 		adev->nbio.funcs->enable_doorbell_interrupt(adev, true);
  
-+	mutex_lock(&pdr->lock);
- 	/* Create a local client port for QMI communication */
- 	pdr->locator_addr.sq_family = AF_QIPCRTR;
- 	pdr->locator_addr.sq_node = svc->node;
- 	pdr->locator_addr.sq_port = svc->port;
+-	if (amdgpu_passthrough(adev) &&
++	if (amdgpu_passthrough(adev) && adev->nbio.funcs &&
+ 	    adev->nbio.funcs->clear_doorbell_interrupt)
+ 		adev->nbio.funcs->clear_doorbell_interrupt(adev);
  
--	mutex_lock(&pdr->lock);
- 	pdr->locator_init_complete = true;
- 	mutex_unlock(&pdr->lock);
- 
-@@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
- 
- 	mutex_lock(&pdr->lock);
- 	pdr->locator_init_complete = false;
--	mutex_unlock(&pdr->lock);
- 
- 	pdr->locator_addr.sq_node = 0;
- 	pdr->locator_addr.sq_port = 0;
-+	mutex_unlock(&pdr->lock);
- }
- 
- static const struct qmi_ops pdr_locator_ops = {
-@@ -365,12 +365,14 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
- 	if (ret < 0)
- 		return ret;
- 
-+	mutex_lock(&pdr->lock);
- 	ret = qmi_send_request(&pdr->locator_hdl,
- 			       &pdr->locator_addr,
- 			       &txn, SERVREG_GET_DOMAIN_LIST_REQ,
- 			       SERVREG_GET_DOMAIN_LIST_REQ_MAX_LEN,
- 			       servreg_get_domain_list_req_ei,
- 			       req);
-+	mutex_unlock(&pdr->lock);
- 	if (ret < 0) {
- 		qmi_txn_cancel(&txn);
- 		return ret;
 -- 
 2.43.0
 
