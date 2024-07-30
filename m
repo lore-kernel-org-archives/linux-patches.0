@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E79A1A6186;
-	Tue, 30 Jul 2024 16:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8E2189516;
+	Tue, 30 Jul 2024 16:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356277; cv=none; b=PlEtKWfd0GRw3Q7agZcxW6zmKCyjOrlrs1aE7rmZ/v+nXmIjdVx+JGs4JGK8umOMn6Mb8XExh9DujqKvTfT5Wowcm/0E/+NeieRI7ouRC8QoZ2QWE1fasGw6XJuUHY7iHXdNFDUSmLuTzbJisF0CY9lKa9/AN8DQs9uyBLn8cwk=
+	t=1722356280; cv=none; b=r8kW7FwbsF2CJMYa+D7ZUWC+zObjbLfLRo2dEN7rvL5UPvHYh70p99MFji9CX8XjUHpPVp776rhlWEnv9fugDIfu438GEYd6t2S4OtMX5Fw7i0mmVndbU/EcwMEk4HSVJjBdzsw9iXpylOUgtHAXCmC4CIk9prEKatGW2yryIIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356277; c=relaxed/simple;
-	bh=xoC8W9aBmmO2OtdtiDLYBsagKv1V+YWB7Fsp3N41UDo=;
+	s=arc-20240116; t=1722356280; c=relaxed/simple;
+	bh=n+ujX1nP6Pp2iUlj5p0GfcXvR1xZRjOfdQ2K5E8mEKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AkdAKJMvTidmiQ2vAza5W7giBpkF7xF+lwOA+BgM8jrgz7AI+muwP4bxFujCX6TxwxLnaxX69K+6QZbAmhTXfyqjjI/rfpmnV72xwPNGazRv5xYCHR5G/xecyGx2Y71JVAJMi0merDuOUNV4v5rY0PDYgrSaI3BA4+kanjKadng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YAPOEfvB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=htKLIJGQZmbnWh1iCPWIWMKEVaXOyhDBaJVs2Ihx3U4DT+9ar4frDIuuU87/akcKJy7BJfGpUvGOtoxH/o+6t5R22C8M/9XelcEO/jQTd0V+PxFDqQJzMyMPsiAsaWVBtZ+8KZYTNLHpalR+QF77yana5I3QOr8fAmD+C5UE/Dg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=16FxLg+w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YAPOEfvB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 533CEC32782;
-	Tue, 30 Jul 2024 16:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="16FxLg+w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B91AC32782;
+	Tue, 30 Jul 2024 16:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356276;
-	bh=xoC8W9aBmmO2OtdtiDLYBsagKv1V+YWB7Fsp3N41UDo=;
+	s=korg; t=1722356279;
+	bh=n+ujX1nP6Pp2iUlj5p0GfcXvR1xZRjOfdQ2K5E8mEKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAPOEfvBS+Jn7ydsJLr5c6cdlHeseYStpSLlPr+pkT22OzyWZpAcfkjBpcx2caQAf
-	 7f8C9eUUJhzNqxSS/q2mq2JK5Ynzvl0NPljS8nrKQHkNPi0uvTVuUMHvjKhe4n8Gsr
-	 yxoDiLPfMOH+NP12ryGue5uBXCuXGKWMWMO/wRrw=
+	b=16FxLg+wtazuELbj3njRKeQBn4yYkLsz5LK+jbQhpYhKfq4AiAPWQqyYgqn2TTVHT
+	 cxWgii51pbkp+8vGWhak94AliI6IBWx+50qkYscx0hRfYpiFGoltgCFe48Yi7+6rVU
+	 RkQaXJmg1zuVMedtQvxe8GSHMbcb5uHCt4II8zyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Zubkov <green@qrator.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 130/568] mlxsw: spectrum_acl: Fix ACL scale regression and firmware errors
-Date: Tue, 30 Jul 2024 17:43:57 +0200
-Message-ID: <20240730151644.952417698@linuxfoundation.org>
+Subject: [PATCH 6.1 175/440] sparc64: Fix incorrect function signature and add prototype for prom_cif_init
+Date: Tue, 30 Jul 2024 17:46:48 +0200
+Message-ID: <20240730151622.709437339@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,256 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Andreas Larsson <andreas@gaisler.com>
 
-[ Upstream commit 75d8d7a63065b18df9555dbaab0b42d4c6f20943 ]
+[ Upstream commit a6c3ea1ec96307dbfbb2f16d96c674c5cc80f445 ]
 
-ACLs that reside in the algorithmic TCAM (A-TCAM) in Spectrum-2 and
-newer ASICs can share the same mask if their masks only differ in up to
-8 consecutive bits. For example, consider the following filters:
+Remove the unused cif_stack argument and add a protype in oplib_64.h
+Commit ef3e035c3a9b ("sparc64: Fix register corruption in top-most
+kernel stack frame during boot.") removed the cif_stack argument to
+prom_cif init in the declaration at the caller site and the usage of it
+within prom_cif_init, but not in the function signature of the function
+itself.
 
- # tc filter add dev swp1 ingress pref 1 proto ip flower dst_ip 192.0.2.0/24 action drop
- # tc filter add dev swp1 ingress pref 1 proto ip flower dst_ip 198.51.100.128/25 action drop
+This also fixes the following warning:
+arch/sparc/prom/p1275.c:52:6: warning: no previous prototype for ‘prom_cif_init’
 
-The second filter can use the same mask as the first (dst_ip/24) with a
-delta of 1 bit.
-
-However, the above only works because the two filters have different
-values in the common unmasked part (dst_ip/24). When entries have the
-same value in the common unmasked part they create undesired collisions
-in the device since many entries now have the same key. This leads to
-firmware errors such as [1] and to a reduced scale.
-
-Fix by adjusting the hash table key to only include the value in the
-common unmasked part. That is, without including the delta bits. That
-way the driver will detect the collision during filter insertion and
-spill the filter into the circuit TCAM (C-TCAM).
-
-Add a test case that fails without the fix and adjust existing cases
-that check C-TCAM spillage according to the above limitation.
-
-[1]
-mlxsw_spectrum2 0000:06:00.0: EMAD reg access failed (tid=3379b18a00003394,reg_id=3027(ptce3),type=write,status=8(resource not available))
-
-Fixes: c22291f7cf45 ("mlxsw: spectrum: acl: Implement delta for ERP")
-Reported-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Amit Cohen <amcohen@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ef3e035c3a9b ("sparc64: Fix register corruption in top-most kernel stack frame during boot.")
+Link: https://lore.kernel.org/r/20240710094155.458731-3-andreas@gaisler.com
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlxsw/spectrum_acl_atcam.c       | 18 +++---
- .../mlxsw/spectrum_acl_bloom_filter.c         |  2 +-
- .../mellanox/mlxsw/spectrum_acl_tcam.h        |  9 +--
- .../drivers/net/mlxsw/spectrum-2/tc_flower.sh | 55 +++++++++++++++++--
- 4 files changed, 63 insertions(+), 21 deletions(-)
+ arch/sparc/include/asm/oplib_64.h | 1 +
+ arch/sparc/prom/init_64.c         | 3 ---
+ arch/sparc/prom/p1275.c           | 2 +-
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-index 4b713832fdd55..f5c0a4214c4e5 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_atcam.c
-@@ -391,7 +391,8 @@ mlxsw_sp_acl_atcam_region_entry_insert(struct mlxsw_sp *mlxsw_sp,
- 	if (err)
- 		return err;
+diff --git a/arch/sparc/include/asm/oplib_64.h b/arch/sparc/include/asm/oplib_64.h
+index a67abebd43592..1b86d02a84556 100644
+--- a/arch/sparc/include/asm/oplib_64.h
++++ b/arch/sparc/include/asm/oplib_64.h
+@@ -247,6 +247,7 @@ void prom_sun4v_guest_soft_state(void);
+ int prom_ihandle2path(int handle, char *buffer, int bufsize);
  
--	lkey_id = aregion->ops->lkey_id_get(aregion, aentry->enc_key, erp_id);
-+	lkey_id = aregion->ops->lkey_id_get(aregion, aentry->ht_key.enc_key,
-+					    erp_id);
- 	if (IS_ERR(lkey_id))
- 		return PTR_ERR(lkey_id);
- 	aentry->lkey_id = lkey_id;
-@@ -399,7 +400,7 @@ mlxsw_sp_acl_atcam_region_entry_insert(struct mlxsw_sp *mlxsw_sp,
- 	kvdl_index = mlxsw_afa_block_first_kvdl_index(rulei->act_block);
- 	mlxsw_reg_ptce3_pack(ptce3_pl, true, MLXSW_REG_PTCE3_OP_WRITE_WRITE,
- 			     priority, region->tcam_region_info,
--			     aentry->enc_key, erp_id,
-+			     aentry->ht_key.enc_key, erp_id,
- 			     aentry->delta_info.start,
- 			     aentry->delta_info.mask,
- 			     aentry->delta_info.value,
-@@ -428,7 +429,7 @@ mlxsw_sp_acl_atcam_region_entry_remove(struct mlxsw_sp *mlxsw_sp,
+ /* Client interface level routines. */
++void prom_cif_init(void *cif_handler);
+ void p1275_cmd_direct(unsigned long *);
  
- 	mlxsw_reg_ptce3_pack(ptce3_pl, false, MLXSW_REG_PTCE3_OP_WRITE_WRITE, 0,
- 			     region->tcam_region_info,
--			     aentry->enc_key, erp_id,
-+			     aentry->ht_key.enc_key, erp_id,
- 			     aentry->delta_info.start,
- 			     aentry->delta_info.mask,
- 			     aentry->delta_info.value,
-@@ -457,7 +458,7 @@ mlxsw_sp_acl_atcam_region_entry_action_replace(struct mlxsw_sp *mlxsw_sp,
- 	kvdl_index = mlxsw_afa_block_first_kvdl_index(rulei->act_block);
- 	mlxsw_reg_ptce3_pack(ptce3_pl, true, MLXSW_REG_PTCE3_OP_WRITE_UPDATE,
- 			     priority, region->tcam_region_info,
--			     aentry->enc_key, erp_id,
-+			     aentry->ht_key.enc_key, erp_id,
- 			     aentry->delta_info.start,
- 			     aentry->delta_info.mask,
- 			     aentry->delta_info.value,
-@@ -480,15 +481,13 @@ __mlxsw_sp_acl_atcam_entry_add(struct mlxsw_sp *mlxsw_sp,
- 	int err;
- 
- 	mlxsw_afk_encode(afk, region->key_info, &rulei->values,
--			 aentry->ht_key.full_enc_key, mask);
-+			 aentry->ht_key.enc_key, mask);
- 
- 	erp_mask = mlxsw_sp_acl_erp_mask_get(aregion, mask, false);
- 	if (IS_ERR(erp_mask))
- 		return PTR_ERR(erp_mask);
- 	aentry->erp_mask = erp_mask;
- 	aentry->ht_key.erp_id = mlxsw_sp_acl_erp_mask_erp_id(erp_mask);
--	memcpy(aentry->enc_key, aentry->ht_key.full_enc_key,
--	       sizeof(aentry->enc_key));
- 
- 	/* Compute all needed delta information and clear the delta bits
- 	 * from the encrypted key.
-@@ -497,9 +496,8 @@ __mlxsw_sp_acl_atcam_entry_add(struct mlxsw_sp *mlxsw_sp,
- 	aentry->delta_info.start = mlxsw_sp_acl_erp_delta_start(delta);
- 	aentry->delta_info.mask = mlxsw_sp_acl_erp_delta_mask(delta);
- 	aentry->delta_info.value =
--		mlxsw_sp_acl_erp_delta_value(delta,
--					     aentry->ht_key.full_enc_key);
--	mlxsw_sp_acl_erp_delta_clear(delta, aentry->enc_key);
-+		mlxsw_sp_acl_erp_delta_value(delta, aentry->ht_key.enc_key);
-+	mlxsw_sp_acl_erp_delta_clear(delta, aentry->ht_key.enc_key);
- 
- 	/* Add rule to the list of A-TCAM rules, assuming this
- 	 * rule is intended to A-TCAM. In case this rule does
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-index 95f63fcf4ba1f..a54eedb69a3f5 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_bloom_filter.c
-@@ -249,7 +249,7 @@ __mlxsw_sp_acl_bf_key_encode(struct mlxsw_sp_acl_atcam_region *aregion,
- 		memcpy(chunk + pad_bytes, &erp_region_id,
- 		       sizeof(erp_region_id));
- 		memcpy(chunk + key_offset,
--		       &aentry->enc_key[chunk_key_offsets[chunk_index]],
-+		       &aentry->ht_key.enc_key[chunk_key_offsets[chunk_index]],
- 		       chunk_key_len);
- 		chunk += chunk_len;
- 	}
-diff --git a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-index 79a1d86065125..010204f73ea46 100644
---- a/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-+++ b/drivers/net/ethernet/mellanox/mlxsw/spectrum_acl_tcam.h
-@@ -167,9 +167,9 @@ struct mlxsw_sp_acl_atcam_region {
- };
- 
- struct mlxsw_sp_acl_atcam_entry_ht_key {
--	char full_enc_key[MLXSW_REG_PTCEX_FLEX_KEY_BLOCKS_LEN]; /* Encoded
--								 * key.
--								 */
-+	char enc_key[MLXSW_REG_PTCEX_FLEX_KEY_BLOCKS_LEN]; /* Encoded key, minus
-+							    * delta bits.
-+							    */
- 	u8 erp_id;
- };
- 
-@@ -181,9 +181,6 @@ struct mlxsw_sp_acl_atcam_entry {
- 	struct rhash_head ht_node;
- 	struct list_head list; /* Member in entries_list */
- 	struct mlxsw_sp_acl_atcam_entry_ht_key ht_key;
--	char enc_key[MLXSW_REG_PTCEX_FLEX_KEY_BLOCKS_LEN]; /* Encoded key,
--							    * minus delta bits.
--							    */
- 	struct {
- 		u16 start;
- 		u8 mask;
-diff --git a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
-index 616d3581419ca..21d0f419cc6d7 100755
---- a/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
-+++ b/tools/testing/selftests/drivers/net/mlxsw/spectrum-2/tc_flower.sh
-@@ -11,7 +11,7 @@ ALL_TESTS="single_mask_test identical_filters_test two_masks_test \
- 	multiple_masks_test ctcam_edge_cases_test delta_simple_test \
- 	delta_two_masks_one_key_test delta_simple_rehash_test \
- 	bloom_simple_test bloom_complex_test bloom_delta_test \
--	max_erp_entries_test max_group_size_test"
-+	max_erp_entries_test max_group_size_test collision_test"
- NUM_NETIFS=2
- source $lib_dir/lib.sh
- source $lib_dir/tc_common.sh
-@@ -457,7 +457,7 @@ delta_two_masks_one_key_test()
+ #endif /* !(__SPARC64_OPLIB_H) */
+diff --git a/arch/sparc/prom/init_64.c b/arch/sparc/prom/init_64.c
+index 103aa91043185..f7b8a1a865b8f 100644
+--- a/arch/sparc/prom/init_64.c
++++ b/arch/sparc/prom/init_64.c
+@@ -26,9 +26,6 @@ phandle prom_chosen_node;
+  * routines in the prom library.
+  * It gets passed the pointer to the PROM vector.
+  */
+-
+-extern void prom_cif_init(void *);
+-
+ void __init prom_init(void *cif_handler)
  {
- 	# If 2 keys are the same and only differ in mask in a way that
- 	# they belong under the same ERP (second is delta of the first),
--	# there should be no C-TCAM spill.
-+	# there should be C-TCAM spill.
- 
- 	RET=0
- 
-@@ -474,8 +474,8 @@ delta_two_masks_one_key_test()
- 	tp_record "mlxsw:*" "tc filter add dev $h2 ingress protocol ip \
- 		   pref 2 handle 102 flower $tcflags dst_ip 192.0.2.2 \
- 		   action drop"
--	tp_check_hits "mlxsw:mlxsw_sp_acl_atcam_entry_add_ctcam_spill" 0
--	check_err $? "incorrect C-TCAM spill while inserting the second rule"
-+	tp_check_hits "mlxsw:mlxsw_sp_acl_atcam_entry_add_ctcam_spill" 1
-+	check_err $? "C-TCAM spill did not happen while inserting the second rule"
- 
- 	$MZ $h1 -c 1 -p 64 -a $h1mac -b $h2mac -A 192.0.2.1 -B 192.0.2.2 \
- 		-t ip -q
-@@ -1087,6 +1087,53 @@ max_group_size_test()
- 	log_test "max ACL group size test ($tcflags). max size $max_size"
+ 	phandle node;
+diff --git a/arch/sparc/prom/p1275.c b/arch/sparc/prom/p1275.c
+index 889aa602f8d86..51c3f984bbf72 100644
+--- a/arch/sparc/prom/p1275.c
++++ b/arch/sparc/prom/p1275.c
+@@ -49,7 +49,7 @@ void p1275_cmd_direct(unsigned long *args)
+ 	local_irq_restore(flags);
  }
  
-+collision_test()
-+{
-+	# Filters cannot share an eRP if in the common unmasked part (i.e.,
-+	# without the delta bits) they have the same values. If the driver does
-+	# not prevent such configuration (by spilling into the C-TCAM), then
-+	# multiple entries will be present in the device with the same key,
-+	# leading to collisions and a reduced scale.
-+	#
-+	# Create such a scenario and make sure all the filters are successfully
-+	# added.
-+
-+	RET=0
-+
-+	local ret
-+
-+	if [[ "$tcflags" != "skip_sw" ]]; then
-+		return 0;
-+	fi
-+
-+	# Add a single dst_ip/24 filter and multiple dst_ip/32 filters that all
-+	# have the same values in the common unmasked part (dst_ip/24).
-+
-+	tc filter add dev $h2 ingress pref 1 proto ipv4 handle 101 \
-+		flower $tcflags dst_ip 198.51.100.0/24 \
-+		action drop
-+
-+	for i in {0..255}; do
-+		tc filter add dev $h2 ingress pref 2 proto ipv4 \
-+			handle $((102 + i)) \
-+			flower $tcflags dst_ip 198.51.100.${i}/32 \
-+			action drop
-+		ret=$?
-+		[[ $ret -ne 0 ]] && break
-+	done
-+
-+	check_err $ret "failed to add all the filters"
-+
-+	for i in {255..0}; do
-+		tc filter del dev $h2 ingress pref 2 proto ipv4 \
-+			handle $((102 + i)) flower
-+	done
-+
-+	tc filter del dev $h2 ingress pref 1 proto ipv4 handle 101 flower
-+
-+	log_test "collision test ($tcflags)"
-+}
-+
- setup_prepare()
+-void prom_cif_init(void *cif_handler, void *cif_stack)
++void prom_cif_init(void *cif_handler)
  {
- 	h1=${NETIFS[p1]}
+ 	p1275buf.prom_cif_handler = (void (*)(long *))cif_handler;
+ }
 -- 
 2.43.0
 
