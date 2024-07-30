@@ -1,37 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADE41A76D9;
-	Tue, 30 Jul 2024 17:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 685EC1A76BE;
+	Tue, 30 Jul 2024 17:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360376; cv=none; b=aIP/T7oVUN6yOyj/VlnR3kLautleis69KHCctJXahMA5e7Wf1wa5ktS7S4QHpkxfu1rOuId1BPbXGv27DVyTaYObAMe8Hhy+jGkCT13k7irbkcGpWrmD8Y/jtcpoDjX0V8T2tdZi4fx1RoYUvx1QwxIgfhA7VHxnvWA1DBVl6Ao=
+	t=1722360379; cv=none; b=aHKO9dI2HlDiVN3KYxlDRZ5t7bUID6/CXqSmAW7jnrRDGu/Doo+W7c0/wtc5R/gystdLyGCOym2NROqsjBdD2VS9AK2GwiWaeSs8GQQNCTzB7XhWq2TfoNiVY4EBG9rhXixFj+HqMbxnzGRlRoR3Pct73o4HdHHIs+nHaSIqsn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360376; c=relaxed/simple;
-	bh=oA+YatxUXbhLJvWofNM7r0CYIHz8p/WnJIPwKVw05z4=;
+	s=arc-20240116; t=1722360379; c=relaxed/simple;
+	bh=Kk5jbjeUi2dnDxQjtrFtnWCQvCYxfFcnIUvL0RPMsgw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qe1LA5rLVDVtbTENVhGiC6rVTLNZKbMTS0PsKN2xZ3udspQgbPsTSzf9wayYsn1qEJMBWvcfMd8D3WSHtJy3RLOxljJTS/TXVzwdUTu7W5VZ2+oL0VQciKH0xJTwtZavMlGUEygN3Gr2t/NR1vyLQJGkiHO/OnNDx0fnr75yrMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WvvkY8kK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmmEq/FCbvL1MAZm3/KD0xJ0a8LC1B+dhnWLXPNr13cOle0osUt1Vy2LwSHAgwCjRVbb19l5++IfROTEeQuwR4ldG9Mqoz9H9zgy1GqQj6092aSVcWFYKzlGq1D75mvtY9HyYHwPLLZbum78Dki0giwVJXCH+kQOPV6O52TvsbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hRdHez0T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WvvkY8kK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F216C32782;
-	Tue, 30 Jul 2024 17:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hRdHez0T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A187C32782;
+	Tue, 30 Jul 2024 17:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360375;
-	bh=oA+YatxUXbhLJvWofNM7r0CYIHz8p/WnJIPwKVw05z4=;
+	s=korg; t=1722360379;
+	bh=Kk5jbjeUi2dnDxQjtrFtnWCQvCYxfFcnIUvL0RPMsgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvvkY8kKhD5WuAba6mjMeY8QP00XvuJSLayUyK81ULyvMfUPFtAKfc1tyO9SwQbhM
-	 4le2WJcB45zr6decMk56wZEYfWPqFJIIc+6x3dsYqrPgG8YpypSibIHAe1wbJiWryN
-	 aN4TLeWM2wjGoLY6Ij57MR0C6yiQi2fCvKBwjgKE=
+	b=hRdHez0TyH/GDM7e8NOdV3mje6RU3LfGDdi7aSrvnPqic4DH67mv+o9eNnAOQiVWF
+	 lFJI4+7IBfcieXVePPXSWVb9zGiE4Px8BVb78Swz+QkIlM+sS5FLxMC7Pne6069CXF
+	 7KRnGgxOT4642U9nV+MMsWSKo2KJ90yPjyXh8Ww4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.10 679/809] irqchip/imx-irqsteer: Handle runtime power management correctly
-Date: Tue, 30 Jul 2024 17:49:15 +0200
-Message-ID: <20240730151751.724366470@linuxfoundation.org>
+	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ingo Molnar <mingo@redhat.com>,
+	Rik van Riel <riel@surriel.com>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Dave Hansen <dave.hansen@intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Michal Hocko <mhocko@suse.com>,
+	David Rientjes <rientjes@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.10 680/809] mm/numa_balancing: teach mpol_to_str about the balancing mode
+Date: Tue, 30 Jul 2024 17:49:16 +0200
+Message-ID: <20240730151751.765543195@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -50,102 +61,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
 
-commit 33b1c47d1fc0b5f06a393bb915db85baacba18ea upstream.
+commit af649773fb25250cd22625af021fb6275c56a3ee upstream.
 
-The power domain is automatically activated from clk_prepare(). However, on
-certain platforms like i.MX8QM and i.MX8QXP, the power-on handling invokes
-sleeping functions, which triggers the 'scheduling while atomic' bug in the
-context switch path during device probing:
+Since balancing mode was added in bda420b98505 ("numa balancing: migrate
+on fault among multiple bound nodes"), it was possible to set this mode
+but it wouldn't be shown in /proc/<pid>/numa_maps since there was no
+support for it in the mpol_to_str() helper.
 
- BUG: scheduling while atomic: kworker/u13:1/48/0x00000002
- Call trace:
-  __schedule_bug+0x54/0x6c
-  __schedule+0x7f0/0xa94
-  schedule+0x5c/0xc4
-  schedule_preempt_disabled+0x24/0x40
-  __mutex_lock.constprop.0+0x2c0/0x540
-  __mutex_lock_slowpath+0x14/0x20
-  mutex_lock+0x48/0x54
-  clk_prepare_lock+0x44/0xa0
-  clk_prepare+0x20/0x44
-  imx_irqsteer_resume+0x28/0xe0
-  pm_generic_runtime_resume+0x2c/0x44
-  __genpd_runtime_resume+0x30/0x80
-  genpd_runtime_resume+0xc8/0x2c0
-  __rpm_callback+0x48/0x1d8
-  rpm_callback+0x6c/0x78
-  rpm_resume+0x490/0x6b4
-  __pm_runtime_resume+0x50/0x94
-  irq_chip_pm_get+0x2c/0xa0
-  __irq_do_set_handler+0x178/0x24c
-  irq_set_chained_handler_and_data+0x60/0xa4
-  mxc_gpio_probe+0x160/0x4b0
+Furthermore, because the balancing mode sets the MPOL_F_MORON flag, it
+would be displayed as 'default' due a workaround introduced a few years
+earlier in 8790c71a18e5 ("mm/mempolicy.c: fix mempolicy printing in
+numa_maps").
 
-Cure this by implementing the irq_bus_lock/sync_unlock() interrupt chip
-callbacks and handle power management in them as they are invoked from
-non-atomic context.
+To tidy this up we implement two changes:
 
-[ tglx: Rewrote change log, added Fixes tag ]
+Replace the MPOL_F_MORON check by pointer comparison against the
+preferred_node_policy array.  By doing this we generalise the current
+special casing and replace the incorrect 'default' with the correct 'bind'
+for the mode.
 
-Fixes: 0136afa08967 ("irqchip: Add driver for imx-irqsteer controller")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240703163250.47887-1-shenwei.wang@nxp.com
+Secondly, we add a string representation and corresponding handling for
+the MPOL_F_NUMA_BALANCING flag.
+
+With the two changes together we start showing the balancing flag when it
+is set and therefore complete the fix.
+
+Representation format chosen is to separate multiple flags with vertical
+bars, following what existed long time ago in kernel 2.6.25.  But as
+between then and now there wasn't a way to display multiple flags, this
+patch does not change the format in practice.
+
+Some /proc/<pid>/numa_maps output examples:
+
+ 555559580000 bind=balancing:0-1,3 file=...
+ 555585800000 bind=balancing|static:0,2 file=...
+ 555635240000 prefer=relative:0 file=
+
+Link: https://lkml.kernel.org/r/20240708075632.95857-1-tursulin@igalia.com
+Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+Fixes: bda420b98505 ("numa balancing: migrate on fault among multiple bound nodes")
+References: 8790c71a18e5 ("mm/mempolicy.c: fix mempolicy printing in numa_maps")
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: "Matthew Wilcox (Oracle)" <willy@infradead.org>
+Cc: Dave Hansen <dave.hansen@intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: David Rientjes <rientjes@google.com>
+Cc: <stable@vger.kernel.org>	[5.12+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-imx-irqsteer.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ mm/mempolicy.c |   18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
---- a/drivers/irqchip/irq-imx-irqsteer.c
-+++ b/drivers/irqchip/irq-imx-irqsteer.c
-@@ -36,6 +36,7 @@ struct irqsteer_data {
- 	int			channel;
- 	struct irq_domain	*domain;
- 	u32			*saved_reg;
-+	struct device		*dev;
- };
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -3293,8 +3293,9 @@ out:
+  * @pol:  pointer to mempolicy to be formatted
+  *
+  * Convert @pol into a string.  If @buffer is too short, truncate the string.
+- * Recommend a @maxlen of at least 32 for the longest mode, "interleave", the
+- * longest flag, "relative", and to display at least a few node ids.
++ * Recommend a @maxlen of at least 51 for the longest mode, "weighted
++ * interleave", plus the longest flag flags, "relative|balancing", and to
++ * display at least a few node ids.
+  */
+ void mpol_to_str(char *buffer, int maxlen, struct mempolicy *pol)
+ {
+@@ -3303,7 +3304,10 @@ void mpol_to_str(char *buffer, int maxle
+ 	unsigned short mode = MPOL_DEFAULT;
+ 	unsigned short flags = 0;
  
- static int imx_irqsteer_get_reg_index(struct irqsteer_data *data,
-@@ -72,10 +73,26 @@ static void imx_irqsteer_irq_mask(struct
- 	raw_spin_unlock_irqrestore(&data->lock, flags);
- }
+-	if (pol && pol != &default_policy && !(pol->flags & MPOL_F_MORON)) {
++	if (pol &&
++	    pol != &default_policy &&
++	    !(pol >= &preferred_node_policy[0] &&
++	      pol <= &preferred_node_policy[ARRAY_SIZE(preferred_node_policy) - 1])) {
+ 		mode = pol->mode;
+ 		flags = pol->flags;
+ 	}
+@@ -3331,12 +3335,18 @@ void mpol_to_str(char *buffer, int maxle
+ 		p += snprintf(p, buffer + maxlen - p, "=");
  
-+static void imx_irqsteer_irq_bus_lock(struct irq_data *d)
-+{
-+	struct irqsteer_data *data = d->chip_data;
+ 		/*
+-		 * Currently, the only defined flags are mutually exclusive
++		 * Static and relative are mutually exclusive.
+ 		 */
+ 		if (flags & MPOL_F_STATIC_NODES)
+ 			p += snprintf(p, buffer + maxlen - p, "static");
+ 		else if (flags & MPOL_F_RELATIVE_NODES)
+ 			p += snprintf(p, buffer + maxlen - p, "relative");
 +
-+	pm_runtime_get_sync(data->dev);
-+}
-+
-+static void imx_irqsteer_irq_bus_sync_unlock(struct irq_data *d)
-+{
-+	struct irqsteer_data *data = d->chip_data;
-+
-+	pm_runtime_put_autosuspend(data->dev);
-+}
-+
- static const struct irq_chip imx_irqsteer_irq_chip = {
--	.name		= "irqsteer",
--	.irq_mask	= imx_irqsteer_irq_mask,
--	.irq_unmask	= imx_irqsteer_irq_unmask,
-+	.name			= "irqsteer",
-+	.irq_mask		= imx_irqsteer_irq_mask,
-+	.irq_unmask		= imx_irqsteer_irq_unmask,
-+	.irq_bus_lock		= imx_irqsteer_irq_bus_lock,
-+	.irq_bus_sync_unlock	= imx_irqsteer_irq_bus_sync_unlock,
- };
++		if (flags & MPOL_F_NUMA_BALANCING) {
++			if (!is_power_of_2(flags & MPOL_MODE_FLAGS))
++				p += snprintf(p, buffer + maxlen - p, "|");
++			p += snprintf(p, buffer + maxlen - p, "balancing");
++		}
+ 	}
  
- static int imx_irqsteer_irq_map(struct irq_domain *h, unsigned int irq,
-@@ -150,6 +167,7 @@ static int imx_irqsteer_probe(struct pla
- 	if (!data)
- 		return -ENOMEM;
- 
-+	data->dev = &pdev->dev;
- 	data->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(data->regs)) {
- 		dev_err(&pdev->dev, "failed to initialize reg\n");
+ 	if (!nodes_empty(nodes))
 
 
