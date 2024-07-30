@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6CE184549;
-	Tue, 30 Jul 2024 16:57:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C637E184549;
+	Tue, 30 Jul 2024 16:57:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358634; cv=none; b=AH+7vHSU4JK/9aAi1ZAZtUYOThtILJODGryC9PC4A1mSeLC69/J9iue2EgnjM032/rkg9vWOQ7s7mnKXZnqq8pJ9kNTopZbwvibjHMws1Cc08BXJL7fSwDWVWOPvkMxkAy4V4+Hr+4yzQRyC05z3/jYHVDCwim+ZqowhX8OTfew=
+	t=1722358637; cv=none; b=E18T0AVu0LYGkHBRaI9aqPXpp30Sqi2NiT6YIfNnddOv3kcwZUACcTyvhaunW+UK/ztGb6t395gfP8lxkaibwHNUvgxkdd6/BMDKoVB6aUjUXHK79bpZfpzKlf1dSjbf21QWrLsTesSRgPREHnl3Mcr+Uef1wOUgexeLgopYVAE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358634; c=relaxed/simple;
-	bh=gEunYKXcZusDTiNGfF7hWCpjcMp6O+Aw/QCK8O1nA5M=;
+	s=arc-20240116; t=1722358637; c=relaxed/simple;
+	bh=ToznvYtZrTG7EfUQqBmtAFOxtMvOVnnT2LBLNHkiz+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cV86/S9oUHKFbeMfT9empS8Ir4JiMH6DGCP8fTQb+bTTJvmFO/Ojd+L2uS8v6Z+PV/JaElCR5OZTpgeeYUGaeaS0w8JyC6HTt70MHdIwVZTpmoFyyxAl9mih/4/4ihupDe4a5VzPwcfDgqQMW0YTNjg/Aq8MfmvaRzXd50eaBtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LXLLpLZj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fmMuMzvzRLNe5hhPcTz3Vsk0s8kQwwa3h7W042+bT7/LKI953V8DAWSm3YZrcXn2CHvF7jemGD2wv53haxFin/7bNx7qavOf3j+X13bbxDwLqYKyJlP8WYydKIG4Nmpwokgo/mgLlTEyDLludTkrOXP/mzhC0rVUl2gRXwmwE6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ir9sXBzF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LXLLpLZj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059E0C32782;
-	Tue, 30 Jul 2024 16:57:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ir9sXBzF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E618C32782;
+	Tue, 30 Jul 2024 16:57:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358634;
-	bh=gEunYKXcZusDTiNGfF7hWCpjcMp6O+Aw/QCK8O1nA5M=;
+	s=korg; t=1722358637;
+	bh=ToznvYtZrTG7EfUQqBmtAFOxtMvOVnnT2LBLNHkiz+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LXLLpLZjDW7F7CqF8mwdnLzhmNnSLgEvwi3pPyFllPxwochWYiw4jYY51yCCc0ocq
-	 T1k9rlSwg0OTEIMLT05xiqmg5qTsUJ4d7WDDbfezIPmiPfjbhobohcTLWc+OKcCxu3
-	 LvtyHfdGo6vmTnhir/we3t6Z1Ch0u+3sx9wJnDiY=
+	b=Ir9sXBzFa5eZ5caSDO5oBfgVl8Q4NBnm9Y3ockff4TUFZTC1zTTBtqIJwB+q8yTSY
+	 35jWMeT8IW8lSDvDYW3RF5x0KApkAZJ0SxA37Fn9EHu9A5Pfa4Xencf/ZdGREupysL
+	 KjseXozOd/Rw47h0zx+oqWrUU/Ui96uRvC7mzxao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chenyuan Yang <chenyuan0y@gmail.com>,
-	Matti Vaittinen <mazziesaccount@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 380/809] iio: Fix the sorting functionality in iio_gts_build_avail_time_table
-Date: Tue, 30 Jul 2024 17:44:16 +0200
-Message-ID: <20240730151739.674379040@linuxfoundation.org>
+	Niklas Cassel <cassel@kernel.org>,
+	Igor Pylypiv <ipylypiv@google.com>,
+	Hannes Reinecke <hare@suse.de>
+Subject: [PATCH 6.6 381/568] ata: libata-scsi: Honor the D_SENSE bit for CK_COND=1 and no error
+Date: Tue, 30 Jul 2024 17:48:08 +0200
+Message-ID: <20240730151654.758954810@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,75 +47,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chenyuan Yang <chenyuan0y@gmail.com>
+From: Igor Pylypiv <ipylypiv@google.com>
 
-[ Upstream commit 5acc3f971a01be48d5ff4252d8f9cdb87998cdfb ]
+commit 28ab9769117ca944cb6eb537af5599aa436287a4 upstream.
 
-The sorting in iio_gts_build_avail_time_table is not working as intended.
-It could result in an out-of-bounds access when the time is zero.
+SAT-5 revision 8 specification removed the text about the ANSI INCITS
+431-2007 compliance which was requiring SCSI/ATA Translation (SAT) to
+return descriptor format sense data for the ATA PASS-THROUGH commands
+regardless of the setting of the D_SENSE bit.
 
-Here are more details:
+Let's honor the D_SENSE bit for ATA PASS-THROUGH commands while
+generating the "ATA PASS-THROUGH INFORMATION AVAILABLE" sense data.
 
-1. When the gts->itime_table[i].time_us is zero, e.g., the time
-sequence is `3, 0, 1`, the inner for-loop will not terminate and do
-out-of-bound writes. This is because once `times[j] > new`, the value
-`new` will be added in the current position and the `times[j]` will be
-moved to `j+1` position, which makes the if-condition always hold.
-Meanwhile, idx will be added one, making the loop keep running without
-termination and out-of-bound write.
-2. If none of the gts->itime_table[i].time_us is zero, the elements
-will just be copied without being sorted as described in the comment
-"Sort times from all tables to one and remove duplicates".
+SAT-5 revision 7
+================
 
-For more details, please refer to
-https://lore.kernel.org/all/6dd0d822-046c-4dd2-9532-79d7ab96ec05@gmail.com.
+12.2.2.8 Fixed format sense data
 
-Reported-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Suggested-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Fixes: 38416c28e168 ("iio: light: Add gain-time-scale helpers")
-Signed-off-by: Chenyuan Yang <chenyuan0y@gmail.com>
-Co-developed-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/d501ade8c1f7b202d34c6404eda423489cab1df5.1714480171.git.mazziesaccount@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Table 212 shows the fields returned in the fixed format sense data
+(see SPC-5) for ATA PASS-THROUGH commands. SATLs compliant with ANSI
+INCITS 431-2007, SCSI/ATA Translation (SAT) return descriptor format
+sense data for the ATA PASS-THROUGH commands regardless of the setting
+of the D_SENSE bit.
+
+SAT-5 revision 8
+================
+
+12.2.2.8 Fixed format sense data
+
+Table 211 shows the fields returned in the fixed format sense data
+(see SPC-5) for ATA PASS-THROUGH commands.
+
+Cc: stable@vger.kernel.org # 4.19+
+Reported-by: Niklas Cassel <cassel@kernel.org>
+Closes: https://lore.kernel.org/linux-ide/Zn1WUhmLglM4iais@ryzen.lan
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Link: https://lore.kernel.org/r/20240702024735.1152293-4-ipylypiv@google.com
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-gts-helper.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/ata/libata-scsi.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/industrialio-gts-helper.c b/drivers/iio/industrialio-gts-helper.c
-index b51eb6cb766f3..59d7615c0f565 100644
---- a/drivers/iio/industrialio-gts-helper.c
-+++ b/drivers/iio/industrialio-gts-helper.c
-@@ -362,17 +362,20 @@ static int iio_gts_build_avail_time_table(struct iio_gts *gts)
- 	for (i = gts->num_itime - 1; i >= 0; i--) {
- 		int new = gts->itime_table[i].time_us;
- 
--		if (times[idx] < new) {
-+		if (idx == 0 || times[idx - 1] < new) {
- 			times[idx++] = new;
- 			continue;
- 		}
- 
--		for (j = 0; j <= idx; j++) {
-+		for (j = 0; j < idx; j++) {
-+			if (times[j] == new)
-+				break;
- 			if (times[j] > new) {
- 				memmove(&times[j + 1], &times[j],
- 					(idx - j) * sizeof(int));
- 				times[j] = new;
- 				idx++;
-+				break;
- 			}
- 		}
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -941,11 +941,8 @@ static void ata_gen_passthru_sense(struc
+ 				   &sense_key, &asc, &ascq);
+ 		ata_scsi_set_sense(qc->dev, cmd, sense_key, asc, ascq);
+ 	} else {
+-		/*
+-		 * ATA PASS-THROUGH INFORMATION AVAILABLE
+-		 * Always in descriptor format sense.
+-		 */
+-		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
++		/* ATA PASS-THROUGH INFORMATION AVAILABLE */
++		ata_scsi_set_sense(qc->dev, cmd, RECOVERED_ERROR, 0, 0x1D);
  	}
--- 
-2.43.0
-
+ }
+ 
 
 
