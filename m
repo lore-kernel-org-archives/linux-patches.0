@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C57B1A6160;
-	Tue, 30 Jul 2024 16:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B3818455D;
+	Tue, 30 Jul 2024 16:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356774; cv=none; b=BqctTFG+jNd/L3/A/hqR9BQoqYD0stOnEHtCTiC3Sa57xVEsYbUx/KkpVnf9MC8qlKU7UI/3rL9oEW/r5GSYVN0SY+eUzLMvOgoDeQrkHwUIiIc36D1NLbj5QFxInVmUJ6J+PPxrPHr/Chj2YYVVzSyHT4HUuIWaiyqRi5EXptg=
+	t=1722356777; cv=none; b=OjkTYkJ3jqMlPcSj6n/7yslKttetSEIcE9Y5hNDBZxP1I6JHqGpgi7n35F7ymkxyjyeelCeG5gg6uubz1FAs9act9dV7yRuURomcRHhEFbTMjuqsor53vRukCF6e7zdVok7p07nnm/BCvq4Qog9P+lgudb/oUU936ExCbIzeb3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356774; c=relaxed/simple;
-	bh=pO+rpmkqMgS8rzw1ZTii3IGImyLH/fn0nmfG+yBFw14=;
+	s=arc-20240116; t=1722356777; c=relaxed/simple;
+	bh=5kOMzIWgTv3EG/mcbFKjkqAEBz/LHDxTR65j3Jdwbic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JhvjrZ/cd4Ii9xCjDuKGqDapCJGIszA2gySgXzRwzhthiO3BjoRHRezoOjki283MOEy0PfckzMbW9oHrXXFlGfYJWoXRhmO+qhNuUbdw3KfBe19SAl0DMcWhjfEHE8YQ3rzr3VBlY3HCky3GvZrHdu/9eEqAxdtcG4nzu+tp+ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rI2JDFnn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a/xcaBrcZmY3IPfU/MHNUBjIPEiSyecoqyUIQbtRvIz9iZpidiYg7L4cuTuIvu2WPVeDrCc+D6PPxgkhAAMc9u2/ilJXx3KajTZpDbqwv50nPvHREoaTVbmzIDs1LYjuoByTkJvVjEQ0XeD4KB7uGn6D+4SJ6X9rUcBOU4Q3DLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SORCqqzr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rI2JDFnn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3673C32782;
-	Tue, 30 Jul 2024 16:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SORCqqzr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8680C4AF0C;
+	Tue, 30 Jul 2024 16:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356774;
-	bh=pO+rpmkqMgS8rzw1ZTii3IGImyLH/fn0nmfG+yBFw14=;
+	s=korg; t=1722356777;
+	bh=5kOMzIWgTv3EG/mcbFKjkqAEBz/LHDxTR65j3Jdwbic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rI2JDFnn7nr8kH2qxlaDneBu+HE+l8S+gZdeyDHnEifkEfajW1pC6OeoTKSCHrzQO
-	 I9lQOODyYIbAVBTNesuEEhfFZceqrMPGlvSBfyxsk1F8Y1ZirzXdOodDPCjMBeueTW
-	 IYZkjbUEvfwzp22d29GbVu8IIKBk17I2QEr1fvYE=
+	b=SORCqqzrFzlDKBs471SnEdLhlwBpzxFvb3Gmpmq6oeBbQVnw53CxZSr2WvE+1G4DN
+	 YqGznqluOxYmU5lrmlNItwIHH14b6E5Ce81KFtgydcWFsfFrbqWtXagsOdgRQiN3ba
+	 YZ1YdVb8Vvx2H9pGUDab1gelL/Yt2HWsktH6k5go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guangguan Wang <guangguan.wang@linux.alibaba.com>,
-	Wen Gu <guwen@linux.alibaba.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tim Van Patten <timvp@google.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 179/809] net/smc: set rmbs SG_MAX_SINGLE_ALLOC limitation only when CONFIG_ARCH_NO_SG_CHAIN is defined
-Date: Tue, 30 Jul 2024 17:40:55 +0200
-Message-ID: <20240730151731.681761682@linuxfoundation.org>
+Subject: [PATCH 6.6 183/568] drm/amdgpu: Remove GC HW IP 9.3.0 from noretry=1
+Date: Tue, 30 Jul 2024 17:44:50 +0200
+Message-ID: <20240730151647.030692841@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +47,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Guangguan Wang <guangguan.wang@linux.alibaba.com>
+From: Tim Van Patten <timvp@google.com>
 
-[ Upstream commit 3ac14b9dfbd345e891d48d89f6c2fa519848f0f4 ]
+[ Upstream commit 1446226d32a45bb7c4f63195a59be8c08defe658 ]
 
-SG_MAX_SINGLE_ALLOC is used to limit maximum number of entries that
-will be allocated in one piece of scatterlist. When the entries of
-scatterlist exceeds SG_MAX_SINGLE_ALLOC, sg chain will be used. From
-commit 7c703e54cc71 ("arch: switch the default on ARCH_HAS_SG_CHAIN"),
-we can know that the macro CONFIG_ARCH_NO_SG_CHAIN is used to identify
-whether sg chain is supported. So, SMC-R's rmb buffer should be limited
-by SG_MAX_SINGLE_ALLOC only when the macro CONFIG_ARCH_NO_SG_CHAIN is
-defined.
+The following commit updated gmc->noretry from 0 to 1 for GC HW IP
+9.3.0:
 
-Fixes: a3fe3d01bd0d ("net/smc: introduce sg-logic for RMBs")
-Signed-off-by: Guangguan Wang <guangguan.wang@linux.alibaba.com>
-Co-developed-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: Wen Gu <guwen@linux.alibaba.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+    commit 5f3854f1f4e2 ("drm/amdgpu: add more cases to noretry=1")
+
+This causes the device to hang when a page fault occurs, until the
+device is rebooted. Instead, revert back to gmc->noretry=0 so the device
+is still responsive.
+
+Fixes: 5f3854f1f4e2 ("drm/amdgpu: add more cases to noretry=1")
+Signed-off-by: Tim Van Patten <timvp@google.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_core.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
-index fafdb97adfad9..acca3b1a068f0 100644
---- a/net/smc/smc_core.c
-+++ b/net/smc/smc_core.c
-@@ -2015,7 +2015,6 @@ int smc_conn_create(struct smc_sock *smc, struct smc_init_info *ini)
-  */
- static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
- {
--	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
- 	u8 compressed;
- 
- 	if (size <= SMC_BUF_MIN_SIZE)
-@@ -2025,9 +2024,11 @@ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
- 	compressed = min_t(u8, ilog2(size) + 1,
- 			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
- 
-+#ifdef CONFIG_ARCH_NO_SG_CHAIN
- 	if (!is_smcd && is_rmb)
- 		/* RMBs are backed by & limited to max size of scatterlists */
--		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
-+		compressed = min_t(u8, compressed, ilog2((SG_MAX_SINGLE_ALLOC * PAGE_SIZE) >> 14));
-+#endif
- 
- 	return compressed;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+index bc0eda1a729c5..0b6a0e149f1c4 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -650,7 +650,6 @@ void amdgpu_gmc_noretry_set(struct amdgpu_device *adev)
+ 	struct amdgpu_gmc *gmc = &adev->gmc;
+ 	uint32_t gc_ver = adev->ip_versions[GC_HWIP][0];
+ 	bool noretry_default = (gc_ver == IP_VERSION(9, 0, 1) ||
+-				gc_ver == IP_VERSION(9, 3, 0) ||
+ 				gc_ver == IP_VERSION(9, 4, 0) ||
+ 				gc_ver == IP_VERSION(9, 4, 1) ||
+ 				gc_ver == IP_VERSION(9, 4, 2) ||
 -- 
 2.43.0
 
