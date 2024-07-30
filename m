@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 883BA187FEC;
-	Tue, 30 Jul 2024 16:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1314F187FEC;
+	Tue, 30 Jul 2024 16:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355333; cv=none; b=QsDiRy8cyebm2M4xYrnCUdyZZyBjQDehAmPUBr3ea2rU3i9Yp8H88m1tKNp1uWhAYbXOC0zwaNkA9yXKJDuW+8MgmBkj+A51UqrxJGWThyvrxAQnoLNA1dkdeP8sbs5GhKX2dU1atyTxcSdaF3eX2mfgkF1t2/a2alSAbzhdL3g=
+	t=1722355337; cv=none; b=TWjEZ9IimS1iwZaqtlD3akqmJDbKbOQgSX+ELUzub1ZD6xDoARvwVEMhUA8u++/foxBU6cAy8n+D600GZsprWIUU+I8wvs9yDhEsWl/hMa2CTghNrw1NrloaBAeu+TjJPsForKmQH1hBqmnO924AcGY6fJCK68Y+kOTHE8V5hrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355333; c=relaxed/simple;
-	bh=MdZViQBFv2l9bmAH26x7kRk901pl8mRRWPFHBOOoUGQ=;
+	s=arc-20240116; t=1722355337; c=relaxed/simple;
+	bh=oocCd/P5ukromBPGWa72hjSXMxJLx8zldo3UN0d5Rmo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BK3sF8lqxjapK/IuXiPSG9vnWqWGXT2DcOIOIyBjLHT8qlWO2Fi8DtJ6fhr/ScQjQp843N46s2BR1v+4nJz+r5fFEVRp0Xckl/w50JopwNGWZRSOKo5L0EK6JUWtwkoqpGYDHeoKY0jxnjWyuJnXs2upVz6hPszmDSX/P9WKz+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RBitkGXM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nDul7iW8uAVI7aOo8AVmkmQ9z0Qme3tZXg+XjrHv/rHE7xBmCTi34y3MGCvyN83E3FfWMWnsecGBIAon9nP/wtaeaDM3ClNz/f5XQA+as/sJsCThRMckKdeZ1o0veGiwaVQh7U8cEdrIVDjFUjOn58hXAU68+hwubJT5hxHbHNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNXRTFSY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RBitkGXM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB7CC32782;
-	Tue, 30 Jul 2024 16:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNXRTFSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45591C32782;
+	Tue, 30 Jul 2024 16:02:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355333;
-	bh=MdZViQBFv2l9bmAH26x7kRk901pl8mRRWPFHBOOoUGQ=;
+	s=korg; t=1722355336;
+	bh=oocCd/P5ukromBPGWa72hjSXMxJLx8zldo3UN0d5Rmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RBitkGXMAH6Z+GIOfhNVwDiZfhfUyxstjCjYK9IH6KOcYUTTA4olcJHoNxjEvbrlS
-	 5GErDFCmOiKaMFI6apjzXdjBjgOko4pgHN5293AgLyclpzivngK4b0COTidUZGNOOS
-	 I1JuQfHYUpS/zfhIGYsVX0GrwdQQR7DVz7x4DReo=
+	b=HNXRTFSYbX42qGMps+35mku/M9mDg5+FKCvR8JhSOmE8OPeRK5Y84V7GTcLIiwlXb
+	 GIt1zDoK/K375BHtCHCETcvxjHxllftOmm8eaPt2bex6xbM1uPgaVk4zB3C+CUzPpO
+	 2qo6kyEeQh2AM8zkl7KmmKUgSQNhywlEqS08kpkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
+	Michal Simek <michal.simek@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 084/440] selftests/bpf: Fix prog numbers in test_sockmap
-Date: Tue, 30 Jul 2024 17:45:17 +0200
-Message-ID: <20240730151619.041182233@linuxfoundation.org>
+Subject: [PATCH 6.6 049/568] soc: xilinx: rename cpu_number1 to dummy_cpu_number
+Date: Tue, 30 Jul 2024 17:42:36 +0200
+Message-ID: <20240730151641.755684818@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,80 +47,107 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
 
-[ Upstream commit 6c8d7598dfed759bf1d9d0322b4c2b42eb7252d8 ]
+[ Upstream commit 4a95449dd975e2ea6629a034f3e74b46c9634916 ]
 
-bpf_prog5 and bpf_prog7 are removed from progs/test_sockmap_kern.h in
-commit d79a32129b21 ("bpf: Selftests, remove prints from sockmap tests"),
-now there are only 9 progs in it, not 11:
+The per cpu variable cpu_number1 is passed to xlnx_event_handler as
+argument "dev_id", but it is not used in this function. So drop the
+initialization of this variable and rename it to dummy_cpu_number.
+This patch is to fix the following call trace when the kernel option
+CONFIG_DEBUG_ATOMIC_SLEEP is enabled:
 
-	SEC("sk_skb1")
-	int bpf_prog1(struct __sk_buff *skb)
-	SEC("sk_skb2")
-	int bpf_prog2(struct __sk_buff *skb)
-	SEC("sk_skb3")
-	int bpf_prog3(struct __sk_buff *skb)
-	SEC("sockops")
-	int bpf_sockmap(struct bpf_sock_ops *skops)
-	SEC("sk_msg1")
-	int bpf_prog4(struct sk_msg_md *msg)
-	SEC("sk_msg2")
-	int bpf_prog6(struct sk_msg_md *msg)
-	SEC("sk_msg3")
-	int bpf_prog8(struct sk_msg_md *msg)
-	SEC("sk_msg4")
-	int bpf_prog9(struct sk_msg_md *msg)
-	SEC("sk_msg5")
-	int bpf_prog10(struct sk_msg_md *msg)
+BUG: sleeping function called from invalid context at include/linux/sched/mm.h:274
+    in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
+    preempt_count: 1, expected: 0
+    CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.0 #53
+    Hardware name: Xilinx Versal vmk180 Eval board rev1.1 (QSPI) (DT)
+    Call trace:
+     dump_backtrace+0xd0/0xe0
+     show_stack+0x18/0x40
+     dump_stack_lvl+0x7c/0xa0
+     dump_stack+0x18/0x34
+     __might_resched+0x10c/0x140
+     __might_sleep+0x4c/0xa0
+     __kmem_cache_alloc_node+0xf4/0x168
+     kmalloc_trace+0x28/0x38
+     __request_percpu_irq+0x74/0x138
+     xlnx_event_manager_probe+0xf8/0x298
+     platform_probe+0x68/0xd8
 
-This patch updates the array sizes of prog_fd[], prog_attach_type[] and
-prog_type[] from 11 to 9 accordingly.
-
-Fixes: d79a32129b21 ("bpf: Selftests, remove prints from sockmap tests")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/9c10d9f974f07fcb354a43a8eca67acb2fafc587.1715926605.git.tanggeliang@kylinos.cn
+Fixes: daed80ed0758 ("soc: xilinx: Fix for call trace due to the usage of smp_processor_id()")
+Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+Link: https://lore.kernel.org/r/20240408110610.15676-1-jay.buddhabhatti@amd.com
+Signed-off-by: Michal Simek <michal.simek@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/soc/xilinx/xlnx_event_manager.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index d56f521b8aaa2..2417300abf36c 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -63,7 +63,7 @@ int passed;
- int failed;
- int map_fd[9];
- struct bpf_map *maps[9];
--int prog_fd[11];
-+int prog_fd[9];
+diff --git a/drivers/soc/xilinx/xlnx_event_manager.c b/drivers/soc/xilinx/xlnx_event_manager.c
+index 042553abe1bf8..098a2ecfd5c68 100644
+--- a/drivers/soc/xilinx/xlnx_event_manager.c
++++ b/drivers/soc/xilinx/xlnx_event_manager.c
+@@ -3,6 +3,7 @@
+  * Xilinx Event Management Driver
+  *
+  *  Copyright (C) 2021 Xilinx, Inc.
++ *  Copyright (C) 2024 Advanced Micro Devices, Inc.
+  *
+  *  Abhyuday Godhasara <abhyuday.godhasara@xilinx.com>
+  */
+@@ -19,7 +20,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/slab.h>
  
- int txmsg_pass;
- int txmsg_redir;
-@@ -1775,8 +1775,6 @@ int prog_attach_type[] = {
- 	BPF_SK_MSG_VERDICT,
- 	BPF_SK_MSG_VERDICT,
- 	BPF_SK_MSG_VERDICT,
--	BPF_SK_MSG_VERDICT,
--	BPF_SK_MSG_VERDICT,
- };
+-static DEFINE_PER_CPU_READ_MOSTLY(int, cpu_number1);
++static DEFINE_PER_CPU_READ_MOSTLY(int, dummy_cpu_number);
  
- int prog_type[] = {
-@@ -1789,8 +1787,6 @@ int prog_type[] = {
- 	BPF_PROG_TYPE_SK_MSG,
- 	BPF_PROG_TYPE_SK_MSG,
- 	BPF_PROG_TYPE_SK_MSG,
--	BPF_PROG_TYPE_SK_MSG,
--	BPF_PROG_TYPE_SK_MSG,
- };
+ static int virq_sgi;
+ static int event_manager_availability = -EACCES;
+@@ -555,7 +556,6 @@ static void xlnx_disable_percpu_irq(void *data)
+ static int xlnx_event_init_sgi(struct platform_device *pdev)
+ {
+ 	int ret = 0;
+-	int cpu;
+ 	/*
+ 	 * IRQ related structures are used for the following:
+ 	 * for each SGI interrupt ensure its mapped by GIC IRQ domain
+@@ -592,11 +592,8 @@ static int xlnx_event_init_sgi(struct platform_device *pdev)
+ 	sgi_fwspec.param[0] = sgi_num;
+ 	virq_sgi = irq_create_fwspec_mapping(&sgi_fwspec);
  
- static int populate_progs(char *bpf_file)
+-	cpu = get_cpu();
+-	per_cpu(cpu_number1, cpu) = cpu;
+ 	ret = request_percpu_irq(virq_sgi, xlnx_event_handler, "xlnx_event_mgmt",
+-				 &cpu_number1);
+-	put_cpu();
++				 &dummy_cpu_number);
+ 
+ 	WARN_ON(ret);
+ 	if (ret) {
+@@ -612,16 +609,12 @@ static int xlnx_event_init_sgi(struct platform_device *pdev)
+ 
+ static void xlnx_event_cleanup_sgi(struct platform_device *pdev)
+ {
+-	int cpu = smp_processor_id();
+-
+-	per_cpu(cpu_number1, cpu) = cpu;
+-
+ 	cpuhp_remove_state(CPUHP_AP_ONLINE_DYN);
+ 
+ 	on_each_cpu(xlnx_disable_percpu_irq, NULL, 1);
+ 
+ 	irq_clear_status_flags(virq_sgi, IRQ_PER_CPU);
+-	free_percpu_irq(virq_sgi, &cpu_number1);
++	free_percpu_irq(virq_sgi, &dummy_cpu_number);
+ 	irq_dispose_mapping(virq_sgi);
+ }
+ 
 -- 
 2.43.0
 
