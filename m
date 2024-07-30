@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18531A619C;
-	Tue, 30 Jul 2024 16:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42631078F;
+	Tue, 30 Jul 2024 16:28:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356931; cv=none; b=rcwm+9FjHZIwCiFX3gAC4smSSe5JtsqOiEla2PeLSH+fQ4f+/+hKSxBrBP73m9yfoJGLrHmiNEwVja6ZHhQ5REZ9EMS7GCSr9BFpb3LRmm7AR0kBU5+I4WAoSxT8/M29TM5MZnG9pz4SqY6BRZO4x2oN1nLyXX6dcHLCknKm4fY=
+	t=1722356934; cv=none; b=JKePiKTV5Iu62csH/JL1q8kxqMfxGXI997PsDCfugpCuscsaj0axDhb2wRb/qA5Rq/LmokpUK8/ibCtgvlt8YEsvBuiLBbdQy8MKpzjKScfKflVR0xV6+ZpzvidF/0wE04J+QuaU/sS1xx5SIY0epJ6TIfDbYg6AD3mT8IQrOp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356931; c=relaxed/simple;
-	bh=EVa5lMGtVSHBRDpdeGdxkV910Myiy8eS0B+ENS1stRk=;
+	s=arc-20240116; t=1722356934; c=relaxed/simple;
+	bh=lRsxIDyJbqVyt40B57EtD5DTo38ZzqgiJNp5b/9nD04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dAcnPWoPubJTomjVnjm5lwiXivhm9hIAiovL+OUEuH8X54+OvvCJZcxCXD9jzmQVxxl76OEklnGqtBb84ku8otF6TZQn2s5b0cxeepxqb8wlnY0ggmsAPGWwF1JlzhVxv/9Izx3OuxN9s7ry6nY4E5CCUR80F9lQJvR4p4X29VQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0jyqIc1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KCe6CAhU1ac7VupbjcbKXQCKC+nS3+/m5RyE/nEqOf0gMy644ZvGIB0Wn2WenrojCmUX5vSTZC1At7dq0JeG++n8gpcLNEsfPgsxyrF4FnIBXql38var2r1XhfpT0lucoeZ/3ZGOz4YqoJVq45j4DG5E62gnqz1ROz8/FO3bySw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WJJ3Ydk+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0jyqIc1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B54FC4AF10;
-	Tue, 30 Jul 2024 16:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WJJ3Ydk+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9BAC32782;
+	Tue, 30 Jul 2024 16:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356931;
-	bh=EVa5lMGtVSHBRDpdeGdxkV910Myiy8eS0B+ENS1stRk=;
+	s=korg; t=1722356934;
+	bh=lRsxIDyJbqVyt40B57EtD5DTo38ZzqgiJNp5b/9nD04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0jyqIc1JJD6wh5JshyoQD4GcMf21l15C/GzmhgCE+RYgizbuatQ94wotPNuN1pMY
-	 +LRcKqI+HdXVsQgse4HdO0O3xnSTpVqePI423sjcod8n+KLZZ/yZNhE8pv5jlhXO5V
-	 qsrSKZMKJNQdHZzmqxlGIo1iuS9NPjAvPsGGrMV8=
+	b=WJJ3Ydk+du3bGGRosfEcumTzFJnvu6BjLZE9CluQ8EIrxTvjjkNABiUDXlGLqYTbv
+	 BG8QeSlMkHzAODFY9zcZyxaqT34iHRhAzo91B5IXSQ9HnsoiHznyCpmW52FJxoJOA9
+	 dnsuQwqYQzff0HtxiNKZU+XQqvJ5eWsC6yShiy9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Rick Edgecombe <rick.p.edgecombe@intel.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 177/809] hns3: avoid linking objects into multiple modules
-Date: Tue, 30 Jul 2024 17:40:53 +0200
-Message-ID: <20240730151731.600789041@linuxfoundation.org>
+Subject: [PATCH 6.6 198/568] x86/shstk: Make return uprobe work with shadow stack
+Date: Tue, 30 Jul 2024 17:45:05 +0200
+Message-ID: <20240730151647.616230949@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,275 +50,96 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit e3bbb994a7e0ead1e028c5a8ec5f8526b4a9c5c9 ]
+[ Upstream commit 1713b63a07a28a475de94664f783b4cfd2e4fa90 ]
 
-Each object file contains information about which module it gets linked
-into, so linking the same file into multiple modules now causes a warning:
+Currently the application with enabled shadow stack will crash
+if it sets up return uprobe. The reason is the uretprobe kernel
+code changes the user space task's stack, but does not update
+shadow stack accordingly.
 
-scripts/Makefile.build:254: drivers/net/ethernet/hisilicon/hns3/Makefile: hns3_common/hclge_comm_cmd.o is added to multiple modules: hclge hclgevf
-scripts/Makefile.build:254: drivers/net/ethernet/hisilicon/hns3/Makefile: hns3_common/hclge_comm_rss.o is added to multiple modules: hclge hclgevf
-scripts/Makefile.build:254: drivers/net/ethernet/hisilicon/hns3/Makefile: hns3_common/hclge_comm_tqp_stats.o is added to multiple modules: hclge hclgevf
+Adding new functions to update values on shadow stack and using
+them in uprobe code to keep shadow stack in sync with uretprobe
+changes to user stack.
 
-Change the way that hns3 is built by moving the three common files into a
-separate module with exported symbols instead.
+Link: https://lore.kernel.org/all/20240611112158.40795-2-jolsa@kernel.org/
 
-Fixes: 5f20be4e90e6 ("net: hns3: refactor hns3 makefile to support hns3_common module")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Link: https://lore.kernel.org/r/20240528161603.2443125-1-arnd@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Rick Edgecombe <rick.p.edgecombe@intel.com>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Fixes: 488af8ea7131 ("x86/shstk: Wire in shadow stack interface")
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/Makefile       | 11 +++++------
- .../hisilicon/hns3/hns3_common/hclge_comm_cmd.c    | 11 +++++++++++
- .../hisilicon/hns3/hns3_common/hclge_comm_rss.c    | 14 ++++++++++++++
- .../hns3/hns3_common/hclge_comm_tqp_stats.c        |  5 +++++
- 4 files changed, 35 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/shstk.h |  2 ++
+ arch/x86/kernel/shstk.c      | 11 +++++++++++
+ arch/x86/kernel/uprobes.c    |  7 ++++++-
+ 3 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/Makefile b/drivers/net/ethernet/hisilicon/hns3/Makefile
-index 8e9293e57bfd5..e8af26da1fc1e 100644
---- a/drivers/net/ethernet/hisilicon/hns3/Makefile
-+++ b/drivers/net/ethernet/hisilicon/hns3/Makefile
-@@ -15,15 +15,14 @@ hns3-objs = hns3_enet.o hns3_ethtool.o hns3_debugfs.o
+diff --git a/arch/x86/include/asm/shstk.h b/arch/x86/include/asm/shstk.h
+index 42fee8959df7b..896909f306e30 100644
+--- a/arch/x86/include/asm/shstk.h
++++ b/arch/x86/include/asm/shstk.h
+@@ -21,6 +21,7 @@ unsigned long shstk_alloc_thread_stack(struct task_struct *p, unsigned long clon
+ void shstk_free(struct task_struct *p);
+ int setup_signal_shadow_stack(struct ksignal *ksig);
+ int restore_signal_shadow_stack(void);
++int shstk_update_last_frame(unsigned long val);
+ #else
+ static inline long shstk_prctl(struct task_struct *task, int option,
+ 			       unsigned long arg2) { return -EINVAL; }
+@@ -31,6 +32,7 @@ static inline unsigned long shstk_alloc_thread_stack(struct task_struct *p,
+ static inline void shstk_free(struct task_struct *p) {}
+ static inline int setup_signal_shadow_stack(struct ksignal *ksig) { return 0; }
+ static inline int restore_signal_shadow_stack(void) { return 0; }
++static inline int shstk_update_last_frame(unsigned long val) { return 0; }
+ #endif /* CONFIG_X86_USER_SHADOW_STACK */
  
- hns3-$(CONFIG_HNS3_DCB) += hns3_dcbnl.o
- 
--obj-$(CONFIG_HNS3_HCLGEVF) += hclgevf.o
-+obj-$(CONFIG_HNS3_HCLGEVF) += hclgevf.o hclge-common.o
- 
--hclgevf-objs = hns3vf/hclgevf_main.o hns3vf/hclgevf_mbx.o  hns3vf/hclgevf_devlink.o hns3vf/hclgevf_regs.o \
--		hns3_common/hclge_comm_cmd.o hns3_common/hclge_comm_rss.o hns3_common/hclge_comm_tqp_stats.o
-+hclge-common-objs += hns3_common/hclge_comm_cmd.o hns3_common/hclge_comm_rss.o hns3_common/hclge_comm_tqp_stats.o
- 
--obj-$(CONFIG_HNS3_HCLGE) += hclge.o
-+hclgevf-objs = hns3vf/hclgevf_main.o hns3vf/hclgevf_mbx.o  hns3vf/hclgevf_devlink.o hns3vf/hclgevf_regs.o
+ #endif /* __ASSEMBLY__ */
+diff --git a/arch/x86/kernel/shstk.c b/arch/x86/kernel/shstk.c
+index 59e15dd8d0f86..19e4db582fb69 100644
+--- a/arch/x86/kernel/shstk.c
++++ b/arch/x86/kernel/shstk.c
+@@ -577,3 +577,14 @@ long shstk_prctl(struct task_struct *task, int option, unsigned long arg2)
+ 		return wrss_control(true);
+ 	return -EINVAL;
+ }
 +
-+obj-$(CONFIG_HNS3_HCLGE) += hclge.o hclge-common.o
- hclge-objs = hns3pf/hclge_main.o hns3pf/hclge_mdio.o hns3pf/hclge_tm.o hns3pf/hclge_regs.o \
- 		hns3pf/hclge_mbx.o hns3pf/hclge_err.o  hns3pf/hclge_debugfs.o hns3pf/hclge_ptp.o hns3pf/hclge_devlink.o \
--		hns3_common/hclge_comm_cmd.o hns3_common/hclge_comm_rss.o hns3_common/hclge_comm_tqp_stats.o
--
- 
- hclge-$(CONFIG_HNS3_DCB) += hns3pf/hclge_dcb.o
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
-index ea40b594dbac7..4ad4e8ab2f1f3 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_cmd.c
-@@ -48,6 +48,7 @@ void hclge_comm_cmd_reuse_desc(struct hclge_desc *desc, bool is_read)
- 	else
- 		desc->flag &= cpu_to_le16(~HCLGE_COMM_CMD_FLAG_WR);
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_reuse_desc);
- 
- static void hclge_comm_set_default_capability(struct hnae3_ae_dev *ae_dev,
- 					      bool is_pf)
-@@ -72,6 +73,7 @@ void hclge_comm_cmd_setup_basic_desc(struct hclge_desc *desc,
- 	if (is_read)
- 		desc->flag |= cpu_to_le16(HCLGE_COMM_CMD_FLAG_WR);
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_setup_basic_desc);
- 
- int hclge_comm_firmware_compat_config(struct hnae3_ae_dev *ae_dev,
- 				      struct hclge_comm_hw *hw, bool en)
-@@ -517,6 +519,7 @@ int hclge_comm_cmd_send(struct hclge_comm_hw *hw, struct hclge_desc *desc,
- 
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_send);
- 
- static void hclge_comm_cmd_uninit_regs(struct hclge_comm_hw *hw)
- {
-@@ -553,6 +556,7 @@ void hclge_comm_cmd_uninit(struct hnae3_ae_dev *ae_dev,
- 	hclge_comm_free_cmd_desc(&cmdq->csq);
- 	hclge_comm_free_cmd_desc(&cmdq->crq);
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_uninit);
- 
- int hclge_comm_cmd_queue_init(struct pci_dev *pdev, struct hclge_comm_hw *hw)
- {
-@@ -591,6 +595,7 @@ int hclge_comm_cmd_queue_init(struct pci_dev *pdev, struct hclge_comm_hw *hw)
- 	hclge_comm_free_cmd_desc(&hw->cmq.csq);
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_queue_init);
- 
- void hclge_comm_cmd_init_ops(struct hclge_comm_hw *hw,
- 			     const struct hclge_comm_cmq_ops *ops)
-@@ -602,6 +607,7 @@ void hclge_comm_cmd_init_ops(struct hclge_comm_hw *hw,
- 		cmdq->ops.trace_cmd_get = ops->trace_cmd_get;
- 	}
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_init_ops);
- 
- int hclge_comm_cmd_init(struct hnae3_ae_dev *ae_dev, struct hclge_comm_hw *hw,
- 			u32 *fw_version, bool is_pf,
-@@ -672,3 +678,8 @@ int hclge_comm_cmd_init(struct hnae3_ae_dev *ae_dev, struct hclge_comm_hw *hw,
- 
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_cmd_init);
++int shstk_update_last_frame(unsigned long val)
++{
++	unsigned long ssp;
 +
-+MODULE_LICENSE("GPL");
-+MODULE_DESCRIPTION("HNS3: Hisilicon Ethernet PF/VF Common Library");
-+MODULE_AUTHOR("Huawei Tech. Co., Ltd.");
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_rss.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_rss.c
-index b4ae2160aff4f..4e2bb6556b1ce 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_rss.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_rss.c
-@@ -62,6 +62,7 @@ int hclge_comm_rss_init_cfg(struct hnae3_handle *nic,
++	if (!features_enabled(ARCH_SHSTK_SHSTK))
++		return 0;
++
++	ssp = get_user_shstk_addr();
++	return write_user_shstk_64((u64 __user *)ssp, (u64)val);
++}
+diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
+index 6c07f6daaa227..6402fb3089d26 100644
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -1076,8 +1076,13 @@ arch_uretprobe_hijack_return_addr(unsigned long trampoline_vaddr, struct pt_regs
+ 		return orig_ret_vaddr;
  
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_rss_init_cfg);
+ 	nleft = copy_to_user((void __user *)regs->sp, &trampoline_vaddr, rasize);
+-	if (likely(!nleft))
++	if (likely(!nleft)) {
++		if (shstk_update_last_frame(trampoline_vaddr)) {
++			force_sig(SIGSEGV);
++			return -1;
++		}
+ 		return orig_ret_vaddr;
++	}
  
- void hclge_comm_get_rss_tc_info(u16 rss_size, u8 hw_tc_map, u16 *tc_offset,
- 				u16 *tc_valid, u16 *tc_size)
-@@ -78,6 +79,7 @@ void hclge_comm_get_rss_tc_info(u16 rss_size, u8 hw_tc_map, u16 *tc_offset,
- 		tc_offset[i] = (hw_tc_map & BIT(i)) ? rss_size * i : 0;
- 	}
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_get_rss_tc_info);
- 
- int hclge_comm_set_rss_tc_mode(struct hclge_comm_hw *hw, u16 *tc_offset,
- 			       u16 *tc_valid, u16 *tc_size)
-@@ -113,6 +115,7 @@ int hclge_comm_set_rss_tc_mode(struct hclge_comm_hw *hw, u16 *tc_offset,
- 
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_set_rss_tc_mode);
- 
- int hclge_comm_set_rss_hash_key(struct hclge_comm_rss_cfg *rss_cfg,
- 				struct hclge_comm_hw *hw, const u8 *key,
-@@ -143,6 +146,7 @@ int hclge_comm_set_rss_hash_key(struct hclge_comm_rss_cfg *rss_cfg,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_set_rss_hash_key);
- 
- int hclge_comm_set_rss_tuple(struct hnae3_ae_dev *ae_dev,
- 			     struct hclge_comm_hw *hw,
-@@ -185,11 +189,13 @@ int hclge_comm_set_rss_tuple(struct hnae3_ae_dev *ae_dev,
- 	rss_cfg->rss_tuple_sets.ipv6_fragment_en = req->ipv6_fragment_en;
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_set_rss_tuple);
- 
- u32 hclge_comm_get_rss_key_size(struct hnae3_handle *handle)
- {
- 	return HCLGE_COMM_RSS_KEY_SIZE;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_get_rss_key_size);
- 
- int hclge_comm_parse_rss_hfunc(struct hclge_comm_rss_cfg *rss_cfg,
- 			       const u8 hfunc, u8 *hash_algo)
-@@ -217,6 +223,7 @@ void hclge_comm_rss_indir_init_cfg(struct hnae3_ae_dev *ae_dev,
- 	for (i = 0; i < ae_dev->dev_specs.rss_ind_tbl_size; i++)
- 		rss_cfg->rss_indirection_tbl[i] = i % rss_cfg->rss_size;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_rss_indir_init_cfg);
- 
- int hclge_comm_get_rss_tuple(struct hclge_comm_rss_cfg *rss_cfg, int flow_type,
- 			     u8 *tuple_sets)
-@@ -250,6 +257,7 @@ int hclge_comm_get_rss_tuple(struct hclge_comm_rss_cfg *rss_cfg, int flow_type,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_get_rss_tuple);
- 
- static void
- hclge_comm_append_rss_msb_info(struct hclge_comm_rss_ind_tbl_cmd *req,
-@@ -304,6 +312,7 @@ int hclge_comm_set_rss_indir_table(struct hnae3_ae_dev *ae_dev,
- 	}
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_set_rss_indir_table);
- 
- int hclge_comm_set_rss_input_tuple(struct hclge_comm_hw *hw,
- 				   struct hclge_comm_rss_cfg *rss_cfg)
-@@ -332,6 +341,7 @@ int hclge_comm_set_rss_input_tuple(struct hclge_comm_hw *hw,
- 			"failed to configure rss input, ret = %d.\n", ret);
- 	return ret;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_set_rss_input_tuple);
- 
- void hclge_comm_get_rss_hash_info(struct hclge_comm_rss_cfg *rss_cfg, u8 *key,
- 				  u8 *hfunc)
-@@ -355,6 +365,7 @@ void hclge_comm_get_rss_hash_info(struct hclge_comm_rss_cfg *rss_cfg, u8 *key,
- 	if (key)
- 		memcpy(key, rss_cfg->rss_hash_key, HCLGE_COMM_RSS_KEY_SIZE);
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_get_rss_hash_info);
- 
- void hclge_comm_get_rss_indir_tbl(struct hclge_comm_rss_cfg *rss_cfg,
- 				  u32 *indir, u16 rss_ind_tbl_size)
-@@ -367,6 +378,7 @@ void hclge_comm_get_rss_indir_tbl(struct hclge_comm_rss_cfg *rss_cfg,
- 	for (i = 0; i < rss_ind_tbl_size; i++)
- 		indir[i] = rss_cfg->rss_indirection_tbl[i];
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_get_rss_indir_tbl);
- 
- int hclge_comm_set_rss_algo_key(struct hclge_comm_hw *hw, const u8 hfunc,
- 				const u8 *key)
-@@ -408,6 +420,7 @@ int hclge_comm_set_rss_algo_key(struct hclge_comm_hw *hw, const u8 hfunc,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_set_rss_algo_key);
- 
- static u8 hclge_comm_get_rss_hash_bits(struct ethtool_rxnfc *nfc)
- {
-@@ -502,3 +515,4 @@ u64 hclge_comm_convert_rss_tuple(u8 tuple_sets)
- 
- 	return tuple_data;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_convert_rss_tuple);
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
-index 618f66d9586b3..2b31188ff5558 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3_common/hclge_comm_tqp_stats.c
-@@ -26,6 +26,7 @@ u64 *hclge_comm_tqps_get_stats(struct hnae3_handle *handle, u64 *data)
- 
- 	return buff;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_tqps_get_stats);
- 
- int hclge_comm_tqps_get_sset_count(struct hnae3_handle *handle)
- {
-@@ -33,6 +34,7 @@ int hclge_comm_tqps_get_sset_count(struct hnae3_handle *handle)
- 
- 	return kinfo->num_tqps * HCLGE_COMM_QUEUE_PAIR_SIZE;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_tqps_get_sset_count);
- 
- u8 *hclge_comm_tqps_get_strings(struct hnae3_handle *handle, u8 *data)
- {
-@@ -56,6 +58,7 @@ u8 *hclge_comm_tqps_get_strings(struct hnae3_handle *handle, u8 *data)
- 
- 	return buff;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_tqps_get_strings);
- 
- int hclge_comm_tqps_update_stats(struct hnae3_handle *handle,
- 				 struct hclge_comm_hw *hw)
-@@ -99,6 +102,7 @@ int hclge_comm_tqps_update_stats(struct hnae3_handle *handle,
- 
- 	return 0;
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_tqps_update_stats);
- 
- void hclge_comm_reset_tqp_stats(struct hnae3_handle *handle)
- {
-@@ -113,3 +117,4 @@ void hclge_comm_reset_tqp_stats(struct hnae3_handle *handle)
- 		memset(&tqp->tqp_stats, 0, sizeof(tqp->tqp_stats));
- 	}
- }
-+EXPORT_SYMBOL_GPL(hclge_comm_reset_tqp_stats);
+ 	if (nleft != rasize) {
+ 		pr_err("return address clobbered: pid=%d, %%sp=%#lx, %%ip=%#lx\n",
 -- 
 2.43.0
 
