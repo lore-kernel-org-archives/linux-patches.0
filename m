@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1D7187FF2;
-	Tue, 30 Jul 2024 16:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79EF0187FF2;
+	Tue, 30 Jul 2024 16:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355615; cv=none; b=pD3/GYU9aMvgZ9jyjRG02lTcM/cRbNPE4Jp4YKSYQQmXBNbz6zgFt8JCycSmMaa2iy1kpu4/uy7WkHQgUIgI/NbmL+wTajTOyHxR8BdRckzPjnBXnTppaJYU0xXVvIae4OwEhc7P/hsv9A+SGpvthYi0OqQCNXslQG2buq3TKdc=
+	t=1722355618; cv=none; b=fw77q71Lb/oKD1U8N06YNr9r0NiW7yx38s+CUSYGePwCchCQsifg0e1SmhLognCwLEsrThtPpv9O+TbvG9OnDiez5mzU/+7BqkNWWK5aOy8K7lN7lOVP/Fk9/UsSzysmBwlTJy+ZyXBBQvTUQiTnRgTygmP8pD4WJAoaxlnklw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355615; c=relaxed/simple;
-	bh=6/OiqucihDT3HJulfDpe4g8K8B19ExjcTW+QOgbELDo=;
+	s=arc-20240116; t=1722355618; c=relaxed/simple;
+	bh=jRyw7OYceTvh4HMWnFwKjbLdQdrsJAgN268a16fMmN4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FBOddwEqXMqE3PcQkQ7XcI4/R46g1PI+ApWX01TqLuUPDKWEJ9GExwf9j4hbLVlz0knUqjrnUvmMalpE1tbCM2mflAA66cKKmW74y50uAJazQGOfbgBSkTo0V989tOpnuXteDfQRlXqJ97U9EZ+hXke1dntMLDVW0xiVPaHxScs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+QrumtE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g4zmGLrcCa8w/oOx2ram3TdusVQedIJzguaVNQIABQZDsgZkDyYMumMHkNYe5PERIcy6rzugiG+tRE+bySM39xcxGk9PIwR/pDxD1VEvgp98AzQz4+Mp943KycH2YNXdFLJNeP90ttSY2geIhWjrjuKO3ue9kOdqGU0znJZiteI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2nK8nmgj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+QrumtE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9ECC32782;
-	Tue, 30 Jul 2024 16:06:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2nK8nmgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E556BC32782;
+	Tue, 30 Jul 2024 16:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355615;
-	bh=6/OiqucihDT3HJulfDpe4g8K8B19ExjcTW+QOgbELDo=;
+	s=korg; t=1722355618;
+	bh=jRyw7OYceTvh4HMWnFwKjbLdQdrsJAgN268a16fMmN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+QrumtElnL8MafV7eTdJIOf75zYgQ0Inb34RUrZh712kLleW9uzcFvvwNXPC767z
-	 nRsBMUcDBWycMsP0CgXIBYQP/Mc0FbpT5kJMma9XN90CqKhqSz2Rd1OEJan9g0prx/
-	 ewWSAXoc4qiuVuaveHKEC9D5zYJKed7iUDZJpGUw=
+	b=2nK8nmgje6iinCPTBvMkAI8U0X+Tto6Wl1drJOeA66vZrKIiEt+DCpiRE8+lJv1Js
+	 ww6xJlA9YCX8Egq/gO5lYn0MB4TeQGZz5R1AwhAWrQVUpwuzpp0TBBrrhpHBw3lvL9
+	 A0kLZCrwH3d93F9cMmkAHFOpMVDknIvFucci+tAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/568] arm64: dts: mediatek: mt7622: fix "emmc" pinctrl mux
-Date: Tue, 30 Jul 2024 17:43:01 +0200
-Message-ID: <20240730151642.754491322@linuxfoundation.org>
+Subject: [PATCH 6.1 111/440] perf: Prevent passing zero nr_pages to rb_alloc_aux()
+Date: Tue, 30 Jul 2024 17:45:44 +0200
+Message-ID: <20240730151620.227877381@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,68 +45,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit aebba1030a5766cdf894ed4ab0cac7aed5aee9c1 ]
+[ Upstream commit dbc48c8f41c208082cfa95e973560134489e3309 ]
 
-Value "emmc_rst" is a group name and should be part of the "groups"
-property.
+nr_pages is unsigned long but gets passed to rb_alloc_aux() as an int,
+and is stored as an int.
 
-This fixes:
-arch/arm64/boot/dts/mediatek/mt7622-rfb1.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
-        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
-arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dtb: pinctrl@10211000: emmc-pins-default:mux:function: ['emmc', 'emmc_rst'] is too long
-        from schema $id: http://devicetree.org/schemas/pinctrl/mediatek,mt7622-pinctrl.yaml#
+Only power-of-2 values are accepted, so if nr_pages is a 64_bit value, it
+will be passed to rb_alloc_aux() as zero.
 
-Fixes: 3725ba3f5574 ("arm64: dts: mt7622: add pinctrl related device nodes")
-Fixes: 0b6286dd96c0 ("arm64: dts: mt7622: add bananapi BPI-R64 board")
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20240604074916.7929-1-zajec5@gmail.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+That is not ideal because:
+ 1. the value is incorrect
+ 2. rb_alloc_aux() is at risk of misbehaving, although it manages to
+ return -ENOMEM in that case, it is a result of passing zero to get_order()
+ even though the get_order() result is documented to be undefined in that
+ case.
+
+Fix by simply validating the maximum supported value in the first place.
+Use -ENOMEM error code for consistency with the current error code that
+is returned in that case.
+
+Fixes: 45bfb2e50471 ("perf: Add AUX area to ring buffer for raw data streams")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240624201101.60186-6-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts | 4 ++--
- arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts             | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ kernel/events/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-index 7ef517e9e3746..15838c1ee8cc3 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-bananapi-bpi-r64.dts
-@@ -318,8 +318,8 @@ asm_sel {
- 	/* eMMC is shared pin with parallel NAND */
- 	emmc_pins_default: emmc-pins-default {
- 		mux {
--			function = "emmc", "emmc_rst";
--			groups = "emmc";
-+			function = "emmc";
-+			groups = "emmc", "emmc_rst";
- 		};
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 413a69aecf5c7..b8333b8e6a782 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6307,6 +6307,8 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
+ 			return -EINVAL;
  
- 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
-diff --git a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-index a75dc63a1362a..0a14ef1da60de 100644
---- a/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt7622-rfb1.dts
-@@ -244,8 +244,8 @@ &pio {
- 	/* eMMC is shared pin with parallel NAND */
- 	emmc_pins_default: emmc-pins-default {
- 		mux {
--			function = "emmc", "emmc_rst";
--			groups = "emmc";
-+			function = "emmc";
-+			groups = "emmc", "emmc_rst";
- 		};
+ 		nr_pages = vma_size / PAGE_SIZE;
++		if (nr_pages > INT_MAX)
++			return -ENOMEM;
  
- 		/* "NDL0","NDL1","NDL2","NDL3","NDL4","NDL5","NDL6","NDL7",
+ 		mutex_lock(&event->mmap_mutex);
+ 		ret = -EINVAL;
 -- 
 2.43.0
 
