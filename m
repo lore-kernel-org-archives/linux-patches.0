@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822B91BA87E;
-	Tue, 30 Jul 2024 15:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52BC19F467;
+	Tue, 30 Jul 2024 15:59:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355163; cv=none; b=TR6zALQ+PXheP2oiht7vasX8tATvXTmVPZxG6K0lF6o6t3tXwvldx/pUe5aLz6/tHndChTmnPjG4yPkaXretkzEt4V4WWJCGmKVlvNSAJvuYJPp44rs4GYtQbbrcQr3uTOI6k4o7Gh1aZ8jk/jmzDBcThZkdKLdK0w9cKtVdH+s=
+	t=1722355167; cv=none; b=Vqojlhwq1+/lOiNOvutVcbgj3GvF5MM1HPZj41mRGyl6Qmtpv+TPbP8sefrNXrtVE1rqPkrawsTlTdy8HjuEgZG1cgJ5ZGhTK2fvl/mSBjfGQ0C3k6FklTrH2FlWK1LWOzp/TehaXwZXM0x5lXrS1b+GG6NgSUPUp/Pe/ZUTtwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355163; c=relaxed/simple;
-	bh=I8hyjo+IapU3UboB16BLYTRq6bfnx6vV3jAaj8v7/co=;
+	s=arc-20240116; t=1722355167; c=relaxed/simple;
+	bh=n59/OwuGgk7L4WAw0NhWvmBMGrY1uYAWxj9XllhxDis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0SJ8yauNbHo9SqI67zuO8uKIkatzieKdjaWlCoZUOejbGbnydjUAp/p9rVuCZrM87t9FyOozMo8/dyh/bN5hmQld7Ft/91kibRjKqqbKzjcoXUpWvMNGcLHrAqqrdQiiFk17ej1p23m0uiXYVrVfJvkqfsL0FmaTvinyTyBCWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOJNwnBX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WsjNs/6YqRMdQicOXK8hdqJTqAzgb3jv8+sP8Fu+QFF5tDloYfVTP9XBHUOqoTEWmNZyXVbeZBeT2DKlhqWlGWbBWijohKP2nZ/mRTqLF/69Ptz/1rAO42LEzinz+oVNfMZ85ypOP0gIIT6u7u5NujjxWXB+bFizcU22XT/ZVRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jFmwHwRj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOJNwnBX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09BFC32782;
-	Tue, 30 Jul 2024 15:59:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jFmwHwRj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63886C32782;
+	Tue, 30 Jul 2024 15:59:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355163;
-	bh=I8hyjo+IapU3UboB16BLYTRq6bfnx6vV3jAaj8v7/co=;
+	s=korg; t=1722355166;
+	bh=n59/OwuGgk7L4WAw0NhWvmBMGrY1uYAWxj9XllhxDis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oOJNwnBXKTia/zpmrBuxbKUcHTk+uR2wdWzSi3c37tI33L3eHH2x1orAIECn2JmPo
-	 5FNz5x69nMcYG6j7smHU5WwK+28E8y1ofAsk1993g+6oJuRrEa6UXUtBbPCesx/ILl
-	 PQfGIiVBKHN0QAhx5TMvpqpy0f+ruPUjC/11e2r0=
+	b=jFmwHwRj9nAJNERdA3vs5LjitbMcuxug9zK2vIkty3OlWzT4ZFmQ60xLfGE8vaCXR
+	 SGPpAzNMUS7C1m22H7+4UCTHnNAkV3ehbm/tVeHi8dZjlKDWR78MSeKq2Nun0Fdj44
+	 TWuEq67bJmk/LQBjkjQIPEp/crY7EYlwEavS6NNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 025/809] block: Call .limit_depth() after .hctx has been set
-Date: Tue, 30 Jul 2024 17:38:21 +0200
-Message-ID: <20240730151725.651838201@linuxfoundation.org>
+Subject: [PATCH 6.1 064/440] arm64: dts: renesas: r8a779g0: Add secondary CA76 CPU cores
+Date: Tue, 30 Jul 2024 17:44:57 +0200
+Message-ID: <20240730151618.264294548@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,62 +46,137 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 6259151c04d4e0085e00d2dcb471ebdd1778e72e ]
+[ Upstream commit 68c9c53d45fa9c48a89d8a9a4d1555b9e91add69 ]
 
-Call .limit_depth() after data->hctx has been set such that data->hctx can
-be used in .limit_depth() implementations.
+Complete the description of the Cortex-A76 CPU cores and L3 cache
+controllers on the Renesas R-Car V4H (R8A779G0) SoC, including CPU
+topology and PSCI support for enabling CPU cores.
 
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Damien Le Moal <dlemoal@kernel.org>
-Cc: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Fixes: 07757588e507 ("block/mq-deadline: Reserve 25% of scheduler tags for synchronous requests")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Tested-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20240509170149.7639-2-bvanassche@acm.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+R-Car V4H has 4 Cortex-A76 cores, grouped in 2 clusters.
+
+Based on a patch in the BSP by Takeshi Kihara.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/ccb55458bd87f8ba70d28c61bcc254f22184824c.1668429870.git.geert+renesas@glider.be
+Stable-dep-of: 6fca24a07e1d ("arm64: dts: renesas: r8a779a0: Add missing hypervisor virtual timer IRQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-mq.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/renesas/r8a779g0.dtsi | 70 +++++++++++++++++++++--
+ 1 file changed, 65 insertions(+), 5 deletions(-)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 3b4df8e5ac9e5..7831af29aadaf 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -448,6 +448,10 @@ static struct request *__blk_mq_alloc_requests(struct blk_mq_alloc_data *data)
- 	if (data->cmd_flags & REQ_NOWAIT)
- 		data->flags |= BLK_MQ_REQ_NOWAIT;
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+index 9f6a30cf315f2..8aa3ea645668c 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+@@ -18,12 +18,60 @@ cpus {
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
  
-+retry:
-+	data->ctx = blk_mq_get_ctx(q);
-+	data->hctx = blk_mq_map_queue(q, data->cmd_flags, data->ctx);
++		cpu-map {
++			cluster0 {
++				core0 {
++					cpu = <&a76_0>;
++				};
++				core1 {
++					cpu = <&a76_1>;
++				};
++			};
 +
- 	if (q->elevator) {
- 		/*
- 		 * All requests use scheduler tags when an I/O scheduler is
-@@ -469,13 +473,9 @@ static struct request *__blk_mq_alloc_requests(struct blk_mq_alloc_data *data)
- 			if (ops->limit_depth)
- 				ops->limit_depth(data->cmd_flags, data);
- 		}
--	}
--
--retry:
--	data->ctx = blk_mq_get_ctx(q);
--	data->hctx = blk_mq_map_queue(q, data->cmd_flags, data->ctx);
--	if (!(data->rq_flags & RQF_SCHED_TAGS))
-+	} else {
- 		blk_mq_tag_busy(data->hctx);
-+	}
++			cluster1 {
++				core0 {
++					cpu = <&a76_2>;
++				};
++				core1 {
++					cpu = <&a76_3>;
++				};
++			};
++		};
++
+ 		a76_0: cpu@0 {
+ 			compatible = "arm,cortex-a76";
+ 			reg = <0>;
+ 			device_type = "cpu";
+ 			power-domains = <&sysc R8A779G0_PD_A1E0D0C0>;
+ 			next-level-cache = <&L3_CA76_0>;
++			enable-method = "psci";
++		};
++
++		a76_1: cpu@100 {
++			compatible = "arm,cortex-a76";
++			reg = <0x100>;
++			device_type = "cpu";
++			power-domains = <&sysc R8A779G0_PD_A1E0D0C1>;
++			next-level-cache = <&L3_CA76_0>;
++			enable-method = "psci";
++		};
++
++		a76_2: cpu@10000 {
++			compatible = "arm,cortex-a76";
++			reg = <0x10000>;
++			device_type = "cpu";
++			power-domains = <&sysc R8A779G0_PD_A1E0D1C0>;
++			next-level-cache = <&L3_CA76_1>;
++			enable-method = "psci";
++		};
++
++		a76_3: cpu@10100 {
++			compatible = "arm,cortex-a76";
++			reg = <0x10100>;
++			device_type = "cpu";
++			power-domains = <&sysc R8A779G0_PD_A1E0D1C1>;
++			next-level-cache = <&L3_CA76_1>;
++			enable-method = "psci";
+ 		};
  
- 	if (data->flags & BLK_MQ_REQ_RESERVED)
- 		data->rq_flags |= RQF_RESV;
+ 		L3_CA76_0: cache-controller-0 {
+@@ -32,6 +80,18 @@ L3_CA76_0: cache-controller-0 {
+ 			cache-unified;
+ 			cache-level = <3>;
+ 		};
++
++		L3_CA76_1: cache-controller-1 {
++			compatible = "cache";
++			power-domains = <&sysc R8A779G0_PD_A2E0D1>;
++			cache-unified;
++			cache-level = <3>;
++		};
++	};
++
++	psci {
++		compatible = "arm,psci-1.0", "arm,psci-0.2";
++		method = "smc";
+ 	};
+ 
+ 	extal_clk: extal {
+@@ -491,7 +551,7 @@ gic: interrupt-controller@f1000000 {
+ 			reg = <0x0 0xf1000000 0 0x20000>,
+ 			      <0x0 0xf1060000 0 0x110000>;
+ 			interrupts = <GIC_PPI 9
+-				      (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_HIGH)>;
++				      (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+ 		};
+ 
+ 		prr: chipid@fff00044 {
+@@ -502,9 +562,9 @@ prr: chipid@fff00044 {
+ 
+ 	timer {
+ 		compatible = "arm,armv8-timer";
+-		interrupts-extended = <&gic GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
+-				      <&gic GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
+-				      <&gic GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>,
+-				      <&gic GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(1) | IRQ_TYPE_LEVEL_LOW)>;
++		interrupts-extended = <&gic GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
++				      <&gic GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
++				      <&gic GIC_PPI 11 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
++				      <&gic GIC_PPI 10 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>;
+ 	};
+ };
 -- 
 2.43.0
 
