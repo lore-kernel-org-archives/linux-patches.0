@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A2B1A76AB;
-	Tue, 30 Jul 2024 17:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8FF1A76A9;
+	Tue, 30 Jul 2024 17:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360165; cv=none; b=K4johG0wCJCat0jNwsk4lNcHGrzzWJJ3dzTzPD6rPqqFVJriNOHaNpCHw3XYqv4IC/1HKqGtI/5/vgYfjp8jDdN+TgPaeEte9V9qa6Mrj3NWqF1UmAyWeS0U+7eA2cPZRaUXP8es3JgdW8+z6pbVHpoHbsh0uHNTVlDPsEoMTCQ=
+	t=1722360168; cv=none; b=WBIcVeFFQQC79URk3vP0qm/v0TydoFrFeYH99OQPqRzoyFIZTwEZkhV3Zmr1uywUPfMrqPJHN5U1oE7I8isXwBFUeIMgh87IlmAe6owoYpBAml6R0KnwO3SdBfocYELP87xxgJ6GnhuaJT59856rikIvO9A4oC/32OGp/AbDCxU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360165; c=relaxed/simple;
-	bh=Ki0/cVyFG7iOgYEIqqVhxYMv+YRpoOAlXw/dU/LAa4o=;
+	s=arc-20240116; t=1722360168; c=relaxed/simple;
+	bh=gPztSG5j899hDQKRvN/pSUUyk0iWTzZQGlKThEafXss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qzPzQxX1pM7uRZ544c1ma7JpU0z8EXzdeqwvBV/dlVd15/m1rNkNrfo3Kn+w+Cys0F6Q36l8pt2udxEr7YdbAU58eFOQqiKuPnr9p+tmijcwJ/jaKMgrJLCQX3gMQ9P3QAR6l1yhEwrY54GuDsrz/LrPyBzwPpG0nzpLRdX2KFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff/E0RO/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G+J3GGo+Il96XHxbffUF7MRs23VNjk0L3Y4oYPbft3N3B+033am7ssV+0odfBmLE0pl9GYNoBG9efmX9jVx+Xium8bg0YIIgCDdLerE6w4TC3BJgbQ1wBDXbzNLH8nyZsJVwrPXLgYdkjOR59MANoMD622vFSrDqmy1i+/aaT9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QR4C/JCc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff/E0RO/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF690C32782;
-	Tue, 30 Jul 2024 17:22:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QR4C/JCc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8FF9C32782;
+	Tue, 30 Jul 2024 17:22:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360165;
-	bh=Ki0/cVyFG7iOgYEIqqVhxYMv+YRpoOAlXw/dU/LAa4o=;
+	s=korg; t=1722360168;
+	bh=gPztSG5j899hDQKRvN/pSUUyk0iWTzZQGlKThEafXss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ff/E0RO/zebA9QDw5YxhKurLhO9A/uo9GlGzzEOuMcTNBTyP3253/fcmn8CUgonGP
-	 XB7gqLw8ROd5NTzTpnw8wkfmE0Jq/SAjfTw+f1lVpY1EbobWzd26shScIsnJg9sLhr
-	 PaX5N14jyKhassYwe4oddzYT20aGMHXuS0iHp6DI=
+	b=QR4C/JCcNUL70QZDUdWvOIadUcG0S2UwM6VLa/9qPMRrFqgfSyRmBccqQyaR4e9f1
+	 P2sdkvrK6sXmutr91Fil1IUo9zBpszY1RMqVfuw9W+1+fKh7LXesjHZSp3vu3MHI9f
+	 2F5n36/3VKhngfhOCs1qh6Vtae3O7wXek7ujIms8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Yao <hao.yao@intel.com>,
-	Wentong Wu <wentong.wu@intel.com>,
-	Jason Chen <jason.z.chen@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 616/809] media: ivsc: csi: dont count privacy on as error
-Date: Tue, 30 Jul 2024 17:48:12 +0200
-Message-ID: <20240730151749.169413984@linuxfoundation.org>
+	Jason Chen <Jason-ch.Chen@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.10 617/809] remoteproc: mediatek: Increase MT8188/MT8195 SCP core0 DRAM size
+Date: Tue, 30 Jul 2024 17:48:13 +0200
+Message-ID: <20240730151749.210137921@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,42 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentong Wu <wentong.wu@intel.com>
+From: Jason Chen <Jason-ch.Chen@mediatek.com>
 
-commit a813f168336ec4ef725b836e598cd9dc14f76dd7 upstream.
+commit 19cb6058620620e68f1a9aed99393be5c3629db4 upstream.
 
-Prior to the ongoing command privacy is on, it would return -1 to
-indicate the current privacy status, and the ongoing command would
-be well executed by firmware as well, so this is not error. This
-patch changes its behavior to notify privacy on directly by V4L2
-privacy control instead of reporting error.
+The current DRAM size is insufficient for the HEVC feature, which
+requires more memory for proper functionality. This change ensures the
+feature has the necessary resources.
 
-Fixes: 29006e196a56 ("media: pci: intel: ivsc: Add CSI submodule")
-Cc: stable@vger.kernel.org # for 6.6 and later
-Reported-by: Hao Yao <hao.yao@intel.com>
-Signed-off-by: Wentong Wu <wentong.wu@intel.com>
-Tested-by: Jason Chen <jason.z.chen@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Jason Chen <Jason-ch.Chen@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240703034409.698-1-Jason-ch.Chen@mediatek.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ivsc/mei_csi.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/remoteproc/mtk_scp.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/media/pci/intel/ivsc/mei_csi.c
-+++ b/drivers/media/pci/intel/ivsc/mei_csi.c
-@@ -192,7 +192,11 @@ static int mei_csi_send(struct mei_csi *
+--- a/drivers/remoteproc/mtk_scp.c
++++ b/drivers/remoteproc/mtk_scp.c
+@@ -1388,7 +1388,7 @@ static const struct mtk_scp_sizes_data d
+ };
  
- 	/* command response status */
- 	ret = csi->cmd_response.status;
--	if (ret) {
-+	if (ret == -1) {
-+		/* notify privacy on instead of reporting error */
-+		ret = 0;
-+		v4l2_ctrl_s_ctrl(csi->privacy_ctrl, 1);
-+	} else if (ret) {
- 		ret = -EINVAL;
- 		goto out;
- 	}
+ static const struct mtk_scp_sizes_data mt8188_scp_sizes = {
+-	.max_dram_size = 0x500000,
++	.max_dram_size = 0x800000,
+ 	.ipi_share_buffer_size = 600,
+ };
+ 
+@@ -1397,6 +1397,11 @@ static const struct mtk_scp_sizes_data m
+ 	.ipi_share_buffer_size = 600,
+ };
+ 
++static const struct mtk_scp_sizes_data mt8195_scp_sizes = {
++	.max_dram_size = 0x800000,
++	.ipi_share_buffer_size = 288,
++};
++
+ static const struct mtk_scp_of_data mt8183_of_data = {
+ 	.scp_clk_get = mt8183_scp_clk_get,
+ 	.scp_before_load = mt8183_scp_before_load,
+@@ -1474,7 +1479,7 @@ static const struct mtk_scp_of_data mt81
+ 	.scp_da_to_va = mt8192_scp_da_to_va,
+ 	.host_to_scp_reg = MT8192_GIPC_IN_SET,
+ 	.host_to_scp_int_bit = MT8192_HOST_IPC_INT_BIT,
+-	.scp_sizes = &default_scp_sizes,
++	.scp_sizes = &mt8195_scp_sizes,
+ };
+ 
+ static const struct mtk_scp_of_data mt8195_of_data_c1 = {
 
 
