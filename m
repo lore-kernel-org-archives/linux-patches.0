@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA1283A17;
-	Tue, 30 Jul 2024 17:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C314B1FBA;
+	Tue, 30 Jul 2024 17:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358911; cv=none; b=AwR13BPDpMlxXrIIeZTbH6mxaHiC+UEqaZCZurnjfeTpO0xX6pS8z4pko5vR2QGjWOdMc0YhcWXEs2Ul40C3BV11oiBhqLD1fv2/MBlpsLKz2d3YJjY6A/M0ms8PE6hwE9tkp1tT07MQanmyC9V6fToSYb0TIU0uiQFYKAZQiLY=
+	t=1722358914; cv=none; b=LJjAD5dvFqkZFqyUJVdpWlQa5smiWYfHeyVcK0w4+8LbwKNxX/6N+c2AnVSDEz6TarJ9e2epoOOPBKuUDe70uKohvgN8c9dQRHuflHOOvSe7GVmhTY7jx+1NQN+auXPXh6tK9C4wxkfEkIB58ZzqH0BmoiJ+q1ApPFp1lhOox14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358911; c=relaxed/simple;
-	bh=GvTEXq65clS9lLTpk9F/GN1dweZJSlZqE4DJ0JCx/XY=;
+	s=arc-20240116; t=1722358914; c=relaxed/simple;
+	bh=/EhDP2IHIpAuFLojviOCPEXa+k9oTDAW3hCbxyeFGT4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dPV//quUUszIGpjLUwAH4FWAD+maremzkP0ji2ig29FvXqpSpYuS42VUGds+cA91cVh+xB2v2oyEuvvwjvJMHzNzqLd7vm3lCByvV3kRAPTwBLyZ3w80h9bm80P8lxR9/dtDljgFsxmssC+C4OP+0sZdoBdhvNChOFLnoMz8beQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnAZiLV7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K1Tc/AucPfx7XtEyId2RjsTIwc+c2i/sPt7uLnzNK2YegDXjWlUt5DMdrV/2ilB0yedyYhjM4EW8Y4Vs5ZfbtKlz0Wsijv36L+Y3BYvYLezQ9TGAwWL4IZEskoRHfXrg9xLLe9KYhBdHzldBi/cSWbjiEhrTnDR9iFXb94VDuBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rx/nn//i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnAZiLV7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B4C3C32782;
-	Tue, 30 Jul 2024 17:01:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rx/nn//i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B1AC32782;
+	Tue, 30 Jul 2024 17:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358911;
-	bh=GvTEXq65clS9lLTpk9F/GN1dweZJSlZqE4DJ0JCx/XY=;
+	s=korg; t=1722358914;
+	bh=/EhDP2IHIpAuFLojviOCPEXa+k9oTDAW3hCbxyeFGT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pnAZiLV7KgrhZubIolX6QO+GT3PV9vI48n8BV4do8dbP+pUhnxBs5x4E6Y83R7zBA
-	 GrglSYE/mE0qj1dFkRWuh08G33Gdlz7B7JiVjlAdK8t84Vk2DAtGpwQh/BT18MH6np
-	 TCE94DUjMuXx0x0WAzr45oNgALavZEAefBy2m3MM=
+	b=Rx/nn//ivp7gPkR5FmKdwJW5PQVlaFC9u7xj5KpvDwyYer8N90nfw/uuvcVurbUsI
+	 FRGOID0difqaXkhiyMgOIqHS193Q7r0k/xIz9/3/Ar9JtbfrNwxhuqH+XkW5geduoI
+	 umQ0EEHN3AG+jSGfz0FUqbhfz11MZjKKfCvCIIMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Yao <hao.yao@intel.com>,
-	Wentong Wu <wentong.wu@intel.com>,
-	Jason Chen <jason.z.chen@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.6 408/568] media: ivsc: csi: add separate lock for v4l2 control handler
-Date: Tue, 30 Jul 2024 17:48:35 +0200
-Message-ID: <20240730151655.815500039@linuxfoundation.org>
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.6 393/568] task_work: s/task_work_cancel()/task_work_cancel_func()/
+Date: Tue, 30 Jul 2024 17:48:20 +0200
+Message-ID: <20240730151655.224117271@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
 References: <20240730151639.792277039@linuxfoundation.org>
@@ -53,69 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wentong Wu <wentong.wu@intel.com>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-commit c6be6471004e0e4d10d0514146d8c41550823d63 upstream.
+commit 68cbd415dd4b9c5b9df69f0f091879e56bf5907a upstream.
 
-There're possibilities that privacy status change notification happens
-in the middle of the ongoing mei command which already takes the command
-lock, but v4l2_ctrl_s_ctrl() would also need the same lock prior to this
-patch, so this may results in circular locking problem. This patch adds
-one dedicated lock for v4l2 control handler to avoid described issue.
+A proper task_work_cancel() API that actually cancels a callback and not
+*any* callback pointing to a given function is going to be needed for
+perf events event freeing. Do the appropriate rename to prepare for
+that.
 
-Fixes: 29006e196a56 ("media: pci: intel: ivsc: Add CSI submodule")
-Cc: stable@vger.kernel.org # for 6.6 and later
-Reported-by: Hao Yao <hao.yao@intel.com>
-Signed-off-by: Wentong Wu <wentong.wu@intel.com>
-Tested-by: Jason Chen <jason.z.chen@intel.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240621091601.18227-2-frederic@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ivsc/mei_csi.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/linux/task_work.h |    2 +-
+ kernel/irq/manage.c       |    2 +-
+ kernel/task_work.c        |   10 +++++-----
+ security/keys/keyctl.c    |    2 +-
+ 4 files changed, 8 insertions(+), 8 deletions(-)
 
---- a/drivers/media/pci/intel/ivsc/mei_csi.c
-+++ b/drivers/media/pci/intel/ivsc/mei_csi.c
-@@ -124,6 +124,8 @@ struct mei_csi {
- 	struct v4l2_ctrl_handler ctrl_handler;
- 	struct v4l2_ctrl *freq_ctrl;
- 	struct v4l2_ctrl *privacy_ctrl;
-+	/* lock for v4l2 controls */
-+	struct mutex ctrl_lock;
- 	unsigned int remote_pad;
- 	/* start streaming or not */
- 	int streaming;
-@@ -609,11 +611,13 @@ static int mei_csi_init_controls(struct
- 	u32 max;
- 	int ret;
+--- a/include/linux/task_work.h
++++ b/include/linux/task_work.h
+@@ -30,7 +30,7 @@ int task_work_add(struct task_struct *ta
  
-+	mutex_init(&csi->ctrl_lock);
-+
- 	ret = v4l2_ctrl_handler_init(&csi->ctrl_handler, 2);
- 	if (ret)
- 		return ret;
+ struct callback_head *task_work_cancel_match(struct task_struct *task,
+ 	bool (*match)(struct callback_head *, void *data), void *data);
+-struct callback_head *task_work_cancel(struct task_struct *, task_work_func_t);
++struct callback_head *task_work_cancel_func(struct task_struct *, task_work_func_t);
+ void task_work_run(void);
  
--	csi->ctrl_handler.lock = &csi->lock;
-+	csi->ctrl_handler.lock = &csi->ctrl_lock;
+ static inline void exit_task_work(struct task_struct *task)
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1332,7 +1332,7 @@ static int irq_thread(void *data)
+ 	 * synchronize_hardirq(). So neither IRQTF_RUNTHREAD nor the
+ 	 * oneshot mask bit can be set.
+ 	 */
+-	task_work_cancel(current, irq_thread_dtor);
++	task_work_cancel_func(current, irq_thread_dtor);
+ 	return 0;
+ }
  
- 	max = ARRAY_SIZE(link_freq_menu_items) - 1;
- 	csi->freq_ctrl = v4l2_ctrl_new_int_menu(&csi->ctrl_handler,
-@@ -772,6 +776,7 @@ err_entity:
+--- a/kernel/task_work.c
++++ b/kernel/task_work.c
+@@ -120,9 +120,9 @@ static bool task_work_func_match(struct
+ }
  
- err_ctrl_handler:
- 	v4l2_ctrl_handler_free(&csi->ctrl_handler);
-+	mutex_destroy(&csi->ctrl_lock);
- 	v4l2_async_nf_unregister(&csi->notifier);
- 	v4l2_async_nf_cleanup(&csi->notifier);
+ /**
+- * task_work_cancel - cancel a pending work added by task_work_add()
+- * @task: the task which should execute the work
+- * @func: identifies the work to remove
++ * task_work_cancel_func - cancel a pending work matching a function added by task_work_add()
++ * @task: the task which should execute the func's work
++ * @func: identifies the func to match with a work to remove
+  *
+  * Find the last queued pending work with ->func == @func and remove
+  * it from queue.
+@@ -131,7 +131,7 @@ static bool task_work_func_match(struct
+  * The found work or NULL if not found.
+  */
+ struct callback_head *
+-task_work_cancel(struct task_struct *task, task_work_func_t func)
++task_work_cancel_func(struct task_struct *task, task_work_func_t func)
+ {
+ 	return task_work_cancel_match(task, task_work_func_match, func);
+ }
+@@ -168,7 +168,7 @@ void task_work_run(void)
+ 		if (!work)
+ 			break;
+ 		/*
+-		 * Synchronize with task_work_cancel(). It can not remove
++		 * Synchronize with task_work_cancel_match(). It can not remove
+ 		 * the first entry == work, cmpxchg(task_works) must fail.
+ 		 * But it can remove another entry from the ->next list.
+ 		 */
+--- a/security/keys/keyctl.c
++++ b/security/keys/keyctl.c
+@@ -1694,7 +1694,7 @@ long keyctl_session_to_parent(void)
+ 		goto unlock;
  
-@@ -791,6 +796,7 @@ static void mei_csi_remove(struct mei_cl
- 	v4l2_async_nf_unregister(&csi->notifier);
- 	v4l2_async_nf_cleanup(&csi->notifier);
- 	v4l2_ctrl_handler_free(&csi->ctrl_handler);
-+	mutex_destroy(&csi->ctrl_lock);
- 	v4l2_async_unregister_subdev(&csi->subdev);
- 	v4l2_subdev_cleanup(&csi->subdev);
- 	media_entity_cleanup(&csi->subdev.entity);
+ 	/* cancel an already pending keyring replacement */
+-	oldwork = task_work_cancel(parent, key_change_session_keyring);
++	oldwork = task_work_cancel_func(parent, key_change_session_keyring);
+ 
+ 	/* the replacement session keyring is applied just prior to userspace
+ 	 * restarting */
 
 
