@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4CA8BE8;
-	Tue, 30 Jul 2024 16:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8A71A619E;
+	Tue, 30 Jul 2024 16:35:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357301; cv=none; b=DunHJcgeYnegd7MgIhgAbxMcokiXK4MYatx8dAJqbV2a3G7d9GWMo8Vy7Gde7J4TzCTlkUviLBZ4AzXekNlijz7TNuSW1EeD4vxjFU9aDcdUdwfJF18TrKBgmeufJdLUV9gfUu0uM4SfpZWZLNCf8zKBwFMsdWSuk4gi8rUg7k8=
+	t=1722357305; cv=none; b=n++FafrMhXlh8A4iOCZ07dKAlELbzCAFz7bk8hy7LMgTmE1l0s2AjX8VQi+rmUshkZvxevxXtZvVWVFmOeo9Djf8fN8OVntMzElvM73MpLIL0yR2q1LD8NHt9yZRql9f8ppaSKWCy7/3qHpdTNI3odeAQnz1Irz+yF2oXclE0xY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357301; c=relaxed/simple;
-	bh=D6U9LjK+3ObLEljYwknACM18TF7ONF5c+rfGEiE/Tms=;
+	s=arc-20240116; t=1722357305; c=relaxed/simple;
+	bh=VYxDizxFm83K7y9WLt8NrNhXKwGpsytAHYf7cqksalw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XPmFxmyA42L/r32g06bz3Igb0/RFzqERUB9hC7gTo6s62s0TUxmz+PvhI1l6bkjTj5avegktuv0e7yCYrvPIfwxOQZkOV8Jc4sxdwKgp7GY2tpG8piZ0Wvc7jYXaiJqFhfpsO7fwZMjmzPvCU+bOWTiaZ7lrqUlbcrVXKsJyGYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NvRG51cO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oepSBFJ2sUv22fjUr2TBhpjL4iUXgmbmDLepvp5UqkMWZ9ORuITV2UKldcne97MtL6Tmz8xHpryrEDx9ZISjn+1Jv4cxg+qheSQD/UD1bqlC4LzlKek4anMuo/jk57pfwZITOogK9pTPr3gQ20Ys/6paUzNkWx14BbmcIFrsXQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ux+4yagz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NvRG51cO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 236C7C32782;
-	Tue, 30 Jul 2024 16:35:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ux+4yagz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83E48C32782;
+	Tue, 30 Jul 2024 16:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357301;
-	bh=D6U9LjK+3ObLEljYwknACM18TF7ONF5c+rfGEiE/Tms=;
+	s=korg; t=1722357305;
+	bh=VYxDizxFm83K7y9WLt8NrNhXKwGpsytAHYf7cqksalw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NvRG51cOSAvSP5adT5jmp6T0vxoR1/TUuDb5ggBgUh03LXlqUma1j4FQcqKf6yCg3
-	 V4TobZoXtYVT37vxNvt1Pi0vWmvTZNoEn0YyQ1+CRcAXl/SQxF7bim0l3G/7cKaj86
-	 1g1uxlzjVlNaUMlFmlgF4HNaPQozWePVKktRbhbc=
+	b=Ux+4yagzxTfudsbfhbLX0OPZ0yLjvkaSa5kAYdWMnPhKBQIfX30Ikj/+piVVaUyzd
+	 lGggdAUhXlZX7MTqu0pkjoHoMrJa/gJgUNjLNWs/hSXFebjHlUZxvzuqf1UpN1ZwFp
+	 bgFtFnJSnRzxBXmFWNWH/O/omOBjJLBnjzaSgkEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Lee Jones <lee@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 238/568] mfd: omap-usb-tll: Use struct_size to allocate tll
-Date: Tue, 30 Jul 2024 17:45:45 +0200
-Message-ID: <20240730151649.184230059@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 278/440] net: netconsole: Disable target before netpoll cleanup
+Date: Tue, 30 Jul 2024 17:48:31 +0200
+Message-ID: <20240730151626.690433964@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,73 +47,56 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 40176714c818b0b6a2ca8213cdb7654fbd49b742 ]
+commit 97d9fba9a812cada5484667a46e14a4c976ca330 upstream.
 
-Commit 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
-changed the memory allocation of 'tll' to consolidate it into a single
-allocation, introducing an incorrect size calculation.
+Currently, netconsole cleans up the netpoll structure before disabling
+the target. This approach can lead to race conditions, as message
+senders (write_ext_msg() and write_msg()) check if the target is
+enabled before using netpoll. The sender can validate that the target is
+enabled, but, the netpoll might be de-allocated already, causing
+undesired behaviours.
 
-In particular, the allocation for the array of pointers was converted
-into a single-pointer allocation.
+This patch reverses the order of operations:
+1. Disable the target
+2. Clean up the netpoll structure
 
-The memory allocation used to occur in two steps:
+This change eliminates the potential race condition, ensuring that
+no messages are sent through a partially cleaned-up netpoll structure.
 
-tll = devm_kzalloc(dev, sizeof(struct usbtll_omap), GFP_KERNEL);
-tll->ch_clk = devm_kzalloc(dev, sizeof(struct clk *) * tll->nch,
-                           GFP_KERNEL);
-
-And it turned that into the following allocation:
-
-tll = devm_kzalloc(dev, sizeof(*tll) + sizeof(tll->ch_clk[nch]),
-                   GFP_KERNEL);
-
-sizeof(tll->ch_clk[nch]) returns the size of a single pointer instead of
-the expected nch pointers.
-
-This bug went unnoticed because the allocation size was small enough to
-fit within the minimum size of a memory allocation for this particular
-case [1].
-
-The complete allocation can still be done at once with the struct_size
-macro, which comes in handy for structures with a trailing flexible
-array.
-
-Fix the memory allocation to obtain the original size again.
-
-Link: https://lore.kernel.org/all/202406261121.2FFD65647@keescook/ [1]
-Fixes: 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
-Reviewed-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Fixes: commit 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
-Link: https://lore.kernel.org/r/20240626-omap-usb-tll-counted_by-v2-1-4bedf20d1b51@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2382b15bcc39 ("netconsole: take care of NETDEV_UNREGISTER event")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240712143415.1141039-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mfd/omap-usb-tll.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/netconsole.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mfd/omap-usb-tll.c b/drivers/mfd/omap-usb-tll.c
-index 906353735c782..5ba2b2352749d 100644
---- a/drivers/mfd/omap-usb-tll.c
-+++ b/drivers/mfd/omap-usb-tll.c
-@@ -230,8 +230,7 @@ static int usbtll_omap_probe(struct platform_device *pdev)
- 		break;
- 	}
+--- a/drivers/net/netconsole.c
++++ b/drivers/net/netconsole.c
+@@ -716,6 +716,7 @@ restart:
+ 				/* rtnl_lock already held
+ 				 * we might sleep in __netpoll_cleanup()
+ 				 */
++				nt->enabled = false;
+ 				spin_unlock_irqrestore(&target_list_lock, flags);
  
--	tll = devm_kzalloc(dev, sizeof(*tll) + sizeof(tll->ch_clk[nch]),
--			   GFP_KERNEL);
-+	tll = devm_kzalloc(dev, struct_size(tll, ch_clk, nch), GFP_KERNEL);
- 	if (!tll) {
- 		pm_runtime_put_sync(dev);
- 		pm_runtime_disable(dev);
--- 
-2.43.0
-
+ 				__netpoll_cleanup(&nt->np);
+@@ -723,7 +724,6 @@ restart:
+ 				spin_lock_irqsave(&target_list_lock, flags);
+ 				netdev_put(nt->np.dev, &nt->np.dev_tracker);
+ 				nt->np.dev = NULL;
+-				nt->enabled = false;
+ 				stopped = true;
+ 				netconsole_target_put(nt);
+ 				goto restart;
 
 
