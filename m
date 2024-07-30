@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AC614831F;
-	Tue, 30 Jul 2024 16:49:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4874914831F;
+	Tue, 30 Jul 2024 16:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358191; cv=none; b=aSr6aj9H4zlN1A+zT/KEJZAgtMeQs2nEjQdovGPy1w7UG9zTKUmkQVGtcp3jepLfxVKLZLSoJBjKL821m2sUwRpl1rCrSXhAaBu6V7Nod1fi+UCfDuxxcbXjj5EL7CYPAernrtbvREdcyRVrXl2Rd+1s05jXWIv/yQWmSpr1274=
+	t=1722358194; cv=none; b=DPXogkoCE5ZYBmByQQnEg9ExK14BG6NJtdeWsIHhAUCqWuR/v1kCkV7AaVSkVTxZnmOofKfSq8FRdLFPcokcxsq+BAqqiK1v8/jjhb8JJ3NIOEAqYjkLYt5hN24sEvFbnq/KCtw8Vs/dnk6XpthmERybWPb9cHvzjyk6pRMmMGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358191; c=relaxed/simple;
-	bh=Y0DQsAzH8J1ebdW4QUzKPejjxye7LEG233zg6PFcWJs=;
+	s=arc-20240116; t=1722358194; c=relaxed/simple;
+	bh=vEMCo7PEtneQFAuBxhWBjMQU4YenxqsYeClDHSmKlXc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hhYk/iWT/ZdhRWbF7KC0eInyU1VsbbY/N0USLDvyo+k+jzdYUhpgs+zkuyE+UzcY+bKEtoqHKgnFJ4bqYdAXhBch3ZpJ/HU13kJC67VFuxrf0s5L9DioH+FaEH67NjM8ooJ1nN1jmkbEs3/dfxsMiKRdTpi95P5NG0nYk9h1g3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o/YVcd3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JTtpJ/hD8YgRg4VSWybsa7TrkqIIAxjMOViiH9pM2g7xwQKLVwYUK06p1sBfkXvpMA3Eh8OPbA4IzVTEFJ3q/LjcpLFIq8eVPJAHItKffHXimSkgir36Clv6ygnoiDnns3N9Cy0WYAAvBlBY5nDPtduF6pZn7gDIWFgySf+ErLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZzO33av1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o/YVcd3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC90C4AF0A;
-	Tue, 30 Jul 2024 16:49:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZzO33av1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3FE6C32782;
+	Tue, 30 Jul 2024 16:49:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358190;
-	bh=Y0DQsAzH8J1ebdW4QUzKPejjxye7LEG233zg6PFcWJs=;
+	s=korg; t=1722358194;
+	bh=vEMCo7PEtneQFAuBxhWBjMQU4YenxqsYeClDHSmKlXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/YVcd3LwWP/o+TzqHRvVMNgkcAVHUWjCf0rdqurcNN4hpPvI7o5tkpmT6DKyUiTn
-	 CqChweqvPePVV1iAVql6JUmiXgE2OLS6pMFma8AvB3cBqmvCT1tUMiMX8nNtkXmR7E
-	 Oysm0wkfbchJgH5YHNiiLxpv0fH6zXCWvTayyduI=
+	b=ZzO33av1olLa+Jb8bJ+2szK6Ryc6RpNK3EllVCScGVh2e3n40jak4bGqEsMykjmQI
+	 zkaM6CKqcLtp7uss5n7DvqLh5j7sT+XzdcOxa5ULzDtKocTPPiZHOR16BzwJglrQ2T
+	 6mTgS0l/lndT+88chw2blE00Xu5p+VUxDUP9Y8sQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 333/809] drm/msm/a6xx: use __unused__ to fix compiler warnings for gen7_* includes
-Date: Tue, 30 Jul 2024 17:43:29 +0200
-Message-ID: <20240730151737.772956104@linuxfoundation.org>
+	Zhu Yanjun <yanjun.zhu@linux.dev>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>
+Subject: [PATCH 6.1 365/440] RDMA/iwcm: Fix a use-after-free related to destroying CM IDs
+Date: Tue, 30 Jul 2024 17:49:58 +0200
+Message-ID: <20240730151630.074384522@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,94 +48,78 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 71d9b458b2bfe79197194d914aa9bada46fb9e14 ]
+commit aee2424246f9f1dadc33faa78990c1e2eb7826e4 upstream.
 
-GCC diagnostic pragma method throws below warnings in some of the versions
+iw_conn_req_handler() associates a new struct rdma_id_private (conn_id) with
+an existing struct iw_cm_id (cm_id) as follows:
 
-drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:16:9: warning: unknown
-option after '#pragma GCC diagnostic' kind [-Wpragmas]
-  #pragma GCC diagnostic ignored "-Wunused-const-variable"
-          ^
-In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:18:0:
-drivers/gpu/drm/msm/adreno/adreno_gen7_0_0_snapshot.h:924:19: warning:
-'gen7_0_0_external_core_regs' defined but not used [-Wunused-variable]
-  static const u32 *gen7_0_0_external_core_regs[] = {
-                    ^
-In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:19:0:
-drivers/gpu/drm/msm/adreno/adreno_gen7_2_0_snapshot.h:748:19: warning:
-'gen7_2_0_external_core_regs' defined but not used [-Wunused-variable]
-  static const u32 *gen7_2_0_external_core_regs[] = {
-                    ^
-In file included from drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c:20:0:
-drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1188:43: warning:
-'gen7_9_0_sptp_clusters' defined but not used [-Wunused-variable]
-  static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] = {
-                                            ^
-drivers/gpu/drm/msm/adreno/adreno_gen7_9_0_snapshot.h:1438:19: warning:
-'gen7_9_0_external_core_regs' defined but not used [-Wunused-variable]
-  static const u32 *gen7_9_0_external_core_regs[] = {
+        conn_id->cm_id.iw = cm_id;
+        cm_id->context = conn_id;
+        cm_id->cm_handler = cma_iw_handler;
 
-Remove GCC version dependency by using __unused__ for the unused gen7_* includes.
+rdma_destroy_id() frees both the cm_id and the struct rdma_id_private. Make
+sure that cm_work_handler() does not trigger a use-after-free by only
+freeing of the struct rdma_id_private after all pending work has finished.
 
-Changes in v2:
-	- Fix the warnings in the commit text
-	- Use __attribute((__unused__)) instead of local assignment
-
-changes in v3:
-	- drop the Link from the auto add
-
-changes in v4:
-	- replace __attribute((__unused__)) with __always_unused
-
-Fixes: 64d6255650d4 ("drm/msm: More fully implement devcoredump for a7xx")
-Suggested-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/597265/
-[Add gen7_9_0_cx_debugbus_blocks as well]
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 59c68ac31e15 ("iw_cm: free cm_id resources on the last deref")
+Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240605145117.397751-6-bvanassche@acm.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/infiniband/core/iwcm.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-index 0a7717a4fc2fd..789a11416f7a4 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
-@@ -8,19 +8,16 @@
- #include "a6xx_gpu_state.h"
- #include "a6xx_gmu.xml.h"
+--- a/drivers/infiniband/core/iwcm.c
++++ b/drivers/infiniband/core/iwcm.c
+@@ -369,8 +369,10 @@ EXPORT_SYMBOL(iw_cm_disconnect);
+  *
+  * Clean up all resources associated with the connection and release
+  * the initial reference taken by iw_create_cm_id.
++ *
++ * Returns true if and only if the last cm_id_priv reference has been dropped.
+  */
+-static void destroy_cm_id(struct iw_cm_id *cm_id)
++static bool destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+ 	struct iwcm_id_private *cm_id_priv;
+ 	struct ib_qp *qp;
+@@ -440,7 +442,7 @@ static void destroy_cm_id(struct iw_cm_i
+ 		iwpm_remove_mapping(&cm_id->local_addr, RDMA_NL_IWCM);
+ 	}
  
--/* Ignore diagnostics about register tables that we aren't using yet. We don't
-- * want to modify these headers too much from their original source.
-- */
--#pragma GCC diagnostic push
--#pragma GCC diagnostic ignored "-Wunused-variable"
--#pragma GCC diagnostic ignored "-Wunused-const-variable"
-+static const unsigned int *gen7_0_0_external_core_regs[] __always_unused;
-+static const unsigned int *gen7_2_0_external_core_regs[] __always_unused;
-+static const unsigned int *gen7_9_0_external_core_regs[] __always_unused;
-+static struct gen7_sptp_cluster_registers gen7_9_0_sptp_clusters[] __always_unused;
-+static const u32 gen7_9_0_cx_debugbus_blocks[] __always_unused;
+-	(void)iwcm_deref_id(cm_id_priv);
++	return iwcm_deref_id(cm_id_priv);
+ }
  
- #include "adreno_gen7_0_0_snapshot.h"
- #include "adreno_gen7_2_0_snapshot.h"
- #include "adreno_gen7_9_0_snapshot.h"
+ /*
+@@ -451,7 +453,8 @@ static void destroy_cm_id(struct iw_cm_i
+  */
+ void iw_destroy_cm_id(struct iw_cm_id *cm_id)
+ {
+-	destroy_cm_id(cm_id);
++	if (!destroy_cm_id(cm_id))
++		flush_workqueue(iwcm_wq);
+ }
+ EXPORT_SYMBOL(iw_destroy_cm_id);
  
--#pragma GCC diagnostic pop
--
- struct a6xx_gpu_state_obj {
- 	const void *handle;
- 	u32 *data;
--- 
-2.43.0
-
+@@ -1035,7 +1038,7 @@ static void cm_work_handler(struct work_
+ 		if (!test_bit(IWCM_F_DROP_EVENTS, &cm_id_priv->flags)) {
+ 			ret = process_event(cm_id_priv, &levent);
+ 			if (ret)
+-				destroy_cm_id(&cm_id_priv->id);
++				WARN_ON_ONCE(destroy_cm_id(&cm_id_priv->id));
+ 		} else
+ 			pr_debug("dropping event %d\n", levent.event);
+ 		if (iwcm_deref_id(cm_id_priv))
 
 
