@@ -1,43 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05EC18454F;
-	Tue, 30 Jul 2024 16:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359051A618E;
+	Tue, 30 Jul 2024 16:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356596; cv=none; b=Zh4GvaPoQbIvfoqryVifw6OriZJSGTSB0mwJ7S1vPoESQAJ1UINNG+j58TxFRn1ZPfQDFBXS7aJ9nUeITvZmRJwMBTmVHbBIEBDmr7X7uWT2myh/t1wgQEolbieOsFaAZ+tXDlIGmna3/qhV7dEHSZSwCq218ck3NBX4N5WQeKg=
+	t=1722356599; cv=none; b=QZDwfRfUocZ/d2R7p2hChAk15rmTQFjV0ODwOQMXNlRo0C1k7fvX+DqZHyMOVFPgFNFednLT1QGmaSVXWoFRyOBktEXD6htS/wBf+gyNzAzJpM3Vee4JBb0drTWwexqsA2a9CTiKjH4JVg3SMz+N4oom67vbvUbTUUjLDPlAC3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356596; c=relaxed/simple;
-	bh=Zsiodig7aKjwiKQiGiIVPHsuAC0CPuDvr77iIbHffD0=;
+	s=arc-20240116; t=1722356599; c=relaxed/simple;
+	bh=Wpg/ri5j+fLytzS3EvqnQKKLmzyMQP+pWYtOss0uk9Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sw4YeHxdpHfYrGYP11OCH0UxVr7YghJdVu3slWQziv4ZyXahtMdPCSkmnTMTUtLxFXAq5jHeGf05BLNeab+fcJWe65/NJT4tBrEjr9ozbQYPny/TnguG//Oqr/J7rPKzLyssXp7cmXUMtG3gk7dwnTHNbFn/fQWSAWboN3Avgf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dps6XzI8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Go8j8ddzo+Xj4dbYDcx3CuKPDR75/pUY+rLo9ZEtmTobTLvnRcCJSxmXT55nxNQwqbJFd55azF7Blzlvvty3sQiAwEulJJ6mXWeFPTl2ojeA2Tuk/cV/+cQrO84gy0rEroWwrQKHlJ5a8CbMK8r9eqGzpz155V2jDEkjdEaoyhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NrghPUI4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dps6XzI8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65882C4AF0A;
-	Tue, 30 Jul 2024 16:23:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NrghPUI4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7699FC4AF0A;
+	Tue, 30 Jul 2024 16:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356595;
-	bh=Zsiodig7aKjwiKQiGiIVPHsuAC0CPuDvr77iIbHffD0=;
+	s=korg; t=1722356599;
+	bh=Wpg/ri5j+fLytzS3EvqnQKKLmzyMQP+pWYtOss0uk9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dps6XzI8NddBoX6kMLwZme4gVpSiWauzIMNi9YqCovRt9LibV/IZq+kWfN5GnImxu
-	 hQaOtGImiHYtCq3CDHINFgEmwVwJDKzZjKu4TrF/vqRTT6r+vjYmRoLJ095wkcJoUj
-	 wTM6T2FynSFSpD3Et+jklNFEBjvzrjK85pEsPyxQ=
+	b=NrghPUI42pIqI9lI9zXcTx0Gb+GIbXNl0DpKrC9TS6xV72CM9oa3zaJPTK7Bwa7KI
+	 2HQCwe28NO8+hrTdiTRnTBdhtvGDFX/UooMqBFcraZ2wwp84TTOeXlAK0NnsH4vOdb
+	 HUa1nHV2vUxC7cLD6kgXasinAvK1IEhO5qF6yXjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Mirsad Todorovac <mtodorovac69@yahoo.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	syzbot+6c21aeb59d0e82eb2782@syzkaller.appspotmail.com,
+	Jeongjun Park <aha310510@gmail.com>,
+	Arseny Krasnov <arseny.krasnov@kaspersky.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 165/568] bpf: annotate BTF show functions with __printf
-Date: Tue, 30 Jul 2024 17:44:32 +0200
-Message-ID: <20240730151646.337424087@linuxfoundation.org>
+Subject: [PATCH 6.1 211/440] vhost/vsock: always initialize seqpacket_allow
+Date: Tue, 30 Jul 2024 17:47:24 +0200
+Message-ID: <20240730151624.107459159@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,60 +53,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit b3470da314fd8018ee237e382000c4154a942420 ]
+[ Upstream commit 1e1fdcbdde3b7663e5d8faeb2245b9b151417d22 ]
 
--Werror=suggest-attribute=format warns about two functions
-in kernel/bpf/btf.c [1]; add __printf() annotations to silence
-these warnings since for CONFIG_WERROR=y they will trigger
-build failures.
+There are two issues around seqpacket_allow:
+1. seqpacket_allow is not initialized when socket is
+   created. Thus if features are never set, it will be
+   read uninitialized.
+2. if VIRTIO_VSOCK_F_SEQPACKET is set and then cleared,
+   then seqpacket_allow will not be cleared appropriately
+   (existing apps I know about don't usually do this but
+    it's legal and there's no way to be sure no one relies
+    on this).
 
-[1] https://lore.kernel.org/bpf/a8b20c72-6631-4404-9e1f-0410642d7d20@gmail.com/
+To fix:
+	- initialize seqpacket_allow after allocation
+	- set it unconditionally in set_features
 
-Fixes: 31d0bc81637d ("bpf: Move to generic BTF show support, apply it to seq files/strings")
-Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Tested-by: Mirsad Todorovac <mtodorovac69@yahoo.com>
-Link: https://lore.kernel.org/r/20240711182321.963667-1-alan.maguire@oracle.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: syzbot+6c21aeb59d0e82eb2782@syzkaller.appspotmail.com
+Reported-by: Jeongjun Park <aha310510@gmail.com>
+Fixes: ced7b713711f ("vhost/vsock: support SEQPACKET for transport").
+Tested-by: Arseny Krasnov <arseny.krasnov@kaspersky.com>
+Cc: David S. Miller <davem@davemloft.net>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Message-ID: <20240422100010-mutt-send-email-mst@kernel.org>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Eugenio Pérez <eperezma@redhat.com>
+Acked-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/vhost/vsock.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index a31704a6bb614..896ac05bf1bd1 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -7070,8 +7070,8 @@ static void btf_type_show(const struct btf *btf, u32 type_id, void *obj,
- 	btf_type_ops(t)->show(btf, t, type_id, obj, 0, show);
- }
+diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
+index 1f3b89c885cca..c00f5821d6ecb 100644
+--- a/drivers/vhost/vsock.c
++++ b/drivers/vhost/vsock.c
+@@ -654,6 +654,7 @@ static int vhost_vsock_dev_open(struct inode *inode, struct file *file)
+ 	}
  
--static void btf_seq_show(struct btf_show *show, const char *fmt,
--			 va_list args)
-+__printf(2, 0) static void btf_seq_show(struct btf_show *show, const char *fmt,
-+					va_list args)
- {
- 	seq_vprintf((struct seq_file *)show->target, fmt, args);
- }
-@@ -7104,8 +7104,8 @@ struct btf_show_snprintf {
- 	int len;		/* length we would have written */
- };
+ 	vsock->guest_cid = 0; /* no CID assigned yet */
++	vsock->seqpacket_allow = false;
  
--static void btf_snprintf_show(struct btf_show *show, const char *fmt,
--			      va_list args)
-+__printf(2, 0) static void btf_snprintf_show(struct btf_show *show, const char *fmt,
-+					     va_list args)
- {
- 	struct btf_show_snprintf *ssnprintf = (struct btf_show_snprintf *)show;
- 	int len;
+ 	atomic_set(&vsock->queued_replies, 0);
+ 
+@@ -797,8 +798,7 @@ static int vhost_vsock_set_features(struct vhost_vsock *vsock, u64 features)
+ 			goto err;
+ 	}
+ 
+-	if (features & (1ULL << VIRTIO_VSOCK_F_SEQPACKET))
+-		vsock->seqpacket_allow = true;
++	vsock->seqpacket_allow = features & (1ULL << VIRTIO_VSOCK_F_SEQPACKET);
+ 
+ 	for (i = 0; i < ARRAY_SIZE(vsock->vqs); i++) {
+ 		vq = &vsock->vqs[i];
 -- 
 2.43.0
 
