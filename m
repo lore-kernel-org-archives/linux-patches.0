@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 683671A6160;
-	Tue, 30 Jul 2024 16:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EB41A6160;
+	Tue, 30 Jul 2024 16:26:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356812; cv=none; b=pK7bCDhPgw67leeGLE4H2hlIkJ/e336pSkSBRulV7+pTLjskpFh1N+HGMCeMmkfDP3izTw6cBVDbsFmdjVHzBOpxxeiMYeYm7BiHAB8frzoFW56vpRvsZXZP2cV9uiDPx1fF5JEgs0akSbX9cSshyUnHtGuspgFi+YLUdwI6COo=
+	t=1722356815; cv=none; b=QXi8KWwgqx6YENAZf49EkAQuEcyJ7aehT8lNcHXW5prbxVBEyOg1lR5egLL2FBvHMVT2OOPq4R57fT08qe3IBALpk/hEqN3hsmeH14nSGulA6kyVYO48TnY3wwsc6FB2XE0U8rqECg58vsftTp9InPU9T8zThY4nQ0TY34FiXeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356812; c=relaxed/simple;
-	bh=NSRrz3sTh9Fc16fNcw5gJUD0nO+wEWgBStRpI/0VZ2I=;
+	s=arc-20240116; t=1722356815; c=relaxed/simple;
+	bh=Pg9/qZ9THz04QJ6VyIZB3W57FLoogUug54ooZrxzczA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G2RAkoKO+xMdmkT5/JDKR4Z86A3NhG13FolS/5dn5e4x/xtKNQTqz88IXtX1ApW+VlzIdeHGlfxlS0ZWXgxvYz4zhvh6DdpzYfJLJUYkgndl/ktsosLp4MflI1Z1vPS6B6cjPayz4jFz3KWpL2ugWWZWaU4dw2Ccgyak4rXzHCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULzN8jPI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GuzIdcktFVowsZr07dUSf2vvDhm+4nOroJQcPltbquaI5iZwYiUgzxP+Nz1nIg3wkXfs8XByrDU77yTalTK0+4LsRBPbdoJynhyiQorLzTm34qjzujLimpUntHxnhDc5eQyd6ma8x4nWvfvbA1uGrgjc16YN2+Y6URFGXAgmF9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Xfrd0UKt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULzN8jPI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC839C4AF0C;
-	Tue, 30 Jul 2024 16:26:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Xfrd0UKt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF6A8C32782;
+	Tue, 30 Jul 2024 16:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356812;
-	bh=NSRrz3sTh9Fc16fNcw5gJUD0nO+wEWgBStRpI/0VZ2I=;
+	s=korg; t=1722356815;
+	bh=Pg9/qZ9THz04QJ6VyIZB3W57FLoogUug54ooZrxzczA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ULzN8jPIimgw7ExSmVM8+rnQcFuCLtepkkRSajnpwFAfAynJmm5bFkrA9VFJGItFu
-	 xg/mHP2LIyZAC53FH7SwBNVKW76x0i1KmU0fURAta/g16bbVPc13OIiYJ8AfyigGX3
-	 SnDTep6sRWP6lOrFh9WdtzxJrmWTRLl3lax2e6as=
+	b=Xfrd0UKtLKQKbR0OxlJ7pkaACqbcmrvsTanIcyyO/udn/gscYhi9hxw4DJAJeJHm3
+	 0VTT536Dvbf54Hud1BrRqA0KtiLRuv9Uhl318gcFe0+OiLM49Syf4zK16kIqd+7Bof
+	 wrLc4oZAtff+7SbgTADGGmDcAN1djH27WzdO6P7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Stefano Brivio <sbrivio@redhat.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 189/809] wifi: ath12k: fix ACPI warning when resume
-Date: Tue, 30 Jul 2024 17:41:05 +0200
-Message-ID: <20240730151732.075844502@linuxfoundation.org>
+Subject: [PATCH 6.1 231/440] netfilter: nft_set_pipapo: constify lookup fn args where possible
+Date: Tue, 30 Jul 2024 17:47:44 +0200
+Message-ID: <20240730151624.880024714@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,65 +47,267 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 8b2a12749b08726f006303814ecc1c37024d3617 ]
+[ Upstream commit f04df573faf90bb828a2241b650598c02c074323 ]
 
-Currently ACPI notification handler is installed when driver loads and only
-gets removed when driver unloads. During resume after firmware is reloaded,
-ath12k tries to install it by default. Since it is installed already, ACPI
-subsystem rejects it and returns an error:
+Those get called from packet path, content must not be modified.
+No functional changes intended.
 
-[   83.094206] ath12k_pci 0000:03:00.0: failed to install DSM notify callback: 7
-
-Fix it by removing that handler when going to suspend. This also avoid any
-possible ACPI call to firmware before firmware is reloaded/reinitialized.
-
-Note ab->acpi also needs to be cleared in ath12k_acpi_stop() such that we
-are in a clean state when ACPI structures are reinitialized in
-ath12k_acpi_start().
-
-Tested-on: WCN7850 HW2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
-
-Fixes: 576771c9fa21 ("wifi: ath12k: ACPI TAS support")
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240531024000.9291-1-quic_bqiang@quicinc.com
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 791a615b7ad2 ("netfilter: nf_set_pipapo: fix initial map fill")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath12k/acpi.c | 2 ++
- drivers/net/wireless/ath/ath12k/core.c | 2 ++
- 2 files changed, 4 insertions(+)
+ net/netfilter/nft_set_pipapo.c      | 18 +++++----
+ net/netfilter/nft_set_pipapo.h      |  6 +--
+ net/netfilter/nft_set_pipapo_avx2.c | 59 +++++++++++++++++------------
+ 3 files changed, 48 insertions(+), 35 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath12k/acpi.c b/drivers/net/wireless/ath/ath12k/acpi.c
-index 443ba12e01f37..0555d35aab477 100644
---- a/drivers/net/wireless/ath/ath12k/acpi.c
-+++ b/drivers/net/wireless/ath/ath12k/acpi.c
-@@ -391,4 +391,6 @@ void ath12k_acpi_stop(struct ath12k_base *ab)
- 	acpi_remove_notify_handler(ACPI_HANDLE(ab->dev),
- 				   ACPI_DEVICE_NOTIFY,
- 				   ath12k_acpi_dsm_notify);
-+
-+	memset(&ab->acpi, 0, sizeof(ab->acpi));
- }
-diff --git a/drivers/net/wireless/ath/ath12k/core.c b/drivers/net/wireless/ath/ath12k/core.c
-index 527cfa3a01ad3..52969a1bb5a56 100644
---- a/drivers/net/wireless/ath/ath12k/core.c
-+++ b/drivers/net/wireless/ath/ath12k/core.c
-@@ -83,6 +83,8 @@ int ath12k_core_suspend_late(struct ath12k_base *ab)
- 	if (!ab->hw_params->supports_suspend)
- 		return -EOPNOTSUPP;
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index a56ed216c2233..261b505e3b3fa 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -360,7 +360,7 @@
+  * Return: -1 on no match, bit position on 'match_only', 0 otherwise.
+  */
+ int pipapo_refill(unsigned long *map, int len, int rules, unsigned long *dst,
+-		  union nft_pipapo_map_bucket *mt, bool match_only)
++		  const union nft_pipapo_map_bucket *mt, bool match_only)
+ {
+ 	unsigned long bitset;
+ 	int k, ret = -1;
+@@ -412,9 +412,9 @@ bool nft_pipapo_lookup(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo_scratch *scratch;
+ 	unsigned long *res_map, *fill_map;
+ 	u8 genmask = nft_genmask_cur(net);
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	const u8 *rp = (const u8 *)key;
+-	struct nft_pipapo_match *m;
+-	struct nft_pipapo_field *f;
+ 	bool map_index;
+ 	int i;
  
-+	ath12k_acpi_stop(ab);
-+
- 	ath12k_hif_irq_disable(ab);
- 	ath12k_hif_ce_irq_disable(ab);
+@@ -519,11 +519,13 @@ static struct nft_pipapo_elem *pipapo_get(const struct net *net,
+ {
+ 	struct nft_pipapo_elem *ret = ERR_PTR(-ENOENT);
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+-	struct nft_pipapo_match *m = priv->clone;
+ 	unsigned long *res_map, *fill_map = NULL;
+-	struct nft_pipapo_field *f;
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	int i;
  
++	m = priv->clone;
++
+ 	res_map = kmalloc_array(m->bsize_max, sizeof(*res_map), GFP_ATOMIC);
+ 	if (!res_map) {
+ 		ret = ERR_PTR(-ENOMEM);
+@@ -1595,7 +1597,7 @@ static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
+ 
+ 	while ((rules_f0 = pipapo_rules_same_key(m->f, first_rule))) {
+ 		union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
+-		struct nft_pipapo_field *f;
++		const struct nft_pipapo_field *f;
+ 		int i, start, rules_fx;
+ 
+ 		start = first_rule;
+@@ -2041,8 +2043,8 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct net *net = read_pnet(&set->net);
+-	struct nft_pipapo_match *m;
+-	struct nft_pipapo_field *f;
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	int i, r;
+ 
+ 	rcu_read_lock();
+diff --git a/net/netfilter/nft_set_pipapo.h b/net/netfilter/nft_set_pipapo.h
+index 30a3d092cd841..73a4518308be4 100644
+--- a/net/netfilter/nft_set_pipapo.h
++++ b/net/netfilter/nft_set_pipapo.h
+@@ -185,7 +185,7 @@ struct nft_pipapo_elem {
+ };
+ 
+ int pipapo_refill(unsigned long *map, int len, int rules, unsigned long *dst,
+-		  union nft_pipapo_map_bucket *mt, bool match_only);
++		  const union nft_pipapo_map_bucket *mt, bool match_only);
+ 
+ /**
+  * pipapo_and_field_buckets_4bit() - Intersect 4-bit buckets
+@@ -193,7 +193,7 @@ int pipapo_refill(unsigned long *map, int len, int rules, unsigned long *dst,
+  * @dst:	Area to store result
+  * @data:	Input data selecting table buckets
+  */
+-static inline void pipapo_and_field_buckets_4bit(struct nft_pipapo_field *f,
++static inline void pipapo_and_field_buckets_4bit(const struct nft_pipapo_field *f,
+ 						 unsigned long *dst,
+ 						 const u8 *data)
+ {
+@@ -221,7 +221,7 @@ static inline void pipapo_and_field_buckets_4bit(struct nft_pipapo_field *f,
+  * @dst:	Area to store result
+  * @data:	Input data selecting table buckets
+  */
+-static inline void pipapo_and_field_buckets_8bit(struct nft_pipapo_field *f,
++static inline void pipapo_and_field_buckets_8bit(const struct nft_pipapo_field *f,
+ 						 unsigned long *dst,
+ 						 const u8 *data)
+ {
+diff --git a/net/netfilter/nft_set_pipapo_avx2.c b/net/netfilter/nft_set_pipapo_avx2.c
+index a3a8ddca99189..d08407d589eac 100644
+--- a/net/netfilter/nft_set_pipapo_avx2.c
++++ b/net/netfilter/nft_set_pipapo_avx2.c
+@@ -212,8 +212,9 @@ static int nft_pipapo_avx2_refill(int offset, unsigned long *map,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	u8 pg[2] = { pkt[0] >> 4, pkt[0] & 0xf };
+@@ -274,8 +275,9 @@ static int nft_pipapo_avx2_lookup_4b_2(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	u8 pg[4] = { pkt[0] >> 4, pkt[0] & 0xf, pkt[1] >> 4, pkt[1] & 0xf };
+@@ -350,8 +352,9 @@ static int nft_pipapo_avx2_lookup_4b_4(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	u8 pg[8] = {  pkt[0] >> 4,  pkt[0] & 0xf,  pkt[1] >> 4,  pkt[1] & 0xf,
+ 		      pkt[2] >> 4,  pkt[2] & 0xf,  pkt[3] >> 4,  pkt[3] & 0xf,
+@@ -445,8 +448,9 @@ static int nft_pipapo_avx2_lookup_4b_8(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
+-				        struct nft_pipapo_field *f, int offset,
+-				        const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	u8 pg[12] = {  pkt[0] >> 4,  pkt[0] & 0xf,  pkt[1] >> 4,  pkt[1] & 0xf,
+ 		       pkt[2] >> 4,  pkt[2] & 0xf,  pkt[3] >> 4,  pkt[3] & 0xf,
+@@ -534,8 +538,9 @@ static int nft_pipapo_avx2_lookup_4b_12(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
+-					struct nft_pipapo_field *f, int offset,
+-					const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	u8 pg[32] = {  pkt[0] >> 4,  pkt[0] & 0xf,  pkt[1] >> 4,  pkt[1] & 0xf,
+ 		       pkt[2] >> 4,  pkt[2] & 0xf,  pkt[3] >> 4,  pkt[3] & 0xf,
+@@ -669,8 +674,9 @@ static int nft_pipapo_avx2_lookup_4b_32(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -726,8 +732,9 @@ static int nft_pipapo_avx2_lookup_8b_1(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -790,8 +797,9 @@ static int nft_pipapo_avx2_lookup_8b_2(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -865,8 +873,9 @@ static int nft_pipapo_avx2_lookup_8b_4(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
+-				       struct nft_pipapo_field *f, int offset,
+-				       const u8 *pkt, bool first, bool last)
++				       const struct nft_pipapo_field *f,
++				       int offset, const u8 *pkt,
++				       bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -950,8 +959,9 @@ static int nft_pipapo_avx2_lookup_8b_6(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+-					struct nft_pipapo_field *f, int offset,
+-					const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	int i, ret = -1, m256_size = f->bsize / NFT_PIPAPO_LONGS_PER_M256, b;
+ 	unsigned long *lt = f->lt, bsize = f->bsize;
+@@ -1042,8 +1052,9 @@ static int nft_pipapo_avx2_lookup_8b_16(unsigned long *map, unsigned long *fill,
+  * word index to be checked next (i.e. first filled word).
+  */
+ static int nft_pipapo_avx2_lookup_slow(unsigned long *map, unsigned long *fill,
+-					struct nft_pipapo_field *f, int offset,
+-					const u8 *pkt, bool first, bool last)
++					const struct nft_pipapo_field *f,
++					int offset, const u8 *pkt,
++					bool first, bool last)
+ {
+ 	unsigned long bsize = f->bsize;
+ 	int i, ret = -1, b;
+@@ -1119,9 +1130,9 @@ bool nft_pipapo_avx2_lookup(const struct net *net, const struct nft_set *set,
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_scratch *scratch;
+ 	u8 genmask = nft_genmask_cur(net);
++	const struct nft_pipapo_match *m;
++	const struct nft_pipapo_field *f;
+ 	const u8 *rp = (const u8 *)key;
+-	struct nft_pipapo_match *m;
+-	struct nft_pipapo_field *f;
+ 	unsigned long *res, *fill;
+ 	bool map_index;
+ 	int i, ret = 0;
 -- 
 2.43.0
 
