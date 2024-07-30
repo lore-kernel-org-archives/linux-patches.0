@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794A9189522;
-	Tue, 30 Jul 2024 16:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1511A6190;
+	Tue, 30 Jul 2024 16:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356732; cv=none; b=ngsQEq7TaAZWTvTbAfQPfdqURFb9OzUP5CPDNR38hDboTALc9lHtGERhipI/iraJpmcJo9YiJM1wyVs2XJoO+5vCJ7OZDKZxF/BW8GswVyiyaVc3EK63ML5UGDPlwgX6Q/qfLlIeVDjnuKl4SkKDmhJbEVZI1TXuXH4Ytf4euvE=
+	t=1722356736; cv=none; b=eoiRd6i4hhVlxMlvN1MYfxSyeS7D3VSMxk/dtWkRmBlCVeMoVwEZUSFaHy2kUcO4p2NQiCFiitrbpjd8moGP5KFbHRKggQKo0utqdy4kKl642moX4C8eoPqhPeyZVP3UYtFSuEesoszQBSjs+MVXjx+cFMt6ywVe/m1X6QMkEa0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356732; c=relaxed/simple;
-	bh=GEmpZ40ureNYtdLPEV/UDNCB7/UJv7Y3+9j/ZiRB3z8=;
+	s=arc-20240116; t=1722356736; c=relaxed/simple;
+	bh=r1KtwNsca5ZZYOAuXRcu0Q8tPPLj4ev4/JzmS5urC9k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVJKtjNRruQStdlb0mXXVXsF8lhHw06WpRnbsRLXyUrZRfRUvI2eJIyqPzQoIXHcwI130P2M5M2ZKC8lF71n/UBmOwz1RpKlYB8VizHo5+zYQqp30AijwhgdRIAGoEKnjKFYhkiRqLdotKpOyhgSJah+a2jsu5T2ooXoF8KqBSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BCafPPeh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=EyNVpqWJnwDYPW8G67jmr3jqqY5uoLQjc0N5QEG+FsPp9G3YwmesMor73/QyI9A8zvUEPHeT4mBK9lz6V8uA1hesA30RVUcDungxrcsTG5NKsHpstw9JyJrk/y1PFq6sGYzYimwfuVPEunGUSxnKjK5CE2bMBU8m/E8aiF2+atE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paW46zKA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BCafPPeh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAC3C4AF0A;
-	Tue, 30 Jul 2024 16:25:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paW46zKA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16E0C32782;
+	Tue, 30 Jul 2024 16:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356732;
-	bh=GEmpZ40ureNYtdLPEV/UDNCB7/UJv7Y3+9j/ZiRB3z8=;
+	s=korg; t=1722356736;
+	bh=r1KtwNsca5ZZYOAuXRcu0Q8tPPLj4ev4/JzmS5urC9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BCafPPehQ0SunxQgliqH/oVafawnJn5FxDLlsIn38kFbq1LyVSaqo2nAqPkx95cSc
-	 66B75IVCf1lRtlzlXlM40WPTezMjMixSJIlUYZqRpk4XYq9iIuxKN5nzGrt5FyKMDs
-	 Y4e+ru6nhH9LScCIYe8alp/Pd+93KKQEU7PEaaBA=
+	b=paW46zKANNPu2sD85YsOBHQ3MuRBkknNijityv3jnIYg3P0pwpZd3c/nnBueWSSI/
+	 xL4MVbjYnO8/R0e5O/qhZNOIJ2wgEqQg1YxaI6xX1X5IYMPFsKVnJNfD55lTpHRjOY
+	 r5NVzO6yYvRWMpd6YNmQYdSY1XCj9f9wBYzxDTD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miri Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 159/809] wifi: iwlwifi: mvm: dont skip link selection
-Date: Tue, 30 Jul 2024 17:40:35 +0200
-Message-ID: <20240730151730.883358705@linuxfoundation.org>
+Subject: [PATCH 6.1 199/440] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
+Date: Tue, 30 Jul 2024 17:47:12 +0200
+Message-ID: <20240730151623.645721925@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,51 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miri Korenblit <miriam.rachel.korenblit@intel.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 46144103ace2863e26f4e911aa45200753b7dbca ]
+[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
 
-If we exit EMLSR due to a IWL_MVM_ESR_EXIT*, a MLO scan followed by a
-link selection is scheduled with a delay of 30 seconds.
-If during that 30 seconds EMLSR was blocked and unblocked
-(IWL_MVM_ESR_BLOCKED*), we would still want to get the needed data from
-the MLO scan and select link accordingly, and not return immediately to
-EMLSR.
+drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
+output may be truncated writing between 1 and 11 bytes into a region of
+size 5 [-Werror=format-truncation=]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                                          ^~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                               ^~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
+between 12 and 22 bytes into a destination of size 15
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-Fixes: 2f33561ea8f9 ("wifi: iwlwifi: mvm: trigger link selection after exiting EMLSR")
-Signed-off-by: Miri Korenblit <miriam.rachel.korenblit@intel.com>
-Reviewed-by: Johannes Berg <johannes.berg@intel.com>
-Link: https://msgid.link/20240512152312.caab27a8dd8f.I63f67e213d5e05416f71513a8d914917d59aa44f@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
+Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/link.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/link.c b/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-index 6ec9a8e21a34e..b4a4d25b31cd2 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/link.c
-@@ -1082,6 +1082,13 @@ static void iwl_mvm_esr_unblocked(struct iwl_mvm *mvm,
+diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
+index 111fa88a3be44..9a439569ffcf3 100644
+--- a/drivers/infiniband/hw/mlx4/alias_GUID.c
++++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
+@@ -829,7 +829,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
  
- 	IWL_DEBUG_INFO(mvm, "EMLSR is unblocked\n");
- 
-+	/* We exited due to an EXIT reason, so MLO scan was scheduled already */
-+	if (mvmvif->last_esr_exit.reason &&
-+	    !(mvmvif->last_esr_exit.reason & IWL_MVM_BLOCK_ESR_REASONS)) {
-+		IWL_DEBUG_INFO(mvm, "Wait for MLO scan\n");
-+		return;
-+	}
-+
- 	/*
- 	 * If EMLSR was blocked for more than 30 seconds, or the last link
- 	 * selection decided to not enter EMLSR, trigger a new scan.
+ int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
+ {
+-	char alias_wq_name[15];
++	char alias_wq_name[22];
+ 	int ret = 0;
+ 	int i, j;
+ 	union ib_gid gid;
 -- 
 2.43.0
 
