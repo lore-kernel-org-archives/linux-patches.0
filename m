@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D783418801A;
-	Tue, 30 Jul 2024 16:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BBA18801A;
+	Tue, 30 Jul 2024 16:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358564; cv=none; b=B7SWybc8mIF0ThzLnePz3rlycZYMvIgnlm0SPtCkZ/l6usaOjI1l6hmntLB4D6W4mX71C0s/ObSLkBDFS8Mz4ErwLVsjyGrIisOX4KVP4bTlk3gTA7WRWD5A0hWfo0gz6ZHtxSkBGVNKNlTvsCYoeJMygftKNv0K7f0KUS829Lw=
+	t=1722358567; cv=none; b=p2gOQBFmq/gYUWPfUOsAph8TbK1TlwdbZgx5ziIT3MqCAb3UW3CGyNSHhSN1wRzkN+WiR8OcHsDgve85/5EmfBCiregjo9j5AD3Sadqq5ZzSrDhlC4jHMXT2noFvBe4D1oyaHpgyO/wsmcxCxuH8vWirRjbGBMKp8opNWggIQXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358564; c=relaxed/simple;
-	bh=YGSRIVnL6VOpGd2FOKkGYVoF0dPsSkB0uNdYBGRv+5g=;
+	s=arc-20240116; t=1722358567; c=relaxed/simple;
+	bh=WNL24qwYSq4A0MhYoNJU0qQeLyN2SbsPSB/fE6CyY7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8Kj6MhqlA5VqzfhfRE3yIMDFuI0eqEKr/u4R1ejyEB3fFuYWpn54sgmG9ju+d41kOdgLV2irn8P4x7qJcsJBE00icHW/hlTM5g4Ik4UqmgxuMkCeDLU0ifzMu/swLIPZFeBWwoHVkZptTzsw01rIDzLQ4+4p6R8Nuz7Cr4oH0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yO3ZFALk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BI22rLAmuH9YjmToPSHdfKH8Px2am9OrdHB5J3Y7haCiAlLV80nJHUzNcCwcuH+pkOetclr8HKQAN1KCX4EhdZnKBJ17KSSqtFyLzDMsuRbM6TqGS+V5ZL+35Xd2dtzF7vdHkcdacq+O/Txi2P9bd+JYDFzB8up6uMLCBDiBGq4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kHCGBEBN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yO3ZFALk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9E4C32782;
-	Tue, 30 Jul 2024 16:56:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kHCGBEBN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8437EC32782;
+	Tue, 30 Jul 2024 16:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358563;
-	bh=YGSRIVnL6VOpGd2FOKkGYVoF0dPsSkB0uNdYBGRv+5g=;
+	s=korg; t=1722358567;
+	bh=WNL24qwYSq4A0MhYoNJU0qQeLyN2SbsPSB/fE6CyY7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yO3ZFALkGHSvJN4EGHbCCUIH6fx5zWNUXThTbIFDRQ7Xeuj2RyFf3qRhBv7Fv3Tkf
-	 Gnox/jYIrHAJAPZCaKGok0H/BJV5ZG8ROu3pjIfwHiDJTLM2RtCZSDy6bqh3Yimp2z
-	 YKD0h/MzKJ5Y+bEsQsNsJAcSL2arEWDJM9L996YI=
+	b=kHCGBEBNLgpKWIgU+EN7IBXNIazvZzqy7I/wEo5SzACSXSi9RoeL9Z9V0Ctun0BU1
+	 K38tSjFoVEF8TmySwozk1J+4s6wP/YexvaVc3VioFGraygZxKJ0iIex5ufdsVosf+k
+	 muCrhssx/oK68lqLmnTkWdM3fUrccq0PEKJrKJMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 402/440] watchdog: rzg2l_wdt: Check return status of pm_runtime_put()
-Date: Tue, 30 Jul 2024 17:50:35 +0200
-Message-ID: <20240730151631.501522229@linuxfoundation.org>
+Subject: [PATCH 6.10 374/809] leds: flash: leds-qcom-flash: Test the correct variable in init
+Date: Tue, 30 Jul 2024 17:44:10 +0200
+Message-ID: <20240730151739.433120863@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,61 +47,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 471e45a33302852bf79bc140fe418782f50734f6 ]
+[ Upstream commit 87e552ad654554be73e62dd43c923bcee215287d ]
 
-pm_runtime_put() may return an error code. Check its return status.
+This code was passing the incorrect pointer to PTR_ERR_OR_ZERO() so it
+always returned success.  It should have been checking the array element
+instead of the array itself.
 
-Along with it the rzg2l_wdt_set_timeout() function was updated to
-propagate the result of rzg2l_wdt_stop() to its caller.
-
-Fixes: 2cbc5cd0b55f ("watchdog: Add Watchdog Timer driver for RZ/G2L")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20240531065723.1085423-5-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
+Fixes: 96a2e242a5dc ("leds: flash: Add driver to support flash LED module in QCOM PMICs")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/ZoWJS_epjIMCYITg@stanley.mountain
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/watchdog/rzg2l_wdt.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/leds/flash/leds-qcom-flash.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/watchdog/rzg2l_wdt.c b/drivers/watchdog/rzg2l_wdt.c
-index 78d904df5f1ea..9b2698a4fc1a1 100644
---- a/drivers/watchdog/rzg2l_wdt.c
-+++ b/drivers/watchdog/rzg2l_wdt.c
-@@ -144,9 +144,13 @@ static int rzg2l_wdt_start(struct watchdog_device *wdev)
- static int rzg2l_wdt_stop(struct watchdog_device *wdev)
- {
- 	struct rzg2l_wdt_priv *priv = watchdog_get_drvdata(wdev);
-+	int ret;
+diff --git a/drivers/leds/flash/leds-qcom-flash.c b/drivers/leds/flash/leds-qcom-flash.c
+index 7c99a30391716..bf70bf6fb0d59 100644
+--- a/drivers/leds/flash/leds-qcom-flash.c
++++ b/drivers/leds/flash/leds-qcom-flash.c
+@@ -505,6 +505,7 @@ qcom_flash_v4l2_init(struct device *dev, struct qcom_flash_led *led, struct fwno
+ 	struct qcom_flash_data *flash_data = led->flash_data;
+ 	struct v4l2_flash_config v4l2_cfg = { 0 };
+ 	struct led_flash_setting *intensity = &v4l2_cfg.intensity;
++	struct v4l2_flash *v4l2_flash;
  
- 	rzg2l_wdt_reset(priv);
--	pm_runtime_put(wdev->parent);
+ 	if (!(led->flash.led_cdev.flags & LED_DEV_CAP_FLASH))
+ 		return 0;
+@@ -523,9 +524,12 @@ qcom_flash_v4l2_init(struct device *dev, struct qcom_flash_led *led, struct fwno
+ 				LED_FAULT_OVER_TEMPERATURE |
+ 				LED_FAULT_TIMEOUT;
+ 
+-	flash_data->v4l2_flash[flash_data->leds_count] =
+-		v4l2_flash_init(dev, fwnode, &led->flash, &qcom_v4l2_flash_ops, &v4l2_cfg);
+-	return PTR_ERR_OR_ZERO(flash_data->v4l2_flash);
++	v4l2_flash = v4l2_flash_init(dev, fwnode, &led->flash, &qcom_v4l2_flash_ops, &v4l2_cfg);
++	if (IS_ERR(v4l2_flash))
++		return PTR_ERR(v4l2_flash);
 +
-+	ret = pm_runtime_put(wdev->parent);
-+	if (ret < 0)
-+		return ret;
- 
- 	return 0;
++	flash_data->v4l2_flash[flash_data->leds_count] = v4l2_flash;
++	return 0;
  }
-@@ -163,7 +167,10 @@ static int rzg2l_wdt_set_timeout(struct watchdog_device *wdev, unsigned int time
- 	 * to reset the module) so that it is updated with new timeout values.
- 	 */
- 	if (watchdog_active(wdev)) {
--		rzg2l_wdt_stop(wdev);
-+		ret = rzg2l_wdt_stop(wdev);
-+		if (ret)
-+			return ret;
-+
- 		ret = rzg2l_wdt_start(wdev);
- 	}
- 
+ # else
+ static int
 -- 
 2.43.0
 
