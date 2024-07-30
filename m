@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EC81898FB;
-	Tue, 30 Jul 2024 16:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE12189902;
+	Tue, 30 Jul 2024 16:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355826; cv=none; b=odY1/8+yBZFzNGEAnp2vHHeC2jrae2wQuo4sllF/BKPJtOIipzHBx6Q/bQigTm3PGYDgN128nYt5TU5YPB52ERNcgPWo66MMICM68XtQbU050rJZcNNIKxD2Zp0ieeO75vFkU5cnP2gvYa+IJpLbmGYcgWLYyXYDTENp1eB7SVQ=
+	t=1722355829; cv=none; b=AchPka8HjN9H+Q1D0/puBSzS61qgQUMEg/aaeMrymJr/grz0U4s3cbWct5BVQljpphxLvGFvyRzesgKAVNS/pluXFUBdY/JkvL/ygmO/+5q19Zi3PSmAEjpFEby+xE5CMLv5Jb0EFAue2jg5aRCci9aAS+1jSk+mZRCs3TjnHvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355826; c=relaxed/simple;
-	bh=nATbWaakCyp+NlmFb44A0BF+qxqdwaVoBrqS8+gMzXc=;
+	s=arc-20240116; t=1722355829; c=relaxed/simple;
+	bh=itqwuvuZZeYG6jEYho+F45xCOmyPapLBLGQZAS5m1Gs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KEpOMxC3WmxJ5J4ViPw1kHqbuHFjCdU9sjPVi2rgwKfFIf09gK1Gxk0F7FI8grNxAsBn1B1crMdhL+1ASpw5LoVm9G1b0YKKEbwOAauydnpSltamNA8zBtZdr806mbEPqf2agJmQUX/v0WfmUUErHTqF3vgSOelVnFX4xAQURIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2niGnfMe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IbRKOQiSqBuam7+xKg3ApuCsZc91bkNVBntbyghMjiWdezP/f49xfdrra1BJTg1jC90yMIG0cc39wtUgfARuY6gIy8nzhwgB/EVbIfCRxH2n6W8eAA5AR+EkFQhmLdMLn+PuGTYJM33MkkYE40dDUQaSLTL7VNbO/3gZF1bh2jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rus7w9cD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2niGnfMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8D9C32782;
-	Tue, 30 Jul 2024 16:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rus7w9cD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BD6AC32782;
+	Tue, 30 Jul 2024 16:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355826;
-	bh=nATbWaakCyp+NlmFb44A0BF+qxqdwaVoBrqS8+gMzXc=;
+	s=korg; t=1722355829;
+	bh=itqwuvuZZeYG6jEYho+F45xCOmyPapLBLGQZAS5m1Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2niGnfMe6C7ATVVbRkmGRIaT/yzgYe7MRahDeemJS2IsnpZlVTxSuScDp5Htc9Knc
-	 ZizjW5wsaq+zQ/TbiIO1HywnDNOpZQOPmBSxihExipsj8Y9G9j2C9OgvyeYzbhO4yt
-	 0PxIORk+CrKGGdcXWBzqAIpES0wbY4mtPXDeot9A=
+	b=rus7w9cD2qFi1qp44THQdo1CinNbyeKHf5MKM5TERmM7hK1rT6g/8MjwuNUvmf52Z
+	 0iFa8c516N8zY+pT+Q1aE8Vh1IkXmD5EdJLwCNSoYgE55lLLUAtbeopVsJmxmtT4zo
+	 TpM6CaZ22vWUEyEVxPs3QJB+G/fukAaJw7JBwDbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 092/809] arm64: dts: rockchip: Increase VOP clk rate on RK3328
-Date: Tue, 30 Jul 2024 17:39:28 +0200
-Message-ID: <20240730151728.272713348@linuxfoundation.org>
+Subject: [PATCH 6.1 134/440] drm/panel: boe-tv101wum-nl6: If prepare fails, disable GPIO before regulators
+Date: Tue, 30 Jul 2024 17:46:07 +0200
+Message-ID: <20240730151621.117125079@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,44 +49,49 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 0f2ddb128fa20f8441d903285632f2c69e90fae1 ]
+[ Upstream commit 587c48f622374e5d47b1d515c6006a4df4dee882 ]
 
-The VOP on RK3328 needs to run at a higher rate in order to produce a
-proper 3840x2160 signal.
+The enable GPIO should clearly be set low before turning off
+regulators. That matches both the inverse order that things were
+enabled and also the order in unprepare().
 
-Change to use 300MHz for VIO clk and 400MHz for VOP clk, same rates used
-by vendor 4.4 kernel.
-
-Fixes: 52e02d377a72 ("arm64: dts: rockchip: add core dtsi file for RK3328 SoCs")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Link: https://lore.kernel.org/r/20240615170417.3134517-2-jonas@kwiboo.se
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328.dtsi b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-index 07dcc949b8997..b01efd6d042c8 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3328.dtsi
-@@ -850,8 +850,8 @@ cru: clock-controller@ff440000 {
- 			<0>, <24000000>,
- 			<24000000>, <24000000>,
- 			<15000000>, <15000000>,
--			<100000000>, <100000000>,
--			<100000000>, <100000000>,
-+			<300000000>, <100000000>,
-+			<400000000>, <100000000>,
- 			<50000000>, <100000000>,
- 			<100000000>, <100000000>,
- 			<50000000>, <50000000>,
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index 1c008bd9102ff..b26c4a09d0912 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -1292,13 +1292,13 @@ static int boe_panel_prepare(struct drm_panel *panel)
+ 	return 0;
+ 
+ poweroff:
++	gpiod_set_value(boe->enable_gpio, 0);
+ 	regulator_disable(boe->avee);
+ poweroffavdd:
+ 	regulator_disable(boe->avdd);
+ poweroff1v8:
+ 	usleep_range(5000, 7000);
+ 	regulator_disable(boe->pp1800);
+-	gpiod_set_value(boe->enable_gpio, 0);
+ 
+ 	return ret;
+ }
 -- 
 2.43.0
 
