@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB3D1D3634;
-	Tue, 30 Jul 2024 16:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6B161D47B5;
+	Tue, 30 Jul 2024 16:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355261; cv=none; b=RCYPWPlUJXDi6ZweKldvnHigegFCo9opFM3ckPBZh1sefvvz/9nr3LXwqrdqOF/fvPyiYCgAiRJcprV9Y0vmbCfEPNvc9TtSgA5F4Jr4jasKtj+nRMh6SFCli7rS7aYwM3TAXDkUIzYk2EHWWtSB1se8lwYW81xQX84BjCq6/Q0=
+	t=1722355264; cv=none; b=fM/xCdG+BhRfp94HSV3zg+6wiGfIRNQAY3PGmbGFvZdhLl9zT/fp8E5NBAXv7iweXkRwP5ZZ68WC+zOU9boxPg6G/kdGx9yHSrZCPGNDBKQJAODpaN3GutNA7740JQS9J1joAnV32Eh2P8go4JmHQJtXoZRtea0MW79EKN59KTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355261; c=relaxed/simple;
-	bh=1ZY839CPLnqqr+S0c4VJ1GZjPCLHzBK7Pq/rgTu/ylM=;
+	s=arc-20240116; t=1722355264; c=relaxed/simple;
+	bh=85oQ8eM+XxZcofLKmTPKx0YizaxquY4fjkaCl8vfu/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qo/nRRI+fgLeKEAaA6TjUCms4oF7QfAki9zqb7KwHOhY5THGLTwPNlfQjk9csMTpbSbpz9bA0nLHEn0FuQhDRnkh14gSAvE9aIvfnoMaSD9VPDqyq2bApFgnw6guh6icbEnV0L1G/j55/avF62wU6p/usNPMowN7IYFhiA1kvCs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q077XYTe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mnjqkOLE30LEETRI7KOy08CHkv99EaZmzTTfCP4Iv/uWxKtnLv6ziTabvaMOMPeeqi/OmDTwXIGCSYBSMgk1IEsD58ic8VOvrOo8RDyDUMQCS9ErxdZgGAWymqfdEAiaskZHAaYMk28mYvAN55XARSrRHZtYuZrZLK1sZBmR+Cw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vz2XLS7t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q077XYTe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42B7C32782;
-	Tue, 30 Jul 2024 16:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vz2XLS7t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01350C32782;
+	Tue, 30 Jul 2024 16:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355261;
-	bh=1ZY839CPLnqqr+S0c4VJ1GZjPCLHzBK7Pq/rgTu/ylM=;
+	s=korg; t=1722355264;
+	bh=85oQ8eM+XxZcofLKmTPKx0YizaxquY4fjkaCl8vfu/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q077XYTeWvC6BdbsIpOj/jxBSnMqkKKtvri5ll8jOvR/oaa7hnL7VHu8//P9ml5HJ
-	 LYYIlmq9f7d7VXU3YdUaR5rX0ldDh1V1TSWTWdyyVF012jboMAO7WdEEMDRWlgqM+R
-	 FUNBM3aAsKGGiZZ5Rc7HhvdCZ2X/cPcr9o/tM13Y=
+	b=Vz2XLS7tOXVce1X3mKW+cC8RhA9nE/72O487FgqxmfN9ampEGe6HRxN6fa7fXKQac
+	 zSakO2wsAqc7jWv4FnrMH4q+SzPexN8/jrEOfKgt5sLOu2E1KZJQ6oZGgFC8mKWDIq
+	 e3j6VUkOHdHUr3VRaX/dqk9tISaqQultBL+CxGLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 042/568] soc: qcom: rpmh-rsc: Ensure irqs arent disabled by rpmh_rsc_send_data() callers
-Date: Tue, 30 Jul 2024 17:42:29 +0200
-Message-ID: <20240730151641.482608400@linuxfoundation.org>
+Subject: [PATCH 6.10 035/809] nvmet-auth: fix nvmet_auth hash error handling
+Date: Tue, 30 Jul 2024 17:38:31 +0200
+Message-ID: <20240730151726.039906476@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+References: <20240730151724.637682316@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,85 +49,91 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit e43111f52b9ec5c2d700f89a1d61c8d10dc2d9e9 ]
+[ Upstream commit 89f58f96d1e2357601c092d85b40a2109cf25ef3 ]
 
-Dan pointed out that Smatch is concerned about this code because it uses
-spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
-irqs before going to sleep. The comment above the function says it
-should be called with interrupts enabled, but we simply hope that's true
-without really confirming that. Let's add a might_sleep() here to
-confirm that interrupts and preemption aren't disabled. Once we do that,
-we can change the lock to be non-saving, spin_lock_irq(), to clarify
-that we don't expect irqs to be disabled. If irqs are disabled by
-callers they're going to be enabled anyway in the wait_event_lock_irq()
-call which would be bad.
+If we fail to call nvme_auth_augmented_challenge, or fail to kmalloc
+for shash, we should free the memory allocation for challenge, so add
+err path out_free_challenge to fix the memory leak.
 
-This should make Smatch happier and find bad callers faster with the
-might_sleep(). We can drop the WARN_ON() in the caller because we have
-the might_sleep() now, simplifying the code.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain
-Fixes: 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free")
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240509184129.3924422-1-swboyd@chromium.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: 7a277c37d352 ("nvmet-auth: Diffie-Hellman key exchange support")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 7 ++++---
- drivers/soc/qcom/rpmh.c     | 1 -
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvme/target/auth.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index daf64be966fe1..dfc2d4e38fa9b 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -646,13 +646,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- {
- 	struct tcs_group *tcs;
- 	int tcs_id;
--	unsigned long flags;
-+
-+	might_sleep();
- 
- 	tcs = get_tcs_for_msg(drv, msg);
- 	if (IS_ERR(tcs))
- 		return PTR_ERR(tcs);
- 
--	spin_lock_irqsave(&drv->lock, flags);
-+	spin_lock_irq(&drv->lock);
- 
- 	/* Wait forever for a free tcs. It better be there eventually! */
- 	wait_event_lock_irq(drv->tcs_wait,
-@@ -670,7 +671,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- 		write_tcs_reg_sync(drv, drv->regs[RSC_DRV_CMD_ENABLE], tcs_id, 0);
- 		enable_tcs_irq(drv, tcs_id, true);
- 	}
--	spin_unlock_irqrestore(&drv->lock, flags);
-+	spin_unlock_irq(&drv->lock);
- 
- 	/*
- 	 * These two can be done after the lock is released because:
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 08e09642d7f55..62dfc7df93541 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -183,7 +183,6 @@ static int __rpmh_write(const struct device *dev, enum rpmh_state state,
+diff --git a/drivers/nvme/target/auth.c b/drivers/nvme/target/auth.c
+index 7d2633940f9b8..8bc3f431c77f6 100644
+--- a/drivers/nvme/target/auth.c
++++ b/drivers/nvme/target/auth.c
+@@ -314,7 +314,7 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 						    req->sq->dhchap_c1,
+ 						    challenge, shash_len);
+ 		if (ret)
+-			goto out_free_response;
++			goto out_free_challenge;
  	}
  
- 	if (state == RPMH_ACTIVE_ONLY_STATE) {
--		WARN_ON(irqs_disabled());
- 		ret = rpmh_rsc_send_data(ctrlr_to_drv(ctrlr), &rpm_msg->msg);
- 	} else {
- 		/* Clean up our call by spoofing tx_done */
+ 	pr_debug("ctrl %d qid %d host response seq %u transaction %d\n",
+@@ -325,7 +325,7 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 			GFP_KERNEL);
+ 	if (!shash) {
+ 		ret = -ENOMEM;
+-		goto out_free_response;
++		goto out_free_challenge;
+ 	}
+ 	shash->tfm = shash_tfm;
+ 	ret = crypto_shash_init(shash);
+@@ -361,9 +361,10 @@ int nvmet_auth_host_hash(struct nvmet_req *req, u8 *response,
+ 		goto out;
+ 	ret = crypto_shash_final(shash, response);
+ out:
++	kfree(shash);
++out_free_challenge:
+ 	if (challenge != req->sq->dhchap_c1)
+ 		kfree(challenge);
+-	kfree(shash);
+ out_free_response:
+ 	nvme_auth_free_key(transformed_key);
+ out_free_tfm:
+@@ -427,14 +428,14 @@ int nvmet_auth_ctrl_hash(struct nvmet_req *req, u8 *response,
+ 						    req->sq->dhchap_c2,
+ 						    challenge, shash_len);
+ 		if (ret)
+-			goto out_free_response;
++			goto out_free_challenge;
+ 	}
+ 
+ 	shash = kzalloc(sizeof(*shash) + crypto_shash_descsize(shash_tfm),
+ 			GFP_KERNEL);
+ 	if (!shash) {
+ 		ret = -ENOMEM;
+-		goto out_free_response;
++		goto out_free_challenge;
+ 	}
+ 	shash->tfm = shash_tfm;
+ 
+@@ -471,9 +472,10 @@ int nvmet_auth_ctrl_hash(struct nvmet_req *req, u8 *response,
+ 		goto out;
+ 	ret = crypto_shash_final(shash, response);
+ out:
++	kfree(shash);
++out_free_challenge:
+ 	if (challenge != req->sq->dhchap_c2)
+ 		kfree(challenge);
+-	kfree(shash);
+ out_free_response:
+ 	nvme_auth_free_key(transformed_key);
+ out_free_tfm:
 -- 
 2.43.0
 
