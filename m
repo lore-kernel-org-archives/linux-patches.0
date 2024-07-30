@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720221A76A1;
-	Tue, 30 Jul 2024 17:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36A71A76A1;
+	Tue, 30 Jul 2024 17:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360291; cv=none; b=jIGKTuaM0mAgq42hWCWT3lHHBtD6WjxHCOTP5icFfKrapjKCs/y6X0T76gQsdgg+daF8AFYWRZV81rPmV+cuo2qzJ1lLKVXlKhxXyQT0taiuj0YVFMWXTzuPeOAcUUolD6aECI+80JDSFS6KkEJkvx5kpJbWirJF4JFpwPrA3A8=
+	t=1722360294; cv=none; b=m7szMm9Vsno1hpjDhoXewpVrev5Pi+vmwKG0IUhwp/3i3HtYOoRo6a9FmE0Vf4wQeVx5Rh6KmDira2QC9kt4/tOWuUFofgB6aZSEPpfVOIO5HE0v1pP7J1e+drlpses0SznlVISHT+duWdCNoC6iEmUv7Rn3/bjbEf5wXnY0abQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360291; c=relaxed/simple;
-	bh=V19M6ukeoWiV4cbITcL6xmaovxb67XZZFq5eyd/47eY=;
+	s=arc-20240116; t=1722360294; c=relaxed/simple;
+	bh=AT6ueBOuEspHWO+uUOYVMYv5vtUIf4uZ1hMpB28eMOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lOee67uPnCK9l8h+64sH4P46ChvX5dgutKNQwzZmQQCMmeiC9MoMKB7zg29lDGaNn5d1cZ+W+avYyX2PBJhaROwht2Ce4DWtWMHdzmZxp82L2LLmpSPizQ3tu2IKtCbq4m7O4pC0oN2omOZTXwT0YManfUqaN9fm/I55T+9VNXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dTaEIkdU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KW8w1p5irfXdc/M1hD963XEhhPMtaGPlVh06Gn1hlMH+0n2GddcdUOWN56J+UoGlPMUDZ3EsNkRtD4JH2fiACqG+215S67CZeBNOq8pztTaR7w5CXHXDtSDSgXnfRk8t+AMjHLBO54Wjkn7ERj/xiWNR5cem78OW0KL2DeauFqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ma9jtMIh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dTaEIkdU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6C37C32782;
-	Tue, 30 Jul 2024 17:24:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ma9jtMIh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21F7EC32782;
+	Tue, 30 Jul 2024 17:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360291;
-	bh=V19M6ukeoWiV4cbITcL6xmaovxb67XZZFq5eyd/47eY=;
+	s=korg; t=1722360294;
+	bh=AT6ueBOuEspHWO+uUOYVMYv5vtUIf4uZ1hMpB28eMOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTaEIkdUSPz/2+zp+XZyK2gZX9c5Wvo0cLnsMzq9qjyj3+23b1ExonzJUMwBrv8px
-	 amjvmMqzcSw2TN5aEhKoIA191UK6kalFddqoVQ3ztnE98HnJmJQ5ZpBjKPAC3Y9V5a
-	 HPpL8zHMhykufnTVGs+Wf6BjTRJB+FWYzZTrZxoQ=
+	b=Ma9jtMIhyNipE2Nu6ofaa8KhUxxAx6cxmE21bemAn6wzget6RKnrMMDd6o9cHA5eu
+	 4nhQHg8fJofSV7CW3STikRjyb2olu78fZ/lGxSCIjWRdhzGtJ5O8UvDEsvOU5ZfVg3
+	 daiRwyaFwjNGDkFNDCdhZK2PTSpH6TicVQaBB84E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 627/809] ALSA: ump: Dont update FB name for static blocks
-Date: Tue, 30 Jul 2024 17:48:23 +0200
-Message-ID: <20240730151749.607687478@linuxfoundation.org>
+	syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.10 654/809] f2fs: fix return value of f2fs_convert_inline_inode()
+Date: Tue, 30 Jul 2024 17:48:50 +0200
+Message-ID: <20240730151750.710472703@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -49,38 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Chao Yu <chao@kernel.org>
 
-commit 9a4ab167cfb1dea1df0c0c948205a62c7eb3b85b upstream.
+commit a8eb3de28e7a365690c61161e7a07a4fc7c60bbf upstream.
 
-When a device tries to update the FB name string even if its Endpoint
-is declared as static, we should skip it, just already done for the FB
-info update reply.
+If device is readonly, make f2fs_convert_inline_inode()
+return EROFS instead of zero, otherwise it may trigger
+panic during writeback of inline inode's dirty page as
+below:
 
-Fixes: 37e0e14128e0 ("ALSA: ump: Support UMP Endpoint and Function Block parsing")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240722135929.8612-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ f2fs_write_single_data_page+0xbb6/0x1e90 fs/f2fs/data.c:2888
+ f2fs_write_cache_pages fs/f2fs/data.c:3187 [inline]
+ __f2fs_write_data_pages fs/f2fs/data.c:3342 [inline]
+ f2fs_write_data_pages+0x1efe/0x3a90 fs/f2fs/data.c:3369
+ do_writepages+0x359/0x870 mm/page-writeback.c:2634
+ filemap_fdatawrite_wbc+0x125/0x180 mm/filemap.c:397
+ __filemap_fdatawrite_range mm/filemap.c:430 [inline]
+ file_write_and_wait_range+0x1aa/0x290 mm/filemap.c:788
+ f2fs_do_sync_file+0x68a/0x1ae0 fs/f2fs/file.c:276
+ generic_write_sync include/linux/fs.h:2806 [inline]
+ f2fs_file_write_iter+0x7bd/0x24e0 fs/f2fs/file.c:4977
+ call_write_iter include/linux/fs.h:2114 [inline]
+ new_sync_write fs/read_write.c:497 [inline]
+ vfs_write+0xa72/0xc90 fs/read_write.c:590
+ ksys_write+0x1a0/0x2c0 fs/read_write.c:643
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf5/0x240 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Cc: stable@vger.kernel.org
+Reported-by: syzbot+848062ba19c8782ca5c8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-f2fs-devel/000000000000d103ce06174d7ec3@google.com
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/ump.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/f2fs/inline.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/sound/core/ump.c
-+++ b/sound/core/ump.c
-@@ -806,6 +806,13 @@ static int ump_handle_fb_name_msg(struct
- 	if (!fb)
- 		return -ENODEV;
+--- a/fs/f2fs/inline.c
++++ b/fs/f2fs/inline.c
+@@ -203,8 +203,10 @@ int f2fs_convert_inline_inode(struct ino
+ 	struct page *ipage, *page;
+ 	int err = 0;
  
-+	if (ump->parsed &&
-+	    (ump->info.flags & SNDRV_UMP_EP_INFO_STATIC_BLOCKS)) {
-+		ump_dbg(ump, "Skipping static FB name update (blk#%d)\n",
-+			fb->info.block_id);
-+		return 0;
-+	}
+-	if (!f2fs_has_inline_data(inode) ||
+-			f2fs_hw_is_readonly(sbi) || f2fs_readonly(sbi->sb))
++	if (f2fs_hw_is_readonly(sbi) || f2fs_readonly(sbi->sb))
++		return -EROFS;
 +
- 	ret = ump_append_string(ump, fb->info.name, sizeof(fb->info.name),
- 				buf->raw, 3);
- 	/* notify the FB name update to sequencer, too */
++	if (!f2fs_has_inline_data(inode))
+ 		return 0;
+ 
+ 	err = f2fs_dquot_initialize(inode);
 
 
