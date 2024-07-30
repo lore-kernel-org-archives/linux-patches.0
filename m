@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBB7187FF6;
-	Tue, 30 Jul 2024 17:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B4318801A;
+	Tue, 30 Jul 2024 17:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358921; cv=none; b=QX6nbGRNIZYqwRihT4+DpRnJruOsX9HpKgqC00ZSXMpt5Mh2wsW9popBg1ug+oI1lwSD2eElVzlgF1V94VGYcT/lLA0M+jprxCq35VxJGm4tuq2OTEDanlA2DH6VczGAicF3mqtoXIbEsdha75zp8XsUVDaQ7wbL/1J8LK2pozQ=
+	t=1722358924; cv=none; b=cxDyaXxhdJ2RnHKO8kLx6dmhWYugGx1QJcb69L7fyanKRqcJ8hDOuB5UZwEwtI+UMUzZCtx64nr/LQkpxKSIqxtABmd7BH/RAVvAJPWL0746H0imbnNLzQ7uBltXyErLSrMeaxQUc0KhYgzNpl1IvktHu+SANMbnrHxNdO6s8Po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358921; c=relaxed/simple;
-	bh=FJbW8NKdUQqy4tGY3sMVqMc+caPb9LkXNpd8YlQx2sM=;
+	s=arc-20240116; t=1722358924; c=relaxed/simple;
+	bh=rLhkJrm5LU49SX6bM3Nx9X6Zj2bV7Dl1Y+vwbGRVQhk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TJw3T7lVxEudBFJiedUTL4MiFFoL10m//36gRe9QpgspLUVQh5dkxmTAYCL4RwTiEy5fx2Pf7gq5v6+88m7vy+1w6r04eCBqMW647JFoStyyRDUNHGh56kIHz4mvkBCaYUwv3CckQCSvALdAuPqWIZKjTlJiAPkjbNFv9de/+6k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9dDzswR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XluzJYi7rJRstPCzWqHCDB1Rl6OrJbexYTZB5EN4CiAj9WD+nKWEmoAuLEfeNFXPd3jtZwdjWQcvhJvPZI/rA6VMO08telzntZ1LJgU+isLmJPOPv3ARtoTsMaHEBzPgrzuMnQtUXd4OCmNYpeVbBQpHsVS1clUYVnCM7S/W6Uk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rCetgRG9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9dDzswR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB951C32782;
-	Tue, 30 Jul 2024 17:02:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rCetgRG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC42C32782;
+	Tue, 30 Jul 2024 17:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358921;
-	bh=FJbW8NKdUQqy4tGY3sMVqMc+caPb9LkXNpd8YlQx2sM=;
+	s=korg; t=1722358924;
+	bh=rLhkJrm5LU49SX6bM3Nx9X6Zj2bV7Dl1Y+vwbGRVQhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9dDzswRt3asx9fHhbuzNQEWe8yFjXA59xcALcpQacrmhBupL77d24FDgbUTY88Jc
-	 cG/DqIa8kWL73kASmtA80hZnk32AfN1vZ2uTnrLhD5gZNJ8i8E5e4w7qS1bhOCyeRA
-	 sGngQLbRij1DFwF0M40VprfuLGF5gLo0rhav2be4=
+	b=rCetgRG9p8gXF3u1XBs0cV/ctP5ULnsOBNz5O2CZ/ogAP4488RZjOLpxnD0+KFGh+
+	 9/eJe3d9U9p6ufGsrnYhQhGimdHq3aJ/+Xq1i/g62Eb1kaQcB6Q2Bsa05wfvZBq6kW
+	 tJLkTA6u0qEUdTEyXPmjhesJeRAffpNaRJ7V0sRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 408/809] usb: typec-mux: nb7vpq904m: unregister typec switch on probe error and remove
-Date: Tue, 30 Jul 2024 17:44:44 +0200
-Message-ID: <20240730151740.804965475@linuxfoundation.org>
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Subject: [PATCH 6.6 409/568] media: imx-pxp: Fix ERR_PTR dereference in pxp_probe()
+Date: Tue, 30 Jul 2024 17:48:36 +0200
+Message-ID: <20240730151655.855368195@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,63 +46,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 74b64e760ee3433c0f8d95715038c869bcddacf7 ]
+commit 57e9ce68ae98551da9c161aaab12b41fe8601856 upstream.
 
-Add the missing call to typec_switch_put() when probe fails and
-the nb7vpq904m_remove() call is called.
+devm_regmap_init_mmio() can fail, add a check and bail out in case of
+error.
 
-Fixes: 348359e7c232 ("usb: typec: nb7vpq904m: Add an error handling path in nb7vpq904m_probe()")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Fixes: 88d8f3ac9c67 ("usb: typec: add support for the nb7vpq904m Type-C Linear Redriver")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20240606-topic-sm8x50-upstream-retimer-broadcast-mode-v2-2-c6f6eae479c3@linaro.org
+Fixes: 4e5bd3fdbeb3 ("media: imx-pxp: convert to regmap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240514095038.3464191-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/mux/nb7vpq904m.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/platform/nxp/imx-pxp.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/usb/typec/mux/nb7vpq904m.c b/drivers/usb/typec/mux/nb7vpq904m.c
-index b17826713753a..9fe4ce6f62ac0 100644
---- a/drivers/usb/typec/mux/nb7vpq904m.c
-+++ b/drivers/usb/typec/mux/nb7vpq904m.c
-@@ -413,7 +413,7 @@ static int nb7vpq904m_probe(struct i2c_client *client)
+--- a/drivers/media/platform/nxp/imx-pxp.c
++++ b/drivers/media/platform/nxp/imx-pxp.c
+@@ -1805,6 +1805,9 @@ static int pxp_probe(struct platform_dev
+ 		return PTR_ERR(mmio);
+ 	dev->regmap = devm_regmap_init_mmio(&pdev->dev, mmio,
+ 					    &pxp_regmap_config);
++	if (IS_ERR(dev->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(dev->regmap),
++				     "Failed to init regmap\n");
  
- 	ret = nb7vpq904m_parse_data_lanes_mapping(nb7);
- 	if (ret)
--		return ret;
-+		goto err_switch_put;
- 
- 	ret = regulator_enable(nb7->vcc_supply);
- 	if (ret)
-@@ -456,6 +456,9 @@ static int nb7vpq904m_probe(struct i2c_client *client)
- 	gpiod_set_value(nb7->enable_gpio, 0);
- 	regulator_disable(nb7->vcc_supply);
- 
-+err_switch_put:
-+	typec_switch_put(nb7->typec_switch);
-+
- 	return ret;
- }
- 
-@@ -469,6 +472,8 @@ static void nb7vpq904m_remove(struct i2c_client *client)
- 	gpiod_set_value(nb7->enable_gpio, 0);
- 
- 	regulator_disable(nb7->vcc_supply);
-+
-+	typec_switch_put(nb7->typec_switch);
- }
- 
- static const struct i2c_device_id nb7vpq904m_table[] = {
--- 
-2.43.0
-
+ 	irq = platform_get_irq(pdev, 0);
+ 	if (irq < 0)
 
 
