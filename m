@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D131A619E;
-	Tue, 30 Jul 2024 16:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956481A619E;
+	Tue, 30 Jul 2024 16:52:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722358354; cv=none; b=BOEkPhEdlWAF3KnD57HkQvrOczscoHxv9X7Kr5CtGg1o2hycRfZxAXKXlzJvA+wE12s7/Ny9AfNrQip5eIwg2wDbtbL59vrUTV0H97k/GctpfXTlTNIyHbMqNeRxIv7nv4LshvJeSkg4RIq4DCU20N+qNovwa125vH36tn92E5w=
+	t=1722358357; cv=none; b=HoV3RyWhd+Vi+PK94bs/wi4sNfj8K0wx5lElkDb3sIDl+S/Ai1q+Z5zi1YhNS43NrTVF2gXY4be7mehAqj9zXiNQwBtGuC39jZtUbIPxuXZraNqeemVDc+55P9E7f5uxiIe8Yb0vUi4Tts4a5b4m5CURh3BMsQ+XrEp0zWXkqMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722358354; c=relaxed/simple;
-	bh=D3yevytANEwQe6x4oE720RuexFSZN9folyPdDgidZK0=;
+	s=arc-20240116; t=1722358357; c=relaxed/simple;
+	bh=kHxy8q3tli3S824rO+hWbL35/AAhsKaBZAYr2nvWQG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oR2CkPRKkmoonEasLNtvcw4clj375clU6ydgwOKi3yn/Fz6yVTS3YyZ5VmpbDGY/HNtLLdVU7M006+NWn778AmPqoss+P6IMqO+yBFpF4QZuBJo9iQ5k2nQ2uyBCBYRDyqG/zyI/nJBFkfiyBO5Ygb0ppDRIVKF6gHbNs8eS4Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IifFBoWm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oE9n11A7XGUwzS021sih9XpEDuw/obktcfU5vyzCs4YqNk8ocwGnEc299FYos1WQrVwx0SfuekU4a4qunDNBNvVhoH3mN4F7Z9daGhKlH+uPmjil0vbLLN2KmXk4AdfTHwAEYaGiBbdQAxtraX+G6wKwRIrVdN4H/KNXPHuogJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLy8iPbh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IifFBoWm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21F1C32782;
-	Tue, 30 Jul 2024 16:52:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLy8iPbh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C76C4AF0C;
+	Tue, 30 Jul 2024 16:52:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722358354;
-	bh=D3yevytANEwQe6x4oE720RuexFSZN9folyPdDgidZK0=;
+	s=korg; t=1722358357;
+	bh=kHxy8q3tli3S824rO+hWbL35/AAhsKaBZAYr2nvWQG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IifFBoWmOs4L257bObUcWVeCUx9+ZddrCJM0HJi6TambFdP6GJklDBOFjuD3UkvIC
-	 QdTAQ8rlAeSOmWcfHkp3ZpeBBwEZbWJGA9E0gEAgbeFGl1M4cuI50LzTl1bME/2+q1
-	 a5K6hmixAkLi5EdZiowmza4OnKq8XYGTSbz5NSQ0=
+	b=kLy8iPbhQvGE6Bve9NpnbUey0l+yXF3xDgfEtKWvTYpjqMyXgJLKhLO46FR7ZcL/T
+	 NX4v9bqWItsQ/78rH/k2z0CXu/b09Hzy5WCoE3f85X4VfBCGbaLcjAS5xKBg1xPnxr
+	 zYXOqma9BRQaAi7al4LZdi//YUGe2V28QCeBrGHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linke li <lilinke99@qq.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 354/568] sbitmap: use READ_ONCE to access map->word
-Date: Tue, 30 Jul 2024 17:47:41 +0200
-Message-ID: <20240730151653.702927655@linuxfoundation.org>
+	Hao Sun <sunhao.th@gmail.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Yonghong Song <yhs@fb.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot+08ba1e474d350b613604@syzkaller.appspotmail.com,
+	=?UTF-8?q?Sergio=20Gonz=C3=A1lez=20Collado?= <sergio.collado@gmail.com>
+Subject: [PATCH 6.1 383/440] bpf: Synchronize dispatcher update with bpf_dispatcher_xdp_func
+Date: Tue, 30 Jul 2024 17:50:16 +0200
+Message-ID: <20240730151630.767677214@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -45,63 +49,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: linke li <lilinke99@qq.com>
+From: Jiri Olsa <jolsa@kernel.org>
 
-[ Upstream commit 6ad0d7e0f4b68f87a98ea2b239123b7d865df86b ]
+commit 4121d4481b72501aa4d22680be4ea1096d69d133 upstream.
 
-In __sbitmap_queue_get_batch(), map->word is read several times, and
-update atomically using atomic_long_try_cmpxchg(). But the first two read
-of map->word is not protected.
+Hao Sun reported crash in dispatcher image [1].
 
-This patch moves the statement val = READ_ONCE(map->word) forward,
-eliminating unprotected accesses to map->word within the function.
-It is aimed at reducing the number of benign races reported by KCSAN in
-order to focus future debugging effort on harmful races.
+Currently we don't have any sync between bpf_dispatcher_update and
+bpf_dispatcher_xdp_func, so following race is possible:
 
-Signed-off-by: linke li <lilinke99@qq.com>
-Link: https://lore.kernel.org/r/tencent_0B517C25E519D3D002194E8445E86C04AD0A@qq.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 72d04bdcf3f7 ("sbitmap: fix io hung due to race on sbitmap_word::cleared")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ cpu 0:                               cpu 1:
+
+ bpf_prog_run_xdp
+   ...
+   bpf_dispatcher_xdp_func
+     in image at offset 0x0
+
+                                      bpf_dispatcher_update
+                                        update image at offset 0x800
+                                      bpf_dispatcher_update
+                                        update image at offset 0x0
+
+     in image at offset 0x0 -> crash
+
+Fixing this by synchronizing dispatcher image update (which is done
+in bpf_dispatcher_update function) with bpf_dispatcher_xdp_func that
+reads and execute the dispatcher image.
+
+Calling synchronize_rcu after updating and installing new image ensures
+that readers leave old image before it's changed in the next dispatcher
+update. The update itself is locked with dispatcher's mutex.
+
+The bpf_prog_run_xdp is called under local_bh_disable and synchronize_rcu
+will wait for it to leave [2].
+
+[1] https://lore.kernel.org/bpf/Y5SFho7ZYXr9ifRn@krava/T/#m00c29ece654bc9f332a17df493bbca33e702896c
+[2] https://lore.kernel.org/bpf/0B62D35A-E695-4B7A-A0D4-774767544C1A@gmail.com/T/#mff43e2c003ae99f4a38f353c7969be4c7162e877
+
+Reported-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Yonghong Song <yhs@fb.com>
+Acked-by: Paul E. McKenney <paulmck@kernel.org>
+Link: https://lore.kernel.org/r/20221214123542.1389719-1-jolsa@kernel.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-by: syzbot+08ba1e474d350b613604@syzkaller.appspotmail.com
+Signed-off-by: Sergio González Collado <sergio.collado@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/sbitmap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/bpf/dispatcher.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/lib/sbitmap.c b/lib/sbitmap.c
-index d0a5081dfd122..d1247f34d584e 100644
---- a/lib/sbitmap.c
-+++ b/lib/sbitmap.c
-@@ -499,18 +499,18 @@ unsigned long __sbitmap_queue_get_batch(struct sbitmap_queue *sbq, int nr_tags,
- 		struct sbitmap_word *map = &sb->map[index];
- 		unsigned long get_mask;
- 		unsigned int map_depth = __map_depth(sb, index);
-+		unsigned long val;
+--- a/kernel/bpf/dispatcher.c
++++ b/kernel/bpf/dispatcher.c
+@@ -125,6 +125,11 @@ static void bpf_dispatcher_update(struct
  
- 		sbitmap_deferred_clear(map);
--		if (map->word == (1UL << (map_depth - 1)) - 1)
-+		val = READ_ONCE(map->word);
-+		if (val == (1UL << (map_depth - 1)) - 1)
- 			goto next;
+ 	__BPF_DISPATCHER_UPDATE(d, new ?: (void *)&bpf_dispatcher_nop_func);
  
--		nr = find_first_zero_bit(&map->word, map_depth);
-+		nr = find_first_zero_bit(&val, map_depth);
- 		if (nr + nr_tags <= map_depth) {
- 			atomic_long_t *ptr = (atomic_long_t *) &map->word;
--			unsigned long val;
- 
- 			get_mask = ((1UL << nr_tags) - 1) << nr;
--			val = READ_ONCE(map->word);
- 			while (!atomic_long_try_cmpxchg(ptr, &val,
- 							  get_mask | val))
- 				;
--- 
-2.43.0
-
++	/* Make sure all the callers executing the previous/old half of the
++	 * image leave it, so following update call can modify it safely.
++	 */
++	synchronize_rcu();
++
+ 	if (new)
+ 		d->image_off = noff;
+ }
 
 
