@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCEE1A76B7;
-	Tue, 30 Jul 2024 17:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE1A1A76B7;
+	Tue, 30 Jul 2024 17:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722359674; cv=none; b=dZr1CPdqOUYIZ3t/YCvLlF0UlqaUsqsEfuv5PwyUYKgMPQ4lDOEEh5F8NNgLgiFYRqz5nPeBOgj0LNNfgljP3Je4dL4MwhrsGdPSLR/EpI+x/8pE4tNEioZ9V7JWgU6moUtLyoV5T3THsdp3XjsW5eZWfHYkOLc2+ostPiq4C+4=
+	t=1722359677; cv=none; b=iN7JMh3Prv3krQUoEjiWfBkc0PLKuONgtYl2Y6m7M4tYY0hdOTuuaPuFn0ATkwwh/UPvOy2qZYANQMHgUFNTFuasJ8SxueNm848bYWLSzvpNUIrodkrvFvVQm16pOfnNqhF+FxniV3aR6rSPB6YdCzdOHUBkcUudhLdpFrET/fs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722359674; c=relaxed/simple;
-	bh=kDIHgHu9N9O5dRKsOuW4mUMjGQvt+MIAAcRYjClXJMc=;
+	s=arc-20240116; t=1722359677; c=relaxed/simple;
+	bh=ZNMy+QmuWKm4XsIFJxTSQspvYqACQyWp9aVbyWQCc2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dkm9zIqmT+HNbN+UglICP+8Nu9LjubxTgb3Hkox+hoiGwnVfViqyPCPGWEgT5vtvhDCN2vclo6HZ1MCHmq/pISQf7W5RY/xXLlGBOmlM6gUaUxVL59S7nrjrC2UBWxies0PrPTKGH0wrK4zYQp9/fBVnIBsdm4T7ZkNuSHEnPTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uNpqaMB7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CPS2/S+BAYPFyjyicbcZM1sb+ttwUyAyWwvYV9hsvj3q50fJv31QYWeqg43Ol/OALh2Vpl1RXmKKHnU7aWrQvOtWc08+CaczfY6ettmEPXZZwTTbRBZBt1K76vXe1aQ5PeOHNEHvaHTjKbvNeNPIZpHOkcKayk+LWqNmA2WETf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kxF4LxME; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uNpqaMB7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917D8C32782;
-	Tue, 30 Jul 2024 17:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kxF4LxME"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FB0C32782;
+	Tue, 30 Jul 2024 17:14:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722359674;
-	bh=kDIHgHu9N9O5dRKsOuW4mUMjGQvt+MIAAcRYjClXJMc=;
+	s=korg; t=1722359677;
+	bh=ZNMy+QmuWKm4XsIFJxTSQspvYqACQyWp9aVbyWQCc2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uNpqaMB7uxhG/jd/iAYdvG0Gd2LXF1bQ3x01kEnevqj18pjftrlaa1NqvzQze6AY9
-	 Q+086PXB6d7ZiGet8RL5iHR44QkDwfARrRr03MFiXy2cZ79/PmlAk+LzhUeEbePdIK
-	 ucBCm4JaFMJr94LrVDEbDXo8ynsglJzWHhG6dTAY=
+	b=kxF4LxMEEyMQrwBQ/2vm6SU2V3mycnH9OWMg15gQhpVSoJal6aJ4YCe0VH6YAT1RH
+	 rQkFCKWQGZAxzOj2lav88kh800/wRPZdCJOCfWj0WNONN6851VCb3yPwvG8xLzrWVv
+	 o/C9jh8f3xz/1399/5rJZYkVMjiL7AyY/jIRart4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Su Yue <glass.su@suse.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Sean Anderson <sean.anderson@linux.dev>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 517/809] md-cluster: fix hanging issue while a new disk adding
-Date: Tue, 30 Jul 2024 17:46:33 +0200
-Message-ID: <20240730151745.159785700@linuxfoundation.org>
+Subject: [PATCH 6.6 521/568] phy: zynqmp: Enable reference clock correctly
+Date: Tue, 30 Jul 2024 17:50:28 +0200
+Message-ID: <20240730151700.519603947@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,111 +47,81 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Heming Zhao <heming.zhao@suse.com>
+From: Sean Anderson <sean.anderson@linux.dev>
 
-[ Upstream commit fff42f213824fa434a4b6cf906b4331fe6e9302b ]
+[ Upstream commit 687d6bccb28238fcfa65f7c1badfdfeac498c428 ]
 
-The commit 1bbe254e4336 ("md-cluster: check for timeout while a
-new disk adding") is correct in terms of code syntax but not
-suite real clustered code logic.
+Lanes can use other lanes' reference clocks, as determined by refclk.
+Use refclk to determine the clock to enable/disable instead of always
+using the lane's own reference clock. This ensures the clock selected in
+xpsgtr_configure_pll is the one enabled.
 
-When a timeout occurs while adding a new disk, if recv_daemon()
-bypasses the unlock for ack_lockres:CR, another node will be waiting
-to grab EX lock. This will cause the cluster to hang indefinitely.
+For the other half of the equation, always program REF_CLK_SEL even when
+we are selecting the lane's own clock. This ensures that Linux's idea of
+the reference clock matches the hardware. We use the "local" clock mux
+for this instead of going through the ref clock network.
 
-How to fix:
-
-1. In dlm_lock_sync(), change the wait behaviour from forever to a
-   timeout, This could avoid the hanging issue when another node
-   fails to handle cluster msg. Another result of this change is
-   that if another node receives an unknown msg (e.g. a new msg_type),
-   the old code will hang, whereas the new code will timeout and fail.
-   This could help cluster_md handle new msg_type from different
-   nodes with different kernel/module versions (e.g. The user only
-   updates one leg's kernel and monitors the stability of the new
-   kernel).
-2. The old code for __sendmsg() always returns 0 (success) under the
-   design (must successfully unlock ->message_lockres). This commit
-   makes this function return an error number when an error occurs.
-
-Fixes: 1bbe254e4336 ("md-cluster: check for timeout while a new disk adding")
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Su Yue <glass.su@suse.com>
-Acked-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240709104120.22243-1-heming.zhao@suse.com
+Fixes: 25d700833513 ("phy: xilinx: phy-zynqmp: dynamic clock support for power-save")
+Signed-off-by: Sean Anderson <sean.anderson@linux.dev>
+Link: https://lore.kernel.org/r/20240628205540.3098010-2-sean.anderson@linux.dev
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md-cluster.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
+ drivers/phy/xilinx/phy-zynqmp.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/md/md-cluster.c b/drivers/md/md-cluster.c
-index 8e36a0feec098..b5a802ae17bb2 100644
---- a/drivers/md/md-cluster.c
-+++ b/drivers/md/md-cluster.c
-@@ -15,6 +15,7 @@
+diff --git a/drivers/phy/xilinx/phy-zynqmp.c b/drivers/phy/xilinx/phy-zynqmp.c
+index 2559c6594cea2..0cb5088e460b5 100644
+--- a/drivers/phy/xilinx/phy-zynqmp.c
++++ b/drivers/phy/xilinx/phy-zynqmp.c
+@@ -80,7 +80,8 @@
  
- #define LVB_SIZE	64
- #define NEW_DEV_TIMEOUT 5000
-+#define WAIT_DLM_LOCK_TIMEOUT (30 * HZ)
+ /* Reference clock selection parameters */
+ #define L0_Ln_REF_CLK_SEL(n)		(0x2860 + (n) * 4)
+-#define L0_REF_CLK_SEL_MASK		0x8f
++#define L0_REF_CLK_LCL_SEL		BIT(7)
++#define L0_REF_CLK_SEL_MASK		0x9f
  
- struct dlm_lock_resource {
- 	dlm_lockspace_t *ls;
-@@ -130,8 +131,13 @@ static int dlm_lock_sync(struct dlm_lock_resource *res, int mode)
- 			0, sync_ast, res, res->bast);
- 	if (ret)
- 		return ret;
--	wait_event(res->sync_locking, res->sync_locking_done);
-+	ret = wait_event_timeout(res->sync_locking, res->sync_locking_done,
-+				WAIT_DLM_LOCK_TIMEOUT);
- 	res->sync_locking_done = false;
-+	if (!ret) {
-+		pr_err("locking DLM '%s' timeout!\n", res->name);
-+		return -EBUSY;
-+	}
- 	if (res->lksb.sb_status == 0)
- 		res->mode = mode;
- 	return res->lksb.sb_status;
-@@ -743,7 +749,7 @@ static void unlock_comm(struct md_cluster_info *cinfo)
-  */
- static int __sendmsg(struct md_cluster_info *cinfo, struct cluster_msg *cmsg)
- {
--	int error;
-+	int error, unlock_error;
- 	int slot = cinfo->slot_number - 1;
+ /* Calibration digital logic parameters */
+ #define L3_TM_CALIB_DIG19		0xec4c
+@@ -349,11 +350,12 @@ static void xpsgtr_configure_pll(struct xpsgtr_phy *gtr_phy)
+ 		       PLL_FREQ_MASK, ssc->pll_ref_clk);
  
- 	cmsg->slot = cpu_to_le32(slot);
-@@ -751,7 +757,7 @@ static int __sendmsg(struct md_cluster_info *cinfo, struct cluster_msg *cmsg)
- 	error = dlm_lock_sync(cinfo->message_lockres, DLM_LOCK_EX);
- 	if (error) {
- 		pr_err("md-cluster: failed to get EX on MESSAGE (%d)\n", error);
--		goto failed_message;
-+		return error;
- 	}
- 
- 	memcpy(cinfo->message_lockres->lksb.sb_lvbptr, (void *)cmsg,
-@@ -781,14 +787,10 @@ static int __sendmsg(struct md_cluster_info *cinfo, struct cluster_msg *cmsg)
- 	}
- 
- failed_ack:
--	error = dlm_unlock_sync(cinfo->message_lockres);
--	if (unlikely(error != 0)) {
-+	while ((unlock_error = dlm_unlock_sync(cinfo->message_lockres)))
- 		pr_err("md-cluster: failed convert to NL on MESSAGE(%d)\n",
--			error);
--		/* in case the message can't be released due to some reason */
--		goto failed_ack;
+ 	/* Enable lane clock sharing, if required */
+-	if (gtr_phy->refclk != gtr_phy->lane) {
+-		/* Lane3 Ref Clock Selection Register */
++	if (gtr_phy->refclk == gtr_phy->lane)
++		xpsgtr_clr_set(gtr_phy->dev, L0_Ln_REF_CLK_SEL(gtr_phy->lane),
++			       L0_REF_CLK_SEL_MASK, L0_REF_CLK_LCL_SEL);
++	else
+ 		xpsgtr_clr_set(gtr_phy->dev, L0_Ln_REF_CLK_SEL(gtr_phy->lane),
+ 			       L0_REF_CLK_SEL_MASK, 1 << gtr_phy->refclk);
 -	}
--failed_message:
-+			unlock_error);
-+
- 	return error;
- }
  
+ 	/* SSC step size [7:0] */
+ 	xpsgtr_clr_set_phy(gtr_phy, L0_PLL_SS_STEP_SIZE_0_LSB,
+@@ -573,7 +575,7 @@ static int xpsgtr_phy_init(struct phy *phy)
+ 	mutex_lock(&gtr_dev->gtr_mutex);
+ 
+ 	/* Configure and enable the clock when peripheral phy_init call */
+-	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->lane]))
++	if (clk_prepare_enable(gtr_dev->clk[gtr_phy->refclk]))
+ 		goto out;
+ 
+ 	/* Skip initialization if not required. */
+@@ -625,7 +627,7 @@ static int xpsgtr_phy_exit(struct phy *phy)
+ 	gtr_phy->skip_phy_init = false;
+ 
+ 	/* Ensure that disable clock only, which configure for lane */
+-	clk_disable_unprepare(gtr_dev->clk[gtr_phy->lane]);
++	clk_disable_unprepare(gtr_dev->clk[gtr_phy->refclk]);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
