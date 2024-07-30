@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3131A6192;
-	Tue, 30 Jul 2024 16:39:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E581183CDB;
+	Tue, 30 Jul 2024 16:39:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357594; cv=none; b=CHm77MVlRnh57G/gbhkyStyTXPgGhtPRZqRdPiPmPkiExhy0uSBz5uxIghCre6VAJKf1loJP9bpKZxOjaczacNKW3z+G7zofl6qRZDdOiaZY/Y8HM/xsGAVRWV2unQZLni8KwvYQ2KHR+VNIinzQ9qv06n1oNYy27htiWIoyyGc=
+	t=1722357597; cv=none; b=IA9JNI7nXTkJIucoCl8KJa4FnjpiWdpzuzY9TDQDBDWmtJDtXtmcz+Pyyw5BpFCGMlRXbt9RPI7nSv0idnrtuaLBY3Ots+PGu4MPXO7i9XJLmGhtV+7sg0/3vKVEi4ffEDimYBy+Ph+yOzShFg7iKdk5MwUNuls61yFpNyX5ie4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357594; c=relaxed/simple;
-	bh=glBMCQsu9f4s9jwaE05oHSTC/mKj8oRkHwMsoRLZ9Ww=;
+	s=arc-20240116; t=1722357597; c=relaxed/simple;
+	bh=mZdZkJKYGuSWnh1rKucFBvDEcoZoImeAKNvUQdo7BLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ezmb6KtcvhMTCrx/2V+6QUdPUhbEbOSW31JEWd5o4BJvyErxO/0nL3hWKF20M1sPri+mjnRBv6y/nsOr0+TE1AEyBDfIlyYEz/VOJ52USh4A6fLN/afCJNEoMB1JGqRk1UwZwoYVnO8PVem/NzycQWiUHynWAo8D86obdXmK/2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RQmkGmm5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=l5F9Ns0KCL1iXGPxo3tXG1oRI5wvqIhnlpxLhcKaGmY6Slvr3buk9A71UcRAIjbbqkgjj6uzAarsY2QciCmHW3wGneLEBBSsBUXNXFuTxuE9ZtmkEcETdsIPD11EKi/10OJym2QoYdM6cekBp2Q7pwMFcB6AqHZubZN6ATiqGM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vLALYPPx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RQmkGmm5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC8BC32782;
-	Tue, 30 Jul 2024 16:39:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vLALYPPx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B9DC4AF0C;
+	Tue, 30 Jul 2024 16:39:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357593;
-	bh=glBMCQsu9f4s9jwaE05oHSTC/mKj8oRkHwMsoRLZ9Ww=;
+	s=korg; t=1722357597;
+	bh=mZdZkJKYGuSWnh1rKucFBvDEcoZoImeAKNvUQdo7BLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQmkGmm5KGoXFhYTvX2pmtjKcHeE7pfKiNWXR46odPCq4Aw0f351ie8fSS3Xhwg6T
-	 ZtadSvnFDxMAMy0FOF5eBzpS5WAWcQ3TGhlNMpwQX9yrcHODmxV2YD51gEi0Q3F+zZ
-	 jxf49l5ptt3O+Uz9uKGx9CZUqFf5o59gc9M7Vt1g=
+	b=vLALYPPxbruRPuNMxUAc4FIgMqQu7WSDkqd3RdwL1z14ylnUr98H8qBA5gTjmbXmo
+	 MhMD4bkQoEh9rfnVKXradp/7o2T/MxtKmQMpWSG4qb9cL69IEw6hpxDRA+SwjLXJ8A
+	 70wBmFScuV/KUR7r3AiYeYolJqJtd15ltEhQZ2YQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 6.1 307/440] selftests/landlock: Add cred_transfer test
-Date: Tue, 30 Jul 2024 17:49:00 +0200
-Message-ID: <20240730151627.813763789@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 273/568] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
+Date: Tue, 30 Jul 2024 17:46:20 +0200
+Message-ID: <20240730151650.551485033@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,128 +48,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit cc374782b6ca0fd634482391da977542443d3368 upstream.
+[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
 
-Check that keyctl(KEYCTL_SESSION_TO_PARENT) preserves the parent's
-restrictions.
+drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
+output may be truncated writing between 1 and 11 bytes into a region of
+size 5 [-Werror=format-truncation=]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                                          ^~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                               ^~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
+between 12 and 22 bytes into a destination of size 15
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-Fixes: e1199815b47b ("selftests/landlock: Add user space tests")
-Co-developed-by: Jann Horn <jannh@google.com>
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20240724.Ood5aige9she@digikod.net
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
+Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/landlock/base_test.c |   74 +++++++++++++++++++++++++++
- tools/testing/selftests/landlock/config      |    5 +
- 2 files changed, 77 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/testing/selftests/landlock/base_test.c
-+++ b/tools/testing/selftests/landlock/base_test.c
-@@ -9,6 +9,7 @@
- #define _GNU_SOURCE
- #include <errno.h>
- #include <fcntl.h>
-+#include <linux/keyctl.h>
- #include <linux/landlock.h>
- #include <string.h>
- #include <sys/prctl.h>
-@@ -356,4 +357,77 @@ TEST(ruleset_fd_transfer)
- 	ASSERT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
- }
+diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
+index 111fa88a3be44..9a439569ffcf3 100644
+--- a/drivers/infiniband/hw/mlx4/alias_GUID.c
++++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
+@@ -829,7 +829,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
  
-+TEST(cred_transfer)
-+{
-+	struct landlock_ruleset_attr ruleset_attr = {
-+		.handled_access_fs = LANDLOCK_ACCESS_FS_READ_DIR,
-+	};
-+	int ruleset_fd, dir_fd;
-+	pid_t child;
-+	int status;
-+
-+	drop_caps(_metadata);
-+
-+	dir_fd = open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC);
-+	EXPECT_LE(0, dir_fd);
-+	EXPECT_EQ(0, close(dir_fd));
-+
-+	/* Denies opening directories. */
-+	ruleset_fd =
-+		landlock_create_ruleset(&ruleset_attr, sizeof(ruleset_attr), 0);
-+	ASSERT_LE(0, ruleset_fd);
-+	EXPECT_EQ(0, prctl(PR_SET_NO_NEW_PRIVS, 1, 0, 0, 0));
-+	ASSERT_EQ(0, landlock_restrict_self(ruleset_fd, 0));
-+	EXPECT_EQ(0, close(ruleset_fd));
-+
-+	/* Checks ruleset enforcement. */
-+	EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
-+	EXPECT_EQ(EACCES, errno);
-+
-+	/* Needed for KEYCTL_SESSION_TO_PARENT permission checks */
-+	EXPECT_NE(-1, syscall(__NR_keyctl, KEYCTL_JOIN_SESSION_KEYRING, NULL, 0,
-+			      0, 0))
-+	{
-+		TH_LOG("Failed to join session keyring: %s", strerror(errno));
-+	}
-+
-+	child = fork();
-+	ASSERT_LE(0, child);
-+	if (child == 0) {
-+		/* Checks ruleset enforcement. */
-+		EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
-+		EXPECT_EQ(EACCES, errno);
-+
-+		/*
-+		 * KEYCTL_SESSION_TO_PARENT is a no-op unless we have a
-+		 * different session keyring in the child, so make that happen.
-+		 */
-+		EXPECT_NE(-1, syscall(__NR_keyctl, KEYCTL_JOIN_SESSION_KEYRING,
-+				      NULL, 0, 0, 0));
-+
-+		/*
-+		 * KEYCTL_SESSION_TO_PARENT installs credentials on the parent
-+		 * that never go through the cred_prepare hook, this path uses
-+		 * cred_transfer instead.
-+		 */
-+		EXPECT_EQ(0, syscall(__NR_keyctl, KEYCTL_SESSION_TO_PARENT, 0,
-+				     0, 0, 0));
-+
-+		/* Re-checks ruleset enforcement. */
-+		EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
-+		EXPECT_EQ(EACCES, errno);
-+
-+		_exit(_metadata->passed ? EXIT_SUCCESS : EXIT_FAILURE);
-+		return;
-+	}
-+
-+	EXPECT_EQ(child, waitpid(child, &status, 0));
-+	EXPECT_EQ(1, WIFEXITED(status));
-+	EXPECT_EQ(EXIT_SUCCESS, WEXITSTATUS(status));
-+
-+	/* Re-checks ruleset enforcement. */
-+	EXPECT_EQ(-1, open("/", O_RDONLY | O_DIRECTORY | O_CLOEXEC));
-+	EXPECT_EQ(EACCES, errno);
-+}
-+
- TEST_HARNESS_MAIN
---- a/tools/testing/selftests/landlock/config
-+++ b/tools/testing/selftests/landlock/config
-@@ -1,7 +1,8 @@
-+CONFIG_KEYS=y
- CONFIG_OVERLAY_FS=y
-+CONFIG_SECURITY=y
- CONFIG_SECURITY_LANDLOCK=y
- CONFIG_SECURITY_PATH=y
--CONFIG_SECURITY=y
- CONFIG_SHMEM=y
--CONFIG_TMPFS_XATTR=y
- CONFIG_TMPFS=y
-+CONFIG_TMPFS_XATTR=y
+ int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
+ {
+-	char alias_wq_name[15];
++	char alias_wq_name[22];
+ 	int ret = 0;
+ 	int i, j;
+ 	union ib_gid gid;
+-- 
+2.43.0
+
 
 
