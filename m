@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7DE6184535;
-	Tue, 30 Jul 2024 16:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1617D183CA0;
+	Tue, 30 Jul 2024 16:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722355783; cv=none; b=ABl6taqb5ujyo0ZSoY3vVLmFTvu7ptDbxJb4CXYkl9QHBhbGCa1knroqJUtcqMKg04cqO5VBTBZJ4q8u3MVtOIeTzZCBST06CRHpXSTsixo5Ii74vCchGlevM0prO6isGuryTEmFYRtuTvg5xSz+v8viApP19aZ4kCVlBs/Hh7A=
+	t=1722355787; cv=none; b=sK5oC176M9BiKHqHrdtMyQ4EXr3+qAgIYHDVywbSL6Pv7bt3B45c4G5cD2j2blYfgJbuP3IP/wmCcnYttd2TxA/kJTIAxpVAkMVtX/CmeJOfW+24o2x0bjiaXmtpmsCgjuZirshVcSK8UNLDm+uFDPib+bF30WyTKK+SHdMYeAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722355783; c=relaxed/simple;
-	bh=/TisCXGcqmaHONbqvz+UBjeHpksiQOlcEQ4DIoapjYw=;
+	s=arc-20240116; t=1722355787; c=relaxed/simple;
+	bh=woFqQ4Ox2WkAe1/g6uhlAvSNr3xWH0MKeC/C7XBdaUQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=APsspmTPFSFdmzcXk9SbG4G7rl5v+hhFhxMbb99C9js0MCViRUORvmdAY+kExQ/yCbzivbHTgvdAFjTnQYvnOW54QjK2npP2FPqlPVEHc35HaPWQFSbOyDFfI80UjHXxR9hNFz9yTaKgRUYCtbH5HQRoU0K/+h/eKpb3pSP9Gpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NNPIdOry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RSFVKEv6ErfsKX+fLCoBqqOD9fFXNPml0+iE9NHQmep8t7PVt1DBjPlHXvyhcdZ25rmtCJX5X8IoRZvSBDHUdNKfuB3ZvzfOK65td2M6xkMn6cH+qhkoDigChqzf68Ox0PYLWu53DjtMLk9aJtg8KpsYKZfjR1HOHDOZD5Sn26o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NGjaNNL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NNPIdOry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10437C32782;
-	Tue, 30 Jul 2024 16:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NGjaNNL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35C33C4AF0A;
+	Tue, 30 Jul 2024 16:09:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722355783;
-	bh=/TisCXGcqmaHONbqvz+UBjeHpksiQOlcEQ4DIoapjYw=;
+	s=korg; t=1722355786;
+	bh=woFqQ4Ox2WkAe1/g6uhlAvSNr3xWH0MKeC/C7XBdaUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NNPIdOry4vhQPy0jXdI73vmVFI5PEfiUZMSwumpQOuafjnHk3Ng2vlKt+f/QA3ETu
-	 MDW+tS8mPCF6A26qrPn4Po+Gvd3XeqJAd6zcW14M1IU0C7Dq95fh0puZYHqgDoXC52
-	 7hP85ELMr5mZK28q2xunhUvtvlVWSHYthjGVZE7Q=
+	b=NGjaNNL4apVG2XJtKSM4iF0Cj8GNxZqFYa5xNYBO9Hz8+3/Ej2Ol3EU2vMOUW04wE
+	 qvnyr1V4k3zINptx0GwjzDp/siVnk79OuG25AQrBqPm/e9L5zlHWe4xeFtqV0XVki3
+	 wTv8M6dvW6MjH8cSs1LOBA0xq+4NLCLGyLHVBjmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Komal Bajaj <quic_kbajaj@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 088/809] arm64: dts: qcom: qdu1000: Add secure qfprom node
-Date: Tue, 30 Jul 2024 17:39:24 +0200
-Message-ID: <20240730151728.113631561@linuxfoundation.org>
+Subject: [PATCH 6.1 130/440] drm/mipi-dsi: Fix theoretical int overflow in mipi_dsi_dcs_write_seq()
+Date: Tue, 30 Jul 2024 17:46:03 +0200
+Message-ID: <20240730151620.959807807@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -50,56 +48,79 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Komal Bajaj <quic_kbajaj@quicinc.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 367fb3f0aaa6eac9101dc683dd27c268b4cc702e ]
+[ Upstream commit 0b03829fdece47beba9ecb7dbcbde4585ee3663e ]
 
-Add secure qfprom node and also add properties for multi channel
-DDR. This is required for LLCC driver to pick the correct LLCC
-configuration.
+The mipi_dsi_dcs_write_seq() macro makes a call to
+mipi_dsi_dcs_write_buffer() which returns a type ssize_t. The macro
+then stores it in an int and checks to see if it's negative. This
+could theoretically be a problem if "ssize_t" is larger than "int".
 
-Fixes: 6209038f131f ("arm64: dts: qcom: qdu1000: Add LLCC/system-cache-controller")
-Signed-off-by: Komal Bajaj <quic_kbajaj@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Link: https://lore.kernel.org/r/20240618092711.15037-1-quic_kbajaj@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+To see the issue, imagine that "ssize_t" is 32-bits and "int" is
+16-bits, you could see a problem if there was some code out there that
+looked like:
+
+  mipi_dsi_dcs_write_seq(dsi, cmd, <32767 bytes as arguments>);
+
+...since we'd get back that 32768 bytes were transferred and 32768
+stored in a 16-bit int would look negative.
+
+Though there are no callsites where we'd actually hit this (even if
+"int" was only 16-bit), it's cleaner to make the types match so let's
+fix it.
+
+Fixes: 2a9e9daf7523 ("drm/mipi-dsi: Introduce mipi_dsi_dcs_write_seq macro")
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240514102056.v5.1.I30fa4c8348ea316c886ef8a522a52fed617f930d@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240514102056.v5.1.I30fa4c8348ea316c886ef8a522a52fed617f930d@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/qdu1000.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ include/drm/drm_mipi_dsi.h | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/qdu1000.dtsi b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-index f90f03fa6a24f..1da40f4b4f8ac 100644
---- a/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qdu1000.dtsi
-@@ -1478,6 +1478,21 @@ system-cache-controller@19200000 {
- 				    "llcc7_base",
- 				    "llcc_broadcast_base";
- 			interrupts = <GIC_SPI 266 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			nvmem-cells = <&multi_chan_ddr>;
-+			nvmem-cell-names = "multi-chan-ddr";
-+		};
-+
-+		sec_qfprom: efuse@221c8000 {
-+			compatible = "qcom,qdu1000-sec-qfprom", "qcom,sec-qfprom";
-+			reg = <0 0x221c8000 0 0x1000>;
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			multi_chan_ddr: multi-chan-ddr@12b {
-+				reg = <0x12b 0x1>;
-+				bits = <0 2>;
-+			};
- 		};
- 	};
+diff --git a/include/drm/drm_mipi_dsi.h b/include/drm/drm_mipi_dsi.h
+index 9dd1093b2dfa9..1a921e8943a03 100644
+--- a/include/drm/drm_mipi_dsi.h
++++ b/include/drm/drm_mipi_dsi.h
+@@ -309,18 +309,18 @@ int mipi_dsi_dcs_get_display_brightness_large(struct mipi_dsi_device *dsi,
+  * @cmd: Command
+  * @seq: buffer containing data to be transmitted
+  */
+-#define mipi_dsi_dcs_write_seq(dsi, cmd, seq...)                           \
+-	do {                                                               \
+-		static const u8 d[] = { cmd, seq };                        \
+-		struct device *dev = &dsi->dev;                            \
+-		int ret;                                                   \
+-		ret = mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d));    \
+-		if (ret < 0) {                                             \
+-			dev_err_ratelimited(                               \
+-				dev, "sending command %#02x failed: %d\n", \
+-				cmd, ret);                                 \
+-			return ret;                                        \
+-		}                                                          \
++#define mipi_dsi_dcs_write_seq(dsi, cmd, seq...)                            \
++	do {                                                                \
++		static const u8 d[] = { cmd, seq };                         \
++		struct device *dev = &dsi->dev;                             \
++		ssize_t ret;                                                \
++		ret = mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d));     \
++		if (ret < 0) {                                              \
++			dev_err_ratelimited(                                \
++				dev, "sending command %#02x failed: %zd\n", \
++				cmd, ret);                                  \
++			return ret;                                         \
++		}                                                           \
+ 	} while (0)
  
+ /**
 -- 
 2.43.0
 
