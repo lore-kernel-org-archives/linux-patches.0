@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389D51A76A1;
-	Tue, 30 Jul 2024 17:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BC921A76AF;
+	Tue, 30 Jul 2024 17:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360218; cv=none; b=hUPitmSwrKyA6/IzE/VS/c80P6JTCDO98+sGCH+srsuSiL+hMYmvmyehDFipEHPq3QYXudoYyuKhyfBI1+DnNPNwwRC4bYzKAAO3EleaP7oDpXJUnjbU3d43aL0mH6MR7IHFZJ1VzeUxdgPO2ctZ+wBl3nrgE64yatcY/uCDoWA=
+	t=1722360221; cv=none; b=ByNp6+mL8axYQ25K8pvhCxoEvtDiYNHyCCHkF7+ZmdLmjzFqRkdXjh1D8hx2+VZuwH3ZD8LboYhjP+wPnk91DD4BdLqLarPvO0Wde0I0lo0CuFcrhQpRjXTdw9X3o2z5fJ7KLY/oDyfMo8uNwR0MGAKnBMCaGSuWoSd+S0iCPkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360218; c=relaxed/simple;
-	bh=nPUPu5wGxfRQb4HnpJEHyIikwg4MmVJWxd2rtxOBKeI=;
+	s=arc-20240116; t=1722360221; c=relaxed/simple;
+	bh=kk/w0boIX4z1xrykrSiNiGxw2TbqpWeb8cn6g3leiAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JjElbOUq4ItCwQ8g0Y/9/+ylmNnp32d9nYZzcAqW085HGBtsU43BcTeapDD48hOKiGUxueQ/WgP0bGvT6EP/1wNpclp0RbotuHq84XqIGyI1Y3yhSyYCnkxfCOxHOHAkwKO5L7j1xvnn/w3ap/5JGbQ2PaZCEbPJEX6FP/W2yoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fm8XvNKr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YCvxaDWTAOvQnpcy9Py22zAJ+53AxoYw5xXTghEBow73qHrtyyGZH3Qq3YXyGg1Xukx0DQSTTIpoWCqIqCMD+84qCTlijW2q55NzKp9DuOcKdl801Njy6THPV2HOM5NUf6KfZoxR7uWj/qdVF7NSjgrdQl2+QRbWGMP0ATk/UeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1zOafbWH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fm8XvNKr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B465EC32782;
-	Tue, 30 Jul 2024 17:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1zOafbWH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B919DC32782;
+	Tue, 30 Jul 2024 17:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360218;
-	bh=nPUPu5wGxfRQb4HnpJEHyIikwg4MmVJWxd2rtxOBKeI=;
+	s=korg; t=1722360221;
+	bh=kk/w0boIX4z1xrykrSiNiGxw2TbqpWeb8cn6g3leiAE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fm8XvNKrfCr0vthE722Alg/iIfJEEd8gDvq6JQk9qY5q4uVoyPK7kf71uV9K42oM2
-	 OEa7u+6FFSIKfaUdLLODOwLWSgqWw02yUMjmM4r4F9JbnHalctPLlQFRP69zvxJiRK
-	 F6IiRwWca4v9yYMELq0o2I+wRdZyGkHbPeLmElWQ=
+	b=1zOafbWHmv5zGUAoRvC8menXc9a5rabdOStmSpubxPHWj2GnR4kaUWuN7h76jEad+
+	 pxvqCrA6Ka4CeHBXs8dTbfO01MBZ/LmJJIqrJ/Iukg7clD2t7l44ylhW4FAYH0+COu
+	 ZJSDbDP8aGMeaNV5UIQQWo5KN14LQIFdSUWRrDpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luke D. Jones" <luke@ljones.dev>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 625/809] ALSA: hda/realtek: cs35l41: Fixup remaining asus strix models
-Date: Tue, 30 Jul 2024 17:48:21 +0200
-Message-ID: <20240730151749.526887049@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Thomas Huth <thuth@redhat.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 6.10 634/809] drm/fbdev-dma: Fix framebuffer mode for big endian devices
+Date: Tue, 30 Jul 2024 17:48:30 +0200
+Message-ID: <20240730151749.883723357@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -50,38 +55,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke D. Jones <luke@ljones.dev>
+From: Thomas Huth <thuth@redhat.com>
 
-commit e6e18021ddd0dc5af487fb86b6d7c964e062d692 upstream.
+commit cb31c58e8c294ff31ea842ee1fa2c06c9a9f1cc3 upstream.
 
-Adjust quirks for 0x3a20, 0x3a30, 0x3a50 to match the 0x3a60. This
-set has now been confirmed to work with this patch.
+The drm_mode_legacy_fb_format() function only generates formats suitable
+for little endian devices. switch to drm_driver_legacy_fb_format() here
+instead to take the device endianness into consideration, too.
 
-Signed-off-by: Luke D. Jones <luke@ljones.dev>
-Fixes: 811dd426a9b1 ("ALSA: hda/realtek: Add quirks for Asus ROG 2024 laptops using CS35L41")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240723011224.115579-1-luke@ljones.dev
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 6ae2ff23aa43 ("drm/client: Convert drm_client_buffer_addfb() to drm_mode_addfb2()")
+Cc: Geert Uytterhoeven <geert@linux-m68k.org>
+Cc: Javier Martinez Canillas <javierm@redhat.com>
+Cc: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: <stable@vger.kernel.org> # v6.7+
+Link: https://patchwork.freedesktop.org/patch/msgid/20240702121737.522878-1-thuth@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_fbdev_dma.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10360,10 +10360,10 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1043, 0x1f62, "ASUS UX7602ZM", ALC245_FIXUP_CS35L41_SPI_2),
- 	SND_PCI_QUIRK(0x1043, 0x1f92, "ASUS ROG Flow X16", ALC289_FIXUP_ASUS_GA401),
- 	SND_PCI_QUIRK(0x1043, 0x3030, "ASUS ZN270IE", ALC256_FIXUP_ASUS_AIO_GPIO2),
--	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC245_FIXUP_CS35L41_SPI_2),
--	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x3a20, "ASUS G614JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
-+	SND_PCI_QUIRK(0x1043, 0x3a30, "ASUS G814JVR/JIR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a40, "ASUS G814JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
--	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC245_FIXUP_CS35L41_SPI_2),
-+	SND_PCI_QUIRK(0x1043, 0x3a50, "ASUS G834JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x3a60, "ASUS G634JYR/JZR", ALC285_FIXUP_ASUS_SPI_REAR_SPEAKERS),
- 	SND_PCI_QUIRK(0x1043, 0x831a, "ASUS P901", ALC269_FIXUP_STEREO_DMIC),
- 	SND_PCI_QUIRK(0x1043, 0x834a, "ASUS S101", ALC269_FIXUP_STEREO_DMIC),
+--- a/drivers/gpu/drm/drm_fbdev_dma.c
++++ b/drivers/gpu/drm/drm_fbdev_dma.c
+@@ -90,7 +90,8 @@ static int drm_fbdev_dma_helper_fb_probe
+ 		    sizes->surface_width, sizes->surface_height,
+ 		    sizes->surface_bpp);
+ 
+-	format = drm_mode_legacy_fb_format(sizes->surface_bpp, sizes->surface_depth);
++	format = drm_driver_legacy_fb_format(dev, sizes->surface_bpp,
++					     sizes->surface_depth);
+ 	buffer = drm_client_framebuffer_create(client, sizes->surface_width,
+ 					       sizes->surface_height, format);
+ 	if (IS_ERR(buffer))
 
 
