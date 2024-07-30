@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF161A76AB;
-	Tue, 30 Jul 2024 17:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728EB1A76AB;
+	Tue, 30 Jul 2024 17:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360421; cv=none; b=qkjQWZTntjp5f3B9CtfBFyJpo9anzNtnxJ/EGQdwVz0udweaOq7zUp10UWOWA6e79YaLl9MZS31URYAWSr+ZJHo8LPU1yTC/oUO0sPdqbCMevoGcR5qQLsU+xYYcmWCfIqSedoecZtVcenRyD0mWmVfkD+FCuOaNsQIaDUudajU=
+	t=1722360424; cv=none; b=Wu5AVOykNSyXYs3AjYc7O+KutNkQq3/2xsKhKE8lsK82fh4E1/R4AiNOeDvP6QVMewlfeVx1IulR+gGl0Z4p8Qjtpz2GpmQ0m1p6nzvuP8kjvJzUfSZbWM0bESwRaZ08rEpYFxi69w79kjCG1sFY3wkf5ifcapgRnHFDjSNyFH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360421; c=relaxed/simple;
-	bh=f/ZQD4tj4LLD21zwCpV9aryLw8tjwdqwQpIcz2s8Rhk=;
+	s=arc-20240116; t=1722360424; c=relaxed/simple;
+	bh=AwFdvN5IIE8NgTGL8DkLQ6jTt8Dw8XK447Ez2l94RG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j2zJok2DlUaTJS2UYndpet9WTigH03j88NqZEiW7q2LpYgWGwIRGHO/h1gST2KGhwNJVjlpYAd3QoWRmYCFj9jjgzvJo+zSJFVHWsUEjI4Ugpw7Kvu0IIWJ/gj59ZboAf98ctlypw8bpzPkQ+y0Eyj6IjAnlD1O6i4/ck5Buito=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kh+VW6Rt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t5q9Pu8dCg7JYRbJGU3/VfRLiRrwFVFUP1iYpl3BnMWC+IyKoX/aXuos6YfnFon0taSVW4a/JNGNCHYS7SOFK7tZeSCgtor6DqnmHtBWTtbWuS5nq5UldJ4SaDwei3q3mh/yc6mJu1mj34Fk6PdncE3PBMe5C17rxztPq+PLKJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SsJ7qOCA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kh+VW6Rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649DCC4AF0C;
-	Tue, 30 Jul 2024 17:27:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SsJ7qOCA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3E60C4AF0C;
+	Tue, 30 Jul 2024 17:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360420;
-	bh=f/ZQD4tj4LLD21zwCpV9aryLw8tjwdqwQpIcz2s8Rhk=;
+	s=korg; t=1722360424;
+	bh=AwFdvN5IIE8NgTGL8DkLQ6jTt8Dw8XK447Ez2l94RG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kh+VW6RtR0ZwKE/M4PPsHNQhKYcDz6T8lydGjjNBod1yS7xvayFjmi9latbV/d9e4
-	 CWbet1klNPERY8hvGqX/UkqVQ/AHLSOx5kEjVdGLr4RQ8/e5xvceeVL0dmgDTVBUSl
-	 UgHxNQd2GDg5xk6yrTzvA+yKKrSYzGjhHleFzxJ4=
+	b=SsJ7qOCAlwVHp0WfMQdutajuHoZ88sbLupJpcV3QXodZzu5KykGxjkx6lvV6BDJ8N
+	 t69RZz2Ed+jpTB82j4BmoOo3WfT3R5X2WIdy+gJ6Y+gAuMBjRfZdBamUaI9P5iYZv4
+	 d4pi/eQ8vWx2Guyo3XmXQVLXf7W+pY32sleMHBjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ram Tummala <rtummala@nvidia.com>,
-	Yin Fengwei <fengwei.yin@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Alain Knaff <alain@knaff.lu>,
+	"H. Peter Anvin" <hpa@zytor.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 663/809] mm: fix old/young bit handling in the faulting path
-Date: Tue, 30 Jul 2024 17:48:59 +0200
-Message-ID: <20240730151751.088384681@linuxfoundation.org>
+Subject: [PATCH 6.10 664/809] decompress_bunzip2: fix rare decompression failure
+Date: Tue, 30 Jul 2024 17:49:00 +0200
+Message-ID: <20240730151751.128453462@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
 References: <20240730151724.637682316@linuxfoundation.org>
@@ -53,63 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ram Tummala <rtummala@nvidia.com>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-commit 4cd7ba16a0afb36550eed7690e73d3e7a743fa96 upstream.
+commit bf6acd5d16057d7accbbb1bf7dc6d8c56eeb4ecc upstream.
 
-Commit 3bd786f76de2 ("mm: convert do_set_pte() to set_pte_range()")
-replaced do_set_pte() with set_pte_range() and that introduced a
-regression in the following faulting path of non-anonymous vmas which
-caused the PTE for the faulting address to be marked as old instead of
-young.
+The decompression code parses a huffman tree and counts the number of
+symbols for a given bit length.  In rare cases, there may be >= 256
+symbols with a given bit length, causing the unsigned char to overflow.
+This causes a decompression failure later when the code tries and fails to
+find the bit length for a given symbol.
 
-handle_pte_fault()
-  do_pte_missing()
-    do_fault()
-      do_read_fault() || do_cow_fault() || do_shared_fault()
-        finish_fault()
-          set_pte_range()
+Since the maximum number of symbols is 258, use unsigned short instead.
 
-The polarity of prefault calculation is incorrect.  This leads to prefault
-being incorrectly set for the faulting address.  The following check will
-incorrectly mark the PTE old rather than young.  On some architectures
-this will cause a double fault to mark it young when the access is
-retried.
-
-    if (prefault && arch_wants_old_prefaulted_pte())
-        entry = pte_mkold(entry);
-
-On a subsequent fault on the same address, the faulting path will see a
-non NULL vmf->pte and instead of reaching the do_pte_missing() path, PTE
-will then be correctly marked young in handle_pte_fault() itself.
-
-Due to this bug, performance degradation in the fault handling path will
-be observed due to unnecessary double faulting.
-
-Link: https://lkml.kernel.org/r/20240710014539.746200-1-rtummala@nvidia.com
-Fixes: 3bd786f76de2 ("mm: convert do_set_pte() to set_pte_range()")
-Signed-off-by: Ram Tummala <rtummala@nvidia.com>
-Reviewed-by: Yin Fengwei <fengwei.yin@intel.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Yin Fengwei <fengwei.yin@intel.com>
+Link: https://lkml.kernel.org/r/20240717162016.1514077-1-ross.lagerwall@citrix.com
+Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Cc: Alain Knaff <alain@knaff.lu>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memory.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/decompress_bunzip2.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -4681,7 +4681,7 @@ void set_pte_range(struct vm_fault *vmf,
- {
- 	struct vm_area_struct *vma = vmf->vma;
- 	bool write = vmf->flags & FAULT_FLAG_WRITE;
--	bool prefault = in_range(vmf->address, addr, nr * PAGE_SIZE);
-+	bool prefault = !in_range(vmf->address, addr, nr * PAGE_SIZE);
- 	pte_t entry;
- 
- 	flush_icache_pages(vma, page, nr);
+--- a/lib/decompress_bunzip2.c
++++ b/lib/decompress_bunzip2.c
+@@ -232,7 +232,8 @@ static int INIT get_next_block(struct bu
+ 	   RUNB) */
+ 	symCount = symTotal+2;
+ 	for (j = 0; j < groupCount; j++) {
+-		unsigned char length[MAX_SYMBOLS], temp[MAX_HUFCODE_BITS+1];
++		unsigned char length[MAX_SYMBOLS];
++		unsigned short temp[MAX_HUFCODE_BITS+1];
+ 		int	minLen,	maxLen, pp;
+ 		/* Read Huffman code lengths for each symbol.  They're
+ 		   stored in a way similar to mtf; record a starting
 
 
