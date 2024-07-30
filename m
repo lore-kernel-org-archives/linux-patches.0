@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A3091A76AE;
-	Tue, 30 Jul 2024 17:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03B31A76AE;
+	Tue, 30 Jul 2024 17:21:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722360089; cv=none; b=suqMTVn9mPFZd1K/oaFs5iNm4Nl3ASdWa1bFxB/5n/wcQZUapTZL0hgntjxUEmZZNHOjVgUoB522l6swDWD1//8ZPgx1JzfnIM1Ous7jlXY8NjwkLBRKI9CFl6y83MHCfoo0ntVtUw/4vm1uR7bTKss1pOoYv9Cwj9DSQcGXwn0=
+	t=1722360093; cv=none; b=IKW9+zGDTfzt6Hd+BSIpEJ8EkTg8TAoDLTM84XFTeS9TIor8G8litUXl52tk/zR91Ybd0H4JrrOGsr8USvDkqMXbp5a/Alu7vmkwNBRE4a4dk6kODcZVZkH2p8N+F49cIqTj5MGPze5Mu0tVEgVlNifQhinQbTYs1ECqbt2f+UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722360089; c=relaxed/simple;
-	bh=qvqIuwkDNBL42UZZteZ4KJ3diOM8D1IDPdP2oqzOx7I=;
+	s=arc-20240116; t=1722360093; c=relaxed/simple;
+	bh=jALQrV5/zi6mjKxPEvd5xjLTnI0FEHw/BUneTx3nrcc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYrxDfg/QwBlsytqg9y6MHTevneoLzPCgV6g93P8NKxAg3Q8WXnafbFyyUrgTdRaiOEej7tq/vJgg87LhRQBbj5B9RfvbqxfzQ4osiQM0K6mNGapksNNNQIuMc2DrG8KlaKZ+iIj9ENPfFps+/0G65IbxWi+IY27p31ODAaHqT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q0sejVra; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ohflvv7MLTTQWAAYxDBj7dzijOmN6/RHlaR+IfcrUFtI/0cJaPMuIbgTWxzUzwFjopfKntZRemxHjt7svrG7AhlQwhLzLF/JTc+mS/vOUxV3MMageuaO7VfzCjz8dz9vrh4MwK1QzZ8OHV3ZncdiwPl87qqvx1j/rxz3vxPgTbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WjaoYe9T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q0sejVra"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2165CC4AF0A;
-	Tue, 30 Jul 2024 17:21:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WjaoYe9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 664BFC32782;
+	Tue, 30 Jul 2024 17:21:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722360089;
-	bh=qvqIuwkDNBL42UZZteZ4KJ3diOM8D1IDPdP2oqzOx7I=;
+	s=korg; t=1722360092;
+	bh=jALQrV5/zi6mjKxPEvd5xjLTnI0FEHw/BUneTx3nrcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0sejVraLnzrzV4vrmLv+ai72ihO6Ek8K247Gso0tP8wiaeNb21FzFuuXjAlxM74H
-	 99SNIxhyZaeorSB4jVWsM8jnukUndd7FrWYaKgIo/JAg1vSxFGlNk8I84jz8xnSy7n
-	 w+whpphjdNZN8f3FbxCUiwIQnqtUTzUGRLaj7ekc=
+	b=WjaoYe9Tj54yyeE9a+4Y30+czdZCEXWXsDG5UDeThl8xVFk/EIDhPv0PhRaahoTRi
+	 OP/qAt8nAtgFlDjR49yWiOTzyyKus27v1BPzn0BPHKskwGzCSa1fi41WFZ5/jnKcnj
+	 fP60oVu8hLCzvy08uHiXpKy18UiAKSJL2ZFxhL4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.10 563/809] media: stm32: dcmipp: correct error handling in dcmipp_create_subdevs
-Date: Tue, 30 Jul 2024 17:47:19 +0200
-Message-ID: <20240730151747.003602205@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>,
+	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 568/568] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
+Date: Tue, 30 Jul 2024 17:51:15 +0200
+Message-ID: <20240730151702.357758677@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
-References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,40 +48,68 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.10-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alain Volmat <alain.volmat@foss.st.com>
+From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
 
-commit a7351f0d3668b449fdc2cfd90403b1cb1f03ed6d upstream.
+[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
 
-Correct error handling within the dcmipp_create_subdevs by properly
-decrementing the i counter when releasing the subdevs.
+Christian noticed that it is possible for a privileged user to mount
+most filesystems with a non-initial user namespace in sb->s_user_ns.
+When fsopen() is called in a non-init namespace the caller's namespace
+is recorded in fs_context->user_ns. If the returned file descriptor is
+then passed to a process priviliged in init_user_ns, that process can
+call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
+with sb->s_user_ns set to the namespace of the process which called
+fsopen().
 
-Fixes: 28e0f3772296 ("media: stm32-dcmipp: STM32 DCMIPP camera interface driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Acked-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-[hverkuil: correct the indices: it's [i], not [i - 1].]
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is problematic. We cannot assume that any filesystem which does not
+set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
+mind, increasing the risk for bugs and security issues.
+
+Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
+not set for the filesystem and a non-initial user namespace will be
+used. sget() does not need to be updated as it always uses the user
+namespace of the current context, or the initial user namespace if
+SB_SUBMOUNT is set.
+
+Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
+Reported-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/super.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c
-+++ b/drivers/media/platform/st/stm32/stm32-dcmipp/dcmipp-core.c
-@@ -202,8 +202,8 @@ static int dcmipp_create_subdevs(struct
- 	return 0;
+diff --git a/fs/super.c b/fs/super.c
+index 2d762ce67f6e6..576abb1ff0403 100644
+--- a/fs/super.c
++++ b/fs/super.c
+@@ -781,6 +781,17 @@ struct super_block *sget_fc(struct fs_context *fc,
+ 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
+ 	int err;
  
- err_init_entity:
--	while (i > 0)
--		dcmipp->pipe_cfg->ents[i - 1].release(dcmipp->entity[i - 1]);
-+	while (i-- > 0)
-+		dcmipp->pipe_cfg->ents[i].release(dcmipp->entity[i]);
- 	return ret;
- }
- 
++	/*
++	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
++	 * not set, as the filesystem is likely unprepared to handle it.
++	 * This can happen when fsconfig() is called from init_user_ns with
++	 * an fs_fd opened in another user namespace.
++	 */
++	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
++		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
++		return ERR_PTR(-EPERM);
++	}
++
+ retry:
+ 	spin_lock(&sb_lock);
+ 	if (test) {
+-- 
+2.43.0
+
 
 
