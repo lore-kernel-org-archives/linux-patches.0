@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB5C188013;
-	Tue, 30 Jul 2024 16:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132B41A617E;
+	Tue, 30 Jul 2024 16:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722356478; cv=none; b=UoQ5ePbfM7nCofK23tBETBxOWxcU+u2QYLuX90IaUziUDrjBYnHVMNXrvtg4U4PCC2r0v/xuyBsv0HIjPdVmkdOTpIosFEmLT++mWWn9hh2dvECyNyDK1PYpfrnGFBISqVnGWe1tS3XHVtwaxbKA5WkCxcu7e3/CoswPkjs66Dc=
+	t=1722356481; cv=none; b=QQyrj8G7k3gHaznu46HzoZ7gfu6nYcNgj9GBPI3tFHJ7PwhhUOYBPfeSrSM/V9woAWWFs4i8gShFNkIuJMg74J+7wk5KOuBcGmQLqXvyc3a03XTBv+tmTtaUnqzUGTyxHUHPw33aMx3pLMIEUR9mnZlSMwHKnFYwLRDHq9vr0B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722356478; c=relaxed/simple;
-	bh=BTkFYPhFES3Jevnex3EWazpYo6lgAsoOAbdSykqhbcY=;
+	s=arc-20240116; t=1722356481; c=relaxed/simple;
+	bh=BIcfr4hXQ+pC82r3I20MgbbK2z87MxA+XxDWNCr+qb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BpHiVAvaKZLQjYXatjeQ88nc9dDk+URsbRyxA5nUrOP7ce6xkGfmUHLLS2QnsN2PK8U2mcKge2UaB2QiKpkL0XrUq5SEW5TBYCHbF9FDfL70GhjG9pM2l0ZfrK8LY/h4z9rIHz6g66Gr5Nz5XP/a6MK8QnT8s0ocTt2E4F6ApRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhB4MSnb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XF2x2eT2nvrbLMK6Z3/R7W9o6rAyAI7BoqAC2cSz41x3BvzDJm8pMBzREREZhQGhZixtPgjDh1SiT407Zt8TAish5qyR1VSLI4eO7yy4TUAlZSnieq0mK7iDltp0yP6U4fxbsRa1HMhF3mMSifEYNcJKSa/+//L7y4/gtAyyvRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txrjPW/U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhB4MSnb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6649EC32782;
-	Tue, 30 Jul 2024 16:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txrjPW/U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D868C32782;
+	Tue, 30 Jul 2024 16:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722356478;
-	bh=BTkFYPhFES3Jevnex3EWazpYo6lgAsoOAbdSykqhbcY=;
+	s=korg; t=1722356481;
+	bh=BIcfr4hXQ+pC82r3I20MgbbK2z87MxA+XxDWNCr+qb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YhB4MSnbhQKeDsB11KUvRC9mtQTv/KoCgiupQChd5AqBIB0JDwkW83s5e8CLqg9RT
-	 urWqocDzXqtUcINPQ1pPzchpfcdVFlfxKG23YxhdW2oTCbXuDsGfe/pHWClxup42dE
-	 Cz/kGevAqWKISEpFtN8lUqMA+apnzX6uiwpKPvdg=
+	b=txrjPW/Uoi54j+VKKkAXHcX/R69AFyM1Os0XGncUBDkYL3EyApTXBn98N/eDlDaFh
+	 ZW5327v3JMARD7UiuA7plH6a4jeYGy8vHR/hvpJ0WGjFU+sZp+VtVP5itr7o4Tu1tl
+	 LaPHvRUa5bWwA0CmxAzGWNJnOH3RzW2dHRw3IdHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Aleksandr Mishin <amishin@t-argos.ru>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/440] clk: qcom: gpucc-sm8350: Park RCGs clk source at XO during disable
-Date: Tue, 30 Jul 2024 17:47:08 +0200
-Message-ID: <20240730151623.488254355@linuxfoundation.org>
+Subject: [PATCH 6.6 152/568] wifi: rtw89: Fix array index mistake in rtw89_sta_info_get_iter()
+Date: Tue, 30 Jul 2024 17:44:19 +0200
+Message-ID: <20240730151645.817146516@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
+In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
+References: <20240730151639.792277039@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,58 +47,46 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Aleksandr Mishin <amishin@t-argos.ru>
 
-[ Upstream commit 313e2909023bef36ef7b6d1d9ff2d98febcaa28d ]
+[ Upstream commit 85099c7ce4f9e64c66aa397cd9a37473637ab891 ]
 
-The RCG's clk src has to be parked at XO while disabling as per the
-HW recommendation, hence use clk_rcg2_shared_ops to achieve the same.
+In rtw89_sta_info_get_iter() 'status->he_gi' is compared to array size.
+But then 'rate->he_gi' is used as array index instead of 'status->he_gi'.
+This can lead to go beyond array boundaries in case of 'rate->he_gi' is
+not equal to 'status->he_gi' and is bigger than array size. Looks like
+"copy-paste" mistake.
 
-Fixes: 160758b05ab1 ("clk: qcom: add support for SM8350 GPUCC")
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> # SM8350-HDK
-Link: https://lore.kernel.org/r/20240621-sm8350-gpucc-fixes-v1-1-22db60c7c5d3@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Fix this mistake by replacing 'rate->he_gi' with 'status->he_gi'.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
+Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://patch.msgid.link/20240703210510.11089-1-amishin@t-argos.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gpucc-sm8350.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/gpucc-sm8350.c b/drivers/clk/qcom/gpucc-sm8350.c
-index 5367ce654ac9a..cc9fcbc884650 100644
---- a/drivers/clk/qcom/gpucc-sm8350.c
-+++ b/drivers/clk/qcom/gpucc-sm8350.c
-@@ -2,6 +2,7 @@
- /*
-  * Copyright (c) 2019-2020, The Linux Foundation. All rights reserved.
-  * Copyright (c) 2022, Linaro Limited
-+ * Copyright (c) 2024, Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- 
- #include <linux/clk.h>
-@@ -147,7 +148,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
- 		.parent_data = gpu_cc_parent_data_0,
- 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
-@@ -169,7 +170,7 @@ static struct clk_rcg2 gpu_cc_hub_clk_src = {
- 		.parent_data = gpu_cc_parent_data_1,
- 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_1),
- 		.flags = CLK_SET_RATE_PARENT,
--		.ops = &clk_rcg2_ops,
-+		.ops = &clk_rcg2_shared_ops,
- 	},
- };
- 
+diff --git a/drivers/net/wireless/realtek/rtw89/debug.c b/drivers/net/wireless/realtek/rtw89/debug.c
+index d162e64f60647..94fe921e9ff28 100644
+--- a/drivers/net/wireless/realtek/rtw89/debug.c
++++ b/drivers/net/wireless/realtek/rtw89/debug.c
+@@ -3292,7 +3292,7 @@ static void rtw89_sta_info_get_iter(void *data, struct ieee80211_sta *sta)
+ 	case RX_ENC_HE:
+ 		seq_printf(m, "HE %dSS MCS-%d GI:%s", status->nss, status->rate_idx,
+ 			   status->he_gi <= NL80211_RATE_INFO_HE_GI_3_2 ?
+-			   he_gi_str[rate->he_gi] : "N/A");
++			   he_gi_str[status->he_gi] : "N/A");
+ 		break;
+ 	}
+ 	seq_printf(m, " BW:%u", rtw89_rate_info_bw_to_mhz(status->bw));
 -- 
 2.43.0
 
