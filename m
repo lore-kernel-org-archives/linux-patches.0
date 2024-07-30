@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA571A6192;
-	Tue, 30 Jul 2024 16:33:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B0B8BE8;
+	Tue, 30 Jul 2024 16:33:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722357236; cv=none; b=Y1TtqbZA0PO6eLKlLd8+bZ8b2P9O/kBAaU7OHzxzKXcpTtXD7nNYwZqg+path75oO4KebCxo+Kb0QOGxRItiyXB36gFec8xZI66pVQuRosEhIJOD8mw83XabhqCP/ne0nDNjcr1pdwI92q8AoguEVXJuTItw/iuyvaKM6W0alX4=
+	t=1722357239; cv=none; b=DEaFQ2it3HP/5rB+K4OfFVyd/Jtp0HejUTvYkYkksuhkHcMLsWO2CNRXMIlohiaFkBS8AqFaz1Ezn/VdAnUL+qLFlDp/P2W9XcuGMXnrpBqoZ3TvE/z571JD+07NM0InfbaS00LOLMBrP3sAyZ/+dIss4bt6+bh5BtoMo2UYd7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722357236; c=relaxed/simple;
-	bh=ECCxSbS0eXW1EwuYGuT5JMmr1IxOTA0jYP2TNCLWtLA=;
+	s=arc-20240116; t=1722357239; c=relaxed/simple;
+	bh=9jvsUP/qLpuA4Ul36TOMI5HfOaT4z/odrRPdwCNKz2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGxUfNYJ+sJKpPsgBLnwKr+GgKOLdn6MaBJK645x20idXHavqcUp+dY0iWgYf983A7vi6eBYNuOqYW8hU+pJZifK+wfG/VpCHssKimftKKGQmgS6IxH1CbY7tW95UF/Kgr7u/yozt/ci+Kp1Am64nQawwDhdF953pT4upq9ZvOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbhEHOKV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=m7I2RX7o2tW0dHRyM1syacFKl57nTcafAkAQCUqLwP6dVR8p2Ah81iGllduhB4hQS6aamgved8kP/zqqhFV8zu9lCJccMocczUIkoKjB9WeJ0ZARR9wR6F5tGmgqUYjvLX0sXErN/MVOMFDjWGNr1sNCeRTgGNh8ylW1I3lcLMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z5hEB90E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbhEHOKV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4E96C32782;
-	Tue, 30 Jul 2024 16:33:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z5hEB90E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01AC0C32782;
+	Tue, 30 Jul 2024 16:33:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722357236;
-	bh=ECCxSbS0eXW1EwuYGuT5JMmr1IxOTA0jYP2TNCLWtLA=;
+	s=korg; t=1722357239;
+	bh=9jvsUP/qLpuA4Ul36TOMI5HfOaT4z/odrRPdwCNKz2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbhEHOKVbY0UcsVniDMa6achWs/jW2s5WqMOF4z57E7iOVBCScZrvjHGpMM/VifBV
-	 LOw1aVsMDib8lddHnWMdipLH+CTXwmZJ2U63iAoZTwJcFVwAD0u/nRR8Z/S01i9r6i
-	 Q9/tJhrMYIiFloNPFe0oEUDRoZ25mPzhzB61nR5k=
+	b=Z5hEB90Eu57GgAu3hDc82wY/VQ25zv6UOvwxUHNDXu5KVSkYSHEGXtEVYFuw8dFQw
+	 NHhegh/hsi+KmiHzfcYZ0mDN4pPHoOVcDsksPciY2aJO4ogJd3dtZC+1o0kpzhlanA
+	 sEbZR3P2l42NMepNkdiYs2KZ/9WTwqSr1zBi7YMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/568] drm/mediatek/dp: switch to ->edid_read callback
-Date: Tue, 30 Jul 2024 17:45:39 +0200
-Message-ID: <20240730151648.948528136@linuxfoundation.org>
+	Wei Xu <weixugc@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	Alexander Motin <mav@ixsystems.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 272/440] mm/mglru: fix div-by-zero in vmpressure_calc_level()
+Date: Tue, 30 Jul 2024 17:48:25 +0200
+Message-ID: <20240730151626.458853987@linuxfoundation.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-References: <20240730151639.792277039@linuxfoundation.org>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+References: <20240730151615.753688326@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -47,106 +48,55 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Yu Zhao <yuzhao@google.com>
 
-[ Upstream commit 0c13bd9bf444b0dfb2e9ea0d26915f310cc8ad6a ]
+commit 8b671fe1a879923ecfb72dda6caf01460dd885ef upstream.
 
-Prefer using the struct drm_edid based callback and functions.
+evict_folios() uses a second pass to reclaim folios that have gone through
+page writeback and become clean before it finishes the first pass, since
+folio_rotate_reclaimable() cannot handle those folios due to the
+isolation.
 
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/3d783478e25e71f12f66c2caedb1f9205d4d8a44.1706038510.git.jani.nikula@intel.com
-Stable-dep-of: 8ad49a92cff4 ("drm/mediatek/dp: Fix spurious kfree()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The second pass tries to avoid potential double counting by deducting
+scan_control->nr_scanned.  However, this can result in underflow of
+nr_scanned, under a condition where shrink_folio_list() does not increment
+nr_scanned, i.e., when folio_trylock() fails.
+
+The underflow can cause the divisor, i.e., scale=scanned+reclaimed in
+vmpressure_calc_level(), to become zero, resulting in the following crash:
+
+  [exception RIP: vmpressure_work_fn+101]
+  process_one_work at ffffffffa3313f2b
+
+Since scan_control->nr_scanned has no established semantics, the potential
+double counting has minimal risks.  Therefore, fix the problem by not
+deducting scan_control->nr_scanned in evict_folios().
+
+Link: https://lkml.kernel.org/r/20240711191957.939105-1-yuzhao@google.com
+Fixes: 359a5e1416ca ("mm: multi-gen LRU: retry folios written back while isolated")
+Reported-by: Wei Xu <weixugc@google.com>
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+Cc: Alexander Motin <mav@ixsystems.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dp.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ mm/vmscan.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dp.c b/drivers/gpu/drm/mediatek/mtk_dp.c
-index af03a22772fed..ff8436fb6e0d8 100644
---- a/drivers/gpu/drm/mediatek/mtk_dp.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dp.c
-@@ -2027,12 +2027,12 @@ static enum drm_connector_status mtk_dp_bdg_detect(struct drm_bridge *bridge)
- 	return ret;
- }
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -5065,7 +5065,6 @@ retry:
  
--static struct edid *mtk_dp_get_edid(struct drm_bridge *bridge,
--				    struct drm_connector *connector)
-+static const struct drm_edid *mtk_dp_edid_read(struct drm_bridge *bridge,
-+					       struct drm_connector *connector)
- {
- 	struct mtk_dp *mtk_dp = mtk_dp_from_bridge(bridge);
- 	bool enabled = mtk_dp->enabled;
--	struct edid *new_edid = NULL;
-+	const struct drm_edid *drm_edid;
- 	struct mtk_dp_audio_cfg *audio_caps = &mtk_dp->info.audio_cur_cfg;
- 
- 	if (!enabled) {
-@@ -2040,7 +2040,7 @@ static struct edid *mtk_dp_get_edid(struct drm_bridge *bridge,
- 		mtk_dp_aux_panel_poweron(mtk_dp, true);
+ 		/* retry folios that may have missed folio_rotate_reclaimable() */
+ 		list_move(&folio->lru, &clean);
+-		sc->nr_scanned -= folio_nr_pages(folio);
  	}
  
--	new_edid = drm_get_edid(connector, &mtk_dp->aux.ddc);
-+	drm_edid = drm_edid_read_ddc(connector, &mtk_dp->aux.ddc);
- 
- 	/*
- 	 * Parse capability here to let atomic_get_input_bus_fmts and
-@@ -2048,17 +2048,26 @@ static struct edid *mtk_dp_get_edid(struct drm_bridge *bridge,
- 	 */
- 	if (mtk_dp_parse_capabilities(mtk_dp)) {
- 		drm_err(mtk_dp->drm_dev, "Can't parse capabilities\n");
--		kfree(new_edid);
--		new_edid = NULL;
-+		drm_edid_free(drm_edid);
-+		drm_edid = NULL;
- 	}
- 
--	if (new_edid) {
-+	if (drm_edid) {
-+		/*
-+		 * FIXME: get rid of drm_edid_raw()
-+		 */
-+		const struct edid *edid = drm_edid_raw(drm_edid);
- 		struct cea_sad *sads;
- 
--		audio_caps->sad_count = drm_edid_to_sad(new_edid, &sads);
-+		audio_caps->sad_count = drm_edid_to_sad(edid, &sads);
- 		kfree(sads);
- 
--		audio_caps->detect_monitor = drm_detect_monitor_audio(new_edid);
-+		/*
-+		 * FIXME: This should use connector->display_info.has_audio from
-+		 * a path that has read the EDID and called
-+		 * drm_edid_connector_update().
-+		 */
-+		audio_caps->detect_monitor = drm_detect_monitor_audio(edid);
- 	}
- 
- 	if (!enabled) {
-@@ -2066,7 +2075,7 @@ static struct edid *mtk_dp_get_edid(struct drm_bridge *bridge,
- 		drm_atomic_bridge_chain_post_disable(bridge, connector->state->state);
- 	}
- 
--	return new_edid;
-+	return drm_edid;
- }
- 
- static ssize_t mtk_dp_aux_transfer(struct drm_dp_aux *mtk_aux,
-@@ -2418,7 +2427,7 @@ static const struct drm_bridge_funcs mtk_dp_bridge_funcs = {
- 	.atomic_enable = mtk_dp_bridge_atomic_enable,
- 	.atomic_disable = mtk_dp_bridge_atomic_disable,
- 	.mode_valid = mtk_dp_bridge_mode_valid,
--	.get_edid = mtk_dp_get_edid,
-+	.edid_read = mtk_dp_edid_read,
- 	.detect = mtk_dp_bdg_detect,
- };
- 
--- 
-2.43.0
-
+ 	spin_lock_irq(&lruvec->lru_lock);
 
 
