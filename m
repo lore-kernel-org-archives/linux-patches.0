@@ -1,105 +1,194 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E0A12CD8B;
-	Wed, 31 Jul 2024 06:07:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A1715884D
+	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 07:07:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722406043; cv=none; b=qnfOzu6DJR06g5H71t5/Ua+rgiIZSykbRlKZpdg2jVFZwKVvJfCfAwe3248Hf8LLYGZKJVgaMhDM7acmpW0jSaKt8dqeWbbF7pRYIFzJoZ5zZsKfxgAtihALVl9hLJGJKN1uy2GWjIP0XpDXLgdaQDwe7/nCTYy0aaPFKAeMps0=
+	t=1722409648; cv=none; b=qxddhQRH8o1YNmHQUT1dXeQdJ0DMJLoe2RmdjnaCqzhQnKOz3dp9GryqrOJJy3ycLgDN451gstP87cwq7kaAup3+lO8T+/yeLm4PRhCqb3PHGO8WGfkKn+Vq+DASvQDbWmr06Gj7YelPM1bk851GQuYjb7AQqb1QqzmTF5mrvAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722406043; c=relaxed/simple;
-	bh=m9H/vZfzxCiO48tSjGipkOtUHTQ4Uyip2hjeMCtMCqA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pgu8BN6q3DgmGm/XYLeme7fAGHEZlhhuh36OKHnPthiHF2rsXuGt2Dg3ZlklUKf8vbEW8vEvt2Ms9QOvBVrkPAYn4s2cu8Ga29dnypGpYzOCZFi9mfq37jJDGpCEQwm6Tu0jLDw4TQtsj5rH0eQ3X4MVX09Dy9DpdoEAgR6QaZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c2SlwS+j; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1722409648; c=relaxed/simple;
+	bh=YPyvNeoLsZV/8SRLmt6tzoyEftxMwY363Jj6/4Cvt9E=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T+UlTTB5Umr+f90cyrhZVjUQHStHCq2bvHfzWlPDI7o4lEp7CS4IMCaXKuE5RtskmAua8dhA/V5OIbYk5H2iTnB87ST69AmQUZi2NM+QzToqzVt/QwBiDt+AJao6zsh1Gq8eY1i5qeMaCCg+SOhp6yE2J+rQV7wfnfvT3wELaQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L7hr+4vy; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c2SlwS+j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4098C116B1;
-	Wed, 31 Jul 2024 06:07:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722406043;
-	bh=m9H/vZfzxCiO48tSjGipkOtUHTQ4Uyip2hjeMCtMCqA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=c2SlwS+jpaXWYY091/o+2qnnDX4Um8yrPpS0AxL6ubKIuQ0cQwIiApldEOTv73GWb
-	 mPYhI6Jem8oVooUxH9sskfBfN3aNL9B4XURjDukQLAkNUtQQW0P8OgWHL/5R0Tb8It
-	 McfeN3sdfN0cNK0OCyS2ibT0Xq+9lSKc3aqthJeA=
-Date: Wed, 31 Jul 2024 08:07:15 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Frank Scheiner <frank.scheiner@web.de>
-Cc: akpm@linux-foundation.org, allen.lkml@gmail.com, broonie@kernel.org,
-	conor@kernel.org, f.fainelli@gmail.com, jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org, linux@roeck-us.net,
-	lkft-triage@lists.linaro.org, patches@kernelci.org,
-	patches@lists.linux.dev, pavel@denx.de, rwarsow@gmx.de,
-	shuah@kernel.org, srw@sladewatkins.net, stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org
-Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc1 review
-Message-ID: <2024073137-scouting-wooing-ec33@gregkh>
-References: <20240730151615.753688326@linuxfoundation.org>
- <de6f52bb-c670-4e03-9ce1-b4ee9b981686@web.de>
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L7hr+4vy"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-a7ab63a388bso416448766b.1
+        for <patches@lists.linux.dev>; Wed, 31 Jul 2024 00:07:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1722409644; x=1723014444; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Tpy+nnibbUxT24aBwgVje1ug92d+vgtxsaPNSOQztMA=;
+        b=L7hr+4vyE4pDdTw5FSkwIBBV3VaD+RbZhm/A/OcG+PoyMjEAUG/fbFIVihV5wOdZBN
+         exO1yDCDdmxe6U4pWQHw1vbs3o5XFvRjV1Snwu1A5k1vfWj+9fpEnKzV1/3zkdEJ6oby
+         4NakS3CJUKA+4UPJhhkQ3Kaffg56LPiCKSebQjj5UJsFy3Ps5kgnCCQ82qejXaBue1Rr
+         QolWRfwIDS/N1N4QgKkESllRbaN93yPoGiQxMC7V8VVuX1lk3gtc1qJaVzoPE2OaRO6Y
+         bcrRPDhORZTSoFnZnsnyQvof/E+HSvMoBBMyB0aTSswDQgyoBWcoaNrKnjtKSzg66z70
+         2kmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722409644; x=1723014444;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tpy+nnibbUxT24aBwgVje1ug92d+vgtxsaPNSOQztMA=;
+        b=tjt+YOjV5ObHBb/+nnrp53aYaRsriomYlpPNPwNu1G5Eob+WHfV7vt2xvSeL2j6Vhn
+         9B1tJJygB82Lfk3qXUJDxAd7GyMKzib/e+YXzKNNDML8X29j0KSrpDNG4kp7tRofuMUL
+         p5lgyKfaYXDrzxHQsniqmwS61kqtMabWWpUqr0giuHY5gZKLV5pYvqoFcfrtAPrZpJz8
+         o4ub3jPd1WoP4G4439fk8a+AflhjXgu9KgIF8RGymBmLw7qgY01JOt0clFXfmEP14hE9
+         7E3LTSeuQQpgu5G7UhbOKLwjCmVQFyewuldtOg6RHP+413eYGnhmySDV3Ugk385gDo4a
+         1wXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7Pq1Epgj4usxuMYLbNWRn4NfSV9ozknK8QlpRYxpwXzwjJvJ5R2vw0iowjOIRoyXlnPphUFxdoFVX3IizMDOAlluWQBPGvQ==
+X-Gm-Message-State: AOJu0Yyhpgpap9MDidH3lb3Rn5Xg+pmdUFsXlFsR60Z048z73ydXqQQg
+	P5xf8qXa5M56bdDvqqf6oHCZzjpplGRzbaQmGSR3WtDjyA9KSZnl6z2t0Npbe3B7+MhOYb3hUY3
+	yrOK/tXgum8SsuCDtz+pb4EdoheibFutcToz4vg==
+X-Google-Smtp-Source: AGHT+IGZexRCl8N0H7iNZBGguludMOGdSOIQzKBFKm/K8c3Qp5kaS9pSyHKHgpZH79otFq1q9zgflZQKxZFwQLjP0Sw=
+X-Received: by 2002:a05:6402:51cc:b0:5a1:de88:a5ef with SMTP id
+ 4fb4d7f45d1cf-5b02317f4c0mr11460864a12.27.1722409643609; Wed, 31 Jul 2024
+ 00:07:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <de6f52bb-c670-4e03-9ce1-b4ee9b981686@web.de>
+References: <20240730151724.637682316@linuxfoundation.org>
+In-Reply-To: <20240730151724.637682316@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Wed, 31 Jul 2024 12:37:10 +0530
+Message-ID: <CA+G9fYvDT-Ek263796cuaOLCPMDAC3Gu6OkG=dSAP9CfBPYU5w@mail.gmail.com>
+Subject: Re: [PATCH 6.10 000/809] 6.10.3-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jul 31, 2024 at 01:24:25AM +0200, Frank Scheiner wrote:
-> Dear Greg,
-> 
-> 6259151c04d4e0085e00d2dcb471ebdd1778e72e from mainline is missing in
-> 6.1.103-rc1 and completes 39823b47bbd40502632ffba90ebb34fff7c8b5e8.
-> 
-> Please note that the second hunk from 6259151 needs to be modified to
-> cleanly apply to 6.1.103-rc1. Example on [1].
-> 
-> [1]:
-> https://github.com/linux-ia64/linux-stable-rc/blob/__mirror/patches/linux-6.1.y/6259151c04d4e0085e00d2dcb471ebdd1778e72e.patch
-> 
-> ****
-> 
-> ## Long version ##
-> 
-> This patch series breaks operation of the hp-sim kernel in ski. I think
-> it happens when trying to access the ext4 root FS in the simulation, see
-> for example [2] for more details.
-> 
-> [2]: https://github.com/linux-ia64/linux-stable-rc/issues/3
-> 
-> From the call trace:
-> ```
-> [...]
-> [<a0000001000263f0>] die+0x1b0/0x3e0
-> [<a00000010004bd40>] ia64_do_page_fault+0x680/0x9c0
-> [<a00000010000c4e0>] ia64_leave_kernel+0x0/0x280
-> [<a00000010063f6a0>] dd_limit_depth+0x80/0x140
-> [...]
-> ```
-> 
-> ...I tracked it down to [3] and following the linked discussion ([4]),
-> this is actually patch 2 of 2. And 1 of 2 ([5]) is in upstream, but not
-> in 6.1.103-rc1.
-> 
-> [3]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=39823b47bbd40502632ffba90ebb34fff7c8b5e8
-> 
-> [4]: https://lore.kernel.org/all/20240509170149.7639-3-bvanassche@acm.org/
-> 
-> [5]:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=6259151c04d4e0085e00d2dcb471ebdd1778e72e
-> 
-> Applying that patch ([5]) (plus adapting hunk #2 of it) on top of
-> 6.1.103-rc1 fixes it for me ([6]).
-> 
-> [6]:
-> https://github.com/linux-ia64/linux-stable-rc/actions/runs/10170700172#summary-28130632329
+On Tue, 30 Jul 2024 at 21:22, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.10.3 release.
+> There are 809 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 01 Aug 2024 15:14:54 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.3-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-Thanks for this, I'll just drop the original offending commit here as
-that seems like the simplest way.  If these really need to be in the
-6.1.y tree, I'll be glad to take a backported series that people have
-tested to verify it all works properly.
 
-greg k-h
+As others reported,
+
+Following perf build warnings / errors noticed on stable-rc 6.10 for x86_64,
+arm64, arm and i386 with gcc-13 toolchain.
+
+Perf build regressions:
+----
+* arm, build
+  - gcc-13-lkftconfig-perf
+* arm64, build
+  - gcc-13-lkftconfig-perf
+* i386, build
+  - gcc-13-lkftconfig-perf
+* x86_64, build
+  - gcc-13-lkftconfig-perf
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+Perf build logs:
+-------------
+tests/pmu.c: In function 'test__name_len':
+tests/pmu.c:400:32: error: too few arguments to function
+'pmu_name_len_no_suffix'
+  400 |         TEST_ASSERT_VAL("cpu", pmu_name_len_no_suffix("cpu")
+== strlen("cpu"));
+      |                                ^~~~~~~~~~~~~~~~~~~~~~
+tests/tests.h:15:15: note: in definition of macro 'TEST_ASSERT_VAL'
+   15 |         if (!(cond)) {
+          \
+      |               ^~~~
+In file included from tools/perf/util/evsel.h:13,
+                 from tools/perf/util/evlist.h:14,
+                 from tests/pmu.c:2:
+tools/perf/util/pmus.h:8:5: note: declared here
+    8 | int pmu_name_len_no_suffix(const char *str, unsigned long *num);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+tests/pmu.c:401:33: error: too few arguments to function
+'pmu_name_len_no_suffix'
+  401 |         TEST_ASSERT_VAL("i915", pmu_name_len_no_suffix("i915")
+== strlen("i915"));
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~
+tests/tests.h:15:15: note: in definition of macro 'TEST_ASSERT_VAL'
+   15 |         if (!(cond)) {
+          \
+      |               ^~~~
+tools/perf/util/pmus.h:8:5: note: declared here
+    8 | int pmu_name_len_no_suffix(const char *str, unsigned long *num);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+tests/pmu.c:402:36: error: too few arguments to function
+'pmu_name_len_no_suffix'
+  402 |         TEST_ASSERT_VAL("cpum_cf",
+pmu_name_len_no_suffix("cpum_cf") == strlen("cpum_cf"));
+      |                                    ^~~~~~~~~~~~~~~~~~~~~~
+tests/tests.h:15:15: note: in definition of macro 'TEST_ASSERT_VAL'
+   15 |         if (!(cond)) {
+          \
+      |               ^~~~
+tools/perf/util/pmus.h:8:5: note: declared here
+    8 | int pmu_name_len_no_suffix(const char *str, unsigned long *num);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+tests/pmu.c:405:33: error: too few arguments to function
+'pmu_name_len_no_suffix'
+  405 |
+pmu_name_len_no_suffix(uncore_chas[i]) ==
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~
+tests/tests.h:15:15: note: in definition of macro 'TEST_ASSERT_VAL'
+   15 |         if (!(cond)) {
+          \
+      |               ^~~~
+tools/perf/util/pmus.h:8:5: note: declared here
+    8 | int pmu_name_len_no_suffix(const char *str, unsigned long *num);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+tests/pmu.c:410:33: error: too few arguments to function
+'pmu_name_len_no_suffix'
+  410 |                                 pmu_name_len_no_suffix(mrvl_ddrs[i]) ==
+      |                                 ^~~~~~~~~~~~~~~~~~~~~~
+tests/tests.h:15:15: note: in definition of macro 'TEST_ASSERT_VAL'
+   15 |         if (!(cond)) {
+          \
+      |               ^~~~
+tools/perf/util/pmus.h:8:5: note: declared here
+    8 | int pmu_name_len_no_suffix(const char *str, unsigned long *num);
+      |     ^~~~~~~~~~~~~~~~~~~~~~
+tests/pmu.c: In function 'test__name_cmp':
+tests/pmu.c:418:34: error: implicit declaration of function
+'pmu_name_cmp'; did you mean 'test__name_cmp'?
+[-Werror=implicit-function-declaration]
+  418 |         TEST_ASSERT_EQUAL("cpu", pmu_name_cmp("cpu", "cpu"), 0);
+      |                                  ^~~~~~~~~~~~
+tests/tests.h:23:13: note: in definition of macro 'TEST_ASSERT_EQUAL'
+   23 |         if (val != expected) {
+          \
+      |             ^~~
+cc1: all warnings being treated as errors
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
