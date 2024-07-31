@@ -1,114 +1,82 @@
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.130])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2313812B71;
-	Wed, 31 Jul 2024 15:13:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.130
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C281799F;
+	Wed, 31 Jul 2024 15:54:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722438831; cv=none; b=o7OF84qdMxDs0tF/SFc2ns6a9xhwlXfit+BkOQtH1zXh1iI0JEs0nDnkEfIgnl4fQVCzw4vagR5AE26L8lTtQ6hFOyO26KrY83DD9BR+KkbnEcc3220oMYeY+DC/uHUtPw3DfGLRMMKPFWnyXCRGhUcKOWNlGe0FKTUxo9LJ0z0=
+	t=1722441277; cv=none; b=cgs0u/EFNFARr+W6PpgS1pK77ZykuvVzJ+DY1lgCHcgpUp/rWSi/gUQ/+rkLybHwgPK7fSUXdn71nIyeTLu5I8ppbxIVtDNJyDbqE9y/n+wsXEmboIG3DLPnNuRdVUa1kC9oiOyiqfxdE58O21mNuC/sjPXCUl+tJu9FP6a2jzY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722438831; c=relaxed/simple;
-	bh=TNAtonRidmna81IBY8G3UGvtn9tX31MGv18W/k8LTLE=;
+	s=arc-20240116; t=1722441277; c=relaxed/simple;
+	bh=QB/+oRrzERp7DM97KpOzJ2rbZl1zjzVLdZiMQA3ZbIg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=od3dDpzniUHlOtwogxG4+xWTQmw6u5Dxf/+KtHaVX0frKZicqLCFOFMFW7p3kDlgV7cq4Mnlj5X1cKjcxX2jeDw96/C+GUosm3lwsgOJ4BTvj6N0HsExv7HucXyUbmptaos/sWmdVQmsiqfZDT7qlnK/uuZQxfLx3DBUmgf241E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu; spf=pass smtp.mailfrom=heusel.eu; dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b=u+3/e0Dt; arc=none smtp.client-ip=212.227.126.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=heusel.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=heusel.eu
+	 Content-Type:Content-Disposition:In-Reply-To; b=thcE8ReHgdHxSc99jo6uV+0xRxYFTK/vU+ursKY/rkL/bt2knSKsnN1AdYRHRxExNX1lrwCLtp5MARRUUsXXb0pjUfplEsEi4yrtmG1zix5JjJ1I7GSSP8QbApp0Uricme/WGSe0wJlu83SWh40vML02JcuCUmjlWs7LXI9omMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Akto6h+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=heusel.eu header.i=christian@heusel.eu header.b="u+3/e0Dt"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=heusel.eu;
-	s=s1-ionos; t=1722438755; x=1723043555; i=christian@heusel.eu;
-	bh=fiuN9fTjYPSMySejhaU8aJ/MESvbQXsZn6JAwSDbzoY=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=u+3/e0Dt4tdSfpFLyFjUl6smtzg7Vx1Q1LJu236Bi6Pdwlm05H6JT7gQSuNwSy0F
-	 zRvEADi+nS398VOq143zX5wzYTyVDnTFKyfMLvfDq4pq76CvlLfghqwzGjwoTHRYv
-	 7pFbAoqBBbkRW7DO7TP4cALFiXUI3zh3wNDd04YEfXERfXEkMN9liS61t0vbykPBo
-	 96wiM+4bFfYH+gDTzRbK32MNTeIdDRi349TVFcp3WzyJq3b5K3DAtlLx6CW0uIn+r
-	 NBF8CWpmFIIbzAp9zJp79sh/bH670SfH5JkktU78RwO/haEzvLW0hj7OkNC+b0bUO
-	 CkxSW8SedJ+DSMKM7g==
-X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
-Received: from localhost ([129.206.226.57]) by mrelayeu.kundenserver.de
- (mreue012 [212.227.15.167]) with ESMTPSA (Nemesis) id
- 1N3Xvv-1s8brM2e1L-012igo; Wed, 31 Jul 2024 17:12:35 +0200
-Date: Wed, 31 Jul 2024 17:12:34 +0200
-From: Christian Heusel <christian@heusel.eu>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Akto6h+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A467C116B1;
+	Wed, 31 Jul 2024 15:54:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722441276;
+	bh=QB/+oRrzERp7DM97KpOzJ2rbZl1zjzVLdZiMQA3ZbIg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Akto6h+ZxZrA9Tr2b/3OKLTudUDg/9UN/tYPgKlZ2pOpH9a/1lNPLCXBFaYJVBLdD
+	 Ii36GLDGzfKvUo5YZcpM+R2zW62G9j7lgcWJnMRaOwEKaO4HFkbAJP1NMxHO/o6CU8
+	 PsAfxVD/TpvTHv1IBdMXyq3gu6k1zRXrS0OcklR9V+PcrzXtKJeYyHYMosRlBQkxAY
+	 aFOsUTAbImzIPCmcG3VaPW0UqA136q5j3GR5QR0DUUdu/0rOryR42+B+breO8z6icL
+	 khfJZ5AW4mJ9h5yNxV0y3FzjQG1brOYA1pspFkDb7y4P5F3omFFF/Xhcnv61+KUanr
+	 dRjHTCD1jcGew==
+Date: Wed, 31 Jul 2024 16:54:30 +0100
+From: Mark Brown <broonie@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, 
-	allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.10 000/809] 6.10.3-rc3 review
-Message-ID: <47c19dd0-b9fc-490b-ada7-3e2fd74c32f1@heusel.eu>
-References: <20240731095022.970699670@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com
+Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc3 review
+Message-ID: <481386a9-e85e-4923-be7a-f95e783a112e@sirena.org.uk>
+References: <20240731100057.990016666@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cflmrewle6jrucdq"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gRTQ4DHMYcmn+phQ"
 Content-Disposition: inline
-In-Reply-To: <20240731095022.970699670@linuxfoundation.org>
-X-Provags-ID: V03:K1:fPz2yEFyjf42LoBYm0wjWV7TJYdOYLZfAv5I1xJC5lw+EpAFNoE
- beSr/qV/J+MqsLcIzPYaAc4/Z9FMEp5Jv2ZWOMh7Vz9vYJRTXGUXTIgu5Am92BTzbCpiJi4
- FP1s3cKUfLTK/07yFCiRpBdEWrjgFrVpD2oFwLxhXsGgJprIEODG+WPDiK/PDwrQkg+4GDS
- xapcnO+zUJn/9S4HYQSmQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:zJPtp1StDLI=;7RB2+PUw1FOq1De1ZUu7NVEbg+P
- iU05n04wMlOd9H88p3LIlB2FXkchH6QVJy7tNlM79fyq5s7hEeDPRo+iz0HZQUNKruomp0oEj
- LTg6G/moeQBsEcdVR2ad1CcASgupAi8sHhuUD7b6NzRtmO6dTMzWOkqM3hi+dG6eg264hAJbR
- WVSnGL9vnwGertfrH9TJ33FBf3SAc7SU9ZPq4g9BK0c/XjLkjS0iC9kDW8a3IK2lsH3VBOD+E
- M3VR4Po3vOthRycVhKtmJ5fj/YkTCNqd1K1gfHHsJBCE6zW5Gf9GT9CsBuo6y5LtddCtVcFde
- UteN1GMoinRX+a9+5EDWuJY8fuFRLt8EHo8TMhb+Y6T2kY2hIDsGe6NZrrO/8W0XXHW+W4P+m
- 1XiziBYUQG/Wh/sQCaphhyuOaDlSxQ5Y31gARZrFeK2yFehU1R5dEigAI9TkmFdZXxEmwRkcD
- HVokdfnTUXF1ymK5l9ruQNh3ukKuwfciZCOkEt9GJw2oSwtnGulrgoPNp2gFH6y8PLhw72l8l
- /5kZF8K9aCRNLJCfiDvXj3FZjAUtTGWwNqlRHq8jghWS8Hp4eryOIqofF4GP1m7GYQAumJwtS
- LNDcHJPaoDuPdRnx/Pv/8ocv5MJfY8OtsjN2m3zyr7NQfthhr2UFmWosaDHYDCcxSHN05oaN1
- iJUHCBsrKMA8b7NmzlbCGShzOl3APVxgrQJkavgXOynK4mh0qH4SwM5s+vQ0q0yp1FXs51t58
- Lf9wJOSLDMQFugzd3iFzKAFvjjLKRpT4w==
+In-Reply-To: <20240731100057.990016666@linuxfoundation.org>
+X-Cookie: You are number 6!  Who is number one?
 
 
---cflmrewle6jrucdq
+--gRTQ4DHMYcmn+phQ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 24/07/31 12:03PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.3 release.
-> There are 809 patches in this series, all will be posted as a response
+On Wed, Jul 31, 2024 at 12:02:57PM +0200, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.103 release.
+> There are 440 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
-> Responses should be made by Fri, 02 Aug 2024 09:47:47 +0000.
-> Anything received after that time might be too late.
->=20
 
-Tested-by: Christian Heusel <christian@heusel.eu>
+Tested-by: Mark Brown <broonie@kernel.org>
 
-Tested on a ThinkPad E14 Gen 3 with a AMD Ryzen 5 5500U CPU
-
---cflmrewle6jrucdq
+--gRTQ4DHMYcmn+phQ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEb3ea3iR6a4oPcswTwEfU8yi1JYUFAmaqVGIACgkQwEfU8yi1
-JYWW6BAAgMb43zlVQ1DaIuqk2kv7cdamBQXFOU6cQz60p5UgvKCgZkYt6nBbHsz0
-FmsnlIlunEe6K6TR3evgcH88R3he0XkLhXAPS672YKtYytRlbIQ1KWNlYqSmp0WP
-5c6tZdq2O8TmKaFzBU0ZFS3C9wh1MfilSxUrfC8B4tGcnDL+YkHjUq770sUYENoq
-21pq9Ne0/ALF6/ID9ck2p2tyh7WwJ1+A07RBoJV8Z0b9cGBevozRtKaw+5BuZUBf
-V4Yiwa/1gvp8MAL/6CbRHBwj+r9x79oxkDH+GKEPZUJzW0R0y6cDqy1Mw3hWL5uw
-h9VXo9qY+qZvVUHC6pIfbWhB4QCDPyBh13v6pFcQ6tNT08VN2n24kjNI6X0yphfZ
-WQeQN+t2psI85rzFfqQA6/33R+Lhr6Ypaep+fGGvoWWZzdwgltZuAnjgBQ8d6qPW
-cvSAMpe86Np5bXpTOHE/pjFiY7kw4/gzccsMiv/QxO0/b62u0u2cYC8+vQ3O74xD
-BJutJ210o24ESKE4UrIEFLcwsYx+SXWwzLeRE6n/28piWwfsEgd9Ojo82K6p1KMN
-xAzTxOLm1hI5b+UIOO3MoqMGpCDtAdIyXm8r5VNW+s78wurxY75hUuPubHA959b7
-V3bNEm6Ocmssc5IJSUgkCyZyRmpYf8C7y5o4eA3pLGYbjjH+PXE=
-=m2sJ
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmaqXjUACgkQJNaLcl1U
+h9Anawf/Su5y8CkNmA5i1IbvNfqjeQufcLBIes9TXxqkphGmY5n25Arkz2BWk5TU
+judfyZfiXxNnyAkyOX9KBUmfjiN1leoNI4NBPzdyW9GIhBd5pHIkhq1BGzuqnQQp
+vTClR1ee7I4S/qpVx3eKgxjIhAkzh27NDGEIQVurrkG/SQqjpsZq6FsnnV9BQDSH
+2i5ZfDDvp1Fep/t0bijahVqY355EhKZ1PPZQyigjvFpLYmiDA98oli20aCrvDRXL
+9+38wKOBqlaYwXBhp5D8yIXFpIAXMPCqpin3bja2orSvdEadpxlqY06DG0SJXU9v
+318DOEa4PGSpWk6nqxWJ16iSfNNybA==
+=Zzhz
 -----END PGP SIGNATURE-----
 
---cflmrewle6jrucdq--
+--gRTQ4DHMYcmn+phQ--
