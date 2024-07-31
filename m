@@ -1,135 +1,103 @@
-Received: from mail.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ABDA1B580D
-	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 14:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=150.107.74.76
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFE81AE85E
+	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 14:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722435781; cv=none; b=HeLh0KtOIp4++c4LC4HPNAUKul2GwgYrM8F8F5MqSjuRm7FEoF5Y0bsR86dS0Cj8i3hWhe+rTGnC1nB/uNnAj0BItzBbo/U9GwNRXA1ekE75rxue/o4Cz+fYNqelbITHIrDD/E2ryrCDQijMEk7c1PDAH51WTQr52TtDrXCsIj8=
+	t=1722436979; cv=none; b=VnYT7QpWYDRv7XSIlUWxLr4l5Ve1RP+GDTmRoaGrIe+wuY0OJAA4JUpGJ75K8nC8qe0I4fwK1B8pmBF2t1OyRdidQXiiBnAnwuJYzahTavqmcm1roZtiTKq6/iGtEwzm51eykwhHo4foB6JYkEbshHX/9Hs0+kH5nDZXLVDe1YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722435781; c=relaxed/simple;
-	bh=fOaj5y/F4hF2tW8PoKwST6yBYB27qSYGz2/n6O27sxE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sZx7zljHhNWe/U75CMoXum8193wvZ2RSg6Qhn6rxozxlGX1Htyju3GZjpbbvdqTfhgdDxwF3Z5wGoTAXvQtVFpshngQ9pBt9uanRAoJlunB/i5aXc1SqWDxUs9Pyv1nkx1HR+MXxTwHdC16bVF69XLbv88JMv379W35Nf6t+QkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au; spf=pass smtp.mailfrom=ellerman.id.au; dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b=QvUL4ABB; arc=none smtp.client-ip=150.107.74.76
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ellerman.id.au
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ellerman.id.au
+	s=arc-20240116; t=1722436979; c=relaxed/simple;
+	bh=03o06WRPMECBH8cNLsTZ+D+b1SXhalEQ2Hoe+OeZjbE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bF+FcPYFzdecnK96YWxHHYzbLu1o42MgpcPSe8v+amrZd+2cg5ijxRhUuGzin8dX4IoHG5J+8UOwSMxyND9LfyzDCdSP7CZFTdHzTAnjFp+NC9QSe2GhKz2Z2dhVBOJSskYrQpnGfAqV1wKGVnzSnV3GP//FmZdKdxV5Io97dRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=FArfMgQH; arc=none smtp.client-ip=209.85.208.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ellerman.id.au header.i=@ellerman.id.au header.b="QvUL4ABB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ellerman.id.au;
-	s=201909; t=1722435771;
-	bh=/GGL+wXv2axHl1vUEele1Kgydzhn2gXewxtldoRpqKY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-	b=QvUL4ABB2rLUBOW0YWwbdvmctTxvZI84t9QmKoVgTU2/oRtLoV/nUWlolkje6MTcv
-	 eW60ycX/5ZhnPHxKBN5ecOY0SdkNT9+rlV+Z9uVxCy8yuU8JtNrwUSEkLjnzNYjMVP
-	 7aXzp0M4SNZkLZgjr24zKAc6fFJkRIaV9cfhAFWH78O3Pa8lsSO/B1cGVNzWJrtKYC
-	 hbaqemtYcmKkKLXoG+U5RfwOcXrhkaEk9fCiNGmFs+NAgWxPaSkEXZzeaft8jQBJo5
-	 82CwvuXhsuvuGyN6cnMxQZCnKXwm9dPul8VnJnszZX8zFXpzjuEC9JFx39e2slXxqQ
-	 5l34wYBEH16Sw==
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4WYvSq07wKz4wcl;
-	Thu,  1 Aug 2024 00:22:50 +1000 (AEST)
-From: Michael Ellerman <mpe@ellerman.id.au>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- patches@lists.linux.dev, Russell Currey <ruscur@russell.cc>, Andrew
- Donnellan <ajd@linux.ibm.com>, Stefan Berger <stefanb@linux.ibm.com>,
- Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 189/440] powerpc/pseries: Move plpks.h to include
- directory
-In-Reply-To: <20240730151623.255648651@linuxfoundation.org>
-References: <20240730151615.753688326@linuxfoundation.org>
- <20240730151623.255648651@linuxfoundation.org>
-Date: Thu, 01 Aug 2024 00:22:49 +1000
-Message-ID: <874j85prnq.fsf@mail.lhotse>
+	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="FArfMgQH"
+Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-2eeb1051360so64583771fa.0
+        for <patches@lists.linux.dev>; Wed, 31 Jul 2024 07:42:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=20230601; t=1722436976; x=1723041776; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7+eaS7WmK/h+AxO7xK0Tq5m6QMfSwjAwlMf/qchy6iw=;
+        b=FArfMgQHHPm8nPwIpszbktIpF5geq4fVsv2AlcLFSaBj8PA7MU36SMu0K4cBk3JocJ
+         9yr22S5P5q5hs4Q0Gyd4lIoURbmvogzWRK2KwZXX4Tb4SzndYz4N3BMtLZVlwvlHkm2C
+         rEN8aaXzWzQvGxmVcPXyBeTgN54lrCIw6Hbo5M27CFHNak9pOnj3Tpy/2NuTY5aH+LYB
+         EV1/9p70FDgSNqHl8x33Ke3ibSw2Zm6yuhCBoQPHxwwdbyFBWQGY2YBW9Dk/wAYpDW2D
+         8IMRQMAEqIeNaEEhxYrgg1ksQ8uwNs7mF967FgJ45e4J97/rYIgySaryFwGQf6oz5lr1
+         PDEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722436976; x=1723041776;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7+eaS7WmK/h+AxO7xK0Tq5m6QMfSwjAwlMf/qchy6iw=;
+        b=PGomZU5xzeGCPNjm1MYkv/3yFIuOYdRGD+yXyt1JeZD0BOAnhWlWLcBAClwFnByeTB
+         uhlmWMtTXXFf2Zzn4eZVChF5vEHHMki7QVg6yclddH+LgKw4wT3rxngNNB31NFSo2sIk
+         p9TlPhFuYEMUDWudVBR1LkbF4EYeimibLFWstTqLrUz/3rfajjoEF5ESAlvuljw9NlAa
+         /Jx6OMZguSpZaNPD+tfdekkgytq3HBDnM7Y5Eb2CYbmL20HFrc7/7XodDw05+LgAGW0j
+         phT4T1bbbcBJMiFMIpS2PpoYJUnMoq86TYsLDLctbgm4WS97B2UMagaqFC4IBRZUQEyj
+         vsVA==
+X-Gm-Message-State: AOJu0Yz36hqnb5rQkLwYYyh3v6ibwFUsLTkEgPNzww4weGthHcj1TANZ
+	PoBDcFG/aKkJSLMZ7rjIwj5sKXZ9EPZ8HMfKEignc1yrvKaxUes=
+X-Google-Smtp-Source: AGHT+IFXclmu5DEIX5SRJTwTFkq5JFNwJWu6kCEgvQ/1i3mVfeno0N3amnMwKWgaIPb8PCQESr5PZQ==
+X-Received: by 2002:a2e:9609:0:b0:2ef:2a60:c1c1 with SMTP id 38308e7fff4ca-2f12ee1663bmr90480651fa.21.1722436975606;
+        Wed, 31 Jul 2024 07:42:55 -0700 (PDT)
+Received: from [192.168.1.3] (p5b057724.dip0.t-ipconnect.de. [91.5.119.36])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4282bb6403bsm24239425e9.35.2024.07.31.07.42.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Jul 2024 07:42:54 -0700 (PDT)
+Message-ID: <018c2396-3a00-47db-be60-4a49e3668a9d@googlemail.com>
+Date: Wed, 31 Jul 2024 16:42:53 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Betterbird (Windows)
+Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc1 review
+Content-Language: de-DE
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240730151615.753688326@linuxfoundation.org>
+From: Peter Schneider <pschneider1968@googlemail.com>
+In-Reply-To: <20240730151615.753688326@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> writes:
-> 6.1-stable review patch.  If anyone has any objections, please let me know.
->
-> ------------------
->
-> From: Russell Currey <ruscur@russell.cc>
->
-> [ Upstream commit 90b74e305d6b5a444b1283dd7ad1caf6acaa0340 ]
->
-> Move plpks.h from platforms/pseries/ to include/asm/. This is necessary
-> for later patches to make use of the PLPKS from code in other subsystems.
->
-> Signed-off-by: Russell Currey <ruscur@russell.cc>
-> Signed-off-by: Andrew Donnellan <ajd@linux.ibm.com>
-> Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-> Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-> Link: https://lore.kernel.org/r/20230210080401.345462-15-ajd@linux.ibm.com
-> Stable-dep-of: 932bed412170 ("powerpc/kexec_file: fix cpus node update to FDT")
- 
-I don't see why this is a stable-dep of that commit?
+Am 30.07.2024 um 17:43 schrieb Greg Kroah-Hartman:
+> This is the start of the stable review cycle for the 6.1.103 release.
+> There are 440 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 01 Aug 2024 15:14:54 +0000.
+> Anything received after that time might be too late.
 
-0857beff9c1e and 932bed412170 apply with some fuzz, but otherwise seem
-fine, and build OK for me here (only tested a few configs).
+Just for the record: this builds on my 2-socket Ivy Bridge Xeon E5-2697 v2 server, but 
+fails to boot due to a kernel panic which others have already reported.
 
-I'm not sure about backporting these plpks commits without some further
-testing.
+Looking for testing -rc2...
 
-cheers
+Beste Grüße,
+Peter Schneider
 
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  .../powerpc/{platforms/pseries => include/asm}/plpks.h | 10 +++++++---
->  arch/powerpc/platforms/pseries/plpks.c                 |  3 +--
->  2 files changed, 8 insertions(+), 5 deletions(-)
->  rename arch/powerpc/{platforms/pseries => include/asm}/plpks.h (94%)
->
-> diff --git a/arch/powerpc/platforms/pseries/plpks.h b/arch/powerpc/include/asm/plpks.h
-> similarity index 94%
-> rename from arch/powerpc/platforms/pseries/plpks.h
-> rename to arch/powerpc/include/asm/plpks.h
-> index 07278a990c2df..44c3d93fb5e7d 100644
-> --- a/arch/powerpc/platforms/pseries/plpks.h
-> +++ b/arch/powerpc/include/asm/plpks.h
-> @@ -6,8 +6,10 @@
->   * Platform keystore for pseries LPAR(PLPKS).
->   */
->  
-> -#ifndef _PSERIES_PLPKS_H
-> -#define _PSERIES_PLPKS_H
-> +#ifndef _ASM_POWERPC_PLPKS_H
-> +#define _ASM_POWERPC_PLPKS_H
-> +
-> +#ifdef CONFIG_PSERIES_PLPKS
->  
->  #include <linux/types.h>
->  #include <linux/list.h>
-> @@ -93,4 +95,6 @@ int plpks_read_fw_var(struct plpks_var *var);
->   */
->  int plpks_read_bootloader_var(struct plpks_var *var);
->  
-> -#endif
-> +#endif // CONFIG_PSERIES_PLPKS
-> +
-> +#endif // _ASM_POWERPC_PLPKS_H
-> diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-> index d54188a355c9c..1c43c4febd3da 100644
-> --- a/arch/powerpc/platforms/pseries/plpks.c
-> +++ b/arch/powerpc/platforms/pseries/plpks.c
-> @@ -18,8 +18,7 @@
->  #include <linux/types.h>
->  #include <asm/hvcall.h>
->  #include <asm/machdep.h>
-> -
-> -#include "plpks.h"
-> +#include <asm/plpks.h>
->  
->  static u8 *ospassword;
->  static u16 ospasswordlength;
-> -- 
-> 2.43.0
+-- 
+Climb the mountain not to plant your flag, but to embrace the challenge,
+enjoy the air and behold the view. Climb it so you can see the world,
+not so the world can see you.                    -- David McCullough Jr.
+
+OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
+Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
+https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
