@@ -1,79 +1,135 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EDB7406D
-	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 11:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983681A8BE6
+	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 11:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722423801; cv=none; b=mKhVTNTLGP5vIB+3CGk1pQc5H4w6QwR9YO2O7x8mhHiOe1dDi/ozarZI9kC0GKhm9YhgM6R4FB4XnyoSK0OE2UQ6jPLZrqzqVTMz4SnrB6FmNrJ3DoFBZF2UwJNjjdJ2ypUCOReoiF/T+j7KiFyoU533p50f9c7oNhmnQbOh/DY=
+	t=1722426760; cv=none; b=X8oynMsUUdqR1QOB5L5Mm/22Zv2Pkuw9I5VniSGbWZujmc6SfnxQGlnO3llFpxA37eBjGj3XC9k+XJjulO4IxKi9lIrpoH6K8AmP4qCItcT0SnBepLuoCUumURZAB3oUFtR8BLnfQ3Oc71G0zVWzu3MJbpTTDxekXVOj6gp3Pp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722423801; c=relaxed/simple;
-	bh=eFGq9VlDSc6Xp8qNHNxgm+6lO0OLdLbrrnGCzxIeDUc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cHe14GxXEXwqChxXMvgJsnCENXlGdfZrFjSW1bDs2bUaoShhBjTaHi6j8TdraAEvbyH/9N5p0j9fkdaegNXCjRsYvboT03eSkxwN2cbWoTPCO3/RkrqliobjVTah97QhijikWm3XZrcjvV1eTx9bD3q8Oct+nQHrP1M7P7e/Tn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id E72D11C0082; Wed, 31 Jul 2024 13:03:16 +0200 (CEST)
-Date: Wed, 31 Jul 2024 13:03:16 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.10 000/809] 6.10.3-rc3 review
-Message-ID: <ZqoZ9ES+OlAhGwLf@duo.ucw.cz>
-References: <20240731095022.970699670@linuxfoundation.org>
+	s=arc-20240116; t=1722426760; c=relaxed/simple;
+	bh=NyMO6iO1dLHjOXTSR5oxTaF4XpTD6O/Z4OOw0DPhHq8=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=KmLTZ+F57xgCzqlHVASWYDf2Gszwp+bfCQolun5jnbcM40yIyztoLHk6eIiGmqKAG+7+dnogxge7yiFnbBk7Y/8z63npG0EOZjwebXgLPS/CSElkKkZoZZQsNi71NlEkUiQamLwXKoQE/AaTlAThzhwGSokYbABF5l+RPtBEbHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4WYr4R0bPpz6K9nm;
+	Wed, 31 Jul 2024 19:49:59 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
+	by mail.maildlp.com (Postfix) with ESMTPS id 891D11408F9;
+	Wed, 31 Jul 2024 19:52:33 +0800 (CST)
+Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
+ (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 31 Jul
+ 2024 12:52:32 +0100
+Date: Wed, 31 Jul 2024 12:52:32 +0100
+From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>, Jakub
+ Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
+	<linux-doc@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
+	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
+	<saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
+	<andrew.gospodarek@broadcom.com>, Aron Silverton <aron.silverton@oracle.com>,
+	Dan Williams <dan.j.williams@intel.com>, "David Ahern" <dsahern@kernel.org>,
+	Christoph Hellwig <hch@infradead.org>, "Jiri Pirko" <jiri@nvidia.com>, Leonid
+ Bloch <lbloch@nvidia.com>, "Leon Romanovsky" <leonro@nvidia.com>,
+	<linux-cxl@vger.kernel.org>, <patches@lists.linux.dev>
+Subject: Re: [PATCH v2 7/8] fwctl/mlx5: Support for communicating with mlx5
+ fw
+Message-ID: <20240731125232.00005aad@Huawei.com>
+In-Reply-To: <20240729162217.GB3625856@nvidia.com>
+References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
+	<7-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
+	<20240726171013.00006e67@Huawei.com>
+	<20240729162217.GB3625856@nvidia.com>
+Organization: Huawei Technologies Research and Development (UK) Ltd.
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uhJlyNLjyCQTjA6B"
-Content-Disposition: inline
-In-Reply-To: <20240731095022.970699670@linuxfoundation.org>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
+ lhrpeml500005.china.huawei.com (7.191.163.240)
 
 
---uhJlyNLjyCQTjA6B
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> > > +static void mlx5ctl_remove(struct auxiliary_device *adev)
+> > > +{
+> > > +	struct mlx5ctl_dev *mcdev __free(mlx5ctl) = auxiliary_get_drvdata(adev);  
+> > 
+> > So this is calling fwctl_put(&mcdev->fwctl) on scope exit.
+> > 
+> > Why do you need to drop a reference beyond the one fwctl_unregister() is dropping
+> > in cdev_device_del()?  Where am I missing a reference get?  
+> 
+> fwctl_register() / fwctl_unregister() are pairs. Internally they pair
+> cdev_device_add() / cdev_device_del() which decrease some internal
+> cdev refcounts.
+> 
+> _alloc_device() / __free(mlx5ctl) above are the other pair.
+> device_initialize() holds a reference from probe to remove.
+> 
+> It has to work this way because if cdev_device_del() would put back
+> all the references we would immediately UAF, eg:
+> 
+> 	cdev_device_del(&fwctl->cdev, &fwctl->dev);
+> 
+> 	/* Disable and free the driver's resources for any still open FDs. */
+> 	guard(rwsem_write)(&fwctl->registration_lock);
+> 	guard(mutex)(&fwctl->uctx_list_lock);
+>                     ^^^^^^^
+>                        Must still be allocated
+> 
+> And more broadly, though mlx5 does not use this, it would be safe for
+> a driver to do:
+> 
+>     fwctl_unregister();
+>     kfree(mcdev->mymemory);
+>           ^^^^^^ Must still be allocated!
+>     fwctl_put(&mcdev->fwctl);
+> 
+> So we have the two steps where unregister makes it safe for the driver
+> to begin teardown but keeps memory around, and the final put which
+> releases the memory after driver teardown is done.
+> 
+> This is also captured in the cleanup.h notation:
+> 
+> 	struct mlx5ctl_dev *mcdev __free(mlx5ctl) = fwctl_alloc_device(
+> 		&mdev->pdev->dev, &mlx5ctl_ops, struct mlx5ctl_dev,
+> 		fwctl);
+>                                   ^^^^^^^^^^^^
+>                Here we indicate we have a ref on the stack from
+>                fwctl_alloc_device
+> 
+> 	auxiliary_set_drvdata(adev, no_free_ptr(mcdev));
+>                                     ^^^^^^^^^^^^^^^^^ Move the ref
+> 				    into drvdata
+> 
+> 	struct mlx5ctl_dev *mcdev __free(mlx5ctl) = auxiliary_get_drvdata(adev);
+>                                     ^^^^^^^^^^^ Move the ref out of
+> 				    drvdata onto the stack
+> 
 
-Hi!
+Thanks for the explanation.  I clearly needed more coffee that day :)
+Personally I find this to be a confusing use of scoped cleanup
+as we aren't associating a constructor / destructor with scope, but
+rather sort of 'adopting ownership / destructor'.
 
-> This is the start of the stable review cycle for the 6.10.3 release.
-> There are 809 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Assuming my caffeine level is better today, maybe device managed is
+more appropriate?
+devm_add_action_or_reset to associate the destructor by placing
+it immediately after the setup path for both the allocate and unregister.
+Should run in very nearly same order for teardown as what you have here.
 
-CIP testing did not find any problems here:
+Alternatively this is just a new pattern I should get used to.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.10.y
+Jonathan
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
 
---uhJlyNLjyCQTjA6B
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZqoZ9AAKCRAw5/Bqldv6
-8jjrAKCpBA4f4n8vBR/rKG2RQbCd54JMbQCcDv4kyZ9EhuApF3HMo92khQVlDi8=
-=SxOS
------END PGP SIGNATURE-----
-
---uhJlyNLjyCQTjA6B--
