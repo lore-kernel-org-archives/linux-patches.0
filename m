@@ -1,103 +1,110 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945016EB5C
-	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 21:03:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED224166316
+	for <patches@lists.linux.dev>; Wed, 31 Jul 2024 21:18:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722459839; cv=none; b=jBd/pS6TlJn0RN6dEoGcW6pJFFgV9cQrzLr2SIbs3Bv8b1CIHO7OdnvWwCeL5CKBDOIywWS3FyArjGts6ymdpJlL9BwCuvwQhN5cWLeJU+HjQ3f1mlwZeLiNrcbubfoihnZnEK69OJ6xxRKM/v3DxcOUB0wv0L3NVfA29goZWyM=
+	t=1722460715; cv=none; b=NoE9IcIsXyo0MhZ9P/Qx5gTpGkEG4qHViV1cYeiun2vV5aRNzJfA+PArSf1D1FgmG2BrOJl56bIBr5PV00WM5APpcC+FRWxv2P873DF4EZbeRiEao/2OI7omy4yctrRfb822E1iA8eIpILEt9IRUtk7UM/CVX67lJZv+d6KkA6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722459839; c=relaxed/simple;
-	bh=AUkJ686A8RH4qcFlXPTcSnFatT/ytf00l23UxvbQAAs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UXJmLP08J2tCs3tzhVod3t+b1bLnEuEJyFbYdT0B9+aQcYrZr5Gg+dn5JmVnj+UesLSt2EBF6oHh5NdZQoG1ujnoOiHgeFAqbefEI69brHq5W5hXblmr1TCnE0N34J/4RlugVPll8RE/QyGFS/+o7NzXMK/7cl2nEmlbJaWP27A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jMP9HPai; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1722460715; c=relaxed/simple;
+	bh=NqiclvbCP2OQ7Ina8jDYF9/McnZrsd+Z4GR+MnQQhls=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 In-Reply-To:Content-Type:Content-Disposition; b=ZALs+pgRiYIAV+YsluQbtu1VZ/cpWQgg65hxXW96ayPqRg8YcgyATFPq2bVwf4rSK0kKRpsehPLq1Lkc2Kl45va26WHIS1GUfJkZj1b46DnslgX3FkKYcCGkh0qkgodpBKq2w3uPqtHb1+wrKXftd2tYhEAAguV/ZFzLuNTvUug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=gW8tycoB; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jMP9HPai"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2cb4b6ecb3dso4155261a91.3
-        for <patches@lists.linux.dev>; Wed, 31 Jul 2024 14:03:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722459838; x=1723064638; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=9HPGA+i9bLxv8+ywKzP8zynz5mLJCS77FFmzEIhkQ6g=;
-        b=jMP9HPaiWeMe7qQ3b2Yq/G81mSw0GU9JMxmg+dpHzdBGWCGpzhApnPVx32HPys+g8x
-         YM6txFYLdDtFPISeqHcrzRjUs2+Sor9eblAfEaxGAr0tBrh5B/T/NXEvmgcuqAnB3vbe
-         42DGmV0JMswttsVkh4NjK7nDQwuiYnOS5KlecxByYAkgo0fdqpqjTndrrZ1p/qeJhdAm
-         CPMl+lEwM+m+M3DgCsR5hyd3hPyR9hY6bG3JOVMQIYPXJV2VzlP2MluKba1rfZXvKxSP
-         hQr1VWkpWm2+uzTi+YcfKkkPq+Bxuq+TmjpxUR9nOrcwBJm0Dm9na3vP8MKKN1Ge7lc0
-         HuUw==
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="gW8tycoB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1722460712;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=bKdInG1OtpKpxRilEfiRw+XNZcY8cbOzLiAZonQhq90=;
+	b=gW8tycoBJO1ORvyVeCX7SwITAU3n1uxR5hkxPeIcR/u7UubyGI4xztkgQ3SPD3N8qSxPu8
+	rZoTRwLYanOD2wwcnu/+q0EMdB044J9l+kUkuuPURU758HtzVh85VvA/OY+rEApxVZNpat
+	5TxvNVGsudeU1dqXT6RX6ivdRXH3h+Q=
+Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
+ [209.85.167.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-696-ne2wDfxqPm-1fC45mtHFwA-1; Wed, 31 Jul 2024 17:18:30 -0400
+X-MC-Unique: ne2wDfxqPm-1fC45mtHFwA-1
+Received: by mail-lf1-f69.google.com with SMTP id 2adb3069b0e04-52ebdbf8a7cso4856181e87.2
+        for <patches@lists.linux.dev>; Wed, 31 Jul 2024 14:18:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722459838; x=1723064638;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9HPGA+i9bLxv8+ywKzP8zynz5mLJCS77FFmzEIhkQ6g=;
-        b=MTS9cGxPTi6ogMTnKBdNyLEM6JOH9tic4Km//ACW0FoHNQE7ut+Ds9rr7de66c/f/j
-         N6HjQtUZXBXDXsQuvD0EMKWSdnggdsBt0k+lk4bc9ZF+S/7ZQC/EZ5Dl/d4y/8GEMuts
-         X39aPJVZlIl4dDBHq0cStPMbY9bhl8uVrit7HUOB0cjsy+H4EbOi2atD8EIczfBq5w1h
-         eXcMOUcHptPlrATn6BdBgthh6h4vexzSkqQy/pCR6yS5kI1TUGzZbueMD38ArXrP/9ZM
-         KR1UjUcIO6IQxtjSXhzpWQKqTswVy6K8m53ri4+mV+pMClyUgTZ4r6f/ve0BTjNUGgNc
-         smwg==
-X-Gm-Message-State: AOJu0YxdEMu1nydN1b81rQmn63X636J5XV+hHPnMnOHL/OZOdCBbIUlc
-	tjaBHceEA5Fs2pqP0C5rFizAdn2R8tgPxrZ6niCeS3B3JbsYjaYt
-X-Google-Smtp-Source: AGHT+IFk10AYWxbSh1MmvpWEmpv9q0UkSPOj4nAsBLWAvUgWZuIy6nbW6vx6nkjdyo27E1GFlvccQg==
-X-Received: by 2002:a17:90a:a110:b0:2c9:a56b:8db6 with SMTP id 98e67ed59e1d1-2cfe7b73301mr634074a91.37.1722459837737;
-        Wed, 31 Jul 2024 14:03:57 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2cfcb85b7a5sm2146765a91.1.2024.07.31.14.03.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 31 Jul 2024 14:03:57 -0700 (PDT)
-Message-ID: <66c69c35-6486-4b84-9315-3a88232694be@gmail.com>
-Date: Wed, 31 Jul 2024 14:03:52 -0700
+        d=1e100.net; s=20230601; t=1722460709; x=1723065509;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bKdInG1OtpKpxRilEfiRw+XNZcY8cbOzLiAZonQhq90=;
+        b=vKtgLWvOLLrhkaD4/ipkm6dn7pVJPnE9MrF+VY6rxVeWzsLmCyWcRexCwtzgbHbgxy
+         5/MBR3BRungnR6ksSQy/7WhtbQMB3IRimX8jJsBQvvJZ7GQrOcX3Y/4WPVCuKAdLEUHu
+         KUv8A/dltAn72MXFmG2PAWkyaMPZJKbtzMsNPH+8TFNacn+6aFZlR+BmdgfhCi6LqmUh
+         7OyAoVYd+6JumGsti8F93GN/q7S0g7W9HwkCj3C+spqpIehK7w9ywRhkb+thoZ62I0w6
+         bvkRcc/H+ANVO2pc1mBGh4kPq0Q5MZzvi69vYKvPrAy3ejvEtwEYpoSWDkX2G2fsszco
+         1VlQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX7jQQkRs+5QSH3VIQ5W9+6ETtElR/3an842Y9S4OlPhIFczyywKejUi2aEjxpRG1MngnrKEVS2KUSi/47c4UvhIx6f7dJwuQ==
+X-Gm-Message-State: AOJu0YyQ//OM97wVLdV3ZbHayDgR0rYaFKkkYSQ0LgJnXkRHf5cGnyOJ
+	OsIadUCn5Cd7eruvKGishViTxvnBvmfi1a1WCSoA817gjdcRTqS7aI9vgm7YiMxbaSjUdxco7FN
+	IY4IijBSUevjKRjDDZZb/quI8FQhMMeeJMPsaGtX7DzJ16D7qAuE5XIU=
+X-Received: by 2002:a05:6512:b05:b0:52e:9fd3:f0ca with SMTP id 2adb3069b0e04-530b61c8b29mr166280e87.33.1722460709331;
+        Wed, 31 Jul 2024 14:18:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFAl7TOmiwrb7SR7IgnOM2SF/1zCAF5fHO3YQpg6C1uxKqXSkE3RpxPj0fCYXGG+w88vd9rOw==
+X-Received: by 2002:a05:6512:b05:b0:52e:9fd3:f0ca with SMTP id 2adb3069b0e04-530b61c8b29mr166260e87.33.1722460708510;
+        Wed, 31 Jul 2024 14:18:28 -0700 (PDT)
+Received: from redhat.com ([2.55.14.19])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5ac63b59c95sm9280320a12.50.2024.07.31.14.18.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 31 Jul 2024 14:18:27 -0700 (PDT)
+Date: Wed, 31 Jul 2024 17:18:22 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jiri Pirko <jiri@nvidia.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.10 259/809] virtio_net: add support for Byte Queue
+ Limits
+Message-ID: <20240731171750-mutt-send-email-mst@kernel.org>
+References: <20240730151724.637682316@linuxfoundation.org>
+ <20240730151734.824711848@linuxfoundation.org>
+ <20240730153217-mutt-send-email-mst@kernel.org>
+ <2024073119-gentleman-busybody-8091@gregkh>
+ <Zqph1kRQx0FU4L3I@nanopsycho.orion>
+ <2024073128-emergency-backspin-11ff@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.10 000/809] 6.10.3-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240731095022.970699670@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240731095022.970699670@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <2024073128-emergency-backspin-11ff@gregkh>
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-On 7/31/24 03:03, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.3 release.
-> There are 809 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Jul 31, 2024 at 06:12:35PM +0200, Greg Kroah-Hartman wrote:
+> On Wed, Jul 31, 2024 at 06:09:58PM +0200, Jiri Pirko wrote:
+> > Wed, Jul 31, 2024 at 07:46:26AM CEST, gregkh@linuxfoundation.org wrote:
+> > >On Tue, Jul 30, 2024 at 03:33:18PM -0400, Michael S. Tsirkin wrote:
+> > >> On Tue, Jul 30, 2024 at 05:42:15PM +0200, Greg Kroah-Hartman wrote:
+> > >> > 6.10-stable review patch.  If anyone has any objections, please let me know.
+> > >> 
+> > >> Wow.
+> > >> 
+> > >> It's clearly a feature, not a bugfix. And a risky one, at that.
+> > >> 
+> > >> Applies to any stable tree.
+> > >
+> > >Now dropped, thanks.
+> > 
+> > I wonder, how this got into the stable queue?
 > 
-> Responses should be made by Fri, 02 Aug 2024 09:47:47 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.3-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+> Stable-dep-of: f8321fa75102 ("virtio_net: Fix napi_skb_cache_put warning")
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Well, hmm. Something to fix in the auto-backport machinery then.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 -- 
-Florian
+MST
 
