@@ -1,82 +1,60 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA568D512;
-	Wed, 31 Jul 2024 00:54:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC112946F;
+	Wed, 31 Jul 2024 05:46:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722387300; cv=none; b=dMPi1IzLoMYne51erDPyUIKVrq1u/XH8TMoADdyCdXAfIP0prXIbXzqptozVBzGQ4aJR4Bn2YXmgspd3T6RPUdferFatRpEOtintiF+BcnOjgbXaYwz6wAFwVW/mGRaa5nc0Ku/XBkJuOQDAMSBOyeVYzVcP8ScxXtT9VR5X+gc=
+	t=1722404789; cv=none; b=m+UKfy3IPTtFRtNjxiqAJADPhlJlCTJoxKL/gdHE+FOZDuaRKqHfVeF13fi1OJ1n5pLOs6QrJ7Gre938XrpjcecufymQKRZ/FjlRAWoh5x5Eh9eSRXDTMkqxr5OFZLJ5XgdGMlP0b6+0I9Ot0RBaKrX2eFZ7wkc9KiB+wGbOMgA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722387300; c=relaxed/simple;
-	bh=CmM43waZGak4yCefqzOSHRQra7iXX233t6EtQImOPlk=;
+	s=arc-20240116; t=1722404789; c=relaxed/simple;
+	bh=AYf7Rp+ExjXXveWaylltspquL/pn6LYHTRfVUNAcWVQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MgaUk5Xlov74ofO1OTUMg++D8DQiLB/upKGfL4UJXt905zl+Fq/Kt5VUVWeZn742o57f8XqrQQ+Qg+isqTQx/ZTC/jaxlTtZq8RMRaLe54x09Z2gchYGc99bflHf+JxOWI/vdhw9/m1el+L/ZqFW0XYx+corLLLU5aPVpyJ7WqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UyxtoBlJ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=hue5OisPtl93xaV7Mrma+PGezwhRQOgnecY6AuEjJK4OYDNnrs0K12jiw+RxNp5UW7bTYV1tNsKqUx1FumjpnUDY7gEjOoo817Va8llYPZhZEQOo7furNCFZNz2RI7J85dmJItAfMCMyCBZK9QkgXR1rFiObjFeSjdUS1ZpBgso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HfVA3CuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UyxtoBlJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B0BC32782;
-	Wed, 31 Jul 2024 00:54:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722387299;
-	bh=CmM43waZGak4yCefqzOSHRQra7iXX233t6EtQImOPlk=;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HfVA3CuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A00FCC116B1;
+	Wed, 31 Jul 2024 05:46:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1722404789;
+	bh=AYf7Rp+ExjXXveWaylltspquL/pn6LYHTRfVUNAcWVQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UyxtoBlJhxGiIGHvORECvjmnydK7zj+1Rs6irAT11Y1dMIdH8nUxa6nG6crilnfqz
-	 XpZJFe3QehAgu2ySxu3xY1ZktYZQ/Tpp8LTGSlXFveFR/uXxuw/ObbLykckeeaZ7lM
-	 /Q+TO/rmCt7UYqk9ST9ajmrzzlW75MxQMq5TBr81MpxFFmj6gcNSkXnAHU7sqHFZnG
-	 JWp00/4Jm0glMkUBd/83SQtSMJz45aaGhN3BWbMyFo4sj7a/1LKW3oXAXWNU2uN8D8
-	 bYyA+1gFtEj75eZyNuaG1RrZJtvPh4NFdRMrLGmqgTThrk1WKQGMH3uznETFg2+2rl
-	 /AmfevbdjflPA==
-Date: Wed, 31 Jul 2024 01:54:47 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	b=HfVA3CuIUjg8pslGMOE2R+drub5VurTmZqFr/wwpkfj0B+a8ZPYSE+fsoULEhOtrd
+	 Wo7TxF8Mc1RpkrR5brVJthrBEEObORUW5tAi+gJEIXsacXN5LiLEgyOirDVdzYsDK1
+	 X9O2tQ0B8ssRZAELhOEiXLoNK6tIdy2UeiBD6/JM=
+Date: Wed, 31 Jul 2024 07:46:26 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Michael S. Tsirkin" <mst@redhat.com>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com
-Subject: Re: [PATCH 6.6 000/568] 6.6.44-rc1 review
-Message-ID: <1d17b8f6-d10f-4c7e-9a94-3f4698e2f119@sirena.org.uk>
-References: <20240730151639.792277039@linuxfoundation.org>
+	Jiri Pirko <jiri@nvidia.com>, Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.10 259/809] virtio_net: add support for Byte Queue
+ Limits
+Message-ID: <2024073119-gentleman-busybody-8091@gregkh>
+References: <20240730151724.637682316@linuxfoundation.org>
+ <20240730151734.824711848@linuxfoundation.org>
+ <20240730153217-mutt-send-email-mst@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="0IsDmSCi87GWgQNb"
-Content-Disposition: inline
-In-Reply-To: <20240730151639.792277039@linuxfoundation.org>
-X-Cookie: Don't SANFORIZE me!!
-
-
---0IsDmSCi87GWgQNb
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <20240730153217-mutt-send-email-mst@kernel.org>
 
-On Tue, Jul 30, 2024 at 05:41:47PM +0200, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.44 release.
-> There are 568 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Tue, Jul 30, 2024 at 03:33:18PM -0400, Michael S. Tsirkin wrote:
+> On Tue, Jul 30, 2024 at 05:42:15PM +0200, Greg Kroah-Hartman wrote:
+> > 6.10-stable review patch.  If anyone has any objections, please let me know.
+> 
+> Wow.
+> 
+> It's clearly a feature, not a bugfix. And a risky one, at that.
+> 
+> Applies to any stable tree.
 
-Tested-by: Mark Brown <broonie@kernel.org>
+Now dropped, thanks.
 
---0IsDmSCi87GWgQNb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmapi1YACgkQJNaLcl1U
-h9As1wf+N3/BcCDhvDK2fdQwQ3W1hXUXswR9SsdlLp8BeTHrL9my4yo4BRKnrXlY
-+AK0RU/rU5IrPquFUrG29ubKJ0e/QgnlKsmNHQ0Qb6mVlLoqm+AsX7B9kZStGDhR
-+gMWV8ASX1Ny7/ZofEPqykBwovpaK2TiNf4OdTDTSIZXWAYcYmqSz4SHOp3QBrh8
-6nLIdEJwvRcSWEtdHDkymKqZVOiGyzLiapP1Exy97t1TEHJMvM3d9ESPSgc26H/z
-2YS0LML45oUeXDcWVgpw1WtH5xCDeZn4CK3iop5CBeJZqAlXULO1GwuUaZZ2yRFD
-r7tWKEkFoIyXye7nvvK6qsfdpuX4gg==
-=qX9f
------END PGP SIGNATURE-----
-
---0IsDmSCi87GWgQNb--
+greg k-h
