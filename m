@@ -1,132 +1,123 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 505C9143883;
-	Thu,  1 Aug 2024 05:01:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5AB1EB491
+	for <patches@lists.linux.dev>; Thu,  1 Aug 2024 05:15:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722488495; cv=none; b=kq2xSoh06lnPD8nw/fJqyoqqr0b/OCGKrWDS74doJ1HSCmnJvuJ9a3sX9M5q377fdR5flTHAHdNDRnug2DkMt07ZfV8LzQ8jHGpeAwv2aPcyV88YE43k42TXpWqw7nuGqtGZsgdG/OT4WQVKDCdNMuNKlx/lr0mIVqWSXDS9bbI=
+	t=1722489330; cv=none; b=K+JU7x52UPcdcWQsE2Rnz5spvK13PK/MorsIguAGXDn3u9OHNChb3T5VTybLDgdsU0XAcjfteSLgVSd9+KCVVtY6uwb+Nlrq+HI6BL0LwKPm6DQI5Gm/UT0HH5hSeAW5D0xTROj8LqFoUpVGMfdtdQLTwq+v1e/aHeaOVS9a7FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722488495; c=relaxed/simple;
-	bh=ps+wc1QwyfUolpRk3qvMgokBT3mBGAnwtY+M4K/Z1IQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AB7SrTOBIbfuU94COXGiPwH2OwRcTyQVL917hmm1sMqthKiwbd1IY6xsTlo3sFUom+itqMiCZDR+tPZikJklStB9NA3cjELRQ7uZyX/hgrI3yhBP1xsTv2J1OMg9pigVHy94HbH3nfawM+8YlehHVZp0BeLe04yjORVIxbYN+sU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSEV7RJ7; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSEV7RJ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43620C4AF0A;
-	Thu,  1 Aug 2024 05:01:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1722488494;
-	bh=ps+wc1QwyfUolpRk3qvMgokBT3mBGAnwtY+M4K/Z1IQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rSEV7RJ7fkEMQJQOhk0Hau6SPYP1ec5ZCHaXOmN/AfiTWXX69Jr9Cbv1x4803npgB
-	 b/4V5TJoOJIBY8JUYoJL56rk0LQ13BVeUGAz4tsk8iOniepgnJlY11+ljfENQ8ZsOE
-	 NUnYUJpNWcuYWzD4yBYrxalZFlrv72xktuxEUkpM=
-Date: Thu, 1 Aug 2024 07:01:31 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Mateusz =?utf-8?Q?Jo=C5=84czyk?= <mat.jonczyk@o2.pl>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Song Liu <song@kernel.org>, Yu Kuai <yukuai3@huawei.com>,
-	Paul Luse <paul.e.luse@linux.intel.com>, Xiao Ni <xni@redhat.com>,
-	Mariusz Tkaczyk <mariusz.tkaczyk@linux.intel.com>
-Subject: Re: [PATCH 6.10 678/809] md/raid1: set max_sectors during early
- return from choose_slow_rdev()
-Message-ID: <2024080111-poet-bok-e8d4@gregkh>
-References: <20240730151724.637682316@linuxfoundation.org>
- <20240730151751.683503374@linuxfoundation.org>
- <974b072b-9696-42c9-8cec-f68454eedc33@o2.pl>
+	s=arc-20240116; t=1722489330; c=relaxed/simple;
+	bh=nbVPwshAhNrpEsKdxoyVRVev85k1jNuEZ74G8+iJ0NA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k/rbRCqScY3spVU1yCXmFc3BGuafjFIPdUDPOP0TBDJzCnjWaoCgDSXcgUnccjxCsdpshP8PIIsaNrRNow5JMaUdgMIDN2JvQqdHOBt/p/6CttJFQ8WjQzcVagWIS6yO9WgwzlsSQd+cNeQYF2d/+QGjjFDfq8gFfLIL7HnKSoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=kernel.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-a7d89bb07e7so348326766b.3
+        for <patches@lists.linux.dev>; Wed, 31 Jul 2024 22:15:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722489327; x=1723094127;
+        h=content-transfer-encoding:in-reply-to:autocrypt:from
+         :content-language:references:cc:to:subject:user-agent:mime-version
+         :date:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6B8zqxcAWF094Dn9mqbd0CWQdZb8mUOrQJBlF9bReUs=;
+        b=UOBS0Rm2sPacSzARLmk+lNrrWT2KZ2PW96ivYGgog/sg+3wnNbJWRMstODsQlDGr3V
+         F0MSCKzjLS881S6n6qyHN6TUrVDI8foUnIGR885251VHy/w213aOD5YGkMt+HQCebaFA
+         j3CIjZYtgxQXtdLgpQ5gg2M9P7OEW7DF+q0JXkjpgFgoNvzNpPenPmXaLtJ82aPwJm70
+         AWAOkZkTL1rya7rn53PTDMFvDQhF2VbamYIyPebJFQ0nxzFIcHLukh/+0M6bH8PPFtM/
+         5qUn9gNNSVrPNTYkCHy+6laxmCaXyKdqh3ZnH8YBWosKtj07/Qkf9jcKMKoOFD8bDCQE
+         6ObQ==
+X-Gm-Message-State: AOJu0YzFsgzljHLSl9/s10runBRXK90tZQegzpvwBwx2VV2TPuPx73yf
+	nArcw3YnHa2XnTtjIBb2zG/8D4ZFhU7qX/Bp5Bq85YnxEARDLiJI
+X-Google-Smtp-Source: AGHT+IGXwU28ZlxI9fyosqcU/z8I5NoWlqigyE3Q1sLDc3Kf3NzxQ2p5rwPqHy4k8rHun/ppK6aMIQ==
+X-Received: by 2002:a17:906:dc8e:b0:a7a:a33e:47cc with SMTP id a640c23a62f3a-a7daf76b23dmr95551766b.59.1722489327205;
+        Wed, 31 Jul 2024 22:15:27 -0700 (PDT)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:69? ([2a0b:e7c0:0:107::aaaa:69])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a7acadb97e0sm847145566b.210.2024.07.31.22.15.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Jul 2024 22:15:26 -0700 (PDT)
+Message-ID: <d5eff99e-bcfc-44b2-83b8-6eb585441670@kernel.org>
+Date: Thu, 1 Aug 2024 07:15:25 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.10 000/809] 6.10.3-rc3 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240731095022.970699670@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20240731095022.970699670@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <974b072b-9696-42c9-8cec-f68454eedc33@o2.pl>
 
-On Wed, Jul 31, 2024 at 09:43:58PM +0200, Mateusz Jończyk wrote:
-> W dniu 30.07.2024 o 17:49, Greg Kroah-Hartman pisze:
-> > 6.10-stable review patch.  If anyone has any objections, please let me know.
-> >
-> > ------------------
-> >
-> > From: Mateusz Jończyk <mat.jonczyk@o2.pl>
-> >
-> > commit 36a5c03f232719eb4e2d925f4d584e09cfaf372c upstream.
-> >
-> > Linux 6.9+ is unable to start a degraded RAID1 array with one drive,
-> > when that drive has a write-mostly flag set. During such an attempt,
-> > the following assertion in bio_split() is hit:
-> >
-> > 	BUG_ON(sectors <= 0);
-> >
-> > Call Trace:
-> > 	? bio_split+0x96/0xb0
-> > 	? exc_invalid_op+0x53/0x70
-> > 	? bio_split+0x96/0xb0
-> > 	? asm_exc_invalid_op+0x1b/0x20
-> > 	? bio_split+0x96/0xb0
-> > 	? raid1_read_request+0x890/0xd20
-> > 	? __call_rcu_common.constprop.0+0x97/0x260
-> > 	raid1_make_request+0x81/0xce0
-> > 	? __get_random_u32_below+0x17/0x70
-> > 	? new_slab+0x2b3/0x580
-> > 	md_handle_request+0x77/0x210
-> > 	md_submit_bio+0x62/0xa0
-> > 	__submit_bio+0x17b/0x230
-> > 	submit_bio_noacct_nocheck+0x18e/0x3c0
-> > 	submit_bio_noacct+0x244/0x670
-> >
-> > After investigation, it turned out that choose_slow_rdev() does not set
-> > the value of max_sectors in some cases and because of it,
-> > raid1_read_request calls bio_split with sectors == 0.
-> >
-> > Fix it by filling in this variable.
-> >
-> > This bug was introduced in
-> > commit dfa8ecd167c1 ("md/raid1: factor out choose_slow_rdev() from read_balance()")
-> > but apparently hidden until
-> > commit 0091c5a269ec ("md/raid1: factor out helpers to choose the best rdev from read_balance()")
-> > shortly thereafter.
-> >
-> > Cc: stable@vger.kernel.org # 6.9.x+
-> > Signed-off-by: Mateusz Jończyk <mat.jonczyk@o2.pl>
-> > Fixes: dfa8ecd167c1 ("md/raid1: factor out choose_slow_rdev() from read_balance()")
-> > Cc: Song Liu <song@kernel.org>
-> > Cc: Yu Kuai <yukuai3@huawei.com>
-> > Cc: Paul Luse <paul.e.luse@linux.intel.com>
-> > Cc: Xiao Ni <xni@redhat.com>
-> > Cc: Mariusz Tkaczyk <mariusz.tkaczyk@linux.intel.com>
-> > Link: https://lore.kernel.org/linux-raid/20240706143038.7253-1-mat.jonczyk@o2.pl/
-> > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> 
-> Hello,
-> 
-> FYI there is a second regression in Linux 6.9 - 6.11, which occurs with RAID
-> component devices with a write-mostly flag when a new device is added
-> to the array. (A write-mostly flag on a device specifies that the kernel is to
-> avoid reading from such a device, if possible. It is enabled only manually with
-> a mdadm command line switch and can be beneficial when devices are of
-> different speed). The kernel than reads from the wrong component device
-> before it is synced, which may result in data corruption.
-> 
-> Link: https://lore.kernel.org/lkml/9952f532-2554-44bf-b906-4880b2e88e3a@o2.pl/T/
-> 
-> This is not caused by this patch, but only linked by similar functions and the
-> write-mostly flag being involved in both cases. The issue is that without this
-> patch, the kernel will fail to start or keep running a RAID array with a single
-> write-mostly device and the user will not be able to add another device to it,
-> which triggered the second regression.
-> 
-> Paul was of the opinion that this first patch should land nonetheless.
-> I would like you to decide whether to ship it now or defer it.
+On 31. 07. 24, 12:03, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.10.3 release.
+> There are 809 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Is there a fix for this anywhere?  If not, being in sync with Linus's
-tree is probably the best solution for now.
+openSUSE configs¹⁾ all green. x86_64 runs fine in qemu.
+
+Tested-by: Jiri Slaby <jirislaby@kernel.org>
+
+¹⁾ armv6hl armv7hl arm64 i386 ppc64 ppc64le riscv64 s390x x86_64
 
 thanks,
+-- 
+js
+suse labs
 
-greg k-h
