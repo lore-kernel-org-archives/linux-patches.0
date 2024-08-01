@@ -1,208 +1,174 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2043.outbound.protection.outlook.com [40.107.244.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37267189B8E
-	for <patches@lists.linux.dev>; Thu,  1 Aug 2024 12:00:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722513608; cv=none; b=PMO6u/1o5i0zPMJ/covjWecdDj6KG0x/rmOUz/hq9OJzgpndT2KeC7ag0rf2Otq0ZNwAmEjxmXt/xpGAxZ+ZkaHrw0wrjDk0L5eSAF6HLFbLg3Zzm9BpOju0YIPsWkjsNsCcRWWC+V8RJaZaneSFrjofnReHAOVCDWDMwwUu4nE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722513608; c=relaxed/simple;
-	bh=3ch82ZGw9itWwM3foqXc9vkSYoQPWEdSIpMsxQEbjX8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vD48RzCBbniXfN/mPh7ViKEK8osT7W9x1Viv/LWlR5xMYOgLHMmNMWu5xWxKQI4uGtCzY/AW2syNPyNNdTjoP1YpRG7Q69DFIDAhqZMWNJFYrHGZI7Kgql8OdaF5TKoHkk9YRHvvWv5rMhPNV9/5SugM0aUCcAjBs8/H8+syN0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DO2eXlO7; arc=none smtp.client-ip=209.85.222.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4A418950D;
+	Thu,  1 Aug 2024 12:26:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1722515172; cv=fail; b=JM7NYdbFVFVS3VrraME7sS5ozNp56Rpurd5mpCIDuExPdOl/WBrQZ9onrxgUpM7jcXb9ZF0cXLB543RpzYmiffCOluzOIjEKJwbBuyaLyjg58YXuIJt7du5qVN7+WAAzJDLrVV+jjp9+7MrZ5nyP4E4P5nJ26V5BVX83C4QThU4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1722515172; c=relaxed/simple;
+	bh=KoN78HtHoLvSRYi+rx6sDzxEyu0TNsSblC/hQdf+42A=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=ObEDgMm1TRSNbO3S0W0IaV299xiDb86CSxqXbMyWMA09MZ7Ok3SJK3onJFXfUrbD5Ah7aNFpK8E+bCr8wm9l9b/XzMob+wo5ZpMi3z3gtN7jHw3/ZXpWTqGcUAZLbyQQlo/uPNNzESm5qUwxvuCNcKopla3tjJzlJzlGPGYculU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=XGisK8lp; arc=fail smtp.client-ip=40.107.244.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DO2eXlO7"
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-823227e7572so1289450241.1
-        for <patches@lists.linux.dev>; Thu, 01 Aug 2024 05:00:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1722513605; x=1723118405; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=39/okCXpvEfDdVyBNIEADsyPVsMtXQG7Jd9DbMIJnl8=;
-        b=DO2eXlO7bgj0AIYF1h7tObR9C9Tycz/Ljpwpz+4SWNDbmO2bB34o4euqOn09/DBw0S
-         UwpROxNnU7Hf4ndVxUY92udpqLc98j2E2aZCFofJaczf3dH1rkxm0fx9O0uiZX9o60Rp
-         UxSamLwYDFF9MLsuMlTnNjf1B+FmY6x8Z2Ku73cCgQrzT8qy3DlRVw0r4ygcJShCkW3g
-         dFJO4uJomnmTqFvWZEv+jXfjrrFz6BVvUlvWGiykg6cHyPJTgNwgBDedEhuvKZRkU/Qq
-         yRDHG/YH86psh83TvdkYMiK98AAx4iu6IkxmclV5IvFK7lQzI0iiySz+mn3EAZR30UG9
-         Xgqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722513605; x=1723118405;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=39/okCXpvEfDdVyBNIEADsyPVsMtXQG7Jd9DbMIJnl8=;
-        b=KfQSDi5d90T29idlw2xrDf7YxhjRwnldtBPLft7r4kp97vYXni7qbtjBFAERSKMVLo
-         mp5lNYv6iQoKF2+xepf/83F0IgJTNYQDOhRt+4R7cqooew7qTiNt1J1Tcgt2T+LJi+Cs
-         ETaamA5550g4cJJ4qaWzBZ1KCUzvBW6kroclb9X/Szy+vcad2MDReU0V0lpfsYD7Omwm
-         /LQX16CD9uUHuy/RNIwYnRk7DIwtrjRTksC+EqsFSR7al0NMWSJkWX4CfaN2JUIhEQRn
-         tBZSsS2iPBbbhp4moQPcoHp5tyhQbTiNu+XhwVffoNs74lwaOnbQnuK0gVUy78k+UhrE
-         uboQ==
-X-Forwarded-Encrypted: i=1; AJvYcCURAEI4Wic3484T2gGxyZJIFwtKwvJ1xHst4DEmoHqfSg5eY6WtsB95TcklE0XiX8cK/KBgplmXHYaWFM/4zCBAixrB6moTiQ==
-X-Gm-Message-State: AOJu0Yz0A9xw/z9VrCgTzsaoz9jGWkdmypdNUH630Aj/h8UaPpRwQwJI
-	UOMaq5/u08jH4rPQ018BKHI36dco3gyKDllv9yZAEkqx5zLmdq3zleN6BAsdF9T7bhTCRx/5oqh
-	cuKkHLUaeqWYK+Sqf/o/sw/AuZQtCbXkQhMhN8w==
-X-Google-Smtp-Source: AGHT+IF/TDUkHDgBItBjFUIVrxnPpACFopWfjdE9RH7NLEAE+ZcE6DNqzAmrrpGzUOTkY/FD0CW07WIZVLL23BzdnyM=
-X-Received: by 2002:a1f:e404:0:b0:4f2:ffa6:dbd5 with SMTP id
- 71dfb90a1353d-4f89c16eb50mr351810e0c.6.1722513604907; Thu, 01 Aug 2024
- 05:00:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="XGisK8lp"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PRgyog//YV6nBrxtSVLuJnMBWMBXRHUtrVMDptYuikTAZy+/SS1fqL2T5zuZBOX/xUKX71DyGmyQUKHDoe/H5gu+XVe2dsAukjR52vPe426Uw8WaakI/wf8AXJdewjuoiQrjmXi4lFWVMHUEUz9bEvwIpmLaPDkVJ1koqkdyEyVTz3mqBllJmknRnCPZG5kMM/0wdJmqjDIXzKpVNRoPbqDfYfF9zTWr0PvBIb0Kj8WyBv+zWeiTvZX4XdmIhNtASXEor67SHP9sOhg/5IsMEdWel08zakZuyS0+9iX7g2iu8oP60UebSwydlrk4FKokRIbEyzsyqgrGfoRumOH2ZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OF0duuvxW7rjFB7nhQaVnQX+P3AmzDlpBVstxy8dfrM=;
+ b=C0vYXkWn2Sevbw8vKgMiwf97/+AhvH546mWfqG5QEIHRj6a7LX6cvVrUOBCzm3nbsGvTcLiYrz+UHh7tUf/Ny3t/uHn1fzE0hHaP8JKQh2cbSW2ioPSnw/0Nz7kiH5i0GvPSY/W8XE/NJ/GglWVvHclVRB9lxFyAV6TtIPAp65BOjAj694R2qt+qAjVvId5MCgrg65ogZkyap/92fDb5G6s+QRJTt37DUPVuKlV0piHOs6BCUtNuLHhd9Ox+oNwBkKswoxcXBNblA9NAfI8kjVpNJAyyjpJtKnbaznIISs/OBYYmWwmsQY3outIMTI8t/fLUFBPIMnHE2XAtcfAq3Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OF0duuvxW7rjFB7nhQaVnQX+P3AmzDlpBVstxy8dfrM=;
+ b=XGisK8lpsgqp109GlwB2iEzxyQd8jCAdJe7gw/Y+t/CdxQBznhh2MR7/ed9ydHXVG/Tz5a4n62iljQU3SeXg2KayvqMF35Y8zrFDV9hCj3hgt82THbA3GuwnI+eeM/p8bdzHp0DtL8j1DoFxddQ4jk08jVMt9Z9Dfp2nEi/LSNQrPoqirmlm6nCPXw+17nVI8hYz7wyp1Ne/aD9fbVnGizg4OclhzFD03+9f/jkh3J+eXuenqsuQTzlnBx6aWCWxzGEGmIIIV2ZBAet9Izrj8fn606HFR/xEDui85bAWiUarKBLSoPHupJ8bzX6fDuuhNh2DPIx6VrZnH7pvEOGe4A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
+ by IA0PR12MB7650.namprd12.prod.outlook.com (2603:10b6:208:436::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.22; Thu, 1 Aug
+ 2024 12:26:06 +0000
+Received: from CH3PR12MB7763.namprd12.prod.outlook.com
+ ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
+ ([fe80::8b63:dd80:c182:4ce8%4]) with mapi id 15.20.7828.016; Thu, 1 Aug 2024
+ 12:26:06 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: iommu@lists.linux.dev,
+	Joerg Roedel <joro@8bytes.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>
+Cc: Lu Baolu <baolu.lu@linux.intel.com>,
+	Barak Biber <bbiber@nvidia.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Kevin Tian <kevin.tian@intel.com>,
+	patches@lists.linux.dev
+Subject: [PATCH rc] iommu: Restore lost return in iommu_report_device_fault()
+Date: Thu,  1 Aug 2024 09:26:04 -0300
+Message-ID: <0-v1-e7153d9c8cee+1c6-iommu_fault_fix_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BL0PR0102CA0016.prod.exchangelabs.com
+ (2603:10b6:207:18::29) To CH3PR12MB7763.namprd12.prod.outlook.com
+ (2603:10b6:610:145::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240502224703.103150-1-swboyd@chromium.org> <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
-In-Reply-To: <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
-From: Amit Pundir <amit.pundir@linaro.org>
-Date: Thu, 1 Aug 2024 17:29:28 +0530
-Message-ID: <CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: Park shared RCGs upon registration
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Laura Nao <laura.nao@collabora.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Douglas Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|IA0PR12MB7650:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3fbd763d-3af7-45bb-2f04-08dcb2251da0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?UXLgyyFbfRJhxbLtRrRKUqoRv7pbIh9DbYmHsRlcSljMD4RShfLJV+XwwI3l?=
+ =?us-ascii?Q?+pThmXc7wI6ELOi/k2T2O/CE/O1HXUe7RyYTDOcL6R9ZPPAIvuUnVQIzbCnB?=
+ =?us-ascii?Q?6yZq1jA+HISTkdt9+cszmc3uKqKmKSeWmBgebDge5j//RBZMiq1YzwANbUjk?=
+ =?us-ascii?Q?zjLl94x6vBnrTBe3Cd2Vjz5IX09YmUuxdITClVLu5OEQhukoXgPv/oGMjhxR?=
+ =?us-ascii?Q?rbR/NWDCK9RYattvVmqVBE4uuK0V+CLFM3UmtOBOmhprSs2c9gScUrqoXrcL?=
+ =?us-ascii?Q?dhBnzhXTNsfATI/QiyHuho+lK6y15Ak5vn6oSN/P3cwVYqH/NcRt/F0232X5?=
+ =?us-ascii?Q?IIPYRXUuzyITBfb3S1aOp30Z0afOvt2KFRjR+yoWHlABq8H8i0dPxD41/xiY?=
+ =?us-ascii?Q?ejt/N1p3G/dNILvfmBsuZhO+0pbwHG7pdaZhFCF996jVOrnDE/+sgnrs3rOQ?=
+ =?us-ascii?Q?8VrepkAev/AZTYUj8xycMQjsb6zp4xh1X5FLE/Hf2a4k4S3LaJXzYlYS8Dq/?=
+ =?us-ascii?Q?v+62njxtana/rudSE8Zf8R45kHLJ/zwkLluvbRDT1x1AmoBGpBFEVP47MlLm?=
+ =?us-ascii?Q?wmso1TPtJmqF621LYGI4CEbYc48pHaxeFvaQG5dmIFNVF99gu5u1/42Yk8ek?=
+ =?us-ascii?Q?T0MjfhLVUQxVBrkUTJjKiu1uRxNYPRu44Yh8lcQkeCPU56rXGk+P3D8UcN6y?=
+ =?us-ascii?Q?2ig1KOZ3pudy8AJEJ2ee5mrxxX69ChqYJbfR9LR3kQQd2TMwXp/c35orVKPE?=
+ =?us-ascii?Q?gqc9bsLePx+AfdnezFV/Utmm+Amvqvr2zdLvFjMiiSYT3u4yjXGsHXIPLeLf?=
+ =?us-ascii?Q?SUavWbjp8d+9CegxBoGBnNj13MR/y6PoGImqyKNrlRBuZz/ia+9NPl3mcmbH?=
+ =?us-ascii?Q?SnyAB7h/aF+4ziZ5I31C2Jx0v0y2HwUVUOSKevrD9jO51lpgRm+bZYJcZGy4?=
+ =?us-ascii?Q?d2phNLN90fO/fFp3NWxq8dlLybaVgmBaZukta7/Au2s5cjqBBo0ins8x3CrD?=
+ =?us-ascii?Q?dP/907jM07kKuYl61JbQYPN29mOIt2tIikxgCQEwreQYY85HPi9a1KDUC8QQ?=
+ =?us-ascii?Q?B/Nm3vB4Z5DWXuZDKxzY9tFGVnKHCoLuW41Rinx14YBoTaPhHvdXAWB5xwuc?=
+ =?us-ascii?Q?JogM0mpSZ1Vlft5SxNgya8DAuNTDkqNw6zH+gBlC303ec6Y2fGC6LDfWrRgw?=
+ =?us-ascii?Q?cCaSwLVz2vK+PIVHbEovlEUUGOznfWFAfctEapRUAncK9ZFSfXxkkQdclO7y?=
+ =?us-ascii?Q?3gMm/CYV3FDIldqseb0yp5Cug+nRCBVbgoCAmC1/HlCTOUCS1BQgdQyDwViA?=
+ =?us-ascii?Q?a/9HOGXTS8gpxHpluo5vk4h4VQvpIZ5RuZMTgo1qXA/sVg=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?NhUNb8YtbrSrOrIaZGI9NkcXwvA8Ie6rdZ5CDcmLVA2IUbwNPVesdFlwgQug?=
+ =?us-ascii?Q?xCKjl7hFBSBqQY5SNn4A8OR1US6MRsKfwV7NwPZ75lt1DpogPTsY5NlXyNKv?=
+ =?us-ascii?Q?1kLDgCbYV2e5qExxy0Vf9rrP0AWb65mQqr943WiYr/SXaPrJqFsx1AW5aWBP?=
+ =?us-ascii?Q?Lhq0D8jNj32uD3yfO05Co4tExUc9x3Te9a3JS+O7/+XmwT0JQLUVQtNn5GrB?=
+ =?us-ascii?Q?S9HPYE9Mh9g9EKE2MldUkj6A44ZY+sH7DhwxfiDXnarbAbyOn6z4ZDcmN3Ga?=
+ =?us-ascii?Q?VQxqajFzlHvMgI3P6QNoHHFke1kwa/nIM4y5mHGhBiqjA0nu74g2FSZMpV5/?=
+ =?us-ascii?Q?87dZ7mrrTAiZ3Z39gDdpuA4VZWmaVBlxiCwbW8MO3gQglkWxfPt3+Q2uCzpA?=
+ =?us-ascii?Q?rtjdmJhUevxc2sXvE4Ux8OQ3pNm5//OBSv6ed2byorMIHDwq4xOBchgo3r+p?=
+ =?us-ascii?Q?PGjlfFafMtwpmzZqhi7ls7AarnBIR08brqICIwDjsoxL6ebuhxrddz+OOTpc?=
+ =?us-ascii?Q?X7LFhpt64Op2SiZC4KPBvMBDrYoMbP8tVDQmbJg19dExSO5ZCSH79bov39Wq?=
+ =?us-ascii?Q?KzlhzRMwz3cgQxQSPzKKN9vZ70slwUXqwIlpOCa3VVj3UhUCIeh1FJZVhcT9?=
+ =?us-ascii?Q?4WPgRkKyV7I51byyL36W1WPqAA0pzqXkAmq21oND7jGVxnL7Ccn3OiCgGOFu?=
+ =?us-ascii?Q?rhPcAhP4F4d+U90eEcZQ0p6VYigGq2/y3keCNAoFgXHHN3/6SZVXX1u7VoKk?=
+ =?us-ascii?Q?P5ZZ0VGvJTd+4P83aCu03cOVjYRXqVnmHX95ufKVxc4tY0MY/1T5Yt6tz1JQ?=
+ =?us-ascii?Q?pOMqLRQOG18wOIL2TYe+TyVihu2c4SjM3f0Xkt/fAztq2GRYGHNTTKJVhjUN?=
+ =?us-ascii?Q?nl5A24gGlVkP5FmbmzvcleDSLvQ4y58sV5s9ZObNqUNxzg6EAJ8mAjiIR0PB?=
+ =?us-ascii?Q?TapBj++fkDKNFjEUE0o4WNB9lMu49vviK7ofRMr2PGCMXfxDMxMl3u45U6IQ?=
+ =?us-ascii?Q?Yt+sLKa84oQOVbd/ZLtwlG+Nkeu3ZDZ3y+RWHqxrl6CVSVEnsON+Ka3qlpr5?=
+ =?us-ascii?Q?OxkAZsKwQfiF8AczOIX3FGDjufYYc3OFUsXnkbCA+v8qkOph+NnpHtPRZavW?=
+ =?us-ascii?Q?f8S/RgOAtrugUIEXXAZ8K4M8oFEKvuogWGl0YeVPfOR363I5Y8Z+KLOTPZ2U?=
+ =?us-ascii?Q?Um1GDti6Nd3dHRENRKHfMgOp1lJvTyDElXZRMbE2leW8yrlN0/nAKKqqc2iM?=
+ =?us-ascii?Q?+TTPkdS2R8iYv/3DvAT3beQKuw94qIT9l/w5WMLLLNCTmP6sMaQm8YEC0cUl?=
+ =?us-ascii?Q?Dhqjtt/mTC0apLcm3yMMsAW3/bYdsfuKacIXeufAmXuvNhl9Omt7U/e7dr35?=
+ =?us-ascii?Q?A7U1Vu/Tvj2HvRixgmWauXYo6W4t23hktidJkuqKVQbFzBSEJ34q6wNdCJ28?=
+ =?us-ascii?Q?ALvr4iTj7YlSaKoQ1XDHhn0Hi24g/xpOyyKF6bwRDNpal3x+yKCIyry17EEB?=
+ =?us-ascii?Q?1qMCPpxYPus5lt6Gnr6nSWjaeBuFwgZ0gymdaIJzGRsgXl0j6eIQoHQ5AVtc?=
+ =?us-ascii?Q?tCgVtFhvqYKlmf53C58pGo/J8hSGGmF7MnLfrB2Z?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3fbd763d-3af7-45bb-2f04-08dcb2251da0
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Aug 2024 12:26:06.1858
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9Ug8fkYZJjGZOI7I7lH2cmBi46X3C0Ciq8OvvYtxV937a3tNnu2hEhx48a1WfZ3G
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB7650
 
-Hi Stephen,
+From: Barak Biber <bbiber@nvidia.com>
 
-On Tue, 9 Jul 2024 at 00:03, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Stephen Boyd (2024-05-02 15:47:02)
-> > There's two problems with shared RCGs.
-> >
-> > The first problem is that they incorrectly report the parent after
-> > commit 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for
-> > parked RCGs"). That's because the cached CFG register value needs to be
-> > populated when the clk is registered. clk_rcg2_shared_enable() writes
-> > the cached CFG register value 'parked_cfg'. This value is initially zero
-> > due to static initializers. If a driver calls clk_enable() before
-> > setting a rate or parent, it will set the parent to '0' which is
-> > (almost?) always XO, and may not reflect the parent at registration. In
-> > the worst case, this switches the RCG from sourcing a fast PLL to the
-> > slow crystal speed.
-> >
-> > The second problem is that the force enable bit isn't cleared. The force
-> > enable bit is only used during parking and unparking of shared RCGs.
-> > Otherwise it shouldn't be set because it keeps the RCG enabled even when
-> > all the branches on the output of the RCG are disabled (the hardware has
-> > a feedback mechanism so that any child branches keep the RCG enabled
-> > when the branch enable bit is set). This problem wastes power if the clk
-> > is unused, and is harmful in the case that the clk framework disables
-> > the parent of the force enabled RCG. In the latter case, the GDSC the
-> > shared RCG is associated with will get wedged if the RCG's source clk is
-> > disabled and the GDSC tries to enable the RCG to do "housekeeping" while
-> > powering on.
-> >
-> > Both of these problems combined with incorrect runtime PM usage in the
-> > display driver lead to a black screen on Qualcomm sc7180 Trogdor
-> > chromebooks. What happens is that the bootloader leaves the
-> > 'disp_cc_mdss_rot_clk' enabled and the 'disp_cc_mdss_rot_clk_src' force
-> > enabled and parented to 'disp_cc_pll0'. The mdss driver probes and
-> > runtime suspends, disabling the mdss_gdsc which uses the
-> > 'disp_cc_mdss_rot_clk_src' for "housekeeping". The
-> > 'disp_cc_mdss_rot_clk' is disabled during late init because the clk is
-> > unused, but the parent 'disp_cc_mdss_rot_clk_src' is still force enabled
-> > because the force enable bit was never cleared. Then 'disp_cc_pll0' is
-> > disabled because it is also unused. That's because the clk framework
-> > believes the parent of the RCG is XO when it isn't. A child device of
-> > the mdss device (e.g. DSI) runtime resumes mdss which powers on the
-> > mdss_gdsc. This wedges the GDSC because 'disp_cc_mdss_rot_clk_src' is
-> > parented to 'disp_cc_pll0' and that PLL is off. With the GDSC wedged,
-> > mdss_runtime_resume() tries to enable 'disp_cc_mdss_mdp_clk' but it
-> > can't because the GDSC has wedged all the clks associated with the GDSC
-> > causing clks to stay stuck off.
-> >
-> > This leads to the following warning seen at boot and a black screen
-> > because the display driver fails to probe.
-> >
-> >  disp_cc_mdss_mdp_clk status stuck at 'off'
-> >  WARNING: CPU: 1 PID: 81 at drivers/clk/qcom/clk-branch.c:87 clk_branch_toggle+0x114/0x168
-> >  Modules linked in:
-> >  CPU: 1 PID: 81 Comm: kworker/u16:4 Not tainted 6.7.0-g0dd3ee311255 #1 f5757d475795053fd2ad52247a070cd50dd046f2
-> >  Hardware name: Google Lazor (rev1 - 2) with LTE (DT)
-> >  Workqueue: events_unbound deferred_probe_work_func
-> >  pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> >  pc : clk_branch_toggle+0x114/0x168
-> >  lr : clk_branch_toggle+0x110/0x168
-> >  sp : ffffffc08084b670
-> >  pmr_save: 00000060
-> >  x29: ffffffc08084b680 x28: ffffff808006de00 x27: 0000000000000001
-> >  x26: ffffff8080dbd4f4 x25: 0000000000000000 x24: 0000000000000000
-> >  x23: 0000000000000000 x22: ffffffd838461198 x21: ffffffd838007997
-> >  x20: ffffffd837541d5c x19: 0000000000000001 x18: 0000000000000004
-> >  x17: 0000000000000000 x16: 0000000000000010 x15: ffffffd837070fac
-> >  x14: 0000000000000003 x13: 0000000000000004 x12: 0000000000000001
-> >  x11: c0000000ffffdfff x10: ffffffd838347aa0 x9 : 08dadf92e516c000
-> >  x8 : 08dadf92e516c000 x7 : 0000000000000000 x6 : 0000000000000027
-> >  x5 : ffffffd8385a61f2 x4 : 0000000000000000 x3 : ffffffc08084b398
-> >  x2 : ffffffc08084b3a0 x1 : 00000000ffffdfff x0 : 00000000fffffff0
-> >  Call trace:
-> >   clk_branch_toggle+0x114/0x168
-> >   clk_branch2_enable+0x24/0x30
-> >   clk_core_enable+0x5c/0x1c8
-> >   clk_enable+0x38/0x58
-> >   clk_bulk_enable+0x40/0xb0
-> >   mdss_runtime_resume+0x68/0x258
-> >   pm_generic_runtime_resume+0x30/0x44
-> >   __genpd_runtime_resume+0x30/0x80
-> >   genpd_runtime_resume+0x124/0x214
-> >   __rpm_callback+0x7c/0x15c
-> >   rpm_callback+0x30/0x88
-> >   rpm_resume+0x390/0x4d8
-> >   rpm_resume+0x43c/0x4d8
-> >   __pm_runtime_resume+0x54/0x98
-> >   __device_attach+0xe0/0x170
-> >   device_initial_probe+0x1c/0x28
-> >   bus_probe_device+0x48/0xa4
-> >   device_add+0x52c/0x6fc
-> >   mipi_dsi_device_register_full+0x104/0x1a8
-> >   devm_mipi_dsi_device_register_full+0x28/0x78
-> >   ti_sn_bridge_probe+0x1dc/0x2bc
-> >   auxiliary_bus_probe+0x4c/0x94
-> >   really_probe+0xf8/0x270
-> >   __driver_probe_device+0xa8/0x130
-> >   driver_probe_device+0x44/0x104
-> >   __device_attach_driver+0xa4/0xcc
-> >   bus_for_each_drv+0x94/0xe8
-> >   __device_attach+0xf8/0x170
-> >   device_initial_probe+0x1c/0x28
-> >   bus_probe_device+0x48/0xa4
-> >   deferred_probe_work_func+0x9c/0xd8
-> >
-> > Fix these problems by parking shared RCGs at boot. This will properly
-> > initialize the parked_cfg struct member so that the parent is reported
-> > properly and ensure that the clk won't get stuck on or off because the
-> > RCG is parented to the safe source (XO).
-> >
-> > Fixes: 703db1f5da1e ("clk: qcom: rcg2: Cache CFG register updates for parked RCGs")
-> > Reported-by: Stephen Boyd <sboyd@kernel.org>
-> > Closes: https://lore.kernel.org/r/1290a5a0f7f584fcce722eeb2a1fd898.sboyd@kernel.org
-> > Closes: https://issuetracker.google.com/319956935
-> > Reported-by: Laura Nao <laura.nao@collabora.com>
-> > Closes: https://lore.kernel.org/r/20231218091806.7155-1-laura.nao@collabora.com
-> > Cc: Bjorn Andersson <andersson@kernel.org>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Douglas Anderson <dianders@chromium.org>
-> > Cc: Taniya Das <quic_tdas@quicinc.com>
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
->
-> Applied to clk-next
->
+When iommu_report_device_fault gets called with a partial fault it is
+supposed to collect the fault into the group and then return.
 
-This patch caused a few deferred probes on sm8550-hdk breaking the
-audio codec and usb-c host mode support. This breakage is not 100%
-reproducible but can be fairly easily reproduced though.
-I have attached the relevant logs and defconfig here
-https://bugs.linaro.org/show_bug.cgi?id=6053 for reference. Let me
-know if you need more information or if I can assist you in testing a
-debug patch to diagnose it further.
+Instead the return was accidently deleted which results in trying to
+process the fault and an eventual crash.
 
-Regards,
-Amit Pundir
+Deleting the return was a typo, put it back.
+
+Fixes: 3dfa64aecbaf ("iommu: Make iommu_report_device_fault() return void")
+Signed-off-by: Barak Biber <bbiber@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/iommu/io-pgfault.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/iommu/io-pgfault.c b/drivers/iommu/io-pgfault.c
+index cd679c13752e00..81e9cc6e3164a4 100644
+--- a/drivers/iommu/io-pgfault.c
++++ b/drivers/iommu/io-pgfault.c
+@@ -170,6 +170,7 @@ void iommu_report_device_fault(struct device *dev, struct iopf_fault *evt)
+ 		report_partial_fault(iopf_param, fault);
+ 		iopf_put_dev_fault_param(iopf_param);
+ 		/* A request that is not the last does not need to be ack'd */
++		return;
+ 	}
+ 
+ 	/*
+
+base-commit: 8400291e289ee6b2bf9779ff1c83a291501f017b
+-- 
+2.45.2
+
