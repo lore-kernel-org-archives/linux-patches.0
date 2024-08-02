@@ -1,56 +1,59 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09C21A34D2;
-	Fri,  2 Aug 2024 15:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77392B67E;
+	Fri,  2 Aug 2024 23:34:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722614260; cv=none; b=rHgbRnEO6hKtVrKjwSx1GGbT/S1+n27DD3dJ9/1SNzYWAQbG8bKX56dmyOKlkRd5zOxNlKCoFlKkMMSUMzzBcixuS8uflxHHwUEm9IzcsWr4ZUVNc0RShPHnELeyWeovreFMc4XIhzBKwO8eCuHZhxIYS+s53aMAQIr/9du78CY=
+	t=1722641684; cv=none; b=OJ+XEbySUl8EABt0peWFEZtTVAQFGeA2TvOI45f9S8I9aZHFI3d2ZAiPONNsRk6JJBFJvphmT23P4pZYR3+rraBew5WbWEK8b6vMLSW1ljqukFOtQ9rSiToQnYJv8iulIQbJwOikWnffC7F/lsmoC/W1492ajSBXzoThknuScW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722614260; c=relaxed/simple;
-	bh=SygGhejwtugE49KfkjCbD9EIloYT99XipGcKa/8Qp3w=;
+	s=arc-20240116; t=1722641684; c=relaxed/simple;
+	bh=3Dt3rP3cBNyiNx8q6SWdzLDhWb+b6sCffZ8eBEtclM8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q8emdCg5Sy8QlvYi8CJ/bMu46XSTdtKMhy0HaEgKMQrajZ2p8Dbmva6m0qfMDDoLS9XyVUEuR6H4Fgi6in+JP+o4rqhcEWwlxvLL4nYtXChimzFXL/xeyP1yd/OW7zcsiC6QESGRsFpe1dpHlCGRH8owSwsFCrTNsoZPwnQG/oE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YV/dypFC; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=T5b2YBNrG67Oizvdr+cSkjSkyUMMHWl7PMqK6zeoCaupZhKvJT4JdqpT/k1dcrA3WnvxIySA4be/E5XI5N5YO+gM3VnfNE+owKhDq7xxhHmRv2yEGdzhdq80vwEKT7Kr4sabds+ceB8I0J1Z2JIsMjERczkkIpKm8mdURJaRa0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=mWWpur2v; arc=none smtp.client-ip=194.63.252.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YV/dypFC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA571C32782;
-	Fri,  2 Aug 2024 15:57:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722614259;
-	bh=SygGhejwtugE49KfkjCbD9EIloYT99XipGcKa/8Qp3w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YV/dypFCvqgZ0QSl5sAYt59iH5qph/Em1mQCDHFp5p1EXgVTccPJze54MVp9Zr+/I
-	 JO8rEQ6tU+2BC7I4+NOVw53jOxNHRZ/LkzvFq8XpQzGw5LpzM6YVwTcKeFxDjjj/oJ
-	 IWwoJYKN4Ms3W2TVg8ro4CdBtyY3mIPUjpt6VFeFLEgDiyUttDt/NpVbFODhzh7l7q
-	 uAF2iOAUUaXBmjHcqwpa+PCo+a9VHO0vqV+xBgLijA/+2dIMbBiHfxE+klmdgCKqVE
-	 z/UKQx7S2bXzi4xvlL8fEnnVdEaVbH+aJoWCwsKAtoAfXYlolgjk/X29WsHcb9vDTK
-	 70B1ZSmRoiV7w==
-Date: Fri, 2 Aug 2024 18:57:34 +0300
-From: Leon Romanovsky <leon@kernel.org>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>,
-	Itay Avraham <itayavr@nvidia.com>, Jakub Kicinski <kuba@kernel.org>,
-	linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
-	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Ahern <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>, linux-cxl@vger.kernel.org,
+	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="mWWpur2v"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
+	s=ds202307; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
+	Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:
+	MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Asq92kUoORZTc3wQnPiSj6dveDoW9X+Fb+nu6DxMHzs=; b=mWWpur2vFEFFWGlnrjuEaPkCEC
+	Win1kuMgBdbpZ1+xYJGzL94BaAaG3sNBI9oYxyxvnXc+pL3dczvXq7z86yIOjywAoN1SfN3cZQm2S
+	oxEoDgG1Dk8IfttnRSGN40RSe/lmDXqe4Hzl41xOfAqAC/ONzaTrpGzD2GQZk5pfAlkDhQGGDu91T
+	O50MrUVVDMK6SeMzbFJpLnLp8Vbp5Zi24+pSsuX8V/YmyQfF8zIKbqfXkudTQeU/Xs/exxLsmmYAc
+	O5TunBRg1MyWyRMFqqmORqlqt7NVORq978w8/qI0BVdEMh+bXO/VHKcEVUlI3Jl52lcTCciSKIbM5
+	/l7bhgXA==;
+Received: from [2001:9e8:9c5:5401:3235:adff:fed0:37e6] (port=45440 helo=lindesnes.fjasle.eu)
+	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <nicolas@fjasle.eu>)
+	id 1sa1my-002EZG-E9;
+	Sat, 03 Aug 2024 01:34:24 +0200
+Date: Sat, 3 Aug 2024 01:34:19 +0200
+From: Nicolas Schier <nicolas@fjasle.eu>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Martin KaFai Lau <martin.lau@linux.dev>,
+	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	John Fastabend <john.fastabend@gmail.com>,
+	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>,
+	Hao Luo <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>,
+	bpf@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>,
+	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: Re: [PATCH v2 5/8] fwctl: FWCTL_RPC to execute a Remote Procedure
- Call to device firmware
-Message-ID: <20240802155734.GJ4209@unreal>
-References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <5-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <20240730080038.GA4209@unreal>
- <20240801125829.GA2809814@nvidia.com>
- <20240801172631.GI4209@unreal>
- <20240802145946.000002e7@Huawei.com>
+Subject: Re: [PATCH] kbuild: pahole-version: avoid errors if executing fails
+Message-ID: <20240803-axiomatic-wallaby-of-courtesy-7d2ffa@lindesnes>
+References: <20240728125527.690726-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,81 +62,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20240802145946.000002e7@Huawei.com>
+In-Reply-To: <20240728125527.690726-1-ojeda@kernel.org>
 
-On Fri, Aug 02, 2024 at 02:59:46PM +0100, Jonathan Cameron wrote:
-> On Thu, 1 Aug 2024 20:26:31 +0300
-> Leon Romanovsky <leon@kernel.org> wrote:
+On Sun, Jul 28, 2024 at 02:55:27PM +0200, Miguel Ojeda wrote:
+> Like patch "rust: suppress error messages from
+> CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT" [1], do not assume the file existing
+> and being executable implies executing it will succeed. Instead, bail
+> out if executing it fails for any reason.
 > 
-> > On Thu, Aug 01, 2024 at 09:58:29AM -0300, Jason Gunthorpe wrote:
-> > > On Tue, Jul 30, 2024 at 11:00:38AM +0300, Leon Romanovsky wrote:  
-> > > > > +
-> > > > > +	void *inbuf __free(kvfree) =
-> > > > > +		kvzalloc(cmd->in_len, GFP_KERNEL | GFP_KERNEL_ACCOUNT);  
-> > > > 
-> > > > 
-> > > > <...>
-> > > >   
-> > > > > +	out_len = cmd->out_len;
-> > > > > +	void *outbuf __free(kvfree_errptr) = fwctl->ops->fw_rpc(
-> > > > > +		ucmd->uctx, cmd->scope, inbuf, cmd->in_len, &out_len);  
-> > > > 
-> > > > I was under impression that declaration of variables in C should be at the beginning
-> > > > of block. Was it changed for the kernel?  
-> > > 
-> > > Yes, the compiler check blocking variables in the body was disabled to
-> > > allow cleanup.h
-> > > 
-> > > Jonathan said this is the agreed coding style to use for this  
-> > 
-> > I'm said to hear that.
+> For instance, `pahole` may be built for another architecture, may be a
+> program we do not expect or may be completely broken:
 > 
-> Was passing on a statement Linus made (not digging it out right now)
-> that he really wanted to be able see constructors and destructors
-> together.
+>     $ echo 'bad' > bad-pahole
+>     $ chmod u+x bad-pahole
+>     $ make PAHOLE=./bad-pahole defconfig
+>     ...
+>     ./bad-pahole: 1: bad: not found
+>     init/Kconfig:112: syntax error
+>     init/Kconfig:112: invalid statement
+> 
+> Link: https://lore.kernel.org/rust-for-linux/20240727140302.1806011-1-masahiroy@kernel.org/ [1]
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  scripts/pahole-version.sh | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/scripts/pahole-version.sh b/scripts/pahole-version.sh
+> index f8a32ab93ad1..a35b557f1901 100755
+> --- a/scripts/pahole-version.sh
+> +++ b/scripts/pahole-version.sh
+> @@ -5,9 +5,9 @@
+>  #
+>  # Prints pahole's version in a 3-digit form, such as 119 for v1.19.
+>  
+> -if [ ! -x "$(command -v "$@")" ]; then
+> +if output=$("$@" --version 2>/dev/null); then
+> +	echo "$output" | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/'
+> +else
+>  	echo 0
+>  	exit 1
+>  fi
+> -
+> -"$@" --version | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/'
+> 
+> base-commit: 256abd8e550ce977b728be79a74e1729438b4948
+> -- 
+> 2.45.2
+> 
 
-The thing is that we are talking about the same thing. I and Linus want
-to keep locality of variables declaration and initialization. I don't
-know the Linus's stance on it, but I'm sad that to achieve that for
-cleanup.h, very useful feature of GCC (keep variables at the beginning
-of the block) was disabled.
+thanks, looks good to me.
 
-Right now, you can declare variables in any place and it is harder to
-review the code now. It is a matter of time when we will see code like
-this and start to chase bugs introduced by this pattern:
-
-int f()
-{
-	<some code>
-	int i;
-	<some code>
-	return something;
-}
-
-Thanks
-
-> 
-> The other part is that in some cases you can end up with non
-> obvious ordering bugs because the cleanup is the reverse of the
-> declarations, not the constructors being called.
-> Whilst it is fairly easy to review for this, future code reorganization
-> may well lead to subtle bugs, typically in error paths etc.
-> 
-> Putting the declaration inline avoids this potential problem
-> 
-> Dan wrote a style guide proposal.
-> https://lore.kernel.org/all/171175585714.2192972.12661675876300167762.stgit@dwillia2-xfh.jf.intel.com/
-> [PATCH v3] cleanup: Add usage and style documentation
-> 
-> seems it died out without anyone applying it.  I've poked.
-> 
-> Jonathan
-> 
-> > 
-> > Thanks
-> > 
-> > > 
-> > > Jason  
-> > 
-> 
-> 
+Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
