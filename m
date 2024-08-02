@@ -1,114 +1,58 @@
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E381E2873
-	for <patches@lists.linux.dev>; Fri,  2 Aug 2024 13:59:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5C131E2894;
+	Fri,  2 Aug 2024 13:59:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722607193; cv=none; b=W85suJJs8ewsENkjz0SdIGFvr/wx2+sCkfdhS3zTtcP2BFsco2iKMtFG07htPjFVuboTmLQU1wQok4Uj6N3zZRBR00aDW39nTjEUvj4zE9MW682TuMTUzAOpqeVo74QC/9arr0dQW6ljV4bqHpUmUTm8s+SmBj7JqqXRGN3q2dI=
+	t=1722607200; cv=none; b=EIh9PX567tot+/kwNE4FVUbXSYPweCTELI/Uw5u0rHSb3QyjGr9Dn9JF+6wceTDF/j7N6UeQLjor8DfV6wNXomYTQsIRg0yTgBWD+vyK/qJMnWSlpbTpKWLthVWPOZJabWycI46KXSKYDRZfeKMrWHdETMourXEvWnHkEiqBH9k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722607193; c=relaxed/simple;
-	bh=wFa0Dd0QCPMjL3yKGIPRC3IqvgyKLQTUfaNKwswBGVY=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Zj1HsO9dfLp6rQ/jOMhxrk3ozdZJDtKP1v/9vhprSfC6340tWzlXrcj0/y2Hcdta2xlwuSUlv8H9UFWgw3h0uyEoJR7l8HhXHdiy23YjGz76X3znbXus981dpetSFFPz1gscGbyIM9OL4uG9mSwRKsT6WzYf4ijRkHJxAXJqZ0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=Huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.231])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Wb6pG5ChXz6K9GR;
-	Fri,  2 Aug 2024 21:57:10 +0800 (CST)
-Received: from lhrpeml500005.china.huawei.com (unknown [7.191.163.240])
-	by mail.maildlp.com (Postfix) with ESMTPS id 4959C140B63;
-	Fri,  2 Aug 2024 21:59:48 +0800 (CST)
-Received: from localhost (10.203.177.66) by lhrpeml500005.china.huawei.com
- (7.191.163.240) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 2 Aug
- 2024 14:59:47 +0100
-Date: Fri, 2 Aug 2024 14:59:46 +0100
-From: Jonathan Cameron <Jonathan.Cameron@Huawei.com>
-To: Leon Romanovsky <leon@kernel.org>
-CC: Jason Gunthorpe <jgg@nvidia.com>, Jonathan Corbet <corbet@lwn.net>, "Itay
- Avraham" <itayavr@nvidia.com>, Jakub Kicinski <kuba@kernel.org>,
-	<linux-doc@vger.kernel.org>, <linux-rdma@vger.kernel.org>,
-	<netdev@vger.kernel.org>, Paolo Abeni <pabeni@redhat.com>, Saeed Mahameed
-	<saeedm@nvidia.com>, Tariq Toukan <tariqt@nvidia.com>, Andy Gospodarek
-	<andrew.gospodarek@broadcom.com>, Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>, "David Ahern" <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, "Jiri Pirko" <jiri@nvidia.com>, Leonid
- Bloch <lbloch@nvidia.com>, <linux-cxl@vger.kernel.org>,
-	<patches@lists.linux.dev>, Jonathan Corbet <corbet@lwn.net>
-Subject: Re: [PATCH v2 5/8] fwctl: FWCTL_RPC to execute a Remote Procedure
- Call to device firmware
-Message-ID: <20240802145946.000002e7@Huawei.com>
-In-Reply-To: <20240801172631.GI4209@unreal>
-References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<5-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
-	<20240730080038.GA4209@unreal>
-	<20240801125829.GA2809814@nvidia.com>
-	<20240801172631.GI4209@unreal>
-Organization: Huawei Technologies Research and Development (UK) Ltd.
-X-Mailer: Claws Mail 4.1.0 (GTK 3.24.33; x86_64-w64-mingw32)
+	s=arc-20240116; t=1722607200; c=relaxed/simple;
+	bh=EeHisQoJvRHNuhbJues0OBjMZm1RIQx7uM8MGkBztS4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BQ9PAeCUnbEYg/x/XCx1jnWiFQtjswK9L26lGY+U80epiYYuSUKQD79Dh865GJjPeE1usMWWNRGq/pgLl3CLRugXwkLemPVVo9shjnpbGbtXzMVhplhTbwP9ovTKvwX7977HgXc+m9Np8YMNhjnGGxhBhDUh4OUkLo9dUfcXmFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=OR+6+zwq; arc=none smtp.client-ip=85.214.250.239
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="OR+6+zwq"
+Received: from 8bytes.org (pd9fe9dd8.dip0.t-ipconnect.de [217.254.157.216])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 401062A4C5B;
+	Fri,  2 Aug 2024 15:59:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
+	s=default; t=1722607196;
+	bh=EeHisQoJvRHNuhbJues0OBjMZm1RIQx7uM8MGkBztS4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OR+6+zwq1HkdsXEUKRTOyfR5ajUE0GuYYbfJtPyAWFUx56c28vNfGOT8IllqoqPaV
+	 yxcLVIaSAHrP+6fzzIsKTfQi2SMmPFYMkG1jnyzgKomvowbsAX6dNW07/zqgglO1Ug
+	 LbqqzH7OC6lA4lfC4LeeD26L/hLFnehG3KVppBne3gXxzx/srOCcP2cGGf2/CA9ozO
+	 qxV/h6PaikjqgmO6+9vEcNqgDHiuiEMkpwIqLSzUoV293bCxEI9O9uvNTsPO5PlhFW
+	 Q7Zk1IiRCjxSlgUVY+EdqeDuDAElwHXAaivIBFZZb0+KT8Kb0TxexKFGFRwoeWx6EI
+	 CR5dT64lrIo/w==
+Date: Fri, 2 Aug 2024 15:59:55 +0200
+From: Joerg Roedel <joro@8bytes.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>,
+	Will Deacon <will@kernel.org>, Lu Baolu <baolu.lu@linux.intel.com>,
+	Barak Biber <bbiber@nvidia.com>, Joerg Roedel <jroedel@suse.de>,
+	Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev
+Subject: Re: [PATCH rc] iommu: Restore lost return in
+ iommu_report_device_fault()
+Message-ID: <ZqzmW3_A6FOVn1x_@8bytes.org>
+References: <0-v1-e7153d9c8cee+1c6-iommu_fault_fix_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml500004.china.huawei.com (7.191.163.9) To
- lhrpeml500005.china.huawei.com (7.191.163.240)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0-v1-e7153d9c8cee+1c6-iommu_fault_fix_jgg@nvidia.com>
 
-On Thu, 1 Aug 2024 20:26:31 +0300
-Leon Romanovsky <leon@kernel.org> wrote:
+On Thu, Aug 01, 2024 at 09:26:04AM -0300, Jason Gunthorpe wrote:
+>  drivers/iommu/io-pgfault.c | 1 +
+>  1 file changed, 1 insertion(+)
 
-> On Thu, Aug 01, 2024 at 09:58:29AM -0300, Jason Gunthorpe wrote:
-> > On Tue, Jul 30, 2024 at 11:00:38AM +0300, Leon Romanovsky wrote:  
-> > > > +
-> > > > +	void *inbuf __free(kvfree) =
-> > > > +		kvzalloc(cmd->in_len, GFP_KERNEL | GFP_KERNEL_ACCOUNT);  
-> > > 
-> > > 
-> > > <...>
-> > >   
-> > > > +	out_len = cmd->out_len;
-> > > > +	void *outbuf __free(kvfree_errptr) = fwctl->ops->fw_rpc(
-> > > > +		ucmd->uctx, cmd->scope, inbuf, cmd->in_len, &out_len);  
-> > > 
-> > > I was under impression that declaration of variables in C should be at the beginning
-> > > of block. Was it changed for the kernel?  
-> > 
-> > Yes, the compiler check blocking variables in the body was disabled to
-> > allow cleanup.h
-> > 
-> > Jonathan said this is the agreed coding style to use for this  
-> 
-> I'm said to hear that.
-
-Was passing on a statement Linus made (not digging it out right now)
-that he really wanted to be able see constructors and destructors
-together.
-
-The other part is that in some cases you can end up with non
-obvious ordering bugs because the cleanup is the reverse of the
-declarations, not the constructors being called.
-Whilst it is fairly easy to review for this, future code reorganization
-may well lead to subtle bugs, typically in error paths etc.
-
-Putting the declaration inline avoids this potential problem
-
-Dan wrote a style guide proposal.
-https://lore.kernel.org/all/171175585714.2192972.12661675876300167762.stgit@dwillia2-xfh.jf.intel.com/
-[PATCH v3] cleanup: Add usage and style documentation
-
-seems it died out without anyone applying it.  I've poked.
-
-Jonathan
-
-> 
-> Thanks
-> 
-> > 
-> > Jason  
-> 
-
+Applied, thanks.
