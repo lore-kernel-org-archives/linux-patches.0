@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4572A2561B;
-	Sat,  3 Aug 2024 17:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDD03B1A1;
+	Sat,  3 Aug 2024 17:20:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722705607; cv=none; b=j0Zdayos3/FbSVXegekL61OV6KYhL9mnWk051pOXh/mcQM005QeCmaW6DSipu/pcLFE7L7MHjpCbctdwLvqPtF5M3A68cBI/J+FFYKJXU9B4IZpjruAxp/2SHsbl0UWbyAXjFAdnBu8qQxqM/jvQvkUvgTb7aY1KJ9ru1msjt2E=
+	t=1722705610; cv=none; b=GJpRyw7mFJ4zZ6Ed/U5hAx/4k+Ler5JtbRgn7diRtvBdPlPJZ/gUO08r9+abekIRGk35I8M+LTwtor7bK9kVjV7rmZ9QU3hCo3N0ncyKah7NaVMOfUz8IqwMuo1aptLJkOe9N3uzmIvSUFbGG0hcQBykmdJXNTeITIfDtXZJwdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722705607; c=relaxed/simple;
-	bh=Srfi3Dbl2mVsUf8lHrRzpRnCT2ZEY7fCNifbqYjiFGI=;
+	s=arc-20240116; t=1722705610; c=relaxed/simple;
+	bh=rnbH9kFxPcja9/hUhgnU5THreC2oxdLcAfmUx26FtSA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h6cpS/9MZCAcC4NA8GxJgh1iKmfd076Uuo6IVNhbx8bDqKBmTsjlx4Ai8qQeO7/hxv5IxrFvA9h8VgGCIVYsImW6Ncs6aXQPg+n8h9wKjQnF01SseE09GfELrb5wv6MF5TfNopNAygxLakGg/P5M7/RRaaEHogaPJvuck9D05Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D8yQeC6q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mn+qsF5XZJTtMwNoyaVGLoPAoZYFh83OyhNc9B4o9UbsdW5xmTf885RJuSj4uH909fzToMhkYmb4Qydlz2rg9H0wwg7WKcsRHviSOrMiP3X0MVjjpH/DKD/lBjXFkofYJ4GQ+fqCL3q68LgBzjncuEOENBTD2LBueYDnfZObqOs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iWiudmB4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D8yQeC6q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85FEC4AF09;
-	Sat,  3 Aug 2024 17:20:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iWiudmB4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5440EC4AF0B;
+	Sat,  3 Aug 2024 17:20:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1722705606;
-	bh=Srfi3Dbl2mVsUf8lHrRzpRnCT2ZEY7fCNifbqYjiFGI=;
+	s=k20201202; t=1722705609;
+	bh=rnbH9kFxPcja9/hUhgnU5THreC2oxdLcAfmUx26FtSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8yQeC6qP65UXm+VzQRtwqIxKPoqUPA/ILKYik5cwzq/y7+BriQyCBU8YLjH/OLSj
-	 y0pfBg08KTYvc0emg8rE1BIspAaOyuyo4l8ADFg5g78IY7kgRL9Ism4/YIuwg6qK/y
-	 3h01Oq/y+LC5KO21Ip+nWTR/ogMAhDq7XghB98w65vJxVaH59dE1A4VcxwWAXttL4h
-	 LoFZOGfJp846/i3R1N+TWiWEjMRFTH+A/2X5pqaCzTMQJO2hzObXE2HQdPLWudymNC
-	 Xi2ODoYW9Utznc5r9aRxdlny1ZvPCoMIPRw20TfRYT4VhY892wgcSdhxOnTPWI7AZa
-	 JiWPRswcnFWfg==
+	b=iWiudmB49S6Li4IR87H55Kj/kxjmSUPjCjslUuJ/zaft3rnP4G6XHPhQ9v7GK12H6
+	 jA7I6AL3cqQUo5ul/1XEwGNgOBkjibAoUKQ17y1pLafPKvgPgS0dFSKjTQgOPgWFSt
+	 GIJ5FeExgUkSVaK9h7djZRQYBdkPHyZN35GGntDGIyR5O9K8Xy92BCypykt2QZINT6
+	 c0MwwAQfnzsKXnlJRMejqT2MamqJ8ISSFr/Ft0ug3N392MLoYjs1GVVvBG8RM6jbCK
+	 XX/iPQ77kzm1x8fLQ/ACqO1jFNznndBuhrRoA0V+p5wuRkSDIOTqJ4EMDPIc/0CWZ2
+	 gn0EzQyEbuPTQ==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Miguel Ojeda <ojeda@kernel.org>
 Cc: Nathan Chancellor <nathan@kernel.org>,
@@ -35,9 +35,9 @@ Cc: Nathan Chancellor <nathan@kernel.org>,
 	llvm@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH 4/5] Compiler Attributes: fix formatting of GCC/Clang doc links
-Date: Sat,  3 Aug 2024 19:19:32 +0200
-Message-ID: <20240803171933.483316-4-ojeda@kernel.org>
+Subject: [PATCH 5/5] Compiler Attributes: make version constraints more consistent
+Date: Sat,  3 Aug 2024 19:19:33 +0200
+Message-ID: <20240803171933.483316-5-ojeda@kernel.org>
 In-Reply-To: <20240803171933.483316-1-ojeda@kernel.org>
 References: <20240803171933.483316-1-ojeda@kernel.org>
 Precedence: bulk
@@ -48,58 +48,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Over time, some links have been added that did not follow the formatting
-of the rest. Fix it for consistency.
+Over time, some version constraints have been added that did not follow
+the formatting of the rest. Fix it for consistency.
 
-No non-whitespace changes intended.
+Some of the version requirements can be simplified, too.
 
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- include/linux/compiler_attributes.h | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/linux/compiler_attributes.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/include/linux/compiler_attributes.h b/include/linux/compiler_attributes.h
-index 2d1ad2a74a4e..a6e8c9406f7a 100644
+index a6e8c9406f7a..908e59e261c0 100644
 --- a/include/linux/compiler_attributes.h
 +++ b/include/linux/compiler_attributes.h
-@@ -226,7 +226,7 @@
-  *   goto <label>;
-  *   return [expression];
+@@ -112,7 +112,7 @@
+ 
+ /*
+  * Optional: not supported by gcc
+- * Optional: only supported since clang >= 14.0
++ * Optional: only supported since clang >= 14
   *
-- *  gcc: https://gcc.gnu.org/onlinedocs/gcc/Statement-Attributes.html#Statement-Attributes
-+ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Statement-Attributes.html#Statement-Attributes
-  * clang: https://clang.llvm.org/docs/AttributeReference.html#fallthrough
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#diagnose_as_builtin
   */
- #if __has_attribute(__fallthrough__)
-@@ -236,7 +236,7 @@
+@@ -146,7 +146,7 @@
  #endif
  
  /*
-- * gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#Common-Function-Attributes
-+ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#Common-Function-Attributes
-  * clang: https://clang.llvm.org/docs/AttributeReference.html#flatten
-  */
- # define __flatten			__attribute__((flatten))
-@@ -264,8 +264,8 @@
- /*
-  * Optional: only supported since GCC >= 7.1
+- * Optional: only supported since clang >= 14.0
++ * Optional: only supported since clang >= 14
   *
-- *      gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005fprofile_005finstrument_005ffunction-function-attribute
-- *    clang: https://clang.llvm.org/docs/AttributeReference.html#no-profile-instrument-function
-+ *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005fprofile_005finstrument_005ffunction-function-attribute
-+ * clang: https://clang.llvm.org/docs/AttributeReference.html#no-profile-instrument-function
-  */
- #if __has_attribute(__no_profile_instrument_function__)
- # define __no_profile                  __attribute__((__no_profile_instrument_function__))
-@@ -283,7 +283,7 @@
-  * Optional: only supported since GCC >= 11.1
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#error-warning
+@@ -262,7 +262,7 @@
+ #endif
+ 
+ /*
+- * Optional: only supported since GCC >= 7.1
++ * Optional: only supported since gcc >= 7
+  *
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005fprofile_005finstrument_005ffunction-function-attribute
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#no-profile-instrument-function
+@@ -280,7 +280,7 @@
+ #define __noreturn                      __attribute__((__noreturn__))
+ 
+ /*
+- * Optional: only supported since GCC >= 11.1
++ * Optional: only supported since gcc >= 11
   *
   *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-no_005fstack_005fprotector-function-attribute
-- *   clang: https://clang.llvm.org/docs/AttributeReference.html#no-stack-protector-safebuffers
-+ * clang: https://clang.llvm.org/docs/AttributeReference.html#no-stack-protector-safebuffers
-  */
- #if __has_attribute(__no_stack_protector__)
- # define __no_stack_protector		__attribute__((__no_stack_protector__))
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#no-stack-protector-safebuffers
+@@ -388,7 +388,7 @@
+ #define __must_check                    __attribute__((__warn_unused_result__))
+ 
+ /*
+- * Optional: only supported since clang >= 14.0
++ * Optional: only supported since clang >= 14
+  *
+  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-warning-function-attribute
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#error-warning
+@@ -400,7 +400,7 @@
+ #endif
+ 
+ /*
+- * Optional: only supported since clang >= 14.0
++ * Optional: only supported since clang >= 14
+  *
+  * clang: https://clang.llvm.org/docs/AttributeReference.html#disable-sanitizer-instrumentation
+  *
 -- 
 2.46.0
 
