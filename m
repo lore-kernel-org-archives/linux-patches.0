@@ -1,115 +1,1049 @@
-Received: from smtp.domeneshop.no (smtp.domeneshop.no [194.63.252.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f176.google.com (mail-qk1-f176.google.com [209.85.222.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77392B67E;
-	Fri,  2 Aug 2024 23:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.63.252.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA15A1ABEB7
+	for <patches@lists.linux.dev>; Sat,  3 Aug 2024 00:59:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722641684; cv=none; b=OJ+XEbySUl8EABt0peWFEZtTVAQFGeA2TvOI45f9S8I9aZHFI3d2ZAiPONNsRk6JJBFJvphmT23P4pZYR3+rraBew5WbWEK8b6vMLSW1ljqukFOtQ9rSiToQnYJv8iulIQbJwOikWnffC7F/lsmoC/W1492ajSBXzoThknuScW0=
+	t=1722646773; cv=none; b=qkztHIsFZmw78fXK2U4exbbCCMMkDOrXEWeSAHRdiSM4gW4qexrnhyWHLMlF1aap2iWt9REE+h9N4ZQviEojtji4h/q0z2QbfmDGZwzQZDamsMJdbaRT2pdvLlRxUyCzha66x1v0MKCTeGaPpuNypyAds669r4E2ICbcEOLp8iM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722641684; c=relaxed/simple;
-	bh=3Dt3rP3cBNyiNx8q6SWdzLDhWb+b6sCffZ8eBEtclM8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T5b2YBNrG67Oizvdr+cSkjSkyUMMHWl7PMqK6zeoCaupZhKvJT4JdqpT/k1dcrA3WnvxIySA4be/E5XI5N5YO+gM3VnfNE+owKhDq7xxhHmRv2yEGdzhdq80vwEKT7Kr4sabds+ceB8I0J1Z2JIsMjERczkkIpKm8mdURJaRa0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu; spf=pass smtp.mailfrom=fjasle.eu; dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b=mWWpur2v; arc=none smtp.client-ip=194.63.252.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fjasle.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fjasle.eu
+	s=arc-20240116; t=1722646773; c=relaxed/simple;
+	bh=chbMiMAxBn/NvO+SUCwhZkpVRwA4SkbL/IFyWLjHz+E=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=KS0XtRyPS4Jg0uWyfn07cx7notlDEtHYZfAQD+SBMRWVbNU09bNjLgdYq028g1zDE4K3OkYHUnWhcaDyiBovZ+rU09bJW5A65H2SZ2ppHwCtjiPJmCqlcls61f1nlTK0DczNqmxvFCm1IfbPIVg2/1nSFHWNWx5Lqwk9TXLwcJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=PIKwZeyH; arc=none smtp.client-ip=209.85.222.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fjasle.eu header.i=@fjasle.eu header.b="mWWpur2v"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=fjasle.eu;
-	s=ds202307; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:
-	Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:Date:Message-ID:To:Cc:
-	MIME-Version:Content-Type:Content-Transfer-Encoding:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:In-Reply-To:References:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Asq92kUoORZTc3wQnPiSj6dveDoW9X+Fb+nu6DxMHzs=; b=mWWpur2vFEFFWGlnrjuEaPkCEC
-	Win1kuMgBdbpZ1+xYJGzL94BaAaG3sNBI9oYxyxvnXc+pL3dczvXq7z86yIOjywAoN1SfN3cZQm2S
-	oxEoDgG1Dk8IfttnRSGN40RSe/lmDXqe4Hzl41xOfAqAC/ONzaTrpGzD2GQZk5pfAlkDhQGGDu91T
-	O50MrUVVDMK6SeMzbFJpLnLp8Vbp5Zi24+pSsuX8V/YmyQfF8zIKbqfXkudTQeU/Xs/exxLsmmYAc
-	O5TunBRg1MyWyRMFqqmORqlqt7NVORq978w8/qI0BVdEMh+bXO/VHKcEVUlI3Jl52lcTCciSKIbM5
-	/l7bhgXA==;
-Received: from [2001:9e8:9c5:5401:3235:adff:fed0:37e6] (port=45440 helo=lindesnes.fjasle.eu)
-	by smtp.domeneshop.no with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <nicolas@fjasle.eu>)
-	id 1sa1my-002EZG-E9;
-	Sat, 03 Aug 2024 01:34:24 +0200
-Date: Sat, 3 Aug 2024 01:34:19 +0200
-From: Nicolas Schier <nicolas@fjasle.eu>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Eduard Zingerman <eddyz87@gmail.com>, Song Liu <song@kernel.org>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	John Fastabend <john.fastabend@gmail.com>,
-	KP Singh <kpsingh@kernel.org>, Stanislav Fomichev <sdf@fomichev.me>,
-	Hao Luo <haoluo@google.com>, Jiri Olsa <jolsa@kernel.org>,
-	bpf@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>,
-	linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH] kbuild: pahole-version: avoid errors if executing fails
-Message-ID: <20240803-axiomatic-wallaby-of-courtesy-7d2ffa@lindesnes>
-References: <20240728125527.690726-1-ojeda@kernel.org>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="PIKwZeyH"
+Received: by mail-qk1-f176.google.com with SMTP id af79cd13be357-7a1d3959ad5so358314085a.0
+        for <patches@lists.linux.dev>; Fri, 02 Aug 2024 17:59:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1722646770; x=1723251570; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uF1uNBHMb3bVkFkEd/i9/wYU5BWgvRLoejxVDaoMwzw=;
+        b=PIKwZeyHFaDL3SU0KoQQPhByGNGxpcQATyGDxknxU+555YyNAFARiBrIIkVdbdCJ+s
+         V9XlEpOqq0dnvrc1KKRJ6kyB9NobkAg1j79bdfXuOahemRgKMBxZwICbBnPhqfh+HlPz
+         +XgYLlPhuQY6PgIFM3zg/ROgHwnjo4n96rVac=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1722646770; x=1723251570;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uF1uNBHMb3bVkFkEd/i9/wYU5BWgvRLoejxVDaoMwzw=;
+        b=QriHvSG3SJbPhcaV2x2WrK3GhRJTsH2kYQrC9Lq1sg4eOaIZSd8E3fDLfm9Fk93+Kj
+         jDRz9HhV4TuMihlO8QzgFWBlp9idiafdQgIQ6/2bemrvt7ZKsD8wiPeqvD6n1iezMeZp
+         6m4cpKkorOqNYCzwBA2Sco4Tdzf5gNRecdVWYjfDiMT5D/OUNdVI2GQJooDle4jqi55D
+         OQGwBkWq133HActU4LTZ++ILwzrBsAdyEWbOfzq+XO+4VkpNWukVaKi4wrPnB/EeYfE4
+         VWGAEDLOaAteCprj4Icm4yxvuCJYLMJQe3XhVQTC6LBw49Q8zSA/2/jKK7MYRvKQ+tLS
+         xV0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVVigZcJ8/7AJI3pR30ftw41HQY94wfMY5dWGGcujnnXFFFFrmZIeuQhujdd2A/jS+Trn3XQ+WaaQqlRq73NkqAuo7pBeiyYA==
+X-Gm-Message-State: AOJu0YwHLaHy7jBjzFi07g5I2+QTmx3/kz43jOr2WdcWkXx1Cve6i40n
+	vnbBUT6mU00lNOozA9kwe9YjjiId2mF5w3gtTFL0f2gQ1YnyR3YPhivOvCmFVnojFzHQE5XPBFN
+	0ZU4PvsKc1eS5J9aowwx8uMeDcvd+hLQUP4H7
+X-Google-Smtp-Source: AGHT+IGOakMuqT9zQ2H9NlKqTvqIOt0GbuZ8Sy821ST3N36IyLos89NyFnsHrf1/EMJQxB87rwpIjo66pRmwU+ptp4s=
+X-Received: by 2002:a05:620a:40c4:b0:79e:fec7:d6e9 with SMTP id
+ af79cd13be357-7a34f0005a6mr921955985a.32.1722646769477; Fri, 02 Aug 2024
+ 17:59:29 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 2 Aug 2024 19:59:28 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240728125527.690726-1-ojeda@kernel.org>
+In-Reply-To: <CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com>
+References: <20240502224703.103150-1-swboyd@chromium.org> <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
+ <CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Fri, 2 Aug 2024 19:59:28 -0500
+Message-ID: <CAE-0n53X1Gv9nnyDfeivYd7n5W6D1WFkO0tCvYc9drb0+4hQbw@mail.gmail.com>
+Subject: Re: [PATCH] clk: qcom: Park shared RCGs upon registration
+To: Amit Pundir <amit.pundir@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
+	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
+	Laura Nao <laura.nao@collabora.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
+	Douglas Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Jul 28, 2024 at 02:55:27PM +0200, Miguel Ojeda wrote:
-> Like patch "rust: suppress error messages from
-> CONFIG_{RUSTC,BINDGEN}_VERSION_TEXT" [1], do not assume the file existing
-> and being executable implies executing it will succeed. Instead, bail
-> out if executing it fails for any reason.
-> 
-> For instance, `pahole` may be built for another architecture, may be a
-> program we do not expect or may be completely broken:
-> 
->     $ echo 'bad' > bad-pahole
->     $ chmod u+x bad-pahole
->     $ make PAHOLE=./bad-pahole defconfig
->     ...
->     ./bad-pahole: 1: bad: not found
->     init/Kconfig:112: syntax error
->     init/Kconfig:112: invalid statement
-> 
-> Link: https://lore.kernel.org/rust-for-linux/20240727140302.1806011-1-masahiroy@kernel.org/ [1]
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  scripts/pahole-version.sh | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/scripts/pahole-version.sh b/scripts/pahole-version.sh
-> index f8a32ab93ad1..a35b557f1901 100755
-> --- a/scripts/pahole-version.sh
-> +++ b/scripts/pahole-version.sh
-> @@ -5,9 +5,9 @@
->  #
->  # Prints pahole's version in a 3-digit form, such as 119 for v1.19.
->  
-> -if [ ! -x "$(command -v "$@")" ]; then
-> +if output=$("$@" --version 2>/dev/null); then
-> +	echo "$output" | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/'
-> +else
->  	echo 0
->  	exit 1
->  fi
-> -
-> -"$@" --version | sed -E 's/v([0-9]+)\.([0-9]+)/\1\2/'
-> 
-> base-commit: 256abd8e550ce977b728be79a74e1729438b4948
-> -- 
-> 2.45.2
-> 
+Quoting Amit Pundir (2024-08-01 04:59:28)
+> Hi Stephen,
+>
+> This patch caused a few deferred probes on sm8550-hdk breaking the
+> audio codec and usb-c host mode support. This breakage is not 100%
+> reproducible but can be fairly easily reproduced though.
+> I have attached the relevant logs and defconfig here
+> https://bugs.linaro.org/show_bug.cgi?id=6053 for reference. Let me
+> know if you need more information or if I can assist you in testing a
+> debug patch to diagnose it further.
+>
 
-thanks, looks good to me.
+Thanks for the report! I'm not sure why probe would defer because of
+this patch though. Maybe there's a slowness to probe that isn't there
+when we don't park all the RCGs using the shared clk ops. Can you try
+this patch and see if it makes things better? I'd like to narrow it down
+to the clk that's the problem instead of changing every sm8550 clk
+that's using the shared clk ops. To do that, undo the change for some
+set of RCGs until the problem comes back (assuming the patch fixes it at
+all).
 
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
+What the patch does is calculate the cached cfg register value to fix
+one problem, but skips parking the clk at registration time because I
+suspect that's causing deferred probes. Of course, deferred probe in
+itself shouldn't be a problem, so if simply having drivers defer probe
+causes an issue then the problem isn't in the clk driver.
+
+Also please send back the dmesg so we can see what clks are configured
+for at boot time. If they're using TCXO source at boot then they're not
+going to be broken. In which case those clks can keep using the old clk
+ops and we can focus on the ones that aren't sourcing from TCXO.
+
+ drivers/clk/qcom/camcc-sm8550.c   | 84 +++++++++++++++---------------
+ drivers/clk/qcom/clk-rcg.h        |  1 +
+ drivers/clk/qcom/clk-rcg2.c       | 28 ++++++++++
+ drivers/clk/qcom/dispcc-sm8550.c  |  4 +-
+ drivers/clk/qcom/gcc-sm8550.c     | 86 +++++++++++++++----------------
+ drivers/clk/qcom/gpucc-sm8550.c   |  8 +--
+ drivers/clk/qcom/videocc-sm8550.c |  6 +--
+ 7 files changed, 123 insertions(+), 94 deletions(-)
+
+----8<-----
+diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
+index eac850bb690a..bd726f5d0d59 100644
+--- a/drivers/clk/qcom/camcc-sm8550.c
++++ b/drivers/clk/qcom/camcc-sm8550.c
+@@ -922,7 +922,7 @@ static struct clk_rcg2 cam_cc_bps_clk_src = {
+ 		.parent_data = cam_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -944,7 +944,7 @@ static struct clk_rcg2 cam_cc_camnoc_axi_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -965,7 +965,7 @@ static struct clk_rcg2 cam_cc_cci_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -980,7 +980,7 @@ static struct clk_rcg2 cam_cc_cci_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -995,7 +995,7 @@ static struct clk_rcg2 cam_cc_cci_2_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1017,7 +1017,7 @@ static struct clk_rcg2 cam_cc_cphy_rx_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1040,7 +1040,7 @@ static struct clk_rcg2 cam_cc_cre_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1061,7 +1061,7 @@ static struct clk_rcg2 cam_cc_csi0phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1076,7 +1076,7 @@ static struct clk_rcg2 cam_cc_csi1phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1091,7 +1091,7 @@ static struct clk_rcg2 cam_cc_csi2phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1106,7 +1106,7 @@ static struct clk_rcg2 cam_cc_csi3phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1127,7 +1127,7 @@ static struct clk_rcg2 cam_cc_csi4phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1142,7 +1142,7 @@ static struct clk_rcg2 cam_cc_csi5phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1157,7 +1157,7 @@ static struct clk_rcg2 cam_cc_csi6phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1172,7 +1172,7 @@ static struct clk_rcg2 cam_cc_csi7phytimer_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1193,7 +1193,7 @@ static struct clk_rcg2 cam_cc_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1215,7 +1215,7 @@ static struct clk_rcg2 cam_cc_fast_ahb_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1238,7 +1238,7 @@ static struct clk_rcg2 cam_cc_icp_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1262,7 +1262,7 @@ static struct clk_rcg2 cam_cc_ife_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1285,7 +1285,7 @@ static struct clk_rcg2 cam_cc_ife_0_dsp_clk_src = {
+ 		.parent_data = cam_cc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_4),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1309,7 +1309,7 @@ static struct clk_rcg2 cam_cc_ife_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_5,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_5),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1332,7 +1332,7 @@ static struct clk_rcg2 cam_cc_ife_1_dsp_clk_src = {
+ 		.parent_data = cam_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1355,7 +1355,7 @@ static struct clk_rcg2 cam_cc_ife_2_clk_src = {
+ 		.parent_data = cam_cc_parent_data_7,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_7),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1378,7 +1378,7 @@ static struct clk_rcg2 cam_cc_ife_2_dsp_clk_src = {
+ 		.parent_data = cam_cc_parent_data_8,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_8),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1393,7 +1393,7 @@ static struct clk_rcg2 cam_cc_ife_lite_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1408,7 +1408,7 @@ static struct clk_rcg2 cam_cc_ife_lite_csid_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1431,7 +1431,7 @@ static struct clk_rcg2 cam_cc_ipe_nps_clk_src = {
+ 		.parent_data = cam_cc_parent_data_9,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_9),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1455,7 +1455,7 @@ static struct clk_rcg2 cam_cc_jpeg_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1477,7 +1477,7 @@ static struct clk_rcg2 cam_cc_mclk0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1492,7 +1492,7 @@ static struct clk_rcg2 cam_cc_mclk1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1507,7 +1507,7 @@ static struct clk_rcg2 cam_cc_mclk2_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1522,7 +1522,7 @@ static struct clk_rcg2 cam_cc_mclk3_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1537,7 +1537,7 @@ static struct clk_rcg2 cam_cc_mclk4_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1552,7 +1552,7 @@ static struct clk_rcg2 cam_cc_mclk5_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1567,7 +1567,7 @@ static struct clk_rcg2 cam_cc_mclk6_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1582,7 +1582,7 @@ static struct clk_rcg2 cam_cc_mclk7_clk_src = {
+ 		.parent_data = cam_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1605,7 +1605,7 @@ static struct clk_rcg2 cam_cc_qdss_debug_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1628,7 +1628,7 @@ static struct clk_rcg2 cam_cc_sfe_0_clk_src = {
+ 		.parent_data = cam_cc_parent_data_10,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_10),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1651,7 +1651,7 @@ static struct clk_rcg2 cam_cc_sfe_1_clk_src = {
+ 		.parent_data = cam_cc_parent_data_11,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_11),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1671,7 +1671,7 @@ static struct clk_rcg2 cam_cc_sleep_clk_src = {
+ 		.parent_data = cam_cc_parent_data_12,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_12),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1692,7 +1692,7 @@ static struct clk_rcg2 cam_cc_slow_ahb_clk_src = {
+ 		.parent_data = cam_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1712,7 +1712,7 @@ static struct clk_rcg2 cam_cc_xo_clk_src = {
+ 		.parent_data = cam_cc_parent_data_13_ao,
+ 		.num_parents = ARRAY_SIZE(cam_cc_parent_data_13_ao),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
+index d7414361e432..8e0f3372dc7a 100644
+--- a/drivers/clk/qcom/clk-rcg.h
++++ b/drivers/clk/qcom/clk-rcg.h
+@@ -198,6 +198,7 @@ extern const struct clk_ops clk_byte2_ops;
+ extern const struct clk_ops clk_pixel_ops;
+ extern const struct clk_ops clk_gfx3d_ops;
+ extern const struct clk_ops clk_rcg2_shared_ops;
++extern const struct clk_ops clk_rcg2_shared_no_init_park_ops;
+ extern const struct clk_ops clk_dp_ops;
+
+ struct clk_rcg_dfs_data {
+diff --git a/drivers/clk/qcom/clk-rcg2.c b/drivers/clk/qcom/clk-rcg2.c
+index 30b19bd39d08..1c760918be16 100644
+--- a/drivers/clk/qcom/clk-rcg2.c
++++ b/drivers/clk/qcom/clk-rcg2.c
+@@ -1348,6 +1348,34 @@ const struct clk_ops clk_rcg2_shared_ops = {
+ };
+ EXPORT_SYMBOL_GPL(clk_rcg2_shared_ops);
+
++static int clk_rcg2_shared_no_init_park(struct clk_hw *hw)
++{
++	struct clk_rcg2 *rcg = to_clk_rcg2(hw);
++
++	regmap_read(rcg->clkr.regmap, rcg->cmd_rcgr + CFG_REG, &rcg->parked_cfg);
++
++	pr_info("parking %s with cfg %#x\n", clk_hw_get_name(hw), rcg->parked_cfg);
++
++	return 0;
++}
++
++/*
++ * Like clk_rcg2_shared_ops but skip the init so that the clk frequency is left
++ * unchanged at registration time.
++ */
++const struct clk_ops clk_rcg2_shared_no_init_park_ops = {
++	.init = clk_rcg2_shared_no_init_park,
++	.enable = clk_rcg2_shared_enable,
++	.disable = clk_rcg2_shared_disable,
++	.get_parent = clk_rcg2_shared_get_parent,
++	.set_parent = clk_rcg2_shared_set_parent,
++	.recalc_rate = clk_rcg2_shared_recalc_rate,
++	.determine_rate = clk_rcg2_determine_rate,
++	.set_rate = clk_rcg2_shared_set_rate,
++	.set_rate_and_parent = clk_rcg2_shared_set_rate_and_parent,
++};
++EXPORT_SYMBOL_GPL(clk_rcg2_shared_no_init_park_ops);
++
+ /* Common APIs to be used for DFS based RCGR */
+ static void clk_rcg2_dfs_populate_freq(struct clk_hw *hw, unsigned int l,
+ 				       struct freq_tbl *f)
+diff --git a/drivers/clk/qcom/dispcc-sm8550.c b/drivers/clk/qcom/dispcc-sm8550.c
+index 31ae46f180a5..8337c333eeb0 100644
+--- a/drivers/clk/qcom/dispcc-sm8550.c
++++ b/drivers/clk/qcom/dispcc-sm8550.c
+@@ -291,7 +291,7 @@ static struct clk_rcg2 disp_cc_mdss_ahb_clk_src = {
+ 		.parent_data = disp_cc_parent_data_6,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_6),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -605,7 +605,7 @@ static struct clk_rcg2 disp_cc_mdss_mdp_clk_src = {
+ 		.parent_data = disp_cc_parent_data_8,
+ 		.num_parents = ARRAY_SIZE(disp_cc_parent_data_8),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+diff --git a/drivers/clk/qcom/gcc-sm8550.c b/drivers/clk/qcom/gcc-sm8550.c
+index 7944ddb4b47d..33c5d422da9b 100644
+--- a/drivers/clk/qcom/gcc-sm8550.c
++++ b/drivers/clk/qcom/gcc-sm8550.c
+@@ -401,7 +401,7 @@ static struct clk_rcg2 gcc_gp1_clk_src = {
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -416,7 +416,7 @@ static struct clk_rcg2 gcc_gp2_clk_src = {
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -431,7 +431,7 @@ static struct clk_rcg2 gcc_gp3_clk_src = {
+ 		.parent_data = gcc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -451,7 +451,7 @@ static struct clk_rcg2 gcc_pcie_0_aux_clk_src = {
+ 		.parent_data = gcc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -471,7 +471,7 @@ static struct clk_rcg2 gcc_pcie_0_phy_rchng_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -486,7 +486,7 @@ static struct clk_rcg2 gcc_pcie_1_aux_clk_src = {
+ 		.parent_data = gcc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -501,7 +501,7 @@ static struct clk_rcg2 gcc_pcie_1_phy_rchng_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -521,7 +521,7 @@ static struct clk_rcg2 gcc_pdm2_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -536,7 +536,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s0_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -551,7 +551,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s1_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -566,7 +566,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s2_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -581,7 +581,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s3_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -596,7 +596,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s4_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -611,7 +611,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s5_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -626,7 +626,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s6_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -641,7 +641,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s7_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -656,7 +656,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s8_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -671,7 +671,7 @@ static struct clk_rcg2 gcc_qupv3_i2c_s9_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -700,7 +700,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s0_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s0_clk_src = {
+@@ -717,7 +717,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s1_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s1_clk_src = {
+@@ -750,7 +750,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s2_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s2_clk_src = {
+@@ -767,7 +767,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s3_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s3_clk_src = {
+@@ -784,7 +784,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s4_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s4_clk_src = {
+@@ -801,7 +801,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s5_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s5_clk_src = {
+@@ -818,7 +818,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s6_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s6_clk_src = {
+@@ -835,7 +835,7 @@ static struct clk_init_data
+gcc_qupv3_wrap1_s7_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap1_s7_clk_src = {
+@@ -852,7 +852,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s0_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s0_clk_src = {
+@@ -869,7 +869,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s1_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s1_clk_src = {
+@@ -886,7 +886,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s2_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s2_clk_src = {
+@@ -903,7 +903,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s3_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s3_clk_src = {
+@@ -920,7 +920,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s4_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s4_clk_src = {
+@@ -937,7 +937,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s5_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s5_clk_src = {
+@@ -975,7 +975,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s6_clk_src_init = {
+ 	.parent_data = gcc_parent_data_8,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_8),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s6_clk_src = {
+@@ -992,7 +992,7 @@ static struct clk_init_data
+gcc_qupv3_wrap2_s7_clk_src_init = {
+ 	.parent_data = gcc_parent_data_0,
+ 	.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 	.flags = CLK_SET_RATE_PARENT,
+-	.ops = &clk_rcg2_shared_ops,
++	.ops = &clk_rcg2_shared_no_init_park_ops,
+ };
+
+ static struct clk_rcg2 gcc_qupv3_wrap2_s7_clk_src = {
+@@ -1025,7 +1025,7 @@ static struct clk_rcg2 gcc_sdcc2_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_9,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_9),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1048,7 +1048,7 @@ static struct clk_rcg2 gcc_sdcc4_apps_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1071,7 +1071,7 @@ static struct clk_rcg2 gcc_ufs_phy_axi_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1093,7 +1093,7 @@ static struct clk_rcg2 gcc_ufs_phy_ice_core_clk_src = {
+ 		.parent_data = gcc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1114,7 +1114,7 @@ static struct clk_rcg2 gcc_ufs_phy_phy_aux_clk_src = {
+ 		.parent_data = gcc_parent_data_4,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_4),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1136,7 +1136,7 @@ static struct clk_rcg2 gcc_ufs_phy_unipro_core_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1159,7 +1159,7 @@ static struct clk_rcg2 gcc_usb30_prim_master_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1174,7 +1174,7 @@ static struct clk_rcg2
+gcc_usb30_prim_mock_utmi_clk_src = {
+ 		.parent_data = gcc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -1189,7 +1189,7 @@ static struct clk_rcg2 gcc_usb3_prim_phy_aux_clk_src = {
+ 		.parent_data = gcc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(gcc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+diff --git a/drivers/clk/qcom/gpucc-sm8550.c b/drivers/clk/qcom/gpucc-sm8550.c
+index 7486edf56160..5daa9d3ff438 100644
+--- a/drivers/clk/qcom/gpucc-sm8550.c
++++ b/drivers/clk/qcom/gpucc-sm8550.c
+@@ -166,7 +166,7 @@ static struct clk_rcg2 gpu_cc_ff_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -188,7 +188,7 @@ static struct clk_rcg2 gpu_cc_gmu_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -210,7 +210,7 @@ static struct clk_rcg2 gpu_cc_hub_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -230,7 +230,7 @@ static struct clk_rcg2 gpu_cc_xo_clk_src = {
+ 		.parent_data = gpu_cc_parent_data_3,
+ 		.num_parents = ARRAY_SIZE(gpu_cc_parent_data_3),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+diff --git a/drivers/clk/qcom/videocc-sm8550.c
+b/drivers/clk/qcom/videocc-sm8550.c
+index 97d150b132a6..f5c712e888ad 100644
+--- a/drivers/clk/qcom/videocc-sm8550.c
++++ b/drivers/clk/qcom/videocc-sm8550.c
+@@ -155,7 +155,7 @@ static struct clk_rcg2 video_cc_mvs0_clk_src = {
+ 		.parent_data = video_cc_parent_data_0,
+ 		.num_parents = ARRAY_SIZE(video_cc_parent_data_0),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -187,7 +187,7 @@ static struct clk_rcg2 video_cc_mvs1_clk_src = {
+ 		.parent_data = video_cc_parent_data_1,
+ 		.num_parents = ARRAY_SIZE(video_cc_parent_data_1),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
+
+@@ -207,7 +207,7 @@ static struct clk_rcg2 video_cc_xo_clk_src = {
+ 		.parent_data = video_cc_parent_data_2,
+ 		.num_parents = ARRAY_SIZE(video_cc_parent_data_2),
+ 		.flags = CLK_SET_RATE_PARENT,
+-		.ops = &clk_rcg2_shared_ops,
++		.ops = &clk_rcg2_shared_no_init_park_ops,
+ 	},
+ };
