@@ -1,83 +1,63 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDFF14A4E1
-	for <patches@lists.linux.dev>; Mon,  5 Aug 2024 20:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC57149C60;
+	Mon,  5 Aug 2024 20:44:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722890248; cv=none; b=XV/7QpsqzUE1kFtx2vqpBoEivvcs01ARQHcepKuIXcVujU8knt2y7kcDQpVwXpokM4vbRBPvj4b+6npahU4wo1M4DRzT6l330jSkfqx6uyefdapsSN6ypPkT6dE0c1hy/k7brZqQgvthNm0FLqj+7L3NKCy/f3YgF6RxtDzScF4=
+	t=1722890661; cv=none; b=J06CDWtstuEHIs8dwWLE703YJ1FDO9Y/wilbL2MHkEC5i6QfEYRQkEIHcILBLTTSeRumWh4v6+JMedSc03M+UwofMOMYD/ci8uJN8jd69/cGnMoLmgKsjz+K95ur+nh9GZtEF/kcyZ9CCW7v5ssZUB9gJuMHYiqViYQdrht9QW4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722890248; c=relaxed/simple;
-	bh=7+2SK2/0Mg7cQrO0vWtLDLCj9eIWq13brVxXgihEtLU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nKEkRPi4bS1fmpLRA1rCGIQLWRy+pwQdEqPHfYDV+xU/L6Rr4I4aMuQEZ+qe7SbtvZT+01y3/c9GiRA8rI45k8fHHrfXhTVP2eJUITaw1NmIw/yX13X+CGXbHR377qmMwqQl4P08Uk913HdsewD7n4f+7I0hFzH+5Ix6O3oX1sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 2606B1C009C; Mon,  5 Aug 2024 22:37:18 +0200 (CEST)
-Date: Mon, 5 Aug 2024 22:37:15 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 0x7f454c46@gmail.com
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/440] 6.1.103-rc3 review
-Message-ID: <ZrE3+/rL2KxFRzFS@duo.ucw.cz>
-References: <20240731100057.990016666@linuxfoundation.org>
+	s=arc-20240116; t=1722890661; c=relaxed/simple;
+	bh=Vla3+Xd8tqswmHzQh3qdpWDe0XZXwVu7NpYynU7IqV0=;
+	h=Subject:From:In-Reply-To:References:Message-Id:Date:To:Cc; b=XhxljfV6ZlN3fQ98yo90JaDNBAO74W6yZl+oarmfO8/KSbzBgUHviqxMI1nnK2FIZN8GqKQBLGanVzIp3pD47JnEpkbCNrKs93n8XlJTNSmk1VDThUPl/8FkKWi2BwKx25o6TDC4noAnQ4ZN4p6keUURT7uM0wJ6JaQJpbiaIfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d1IgVlSq; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d1IgVlSq"
+Received: by smtp.kernel.org (Postfix) with ESMTPS id E7DC7C32782;
+	Mon,  5 Aug 2024 20:44:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722890661;
+	bh=Vla3+Xd8tqswmHzQh3qdpWDe0XZXwVu7NpYynU7IqV0=;
+	h=Subject:From:In-Reply-To:References:Date:To:Cc:From;
+	b=d1IgVlSqxpqnfdwyuOQMJHWaydko8lREgC4BkS3mpGyIvqb4BNVxzTCXnoHfIBy4n
+	 /2/uec8/oRd+LRbMQbCSaOyl6q028pgNcV+zyVSduo7hRuq/Cpwt/OA8PuuRmDQmmH
+	 aH/hJGu1a4bgZMAXMQM3rHzhRq3X27l4OGToEVDtgagu7I/Uff6wDp0XGevJNLoaAG
+	 PTBVfYq1OUOS4nEgHyReV0y7YWilHVlQgrrRDldJfhfgaUG0idAiFil/DScxGmlUhR
+	 MtlKWXH8z0+gHdKetBRL/MMejNHZUJb13PXbO+YHYaAfKLXzCtZK6l1xpGIA41l7Dk
+	 FWAj17ZZvt1xg==
+Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id C22D1C43337;
+	Mon,  5 Aug 2024 20:44:20 +0000 (UTC)
+Subject: Re: [GIT PULL] slab fixes for 6.11-rc2
+From: pr-tracker-bot@kernel.org
+In-Reply-To: <983737e7-7894-428e-be51-355c959ac31b@suse.cz>
+References: <983737e7-7894-428e-be51-355c959ac31b@suse.cz>
+X-PR-Tracked-List-Id: <linux-kernel.vger.kernel.org>
+X-PR-Tracked-Message-Id: <983737e7-7894-428e-be51-355c959ac31b@suse.cz>
+X-PR-Tracked-Remote: git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fixes-for-6.11-rc2
+X-PR-Tracked-Commit-Id: a371d558e6f3aed977a8a7346350557de5d25190
+X-PR-Merge-Tree: torvalds/linux.git
+X-PR-Merge-Refname: refs/heads/master
+X-PR-Merge-Commit-Id: c813111d19e65b6336a6352eae9c1ff5c40f722f
+Message-Id: <172289066063.27723.4496627071268199582.pr-tracker-bot@kernel.org>
+Date: Mon, 05 Aug 2024 20:44:20 +0000
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>, David Rientjes <rientjes@google.com>, Joonsoo Kim <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>, Pekka Enberg <penberg@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>, LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, Roman Gushchin <roman.gushchin@linux.dev>, Hyeonggon Yoo <42.hyeyoo@gmail.com>, Chengming Zhou <chengming.zhou@linux.dev>, Rik van Riel <riel@surriel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="M0UNOviHzdSpNo2D"
-Content-Disposition: inline
-In-Reply-To: <20240731100057.990016666@linuxfoundation.org>
 
+The pull request you sent on Mon, 5 Aug 2024 12:00:33 +0200:
 
---M0UNOviHzdSpNo2D
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-fixes-for-6.11-rc2
 
-Hi!
+has been merged into torvalds/linux.git:
+https://git.kernel.org/torvalds/c/c813111d19e65b6336a6352eae9c1ff5c40f722f
 
-> This is the start of the stable review cycle for the 6.1.103 release.
-> There are 440 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Thank you!
 
-> Dmitry Safonov <0x7f454c46@gmail.com>
->     jump_label: Prevent key->enabled int overflow
-
-In practice, this will work, but theoretically signed overflow is
-undefined and this depends on undefined behaviour.
-
-+       int v;
-=2E..
-+               if (v <=3D 0 || (v + 1) < 0)
-+                       return false;
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---M0UNOviHzdSpNo2D
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZrE3+wAKCRAw5/Bqldv6
-8p13AJ9L0B6215x91g6GiwokiZtsI0l0YwCdG6P9hxcnx8+53JNnbdcN7IKt1aE=
-=5qua
------END PGP SIGNATURE-----
-
---M0UNOviHzdSpNo2D--
+-- 
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/prtracker.html
