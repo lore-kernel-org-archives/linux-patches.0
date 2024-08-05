@@ -1,60 +1,60 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CDACA95B
-	for <patches@lists.linux.dev>; Sun,  4 Aug 2024 18:36:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F6F3FBB2
+	for <patches@lists.linux.dev>; Mon,  5 Aug 2024 03:28:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722796589; cv=none; b=LXNu+krb2Z0xaxF1KghKcG2TZruilVTNry5zGIO4z4RTw4iYnlVTtrDTT27KZo06po4ZvagrBWvyhnT/eKCShGue+4GovAV1o+D5QyWv5Bi/KdGSiz5qTnE43GpRZTD/H0+lR8xgw4g3XLQoa5GpLo/JRsVCcw7Q8Tby6b4jAC8=
+	t=1722828535; cv=none; b=R+1Gw4taPXcWPOLf3XzKd70H9K3pSVs/TZkJBur7QaQQOn/tBuyizPbiqqZDYFT2dBg7y4z9Aw6/npFgIkrD2OoNNG3+0ydm4OVf9J0+wS0SRXVOQKu3DihmXgXFUf+iF2eQABIrvS/ZHoKEVPSZZqsigpxqvL0JQjuGYkCaBsU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722796589; c=relaxed/simple;
-	bh=fwU1ZT+QSgiD639FYphCCzxaDviFaMljcAhW3SdEvM0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l/8adPLkDfe3chjiC6zACwEYFebdPb44DunxgB0lMd+G3njByKIAqI7sSGoSGHv6cmeCy4RQ2uzso/Ps3muGD6b+seJRX70QzF5nzhroQo0V3Hes7pAgJG//Z7LmUbvbzKVj3fBPy+3jN3T98azur6SA+r26PilFsQkxgMDd0NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZsGdZ1Xn; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1722828535; c=relaxed/simple;
+	bh=kts81rH1k8RtXz6FCafCNk3tonScZQfSdlrhwhCMsZQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=VIJy6X6ZYhkgM673PCTiHxNnk812wngUQSAbqfT+G/GhAEkFaAy52bCcFA4rC7fHIr31XKcX7xZ9ETzrDqftMFEn6yOxOBDef+zW9Qn3b0K4mbremj7YQx4B+K3sqbSOxzzUlBoMgrALrJAE9aaD+wA8x6MpzmoRbK/IGCkDxb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mbalcOYM; arc=none smtp.client-ip=209.85.219.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZsGdZ1Xn"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-1fc491f9b55so76711845ad.3
-        for <patches@lists.linux.dev>; Sun, 04 Aug 2024 11:36:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mbalcOYM"
+Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6b95b710e2cso12823006d6.2
+        for <patches@lists.linux.dev>; Sun, 04 Aug 2024 20:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722796587; x=1723401387; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=NYN7zG5VPUuLVvkcbGwAPPe8uDQFTuuTIsqIl/+g+/c=;
-        b=ZsGdZ1XnL1wl/zpXf1C1uJLzoEmDmNs03IwE6p3L+rXeDH0brQ4JpTkW4Yu9B95Zqw
-         B2gg7pBAORrTBTf5/xylhUKQNr0emBJk95vcVO20jo0ECdLKdImoaybkVhkI4thM/oFk
-         R6LOR+FHVBzLKKteFLoImjRVxElwS/qk73g8a9mHdqYBqxzjBCCwTcNblzRCCC4b0NR5
-         /nhQeej3R49EROHrwE7BdCdk1xhsLY3fRJL/MZ5rv2ijEB9M1IyAHd7uwcAjTiGskpRJ
-         PxLgyXTw6mAWvPHGGA9471bVm6pVrYH35Pvnu5uD9ZcnVYCq3BGju7yrOnCgKbP3oZRK
-         EmTg==
+        d=gmail.com; s=20230601; t=1722828533; x=1723433333; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=ubgoVcGCg+qbw4dJAKrhDegiiKl08DrFXbdGG+4Wd2Q=;
+        b=mbalcOYMvhQ1l+tZmwKTcB/dHLHTGEh9L3DEblB1mp4nw0r0dIxJQ831AolLV/5S/R
+         Pw/e0Fxt2zIgDm4UVTCgGFT073q4aVim8+qOoPq5uEYMb1cXowcsP8hnIj8Eeam3mR+b
+         iyWfAbQr+t6RpnIwYYIiA0Wds9BtqSLs+IhZC5r2SrMZAeOXfFpTl6V3UQmFNchE8h15
+         dQxUa8NDfQuZVHhAxNkM6aug2HqTxku1Mfahilez3xzXL0kqPueTdcyBUJMXEO+TP1z9
+         FB3v+vSbkeXrGQc9XKNGvHtKCnwHZYBc4G2QZQpPDQuLQQ2amHgj0p0Vm2OG2xucR2Me
+         mXJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722796587; x=1723401387;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1722828533; x=1723433333;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :references:cc:to:from:subject:user-agent:mime-version:date
+         :message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=NYN7zG5VPUuLVvkcbGwAPPe8uDQFTuuTIsqIl/+g+/c=;
-        b=TqNV0DmSHA+YJR1NXiQ3P20tj6AZo9u06WFw6Lrx7vpias79rzRvMqnatZVodlknqa
-         hfPxcBeQPdrnHvX+SaEfUKHoG+JYnW7nhcVV96rzdOLjSoFOxPgk0TjAysX6CrE2UU9X
-         kvex5JVuXE9r3FMJzkiXxPuw784ezZ0tWAXSHWJqcDpZi8lQHcRLk+RmXXmv+02clIg3
-         LTRpZGnhosqh4k+pe9TxGDBp8Pn3QG9IVaUamLcSETG9qRyJm7FRzBODcibr9QNhn2X4
-         rssTCPmCmmRrxJ7ypCP7GJ3wH7WMxKXCQiSPWSJTtlnB2yO8VTzOaBbdYx6hV9VnZ3XR
-         eRbg==
-X-Gm-Message-State: AOJu0YxuFbliHDOVtATXalHIDAmVOYMkUF4rljPbgaVWNZvOXWA2dt2N
-	kxjZEn9MHhHhbtQoSJ06Brptg5R7CiK5thUju11AearUWAIDEywR
-X-Google-Smtp-Source: AGHT+IE67elTeBcuN97roZwVNiCI67d3pvnYBM/HUAmAaKyD3qnZgGOsvHknt/0Z3YS8ZfHAoKrutQ==
-X-Received: by 2002:a17:903:290:b0:1fc:419d:871c with SMTP id d9443c01a7336-1ff5722e7a0mr89980645ad.9.1722796587408;
-        Sun, 04 Aug 2024 11:36:27 -0700 (PDT)
+        bh=ubgoVcGCg+qbw4dJAKrhDegiiKl08DrFXbdGG+4Wd2Q=;
+        b=gLsi7yuwQNguWuw//9TfxGKW6TM7Pzwc5C3d1JAlNxCzwFydf+c+Ks2yFK37AE7iHz
+         qwrgZm2tsQ8o/UGz5mSKBmn7b1LCyFgiheyQOvMNxEeAWJPQzZPxqCXuh+jcE4cjVcaW
+         XK5YGhAICFRrgjvIECQbmvmAbNRFx7M9a3aDv+EJLCGe86Z8bEv8HgwoKdRYrmecQRlf
+         Kw1tMQ/rw6Ro1oRcr9ZbINxwliQMGlLkQqq+sxeu9++5G6YWzF23w9InZ8hHmyvsR6dh
+         UBRBn+L7NeJDdFDnqvYnOvyi8uYOW2wARnlgZPom7ECLrW9dKVqELLjgx6I2zJftMLSx
+         +QSA==
+X-Gm-Message-State: AOJu0Yz1cbs9iO2g7zSYrFDKyGrJteXUddMJyJDcOw4xbbb2gCO0aPUW
+	V/C5ZIUUHQUELdlY4hQJHjXgbBC56TtBKC9dVzni+y4Y9f0iOvPL
+X-Google-Smtp-Source: AGHT+IH65vZ8s5Q2UC3ovyv39LXG4xjNR+pcI5Q9I5KU56YIdlaN4OVmeOgUNJPurldO3bZxh3coNA==
+X-Received: by 2002:a05:6214:5c05:b0:6b5:dcda:badf with SMTP id 6a1803df08f44-6bb9843e9bcmr155389146d6.42.1722828532703;
+        Sun, 04 Aug 2024 20:28:52 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff5905ee12sm52726385ad.167.2024.08.04.11.36.24
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6bb9c78ecc7sm31518456d6.35.2024.08.04.20.28.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 04 Aug 2024 11:36:26 -0700 (PDT)
+        Sun, 04 Aug 2024 20:28:51 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net>
-Date: Sun, 4 Aug 2024 11:36:24 -0700
+Message-ID: <a8a81b3d-b005-4b6f-991b-c31cdb5513e5@roeck-us.net>
+Date: Sun, 4 Aug 2024 20:28:48 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -63,6 +63,7 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 6.10 000/809] 6.10.3-rc3 review
+From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
@@ -70,10 +71,11 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
  allen.lkml@gmail.com, broonie@kernel.org,
- "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+ "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+ Helge Deller <deller@gmx.de>, Parisc List <linux-parisc@vger.kernel.org>
 References: <20240731095022.970699670@linuxfoundation.org>
+ <718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net>
 Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
  RYHA7RCEK2dh6dDccykQk3bC90xXMPg+O3R+C/SkwcnUak1UZaeK/SwQbq/t0tkMzYDRxfJ7
@@ -117,39 +119,68 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20240731095022.970699670@linuxfoundation.org>
+In-Reply-To: <718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi,
-
-On 7/31/24 03:03, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.3 release.
-> There are 809 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 8/4/24 11:36, Guenter Roeck wrote:
+> Hi,
 > 
-> Responses should be made by Fri, 02 Aug 2024 09:47:47 +0000.
-> Anything received after that time might be too late.
+> On 7/31/24 03:03, Greg Kroah-Hartman wrote:
+>> This is the start of the stable review cycle for the 6.10.3 release.
+>> There are 809 patches in this series, all will be posted as a response
+>> to this one.  If anyone has any issues with these being applied, please
+>> let me know.
+>>
+>> Responses should be made by Fri, 02 Aug 2024 09:47:47 +0000.
+>> Anything received after that time might be too late.
+>>
+> [ ... ]
 > 
-[ ... ]
-
-> Rafael J. Wysocki <rafael.j.wysocki@intel.com>
->      genirq: Set IRQF_COND_ONESHOT in request_irq()
+>> Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>>      genirq: Set IRQF_COND_ONESHOT in request_irq()
+>>
+> 
+> With this patch in v6.10.3, all my parisc64 qemu tests get stuck with repeated error messages
+> 
+> [    0.000000] =============================================================================
+> [    0.000000] BUG kmem_cache_node (Not tainted): objects 21 > max 16
+> [    0.000000] -----------------------------------------------------------------------------
+> 
+> This never stops until the emulation aborts.
+> 
+> Reverting this patch fixes the problem for me.
+> 
+> I noticed a similar problem in the mainline kernel but it is either spurious there
+> or the problem has been fixed.
 > 
 
-With this patch in v6.10.3, all my parisc64 qemu tests get stuck with repeated error messages
+As a follow-up, the patch below (on top of v6.10.3) "fixes" the problem for me.
+I guess that suggests some kind of race condition.
 
-[    0.000000] =============================================================================
-[    0.000000] BUG kmem_cache_node (Not tainted): objects 21 > max 16
-[    0.000000] -----------------------------------------------------------------------------
-
-This never stops until the emulation aborts.
-
-Reverting this patch fixes the problem for me.
-
-I noticed a similar problem in the mainline kernel but it is either spurious there
-or the problem has been fixed.
+Added Helge and the parisc mailing list to Cc:. Sorry, I forgot that earlier.
 
 Guenter
+
+---
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index dd53298ef1a5..53a0f654ab56 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -8,6 +8,7 @@
+
+  #define pr_fmt(fmt) "genirq: " fmt
+
++#include <linux/delay.h>
+  #include <linux/irq.h>
+  #include <linux/kthread.h>
+  #include <linux/module.h>
+@@ -2156,6 +2157,8 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,
+         struct irq_desc *desc;
+         int retval;
+
++       udelay(1);
++
+         if (irq == IRQ_NOTCONNECTED)
+                 return -ENOTCONN;
 
