@@ -1,60 +1,60 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E193139D15
-	for <patches@lists.linux.dev>; Mon,  5 Aug 2024 15:02:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB0015F330
+	for <patches@lists.linux.dev>; Mon,  5 Aug 2024 17:42:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722870177; cv=none; b=sIHzzbJQgMghRWYBzzJ4FeMxjt1RBP1hmnrXJQKMKdGE4aDq+/uzfhhOGpLuZvXlKP1jOLqPl6wUYspzi4hQ9CdKRzYd3uuwOYLa9bo4VE3y0kB6+jtEWzN+44bCqQFhzNe+S6lhP6Uu+1uoPHs4Im13cnd+SpylsuQ+xP0ySLQ=
+	t=1722879779; cv=none; b=rHExGzzYzkPQB7KTsJUk8xEeZTFHUQeJy//X0WKzuFcfHLvfGxGdhvJII2V7JHukj9uSaJDkIDq4IjoniPm2MQE8ClxmmjkEr2NbPAJtI+Oy7/fzeu6KbyLnPKuDOYC0kNFivzLMXPiMRi7z48MpXVeZL/MOvWm6Uou6lKv3vxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722870177; c=relaxed/simple;
-	bh=RBsnFk5DadJtMA1FJS0lHnyvEaqrRFpHI5h0r1n3R6s=;
+	s=arc-20240116; t=1722879779; c=relaxed/simple;
+	bh=dVcgk1Ne85Fv0mC3xhxmoZoZR7RbyGXDK5k4NffPkE8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=A8/5uqdJxOK5TVPDQblKdyIqh9Y+wKWvPQKxPv4x9HATrkAdak/aqkS9f2EAVCXGxmzJVRAwfBxzFneruk9jQwteAGGWMaIBrFvQ3EwUJUWhPlQMu6+xKptndSOg29cIZDVjw1enuYiy8rHKibWy/z5qRhtnc68JClE/5QMEtBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=URo6CJrP; arc=none smtp.client-ip=209.85.210.174
+	 In-Reply-To:Content-Type; b=U6GG2kDTc6RnYbr8MXu8xtrdH+SGnCnFJTfHtRisosHfqtuzeh7IFHCL6tBO6Ze5C/ubIOKpBFWyfutPFeM0dmgwPUK8iT51r0blXNbkqPtxOQ2TnR6Pbu5ntl6saIloMbXWxs6MSLQPkBUlsyumuJ7IHY1/DoPHMU299PQgbG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HMrGguhm; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="URo6CJrP"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-70eec5f2401so7668192b3a.3
-        for <patches@lists.linux.dev>; Mon, 05 Aug 2024 08:02:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HMrGguhm"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-1fc569440e1so95098205ad.3
+        for <patches@lists.linux.dev>; Mon, 05 Aug 2024 10:42:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1722870175; x=1723474975; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1722879777; x=1723484577; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=/UW2E4RcKiJERBgH4Mqjg5hlsYlWS/uYtAEnyYZE9eU=;
-        b=URo6CJrP044so+4bqhwJFlXdq+vp7sbZEfypEJ2uq7pBYYhX/Y05YFv1nevqnWmXgn
-         EfuxpwDxlCZ4QHRCxLc/tu3jj+CC7YuhIZhXXfdPHbZwodMAhquYnCuHKIJtXgn4A+lO
-         W97dajxqIjJ9vjJV35FN4PZvlCeJ1STSUuuz6v3HERBAWUpTf9wqRk9D9wy0cjD76fql
-         +8s+nc4flV4VMlQUCPJVyUs4UZuCyu//qAIzalZc91LRpSqMELR05P4fUh2CAkcJDaAR
-         GWrrdq7rKL1bSF4D8p9QXyQVGREB2J3jBZcuL+XkYlRcXOqn3ODCbsFIHS/N1b+C6Jj7
-         GOyg==
+        bh=6VbQh8mSbRW3lubvyrbJti/A8j4Q7wUIF9hsHCo7CWQ=;
+        b=HMrGguhm2Uv4ybxkE8ejSfSd1/MqLGZ23ewxtIAVMecm1cVaCuAyFoCYob+N19olgP
+         193nREejcqAP/dV8l5VZUJkWsbr5uElnm6W/CYKthfa+9/gjZngHY7S91MHABkyLF5/Z
+         XM6+0MnTvYbkOx1BcMuhgOsJpPUVwv3mQ5haJTRffTEYoTiqoXZQre1LFcXr/l2c4355
+         VZ+vzNkb174JVOVRBNKJF7Ci8eO299G4A0LUF0jiAbzAVUg+pF0/L/xr+JWxCyHqyD5T
+         /YSjfFXWUX+zhfABV/n38enk+WhoE7hSa6yGgpsTpdhh69XFr1OJA8oBtKeaN+ME2FGj
+         8F1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722870175; x=1723474975;
+        d=1e100.net; s=20230601; t=1722879777; x=1723484577;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/UW2E4RcKiJERBgH4Mqjg5hlsYlWS/uYtAEnyYZE9eU=;
-        b=GtL3DtHqPvaPW7e9U5F0wzjQEufSwKaCKyfVx6EiThDnNIHlRI1gbaOp9Y6BpHMSfe
-         dbVX1xRbYcH5BoZRoFO39CV50rQLUhr59C/qNAVYbTOaAWws2M5flrtRjRse4V3O304S
-         usnpo/vd2Cg5EAYxuVu+5mgB4mxUjKx5wWGZLp9G68uUiO8PLbYKW6QFzSM+HNksMBRy
-         /5W5FQ/10kUeaezqu0DKdI5BP17zc26AMFAZFMeUgtB92uW0Kk3BRbbVVo96Zq3xcwEf
-         2iTUFwO3Fb7mRZMoaWNdogZ08NoDgC+vx1Fb24prQCIj9SD83qRRUWQnjz77iPEllG0D
-         w/HQ==
-X-Gm-Message-State: AOJu0YxJGcAEmcD3E7RT7+x6TWZA4LNcGIwRX+k33fDpry/EUr3k7EE1
-	rWcbAYKCWwHeNdvgTskaqNomqU4ssm96VJ/UN+IUv6xkpyrm8zum
-X-Google-Smtp-Source: AGHT+IFPYXq5FsQ7KWy51Os2WgMdVPa87GeT5Uo5Wtkin4gKLKDpsvR94eZ56uiR2b+AupH6Ol4VCw==
-X-Received: by 2002:a05:6a00:928a:b0:70d:3420:9309 with SMTP id d2e1a72fcca58-7106cfd9664mr17189497b3a.17.1722870174693;
-        Mon, 05 Aug 2024 08:02:54 -0700 (PDT)
+        bh=6VbQh8mSbRW3lubvyrbJti/A8j4Q7wUIF9hsHCo7CWQ=;
+        b=ZRhEPg4+pXnm5dj/oAQ43JLR6dBPXyYvPnVv4S1JehAGWtZkos2Eeyxg6qUBUn2CtX
+         H8lFl0Aenou1b30qvh64N0LO2BTW5dS+teh93/46Hss3w766fepe1l8WsI9YdZjNwV4t
+         gl9/8EoIqQ6puOgYPQrQip+HRDg8MIibkns1SU6w6ziQ8u4ak+a3UdaX4yixY5Lj+3Kg
+         j9+wR8Nfip0IuApmMy/qGtgq++I+1J7mcNFuaWXt4EkKjHDGLAkx4qDBg66Jr/2gfd14
+         brumtGxRftU+yIkuu/EIM4Y77TwSREDtucjTtMoTGQUnytgxa+5rXN26E93YaXueJf3D
+         PgKg==
+X-Gm-Message-State: AOJu0YwCbcMC8ldVhB5bAqV+DFy+Jouykq4nuI1sippCRmLB+j2HA2NL
+	HWEhChkEsWP2VaNbbC2lc40sTckFpjP/Va4DXEBnEVo+ns5iFSgl
+X-Google-Smtp-Source: AGHT+IED9JAxC6zoQhCjbLEHyYvynj8Snu5jQmSjsxwwQvECvD8vrtT+XFCNoPoYaJjdcFXVzV94Ag==
+X-Received: by 2002:a17:903:120c:b0:1fd:a0b9:2be7 with SMTP id d9443c01a7336-1ff5722d9bamr198616075ad.13.1722879776576;
+        Mon, 05 Aug 2024 10:42:56 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7106ece493esm5508909b3a.110.2024.08.05.08.02.52
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-1ff59298f8asm71034115ad.266.2024.08.05.10.42.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 Aug 2024 08:02:53 -0700 (PDT)
+        Mon, 05 Aug 2024 10:42:55 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <8326f852-87fa-435a-9ca7-712bce534472@roeck-us.net>
-Date: Mon, 5 Aug 2024 08:02:51 -0700
+Message-ID: <0ad9d0db-df2f-4e35-b53c-ed23cb2dc42d@roeck-us.net>
+Date: Mon, 5 Aug 2024 10:42:53 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -76,7 +76,6 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 References: <20240731095022.970699670@linuxfoundation.org>
  <718b8afe-222f-4b3a-96d3-93af0e4ceff1@roeck-us.net>
  <a8a81b3d-b005-4b6f-991b-c31cdb5513e5@roeck-us.net> <87ikwf5owu.ffs@tglx>
- <87frrj5e0o.ffs@tglx>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -122,79 +121,85 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <87frrj5e0o.ffs@tglx>
+In-Reply-To: <87ikwf5owu.ffs@tglx>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 8/5/24 05:51, Thomas Gleixner wrote:
-> On Mon, Aug 05 2024 at 10:56, Thomas Gleixner wrote:
->> If this is really a race then the following must be true:
+On 8/5/24 01:56, Thomas Gleixner wrote:
+> On Sun, Aug 04 2024 at 20:28, Guenter Roeck wrote:
+>> On 8/4/24 11:36, Guenter Roeck wrote:
+>>>> Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+>>>>       genirq: Set IRQF_COND_ONESHOT in request_irq()
+>>>>
+>>>
+>>> With this patch in v6.10.3, all my parisc64 qemu tests get stuck with repeated error messages
+>>>
+>>> [    0.000000] =============================================================================
+>>> [    0.000000] BUG kmem_cache_node (Not tainted): objects 21 > max 16
+>>> [    0.000000] -----------------------------------------------------------------------------
+> 
+> Do you have a full boot log? It's unclear to me at which point of the boot
+> process this happens. Is this before or after the secondary CPUs have
+> been brought up?
+> 
+>>> This never stops until the emulation aborts.
+> 
+> Do you have a recipe how to reproduce?
+> 
+>>> Reverting this patch fixes the problem for me.
+>>>
+>>> I noticed a similar problem in the mainline kernel but it is either spurious there
+>>> or the problem has been fixed.
+>>>
 >>
->> 1) no delay
+>> As a follow-up, the patch below (on top of v6.10.3) "fixes" the problem for me.
+>> I guess that suggests some kind of race condition.
 >>
->>     CPU0                                 CPU1
->>     request_irq(IRQF_ONESHOT)
->>                                          request_irq(IRQF_COND_ONESHOT)
 >>
->> 2) delay
+>> @@ -2156,6 +2157,8 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,
+>>           struct irq_desc *desc;
+>>           int retval;
 >>
->>     CPU0                                 CPU1
->>                                          request_irq(IRQF_COND_ONESHOT)
->>     request_irq(IRQF_ONESHOT)
->>
->>     In this case the request on CPU 0 fails with -EBUSY ...
->>
->> Confused
+>> +       udelay(1);
+>> +
+>>           if (irq == IRQ_NOTCONNECTED)
+>>                   return -ENOTCONN;
 > 
-> More confusing:
-> 
-> Adding a printk() in setup_irq() - using the config, rootfs and the run.sh
-> script from:
-> 
->    http://server.roeck-us.net/qemu/parisc64-6.1.5/
-> 
-> results in:
-> 
-> [    0.000000] genirq: 64 flags: 00215600
-> [    0.000000] genirq: 65 flags: 00200400
-> [    8.110946] genirq: 66 flags: 00200080
-> 
-> IRQF_ONESHOT is 0x2000 which is not set by any of the interrupt
-> requests.
-> 
-> IRQF_COND_ONESHOT has only an effect when
-> 
->      1) Interrupt is shared
->      2) First interrupt request has IRQF_ONESHOT set
-> 
-> Neither #1 nor #2 are true, but maybe your current config enables some moar
-> devices than the one on your website.
+> That all makes absolutely no sense to me.
 > 
 
-No, it is pretty much the same, except for a more recent C compiler, and it
-requires qemu v9.0. See http://server.roeck-us.net/qemu/parisc64-6.10.3/.
-
-Debugging shows pretty much the same for me, and any log message added
-to request_irq() makes the problem go away (or be different), and if the problem
-is seen it doesn't even get to the third interrupt request. I copied a more complete
-log to bad.log.gz in above page.
-
-Below is yet another "fix" of the problem, just as puzzling as the other "fix".
+Same here, really. I can reproduce the problem with v6.10.3, using my configuration,
+but whatever debugging I add makes the problem disappear. I had seen the same problem
+on mainline with v6.11-rc1-272-g17712b7ea075. Log is at
+https://kerneltests.org/builders/qemu-parisc64-master/builds/168/steps/qemubuildcommand/logs/stdio
+However, I can no longer reproduce it there. What makes it even more weird / odd
+is that I can bisect the problem between v6.10.2 and v6.10.3 and it points to this
+commit, but reproducing it outside that chain seems to be all but impossible.
 
 Guenter
 
----
-diff --git a/arch/parisc/kernel/time.c b/arch/parisc/kernel/time.c
-index 9714fbd7c42d..9707914c1a62 100644
---- a/arch/parisc/kernel/time.c
-+++ b/arch/parisc/kernel/time.c
-@@ -75,6 +75,8 @@ irqreturn_t __irq_entry timer_interrupt(int irq, void *dev_id)
-         /* Initialize next_tick to the old expected tick time. */
-         next_tick = cpuinfo->it_value;
-
-+       pr_info_once("####### First timer interrupt\n");
-+
-         /* Calculate how many ticks have elapsed. */
-         now = mfctl(16);
-         do {
+> IRQF_COND_ONESHOT has only an effect on shared interrupts, when the
+> interrupt was already requested with IRQF_ONESHOT.
+> 
+> If this is really a race then the following must be true:
+> 
+> 1) no delay
+> 
+>     CPU0                                 CPU1
+>     request_irq(IRQF_ONESHOT)
+>                                          request_irq(IRQF_COND_ONESHOT)
+> 
+> 2) delay
+> 
+>     CPU0                                 CPU1
+>                                          request_irq(IRQF_COND_ONESHOT)
+>     request_irq(IRQF_ONESHOT)
+> 
+>     In this case the request on CPU 0 fails with -EBUSY ...
+> 
+> Confused
+> 
+>          tglx
+> 
+> 
 
