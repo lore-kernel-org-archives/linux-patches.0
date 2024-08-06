@@ -1,133 +1,113 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BFF75817
-	for <patches@lists.linux.dev>; Tue,  6 Aug 2024 18:30:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BEF15444E;
+	Tue,  6 Aug 2024 19:42:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722969049; cv=none; b=mLJCNx1GlCQGrii9Aq38/eWu7mZ9gEgn+VKC+f4SOxwE4FpVmadDjqQwcqVo8qSDTchh4wL2D0oTUFo3JgUDC09Wkrt4Nfl0Q7WODcP82IgnZGiNT6ccRGhxSWVEffiUDu2ghgzUOXpr4pWRdXvoZP0o2nxgLgRinAR983yy2vg=
+	t=1722973362; cv=none; b=HQMYdYx5QV5MGnpDQG6CyhOEaoH8TIbhKMo5CVCY+jRXDkp4u6ZUGKco3pf0X0+D7ksHjRBzaPrjN2oVtXbmdizC8uClPHqIgXZJ+q4q6h5layfy6mgotdmDHy5d8mUa3CH+HxGjtRDcKNyE64ihP+Au3Pw0nhharxKF4Pah7Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722969049; c=relaxed/simple;
-	bh=oe38/BA3I3GPzGRZcA4tK3QobjJz3lxhxxE69sqobgM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=KxtrWtmSCAKm3URQlTop17+F4D3P/f5qd+m9KQKAQf6m4/cZQzVIEkk/N6OE6jvCT4s8ANTN3ZLktlcNPZ1ZdZGhTp9EAcNep627xWQwDirglJqL+orxqBaDPUMiqtB6RbXymfXim0OntDJ6CmrQJdnJySLfMU0cexyLNRap+L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu; spf=pass smtp.mailfrom=umich.edu; dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b=EBQZWnRO; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=umich.edu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=umich.edu
+	s=arc-20240116; t=1722973362; c=relaxed/simple;
+	bh=A6wuRUtfgg1q7zJnhSwgRYW1regIAczoPJ9M7ZNTQPw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qSnBmrmmOccVWK7DjqYBnOS6weS8xAyLvhg17syy2OMGW4SQucD44lw+Z6WSWEc9MqWIMKUG3e1g5o6tqqLvXcSbi7aIeFEvbrtaUrk4nrfe+KDaoBlJauKRo5tgQzA1pA9oxZkGTfmXzccFSLzkHwyBlcJWtbYc/Ye6cEC2tu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hn93Maia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=umich.edu header.i=@umich.edu header.b="EBQZWnRO"
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-66ca536621cso10777627b3.3
-        for <patches@lists.linux.dev>; Tue, 06 Aug 2024 11:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=umich.edu; s=google-2016-06-03; t=1722969045; x=1723573845; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AJcjEsELElj17ftf1H3NNxeE2XuKAN8uQ1oS0Kp4OuE=;
-        b=EBQZWnROFH2TmQ/C8W1LjjF33v0uHgmALblqwqjj9QVCKqyJiV6cMe7iIbtWkaNLHg
-         GDiVHCFutPXCy1h7ZmBQE3h3lZyMkBOwaVPj0BIdmQYf1plbuOznnmgMgffpYRlVEUJP
-         atbf+hUfBF8FhSAli8qhRsMFv/f9Hr04QkCdVsmWLwR8Xe0fjtTYyIdbxraoFlsvYDJf
-         8PajRInYzYbcv5vMe0pP3qmugYWKcrZTpVFPjbR76RLyxZc8jJGVUbjr0UZPrnAEjmG9
-         3gJH3ZovmNz8wPuK80lkheKKysiqr23C9R2wiDhEZR+k0sD76LNxxCMJIA28JL4IVtjW
-         hKVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1722969045; x=1723573845;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=AJcjEsELElj17ftf1H3NNxeE2XuKAN8uQ1oS0Kp4OuE=;
-        b=izKDD6kNf0zdSHZ5Co4FUW+hiPcBLZabwkXiHihRW37foXDddrvKJCEsWG5lk6cpvd
-         /T43HvSRsxsQ2b8Xs5llPd0juOMMyjMn3QiI9QeI0k0Zz8MndKZ4UwKDs0QmN3QcLmXp
-         qrEyE+IxXYJQgz/z92RPMonj1Lk+GBj6eh5MzJY0J+qMyf0UuUwEph39rlFO474BsdQG
-         6Cu8z8Hj3mXuaE4dR6IWS73d6XB8E1LyBo4mRiCgi+BHZ0lK4Md6yeb1HBReYz2w9N4P
-         dGPT0XHpv2wddgZR3EYEhPmJBdyWN/1rLZr1VV7Gv9KmHMB9d6e7dBtDgbaE2lTKeZKE
-         r00A==
-X-Forwarded-Encrypted: i=1; AJvYcCWxiO+SW8luRmbDSZEHzYA0Gpxdg4nJgnUGJagwtiEzdlCiYkydVF45ChMUJfp0CoMXAwoZk7NQSHHKELQI+YB2RETF/IlAAA==
-X-Gm-Message-State: AOJu0YzEbQYJuQgtZwfVYwh7jbElixfZqzqaI5FlX9Dxtbj1ZIQGkLFJ
-	dIDv7wgd3ka8Zc+Qt7ncrMiBge2ti7BhWscYC/JTYSItumnJj7lgKZ6/7CWmzI88AB0k7Dyo7HL
-	A9TtB9GX3UoXf+muJ3tPURHFZYyQzcgIpGv4HBg==
-X-Google-Smtp-Source: AGHT+IEi5wEKcxYijrCG9lZ62HVarFC1N/dov62z2Vvk1px7mbW2C3yfR+rXHXlo0cHub/OfafmZkMejgkYcoEw+XE8=
-X-Received: by 2002:a81:5b06:0:b0:65f:9e35:af1a with SMTP id
- 00721157ae682-68964590c97mr153755347b3.41.1722969045434; Tue, 06 Aug 2024
- 11:30:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hn93Maia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB210C32786;
+	Tue,  6 Aug 2024 19:42:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1722973361;
+	bh=A6wuRUtfgg1q7zJnhSwgRYW1regIAczoPJ9M7ZNTQPw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=hn93MaiaMX8jKd2xmiJiNo+7tzNOOV3BEu6J3Q+G9l8enc8swjm4sTKHw0VrwjUu+
+	 MkQolnpS0D7YlL1/xbQBXfdsiPzT+JyOCkkNCgNz4xnBpGIP7sHJpAlyy13vLoCekC
+	 Lx1JkX7b5TDMsQNXNBVfhIGl/6siwTXMrWtEQWKdzeqYgvXypyaYXVdNm00F5GnmVf
+	 68APEYskHQn3fq17vQYouJuihB8Cn4yE94uaWac/MktSfRoQU5Af6VOmDxOTfM4n5W
+	 fes0NU13Cu4SJA3EgGESo72co35hb5cPZOQ3A4xQ3NhOh4h8IAJdwLR7zGTW+VI1sD
+	 EU4NtdKezNWEA==
+Date: Tue, 6 Aug 2024 12:42:41 -0700
+From: Kees Cook <kees@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Masahiro Yamada <masahiroy@kernel.org>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+	=?iso-8859-1?Q?Bj=F6rn?= Roy Baron <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH v3 5/6] objtool/rust: list `noreturn` Rust functions
+Message-ID: <202408061241.855CB28@keescook>
+References: <20240725183325.122827-1-ojeda@kernel.org>
+ <20240725183325.122827-6-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240806150619.192882-1-ojeda@kernel.org>
-In-Reply-To: <20240806150619.192882-1-ojeda@kernel.org>
-From: Trevor Gross <tmgross@umich.edu>
-Date: Tue, 6 Aug 2024 14:30:33 -0400
-Message-ID: <CALNs47swnK6je1o+LOLUFCDEZJmQmZx8vZ+7MPvUbNKdFr_Q_Q@mail.gmail.com>
-Subject: Re: [PATCH] rust: add intrinsics to fix `-Os` builds
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240725183325.122827-6-ojeda@kernel.org>
 
-On Tue, Aug 6, 2024 at 11:06=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wro=
-te:
->
-> Alice reported [1] that an arm64 build failed with:
->
->     ld.lld: error: undefined symbol: __extendsfdf2
->     >>> referenced by core.a6f5fc5794e7b7b3-cgu.0
->     >>>               rust/core.o:(<f32>::midpoint) in archive vmlinux.a
->     >>> referenced by core.a6f5fc5794e7b7b3-cgu.0
->     >>>               rust/core.o:(<f32>::midpoint) in archive vmlinux.a
->
->     ld.lld: error: undefined symbol: __truncdfsf2
->     >>> referenced by core.a6f5fc5794e7b7b3-cgu.0
->     >>>               rust/core.o:(<f32>::midpoint) in archive vmlinux.a
->
-> Rust 1.80.0 or later together with `CONFIG_CC_OPTIMIZE_FOR_SIZE=3Dy`
-> is what triggers it.
->
-> In addition, x86_64 builds also fail the same way.
->
-> Similarly, compiling with Rust 1.82.0 (currently in nightly) makes
-> another one appear, possibly due to the LLVM 19 upgrade there:
->
->     ld.lld: error: undefined symbol: __eqdf2
->     >>> referenced by core.20495ea57a9f069d-cgu.0
->     >>>               rust/core.o:(<f64>::next_up) in archive vmlinux.a
->     >>> referenced by core.20495ea57a9f069d-cgu.0
->     >>>               rust/core.o:(<f64>::next_down) in archive vmlinux.a
->
-> Gary adds [1]:
->
-> > Usually the fix on rustc side is to mark those functions as `#[inline]`
-> >
-> > All of {midpoint,next_up,next_down} are indeed unstable functions not
-> > marked as inline...
->
-> Fix all those by adding those intrinsics to our usual workaround.
->
-> Cc: Gary Guo <gary@garyguo.net>
-> Reported-by: Alice Ryhl <aliceryhl@google.com>
-> Closes: https://rust-for-linux.zulipchat.com/#narrow/stream/288089-Genera=
-l/topic/v6.2E11-rc1.20doesn't.20build.20for.20arm64/near/455637364
+On Thu, Jul 25, 2024 at 08:33:22PM +0200, Miguel Ojeda wrote:
+> Rust functions may be `noreturn` (i.e. diverging) by returning the
+> "never" type, `!`, e.g.
+> 
+>     fn f() -> ! {
+>         loop {}
+>     }
+> 
+> Thus list the known `noreturn` functions to avoid such warnings.
+> 
+> Without this, `objtool` would complain if enabled for Rust, e.g.:
+> 
+>     rust/core.o: warning: objtool:
+>     _R...9panic_fmt() falls through to next function _R...18panic_nounwind_fmt()
+> 
+>     rust/alloc.o: warning: objtool:
+>     .text: unexpected end of section
+> 
+> In order to do so, we cannot match symbols' names exactly, for two
+> reasons:
+> 
+>   - Rust mangling scheme [1] contains disambiguators [2] which we
+>     cannot predict (e.g. they may vary depending on the compiler version).
+> 
+>     One possibility to solve this would be to parse v0 and ignore/zero
+>     those before comparison.
+> 
+>   - Some of the diverging functions come from `core`, i.e. the Rust
+>     standard library, which may change with each compiler version
+>     since they are implementation details (e.g. `panic_internals`).
+> 
+> Thus, to workaround both issues, only part of the symbols are matched,
+> instead of using the `NORETURN` macro in `noreturns.h`.
+> 
+> Ideally, just like for the C side, we should have a better solution. For
+> instance, the compiler could give us the list via something like:
+> 
+>     $ rustc --emit=noreturns ...
 
-Should this link have the `[1]`?
+Yeah, having added noreturns to objtool myself a few times, it'd be nice
+to have a way to make these manual lists go away some day.
 
+> 
+> Link: https://rust-lang.github.io/rfcs/2603-rust-symbol-name-mangling-v0.html [1]
+> Link: https://doc.rust-lang.org/rustc/symbol-mangling/v0.html#disambiguator [2]
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-> ---
->  rust/Makefile             | 4 ++--
->  rust/compiler_builtins.rs | 3 +++
->  2 files changed, 5 insertions(+), 2 deletions(-)
 
-Reviewed-by: Trevor Gross <tmgross@umich.edu>
+Reviewed-by: Kees Cook <kees@kernel.org>
 
-Also submitted a fix upstream https://github.com/rust-lang/rust/pull/128749=
-.
-
-- Trevor
+-- 
+Kees Cook
