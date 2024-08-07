@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6145A81AB1;
-	Wed,  7 Aug 2024 15:11:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F3A81AB1;
+	Wed,  7 Aug 2024 15:11:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043477; cv=none; b=iMWS7M9QXziwUmr/tuEkR0oJZBOyuAKuDNnQhL6fm1kg8vu4c+G9XfQWZBsnHg3BmCvMGGfvpx71znTlhzKGB0PkGd+D2JSu8ACL5/xFcW+JniNPhr5aZJBvTaGrcBWu56ts/E33x+o0Qf+3KKhHeCQLHIWXoDmOAAYayA/HNWE=
+	t=1723043480; cv=none; b=S8hUO+dycn18kb0qtQJBOS89cx1XnREOkIJYz5xZWKMyHsBs0/VNZKqFwOR0JL62SrTPF+5mplf0dOD2tZ/rr4A0V7QRjSfYnwtufRLBXfZw2x/Pl9taPsRAMzaBTif+MkvRUib2l5CZ4TBxpzqdOfSS8Q307OSbyuwcgdjJ0+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043477; c=relaxed/simple;
-	bh=8ULmwBtjZY+0MF4ieMPtifXj22Is+e/3HId8t5uj0aE=;
+	s=arc-20240116; t=1723043480; c=relaxed/simple;
+	bh=juYEbEonY58n4Qy0yApilqXQH6cfD5nUoGvqWjBPsmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4HZUTpwLH2vB4WTVQQInugLEVn2YbyCtM6rlB2FvShmEiQCxJ4lJEbNuUrDObz5z5rY93yVYsosUnlzIyVOpq7wifvJIxCTQ3eme1OkwXonKo/DHnwJCHwb5P92Xw7yVSfqcwOwtLxIcB5aPJxne4eebaz2vtzGzOtM94skE8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Mkke48Sd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XNN5YmCLkP2NtS+tp46pKWR3+OLGo2Vv3jnwmhqKT6vMkbWiBGdGY2Kn6NVhrhJJQBJ3x7iTTJ+yEBHQ+7NvFODx/AddQNO8nvJ3K1SNrVCVM3yA8klcrF9uaeomymhnF+AdTfGzqpOWP8jeZT0DKLGYNtZFj1I1kTqCMdgYcBc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaHeZU/8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Mkke48Sd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8599C32781;
-	Wed,  7 Aug 2024 15:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaHeZU/8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B4CC32781;
+	Wed,  7 Aug 2024 15:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043477;
-	bh=8ULmwBtjZY+0MF4ieMPtifXj22Is+e/3HId8t5uj0aE=;
+	s=korg; t=1723043479;
+	bh=juYEbEonY58n4Qy0yApilqXQH6cfD5nUoGvqWjBPsmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mkke48SdpLSNF02jnBzFxJ/VOJb8HqZ1/0RnfDP1PULonmWbWXXGaHzi2ddQsK4dl
-	 ItqMltGR21ahqj8YEDkA6Tgqe4jkxDOLjRWLnIu2ZKk4q/Uu9oKMI014KP3yGvKdg/
-	 JFMQIccucQVvJW4q043XRIdHMSbvLiRB3aVq1mJQ=
+	b=FaHeZU/8Sihw/9Z2D+LcRxYtUmANd6GBZj5ZgqwgE/jXoDZhZCnOM8dYggVg3xJer
+	 mwVHp3hmC92XUj6H0af7w4Gi4wJJ0QPAXbIsgap2ZGmSFDjmoVaFaTcVFwnJhXBHLJ
+	 EldL2vJNASIRHv0aYsQCqJ/vx7LzT9kuNr56GQpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"edmund.raile" <edmund.raile@proton.me>,
-	Edmund Raile <edmund.raile@protonmail.com>,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 105/121] Revert "ALSA: firewire-lib: operate for period elapse event in process context"
-Date: Wed,  7 Aug 2024 17:00:37 +0200
-Message-ID: <20240807150022.836287493@linuxfoundation.org>
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	dri-devel@lists.freedesktop.org,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Martin Krastev <martin.krastev@broadcom.com>
+Subject: [PATCH 6.6 106/121] drm/vmwgfx: Fix a deadlock in dma buf fence polling
+Date: Wed,  7 Aug 2024 17:00:38 +0200
+Message-ID: <20240807150022.866547640@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,118 +53,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edmund Raile <edmund.raile@protonmail.com>
+From: Zack Rusin <zack.rusin@broadcom.com>
 
-commit 3dab73ab925a51ab05543b491bf17463a48ca323 upstream.
+commit e58337100721f3cc0c7424a18730e4f39844934f upstream.
 
-Commit 7ba5ca32fe6e ("ALSA: firewire-lib: operate for period elapse event
-in process context") removed the process context workqueue from
-amdtp_domain_stream_pcm_pointer() and update_pcm_pointers() to remove
-its overhead.
+Introduce a version of the fence ops that on release doesn't remove
+the fence from the pending list, and thus doesn't require a lock to
+fix poll->fence wait->fence unref deadlocks.
 
-With RME Fireface 800, this lead to a regression since
-Kernels 5.14.0, causing an AB/BA deadlock competition for the
-substream lock with eventual system freeze under ALSA operation:
+vmwgfx overwrites the wait callback to iterate over the list of all
+fences and update their status, to do that it holds a lock to prevent
+the list modifcations from other threads. The fence destroy callback
+both deletes the fence and removes it from the list of pending
+fences, for which it holds a lock.
 
-thread 0:
-    * (lock A) acquire substream lock by
-	snd_pcm_stream_lock_irq() in
-	snd_pcm_status64()
-    * (lock B) wait for tasklet to finish by calling
-    	tasklet_unlock_spin_wait() in
-	tasklet_disable_in_atomic() in
-	ohci_flush_iso_completions() of ohci.c
+dma buf polling cb unrefs a fence after it's been signaled: so the poll
+calls the wait, which signals the fences, which are being destroyed.
+The destruction tries to acquire the lock on the pending fences list
+which it can never get because it's held by the wait from which it
+was called.
 
-thread 1:
-    * (lock B) enter tasklet
-    * (lock A) attempt to acquire substream lock,
-    	waiting for it to be released:
-	snd_pcm_stream_lock_irqsave() in
-    	snd_pcm_period_elapsed() in
-	update_pcm_pointers() in
-	process_ctx_payloads() in
-	process_rx_packets() of amdtp-stream.c
+Old bug, but not a lot of userspace apps were using dma-buf polling
+interfaces. Fix those, in particular this fixes KDE stalls/deadlock.
 
-? tasklet_unlock_spin_wait
- </NMI>
- <TASK>
-ohci_flush_iso_completions firewire_ohci
-amdtp_domain_stream_pcm_pointer snd_firewire_lib
-snd_pcm_update_hw_ptr0 snd_pcm
-snd_pcm_status64 snd_pcm
-
-? native_queued_spin_lock_slowpath
- </NMI>
- <IRQ>
-_raw_spin_lock_irqsave
-snd_pcm_period_elapsed snd_pcm
-process_rx_packets snd_firewire_lib
-irq_target_callback snd_firewire_lib
-handle_it_packet firewire_ohci
-context_tasklet firewire_ohci
-
-Restore the process context work queue to prevent deadlock
-AB/BA deadlock competition for ALSA substream lock of
-snd_pcm_stream_lock_irq() in snd_pcm_status64()
-and snd_pcm_stream_lock_irqsave() in snd_pcm_period_elapsed().
-
-revert commit 7ba5ca32fe6e ("ALSA: firewire-lib: operate for period
-elapse event in process context")
-
-Replace inline description to prevent future deadlock.
-
-Cc: stable@vger.kernel.org
-Fixes: 7ba5ca32fe6e ("ALSA: firewire-lib: operate for period elapse event in process context")
-Reported-by: edmund.raile <edmund.raile@proton.me>
-Closes: https://lore.kernel.org/r/kwryofzdmjvzkuw6j3clftsxmoolynljztxqwg76hzeo4simnl@jn3eo7pe642q/
-Signed-off-by: Edmund Raile <edmund.raile@protonmail.com>
-Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20240730195318.869840-3-edmund.raile@protonmail.com
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Fixes: 2298e804e96e ("drm/vmwgfx: rework to new fence interface, v2")
+Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v6.2+
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240722184313.181318-2-zack.rusin@broadcom.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/firewire/amdtp-stream.c |   23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
---- a/sound/firewire/amdtp-stream.c
-+++ b/sound/firewire/amdtp-stream.c
-@@ -615,16 +615,8 @@ static void update_pcm_pointers(struct a
- 		// The program in user process should periodically check the status of intermediate
- 		// buffer associated to PCM substream to process PCM frames in the buffer, instead
- 		// of receiving notification of period elapsed by poll wait.
--		if (!pcm->runtime->no_period_wakeup) {
--			if (in_softirq()) {
--				// In software IRQ context for 1394 OHCI.
--				snd_pcm_period_elapsed(pcm);
--			} else {
--				// In process context of ALSA PCM application under acquired lock of
--				// PCM substream.
--				snd_pcm_period_elapsed_under_stream_lock(pcm);
--			}
--		}
-+		if (!pcm->runtime->no_period_wakeup)
-+			queue_work(system_highpri_wq, &s->period_work);
- 	}
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
+@@ -32,7 +32,6 @@
+ #define VMW_FENCE_WRAP (1 << 31)
+ 
+ struct vmw_fence_manager {
+-	int num_fence_objects;
+ 	struct vmw_private *dev_priv;
+ 	spinlock_t lock;
+ 	struct list_head fence_list;
+@@ -124,13 +123,13 @@ static void vmw_fence_obj_destroy(struct
+ {
+ 	struct vmw_fence_obj *fence =
+ 		container_of(f, struct vmw_fence_obj, base);
+-
+ 	struct vmw_fence_manager *fman = fman_from_fence(fence);
+ 
+-	spin_lock(&fman->lock);
+-	list_del_init(&fence->head);
+-	--fman->num_fence_objects;
+-	spin_unlock(&fman->lock);
++	if (!list_empty(&fence->head)) {
++		spin_lock(&fman->lock);
++		list_del_init(&fence->head);
++		spin_unlock(&fman->lock);
++	}
+ 	fence->destroy(fence);
  }
  
-@@ -1866,11 +1858,14 @@ unsigned long amdtp_domain_stream_pcm_po
- {
- 	struct amdtp_stream *irq_target = d->irq_target;
+@@ -257,7 +256,6 @@ static const struct dma_fence_ops vmw_fe
+ 	.release = vmw_fence_obj_destroy,
+ };
  
--	// Process isochronous packets queued till recent isochronous cycle to handle PCM frames.
- 	if (irq_target && amdtp_stream_running(irq_target)) {
--		// In software IRQ context, the call causes dead-lock to disable the tasklet
--		// synchronously.
--		if (!in_softirq())
-+		// use wq to prevent AB/BA deadlock competition for
-+		// substream lock:
-+		// fw_iso_context_flush_completions() acquires
-+		// lock by ohci_flush_iso_completions(),
-+		// amdtp-stream process_rx_packets() attempts to
-+		// acquire same lock by snd_pcm_elapsed()
-+		if (current_work() != &s->period_work)
- 			fw_iso_context_flush_completions(irq_target->context);
+-
+ /*
+  * Execute signal actions on fences recently signaled.
+  * This is done from a workqueue so we don't have to execute
+@@ -355,7 +353,6 @@ static int vmw_fence_obj_init(struct vmw
+ 		goto out_unlock;
  	}
+ 	list_add_tail(&fence->head, &fman->fence_list);
+-	++fman->num_fence_objects;
  
+ out_unlock:
+ 	spin_unlock(&fman->lock);
+@@ -403,7 +400,7 @@ static bool vmw_fence_goal_new_locked(st
+ 				      u32 passed_seqno)
+ {
+ 	u32 goal_seqno;
+-	struct vmw_fence_obj *fence;
++	struct vmw_fence_obj *fence, *next_fence;
+ 
+ 	if (likely(!fman->seqno_valid))
+ 		return false;
+@@ -413,7 +410,7 @@ static bool vmw_fence_goal_new_locked(st
+ 		return false;
+ 
+ 	fman->seqno_valid = false;
+-	list_for_each_entry(fence, &fman->fence_list, head) {
++	list_for_each_entry_safe(fence, next_fence, &fman->fence_list, head) {
+ 		if (!list_empty(&fence->seq_passed_actions)) {
+ 			fman->seqno_valid = true;
+ 			vmw_fence_goal_write(fman->dev_priv,
 
 
