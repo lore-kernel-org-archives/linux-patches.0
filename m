@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FAB27448;
-	Wed,  7 Aug 2024 15:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764363A1C4;
+	Wed,  7 Aug 2024 15:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043341; cv=none; b=tRXU3xf+9DcG2h4xgYDyHYz90zVG4o0wzkDI0OfdPfKWYsCkVOyfijd1r5ua91toEZOLR/OE4iA4Yt4auuUt1gE7lrzN0+YD3h32n+eYlvOhbJyQOeM0FeUrrWddLsb2WFyMYfigs0zmPYLnd9nvnZLGPvhRqbJI5nDq3NmMhjg=
+	t=1723043344; cv=none; b=mD01gQk8eJed4PB7xC1h5jb+hPvzUTwrNsQoIe+/SL7OBHIM5UYcCm96ZW3LU7j0kAy5W/V2gPy21ms9jhkKo6PmkDudPp9QyF/E8Q/KWHoz5eDfM5rPDJfP7X45b3XP7jhJ+khKZo+61Qcoif5CF8PzpkucPpfhgRSkbtlSL68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043341; c=relaxed/simple;
-	bh=aN5NKphGwea0f774GGKh8HjsBQTPquQAprJhF1XbzgE=;
+	s=arc-20240116; t=1723043344; c=relaxed/simple;
+	bh=BqPLF8Pt9ffq+GZRzdf/luOpTo8yOry1QpFeqazGOM4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YyTBy6bul1qh3xkX+FJqe5rPN+2xFZfpxWFA2rRTUz19jQs+SIBBa7cPLsErorXyy6bZojTJ4/BnqiNujFJM9PWrKanaJ3awUyqHvvaXJZDSRx/yBI5Ob9BHDM0O7eQbBl64CXDAjOLzimIuQs/yyec7xf/Bv1yETdE605qhYjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IL/gCpRS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMQsvQwEchJaZEsYEYD6jYuHn1keREOYCnpnaGDPi4WxV6a+9sp2jMD34uT1Cz3Us6wzELWsLQU4SnazCXOfkraUh1hMsvP33UwUerQnKENhNv2n1WHWxUaTmpS9xsWGOPip7bi2ezazD6okc3gf9zNjA2aBfX2Va+W7Q4B7tGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4f5AaNk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IL/gCpRS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F5CFC4AF0D;
-	Wed,  7 Aug 2024 15:09:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4f5AaNk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0645BC32781;
+	Wed,  7 Aug 2024 15:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043341;
-	bh=aN5NKphGwea0f774GGKh8HjsBQTPquQAprJhF1XbzgE=;
+	s=korg; t=1723043344;
+	bh=BqPLF8Pt9ffq+GZRzdf/luOpTo8yOry1QpFeqazGOM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IL/gCpRSxLWY5SGgkTClXMESoKsw80NH3PieZVT5UZ0//4Y1UR0ETAwC8G3kQDBvJ
-	 PoARxz8NsSY2La7tYDVurp9FBQkJ4OU9KdT8zUEmUG6z0VXqVLDgKvdo2aDhu9Lyma
-	 rRBvsPRcFOCro2dPidGKCFBb+vysHrY96rBVCLZY=
+	b=M4f5AaNkTKDLxhpTTa1D9t93Qc9IADaOxTqNPmlp7WrK1XKIsSWiTJOMJIW5saiXD
+	 KUTVQErRmoaZkXcYG8vJOwl4DTOfdLK03yffmxiAeONSVZzVuEcYWX24mWmz+MJFVS
+	 gs0aYMAvCT3W29CF7ZaxtyVXsQsEJw17/nRKlLvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dustin L. Howett" <dustin@howett.net>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Lee Jones <lee@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/121] leds: triggers: Flush pending brightness before activating trigger
-Date: Wed,  7 Aug 2024 16:59:18 +0200
-Message-ID: <20240807150020.200342432@linuxfoundation.org>
+Subject: [PATCH 6.6 017/121] ext4: refactor ext4_da_map_blocks()
+Date: Wed,  7 Aug 2024 16:59:09 +0200
+Message-ID: <20240807150019.920637810@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -46,67 +46,96 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit ab477b766edd3bfb6321a6e3df4c790612613fae ]
+[ Upstream commit 3fcc2b887a1ba4c1f45319cd8c54daa263ecbc36 ]
 
-The race fixed in timer_trig_activate() between a blocking
-set_brightness() call and trigger->activate() can affect any trigger.
-So move the call to flush_work() into led_trigger_set() where it can
-avoid the race for all triggers.
+Refactor and cleanup ext4_da_map_blocks(), reduce some unnecessary
+parameters and branches, no logic changes.
 
-Fixes: 0db37915d912 ("leds: avoid races with workqueue")
-Fixes: 8c0f693c6eff ("leds: avoid flush_work in atomic context")
-Cc: stable@vger.kernel.org
-Tested-by: Dustin L. Howett <dustin@howett.net>
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20240613-led-trigger-flush-v2-1-f4f970799d77@weissschuh.net
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240127015825.1608160-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 0ea6560abb3b ("ext4: check the extent status again before inserting delalloc block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-triggers.c          | 6 ++++++
- drivers/leds/trigger/ledtrig-timer.c | 5 -----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ fs/ext4/inode.c | 39 +++++++++++++++++----------------------
+ 1 file changed, 17 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
-index baa5365c26047..72fd2fe8f6fe8 100644
---- a/drivers/leds/led-triggers.c
-+++ b/drivers/leds/led-triggers.c
-@@ -201,6 +201,12 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
- 		 */
- 		synchronize_rcu();
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index d5eb8d44c6c81..b8eab9cf36b98 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1706,7 +1706,6 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 	/* Lookup extent status tree firstly */
+ 	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
+ 		if (ext4_es_is_hole(&es)) {
+-			retval = 0;
+ 			down_read(&EXT4_I(inode)->i_data_sem);
+ 			goto add_delayed;
+ 		}
+@@ -1751,26 +1750,9 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 		retval = ext4_ext_map_blocks(NULL, inode, map, 0);
+ 	else
+ 		retval = ext4_ind_map_blocks(NULL, inode, map, 0);
+-
+-add_delayed:
+-	if (retval == 0) {
+-		int ret;
+-
+-		/*
+-		 * XXX: __block_prepare_write() unmaps passed block,
+-		 * is it OK?
+-		 */
+-
+-		ret = ext4_insert_delayed_block(inode, map->m_lblk);
+-		if (ret != 0) {
+-			retval = ret;
+-			goto out_unlock;
+-		}
+-
+-		map_bh(bh, inode->i_sb, invalid_block);
+-		set_buffer_new(bh);
+-		set_buffer_delay(bh);
+-	} else if (retval > 0) {
++	if (retval < 0)
++		goto out_unlock;
++	if (retval > 0) {
+ 		unsigned int status;
  
-+		/*
-+		 * If "set brightness to 0" is pending in workqueue,
-+		 * we don't want that to be reordered after ->activate()
-+		 */
-+		flush_work(&led_cdev->set_brightness_work);
-+
- 		ret = 0;
- 		if (trig->activate)
- 			ret = trig->activate(led_cdev);
-diff --git a/drivers/leds/trigger/ledtrig-timer.c b/drivers/leds/trigger/ledtrig-timer.c
-index b4688d1d9d2b2..1d213c999d40a 100644
---- a/drivers/leds/trigger/ledtrig-timer.c
-+++ b/drivers/leds/trigger/ledtrig-timer.c
-@@ -110,11 +110,6 @@ static int timer_trig_activate(struct led_classdev *led_cdev)
- 		led_cdev->flags &= ~LED_INIT_DEFAULT_TRIGGER;
+ 		if (unlikely(retval != map->m_len)) {
+@@ -1785,11 +1767,24 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
+ 		ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
+ 				      map->m_pblk, status);
++		goto out_unlock;
  	}
  
--	/*
--	 * If "set brightness to 0" is pending in workqueue, we don't
--	 * want that to be reordered after blink_set()
--	 */
--	flush_work(&led_cdev->set_brightness_work);
- 	led_blink_set(led_cdev, &led_cdev->blink_delay_on,
- 		      &led_cdev->blink_delay_off);
++add_delayed:
++	/*
++	 * XXX: __block_prepare_write() unmaps passed block,
++	 * is it OK?
++	 */
++	retval = ext4_insert_delayed_block(inode, map->m_lblk);
++	if (retval)
++		goto out_unlock;
++
++	map_bh(bh, inode->i_sb, invalid_block);
++	set_buffer_new(bh);
++	set_buffer_delay(bh);
++
+ out_unlock:
+ 	up_read((&EXT4_I(inode)->i_data_sem));
+-
+ 	return retval;
+ }
  
 -- 
 2.43.0
