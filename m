@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D0774055;
-	Wed,  7 Aug 2024 15:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A0E12C80F;
+	Wed,  7 Aug 2024 15:02:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042965; cv=none; b=KoFlZFAIGPCkjYk4K/f3a1nhZ/pNWtysdudXgv3hGLdQ99AzGsxw3+n/5sXx8Am5dmkgJuKWWXpimihNox5zTf6jqmxuMcPkStH6A/eg7FbBKfsYBPnGKXQkwETGm+y6DfZPyTOyOumYg57KMx4fYVqqWFF0jdJIQtwL25a7JKM=
+	t=1723042967; cv=none; b=NUnn0tHllmfmWcJ9byTLSfa4C98WAIiQWR+oM2t8ovPLg0iPAuVWnPztg/anGTl+Bk/HZV7E80jTNiz1kWA5XUFCM/X+z/KYpqDuOsM3n6FneeJp/26zgfKCknVtMcAIyR8OmVXO4gQD9gP6OFykJGiq8UHfHDrC5Ko0Ge/gKvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042965; c=relaxed/simple;
-	bh=d5eUhAfmjb72PvIxRP3e/raB4j42KWsNHXbPq8d/bQQ=;
+	s=arc-20240116; t=1723042967; c=relaxed/simple;
+	bh=6Jxgdv4Qynw5+hJS+i/9lj9fDcdsonLkz6zSGMXBXcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sezWzKwf1yLnp3TWiXQ4oqvaca3Sfbt108HFbK29SLsq4zcDsXs6A+SXuW5ojEwnES7jnHcKmNiMMZQWlAU09FXdkEBRg38ad+6ra7OiFWIgWBdhfHKKMZjfIF4uhWO3A2Jj5/Nh2En3qDfEWipO+zfI/YIJIT3NCpaq+kIbEdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0rJmcUNW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGIjlDJiFMihgYOrDg7h/k9Ug9AXEAdItwxLagwpK5us4YdRfXIWHz3WZ9H30QoMzWoyvmvtT4zHf5pDwmH5FiA9KQ6E/QuPgsOJK56cZ/1vKqF4nxskdBVWj4zgIPRFMeO+jwgwpbvtQ/o7AH3rGVShWR5LGYZuWM2IvhI44p4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XcwZf+Pw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0rJmcUNW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC2FC4AF0F;
-	Wed,  7 Aug 2024 15:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XcwZf+Pw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17DEAC4AF19;
+	Wed,  7 Aug 2024 15:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042964;
-	bh=d5eUhAfmjb72PvIxRP3e/raB4j42KWsNHXbPq8d/bQQ=;
+	s=korg; t=1723042967;
+	bh=6Jxgdv4Qynw5+hJS+i/9lj9fDcdsonLkz6zSGMXBXcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rJmcUNWFjvOY0NA539oo9+Lhd8eM7QDneACrkwKNgXZv0hHvHnF0Mk93SpPmryjy
-	 47j+gaCmzL9l5azFYrAdMb1YPZYldZlt1L2LyYVMqY9uAa5bVU5kEYjQNkKMpbk5lp
-	 SXFu++o317riQ4vx2L+3BfkgC+6oeaYsH10OLeUM=
+	b=XcwZf+PwXzv5VvS+JxiZc0ibmw9d49Wr+GOTQ7BNevveTRx/uuS0n377F7x1/4f7P
+	 iaaGVOTF4UxXa2uHQnUVzxRPlM7AOeBVCzOCT6ugraiSW93syTW1YCP/+hmPAM78dt
+	 yVC+Nw0oonwJJIZRTDPXouq23yOMVWwEngvGoKj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shannon Nelson <shannon.nelson@amd.com>,
-	Michal Kubiak <michal.kubiak@intel.com>,
 	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.10 041/123] ice: respect netif readiness in AF_XDP ZC related ndos
-Date: Wed,  7 Aug 2024 16:59:20 +0200
-Message-ID: <20240807150022.170041420@linuxfoundation.org>
+Subject: [PATCH 6.10 042/123] ice: dont busy wait for Rx queue disable in ice_qp_dis()
+Date: Wed,  7 Aug 2024 16:59:21 +0200
+Message-ID: <20240807150022.201086107@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -54,65 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit ec145a18687fec8dd97eeb4f30057fa4debef577 ]
+[ Upstream commit 1ff72a2f67791cd4ddad19ed830445f57b30e992 ]
 
-Address a scenario in which XSK ZC Tx produces descriptors to XDP Tx
-ring when link is either not yet fully initialized or process of
-stopping the netdev has already started. To avoid this, add checks
-against carrier readiness in ice_xsk_wakeup() and in ice_xmit_zc().
-One could argue that bailing out early in ice_xsk_wakeup() would be
-sufficient but given the fact that we produce Tx descriptors on behalf
-of NAPI that is triggered for Rx traffic, the latter is also needed.
+When ice driver is spammed with multiple xdpsock instances and flow
+control is enabled, there are cases when Rx queue gets stuck and unable
+to reflect the disable state in QRX_CTRL register. Similar issue has
+previously been addressed in commit 13a6233b033f ("ice: Add support to
+enable/disable all Rx queues before waiting").
 
-Bringing link up is an asynchronous event executed within
-ice_service_task so even though interface has been brought up there is
-still a time frame where link is not yet ok.
+To workaround this, let us simply not wait for a disabled state as later
+patch will make sure that regardless of the encountered error in the
+process of disabling a queue pair, the Rx queue will be enabled.
 
-Without this patch, when AF_XDP ZC Tx is used simultaneously with stack
-Tx, Tx timeouts occur after going through link flap (admin brings
-interface down then up again). HW seem to be unable to transmit
-descriptor to the wire after HW tail register bump which in turn causes
-bit __QUEUE_STATE_STACK_XOFF to be set forever as
-netdev_tx_completed_queue() sees no cleaned bytes on the input.
-
-Fixes: 126cdfe1007a ("ice: xsk: Improve AF_XDP ZC Tx and use batching API")
 Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
 Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
 Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
 Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_xsk.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index a65955eb23c0b..72738b8b8a68e 100644
+index 72738b8b8a68e..3104a5657b837 100644
 --- a/drivers/net/ethernet/intel/ice/ice_xsk.c
 +++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -1048,6 +1048,10 @@ bool ice_xmit_zc(struct ice_tx_ring *xdp_ring)
+@@ -199,10 +199,8 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
+ 		if (err)
+ 			return err;
+ 	}
+-	err = ice_vsi_ctrl_one_rx_ring(vsi, false, q_idx, true);
+-	if (err)
+-		return err;
  
- 	ice_clean_xdp_irq_zc(xdp_ring);
++	ice_vsi_ctrl_one_rx_ring(vsi, false, q_idx, false);
+ 	ice_qp_clean_rings(vsi, q_idx);
+ 	ice_qp_reset_stats(vsi, q_idx);
  
-+	if (!netif_carrier_ok(xdp_ring->vsi->netdev) ||
-+	    !netif_running(xdp_ring->vsi->netdev))
-+		return true;
-+
- 	budget = ICE_DESC_UNUSED(xdp_ring);
- 	budget = min_t(u16, budget, ICE_RING_QUARTER(xdp_ring));
- 
-@@ -1091,7 +1095,7 @@ ice_xsk_wakeup(struct net_device *netdev, u32 queue_id,
- 	struct ice_vsi *vsi = np->vsi;
- 	struct ice_tx_ring *ring;
- 
--	if (test_bit(ICE_VSI_DOWN, vsi->state))
-+	if (test_bit(ICE_VSI_DOWN, vsi->state) || !netif_carrier_ok(netdev))
- 		return -ENETDOWN;
- 
- 	if (!ice_is_xdp_ena_vsi(vsi))
 -- 
 2.43.0
 
