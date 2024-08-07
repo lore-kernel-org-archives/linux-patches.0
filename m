@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EDF823DE;
-	Wed,  7 Aug 2024 15:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D5C839E4;
+	Wed,  7 Aug 2024 15:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043612; cv=none; b=JlxiphQSKJ+eYBKZudBq+HRtZ57Nsg6P2xdW2J/0rs6QycQclNXQaX1iwmZsg1ZBxiMHGFJ8k5F1Luqix8wvzVtLsbJfqI15NVIBRac/oo38e51gcOch4sZryRss72IB05KkbNG1vATcRo/ZPaO7V2fKTYc6lhr5NtxfBX3BFko=
+	t=1723043615; cv=none; b=Vo+UuCwJkghfOW08wgr/Q9Of6f3V/BwAJgFcz5f/0NWV+zfrwenOIJ8J6dHabVEtGaKe3/O/LfeqNOpOAIjezkA7oh76Y7gPGFPfD5yt+OcghCIEwoPuUC8Apt+j5IXjAUKABrrmQ6CxjcOcxjUy//PtRrTJ2VhAzT9HxwdNcQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043612; c=relaxed/simple;
-	bh=S05tiWgaasuniJt1imIb8M9JNwtfJ7/T4e9mq1YFIs8=;
+	s=arc-20240116; t=1723043615; c=relaxed/simple;
+	bh=nu/H+seE4zlwaS2wfeOjLrHT5G4RQtFOo/723fOC5h0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pADuwS1iSbz+ixXQkZR8szIFJ/ChGjvYa86ByYd3KhgwWHYJsjUY97b3BuDp9kRjE+dzIxpUJ6Dkpx0M1tOYRzJbxOfxkvx2WaTzK4YCsuutNg9k+b0eOTa0XC+ihd33l+7cMGlG6AHjqoHyXCEgGCkMVvy02ec6ZtrW6dcdruw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVPuDf2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SXwz0un0s8FASvIZLIJwJZzav247huXbs3owAvOSDH54br4Nc+aFozLYtsad/SsANej7SA+sfK7Jz/6Wg3B9HfFy2ouBA9lpaqoElKc52Ou2vi/hRI7BTNj9kUIQfEGZFbRCfg+dIl1xK7gKP4ur/5dtfObEp58AEZwUoX9+nxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OwV3+wA3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVPuDf2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4892DC32781;
-	Wed,  7 Aug 2024 15:13:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OwV3+wA3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECC0DC32781;
+	Wed,  7 Aug 2024 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043612;
-	bh=S05tiWgaasuniJt1imIb8M9JNwtfJ7/T4e9mq1YFIs8=;
+	s=korg; t=1723043615;
+	bh=nu/H+seE4zlwaS2wfeOjLrHT5G4RQtFOo/723fOC5h0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVPuDf2yHaw4TKiEDx5vmWfWjWKXA/gOfC5xh/vmauM79DMUxLXshDxiXJsy1Wd/0
-	 vtMJi8pPgDbQnpCG31XlRAGk/PAduAAdLnbNdpcgauB2Gq8FxRcU8H62iCH8BYWT18
-	 m440T/XNR5O/7OAKX6z2T10dhp2EIWKTIyYp04K0=
+	b=OwV3+wA3KPK7U3xHSj5jGvzsz9oX0CTOps0MsEaf8PJcrZMX1730Qmmbz4cTDZ8Vn
+	 qtcbTcUBAWNZzp9SOu9yqVsfjWYN4Mg6JRSMBNlm0qjCtDLbn/mIoDES+SiUReHEPu
+	 4KZ7fNKrhv4ZQ2kpxbTz/4k9b5Gf2bNy9EN7JOz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 35/86] MIPS: Loongson64: DTS: Fix PCIe port nodes for ls7a
-Date: Wed,  7 Aug 2024 17:00:14 +0200
-Message-ID: <20240807150040.388039293@linuxfoundation.org>
+Subject: [PATCH 6.1 36/86] MIPS: dts: loongson: Fix liointc IRQ polarity
+Date: Wed,  7 Aug 2024 17:00:15 +0200
+Message-ID: <20240807150040.416793841@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -53,157 +53,168 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit d89a415ff8d5e0aad4963f2d8ebb0f9e8110b7fa ]
+[ Upstream commit dbb69b9d6234aad23b3ecd33e5bc8a8ae1485b7d ]
 
-Add various required properties to silent warnings:
+All internal liointc interrupts are high level triggered.
 
-arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi:116.16-297.5: Warning (interrupt_provider): /bus@10000000/pci@1a000000: '#interrupt-cells' found, but node is not an interrupt provider
-arch/mips/boot/dts/loongson/loongson64_2core_2k1000.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
-
+Fixes: b1a792601f26 ("MIPS: Loongson64: DeviceTree for Loongson-2K1000")
+Cc: stable@vger.kernel.org
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: dbb69b9d6234 ("MIPS: dts: loongson: Fix liointc IRQ polarity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/loongson/loongson64-2k1000.dtsi  | 37 +++++++++++++++----
- 1 file changed, 30 insertions(+), 7 deletions(-)
+ .../boot/dts/loongson/loongson64-2k1000.dtsi  | 42 +++++++++----------
+ 1 file changed, 21 insertions(+), 21 deletions(-)
 
 diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-index c0be84a6e81fd..c1d3092fdd870 100644
+index c1d3092fdd870..eec8243be6499 100644
 --- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
 +++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-@@ -117,7 +117,6 @@ pci@1a000000 {
- 			device_type = "pci";
- 			#address-cells = <3>;
- 			#size-cells = <2>;
--			#interrupt-cells = <2>;
+@@ -100,7 +100,7 @@ rtc0: rtc@1fe07800 {
+ 			compatible = "loongson,ls2k1000-rtc";
+ 			reg = <0 0x1fe07800 0 0x78>;
+ 			interrupt-parent = <&liointc0>;
+-			interrupts = <60 IRQ_TYPE_LEVEL_LOW>;
++			interrupts = <60 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
  
- 			reg = <0 0x1a000000 0 0x02000000>,
- 				<0xfe 0x00000000 0 0x20000000>;
-@@ -205,93 +204,117 @@ sata@8,0 {
+ 		uart0: serial@1fe00000 {
+@@ -108,7 +108,7 @@ uart0: serial@1fe00000 {
+ 			reg = <0 0x1fe00000 0 0x8>;
+ 			clock-frequency = <125000000>;
+ 			interrupt-parent = <&liointc0>;
+-			interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
++			interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+ 			no-loopback-test;
+ 		};
+ 
+@@ -131,8 +131,8 @@ gmac@3,0 {
+ 						   "pciclass0c03";
+ 
+ 				reg = <0x1800 0x0 0x0 0x0 0x0>;
+-				interrupts = <12 IRQ_TYPE_LEVEL_LOW>,
+-					     <13 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <12 IRQ_TYPE_LEVEL_HIGH>,
++					     <13 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-names = "macirq", "eth_lpi";
+ 				interrupt-parent = <&liointc0>;
+ 				phy-mode = "rgmii-id";
+@@ -155,8 +155,8 @@ gmac@3,1 {
+ 						   "loongson, pci-gmac";
+ 
+ 				reg = <0x1900 0x0 0x0 0x0 0x0>;
+-				interrupts = <14 IRQ_TYPE_LEVEL_LOW>,
+-					     <15 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <14 IRQ_TYPE_LEVEL_HIGH>,
++					     <15 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-names = "macirq", "eth_lpi";
+ 				interrupt-parent = <&liointc0>;
+ 				phy-mode = "rgmii-id";
+@@ -178,7 +178,7 @@ ehci@4,1 {
+ 						   "pciclass0c03";
+ 
+ 				reg = <0x2100 0x0 0x0 0x0 0x0>;
+-				interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <18 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&liointc1>;
+ 			};
+ 
+@@ -189,7 +189,7 @@ ohci@4,2 {
+ 						   "pciclass0c03";
+ 
+ 				reg = <0x2200 0x0 0x0 0x0 0x0>;
+-				interrupts = <19 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
+ 				interrupt-parent = <&liointc1>;
+ 			};
+ 
+@@ -200,7 +200,7 @@ sata@8,0 {
+ 						   "pciclass0106";
+ 
+ 				reg = <0x4000 0x0 0x0 0x0 0x0>;
+-				interrupts = <19 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc0>;
  			};
  
--			pci_bridge@9,0 {
-+			pcie@9,0 {
- 				compatible = "pci0014,7a19.0",
- 						   "pci0014,7a19",
- 						   "pciclass060400",
- 						   "pciclass0604";
- 
- 				reg = <0x4800 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
+@@ -215,10 +215,10 @@ pcie@9,0 {
+ 				#size-cells = <2>;
+ 				device_type = "pci";
  				#interrupt-cells = <1>;
- 				interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+-				interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc1>;
  				interrupt-map-mask = <0 0 0 0>;
- 				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_LOW>;
-+				ranges;
+-				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_HIGH>;
+ 				ranges;
  				external-facing;
  			};
- 
--			pci_bridge@a,0 {
-+			pcie@a,0 {
- 				compatible = "pci0014,7a09.0",
- 						   "pci0014,7a09",
- 						   "pciclass060400",
- 						   "pciclass0604";
- 
- 				reg = <0x5000 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
+@@ -234,10 +234,10 @@ pcie@a,0 {
+ 				#size-cells = <2>;
+ 				device_type = "pci";
  				#interrupt-cells = <1>;
- 				interrupts = <1 IRQ_TYPE_LEVEL_LOW>;
+-				interrupts = <1 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <1 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc1>;
  				interrupt-map-mask = <0 0 0 0>;
- 				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_LOW>;
-+				ranges;
+-				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_HIGH>;
+ 				ranges;
  				external-facing;
  			};
- 
--			pci_bridge@b,0 {
-+			pcie@b,0 {
- 				compatible = "pci0014,7a09.0",
- 						   "pci0014,7a09",
- 						   "pciclass060400",
- 						   "pciclass0604";
- 
- 				reg = <0x5800 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
+@@ -253,10 +253,10 @@ pcie@b,0 {
+ 				#size-cells = <2>;
+ 				device_type = "pci";
  				#interrupt-cells = <1>;
- 				interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+-				interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <2 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc1>;
  				interrupt-map-mask = <0 0 0 0>;
- 				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_LOW>;
-+				ranges;
+-				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_HIGH>;
+ 				ranges;
  				external-facing;
  			};
- 
--			pci_bridge@c,0 {
-+			pcie@c,0 {
- 				compatible = "pci0014,7a09.0",
- 						   "pci0014,7a09",
- 						   "pciclass060400",
- 						   "pciclass0604";
- 
- 				reg = <0x6000 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
+@@ -272,10 +272,10 @@ pcie@c,0 {
+ 				#size-cells = <2>;
+ 				device_type = "pci";
  				#interrupt-cells = <1>;
- 				interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
+-				interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc1>;
  				interrupt-map-mask = <0 0 0 0>;
- 				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_LOW>;
-+				ranges;
+-				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_HIGH>;
+ 				ranges;
  				external-facing;
  			};
- 
--			pci_bridge@d,0 {
-+			pcie@d,0 {
- 				compatible = "pci0014,7a19.0",
- 						   "pci0014,7a19",
- 						   "pciclass060400",
- 						   "pciclass0604";
- 
- 				reg = <0x6800 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
+@@ -291,10 +291,10 @@ pcie@d,0 {
+ 				#size-cells = <2>;
+ 				device_type = "pci";
  				#interrupt-cells = <1>;
- 				interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+-				interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc1>;
  				interrupt-map-mask = <0 0 0 0>;
- 				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_LOW>;
-+				ranges;
+-				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_HIGH>;
+ 				ranges;
  				external-facing;
  			};
- 
--			pci_bridge@e,0 {
-+			pcie@e,0 {
- 				compatible = "pci0014,7a09.0",
- 						   "pci0014,7a09",
- 						   "pciclass060400",
- 						   "pciclass0604";
- 
- 				reg = <0x7000 0x0 0x0 0x0 0x0>;
-+				#address-cells = <3>;
-+				#size-cells = <2>;
-+				device_type = "pci";
+@@ -310,10 +310,10 @@ pcie@e,0 {
+ 				#size-cells = <2>;
+ 				device_type = "pci";
  				#interrupt-cells = <1>;
- 				interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
+-				interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
++				interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
  				interrupt-parent = <&liointc1>;
  				interrupt-map-mask = <0 0 0 0>;
- 				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_LOW>;
-+				ranges;
+-				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_LOW>;
++				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_HIGH>;
+ 				ranges;
  				external-facing;
  			};
- 
 -- 
 2.43.0
 
