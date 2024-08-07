@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058BD3EA9A;
-	Wed,  7 Aug 2024 15:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053033EA9A;
+	Wed,  7 Aug 2024 15:02:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042946; cv=none; b=n48bdNS09L9kdC5C0FkUPDziX5XaabmLUl+klSnVKaU/xW7ihIyi7asRwCJOwenTAVltdCv21WrG0gOm3waSMDlsoyoDJfqc1PnQdnB5b/E15/SfNi5hwg4SxWiAw/Cpx0yB2bjBxtVMxtRc68j3i6r0rCBfOTxezzOaDhQ0XvM=
+	t=1723042949; cv=none; b=qOf2wGKl2CPSp1bGdtDrhu4fEi7zxKV2qb7T3XXTKRk/U+J7+ioK53YB403KxP/NgXkvur/eTuZZ/eKxpJbR+iM6s1jI9hVWo4KSuv84CMKkmc8vkhrvQGIElfSnbRZ/F3PgqovNdTCxVz2RbenSOtvS4qyb86ZEY8+MFn6rfpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042946; c=relaxed/simple;
-	bh=ss82xnj7NoP5gYbKurZCxHHz1V4jBKYqiuoEASDnR/o=;
+	s=arc-20240116; t=1723042949; c=relaxed/simple;
+	bh=n6tBxFLP5SecrlqELC+8vbT5brvn7NND0WGbWV3DNWA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RENnu3iNhucGNy7UAP9EpDah6AL/UlfcD4A0/vRlzql6os+3el8z7y4CvfseEDc4DtgyMSQKKJClDREX5kGbYXBlCPBs3TxmbB1LaCBAJh+oDlxk8lxCmoL03pxga3j7UueUV76SKGuISrg15H3KTXPtrY9nNFIzsSvmne9vD7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pJFvxbo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QySQVUUYAUw0WZRO8QctZ7FQTUt9tiV5J5ARtwekPD8wZqSQUtfVbbJOq1J3LWx3vMUXE+joVPXFUgAJsuAnTGT5yo1LhrnkxtHwjZjgD4Lz8lSZFuIdoyBLTUT6V9tSYmzFP9xJAf3feJ33Ru9jWjy+/yisWiA1DVswTivK2uQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fy17Bpze; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pJFvxbo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78717C32781;
-	Wed,  7 Aug 2024 15:02:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fy17Bpze"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373A7C32781;
+	Wed,  7 Aug 2024 15:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042945;
-	bh=ss82xnj7NoP5gYbKurZCxHHz1V4jBKYqiuoEASDnR/o=;
+	s=korg; t=1723042948;
+	bh=n6tBxFLP5SecrlqELC+8vbT5brvn7NND0WGbWV3DNWA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0pJFvxboN/Fk+w5JyAdGKphIqajahkiASI9hRtSosgV0a9THQAfPD/2eTFr0bbgb9
-	 fcwZ1CcM9W8J+prk7IX55zxlf0ECh7+dJNIZ2acR9OB/o7VLekpTvl6QIyBtYqoRqV
-	 ODHPzDb4dLe6/phiQ+I6NBVZqHn6cZJ4DDi7js4c=
+	b=fy17BpzeCvqBEUtukMsStAtTTNM6LRiJradNNiQwc6CVpTPWW7Q2AE9gy2Nk00cuL
+	 xnXWAKX4mw49/QRPwri6H6O3G/fogSptZ2+y0o9BQJAu0sa3bDo+Omidf1vtw9rO50
+	 HJaG5JRmGNlO7oRMJkb9QqIya1SekoUFP8q0rMeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Xu <peterx@redhat.com>,
-	Zi Yan <ziy@nvidia.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Hugh Dickins <hughd@google.com>,
-	Huang Ying <ying.huang@intel.com>,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 005/123] mm/migrate: putback split folios when numa hint migration fails
-Date: Wed,  7 Aug 2024 16:58:44 +0200
-Message-ID: <20240807150020.986774419@linuxfoundation.org>
+Subject: [PATCH 6.10 006/123] ext4: factor out a common helper to query extent map
+Date: Wed,  7 Aug 2024 16:58:45 +0200
+Message-ID: <20240807150021.016620120@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -57,70 +53,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Xu <peterx@redhat.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 6e49019db5f7a09a9c0e8ac4d108e656c3f8e583 ]
+[ Upstream commit 8e4e5cdf2fdeb99445a468b6b6436ad79b9ecb30 ]
 
-This issue is not from any report yet, but by code observation only.
+Factor out a new common helper ext4_map_query_blocks() from the
+ext4_da_map_blocks(), it query and return the extent map status on the
+inode's extent path, no logic changes.
 
-This is yet another fix besides Hugh's patch [1] but on relevant code
-path, where eager split of folio can happen if the folio is already on
-deferred list during a folio migration.
-
-Here the issue is NUMA path (migrate_misplaced_folio()) may start to
-encounter such folio split now even with MR_NUMA_MISPLACED hint applied.
-Then when migrate_pages() didn't migrate all the folios, it's possible the
-split small folios be put onto the list instead of the original folio.
-Then putting back only the head page won't be enough.
-
-Fix it by putting back all the folios on the list.
-
-[1] https://lore.kernel.org/all/46c948b4-4dd8-6e03-4c7b-ce4e81cfa536@google.com/
-
-[akpm@linux-foundation.org: remove now unused local `nr_pages']
-Link: https://lkml.kernel.org/r/20240708215537.2630610-1-peterx@redhat.com
-Fixes: 7262f208ca68 ("mm/migrate: split source folio if it is on deferred split list")
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Zi Yan <ziy@nvidia.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Huang Ying <ying.huang@intel.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://patch.msgid.link/20240517124005.347221-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 0ea6560abb3b ("ext4: check the extent status again before inserting delalloc block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/migrate.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ fs/ext4/inode.c | 57 +++++++++++++++++++++++++++----------------------
+ 1 file changed, 32 insertions(+), 25 deletions(-)
 
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 6b5affe49cf91..9dabeb90f772d 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -2634,20 +2634,13 @@ int migrate_misplaced_folio(struct folio *folio, struct vm_area_struct *vma,
- 	int nr_remaining;
- 	unsigned int nr_succeeded;
- 	LIST_HEAD(migratepages);
--	int nr_pages = folio_nr_pages(folio);
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 4bae9ccf5fe01..168819b4db019 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -453,6 +453,35 @@ static void ext4_map_blocks_es_recheck(handle_t *handle,
+ }
+ #endif /* ES_AGGRESSIVE_TEST */
  
- 	list_add(&folio->lru, &migratepages);
- 	nr_remaining = migrate_pages(&migratepages, alloc_misplaced_dst_folio,
- 				     NULL, node, MIGRATE_ASYNC,
- 				     MR_NUMA_MISPLACED, &nr_succeeded);
--	if (nr_remaining) {
--		if (!list_empty(&migratepages)) {
--			list_del(&folio->lru);
--			node_stat_mod_folio(folio, NR_ISOLATED_ANON +
--					folio_is_file_lru(folio), -nr_pages);
--			folio_putback_lru(folio);
--		}
++static int ext4_map_query_blocks(handle_t *handle, struct inode *inode,
++				 struct ext4_map_blocks *map)
++{
++	unsigned int status;
++	int retval;
++
++	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
++		retval = ext4_ext_map_blocks(handle, inode, map, 0);
++	else
++		retval = ext4_ind_map_blocks(handle, inode, map, 0);
++
++	if (retval <= 0)
++		return retval;
++
++	if (unlikely(retval != map->m_len)) {
++		ext4_warning(inode->i_sb,
++			     "ES len assertion failed for inode "
++			     "%lu: retval %d != map->m_len %d",
++			     inode->i_ino, retval, map->m_len);
++		WARN_ON(1);
++	}
++
++	status = map->m_flags & EXT4_MAP_UNWRITTEN ?
++			EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
++	ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
++			      map->m_pblk, status);
++	return retval;
++}
++
+ /*
+  * The ext4_map_blocks() function tries to look up the requested blocks,
+  * and returns if the blocks are already mapped.
+@@ -1744,33 +1773,11 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 	down_read(&EXT4_I(inode)->i_data_sem);
+ 	if (ext4_has_inline_data(inode))
+ 		retval = 0;
+-	else if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
+-		retval = ext4_ext_map_blocks(NULL, inode, map, 0);
+ 	else
+-		retval = ext4_ind_map_blocks(NULL, inode, map, 0);
+-	if (retval < 0) {
+-		up_read(&EXT4_I(inode)->i_data_sem);
+-		return retval;
 -	}
-+	if (nr_remaining && !list_empty(&migratepages))
-+		putback_movable_pages(&migratepages);
- 	if (nr_succeeded) {
- 		count_vm_numa_events(NUMA_PAGE_MIGRATE, nr_succeeded);
- 		if (!node_is_toptier(folio_nid(folio)) && node_is_toptier(node))
+-	if (retval > 0) {
+-		unsigned int status;
+-
+-		if (unlikely(retval != map->m_len)) {
+-			ext4_warning(inode->i_sb,
+-				     "ES len assertion failed for inode "
+-				     "%lu: retval %d != map->m_len %d",
+-				     inode->i_ino, retval, map->m_len);
+-			WARN_ON(1);
+-		}
+-
+-		status = map->m_flags & EXT4_MAP_UNWRITTEN ?
+-				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
+-		ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
+-				      map->m_pblk, status);
+-		up_read(&EXT4_I(inode)->i_data_sem);
+-		return retval;
+-	}
++		retval = ext4_map_query_blocks(NULL, inode, map);
+ 	up_read(&EXT4_I(inode)->i_data_sem);
++	if (retval)
++		return retval;
+ 
+ add_delayed:
+ 	down_write(&EXT4_I(inode)->i_data_sem);
 -- 
 2.43.0
 
