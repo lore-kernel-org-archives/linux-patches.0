@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3DE78281;
-	Wed,  7 Aug 2024 15:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F32778281;
+	Wed,  7 Aug 2024 15:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043279; cv=none; b=EU8yXcF3dV4Adc2vbJnEpkOoeg1C7Hb9wVWEE1tAyNTX3WElDbg9EC+gVx3cCbJqEGh+GltCp4iaYx+cDTSW7fcfnqM9UDgi3KCilhcjvRS9YNv0RbA8hNeYztz8YucBCK1wVx7djAirzh8ZXLInwOP63N4J+TNI3Y6a0JqExzc=
+	t=1723043282; cv=none; b=r1aidlh2HV4xl8VC7c2gSA9xZS5sUPet7MSgR9xkwFEN7wAENJXwrIpg3Y9S6We2WZjyxLuX/jTwXLcbbs4PKaQ4CsCM+XRkDDlkfDOuICrwgiuv1jiVO/VD7ZL/ujdQkKpU6/vw2KGwvP4LtyJ1FNjdbZiMvK4bO4eBDkVRoSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043279; c=relaxed/simple;
-	bh=jqTyrTvY7JxagwPhd6bUkBH5k5FeELMUaltIoJcXivI=;
+	s=arc-20240116; t=1723043282; c=relaxed/simple;
+	bh=h5OdWM/yDLKAnoRjJnXIsb/JrYZaL5D7sps9zz55nj4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYT8YnHWHm8xVjtfTNpaDmI4X43idgnFaLYrnpiExHmRq87fc87QJEc+2oEzfUUhrBnmnz9VR0LhIl6cnEGb5qUL4MIYXg1cjAK6mWk5ok3hor4jSpYGHww6q9Qg1SR3fkHHjeSo186riH1SkOyBlqJtzeEUOOwu4M1unylTr9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+aU0d32; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h2uC2xfv3YvO/JNJp0xJsrUkhHant8i0QFhIHtFiOlIUAVMz5Ba5MMFcvxFX+R3sVeUUyYKTpirdRHNYN6SkY79bAekwgdY4YbOVTvFpFLsxuA/UBHy26QIoyM0x1unoMrcj2MDtqtlOS9td7AJAAYOTPQQwlt7Ocm/Wz3K3e3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6O0Xhie; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+aU0d32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F134CC4AF0B;
-	Wed,  7 Aug 2024 15:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6O0Xhie"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF37C4AF0B;
+	Wed,  7 Aug 2024 15:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043279;
-	bh=jqTyrTvY7JxagwPhd6bUkBH5k5FeELMUaltIoJcXivI=;
+	s=korg; t=1723043282;
+	bh=h5OdWM/yDLKAnoRjJnXIsb/JrYZaL5D7sps9zz55nj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+aU0d32PSlHU5xPGRiqIIGJhakVD7awPyzWKSxaaXygXlatEwxn9/OOyW3AnqZkP
-	 XuVYIPI8S/xvcIcjz8bztFVJq/FDdSBu95faiICdCl9FqkBaCzLrUblRKdaeUB5zQ1
-	 7jjQefCHHYaBn0ba+ZEysrkDLnjSLeNyF8S0wfMI=
+	b=s6O0XhienWO8KE/GV8j7Fjifrs1B/BRRyJ18UsjStC6YmHEfag6tVUPBeZ2+GS1Bg
+	 4RTfxPI+HnKFDYuUY3/+rUwycErouI8W7dXv8nyRnbd/STqkPH0U/HhlDXGjETflCI
+	 38XE5zPZdwk5uYL1e9tafbrTgcvgYjQ1DE4czYFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/121] video: Add helpers for decoding screen_info
-Date: Wed,  7 Aug 2024 16:59:25 +0200
-Message-ID: <20240807150020.413273746@linuxfoundation.org>
+Subject: [PATCH 6.6 034/121] video: Provide screen_info_get_pci_dev() to find screen_infos PCI device
+Date: Wed,  7 Aug 2024 16:59:26 +0200
+Message-ID: <20240807150020.440212849@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,347 +53,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 75fa9b7e375e35739663cde0252d31e586c6314a ]
+[ Upstream commit 036105e3a776b6fc2fe0d262896a23ff2cc2e6b1 ]
 
-The plain values as stored in struct screen_info need to be decoded
-before being used. Add helpers that decode the type of video output
-and the framebuffer I/O aperture.
+Add screen_info_get_pci_dev() to find the PCI device of an instance
+of screen_info. Does nothing on systems without PCI bus.
 
-Old or non-x86 systems may not set the type of video directly, but
-only indicate the presence by storing 0x01 in orig_video_isVGA. The
-decoding logic in screen_info_video_type() takes this into account.
-It then follows similar code in vgacon's vgacon_startup() to detect
-the video type from the given values.
-
-A call to screen_info_resources() returns all known resources of the
-given screen_info. The resources' values have been taken from existing
-code in vgacon and vga16fb. These drivers can later be converted to
-use the new interfaces.
-
+v3:
+	* search PCI device with pci_get_base_class() (Sui)
 v2:
-	* return ssize_t from screen_info_resources()
-	* don't call __screen_info_has_lfb() unnecessarily
+	* remove ret from screen_info_pci_dev() (Javier)
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240212090736.11464-2-tzimmermann@suse.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20240212090736.11464-3-tzimmermann@suse.de
 Stable-dep-of: c2bc958b2b03 ("fbdev: vesafb: Detect VGA compatibility from screen info's VESA attributes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/Kconfig            |   1 +
- drivers/video/Kconfig               |   4 +
- drivers/video/Makefile              |   3 +
- drivers/video/screen_info_generic.c | 146 ++++++++++++++++++++++++++++
- include/linux/screen_info.h         | 100 +++++++++++++++++++
- 5 files changed, 254 insertions(+)
- create mode 100644 drivers/video/screen_info_generic.c
+ drivers/video/Makefile          |  1 +
+ drivers/video/screen_info_pci.c | 48 +++++++++++++++++++++++++++++++++
+ include/linux/screen_info.h     | 10 +++++++
+ 3 files changed, 59 insertions(+)
+ create mode 100644 drivers/video/screen_info_pci.c
 
-diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-index b59e3041fd627..f0e9f250669e2 100644
---- a/drivers/firmware/Kconfig
-+++ b/drivers/firmware/Kconfig
-@@ -229,6 +229,7 @@ config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
- config SYSFB
- 	bool
- 	select BOOT_VESA_SUPPORT
-+	select SCREEN_INFO
- 
- config SYSFB_SIMPLEFB
- 	bool "Mark VGA/VBE/EFI FB as generic system framebuffer"
-diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
-index b694d7669d320..1eb755a94940a 100644
---- a/drivers/video/Kconfig
-+++ b/drivers/video/Kconfig
-@@ -11,6 +11,10 @@ config APERTURE_HELPERS
- 	  Support tracking and hand-over of aperture ownership. Required
- 	  by graphics drivers for firmware-provided framebuffers.
- 
-+config SCREEN_INFO
-+	bool
-+	default n
-+
- config STI_CORE
- 	bool
- 	depends on PARISC
 diff --git a/drivers/video/Makefile b/drivers/video/Makefile
-index 6bbc039508995..b929b664d52cd 100644
+index b929b664d52cd..6bbf87c1b579e 100644
 --- a/drivers/video/Makefile
 +++ b/drivers/video/Makefile
-@@ -1,12 +1,15 @@
- # SPDX-License-Identifier: GPL-2.0
- 
- obj-$(CONFIG_APERTURE_HELPERS)    += aperture.o
-+obj-$(CONFIG_SCREEN_INFO)         += screen_info.o
- obj-$(CONFIG_STI_CORE)            += sticore.o
- obj-$(CONFIG_VGASTATE)            += vgastate.o
- obj-$(CONFIG_VIDEO_CMDLINE)       += cmdline.o
- obj-$(CONFIG_VIDEO_NOMODESET)     += nomodeset.o
+@@ -9,6 +9,7 @@ obj-$(CONFIG_VIDEO_NOMODESET)     += nomodeset.o
  obj-$(CONFIG_HDMI)                += hdmi.o
  
-+screen_info-y			  := screen_info_generic.o
-+
+ screen_info-y			  := screen_info_generic.o
++screen_info-$(CONFIG_PCI)         += screen_info_pci.o
+ 
  obj-$(CONFIG_VT)		  += console/
  obj-$(CONFIG_FB_STI)		  += console/
- obj-$(CONFIG_LOGO)		  += logo/
-diff --git a/drivers/video/screen_info_generic.c b/drivers/video/screen_info_generic.c
+diff --git a/drivers/video/screen_info_pci.c b/drivers/video/screen_info_pci.c
 new file mode 100644
-index 0000000000000..64117c6367abb
+index 0000000000000..d8985a54ce717
 --- /dev/null
-+++ b/drivers/video/screen_info_generic.c
-@@ -0,0 +1,146 @@
++++ b/drivers/video/screen_info_pci.c
+@@ -0,0 +1,48 @@
 +// SPDX-License-Identifier: GPL-2.0
 +
-+#include <linux/export.h>
-+#include <linux/ioport.h>
++#include <linux/pci.h>
 +#include <linux/screen_info.h>
-+#include <linux/string.h>
 +
-+static void resource_init_named(struct resource *r,
-+				resource_size_t start, resource_size_t size,
-+				const char *name, unsigned int flags)
++static struct pci_dev *__screen_info_pci_dev(struct resource *res)
 +{
-+	memset(r, 0, sizeof(*r));
++	struct pci_dev *pdev = NULL;
++	const struct resource *r = NULL;
 +
-+	r->start = start;
-+	r->end = start + size - 1;
-+	r->name = name;
-+	r->flags = flags;
-+}
++	if (!(res->flags & IORESOURCE_MEM))
++		return NULL;
 +
-+static void resource_init_io_named(struct resource *r,
-+				   resource_size_t start, resource_size_t size,
-+				   const char *name)
-+{
-+	resource_init_named(r, start, size, name, IORESOURCE_IO);
-+}
-+
-+static void resource_init_mem_named(struct resource *r,
-+				   resource_size_t start, resource_size_t size,
-+				   const char *name)
-+{
-+	resource_init_named(r, start, size, name, IORESOURCE_MEM);
-+}
-+
-+static inline bool __screen_info_has_ega_gfx(unsigned int mode)
-+{
-+	switch (mode) {
-+	case 0x0d:	/* 320x200-4 */
-+	case 0x0e:	/* 640x200-4 */
-+	case 0x0f:	/* 640x350-1 */
-+	case 0x10:	/* 640x350-4 */
-+		return true;
-+	default:
-+		return false;
++	while (!r && (pdev = pci_get_base_class(PCI_BASE_CLASS_DISPLAY, pdev))) {
++		r = pci_find_resource(pdev, res);
 +	}
-+}
 +
-+static inline bool __screen_info_has_vga_gfx(unsigned int mode)
-+{
-+	switch (mode) {
-+	case 0x10:	/* 640x480-1 */
-+	case 0x12:	/* 640x480-4 */
-+	case 0x13:	/* 320-200-8 */
-+	case 0x6a:	/* 800x600-4 (VESA) */
-+		return true;
-+	default:
-+		return __screen_info_has_ega_gfx(mode);
-+	}
++	return pdev;
 +}
 +
 +/**
-+ * screen_info_resources() - Get resources from screen_info structure
++ * screen_info_pci_dev() - Return PCI parent device that contains screen_info's framebuffer
 + * @si: the screen_info
-+ * @r: pointer to an array of resource structures
-+ * @num: number of elements in @r:
 + *
 + * Returns:
-+ * The number of resources stored in @r on success, or a negative errno code otherwise.
-+ *
-+ * A call to screen_info_resources() returns the resources consumed by the
-+ * screen_info's device or framebuffer. The result is stored in the caller-supplied
-+ * array @r with up to @num elements. The function returns the number of
-+ * initialized elements.
++ * The screen_info's parent device or NULL on success, or a pointer-encoded
++ * errno value otherwise. The value NULL is not an error. It signals that no
++ * PCI device has been found.
 + */
-+ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num)
++struct pci_dev *screen_info_pci_dev(const struct screen_info *si)
 +{
-+	struct resource *pos = r;
-+	unsigned int type = screen_info_video_type(si);
-+	u64 base, size;
++	struct resource res[SCREEN_INFO_MAX_RESOURCES];
++	ssize_t i, numres;
 +
-+	switch (type) {
-+	case VIDEO_TYPE_MDA:
-+		if (num > 0)
-+			resource_init_io_named(pos++, 0x3b0, 12, "mda");
-+		if (num > 1)
-+			resource_init_io_named(pos++, 0x3bf, 0x01, "mda");
-+		if (num > 2)
-+			resource_init_mem_named(pos++, 0xb0000, 0x2000, "mda");
-+		break;
-+	case VIDEO_TYPE_CGA:
-+		if (num > 0)
-+			resource_init_io_named(pos++, 0x3d4, 0x02, "cga");
-+		if (num > 1)
-+			resource_init_mem_named(pos++, 0xb8000, 0x2000, "cga");
-+		break;
-+	case VIDEO_TYPE_EGAM:
-+		if (num > 0)
-+			resource_init_io_named(pos++, 0x3bf, 0x10, "ega");
-+		if (num > 1)
-+			resource_init_mem_named(pos++, 0xb0000, 0x8000, "ega");
-+		break;
-+	case VIDEO_TYPE_EGAC:
-+		if (num > 0)
-+			resource_init_io_named(pos++, 0x3c0, 0x20, "ega");
-+		if (num > 1) {
-+			if (__screen_info_has_ega_gfx(si->orig_video_mode))
-+				resource_init_mem_named(pos++, 0xa0000, 0x10000, "ega");
-+			else
-+				resource_init_mem_named(pos++, 0xb8000, 0x8000, "ega");
-+		}
-+		break;
-+	case VIDEO_TYPE_VGAC:
-+		if (num > 0)
-+			resource_init_io_named(pos++, 0x3c0, 0x20, "vga+");
-+		if (num > 1) {
-+			if (__screen_info_has_vga_gfx(si->orig_video_mode))
-+				resource_init_mem_named(pos++, 0xa0000, 0x10000, "vga+");
-+			else
-+				resource_init_mem_named(pos++, 0xb8000, 0x8000, "vga+");
-+		}
-+		break;
-+	case VIDEO_TYPE_VLFB:
-+	case VIDEO_TYPE_EFI:
-+		base = __screen_info_lfb_base(si);
-+		if (!base)
-+			break;
-+		size = __screen_info_lfb_size(si, type);
-+		if (!size)
-+			break;
-+		if (num > 0)
-+			resource_init_mem_named(pos++, base, size, "lfb");
-+		break;
-+	case VIDEO_TYPE_PICA_S3:
-+	case VIDEO_TYPE_MIPS_G364:
-+	case VIDEO_TYPE_SGI:
-+	case VIDEO_TYPE_TGAC:
-+	case VIDEO_TYPE_SUN:
-+	case VIDEO_TYPE_SUNPCI:
-+	case VIDEO_TYPE_PMAC:
-+	default:
-+		/* not supported */
-+		return -EINVAL;
++	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
++	if (numres < 0)
++		return ERR_PTR(numres);
++
++	for (i = 0; i < numres; ++i) {
++		struct pci_dev *pdev = __screen_info_pci_dev(&res[i]);
++
++		if (pdev)
++			return pdev;
 +	}
 +
-+	return pos - r;
++	return NULL;
 +}
-+EXPORT_SYMBOL(screen_info_resources);
++EXPORT_SYMBOL(screen_info_pci_dev);
 diff --git a/include/linux/screen_info.h b/include/linux/screen_info.h
-index eab7081392d50..e7a02c5609d12 100644
+index e7a02c5609d12..0eae08e3c6f90 100644
 --- a/include/linux/screen_info.h
 +++ b/include/linux/screen_info.h
-@@ -4,6 +4,106 @@
+@@ -9,6 +9,7 @@
+  */
+ #define SCREEN_INFO_MAX_RESOURCES	3
  
- #include <uapi/linux/screen_info.h>
++struct pci_dev;
+ struct resource;
  
-+/**
-+ * SCREEN_INFO_MAX_RESOURCES - maximum number of resources per screen_info
-+ */
-+#define SCREEN_INFO_MAX_RESOURCES	3
-+
-+struct resource;
-+
-+static inline bool __screen_info_has_lfb(unsigned int type)
+ static inline bool __screen_info_has_lfb(unsigned int type)
+@@ -104,6 +105,15 @@ static inline unsigned int screen_info_video_type(const struct screen_info *si)
+ 
+ ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num);
+ 
++#if defined(CONFIG_PCI)
++struct pci_dev *screen_info_pci_dev(const struct screen_info *si);
++#else
++static inline struct pci_dev *screen_info_pci_dev(const struct screen_info *si)
 +{
-+	return (type == VIDEO_TYPE_VLFB) || (type == VIDEO_TYPE_EFI);
++	return NULL;
 +}
-+
-+static inline u64 __screen_info_lfb_base(const struct screen_info *si)
-+{
-+	u64 lfb_base = si->lfb_base;
-+
-+	if (si->capabilities & VIDEO_CAPABILITY_64BIT_BASE)
-+		lfb_base |= (u64)si->ext_lfb_base << 32;
-+
-+	return lfb_base;
-+}
-+
-+static inline u64 __screen_info_lfb_size(const struct screen_info *si, unsigned int type)
-+{
-+	u64 lfb_size = si->lfb_size;
-+
-+	if (type == VIDEO_TYPE_VLFB)
-+		lfb_size <<= 16;
-+	return lfb_size;
-+}
-+
-+static inline unsigned int __screen_info_video_type(unsigned int type)
-+{
-+	switch (type) {
-+	case VIDEO_TYPE_MDA:
-+	case VIDEO_TYPE_CGA:
-+	case VIDEO_TYPE_EGAM:
-+	case VIDEO_TYPE_EGAC:
-+	case VIDEO_TYPE_VGAC:
-+	case VIDEO_TYPE_VLFB:
-+	case VIDEO_TYPE_PICA_S3:
-+	case VIDEO_TYPE_MIPS_G364:
-+	case VIDEO_TYPE_SGI:
-+	case VIDEO_TYPE_TGAC:
-+	case VIDEO_TYPE_SUN:
-+	case VIDEO_TYPE_SUNPCI:
-+	case VIDEO_TYPE_PMAC:
-+	case VIDEO_TYPE_EFI:
-+		return type;
-+	default:
-+		return 0;
-+	}
-+}
-+
-+/**
-+ * screen_info_video_type() - Decodes the video type from struct screen_info
-+ * @si: an instance of struct screen_info
-+ *
-+ * Returns:
-+ * A VIDEO_TYPE_ constant representing si's type of video display, or 0 otherwise.
-+ */
-+static inline unsigned int screen_info_video_type(const struct screen_info *si)
-+{
-+	unsigned int type;
-+
-+	// check if display output is on
-+	if (!si->orig_video_isVGA)
-+		return 0;
-+
-+	// check for a known VIDEO_TYPE_ constant
-+	type = __screen_info_video_type(si->orig_video_isVGA);
-+	if (type)
-+		return si->orig_video_isVGA;
-+
-+	// check if text mode has been initialized
-+	if (!si->orig_video_lines || !si->orig_video_cols)
-+		return 0;
-+
-+	// 80x25 text, mono
-+	if (si->orig_video_mode == 0x07) {
-+		if ((si->orig_video_ega_bx & 0xff) != 0x10)
-+			return VIDEO_TYPE_EGAM;
-+		else
-+			return VIDEO_TYPE_MDA;
-+	}
-+
-+	// EGA/VGA, 16 colors
-+	if ((si->orig_video_ega_bx & 0xff) != 0x10) {
-+		if (si->orig_video_isVGA)
-+			return VIDEO_TYPE_VGAC;
-+		else
-+			return VIDEO_TYPE_EGAC;
-+	}
-+
-+	// the rest...
-+	return VIDEO_TYPE_CGA;
-+}
-+
-+ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num);
++#endif
 +
  extern struct screen_info screen_info;
  
