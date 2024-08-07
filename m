@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481D482871;
-	Wed,  7 Aug 2024 15:05:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4F818289E;
+	Wed,  7 Aug 2024 15:05:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043111; cv=none; b=FKIt8Q3xmk0IM8xn4fpGrJBa2P5nr2JN6OaeNFj07eBtrEwnhq7YT95qj/2CgYj8JNdJsJurtyhmsdvmgwXsAk9CQ2KvomiHc/F0LXf/5Cd1AxV5gg/41469PCNHBmqcdc9A2rbATruJNQbsMXerZN7jNqK5BnCYJS1ctlU9Dxo=
+	t=1723043113; cv=none; b=u1/z3zOV39sTmRHPkaY4cvEDJJ4MVQKf6je3o9J221nuJxTsn9iOGVSny+pgaq0Shry+gkdFLa8cGxvu2Hd8EnRpA6MfLQEH/C9a5X+gjvGuBXGrpwE+zrlAYQd6ljbdbvL9NDRzYsfA/zwnQfjcKVRoUISfPZpqbPZr/V2zV6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043111; c=relaxed/simple;
-	bh=OvC6sMxuD76yiN1XFOBZZj0bucRN6lbEN30I7smOTaw=;
+	s=arc-20240116; t=1723043113; c=relaxed/simple;
+	bh=QTE33PFHVpBvJ9sQy/voY3iMwTiKCECkn0humdTieGE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DvKX6F7sUprvZ3UTs1YgA1Ug0pB9v0Vlzmi4zZOYyD+gLD6RzPqP16xVUV9aEKbSAeW9SsI1QhpCHshq9dEMiapCVYfPMQEOup6adjRrioNsv1iZPe/uJQubGzutgoiXoJSeJwi6fm6gggXduGWv8vqMWLlJwfx2YtoSbXdZ/GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tkV3Byw1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oeAhfGYGaqfCnzLoxyLfHv1dhPYyrY+zvDj/rFoBaylzoFAKRSGCvvMWtlD+rMS+3hplKzgVZsvh3IF1CT+9rQmXXLQkCtX18Mw9U7Ce7r0MGm6XjhoCXKDLSV6aFglG4xZiRPstF9UFRX+/lgwSo+bZ/M8CJ3lopWfdmFGdJTQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nxu7k2Sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tkV3Byw1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4B6C32781;
-	Wed,  7 Aug 2024 15:05:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nxu7k2Sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353F5C32781;
+	Wed,  7 Aug 2024 15:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043110;
-	bh=OvC6sMxuD76yiN1XFOBZZj0bucRN6lbEN30I7smOTaw=;
+	s=korg; t=1723043113;
+	bh=QTE33PFHVpBvJ9sQy/voY3iMwTiKCECkn0humdTieGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkV3Byw1wD9CTRSpus6P6PR2cuaSeYbS/ZVadxazIXyShleRkRXNiCHwadRh53x5j
-	 OSPSoWmHrd1W4I+Ev7cocRfoRBKFSyESp3O5rVPpqFqcP2SI33vHvbI4kWG7evbzL6
-	 WptmbvG8YnCq+w7W1+mjm441t6i9PjiUv4zKQknw=
+	b=nxu7k2SzfFyTRTojNTGEZJhDN67pez+CRjM03JPfFkabIRwKogXjfneFnun44fIIA
+	 foVuIN7gc+ydkC6cn2JcH2+PllaLZZzSERHrFj4TIq/6OK25XU/zkRxQDkP+xeCWg+
+	 gkUsuY9+ap85C+2RMvCitIVVAHIidT+OyNTfl7lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jocelyn Falempe <jfalempe@redhat.com>,
+	Cary Garrett <cogarre@gmail.com>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
 	Dave Airlie <airlied@redhat.com>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.10 093/123] drm/ast: astdp: Wake up during connector status detection
-Date: Wed,  7 Aug 2024 17:00:12 +0200
-Message-ID: <20240807150023.836802626@linuxfoundation.org>
+	dri-devel@lists.freedesktop.org,
+	Jammy Huang <jammy_huang@aspeedtech.com>
+Subject: [PATCH 6.10 094/123] drm/ast: Fix black screen after resume
+Date: Wed,  7 Aug 2024 17:00:13 +0200
+Message-ID: <20240807150023.869690975@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,111 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
 
-commit 0ce91928ec62d189b5c51816e325f02587b53118 upstream.
+commit 12c35c5582acb0fd8f7713ffa75f450766022ff1 upstream.
 
-Power up the ASTDP connector for connection status detection if the
-connector is not active. Keep it powered if a display is attached.
+Suspend will disable pcie device. Thus, resume should do full hw
+initialization again.
+Add some APIs to ast_drm_thaw() before ast_post_gpu() to fix the issue.
 
-This fixes a bug where the connector does not come back after
-disconnecting the display. The encoder's atomic_disable turns off
-power on the physical connector. Further HPD reads will fail,
-thus preventing the driver from detecting re-connected displays.
+v2:
+- fix function-call arguments
 
-For connectors that are actively used, only test the HPD flag without
-touching power.
-
-Fixes: f81bb0ac7872 ("drm/ast: report connection status on Display Port.")
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: 5b71707dd13c ("drm/ast: Enable and unlock device access early during init")
+Reported-by: Cary Garrett <cogarre@gmail.com>
+Closes: https://lore.kernel.org/dri-devel/8ce1e1cc351153a890b65e62fed93b54ccd43f6a.camel@gmail.com/
 Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
 Cc: Dave Airlie <airlied@redhat.com>
 Cc: dri-devel@lists.freedesktop.org
 Cc: <stable@vger.kernel.org> # v6.6+
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240717143319.104012-2-tzimmermann@suse.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20240718030352.654155-1-jammy_huang@aspeedtech.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ast/ast_dp.c   |    7 +++++++
- drivers/gpu/drm/ast/ast_drv.h  |    1 +
- drivers/gpu/drm/ast/ast_mode.c |   29 +++++++++++++++++++++++++++--
- 3 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/ast/ast_drv.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/ast/ast_dp.c
-+++ b/drivers/gpu/drm/ast/ast_dp.c
-@@ -158,7 +158,14 @@ void ast_dp_launch(struct drm_device *de
- 			       ASTDP_HOST_EDID_READ_DONE);
- }
+--- a/drivers/gpu/drm/ast/ast_drv.c
++++ b/drivers/gpu/drm/ast/ast_drv.c
+@@ -391,6 +391,11 @@ static int ast_drm_freeze(struct drm_dev
  
-+bool ast_dp_power_is_on(struct ast_device *ast)
-+{
-+	u8 vgacre3;
-+
-+	vgacre3 = ast_get_index_reg(ast, AST_IO_VGACRI, 0xe3);
- 
-+	return !(vgacre3 & AST_DP_PHY_SLEEP);
-+}
- 
- void ast_dp_power_on_off(struct drm_device *dev, bool on)
+ static int ast_drm_thaw(struct drm_device *dev)
  {
---- a/drivers/gpu/drm/ast/ast_drv.h
-+++ b/drivers/gpu/drm/ast/ast_drv.h
-@@ -472,6 +472,7 @@ void ast_init_3rdtx(struct drm_device *d
- bool ast_astdp_is_connected(struct ast_device *ast);
- int ast_astdp_read_edid(struct drm_device *dev, u8 *ediddata);
- void ast_dp_launch(struct drm_device *dev);
-+bool ast_dp_power_is_on(struct ast_device *ast);
- void ast_dp_power_on_off(struct drm_device *dev, bool no);
- void ast_dp_set_on_off(struct drm_device *dev, bool no);
- void ast_dp_set_mode(struct drm_crtc *crtc, struct ast_vbios_mode_info *vbios_mode);
---- a/drivers/gpu/drm/ast/ast_mode.c
-+++ b/drivers/gpu/drm/ast/ast_mode.c
-@@ -28,6 +28,7 @@
-  * Authors: Dave Airlie <airlied@redhat.com>
-  */
++	struct ast_device *ast = to_ast_device(dev);
++
++	ast_enable_vga(ast->ioregs);
++	ast_open_key(ast->ioregs);
++	ast_enable_mmio(dev->dev, ast->ioregs);
+ 	ast_post_gpu(dev);
  
-+#include <linux/delay.h>
- #include <linux/export.h>
- #include <linux/pci.h>
- 
-@@ -1641,11 +1642,35 @@ static int ast_astdp_connector_helper_de
- 						 struct drm_modeset_acquire_ctx *ctx,
- 						 bool force)
- {
-+	struct drm_device *dev = connector->dev;
- 	struct ast_device *ast = to_ast_device(connector->dev);
-+	enum drm_connector_status status = connector_status_disconnected;
-+	struct drm_connector_state *connector_state = connector->state;
-+	bool is_active = false;
-+
-+	mutex_lock(&ast->modeset_lock);
-+
-+	if (connector_state && connector_state->crtc) {
-+		struct drm_crtc_state *crtc_state = connector_state->crtc->state;
-+
-+		if (crtc_state && crtc_state->active)
-+			is_active = true;
-+	}
-+
-+	if (!is_active && !ast_dp_power_is_on(ast)) {
-+		ast_dp_power_on_off(dev, true);
-+		msleep(50);
-+	}
- 
- 	if (ast_astdp_is_connected(ast))
--		return connector_status_connected;
--	return connector_status_disconnected;
-+		status = connector_status_connected;
-+
-+	if (!is_active && status == connector_status_disconnected)
-+		ast_dp_power_on_off(dev, false);
-+
-+	mutex_unlock(&ast->modeset_lock);
-+
-+	return status;
- }
- 
- static const struct drm_connector_helper_funcs ast_astdp_connector_helper_funcs = {
+ 	return drm_mode_config_helper_resume(dev);
 
 
