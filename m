@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97234374CC;
-	Wed,  7 Aug 2024 15:12:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C923374CC;
+	Wed,  7 Aug 2024 15:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043551; cv=none; b=WQjhJHqLc9cuuiyeT4wjNHchY9Oey/BrSW1dho3nIvlA+EBx/asYwKJlc1IxirFoJ0yMnjvvBHFcr3HKrfHYzIRZYLbkJ4U+vq9i2kRRST60iM1ztTviqtZ8Wlff1Xa4qOvXhhkS5UxHJc2qZB8GriUdELxVIkfYYwCsPPP5prg=
+	t=1723043554; cv=none; b=osXEmYJr/lDKQ7g1y63oPhJS/E/mTs+bDn5bbT9kKRyqE/cGJijUfuNeMwIj8+hLckZCDtmaVIpzjg0bLFiZZPSqnRflrHhZ27e9Fx4XKgrJbT/FxGB7bDllC0u7LI1nzd1rZ8peT+YlvcbSYbQ41FW986X7hN9/T110eHNxSYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043551; c=relaxed/simple;
-	bh=GV9iSqYddYI7Zlie/I9x3PspUPmhcPPItu69WacKW4A=;
+	s=arc-20240116; t=1723043554; c=relaxed/simple;
+	bh=GsqdLoMlSH+1+4TkJ5tdGBe5JnhUzbrVWYdkiEA7hrA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5lwzji0nhSF1PKCcVcYWXJWjaa9hzRUi1uJXD5Pqj2FlkAXRaFVpu3M1LocLPTPIJpUhFb/Xe3vriewA0jKl6Y1tC7KU8bYMGW4zWLHcbXo10IxWHx0pzcy+5aPALgw8GYiqszQD8+UoKGfYycUdlzfr96SOmWYJ+iAf4ImRC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCTaEsqh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mfE8xylGELbGz0patzlZReKfs5KxVeThfV2dgeUP494VMQV1Zpizfl+wpZAyVglu+r//YFed6IpnOMOLgM8o9fkMp3n4pL+GHJqxVKHJBLCGB7RDnQr9f7sk8LlDg9X7o5AsRFPvscQRlRAn5UpK071h6cTiJsE1VJ6nIMedIQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mJD+5YcO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCTaEsqh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCD08C32781;
-	Wed,  7 Aug 2024 15:12:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mJD+5YcO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77DB7C32781;
+	Wed,  7 Aug 2024 15:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043551;
-	bh=GV9iSqYddYI7Zlie/I9x3PspUPmhcPPItu69WacKW4A=;
+	s=korg; t=1723043553;
+	bh=GsqdLoMlSH+1+4TkJ5tdGBe5JnhUzbrVWYdkiEA7hrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCTaEsqhL4Q6nvVLlshVysiuBeJMLMB4RvexeGfVhnMePpF0lERlNd+pgKljePCYG
-	 SSHrjyIuoxEn4P91tv9wBNeXmhxTVvNPJgRPtCDarDVguvd/aCfs3HhWdUM1t8RZ6x
-	 92ZbHWKRMA+siQlClP2ZNDDuI69eoNR0ZtWmIRms=
+	b=mJD+5YcOrYyPjudWjgs9/qD+nGR2oLfOvW/VZ/n5QaDpob8Ae5mOEMAP6laHZy9TI
+	 xvSwC2dMqJFpu5tRRw+WeBlvj/UTZBdD8+iPtKV+xj6DY9FhR+F8Mnz3BdNPK86gk0
+	 nbpO9dSarEdMFD8nPb9kc9Rdv718uBcAIjmv+awM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Yangtao Li <frank.li@vivo.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 12/86] ext4: check the extent status again before inserting delalloc block
-Date: Wed,  7 Aug 2024 16:59:51 +0200
-Message-ID: <20240807150039.649036789@linuxfoundation.org>
+Subject: [PATCH 6.1 13/86] cpufreq: qcom-nvmem: Convert to platform remove callback returning void
+Date: Wed,  7 Aug 2024 16:59:52 +0200
+Message-ID: <20240807150039.677167604@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -46,104 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Yangtao Li <frank.li@vivo.com>
 
-[ Upstream commit 0ea6560abb3bac1ffcfa4bf6b2c4d344fdc27b3c ]
+[ Upstream commit 402732324b17a31f7e5dce9659d1b1f049fd65d3 ]
 
-ext4_da_map_blocks looks up for any extent entry in the extent status
-tree (w/o i_data_sem) and then the looks up for any ondisk extent
-mapping (with i_data_sem in read mode).
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is (mostly) ignored
+and this typically results in resource leaks. To improve here there is a
+quest to make the remove callback return void. In the first step of this
+quest all drivers are converted to .remove_new() which already returns
+void.
 
-If it finds a hole in the extent status tree or if it couldn't find any
-entry at all, it then takes the i_data_sem in write mode to add a da
-entry into the extent status tree. This can actually race with page
-mkwrite & fallocate path.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Note that this is ok between
-1. ext4 buffered-write path v/s ext4_page_mkwrite(), because of the
-   folio lock
-2. ext4 buffered write path v/s ext4 fallocate because of the inode
-   lock.
-
-But this can race between ext4_page_mkwrite() & ext4 fallocate path
-
-ext4_page_mkwrite()             ext4_fallocate()
- block_page_mkwrite()
-  ext4_da_map_blocks()
-   //find hole in extent status tree
-                                 ext4_alloc_file_blocks()
-                                  ext4_map_blocks()
-                                   //allocate block and unwritten extent
-   ext4_insert_delayed_block()
-    ext4_da_reserve_space()
-     //reserve one more block
-    ext4_es_insert_delayed_block()
-     //drop unwritten extent and add delayed extent by mistake
-
-Then, the delalloc extent is wrong until writeback and the extra
-reserved block can't be released any more and it triggers below warning:
-
- EXT4-fs (pmem2): Inode 13 (00000000bbbd4d23): i_reserved_data_blocks(1) not cleared!
-
-Fix the problem by looking up extent status tree again while the
-i_data_sem is held in write mode. If it still can't find any entry, then
-we insert a new da entry into the extent status tree.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240517124005.347221-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Yangtao Li <frank.li@vivo.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: d01c84b97f19 ("cpufreq: qcom-nvmem: fix memory leaks in probe error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index a0c6a173c14d5..93a1c22048de6 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1772,6 +1772,7 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
- 		if (ext4_es_is_hole(&es))
- 			goto add_delayed;
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index cb03bfb0435ea..91634b84baa87 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -374,7 +374,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
-+found:
- 		/*
- 		 * Delayed extent could be allocated by fallocate.
- 		 * So we need to check it.
-@@ -1816,6 +1817,26 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+-static int qcom_cpufreq_remove(struct platform_device *pdev)
++static void qcom_cpufreq_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_cpufreq_drv *drv = platform_get_drvdata(pdev);
+ 	unsigned int cpu;
+@@ -386,13 +386,11 @@ static int qcom_cpufreq_remove(struct platform_device *pdev)
  
- add_delayed:
- 	down_write(&EXT4_I(inode)->i_data_sem);
-+	/*
-+	 * Page fault path (ext4_page_mkwrite does not take i_rwsem)
-+	 * and fallocate path (no folio lock) can race. Make sure we
-+	 * lookup the extent status tree here again while i_data_sem
-+	 * is held in write mode, before inserting a new da entry in
-+	 * the extent status tree.
-+	 */
-+	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
-+		if (!ext4_es_is_hole(&es)) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			goto found;
-+		}
-+	} else if (!ext4_has_inline_data(inode)) {
-+		retval = ext4_map_query_blocks(NULL, inode, map);
-+		if (retval) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			return retval;
-+		}
-+	}
-+
- 	retval = ext4_insert_delayed_block(inode, map->m_lblk);
- 	up_write(&EXT4_I(inode)->i_data_sem);
- 	if (retval)
+ 	kfree(drv->opp_tokens);
+ 	kfree(drv);
+-
+-	return 0;
+ }
+ 
+ static struct platform_driver qcom_cpufreq_driver = {
+ 	.probe = qcom_cpufreq_probe,
+-	.remove = qcom_cpufreq_remove,
++	.remove_new = qcom_cpufreq_remove,
+ 	.driver = {
+ 		.name = "qcom-cpufreq-nvmem",
+ 	},
 -- 
 2.43.0
 
