@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D01823A9;
-	Wed,  7 Aug 2024 15:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB008287E;
+	Wed,  7 Aug 2024 15:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043458; cv=none; b=lmv1Ztafb2DPHfN9PnY6ux4aFeNT6db4s6aTsvaQfQvUlMeCo3d7j1ba9zqJoxvrMXJS2Q2jqdAOjsJStqcunXoONwfWjJPsxqwNUlLlC6KxMIA0nFXRAtcfbkbY4Yt1RPp5iJaz1b5PlXBhHmMdHypR837tHGK0OFxmA58OV4E=
+	t=1723043461; cv=none; b=mEptzasDXoqNtxW422DDZGevaMohq0/2jdJ+TRl+d68r0MJFuTGXVyu5P9Ou35ubG+ZH3XQ+k2lJH3l+6TRH1GnbgYeJWrjJJ+eZDeBlRJKc3Phcg3dJcsdjCwhnIT0BazpCJ85ouWNDDOHe3JSdOYs5TZnlrZWXAiB0we+o1yI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043458; c=relaxed/simple;
-	bh=FrkFCZH1Y4/nMmK42RH999nGllSNp8Zj6CumgJZrtlg=;
+	s=arc-20240116; t=1723043461; c=relaxed/simple;
+	bh=lAsxR8lkjcGWL4zD1grYYzXNRNvL705x+K8axm7TQTc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TKwAJsw01AplIHNKWZV70yLOLZF3Pqpglua/mEt8ckwUHOtaQGZHRGJw3qoTG3B5NxGCiJN36e4CemixyhGA7whf4b4mWRk6i/RMYw3WMChJTTFguvFUTjEFr5SkAtkzEdL7g3kfAjCwzZHPfUK8XZhfUBJ/ygG+9TTpEkYl2SE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgGkS2gl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ktV2OnBxRIJxDyBYtkS45UIwzepf9HutjFB9tV0h/6MxjzZv4RokTibaqtpKfSbyYySEqsdNLjFXwDLRGoxtU7v5YqjV1lC141jaGf2HvQJgWATqF4Pga8KuQ/B+04FVMNxT0JCQ4WCVx/sEnfLkEfKtphtCqmA6pEdNDcokMgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhczJNiz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgGkS2gl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B989C32781;
-	Wed,  7 Aug 2024 15:10:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhczJNiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AF9C32781;
+	Wed,  7 Aug 2024 15:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043458;
-	bh=FrkFCZH1Y4/nMmK42RH999nGllSNp8Zj6CumgJZrtlg=;
+	s=korg; t=1723043461;
+	bh=lAsxR8lkjcGWL4zD1grYYzXNRNvL705x+K8axm7TQTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TgGkS2glcGhG9M3DkWuaRiFYM8czg/AFvRH/gyPQ/KNYAstU+UtY36q78myXA+aQd
-	 DbcNSVUUgKOHVjaQHnM9PTVibkrHyoH9MoGPi7Qric0eUGDG1/wXbuamBtRxO9/yKD
-	 UbGbyzQVMTejdnE5JUwYrU52xCNk1L8Ubcc2pS6U=
+	b=JhczJNizWg4RVHSTY38Kl+6xzAsd/M+Qbr+cHW6P29QxtiGRNUHfQ81aJd/7k/MFY
+	 yNZRoGrWTyteiLXhcStIKImWQmukYLQ5L/vXm4+R5gsmmKMHWkgX5fe5T5zLpXyV7O
+	 kkrDoNH5HPSf0dFOJ5aIaX8dgHIqUnmgI+DJ+p8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 6.6 099/121] protect the fetch of ->fd[fd] in do_dup2() from mispredictions
-Date: Wed,  7 Aug 2024 17:00:31 +0200
-Message-ID: <20240807150022.635978319@linuxfoundation.org>
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 082/121] net/mlx5: Lag, dont use the hardcoded value of the first port
+Date: Wed,  7 Aug 2024 17:00:14 +0200
+Message-ID: <20240807150022.096043401@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -49,34 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Mark Bloch <mbloch@nvidia.com>
 
-commit 8aa37bde1a7b645816cda8b80df4753ecf172bf1 upstream.
+[ Upstream commit 3fda84dc090390573cfbd0b1d70372663315de21 ]
 
-both callers have verified that fd is not greater than ->max_fds;
-however, misprediction might end up with
-        tofree = fdt->fd[fd];
-being speculatively executed.  That's wrong for the same reasons
-why it's wrong in close_fd()/file_close_fd_locked(); the same
-solution applies - array_index_nospec(fd, fdt->max_fds) could differ
-from fd only in case of speculative execution on mispredicted path.
+The cited commit didn't change the body of the loop as it should.
+It shouldn't be using MLX5_LAG_P1.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7e978e7714d6 ("net/mlx5: Lag, use actual number of lag ports")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/20240730061638.1831002-5-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1124,6 +1124,7 @@ __releases(&files->file_lock)
- 	 * tables and this condition does not arise without those.
- 	 */
- 	fdt = files_fdtable(files);
-+	fd = array_index_nospec(fd, fdt->max_fds);
- 	tofree = fdt->fd[fd];
- 	if (!tofree && fd_is_open(fd, fdt))
- 		goto Ebusy;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index dfc2ba6f780a2..18cf756bad8cc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -1512,7 +1512,7 @@ u8 mlx5_lag_get_slave_port(struct mlx5_core_dev *dev,
+ 		goto unlock;
+ 
+ 	for (i = 0; i < ldev->ports; i++) {
+-		if (ldev->pf[MLX5_LAG_P1].netdev == slave) {
++		if (ldev->pf[i].netdev == slave) {
+ 			port = i;
+ 			break;
+ 		}
+-- 
+2.43.0
+
 
 
