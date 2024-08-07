@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD46A7E0E9;
-	Wed,  7 Aug 2024 15:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766E87E0E9;
+	Wed,  7 Aug 2024 15:11:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043500; cv=none; b=lHn9WV76SmYKZMj3jSkzZQMOCrX+BjJg3aUcoviahXEdbFhAkkH4DwA/Atq9Gw38oMN6CCwO8z+T0ywQI7ZX+GjWutcj8KmflfnCxAGbLYTXWvg5udi/frvvqBglxVJKsRDtk81+AFcvifWOS+4nc999Hm2BkKSxVkRJGLcQsro=
+	t=1723043503; cv=none; b=WwXRqN5yvwmirWGV4GNIa1G2vBI71BTnSqph6SDFCO3vqY6cBn0riEq8J2I4f7WlPzuSSUi8ueWpg0req4YtdRlPIbxERu2EsLQKrUFfUDqOC+k/C4vwNqQ/+LE2c4NZjutfHMU+qRIXbvNZeeuKekykQePJuS86DxdNW39TowM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043500; c=relaxed/simple;
-	bh=koRhZITgrr98ZcHOBP/5sf/t1YLE7gqucTgkRufJ4C4=;
+	s=arc-20240116; t=1723043503; c=relaxed/simple;
+	bh=APqQMuK3IUdNbjZLQYmTVqQOa3jSJNpD9Hlh9nrEC7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=argtC0VnNkpiRhGQyOGoSkIHm47FrftuR4DYBkvN50HiNjzdLV+nPW5yH7ujHU5QH97yI0B5zJEd29hb4IzX/8P2XkG/pXvd3XLOa6gUn5BopDNnBBh8cISSL4FtyY2lFuX785vCTZb8yRwNcC+ln8ZulGoNqzR0H3OO+OyNQR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxHw6KDM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FUwBQGcnKHKNK9SKTFnfXEA/qy86jAQ774KdrchLaEAEweLaGs07hA5+tzs4WGNRGmMNq0O6ydCOIBZnNzN0AzFUmRAVBshEsFztaA0zxizJKMU3Jli4qTmmReZO/btjxpcFMVgD4dygWu0ggfcU1r0Ykdk9T17uO4ZcYaYizuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gNQ9CW5l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxHw6KDM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC1EC32781;
-	Wed,  7 Aug 2024 15:11:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gNQ9CW5l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E24C32781;
+	Wed,  7 Aug 2024 15:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043500;
-	bh=koRhZITgrr98ZcHOBP/5sf/t1YLE7gqucTgkRufJ4C4=;
+	s=korg; t=1723043503;
+	bh=APqQMuK3IUdNbjZLQYmTVqQOa3jSJNpD9Hlh9nrEC7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxHw6KDMELLAXZM0tftZj3eYCuDdzEbdmzVSz43KjSib+VwZ9qacKwPR79b5UcacB
-	 PQolPjUWTOQntg/D/S3j4eeU2vZSFHOBZARlFMbDR6aS2Q8wYYLGghKECCujh284OR
-	 1WBV1iYu85gxsfZ9riKJHIHTsYOjD45i/lmTHxjA=
+	b=gNQ9CW5lTFZTesD8DgvlGRoKieNfd8vZuzlFF+6s65jf0dBe/CKGEpf/KGrtJHC6M
+	 tDdzcGSETlsgg13EHfRjQw+UC26bv+xYTs7e1NgflZpZsy+M2ThgfyM8Qnegu0jSIf
+	 tZxJNIxuVkXsS1nI/FlssCsiswDz+gcEeSmm4ELw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jen Linkova <furry@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Patrick Rohr <prohr@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
 	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 087/121] igc: Fix double reset adapter triggered from a single taprio cmd
-Date: Wed,  7 Aug 2024 17:00:19 +0200
-Message-ID: <20240807150022.253359874@linuxfoundation.org>
+Subject: [PATCH 6.6 088/121] ipv6: fix ndisc_is_useropt() handling for PIO
+Date: Wed,  7 Aug 2024 17:00:20 +0200
+Message-ID: <20240807150022.283532118@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -49,96 +51,94 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit b9e7fc0aeda79031a101610b2fcb12bf031056e9 ]
+[ Upstream commit a46c68debf3be3a477a69ccbf0a1d050df841676 ]
 
-Following the implementation of "igc: Add TransmissionOverrun counter"
-patch, when a taprio command is triggered by user, igc processes two
-commands: TAPRIO_CMD_REPLACE followed by TAPRIO_CMD_STATS. However, both
-commands unconditionally pass through igc_tsn_offload_apply() which
-evaluates and triggers reset adapter. The double reset causes issues in
-the calculation of adapter->qbv_count in igc.
+The current logic only works if the PIO is between two
+other ND user options.  This fixes it so that the PIO
+can also be either before or after other ND user options
+(for example the first or last option in the RA).
 
-TAPRIO_CMD_REPLACE command is expected to reset the adapter since it
-activates qbv. It's unexpected for TAPRIO_CMD_STATS to do the same
-because it doesn't configure any driver-specific TSN settings. So, the
-evaluation in igc_tsn_offload_apply() isn't needed for TAPRIO_CMD_STATS.
+side note: there's actually Android tests verifying
+a portion of the old broken behaviour, so:
+  https://android-review.googlesource.com/c/kernel/tests/+/3196704
+fixes those up.
 
-To address this, commands parsing are relocated to
-igc_tsn_enable_qbv_scheduling(). Commands that don't require an adapter
-reset will exit after processing, thus avoiding igc_tsn_offload_apply().
-
-Fixes: d3750076d464 ("igc: Add TransmissionOverrun counter")
-Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
-Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20240730173304.865479-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Jen Linkova <furry@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: Patrick Rohr <prohr@google.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Fixes: 048c796beb6e ("ipv6: adjust ndisc_is_useropt() to also return true for PIO")
+Link: https://patch.msgid.link/20240730001748.147636-1-maze@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 33 ++++++++++++-----------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ net/ipv6/ndisc.c | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index e83700ad7e622..d80bbcdeb93ed 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6208,21 +6208,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	size_t n;
- 	int i;
- 
--	switch (qopt->cmd) {
--	case TAPRIO_CMD_REPLACE:
--		break;
--	case TAPRIO_CMD_DESTROY:
--		return igc_tsn_clear_schedule(adapter);
--	case TAPRIO_CMD_STATS:
--		igc_taprio_stats(adapter->netdev, &qopt->stats);
--		return 0;
--	case TAPRIO_CMD_QUEUE_STATS:
--		igc_taprio_queue_stats(adapter->netdev, &qopt->queue_stats);
--		return 0;
--	default:
--		return -EOPNOTSUPP;
--	}
--
- 	if (qopt->base_time < 0)
- 		return -ERANGE;
- 
-@@ -6331,7 +6316,23 @@ static int igc_tsn_enable_qbv_scheduling(struct igc_adapter *adapter,
- 	if (hw->mac.type != igc_i225)
- 		return -EOPNOTSUPP;
- 
--	err = igc_save_qbv_schedule(adapter, qopt);
-+	switch (qopt->cmd) {
-+	case TAPRIO_CMD_REPLACE:
-+		err = igc_save_qbv_schedule(adapter, qopt);
-+		break;
-+	case TAPRIO_CMD_DESTROY:
-+		err = igc_tsn_clear_schedule(adapter);
-+		break;
-+	case TAPRIO_CMD_STATS:
-+		igc_taprio_stats(adapter->netdev, &qopt->stats);
-+		return 0;
-+	case TAPRIO_CMD_QUEUE_STATS:
-+		igc_taprio_queue_stats(adapter->netdev, &qopt->queue_stats);
-+		return 0;
-+	default:
-+		return -EOPNOTSUPP;
-+	}
-+
- 	if (err)
- 		return err;
- 
+diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
+index 68debc78189c2..2062ab94721e3 100644
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -227,6 +227,7 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
+ 		return NULL;
+ 	memset(ndopts, 0, sizeof(*ndopts));
+ 	while (opt_len) {
++		bool unknown = false;
+ 		int l;
+ 		if (opt_len < sizeof(struct nd_opt_hdr))
+ 			return NULL;
+@@ -262,22 +263,23 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
+ 			break;
+ #endif
+ 		default:
+-			if (ndisc_is_useropt(dev, nd_opt)) {
+-				ndopts->nd_useropts_end = nd_opt;
+-				if (!ndopts->nd_useropts)
+-					ndopts->nd_useropts = nd_opt;
+-			} else {
+-				/*
+-				 * Unknown options must be silently ignored,
+-				 * to accommodate future extension to the
+-				 * protocol.
+-				 */
+-				ND_PRINTK(2, notice,
+-					  "%s: ignored unsupported option; type=%d, len=%d\n",
+-					  __func__,
+-					  nd_opt->nd_opt_type,
+-					  nd_opt->nd_opt_len);
+-			}
++			unknown = true;
++		}
++		if (ndisc_is_useropt(dev, nd_opt)) {
++			ndopts->nd_useropts_end = nd_opt;
++			if (!ndopts->nd_useropts)
++				ndopts->nd_useropts = nd_opt;
++		} else if (unknown) {
++			/*
++			 * Unknown options must be silently ignored,
++			 * to accommodate future extension to the
++			 * protocol.
++			 */
++			ND_PRINTK(2, notice,
++				  "%s: ignored unsupported option; type=%d, len=%d\n",
++				  __func__,
++				  nd_opt->nd_opt_type,
++				  nd_opt->nd_opt_len);
+ 		}
+ next_opt:
+ 		opt_len -= l;
 -- 
 2.43.0
 
