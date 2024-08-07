@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8350478C92;
-	Wed,  7 Aug 2024 15:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D79078C92;
+	Wed,  7 Aug 2024 15:10:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043426; cv=none; b=LIA2AhsSGDEWGAU0Q0avKvLRVLk7gz+FXm8nKzbTFkhN+ljobWEoYyFpinO5nVHPecpih/omaoOIzRBuqCNPznUp03IuV54RoB1Dnbm24wZQqtibl/RsVnLq2DLJrnryyXYyL9oFZce8r7as5BjzSGVA0XAygH9elM9rbqHEBIY=
+	t=1723043429; cv=none; b=NO6WZpH+a+a0fqRo+4tLivuwYcG4vIPplgoXlRepUknuNI/uYE/MNazHZtMwAth21aIlgKxOaLCJpqW308+iEI8xOM+qyfD0/DRA7bcOOaJG3f8WJHnyFkkvWhG+iM9VKMaYeKcF9a3sYiT5zNgwh1BuaMoITs39DYL3h28SqlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043426; c=relaxed/simple;
-	bh=FIGYimcaMq1i1qId/9i3RYI6XrdZe6aJzUMsCIsSqv8=;
+	s=arc-20240116; t=1723043429; c=relaxed/simple;
+	bh=+9QkHlQmlnANAwmQ/qDkwWPeOEjBsXdWFoO0yv1E1Bs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S5hXZP1srZvkAeMUYfBuOgvh0uiVENccL3+5BJmx4WigpxPb7ePU/vriyjaBEokQZpKt3GBiPemflkUfL8JlNrXYXcffpXjEKMlX00Nx67hP0nLL0qJApfci+2jwIjb1lVxmQ8zHSKQd62FcD+RaDio4vIteDt779F0b2CPpecU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BNUGq4MR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=leuWWgN+eIl0ahEq0NOM7gOTQI4hVo1crhR9avnH4SpB7UldPKG9SEF86+6k+1XXeJKBt9dMR4Ps91b9K3iRxESSrNeLBclcrsP19EcG9wAlvfw3q5EZ6WgCT05VWVR1/JghglZEDO6J7KTOE43F6p8x30uhc6T+oX5/PMHaPaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FSOCdgjd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BNUGq4MR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 132A5C32781;
-	Wed,  7 Aug 2024 15:10:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FSOCdgjd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D08C32781;
+	Wed,  7 Aug 2024 15:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043426;
-	bh=FIGYimcaMq1i1qId/9i3RYI6XrdZe6aJzUMsCIsSqv8=;
+	s=korg; t=1723043429;
+	bh=+9QkHlQmlnANAwmQ/qDkwWPeOEjBsXdWFoO0yv1E1Bs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BNUGq4MRqp/DDHqemUgF0T9qfgH0pD1C/EXaWZAOOjJI/2UAW9Eduy/pZ+Xzr/T0m
-	 spL7ysatQtPclHePkRXbQSwxsoXmQa1FwFKY67/R8Bv3tL5Uy6Cez3AE9tPkjTKB+I
-	 a2kL9RjqOBXyS5wP1T5yXrGQ7ORdfmEM+2YOgFd4=
+	b=FSOCdgjd57mh+xr4TydvO5dnkW0F2xJNvhnrZlv5gHGRIpP+84qaq4Lp6psr8uLCt
+	 GRsFTUJ0FpaNDV7yIZ8LwGYrn3HRZt2ZcnRvOWi56teQJLZk6LcKmuF8XrtN0/Rztu
+	 8TcS6FBVLIUX9hr4YgkaA1UGrZPw+WBIgm6fDoyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Senior <russell@personaltelco.net>,
-	Mark Mentovai <mark@mentovai.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 058/121] net: phy: realtek: add support for RTL8366S Gigabit PHY
-Date: Wed,  7 Aug 2024 16:59:50 +0200
-Message-ID: <20240807150021.312464799@linuxfoundation.org>
+Subject: [PATCH 6.6 049/121] MIPS: dts: loongson: Fix ls2k1000-rtc interrupt
+Date: Wed,  7 Aug 2024 16:59:41 +0200
+Message-ID: <20240807150021.009285949@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,56 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Mentovai <mark@mentovai.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 225990c487c1023e7b3aa89beb6a68011fbc0461 ]
+[ Upstream commit f70fd92df7529e7283e02a6c3a2510075f13ba30 ]
 
-The PHY built in to the Realtek RTL8366S switch controller was
-previously supported by genphy_driver. This PHY does not implement MMD
-operations. Since commit 9b01c885be36 ("net: phy: c22: migrate to
-genphy_c45_write_eee_adv()"), MMD register reads have been made during
-phy_probe to determine EEE support. For genphy_driver, these reads are
-transformed into 802.3 annex 22D clause 45-over-clause 22
-mmd_phy_indirect operations that perform MII register writes to
-MII_MMD_CTRL and MII_MMD_DATA. This overwrites those two MII registers,
-which on this PHY are reserved and have another function, rendering the
-PHY unusable while so configured.
+The correct interrupt line for RTC is line 8 on liointc1.
 
-Proper support for this PHY is restored by providing a phy_driver that
-declares MMD operations as unsupported by using the helper functions
-provided for that purpose, while remaining otherwise identical to
-genphy_driver.
-
-Fixes: 9b01c885be36 ("net: phy: c22: migrate to genphy_c45_write_eee_adv()")
-Reported-by: Russell Senior <russell@personaltelco.net>
-Closes: https://github.com/openwrt/openwrt/issues/15981
-Link: https://github.com/openwrt/openwrt/issues/15739
-Signed-off-by: Mark Mentovai <mark@mentovai.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e47084e116fc ("MIPS: Loongson64: DTS: Add RTC support to Loongson-2K1000")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
-index 337899c69738e..2604d9663a5b2 100644
---- a/drivers/net/phy/realtek.c
-+++ b/drivers/net/phy/realtek.c
-@@ -1083,6 +1083,13 @@ static struct phy_driver realtek_drvs[] = {
- 		.handle_interrupt = genphy_handle_interrupt_no_ack,
- 		.suspend	= genphy_suspend,
- 		.resume		= genphy_resume,
-+	}, {
-+		PHY_ID_MATCH_EXACT(0x001cc960),
-+		.name		= "RTL8366S Gigabit Ethernet",
-+		.suspend	= genphy_suspend,
-+		.resume		= genphy_resume,
-+		.read_mmd	= genphy_read_mmd_unsupported,
-+		.write_mmd	= genphy_write_mmd_unsupported,
- 	},
- };
+diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+index eec8243be6499..cc7747c5f21f3 100644
+--- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
++++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+@@ -99,8 +99,8 @@ liointc1: interrupt-controller@1fe11440 {
+ 		rtc0: rtc@1fe07800 {
+ 			compatible = "loongson,ls2k1000-rtc";
+ 			reg = <0 0x1fe07800 0 0x78>;
+-			interrupt-parent = <&liointc0>;
+-			interrupts = <60 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-parent = <&liointc1>;
++			interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
+ 		};
  
+ 		uart0: serial@1fe00000 {
 -- 
 2.43.0
 
