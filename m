@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A559A23CE;
-	Wed,  7 Aug 2024 15:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB1A23CE;
+	Wed,  7 Aug 2024 15:01:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042883; cv=none; b=r7UBpQAInHVcSVUqgoXZrvcg7JxTRLff1bKYyy4yCl0xHsZbDPQ8Kzmpol9Cx5zMb8Gr0w6zi80NX09Qr4EgzlNi0G8ZgOpRezbojafOS2+JYb6tI/bm+to0qN4zWFftMloMwUM8VeiJaHRWwWoGb3PvZigxK20HiXtclSdcXvY=
+	t=1723042886; cv=none; b=ft2gpEvniT6igGza/+mbk3lo8HSRXb5RwEKGk9KaDbOkK5t0oESWv8rDxo0I4fidarxMgEyzbML+kHRGqQgr3H5AauWL78wfyIkt7pj8aOHfVQ7Qrtdr/p8qjEi+DCHUpgZ1ts4scW43ZuPNrzoPijH/jd4vlHbT4wKgVarbQo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042883; c=relaxed/simple;
-	bh=ilKViCGd1vRllfYC5EXB0kk9MaQHs6edmoMEGua7dNk=;
+	s=arc-20240116; t=1723042886; c=relaxed/simple;
+	bh=yaaibFyCEvYMpNHPT5yrzcFMTWMn9977OUlzVUTlyXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AOGsCmlPVkXdE70DOBvAvt6kYeSVm0OlAg4T36/vQCsIdGO5xFeeezSLt+VtXh2kgjdtfgUVeNR4bNf5HzwR+txuuJ4dZb+vdBTWrv3F7H5CmMXlVCbFttc57wmxnOf0AJet653ZxoQEp6SXLlrsa2/oUIWe5VP82jZF0pltSIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q9kjetMb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=f9nOQrt/6W+8lL6i6r6s3TzKPgJXjoZCzGcX6tYwcrqK6pvpDoWyjrEqZGYK9Dy1oWnYwKSe4ZlNQ/qnPcy//MCr4b15aE4NJfc/mQF0cH3BroOY4k9f3AC9aVCfp9P9H+J25NzZTsLXE1M0j+IDHGtwN5FTIiVoheXrr8EFtpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/5o9rYn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q9kjetMb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9FD0C32781;
-	Wed,  7 Aug 2024 15:01:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/5o9rYn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D66C32781;
+	Wed,  7 Aug 2024 15:01:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042883;
-	bh=ilKViCGd1vRllfYC5EXB0kk9MaQHs6edmoMEGua7dNk=;
+	s=korg; t=1723042885;
+	bh=yaaibFyCEvYMpNHPT5yrzcFMTWMn9977OUlzVUTlyXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q9kjetMb1MP7EQWhAFNQumIUn7pT2cG5W6wCKkP5UH1iFNKCMNyfigpxx7yyQmoD3
-	 9pLl1ZIH/DInp/eIe/Gd2MW2P+8PBNYyyIbH+GwcbdtOhi+K2WmJ9OkMTEtsT9Sl2S
-	 8G9hPhijNmnNR3Q5BBaY98BYZ7lPbVGH2arCV5AU=
+	b=i/5o9rYn0n+yjX1vqxM/v72MiKLJrFGBSUggo5iAPCy/aKrZ0Jm6DcnzLfGDzIQJR
+	 Af47G4kDqn5WRYZXX/wGy1EzmdOWdFBsspgEbvhdacUORugITwTkgfCeFFR1jcVrM2
+	 rE2IjoTrVnM2G+MK9eccxL8QF7XWxXGvnEZ/P4QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Ahmad Yasin <ahmad.yasin@intel.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 011/123] perf/x86/intel: Switch to new Intel CPU model defines
-Date: Wed,  7 Aug 2024 16:58:50 +0200
-Message-ID: <20240807150021.192837450@linuxfoundation.org>
+Subject: [PATCH 6.10 012/123] perf/x86/intel: Add a distinct name for Granite Rapids
+Date: Wed,  7 Aug 2024 16:58:51 +0200
+Message-ID: <20240807150021.220650648@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -45,355 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tony Luck <tony.luck@intel.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit d142df13f3574237688c7a20e0019cccc7ae39eb ]
+[ Upstream commit fa0c1c9d283b37fdb7fc1dcccbb88fc8f48a4aa4 ]
 
-New CPU #defines encode vendor and family as well as model.
+Currently, the Sapphire Rapids and Granite Rapids share the same PMU
+name, sapphire_rapids. Because from the kernel’s perspective, GNR is
+similar to SPR. The only key difference is that they support different
+extra MSRs. The code path and the PMU name are shared.
 
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20240520224620.9480-32-tony.luck%40intel.com
-Stable-dep-of: fa0c1c9d283b ("perf/x86/intel: Add a distinct name for Granite Rapids")
+However, from end users' perspective, they are quite different. Besides
+the extra MSRs, GNR has a newer PEBS format, supports Retire Latency,
+supports new CPUID enumeration architecture, doesn't required the
+load-latency AUX event, has additional TMA Level 1 Architectural Events,
+etc. The differences can be enumerated by CPUID or the PERF_CAPABILITIES
+MSR. They weren't reflected in the model-specific kernel setup.
+But it is worth to have a distinct PMU name for GNR.
+
+Fixes: a6742cb90b56 ("perf/x86/intel: Fix the FRONTEND encoding on GNR and MTL")
+Suggested-by: Ahmad Yasin <ahmad.yasin@intel.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lkml.kernel.org/r/20240708193336.1192217-3-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 148 +++++++++++++++++------------------
- 1 file changed, 74 insertions(+), 74 deletions(-)
+ arch/x86/events/intel/core.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 38c1b1f1deaad..7f7f1c3bb1881 100644
+index 7f7f1c3bb1881..101a21fe9c213 100644
 --- a/arch/x86/events/intel/core.c
 +++ b/arch/x86/events/intel/core.c
-@@ -4698,8 +4698,8 @@ static void intel_pmu_check_extra_regs(struct extra_reg *extra_regs);
- static inline bool intel_pmu_broken_perf_cap(void)
- {
- 	/* The Perf Metric (Bit 15) is always cleared */
--	if ((boot_cpu_data.x86_model == INTEL_FAM6_METEORLAKE) ||
--	    (boot_cpu_data.x86_model == INTEL_FAM6_METEORLAKE_L))
-+	if (boot_cpu_data.x86_vfm == INTEL_METEORLAKE ||
-+	    boot_cpu_data.x86_vfm == INTEL_METEORLAKE_L)
- 		return true;
- 
- 	return false;
-@@ -6238,19 +6238,19 @@ __init int intel_pmu_init(void)
- 	/*
- 	 * Install the hw-cache-events table:
- 	 */
--	switch (boot_cpu_data.x86_model) {
--	case INTEL_FAM6_CORE_YONAH:
-+	switch (boot_cpu_data.x86_vfm) {
-+	case INTEL_CORE_YONAH:
- 		pr_cont("Core events, ");
- 		name = "core";
- 		break;
- 
--	case INTEL_FAM6_CORE2_MEROM:
-+	case INTEL_CORE2_MEROM:
- 		x86_add_quirk(intel_clovertown_quirk);
- 		fallthrough;
- 
--	case INTEL_FAM6_CORE2_MEROM_L:
--	case INTEL_FAM6_CORE2_PENRYN:
--	case INTEL_FAM6_CORE2_DUNNINGTON:
-+	case INTEL_CORE2_MEROM_L:
-+	case INTEL_CORE2_PENRYN:
-+	case INTEL_CORE2_DUNNINGTON:
- 		memcpy(hw_cache_event_ids, core2_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
- 
-@@ -6262,9 +6262,9 @@ __init int intel_pmu_init(void)
- 		name = "core2";
- 		break;
- 
--	case INTEL_FAM6_NEHALEM:
--	case INTEL_FAM6_NEHALEM_EP:
--	case INTEL_FAM6_NEHALEM_EX:
-+	case INTEL_NEHALEM:
-+	case INTEL_NEHALEM_EP:
-+	case INTEL_NEHALEM_EX:
- 		memcpy(hw_cache_event_ids, nehalem_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs, nehalem_hw_cache_extra_regs,
-@@ -6296,11 +6296,11 @@ __init int intel_pmu_init(void)
- 		name = "nehalem";
- 		break;
- 
--	case INTEL_FAM6_ATOM_BONNELL:
--	case INTEL_FAM6_ATOM_BONNELL_MID:
--	case INTEL_FAM6_ATOM_SALTWELL:
--	case INTEL_FAM6_ATOM_SALTWELL_MID:
--	case INTEL_FAM6_ATOM_SALTWELL_TABLET:
-+	case INTEL_ATOM_BONNELL:
-+	case INTEL_ATOM_BONNELL_MID:
-+	case INTEL_ATOM_SALTWELL:
-+	case INTEL_ATOM_SALTWELL_MID:
-+	case INTEL_ATOM_SALTWELL_TABLET:
- 		memcpy(hw_cache_event_ids, atom_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
- 
-@@ -6313,11 +6313,11 @@ __init int intel_pmu_init(void)
- 		name = "bonnell";
- 		break;
- 
--	case INTEL_FAM6_ATOM_SILVERMONT:
--	case INTEL_FAM6_ATOM_SILVERMONT_D:
--	case INTEL_FAM6_ATOM_SILVERMONT_MID:
--	case INTEL_FAM6_ATOM_AIRMONT:
--	case INTEL_FAM6_ATOM_AIRMONT_MID:
-+	case INTEL_ATOM_SILVERMONT:
-+	case INTEL_ATOM_SILVERMONT_D:
-+	case INTEL_ATOM_SILVERMONT_MID:
-+	case INTEL_ATOM_AIRMONT:
-+	case INTEL_ATOM_AIRMONT_MID:
- 		memcpy(hw_cache_event_ids, slm_hw_cache_event_ids,
- 			sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs, slm_hw_cache_extra_regs,
-@@ -6335,8 +6335,8 @@ __init int intel_pmu_init(void)
- 		name = "silvermont";
- 		break;
- 
--	case INTEL_FAM6_ATOM_GOLDMONT:
--	case INTEL_FAM6_ATOM_GOLDMONT_D:
-+	case INTEL_ATOM_GOLDMONT:
-+	case INTEL_ATOM_GOLDMONT_D:
- 		memcpy(hw_cache_event_ids, glm_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs, glm_hw_cache_extra_regs,
-@@ -6362,7 +6362,7 @@ __init int intel_pmu_init(void)
- 		name = "goldmont";
- 		break;
- 
--	case INTEL_FAM6_ATOM_GOLDMONT_PLUS:
-+	case INTEL_ATOM_GOLDMONT_PLUS:
- 		memcpy(hw_cache_event_ids, glp_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs, glp_hw_cache_extra_regs,
-@@ -6391,9 +6391,9 @@ __init int intel_pmu_init(void)
- 		name = "goldmont_plus";
- 		break;
- 
--	case INTEL_FAM6_ATOM_TREMONT_D:
--	case INTEL_FAM6_ATOM_TREMONT:
--	case INTEL_FAM6_ATOM_TREMONT_L:
-+	case INTEL_ATOM_TREMONT_D:
-+	case INTEL_ATOM_TREMONT:
-+	case INTEL_ATOM_TREMONT_L:
- 		x86_pmu.late_ack = true;
- 		memcpy(hw_cache_event_ids, glp_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
-@@ -6420,7 +6420,7 @@ __init int intel_pmu_init(void)
- 		name = "Tremont";
- 		break;
- 
--	case INTEL_FAM6_ATOM_GRACEMONT:
-+	case INTEL_ATOM_GRACEMONT:
- 		intel_pmu_init_grt(NULL);
- 		intel_pmu_pebs_data_source_grt();
- 		x86_pmu.pebs_latency_data = adl_latency_data_small;
-@@ -6432,8 +6432,8 @@ __init int intel_pmu_init(void)
- 		name = "gracemont";
- 		break;
- 
--	case INTEL_FAM6_ATOM_CRESTMONT:
--	case INTEL_FAM6_ATOM_CRESTMONT_X:
-+	case INTEL_ATOM_CRESTMONT:
-+	case INTEL_ATOM_CRESTMONT_X:
- 		intel_pmu_init_grt(NULL);
- 		x86_pmu.extra_regs = intel_cmt_extra_regs;
- 		intel_pmu_pebs_data_source_cmt();
-@@ -6446,9 +6446,9 @@ __init int intel_pmu_init(void)
- 		name = "crestmont";
- 		break;
- 
--	case INTEL_FAM6_WESTMERE:
--	case INTEL_FAM6_WESTMERE_EP:
--	case INTEL_FAM6_WESTMERE_EX:
-+	case INTEL_WESTMERE:
-+	case INTEL_WESTMERE_EP:
-+	case INTEL_WESTMERE_EX:
- 		memcpy(hw_cache_event_ids, westmere_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs, nehalem_hw_cache_extra_regs,
-@@ -6477,8 +6477,8 @@ __init int intel_pmu_init(void)
- 		name = "westmere";
- 		break;
- 
--	case INTEL_FAM6_SANDYBRIDGE:
--	case INTEL_FAM6_SANDYBRIDGE_X:
-+	case INTEL_SANDYBRIDGE:
-+	case INTEL_SANDYBRIDGE_X:
- 		x86_add_quirk(intel_sandybridge_quirk);
- 		x86_add_quirk(intel_ht_bug);
- 		memcpy(hw_cache_event_ids, snb_hw_cache_event_ids,
-@@ -6491,7 +6491,7 @@ __init int intel_pmu_init(void)
- 		x86_pmu.event_constraints = intel_snb_event_constraints;
- 		x86_pmu.pebs_constraints = intel_snb_pebs_event_constraints;
- 		x86_pmu.pebs_aliases = intel_pebs_aliases_snb;
--		if (boot_cpu_data.x86_model == INTEL_FAM6_SANDYBRIDGE_X)
-+		if (boot_cpu_data.x86_vfm == INTEL_SANDYBRIDGE_X)
- 			x86_pmu.extra_regs = intel_snbep_extra_regs;
- 		else
- 			x86_pmu.extra_regs = intel_snb_extra_regs;
-@@ -6517,8 +6517,8 @@ __init int intel_pmu_init(void)
- 		name = "sandybridge";
- 		break;
- 
--	case INTEL_FAM6_IVYBRIDGE:
--	case INTEL_FAM6_IVYBRIDGE_X:
-+	case INTEL_IVYBRIDGE:
-+	case INTEL_IVYBRIDGE_X:
- 		x86_add_quirk(intel_ht_bug);
- 		memcpy(hw_cache_event_ids, snb_hw_cache_event_ids,
- 		       sizeof(hw_cache_event_ids));
-@@ -6534,7 +6534,7 @@ __init int intel_pmu_init(void)
- 		x86_pmu.pebs_constraints = intel_ivb_pebs_event_constraints;
- 		x86_pmu.pebs_aliases = intel_pebs_aliases_ivb;
- 		x86_pmu.pebs_prec_dist = true;
--		if (boot_cpu_data.x86_model == INTEL_FAM6_IVYBRIDGE_X)
-+		if (boot_cpu_data.x86_vfm == INTEL_IVYBRIDGE_X)
- 			x86_pmu.extra_regs = intel_snbep_extra_regs;
- 		else
- 			x86_pmu.extra_regs = intel_snb_extra_regs;
-@@ -6556,10 +6556,10 @@ __init int intel_pmu_init(void)
- 		break;
- 
- 
--	case INTEL_FAM6_HASWELL:
--	case INTEL_FAM6_HASWELL_X:
--	case INTEL_FAM6_HASWELL_L:
--	case INTEL_FAM6_HASWELL_G:
-+	case INTEL_HASWELL:
-+	case INTEL_HASWELL_X:
-+	case INTEL_HASWELL_L:
-+	case INTEL_HASWELL_G:
- 		x86_add_quirk(intel_ht_bug);
- 		x86_add_quirk(intel_pebs_isolation_quirk);
- 		x86_pmu.late_ack = true;
-@@ -6589,10 +6589,10 @@ __init int intel_pmu_init(void)
- 		name = "haswell";
- 		break;
- 
--	case INTEL_FAM6_BROADWELL:
--	case INTEL_FAM6_BROADWELL_D:
--	case INTEL_FAM6_BROADWELL_G:
--	case INTEL_FAM6_BROADWELL_X:
-+	case INTEL_BROADWELL:
-+	case INTEL_BROADWELL_D:
-+	case INTEL_BROADWELL_G:
-+	case INTEL_BROADWELL_X:
- 		x86_add_quirk(intel_pebs_isolation_quirk);
- 		x86_pmu.late_ack = true;
- 		memcpy(hw_cache_event_ids, hsw_hw_cache_event_ids, sizeof(hw_cache_event_ids));
-@@ -6631,8 +6631,8 @@ __init int intel_pmu_init(void)
- 		name = "broadwell";
- 		break;
- 
--	case INTEL_FAM6_XEON_PHI_KNL:
--	case INTEL_FAM6_XEON_PHI_KNM:
-+	case INTEL_XEON_PHI_KNL:
-+	case INTEL_XEON_PHI_KNM:
- 		memcpy(hw_cache_event_ids,
- 		       slm_hw_cache_event_ids, sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs,
-@@ -6651,15 +6651,15 @@ __init int intel_pmu_init(void)
- 		name = "knights-landing";
- 		break;
- 
--	case INTEL_FAM6_SKYLAKE_X:
-+	case INTEL_SKYLAKE_X:
- 		pmem = true;
- 		fallthrough;
--	case INTEL_FAM6_SKYLAKE_L:
--	case INTEL_FAM6_SKYLAKE:
--	case INTEL_FAM6_KABYLAKE_L:
--	case INTEL_FAM6_KABYLAKE:
--	case INTEL_FAM6_COMETLAKE_L:
--	case INTEL_FAM6_COMETLAKE:
-+	case INTEL_SKYLAKE_L:
-+	case INTEL_SKYLAKE:
-+	case INTEL_KABYLAKE_L:
-+	case INTEL_KABYLAKE:
-+	case INTEL_COMETLAKE_L:
-+	case INTEL_COMETLAKE:
- 		x86_add_quirk(intel_pebs_isolation_quirk);
- 		x86_pmu.late_ack = true;
- 		memcpy(hw_cache_event_ids, skl_hw_cache_event_ids, sizeof(hw_cache_event_ids));
-@@ -6708,16 +6708,16 @@ __init int intel_pmu_init(void)
- 		name = "skylake";
- 		break;
- 
--	case INTEL_FAM6_ICELAKE_X:
--	case INTEL_FAM6_ICELAKE_D:
-+	case INTEL_ICELAKE_X:
-+	case INTEL_ICELAKE_D:
- 		x86_pmu.pebs_ept = 1;
- 		pmem = true;
- 		fallthrough;
--	case INTEL_FAM6_ICELAKE_L:
--	case INTEL_FAM6_ICELAKE:
--	case INTEL_FAM6_TIGERLAKE_L:
--	case INTEL_FAM6_TIGERLAKE:
--	case INTEL_FAM6_ROCKETLAKE:
-+	case INTEL_ICELAKE_L:
-+	case INTEL_ICELAKE:
-+	case INTEL_TIGERLAKE_L:
-+	case INTEL_TIGERLAKE:
-+	case INTEL_ROCKETLAKE:
- 		x86_pmu.late_ack = true;
- 		memcpy(hw_cache_event_ids, skl_hw_cache_event_ids, sizeof(hw_cache_event_ids));
- 		memcpy(hw_cache_extra_regs, skl_hw_cache_extra_regs, sizeof(hw_cache_extra_regs));
-@@ -6752,13 +6752,13 @@ __init int intel_pmu_init(void)
- 		name = "icelake";
- 		break;
- 
--	case INTEL_FAM6_SAPPHIRERAPIDS_X:
--	case INTEL_FAM6_EMERALDRAPIDS_X:
-+	case INTEL_SAPPHIRERAPIDS_X:
-+	case INTEL_EMERALDRAPIDS_X:
+@@ -6756,12 +6756,18 @@ __init int intel_pmu_init(void)
+ 	case INTEL_EMERALDRAPIDS_X:
  		x86_pmu.flags |= PMU_FL_MEM_LOADS_AUX;
  		x86_pmu.extra_regs = intel_glc_extra_regs;
- 		fallthrough;
--	case INTEL_FAM6_GRANITERAPIDS_X:
--	case INTEL_FAM6_GRANITERAPIDS_D:
-+	case INTEL_GRANITERAPIDS_X:
-+	case INTEL_GRANITERAPIDS_D:
+-		fallthrough;
++		pr_cont("Sapphire Rapids events, ");
++		name = "sapphire_rapids";
++		goto glc_common;
++
+ 	case INTEL_GRANITERAPIDS_X:
+ 	case INTEL_GRANITERAPIDS_D:
++		x86_pmu.extra_regs = intel_rwc_extra_regs;
++		pr_cont("Granite Rapids events, ");
++		name = "granite_rapids";
++
++	glc_common:
  		intel_pmu_init_glc(NULL);
- 		if (!x86_pmu.extra_regs)
- 			x86_pmu.extra_regs = intel_rwc_extra_regs;
-@@ -6776,11 +6776,11 @@ __init int intel_pmu_init(void)
- 		name = "sapphire_rapids";
+-		if (!x86_pmu.extra_regs)
+-			x86_pmu.extra_regs = intel_rwc_extra_regs;
+ 		x86_pmu.pebs_ept = 1;
+ 		x86_pmu.hw_config = hsw_hw_config;
+ 		x86_pmu.get_event_constraints = glc_get_event_constraints;
+@@ -6772,8 +6778,6 @@ __init int intel_pmu_init(void)
+ 		td_attr = glc_td_events_attrs;
+ 		tsx_attr = glc_tsx_events_attrs;
+ 		intel_pmu_pebs_data_source_skl(true);
+-		pr_cont("Sapphire Rapids events, ");
+-		name = "sapphire_rapids";
  		break;
  
--	case INTEL_FAM6_ALDERLAKE:
--	case INTEL_FAM6_ALDERLAKE_L:
--	case INTEL_FAM6_RAPTORLAKE:
--	case INTEL_FAM6_RAPTORLAKE_P:
--	case INTEL_FAM6_RAPTORLAKE_S:
-+	case INTEL_ALDERLAKE:
-+	case INTEL_ALDERLAKE_L:
-+	case INTEL_RAPTORLAKE:
-+	case INTEL_RAPTORLAKE_P:
-+	case INTEL_RAPTORLAKE_S:
- 		/*
- 		 * Alder Lake has 2 types of CPU, core and atom.
- 		 *
-@@ -6838,8 +6838,8 @@ __init int intel_pmu_init(void)
- 		name = "alderlake_hybrid";
- 		break;
- 
--	case INTEL_FAM6_METEORLAKE:
--	case INTEL_FAM6_METEORLAKE_L:
-+	case INTEL_METEORLAKE:
-+	case INTEL_METEORLAKE_L:
- 		intel_pmu_init_hybrid(hybrid_big_small);
- 
- 		x86_pmu.pebs_latency_data = mtl_latency_data_small;
+ 	case INTEL_ALDERLAKE:
 -- 
 2.43.0
 
