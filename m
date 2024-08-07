@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8332284A2F;
-	Wed,  7 Aug 2024 15:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF4078281;
+	Wed,  7 Aug 2024 15:08:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043298; cv=none; b=H4L42cvsCvt0RJusLASfCnGikZ+7dgvL0ajaQ6+WMQGBUMiJq+M8SCHyXEcKqlslvfklgJzDriBoC6Hv1/ivwJ1uUyiR6NIJviV+uVNC+hvDm5OeI80Hu0EqcDwQt5VAWzZBcTGB4OuCiSvKlGlDL3Hjgq1zoG7L01l8ZRif9pU=
+	t=1723043301; cv=none; b=f/JQHROwePudsqSDyt3yb6lJ3ZF3obe95VX+rRchsT3qD1XA7cSrp+o+fxSvev+O2dEDEVA/HJgHgAjgixyT98MJpJpU8PYKxxxcMsrhkhCzhj78qBRAYbyzWXryp7PlgL6IRZLIZGqvxpoYg5UIaaK89/iwP05AsSb2ZdKEhsg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043298; c=relaxed/simple;
-	bh=WazWV7rKnaqt2C8pPF4K9kNk7XxTsgLnykVix/veTdI=;
+	s=arc-20240116; t=1723043301; c=relaxed/simple;
+	bh=OnkYzka1VVejeJ9Xe/b0Y1FEf9IDVXR5hH9Zub9q7jA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HDWBf9B037GSa01womiOSbqvcx/YIEBzxzruEagm4LuD8gvsPms17z9WuOK1YC3onUFeOGNCGOQWaHC7FfStiupWiEMhKGQsWcBQKWMg5xubPpnUdaXRgFKuYCdcXzApH6hKTtcSfea9MzEKTeMXLcjSm2/P6yAYSJs+i7guMJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GMJvEF+Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OgUTsrS0OD8PJQGQDuMmR9wvguZy3Ze3M+w2g5TGMDiySCo9IJnWE62O6L3sXcQOoZVvUTSum4B/Q0qX5RhzchQDP6x1EXEIib+BFFT8ySoT3Q7iPEsKjC3ugJ+fyNR+0X6clriY9hbfDki2zHXncKSsgw38xI4YNJSEXRwV5Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0l7h6l1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GMJvEF+Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14901C32781;
-	Wed,  7 Aug 2024 15:08:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0l7h6l1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57A4C32781;
+	Wed,  7 Aug 2024 15:08:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043298;
-	bh=WazWV7rKnaqt2C8pPF4K9kNk7XxTsgLnykVix/veTdI=;
+	s=korg; t=1723043301;
+	bh=OnkYzka1VVejeJ9Xe/b0Y1FEf9IDVXR5hH9Zub9q7jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMJvEF+Q4mU7sVaDZucOt/F0P+XPd15jLav83u2qNMX2vbVoynPfwR59uRNef/Tb6
-	 gRkuW2I7vk59i2PTaBuJUFzm3/uWUTY4WNc332H2maoGIjHU/7v2V3+1WbO2m6eVbq
-	 7rfk4YfvgGGmBmML6+dz9pGzE2uRQKHUl4vvtaIM=
+	b=W0l7h6l1nIApFuGoVry5aHqctPKgAwgGdIxysyZLEat1YfELKYbaXoMwvn6w/fR47
+	 617YLeGsPZ+P03qs+2oVaZjC6pyFvxW2INi+FqMa+jl8yvAzJ4zbFj2T+5lReHpkUW
+	 DDsMG5+plMaZ8irXwkb+T9jtdjw4w7ZeV2Yv3OXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zhijian <lizhijian@fujitsu.com>,
-	Yao Xingtao <yaoxt.fnst@fujitsu.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	David Hildenbrand <david@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/121] mm/page_alloc: fix pcp->count race between drain_pages_zone() vs __rmqueue_pcplist()
-Date: Wed,  7 Aug 2024 16:59:31 +0200
-Message-ID: <20240807150020.692698885@linuxfoundation.org>
+Subject: [PATCH 6.6 040/121] f2fs: fix to avoid use SSR allocate when do defragment
+Date: Wed,  7 Aug 2024 16:59:32 +0200
+Message-ID: <20240807150020.723217992@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -54,96 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Zhijian <lizhijian@fujitsu.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 66eca1021a42856d6af2a9802c99e160278aed91 ]
+[ Upstream commit 21327a042dd94bc73181d7300e688699cb1f467e ]
 
-It's expected that no page should be left in pcp_list after calling
-zone_pcp_disable() in offline_pages().  Previously, it's observed that
-offline_pages() gets stuck [1] due to some pages remaining in pcp_list.
+SSR allocate mode will be used when doing file defragment
+if ATGC is working at the same time, that is because
+set_page_private_gcing may make CURSEG_ALL_DATA_ATGC segment
+type got in f2fs_allocate_data_block when defragment page
+is writeback, which may cause file fragmentation is worse.
 
-Cause:
-There is a race condition between drain_pages_zone() and __rmqueue_pcplist()
-involving the pcp->count variable. See below scenario:
+A file with 2 fragmentations is changed as following after defragment:
 
-         CPU0                              CPU1
-    ----------------                    ---------------
-                                      spin_lock(&pcp->lock);
-                                      __rmqueue_pcplist() {
-zone_pcp_disable() {
-                                        /* list is empty */
-                                        if (list_empty(list)) {
-                                          /* add pages to pcp_list */
-                                          alloced = rmqueue_bulk()
-  mutex_lock(&pcp_batch_high_lock)
-  ...
-  __drain_all_pages() {
-    drain_pages_zone() {
-      /* read pcp->count, it's 0 here */
-      count = READ_ONCE(pcp->count)
-      /* 0 means nothing to drain */
-                                          /* update pcp->count */
-                                          pcp->count += alloced << order;
-      ...
-                                      ...
-                                      spin_unlock(&pcp->lock);
+----------------file info-------------------
+sensorsdata :
+--------------------------------------------
+dev       [254:48]
+ino       [0x    3029 : 12329]
+mode      [0x    81b0 : 33200]
+nlink     [0x       1 : 1]
+uid       [0x    27e6 : 10214]
+gid       [0x    27e6 : 10214]
+size      [0x  242000 : 2367488]
+blksize   [0x    1000 : 4096]
+blocks    [0x    1210 : 4624]
+--------------------------------------------
 
-In this case, after calling zone_pcp_disable() though, there are still some
-pages in pcp_list. And these pages in pcp_list are neither movable nor
-isolated, offline_pages() gets stuck as a result.
+file_pos   start_blk     end_blk        blks
+       0    11361121    11361207          87
+  356352    11361215    11361216           2
+  364544    11361218    11361218           1
+  368640    11361220    11361221           2
+  376832    11361224    11361225           2
+  385024    11361227    11361238          12
+  434176    11361240    11361252          13
+  487424    11361254    11361254           1
+  491520    11361271    11361279           9
+  528384     3681794     3681795           2
+  536576     3681797     3681797           1
+  540672     3681799     3681799           1
+  544768     3681803     3681803           1
+  548864     3681805     3681805           1
+  552960     3681807     3681807           1
+  557056     3681809     3681809           1
 
-Solution:
-Expand the scope of the pcp->lock to also protect pcp->count in
-drain_pages_zone(), to ensure no pages are left in the pcp list after
-zone_pcp_disable()
-
-[1] https://lore.kernel.org/linux-mm/6a07125f-e720-404c-b2f9-e55f3f166e85@fujitsu.com/
-
-Link: https://lkml.kernel.org/r/20240723064428.1179519-1-lizhijian@fujitsu.com
-Fixes: 4b23a68f9536 ("mm/page_alloc: protect PCP lists with a spinlock")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-Reported-by: Yao Xingtao <yaoxt.fnst@fujitsu.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 8cb1f4080dd9 ("f2fs: assign CURSEG_ALL_DATA_ATGC if blkaddr is valid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/page_alloc.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ fs/f2fs/segment.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/mm/page_alloc.c b/mm/page_alloc.c
-index 2c40cf4f1eb2d..39bdbfb5313fb 100644
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -2186,16 +2186,20 @@ void drain_zone_pages(struct zone *zone, struct per_cpu_pages *pcp)
- static void drain_pages_zone(unsigned int cpu, struct zone *zone)
- {
- 	struct per_cpu_pages *pcp = per_cpu_ptr(zone->per_cpu_pageset, cpu);
--	int count = READ_ONCE(pcp->count);
--
--	while (count) {
--		int to_drain = min(count, pcp->batch << CONFIG_PCP_BATCH_SCALE_MAX);
--		count -= to_drain;
-+	int count;
- 
-+	do {
- 		spin_lock(&pcp->lock);
--		free_pcppages_bulk(zone, to_drain, pcp, 0);
-+		count = pcp->count;
-+		if (count) {
-+			int to_drain = min(count,
-+				pcp->batch << CONFIG_PCP_BATCH_SCALE_MAX);
-+
-+			free_pcppages_bulk(zone, to_drain, pcp, 0);
-+			count -= to_drain;
-+		}
- 		spin_unlock(&pcp->lock);
--	}
-+	} while (count);
- }
- 
- /*
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 22080606b8769..6d6c47df36ec0 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3350,7 +3350,8 @@ static int __get_segment_type_6(struct f2fs_io_info *fio)
+ 		if (page_private_gcing(fio->page)) {
+ 			if (fio->sbi->am.atgc_enabled &&
+ 				(fio->io_type == FS_DATA_IO) &&
+-				(fio->sbi->gc_mode != GC_URGENT_HIGH))
++				(fio->sbi->gc_mode != GC_URGENT_HIGH) &&
++				!is_inode_flag_set(inode, FI_OPU_WRITE))
+ 				return CURSEG_ALL_DATA_ATGC;
+ 			else
+ 				return CURSEG_COLD_DATA;
 -- 
 2.43.0
 
