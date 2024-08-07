@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B5AE7E0E9;
-	Wed,  7 Aug 2024 15:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F597374CC;
+	Wed,  7 Aug 2024 15:14:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043648; cv=none; b=HHBZg5b7BNJGzYl+1x75vWsdn2qVwvBL9mFBg16IVE2xB3EMbNzVJI6nJIVEUxfQr43it3B4dj/W9AYXYGgfXbdA6Oy6XE9IC6bxUMCobNh0Nanm15ArL8QpxBb7aDU4AV5PjK7TU3CyPvC5I12thSdh5justFF3o160KiMnQQI=
+	t=1723043650; cv=none; b=u1zK8/BU711FoijwnNpnKB0l1otdG7vfKeZXEEYLrn0T2gRuimegrCDdi/2WZh/yvExUikVhtyPy7fLDi0Gvn8BYXGNlAxqedywuzD+239EP7ZEo9To+fuegok4AiRX8eav4eWEk9FRJZDWqVX7ZyUylAL9/bDAoqGFzE+fOUgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043648; c=relaxed/simple;
-	bh=j5SugisAFESG7NvIbxjwiewBvNsWGffEU8v1vJqLkZo=;
+	s=arc-20240116; t=1723043650; c=relaxed/simple;
+	bh=F7OpvfJQPrbGIvuc5aiPbMz/6WUGgZlEdpE5lBh+vO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijy4QIOOYZ6XcqyaNn3TcQDAr/gCvKFkthyC7n3rR6k0VcOxSmYqoOaY14jotMpt+INzzyLgYfzro7Q4s4qa5QuJMSiCWudfCwVXbL+GCtj5v4mNvWr9mZXF31i2b3RE1tS3RaJDH/CqDA9mz1apArSMwS0Us5sIMQvG4VLBITA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S+8MwO1V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y1zSbBBEFCj/mPHRNOyVWJXTOjXkqLWKliJU0PUVpMutAQF9EAGXT9p4rFw71MpExKOKpOQEH81c4tZzTu2OeurDDxN7YtC9PflHa6411uy7bdD4txyzZ05AuDr6mG/jBydKI2wr70JEP091I0QSwosCW2oiKE9LPVMwFRX8GjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rJVLC+e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S+8MwO1V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB59C32781;
-	Wed,  7 Aug 2024 15:14:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rJVLC+e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21211C32781;
+	Wed,  7 Aug 2024 15:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043647;
-	bh=j5SugisAFESG7NvIbxjwiewBvNsWGffEU8v1vJqLkZo=;
+	s=korg; t=1723043650;
+	bh=F7OpvfJQPrbGIvuc5aiPbMz/6WUGgZlEdpE5lBh+vO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+8MwO1VuKK3w8ez/WHbAXSnrpNjXDjM2wEd/bFquBKYKStT/DeJMDLthcjsju4/t
-	 gVt8utMjcrhMpI19yIkNF/iPYJvw47J/rXXzSS+MqppYRIpxQ+MO5JOKSSP7eERfc7
-	 nNmsMI9CckPhBMa/H6HtPzrPiF2T3t6cCoQ2dxQI=
+	b=2rJVLC+e66bCHRRnho0UcNyCL/yrtBTuraPtWwbh9V5dgesZ4j3JLMUb8NwhSvUXU
+	 ctE9VIA/6qR5AFt5wzTYOf/Yy2Z6a+Vltfif2LznE9b+L7M0/xoc3C+Fj7DeDn+QgN
+	 L1i3ZtPH2HRphH6aORjX5mNI9uFBcLZfDAav66+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Andy Chiu <andy.chiu@sifive.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 47/86] Bluetooth: hci_sync: Fix suspending with wrong filter policy
-Date: Wed,  7 Aug 2024 17:00:26 +0200
-Message-ID: <20240807150040.796643897@linuxfoundation.org>
+Subject: [PATCH 6.1 48/86] net: axienet: start napi before enabling Rx/Tx
+Date: Wed,  7 Aug 2024 17:00:27 +0200
+Message-ID: <20240807150040.825802611@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -50,57 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Andy Chiu <andy.chiu@sifive.com>
 
-[ Upstream commit 96b82af36efaa1787946e021aa3dc5410c05beeb ]
+[ Upstream commit 799a829507506924add8a7620493adc1c3cfda30 ]
 
-When suspending the scan filter policy cannot be 0x00 (no acceptlist)
-since that means the host has to process every advertisement report
-waking up the system, so this attempts to check if hdev is marked as
-suspended and if the resulting filter policy would be 0x00 (no
-acceptlist) then skip passive scanning if thre no devices in the
-acceptlist otherwise reset the filter policy to 0x01 so the acceptlist
-is used since the devices programmed there can still wakeup be system.
+softirq may get lost if an Rx interrupt comes before we call
+napi_enable. Move napi_enable in front of axienet_setoptions(), which
+turns on the device, to address the issue.
 
-Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg06160.html
+Fixes: cc37610caaf8 ("net: axienet: implement NAPI and GRO receive")
+Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 57302021b7ebb..320fc1e6dff2a 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -2837,6 +2837,27 @@ static int hci_passive_scan_sync(struct hci_dev *hdev)
- 	 */
- 	filter_policy = hci_update_accept_list_sync(hdev);
+diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+index 5ea9dc251dd9a..ff777735be66b 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
++++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
+@@ -1825,9 +1825,9 @@ static void axienet_dma_err_handler(struct work_struct *work)
+ 			   ~(XAE_OPTION_TXEN | XAE_OPTION_RXEN));
+ 	axienet_set_mac_address(ndev, NULL);
+ 	axienet_set_multicast_list(ndev);
+-	axienet_setoptions(ndev, lp->options);
+ 	napi_enable(&lp->napi_rx);
+ 	napi_enable(&lp->napi_tx);
++	axienet_setoptions(ndev, lp->options);
+ }
  
-+	/* If suspended and filter_policy set to 0x00 (no acceptlist) then
-+	 * passive scanning cannot be started since that would require the host
-+	 * to be woken up to process the reports.
-+	 */
-+	if (hdev->suspended && !filter_policy) {
-+		/* Check if accept list is empty then there is no need to scan
-+		 * while suspended.
-+		 */
-+		if (list_empty(&hdev->le_accept_list))
-+			return 0;
-+
-+		/* If there are devices is the accept_list that means some
-+		 * devices could not be programmed which in non-suspended case
-+		 * means filter_policy needs to be set to 0x00 so the host needs
-+		 * to filter, but since this is treating suspended case we
-+		 * can ignore device needing host to filter to allow devices in
-+		 * the acceptlist to be able to wakeup the system.
-+		 */
-+		filter_policy = 0x01;
-+	}
-+
- 	/* When the controller is using random resolvable addresses and
- 	 * with that having LE privacy enabled, then controllers with
- 	 * Extended Scanner Filter Policies support can now enable support
+ /**
 -- 
 2.43.0
 
