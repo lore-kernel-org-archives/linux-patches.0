@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053033EA9A;
-	Wed,  7 Aug 2024 15:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BC66F2F7;
+	Wed,  7 Aug 2024 15:02:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042949; cv=none; b=qOf2wGKl2CPSp1bGdtDrhu4fEi7zxKV2qb7T3XXTKRk/U+J7+ioK53YB403KxP/NgXkvur/eTuZZ/eKxpJbR+iM6s1jI9hVWo4KSuv84CMKkmc8vkhrvQGIElfSnbRZ/F3PgqovNdTCxVz2RbenSOtvS4qyb86ZEY8+MFn6rfpw=
+	t=1723042951; cv=none; b=nNG/56XJjHb+XTqskP1nnoditIj9KKSxVNBcqZNQs72Z0m13+s8BSqpQIZxnlzIXi8D6Qvc0yK5WWrmj2azFX7vnTOq+N59xiOKvFeJVmoa7b/8GHFTREEupJoIbG6OziaZkjPpoeqxko9uvIa9+a7YLQV1Jl99ycMV+kDPgyTI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042949; c=relaxed/simple;
-	bh=n6tBxFLP5SecrlqELC+8vbT5brvn7NND0WGbWV3DNWA=;
+	s=arc-20240116; t=1723042951; c=relaxed/simple;
+	bh=7klVwnkXbLsPPTFtzRwtWgkgT3NW2c5tPyIaREncCWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QySQVUUYAUw0WZRO8QctZ7FQTUt9tiV5J5ARtwekPD8wZqSQUtfVbbJOq1J3LWx3vMUXE+joVPXFUgAJsuAnTGT5yo1LhrnkxtHwjZjgD4Lz8lSZFuIdoyBLTUT6V9tSYmzFP9xJAf3feJ33Ru9jWjy+/yisWiA1DVswTivK2uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fy17Bpze; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cQKgigxUly9CSKlt8dlkov5z2lDJXlDu4Wn5BkNuTkj3rgt0EABfV2Qg9YrFMP1D5fN9RogQKVilVdbdF9V2rmDaPxxWBNUI6t5N/oPz0gfxB0j8PoZ+a2pFIocuRB00L9J38quuRt1zyOctfkMDgrD/RfUgk8EFnCbHqmg4NIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Emg4iVnj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fy17Bpze"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 373A7C32781;
-	Wed,  7 Aug 2024 15:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Emg4iVnj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E925FC32781;
+	Wed,  7 Aug 2024 15:02:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042948;
-	bh=n6tBxFLP5SecrlqELC+8vbT5brvn7NND0WGbWV3DNWA=;
+	s=korg; t=1723042951;
+	bh=7klVwnkXbLsPPTFtzRwtWgkgT3NW2c5tPyIaREncCWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fy17BpzeCvqBEUtukMsStAtTTNM6LRiJradNNiQwc6CVpTPWW7Q2AE9gy2Nk00cuL
-	 xnXWAKX4mw49/QRPwri6H6O3G/fogSptZ2+y0o9BQJAu0sa3bDo+Omidf1vtw9rO50
-	 HJaG5JRmGNlO7oRMJkb9QqIya1SekoUFP8q0rMeE=
+	b=Emg4iVnjwa14MNA8kXr5JzwPaxNZyZFt7MY/ETWVgC2zWQSi3nogSjt9RnWYihhMX
+	 BLf0b4mp9gp0Z19txXf1YxGptA+aHWgnNX4pWBIYLXd7OIgHXPoDJBDLECL3vJ1JYj
+	 t553EDhOG8jHgZXy8HX8eNL71kDJrp2WvL1Ng3a0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 006/123] ext4: factor out a common helper to query extent map
-Date: Wed,  7 Aug 2024 16:58:45 +0200
-Message-ID: <20240807150021.016620120@linuxfoundation.org>
+Subject: [PATCH 6.10 007/123] ext4: check the extent status again before inserting delalloc block
+Date: Wed,  7 Aug 2024 16:58:46 +0200
+Message-ID: <20240807150021.054622903@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -55,100 +54,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 8e4e5cdf2fdeb99445a468b6b6436ad79b9ecb30 ]
+[ Upstream commit 0ea6560abb3bac1ffcfa4bf6b2c4d344fdc27b3c ]
 
-Factor out a new common helper ext4_map_query_blocks() from the
-ext4_da_map_blocks(), it query and return the extent map status on the
-inode's extent path, no logic changes.
+ext4_da_map_blocks looks up for any extent entry in the extent status
+tree (w/o i_data_sem) and then the looks up for any ondisk extent
+mapping (with i_data_sem in read mode).
 
+If it finds a hole in the extent status tree or if it couldn't find any
+entry at all, it then takes the i_data_sem in write mode to add a da
+entry into the extent status tree. This can actually race with page
+mkwrite & fallocate path.
+
+Note that this is ok between
+1. ext4 buffered-write path v/s ext4_page_mkwrite(), because of the
+   folio lock
+2. ext4 buffered write path v/s ext4 fallocate because of the inode
+   lock.
+
+But this can race between ext4_page_mkwrite() & ext4 fallocate path
+
+ext4_page_mkwrite()             ext4_fallocate()
+ block_page_mkwrite()
+  ext4_da_map_blocks()
+   //find hole in extent status tree
+                                 ext4_alloc_file_blocks()
+                                  ext4_map_blocks()
+                                   //allocate block and unwritten extent
+   ext4_insert_delayed_block()
+    ext4_da_reserve_space()
+     //reserve one more block
+    ext4_es_insert_delayed_block()
+     //drop unwritten extent and add delayed extent by mistake
+
+Then, the delalloc extent is wrong until writeback and the extra
+reserved block can't be released any more and it triggers below warning:
+
+ EXT4-fs (pmem2): Inode 13 (00000000bbbd4d23): i_reserved_data_blocks(1) not cleared!
+
+Fix the problem by looking up extent status tree again while the
+i_data_sem is held in write mode. If it still can't find any entry, then
+we insert a new da entry into the extent status tree.
+
+Cc: stable@vger.kernel.org
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://patch.msgid.link/20240517124005.347221-2-yi.zhang@huaweicloud.com
+Link: https://patch.msgid.link/20240517124005.347221-3-yi.zhang@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 0ea6560abb3b ("ext4: check the extent status again before inserting delalloc block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 57 +++++++++++++++++++++++++++----------------------
- 1 file changed, 32 insertions(+), 25 deletions(-)
+ fs/ext4/inode.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
 diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 4bae9ccf5fe01..168819b4db019 100644
+index 168819b4db019..4b0d64a76e88e 100644
 --- a/fs/ext4/inode.c
 +++ b/fs/ext4/inode.c
-@@ -453,6 +453,35 @@ static void ext4_map_blocks_es_recheck(handle_t *handle,
- }
- #endif /* ES_AGGRESSIVE_TEST */
+@@ -1737,6 +1737,7 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 		if (ext4_es_is_hole(&es))
+ 			goto add_delayed;
  
-+static int ext4_map_query_blocks(handle_t *handle, struct inode *inode,
-+				 struct ext4_map_blocks *map)
-+{
-+	unsigned int status;
-+	int retval;
-+
-+	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
-+		retval = ext4_ext_map_blocks(handle, inode, map, 0);
-+	else
-+		retval = ext4_ind_map_blocks(handle, inode, map, 0);
-+
-+	if (retval <= 0)
-+		return retval;
-+
-+	if (unlikely(retval != map->m_len)) {
-+		ext4_warning(inode->i_sb,
-+			     "ES len assertion failed for inode "
-+			     "%lu: retval %d != map->m_len %d",
-+			     inode->i_ino, retval, map->m_len);
-+		WARN_ON(1);
-+	}
-+
-+	status = map->m_flags & EXT4_MAP_UNWRITTEN ?
-+			EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
-+	ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
-+			      map->m_pblk, status);
-+	return retval;
-+}
-+
- /*
-  * The ext4_map_blocks() function tries to look up the requested blocks,
-  * and returns if the blocks are already mapped.
-@@ -1744,33 +1773,11 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
- 	down_read(&EXT4_I(inode)->i_data_sem);
- 	if (ext4_has_inline_data(inode))
- 		retval = 0;
--	else if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
--		retval = ext4_ext_map_blocks(NULL, inode, map, 0);
- 	else
--		retval = ext4_ind_map_blocks(NULL, inode, map, 0);
--	if (retval < 0) {
--		up_read(&EXT4_I(inode)->i_data_sem);
--		return retval;
--	}
--	if (retval > 0) {
--		unsigned int status;
--
--		if (unlikely(retval != map->m_len)) {
--			ext4_warning(inode->i_sb,
--				     "ES len assertion failed for inode "
--				     "%lu: retval %d != map->m_len %d",
--				     inode->i_ino, retval, map->m_len);
--			WARN_ON(1);
--		}
--
--		status = map->m_flags & EXT4_MAP_UNWRITTEN ?
--				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
--		ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
--				      map->m_pblk, status);
--		up_read(&EXT4_I(inode)->i_data_sem);
--		return retval;
--	}
-+		retval = ext4_map_query_blocks(NULL, inode, map);
- 	up_read(&EXT4_I(inode)->i_data_sem);
-+	if (retval)
-+		return retval;
++found:
+ 		/*
+ 		 * Delayed extent could be allocated by fallocate.
+ 		 * So we need to check it.
+@@ -1781,6 +1782,26 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
  
  add_delayed:
  	down_write(&EXT4_I(inode)->i_data_sem);
++	/*
++	 * Page fault path (ext4_page_mkwrite does not take i_rwsem)
++	 * and fallocate path (no folio lock) can race. Make sure we
++	 * lookup the extent status tree here again while i_data_sem
++	 * is held in write mode, before inserting a new da entry in
++	 * the extent status tree.
++	 */
++	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
++		if (!ext4_es_is_hole(&es)) {
++			up_write(&EXT4_I(inode)->i_data_sem);
++			goto found;
++		}
++	} else if (!ext4_has_inline_data(inode)) {
++		retval = ext4_map_query_blocks(NULL, inode, map);
++		if (retval) {
++			up_write(&EXT4_I(inode)->i_data_sem);
++			return retval;
++		}
++	}
++
+ 	retval = ext4_insert_delayed_block(inode, map->m_lblk);
+ 	up_write(&EXT4_I(inode)->i_data_sem);
+ 	if (retval)
 -- 
 2.43.0
 
