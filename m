@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9CB81751;
-	Wed,  7 Aug 2024 15:14:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50D467F7F5;
+	Wed,  7 Aug 2024 15:14:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043687; cv=none; b=WOJ2wZKlbEZzWOviYX7M9p6x5ACkBFJoy7aml3HBUbz8vdG68rFsl4B3vfrUqbT94vRptw+kntfquWVtUrYxr8Pl63hiWqKAYYx9yn7V2bW1nNxf2TWWkYggO1hv29JR1lbRTl83G/L2hsA7UGzZJQ8NEDU1THGUpYeulvBBDwA=
+	t=1723043690; cv=none; b=sP/gZy0zYC7QVpdGx63FztCZ8ntFneoeCDP7yDybLFMVu7CEc4ZtDNi9aYsOGHN5h9LNQs1ZwrwkiSJwywHOY9dyRY9ZeVKW5WSCbFOhovVozuBIOtRcq7SNUwRFg8aTi3LTiVyFj8bPlwHGdPUW/N368FCCB6TnZK5SwD5iwmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043687; c=relaxed/simple;
-	bh=LTGYOUuFvxQwtR9BmE1byuz1cUIUsbzZ+tFU70agGo0=;
+	s=arc-20240116; t=1723043690; c=relaxed/simple;
+	bh=vVUrIZaqBSd487uUjguB+a3sjH4WF8mVs1boFlfUk78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Qik9ws2gM8j+7waSe1MW+AlLgA06cnHp7OGp8eqB7tyExXWUzIiX42npcm163axoYH17CULPZUO7oHB3vJnkYRR0FzYWK8osGpdFGruAvOdhLdGOdxJP0feLfuok9cgJ4cvuwSmWdqBYdfm6KhPQpyZZ3Y02DyBfqRrBo2H3g1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MvFObzAZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fv/gugUTBAWrHSfL48mFKBNOJMUpAlwEg6IIvJ1lwGYOVeMeBhdVcI8qRCwpNOoDb/y8PPTs7+kWRQSJqvBCkiguC+GNQSrf0vyshqbh8eXaTxinyvoi4fXeIL9n6c87S7gx++HXhvV4lrnnodyOKbJe1+UDx64XOS+fTHcb0G0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dF+0lUGR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MvFObzAZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08F9DC32781;
-	Wed,  7 Aug 2024 15:14:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dF+0lUGR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A742AC4AF0D;
+	Wed,  7 Aug 2024 15:14:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043687;
-	bh=LTGYOUuFvxQwtR9BmE1byuz1cUIUsbzZ+tFU70agGo0=;
+	s=korg; t=1723043690;
+	bh=vVUrIZaqBSd487uUjguB+a3sjH4WF8mVs1boFlfUk78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvFObzAZA5cCENHKX2qh/rAVXhNDURJyxVTrQLE6GFb4K0DMQ4IMnCm3E069GlWOi
-	 oTDg+sxwa5p2PiItMc3Qs6qLJgH1bThVvjPEY6SSZ0nigQm0XCyVksgAeYGBUBSa1E
-	 8kVWtf3/CjBQiHxeT1w8V9acyxPLrQKrIdi6fx/Y=
+	b=dF+0lUGRaZLqUq2zocuk061FnqLl5TvO7hhrziaqGnjP1iERIF6RarY4tZpqIHjs7
+	 bb+wLEK0v8fT9nSnqpy90eH3gQf0wq5A1NeLuQxwu524QhsZAQ7VjeIZJ4crfVJEEW
+	 R9SzNJXRrFg+omP+gLgwB4mDw3a46BpCpUxYydiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jen Linkova <furry@google.com>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Patrick Rohr <prohr@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zhe Qiao <qiaozhe@iscas.ac.cn>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 63/86] ipv6: fix ndisc_is_useropt() handling for PIO
-Date: Wed,  7 Aug 2024 17:00:42 +0200
-Message-ID: <20240807150041.335155011@linuxfoundation.org>
+Subject: [PATCH 6.1 64/86] riscv/mm: Add handling for VM_FAULT_SIGSEGV in mm_fault_error()
+Date: Wed,  7 Aug 2024 17:00:43 +0200
+Message-ID: <20240807150041.373511735@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -51,94 +46,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Zhe Qiao <qiaozhe@iscas.ac.cn>
 
-[ Upstream commit a46c68debf3be3a477a69ccbf0a1d050df841676 ]
+[ Upstream commit 0c710050c47d45eb77b28c271cddefc5c785cb40 ]
 
-The current logic only works if the PIO is between two
-other ND user options.  This fixes it so that the PIO
-can also be either before or after other ND user options
-(for example the first or last option in the RA).
+Handle VM_FAULT_SIGSEGV in the page fault path so that we correctly
+kill the process and we don't BUG() the kernel.
 
-side note: there's actually Android tests verifying
-a portion of the old broken behaviour, so:
-  https://android-review.googlesource.com/c/kernel/tests/+/3196704
-fixes those up.
-
-Cc: Jen Linkova <furry@google.com>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: Patrick Rohr <prohr@google.com>
-Cc: David Ahern <dsahern@kernel.org>
-Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Fixes: 048c796beb6e ("ipv6: adjust ndisc_is_useropt() to also return true for PIO")
-Link: https://patch.msgid.link/20240730001748.147636-1-maze@google.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 07037db5d479 ("RISC-V: Paging and MMU")
+Signed-off-by: Zhe Qiao <qiaozhe@iscas.ac.cn>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240731084547.85380-1-qiaozhe@iscas.ac.cn
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/ndisc.c | 34 ++++++++++++++++++----------------
- 1 file changed, 18 insertions(+), 16 deletions(-)
+ arch/riscv/mm/fault.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/net/ipv6/ndisc.c b/net/ipv6/ndisc.c
-index 8c5a99fe68030..cfb4cf6e66549 100644
---- a/net/ipv6/ndisc.c
-+++ b/net/ipv6/ndisc.c
-@@ -227,6 +227,7 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
- 		return NULL;
- 	memset(ndopts, 0, sizeof(*ndopts));
- 	while (opt_len) {
-+		bool unknown = false;
- 		int l;
- 		if (opt_len < sizeof(struct nd_opt_hdr))
- 			return NULL;
-@@ -262,22 +263,23 @@ struct ndisc_options *ndisc_parse_options(const struct net_device *dev,
- 			break;
- #endif
- 		default:
--			if (ndisc_is_useropt(dev, nd_opt)) {
--				ndopts->nd_useropts_end = nd_opt;
--				if (!ndopts->nd_useropts)
--					ndopts->nd_useropts = nd_opt;
--			} else {
--				/*
--				 * Unknown options must be silently ignored,
--				 * to accommodate future extension to the
--				 * protocol.
--				 */
--				ND_PRINTK(2, notice,
--					  "%s: ignored unsupported option; type=%d, len=%d\n",
--					  __func__,
--					  nd_opt->nd_opt_type,
--					  nd_opt->nd_opt_len);
--			}
-+			unknown = true;
-+		}
-+		if (ndisc_is_useropt(dev, nd_opt)) {
-+			ndopts->nd_useropts_end = nd_opt;
-+			if (!ndopts->nd_useropts)
-+				ndopts->nd_useropts = nd_opt;
-+		} else if (unknown) {
-+			/*
-+			 * Unknown options must be silently ignored,
-+			 * to accommodate future extension to the
-+			 * protocol.
-+			 */
-+			ND_PRINTK(2, notice,
-+				  "%s: ignored unsupported option; type=%d, len=%d\n",
-+				  __func__,
-+				  nd_opt->nd_opt_type,
-+				  nd_opt->nd_opt_len);
- 		}
- next_opt:
- 		opt_len -= l;
+diff --git a/arch/riscv/mm/fault.c b/arch/riscv/mm/fault.c
+index 274bc6dd839fa..05d7d36479648 100644
+--- a/arch/riscv/mm/fault.c
++++ b/arch/riscv/mm/fault.c
+@@ -60,26 +60,27 @@ static inline void no_context(struct pt_regs *regs, unsigned long addr)
+ 
+ static inline void mm_fault_error(struct pt_regs *regs, unsigned long addr, vm_fault_t fault)
+ {
++	if (!user_mode(regs)) {
++		no_context(regs, addr);
++		return;
++	}
++
+ 	if (fault & VM_FAULT_OOM) {
+ 		/*
+ 		 * We ran out of memory, call the OOM killer, and return the userspace
+ 		 * (which will retry the fault, or kill us if we got oom-killed).
+ 		 */
+-		if (!user_mode(regs)) {
+-			no_context(regs, addr);
+-			return;
+-		}
+ 		pagefault_out_of_memory();
+ 		return;
+ 	} else if (fault & VM_FAULT_SIGBUS) {
+ 		/* Kernel mode? Handle exceptions or die */
+-		if (!user_mode(regs)) {
+-			no_context(regs, addr);
+-			return;
+-		}
+ 		do_trap(regs, SIGBUS, BUS_ADRERR, addr);
+ 		return;
++	} else if (fault & VM_FAULT_SIGSEGV) {
++		do_trap(regs, SIGSEGV, SEGV_MAPERR, addr);
++		return;
+ 	}
++
+ 	BUG();
+ }
+ 
 -- 
 2.43.0
 
