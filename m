@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BF12AF07;
-	Wed,  7 Aug 2024 15:09:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7049278C67;
+	Wed,  7 Aug 2024 15:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043347; cv=none; b=s9A3rNGCjsNSGawmmoaPqDBLtjYArbUS9IS+tOyH4u6s1NQlHa0QwPlLsXbaLdtJvRm/r7gYEKZlSzkHw19uyBVnkt6zsXNqzRuNh/zTm/RB8DduUyTn1dAJOcIcgyu4jfHd783wBqn2hovcP8VBqojnrBaaA/OoYenVF6AdcMw=
+	t=1723043350; cv=none; b=ND4+N9AW/4Dy/Io4CeL3oUlgIqTtfPvM5Oz9xvaCM1HDXPn4ZgT4ZpeK39kFLEqpBm/MnGsKIyq+i/KD9I9Os9b8ORKWE0PvB5zp9apuyqytuWNK7A7qt04kcTN11koHuEnsRGU8Ygx/7GT7fq1nPx/G8HlFAZDbBro7OG/pbL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043347; c=relaxed/simple;
-	bh=0wqAqoSfSLqxvYX/U1zqspuWv+OovESFLJ94iqLOBUQ=;
+	s=arc-20240116; t=1723043350; c=relaxed/simple;
+	bh=zryoGE/9+RV8BixOQKYt1Hvor0X61YZBq2o4CKrutYY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRjNTOfAYejGJa0fJEJYbDYuC+z5UBMLc3ovr3HxZZj/9SdGtBekeRu/0nz7L9mV9zwRzEq8zGlYpR/Nj3LNkS9ZnZLnEp6OUlL0/7vdzJdrfwO1Z/cb+1bePjUcTQoAj0qKtyguxy9mFWyyCLH7dkcBMYpUoW5BWYBh+hwawlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ngOsBUDZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BC0aiBAk2TUHUchCiqMDq9FXbtjFz3/IKq9uj1npAa9si6YoKIZzJ4GJXrOS27nHLdHWwwyyvhwLEHC3bLj2Rz8AzWNKB8n4vNnAd7Le1dcxGLBF+lRE/fHDahIjaLMTBAyMLWLRJ0h/rimFCW2ZVoM+B1FAK9jvFhGNPlmSrb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oU7ivUHB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ngOsBUDZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8898C32781;
-	Wed,  7 Aug 2024 15:09:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oU7ivUHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1A4C32781;
+	Wed,  7 Aug 2024 15:09:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043347;
-	bh=0wqAqoSfSLqxvYX/U1zqspuWv+OovESFLJ94iqLOBUQ=;
+	s=korg; t=1723043349;
+	bh=zryoGE/9+RV8BixOQKYt1Hvor0X61YZBq2o4CKrutYY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ngOsBUDZVaVIVsl/4PhYgROHmclXMmO/LO90tEVUE78vAdTHDVH1xAaeVnS5/ZE8n
-	 1fSSZr8fb87rBXpNuKX7RM2WyZ37qtdPmcBY7/7p8U/7AboMDyz4mPTTh6ItEaGAtw
-	 lMg2I4vHcTOXoeh6okjXA7p+1rctYoY5caVOTtJs=
+	b=oU7ivUHBQblKLX9/6nIdQgHNoXtxTq91fbRfC/P2nEEZ6Jqa4MduhjsDsxDfEMJss
+	 Mk1Yu/CJSKhduoz12oUnn1G6fiPdWxI0oOhylnhr4KE8QdbetgfkhLYcYAUXyyUgOE
+	 TTWQFbkK9f2vk1IO3QwtjuFcso5g0TFlIayJ4A1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinjie Ruan <ruanjinjie@huawei.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 050/121] ARM: 9406/1: Fix callchain_trace() return value
-Date: Wed,  7 Aug 2024 16:59:42 +0200
-Message-ID: <20240807150021.041113666@linuxfoundation.org>
+Subject: [PATCH 6.6 059/121] ALSA: hda: conexant: Reduce CONFIG_PM dependencies
+Date: Wed,  7 Aug 2024 16:59:51 +0200
+Message-ID: <20240807150021.344256396@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,36 +50,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jinjie Ruan <ruanjinjie@huawei.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 4e7b4ff2dcaed228cb2fb7bfe720262c98ec1bb9 ]
+[ Upstream commit 29d57f6dc62485ee0752767debdfa2783d162beb ]
 
-perf_callchain_store() return 0 on success, -1 otherwise, fix
-callchain_trace() to return correct bool value. So walk_stackframe() can
-have a chance to stop walking the stack ahead.
+CONFIG_PM dependencies got reduced in HD-audio codec core driver, and
+now it's time to reduce in HD-audio conexant codec driver, too.
 
-Fixes: 70ccc7c0667b ("ARM: 9258/1: stacktrace: Make stack walk callback consistent with generic code")
-Signed-off-by: Jinjie Ruan <ruanjinjie@huawei.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Simply drop CONFIG_PM ifdefs.
+
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://lore.kernel.org/r/20240506161359.6960-8-tiwai@suse.de
+Stable-dep-of: e60dc9812211 ("ALSA: hda: conexant: Fix headset auto detect fail in the polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/kernel/perf_callchain.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/pci/hda/patch_conexant.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/arch/arm/kernel/perf_callchain.c b/arch/arm/kernel/perf_callchain.c
-index 7147edbe56c67..1d230ac9d0eb5 100644
---- a/arch/arm/kernel/perf_callchain.c
-+++ b/arch/arm/kernel/perf_callchain.c
-@@ -85,8 +85,7 @@ static bool
- callchain_trace(void *data, unsigned long pc)
- {
- 	struct perf_callchain_entry_ctx *entry = data;
--	perf_callchain_store(entry, pc);
--	return true;
-+	return perf_callchain_store(entry, pc) == 0;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index e8209178d87bb..17389a3801bd1 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -294,13 +294,11 @@ static void cx_jack_unsol_event(struct hda_codec *codec, unsigned int res)
+ 	snd_hda_jack_unsol_event(codec, res);
  }
  
- void
+-#ifdef CONFIG_PM
+ static int cx_auto_suspend(struct hda_codec *codec)
+ {
+ 	cx_auto_shutdown(codec);
+ 	return 0;
+ }
+-#endif
+ 
+ static const struct hda_codec_ops cx_auto_patch_ops = {
+ 	.build_controls = snd_hda_gen_build_controls,
+@@ -308,10 +306,8 @@ static const struct hda_codec_ops cx_auto_patch_ops = {
+ 	.init = cx_auto_init,
+ 	.free = cx_auto_free,
+ 	.unsol_event = cx_jack_unsol_event,
+-#ifdef CONFIG_PM
+ 	.suspend = cx_auto_suspend,
+ 	.check_power_status = snd_hda_gen_check_power_status,
+-#endif
+ };
+ 
+ /*
 -- 
 2.43.0
 
