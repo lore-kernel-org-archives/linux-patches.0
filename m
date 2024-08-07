@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A663A78B4C;
-	Wed,  7 Aug 2024 15:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3DE78281;
+	Wed,  7 Aug 2024 15:07:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043276; cv=none; b=lOVZCJZf/iKdH02xnawNZL5FsYe/1dS/Fykh7dWb/ZabjhIBdEX1Wwgl20UlBPDJV4Ct5GayH15yARp4PRO8SpEbEOXWGsiP1urqcHLSCWnr3gRrY9sbE5DiRkWV+PywbAur6YDNOnVQ13gJB85/OnjhlRI/sQUeuSWrOiXh5nE=
+	t=1723043279; cv=none; b=EU8yXcF3dV4Adc2vbJnEpkOoeg1C7Hb9wVWEE1tAyNTX3WElDbg9EC+gVx3cCbJqEGh+GltCp4iaYx+cDTSW7fcfnqM9UDgi3KCilhcjvRS9YNv0RbA8hNeYztz8YucBCK1wVx7djAirzh8ZXLInwOP63N4J+TNI3Y6a0JqExzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043276; c=relaxed/simple;
-	bh=qvgl8DemB3guj68mp+LYnesDgD2rHEoY4wtW2YmoAcI=;
+	s=arc-20240116; t=1723043279; c=relaxed/simple;
+	bh=jqTyrTvY7JxagwPhd6bUkBH5k5FeELMUaltIoJcXivI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OyczYZaz5tHoGH+bjX+TXqNma9J0FAGDqIb2DVuViaMXuJB969oZHs3wjVmkw0zNpHQur/LstXWrbWsUMvEJT2ueaZwnWY4miV2O6hT6mbmfxLtlTh1MPZmBFrfx5mhX59+yANxFjgRSa+OHMWiJ4WgiT/IXItYPmHlnz1SS5YE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oDkqWeEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYT8YnHWHm8xVjtfTNpaDmI4X43idgnFaLYrnpiExHmRq87fc87QJEc+2oEzfUUhrBnmnz9VR0LhIl6cnEGb5qUL4MIYXg1cjAK6mWk5ok3hor4jSpYGHww6q9Qg1SR3fkHHjeSo186riH1SkOyBlqJtzeEUOOwu4M1unylTr9E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n+aU0d32; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oDkqWeEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39947C32781;
-	Wed,  7 Aug 2024 15:07:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n+aU0d32"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F134CC4AF0B;
+	Wed,  7 Aug 2024 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043276;
-	bh=qvgl8DemB3guj68mp+LYnesDgD2rHEoY4wtW2YmoAcI=;
+	s=korg; t=1723043279;
+	bh=jqTyrTvY7JxagwPhd6bUkBH5k5FeELMUaltIoJcXivI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oDkqWeEEBIDy9kZlfxIj0TtNO8M/NmMJvnGOwQeOqhw7tJ02cqFLloyclYbHornJZ
-	 Qa2zXYq8WW7fH6emSpGPl+gtY4E8JjqoNCOaSoXiILbSXBDH4q/VCowXIuDbZeegIU
-	 +grDy95il83wvWDa7DYWQYcOxqC8gwdGSS+B3XAU=
+	b=n+aU0d32PSlHU5xPGRiqIIGJhakVD7awPyzWKSxaaXygXlatEwxn9/OOyW3AnqZkP
+	 XuVYIPI8S/xvcIcjz8bztFVJq/FDdSBu95faiICdCl9FqkBaCzLrUblRKdaeUB5zQ1
+	 7jjQefCHHYaBn0ba+ZEysrkDLnjSLeNyF8S0wfMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/121] fbdev/vesafb: Replace references to global screen_info by local pointer
-Date: Wed,  7 Aug 2024 16:59:24 +0200
-Message-ID: <20240807150020.383471633@linuxfoundation.org>
+Subject: [PATCH 6.6 033/121] video: Add helpers for decoding screen_info
+Date: Wed,  7 Aug 2024 16:59:25 +0200
+Message-ID: <20240807150020.413273746@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,154 +53,351 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 3218286bbb78cac3dde713514529e0480d678173 ]
+[ Upstream commit 75fa9b7e375e35739663cde0252d31e586c6314a ]
 
-Get the global screen_info's address once and access the data via
-this pointer. Limits the use of global state.
+The plain values as stored in struct screen_info need to be decoded
+before being used. Add helpers that decode the type of video output
+and the framebuffer I/O aperture.
+
+Old or non-x86 systems may not set the type of video directly, but
+only indicate the presence by storing 0x01 in orig_video_isVGA. The
+decoding logic in screen_info_video_type() takes this into account.
+It then follows similar code in vgacon's vgacon_startup() to detect
+the video type from the given values.
+
+A call to screen_info_resources() returns all known resources of the
+given screen_info. The resources' values have been taken from existing
+code in vgacon and vga16fb. These drivers can later be converted to
+use the new interfaces.
+
+v2:
+	* return ssize_t from screen_info_resources()
+	* don't call __screen_info_has_lfb() unnecessarily
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20231206135153.2599-4-tzimmermann@suse.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20240212090736.11464-2-tzimmermann@suse.de
 Stable-dep-of: c2bc958b2b03 ("fbdev: vesafb: Detect VGA compatibility from screen info's VESA attributes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/vesafb.c | 66 +++++++++++++++++++-----------------
- 1 file changed, 35 insertions(+), 31 deletions(-)
+ drivers/firmware/Kconfig            |   1 +
+ drivers/video/Kconfig               |   4 +
+ drivers/video/Makefile              |   3 +
+ drivers/video/screen_info_generic.c | 146 ++++++++++++++++++++++++++++
+ include/linux/screen_info.h         | 100 +++++++++++++++++++
+ 5 files changed, 254 insertions(+)
+ create mode 100644 drivers/video/screen_info_generic.c
 
-diff --git a/drivers/video/fbdev/vesafb.c b/drivers/video/fbdev/vesafb.c
-index c0edceea0a793..ea89accbec385 100644
---- a/drivers/video/fbdev/vesafb.c
-+++ b/drivers/video/fbdev/vesafb.c
-@@ -243,6 +243,7 @@ static int vesafb_setup(char *options)
+diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+index b59e3041fd627..f0e9f250669e2 100644
+--- a/drivers/firmware/Kconfig
++++ b/drivers/firmware/Kconfig
+@@ -229,6 +229,7 @@ config QCOM_SCM_DOWNLOAD_MODE_DEFAULT
+ config SYSFB
+ 	bool
+ 	select BOOT_VESA_SUPPORT
++	select SCREEN_INFO
  
- static int vesafb_probe(struct platform_device *dev)
- {
-+	struct screen_info *si = &screen_info;
- 	struct fb_info *info;
- 	struct vesafb_par *par;
- 	int i, err;
-@@ -255,17 +256,17 @@ static int vesafb_probe(struct platform_device *dev)
- 	fb_get_options("vesafb", &option);
- 	vesafb_setup(option);
+ config SYSFB_SIMPLEFB
+ 	bool "Mark VGA/VBE/EFI FB as generic system framebuffer"
+diff --git a/drivers/video/Kconfig b/drivers/video/Kconfig
+index b694d7669d320..1eb755a94940a 100644
+--- a/drivers/video/Kconfig
++++ b/drivers/video/Kconfig
+@@ -11,6 +11,10 @@ config APERTURE_HELPERS
+ 	  Support tracking and hand-over of aperture ownership. Required
+ 	  by graphics drivers for firmware-provided framebuffers.
  
--	if (screen_info.orig_video_isVGA != VIDEO_TYPE_VLFB)
-+	if (si->orig_video_isVGA != VIDEO_TYPE_VLFB)
- 		return -ENODEV;
++config SCREEN_INFO
++	bool
++	default n
++
+ config STI_CORE
+ 	bool
+ 	depends on PARISC
+diff --git a/drivers/video/Makefile b/drivers/video/Makefile
+index 6bbc039508995..b929b664d52cd 100644
+--- a/drivers/video/Makefile
++++ b/drivers/video/Makefile
+@@ -1,12 +1,15 @@
+ # SPDX-License-Identifier: GPL-2.0
  
--	vga_compat = (screen_info.capabilities & 2) ? 0 : 1;
--	vesafb_fix.smem_start = screen_info.lfb_base;
--	vesafb_defined.bits_per_pixel = screen_info.lfb_depth;
-+	vga_compat = (si->capabilities & 2) ? 0 : 1;
-+	vesafb_fix.smem_start = si->lfb_base;
-+	vesafb_defined.bits_per_pixel = si->lfb_depth;
- 	if (15 == vesafb_defined.bits_per_pixel)
- 		vesafb_defined.bits_per_pixel = 16;
--	vesafb_defined.xres = screen_info.lfb_width;
--	vesafb_defined.yres = screen_info.lfb_height;
--	vesafb_fix.line_length = screen_info.lfb_linelength;
-+	vesafb_defined.xres = si->lfb_width;
-+	vesafb_defined.yres = si->lfb_height;
-+	vesafb_fix.line_length = si->lfb_linelength;
- 	vesafb_fix.visual   = (vesafb_defined.bits_per_pixel == 8) ?
- 		FB_VISUAL_PSEUDOCOLOR : FB_VISUAL_TRUECOLOR;
+ obj-$(CONFIG_APERTURE_HELPERS)    += aperture.o
++obj-$(CONFIG_SCREEN_INFO)         += screen_info.o
+ obj-$(CONFIG_STI_CORE)            += sticore.o
+ obj-$(CONFIG_VGASTATE)            += vgastate.o
+ obj-$(CONFIG_VIDEO_CMDLINE)       += cmdline.o
+ obj-$(CONFIG_VIDEO_NOMODESET)     += nomodeset.o
+ obj-$(CONFIG_HDMI)                += hdmi.o
  
-@@ -277,7 +278,7 @@ static int vesafb_probe(struct platform_device *dev)
- 	/*   size_total -- all video memory we have. Used for mtrr
- 	 *                 entries, resource allocation and bounds
- 	 *                 checking. */
--	size_total = screen_info.lfb_size * 65536;
-+	size_total = si->lfb_size * 65536;
- 	if (vram_total)
- 		size_total = vram_total * 1024 * 1024;
- 	if (size_total < size_vmode)
-@@ -297,7 +298,7 @@ static int vesafb_probe(struct platform_device *dev)
- 	vesafb_fix.smem_len = size_remap;
++screen_info-y			  := screen_info_generic.o
++
+ obj-$(CONFIG_VT)		  += console/
+ obj-$(CONFIG_FB_STI)		  += console/
+ obj-$(CONFIG_LOGO)		  += logo/
+diff --git a/drivers/video/screen_info_generic.c b/drivers/video/screen_info_generic.c
+new file mode 100644
+index 0000000000000..64117c6367abb
+--- /dev/null
++++ b/drivers/video/screen_info_generic.c
+@@ -0,0 +1,146 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include <linux/export.h>
++#include <linux/ioport.h>
++#include <linux/screen_info.h>
++#include <linux/string.h>
++
++static void resource_init_named(struct resource *r,
++				resource_size_t start, resource_size_t size,
++				const char *name, unsigned int flags)
++{
++	memset(r, 0, sizeof(*r));
++
++	r->start = start;
++	r->end = start + size - 1;
++	r->name = name;
++	r->flags = flags;
++}
++
++static void resource_init_io_named(struct resource *r,
++				   resource_size_t start, resource_size_t size,
++				   const char *name)
++{
++	resource_init_named(r, start, size, name, IORESOURCE_IO);
++}
++
++static void resource_init_mem_named(struct resource *r,
++				   resource_size_t start, resource_size_t size,
++				   const char *name)
++{
++	resource_init_named(r, start, size, name, IORESOURCE_MEM);
++}
++
++static inline bool __screen_info_has_ega_gfx(unsigned int mode)
++{
++	switch (mode) {
++	case 0x0d:	/* 320x200-4 */
++	case 0x0e:	/* 640x200-4 */
++	case 0x0f:	/* 640x350-1 */
++	case 0x10:	/* 640x350-4 */
++		return true;
++	default:
++		return false;
++	}
++}
++
++static inline bool __screen_info_has_vga_gfx(unsigned int mode)
++{
++	switch (mode) {
++	case 0x10:	/* 640x480-1 */
++	case 0x12:	/* 640x480-4 */
++	case 0x13:	/* 320-200-8 */
++	case 0x6a:	/* 800x600-4 (VESA) */
++		return true;
++	default:
++		return __screen_info_has_ega_gfx(mode);
++	}
++}
++
++/**
++ * screen_info_resources() - Get resources from screen_info structure
++ * @si: the screen_info
++ * @r: pointer to an array of resource structures
++ * @num: number of elements in @r:
++ *
++ * Returns:
++ * The number of resources stored in @r on success, or a negative errno code otherwise.
++ *
++ * A call to screen_info_resources() returns the resources consumed by the
++ * screen_info's device or framebuffer. The result is stored in the caller-supplied
++ * array @r with up to @num elements. The function returns the number of
++ * initialized elements.
++ */
++ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num)
++{
++	struct resource *pos = r;
++	unsigned int type = screen_info_video_type(si);
++	u64 base, size;
++
++	switch (type) {
++	case VIDEO_TYPE_MDA:
++		if (num > 0)
++			resource_init_io_named(pos++, 0x3b0, 12, "mda");
++		if (num > 1)
++			resource_init_io_named(pos++, 0x3bf, 0x01, "mda");
++		if (num > 2)
++			resource_init_mem_named(pos++, 0xb0000, 0x2000, "mda");
++		break;
++	case VIDEO_TYPE_CGA:
++		if (num > 0)
++			resource_init_io_named(pos++, 0x3d4, 0x02, "cga");
++		if (num > 1)
++			resource_init_mem_named(pos++, 0xb8000, 0x2000, "cga");
++		break;
++	case VIDEO_TYPE_EGAM:
++		if (num > 0)
++			resource_init_io_named(pos++, 0x3bf, 0x10, "ega");
++		if (num > 1)
++			resource_init_mem_named(pos++, 0xb0000, 0x8000, "ega");
++		break;
++	case VIDEO_TYPE_EGAC:
++		if (num > 0)
++			resource_init_io_named(pos++, 0x3c0, 0x20, "ega");
++		if (num > 1) {
++			if (__screen_info_has_ega_gfx(si->orig_video_mode))
++				resource_init_mem_named(pos++, 0xa0000, 0x10000, "ega");
++			else
++				resource_init_mem_named(pos++, 0xb8000, 0x8000, "ega");
++		}
++		break;
++	case VIDEO_TYPE_VGAC:
++		if (num > 0)
++			resource_init_io_named(pos++, 0x3c0, 0x20, "vga+");
++		if (num > 1) {
++			if (__screen_info_has_vga_gfx(si->orig_video_mode))
++				resource_init_mem_named(pos++, 0xa0000, 0x10000, "vga+");
++			else
++				resource_init_mem_named(pos++, 0xb8000, 0x8000, "vga+");
++		}
++		break;
++	case VIDEO_TYPE_VLFB:
++	case VIDEO_TYPE_EFI:
++		base = __screen_info_lfb_base(si);
++		if (!base)
++			break;
++		size = __screen_info_lfb_size(si, type);
++		if (!size)
++			break;
++		if (num > 0)
++			resource_init_mem_named(pos++, base, size, "lfb");
++		break;
++	case VIDEO_TYPE_PICA_S3:
++	case VIDEO_TYPE_MIPS_G364:
++	case VIDEO_TYPE_SGI:
++	case VIDEO_TYPE_TGAC:
++	case VIDEO_TYPE_SUN:
++	case VIDEO_TYPE_SUNPCI:
++	case VIDEO_TYPE_PMAC:
++	default:
++		/* not supported */
++		return -EINVAL;
++	}
++
++	return pos - r;
++}
++EXPORT_SYMBOL(screen_info_resources);
+diff --git a/include/linux/screen_info.h b/include/linux/screen_info.h
+index eab7081392d50..e7a02c5609d12 100644
+--- a/include/linux/screen_info.h
++++ b/include/linux/screen_info.h
+@@ -4,6 +4,106 @@
  
- #ifndef __i386__
--	screen_info.vesapm_seg = 0;
-+	si->vesapm_seg = 0;
- #endif
+ #include <uapi/linux/screen_info.h>
  
- 	if (!request_mem_region(vesafb_fix.smem_start, size_total, "vesafb")) {
-@@ -317,23 +318,26 @@ static int vesafb_probe(struct platform_device *dev)
- 	par = info->par;
- 	info->pseudo_palette = par->pseudo_palette;
++/**
++ * SCREEN_INFO_MAX_RESOURCES - maximum number of resources per screen_info
++ */
++#define SCREEN_INFO_MAX_RESOURCES	3
++
++struct resource;
++
++static inline bool __screen_info_has_lfb(unsigned int type)
++{
++	return (type == VIDEO_TYPE_VLFB) || (type == VIDEO_TYPE_EFI);
++}
++
++static inline u64 __screen_info_lfb_base(const struct screen_info *si)
++{
++	u64 lfb_base = si->lfb_base;
++
++	if (si->capabilities & VIDEO_CAPABILITY_64BIT_BASE)
++		lfb_base |= (u64)si->ext_lfb_base << 32;
++
++	return lfb_base;
++}
++
++static inline u64 __screen_info_lfb_size(const struct screen_info *si, unsigned int type)
++{
++	u64 lfb_size = si->lfb_size;
++
++	if (type == VIDEO_TYPE_VLFB)
++		lfb_size <<= 16;
++	return lfb_size;
++}
++
++static inline unsigned int __screen_info_video_type(unsigned int type)
++{
++	switch (type) {
++	case VIDEO_TYPE_MDA:
++	case VIDEO_TYPE_CGA:
++	case VIDEO_TYPE_EGAM:
++	case VIDEO_TYPE_EGAC:
++	case VIDEO_TYPE_VGAC:
++	case VIDEO_TYPE_VLFB:
++	case VIDEO_TYPE_PICA_S3:
++	case VIDEO_TYPE_MIPS_G364:
++	case VIDEO_TYPE_SGI:
++	case VIDEO_TYPE_TGAC:
++	case VIDEO_TYPE_SUN:
++	case VIDEO_TYPE_SUNPCI:
++	case VIDEO_TYPE_PMAC:
++	case VIDEO_TYPE_EFI:
++		return type;
++	default:
++		return 0;
++	}
++}
++
++/**
++ * screen_info_video_type() - Decodes the video type from struct screen_info
++ * @si: an instance of struct screen_info
++ *
++ * Returns:
++ * A VIDEO_TYPE_ constant representing si's type of video display, or 0 otherwise.
++ */
++static inline unsigned int screen_info_video_type(const struct screen_info *si)
++{
++	unsigned int type;
++
++	// check if display output is on
++	if (!si->orig_video_isVGA)
++		return 0;
++
++	// check for a known VIDEO_TYPE_ constant
++	type = __screen_info_video_type(si->orig_video_isVGA);
++	if (type)
++		return si->orig_video_isVGA;
++
++	// check if text mode has been initialized
++	if (!si->orig_video_lines || !si->orig_video_cols)
++		return 0;
++
++	// 80x25 text, mono
++	if (si->orig_video_mode == 0x07) {
++		if ((si->orig_video_ega_bx & 0xff) != 0x10)
++			return VIDEO_TYPE_EGAM;
++		else
++			return VIDEO_TYPE_MDA;
++	}
++
++	// EGA/VGA, 16 colors
++	if ((si->orig_video_ega_bx & 0xff) != 0x10) {
++		if (si->orig_video_isVGA)
++			return VIDEO_TYPE_VGAC;
++		else
++			return VIDEO_TYPE_EGAC;
++	}
++
++	// the rest...
++	return VIDEO_TYPE_CGA;
++}
++
++ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num);
++
+ extern struct screen_info screen_info;
  
--	par->base = screen_info.lfb_base;
-+	par->base = si->lfb_base;
- 	par->size = size_total;
- 
- 	printk(KERN_INFO "vesafb: mode is %dx%dx%d, linelength=%d, pages=%d\n",
--	       vesafb_defined.xres, vesafb_defined.yres, vesafb_defined.bits_per_pixel, vesafb_fix.line_length, screen_info.pages);
-+	       vesafb_defined.xres, vesafb_defined.yres, vesafb_defined.bits_per_pixel,
-+	       vesafb_fix.line_length, si->pages);
- 
--	if (screen_info.vesapm_seg) {
-+	if (si->vesapm_seg) {
- 		printk(KERN_INFO "vesafb: protected mode interface info at %04x:%04x\n",
--		       screen_info.vesapm_seg,screen_info.vesapm_off);
-+		       si->vesapm_seg, si->vesapm_off);
- 	}
- 
--	if (screen_info.vesapm_seg < 0xc000)
-+	if (si->vesapm_seg < 0xc000)
- 		ypan = pmi_setpal = 0; /* not available or some DOS TSR ... */
- 
- 	if (ypan || pmi_setpal) {
-+		unsigned long pmi_phys;
- 		unsigned short *pmi_base;
--		pmi_base  = (unsigned short*)phys_to_virt(((unsigned long)screen_info.vesapm_seg << 4) + screen_info.vesapm_off);
-+		pmi_phys  = ((unsigned long)si->vesapm_seg << 4) + si->vesapm_off;
-+		pmi_base  = (unsigned short *)phys_to_virt(pmi_phys);
- 		pmi_start = (void*)((char*)pmi_base + pmi_base[1]);
- 		pmi_pal   = (void*)((char*)pmi_base + pmi_base[2]);
- 		printk(KERN_INFO "vesafb: pmi: set display start = %p, set palette = %p\n",pmi_start,pmi_pal);
-@@ -377,14 +381,14 @@ static int vesafb_probe(struct platform_device *dev)
- 	vesafb_defined.left_margin  = (vesafb_defined.xres / 8) & 0xf8;
- 	vesafb_defined.hsync_len    = (vesafb_defined.xres / 8) & 0xf8;
- 
--	vesafb_defined.red.offset    = screen_info.red_pos;
--	vesafb_defined.red.length    = screen_info.red_size;
--	vesafb_defined.green.offset  = screen_info.green_pos;
--	vesafb_defined.green.length  = screen_info.green_size;
--	vesafb_defined.blue.offset   = screen_info.blue_pos;
--	vesafb_defined.blue.length   = screen_info.blue_size;
--	vesafb_defined.transp.offset = screen_info.rsvd_pos;
--	vesafb_defined.transp.length = screen_info.rsvd_size;
-+	vesafb_defined.red.offset    = si->red_pos;
-+	vesafb_defined.red.length    = si->red_size;
-+	vesafb_defined.green.offset  = si->green_pos;
-+	vesafb_defined.green.length  = si->green_size;
-+	vesafb_defined.blue.offset   = si->blue_pos;
-+	vesafb_defined.blue.length   = si->blue_size;
-+	vesafb_defined.transp.offset = si->rsvd_pos;
-+	vesafb_defined.transp.length = si->rsvd_size;
- 
- 	if (vesafb_defined.bits_per_pixel <= 8) {
- 		depth = vesafb_defined.green.length;
-@@ -399,14 +403,14 @@ static int vesafb_probe(struct platform_device *dev)
- 	       (vesafb_defined.bits_per_pixel > 8) ?
- 	       "Truecolor" : (vga_compat || pmi_setpal) ?
- 	       "Pseudocolor" : "Static Pseudocolor",
--	       screen_info.rsvd_size,
--	       screen_info.red_size,
--	       screen_info.green_size,
--	       screen_info.blue_size,
--	       screen_info.rsvd_pos,
--	       screen_info.red_pos,
--	       screen_info.green_pos,
--	       screen_info.blue_pos);
-+	       si->rsvd_size,
-+	       si->red_size,
-+	       si->green_size,
-+	       si->blue_size,
-+	       si->rsvd_pos,
-+	       si->red_pos,
-+	       si->green_pos,
-+	       si->blue_pos);
- 
- 	vesafb_fix.ypanstep  = ypan     ? 1 : 0;
- 	vesafb_fix.ywrapstep = (ypan>1) ? 1 : 0;
+ #endif /* _SCREEN_INFO_H */
 -- 
 2.43.0
 
