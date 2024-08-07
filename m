@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7F582C8E;
-	Wed,  7 Aug 2024 15:14:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282587E0E9;
+	Wed,  7 Aug 2024 15:14:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043658; cv=none; b=JiWvp5EE2S6AoJw0A4s2iDR7FDJ0LBgIOrynH1dz2+aVsChHrtKqFDLA6emmIgvgwwHu8Zc5kVeSeDHmfbPqls83jLyHGcnIKFNzymZ7eehLYcDw+TXGfD1copq3bspijsdIdhALr3F0iS+NCZB6hpxy6UISZ9yLCNC7h23eGpA=
+	t=1723043661; cv=none; b=de3eXFs99K0B9WDq6xKeDmzFFjUKEOK2eCJACHy8uVJpBhjqjs/iY3yj3h6MXCAJioVhIF59SqxgRRb9UOtOU2Z2nAGqw2xK2wys1zT4acYt4iS5lgsZgG/OOE8FtAKUKTcaG5EGhzQ8XBVomrS5ekzbaziunV8AdeYvTk0NfAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043658; c=relaxed/simple;
-	bh=u9ihcOTuNqVKtSFnhw1C7NMVnEDAPkh1j3bXqWvRG00=;
+	s=arc-20240116; t=1723043661; c=relaxed/simple;
+	bh=udfNYq/9jZtP1+7ofpnIPgdpYzZxZpEdugZrOorLB1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=secAhLztpe1ZEvmcH2hH1N+/lGgfyjBHoPZr9EioxmkIXccyh5MGdDDN6zsvcviCxKB7Vgr2d2QJdMo/8LeyZkjosC15cG7WekgUYGNxxJHoB1CaNtxFLd/0EsTzq7b96TBmrk1Y5wPyvLyj+StK5up0wQq7kJ45KtK7wsMPOmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ogCcYAAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KV+aqhQLPN4yQvjtN6ZRireTkgQl8MTFtbGdmopY6ccyJO9TFudI/xIcuRxq9R4CZis26dcekQ3UQWf5Kg9X2RcsVTyMzb6Qf69rwo/+vzE1zv2z6Gm/5/4lnLHNkxzz2WViTIvU8dMXvigJ4DdI+G51sjFIyx0ge8E/7niZgSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AD+EIk4c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ogCcYAAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07DA1C32781;
-	Wed,  7 Aug 2024 15:14:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AD+EIk4c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BAFC4AF0D;
+	Wed,  7 Aug 2024 15:14:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043658;
-	bh=u9ihcOTuNqVKtSFnhw1C7NMVnEDAPkh1j3bXqWvRG00=;
+	s=korg; t=1723043661;
+	bh=udfNYq/9jZtP1+7ofpnIPgdpYzZxZpEdugZrOorLB1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ogCcYAAvSZ9M4G4obEtc7tI+8F+WyWzHc4PlM5o2y4hTfW4zdPqZ8RORi617VjBMN
-	 z6p56F5upC+0FxM9tmHVra0zRhBcu2GCEHS1NqK7YthCiWSSNHDr58ZtHKJbOX9qsb
-	 36aLEZ8iRSNZRRbOPugrRGYKaNEizvTx8cZg/XLY=
+	b=AD+EIk4c/55zxroGHYb8w3uwDCbS7tmDT1xmPIbr60Gmu1IB/Rr6y/ohWFcANLPG0
+	 YeYk+KQkxd3zVxaqOLV09iI9lnkfL9lrlvoXnupZpYZBECwGhIE6trYqJM0lK6IPta
+	 FqhkJKdVAfi/Jgxo1JcQvOkjcFAXCnNNnvYFejqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.1 51/86] ice: dont busy wait for Rx queue disable in ice_qp_dis()
-Date: Wed,  7 Aug 2024 17:00:30 +0200
-Message-ID: <20240807150040.932575330@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 25/86] irqdomain: Use return value of strreplace()
+Date: Wed,  7 Aug 2024 17:00:04 +0200
+Message-ID: <20240807150040.064267100@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -53,46 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 1ff72a2f67791cd4ddad19ed830445f57b30e992 ]
+[ Upstream commit 67a4e1a3bf7c68ed3fbefc4213648165d912cabb ]
 
-When ice driver is spammed with multiple xdpsock instances and flow
-control is enabled, there are cases when Rx queue gets stuck and unable
-to reflect the disable state in QRX_CTRL register. Similar issue has
-previously been addressed in commit 13a6233b033f ("ice: Add support to
-enable/disable all Rx queues before waiting").
+Since strreplace() returns the pointer to the string itself, use it
+directly.
 
-To workaround this, let us simply not wait for a disabled state as later
-patch will make sure that regardless of the encountered error in the
-process of disabling a queue pair, the Rx queue will be enabled.
-
-Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
-Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20230628150251.17832-1-andriy.shevchenko@linux.intel.com
+Stable-dep-of: 6ce3e98184b6 ("irqdomain: Fixed unbalanced fwnode get and put")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_xsk.c | 4 +---
+ kernel/irq/irqdomain.c | 4 +---
  1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 61e4730bba59e..ebc017dd245f1 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -191,10 +191,8 @@ static int ice_qp_dis(struct ice_vsi *vsi, u16 q_idx)
- 		if (err)
- 			return err;
+diff --git a/kernel/irq/irqdomain.c b/kernel/irq/irqdomain.c
+index 607c0c3d3f5e1..e03baca901e76 100644
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -182,9 +182,7 @@ static struct irq_domain *__irq_domain_create(struct fwnode_handle *fwnode,
+ 			return NULL;
+ 		}
+ 
+-		strreplace(name, '/', ':');
+-
+-		domain->name = name;
++		domain->name = strreplace(name, '/', ':');
+ 		domain->fwnode = fwnode;
+ 		domain->flags |= IRQ_DOMAIN_NAME_ALLOCATED;
  	}
--	err = ice_vsi_ctrl_one_rx_ring(vsi, false, q_idx, true);
--	if (err)
--		return err;
- 
-+	ice_vsi_ctrl_one_rx_ring(vsi, false, q_idx, false);
- 	ice_qp_clean_rings(vsi, q_idx);
- 	ice_qp_reset_stats(vsi, q_idx);
- 
 -- 
 2.43.0
 
