@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F23E980BF8;
-	Wed,  7 Aug 2024 15:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC0D85626;
+	Wed,  7 Aug 2024 15:08:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043320; cv=none; b=TB8OpOn/b06Rts8g+M/11IHKiYwGpo06HO7x2GSSwPJ8W6sAezWeWgkzOPpZ9QtB9wcsegr5K7SVNAulo0yk1utRJXXU+Ot/PtE8E9T9ISwp1TKgxngg9t4osc+4vP9TNV/FvxUAGbk3IDFBU0YMyrTgX8bCPu+XufvWq1lzqEY=
+	t=1723043323; cv=none; b=I7cUn6IbOTiQ/iP3t3+xeOfyXCeEEqX//kg2KcqftjrUN2xgd6Nctm/1XwkrpIk6qXIvPVC98NwH4d8m5TU5d3RkmS6iBtZvT1Quc2jS9TwRqq9l4rvUbE7P/bcXYDnTz3oeoXqfOI0sJOaFXRuteIjhvw1py9G+tL0K3T+GpIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043320; c=relaxed/simple;
-	bh=6wlUB9OwwChZiK1SSdZwPIfOnvycNg67iKrw/tIrH74=;
+	s=arc-20240116; t=1723043323; c=relaxed/simple;
+	bh=7r4Qq48QP7JsTKDZctCTQY7xUtcYygCvvAuRvi2eGpM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LXmYQ5yX543V6NHTCREuEnVUHKvN+eFaaUhi5SOWgzsLvwPHpb/DJfBMKVUxKnpIdLI5jvp53Ki7QR0dRbARszVZNa1QdYXieuPaja/+1dleCZRE2BG10mcwRtEaGm2jaZP9BRlXiZg2wK/c7Z2cBo2T6dQT1fM8XcG3QZjc62s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCfptUYz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YwW4aYExvR63Z1ldsSbfZUl3ZJ+YrsYoEH+YXHWYrPYQqfrbqrr45gQbqFByQ/nZSkZ51sOqdCYV7O7weqSwNk5B1mIJEmt5GfHxk5y4jmayMKqF4DMgzisCORqdCvIjbpOpz27vl80f0VyQ2BJfBZAhGdmsW1hHJdCcdq426y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GBukI/zc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCfptUYz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D71C4AF0D;
-	Wed,  7 Aug 2024 15:08:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GBukI/zc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33658C4AF0B;
+	Wed,  7 Aug 2024 15:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043319;
-	bh=6wlUB9OwwChZiK1SSdZwPIfOnvycNg67iKrw/tIrH74=;
+	s=korg; t=1723043322;
+	bh=7r4Qq48QP7JsTKDZctCTQY7xUtcYygCvvAuRvi2eGpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCfptUYzbxo5owICQDM2gTJr9+j1IMdtneTYuOv9SnAq7SwhxGkT8shuiV9mwl82E
-	 G+H2/wyIXKjhYRZvTCseSR0dNdfCbb4FJyX26854PoeV/XruqFwcssInOvpVhYUeTw
-	 XwBYptWZhxY6EyZxmMzUzHa75vghizs+LFgnIxUY=
+	b=GBukI/zcO7bVRk0to17YF3u1Cqub3DheoPDpjvhYWF48c2llXO0UvgVVHjEYSuMsG
+	 L7+cO7rDp+HPKHdh/b8RedYSaYBo1pQoI6esdUlNTZXnKiQbx5pKj5UM7IQxYPpwuT
+	 17p5MR1UqXjJZS3cKVM9/sdt4Llw4OxYPoJbzEaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 020/121] ext4: check the extent status again before inserting delalloc block
-Date: Wed,  7 Aug 2024 16:59:12 +0200
-Message-ID: <20240807150020.017770397@linuxfoundation.org>
+Subject: [PATCH 6.6 047/121] MIPS: Loongson64: DTS: Fix PCIe port nodes for ls7a
+Date: Wed,  7 Aug 2024 16:59:39 +0200
+Message-ID: <20240807150020.938036446@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,98 +51,159 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit 0ea6560abb3bac1ffcfa4bf6b2c4d344fdc27b3c ]
+[ Upstream commit d89a415ff8d5e0aad4963f2d8ebb0f9e8110b7fa ]
 
-ext4_da_map_blocks looks up for any extent entry in the extent status
-tree (w/o i_data_sem) and then the looks up for any ondisk extent
-mapping (with i_data_sem in read mode).
+Add various required properties to silent warnings:
 
-If it finds a hole in the extent status tree or if it couldn't find any
-entry at all, it then takes the i_data_sem in write mode to add a da
-entry into the extent status tree. This can actually race with page
-mkwrite & fallocate path.
+arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi:116.16-297.5: Warning (interrupt_provider): /bus@10000000/pci@1a000000: '#interrupt-cells' found, but node is not an interrupt provider
+arch/mips/boot/dts/loongson/loongson64_2core_2k1000.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
 
-Note that this is ok between
-1. ext4 buffered-write path v/s ext4_page_mkwrite(), because of the
-   folio lock
-2. ext4 buffered write path v/s ext4 fallocate because of the inode
-   lock.
-
-But this can race between ext4_page_mkwrite() & ext4 fallocate path
-
-ext4_page_mkwrite()             ext4_fallocate()
- block_page_mkwrite()
-  ext4_da_map_blocks()
-   //find hole in extent status tree
-                                 ext4_alloc_file_blocks()
-                                  ext4_map_blocks()
-                                   //allocate block and unwritten extent
-   ext4_insert_delayed_block()
-    ext4_da_reserve_space()
-     //reserve one more block
-    ext4_es_insert_delayed_block()
-     //drop unwritten extent and add delayed extent by mistake
-
-Then, the delalloc extent is wrong until writeback and the extra
-reserved block can't be released any more and it triggers below warning:
-
- EXT4-fs (pmem2): Inode 13 (00000000bbbd4d23): i_reserved_data_blocks(1) not cleared!
-
-Fix the problem by looking up extent status tree again while the
-i_data_sem is held in write mode. If it still can't find any entry, then
-we insert a new da entry into the extent status tree.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240517124005.347221-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: dbb69b9d6234 ("MIPS: dts: loongson: Fix liointc IRQ polarity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ .../boot/dts/loongson/loongson64-2k1000.dtsi  | 37 +++++++++++++++----
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index b8b2f731f1d0e..cef119a2476bb 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1737,6 +1737,7 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
- 		if (ext4_es_is_hole(&es))
- 			goto add_delayed;
+diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+index c0be84a6e81fd..c1d3092fdd870 100644
+--- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
++++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+@@ -117,7 +117,6 @@ pci@1a000000 {
+ 			device_type = "pci";
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+-			#interrupt-cells = <2>;
  
-+found:
- 		/*
- 		 * Delayed extent could be allocated by fallocate.
- 		 * So we need to check it.
-@@ -1781,6 +1782,26 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 			reg = <0 0x1a000000 0 0x02000000>,
+ 				<0xfe 0x00000000 0 0x20000000>;
+@@ -205,93 +204,117 @@ sata@8,0 {
+ 				interrupt-parent = <&liointc0>;
+ 			};
  
- add_delayed:
- 	down_write(&EXT4_I(inode)->i_data_sem);
-+	/*
-+	 * Page fault path (ext4_page_mkwrite does not take i_rwsem)
-+	 * and fallocate path (no folio lock) can race. Make sure we
-+	 * lookup the extent status tree here again while i_data_sem
-+	 * is held in write mode, before inserting a new da entry in
-+	 * the extent status tree.
-+	 */
-+	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
-+		if (!ext4_es_is_hole(&es)) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			goto found;
-+		}
-+	} else if (!ext4_has_inline_data(inode)) {
-+		retval = ext4_map_query_blocks(NULL, inode, map);
-+		if (retval) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			return retval;
-+		}
-+	}
-+
- 	retval = ext4_insert_delayed_block(inode, map->m_lblk);
- 	up_write(&EXT4_I(inode)->i_data_sem);
- 	if (retval)
+-			pci_bridge@9,0 {
++			pcie@9,0 {
+ 				compatible = "pci0014,7a19.0",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x4800 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@a,0 {
++			pcie@a,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x5000 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@b,0 {
++			pcie@b,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x5800 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@c,0 {
++			pcie@c,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x6000 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@d,0 {
++			pcie@d,0 {
+ 				compatible = "pci0014,7a19.0",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x6800 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@e,0 {
++			pcie@e,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x7000 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
 -- 
 2.43.0
 
