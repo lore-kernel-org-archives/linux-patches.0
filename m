@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68BC66F2F7;
-	Wed,  7 Aug 2024 15:02:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2006F2F7;
+	Wed,  7 Aug 2024 15:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042951; cv=none; b=nNG/56XJjHb+XTqskP1nnoditIj9KKSxVNBcqZNQs72Z0m13+s8BSqpQIZxnlzIXi8D6Qvc0yK5WWrmj2azFX7vnTOq+N59xiOKvFeJVmoa7b/8GHFTREEupJoIbG6OziaZkjPpoeqxko9uvIa9+a7YLQV1Jl99ycMV+kDPgyTI=
+	t=1723042954; cv=none; b=ggur2j59SzZpF/pxSd4zfKgSVzTB40eeysxWs4ZZrBs8bzgT7FO9z+iM/vhyGpE7KxN9pWq/H6f6kh5E3nbmDPFAGRmN0Ldt68YmcRB5CTMnKy+uDhFDAmfxFy1yaMoxYGCrzshyIjJtujR+gygK6SJrwgdhj/tEmipn2xmcmeQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042951; c=relaxed/simple;
-	bh=7klVwnkXbLsPPTFtzRwtWgkgT3NW2c5tPyIaREncCWU=;
+	s=arc-20240116; t=1723042954; c=relaxed/simple;
+	bh=lJzdWj7ZrB4/hDIUFv2Zo2w8/ezu7BzauUTZjAIrlK4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cQKgigxUly9CSKlt8dlkov5z2lDJXlDu4Wn5BkNuTkj3rgt0EABfV2Qg9YrFMP1D5fN9RogQKVilVdbdF9V2rmDaPxxWBNUI6t5N/oPz0gfxB0j8PoZ+a2pFIocuRB00L9J38quuRt1zyOctfkMDgrD/RfUgk8EFnCbHqmg4NIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Emg4iVnj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hqdQbe0UZ5wBcmTHcdu5HIAQ10De2vEcxXU1tLaMCsLjELLXLhZTKel8Z1kiAr/LQeem8j/odvwllieuuTkv424aAmZlq5X+E/Emt6xyADRzpyVDwN3FoSft1dE2y9Gsl+2GPet5BpxAx2ENlG7t9HnmXnVwbY9ryNRcvjXtwGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdA/I4lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Emg4iVnj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E925FC32781;
-	Wed,  7 Aug 2024 15:02:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdA/I4lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAF1C32781;
+	Wed,  7 Aug 2024 15:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042951;
-	bh=7klVwnkXbLsPPTFtzRwtWgkgT3NW2c5tPyIaREncCWU=;
+	s=korg; t=1723042954;
+	bh=lJzdWj7ZrB4/hDIUFv2Zo2w8/ezu7BzauUTZjAIrlK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Emg4iVnjwa14MNA8kXr5JzwPaxNZyZFt7MY/ETWVgC2zWQSi3nogSjt9RnWYihhMX
-	 BLf0b4mp9gp0Z19txXf1YxGptA+aHWgnNX4pWBIYLXd7OIgHXPoDJBDLECL3vJ1JYj
-	 t553EDhOG8jHgZXy8HX8eNL71kDJrp2WvL1Ng3a0=
+	b=kdA/I4lhKl86YiKm4gdJ/Jr7h7e5rYD6LPs1tlJAtE8BVEdGqj3K6TW4o2v1bnne1
+	 42TvNriElS/wewVB/kQizLw+KmrLd/ZMKrmUdL3fECoLiW5kl265PH+O/Tqq36JuOy
+	 LMkwCICt5QAB+ASiFfLO7ZpcsvwiGUNNBVNBVw6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 007/123] ext4: check the extent status again before inserting delalloc block
-Date: Wed,  7 Aug 2024 16:58:46 +0200
-Message-ID: <20240807150021.054622903@linuxfoundation.org>
+Subject: [PATCH 6.10 008/123] f2fs: fix to avoid use SSR allocate when do defragment
+Date: Wed,  7 Aug 2024 16:58:47 +0200
+Message-ID: <20240807150021.085535568@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,98 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-[ Upstream commit 0ea6560abb3bac1ffcfa4bf6b2c4d344fdc27b3c ]
+[ Upstream commit 21327a042dd94bc73181d7300e688699cb1f467e ]
 
-ext4_da_map_blocks looks up for any extent entry in the extent status
-tree (w/o i_data_sem) and then the looks up for any ondisk extent
-mapping (with i_data_sem in read mode).
+SSR allocate mode will be used when doing file defragment
+if ATGC is working at the same time, that is because
+set_page_private_gcing may make CURSEG_ALL_DATA_ATGC segment
+type got in f2fs_allocate_data_block when defragment page
+is writeback, which may cause file fragmentation is worse.
 
-If it finds a hole in the extent status tree or if it couldn't find any
-entry at all, it then takes the i_data_sem in write mode to add a da
-entry into the extent status tree. This can actually race with page
-mkwrite & fallocate path.
+A file with 2 fragmentations is changed as following after defragment:
 
-Note that this is ok between
-1. ext4 buffered-write path v/s ext4_page_mkwrite(), because of the
-   folio lock
-2. ext4 buffered write path v/s ext4 fallocate because of the inode
-   lock.
+----------------file info-------------------
+sensorsdata :
+--------------------------------------------
+dev       [254:48]
+ino       [0x    3029 : 12329]
+mode      [0x    81b0 : 33200]
+nlink     [0x       1 : 1]
+uid       [0x    27e6 : 10214]
+gid       [0x    27e6 : 10214]
+size      [0x  242000 : 2367488]
+blksize   [0x    1000 : 4096]
+blocks    [0x    1210 : 4624]
+--------------------------------------------
 
-But this can race between ext4_page_mkwrite() & ext4 fallocate path
+file_pos   start_blk     end_blk        blks
+       0    11361121    11361207          87
+  356352    11361215    11361216           2
+  364544    11361218    11361218           1
+  368640    11361220    11361221           2
+  376832    11361224    11361225           2
+  385024    11361227    11361238          12
+  434176    11361240    11361252          13
+  487424    11361254    11361254           1
+  491520    11361271    11361279           9
+  528384     3681794     3681795           2
+  536576     3681797     3681797           1
+  540672     3681799     3681799           1
+  544768     3681803     3681803           1
+  548864     3681805     3681805           1
+  552960     3681807     3681807           1
+  557056     3681809     3681809           1
 
-ext4_page_mkwrite()             ext4_fallocate()
- block_page_mkwrite()
-  ext4_da_map_blocks()
-   //find hole in extent status tree
-                                 ext4_alloc_file_blocks()
-                                  ext4_map_blocks()
-                                   //allocate block and unwritten extent
-   ext4_insert_delayed_block()
-    ext4_da_reserve_space()
-     //reserve one more block
-    ext4_es_insert_delayed_block()
-     //drop unwritten extent and add delayed extent by mistake
-
-Then, the delalloc extent is wrong until writeback and the extra
-reserved block can't be released any more and it triggers below warning:
-
- EXT4-fs (pmem2): Inode 13 (00000000bbbd4d23): i_reserved_data_blocks(1) not cleared!
-
-Fix the problem by looking up extent status tree again while the
-i_data_sem is held in write mode. If it still can't find any entry, then
-we insert a new da entry into the extent status tree.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240517124005.347221-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Stable-dep-of: 8cb1f4080dd9 ("f2fs: assign CURSEG_ALL_DATA_ATGC if blkaddr is valid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ fs/f2fs/segment.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 168819b4db019..4b0d64a76e88e 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1737,6 +1737,7 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
- 		if (ext4_es_is_hole(&es))
- 			goto add_delayed;
- 
-+found:
- 		/*
- 		 * Delayed extent could be allocated by fallocate.
- 		 * So we need to check it.
-@@ -1781,6 +1782,26 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
- 
- add_delayed:
- 	down_write(&EXT4_I(inode)->i_data_sem);
-+	/*
-+	 * Page fault path (ext4_page_mkwrite does not take i_rwsem)
-+	 * and fallocate path (no folio lock) can race. Make sure we
-+	 * lookup the extent status tree here again while i_data_sem
-+	 * is held in write mode, before inserting a new da entry in
-+	 * the extent status tree.
-+	 */
-+	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
-+		if (!ext4_es_is_hole(&es)) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			goto found;
-+		}
-+	} else if (!ext4_has_inline_data(inode)) {
-+		retval = ext4_map_query_blocks(NULL, inode, map);
-+		if (retval) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			return retval;
-+		}
-+	}
-+
- 	retval = ext4_insert_delayed_block(inode, map->m_lblk);
- 	up_write(&EXT4_I(inode)->i_data_sem);
- 	if (retval)
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 259e235becc59..92331f8dbe4e3 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3483,7 +3483,8 @@ static int __get_segment_type_6(struct f2fs_io_info *fio)
+ 		if (page_private_gcing(fio->page)) {
+ 			if (fio->sbi->am.atgc_enabled &&
+ 				(fio->io_type == FS_DATA_IO) &&
+-				(fio->sbi->gc_mode != GC_URGENT_HIGH))
++				(fio->sbi->gc_mode != GC_URGENT_HIGH) &&
++				!is_inode_flag_set(inode, FI_OPU_WRITE))
+ 				return CURSEG_ALL_DATA_ATGC;
+ 			else
+ 				return CURSEG_COLD_DATA;
 -- 
 2.43.0
 
