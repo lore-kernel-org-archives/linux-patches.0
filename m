@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF1B82488;
-	Wed,  7 Aug 2024 15:04:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5BE82488;
+	Wed,  7 Aug 2024 15:04:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043091; cv=none; b=QX+Fv+2Q5cNBOM89y7/5mEc9WgcZ9XnoYougD56k1xgm1bs9koBOuvLwd+3qxw8xS0WvHucEtnbVEN0GwYSlRB1L8XsC7NtuxTo/HtlN6PvsT0I+3L4tdT6CN1LlprzQbgXCyAjUHGY7zUswB/q2RWvAB5Q7Q/nfWHZ8ZExexfE=
+	t=1723043094; cv=none; b=Any1kDkwiPxavjj41sDbutiZfU9AbDMQ4r5eBFljDwvvNJFtKFTX9Ankp6QdgiL3HbDorNwGKcEWJYO71yOWHgSyVW2XkHgOjJ5dixVAnjoRkArIxhWqAkDFSmW78Jpv7GqUPtBRu28Z3CaDuj/inh4zz2HIgc9wG9f1I/k9xDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043091; c=relaxed/simple;
-	bh=XzKIQ/LcCO2TChKj+rD4o48+mbY53w4kQ1/i6I3gjmk=;
+	s=arc-20240116; t=1723043094; c=relaxed/simple;
+	bh=6Lz6kNgxhSc8QCGCf14yaU613RKBDNuhv+gH2IZuCCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f4cKgHEwH/wcbyas0NxEnrKuQp4z16wLvV7jL64ICIFOYK118HGWo4x30rM+EUyC99dfQwWDAEjQq94JdogkmioAs1cD1NuNOP3P/ooukQNEsh2Fd8I7dQ+oD8/A+xBlx+XWYZevTZvHZKwU/y8E4EX5ErOanxK+V9sT1eqgeSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=an7oErN4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b152eylcJK6OwzPeVTkzIahtFiU3RgtssmZ/uWhtucOIER6bQbjCth0NWikr1cbcVD6b1ZaQyrQExAmQ4pE+LRbtnezUAbFVKGefFiRXVfEt04zNMaKz5F0ZJoB6ZxlgDIWX4D6pHWtSYmhQh9+CvOss3aQsqqchDBdGrtVlzi4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wzXxSHWk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="an7oErN4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61172C32781;
-	Wed,  7 Aug 2024 15:04:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wzXxSHWk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E420C32781;
+	Wed,  7 Aug 2024 15:04:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043091;
-	bh=XzKIQ/LcCO2TChKj+rD4o48+mbY53w4kQ1/i6I3gjmk=;
+	s=korg; t=1723043094;
+	bh=6Lz6kNgxhSc8QCGCf14yaU613RKBDNuhv+gH2IZuCCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=an7oErN4rx6ig+vZdqeaGexTyiPuilfqQFmOfYVdCSc2MWTDiv5/5KbVFD9taaCBw
-	 FwJYkprP64lbfmz+XDKaKr7a+UNZqPNX91HV49sOWnxOdE0Wjm7BkyNVUhiQv57mkp
-	 JPRJ7LIjQgd1uSQQPTpqQ0zYKNqI8q9gZFgp5aQ8=
+	b=wzXxSHWknHXpNHyzQUKpTyjZX45qnooNL0LqkuFYXV+3T35yDS4tRvN0uRwZnnx0j
+	 j5uHcDW09BDDFih5etHRHWnJ5MawWwtTgppEjcIuVKdC+8/SZ2c8fV9quCKkY1Fu4U
+	 O+L6qGfIN44uB0IKQu/j5kzISxt7cPI+gzb2LCQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Edmund Raile <edmund.raile@protonmail.com>,
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 087/123] ALSA: seq: ump: Optimize conversions from SysEx to UMP
-Date: Wed,  7 Aug 2024 17:00:06 +0200
-Message-ID: <20240807150023.625430184@linuxfoundation.org>
+Subject: [PATCH 6.10 088/123] Revert "ALSA: firewire-lib: obsolete workqueue for period update"
+Date: Wed,  7 Aug 2024 17:00:07 +0200
+Message-ID: <20240807150023.655422429@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -49,104 +51,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Edmund Raile <edmund.raile@protonmail.com>
 
-commit 952b13c215234855d75ef4b5bb0138075e73677c upstream.
+commit 6ccf9984d6be3c2f804087b736db05c2ec42664b upstream.
 
-The current conversion from the legacy SysEx event to UMP SysEx packet
-in the sequencer core has a couple of issues:
+prepare resolution of AB/BA deadlock competition for substream lock:
+restore workqueue previously used for process context:
 
-* The first packet trims the SysEx start byte (0xf0), hence it
-  contains only 5 bytes instead of 6.  This isn't wrong, per
-  specification, but it's strange not to fill 6 bytes.
+revert commit b5b519965c4c ("ALSA: firewire-lib: obsolete workqueue
+for period update")
 
-* When the SysEx end marker (0xf7) is placed at the first byte of the
-  next packet, it'll end up with an empty data just with the END
-  status.  It can be rather folded into the previous packet with the
-  END status.
-
-This patch tries to address those issues.  The first packet may have 6
-bytes even with the SysEx start, and an empty packet with the SysEx
-end marker is omitted.
-
-Fixes: e9e02819a98a ("ALSA: seq: Automatic conversion of UMP events")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240726143455.3254-1-tiwai@suse.de
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/kwryofzdmjvzkuw6j3clftsxmoolynljztxqwg76hzeo4simnl@jn3eo7pe642q/
+Signed-off-by: Edmund Raile <edmund.raile@protonmail.com>
+Reviewed-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20240730195318.869840-2-edmund.raile@protonmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/seq/seq_ump_convert.c |   37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ sound/firewire/amdtp-stream.c |   15 +++++++++++++++
+ sound/firewire/amdtp-stream.h |    1 +
+ 2 files changed, 16 insertions(+)
 
---- a/sound/core/seq/seq_ump_convert.c
-+++ b/sound/core/seq/seq_ump_convert.c
-@@ -1192,44 +1192,53 @@ static int cvt_sysex_to_ump(struct snd_s
+--- a/sound/firewire/amdtp-stream.c
++++ b/sound/firewire/amdtp-stream.c
+@@ -77,6 +77,8 @@
+ // overrun. Actual device can skip more, then this module stops the packet streaming.
+ #define IR_JUMBO_PAYLOAD_MAX_SKIP_CYCLES	5
+ 
++static void pcm_period_work(struct work_struct *work);
++
+ /**
+  * amdtp_stream_init - initialize an AMDTP stream structure
+  * @s: the AMDTP stream to initialize
+@@ -105,6 +107,7 @@ int amdtp_stream_init(struct amdtp_strea
+ 	s->flags = flags;
+ 	s->context = ERR_PTR(-1);
+ 	mutex_init(&s->mutex);
++	INIT_WORK(&s->period_work, pcm_period_work);
+ 	s->packet_index = 0;
+ 
+ 	init_waitqueue_head(&s->ready_wait);
+@@ -347,6 +350,7 @@ EXPORT_SYMBOL(amdtp_stream_get_max_paylo
+  */
+ void amdtp_stream_pcm_prepare(struct amdtp_stream *s)
  {
- 	struct snd_seq_ump_event ev_cvt;
- 	unsigned char status;
--	u8 buf[6], *xbuf;
-+	u8 buf[8], *xbuf;
- 	int offset = 0;
- 	int len, err;
-+	bool finished = false;
- 
- 	if (!snd_seq_ev_is_variable(event))
- 		return 0;
- 
- 	setup_ump_event(&ev_cvt, event);
--	for (;;) {
-+	while (!finished) {
- 		len = snd_seq_expand_var_event_at(event, sizeof(buf), buf, offset);
- 		if (len <= 0)
- 			break;
--		if (WARN_ON(len > 6))
-+		if (WARN_ON(len > sizeof(buf)))
- 			break;
--		offset += len;
-+
- 		xbuf = buf;
-+		status = UMP_SYSEX_STATUS_CONTINUE;
-+		/* truncate the sysex start-marker */
- 		if (*xbuf == UMP_MIDI1_MSG_SYSEX_START) {
- 			status = UMP_SYSEX_STATUS_START;
--			xbuf++;
- 			len--;
--			if (len > 0 && xbuf[len - 1] == UMP_MIDI1_MSG_SYSEX_END) {
-+			offset++;
-+			xbuf++;
-+		}
-+
-+		/* if the last of this packet or the 1st byte of the next packet
-+		 * is the end-marker, finish the transfer with this packet
-+		 */
-+		if (len > 0 && len < 8 &&
-+		    xbuf[len - 1] == UMP_MIDI1_MSG_SYSEX_END) {
-+			if (status == UMP_SYSEX_STATUS_START)
- 				status = UMP_SYSEX_STATUS_SINGLE;
--				len--;
--			}
--		} else {
--			if (xbuf[len - 1] == UMP_MIDI1_MSG_SYSEX_END) {
-+			else
- 				status = UMP_SYSEX_STATUS_END;
--				len--;
--			} else {
--				status = UMP_SYSEX_STATUS_CONTINUE;
--			}
-+			len--;
-+			finished = true;
- 		}
-+
-+		len = min(len, 6);
- 		fill_sysex7_ump(dest_port, ev_cvt.ump, status, xbuf, len);
- 		err = __snd_seq_deliver_single_event(dest, dest_port,
- 						     (struct snd_seq_event *)&ev_cvt,
- 						     atomic, hop);
- 		if (err < 0)
- 			return err;
-+		offset += len;
- 	}
- 	return 0;
++	cancel_work_sync(&s->period_work);
+ 	s->pcm_buffer_pointer = 0;
+ 	s->pcm_period_pointer = 0;
  }
+@@ -624,6 +628,16 @@ static void update_pcm_pointers(struct a
+ 	}
+ }
+ 
++static void pcm_period_work(struct work_struct *work)
++{
++	struct amdtp_stream *s = container_of(work, struct amdtp_stream,
++					      period_work);
++	struct snd_pcm_substream *pcm = READ_ONCE(s->pcm);
++
++	if (pcm)
++		snd_pcm_period_elapsed(pcm);
++}
++
+ static int queue_packet(struct amdtp_stream *s, struct fw_iso_packet *params,
+ 			bool sched_irq)
+ {
+@@ -1909,6 +1923,7 @@ static void amdtp_stream_stop(struct amd
+ 		return;
+ 	}
+ 
++	cancel_work_sync(&s->period_work);
+ 	fw_iso_context_stop(s->context);
+ 	fw_iso_context_destroy(s->context);
+ 	s->context = ERR_PTR(-1);
+--- a/sound/firewire/amdtp-stream.h
++++ b/sound/firewire/amdtp-stream.h
+@@ -191,6 +191,7 @@ struct amdtp_stream {
+ 
+ 	/* For a PCM substream processing. */
+ 	struct snd_pcm_substream *pcm;
++	struct work_struct period_work;
+ 	snd_pcm_uframes_t pcm_buffer_pointer;
+ 	unsigned int pcm_period_pointer;
+ 	unsigned int pcm_frame_multiplier;
 
 
