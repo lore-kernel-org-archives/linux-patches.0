@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDCFB2AF07;
-	Wed,  7 Aug 2024 15:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37BD78C92;
+	Wed,  7 Aug 2024 15:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043215; cv=none; b=UcMHD3jXpknZ4KSXzhT6ow/hArl5kMzlkbHg7YH/KRktQCm9hC83whWfHsxTCAsIPLqvurQ9w/MOrQEVbUb8gjtpQs5fL/D/YWdo6Td6g5uWT0R0bQx6aBuTrejPJF9Ev9kiEwabhfblqaRqvY9hyGWPGXql1kNWZWrI2LoDYuk=
+	t=1723043218; cv=none; b=lVIPu1yFStfAYIhgr203OM+Io9XgAMsC9lbiFMOhyd0csQUOU9z+7Pqgur8X1b+diqvvZmoATHspyY5izALzPu1aNwa5EoZMh4n+P+48+v+jCrIL2SRIET+ke3VcVthY0kQv089B36RliZMeMlKARaYG4guqgioZETm8htIdNEs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043215; c=relaxed/simple;
-	bh=KTp/RGNo+sdoMW3rthzRitZpfT61VuDbIW2/NH927z8=;
+	s=arc-20240116; t=1723043218; c=relaxed/simple;
+	bh=rjky8C4GM6KDXiLn6/leNevRCDmP8o3cenFLcyDhcgQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PN0ixKseDETZGGFOVMSVqgynmmSSJTT1OJ7blBPJgQRGNL+d00ylJ5/NLgMR0+l6i8odyF+yskMEr8Q2VpT44IOjRq3hSikDXIR630G6eaOK4H1z0lntvJMmcLn4S/IocUIBsnHoCHKC1Q/zYnAMdYq+SbIY/7Nmx0b7iHiru08=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BQvRomy5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pEQBnncPzmr6xiVm3s0eACmcecBBWM0HrNyuZV/I6CchiiPiSEfQItmUVeYi+kb54EhxjsbmKWsqjrpEDxepzXIDK4124/tiTZENKi7rwudsO6iz/nURdMruqv5J+amvyLMu+VniJZfnwN8tAd4EMMIy+uswwvtG3ZwjOkfddG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FZSqqICt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BQvRomy5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0DAC32781;
-	Wed,  7 Aug 2024 15:06:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FZSqqICt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ACECC32781;
+	Wed,  7 Aug 2024 15:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043215;
-	bh=KTp/RGNo+sdoMW3rthzRitZpfT61VuDbIW2/NH927z8=;
+	s=korg; t=1723043218;
+	bh=rjky8C4GM6KDXiLn6/leNevRCDmP8o3cenFLcyDhcgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQvRomy5TSBT4uCmvFYxuLDmlxc5J/Gj6hzPoCaSFONMHC8B+qazq8AqXR3uXX1lw
-	 7Kaz/u7DuuOYKHrq4luj09dgi3tw8SoaHSitFzfBzuiY3u/j5ak4QfopFucJX4adT8
-	 0pFoCf0/NYL7W0MbIVIVsJsVQlJqPtlaA93przJ4=
+	b=FZSqqICtsoxPt6YBK4PTQJsoDY2uNhzzfXCq6on8xBXTKu/Wz9hLdMB3qDlmco1Fw
+	 xESNXsju6GL+UkTnUHzL+4keF+nWaM+I7xqpUGqcLPNH/wXuL26WjEBu9sR6JTOPg5
+	 Vm+37O3uK1LRlGKiiaWYuHKQX3kFUO3TSWpFi0Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 010/121] arm64: dts: qcom: sdm845: Disable SS instance in Parkmode for USB
-Date: Wed,  7 Aug 2024 16:59:02 +0200
-Message-ID: <20240807150019.718055978@linuxfoundation.org>
+Subject: [PATCH 6.6 011/121] thermal: bcm2835: Convert to platform remove callback returning void
+Date: Wed,  7 Aug 2024 16:59:03 +0200
+Message-ID: <20240807150019.742020612@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -46,57 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Krishna Kurapati <quic_kriskura@quicinc.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit cf4d6d54eadb60d2ee4d31c9d92299f5e8dcb55c ]
+[ Upstream commit f29ecd3748a28d0b52512afc81b3c13fd4a00c9b ]
 
-For Gen-1 targets like SDM845, it is seen that stressing out the
-controller in host mode results in HC died error:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
- xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
- xhci-hcd.12.auto: xHCI host controller not responding, assume dead
- xhci-hcd.12.auto: HC died; cleaning up
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-And at this instant only restarting the host mode fixes it. Disable
-SuperSpeed instance in park mode for SDM845 to mitigate this issue.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Cc: stable@vger.kernel.org
-Fixes: ca4db2b538a1 ("arm64: dts: qcom: sdm845: Add USB-related nodes")
-Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240704152848.3380602-9-quic_kriskura@quicinc.com
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: e90c369cc2ff ("thermal/drivers/broadcom: Fix race between removal and clock disable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/thermal/broadcom/bcm2835_thermal.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index abffd0ad6e90c..dcdc8a0cd1819 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -4080,6 +4080,7 @@ usb_1_dwc3: usb@a600000 {
- 				iommus = <&apps_smmu 0x740 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_1_hsphy>, <&usb_1_qmpphy QMP_USB43DP_USB3_PHY>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
-@@ -4131,6 +4132,7 @@ usb_2_dwc3: usb@a800000 {
- 				iommus = <&apps_smmu 0x760 0>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
-+				snps,parkmode-disable-ss-quirk;
- 				phys = <&usb_2_hsphy>, <&usb_2_qmpphy>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 			};
+diff --git a/drivers/thermal/broadcom/bcm2835_thermal.c b/drivers/thermal/broadcom/bcm2835_thermal.c
+index 3acc9288b3105..5c1cebe075801 100644
+--- a/drivers/thermal/broadcom/bcm2835_thermal.c
++++ b/drivers/thermal/broadcom/bcm2835_thermal.c
+@@ -282,19 +282,17 @@ static int bcm2835_thermal_probe(struct platform_device *pdev)
+ 	return err;
+ }
+ 
+-static int bcm2835_thermal_remove(struct platform_device *pdev)
++static void bcm2835_thermal_remove(struct platform_device *pdev)
+ {
+ 	struct bcm2835_thermal_data *data = platform_get_drvdata(pdev);
+ 
+ 	debugfs_remove_recursive(data->debugfsdir);
+ 	clk_disable_unprepare(data->clk);
+-
+-	return 0;
+ }
+ 
+ static struct platform_driver bcm2835_thermal_driver = {
+ 	.probe = bcm2835_thermal_probe,
+-	.remove = bcm2835_thermal_remove,
++	.remove_new = bcm2835_thermal_remove,
+ 	.driver = {
+ 		.name = "bcm2835_thermal",
+ 		.of_match_table = bcm2835_thermal_of_match_table,
 -- 
 2.43.0
 
