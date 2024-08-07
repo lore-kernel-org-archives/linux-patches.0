@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716184A27;
-	Wed,  7 Aug 2024 15:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D449823DE;
+	Wed,  7 Aug 2024 15:13:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043626; cv=none; b=Zx00pLgVXwAB7Oe2ynKfaDc2Gts7UEt5jFC0FYQZJWv8wh3ejZrae5HjCejV1Su1YW+/DeUzHMLUOwEXtmt2J8EO7yI+vbJfy1lU44JI2KCxSncFAedktg3nqRX8Q+q28Nv8ehJk/78p8QzsoP58QJGmXaMp3qdcIHGIEYDDK/A=
+	t=1723043629; cv=none; b=Cr1tWWBQ2iV1sj965EydA84RpYM9MWpFq2k3AD5dKNrowB+eWfczTnei6eKpxvP+Im64AuvH3QV9nmX1mZxq7Ti2PfsnZMZcSsX4ydBDk3Vm0osdhGsVueJ/0ImxuWdF2oIbBB/UKtU5DNpo5kWqsNHhyNRPSsrRD1gthQMgHAY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043626; c=relaxed/simple;
-	bh=C6L/smlR3srmvju6xsfRp1JLDHm8dWWgnTwNZrDjlKI=;
+	s=arc-20240116; t=1723043629; c=relaxed/simple;
+	bh=llLU+/L3iYJOF3rL3B6LRaVC4Emh8Bcxj3PhPgyIvmQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FOj9nIKsmW5nuAkbYnwxGZ6f1bytemNCu/4K5Nb8ejju1yGgS410d8KhKpQ5B+4pvR5CCfmmkgM2VbfZxfYj0tyozXzbVhvc/oc8BYoCBT2dtTIhQy71x2qfseuLCyUYYnrv5CPs9EE3eivFXlRpjB9t3smqufIzajm/JejW1x4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUp4Jnch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hCADu3PiSHe2epSpbeHPWcWjqb7weKLUwXqel9ti8CndJ1qyZWAXqpE2FCDGeurTfXZ/fBDiuUL5zOcBP5HspjarqhOHwXuQ6ZrxR2a5q/O0aec9wjJe8XdYTZ6wp+bx/QdUgjrvPtZwYVdiZ/zAShYF3RzwuU1yuEjcrxBL+Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr7fVpNa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUp4Jnch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096DEC32781;
-	Wed,  7 Aug 2024 15:13:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr7fVpNa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BE2C32781;
+	Wed,  7 Aug 2024 15:13:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043626;
-	bh=C6L/smlR3srmvju6xsfRp1JLDHm8dWWgnTwNZrDjlKI=;
+	s=korg; t=1723043629;
+	bh=llLU+/L3iYJOF3rL3B6LRaVC4Emh8Bcxj3PhPgyIvmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUp4Jnchonl1FAxBjeZmxG9c9ZphpVU2b85sAGCRMgCaNxtbNT+gnI9E75kkWsGN6
-	 aZ7bLpxUeUN51ppl4IeUQg2FGeZbcTWbJZx2pEAgyF58XbsYW7p2kOwhaPld5NRMpP
-	 cfJdfAGRHk/3VqjzIZZ2eVR71wiqknLfcr5Z7v3U=
+	b=Gr7fVpNa0Z/crvKIVjHCln1/+fowkHm87cwETb0e+3T2QsPwhtwltX8E1XDCUWeET
+	 g5FKxsWp73q8Zs97s30xLYjGs7u1nQ/+m6nnLNyC6znyVzu6Lg4o0+DvMCqHlXKxlc
+	 4NeEXsBzgNxoRzBwmnOOH4r4NjCTeS7XQSbrTVUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurinko <petrvelicka@tuta.io>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 40/86] HID: amd_sfh: Move sensor discovery before HID device initialization
-Date: Wed,  7 Aug 2024 17:00:19 +0200
-Message-ID: <20240807150040.563556340@linuxfoundation.org>
+Subject: [PATCH 6.1 41/86] drm/nouveau: prime: fix refcount underflow
+Date: Wed,  7 Aug 2024 17:00:20 +0200
+Message-ID: <20240807150040.596666593@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -46,72 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit 8031b001da700474c11d28629581480b12a0d8d4 ]
+[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
 
-Sensors discovery is independent of HID device initialization. If sensor
-discovery fails after HID initialization, then the HID device needs to be
-deinitialized. Therefore, sensors discovery should be moved before HID
-device initialization.
+Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
+hence the backing ttm_bo) leads to a refcount underflow.
 
-Fixes: 7bcfdab3f0c6 ("HID: amd_sfh: if no sensors are enabled, clean up")
-Tested-by: Aurinko <petrvelicka@tuta.io>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://patch.msgid.link/20240718111616.3012155-1-Basavaraj.Natikar@amd.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Instead of calling nouveau_bo_ref() in the unwind path of
+drm_gem_object_init(), clean things up manually.
+
+Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
+(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_client.c b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-index 6e65379b10d53..4343fef7dd83e 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -287,12 +287,22 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 		mp2_ops->start(privdata, info);
- 		cl_data->sensor_sts[i] = amd_sfh_wait_for_response
- 						(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
-+
-+		if (cl_data->sensor_sts[i] == SENSOR_ENABLED)
-+			cl_data->is_any_sensor_enabled = true;
-+	}
-+
-+	if (!cl_data->is_any_sensor_enabled ||
-+	    (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
-+		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n",
-+			 cl_data->is_any_sensor_enabled);
-+		rc = -EOPNOTSUPP;
-+		goto cleanup;
+diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
+index 9608121e49b7e..8340d55aaa987 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_prime.c
++++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
+@@ -63,7 +63,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
+ 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
+ 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
+ 	if (ret) {
+-		nouveau_bo_ref(NULL, &nvbo);
++		drm_gem_object_release(&nvbo->bo.base);
++		kfree(nvbo);
+ 		obj = ERR_PTR(-ENOMEM);
+ 		goto unlock;
  	}
- 
- 	for (i = 0; i < cl_data->num_hid_devices; i++) {
- 		cl_data->cur_hid_dev = i;
- 		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
--			cl_data->is_any_sensor_enabled = true;
- 			rc = amdtp_hid_probe(i, cl_data);
- 			if (rc)
- 				goto cleanup;
-@@ -308,12 +318,6 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 			cl_data->sensor_sts[i]);
- 	}
- 
--	if (!cl_data->is_any_sensor_enabled ||
--	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
--		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
--		rc = -EOPNOTSUPP;
--		goto cleanup;
--	}
- 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
- 	return 0;
- 
 -- 
 2.43.0
 
