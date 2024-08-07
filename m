@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8778F823AF;
-	Wed,  7 Aug 2024 15:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 053F082499;
+	Wed,  7 Aug 2024 15:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043618; cv=none; b=omu5GNGirfp2cua8Es0QFYiloYx/wEBI1BQrWCGxBuZe8Q69syYX93fgS+34cAFFF5q3UVETx4Pbw8T2oHkhQyogSA7yKchsM4RMh/4pYrfg4YEAshmdokAroNM93UYSi/ypEyBzpqDfBz1axzgp3eGaT+46VyYcczOz3VZ2STA=
+	t=1723043621; cv=none; b=NPaSLAndTr/me1iQlmX+LX/l680OsCYD9hZHn50pJZCqk4nEHKhRUikL3eiaOg6iIpigESFRYKCinFn4fo6a/a+mhpWTCl36l+8VCd0bdn1dsyj1Jdz75Wy1N5T/bN5RC0DJVSwiI96QOf4GoIFLA0cmtOs6HjvixTSQq6qZt18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043618; c=relaxed/simple;
-	bh=G7OZXzs8sEiOGUX6xNdkwvkWfR40kgnNX+yilyw0v9I=;
+	s=arc-20240116; t=1723043621; c=relaxed/simple;
+	bh=Svfokq+rrJghC83j1sVymGbbi73pkeg5bQhwdUbPEQ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ejJhcdNB1Vv1zmSKVQSodBma2wZfcv90x3kw0kNiydv7Adc02a9TyAOnSX12/o7pzs+bGSZwfdHozAmBxETJ5Wd3oJ3k2ES0UpWuydHWhJa51u7TVn9JFWqvq5AAiSdyD4OEKd+a1CfMHeIAb7CCFl4cwYprNK/WSQRtEEiJmM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G1s9ZwGu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JV2obnVaPNLw2McN4JMUg4kG+Ofh6BnLf2/HfqGmhideO+ETzApaIq8RcG44ti+2IUk9RH2cUR7fCQckfCLmr1OeQ9XQKwVDzYwEXhnwstunzyXzEipqG6WqwbylCZ53lwmiqy15MQilchgmCwjfYrECPuNejGuqyjhX7YfLAD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iynGaEqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G1s9ZwGu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D59C32781;
-	Wed,  7 Aug 2024 15:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iynGaEqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD7CC32781;
+	Wed,  7 Aug 2024 15:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043618;
-	bh=G7OZXzs8sEiOGUX6xNdkwvkWfR40kgnNX+yilyw0v9I=;
+	s=korg; t=1723043620;
+	bh=Svfokq+rrJghC83j1sVymGbbi73pkeg5bQhwdUbPEQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1s9ZwGuefa3IqyFV5IV3V1Qe8z76RHxpy0+YIZqSyuQZ5d8C0Q2ZNEGed37b9yeD
-	 xxSQsnvVFUaISLrmIhvTaKvFx8CG/1ah5TTes6rVvfX2UApvIBmHjlT7sLmm7nYGtl
-	 L62tCHVjU2jNg5jlKCAFLciPpkRRypLGEjS9bfcc=
+	b=iynGaEqCvYSFEkRSf4baEd85v/y0UuddjnZX7EqDEaylskODmVxTl7GL94G5f37zj
+	 1JEpu99qNMCxDBsKtlIZvd/8iqXFzfA6zhcy+x33Dli5rZVusmtMSiV+aZwyqrT23l
+	 KdkVixB2JOAe/w0ox2V5ITsTVS5OkdCNm9WolH/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 37/86] MIPS: dts: loongson: Fix ls2k1000-rtc interrupt
-Date: Wed,  7 Aug 2024 17:00:16 +0200
-Message-ID: <20240807150040.451901921@linuxfoundation.org>
+Subject: [PATCH 6.1 38/86] HID: amd_sfh: Remove duplicate cleanup
+Date: Wed,  7 Aug 2024 17:00:17 +0200
+Message-ID: <20240807150040.490068613@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -51,36 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit f70fd92df7529e7283e02a6c3a2510075f13ba30 ]
+[ Upstream commit e295709054d59e35be44794dd125efee528ccceb ]
 
-The correct interrupt line for RTC is line 8 on liointc1.
+A number of duplicate cleanups are performed that are not necessary. As a
+result, remove duplicate cleanups and use common cleanup.
 
-Fixes: e47084e116fc ("MIPS: Loongson64: DTS: Add RTC support to Loongson-2K1000")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Stable-dep-of: 8031b001da70 ("HID: amd_sfh: Move sensor discovery before HID device initialization")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_client.c | 27 ++++--------------------
+ 1 file changed, 4 insertions(+), 23 deletions(-)
 
-diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-index eec8243be6499..cc7747c5f21f3 100644
---- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-+++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-@@ -99,8 +99,8 @@ liointc1: interrupt-controller@1fe11440 {
- 		rtc0: rtc@1fe07800 {
- 			compatible = "loongson,ls2k1000-rtc";
- 			reg = <0 0x1fe07800 0 0x78>;
--			interrupt-parent = <&liointc0>;
--			interrupts = <60 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-parent = <&liointc1>;
-+			interrupts = <8 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_client.c b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
+index c751d12f5df89..34eb419b225ed 100644
+--- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
++++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
+@@ -291,18 +291,8 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
+ 			cl_data->is_any_sensor_enabled = true;
+ 			cl_data->sensor_sts[i] = SENSOR_ENABLED;
+ 			rc = amdtp_hid_probe(cl_data->cur_hid_dev, cl_data);
+-			if (rc) {
+-				mp2_ops->stop(privdata, cl_data->sensor_idx[i]);
+-				status = amd_sfh_wait_for_response
+-					(privdata, cl_data->sensor_idx[i], SENSOR_DISABLED);
+-				if (status != SENSOR_ENABLED)
+-					cl_data->sensor_sts[i] = SENSOR_DISABLED;
+-				dev_dbg(dev, "sid 0x%x (%s) status 0x%x\n",
+-					cl_data->sensor_idx[i],
+-					get_sensor_name(cl_data->sensor_idx[i]),
+-					cl_data->sensor_sts[i]);
++			if (rc)
+ 				goto cleanup;
+-			}
+ 		} else {
+ 			cl_data->sensor_sts[i] = SENSOR_DISABLED;
+ 			dev_dbg(dev, "sid 0x%x (%s) status 0x%x\n",
+@@ -316,25 +306,16 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
+ 	}
+ 	if (!cl_data->is_any_sensor_enabled ||
+ 	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
+-		amd_sfh_hid_client_deinit(privdata);
+-		for (i = 0; i < cl_data->num_hid_devices; i++) {
+-			devm_kfree(dev, cl_data->feature_report[i]);
+-			devm_kfree(dev, in_data->input_report[i]);
+-			devm_kfree(dev, cl_data->report_descr[i]);
+-		}
+ 		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
+-		return -EOPNOTSUPP;
++		rc = -EOPNOTSUPP;
++		goto cleanup;
+ 	}
+ 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
+ 	return 0;
  
- 		uart0: serial@1fe00000 {
+ cleanup:
++	amd_sfh_hid_client_deinit(privdata);
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
+-		if (in_data->sensor_virt_addr[i]) {
+-			dma_free_coherent(&privdata->pdev->dev, 8 * sizeof(int),
+-					  in_data->sensor_virt_addr[i],
+-					  cl_data->sensor_dma_addr[i]);
+-		}
+ 		devm_kfree(dev, cl_data->feature_report[i]);
+ 		devm_kfree(dev, in_data->input_report[i]);
+ 		devm_kfree(dev, cl_data->report_descr[i]);
 -- 
 2.43.0
 
