@@ -1,109 +1,197 @@
-Received: from out-184.mta1.migadu.com (out-184.mta1.migadu.com [95.215.58.184])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618A778281
-	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 15:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.184
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18CAD823A9;
+	Wed,  7 Aug 2024 15:07:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043223; cv=none; b=Z+QPNnq0E/p3Rkvu6XBsn43o7tE5v32D7RPtSe7CDI7VCXTuahpqThfn8GfpQWo2lkTIbrlBnoLKHmUfZRQB5n6woG1PqsnRY0Spsfix3ElpHlctdmkMSXp6Ybl7ztfek88398STuigFgf8QBS44e/lDBLB/yqrAoVPHRJ3vqCM=
+	t=1723043224; cv=none; b=P5+Z1zmz9uCk2evf3EGZyMUz22zz0vmy9sC/oQerCRKwK8ysv31mTjn0b7HMMORKeeh1GQB+ulQvJYesPYvHwfKT9xNnTVS3H7avhLsxbKvowF9JUNvyW9xzDAHxIF6u/DD04trctes55D1yH0AHPy44uy3KO69WyePh3m0jaMw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043223; c=relaxed/simple;
-	bh=HD8hrV4gIHuxpAFIzfROM1BuDx1AYrUPGttLpTR1FvY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=avLXDD8Y3r2ex8wpWZNAOAPDiclRfZT9e47/TVKYAPuVPiiOoPLc8sbfeNmivFyJMaNC0bmF0WhGSLxHE5LvjsLaK7rkM/Bm/qh435AuUIGULFZNX1wRiTf18ez4mHJMLCUrXSVeR1C/WKbxPfuvpc1ok3lMes9TcsKAzMW80DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev; spf=pass smtp.mailfrom=holm.dev; dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b=02apBj7D; arc=none smtp.client-ip=95.215.58.184
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=holm.dev
+	s=arc-20240116; t=1723043224; c=relaxed/simple;
+	bh=QoUOJlb+uHnzku92O9QD+nZXJ9KQ/oaNLXqkJM43W6w=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fSdcxhz+6NBwSrRKLzpnRgYJC/nL+csyOAtcDjuLEE8h+c3+N/Zj56eaCNhL16sDGXiV1Prl01tfLM2Ak4LxqQKIoYojb0WLbA1TJXfFOoSylwcrWQAmnnwXa1YLTGTOc8bbK5c/hXzfmNPB+6+AvtiSwzRHkkaK54AqeQ+IhYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WZKPw8yg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b="02apBj7D"
-Message-ID: <27a85289-1fe4-4131-b5d6-6608ef699632@holm.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=holm.dev; s=key1;
-	t=1723043217;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=S8ttu6TLJyke3ECLcjRhYkI8l7Hm4bTOSkREYhvq7OE=;
-	b=02apBj7D5qMfz0zV5VLertTj2zbCK6UOxZZ6sqINVLpfBy2jclLwyAU6eHHHDrIR6vvYgn
-	GVPJpFLLb8/hUmLqpiQz0o8OuVLssuJLH1SfgNtGp9raxr7+9nQKKl+wURRhBkQJwRzbns
-	X5RI5MHf/DMts7o9AZ0VylZdiCf0TWhaN8tvEzX0Q/5OE72WTSv9fle4v1ZJzs+RYt25jg
-	DLT6uIjjqWSUmisH9NOA323TMIrUKN5Ix8aZCh29jS4GpO1jCMYCzO4vGM1PWB4EmqeU3B
-	jAeR39wSSt+3jzI87KEq8DBj5jyTwI9AexszqLQ1roSRc3NhkMe6mEx9i+AP3A==
-Date: Wed, 7 Aug 2024 17:06:54 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WZKPw8yg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44A3FC32781;
+	Wed,  7 Aug 2024 15:07:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1723043223;
+	bh=QoUOJlb+uHnzku92O9QD+nZXJ9KQ/oaNLXqkJM43W6w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WZKPw8ygB951yS+L32LqrPr/knzp/zjTKkYN932sQa4bCFGkSc++qtwA3xM3MPj5c
+	 4VAZpLfjqfiEGU0P+R/zI1M5KNq0Je9HdVQ8QBO/jh2j0KriEuTd3Y7b0HF2kPGuer
+	 zo5HcMOkStLd3dVFZAzkr/UAf2bsSuv7Y/7Nk9Lw=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Alexey Gladkov <legion@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Joel Granados <joel.granados@gmail.com>,
+	Kees Cook <keescook@chromium.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Manfred Spraul <manfred@colorfullife.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 013/121] sysctl: allow change system v ipc sysctls inside ipc namespace
+Date: Wed,  7 Aug 2024 16:59:05 +0200
+Message-ID: <20240807150019.807652669@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
+References: <20240807150019.412911622@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 6.10 001/123] mm/huge_memory: mark racy access
- onhuge_anon_orders_always
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Ran Xiaokai <ran.xiaokai@zte.com.cn>,
- David Hildenbrand <david@redhat.com>, Lu Zhongjun <lu.zhongjun@zte.com.cn>,
- xu xin <xu.xin16@zte.com.cn>, Yang Yang <yang.yang29@zte.com.cn>,
- "Matthew Wilcox (Oracle)" <willy@infradead.org>,
- Yang Shi <shy828301@gmail.com>, Zi Yan <ziy@nvidia.com>,
- Andrew Morton <akpm@linux-foundation.org>, Sasha Levin <sashal@kernel.org>
-References: <20240807150020.790615758@linuxfoundation.org>
- <20240807150020.834416694@linuxfoundation.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Kevin Holm <kevin@holm.dev>
-In-Reply-To: <20240807150020.834416694@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-On 8/7/24 16:58, Greg Kroah-Hartman wrote:
-> 6.10-stable review patch.  If anyone has any objections, please let me know.
-Did the back port [1] I submit just get missed? It fixes a regression I reported 
-[2] with high resolution displays on a dp link after a hub in the amdgpu driver.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
-[1] https://lore.kernel.org/stable/20240730185339.543359-1-kevin@holm.dev/
-[2] 
-https://lore.kernel.org/stable/d74a7768e957e6ce88c27a5bece0c64dff132e24@holm.dev/T/#u
-> 
-> ------------------
-> 
-> From: Ran Xiaokai <ran.xiaokai@zte.com.cn>
-> 
-> [ Upstream commit 7f83bf14603ef41a44dc907594d749a283e22c37 ]
-> 
-> huge_anon_orders_always is accessed lockless, it is better to use the
-> READ_ONCE() wrapper.  This is not fixing any visible bug, hopefully this
-> can cease some KCSAN complains in the future.  Also do that for
-> huge_anon_orders_madvise.
-> 
-> Link: https://lkml.kernel.org/r/20240515104754889HqrahFPePOIE1UlANHVAh@zte.com.cn
-> Signed-off-by: Ran Xiaokai <ran.xiaokai@zte.com.cn>
-> Acked-by: David Hildenbrand <david@redhat.com>
-> Reviewed-by: Lu Zhongjun <lu.zhongjun@zte.com.cn>
-> Reviewed-by: xu xin <xu.xin16@zte.com.cn>
-> Cc: Yang Yang <yang.yang29@zte.com.cn>
-> Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-> Cc: Yang Shi <shy828301@gmail.com>
-> Cc: Zi Yan <ziy@nvidia.com>
-> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> Stable-dep-of: 00f58104202c ("mm: fix khugepaged activation policy")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->   include/linux/huge_mm.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/include/linux/huge_mm.h b/include/linux/huge_mm.h
-> index c73ad77fa33d3..71945cf4c7a8d 100644
-> --- a/include/linux/huge_mm.h
-> +++ b/include/linux/huge_mm.h
-> @@ -140,8 +140,8 @@ static inline bool hugepage_flags_enabled(void)
->   	 * So we don't need to look at huge_anon_orders_inherit.
->   	 */
->   	return hugepage_global_enabled() ||
-> -	       huge_anon_orders_always ||
-> -	       huge_anon_orders_madvise;
-> +	       READ_ONCE(huge_anon_orders_always) ||
-> +	       READ_ONCE(huge_anon_orders_madvise);
->   }
->   
->   static inline int highest_order(unsigned long orders)
+------------------
+
+From: Alexey Gladkov <legion@kernel.org>
+
+[ Upstream commit 50ec499b9a43e46200c9f7b7d723ab2e4af540b3 ]
+
+Patch series "Allow to change ipc/mq sysctls inside ipc namespace", v3.
+
+Right now ipc and mq limits count as per ipc namespace, but only real root
+can change them.  By default, the current values of these limits are such
+that it can only be reduced.  Since only root can change the values, it is
+impossible to reduce these limits in the rootless container.
+
+We can allow limit changes within ipc namespace because mq parameters are
+limited by RLIMIT_MSGQUEUE and ipc parameters are not limited to anything
+other than cgroups.
+
+This patch (of 3):
+
+Rootless containers are not allowed to modify kernel IPC parameters.
+
+All default limits are set to such high values that in fact there are no
+limits at all.  All limits are not inherited and are initialized to
+default values when a new ipc_namespace is created.
+
+For new ipc_namespace:
+
+size_t       ipc_ns.shm_ctlmax = SHMMAX; // (ULONG_MAX - (1UL << 24))
+size_t       ipc_ns.shm_ctlall = SHMALL; // (ULONG_MAX - (1UL << 24))
+int          ipc_ns.shm_ctlmni = IPCMNI; // (1 << 15)
+int          ipc_ns.shm_rmid_forced = 0;
+unsigned int ipc_ns.msg_ctlmax = MSGMAX; // 8192
+unsigned int ipc_ns.msg_ctlmni = MSGMNI; // 32000
+unsigned int ipc_ns.msg_ctlmnb = MSGMNB; // 16384
+
+The shm_tot (total amount of shared pages) has also ceased to be global,
+it is located in ipc_namespace and is not inherited from anywhere.
+
+In such conditions, it cannot be said that these limits limit anything.
+The real limiter for them is cgroups.
+
+If we allow rootless containers to change these parameters, then it can
+only be reduced.
+
+Link: https://lkml.kernel.org/r/cover.1705333426.git.legion@kernel.org
+Link: https://lkml.kernel.org/r/d2f4603305cbfed58a24755aa61d027314b73a45.1705333426.git.legion@kernel.org
+Signed-off-by: Alexey Gladkov <legion@kernel.org>
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Link: https://lkml.kernel.org/r/e2d84d3ec0172cfff759e6065da84ce0cc2736f8.1663756794.git.legion@kernel.org
+Cc: Christian Brauner <brauner@kernel.org>
+Cc: Joel Granados <joel.granados@gmail.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Manfred Spraul <manfred@colorfullife.com>
+Cc: Davidlohr Bueso <dave@stgolabs.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 98ca62ba9e2b ("sysctl: always initialize i_uid/i_gid")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ ipc/ipc_sysctl.c | 37 +++++++++++++++++++++++++++++++++++--
+ 1 file changed, 35 insertions(+), 2 deletions(-)
+
+diff --git a/ipc/ipc_sysctl.c b/ipc/ipc_sysctl.c
+index 8c62e443f78b3..01c4a50d22b2d 100644
+--- a/ipc/ipc_sysctl.c
++++ b/ipc/ipc_sysctl.c
+@@ -14,6 +14,7 @@
+ #include <linux/ipc_namespace.h>
+ #include <linux/msg.h>
+ #include <linux/slab.h>
++#include <linux/cred.h>
+ #include "util.h"
+ 
+ static int proc_ipc_dointvec_minmax_orphans(struct ctl_table *table, int write,
+@@ -190,25 +191,57 @@ static int set_is_seen(struct ctl_table_set *set)
+ 	return &current->nsproxy->ipc_ns->ipc_set == set;
+ }
+ 
++static void ipc_set_ownership(struct ctl_table_header *head,
++			      struct ctl_table *table,
++			      kuid_t *uid, kgid_t *gid)
++{
++	struct ipc_namespace *ns =
++		container_of(head->set, struct ipc_namespace, ipc_set);
++
++	kuid_t ns_root_uid = make_kuid(ns->user_ns, 0);
++	kgid_t ns_root_gid = make_kgid(ns->user_ns, 0);
++
++	*uid = uid_valid(ns_root_uid) ? ns_root_uid : GLOBAL_ROOT_UID;
++	*gid = gid_valid(ns_root_gid) ? ns_root_gid : GLOBAL_ROOT_GID;
++}
++
+ static int ipc_permissions(struct ctl_table_header *head, struct ctl_table *table)
+ {
+ 	int mode = table->mode;
+ 
+ #ifdef CONFIG_CHECKPOINT_RESTORE
+-	struct ipc_namespace *ns = current->nsproxy->ipc_ns;
++	struct ipc_namespace *ns =
++		container_of(head->set, struct ipc_namespace, ipc_set);
+ 
+ 	if (((table->data == &ns->ids[IPC_SEM_IDS].next_id) ||
+ 	     (table->data == &ns->ids[IPC_MSG_IDS].next_id) ||
+ 	     (table->data == &ns->ids[IPC_SHM_IDS].next_id)) &&
+ 	    checkpoint_restore_ns_capable(ns->user_ns))
+ 		mode = 0666;
++	else
+ #endif
+-	return mode;
++	{
++		kuid_t ns_root_uid;
++		kgid_t ns_root_gid;
++
++		ipc_set_ownership(head, table, &ns_root_uid, &ns_root_gid);
++
++		if (uid_eq(current_euid(), ns_root_uid))
++			mode >>= 6;
++
++		else if (in_egroup_p(ns_root_gid))
++			mode >>= 3;
++	}
++
++	mode &= 7;
++
++	return (mode << 6) | (mode << 3) | mode;
+ }
+ 
+ static struct ctl_table_root set_root = {
+ 	.lookup = set_lookup,
+ 	.permissions = ipc_permissions,
++	.set_ownership = ipc_set_ownership,
+ };
+ 
+ bool setup_ipc_sysctls(struct ipc_namespace *ns)
+-- 
+2.43.0
+
+
 
