@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A9981AB6;
-	Wed,  7 Aug 2024 15:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E833A1C4;
+	Wed,  7 Aug 2024 15:08:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043325; cv=none; b=CcXdsF4URwbk3pbWMxpQHSS4A07H+iFJm3g3+yQM5u7yudMgQhaU7MIkXW7s7UlqqZ59I6Yu0RkbwRDlyb8er7tginRfkC20mE7Bcjo+TffJOAPFanQgulopdmdv3abwDlvv9VHC3bzFJhn0lXgXkeOgdBUJsqaQi1P036ZK0xw=
+	t=1723043328; cv=none; b=lV81Jryvc9soR+awIZkK2wwVvgeiX6qYzatqwvF3tfQPWQRnh/RiI3mLGH/Ae5vXvkZf8s7wuVNUxUAZlr4deA/uCXdXc0EgLSfIJLgdVR49XaOwj6a76l8w2MGC+xt/fUNpZYOvtauKmeEW8JC3k2MsQNXGZAbwX/VFOjwkYC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043325; c=relaxed/simple;
-	bh=KKQ/q0YWVdsYLVfgL73yCzFw26k4tal1NStdJG4xgJ4=;
+	s=arc-20240116; t=1723043328; c=relaxed/simple;
+	bh=gnFzgdRtlEYCJ/ebGUaYnzZ75YGivHMVFjK9Be5qj5E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LCE4gZ6D/DrrVUYxvdQT6l3johlipxunzbOOd8XohFEs4aS6sOQZMwezp3QjMEq+ahsEvTr1g14Yw44S3fx4aoTv9hW+sZuKfNpLDVvXZjCt3SAdSDBBMcJPohVNmMGNGRHNvJIbD3T9FXz5pzXi4j9xbV5wx1QxXFziaBrzdwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W+tog37A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f0inEDTTDvBwDgxEopsXuF7BQjaKZgmsKL1Gh0BwQcfyL3YAVzb1robK4+HOFPCexjQTn0rLbuD0DYaXOISYCEugossgPS2aCP5KGaPTKhzZLAuigbPfeHO3nhSpPwUcsGsA9at15zdd7XY+vhpk61JRLI78LPVW+ZMkUbZuTWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Oazpw+2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W+tog37A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9921C32781;
-	Wed,  7 Aug 2024 15:08:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Oazpw+2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0605FC32781;
+	Wed,  7 Aug 2024 15:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043325;
-	bh=KKQ/q0YWVdsYLVfgL73yCzFw26k4tal1NStdJG4xgJ4=;
+	s=korg; t=1723043328;
+	bh=gnFzgdRtlEYCJ/ebGUaYnzZ75YGivHMVFjK9Be5qj5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+tog37AyGcys3cRmOx5uIwAmju8F9G0LdDR5MP7X3BqDRF4Se63LEi0LKoA8JhNM
-	 YxpUsa6kvxlcQ5hqnDR22+HLBuNf0Df1xBz68cpKvQTX9N5HeUfokd6+Hp7g01SaeB
-	 PphPc7Oz/gfhfHCj6Cb1HfPKdaUpDWdQ2LEdeQ+A=
+	b=Oazpw+2DuxanFyvnzS7F8hnZYb8YUifjPVTLHU4QVkcEZvSzgPzJrYT99oN5D9cAx
+	 tg0sILMTXVtwAlrUYYT/qRBieo6Ze8qZPvVbur1v4SlBJ8+5/j6qK+sobHaxIe3Mv1
+	 0F/M8rITT+TGBxcKFtREoaCkXS6XdQ3oE47nahiE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 048/121] MIPS: dts: loongson: Fix liointc IRQ polarity
-Date: Wed,  7 Aug 2024 16:59:40 +0200
-Message-ID: <20240807150020.978631361@linuxfoundation.org>
+Subject: [PATCH 6.6 021/121] cpufreq: qcom-nvmem: Simplify driver data allocation
+Date: Wed,  7 Aug 2024 16:59:13 +0200
+Message-ID: <20240807150020.048267689@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,170 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-[ Upstream commit dbb69b9d6234aad23b3ecd33e5bc8a8ae1485b7d ]
+[ Upstream commit 2a5d46c3ad6b0e62d2b04356ad999d504fb564e0 ]
 
-All internal liointc interrupts are high level triggered.
+Simplify the allocation and cleanup of driver data by using devm
+together with a flexible array. Prepare for adding additional per-CPU
+data by defining a struct qcom_cpufreq_drv_cpu instead of storing the
+opp_tokens directly.
 
-Fixes: b1a792601f26 ("MIPS: Loongson64: DeviceTree for Loongson-2K1000")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Stable-dep-of: d01c84b97f19 ("cpufreq: qcom-nvmem: fix memory leaks in probe error paths")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/loongson/loongson64-2k1000.dtsi  | 42 +++++++++----------
- 1 file changed, 21 insertions(+), 21 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-nvmem.c | 49 ++++++++++------------------
+ 1 file changed, 18 insertions(+), 31 deletions(-)
 
-diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-index c1d3092fdd870..eec8243be6499 100644
---- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-+++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
-@@ -100,7 +100,7 @@ rtc0: rtc@1fe07800 {
- 			compatible = "loongson,ls2k1000-rtc";
- 			reg = <0 0x1fe07800 0 0x78>;
- 			interrupt-parent = <&liointc0>;
--			interrupts = <60 IRQ_TYPE_LEVEL_LOW>;
-+			interrupts = <60 IRQ_TYPE_LEVEL_HIGH>;
- 		};
+diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+index 84d7033e5efe8..03586fee15aac 100644
+--- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
++++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
+@@ -40,10 +40,14 @@ struct qcom_cpufreq_match_data {
+ 	const char **genpd_names;
+ };
  
- 		uart0: serial@1fe00000 {
-@@ -108,7 +108,7 @@ uart0: serial@1fe00000 {
- 			reg = <0 0x1fe00000 0 0x8>;
- 			clock-frequency = <125000000>;
- 			interrupt-parent = <&liointc0>;
--			interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
-+			interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
- 			no-loopback-test;
- 		};
++struct qcom_cpufreq_drv_cpu {
++	int opp_token;
++};
++
+ struct qcom_cpufreq_drv {
+-	int *opp_tokens;
+ 	u32 versions;
+ 	const struct qcom_cpufreq_match_data *data;
++	struct qcom_cpufreq_drv_cpu cpus[];
+ };
  
-@@ -131,8 +131,8 @@ gmac@3,0 {
- 						   "pciclass0c03";
+ static struct platform_device *cpufreq_dt_pdev, *cpufreq_pdev;
+@@ -243,42 +247,32 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 		return -ENOENT;
+ 	}
  
- 				reg = <0x1800 0x0 0x0 0x0 0x0>;
--				interrupts = <12 IRQ_TYPE_LEVEL_LOW>,
--					     <13 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <12 IRQ_TYPE_LEVEL_HIGH>,
-+					     <13 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
- 				interrupt-parent = <&liointc0>;
- 				phy-mode = "rgmii-id";
-@@ -155,8 +155,8 @@ gmac@3,1 {
- 						   "loongson, pci-gmac";
+-	drv = kzalloc(sizeof(*drv), GFP_KERNEL);
++	drv = devm_kzalloc(&pdev->dev, struct_size(drv, cpus, num_possible_cpus()),
++		           GFP_KERNEL);
+ 	if (!drv)
+ 		return -ENOMEM;
  
- 				reg = <0x1900 0x0 0x0 0x0 0x0>;
--				interrupts = <14 IRQ_TYPE_LEVEL_LOW>,
--					     <15 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <14 IRQ_TYPE_LEVEL_HIGH>,
-+					     <15 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-names = "macirq", "eth_lpi";
- 				interrupt-parent = <&liointc0>;
- 				phy-mode = "rgmii-id";
-@@ -178,7 +178,7 @@ ehci@4,1 {
- 						   "pciclass0c03";
+ 	match = pdev->dev.platform_data;
+ 	drv->data = match->data;
+-	if (!drv->data) {
+-		ret = -ENODEV;
+-		goto free_drv;
+-	}
++	if (!drv->data)
++		return -ENODEV;
  
- 				reg = <0x2100 0x0 0x0 0x0 0x0>;
--				interrupts = <18 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <18 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 			};
+ 	if (drv->data->get_version) {
+ 		speedbin_nvmem = of_nvmem_cell_get(np, NULL);
+-		if (IS_ERR(speedbin_nvmem)) {
+-			ret = dev_err_probe(cpu_dev, PTR_ERR(speedbin_nvmem),
+-					    "Could not get nvmem cell\n");
+-			goto free_drv;
+-		}
++		if (IS_ERR(speedbin_nvmem))
++			return dev_err_probe(cpu_dev, PTR_ERR(speedbin_nvmem),
++					     "Could not get nvmem cell\n");
  
-@@ -189,7 +189,7 @@ ohci@4,2 {
- 						   "pciclass0c03";
+ 		ret = drv->data->get_version(cpu_dev,
+ 							speedbin_nvmem, &pvs_name, drv);
+ 		if (ret) {
+ 			nvmem_cell_put(speedbin_nvmem);
+-			goto free_drv;
++			return ret;
+ 		}
+ 		nvmem_cell_put(speedbin_nvmem);
+ 	}
+ 	of_node_put(np);
  
- 				reg = <0x2200 0x0 0x0 0x0 0x0>;
--				interrupts = <19 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 			};
+-	drv->opp_tokens = kcalloc(num_possible_cpus(), sizeof(*drv->opp_tokens),
+-				  GFP_KERNEL);
+-	if (!drv->opp_tokens) {
+-		ret = -ENOMEM;
+-		goto free_drv;
+-	}
+-
+ 	for_each_possible_cpu(cpu) {
+ 		struct dev_pm_opp_config config = {
+ 			.supported_hw = NULL,
+@@ -304,9 +298,9 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+ 		}
  
-@@ -200,7 +200,7 @@ sata@8,0 {
- 						   "pciclass0106";
+ 		if (config.supported_hw || config.genpd_names) {
+-			drv->opp_tokens[cpu] = dev_pm_opp_set_config(cpu_dev, &config);
+-			if (drv->opp_tokens[cpu] < 0) {
+-				ret = drv->opp_tokens[cpu];
++			drv->cpus[cpu].opp_token = dev_pm_opp_set_config(cpu_dev, &config);
++			if (drv->cpus[cpu].opp_token < 0) {
++				ret = drv->cpus[cpu].opp_token;
+ 				dev_err(cpu_dev, "Failed to set OPP config\n");
+ 				goto free_opp;
+ 			}
+@@ -325,11 +319,7 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
  
- 				reg = <0x4000 0x0 0x0 0x0 0x0>;
--				interrupts = <19 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <19 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc0>;
- 			};
+ free_opp:
+ 	for_each_possible_cpu(cpu)
+-		dev_pm_opp_clear_config(drv->opp_tokens[cpu]);
+-	kfree(drv->opp_tokens);
+-free_drv:
+-	kfree(drv);
+-
++		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+ 	return ret;
+ }
  
-@@ -215,10 +215,10 @@ pcie@9,0 {
- 				#size-cells = <2>;
- 				device_type = "pci";
- 				#interrupt-cells = <1>;
--				interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 				interrupt-map-mask = <0 0 0 0>;
--				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_HIGH>;
- 				ranges;
- 				external-facing;
- 			};
-@@ -234,10 +234,10 @@ pcie@a,0 {
- 				#size-cells = <2>;
- 				device_type = "pci";
- 				#interrupt-cells = <1>;
--				interrupts = <1 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <1 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 				interrupt-map-mask = <0 0 0 0>;
--				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_HIGH>;
- 				ranges;
- 				external-facing;
- 			};
-@@ -253,10 +253,10 @@ pcie@b,0 {
- 				#size-cells = <2>;
- 				device_type = "pci";
- 				#interrupt-cells = <1>;
--				interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <2 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 				interrupt-map-mask = <0 0 0 0>;
--				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_HIGH>;
- 				ranges;
- 				external-facing;
- 			};
-@@ -272,10 +272,10 @@ pcie@c,0 {
- 				#size-cells = <2>;
- 				device_type = "pci";
- 				#interrupt-cells = <1>;
--				interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <3 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 				interrupt-map-mask = <0 0 0 0>;
--				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_HIGH>;
- 				ranges;
- 				external-facing;
- 			};
-@@ -291,10 +291,10 @@ pcie@d,0 {
- 				#size-cells = <2>;
- 				device_type = "pci";
- 				#interrupt-cells = <1>;
--				interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <4 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 				interrupt-map-mask = <0 0 0 0>;
--				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_HIGH>;
- 				ranges;
- 				external-facing;
- 			};
-@@ -310,10 +310,10 @@ pcie@e,0 {
- 				#size-cells = <2>;
- 				device_type = "pci";
- 				#interrupt-cells = <1>;
--				interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
-+				interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
- 				interrupt-parent = <&liointc1>;
- 				interrupt-map-mask = <0 0 0 0>;
--				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_LOW>;
-+				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_HIGH>;
- 				ranges;
- 				external-facing;
- 			};
+@@ -341,10 +331,7 @@ static void qcom_cpufreq_remove(struct platform_device *pdev)
+ 	platform_device_unregister(cpufreq_dt_pdev);
+ 
+ 	for_each_possible_cpu(cpu)
+-		dev_pm_opp_clear_config(drv->opp_tokens[cpu]);
+-
+-	kfree(drv->opp_tokens);
+-	kfree(drv);
++		dev_pm_opp_clear_config(drv->cpus[cpu].opp_token);
+ }
+ 
+ static struct platform_driver qcom_cpufreq_driver = {
 -- 
 2.43.0
 
