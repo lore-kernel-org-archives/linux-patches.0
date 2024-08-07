@@ -1,103 +1,84 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE8E77F1B
-	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 21:48:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF81612FF7B
+	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 22:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723067295; cv=none; b=dqKKb1Y+jdiLS2B4Hh157JWU0rD8QKLyIQRROj/zk0ezb9t01M7VnhKBj9G+4b45sZQ1FRd+nD8UTjRLanreFI2eyJi+wy5bOaUAPSkLDQqqbPYsgevC0yqtPUwixSXyYKRLI+rc/dR4rPl7Hi97zqr0qbqJL3e4jG91InkNVb8=
+	t=1723068965; cv=none; b=rIfUR1qEgt5BasWScaa5C2BKb14qtmLqF3HhiLwMIN29Pjgwtp/yvbou0PcK9cN1T2fmVZedZWRliDmfd4qFjYiSuI4CBwjWaeNtrA4DfoLXnyYhNTez/64cXDxF8bULMQnKL7FxrRTACW/+FYVFnUiogJk4E8z3sjKoZN+qrE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723067295; c=relaxed/simple;
-	bh=ikHrDHxrIlxO7Av4gQzjNSiQgY/ZMnBK+K+bWKNpGEM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z5I1KaSVFWACnHlvUIP4l/TbFkUge/JbmneGnzm4zqYVd92/HEYTx/hwpq9I7eMkNOnlOI/guz1VqqQiQyq8ZCkW8elXM7j92nHgm9wwP/Nj7n8XksAIB1/2re9Uc7wfdrtB2hCNDT5pnHIj8YzTfppiKDzublyrrl8btopngoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SXr6XPHW; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SXr6XPHW"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-6e7e23b42c3so271865a12.1
-        for <patches@lists.linux.dev>; Wed, 07 Aug 2024 14:48:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723067292; x=1723672092; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=zwnAvupY4s0tGUxoV29OC1pw14aRUUNlkJE3yq1W4l4=;
-        b=SXr6XPHWdYye6PNiBVsmbeX+QnDzZHFSEXzI0eNJsGSfL87XoycXArZdA3W0WyLwoi
-         Cb4IMUe9kHIdiaBvMh3OW0cxgwhNejnLCwfIMezyhbm0WjQTd9VTxKzo0pJ73VS1ljn3
-         djH1rMg44PDXpVvezMxBfiFydsMrD47A88NExcIUxC9u2Hb2VEly/JUCge2QAR+LFLAy
-         3hdLH+nR7tXzhwBIn8/61aJRSJicUwOwRZiyuVbwc5n8T4hyf4h7l2IRW5VKpb8klWRi
-         cbgfz6N3QVMYTqRdl/yTbxaqJXh4splhNchIY3PoWxkpk5DZvMUKACC/mwrVk3iFh4dl
-         0v0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723067292; x=1723672092;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=zwnAvupY4s0tGUxoV29OC1pw14aRUUNlkJE3yq1W4l4=;
-        b=GOlov7+Sb/W/ehEo7STDYr6GncHHjmUdX08pCUMKMe4IFqfM7KRavWE0QP3rNn5lSy
-         DEeesfbltvPF2v79wGDuWsEAbzEUVUPLFdRbmLeqQDZyr3XBDlvyYH8aJQRAmattYEz2
-         O3YNEi9Ko0hxn3EZ6bKrtzAPhIdMMb2r34nSCxqIBfvH4M3V1nR9cBY/gPU6fusqByBY
-         28ML07Cq5l2mzk6vxXQGEFsAM3UIptxg34Tn9dUPp1onn143bYW8tg4Z4QnMAqnzLVTq
-         mUv+q8IyFPEy4KWBNACuXB8nkBykY1OsHWEcUXFIwiPeiGLe59JTIOLJ6CdIxSXKAy4+
-         P+aQ==
-X-Gm-Message-State: AOJu0YwU6hgXJhWfbe9XnWoxIvHjrfskd0JBRRQzKB9u1a4EC5+nmOjX
-	FQnuOLLGvyACr16Q2NfDgWiFjd2kYUbAU6FhuvtipTSIlel0ra66
-X-Google-Smtp-Source: AGHT+IGw6duZP0Dlz2YBvISY62DQJZX6EzKf/9DR6v+6hasCmSzLdLX1MaagaF6MVIhiK1G/LlhQYQ==
-X-Received: by 2002:a17:90a:16c2:b0:2c9:67f5:3fae with SMTP id 98e67ed59e1d1-2cff952cffemr18586049a91.28.1723067291659;
-        Wed, 07 Aug 2024 14:48:11 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id 98e67ed59e1d1-2d1b3ab3baesm2096565a91.15.2024.08.07.14.48.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 Aug 2024 14:48:11 -0700 (PDT)
-Message-ID: <fd6a7f02-7ef7-4b91-bacb-1129049b0343@gmail.com>
-Date: Wed, 7 Aug 2024 14:48:09 -0700
+	s=arc-20240116; t=1723068965; c=relaxed/simple;
+	bh=5dGec4BtOSX629Q9D8fwLxG2Wg9I8wXgjSG4Ryur2Oc=;
+	h=From:To:Cc:Date:Message-Id:Subject; b=gDHnk3NxxmDOJyWtCw+RDYxsGZ5Le6f+zshLB0AKQej8+u5Un9F9w7ABEr4Ta70g6yIU5BG5XiZDj9HXUhXr2XAmJSISM1tll4Rcc8yZrfCus1fXq1J0QyBCwzThrqVmd5b2I+yVu4XePPIurGBijFtLs53Vr43TZAGWME537IM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329D4C4AF0D
+	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 22:16:04 +0000 (UTC)
+Resent-From: Mark Brown <broonie@finisterre.sirena.org.uk>
+Resent-Date: Wed, 7 Aug 2024 23:16:00 +0100
+Resent-Message-ID: <ZrPyIP4nj_2-idaS@finisterre.sirena.org.uk>
+Resent-To: patches@lists.linux.dev
+Envelope-to: broonie@sirena.co.uk
+Delivery-date: Wed, 07 Aug 2024 03:56:42 +0100
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by cassiel.sirena.org.uk with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <SRS0=Nwo7=PG=everest-semi.com=zhangyi@kernel.org>)
+	id 1sbWqu-00AaNi-2N
+	for broonie@sirena.co.uk; Wed, 07 Aug 2024 03:56:42 +0100
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by dfw.source.kernel.org (Postfix) with ESMTP id D9C046112F
+	for <broonie@sirena.co.uk>; Wed,  7 Aug 2024 02:56:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id A16C7C4AF0D; Wed,  7 Aug 2024 02:56:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 7FBFCC32786
+	for <broonie@kernel.org>; Wed,  7 Aug 2024 02:56:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 7FBFCC32786
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=everest-semi.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=everest-semi.com
+Received: from unknown (HELO zy-virtual-machine.localdomain)([180.172.39.131])
+	by sina.net (10.185.250.31) with ESMTP
+	id 66B2E1C800005724; Wed, 7 Aug 2024 10:54:01 +0800 (CST)
+X-Sender: zhangyi@everest-semi.com
+X-Auth-ID: zhangyi@everest-semi.com
+Authentication-Results: sina.net;
+	 spf=none smtp.mailfrom=zhangyi@everest-semi.com;
+	 dkim=none header.i=none;
+	 dmarc=none action=none header.from=zhangyi@everest-semi.com
+X-SMAIL-MID: 6ECF8FEFE79D42E59A78B7C1A48E0E9B
+X-SMAIL-UIID: 6ECF8FEFE79D42E59A78B7C1A48E0E9B-20240807-105401
+From: Zhang Yi <zhangyi@everest-semi.com>
+To: alsa-devel@alsa-project.org,
+	broonie@kernel.org
+Cc: tiwai@suse.com,
+	amadeuszx.slawinski@linux.intel.com,
+	yangxiaohua@everest-semi.com,
+	zhuning@everest-semi.com,
+	zhangyi@everest-semi.com
+Date: Wed,  7 Aug 2024 10:53:54 +0800
+Message-Id: <20240807025356.24904-1-zhangyi@everest-semi.com>
+X-Mailer: git-send-email 2.17.1
+X-SA-Exim-Connect-IP: 139.178.84.217
+X-SA-Exim-Mail-From: SRS0=Nwo7=PG=everest-semi.com=zhangyi@kernel.org
+Subject: [PATCH 0/2] ASoC: codecs: ES8326: button and input issue
+X-SA-Exim-Version: 4.2.1 (built Sat, 13 Feb 2021 17:57:42 +0000)
+X-SA-Exim-Scanned: No (on cassiel.sirena.org.uk); Unknown failure
+X-TUID: RTYpmsNgk8n8
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.10 000/123] 6.10.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240807150020.790615758@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 8/7/24 07:58, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.10.4 release.
-> There are 123 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 09 Aug 2024 14:59:54 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.10.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+TO solve button and input issue, We have modified parts of the driver
+related to button and input.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENEIRC:
+Zhang Yi (2):
+  ASoC: codecs: ES8326: button detect issue
+  ASoC: codecs: ES8326: input issue after init
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+ sound/soc/codecs/es8326.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
 -- 
-Florian
+2.17.1
 
