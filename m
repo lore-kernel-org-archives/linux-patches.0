@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC297D3E4;
-	Wed,  7 Aug 2024 15:06:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB7982488;
+	Wed,  7 Aug 2024 15:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043205; cv=none; b=bUPC7sFwCPU0pQ7eTksjzNbyQGBrjZgevZo78haLcFaS1lU0zAldqEniWPZR8seKHoliobHAcIq6Tg5+lyHcEq0rhwNvSuXrITRgFxMaxGHvU7g6lm4JwjRCpzQZDRK04J2ABdR+5qhh27KYcftDIc2/UTQCF84ps8sX2COgANQ=
+	t=1723043208; cv=none; b=Ol+NRDewsP8v9/xGgQ9la/0b4bL2iHdueP2+XyV/hNKdVJu/iduW9A7G6P9Lsi4AWOS24QP99i2RYM241wMhJXsAcnNYGug9GHhDJjQruei2CnuhMtH1CXuoWDcYy4eOmOtBqEMjkzAt9ShmM2NJDLl09hjL7UZi62wTErzwmOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043205; c=relaxed/simple;
-	bh=q+tLKqN6a5RMQuktnkRSC6mUO5lGbfcLixXPW/UW1is=;
+	s=arc-20240116; t=1723043208; c=relaxed/simple;
+	bh=Tg7385+GFBkwL6ZhnxfFt5W1j2xrtSfL2SlNit6v67A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T+UH9t6a9FPXUpzJowDrQjmPG4VWT9G3Boe4VSmDkoZ5SsJXGjVmouCI5grgIB7v5RePApmHlgfw4WQdXhqPZwf1Kht+Os+f/sI6O3TrEjtMzyDzn0DP/rnA5wwzdoCREFQI5ulL1s+wPFK71VQT69oXgbLVw74KK4ZoiChSl5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0cd5uL9R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=StUb3Cp1GPzELLs1eEijROtK5DHFXH90El9OMCbwv5IyYW8HJ7b4k5lDHWy9A52HzNRqViGY1FiZqS4niFudItGBCM9GRzGrQLhwhKFVFQRUQdzDIHwj4EnI3Zj3v4I4BbQbCfVG9OnwDt+1UP3jZ3T6FQh9AdYfaynYplBbAnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LSdpLLMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0cd5uL9R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56B7C32781;
-	Wed,  7 Aug 2024 15:06:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LSdpLLMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CABBC32781;
+	Wed,  7 Aug 2024 15:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043205;
-	bh=q+tLKqN6a5RMQuktnkRSC6mUO5lGbfcLixXPW/UW1is=;
+	s=korg; t=1723043207;
+	bh=Tg7385+GFBkwL6ZhnxfFt5W1j2xrtSfL2SlNit6v67A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0cd5uL9RXxhS78WnpalB3fRVag3dZwgpJbhwBM6Y7nkIrzhbXizFFzyNCejbL2aSP
-	 GnQz5Q63Xdp3wAx1+66OOPkTGryx+YVtVMorUUisAySK3ERSPHNrNL69MavbqOAKIn
-	 jLYY+mZs732R69vzFNPSE56bFEbLhsVDWCaIm0tI=
+	b=LSdpLLMjXJbVLlqZaP3+ftGTjw40PYXOgYeMjrwbCfY2yy4j3hUnw6IOl1w2+Clmp
+	 Z4tANPCh9DiAUh3eeoEHjtdnGii54yyyMpqmbeCJ6WzDM46jSrQ3m495jNhgqYZF7A
+	 phaat4hu8xbeaSZobxxDkPvdZViJEm1TW1qY3VMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herve Codina <herve.codina@bootlin.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 110/123] net: wan: fsl_qmc_hdlc: Discard received CRC
-Date: Wed,  7 Aug 2024 17:00:29 +0200
-Message-ID: <20240807150024.427982423@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>
+Subject: [PATCH 6.10 111/123] r8169: dont increment tx_dropped in case of NETDEV_TX_BUSY
+Date: Wed,  7 Aug 2024 17:00:30 +0200
+Message-ID: <20240807150024.462926913@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -51,75 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Herve Codina <herve.codina@bootlin.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit e549360069b4a57e111b8222fc072f3c7c1688ab upstream.
+commit d516b187a9cc2e842030dd005be2735db3e8f395 upstream.
 
-Received frame from QMC contains the CRC.
-Upper layers don't need this CRC and tcpdump mentioned trailing junk
-data due to this CRC presence.
+The skb isn't consumed in case of NETDEV_TX_BUSY, therefore don't
+increment the tx_dropped counter.
 
-As some other HDLC driver, simply discard this CRC.
-
-Fixes: d0f2258e79fd ("net: wan: Add support for QMC HDLC")
+Fixes: 188f4af04618 ("r8169: use NETDEV_TX_{BUSY/OK}")
 Cc: stable@vger.kernel.org
-Signed-off-by: Herve Codina <herve.codina@bootlin.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20240730063133.179598-1-herve.codina@bootlin.com
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/bbba9c48-8bac-4932-9aa1-d2ed63bc9433@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/fsl_qmc_hdlc.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wan/fsl_qmc_hdlc.c b/drivers/net/wan/fsl_qmc_hdlc.c
-index 64b4bfa6fea7..8fcfbde31a1c 100644
---- a/drivers/net/wan/fsl_qmc_hdlc.c
-+++ b/drivers/net/wan/fsl_qmc_hdlc.c
-@@ -250,6 +250,7 @@ static void qmc_hcld_recv_complete(void *context, size_t length, unsigned int fl
- 	struct qmc_hdlc_desc *desc = context;
- 	struct net_device *netdev;
- 	struct qmc_hdlc *qmc_hdlc;
-+	size_t crc_size;
- 	int ret;
- 
- 	netdev = desc->netdev;
-@@ -268,15 +269,26 @@ static void qmc_hcld_recv_complete(void *context, size_t length, unsigned int fl
- 		if (flags & QMC_RX_FLAG_HDLC_CRC) /* CRC error */
- 			netdev->stats.rx_crc_errors++;
- 		kfree_skb(desc->skb);
--	} else {
--		netdev->stats.rx_packets++;
--		netdev->stats.rx_bytes += length;
--
--		skb_put(desc->skb, length);
--		desc->skb->protocol = hdlc_type_trans(desc->skb, netdev);
--		netif_rx(desc->skb);
-+		goto re_queue;
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4347,7 +4347,8 @@ static netdev_tx_t rtl8169_start_xmit(st
+ 	if (unlikely(!rtl_tx_slots_avail(tp))) {
+ 		if (net_ratelimit())
+ 			netdev_err(dev, "BUG! Tx Ring full when queue awake!\n");
+-		goto err_stop_0;
++		netif_stop_queue(dev);
++		return NETDEV_TX_BUSY;
  	}
  
-+	/* Discard the CRC */
-+	crc_size = qmc_hdlc->is_crc32 ? 4 : 2;
-+	if (length < crc_size) {
-+		netdev->stats.rx_length_errors++;
-+		kfree_skb(desc->skb);
-+		goto re_queue;
-+	}
-+	length -= crc_size;
-+
-+	netdev->stats.rx_packets++;
-+	netdev->stats.rx_bytes += length;
-+
-+	skb_put(desc->skb, length);
-+	desc->skb->protocol = hdlc_type_trans(desc->skb, netdev);
-+	netif_rx(desc->skb);
-+
-+re_queue:
- 	/* Re-queue a transfer using the same descriptor */
- 	ret = qmc_hdlc_recv_queue(qmc_hdlc, desc, desc->dma_size);
- 	if (ret) {
--- 
-2.46.0
-
+ 	opts[1] = rtl8169_tx_vlan_tag(skb);
+@@ -4403,11 +4404,6 @@ err_dma_0:
+ 	dev_kfree_skb_any(skb);
+ 	dev->stats.tx_dropped++;
+ 	return NETDEV_TX_OK;
+-
+-err_stop_0:
+-	netif_stop_queue(dev);
+-	dev->stats.tx_dropped++;
+-	return NETDEV_TX_BUSY;
+ }
+ 
+ static unsigned int rtl_last_frag_len(struct sk_buff *skb)
 
 
