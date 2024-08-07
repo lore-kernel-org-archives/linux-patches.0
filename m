@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A844723CE;
-	Wed,  7 Aug 2024 15:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4F023CE;
+	Wed,  7 Aug 2024 15:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042926; cv=none; b=B/vuUBwVWvIaD13VYrOySKJKAYPM+x0hrEuRRa9UuHH78yFC/ErWlYZVlxLhzGMcsWx7GvxHOmJyTgngCwa8Z9pEUzC5e2raJ32jvyCLpB/UqYs371j45SBWPb5Tmj/cvIQHS42IfgUhbfTtsULyUU1514OG3gtVWpEObcdO2BY=
+	t=1723042929; cv=none; b=SwCXS6xgToUHdKey+oCYSkzjFiMjD3uoTpPElhlzxeSdI1NpHG1yowj1/ccerAIzKTrCv4kL96OEvnl2WWnoLSRyUv/8InzdSj3voBMG/1YkX4oSSEG3TACjvmwKrCqJvsSRH4ZXoji9QgfRnf0TYnMe8a26YuQPZj3g51zfQGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042926; c=relaxed/simple;
-	bh=ldz1amlNmF4b3lz0Ro4+awzmu/2D5x7gtAu37PrxjtU=;
+	s=arc-20240116; t=1723042929; c=relaxed/simple;
+	bh=2ZqsQDzuFTqByRYneP2KY+RM7q2g9Ay3qHIM8g3nJWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eKxxDhXGRf0sCd6euDn2rj07URJcmHfpqDaoryaas0oyfQEUVthleTFix7WEMBOIbELPM3177WbLhOJ38IuM0vZfnPyJmVUbkWWrP5lDLXguIznXeokyOURIug148cp8sNvljFF0X9rFQnGkRWXkjDIhWK0xt7j0grmOjRkukpo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qswRUuN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cMy85HelENlbeaXGRnBr71HdefJEraKhShtYttPiMufV1xioQn4gP9zZpgSN3F5xCcFkJdl38GDcPS/F/of/eUo37BYswGNU89tGx2kv3hiuY/MyG82p811Xt/8b2aadP7rN3rcm728eh/V2hoa5MwEUNC0rwMisMSiBqFSKhKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAscgH5P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qswRUuN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 380B4C4AF0B;
-	Wed,  7 Aug 2024 15:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAscgH5P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1E49C32781;
+	Wed,  7 Aug 2024 15:02:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042926;
-	bh=ldz1amlNmF4b3lz0Ro4+awzmu/2D5x7gtAu37PrxjtU=;
+	s=korg; t=1723042929;
+	bh=2ZqsQDzuFTqByRYneP2KY+RM7q2g9Ay3qHIM8g3nJWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qswRUuN/AsOtmc6CjXOeEJKjApD+sH6xXtpOsCgxTigOBiZwMxiYREbfRV9TDX1OL
-	 UaDjbbGNPYh7RUD+8nFNaa3w+cb7IVjwhDpcrKUedrWOC9zAzTA2ajeEVejTBHPL5q
-	 Yy3EtGg/HgSLTwFtlG8ENISmsw5wn+7FrNq+YQZk=
+	b=PAscgH5P8Q391zg47eeaEPCi7yg9f3XAApgjzRWhcepejUteRCJwyxEfqLkPv9ETH
+	 bRsxNj/0Ljb/S1EqIn+K/FuXAuSpDZgDMfB9tMlx3sziXuk2WWJUFqYJ7BxzWWc2FY
+	 Kj6H1rKruDpmnEUCcgtLh0uCP3aEy6hgNHwtiKdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Joe Damato <jdamato@fastly.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 026/123] ethtool: rss: echo the context number back
-Date: Wed,  7 Aug 2024 16:59:05 +0200
-Message-ID: <20240807150021.661582647@linuxfoundation.org>
+Subject: [PATCH 6.10 027/123] drm/vmwgfx: Trigger a modeset when the screen moves
+Date: Wed,  7 Aug 2024 16:59:06 +0200
+Message-ID: <20240807150021.697119196@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,85 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit f96aae91b0d260f682e630e092ef70a05a718a43 ]
+[ Upstream commit 75c3e8a26a35d4f3eee299b3cc7e465f166f4e2d ]
 
-The response to a GET request in Netlink should fully identify
-the queried object. RSS_GET accepts context id as an input,
-so it must echo that attribute back to the response.
+When multi-monitor is cycled the X,Y position of the Screen Target will
+likely change but the resolution will not. We need to trigger a modeset
+when this occurs in order to recreate the Screen Target with the correct
+X,Y position.
 
-After (assuming context 1 has been created):
+Fixes a bug where multiple displays are shown in a single scrollable
+host window rather than in 2+ windows on separate host displays.
 
-  $ ./cli.py --spec netlink/specs/ethtool.yaml \
-             --do rss-get \
-	     --json '{"header": {"dev-index": 2}, "context": 1}'
-  {'context': 1,
-   'header': {'dev-index': 2, 'dev-name': 'eth0'},
-  [...]
-
-Fixes: 7112a04664bf ("ethtool: add netlink based get rss support")
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Joe Damato <jdamato@fastly.com>
-Link: https://patch.msgid.link/20240724234249.2621109-3-kuba@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 426826933109 ("drm/vmwgfx: Filter modes which exceed graphics memory")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624205951.23343-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/netlink/specs/ethtool.yaml     | 1 +
- Documentation/networking/ethtool-netlink.rst | 1 +
- net/ethtool/rss.c                            | 8 +++++++-
- 3 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c | 29 +++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/netlink/specs/ethtool.yaml b/Documentation/netlink/specs/ethtool.yaml
-index 3632c1c891e94..238145c31835e 100644
---- a/Documentation/netlink/specs/ethtool.yaml
-+++ b/Documentation/netlink/specs/ethtool.yaml
-@@ -1638,6 +1638,7 @@ operations:
-         reply:
-           attributes:
-             - header
-+            - context
-             - hfunc
-             - indir
-             - hkey
-diff --git a/Documentation/networking/ethtool-netlink.rst b/Documentation/networking/ethtool-netlink.rst
-index 160bfb0ae8bae..0d8c487be3993 100644
---- a/Documentation/networking/ethtool-netlink.rst
-+++ b/Documentation/networking/ethtool-netlink.rst
-@@ -1800,6 +1800,7 @@ Kernel response contents:
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
+index a04e0736318da..9becd71bc93bc 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
+@@ -877,6 +877,32 @@ vmw_stdu_connector_mode_valid(struct drm_connector *connector,
+ 	return MODE_OK;
+ }
  
- =====================================  ======  ==========================
-   ``ETHTOOL_A_RSS_HEADER``             nested  reply header
-+  ``ETHTOOL_A_RSS_CONTEXT``            u32     context number
-   ``ETHTOOL_A_RSS_HFUNC``              u32     RSS hash func
-   ``ETHTOOL_A_RSS_INDIR``              binary  Indir table bytes
-   ``ETHTOOL_A_RSS_HKEY``               binary  Hash key bytes
-diff --git a/net/ethtool/rss.c b/net/ethtool/rss.c
-index 71679137eff21..5c4c4505ab9a4 100644
---- a/net/ethtool/rss.c
-+++ b/net/ethtool/rss.c
-@@ -111,7 +111,8 @@ rss_reply_size(const struct ethnl_req_info *req_base,
- 	const struct rss_reply_data *data = RSS_REPDATA(reply_base);
- 	int len;
- 
--	len = nla_total_size(sizeof(u32)) +	/* _RSS_HFUNC */
-+	len = nla_total_size(sizeof(u32)) +	/* _RSS_CONTEXT */
-+	      nla_total_size(sizeof(u32)) +	/* _RSS_HFUNC */
- 	      nla_total_size(sizeof(u32)) +	/* _RSS_INPUT_XFRM */
- 	      nla_total_size(sizeof(u32) * data->indir_size) + /* _RSS_INDIR */
- 	      nla_total_size(data->hkey_size);	/* _RSS_HKEY */
-@@ -124,6 +125,11 @@ rss_fill_reply(struct sk_buff *skb, const struct ethnl_req_info *req_base,
- 	       const struct ethnl_reply_data *reply_base)
- {
- 	const struct rss_reply_data *data = RSS_REPDATA(reply_base);
-+	struct rss_req_info *request = RSS_REQINFO(req_base);
++/*
++ * Trigger a modeset if the X,Y position of the Screen Target changes.
++ * This is needed when multi-mon is cycled. The original Screen Target will have
++ * the same mode but its relative X,Y position in the topology will change.
++ */
++static int vmw_stdu_connector_atomic_check(struct drm_connector *conn,
++					   struct drm_atomic_state *state)
++{
++	struct drm_connector_state *conn_state;
++	struct vmw_screen_target_display_unit *du;
++	struct drm_crtc_state *new_crtc_state;
 +
-+	if (request->rss_context &&
-+	    nla_put_u32(skb, ETHTOOL_A_RSS_CONTEXT, request->rss_context))
-+		return -EMSGSIZE;
++	conn_state = drm_atomic_get_connector_state(state, conn);
++	du = vmw_connector_to_stdu(conn);
++
++	if (!conn_state->crtc)
++		return 0;
++
++	new_crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
++	if (du->base.gui_x != du->base.set_gui_x ||
++	    du->base.gui_y != du->base.set_gui_y)
++		new_crtc_state->mode_changed = true;
++
++	return 0;
++}
++
+ static const struct drm_connector_funcs vmw_stdu_connector_funcs = {
+ 	.dpms = vmw_du_connector_dpms,
+ 	.detect = vmw_du_connector_detect,
+@@ -891,7 +917,8 @@ static const struct drm_connector_funcs vmw_stdu_connector_funcs = {
+ static const struct
+ drm_connector_helper_funcs vmw_stdu_connector_helper_funcs = {
+ 	.get_modes = vmw_connector_get_modes,
+-	.mode_valid = vmw_stdu_connector_mode_valid
++	.mode_valid = vmw_stdu_connector_mode_valid,
++	.atomic_check = vmw_stdu_connector_atomic_check,
+ };
  
- 	if ((data->hfunc &&
- 	     nla_put_u32(skb, ETHTOOL_A_RSS_HFUNC, data->hfunc)) ||
+ 
 -- 
 2.43.0
 
