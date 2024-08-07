@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC7781AB1;
-	Wed,  7 Aug 2024 15:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5F87E0E9;
+	Wed,  7 Aug 2024 15:11:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043487; cv=none; b=JZHQnecaKOfAydsenBUHdTqu361kW3zI/QRXwIIP6u3ywF1iu7eo/x/0EzaiOiePl/pJBktkJAaezi3JrnbLlCQjVwDe7C+/BkjffpSVQw2FaCZh/epIECJuP8ZJS9ZvWbPIz67zxxVpXbdIC8WuG6bpHwcJUZUjZfh7UQACnOw=
+	t=1723043490; cv=none; b=qBlnwoz9tzgJ2kIucNRrLcFjm+yaZzt05pOaJrjwql8CXU+XMFH0p7qSd3eNPHGTSJOHULqY772YERSasO2SeyhBMviNwMVJnId3OF0PfK5YJ3FNXMb2068ztVZOHDEqnI0UK261NDdxa8D+50JKhEbuo4F93QkNOjhkmaMKMV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043487; c=relaxed/simple;
-	bh=Ypl/Vzh7mRUFfI8iPxgpcxPizKxWm2e2svpw1rt3+Pg=;
+	s=arc-20240116; t=1723043490; c=relaxed/simple;
+	bh=x/Ik3eCLV47mqPNYadvFiw90rADswH8EszzYx3IgtBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u9jWAxlpMwmHFKYOFTH+Fga+WIgZwku1lJWGLKJq5cU6bqy0cMM3azhTCljuynPJhrpNPnYKZDHKmQ4y0q66b3YNu4VcNRM9yghWKluptU0zDlMbbMaN7/rakhkoR74vsyeH+J5oXTtNmm53++J6NRyG1GDxKYW6eMN6ZT9DZ4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fyMIhM//; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DLo7hTL/yHP8ZWexVcuBpnQKy87xvCdFCliGIGdbNo7Dm1DEXm9RJIBleQxPE/5Gb12Ff0H0Um4JllmrXdgVlqjQIyLZQvZHygqN3nt8Z88Sd/NYHUmPGAebxhupYDiXz0poIB6R7vR0FiDuzjmDEV59/9oSZm2gNSZ5TpH3ESw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v429Kp3A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fyMIhM//"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D270C32781;
-	Wed,  7 Aug 2024 15:11:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v429Kp3A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5190C32781;
+	Wed,  7 Aug 2024 15:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043487;
-	bh=Ypl/Vzh7mRUFfI8iPxgpcxPizKxWm2e2svpw1rt3+Pg=;
+	s=korg; t=1723043490;
+	bh=x/Ik3eCLV47mqPNYadvFiw90rADswH8EszzYx3IgtBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fyMIhM//AlV0Y0rn4H3U4xubgCGJWh1zkwH6Qj8h2vt+1EHWxFSq/ddpa8Q8RvRd8
-	 1qLNo3bV0DDpv/l0ROL1GX1GMlaFU+1ROM+1/1lqNiDkp4FdqqGM0afvgiLSZFUmuW
-	 UvcAxh94drSxT/5npdspiMpkMgQubM87+Xbkbr7Q=
+	b=v429Kp3AP21ILzLJUXfZgmDqsJxBoLmY4/PuHDn7sEfI7BS02X0aCE7h4NKMmLIBo
+	 j9zp6qDBFfez63J7AwCZlikHihdVLjaSDhKw8wgSawGFmkoRkSZw4ESnhg6jNoUpju
+	 HLOwWxfkhVpEWcKj7POvop/ygZXFONo2QEEk8DV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 109/121] net: usb: sr9700: fix uninitialized variable use in sr_mdio_read
-Date: Wed,  7 Aug 2024 17:00:41 +0200
-Message-ID: <20240807150022.963991274@linuxfoundation.org>
+	Moshe Shemesh <moshe@nvidia.com>,
+	Maor Gottlieb <maorg@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 083/121] net/mlx5: Fix missing lock on sync reset reload
+Date: Wed,  7 Aug 2024 17:00:15 +0200
+Message-ID: <20240807150022.129118053@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -46,66 +48,84 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Moshe Shemesh <moshe@nvidia.com>
 
-commit 08f3a5c38087d1569e982a121aad1e6acbf145ce upstream.
+[ Upstream commit 572f9caa9e7295f8c8822e4122c7ae8f1c412ff9 ]
 
-It could lead to error happen because the variable res is not updated if
-the call to sr_share_read_word returns an error. In this particular case
-error code was returned and res stayed uninitialized. Same issue also
-applies to sr_read_reg.
+On sync reset reload work, when remote host updates devlink on reload
+actions performed on that host, it misses taking devlink lock before
+calling devlink_remote_reload_actions_performed() which results in
+triggering lock assert like the following:
 
-This can be avoided by checking the return value of sr_share_read_word
-and sr_read_reg, and propagating the error if the read operation failed.
+WARNING: CPU: 4 PID: 1164 at net/devlink/core.c:261 devl_assert_locked+0x3e/0x50
+…
+ CPU: 4 PID: 1164 Comm: kworker/u96:6 Tainted: G S      W          6.10.0-rc2+ #116
+ Hardware name: Supermicro SYS-2028TP-DECTR/X10DRT-PT, BIOS 2.0 12/18/2015
+ Workqueue: mlx5_fw_reset_events mlx5_sync_reset_reload_work [mlx5_core]
+ RIP: 0010:devl_assert_locked+0x3e/0x50
+…
+ Call Trace:
+  <TASK>
+  ? __warn+0xa4/0x210
+  ? devl_assert_locked+0x3e/0x50
+  ? report_bug+0x160/0x280
+  ? handle_bug+0x3f/0x80
+  ? exc_invalid_op+0x17/0x40
+  ? asm_exc_invalid_op+0x1a/0x20
+  ? devl_assert_locked+0x3e/0x50
+  devlink_notify+0x88/0x2b0
+  ? mlx5_attach_device+0x20c/0x230 [mlx5_core]
+  ? __pfx_devlink_notify+0x10/0x10
+  ? process_one_work+0x4b6/0xbb0
+  process_one_work+0x4b6/0xbb0
+[…]
 
-Found by code review.
-
-Cc: stable@vger.kernel.org
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 84a433a40d0e ("net/mlx5: Lock mlx5 devlink reload callbacks")
+Signed-off-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/20240730061638.1831002-6-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -179,6 +179,7 @@ static int sr_mdio_read(struct net_devic
- 	struct usbnet *dev = netdev_priv(netdev);
- 	__le16 res;
- 	int rc = 0;
-+	int err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+index 3a9cdf79403ae..6b17346aa4cef 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/fw_reset.c
+@@ -206,6 +206,7 @@ int mlx5_fw_reset_set_live_patch(struct mlx5_core_dev *dev)
+ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev, bool unloaded)
+ {
+ 	struct mlx5_fw_reset *fw_reset = dev->priv.fw_reset;
++	struct devlink *devlink = priv_to_devlink(dev);
  
- 	if (phy_id) {
- 		netdev_dbg(netdev, "Only internal phy supported\n");
-@@ -189,11 +190,17 @@ static int sr_mdio_read(struct net_devic
- 	if (loc == MII_BMSR) {
- 		u8 value;
- 
--		sr_read_reg(dev, SR_NSR, &value);
-+		err = sr_read_reg(dev, SR_NSR, &value);
-+		if (err < 0)
-+			return err;
-+
- 		if (value & NSR_LINKST)
- 			rc = 1;
+ 	/* if this is the driver that initiated the fw reset, devlink completed the reload */
+ 	if (test_bit(MLX5_FW_RESET_FLAGS_PENDING_COMP, &fw_reset->reset_flags)) {
+@@ -217,9 +218,11 @@ static void mlx5_fw_reset_complete_reload(struct mlx5_core_dev *dev, bool unload
+ 			mlx5_core_err(dev, "reset reload flow aborted, PCI reads still not working\n");
+ 		else
+ 			mlx5_load_one(dev, true);
+-		devlink_remote_reload_actions_performed(priv_to_devlink(dev), 0,
++		devl_lock(devlink);
++		devlink_remote_reload_actions_performed(devlink, 0,
+ 							BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT) |
+ 							BIT(DEVLINK_RELOAD_ACTION_FW_ACTIVATE));
++		devl_unlock(devlink);
  	}
--	sr_share_read_word(dev, 1, loc, &res);
-+	err = sr_share_read_word(dev, 1, loc, &res);
-+	if (err < 0)
-+		return err;
-+
- 	if (rc == 1)
- 		res = le16_to_cpu(res) | BMSR_LSTATUS;
- 	else
+ }
+ 
+-- 
+2.43.0
+
 
 
