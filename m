@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB008287E;
-	Wed,  7 Aug 2024 15:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2AF27E0E9;
+	Wed,  7 Aug 2024 15:11:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043461; cv=none; b=mEptzasDXoqNtxW422DDZGevaMohq0/2jdJ+TRl+d68r0MJFuTGXVyu5P9Ou35ubG+ZH3XQ+k2lJH3l+6TRH1GnbgYeJWrjJJ+eZDeBlRJKc3Phcg3dJcsdjCwhnIT0BazpCJ85ouWNDDOHe3JSdOYs5TZnlrZWXAiB0we+o1yI=
+	t=1723043463; cv=none; b=UrfESJ6+EbzNT1PfRNmJYAJlOgkOM+QLsRbbR49DOxbahSmxfvhptgWyFwn+rUWi5e/qTEwPb0ZmP//KIyBDU4TgY5h1rNc3MW/unbDcv5Pf9j5UVVBBPrgeAjpfBP1yjsvRzbVIfem7eXvCX2uPqiYZzJohqo9Tisw7ckG37Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043461; c=relaxed/simple;
-	bh=lAsxR8lkjcGWL4zD1grYYzXNRNvL705x+K8axm7TQTc=;
+	s=arc-20240116; t=1723043463; c=relaxed/simple;
+	bh=x7UehxwEb5/3mzg5NOeJAR4jso5GpTecrY6d0SQ+Dd4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ktV2OnBxRIJxDyBYtkS45UIwzepf9HutjFB9tV0h/6MxjzZv4RokTibaqtpKfSbyYySEqsdNLjFXwDLRGoxtU7v5YqjV1lC141jaGf2HvQJgWATqF4Pga8KuQ/B+04FVMNxT0JCQ4WCVx/sEnfLkEfKtphtCqmA6pEdNDcokMgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JhczJNiz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QgVCf+nf50rExmK6qQmOQMecEnQdFOHxPIblQDxbM6z18ZGlnjhOIlTehC8MsMU9fAaE+TAvSiatgExoBAuDNrK9/qS3jht7qpMifhLPSY/1zpku/wd1Bw7QEkZzs4l1vHi3SsEXle9iI2TfXX63VWE5+03reqUWyDJP+iE1URw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o3Tll7aG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JhczJNiz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AF9C32781;
-	Wed,  7 Aug 2024 15:11:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o3Tll7aG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5311BC32781;
+	Wed,  7 Aug 2024 15:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043461;
-	bh=lAsxR8lkjcGWL4zD1grYYzXNRNvL705x+K8axm7TQTc=;
+	s=korg; t=1723043463;
+	bh=x7UehxwEb5/3mzg5NOeJAR4jso5GpTecrY6d0SQ+Dd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JhczJNizWg4RVHSTY38Kl+6xzAsd/M+Qbr+cHW6P29QxtiGRNUHfQ81aJd/7k/MFY
-	 yNZRoGrWTyteiLXhcStIKImWQmukYLQ5L/vXm4+R5gsmmKMHWkgX5fe5T5zLpXyV7O
-	 kkrDoNH5HPSf0dFOJ5aIaX8dgHIqUnmgI+DJ+p8U=
+	b=o3Tll7aGUFLk4Pih6+xGEPCTcywZklDrVui3gb9TeKCXegXXDUnGnVf71huF8u+7o
+	 Fh2IFGanx+yYPNkJtET7vNFWc2NxWTm/8UHXyObWNrI9swIZ9Mjipgpkw38W3YfGfn
+	 /9LILooVWPIWyaav6V8GJ89L0RyCM3J/oLMhYLrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Bloch <mbloch@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/121] net/mlx5: Lag, dont use the hardcoded value of the first port
-Date: Wed,  7 Aug 2024 17:00:14 +0200
-Message-ID: <20240807150022.096043401@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 100/121] mptcp: sched: check both directions for backup
+Date: Wed,  7 Aug 2024 17:00:32 +0200
+Message-ID: <20240807150022.665966341@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,39 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Bloch <mbloch@nvidia.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 3fda84dc090390573cfbd0b1d70372663315de21 ]
+commit b6a66e521a2032f7fcba2af5a9bcbaeaa19b7ca3 upstream.
 
-The cited commit didn't change the body of the loop as it should.
-It shouldn't be using MLX5_LAG_P1.
+The 'mptcp_subflow_context' structure has two items related to the
+backup flags:
 
-Fixes: 7e978e7714d6 ("net/mlx5: Lag, use actual number of lag ports")
-Signed-off-by: Mark Bloch <mbloch@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://patch.msgid.link/20240730061638.1831002-5-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+ - 'backup': the subflow has been marked as backup by the other peer
+
+ - 'request_bkup': the backup flag has been set by the host
+
+Before this patch, the scheduler was only looking at the 'backup' flag.
+That can make sense in some cases, but it looks like that's not what we
+wanted for the general use, because either the path-manager was setting
+both of them when sending an MP_PRIO, or the receiver was duplicating
+the 'backup' flag in the subflow request.
+
+Note that the use of these two flags in the path-manager are going to be
+fixed in the next commits, but this change here is needed not to modify
+the behaviour.
+
+Fixes: f296234c98a8 ("mptcp: Add handling of incoming MP_JOIN requests")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/trace/events/mptcp.h |    2 +-
+ net/mptcp/protocol.c         |   10 ++++++----
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index dfc2ba6f780a2..18cf756bad8cc 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -1512,7 +1512,7 @@ u8 mlx5_lag_get_slave_port(struct mlx5_core_dev *dev,
- 		goto unlock;
+--- a/include/trace/events/mptcp.h
++++ b/include/trace/events/mptcp.h
+@@ -34,7 +34,7 @@ TRACE_EVENT(mptcp_subflow_get_send,
+ 		struct sock *ssk;
  
- 	for (i = 0; i < ldev->ports; i++) {
--		if (ldev->pf[MLX5_LAG_P1].netdev == slave) {
-+		if (ldev->pf[i].netdev == slave) {
- 			port = i;
- 			break;
+ 		__entry->active = mptcp_subflow_active(subflow);
+-		__entry->backup = subflow->backup;
++		__entry->backup = subflow->backup || subflow->request_bkup;
+ 
+ 		if (subflow->tcp_sock && sk_fullsock(subflow->tcp_sock))
+ 			__entry->free = sk_stream_memory_free(subflow->tcp_sock);
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -1417,13 +1417,15 @@ struct sock *mptcp_subflow_get_send(stru
+ 	}
+ 
+ 	mptcp_for_each_subflow(msk, subflow) {
++		bool backup = subflow->backup || subflow->request_bkup;
++
+ 		trace_mptcp_subflow_get_send(subflow);
+ 		ssk =  mptcp_subflow_tcp_sock(subflow);
+ 		if (!mptcp_subflow_active(subflow))
+ 			continue;
+ 
+ 		tout = max(tout, mptcp_timeout_from_subflow(subflow));
+-		nr_active += !subflow->backup;
++		nr_active += !backup;
+ 		pace = subflow->avg_pacing_rate;
+ 		if (unlikely(!pace)) {
+ 			/* init pacing rate from socket */
+@@ -1434,9 +1436,9 @@ struct sock *mptcp_subflow_get_send(stru
  		}
--- 
-2.43.0
-
+ 
+ 		linger_time = div_u64((u64)READ_ONCE(ssk->sk_wmem_queued) << 32, pace);
+-		if (linger_time < send_info[subflow->backup].linger_time) {
+-			send_info[subflow->backup].ssk = ssk;
+-			send_info[subflow->backup].linger_time = linger_time;
++		if (linger_time < send_info[backup].linger_time) {
++			send_info[backup].ssk = ssk;
++			send_info[backup].linger_time = linger_time;
+ 		}
+ 	}
+ 	__mptcp_set_timeout(sk, tout);
 
 
