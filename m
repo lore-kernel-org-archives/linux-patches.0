@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CF384A3F;
-	Wed,  7 Aug 2024 15:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28BD84A40;
+	Wed,  7 Aug 2024 15:15:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043724; cv=none; b=iuyzfWmbmNqjSvegFvwk7+t5ptN1HIEvrdIfPrA9eVfiEVUklHbvY6XEqfAo+LDNChKgAHkSCDCICleC8wt9w2Ccq6+YlOccv+msb9YuDMMsQ8OSforfvUlK0o0gNtr8R+DemODQKGml+Rznvq6EL97nnYPqmeebU2KHGL59oSQ=
+	t=1723043727; cv=none; b=RfFuqxzhCPlVgvEtwbFHkDKojxWc6yZyr5EWyu8oVjmlplSc4SHUdTCbLjFvhbSv9fH/YjTDDGq8y82Qw5Dgbm5qvJvgK4BYn1Y2u2GaLrU4nH7sbEvAFS3VeXYRj/AFtnO0gxyCO4O0fxhpq2eGHr3Qmgk1ob8B1fqo+LZFDXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043724; c=relaxed/simple;
-	bh=Wfis4Q9FbITXkgc4FqU7Rh9TF+niaeIycYKKAP87PcQ=;
+	s=arc-20240116; t=1723043727; c=relaxed/simple;
+	bh=uuoRJtVET8M+GC0W0xDgnZWg8fq7kQGDoHwaQTZhG88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAQdP7huR/DoZFRLdel35+gOrBjMe5FdJTnEIUPZ7u+a+3bQ4+N781RwtaKjBWk5z9BeXDw5GOE6oOAECCBdKY8WlNVvHr+CXzFOKbVlcSuIir8pSxgQFKw38JEpcLngLv8zqV2X9kqGkdTcFysT740/TyK+kFpG8uXLOQ22Mvc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pCTPfgOL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VM+5606HgSTzAxt+sYJwHjVTnhVp3E8lM7MK9rg6vLcHtUeTQL2RPPTi+Cyz6tmgoTe9+8aDgInA54vWS1NnMWkZFsWA8ysFiRh4JP3Ov23zEzUPt2o4L86NuzewmVEzfaKDabfvTAuZNTqc4FaBcRqj3gSifj/jC74u9zAD0u8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0tyjl7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pCTPfgOL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7334C4AF0D;
-	Wed,  7 Aug 2024 15:15:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0tyjl7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86AFEC32781;
+	Wed,  7 Aug 2024 15:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043724;
-	bh=Wfis4Q9FbITXkgc4FqU7Rh9TF+niaeIycYKKAP87PcQ=;
+	s=korg; t=1723043726;
+	bh=uuoRJtVET8M+GC0W0xDgnZWg8fq7kQGDoHwaQTZhG88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCTPfgOLOqcH8eNRoVKC8C6oEGdutqdZdARCdToj24L9WJD31v+pXQsFZe0uWWnZw
-	 ICshFmXX2NEHtYyMLlQVjc3ZaAZJPGgUnoSEmi4XSq0kS/9Law+3oCLBz5X8jJGb/S
-	 4Dt5ZdDhc4Se8I63kdccPFdMAeINORM0WLDOWIWg=
+	b=y0tyjl7eo1LdgN4s14eE8QCCe0sMB8shhnl4JcuoB715JxIvQxglDfCwP0uUEBhX7
+	 4pU/xATGDQB9r6zdOnvDZ5fon8mJhW1ZwHg32t8ivs74xXQNHV8SDABYNtT3iQX/Qv
+	 +89lp9kNU6F/h0grLbULfFJfLkD8J7LRyK9giQYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>
-Subject: [PATCH 6.1 76/86] drm/vmwgfx: Fix a deadlock in dma buf fence polling
-Date: Wed,  7 Aug 2024 17:00:55 +0200
-Message-ID: <20240807150041.797188532@linuxfoundation.org>
+	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.1 77/86] drm/i915: Fix possible int overflow in skl_ddi_calculate_wrpll()
+Date: Wed,  7 Aug 2024 17:00:56 +0200
+Message-ID: <20240807150041.837107262@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -53,104 +51,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
 
-commit e58337100721f3cc0c7424a18730e4f39844934f upstream.
+commit 5b511572660190db1dc8ba412efd0be0d3781ab6 upstream.
 
-Introduce a version of the fence ops that on release doesn't remove
-the fence from the pending list, and thus doesn't require a lock to
-fix poll->fence wait->fence unref deadlocks.
+On the off chance that clock value ends up being too high (by means
+of skl_ddi_calculate_wrpll() having been called with big enough
+value of crtc_state->port_clock * 1000), one possible consequence
+may be that the result will not be able to fit into signed int.
 
-vmwgfx overwrites the wait callback to iterate over the list of all
-fences and update their status, to do that it holds a lock to prevent
-the list modifcations from other threads. The fence destroy callback
-both deletes the fence and removes it from the list of pending
-fences, for which it holds a lock.
+Fix this issue by moving conversion of clock parameter from kHz to Hz
+into the body of skl_ddi_calculate_wrpll(), as well as casting the
+same parameter to u64 type while calculating the value for AFE clock.
+This both mitigates the overflow problem and avoids possible erroneous
+integer promotion mishaps.
 
-dma buf polling cb unrefs a fence after it's been signaled: so the poll
-calls the wait, which signals the fences, which are being destroyed.
-The destruction tries to acquire the lock on the pending fences list
-which it can never get because it's held by the wait from which it
-was called.
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-Old bug, but not a lot of userspace apps were using dma-buf polling
-interfaces. Fix those, in particular this fixes KDE stalls/deadlock.
-
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 2298e804e96e ("drm/vmwgfx: rework to new fence interface, v2")
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.2+
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240722184313.181318-2-zack.rusin@broadcom.com
+Fixes: 82d354370189 ("drm/i915/skl: Implementation of SKL DPLL programming")
+Cc: stable@vger.kernel.org
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240729174035.25727-1-n.zhandarovich@fintech.ru
+(cherry picked from commit 833cf12846aa19adf9b76bc79c40747726f3c0c1)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dpll_mgr.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -32,7 +32,6 @@
- #define VMW_FENCE_WRAP (1 << 31)
- 
- struct vmw_fence_manager {
--	int num_fence_objects;
- 	struct vmw_private *dev_priv;
- 	spinlock_t lock;
- 	struct list_head fence_list;
-@@ -124,13 +123,13 @@ static void vmw_fence_obj_destroy(struct
- {
- 	struct vmw_fence_obj *fence =
- 		container_of(f, struct vmw_fence_obj, base);
--
- 	struct vmw_fence_manager *fman = fman_from_fence(fence);
- 
--	spin_lock(&fman->lock);
--	list_del_init(&fence->head);
--	--fman->num_fence_objects;
--	spin_unlock(&fman->lock);
-+	if (!list_empty(&fence->head)) {
-+		spin_lock(&fman->lock);
-+		list_del_init(&fence->head);
-+		spin_unlock(&fman->lock);
-+	}
- 	fence->destroy(fence);
+--- a/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
++++ b/drivers/gpu/drm/i915/display/intel_dpll_mgr.c
+@@ -1552,7 +1552,7 @@ static void skl_wrpll_params_populate(st
  }
  
-@@ -257,7 +256,6 @@ static const struct dma_fence_ops vmw_fe
- 	.release = vmw_fence_obj_destroy,
- };
- 
--
- /*
-  * Execute signal actions on fences recently signaled.
-  * This is done from a workqueue so we don't have to execute
-@@ -355,7 +353,6 @@ static int vmw_fence_obj_init(struct vmw
- 		goto out_unlock;
- 	}
- 	list_add_tail(&fence->head, &fman->fence_list);
--	++fman->num_fence_objects;
- 
- out_unlock:
- 	spin_unlock(&fman->lock);
-@@ -403,7 +400,7 @@ static bool vmw_fence_goal_new_locked(st
- 				      u32 passed_seqno)
+ static int
+-skl_ddi_calculate_wrpll(int clock /* in Hz */,
++skl_ddi_calculate_wrpll(int clock,
+ 			int ref_clock,
+ 			struct skl_wrpll_params *wrpll_params)
  {
- 	u32 goal_seqno;
--	struct vmw_fence_obj *fence;
-+	struct vmw_fence_obj *fence, *next_fence;
+@@ -1577,7 +1577,7 @@ skl_ddi_calculate_wrpll(int clock /* in
+ 	};
+ 	unsigned int dco, d, i;
+ 	unsigned int p0, p1, p2;
+-	u64 afe_clock = clock * 5; /* AFE Clock is 5x Pixel clock */
++	u64 afe_clock = (u64)clock * 1000 * 5; /* AFE Clock is 5x Pixel clock, in Hz */
  
- 	if (likely(!fman->seqno_valid))
- 		return false;
-@@ -413,7 +410,7 @@ static bool vmw_fence_goal_new_locked(st
- 		return false;
+ 	for (d = 0; d < ARRAY_SIZE(dividers); d++) {
+ 		for (dco = 0; dco < ARRAY_SIZE(dco_central_freq); dco++) {
+@@ -1709,7 +1709,7 @@ static int skl_ddi_hdmi_pll_dividers(str
  
- 	fman->seqno_valid = false;
--	list_for_each_entry(fence, &fman->fence_list, head) {
-+	list_for_each_entry_safe(fence, next_fence, &fman->fence_list, head) {
- 		if (!list_empty(&fence->seq_passed_actions)) {
- 			fman->seqno_valid = true;
- 			vmw_fence_goal_write(fman->dev_priv,
+ 	ctrl1 |= DPLL_CTRL1_HDMI_MODE(0);
+ 
+-	ret = skl_ddi_calculate_wrpll(crtc_state->port_clock * 1000,
++	ret = skl_ddi_calculate_wrpll(crtc_state->port_clock,
+ 				      i915->display.dpll.ref_clks.nssc, &wrpll_params);
+ 	if (ret)
+ 		return ret;
 
 
