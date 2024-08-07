@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E59E381AB1;
-	Wed,  7 Aug 2024 15:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13B81751;
+	Wed,  7 Aug 2024 15:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043522; cv=none; b=Ny3o0teFWOm+9D7D5iQlwZc5nR2hJEEfMIq1l+T05ZWOAkl92obgNVVg3+88HDnLrWFgnLxMi4euw76jmvEurxo3PxX0D1eYhIIjL2FX0gckTn7hoRsLZdo1BEAr7HNhf4sHvp1T4ZRZjgHnQrEltvAmn6XFkb0xjIXx1G1iWGs=
+	t=1723043524; cv=none; b=otSVjLkXHIDe3GPf40RPaV+/t2FCd/+OBqKcjkPuQtOOfAd0QRplLBlGoGphvD9HGRnLX7RmKF8UzJV3sCE2y2HEB1FWd1r58hYrvwMjVVke6025aj5MuJ4F0IS94MKniKqMcfmfGSjLaj0gQCgAS77CnZcD47SpV0OmgVUrwOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043522; c=relaxed/simple;
-	bh=EK4euiygNhTgwEr1p9gatG6+lljNMMzjSl8UgdrBu+A=;
+	s=arc-20240116; t=1723043524; c=relaxed/simple;
+	bh=NcdrJhmfaJt871DBe2fxCW5E+pioM2rUO/LomzVQ+Sc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BJ8jJgUXqKGbYHLEQlK1Q7e/Cq5uUyrcwUB1uI4vYFfhiPMkP27EFsdKO7/mRhp/lcnkS/an+xYwRubw95NdfZqfzF6xGIArEf0zGjtTxpqmKhL9JCCs4Xy6BwJ6C6fDojW3eJXkcNCIRtGNsscNxRpihuw+XtdOblbkpiEn7/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvKiwY1p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hem2Qt0xRkcRqLy6HNVA1IZIE7mOb/15e9owjKT/pVP9Jw69gwYTfNuNRx/XvvEKwI3RCpFU8vl4TUb6vaFM5wjFfC6h/coJOBViVW6+2XnBEEqyN8nWRxvvDjOCydhFYbQbneAhHzTpaK0vdldku+/lHLlO2Sg37SzGBxAmbfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAs/FpMJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvKiwY1p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2E9C32781;
-	Wed,  7 Aug 2024 15:12:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAs/FpMJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113CCC32781;
+	Wed,  7 Aug 2024 15:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043521;
-	bh=EK4euiygNhTgwEr1p9gatG6+lljNMMzjSl8UgdrBu+A=;
+	s=korg; t=1723043524;
+	bh=NcdrJhmfaJt871DBe2fxCW5E+pioM2rUO/LomzVQ+Sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UvKiwY1pLd0hZGhfMOBehBdmEs3jax5Xj6rKw48OZZ5EX8pXsqkEb6LNBpjy/aV6Y
-	 bPP2KBGyJ3PW9BJGzhC5823rEEbJZ9yHncVxwImx+A/e/u3UnRWBCB9SaVYY7tDV9g
-	 hzfQszqIU4BDxYX0B1XmmBfxAp5OrkeO5LzMlLoY=
+	b=wAs/FpMJGE8l/9kzvzSlXSzZGmcYq3rxLRnXpCR6PUt0b19GTmBh8R0Ywl+EJMPIL
+	 g14OTxwHXj8YNiob2ievShjB/ZRqUJSKZ56dcIUNZFADuWyQneGRMFKoDMyKvpspOZ
+	 tCR7HIsxit2+G7rufrBbVEh3uh18sjhIzytscpHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 113/121] mptcp: fix NL PM announced address accounting
-Date: Wed,  7 Aug 2024 17:00:45 +0200
-Message-ID: <20240807150023.107186509@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 114/121] mptcp: mib: count MPJ with backup flag
+Date: Wed,  7 Aug 2024 17:00:46 +0200
+Message-ID: <20240807150023.136624681@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,62 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 4b317e0eb287bd30a1b329513531157c25e8b692 upstream.
+commit 4dde0d72ccec500c60c798e036b852e013d6e124 upstream.
 
-Currently the per connection announced address counter is never
-decreased. As a consequence, after connection establishment, if
-the NL PM deletes an endpoint and adds a new/different one, no
-additional subflow is created for the new endpoint even if the
-current limits allow that.
+Without such counters, it is difficult to easily debug issues with MPJ
+not having the backup flags on production servers.
 
-Address the issue properly updating the signaled address counter
-every time the NL PM removes such addresses.
+This is not strictly a fix, but it eases to validate the following
+patches without requiring to take packet traces, to query ongoing
+connections with Netlink with admin permissions, or to guess by looking
+at the behaviour of the packet scheduler. Also, the modification is self
+contained, isolated, well controlled, and the increments are done just
+after others, there from the beginning. It looks then safe, and helpful
+to backport this.
 
-Fixes: 01cacb00b35c ("mptcp: add netlink-based PM")
+Fixes: 4596a2c1b7f5 ("mptcp: allow creating non-backup subflows")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ net/mptcp/mib.c     |    2 ++
+ net/mptcp/mib.h     |    2 ++
+ net/mptcp/subflow.c |    6 ++++++
+ 3 files changed, 10 insertions(+)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -1432,6 +1432,7 @@ static bool mptcp_pm_remove_anno_addr(st
- 	ret = remove_anno_list_by_saddr(msk, addr);
- 	if (ret || force) {
- 		spin_lock_bh(&msk->pm.lock);
-+		msk->pm.add_addr_signaled -= ret;
- 		mptcp_pm_remove_addr(msk, &list);
- 		spin_unlock_bh(&msk->pm.lock);
+--- a/net/mptcp/mib.c
++++ b/net/mptcp/mib.c
+@@ -19,7 +19,9 @@ static const struct snmp_mib mptcp_snmp_
+ 	SNMP_MIB_ITEM("MPTCPRetrans", MPTCP_MIB_RETRANSSEGS),
+ 	SNMP_MIB_ITEM("MPJoinNoTokenFound", MPTCP_MIB_JOINNOTOKEN),
+ 	SNMP_MIB_ITEM("MPJoinSynRx", MPTCP_MIB_JOINSYNRX),
++	SNMP_MIB_ITEM("MPJoinSynBackupRx", MPTCP_MIB_JOINSYNBACKUPRX),
+ 	SNMP_MIB_ITEM("MPJoinSynAckRx", MPTCP_MIB_JOINSYNACKRX),
++	SNMP_MIB_ITEM("MPJoinSynAckBackupRx", MPTCP_MIB_JOINSYNACKBACKUPRX),
+ 	SNMP_MIB_ITEM("MPJoinSynAckHMacFailure", MPTCP_MIB_JOINSYNACKMAC),
+ 	SNMP_MIB_ITEM("MPJoinAckRx", MPTCP_MIB_JOINACKRX),
+ 	SNMP_MIB_ITEM("MPJoinAckHMacFailure", MPTCP_MIB_JOINACKMAC),
+--- a/net/mptcp/mib.h
++++ b/net/mptcp/mib.h
+@@ -12,7 +12,9 @@ enum linux_mptcp_mib_field {
+ 	MPTCP_MIB_RETRANSSEGS,		/* Segments retransmitted at the MPTCP-level */
+ 	MPTCP_MIB_JOINNOTOKEN,		/* Received MP_JOIN but the token was not found */
+ 	MPTCP_MIB_JOINSYNRX,		/* Received a SYN + MP_JOIN */
++	MPTCP_MIB_JOINSYNBACKUPRX,	/* Received a SYN + MP_JOIN + backup flag */
+ 	MPTCP_MIB_JOINSYNACKRX,		/* Received a SYN/ACK + MP_JOIN */
++	MPTCP_MIB_JOINSYNACKBACKUPRX,	/* Received a SYN/ACK + MP_JOIN + backup flag */
+ 	MPTCP_MIB_JOINSYNACKMAC,	/* HMAC was wrong on SYN/ACK + MP_JOIN */
+ 	MPTCP_MIB_JOINACKRX,		/* Received an ACK + MP_JOIN */
+ 	MPTCP_MIB_JOINACKMAC,		/* HMAC was wrong on ACK + MP_JOIN */
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -166,6 +166,9 @@ static int subflow_check_req(struct requ
+ 			return 0;
+ 	} else if (opt_mp_join) {
+ 		SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINSYNRX);
++
++		if (mp_opt.backup)
++			SUBFLOW_REQ_INC_STATS(req, MPTCP_MIB_JOINSYNBACKUPRX);
  	}
-@@ -1596,17 +1597,18 @@ void mptcp_pm_remove_addrs_and_subflows(
- 	struct mptcp_pm_addr_entry *entry;
  
- 	list_for_each_entry(entry, rm_list, list) {
--		if (lookup_subflow_by_saddr(&msk->conn_list, &entry->addr) &&
--		    slist.nr < MPTCP_RM_IDS_MAX)
-+		if (slist.nr < MPTCP_RM_IDS_MAX &&
-+		    lookup_subflow_by_saddr(&msk->conn_list, &entry->addr))
- 			slist.ids[slist.nr++] = entry->addr.id;
+ 	if (opt_mp_capable && listener->request_mptcp) {
+@@ -558,6 +561,9 @@ static void subflow_finish_connect(struc
+ 		subflow->mp_join = 1;
+ 		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKRX);
  
--		if (remove_anno_list_by_saddr(msk, &entry->addr) &&
--		    alist.nr < MPTCP_RM_IDS_MAX)
-+		if (alist.nr < MPTCP_RM_IDS_MAX &&
-+		    remove_anno_list_by_saddr(msk, &entry->addr))
- 			alist.ids[alist.nr++] = entry->addr.id;
- 	}
- 
- 	if (alist.nr) {
- 		spin_lock_bh(&msk->pm.lock);
-+		msk->pm.add_addr_signaled -= alist.nr;
- 		mptcp_pm_remove_addr(msk, &alist);
- 		spin_unlock_bh(&msk->pm.lock);
- 	}
++		if (subflow->backup)
++			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_JOINSYNACKBACKUPRX);
++
+ 		if (subflow_use_different_dport(msk, sk)) {
+ 			pr_debug("synack inet_dport=%d %d",
+ 				 ntohs(inet_sk(sk)->inet_dport),
 
 
