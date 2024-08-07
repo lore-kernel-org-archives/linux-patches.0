@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519F880BF8;
-	Wed,  7 Aug 2024 15:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AA2374CC;
+	Wed,  7 Aug 2024 15:03:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043030; cv=none; b=DAPe/vXNRl8XvcNcM2IXIBaCBZsPZbgsQK5XlLNMDDXYD0TW00iDeKhYUOHUZL/YP2uVq06jZwrpB4HaYg3vvRODgl8LohfT+b7S/F4OPwpl5GRvXeQb3qO77xso2lOrW5lKaUpXAVIfGx+skQNhKg+inkx7q+odevoXt6ShtcQ=
+	t=1723043032; cv=none; b=oxUknQd9jBKrnehFL+bonQ2KcgeDDRMNaV/lcUneCebm8xIskSAuxRftauGeO66lxgWDSahNpY3g18f+dJvgbP8ctSXtI9lcqTJO0NhGsKPwbVnOuUr0DX3YQdb0M9BjZeA9Iwt+WICLRI0t9vJgiRsJMH0ip5eA+XqKHhIdWTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043030; c=relaxed/simple;
-	bh=sKnt/4lHOU1qGI3gONEPgjBcLPaTBZO05aWoPczsQg0=;
+	s=arc-20240116; t=1723043032; c=relaxed/simple;
+	bh=+pg1wMAWhiVDhbc5IehSKfKwrpbWtezqqGCYGc/N8Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GIUXkKQ7bajr9KZ3lj1HLlKwtDRi+ZCZam9xcnFErSvIg2rV/C67T4pqEYzRFjyboOm/4mLMUfHdUdXsaQMZetbZrx9ShjE+sqNWZgbvQ3h8P6C/YeH4Kf9cA+Rh/KfeQApLhPgiTxToFVL5emvCkGBkYeZwtipfhK9mST2cE5s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l5UM0ONf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z97rxbtOkOltn7dpjLwn5TiD9584Nyv8Ra5epDv3zhU3W2oTF7hf5Yo1G4G8e35VXXw8NTdAywCinIX52kNBg/2fgXPM61tksPwNwe9+eEAMN2F10934S8mF7slZwYrmgy3mQDg5K2yQgMl+i1251ZW8e7V5Ej1p4QaB3tmE64I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgqSqHMZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l5UM0ONf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A203C32781;
-	Wed,  7 Aug 2024 15:03:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgqSqHMZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A1CC32781;
+	Wed,  7 Aug 2024 15:03:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043030;
-	bh=sKnt/4lHOU1qGI3gONEPgjBcLPaTBZO05aWoPczsQg0=;
+	s=korg; t=1723043032;
+	bh=+pg1wMAWhiVDhbc5IehSKfKwrpbWtezqqGCYGc/N8Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5UM0ONf3f1cHoB+KP1HG04+oWbq9wcl3TkkpHhYyVzg8O9y3AKVm1oIFFkj1y4NQ
-	 fireUZ3ciITioFiBCOPdOiTUsUxwbW6CuOL9++EoeqAVg2WQihcpzi4M2U99qWJxf2
-	 0SR52Jdw+vQpSeFD8Wlim2INh0WUwUB73bxcKCLs=
+	b=GgqSqHMZTS1OT4abc7xgLeWhG0ft3nYixveZ65D75hxEdch/gfhQA3aQFvuZY4Jd3
+	 kN51YVw2M3NfxN8WvbV0LxdlpGRXD7SzDFjRF09eIg5S0qhXwD3z7EVxTM618qmERi
+	 GJqk+HqQ5wuHBzg/6ujowaMO1CqaqysApxrohyts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 035/123] drm/client: Fix error code in drm_client_buffer_vmap_local()
-Date: Wed,  7 Aug 2024 16:59:14 +0200
-Message-ID: <20240807150021.961640018@linuxfoundation.org>
+Subject: [PATCH 6.10 036/123] ethtool: fix setting key and resetting indir at once
+Date: Wed,  7 Aug 2024 16:59:15 +0200
+Message-ID: <20240807150021.998214044@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,38 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit b5fbf924f125ba3638cfdc21c0515eb7e76264ca ]
+[ Upstream commit 7195f0ef7f5b8c678cf28de7c9b619cb908b482c ]
 
-This function accidentally returns zero/success on the failure path.
-It leads to locking issues and an uninitialized *map_copy in the
-caller.
+The indirection table and the key follow struct ethtool_rxfh
+in user memory.
 
-Fixes: b4b0193e83cb ("drm/fbdev-generic: Fix locking with drm_client_buffer_vmap_local()")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/89d13df3-747c-4c5d-b122-d081aef5110a@stanley.mountain
+To reset the indirection table user space calls SET_RXFH with
+table of size 0 (OTOH to say "no change" it should use -1 / ~0).
+The logic for calculating the offset where they key sits is
+incorrect in this case, as kernel would still offset by the full
+table length, while for the reset there is no indir table and
+key is immediately after the struct.
+
+  $ ethtool -X eth0 default hkey 01:02:03...
+  $ ethtool -x eth0
+  [...]
+  RSS hash key:
+00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
+  [...]
+
+Fixes: 3de0b592394d ("ethtool: Support for configurable RSS hash key")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_client.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ethtool/ioctl.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_client.c b/drivers/gpu/drm/drm_client.c
-index 2803ac111bbd8..bfedcbf516dbe 100644
---- a/drivers/gpu/drm/drm_client.c
-+++ b/drivers/gpu/drm/drm_client.c
-@@ -355,7 +355,7 @@ int drm_client_buffer_vmap_local(struct drm_client_buffer *buffer,
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 223dcd25d88a2..fcc3dbef8b503 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -1277,11 +1277,11 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
+ 	u32 rss_cfg_offset = offsetof(struct ethtool_rxfh, rss_config[0]);
+ 	const struct ethtool_ops *ops = dev->ethtool_ops;
+ 	u32 dev_indir_size = 0, dev_key_size = 0, i;
++	u32 user_indir_len = 0, indir_bytes = 0;
+ 	struct ethtool_rxfh_param rxfh_dev = {};
+ 	struct netlink_ext_ack *extack = NULL;
+ 	struct ethtool_rxnfc rx_rings;
+ 	struct ethtool_rxfh rxfh;
+-	u32 indir_bytes = 0;
+ 	u8 *rss_config;
+ 	int ret;
  
- err_drm_gem_vmap_unlocked:
- 	drm_gem_unlock(gem);
--	return 0;
-+	return ret;
- }
- EXPORT_SYMBOL(drm_client_buffer_vmap_local);
- 
+@@ -1342,6 +1342,7 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
+ 	 */
+ 	if (rxfh.indir_size &&
+ 	    rxfh.indir_size != ETH_RXFH_INDIR_NO_CHANGE) {
++		user_indir_len = indir_bytes;
+ 		rxfh_dev.indir = (u32 *)rss_config;
+ 		rxfh_dev.indir_size = dev_indir_size;
+ 		ret = ethtool_copy_validate_indir(rxfh_dev.indir,
+@@ -1368,7 +1369,7 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
+ 		rxfh_dev.key_size = dev_key_size;
+ 		rxfh_dev.key = rss_config + indir_bytes;
+ 		if (copy_from_user(rxfh_dev.key,
+-				   useraddr + rss_cfg_offset + indir_bytes,
++				   useraddr + rss_cfg_offset + user_indir_len,
+ 				   rxfh.key_size)) {
+ 			ret = -EFAULT;
+ 			goto out;
 -- 
 2.43.0
 
