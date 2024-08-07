@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BAFF85931;
-	Wed,  7 Aug 2024 15:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3369685270;
+	Wed,  7 Aug 2024 15:06:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043194; cv=none; b=cDyxApYz6WYPshjm0TMdvOu/St15RCg1C4nOmLM0Z9aUXiyFvR7XyaXJhsxa+rOliblGNIJJZQT1+TgCoqc2EzvN+Mh4Qmf6boYiVLKzjjUq67Mhj7jQERTYU5UpQe1H4WkjrMDpEOIBE4uOfYIFxCclqK5SxxM5BdqDtudp1IU=
+	t=1723043197; cv=none; b=GZAWSoXnBYfa+ikm+Y/X8og5rDv0rk0ffopN5zCcXx/RQTjR2pNYd+7UVXC1yg6KO/KfRA25cZgRjz0nb2X1L1FN4Lee+GcsqsZQR1hOuHUlX4QYvRa0BS5aD7Y0fMkFZuWSr6QwTqmpX+10ZA7fLnW2DkZLsg4ewbTFWH8lPVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043194; c=relaxed/simple;
-	bh=xfGiIh5yXGlfZj3NveTfse8Yf1l3TLUPXy1lpOPENss=;
+	s=arc-20240116; t=1723043197; c=relaxed/simple;
+	bh=Xoe6nLD57TYWN5Bx0P9bsVTeltsjQKYlTREMPAhU41I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HRjd+Hy2vUfc7tMg6c729Ti7R+tzh9plk/J7irVPXP4oYeFysIXGFKriOKqnaL0nNgwnVJhXwQ+0/DCqonKYc62H98puw1q6Y9b8E6NjFx67IRq6xmbayE3BHadDX7yKiSPOr0HzPWNBRsJS6QZnzUd8EJu/Yw/CILwpwQa5hoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wK19UdmJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r0bGN6Lpvq9dAkL54ihMB+6bNSgNu2faRgISPYhWWjP/3fkmi7WrWA8ubzSwEHI6LufXh9u9+O2hO0Lwa84wpcakKur+tjToe1bn7OnsOSZgqZu8bCqZEuLMiIsCNw+hT0+UzUaWk/Q+26hCIOEqLNRatOc6+s0jNnxH9lL9QFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhI+GxPo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wK19UdmJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E285C32781;
-	Wed,  7 Aug 2024 15:06:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhI+GxPo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3B0C32781;
+	Wed,  7 Aug 2024 15:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043194;
-	bh=xfGiIh5yXGlfZj3NveTfse8Yf1l3TLUPXy1lpOPENss=;
+	s=korg; t=1723043197;
+	bh=Xoe6nLD57TYWN5Bx0P9bsVTeltsjQKYlTREMPAhU41I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wK19UdmJZ28WccdMFaySHsJgO95R43GmQaC8zxH09VRhlM9cxwLctQ/mABqdmzE9w
-	 R1WgHC2samV4hb17fBwH3rjDSBrY/OVsDmMdkN8O78sNDOakeE9bAtKrntR2qhpQVb
-	 p7vLZksUDBqepGCog/4Z9LAjtCGmdoWvYPBDTp4Y=
+	b=xhI+GxPoTfavqrj781Hj2pCpnX2duBDXLzZkGfr5d5zTAZvJpmCfHtgVIlAZGaD22
+	 5JF4057NYMzy4+AcdWK+vn34SjObWNMQv1RSLLEfhTawJF+o9gM2yTnnrqAbhPaazS
+	 Os5Y9/LOZ6pRzoarSXpFQYMYaw7qY1bmObyaUBcY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZeroBeat <ZeroBeat@gmx.de>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.10 106/123] wifi: mac80211: use monitor sdata with driver only if desired
-Date: Wed,  7 Aug 2024 17:00:25 +0200
-Message-ID: <20240807150024.282683738@linuxfoundation.org>
+	Olivier Langlois <olivier@trillion01.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.10 107/123] io_uring: keep multishot request NAPI timeout current
+Date: Wed,  7 Aug 2024 17:00:26 +0200
+Message-ID: <20240807150024.316902125@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -51,100 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Olivier Langlois <olivier@trillion01.com>
 
-commit 8f4fa0876231c426f880a2bff25ac49fac67d805 upstream.
+commit 2c762be5b798c443612c1bb9b011de4fdaebd1c5 upstream.
 
-In commit 0d9c2beed116 ("wifi: mac80211: fix monitor channel
-with chanctx emulation") I changed mac80211 to always have an
-internal monitor_sdata to have something to have the chanctx
-bound to.
+This refresh statement was originally present in the original patch:
+https://lore.kernel.org/netdev/20221121191437.996297-2-shr@devkernel.io/
 
-However, if the driver didn't also have the WANT_MONITOR flag
-this would cause mac80211 to allocate it without telling the
-driver (which was intentional) but also use it for later APIs
-to the driver without it ever having known about it which was
-_not_ intentional.
+It has been removed with no explanation in v6:
+https://lore.kernel.org/netdev/20230201222254.744422-2-shr@devkernel.io/
 
-Check through the code and only use the monitor_sdata in the
-relevant places (TX, MU-MIMO follow settings, TX power, and
-interface iteration) when the WANT_MONITOR flag is set.
+It is important to make the refresh for multishot requests, because if no
+new requests using the same NAPI device are added to the ring, the entry
+will become stale and be removed silently. The unsuspecting user will
+not know that their ring had busy polling for only 60 seconds before
+being pruned.
 
+Signed-off-by: Olivier Langlois <olivier@trillion01.com>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
+Fixes: 8d0c12a80cdeb ("io-uring: add napi busy poll support")
 Cc: stable@vger.kernel.org
-Fixes: 0d9c2beed116 ("wifi: mac80211: fix monitor channel with chanctx emulation")
-Reported-by: ZeroBeat <ZeroBeat@gmx.de>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=219086
-Tested-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20240725184836.25d334157a8e.I02574086da2c5cf0e18264ce5807db6f14ffd9c0@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/0fe61a019ec61e5708cd117cb42ed0dab95e1617.1722294646.git.olivier@trillion01.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c  |    7 +++++--
- net/mac80211/tx.c   |    5 +++--
- net/mac80211/util.c |    2 +-
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ io_uring/poll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -114,7 +114,7 @@ static int ieee80211_set_mon_options(str
+diff --git a/io_uring/poll.c b/io_uring/poll.c
+index 0a8e02944689..1f63b60e85e7 100644
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -347,6 +347,7 @@ static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
+ 		v &= IO_POLL_REF_MASK;
+ 	} while (atomic_sub_return(v, &req->poll_refs) & IO_POLL_REF_MASK);
  
- 	/* apply all changes now - no failures allowed */
++	io_napi_add(req);
+ 	return IOU_POLL_NO_ACTION;
+ }
  
--	if (monitor_sdata)
-+	if (monitor_sdata && ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF))
- 		ieee80211_set_mu_mimo_follow(monitor_sdata, params);
- 
- 	if (params->flags) {
-@@ -3038,6 +3038,9 @@ static int ieee80211_set_tx_power(struct
- 		sdata = IEEE80211_WDEV_TO_SUB_IF(wdev);
- 
- 		if (sdata->vif.type == NL80211_IFTYPE_MONITOR) {
-+			if (!ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF))
-+				return -EOPNOTSUPP;
-+
- 			sdata = wiphy_dereference(local->hw.wiphy,
- 						  local->monitor_sdata);
- 			if (!sdata)
-@@ -3100,7 +3103,7 @@ static int ieee80211_set_tx_power(struct
- 	if (has_monitor) {
- 		sdata = wiphy_dereference(local->hw.wiphy,
- 					  local->monitor_sdata);
--		if (sdata) {
-+		if (sdata && ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF)) {
- 			sdata->deflink.user_power_level = local->user_power_level;
- 			if (txp_type != sdata->vif.bss_conf.txpower_type)
- 				update_txp_type = true;
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1768,7 +1768,7 @@ static bool __ieee80211_tx(struct ieee80
- 			break;
- 		}
- 		sdata = rcu_dereference(local->monitor_sdata);
--		if (sdata) {
-+		if (sdata && ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF)) {
- 			vif = &sdata->vif;
- 			info->hw_queue =
- 				vif->hw_queue[skb_get_queue_mapping(skb)];
-@@ -3957,7 +3957,8 @@ begin:
- 			break;
- 		}
- 		tx.sdata = rcu_dereference(local->monitor_sdata);
--		if (tx.sdata) {
-+		if (tx.sdata &&
-+		    ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF)) {
- 			vif = &tx.sdata->vif;
- 			info->hw_queue =
- 				vif->hw_queue[skb_get_queue_mapping(skb)];
---- a/net/mac80211/util.c
-+++ b/net/mac80211/util.c
-@@ -776,7 +776,7 @@ static void __iterate_interfaces(struct
- 	sdata = rcu_dereference_check(local->monitor_sdata,
- 				      lockdep_is_held(&local->iflist_mtx) ||
- 				      lockdep_is_held(&local->hw.wiphy->mtx));
--	if (sdata &&
-+	if (sdata && ieee80211_hw_check(&local->hw, WANT_MONITOR_VIF) &&
- 	    (iter_flags & IEEE80211_IFACE_ITER_RESUME_ALL || !active_only ||
- 	     sdata->flags & IEEE80211_SDATA_IN_DRIVER))
- 		iterator(data, sdata->vif.addr, &sdata->vif);
+-- 
+2.46.0
+
 
 
