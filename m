@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A94527448;
-	Wed,  7 Aug 2024 15:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1A68563E;
+	Wed,  7 Aug 2024 15:06:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043186; cv=none; b=nmokU9l/sv4gG3ODm9l1u8K+BYxt5UplK1ePu/EyXs+1cj9JwHAD69CckIDBWb8c6jKS8gup6fzOFvBaDxrm7QbH6x0q+mUBVXOTY90EfLakT0jYPvpVulZMNSN45S1q/+R0+QmYohlxIHBngRWGqKZbyGL8jVOY4nCmruMVQI4=
+	t=1723043189; cv=none; b=Ug7KLO968Cue+F/mBMjTSTUTWBzuAflrmKRc08LsL43srk69SFkNrYZLVvmgTK0DPdRq4OmSfnd1ymjGW1I3wH435XloL9aAHws0i36YGpAxl+47Z8V7YVCesh6ZeoPHb6rHjKy55xih6IvHNdRa+cL3naXjwhcoLK7+E3KSLp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043186; c=relaxed/simple;
-	bh=ynAsDqhnCN9QeUuKNfLeseN98fhq9nploUXn3ZXVr3E=;
+	s=arc-20240116; t=1723043189; c=relaxed/simple;
+	bh=tTuQvPYvD4taaKFnAEwxLVVcnuFvUg52RpoLjn6XEZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTYpWQxrNThlFuwuz+SaKaSN73xhrDMmOMoynS6ARQvgBLUc8O5Jg7wEGIoHMooWs7feNM1sGSYLaOHH6eJbhrRRFpM9Hhc2vcCsR49bGxSNwAp2+PXPcZzXQpYN8l6qZIfSFc+ohHknfpsjWZ3dwwGfY18WnYjf8AAyhQ+E6So=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UvpuxVa4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JU1vcFqKEncPFvtZmYPwNz8VuylORGlBWJZWQCBZfEwS99LF7+U6++EjOAWwSNQS1AmjUY17kt+fjlaCN+4FLhgD0asTYnx8eSp/Cqx27Jzw5r7oZGf0HgM73k/uVYT1u/360YH+1flHt6G9LbqzEiyyrm6aG5n7r16KWYXiiB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1IRgc0Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UvpuxVa4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23643C32781;
-	Wed,  7 Aug 2024 15:06:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1IRgc0Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C075AC32781;
+	Wed,  7 Aug 2024 15:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043186;
-	bh=ynAsDqhnCN9QeUuKNfLeseN98fhq9nploUXn3ZXVr3E=;
+	s=korg; t=1723043189;
+	bh=tTuQvPYvD4taaKFnAEwxLVVcnuFvUg52RpoLjn6XEZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UvpuxVa4dBD4l5LO+ViLpktuavrHyC5iVNgsoXt2bN2w1hNTd6v41xG5oQEJasEri
-	 AQfrHRqKNIqCQMI/yWSiKBke4CsBMMBuqmgcC3+kiEmmm6XFEBDFByTEwenDeLXkTi
-	 tYPw7grLyNRkNUZk5ixSXJkAfpkWg74A6xLGfn24=
+	b=o1IRgc0ZoPO0SXsTNgVr/HXik7nJa64ue0gqVG8LxblUVaQfcUwKbRPMegb4/PpOO
+	 Nk8W291ZgRzNh0iGj1qy+j1i1zIDgCszi/S2K6OU7MSe5GzCq0J1bw3iLa3lR5VBm9
+	 n5Ke7kuc4Am/vr5wKXILlhn7deEo3LYsBPeouorM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.10 122/123] selftests: mptcp: join: validate backup in MPJ
-Date: Wed,  7 Aug 2024 17:00:41 +0200
-Message-ID: <20240807150024.901248416@linuxfoundation.org>
+Subject: [PATCH 6.10 123/123] selftests: mptcp: join: check backup support in signal endp
+Date: Wed,  7 Aug 2024 17:00:42 +0200
+Message-ID: <20240807150024.940876249@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -53,23 +53,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 935ff5bb8a1cfcdf8e60c8f5c794d0bbbc234437 upstream.
+commit f833470c27832136d4416d8fc55d658082af0989 upstream.
 
-A peer can notify the other one that a subflow has to be treated as
-"backup" by two different ways: either by sending a dedicated MP_PRIO
-notification, or by setting the backup flag in the MP_JOIN handshake.
+Before the previous commit, 'signal' endpoints with the 'backup' flag
+were ignored when sending the MP_JOIN.
 
-The selftests were previously monitoring the former, but not the latter.
-This is what is now done here by looking at these new MIB counters when
-validating the 'backup' cases:
+The MPTCP Join selftest has then been modified to validate this case:
+the "single address, backup" test, is now validating the MP_JOIN with a
+backup flag as it is what we expect it to do with such name. The
+previous version has been kept, but renamed to "single address, switch
+to backup" to avoid confusions.
 
-  MPTcpExtMPJoinSynBackupRx
-  MPTcpExtMPJoinSynAckBackupRx
+The "single address with port, backup" test is also now validating the
+MPJ with a backup flag, which makes more sense than checking the switch
+to backup with an MP_PRIO.
+
+The "mpc backup both sides" test is now validating that the backup flag
+is also set in MP_JOIN from and to the addresses used in the initial
+subflow, using the special ID 0.
 
 The 'Fixes' tag here below is the same as the one from the previous
 commit: this patch here is not fixing anything wrong in the selftests,
-but it will help to validate a new fix for an issue introduced by this
-commit ID.
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
 Fixes: 4596a2c1b7f5 ("mptcp: allow creating non-backup subflows")
 Cc: stable@vger.kernel.org
@@ -78,136 +84,72 @@ Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   42 ++++++++++++++++++------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   34 +++++++++++++++++++-----
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
 --- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
 +++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -1634,6 +1634,8 @@ chk_prio_nr()
- {
- 	local mp_prio_nr_tx=$1
- 	local mp_prio_nr_rx=$2
-+	local mpj_syn=$3
-+	local mpj_syn_ack=$4
- 	local count
- 
- 	print_check "ptx"
-@@ -1655,6 +1657,26 @@ chk_prio_nr()
- 	else
- 		print_ok
- 	fi
-+
-+	print_check "syn backup"
-+	count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMPJoinSynBackupRx")
-+	if [ -z "$count" ]; then
-+		print_skip
-+	elif [ "$count" != "$mpj_syn" ]; then
-+		fail_test "got $count JOIN[s] syn with Backup expected $mpj_syn"
-+	else
-+		print_ok
+@@ -2641,6 +2641,19 @@ backup_tests()
+ 	if reset "single address, backup" &&
+ 	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
+ 		pm_nl_set_limits $ns1 0 1
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal,backup
++		pm_nl_set_limits $ns2 1 1
++		sflags=nobackup speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
++		chk_join_nr 1 1 1
++		chk_add_nr 1 1
++		chk_prio_nr 1 0 0 1
 +	fi
 +
-+	print_check "synack backup"
-+	count=$(mptcp_lib_get_counter ${ns2} "MPTcpExtMPJoinSynAckBackupRx")
-+	if [ -z "$count" ]; then
-+		print_skip
-+	elif [ "$count" != "$mpj_syn_ack" ]; then
-+		fail_test "got $count JOIN[s] synack with Backup expected $mpj_syn_ack"
-+	else
-+		print_ok
-+	fi
- }
- 
- chk_subflow_nr()
-@@ -2612,7 +2634,7 @@ backup_tests()
- 		sflags=nobackup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 1 0
- 	fi
- 
- 	# single address, backup
-@@ -2625,7 +2647,7 @@ backup_tests()
++	# single address, switch to backup
++	if reset "single address, switch to backup" &&
++	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
++		pm_nl_set_limits $ns1 0 1
+ 		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
+ 		pm_nl_set_limits $ns2 1 1
+ 		sflags=backup speed=slow \
+@@ -2654,13 +2667,13 @@ backup_tests()
+ 	if reset "single address with port, backup" &&
+ 	   continue_if mptcp_lib_kallsyms_has "subflow_rebuild_header$"; then
+ 		pm_nl_set_limits $ns1 0 1
+-		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal port 10100
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal,backup port 10100
+ 		pm_nl_set_limits $ns2 1 1
+-		sflags=backup speed=slow \
++		sflags=nobackup speed=slow \
  			run_tests $ns1 $ns2 10.0.1.1
  		chk_join_nr 1 1 1
  		chk_add_nr 1 1
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
- 	fi
- 
- 	# single address with port, backup
-@@ -2638,7 +2660,7 @@ backup_tests()
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
- 		chk_add_nr 1 1
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
+-		chk_prio_nr 1 1 0 0
++		chk_prio_nr 1 0 0 1
  	fi
  
  	if reset "mpc backup" &&
-@@ -2647,7 +2669,7 @@ backup_tests()
- 		speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 0 0
- 	fi
+@@ -2674,12 +2687,21 @@ backup_tests()
  
  	if reset "mpc backup both sides" &&
-@@ -2657,7 +2679,7 @@ backup_tests()
+ 	   continue_if mptcp_lib_kallsyms_doesnt_have "T mptcp_subflow_send_ack$"; then
+-		pm_nl_add_endpoint $ns1 10.0.1.1 flags subflow,backup
++		pm_nl_set_limits $ns1 0 2
++		pm_nl_set_limits $ns2 1 2
++		pm_nl_add_endpoint $ns1 10.0.1.1 flags signal,backup
+ 		pm_nl_add_endpoint $ns2 10.0.1.2 flags subflow,backup
++
++		# 10.0.2.2 (non-backup) -> 10.0.1.1 (backup)
++		pm_nl_add_endpoint $ns2 10.0.2.2 flags subflow
++		# 10.0.1.2 (backup) -> 10.0.2.1 (non-backup)
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal
++		ip -net "$ns2" route add 10.0.2.1 via 10.0.1.1 dev ns2eth1 # force this path
++
  		speed=slow \
  			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
+-		chk_join_nr 0 0 0
+-		chk_prio_nr 1 1 0 0
++		chk_join_nr 2 2 2
++		chk_prio_nr 1 1 1 1
  	fi
  
  	if reset "mpc switch to backup" &&
-@@ -2666,7 +2688,7 @@ backup_tests()
- 		sflags=backup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 0 0
- 	fi
- 
- 	if reset "mpc switch to backup both sides" &&
-@@ -2676,7 +2698,7 @@ backup_tests()
- 		sflags=backup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
- 	fi
- }
- 
-@@ -3053,7 +3075,7 @@ fullmesh_tests()
- 		addr_nr_ns2=1 sflags=backup,fullmesh speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 2 2 2
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 1 0
- 		chk_rm_nr 0 1
- 	fi
- 
-@@ -3066,7 +3088,7 @@ fullmesh_tests()
- 		sflags=nobackup,nofullmesh speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 2 2 2
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 1 0
- 		chk_rm_nr 0 1
- 	fi
- }
-@@ -3318,7 +3340,7 @@ userspace_tests()
- 		sflags=backup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 0
--		chk_prio_nr 0 0
-+		chk_prio_nr 0 0 0 0
- 	fi
- 
- 	# userspace pm type prevents rm_addr
 
 
