@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5869F23CE;
-	Wed,  7 Aug 2024 15:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0800923CE;
+	Wed,  7 Aug 2024 15:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043695; cv=none; b=lBaqLAA9XUQI4FOj+YgWOaEZ54jVbadYHylWI8AkoC9/v5yG5PXVEeasdAzLVJAKrmNa26ELDbJdaUbjISVmgpxHQS0J18EZ5Am/OTNspiE3Z++Au/CVS2BWH2RLJlI0L14OywnlCpnm6kI+VTj82JQi/Q00BzJMEfxLkw12E4w=
+	t=1723043698; cv=none; b=FcfKzf6lB50UlwGGBGKETg/vXxFQG0UhECrrIo94GEfLRS/uh3xQvnm0XycQkVJqXFlahu/mKJivqzjcV0WawuCWmkQFRM/7X1CYLK2RAJbtgzg+HsZkiysbSjiky4NxHNlMUnhH4/NXqua/IF3YLm6OlXTvjpzB1YeTSu1YKks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043695; c=relaxed/simple;
-	bh=DLqntHXEq3r6Ao2rdw+qld6VmQMqRpDcXIuYkAhDknc=;
+	s=arc-20240116; t=1723043698; c=relaxed/simple;
+	bh=VegMAM3cSjWzkB5OwZeIQ3+NjNxl0/yPVhOe6r3TFI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l/o7PFiVccx8DSj5XFNDRV6bitgRwxne64rp8uHUxRkDtqKZxummfYFgB531OtAcCQYUZnAlKg+KLrTm1R7MRk7x7gNCNhmMolnPQNqjFexbkGk08KuOOkEYPxKxZm8pziSWYF5XoP3ROlDD1RzCmzdUYfW7i0n4aLJDyAI5nm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AIXDslcU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+Vxd6EgVho6nksGi7lwHpso5bFfukUMO0amXDT7gpvbOvQLxOkfkmCZeNxhN4UegGEXIRk8awPjdn31IGbWzjDGM1HtTiWzxa/T+0vHj+MKiqCB7poDGX93hB436drj8xP2QxTy1eka/ZrLeVPMP1KULajMofG34X9fq+va658=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F2ydrCrE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AIXDslcU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0805C32781;
-	Wed,  7 Aug 2024 15:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F2ydrCrE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5DEC32781;
+	Wed,  7 Aug 2024 15:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043695;
-	bh=DLqntHXEq3r6Ao2rdw+qld6VmQMqRpDcXIuYkAhDknc=;
+	s=korg; t=1723043697;
+	bh=VegMAM3cSjWzkB5OwZeIQ3+NjNxl0/yPVhOe6r3TFI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AIXDslcUqF0UwWqhhBnEU6jiH/YVemLT5bsNE0atUSo0KXz07QQ9p3HYkACYvjh99
-	 s6BGZaK6O56lR3fs642hdQ84vMOx+gWFSICRoPJqT8uVEh9su2e+I9tZL2kq34RCgA
-	 2mk9k+B+I2GvbX5y4GxS1OhNvUu3b4O/H/ujYwMc=
+	b=F2ydrCrEETVoix5qJ0dwQDgI25xwfFcok+taY4jyqzHc1IMKvjVCp2suAbq87QngB
+	 1ylLi4EWYr7tquGvxz7eaZu7jXwgr4okpZHAK4+dJoi344rHRQRkpqLUNanITjLn/z
+	 UVTazxrjW2a+h7NSVViCH8GX9wXib/snSrD98JZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Ryhl <aliceryhl@google.com>,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.1 66/86] rust: SHADOW_CALL_STACK is incompatible with Rust
-Date: Wed,  7 Aug 2024 17:00:45 +0200
-Message-ID: <20240807150041.439389498@linuxfoundation.org>
+	Patryk Duda <patrykd@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.1 67/86] platform/chrome: cros_ec_proto: Lock device when updating MKBP version
+Date: Wed,  7 Aug 2024 17:00:46 +0200
+Message-ID: <20240807150041.470892509@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -51,42 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Patryk Duda <patrykd@google.com>
 
-commit f126745da81783fb1d082e67bf14c6795e489a88 upstream.
+commit df615907f1bf907260af01ccb904d0e9304b5278 upstream.
 
-When using the shadow call stack sanitizer, all code must be compiled
-with the -ffixed-x18 flag, but this flag is not currently being passed
-to Rust. This results in crashes that are extremely difficult to debug.
+The cros_ec_get_host_command_version_mask() function requires that the
+caller must have ec_dev->lock mutex before calling it. This requirement
+was not met and as a result it was possible that two commands were sent
+to the device at the same time.
 
-To ensure that nobody else has to go through the same debugging session
-that I had to, prevent configurations that enable both SHADOW_CALL_STACK
-and RUST.
+The problem was observed while using UART backend which doesn't use any
+additional locks, unlike SPI backend which locks the controller until
+response is received.
 
-It is rather common for people to backport 724a75ac9542 ("arm64: rust:
-Enable Rust support for AArch64"), so I recommend applying this fix all
-the way back to 6.1.
-
-Cc: stable@vger.kernel.org # 6.1 and later
-Fixes: 724a75ac9542 ("arm64: rust: Enable Rust support for AArch64")
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Miguel Ojeda <ojeda@kernel.org>
-Link: https://lore.kernel.org/r/20240729-shadow-call-stack-v4-1-2a664b082ea4@google.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: f74c7557ed0d ("platform/chrome: cros_ec_proto: Update version on GET_NEXT_EVENT failure")
+Cc: stable@vger.kernel.org
+Signed-off-by: Patryk Duda <patrykd@google.com>
+Link: https://lore.kernel.org/r/20240730104425.607083-1-patrykd@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- init/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/chrome/cros_ec_proto.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -1924,6 +1924,7 @@ config RUST
- 	depends on !MODVERSIONS
- 	depends on !GCC_PLUGINS
- 	depends on !RANDSTRUCT
-+	depends on !SHADOW_CALL_STACK
- 	depends on !DEBUG_INFO_BTF || PAHOLE_HAS_LANG_EXCLUDE
- 	help
- 	  Enables Rust support in the kernel.
+--- a/drivers/platform/chrome/cros_ec_proto.c
++++ b/drivers/platform/chrome/cros_ec_proto.c
+@@ -805,9 +805,11 @@ int cros_ec_get_next_event(struct cros_e
+ 	if (ret == -ENOPROTOOPT) {
+ 		dev_dbg(ec_dev->dev,
+ 			"GET_NEXT_EVENT returned invalid version error.\n");
++		mutex_lock(&ec_dev->lock);
+ 		ret = cros_ec_get_host_command_version_mask(ec_dev,
+ 							EC_CMD_GET_NEXT_EVENT,
+ 							&ver_mask);
++		mutex_unlock(&ec_dev->lock);
+ 		if (ret < 0 || ver_mask == 0)
+ 			/*
+ 			 * Do not change the MKBP supported version if we can't
 
 
