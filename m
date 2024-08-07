@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA7F78281;
-	Wed,  7 Aug 2024 15:08:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C695678281;
+	Wed,  7 Aug 2024 15:08:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043331; cv=none; b=I3ektRjADEl3xemKG+BNsfaTUVzFGJoiCGpZXx4fIo1LGF8xuK0+CJfx8ns+menWHK8zMNk+roejaGIqOeOTILSrM0ELetKA1zzuOseA2hcLA0suxLalIP6Hvi+wdrhXmwvmTak092uEjna5T/VlB6JKG5+PPOqIMSTvSHl7OqY=
+	t=1723043333; cv=none; b=FdRvO/g0UqGEHMLUAZykdRWwvgif0hz90SEo2q69EriFUsDJ/VeFm8TOuiz7Q7b75jL5mcha78G29ftsdDQmCTK/AnnoTtVa4CJMZx7ZrTdvYQkK/vqrYP0Up8HU8+ZFm3YgO7trSRvOQpTT6fFy1VT5Z01zvbmJhtoCOg04i0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043331; c=relaxed/simple;
-	bh=fx6WkcMo/U2au1sH22oEYdWfWR/JxsbSY5qT+aFwE9Q=;
+	s=arc-20240116; t=1723043333; c=relaxed/simple;
+	bh=VbXEu9ghFo6MPRSCRfq5V+QmZGcNoqHq+BaG24UJ2D4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YdPd7vXRdY5MV1El5Ya2L35UQSNKzEFMr0+2dsQFN6DdWMhyDz69hqOsXJU/Hc63PBnp8sbBhshqKNcPwEwFQGdh+rwAPLea/WkBXxheiogp6QBP7Bi6Hf+0GqTGCaAXW+vPD/okPbdLy/2sOdhRW0NlU4syEiEMr1a6yT7h45Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n/1f14oo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1yFeirp99i19ELxPZzpQ1ZvJbGHVGAmmxIzJzxuJ5U/g/dZOZKJMYSmSCQbXkR0tAVKy3o2Zn4D/vaeT2RAsGoUd+RcaTxvFVMTcwtOyg22QXUOPg6LsKQA3289FNSB3s5jx81kyDqc+HFSLJZpaI7GffVGpDyg1k32Sd4n+CM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J1hZTQzc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n/1f14oo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A523CC32781;
-	Wed,  7 Aug 2024 15:08:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J1hZTQzc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B01C32781;
+	Wed,  7 Aug 2024 15:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043331;
-	bh=fx6WkcMo/U2au1sH22oEYdWfWR/JxsbSY5qT+aFwE9Q=;
+	s=korg; t=1723043333;
+	bh=VbXEu9ghFo6MPRSCRfq5V+QmZGcNoqHq+BaG24UJ2D4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/1f14oofoOns+U4L4RMEsMSDCwB6vmJ3z7lYhnNuS64VQyi8beoPpJRNmEdWxLYr
-	 nENhZCytvGnXDaj7CZz0dEdJNbhc0wmQVJocSwG4cqxi42CXdSTQfvzeqU8HyyAEJv
-	 TCKX1jjsM9S/XxRVLYNX0MY/857iWMDwGCVdpvhY=
+	b=J1hZTQzcL+lixboSt9MkPDTV9WQdOPmfYFytaxuk5H8/IsnERTnBCHsbNKCPzlxNB
+	 NAiEr4lHAn5fGx+/06Zc8ldkagDzTfQmp0oZgA8fuL/WBolPsdCljd5EV1gwXqPLIv
+	 vo383kkHtQsR253KBjU0x+6QD8RQFchBDl8HtrzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/121] cpufreq: qcom-nvmem: fix memory leaks in probe error paths
-Date: Wed,  7 Aug 2024 16:59:14 +0200
-Message-ID: <20240807150020.080637151@linuxfoundation.org>
+Subject: [PATCH 6.6 023/121] leds: trigger: Remove unused function led_trigger_rename_static()
+Date: Wed,  7 Aug 2024 16:59:15 +0200
+Message-ID: <20240807150020.108605948@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,63 +51,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit d01c84b97f19f1137211e90b0a910289a560019e ]
+[ Upstream commit c82a1662d4548c454de5343b88f69b9fc82266b3 ]
 
-The code refactoring added new error paths between the np device node
-allocation and the call to of_node_put(), which leads to memory leaks if
-any of those errors occur.
+This function was added with a8df7b1ab70b ("leds: add led_trigger_rename
+function") 11 yrs ago, but it has no users. So remove it.
 
-Add the missing of_node_put() in the error paths that require it.
-
-Cc: stable@vger.kernel.org
-Fixes: 57f2f8b4aa0c ("cpufreq: qcom: Refactor the driver to make it easier to extend")
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/d90f30be-f661-4db7-b0b5-d09d07a78a68@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: ab477b766edd ("leds: triggers: Flush pending brightness before activating trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/qcom-cpufreq-nvmem.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/leds/led-triggers.c | 13 -------------
+ include/linux/leds.h        | 17 -----------------
+ 2 files changed, 30 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-nvmem.c b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-index 03586fee15aac..ef51dfb39baa9 100644
---- a/drivers/cpufreq/qcom-cpufreq-nvmem.c
-+++ b/drivers/cpufreq/qcom-cpufreq-nvmem.c
-@@ -249,23 +249,30 @@ static int qcom_cpufreq_probe(struct platform_device *pdev)
+diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
+index 4f5829b726a75..081acf1f345b3 100644
+--- a/drivers/leds/led-triggers.c
++++ b/drivers/leds/led-triggers.c
+@@ -269,19 +269,6 @@ void led_trigger_set_default(struct led_classdev *led_cdev)
+ }
+ EXPORT_SYMBOL_GPL(led_trigger_set_default);
  
- 	drv = devm_kzalloc(&pdev->dev, struct_size(drv, cpus, num_possible_cpus()),
- 		           GFP_KERNEL);
--	if (!drv)
-+	if (!drv) {
-+		of_node_put(np);
- 		return -ENOMEM;
-+	}
+-void led_trigger_rename_static(const char *name, struct led_trigger *trig)
+-{
+-	/* new name must be on a temporary string to prevent races */
+-	BUG_ON(name == trig->name);
+-
+-	down_write(&triggers_list_lock);
+-	/* this assumes that trig->name was originaly allocated to
+-	 * non constant storage */
+-	strcpy((char *)trig->name, name);
+-	up_write(&triggers_list_lock);
+-}
+-EXPORT_SYMBOL_GPL(led_trigger_rename_static);
+-
+ /* LED Trigger Interface */
  
- 	match = pdev->dev.platform_data;
- 	drv->data = match->data;
--	if (!drv->data)
-+	if (!drv->data) {
-+		of_node_put(np);
- 		return -ENODEV;
-+	}
+ int led_trigger_register(struct led_trigger *trig)
+diff --git a/include/linux/leds.h b/include/linux/leds.h
+index aa16dc2a8230f..6a4973feecd65 100644
+--- a/include/linux/leds.h
++++ b/include/linux/leds.h
+@@ -527,23 +527,6 @@ static inline void *led_get_trigger_data(struct led_classdev *led_cdev)
+ 	return led_cdev->trigger_data;
+ }
  
- 	if (drv->data->get_version) {
- 		speedbin_nvmem = of_nvmem_cell_get(np, NULL);
--		if (IS_ERR(speedbin_nvmem))
-+		if (IS_ERR(speedbin_nvmem)) {
-+			of_node_put(np);
- 			return dev_err_probe(cpu_dev, PTR_ERR(speedbin_nvmem),
- 					     "Could not get nvmem cell\n");
-+		}
- 
- 		ret = drv->data->get_version(cpu_dev,
- 							speedbin_nvmem, &pvs_name, drv);
- 		if (ret) {
-+			of_node_put(np);
- 			nvmem_cell_put(speedbin_nvmem);
- 			return ret;
- 		}
+-/**
+- * led_trigger_rename_static - rename a trigger
+- * @name: the new trigger name
+- * @trig: the LED trigger to rename
+- *
+- * Change a LED trigger name by copying the string passed in
+- * name into current trigger name, which MUST be large
+- * enough for the new string.
+- *
+- * Note that name must NOT point to the same string used
+- * during LED registration, as that could lead to races.
+- *
+- * This is meant to be used on triggers with statically
+- * allocated name.
+- */
+-void led_trigger_rename_static(const char *name, struct led_trigger *trig);
+-
+ #define module_led_trigger(__led_trigger) \
+ 	module_driver(__led_trigger, led_trigger_register, \
+ 		      led_trigger_unregister)
 -- 
 2.43.0
 
