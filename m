@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF4078281;
-	Wed,  7 Aug 2024 15:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A6F78281;
+	Wed,  7 Aug 2024 15:08:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043301; cv=none; b=f/JQHROwePudsqSDyt3yb6lJ3ZF3obe95VX+rRchsT3qD1XA7cSrp+o+fxSvev+O2dEDEVA/HJgHgAjgixyT98MJpJpU8PYKxxxcMsrhkhCzhj78qBRAYbyzWXryp7PlgL6IRZLIZGqvxpoYg5UIaaK89/iwP05AsSb2ZdKEhsg=
+	t=1723043304; cv=none; b=GeN79GTA/UZGxh/9vmux46zR1W186pKGoMqwkqvXw/fIMRJkWoc/C2UsZeCkhRn1p95xkokJSUcWCEMRZPKTwI9ybo2TMaOHP7/mTax/UOEbbKV30p6gP+swHUzsrTfM3ZdBO1zz9uwGm+tsehCb6/lNFXYjo5Wd0Szga9pEWCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043301; c=relaxed/simple;
-	bh=OnkYzka1VVejeJ9Xe/b0Y1FEf9IDVXR5hH9Zub9q7jA=;
+	s=arc-20240116; t=1723043304; c=relaxed/simple;
+	bh=mqO3eLIdV6C3+Tye6UIKsad5H6Ds5JA2pcHZWJ/6uNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OgUTsrS0OD8PJQGQDuMmR9wvguZy3Ze3M+w2g5TGMDiySCo9IJnWE62O6L3sXcQOoZVvUTSum4B/Q0qX5RhzchQDP6x1EXEIib+BFFT8ySoT3Q7iPEsKjC3ugJ+fyNR+0X6clriY9hbfDki2zHXncKSsgw38xI4YNJSEXRwV5Nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W0l7h6l1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZO44N20nR6fqNTyClZb2tqrTANjQt6jJ+4Hr3VaJzjE1aV9yIgVHDpIufCw1RhNpRb2wG0xwtlk/SP/hng/FHroUROanfWJt+6Hg2JO9P8FCeHqH+H+YV/kQErjfB4xI0w89mFhxK49Vw3PGdwgHozveUFp1Ho8PoTVz4FcFuiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YhKwIgUM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W0l7h6l1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B57A4C32781;
-	Wed,  7 Aug 2024 15:08:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YhKwIgUM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BCABC32781;
+	Wed,  7 Aug 2024 15:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043301;
-	bh=OnkYzka1VVejeJ9Xe/b0Y1FEf9IDVXR5hH9Zub9q7jA=;
+	s=korg; t=1723043303;
+	bh=mqO3eLIdV6C3+Tye6UIKsad5H6Ds5JA2pcHZWJ/6uNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W0l7h6l1nIApFuGoVry5aHqctPKgAwgGdIxysyZLEat1YfELKYbaXoMwvn6w/fR47
-	 617YLeGsPZ+P03qs+2oVaZjC6pyFvxW2INi+FqMa+jl8yvAzJ4zbFj2T+5lReHpkUW
-	 DDsMG5+plMaZ8irXwkb+T9jtdjw4w7ZeV2Yv3OXE=
+	b=YhKwIgUMInAWKsKcyorNF1qg1QiqQ+CexqrhhU/RxScTHdcJuyKaI7by+EWSzXew4
+	 5cHUQ2EijWeTjiv9ZGndkAIO9RGEdznNLl2OPwy5Khb9ZqGjHxpQVZkkm3NG6KiSA8
+	 Ens/7RVof1i1NlQB96wBj59+eTGMfnPnXFwbz/QE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
 	Chao Yu <chao@kernel.org>,
+	Will McVicker <willmcvicker@google.com>,
 	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 040/121] f2fs: fix to avoid use SSR allocate when do defragment
-Date: Wed,  7 Aug 2024 16:59:32 +0200
-Message-ID: <20240807150020.723217992@linuxfoundation.org>
+Subject: [PATCH 6.6 041/121] f2fs: assign CURSEG_ALL_DATA_ATGC if blkaddr is valid
+Date: Wed,  7 Aug 2024 16:59:33 +0200
+Message-ID: <20240807150020.750025149@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,73 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit 21327a042dd94bc73181d7300e688699cb1f467e ]
+[ Upstream commit 8cb1f4080dd91c6e6b01dbea013a3f42341cb6a1 ]
 
-SSR allocate mode will be used when doing file defragment
-if ATGC is working at the same time, that is because
-set_page_private_gcing may make CURSEG_ALL_DATA_ATGC segment
-type got in f2fs_allocate_data_block when defragment page
-is writeback, which may cause file fragmentation is worse.
+mkdir /mnt/test/comp
+f2fs_io setflags compression /mnt/test/comp
+dd if=/dev/zero of=/mnt/test/comp/testfile bs=16k count=1
+truncate --size 13 /mnt/test/comp/testfile
 
-A file with 2 fragmentations is changed as following after defragment:
+In the above scenario, we can get a BUG_ON.
+ kernel BUG at fs/f2fs/segment.c:3589!
+ Call Trace:
+  do_write_page+0x78/0x390 [f2fs]
+  f2fs_outplace_write_data+0x62/0xb0 [f2fs]
+  f2fs_do_write_data_page+0x275/0x740 [f2fs]
+  f2fs_write_single_data_page+0x1dc/0x8f0 [f2fs]
+  f2fs_write_multi_pages+0x1e5/0xae0 [f2fs]
+  f2fs_write_cache_pages+0xab1/0xc60 [f2fs]
+  f2fs_write_data_pages+0x2d8/0x330 [f2fs]
+  do_writepages+0xcf/0x270
+  __writeback_single_inode+0x44/0x350
+  writeback_sb_inodes+0x242/0x530
+  __writeback_inodes_wb+0x54/0xf0
+  wb_writeback+0x192/0x310
+  wb_workfn+0x30d/0x400
 
-----------------file info-------------------
-sensorsdata :
---------------------------------------------
-dev       [254:48]
-ino       [0x    3029 : 12329]
-mode      [0x    81b0 : 33200]
-nlink     [0x       1 : 1]
-uid       [0x    27e6 : 10214]
-gid       [0x    27e6 : 10214]
-size      [0x  242000 : 2367488]
-blksize   [0x    1000 : 4096]
-blocks    [0x    1210 : 4624]
---------------------------------------------
+The reason is we gave CURSEG_ALL_DATA_ATGC to COMPR_ADDR where the
+page was set the gcing flag by set_cluster_dirty().
 
-file_pos   start_blk     end_blk        blks
-       0    11361121    11361207          87
-  356352    11361215    11361216           2
-  364544    11361218    11361218           1
-  368640    11361220    11361221           2
-  376832    11361224    11361225           2
-  385024    11361227    11361238          12
-  434176    11361240    11361252          13
-  487424    11361254    11361254           1
-  491520    11361271    11361279           9
-  528384     3681794     3681795           2
-  536576     3681797     3681797           1
-  540672     3681799     3681799           1
-  544768     3681803     3681803           1
-  548864     3681805     3681805           1
-  552960     3681807     3681807           1
-  557056     3681809     3681809           1
-
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Cc: stable@vger.kernel.org
+Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
 Reviewed-by: Chao Yu <chao@kernel.org>
+Tested-by: Will McVicker <willmcvicker@google.com>
 Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Stable-dep-of: 8cb1f4080dd9 ("f2fs: assign CURSEG_ALL_DATA_ATGC if blkaddr is valid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/segment.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 22080606b8769..6d6c47df36ec0 100644
+index 6d6c47df36ec0..804958c6de34c 100644
 --- a/fs/f2fs/segment.c
 +++ b/fs/f2fs/segment.c
-@@ -3350,7 +3350,8 @@ static int __get_segment_type_6(struct f2fs_io_info *fio)
- 		if (page_private_gcing(fio->page)) {
+@@ -3351,6 +3351,7 @@ static int __get_segment_type_6(struct f2fs_io_info *fio)
  			if (fio->sbi->am.atgc_enabled &&
  				(fio->io_type == FS_DATA_IO) &&
--				(fio->sbi->gc_mode != GC_URGENT_HIGH))
-+				(fio->sbi->gc_mode != GC_URGENT_HIGH) &&
-+				!is_inode_flag_set(inode, FI_OPU_WRITE))
+ 				(fio->sbi->gc_mode != GC_URGENT_HIGH) &&
++				__is_valid_data_blkaddr(fio->old_blkaddr) &&
+ 				!is_inode_flag_set(inode, FI_OPU_WRITE))
  				return CURSEG_ALL_DATA_ATGC;
  			else
- 				return CURSEG_COLD_DATA;
 -- 
 2.43.0
 
