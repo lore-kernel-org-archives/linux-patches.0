@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB1A23CE;
-	Wed,  7 Aug 2024 15:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014A27603A;
+	Wed,  7 Aug 2024 15:01:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042886; cv=none; b=ft2gpEvniT6igGza/+mbk3lo8HSRXb5RwEKGk9KaDbOkK5t0oESWv8rDxo0I4fidarxMgEyzbML+kHRGqQgr3H5AauWL78wfyIkt7pj8aOHfVQ7Qrtdr/p8qjEi+DCHUpgZ1ts4scW43ZuPNrzoPijH/jd4vlHbT4wKgVarbQo8=
+	t=1723042889; cv=none; b=qMEMo/nQ+X45NjQApKC1WGhMFbi8jcZbgaZV8bkerF0U0Ic0/IKmoz7QB+ugkB1ZR+oDgTQSYXmdC96HYLrWon0T/kjUVhNpa0zRhjNAhyrjUtP23NKKPCtTh5Sd252b46uOvp9qK4fqRhjlkneKABkWupzq32sdM2agc5G7qLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042886; c=relaxed/simple;
-	bh=yaaibFyCEvYMpNHPT5yrzcFMTWMn9977OUlzVUTlyXU=;
+	s=arc-20240116; t=1723042889; c=relaxed/simple;
+	bh=ka+OaS2uE4J4A9v35b6mn18Un1K0SEvl3ZKMDHRN4lk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=f9nOQrt/6W+8lL6i6r6s3TzKPgJXjoZCzGcX6tYwcrqK6pvpDoWyjrEqZGYK9Dy1oWnYwKSe4ZlNQ/qnPcy//MCr4b15aE4NJfc/mQF0cH3BroOY4k9f3AC9aVCfp9P9H+J25NzZTsLXE1M0j+IDHGtwN5FTIiVoheXrr8EFtpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/5o9rYn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UMk428CL+pFyhUVaBa4qdfavF4puJsFV2JoWtP5ozxCPKkl+RNQBHuc17sfZ2tDE+iqrjgzIR3GYQSwK774a8mleC/7Joc1S17jY7MAmDsqm03RoxZfQ3HEcNkZRQFxh8QLWYNuBKyNOq4/we3k37WxK/sGNzY4QpA+CSTmmdBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UbmBFVAP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/5o9rYn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89D66C32781;
-	Wed,  7 Aug 2024 15:01:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UbmBFVAP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B73C32781;
+	Wed,  7 Aug 2024 15:01:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042885;
-	bh=yaaibFyCEvYMpNHPT5yrzcFMTWMn9977OUlzVUTlyXU=;
+	s=korg; t=1723042888;
+	bh=ka+OaS2uE4J4A9v35b6mn18Un1K0SEvl3ZKMDHRN4lk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/5o9rYn0n+yjX1vqxM/v72MiKLJrFGBSUggo5iAPCy/aKrZ0Jm6DcnzLfGDzIQJR
-	 Af47G4kDqn5WRYZXX/wGy1EzmdOWdFBsspgEbvhdacUORugITwTkgfCeFFR1jcVrM2
-	 rE2IjoTrVnM2G+MK9eccxL8QF7XWxXGvnEZ/P4QU=
+	b=UbmBFVAPqecMMz4ANjnKXQ00x/0lOSJIoaplwHHDmc2gJZzMxxlZ32aw62PsFRrkW
+	 BuuhuD+FrcArGVEL33GPOmOn5IIfY/3JiIH1K6J2tUahakKA2S6BYv3nis8pTGMbpD
+	 GossBN6n67TUr6PkT0CIFyLKdmhbzz+Z2xVGh3JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ahmad Yasin <ahmad.yasin@intel.com>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 012/123] perf/x86/intel: Add a distinct name for Granite Rapids
-Date: Wed,  7 Aug 2024 16:58:51 +0200
-Message-ID: <20240807150021.220650648@linuxfoundation.org>
+Subject: [PATCH 6.10 013/123] MIPS: Loongson64: DTS: Fix PCIe port nodes for ls7a
+Date: Wed,  7 Aug 2024 16:58:52 +0200
+Message-ID: <20240807150021.246153858@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -46,76 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-[ Upstream commit fa0c1c9d283b37fdb7fc1dcccbb88fc8f48a4aa4 ]
+[ Upstream commit d89a415ff8d5e0aad4963f2d8ebb0f9e8110b7fa ]
 
-Currently, the Sapphire Rapids and Granite Rapids share the same PMU
-name, sapphire_rapids. Because from the kernel’s perspective, GNR is
-similar to SPR. The only key difference is that they support different
-extra MSRs. The code path and the PMU name are shared.
+Add various required properties to silent warnings:
 
-However, from end users' perspective, they are quite different. Besides
-the extra MSRs, GNR has a newer PEBS format, supports Retire Latency,
-supports new CPUID enumeration architecture, doesn't required the
-load-latency AUX event, has additional TMA Level 1 Architectural Events,
-etc. The differences can be enumerated by CPUID or the PERF_CAPABILITIES
-MSR. They weren't reflected in the model-specific kernel setup.
-But it is worth to have a distinct PMU name for GNR.
+arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi:116.16-297.5: Warning (interrupt_provider): /bus@10000000/pci@1a000000: '#interrupt-cells' found, but node is not an interrupt provider
+arch/mips/boot/dts/loongson/loongson64_2core_2k1000.dtb: Warning (interrupt_map): Failed prerequisite 'interrupt_provider'
 
-Fixes: a6742cb90b56 ("perf/x86/intel: Fix the FRONTEND encoding on GNR and MTL")
-Suggested-by: Ahmad Yasin <ahmad.yasin@intel.com>
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20240708193336.1192217-3-kan.liang@linux.intel.com
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: dbb69b9d6234 ("MIPS: dts: loongson: Fix liointc IRQ polarity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/core.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ .../boot/dts/loongson/loongson64-2k1000.dtsi  | 37 +++++++++++++++----
+ 1 file changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/arch/x86/events/intel/core.c b/arch/x86/events/intel/core.c
-index 7f7f1c3bb1881..101a21fe9c213 100644
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -6756,12 +6756,18 @@ __init int intel_pmu_init(void)
- 	case INTEL_EMERALDRAPIDS_X:
- 		x86_pmu.flags |= PMU_FL_MEM_LOADS_AUX;
- 		x86_pmu.extra_regs = intel_glc_extra_regs;
--		fallthrough;
-+		pr_cont("Sapphire Rapids events, ");
-+		name = "sapphire_rapids";
-+		goto glc_common;
-+
- 	case INTEL_GRANITERAPIDS_X:
- 	case INTEL_GRANITERAPIDS_D:
-+		x86_pmu.extra_regs = intel_rwc_extra_regs;
-+		pr_cont("Granite Rapids events, ");
-+		name = "granite_rapids";
-+
-+	glc_common:
- 		intel_pmu_init_glc(NULL);
--		if (!x86_pmu.extra_regs)
--			x86_pmu.extra_regs = intel_rwc_extra_regs;
- 		x86_pmu.pebs_ept = 1;
- 		x86_pmu.hw_config = hsw_hw_config;
- 		x86_pmu.get_event_constraints = glc_get_event_constraints;
-@@ -6772,8 +6778,6 @@ __init int intel_pmu_init(void)
- 		td_attr = glc_td_events_attrs;
- 		tsx_attr = glc_tsx_events_attrs;
- 		intel_pmu_pebs_data_source_skl(true);
--		pr_cont("Sapphire Rapids events, ");
--		name = "sapphire_rapids";
- 		break;
+diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+index c0be84a6e81fd..c1d3092fdd870 100644
+--- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
++++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+@@ -117,7 +117,6 @@ pci@1a000000 {
+ 			device_type = "pci";
+ 			#address-cells = <3>;
+ 			#size-cells = <2>;
+-			#interrupt-cells = <2>;
  
- 	case INTEL_ALDERLAKE:
+ 			reg = <0 0x1a000000 0 0x02000000>,
+ 				<0xfe 0x00000000 0 0x20000000>;
+@@ -205,93 +204,117 @@ sata@8,0 {
+ 				interrupt-parent = <&liointc0>;
+ 			};
+ 
+-			pci_bridge@9,0 {
++			pcie@9,0 {
+ 				compatible = "pci0014,7a19.0",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x4800 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <0 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 0 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@a,0 {
++			pcie@a,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x5000 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <1 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 1 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@b,0 {
++			pcie@b,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x5800 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 2 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@c,0 {
++			pcie@c,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x6000 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <3 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 3 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@d,0 {
++			pcie@d,0 {
+ 				compatible = "pci0014,7a19.0",
+ 						   "pci0014,7a19",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x6800 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <4 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 4 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
+-			pci_bridge@e,0 {
++			pcie@e,0 {
+ 				compatible = "pci0014,7a09.0",
+ 						   "pci0014,7a09",
+ 						   "pciclass060400",
+ 						   "pciclass0604";
+ 
+ 				reg = <0x7000 0x0 0x0 0x0 0x0>;
++				#address-cells = <3>;
++				#size-cells = <2>;
++				device_type = "pci";
+ 				#interrupt-cells = <1>;
+ 				interrupts = <5 IRQ_TYPE_LEVEL_LOW>;
+ 				interrupt-parent = <&liointc1>;
+ 				interrupt-map-mask = <0 0 0 0>;
+ 				interrupt-map = <0 0 0 0 &liointc1 5 IRQ_TYPE_LEVEL_LOW>;
++				ranges;
+ 				external-facing;
+ 			};
+ 
 -- 
 2.43.0
 
