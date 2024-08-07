@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE1678C67;
-	Wed,  7 Aug 2024 15:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67B78C67;
+	Wed,  7 Aug 2024 15:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043434; cv=none; b=LLXe85p61stEToCCDrjC0iscXLhyQyqaadAsXXrBzBLtgDYlj8RNoGh6h/TBLZ+aS8FQSdyUNlrj8msOfly8Xgo+x0y0WxlD8n65VVf0A3AtvKtu7qY3fQ3RZjfNXKZeGNM8cIpYJo8+rtjH0nq4p4Zz8cZEaHHFCLjOUg6iukg=
+	t=1723043437; cv=none; b=HQE7F66nL0V6uDGUaE1E89ZFw4M3yIAgBlTj5KY7QY69KGXOyEvez1q8LLYtdm5Y+MZVBjnK6+vowmMssR2Rqk9OYhSPustclPvN9n9VSwcBDLYKpyFq0e4AvPGlJub4moXDjm53H196Df5kVHpVpXyaRl/0rpH3oGjslhuu0u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043434; c=relaxed/simple;
-	bh=I7v91elygarNu2YDFFsFySXnOwGKwzTNVu39cxU6tZ4=;
+	s=arc-20240116; t=1723043437; c=relaxed/simple;
+	bh=WpighMgvia2Jlq/fZFM+efLEuiJWvETMsOlY0Rryc34=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JXNiQU6VvpCoWTWK1xMqu4W/F8J2z20Ti8IzIR/X3mSj/rLV0ZaCvxpjDNDRRHSh7vETaLRaPsvx6DdhsHQ6rIePOAR6he8p8MPKaMi+U9gS8c6qmSXOY855cGwWaWlQTr0TxUbKgh37yL2atv/JoMnWo7bD9sOCFqKVXqXFSM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fNn5XKEE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8oXYbEvjKr/j7/mCiJAfpSWcrnGc6gHNH0QHjeNSFVs+veWEu5wkm5fLeU407lz70xkCUbLzpo8TYav0KmCbXSFk9i0pNtVRecZNaxZohADUvVb1CbOhKI30yzJfrzT1w0ZwAce+qalSqksbDifoyc9qGH77Qh4ssaokwh726Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0pbTUey2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fNn5XKEE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA1DC32781;
-	Wed,  7 Aug 2024 15:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0pbTUey2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BA9C4AF0E;
+	Wed,  7 Aug 2024 15:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043434;
-	bh=I7v91elygarNu2YDFFsFySXnOwGKwzTNVu39cxU6tZ4=;
+	s=korg; t=1723043437;
+	bh=WpighMgvia2Jlq/fZFM+efLEuiJWvETMsOlY0Rryc34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fNn5XKEEMZdSrP/n1enjXD3Q4afmS+CqU/YjlnOkVi+RJrWFIXNw0plGOj4ixXdEp
-	 db+7tFSFxFaw+VsRqfnoOffsROtxpFyngdcFJZaw6rHOYDoFl7diEJfO6S5Jp67Rit
-	 iVxL+HAR8RXgDptChBdd5L3hy5qrjuGHPi6q/188=
+	b=0pbTUey2waM+XNH/sztOKb4rCD3cgNlGto6w6BjCM2JeBKEx/08kBmoyPApdHMGS5
+	 yIZtdBH/B49TvfiW+laNB5qUmrEd55+/oBmxk+lzVTJORzLU+cPg08Eh5MAujhmb8y
+	 LJASatkJ0OiMde5E4P5grJ8uCRNFyYEe02DiYkpw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shifrin Dmitry <dmitry.shifrin@syntacore.com>,
-	Atish Patra <atishp@rivosinc.com>,
+	Zhe Qiao <qiaozhe@iscas.ac.cn>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 090/121] perf: riscv: Fix selecting counters in legacy mode
-Date: Wed,  7 Aug 2024 17:00:22 +0200
-Message-ID: <20240807150022.353532607@linuxfoundation.org>
+Subject: [PATCH 6.6 091/121] riscv/mm: Add handling for VM_FAULT_SIGSEGV in mm_fault_error()
+Date: Wed,  7 Aug 2024 17:00:23 +0200
+Message-ID: <20240807150022.382645693@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,45 +52,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shifrin Dmitry <dmitry.shifrin@syntacore.com>
+From: Zhe Qiao <qiaozhe@iscas.ac.cn>
 
-[ Upstream commit 941a8e9b7a86763ac52d5bf6ccc9986d37fde628 ]
+[ Upstream commit 0c710050c47d45eb77b28c271cddefc5c785cb40 ]
 
-It is required to check event type before checking event config.
-Events with the different types can have the same config.
-This check is missed for legacy mode code
+Handle VM_FAULT_SIGSEGV in the page fault path so that we correctly
+kill the process and we don't BUG() the kernel.
 
-For such perf usage:
-    sysctl -w kernel.perf_user_access=2
-    perf stat -e cycles,L1-dcache-loads --
-driver will try to force both events to CYCLE counter.
-
-This commit implements event type check before forcing
-events on the special counters.
-
-Signed-off-by: Shifrin Dmitry <dmitry.shifrin@syntacore.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Fixes: cc4c07c89aad ("drivers: perf: Implement perf event mmap support in the SBI backend")
-Link: https://lore.kernel.org/r/20240729125858.630653-1-dmitry.shifrin@syntacore.com
+Fixes: 07037db5d479 ("RISC-V: Paging and MMU")
+Signed-off-by: Zhe Qiao <qiaozhe@iscas.ac.cn>
+Reviewed-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Link: https://lore.kernel.org/r/20240731084547.85380-1-qiaozhe@iscas.ac.cn
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/riscv_pmu_sbi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/mm/fault.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
-index ae16ecb15f2d9..901da688ea3f8 100644
---- a/drivers/perf/riscv_pmu_sbi.c
-+++ b/drivers/perf/riscv_pmu_sbi.c
-@@ -355,7 +355,7 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
- 	 * but not in the user access mode as we want to use the other counters
- 	 * that support sampling/filtering.
- 	 */
--	if (hwc->flags & PERF_EVENT_FLAG_LEGACY) {
-+	if ((hwc->flags & PERF_EVENT_FLAG_LEGACY) && (event->attr.type == PERF_TYPE_HARDWARE)) {
- 		if (event->attr.config == PERF_COUNT_HW_CPU_CYCLES) {
- 			cflags |= SBI_PMU_CFG_FLAG_SKIP_MATCH;
- 			cmask = 1;
+diff --git a/arch/riscv/mm/fault.c b/arch/riscv/mm/fault.c
+index 90d4ba36d1d06..655b2b1bb529f 100644
+--- a/arch/riscv/mm/fault.c
++++ b/arch/riscv/mm/fault.c
+@@ -61,26 +61,27 @@ static inline void no_context(struct pt_regs *regs, unsigned long addr)
+ 
+ static inline void mm_fault_error(struct pt_regs *regs, unsigned long addr, vm_fault_t fault)
+ {
++	if (!user_mode(regs)) {
++		no_context(regs, addr);
++		return;
++	}
++
+ 	if (fault & VM_FAULT_OOM) {
+ 		/*
+ 		 * We ran out of memory, call the OOM killer, and return the userspace
+ 		 * (which will retry the fault, or kill us if we got oom-killed).
+ 		 */
+-		if (!user_mode(regs)) {
+-			no_context(regs, addr);
+-			return;
+-		}
+ 		pagefault_out_of_memory();
+ 		return;
+ 	} else if (fault & (VM_FAULT_SIGBUS | VM_FAULT_HWPOISON | VM_FAULT_HWPOISON_LARGE)) {
+ 		/* Kernel mode? Handle exceptions or die */
+-		if (!user_mode(regs)) {
+-			no_context(regs, addr);
+-			return;
+-		}
+ 		do_trap(regs, SIGBUS, BUS_ADRERR, addr);
+ 		return;
++	} else if (fault & VM_FAULT_SIGSEGV) {
++		do_trap(regs, SIGSEGV, SEGV_MAPERR, addr);
++		return;
+ 	}
++
+ 	BUG();
+ }
+ 
 -- 
 2.43.0
 
