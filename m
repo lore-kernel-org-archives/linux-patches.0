@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F109484D29;
-	Wed,  7 Aug 2024 15:07:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B332984DF8;
+	Wed,  7 Aug 2024 15:07:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043263; cv=none; b=Blid8z6la9KoFH7cAodcP8uutygd3q7tQNq7gkUnZ/cFWgN0ZMstYGDRh0KRZ5QicmpuRB92jLWB/9CV5J3U170LmUtn3eK5kpq5VDFEG4yeQ0Xdo5Dw2Hq2GXcGv+rEymzBxo44Qp9paGN3ZqluWU66Fc305A6r2nGL9tOMHkI=
+	t=1723043265; cv=none; b=OaPlRyU4SCo1SWSknXWm3kB0orA1qP6Nju7LxzmgOmktUQHgwG/3fjVTommpKSOpjnLC3FQQlmYXELdD+TqA3M20v7cj033MJ8em/ZXGtRum8+Txtw3vY8jEuO7HvReI/jlTJR+pcVtELKFFF/2gmNg80u1/xWvf1YWslJxX/S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043263; c=relaxed/simple;
-	bh=dp+ZG6rnpCni1hviGhuicefcmEdc+xzesrvdHO+XXVc=;
+	s=arc-20240116; t=1723043265; c=relaxed/simple;
+	bh=fiZWRMKmesf1TKSKfCKg+i/tY/h4/fpzZ8vIjgEndQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2B7+lqxOFgx2BFgraux7r23lEPVjPpz1JIthv4xW+zOmFlOIeZywP8sCtQZdwdhCP7t6+n00MsuV35hTmqavFaXfMEFg427R/J5mtnBq2qDO71eEfCiIwNCailQNIHcidY++CtOhlTtDi+NJW3MU7AhAhS793xgB8W44YFYLdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AzGOSj+I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzjyiIVi34WgVXasPSA6CkEHvVsiL0h75KjucwXWkwWzN6VrUNZubQwsYPSo+9voMVYbVZ+TVP6kdcxot8VfJ2O+3lPx1qJjUl/IferETSoSBDcmX4F+G+gtNnD+Mo2n36Zco2IxpSsPTGmGLKy+WYhqdPEbkMWJJZPNYOTpuR0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qztbQOm2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AzGOSj+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FF00C32781;
-	Wed,  7 Aug 2024 15:07:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qztbQOm2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2ADC32781;
+	Wed,  7 Aug 2024 15:07:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043262;
-	bh=dp+ZG6rnpCni1hviGhuicefcmEdc+xzesrvdHO+XXVc=;
+	s=korg; t=1723043265;
+	bh=fiZWRMKmesf1TKSKfCKg+i/tY/h4/fpzZ8vIjgEndQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AzGOSj+IT0oezo4kXBQmIxCI06hlczhQmX8hucDHPDPq8Vhbn85n+2fDq5uIV8zOU
-	 DQBjKv4Kc8s+C4rkkFglVw6C/ICVULwiO5rxjY/qi0o1zC4zpe771NPPB8OWnGP/BI
-	 4M1IMZ4EwDBVKdLf51vfGGigZsi6ynwXsx8dNysc=
+	b=qztbQOm2XRT39K68MhvAQnGaqThnd4qy4KfKJDt7WSBLGIjxmxzUAvw+0jA3tcgft
+	 E80iCrScIG8Ucfg2nIQUqn3b8Dq5OfhqZH6gr2N89SOoWBmCk4oHEJ0lofoLRM/74z
+	 9BXeKQ9ViUkJtNkyQO0IBeBA6irRj+L5ZI7FfRMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Jacob Pan <jacob.jun.pan@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/121] KVM: VMX: Split off vmx_onhyperv.{ch} from hyperv.{ch}
-Date: Wed,  7 Aug 2024 16:59:19 +0200
-Message-ID: <20240807150020.225534746@linuxfoundation.org>
+Subject: [PATCH 6.6 028/121] KVM: VMX: Move posted interrupt descriptor out of VMX code
+Date: Wed,  7 Aug 2024 16:59:20 +0200
+Message-ID: <20240807150020.259390292@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,641 +52,253 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Kuznetsov <vkuznets@redhat.com>
+From: Jacob Pan <jacob.jun.pan@linux.intel.com>
 
-[ Upstream commit 50a82b0eb88c108d1ebc73a97f5b81df0d5918e0 ]
+[ Upstream commit 699f67512f04cbaee965fad872702c06eaf440f6 ]
 
-hyperv.{ch} is currently a mix of stuff which is needed by both Hyper-V on
-KVM and KVM on Hyper-V. As a preparation to making Hyper-V emulation
-optional, put KVM-on-Hyper-V specific code into dedicated files.
+To prepare native usage of posted interrupts, move the PID declarations out
+of VMX code such that they can be shared.
 
-No functional change intended.
-
-Reviewed-by: Maxim Levitsky <mlevitsk@redhat.com>
-Tested-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Link: https://lore.kernel.org/r/20231205103630.1391318-4-vkuznets@redhat.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Jacob Pan <jacob.jun.pan@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20240423174114.526704-2-jacob.jun.pan@linux.intel.com
 Stable-dep-of: d83c36d822be ("KVM: nVMX: Add a helper to get highest pending from Posted Interrupt vector")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/Makefile           |   4 +
- arch/x86/kvm/vmx/hyperv.c       | 139 --------------------
- arch/x86/kvm/vmx/hyperv.h       | 217 ++++++++++++++++----------------
- arch/x86/kvm/vmx/vmx.c          |   1 +
- arch/x86/kvm/vmx/vmx_onhyperv.c |  36 ++++++
- arch/x86/kvm/vmx/vmx_onhyperv.h | 124 ++++++++++++++++++
- arch/x86/kvm/vmx/vmx_ops.h      |   2 +-
- 7 files changed, 271 insertions(+), 252 deletions(-)
- create mode 100644 arch/x86/kvm/vmx/vmx_onhyperv.c
- create mode 100644 arch/x86/kvm/vmx/vmx_onhyperv.h
+ arch/x86/include/asm/posted_intr.h | 88 ++++++++++++++++++++++++++++
+ arch/x86/kvm/vmx/posted_intr.h     | 93 +-----------------------------
+ arch/x86/kvm/vmx/vmx.c             |  1 +
+ arch/x86/kvm/vmx/vmx.h             |  2 +-
+ 4 files changed, 91 insertions(+), 93 deletions(-)
+ create mode 100644 arch/x86/include/asm/posted_intr.h
 
-diff --git a/arch/x86/kvm/Makefile b/arch/x86/kvm/Makefile
-index 80e3fe184d17e..a99ffc3f3a3fd 100644
---- a/arch/x86/kvm/Makefile
-+++ b/arch/x86/kvm/Makefile
-@@ -26,6 +26,10 @@ kvm-intel-y		+= vmx/vmx.o vmx/vmenter.o vmx/pmu_intel.o vmx/vmcs12.o \
- 			   vmx/hyperv.o vmx/nested.o vmx/posted_intr.o
- kvm-intel-$(CONFIG_X86_SGX_KVM)	+= vmx/sgx.o
- 
-+ifdef CONFIG_HYPERV
-+kvm-intel-y		+= vmx/vmx_onhyperv.o
-+endif
+diff --git a/arch/x86/include/asm/posted_intr.h b/arch/x86/include/asm/posted_intr.h
+new file mode 100644
+index 0000000000000..f0324c56f7af5
+--- /dev/null
++++ b/arch/x86/include/asm/posted_intr.h
+@@ -0,0 +1,88 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _X86_POSTED_INTR_H
++#define _X86_POSTED_INTR_H
 +
- kvm-amd-y		+= svm/svm.o svm/vmenter.o svm/pmu.o svm/nested.o svm/avic.o \
- 			   svm/sev.o svm/hyperv.o
- 
-diff --git a/arch/x86/kvm/vmx/hyperv.c b/arch/x86/kvm/vmx/hyperv.c
-index 313b8bb5b8a7c..de13dc14fe1d2 100644
---- a/arch/x86/kvm/vmx/hyperv.c
-+++ b/arch/x86/kvm/vmx/hyperv.c
-@@ -13,111 +13,6 @@
- 
- #define CC KVM_NESTED_VMENTER_CONSISTENCY_CHECK
- 
--/*
-- * Enlightened VMCSv1 doesn't support these:
-- *
-- *	POSTED_INTR_NV                  = 0x00000002,
-- *	GUEST_INTR_STATUS               = 0x00000810,
-- *	APIC_ACCESS_ADDR		= 0x00002014,
-- *	POSTED_INTR_DESC_ADDR           = 0x00002016,
-- *	EOI_EXIT_BITMAP0                = 0x0000201c,
-- *	EOI_EXIT_BITMAP1                = 0x0000201e,
-- *	EOI_EXIT_BITMAP2                = 0x00002020,
-- *	EOI_EXIT_BITMAP3                = 0x00002022,
-- *	GUEST_PML_INDEX			= 0x00000812,
-- *	PML_ADDRESS			= 0x0000200e,
-- *	VM_FUNCTION_CONTROL             = 0x00002018,
-- *	EPTP_LIST_ADDRESS               = 0x00002024,
-- *	VMREAD_BITMAP                   = 0x00002026,
-- *	VMWRITE_BITMAP                  = 0x00002028,
-- *
-- *	TSC_MULTIPLIER                  = 0x00002032,
-- *	PLE_GAP                         = 0x00004020,
-- *	PLE_WINDOW                      = 0x00004022,
-- *	VMX_PREEMPTION_TIMER_VALUE      = 0x0000482E,
-- *
-- * Currently unsupported in KVM:
-- *	GUEST_IA32_RTIT_CTL		= 0x00002814,
-- */
--#define EVMCS1_SUPPORTED_PINCTRL					\
--	(PIN_BASED_ALWAYSON_WITHOUT_TRUE_MSR |				\
--	 PIN_BASED_EXT_INTR_MASK |					\
--	 PIN_BASED_NMI_EXITING |					\
--	 PIN_BASED_VIRTUAL_NMIS)
--
--#define EVMCS1_SUPPORTED_EXEC_CTRL					\
--	(CPU_BASED_ALWAYSON_WITHOUT_TRUE_MSR |				\
--	 CPU_BASED_HLT_EXITING |					\
--	 CPU_BASED_CR3_LOAD_EXITING |					\
--	 CPU_BASED_CR3_STORE_EXITING |					\
--	 CPU_BASED_UNCOND_IO_EXITING |					\
--	 CPU_BASED_MOV_DR_EXITING |					\
--	 CPU_BASED_USE_TSC_OFFSETTING |					\
--	 CPU_BASED_MWAIT_EXITING |					\
--	 CPU_BASED_MONITOR_EXITING |					\
--	 CPU_BASED_INVLPG_EXITING |					\
--	 CPU_BASED_RDPMC_EXITING |					\
--	 CPU_BASED_INTR_WINDOW_EXITING |				\
--	 CPU_BASED_CR8_LOAD_EXITING |					\
--	 CPU_BASED_CR8_STORE_EXITING |					\
--	 CPU_BASED_RDTSC_EXITING |					\
--	 CPU_BASED_TPR_SHADOW |						\
--	 CPU_BASED_USE_IO_BITMAPS |					\
--	 CPU_BASED_MONITOR_TRAP_FLAG |					\
--	 CPU_BASED_USE_MSR_BITMAPS |					\
--	 CPU_BASED_NMI_WINDOW_EXITING |					\
--	 CPU_BASED_PAUSE_EXITING |					\
--	 CPU_BASED_ACTIVATE_SECONDARY_CONTROLS)
--
--#define EVMCS1_SUPPORTED_2NDEXEC					\
--	(SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |			\
--	 SECONDARY_EXEC_WBINVD_EXITING |				\
--	 SECONDARY_EXEC_ENABLE_VPID |					\
--	 SECONDARY_EXEC_ENABLE_EPT |					\
--	 SECONDARY_EXEC_UNRESTRICTED_GUEST |				\
--	 SECONDARY_EXEC_DESC |						\
--	 SECONDARY_EXEC_ENABLE_RDTSCP |					\
--	 SECONDARY_EXEC_ENABLE_INVPCID |				\
--	 SECONDARY_EXEC_ENABLE_XSAVES |					\
--	 SECONDARY_EXEC_RDSEED_EXITING |				\
--	 SECONDARY_EXEC_RDRAND_EXITING |				\
--	 SECONDARY_EXEC_TSC_SCALING |					\
--	 SECONDARY_EXEC_ENABLE_USR_WAIT_PAUSE |				\
--	 SECONDARY_EXEC_PT_USE_GPA |					\
--	 SECONDARY_EXEC_PT_CONCEAL_VMX |				\
--	 SECONDARY_EXEC_BUS_LOCK_DETECTION |				\
--	 SECONDARY_EXEC_NOTIFY_VM_EXITING |				\
--	 SECONDARY_EXEC_ENCLS_EXITING)
--
--#define EVMCS1_SUPPORTED_3RDEXEC (0ULL)
--
--#define EVMCS1_SUPPORTED_VMEXIT_CTRL					\
--	(VM_EXIT_ALWAYSON_WITHOUT_TRUE_MSR |				\
--	 VM_EXIT_SAVE_DEBUG_CONTROLS |					\
--	 VM_EXIT_ACK_INTR_ON_EXIT |					\
--	 VM_EXIT_HOST_ADDR_SPACE_SIZE |					\
--	 VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |				\
--	 VM_EXIT_SAVE_IA32_PAT |					\
--	 VM_EXIT_LOAD_IA32_PAT |					\
--	 VM_EXIT_SAVE_IA32_EFER |					\
--	 VM_EXIT_LOAD_IA32_EFER |					\
--	 VM_EXIT_CLEAR_BNDCFGS |					\
--	 VM_EXIT_PT_CONCEAL_PIP |					\
--	 VM_EXIT_CLEAR_IA32_RTIT_CTL)
--
--#define EVMCS1_SUPPORTED_VMENTRY_CTRL					\
--	(VM_ENTRY_ALWAYSON_WITHOUT_TRUE_MSR |				\
--	 VM_ENTRY_LOAD_DEBUG_CONTROLS |					\
--	 VM_ENTRY_IA32E_MODE |						\
--	 VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL |				\
--	 VM_ENTRY_LOAD_IA32_PAT |					\
--	 VM_ENTRY_LOAD_IA32_EFER |					\
--	 VM_ENTRY_LOAD_BNDCFGS |					\
--	 VM_ENTRY_PT_CONCEAL_PIP |					\
--	 VM_ENTRY_LOAD_IA32_RTIT_CTL)
--
--#define EVMCS1_SUPPORTED_VMFUNC (0)
--
- #define EVMCS1_OFFSET(x) offsetof(struct hv_enlightened_vmcs, x)
- #define EVMCS1_FIELD(number, name, clean_field)[ROL16(number, 6)] = \
- 		{EVMCS1_OFFSET(name), clean_field}
-@@ -608,40 +503,6 @@ int nested_evmcs_check_controls(struct vmcs12 *vmcs12)
- 	return 0;
- }
- 
--#if IS_ENABLED(CONFIG_HYPERV)
--DEFINE_STATIC_KEY_FALSE(__kvm_is_using_evmcs);
--
--/*
-- * KVM on Hyper-V always uses the latest known eVMCSv1 revision, the assumption
-- * is: in case a feature has corresponding fields in eVMCS described and it was
-- * exposed in VMX feature MSRs, KVM is free to use it. Warn if KVM meets a
-- * feature which has no corresponding eVMCS field, this likely means that KVM
-- * needs to be updated.
-- */
--#define evmcs_check_vmcs_conf(field, ctrl)					\
--	do {									\
--		typeof(vmcs_conf->field) unsupported;				\
--										\
--		unsupported = vmcs_conf->field & ~EVMCS1_SUPPORTED_ ## ctrl;	\
--		if (unsupported) {						\
--			pr_warn_once(#field " unsupported with eVMCS: 0x%llx\n",\
--				     (u64)unsupported);				\
--			vmcs_conf->field &= EVMCS1_SUPPORTED_ ## ctrl;		\
--		}								\
--	}									\
--	while (0)
--
--void evmcs_sanitize_exec_ctrls(struct vmcs_config *vmcs_conf)
--{
--	evmcs_check_vmcs_conf(cpu_based_exec_ctrl, EXEC_CTRL);
--	evmcs_check_vmcs_conf(pin_based_exec_ctrl, PINCTRL);
--	evmcs_check_vmcs_conf(cpu_based_2nd_exec_ctrl, 2NDEXEC);
--	evmcs_check_vmcs_conf(cpu_based_3rd_exec_ctrl, 3RDEXEC);
--	evmcs_check_vmcs_conf(vmentry_ctrl, VMENTRY_CTRL);
--	evmcs_check_vmcs_conf(vmexit_ctrl, VMEXIT_CTRL);
--}
--#endif
--
- int nested_enable_evmcs(struct kvm_vcpu *vcpu,
- 			uint16_t *vmcs_version)
- {
-diff --git a/arch/x86/kvm/vmx/hyperv.h b/arch/x86/kvm/vmx/hyperv.h
-index 9623fe1651c48..9401dbfaea7ce 100644
---- a/arch/x86/kvm/vmx/hyperv.h
-+++ b/arch/x86/kvm/vmx/hyperv.h
-@@ -14,12 +14,113 @@
- #include "vmcs.h"
- #include "vmcs12.h"
- 
--struct vmcs_config;
--
--#define current_evmcs ((struct hv_enlightened_vmcs *)this_cpu_read(current_vmcs))
--
- #define KVM_EVMCS_VERSION 1
- 
-+/*
-+ * Enlightened VMCSv1 doesn't support these:
-+ *
-+ *	POSTED_INTR_NV                  = 0x00000002,
-+ *	GUEST_INTR_STATUS               = 0x00000810,
-+ *	APIC_ACCESS_ADDR		= 0x00002014,
-+ *	POSTED_INTR_DESC_ADDR           = 0x00002016,
-+ *	EOI_EXIT_BITMAP0                = 0x0000201c,
-+ *	EOI_EXIT_BITMAP1                = 0x0000201e,
-+ *	EOI_EXIT_BITMAP2                = 0x00002020,
-+ *	EOI_EXIT_BITMAP3                = 0x00002022,
-+ *	GUEST_PML_INDEX			= 0x00000812,
-+ *	PML_ADDRESS			= 0x0000200e,
-+ *	VM_FUNCTION_CONTROL             = 0x00002018,
-+ *	EPTP_LIST_ADDRESS               = 0x00002024,
-+ *	VMREAD_BITMAP                   = 0x00002026,
-+ *	VMWRITE_BITMAP                  = 0x00002028,
-+ *
-+ *	TSC_MULTIPLIER                  = 0x00002032,
-+ *	PLE_GAP                         = 0x00004020,
-+ *	PLE_WINDOW                      = 0x00004022,
-+ *	VMX_PREEMPTION_TIMER_VALUE      = 0x0000482E,
-+ *
-+ * Currently unsupported in KVM:
-+ *	GUEST_IA32_RTIT_CTL		= 0x00002814,
-+ */
-+#define EVMCS1_SUPPORTED_PINCTRL					\
-+	(PIN_BASED_ALWAYSON_WITHOUT_TRUE_MSR |				\
-+	 PIN_BASED_EXT_INTR_MASK |					\
-+	 PIN_BASED_NMI_EXITING |					\
-+	 PIN_BASED_VIRTUAL_NMIS)
++#define POSTED_INTR_ON  0
++#define POSTED_INTR_SN  1
 +
-+#define EVMCS1_SUPPORTED_EXEC_CTRL					\
-+	(CPU_BASED_ALWAYSON_WITHOUT_TRUE_MSR |				\
-+	 CPU_BASED_HLT_EXITING |					\
-+	 CPU_BASED_CR3_LOAD_EXITING |					\
-+	 CPU_BASED_CR3_STORE_EXITING |					\
-+	 CPU_BASED_UNCOND_IO_EXITING |					\
-+	 CPU_BASED_MOV_DR_EXITING |					\
-+	 CPU_BASED_USE_TSC_OFFSETTING |					\
-+	 CPU_BASED_MWAIT_EXITING |					\
-+	 CPU_BASED_MONITOR_EXITING |					\
-+	 CPU_BASED_INVLPG_EXITING |					\
-+	 CPU_BASED_RDPMC_EXITING |					\
-+	 CPU_BASED_INTR_WINDOW_EXITING |				\
-+	 CPU_BASED_CR8_LOAD_EXITING |					\
-+	 CPU_BASED_CR8_STORE_EXITING |					\
-+	 CPU_BASED_RDTSC_EXITING |					\
-+	 CPU_BASED_TPR_SHADOW |						\
-+	 CPU_BASED_USE_IO_BITMAPS |					\
-+	 CPU_BASED_MONITOR_TRAP_FLAG |					\
-+	 CPU_BASED_USE_MSR_BITMAPS |					\
-+	 CPU_BASED_NMI_WINDOW_EXITING |					\
-+	 CPU_BASED_PAUSE_EXITING |					\
-+	 CPU_BASED_ACTIVATE_SECONDARY_CONTROLS)
++#define PID_TABLE_ENTRY_VALID 1
 +
-+#define EVMCS1_SUPPORTED_2NDEXEC					\
-+	(SECONDARY_EXEC_VIRTUALIZE_X2APIC_MODE |			\
-+	 SECONDARY_EXEC_WBINVD_EXITING |				\
-+	 SECONDARY_EXEC_ENABLE_VPID |					\
-+	 SECONDARY_EXEC_ENABLE_EPT |					\
-+	 SECONDARY_EXEC_UNRESTRICTED_GUEST |				\
-+	 SECONDARY_EXEC_DESC |						\
-+	 SECONDARY_EXEC_ENABLE_RDTSCP |					\
-+	 SECONDARY_EXEC_ENABLE_INVPCID |				\
-+	 SECONDARY_EXEC_ENABLE_XSAVES |					\
-+	 SECONDARY_EXEC_RDSEED_EXITING |				\
-+	 SECONDARY_EXEC_RDRAND_EXITING |				\
-+	 SECONDARY_EXEC_TSC_SCALING |					\
-+	 SECONDARY_EXEC_ENABLE_USR_WAIT_PAUSE |				\
-+	 SECONDARY_EXEC_PT_USE_GPA |					\
-+	 SECONDARY_EXEC_PT_CONCEAL_VMX |				\
-+	 SECONDARY_EXEC_BUS_LOCK_DETECTION |				\
-+	 SECONDARY_EXEC_NOTIFY_VM_EXITING |				\
-+	 SECONDARY_EXEC_ENCLS_EXITING)
++/* Posted-Interrupt Descriptor */
++struct pi_desc {
++	u32 pir[8];     /* Posted interrupt requested */
++	union {
++		struct {
++				/* bit 256 - Outstanding Notification */
++			u16	on	: 1,
++				/* bit 257 - Suppress Notification */
++				sn	: 1,
++				/* bit 271:258 - Reserved */
++				rsvd_1	: 14;
++				/* bit 279:272 - Notification Vector */
++			u8	nv;
++				/* bit 287:280 - Reserved */
++			u8	rsvd_2;
++				/* bit 319:288 - Notification Destination */
++			u32	ndst;
++		};
++		u64 control;
++	};
++	u32 rsvd[6];
++} __aligned(64);
 +
-+#define EVMCS1_SUPPORTED_3RDEXEC (0ULL)
++static inline bool pi_test_and_set_on(struct pi_desc *pi_desc)
++{
++	return test_and_set_bit(POSTED_INTR_ON, (unsigned long *)&pi_desc->control);
++}
 +
-+#define EVMCS1_SUPPORTED_VMEXIT_CTRL					\
-+	(VM_EXIT_ALWAYSON_WITHOUT_TRUE_MSR |				\
-+	 VM_EXIT_SAVE_DEBUG_CONTROLS |					\
-+	 VM_EXIT_ACK_INTR_ON_EXIT |					\
-+	 VM_EXIT_HOST_ADDR_SPACE_SIZE |					\
-+	 VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL |				\
-+	 VM_EXIT_SAVE_IA32_PAT |					\
-+	 VM_EXIT_LOAD_IA32_PAT |					\
-+	 VM_EXIT_SAVE_IA32_EFER |					\
-+	 VM_EXIT_LOAD_IA32_EFER |					\
-+	 VM_EXIT_CLEAR_BNDCFGS |					\
-+	 VM_EXIT_PT_CONCEAL_PIP |					\
-+	 VM_EXIT_CLEAR_IA32_RTIT_CTL)
++static inline bool pi_test_and_clear_on(struct pi_desc *pi_desc)
++{
++	return test_and_clear_bit(POSTED_INTR_ON, (unsigned long *)&pi_desc->control);
++}
 +
-+#define EVMCS1_SUPPORTED_VMENTRY_CTRL					\
-+	(VM_ENTRY_ALWAYSON_WITHOUT_TRUE_MSR |				\
-+	 VM_ENTRY_LOAD_DEBUG_CONTROLS |					\
-+	 VM_ENTRY_IA32E_MODE |						\
-+	 VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL |				\
-+	 VM_ENTRY_LOAD_IA32_PAT |					\
-+	 VM_ENTRY_LOAD_IA32_EFER |					\
-+	 VM_ENTRY_LOAD_BNDCFGS |					\
-+	 VM_ENTRY_PT_CONCEAL_PIP |					\
-+	 VM_ENTRY_LOAD_IA32_RTIT_CTL)
++static inline bool pi_test_and_clear_sn(struct pi_desc *pi_desc)
++{
++	return test_and_clear_bit(POSTED_INTR_SN, (unsigned long *)&pi_desc->control);
++}
 +
-+#define EVMCS1_SUPPORTED_VMFUNC (0)
++static inline bool pi_test_and_set_pir(int vector, struct pi_desc *pi_desc)
++{
++	return test_and_set_bit(vector, (unsigned long *)pi_desc->pir);
++}
 +
- struct evmcs_field {
- 	u16 offset;
- 	u16 clean_field;
-@@ -65,114 +166,6 @@ static inline u64 evmcs_read_any(struct hv_enlightened_vmcs *evmcs,
- 	return vmcs12_read_any((void *)evmcs, field, offset);
- }
++static inline bool pi_is_pir_empty(struct pi_desc *pi_desc)
++{
++	return bitmap_empty((unsigned long *)pi_desc->pir, NR_VECTORS);
++}
++
++static inline void pi_set_sn(struct pi_desc *pi_desc)
++{
++	set_bit(POSTED_INTR_SN, (unsigned long *)&pi_desc->control);
++}
++
++static inline void pi_set_on(struct pi_desc *pi_desc)
++{
++	set_bit(POSTED_INTR_ON, (unsigned long *)&pi_desc->control);
++}
++
++static inline void pi_clear_on(struct pi_desc *pi_desc)
++{
++	clear_bit(POSTED_INTR_ON, (unsigned long *)&pi_desc->control);
++}
++
++static inline void pi_clear_sn(struct pi_desc *pi_desc)
++{
++	clear_bit(POSTED_INTR_SN, (unsigned long *)&pi_desc->control);
++}
++
++static inline bool pi_test_on(struct pi_desc *pi_desc)
++{
++	return test_bit(POSTED_INTR_ON, (unsigned long *)&pi_desc->control);
++}
++
++static inline bool pi_test_sn(struct pi_desc *pi_desc)
++{
++	return test_bit(POSTED_INTR_SN, (unsigned long *)&pi_desc->control);
++}
++
++#endif /* _X86_POSTED_INTR_H */
+diff --git a/arch/x86/kvm/vmx/posted_intr.h b/arch/x86/kvm/vmx/posted_intr.h
+index 26992076552ef..6b2a0226257ea 100644
+--- a/arch/x86/kvm/vmx/posted_intr.h
++++ b/arch/x86/kvm/vmx/posted_intr.h
+@@ -1,98 +1,7 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ #ifndef __KVM_X86_VMX_POSTED_INTR_H
+ #define __KVM_X86_VMX_POSTED_INTR_H
+-
+-#define POSTED_INTR_ON  0
+-#define POSTED_INTR_SN  1
+-
+-#define PID_TABLE_ENTRY_VALID 1
+-
+-/* Posted-Interrupt Descriptor */
+-struct pi_desc {
+-	u32 pir[8];     /* Posted interrupt requested */
+-	union {
+-		struct {
+-				/* bit 256 - Outstanding Notification */
+-			u16	on	: 1,
+-				/* bit 257 - Suppress Notification */
+-				sn	: 1,
+-				/* bit 271:258 - Reserved */
+-				rsvd_1	: 14;
+-				/* bit 279:272 - Notification Vector */
+-			u8	nv;
+-				/* bit 287:280 - Reserved */
+-			u8	rsvd_2;
+-				/* bit 319:288 - Notification Destination */
+-			u32	ndst;
+-		};
+-		u64 control;
+-	};
+-	u32 rsvd[6];
+-} __aligned(64);
+-
+-static inline bool pi_test_and_set_on(struct pi_desc *pi_desc)
+-{
+-	return test_and_set_bit(POSTED_INTR_ON,
+-			(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline bool pi_test_and_clear_on(struct pi_desc *pi_desc)
+-{
+-	return test_and_clear_bit(POSTED_INTR_ON,
+-			(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline bool pi_test_and_clear_sn(struct pi_desc *pi_desc)
+-{
+-	return test_and_clear_bit(POSTED_INTR_SN,
+-			(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline bool pi_test_and_set_pir(int vector, struct pi_desc *pi_desc)
+-{
+-	return test_and_set_bit(vector, (unsigned long *)pi_desc->pir);
+-}
+-
+-static inline bool pi_is_pir_empty(struct pi_desc *pi_desc)
+-{
+-	return bitmap_empty((unsigned long *)pi_desc->pir, NR_VECTORS);
+-}
+-
+-static inline void pi_set_sn(struct pi_desc *pi_desc)
+-{
+-	set_bit(POSTED_INTR_SN,
+-		(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline void pi_set_on(struct pi_desc *pi_desc)
+-{
+-	set_bit(POSTED_INTR_ON,
+-		(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline void pi_clear_on(struct pi_desc *pi_desc)
+-{
+-	clear_bit(POSTED_INTR_ON,
+-		(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline void pi_clear_sn(struct pi_desc *pi_desc)
+-{
+-	clear_bit(POSTED_INTR_SN,
+-		(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline bool pi_test_on(struct pi_desc *pi_desc)
+-{
+-	return test_bit(POSTED_INTR_ON,
+-			(unsigned long *)&pi_desc->control);
+-}
+-
+-static inline bool pi_test_sn(struct pi_desc *pi_desc)
+-{
+-	return test_bit(POSTED_INTR_SN,
+-			(unsigned long *)&pi_desc->control);
+-}
++#include <asm/posted_intr.h>
  
--#if IS_ENABLED(CONFIG_HYPERV)
--
--DECLARE_STATIC_KEY_FALSE(__kvm_is_using_evmcs);
--
--static __always_inline bool kvm_is_using_evmcs(void)
--{
--	return static_branch_unlikely(&__kvm_is_using_evmcs);
--}
--
--static __always_inline int get_evmcs_offset(unsigned long field,
--					    u16 *clean_field)
--{
--	int offset = evmcs_field_offset(field, clean_field);
--
--	WARN_ONCE(offset < 0, "accessing unsupported EVMCS field %lx\n", field);
--	return offset;
--}
--
--static __always_inline void evmcs_write64(unsigned long field, u64 value)
--{
--	u16 clean_field;
--	int offset = get_evmcs_offset(field, &clean_field);
--
--	if (offset < 0)
--		return;
--
--	*(u64 *)((char *)current_evmcs + offset) = value;
--
--	current_evmcs->hv_clean_fields &= ~clean_field;
--}
--
--static __always_inline void evmcs_write32(unsigned long field, u32 value)
--{
--	u16 clean_field;
--	int offset = get_evmcs_offset(field, &clean_field);
--
--	if (offset < 0)
--		return;
--
--	*(u32 *)((char *)current_evmcs + offset) = value;
--	current_evmcs->hv_clean_fields &= ~clean_field;
--}
--
--static __always_inline void evmcs_write16(unsigned long field, u16 value)
--{
--	u16 clean_field;
--	int offset = get_evmcs_offset(field, &clean_field);
--
--	if (offset < 0)
--		return;
--
--	*(u16 *)((char *)current_evmcs + offset) = value;
--	current_evmcs->hv_clean_fields &= ~clean_field;
--}
--
--static __always_inline u64 evmcs_read64(unsigned long field)
--{
--	int offset = get_evmcs_offset(field, NULL);
--
--	if (offset < 0)
--		return 0;
--
--	return *(u64 *)((char *)current_evmcs + offset);
--}
--
--static __always_inline u32 evmcs_read32(unsigned long field)
--{
--	int offset = get_evmcs_offset(field, NULL);
--
--	if (offset < 0)
--		return 0;
--
--	return *(u32 *)((char *)current_evmcs + offset);
--}
--
--static __always_inline u16 evmcs_read16(unsigned long field)
--{
--	int offset = get_evmcs_offset(field, NULL);
--
--	if (offset < 0)
--		return 0;
--
--	return *(u16 *)((char *)current_evmcs + offset);
--}
--
--static inline void evmcs_load(u64 phys_addr)
--{
--	struct hv_vp_assist_page *vp_ap =
--		hv_get_vp_assist_page(smp_processor_id());
--
--	if (current_evmcs->hv_enlightenments_control.nested_flush_hypercall)
--		vp_ap->nested_control.features.directhypercall = 1;
--	vp_ap->current_nested_vmcs = phys_addr;
--	vp_ap->enlighten_vmentry = 1;
--}
--
--void evmcs_sanitize_exec_ctrls(struct vmcs_config *vmcs_conf);
--#else /* !IS_ENABLED(CONFIG_HYPERV) */
--static __always_inline bool kvm_is_using_evmcs(void) { return false; }
--static __always_inline void evmcs_write64(unsigned long field, u64 value) {}
--static __always_inline void evmcs_write32(unsigned long field, u32 value) {}
--static __always_inline void evmcs_write16(unsigned long field, u16 value) {}
--static __always_inline u64 evmcs_read64(unsigned long field) { return 0; }
--static __always_inline u32 evmcs_read32(unsigned long field) { return 0; }
--static __always_inline u16 evmcs_read16(unsigned long field) { return 0; }
--static inline void evmcs_load(u64 phys_addr) {}
--#endif /* IS_ENABLED(CONFIG_HYPERV) */
--
- #define EVMPTR_INVALID (-1ULL)
- #define EVMPTR_MAP_PENDING (-2ULL)
- 
+ void vmx_vcpu_pi_load(struct kvm_vcpu *vcpu, int cpu);
+ void vmx_vcpu_pi_put(struct kvm_vcpu *vcpu);
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index f5f652a546bf2..09d26b46800d4 100644
+index 09d26b46800d4..2e0106d9d371c 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -66,6 +66,7 @@
- #include "vmx.h"
+@@ -67,6 +67,7 @@
  #include "x86.h"
  #include "smm.h"
-+#include "vmx_onhyperv.h"
+ #include "vmx_onhyperv.h"
++#include "posted_intr.h"
  
  MODULE_AUTHOR("Qumranet");
  MODULE_LICENSE("GPL");
-diff --git a/arch/x86/kvm/vmx/vmx_onhyperv.c b/arch/x86/kvm/vmx/vmx_onhyperv.c
-new file mode 100644
-index 0000000000000..b9a8b91166d02
---- /dev/null
-+++ b/arch/x86/kvm/vmx/vmx_onhyperv.c
-@@ -0,0 +1,36 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+#include "capabilities.h"
-+#include "vmx_onhyperv.h"
-+
-+DEFINE_STATIC_KEY_FALSE(__kvm_is_using_evmcs);
-+
-+/*
-+ * KVM on Hyper-V always uses the latest known eVMCSv1 revision, the assumption
-+ * is: in case a feature has corresponding fields in eVMCS described and it was
-+ * exposed in VMX feature MSRs, KVM is free to use it. Warn if KVM meets a
-+ * feature which has no corresponding eVMCS field, this likely means that KVM
-+ * needs to be updated.
-+ */
-+#define evmcs_check_vmcs_conf(field, ctrl)					\
-+	do {									\
-+		typeof(vmcs_conf->field) unsupported;				\
-+										\
-+		unsupported = vmcs_conf->field & ~EVMCS1_SUPPORTED_ ## ctrl;	\
-+		if (unsupported) {						\
-+			pr_warn_once(#field " unsupported with eVMCS: 0x%llx\n",\
-+				     (u64)unsupported);				\
-+			vmcs_conf->field &= EVMCS1_SUPPORTED_ ## ctrl;		\
-+		}								\
-+	}									\
-+	while (0)
-+
-+void evmcs_sanitize_exec_ctrls(struct vmcs_config *vmcs_conf)
-+{
-+	evmcs_check_vmcs_conf(cpu_based_exec_ctrl, EXEC_CTRL);
-+	evmcs_check_vmcs_conf(pin_based_exec_ctrl, PINCTRL);
-+	evmcs_check_vmcs_conf(cpu_based_2nd_exec_ctrl, 2NDEXEC);
-+	evmcs_check_vmcs_conf(cpu_based_3rd_exec_ctrl, 3RDEXEC);
-+	evmcs_check_vmcs_conf(vmentry_ctrl, VMENTRY_CTRL);
-+	evmcs_check_vmcs_conf(vmexit_ctrl, VMEXIT_CTRL);
-+}
-diff --git a/arch/x86/kvm/vmx/vmx_onhyperv.h b/arch/x86/kvm/vmx/vmx_onhyperv.h
-new file mode 100644
-index 0000000000000..11541d272dbd8
---- /dev/null
-+++ b/arch/x86/kvm/vmx/vmx_onhyperv.h
-@@ -0,0 +1,124 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+
-+#ifndef __ARCH_X86_KVM_VMX_ONHYPERV_H__
-+#define __ARCH_X86_KVM_VMX_ONHYPERV_H__
-+
-+#include <asm/hyperv-tlfs.h>
-+
-+#include <linux/jump_label.h>
-+
-+#include "capabilities.h"
-+#include "hyperv.h"
-+#include "vmcs12.h"
-+
-+#define current_evmcs ((struct hv_enlightened_vmcs *)this_cpu_read(current_vmcs))
-+
-+#if IS_ENABLED(CONFIG_HYPERV)
-+
-+DECLARE_STATIC_KEY_FALSE(__kvm_is_using_evmcs);
-+
-+static __always_inline bool kvm_is_using_evmcs(void)
-+{
-+	return static_branch_unlikely(&__kvm_is_using_evmcs);
-+}
-+
-+static __always_inline int get_evmcs_offset(unsigned long field,
-+					    u16 *clean_field)
-+{
-+	int offset = evmcs_field_offset(field, clean_field);
-+
-+	WARN_ONCE(offset < 0, "accessing unsupported EVMCS field %lx\n", field);
-+	return offset;
-+}
-+
-+static __always_inline void evmcs_write64(unsigned long field, u64 value)
-+{
-+	u16 clean_field;
-+	int offset = get_evmcs_offset(field, &clean_field);
-+
-+	if (offset < 0)
-+		return;
-+
-+	*(u64 *)((char *)current_evmcs + offset) = value;
-+
-+	current_evmcs->hv_clean_fields &= ~clean_field;
-+}
-+
-+static __always_inline void evmcs_write32(unsigned long field, u32 value)
-+{
-+	u16 clean_field;
-+	int offset = get_evmcs_offset(field, &clean_field);
-+
-+	if (offset < 0)
-+		return;
-+
-+	*(u32 *)((char *)current_evmcs + offset) = value;
-+	current_evmcs->hv_clean_fields &= ~clean_field;
-+}
-+
-+static __always_inline void evmcs_write16(unsigned long field, u16 value)
-+{
-+	u16 clean_field;
-+	int offset = get_evmcs_offset(field, &clean_field);
-+
-+	if (offset < 0)
-+		return;
-+
-+	*(u16 *)((char *)current_evmcs + offset) = value;
-+	current_evmcs->hv_clean_fields &= ~clean_field;
-+}
-+
-+static __always_inline u64 evmcs_read64(unsigned long field)
-+{
-+	int offset = get_evmcs_offset(field, NULL);
-+
-+	if (offset < 0)
-+		return 0;
-+
-+	return *(u64 *)((char *)current_evmcs + offset);
-+}
-+
-+static __always_inline u32 evmcs_read32(unsigned long field)
-+{
-+	int offset = get_evmcs_offset(field, NULL);
-+
-+	if (offset < 0)
-+		return 0;
-+
-+	return *(u32 *)((char *)current_evmcs + offset);
-+}
-+
-+static __always_inline u16 evmcs_read16(unsigned long field)
-+{
-+	int offset = get_evmcs_offset(field, NULL);
-+
-+	if (offset < 0)
-+		return 0;
-+
-+	return *(u16 *)((char *)current_evmcs + offset);
-+}
-+
-+static inline void evmcs_load(u64 phys_addr)
-+{
-+	struct hv_vp_assist_page *vp_ap =
-+		hv_get_vp_assist_page(smp_processor_id());
-+
-+	if (current_evmcs->hv_enlightenments_control.nested_flush_hypercall)
-+		vp_ap->nested_control.features.directhypercall = 1;
-+	vp_ap->current_nested_vmcs = phys_addr;
-+	vp_ap->enlighten_vmentry = 1;
-+}
-+
-+void evmcs_sanitize_exec_ctrls(struct vmcs_config *vmcs_conf);
-+#else /* !IS_ENABLED(CONFIG_HYPERV) */
-+static __always_inline bool kvm_is_using_evmcs(void) { return false; }
-+static __always_inline void evmcs_write64(unsigned long field, u64 value) {}
-+static __always_inline void evmcs_write32(unsigned long field, u32 value) {}
-+static __always_inline void evmcs_write16(unsigned long field, u16 value) {}
-+static __always_inline u64 evmcs_read64(unsigned long field) { return 0; }
-+static __always_inline u32 evmcs_read32(unsigned long field) { return 0; }
-+static __always_inline u16 evmcs_read16(unsigned long field) { return 0; }
-+static inline void evmcs_load(u64 phys_addr) {}
-+#endif /* IS_ENABLED(CONFIG_HYPERV) */
-+
-+#endif /* __ARCH_X86_KVM_VMX_ONHYPERV_H__ */
-diff --git a/arch/x86/kvm/vmx/vmx_ops.h b/arch/x86/kvm/vmx/vmx_ops.h
-index 6a0c6e81f7f3e..8060e5fc6dbd8 100644
---- a/arch/x86/kvm/vmx/vmx_ops.h
-+++ b/arch/x86/kvm/vmx/vmx_ops.h
-@@ -6,7 +6,7 @@
+diff --git a/arch/x86/kvm/vmx/vmx.h b/arch/x86/kvm/vmx/vmx.h
+index 912b0c4697429..6be1627d888e5 100644
+--- a/arch/x86/kvm/vmx/vmx.h
++++ b/arch/x86/kvm/vmx/vmx.h
+@@ -7,10 +7,10 @@
+ #include <asm/kvm.h>
+ #include <asm/intel_pt.h>
+ #include <asm/perf_event.h>
++#include <asm/posted_intr.h>
  
- #include <asm/vmx.h>
- 
--#include "hyperv.h"
-+#include "vmx_onhyperv.h"
+ #include "capabilities.h"
+ #include "../kvm_cache_regs.h"
+-#include "posted_intr.h"
  #include "vmcs.h"
- #include "../x86.h"
- 
+ #include "vmx_ops.h"
+ #include "../cpuid.h"
 -- 
 2.43.0
 
