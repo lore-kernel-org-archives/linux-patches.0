@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C201227448;
-	Wed,  7 Aug 2024 15:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20613EA9A;
+	Wed,  7 Aug 2024 15:06:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043175; cv=none; b=eoBEbeyBzQQDtCecawltSFM3NUanVugIZRuAUn5lF5kW8iHqVeidHRa4jss5K1JkJ/ugKAaUOa0YC3FE+Ess5xsd/wpWKqGBDO86ocyX6BlO3kM/8Vnf8mbh7gdI4p1Oxxk/+eIaAiUkIYu/xzpj+8x2PRvLHq8RSsWprzgq068=
+	t=1723043178; cv=none; b=YbNm3OsXXaKZsngpo95oCIFCSDZjr0OFjl7OWP54H4xpl45Kg0Yf1Z5n6VMS3fIRMomH5oU+IsXbBu1oSzM/r3ieWCHlNQZzi8xC3iBR+mxg9RagGzLuEWOz9k1l3SYfTTh4AxzFh+xObeMrLLVcFwNJ0S+Bst4pA6EEtHotNuo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043175; c=relaxed/simple;
-	bh=aDbrvKhPUxjQmiNHaEOhIE4rfoVz1hHKSPUZ3zXWvhw=;
+	s=arc-20240116; t=1723043178; c=relaxed/simple;
+	bh=1NcZmsl52LR4C5hbT/g7UuiSMQSvS/DKComZXT9hEHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PFA6wCWNhYcTFlFbCbZO6ltid2Ghr3FGIeVKP6FLt10ZcFQgxBiHIF25rWFQJXXHRaoiY2bHe54lgyhHqGFjqDNjK9jVRoA6gpnRd27UsxXb1aRyEKQC8bwms4EeK71MeFx7Co5w6y2SoNjvR2PBlna8+zcBiEVc6cnOBfiObCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1YPGeUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rHbyPM3DVP39Bj2Jfwr8lagaPeWdZUslM5yt8W6OAytJzEPik170Oz1WIQn2Dl1ZjJs6wKEkjHBukRybzzrG7pA8+JtyiBoSvXLgHqaG30iwa0Hwk6HS81W/zcKRniPHETGIML6ICbuDjsJTSRizI2GZEXg4h2wGkoihDfXhYNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PIoo1smv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1YPGeUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52FEDC32781;
-	Wed,  7 Aug 2024 15:06:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PIoo1smv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1200FC32781;
+	Wed,  7 Aug 2024 15:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043175;
-	bh=aDbrvKhPUxjQmiNHaEOhIE4rfoVz1hHKSPUZ3zXWvhw=;
+	s=korg; t=1723043178;
+	bh=1NcZmsl52LR4C5hbT/g7UuiSMQSvS/DKComZXT9hEHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1YPGeUlVjkOhgF2l6dq/KY9dPF+AaNjDc1Y8I36GK43BnqFMz1WCSK6RGyxcCtB7
-	 tF1SmOEeYTWlfE2wka5zXi8C63TXgbh3AWyf132NfzBaV4/H9OnqLfUbP1+pxmuRrE
-	 G+7K3WdH5GsFDghfzmofmB5LMDs3cYSLe8fQNlcA=
+	b=PIoo1smvlLvRFO1uzx7kv0fKI8L36JI/NPelSOS0QiTEWKGm8BLAPwss1Keq2CFkF
+	 nQIddU/+TrMug9C/+NDgDOL/wtYh4tUtct+RfLYYMFdj1F9HqoUVSAMBNCZDyOwj5r
+	 u0dLlmSlVlT1xHQnTqr+f94vDuMBOdW5dqsSO+Cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.10 119/123] mptcp: fix duplicate data handling
-Date: Wed,  7 Aug 2024 17:00:38 +0200
-Message-ID: <20240807150024.775354485@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.10 120/123] selftests: mptcp: fix error path
+Date: Wed,  7 Aug 2024 17:00:39 +0200
+Message-ID: <20240807150024.817326637@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -53,60 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-commit 68cc924729ffcfe90d0383177192030a9aeb2ee4 upstream.
+commit 4a2f48992ddf4b8c2fba846c6754089edae6db5a upstream.
 
-When a subflow receives and discards duplicate data, the mptcp
-stack assumes that the consumed offset inside the current skb is
-zero.
+pm_nl_check_endpoint() currently calls an not existing helper
+to mark the test as failed. Fix the wrong call.
 
-With multiple subflows receiving data simultaneously such assertion
-does not held true. As a result the subflow-level copied_seq will
-be incorrectly increased and later on the same subflow will observe
-a bad mapping, leading to subflow reset.
-
-Address the issue taking into account the skb consumed offset in
-mptcp_subflow_discard_data().
-
-Fixes: 04e4cd4f7ca4 ("mptcp: cleanup mptcp_subflow_discard_data()")
+Fixes: 03668c65d153 ("selftests: mptcp: join: rework detailed report")
 Cc: stable@vger.kernel.org
-Link: https://github.com/multipath-tcp/mptcp_net-next/issues/501
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
+Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1230,14 +1230,22 @@ static void mptcp_subflow_discard_data(s
- {
- 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
- 	bool fin = TCP_SKB_CB(skb)->tcp_flags & TCPHDR_FIN;
--	u32 incr;
-+	struct tcp_sock *tp = tcp_sk(ssk);
-+	u32 offset, incr, avail_len;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -661,7 +661,7 @@ pm_nl_check_endpoint()
+ 	done
  
--	incr = limit >= skb->len ? skb->len + fin : limit;
-+	offset = tp->copied_seq - TCP_SKB_CB(skb)->seq;
-+	if (WARN_ON_ONCE(offset > skb->len))
-+		goto out;
+ 	if [ -z "${id}" ]; then
+-		test_fail "bad test - missing endpoint id"
++		fail_test "bad test - missing endpoint id"
+ 		return
+ 	fi
  
--	pr_debug("discarding=%d len=%d seq=%d", incr, skb->len,
--		 subflow->map_subflow_seq);
-+	avail_len = skb->len - offset;
-+	incr = limit >= avail_len ? avail_len + fin : limit;
-+
-+	pr_debug("discarding=%d len=%d offset=%d seq=%d", incr, skb->len,
-+		 offset, subflow->map_subflow_seq);
- 	MPTCP_INC_STATS(sock_net(ssk), MPTCP_MIB_DUPDATA);
- 	tcp_sk(ssk)->copied_seq += incr;
-+
-+out:
- 	if (!before(tcp_sk(ssk)->copied_seq, TCP_SKB_CB(skb)->end_seq))
- 		sk_eat_skb(ssk, skb);
- 	if (mptcp_subflow_get_map_offset(subflow) >= subflow->map_data_len)
 
 
