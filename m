@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5616212C81F;
-	Wed,  7 Aug 2024 15:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C098F78C67;
+	Wed,  7 Aug 2024 15:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043038; cv=none; b=g4gqjejuOwJdM+qLFp+/RoPp6ZTOypfCWf9y3BCC7CpuWg0ldQ0rjGvsdGzHmLdKAh7B1d3/zoM1nqX6BcbL/V7Zyd4V3dTIML6U1R2w9kFW3E9oWumbc0cPMb8w89qbGth9lfYJMw632ABGxigrexfuRJLH1Nb2LCaI6JM2jFc=
+	t=1723043040; cv=none; b=Gi745lMsdukYhfHnibaGpm1HX+ebQ0PzBjHmFt0gdDdcy5SP2NOAtH59jLTctV1iXGTHxO0AlZHEkOM/4pOlCcA4ncxtr9FnjJxBjRsjVQsw6Sn865HtqqdN1gJTaJUOohp7yB6+UJXwUnAVjh/J0k0HAaEq28A2A7bWZiBUjuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043038; c=relaxed/simple;
-	bh=eJy6Fo+ddtW4ZjLeaZIVmPTin1B7TVGEMEXA2ym9eeU=;
+	s=arc-20240116; t=1723043040; c=relaxed/simple;
+	bh=RmvtXaU0R1jnu15JODOIbTUOldm/QYr4DbnSZx7+LsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OamaDB7l/qs/DehUDByM23LnJM0+OJSseGVEpD+2VGx/GuQS9m0MTHSn+eZrTq9/zKt8h+WOJwv1v9X8JNaQRAEpHxDn6yauD0nIqmDk4eRd1H3VSplOaKlKDydlqJTAh9ub7BdpPMM6SaTDomyJuOMoTYpuub1kiQntWsRSTu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wFovs5J5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hd5tUluhcjezPAcZRbWCCqu4brIWzJIqV7A3VhXU8pP52KMUey0/WUuLTTeJzOKbY4kM/kZUgvtA+f/6lFQ4mZptx0wwD/Rcgssd5bzltQ/Qpii9I2e+fawnP7zx/DxA1g7UhysfHgZ1ZcsfJQ9TowvaRixvxxRJVfEnsw8BMyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VrktD4Tg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wFovs5J5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A66D6C32781;
-	Wed,  7 Aug 2024 15:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VrktD4Tg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527F3C32781;
+	Wed,  7 Aug 2024 15:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043038;
-	bh=eJy6Fo+ddtW4ZjLeaZIVmPTin1B7TVGEMEXA2ym9eeU=;
+	s=korg; t=1723043040;
+	bh=RmvtXaU0R1jnu15JODOIbTUOldm/QYr4DbnSZx7+LsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFovs5J5YerssKiMNsKkqb6O0Jzd19eIysj5bqDGR51nAAWFGA/bbPq60HOZYKhQE
-	 7J1ElE8AC6+/0gmJokqwCBTEgXjRjkiFwYfjwC5Jv1tT1TF7RwB46LlcZqwU4kljiy
-	 eG5HVU/qUSgpoaj+kC3AE6wgXscAfQUc+lRwCYYo=
+	b=VrktD4TgXCuEhlyZrUEJJ41mZ51WR6SWev0p6iOvYhHxSqkEOXADMLnBR8X98zy4e
+	 10mGLnTffY/BEXd0D3jypcUhO3HfIQQ7TiWgVOdFZuLgQXotpLym23SAqywSouYJUX
+	 NbUp9PhINlRwpENUn/27sovdFlt4jZCF2SKzBSr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Chiu <andy.chiu@sifive.com>,
-	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 038/123] net: axienet: start napi before enabling Rx/Tx
-Date: Wed,  7 Aug 2024 16:59:17 +0200
-Message-ID: <20240807150022.070047144@linuxfoundation.org>
+Subject: [PATCH 6.10 039/123] rtnetlink: Dont ignore IFLA_TARGET_NETNSID when ifname is specified in rtnl_dellink().
+Date: Wed,  7 Aug 2024 16:59:18 +0200
+Message-ID: <20240807150022.105765682@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,39 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Chiu <andy.chiu@sifive.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 799a829507506924add8a7620493adc1c3cfda30 ]
+[ Upstream commit 9415d375d8520e0ed55f0c0b058928da9a5b5b3d ]
 
-softirq may get lost if an Rx interrupt comes before we call
-napi_enable. Move napi_enable in front of axienet_setoptions(), which
-turns on the device, to address the issue.
+The cited commit accidentally replaced tgt_net with net in rtnl_dellink().
 
-Link: https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg06160.html
-Fixes: cc37610caaf8 ("net: axienet: implement NAPI and GRO receive")
-Signed-off-by: Andy Chiu <andy.chiu@sifive.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+As a result, IFLA_TARGET_NETNSID is ignored if the interface is specified
+with IFLA_IFNAME or IFLA_ALT_IFNAME.
+
+Let's pass tgt_net to rtnl_dev_get().
+
+Fixes: cc6090e985d7 ("net: rtnetlink: introduce helper to get net_device instance by ifname")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_axienet_main.c | 2 +-
+ net/core/rtnetlink.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-index c29809cd92015..fa510f4e26008 100644
---- a/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_axienet_main.c
-@@ -2219,9 +2219,9 @@ static void axienet_dma_err_handler(struct work_struct *work)
- 			   ~(XAE_OPTION_TXEN | XAE_OPTION_RXEN));
- 	axienet_set_mac_address(ndev, NULL);
- 	axienet_set_multicast_list(ndev);
--	axienet_setoptions(ndev, lp->options);
- 	napi_enable(&lp->napi_rx);
- 	napi_enable(&lp->napi_tx);
-+	axienet_setoptions(ndev, lp->options);
- }
- 
- /**
+diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
+index 4668d67180407..5e589f0a62bc5 100644
+--- a/net/core/rtnetlink.c
++++ b/net/core/rtnetlink.c
+@@ -3288,7 +3288,7 @@ static int rtnl_dellink(struct sk_buff *skb, struct nlmsghdr *nlh,
+ 	if (ifm->ifi_index > 0)
+ 		dev = __dev_get_by_index(tgt_net, ifm->ifi_index);
+ 	else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME])
+-		dev = rtnl_dev_get(net, tb);
++		dev = rtnl_dev_get(tgt_net, tb);
+ 	else if (tb[IFLA_GROUP])
+ 		err = rtnl_group_dellink(tgt_net, nla_get_u32(tb[IFLA_GROUP]));
+ 	else
 -- 
 2.43.0
 
