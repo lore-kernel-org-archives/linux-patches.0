@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC65374CC;
-	Wed,  7 Aug 2024 15:12:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD3717F7F5;
+	Wed,  7 Aug 2024 15:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043538; cv=none; b=MHNOe1CbKHEcEC1bBc3v/MrfAZibYQYJJ+ENgKYPLV++slZaxtf+EZDMW5+Is9M+Htm3QxhbMcoATnH1w9ia7CVCPjkrp8UpgTyC4fmc5T3laJsT0ggD3kmVH4+6UkdlNiZgSPTN34MWlr0+i3qINGnDm6hkTwSCiROKQRJ/c08=
+	t=1723043540; cv=none; b=Wt5/HjwHP7LAZ6tGsJrwKmm0r7kBp9hkJ3NmeyZfhaMJHOio3OUDW9vMD5IikGmJO+i15kixypFaL9H4rdXB9AHmxPxNGDThBqetRemCKiJaec242QbH6+hGQ+oUbNAQMMufOX6CkGTy9EGWavS0yZnuVqKsRZcKjZEbrAd/e0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043538; c=relaxed/simple;
-	bh=bA86UCrD9T6syJXXQ/23me+d1wfCvJfwrb2CdvilG/o=;
+	s=arc-20240116; t=1723043540; c=relaxed/simple;
+	bh=7okaDeJbe/27T9TAzPkoMr0kaZwNrONwcLXAxMwi8lo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sh0kVBUPgRdscBPyG86OwHA2LKUSB/HyT7owed0Trn2rIm6CYMZpqughbwEE0wF2nt1qa4Lyj3H01wfdmEjC++88LNIU7wZqimh17EtF2C//jFmB6QVzpm0l3KtN+1Dp1GzUCCSuk3y2cnni5h+iY9UCjg2gbyEr1sqJRLkY0FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BgMMRcVv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ig4oZOz9Vtp2LpmahYkJ7vjCktQnLCStkcSKYo2PgY/LinK5IL+wkJLcHbTSNngarl+XOkfHjP2sAWyGYUOop3MKiJwA14NBMY9QuRXKxZUe80QDB7uAMVhquvCEExutKBE6l/IrOhcQtEFgmCsVdHFyjlg0jKAfDr5KBodcgN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZ5TPiId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BgMMRcVv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A187EC4AF0B;
-	Wed,  7 Aug 2024 15:12:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZ5TPiId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F124C32781;
+	Wed,  7 Aug 2024 15:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043538;
-	bh=bA86UCrD9T6syJXXQ/23me+d1wfCvJfwrb2CdvilG/o=;
+	s=korg; t=1723043540;
+	bh=7okaDeJbe/27T9TAzPkoMr0kaZwNrONwcLXAxMwi8lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgMMRcVv1AL8JEzRRsaFmJ0s2EwC2QjnxWMTOAAfZfQP45LOh4hrH9C6u2TkqU3mm
-	 ap2CY9BywcaD1Gkt3yXOGTDjHsGhypSKVIN1rJgK5XTq464JONwY7r360nKEQgjyRE
-	 +fBbWcURja4vhFC45cc2kHSsRg0RzmsZG9sojgsI=
+	b=XZ5TPiIdal64eBMtKLEAMA17zQ5zbgog4MBCqjVbGpLmbvgwjt33MpV+NwsaCHSvX
+	 5zFu0wiBqFRhpY665M/nWEMv5VkZYUwYkP2izJxa1Nqz864ufBLWfLA3KaqzL6v3LY
+	 q8M3fRh7DMB1aX4Sqnzx/zIa1up4Gsi7EmO/Mt38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 119/121] selftests: mptcp: join: validate backup in MPJ
-Date: Wed,  7 Aug 2024 17:00:51 +0200
-Message-ID: <20240807150023.295888628@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>
+Subject: [PATCH 6.6 110/121] r8169: dont increment tx_dropped in case of NETDEV_TX_BUSY
+Date: Wed,  7 Aug 2024 17:00:42 +0200
+Message-ID: <20240807150022.999876259@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,163 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 935ff5bb8a1cfcdf8e60c8f5c794d0bbbc234437 upstream.
+commit d516b187a9cc2e842030dd005be2735db3e8f395 upstream.
 
-A peer can notify the other one that a subflow has to be treated as
-"backup" by two different ways: either by sending a dedicated MP_PRIO
-notification, or by setting the backup flag in the MP_JOIN handshake.
+The skb isn't consumed in case of NETDEV_TX_BUSY, therefore don't
+increment the tx_dropped counter.
 
-The selftests were previously monitoring the former, but not the latter.
-This is what is now done here by looking at these new MIB counters when
-validating the 'backup' cases:
-
-  MPTcpExtMPJoinSynBackupRx
-  MPTcpExtMPJoinSynAckBackupRx
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it will help to validate a new fix for an issue introduced by this
-commit ID.
-
-Fixes: 4596a2c1b7f5 ("mptcp: allow creating non-backup subflows")
+Fixes: 188f4af04618 ("r8169: use NETDEV_TX_{BUSY/OK}")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/bbba9c48-8bac-4932-9aa1-d2ed63bc9433@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   42 ++++++++++++++++++------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -1778,6 +1778,8 @@ chk_prio_nr()
- {
- 	local mp_prio_nr_tx=$1
- 	local mp_prio_nr_rx=$2
-+	local mpj_syn=$3
-+	local mpj_syn_ack=$4
- 	local count
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4256,7 +4256,8 @@ static netdev_tx_t rtl8169_start_xmit(st
+ 	if (unlikely(!rtl_tx_slots_avail(tp))) {
+ 		if (net_ratelimit())
+ 			netdev_err(dev, "BUG! Tx Ring full when queue awake!\n");
+-		goto err_stop_0;
++		netif_stop_queue(dev);
++		return NETDEV_TX_BUSY;
+ 	}
  
- 	print_check "ptx"
-@@ -1799,6 +1801,26 @@ chk_prio_nr()
- 	else
- 		print_ok
- 	fi
-+
-+	print_check "syn backup"
-+	count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMPJoinSynBackupRx")
-+	if [ -z "$count" ]; then
-+		print_skip
-+	elif [ "$count" != "$mpj_syn" ]; then
-+		fail_test "got $count JOIN[s] syn with Backup expected $mpj_syn"
-+	else
-+		print_ok
-+	fi
-+
-+	print_check "synack backup"
-+	count=$(mptcp_lib_get_counter ${ns2} "MPTcpExtMPJoinSynAckBackupRx")
-+	if [ -z "$count" ]; then
-+		print_skip
-+	elif [ "$count" != "$mpj_syn_ack" ]; then
-+		fail_test "got $count JOIN[s] synack with Backup expected $mpj_syn_ack"
-+	else
-+		print_ok
-+	fi
+ 	opts[1] = rtl8169_tx_vlan_tag(skb);
+@@ -4312,11 +4313,6 @@ err_dma_0:
+ 	dev_kfree_skb_any(skb);
+ 	dev->stats.tx_dropped++;
+ 	return NETDEV_TX_OK;
+-
+-err_stop_0:
+-	netif_stop_queue(dev);
+-	dev->stats.tx_dropped++;
+-	return NETDEV_TX_BUSY;
  }
  
- chk_subflow_nr()
-@@ -2751,7 +2773,7 @@ backup_tests()
- 		sflags=nobackup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 1 0
- 	fi
- 
- 	# single address, backup
-@@ -2764,7 +2786,7 @@ backup_tests()
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
- 		chk_add_nr 1 1
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
- 	fi
- 
- 	# single address with port, backup
-@@ -2777,7 +2799,7 @@ backup_tests()
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 1
- 		chk_add_nr 1 1
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
- 	fi
- 
- 	if reset "mpc backup" &&
-@@ -2786,7 +2808,7 @@ backup_tests()
- 		speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 0 0
- 	fi
- 
- 	if reset "mpc backup both sides" &&
-@@ -2796,7 +2818,7 @@ backup_tests()
- 		speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
- 	fi
- 
- 	if reset "mpc switch to backup" &&
-@@ -2805,7 +2827,7 @@ backup_tests()
- 		sflags=backup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 0 0
- 	fi
- 
- 	if reset "mpc switch to backup both sides" &&
-@@ -2815,7 +2837,7 @@ backup_tests()
- 		sflags=backup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 0 0 0
--		chk_prio_nr 1 1
-+		chk_prio_nr 1 1 0 0
- 	fi
- }
- 
-@@ -3215,7 +3237,7 @@ fullmesh_tests()
- 		addr_nr_ns2=1 sflags=backup,fullmesh speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 2 2 2
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 1 0
- 		chk_rm_nr 0 1
- 	fi
- 
-@@ -3228,7 +3250,7 @@ fullmesh_tests()
- 		sflags=nobackup,nofullmesh speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 2 2 2
--		chk_prio_nr 0 1
-+		chk_prio_nr 0 1 1 0
- 		chk_rm_nr 0 1
- 	fi
- }
-@@ -3407,7 +3429,7 @@ userspace_tests()
- 		sflags=backup speed=slow \
- 			run_tests $ns1 $ns2 10.0.1.1
- 		chk_join_nr 1 1 0
--		chk_prio_nr 0 0
-+		chk_prio_nr 0 0 0 0
- 	fi
- 
- 	# userspace pm type prevents rm_addr
+ static unsigned int rtl_last_frag_len(struct sk_buff *skb)
 
 
