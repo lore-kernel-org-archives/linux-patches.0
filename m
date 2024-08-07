@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2945E78C67;
-	Wed,  7 Aug 2024 15:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D645478C67;
+	Wed,  7 Aug 2024 15:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043046; cv=none; b=W3mjHuUnVFyLZDtD2unfLwx5oQb+sjnhGZQ6wrXhR3uJ1qctN9yyBls/nUywJIR8R5XD5XAjGg8E1/ijLbS0z/gjWwwJVdCFtsjRa+NIB7R+bdN/6lvPufFq0BS8WkYvKXX82W1vaMZy75ji6vAA+VA4cSpje3p4PcQ0nQ4C+Gg=
+	t=1723043048; cv=none; b=gpbwXkth/3V+5hzyK6WS86L/8laYNpzWNjTwzEPa64Hck284U86XG9ZNHTBwG0y0P7UJ6r2lijWDsHk8rL63UvEyltRDrkpx4/L+WoAHSpMPvspyi99lorWzALxqj4qDeDZVyOZG35W897z+xhC1rops+jz6uMqrm7orOj/Yo4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043046; c=relaxed/simple;
-	bh=GP5IrzgnkPeHkzIdpajioRii/D/EvwAjkjxpQRJd24s=;
+	s=arc-20240116; t=1723043048; c=relaxed/simple;
+	bh=HuZY87EYQIX9UyPqsF8XivNRW1YTGS3vvFx+/qqksTs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rXqk3gi/ss+HFQmHo5H+PHBxpz+V0IiSEXUNq5V5V+L7ozKjYIPHAfHgveObn3BYIELFC2OdObYOLAM9ODvKL4SDrYUAybGQ/xo+3zDuwxXZn94AjYzPRcnTH88vuNV2vdBEy1gq9fuWal0QblMA3dzjjuk1+xk8aKmDs6WPVHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sajgPGdv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhzrCfnluCsWElSTVQkdENaKV4+3Bv6852DNpH+VMJVQXPp0zwy4MlLH3zM9fCbhaiFwTdsW1Q1DCMIplHAhWJujkF4IbT1NDP2uxaaxrk39Y9DB/prlVeBp3fhNCfcbZSn/I7AqlR5qaDsy2jZoewY04uQ+pybCpbB72jei5io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mKAM+gNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sajgPGdv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD0FC32781;
-	Wed,  7 Aug 2024 15:04:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mKAM+gNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B00AC4AF0D;
+	Wed,  7 Aug 2024 15:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043046;
-	bh=GP5IrzgnkPeHkzIdpajioRii/D/EvwAjkjxpQRJd24s=;
+	s=korg; t=1723043048;
+	bh=HuZY87EYQIX9UyPqsF8XivNRW1YTGS3vvFx+/qqksTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sajgPGdvy1T0U2GiwTGvTi5nI4D0MSQ7mqjLN4Lp5q/w1EIG/v1UKK26BzhfHLX/S
-	 GAmZREvnmC/fXVwBn8OPg6Xh1FxIowEUuB5ilYssqJn+HYbZV9TUleDXg960j+lcVG
-	 r9IDlWPuViz+9ITfqmFnMO8PGWyEIeG99T7Uu7LY=
+	b=mKAM+gNiB80dD/smY8lTLbqSrYPF1Zf2tCBojUW/tD73zIXeR2MZ4ppn1UzmmX51T
+	 SxxeiywkNeXSq1RXcB8xEJo9U35wrS8FSUgpAhsRUKiyiOSeD3t7N4x2mBKwKMO0Ku
+	 w1c8goZhcFZn+sSksYNGongEbtYC4FxVXHbM0IFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell Senior <russell@personaltelco.net>,
-	Mark Mentovai <mark@mentovai.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chris Mi <cmi@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 031/123] net: phy: realtek: add support for RTL8366S Gigabit PHY
-Date: Wed,  7 Aug 2024 16:59:10 +0200
-Message-ID: <20240807150021.833081295@linuxfoundation.org>
+Subject: [PATCH 6.10 064/123] net/mlx5e: Fix CT entry update leaks of modify header context
+Date: Wed,  7 Aug 2024 16:59:43 +0200
+Message-ID: <20240807150022.873653074@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -53,56 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Mentovai <mark@mentovai.com>
+From: Chris Mi <cmi@nvidia.com>
 
-[ Upstream commit 225990c487c1023e7b3aa89beb6a68011fbc0461 ]
+[ Upstream commit 025f2b85a5e5a46df14ecf162c3c80a957a36d0b ]
 
-The PHY built in to the Realtek RTL8366S switch controller was
-previously supported by genphy_driver. This PHY does not implement MMD
-operations. Since commit 9b01c885be36 ("net: phy: c22: migrate to
-genphy_c45_write_eee_adv()"), MMD register reads have been made during
-phy_probe to determine EEE support. For genphy_driver, these reads are
-transformed into 802.3 annex 22D clause 45-over-clause 22
-mmd_phy_indirect operations that perform MII register writes to
-MII_MMD_CTRL and MII_MMD_DATA. This overwrites those two MII registers,
-which on this PHY are reserved and have another function, rendering the
-PHY unusable while so configured.
+The cited commit allocates a new modify header to replace the old
+one when updating CT entry. But if failed to allocate a new one, eg.
+exceed the max number firmware can support, modify header will be
+an error pointer that will trigger a panic when deallocating it. And
+the old modify header point is copied to old attr. When the old
+attr is freed, the old modify header is lost.
 
-Proper support for this PHY is restored by providing a phy_driver that
-declares MMD operations as unsupported by using the helper functions
-provided for that purpose, while remaining otherwise identical to
-genphy_driver.
+Fix it by restoring the old attr to attr when failed to allocate a
+new modify header context. So when the CT entry is freed, the right
+modify header context will be freed. And the panic of accessing
+error pointer is also fixed.
 
-Fixes: 9b01c885be36 ("net: phy: c22: migrate to genphy_c45_write_eee_adv()")
-Reported-by: Russell Senior <russell@personaltelco.net>
-Closes: https://github.com/openwrt/openwrt/issues/15981
-Link: https://github.com/openwrt/openwrt/issues/15739
-Signed-off-by: Mark Mentovai <mark@mentovai.com>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 94ceffb48eac ("net/mlx5e: Implement CT entry update")
+Signed-off-by: Chris Mi <cmi@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/20240730061638.1831002-8-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/realtek.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/phy/realtek.c b/drivers/net/phy/realtek.c
-index 7ab41f95dae5f..ffa07c3f04c26 100644
---- a/drivers/net/phy/realtek.c
-+++ b/drivers/net/phy/realtek.c
-@@ -1351,6 +1351,13 @@ static struct phy_driver realtek_drvs[] = {
- 		.handle_interrupt = genphy_handle_interrupt_no_ack,
- 		.suspend	= genphy_suspend,
- 		.resume		= genphy_resume,
-+	}, {
-+		PHY_ID_MATCH_EXACT(0x001cc960),
-+		.name		= "RTL8366S Gigabit Ethernet",
-+		.suspend	= genphy_suspend,
-+		.resume		= genphy_resume,
-+		.read_mmd	= genphy_read_mmd_unsupported,
-+		.write_mmd	= genphy_write_mmd_unsupported,
- 	},
- };
- 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
+index fadfa8b50bebe..8c4e3ecef5901 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_ct.c
+@@ -920,6 +920,7 @@ mlx5_tc_ct_entry_replace_rule(struct mlx5_tc_ct_priv *ct_priv,
+ 	mlx5_tc_ct_entry_destroy_mod_hdr(ct_priv, zone_rule->attr, mh);
+ 	mlx5_put_label_mapping(ct_priv, attr->ct_attr.ct_labels_id);
+ err_mod_hdr:
++	*attr = *old_attr;
+ 	kfree(old_attr);
+ err_attr:
+ 	kvfree(spec);
 -- 
 2.43.0
 
