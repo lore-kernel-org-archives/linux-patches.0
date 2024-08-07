@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECBA78C67;
-	Wed,  7 Aug 2024 15:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B00178C67;
+	Wed,  7 Aug 2024 15:10:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043410; cv=none; b=sJn8Dt3FQgoAUFXPdYGIPGG09aVfEjrlNBAMzypXlm/OUyqouJV0Ly8xSVSwNb8M9f9Rlx16nupte4a/i/uEODxyOavIppLiOr3usAGjcSzTthRViz9mhY5NqDoBy4LWFLD9V9gUjrh+Z1Y4LF05p8UDkn5klhpinO9PXnCovQw=
+	t=1723043413; cv=none; b=FfpqwNskDtWoDmh+Fj0h0AF8Q9SOYC+wkYcSmGIvDnFBp5ye8ApeswDpwyuk2FgRAIVy9NZfVUbW+ljGTgHKyD/Kj6BXQyCXtzMbcwV5pfHgjuqBaqoyu0FXxzo1A+kZ4PvVG3hCogVdxXYSqCM+vyMGLGrWDQpSVliRvxUXxtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043410; c=relaxed/simple;
-	bh=0DuonC+rV4jztOgSAN46PyJumSBCWpUnNjik1B4kglY=;
+	s=arc-20240116; t=1723043413; c=relaxed/simple;
+	bh=4xvovHONUfK0HFcUBhVEb8/H5kEXF6Q0eZaaV0/47xc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MwFfg8lyAmxnQhTJ28ieywH17s+OWlb4y8x1XO8qUtjf8/bekWr4CRdwU89wP7o7WUGezitc4f6BHUGH8w3Ponu0dF/wdmHlCR8pe20rn0IsaGXMbmCT+Od5nCMxhZvUu007qrpDOzKAUepxgli+lUnfaSpAnftaVCieQQJ/5bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=THorCcLD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=vBGk2zp+VtA1dIimM9f6pqKlvQ/LRqH4NRhp5gWwh6erSV9x0sWrnuDJXw0klaV1BGRZy7cjlPW3RK0lZaUfn80S3OPxF7z8g3WJ8Q1LuzGIy0vrieWtFQjlaHCc2gsKSARKaznjwCQEN0Do4jiGNbIkaeENz+dSORIkgBuWjhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ur1+0EVp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="THorCcLD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 025BDC32781;
-	Wed,  7 Aug 2024 15:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ur1+0EVp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1D92C32781;
+	Wed,  7 Aug 2024 15:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043410;
-	bh=0DuonC+rV4jztOgSAN46PyJumSBCWpUnNjik1B4kglY=;
+	s=korg; t=1723043413;
+	bh=4xvovHONUfK0HFcUBhVEb8/H5kEXF6Q0eZaaV0/47xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=THorCcLD3TkYqydrU6vlN3Veaj//ca+MTgGVY5WkIpzlvToTGb0ZSh8gg890E18Xc
-	 lVjdAJ9hhX56blxVFOXPlFmsAuw5sMjp12VwRu+ylSAmuSEBTEfhdovEXhi1VLy927
-	 zSSAjTiDnFE2QphDp2lkm05s+z/plAk+j7WCkFmM=
+	b=Ur1+0EVpdLMjFpVi6bfrAH619XRY8PZz2UDUDgNWTZksd+vEX51wB1ObrbSZpcpHz
+	 0O7CDNKgW4xw2OoRvOTpzuToYa6sIYhBNV8ZVX/evkuqB8tXqHy5ucL+z1xMujIedR
+	 bCQFmMKDa68X+8GCgAm+mACdFIFAZ3fL/WPNq17g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Ben Skeggs <bskeggs@nvidia.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 079/121] netfilter: iptables: Fix potential null-ptr-deref in ip6table_nat_table_init().
-Date: Wed,  7 Aug 2024 17:00:11 +0200
-Message-ID: <20240807150022.000226236@linuxfoundation.org>
+Subject: [PATCH 6.6 053/121] drm/nouveau: prime: fix refcount underflow
+Date: Wed,  7 Aug 2024 16:59:45 +0200
+Message-ID: <20240807150021.146986388@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -46,68 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit c22921df777de5606f1047b1345b8d22ef1c0b34 ]
+[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
 
-ip6table_nat_table_init() accesses net->gen->ptr[ip6table_nat_net_ops.id],
-but the function is exposed to user space before the entry is allocated
-via register_pernet_subsys().
+Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
+hence the backing ttm_bo) leads to a refcount underflow.
 
-Let's call register_pernet_subsys() before xt_register_template().
+Instead of calling nouveau_bo_ref() in the unwind path of
+drm_gem_object_init(), clean things up manually.
 
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
+(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6table_nat.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
-index bf3cb3a13600c..52d597b16b658 100644
---- a/net/ipv6/netfilter/ip6table_nat.c
-+++ b/net/ipv6/netfilter/ip6table_nat.c
-@@ -147,23 +147,27 @@ static struct pernet_operations ip6table_nat_net_ops = {
- 
- static int __init ip6table_nat_init(void)
- {
--	int ret = xt_register_template(&nf_nat_ipv6_table,
--				       ip6table_nat_table_init);
-+	int ret;
- 
-+	/* net->gen->ptr[ip6table_nat_net_id] must be allocated
-+	 * before calling ip6t_nat_register_lookups().
-+	 */
-+	ret = register_pernet_subsys(&ip6table_nat_net_ops);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = register_pernet_subsys(&ip6table_nat_net_ops);
-+	ret = xt_register_template(&nf_nat_ipv6_table,
-+				   ip6table_nat_table_init);
- 	if (ret)
--		xt_unregister_template(&nf_nat_ipv6_table);
-+		unregister_pernet_subsys(&ip6table_nat_net_ops);
- 
- 	return ret;
- }
- 
- static void __exit ip6table_nat_exit(void)
- {
--	unregister_pernet_subsys(&ip6table_nat_net_ops);
- 	xt_unregister_template(&nf_nat_ipv6_table);
-+	unregister_pernet_subsys(&ip6table_nat_net_ops);
- }
- 
- module_init(ip6table_nat_init);
+diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
+index 1b2ff0c40fc1c..6c599a9f49ee4 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_prime.c
++++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
+@@ -64,7 +64,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
+ 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
+ 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
+ 	if (ret) {
+-		nouveau_bo_ref(NULL, &nvbo);
++		drm_gem_object_release(&nvbo->bo.base);
++		kfree(nvbo);
+ 		obj = ERR_PTR(-ENOMEM);
+ 		goto unlock;
+ 	}
 -- 
 2.43.0
 
