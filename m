@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D449823DE;
-	Wed,  7 Aug 2024 15:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC16823DE;
+	Wed,  7 Aug 2024 15:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043629; cv=none; b=Cr1tWWBQ2iV1sj965EydA84RpYM9MWpFq2k3AD5dKNrowB+eWfczTnei6eKpxvP+Im64AuvH3QV9nmX1mZxq7Ti2PfsnZMZcSsX4ydBDk3Vm0osdhGsVueJ/0ImxuWdF2oIbBB/UKtU5DNpo5kWqsNHhyNRPSsrRD1gthQMgHAY=
+	t=1723043632; cv=none; b=OMYGYAe63oP0B9h0zmY/jGifwCUzhXU6q2wOJgQlhmVRCZ10K3m0sEhMjL0avyr55VVweWM8by+DviTF0htYJcrNyfQrvHJmlG8brliWvHPxODjp2ld3WecwuZ9faXuiOo3YQP1wGQMCTG/WSK2pg6yx0ErKqCybC1kyPna6Wyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043629; c=relaxed/simple;
-	bh=llLU+/L3iYJOF3rL3B6LRaVC4Emh8Bcxj3PhPgyIvmQ=;
+	s=arc-20240116; t=1723043632; c=relaxed/simple;
+	bh=rfCWkAUMYCLGnDnkALadpdQVsFbxR7ROFC40CMDGgVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hCADu3PiSHe2epSpbeHPWcWjqb7weKLUwXqel9ti8CndJ1qyZWAXqpE2FCDGeurTfXZ/fBDiuUL5zOcBP5HspjarqhOHwXuQ6ZrxR2a5q/O0aec9wjJe8XdYTZ6wp+bx/QdUgjrvPtZwYVdiZ/zAShYF3RzwuU1yuEjcrxBL+Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gr7fVpNa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MCwASI/noKSo4uNctYWi/852fU1uGqdJaFV2HLn1zdRNsVl3eUbvSzP1l5jXgwq62hv3r7/g+XfG5b417HkTZRpMMNe0q11/sqeQ4yOkzssCpKjwKCPhvmU0sE0JIaqWlXvrFBBOMH7wO6EBxQzrEyicdq1mG9JVarbfW5jXr9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T8EvmGyr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gr7fVpNa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BE2C32781;
-	Wed,  7 Aug 2024 15:13:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T8EvmGyr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E962C32781;
+	Wed,  7 Aug 2024 15:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043629;
-	bh=llLU+/L3iYJOF3rL3B6LRaVC4Emh8Bcxj3PhPgyIvmQ=;
+	s=korg; t=1723043631;
+	bh=rfCWkAUMYCLGnDnkALadpdQVsFbxR7ROFC40CMDGgVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gr7fVpNa0Z/crvKIVjHCln1/+fowkHm87cwETb0e+3T2QsPwhtwltX8E1XDCUWeET
-	 g5FKxsWp73q8Zs97s30xLYjGs7u1nQ/+m6nnLNyC6znyVzu6Lg4o0+DvMCqHlXKxlc
-	 4NeEXsBzgNxoRzBwmnOOH4r4NjCTeS7XQSbrTVUM=
+	b=T8EvmGyr/JpS8S4TkH8PMAnzReFOjwHJOkHTacnEN7DxKbs42SL1Hy2ruSu4k0/XM
+	 eUIqU2kJFu+sAyMttB5uLtVX1MwwWTlM6rWTgKsgZuK8NzLvoA+Rz3M35RMAu6+6+P
+	 W4LR2oxpg35cE+GWsuemoFsh15mnKmykz+qu0y+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Skeggs <bskeggs@nvidia.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Danilo Krummrich <dakr@kernel.org>,
+	Chao Yu <chao@kernel.org>,
+	Will McVicker <willmcvicker@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 41/86] drm/nouveau: prime: fix refcount underflow
-Date: Wed,  7 Aug 2024 17:00:20 +0200
-Message-ID: <20240807150040.596666593@linuxfoundation.org>
+Subject: [PATCH 6.1 24/86] f2fs: assign CURSEG_ALL_DATA_ATGC if blkaddr is valid
+Date: Wed,  7 Aug 2024 17:00:03 +0200
+Message-ID: <20240807150040.036225807@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -46,49 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Danilo Krummrich <dakr@kernel.org>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
+[ Upstream commit 8cb1f4080dd91c6e6b01dbea013a3f42341cb6a1 ]
 
-Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
-hence the backing ttm_bo) leads to a refcount underflow.
+mkdir /mnt/test/comp
+f2fs_io setflags compression /mnt/test/comp
+dd if=/dev/zero of=/mnt/test/comp/testfile bs=16k count=1
+truncate --size 13 /mnt/test/comp/testfile
 
-Instead of calling nouveau_bo_ref() in the unwind path of
-drm_gem_object_init(), clean things up manually.
+In the above scenario, we can get a BUG_ON.
+ kernel BUG at fs/f2fs/segment.c:3589!
+ Call Trace:
+  do_write_page+0x78/0x390 [f2fs]
+  f2fs_outplace_write_data+0x62/0xb0 [f2fs]
+  f2fs_do_write_data_page+0x275/0x740 [f2fs]
+  f2fs_write_single_data_page+0x1dc/0x8f0 [f2fs]
+  f2fs_write_multi_pages+0x1e5/0xae0 [f2fs]
+  f2fs_write_cache_pages+0xab1/0xc60 [f2fs]
+  f2fs_write_data_pages+0x2d8/0x330 [f2fs]
+  do_writepages+0xcf/0x270
+  __writeback_single_inode+0x44/0x350
+  writeback_sb_inodes+0x242/0x530
+  __writeback_inodes_wb+0x54/0xf0
+  wb_writeback+0x192/0x310
+  wb_workfn+0x30d/0x400
 
-Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
-Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
-(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+The reason is we gave CURSEG_ALL_DATA_ATGC to COMPR_ADDR where the
+page was set the gcing flag by set_cluster_dirty().
+
+Cc: stable@vger.kernel.org
+Fixes: 4961acdd65c9 ("f2fs: fix to tag gcing flag on page during block migration")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Tested-by: Will McVicker <willmcvicker@google.com>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/f2fs/segment.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
-index 9608121e49b7e..8340d55aaa987 100644
---- a/drivers/gpu/drm/nouveau/nouveau_prime.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
-@@ -63,7 +63,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
- 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
- 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
- 	if (ret) {
--		nouveau_bo_ref(NULL, &nvbo);
-+		drm_gem_object_release(&nvbo->bo.base);
-+		kfree(nvbo);
- 		obj = ERR_PTR(-ENOMEM);
- 		goto unlock;
- 	}
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 99391ee4c28c4..1264a350d4d75 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -3186,6 +3186,7 @@ static int __get_segment_type_6(struct f2fs_io_info *fio)
+ 			if (fio->sbi->am.atgc_enabled &&
+ 				(fio->io_type == FS_DATA_IO) &&
+ 				(fio->sbi->gc_mode != GC_URGENT_HIGH) &&
++				__is_valid_data_blkaddr(fio->old_blkaddr) &&
+ 				!is_inode_flag_set(inode, FI_OPU_WRITE))
+ 				return CURSEG_ALL_DATA_ATGC;
+ 			else
 -- 
 2.43.0
 
