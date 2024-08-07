@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75465374CC;
-	Wed,  7 Aug 2024 15:12:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1381E81751;
+	Wed,  7 Aug 2024 15:12:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043543; cv=none; b=n/oYA2eGg9JcScSTAIaiY+3034oOvyPE9zf8u8dobQ8plrD6NB4yZ6tKN5CeEvO7lCLhUwbjxsZvoXHYsA6MUlSx9nCVpSD8t3ANAFr8JbQLH7rYxoD0EjUU/avTWYCA+k/AMzT7OLlk4GHtZdGoNG/dqORNhJvi2gkLJNNZfyc=
+	t=1723043546; cv=none; b=lUF2ks2CV+/hx45CcJgi772rvmA/ZL/n4im+2/GQJMIHp33jYXh1zwVKu5mRq9XwklQL+dUCh/TRPvUb1CRU4Myv+fYA+FkhqN9EJpSsuCwTsAbV8C9AX0u4fhaNN4K2KW7SMN3elQ25FOEHwhaaFoFrdTQ1pgkh5p9lZq8gFCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043543; c=relaxed/simple;
-	bh=YShQqegv1T4BR+5gpHIR0x1X87gRT8qbtJFtSefgNRw=;
+	s=arc-20240116; t=1723043546; c=relaxed/simple;
+	bh=gNq9oV1FFmMi0KApP1XdENPJKhnOYBp3+vsvY2aPQzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IklUJiDbtKkdVPeTvEh/ex1HI7Lqm6Oqtqk7JZNnSasqrTagK+jnfBsNjMBCIO9mHG63gAuo462AKAxx3ewpdeeyf0Uat7npe6hwIuyPh35xDwTpOhqU+ufGNUDqknU86HsRn+HTLF87m0gHlPhtr6pNEk7xEA/qt8m8JUSodQE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkYcN7lw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nbrKS84UPsps7sbvJDt6E/cEoNAeNe1rQO8Gut40y1BcEnWnRpxCzJesDcLKV3JYcu98XL14oBXGkijbwuw5nhKZpsCZtxPOecKhaGk8F4nmuiF9ee11UyP2e6FR6oDlfxqHAwlctmPk9entj8/3+QzRvlwGzCb7lJytkgRjp2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lyLiZgpu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkYcN7lw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0311FC32781;
-	Wed,  7 Aug 2024 15:12:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lyLiZgpu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B704C32781;
+	Wed,  7 Aug 2024 15:12:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043543;
-	bh=YShQqegv1T4BR+5gpHIR0x1X87gRT8qbtJFtSefgNRw=;
+	s=korg; t=1723043546;
+	bh=gNq9oV1FFmMi0KApP1XdENPJKhnOYBp3+vsvY2aPQzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkYcN7lw/NvB1fcUMRaJpiNNnrWOFgcLVNDuPcm4VknpI0tcprDjExEBsj7f10pbR
-	 U7bUxaOxvtXcIF5JBZpahZgeR6XubqlMKiNnG0eWl7ZitTdit4r78B4KlXKwbzh2+C
-	 Ci2aoFrh4U+Wphr+xs32gn2xlIZ8/fQmPBLvWmcw=
+	b=lyLiZgpusPX6h46sRE5wmzS94AKRZfwblpbCeeVE3E/ObNC5xssmQ8qaHgO4i8Sna
+	 OF1y7j+KjwAVZb7Cvw6ZFqKcjw/p2eHC3CPdjRq4wrmOiISAkwGIfL93sRZa1Hht7+
+	 AbkJvCGG7BUtReLXU5rI934H7YiGFi9rUL501l58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 01/86] arm64: dts: qcom: msm8998: switch USB QMP PHY to new style of bindings
-Date: Wed,  7 Aug 2024 16:59:40 +0200
-Message-ID: <20240807150039.293460467@linuxfoundation.org>
+Subject: [PATCH 6.1 10/86] ext4: convert to exclusive lock while inserting delalloc extents
+Date: Wed,  7 Aug 2024 16:59:49 +0200
+Message-ID: <20240807150039.589135241@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -51,82 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit b7efebfeb2e8ad8187cdabba5f0212ba2e6c1069 ]
+[ Upstream commit acf795dc161f3cf481db20f05db4250714e375e5 ]
 
-Change the USB QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+ext4_da_map_blocks() only hold i_data_sem in shared mode and i_rwsem
+when inserting delalloc extents, it could be raced by another querying
+path of ext4_map_blocks() without i_rwsem, .e.g buffered read path.
+Suppose we buffered read a file containing just a hole, and without any
+cached extents tree, then it is raced by another delayed buffered write
+to the same area or the near area belongs to the same hole, and the new
+delalloc extent could be overwritten to a hole extent.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230824211952.1397699-11-dmitry.baryshkov@linaro.org
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 0046325ae520 ("arm64: dts: qcom: msm8998: Disable SS instance in Parkmode for USB")
+ pread()                           pwrite()
+  filemap_read_folio()
+   ext4_mpage_readpages()
+    ext4_map_blocks()
+     down_read(i_data_sem)
+     ext4_ext_determine_hole()
+     //find hole
+     ext4_ext_put_gap_in_cache()
+      ext4_es_find_extent_range()
+      //no delalloc extent
+                                    ext4_da_map_blocks()
+                                     down_read(i_data_sem)
+                                     ext4_insert_delayed_block()
+                                     //insert delalloc extent
+      ext4_es_insert_extent()
+      //overwrite delalloc extent to hole
+
+This race could lead to inconsistent delalloc extents tree and
+incorrect reserved space counter. Fix this by converting to hold
+i_data_sem in exclusive mode when adding a new delalloc extent in
+ext4_da_map_blocks().
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240127015825.1608160-3-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 0ea6560abb3b ("ext4: check the extent status again before inserting delalloc block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 35 +++++++++++----------------
- 1 file changed, 14 insertions(+), 21 deletions(-)
+ fs/ext4/inode.c | 25 +++++++++++--------------
+ 1 file changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 3d4941dc31d74..c19fb8ae2da2a 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2029,7 +2029,7 @@ usb3_dwc3: usb@a800000 {
- 				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
- 				snps,dis_u2_susphy_quirk;
- 				snps,dis_enblslpm_quirk;
--				phys = <&qusb2phy>, <&usb1_ssphy>;
-+				phys = <&qusb2phy>, <&usb3phy>;
- 				phy-names = "usb2-phy", "usb3-phy";
- 				snps,has-lpm-erratum;
- 				snps,hird-threshold = /bits/ 8 <0x10>;
-@@ -2038,33 +2038,26 @@ usb3_dwc3: usb@a800000 {
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index eab9aefe96ce6..d6f7525a796c0 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1740,10 +1740,8 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
  
- 		usb3phy: phy@c010000 {
- 			compatible = "qcom,msm8998-qmp-usb3-phy";
--			reg = <0x0c010000 0x18c>;
--			status = "disabled";
--			#address-cells = <1>;
--			#size-cells = <1>;
--			ranges;
-+			reg = <0x0c010000 0x1000>;
+ 	/* Lookup extent status tree firstly */
+ 	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
+-		if (ext4_es_is_hole(&es)) {
+-			down_read(&EXT4_I(inode)->i_data_sem);
++		if (ext4_es_is_hole(&es))
+ 			goto add_delayed;
+-		}
  
- 			clocks = <&gcc GCC_USB3_PHY_AUX_CLK>,
-+				 <&gcc GCC_USB3_CLKREF_CLK>,
- 				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
--				 <&gcc GCC_USB3_CLKREF_CLK>;
--			clock-names = "aux", "cfg_ahb", "ref";
-+				 <&gcc GCC_USB3_PHY_PIPE_CLK>;
-+			clock-names = "aux",
-+				      "ref",
-+				      "cfg_ahb",
-+				      "pipe";
-+			clock-output-names = "usb3_phy_pipe_clk_src";
-+			#clock-cells = <0>;
-+			#phy-cells = <0>;
+ 		/*
+ 		 * Delayed extent could be allocated by fallocate.
+@@ -1785,8 +1783,10 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 		retval = ext4_ext_map_blocks(NULL, inode, map, 0);
+ 	else
+ 		retval = ext4_ind_map_blocks(NULL, inode, map, 0);
+-	if (retval < 0)
+-		goto out_unlock;
++	if (retval < 0) {
++		up_read(&EXT4_I(inode)->i_data_sem);
++		return retval;
++	}
+ 	if (retval > 0) {
+ 		unsigned int status;
  
- 			resets = <&gcc GCC_USB3_PHY_BCR>,
- 				 <&gcc GCC_USB3PHY_PHY_BCR>;
--			reset-names = "phy", "common";
-+			reset-names = "phy",
-+				      "phy_phy";
+@@ -1802,24 +1802,21 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
+ 		ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
+ 				      map->m_pblk, status);
+-		goto out_unlock;
++		up_read(&EXT4_I(inode)->i_data_sem);
++		return retval;
+ 	}
++	up_read(&EXT4_I(inode)->i_data_sem);
  
--			usb1_ssphy: phy@c010200 {
--				reg = <0xc010200 0x128>,
--				      <0xc010400 0x200>,
--				      <0xc010c00 0x20c>,
--				      <0xc010600 0x128>,
--				      <0xc010800 0x200>;
--				#phy-cells = <0>;
--				#clock-cells = <0>;
--				clocks = <&gcc GCC_USB3_PHY_PIPE_CLK>;
--				clock-names = "pipe0";
--				clock-output-names = "usb3_phy_pipe_clk_src";
--			};
-+			status = "disabled";
- 		};
+ add_delayed:
+-	/*
+-	 * XXX: __block_prepare_write() unmaps passed block,
+-	 * is it OK?
+-	 */
++	down_write(&EXT4_I(inode)->i_data_sem);
+ 	retval = ext4_insert_delayed_block(inode, map->m_lblk);
++	up_write(&EXT4_I(inode)->i_data_sem);
+ 	if (retval)
+-		goto out_unlock;
++		return retval;
  
- 		qusb2phy: phy@c012000 {
+ 	map_bh(bh, inode->i_sb, invalid_block);
+ 	set_buffer_new(bh);
+ 	set_buffer_delay(bh);
+-
+-out_unlock:
+-	up_read((&EXT4_I(inode)->i_data_sem));
+ 	return retval;
+ }
+ 
 -- 
 2.43.0
 
