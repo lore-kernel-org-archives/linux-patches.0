@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AA2374CC;
-	Wed,  7 Aug 2024 15:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7905A6FE16;
+	Wed,  7 Aug 2024 15:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043032; cv=none; b=oxUknQd9jBKrnehFL+bonQ2KcgeDDRMNaV/lcUneCebm8xIskSAuxRftauGeO66lxgWDSahNpY3g18f+dJvgbP8ctSXtI9lcqTJO0NhGsKPwbVnOuUr0DX3YQdb0M9BjZeA9Iwt+WICLRI0t9vJgiRsJMH0ip5eA+XqKHhIdWTQ=
+	t=1723043035; cv=none; b=cs8nhzak9V7iCtVFyGeg0SirQDLMMlci7bVcEJhIFMJRymDdzhGn0vUhxBOXWrh5LZuEH/B9Ak513HF5wYKv2Ebwoeb1mWJyiZxMEreAi0muxRKvknsqs/RLGiebQ9Nbfs8JkpU1jgfKGrN9/jeIx2/gpYgP4DqMNrcM2VUZ2PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043032; c=relaxed/simple;
-	bh=+pg1wMAWhiVDhbc5IehSKfKwrpbWtezqqGCYGc/N8Oc=;
+	s=arc-20240116; t=1723043035; c=relaxed/simple;
+	bh=e73y6voutiKMcQHgLi+JoHw8GP09yKouQb6C1hhZ7t0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z97rxbtOkOltn7dpjLwn5TiD9584Nyv8Ra5epDv3zhU3W2oTF7hf5Yo1G4G8e35VXXw8NTdAywCinIX52kNBg/2fgXPM61tksPwNwe9+eEAMN2F10934S8mF7slZwYrmgy3mQDg5K2yQgMl+i1251ZW8e7V5Ej1p4QaB3tmE64I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgqSqHMZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e3fE80gf32q/Y8FWCBn9SYC8j5KKb9ALs7xWk148U9x5LFxmNFQ22p9HfURDDNKMfNNiOcMp16ltIrEcOtP2ovjiUen14KNfumZS77hIKqOA1heS5FDEnWCOcSwmuxjGbGvPtCy3HLQHXiKRKyYusd1eTVxoR96+0uFcMlo0rCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=frxYaC9J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgqSqHMZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47A1CC32781;
-	Wed,  7 Aug 2024 15:03:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="frxYaC9J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E1BC32781;
+	Wed,  7 Aug 2024 15:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043032;
-	bh=+pg1wMAWhiVDhbc5IehSKfKwrpbWtezqqGCYGc/N8Oc=;
+	s=korg; t=1723043035;
+	bh=e73y6voutiKMcQHgLi+JoHw8GP09yKouQb6C1hhZ7t0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgqSqHMZTS1OT4abc7xgLeWhG0ft3nYixveZ65D75hxEdch/gfhQA3aQFvuZY4Jd3
-	 kN51YVw2M3NfxN8WvbV0LxdlpGRXD7SzDFjRF09eIg5S0qhXwD3z7EVxTM618qmERi
-	 GJqk+HqQ5wuHBzg/6ujowaMO1CqaqysApxrohyts=
+	b=frxYaC9JEQ+3NxN6dM5jbGr/fKLKi3PVVTljFwv/UPT2DQsDJNcRQ9BoOGARRD6Ue
+	 T7eOxhftXCKdTQhJsMHHhIDQ56UVxc+OIQ0idVFqNh5DuDpJ0jMNNB7JfymxrMSuyz
+	 XhEhOcc4anYURuKzc626QJ1vUslot0qJMDK02uzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sean Tranchetti <quic_stranche@quicinc.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 036/123] ethtool: fix setting key and resetting indir at once
-Date: Wed,  7 Aug 2024 16:59:15 +0200
-Message-ID: <20240807150021.998214044@linuxfoundation.org>
+Subject: [PATCH 6.10 037/123] tcp: Adjust clamping window for applications specifying SO_RCVBUF
+Date: Wed,  7 Aug 2024 16:59:16 +0200
+Message-ID: <20240807150022.032951310@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -51,69 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
 
-[ Upstream commit 7195f0ef7f5b8c678cf28de7c9b619cb908b482c ]
+[ Upstream commit 05f76b2d634e65ab34472802d9b142ea9e03f74e ]
 
-The indirection table and the key follow struct ethtool_rxfh
-in user memory.
+tp->scaling_ratio is not updated based on skb->len/skb->truesize once
+SO_RCVBUF is set leading to the maximum window scaling to be 25% of
+rcvbuf after
+commit dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+and 50% of rcvbuf after
+commit 697a6c8cec03 ("tcp: increase the default TCP scaling ratio").
+50% tries to emulate the behavior of older kernels using
+sysctl_tcp_adv_win_scale with default value.
 
-To reset the indirection table user space calls SET_RXFH with
-table of size 0 (OTOH to say "no change" it should use -1 / ~0).
-The logic for calculating the offset where they key sits is
-incorrect in this case, as kernel would still offset by the full
-table length, while for the reset there is no indir table and
-key is immediately after the struct.
+Systems which were using a different values of sysctl_tcp_adv_win_scale
+in older kernels ended up seeing reduced download speeds in certain
+cases as covered in https://lists.openwall.net/netdev/2024/05/15/13
+While the sysctl scheme is no longer acceptable, the value of 50% is
+a bit conservative when the skb->len/skb->truesize ratio is later
+determined to be ~0.66.
 
-  $ ethtool -X eth0 default hkey 01:02:03...
-  $ ethtool -x eth0
-  [...]
-  RSS hash key:
-00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00:00
-  [...]
+Applications not specifying SO_RCVBUF update the window scaling and
+the receiver buffer every time data is copied to userspace. This
+computation is now used for applications setting SO_RCVBUF to update
+the maximum window scaling while ensuring that the receive buffer
+is within the application specified limit.
 
-Fixes: 3de0b592394d ("ethtool: Support for configurable RSS hash key")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
+Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ethtool/ioctl.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_input.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
-index 223dcd25d88a2..fcc3dbef8b503 100644
---- a/net/ethtool/ioctl.c
-+++ b/net/ethtool/ioctl.c
-@@ -1277,11 +1277,11 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
- 	u32 rss_cfg_offset = offsetof(struct ethtool_rxfh, rss_config[0]);
- 	const struct ethtool_ops *ops = dev->ethtool_ops;
- 	u32 dev_indir_size = 0, dev_key_size = 0, i;
-+	u32 user_indir_len = 0, indir_bytes = 0;
- 	struct ethtool_rxfh_param rxfh_dev = {};
- 	struct netlink_ext_ack *extack = NULL;
- 	struct ethtool_rxnfc rx_rings;
- 	struct ethtool_rxfh rxfh;
--	u32 indir_bytes = 0;
- 	u8 *rss_config;
- 	int ret;
- 
-@@ -1342,6 +1342,7 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 570e87ad9a56e..ecd521108559f 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -754,8 +754,7 @@ void tcp_rcv_space_adjust(struct sock *sk)
+ 	 * <prev RTT . ><current RTT .. ><next RTT .... >
  	 */
- 	if (rxfh.indir_size &&
- 	    rxfh.indir_size != ETH_RXFH_INDIR_NO_CHANGE) {
-+		user_indir_len = indir_bytes;
- 		rxfh_dev.indir = (u32 *)rss_config;
- 		rxfh_dev.indir_size = dev_indir_size;
- 		ret = ethtool_copy_validate_indir(rxfh_dev.indir,
-@@ -1368,7 +1369,7 @@ static noinline_for_stack int ethtool_set_rxfh(struct net_device *dev,
- 		rxfh_dev.key_size = dev_key_size;
- 		rxfh_dev.key = rss_config + indir_bytes;
- 		if (copy_from_user(rxfh_dev.key,
--				   useraddr + rss_cfg_offset + indir_bytes,
-+				   useraddr + rss_cfg_offset + user_indir_len,
- 				   rxfh.key_size)) {
- 			ret = -EFAULT;
- 			goto out;
+ 
+-	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_moderate_rcvbuf) &&
+-	    !(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
++	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_moderate_rcvbuf)) {
+ 		u64 rcvwin, grow;
+ 		int rcvbuf;
+ 
+@@ -771,12 +770,22 @@ void tcp_rcv_space_adjust(struct sock *sk)
+ 
+ 		rcvbuf = min_t(u64, tcp_space_from_win(sk, rcvwin),
+ 			       READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_rmem[2]));
+-		if (rcvbuf > sk->sk_rcvbuf) {
+-			WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
++		if (!(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
++			if (rcvbuf > sk->sk_rcvbuf) {
++				WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
+ 
+-			/* Make the window clamp follow along.  */
+-			WRITE_ONCE(tp->window_clamp,
+-				   tcp_win_from_space(sk, rcvbuf));
++				/* Make the window clamp follow along.  */
++				WRITE_ONCE(tp->window_clamp,
++					   tcp_win_from_space(sk, rcvbuf));
++			}
++		} else {
++			/* Make the window clamp follow along while being bounded
++			 * by SO_RCVBUF.
++			 */
++			int clamp = tcp_win_from_space(sk, min(rcvbuf, sk->sk_rcvbuf));
++
++			if (clamp > tp->window_clamp)
++				WRITE_ONCE(tp->window_clamp, clamp);
+ 		}
+ 	}
+ 	tp->rcvq_space.space = copied;
 -- 
 2.43.0
 
