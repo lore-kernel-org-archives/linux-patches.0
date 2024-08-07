@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428598288C;
-	Wed,  7 Aug 2024 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C59823AF;
+	Wed,  7 Aug 2024 15:09:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043378; cv=none; b=MXUGZhEB437gZZii4Y7DPEWBJvRco63JTKe0Yg99BSh85sUmBauuTFCTaL0KoFGUz/mk8N2nD8qXazDtHg7PVdVgt4nbitV8Hq7TXY2/4beOwCTbLHBo2d3AgGdtKgmIdRl1fNe931vcTfN39aT4xGwgg5kn+7L2411EsggYa0I=
+	t=1723043381; cv=none; b=uwbiFuNSPcXahunMZX2PBGuYhZ4191WJFxBCj4FeJXI8bR5l/NsO5SLtmWKh5s5fx9vHRZk65F4jhxRe+8qlkET0t+bRfiGf0GQj7yrhP08o0DkwszmIXYomGu/5NyNJKdwfB/byg2DFz43ipRvOjuQawaWDzGw7EzfH0czdNUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043378; c=relaxed/simple;
-	bh=NSoQKd7Du21rep9WPaHGKk/iX9B7WcMF3ZW2MJnhhtg=;
+	s=arc-20240116; t=1723043381; c=relaxed/simple;
+	bh=5eiBrpFLgWzl2iZQYbyl17ytfj9FWmFFm3LALaTf8CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nqqLAL2QXrhvXgiU+UnOkFMrd0X0rnj+KQ+y45wMsYnq857eir838XxzFgjARyUkqlKj/wOOxtdFwRCiE8ayx5N+3XTiG2FKLrqG5B/OqYLrCn1AD19jddGjEuo3VA4ATuXdn6dRjpU8qoWnQTbC8f6PehxSafwgymPrqNxcmG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3DONJY7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dAtCvseuH/wbOGkYGN2L9yTVMGB8JwCIqJc9zLFp6FWE+TklTYMgHQQ/QuKE3y0jpP9E1JxiMYrBDNe3QChNz9J+HDS9oBaCicGDzeZy+LW5wMVpA5kW6zAOgBbeb+3snADQ7i6Tni5XQK9tpovmXk1oABJcL6ziI8OAuvm9bQY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qo3xLSVf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3DONJY7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DB1C32781;
-	Wed,  7 Aug 2024 15:09:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qo3xLSVf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 720EFC32781;
+	Wed,  7 Aug 2024 15:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043378;
-	bh=NSoQKd7Du21rep9WPaHGKk/iX9B7WcMF3ZW2MJnhhtg=;
+	s=korg; t=1723043380;
+	bh=5eiBrpFLgWzl2iZQYbyl17ytfj9FWmFFm3LALaTf8CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3DONJY7OtOqHx27S2AAmbj3/u9bqEJ900tbzJOaT3w/Stmz0O6hrDqAF4ZNefFiM
-	 16y5cvQdT+x1schkap70l/dTIhhK+Q4h8HIareO2p4IW+XBHjQ1Hr9rn76A4fiGnQr
-	 xzBYJpEnse6jGCPz/Tsza1xkgDnTenrQoKSNfzxs=
+	b=qo3xLSVfToEx9uihyo+yKzwe9szKUB71sH2RM3SozaZFsBxDKjOVaOFYg4K1PQoy4
+	 DHWV+Y6YhWjDD+B4nK8GRyM2TKhpuwO4nPJk3yGk5Ul3kRVVDG0uDcsn+5OcDkTxAK
+	 K6kO2husPW8VZSVuUsIYEVlZ5q3FfJtSGE95IE/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurinko <petrvelicka@tuta.io>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 051/121] HID: amd_sfh: Move sensor discovery before HID device initialization
-Date: Wed,  7 Aug 2024 16:59:43 +0200
-Message-ID: <20240807150021.079252985@linuxfoundation.org>
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Michal Kubiak <michal.kubiak@intel.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.6 069/121] ice: respect netif readiness in AF_XDP ZC related ndos
+Date: Wed,  7 Aug 2024 17:00:01 +0200
+Message-ID: <20240807150021.659059539@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,66 +54,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Michal Kubiak <michal.kubiak@intel.com>
 
-[ Upstream commit 8031b001da700474c11d28629581480b12a0d8d4 ]
+[ Upstream commit ec145a18687fec8dd97eeb4f30057fa4debef577 ]
 
-Sensors discovery is independent of HID device initialization. If sensor
-discovery fails after HID initialization, then the HID device needs to be
-deinitialized. Therefore, sensors discovery should be moved before HID
-device initialization.
+Address a scenario in which XSK ZC Tx produces descriptors to XDP Tx
+ring when link is either not yet fully initialized or process of
+stopping the netdev has already started. To avoid this, add checks
+against carrier readiness in ice_xsk_wakeup() and in ice_xmit_zc().
+One could argue that bailing out early in ice_xsk_wakeup() would be
+sufficient but given the fact that we produce Tx descriptors on behalf
+of NAPI that is triggered for Rx traffic, the latter is also needed.
 
-Fixes: 7bcfdab3f0c6 ("HID: amd_sfh: if no sensors are enabled, clean up")
-Tested-by: Aurinko <petrvelicka@tuta.io>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://patch.msgid.link/20240718111616.3012155-1-Basavaraj.Natikar@amd.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Bringing link up is an asynchronous event executed within
+ice_service_task so even though interface has been brought up there is
+still a time frame where link is not yet ok.
+
+Without this patch, when AF_XDP ZC Tx is used simultaneously with stack
+Tx, Tx timeouts occur after going through link flap (admin brings
+interface down then up again). HW seem to be unable to transmit
+descriptor to the wire after HW tail register bump which in turn causes
+bit __QUEUE_STATE_STACK_XOFF to be set forever as
+netdev_tx_completed_queue() sees no cleaned bytes on the input.
+
+Fixes: 126cdfe1007a ("ice: xsk: Improve AF_XDP ZC Tx and use batching API")
+Fixes: 2d4238f55697 ("ice: Add support for AF_XDP")
+Reviewed-by: Shannon Nelson <shannon.nelson@amd.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_client.c b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-index bdb578e0899f5..4b59687ff5d82 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -288,12 +288,22 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 		mp2_ops->start(privdata, info);
- 		cl_data->sensor_sts[i] = amd_sfh_wait_for_response
- 						(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index f53566cb6bfbd..248cb02958acd 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -1068,6 +1068,10 @@ bool ice_xmit_zc(struct ice_tx_ring *xdp_ring)
+ 
+ 	ice_clean_xdp_irq_zc(xdp_ring);
+ 
++	if (!netif_carrier_ok(xdp_ring->vsi->netdev) ||
++	    !netif_running(xdp_ring->vsi->netdev))
++		return true;
 +
-+		if (cl_data->sensor_sts[i] == SENSOR_ENABLED)
-+			cl_data->is_any_sensor_enabled = true;
-+	}
-+
-+	if (!cl_data->is_any_sensor_enabled ||
-+	    (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
-+		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n",
-+			 cl_data->is_any_sensor_enabled);
-+		rc = -EOPNOTSUPP;
-+		goto cleanup;
- 	}
+ 	budget = ICE_DESC_UNUSED(xdp_ring);
+ 	budget = min_t(u16, budget, ICE_RING_QUARTER(xdp_ring));
  
- 	for (i = 0; i < cl_data->num_hid_devices; i++) {
- 		cl_data->cur_hid_dev = i;
- 		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
--			cl_data->is_any_sensor_enabled = true;
- 			rc = amdtp_hid_probe(i, cl_data);
- 			if (rc)
- 				goto cleanup;
-@@ -305,12 +315,6 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 			cl_data->sensor_sts[i]);
- 	}
+@@ -1111,7 +1115,7 @@ ice_xsk_wakeup(struct net_device *netdev, u32 queue_id,
+ 	struct ice_vsi *vsi = np->vsi;
+ 	struct ice_tx_ring *ring;
  
--	if (!cl_data->is_any_sensor_enabled ||
--	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
--		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
--		rc = -EOPNOTSUPP;
--		goto cleanup;
--	}
- 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
- 	return 0;
+-	if (test_bit(ICE_VSI_DOWN, vsi->state))
++	if (test_bit(ICE_VSI_DOWN, vsi->state) || !netif_carrier_ok(netdev))
+ 		return -ENETDOWN;
  
+ 	if (!ice_is_xdp_ena_vsi(vsi))
 -- 
 2.43.0
 
