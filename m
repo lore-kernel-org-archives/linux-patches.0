@@ -1,171 +1,89 @@
-Received: from GBR01-CWX-obe.outbound.protection.outlook.com (mail-cwxgbr01on2109.outbound.protection.outlook.com [40.107.121.109])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B741C823D
-	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 10:24:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.121.109
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723026276; cv=fail; b=Tz1hH0RAhzwkyoGlYRZga+W/c9B2pUhrZ0JEpjq/lFr7k3BAXr3crsaLoCJEDeHYVSHlLqBtHXTGgX7zxcnCPOHCk9oz94JT3xe7OFntUSfrzuLD7OJVXG7HJcBuD/G7GgwSIvSoBzE1koQPIWdmI8HW8f9OwUcmVXnowfnlRHg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723026276; c=relaxed/simple;
-	bh=lYtGQ0KtYleXsT/Vf3KLiMfcY2nXpAURUHFCZLDkBtc=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=e9vV7KT8S6dNKQdfS53/pyvrgVbp+slUpwK3qP8zNVKXITMtwjxL3O2t+XZeAsab5h9A6Oqgsa7W0TeTITKy5cUAIzPvziixjATLHxW8v5IeXfJ88kT0fCpt/IIMgSDDApII03CcmY1UsOiGqLsbTuOrQ6kjK8YRvWY+5MC9Xl0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=garyguo.net; spf=pass smtp.mailfrom=garyguo.net; dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b=ZkTR69t7; arc=fail smtp.client-ip=40.107.121.109
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=garyguo.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=garyguo.net
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721F0171E69
+	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 11:49:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723031387; cv=none; b=ABHi3Fp6PsRyqnpPV9UFAJaj/1/eHzY6AQiW5eHKbi+BJaMzr+0wO05HrCHmAK4hZ2wN+cixt3WldlwawWIZsCDfJibNt9f8idqZph1qlO39ib5gdg9J4uMHHYnhj6KLdzw7cjwV3EzmfD7YUgL2CQrEXWQTZTQRVLtWZkjcxSU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723031387; c=relaxed/simple;
+	bh=a/dC9WYEQPdmFDxHth1Lwu8KV1JB3jsWpTUlohgSUHI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ci1R2hXmsooXbYghqsvdllLma7uGSwSUAWhCo6hwtnTZngsuhW9qa8xumuzPGPYElbxAJLtbyyBz1mlFWzEXmt203kli+44u2I6YlVNQBef+Dqa9EVrd7tjAIOzSpI9Gznzgi5Qf2albqEeKY5P8xI5XPg2SqZv/t2w0dZERx+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Qeggvq0R; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=garyguo.net header.i=@garyguo.net header.b="ZkTR69t7"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ne7fi9AkfrEHFLKo94BwsQc+Xtm4sk7LW1D8hiilb8+10c/S8svuyNQo/4fzfc1M93hCA0Z5rMb8IYn+GAnaV256tivaxZDVSSiH6AWjvf6dyMvjLNfCrbtrU4mIB77hUKe2EQ6bnHvK2yJHK+gAXsAnDqXOyW26We4APgIbX5ux9FufD/sXFpEpK0eZ0A/WFz1QynE0+gNfymzqqOEqZxAayBGhVQG+/OWfm98Kq8KB/jhAxeOXbr2jRHWwm23nHXtzf1Ie9S7mzIerjeN1h9Ifd/hdPA9GsyHnbkigAlr5h70NyFGLdFlvxF7tGDopO41m1z2tc19g89XMBpYFuA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hsCRjh0cU0bQJxzUEr9YLKC6EYehMKZp71nf/nKbu+4=;
- b=QLbg9ZZHFgxmZWD3IjDPoP856Mt35YCqtNqVv4Rizbp6YnNf5II0ojX+SA6RoXziVO9LpUnYbR/icxFsPaiWj93Smk7fAf0Ropq/xk6GMi/+JLarIUSPXssj1m2nmpEEIbrvrLUoQy700vB4VeGTGTob4mloz33tTEk5jctNomxAaT1LhkGW9C+6hey6FcpscXVNZtJFNFRO+G1ZT5fEe6AGtkYeC5YrDcYsBukGrOQ5XW1SQlEfmrMmZqCxkEhJz5SVUe9hguitvbwBh7Frxcfy08IENdP/SXkmI4XRQ0/P8luTLFFp930+sU6HEJXTz8ogzyIhoWudTGZ6gWn1PA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=garyguo.net; dmarc=pass action=none header.from=garyguo.net;
- dkim=pass header.d=garyguo.net; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=garyguo.net;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hsCRjh0cU0bQJxzUEr9YLKC6EYehMKZp71nf/nKbu+4=;
- b=ZkTR69t7hsUgyOnWnbVaLCQYQPduaAF9c3HifzsJNLX0d2D/AZB/2JqrtfHJBFOQyGvOyZZMfue1bhr6qlVoaLMN8hggjoUtrH4l4BtT8pHli6FfslloEEozLaRuD93rFnP2Y1qikM4n6RmsvykbPNPbWW+TTVi/EVtudCfRA98=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=garyguo.net;
-Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:253::10)
- by LO4P265MB6027.GBRP265.PROD.OUTLOOK.COM (2603:10a6:600:29c::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.13; Wed, 7 Aug
- 2024 10:24:31 +0000
-Received: from LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
- ([fe80::1818:a2bf:38a7:a1e7]) by LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
- ([fe80::1818:a2bf:38a7:a1e7%7]) with mapi id 15.20.7849.008; Wed, 7 Aug 2024
- 10:24:31 +0000
-Date: Wed, 7 Aug 2024 11:24:28 +0100
-From: Gary Guo <gary@garyguo.net>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>, Peter Zijlstra
- <peterz@infradead.org>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar
- <mingo@redhat.com>, Borislav Petkov <bp@alien8.de>, Dave Hansen
- <dave.hansen@linux.intel.com>, Masahiro Yamada <masahiroy@kernel.org>,
- x86@kernel.org, "H. Peter Anvin" <hpa@zytor.com>, Nathan Chancellor
- <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Wedson Almeida
- Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Boqun Feng
- <boqun.feng@gmail.com>, =?UTF-8?B?QmrDtnJu?= Roy Baron
- <bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, Andreas
- Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
- rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org,
- patches@lists.linux.dev
-Subject: Re: [PATCH v3 1/6] rust: module: add static pointer to
- `{init,cleanup}_module()`
-Message-ID: <20240807112428.7620f5c5@eugeo>
-In-Reply-To: <20240725183325.122827-2-ojeda@kernel.org>
-References: <20240725183325.122827-1-ojeda@kernel.org>
-	<20240725183325.122827-2-ojeda@kernel.org>
-X-Mailer: Claws Mail 4.2.0 (GTK 3.24.42; x86_64-pc-linux-gnu)
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: LO2P265CA0276.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:a1::24) To LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:253::10)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Qeggvq0R"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-36ba3b06186so952621f8f.2
+        for <patches@lists.linux.dev>; Wed, 07 Aug 2024 04:49:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723031384; x=1723636184; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a/dC9WYEQPdmFDxHth1Lwu8KV1JB3jsWpTUlohgSUHI=;
+        b=Qeggvq0RdwA9FurYPhahvhmy4x1+BollD8zFQd5MgAMdTEQs2xrJoudi9MNWk+0HFa
+         6XtjbJ0DICQfbuUZRqwFcOP2J/GYVAc9e6pXOFPwLfEU/U6Qd0Fv88wA3UifHDCYEJhe
+         ga8c0L6brTLg0qEexmNX62DSoQzTRFclpWVY1HmMh7M5jbSTDrjp65f94NBnhg2xwCap
+         EW9XqWvBdYAf6xwyj9/Zgi0OsgrRNPrtPq9+6Qdw10U7o+hJ+rhj5Jm9eeBby4sg9kp4
+         A3C2yDoyoK1Qfi0TnBMqBr2c/TNTV4WX2uthRzqc294EqkB0801BYH+hzev0ffMZgE8J
+         ufUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723031384; x=1723636184;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=a/dC9WYEQPdmFDxHth1Lwu8KV1JB3jsWpTUlohgSUHI=;
+        b=O3TYc1LdN6A9VrSDNNXrfdUiEpNRu7r9I2pJxrQSN3iCL5W3iUJkTzgh2lVpzAqi0p
+         YPCv52zEpAWY74xg8mqPBYav2Th7lhsvDd5FjUWRUPoGiBzJSZW9GKwZ2NPgudlht0IA
+         CFoZxn4ZbAwmnXe/y/5jvUS9EH47vO4nhAjsdLLVHYFDm2OLAvxvBSZBrG64LtmVUNY0
+         g11gC10v4qRYtoJIv5X0nJoVkUuOSPmoEeI68M3rjusZIT0aU0ohpNe3ukQH4XVwhMfb
+         3K5odmdTQiz4I6VidRIWFS7Ag6F5laumFkbW1sDuF6eaCeGtf+p1oKp3/t1yB2al7rvE
+         QWOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVj/8pl8AfG4aiqvR/XmY5LhDYp9ohpBxPkK/9OKokcRKIgDv4QB+3a8OYuRT4aj+uuerKUn/YVu5Hf4Y8TE6ZBqIrDO7HALg==
+X-Gm-Message-State: AOJu0YxXZcakhuWP0SD/CJCSjG5RPXekR/I6jH3r936KdYFPV6daJcOl
+	pm9usdpDgT6tDuBZcf0hObrYNQ8s8YhRsZYo5HK0DCPVEdtEHqOvFyJQIA9a1HwLq3rbma10zz+
+	ZZE8yNqWZ/3WiGnOklTKxqHs1FkXUpMaLPa+P
+X-Google-Smtp-Source: AGHT+IEtTOVqbzU4EcqZnKqzn7ZHQ6dJC1In4BJyyOOt1USL9W8GtpPF1PcUdjk686l2fHYBMyX04R1GUZOIR9Bydzc=
+X-Received: by 2002:a05:6000:bc2:b0:368:6ab:ba69 with SMTP id
+ ffacd0b85a97d-36bbc1005bemr12210634f8f.28.1723031383491; Wed, 07 Aug 2024
+ 04:49:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LO2P265MB5183:EE_|LO4P265MB6027:EE_
-X-MS-Office365-Filtering-Correlation-Id: d77c625e-cf43-4bb1-9f51-08dcb6cb1fda
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?LUYcz9ayV7LKFeOIoSJrNU9PEKX7a0ZXTIu7snT6rmF6iC+d80p6UqcX2UdR?=
- =?us-ascii?Q?3f9jiwvzZAJ1Tcny0Bg2TQgV/qaxSh8OwoxsTfsfeQmlfzL4TQ5nfDzriOO0?=
- =?us-ascii?Q?pgTEIfDhyM2I09VZuso9ju54v/H5KEEWfW7XE4+obYWSHgzM/dGVwBlLFX7Y?=
- =?us-ascii?Q?z3ZsH+J5fvMhDk45SXOImhdeuLDsmCjIFC+oBkranmsncEs+gyCCRJBezpgP?=
- =?us-ascii?Q?4MIoewhAJhIyvJLdE/qNdWuIfojIl7kVKNH7Jld7JSf21aILhfHJFggdWDT6?=
- =?us-ascii?Q?DU+gPcY9Za/qF20kaXhQng9Ia2xKvLyncO7k+blXRP2cUC8l/6sWjMplkGfz?=
- =?us-ascii?Q?4Tt1Mqx2GQvYNvI0uT+6Y11AhoAGia5fqj2rBP2ML1pQ1lYZhl0nmC//1k4V?=
- =?us-ascii?Q?7NsJZkBg/rEXIII17LixVXxDkC4owADgYt6FRzcRkD/Y9T0oxANnYv3myIZ7?=
- =?us-ascii?Q?2ZLDgYDowHYOUoIKUVr6yNqewi228B8vy+68XLpZi8b5vdjGvp6K4ogSQf+r?=
- =?us-ascii?Q?nIPvA+n+cfN37dzFHGYGAf7iso+DcCVXekkNW9LP0oCeonDd21wxJ/Wfm/6g?=
- =?us-ascii?Q?bo5D4rQH2amY7wm31Lw2kKznC3uIDNzqILZKyE0cECFdeVCG0ZZGM99NBTBR?=
- =?us-ascii?Q?r0hejrK8WMhrIA71Cr739VdepTTrK7m0PjHXj8rYR8LpqGG9olPQQfHSnp7x?=
- =?us-ascii?Q?6+n+HmnceIXFlGgDDOjz8VTYkrhISdVr1sAZ9iVbmp6mqFV9GtJJ9XwGMh9g?=
- =?us-ascii?Q?pwRk/Z4Pw9qaBy6wrfTBDvSpxu16s3Leo3KYEZJh0Plblhtnrzoa083pSNlp?=
- =?us-ascii?Q?uXWmYbgR1oa6doO2EAqUlNkQBpE9Z/QyfKqAUCzxvqQMYf3y19SHqQu3WN3S?=
- =?us-ascii?Q?mh1U5v8pbd31nmF8S6yH6i5K2BFlFisOXtJJkAxIfbZl2U9BlBGtufjwvIcd?=
- =?us-ascii?Q?sUgHpcBCSgT05GJX/jdIpnbe0LBo5OBEW72329S70MVzPwNsfmhHpCgrkQb0?=
- =?us-ascii?Q?ZUQ/78eBG3qbjBxJdellY+kDzwwSZvYXuQSCGTDytz+kRXgJ+vqdb0N9XViX?=
- =?us-ascii?Q?60gCTlgAQmIa6XxcWJScu2kQrS0afDu4v+2mM80advYjnTOgXRbnxHQ7lAS9?=
- =?us-ascii?Q?4HBpuRs+Mwh3O7PEKSq59NdfijcpyPfih1odt+UFXoxeDgZRQGPPvSlQP8GU?=
- =?us-ascii?Q?rrNrhLnBr7VqOhQBK2Lq1igv8vAB2sCa3/P3w8JHixeQ8XG87n19/8LYXyfO?=
- =?us-ascii?Q?4XgWPyv1DDEtAQKGvvK9t9ZRQt8jX5SOJS+sycrGXw2SJDLCCPCr368N8dAD?=
- =?us-ascii?Q?4xjf/XgQDvIZsUL2ciqsSkTraBmaSO0fms1nFrPuv5R6hg=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?p7xy4kRKW5Mo/41Dbgf9vD3vpT2eFkOimm9U9NKpmeKYEFSunWz8j0PrH4z0?=
- =?us-ascii?Q?mjSAwXyxOOPi1kv9fVOmmvIfklZ/vBuA1zvDIBiW8T9jCrp8Geu1wIHKuBLO?=
- =?us-ascii?Q?zQ9vDqyETq9J6mUDJt58PTuuHQA2LR9Xpy84KicrA9gm8Y7YjWZMyVR3QSFz?=
- =?us-ascii?Q?beDCo57ZNOuhxamb+4YhRN75PJZk4OQ0KF/aexNrbg3QY5mgU1aeFRear5GK?=
- =?us-ascii?Q?wyfvL3MvQSFyHANxvJpgv9bojwhFGrSYzW4+90IZxmnje5oE/y4ONBCRoYUT?=
- =?us-ascii?Q?DPLg2ppqUSQ3asJI+5Nb/Sg6qMhgTis66wteOlGQRlwgFbXetdt4R/Cp4Wvl?=
- =?us-ascii?Q?HteBL5+zTidG+AD2nCWfJTTixmvDyHL34H1HnlX0YWaLEp1Ljvz93Rw5KhSj?=
- =?us-ascii?Q?hX9O68JiOcJ08wpWWJuhVi/lYmfzFFgm6g4me1jNJm5gXMgXAZKX0LbzhueC?=
- =?us-ascii?Q?2dbkzvNJFyYgeb9Ng+gTYJp1WBMzwnlCg9ybeGDHcXJk7/7HX5LZ1jpRt7gl?=
- =?us-ascii?Q?t9raeUKa1h8VJjiapP3+ncWjVrSORPFuVQClstg4x1uGeB+xCajH6XjRIAbP?=
- =?us-ascii?Q?tHN49hiH+eodSK8o5MP6GqHr38OwBUHNHANMx/41N3AYEjy3kig4creXTG/b?=
- =?us-ascii?Q?5D1PflGDyPr2arpS+LnQ+V51Q6AifJE74BkTaCigPrvUgZCzienJLGlb2R/X?=
- =?us-ascii?Q?9j4+/EgnAz2c4YxXtCSZfTmMAzlknczF5nGFsPG26axo4NbqQZaJ2ETxII99?=
- =?us-ascii?Q?Jl6Iz5FkvI/BMWdv8k3DLacAPp3wxz0w/rcSp2+l3njttKN7jXnZCATZgmRd?=
- =?us-ascii?Q?oXG6ihZ20aBqYpjfa4My1FPzhYSl2oP4SXzNveKlGBCpcw/QgGwOTnzDAPYM?=
- =?us-ascii?Q?0I901BQzpBLlRt7bgq8oGzYIbO5Wt3Cig7zawwhdaNi8VXhKRjPwwVyT8H9W?=
- =?us-ascii?Q?F/xL47AQcFTXaurNcF1lZYRQRtqj7ejGnW6mxsqB7CqKXa/eUFQTNh5JjnUa?=
- =?us-ascii?Q?jrIJo3ucY1obN0O436BdfyUE6B+QAcx5BrG45hLw1Q+K/vdTBMBexLUJ/djS?=
- =?us-ascii?Q?MPMfcxoFdATWmcciu7uQwJTjoFa36ts7PSkz3Pbg4IihUaoLVT2KkMkT+B+z?=
- =?us-ascii?Q?xQjcPSrtDe6OlxL59EjvvEYoNyLvvRq5/O0OgBgPSdCEi2q+2g5OY///5xZF?=
- =?us-ascii?Q?cX57uspr6m9s2a3uoGTPyPtCJhdgVuos5M7+RRwobGEfuzbjUG55U38sXk0/?=
- =?us-ascii?Q?WWDNMYFF/aoieX8HpRzd2EQuYy+K44E/BtMjEIYIw4dJRJsLu/oNs82v4Mua?=
- =?us-ascii?Q?4P0bNus0AHaCtJKH/sPQL3xgMGuMz/a3UKAwJz2rG+tPPVV7GxhS2RkKI1eS?=
- =?us-ascii?Q?RARUg0smZR+TXMhm0ARSpSN/vALvzEtHRZuya2KQGiXdxdPEP1NJaWffDu2L?=
- =?us-ascii?Q?hXvGDAwU8w8zkZIvAZzG7/9cOavCXS5Tz4R9lamI76/ulPNLYboKh0kbid2R?=
- =?us-ascii?Q?G+zUbWWwiHUhOQphTSpkIRpBvJhnmvdNWoKm+Dp/Qdita+C2ATz3UVr7u2lz?=
- =?us-ascii?Q?s0lpEemGM1K/s9xw3u8o9U4rXRC4T/kOILgtoV2a?=
-X-OriginatorOrg: garyguo.net
-X-MS-Exchange-CrossTenant-Network-Message-Id: d77c625e-cf43-4bb1-9f51-08dcb6cb1fda
-X-MS-Exchange-CrossTenant-AuthSource: LO2P265MB5183.GBRP265.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2024 10:24:31.0018
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bbc898ad-b10f-4e10-8552-d9377b823d45
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 20b5wnlFrFfT6OsK47t2QhzYpLruILMgVUl5nR0rdU02epFBtzVUEsC5UEkwcBeEW+boWFr1cI/ZoPDaUKwJmQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LO4P265MB6027
+References: <20240806233559.246705-1-ojeda@kernel.org>
+In-Reply-To: <20240806233559.246705-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Wed, 7 Aug 2024 13:49:31 +0200
+Message-ID: <CAH5fLgiVwsxrY-PmwCntsx2=9u24TfFkNuJCJ4aioGD6V6ddHQ@mail.gmail.com>
+Subject: Re: [PATCH] kbuild: rust-analyzer: mark `rust_is_available.sh`
+ invocation as recursive
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Masahiro Yamada <masahiroy@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>, 
+	Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 25 Jul 2024 20:33:18 +0200
-Miguel Ojeda <ojeda@kernel.org> wrote:
-
-> Add the equivalent of the `___ADDRESSABLE()` annotation in the
-> `module_{init,exit}` macros to the Rust `module!` macro.
-> 
-> Without this, `objtool` would complain if enabled for Rust (under IBT
-> builds), e.g.:
-> 
->     samples/rust/rust_print.o: warning: objtool: cleanup_module(): not an indirect call target
->     samples/rust/rust_print.o: warning: objtool: init_module(): not an indirect call target
-> 
-> Tested-by: Alice Ryhl <aliceryhl@google.com>
-> Tested-by: Benno Lossin <benno.lossin@proton.me>
+On Wed, Aug 7, 2024 at 1:36=E2=80=AFAM Miguel Ojeda <ojeda@kernel.org> wrot=
+e:
+>
+> When calling the `rust_is_available.sh` script, we need to make the
+> jobserver available to it, as commit ecab4115c44c ("kbuild: mark `rustc`
+> (and others) invocations as recursive") explains and did for the others.
+>
+> Otherwise, we get a warning from `rustc`. Thus fix it.
+>
+> Fixes: 6dc9d9ca9a72 ("kbuild: rust-analyzer: better error handling")
 > Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Reviewed-by: Gary Guo <gary@garyguo.net>
-
-> ---
->  rust/macros/module.rs | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
