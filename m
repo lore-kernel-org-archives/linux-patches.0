@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D664B3EA9A;
-	Wed,  7 Aug 2024 15:01:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB81823CE;
+	Wed,  7 Aug 2024 15:01:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042901; cv=none; b=hLzspfrsTS9CkZSVpKqYhBATpKruuPefak+yOzZJtmA6X6sBrPzRy7yLKnV75qy+Ru6qge3e39n6kkO4qMth0e/P3YEgwCyUpLXrvIVpnxR/WfvOcyGQbywHJA0GP3VnKkns1b4nSeqOV+BGHsCWa8zKJqXt9iZLGnDS19B8p0I=
+	t=1723042904; cv=none; b=Ce1fGrm9nFb7UhgNSG5kIWIhJkHfvo/D1la9NkBkuFrB2UE0pPYjQ/vDhxUkzmBOsB8+pCyIM+VplvG7yXfQuygaCVFkg/gq/xSySVffAPXpVMvkD3GqXM0gFjLevIGk8VjAT5YWp1CEp3M/HkrJsGUEonm1qzfzxkkifiyBQDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042901; c=relaxed/simple;
-	bh=MD4k+ef0I7vrq6SMjERLZREP6zZQkymbyRo267X4udI=;
+	s=arc-20240116; t=1723042904; c=relaxed/simple;
+	bh=a+J/kI3WB7Jyscp9u8lxWa2CXmiYs0iITC10kYq0j6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZaNN8kQZDqDU0QRm/9drHAdK+IuEBnfJ3h3ebfCwd8y707yuSpWeUZicVqMGRV4MqRQ9wH493gqgRIkAfr4/UUpKzfkKoYQWYPdNWsbnKXl58I3IuZjus9Oe+h3R7uqpQvvR3OkqZoaV9KjxDNwkxOVPHreOcWse3i/R/VCYtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSIF25zR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tSaSFCeSHQARGactN49GrrvV0gEK2M97fitoR3+AW4xa6GMRZCtF9/9YGgC1J0CNksawzhMyhcoTrXxBTie70uX6jJClt3/IJk5PuIZT+JUOuSNO1dcJYCVKPp169xmxLrt8FOV1dZrcVxdzUK3rOWVlSg5vDihaRSSBhAgTPfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qEgm4k/G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSIF25zR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDA9C4AF0B;
-	Wed,  7 Aug 2024 15:01:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qEgm4k/G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BCFBC32781;
+	Wed,  7 Aug 2024 15:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042901;
-	bh=MD4k+ef0I7vrq6SMjERLZREP6zZQkymbyRo267X4udI=;
+	s=korg; t=1723042904;
+	bh=a+J/kI3WB7Jyscp9u8lxWa2CXmiYs0iITC10kYq0j6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSIF25zRBusQJ084U35yaPke/QIu6Z1zwUrEmlkjQ7XVtjUU3R1i+z0RZ2THpz8ip
-	 cX7HZUiNNANghCq1/LW4MOO2arYT0oTXOUBNMRUEpAnxKyiLSU/Mbg5VRdc7smBHm8
-	 uQ85Vihi/7/lw5RdgcTeC2KMJuYfuoH/0Ew2vUpc=
+	b=qEgm4k/GP0ZRqQBTf3lOSm09fQ+6I4WTqcQIQOkRsmVctp1+CX/PZtrBKZVhIkjYV
+	 gky3Bs9K9aQhmonFuDNudGgcvOCs0axmBCLu4M8kb04k5xjJoxsWuIWB06gVaczIg3
+	 XpKG9huJRNKnMzDugIE66bBFiytT1LBYSsCTcqSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurinko <petrvelicka@tuta.io>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+	Casey Chen <cachen@purestorage.com>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	yzhong@purestorage.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 018/123] HID: amd_sfh: Move sensor discovery before HID device initialization
-Date: Wed,  7 Aug 2024 16:58:57 +0200
-Message-ID: <20240807150021.406940403@linuxfoundation.org>
+Subject: [PATCH 6.10 019/123] perf tool: fix dereferencing NULL al->maps
+Date: Wed,  7 Aug 2024 16:58:58 +0200
+Message-ID: <20240807150021.441970732@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,66 +54,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+From: Casey Chen <cachen@purestorage.com>
 
-[ Upstream commit 8031b001da700474c11d28629581480b12a0d8d4 ]
+[ Upstream commit 4c17736689ccfc44ec7dcc472577f25c34cf8724 ]
 
-Sensors discovery is independent of HID device initialization. If sensor
-discovery fails after HID initialization, then the HID device needs to be
-deinitialized. Therefore, sensors discovery should be moved before HID
-device initialization.
+With 0dd5041c9a0e ("perf addr_location: Add init/exit/copy functions"),
+when cpumode is 3 (macro PERF_RECORD_MISC_HYPERVISOR),
+thread__find_map() could return with al->maps being NULL.
 
-Fixes: 7bcfdab3f0c6 ("HID: amd_sfh: if no sensors are enabled, clean up")
-Tested-by: Aurinko <petrvelicka@tuta.io>
-Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://patch.msgid.link/20240718111616.3012155-1-Basavaraj.Natikar@amd.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+The path below could add a callchain_cursor_node with NULL ms.maps.
+
+add_callchain_ip()
+  thread__find_symbol(.., &al)
+    thread__find_map(.., &al)   // al->maps becomes NULL
+  ms.maps = maps__get(al.maps)
+  callchain_cursor_append(..., &ms, ...)
+    node->ms.maps = maps__get(ms->maps)
+
+Then the path below would dereference NULL maps and get segfault.
+
+fill_callchain_info()
+  maps__machine(node->ms.maps);
+
+Fix it by checking if maps is NULL in fill_callchain_info().
+
+Fixes: 0dd5041c9a0e ("perf addr_location: Add init/exit/copy functions")
+Signed-off-by: Casey Chen <cachen@purestorage.com>
+Reviewed-by: Ian Rogers <irogers@google.com>
+Reviewed-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: yzhong@purestorage.com
+Link: https://lore.kernel.org/r/20240722211548.61455-1-cachen@purestorage.com
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ tools/perf/util/callchain.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_client.c b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-index bdb578e0899f5..4b59687ff5d82 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -288,12 +288,22 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 		mp2_ops->start(privdata, info);
- 		cl_data->sensor_sts[i] = amd_sfh_wait_for_response
- 						(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
-+
-+		if (cl_data->sensor_sts[i] == SENSOR_ENABLED)
-+			cl_data->is_any_sensor_enabled = true;
-+	}
-+
-+	if (!cl_data->is_any_sensor_enabled ||
-+	    (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
-+		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n",
-+			 cl_data->is_any_sensor_enabled);
-+		rc = -EOPNOTSUPP;
-+		goto cleanup;
- 	}
+diff --git a/tools/perf/util/callchain.c b/tools/perf/util/callchain.c
+index 1730b852a9474..6d075648d2ccf 100644
+--- a/tools/perf/util/callchain.c
++++ b/tools/perf/util/callchain.c
+@@ -1141,7 +1141,7 @@ int hist_entry__append_callchain(struct hist_entry *he, struct perf_sample *samp
+ int fill_callchain_info(struct addr_location *al, struct callchain_cursor_node *node,
+ 			bool hide_unresolved)
+ {
+-	struct machine *machine = maps__machine(node->ms.maps);
++	struct machine *machine = node->ms.maps ? maps__machine(node->ms.maps) : NULL;
  
- 	for (i = 0; i < cl_data->num_hid_devices; i++) {
- 		cl_data->cur_hid_dev = i;
- 		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
--			cl_data->is_any_sensor_enabled = true;
- 			rc = amdtp_hid_probe(i, cl_data);
- 			if (rc)
- 				goto cleanup;
-@@ -305,12 +315,6 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 			cl_data->sensor_sts[i]);
- 	}
- 
--	if (!cl_data->is_any_sensor_enabled ||
--	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
--		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
--		rc = -EOPNOTSUPP;
--		goto cleanup;
--	}
- 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
- 	return 0;
- 
+ 	maps__put(al->maps);
+ 	al->maps = maps__get(node->ms.maps);
 -- 
 2.43.0
 
