@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 625F012BEBB;
-	Wed,  7 Aug 2024 15:03:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E407D3E4;
+	Wed,  7 Aug 2024 15:03:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043016; cv=none; b=L1Omi3opaVRNwf0RIcT0ipOkEyCk7qI+fcbusTX9UQqq6DOpNEG332ajjA2YFlbrCGTBWmmRpLbxmtQ9npRYN4qHGhLJO7WoFMeYjXL6mEisyWlSgJpLOI5Phs/exKP8CAf3TYhPiuPKiCU/ONrCA38oukBdRSK/jREsEL4etyo=
+	t=1723043019; cv=none; b=KCvyTVXMMLW+qsF4qyf8DQ645iuAFFQ2xfMYjeDjwV5GK3DcF86vnG2Ec3HB7H7uDkUv6r7cvDV/HyScMVTChlEBYG4xo4/pMRJmz6Ytx1fuSZwLJSz4mXsXsxohbGHlxzgmWxRxyxMYqkzk6zCTOxTjbx27IvWRNRJgHjJiSRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043016; c=relaxed/simple;
-	bh=U6RLW8k+X4nUJ7QE04dBt5jto/mnbnkabzHt/IYogio=;
+	s=arc-20240116; t=1723043019; c=relaxed/simple;
+	bh=TMOSGl0sYZcrfYgXskz3hM/gYoUu3PEZeFC6p7/IZvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aAsKD3vPv5v6b1BiWBmh50jX9+JfSXbL9+t+XYVak6mNrWqP35BzTVZvXT+WqUu53xKBfdWzZlpF1JuQllKsd47iCl76wO/SzG7ZDszSrtrgOBl6qs6De9srCDvvlV1Gur7BgCjjL55fACD7bVxZDSaY5hiL693YSTiVjsNZjsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GxXP7GNR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MgkVNf0JGmkCr9eOI3wwZi/werjFpQxmtAhaDd9cp8s047y8S7HekmWUD0jrfLsOgizneXRb079/bX7bsefomMytCdBurwvf/6TDvAm7cVRL6V8gP/nG9PY++mX65DK0+PAEGHUPzRRU7Bjn6rnZRJYNp7MU0vvczT/7Txdyggc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BeJ0PwP9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GxXP7GNR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A55C4AF0F;
-	Wed,  7 Aug 2024 15:03:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BeJ0PwP9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E01C32781;
+	Wed,  7 Aug 2024 15:03:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043016;
-	bh=U6RLW8k+X4nUJ7QE04dBt5jto/mnbnkabzHt/IYogio=;
+	s=korg; t=1723043019;
+	bh=TMOSGl0sYZcrfYgXskz3hM/gYoUu3PEZeFC6p7/IZvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GxXP7GNRGbyTQLk3ldkxd4PPd4AnuZXU59t8ZQVZeMKWQYDAltN2ORsGnsqmRgdVG
-	 6tgtl3kcN9Cbs+Uc/2pUr5GMmgSFpe1tnAegq84kM6jdhyaCVEEEMKeYrc/idGdtp8
-	 CZIpb+dDUJZzs4cstiEQGBC+4QsWRlpJ1t0UiWgE=
+	b=BeJ0PwP94Qdy6k3MWk5cfO/RYCIZNFhhG7YR6oA630I6GvMyKbHIO4gltLkAEwAM/
+	 HqX+aFIHQak1jwbXfXLnesyYINNDyQuEl+/Qgg4Pk/20nxez8FHP6OTdktie5+dBu6
+	 s482i1ovOyXOBh//xLJVs1phHHHYIqOOdYTq0w6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Maher Sanalla <msanalla@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Wojciech Drewek <wojciech.drewek@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 059/123] net/mlx5: Always drain health in shutdown callback
-Date: Wed,  7 Aug 2024 16:59:38 +0200
-Message-ID: <20240807150022.710787384@linuxfoundation.org>
+Subject: [PATCH 6.10 060/123] net/mlx5: Fix error handling in irq_pool_request_irq
+Date: Wed,  7 Aug 2024 16:59:39 +0200
+Message-ID: <20240807150022.741561430@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -56,60 +56,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 1b75da22ed1e6171e261bc9265370162553d5393 ]
+[ Upstream commit a4557b0b57c40871ff00da4f623cf79211e052f3 ]
 
-There is no point in recovery during device shutdown. if health
-work started need to wait for it to avoid races and NULL pointer
-access.
+In case mlx5_irq_alloc fails, the previously allocated index remains
+in the XArray, which could lead to inconsistencies.
 
-Hence, drain health WQ on shutdown callback.
+Fix it by adding error handling that erases the allocated index
+from the XArray if mlx5_irq_alloc returns an error.
 
-Fixes: 1958fc2f0712 ("net/mlx5: SF, Add auxiliary device driver")
-Fixes: d2aa060d40fa ("net/mlx5: Cancel health poll before sending panic teardown command")
+Fixes: c36326d38d93 ("net/mlx5: Round-Robin EQs over IRQs")
 Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Maher Sanalla <msanalla@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
 Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://patch.msgid.link/20240730061638.1831002-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20240730061638.1831002-3-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c          | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 459a836a5d9c1..3e55a6c6a7c9b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -2140,7 +2140,6 @@ static int mlx5_try_fast_unload(struct mlx5_core_dev *dev)
- 	/* Panic tear down fw command will stop the PCI bus communication
- 	 * with the HCA, so the health poll is no longer needed.
- 	 */
--	mlx5_drain_health_wq(dev);
- 	mlx5_stop_health_poll(dev, false);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c b/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c
+index 612e666ec2635..e2230c8f18152 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/irq_affinity.c
+@@ -48,6 +48,7 @@ static struct mlx5_irq *
+ irq_pool_request_irq(struct mlx5_irq_pool *pool, struct irq_affinity_desc *af_desc)
+ {
+ 	struct irq_affinity_desc auto_desc = {};
++	struct mlx5_irq *irq;
+ 	u32 irq_index;
+ 	int err;
  
- 	ret = mlx5_cmd_fast_teardown_hca(dev);
-@@ -2175,6 +2174,7 @@ static void shutdown(struct pci_dev *pdev)
- 
- 	mlx5_core_info(dev, "Shutdown was called\n");
- 	set_bit(MLX5_BREAK_FW_WAIT, &dev->intf_state);
-+	mlx5_drain_health_wq(dev);
- 	err = mlx5_try_fast_unload(dev);
- 	if (err)
- 		mlx5_unload_one(dev, false);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-index b2986175d9afe..b706f1486504a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/sf/dev/driver.c
-@@ -112,6 +112,7 @@ static void mlx5_sf_dev_shutdown(struct auxiliary_device *adev)
- 	struct mlx5_core_dev *mdev = sf_dev->mdev;
- 
- 	set_bit(MLX5_BREAK_FW_WAIT, &mdev->intf_state);
-+	mlx5_drain_health_wq(mdev);
- 	mlx5_unload_one(mdev, false);
+@@ -64,9 +65,12 @@ irq_pool_request_irq(struct mlx5_irq_pool *pool, struct irq_affinity_desc *af_de
+ 		else
+ 			cpu_get(pool, cpumask_first(&af_desc->mask));
+ 	}
+-	return mlx5_irq_alloc(pool, irq_index,
+-			      cpumask_empty(&auto_desc.mask) ? af_desc : &auto_desc,
+-			      NULL);
++	irq = mlx5_irq_alloc(pool, irq_index,
++			     cpumask_empty(&auto_desc.mask) ? af_desc : &auto_desc,
++			     NULL);
++	if (IS_ERR(irq))
++		xa_erase(&pool->irqs, irq_index);
++	return irq;
  }
  
+ /* Looking for the IRQ with the smallest refcount that fits req_mask.
 -- 
 2.43.0
 
