@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F3A81AB1;
-	Wed,  7 Aug 2024 15:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6D3823A9;
+	Wed,  7 Aug 2024 15:11:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043480; cv=none; b=S8hUO+dycn18kb0qtQJBOS89cx1XnREOkIJYz5xZWKMyHsBs0/VNZKqFwOR0JL62SrTPF+5mplf0dOD2tZ/rr4A0V7QRjSfYnwtufRLBXfZw2x/Pl9taPsRAMzaBTif+MkvRUib2l5CZ4TBxpzqdOfSS8Q307OSbyuwcgdjJ0+c=
+	t=1723043482; cv=none; b=r2k6zb6g0KB9EOdg8sH/GCdsX6BmxniHDnszjmCSKAa5dEpvP61kUsWoNeHcv+rNqf9zqnsrDIpo7Q45FLlleZ+BHWhHXo9nm+i3k+F/+PKBOEUHNhWz120qOg0Zvx1S1Unp1AOZUDRVIWbLvbyCnTk61AFi2THR0KROsu7NTAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043480; c=relaxed/simple;
-	bh=juYEbEonY58n4Qy0yApilqXQH6cfD5nUoGvqWjBPsmA=;
+	s=arc-20240116; t=1723043482; c=relaxed/simple;
+	bh=3zl79XewRxpgWaezV1O+fqJQjjNzuP8NBT5OJNxPHmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XNN5YmCLkP2NtS+tp46pKWR3+OLGo2Vv3jnwmhqKT6vMkbWiBGdGY2Kn6NVhrhJJQBJ3x7iTTJ+yEBHQ+7NvFODx/AddQNO8nvJ3K1SNrVCVM3yA8klcrF9uaeomymhnF+AdTfGzqpOWP8jeZT0DKLGYNtZFj1I1kTqCMdgYcBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FaHeZU/8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SgKBVFKZlMfzmOI8OswQU6vj7icARy+67Pjmw0us+vMSgHWyvaOU4ifWsMit/LdxtcpIYTNrpwH1tV7a65PorDYqYtk0LlXCv/EKgxsTGva/6NNrPRSL4ukZCavOx3g1JMC4R7aU+yTpPh1QA3OaY/kIUUgFFqv0wQ6aftyJPPQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eXqOqFIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FaHeZU/8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54B4CC32781;
-	Wed,  7 Aug 2024 15:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eXqOqFIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2A22C32781;
+	Wed,  7 Aug 2024 15:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043479;
-	bh=juYEbEonY58n4Qy0yApilqXQH6cfD5nUoGvqWjBPsmA=;
+	s=korg; t=1723043482;
+	bh=3zl79XewRxpgWaezV1O+fqJQjjNzuP8NBT5OJNxPHmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FaHeZU/8Sihw/9Z2D+LcRxYtUmANd6GBZj5ZgqwgE/jXoDZhZCnOM8dYggVg3xJer
-	 mwVHp3hmC92XUj6H0af7w4Gi4wJJ0QPAXbIsgap2ZGmSFDjmoVaFaTcVFwnJhXBHLJ
-	 EldL2vJNASIRHv0aYsQCqJ/vx7LzT9kuNr56GQpQ=
+	b=eXqOqFIT7cY/DkhYwkYfAZBNkNsGBZHwl/fZ0JMl3BG0uGPI3E7vgqXZHpES6o/ft
+	 WfFEqE4jmcoyWmKqzTxGb3QAnnkXl45HgaMrYpwiI4IOX1pYKfmOTuoQz/bkED2jwg
+	 C0ZNM49TTuWSXwA0n77QPk6tL3iH4Hu2lF9MZJLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	dri-devel@lists.freedesktop.org,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Martin Krastev <martin.krastev@broadcom.com>
-Subject: [PATCH 6.6 106/121] drm/vmwgfx: Fix a deadlock in dma buf fence polling
-Date: Wed,  7 Aug 2024 17:00:38 +0200
-Message-ID: <20240807150022.866547640@linuxfoundation.org>
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+	Rob Clark <robdclark@gmail.com>
+Subject: [PATCH 6.6 107/121] drm/virtio: Fix type of dma-fence context variable
+Date: Wed,  7 Aug 2024 17:00:39 +0200
+Message-ID: <20240807150022.899735746@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,104 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zack Rusin <zack.rusin@broadcom.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-commit e58337100721f3cc0c7424a18730e4f39844934f upstream.
+commit 445d336cd15860f1efb441e6d694f829fbf679eb upstream.
 
-Introduce a version of the fence ops that on release doesn't remove
-the fence from the pending list, and thus doesn't require a lock to
-fix poll->fence wait->fence unref deadlocks.
+Type of DMA fence context is u64. Fence-waiting code uses u32 for the
+context variable, fix it.
 
-vmwgfx overwrites the wait callback to iterate over the list of all
-fences and update their status, to do that it holds a lock to prevent
-the list modifcations from other threads. The fence destroy callback
-both deletes the fence and removes it from the list of pending
-fences, for which it holds a lock.
-
-dma buf polling cb unrefs a fence after it's been signaled: so the poll
-calls the wait, which signals the fences, which are being destroyed.
-The destruction tries to acquire the lock on the pending fences list
-which it can never get because it's held by the wait from which it
-was called.
-
-Old bug, but not a lot of userspace apps were using dma-buf polling
-interfaces. Fix those, in particular this fixes KDE stalls/deadlock.
-
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Fixes: 2298e804e96e ("drm/vmwgfx: rework to new fence interface, v2")
-Cc: Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.2+
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Reviewed-by: Martin Krastev <martin.krastev@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240722184313.181318-2-zack.rusin@broadcom.com
+Fixes: e4812ab8e6b1 ("drm/virtio: Refactor and optimize job submission code path")
+Cc: <stable@vger.kernel.org> # v6.4+
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240714205009.3408298-1-dmitry.osipenko@collabora.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_fence.c |   17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_submit.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_fence.c
-@@ -32,7 +32,6 @@
- #define VMW_FENCE_WRAP (1 << 31)
- 
- struct vmw_fence_manager {
--	int num_fence_objects;
- 	struct vmw_private *dev_priv;
- 	spinlock_t lock;
- 	struct list_head fence_list;
-@@ -124,13 +123,13 @@ static void vmw_fence_obj_destroy(struct
+diff --git a/drivers/gpu/drm/virtio/virtgpu_submit.c b/drivers/gpu/drm/virtio/virtgpu_submit.c
+index 1c7c7f61a222..7d34cf83f5f2 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_submit.c
++++ b/drivers/gpu/drm/virtio/virtgpu_submit.c
+@@ -48,7 +48,7 @@ struct virtio_gpu_submit {
+ static int virtio_gpu_do_fence_wait(struct virtio_gpu_submit *submit,
+ 				    struct dma_fence *in_fence)
  {
- 	struct vmw_fence_obj *fence =
- 		container_of(f, struct vmw_fence_obj, base);
--
- 	struct vmw_fence_manager *fman = fman_from_fence(fence);
+-	u32 context = submit->fence_ctx + submit->ring_idx;
++	u64 context = submit->fence_ctx + submit->ring_idx;
  
--	spin_lock(&fman->lock);
--	list_del_init(&fence->head);
--	--fman->num_fence_objects;
--	spin_unlock(&fman->lock);
-+	if (!list_empty(&fence->head)) {
-+		spin_lock(&fman->lock);
-+		list_del_init(&fence->head);
-+		spin_unlock(&fman->lock);
-+	}
- 	fence->destroy(fence);
- }
- 
-@@ -257,7 +256,6 @@ static const struct dma_fence_ops vmw_fe
- 	.release = vmw_fence_obj_destroy,
- };
- 
--
- /*
-  * Execute signal actions on fences recently signaled.
-  * This is done from a workqueue so we don't have to execute
-@@ -355,7 +353,6 @@ static int vmw_fence_obj_init(struct vmw
- 		goto out_unlock;
- 	}
- 	list_add_tail(&fence->head, &fman->fence_list);
--	++fman->num_fence_objects;
- 
- out_unlock:
- 	spin_unlock(&fman->lock);
-@@ -403,7 +400,7 @@ static bool vmw_fence_goal_new_locked(st
- 				      u32 passed_seqno)
- {
- 	u32 goal_seqno;
--	struct vmw_fence_obj *fence;
-+	struct vmw_fence_obj *fence, *next_fence;
- 
- 	if (likely(!fman->seqno_valid))
- 		return false;
-@@ -413,7 +410,7 @@ static bool vmw_fence_goal_new_locked(st
- 		return false;
- 
- 	fman->seqno_valid = false;
--	list_for_each_entry(fence, &fman->fence_list, head) {
-+	list_for_each_entry_safe(fence, next_fence, &fman->fence_list, head) {
- 		if (!list_empty(&fence->seq_passed_actions)) {
- 			fman->seqno_valid = true;
- 			vmw_fence_goal_write(fman->dev_priv,
+ 	if (dma_fence_match_context(in_fence, context))
+ 		return 0;
+-- 
+2.46.0
+
 
 
