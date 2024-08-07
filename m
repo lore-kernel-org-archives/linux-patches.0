@@ -1,286 +1,237 @@
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2077.outbound.protection.outlook.com [40.107.212.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AA6762DF;
-	Wed,  7 Aug 2024 18:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.212.77
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723054768; cv=fail; b=jztNvftME5bMxNfegXE3J374371iM3qPbizry0g51DpNI2FLtPdNGUD2DZQml0o9+rAkAyZVJVOf6mmLM3GDVyy6IOc0kWOfhKAwhMkj9abO+aRbDlD8P7z8+63dogQoQ4mga5GDX8JFMy/dUo5rcTaTp71I2YzkbKL5LFyPaoI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723054768; c=relaxed/simple;
-	bh=ekKm0SudydNjyRpCcC2mMuFLsly9MBAZA5eALeH8Cfo=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=TE2adXLcWZNSuKH9jx8o294q6IdIP9AJ49bNvIbjTCsza7N3UH4bOTUYenVN1acQ0qjAWH9uCAH5KX0z87ljsAP1n2GqZVJeJ2KyIG4zNdzyL6PVzDSBjkKBFe0/4tzKeVAhfAfFjM6HbbAk0+O7ahsjzx2DLUGjGvpybOJ4c/8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=TiRSO24m; arc=fail smtp.client-ip=40.107.212.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48BA813F42F
+	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 18:22:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723054955; cv=none; b=HVrwWGDgpRfEj2+qWBe8yUNNBVFMosrWoPoAjYadN5FtJKjbiBIj3YRDNnFoMvotTr2Sxf8YwIwpTOvrgD4s3bf3/UEvghl2Jk3Ec7ZNASfX1ZhMruZsC6mDQuHaR7U9BK0TyewhMdA8CLCmjWjgyav52eGtZbsfsfea3j9fcGI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723054955; c=relaxed/simple;
+	bh=DYdsVlyg7drIWq2ZvwnPQj6pYo01O2qmVRaRyE4nV9s=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jqK+jH9gfmty+4FWzfmIGVjexDNQANPk1gYrsU52R++FZcVWFgkKc+u5WwoWZ43G4bIBgiObAbTOQF4LF5YCPbh+0cCFp9YJ49IHJN4OF8tzkL4yLR8H8EyxtAU1dLmHQjQna0f0H+BtyZCiuET7FkVTpxHfv13v9s6Pfd2z+rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OgaZIaXI; arc=none smtp.client-ip=209.85.210.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="TiRSO24m"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PZD2dneXl7aRfcMCCiRAIPRPsU5cWns9eTeDw6nwBr7KaB76gJRQ5F5QbOKuAMA81XbP9BfoBSf39B7hBii50CTpcIzfJd8MvTmEtHZah3VsRafdZ3dlS6E8Iq1Tfba3sF5C7ZE4VmoG2jcYWFmu+t+BkQYbYVd3iaArBz4Gt31sv5RtLHk3CQLxO1AJqIrnL9fm2vu/gESv3RsL8XEEYGFFScJ375UyVyZ/m5Iu2EVNADz8hZzDG1oOJHWdMZ2iPyuf6AnmidheyfMny15ZMZ//f0aec7thuGR24MRqW9CikMJ2WYA0zEq1aGGPH0lTJe6P9Jzi6NHHp1wzb9xMrA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K6WD6jm0UK5sPcjCZ/fAfsvVddmEtM5mTSnj/pU/fSs=;
- b=dAo1jF7KG0nOJtjh7ui3+d1EG9M5PIPY5LhXq3KDWJUdBu1fE8eq4U3y2PijV3OaLoce8IQWwpSJ5gW5AIETPIl+om+8lipMHiNRNO1pRET0ROsn15UyeZazhxK1Pe6NM3JV30Iy4xmKNZOf2hGv9etvlX1EKMVtko7m8mCd4icMb2ujYV8wMRsvxYRrEmDVDfRvJtncsyfekG6hqoaMK8yJG76xgCsJ86eEYwfmXjECl2ARCKsWdbDJRHkkgvUBBkAV4eCoeGU3GGVM2QwNukpSyAU0G1Cd0hqZGlMyCAfYHfuaiYCUSmj9YO6kY6938txE3L05QAgYafRO9MhpOg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K6WD6jm0UK5sPcjCZ/fAfsvVddmEtM5mTSnj/pU/fSs=;
- b=TiRSO24m7dozQzgLo81vMKEdKGmMkc8d5kOr/KxWhNytbvHwcS3IRoUM8Qsi0mxL3ZD7f4rytk4zwFlcqRDS4vWtzqrp5rV8SimCm4W/cp40LlAxVU0ZSQJ/6PfK1mOQhikjeNkTsO5w0Y+sbJD/qdTI+EAvE/xvHl0WS/NYHIIabiKoyGVRyiFBidoPvWXIPGBulZK/Zge4aHqfQYniqgLhrmufFnTyqZtr3o8BAQVEys8t7shFzDg0z57jhm1JdTt14XbqznaSBneo1v6Z7irMLhjYLB8YZLC0ssDWdZ87HEqAo2lsAyyCj3qWM1ji2vul+Uwzw/sgj7kIahgcQQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
- by CH3PR12MB9021.namprd12.prod.outlook.com (2603:10b6:610:173::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.26; Wed, 7 Aug
- 2024 18:19:22 +0000
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7849.008; Wed, 7 Aug 2024
- 18:19:22 +0000
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Lu Baolu <baolu.lu@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	iommu@lists.linux.dev,
-	Joerg Roedel <joro@8bytes.org>,
-	kvm@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-pci@vger.kernel.org,
-	Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>
-Cc: patches@lists.linux.dev
-Subject: [PATCH] iommu: Allow ATS to work on VFs when the PF uses IDENTITY
-Date: Wed,  7 Aug 2024 15:19:20 -0300
-Message-ID: <0-v1-0fb4d2ab6770+7e706-ats_vf_jgg@nvidia.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BL1P221CA0022.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:2c5::16) To CH3PR12MB7763.namprd12.prod.outlook.com
- (2603:10b6:610:145::10)
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OgaZIaXI"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-70943b07c2cso72538a34.1
+        for <patches@lists.linux.dev>; Wed, 07 Aug 2024 11:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1723054951; x=1723659751; darn=lists.linux.dev;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z2a5gwKJnS3ln2m/beFUHLu530BIgX8IlloupPMeXcM=;
+        b=OgaZIaXIX0aFiD4tapHW4BUyrWNwwMibcdLaVdhruzgpinySN/C+/ko75T/lScRN69
+         seYg7LecsUQ/2prNQzOWbgC0GhezNvVywpm/D8JsZqlk85L49KLj8FlQORG0a+M9uP54
+         VQ/hw5Foe+gdhgJac6qnH7h9exMwOEVFMuu7tyTKix8JOF8i0+n1kSmMhkC0TAaor6KV
+         95vEMMA6ltcaL/GQ6sKiRY+TOD7q3KJDWVcVBn+FhfCd5g7Jkq3U/Z3HbG3cdb9g9hfO
+         bTjROLJSVtuGwQI6QPXXnA+5dm8udDRcdqNA1QTbESJaITX7ZFYVwlelUvv9sNcy/N01
+         keDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723054951; x=1723659751;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z2a5gwKJnS3ln2m/beFUHLu530BIgX8IlloupPMeXcM=;
+        b=bsCX4ayVhkNThmuT2WmldGhYu7Kudi/u9g5hpsbum+okGPqlzV+OiTKc2OOyIXWobt
+         /mucG+5VvFws6FYuQHrQ+JlS0gQu1M+++ncpqn3+A4HZldjAaf9vFlezsWXD0tpFFytz
+         brkvI82N7c5+R4ROloZ0aOa5e/A3UeRjka9MclYfSRaKOJ1MkRVpdQSRTRW9/rlliSUS
+         dQMGfpwdWfuQVxyf9fmKotbzRC4Awx5vdxxaqehXOE/7IsPhpWS39ttQBg2E5LUTFd8l
+         ZU1mjSshu8B2ymZ7g4bgQG06Dd5+96Nog6XQD3DCAI+j/w6/XAu2mUeQ5cALun0idY8C
+         JK3g==
+X-Forwarded-Encrypted: i=1; AJvYcCXbYjisnaO+pZ2sfit5/qm2L9Juh6SYIIq8fIOJVL88ImhLP4ggLEi3mwueAIUAtVGem0JjikYqmvajWdXnEzwezS/t6gD+Vw==
+X-Gm-Message-State: AOJu0YyaDexNQYzv0PLgQuff+d2bHMv1I7vT7kS95CEWx/2D09AWL+0H
+	FitvieCiLCUyPXVGYwUMYocYInMyiLonwll5aBjff8e5LdAIa2zAQ3qrkdNKfxxaeH8kpVqvfZm
+	kWcXmfT9q8B6yVRte3Hf7VcT1KdiKFNPlbRMS/A==
+X-Google-Smtp-Source: AGHT+IFZ1nAFr030oa9R5aIs6OoTYFYue3ihojrDjSX2FR8yDRlkkM18UrBwPRgt2PB0EDlQJykjHoClLour8qFtiNg=
+X-Received: by 2002:a05:6830:6318:b0:709:41c2:5104 with SMTP id
+ 46e09a7af769-709b3218e10mr26258465a34.8.1723054951256; Wed, 07 Aug 2024
+ 11:22:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|CH3PR12MB9021:EE_
-X-MS-Office365-Filtering-Correlation-Id: c6b83c53-c14a-49b2-af7c-08dcb70d75ce
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|1800799024|7416014|376014|921020;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Aa8NvXcflQhh130WjwGP+h3PjACK7Ww14i7qDFMoG0H43DXG6ge0jlwbaoRO?=
- =?us-ascii?Q?VkJ11cXMCUVnflx2XaOPFBhC8LeJB3O66mhX3vVegyKFTwFK6C2g9oLGTpJM?=
- =?us-ascii?Q?QFHvcuBSuroLvzVgB2S8oBw+EgmUH1JaP1Qc8I7TA1l8P7GRUVVCA497i7lo?=
- =?us-ascii?Q?/He2T2fPi7dgDYIqooB3RYxBc2hMw6kMCdqU5Lh9yqihmNXyG+m1L9kcKnp2?=
- =?us-ascii?Q?EE3zOrgfkMU4p11R4CGX+nKrDobu7Ps0ZkAdVnskAJt9Nfv6Vi+wWcZ341Z+?=
- =?us-ascii?Q?hCnnuxwdVhfDt/kH55B+bDInSvFO67h7k6vo0XVVZw567S3dPzGMQmNetA7U?=
- =?us-ascii?Q?Xlo/d5VshLwwc0GB/+Na8w+CUPrso53UhfRfO46EA62SsxtacccnNHXwwcsO?=
- =?us-ascii?Q?V4kHtjYgTKtzdxUYkN+huzFb0XTxBPKLvlqeHKmXFhMUublMvO3Ejb9tRVl+?=
- =?us-ascii?Q?B6lzYHFTUT15N3cc1uyTUSAn3tBcjXcryzLKSTQJy44HVF/ksdYuYT/2jHfJ?=
- =?us-ascii?Q?og7mvNiD49srR0bkU6cZNDcOhf+smQH2DL78ahbtDiB2YwJIBg0aeCKvK/A8?=
- =?us-ascii?Q?iQpOVdTyF96OHNjpKu9xBxLLyoxkJYJUKk83GhzGa/hW6p5J1q6SaAO9ftIq?=
- =?us-ascii?Q?tcAfEqn6S2xamwgyDvWXWJgSUnxmPf4cV7uTPjXbkqrpEdoyqMT+LvmbFMNI?=
- =?us-ascii?Q?URJwbjI+LQtnttxfch2MZQFDRD3UAGhNeEuZp43YUTjB0Q0U9KgCkva5Ks+1?=
- =?us-ascii?Q?TaouL/uwZHVnZrZGNAMVotk33K/IJkscqOGnFDxHLajOITerBbyKPXF4fAwx?=
- =?us-ascii?Q?uYaqtbwyp6Bt6pJdmFM1f1aDVtQfU0hAc7tje9COqmdJcdGLiNAQDUiqK/Yv?=
- =?us-ascii?Q?NdsBDSrDGjMVkM1HQAotzxj4VZMVsLDoOdb2DqdW8RiejLgIpCYxnTbw9f9g?=
- =?us-ascii?Q?zcxQ8f1VZidTUf2fq2gVltfzNZ0o+PmBjpRGIstMcNYYFJWWRc0feeKJcvm+?=
- =?us-ascii?Q?pMmBJ2JJN5g7WDZ6gUkxqafiKfU6Fsa54p/XkPq2g1c4JLdDQHAichpXwG/3?=
- =?us-ascii?Q?GN4xqnbKnhePvTFx1alspt+dbxib3BfmP3rNLDq9NL4lXCBj6cs4qwnZcdMw?=
- =?us-ascii?Q?SXlvVVafDcuBm2OxhxnYGFvv7HyoPYFiJd/6IggJe/ESK7/5qWqE8x0+tnNN?=
- =?us-ascii?Q?hemAi+w+6sRWIXvx2d1YpNsmT5z36CTsKM91j0iDaaX/Y0j6Mnr8iIhbnKcT?=
- =?us-ascii?Q?jZ/kUNtpnswFMuKDyLtnZ4aJ09ZrGmtUo7FOdMwk44HYtITluwD5UStKDXmy?=
- =?us-ascii?Q?QzbYsiz1kOOTAKaT9e3u1rYlPvaDxq29KHFNOGUhh8lXaAXvS/IuyMN9zqyA?=
- =?us-ascii?Q?wvh55DkFCxua/h1ifJkDOO0zVNBy?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014)(921020);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?7NyOWYTxbLyJp31ovh0C+tp0KtgV3ZCpNEtgbasDC9qrPsHkYzwJnTFxaDvB?=
- =?us-ascii?Q?laL6vSqLgsQQGw/hD3A6cRk703rd1H150oard3vXyr8YXVJyJvqxSU9OLzyo?=
- =?us-ascii?Q?5Yyt4dPc3Eb1aS0+G1BP7RLiAbElx1Z2Kvp1v8nC/lCDDiFZQFHVjKn8PaR1?=
- =?us-ascii?Q?M/lkey5G3b/zmKv4RV9Ns4Blm/mWTRFMS3X+1hGFBHDl4mc44+IhADuXNqyi?=
- =?us-ascii?Q?WZtB2uO51Sg8RYimz8ye7/EfeSXiCHBk8M8JI3zT3l84Tx2N8SHuwIaXJDrd?=
- =?us-ascii?Q?F61L7vTQq907dgcOaVUh7ngw5wKd8QCtYa8pTMg7rn2pUrLeFTq5BYJYQQpN?=
- =?us-ascii?Q?RAGdnkHZx45X4DoLIKb7wC+4i+oqU5wt30DAV68fySHowqmep6fBglqcwxMv?=
- =?us-ascii?Q?pT5TEZVItzNO/vJ47WIu9JxkrqCvkvmVy9zI/mydIfFezeGXDerJR3fCGJro?=
- =?us-ascii?Q?4dGNH0hr1TB45f94rxkj55Apag8Z+1FZ/cP1ClWo+Eug0bjl6N8RRoJ5k/F6?=
- =?us-ascii?Q?QX0vdAqduwz7hpSCE2kz5Y+BmXHaSjKD8AjnFXZwjLayktkNHn60v4jvzm/h?=
- =?us-ascii?Q?paNHcu0UJo2aImqdJPB06g6gWTIaXQhuL3HrsL6WMY8zAjtG8zhl0Gh8we5R?=
- =?us-ascii?Q?9EIsLbVjpP6hpyo+krLJ7svYSPLi0np3szHHKvw4PQV4VRi06zzpw+N2eyF+?=
- =?us-ascii?Q?qxAylQDpGGINcgVqir6aQ5CYNC7McaqjcqOdoXkt+HaJaJCHLcS55WW4PM/h?=
- =?us-ascii?Q?FoSm2M0Mibi75bwl1D9iC00Zagtpu2RrsQKCWW09rsE8LOAybdb4QpiDOOTn?=
- =?us-ascii?Q?2ZD7/QBIOQABlPw8neXWeBQd+TgWg9WRtZB+F9HNroysDmRUM0LwZOcHAqw/?=
- =?us-ascii?Q?peDpxlcrN4h+aChfeOH9NXj/RUDikW7wFjTfZGCdrVMObB3m2mjJgrKUuzTk?=
- =?us-ascii?Q?5yYI/vK6iGkp1wexIalURbUs0NCm+/y8Y4xSy1K6xTg23OKOQZGR8FC1EpTY?=
- =?us-ascii?Q?Qsyn+unRBEDM78FLWozJJvtsO1bTpPeLTd6KyuammmqtDUqEg/zWHvp37QkV?=
- =?us-ascii?Q?+dRLMiQNAE54cLRiIzxt2vNKe2iWME99dSr0KaJeVB+4kYsapkZa90RaZRuj?=
- =?us-ascii?Q?ATjtAEJVFE1CEjC9up2/QyBoS0alIQEpAy0UWDW3pu7GBJKA0u7se3RbcpqW?=
- =?us-ascii?Q?sPh29XmYO2q7cwwnl4RrnLsg+fmnfibOErvMWk8DFUsARLVXeSbCuklKTTms?=
- =?us-ascii?Q?HtFIzLG1NoV8sLWzphPBbRYSkkZUhaDMmGOsPGRW7O33cyuERXpUDoOKpz5y?=
- =?us-ascii?Q?WkqRO1IQqfg0lwWQneIqFNF4ER1QpVtbPkVqPj02WjOt4DyEsFYBVo73MSfH?=
- =?us-ascii?Q?TpC7uaOz/9OfxMsJUSF81Yx/UxqsUqqd79GicvIeg64aUTI0lRIZNanuj3CC?=
- =?us-ascii?Q?+7bxQrSWovtVN+X8PjTTf8P1HQVvAUU6/XFrnRosSczppT8mh9DJGNWZQl2B?=
- =?us-ascii?Q?K1eZopdkBwNROFdm5nhKUikd8Ts/NFesDri/R8INobs/i+kCuyQDVHJe5Pjl?=
- =?us-ascii?Q?fI+qaCCQVlJKds++ce0=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c6b83c53-c14a-49b2-af7c-08dcb70d75ce
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Aug 2024 18:19:21.9982
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1HD6Tq665n11cFFmvCaodTCfM3pkR4kOiZu6iWrB0YXiZs4DpOmhrmhr+jRvjwOf
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9021
+References: <20240807150039.247123516@linuxfoundation.org>
+In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
+From: Anders Roxell <anders.roxell@linaro.org>
+Date: Wed, 7 Aug 2024 20:22:20 +0200
+Message-ID: <CADYN=9Jbqec210z5wZXVJV0vsi2QJK4TBJ6DULObW+bZRd4Q-g@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, 
+	Thomas Gleixner <tglx@linutronix.de>
+Content-Type: text/plain; charset="UTF-8"
 
-PCI ATS has a global Smallest Translation Unit field that is located in
-the PF but shared by all of the VFs.
+On Wed, 7 Aug 2024 at 17:13, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.104 release.
+> There are 86 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 09 Aug 2024 15:00:24 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.104-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-The expectation is that the STU will be set to the root port's global STU
-capability which is driven by the IO page table configuration of the iommu
-HW. Today it becomes set when the iommu driver first enables ATS.
+The following kernel panic noticed on stable-rc linux-6.1.y on while booting
+qemu-arm64 and qemu-arm.
 
-Thus, to enable ATS on the VF, the PF must have already had the correct
-STU programmed, even if ATS is off on the PF.
+  GOOD: v6.1.102-441-gdbbffaaee188
+  BAD:  v6.1.103-87-gb22fe5fc2a45
 
-Unfortunately the PF only programs the STU when the PF enables ATS. The
-iommu drivers tend to leave ATS disabled when IDENTITY translation is
-being used.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Thus we can get into a state where the PF is setup to use IDENTITY with
-the DMA API while the VF would like to use VFIO with a PAGING domain and
-have ATS turned on. This fails because the PF never loaded a PAGING domain
-and so it never setup the STU, and the VF can't do it.
+The git bisect results pointing to,
 
-The simplest solution is to have the iommu driver set the ATS STU when it
-probes the device. This way the ATS STU is loaded immediately at boot time
-to all PFs and there is no issue when a VF comes to use it.
+    irqdomain: Use return value of strreplace()
 
-Add a new call pci_prepare_ats() which should be called by iommu drivers
-in their probe_device() op for every PCI device if the iommu driver
-supports ATS. This will setup the STU based on whatever page size
-capability the iommu HW has.
+    [ Upstream commit 67a4e1a3bf7c68ed3fbefc4213648165d912cabb ]
 
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
----
- drivers/iommu/amd/iommu.c                   |  3 ++
- drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  6 ++++
- drivers/iommu/intel/iommu.c                 |  1 +
- drivers/pci/ats.c                           | 33 +++++++++++++++++++++
- include/linux/pci-ats.h                     |  1 +
- 5 files changed, 44 insertions(+)
+Kernel panic:
+--------
+[    0.000000] Booting Linux on physical CPU 0x0000000000 [0x000f0510]
+[    0.000000] Linux version 6.1.104-rc1 (tuxmake@tuxmake)
+(aarch64-linux-gnu-gcc (Debian 13.2.0-12) 13.2.0, GNU ld (GNU Binutils
+for Debian) 2.42) #1 SMP PREEMPT @1723045420
+[    0.000000] random: crng init done
+[    0.000000] Machine model: linux,dummy-virt
+...
+<6>[    0.000000] GICv3: GICv3 features: 16 PPIs
+<6>[    0.000000] GICv3: CPU0: found redistributor 0 region 0:0x00000000080a0000
+<1>[    0.000000] Unable to handle kernel paging request at virtual
+address ffff0000c003150d
+<1>[    0.000000] Mem abort info:
+<1>[    0.000000]   ESR = 0x0000000096000061
+<1>[    0.000000]   EC = 0x25: DABT (current EL), IL = 32 bits
+<1>[    0.000000]   SET = 0, FnV = 0
+<1>[    0.000000]   EA = 0, S1PTW = 0
+<1>[    0.000000]   FSC = 0x21: alignment fault
+<1>[    0.000000] Data abort info:
+<1>[    0.000000]   ISV = 0, ISS = 0x00000061
+<1>[    0.000000]   CM = 0, WnR = 1
+<1>[    0.000000] swapper pgtable: 64k pages, 48-bit VAs, pgdp=0000000042120000
+<1>[    0.000000] [ffff0000c003150d] pgd=180000013dfd0003,
+p4d=180000013dfd0003, pud=180000013dfd0003, pmd=180000013df60003,
+pte=0068000100030707
+<0>[    0.000000] Internal error: Oops: 0000000096000061 [#1] PREEMPT SMP
+<4>[    0.000000] Modules linked in:
+<4>[    0.000000] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.1.104-rc1 #1
+<4>[    0.000000] Hardware name: linux,dummy-virt (DT)
+<4>[    0.000000] pstate: 600000c9 (nZCv daIF -PAN -UAO -TCO -DIT
+-SSBS BTYPE=--)
+<4>[ 0.000000] pc : irq_percpu_enable
+(arch/arm64/include/asm/atomic_ll_sc.h:203 (discriminator 2)
+arch/arm64/include/asm/atomic.h:65 (discriminator 2)
+include/linux/atomic/atomic-long.h:329 (discriminator 2)
+include/asm-generic/bitops/atomic.h:18 (discriminator 2)
+include/asm-generic/bitops/instrumented-atomic.h:29 (discriminator 2)
+include/linux/cpumask.h:411 (discriminator 2) kernel/irq/chip.c:396
+(discriminator 2))
+<4>[ 0.000000] lr : irq_percpu_enable
+(include/asm-generic/bitops/atomic.h:17
+include/asm-generic/bitops/instrumented-atomic.h:29
+include/linux/cpumask.h:411 kernel/irq/chip.c:396)
+<4>[    0.000000] sp : ffffc6d51bd6fb00
+<4>[    0.000000] x29: ffffc6d51bd6fb00 x28: 0000000000000018 x27:
+0000000000000001
+<4>[    0.000000] x26: ffffc6d519227000 x25: ffffc6d51bd98000 x24:
+0000000000000008
+<4>[    0.000000] x23: ffffc6d51b3c0008 x22: 0000000000000000 x21:
+0000000000000001
+<4>[    0.000000] x20: 0000000000000000 x19: ffff0000c0061800 x18:
+0000000000000006
+<4>[    0.000000] x17: 000000000000003f x16: 00000000ffffffff x15:
+ffffc6d51bd6f5f0
+<4>[    0.000000] x14: 0000000000003f9f x13: 0000000000004000 x12:
+0000000000000000
+<4>[    0.000000] x11: 0000000000000040 x10: ffffc6d51be2db60 x9 :
+ffffc6d51989695c
+<4>[    0.000000] x8 : ffff000020000270 x7 : 0000000000000000 x6 :
+0000000000000000
+<4>[    0.000000] x5 : ffff000020000248 x4 : ffff392be25e0000 x3 :
+ffff0000c003150d
+<4>[    0.000000] x2 : 0000000000000001 x1 : 0000000000000001 x0 :
+ffff0000c003150d
+<4>[    0.000000] Call trace:
+<4>[ 0.000000] irq_percpu_enable
+(arch/arm64/include/asm/atomic_ll_sc.h:203 (discriminator 2)
+arch/arm64/include/asm/atomic.h:65 (discriminator 2)
+include/linux/atomic/atomic-long.h:329 (discriminator 2)
+include/asm-generic/bitops/atomic.h:18 (discriminator 2)
+include/asm-generic/bitops/instrumented-atomic.h:29 (discriminator 2)
+include/linux/cpumask.h:411 (discriminator 2) kernel/irq/chip.c:396
+(discriminator 2))
+<4>[ 0.000000] enable_percpu_irq (kernel/irq/internals.h:194
+kernel/irq/manage.c:2396)
+<4>[ 0.000000] ipi_setup.isra.0 (arch/arm64/kernel/smp.c:939
+(discriminator 3) arch/arm64/kernel/smp.c:932 (discriminator 3))
+<4>[ 0.000000] set_smp_ipi_range (arch/arm64/kernel/smp.c:978)
+<4>[ 0.000000] gic_init_bases (drivers/irqchip/irq-gic.c:568)
+<4>[ 0.000000] gic_of_init (drivers/irqchip/irq-gic-v3.c:2227)
+<4>[ 0.000000] of_irq_init (drivers/of/irq.c:607)
+<4>[ 0.000000] irqchip_init (drivers/irqchip/irqchip.c:32)
+<4>[ 0.000000] init_IRQ (arch/arm64/kernel/irq.c:136)
+<4>[ 0.000000] start_kernel (init/main.c:1045)
+<4>[ 0.000000] __primary_switched (arch/arm64/kernel/head.S:469)
+<0>[ 0.000000] Code: a8c27bfd d50323bf d65f03c0 f9800011 (c85f7c02)
+All code
+========
+   0: a8c27bfd ldp x29, x30, [sp], #32
+   4: d50323bf autiasp
+   8: d65f03c0 ret
+   c: f9800011 prfm pstl1strm, [x0]
+  10:* c85f7c02 ldxr x2, [x0] <-- trapping instruction
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index b19e8c0f48fa25..98054497d343bc 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2203,6 +2203,9 @@ static struct iommu_device *amd_iommu_probe_device(struct device *dev)
- 
- 	iommu_completion_wait(iommu);
- 
-+	if (dev_is_pci(dev))
-+		pci_prepare_ats(to_pci_dev(dev), PAGE_SHIFT);
-+
- 	return iommu_dev;
- }
- 
-diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-index a31460f9f3d421..9bc50bded5af72 100644
---- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-+++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
-@@ -3295,6 +3295,12 @@ static struct iommu_device *arm_smmu_probe_device(struct device *dev)
- 	    smmu->features & ARM_SMMU_FEAT_STALL_FORCE)
- 		master->stall_enabled = true;
- 
-+	if (dev_is_pci(dev)) {
-+		unsigned int stu = __ffs(smmu->pgsize_bitmap);
-+
-+		pci_prepare_ats(to_pci_dev(dev), stu);
-+	}
-+
- 	return &smmu->iommu;
- 
- err_free_master:
-diff --git a/drivers/iommu/intel/iommu.c b/drivers/iommu/intel/iommu.c
-index 9ff8b83c19a3e2..ad81db026ab236 100644
---- a/drivers/iommu/intel/iommu.c
-+++ b/drivers/iommu/intel/iommu.c
-@@ -4091,6 +4091,7 @@ static struct iommu_device *intel_iommu_probe_device(struct device *dev)
- 
- 	dev_iommu_priv_set(dev, info);
- 	if (pdev && pci_ats_supported(pdev)) {
-+		pci_prepare_ats(pdev, VTD_PAGE_SHIFT);
- 		ret = device_rbtree_insert(iommu, info);
- 		if (ret)
- 			goto free;
-diff --git a/drivers/pci/ats.c b/drivers/pci/ats.c
-index c570892b209095..87fa03540b8a21 100644
---- a/drivers/pci/ats.c
-+++ b/drivers/pci/ats.c
-@@ -47,6 +47,39 @@ bool pci_ats_supported(struct pci_dev *dev)
- }
- EXPORT_SYMBOL_GPL(pci_ats_supported);
- 
-+/**
-+ * pci_prepare_ats - Setup the PS for ATS
-+ * @dev: the PCI device
-+ * @ps: the IOMMU page shift
-+ *
-+ * This must be done by the IOMMU driver on the PF before any VFs are created to
-+ * ensure that the VF can have ATS enabled.
-+ *
-+ * Returns 0 on success, or negative on failure.
-+ */
-+int pci_prepare_ats(struct pci_dev *dev, int ps)
-+{
-+	u16 ctrl;
-+
-+	if (!pci_ats_supported(dev))
-+		return -EINVAL;
-+
-+	if (WARN_ON(dev->ats_enabled))
-+		return -EBUSY;
-+
-+	if (ps < PCI_ATS_MIN_STU)
-+		return -EINVAL;
-+
-+	if (dev->is_virtfn)
-+		return 0;
-+
-+	dev->ats_stu = ps;
-+	ctrl = PCI_ATS_CTRL_STU(dev->ats_stu - PCI_ATS_MIN_STU);
-+	pci_write_config_word(dev, dev->ats_cap + PCI_ATS_CTRL, ctrl);
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(pci_prepare_ats);
-+
- /**
-  * pci_enable_ats - enable the ATS capability
-  * @dev: the PCI device
-diff --git a/include/linux/pci-ats.h b/include/linux/pci-ats.h
-index df54cd5b15db09..d98929c86991be 100644
---- a/include/linux/pci-ats.h
-+++ b/include/linux/pci-ats.h
-@@ -8,6 +8,7 @@
- /* Address Translation Service */
- bool pci_ats_supported(struct pci_dev *dev);
- int pci_enable_ats(struct pci_dev *dev, int ps);
-+int pci_prepare_ats(struct pci_dev *dev, int ps);
- void pci_disable_ats(struct pci_dev *dev);
- int pci_ats_queue_depth(struct pci_dev *dev);
- int pci_ats_page_aligned(struct pci_dev *dev);
+Code starting with the faulting instruction
+===========================================
+   0: c85f7c02 ldxr x2, [x0]
+<4>[    0.000000] ---[ end trace 0000000000000000 ]---
+<0>[    0.000000] Kernel panic - not syncing: Attempted to kill the idle task!
+<0>[    0.000000] ---[ end Kernel panic - not syncing: Attempted to
+kill the idle task! ]---
 
-base-commit: e7153d9c8cee2f17fdcd011509860717bfa91423
--- 
-2.46.0
 
+boot log:
+-------
+   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.103-87-gb22fe5fc2a45/testrun/24787696/suite/boot/test/gcc-13-lkftconfig-rcutorture/log
+
+details log:
+-----------
+   - https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.103-87-gb22fe5fc2a45/testrun/24787696/suite/boot/test/gcc-13-lkftconfig-rcutorture/details/
+
+Build log links:
+-----
+  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2kKvVPIRvZ26DxUefAqM4a0PwOs/
+  - https://storage.tuxsuite.com/public/linaro/lkft/builds/2kKvVPIRvZ26DxUefAqM4a0PwOs/config
+
+metadata:
+----
+  git_describe: v6.1.103-87-gb22fe5fc2a45
+  git_repo: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+  git_sha: b22fe5fc2a455ab65a78fe39d86ef3a300d87243
+  git_short_log: b22fe5fc2a45 ("Linux 6.1.104-rc1")
+
+
+--
+Linaro LKFT
+https://lkft.linaro.org
