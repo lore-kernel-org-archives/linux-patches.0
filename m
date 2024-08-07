@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D463374CC;
-	Wed,  7 Aug 2024 15:13:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549EF7E0E9;
+	Wed,  7 Aug 2024 15:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043634; cv=none; b=IK+kc7LMWNjaIbeDeCr50yxLqacAub0eCcltJ0vf0T7WVRIaxcQoE/SlVO+FqqBeIoeJ5kO7dzywMKsEbtvL8VrmC9N97octQ5esosqgY3znR6dmVROBQ9qGbpKoOIwdzBVcnT514jIEBFI+3+rgLM3AkFBdtkfRuD9iVZFAlz0=
+	t=1723043637; cv=none; b=seyj67YwmHb1hhYVAyIS7E2t4zncNGGJfgqGKGCJr60Wqnsx9sHDLg1QmDxv0XIWjhSE/woA/7G4KGIUK31+bH0D2RWGyrKmzce5zNtdj9WozQ1Q+eDTjtTPcBRpfSxnTCdsHd5Dn4F5Iom5LiMwAGSADHFeok986+Owsm1k45A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043634; c=relaxed/simple;
-	bh=JHBS1DKQYKwAtikqptGETy5KtRb/9LTgZgoNaSKyLvk=;
+	s=arc-20240116; t=1723043637; c=relaxed/simple;
+	bh=7kucE2R/RG5u67+9cvOKlLSO7Q9ljCYXQB7b9D/HtPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jzkswK8CO/kJ4OHg5wQsUAARhVF8saWXDca+NIc4Bm/l4j8TaA7xeqKy/kzM+qiVFwqKOg2rnZBixO7ga/gE1nIov56jzINXTNpHtrupX3RbLLm92IkY2L85Hg692XgwTdzC/unTeesqTn0L/Jd5W7UfBKr/2278X7WaNjZ3+DY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VjsxGmz+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J2MOZd5l7k2T5/fWItTwW4WG/WwSYl7GYBf+yIK0zz3/RyW1QLMjWidq5BSmPwcQ36Jo62rd4hwuSKiIkfjeTHmDCzLESwlkYgtOFQdBPt3++Mm9A8WIb0myAPEkEncoQvUmfjavZN2rbpDwj/byGd6GIZ9LuelIVi7UX/32Izo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gO25PDik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VjsxGmz+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CFEDC32781;
-	Wed,  7 Aug 2024 15:13:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gO25PDik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D567BC4AF0E;
+	Wed,  7 Aug 2024 15:13:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043634;
-	bh=JHBS1DKQYKwAtikqptGETy5KtRb/9LTgZgoNaSKyLvk=;
+	s=korg; t=1723043637;
+	bh=7kucE2R/RG5u67+9cvOKlLSO7Q9ljCYXQB7b9D/HtPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VjsxGmz+URCr9lgn2EOWD8q613UfqKdHO3md9qFZOs+Qpsp14fL514QluK2itUP2/
-	 1bAaSYCOlIW+1ihLk5WCevcKer86kWuEEl9vcjFiApPInUVZRsxoAtALNeboCIJxE/
-	 8aU/h2JKi9dGTc/cNEhaS1es7g8yh9eZDIso+3kk=
+	b=gO25PDikjJ1cvHQsaSUjd5lm9ZW1L3izM2c0UVsrb/bNt3UmwEFZ5ZqyoYG15fRe/
+	 RVYKhJsVME7it435ioRJseJxv+WjeY/xEEBpCLs+VAgdu0uu2OOndk6SlJeFRQTRgY
+	 2kkE/h4X3c6U0NG5+pYVZ18FK1b2a/2YzUUwV/2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
 	Ian Forbes <ian.forbes@broadcom.com>,
 	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 42/86] drm/vmwgfx: Fix overlay when using Screen Targets
-Date: Wed,  7 Aug 2024 17:00:21 +0200
-Message-ID: <20240807150040.625329208@linuxfoundation.org>
+Subject: [PATCH 6.1 43/86] drm/vmwgfx: Trigger a modeset when the screen moves
+Date: Wed,  7 Aug 2024 17:00:22 +0200
+Message-ID: <20240807150040.653753928@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -54,36 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit cb372a505a994cb39aa75acfb8b3bcf94787cf94 ]
+[ Upstream commit 75c3e8a26a35d4f3eee299b3cc7e465f166f4e2d ]
 
-This code was never updated to support Screen Targets.
-Fixes a bug where Xv playback displays a green screen instead of actual
-video contents when 3D acceleration is disabled in the guest.
+When multi-monitor is cycled the X,Y position of the Screen Target will
+likely change but the resolution will not. We need to trigger a modeset
+when this occurs in order to recreate the Screen Target with the correct
+X,Y position.
 
-Fixes: c8261a961ece ("vmwgfx: Major KMS refactoring / cleanup in preparation of screen targets")
-Reported-by: Doug Brown <doug@schmorgal.com>
-Closes: https://lore.kernel.org/all/bd9cb3c7-90e8-435d-bc28-0e38fee58977@schmorgal.com
+Fixes a bug where multiple displays are shown in a single scrollable
+host window rather than in 2+ windows on separate host displays.
+
+Fixes: 426826933109 ("drm/vmwgfx: Filter modes which exceed graphics memory")
 Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Tested-by: Doug Brown <doug@schmorgal.com>
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240719163627.20888-1-ian.forbes@broadcom.com
+Link: https://patchwork.freedesktop.org/patch/msgid/20240624205951.23343-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c | 29 +++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-index abc354ead4e8b..5dcddcb59a6f7 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-@@ -98,7 +98,7 @@ static int vmw_overlay_send_put(struct vmw_private *dev_priv,
- {
- 	struct vmw_escape_video_flush *flush;
- 	size_t fifo_size;
--	bool have_so = (dev_priv->active_display_unit == vmw_du_screen_object);
-+	bool have_so = (dev_priv->active_display_unit != vmw_du_legacy);
- 	int i, num_items;
- 	SVGAGuestPtr ptr;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
+index 6dd33d1258d11..e98fde90f4e0c 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_stdu.c
+@@ -1015,6 +1015,32 @@ vmw_stdu_connector_mode_valid(struct drm_connector *connector,
+ 	return MODE_OK;
+ }
+ 
++/*
++ * Trigger a modeset if the X,Y position of the Screen Target changes.
++ * This is needed when multi-mon is cycled. The original Screen Target will have
++ * the same mode but its relative X,Y position in the topology will change.
++ */
++static int vmw_stdu_connector_atomic_check(struct drm_connector *conn,
++					   struct drm_atomic_state *state)
++{
++	struct drm_connector_state *conn_state;
++	struct vmw_screen_target_display_unit *du;
++	struct drm_crtc_state *new_crtc_state;
++
++	conn_state = drm_atomic_get_connector_state(state, conn);
++	du = vmw_connector_to_stdu(conn);
++
++	if (!conn_state->crtc)
++		return 0;
++
++	new_crtc_state = drm_atomic_get_new_crtc_state(state, conn_state->crtc);
++	if (du->base.gui_x != du->base.set_gui_x ||
++	    du->base.gui_y != du->base.set_gui_y)
++		new_crtc_state->mode_changed = true;
++
++	return 0;
++}
++
+ static const struct drm_connector_funcs vmw_stdu_connector_funcs = {
+ 	.dpms = vmw_du_connector_dpms,
+ 	.detect = vmw_du_connector_detect,
+@@ -1029,7 +1055,8 @@ static const struct drm_connector_funcs vmw_stdu_connector_funcs = {
+ static const struct
+ drm_connector_helper_funcs vmw_stdu_connector_helper_funcs = {
+ 	.get_modes = vmw_connector_get_modes,
+-	.mode_valid = vmw_stdu_connector_mode_valid
++	.mode_valid = vmw_stdu_connector_mode_valid,
++	.atomic_check = vmw_stdu_connector_atomic_check,
+ };
+ 
  
 -- 
 2.43.0
