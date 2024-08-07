@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3369685270;
-	Wed,  7 Aug 2024 15:06:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E7A126F2A;
+	Wed,  7 Aug 2024 15:06:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043197; cv=none; b=GZAWSoXnBYfa+ikm+Y/X8og5rDv0rk0ffopN5zCcXx/RQTjR2pNYd+7UVXC1yg6KO/KfRA25cZgRjz0nb2X1L1FN4Lee+GcsqsZQR1hOuHUlX4QYvRa0BS5aD7Y0fMkFZuWSr6QwTqmpX+10ZA7fLnW2DkZLsg4ewbTFWH8lPVQ=
+	t=1723043199; cv=none; b=qAwHZfMGtB6brni7PQEjMdTOosVyI5bIWbdN87xzMMdwj0SmOpFJIX7IJmzuVMfXPMBdOW/UR18bEub1yaV2l0/urvaVZVg4tqLnb/zih/XbPDkC0m/8ltlbVHX+V5iAuPNXumtDz94A79+mRq+IWute86Rmh9aTOxQI0kVi/Ck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043197; c=relaxed/simple;
-	bh=Xoe6nLD57TYWN5Bx0P9bsVTeltsjQKYlTREMPAhU41I=;
+	s=arc-20240116; t=1723043199; c=relaxed/simple;
+	bh=BvyHLi3e1BHIdXBpbAbbpRIxHXe69V9LJKmxTp6iD8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r0bGN6Lpvq9dAkL54ihMB+6bNSgNu2faRgISPYhWWjP/3fkmi7WrWA8ubzSwEHI6LufXh9u9+O2hO0Lwa84wpcakKur+tjToe1bn7OnsOSZgqZu8bCqZEuLMiIsCNw+hT0+UzUaWk/Q+26hCIOEqLNRatOc6+s0jNnxH9lL9QFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xhI+GxPo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BPeerWWWPsnRB8DZpYyx/3+74MkLjmhizfg0Rua1ms/pNe1b1VfcSOi1CuiD078FuOUt3R+YJ2D6OpU2ewd2R/X/DcsRRdMjBBgelAHdman3XfGQavnrvlLZO4oW3yIKF3YDSr/k6tQ+zVk8XUxlXYkhLUkmqzt5OO3GgbzZTBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ashngIiz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xhI+GxPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3B0C32781;
-	Wed,  7 Aug 2024 15:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ashngIiz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A23C32781;
+	Wed,  7 Aug 2024 15:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043197;
-	bh=Xoe6nLD57TYWN5Bx0P9bsVTeltsjQKYlTREMPAhU41I=;
+	s=korg; t=1723043199;
+	bh=BvyHLi3e1BHIdXBpbAbbpRIxHXe69V9LJKmxTp6iD8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xhI+GxPoTfavqrj781Hj2pCpnX2duBDXLzZkGfr5d5zTAZvJpmCfHtgVIlAZGaD22
-	 5JF4057NYMzy4+AcdWK+vn34SjObWNMQv1RSLLEfhTawJF+o9gM2yTnnrqAbhPaazS
-	 Os5Y9/LOZ6pRzoarSXpFQYMYaw7qY1bmObyaUBcY=
+	b=ashngIizoj+GZydGIvw3G2lwdxK963HiYwS+5UFBSvS77St+k1mOFNXZhEiCERXHR
+	 14bJk/opKRCz7gPvX+4uZ8OrREqF8E0KgfEsDoo/sytxGNeBvmtBM9mZ1Em7f71xM3
+	 /XUPDo/ze5JRgKPPaU8ybrInir9xFqBG+u8Hd058=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Langlois <olivier@trillion01.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.10 107/123] io_uring: keep multishot request NAPI timeout current
-Date: Wed,  7 Aug 2024 17:00:26 +0200
-Message-ID: <20240807150024.316902125@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.10 108/123] net: usb: sr9700: fix uninitialized variable use in sr_mdio_read
+Date: Wed,  7 Aug 2024 17:00:27 +0200
+Message-ID: <20240807150024.354058314@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -51,47 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Olivier Langlois <olivier@trillion01.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 2c762be5b798c443612c1bb9b011de4fdaebd1c5 upstream.
+commit 08f3a5c38087d1569e982a121aad1e6acbf145ce upstream.
 
-This refresh statement was originally present in the original patch:
-https://lore.kernel.org/netdev/20221121191437.996297-2-shr@devkernel.io/
+It could lead to error happen because the variable res is not updated if
+the call to sr_share_read_word returns an error. In this particular case
+error code was returned and res stayed uninitialized. Same issue also
+applies to sr_read_reg.
 
-It has been removed with no explanation in v6:
-https://lore.kernel.org/netdev/20230201222254.744422-2-shr@devkernel.io/
+This can be avoided by checking the return value of sr_share_read_word
+and sr_read_reg, and propagating the error if the read operation failed.
 
-It is important to make the refresh for multishot requests, because if no
-new requests using the same NAPI device are added to the ring, the entry
-will become stale and be removed silently. The unsuspecting user will
-not know that their ring had busy polling for only 60 seconds before
-being pruned.
+Found by code review.
 
-Signed-off-by: Olivier Langlois <olivier@trillion01.com>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-Fixes: 8d0c12a80cdeb ("io-uring: add napi busy poll support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/0fe61a019ec61e5708cd117cb42ed0dab95e1617.1722294646.git.olivier@trillion01.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/sr9700.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/io_uring/poll.c b/io_uring/poll.c
-index 0a8e02944689..1f63b60e85e7 100644
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -347,6 +347,7 @@ static int io_poll_check_events(struct io_kiocb *req, struct io_tw_state *ts)
- 		v &= IO_POLL_REF_MASK;
- 	} while (atomic_sub_return(v, &req->poll_refs) & IO_POLL_REF_MASK);
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -179,6 +179,7 @@ static int sr_mdio_read(struct net_devic
+ 	struct usbnet *dev = netdev_priv(netdev);
+ 	__le16 res;
+ 	int rc = 0;
++	int err;
  
-+	io_napi_add(req);
- 	return IOU_POLL_NO_ACTION;
- }
+ 	if (phy_id) {
+ 		netdev_dbg(netdev, "Only internal phy supported\n");
+@@ -189,11 +190,17 @@ static int sr_mdio_read(struct net_devic
+ 	if (loc == MII_BMSR) {
+ 		u8 value;
  
--- 
-2.46.0
-
+-		sr_read_reg(dev, SR_NSR, &value);
++		err = sr_read_reg(dev, SR_NSR, &value);
++		if (err < 0)
++			return err;
++
+ 		if (value & NSR_LINKST)
+ 			rc = 1;
+ 	}
+-	sr_share_read_word(dev, 1, loc, &res);
++	err = sr_share_read_word(dev, 1, loc, &res);
++	if (err < 0)
++		return err;
++
+ 	if (rc == 1)
+ 		res = le16_to_cpu(res) | BMSR_LSTATUS;
+ 	else
 
 
