@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EA0824BB;
-	Wed,  7 Aug 2024 15:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A716184A27;
+	Wed,  7 Aug 2024 15:13:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043624; cv=none; b=cdrKwzzpGstguWfjUZgr82w0HJIGNv4S9+OwI28edaqjAqULYYASzebL850TCSrS2p/2oU8U5SlB/EXzejdiRN421EYoRZ+3sGaZIBfwjKI2lY81vMrn0WwBiKo8MhAnzvpOTaW7Ped9CmGwgqiRiLI3QN293YlK9zsXC0ipHPk=
+	t=1723043626; cv=none; b=Zx00pLgVXwAB7Oe2ynKfaDc2Gts7UEt5jFC0FYQZJWv8wh3ejZrae5HjCejV1Su1YW+/DeUzHMLUOwEXtmt2J8EO7yI+vbJfy1lU44JI2KCxSncFAedktg3nqRX8Q+q28Nv8ehJk/78p8QzsoP58QJGmXaMp3qdcIHGIEYDDK/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043624; c=relaxed/simple;
-	bh=OPBXGYK7HkKUUwC2ddfz4Z6eD50I2M3TMQbbInRshas=;
+	s=arc-20240116; t=1723043626; c=relaxed/simple;
+	bh=C6L/smlR3srmvju6xsfRp1JLDHm8dWWgnTwNZrDjlKI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYPAM/fMb+vULeX7svbLPs2rplIOuI0wixRUzckGjaJrh6HU6TUOdk0Uf0z6AcUhvGl2LQgrcPJXJ9ZP9t6VduJ14wCrs6eCfa/fwr/XoNDAvOcnwzq8TCjz8WUVCEoQlbMZrWqcsGBlO+V8XRTb5i3BR1AaXnG2eFb58HStVTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Idsa9uxk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FOj9nIKsmW5nuAkbYnwxGZ6f1bytemNCu/4K5Nb8ejju1yGgS410d8KhKpQ5B+4pvR5CCfmmkgM2VbfZxfYj0tyozXzbVhvc/oc8BYoCBT2dtTIhQy71x2qfseuLCyUYYnrv5CPs9EE3eivFXlRpjB9t3smqufIzajm/JejW1x4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUp4Jnch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Idsa9uxk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345E7C32781;
-	Wed,  7 Aug 2024 15:13:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUp4Jnch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 096DEC32781;
+	Wed,  7 Aug 2024 15:13:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043623;
-	bh=OPBXGYK7HkKUUwC2ddfz4Z6eD50I2M3TMQbbInRshas=;
+	s=korg; t=1723043626;
+	bh=C6L/smlR3srmvju6xsfRp1JLDHm8dWWgnTwNZrDjlKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Idsa9uxkusM3kgoIpsctHARw/+8flZLIESB6FI/2k6DX73aFI+hJp8dW5iRIURiFq
-	 T/D24L5A2mvE7yZmt6jlnlr5fUtICA/lYBJUdrlkJ8vtWa9/n5mejxqWgl3T7MhZkK
-	 OIboCjAxMwksmOEZ8Z6GyQ6Hxmv/gN52FbvMJ7RI=
+	b=RUp4Jnchonl1FAxBjeZmxG9c9ZphpVU2b85sAGCRMgCaNxtbNT+gnI9E75kkWsGN6
+	 aZ7bLpxUeUN51ppl4IeUQg2FGeZbcTWbJZx2pEAgyF58XbsYW7p2kOwhaPld5NRMpP
+	 cfJdfAGRHk/3VqjzIZZ2eVR71wiqknLfcr5Z7v3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Aurinko <petrvelicka@tuta.io>,
 	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 39/86] HID: amd_sfh: Split sensor and HID initialization
-Date: Wed,  7 Aug 2024 17:00:18 +0200
-Message-ID: <20240807150040.529429170@linuxfoundation.org>
+Subject: [PATCH 6.1 40/86] HID: amd_sfh: Move sensor discovery before HID device initialization
+Date: Wed,  7 Aug 2024 17:00:19 +0200
+Message-ID: <20240807150040.563556340@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -53,63 +54,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 5ca505c6b0259606361d8f95b0811b783d4e78f7 ]
+[ Upstream commit 8031b001da700474c11d28629581480b12a0d8d4 ]
 
-Sensors are enabled independently of HID device initialization. Sensor
-initialization should be kept separate in this case, while HID devices
-should be initialized according to the sensor state. Hence split sensor
-initialization and HID initialization into separate blocks.
+Sensors discovery is independent of HID device initialization. If sensor
+discovery fails after HID initialization, then the HID device needs to be
+deinitialized. Therefore, sensors discovery should be moved before HID
+device initialization.
 
+Fixes: 7bcfdab3f0c6 ("HID: amd_sfh: if no sensors are enabled, clean up")
+Tested-by: Aurinko <petrvelicka@tuta.io>
 Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Stable-dep-of: 8031b001da70 ("HID: amd_sfh: Move sensor discovery before HID device initialization")
+Link: https://patch.msgid.link/20240718111616.3012155-1-Basavaraj.Natikar@amd.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ drivers/hid/amd-sfh-hid/amd_sfh_client.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
 diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_client.c b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-index 34eb419b225ed..6e65379b10d53 100644
+index 6e65379b10d53..4343fef7dd83e 100644
 --- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
 +++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -214,7 +214,7 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 	struct device *dev;
- 	u32 feature_report_size;
- 	u32 input_report_size;
--	int rc, i, status;
-+	int rc, i;
- 	u8 cl_idx;
- 
- 	req_list = &cl_data->req_list;
-@@ -285,12 +285,15 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 		if (rc)
- 			goto cleanup;
+@@ -287,12 +287,22 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
  		mp2_ops->start(privdata, info);
--		status = amd_sfh_wait_for_response
--				(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
--		if (status == SENSOR_ENABLED) {
-+		cl_data->sensor_sts[i] = amd_sfh_wait_for_response
-+						(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
+ 		cl_data->sensor_sts[i] = amd_sfh_wait_for_response
+ 						(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
++
++		if (cl_data->sensor_sts[i] == SENSOR_ENABLED)
++			cl_data->is_any_sensor_enabled = true;
 +	}
 +
-+	for (i = 0; i < cl_data->num_hid_devices; i++) {
-+		cl_data->cur_hid_dev = i;
-+		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
- 			cl_data->is_any_sensor_enabled = true;
--			cl_data->sensor_sts[i] = SENSOR_ENABLED;
--			rc = amdtp_hid_probe(cl_data->cur_hid_dev, cl_data);
-+			rc = amdtp_hid_probe(i, cl_data);
++	if (!cl_data->is_any_sensor_enabled ||
++	    (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
++		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n",
++			 cl_data->is_any_sensor_enabled);
++		rc = -EOPNOTSUPP;
++		goto cleanup;
+ 	}
+ 
+ 	for (i = 0; i < cl_data->num_hid_devices; i++) {
+ 		cl_data->cur_hid_dev = i;
+ 		if (cl_data->sensor_sts[i] == SENSOR_ENABLED) {
+-			cl_data->is_any_sensor_enabled = true;
+ 			rc = amdtp_hid_probe(i, cl_data);
  			if (rc)
  				goto cleanup;
- 		} else {
-@@ -304,6 +307,7 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 			cl_data->sensor_idx[i], get_sensor_name(cl_data->sensor_idx[i]),
+@@ -308,12 +318,6 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
  			cl_data->sensor_sts[i]);
  	}
-+
- 	if (!cl_data->is_any_sensor_enabled ||
- 	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
- 		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
+ 
+-	if (!cl_data->is_any_sensor_enabled ||
+-	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
+-		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
+-		rc = -EOPNOTSUPP;
+-		goto cleanup;
+-	}
+ 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
+ 	return 0;
+ 
 -- 
 2.43.0
 
