@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2FAF81751;
-	Wed,  7 Aug 2024 15:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D01823A9;
+	Wed,  7 Aug 2024 15:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043456; cv=none; b=shtFLDQPVnTUEr6Of3NbI49m1u4LwhGV9euiPRLkYN210hMP1T4PvJCe9gLCE4rEQ84hrmiTgSYjf1IBPQH1F/UZr+VGvx9Y8v05VtS9Z16HLkamQw8jTWXEf2rHnhzho2u3aiGPratrJjnHnub4rTXoLs7UhfDNx3r+0CTinik=
+	t=1723043458; cv=none; b=lmv1Ztafb2DPHfN9PnY6ux4aFeNT6db4s6aTsvaQfQvUlMeCo3d7j1ba9zqJoxvrMXJS2Q2jqdAOjsJStqcunXoONwfWjJPsxqwNUlLlC6KxMIA0nFXRAtcfbkbY4Yt1RPp5iJaz1b5PlXBhHmMdHypR837tHGK0OFxmA58OV4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043456; c=relaxed/simple;
-	bh=D4rmtA902DIbPR0PvGneWkcNPXK21tNDzLnOqdAq7nc=;
+	s=arc-20240116; t=1723043458; c=relaxed/simple;
+	bh=FrkFCZH1Y4/nMmK42RH999nGllSNp8Zj6CumgJZrtlg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSuxtJSu/ubK4dRcHaVaG56LzrYm3/hBqSpIZU/+GLDsZzsWxC9UHxgxExJH8PBgyk0mbTfuM083wXsomDXo0JIA2l+uDuxQOmNh7DuRbCxiCCoNRuDp7Wjk2XNLa576r6ZKjHTLCv7C+6FAfUazS/TLyB0awpSSs09qY8qaXMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PHrVWrzw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TKwAJsw01AplIHNKWZV70yLOLZF3Pqpglua/mEt8ckwUHOtaQGZHRGJw3qoTG3B5NxGCiJN36e4CemixyhGA7whf4b4mWRk6i/RMYw3WMChJTTFguvFUTjEFr5SkAtkzEdL7g3kfAjCwzZHPfUK8XZhfUBJ/ygG+9TTpEkYl2SE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgGkS2gl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PHrVWrzw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74664C32781;
-	Wed,  7 Aug 2024 15:10:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgGkS2gl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B989C32781;
+	Wed,  7 Aug 2024 15:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043455;
-	bh=D4rmtA902DIbPR0PvGneWkcNPXK21tNDzLnOqdAq7nc=;
+	s=korg; t=1723043458;
+	bh=FrkFCZH1Y4/nMmK42RH999nGllSNp8Zj6CumgJZrtlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHrVWrzwcOHTFKdP7Oq9Nd6aFXIZl9qMp/F8xz1Q6YjxwC77iJl57Wc1rOWAIGc7s
-	 pv/R4rtOOHWGD8EG5OfJqmwpZidNchcyQoVLOiRVnUSoeRqooZ6ibs/a6Q9dAstNrj
-	 Qhk1zfXuOSqG4gHHki9uF51mj7o649bl7Zz7a3uA=
+	b=TgGkS2glcGhG9M3DkWuaRiFYM8czg/AFvRH/gyPQ/KNYAstU+UtY36q78myXA+aQd
+	 DbcNSVUUgKOHVjaQHnM9PTVibkrHyoH9MoGPi7Qric0eUGDG1/wXbuamBtRxO9/yKD
+	 UbGbyzQVMTejdnE5JUwYrU52xCNk1L8Ubcc2pS6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	Boris Burkov <boris@bur.io>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 098/121] btrfs: do not subtract delalloc from avail bytes
-Date: Wed,  7 Aug 2024 17:00:30 +0200
-Message-ID: <20240807150022.608295479@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 6.6 099/121] protect the fetch of ->fd[fd] in do_dup2() from mispredictions
+Date: Wed,  7 Aug 2024 17:00:31 +0200
+Message-ID: <20240807150022.635978319@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,38 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit d89c285d28491d8f10534c262ac9e6bdcbe1b4d2 upstream.
+commit 8aa37bde1a7b645816cda8b80df4753ecf172bf1 upstream.
 
-The block group's avail bytes printed when dumping a space info subtract
-the delalloc_bytes. However, as shown in btrfs_add_reserved_bytes() and
-btrfs_free_reserved_bytes(), it is added or subtracted along with
-"reserved" for the delalloc case, which means the "delalloc_bytes" is a
-part of the "reserved" bytes. So, excluding it to calculate the avail space
-counts delalloc_bytes twice, which can lead to an invalid result.
+both callers have verified that fd is not greater than ->max_fds;
+however, misprediction might end up with
+        tofree = fdt->fd[fd];
+being speculatively executed.  That's wrong for the same reasons
+why it's wrong in close_fd()/file_close_fd_locked(); the same
+solution applies - array_index_nospec(fd, fdt->max_fds) could differ
+from fd only in case of speculative execution on mispredicted path.
 
-Fixes: e50b122b832b ("btrfs: print available space for a block group when dumping a space info")
-CC: stable@vger.kernel.org # 6.6+
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/space-info.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/file.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/btrfs/space-info.c
-+++ b/fs/btrfs/space-info.c
-@@ -524,8 +524,7 @@ again:
- 
- 		spin_lock(&cache->lock);
- 		avail = cache->length - cache->used - cache->pinned -
--			cache->reserved - cache->delalloc_bytes -
--			cache->bytes_super - cache->zone_unusable;
-+			cache->reserved - cache->bytes_super - cache->zone_unusable;
- 		btrfs_info(fs_info,
- "block group %llu has %llu bytes, %llu used %llu pinned %llu reserved %llu delalloc %llu super %llu zone_unusable (%llu bytes available) %s",
- 			   cache->start, cache->length, cache->used, cache->pinned,
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -1124,6 +1124,7 @@ __releases(&files->file_lock)
+ 	 * tables and this condition does not arise without those.
+ 	 */
+ 	fdt = files_fdtable(files);
++	fd = array_index_nospec(fd, fdt->max_fds);
+ 	tofree = fdt->fd[fd];
+ 	if (!tofree && fd_is_open(fd, fdt))
+ 		goto Ebusy;
 
 
