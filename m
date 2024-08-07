@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F32778281;
-	Wed,  7 Aug 2024 15:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBFE78C92;
+	Wed,  7 Aug 2024 15:08:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043282; cv=none; b=r1aidlh2HV4xl8VC7c2gSA9xZS5sUPet7MSgR9xkwFEN7wAENJXwrIpg3Y9S6We2WZjyxLuX/jTwXLcbbs4PKaQ4CsCM+XRkDDlkfDOuICrwgiuv1jiVO/VD7ZL/ujdQkKpU6/vw2KGwvP4LtyJ1FNjdbZiMvK4bO4eBDkVRoSw=
+	t=1723043285; cv=none; b=IjWjgPRP1nZSNkbB9kHRG5XE/iUhXIJJyZ0QYi93+iOSzfNzHqczezNWcOAWz9m1Q2CDrIx9J9TYnhWzFfqdByUDY/BvWJPwbFNg0gEG8yddyCTxv9vq2Tzjg7W7qDY5sVxOqV3aSvJDyhy6lMP/8l6XYau3bhDeJJAVHi2yjyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043282; c=relaxed/simple;
-	bh=h5OdWM/yDLKAnoRjJnXIsb/JrYZaL5D7sps9zz55nj4=;
+	s=arc-20240116; t=1723043285; c=relaxed/simple;
+	bh=DFdYc8tLm8XsPfeBDQwWzd1HixQPfPvr1prccoG+6/U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h2uC2xfv3YvO/JNJp0xJsrUkhHant8i0QFhIHtFiOlIUAVMz5Ba5MMFcvxFX+R3sVeUUyYKTpirdRHNYN6SkY79bAekwgdY4YbOVTvFpFLsxuA/UBHy26QIoyM0x1unoMrcj2MDtqtlOS9td7AJAAYOTPQQwlt7Ocm/Wz3K3e3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6O0Xhie; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rx0GHkMfBAfwVZvntmVtffvkhoDTO3teySPYvWc3I5dign4ZK8iQcLrF18B6srvFx/miw0Spz1OxTlG+qKKYwg3MbJbTgm7mgSonAY9egvafew3VxzK9d0kTRVBOMmD1EkQOLiEguBa6ITu6jl+4u2Mv70VHwCHSuB6fDKduH98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnZiN1K2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6O0Xhie"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF37C4AF0B;
-	Wed,  7 Aug 2024 15:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnZiN1K2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7AAC4AF0D;
+	Wed,  7 Aug 2024 15:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043282;
-	bh=h5OdWM/yDLKAnoRjJnXIsb/JrYZaL5D7sps9zz55nj4=;
+	s=korg; t=1723043285;
+	bh=DFdYc8tLm8XsPfeBDQwWzd1HixQPfPvr1prccoG+6/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s6O0XhienWO8KE/GV8j7Fjifrs1B/BRRyJ18UsjStC6YmHEfag6tVUPBeZ2+GS1Bg
-	 4RTfxPI+HnKFDYuUY3/+rUwycErouI8W7dXv8nyRnbd/STqkPH0U/HhlDXGjETflCI
-	 38XE5zPZdwk5uYL1e9tafbrTgcvgYjQ1DE4czYFE=
+	b=AnZiN1K2/34mL5Btf79tLUt2Stktbuv21RKCZN03IB9NhA1PWSvDxBtGyjJMPAsMu
+	 /lQHX+SCoNDANPyKYAWugEcf6rfCS+GokYTzDWrRD0SpiufreHhfycP4J9PhTbKOH7
+	 uHucRTx4qMnyNtIaoKpA4Rei3tRySRTtkmksxsyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 034/121] video: Provide screen_info_get_pci_dev() to find screen_infos PCI device
-Date: Wed,  7 Aug 2024 16:59:26 +0200
-Message-ID: <20240807150020.440212849@linuxfoundation.org>
+Subject: [PATCH 6.6 035/121] firmware/sysfb: Update screen_info for relocated EFI framebuffers
+Date: Wed,  7 Aug 2024 16:59:27 +0200
+Message-ID: <20240807150020.483198360@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,122 +53,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 036105e3a776b6fc2fe0d262896a23ff2cc2e6b1 ]
+[ Upstream commit 78aa89d1dfba1e3cf4a2e053afa3b4c4ec622371 ]
 
-Add screen_info_get_pci_dev() to find the PCI device of an instance
-of screen_info. Does nothing on systems without PCI bus.
+On ARM PCI systems, the PCI hierarchy might be reconfigured during
+boot and the firmware framebuffer might move as a result of that.
+The values in screen_info will then be invalid.
 
-v3:
-	* search PCI device with pci_get_base_class() (Sui)
-v2:
-	* remove ret from screen_info_pci_dev() (Javier)
+Work around this problem by tracking the framebuffer's initial
+location before it get relocated; then fix the screen_info state
+between reloaction and creating the firmware framebuffer's device.
+
+This functionality has been lifted from efifb. See the commit message
+of commit 55d728a40d36 ("efi/fb: Avoid reconfiguration of BAR that
+covers the framebuffer") for more information.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240212090736.11464-3-tzimmermann@suse.de
+Link: https://patchwork.freedesktop.org/patch/msgid/20240212090736.11464-8-tzimmermann@suse.de
 Stable-dep-of: c2bc958b2b03 ("fbdev: vesafb: Detect VGA compatibility from screen info's VESA attributes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/Makefile          |  1 +
- drivers/video/screen_info_pci.c | 48 +++++++++++++++++++++++++++++++++
- include/linux/screen_info.h     | 10 +++++++
- 3 files changed, 59 insertions(+)
- create mode 100644 drivers/video/screen_info_pci.c
+ drivers/firmware/sysfb.c        |  2 +
+ drivers/video/screen_info_pci.c | 88 +++++++++++++++++++++++++++++++++
+ include/linux/screen_info.h     | 16 ++++++
+ 3 files changed, 106 insertions(+)
 
-diff --git a/drivers/video/Makefile b/drivers/video/Makefile
-index b929b664d52cd..6bbf87c1b579e 100644
---- a/drivers/video/Makefile
-+++ b/drivers/video/Makefile
-@@ -9,6 +9,7 @@ obj-$(CONFIG_VIDEO_NOMODESET)     += nomodeset.o
- obj-$(CONFIG_HDMI)                += hdmi.o
+diff --git a/drivers/firmware/sysfb.c b/drivers/firmware/sysfb.c
+index 3c197db42c9d9..defd7a36cb08a 100644
+--- a/drivers/firmware/sysfb.c
++++ b/drivers/firmware/sysfb.c
+@@ -77,6 +77,8 @@ static __init int sysfb_init(void)
+ 	bool compatible;
+ 	int ret = 0;
  
- screen_info-y			  := screen_info_generic.o
-+screen_info-$(CONFIG_PCI)         += screen_info_pci.o
- 
- obj-$(CONFIG_VT)		  += console/
- obj-$(CONFIG_FB_STI)		  += console/
++	screen_info_apply_fixups();
++
+ 	mutex_lock(&disable_lock);
+ 	if (disabled)
+ 		goto unlock_mutex;
 diff --git a/drivers/video/screen_info_pci.c b/drivers/video/screen_info_pci.c
-new file mode 100644
-index 0000000000000..d8985a54ce717
---- /dev/null
+index d8985a54ce717..6c58335171410 100644
+--- a/drivers/video/screen_info_pci.c
 +++ b/drivers/video/screen_info_pci.c
-@@ -0,0 +1,48 @@
-+// SPDX-License-Identifier: GPL-2.0
+@@ -1,7 +1,95 @@
+ // SPDX-License-Identifier: GPL-2.0
+ 
+ #include <linux/pci.h>
++#include <linux/printk.h>
+ #include <linux/screen_info.h>
++#include <linux/string.h>
 +
-+#include <linux/pci.h>
-+#include <linux/screen_info.h>
++static struct pci_dev *screen_info_lfb_pdev;
++static size_t screen_info_lfb_bar;
++static resource_size_t screen_info_lfb_offset;
++static struct resource screen_info_lfb_res = DEFINE_RES_MEM(0, 0);
 +
-+static struct pci_dev *__screen_info_pci_dev(struct resource *res)
++static bool __screen_info_relocation_is_valid(const struct screen_info *si, struct resource *pr)
 +{
-+	struct pci_dev *pdev = NULL;
-+	const struct resource *r = NULL;
++	u64 size = __screen_info_lfb_size(si, screen_info_video_type(si));
 +
-+	if (!(res->flags & IORESOURCE_MEM))
-+		return NULL;
++	if (screen_info_lfb_offset > resource_size(pr))
++		return false;
++	if (size > resource_size(pr))
++		return false;
++	if (resource_size(pr) - size < screen_info_lfb_offset)
++		return false;
 +
-+	while (!r && (pdev = pci_get_base_class(PCI_BASE_CLASS_DISPLAY, pdev))) {
-+		r = pci_find_resource(pdev, res);
-+	}
-+
-+	return pdev;
++	return true;
 +}
 +
-+/**
-+ * screen_info_pci_dev() - Return PCI parent device that contains screen_info's framebuffer
-+ * @si: the screen_info
-+ *
-+ * Returns:
-+ * The screen_info's parent device or NULL on success, or a pointer-encoded
-+ * errno value otherwise. The value NULL is not an error. It signals that no
-+ * PCI device has been found.
-+ */
-+struct pci_dev *screen_info_pci_dev(const struct screen_info *si)
++void screen_info_apply_fixups(void)
 +{
-+	struct resource res[SCREEN_INFO_MAX_RESOURCES];
-+	ssize_t i, numres;
++	struct screen_info *si = &screen_info;
 +
-+	numres = screen_info_resources(si, res, ARRAY_SIZE(res));
-+	if (numres < 0)
-+		return ERR_PTR(numres);
++	if (screen_info_lfb_pdev) {
++		struct resource *pr = &screen_info_lfb_pdev->resource[screen_info_lfb_bar];
++
++		if (pr->start != screen_info_lfb_res.start) {
++			if (__screen_info_relocation_is_valid(si, pr)) {
++				/*
++				 * Only update base if we have an actual
++				 * relocation to a valid I/O range.
++				 */
++				__screen_info_set_lfb_base(si, pr->start + screen_info_lfb_offset);
++				pr_info("Relocating firmware framebuffer to offset %pa[d] within %pr\n",
++					&screen_info_lfb_offset, pr);
++			} else {
++				pr_warn("Invalid relocating, disabling firmware framebuffer\n");
++			}
++		}
++	}
++}
++
++static void screen_info_fixup_lfb(struct pci_dev *pdev)
++{
++	unsigned int type;
++	struct resource res[SCREEN_INFO_MAX_RESOURCES];
++	size_t i, numres;
++	int ret;
++	const struct screen_info *si = &screen_info;
++
++	if (screen_info_lfb_pdev)
++		return; // already found
++
++	type = screen_info_video_type(si);
++	if (type != VIDEO_TYPE_EFI)
++		return; // only applies to EFI
++
++	ret = screen_info_resources(si, res, ARRAY_SIZE(res));
++	if (ret < 0)
++		return;
++	numres = ret;
 +
 +	for (i = 0; i < numres; ++i) {
-+		struct pci_dev *pdev = __screen_info_pci_dev(&res[i]);
++		struct resource *r = &res[i];
++		const struct resource *pr;
 +
-+		if (pdev)
-+			return pdev;
++		if (!(r->flags & IORESOURCE_MEM))
++			continue;
++		pr = pci_find_resource(pdev, r);
++		if (!pr)
++			continue;
++
++		/*
++		 * We've found a PCI device with the framebuffer
++		 * resource. Store away the parameters to track
++		 * relocation of the framebuffer aperture.
++		 */
++		screen_info_lfb_pdev = pdev;
++		screen_info_lfb_bar = pr - pdev->resource;
++		screen_info_lfb_offset = r->start - pr->start;
++		memcpy(&screen_info_lfb_res, r, sizeof(screen_info_lfb_res));
 +	}
-+
-+	return NULL;
 +}
-+EXPORT_SYMBOL(screen_info_pci_dev);
++DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_ANY_ID, PCI_ANY_ID, PCI_BASE_CLASS_DISPLAY, 16,
++			       screen_info_fixup_lfb);
+ 
+ static struct pci_dev *__screen_info_pci_dev(struct resource *res)
+ {
 diff --git a/include/linux/screen_info.h b/include/linux/screen_info.h
-index e7a02c5609d12..0eae08e3c6f90 100644
+index 0eae08e3c6f90..75303c126285a 100644
 --- a/include/linux/screen_info.h
 +++ b/include/linux/screen_info.h
-@@ -9,6 +9,7 @@
+@@ -4,6 +4,8 @@
+ 
+ #include <uapi/linux/screen_info.h>
+ 
++#include <linux/bits.h>
++
+ /**
+  * SCREEN_INFO_MAX_RESOURCES - maximum number of resources per screen_info
   */
- #define SCREEN_INFO_MAX_RESOURCES	3
+@@ -27,6 +29,17 @@ static inline u64 __screen_info_lfb_base(const struct screen_info *si)
+ 	return lfb_base;
+ }
  
-+struct pci_dev;
- struct resource;
- 
- static inline bool __screen_info_has_lfb(unsigned int type)
-@@ -104,6 +105,15 @@ static inline unsigned int screen_info_video_type(const struct screen_info *si)
- 
++static inline void __screen_info_set_lfb_base(struct screen_info *si, u64 lfb_base)
++{
++	si->lfb_base = lfb_base & GENMASK_ULL(31, 0);
++	si->ext_lfb_base = (lfb_base & GENMASK_ULL(63, 32)) >> 32;
++
++	if (si->ext_lfb_base)
++		si->capabilities |= VIDEO_CAPABILITY_64BIT_BASE;
++	else
++		si->capabilities &= ~VIDEO_CAPABILITY_64BIT_BASE;
++}
++
+ static inline u64 __screen_info_lfb_size(const struct screen_info *si, unsigned int type)
+ {
+ 	u64 lfb_size = si->lfb_size;
+@@ -106,8 +119,11 @@ static inline unsigned int screen_info_video_type(const struct screen_info *si)
  ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num);
  
-+#if defined(CONFIG_PCI)
-+struct pci_dev *screen_info_pci_dev(const struct screen_info *si);
-+#else
-+static inline struct pci_dev *screen_info_pci_dev(const struct screen_info *si)
-+{
-+	return NULL;
-+}
-+#endif
-+
- extern struct screen_info screen_info;
- 
- #endif /* _SCREEN_INFO_H */
+ #if defined(CONFIG_PCI)
++void screen_info_apply_fixups(void);
+ struct pci_dev *screen_info_pci_dev(const struct screen_info *si);
+ #else
++static inline void screen_info_apply_fixups(void)
++{ }
+ static inline struct pci_dev *screen_info_pci_dev(const struct screen_info *si)
+ {
+ 	return NULL;
 -- 
 2.43.0
 
