@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6342F84A4E;
-	Wed,  7 Aug 2024 15:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E05A78B4C;
+	Wed,  7 Aug 2024 15:04:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043062; cv=none; b=WLMlWL/0lgt8X/6+ORU52SiacWxGorM5jG2/CCJBHrPZnv2SdgPBtFwAd2dcdUL8v46/BKotVs1yFAWyLbsmH6p35UbTpgxgmFHvaHCCv1gj9fOJkeYfhD4WAll4yt81x/avEuvWSlfGAhcfIvQ4PCFTeQ2qwzwwGR6rNhXFIvg=
+	t=1723043065; cv=none; b=ngOiubMpS6F13rYQLkhVzJxuKBqRPi9Pd4bT0ePJtVV5ojbzCxTwemoqYgEMmmpospSCqn97Zr0coDjeMrgy0unAP+f9isramH7czyOeWliWg1DU/IEHfJmauYqPrdsbAJUv0zZKCmhZxDXCXIdC3XMJ8LyNkV4mEq6AlpgZbDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043062; c=relaxed/simple;
-	bh=JUharwETHCVC8tWLHRPhSeOKRFYOmEWbZowle9xPmkE=;
+	s=arc-20240116; t=1723043065; c=relaxed/simple;
+	bh=OQUiSnMWfFGiAqGpJxQK4eWndaHBcQlt4ugep2f5opk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kw81C2GcwdJrLHaMSsrRv5OlhnjEWX6ETo6GOfRozsN67xzLI+sA98siaN+hEJMvy/NHlU5P4NXxXivavlBUyQJ1yn1TPf8JLYHqgLmEfraC5DMqtf67MZPtEBllcbjM544AP4Ey7rEHNe5QuuSiaUzGMXX6AUKUHGWIwYiHb7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgNqvzgj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IDdC6NqsZ1u07OCDHfTaK6qXtNfWC2zLOQJKAGX7vwXX2/dDpuwapqN17lbq9QH/idvye9J9oY5FokyznIUny8f9/SJheLE3FT7TD25Ob2eejdCY3hZl7KEnGeT2bHQYA4HaCJo1kp7IOfqJX7MGau9Uz+Aswm48ox0+7U8YkA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eIOmqa1w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgNqvzgj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4BAFC4AF0D;
-	Wed,  7 Aug 2024 15:04:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eIOmqa1w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EE5C32781;
+	Wed,  7 Aug 2024 15:04:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043062;
-	bh=JUharwETHCVC8tWLHRPhSeOKRFYOmEWbZowle9xPmkE=;
+	s=korg; t=1723043064;
+	bh=OQUiSnMWfFGiAqGpJxQK4eWndaHBcQlt4ugep2f5opk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PgNqvzgjXoVfs+dC8ZElq7HejYug4gS9AHxMveiXVe0K9XuC7wIBzaevIPykukp6J
-	 lAoBPWEX+8WF3MLbDwJ/JMGhFbcKacYXgMT6o7hufjoEaIImaeu8ObxyXg5pF6KlIu
-	 kTL2qY9XUq27gikmbbs88jIDqfg9Sk7WyS/pCYCM=
+	b=eIOmqa1wDAokLnRvUIrxIbQNATfDSiQ3DnxTAu436zrLLbk+bj5o0snjypnYXhU04
+	 nAABNp3SLmuiTu9pgwxSgShYrhgJLDaOvSGGk3kCTP9LpQBlW528Kac6RfZQCnZgV9
+	 OSKHT7yndjMxTwzMAyLNt8eS347qARgKNcGFrmHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aristeu Rozanski <aris@redhat.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.10 077/123] s390/fpu: Re-add exception handling in load_fpu_state()
-Date: Wed,  7 Aug 2024 16:59:56 +0200
-Message-ID: <20240807150023.290844648@linuxfoundation.org>
+	Patryk Duda <patrykd@google.com>,
+	Tzung-Bi Shih <tzungbi@kernel.org>
+Subject: [PATCH 6.10 078/123] platform/chrome: cros_ec_proto: Lock device when updating MKBP version
+Date: Wed,  7 Aug 2024 16:59:57 +0200
+Message-ID: <20240807150023.325296842@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -51,43 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Patryk Duda <patrykd@google.com>
 
-commit 4734406c39238cbeafe66f0060084caa3247ff53 upstream.
+commit df615907f1bf907260af01ccb904d0e9304b5278 upstream.
 
-With the recent rewrite of the fpu code exception handling for the
-lfpc instruction within load_fpu_state() was erroneously removed.
+The cros_ec_get_host_command_version_mask() function requires that the
+caller must have ec_dev->lock mutex before calling it. This requirement
+was not met and as a result it was possible that two commands were sent
+to the device at the same time.
 
-Add it again to prevent that loading invalid floating point register
-values cause an unhandled specification exception.
+The problem was observed while using UART backend which doesn't use any
+additional locks, unlike SPI backend which locks the controller until
+response is received.
 
-Fixes: 8c09871a950a ("s390/fpu: limit save and restore to used registers")
+Fixes: f74c7557ed0d ("platform/chrome: cros_ec_proto: Update version on GET_NEXT_EVENT failure")
 Cc: stable@vger.kernel.org
-Reported-by: Aristeu Rozanski <aris@redhat.com>
-Tested-by: Aristeu Rozanski <aris@redhat.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Patryk Duda <patrykd@google.com>
+Link: https://lore.kernel.org/r/20240730104425.607083-1-patrykd@google.com
+Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/fpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/chrome/cros_ec_proto.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/s390/kernel/fpu.c b/arch/s390/kernel/fpu.c
-index fa90bbdc5ef9..6f2e87920288 100644
---- a/arch/s390/kernel/fpu.c
-+++ b/arch/s390/kernel/fpu.c
-@@ -113,7 +113,7 @@ void load_fpu_state(struct fpu *state, int flags)
- 	int mask;
- 
- 	if (flags & KERNEL_FPC)
--		fpu_lfpc(&state->fpc);
-+		fpu_lfpc_safe(&state->fpc);
- 	if (!cpu_has_vx()) {
- 		if (flags & KERNEL_VXR_V0V7)
- 			load_fp_regs_vx(state->vxrs);
--- 
-2.46.0
-
+--- a/drivers/platform/chrome/cros_ec_proto.c
++++ b/drivers/platform/chrome/cros_ec_proto.c
+@@ -805,9 +805,11 @@ int cros_ec_get_next_event(struct cros_e
+ 	if (ret == -ENOPROTOOPT) {
+ 		dev_dbg(ec_dev->dev,
+ 			"GET_NEXT_EVENT returned invalid version error.\n");
++		mutex_lock(&ec_dev->lock);
+ 		ret = cros_ec_get_host_command_version_mask(ec_dev,
+ 							EC_CMD_GET_NEXT_EVENT,
+ 							&ver_mask);
++		mutex_unlock(&ec_dev->lock);
+ 		if (ret < 0 || ver_mask == 0)
+ 			/*
+ 			 * Do not change the MKBP supported version if we can't
 
 
