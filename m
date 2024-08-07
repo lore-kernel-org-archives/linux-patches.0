@@ -1,176 +1,79 @@
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCA82209B
-	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 16:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C5D13BACE
+	for <patches@lists.linux.dev>; Wed,  7 Aug 2024 17:38:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723048701; cv=none; b=LXdjlaOB0D0lSBlramZS6HO9a0dhLeFyuEcwmYP1ub367f66r5ing5d3rTFqyNwMCGK53ERUKDgJQOcGMGI9LaDsupVhBb6oqVEJAJGj88bsSGFcm3+hsRbsqC6xwyjgCp7DtiAD3r9bb57WTEmGYZgGU03Ih10tUV2cQyvOwss=
+	t=1723052331; cv=none; b=baJCHhdSvMHG4bcZ5abKTi5RC4po2//dDZGMpFUiPkgcC9o42Lyfa1eS3E+gBBkmPJYTY9Ouu/KA/clLn2jbWh+v+tSNZEYeRgUY5MDIXbztdsc2Gx2c0mh2Knjy7VQIgA6ernyS+tqqofcYWgud2f/MFB6o631VBMj57pFxzQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723048701; c=relaxed/simple;
-	bh=swXe+VWaAkni4Hx0T2da1vs9jbN54TFsI8Ydd4FkgFo=;
+	s=arc-20240116; t=1723052331; c=relaxed/simple;
+	bh=G34MLcZek6ZJZmuPIY647FHUQkHgp9qvo38MQTEokPs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cAojiDBk0VyixpI4RMQwWRv7gd15AcTSUbxIGPstA9c8Dz4MaE4b0DnbXbkyyJtib2kjLoP81ldFPtKAKZIhu5oAK4tV24DJJFe6G/oWBPc/p2AfYn/68dT5sJo3mq4rGi+sCWaGSxNQ/wqlBcV484FDDjx/p3lXR8KhfWURxoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net; spf=pass smtp.mailfrom=weissschuh.net; dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b=CmbFhUFN; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=weissschuh.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=weissschuh.net header.i=@weissschuh.net header.b="CmbFhUFN"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=weissschuh.net;
-	s=mail; t=1723048693;
-	bh=swXe+VWaAkni4Hx0T2da1vs9jbN54TFsI8Ydd4FkgFo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CmbFhUFNeIm0z+ciBCp4l8554iUhkUGfHEz7XYaAxc5jQl3Ruix7pGpezPAOSrpGO
-	 oE/pJD3Y+nIGcFsW2i8adcZPi4CYWj5xDG18yaMqoun8bM6WqqHjSYQ2vdZoDLdlNa
-	 J6gs6L67/fBaKxcdxZzYNHkzCxxT8D15+j1we7mc=
-Date: Wed, 7 Aug 2024 18:38:13 +0200
-From: Thomas =?utf-8?Q?Wei=C3=9Fschuh?= <linux@weissschuh.net>
+	 Content-Type:Content-Disposition:In-Reply-To; b=qP+qC8ZhQYTuX9TS9BqlbLGqkmnohOLRsh+qUXy4hxy1Gw43Q+sjELRwfAkhywZf0OsQrks9mHWZFI9Ce/D5ggq8ELdnGAr+6ucOOZS4RGiqgzjd1BO1acuegGObtf3UPwPXAaCLgPY2GO+6TI/DPbdiPt0KudU2xgUlwz/8pB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 4F6161C0082; Wed,  7 Aug 2024 19:33:29 +0200 (CEST)
+Date: Wed, 7 Aug 2024 19:32:50 +0200
+From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Joel Granados <j.granados@samsung.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.6 015/121] sysctl: treewide: drop unused argument
- ctl_table_root::set_ownership(table)
-Message-ID: <0352ae40-ba3e-4d27-84c6-19926a787c33@t-8ch.de>
-References: <20240807150019.412911622@linuxfoundation.org>
- <20240807150019.868023928@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc1 review
+Message-ID: <ZrOvwlaMUY7+KvZs@duo.ucw.cz>
+References: <20240807150039.247123516@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YO9CkmFFup0qxjMs"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20240807150019.868023928@linuxfoundation.org>
+In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 
-Hi Greg,
 
-On 2024-08-07 16:59:07+0000, Greg Kroah-Hartman wrote:
-> 6.6-stable review patch.  If anyone has any objections, please let me know.
+--YO9CkmFFup0qxjMs
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't think this has any value being backported to any version.
+Hi!
 
-> 
-> ------------------
-> 
-> From: Thomas Weißschuh <linux@weissschuh.net>
-> 
-> [ Upstream commit 520713a93d550406dae14d49cdb8778d70cecdfd ]
-> 
-> Remove the 'table' argument from set_ownership as it is never used. This
-> change is a step towards putting "struct ctl_table" into .rodata and
-> eventually having sysctl core only use "const struct ctl_table".
-> 
-> The patch was created with the following coccinelle script:
-> 
->   @@
->   identifier func, head, table, uid, gid;
->   @@
-> 
->   void func(
->     struct ctl_table_header *head,
->   - struct ctl_table *table,
->     kuid_t *uid, kgid_t *gid)
->   { ... }
-> 
-> No additional occurrences of 'set_ownership' were found after doing a
-> tree-wide search.
-> 
-> Reviewed-by: Joel Granados <j.granados@samsung.com>
-> Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-> Signed-off-by: Joel Granados <j.granados@samsung.com>
-> Stable-dep-of: 98ca62ba9e2b ("sysctl: always initialize i_uid/i_gid")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  fs/proc/proc_sysctl.c  | 2 +-
->  include/linux/sysctl.h | 1 -
->  ipc/ipc_sysctl.c       | 3 +--
->  ipc/mq_sysctl.c        | 3 +--
->  net/sysctl_net.c       | 1 -
->  5 files changed, 3 insertions(+), 7 deletions(-)
-> 
-> diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-> index 5b5cdc747cef3..cec67e6a6678f 100644
-> --- a/fs/proc/proc_sysctl.c
-> +++ b/fs/proc/proc_sysctl.c
-> @@ -481,7 +481,7 @@ static struct inode *proc_sys_make_inode(struct super_block *sb,
->  	}
->  
->  	if (root->set_ownership)
-> -		root->set_ownership(head, table, &inode->i_uid, &inode->i_gid);
-> +		root->set_ownership(head, &inode->i_uid, &inode->i_gid);
->  	else {
->  		inode->i_uid = GLOBAL_ROOT_UID;
->  		inode->i_gid = GLOBAL_ROOT_GID;
-> diff --git a/include/linux/sysctl.h b/include/linux/sysctl.h
-> index 61b40ea81f4d3..698a71422a14b 100644
-> --- a/include/linux/sysctl.h
-> +++ b/include/linux/sysctl.h
-> @@ -205,7 +205,6 @@ struct ctl_table_root {
->  	struct ctl_table_set default_set;
->  	struct ctl_table_set *(*lookup)(struct ctl_table_root *root);
->  	void (*set_ownership)(struct ctl_table_header *head,
-> -			      struct ctl_table *table,
->  			      kuid_t *uid, kgid_t *gid);
->  	int (*permissions)(struct ctl_table_header *head, struct ctl_table *table);
->  };
-> diff --git a/ipc/ipc_sysctl.c b/ipc/ipc_sysctl.c
-> index 01c4a50d22b2d..b2f39a86f4734 100644
-> --- a/ipc/ipc_sysctl.c
-> +++ b/ipc/ipc_sysctl.c
-> @@ -192,7 +192,6 @@ static int set_is_seen(struct ctl_table_set *set)
->  }
->  
->  static void ipc_set_ownership(struct ctl_table_header *head,
-> -			      struct ctl_table *table,
->  			      kuid_t *uid, kgid_t *gid)
->  {
->  	struct ipc_namespace *ns =
-> @@ -224,7 +223,7 @@ static int ipc_permissions(struct ctl_table_header *head, struct ctl_table *tabl
->  		kuid_t ns_root_uid;
->  		kgid_t ns_root_gid;
->  
-> -		ipc_set_ownership(head, table, &ns_root_uid, &ns_root_gid);
-> +		ipc_set_ownership(head, &ns_root_uid, &ns_root_gid);
->  
->  		if (uid_eq(current_euid(), ns_root_uid))
->  			mode >>= 6;
-> diff --git a/ipc/mq_sysctl.c b/ipc/mq_sysctl.c
-> index 21fba3a6edaf7..6bb1c5397c69b 100644
-> --- a/ipc/mq_sysctl.c
-> +++ b/ipc/mq_sysctl.c
-> @@ -78,7 +78,6 @@ static int set_is_seen(struct ctl_table_set *set)
->  }
->  
->  static void mq_set_ownership(struct ctl_table_header *head,
-> -			     struct ctl_table *table,
->  			     kuid_t *uid, kgid_t *gid)
->  {
->  	struct ipc_namespace *ns =
-> @@ -97,7 +96,7 @@ static int mq_permissions(struct ctl_table_header *head, struct ctl_table *table
->  	kuid_t ns_root_uid;
->  	kgid_t ns_root_gid;
->  
-> -	mq_set_ownership(head, table, &ns_root_uid, &ns_root_gid);
-> +	mq_set_ownership(head, &ns_root_uid, &ns_root_gid);
->  
->  	if (uid_eq(current_euid(), ns_root_uid))
->  		mode >>= 6;
-> diff --git a/net/sysctl_net.c b/net/sysctl_net.c
-> index 051ed5f6fc937..a0a7a79991f9f 100644
-> --- a/net/sysctl_net.c
-> +++ b/net/sysctl_net.c
-> @@ -54,7 +54,6 @@ static int net_ctl_permissions(struct ctl_table_header *head,
->  }
->  
->  static void net_ctl_set_ownership(struct ctl_table_header *head,
-> -				  struct ctl_table *table,
->  				  kuid_t *uid, kgid_t *gid)
->  {
->  	struct net *net = container_of(head->set, struct net, sysctls);
-> -- 
-> 2.43.0
-> 
-> 
-> 
+> This is the start of the stable review cycle for the 6.1.104 release.
+> There are 86 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+6.1.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,        Managing Director: Erika Unter
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--YO9CkmFFup0qxjMs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iFwEABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZrOvwgAKCRAw5/Bqldv6
+8iUSAJinslmJCrfhZq6IulbXHydHv7rAAKCEL1OeNkbaE1dkP0bI1v3fRuWcYA==
+=sThu
+-----END PGP SIGNATURE-----
+
+--YO9CkmFFup0qxjMs--
