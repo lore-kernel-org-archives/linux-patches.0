@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DDD52F62;
-	Wed,  7 Aug 2024 15:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F872374CC;
+	Wed,  7 Aug 2024 15:15:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043750; cv=none; b=J0FNQndywKQm73JIcxBaKkjYangqRolSZEuG6ksomPEmR9k7GVLXiRkkINbQ87xiFHCW3t4ODG8iMbOSZtRDDCLlwfe/PZpVV+o6avoLu1CGFvaWVdWoQ7a83Sm1RTd5vjlKXXabCy2upmIp+1ih5283j5sfRPEeX4F67uA89BY=
+	t=1723043753; cv=none; b=SZY47OuXmkqKNTWWQ/+H3al8i8fc65H0IR/NmM4VIfO0UnARaT8dvdgE+XSJKfA5+5OM0/tLjwSAMp813IBsLWN7R89y+LT0YuNho5knDsgkR2b6QMdjDVT/bTj1ww/c+/8zj708WaHnwqA3cUgYyqUJ5kh6FugnrJuJ3GOVm6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043750; c=relaxed/simple;
-	bh=846lUJ+rO/bDq47+6KdkTH0J9SQB8roi9vpy6lBdFLE=;
+	s=arc-20240116; t=1723043753; c=relaxed/simple;
+	bh=/zDMgqT515O7LnOR/PwwYt8sB0gX3yq0EjXFUIaUOWw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B7XeDtsr8ubO7D7rx76lU1kKcI6/BA9Jn5taIKQkD/FurPE2Kor7jXoyz0DFbonTDSjX4kLE5PPeOtb5PMVUgTqixEG9K7YI574gIcrl7Fvx2wNLoGla+VOoIwnrWFpnr/sELVgf2DSNV0ctlHUfbndxCPoyCdO/8WJL0pJiL74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IjLX3Xah; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ah4fSgP15J0NX6pzyxbR/VWWzgUHrFyGqMg0aPN6npBzanTtU0lY02nbNGgrvcCmiwG7wIJHEDzD4drzijQEWVBTuRFvZXy575xu1IO7x27E3AnFnhPi/ovpY28jf7wpOE3V3JEFLYLzjjFQRiN3tTWjRAIU3TK5LCMx3rMQn8w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L+dN+NyN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IjLX3Xah"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58E2EC32781;
-	Wed,  7 Aug 2024 15:15:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L+dN+NyN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00298C32781;
+	Wed,  7 Aug 2024 15:15:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043750;
-	bh=846lUJ+rO/bDq47+6KdkTH0J9SQB8roi9vpy6lBdFLE=;
+	s=korg; t=1723043753;
+	bh=/zDMgqT515O7LnOR/PwwYt8sB0gX3yq0EjXFUIaUOWw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IjLX3XahrNuz4dpItRd/otBqVoN7HR6k0qwxaoHmM5YL9AyE6Aye71CqUSP06BY0W
-	 MB1ZAZlo2pQq1MeWkp21y9dqavPVF2n0v6qRtCZKfjsqI8Bd3hdMYieB2pG5CzwhbY
-	 qYGm34MvRKrSW+Gcxhvhosnb/+U2nBEa50C4L5Fw=
+	b=L+dN+NyNug1qU/EqdSpZFJnq9cAdm1Qq0aSEJEPBpxmX6K6j659JXxfvuN3pv1QLu
+	 f5MztOHLDeOb+pzlksU8gWlfaB99eAueiaYsdSFy+JBQ/dxt014DFDJlSswsmm1wsf
+	 GDaWpPEve8klvx9sv2NXObRkBrm2mVhfGydFiQ6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Mark Bloch <mbloch@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 59/86] netfilter: iptables: Fix potential null-ptr-deref in ip6table_nat_table_init().
-Date: Wed,  7 Aug 2024 17:00:38 +0200
-Message-ID: <20240807150041.199776081@linuxfoundation.org>
+Subject: [PATCH 6.1 60/86] net/mlx5: Lag, dont use the hardcoded value of the first port
+Date: Wed,  7 Aug 2024 17:00:39 +0200
+Message-ID: <20240807150041.228789385@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150039.247123516@linuxfoundation.org>
 References: <20240807150039.247123516@linuxfoundation.org>
@@ -52,62 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Mark Bloch <mbloch@nvidia.com>
 
-[ Upstream commit c22921df777de5606f1047b1345b8d22ef1c0b34 ]
+[ Upstream commit 3fda84dc090390573cfbd0b1d70372663315de21 ]
 
-ip6table_nat_table_init() accesses net->gen->ptr[ip6table_nat_net_ops.id],
-but the function is exposed to user space before the entry is allocated
-via register_pernet_subsys().
+The cited commit didn't change the body of the loop as it should.
+It shouldn't be using MLX5_LAG_P1.
 
-Let's call register_pernet_subsys() before xt_register_template().
-
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 7e978e7714d6 ("net/mlx5: Lag, use actual number of lag ports")
+Signed-off-by: Mark Bloch <mbloch@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/20240730061638.1831002-5-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6table_nat.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
-index bf3cb3a13600c..52d597b16b658 100644
---- a/net/ipv6/netfilter/ip6table_nat.c
-+++ b/net/ipv6/netfilter/ip6table_nat.c
-@@ -147,23 +147,27 @@ static struct pernet_operations ip6table_nat_net_ops = {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index a283d8ae466b6..4b4d761081115 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -1483,7 +1483,7 @@ u8 mlx5_lag_get_slave_port(struct mlx5_core_dev *dev,
+ 		goto unlock;
  
- static int __init ip6table_nat_init(void)
- {
--	int ret = xt_register_template(&nf_nat_ipv6_table,
--				       ip6table_nat_table_init);
-+	int ret;
- 
-+	/* net->gen->ptr[ip6table_nat_net_id] must be allocated
-+	 * before calling ip6t_nat_register_lookups().
-+	 */
-+	ret = register_pernet_subsys(&ip6table_nat_net_ops);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = register_pernet_subsys(&ip6table_nat_net_ops);
-+	ret = xt_register_template(&nf_nat_ipv6_table,
-+				   ip6table_nat_table_init);
- 	if (ret)
--		xt_unregister_template(&nf_nat_ipv6_table);
-+		unregister_pernet_subsys(&ip6table_nat_net_ops);
- 
- 	return ret;
- }
- 
- static void __exit ip6table_nat_exit(void)
- {
--	unregister_pernet_subsys(&ip6table_nat_net_ops);
- 	xt_unregister_template(&nf_nat_ipv6_table);
-+	unregister_pernet_subsys(&ip6table_nat_net_ops);
- }
- 
- module_init(ip6table_nat_init);
+ 	for (i = 0; i < ldev->ports; i++) {
+-		if (ldev->pf[MLX5_LAG_P1].netdev == slave) {
++		if (ldev->pf[i].netdev == slave) {
+ 			port = i;
+ 			break;
+ 		}
 -- 
 2.43.0
 
