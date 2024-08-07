@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220A227448;
-	Wed,  7 Aug 2024 15:09:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F8084A46;
+	Wed,  7 Aug 2024 15:09:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043365; cv=none; b=A1TaKlDjapxv4x1d+kHX4yKE8hNwcnz1fD+PZEUnwkmrDJDft4MxKWHa3Ahu2h8BM2KSmcQSD4Qnt8OBwhu7vnQd4iyFz6I2wjQeTUQXztW48Yw+anPEMym1nbMJY0NfkGMi2fkHALPM5rLs0embhBlQcbTpgrC2o+NsXHVnkqI=
+	t=1723043367; cv=none; b=fAb61Uf+yRIeqNW5rH+H92xL6GEwETnwLlbRvxEA5vdHUUKhemzXZhQks3BCBIAejMCH7unQs7lSI4bNYIhZytPeO+205ZyuymyDMFWDALcKYi6Y0AEyOOoK9qpywHOi7a+8aukb/lmmr0zBSyAMWuU5Aca2FodzLbE1eFSpTDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043365; c=relaxed/simple;
-	bh=dxeraXo47CbXyQn7gPd+j4rhikGsxrWb3KxunMH01V0=;
+	s=arc-20240116; t=1723043367; c=relaxed/simple;
+	bh=gRjYnkFcSnwR0UkyQ4wDIL2xaXVxd+5Ii3qL3QRVIpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tDwBInV2tiqZg9WMAnRGru+l2fPTqwvrAZrcapOjjXWh/vsawEFs0mgx+6VAy8ebbjgCh40+aChmqffwWQr2RxV5+8NoAUFIoGBq6jAF8xFnRZ036MOtxZCgGE5//G7SmXFddexQATMPlNL90HasnD2zUoSgIm0tfCn/Yq/aQT0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uTD7ceCb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QEWtFxdj5xUZr2USXdcRVbLAJpquHRDhZ7s9w3xzh/GWRUilSxd50SXNEHOEnDC9OKcDHm/WV/dVF5a8UjkNzYV6JG57A3lEYBq95dZMOWBhleMSdci+q4BrIO13wzkuZg3wXleifwy+VzcSs0kTTpdpXL5Ksxu8JRbc5nztYvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MMbs+EZX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uTD7ceCb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65D9FC32781;
-	Wed,  7 Aug 2024 15:09:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MMbs+EZX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 190AEC4AF0B;
+	Wed,  7 Aug 2024 15:09:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043364;
-	bh=dxeraXo47CbXyQn7gPd+j4rhikGsxrWb3KxunMH01V0=;
+	s=korg; t=1723043367;
+	bh=gRjYnkFcSnwR0UkyQ4wDIL2xaXVxd+5Ii3qL3QRVIpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uTD7ceCbepNpciRbF8MM2+TuwT63bk62mNR5Jb8XycceSBOEoKrp9PLuVE2nMcgJW
-	 mqtoVTM/bTmbKdvLJ/nVCwB3OjhbFJvqHxlNuqVdC/66Chl7aXeAQVuJEnlO/Ci7cd
-	 y8pdCQG7y9qb3y8vBIPkw6HDZkgRB3Yzj/WdeglM=
+	b=MMbs+EZX2jiNsCHWKFtepwSTp2xaHfLYj9cYhVEL1nIJDX4KpXlo5yND1TG/+cy26
+	 nAIe1O1pyyqVxE6OAhv3rZ9DguQM8i0HQoJeEoUD9VQKFlrEct72FGIUrkgtv5HTfz
+	 pyir2/JiK+ZvMopqCeXzYkA+aR/9MHb0oDu/6BGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sean Tranchetti <quic_stranche@quicinc.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jason Xing <kerneljasonxing@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 064/121] tcp: annotate data-races around tp->window_clamp
-Date: Wed,  7 Aug 2024 16:59:56 +0200
-Message-ID: <20240807150021.507309604@linuxfoundation.org>
+Subject: [PATCH 6.6 065/121] tcp: Adjust clamping window for applications specifying SO_RCVBUF
+Date: Wed,  7 Aug 2024 16:59:57 +0200
+Message-ID: <20240807150021.534621717@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,232 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
 
-[ Upstream commit f410cbea9f3d2675b4c8e52af1d1985b11b387d1 ]
+[ Upstream commit 05f76b2d634e65ab34472802d9b142ea9e03f74e ]
 
-tp->window_clamp can be read locklessly, add READ_ONCE()
-and WRITE_ONCE() annotations.
+tp->scaling_ratio is not updated based on skb->len/skb->truesize once
+SO_RCVBUF is set leading to the maximum window scaling to be 25% of
+rcvbuf after
+commit dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+and 50% of rcvbuf after
+commit 697a6c8cec03 ("tcp: increase the default TCP scaling ratio").
+50% tries to emulate the behavior of older kernels using
+sysctl_tcp_adv_win_scale with default value.
 
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Jason Xing <kerneljasonxing@gmail.com>
-Link: https://lore.kernel.org/r/20240404114231.2195171-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 05f76b2d634e ("tcp: Adjust clamping window for applications specifying SO_RCVBUF")
+Systems which were using a different values of sysctl_tcp_adv_win_scale
+in older kernels ended up seeing reduced download speeds in certain
+cases as covered in https://lists.openwall.net/netdev/2024/05/15/13
+While the sysctl scheme is no longer acceptable, the value of 50% is
+a bit conservative when the skb->len/skb->truesize ratio is later
+determined to be ~0.66.
+
+Applications not specifying SO_RCVBUF update the window scaling and
+the receiver buffer every time data is copied to userspace. This
+computation is now used for applications setting SO_RCVBUF to update
+the maximum window scaling while ensuring that the receive buffer
+is within the application specified limit.
+
+Fixes: dfa2f0483360 ("tcp: get rid of sysctl_tcp_adv_win_scale")
+Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
+Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/syncookies.c |  3 ++-
- net/ipv4/tcp.c        |  8 ++++----
- net/ipv4/tcp_input.c  | 17 ++++++++++-------
- net/ipv4/tcp_output.c | 18 ++++++++++--------
- net/ipv6/syncookies.c |  2 +-
- net/mptcp/protocol.c  |  2 +-
- net/mptcp/sockopt.c   |  2 +-
- 7 files changed, 29 insertions(+), 23 deletions(-)
+ net/ipv4/tcp_input.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
-index 3b4dafefb4b03..e143562077958 100644
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -424,7 +424,8 @@ struct sock *cookie_v4_check(struct sock *sk, struct sk_buff *skb)
- 	}
- 
- 	/* Try to redo what tcp_v4_send_synack did. */
--	req->rsk_window_clamp = tp->window_clamp ? :dst_metric(&rt->dst, RTAX_WINDOW);
-+	req->rsk_window_clamp = READ_ONCE(tp->window_clamp) ? :
-+				dst_metric(&rt->dst, RTAX_WINDOW);
- 	/* limit the window selection if the user enforce a smaller rx buffer */
- 	full_space = tcp_full_space(sk);
- 	if (sk->sk_userlocks & SOCK_RCVBUF_LOCK &&
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 91c3d8264059d..1e3202f2b7a87 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -1723,7 +1723,7 @@ int tcp_set_rcvlowat(struct sock *sk, int val)
- 	space = tcp_space_from_win(sk, val);
- 	if (space > sk->sk_rcvbuf) {
- 		WRITE_ONCE(sk->sk_rcvbuf, space);
--		tcp_sk(sk)->window_clamp = val;
-+		WRITE_ONCE(tcp_sk(sk)->window_clamp, val);
- 	}
- 	return 0;
- }
-@@ -3386,7 +3386,7 @@ int tcp_set_window_clamp(struct sock *sk, int val)
- 	if (!val) {
- 		if (sk->sk_state != TCP_CLOSE)
- 			return -EINVAL;
--		tp->window_clamp = 0;
-+		WRITE_ONCE(tp->window_clamp, 0);
- 	} else {
- 		u32 new_rcv_ssthresh, old_window_clamp = tp->window_clamp;
- 		u32 new_window_clamp = val < SOCK_MIN_RCVBUF / 2 ?
-@@ -3395,7 +3395,7 @@ int tcp_set_window_clamp(struct sock *sk, int val)
- 		if (new_window_clamp == old_window_clamp)
- 			return 0;
- 
--		tp->window_clamp = new_window_clamp;
-+		WRITE_ONCE(tp->window_clamp, new_window_clamp);
- 		if (new_window_clamp < old_window_clamp) {
- 			/* need to apply the reserved mem provisioning only
- 			 * when shrinking the window clamp
-@@ -4020,7 +4020,7 @@ int do_tcp_getsockopt(struct sock *sk, int level,
- 				      TCP_RTO_MAX / HZ);
- 		break;
- 	case TCP_WINDOW_CLAMP:
--		val = tp->window_clamp;
-+		val = READ_ONCE(tp->window_clamp);
- 		break;
- 	case TCP_INFO: {
- 		struct tcp_info info;
 diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index c2e4dac42453b..13464e35d7565 100644
+index 13464e35d7565..d0364cff65c9f 100644
 --- a/net/ipv4/tcp_input.c
 +++ b/net/ipv4/tcp_input.c
-@@ -570,19 +570,20 @@ static void tcp_init_buffer_space(struct sock *sk)
- 	maxwin = tcp_full_space(sk);
+@@ -748,8 +748,7 @@ void tcp_rcv_space_adjust(struct sock *sk)
+ 	 * <prev RTT . ><current RTT .. ><next RTT .... >
+ 	 */
  
- 	if (tp->window_clamp >= maxwin) {
--		tp->window_clamp = maxwin;
-+		WRITE_ONCE(tp->window_clamp, maxwin);
+-	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_moderate_rcvbuf) &&
+-	    !(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
++	if (READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_moderate_rcvbuf)) {
+ 		u64 rcvwin, grow;
+ 		int rcvbuf;
  
- 		if (tcp_app_win && maxwin > 4 * tp->advmss)
--			tp->window_clamp = max(maxwin -
--					       (maxwin >> tcp_app_win),
--					       4 * tp->advmss);
-+			WRITE_ONCE(tp->window_clamp,
-+				   max(maxwin - (maxwin >> tcp_app_win),
-+				       4 * tp->advmss));
- 	}
+@@ -765,12 +764,22 @@ void tcp_rcv_space_adjust(struct sock *sk)
  
- 	/* Force reservation of one segment. */
- 	if (tcp_app_win &&
- 	    tp->window_clamp > 2 * tp->advmss &&
- 	    tp->window_clamp + tp->advmss > maxwin)
--		tp->window_clamp = max(2 * tp->advmss, maxwin - tp->advmss);
-+		WRITE_ONCE(tp->window_clamp,
-+			   max(2 * tp->advmss, maxwin - tp->advmss));
+ 		rcvbuf = min_t(u64, tcp_space_from_win(sk, rcvwin),
+ 			       READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_rmem[2]));
+-		if (rcvbuf > sk->sk_rcvbuf) {
+-			WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
++		if (!(sk->sk_userlocks & SOCK_RCVBUF_LOCK)) {
++			if (rcvbuf > sk->sk_rcvbuf) {
++				WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
  
- 	tp->rcv_ssthresh = min(tp->rcv_ssthresh, tp->window_clamp);
- 	tp->snd_cwnd_stamp = tcp_jiffies32;
-@@ -768,7 +769,8 @@ void tcp_rcv_space_adjust(struct sock *sk)
- 			WRITE_ONCE(sk->sk_rcvbuf, rcvbuf);
- 
- 			/* Make the window clamp follow along.  */
--			tp->window_clamp = tcp_win_from_space(sk, rcvbuf);
-+			WRITE_ONCE(tp->window_clamp,
-+				   tcp_win_from_space(sk, rcvbuf));
+-			/* Make the window clamp follow along.  */
+-			WRITE_ONCE(tp->window_clamp,
+-				   tcp_win_from_space(sk, rcvbuf));
++				/* Make the window clamp follow along.  */
++				WRITE_ONCE(tp->window_clamp,
++					   tcp_win_from_space(sk, rcvbuf));
++			}
++		} else {
++			/* Make the window clamp follow along while being bounded
++			 * by SO_RCVBUF.
++			 */
++			int clamp = tcp_win_from_space(sk, min(rcvbuf, sk->sk_rcvbuf));
++
++			if (clamp > tp->window_clamp)
++				WRITE_ONCE(tp->window_clamp, clamp);
  		}
  	}
  	tp->rcvq_space.space = copied;
-@@ -6347,7 +6349,8 @@ static int tcp_rcv_synsent_state_process(struct sock *sk, struct sk_buff *skb,
- 
- 		if (!tp->rx_opt.wscale_ok) {
- 			tp->rx_opt.snd_wscale = tp->rx_opt.rcv_wscale = 0;
--			tp->window_clamp = min(tp->window_clamp, 65535U);
-+			WRITE_ONCE(tp->window_clamp,
-+				   min(tp->window_clamp, 65535U));
- 		}
- 
- 		if (tp->rx_opt.saw_tstamp) {
-diff --git a/net/ipv4/tcp_output.c b/net/ipv4/tcp_output.c
-index 5631041ae12cb..15c49d559db53 100644
---- a/net/ipv4/tcp_output.c
-+++ b/net/ipv4/tcp_output.c
-@@ -203,16 +203,17 @@ static inline void tcp_event_ack_sent(struct sock *sk, u32 rcv_nxt)
-  * This MUST be enforced by all callers.
-  */
- void tcp_select_initial_window(const struct sock *sk, int __space, __u32 mss,
--			       __u32 *rcv_wnd, __u32 *window_clamp,
-+			       __u32 *rcv_wnd, __u32 *__window_clamp,
- 			       int wscale_ok, __u8 *rcv_wscale,
- 			       __u32 init_rcv_wnd)
- {
- 	unsigned int space = (__space < 0 ? 0 : __space);
-+	u32 window_clamp = READ_ONCE(*__window_clamp);
- 
- 	/* If no clamp set the clamp to the max possible scaled window */
--	if (*window_clamp == 0)
--		(*window_clamp) = (U16_MAX << TCP_MAX_WSCALE);
--	space = min(*window_clamp, space);
-+	if (window_clamp == 0)
-+		window_clamp = (U16_MAX << TCP_MAX_WSCALE);
-+	space = min(window_clamp, space);
- 
- 	/* Quantize space offering to a multiple of mss if possible. */
- 	if (space > mss)
-@@ -239,12 +240,13 @@ void tcp_select_initial_window(const struct sock *sk, int __space, __u32 mss,
- 		/* Set window scaling on max possible window */
- 		space = max_t(u32, space, READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_rmem[2]));
- 		space = max_t(u32, space, READ_ONCE(sysctl_rmem_max));
--		space = min_t(u32, space, *window_clamp);
-+		space = min_t(u32, space, window_clamp);
- 		*rcv_wscale = clamp_t(int, ilog2(space) - 15,
- 				      0, TCP_MAX_WSCALE);
- 	}
- 	/* Set the clamp no higher than max representable value */
--	(*window_clamp) = min_t(__u32, U16_MAX << (*rcv_wscale), *window_clamp);
-+	WRITE_ONCE(*__window_clamp,
-+		   min_t(__u32, U16_MAX << (*rcv_wscale), window_clamp));
- }
- EXPORT_SYMBOL(tcp_select_initial_window);
- 
-@@ -3787,7 +3789,7 @@ static void tcp_connect_init(struct sock *sk)
- 	tcp_ca_dst_init(sk, dst);
- 
- 	if (!tp->window_clamp)
--		tp->window_clamp = dst_metric(dst, RTAX_WINDOW);
-+		WRITE_ONCE(tp->window_clamp, dst_metric(dst, RTAX_WINDOW));
- 	tp->advmss = tcp_mss_clamp(tp, dst_metric_advmss(dst));
- 
- 	tcp_initialize_rcv_mss(sk);
-@@ -3795,7 +3797,7 @@ static void tcp_connect_init(struct sock *sk)
- 	/* limit the window selection if the user enforce a smaller rx buffer */
- 	if (sk->sk_userlocks & SOCK_RCVBUF_LOCK &&
- 	    (tp->window_clamp > tcp_full_space(sk) || tp->window_clamp == 0))
--		tp->window_clamp = tcp_full_space(sk);
-+		WRITE_ONCE(tp->window_clamp, tcp_full_space(sk));
- 
- 	rcv_wnd = tcp_rwnd_init_bpf(sk);
- 	if (rcv_wnd == 0)
-diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
-index 8698b49dfc8de..593ead8a45d79 100644
---- a/net/ipv6/syncookies.c
-+++ b/net/ipv6/syncookies.c
-@@ -243,7 +243,7 @@ struct sock *cookie_v6_check(struct sock *sk, struct sk_buff *skb)
- 			goto out_free;
- 	}
- 
--	req->rsk_window_clamp = tp->window_clamp ? :dst_metric(dst, RTAX_WINDOW);
-+	req->rsk_window_clamp = READ_ONCE(tp->window_clamp) ? :dst_metric(dst, RTAX_WINDOW);
- 	/* limit the window selection if the user enforce a smaller rx buffer */
- 	full_space = tcp_full_space(sk);
- 	if (sk->sk_userlocks & SOCK_RCVBUF_LOCK &&
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index d2edd02a137bd..973290d08e796 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2024,7 +2024,7 @@ static void mptcp_rcv_space_adjust(struct mptcp_sock *msk, int copied)
- 				ssk = mptcp_subflow_tcp_sock(subflow);
- 				slow = lock_sock_fast(ssk);
- 				WRITE_ONCE(ssk->sk_rcvbuf, rcvbuf);
--				tcp_sk(ssk)->window_clamp = window_clamp;
-+				WRITE_ONCE(tcp_sk(ssk)->window_clamp, window_clamp);
- 				tcp_cleanup_rbuf(ssk, 1);
- 				unlock_sock_fast(ssk, slow);
- 			}
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 6e254f10b41e6..3977332c44c0a 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -1564,7 +1564,7 @@ int mptcp_set_rcvlowat(struct sock *sk, int val)
- 
- 		slow = lock_sock_fast(ssk);
- 		WRITE_ONCE(ssk->sk_rcvbuf, space);
--		tcp_sk(ssk)->window_clamp = val;
-+		WRITE_ONCE(tcp_sk(ssk)->window_clamp, val);
- 		unlock_sock_fast(ssk, slow);
- 	}
- 	return 0;
 -- 
 2.43.0
 
