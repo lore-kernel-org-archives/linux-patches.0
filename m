@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 116B174055;
-	Wed,  7 Aug 2024 15:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5951823DE;
+	Wed,  7 Aug 2024 15:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043003; cv=none; b=H6iYJcJnWsmHtxjeab3d4chD4snu0E9E8Vs+M2NX+jAQ5UrcqDWKWiUxLXcoSGOM9H6Jr/mVS1OY9DNdHxsqCUJQ++W36/BWNnV0nJPRoDU4LTRaavOdXGSQUeHxUFrsAcOBhMGGyw1QtMvaF+LbNolor9rfxjQD09whGMUrlVc=
+	t=1723043005; cv=none; b=hThrwkXYa91vH7bB+8fRBEFACf/GSuQyBorsil7t9it/jzw1RsX/+QSfRkTOVr4Uoqo0SrQVsqrkFnqe58caiz/B/Jofne+dlaYha40lfo3/bZpjp7KjQW4zhnJ+oQXTfHSU82UwwO/9tXfWohRNhbCeGsnF4XwKRj+6ubXr4TY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043003; c=relaxed/simple;
-	bh=SL92PvVJUAXhxS045EPAynU+rGud/Bc9a1HGuNULb8E=;
+	s=arc-20240116; t=1723043005; c=relaxed/simple;
+	bh=8iIuAjNOFqq5giQbDAxeOfpDlQLvi/YlWkgeCN/M5ME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gy7EANb0jGNct+odbDSeJdfayhXtzs1yTH3bpJMYqsY2rx8t6M2DDrJ4gDgyYHiE/g+Hp6YKfRk+tceczJ78639qXM2fjcN+sCwPp/QKwVNT9DmR5WiJr85ewz2RmiE9gX8RnDxCRWELCRnJbz23LgwgAINAdYZJwLObwYA/b8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2+EXITr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XNEX4iukOMdpKQNOtw+SDN1Q6dyWgPjEWcs03dYaRkXxotgovUBon/zL1rW4Xdgd7JfSxTPjEKaF1lXAOZqVcihX1fmmXImLMD07XRWu3vHTzOEGoFdsDST4+rMPAZAiW8gSMRXMAB5SbtHHIeaDL77p5Hjdjy5y1mLXFTnbMFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S07h6//7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2+EXITr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539AAC32781;
-	Wed,  7 Aug 2024 15:03:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S07h6//7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04DC5C32781;
+	Wed,  7 Aug 2024 15:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043002;
-	bh=SL92PvVJUAXhxS045EPAynU+rGud/Bc9a1HGuNULb8E=;
+	s=korg; t=1723043005;
+	bh=8iIuAjNOFqq5giQbDAxeOfpDlQLvi/YlWkgeCN/M5ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2+EXITr/ZxZZKW4Xd6bhupoA3JUegnfGC+vkAeMlfxS/1HaSMnNa2XsMnDTiPa8C
-	 eGLUNgfGCLywMXc7KcxSGpGt8Jjb52g71Q6/t7ayzJIZnEH4WLrYMORjzD5jwtnxVn
-	 uab5m+pTN7PkxJCY8BM+tIhm6OS23yazD2HY/+0I=
+	b=S07h6//7Hb6kcP6jA2Wgufs/2+aJyet9zgvCH47kJ6w/a0vphzTHN1qms8o2rV8nb
+	 EIY3cBlvhRQJaHVRdg+hB6Yxe/Trdf/XXiqOq2WBzHuScdbh0Ef05nKYpS5q3tggVJ
+	 hExv+40CkWKrYv8yZLTwIneGilaZ14jkbOErqJ8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Andr=C3=A9=20Almeida?= <andrealmeid@igalia.com>,
+	Simon Ser <contact@emersion.fr>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 054/123] ALSA: hda: Conditionally use snooping for AMD HDMI
-Date: Wed,  7 Aug 2024 16:59:33 +0200
-Message-ID: <20240807150022.559953819@linuxfoundation.org>
+Subject: [PATCH 6.10 055/123] drm/atomic: Allow userspace to use explicit sync with atomic async flips
+Date: Wed,  7 Aug 2024 16:59:34 +0200
+Message-ID: <20240807150022.588543444@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -44,86 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: André Almeida <andrealmeid@igalia.com>
 
-[ Upstream commit 478689b5990deb626a0b3f1ebf165979914d6be4 ]
+[ Upstream commit e0fa4132bfae725a60c50d53bac80ec31fc20d89 ]
 
-The recent regression report revealed that the use of WC pages for AMD
-HDMI device together with AMD IOMMU leads to unexpected truncation or
-noises.  The issue seems triggered by the change in the kernel core
-memory allocation that enables IOMMU driver to use always S/G
-buffers.  Meanwhile, the use of WC pages has been a workaround for the
-similar issue with standard pages in the past.  So, now we need to
-apply the workaround conditionally, namely, only when IOMMU isn't in
-place.
+Allow userspace to use explicit synchronization with atomic async flips.
+That means that the flip will wait for some hardware fence, and then
+will flip as soon as possible (async) in regard of the vblank.
 
-This patch modifies the workaround code to check the DMA ops at first
-and apply the snoop-off only when needed.
-
-Fixes: f5ff79fddf0e ("dma-mapping: remove CONFIG_DMA_REMAP")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=219087
-Link: https://patch.msgid.link/20240731170521.31714-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 0e26cc72c71c ("drm: Refuse to async flip with atomic prop changes")
+Signed-off-by: André Almeida <andrealmeid@igalia.com>
+Reviewed-by: Simon Ser <contact@emersion.fr>
+Signed-off-by: Simon Ser <contact@emersion.fr>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240702212215.109696-1-andrealmeid@igalia.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_controller.h |  2 +-
- sound/pci/hda/hda_intel.c      | 10 +++++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/drm_atomic_uapi.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/hda_controller.h b/sound/pci/hda/hda_controller.h
-index c2d0109866e62..68c883f202ca5 100644
---- a/sound/pci/hda/hda_controller.h
-+++ b/sound/pci/hda/hda_controller.h
-@@ -28,7 +28,7 @@
- #else
- #define AZX_DCAPS_I915_COMPONENT 0		/* NOP */
- #endif
--/* 14 unused */
-+#define AZX_DCAPS_AMD_ALLOC_FIX	(1 << 14)	/* AMD allocation workaround */
- #define AZX_DCAPS_CTX_WORKAROUND (1 << 15)	/* X-Fi workaround */
- #define AZX_DCAPS_POSFIX_LPIB	(1 << 16)	/* Use LPIB as default */
- #define AZX_DCAPS_AMD_WORKAROUND (1 << 17)	/* AMD-specific workaround */
-diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
-index 3500108f6ba37..87203b819dd47 100644
---- a/sound/pci/hda/hda_intel.c
-+++ b/sound/pci/hda/hda_intel.c
-@@ -40,6 +40,7 @@
+diff --git a/drivers/gpu/drm/drm_atomic_uapi.c b/drivers/gpu/drm/drm_atomic_uapi.c
+index fc16fddee5c59..fef4849a4ec21 100644
+--- a/drivers/gpu/drm/drm_atomic_uapi.c
++++ b/drivers/gpu/drm/drm_atomic_uapi.c
+@@ -1066,7 +1066,9 @@ int drm_atomic_set_property(struct drm_atomic_state *state,
+ 			break;
+ 		}
  
- #ifdef CONFIG_X86
- /* for snoop control */
-+#include <linux/dma-map-ops.h>
- #include <asm/set_memory.h>
- #include <asm/cpufeature.h>
- #endif
-@@ -306,7 +307,7 @@ enum {
- 
- /* quirks for ATI HDMI with snoop off */
- #define AZX_DCAPS_PRESET_ATI_HDMI_NS \
--	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_SNOOP_OFF)
-+	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_AMD_ALLOC_FIX)
- 
- /* quirks for AMD SB */
- #define AZX_DCAPS_PRESET_AMD_SB \
-@@ -1702,6 +1703,13 @@ static void azx_check_snoop_available(struct azx *chip)
- 	if (chip->driver_caps & AZX_DCAPS_SNOOP_OFF)
- 		snoop = false;
- 
-+#ifdef CONFIG_X86
-+	/* check the presence of DMA ops (i.e. IOMMU), disable snoop conditionally */
-+	if ((chip->driver_caps & AZX_DCAPS_AMD_ALLOC_FIX) &&
-+	    !get_dma_ops(chip->card->dev))
-+		snoop = false;
-+#endif
-+
- 	chip->snoop = snoop;
- 	if (!snoop) {
- 		dev_info(chip->card->dev, "Force to non-snoop mode\n");
+-		if (async_flip && prop != config->prop_fb_id) {
++		if (async_flip &&
++		    prop != config->prop_fb_id &&
++		    prop != config->prop_in_fence_fd) {
+ 			ret = drm_atomic_plane_get_property(plane, plane_state,
+ 							    prop, &old_val);
+ 			ret = drm_atomic_check_prop_changes(ret, old_val, prop_value, prop);
 -- 
 2.43.0
 
