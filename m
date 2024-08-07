@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3F684DF8;
-	Wed,  7 Aug 2024 15:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CF784E0D;
+	Wed,  7 Aug 2024 15:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042991; cv=none; b=D4oOB1WiEBRao58jZeIagIx9V/lEU31pOIYnZ/BB+rmy6XA1FtC7k55M59uDQbXZCpOawfcVHCb1y/Kt8CfIC1ag9HrqBLsRVUnHCUVWVPwTL7t5rIrjQ0xxm6lnWLXXg7eRovpAom5mnzjyYwCXch+uCfoAyIs9RRt5TlJD3Rc=
+	t=1723042994; cv=none; b=tEM7glHoQPZB/Z9MkzGBVsiyjQbiaosd12/TEXupPGm/8EuZgj3ZaaPqJpd61dK0JIlmMYZfwgrQWqJLtDDIl6n1AznBBr94BIe8bG78UE0pHY6aBdxJas6U0fjWBNXbDxI5dDYCCYpbFGd9J6wJedtz/99+DwrxwnPHr31qcLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042991; c=relaxed/simple;
-	bh=2TDuwAuZ9v2ieMit6fwpwUaHrdwFdQRb/4l2r9KEQ/E=;
+	s=arc-20240116; t=1723042994; c=relaxed/simple;
+	bh=POFyRQERIHvV7zn4OugzFyNpFASwn6Zr5cEF+Abt1nc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wl+Rr3rC6ZaaWyPdFBOpcYp/IiXiEH5RDO5Uf4qbOtQMJe3k+3X1k09YJnc5pq5F/k0dBlcLlX2nFC0Q+WrwtR3tbiFn/mz+jeWMFm7VzaQpDkvyuFj46+mguLr45cc1ar72nb9fWrGx1BzfC9i/oSo9NHYHEauF21LbY9LoZG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dBJXu+7F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g3CEJaQRhw3c/DUobnZErSWi+ibNeaO1/1VMR5KNFR08qNpUf8Oi4AahagQPvc2oQDGSfKQtWcW1bGdNVTukpgR9hfirV3vchdk8Lo05b1OBAiGHD02DXzCMLZAKf9goRva6cfsLxnjZiw6xjHyfvN5y2tBS8W5OLRPnSwuJKnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rr6vH3BJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dBJXu+7F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691ECC32781;
-	Wed,  7 Aug 2024 15:03:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rr6vH3BJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12100C32781;
+	Wed,  7 Aug 2024 15:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042991;
-	bh=2TDuwAuZ9v2ieMit6fwpwUaHrdwFdQRb/4l2r9KEQ/E=;
+	s=korg; t=1723042994;
+	bh=POFyRQERIHvV7zn4OugzFyNpFASwn6Zr5cEF+Abt1nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBJXu+7Fmgqml7hDFT6sePfcFS3aJjEyTcJHTSYwQrKKqYkIM7zbAVRs0Wcd9yjKw
-	 t0H0LFWgIs1GRZ6llQ0BkbKlXg8zKLbNT7fyQP++I64iyrr3oy76LPNZ9RaTi4VB3U
-	 pK+nqpi3mHXlDDlAGqCR2S4tj/RjlmPVk1w36ezs=
+	b=rr6vH3BJ+7+FToMQu8bmYHmMyM5ca0cUi4HetrpWvsa/DTHyoWN3XrpD8a1SQ1GcJ
+	 QtbTeq6tkMaIsa/f8bPJaRQBaoYirPHtqzcLeZk2Z83F6BxCjqsb6l1L72hZH1mu0q
+	 MdSFt9Qs3jPaM/m8H8znyDa5ot1CFw2weDD4GuSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 033/123] Bluetooth: btintel: Fail setup on error
-Date: Wed,  7 Aug 2024 16:59:12 +0200
-Message-ID: <20240807150021.899008624@linuxfoundation.org>
+Subject: [PATCH 6.10 051/123] net: mvpp2: Dont re-use loop iterator
+Date: Wed,  7 Aug 2024 16:59:30 +0200
+Message-ID: <20240807150022.473125052@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -51,35 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit e22a3a9d4134d7e6351a2998771522e74bcc58da ]
+[ Upstream commit 0aa3ca956c46d849775eae1816cef8fe4bc8b50e ]
 
-Do not attempt to send any hci command to controller if *setup* function
-fails.
+This function has a nested loop.  The problem is that both the inside
+and outside loop use the same variable as an iterator.  I found this
+via static analysis so I'm not sure the impact.  It could be that it
+loops forever or, more likely, the loop exits early.
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Kiran K <kiran.k@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3a616b92a9d1 ("net: mvpp2: Add TX flow control support for jumbo frames")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/eaa8f403-7779-4d81-973d-a9ecddc0bf6f@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 7ecc67deecb09..93900c37349c1 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -3012,6 +3012,9 @@ static int btintel_setup_combined(struct hci_dev *hdev)
- 		btintel_set_dsm_reset_method(hdev, &ver_tlv);
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index 9adf4301c9b1d..a40b631188866 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -953,13 +953,13 @@ static void mvpp2_bm_pool_update_fc(struct mvpp2_port *port,
+ static void mvpp2_bm_pool_update_priv_fc(struct mvpp2 *priv, bool en)
+ {
+ 	struct mvpp2_port *port;
+-	int i;
++	int i, j;
  
- 		err = btintel_bootloader_setup_tlv(hdev, &ver_tlv);
-+		if (err)
-+			goto exit_error;
-+
- 		btintel_register_devcoredump_support(hdev);
- 		btintel_print_fseq_info(hdev);
- 		break;
+ 	for (i = 0; i < priv->port_count; i++) {
+ 		port = priv->port_list[i];
+ 		if (port->priv->percpu_pools) {
+-			for (i = 0; i < port->nrxqs; i++)
+-				mvpp2_bm_pool_update_fc(port, &port->priv->bm_pools[i],
++			for (j = 0; j < port->nrxqs; j++)
++				mvpp2_bm_pool_update_fc(port, &port->priv->bm_pools[j],
+ 							port->tx_fc & en);
+ 		} else {
+ 			mvpp2_bm_pool_update_fc(port, port->pool_long, port->tx_fc & en);
 -- 
 2.43.0
 
