@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79A278C67;
-	Wed,  7 Aug 2024 15:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6602278C67;
+	Wed,  7 Aug 2024 15:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043399; cv=none; b=Y1gjkAHt8tpwt1gga7aENuW0nhUZOyzugZ+2DRLMZRGmkUWhRCDKv9H9MXlRJFVNTpIWAh7sLj1tGDeKWN+Zc1V/yPrQUJoPIsx974VbJJVOvegzkO4/XvbhQmPwYOS4uJwRapp9uCO5j+ssgxkU4m1EDQMlVWEuPQXq3ZqQCa8=
+	t=1723043402; cv=none; b=P9tgiHUHzxwnjeus38iX2naMZvsQ/aDGWquxI57mlVSVEGtqDVrlG60Nz1rMVF879Z3dIIiUgISZxwHcoqXLh2KAOUsuGzVCBZWTDYLZ/EBvf2VBaigXMURfFKsyjgcOxP772NtJyhD/dRTOyYFjrtVQPBXklZU5LCw19FT99UU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043399; c=relaxed/simple;
-	bh=D+MSMBvc+RlJslnCP4VgHh5x+3yDGgzfrpzirU/EDc4=;
+	s=arc-20240116; t=1723043402; c=relaxed/simple;
+	bh=AXA+miPA+XjkNHPujoRKZJrz0T+XZZ/77KDcwdO05mk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hq+TDQLi6KC93433EaOFwr69hk3VpPR7VCg6wiXHNuPiudLjeP+jpWnG0f2O5LIwIj0KsDpBgi0/sK5vFmIhoaD0Olrduv66TVdEXAwSDJlFSpSU17+7beCoIy/uwPBNtzEyyZPldVdNnXhVSO7kUwwboKYSRJpkwlPvrF4f7LQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zIWJetrz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GN2QY7kPj1LPRup232P9+NDrMk5iH3fyiMLtdsT+eX/UDipte5bL+riDdpysQrekpKyu5yR64RaC65q7Rl3AOKKsUW8X9wLQ+r24JDzZM4Ku7bnlyp7ISIjhdWCJquFOoVdhT6BXu+wUXMwU639y9cRZ848UqyqG1uYIiFnnCrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zTdSdYab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zIWJetrz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A55AC32781;
-	Wed,  7 Aug 2024 15:09:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zTdSdYab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0808C4AF0B;
+	Wed,  7 Aug 2024 15:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043399;
-	bh=D+MSMBvc+RlJslnCP4VgHh5x+3yDGgzfrpzirU/EDc4=;
+	s=korg; t=1723043402;
+	bh=AXA+miPA+XjkNHPujoRKZJrz0T+XZZ/77KDcwdO05mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIWJetrz6C3kPixdw+EJQv7Zm0iE+Y/MivndyMAcnheU4bsR1e1aM2zR1iIAES22Y
-	 m4oIvN/7Qtf3C8+PqQTst1qbi1njQvhOmPziRJTwjxbOGqj589TTbGlZhCzfkFtaUZ
-	 cP35HSAB6CLx7CUxXgigQaAqozyfJSb6lhhcg+RI=
+	b=zTdSdYabJ5Xjqxnqbu2mOJRiDjB4KeB+Bp3b+RHgFsHw0Pv3pb3cOktU6xx3oaOCe
+	 4oAggcm2+TWqhYqCYVrGOx/rPdqJH9RwaCxV8gMa+X+8SjRZXiV1v14EFeuEOL1n0M
+	 ERyhK8wKbwbPsxNXhXEDUi85wtTOIIeWCBg0JJGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 076/121] net: phy: micrel: Fix the KSZ9131 MDI-X status issue
-Date: Wed,  7 Aug 2024 17:00:08 +0200
-Message-ID: <20240807150021.897920408@linuxfoundation.org>
+Subject: [PATCH 6.6 077/121] ALSA: hda: Conditionally use snooping for AMD HDMI
+Date: Wed,  7 Aug 2024 17:00:09 +0200
+Message-ID: <20240807150021.933809042@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -52,86 +50,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 84383b5ef4cd21b4a67de92afdc05a03b5247db9 ]
+[ Upstream commit 478689b5990deb626a0b3f1ebf165979914d6be4 ]
 
-The MDIX status is not accurately reflecting the current state after the link
-partner has manually altered its MDIX configuration while operating in forced
-mode.
+The recent regression report revealed that the use of WC pages for AMD
+HDMI device together with AMD IOMMU leads to unexpected truncation or
+noises.  The issue seems triggered by the change in the kernel core
+memory allocation that enables IOMMU driver to use always S/G
+buffers.  Meanwhile, the use of WC pages has been a workaround for the
+similar issue with standard pages in the past.  So, now we need to
+apply the workaround conditionally, namely, only when IOMMU isn't in
+place.
 
-Access information about Auto mdix completion and pair selection from the
-KSZ9131's Auto/MDI/MDI-X status register
+This patch modifies the workaround code to check the DMA ops at first
+and apply the snoop-off only when needed.
 
-Fixes: b64e6a8794d9 ("net: phy: micrel: Add PHY Auto/MDI/MDI-X set driver for KSZ9131")
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20240725071125.13960-1-Raju.Lakkaraju@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f5ff79fddf0e ("dma-mapping: remove CONFIG_DMA_REMAP")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=219087
+Link: https://patch.msgid.link/20240731170521.31714-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ sound/pci/hda/hda_controller.h |  2 +-
+ sound/pci/hda/hda_intel.c      | 10 +++++++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index 029c82f88ee38..9a0432145645f 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -1293,6 +1293,8 @@ static int ksz9131_config_init(struct phy_device *phydev)
- 	const struct device *dev_walker;
- 	int ret;
+diff --git a/sound/pci/hda/hda_controller.h b/sound/pci/hda/hda_controller.h
+index 8556031bcd68e..f31cb31d46362 100644
+--- a/sound/pci/hda/hda_controller.h
++++ b/sound/pci/hda/hda_controller.h
+@@ -28,7 +28,7 @@
+ #else
+ #define AZX_DCAPS_I915_COMPONENT 0		/* NOP */
+ #endif
+-/* 14 unused */
++#define AZX_DCAPS_AMD_ALLOC_FIX	(1 << 14)	/* AMD allocation workaround */
+ #define AZX_DCAPS_CTX_WORKAROUND (1 << 15)	/* X-Fi workaround */
+ #define AZX_DCAPS_POSFIX_LPIB	(1 << 16)	/* Use LPIB as default */
+ #define AZX_DCAPS_AMD_WORKAROUND (1 << 17)	/* AMD-specific workaround */
+diff --git a/sound/pci/hda/hda_intel.c b/sound/pci/hda/hda_intel.c
+index a6a9d353fe635..d5c9f113e477a 100644
+--- a/sound/pci/hda/hda_intel.c
++++ b/sound/pci/hda/hda_intel.c
+@@ -40,6 +40,7 @@
  
-+	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
+ #ifdef CONFIG_X86
+ /* for snoop control */
++#include <linux/dma-map-ops.h>
+ #include <asm/set_memory.h>
+ #include <asm/cpufeature.h>
+ #endif
+@@ -301,7 +302,7 @@ enum {
+ 
+ /* quirks for ATI HDMI with snoop off */
+ #define AZX_DCAPS_PRESET_ATI_HDMI_NS \
+-	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_SNOOP_OFF)
++	(AZX_DCAPS_PRESET_ATI_HDMI | AZX_DCAPS_AMD_ALLOC_FIX)
+ 
+ /* quirks for AMD SB */
+ #define AZX_DCAPS_PRESET_AMD_SB \
+@@ -1715,6 +1716,13 @@ static void azx_check_snoop_available(struct azx *chip)
+ 	if (chip->driver_caps & AZX_DCAPS_SNOOP_OFF)
+ 		snoop = false;
+ 
++#ifdef CONFIG_X86
++	/* check the presence of DMA ops (i.e. IOMMU), disable snoop conditionally */
++	if ((chip->driver_caps & AZX_DCAPS_AMD_ALLOC_FIX) &&
++	    !get_dma_ops(chip->card->dev))
++		snoop = false;
++#endif
 +
- 	dev_walker = &phydev->mdio.dev;
- 	do {
- 		of_node = dev_walker->of_node;
-@@ -1342,28 +1344,30 @@ static int ksz9131_config_init(struct phy_device *phydev)
- #define MII_KSZ9131_AUTO_MDIX		0x1C
- #define MII_KSZ9131_AUTO_MDI_SET	BIT(7)
- #define MII_KSZ9131_AUTO_MDIX_SWAP_OFF	BIT(6)
-+#define MII_KSZ9131_DIG_AXAN_STS	0x14
-+#define MII_KSZ9131_DIG_AXAN_STS_LINK_DET	BIT(14)
-+#define MII_KSZ9131_DIG_AXAN_STS_A_SELECT	BIT(12)
- 
- static int ksz9131_mdix_update(struct phy_device *phydev)
- {
- 	int ret;
- 
--	ret = phy_read(phydev, MII_KSZ9131_AUTO_MDIX);
--	if (ret < 0)
--		return ret;
--
--	if (ret & MII_KSZ9131_AUTO_MDIX_SWAP_OFF) {
--		if (ret & MII_KSZ9131_AUTO_MDI_SET)
--			phydev->mdix_ctrl = ETH_TP_MDI;
--		else
--			phydev->mdix_ctrl = ETH_TP_MDI_X;
-+	if (phydev->mdix_ctrl != ETH_TP_MDI_AUTO) {
-+		phydev->mdix = phydev->mdix_ctrl;
- 	} else {
--		phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
--	}
-+		ret = phy_read(phydev, MII_KSZ9131_DIG_AXAN_STS);
-+		if (ret < 0)
-+			return ret;
- 
--	if (ret & MII_KSZ9131_AUTO_MDI_SET)
--		phydev->mdix = ETH_TP_MDI;
--	else
--		phydev->mdix = ETH_TP_MDI_X;
-+		if (ret & MII_KSZ9131_DIG_AXAN_STS_LINK_DET) {
-+			if (ret & MII_KSZ9131_DIG_AXAN_STS_A_SELECT)
-+				phydev->mdix = ETH_TP_MDI;
-+			else
-+				phydev->mdix = ETH_TP_MDI_X;
-+		} else {
-+			phydev->mdix = ETH_TP_MDI_INVALID;
-+		}
-+	}
- 
- 	return 0;
- }
+ 	chip->snoop = snoop;
+ 	if (!snoop) {
+ 		dev_info(chip->card->dev, "Force to non-snoop mode\n");
 -- 
 2.43.0
 
