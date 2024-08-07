@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BE53EA9A;
-	Wed,  7 Aug 2024 15:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 662F33EA9A;
+	Wed,  7 Aug 2024 15:01:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042909; cv=none; b=E/oXmLu+64/6lOM7/VFzb6dL/O62Azxf7VT66CnXmrPYE/VCg3dp1dwsBGgapoq7TbFV8vUR+0NQULrI9H9hkKuWqqa/GUG/UDSGuz3NCLHlSB00lhj/+4HlM4KeAQ+epIT3ma+nTCCYEgUzUElJMn1jQ7l8EDuuwUphjO9dA5k=
+	t=1723042912; cv=none; b=Swe3Mrx4V5SWdUgS7aXcDCF8q0157W7Bs4IBMs83vbaC5SL7wh3T4usiezo/Dg1gt7+KIg06wImbTrkTivsdhKeiKBmxpnuJ3ue0FgtoKo3WnpTWQm4YGkeBUp5j7EPFHZUYECx/Ij8RDI8SUq1qFpc1FdOcBcsy9DFbAI0KUDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042909; c=relaxed/simple;
-	bh=y+ucpysC0nwBLeT/p00XhA5kS10clnHfPdINKTQAFsk=;
+	s=arc-20240116; t=1723042912; c=relaxed/simple;
+	bh=yz66p5R+fdpPph2b7QjHxLxOTQRzYe4mCSvu4JQXN9Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BriKMPBRIIFuvAigAh5CS38+UT8i/POHjQmJQouxwnTIFDAvlTKv5CJ1RvQixv/8RA1bpPRtCeFuFonHljd5mLVPcQyUU1Xor9TjwRYMfrsv8zaCGWEVQ7SsQISXmwc+23b6esYxM5lLlGUDrMQA9lHGVD0PZL+Bj8hRtIZdv6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QyFchj0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UpYDVq9o4rQL8aAuop3ZIbAOEkCTLeIn6ce9hH4A5wktkeUdx7fDhzi9pK8SZJSx9H3N6JjGBCh3C+4wGdNdODfTuTlC3XHGYKg80wSBSumnq8Y4SHJwkW1R3FggPYPOiCUg9qdidaBi3d3OvOY6i2MvgLVJWc3gSGFy9bq5/5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iz62jEM3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QyFchj0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF7DC32781;
-	Wed,  7 Aug 2024 15:01:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iz62jEM3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD86C32781;
+	Wed,  7 Aug 2024 15:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042909;
-	bh=y+ucpysC0nwBLeT/p00XhA5kS10clnHfPdINKTQAFsk=;
+	s=korg; t=1723042912;
+	bh=yz66p5R+fdpPph2b7QjHxLxOTQRzYe4mCSvu4JQXN9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QyFchj0YreB6mZ8uFlTEKeSBu7XU2x6uvdpYJqf1jzdrM4vtRL73uZonxouSc+AjK
-	 ZvfFGlOCDvX7ZdzoUuTQ7RvToBiwAAxY8nhZLKfJWxacqMa7Rda5l2BFPP1dtNOhhh
-	 TaRyU3Swj4qHj/tHSYIIUxRW5EhbLT73OXeyZU4Y=
+	b=Iz62jEM32pqRy4WHV90cu9i5ao4X/mGRnJbwowKEWq7H+GsuFlGJSBG2AEzy+raRm
+	 xUOWCSIdL0CYklqLUFPeuHQuizxM6UN1k1gXoqsB2ZZQJVRipt0JP5gUwMxHRlIfmy
+	 l6uXk87WjRTl7uYjLxUVO4BMBv8gktRAMJk+U7Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ben Skeggs <bskeggs@nvidia.com>,
 	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Boris Brezillon <boris.brezillon@collabora.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Danilo Krummrich <dakr@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 020/123] drm/gpuvm: fix missing dependency to DRM_EXEC
-Date: Wed,  7 Aug 2024 16:58:59 +0200
-Message-ID: <20240807150021.473582546@linuxfoundation.org>
+Subject: [PATCH 6.10 021/123] drm/nouveau: prime: fix refcount underflow
+Date: Wed,  7 Aug 2024 16:59:00 +0200
+Message-ID: <20240807150021.505473679@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -54,38 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Danilo Krummrich <dakr@redhat.com>
+From: Danilo Krummrich <dakr@kernel.org>
 
-[ Upstream commit eeb1f825b5dc68047a0556e5ae86d1467920db41 ]
+[ Upstream commit a9bf3efc33f1fbf88787a277f7349459283c9b95 ]
 
-In commit 50c1a36f594b ("drm/gpuvm: track/lock/validate external/evicted
-objects") we started using drm_exec, but did not select DRM_EXEC in the
-Kconfig for DRM_GPUVM, fix this.
+Calling nouveau_bo_ref() on a nouveau_bo without initializing it (and
+hence the backing ttm_bo) leads to a refcount underflow.
 
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Boris Brezillon <boris.brezillon@collabora.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Fixes: 50c1a36f594b ("drm/gpuvm: track/lock/validate external/evicted objects")
-Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Instead of calling nouveau_bo_ref() in the unwind path of
+drm_gem_object_init(), clean things up manually.
+
+Fixes: ab9ccb96a6e6 ("drm/nouveau: use prime helpers")
+Reviewed-by: Ben Skeggs <bskeggs@nvidia.com>
 Reviewed-by: Christian König <christian.koenig@amd.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240715135158.133287-1-dakr@redhat.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240718165959.3983-2-dakr@kernel.org
+(cherry picked from commit 1b93f3e89d03cfc576636e195466a0d728ad8de5)
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/nouveau/nouveau_prime.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/Kconfig b/drivers/gpu/drm/Kconfig
-index 359b68adafc1b..79628ff837e6f 100644
---- a/drivers/gpu/drm/Kconfig
-+++ b/drivers/gpu/drm/Kconfig
-@@ -253,6 +253,7 @@ config DRM_EXEC
- config DRM_GPUVM
- 	tristate
- 	depends on DRM
-+	select DRM_EXEC
- 	help
- 	  GPU-VM representation providing helpers to manage a GPUs virtual
- 	  address space
+diff --git a/drivers/gpu/drm/nouveau/nouveau_prime.c b/drivers/gpu/drm/nouveau/nouveau_prime.c
+index b58ab595faf82..cd95446d68511 100644
+--- a/drivers/gpu/drm/nouveau/nouveau_prime.c
++++ b/drivers/gpu/drm/nouveau/nouveau_prime.c
+@@ -64,7 +64,8 @@ struct drm_gem_object *nouveau_gem_prime_import_sg_table(struct drm_device *dev,
+ 	 * to the caller, instead of a normal nouveau_bo ttm reference. */
+ 	ret = drm_gem_object_init(dev, &nvbo->bo.base, size);
+ 	if (ret) {
+-		nouveau_bo_ref(NULL, &nvbo);
++		drm_gem_object_release(&nvbo->bo.base);
++		kfree(nvbo);
+ 		obj = ERR_PTR(-ENOMEM);
+ 		goto unlock;
+ 	}
 -- 
 2.43.0
 
