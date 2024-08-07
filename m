@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4B627448;
-	Wed,  7 Aug 2024 15:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740FA27448;
+	Wed,  7 Aug 2024 15:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043356; cv=none; b=fKtaTBptH31tHyrvzNtfWbut1nvOu5lnt+VpksM/Pbv5mrgd00llMdzdz6/cKM7J4FKpIFSVtTj8qtNdm/ZoZ0ZX+uqmzlrVOtVpihqKVEs+j9aZAh7oUHmQnE5KVS26yfupAoW33g6U39DKV9WeINFrcvZP78MG3+JQld1W4uo=
+	t=1723043359; cv=none; b=gFCIGt82GHPN0fIuSYKJPKzs6322Fzf/ZxnvNJAIrtoZglANaM5YW+8ej+Z4+YKtvWbwsu/nbOpuSpN30zychyn6do1bPTL/d1TsgzE831Vp0XSzb5HLeA76bjZiax3UvsLth5FtvLSHkjaRNal180kumv9l+SP6ZoKUiN9hjeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043356; c=relaxed/simple;
-	bh=TeTI5aYTo7wL0U3l/Jsiv1CjnjTBMkgqasLYgotE1XA=;
+	s=arc-20240116; t=1723043359; c=relaxed/simple;
+	bh=eAxlgFN994ZSyxf2Gj8IJ699a+ss/FyKc31/9NT8BVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EiIpQcXJwxndHSkWlTANInV9rm0AcSlWaDO8V6Kgk5/WwuzdTmIUvfo3HA3peRByA5CfCRWEhHc09e/QZ8PggdrNNW4oECGQaGXCwoWF2vpvFcnkDohVjhQ/xtYqOzLm38Lmb69HX4Tsr9YN/cy9lHxK8tH5Rd0f0R2zJtyN6a4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lk8GNonC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ro9VTxVeR9u4Uxz1bgras6WQZvAnVMF027y1+5hkW9UepW//pxZENXudrF/WJWUM3OjE7bPFaxmj59hkTh5DaLWJTF/WxNmz+W5Jd0mAc/LryPBlhMUi/ih3GU53To1mNVekBgv9ggb+z/2nMl58+o5Im5uteiNFW7o1/G081KA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e3WdMfby; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lk8GNonC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB23C32781;
-	Wed,  7 Aug 2024 15:09:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e3WdMfby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF1A6C4AF0B;
+	Wed,  7 Aug 2024 15:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043356;
-	bh=TeTI5aYTo7wL0U3l/Jsiv1CjnjTBMkgqasLYgotE1XA=;
+	s=korg; t=1723043359;
+	bh=eAxlgFN994ZSyxf2Gj8IJ699a+ss/FyKc31/9NT8BVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lk8GNonCn4TYIhTHAKL+PJQ9ef1ktiRl28g3ZLbafbpLNccczXNxR7zlKuByn1OrA
-	 z1nhMmaDfLiDo6C+aooIkPpWPtRqxixyqxr5nYU/gdMr3YHeqC7DoJ6GzFR3gRZD6l
-	 Ir06WcdcSQ0VkDM6wedhHFuRZmBCE5/LNvxYbX8I=
+	b=e3WdMfbyzr0/qNnqs1xloNzwi30wlUZQ3yLvkm0sNhTwf1JZVQaXH4CYTjcW2ubvG
+	 mwNK8wZ7RnQI3ZnrrzSrtzEHE6KrzAdMGlsD87wsXN2BdwvVrexkz/UUjFAZdw5MNi
+	 UC0MHKMhqIK4/g+dFF2DPaIikAKnnypb/zIyDfRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kiran K <kiran.k@intel.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 061/121] Bluetooth: btintel: Fail setup on error
-Date: Wed,  7 Aug 2024 16:59:53 +0200
-Message-ID: <20240807150021.410720036@linuxfoundation.org>
+Subject: [PATCH 6.6 062/121] Bluetooth: hci_sync: Fix suspending with wrong filter policy
+Date: Wed,  7 Aug 2024 16:59:54 +0200
+Message-ID: <20240807150021.439165707@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -51,35 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kiran K <kiran.k@intel.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit e22a3a9d4134d7e6351a2998771522e74bcc58da ]
+[ Upstream commit 96b82af36efaa1787946e021aa3dc5410c05beeb ]
 
-Do not attempt to send any hci command to controller if *setup* function
-fails.
+When suspending the scan filter policy cannot be 0x00 (no acceptlist)
+since that means the host has to process every advertisement report
+waking up the system, so this attempts to check if hdev is marked as
+suspended and if the resulting filter policy would be 0x00 (no
+acceptlist) then skip passive scanning if thre no devices in the
+acceptlist otherwise reset the filter policy to 0x01 so the acceptlist
+is used since the devices programmed there can still wakeup be system.
 
-Fixes: af395330abed ("Bluetooth: btintel: Add Intel devcoredump support")
-Signed-off-by: Kiran K <kiran.k@intel.com>
+Fixes: 182ee45da083 ("Bluetooth: hci_sync: Rework hci_suspend_notifier")
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btintel.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/bluetooth/hci_sync.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
-index 3da3c266a66f3..a936219aebb81 100644
---- a/drivers/bluetooth/btintel.c
-+++ b/drivers/bluetooth/btintel.c
-@@ -2845,6 +2845,9 @@ static int btintel_setup_combined(struct hci_dev *hdev)
- 		btintel_set_dsm_reset_method(hdev, &ver_tlv);
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index b3f5714dab342..6dab0c99c82c7 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2862,6 +2862,27 @@ static int hci_passive_scan_sync(struct hci_dev *hdev)
+ 	 */
+ 	filter_policy = hci_update_accept_list_sync(hdev);
  
- 		err = btintel_bootloader_setup_tlv(hdev, &ver_tlv);
-+		if (err)
-+			goto exit_error;
++	/* If suspended and filter_policy set to 0x00 (no acceptlist) then
++	 * passive scanning cannot be started since that would require the host
++	 * to be woken up to process the reports.
++	 */
++	if (hdev->suspended && !filter_policy) {
++		/* Check if accept list is empty then there is no need to scan
++		 * while suspended.
++		 */
++		if (list_empty(&hdev->le_accept_list))
++			return 0;
 +
- 		btintel_register_devcoredump_support(hdev);
- 		break;
- 	default:
++		/* If there are devices is the accept_list that means some
++		 * devices could not be programmed which in non-suspended case
++		 * means filter_policy needs to be set to 0x00 so the host needs
++		 * to filter, but since this is treating suspended case we
++		 * can ignore device needing host to filter to allow devices in
++		 * the acceptlist to be able to wakeup the system.
++		 */
++		filter_policy = 0x01;
++	}
++
+ 	/* When the controller is using random resolvable addresses and
+ 	 * with that having LE privacy enabled, then controllers with
+ 	 * Extended Scanner Filter Policies support can now enable support
 -- 
 2.43.0
 
