@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CF784E0D;
-	Wed,  7 Aug 2024 15:03:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B6574055;
+	Wed,  7 Aug 2024 15:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042994; cv=none; b=tEM7glHoQPZB/Z9MkzGBVsiyjQbiaosd12/TEXupPGm/8EuZgj3ZaaPqJpd61dK0JIlmMYZfwgrQWqJLtDDIl6n1AznBBr94BIe8bG78UE0pHY6aBdxJas6U0fjWBNXbDxI5dDYCCYpbFGd9J6wJedtz/99+DwrxwnPHr31qcLw=
+	t=1723042997; cv=none; b=pfZjMo76VV82m6aS+evl1hQKa3xpoUtFljxggfdOpkAAuHJpg1cvGJjM4EBz/PS2Nxnommr5UikoSMaDSPOPp9R1i4kKTHRBaV1dCHkr/l+2z0TCeZuTWa6QkZyAnus85b4+KYF+aQpqsmrHnS5vJTUFq1l6BpDSZ7yVzpKMPXo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042994; c=relaxed/simple;
-	bh=POFyRQERIHvV7zn4OugzFyNpFASwn6Zr5cEF+Abt1nc=;
+	s=arc-20240116; t=1723042997; c=relaxed/simple;
+	bh=gsiX7ZcRO6HAiQUWJz8tn2lByzVStPoVxvd0AwX9/rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3CEJaQRhw3c/DUobnZErSWi+ibNeaO1/1VMR5KNFR08qNpUf8Oi4AahagQPvc2oQDGSfKQtWcW1bGdNVTukpgR9hfirV3vchdk8Lo05b1OBAiGHD02DXzCMLZAKf9goRva6cfsLxnjZiw6xjHyfvN5y2tBS8W5OLRPnSwuJKnM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rr6vH3BJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fhfXWO4Hou57SSJJdeM1duVI4ewUJr1sM/S2v1zl1X1z25zt+daJNy0XH5FHM2IZl31oRgJj0K421AtgfN75anevwAYUNBJj/QarAkX/MUdzT8kj+zNzpu2cJpzWiEz1BvmqT3Ls6LtMI4Ah/M/WiTF2KMul+2GzlYUIj9aDJGs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW3C8N7X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rr6vH3BJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12100C32781;
-	Wed,  7 Aug 2024 15:03:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW3C8N7X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C3BC32781;
+	Wed,  7 Aug 2024 15:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042994;
-	bh=POFyRQERIHvV7zn4OugzFyNpFASwn6Zr5cEF+Abt1nc=;
+	s=korg; t=1723042997;
+	bh=gsiX7ZcRO6HAiQUWJz8tn2lByzVStPoVxvd0AwX9/rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rr6vH3BJ+7+FToMQu8bmYHmMyM5ca0cUi4HetrpWvsa/DTHyoWN3XrpD8a1SQ1GcJ
-	 QtbTeq6tkMaIsa/f8bPJaRQBaoYirPHtqzcLeZk2Z83F6BxCjqsb6l1L72hZH1mu0q
-	 MdSFt9Qs3jPaM/m8H8znyDa5ot1CFw2weDD4GuSs=
+	b=EW3C8N7XbrM+O2lBRFFaZCZgpqxKXPKV08jlccFQuAh3n68LcWfNLlnQgZnD4bzuK
+	 4QFCox9w9NaS1HQbPqYmVqndmAZyxlaKK4k6YnTK6Np1s1o7/X4Y6BCzCS1mZz68N1
+	 n1uHWdKyx6Ey5lszuETFaijvAbXrzRwmgqe67Xxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Simon Horman <horms@kernel.org>,
+	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 051/123] net: mvpp2: Dont re-use loop iterator
-Date: Wed,  7 Aug 2024 16:59:30 +0200
-Message-ID: <20240807150022.473125052@linuxfoundation.org>
+Subject: [PATCH 6.10 052/123] net: phy: micrel: Fix the KSZ9131 MDI-X status issue
+Date: Wed,  7 Aug 2024 16:59:31 +0200
+Message-ID: <20240807150022.499952635@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,46 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
 
-[ Upstream commit 0aa3ca956c46d849775eae1816cef8fe4bc8b50e ]
+[ Upstream commit 84383b5ef4cd21b4a67de92afdc05a03b5247db9 ]
 
-This function has a nested loop.  The problem is that both the inside
-and outside loop use the same variable as an iterator.  I found this
-via static analysis so I'm not sure the impact.  It could be that it
-loops forever or, more likely, the loop exits early.
+The MDIX status is not accurately reflecting the current state after the link
+partner has manually altered its MDIX configuration while operating in forced
+mode.
 
-Fixes: 3a616b92a9d1 ("net: mvpp2: Add TX flow control support for jumbo frames")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/eaa8f403-7779-4d81-973d-a9ecddc0bf6f@stanley.mountain
+Access information about Auto mdix completion and pair selection from the
+KSZ9131's Auto/MDI/MDI-X status register
+
+Fixes: b64e6a8794d9 ("net: phy: micrel: Add PHY Auto/MDI/MDI-X set driver for KSZ9131")
+Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240725071125.13960-1-Raju.Lakkaraju@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/phy/micrel.c | 34 +++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index 9adf4301c9b1d..a40b631188866 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -953,13 +953,13 @@ static void mvpp2_bm_pool_update_fc(struct mvpp2_port *port,
- static void mvpp2_bm_pool_update_priv_fc(struct mvpp2 *priv, bool en)
- {
- 	struct mvpp2_port *port;
--	int i;
-+	int i, j;
+diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
+index ebafedde0ab74..0803b6e83cf74 100644
+--- a/drivers/net/phy/micrel.c
++++ b/drivers/net/phy/micrel.c
+@@ -1389,6 +1389,8 @@ static int ksz9131_config_init(struct phy_device *phydev)
+ 	const struct device *dev_walker;
+ 	int ret;
  
- 	for (i = 0; i < priv->port_count; i++) {
- 		port = priv->port_list[i];
- 		if (port->priv->percpu_pools) {
--			for (i = 0; i < port->nrxqs; i++)
--				mvpp2_bm_pool_update_fc(port, &port->priv->bm_pools[i],
-+			for (j = 0; j < port->nrxqs; j++)
-+				mvpp2_bm_pool_update_fc(port, &port->priv->bm_pools[j],
- 							port->tx_fc & en);
- 		} else {
- 			mvpp2_bm_pool_update_fc(port, port->pool_long, port->tx_fc & en);
++	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
++
+ 	dev_walker = &phydev->mdio.dev;
+ 	do {
+ 		of_node = dev_walker->of_node;
+@@ -1438,28 +1440,30 @@ static int ksz9131_config_init(struct phy_device *phydev)
+ #define MII_KSZ9131_AUTO_MDIX		0x1C
+ #define MII_KSZ9131_AUTO_MDI_SET	BIT(7)
+ #define MII_KSZ9131_AUTO_MDIX_SWAP_OFF	BIT(6)
++#define MII_KSZ9131_DIG_AXAN_STS	0x14
++#define MII_KSZ9131_DIG_AXAN_STS_LINK_DET	BIT(14)
++#define MII_KSZ9131_DIG_AXAN_STS_A_SELECT	BIT(12)
+ 
+ static int ksz9131_mdix_update(struct phy_device *phydev)
+ {
+ 	int ret;
+ 
+-	ret = phy_read(phydev, MII_KSZ9131_AUTO_MDIX);
+-	if (ret < 0)
+-		return ret;
+-
+-	if (ret & MII_KSZ9131_AUTO_MDIX_SWAP_OFF) {
+-		if (ret & MII_KSZ9131_AUTO_MDI_SET)
+-			phydev->mdix_ctrl = ETH_TP_MDI;
+-		else
+-			phydev->mdix_ctrl = ETH_TP_MDI_X;
++	if (phydev->mdix_ctrl != ETH_TP_MDI_AUTO) {
++		phydev->mdix = phydev->mdix_ctrl;
+ 	} else {
+-		phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
+-	}
++		ret = phy_read(phydev, MII_KSZ9131_DIG_AXAN_STS);
++		if (ret < 0)
++			return ret;
+ 
+-	if (ret & MII_KSZ9131_AUTO_MDI_SET)
+-		phydev->mdix = ETH_TP_MDI;
+-	else
+-		phydev->mdix = ETH_TP_MDI_X;
++		if (ret & MII_KSZ9131_DIG_AXAN_STS_LINK_DET) {
++			if (ret & MII_KSZ9131_DIG_AXAN_STS_A_SELECT)
++				phydev->mdix = ETH_TP_MDI;
++			else
++				phydev->mdix = ETH_TP_MDI_X;
++		} else {
++			phydev->mdix = ETH_TP_MDI_INVALID;
++		}
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
