@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DBFE78C92;
-	Wed,  7 Aug 2024 15:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1D8727448;
+	Wed,  7 Aug 2024 15:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043285; cv=none; b=IjWjgPRP1nZSNkbB9kHRG5XE/iUhXIJJyZ0QYi93+iOSzfNzHqczezNWcOAWz9m1Q2CDrIx9J9TYnhWzFfqdByUDY/BvWJPwbFNg0gEG8yddyCTxv9vq2Tzjg7W7qDY5sVxOqV3aSvJDyhy6lMP/8l6XYau3bhDeJJAVHi2yjyg=
+	t=1723043287; cv=none; b=R91kqPDZOZwkP7U6e/8/wyzAo35ak02MOzk5ul8+lnnz4+oBeQfUXVzbfdy1eFuJCX3CHsn+64G7JZXHWMEFXuxTb2AntyZun/Ysx9iQ5s+xxCC1MvwfBTHBkWiLwUEdd6siNShCyh45ocrhENEcPWzvqPlyy2Lfo14VAH4pnjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043285; c=relaxed/simple;
-	bh=DFdYc8tLm8XsPfeBDQwWzd1HixQPfPvr1prccoG+6/U=;
+	s=arc-20240116; t=1723043287; c=relaxed/simple;
+	bh=z1BDHlVSOqdnrDiIVNavIKomsbybbSU/LNhotR2GMdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rx0GHkMfBAfwVZvntmVtffvkhoDTO3teySPYvWc3I5dign4ZK8iQcLrF18B6srvFx/miw0Spz1OxTlG+qKKYwg3MbJbTgm7mgSonAY9egvafew3VxzK9d0kTRVBOMmD1EkQOLiEguBa6ITu6jl+4u2Mv70VHwCHSuB6fDKduH98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AnZiN1K2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hZgBxrc9XQ7tOQes22QWx1Hff9d1VIci+pVTCWA6Wj+dX0R8WcTN2wrMMLJ7gbJkKwp7n75PwHpjohLE7JIWyJ/XXBuheI7Jf2JMI6whuIW6Wk0EkHGjjqWluWuEZhKsRGRTHaLXyHHgroRFroarUDLNKET1d1OF6nK/V9ju29A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYNMh/zS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AnZiN1K2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A7AAC4AF0D;
-	Wed,  7 Aug 2024 15:08:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYNMh/zS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C521C32781;
+	Wed,  7 Aug 2024 15:08:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043285;
-	bh=DFdYc8tLm8XsPfeBDQwWzd1HixQPfPvr1prccoG+6/U=;
+	s=korg; t=1723043287;
+	bh=z1BDHlVSOqdnrDiIVNavIKomsbybbSU/LNhotR2GMdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AnZiN1K2/34mL5Btf79tLUt2Stktbuv21RKCZN03IB9NhA1PWSvDxBtGyjJMPAsMu
-	 /lQHX+SCoNDANPyKYAWugEcf6rfCS+GokYTzDWrRD0SpiufreHhfycP4J9PhTbKOH7
-	 uHucRTx4qMnyNtIaoKpA4Rei3tRySRTtkmksxsyc=
+	b=yYNMh/zScIypPVOyx4X2ImtFV4G4+jlJWvAysaNM+c7t9LoOYyVPnZr7CXIOcax2w
+	 AbvOV0eTuUBX0uGbwZa7LcGx6OIjJZPxNRuSh1P+Jci4GKuLN8Po75T1zjnIpla+cC
+	 /6Ai6EPdb6eHWyVZ4OBsE22OFmKJBlkFuuMsGG7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Javier Martinez Canillas <javierm@redhat.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 035/121] firmware/sysfb: Update screen_info for relocated EFI framebuffers
-Date: Wed,  7 Aug 2024 16:59:27 +0200
-Message-ID: <20240807150020.483198360@linuxfoundation.org>
+Subject: [PATCH 6.6 036/121] fbdev: vesafb: Detect VGA compatibility from screen infos VESA attributes
+Date: Wed,  7 Aug 2024 16:59:28 +0200
+Message-ID: <20240807150020.530453644@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -53,187 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Zimmermann <tzimmermann@suse.de>
 
-[ Upstream commit 78aa89d1dfba1e3cf4a2e053afa3b4c4ec622371 ]
+[ Upstream commit c2bc958b2b03e361f14df99983bc64a39a7323a3 ]
 
-On ARM PCI systems, the PCI hierarchy might be reconfigured during
-boot and the firmware framebuffer might move as a result of that.
-The values in screen_info will then be invalid.
+Test the vesa_attributes field in struct screen_info for compatibility
+with VGA hardware. Vesafb currently tests bit 1 in screen_info's
+capabilities field which indicates a 64-bit lfb address and is
+unrelated to VGA compatibility.
 
-Work around this problem by tracking the framebuffer's initial
-location before it get relocated; then fix the screen_info state
-between reloaction and creating the firmware framebuffer's device.
+Section 4.4 of the Vesa VBE 2.0 specifications defines that bit 5 in
+the mode's attributes field signals VGA compatibility. The mode is
+compatible with VGA hardware if the bit is clear. In that case, the
+driver can access VGA state of the VBE's underlying hardware. The
+vesafb driver uses this feature to program the color LUT in palette
+modes. Without, colors might be incorrect.
 
-This functionality has been lifted from efifb. See the commit message
-of commit 55d728a40d36 ("efi/fb: Avoid reconfiguration of BAR that
-covers the framebuffer") for more information.
+The problem got introduced in commit 89ec4c238e7a ("[PATCH] vesafb: Fix
+incorrect logo colors in x86_64"). It incorrectly stores the mode
+attributes in the screen_info's capabilities field and updates vesafb
+accordingly. Later, commit 5e8ddcbe8692 ("Video mode probing support for
+the new x86 setup code") fixed the screen_info, but did not update vesafb.
+Color output still tends to work, because bit 1 in capabilities is
+usually 0.
+
+Besides fixing the bug in vesafb, this commit introduces a helper that
+reads the correct bit from screen_info.
 
 Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Fixes: 5e8ddcbe8692 ("Video mode probing support for the new x86 setup code")
 Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240212090736.11464-8-tzimmermann@suse.de
-Stable-dep-of: c2bc958b2b03 ("fbdev: vesafb: Detect VGA compatibility from screen info's VESA attributes")
+Cc: <stable@vger.kernel.org> # v2.6.23+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/sysfb.c        |  2 +
- drivers/video/screen_info_pci.c | 88 +++++++++++++++++++++++++++++++++
- include/linux/screen_info.h     | 16 ++++++
- 3 files changed, 106 insertions(+)
+ drivers/video/fbdev/vesafb.c |  2 +-
+ include/linux/screen_info.h  | 10 ++++++++++
+ 2 files changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/sysfb.c b/drivers/firmware/sysfb.c
-index 3c197db42c9d9..defd7a36cb08a 100644
---- a/drivers/firmware/sysfb.c
-+++ b/drivers/firmware/sysfb.c
-@@ -77,6 +77,8 @@ static __init int sysfb_init(void)
- 	bool compatible;
- 	int ret = 0;
+diff --git a/drivers/video/fbdev/vesafb.c b/drivers/video/fbdev/vesafb.c
+index ea89accbec385..a21581b40256c 100644
+--- a/drivers/video/fbdev/vesafb.c
++++ b/drivers/video/fbdev/vesafb.c
+@@ -259,7 +259,7 @@ static int vesafb_probe(struct platform_device *dev)
+ 	if (si->orig_video_isVGA != VIDEO_TYPE_VLFB)
+ 		return -ENODEV;
  
-+	screen_info_apply_fixups();
-+
- 	mutex_lock(&disable_lock);
- 	if (disabled)
- 		goto unlock_mutex;
-diff --git a/drivers/video/screen_info_pci.c b/drivers/video/screen_info_pci.c
-index d8985a54ce717..6c58335171410 100644
---- a/drivers/video/screen_info_pci.c
-+++ b/drivers/video/screen_info_pci.c
-@@ -1,7 +1,95 @@
- // SPDX-License-Identifier: GPL-2.0
- 
- #include <linux/pci.h>
-+#include <linux/printk.h>
- #include <linux/screen_info.h>
-+#include <linux/string.h>
-+
-+static struct pci_dev *screen_info_lfb_pdev;
-+static size_t screen_info_lfb_bar;
-+static resource_size_t screen_info_lfb_offset;
-+static struct resource screen_info_lfb_res = DEFINE_RES_MEM(0, 0);
-+
-+static bool __screen_info_relocation_is_valid(const struct screen_info *si, struct resource *pr)
-+{
-+	u64 size = __screen_info_lfb_size(si, screen_info_video_type(si));
-+
-+	if (screen_info_lfb_offset > resource_size(pr))
-+		return false;
-+	if (size > resource_size(pr))
-+		return false;
-+	if (resource_size(pr) - size < screen_info_lfb_offset)
-+		return false;
-+
-+	return true;
-+}
-+
-+void screen_info_apply_fixups(void)
-+{
-+	struct screen_info *si = &screen_info;
-+
-+	if (screen_info_lfb_pdev) {
-+		struct resource *pr = &screen_info_lfb_pdev->resource[screen_info_lfb_bar];
-+
-+		if (pr->start != screen_info_lfb_res.start) {
-+			if (__screen_info_relocation_is_valid(si, pr)) {
-+				/*
-+				 * Only update base if we have an actual
-+				 * relocation to a valid I/O range.
-+				 */
-+				__screen_info_set_lfb_base(si, pr->start + screen_info_lfb_offset);
-+				pr_info("Relocating firmware framebuffer to offset %pa[d] within %pr\n",
-+					&screen_info_lfb_offset, pr);
-+			} else {
-+				pr_warn("Invalid relocating, disabling firmware framebuffer\n");
-+			}
-+		}
-+	}
-+}
-+
-+static void screen_info_fixup_lfb(struct pci_dev *pdev)
-+{
-+	unsigned int type;
-+	struct resource res[SCREEN_INFO_MAX_RESOURCES];
-+	size_t i, numres;
-+	int ret;
-+	const struct screen_info *si = &screen_info;
-+
-+	if (screen_info_lfb_pdev)
-+		return; // already found
-+
-+	type = screen_info_video_type(si);
-+	if (type != VIDEO_TYPE_EFI)
-+		return; // only applies to EFI
-+
-+	ret = screen_info_resources(si, res, ARRAY_SIZE(res));
-+	if (ret < 0)
-+		return;
-+	numres = ret;
-+
-+	for (i = 0; i < numres; ++i) {
-+		struct resource *r = &res[i];
-+		const struct resource *pr;
-+
-+		if (!(r->flags & IORESOURCE_MEM))
-+			continue;
-+		pr = pci_find_resource(pdev, r);
-+		if (!pr)
-+			continue;
-+
-+		/*
-+		 * We've found a PCI device with the framebuffer
-+		 * resource. Store away the parameters to track
-+		 * relocation of the framebuffer aperture.
-+		 */
-+		screen_info_lfb_pdev = pdev;
-+		screen_info_lfb_bar = pr - pdev->resource;
-+		screen_info_lfb_offset = r->start - pr->start;
-+		memcpy(&screen_info_lfb_res, r, sizeof(screen_info_lfb_res));
-+	}
-+}
-+DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_ANY_ID, PCI_ANY_ID, PCI_BASE_CLASS_DISPLAY, 16,
-+			       screen_info_fixup_lfb);
- 
- static struct pci_dev *__screen_info_pci_dev(struct resource *res)
- {
+-	vga_compat = (si->capabilities & 2) ? 0 : 1;
++	vga_compat = !__screen_info_vbe_mode_nonvga(si);
+ 	vesafb_fix.smem_start = si->lfb_base;
+ 	vesafb_defined.bits_per_pixel = si->lfb_depth;
+ 	if (15 == vesafb_defined.bits_per_pixel)
 diff --git a/include/linux/screen_info.h b/include/linux/screen_info.h
-index 0eae08e3c6f90..75303c126285a 100644
+index 75303c126285a..6a4a3cec4638b 100644
 --- a/include/linux/screen_info.h
 +++ b/include/linux/screen_info.h
-@@ -4,6 +4,8 @@
- 
- #include <uapi/linux/screen_info.h>
- 
-+#include <linux/bits.h>
-+
- /**
-  * SCREEN_INFO_MAX_RESOURCES - maximum number of resources per screen_info
-  */
-@@ -27,6 +29,17 @@ static inline u64 __screen_info_lfb_base(const struct screen_info *si)
- 	return lfb_base;
+@@ -49,6 +49,16 @@ static inline u64 __screen_info_lfb_size(const struct screen_info *si, unsigned
+ 	return lfb_size;
  }
  
-+static inline void __screen_info_set_lfb_base(struct screen_info *si, u64 lfb_base)
++static inline bool __screen_info_vbe_mode_nonvga(const struct screen_info *si)
 +{
-+	si->lfb_base = lfb_base & GENMASK_ULL(31, 0);
-+	si->ext_lfb_base = (lfb_base & GENMASK_ULL(63, 32)) >> 32;
-+
-+	if (si->ext_lfb_base)
-+		si->capabilities |= VIDEO_CAPABILITY_64BIT_BASE;
-+	else
-+		si->capabilities &= ~VIDEO_CAPABILITY_64BIT_BASE;
++	/*
++	 * VESA modes typically run on VGA hardware. Set bit 5 signals that this
++	 * is not the case. Drivers can then not make use of VGA resources. See
++	 * Sec 4.4 of the VBE 2.0 spec.
++	 */
++	return si->vesa_attributes & BIT(5);
 +}
 +
- static inline u64 __screen_info_lfb_size(const struct screen_info *si, unsigned int type)
+ static inline unsigned int __screen_info_video_type(unsigned int type)
  {
- 	u64 lfb_size = si->lfb_size;
-@@ -106,8 +119,11 @@ static inline unsigned int screen_info_video_type(const struct screen_info *si)
- ssize_t screen_info_resources(const struct screen_info *si, struct resource *r, size_t num);
- 
- #if defined(CONFIG_PCI)
-+void screen_info_apply_fixups(void);
- struct pci_dev *screen_info_pci_dev(const struct screen_info *si);
- #else
-+static inline void screen_info_apply_fixups(void)
-+{ }
- static inline struct pci_dev *screen_info_pci_dev(const struct screen_info *si)
- {
- 	return NULL;
+ 	switch (type) {
 -- 
 2.43.0
 
