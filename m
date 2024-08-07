@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E612712CDBE;
-	Wed,  7 Aug 2024 15:05:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A3E78281;
+	Wed,  7 Aug 2024 15:05:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043141; cv=none; b=rlRSt9RUTOw+HDj/JtE9762o1i3BKgJKXy5KzF0Eqjdbwt6hprJYWjUq2l3gSYCL2Lrk+v9Hd2Z7XArAfHIxzNuRLT10D+c6DFNHwpAHhZBunkWulrji/jMXhbg7O2nNymtQAdMJYPZm4bbXe3SwpLiCw5Gdhy74q2DOFlDtPvI=
+	t=1723043143; cv=none; b=QAv0cbr2cMZT8S4qqr11aaAIGuEYW7XSw6pID1KtKJzTzbvYKb2cNPAWsVBVrCXw1pNbUh+oDEdEQe7V13yj0aMTh+7u2QPE2XjeaiXI4QOak8DV9SMlO9MzsnD+D31q1+sd1R6U8bZgTT+z+5MH4EL3Og4ykxzWMz/fzpW8nQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043141; c=relaxed/simple;
-	bh=7PmBBi/Vr4n0ucY9QtrsjRWAcCnRixPT2CdvfUoUxQ0=;
+	s=arc-20240116; t=1723043143; c=relaxed/simple;
+	bh=gAvQBZ85BFTaftB4EeKiOzZM9T+g/rM2f6IY4rkumkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jrPzmhvPFM4NyHwqDz85TA7rA0RhDCV0FWMPbFJg5E86Q9+Xi6DwrEp5rz56Ne/DRJdldudkzet2jjdnKTFmSd5rEELNbYsljfP0ncwVkvkEJ3+nKvYkx/sKpgKbtaioNyr7kXP/ZLfaYX1YN004+Ne4PU+u7oTTnTdpuhxSQg8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkGiXW4V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f4AMZWvTufFVxGp72NvRYvTxCkWFXoy3B3cs9L9Erpbm0co9eIN4t/9dIE5K7qz6TBI8NvjExrlI06Qo64hkLrbnBLb7I18b3DzBctMzezLzZrdMKBlFDuAeSj3pG0fpt/MSeelJeX08Dtof3OmenGmuTZmwRk7wsY7Aac50wLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkGR/fzs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkGiXW4V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E40C32781;
-	Wed,  7 Aug 2024 15:05:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkGR/fzs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251F8C32781;
+	Wed,  7 Aug 2024 15:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043140;
-	bh=7PmBBi/Vr4n0ucY9QtrsjRWAcCnRixPT2CdvfUoUxQ0=;
+	s=korg; t=1723043143;
+	bh=gAvQBZ85BFTaftB4EeKiOzZM9T+g/rM2f6IY4rkumkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkGiXW4VCDagqYkFvPt0OXNk59x8JIKPr2xOA+Nrf9zb8Pu3+NPS2Ctp1v342S6jw
-	 pcEBJDTy3P/te9XSYoXwGq3w0F5y3qf48hEjdSjdzmG76ydn+8Ntu4Rh2cPechqKSY
-	 eT4E7Ml7ah2ENxOBNtSfEtLw1rELXJxCoLATJyvI=
+	b=VkGR/fzsCbWdENtaGmWEGXBGExnqkDO4LQnxsDRcvWfo5uhmqlfYCLH3MATcRlfer
+	 4VkFJeCPLu2jgpuY3PybRPdX7T1uJwL5ciTdHklMA3ha7j3iE66pXEw1PhFL4aKERT
+	 WCJatM5h7RKFy9hBObFWc/9cuLU82SDXgIFXuYuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Lin <eric.lin@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Nikita Shubin <n.shubin@yadro.com>,
-	Inochi Amaoto <inochiama@outlook.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
+	Shifrin Dmitry <dmitry.shifrin@syntacore.com>,
 	Atish Patra <atishp@rivosinc.com>,
 	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 069/123] perf arch events: Fix duplicate RISC-V SBI firmware event name
-Date: Wed,  7 Aug 2024 16:59:48 +0200
-Message-ID: <20240807150023.035274793@linuxfoundation.org>
+Subject: [PATCH 6.10 070/123] perf: riscv: Fix selecting counters in legacy mode
+Date: Wed,  7 Aug 2024 16:59:49 +0200
+Message-ID: <20240807150023.064763033@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -56,136 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Lin <eric.lin@sifive.com>
+From: Shifrin Dmitry <dmitry.shifrin@syntacore.com>
 
-[ Upstream commit 63ba5b0fb4f54db256ec43b3062b2606b383055d ]
+[ Upstream commit 941a8e9b7a86763ac52d5bf6ccc9986d37fde628 ]
 
-Currently, the RISC-V firmware JSON file has duplicate event name
-"FW_SFENCE_VMA_RECEIVED". According to the RISC-V SBI PMU extension[1],
-the event name should be "FW_SFENCE_VMA_ASID_SENT".
+It is required to check event type before checking event config.
+Events with the different types can have the same config.
+This check is missed for legacy mode code
 
-Before this patch:
-$ perf list
+For such perf usage:
+    sysctl -w kernel.perf_user_access=2
+    perf stat -e cycles,L1-dcache-loads --
+driver will try to force both events to CYCLE counter.
 
-firmware:
-  fw_access_load
-       [Load access trap event. Unit: cpu]
-  fw_access_store
-       [Store access trap event. Unit: cpu]
-....
- fw_set_timer
-       [Set timer event. Unit: cpu]
-  fw_sfence_vma_asid_received
-       [Received SFENCE.VMA with ASID request from other HART event. Unit: cpu]
-  fw_sfence_vma_received
-       [Sent SFENCE.VMA with ASID request to other HART event. Unit: cpu]
+This commit implements event type check before forcing
+events on the special counters.
 
-After this patch:
-$ perf list
-
-firmware:
-  fw_access_load
-       [Load access trap event. Unit: cpu]
-  fw_access_store
-       [Store access trap event. Unit: cpu]
-.....
-  fw_set_timer
-       [Set timer event. Unit: cpu]
-  fw_sfence_vma_asid_received
-       [Received SFENCE.VMA with ASID request from other HART event. Unit: cpu]
-  fw_sfence_vma_asid_sent
-       [Sent SFENCE.VMA with ASID request to other HART event. Unit: cpu]
-  fw_sfence_vma_received
-       [Received SFENCE.VMA request from other HART event. Unit: cpu]
-
-Link: https://github.com/riscv-non-isa/riscv-sbi-doc/blob/master/src/ext-pmu.adoc#event-firmware-events-type-15 [1]
-Fixes: 8f0dcb4e7364 ("perf arch events: riscv sbi firmware std event files")
-Fixes: c4f769d4093d ("perf vendor events riscv: add Sifive U74 JSON file")
-Fixes: acbf6de674ef ("perf vendor events riscv: Add StarFive Dubhe-80 JSON file")
-Fixes: 7340c6df49df ("perf vendor events riscv: add T-HEAD C9xx JSON file")
-Fixes: f5102e31c209 ("riscv: andes: Support specifying symbolic firmware and hardware raw event")
-Signed-off-by: Eric Lin <eric.lin@sifive.com>
-Reviewed-by: Samuel Holland <samuel.holland@sifive.com>
-Reviewed-by: Nikita Shubin <n.shubin@yadro.com>
-Reviewed-by: Inochi Amaoto <inochiama@outlook.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Signed-off-by: Shifrin Dmitry <dmitry.shifrin@syntacore.com>
 Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Link: https://lore.kernel.org/r/20240719115018.27356-1-eric.lin@sifive.com
+Fixes: cc4c07c89aad ("drivers: perf: Implement perf event mmap support in the SBI backend")
+Link: https://lore.kernel.org/r/20240729125858.630653-1-dmitry.shifrin@syntacore.com
 Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/pmu-events/arch/riscv/andes/ax45/firmware.json       | 2 +-
- tools/perf/pmu-events/arch/riscv/riscv-sbi-firmware.json        | 2 +-
- tools/perf/pmu-events/arch/riscv/sifive/u74/firmware.json       | 2 +-
- .../perf/pmu-events/arch/riscv/starfive/dubhe-80/firmware.json  | 2 +-
- .../perf/pmu-events/arch/riscv/thead/c900-legacy/firmware.json  | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/perf/riscv_pmu_sbi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/pmu-events/arch/riscv/andes/ax45/firmware.json b/tools/perf/pmu-events/arch/riscv/andes/ax45/firmware.json
-index 9b4a032186a7b..7149caec4f80e 100644
---- a/tools/perf/pmu-events/arch/riscv/andes/ax45/firmware.json
-+++ b/tools/perf/pmu-events/arch/riscv/andes/ax45/firmware.json
-@@ -36,7 +36,7 @@
-     "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-   },
-   {
--    "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-+    "ArchStdEvent": "FW_SFENCE_VMA_ASID_SENT"
-   },
-   {
-     "ArchStdEvent": "FW_SFENCE_VMA_ASID_RECEIVED"
-diff --git a/tools/perf/pmu-events/arch/riscv/riscv-sbi-firmware.json b/tools/perf/pmu-events/arch/riscv/riscv-sbi-firmware.json
-index a9939823b14b5..0c9b9a2d2958a 100644
---- a/tools/perf/pmu-events/arch/riscv/riscv-sbi-firmware.json
-+++ b/tools/perf/pmu-events/arch/riscv/riscv-sbi-firmware.json
-@@ -74,7 +74,7 @@
-   {
-     "PublicDescription": "Sent SFENCE.VMA with ASID request to other HART event",
-     "ConfigCode": "0x800000000000000c",
--    "EventName": "FW_SFENCE_VMA_RECEIVED",
-+    "EventName": "FW_SFENCE_VMA_ASID_SENT",
-     "BriefDescription": "Sent SFENCE.VMA with ASID request to other HART event"
-   },
-   {
-diff --git a/tools/perf/pmu-events/arch/riscv/sifive/u74/firmware.json b/tools/perf/pmu-events/arch/riscv/sifive/u74/firmware.json
-index 9b4a032186a7b..7149caec4f80e 100644
---- a/tools/perf/pmu-events/arch/riscv/sifive/u74/firmware.json
-+++ b/tools/perf/pmu-events/arch/riscv/sifive/u74/firmware.json
-@@ -36,7 +36,7 @@
-     "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-   },
-   {
--    "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-+    "ArchStdEvent": "FW_SFENCE_VMA_ASID_SENT"
-   },
-   {
-     "ArchStdEvent": "FW_SFENCE_VMA_ASID_RECEIVED"
-diff --git a/tools/perf/pmu-events/arch/riscv/starfive/dubhe-80/firmware.json b/tools/perf/pmu-events/arch/riscv/starfive/dubhe-80/firmware.json
-index 9b4a032186a7b..7149caec4f80e 100644
---- a/tools/perf/pmu-events/arch/riscv/starfive/dubhe-80/firmware.json
-+++ b/tools/perf/pmu-events/arch/riscv/starfive/dubhe-80/firmware.json
-@@ -36,7 +36,7 @@
-     "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-   },
-   {
--    "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-+    "ArchStdEvent": "FW_SFENCE_VMA_ASID_SENT"
-   },
-   {
-     "ArchStdEvent": "FW_SFENCE_VMA_ASID_RECEIVED"
-diff --git a/tools/perf/pmu-events/arch/riscv/thead/c900-legacy/firmware.json b/tools/perf/pmu-events/arch/riscv/thead/c900-legacy/firmware.json
-index 9b4a032186a7b..7149caec4f80e 100644
---- a/tools/perf/pmu-events/arch/riscv/thead/c900-legacy/firmware.json
-+++ b/tools/perf/pmu-events/arch/riscv/thead/c900-legacy/firmware.json
-@@ -36,7 +36,7 @@
-     "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-   },
-   {
--    "ArchStdEvent": "FW_SFENCE_VMA_RECEIVED"
-+    "ArchStdEvent": "FW_SFENCE_VMA_ASID_SENT"
-   },
-   {
-     "ArchStdEvent": "FW_SFENCE_VMA_ASID_RECEIVED"
+diff --git a/drivers/perf/riscv_pmu_sbi.c b/drivers/perf/riscv_pmu_sbi.c
+index 4e842dcedfbaa..11c7c85047ed4 100644
+--- a/drivers/perf/riscv_pmu_sbi.c
++++ b/drivers/perf/riscv_pmu_sbi.c
+@@ -412,7 +412,7 @@ static int pmu_sbi_ctr_get_idx(struct perf_event *event)
+ 	 * but not in the user access mode as we want to use the other counters
+ 	 * that support sampling/filtering.
+ 	 */
+-	if (hwc->flags & PERF_EVENT_FLAG_LEGACY) {
++	if ((hwc->flags & PERF_EVENT_FLAG_LEGACY) && (event->attr.type == PERF_TYPE_HARDWARE)) {
+ 		if (event->attr.config == PERF_COUNT_HW_CPU_CYCLES) {
+ 			cflags |= SBI_PMU_CFG_FLAG_SKIP_MATCH;
+ 			cmask = 1;
 -- 
 2.43.0
 
