@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3695C7E0E9;
-	Wed,  7 Aug 2024 15:11:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD46A7E0E9;
+	Wed,  7 Aug 2024 15:11:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723043498; cv=none; b=R+2maQSTcGWuxYhr1wV9Tph0NEatyaToSSpFv6RJP9Wf4Z3YP/X73ffE2ANX1DdFjpRPIRtHD+pwqypLiUOjHvU/wEdlVWLq78K7bQuFy+6MrHhgQFPCU3RPjfWZkccxifnh5cehs/FeCezGTPIsTfJcnb/kaijyZmbZbclM+/M=
+	t=1723043500; cv=none; b=lHn9WV76SmYKZMj3jSkzZQMOCrX+BjJg3aUcoviahXEdbFhAkkH4DwA/Atq9Gw38oMN6CCwO8z+T0ywQI7ZX+GjWutcj8KmflfnCxAGbLYTXWvg5udi/frvvqBglxVJKsRDtk81+AFcvifWOS+4nc999Hm2BkKSxVkRJGLcQsro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723043498; c=relaxed/simple;
-	bh=fBmFskg6+kgzNIsvKJkutrTuTloNA/gTAazdZzTet34=;
+	s=arc-20240116; t=1723043500; c=relaxed/simple;
+	bh=koRhZITgrr98ZcHOBP/5sf/t1YLE7gqucTgkRufJ4C4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E1PxHRpDe/hsL1PlR4F5IQC6cuU1P8q94pdFmJ9JWa76Tj7u1VYVbARibApIYbFNHuq7m36docA0aGinm7F3yOs7ts2IbqHBZGSN5fzjRIi520b2E4gHEmwidQSnPxTkMf3kEK8OL5m57USQkjfwzFba8djCQNgv1eb42hYXXLI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7RKm+Z2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=argtC0VnNkpiRhGQyOGoSkIHm47FrftuR4DYBkvN50HiNjzdLV+nPW5yH7ujHU5QH97yI0B5zJEd29hb4IzX/8P2XkG/pXvd3XLOa6gUn5BopDNnBBh8cISSL4FtyY2lFuX785vCTZb8yRwNcC+ln8ZulGoNqzR0H3OO+OyNQR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DxHw6KDM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7RKm+Z2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CCCC32781;
-	Wed,  7 Aug 2024 15:11:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DxHw6KDM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DC1EC32781;
+	Wed,  7 Aug 2024 15:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723043498;
-	bh=fBmFskg6+kgzNIsvKJkutrTuTloNA/gTAazdZzTet34=;
+	s=korg; t=1723043500;
+	bh=koRhZITgrr98ZcHOBP/5sf/t1YLE7gqucTgkRufJ4C4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7RKm+Z26tNMzJq0pOR8B/5kkqZyzXknenq8ZUAByx6B5bsgHntBNUm0lQ5+OEhVB
-	 a2SGcf8zOUSagnAdCynC00MKJZv2mfMgNDWn0QnsH5zuMHM6xKEODEXF/V53ZknyTT
-	 VQwim1Y8r3MalxrD4OWDlmVc/dNpa5cQh/5ytwBE=
+	b=DxHw6KDMELLAXZM0tftZj3eYCuDdzEbdmzVSz43KjSib+VwZ9qacKwPR79b5UcacB
+	 PQolPjUWTOQntg/D/S3j4eeU2vZSFHOBZARlFMbDR6aS2Q8wYYLGghKECCujh284OR
+	 1WBV1iYu85gxsfZ9riKJHIHTsYOjD45i/lmTHxjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shahar Shitrit <shshitrit@nvidia.com>,
-	Carolina Jubran <cjubran@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Mor Bar-Gabay <morx.bar.gabay@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/121] net/mlx5e: Add a check for the return value from mlx5_port_set_eth_ptys
-Date: Wed,  7 Aug 2024 17:00:18 +0200
-Message-ID: <20240807150022.222350288@linuxfoundation.org>
+Subject: [PATCH 6.6 087/121] igc: Fix double reset adapter triggered from a single taprio cmd
+Date: Wed,  7 Aug 2024 17:00:19 +0200
+Message-ID: <20240807150022.253359874@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150019.412911622@linuxfoundation.org>
 References: <20240807150019.412911622@linuxfoundation.org>
@@ -54,45 +55,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shahar Shitrit <shshitrit@nvidia.com>
+From: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
 
-[ Upstream commit 3f8e82a020a5c22f9b791f4ac499b8e18007fbda ]
+[ Upstream commit b9e7fc0aeda79031a101610b2fcb12bf031056e9 ]
 
-Since the documentation for mlx5_toggle_port_link states that it should
-only be used after setting the port register, we add a check for the
-return value from mlx5_port_set_eth_ptys to ensure the register was
-successfully set before calling it.
+Following the implementation of "igc: Add TransmissionOverrun counter"
+patch, when a taprio command is triggered by user, igc processes two
+commands: TAPRIO_CMD_REPLACE followed by TAPRIO_CMD_STATS. However, both
+commands unconditionally pass through igc_tsn_offload_apply() which
+evaluates and triggers reset adapter. The double reset causes issues in
+the calculation of adapter->qbv_count in igc.
 
-Fixes: 667daedaecd1 ("net/mlx5e: Toggle link only after modifying port parameters")
-Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
-Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
-Link: https://patch.msgid.link/20240730061638.1831002-9-tariqt@nvidia.com
+TAPRIO_CMD_REPLACE command is expected to reset the adapter since it
+activates qbv. It's unexpected for TAPRIO_CMD_STATS to do the same
+because it doesn't configure any driver-specific TSN settings. So, the
+evaluation in igc_tsn_offload_apply() isn't needed for TAPRIO_CMD_STATS.
+
+To address this, commands parsing are relocated to
+igc_tsn_enable_qbv_scheduling(). Commands that don't require an adapter
+reset will exit after processing, thus avoiding igc_tsn_offload_apply().
+
+Fixes: d3750076d464 ("igc: Add TransmissionOverrun counter")
+Signed-off-by: Faizal Rahim <faizal.abdul.rahim@linux.intel.com>
+Acked-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Tested-by: Mor Bar-Gabay <morx.bar.gabay@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20240730173304.865479-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 33 ++++++++++++-----------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-index 38263d5c98b34..50db127e6371b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
-@@ -1223,7 +1223,12 @@ int mlx5e_ethtool_set_link_ksettings(struct mlx5e_priv *priv,
- 	if (!an_changes && link_modes == eproto.admin)
- 		goto out;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index e83700ad7e622..d80bbcdeb93ed 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6208,21 +6208,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	size_t n;
+ 	int i;
  
--	mlx5_port_set_eth_ptys(mdev, an_disable, link_modes, ext);
-+	err = mlx5_port_set_eth_ptys(mdev, an_disable, link_modes, ext);
-+	if (err) {
-+		netdev_err(priv->netdev, "%s: failed to set ptys reg: %d\n", __func__, err);
-+		goto out;
+-	switch (qopt->cmd) {
+-	case TAPRIO_CMD_REPLACE:
+-		break;
+-	case TAPRIO_CMD_DESTROY:
+-		return igc_tsn_clear_schedule(adapter);
+-	case TAPRIO_CMD_STATS:
+-		igc_taprio_stats(adapter->netdev, &qopt->stats);
+-		return 0;
+-	case TAPRIO_CMD_QUEUE_STATS:
+-		igc_taprio_queue_stats(adapter->netdev, &qopt->queue_stats);
+-		return 0;
+-	default:
+-		return -EOPNOTSUPP;
+-	}
+-
+ 	if (qopt->base_time < 0)
+ 		return -ERANGE;
+ 
+@@ -6331,7 +6316,23 @@ static int igc_tsn_enable_qbv_scheduling(struct igc_adapter *adapter,
+ 	if (hw->mac.type != igc_i225)
+ 		return -EOPNOTSUPP;
+ 
+-	err = igc_save_qbv_schedule(adapter, qopt);
++	switch (qopt->cmd) {
++	case TAPRIO_CMD_REPLACE:
++		err = igc_save_qbv_schedule(adapter, qopt);
++		break;
++	case TAPRIO_CMD_DESTROY:
++		err = igc_tsn_clear_schedule(adapter);
++		break;
++	case TAPRIO_CMD_STATS:
++		igc_taprio_stats(adapter->netdev, &qopt->stats);
++		return 0;
++	case TAPRIO_CMD_QUEUE_STATS:
++		igc_taprio_queue_stats(adapter->netdev, &qopt->queue_stats);
++		return 0;
++	default:
++		return -EOPNOTSUPP;
 +	}
 +
- 	mlx5_toggle_port_link(mdev);
+ 	if (err)
+ 		return err;
  
- out:
 -- 
 2.43.0
 
