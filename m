@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E47FE6FE16;
-	Wed,  7 Aug 2024 15:02:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA68B23CE;
+	Wed,  7 Aug 2024 15:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042935; cv=none; b=pPXtOLdjdKgTj+HrpeoFof4tFd9vff1IjM3QXxNLs5+TLUOq3DFo/Ijfxy8D6vU6tVmeKAXrzfcal0o7HnZkQ4FzlQ7Wru8FPlwc+dILXaogM3Bmm8r1U/ENzSfNhRK6C9b7mvld8Hak27Z+/zjHH5FGLON2wXgUC+deRNDOnyQ=
+	t=1723042937; cv=none; b=NOuRMMJRS8bqRNhIuA7Z+sIKebJJ/PNaS522kUv8tSJ2NJbCYrdycyPR4nfTbR/d4iHCXlmg5mYyM4TUz08QLkqt0uz6sZibRVcU2f7a4ExasgGzKApJ3T3584mcCKYQWg+PC1xI6LDmOaadHwT838pnXfsbDAPQIR4uoVbzmSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042935; c=relaxed/simple;
-	bh=mJhLVy/37Ku5g4STZ5v5GXEjqGJZLpWrb1jCewMJmX0=;
+	s=arc-20240116; t=1723042937; c=relaxed/simple;
+	bh=xPRCY2YIc89lzf6sYLr6DWAVes5Bmg7F39U6/VqGtUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CkSmcoEK8Y5D89An40ON6nNy+KtjFvKTxpAoq2yTE33OZej9RpG9FOv2IWy9rS1aZtjC8mSY82YZ2DS+BQhlLphPI/eCfm14Bfsorzn6OWHPVkL4vt/nsRTMdvDt3HC/XjYmU5YuqG3EK56ih0QyJL+EcWPeL0yEK+ks6QAGy0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qzpgJstO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T479j92vOjJpY385JwYFV4FYsCmWZmpP3MX07OZFQpWNvp6dd9QMUI/4sWPFVqEhC+THWkWqR1+DBKMu4P3IshvFaFrJtsy/KADVk0z+lvk+NjqiUQBsGgEiLpLBesfc1Czh6HacOtydDV7xSCyqq0a37XGuILYAKhQS05mLWS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3CWvb0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qzpgJstO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F4CC32781;
-	Wed,  7 Aug 2024 15:02:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3CWvb0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395F5C32781;
+	Wed,  7 Aug 2024 15:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042934;
-	bh=mJhLVy/37Ku5g4STZ5v5GXEjqGJZLpWrb1jCewMJmX0=;
+	s=korg; t=1723042937;
+	bh=xPRCY2YIc89lzf6sYLr6DWAVes5Bmg7F39U6/VqGtUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qzpgJstOkj7a3F9kpwJuT1YlmY5WCESfBq/BnpiQw2ADhSyVzHpa0pOHK+Rl1ccPS
-	 Smp6rzSHMlumascVL8+1KetWgwdAIHjn7kDWp2CYQAhd6Mx7u8lhTpiE90Y+9sBbqt
-	 dqQA1FTlnYg3P+zAFL6DwYev8sSH1tzp/cJiyn8M=
+	b=b3CWvb0frIie247QX3Vp+NzZznncEJCLYjYdw4+Eog6JP4WqiuIEvm7e1zwhThoXa
+	 qXZyeo60uH1A69Jcg+O3j6zAVjiaFa/XNKYNomGDH407+rfDiw02c5va44eyLDJTyN
+	 teu5m1k+wM4zDIXCZxdfnXH9AwJ2A+ZiFNBeTAmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Veerendranath Jakkam <quic_vjakkam@quicinc.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	David Hildenbrand <david@redhat.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Donet Tom <donettom@linux.ibm.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 029/123] wifi: cfg80211: fix reporting failed MLO links status with cfg80211_connect_done
-Date: Wed,  7 Aug 2024 16:59:08 +0200
-Message-ID: <20240807150021.763193794@linuxfoundation.org>
+Subject: [PATCH 6.10 003/123] mm/migrate: make migrate_misplaced_folio() return 0 on success
+Date: Wed,  7 Aug 2024 16:58:42 +0200
+Message-ID: <20240807150020.908601126@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,41 +54,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Veerendranath Jakkam <quic_vjakkam@quicinc.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit baeaabf970b9a90999f62ae27edf63f6cb86c023 ]
+[ Upstream commit 4b88c23ab8c9bc3857f7c8847e2c6bed95185530 ]
 
-Individual MLO links connection status is not copied to
-EVENT_CONNECT_RESULT data while processing the connect response
-information in cfg80211_connect_done(). Due to this failed links
-are wrongly indicated with success status in EVENT_CONNECT_RESULT.
+Patch series "mm/migrate: move NUMA hinting fault folio isolation + checks
+under PTL".
 
-To fix this, copy the individual MLO links status to the
-EVENT_CONNECT_RESULT data.
+Let's just return 0 on success, which is less confusing.
 
-Fixes: 53ad07e9823b ("wifi: cfg80211: support reporting failed links")
-Signed-off-by: Veerendranath Jakkam <quic_vjakkam@quicinc.com>
-Reviewed-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20240724125327.3495874-1-quic_vjakkam@quicinc.com
-[commit message editorial changes]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+...  especially because we got it wrong in the migrate.h stub where we
+have "return -EAGAIN; /* can't migrate now */" instead of "return 0;".
+Likely this wrong return value doesn't currently matter, but it certainly
+adds confusion.
+
+We'll add migrate_misplaced_folio_prepare() next, where we want to use the
+same "return 0 on success" approach, so let's just clean this up.
+
+Link: https://lkml.kernel.org/r/20240620212935.656243-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20240620212935.656243-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: 6e49019db5f7 ("mm/migrate: putback split folios when numa hint migration fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/sme.c | 1 +
- 1 file changed, 1 insertion(+)
+ mm/huge_memory.c | 5 ++---
+ mm/memory.c      | 2 +-
+ mm/migrate.c     | 4 ++--
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/net/wireless/sme.c b/net/wireless/sme.c
-index a8ad55f11133b..1cfe673bc52f3 100644
---- a/net/wireless/sme.c
-+++ b/net/wireless/sme.c
-@@ -1045,6 +1045,7 @@ void cfg80211_connect_done(struct net_device *dev,
- 			cfg80211_hold_bss(
- 				bss_from_pub(params->links[link].bss));
- 		ev->cr.links[link].bss = params->links[link].bss;
-+		ev->cr.links[link].status = params->links[link].status;
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+index e234954cf5067..5ca9d45e6742c 100644
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -1666,7 +1666,7 @@ vm_fault_t do_huge_pmd_numa_page(struct vm_fault *vmf)
+ 	unsigned long haddr = vmf->address & HPAGE_PMD_MASK;
+ 	int nid = NUMA_NO_NODE;
+ 	int target_nid, last_cpupid = (-1 & LAST_CPUPID_MASK);
+-	bool migrated = false, writable = false;
++	bool writable = false;
+ 	int flags = 0;
  
- 		if (params->links[link].addr) {
- 			ev->cr.links[link].addr = next;
+ 	vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
+@@ -1710,8 +1710,7 @@ vm_fault_t do_huge_pmd_numa_page(struct vm_fault *vmf)
+ 	spin_unlock(vmf->ptl);
+ 	writable = false;
+ 
+-	migrated = migrate_misplaced_folio(folio, vma, target_nid);
+-	if (migrated) {
++	if (!migrate_misplaced_folio(folio, vma, target_nid)) {
+ 		flags |= TNF_MIGRATED;
+ 		nid = target_nid;
+ 	} else {
+diff --git a/mm/memory.c b/mm/memory.c
+index f81760c93801f..b1e77b9d17e75 100644
+--- a/mm/memory.c
++++ b/mm/memory.c
+@@ -5214,7 +5214,7 @@ static vm_fault_t do_numa_page(struct vm_fault *vmf)
+ 	ignore_writable = true;
+ 
+ 	/* Migrate to the requested node */
+-	if (migrate_misplaced_folio(folio, vma, target_nid)) {
++	if (!migrate_misplaced_folio(folio, vma, target_nid)) {
+ 		nid = target_nid;
+ 		flags |= TNF_MIGRATED;
+ 	} else {
+diff --git a/mm/migrate.c b/mm/migrate.c
+index a8c6f466e33ac..83e0e1aa21c7e 100644
+--- a/mm/migrate.c
++++ b/mm/migrate.c
+@@ -2656,11 +2656,11 @@ int migrate_misplaced_folio(struct folio *folio, struct vm_area_struct *vma,
+ 					    nr_succeeded);
+ 	}
+ 	BUG_ON(!list_empty(&migratepages));
+-	return isolated;
++	return isolated ? 0 : -EAGAIN;
+ 
+ out:
+ 	folio_put(folio);
+-	return 0;
++	return -EAGAIN;
+ }
+ #endif /* CONFIG_NUMA_BALANCING */
+ #endif /* CONFIG_NUMA */
 -- 
 2.43.0
 
