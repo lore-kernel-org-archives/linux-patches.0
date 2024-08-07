@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B6574055;
-	Wed,  7 Aug 2024 15:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20ADE84A52;
+	Wed,  7 Aug 2024 15:03:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723042997; cv=none; b=pfZjMo76VV82m6aS+evl1hQKa3xpoUtFljxggfdOpkAAuHJpg1cvGJjM4EBz/PS2Nxnommr5UikoSMaDSPOPp9R1i4kKTHRBaV1dCHkr/l+2z0TCeZuTWa6QkZyAnus85b4+KYF+aQpqsmrHnS5vJTUFq1l6BpDSZ7yVzpKMPXo=
+	t=1723043000; cv=none; b=CYCB10QKsRtTUBmXPU+/DMQCISi4dNHnqvCkPaHUkpsOM3eKfA0zyxAKTTob3r+5YWw+5S+vVlzBme1YQ2G7M00YZDfm1acDep5BCnZaR59DJbSXugQoHsM1TqGj7hG/FwTRrdvAxRWm2o+LbcpJOalNA8oCoQWS+a0Dl1zaYyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723042997; c=relaxed/simple;
-	bh=gsiX7ZcRO6HAiQUWJz8tn2lByzVStPoVxvd0AwX9/rc=;
+	s=arc-20240116; t=1723043000; c=relaxed/simple;
+	bh=DpeRoJdUxfFsN+W7ELSotj9jTxPxqGwQc9o+ZEcJ+V8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fhfXWO4Hou57SSJJdeM1duVI4ewUJr1sM/S2v1zl1X1z25zt+daJNy0XH5FHM2IZl31oRgJj0K421AtgfN75anevwAYUNBJj/QarAkX/MUdzT8kj+zNzpu2cJpzWiEz1BvmqT3Ls6LtMI4Ah/M/WiTF2KMul+2GzlYUIj9aDJGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EW3C8N7X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AoKW+Kx2+FcBclBlmxW6ywWd9bs/z1cohcXMVKCs1FQHG+r1fdkKSzSMkz/UE8M3/dfBYqpJoI9xDrc70Yp3h36veXCajuNi29Xc7q7tmvUV67DNi2O7IYWBqDS/vIsuqpBVUtL0Qlsu4xE29N9tZkPQoi+vyt+6e2kOj33EUFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uA7POpBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EW3C8N7X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4C3BC32781;
-	Wed,  7 Aug 2024 15:03:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uA7POpBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64D9C32781;
+	Wed,  7 Aug 2024 15:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723042997;
-	bh=gsiX7ZcRO6HAiQUWJz8tn2lByzVStPoVxvd0AwX9/rc=;
+	s=korg; t=1723043000;
+	bh=DpeRoJdUxfFsN+W7ELSotj9jTxPxqGwQc9o+ZEcJ+V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EW3C8N7XbrM+O2lBRFFaZCZgpqxKXPKV08jlccFQuAh3n68LcWfNLlnQgZnD4bzuK
-	 4QFCox9w9NaS1HQbPqYmVqndmAZyxlaKK4k6YnTK6Np1s1o7/X4Y6BCzCS1mZz68N1
-	 n1uHWdKyx6Ey5lszuETFaijvAbXrzRwmgqe67Xxk=
+	b=uA7POpBRKmLNeff+FasakwIzlwi9pDc48B7P95eaOxQ3JD9klI6zHP9DqBeGB7KSD
+	 YaeZ+v6WeYX7/Pm7WPrBNPIl8OBtAwHw1V96KYNVFMSqI0JCeHrjmDa9mHl+baRNvV
+	 mY5G2PSbWFqsY2s3dH86tUq42iy+AYwNmqiXFtIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Lakkaraju <Raju.Lakkaraju@microchip.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 052/123] net: phy: micrel: Fix the KSZ9131 MDI-X status issue
-Date: Wed,  7 Aug 2024 16:59:31 +0200
-Message-ID: <20240807150022.499952635@linuxfoundation.org>
+Subject: [PATCH 6.10 053/123] s390/mm/ptdump: Fix handling of identity mapping area
+Date: Wed,  7 Aug 2024 16:59:32 +0200
+Message-ID: <20240807150022.529474699@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240807150020.790615758@linuxfoundation.org>
 References: <20240807150020.790615758@linuxfoundation.org>
@@ -52,86 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 84383b5ef4cd21b4a67de92afdc05a03b5247db9 ]
+[ Upstream commit 373953444ce542db43535861fb8ebf3a1e05669c ]
 
-The MDIX status is not accurately reflecting the current state after the link
-partner has manually altered its MDIX configuration while operating in forced
-mode.
+Since virtual and real addresses are not the same anymore the
+assumption that the kernel image is contained within the identity
+mapping is also not true anymore.
 
-Access information about Auto mdix completion and pair selection from the
-KSZ9131's Auto/MDI/MDI-X status register
+Fix this by adding two explicit areas and at the correct locations: one
+for the 8kb lowcore area, and one for the identity mapping.
 
-Fixes: b64e6a8794d9 ("net: phy: micrel: Add PHY Auto/MDI/MDI-X set driver for KSZ9131")
-Signed-off-by: Raju Lakkaraju <Raju.Lakkaraju@microchip.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20240725071125.13960-1-Raju.Lakkaraju@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address spaces")
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/micrel.c | 34 +++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ arch/s390/mm/dump_pagetables.c | 21 ++++++++++++---------
+ 1 file changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/phy/micrel.c b/drivers/net/phy/micrel.c
-index ebafedde0ab74..0803b6e83cf74 100644
---- a/drivers/net/phy/micrel.c
-+++ b/drivers/net/phy/micrel.c
-@@ -1389,6 +1389,8 @@ static int ksz9131_config_init(struct phy_device *phydev)
- 	const struct device *dev_walker;
- 	int ret;
+diff --git a/arch/s390/mm/dump_pagetables.c b/arch/s390/mm/dump_pagetables.c
+index ffd07ed7b4af8..9d0805d6dc1b2 100644
+--- a/arch/s390/mm/dump_pagetables.c
++++ b/arch/s390/mm/dump_pagetables.c
+@@ -20,8 +20,8 @@ struct addr_marker {
+ };
  
-+	phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
-+
- 	dev_walker = &phydev->mdio.dev;
- 	do {
- 		of_node = dev_walker->of_node;
-@@ -1438,28 +1440,30 @@ static int ksz9131_config_init(struct phy_device *phydev)
- #define MII_KSZ9131_AUTO_MDIX		0x1C
- #define MII_KSZ9131_AUTO_MDI_SET	BIT(7)
- #define MII_KSZ9131_AUTO_MDIX_SWAP_OFF	BIT(6)
-+#define MII_KSZ9131_DIG_AXAN_STS	0x14
-+#define MII_KSZ9131_DIG_AXAN_STS_LINK_DET	BIT(14)
-+#define MII_KSZ9131_DIG_AXAN_STS_A_SELECT	BIT(12)
+ enum address_markers_idx {
+-	IDENTITY_BEFORE_NR = 0,
+-	IDENTITY_BEFORE_END_NR,
++	LOWCORE_START_NR = 0,
++	LOWCORE_END_NR,
+ 	AMODE31_START_NR,
+ 	AMODE31_END_NR,
+ 	KERNEL_START_NR,
+@@ -30,8 +30,8 @@ enum address_markers_idx {
+ 	KFENCE_START_NR,
+ 	KFENCE_END_NR,
+ #endif
+-	IDENTITY_AFTER_NR,
+-	IDENTITY_AFTER_END_NR,
++	IDENTITY_START_NR,
++	IDENTITY_END_NR,
+ 	VMEMMAP_NR,
+ 	VMEMMAP_END_NR,
+ 	VMALLOC_NR,
+@@ -49,8 +49,10 @@ enum address_markers_idx {
+ };
  
- static int ksz9131_mdix_update(struct phy_device *phydev)
- {
- 	int ret;
- 
--	ret = phy_read(phydev, MII_KSZ9131_AUTO_MDIX);
--	if (ret < 0)
--		return ret;
--
--	if (ret & MII_KSZ9131_AUTO_MDIX_SWAP_OFF) {
--		if (ret & MII_KSZ9131_AUTO_MDI_SET)
--			phydev->mdix_ctrl = ETH_TP_MDI;
--		else
--			phydev->mdix_ctrl = ETH_TP_MDI_X;
-+	if (phydev->mdix_ctrl != ETH_TP_MDI_AUTO) {
-+		phydev->mdix = phydev->mdix_ctrl;
- 	} else {
--		phydev->mdix_ctrl = ETH_TP_MDI_AUTO;
--	}
-+		ret = phy_read(phydev, MII_KSZ9131_DIG_AXAN_STS);
-+		if (ret < 0)
-+			return ret;
- 
--	if (ret & MII_KSZ9131_AUTO_MDI_SET)
--		phydev->mdix = ETH_TP_MDI;
--	else
--		phydev->mdix = ETH_TP_MDI_X;
-+		if (ret & MII_KSZ9131_DIG_AXAN_STS_LINK_DET) {
-+			if (ret & MII_KSZ9131_DIG_AXAN_STS_A_SELECT)
-+				phydev->mdix = ETH_TP_MDI;
-+			else
-+				phydev->mdix = ETH_TP_MDI_X;
-+		} else {
-+			phydev->mdix = ETH_TP_MDI_INVALID;
-+		}
-+	}
- 
- 	return 0;
- }
+ static struct addr_marker address_markers[] = {
+-	[IDENTITY_BEFORE_NR]	= {0, "Identity Mapping Start"},
+-	[IDENTITY_BEFORE_END_NR] = {(unsigned long)_stext, "Identity Mapping End"},
++	[LOWCORE_START_NR]	= {0, "Lowcore Start"},
++	[LOWCORE_END_NR]	= {0, "Lowcore End"},
++	[IDENTITY_START_NR]	= {0, "Identity Mapping Start"},
++	[IDENTITY_END_NR]	= {0, "Identity Mapping End"},
+ 	[AMODE31_START_NR]	= {0, "Amode31 Area Start"},
+ 	[AMODE31_END_NR]	= {0, "Amode31 Area End"},
+ 	[KERNEL_START_NR]	= {(unsigned long)_stext, "Kernel Image Start"},
+@@ -59,8 +61,6 @@ static struct addr_marker address_markers[] = {
+ 	[KFENCE_START_NR]	= {0, "KFence Pool Start"},
+ 	[KFENCE_END_NR]		= {0, "KFence Pool End"},
+ #endif
+-	[IDENTITY_AFTER_NR]	= {(unsigned long)_end, "Identity Mapping Start"},
+-	[IDENTITY_AFTER_END_NR]	= {0, "Identity Mapping End"},
+ 	[VMEMMAP_NR]		= {0, "vmemmap Area Start"},
+ 	[VMEMMAP_END_NR]	= {0, "vmemmap Area End"},
+ 	[VMALLOC_NR]		= {0, "vmalloc Area Start"},
+@@ -290,7 +290,10 @@ static int pt_dump_init(void)
+ 	 */
+ 	max_addr = (S390_lowcore.kernel_asce.val & _REGION_ENTRY_TYPE_MASK) >> 2;
+ 	max_addr = 1UL << (max_addr * 11 + 31);
+-	address_markers[IDENTITY_AFTER_END_NR].start_address = ident_map_size;
++	address_markers[LOWCORE_START_NR].start_address = 0;
++	address_markers[LOWCORE_END_NR].start_address = sizeof(struct lowcore);
++	address_markers[IDENTITY_START_NR].start_address = __identity_base;
++	address_markers[IDENTITY_END_NR].start_address = __identity_base + ident_map_size;
+ 	address_markers[AMODE31_START_NR].start_address = (unsigned long)__samode31;
+ 	address_markers[AMODE31_END_NR].start_address = (unsigned long)__eamode31;
+ 	address_markers[MODULES_NR].start_address = MODULES_VADDR;
 -- 
 2.43.0
 
