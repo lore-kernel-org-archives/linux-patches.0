@@ -1,213 +1,97 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44A8719005E
-	for <patches@lists.linux.dev>; Thu,  8 Aug 2024 17:03:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AAA15820F;
+	Thu,  8 Aug 2024 22:11:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723136603; cv=none; b=QPoBCSTPKoQo9EsGGi3dz3prB42iDaxnsqxTK7SxuKnCRyWph/nws3lu/064fV+7S5ItRb6IX/mNQvJNwy7l403VaZWB8g5RSUgTYszC6vNTfbnXbwxmP22S9NtAsFpp6zXARrUORMh4t36IHFzDZw1vxUluu7Qgh4Ch83vnKSQ=
+	t=1723155117; cv=none; b=HAa/ZhVRJvQrC59aeVGlRkfsIQX/1P3WeQpAYonaC2pZO/3A1geNYEwhQRXZq0OXRri4xjrBy1CvFBfxf0tHmPBfFTJH/HtQrJW/f638H5+zFiSqOz9viSRGuiG9Ki/2Zou05QSZdT0ZizU8X6ZoJ2ok4ZO80A7a96EarOEdGbg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723136603; c=relaxed/simple;
-	bh=lUIo6oiQqZK5O1iQi9Ew80iJexWTxa4LW10DgVsgQfQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jZw/9aY8v8iOgfXphbJ8DrfW8/rgjL23+rqw79MXiNlklpAhaRQyACixaiHicX5yLfrpJAjS4948x5wV7IDSGayRPsySEETF8R0iD0QTOERwE3bQJp/Uvv6RIH478o+qoRGVcz1cPhrBwxE6wHHAc3bo6Hkc20XnNZpgxzKhQAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=L4nXcsLv; arc=none smtp.client-ip=209.85.219.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	s=arc-20240116; t=1723155117; c=relaxed/simple;
+	bh=8cwTGDcOJUK8ayBA2CjvTAILOfKtt8rJkL2q5JOGIRY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=s8wuIYDyB2kns6Zp4g0MQBzrbhjj/lSD0iIDmhuo/imWuGftdO5v2Jdc1nNt9rpZLeuTiQYWnlhSQhOMQp8EFrLJ4TgEXfoi3tADR2+6Fi4djph0xYly61AMWOvxYE9o4MUQopjdDgKXkz9SvDdLcqz/YPU0Y2N1b3ronLKN7RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eAUQAX9m; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="L4nXcsLv"
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-6b7a8cada97so7153546d6.3
-        for <patches@lists.linux.dev>; Thu, 08 Aug 2024 10:03:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723136600; x=1723741400; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=f3Kn9FeTQTB0XeKhPb+Dnbovz4C39z8Mc/z6dR8N/Dg=;
-        b=L4nXcsLvmnH2bW2Lb+WbvzH7ZkftoCVkBjrKgxI8MLD+l2PFiJQ2xO5i1JQd6zYR5a
-         chaD78Hf4yVRuEfPYfqF8ukRlff4W93MqGrgaozLPBRPtvkJftpeIpdVCoadxuox6Fa9
-         TGBuJj4fzgS1ap8O4ERb5YMuXpOsHOEwQv68sChrBmGtwBhqfIQbP0RrGjtkc4Ua7u24
-         J4B7v4xHcb51bMPJcjajCD+UjmK+z1oPiJSG2u2r7+KG2kygW1ruIu61cnmPWtoyz1Q+
-         J/LY3FLp8uajlk42v/C5gYGd3ZDUbEXKol2IIMqT0VAgboxPGsTW8GdptgOOWjNiPWPn
-         6O/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723136600; x=1723741400;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f3Kn9FeTQTB0XeKhPb+Dnbovz4C39z8Mc/z6dR8N/Dg=;
-        b=KxT9P+kbu6aKC3eXzXI+wmEy9FBKQ3tq99ECZwAZTnSdFvaDrr9zJK6JvPbHvfNoFi
-         oL4BjRpOGpIs000EUszccWNGimpk9jI7AxViErd0LA8/+rIImBIWdvPl/V3P7MsvanrI
-         FdxbYuT28GsWFRji3HU3ZHhBQCT9t2KNHu3IHdgwlcLAyPOCQm9OcO5awq5F6ch6MelB
-         BLe39k92/IX4r2COdOsVK+ybrv5jbbY7eHbzjLrbHkoxtbkQjsgtGKbnqW3wbEE5LhPv
-         3hHQlFKgz222TT7ajr57sNHn2EKaYcdH1X86tudoUWDwJ0sFDPoJImkmR3LkTHfnc4+t
-         ZtuQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXvnuGoGoSIpheBlHnbHIJYfrsM4WB8uMU+/+5IzWPo/c+0dtWtj+TGL1Cxk6D4gBlSCDaxeebxyOG0X2hUq5vPFKyOs6RG6Q==
-X-Gm-Message-State: AOJu0Yzbirb4PvpGJBBj/m7vjdo/2wcm9UvUclFr6XVdLneKOYzwtPe0
-	MwoPUqjcF60O2cUxOATIL2Gnjlg2kaNYxsw1k3gnLpu35mo0lUhTCN/IrJ7vdIQgbUdv/VYRyDA
-	KfcUac45A8jkEZJ8fqOcnNaAw7AVzbSMLZGaUcw==
-X-Google-Smtp-Source: AGHT+IFjDUaYYSyQivtnc/qZepRTvoD/qVoK7yZkNmzYgvZXacGVlug0bjBLL/TbDDwlXws31s4fImRRGLs56AiTg4I=
-X-Received: by 2002:a0c:f410:0:b0:6b5:ea99:bdcb with SMTP id
- 6a1803df08f44-6bd6bd745aemr30909856d6.42.1723136600096; Thu, 08 Aug 2024
- 10:03:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eAUQAX9m"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C9BC32782;
+	Thu,  8 Aug 2024 22:11:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723155116;
+	bh=8cwTGDcOJUK8ayBA2CjvTAILOfKtt8rJkL2q5JOGIRY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=eAUQAX9mI81rc0GGlJ9gUsCcOkRC+8zAd1hgNKn/0LYHf3Tp49SXM/EZyCxGE/s9G
+	 Ay3uMNf6Bk5kXIoKyOHiFF4A4hesGM5R6EzxR1XBAFDnSYY9JllmzEtc3ReS0peeO1
+	 aTFixnDdqqHr0M6SuCNihYAKrFbzNLYbJ0ezzklM26+HlwrpGpGFFYVGyvcf5GBobZ
+	 jAyx18wKxzzf/aqG+Gl6GKJOR7k8AZuIEOzuw41gEPYUo8lCXRh9/4osVdf5TSySbh
+	 KUdbjekrXSX1O7cQ4XVTnOu36CAqbW4t3/FHUvkaTp391WFMhLSsJn4pUZccqVVpTo
+	 h0giCSSq4SC8g==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Masahiro Yamada <masahiroy@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Benno Lossin <benno.lossin@proton.me>,
+	Andreas Hindborg <a.hindborg@samsung.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	rust-for-linux@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	linux-kbuild@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH 0/6] kbuild: rust: add `RUSTC_VERSION` and reconfig/rebuild support
+Date: Fri,  9 Aug 2024 00:11:32 +0200
+Message-ID: <20240808221138.873750-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240808091131.014292134@linuxfoundation.org>
-In-Reply-To: <20240808091131.014292134@linuxfoundation.org>
-From: Anders Roxell <anders.roxell@linaro.org>
-Date: Thu, 8 Aug 2024 19:03:08 +0200
-Message-ID: <CADYN=9LA_eMtMjyyyUNyT=Rsr030HNK1J1u9qYtuHvYApK4E5g@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc2 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
-	broonie@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, 8 Aug 2024 at 11:11, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.1.104 release.
-> There are 86 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 10 Aug 2024 09:11:02 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.104-rc2.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi all,
 
-Results from Linaro's test farm.
-No regressions on arm64, arm, x86_64, and i386.
+This series introduces `RUSTC_VERSION` support, which is needed for
+several patch series getting upstreamed, and it will be increasingly
+useful as we now support several Rust compiler (and `bindgen`) versions.
+Later on, we will likely introduce other macros, such as
+`rustc-min-version`.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+In addition, the series introduces automatic reconfiguration and rebuild
+based on `RUSTC_VERSION_TEXT`, to mimic the C side, which is also good
+to have now that we support several versions.
 
-## Build
-* kernel: 6.1.104-rc2
-* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-* git commit: 54b8e3a13b43747af658936db1fa59a365d52997
-* git describe: v6.1.103-87-g54b8e3a13b43
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.103-87-g54b8e3a13b43
+It is based on top of the current `rust-fixes`, since there are a couple
+pending changes to the version text Kconfig symbols that will be sent to
+Linus soon for an -rc.
 
-## Test Regressions (compared to v6.1.102-441-gdbbffaaee188)
+Cheers,
+Miguel
 
-## Metric Regressions (compared to v6.1.102-441-gdbbffaaee188)
+Miguel Ojeda (6):
+  kbuild: rust: add `CONFIG_RUSTC_VERSION`
+  kbuild: rust: make command for `RUSTC_VERSION_TEXT` closer to the `CC`
+    one
+  kbuild: rust: re-run Kconfig if the version text changes
+  kbuild: rust: rebuild if the version text changes
+  kbuild: rust: replace proc macros dependency on `core.o` with the
+    version text
+  docs: rust: include other expressions in conditional compilation
+    section
 
-## Test Fixes (compared to v6.1.102-441-gdbbffaaee188)
+ Documentation/rust/general-information.rst |  8 +++++++
+ Makefile                                   |  5 +++--
+ init/Kconfig                               | 11 ++++++++-
+ rust/Makefile                              |  8 +++----
+ scripts/rustc-version.sh                   | 26 ++++++++++++++++++++++
+ 5 files changed, 51 insertions(+), 7 deletions(-)
+ create mode 100755 scripts/rustc-version.sh
 
-## Metric Fixes (compared to v6.1.102-441-gdbbffaaee188)
 
-## Test result summary
-total: 219072, pass: 188702, fail: 2594, skip: 27408, xfail: 368
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 135 total, 135 passed, 0 failed
-* arm64: 38 total, 38 passed, 0 failed
-* i386: 28 total, 28 passed, 0 failed
-* mips: 26 total, 25 passed, 1 failed
-* parisc: 4 total, 3 passed, 1 failed
-* powerpc: 36 total, 35 passed, 1 failed
-* riscv: 11 total, 11 passed, 0 failed
-* s390: 14 total, 12 passed, 2 failed
-* sh: 10 total, 10 passed, 0 failed
-* sparc: 7 total, 7 passed, 0 failed
-* x86_64: 33 total, 33 passed, 0 failed
-
-## Test suites summary
-* boot
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-efivarfs
-* kselftest-exec
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-filesystems-epoll
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-kcmp
-* kselftest-kvm
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-mincore
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-mptcp
-* kselftest-openat2
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-tc-testing
-* kselftest-timers
-* kselftest-timesync-off
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user_events
-* kselftest-vDSO
-* kselftest-watchdog
-* kselftest-x86
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-hugetlb
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-pty
-* ltp-sched
-* ltp-smoke
-* ltp-smoketest
-* ltp-syscalls
-* ltp-tracing
-* perf
-* rcutorture
-
+base-commit: fe992163575b187405899c5abaad8ef6fb828ff6
 --
-Linaro LKFT
-https://lkft.linaro.org
+2.46.0
