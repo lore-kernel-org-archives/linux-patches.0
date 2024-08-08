@@ -1,175 +1,146 @@
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2049.outbound.protection.outlook.com [40.107.101.49])
+Received: from omta36.uswest2.a.cloudfilter.net (omta36.uswest2.a.cloudfilter.net [35.89.44.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 975B61487C4
-	for <patches@lists.linux.dev>; Thu,  8 Aug 2024 11:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.101.49
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723117590; cv=fail; b=JiGKPh2upP5A0hP2lMrpltu9zu1UUXDL3malsaMOylUoaDM6XfSFTw6v5lUYn/rz032XvLfekwK5kLbesskM1j3DvYujmaHnvgdOIZY8DGJNSZwdJjCfON2AsK/mFJIy0fGfG5ETtTlgZukE9ypRiwEW0bt21T/dFputu0y/q/o=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723117590; c=relaxed/simple;
-	bh=Ly+h6zQhpj4F+uYJlv2DJzsmMjLl1C52Jss0dE5pfsM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=qtGJvj5i/F1ohsgH+wbtEXBjJqUUssm+2RqKTthtqAE0cJhT7Z5reCwJLdUgCACJpoEGW+gIR6Hivhdqac7+L86flXzv7ss8UgcGYpe6rf5Zm9ThQPH1NW3eTrCjJ75/lbYkTA1ZayTcRQufcq7K03gz0aGxulLVzl/o91QzP9k=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=gLoLfY8Q; arc=fail smtp.client-ip=40.107.101.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBB718C320
+	for <patches@lists.linux.dev>; Thu,  8 Aug 2024 11:55:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.89.44.35
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723118148; cv=none; b=JIBdOAcX2U/XaeYfaXazPpTnnxlmSzGLtdSzyCTF/rWPmYCJGsc0gV7FETRYM9zHEdKcsvzpf6ts3+Qjs4HZ6Pi3tDMtl9frpQx864nWgJY4GebhC02JgCrkA73HR6sXPpsQMKRAvp36MNMMSgUCn+YMcCPWb5iOAn4tbYlktUs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723118148; c=relaxed/simple;
+	bh=maJUu45KZlX7FeMIpGorIoOQMDIfA3yf1EfQUBBVNCw=;
+	h=Subject:To:Cc:References:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=jQ/i/D7xUACxHTsu4yZjvq2pO6/kpxWrFkdBWL71/+E3+Op+b9hQ5kSraFH+vHfugrUeM5SHZeEwdUSL4jDjCEvVWaVLSRIuJHUY7eAfIR7zNuo0TZQvdWgE2/qUFp3W+wNyZ3a4hRjyPNrG/d18SkuqqERFlt1hsiZFjoM9gGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=FNSo6y73; arc=none smtp.client-ip=35.89.44.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="gLoLfY8Q"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QdDLklqqWZzfCWetyplhBCdhAZuTAqof8NfRbKd3sr5StVgzSU+U1mqFV8MqxKiRImt/q1ZV7MWcHOEUO7VoHZjSyt6ZYmRYaB6YLYurG+q8ODkHixFnLGzLR3nfD+uar4hSU4ArVEXEtNO2ypyEYwwxVht2bljhOXfNFh7U2qH9EWfKOz5ecJJmC2+UQj4Fx+rrXtVwKtCmipOXq8kMAwv//PWLQAItj6Kr8bR2eY4jkEyGKZ78aNm/ghCGbZeHEadEoNR+Dxtq60/2rXqKUt5SYqYNGWwiLgg5d6WTWggWAuZRs95WbJcArZNWjc5MQn6GMDOjt1W+whuPEM9e7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=e7VmUeN2bPZUZQ3pglkA2B7eMGe7LNoZz2CPFZVHm/0=;
- b=PAHE52WQ1duDRAXHoK9fqnk/+JsyNeme6KHn/uvQQ0FaPZAoyl4q8OA9dxSTWxUG4bGhD708ji6eVf565pNGt6Av/+TYW2wQjJlPE9H1e88ZwnQiUX59UYthLEq1UvcinoVTIAcfs9HdKW8e1ewxdSwejybJZBNqi8zlXKYjnpin8KOoSr1lyNwEze/JO8XcRoIJ44U5zk5ZETPfXlyyWMUb85VXOLjmYJCRvChTfdDcb2FN8ovVNLh+JYKR23Dbwzeqc4Ckf9vu7sWbqu7PmMJ7o7PYXpcj+I5/DOVbwm0Ann7UlbyVV5U8lMSIj3xkMYWHtDRijVGr7PEFo1DcoA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=e7VmUeN2bPZUZQ3pglkA2B7eMGe7LNoZz2CPFZVHm/0=;
- b=gLoLfY8Q5KjXvwIwFY5R2EksduKt7KwVEBmSOd4hw4fVaPR+CWItHBJlbuIHoQy0GInToEe5NJTweT75Jr2ZiPia4ZGuJIAxlCjxa+qt8GnJ5mURK1BFTVZ5CZ5/OLO5+SI3LS7MnvIUCHDf+UkCsLMndcWfN5KdD0+2Cnt3aK20MQtzsUjwycmvHXx4g4h+Q+jHbykzqT6Ydy8eu6ghW7svUHBysvMUQVpnfEh7oHq1GACEJ7oh/rdejlIVIy/s48kxm7tA1pxK9Bv6FD0g0c6REYD5xW/zpJXj4k6/qk3VQqvHsZGbuSGPLLmakY6TtB7L4kVX4jwak9gUDtqNWg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
- by PH8PR12MB6819.namprd12.prod.outlook.com (2603:10b6:510:1ca::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7807.28; Thu, 8 Aug
- 2024 11:46:24 +0000
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7849.014; Thu, 8 Aug 2024
- 11:46:24 +0000
-Date: Thu, 8 Aug 2024 08:46:22 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Oded Gabbay <ogabbay@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>, Itay Avraham <itayavr@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>, Leon Romanovsky <leon@kernel.org>,
-	linux-doc@vger.kernel.org, linux-rdma@vger.kernel.org,
-	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Aron Silverton <aron.silverton@oracle.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	David Ahern <dsahern@kernel.org>,
-	Christoph Hellwig <hch@infradead.org>, Jiri Pirko <jiri@nvidia.com>,
-	Leonid Bloch <lbloch@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>, linux-cxl@vger.kernel.org,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 5/8] fwctl: FWCTL_RPC to execute a Remote Procedure
- Call to device firmware
-Message-ID: <20240808114622.GA8378@nvidia.com>
-References: <0-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <5-v2-940e479ceba9+3821-fwctl_jgg@nvidia.com>
- <ZrMl1bkPP-3G9B4N@T14sgabbay.>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZrMl1bkPP-3G9B4N@T14sgabbay.>
-X-ClientProxiedBy: BLAPR03CA0166.namprd03.prod.outlook.com
- (2603:10b6:208:32f::18) To CH3PR12MB7763.namprd12.prod.outlook.com
- (2603:10b6:610:145::10)
+	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="FNSo6y73"
+Received: from eig-obgw-6003a.ext.cloudfilter.net ([10.0.30.151])
+	by cmsmtp with ESMTPS
+	id bpeksvjPBjnP5c1k3sgjM9; Thu, 08 Aug 2024 11:55:39 +0000
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTPS
+	id c1k1s9BKYV2ivc1k2sgeeB; Thu, 08 Aug 2024 11:55:38 +0000
+X-Authority-Analysis: v=2.4 cv=OLns3jaB c=1 sm=1 tr=0 ts=66b4b23a
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=IkcTkHD0fZMA:10 a=yoJbH4e0A30A:10 a=VwQbUJbxAAAA:8 a=1GQxe75yrw9fIeUcjpcA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=AjGcO6oz07-iQ99wixmX:22
+ a=hTR6fmoedSdf3N0JiVF8:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:
+	Date:Message-ID:From:References:Cc:To:Subject:Sender:Reply-To:Content-ID:
+	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+	List-Post:List-Owner:List-Archive;
+	bh=ZcW3HDl9lOrDODASspPnNrMUFSlpL6DN7JxGWATxdsM=; b=FNSo6y73QOcH0KRxzTpHWAfuDE
+	XjDpnN2zCFcXZXQh/ih/nF6xDYJP/gsJA4bxE9chfT5tIgr7NstxcXSmvDKq2W+GUzZqPcBxbr0hG
+	dYNLBX/OJ6ALdcMTsuqlXJtXAxzpWzoqc7m+rHlHhgyJOP2Q6ifZJYciXEuUNKRMEL5wsAuUW0OWk
+	O1fyLSOFTo+R5cx8Hfmhjcw9TIQ6da2Xl526dYEMYCK4+un29enuIXILA0G5YdHj7Se6705Ad/Qcr
+	TpSeeqggYFqY63oDV5wTt+ltuup5NIBRrR9jrFgYm7fqROfPAs1fhfwv0GC/wbBjtlckKfe5uHy7Z
+	HzlI9T4g==;
+Received: from c-73-223-253-157.hsd1.ca.comcast.net ([73.223.253.157]:33410 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.96.2)
+	(envelope-from <re@w6rz.net>)
+	id 1sc1jx-003iMd-15;
+	Thu, 08 Aug 2024 05:55:33 -0600
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
+References: <20240808091131.014292134@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <96b86f9b-c516-9742-5e33-e5cbfbed10b3@w6rz.net>
+Date: Thu, 8 Aug 2024 04:55:27 -0700
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|PH8PR12MB6819:EE_
-X-MS-Office365-Filtering-Correlation-Id: 79681a53-629a-40e3-0252-08dcb79fbacb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?lOvpq3ZynVDgLUn3gcDBWbftqB9nY9sDDD5Mse7XOiyOd5ZvPTCQVLtTNU4h?=
- =?us-ascii?Q?f+d8fcZFfpzqJCR6ezCqLXA201RB0sayyDYCp4wG8vchRYkUrd4YEfLuyE4d?=
- =?us-ascii?Q?HM+xz8irjnhsryhA5FGr6mJHAjNO0pUkYyIyWgWxpp996UmbFEBBKbcDN6P0?=
- =?us-ascii?Q?rkYDcXQZ5u7avZSyxTGsakfzozHoNLS2Gqzut0urHmurus7X4szB5s+FwfX4?=
- =?us-ascii?Q?KQDsa9lFaK9a/DeLcLnRjl7Xxgj3fzGHS7R2DiY8rZUekFY4Xa2KDOglhR4p?=
- =?us-ascii?Q?MAAIXOt8WBakAjtBy7Qt/snWfXnzQSAq+lSZ2mWMKai5Vhrnae8qg/rEEhga?=
- =?us-ascii?Q?leaXHEbEKBK406H23GlkE8WXD/cM0CL09Kt5cvTSpE8ATBBa28y8E6RY2/NG?=
- =?us-ascii?Q?tIKefg5sSJU2iX9oWjfKX7/gPgTQJKx6ABJ/UsKKkaITASFqqy9blT0KuAiq?=
- =?us-ascii?Q?rse15iVb3tX5I1NZAcBDy3ySMRNYkxr+8YV++UU/hB9iBadZ2ubxQmVtoVNh?=
- =?us-ascii?Q?9PverY3DzlpwiugEH96egPVI5J/DIlQ1yhog2De1YSnB3tJuIHZ0GWIyAeV1?=
- =?us-ascii?Q?BS+dJtkoiTnMC98ACWAAqYVZvFEp7/R/w4AWKsRINu17hdH3XY7G89K0Kp83?=
- =?us-ascii?Q?tcm8rbdGIoUhfJHwsabJJVZhhmK9tfDGorvo/s2U4ay+4EbimutYEaeUE4gl?=
- =?us-ascii?Q?0CLx/NtbVhqu+7EjyzMIeTSQRTeZrM/zSfDaNgf0IZpbBUratdW2UAfvs0nq?=
- =?us-ascii?Q?lZZtXcJXKH1y75C6L1fMxBOuoFSpXkT5YPS7ir7YSQCeTVSi7HyAlpgZo7Wd?=
- =?us-ascii?Q?VyMzzBY3VNxXLhij9AzajyXv8cHxrCuwA37gUT1aNmPOOYrp+Jokb+QTiMeu?=
- =?us-ascii?Q?R3Fo0AQNzuNSmkvScc6UtqQK2AezaDPnMnI4KQWtpLJrIjzNxhVd8HbrFzf0?=
- =?us-ascii?Q?mdJ1z5Jgm6l3kaj7rxYJ5XH4eF9yCZk8kh6jmRdHQa+cOsqhwGFdKSitop5A?=
- =?us-ascii?Q?qDS0cx1Dckhwwdh31N1bNJFvswESkCIikH5WZKOaJUmmOS6XN4cNkcn9u49Q?=
- =?us-ascii?Q?KOcVSW66Px1vAuWNfEi5rFbFdBh98wdrMkDqRwiXME+b2QTVnrA+WdIBweK2?=
- =?us-ascii?Q?Zbk+V0Vec5S2qpXiGqg2B9fAld10LXSHkX0QcbbgPlfhtUykaMFtLSHzOukZ?=
- =?us-ascii?Q?Y0OlFyO4Ia207TndqfMIzbnEs4RDPJdUeSLR7UJtjQURWq268jmVZryrinzT?=
- =?us-ascii?Q?M9EL2H+LN4VaOp4NHbAzB+5KsDyHMScIcHKn+jmomqjI4TYpNScNV+Yf0ob1?=
- =?us-ascii?Q?Txvoam/39+Ar4IaQIXUYCUVfrdj41ERwyyPgKRw3ilhZ7w=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?xGqWjts3fOa3L8hiGRKOK7Tne7DCExDlFaySzmjrI/pwKbKYVWbHQpRE3oo9?=
- =?us-ascii?Q?k4qcdBWRVqkhdXk9nbh4enhE+YBldEOw6t3UABSbDGtyUwSkr8uqJZcBrkkG?=
- =?us-ascii?Q?upTL25fL3iOAVyEfVi5bHYn+SaC3d/8AQ8s9GNcxMpTJinztGsMTphAppSnf?=
- =?us-ascii?Q?OsePjueM5Tn/3MgloGe41yrMKmEtScLZjTSxtzN4fCsBCDC+ZojXUZ5R99wR?=
- =?us-ascii?Q?+sOj1rSMHKN+nJ6LhbCtn1lM+YLaeniJhEIsRys17okjZVBey5KVDa7gk6pY?=
- =?us-ascii?Q?eastcpgNTD3MDqUTYfKv7+GszPzStLq2DNJ+dyJqsGEQN5b6n4J/TUYSO1eo?=
- =?us-ascii?Q?yFIPpD2+6hbFh/UJBdkP5NCAmmrAlCpx9uO0UuSiRYmvg9JFKNqaqLv/t8zz?=
- =?us-ascii?Q?L3kmeYVZJHkAl2R9EKI2s3v5ZgkYOfAytF2HGOPxjG/HlVbbm5UCT/hGUvds?=
- =?us-ascii?Q?J6OarWLJvmH9AXlpw3VkyZGF0Z7lPmLmo9HlM9YZSBashOUnmgYnhPxL4v1A?=
- =?us-ascii?Q?euO3YYuGyEMAu52q/fGSyPy1cCZtQBXLnDCjIVOMwZ8/8A2vTJMQqO+HQzNN?=
- =?us-ascii?Q?igN5KblRcs8LDUSP4yot0eJoy5bX3T1VLxrsNXXznYk4K7k27PG0ugih7WP2?=
- =?us-ascii?Q?SVhKKkUwc97GEh0OSqR2/bBBnJX/D8nx7EqxZalZ9vvDraxZ3kfPTlDMSLK3?=
- =?us-ascii?Q?ay4+bE8ZfBGWi9voYfRpMFF0XIf1NnIA4oRROwS0wGp1KEaip88l514kDOAu?=
- =?us-ascii?Q?e2LxeEuvoXIqhviOS/eXFOXH4C2Cd5a5H4DxmKq+QAMQYONee873oXYLv0gm?=
- =?us-ascii?Q?SlzRPjPqrhVz/UFSWXUI1WZEp8nb5Fk49v/uHp37UFRWmsBhtzk4SrVlPmZX?=
- =?us-ascii?Q?7Zb+AK66wNQ2j5T3L0eHytOq0JM3x1iWCMtdi2RKLjt34Sx5ncGdRCVsb1d5?=
- =?us-ascii?Q?ktEGcGcCZoXnnKq5zitOPD40l9YCHZ5MEMOUBK/8ixknksyNBJK+4gIDwgkD?=
- =?us-ascii?Q?a1BRsGt3SbxSKRwxkjNs2GUH1awukIv1z9UswxwfQAQ1AXO9PcFSUjJHFgUj?=
- =?us-ascii?Q?X/0J8JmWlDnzxnycWI7yTUQ6UrQTi0hhE068y92B2Z10yjb1STosqQanZJ+W?=
- =?us-ascii?Q?f6Fe2ZRRWNIplK7rghCN8rm5DgGuuvNn36GuWBtHWVZuFwuSSglrpfX93XvJ?=
- =?us-ascii?Q?B8++ornPP/6PsR+L1Z+B1ZyOS2CpTrucAU1bsuY+4J2YWMJscbVqQHiw2+2v?=
- =?us-ascii?Q?0NeKDtqwna9eZzgzQWpWsu+HOX7Os1IeT+e/JWqiSc/sME60RvTtjVP4jwNd?=
- =?us-ascii?Q?lBDCCrVTsd11b8dbkA452lk4/rlQfe3AAqCpUC44Au+pYxrCg32OROtlPHM0?=
- =?us-ascii?Q?lSJ6ugSf7h9GhtYuWcRMoxb/sXOnMJpOoXN0w+mRjCLtuhMk2mT/W2tIggCv?=
- =?us-ascii?Q?doIsFpWJWiwvHDCzdEuA3rGYNofExeCsGcl8ZML7mKzp9KkqK5dYsmY6MmPm?=
- =?us-ascii?Q?QqlhElWEDU6DNhvHrq0VYDY578bqc2g3goB1UztGDInDAAJPHP88PT0eNBq/?=
- =?us-ascii?Q?XkEBXhqJbbPYTbcDkqfcJimi5edBHs1rWZPUcJ+E?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79681a53-629a-40e3-0252-08dcb79fbacb
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Aug 2024 11:46:24.4486
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HEk52IbIb5OKmafBViDDGLr+1CBA/tKrLMdZN8pb/VV7S+BTj099UEhdT5aiUwPc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6819
+In-Reply-To: <20240808091131.014292134@linuxfoundation.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.223.253.157
+X-Source-L: No
+X-Exim-ID: 1sc1jx-003iMd-15
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-223-253-157.hsd1.ca.comcast.net ([10.0.1.47]) [73.223.253.157]:33410
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Org: HG=bhshared;ORG=bluehost;
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
+X-CMAE-Envelope: MS4xfOlWg0GQNBrN7YKF+aUd9c2Hr3mXInKi7sAKxObvCxZDeDyIwaGVjtUrCQrLnq7aYu8uifbhO/asr/k/Z9AK3BaMQ/tKz/ntqLhMeOtQGXKZbhdceOIS
+ 35m2Oiw63vnM/uRuVoy/b0S6qlRVG9sSsLJfLfsUs5+WGe5yixiZbp9YnkumNxEOQ5Jsgj0uIiqj+w==
 
-On Wed, Aug 07, 2024 at 10:44:21AM +0300, Oded Gabbay wrote:
-> Disconnecting the RPCs from the drivers and providing a generic interface will
-> allow to have a single user-space library which will be able to communicate
-> with the firmware for all the IPs in the device. In Habana's case, it was
-> mainly for monitoring and debugging purposes.
+On 8/8/24 2:11 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.104 release.
+> There are 86 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 10 Aug 2024 09:11:02 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.104-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+I'm seeing a build failure.
 
-Yeah, monitoring and debugging is definately a key use case.
- 
-> I do have one question about the rpc ioctl. Are you assuming that the rpc
-> is synchronous (we send a message to the firmware and block until we get the
-> reply)? If so, what happen if we have an async RPC implementation
-> inside the driver? How would you recommend to handle it?
+sound/pci/hda/patch_conexant.c:273:10: error: ‘const struct 
+hda_codec_ops’ has no member named ‘suspend’
+   273 |         .suspend = cx_auto_suspend,
+       |          ^~~~~~~
+sound/pci/hda/patch_conexant.c:273:20: error: initialization of ‘void 
+(*)(struct hda_codec *, hda_nid_t,  unsigned int)’ {aka ‘void (*)(struct 
+hda_codec *, short unsigned int,  unsigned int)’} from incompatible 
+pointer type ‘int (*)(struct hda_codec *)’ 
+[-Werror=incompatible-pointer-types]
+   273 |         .suspend = cx_auto_suspend,
+       |                    ^~~~~~~~~~~~~~~
+sound/pci/hda/patch_conexant.c:273:20: note: (near initialization for 
+‘cx_auto_patch_ops.set_power_state’)
+sound/pci/hda/patch_conexant.c:274:10: error: ‘const struct 
+hda_codec_ops’ has no member named ‘check_power_status’; did you mean 
+‘set_power_state’?
+   274 |         .check_power_status = snd_hda_gen_check_power_status,
+       |          ^~~~~~~~~~~~~~~~~~
+       |          set_power_state
+sound/pci/hda/patch_conexant.c:274:31: error: 
+‘snd_hda_gen_check_power_status’ undeclared here (not in a function); 
+did you mean ‘snd_hda_check_power_state’?
+   274 |         .check_power_status = snd_hda_gen_check_power_status,
+       | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+       |                               snd_hda_check_power_state
 
-Yes, this is all simplified so the ioctl system call is
-synchronous. mlx5 is async under the hood too, it just launches an
-async work and waits on a completion before returning from the system
-call.
+This is triggered because my config does not include CONFIG_PM. But the 
+error is caused by upstream patch 
+9e993b3d722fb452e274e1f8694d8940db183323 "ALSA: hda: codec: Reduce 
+CONFIG_PM dependencies" being missing. This patch removes the #ifdef 
+CONFIG_PM in the hda_codec_ops structure. So if CONFIG_PM is not set, 
+some structure members are missing and the the build fails.
 
-Userspace could multi-thread it, and If people were really keen maybe
-there is some io_uring approach.
-
-Thanks,
-Jason
