@@ -1,245 +1,144 @@
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2050.outbound.protection.outlook.com [40.107.244.50])
+Received: from szxga07-in.huawei.com (szxga07-in.huawei.com [45.249.212.35])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3AEF194C93;
-	Fri,  9 Aug 2024 13:28:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.244.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723210134; cv=fail; b=DbcS7OGAiK4G1r2dumqp39qS856XeubQw6ZlgFYIUBBhER10lXcnHLJ4JSOZujF8kfW3qhSkA4tTPAZlSztfuVK3ljE9BwMUmNEMu6GmUK2XO7G8hENzl892BC82PCPkWC/rPr1TX4ER5D3fwS8y7CdPyT1xe7PH6YNMBuFOOyU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723210134; c=relaxed/simple;
-	bh=EctziKcAyquakDoP0wscF8rBYkwob39nPk2uVOk5r7M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=Q0N6yaHj2yeb+O2Yp24a0MgEib2BWib4kk9FKpzZJGPU+wI72DMZs+VvIdOYnTnfWSg0hJXM3hNOunr12mm+Lbs25b8um+yfBN3D5pLsamZRI7Ojo3WsOYGVGQP2TCUOzS9+G+jKLUsubYFCoxAejuETJNw5AcucxVvmDmHdvHM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=BgBzFAao; arc=fail smtp.client-ip=40.107.244.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="BgBzFAao"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=nnIo3uKT3PW80LH49frlPYXVb5oVq8sxMI7qJBy5Q34mUlejVnxpTCJw0TgNa+SHV2W0kkeiSJ4ViFiqtB1ydpxkZJJlH4NYoU6hzi1Qbkyz8Yy+5nTQ2ZRVL0GcJ+QZ3+O6/PERFgjh4TCEzIuhE5WHJxYuJIvE2vk3VWOZHdbQcF/9wfR18cx24CggqFGj4Uk51sPvWd0P2hGU5Afhuqtngp5359dih4CUG1Io+3MkB6T+KBZJon94U/+X3GPFnoIFK3MhhmUXoJ4IvKdibL6k5AJtSGvHw0b7SyEmqj6ZcYzVnx8zd2jHB2N4aCqOJ2gWB4iEKhEt4+Xb47lJ+A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P9KJgKlV00IdZqKfMfIDPB7HhFe6NVuBPS3hMuJb6vw=;
- b=nf3tZh8KBKZ+9wpXGbOayUkNo1o+OZKWYBui1cR+n2yArvAeUKR6y4RjcVpIE5NAw58ySKOmz6u/+yFA/yVPM1MPQ+08Kk3k+UpVGRT95vhY4BvTGzaPVid/rI/bsV7Aq0s4XuEPziTk5R5A3irdMIttN0WsSIBzXvhM0bwg8QCnqtYoHwbdBuS2ojCVn+QnNvK+9DGZC/uuh//fi43AiZ32o42Ni9j+XR0JOAQH+3syyBGabuYCRXxTOPHA+Hqi9uw6lNdipQ7/r4qvPwDtDtpZfkt6+pKM2x0g96oPO4lYW8KSo6+vkHOJgf/zJS/kWlyl4jtQgb3YfK+QKceOlA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=P9KJgKlV00IdZqKfMfIDPB7HhFe6NVuBPS3hMuJb6vw=;
- b=BgBzFAaonFBWhvhhivspbclYRv+AUh+AspM7nhE4G4dZFS0zoVVk0RCc7MrapC0X3YGYr1ndMnPyrfRaV1G/hyjhNtysI+voG5qi0nT6Ee0TY0XSjS2anmW95LVNfXn2KZ/xlshvWxgGi/ZyMgxG6kW9uLny5LlCsp3RR67pifbQ2TiwcqmPmiYgKqn7ed2r0d6nSPQZl0+zCP3A4yA4H5W4HD+S4m5f1PqHblJN3SeyAdaxwPotGifkAhp1DILUTnLQHXZHrmiqeDTXXyyiKxbpciQp0DBz1PKbg+YqM/sMtXwQJkI0+h556j0KGtKazGs/s1XWLOLAJbb2br8fhQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
- by SA3PR12MB8809.namprd12.prod.outlook.com (2603:10b6:806:31f::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.22; Fri, 9 Aug
- 2024 13:28:47 +0000
-Received: from CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
- ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7849.014; Fri, 9 Aug 2024
- 13:28:47 +0000
-Date: Fri, 9 Aug 2024 10:28:45 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: "Tian, Kevin" <kevin.tian@intel.com>
-Cc: Lu Baolu <baolu.lu@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	David Woodhouse <dwmw2@infradead.org>,
-	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
-	Joerg Roedel <joro@8bytes.org>,
-	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
-	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Will Deacon <will@kernel.org>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E29A195FEC;
+	Fri,  9 Aug 2024 14:26:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.35
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723213586; cv=none; b=Je+XtvmiWV03l53NaRwCg9g0m8bYftUeBtm1+TtzBATcG74R8+F0w2WEUfmVUyMleBwuJW/fQI0Uk7KDedHd9cK/OMYfCKeehPNmY6jAb3gOyqxEGLCraN5ST9qCPyvtGGqPBdfo7eK2AU011EsDsWrORSMZWH2NKqk/q0+Ea6k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723213586; c=relaxed/simple;
+	bh=BRSycxJtSK6+TNSeWc0Ke0HnnZcJoST+YtczCHXVm0w=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=tNO1eSi3/Q+Y/lUSIeO4ThPKLXeT9I0MxxAS6e1GS/HwRrJMZS5CGdwhBggmpS95kcHripYbW4F9Qz3wYAF3WoGttA6hCDLFYKozaKOZBRe2fhzdho57tnQk3iCnK9xCFgifygkdQz2xqmdfTVbPMVoNkQz6brsgrgNrHfb4uu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=45.249.212.35
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.19.88.163])
+	by szxga07-in.huawei.com (SkyGuard) with ESMTP id 4WgR1628Bqz1S76l;
+	Fri,  9 Aug 2024 22:21:30 +0800 (CST)
+Received: from dggpemf500002.china.huawei.com (unknown [7.185.36.57])
+	by mail.maildlp.com (Postfix) with ESMTPS id 626F818002B;
+	Fri,  9 Aug 2024 22:26:16 +0800 (CST)
+Received: from lhrpeml500005.china.huawei.com (7.191.163.240) by
+ dggpemf500002.china.huawei.com (7.185.36.57) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Fri, 9 Aug 2024 22:26:15 +0800
+Received: from lhrpeml500005.china.huawei.com ([7.191.163.240]) by
+ lhrpeml500005.china.huawei.com ([7.191.163.240]) with mapi id 15.01.2507.039;
+ Fri, 9 Aug 2024 15:26:13 +0100
+From: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, "acpica-devel@lists.linux.dev"
+	<acpica-devel@lists.linux.dev>, Alex Williamson <alex.williamson@redhat.com>,
+	"Guohanjun (Hanjun Guo)" <guohanjun@huawei.com>, "iommu@lists.linux.dev"
+	<iommu@lists.linux.dev>, Joerg Roedel <joro@8bytes.org>, Kevin Tian
+	<kevin.tian@intel.com>, "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "Len
+ Brown" <lenb@kernel.org>, "linux-acpi@vger.kernel.org"
+	<linux-acpi@vger.kernel.org>, "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Lorenzo Pieralisi
+	<lpieralisi@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, "Robert
+ Moore" <robert.moore@intel.com>, Robin Murphy <robin.murphy@arm.com>, "Sudeep
+ Holla" <sudeep.holla@arm.com>, Will Deacon <will@kernel.org>
+CC: Eric Auger <eric.auger@redhat.com>, Jean-Philippe Brucker
+	<jean-philippe@linaro.org>, Moritz Fischer <mdf@kernel.org>, Michael Shavit
+	<mshavit@google.com>, Nicolin Chen <nicolinc@nvidia.com>,
 	"patches@lists.linux.dev" <patches@lists.linux.dev>
-Subject: Re: [PATCH] iommu: Allow ATS to work on VFs when the PF uses IDENTITY
-Message-ID: <20240809132845.GG8378@nvidia.com>
-References: <0-v1-0fb4d2ab6770+7e706-ats_vf_jgg@nvidia.com>
- <BN9PR11MB52762296EEA7F307A48591518CBA2@BN9PR11MB5276.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BN9PR11MB52762296EEA7F307A48591518CBA2@BN9PR11MB5276.namprd11.prod.outlook.com>
-X-ClientProxiedBy: BL1P223CA0004.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:208:2c4::9) To CH3PR12MB7763.namprd12.prod.outlook.com
- (2603:10b6:610:145::10)
+Subject: RE: [PATCH 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+Thread-Topic: [PATCH 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+Thread-Index: AQHa6FotZjxW0m4zQk+YUXvVQrNfTbIe/kcw
+Date: Fri, 9 Aug 2024 14:26:13 +0000
+Message-ID: <5af45a0c060c487fb41983c434de0ec6@huawei.com>
+References: <0-v1-54e734311a7f+14f72-smmuv3_nesting_jgg@nvidia.com>
+ <2-v1-54e734311a7f+14f72-smmuv3_nesting_jgg@nvidia.com>
+In-Reply-To: <2-v1-54e734311a7f+14f72-smmuv3_nesting_jgg@nvidia.com>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|SA3PR12MB8809:EE_
-X-MS-Office365-Filtering-Correlation-Id: f4cbad76-5d82-43bc-826b-08dcb877330d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?rcrQmojDXy27qZWjw3l0/Ge2jllwMjrVIouU8B3eDRCW2Iq7UyIf1vS2+QfU?=
- =?us-ascii?Q?W6d1Y7eHGPhQfwYCLu6voU6a7rPNbCO7ILtfVNugDqc0+BHzKCnwhdswdDCk?=
- =?us-ascii?Q?nAh5nLq2UjEe6gTdTChPsHddAUOnMYg+J+N8w0J/8RB6MVBcZP8L78rBJ2np?=
- =?us-ascii?Q?Rs1EVDefunWon9kVBD7lHWekt5YKE5PRvB4eq/uHssJEKrp0APzgbd9M8NJO?=
- =?us-ascii?Q?KnmkmkWgmKmHzkpAQfD5Brr6UR5eJvmmf3wIco43ZnLUycosz7FslwWrGvlD?=
- =?us-ascii?Q?QIrfApIJ2ysM0L9u8cxEnDtQb48TbGczYU2994gSo0Z1cy9IaRWPjhsITEBw?=
- =?us-ascii?Q?mvE+fJbEeOM/YHwJZTm5QR+J5Tp2dTF9KM+xQU2MwUQAZS19DmJ9iRFyi5B9?=
- =?us-ascii?Q?JzLVUHX9OIJ1DLwsUhgxiHCca1U1n3M5jRmXJiwN8PUm1SnrsHhrg3YHxL9X?=
- =?us-ascii?Q?zsTQ5OzPPExWQ8tyu7V3En5L/oXxq+dB9HCkIKCXSKkC+Vj3oYs2DBExM3CZ?=
- =?us-ascii?Q?uk+yBIkAgar+kjBghZNGvXsesZ3JgT/ojxb4ndVZV3ZgcpXjEaZJ13DgWw4K?=
- =?us-ascii?Q?WaZAmhMOP1j7BDHe5kT9mSyHLjjtJ7z5+lEhhn8GvZ8J9baNS5jy58IilLID?=
- =?us-ascii?Q?Iclg2ywJ6TYS+imkGeOmCP1TmRTUoSNgN+OVw6EZmIvjJApZAKR5qskvyZQe?=
- =?us-ascii?Q?UpPbgwIO9yuJeR5UwTSkjCA+5siRaTuyQyeSRg6toFTakpbZoiYZ1eSmfiEo?=
- =?us-ascii?Q?0lcfXU/gizfloEiqXHmcIP2LA73NFBAfRK0/mC4ncaH34xTlTYpPQtpyCSB8?=
- =?us-ascii?Q?/y1nrnuAj9FaBXI+IMCpwoh3mjDFa85/nmuzAw1vO53DeeZSexwjI6UVitA9?=
- =?us-ascii?Q?vbBg+nSytzAkSWx42m5Af/QvI3H5IgERXvOScARKdvedR279t3bQKZKY0GfH?=
- =?us-ascii?Q?LSXtTD/gdA1STT4fxLAiMWPHe5v7bSrwDP4YdnLiktYh/nVXYERlQw18K0sj?=
- =?us-ascii?Q?1LSFaus+feXqjH5EctBue+zK7va8t2NEBbXxaPHof8KVoXS7zwd6ACHGgC6Q?=
- =?us-ascii?Q?TZvqYtO6/kng8ZpS7JVuyTCfiVxa2kteG//lARbMsQYOdWgap+r725tcPhWB?=
- =?us-ascii?Q?24ysmeIaiUpdaJ809dN+szbAsQctH1KPjlrExwXhOWEmXworHXLjkDziL1tH?=
- =?us-ascii?Q?Phr7ePm999ftli037b5JyNNfmzFwn9eH5yQ30mCAxFlgsu9yghbAlotgfmw8?=
- =?us-ascii?Q?cF6fwHfR9Ya+u1CmOws+6uQ1KlIyzN6CJ9EWv7696YKLb3fbqPvMrE6JjlyH?=
- =?us-ascii?Q?k+9nxSEhtrQHuscnFgg4ju89vPKkidm7EBJ15i1dnuelhg=3D=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?KIPR8cSbfXtio+OCOoX212a68JNy+xEoTKa0fi8tkUeQI7SCo3NSeTgX2wS+?=
- =?us-ascii?Q?WvgqDvQUwXtog/gL0KWNFcuqPhzNSsdBI3DAcJ1OOVGUreIXJ3patdO2yYEk?=
- =?us-ascii?Q?QYvf+tervWuWLpjLCw+ZsTqjF3H/UUo4WTEJuXV/TRPViU48W/yuuqR3l2OB?=
- =?us-ascii?Q?lTcJTftUqidF+cASAeEnjBnoKYyoX0+eRhCrTIndTFgsB1G3rvkpmsH0nfU4?=
- =?us-ascii?Q?mCZ0CvpS47V7HmcDF8xvWhnSNeF6W3q6woz58T5YntHbzZO+pjvb6C56FOjl?=
- =?us-ascii?Q?0MNhjmeFFu/PnbQ3x+Jr9djadWYzCDKZvE1I6Z0ivxIuyHwrHSIqoPAzpRiu?=
- =?us-ascii?Q?pTVtg1rmA1jOclbB18dWwqXfgASynLqEfxbuR+2zLzC0wvesQcS569WAVmDD?=
- =?us-ascii?Q?nC4ngQb1b51WCQsamHxzmI9XIVG76xMCHjDVp2BaOL2gOJ6Qdi8CdErIAedP?=
- =?us-ascii?Q?bz3aGi7HSiAEuF/HrRJV8UwHwPTTI8lireJAvQ5g9sqnWfQTCTBJvgzSPWLp?=
- =?us-ascii?Q?AKxLQsTkvfVGUhura6UlZM7Oga4frIjLAKLlYPkrg2K1c+zjD7kbVSj7gIMz?=
- =?us-ascii?Q?RR0MiPHgPhSzEZEZ0TEndsOtzdZc0svRKn1gYo5pzOF11mqrgpa51O4qXmRG?=
- =?us-ascii?Q?IpxkAC2r9Qdt636qsTfI0IC1LdK2CJCPsN/8+40e+Lpmj/Z3zmCIvPbQWQxr?=
- =?us-ascii?Q?cUZYSJSLO7rwfb99S8/rgSeznzcwfEfrB4Bqx85scvu+07lp5N23kuMc45GF?=
- =?us-ascii?Q?iguxEigDgg7gqfN8XJzCPDgGXmyucC2I0jsbgUxEpSgva6PzBZhY60pq5CBe?=
- =?us-ascii?Q?WBE8AUpiA/GJ7d9NhclrUedEcKryK5YSGsbXYjaLluUco968NXDDuJuJfVtf?=
- =?us-ascii?Q?9+ZkSiKKf0IcQB86L8phjSPETXUMS/woDGBxNdTk8A92yJALjo2mtSjRd9ES?=
- =?us-ascii?Q?gbE0P8YFC3Fdz7soZNv3c4AR4bgxb28XMl+85M0as2a01kEvqPWsTsCNbX9j?=
- =?us-ascii?Q?6xqm4WSexcG6y1UZJolPcNXUgoujXf44nRiRHW/s+mRUjOoO7sxTIzV3s1H8?=
- =?us-ascii?Q?LPs6aqPp5vfVKBts0v13vo9+V4tBTgZ5poanWoE43ooX5ewo8jzEGW8WSa7j?=
- =?us-ascii?Q?y9URLfRU3w2thSTbiiBedvnJ7CJdmLFbEXMXTtEJuVwkeRhNEfnj1uPMmQGS?=
- =?us-ascii?Q?euhqiqpjMRWyXOmwnaK9tisu7JddAye7KPgJeBh1De8mm1LxaPALxVGApSFe?=
- =?us-ascii?Q?Ni4hIrxmxvzAoaMhSCzpZouaNppWHUuXifJQKlEIQpy6oMgnywYGXYNQbQNo?=
- =?us-ascii?Q?b+OIj6NmF1waddvnFW1klr2iHo+Ne7sOqJJz15M+DQ2bZgEMfBEFXvFA6MXG?=
- =?us-ascii?Q?vazkKEdtN/V0BE4wyl9giCvT5SVK5tufl5yZhUslJeRpjpdjGTS2cPMB3/LH?=
- =?us-ascii?Q?Q2EU1fFNxZvqMuq4BZhXr4EQ4d+LRKgSb/ajk/TL9PHSFaVxH8Jji49tFSBc?=
- =?us-ascii?Q?bb08cyk7qsjLuKUI7dAQKswI+jny284UjK3OfqYYk/9r19UnshvXqyIgZ40t?=
- =?us-ascii?Q?owkZnihxmPqeQPHbQ+o=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f4cbad76-5d82-43bc-826b-08dcb877330d
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Aug 2024 13:28:47.8208
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: pDhsPaQRevCLmk82tpwUQH+jgFYIai+ksWXwkrYwTnc3UMNrXZm1+cv2WkLZ+mkJ
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB8809
 
-On Fri, Aug 09, 2024 at 02:36:14AM +0000, Tian, Kevin wrote:
-> > From: Jason Gunthorpe <jgg@nvidia.com>
-> > Sent: Thursday, August 8, 2024 2:19 AM
-> > 
-> > PCI ATS has a global Smallest Translation Unit field that is located in
-> > the PF but shared by all of the VFs.
-> > 
-> > The expectation is that the STU will be set to the root port's global STU
-> > capability which is driven by the IO page table configuration of the iommu
-> > HW. Today it becomes set when the iommu driver first enables ATS.
-> > 
-> > Thus, to enable ATS on the VF, the PF must have already had the correct
-> > STU programmed, even if ATS is off on the PF.
-> > 
-> > Unfortunately the PF only programs the STU when the PF enables ATS. The
-> > iommu drivers tend to leave ATS disabled when IDENTITY translation is
-> > being used.
-> 
-> Is there more context on this?
 
-How do you mean?
 
-> Looking at intel-iommu driver ATS is disabled for IDENETITY when
-> the iommu is in legacy mode:
-> 
-> dmar_domain_attach_device()
-> {
-> 	...
-> 	if (sm_supported(info->iommu) || !domain_type_is_si(info->domain))
-> 		iommu_enable_pci_caps(info);
-> 	...
-> }
-> 
-> But this follows what VT-d spec says (section 9.3):
-> 
-> TT: Translate Type
-> 10b: Untranslated requests are processed as pass-through. The SSPTPTR
-> field is ignored by hardware. Translated and Translation Requests are
-> blocked.
+> -----Original Message-----
+> From: Jason Gunthorpe <jgg@nvidia.com>
+> Sent: Wednesday, August 7, 2024 12:41 AM
+> To: acpica-devel@lists.linux.dev; Alex Williamson
+> <alex.williamson@redhat.com>; Guohanjun (Hanjun Guo)
+> <guohanjun@huawei.com>; iommu@lists.linux.dev; Joerg Roedel
+> <joro@8bytes.org>; Kevin Tian <kevin.tian@intel.com>; kvm@vger.kernel.org=
+;
+> Len Brown <lenb@kernel.org>; linux-acpi@vger.kernel.org; linux-arm-
+> kernel@lists.infradead.org; Lorenzo Pieralisi <lpieralisi@kernel.org>; Ra=
+fael J.
+> Wysocki <rafael@kernel.org>; Robert Moore <robert.moore@intel.com>; Robin
+> Murphy <robin.murphy@arm.com>; Sudeep Holla <sudeep.holla@arm.com>;
+> Will Deacon <will@kernel.org>
+> Cc: Eric Auger <eric.auger@redhat.com>; Jean-Philippe Brucker <jean-
+> philippe@linaro.org>; Moritz Fischer <mdf@kernel.org>; Michael Shavit
+> <mshavit@google.com>; Nicolin Chen <nicolinc@nvidia.com>;
+> patches@lists.linux.dev; Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>
+> Subject: [PATCH 2/8] iommu/arm-smmu-v3: Use S2FWB when available
+>=20
+> Force Write Back (FWB) changes how the S2 IOPTE's MemAttr field
+> works. When S2FWB is supported and enabled the IOPTE will force cachable
+> access to IOMMU_CACHE memory and deny cachable access otherwise.
+>=20
+> This is not especially meaningful for simple S2 domains, it apparently
+> doesn't even force PCI no-snoop access to be coherent.
+>=20
+> However, when used with a nested S1, FWB has the effect of preventing the
+> guest from choosing a MemAttr that would cause ordinary DMA to bypass the
+> cache. Consistent with KVM we wish to deny the guest the ability to becom=
+e
+> incoherent with cached memory the hypervisor believes is cachable so we
+> don't have to flush it.
+>=20
+> Turn on S2FWB whenever the SMMU supports it and use it for all S2
+> mappings.
+>=20
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c |  6 ++++++
+>  drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.h |  3 +++
+>  drivers/iommu/io-pgtable-arm.c              | 24 +++++++++++++++++----
+>  include/linux/io-pgtable.h                  |  2 ++
+>  4 files changed, 31 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> index 531125f231b662..7fe1e27d11586c 100644
+> --- a/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> +++ b/drivers/iommu/arm/arm-smmu-v3/arm-smmu-v3.c
+> @@ -1612,6 +1612,8 @@ void arm_smmu_make_s2_domain_ste(struct
+> arm_smmu_ste *target,
+>  		FIELD_PREP(STRTAB_STE_1_EATS,
+>  			   ats_enabled ? STRTAB_STE_1_EATS_TRANS : 0));
+>=20
+> +	if (smmu->features & ARM_SMMU_FEAT_S2FWB)
+> +		target->data[1] |=3D cpu_to_le64(STRTAB_STE_1_S2FWB);
+>  	if (smmu->features & ARM_SMMU_FEAT_ATTR_TYPES_OVR)
+>  		target->data[1] |=3D
+> cpu_to_le64(FIELD_PREP(STRTAB_STE_1_SHCFG,
+>=20
+> STRTAB_STE_1_SHCFG_INCOMING));
+> @@ -2400,6 +2402,8 @@ static int arm_smmu_domain_finalise(struct
+> arm_smmu_domain *smmu_domain,
+>  		pgtbl_cfg.oas =3D smmu->oas;
+>  		fmt =3D ARM_64_LPAE_S2;
+>  		finalise_stage_fn =3D arm_smmu_domain_finalise_s2;
+> +		if (smmu->features & ARM_SMMU_FEAT_S2FWB)
+> +			pgtbl_cfg.quirks |=3D IO_PGTABLE_QUIRK_ARM_S2FWB;
 
-Yes, HW like this is exactly the problem, it ends up not enabling ATS
-on the PF and then we don't have the STU programmed so the VF is
-effectively disabled too.
+This probably requires an update in arm_64_lpae_alloc_pgtable_s2() quirks c=
+heck.
 
-Ideally iommus would continue to work with translated requests when
-ATS is enabled. Not supporting this configuration creates a nasty
-problem for devices that are using PASID. 
-
-The PASID may require ATS to be enabled (ie SVA), but the RID may be
-IDENTITY for performance. The poor device has no idea it is not
-allowed to use ATS on the RID side :(
-
-> > +/**
-> > + * pci_prepare_ats - Setup the PS for ATS
-> > + * @dev: the PCI device
-> > + * @ps: the IOMMU page shift
-> > + *
-> > + * This must be done by the IOMMU driver on the PF before any VFs are
-> > created to
-> > + * ensure that the VF can have ATS enabled.
-> > + *
-> > + * Returns 0 on success, or negative on failure.
-> > + */
-> > +int pci_prepare_ats(struct pci_dev *dev, int ps)
-> > +{
-> > +	u16 ctrl;
-> > +
-> > +	if (!pci_ats_supported(dev))
-> > +		return -EINVAL;
-> > +
-> > +	if (WARN_ON(dev->ats_enabled))
-> > +		return -EBUSY;
-> > +
-> > +	if (ps < PCI_ATS_MIN_STU)
-> > +		return -EINVAL;
-> > +
-> > +	if (dev->is_virtfn)
-> > +		return 0;
-> 
-> missed a check that 'ps' matches pf's ats_stu.
-
-Deliberate, that check is done when enabling ats:
-
-> > +
-> > +	dev->ats_stu = ps;
-> > +	ctrl = PCI_ATS_CTRL_STU(dev->ats_stu - PCI_ATS_MIN_STU);
-> > +	pci_write_config_word(dev, dev->ats_cap + PCI_ATS_CTRL, ctrl);
-> > +	return 0;
-> > +}
-> > +EXPORT_SYMBOL_GPL(pci_prepare_ats);
-> > +
-> 
-> Then there is no need to keep the 'ps' parameter in pci_enable_ats().
-
-Which is why I left it here.
-
-Jason
+Thanks,
+Shameer
