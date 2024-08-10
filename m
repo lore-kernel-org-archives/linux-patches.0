@@ -1,142 +1,120 @@
-Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A19543AB9;
-	Sat, 10 Aug 2024 05:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E1C182D8
+	for <patches@lists.linux.dev>; Sat, 10 Aug 2024 11:36:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723266181; cv=none; b=XLnGXpibHQrQ+hxk56yk9MeCVdPS2TWaS/fydlQ6ouTiiBGTvgCBPLGRA7kHHzfioVicDxDWqztGlfx1bFvcS9rNTq63VGrwpijLZgFBNTBj4iAbB5NaOXNWZblZ4GeSmeN281moZmd5M2/7wADqEWP9EKWXIicdewQ8i1hmaVc=
+	t=1723289777; cv=none; b=mjOxBkZzUGuOvjp+BnVCC0npexNHIO421MsvBir5O0bIy7LcTVQCmTPqSFLcjELpwkz/hHAg5ttqgHLYCkSBbsp1v3Jz1T3ELToAf1dQPOoro0ZeGvZPXx3DLYH7A1WouAb46vaPnPUuehkIgDT9tnKck4TB6p5Wj1RlD6x+7es=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723266181; c=relaxed/simple;
-	bh=p90VjkHd2QSyI8gT0inSZQc3MjLbk9DQli2MMojVYxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fRUWqkAwS7eiOf9xKhUqFqTNMofv7fDmHMK9d0YjE2nHBwu8TGM3WNrVak0Il+dqEXHKA170wdkBV3QefrQ4+nG2/bRvxlL1hEI0wF/g1W3YjfutcwYbluXh2SIaYzXbABPpGP5eDaQCR42HZexzUUwP00pprqfV/TLl9TACZ+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=bxt12D9J; arc=none smtp.client-ip=82.195.75.108
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
+	s=arc-20240116; t=1723289777; c=relaxed/simple;
+	bh=pRDv7ES/6srChhxqUba+UjeIOeYp7UdK0hH4IWFavG4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T+5GB5gI3ALevC1QNO5Ls+yLrz74Ej+OoBgwD3Xih/RVAR4zXvrZZdUSzu4T/yCjNAo8fCueCJPNY0A7COgD8Xju6COUIGyLJMODnCCfNTr0DawWbCRVvLgEUxiRlbrH0PhYqvfkhWv/7XfluCP2KPvoS3O2q07lvGGg1CGFr9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KE0oEzl1; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="bxt12D9J"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
-	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
-	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
-	Reply-To:Content-ID:Content-Description;
-	bh=TKG+hP+MGaJcpG0oBhsja88fT5jqXMjmRyL9ouWt+d8=; b=bxt12D9Ji/p6jCn44E8utmb17D
-	PyiIkjjSF9cp5+gxfeP15vQCP16pm/a1gXSakW2ZmrV/x5SAEbilaufYH2eWdE0YmvBaumJNLvryi
-	5c8s0CW1h3gTlS9361X/YfHvj/UOtP2sVAFjpWrx8//s2gLyoHs3FgCgvPIzXlOGsRwpKlyZTVv7i
-	xZJ8TQRysHxPfBEpunUDxYRz+/QoEC6VpkhQrghLTlKVXRJ1iOnTKCk4Bgy7H7icsytLHr0lnXZlA
-	au0IbTK9x/hX8Wx/wVdlvYl7a7seMfFKHkXsW+3TSUp4NLs9MJLeNoXlcKDpjjv/TrKbEbtha4Ru4
-	olpwOSDg==;
-Received: from authenticated user
-	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.94.2)
-	(envelope-from <carnil@debian.org>)
-	id 1sceFN-003iGQ-F4; Sat, 10 Aug 2024 05:02:33 +0000
-Received: by eldamar.lan (Postfix, from userid 1000)
-	id F1440BE2DE0; Sat, 10 Aug 2024 07:02:31 +0200 (CEST)
-Date: Sat, 10 Aug 2024 07:02:31 +0200
-From: Salvatore Bonaccorso <carnil@debian.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	Akemi Yagi <toracat@elrepo.org>, bpf@vger.kernel.org,
-	Sahil Siddiq <icegambit91@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Tao Chen <chen.dylane@gmail.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc2 review
-Message-ID: <Zrb0Z0MJDkSzFwDD@eldamar.lan>
-References: <20240808091131.014292134@linuxfoundation.org>
- <ZrSe8gZ_GyFv1knq@eldamar.lan>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KE0oEzl1"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-7ae3d7222d4so2050048a12.3
+        for <patches@lists.linux.dev>; Sat, 10 Aug 2024 04:36:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723289775; x=1723894575; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pRDv7ES/6srChhxqUba+UjeIOeYp7UdK0hH4IWFavG4=;
+        b=KE0oEzl1NEqdKbJLcN0ujoIy56CJpuHvlQnMvKZN+6XjXdWnLJTf6qmBDzBjjeT9MJ
+         IpbzgV/b/DbpyKnctHbuHoz0PIL+zl20kdPiE6KIBga+6FHU2XRpSRFntrR2YFcKO/Jt
+         4tGhY+QctFlp1L3td81XChSX9TZIusv3iLazCkjj4fMdg64biHOeiN6f3lKqJqEgaNiv
+         IKz7UZQzJ44O5WYvaac9opPWEeB3mLb4+zJ1deAn1O1MWmr897r0rBEgY5ccbsWKRO5L
+         /upKkC16EEnit/jZuOZUDm9HylhZbyK2+gAwF/ztEuiRQpm+Co6vQsJUhXys1NFKbwtc
+         xFWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723289775; x=1723894575;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pRDv7ES/6srChhxqUba+UjeIOeYp7UdK0hH4IWFavG4=;
+        b=H6DCgw6JCuUxVy2GY59h50kJ2wSc1xWucK8boTM4331iElVCdhjrPoZX52/K1r/LXx
+         EPHRNh7vPtoStLkubgAj7MpXiINazM3rF+zQMM8rLPX3MmixoyZQR4dDPJno3CWfvwCr
+         7K5PGnxcX70Os8X4zwAReWOjClY8JHLXio5yeHwN578usrXw++ZwAEAxBXfIJzQaHr+S
+         GsKDsx9ITEvnfl1EweY6SAAEoHPTYnAdtVc//G7PMmpycw5rOAQs0gPzPP7+Gp3klzMn
+         4Z3zJyysQa+mKORIoRX0LV6FAWbjHL42JO9rE95ApDAXUAJnUNLiAYHLA63iJSSYV/7Z
+         Cr2w==
+X-Forwarded-Encrypted: i=1; AJvYcCW6F5Q3RnQ2RxsuLpt6XIQKRDFBrENgCIouHO+8wLAhfqs+zZnPBvsk5kilSiLyFPyDMUejPBDiC28pI3DON7pBb2eQqgTOnw==
+X-Gm-Message-State: AOJu0YwEOE9oBofvTLK5b65NCi7LIHs1rX6f+GM3yPBvnXFVd5sKcPX4
+	fD6TmzOXIUlNHMFAhsYgHU8OOeh1d98P9Y0TugHS+S4ERMp3oYd17+0+GCwAG4V54w4nXz4xzWw
+	DoXyVIyEABy47mvZZ2VSBYaXTRnw=
+X-Google-Smtp-Source: AGHT+IFpnJ7gvKTJSB6GWIWnhoHi3O1Ctb9UwS4DLIOCEJdg3CUgwGq9dgvZ3o1M5AYwLlbS30DJQDd8snHf8qzoS1E=
+X-Received: by 2002:a17:90b:190a:b0:2c2:df58:bb8c with SMTP id
+ 98e67ed59e1d1-2d1e7fdb96amr5139875a91.18.1723289774767; Sat, 10 Aug 2024
+ 04:36:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-6-ojeda@kernel.org>
+ <CAK7LNAQBG0nDupXSgAAk-6nOqeqGVkr3H1RjYaqRJ1OxmLm6xA@mail.gmail.com>
+In-Reply-To: <CAK7LNAQBG0nDupXSgAAk-6nOqeqGVkr3H1RjYaqRJ1OxmLm6xA@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 10 Aug 2024 13:36:02 +0200
+Message-ID: <CANiq72knS9dGTh1uEQzYvmZuFz6fE8tNhZ8JEuyKFHYR=Kh8sQ@mail.gmail.com>
+Subject: Re: [PATCH 5/6] kbuild: rust: replace proc macros dependency on
+ `core.o` with the version text
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ZrSe8gZ_GyFv1knq@eldamar.lan>
-X-Debian-User: carnil
 
-Hi Greg,
+On Fri, Aug 9, 2024 at 7:31=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.or=
+g> wrote:
+>
+> The touched file, include/config/*, is an implementation detail
+> in Kconfig and fixdep.
+>
+> Rather, I'd like to put the string "CONFIG_RUST_VERSION_TEXT"
+> in the comment of the source file.
+>
+> This is the idea adopted in include/linux/compiler-version.h
 
-[adding as well people involved in the original commit and the
-backporting for 6.1.y branch]
++1, I did it this way to follow the same pattern to the previous patch
+on `core.o`, since that one needed another approach, but I am happy to
+change it.
 
-On Thu, Aug 08, 2024 at 12:33:22PM +0200, Salvatore Bonaccorso wrote:
-> Hi Greg,
->=20
-> On Thu, Aug 08, 2024 at 11:11:49AM +0200, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.104 release.
-> > There are 86 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >=20
-> > Responses should be made by Sat, 10 Aug 2024 09:11:02 +0000.
-> > Anything received after that time might be too late.
->=20
-> Sorry for bothering you again with it (see previous comment on
-> 6.1.103, respectively 6.1.104-rc1): bpftool still would fail to
-> compile:
->=20
-> gcc -O2 -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initial=
-izers -Wbad-function-cast -Wdeclaration-after-statement -Wformat-security -=
-Wformat-y2k -Winit-self -Wmissing-declarations -Wmissing-prototypes -Wno-sy=
-stem-headers -Wold-style-definition -Wpacked -Wredundant-decls -Wstrict-pro=
-totypes -Wswitch-default -Wundef -Wwrite-strings -Wformat -Wno-type-limits =
--Wstrict-aliasing=3D3 -Wshadow -DPACKAGE=3D'"bpftool"' -D__EXPORTED_HEADERS=
-__ -I. -I/home/build/linux-stable-rc/tools/bpf/bpftool/libbpf/include -I/ho=
-me/build/linux-stable-rc/kernel/bpf/ -I/home/build/linux-stable-rc/tools/in=
-clude -I/home/build/linux-stable-rc/tools/include/uapi -DUSE_LIBCAP -DBPFTO=
-OL_WITHOUT_SKELETONS -c -MMD prog.c -o prog.o
-> prog.c: In function =E2=80=98load_with_options=E2=80=99:
-> prog.c:1710:23: warning: implicit declaration of function =E2=80=98create=
-_and_mount_bpffs_dir=E2=80=99 [-Wimplicit-function-declaration]
->  1710 |                 err =3D create_and_mount_bpffs_dir(pinmaps);
->       |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
-> gcc -O2 -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initial=
-izers -Wbad-function-cast -Wdeclaration-after-statement -Wformat-security -=
-Wformat-y2k -Winit-self -Wmissing-declarations -Wmissing-prototypes -Wno-sy=
-stem-headers -Wold-style-definition -Wpacked -Wredundant-decls -Wstrict-pro=
-totypes -Wswitch-default -Wundef -Wwrite-strings -Wformat -Wno-type-limits =
--Wstrict-aliasing=3D3 -Wshadow -DPACKAGE=3D'"bpftool"' -D__EXPORTED_HEADERS=
-__ -I. -I/home/build/linux-stable-rc/tools/bpf/bpftool/libbpf/include -I/ho=
-me/build/linux-stable-rc/kernel/bpf/ -I/home/build/linux-stable-rc/tools/in=
-clude -I/home/build/linux-stable-rc/tools/include/uapi -DUSE_LIBCAP -DBPFTO=
-OL_WITHOUT_SKELETONS  btf.o btf_dumper.o cfg.o cgroup.o common.o feature.o =
-gen.o iter.o json_writer.o link.o main.o map.o map_perf_ring.o net.o netlin=
-k_dumper.o perf.o pids.o prog.o struct_ops.o tracelog.o xlated_dumper.o dis=
-asm.o /home/build/linux-stable-rc/tools/bpf/bpftool/libbpf/libbpf.a -lelf -=
-lz -lcap -o bpftool
-> /bin/ld: prog.o: in function `load_with_options':
-> prog.c:(.text+0x2f98): undefined reference to `create_and_mount_bpffs_dir'
-> /bin/ld: prog.c:(.text+0x2ff2): undefined reference to `create_and_mount_=
-bpffs_dir'
-> collect2: error: ld returned 1 exit status
-> make[1]: *** [Makefile:216: bpftool] Error 1
-> make: *** [Makefile:113: bpftool] Error 2
->=20
-> Reverting 65dd9cbafec2f6f7908cebcab0386f750fc352af fixes the issue. In
-> fact 65dd9cbafec2f6f7908cebcab0386f750fc352af is the only commit
-> adding call to create_and_mount_bpffs_dir:
->=20
-> $ git grep create_and_mount_bpffs_dir
-> tools/bpf/bpftool/prog.c:               err =3D create_and_mount_bpffs_di=
-r(pinmaps);
+> I do not know how to do it for rust/core.o because there is no in-tree
+> source file.
+>
+> But, can we add rust/core.rs, from which
+> rustlib/src/rust/library/core/src/macros/mod.rs is imported?
 
-Just one additional note, at least 478a535ae54a ("bpftool: Mount bpffs
-on provided dir instead of parent dir") would be a reqisite where the
-code was refactored introducing create_and_mount_bpffs_dir() (but
-won't apply cleanly to 6.1.y). But are more requisites needed?
+That is an interesting idea... :)
 
-Should it be safest to just revert the breaking commit for the bpftool
-build?
+Hmm... I think `core` is a bit too special for that, since we need
+attributes on the crate root and it is the one defining things like
+`include!`. Even if we generated the file on the fly to mimic the
+original, we would still need to handle the paths for each module or
+recreate a directory hierarchy or similar.
 
-Regards,
-Salvatore
+We are also in talks with the Rust project to figure out building
+`core` in a stable way, so the details around it may change too, e.g.
+probably something like passing a flag like `-Cbuild-std=3Dcore`. They
+may also want to figure out the right input file path themselves, i.e.
+rather than having to provide one from our side.
+
+So I think a hack may not be worth it compared to depending on the
+implementation detail, and may be a bit brittle until we know the
+final details of that.
+
+Thanks!
+
+Cheers,
+Miguel
