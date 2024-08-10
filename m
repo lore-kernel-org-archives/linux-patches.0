@@ -1,99 +1,162 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33A012F399
-	for <patches@lists.linux.dev>; Sat, 10 Aug 2024 14:45:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE87A3AC2B;
+	Sat, 10 Aug 2024 21:36:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723301128; cv=none; b=gn0uRu8ATbf+YzcPNS9zAoOWdaTZIWYxyI8hWejEMDou6JQGeXC1hVLh5vTGZcXKrxOTgJnlZe3TNxHyVXZNkSHb1y6wZWcl/QPjmYiiLe6H1bxSh6vzi6TXZNa32kVr+1ONV7EAJvW/AjMPrnaDyBSrEDGOPTbIkJlQ+sKY4Mk=
+	t=1723325789; cv=none; b=godDP7ZqVck/VfSbKcXQ34uHvNcR9uPjx4qTTe9vACQGoB6JXWVbxXA2DCgUf1WfQ1+vBDoSe9v3+twGyG4RQA9934r2IzeVVhNBZVshiZh6emeKi05XFmban1GuW4l5wsY9bVB8/mHkD3xdf4rc3qqr1vWpoS+c2LI2IbSRLOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723301128; c=relaxed/simple;
-	bh=9S4F9A6PaX/W1YdIFNWkFn30l1Nc6GZXCt3lt+ixrQg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CFTLgaPemCO286DI6b3O+ouYMCzqT6T0eL/lZFjzdaxxAu6NdGbyQbonG4F7UsTygfbSyo+Y0dXQAV9Kaa2/EAndHOgR3QE0OV8KDNmIl2p5PJW8qPwxc/Fck8KWwPtKePXP7w2MaDHVLtf896c5P3aURxrNQAtYJFvmMUzQnRw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ERhUVZGw; arc=none smtp.client-ip=209.85.216.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723325789; c=relaxed/simple;
+	bh=NPD6oAZbb8VbzqFH1mXAxFDKJ+lEi3tTLo8Gzty3uMs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eMhrgKggHiqA6GILFfvR9hjmwDyVbgyHhoMyxzjmcKkGOHm9lzx8TwYIrAa1ZwVnDRycHF0PsdRit9Upk6u0/thje0DB8D7aIHhZISRsotrCiJowxubVlG72mxVRSs4dTfigPEKPGBK1RRCKhSrzUGt64Ugz/Svd2MGLy8SdEos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ots8z0Sz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ERhUVZGw"
-Received: by mail-pj1-f53.google.com with SMTP id 98e67ed59e1d1-2cf93dc11c6so2382137a91.1
-        for <patches@lists.linux.dev>; Sat, 10 Aug 2024 07:45:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723301125; x=1723905925; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9S4F9A6PaX/W1YdIFNWkFn30l1Nc6GZXCt3lt+ixrQg=;
-        b=ERhUVZGwK9MugDHXZbbdR376r+MMFU0aAyfe5v1yNapeHmhTSqerCSAQjzS732VjmH
-         QSnbhsTGPQe55OEv1F2cAKu5pegsWOWEgKlUijj6Rr5y1WqKtHLmrL58Ymmxe/aJmtlX
-         G5YBeTyOzPz2MyDXafwywJLQvu/OwQTsK+aviomdpfltC4vKXpedYe+EoojnTL2DbodU
-         vWVzW/rq6xjE/ipw+ZZmIEdjRMVP9p3S6eGSpou9tM0PzVADWjRQr4hFbZsuTdu574N0
-         LWowUmPAxAaxRJGh2KJJ+osQlkMFi+ZWAVEpa5HtE97Y1IbSWYC5Tu4HxM0LnL+VHvsE
-         X7tQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723301125; x=1723905925;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9S4F9A6PaX/W1YdIFNWkFn30l1Nc6GZXCt3lt+ixrQg=;
-        b=MZsOnCazwUxYyEscwE6Pp9PIJnc4Vu92MslIcRVyzUNChk5F2gbeQhRfXDKFT7Wq23
-         e45oL2XxguLO6xBcM+zKyhEnyAvT6IZKe8FBwpxTLDE584yF/qDLQ96lv3CYvodqRG6P
-         DVPanU4DoHi4A/jUHvZbV9EIYimh6oYRh8rFFEJJLHBChIZGm1vW8KiicLriB0JB5o+C
-         pidCGNm0gw2erKSl5rLgK4WX77zmFaUU8qIrJpvz0h3oGa7tY0McP+h2F8dh4Bce6bAo
-         /daRWcYWgn48HPpbKzZW7v0hciYt29gU0gJ/eFS4vhmPyo8SUudirm2eimrEgwvcYh2a
-         8Qbg==
-X-Forwarded-Encrypted: i=1; AJvYcCWAaBqzah1w84C9U4xd2mzZPJXVculNrvomPyFAlwC7OUg2VGcy8CcI7NWHHA4q4fZ5HCI214U4waWcK+Yj8u5b85B816bx1Q==
-X-Gm-Message-State: AOJu0YwnLBmMRO2BmWxHg6kE8Hr+8pZGF//xkfaC/fVcGuofgg1R3Jrc
-	ZMof+eUkq2MTRaZrY8oMR/h7z4MwzneJQt2KeyWNuCo/ZpdLCZydg8R0TTA2P+2pEp4xFebCh6K
-	2Xtr5ubohG7MPn4VayPRI2sox/Lk=
-X-Google-Smtp-Source: AGHT+IGfAWSZ5LwbG80gDM0OaU5dKBmBaQzIewIaSEbnuIWbzBzupl1sGtdFp/rRW2syqJvIsKdkY1uR23zTPg1Hxbc=
-X-Received: by 2002:a17:90b:1b0d:b0:2d2:453:12cb with SMTP id
- 98e67ed59e1d1-2d204531848mr1563929a91.2.1723301124946; Sat, 10 Aug 2024
- 07:45:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ots8z0Sz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 756CDC32781;
+	Sat, 10 Aug 2024 21:36:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723325788;
+	bh=NPD6oAZbb8VbzqFH1mXAxFDKJ+lEi3tTLo8Gzty3uMs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Ots8z0Szs02+YAQL1tzxe9vtfiocqFGUotcKEt2GSnYb9jrCImS/k9BSaUImvBaZy
+	 H+MMBvH3RMWkNl88f7Bk5+WfJ2jJXR4rLbkXPw3rqQ96/Xl7DT+FvEBzlbAkL1zQmg
+	 8H4xidNV9NbsRLJLM8lcsaK6a/93gjhGv+JCArGU+zHKpS12Vf/4H9dwO4ylWY4eFQ
+	 IErETKTA0gHg5J1SIYBgzMA1p9B3ARGUvS7W3Bt9s0rWkZd/pygJVsujdaRAuHhTTz
+	 34CU+I9wQFw89Id9tqOoe4iUlV9ArIwfbwiQFwxDdmEJn4D1dmZffu3+6GOKJvYdgK
+	 491c9h9wh3bbQ==
+Message-ID: <67bfcb8a-e00e-47b2-afe2-970a60e4a173@kernel.org>
+Date: Sat, 10 Aug 2024 22:36:20 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-3-ojeda@kernel.org>
- <652ElsLaWV50vwbKOQc-kTFLeaf8wUGPKNhc8B8tS6EqgqzSj5k_tHgqCTUcxfSZkYvB1xC_N2pmNIA-oq2q9irSPp2XNaaiv67pZojm_9I=@protonmail.com>
-In-Reply-To: <652ElsLaWV50vwbKOQc-kTFLeaf8wUGPKNhc8B8tS6EqgqzSj5k_tHgqCTUcxfSZkYvB1xC_N2pmNIA-oq2q9irSPp2XNaaiv67pZojm_9I=@protonmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 10 Aug 2024 16:45:11 +0200
-Message-ID: <CANiq72kXNCww6oHKNiPr-mGq3gQsH-kUbK-C9B_3bY-ozkiznA@mail.gmail.com>
-Subject: Re: [PATCH 2/6] kbuild: rust: make command for `RUSTC_VERSION_TEXT`
- closer to the `CC` one
-To: =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc2 review
+To: Salvatore Bonaccorso <carnil@debian.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+ allen.lkml@gmail.com, broonie@kernel.org,
+ Hardik Garg <hargar@linux.microsoft.com>, Akemi Yagi <toracat@elrepo.org>,
+ bpf@vger.kernel.org, Sahil Siddiq <icegambit91@gmail.com>,
+ Andrii Nakryiko <andrii@kernel.org>, Tao Chen <chen.dylane@gmail.com>,
+ Sasha Levin <sashal@kernel.org>
+References: <20240808091131.014292134@linuxfoundation.org>
+ <ZrSe8gZ_GyFv1knq@eldamar.lan> <Zrb0Z0MJDkSzFwDD@eldamar.lan>
+From: Quentin Monnet <qmo@kernel.org>
+Content-Language: en-GB
+In-Reply-To: <Zrb0Z0MJDkSzFwDD@eldamar.lan>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Aug 10, 2024 at 3:44=E2=80=AFPM Bj=C3=B6rn Roy Baron
-<bjorn3_gh@protonmail.com> wrote:
->
-> Cargo depends on the rustc version string not getting localized. Or to be=
- precise it depends on the version string being fixed for a given rustc ver=
-sion, which would not be the case if the value of LC_ALL could change the v=
-ersion string. If the version string changes, cargo will rebuild everything=
- from scratch. There is also not really anything to localize in the non-ver=
-bose version string. I guess setting LC_ALL doesn't hurt either though.
+2024-08-10 07:02 UTC+0200 ~ Salvatore Bonaccorso <carnil@debian.org>
+> Hi Greg,
+>=20
+> [adding as well people involved in the original commit and the
+> backporting for 6.1.y branch]
+>=20
+> On Thu, Aug 08, 2024 at 12:33:22PM +0200, Salvatore Bonaccorso wrote:
+>> Hi Greg,
+>>
+>> On Thu, Aug 08, 2024 at 11:11:49AM +0200, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 6.1.104 release.=
 
-Thanks Bj=C3=B6rn -- yeah, I agree it works either way (also for `head` as
-Masahiro mentioned).
+>>> There are 86 patches in this series, all will be posted as a response=
 
-I made this commit to make it as close as possible to the C one, since
-in the next patch it gets moved to another place where both commands
-go together.
+>>> to this one.  If anyone has any issues with these being applied, plea=
+se
+>>> let me know.
+>>>
+>>> Responses should be made by Sat, 10 Aug 2024 09:11:02 +0000.
+>>> Anything received after that time might be too late.
+>>
+>> Sorry for bothering you again with it (see previous comment on
+>> 6.1.103, respectively 6.1.104-rc1): bpftool still would fail to
+>> compile:
+>>
+>> gcc -O2 -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-init=
+ializers -Wbad-function-cast -Wdeclaration-after-statement -Wformat-secur=
+ity -Wformat-y2k -Winit-self -Wmissing-declarations -Wmissing-prototypes =
+-Wno-system-headers -Wold-style-definition -Wpacked -Wredundant-decls -Ws=
+trict-prototypes -Wswitch-default -Wundef -Wwrite-strings -Wformat -Wno-t=
+ype-limits -Wstrict-aliasing=3D3 -Wshadow -DPACKAGE=3D'"bpftool"' -D__EXP=
+ORTED_HEADERS__ -I. -I/home/build/linux-stable-rc/tools/bpf/bpftool/libbp=
+f/include -I/home/build/linux-stable-rc/kernel/bpf/ -I/home/build/linux-s=
+table-rc/tools/include -I/home/build/linux-stable-rc/tools/include/uapi -=
+DUSE_LIBCAP -DBPFTOOL_WITHOUT_SKELETONS -c -MMD prog.c -o prog.o
+>> prog.c: In function =E2=80=98load_with_options=E2=80=99:
+>> prog.c:1710:23: warning: implicit declaration of function =E2=80=98cre=
+ate_and_mount_bpffs_dir=E2=80=99 [-Wimplicit-function-declaration]
+>>  1710 |                 err =3D create_and_mount_bpffs_dir(pinmaps);
+>>       |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
+>> gcc -O2 -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-init=
+ializers -Wbad-function-cast -Wdeclaration-after-statement -Wformat-secur=
+ity -Wformat-y2k -Winit-self -Wmissing-declarations -Wmissing-prototypes =
+-Wno-system-headers -Wold-style-definition -Wpacked -Wredundant-decls -Ws=
+trict-prototypes -Wswitch-default -Wundef -Wwrite-strings -Wformat -Wno-t=
+ype-limits -Wstrict-aliasing=3D3 -Wshadow -DPACKAGE=3D'"bpftool"' -D__EXP=
+ORTED_HEADERS__ -I. -I/home/build/linux-stable-rc/tools/bpf/bpftool/libbp=
+f/include -I/home/build/linux-stable-rc/kernel/bpf/ -I/home/build/linux-s=
+table-rc/tools/include -I/home/build/linux-stable-rc/tools/include/uapi -=
+DUSE_LIBCAP -DBPFTOOL_WITHOUT_SKELETONS  btf.o btf_dumper.o cfg.o cgroup.=
+o common.o feature.o gen.o iter.o json_writer.o link.o main.o map.o map_p=
+erf_ring.o net.o netlink_dumper.o perf.o pids.o prog.o struct_ops.o trace=
+log.o xlated_dumper.o disasm.o /home/build/linux-stable-rc/tools/bpf/bpft=
+ool/libbpf/libbpf.a -lelf -lz -lcap -o bpftool
+>> /bin/ld: prog.o: in function `load_with_options':
+>> prog.c:(.text+0x2f98): undefined reference to `create_and_mount_bpffs_=
+dir'
+>> /bin/ld: prog.c:(.text+0x2ff2): undefined reference to `create_and_mou=
+nt_bpffs_dir'
+>> collect2: error: ld returned 1 exit status
+>> make[1]: *** [Makefile:216: bpftool] Error 1
+>> make: *** [Makefile:113: bpftool] Error 2
+>>
+>> Reverting 65dd9cbafec2f6f7908cebcab0386f750fc352af fixes the issue. In=
 
-It is reasonable to argue that it makes it more complex and slower, so
-I am happy dropping it.
+>> fact 65dd9cbafec2f6f7908cebcab0386f750fc352af is the only commit
+>> adding call to create_and_mount_bpffs_dir:
+>>
+>> $ git grep create_and_mount_bpffs_dir
+>> tools/bpf/bpftool/prog.c:               err =3D create_and_mount_bpffs=
+_dir(pinmaps);
+>=20
+> Just one additional note, at least 478a535ae54a ("bpftool: Mount bpffs
+> on provided dir instead of parent dir") would be a reqisite where the
+> code was refactored introducing create_and_mount_bpffs_dir() (but
+> won't apply cleanly to 6.1.y). But are more requisites needed?
+>=20
+> Should it be safest to just revert the breaking commit for the bpftool
+> build?
+>=20
+> Regards,
+> Salvatore
+>=20
 
-Cheers,
-Miguel
+Hi,
+
+You should be able to fix the build by first cherry-picking commit
+2a36c26fe3b8 ("bpftool: Support bpffs mountpoint as pin path for prog
+loadall"), and then commit 478a535ae54a ("bpftool: Mount bpffs on
+provided dir instead of parent dir") as you figured. Both commits have a
+minor conflict on tools/bpf/bpftool/struct_ops.c, which should be
+addressed by discarding the relevant hunk (for both commit).
+
+Alternatively, it's also fine to revert the breaking commit. It's a
+quality of life improvement without which users may have to manually
+mount the bpffs at the location they want to pin their maps when loading
+multiple BPF programs with "bpftool prog loadall", in the unlikely event
+they're not using /sys/kernel/bpf, prior to running the bpftool command.
+It's not in use during the kernel build process or for the BPF
+selftests, so not necessary on stable branches.
+
+I hope this helps,
+Quentin
