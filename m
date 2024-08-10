@@ -1,140 +1,142 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from stravinsky.debian.org (stravinsky.debian.org [82.195.75.108])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482651667CD;
-	Fri,  9 Aug 2024 22:16:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A19543AB9;
+	Sat, 10 Aug 2024 05:02:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=82.195.75.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723241764; cv=none; b=FR0A+gNB50vw3H9tyjPuKtniHaPfgWbxzqqjyP4HQjvz1sz0f3nFT/JFAQiKNLIjhpfNTtfjBcDSpYXAd8cJuNkkya33KkdDNFlIAKsh7FshQDayVlzphY8/6F8VO6NbqLYJzc+WkAxFqWquyNo2rAtjPVYruklziCXYXhyv8Ag=
+	t=1723266181; cv=none; b=XLnGXpibHQrQ+hxk56yk9MeCVdPS2TWaS/fydlQ6ouTiiBGTvgCBPLGRA7kHHzfioVicDxDWqztGlfx1bFvcS9rNTq63VGrwpijLZgFBNTBj4iAbB5NaOXNWZblZ4GeSmeN281moZmd5M2/7wADqEWP9EKWXIicdewQ8i1hmaVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723241764; c=relaxed/simple;
-	bh=Vyz7mOQSobTax2GI/PV4PZxzi76IZVTiDNoNh8/txbE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hu00S4SULewESbMb6VcLJ1d/6qQCP1NGgMVcK4FsseHHmS1nvOf8YbuS9kK1uvNrjUoVLACRNaPz0tQB6MbZVKQ+AYdQjadyjwhFd60Gn06SCAtWvdRIRPSKkURrfzt0Wo4YX8ye8eyKRXHAGDKC94DMNCa6tqPi2SeV94XtUew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WHqSk3hu; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723266181; c=relaxed/simple;
+	bh=p90VjkHd2QSyI8gT0inSZQc3MjLbk9DQli2MMojVYxM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fRUWqkAwS7eiOf9xKhUqFqTNMofv7fDmHMK9d0YjE2nHBwu8TGM3WNrVak0Il+dqEXHKA170wdkBV3QefrQ4+nG2/bRvxlL1hEI0wF/g1W3YjfutcwYbluXh2SIaYzXbABPpGP5eDaQCR42HZexzUUwP00pprqfV/TLl9TACZ+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=none smtp.mailfrom=debian.org; dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b=bxt12D9J; arc=none smtp.client-ip=82.195.75.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=debian.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WHqSk3hu"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-2d1c1fb5cafso1800675a91.2;
-        Fri, 09 Aug 2024 15:16:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723241762; x=1723846562; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7QajCiM9J1gZRiKmQalSp88+y2PjJcBm2h12qCDW+tY=;
-        b=WHqSk3huQTQ4I9ORO7fpe/QD0o589T0ouqqC+0vBW2+Fnfuwf6nnPHKuxqhY1KmWtY
-         a8KQAbGBIgLoWKWwBRuLU2cQwR5ZufKh8gAiv2ZaiZ2/IzmHo27qBjpeJr6tH9oOSh9P
-         /u4fpFOS35Enwnu3Pv72X3U3nQsbibtULxNN0E5EYjX216H9XZv3oqYlEkztoeGTqX9/
-         8FajRX7wBSwVPAkLEUKKXAV2EbzrxQvYP9t3uh6w3IBF/qIJ7VLnZaz4iEEapVeO/rbG
-         WIhVEb7qX4HCgVB16XeSEmyseFiDKQDhTIDKMukoYvtGRh9bzmBn/E5YhMzAERZClFGQ
-         SP4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723241762; x=1723846562;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=7QajCiM9J1gZRiKmQalSp88+y2PjJcBm2h12qCDW+tY=;
-        b=UzvE95bxH5UX0IzX9UgMHm4vCWiiumRQ9CyuOK8F6I398fb5VtcBMURyc+kwZ1jaVP
-         BqhgRdzTCgwYHm0IBw8AKj9WUGXPnXv8ANjksYv4FzvyMblWf8uAkAYymEDCjr7gQX+J
-         4fej4BEUBpLW+YuttJRMrhQK7VG1J0NHAQa8VBK3UVDTaAbOw8nD1YJ1ichhpIxOy94Z
-         9TQsFbmUOu0+RDiDMhwu8CW1r4L8dRS15Vu0q2/DCuUActo9OAsu3NZlt648lbuI/7tx
-         L3blASxRRc253uzSilCW7uJSaHfNVHxMqGd/H/RFDxq9PLVV+nRISgcyza9xs/MqX/nG
-         KVTA==
-X-Forwarded-Encrypted: i=1; AJvYcCVxjzJOF+u1IT6hPYeyoXPvPP//kPHkTofejAW/d/gpNgD6ZJ4ne5PJbV3CTMnGUGy8TbnddDJDMfZCdRy69+W7MxHFphbJ8rus6yqaaoZMJzD0YwWT3dWDVaPTQjY=
-X-Gm-Message-State: AOJu0YzLHQ9x7YGJ/VlEUK+xEmz3dwTXK89du7B5VeAGDXXi/xlXR7y1
-	6r2iIYOVlkmFD8dbd+uJ+nBuIB9Kq2yYtt+YBNuNDKrVRlD91DsphFLTYNBf3H1fa9WutOt/XSi
-	fUadadJPr0yTDyvuBF4ChTnP7yuw=
-X-Google-Smtp-Source: AGHT+IGqhAIMpdcPgTvG4Lm0bG1VLto7lgkIz+dlldbt0bpWrxp0o616hdq+TZ0DclexAS+zwSJY7UTJsSeXk+LcnK0=
-X-Received: by 2002:a17:90a:b113:b0:2cd:b915:c80b with SMTP id
- 98e67ed59e1d1-2d1e8082b97mr3276313a91.27.1723241762470; Fri, 09 Aug 2024
- 15:16:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=debian.org header.i=@debian.org header.b="bxt12D9J"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=debian.org;
+	s=smtpauto.stravinsky; h=X-Debian-User:In-Reply-To:Content-Transfer-Encoding:
+	Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:
+	Reply-To:Content-ID:Content-Description;
+	bh=TKG+hP+MGaJcpG0oBhsja88fT5jqXMjmRyL9ouWt+d8=; b=bxt12D9Ji/p6jCn44E8utmb17D
+	PyiIkjjSF9cp5+gxfeP15vQCP16pm/a1gXSakW2ZmrV/x5SAEbilaufYH2eWdE0YmvBaumJNLvryi
+	5c8s0CW1h3gTlS9361X/YfHvj/UOtP2sVAFjpWrx8//s2gLyoHs3FgCgvPIzXlOGsRwpKlyZTVv7i
+	xZJ8TQRysHxPfBEpunUDxYRz+/QoEC6VpkhQrghLTlKVXRJ1iOnTKCk4Bgy7H7icsytLHr0lnXZlA
+	au0IbTK9x/hX8Wx/wVdlvYl7a7seMfFKHkXsW+3TSUp4NLs9MJLeNoXlcKDpjjv/TrKbEbtha4Ru4
+	olpwOSDg==;
+Received: from authenticated user
+	by stravinsky.debian.org with esmtpsa (TLS1.3:ECDHE_X25519__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
+	(Exim 4.94.2)
+	(envelope-from <carnil@debian.org>)
+	id 1sceFN-003iGQ-F4; Sat, 10 Aug 2024 05:02:33 +0000
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id F1440BE2DE0; Sat, 10 Aug 2024 07:02:31 +0200 (CEST)
+Date: Sat, 10 Aug 2024 07:02:31 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Hardik Garg <hargar@linux.microsoft.com>,
+	Akemi Yagi <toracat@elrepo.org>, bpf@vger.kernel.org,
+	Sahil Siddiq <icegambit91@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Tao Chen <chen.dylane@gmail.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc2 review
+Message-ID: <Zrb0Z0MJDkSzFwDD@eldamar.lan>
+References: <20240808091131.014292134@linuxfoundation.org>
+ <ZrSe8gZ_GyFv1knq@eldamar.lan>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240806144558.114461-1-ojeda@kernel.org>
-In-Reply-To: <20240806144558.114461-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 10 Aug 2024 00:15:50 +0200
-Message-ID: <CANiq72nH9KZZKtDsMkfosmHpgVjvGM6=yy7fRyNP2NrDFUrkvQ@mail.gmail.com>
-Subject: Re: [PATCH] rust: x86: remove `-3dnow{,a}` from target features
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>, 
-	Borislav Petkov <bp@alien8.de>, Dave Hansen <dave.hansen@linux.intel.com>, x86@kernel.org, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, 
-	"H. Peter Anvin" <hpa@zytor.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Nikita Popov <github@npopov.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <ZrSe8gZ_GyFv1knq@eldamar.lan>
+X-Debian-User: carnil
 
-On Tue, Aug 6, 2024 at 4:47=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wrot=
-e:
->
-> LLVM 19 is dropping support for 3DNow! in commit f0eb5587ceeb ("Remove
-> support for 3DNow!, both intrinsics and builtins. (#96246)"):
->
->     Remove support for 3DNow!, both intrinsics and builtins. (#96246)
->
->     This set of instructions was only supported by AMD chips starting in
->     the K6-2 (introduced 1998), and before the "Bulldozer" family
->     (2011). They were never much used, as they were effectively supersede=
-d
->     by the more-widely-implemented SSE (first implemented on the AMD side
->     in Athlon XP in 2001).
->
->     This is being done as a predecessor towards general removal of MMX
->     register usage. Since there is almost no usage of the 3DNow!
->     intrinsics, and no modern hardware even implements them, simple
->     removal seems like the best option.
->
-> Thus we should avoid passing these to the backend, since otherwise we
-> get a diagnostic about it:
->
->     '-3dnow' is not a recognized feature for this target (ignoring featur=
-e)
->     '-3dnowa' is not a recognized feature for this target (ignoring featu=
-re)
->
-> We could try to disable them only up to LLVM 19 (not the C side one,
-> but the one used by `rustc`, which may be built with a range of
-> LLVMs). However, to avoid more complexity, we can likely just remove
-> them altogether. According to Nikita [2]:
->
-> > I don't think it's needed because LLVM should not generate 3dnow
-> instructions unless specifically asked to, using intrinsics that Rust
-> does not provide in the first place.
->
-> Thus do so, like Rust did for one of their builtin targets [3].
->
-> For those curious: Clang will warn only about trying to enable them
-> (`-m3dnow{,a}`), but not about disabling them (`-mno-3dnow{,a}`), so
-> there is no change needed there.
->
-> Cc: Nikita Popov <github@npopov.com>
-> Cc: Nathan Chancellor <nathan@kernel.org>
-> Cc: x86@kernel.org
-> Link: https://github.com/llvm/llvm-project/commit/f0eb5587ceeb641445b64cb=
-264c822b4751de04a [1]
-> Link: https://github.com/rust-lang/rust/pull/127864#issuecomment-22358987=
-60 [2]
-> Link: https://github.com/rust-lang/rust/pull/127864 [3]
-> Closes: https://github.com/Rust-for-Linux/linux/issues/1094
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Hi Greg,
 
-Applied to `rust-fixes` -- thanks everyone!
+[adding as well people involved in the original commit and the
+backporting for 6.1.y branch]
 
-(If someone from x86 still wants to take a look / Ack it, please let me kno=
-w!)
+On Thu, Aug 08, 2024 at 12:33:22PM +0200, Salvatore Bonaccorso wrote:
+> Hi Greg,
+>=20
+> On Thu, Aug 08, 2024 at 11:11:49AM +0200, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.104 release.
+> > There are 86 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >=20
+> > Responses should be made by Sat, 10 Aug 2024 09:11:02 +0000.
+> > Anything received after that time might be too late.
+>=20
+> Sorry for bothering you again with it (see previous comment on
+> 6.1.103, respectively 6.1.104-rc1): bpftool still would fail to
+> compile:
+>=20
+> gcc -O2 -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initial=
+izers -Wbad-function-cast -Wdeclaration-after-statement -Wformat-security -=
+Wformat-y2k -Winit-self -Wmissing-declarations -Wmissing-prototypes -Wno-sy=
+stem-headers -Wold-style-definition -Wpacked -Wredundant-decls -Wstrict-pro=
+totypes -Wswitch-default -Wundef -Wwrite-strings -Wformat -Wno-type-limits =
+-Wstrict-aliasing=3D3 -Wshadow -DPACKAGE=3D'"bpftool"' -D__EXPORTED_HEADERS=
+__ -I. -I/home/build/linux-stable-rc/tools/bpf/bpftool/libbpf/include -I/ho=
+me/build/linux-stable-rc/kernel/bpf/ -I/home/build/linux-stable-rc/tools/in=
+clude -I/home/build/linux-stable-rc/tools/include/uapi -DUSE_LIBCAP -DBPFTO=
+OL_WITHOUT_SKELETONS -c -MMD prog.c -o prog.o
+> prog.c: In function =E2=80=98load_with_options=E2=80=99:
+> prog.c:1710:23: warning: implicit declaration of function =E2=80=98create=
+_and_mount_bpffs_dir=E2=80=99 [-Wimplicit-function-declaration]
+>  1710 |                 err =3D create_and_mount_bpffs_dir(pinmaps);
+>       |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~
+> gcc -O2 -W -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initial=
+izers -Wbad-function-cast -Wdeclaration-after-statement -Wformat-security -=
+Wformat-y2k -Winit-self -Wmissing-declarations -Wmissing-prototypes -Wno-sy=
+stem-headers -Wold-style-definition -Wpacked -Wredundant-decls -Wstrict-pro=
+totypes -Wswitch-default -Wundef -Wwrite-strings -Wformat -Wno-type-limits =
+-Wstrict-aliasing=3D3 -Wshadow -DPACKAGE=3D'"bpftool"' -D__EXPORTED_HEADERS=
+__ -I. -I/home/build/linux-stable-rc/tools/bpf/bpftool/libbpf/include -I/ho=
+me/build/linux-stable-rc/kernel/bpf/ -I/home/build/linux-stable-rc/tools/in=
+clude -I/home/build/linux-stable-rc/tools/include/uapi -DUSE_LIBCAP -DBPFTO=
+OL_WITHOUT_SKELETONS  btf.o btf_dumper.o cfg.o cgroup.o common.o feature.o =
+gen.o iter.o json_writer.o link.o main.o map.o map_perf_ring.o net.o netlin=
+k_dumper.o perf.o pids.o prog.o struct_ops.o tracelog.o xlated_dumper.o dis=
+asm.o /home/build/linux-stable-rc/tools/bpf/bpftool/libbpf/libbpf.a -lelf -=
+lz -lcap -o bpftool
+> /bin/ld: prog.o: in function `load_with_options':
+> prog.c:(.text+0x2f98): undefined reference to `create_and_mount_bpffs_dir'
+> /bin/ld: prog.c:(.text+0x2ff2): undefined reference to `create_and_mount_=
+bpffs_dir'
+> collect2: error: ld returned 1 exit status
+> make[1]: *** [Makefile:216: bpftool] Error 1
+> make: *** [Makefile:113: bpftool] Error 2
+>=20
+> Reverting 65dd9cbafec2f6f7908cebcab0386f750fc352af fixes the issue. In
+> fact 65dd9cbafec2f6f7908cebcab0386f750fc352af is the only commit
+> adding call to create_and_mount_bpffs_dir:
+>=20
+> $ git grep create_and_mount_bpffs_dir
+> tools/bpf/bpftool/prog.c:               err =3D create_and_mount_bpffs_di=
+r(pinmaps);
 
-Cheers,
-Miguel
+Just one additional note, at least 478a535ae54a ("bpftool: Mount bpffs
+on provided dir instead of parent dir") would be a reqisite where the
+code was refactored introducing create_and_mount_bpffs_dir() (but
+won't apply cleanly to 6.1.y). But are more requisites needed?
+
+Should it be safest to just revert the breaking commit for the bpftool
+build?
+
+Regards,
+Salvatore
