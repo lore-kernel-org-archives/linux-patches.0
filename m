@@ -1,97 +1,91 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-40137.protonmail.ch (mail-40137.protonmail.ch [185.70.40.137])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 416BA156220
-	for <patches@lists.linux.dev>; Sat, 10 Aug 2024 11:37:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7838C15852C
+	for <patches@lists.linux.dev>; Sat, 10 Aug 2024 13:44:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.40.137
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723289866; cv=none; b=b9yUGJ+k87MW98zHqqbregniC6BQF3r6ReohqoSXrty9KdySktzKlMpP6QRSaoHw7pvrf9LrENxnlk4rBvQLXfI4rXsnnI2tvMZ5wUGMkdMFtYy5/N498eHs7hSF6AfjpXR8ey4HltnCAb043lvb7noWJiYhIDYdNX+NiwcVIaU=
+	t=1723297469; cv=none; b=qk5EOzCCOyd7jOOFjDtIiTW/+b54vaudRSOW2QVgdbp19L1XIE2yuE/mgUVw4qvF3vMCmFmGqZLZ5P80gP/422iCAKESbmrTKFuQ5OWiNLJHTrpOs5S5rvGwk1NtesHLkhINMokwli2vagDZeQgbKySQsaPIFXQ6r7MzxUrPpcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723289866; c=relaxed/simple;
-	bh=nyjMbTRKzIgup19D4QFqEmhTVziVhWMsAuiW5Ia3NJ8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oUhRbDW5kP/d7MtD5WUSfNcBkoOyBv7zBAZDuwflBxame2eUk3cQ5JIADk86WpG/OnDJTKh94UQ3/+SssGQZGp1+2G6Vmtt5AzDhjz6Th7lC45aDt4JKzpVfYCEZKyCOt/ZKlqwgQAjTpspQ1+ztNXMwREE7JcXpqJwFZS50MSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mbYRWpKQ; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723297469; c=relaxed/simple;
+	bh=qh1m6RcqelXzfAKZdRZLsq78s/42P6lE89sQ/4cmumQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=VHeUjCS1AP/ywVbdGwaeDESoXPSVIhDpF4kjvi/Zo5tvFeRtW6B6X8Hf3DPCUbWBUdajUT9cLUB2x/WsV1oR3zPsuaF/1oXvpfNtP5OE7hytR/qyO4wHfCE1hLuX7LltgKR3iBKBrGnJGoXzpVI1BB79b44IYfYImhmyGbMYccI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com; spf=pass smtp.mailfrom=protonmail.com; dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b=NGfMDt5j; arc=none smtp.client-ip=185.70.40.137
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=protonmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=protonmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mbYRWpKQ"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2cb5e0b020eso2320048a91.2
-        for <patches@lists.linux.dev>; Sat, 10 Aug 2024 04:37:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723289864; x=1723894664; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nyjMbTRKzIgup19D4QFqEmhTVziVhWMsAuiW5Ia3NJ8=;
-        b=mbYRWpKQQgN9EgAp59vsNCTsCyYhQM46Jq08lt7jTaMjM+t4Hg8WCK4FBnv8AWyUl0
-         g/RMVT+zgKY3CJQHyKRNSWsvG6FAujQEW25byRaui4FcyK0I5rH42ZrIYXdkpPc8K7V0
-         J3MuIpY2fuNnkOtwAhTlqgrJJXM4yY0rl8YCbk6944P6SGIVfCeg9fWaYw5GukSBdHby
-         bS2El6JfBFyi7kUAKDlcqBUmMMXzt1w4sIDV0lMbEkCjWRvr27JD8fddsuWy0lc+JcNG
-         SG3UAnQ8KhuL2M0h9MRP6aLYYRr+4+6Y/hGu9IUrWtNcfzdnmzf6qaAd9tCg/iYjOlUq
-         HOEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723289864; x=1723894664;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nyjMbTRKzIgup19D4QFqEmhTVziVhWMsAuiW5Ia3NJ8=;
-        b=FgD/DjrFgzWr0zc2OpSTpU9G4DkW3A0w8jX9yiWFPF1hNyMLwK2C+da9OPSd35Dz+8
-         ejVDOh/Z1K2l6r/0lYrrv1vST1Qiqar20W2+N5aCbeoXUZm6FEX77LMnqNNToQ4pEGbZ
-         SzpjzLTsyNI33IejdZoTB22b7E6mmq/etqAYPERNbs8Wq4UaHymhl+xnn5Q8vLBw7VIL
-         sBbwzDJSdFL27PfYgNiygDZH/R3zC1yJDWJugmklM5//McxNtxXPEQcwLR2n8V9WcdHq
-         eCALPJIu/bh0GGV1nNYtYL36RoLWsU/InpaEYaAhVXbukISjFCYp7V0AB9hGT2jedlui
-         NY1g==
-X-Forwarded-Encrypted: i=1; AJvYcCUlLv2kzrTHuSNyy90kmF0i4Ng7JgZg1f16lgT2QWIZJVv9WQm+ld4TvtViQIKtd7tZDX3NNWz4LrNw9uyDeRaq4+z1p1QKhA==
-X-Gm-Message-State: AOJu0YysbXnqUz/90vD21oCgGhnzKfabb3GZTKrwXh4Re4IqGl56nrnn
-	SJeZrGp/b1vHQTM6H9StqLt2+Eyzp6erOjBRiGXFmegfxid/yvGMSO4xQq9cRbWjIPMajMEBEid
-	MdjkqtMab+aZuYcl7gwRjkfunsJ8=
-X-Google-Smtp-Source: AGHT+IGbxcou3CzpNZyydQ965UMSaM+Z4qXaE0eCioeDzM0foGhNOabnuSmRRl/OGET8O//67ZF0e5UgZi3e8GvIer4=
-X-Received: by 2002:a17:90a:fe8d:b0:2c9:1012:b323 with SMTP id
- 98e67ed59e1d1-2d1e804a767mr4955578a91.27.1723289864432; Sat, 10 Aug 2024
- 04:37:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=protonmail.com header.i=@protonmail.com header.b="NGfMDt5j"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+	s=protonmail3; t=1723297460; x=1723556660;
+	bh=sTHXt2cWE2fBKkY8Zgj4WTzgbvk4mbt/fAYkNXF/QiQ=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=NGfMDt5j+GFxfdL4Z2YGtl4axtMSbqitXkIaX1l+J7eBLY5xwk3pkAXxJvcrOsojo
+	 EXLAi3CFbU5BJ/SgGJ6zt+sckq1+ZUOcds8L9slVqdPfRQoz+wmETGwtR5mY/8JLem
+	 f+bgB3Z8ih++GSecrAmHnuRBbbI4BdF78p3V7iFiffXV7TNNZDaiIIYuSJ3kyTFADV
+	 yXzD+v++U5AI8xlfMT30qua0BTjDZJ8UK8KIjsVNfsbms48RgTs3sIA8qYRP4BElXz
+	 hYR7efJ+44pq9Utq16l4b0R2IZtWKfVHi2/AxFgh+Xw1Ufw0MhxYEt9puXAdWFaVOp
+	 jzcITwiIUJUEw==
+Date: Sat, 10 Aug 2024 13:44:15 +0000
+To: Miguel Ojeda <ojeda@kernel.org>
+From: =?utf-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, Masahiro Yamada <masahiroy@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+Subject: Re: [PATCH 2/6] kbuild: rust: make command for `RUSTC_VERSION_TEXT` closer to the `CC` one
+Message-ID: <652ElsLaWV50vwbKOQc-kTFLeaf8wUGPKNhc8B8tS6EqgqzSj5k_tHgqCTUcxfSZkYvB1xC_N2pmNIA-oq2q9irSPp2XNaaiv67pZojm_9I=@protonmail.com>
+In-Reply-To: <20240808221138.873750-3-ojeda@kernel.org>
+References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-3-ojeda@kernel.org>
+Feedback-ID: 27884398:user:proton
+X-Pm-Message-ID: ad53a1da5ba7130051722529175b5adb7028da5e
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240808221138.873750-1-ojeda@kernel.org> <20240808221138.873750-3-ojeda@kernel.org>
- <CAK7LNATDZaGrqvugf7JBOvYvJTH=ZUacSvFZtiJW=9k24-wWHw@mail.gmail.com>
-In-Reply-To: <CAK7LNATDZaGrqvugf7JBOvYvJTH=ZUacSvFZtiJW=9k24-wWHw@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 10 Aug 2024 13:37:32 +0200
-Message-ID: <CANiq72=o7cRR909Q_Umr_Ssg5ZKhTXna5J2Nh-_goTGm4ssF-w@mail.gmail.com>
-Subject: Re: [PATCH 2/6] kbuild: rust: make command for `RUSTC_VERSION_TEXT`
- closer to the `CC` one
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
-	Alice Ryhl <aliceryhl@google.com>, rust-for-linux@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, linux-kbuild@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Aug 9, 2024 at 7:53=E2=80=AFPM Masahiro Yamada <masahiroy@kernel.or=
-g> wrote:
->
-> Even if "rustc --version" starts to print multiple lines,
-> it will not cause an immediate problem.
->
-> $(shell ... ) (both Makefile and Kconfig) replaces a new line
-> with a space.
->
-> CONFIG_RUSTC_VERSION_TEXT is not broken in any way.
-> It would be just longer than we would expect.
+On Friday, August 9th, 2024 at 00:11, Miguel Ojeda <ojeda@kernel.org> wrote=
+:
 
-+1, I will update the commit message when I apply it (or if you prefer
-a v2 if you are taking it, or if you want to drop this commit, please
-let me know!).
+> `CC_VERSION_TEXT` is defined as:
+>=20
+>     CC_VERSION_TEXT =3D $(subst $(pound),,$(shell LC_ALL=3DC $(CC) --vers=
+ion 2>/dev/null | head -n 1))
+>=20
+> Make `RUSTC_VERSION_TEXT` closer to that, i.e. add `LC_ALL=3DC` and `|
+> head -n 1` in case it matters in the future, and for consistency.
 
-Thanks for taking a look, Masahiro.
+Cargo depends on the rustc version string not getting localized. Or to be p=
+recise it depends on the version string being fixed for a given rustc versi=
+on, which would not be the case if the value of LC_ALL could change the ver=
+sion string. If the version string changes, cargo will rebuild everything f=
+rom scratch. There is also not really anything to localize in the non-verbo=
+se version string. I guess setting LC_ALL doesn't hurt either though.
 
-Cheers,
-Miguel
+>=20
+> This reduces the difference in the next commit.
+>=20
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> ---
+>  init/Kconfig | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/init/Kconfig b/init/Kconfig
+> index 47e2c3227b99..2f974f412374 100644
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -1926,7 +1926,7 @@ config RUST
+>  config RUSTC_VERSION_TEXT
+>  =09string
+>  =09depends on RUST
+> -=09default "$(shell,$(RUSTC) --version 2>/dev/null)"
+> +=09default "$(shell,LC_ALL=3DC $(RUSTC) --version 2>/dev/null | head -n =
+1)"
+>=20
+>  config BINDGEN_VERSION_TEXT
+>  =09string
+> --
+> 2.46.0
