@@ -1,69 +1,145 @@
-Received: from todd.t-8ch.de (todd.t-8ch.de [159.69.126.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A6424B28
-	for <patches@lists.linux.dev>; Sun, 11 Aug 2024 11:22:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.69.126.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D5B1494A4
+	for <patches@lists.linux.dev>; Sun, 11 Aug 2024 15:03:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723375325; cv=none; b=tXU7zZa1O6Y5KZc9Uwk9cv/3Nhn1IwxriNGdqmK/BeyZKwsHsF2g2jpX0ipaJPjlppi7Y+o0bp/ffEDlVIddFCcK7dRnTUM5wSYgCcSvZLifJpY4aqEOOq2e69RFCaP7Kk9mbUefaA01uEz/8WhBaSJjJPuSdezAwZ3sEJNSvJY=
+	t=1723388630; cv=none; b=X7hB70bINrB5i39k2TdKbFaW+wAg/ZZUamYEatKkQ+gY6raKGOm0csHHATNKmvdjgvqeBMAejbujBRgVPsnF4srfWXXCRgmamA/KDteTAXjcOC411B3I3Us/Oz2SUyHL5/Jhhlwh0adgnzasja16taRf5sXTomKM25hY/fGi2gg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723375325; c=relaxed/simple;
-	bh=WB+HTTvu/+yDXuGjc/zdOw/Oxu0DVfS1BPI97Om7kMU=;
-	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
-	 MIME-Version:Content-Type; b=a0FMWztXuobV4q+lyorVBxG9aWDgWkbhnOEky1R9ID1ah/AdL2fFgK3u+MRSRkh892DV83N/tAEnganQcHNunjIWU8+GdL7/yJ5BQ8cn4sa7d0yoQ+dXMVLLUE5/Lff0JYTcr1ch5uE2A973+vWGI5An1Sar7PFp9oUHU9xGYJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=t-8ch.de; spf=pass smtp.mailfrom=t-8ch.de; dkim=pass (1024-bit key) header.d=t-8ch.de header.i=@t-8ch.de header.b=C0VxXu37; arc=none smtp.client-ip=159.69.126.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=t-8ch.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=t-8ch.de
+	s=arc-20240116; t=1723388630; c=relaxed/simple;
+	bh=t56VbpVtJ+Zdlnja/qi8vfMVnThbtLYAwjUZlQMKN0I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ww25z070e2T8i0TaCiVgFRKyvAa94LJf1MtLtU3tOvq0diOFxh5o3v6A6/c8ubeNXl7Mo9aJw8dKQs3ZCrMacCo2PtiUzJrWEYHiocjxmm9ImW3FsqYK9v/rIHE4Py9MAGSscFeHjv228GIJSprL3IuUR+28hL/QowEIsJkuPv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LI9C9o/H; arc=none smtp.client-ip=209.85.128.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=debian.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=t-8ch.de header.i=@t-8ch.de header.b="C0VxXu37"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=t-8ch.de; s=mail;
-	t=1723375319; bh=WB+HTTvu/+yDXuGjc/zdOw/Oxu0DVfS1BPI97Om7kMU=;
-	h=Date:From:To:Cc:In-Reply-To:References:Subject:From;
-	b=C0VxXu37vMjwqGAyyHK/GFi8QvXZsHjhao8La3DeJqAcAxSb/5FTpd6rV51e/HZTN
-	 ByxZgDg9xSFAJSjhoc+u8VFCUucH00L9Znp4V6L7AbUbUQ3r4CwR2gbYUhE4cDGSmX
-	 ZnU8gmVbMstyNXOsLGp3aUOS5UOrRLUnJkokHUyY=
-Date: Sun, 11 Aug 2024 13:22:00 +0200 (GMT+02:00)
-From: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh_?= <thomas@t-8ch.de>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LI9C9o/H"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-4281c164408so26016755e9.1
+        for <patches@lists.linux.dev>; Sun, 11 Aug 2024 08:03:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1723388627; x=1723993427; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BLQEJ+WX0ldiAMY/HSIi4WEWR2xNDc8YrU3kn4DHc6g=;
+        b=LI9C9o/H0QIBGkNli0VCSuU3dNmKFUNY1y656GiyJYU8eBld0Oi+dEnhpYk4vbmb29
+         HyamxNk46bYiv+eqOOGoq36guTB9amAQmgViXR5UbKagu6PPiLsOgf37dMe7rW7ifvtU
+         1cLCW4wyv4NcdaL7qtg6o+sxaNaGWaUfrobEeSNdO151GUTB5DLe/NW3ZYxpQ4o5HxpH
+         10UFrmtMCYZ2chCraAPSU9/HulrwLTJjHknSRonaNPfFJtF9BviPEBi4kjXpkjMiF71m
+         IR2LMlfpvk1+0jQpJpRg+tkoqTOqLawRdKXNFu4XCHJVU9MWAGlva712GOTw7EFyiu3P
+         B83w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723388627; x=1723993427;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BLQEJ+WX0ldiAMY/HSIi4WEWR2xNDc8YrU3kn4DHc6g=;
+        b=SLWc6xx6WNdyRFFO5fni0O0fvgp6otgvpaoHadDSSH9q9wS90a+0pV8EIS0XfExQ81
+         wN5qLdePBp75wTtiJ1pXLrIAJ/D7RXcvGLKUjeVO/owTS5T9sh5TaOHF9vikmzI3ZnTz
+         aGYSm2UCyGAPa3DA/q+91yqCSruPDIbhdMG08YYPu9tZbcp7qdBzzyAK1L1oygw4FNKL
+         THXYWpVcdxf3WSF+XeFUaVeKGMKqpO5Fm3Rj4ZBBt0LCEVmEaYUx8xJxgVjQPeHn0Tsh
+         /m5p0tMIbvcGD+co3mfS46gjsyVBN8G+paz/F7HC5vUKy2nJpka6WhFlRmgY6aorO7OL
+         3IKA==
+X-Forwarded-Encrypted: i=1; AJvYcCXj68RjGLRQ6xjvDeAvgyOJVHP04APwd0aB4sZB3reyNEdCr0G75siy79+G2d2Hhtcl+2u4IFpf2wUkH591O2PLciU3ljK48Q==
+X-Gm-Message-State: AOJu0YwIxvHfN92sFBeN7Ghv+XJr5wE/HovLuaR0uEbZLFQIYIvmMM3s
+	ei95fyX8Knq0W3fi17lAs3tquhyccRxtfHlI2xAZEOD/OYRuQrlh
+X-Google-Smtp-Source: AGHT+IGRCcyYRtOhzZaRR+hNljuWSn1EeObk0KM0LDvFEUW0jXe00dokU1umwMkyPsJJouac/jht5Q==
+X-Received: by 2002:a05:600c:4f8f:b0:426:6ea8:5037 with SMTP id 5b1f17b1804b1-429c3a643bdmr46498235e9.37.1723388626791;
+        Sun, 11 Aug 2024 08:03:46 -0700 (PDT)
+Received: from eldamar.lan (c-82-192-242-114.customer.ggaweb.ch. [82.192.242.114])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-36e4f0a6d76sm5087903f8f.115.2024.08.11.08.03.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 11 Aug 2024 08:03:45 -0700 (PDT)
+Sender: Salvatore Bonaccorso <salvatore.bonaccorso@gmail.com>
+Received: by eldamar.lan (Postfix, from userid 1000)
+	id 2F04ABE2DE0; Sun, 11 Aug 2024 17:03:45 +0200 (CEST)
+Date: Sun, 11 Aug 2024 17:03:45 +0200
+From: Salvatore Bonaccorso <carnil@debian.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	Joel Granados <j.granados@samsung.com>,
-	Sasha Levin <sashal@kernel.org>
-Message-ID: <08653c1b-ebc4-4f79-b718-636df0def362@t-8ch.de>
-In-Reply-To: <2024081152-retriever-reword-e74a@gregkh>
-References: <20240807150019.412911622@linuxfoundation.org> <20240807150019.868023928@linuxfoundation.org> <0352ae40-ba3e-4d27-84c6-19926a787c33@t-8ch.de> <2024081152-retriever-reword-e74a@gregkh>
-Subject: Re: [PATCH 6.6 015/121] sysctl: treewide: drop unused argument
- ctl_table_root::set_ownership(table)
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
+	Akemi Yagi <toracat@elrepo.org>,
+	Hardik Garg <hargar@linux.microsoft.com>,
+	Quentin Monnet <qmo@kernel.org>, bpf@vger.kernel.org
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc1 review
+Message-ID: <ZrjS0V-tCQ1tGkRu@eldamar.lan>
+References: <20240807150039.247123516@linuxfoundation.org>
+ <ZrPafx6KUuhZZsci@eldamar.lan>
+ <2024081117-delusion-halved-9e9c@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Correlation-ID: <08653c1b-ebc4-4f79-b718-636df0def362@t-8ch.de>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2024081117-delusion-halved-9e9c@gregkh>
 
 Hi Greg,
 
-Aug 11, 2024 12:45:38 Greg Kroah-Hartman <gregkh@linuxfoundation.org>:
+On Sun, Aug 11, 2024 at 12:09:30PM +0200, Greg Kroah-Hartman wrote:
+> On Wed, Aug 07, 2024 at 10:35:11PM +0200, Salvatore Bonaccorso wrote:
+> > Hi Greg,
+> > 
+> > On Wed, Aug 07, 2024 at 04:59:39PM +0200, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.1.104 release.
+> > > There are 86 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Fri, 09 Aug 2024 15:00:24 +0000.
+> > > Anything received after that time might be too late.
+> > 
+> > 6.1.103 had the regression of bpftool not building, due to a missing
+> > backport:
+> > 
+> > https://lore.kernel.org/stable/v8lqgl$15bq$1@ciao.gmane.io/
+> > 
+> > The problem is that da5f8fd1f0d3 ("bpftool: Mount bpffs when pinmaps
+> > path not under the bpffs") was backported to 6.1.103 but there is no
+> > defintion of create_and_mount_bpffs_dir(). 
+> > 
+> > it was suggested to revert the commit completely.
+> 
+> Thanks for this, I'll fix it up after this release.
 
-> On Wed, Aug 07, 2024 at 06:38:13PM +0200, Thomas Wei=C3=9Fschuh wrote:
->> Hi Greg,
->>
->> On 2024-08-07 16:59:07+0000, Greg Kroah-Hartman wrote:
->>> 6.6-stable review patch.=C2=A0 If anyone has any objections, please let=
- me know.
->>
->> I don't think this has any value being backported to any version.
->
-> Did you miss this line:
->
->>> Stable-dep-of: 98ca62ba9e2b ("sysctl: always initialize i_uid/i_gid")
+Thanks! Note today Quentin Monnet proposed another solution by
+cherry-picking two commits:
 
-I did. Thanks and sorry for the noise.
+https://lore.kernel.org/stable/67bfcb8a-e00e-47b2-afe2-970a60e4a173@kernel.org/
 
-FWIW it should be trivial to break the dependency,
-but it's probably not worth to complicate it.
+Quoting:
 
-Thomas
+> You should be able to fix the build by first cherry-picking commit
+> 2a36c26fe3b8 ("bpftool: Support bpffs mountpoint as pin path for prog
+> loadall"), and then commit 478a535ae54a ("bpftool: Mount bpffs on
+> provided dir instead of parent dir") as you figured. Both commits have a
+> minor conflict on tools/bpf/bpftool/struct_ops.c, which should be
+> addressed by discarding the relevant hunk (for both commit).
+> 
+> Alternatively, it's also fine to revert the breaking commit. It's a
+> quality of life improvement without which users may have to manually
+> mount the bpffs at the location they want to pin their maps when loading
+> multiple BPF programs with "bpftool prog loadall", in the unlikely event
+> they're not using /sys/kernel/bpf, prior to running the bpftool command.
+> It's not in use during the kernel build process or for the BPF
+> selftests, so not necessary on stable branches.
+> 
+> I hope this helps,
+> Quentin
+
+I cannot judge which is less risky, but I will for Debian in any case
+follow what will be picked (if needed to cherry-pick those in advance;
+I was meaning to release another update but can now as well wait for
+6.1.105 with that bpftool fix).
+
+Regards,
+Salvatore
