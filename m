@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0878929CA;
-	Mon, 12 Aug 2024 16:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8C29CA;
+	Mon, 12 Aug 2024 16:21:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479669; cv=none; b=Za9789vrwvRuNpunKyOJFy46zo7VE5ubL01NCc76E+shT1Ly34C0PWN57H0CEcHRBhQsWg4OO+6Ma/RUlD8WR+D51wfDSBxHP/Ytu/m5fVxUPTaRvIUWgZEwTThOy82tybQangozEZqxm8FwT8Z6GfbCpaAo2++pmvvWA6lpxHk=
+	t=1723479672; cv=none; b=as/4mAaQigSEczObega9STTStPtd2Fjk8RywLJek40nM0z7p9uFUVYMYYe7YCjw7DsWVGIuiJJrX1AOL92zTQKz6r6oDSTnSb5DjcwhxiWfFL+NTnTzCqoaQcOIsueAqiFMwJtRsEQrtlWlLRtu4PwtqzfkPkdD6g4JfR0bOFck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479669; c=relaxed/simple;
-	bh=FfwE4tzvZOcQZXF/ohmkArhBu5/vsHgQM4l6fO3LK34=;
+	s=arc-20240116; t=1723479672; c=relaxed/simple;
+	bh=UQz1UnJXPsKu2HMt2KidjApKrGtsaAFJleZl8g/FN90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QqIroszInFdg+UoHBMcllEljBKfFSvrPedXnAYclahXdK7Tv5BP9hFyO/TXIWiT8i3GQjnqxYemf4v29jXhSKQzhDPVeOuPeO4JbgzthDjRhJLfjtOlMjyDcH/mn5Ut8lQd9Ksw0sVB7a5Md8nZuWVmqmcwEE2J7VqURphjzn8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X5VQ0oX3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNiBOaxRnEDH7/GYy63XNfC/XheUvx0g34A7bCRR4Ci3fLUZF3pAj74Mwqp7ApTk1o2NYJJ3pUTFe6ngGBNer6qAXxAO/ea+LbhmjnsHFV3si1XzJ3he8Rm/evTQwz86ATG96XHoLi0Yz4Aq2Wuuk1g1CyqrtkjeLpbxiwlAlfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4QDqVCK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X5VQ0oX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 141D7C32782;
-	Mon, 12 Aug 2024 16:21:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4QDqVCK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8ACEC32782;
+	Mon, 12 Aug 2024 16:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479668;
-	bh=FfwE4tzvZOcQZXF/ohmkArhBu5/vsHgQM4l6fO3LK34=;
+	s=korg; t=1723479672;
+	bh=UQz1UnJXPsKu2HMt2KidjApKrGtsaAFJleZl8g/FN90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5VQ0oX3ScOHfXXucE53KJxpkuvTMXAORjStKwA9WBWhyUnexkOQW+DwxiKZ+I5Mt
-	 Pw+MS5IOYeZipHbUQ6dnQ3E4aWK7ouBGMlYAvLUev1sLEBABLU9lOMJ2c7acqg0Wdq
-	 TCVguNEuEjswSnCteXtkVncbM2hk26SrKVxNUVbw=
+	b=r4QDqVCKDSGGLFoE/Q498v13PhnuTj88qznhBvm5pqoEdmLh6tbtQ/ktifhZ5s9pW
+	 zpQvURP5CxpmOpD4ktKXPqnd3k4XqaKGlT1okWnYLp1NM6lrv86lMAvIdZyT1uUyjm
+	 PbwC2fJ9GTjahlVsniPurvh55IBLMeZJOqjahUpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Kleen <ak@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.6 156/189] x86/mtrr: Check if fixed MTRRs exist before saving them
-Date: Mon, 12 Aug 2024 18:03:32 +0200
-Message-ID: <20240812160138.147024108@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 130/189] clocksource: Fix brown-bag boolean thinko in cs_watchdog_read()
+Date: Mon, 12 Aug 2024 18:03:06 +0200
+Message-ID: <20240812160137.148721790@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -50,44 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Kleen <ak@linux.intel.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit 919f18f961c03d6694aa726c514184f2311a4614 upstream.
+[ Upstream commit f2655ac2c06a15558e51ed6529de280e1553c86e ]
 
-MTRRs have an obsolete fixed variant for fine grained caching control
-of the 640K-1MB region that uses separate MSRs. This fixed variant has
-a separate capability bit in the MTRR capability MSR.
+The current "nretries > 1 || nretries >= max_retries" check in
+cs_watchdog_read() will always evaluate to true, and thus pr_warn(), if
+nretries is greater than 1.  The intent is instead to never warn on the
+first try, but otherwise warn if the successful retry was the last retry.
 
-So far all x86 CPUs which support MTRR have this separate bit set, so it
-went unnoticed that mtrr_save_state() does not check the capability bit
-before accessing the fixed MTRR MSRs.
+Therefore, change that "||" to "&&".
 
-Though on a CPU that does not support the fixed MTRR capability this
-results in a #GP.  The #GP itself is harmless because the RDMSR fault is
-handled gracefully, but results in a WARN_ON().
-
-Add the missing capability check to prevent this.
-
-Fixes: 2b1f6278d77c ("[PATCH] x86: Save the MTRRs of the BSP before booting an AP")
-Signed-off-by: Andi Kleen <ak@linux.intel.com>
+Fixes: db3a34e17433 ("clocksource: Retry clock read if long delays detected")
+Reported-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240808000244.946864-1-ak@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/all/20240802154618.4149953-2-paulmck@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/mtrr/mtrr.c |    2 +-
+ kernel/time/clocksource.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kernel/cpu/mtrr/mtrr.c
-+++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
-@@ -609,7 +609,7 @@ void mtrr_save_state(void)
- {
- 	int first_cpu;
- 
--	if (!mtrr_enabled())
-+	if (!mtrr_enabled() || !mtrr_state.have_fixed)
- 		return;
- 
- 	first_cpu = cpumask_first(cpu_online_mask);
+diff --git a/kernel/time/clocksource.c b/kernel/time/clocksource.c
+index c95080f005dd4..3260bbe98894b 100644
+--- a/kernel/time/clocksource.c
++++ b/kernel/time/clocksource.c
+@@ -238,7 +238,7 @@ static enum wd_read_status cs_watchdog_read(struct clocksource *cs, u64 *csnow,
+ 		wd_delay = clocksource_cyc2ns(wd_delta, watchdog->mult,
+ 					      watchdog->shift);
+ 		if (wd_delay <= WATCHDOG_MAX_SKEW) {
+-			if (nretries > 1 || nretries >= max_retries) {
++			if (nretries > 1 && nretries >= max_retries) {
+ 				pr_warn("timekeeping watchdog on CPU%d: %s retried %d times before success\n",
+ 					smp_processor_id(), watchdog->name, nretries);
+ 			}
+-- 
+2.43.0
+
 
 
