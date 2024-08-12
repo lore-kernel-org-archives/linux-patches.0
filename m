@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351B71EA8D;
-	Mon, 12 Aug 2024 16:13:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A501EA8D;
+	Mon, 12 Aug 2024 16:13:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479186; cv=none; b=oHn+bEH5f6zJx6g3RWWFDjtq289jQoWnvbPZEhFXPbH05KHcwWGA5f0IEk3j7nYCAXoNEjlKC5xo3OoLLjz1XPc9rVFrNA0mYVZStTmeRx7y6t478IPKmUyLwkKDikE5QbMSTTCpLTfKej364fywqQDdzf6UIrltnRK12JFPcR4=
+	t=1723479189; cv=none; b=CGSqvn/wiKHIUnLM6yWyORMJbfVn4EW2YzZTBQXh7DMy4VRLylxzlib0zM1XXugqGV8b9i2q2ibkiBUwylO246HPResiBu+qXV+WzVBKSnU3i9G97DYM1mYJtreJ61+yLBR0XwjWwbOHmJ1iS5o4A4fJ26+yTqK+l+OYH6zI5Ng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479186; c=relaxed/simple;
-	bh=iO12GF78u3kURUDhkPba3dEAJTvsrUtAa2ngYGj12uo=;
+	s=arc-20240116; t=1723479189; c=relaxed/simple;
+	bh=HUfCjQFzlaEjX4dkDow1sM0TJFTp7QwCGUOB0dGQwLg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ihgZPTckjpaiQEsoeK5UvX6t1WCwIjbEqrB2Wg6DvSjOYGg5LdTpJ2g/cW2Qhm7ONBR3ME9p6eJpbEw1QbbDxP45N0lX8F40xWBUXaHrVmcYiHta1O1c8xHJ0H8quCA8WaTNeQvv3m2xILp9c8PrSFm528IMKHYli1GbqD/FbJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DEEg8H1u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SCDRDWgojHddP+2VtpwhgOAOV0MVB5lRewAPaUURcBLvruK79pj9iw7MEsFRLd9XBAfni+5EV22qXP8e27lFMhIVYUD7yxNPNdmne0CEL5qVvjNMy731IL9U1R0q7ih5FDG+7GuzkFRdO22inSR+nuU4q2mnEWCgEtD3ZusQU9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bgk65a/t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DEEg8H1u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57F04C32782;
-	Mon, 12 Aug 2024 16:13:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bgk65a/t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87599C4AF0D;
+	Mon, 12 Aug 2024 16:13:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479185;
-	bh=iO12GF78u3kURUDhkPba3dEAJTvsrUtAa2ngYGj12uo=;
+	s=korg; t=1723479189;
+	bh=HUfCjQFzlaEjX4dkDow1sM0TJFTp7QwCGUOB0dGQwLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DEEg8H1url4Fd4qmXWGOYFbbeBILCDlT3k38EuMEkgOrlRUUwRSyIQBFsxkOjamRc
-	 +S32sefziD/Zy9uCL+F+RmR1Yof2RPztTrN9Sz3uN4nJSM2mHyfKQ2wYXbxAXoXRdw
-	 1wpFmo+VWtU0QFaShZtYCwqVOZFpqG0Ydwz2K2b8=
+	b=Bgk65a/taApuBAtTyKcHEMA4h27Rctqz/2KoJNiK2w8ybtiqqXxqUBNRVdybJWMwV
+	 RDJFwwQWIfhcpHJc8s5Qpm7zk8WGgbeuuRN+buHxb7OTYnTYRwEvcP+5cILk7Byi1d
+	 SXXAIddwATO/vBKf7VXwaEXasA2JLAL4YzfJGhGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Kang Yang <quic_kangyang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 001/189] irqchip/mbigen: Fix mbigen node address layout
-Date: Mon, 12 Aug 2024 18:00:57 +0200
-Message-ID: <20240812160132.195393755@linuxfoundation.org>
+Subject: [PATCH 6.6 010/189] wifi: ath12k: add CE and ext IRQ flag to indicate irq_handler
+Date: Mon, 12 Aug 2024 18:01:06 +0200
+Message-ID: <20240812160132.537190084@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,87 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: Kang Yang <quic_kangyang@quicinc.com>
 
-[ Upstream commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ]
+[ Upstream commit 604308a34487eaa382c50fcdb4396c435030b4fa ]
 
-The mbigen interrupt chip has its per node registers located in a
-contiguous region of page sized chunks. The code maps them into virtual
-address space as a contiguous region and determines the address of a node
-by using the node ID as index.
+Add two flags to indicate whether IRQ handler for CE and DP can be called.
+This is because in one MSI vector case, interrupt is not disabled in
+hif_stop and hif_irq_disable. So if interrupt is disabled, MHI interrupt
+is disabled too.
 
-                    mbigen chip
-       |-----------------|------------|--------------|
-   mgn_node_0         mgn_node_1     ...         mgn_node_i
-|--------------|   |--------------|       |----------------------|
-[0x0000, 0x0x0FFF] [0x1000, 0x1FFF]    [i*0x1000, (i+1)*0x1000 - 1]
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0-03427-QCAHMTSWPL_V1.0_V2.0_SILICONZ-1.15378.4
 
-This works correctly up to 10 nodes, but then fails because the 11th's
-array slot is used for the MGN_CLEAR registers.
-
-                         mbigen chip
-    |-----------|--------|--------|---------------|--------|
-mgn_node_0  mgn_node_1  ...  mgn_clear_register  ...   mgn_node_i
-                            |-----------------|
-                             [0xA000, 0xAFFF]
-
-Skip the MGN_CLEAR register space when calculating the offset for node IDs
-greater than or equal to ten.
-
-Fixes: a6c2f87b8820 ("irqchip/mbigen: Implement the mbigen irq chip operation functions")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/all/20240730014400.1751530-1-zouyipeng@huawei.com
+Signed-off-by: Kang Yang <quic_kangyang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20231121021304.12966-3-quic_kangyang@quicinc.com
+Stable-dep-of: a47f3320bb4b ("wifi: ath12k: fix soft lockup on suspend")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-mbigen.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ drivers/net/wireless/ath/ath12k/core.h |  2 ++
+ drivers/net/wireless/ath/ath12k/pci.c  | 16 ++++++++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/irqchip/irq-mbigen.c b/drivers/irqchip/irq-mbigen.c
-index 58881d3139792..244a8d489cac6 100644
---- a/drivers/irqchip/irq-mbigen.c
-+++ b/drivers/irqchip/irq-mbigen.c
-@@ -64,6 +64,20 @@ struct mbigen_device {
- 	void __iomem		*base;
+diff --git a/drivers/net/wireless/ath/ath12k/core.h b/drivers/net/wireless/ath/ath12k/core.h
+index c926952c956ef..33f4706af880d 100644
+--- a/drivers/net/wireless/ath/ath12k/core.h
++++ b/drivers/net/wireless/ath/ath12k/core.h
+@@ -181,6 +181,8 @@ enum ath12k_dev_flags {
+ 	ATH12K_FLAG_REGISTERED,
+ 	ATH12K_FLAG_QMI_FAIL,
+ 	ATH12K_FLAG_HTC_SUSPEND_COMPLETE,
++	ATH12K_FLAG_CE_IRQ_ENABLED,
++	ATH12K_FLAG_EXT_IRQ_ENABLED,
  };
  
-+static inline unsigned int get_mbigen_node_offset(unsigned int nid)
-+{
-+	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
-+
-+	/*
-+	 * To avoid touched clear register in unexpected way, we need to directly
-+	 * skip clear register when access to more than 10 mbigen nodes.
-+	 */
-+	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
-+		offset += MBIGEN_NODE_OFFSET;
-+
-+	return offset;
-+}
-+
- static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ enum ath12k_monitor_flags {
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index a6a5f9bcffbd6..f27b93c20a349 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -373,6 +373,8 @@ static void ath12k_pci_ce_irqs_disable(struct ath12k_base *ab)
  {
- 	unsigned int nid, pin;
-@@ -72,8 +86,7 @@ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
- 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
- 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ 	int i;
  
--	return pin * 4 + nid * MBIGEN_NODE_OFFSET
--			+ REG_MBIGEN_VEC_OFFSET;
-+	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
- }
++	clear_bit(ATH12K_FLAG_CE_IRQ_ENABLED, &ab->dev_flags);
++
+ 	for (i = 0; i < ab->hw_params->ce_count; i++) {
+ 		if (ath12k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
+ 			continue;
+@@ -406,6 +408,10 @@ static void ath12k_pci_ce_tasklet(struct tasklet_struct *t)
+ static irqreturn_t ath12k_pci_ce_interrupt_handler(int irq, void *arg)
+ {
+ 	struct ath12k_ce_pipe *ce_pipe = arg;
++	struct ath12k_base *ab = ce_pipe->ab;
++
++	if (!test_bit(ATH12K_FLAG_CE_IRQ_ENABLED, &ab->dev_flags))
++		return IRQ_HANDLED;
  
- static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
-@@ -88,8 +101,7 @@ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
- 	*mask = 1 << (irq_ofst % 32);
- 	ofst = irq_ofst / 32 * 4;
+ 	/* last interrupt received for this CE */
+ 	ce_pipe->timestamp = jiffies;
+@@ -428,6 +434,8 @@ static void __ath12k_pci_ext_irq_disable(struct ath12k_base *ab)
+ {
+ 	int i;
  
--	*addr = ofst + nid * MBIGEN_NODE_OFFSET
--		+ REG_MBIGEN_TYPE_OFFSET;
-+	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
- }
++	clear_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
++
+ 	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
+ 		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
  
- static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
+@@ -483,6 +491,10 @@ static int ath12k_pci_ext_grp_napi_poll(struct napi_struct *napi, int budget)
+ static irqreturn_t ath12k_pci_ext_interrupt_handler(int irq, void *arg)
+ {
+ 	struct ath12k_ext_irq_grp *irq_grp = arg;
++	struct ath12k_base *ab = irq_grp->ab;
++
++	if (!test_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags))
++		return IRQ_HANDLED;
+ 
+ 	ath12k_dbg(irq_grp->ab, ATH12K_DBG_PCI, "ext irq:%d\n", irq);
+ 
+@@ -626,6 +638,8 @@ static void ath12k_pci_ce_irqs_enable(struct ath12k_base *ab)
+ {
+ 	int i;
+ 
++	set_bit(ATH12K_FLAG_CE_IRQ_ENABLED, &ab->dev_flags);
++
+ 	for (i = 0; i < ab->hw_params->ce_count; i++) {
+ 		if (ath12k_ce_get_attr_flags(ab, i) & CE_ATTR_DIS_INTR)
+ 			continue;
+@@ -956,6 +970,8 @@ void ath12k_pci_ext_irq_enable(struct ath12k_base *ab)
+ {
+ 	int i;
+ 
++	set_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
++
+ 	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
+ 		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
+ 
 -- 
 2.43.0
 
