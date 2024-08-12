@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257CD18800D;
-	Mon, 12 Aug 2024 16:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424BF1891BB;
+	Mon, 12 Aug 2024 16:08:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478902; cv=none; b=GRrRcGTgiqrROhfweWhmmg6fpfaglrJykGK/uNMtXtE2LdrEA3yXpGwa6wNz2QD091E0GkDNHIpoGwwneI2pn+j+eqrUk6KTxRE06Le/RRbcn0wiBn8qbdxrpQvDO++XwoA3DmPGXW+V56t28qThYHB4bybeJe9hIswWwRiuJTQ=
+	t=1723478905; cv=none; b=D/E6eVnn5JJK7dxq4IHncHfdIcv/GBU6Oz/PUNr/wOgiTGofasJRQAcpHbOm/IcP7HpM/czOLuxkNqk9uOp6L7ISeuCnJi++kkOi3sGFsqwy5lk5p618/e2nWaNQOz2xE6xjoWptQ0S9ipBtdTz7lIZrN67uRKIQhed/KBfGrvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478902; c=relaxed/simple;
-	bh=LWj2aQXzUndy9ePQ7HUoZN0yx1BejGFZNpq9QqTlmYI=;
+	s=arc-20240116; t=1723478905; c=relaxed/simple;
+	bh=KFzXYLvGD2t2N4hIj8TmwOgtDYB1gbXzTMOGBXhoC6k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gz0K18pCm6gZYfUB6Uckiy8pdf+F09xVavcbjGIMJNV3oDsGH2eUkd+oPD8b/x9zHAnunN31vWxkANM2HLGKy4LY3NIaq7DP//tMaYwTZLaVRgfwRrcQIjwelLzkG2PzFKvZww6dtEXeDqooQPNflmZPjeFCjokJ4BG+aM2iTzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj8I8vit; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bmjiMsOYkiBq23dqZc/qiiSIc6+LlVFgeH5EN6kN1o9AgjpQaRXsxvVjZNQyaGvHqjCh0A6oUOzusbyK9uKzRFlCYVC4E6UNOdXjFDxVhBLXo+B+qmqxakmXhqmQgW/V0s+ARF33GgY0kN2zfInll0wpS3umWmIpFLcpsmqAmKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zg4lN3oJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj8I8vit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947EFC4AF0F;
-	Mon, 12 Aug 2024 16:08:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zg4lN3oJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0062C32782;
+	Mon, 12 Aug 2024 16:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478902;
-	bh=LWj2aQXzUndy9ePQ7HUoZN0yx1BejGFZNpq9QqTlmYI=;
+	s=korg; t=1723478905;
+	bh=KFzXYLvGD2t2N4hIj8TmwOgtDYB1gbXzTMOGBXhoC6k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mj8I8vitUYp35M1aKZ/GUjcAFAuNzd/04AIkHCF+M/y1mBLaot9bXOfaXWFrUglxr
-	 S1QFcpLbDSX6kY7r1KjoUJvykgZIlXyVX5H20RCWsrK1VH5sgj7qVtikamEy3r/+2j
-	 St8dYv9hj3jlGQMzwi/7n3NbaYGFYvNL/TyvG+Qc=
+	b=Zg4lN3oJ+06bt26GCiRwOhz9gNqqyoiv7jP1b18AQy/y19XLHgS64FymH/Xif/eDQ
+	 6jaI0f13ra4i6KpAZkAFY1GBTLFiRB2hQ6ZVC7zKSxNDDrhYi7cZY7ymK0CVXEBgts
+	 dTXDLGHA3juvMB4nICeEcKXgU1urjCrlsUEp+9bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/150] ASoC: codecs: wcd938x-sdw: Correct Soundwire ports mask
-Date: Mon, 12 Aug 2024 18:02:33 +0200
-Message-ID: <20240812160127.952874867@linuxfoundation.org>
+Subject: [PATCH 6.1 073/150] ASoC: codecs: wsa881x: Correct Soundwire ports mask
+Date: Mon, 12 Aug 2024 18:02:34 +0200
+Message-ID: <20240812160127.993243694@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -53,47 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 3f6fb03dae9c7dfba7670858d29e03c8faaa89fe ]
+[ Upstream commit eb11c3bb64ad0a05aeacdb01039863aa2aa3614b ]
 
-Device has up to WCD938X_MAX_SWR_PORTS number of ports and the array
-assigned to prop.src_dpn_prop and prop.sink_dpn_prop has
-0..WCD938X_MAX_SWR_PORTS-1 elements.  On the other hand, GENMASK(high,
-low) creates an inclusive mask between <high, low>, so we need the mask
-from 0 up to WCD938X_MAX_SWR_PORTS-1.
+Device has up to WSA881X_MAX_SWR_PORTS number of ports and the array
+assigned to prop.sink_dpn_prop has 0..WSA881X_MAX_SWR_PORTS-1 elements.
+On the other hand, GENMASK(high, low) creates an inclusive mask between
+<high, low>, so we need the mask from 0 up to WSA881X_MAX_SWR_PORTS-1.
 
 Theoretically, too wide mask could cause an out of bounds read in
 sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
 driver, e.g. adding incorrect number of ports via
 sdw_stream_add_slave().
 
-Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
+Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-2-d4d7a8b56f05@linaro.org
+Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-4-d4d7a8b56f05@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wcd938x-sdw.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wsa881x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wcd938x-sdw.c b/sound/soc/codecs/wcd938x-sdw.c
-index 5b5b7c267a616..061c77d0cd45b 100644
---- a/sound/soc/codecs/wcd938x-sdw.c
-+++ b/sound/soc/codecs/wcd938x-sdw.c
-@@ -1252,12 +1252,12 @@ static int wcd9380_probe(struct sdw_slave *pdev,
- 	pdev->prop.lane_control_support = true;
- 	pdev->prop.simple_clk_stop_capable = true;
- 	if (wcd->is_tx) {
--		pdev->prop.source_ports = GENMASK(WCD938X_MAX_SWR_PORTS, 0);
-+		pdev->prop.source_ports = GENMASK(WCD938X_MAX_SWR_PORTS - 1, 0);
- 		pdev->prop.src_dpn_prop = wcd938x_dpn_prop;
- 		wcd->ch_info = &wcd938x_sdw_tx_ch_info[0];
- 		pdev->prop.wake_capable = true;
- 	} else {
--		pdev->prop.sink_ports = GENMASK(WCD938X_MAX_SWR_PORTS, 0);
-+		pdev->prop.sink_ports = GENMASK(WCD938X_MAX_SWR_PORTS - 1, 0);
- 		pdev->prop.sink_dpn_prop = wcd938x_dpn_prop;
- 		wcd->ch_info = &wcd938x_sdw_rx_ch_info[0];
- 	}
+diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
+index 264ec05a3c675..054da9d2776cd 100644
+--- a/sound/soc/codecs/wsa881x.c
++++ b/sound/soc/codecs/wsa881x.c
+@@ -1131,7 +1131,7 @@ static int wsa881x_probe(struct sdw_slave *pdev,
+ 	wsa881x->sconfig.frame_rate = 48000;
+ 	wsa881x->sconfig.direction = SDW_DATA_DIR_RX;
+ 	wsa881x->sconfig.type = SDW_STREAM_PDM;
+-	pdev->prop.sink_ports = GENMASK(WSA881X_MAX_SWR_PORTS, 0);
++	pdev->prop.sink_ports = GENMASK(WSA881X_MAX_SWR_PORTS - 1, 0);
+ 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+ 	gpiod_direction_output(wsa881x->sd_n, 1);
 -- 
 2.43.0
 
