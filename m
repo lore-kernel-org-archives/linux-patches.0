@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB4184527;
-	Mon, 12 Aug 2024 16:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A16E18733D;
+	Mon, 12 Aug 2024 16:16:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479372; cv=none; b=e2WGBwMZbj1k8TelK3u/gXY260UO4ZaA4I6sXd5TS+KrrpYajFuuFk8V0Q6bzS96HKNQgbhgRcET33y6RoUYX26qfvUXA9GUfaRe1sB6yTIX2SjwNQtUY/nD3Pw6pErsV7fJujZPj4Xl2RtExLwzC8/996B/wtup15g2SvpH6mk=
+	t=1723479375; cv=none; b=oe6LFyjSifSY9zvCBe3bcMUOtHTyUK+vWApQolEOLy0hTJX/qKZKWlvqnK7O+RDNJTnQi533tqBi0JDqeTjogx3ZytNaG0hVrPWtNTuzGDB3XLwsV5WIQjGHZ4pEEUUhurTdUaeUr7A+5bJVZD9Q682eRh6w9/kWeFn31aOxqe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479372; c=relaxed/simple;
-	bh=cDAkF1xCMsPk8j7cfLONqMOkYnT9z1p/ozV/vy63h2c=;
+	s=arc-20240116; t=1723479375; c=relaxed/simple;
+	bh=D6z5+0l2SPyTIFyqcjKykGPEq60sravBK3hd/P8D/Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cWRzzR5LVSQQLCMMtYfKZ5CPkV/Wk4CoWl28r6XmpRMA+0SeQuPD8CihyJOpmf168F9gX27c6N4KSEGJTNhRqq2XkKxlkFMyV+2fibqlIQIgYztVICRkbeoEJJBTcg1IwLHBSQV7OM39Is9hJUIa5zvOrSpTnvvnCsIeTvCDvrY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LF3CIysa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uj0NNabO1tE6sCgcMfY9V6j/yPEvjLg2B8xv2UXvAS57YAO8j0wZeoI6cVxv3A1y1FSPs5ZAKR4Y/E7Zm7vbAXAih0uIZqCePb5O4kPSH7UVGgTvnVdc6s4tj3nXVcKAWO1La8CSnbMggF6jm+gMPxWe1T0NELOHWizkk2gPuTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y1CKbneP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LF3CIysa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27C14C32782;
-	Mon, 12 Aug 2024 16:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y1CKbneP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215CFC32782;
+	Mon, 12 Aug 2024 16:16:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479372;
-	bh=cDAkF1xCMsPk8j7cfLONqMOkYnT9z1p/ozV/vy63h2c=;
+	s=korg; t=1723479375;
+	bh=D6z5+0l2SPyTIFyqcjKykGPEq60sravBK3hd/P8D/Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LF3CIysanSu6Az6U57nvlCcYFYZdOlB5eeJNUdbMYE5ZlNnzayn89KpbErguPihjc
-	 390LTt017SWBdEs18fXbAA29RsOpcwny3oYNbyflsXnFvBUXTSVUlaVmwZvg95svn3
-	 qLOkF+94V4f5bHW58iM2WIUIlXooYV3TFiVqGNL0=
+	b=y1CKbnePw4DfZwi0VxXNdPNrmWtElpwxBMfQuvopT/aX+vE1Hw/6IO6IMhzGxW+gr
+	 N2SQs/9zuuZddyQBlcFj6HcOO8sjRrJFow6j0O9X/L/wrnKWWGQLtduml/yCNvqnSG
+	 HP9CRncFuDe6IHTIBAitUP2vuIZrj1IVrP3t8Hzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 025/189] hwmon: corsair-psu: add USB id of HX1200i Series 2023 psu
-Date: Mon, 12 Aug 2024 18:01:21 +0200
-Message-ID: <20240812160133.114869896@linuxfoundation.org>
+Subject: [PATCH 6.6 060/189] drm/amd/display: Add null checker before passing variables
+Date: Mon, 12 Aug 2024 18:01:56 +0200
+Message-ID: <20240812160134.454324250@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,67 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit b9c15c96ccb47ad860af2e075c5f3c90c4cd1730 ]
+[ Upstream commit 8092aa3ab8f7b737a34b71f91492c676a843043a ]
 
-Add the usb id of the HX1200i Series 2023. Update the documentation
-accordingly. Also fix the version comments, there are no Series 2022
-products. That are legacy or first version products going back many
-many years.
+Checks null pointer before passing variables to functions.
 
-Signed-off-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/ZlAZs4u0dU7JxtDf@monster.localdomain
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This fixes 3 NULL_RETURNS issues reported by Coverity.
+
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/corsair-psu.rst | 6 +++---
- drivers/hwmon/corsair-psu.c         | 7 ++++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/hwmon/corsair-psu.rst b/Documentation/hwmon/corsair-psu.rst
-index 16db34d464dd6..7ed794087f848 100644
---- a/Documentation/hwmon/corsair-psu.rst
-+++ b/Documentation/hwmon/corsair-psu.rst
-@@ -15,11 +15,11 @@ Supported devices:
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 60db3800666ec..94059aef762be 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2628,7 +2628,8 @@ static int dm_suspend(void *handle)
  
-   Corsair HX850i
+ 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
  
--  Corsair HX1000i (Series 2022 and 2023)
-+  Corsair HX1000i (Legacy and Series 2023)
+-		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		if (dm->cached_dc_state)
++			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
  
--  Corsair HX1200i
-+  Corsair HX1200i (Legacy and Series 2023)
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
  
--  Corsair HX1500i (Series 2022 and 2023)
-+  Corsair HX1500i (Legacy and Series 2023)
+@@ -6483,7 +6484,8 @@ static void create_eml_sink(struct amdgpu_dm_connector *aconnector)
+ 		aconnector->dc_sink = aconnector->dc_link->local_sink ?
+ 		aconnector->dc_link->local_sink :
+ 		aconnector->dc_em_sink;
+-		dc_sink_retain(aconnector->dc_sink);
++		if (aconnector->dc_sink)
++			dc_sink_retain(aconnector->dc_sink);
+ 	}
+ }
  
-   Corsair RM550i
- 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 2c7c92272fe39..f8f22b8a67cdf 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -875,15 +875,16 @@ static const struct hid_device_id corsairpsu_idtable[] = {
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c04) }, /* Corsair HX650i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c05) }, /* Corsair HX750i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c06) }, /* Corsair HX850i */
--	{ HID_USB_DEVICE(0x1b1c, 0x1c07) }, /* Corsair HX1000i Series 2022 */
--	{ HID_USB_DEVICE(0x1b1c, 0x1c08) }, /* Corsair HX1200i */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c07) }, /* Corsair HX1000i Legacy */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c08) }, /* Corsair HX1200i Legacy */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c09) }, /* Corsair RM550i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0a) }, /* Corsair RM650i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0b) }, /* Corsair RM750i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0c) }, /* Corsair RM850i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0d) }, /* Corsair RM1000i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c1e) }, /* Corsair HX1000i Series 2023 */
--	{ HID_USB_DEVICE(0x1b1c, 0x1c1f) }, /* Corsair HX1500i Series 2022 and 2023 */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c1f) }, /* Corsair HX1500i Legacy and Series 2023 */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c23) }, /* Corsair HX1200i Series 2023 */
- 	{ },
- };
- MODULE_DEVICE_TABLE(hid, corsairpsu_idtable);
+@@ -7296,7 +7298,8 @@ static int amdgpu_dm_connector_get_modes(struct drm_connector *connector)
+ 				drm_add_modes_noedid(connector, 1920, 1080);
+ 	} else {
+ 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
+-		amdgpu_dm_connector_add_common_modes(encoder, connector);
++		if (encoder)
++			amdgpu_dm_connector_add_common_modes(encoder, connector);
+ 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
+ 	}
+ 	amdgpu_dm_fbc_init(connector);
 -- 
 2.43.0
 
