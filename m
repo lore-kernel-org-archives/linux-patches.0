@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D191EA8D;
-	Mon, 12 Aug 2024 16:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11DB1EA8D;
+	Mon, 12 Aug 2024 16:05:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478697; cv=none; b=Tbq3AnT0HU/XMDAaJltfSjZClZ+wPteBPcthvrr3N2c6hxmkqIzYWG/Bk1vdNN5DRWBDHYGqkaDzlchIhGWIx4WXmPE2g0xjoWHviDXQO3ACyC+P9IZ8WVjv+1xLYm/m3zs7dVLWeLw5G5TbnN6QHlgbl27/RCHCpBE4POXDdbc=
+	t=1723478701; cv=none; b=AZy0DfluRCiPSawfj2E/IQ1wyXWGr+mC1iF+V1QmRy/o9EHuxd1u2cRV3hFvohyO4L7iTG5nUySAOzattS4CNKGbaMYHoFczZTc5q1vu6fmey48mNLudwUCRkJLH3VBf92fwDt/D02x/IbWQBmnvwLQLGLr7cMNTryfgp70gWZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478697; c=relaxed/simple;
-	bh=7KdsjgEvMow1EyG2Ga/pgxObuZPwoZjtNs2H4xcxTYI=;
+	s=arc-20240116; t=1723478701; c=relaxed/simple;
+	bh=4JzBpAizA36dE/tnCDN0FU2q/ekShI5aBgotlYuiS0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQcN+NwMJQBgnRm5p296zbgsuCizX6JUb9oRII5yOV1jVcVi2KUx1Y2fQbe12x9uxvRdU5BWjjneA998wpd+MwsKyzD+O6WufLMcVNFzfByfKaXRmQQFvz6e/puEwGVfSlhj9Arqf83PKYq4b/iBwfZV5j+50gE1nl7T9dP8Mtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ClhLRwSb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wh1eP+KYogUQ0bFdi3g4ERi5wz7meY3yFbrKpK9m38Xowcp8SAZnOFF3E2EXqVN2P1U/znBzyzahlHn8BHXk8EWF5ohaX13IxqHH97RMw9rJboSrtqVgYzEwuT2CW596VevraJgq7WUxSNKsbig+DNQ00GVniSlS4W9OEdZtScE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdtSLTOQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ClhLRwSb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC5DC32782;
-	Mon, 12 Aug 2024 16:04:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdtSLTOQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E5DBC4AF09;
+	Mon, 12 Aug 2024 16:05:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478697;
-	bh=7KdsjgEvMow1EyG2Ga/pgxObuZPwoZjtNs2H4xcxTYI=;
+	s=korg; t=1723478700;
+	bh=4JzBpAizA36dE/tnCDN0FU2q/ekShI5aBgotlYuiS0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClhLRwSbG/3ef8ooWG2nfiOfBO7+/1gWEnK1tDtm+hO7F2EKN/wPpqgz/rUlzIj5K
-	 EXSb1hXaj7QsF8m8q4FArgSCXHg4xtYb8V7asUjW0tvsxfpNdA0TZzXU8NFuIVA2TC
-	 SFnlU8F23ORk6Y4cey2uFtC8iFryDU0kfIyUxIdQ=
+	b=fdtSLTOQo1bUSCHCzdJiAVVV79BxMeF04J3bwtA48XTdLGWraV7cReNqaQwAVqeRZ
+	 XDiLUAswVDVJTLLWKIFO7ZnOtGV/kbgZayI9d77eTNx/EkkvfBqP3u5wk4CSXPqVW4
+	 yRfn4/gvGnOT5HVuD7lwJ/s+wgk70xBiTSeMkZjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
+	Anton Khirnov <anton@khirnov.net>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 011/150] Bluetooth: l2cap: always unlock channel in l2cap_conless_channel()
-Date: Mon, 12 Aug 2024 18:01:32 +0200
-Message-ID: <20240812160125.590709729@linuxfoundation.org>
+Subject: [PATCH 6.1 012/150] Bluetooth: hci_sync: avoid dup filtering when passive scanning with adv monitor
+Date: Mon, 12 Aug 2024 18:01:33 +0200
+Message-ID: <20240812160125.629666917@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -52,35 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Anton Khirnov <anton@khirnov.net>
 
-[ Upstream commit c531e63871c0b50c8c4e62c048535a08886fba3e ]
+[ Upstream commit b5431dc2803ac159d6d4645ae237d15c3cb252db ]
 
-Add missing call to 'l2cap_chan_unlock()' on receive error handling
-path in 'l2cap_conless_channel()'.
+This restores behaviour (including the comment) from now-removed
+hci_request.c, and also matches existing code for active scanning.
 
-Fixes: a24cce144b98 ("Bluetooth: Fix reference counting of global L2CAP channels")
-Reported-by: syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=45ac74737e866894acb0
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Without this, the duplicates filter is always active when passive
+scanning, which makes it impossible to work with devices that send
+nontrivial dynamic data in their advertisement reports.
+
+Fixes: abfeea476c68 ("Bluetooth: hci_sync: Convert MGMT_OP_START_DISCOVERY")
+Signed-off-by: Anton Khirnov <anton@khirnov.net>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_sync.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 98dabbbe42938..209c6d458d336 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7811,6 +7811,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
- 	bt_cb(skb)->l2cap.psm = psm;
- 
- 	if (!chan->ops->recv(chan, skb)) {
-+		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
- 	}
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 320fc1e6dff2a..3d6a22812b498 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -2880,6 +2880,20 @@ static int hci_passive_scan_sync(struct hci_dev *hdev)
+ 	} else if (hci_is_adv_monitoring(hdev)) {
+ 		window = hdev->le_scan_window_adv_monitor;
+ 		interval = hdev->le_scan_int_adv_monitor;
++
++		/* Disable duplicates filter when scanning for advertisement
++		 * monitor for the following reasons.
++		 *
++		 * For HW pattern filtering (ex. MSFT), Realtek and Qualcomm
++		 * controllers ignore RSSI_Sampling_Period when the duplicates
++		 * filter is enabled.
++		 *
++		 * For SW pattern filtering, when we're not doing interleaved
++		 * scanning, it is necessary to disable duplicates filter,
++		 * otherwise hosts can only receive one advertisement and it's
++		 * impossible to know if a peer is still in range.
++		 */
++		filter_dups = LE_SCAN_FILTER_DUP_DISABLE;
+ 	} else {
+ 		window = hdev->le_scan_window;
+ 		interval = hdev->le_scan_interval;
 -- 
 2.43.0
 
