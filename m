@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEA62C1A5;
-	Mon, 12 Aug 2024 16:31:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275D818735F;
+	Mon, 12 Aug 2024 16:31:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480291; cv=none; b=tPXDzy1mZZSO1Tb8XXIEGexmgzSQezlBj6A7P/GReJmx6wTyL1UXvCLtChTQkShAjRUMrvu0VWMma9jpeMIJlVZ3gq2Y3XjqFF6c58U03yhKBk0XcW8KzQU3npwkE6jN9/ZJwlpL/LMGGp/4KHGdbK4v1dYVBHNab+IZgxIx1To=
+	t=1723480294; cv=none; b=cKwHGA3RKRGu002hr0CbwWq0VAb7uQaMRM2vIgpiPRQeN+RppLG0Bmf6mYy/rQY05sp1mmmtSg01KoWXfD9/dI1XEw1j3nLoK8mKzHoiAzK7DF6xpIAVA6gB7O9qzsu2Vcki8w6tJqKcRkFelz8elVA4eBMz9giU30uem/CPJUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480291; c=relaxed/simple;
-	bh=ojyDG1uCalYpHBwz1qK4XsDQXAUhG5V423fE2ITJ2vw=;
+	s=arc-20240116; t=1723480294; c=relaxed/simple;
+	bh=KT1Adc+T8YnkJfWJojzX00mc3vsNtcjAB1iyAkq2yxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MemcrvM47Lw1ofdOLqe5NyI2VOZxMqPdzLDK1iKRS7MgHGoPuclgr0l6mAeDf1Icx05fAQiSjJEiYjTXKg/QtYIItqQFL8zRh8g30/7QGHv7Myrm/KorxZJWlW3ajw8l4mYEPEDxs+L9ZTPTMfZcycrlDc9XF3FTYYgbvjjAjsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcm5386Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LAE3oH2IOk6WgVEk/2tovMQCeDK0wpTL3QF9PQqg1hmCW1YGCU182ipeTMSMiTD9wzs+EDFca88otmKkkbx1AR73yP5ttxkarZ3kuv6EkQst3C6tiDY28QhvxQ1AHJ0BChOkE+cHtZWikSXSPfA150FLa5ki/JgUjuEylBkFEmY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSAdfSPS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcm5386Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DECEC32782;
-	Mon, 12 Aug 2024 16:31:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSAdfSPS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B105C32782;
+	Mon, 12 Aug 2024 16:31:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480290;
-	bh=ojyDG1uCalYpHBwz1qK4XsDQXAUhG5V423fE2ITJ2vw=;
+	s=korg; t=1723480294;
+	bh=KT1Adc+T8YnkJfWJojzX00mc3vsNtcjAB1iyAkq2yxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcm5386Z3x4X7v0+N80PDDEJrveEVL/ttVkpXtPw0ugmv2xNxPFvL1ZBKcxcY9Bb+
-	 mQI5YMO9XZ5Px0vxC5PH7wDzKSfwUWE925tuvTjcJqIijUHvO0KM4FiE2k2AWScgZd
-	 6MZ2r8sYWgjhFf2ooMcU3O0JuB4oUBIxS4ULCxDI=
+	b=HSAdfSPSsUPxnMrjrFcyfPRd3a8pbTDeiuiYkb2J/e8v/HTZ4Qs9r0zcGeTtjmhuu
+	 zwoy6gTs2St4RHQhWtuEgC3yr8scSgNqUxwL46zQl9cvK0xFyUfJrEPEZyAclBKo1S
+	 qc8iReTmR+wcrko/IfwhRxyI8J1uuIeHqW+3c06g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
 	Damien Le Moal <dlemoal@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.10 121/263] scsi: Revert "scsi: sd: Do not repeat the starting disk message"
-Date: Mon, 12 Aug 2024 18:02:02 +0200
-Message-ID: <20240812160151.180502887@linuxfoundation.org>
+Subject: [PATCH 6.10 122/263] scsi: mpt3sas: Avoid IOMMU page faults on REPORT ZONES
+Date: Mon, 12 Aug 2024 18:02:03 +0200
+Message-ID: <20240812160151.218622031@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,70 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-commit da3e19ef0b3de0aa4b25595bdc214c02a04f19b8 upstream.
+commit 82dbb57ac8d06dfe8227ba9ab11a49de2b475ae5 upstream.
 
-This reverts commit 7a6bbc2829d4ab592c7e440a6f6f5deb3cd95db4.
+Some firmware versions of the 9600 series SAS HBA byte-swap the REPORT
+ZONES command reply buffer from ATA-ZAC devices by directly accessing the
+buffer in the host memory. This does not respect the default command DMA
+direction and causes IOMMU page faults on architectures with an IOMMU
+enforcing write-only mappings for DMA_FROM_DEVICE DMA driection (e.g. AMD
+hosts).
 
-The offending commit tried to suppress a double "Starting disk" message for
-some drivers, but instead started spamming the log with bogus messages
-every five seconds:
+scsi 18:0:0:0: Direct-Access-ZBC ATA      WDC  WSH722020AL W870 PQ: 0 ANSI: 6
+scsi 18:0:0:0: SATA: handle(0x0027), sas_addr(0x300062b2083e7c40), phy(0), device_name(0x5000cca29dc35e11)
+scsi 18:0:0:0: enclosure logical id (0x300062b208097c40), slot(0)
+scsi 18:0:0:0: enclosure level(0x0000), connector name( C0.0)
+scsi 18:0:0:0: atapi(n), ncq(y), asyn_notify(n), smart(y), fua(y), sw_preserve(y)
+scsi 18:0:0:0: qdepth(32), tagged(1), scsi_level(7), cmd_que(1)
+sd 18:0:0:0: Attached scsi generic sg2 type 20
+sd 18:0:0:0: [sdc] Host-managed zoned block device
+mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b200 flags=0x0050]
+mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b300 flags=0x0050]
+mpt3sas_cm0: mpt3sas_ctl_pre_reset_handler: Releasing the trace buffer due to adapter reset.
+mpt3sas_cm0 fault info from func: mpt3sas_base_make_ioc_ready
+mpt3sas_cm0: fault_state(0x2666)!
+mpt3sas_cm0: sending diag reset !!
+mpt3sas_cm0: diag reset: SUCCESS
+sd 18:0:0:0: [sdc] REPORT ZONES start lba 0 failed
+sd 18:0:0:0: [sdc] REPORT ZONES: Result: hostbyte=DID_RESET driverbyte=DRIVER_OK
+sd 18:0:0:0: [sdc] 0 4096-byte logical blocks: (0 B/0 B)
 
-	[  311.798956] sd 0:0:0:0: [sda] Starting disk
-	[  316.919103] sd 0:0:0:0: [sda] Starting disk
-	[  322.040775] sd 0:0:0:0: [sda] Starting disk
-	[  327.161140] sd 0:0:0:0: [sda] Starting disk
-	[  332.281352] sd 0:0:0:0: [sda] Starting disk
-	[  337.401878] sd 0:0:0:0: [sda] Starting disk
-	[  342.521527] sd 0:0:0:0: [sda] Starting disk
-	[  345.850401] sd 0:0:0:0: [sda] Starting disk
-	[  350.967132] sd 0:0:0:0: [sda] Starting disk
-	[  356.090454] sd 0:0:0:0: [sda] Starting disk
-	...
+Avoid such issue by always mapping the buffer of REPORT ZONES commands
+using DMA_BIDIRECTIONAL (read+write IOMMU mapping). This is done by
+introducing the helper function _base_scsi_dma_map() and using this helper
+in _base_build_sg_scmd() and _base_build_sg_scmd_ieee() instead of calling
+directly scsi_dma_map().
 
-on machines that do not actually stop the disk on runtime suspend (e.g.
-the Qualcomm sc8280xp CRD with UFS).
-
-Let's just revert for now to address the regression.
-
-Fixes: 7a6bbc2829d4 ("scsi: sd: Do not repeat the starting disk message")
+Fixes: 471ef9d4e498 ("mpt3sas: Build MPI SGL LIST on GEN2 HBAs and IEEE SGL LIST on GEN3 HBAs")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20240716161101.30692-1-johan+linaro@kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20240719073913.179559-3-dlemoal@kernel.org
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/sd.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_base.c |   20 ++++++++++++++++++--
+ 1 file changed, 18 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/sd.c
-+++ b/drivers/scsi/sd.c
-@@ -4119,6 +4119,8 @@ static int sd_resume(struct device *dev)
- {
- 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
+--- a/drivers/scsi/mpt3sas/mpt3sas_base.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
+@@ -2671,6 +2671,22 @@ _base_build_zero_len_sge_ieee(struct MPT
+ 	_base_add_sg_single_ieee(paddr, sgl_flags, 0, 0, -1);
+ }
  
-+	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
++static inline int _base_scsi_dma_map(struct scsi_cmnd *cmd)
++{
++	/*
++	 * Some firmware versions byte-swap the REPORT ZONES command reply from
++	 * ATA-ZAC devices by directly accessing in the host buffer. This does
++	 * not respect the default command DMA direction and causes IOMMU page
++	 * faults on some architectures with an IOMMU enforcing write mappings
++	 * (e.g. AMD hosts). Avoid such issue by making the report zones buffer
++	 * mapping bi-directional.
++	 */
++	if (cmd->cmnd[0] == ZBC_IN && cmd->cmnd[1] == ZI_REPORT_ZONES)
++		cmd->sc_data_direction = DMA_BIDIRECTIONAL;
 +
- 	if (opal_unlock_from_suspend(sdkp->opal_dev)) {
- 		sd_printk(KERN_NOTICE, sdkp, "OPAL unlock failed\n");
- 		return -EIO;
-@@ -4135,13 +4137,12 @@ static int sd_resume_common(struct devic
- 	if (!sdkp)	/* E.g.: runtime resume at the start of sd_probe() */
- 		return 0;
++	return scsi_dma_map(cmd);
++}
++
+ /**
+  * _base_build_sg_scmd - main sg creation routine
+  *		pcie_device is unused here!
+@@ -2717,7 +2733,7 @@ _base_build_sg_scmd(struct MPT3SAS_ADAPT
+ 	sgl_flags = sgl_flags << MPI2_SGE_FLAGS_SHIFT;
  
--	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
--
- 	if (!sd_do_start_stop(sdkp->device, runtime)) {
- 		sdkp->suspended = false;
- 		return 0;
+ 	sg_scmd = scsi_sglist(scmd);
+-	sges_left = scsi_dma_map(scmd);
++	sges_left = _base_scsi_dma_map(scmd);
+ 	if (sges_left < 0)
+ 		return -ENOMEM;
+ 
+@@ -2861,7 +2877,7 @@ _base_build_sg_scmd_ieee(struct MPT3SAS_
  	}
  
-+	sd_printk(KERN_NOTICE, sdkp, "Starting disk\n");
- 	ret = sd_start_stop_device(sdkp, 1);
- 	if (!ret) {
- 		sd_resume(dev);
+ 	sg_scmd = scsi_sglist(scmd);
+-	sges_left = scsi_dma_map(scmd);
++	sges_left = _base_scsi_dma_map(scmd);
+ 	if (sges_left < 0)
+ 		return -ENOMEM;
+ 
 
 
