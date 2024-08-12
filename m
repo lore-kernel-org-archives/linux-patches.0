@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85D56183CD4;
-	Mon, 12 Aug 2024 16:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61752C1A5;
+	Mon, 12 Aug 2024 16:31:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480306; cv=none; b=lo8gURdpw17p7/4OmLSG3D2DKT95QjC9EHY1MEp83mQ/du96/Dcf1GsneQuJCMI+ddKimGCRlHBu+aC3nyS9aQVlvS5ZiBt+IWUTr98STHT0M2AVUl+G9zcsCHIPnly3ZGvnPF/UsinHPY8VOBeESBKmiB2YPQTOGlOJtdWYto0=
+	t=1723480309; cv=none; b=sCa29S5XbScsIg8K59bWk4Z1xlxyKhMO2XEtsHNztLc7yyRlMpu1XagYPybpeyHYaMj5MlkfYQ+stHXh24hV9aFYZw0C6nK90XblHUusrXqLJNIjxJAD9DXzhT+GK8cO1VR32JZiJNyESMER2imlQ2gJcxIbgT0yE3qNzFsduas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480306; c=relaxed/simple;
-	bh=z6wANyY/eGPU9nL0fYMogqFCSJg/e46WI01L7nwI4ms=;
+	s=arc-20240116; t=1723480309; c=relaxed/simple;
+	bh=LsCaPVwE3QEcTNxwy/AmBVR8I1GRsvYFN7nMRezlY7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JnAeJbft2/ghGClQCyj/kFpW5bdlu8XD4hY0SiAvG5VQMJL0e9UaWlOARIPpD9jywt7tDZq4pkSjRtNinw4w74AJQV4u8jSrVQzKefu64O6RMMWOxtRAw5qeW+O7pkGLhGOup68XZnwh6Mpmr1J857kFqY061L8jbYVFXVR1iq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GN/TwdyD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UdVFr1CzVbJOpo/u1QznU8OpdARwTUrKyFSCYlXLKlxSC+TsPWHQHqjOt8O26ZM+cCDqr+Tsx82y5Tmh1vXdWQNuIrk6VRIUA8XgLATYNy0cRO+LnqiOsqsjf9620iSLAQ9WlMRc8aDSn+/ifnd5+7PBmHVEjp0JzEyhHUABElA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDr8aTkt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GN/TwdyD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07BA3C4AF0D;
-	Mon, 12 Aug 2024 16:31:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDr8aTkt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC90C32782;
+	Mon, 12 Aug 2024 16:31:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480306;
-	bh=z6wANyY/eGPU9nL0fYMogqFCSJg/e46WI01L7nwI4ms=;
+	s=korg; t=1723480309;
+	bh=LsCaPVwE3QEcTNxwy/AmBVR8I1GRsvYFN7nMRezlY7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GN/TwdyDLHSRxsDSTYHeWBsq78UaLIP0gBRIeQ+GCulV2D/xMXp+dhHVbdIlPioJL
-	 wqr9qhrw5LaX6kUduRep70lNqmPhDHcfqV3bli3oLYNok9MCPTPahZ5KK7o2h1VXts
-	 r9UVRMY04HUU4qocdJMO6z8ZKzGXL4yKXiXodZzo=
+	b=rDr8aTkt0VotwdV8SnkTw9NJL3tyiggxsoGW5yn6uT9DPh+A5KEBU4C8tSv7QflwK
+	 KOslYBYaYdetMtLWGab9a3fVympRSDc6J45nm5wmcf6LyOa+Q8LqzYZ0opz+MFTFwJ
+	 t6tVQvgQF+v9o6y0voUxLEDxb84krPXRur+7PEpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	David Gow <david@davidgow.net>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 150/263] bpf: kprobe: remove unused declaring of bpf_kprobe_override
-Date: Mon, 12 Aug 2024 18:02:31 +0200
-Message-ID: <20240812160152.289422930@linuxfoundation.org>
+Subject: [PATCH 6.10 159/263] drm/i915: Attempt to get pages without eviction first
+Date: Mon, 12 Aug 2024 18:02:40 +0200
+Message-ID: <20240812160152.633348201@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,37 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: David Gow <david@davidgow.net>
 
-[ Upstream commit 0e8b53979ac86eddb3fd76264025a70071a25574 ]
+[ Upstream commit 787db3bb6ed5cee56fc97fecdd61517d89763f0a ]
 
-After the commit 66665ad2f102 ("tracing/kprobe: bpf: Compare instruction
-pointer with original one"), "bpf_kprobe_override" is not used anywhere
-anymore, and we can remove it now.
+In commit a78a8da51b36 ("drm/ttm: replace busy placement with flags v6"),
+__i915_ttm_get_pages was updated to use flags instead of the separate
+'busy' placement list. However, the behaviour was subtly changed.
+Originally, the function would attempt to use the preferred placement
+without eviction, and give an opportunity to restart the operation
+before falling back to allowing eviction.
 
-Link: https://lore.kernel.org/all/20240710085939.11520-1-dongml2@chinatelecom.cn/
+This was unintentionally changed, as the preferred placement was not
+given the TTM_PL_FLAG_DESIRED flag, and so eviction could be triggered
+in that first pass. This caused thrashing, and a significant performance
+regression on DG2 systems with small BAR. For example, Minecraft and
+Team Fortress 2 would drop to single-digit framerates.
 
-Fixes: 66665ad2f102 ("tracing/kprobe: bpf: Compare instruction pointer with original one")
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Restore the original behaviour by marking the initial placement as
+desired on that first attempt. Also, rework this to use a separate
+struct ttm_palcement, as the individual placements are marked 'const',
+so hot-patching the flags is even more dodgy than before.
+
+Thanks to Justin Brewer for bisecting this.
+
+Fixes: a78a8da51b36 ("drm/ttm: replace busy placement with flags v6")
+Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11255
+Signed-off-by: David Gow <david@davidgow.net>
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240804091851.122186-3-david@davidgow.net
+(cherry picked from commit 92653f2a572505adaf7f13f695c1907e71a1dc84)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/trace_events.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_ttm.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 9df3e2973626b..9435185c10ef7 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -880,7 +880,6 @@ do {									\
- struct perf_event;
+diff --git a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
+index fb848fd8ba15a..5c72462d1f57e 100644
+--- a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
+@@ -778,13 +778,16 @@ static int __i915_ttm_get_pages(struct drm_i915_gem_object *obj,
+ 		.interruptible = true,
+ 		.no_wait_gpu = false,
+ 	};
+-	int real_num_busy;
++	struct ttm_placement initial_placement;
++	struct ttm_place initial_place;
+ 	int ret;
  
- DECLARE_PER_CPU(struct pt_regs, perf_trace_regs);
--DECLARE_PER_CPU(int, bpf_kprobe_override);
- 
- extern int  perf_trace_init(struct perf_event *event);
- extern void perf_trace_destroy(struct perf_event *event);
+ 	/* First try only the requested placement. No eviction. */
+-	real_num_busy = placement->num_placement;
+-	placement->num_placement = 1;
+-	ret = ttm_bo_validate(bo, placement, &ctx);
++	initial_placement.num_placement = 1;
++	memcpy(&initial_place, placement->placement, sizeof(struct ttm_place));
++	initial_place.flags |= TTM_PL_FLAG_DESIRED;
++	initial_placement.placement = &initial_place;
++	ret = ttm_bo_validate(bo, &initial_placement, &ctx);
+ 	if (ret) {
+ 		ret = i915_ttm_err_to_gem(ret);
+ 		/*
+@@ -799,7 +802,6 @@ static int __i915_ttm_get_pages(struct drm_i915_gem_object *obj,
+ 		 * If the initial attempt fails, allow all accepted placements,
+ 		 * evicting if necessary.
+ 		 */
+-		placement->num_placement = real_num_busy;
+ 		ret = ttm_bo_validate(bo, placement, &ctx);
+ 		if (ret)
+ 			return i915_ttm_err_to_gem(ret);
 -- 
 2.43.0
 
