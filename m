@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F70183CA6;
-	Mon, 12 Aug 2024 16:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61569183CA6;
+	Mon, 12 Aug 2024 16:24:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479837; cv=none; b=eMBTBQ+Azgbbph/JvtbZSKS6CQKbTVprpWtxczWMd8yeMpJdNGxiCAeoZg3/x30HV5BouSHPLcKCAcBjypZVB1IZiqM32aPMy2TpNcRYF2oEO0/EvJrsBYQIekAspb5mOzqgErjvGqJ2v2qrdo47QTaurtCq7HcTnVHYdMQ/bcU=
+	t=1723479841; cv=none; b=a31ZDdLdwFQfiK8X9q19ukPafiS/kGT1RbmG0UtFzpPiwQHDSpW+9qhUxPnM0zPTRITu0QiQiE9qbT9HRA6KAuNCrrHQbcHkGjWJF/ZXUFLPJsMuwmj2Ekdm5K3aM98ob86NH+C5aJU9mIFvANENbyt9VH/aDSRvmhe7qq/2Eko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479837; c=relaxed/simple;
-	bh=QDpcQKQpVS7dZ12qzOJMfHfdNzP3QM4UNhBwaHJZ9ew=;
+	s=arc-20240116; t=1723479841; c=relaxed/simple;
+	bh=x/3Sozlj80IH647ZVr9O6FvSbKmbXa8SOtYjNtfIUp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ozG1lROJ1+RMVwO7PbIVjEPxpQSgFaiK5ajAakfzwbbEGSAQJ4/SmlR+uXxHxA0T5AjVdhwmMQRVopFaA40yDJK+WtMF5ReIHSxhi9Fp3/Nc7tIAHd1HbR5BfIXF4daQSn4AdEzAZLvj8tDjplwchrPSdqXel6qOyk9NaKnX1rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b87IdasH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvQr5RPS41kMBf9K8Iw1yVE3P9MlYygL2oonXrkGNVuEn3uJ5dMWYiS+z/qHl99y/d1Wbr9z87JnvXSWOS0ge0I0weuVBvJpwpRcJ47xI3MktrDZ+fm5+unBjXuIDdQxGGbWLefYYZX1ZlW+B0MXFb+HyZE59/gsxOpHofXmfXg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mK9171vb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b87IdasH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BA74C32782;
-	Mon, 12 Aug 2024 16:23:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mK9171vb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67781C32782;
+	Mon, 12 Aug 2024 16:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479837;
-	bh=QDpcQKQpVS7dZ12qzOJMfHfdNzP3QM4UNhBwaHJZ9ew=;
+	s=korg; t=1723479840;
+	bh=x/3Sozlj80IH647ZVr9O6FvSbKmbXa8SOtYjNtfIUp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b87IdasHhJQRrBm3sF7jhDGQrjPr2CUhKUugkI8Q4qiohkIxZ54Fj2T2HTSdhpL++
-	 4a+yizTmWzkT4129aqQ/u9XLZ3EbOABrGfEcBOBq5+cIvBwArBbjnuUWMbM9oprsC7
-	 l3S9FzsixuwN27Ui9sMRLDFJAYafxIQBjvcMVvVc=
+	b=mK9171vbJfCR/BY1HXSoFEGFYa2Bnt6W3qHW7ssM6jE64tSBcb0vQkQSaQLFqxaoZ
+	 E7tRM0nSt8EJWwUzQvqetTUDpbkUfL68w4b8BUrizuc/DulBeFp67UQ27g+Uz8E3Ja
+	 DOL1Rju8MLGObyCO83PHL+nbu/BymTCzZyeEEZVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Kostadin Stoilov <kmstoilov@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 006/263] platform/x86: intel-vbtn: Protect ACPI notify handler against recursion
-Date: Mon, 12 Aug 2024 18:00:07 +0200
-Message-ID: <20240812160146.768945897@linuxfoundation.org>
+Subject: [PATCH 6.10 007/263] irqchip/mbigen: Fix mbigen node address layout
+Date: Mon, 12 Aug 2024 18:00:08 +0200
+Message-ID: <20240812160146.807351259@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -47,98 +45,93 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit e075c3b13a0a142dcd3151b25d29a24f31b7b640 ]
+[ Upstream commit 6be6cba9c4371d27f78d900ccfe34bb880d9ee20 ]
 
-Since commit e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on
-all CPUs") ACPI notify handlers like the intel-vbtn notify_handler() may
-run on multiple CPU cores racing with themselves.
+The mbigen interrupt chip has its per node registers located in a
+contiguous region of page sized chunks. The code maps them into virtual
+address space as a contiguous region and determines the address of a node
+by using the node ID as index.
 
-This race gets hit on Dell Venue 7140 tablets when undocking from
-the keyboard, causing the handler to try and register priv->switches_dev
-twice, as can be seen from the dev_info() message getting logged twice:
+                    mbigen chip
+       |-----------------|------------|--------------|
+   mgn_node_0         mgn_node_1     ...         mgn_node_i
+|--------------|   |--------------|       |----------------------|
+[0x0000, 0x0x0FFF] [0x1000, 0x1FFF]    [i*0x1000, (i+1)*0x1000 - 1]
 
-[ 83.861800] intel-vbtn INT33D6:00: Registering Intel Virtual Switches input-dev after receiving a switch event
-[ 83.861858] input: Intel Virtual Switches as /devices/pci0000:00/0000:00:1f.0/PNP0C09:00/INT33D6:00/input/input17
-[ 83.861865] intel-vbtn INT33D6:00: Registering Intel Virtual Switches input-dev after receiving a switch event
+This works correctly up to 10 nodes, but then fails because the 11th's
+array slot is used for the MGN_CLEAR registers.
 
-After which things go seriously wrong:
-[ 83.861872] sysfs: cannot create duplicate filename '/devices/pci0000:00/0000:00:1f.0/PNP0C09:00/INT33D6:00/input/input17'
-...
-[ 83.861967] kobject: kobject_add_internal failed for input17 with -EEXIST, don't try to register things with the same name in the same directory.
-[ 83.877338] BUG: kernel NULL pointer dereference, address: 0000000000000018
-...
+                         mbigen chip
+    |-----------|--------|--------|---------------|--------|
+mgn_node_0  mgn_node_1  ...  mgn_clear_register  ...   mgn_node_i
+                            |-----------------|
+                             [0xA000, 0xAFFF]
 
-Protect intel-vbtn notify_handler() from racing with itself with a mutex
-to fix this.
+Skip the MGN_CLEAR register space when calculating the offset for node IDs
+greater than or equal to ten.
 
-Fixes: e2ffcda16290 ("ACPI: OSL: Allow Notify () handlers to run on all CPUs")
-Reported-by: En-Wei Wu <en-wei.wu@canonical.com>
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux/+bug/2073001
-Tested-by: Kostadin Stoilov <kmstoilov@gmail.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240729120443.14779-1-hdegoede@redhat.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: a6c2f87b8820 ("irqchip/mbigen: Implement the mbigen irq chip operation functions")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/all/20240730014400.1751530-1-zouyipeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/vbtn.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/irqchip/irq-mbigen.c | 20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/vbtn.c b/drivers/platform/x86/intel/vbtn.c
-index 9b7ce03ba085c..a353e830b65fd 100644
---- a/drivers/platform/x86/intel/vbtn.c
-+++ b/drivers/platform/x86/intel/vbtn.c
-@@ -7,11 +7,13 @@
-  */
- 
- #include <linux/acpi.h>
-+#include <linux/cleanup.h>
- #include <linux/dmi.h>
- #include <linux/input.h>
- #include <linux/input/sparse-keymap.h>
- #include <linux/kernel.h>
- #include <linux/module.h>
-+#include <linux/mutex.h>
- #include <linux/platform_device.h>
- #include <linux/suspend.h>
- #include "../dual_accel_detect.h"
-@@ -66,6 +68,7 @@ static const struct key_entry intel_vbtn_switchmap[] = {
+diff --git a/drivers/irqchip/irq-mbigen.c b/drivers/irqchip/irq-mbigen.c
+index 58881d3139792..244a8d489cac6 100644
+--- a/drivers/irqchip/irq-mbigen.c
++++ b/drivers/irqchip/irq-mbigen.c
+@@ -64,6 +64,20 @@ struct mbigen_device {
+ 	void __iomem		*base;
  };
  
- struct intel_vbtn_priv {
-+	struct mutex mutex; /* Avoid notify_handler() racing with itself */
- 	struct input_dev *buttons_dev;
- 	struct input_dev *switches_dev;
- 	bool dual_accel;
-@@ -155,6 +158,8 @@ static void notify_handler(acpi_handle handle, u32 event, void *context)
- 	bool autorelease;
- 	int ret;
- 
-+	guard(mutex)(&priv->mutex);
++static inline unsigned int get_mbigen_node_offset(unsigned int nid)
++{
++	unsigned int offset = nid * MBIGEN_NODE_OFFSET;
 +
- 	if ((ke = sparse_keymap_entry_from_scancode(priv->buttons_dev, event))) {
- 		if (!priv->has_buttons) {
- 			dev_warn(&device->dev, "Warning: received 0x%02x button event on a device without buttons, please report this.\n",
-@@ -290,6 +295,10 @@ static int intel_vbtn_probe(struct platform_device *device)
- 		return -ENOMEM;
- 	dev_set_drvdata(&device->dev, priv);
- 
-+	err = devm_mutex_init(&device->dev, &priv->mutex);
-+	if (err)
-+		return err;
++	/*
++	 * To avoid touched clear register in unexpected way, we need to directly
++	 * skip clear register when access to more than 10 mbigen nodes.
++	 */
++	if (nid >= (REG_MBIGEN_CLEAR_OFFSET / MBIGEN_NODE_OFFSET))
++		offset += MBIGEN_NODE_OFFSET;
 +
- 	priv->dual_accel = dual_accel;
- 	priv->has_buttons = has_buttons;
- 	priv->has_switches = has_switches;
++	return offset;
++}
++
+ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ {
+ 	unsigned int nid, pin;
+@@ -72,8 +86,7 @@ static inline unsigned int get_mbigen_vec_reg(irq_hw_number_t hwirq)
+ 	nid = hwirq / IRQS_PER_MBIGEN_NODE + 1;
+ 	pin = hwirq % IRQS_PER_MBIGEN_NODE;
+ 
+-	return pin * 4 + nid * MBIGEN_NODE_OFFSET
+-			+ REG_MBIGEN_VEC_OFFSET;
++	return pin * 4 + get_mbigen_node_offset(nid) + REG_MBIGEN_VEC_OFFSET;
+ }
+ 
+ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+@@ -88,8 +101,7 @@ static inline void get_mbigen_type_reg(irq_hw_number_t hwirq,
+ 	*mask = 1 << (irq_ofst % 32);
+ 	ofst = irq_ofst / 32 * 4;
+ 
+-	*addr = ofst + nid * MBIGEN_NODE_OFFSET
+-		+ REG_MBIGEN_TYPE_OFFSET;
++	*addr = ofst + get_mbigen_node_offset(nid) + REG_MBIGEN_TYPE_OFFSET;
+ }
+ 
+ static inline void get_mbigen_clear_reg(irq_hw_number_t hwirq,
 -- 
 2.43.0
 
