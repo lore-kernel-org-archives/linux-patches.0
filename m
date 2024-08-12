@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F283186295;
-	Mon, 12 Aug 2024 16:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57AAA186E5B;
+	Mon, 12 Aug 2024 16:06:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478803; cv=none; b=qrZa0yysIQd0VdcjGNpZI7Cef+1Uvt41cJ5QknNhsnBRAu37lgI/vkD/2AN6+G9WDwkLi4Hao1/BLC35eBgZBmFnp6Vc9lXKPpA2Rzdn78srDEUyUU5Jprw+bJCuy8KPHzr1rviACfqGPu/q6JKnEAggL8LOk4Apxz+WJwE4fVo=
+	t=1723478806; cv=none; b=ADfRcFUXNBKx22Y0Nqhfi+q5feU8+2C1ml43yY3w8Xb4qN2C/FAOlQM1zaXK+YCnGuiHUCh6Om+leIe0V3I4VXVIGtlC41dlWLJ8U5SEI6XfqTaVCjkDPq8cwQr5Ku+10Pt1+I07bOdsWzZi/Fbyt+4Kj/n/Wr1s+8BMfX0qg34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478803; c=relaxed/simple;
-	bh=YikAgcnntTP/okxF56LwhmkLKggU16V745ZBkYngBPg=;
+	s=arc-20240116; t=1723478806; c=relaxed/simple;
+	bh=/5QwyBd7M9uT/85GE/UvH5f8pPxL5GcmG578i4cBGWE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Il1k1o9jRuSBuVspRS5n7/ay7YTdoAIupzqQC3Ob+39CD1oHutc4A/yszTQL++0M4dXEHKle/u8mR2TPfNzgNZGto/n52jt+QmkfLzQcg6y6sqw0Ejwt18KRhipAWfVzt3hjsHbdMhwQGGnggCrEgoXqww2JqGge9dNCBXdWNI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X9NRUi4U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IGIrmOgYaWIE5Wu2YIk1TPUXcF0E/f1fhpR4ljJs0p7kA+o3+kvsbz+mY6OwHdUhziyLfFXX98k9uXXHPf+/G18eqqvTec+8A9Pc9znaDpvCwBxdicshlbEk3OXYRAQannt3Vjilbt7VZQJ9+781aBSusxQs6XtoTayjeANe6ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hOs+yBgq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X9NRUi4U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 739EDC32782;
-	Mon, 12 Aug 2024 16:06:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hOs+yBgq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9752C32782;
+	Mon, 12 Aug 2024 16:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478803;
-	bh=YikAgcnntTP/okxF56LwhmkLKggU16V745ZBkYngBPg=;
+	s=korg; t=1723478806;
+	bh=/5QwyBd7M9uT/85GE/UvH5f8pPxL5GcmG578i4cBGWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X9NRUi4Urbte8uh3Szs6DIwaqO5qynyTOyrmTpNw2hKwWRwEgBBY36GOHAusBbi1f
-	 Q7PomoiSzkdpB6EYqq7A9ME21aQwI01SFttll02TgZiEVc7AvXtpCN06eBqB4ThJnu
-	 qKzbAEc9yguW6idzpNnTs9jPQ6IeuwNKIXcFWkOE=
+	b=hOs+yBgqwqWObgTW2ZYlnEdNIndK3V+DwIPoDmZfmjqbLgwqFIJJ0p/TvKm6SD2hV
+	 ly3EZwyIfuFEfP3F4bVM9WdFw/feZ07F7u3va0GVydf6pAQ9ALmM/Qbg3va0Ix59pw
+	 rDs51q/Ci5LWTcnUIKbiixfYZ3V8oWniQXoWJ9po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
 	Harry Wentland <harry.wentland@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/150] drm/amd/display: Add NULL check for afb before dereferencing in amdgpu_dm_plane_handle_cursor_update
-Date: Mon, 12 Aug 2024 18:02:02 +0200
-Message-ID: <20240812160126.749885027@linuxfoundation.org>
+Subject: [PATCH 6.1 042/150] drm/amd/display: Add null checker before passing variables
+Date: Mon, 12 Aug 2024 18:02:03 +0200
+Message-ID: <20240812160126.788434928@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -58,64 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Alex Hung <alex.hung@amd.com>
 
-[ Upstream commit 38e6f715b02b572f74677eb2f29d3b4bc6f1ddff ]
+[ Upstream commit 8092aa3ab8f7b737a34b71f91492c676a843043a ]
 
-This commit adds a null check for the 'afb' variable in the
-amdgpu_dm_plane_handle_cursor_update function. Previously, 'afb' was
-assumed to be null, but was used later in the code without a null check.
-This could potentially lead to a null pointer dereference.
+Checks null pointer before passing variables to functions.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:1298 amdgpu_dm_plane_handle_cursor_update() error: we previously assumed 'afb' could be null (see line 1252)
+This fixes 3 NULL_RETURNS issues reported by Coverity.
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Hersen Wu <hersenxs.wu@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c  | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-index cd6e99cf74a06..984a5affc5af1 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -1225,14 +1225,22 @@ void handle_cursor_update(struct drm_plane *plane,
- {
- 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
- 	struct amdgpu_framebuffer *afb = to_amdgpu_framebuffer(plane->state->fb);
--	struct drm_crtc *crtc = afb ? plane->state->crtc : old_plane_state->crtc;
--	struct dm_crtc_state *crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
--	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
--	uint64_t address = afb ? afb->address : 0;
-+	struct drm_crtc *crtc;
-+	struct dm_crtc_state *crtc_state;
-+	struct amdgpu_crtc *amdgpu_crtc;
-+	u64 address;
- 	struct dc_cursor_position position = {0};
- 	struct dc_cursor_attributes attributes;
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 31bae620aeffc..6189685af1fda 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2636,7 +2636,8 @@ static int dm_suspend(void *handle)
  
-+	if (!afb)
-+		return;
-+
-+	crtc = plane->state->crtc ? plane->state->crtc : old_plane_state->crtc;
-+	crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
-+	amdgpu_crtc = to_amdgpu_crtc(crtc);
-+	address = afb->address;
-+
- 	if (!plane->state->fb && !old_plane_state->fb)
- 		return;
+ 		dm->cached_dc_state = dc_copy_state(dm->dc->current_state);
  
+-		dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
++		if (dm->cached_dc_state)
++			dm_gpureset_toggle_interrupts(adev, dm->cached_dc_state, false);
+ 
+ 		amdgpu_dm_commit_zero_streams(dm->dc);
+ 
+@@ -6388,7 +6389,8 @@ static void create_eml_sink(struct amdgpu_dm_connector *aconnector)
+ 		aconnector->dc_sink = aconnector->dc_link->local_sink ?
+ 		aconnector->dc_link->local_sink :
+ 		aconnector->dc_em_sink;
+-		dc_sink_retain(aconnector->dc_sink);
++		if (aconnector->dc_sink)
++			dc_sink_retain(aconnector->dc_sink);
+ 	}
+ }
+ 
+@@ -7121,7 +7123,8 @@ static int amdgpu_dm_connector_get_modes(struct drm_connector *connector)
+ 				drm_add_modes_noedid(connector, 640, 480);
+ 	} else {
+ 		amdgpu_dm_connector_ddc_get_modes(connector, edid);
+-		amdgpu_dm_connector_add_common_modes(encoder, connector);
++		if (encoder)
++			amdgpu_dm_connector_add_common_modes(encoder, connector);
+ 		amdgpu_dm_connector_add_freesync_modes(connector, edid);
+ 	}
+ 	amdgpu_dm_fbc_init(connector);
 -- 
 2.43.0
 
