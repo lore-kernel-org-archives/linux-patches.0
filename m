@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C1E0187347;
-	Mon, 12 Aug 2024 16:33:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A95183CD4;
+	Mon, 12 Aug 2024 16:33:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480417; cv=none; b=qnDP2jRgX6YvJwRWp7hJeqm/aA53m91SoQ9t7B/L4LDj45Qp0NdrDtj4JGX4IOSpMcgUQ6rLA8qdbNpRHX5JiLyxND7J4ypKkt8ja+rio7nv2b40Om72awh3bFMWMYF1k5yR4QOPk25fe1bC/8Nxmv+MxpkTM5CLeSMMNjWGvr8=
+	t=1723480420; cv=none; b=YBMKRs5C5rp1oMI2J6J/EPXCXsP/QwebqlqdEDb71naQ0UHkGYNo+v0ez6oqNmVRTVL/j5H+tRDYdzKwVu+DPBh1IFQjVMpWIoq0WHvRKZYd/B3h07+O+gBZ+5raPTs0f9AG6TKfKCGtPRd9HxVHEiNA2k6iyIn04hKlTjznNVM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480417; c=relaxed/simple;
-	bh=jiv6dXq008CxpPSgLJDeuot7Ncn0r8jRR3BqE2kordY=;
+	s=arc-20240116; t=1723480420; c=relaxed/simple;
+	bh=MC+RuV24PDiKljHC3mVMfgwZgiTsAIk961Z5/NZEDFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uNn7tqgTjPZ9I9YFYmbtdMlqDUlFeomHFwP3AfwosD92ytu0oolmAr5oXP12POkcaNJ7pBO5CdND5a1TxwzSkzGSmoiji39Q6Y8+/BquOoZOEt0Ve/8ExXZMUI1GRF8Xg1iSj9GlSVbNDd+YHLvMpkU2ev722cZuKHYPDHreq7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V4bhWHxN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZgDGVdoBNAt6ptddGOCC9h+VQPOO+9krNqjQiKyKLhRaK0qB8Qg5upCNny9746/e2Ivz7DXfPrR5qyI1A4Bc3qJTuDtmrmVrfe0ua/5d/fyXiqHqKsbKWq4/AZN4GdHLvGENEuUArnQXK8z0YZ/KgbaB36qTrMm31mmvcEAF//o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=azfuR9uN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V4bhWHxN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E544CC32782;
-	Mon, 12 Aug 2024 16:33:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="azfuR9uN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEA9C32782;
+	Mon, 12 Aug 2024 16:33:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480417;
-	bh=jiv6dXq008CxpPSgLJDeuot7Ncn0r8jRR3BqE2kordY=;
+	s=korg; t=1723480420;
+	bh=MC+RuV24PDiKljHC3mVMfgwZgiTsAIk961Z5/NZEDFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4bhWHxNKB8XnfJrrbVG+pg9H8HYEE6XCP88FWNpTepL5+inuzyqxJKoBX/amc6mb
-	 5mzsoZzmUMAvcNeUSTQAq1LHBZROOlGkhGlav7XjcSHTUIgqE7VcRz9RvFt0hK8/CP
-	 HGA0Bh6fpQ/t1kPMacPJF9Yfc289Gy53ImJFj3q8=
+	b=azfuR9uNHq15k//TfCk75AWzEXj+4UKZS9W83sXqCxtp2U7/Q6jzkblL4riQxYyb8
+	 2IQsoV+4cOKQaxucEqTjnxnSNvxgz/YVeduDXrkzZrPmlOLGwtLA0Q8byZsHghkq4D
+	 9cvZlA4EN9WzNYGG/PY1aDVR6YRkrdZ6+18n47Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <david@davidgow.net>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 158/263] drm/i915: Allow evicting to use the requested placement
-Date: Mon, 12 Aug 2024 18:02:39 +0200
-Message-ID: <20240812160152.595830322@linuxfoundation.org>
+Subject: [PATCH 6.10 149/263] i2c: smbus: Send alert notifications to all devices if source not found
+Date: Mon, 12 Aug 2024 18:02:30 +0200
+Message-ID: <20240812160152.252335768@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,60 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <david@davidgow.net>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 264b5b5980061d8c6a6a30c031cdec1179fe2bae ]
+[ Upstream commit f6c29f710c1ff2590109f83be3e212b86c01e0f3 ]
 
-In commit a78a8da51b36 ("drm/ttm: replace busy placement with flags v6"),
-the old system of having a separate placement list (for placements
-which should be used without eviction) and a 'busy' placement list (for
-placements which should be attempted if eviction is required) was
-replaced with a new one where placements could be marked 'FALLBACK' (to
-be attempted if eviction is required) or 'DESIRED' (to be attempted
-first, but not if eviction is required).
+If a SMBus alert is received and the originating device is not found,
+the reason may be that the address reported on the SMBus alert address
+is corrupted, for example because multiple devices asserted alert and
+do not correctly implement SMBus arbitration.
 
-i915 had always included the requested placement in the list of
-'busy' placements: i.e., the placement could be used either if eviction
-is required or not. But when the new system was put in place, the
-requested (first) placement was marked 'DESIRED', so would never be used
-if eviction became necessary. While a bug in the original commit
-prevented this flag from working, when this was fixed in
-4a0e7b3c ("drm/i915: fix applying placement flag"), it caused long hangs
-on DG2 systems with small BAR.
+If this happens, call alert handlers on all devices connected to the
+given I2C bus, in the hope that this cleans up the situation.
 
-Don't mark the requested placement DESIRED (or FALLBACK), allowing it to
-be used in both situations. This matches the old behaviour, and resolves
-the hangs.
+This change reliably fixed the problem on a system with multiple devices
+on a single bus. Example log where the device on address 0x18 (ADM1021)
+and on address 0x4c (ADT7461A) both had the alert line asserted:
 
-Thanks to Justin Brewer for bisecting the issue.
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+lm90 3-0018: temp1 out of range, please check!
+lm90 3-0018: Disabling ALERT#
+lm90 3-0029: Everything OK
+lm90 3-002a: Everything OK
+lm90 3-004c: temp1 out of range, please check!
+lm90 3-004c: temp2 out of range, please check!
+lm90 3-004c: Disabling ALERT#
 
-Fixes: a78a8da51b36 ("drm/ttm: replace busy placement with flags v6")
-Fixes: 4a0e7b3c3753 ("drm/i915: fix applying placement flag")
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11255
-Signed-off-by: David Gow <david@davidgow.net>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240804091851.122186-2-david@davidgow.net
-(cherry picked from commit 54bf0af90844fbf18f5be3272eda69198dfdb622)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: b5527a7766f0 ("i2c: Add SMBus alert support")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[wsa: fixed a typo in the commit message]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_ttm.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/i2c/i2c-smbus.c | 38 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 35 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-index e6f177183c0fa..fb848fd8ba15a 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-@@ -165,7 +165,6 @@ i915_ttm_placement_from_obj(const struct drm_i915_gem_object *obj,
- 	i915_ttm_place_from_region(num_allowed ? obj->mm.placements[0] :
- 				   obj->mm.region, &places[0], obj->bo_offset,
- 				   obj->base.size, flags);
--	places[0].flags |= TTM_PL_FLAG_DESIRED;
+diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
+index 1b4057e1bab09..25bc7b8d98f0d 100644
+--- a/drivers/i2c/i2c-smbus.c
++++ b/drivers/i2c/i2c-smbus.c
+@@ -65,6 +65,32 @@ static int smbus_do_alert(struct device *dev, void *addrp)
+ 	return ret;
+ }
  
- 	/* Cache this on object? */
- 	for (i = 0; i < num_allowed; ++i) {
++/* Same as above, but call back all drivers with alert handler */
++
++static int smbus_do_alert_force(struct device *dev, void *addrp)
++{
++	struct i2c_client *client = i2c_verify_client(dev);
++	struct alert_data *data = addrp;
++	struct i2c_driver *driver;
++
++	if (!client || (client->flags & I2C_CLIENT_TEN))
++		return 0;
++
++	/*
++	 * Drivers should either disable alerts, or provide at least
++	 * a minimal handler. Lock so the driver won't change.
++	 */
++	device_lock(dev);
++	if (client->dev.driver) {
++		driver = to_i2c_driver(client->dev.driver);
++		if (driver->alert)
++			driver->alert(client, data->type, data->data);
++	}
++	device_unlock(dev);
++
++	return 0;
++}
++
+ /*
+  * The alert IRQ handler needs to hand work off to a task which can issue
+  * SMBus calls, because those sleeping calls can't be made in IRQ context.
+@@ -106,13 +132,19 @@ static irqreturn_t smbus_alert(int irq, void *d)
+ 		/*
+ 		 * If we read the same address more than once, and the alert
+ 		 * was not handled by a driver, it won't do any good to repeat
+-		 * the loop because it will never terminate.
+-		 * Bail out in this case.
++		 * the loop because it will never terminate. Try again, this
++		 * time calling the alert handlers of all devices connected to
++		 * the bus, and abort the loop afterwards. If this helps, we
++		 * are all set. If it doesn't, there is nothing else we can do,
++		 * so we might as well abort the loop.
+ 		 * Note: This assumes that a driver with alert handler handles
+ 		 * the alert properly and clears it if necessary.
+ 		 */
+-		if (data.addr == prev_addr && status != -EBUSY)
++		if (data.addr == prev_addr && status != -EBUSY) {
++			device_for_each_child(&ara->adapter->dev, &data,
++					      smbus_do_alert_force);
+ 			break;
++		}
+ 		prev_addr = data.addr;
+ 	}
+ 
 -- 
 2.43.0
 
