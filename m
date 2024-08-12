@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF68716D9B8;
-	Mon, 12 Aug 2024 16:32:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F79E16D9B8;
+	Mon, 12 Aug 2024 16:32:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480326; cv=none; b=n17k/rrUWPRa7Oe8LlMNFdWZF1iUzV9nQkMayR42VjdxSCMnQKd1K3GimzEn2Ldy1q2u0w1ylYSZeT4QLiuQ5PTd2Gq7lxNDWxjbp+YFpMcs38xgTfFEWlGsV4aOSdDiElMFn1ljfS3r4zedSwQieebB0wd3wj0iKy25tUjzEr4=
+	t=1723480329; cv=none; b=qevvVcPzozxYheZYQKM7E8UtFC3y8hvRDol48fbT6c0dev+/BfJGJ0ATU2BswA3giO4k4ao6bHjooqabm2WZpx+2l20f91bS2yUQ6/YBi+dkY+gJvSkr/DugBSXtpNU3ysBPhCoUoTDyrfiOeX2Vdbtgib3+Imc11wxRKA5VXbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480326; c=relaxed/simple;
-	bh=ab/+02Ho2mHfH6TN8CT4Gu9w2F7P72NfNwunvzoJCwk=;
+	s=arc-20240116; t=1723480329; c=relaxed/simple;
+	bh=taAEyJbjwokAM9a675V93UUrs3cs5gvq+lQdKzlx9ZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hHWVZz6CAnaBp703rXxFriQUX4oUU5nyuRY/ocqCKgO0TgxOo7ZY5ZsyIvBfhYGiMqJ5337GpMd+kyUMrJ10iCBTD9xU6W8gwzSaykSS0I/LWntlywxbOfAAnKU7Uvtz+LEHx32dIHZ1IGBYvub0eTrWX6UuupoYI7uxsiTR+fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhZlebeF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DXeuBDpC+OLjbTQvhAk1A/fon9NHObtrQrm4M44IrQQ2MvOEmVz/b2Ts95w3lb+f0YPXKDEeWju/gF0FLlNpRF1WPp4byIQAJHRMDWjhq5qwkQbWzOx9TWPGvyFrjXL76ZoLzm4YsWfuIh7NWcgpmkGFzfF6panNx15P68PFV+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MobRpce7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhZlebeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46A96C32782;
-	Mon, 12 Aug 2024 16:32:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MobRpce7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEE4C32782;
+	Mon, 12 Aug 2024 16:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480325;
-	bh=ab/+02Ho2mHfH6TN8CT4Gu9w2F7P72NfNwunvzoJCwk=;
+	s=korg; t=1723480328;
+	bh=taAEyJbjwokAM9a675V93UUrs3cs5gvq+lQdKzlx9ZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhZlebeFnQIrP0jC4xpPttcR6Ce+H94z7vPNx/Ik5OcRLBu8eHuVXPUcAcqS40yRv
-	 53sqo9Iy14i7Q99UU64nwnvbZ/CYlSFiGVV43yeiLsiYPTz1Me5400jdc8tN9gWF7f
-	 wdcYwf/iJA9iYCXtB2qT/yiKrGgWEyJJUYX+JHcs=
+	b=MobRpce7EWD7WLEej+OA/Ozw1HZ1UOzEmhs6ZTMg/jW39UP1EzYw6F/5PykQp+7mV
+	 kAq2p7UWE3P6if8zWmNXyJoTSZzV6iF77yCkhHB1lWknKxgfPp2FwdEiVbNbnqt+CT
+	 jckUhoiA5y5PcmtTfMpG2iZ6RFZ/iOdW6sB/DPyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Zanoni <paulo.r.zanoni@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
+	Karthik Poosa <karthik.poosa@intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 164/263] drm/xe: Use dma_fence_chain_free in chain fence unused as a sync
-Date: Mon, 12 Aug 2024 18:02:45 +0200
-Message-ID: <20240812160152.824745126@linuxfoundation.org>
+Subject: [PATCH 6.10 165/263] drm/xe/hwmon: Fix PL1 disable flow in xe_hwmon_power_max_write
+Date: Mon, 12 Aug 2024 18:02:46 +0200
+Message-ID: <20240812160152.863198387@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,41 +53,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Karthik Poosa <karthik.poosa@intel.com>
 
-[ Upstream commit 4f854a8b1b85d46abd5ce206936d23f87ac5e0c9 ]
+[ Upstream commit ac3191c5cf47e2d5220a1ed7353a2e498a1f415e ]
 
-A chain fence is uninitialized if not installed in a drm sync obj. Thus
-if xe_sync_entry_cleanup is called and sync->chain_fence is non-NULL the
-proper cleanup is dma_fence_chain_free rather than a dma-fence put.
+In xe_hwmon_power_max_write, for PL1 disable supported case, instead of
+returning after PL1 disable, PL1 enable path was also being run.
+Fixed it by returning after disable.
 
-Reported-by: Paulo Zanoni <paulo.r.zanoni@intel.com>
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2411
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/2261
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240727012216.2118276-1-matthew.brost@intel.com
-(cherry picked from commit 7f7a2da3bf8bc0e0f6c239af495b7050056e889c)
+v2: Correct typo and grammar in commit message. (Jonathan)
+
+Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
+Fixes: fef6dd12b45a ("drm/xe/hwmon: Protect hwmon rw attributes with hwmon_lock")
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240801112424.1841766-1-karthik.poosa@intel.com
+(cherry picked from commit 146458645e505f5eac498759bcd865cf7c0dfd9a)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_hwmon.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_sync.c b/drivers/gpu/drm/xe/xe_sync.c
-index 65f1f16282356..2bfff998458ba 100644
---- a/drivers/gpu/drm/xe/xe_sync.c
-+++ b/drivers/gpu/drm/xe/xe_sync.c
-@@ -263,7 +263,7 @@ void xe_sync_entry_cleanup(struct xe_sync_entry *sync)
- 	if (sync->fence)
- 		dma_fence_put(sync->fence);
- 	if (sync->chain_fence)
--		dma_fence_put(&sync->chain_fence->base);
-+		dma_fence_chain_free(sync->chain_fence);
- 	if (sync->ufence)
- 		user_fence_put(sync->ufence);
- }
+diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
+index 453e601ddd5e6..d37f1dea9f8b8 100644
+--- a/drivers/gpu/drm/xe/xe_hwmon.c
++++ b/drivers/gpu/drm/xe/xe_hwmon.c
+@@ -200,9 +200,10 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, int channel, long va
+ 				     PKG_PWR_LIM_1_EN, 0, channel);
+ 
+ 		if (reg_val & PKG_PWR_LIM_1_EN) {
++			drm_warn(&gt_to_xe(hwmon->gt)->drm, "PL1 disable is not supported!\n");
+ 			ret = -EOPNOTSUPP;
+-			goto unlock;
+ 		}
++		goto unlock;
+ 	}
+ 
+ 	/* Computation in 64-bits to avoid overflow. Round to nearest. */
 -- 
 2.43.0
 
