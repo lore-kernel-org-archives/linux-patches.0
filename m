@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C889187543;
-	Mon, 12 Aug 2024 16:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C32B186E5E;
+	Mon, 12 Aug 2024 16:31:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480297; cv=none; b=RYc1OIt00zRTu7uqdNa2/9S2G6XtN5RAZqw9Wfh3PUw2qPx/jAujn2DrnA2L8lJbQcd7jvlBPzJRJ30YKT1AQIlafLPiKHQ6/oBQooIMXR3loAB2DnMF7ZgZtsccg0ge/4ZsTyA9KV3B8zAcowxMldfIS9TmLuwhU7fE9fyMgEc=
+	t=1723480300; cv=none; b=KU7637bxFpvLUtIYGoI98+f9eJfPpG/EQkaHtjRVsteR3hJ5wbHgqkbs1zYbWjAbMV45k4yUzT472YOlRH3ojPirLXC9Hqt4Jy38dkgHtOF9lIpMG7/1om/XXKdY5vZ5CEyzsAyV4vZjUfdPBCss8i+uOD32yZ000fmr5o3GQ+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480297; c=relaxed/simple;
-	bh=/O1nVAxHz1Rd7PVHtHfVJHkrzyr9+rEuKStsNy3NPzU=;
+	s=arc-20240116; t=1723480300; c=relaxed/simple;
+	bh=fRzxIjokeArFm9j738+96ASEoZSQx4iWDetxiOM2hMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V2JCvphXtJ3Eka6wiUooWNfK+qMbfPNyeFlcS6RgW3ZsRPuIVlr7ULAxf6/MedVbRshgSTXmEmQHeYnQKZdr4FfVc2/5Bkp0TselNikxdqM7uVngFyb0vBnLIDPG9RE6IkeBkCzhGOObCIkqzEdh4iRI3v8JqZna4hQVWoPfpSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ziMPa5Pi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S1iYexBX1h9lazoMNbDrQHwRC5vx/41mpjCPXzpOCc7FoCoogXTp8nbt4tngQnSpec218WJf3V+8EfDUxRVZjYGAH6agLTJOlnnvP0dGkmCZ4h2FH91FhpiuwLSiKRVq11UKmgc6wOTr6nwVxFkAgnZSfzaMpxlWkWJCzV9hI4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWJZvqCk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ziMPa5Pi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96D26C32782;
-	Mon, 12 Aug 2024 16:31:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWJZvqCk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C7BC32782;
+	Mon, 12 Aug 2024 16:31:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480297;
-	bh=/O1nVAxHz1Rd7PVHtHfVJHkrzyr9+rEuKStsNy3NPzU=;
+	s=korg; t=1723480300;
+	bh=fRzxIjokeArFm9j738+96ASEoZSQx4iWDetxiOM2hMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ziMPa5PiT44NxAhOxm+2kzQ6qy0VvpjMk1/P8lbUa4vuT/bd1vl+aPdCtJGOyIbnw
-	 fJaEKL+Tic5f0ohPqgix+/1OpPslNn68J8LIqSbMcLULYy4D8XfrEtLbET/tvvqjWB
-	 FNrSChTlTRSFVTmGZH86136APNubFpw/5RmQZ1PU=
+	b=BWJZvqCkbkSkpIxhXCkdPuKtfTM5RcbOeJcoZoR7a5C9jbGTJg4JlrhWYh5DEi18A
+	 KEmhS15zt8IeYG149IZr3SUypqyBRIjwzFIeoL5hidi0yfnIIlBJFuWvqzMxLz4vlT
+	 f3On0BM+lwts1DBdTmaKaPLky7kup2aYIPPc5Ld4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
+	kernel test robot <lkp@intel.com>,
+	Bingbu Cao <bingbu.cao@intel.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 123/263] media: ipu-bridge: fix ipu6 Kconfig dependencies
-Date: Mon, 12 Aug 2024 18:02:04 +0200
-Message-ID: <20240812160151.256949033@linuxfoundation.org>
+Subject: [PATCH 6.10 124/263] media: intel/ipu6: select AUXILIARY_BUS in Kconfig
+Date: Mon, 12 Aug 2024 18:02:05 +0200
+Message-ID: <20240812160151.295881621@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,53 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Bingbu Cao <bingbu.cao@intel.com>
 
-commit d7b5f7537c8282e1e1919408d0b6c69877fd35f8 upstream.
+commit 423a77ae3a3f916809ff3ab1c8db6d3d580c3120 upstream.
 
-Commit 4670c8c3fb04 ("media: ipu-bridge: Fix Kconfig dependencies") changed
-how IPU_BRIDGE dependencies are handled for all drivers, but the IPU6
-variant was added the old way, which causes build time warnings when I2C is
-turned off:
+Intel IPU6 PCI driver need register its devices on auxiliary
+bus, so it needs to select the AUXILIARY_BUS in Kconfig.
 
-WARNING: unmet direct dependencies detected for IPU_BRIDGE
-  Depends on [n]: MEDIA_SUPPORT [=m] && PCI [=y] && MEDIA_PCI_SUPPORT [=y] && (ACPI [=y] || COMPILE_TEST [=y]) && I2C [=n]
-  Selected by [m]:
-  - VIDEO_INTEL_IPU6 [=m] && MEDIA_SUPPORT [=m] && PCI [=y] && MEDIA_PCI_SUPPORT [=y] && (ACPI [=y] || COMPILE_TEST [=y]) && VIDEO_DEV [=m] && X86 [=y] && X86_64 [=y] && HAS_DMA [=y]
-
-To make it consistent with the other IPU drivers as well as avoid this
-warning, change the 'select' into 'depends on'.
-
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407161833.7BEFXejx-lkp@intel.com/
 Fixes: c70281cc83d6 ("media: intel/ipu6: add Kconfig and Makefile")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-[Sakari Ailus: Alternatively depend on !IPU_BRIDGE.]
+Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
 Cc: stable@vger.kernel.org # for v6.10
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/pci/intel/ipu6/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/intel/ipu6/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/media/pci/intel/ipu6/Kconfig b/drivers/media/pci/intel/ipu6/Kconfig
-index 154343080c82..b7ab24b89836 100644
+index b7ab24b89836..40e20f0aa5ae 100644
 --- a/drivers/media/pci/intel/ipu6/Kconfig
 +++ b/drivers/media/pci/intel/ipu6/Kconfig
-@@ -3,13 +3,13 @@ config VIDEO_INTEL_IPU6
- 	depends on ACPI || COMPILE_TEST
+@@ -4,6 +4,7 @@ config VIDEO_INTEL_IPU6
  	depends on VIDEO_DEV
  	depends on X86 && X86_64 && HAS_DMA
-+	depends on IPU_BRIDGE || !IPU_BRIDGE
+ 	depends on IPU_BRIDGE || !IPU_BRIDGE
++	select AUXILIARY_BUS
  	select DMA_OPS
  	select IOMMU_IOVA
  	select VIDEO_V4L2_SUBDEV_API
- 	select MEDIA_CONTROLLER
- 	select VIDEOBUF2_DMA_CONTIG
- 	select V4L2_FWNODE
--	select IPU_BRIDGE
- 	help
- 	  This is the 6th Gen Intel Image Processing Unit, found in Intel SoCs
- 	  and used for capturing images and video from camera sensors.
 -- 
 2.46.0
 
