@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768E15C127;
-	Mon, 12 Aug 2024 16:33:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A89618733D;
+	Mon, 12 Aug 2024 16:33:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480400; cv=none; b=bOxjchSN68LclY/fFJiQr6enUuXGynWL5Xb0uH3cGBxvPT/9FAdPt+Twt5lSIUWSV1w1QeGLg1vm+kmTaP4p9RNb/D8rKelBQFL0CGyeursVLrK2EkQDJGhwUJFNsFx4N9dmLtDXR3NX+FXXEqzAnVp3xG0zSiUgehR+Qc3n2mI=
+	t=1723480404; cv=none; b=FLmlDlYdCu1QiLwgFvNceGj7qxn5HdjRZoK3Z3tGYYR6ACMIBz/Q9UIKFa8S47/AyuKjcvsFp5nthzY1l6vqfpVysJ8cPMOHi8yiUSTnqGw7G7tItLDxFk3QOOTvpyOfRh08Xxdp8QVMcJvB0RI/epZpARZyc/PjXx30Kc9HKSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480400; c=relaxed/simple;
-	bh=HxGeVvGiYPfgzIPeX2MMMmz/uS9up5I3dCP0XU6EZhw=;
+	s=arc-20240116; t=1723480404; c=relaxed/simple;
+	bh=NEh6Ek995m2z/ZdwlZo/0YQqFFfshkzPSFrW8es1Rg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=falC9FCrJaehT01wQcv/G/QPbTLI9WxUKth5NYMOw79SAz2daE6cxGr2B9rMwzGFfqNLhsmqjjaBVyFjhBsSrCpyrVTc9EDFmApHLtc2ZVo0y7qFz9e6bsm4I7SBYUvMIcUEbehpRzKGHNLCe8vfaY7yRjsGui0CbaDeE251r8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18Hxi7Jj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KU6cHmTz9nTIVJafLCyG26eyn4ZEfjhf7KODJZ8y9TbPMe/x3Oed3P+nzPOrY2fedWL7iEde6oOlHSR7QFWGWa9voLgLnv3+npohBkh3pIEzJMQxXfqVkRfkLt2NdtZkC0CZCXadACEK8SFvdx7rRbJ6c8z+FijiTe1hbfRfxyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A1RlNxm8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18Hxi7Jj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6C6C4AF0F;
-	Mon, 12 Aug 2024 16:33:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A1RlNxm8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28BBC32782;
+	Mon, 12 Aug 2024 16:33:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480400;
-	bh=HxGeVvGiYPfgzIPeX2MMMmz/uS9up5I3dCP0XU6EZhw=;
+	s=korg; t=1723480404;
+	bh=NEh6Ek995m2z/ZdwlZo/0YQqFFfshkzPSFrW8es1Rg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=18Hxi7Jjr4lYBRczka/PNRK2dP8KK/oGGVnyrM8T2dF8BP37AWuU+F6UvPY0ryrjT
-	 7rwy0FdWe0fkd68x1kiBRSqlB/qB3f8fpmaf/5kBAvH9qNas8GLmt1Z/I1tu6I6Kw3
-	 n0LPdaM3escKDOx8bueTpWhiaNcP9ulQG+KyWMbY=
+	b=A1RlNxm8gqBniifcGHDkAUnN2o6lrN6MkISP9BLYQmrcpYNkHY95W0wsOvH3P09wN
+	 vEJ/Kqpgibd1sPFH74xJpnWtec38VXnPvNkTz5MrNPyWcAqprMpa2k1o/xAE1ZxYJ6
+	 2xpRElD6pIlH64RaQg4INfEPrczcANxxeHSPf38Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 153/263] i2c: qcom-geni: Add missing clk_disable_unprepare in geni_i2c_runtime_resume
-Date: Mon, 12 Aug 2024 18:02:34 +0200
-Message-ID: <20240812160152.403482895@linuxfoundation.org>
+Subject: [PATCH 6.10 154/263] ASoC: cs35l56: Revert support for dual-ownership of ASP registers
+Date: Mon, 12 Aug 2024 18:02:35 +0200
+Message-ID: <20240812160152.441284652@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,38 +51,551 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit b93d16bee557302d4e588375ececd833cc048acc ]
+[ Upstream commit 5d7e328e20b3d2bd3e1e8bea7a868ab8892aeed1 ]
 
-Add the missing clk_disable_unprepare() before return in
-geni_i2c_runtime_resume().
+This patch reverts a series of commits that allowed for the ASP
+registers to be owned by either the driver or the firmware. Nothing
+currently depends on the functionality that is being reverted, so
+it is safe to remove.
 
-Fixes: 14d02fbadb5d ("i2c: qcom-geni: add desc struct to prepare support for I2C Master Hub variant")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+The commits being reverted are (last 3 are bugfixes to the first 2):
+commit 72a77d7631c6
+("ASoC: cs35l56: Fix to ensure ASP1 registers match cache")
+commit 07f7d6e7a124
+("ASoC: cs35l56: Fix for initializing ASP1 mixer registers")
+commit 4703b014f28b
+("ASoC: cs35l56: fix reversed if statement in cs35l56_dspwait_asp1tx_put()")
+commit c14f09f010cc
+("ASoC: cs35l56: Fix deadlock in ASP1 mixer register initialization")
+commit dfd2ffb37399
+("ASoC: cs35l56: Prevent overwriting firmware ASP config")
+
+These reverts have been squashed into a single commit because there
+would be no reason to revert only some of them (which would just
+reintroduce bugs).
+
+The changes introduced by the commits were well-intentioned but
+somewhat misguided. ACPI does not provide any information about how
+audio hardware is linked together, so that information has to be
+hardcoded into drivers. On Windows the firmware is customized to
+statically setup appropriate configuration of the audio links,
+and the intent of the commits was to re-use this information if the
+Linux host drivers aren't taking control of the ASP. This would
+avoid having to hardcode the ASP config into the machine driver on
+some systems.
+
+However, this added complexity and race conditions into the driver.
+It also complicates implementation of new code.
+
+The only case where the ASP is used but the host is not taking
+ownership is when CS35L56 is used in SoundWire mode with the ASP
+as a reference audio interconnect. But even in that case it's not
+necessarily required even if the firmware initialized it. Typically
+it is used to avoid the host SDCA drivers having to be capable of
+aggregating capture paths from multiple SoundWire peripherals. But
+the SOF SoundWire support is capable of doing that aggregation.
+
+Reverting all these commits significantly simplifies the driver.
+Let's just use the normal Linux mechanisms of the machine driver and
+ALSA controls to set things up instead of trying to use the firmware
+to do use-case setup.
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Link: https://patch.msgid.link/20240701104444.172556-2-rf@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: e42066df07c0 ("ASoC: cs35l56: Handle OTP read latency over SoundWire")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/sound/cs35l56.h           |   9 +-
+ sound/soc/codecs/cs35l56-shared.c | 101 ++++-----------
+ sound/soc/codecs/cs35l56.c        | 205 ++----------------------------
+ sound/soc/codecs/cs35l56.h        |   1 -
+ 4 files changed, 43 insertions(+), 273 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 0a8b95ce35f79..78f43648e9f3a 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -990,8 +990,10 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
- 		return ret;
+diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
+index dc627ebf01df8..b0be189bdc000 100644
+--- a/include/sound/cs35l56.h
++++ b/include/sound/cs35l56.h
+@@ -267,13 +267,18 @@ struct cs35l56_base {
+ 	bool fw_patched;
+ 	bool secured;
+ 	bool can_hibernate;
+-	bool fw_owns_asp1;
+ 	bool cal_data_valid;
+ 	s8 cal_index;
+ 	struct cirrus_amp_cal_data cal_data;
+ 	struct gpio_desc *reset_gpio;
+ };
  
- 	ret = geni_se_resources_on(&gi2c->se);
++/* Temporary to avoid a build break with the HDA driver */
++static inline int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base)
++{
++	return 0;
++}
++
+ extern struct regmap_config cs35l56_regmap_i2c;
+ extern struct regmap_config cs35l56_regmap_spi;
+ extern struct regmap_config cs35l56_regmap_sdw;
+@@ -284,8 +289,6 @@ extern const char * const cs35l56_tx_input_texts[CS35L56_NUM_INPUT_SRC];
+ extern const unsigned int cs35l56_tx_input_values[CS35L56_NUM_INPUT_SRC];
+ 
+ int cs35l56_set_patch(struct cs35l56_base *cs35l56_base);
+-int cs35l56_init_asp1_regs_for_driver_control(struct cs35l56_base *cs35l56_base);
+-int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base);
+ int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command);
+ int cs35l56_firmware_shutdown(struct cs35l56_base *cs35l56_base);
+ int cs35l56_wait_for_firmware_boot(struct cs35l56_base *cs35l56_base);
+diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
+index f609cade805d7..6d821a793045e 100644
+--- a/sound/soc/codecs/cs35l56-shared.c
++++ b/sound/soc/codecs/cs35l56-shared.c
+@@ -20,6 +20,18 @@ static const struct reg_sequence cs35l56_patch[] = {
+ 	 * Firmware can change these to non-defaults to satisfy SDCA.
+ 	 * Ensure that they are at known defaults.
+ 	 */
++	{ CS35L56_ASP1_ENABLES1,		0x00000000 },
++	{ CS35L56_ASP1_CONTROL1,		0x00000028 },
++	{ CS35L56_ASP1_CONTROL2,		0x18180200 },
++	{ CS35L56_ASP1_CONTROL3,		0x00000002 },
++	{ CS35L56_ASP1_FRAME_CONTROL1,		0x03020100 },
++	{ CS35L56_ASP1_FRAME_CONTROL5,		0x00020100 },
++	{ CS35L56_ASP1_DATA_CONTROL1,		0x00000018 },
++	{ CS35L56_ASP1_DATA_CONTROL5,		0x00000018 },
++	{ CS35L56_ASP1TX1_INPUT,		0x00000000 },
++	{ CS35L56_ASP1TX2_INPUT,		0x00000000 },
++	{ CS35L56_ASP1TX3_INPUT,		0x00000000 },
++	{ CS35L56_ASP1TX4_INPUT,		0x00000000 },
+ 	{ CS35L56_SWIRE_DP3_CH1_INPUT,		0x00000018 },
+ 	{ CS35L56_SWIRE_DP3_CH2_INPUT,		0x00000019 },
+ 	{ CS35L56_SWIRE_DP3_CH3_INPUT,		0x00000029 },
+@@ -41,12 +53,18 @@ EXPORT_SYMBOL_NS_GPL(cs35l56_set_patch, SND_SOC_CS35L56_SHARED);
+ static const struct reg_default cs35l56_reg_defaults[] = {
+ 	/* no defaults for OTP_MEM - first read populates cache */
+ 
+-	/*
+-	 * No defaults for ASP1 control or ASP1TX mixer. See
+-	 * cs35l56_populate_asp1_register_defaults() and
+-	 * cs35l56_sync_asp1_mixer_widgets_with_firmware().
+-	 */
+-
++	{ CS35L56_ASP1_ENABLES1,		0x00000000 },
++	{ CS35L56_ASP1_CONTROL1,		0x00000028 },
++	{ CS35L56_ASP1_CONTROL2,		0x18180200 },
++	{ CS35L56_ASP1_CONTROL3,		0x00000002 },
++	{ CS35L56_ASP1_FRAME_CONTROL1,		0x03020100 },
++	{ CS35L56_ASP1_FRAME_CONTROL5,		0x00020100 },
++	{ CS35L56_ASP1_DATA_CONTROL1,		0x00000018 },
++	{ CS35L56_ASP1_DATA_CONTROL5,		0x00000018 },
++	{ CS35L56_ASP1TX1_INPUT,		0x00000000 },
++	{ CS35L56_ASP1TX2_INPUT,		0x00000000 },
++	{ CS35L56_ASP1TX3_INPUT,		0x00000000 },
++	{ CS35L56_ASP1TX4_INPUT,		0x00000000 },
+ 	{ CS35L56_SWIRE_DP3_CH1_INPUT,		0x00000018 },
+ 	{ CS35L56_SWIRE_DP3_CH2_INPUT,		0x00000019 },
+ 	{ CS35L56_SWIRE_DP3_CH3_INPUT,		0x00000029 },
+@@ -206,77 +224,6 @@ static bool cs35l56_volatile_reg(struct device *dev, unsigned int reg)
+ 	}
+ }
+ 
+-static const struct reg_sequence cs35l56_asp1_defaults[] = {
+-	REG_SEQ0(CS35L56_ASP1_ENABLES1,		0x00000000),
+-	REG_SEQ0(CS35L56_ASP1_CONTROL1,		0x00000028),
+-	REG_SEQ0(CS35L56_ASP1_CONTROL2,		0x18180200),
+-	REG_SEQ0(CS35L56_ASP1_CONTROL3,		0x00000002),
+-	REG_SEQ0(CS35L56_ASP1_FRAME_CONTROL1,	0x03020100),
+-	REG_SEQ0(CS35L56_ASP1_FRAME_CONTROL5,	0x00020100),
+-	REG_SEQ0(CS35L56_ASP1_DATA_CONTROL1,	0x00000018),
+-	REG_SEQ0(CS35L56_ASP1_DATA_CONTROL5,	0x00000018),
+-	REG_SEQ0(CS35L56_ASP1TX1_INPUT,		0x00000000),
+-	REG_SEQ0(CS35L56_ASP1TX2_INPUT,		0x00000000),
+-	REG_SEQ0(CS35L56_ASP1TX3_INPUT,		0x00000000),
+-	REG_SEQ0(CS35L56_ASP1TX4_INPUT,		0x00000000),
+-};
+-
+-/*
+- * The firmware can have control of the ASP so we don't provide regmap
+- * with defaults for these registers, to prevent a regcache_sync() from
+- * overwriting the firmware settings. But if the machine driver hooks up
+- * the ASP it means the driver is taking control of the ASP, so then the
+- * registers are populated with the defaults.
+- */
+-int cs35l56_init_asp1_regs_for_driver_control(struct cs35l56_base *cs35l56_base)
+-{
+-	if (!cs35l56_base->fw_owns_asp1)
+-		return 0;
+-
+-	cs35l56_base->fw_owns_asp1 = false;
+-
+-	return regmap_multi_reg_write(cs35l56_base->regmap, cs35l56_asp1_defaults,
+-				      ARRAY_SIZE(cs35l56_asp1_defaults));
+-}
+-EXPORT_SYMBOL_NS_GPL(cs35l56_init_asp1_regs_for_driver_control, SND_SOC_CS35L56_SHARED);
+-
+-/*
+- * The firmware boot sequence can overwrite the ASP1 config registers so that
+- * they don't match regmap's view of their values. Rewrite the values from the
+- * regmap cache into the hardware registers.
+- */
+-int cs35l56_force_sync_asp1_registers_from_cache(struct cs35l56_base *cs35l56_base)
+-{
+-	struct reg_sequence asp1_regs[ARRAY_SIZE(cs35l56_asp1_defaults)];
+-	int i, ret;
+-
+-	if (cs35l56_base->fw_owns_asp1)
+-		return 0;
+-
+-	memcpy(asp1_regs, cs35l56_asp1_defaults, sizeof(asp1_regs));
+-
+-	/* Read current values from regmap cache into the write sequence */
+-	for (i = 0; i < ARRAY_SIZE(asp1_regs); ++i) {
+-		ret = regmap_read(cs35l56_base->regmap, asp1_regs[i].reg, &asp1_regs[i].def);
+-		if (ret)
+-			goto err;
+-	}
+-
+-	/* Write the values cache-bypassed so that they will be written to silicon */
+-	ret = regmap_multi_reg_write_bypassed(cs35l56_base->regmap, asp1_regs,
+-					      ARRAY_SIZE(asp1_regs));
 -	if (ret)
-+	if (ret) {
-+		clk_disable_unprepare(gi2c->core_clk);
- 		return ret;
-+	}
+-		goto err;
+-
+-	return 0;
+-
+-err:
+-	dev_err(cs35l56_base->dev, "Failed to sync ASP1 registers: %d\n", ret);
+-
+-	return ret;
+-}
+-EXPORT_SYMBOL_NS_GPL(cs35l56_force_sync_asp1_registers_from_cache, SND_SOC_CS35L56_SHARED);
+-
+ int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command)
+ {
+ 	unsigned int val;
+diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
+index 7f2f2f8c13fae..84c34f5b1a516 100644
+--- a/sound/soc/codecs/cs35l56.c
++++ b/sound/soc/codecs/cs35l56.c
+@@ -63,131 +63,6 @@ static int cs35l56_dspwait_put_volsw(struct snd_kcontrol *kcontrol,
+ 	return snd_soc_put_volsw(kcontrol, ucontrol);
+ }
  
- 	enable_irq(gi2c->irq);
- 	gi2c->suspended = 0;
+-static const unsigned short cs35l56_asp1_mixer_regs[] = {
+-	CS35L56_ASP1TX1_INPUT, CS35L56_ASP1TX2_INPUT,
+-	CS35L56_ASP1TX3_INPUT, CS35L56_ASP1TX4_INPUT,
+-};
+-
+-static const char * const cs35l56_asp1_mux_control_names[] = {
+-	"ASP1 TX1 Source", "ASP1 TX2 Source", "ASP1 TX3 Source", "ASP1 TX4 Source"
+-};
+-
+-static int cs35l56_sync_asp1_mixer_widgets_with_firmware(struct cs35l56_private *cs35l56)
+-{
+-	struct snd_soc_dapm_context *dapm = snd_soc_component_get_dapm(cs35l56->component);
+-	const char *prefix = cs35l56->component->name_prefix;
+-	char full_name[SNDRV_CTL_ELEM_ID_NAME_MAXLEN];
+-	const char *name;
+-	struct snd_kcontrol *kcontrol;
+-	struct soc_enum *e;
+-	unsigned int val[4];
+-	int i, item, ret;
+-
+-	if (cs35l56->asp1_mixer_widgets_initialized)
+-		return 0;
+-
+-	/*
+-	 * Resume so we can read the registers from silicon if the regmap
+-	 * cache has not yet been populated.
+-	 */
+-	ret = pm_runtime_resume_and_get(cs35l56->base.dev);
+-	if (ret < 0)
+-		return ret;
+-
+-	/* Wait for firmware download and reboot */
+-	cs35l56_wait_dsp_ready(cs35l56);
+-
+-	ret = regmap_bulk_read(cs35l56->base.regmap, CS35L56_ASP1TX1_INPUT,
+-			       val, ARRAY_SIZE(val));
+-
+-	pm_runtime_mark_last_busy(cs35l56->base.dev);
+-	pm_runtime_put_autosuspend(cs35l56->base.dev);
+-
+-	if (ret) {
+-		dev_err(cs35l56->base.dev, "Failed to read ASP1 mixer regs: %d\n", ret);
+-		return ret;
+-	}
+-
+-	for (i = 0; i < ARRAY_SIZE(cs35l56_asp1_mux_control_names); ++i) {
+-		name = cs35l56_asp1_mux_control_names[i];
+-
+-		if (prefix) {
+-			snprintf(full_name, sizeof(full_name), "%s %s", prefix, name);
+-			name = full_name;
+-		}
+-
+-		kcontrol = snd_soc_card_get_kcontrol_locked(dapm->card, name);
+-		if (!kcontrol) {
+-			dev_warn(cs35l56->base.dev, "Could not find control %s\n", name);
+-			continue;
+-		}
+-
+-		e = (struct soc_enum *)kcontrol->private_value;
+-		item = snd_soc_enum_val_to_item(e, val[i] & CS35L56_ASP_TXn_SRC_MASK);
+-		snd_soc_dapm_mux_update_power(dapm, kcontrol, item, e, NULL);
+-	}
+-
+-	cs35l56->asp1_mixer_widgets_initialized = true;
+-
+-	return 0;
+-}
+-
+-static int cs35l56_dspwait_asp1tx_get(struct snd_kcontrol *kcontrol,
+-				      struct snd_ctl_elem_value *ucontrol)
+-{
+-	struct snd_soc_component *component = snd_soc_dapm_kcontrol_component(kcontrol);
+-	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
+-	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+-	int index = e->shift_l;
+-	unsigned int addr, val;
+-	int ret;
+-
+-	ret = cs35l56_sync_asp1_mixer_widgets_with_firmware(cs35l56);
+-	if (ret)
+-		return ret;
+-
+-	addr = cs35l56_asp1_mixer_regs[index];
+-	ret = regmap_read(cs35l56->base.regmap, addr, &val);
+-	if (ret)
+-		return ret;
+-
+-	val &= CS35L56_ASP_TXn_SRC_MASK;
+-	ucontrol->value.enumerated.item[0] = snd_soc_enum_val_to_item(e, val);
+-
+-	return 0;
+-}
+-
+-static int cs35l56_dspwait_asp1tx_put(struct snd_kcontrol *kcontrol,
+-				      struct snd_ctl_elem_value *ucontrol)
+-{
+-	struct snd_soc_component *component = snd_soc_dapm_kcontrol_component(kcontrol);
+-	struct snd_soc_dapm_context *dapm = snd_soc_dapm_kcontrol_dapm(kcontrol);
+-	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
+-	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+-	int item = ucontrol->value.enumerated.item[0];
+-	int index = e->shift_l;
+-	unsigned int addr, val;
+-	bool changed;
+-	int ret;
+-
+-	ret = cs35l56_sync_asp1_mixer_widgets_with_firmware(cs35l56);
+-	if (ret)
+-		return ret;
+-
+-	addr = cs35l56_asp1_mixer_regs[index];
+-	val = snd_soc_enum_item_to_val(e, item);
+-
+-	ret = regmap_update_bits_check(cs35l56->base.regmap, addr,
+-				       CS35L56_ASP_TXn_SRC_MASK, val, &changed);
+-	if (ret)
+-		return ret;
+-
+-	if (changed)
+-		snd_soc_dapm_mux_update_power(dapm, kcontrol, item, e, NULL);
+-
+-	return changed;
+-}
+-
+ static DECLARE_TLV_DB_SCALE(vol_tlv, -10000, 25, 0);
+ 
+ static const struct snd_kcontrol_new cs35l56_controls[] = {
+@@ -210,44 +85,40 @@ static const struct snd_kcontrol_new cs35l56_controls[] = {
+ };
+ 
+ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_asp1tx1_enum,
+-				  SND_SOC_NOPM,
+-				  0, 0,
++				  CS35L56_ASP1TX1_INPUT,
++				  0, CS35L56_ASP_TXn_SRC_MASK,
+ 				  cs35l56_tx_input_texts,
+ 				  cs35l56_tx_input_values);
+ 
+ static const struct snd_kcontrol_new asp1_tx1_mux =
+-	SOC_DAPM_ENUM_EXT("ASP1TX1 SRC", cs35l56_asp1tx1_enum,
+-			  cs35l56_dspwait_asp1tx_get, cs35l56_dspwait_asp1tx_put);
++	SOC_DAPM_ENUM("ASP1TX1 SRC", cs35l56_asp1tx1_enum);
+ 
+ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_asp1tx2_enum,
+-				  SND_SOC_NOPM,
+-				  1, 0,
++				  CS35L56_ASP1TX2_INPUT,
++				  0, CS35L56_ASP_TXn_SRC_MASK,
+ 				  cs35l56_tx_input_texts,
+ 				  cs35l56_tx_input_values);
+ 
+ static const struct snd_kcontrol_new asp1_tx2_mux =
+-	SOC_DAPM_ENUM_EXT("ASP1TX2 SRC", cs35l56_asp1tx2_enum,
+-			  cs35l56_dspwait_asp1tx_get, cs35l56_dspwait_asp1tx_put);
++	SOC_DAPM_ENUM("ASP1TX2 SRC", cs35l56_asp1tx2_enum);
+ 
+ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_asp1tx3_enum,
+-				  SND_SOC_NOPM,
+-				  2, 0,
++				  CS35L56_ASP1TX3_INPUT,
++				  0, CS35L56_ASP_TXn_SRC_MASK,
+ 				  cs35l56_tx_input_texts,
+ 				  cs35l56_tx_input_values);
+ 
+ static const struct snd_kcontrol_new asp1_tx3_mux =
+-	SOC_DAPM_ENUM_EXT("ASP1TX3 SRC", cs35l56_asp1tx3_enum,
+-			  cs35l56_dspwait_asp1tx_get, cs35l56_dspwait_asp1tx_put);
++	SOC_DAPM_ENUM("ASP1TX3 SRC", cs35l56_asp1tx3_enum);
+ 
+ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_asp1tx4_enum,
+-				  SND_SOC_NOPM,
+-				  3, 0,
++				  CS35L56_ASP1TX4_INPUT,
++				  0, CS35L56_ASP_TXn_SRC_MASK,
+ 				  cs35l56_tx_input_texts,
+ 				  cs35l56_tx_input_values);
+ 
+ static const struct snd_kcontrol_new asp1_tx4_mux =
+-	SOC_DAPM_ENUM_EXT("ASP1TX4 SRC", cs35l56_asp1tx4_enum,
+-			  cs35l56_dspwait_asp1tx_get, cs35l56_dspwait_asp1tx_put);
++	SOC_DAPM_ENUM("ASP1TX4 SRC", cs35l56_asp1tx4_enum);
+ 
+ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_sdw1tx1_enum,
+ 				CS35L56_SWIRE_DP3_CH1_INPUT,
+@@ -285,21 +156,6 @@ static SOC_VALUE_ENUM_SINGLE_DECL(cs35l56_sdw1tx4_enum,
+ static const struct snd_kcontrol_new sdw1_tx4_mux =
+ 	SOC_DAPM_ENUM("SDW1TX4 SRC", cs35l56_sdw1tx4_enum);
+ 
+-static int cs35l56_asp1_cfg_event(struct snd_soc_dapm_widget *w,
+-				  struct snd_kcontrol *kcontrol, int event)
+-{
+-	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+-	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(component);
+-
+-	switch (event) {
+-	case SND_SOC_DAPM_PRE_PMU:
+-		/* Override register values set by firmware boot */
+-		return cs35l56_force_sync_asp1_registers_from_cache(&cs35l56->base);
+-	default:
+-		return 0;
+-	}
+-}
+-
+ static int cs35l56_play_event(struct snd_soc_dapm_widget *w,
+ 			      struct snd_kcontrol *kcontrol, int event)
+ {
+@@ -336,9 +192,6 @@ static const struct snd_soc_dapm_widget cs35l56_dapm_widgets[] = {
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("VDD_B", 0, 0),
+ 	SND_SOC_DAPM_REGULATOR_SUPPLY("VDD_AMP", 0, 0),
+ 
+-	SND_SOC_DAPM_SUPPLY("ASP1 CFG", SND_SOC_NOPM, 0, 0, cs35l56_asp1_cfg_event,
+-			    SND_SOC_DAPM_PRE_PMU),
+-
+ 	SND_SOC_DAPM_SUPPLY("PLAY", SND_SOC_NOPM, 0, 0, cs35l56_play_event,
+ 			    SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU | SND_SOC_DAPM_POST_PMD),
+ 
+@@ -406,9 +259,6 @@ static const struct snd_soc_dapm_route cs35l56_audio_map[] = {
+ 	{ "AMP", NULL, "VDD_B" },
+ 	{ "AMP", NULL, "VDD_AMP" },
+ 
+-	{ "ASP1 Playback", NULL, "ASP1 CFG" },
+-	{ "ASP1 Capture", NULL, "ASP1 CFG" },
+-
+ 	{ "ASP1 Playback", NULL, "PLAY" },
+ 	{ "SDW1 Playback", NULL, "PLAY" },
+ 
+@@ -459,14 +309,9 @@ static int cs35l56_asp_dai_set_fmt(struct snd_soc_dai *codec_dai, unsigned int f
+ {
+ 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
+ 	unsigned int val;
+-	int ret;
+ 
+ 	dev_dbg(cs35l56->base.dev, "%s: %#x\n", __func__, fmt);
+ 
+-	ret = cs35l56_init_asp1_regs_for_driver_control(&cs35l56->base);
+-	if (ret)
+-		return ret;
+-
+ 	switch (fmt & SND_SOC_DAIFMT_CLOCK_PROVIDER_MASK) {
+ 	case SND_SOC_DAIFMT_CBC_CFC:
+ 		break;
+@@ -540,11 +385,6 @@ static int cs35l56_asp_dai_set_tdm_slot(struct snd_soc_dai *dai, unsigned int tx
+ 					unsigned int rx_mask, int slots, int slot_width)
+ {
+ 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(dai->component);
+-	int ret;
+-
+-	ret = cs35l56_init_asp1_regs_for_driver_control(&cs35l56->base);
+-	if (ret)
+-		return ret;
+ 
+ 	if ((slots == 0) || (slot_width == 0)) {
+ 		dev_dbg(cs35l56->base.dev, "tdm config cleared\n");
+@@ -593,11 +433,6 @@ static int cs35l56_asp_dai_hw_params(struct snd_pcm_substream *substream,
+ 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(dai->component);
+ 	unsigned int rate = params_rate(params);
+ 	u8 asp_width, asp_wl;
+-	int ret;
+-
+-	ret = cs35l56_init_asp1_regs_for_driver_control(&cs35l56->base);
+-	if (ret)
+-		return ret;
+ 
+ 	asp_wl = params_width(params);
+ 	if (cs35l56->asp_slot_width)
+@@ -654,11 +489,7 @@ static int cs35l56_asp_dai_set_sysclk(struct snd_soc_dai *dai,
+ 				      int clk_id, unsigned int freq, int dir)
+ {
+ 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(dai->component);
+-	int freq_id, ret;
+-
+-	ret = cs35l56_init_asp1_regs_for_driver_control(&cs35l56->base);
+-	if (ret)
+-		return ret;
++	int freq_id;
+ 
+ 	if (freq == 0) {
+ 		cs35l56->sysclk_set = false;
+@@ -1039,13 +870,6 @@ static int cs35l56_component_probe(struct snd_soc_component *component)
+ 	debugfs_create_bool("can_hibernate", 0444, debugfs_root, &cs35l56->base.can_hibernate);
+ 	debugfs_create_bool("fw_patched", 0444, debugfs_root, &cs35l56->base.fw_patched);
+ 
+-	/*
+-	 * The widgets for the ASP1TX mixer can't be initialized
+-	 * until the firmware has been downloaded and rebooted.
+-	 */
+-	regcache_drop_region(cs35l56->base.regmap, CS35L56_ASP1TX1_INPUT, CS35L56_ASP1TX4_INPUT);
+-	cs35l56->asp1_mixer_widgets_initialized = false;
+-
+ 	queue_work(cs35l56->dsp_wq, &cs35l56->dsp_work);
+ 
+ 	return 0;
+@@ -1436,9 +1260,6 @@ int cs35l56_common_probe(struct cs35l56_private *cs35l56)
+ 	cs35l56->base.cal_index = -1;
+ 	cs35l56->speaker_id = -ENOENT;
+ 
+-	/* Assume that the firmware owns ASP1 until we know different */
+-	cs35l56->base.fw_owns_asp1 = true;
+-
+ 	dev_set_drvdata(cs35l56->base.dev, cs35l56);
+ 
+ 	cs35l56_fill_supply_names(cs35l56->supplies);
+diff --git a/sound/soc/codecs/cs35l56.h b/sound/soc/codecs/cs35l56.h
+index b000e7365e406..200f695efca3d 100644
+--- a/sound/soc/codecs/cs35l56.h
++++ b/sound/soc/codecs/cs35l56.h
+@@ -51,7 +51,6 @@ struct cs35l56_private {
+ 	u8 asp_slot_count;
+ 	bool tdm_mode;
+ 	bool sysclk_set;
+-	bool asp1_mixer_widgets_initialized;
+ 	u8 old_sdw_clock_scale;
+ };
+ 
 -- 
 2.43.0
 
