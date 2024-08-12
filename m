@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190C51494B8;
-	Mon, 12 Aug 2024 16:34:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144F41494B8;
+	Mon, 12 Aug 2024 16:34:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480493; cv=none; b=Jy5qYz1WI/L4ys/eJMV3dhUEoUORY9WHRnRJ1KYf5xocfiO4iJpaagnGk16ibdTmKpvnC+Eho3wI5uKk7+w6rIfHXeLus5gOzdCJcAN/iB+97VrvtYCdy74PGrw6/6trm48Wd6UTHQc1Q77vVZhTetYwQ4PN3Zrc4J96ntdplvo=
+	t=1723480496; cv=none; b=dF9YYvRBHFWFI+ONsAt4X9YF09BsIAFIy4jlOFaSkgDLkGP240Go5mY6Kci/8e5EkAkghxOncANJjWjwzZoXxnZXFiVHCboQzLMCDjbC2a9efcpQ5femlr4Gcj2bX6ryefQLm3DCXPXZmlrVv8Rm257+mPfNt/ArdO0a7Z9mRu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480493; c=relaxed/simple;
-	bh=i3fyZNZrq/RupFKDH8njZtYjpg7hBOrZ9LOY3xhOQ0U=;
+	s=arc-20240116; t=1723480496; c=relaxed/simple;
+	bh=Yq9TB10/Jzlf0ORhLFDcKWKqSm1SHMdnxZTAAeili3I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N9DbLJgu7C/KqETTZYhBlOOt8T52hZx0n3ndBKMK485Wc1kIi6f+rHSwp/50pv1O7IuNzQ0IHxWT3KmXwNBkFzqmJ5MmhQKTE9+bO1IX2qaSwIQKAMo7NSJfKxAP9qdDl8SChZkKeA4JHUUR/hepTP4iwG3XKinvObKlQsdSSVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sK7AOoTX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eW0lNpGYs9bJkd1KbzKrJktUj6DNtXg7x1eR5n3Ls05eHCji7cf54gyYVwC11s9pB/nxmzbrwi1G1i9a8tfr1FtpyqL7oNkfw2OODqLXWYIuUMB9YYFyvJwfl6ivfUCvZs556fLgP9N98WpVwur1Avtnwd8B1c2hsnabqtjOuzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JtCm5Fno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sK7AOoTX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D2BC32782;
-	Mon, 12 Aug 2024 16:34:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JtCm5Fno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E06C32782;
+	Mon, 12 Aug 2024 16:34:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480493;
-	bh=i3fyZNZrq/RupFKDH8njZtYjpg7hBOrZ9LOY3xhOQ0U=;
+	s=korg; t=1723480495;
+	bh=Yq9TB10/Jzlf0ORhLFDcKWKqSm1SHMdnxZTAAeili3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sK7AOoTXHIm6kU9Q3t8s92OeoaoRAvs57RVBujUQQrW8lAMH5GCw7Fv9Sc5fGR2sD
-	 Mwwq08jV/iDB/YdsicxvrPfbzJ36oKG72GmwTmdhXA5sJL0GrydDNcv4xcKRbjef/H
-	 eOwtLDGR00ozsDMn8GRXbybBp7K5K4iHzuYNh7pA=
+	b=JtCm5FnoY4CaJFmuppCoUsX2QDUZl723Tka+yphNUOtsFUbqN6LL9sODP4y0i4OCM
+	 t7mwTk/1RblWk1+/vf1ThNObC0rs2+2Kqh+ZoDdTJNygcuKmBqOSKI2a8dhKWPnaNU
+	 ONNpU38N0Ywr/TuSPhu3FecoUz0L6uLIGNP8aLrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Oliver Neukum <oneukum@suse.com>,
 	stable <stable@kernel.org>,
-	Max Krummenacher <max.krummenacher@toradex.com>
-Subject: [PATCH 6.10 212/263] tty: vt: conmakehash: cope with abs_srctree no longer in env
-Date: Mon, 12 Aug 2024 18:03:33 +0200
-Message-ID: <20240812160154.661135002@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.10 186/263] usb: vhci-hcd: Do not drop references before new references are gained
+Date: Mon, 12 Aug 2024 18:03:07 +0200
+Message-ID: <20240812160153.666220974@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,88 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Krummenacher <max.krummenacher@toradex.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 6e20753da6bc651e02378a0cdb78f16c42098c88 upstream.
+commit afdcfd3d6fcdeca2735ca8d994c5f2d24a368f0a upstream.
 
-conmakehash uses getenv("abs_srctree") from the environment to strip
-the absolute path from the generated sources.
-However since commit e2bad142bb3d ("kbuild: unexport abs_srctree and
-abs_objtree") this environment variable no longer gets set.
-Instead use basename() to indicate the used file in a comment of the
-generated source file.
+At a few places the driver carries stale pointers
+to references that can still be used. Make sure that does not happen.
+This strictly speaking closes ZDI-CAN-22273, though there may be
+similar races in the driver.
 
-Fixes: 3bd85c6c97b2 ("tty: vt: conmakehash: Don't mention the full path of the input in output")
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Max Krummenacher <max.krummenacher@toradex.com>
-Link: https://lore.kernel.org/stable/20240725132056.9151-1-max.oss.09%40gmail.com
-Link: https://lore.kernel.org/r/20240725132056.9151-1-max.oss.09@gmail.com
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20240709113851.14691-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/vt/conmakehash.c | 20 +++++++-------------
- 1 file changed, 7 insertions(+), 13 deletions(-)
+ drivers/usb/usbip/vhci_hcd.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/vt/conmakehash.c b/drivers/tty/vt/conmakehash.c
-index dc2177fec715..82d9db68b2ce 100644
---- a/drivers/tty/vt/conmakehash.c
-+++ b/drivers/tty/vt/conmakehash.c
-@@ -11,6 +11,8 @@
-  * Copyright (C) 1995-1997 H. Peter Anvin
-  */
+--- a/drivers/usb/usbip/vhci_hcd.c
++++ b/drivers/usb/usbip/vhci_hcd.c
+@@ -745,6 +745,7 @@ static int vhci_urb_enqueue(struct usb_h
+ 	 *
+ 	 */
+ 	if (usb_pipedevice(urb->pipe) == 0) {
++		struct usb_device *old;
+ 		__u8 type = usb_pipetype(urb->pipe);
+ 		struct usb_ctrlrequest *ctrlreq =
+ 			(struct usb_ctrlrequest *) urb->setup_packet;
+@@ -755,14 +756,15 @@ static int vhci_urb_enqueue(struct usb_h
+ 			goto no_need_xmit;
+ 		}
  
-+#include <libgen.h>
-+#include <linux/limits.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <sysexits.h>
-@@ -76,8 +78,8 @@ static void addpair(int fp, int un)
- int main(int argc, char *argv[])
++		old = vdev->udev;
+ 		switch (ctrlreq->bRequest) {
+ 		case USB_REQ_SET_ADDRESS:
+ 			/* set_address may come when a device is reset */
+ 			dev_info(dev, "SetAddress Request (%d) to port %d\n",
+ 				 ctrlreq->wValue, vdev->rhport);
+ 
+-			usb_put_dev(vdev->udev);
+ 			vdev->udev = usb_get_dev(urb->dev);
++			usb_put_dev(old);
+ 
+ 			spin_lock(&vdev->ud.lock);
+ 			vdev->ud.status = VDEV_ST_USED;
+@@ -781,8 +783,8 @@ static int vhci_urb_enqueue(struct usb_h
+ 				usbip_dbg_vhci_hc(
+ 					"Not yet?:Get_Descriptor to device 0 (get max pipe size)\n");
+ 
+-			usb_put_dev(vdev->udev);
+ 			vdev->udev = usb_get_dev(urb->dev);
++			usb_put_dev(old);
+ 			goto out;
+ 
+ 		default:
+@@ -1067,6 +1069,7 @@ static void vhci_shutdown_connection(str
+ static void vhci_device_reset(struct usbip_device *ud)
  {
-   FILE *ctbl;
--  const char *tblname, *rel_tblname;
--  const char *abs_srctree;
-+  const char *tblname;
-+  char base_tblname[PATH_MAX];
-   char buffer[65536];
-   int fontlen;
-   int i, nuni, nent;
-@@ -102,16 +104,6 @@ int main(int argc, char *argv[])
- 	}
-     }
+ 	struct vhci_device *vdev = container_of(ud, struct vhci_device, ud);
++	struct usb_device *old = vdev->udev;
+ 	unsigned long flags;
  
--  abs_srctree = getenv("abs_srctree");
--  if (abs_srctree && !strncmp(abs_srctree, tblname, strlen(abs_srctree)))
--    {
--      rel_tblname = tblname + strlen(abs_srctree);
--      while (*rel_tblname == '/')
--	++rel_tblname;
--    }
--  else
--    rel_tblname = tblname;
--
-   /* For now we assume the default font is always 256 characters. */
-   fontlen = 256;
+ 	spin_lock_irqsave(&ud->lock, flags);
+@@ -1074,8 +1077,8 @@ static void vhci_device_reset(struct usb
+ 	vdev->speed  = 0;
+ 	vdev->devid  = 0;
  
-@@ -253,6 +245,8 @@ int main(int argc, char *argv[])
-   for ( i = 0 ; i < fontlen ; i++ )
-     nuni += unicount[i];
+-	usb_put_dev(vdev->udev);
+ 	vdev->udev = NULL;
++	usb_put_dev(old);
  
-+  strncpy(base_tblname, tblname, PATH_MAX);
-+  base_tblname[PATH_MAX - 1] = 0;
-   printf("\
- /*\n\
-  * Do not edit this file; it was automatically generated by\n\
-@@ -264,7 +258,7 @@ int main(int argc, char *argv[])
- #include <linux/types.h>\n\
- \n\
- u8 dfont_unicount[%d] = \n\
--{\n\t", rel_tblname, fontlen);
-+{\n\t", basename(base_tblname), fontlen);
- 
-   for ( i = 0 ; i < fontlen ; i++ )
-     {
--- 
-2.46.0
-
+ 	if (ud->tcp_socket) {
+ 		sockfd_put(ud->tcp_socket);
 
 
