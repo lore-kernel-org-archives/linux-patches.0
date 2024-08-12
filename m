@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFD6B1494B8;
-	Mon, 12 Aug 2024 16:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AF11494B8;
+	Mon, 12 Aug 2024 16:37:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480652; cv=none; b=MoX4jIMo79K+FCXpt66RUGonazFz7iUaXJXNs4Pa0jvo9bI3PzxpDxJq8fjuOcTvXO+n1J9y4jL4raOxrIssN6IORKIGcjUS8w1opfHk5SaFzo053V27LNDTpv9OGD3VK86tzMRYXZSUqc7S3TC+MVdNYg0/yx7NIa5aUmK+iqA=
+	t=1723480656; cv=none; b=mWjUOekBTNi8mcrP7lTAf3UvN+igfZ29ln92V9b4wL8bElH1GVbvogMEtA64O4y6yaVDW6hwVhRJ3es4d2Sen41dcYKeE6NlbMfhzNQXD05elyQCLNeNg5MBpGmcyR6+P0ezo/FIKwtsxGQmSN1boyH7RHL7zUUAlnyI9GRALv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480652; c=relaxed/simple;
-	bh=qD9CpURstJl1kEE33aDtozluGKnxovPHU5V+wRQ1M78=;
+	s=arc-20240116; t=1723480656; c=relaxed/simple;
+	bh=xoRDKSLB/3+hR0TBLhXqS+2K+KdfSfYVm37FiynHtk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GdLUM182sMu38uWU8JFawdnL0odPJyaf9rbOT38zw1BQ9nS/rq9ZGZW5J8dxsnyQyxqpMNnlhXIbxZF5TxJAetszTVgyRc4QueRTeAg1ujgLjAs5nxIWyrjyPWX2mm74PrtBknDF3t9wc7ecZbjO2n4VHy8F7kRYyqGdfSb/PUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJniaED1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=duejlK3+38+ZGlTo7GTU3p9KHASfoz/OAxwMjrVaYoBSgtM74neTzD/Qp4yOjtpg5dklUThjAObOUuWakK0SRFUEfAdj59+DCNBp2+tXBiVD7TBQckd8dDGWNRYujhlHLqrBex+ceaI68WYxnsin5QPoTcyiSt+qARYhNg8Xr+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=07egJZKC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJniaED1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F58DC32782;
-	Mon, 12 Aug 2024 16:37:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="07egJZKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89E13C32782;
+	Mon, 12 Aug 2024 16:37:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480652;
-	bh=qD9CpURstJl1kEE33aDtozluGKnxovPHU5V+wRQ1M78=;
+	s=korg; t=1723480656;
+	bh=xoRDKSLB/3+hR0TBLhXqS+2K+KdfSfYVm37FiynHtk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJniaED19/gHiNmtLJ1B27pzyj00+13Xi+y7IqoaTSemCqhj3SKDcqqsBo0eAc9RP
-	 58qZ/qiHZVzm4MvUXxA+GK1dfZ1syDP+V09C3iQfHor7+RrhnK56ARRBuIy6l8RFPp
-	 EfS7dy204BqYpMaVKdtkKwi2dsep4TPDwGFIN1TU=
+	b=07egJZKC3/Hn0IWH1YB7JQ8s15ifxR5YfyEPqGUMOp4+beozx0agO1yujB1AyT3bT
+	 Hmj/UX/gmM3MWAwMbsiIUg/ASHUCLqzam1rVwCoIDV+n2KB8+aSHtuysboKbZcxRWG
+	 8GX0A79T5FqwSwtvEQygprhai1ZGDqf80ggazO2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 262/263] selftests: mptcp: join: test both signal & subflow
-Date: Mon, 12 Aug 2024 18:04:23 +0200
-Message-ID: <20240812160156.683862269@linuxfoundation.org>
+	syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.10 263/263] btrfs: fix double inode unlock for direct IO sync writes
+Date: Mon, 12 Aug 2024 18:04:24 +0200
+Message-ID: <20240812160156.723201804@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,65 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 4d2868b5d191c74262f7407972d68d1bf3245d6a upstream.
+commit e0391e92f9ab4fb3dbdeb139c967dcfa7ac4b115 upstream.
 
-It should be quite uncommon to set both the subflow and the signal
-flags: the initiator of the connection is typically the one creating new
-subflows, not the other peer, then no need to announce additional local
-addresses, and use it to create subflows.
+If we do a direct IO sync write, at btrfs_sync_file(), and we need to skip
+inode logging or we get an error starting a transaction or an error when
+flushing delalloc, we end up unlocking the inode when we shouldn't under
+the 'out_release_extents' label, and then unlock it again at
+btrfs_direct_write().
 
-But some people might be confused about the flags, and set both "just to
-be sure at least the right one is set". To verify the previous fix, and
-avoid future regressions, this specific case is now validated: the
-client announces a new address, and initiates a new subflow from the
-same address.
+Fix that by checking if we have to skip inode unlocking under that label.
 
-While working on this, another bug has been noticed, where the client
-reset the new subflow because an ADD_ADDR echo got received as the 3rd
-ACK: this new test also explicitly checks that no RST have been sent by
-the client and server.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-7-c8a9b036493b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reported-by: syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000dfd631061eaeb4bc@google.com/
+Fixes: 939b656bc8ab ("btrfs: fix corruption after buffer fault in during direct IO append write")
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/btrfs/file.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -1989,6 +1989,21 @@ signal_address_tests()
- 		chk_add_nr 1 1
- 	fi
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2080,7 +2080,10 @@ out:
  
-+	# uncommon: subflow and signal flags on the same endpoint
-+	# or because the user wrongly picked both, but still expects the client
-+	# to create additional subflows
-+	if reset "subflow and signal together"; then
-+		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 0 2
-+		pm_nl_add_endpoint $ns2 10.0.3.2 flags signal,subflow
-+		run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 1 1 1
-+		chk_add_nr 1 1 0 invert  # only initiated by ns2
-+		chk_add_nr 0 0 0         # none initiated by ns1
-+		chk_rst_nr 0 0 invert    # no RST sent by the client
-+		chk_rst_nr 0 0           # no RST sent by the server
-+	fi
-+
- 	# accept and use add_addr with additional subflows
- 	if reset "multiple subflows and signal"; then
- 		pm_nl_set_limits $ns1 0 3
+ out_release_extents:
+ 	btrfs_release_log_ctx_extents(&ctx);
+-	btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
++	if (skip_ilock)
++		up_write(&BTRFS_I(inode)->i_mmap_lock);
++	else
++		btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
+ 	goto out;
+ }
+ 
 
 
