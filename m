@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E433D18454D;
-	Mon, 12 Aug 2024 16:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6737B18454D;
+	Mon, 12 Aug 2024 16:19:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479569; cv=none; b=dEMA8hsmVEDImOQXf4I90einytOl8a1gVMulRCu4C4nuvnzgHV80tTilzY0HsiSZxxQD6PJpnwwUTjLYRolyct7emd7BWos14QoHGmNEerT4HiuEVSlKD9Dn6PyaeaF9mvXiWMBNZ3rUivF7DG43N2wvfL7KcH0RXTADGwzdRPs=
+	t=1723479572; cv=none; b=Vi8E7V4u2hsILQfqVPsJwKSPV+WOWsmTQdh2Nuw2JsVF/vhdsf8SX7knXOd0I1vddDZB6SumrjZTZeL+y9GAChsmXijkkCVfWhmAwGwKfJxoHWmsdQ2inMdVVf5jmNUElk5mSk/o+JKh0Opay9od5Y5921dHcHmOYCcwTYCKfjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479569; c=relaxed/simple;
-	bh=0JWOFf7W9PNUozfDMP3WYuOZY+6ynzPowl9GcHKKkVI=;
+	s=arc-20240116; t=1723479572; c=relaxed/simple;
+	bh=fbYBg7R3omYjYY0Ix2FMnKlwubquW1gbQ3kT8fI+zG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qBXJ2PfCvEz+t2pUzwMBGQDL+njjiA3adVA3TaQHDB8ipsvsJ0JfzWXXVY1hbYLauDViRKYYlOZLXF8+dVTJkupsc8ndOorWF9KHI1M4pWcDXsNvxYCfXAYzaAoWKs1cv4T8FZpdRW3J98y9OHzhmdACf7Q8+hF82/V1ccD7TNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgFTyltu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YGgEZc/gImKk2MfRKOGdqtbUeq/Q0kYWEcbnr1gJmTFB+SjT3sRQabtZikOCBA9ejHLQseqSTMkfQBkLwM1+pWZL26XdUtvp+M3ShTlwJxbTgR0qEIU3WzCDW3zD8D61zkRzkqYri2EwssAR+3MhO42f1gyKlHYtytOxG+jfSsQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TgEfeofP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgFTyltu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500C4C32782;
-	Mon, 12 Aug 2024 16:19:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TgEfeofP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C1BC32782;
+	Mon, 12 Aug 2024 16:19:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479568;
-	bh=0JWOFf7W9PNUozfDMP3WYuOZY+6ynzPowl9GcHKKkVI=;
+	s=korg; t=1723479572;
+	bh=fbYBg7R3omYjYY0Ix2FMnKlwubquW1gbQ3kT8fI+zG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KgFTyltuE8CFmHRkGjZa0VX3TW/plxlJ5m4+yFZ4bUAhie+ymqndKpDvJdgVI5nQa
-	 SvgEAjiSxiwMnM7ANvfnVWJTLppYZpb8aB2GJe1aWs2UeUCNqY3LZwPJQwEc4ZABy5
-	 t2IQWOyqm9y3k4HQ8+N1gmpkT65EjMjzSR2G0xIc=
+	b=TgEfeofPJDnUT+iJvs9WOzqSRdCbAXaoGdAhxmPbA1TbBIapNyb+Zhw0IiKq05SgA
+	 JSZGrQwYLF6Ih5k7ZzKRzZqWMpIUOd8kNPsR5MooDT1oQo8XjRrusuiDKB4AbSndBA
+	 VA8Ey3+4fmtPynjX4Y8rM16P8adjWzn/F6dhaW4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yu Liao <liaoyu15@huawei.com>
-Subject: [PATCH 6.6 126/189] tick/broadcast: Move per CPU pointer access into the atomic section
-Date: Mon, 12 Aug 2024 18:03:02 +0200
-Message-ID: <20240812160136.995963125@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 097/189] i2c: smbus: Send alert notifications to all devices if source not found
+Date: Mon, 12 Aug 2024 18:02:33 +0200
+Message-ID: <20240812160135.877399836@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,52 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 6881e75237a84093d0986f56223db3724619f26e upstream.
+[ Upstream commit f6c29f710c1ff2590109f83be3e212b86c01e0f3 ]
 
-The recent fix for making the take over of the broadcast timer more
-reliable retrieves a per CPU pointer in preemptible context.
+If a SMBus alert is received and the originating device is not found,
+the reason may be that the address reported on the SMBus alert address
+is corrupted, for example because multiple devices asserted alert and
+do not correctly implement SMBus arbitration.
 
-This went unnoticed as compilers hoist the access into the non-preemptible
-region where the pointer is actually used. But of course it's valid that
-the compiler keeps it at the place where the code puts it which rightfully
-triggers:
+If this happens, call alert handlers on all devices connected to the
+given I2C bus, in the hope that this cleans up the situation.
 
-  BUG: using smp_processor_id() in preemptible [00000000] code:
-       caller is hotplug_cpu__broadcast_tick_pull+0x1c/0xc0
+This change reliably fixed the problem on a system with multiple devices
+on a single bus. Example log where the device on address 0x18 (ADM1021)
+and on address 0x4c (ADT7461A) both had the alert line asserted:
 
-Move it to the actual usage site which is in a non-preemptible region.
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+lm90 3-0018: temp1 out of range, please check!
+lm90 3-0018: Disabling ALERT#
+lm90 3-0029: Everything OK
+lm90 3-002a: Everything OK
+lm90 3-004c: temp1 out of range, please check!
+lm90 3-004c: temp2 out of range, please check!
+lm90 3-004c: Disabling ALERT#
 
-Fixes: f7d43dd206e7 ("tick/broadcast: Make takeover of broadcast hrtimer reliable")
-Reported-by: David Wang <00107082@163.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Yu Liao <liaoyu15@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/87ttg56ers.ffs@tglx
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b5527a7766f0 ("i2c: Add SMBus alert support")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[wsa: fixed a typo in the commit message]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-broadcast.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/i2c-smbus.c | 38 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 35 insertions(+), 3 deletions(-)
 
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -1141,7 +1141,6 @@ void tick_broadcast_switch_to_oneshot(vo
- #ifdef CONFIG_HOTPLUG_CPU
- void hotplug_cpu__broadcast_tick_pull(int deadcpu)
- {
--	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
- 	struct clock_event_device *bc;
- 	unsigned long flags;
+diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
+index 6097fa6b5b4b3..6520e09743912 100644
+--- a/drivers/i2c/i2c-smbus.c
++++ b/drivers/i2c/i2c-smbus.c
+@@ -65,6 +65,32 @@ static int smbus_do_alert(struct device *dev, void *addrp)
+ 	return ret;
+ }
  
-@@ -1167,6 +1166,8 @@ void hotplug_cpu__broadcast_tick_pull(in
- 		 * device to avoid the starvation.
- 		 */
- 		if (tick_check_broadcast_expired()) {
-+			struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
++/* Same as above, but call back all drivers with alert handler */
 +
- 			cpumask_clear_cpu(smp_processor_id(), tick_broadcast_force_mask);
- 			tick_program_event(td->evtdev->next_event, 1);
- 		}
++static int smbus_do_alert_force(struct device *dev, void *addrp)
++{
++	struct i2c_client *client = i2c_verify_client(dev);
++	struct alert_data *data = addrp;
++	struct i2c_driver *driver;
++
++	if (!client || (client->flags & I2C_CLIENT_TEN))
++		return 0;
++
++	/*
++	 * Drivers should either disable alerts, or provide at least
++	 * a minimal handler. Lock so the driver won't change.
++	 */
++	device_lock(dev);
++	if (client->dev.driver) {
++		driver = to_i2c_driver(client->dev.driver);
++		if (driver->alert)
++			driver->alert(client, data->type, data->data);
++	}
++	device_unlock(dev);
++
++	return 0;
++}
++
+ /*
+  * The alert IRQ handler needs to hand work off to a task which can issue
+  * SMBus calls, because those sleeping calls can't be made in IRQ context.
+@@ -106,13 +132,19 @@ static irqreturn_t smbus_alert(int irq, void *d)
+ 		/*
+ 		 * If we read the same address more than once, and the alert
+ 		 * was not handled by a driver, it won't do any good to repeat
+-		 * the loop because it will never terminate.
+-		 * Bail out in this case.
++		 * the loop because it will never terminate. Try again, this
++		 * time calling the alert handlers of all devices connected to
++		 * the bus, and abort the loop afterwards. If this helps, we
++		 * are all set. If it doesn't, there is nothing else we can do,
++		 * so we might as well abort the loop.
+ 		 * Note: This assumes that a driver with alert handler handles
+ 		 * the alert properly and clears it if necessary.
+ 		 */
+-		if (data.addr == prev_addr && status != -EBUSY)
++		if (data.addr == prev_addr && status != -EBUSY) {
++			device_for_each_child(&ara->adapter->dev, &data,
++					      smbus_do_alert_force);
+ 			break;
++		}
+ 		prev_addr = data.addr;
+ 	}
+ 
+-- 
+2.43.0
+
 
 
