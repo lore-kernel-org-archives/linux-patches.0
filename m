@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE557183CA6;
-	Mon, 12 Aug 2024 16:09:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F393018732A;
+	Mon, 12 Aug 2024 16:09:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478942; cv=none; b=q8x/adoMXMfTT5DXnAbpaAhePCuBiiguz4zwYE8YUutrtMocV5QSBrf/Nikq6SkIldDXUB5j9KsPXdbfDVHIxd7kndtUJmo+4lbPzqTxetM9uwRKT4PX0XERBCZ6UFx1BdpX+TycL8v9j4MABy9ucOFZJGf9zb+kj63wn6n/bOA=
+	t=1723478945; cv=none; b=paSgIFniYc4tc0NJSqugcVBykL4euYFRQ+pOR+aod4y+rQViaLbGdUfOm6V2JK9+DnC4kXeF+nkxzIDV4D/tvOwBzNpoa4BWHogPeSiDp+rTOOF1hghA8IHJGNf3+Jhqq5cuVESzTEKj0KYkSlO2TunCIOvJlHlLp2SPYSYjj4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478942; c=relaxed/simple;
-	bh=CYRQ7e4isLG5N/VMTY0RXIWnQYfsmforza1WVjKktRE=;
+	s=arc-20240116; t=1723478945; c=relaxed/simple;
+	bh=Hn9thRNbujhyQ8t9kHn+xxUOB0Am9yNqPPhKAyqP6EM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LUqAzi7RWXyYbPAgrxuCi/GkFbqVpD8pWdZbTZ7E5SMjbmkJnvCQAsaohmFFIzom/LZaH3evWocIVpaFu/vT2xOzjRA/AOQciIttueTSDmiSI4WLp9H1I0lzaswEltAzjZDwvRB0oM5Yuxj07glSxc2btMQXEhUUDVsyjtYmEY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vHGYcjGq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NDjIexa3BoYj7c6wZqcKbcEzDYL+Us1ZNjUN7D0CuJNCChFZXx/Po3vOkHOzzdlNd5sE8OXJmqlgHqhfhdZhjn7XNcv/ft3ucHJuy/+Zk+JYyIXhwN1nKQMwssiKKoEez2zPaF5AT87/8ljupjk2T9n2Ntb6zq/Rh9EW7F0CohI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pMhNA+ch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vHGYcjGq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08BD0C32782;
-	Mon, 12 Aug 2024 16:09:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pMhNA+ch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18705C32782;
+	Mon, 12 Aug 2024 16:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478941;
-	bh=CYRQ7e4isLG5N/VMTY0RXIWnQYfsmforza1WVjKktRE=;
+	s=korg; t=1723478944;
+	bh=Hn9thRNbujhyQ8t9kHn+xxUOB0Am9yNqPPhKAyqP6EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vHGYcjGqGda/O2sqi5fLhGn4gY2ydqN7eDu6Nzsn+tpMl5OzHXdvh+y6guARsTMFW
-	 ZPyi2EICxsZua+87aHjV6BSM7472INVC4DWuk0t0MOCLFOxJkdIZQALTwLxEduc71p
-	 l5FKPgweEdpsgC0R3AC1CkoVvu04JOxnyfW4db7o=
+	b=pMhNA+chIFzkoN5OZci++yicqOgkKEKvQGR+68rGddueeI7BdoaUeR0NwZ6OqdeQm
+	 oR5F5R2Dt0+NtEzzNtPbsuv6HOQHTPVupSyD5++ThrxHWwq/orIpOAMNVwMbqgJDYs
+	 UZ9JcXcHaaG9u9xdP2ktHmle2AiJQ6YA2Dwhn8Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 083/150] i2c: qcom-geni: Add missing geni_icc_disable in geni_i2c_runtime_resume
-Date: Mon, 12 Aug 2024 18:02:44 +0200
-Message-ID: <20240812160128.374227310@linuxfoundation.org>
+Subject: [PATCH 6.1 084/150] spi: spi-fsl-lpspi: Fix scldiv calculation
+Date: Mon, 12 Aug 2024 18:02:45 +0200
+Message-ID: <20240812160128.411923488@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -52,34 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit 9ba48db9f77ce0001dbb882476fa46e092feb695 ]
+[ Upstream commit 730bbfaf7d4890bd99e637db7767dc68cfeb24e7 ]
 
-Add the missing geni_icc_disable() before return in
-geni_i2c_runtime_resume().
+The effective SPI clock frequency should never exceed speed_hz
+otherwise this might result in undefined behavior of the SPI device.
 
-Fixes: bf225ed357c6 ("i2c: i2c-qcom-geni: Add interconnect support")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Currently the scldiv calculation could violate this constraint.
+For the example parameters perclk_rate = 24 MHz and speed_hz = 7 MHz,
+the function fsl_lpspi_set_bitrate will determine perscale = 0 and
+scldiv = 1, which is a effective SPI clock of 8 MHz.
+
+So fix this by rounding up the quotient of perclk_rate and speed_hz.
+While this never change within the loop, we can pull this out.
+
+Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20240804113611.83613-1-wahrenst@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-fsl-lpspi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
-index 02eab8d5082ba..6dcc0951c3d6d 100644
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -990,6 +990,7 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
- 	ret = geni_se_resources_on(&gi2c->se);
- 	if (ret) {
- 		clk_disable_unprepare(gi2c->core_clk);
-+		geni_icc_disable(&gi2c->se);
- 		return ret;
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 9e324d72596af..dd2381ac27f67 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -297,7 +297,7 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
+ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ {
+ 	struct lpspi_config config = fsl_lpspi->config;
+-	unsigned int perclk_rate, scldiv;
++	unsigned int perclk_rate, scldiv, div;
+ 	u8 prescale;
+ 
+ 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
+@@ -308,8 +308,10 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ 		return -EINVAL;
  	}
  
++	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
++
+ 	for (prescale = 0; prescale < 8; prescale++) {
+-		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
++		scldiv = div / (1 << prescale) - 2;
+ 		if (scldiv < 256) {
+ 			fsl_lpspi->config.prescale = prescale;
+ 			break;
 -- 
 2.43.0
 
