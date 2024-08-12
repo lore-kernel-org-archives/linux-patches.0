@@ -1,228 +1,176 @@
-Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM04-BN8-obe.outbound.protection.outlook.com (mail-bn8nam04on2043.outbound.protection.outlook.com [40.107.100.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6166F16D4C0
-	for <patches@lists.linux.dev>; Mon, 12 Aug 2024 09:40:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723455627; cv=none; b=Shop9ZmEdLMWE1/asOGhyDPiKKHYCwqiZLmTOW2ZUIoPlfnv8sLD0qCJNed8DSJkCCQSMVvBRTA84iHH5I3crudxTPG3HexvEGK8Ip92x4WAB0Etfu3txd+JqjdIsAhFaTap/HBdcXpOSmZPZqFEPIzaaxKb1HwpgFas6YlcMXk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723455627; c=relaxed/simple;
-	bh=UxtazfqpXDeqlFz/0CJQTYOiDqi7EIoHLyXZ2TczuF8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IbjhFlHM2q513FwcdnNR8Rqr8FIZRCEbkug6bA4kJ+banZk0qGjZDQVW8FKCblBwWP7Jq4iU8PRs9WJF+XlvLZSWJzckwN3I2/Xap6OjW341iGjCsZqUPTrM1rMUwCr/vjw0D8sfEypOWsNdVLXUAixxnnFIVKU4zX5XIzG8RDo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V4Ssa3iZ; arc=none smtp.client-ip=209.85.222.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BEE8174EE7;
+	Mon, 12 Aug 2024 11:36:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.100.43
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723462565; cv=fail; b=pvc4bG00i5VNs0jSUsKd4dRi/7ttLpvmkVUQCOoTynrf2xdAia/X0aTBZRxCuEl12XGcJ7uPAr5A/NX9ESuKnoUdHGQ2uFKRrR+0cvw4a3b8OyYaVkVUgH39wcpvcwPxnUQflTWVSIlyiGOxQX74l1Pkc64ruh5zpFsa6AWZ+0g=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723462565; c=relaxed/simple;
+	bh=x1ntV6PH7c+4XTJTAc70wDPCCAMjrHWpX9sH7QMB+QM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=lcZy7skkrGatnEzzzwgCy9YLzYyg3VgE0tlARSBojy83MP5Qy6ft6lqvLcm/tPk3sQ+IFJWxqnx9Tba+u1EzOiAdiuK0cS9WqTYytAqjU/o3u6/dzpoyvdae+ctOA2FnYvUtSe1jH6j853UunnSaXp/Dzq6nReDePZ/ktDUQfkc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rhmVwmoO; arc=fail smtp.client-ip=40.107.100.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V4Ssa3iZ"
-Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-83120879efcso1053551241.1
-        for <patches@lists.linux.dev>; Mon, 12 Aug 2024 02:40:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1723455624; x=1724060424; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=DVjhFE1LXg8vxrprP/WgbdJUQCPXYg8soperG0HDucw=;
-        b=V4Ssa3iZOgCqsxvZqbfUbckK7YancGmWcaqydn+bMoX0d2ZjPX9pwDzGK7Jp+6yD7+
-         ChMz0h8xFqMEdHiiiyd0PpSO9gdgMQuDLK42NX2VJQ2uxyEyga8SggZmoYjekhO64Q8v
-         noHu/NwpX1J0fl/8O4JS5KNKwYBu88pqf7SnfLAhyk49CHFoByeTBZmhkHaMB748peDd
-         pqi7xckXg8HUaEW58fVHpusUeUfGIpoJHB/iK6E8RjP+sRCzYU9oG0pPmx4v/S3ReL8h
-         +Yer6g7ZefqnhIC6I33Zsyv1SXfQLILG7af4C5z6KCuH6amh9hBtcPetJ01REMRfhTiW
-         thRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723455624; x=1724060424;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=DVjhFE1LXg8vxrprP/WgbdJUQCPXYg8soperG0HDucw=;
-        b=QfO2aGjjiIYRcbOOweVuJ4zsdJEsccE3wONygfTVIwt9JikSWV2Kxp/eYLC1m2IkxM
-         Owx0py3ydDhDSl8t77xoOeV7H/Z9GdbhMaA5oQkzAJqZ4/wS9QC3aICqU1zZyMq5xECa
-         RHT582XkrYDIG0l9jAecxVAymDr7tD1mkFbYz/yZukLb0U8w0vFQyCMZN3jbwxXcxz2r
-         PqqCeUHVhaBsisHvj9ZEFUxXMuRYbMzuBUsMYkUhKBZfkp0bJ2rcd9jR3IgnwP8o9oao
-         OAABGnyPdfuq7AiZJrmWyc8AYloagWtXuhr6CPMS06whRzUVi0nGyNxRQXQ6QCrh2hjN
-         55Aw==
-X-Forwarded-Encrypted: i=1; AJvYcCWP7Os9jxrOm4WsRKBId2IGAwHIViza2UyADBWivcoSvJWVbbOnJO9fAmoS8YLSRoKt2bM4RV6T1BnUSsHU7ICRnSjFAyLKkw==
-X-Gm-Message-State: AOJu0Yw9TAXFSj5NyN4wv15hVzI6TS9RSPfCsjMHVuhWUySs7nmbACAt
-	jN90cSHbbX7X2STPpnF+yvCluUAA3Ay/s6nDVPwaNLuKYbmn/7XlTG6XIF15qb7T8LuLyfibd45
-	RVlM+FevEo0rCoggxyzvhX5o/Pg2WoefUZUs7AQ==
-X-Google-Smtp-Source: AGHT+IGwywSQL2NMVexUKa3WkjoHdNjxA9OJ7LzmouqDA0MzAclMGZ8r1ys42xoldkQbCVAM2hu9PwS2QEWQ4mbjqw0=
-X-Received: by 2002:a05:6122:4598:b0:4f6:ca2:ad0 with SMTP id
- 71dfb90a1353d-4f912bd958cmr5563996e0c.1.1723455624114; Mon, 12 Aug 2024
- 02:40:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rhmVwmoO"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=plIOgukjGLpb84ksP7IgSpzBLAZHSGcgMBC049C8NkUS7clZpd0zn1vq9D9XzJXxsSWQa6g4AOz81PQgmtDEerK+BCgBe4Gss15ugTUAmFvANvMbUrTTl3c7mB9A4DGlK12APgOqaD5vLVg21RnS+vDRBNf2fWmazzKA3eY06p8AbKPb3Dq1bcNtRxPfe8j2vxd+xURD6xBfsJSIBhpB8kc0TrdoRSolqq2KpP6W2iFk65mtwCDQ5IYQlffHZUNVQNXapu+q3/ITq5pGvOgz4VOLPgduVnfXiKQczWC2M+f08MpQvLqFlY2fxRH1IX7s5QMdQeGjmOv/cAXjv5cSFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=qf/Fm5H9y9e4Xwe2WMM6Bptxg+juiFxn8ts5SvBOPhQ=;
+ b=jGmQ7gZD7OTMVKWpNeUY3dQhzz1BJ1p4RNcPtUk+OHT8thwMAJCQhR5sIOQIoNaPypbutuMUv9mIOr54oXOuT/iB8d1PPfgR8bGpZU6M53pLjBlg4pa1Q7Z+mFLvo0GBvLabv6S7Eg8RIBTawdE99S7lGS/qGuS0NX4H+vssRPFA1xFQuEfLPfF/gbnyrsZ2KZevWCtnJQyNLJzojMe+WxCb0resnM7I+GHsW+IotheJK79/H1/Ee4jYNCbNdSIcfp9O4psexs9QURzpoQk5QlQ+aaHKlVzDNgH/1Ln16h0gEd+mND2B3AiJ16rfrsDrRxz9tpeaL5n6Hw5DfA8e5g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=qf/Fm5H9y9e4Xwe2WMM6Bptxg+juiFxn8ts5SvBOPhQ=;
+ b=rhmVwmoOR0a5h+acUB/TKPc4yuKPvc2dllKewNz7BNPCChD2Hy8AUfd3IEKSIyQbrEVM6V62ld6HcSkoIMwmdsxpIUnzRAhAzewDMcdAS6/Z33VzT2ve+HfDfEQibTGJilZSPIndXUf70JWJ+uEAOysm11G0VT2486WiHVJfNaZp7//AX8mFpFTMzMFROZfpPIopCLdbKZzuqaoplwafldtQJyF9+ObA/i57CJEGB7atYWEBR9hufaiqb1ox+fHZ0jSKqhXNGglgCnh1PIIYX4+Px51/Kd6QJFfQIYebqUts4W4qB8g6vRDjFb+Twao9eS+v6XLIfrodolDHQc9dcA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB7763.namprd12.prod.outlook.com (2603:10b6:610:145::10)
+ by SJ0PR12MB5636.namprd12.prod.outlook.com (2603:10b6:a03:42b::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.20; Mon, 12 Aug
+ 2024 11:35:57 +0000
+Received: from CH3PR12MB7763.namprd12.prod.outlook.com
+ ([fe80::8b63:dd80:c182:4ce8]) by CH3PR12MB7763.namprd12.prod.outlook.com
+ ([fe80::8b63:dd80:c182:4ce8%3]) with mapi id 15.20.7849.021; Mon, 12 Aug 2024
+ 11:35:57 +0000
+Date: Mon, 12 Aug 2024 08:35:55 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Yi Liu <yi.l.liu@intel.com>
+Cc: "Tian, Kevin" <kevin.tian@intel.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	Joerg Roedel <joro@8bytes.org>,
+	"kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Will Deacon <will@kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: Re: [PATCH] iommu: Allow ATS to work on VFs when the PF uses IDENTITY
+Message-ID: <20240812113555.GP8378@nvidia.com>
+References: <0-v1-0fb4d2ab6770+7e706-ats_vf_jgg@nvidia.com>
+ <BN9PR11MB52762296EEA7F307A48591518CBA2@BN9PR11MB5276.namprd11.prod.outlook.com>
+ <20240809132845.GG8378@nvidia.com>
+ <880c1858-afee-4c30-aac5-5da2925aaf11@intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <880c1858-afee-4c30-aac5-5da2925aaf11@intel.com>
+X-ClientProxiedBy: BL0PR0102CA0038.prod.exchangelabs.com
+ (2603:10b6:208:25::15) To CH3PR12MB7763.namprd12.prod.outlook.com
+ (2603:10b6:610:145::10)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20240502224703.103150-1-swboyd@chromium.org> <CAE-0n50VDgsg-4QnynvLOzykr3KP5JsnHqeFPA=uRT3EfgL19g@mail.gmail.com>
- <CAMi1Hd1KQBE4kKUdAn8E5FV+BiKzuv+8FoyWQrrTHPDoYTuhgA@mail.gmail.com>
- <CAE-0n53X1Gv9nnyDfeivYd7n5W6D1WFkO0tCvYc9drb0+4hQbw@mail.gmail.com>
- <CAMi1Hd2_a7TjA7J9ShrAbNOd_CoZ3D87twmO5t+nZxC9sX18tA@mail.gmail.com> <CAE-0n52JgfCBWiFQyQWPji8cq_rCsviBpW-m72YitgNfdaEhQg@mail.gmail.com>
-In-Reply-To: <CAE-0n52JgfCBWiFQyQWPji8cq_rCsviBpW-m72YitgNfdaEhQg@mail.gmail.com>
-From: Amit Pundir <amit.pundir@linaro.org>
-Date: Mon, 12 Aug 2024 15:09:47 +0530
-Message-ID: <CAMi1Hd2drhMGTsvnX1aqwpDTOkK_+n2OKMYY1Y9ONHyYiFLTSQ@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: Park shared RCGs upon registration
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, 
-	patches@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	Laura Nao <laura.nao@collabora.com>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, 
-	Douglas Anderson <dianders@chromium.org>, Taniya Das <quic_tdas@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB7763:EE_|SJ0PR12MB5636:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5aa4d120-22e8-4229-2ccb-08dcbac2eeea
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|7416014|366016;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?p0GRH152BimFBgQaqpXlPzDsMjzIcPVMZqqeSJgdpGt/VEgkpoegZ7OQCWIx?=
+ =?us-ascii?Q?aKVpUa1GbhvcjF3M4RM7XZfbrA0U+AVyG4hvAsS7ym6gTV1i+krd4eivwQK2?=
+ =?us-ascii?Q?T4wyBZUOAXviH950i4nSFDRRWz3RGkMyyvTX6wAs97EMs+Eaqb1ntxpCXQ0B?=
+ =?us-ascii?Q?iaXaC3aXy7r9R7+O1b/9ZRFLEGYD+qWm6jJEuCPxz5vq94xTMcI016fC112A?=
+ =?us-ascii?Q?PQtGpjPZgg0EdwwjG5BICSDmiNPgtBl/n3GZfS1DhSVrqYA8M8gVRNY/iZXj?=
+ =?us-ascii?Q?xX0Z8b8NRZu6D5wXHiPuEKt+22hIZ6YKmkkvrAiw5jsmhGakTn2fLZvHHURn?=
+ =?us-ascii?Q?I3c6bKzu77XjCsbs6Py9bN3IrTg+/N50zZvdk/yDp4lbZMLw5+NHSlEPy5tk?=
+ =?us-ascii?Q?pREWW+II9w6wUfKFhllhnusRH7y+rZTusYsbdJErVOEd7+COLJg+EjkGbOby?=
+ =?us-ascii?Q?BGSrV+EhzeSNxzoG/gNbA30/Uc9nb74XBo0EHE6GMr1EUB76x3wAGwGiYZXz?=
+ =?us-ascii?Q?4FaLTTq6B6NJiwDM2l5sINY99wQec45/AG0vpgn0oCl+WoiNBvFs1UPgLHEo?=
+ =?us-ascii?Q?OP9WoqU/+uX+XNSLCU4AthcI0r/IMUa7j8n+NOxy8G4pz1zsDB8Exb6Z3lRL?=
+ =?us-ascii?Q?u6jyoGm5nia/XX3mv2bvzW0M3mJbe/PPsA9/XZo1iPoMEIT331x3yEQQrhHn?=
+ =?us-ascii?Q?Tedp/+UacA2DYDXK45tETmnDrvSeATFiT2weixKHPiok9Vt4j99Ag9PC1wtA?=
+ =?us-ascii?Q?OOpB2Sjo4rrAMq2ZueQs5q9A80XnPxL2lmtO0Zxr929u90UoK4Vc6wL33FJ2?=
+ =?us-ascii?Q?pL5E9AnrL0lPfMPgdzba01NYWdTwNCL9UTs5o+XKDNfEEnAGpy1um5iLi9+I?=
+ =?us-ascii?Q?P9Vdhy5g/qWVlg/Onv57+UHH/gfeksXWbeJ78apv/YYBlfFdcAYtWt/2g4Zg?=
+ =?us-ascii?Q?A/ss38yQXixSeIoFMJZ4h4MNNXp4ESVI8tTHvd8LfIRBpMtst09hz4Ni9lCQ?=
+ =?us-ascii?Q?NbFsdOCnjkDIrCmZpaL1w7axW3tgWfA3gWggonEiGuhTweLwH5mXaG2E66Rc?=
+ =?us-ascii?Q?IPywiHzF6aX1C0l78keNBlrnKzjz4UBbxC4v+OUzbepDUUHi/pJflIl4zXt7?=
+ =?us-ascii?Q?5kRlnIsWtX+qTvYdrzxEoFOoeW/ErFfAYpnEZa93fWEVJ13NAL3zt7R6i51Q?=
+ =?us-ascii?Q?k+bWuaEdOqQekChSZ+Xb6Udxs4oAeLJfYK8W1mjjTSBOxHV4tF5E+F0F4X0z?=
+ =?us-ascii?Q?6uAiuyF0uiwDzGcKgLjTnWdL053W0OrbtZCBQkysh+CNP0x31kqWysOlXD7y?=
+ =?us-ascii?Q?o8y2rPs7DKcjT7R0xmiOoxaGOkVMy79Raxj/2UcXnCcrfg=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR12MB7763.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(7416014)(366016);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?D80sII8Ob7HklBgL2iVu670LI88vV30O53nS3VQBHtWUtzuatZBFSW3l28OP?=
+ =?us-ascii?Q?Yu3iEZjstBfTmbPTMocxdFRb8c6cOKnik9AnHY43GVSb6u0HEp47jgY6vCAw?=
+ =?us-ascii?Q?04OoXu3o7o1jrwzRmBQFMc2xVCJSpH4slH8dAhGz2ohJbvzNLead2nwa2akW?=
+ =?us-ascii?Q?fRVQBsJw+Fx0Xy5Z2b41hN59gTJNBTX1eNaK6UtpaswpeEoVLAgNbf/J88/7?=
+ =?us-ascii?Q?Z+fDco8OPOLWe5ImewDHy8ieW7FjaUMisgqcPL32kcDcC3lUPt/WKqTIlbiU?=
+ =?us-ascii?Q?DGwFFuvl+hhgGqC56yEtFDPQEj8/sAkoxCnoMJLzdoTXOIiPX0PUcd4k5L7V?=
+ =?us-ascii?Q?P2d/uCJIL4zgHy/mC4GOJOJegDsZUgA79IjuID0iPgDID1hgS+LYxkEt3wDZ?=
+ =?us-ascii?Q?JnHky6ZpjYMy3HXtkF0H+HJUvVjY+ifUBYWm4HO35m3LdVBm3nL4u+82kC1B?=
+ =?us-ascii?Q?/5uBKca0DKzhDZtXS1lW2j9uec2SDdzWYkv749MIRj7rD8Mqe3gcvsWZod9M?=
+ =?us-ascii?Q?N6rbWgsIaPhxv7pEflIEaZNJhTKalxGdjljMNtjI1sW1k97PcA1BMTyvuIrT?=
+ =?us-ascii?Q?hcpA24VstFkOr/PVrUSKSO6Efd6gqTXmC+UYISsk+IyAPB2+DSGy5yX5m+fe?=
+ =?us-ascii?Q?GlHgbeeaOByPrWmCvEzroeiQxR5kQ9TqbH3K5x3zk5U3QPv3s9h9fnOIg/k6?=
+ =?us-ascii?Q?cXVayvOGf++jVAyZY2XueG2Ww5NGWT4Cfsruc348EnRK8Gy0G4c+piU0zUBG?=
+ =?us-ascii?Q?c+H8l6i2HfbElGTmE81W077SvVVaNqZxlhnMIi9gNN0dheuoMc4ix2j7Wuuo?=
+ =?us-ascii?Q?R2zjc270w7bImTsOPkABwl8/mWeWhAEPagZuvPvIysAKvRVzvsBcga9Syrbd?=
+ =?us-ascii?Q?7jkbYrCuRJIBGweW6XFHEa/wyGiPHmIlg6S1SNQbTo5jMpT1v3fyJ5FiXBPu?=
+ =?us-ascii?Q?jY3gO5tVhAqra1y4n564JoWyOA3J4FtjZRW/xcd+pn01PCKIHrEmrVK6Ue3E?=
+ =?us-ascii?Q?RRD4rQS5+0fLsI7JaB/jkpOMSgwVr90kLA4/UvNfCAR31Swmoc1bE34yQT3d?=
+ =?us-ascii?Q?sWwDcrfS2xFHnbOM9HaCYcID1ui/y63b0Qym/hXWuh9QWTLyGnnd/KOnxWSr?=
+ =?us-ascii?Q?F4s8z3yTHZG39s7sEmO+pCHGtUHH2DtXTEVuvJItMCki7Gf4o1BRZS83Lbn6?=
+ =?us-ascii?Q?Aen0OXH8eBc4b6Qi2X4Egtmy10Vet5WdhhPZZjs6PdK4vuOv/R2Kde0zUvrv?=
+ =?us-ascii?Q?uCMkbv0xAxey1nVLNQWPzrXfaBybaJ9KE4qo7NscikWoP+2wyIz4FCobq3jK?=
+ =?us-ascii?Q?+ND8UO4/7/2UfaaMzVXBBS56oRTr2hMdICwpFhrdkuxfokA5VlqkDScja4gb?=
+ =?us-ascii?Q?dtDbwMlFTug0euZ52veXpSi2XmKpufWhMsMA6bd8IddiA9nDI9XVqFiFolYi?=
+ =?us-ascii?Q?WdjNst4X8uR7bI1d5uLk4PlLzs8jU/kxcILSkRtVACU2TxU4eadT1sEXX0Af?=
+ =?us-ascii?Q?oh1NUC1jCqCvyZB+Pd1Ax6DHIKjRwN8CSKxzK8RV1E6mwv34IYVI3q457QOy?=
+ =?us-ascii?Q?ABGKt3FPy6U/rd0rTWA=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5aa4d120-22e8-4229-2ccb-08dcbac2eeea
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7763.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Aug 2024 11:35:57.5837
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: DQPPZhy+ViJWKCnuc4WWT/sBEQ62j2ZvUVrSyJ4cfG0t+9EzT8/NvmhfjrhyYUBF
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5636
 
-On Tue, 6 Aug 2024 at 03:07, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Amit Pundir (2024-08-05 03:43:14)
-> > On Sat, 3 Aug 2024 at 06:29, Stephen Boyd <swboyd@chromium.org> wrote:
-> > >
-> > > Also please send back the dmesg so we can see what clks are configured
-> > > for at boot time. If they're using TCXO source at boot then they're not
-> > > going to be broken. In which case those clks can keep using the old clk
-> > > ops and we can focus on the ones that aren't sourcing from TCXO.
-> >
-> > Thank your for this debug patch. I thought I narrowed down the
-> > breakage to the clks in drivers/clk/qcom/gcc-sm8550.c, until I ran
-> > into the following kernel panic in ucsi_glink driver in later test
-> > runs.
->
-> Thanks for the info. These are the clks that aren't sourcing from XO
-> at registration time:
->
->   gcc_qupv3_wrap1_s7_clk_src with cfg 0x102601 -> parent is gpll0_out_even
->   gcc_ufs_phy_axi_clk_src with cfg 0x103 -> parent is gpll0_out_main
->   gcc_ufs_phy_ice_core_clk_src with cfg 0x503 -> parent is gpll4_out_main
->   gcc_ufs_phy_unipro_core_clk_src with cfg 0x103 -> parent is gpll0_out_main
->   gcc_usb30_prim_master_clk_src with cfg 0x105 -> parent is gpll0_out_main
->
-> The original patch is going to inform the clk framework that the parent
-> of these clks aren't XO but something like gpll0_out_even, whatever the
-> hardware is configured for. That may cause these PLLs to be turned off
-> earlier than before if, for example, gcc_ufs_phy_axi_clk_src is turned
-> off by a consumer and gcc_usb30_prim_master_clk_src is left enabled at
-> boot. That's why we force park clks at registration time, so that they
-> can't have their parent clk get turned off by some other clk consumer
-> enabling and then disabling a clk that's also parented to the same
-> parent.
->
-> This same problem exists for RCGs that aren't shared too, but it's
-> particularly bad for shared RCGs because the parent PLLs aren't turned
-> on automatically by the hardware when things like the GDSC do their
-> housekeeping. At least when software is in control we can enable the
-> parent PLL and unstick the RCG that was previously cut off.
+On Mon, Aug 12, 2024 at 05:03:37PM +0800, Yi Liu wrote:
 
-Thank you Stephen for the detailed explanation. Really appreciate this
-knowledge dump.
+> > The PASID may require ATS to be enabled (ie SVA), but the RID may be
+> > IDENTITY for performance. The poor device has no idea it is not
+> > allowed to use ATS on the RID side :(
+> 
+> If this is the only problematic case, the intel iommu driver in this
+> patch could check the scalable mode before enabling ATS in the
+> probe_device() op. In this way, the legacy mode iommu would keep the old
+> ATS enable policy.
 
->
-> Can you narrow down the list above to the clk that matters? I guess if
-> USB isn't working then gcc_usb30_prim_master_clk_src is the one that
-> should be changed and nothing else. Although, I noticed that in the
-> first dmesg log you sent the serial console had garbage, and that's
-> likely because the rate changed while the clk was registered. I don't
-> know why the gcc_qupv3_wrap1_s7_clk_src is marked with the shared clk
-> ops. That's confusing to me as I don't expect that to need to be parked
-> for any reasons. Maybe qcom folks can comment there but I'd expect plain
-> rcg2_ops to be used for those clks. Anyway, if you can narrow down to
-> which clk needs to be left untouched it would be helpful.
+At some point we will need to address this.. At least when we add
+PASID support to mlx5 it will need something since mlx5 is using ATS
+on the RID right now.
 
-gcc_qupv3_wrap1_s7_clk_src and gcc_usb30_prim_master_clk_src need to
-be left untouched to fix the Audio codec and USB-C host mode breakages
-respectively. It seem to have fixed the serial console garbage dump
-issue as well.
+Supporting ATS with the IDENTITY optimization is a good idea in the
+IOMMU HW. The HW just has to answer the ATS with a 1:1 TA.
 
-UFS on SM8550-HDK has it's own issues when booting AOSP from it, so I
-couldn't test/verify if the reported gcc_ufs_phy_*_clk_src clk changes
-make any difference. But I'll bookmark this change for future
-reference if I run into any relevant UFS probe deferrals once we fix
-the existing/on-going issues.
+Next, telling the driver that ATS is enabled but doesn't work on the
+RID would allow the driver to deal with it
 
->
-> >
-> > [    7.882923][    T1] init: Loading module /lib/modules/ucsi_glink.ko
-> > with args ''
-> > [    7.892929][   T92] Unable to handle kernel NULL pointer
-> > dereference at virtual address 0000000000000010
-> > [    7.894935][    T1] init: Loaded kernel module /lib/modules/ucsi_glink.ko
-> > [    7.902670][   T92] user pgtable: 4k pages, 39-bit VAs, pgdp=0000000886218000
-> > [    7.902674][   T92] Internal error: Oops: 0000000096000006 [#1] PREEMPT SMP
-> > [    7.993995][   T64] qcom_pmic_glink pmic-glink: Failed to create
-> > device link (0x180) with a600000.usb
-> > [    8.078673][   T92] CPU: 7 UID: 0 PID: 92 Comm: kworker/7:2
-> > Tainted: G S          E      6.11.0-rc2-mainline-00001-g4153d980358d
-> > #6
-> > [    8.078676][   T92] Tainted: [S]=CPU_OUT_OF_SPEC, [E]=UNSIGNED_MODULE
-> > [    8.078677][   T92] Hardware name: Qualcomm Technologies, Inc.
-> > SM8550 HDK (DT)
-> > [    8.078679][   T92] Workqueue: events pmic_glink_ucsi_register [ucsi_glink]
-> > [    8.078682][   T92] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT
-> > -SSBS BTYPE=--)
-> > [    8.078684][   T92] pc : pmic_glink_send+0x10/0x2c [pmic_glink]
-> > [    8.078685][   T92] lr : pmic_glink_ucsi_read+0x84/0x14c [ucsi_glink]
-> > [    8.078704][   T92] Call trace:
-> > [    8.078705][   T92]  pmic_glink_send+0x10/0x2c [pmic_glink]
-> > [    8.078706][   T92]  pmic_glink_ucsi_read+0x84/0x14c [ucsi_glink]
-> > [    8.078707][   T92]  pmic_glink_ucsi_read_version+0x20/0x30 [ucsi_glink]
-> > [    8.078708][   T92]  ucsi_register+0x28/0x70
-> > [    8.078717][   T92]  pmic_glink_ucsi_register+0x18/0x28 [ucsi_glink]
-> > [    8.078718][   T92]  process_one_work+0x184/0x2e8
-> > [    8.078723][   T92]  worker_thread+0x2f0/0x404
-> > [    8.078725][   T92]  kthread+0x114/0x118
-> > [    8.078728][   T92]  ret_from_fork+0x10/0x20
-> > [    8.078732][   T92] ---[ end trace 0000000000000000 ]---
-> > [    8.078734][   T92] Kernel panic - not syncing: Oops: Fatal exception
-> > [    8.078735][   T92] SMP: stopping secondary CPUs
-> > [    8.279136][   T92] Kernel Offset: 0x14d9480000 from 0xffffffc080000000
-> > [    8.279141][   T92] PHYS_OFFSET: 0x80000000
-> > [    8.279143][   T92] CPU features: 0x18,004e0003,80113128,564676af
-> > [    8.279148][   T92] Memory Limit: none
->
-> That looks like 'client' is NULL in pmic_glink_send(). The VA of 0x10 is
-> the offset of 'pg' in struct pmic_glink_client. I don't know much about
-> that driver but I'd guess that ucsi_glink has some race condition
-> assigning the client pointer?
->
-> Oh actually, I see the problem. devm_pmic_glink_register_client()
-> returns a struct pmic_glink_client pointer that's assigned to
-> 'ucsi->client'. And pmic_glink_ucsi_read() uses 'ucsi->client' to call
-> pmic_glink_send(). That pointer is NULL because the workqueue that runs
-> pmic_glink_ucsi_register() must run before
-> devm_pmic_glink_register_client() returns and assigns the client pointer
-> to 'ucsi->client'. This is simply a race.
->
->  CPU0                                        CPU1
->  ----                                        ----
->  ucsi->client = NULL;
->  devm_pmic_glink_register_client()
->   client->pdr_notify(client->priv, pg->client_state)
->    pmic_glink_ucsi_pdr_notify()
->     schedule_work(&ucsi->register_work)
->     <schedule away>
->                                              pmic_glink_ucsi_register()
->                                               ucsi_register()
->                                                pmic_glink_ucsi_read_version()
->                                                 pmic_glink_ucsi_read()
->                                                  pmic_glink_ucsi_read()
->                                                   pmic_glink_send(ucsi->client)
->                                                   <client is NULL BAD>
->  ucsi->client = client // Too late!
->
-> >
-> > I couldn't reproduce this kernel panic on vanilla v6.11-rc2 in 50+
-> > test runs after that. So I'm assuming that this debug patch may have
-> > triggered it.
-> > Attaching the crashing and working dmesg logs with the debug patch applied.
-> >
->
-> Sounds like you just need to reboot a bunch! Or add an msleep() in
-> devm_pmic_glink_register_client() after the notify call to open the race
-> window and let the workqueue run.
+Finally, doing things like using IDENTITY through a paging domain
+would be a last resort for troubled devices.
 
-Thank you for diagnosing this race in ucsi_glink. I needed to run an
-overnight reboot test to reproduce this crash, and could reproduce it
-on ~380th reboot. I'll check if it has already been reported or fixed
-on linux-next.
-
-Regards,
-Amit Pundir
+Jason
