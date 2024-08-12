@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7A4130E27;
-	Mon, 12 Aug 2024 16:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0160130E27;
+	Mon, 12 Aug 2024 16:14:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479283; cv=none; b=t8o+E9lQOWfKDV2+QsCHj8FEPFa+iFayCnaVOcOeu4Kf6SZSOcz4xoW0OURunh4vPJWiq0CpxxZ/1STaU/A3LnJZEPtlhbsInexvU1gowH5mZHjIpAQMOxRG3MZPsB6tE2gE6yEGBBZPar6rBCGwL0ZseE2WLR2E5xuhXupeL10=
+	t=1723479286; cv=none; b=uz0+drSoGAjArTe1E0djomfdZ7uO+LH8cEcFbZFSHdhtmtyjncH7C38/HuhNNlNQZPwBr/RqZUkWQ7KALtUuMTJSEE0sLEDELNALH5npq2ncJG51z87wGXS/KyZhLcbzVftV0GCQ+ByXkBaGlueNecDWSw8cHPrIDDe75M1sg9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479283; c=relaxed/simple;
-	bh=vBiWwNl4ZUDGqgSZsByGUCMHFjqda4fXjwW+ZE+WNAQ=;
+	s=arc-20240116; t=1723479286; c=relaxed/simple;
+	bh=ctWrwB8s8wghcJdVioPkzm0RnbFVprqebZ0PbMVU37k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PyFSyJrVdCoyemo4P2Rp3bqIzewBz4b5ek7wTGGTDKj6oCvaXG/89J6TQpkUz2ecnlxRFlGI0UCePmikiW6bdJ9boDPlGAXEGCg+9Uvlystrhl+qu2NYI40SWpxSPJSskAFnhgXnU8rjS2Z6Iix+IY1BK+B/eG9HXkHB8rge9sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0L4UNthe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvDXvbkMGl6MTGV3erj8nmsTl/2QA84NkHTX5fU+mn2dc849jMeoBpRWjAQczjS+CxQaupQ30FnUqgFdo5Gav6bV8kNgm7VNCLi4XrtUQjcUcA8WJ4QHvZEi80OXwbUPymbYrLfuvCln0zKsKndretXFiYrCsf+unx9PKLUdVwk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgDSXA8t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0L4UNthe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C784DC32782;
-	Mon, 12 Aug 2024 16:14:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgDSXA8t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D58EC32782;
+	Mon, 12 Aug 2024 16:14:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479283;
-	bh=vBiWwNl4ZUDGqgSZsByGUCMHFjqda4fXjwW+ZE+WNAQ=;
+	s=korg; t=1723479286;
+	bh=ctWrwB8s8wghcJdVioPkzm0RnbFVprqebZ0PbMVU37k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0L4UNtheyFgB8feDE5AxsD3UxuHcAelTPz9jSm6B5+Nnr4htFXsaqu5IN315gzG14
-	 EfAfUzROjhIg6QYQML/XxXXvpSBH/7e3XFO8pJZGoaAhRbKIFPJCyTgi+BJ/vXuS28
-	 wMPj0mM4TeX1hjD0Dyfoui2PsYdzkI9zw906zmv8=
+	b=RgDSXA8twu8FryqhPdrPHfV2dUbfT+6farcdc/F9vUVelQmWdFo0+M8S5LbHYH7LO
+	 s3XaZ2EC3tMMomeeOWLHsHlvq3chWtU5cw++QNgbal/XFou9tzCHRif+MxzadMnMtm
+	 x1G+KkaNkpH3aVaHNK2dIcaYKY57pul8UYcOm0II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	FUJITA Tomonori <fujita.tomonori@gmail.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 039/189] af_unix: Dont retry after unix_state_lock_nested() in unix_stream_connect().
-Date: Mon, 12 Aug 2024 18:01:35 +0200
-Message-ID: <20240812160133.651663335@linuxfoundation.org>
+Subject: [PATCH 6.6 040/189] PCI: Add Edimax Vendor ID to pci_ids.h
+Date: Mon, 12 Aug 2024 18:01:36 +0200
+Message-ID: <20240812160133.689534301@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,136 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: FUJITA Tomonori <fujita.tomonori@gmail.com>
 
-[ Upstream commit 1ca27e0c8c13ac50a4acf9cdf77069e2d94a547d ]
+[ Upstream commit eee5528890d54b22b46f833002355a5ee94c3bb4 ]
 
-When a SOCK_(STREAM|SEQPACKET) socket connect()s to another one, we need
-to lock the two sockets to check their states in unix_stream_connect().
+Add the Edimax Vendor ID (0x1432) for an ethernet driver for Tehuti
+Networks TN40xx chips. This ID can be used for Realtek 8180 and Ralink
+rt28xx wireless drivers.
 
-We use unix_state_lock() for the server and unix_state_lock_nested() for
-client with tricky sk->sk_state check to avoid deadlock.
-
-The possible deadlock scenario are the following:
-
-  1) Self connect()
-  2) Simultaneous connect()
-
-The former is simple, attempt to grab the same lock, and the latter is
-AB-BA deadlock.
-
-After the server's unix_state_lock(), we check the server socket's state,
-and if it's not TCP_LISTEN, connect() fails with -EINVAL.
-
-Then, we avoid the former deadlock by checking the client's state before
-unix_state_lock_nested().  If its state is not TCP_LISTEN, we can make
-sure that the client and the server are not identical based on the state.
-
-Also, the latter deadlock can be avoided in the same way.  Due to the
-server sk->sk_state requirement, AB-BA deadlock could happen only with
-TCP_LISTEN sockets.  So, if the client's state is TCP_LISTEN, we can
-give up the second lock to avoid the deadlock.
-
-  CPU 1                 CPU 2                  CPU 3
-  connect(A -> B)       connect(B -> A)        listen(A)
-  ---                   ---                    ---
-  unix_state_lock(B)
-  B->sk_state == TCP_LISTEN
-  READ_ONCE(A->sk_state) == TCP_CLOSE
-                            ^^^^^^^^^
-                            ok, will lock A    unix_state_lock(A)
-             .--------------'                  WRITE_ONCE(A->sk_state, TCP_LISTEN)
-             |                                 unix_state_unlock(A)
-             |
-             |          unix_state_lock(A)
-             |          A->sk_sk_state == TCP_LISTEN
-             |          READ_ONCE(B->sk_state) == TCP_LISTEN
-             v                                    ^^^^^^^^^^
-  unix_state_lock_nested(A)                       Don't lock B !!
-
-Currently, while checking the client's state, we also check if it's
-TCP_ESTABLISHED, but this is unlikely and can be checked after we know
-the state is not TCP_CLOSE.
-
-Moreover, if it happens after the second lock, we now jump to the restart
-label, but it's unlikely that the server is not found during the retry,
-so the jump is mostly to revist the client state check.
-
-Let's remove the retry logic and check the state against TCP_CLOSE first.
-
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: FUJITA Tomonori <fujita.tomonori@gmail.com>
+Acked-by: Bjorn Helgaas <bhelgaas@google.com>
+Link: https://patch.msgid.link/20240623235507.108147-2-fujita.tomonori@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 34 +++++++++-------------------------
- 1 file changed, 9 insertions(+), 25 deletions(-)
+ include/linux/pci_ids.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index a551be47cb6c6..b7f62442d8268 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1483,6 +1483,7 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 	struct unix_sock *u = unix_sk(sk), *newu, *otheru;
- 	struct net *net = sock_net(sk);
- 	struct sk_buff *skb = NULL;
-+	unsigned char state;
- 	long timeo;
- 	int err;
+diff --git a/include/linux/pci_ids.h b/include/linux/pci_ids.h
+index 0a85ff5c8db3c..abff4e3b6a58b 100644
+--- a/include/linux/pci_ids.h
++++ b/include/linux/pci_ids.h
+@@ -2124,6 +2124,8 @@
  
-@@ -1529,7 +1530,6 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 		goto out;
- 	}
+ #define PCI_VENDOR_ID_CHELSIO		0x1425
  
--	/* Latch state of peer */
- 	unix_state_lock(other);
++#define PCI_VENDOR_ID_EDIMAX		0x1432
++
+ #define PCI_VENDOR_ID_ADLINK		0x144a
  
- 	/* Apparently VFS overslept socket death. Retry. */
-@@ -1559,37 +1559,21 @@ static int unix_stream_connect(struct socket *sock, struct sockaddr *uaddr,
- 		goto restart;
- 	}
- 
--	/* Latch our state.
--
--	   It is tricky place. We need to grab our state lock and cannot
--	   drop lock on peer. It is dangerous because deadlock is
--	   possible. Connect to self case and simultaneous
--	   attempt to connect are eliminated by checking socket
--	   state. other is TCP_LISTEN, if sk is TCP_LISTEN we
--	   check this before attempt to grab lock.
--
--	   Well, and we have to recheck the state after socket locked.
-+	/* self connect and simultaneous connect are eliminated
-+	 * by rejecting TCP_LISTEN socket to avoid deadlock.
- 	 */
--	switch (READ_ONCE(sk->sk_state)) {
--	case TCP_CLOSE:
--		/* This is ok... continue with connect */
--		break;
--	case TCP_ESTABLISHED:
--		/* Socket is already connected */
--		err = -EISCONN;
--		goto out_unlock;
--	default:
--		err = -EINVAL;
-+	state = READ_ONCE(sk->sk_state);
-+	if (unlikely(state != TCP_CLOSE)) {
-+		err = state == TCP_ESTABLISHED ? -EISCONN : -EINVAL;
- 		goto out_unlock;
- 	}
- 
- 	unix_state_lock_nested(sk, U_LOCK_SECOND);
- 
--	if (sk->sk_state != TCP_CLOSE) {
-+	if (unlikely(sk->sk_state != TCP_CLOSE)) {
-+		err = sk->sk_state == TCP_ESTABLISHED ? -EISCONN : -EINVAL;
- 		unix_state_unlock(sk);
--		unix_state_unlock(other);
--		sock_put(other);
--		goto restart;
-+		goto out_unlock;
- 	}
- 
- 	err = security_unix_stream_connect(sk, other, newsk);
+ #define PCI_VENDOR_ID_SAMSUNG		0x144d
 -- 
 2.43.0
 
