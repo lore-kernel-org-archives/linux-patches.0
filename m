@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1372C1A5;
-	Mon, 12 Aug 2024 16:33:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA4187845;
+	Mon, 12 Aug 2024 16:33:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480395; cv=none; b=MqyoaOJLQ5ttMDimEZ4Ekj0gtJliO40MRbDbfxkMzuAKQ74Ci/txuYFyCIMyzvfpLbOxiZ8YAeN8Fgkw184/IEqa9rwXy1lGPXlOMWJFlH5NkDYS862FRoQ3Wn70Zy20xL/hOqio8rmKLe61CxSp9AiUnCXR2jNhkV2PfXw0j80=
+	t=1723480397; cv=none; b=Mb6Uj2xtxqJQ4FdBnLYumMWcG/HzPp1PuJBhq6PWOjeu6ySkFn52YZcku381Xj4BvdHNlcAzCWtxcPCVJHhaaiOXnvgl4GRV9NlWtWMmUtKN3Oy7Uoig5G2hLWb+8sSdBKmROFh8n/nXWRcvomY1yRHKTTDzfMz91UqX0tF7R9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480395; c=relaxed/simple;
-	bh=f25LoB5zDNaHMAeOJPwWrErTrnODdy6dKRjfmtzPGI8=;
+	s=arc-20240116; t=1723480397; c=relaxed/simple;
+	bh=7cknwIYouWmv1MkN7AJuHxvzawNT0+rYqy6gi44ZhDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B1Yd1+/EbYIHOta1d3jVYkJ8ep0gCl9ZIqW0wIJkkQWtwUEcZZxL7M3+jbl+Mq5eLgpsm5oN3ZRaKDgaf81zrZAjVyk2rS4+qWBhuC8L7VA6oRr2jMkuvaJh0DITbNLcV304Y3ndafZzvKvAkExAdiQmQHuQMqpgprlPk23T/HI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vI0YK7lt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rhHOPpn7voyOkduvlpUN2dBqeJfOlVGmT+oPYEmEJbV4beM1OqorbgHp+EU6cK7rOWHf6hvuC/Pobav6uPzrBiaOlPjd9ecDdzk9BTDrLtJzLgKrMEJwBracwhEgjJSNk8+NcosDlAu4KSlOhmCfVeCHpx75OFIWgEjxmhGGbAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYGDkrHA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vI0YK7lt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A715C32782;
-	Mon, 12 Aug 2024 16:33:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYGDkrHA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2726FC32782;
+	Mon, 12 Aug 2024 16:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480394;
-	bh=f25LoB5zDNaHMAeOJPwWrErTrnODdy6dKRjfmtzPGI8=;
+	s=korg; t=1723480397;
+	bh=7cknwIYouWmv1MkN7AJuHxvzawNT0+rYqy6gi44ZhDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vI0YK7lt6ZsoduWCpP+596qmdcGBWQu3v9pRJN7CwDILWetC6vqlmv2mzVx2O5VvL
-	 Z8JECAwsmj0olHA9o6fdve/Ce/8rywM/JVBVX1wiXgOlZZOr27bRuBhRZ2CEjrUQ0g
-	 MWwIEsxY+gWBeB2R2KUQeYZm1HPfwkryUZ+gGgsQ=
+	b=uYGDkrHAxjneN5scIzkQ90Q9VbJSRIZ9RUHgjgttoowWYUCLaz/5mwI5GNyf11gJ+
+	 7LX9FYxNoZgHvKx0CbOiSWYyCAwTwLiSLWk34mhnrvZ4U3dKjl3pdZzexVQ8O9O8Pm
+	 gbnio5ERMr+3ug5RSSLv7BooINoQy8/nuFHA9vbQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.10 181/263] io_uring/net: dont pick multiple buffers for non-bundle send
-Date: Mon, 12 Aug 2024 18:03:02 +0200
-Message-ID: <20240812160153.476746305@linuxfoundation.org>
+	syzbot+78eccfb8b3c9a85fc6c5@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.10 182/263] ALSA: line6: Fix racy access to midibuf
+Date: Mon, 12 Aug 2024 18:03:03 +0200
+Message-ID: <20240812160153.514413303@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -49,43 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 8fe8ac24adcd76b12edbfdefa078567bfff117d4 upstream.
+commit 15b7a03205b31bc5623378c190d22b7ff60026f1 upstream.
 
-If a send is issued marked with IOSQE_BUFFER_SELECT for selecting a
-buffer, unless it's a bundle, it should not select multiple buffers.
+There can be concurrent accesses to line6 midibuf from both the URB
+completion callback and the rawmidi API access.  This could be a cause
+of KMSAN warning triggered by syzkaller below (so put as reported-by
+here).
 
-Cc: stable@vger.kernel.org
-Fixes: a05d1f625c7a ("io_uring/net: support bundles for send")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+This patch protects the midibuf call of the former code path with a
+spinlock for avoiding the possible races.
+
+Reported-by: syzbot+78eccfb8b3c9a85fc6c5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/00000000000000949c061df288c5@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240805130129.10872-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/usb/line6/driver.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -591,17 +591,18 @@ retry_bundle:
- 			.iovs = &kmsg->fast_iov,
- 			.max_len = INT_MAX,
- 			.nr_iovs = 1,
--			.mode = KBUF_MODE_EXPAND,
- 		};
+--- a/sound/usb/line6/driver.c
++++ b/sound/usb/line6/driver.c
+@@ -286,12 +286,14 @@ static void line6_data_received(struct u
+ {
+ 	struct usb_line6 *line6 = (struct usb_line6 *)urb->context;
+ 	struct midi_buffer *mb = &line6->line6midi->midibuf_in;
++	unsigned long flags;
+ 	int done;
  
- 		if (kmsg->free_iov) {
- 			arg.nr_iovs = kmsg->free_iov_nr;
- 			arg.iovs = kmsg->free_iov;
--			arg.mode |= KBUF_MODE_FREE;
-+			arg.mode = KBUF_MODE_FREE;
+ 	if (urb->status == -ESHUTDOWN)
+ 		return;
+ 
+ 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
++		spin_lock_irqsave(&line6->line6midi->lock, flags);
+ 		done =
+ 			line6_midibuf_write(mb, urb->transfer_buffer, urb->actual_length);
+ 
+@@ -300,12 +302,15 @@ static void line6_data_received(struct u
+ 			dev_dbg(line6->ifcdev, "%d %d buffer overflow - message skipped\n",
+ 				done, urb->actual_length);
  		}
++		spin_unlock_irqrestore(&line6->line6midi->lock, flags);
  
- 		if (!(sr->flags & IORING_RECVSEND_BUNDLE))
- 			arg.nr_iovs = 1;
-+		else
-+			arg.mode |= KBUF_MODE_EXPAND;
+ 		for (;;) {
++			spin_lock_irqsave(&line6->line6midi->lock, flags);
+ 			done =
+ 				line6_midibuf_read(mb, line6->buffer_message,
+ 						   LINE6_MIDI_MESSAGE_MAXLEN,
+ 						   LINE6_MIDIBUF_READ_RX);
++			spin_unlock_irqrestore(&line6->line6midi->lock, flags);
  
- 		ret = io_buffers_select(req, &arg, issue_flags);
- 		if (unlikely(ret < 0))
+ 			if (done <= 0)
+ 				break;
 
 
