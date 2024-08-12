@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5506183CC9;
-	Mon, 12 Aug 2024 16:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13465187356;
+	Mon, 12 Aug 2024 16:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478845; cv=none; b=Bl7S3lBtDV13mXfXKakpqMwZRGu2fefN4giKe7Buabf2a93oLAuGO/8C1FWhRl6ve/zg4J8mx4ypqIahAfqXjS6ddh6PR91JeXy6UJpy63z6SrwukAYLV7PWkubSBTduZzcd1llWlgPdFrsUG/LOsRSeXrgLN/ZgDS9k1vTUC9w=
+	t=1723478849; cv=none; b=EjSVFoDukIsXOpfWRP+XoJ5C0yBwziTu/rgtHHD9/HRpWPIRwdP1CVdLg49uJ1ZmTGSLZCWsw2Q+nXBOv4444PZ9e5+dCkOBSdZslPuLPsRYuX/tVgHFVs3iBdLOYh/wsSSwwsBIepLXDywXkM8Uq0O9D+Byfhd15ffiwUrAN64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478845; c=relaxed/simple;
-	bh=5eaz8YQ4YoSl+ypCuiPTSDWzicjAayEwmfQHZaze+4w=;
+	s=arc-20240116; t=1723478849; c=relaxed/simple;
+	bh=DXYCKroz83YlonsSrJFo8K3BFMzCtcVQm3nRn27VP60=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tk4jCBXdRuRHl7PsppHfzV+FvytFr3hQNz8Gv/sY0Wgb5HEgULQq8kudDa7q7AoE81U4uhxD9btAk2Kyu6SAweigJ7IVDif18OGaFYgKEFnw+nO5i7KB1c+DS3Q1cWk7iVe/iBqmaEVTu0NI8TE8n3WIj88dyb7iZZpJjqiZsJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XStKWvOk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=up5E+t8WJE5J+SzdSsjVVZbZDLYbIUC18N/9gjDZRSJjdDTbSHhTEOGEJgudir1MsfbMuLoRQ4ppeH+fndQ/DmpY3SkiZza0zkv2C0ggOTZwV6mYf8SyJNOWrAYXWNDbFbzxRuO5nXh0T9lYxpHvBs44G4ovbtzr8FfRe+mK2jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hAbDuGch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XStKWvOk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11265C32782;
-	Mon, 12 Aug 2024 16:07:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hAbDuGch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862E4C32782;
+	Mon, 12 Aug 2024 16:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478845;
-	bh=5eaz8YQ4YoSl+ypCuiPTSDWzicjAayEwmfQHZaze+4w=;
+	s=korg; t=1723478848;
+	bh=DXYCKroz83YlonsSrJFo8K3BFMzCtcVQm3nRn27VP60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XStKWvOky9/MevSrSOac7Fw/VTJTJG7m7r9wX0beVKxkW8tpfsqZW0hgLZ9kSyv9Z
-	 U6UgEIN21vZtV2AmH8Az9hWTz+iWjtSdLLByEBvIXdWZsMkCg+aOlOJxEE6x72k7xO
-	 1Ae6UjIjGROcNb/Tc6CVJ+nfSMrSVhbtKvc57vUQ=
+	b=hAbDuGchoiKA3Qg8YLrQJ6P/fVOlzc8GXKhH7ycOBc5H8m3rQUhfkeh+tk74S10YF
+	 Vo/lbviabyjZOz76GPJMA0r+v7WsqWeYwP9U/07KdIcoFFtsTOE+4kK2mx2NW28dQV
+	 YYJWemVJ41xgnkpbTctFqX+lIZoc2uvph0ttbzT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.1 053/150] scsi: mpt3sas: Avoid IOMMU page faults on REPORT ZONES
-Date: Mon, 12 Aug 2024 18:02:14 +0200
-Message-ID: <20240812160127.214083679@linuxfoundation.org>
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 054/150] irqchip/meson-gpio: Convert meson_gpio_irq_controller::lock to raw_spinlock_t
+Date: Mon, 12 Aug 2024 18:02:15 +0200
+Message-ID: <20240812160127.254419738@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -52,96 +50,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-commit 82dbb57ac8d06dfe8227ba9ab11a49de2b475ae5 upstream.
+commit f872d4af79fe8c71ae291ce8875b477e1669a6c7 upstream.
 
-Some firmware versions of the 9600 series SAS HBA byte-swap the REPORT
-ZONES command reply buffer from ATA-ZAC devices by directly accessing the
-buffer in the host memory. This does not respect the default command DMA
-direction and causes IOMMU page faults on architectures with an IOMMU
-enforcing write-only mappings for DMA_FROM_DEVICE DMA driection (e.g. AMD
-hosts).
+This lock is acquired under irq_desc::lock with interrupts disabled.
 
-scsi 18:0:0:0: Direct-Access-ZBC ATA      WDC  WSH722020AL W870 PQ: 0 ANSI: 6
-scsi 18:0:0:0: SATA: handle(0x0027), sas_addr(0x300062b2083e7c40), phy(0), device_name(0x5000cca29dc35e11)
-scsi 18:0:0:0: enclosure logical id (0x300062b208097c40), slot(0)
-scsi 18:0:0:0: enclosure level(0x0000), connector name( C0.0)
-scsi 18:0:0:0: atapi(n), ncq(y), asyn_notify(n), smart(y), fua(y), sw_preserve(y)
-scsi 18:0:0:0: qdepth(32), tagged(1), scsi_level(7), cmd_que(1)
-sd 18:0:0:0: Attached scsi generic sg2 type 20
-sd 18:0:0:0: [sdc] Host-managed zoned block device
-mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b200 flags=0x0050]
-mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b300 flags=0x0050]
-mpt3sas_cm0: mpt3sas_ctl_pre_reset_handler: Releasing the trace buffer due to adapter reset.
-mpt3sas_cm0 fault info from func: mpt3sas_base_make_ioc_ready
-mpt3sas_cm0: fault_state(0x2666)!
-mpt3sas_cm0: sending diag reset !!
-mpt3sas_cm0: diag reset: SUCCESS
-sd 18:0:0:0: [sdc] REPORT ZONES start lba 0 failed
-sd 18:0:0:0: [sdc] REPORT ZONES: Result: hostbyte=DID_RESET driverbyte=DRIVER_OK
-sd 18:0:0:0: [sdc] 0 4096-byte logical blocks: (0 B/0 B)
+When PREEMPT_RT is enabled, 'spinlock_t' becomes preemptible, which results
+in invalid lock acquire context;
 
-Avoid such issue by always mapping the buffer of REPORT ZONES commands
-using DMA_BIDIRECTIONAL (read+write IOMMU mapping). This is done by
-introducing the helper function _base_scsi_dma_map() and using this helper
-in _base_build_sg_scmd() and _base_build_sg_scmd_ieee() instead of calling
-directly scsi_dma_map().
+  [ BUG: Invalid wait context ]
+  swapper/0/1 is trying to lock:
+  ffff0000008fed30 (&ctl->lock){....}-{3:3}, at: meson_gpio_irq_update_bits0
+  other info that might help us debug this:
+  context-{5:5}
+  3 locks held by swapper/0/1:
+   #0: ffff0000003cd0f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0x90c
+   #1: ffff000004714650 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq0
+   #2: ffff0000047144c8 (&irq_desc_lock_class){-.-.}-{2:2}, at: __setup_irq0
+  stack backtrace:
+  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.9-sdkernel #1
+  Call trace:
+   _raw_spin_lock_irqsave+0x60/0x88
+   meson_gpio_irq_update_bits+0x34/0x70
+   meson8_gpio_irq_set_type+0x78/0xc4
+   meson_gpio_irq_set_type+0x30/0x60
+   __irq_set_trigger+0x60/0x180
+   __setup_irq+0x30c/0x6e0
+   request_threaded_irq+0xec/0x1a4
 
-Fixes: 471ef9d4e498 ("mpt3sas: Build MPI SGL LIST on GEN2 HBAs and IEEE SGL LIST on GEN3 HBAs")
+Fixes: 215f4cc0fb20 ("irqchip/meson: Add support for gpio interrupt controller")
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240719073913.179559-3-dlemoal@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/all/20240729131850.3015508-1-avkrasnov@salutedevices.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-meson-gpio.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -2672,6 +2672,22 @@ _base_build_zero_len_sge_ieee(struct MPT
- 	_base_add_sg_single_ieee(paddr, sgl_flags, 0, 0, -1);
+--- a/drivers/irqchip/irq-meson-gpio.c
++++ b/drivers/irqchip/irq-meson-gpio.c
+@@ -168,7 +168,7 @@ struct meson_gpio_irq_controller {
+ 	void __iomem *base;
+ 	u32 channel_irqs[MAX_NUM_CHANNEL];
+ 	DECLARE_BITMAP(channel_map, MAX_NUM_CHANNEL);
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ };
+ 
+ static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
+@@ -177,14 +177,14 @@ static void meson_gpio_irq_update_bits(s
+ 	unsigned long flags;
+ 	u32 tmp;
+ 
+-	spin_lock_irqsave(&ctl->lock, flags);
++	raw_spin_lock_irqsave(&ctl->lock, flags);
+ 
+ 	tmp = readl_relaxed(ctl->base + reg);
+ 	tmp &= ~mask;
+ 	tmp |= val;
+ 	writel_relaxed(tmp, ctl->base + reg);
+ 
+-	spin_unlock_irqrestore(&ctl->lock, flags);
++	raw_spin_unlock_irqrestore(&ctl->lock, flags);
  }
  
-+static inline int _base_scsi_dma_map(struct scsi_cmnd *cmd)
-+{
-+	/*
-+	 * Some firmware versions byte-swap the REPORT ZONES command reply from
-+	 * ATA-ZAC devices by directly accessing in the host buffer. This does
-+	 * not respect the default command DMA direction and causes IOMMU page
-+	 * faults on some architectures with an IOMMU enforcing write mappings
-+	 * (e.g. AMD hosts). Avoid such issue by making the report zones buffer
-+	 * mapping bi-directional.
-+	 */
-+	if (cmd->cmnd[0] == ZBC_IN && cmd->cmnd[1] == ZI_REPORT_ZONES)
-+		cmd->sc_data_direction = DMA_BIDIRECTIONAL;
-+
-+	return scsi_dma_map(cmd);
-+}
-+
- /**
-  * _base_build_sg_scmd - main sg creation routine
-  *		pcie_device is unused here!
-@@ -2718,7 +2734,7 @@ _base_build_sg_scmd(struct MPT3SAS_ADAPT
- 	sgl_flags = sgl_flags << MPI2_SGE_FLAGS_SHIFT;
+ static void meson_gpio_irq_init_dummy(struct meson_gpio_irq_controller *ctl)
+@@ -234,12 +234,12 @@ meson_gpio_irq_request_channel(struct me
+ 	unsigned long flags;
+ 	unsigned int idx;
  
- 	sg_scmd = scsi_sglist(scmd);
--	sges_left = scsi_dma_map(scmd);
-+	sges_left = _base_scsi_dma_map(scmd);
- 	if (sges_left < 0)
- 		return -ENOMEM;
+-	spin_lock_irqsave(&ctl->lock, flags);
++	raw_spin_lock_irqsave(&ctl->lock, flags);
  
-@@ -2862,7 +2878,7 @@ _base_build_sg_scmd_ieee(struct MPT3SAS_
+ 	/* Find a free channel */
+ 	idx = find_first_zero_bit(ctl->channel_map, ctl->params->nr_channels);
+ 	if (idx >= ctl->params->nr_channels) {
+-		spin_unlock_irqrestore(&ctl->lock, flags);
++		raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ 		pr_err("No channel available\n");
+ 		return -ENOSPC;
  	}
+@@ -247,7 +247,7 @@ meson_gpio_irq_request_channel(struct me
+ 	/* Mark the channel as used */
+ 	set_bit(idx, ctl->channel_map);
  
- 	sg_scmd = scsi_sglist(scmd);
--	sges_left = scsi_dma_map(scmd);
-+	sges_left = _base_scsi_dma_map(scmd);
- 	if (sges_left < 0)
+-	spin_unlock_irqrestore(&ctl->lock, flags);
++	raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ 
+ 	/*
+ 	 * Setup the mux of the channel to route the signal of the pad
+@@ -557,7 +557,7 @@ static int meson_gpio_irq_of_init(struct
+ 	if (!ctl)
  		return -ENOMEM;
  
+-	spin_lock_init(&ctl->lock);
++	raw_spin_lock_init(&ctl->lock);
+ 
+ 	ctl->base = of_iomap(node, 0);
+ 	if (!ctl->base) {
 
 
