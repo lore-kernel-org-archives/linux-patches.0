@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92750183CA6;
-	Mon, 12 Aug 2024 16:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78B918454D;
+	Mon, 12 Aug 2024 16:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479588; cv=none; b=ed0O9sD11YGeoWDZIP+wuKYWFWcViXC4uBozpU750hH5lG1x+Uph9q+iSDztmFbQIRiUseBWWzvjLb2hOUYilSwOhoS9r30il2qVEUTzZXbVX4QCNFuicZ2VhTSWO2yBA1DiWfJ/7nJjreCm0RLQ42f+RiAV2UiSxa1xB4tRsYQ=
+	t=1723479591; cv=none; b=MKLhHu+B8meQd0iB9mQoecpRTh8vSGTWs3eTJAsN0xuzzKemOV/RWGxGsMyZEm4x2LRj5DH73pU/WjUkNPeVJnWzxIzivNgVx49fJ16N30BlgCl/sSLRuuVkUAJqQLf1K7uECMz6ra75lCopc1b1+xs/oKjmCR1KBIRo5GQvG3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479588; c=relaxed/simple;
-	bh=HJqGqr5jVPWubxgcZJTa5iHV0cEIAWw/8CxCEKNZyGk=;
+	s=arc-20240116; t=1723479591; c=relaxed/simple;
+	bh=X4JaAPJXwFYFO4fiz6QD4+A4LCEWvnHIzaCJ13J8ivY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MuFEmMsY7tVfdFRnGWkKkJyBrojrOfeEruZv6hxoYtP1HSgA1V0T/j/xNk0JwL41dJH1zfc4l+Er0+CtPp97eaKD+S+WnXs0x/qy1axPUVo/vDCrutm//av4owSIuukS4qDDIC4+nZuMA+10/EJ0osz6lhcMC07ir/S42dAfU/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mByNj7A6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=twfphulZ4VU7kR4APygFG2qLOuhJ5Ofq3BTHSo/LkpqqiHJVcEvGKbquw2k2lqDssmKAfqvM7B6Riswdm6+amOLvXi9MbUjg8sJKUd6s4xi4/4lsUSL85iyWQS1kHdT8QrQe7PeoQk6l/JbC734WbdvhJIBJqoLR7eBl5JPrjYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GVhlyiBn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mByNj7A6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1756C4AF09;
-	Mon, 12 Aug 2024 16:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GVhlyiBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EACFC32782;
+	Mon, 12 Aug 2024 16:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479588;
-	bh=HJqGqr5jVPWubxgcZJTa5iHV0cEIAWw/8CxCEKNZyGk=;
+	s=korg; t=1723479591;
+	bh=X4JaAPJXwFYFO4fiz6QD4+A4LCEWvnHIzaCJ13J8ivY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mByNj7A6b9+NN2RgfdMEtauYWAL5YUzPLrN2u/J6SOefBFXeiUGHKngog2p0NkeIE
-	 kKsNSZrjEtZeb5Un+bHXEzmm+9lcuxWb5rAR289KbZKGbR3VQOzQQHRm5s20sic82s
-	 lbw5gf+/Q+satKGT1wgavCC+NOuzID3c6k8Kl+f0=
+	b=GVhlyiBnQ51gumkFI30WL3HuIVBuHyNQrmkYMI8hf4thfo4VjkGrR+wIgJ/n1P433
+	 NtlnC+mE0Rvk7iuaQ6bT8zkf/OmuNhaX8uWPU4WYhAb2oSBYIyCj8b/BXZpl2OGot8
+	 TDbzdAB0nGkO/BuRqf4dV07I7wTP70VSZquB1VXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 102/189] spi: spi-fsl-lpspi: Fix scldiv calculation
-Date: Mon, 12 Aug 2024 18:02:38 +0200
-Message-ID: <20240812160136.068485035@linuxfoundation.org>
+Subject: [PATCH 6.6 093/189] ASoC: codecs: wsa884x: Correct Soundwire ports mask
+Date: Mon, 12 Aug 2024 18:02:29 +0200
+Message-ID: <20240812160135.723976247@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,55 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 730bbfaf7d4890bd99e637db7767dc68cfeb24e7 ]
+[ Upstream commit dcb6631d05152930e2ea70fd2abfd811b0e970b5 ]
 
-The effective SPI clock frequency should never exceed speed_hz
-otherwise this might result in undefined behavior of the SPI device.
+Device has up to WSA884X_MAX_SWR_PORTS number of ports and the array
+assigned to prop.sink_dpn_prop has 0..WSA884X_MAX_SWR_PORTS-1 elements.
+On the other hand, GENMASK(high, low) creates an inclusive mask between
+<high, low>, so we need the mask from 0 up to WSA884X_MAX_SWR_PORTS-1.
 
-Currently the scldiv calculation could violate this constraint.
-For the example parameters perclk_rate = 24 MHz and speed_hz = 7 MHz,
-the function fsl_lpspi_set_bitrate will determine perscale = 0 and
-scldiv = 1, which is a effective SPI clock of 8 MHz.
+Theoretically, too wide mask could cause an out of bounds read in
+sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
+driver, e.g. adding incorrect number of ports via
+sdw_stream_add_slave().
 
-So fix this by rounding up the quotient of perclk_rate and speed_hz.
-While this never change within the loop, we can pull this out.
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20240804113611.83613-1-wahrenst@gmx.net
+Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-6-d4d7a8b56f05@linaro.org
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wsa884x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index 079035db7dd85..3c0f7dc9614d1 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -296,7 +296,7 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
- static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- {
- 	struct lpspi_config config = fsl_lpspi->config;
--	unsigned int perclk_rate, scldiv;
-+	unsigned int perclk_rate, scldiv, div;
- 	u8 prescale;
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index ed8110511a5b1..1cd52fab7b40d 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -1866,7 +1866,7 @@ static int wsa884x_probe(struct sdw_slave *pdev,
+ 					WSA884X_MAX_SWR_PORTS))
+ 		dev_dbg(dev, "Static Port mapping not specified\n");
  
- 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
-@@ -313,8 +313,10 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 		return -EINVAL;
- 	}
- 
-+	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
-+
- 	for (prescale = 0; prescale < 8; prescale++) {
--		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
-+		scldiv = div / (1 << prescale) - 2;
- 		if (scldiv < 256) {
- 			fsl_lpspi->config.prescale = prescale;
- 			break;
+-	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS, 0);
++	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS - 1, 0);
+ 	pdev->prop.simple_clk_stop_capable = true;
+ 	pdev->prop.sink_dpn_prop = wsa884x_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
 -- 
 2.43.0
 
