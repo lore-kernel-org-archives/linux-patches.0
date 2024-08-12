@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F801183CD4;
-	Mon, 12 Aug 2024 16:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1ACC183CD4;
+	Mon, 12 Aug 2024 16:29:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480155; cv=none; b=ZDWQ9zGHjQrgKRizn8mxojytN4gNwdrqF0/oRQ+egL9mETLsZOcKZQ+74E29O62+TKLETPLvLHidk23zFN5SofyQ/sC8s6zed1kaHET9+a1BkH/Bcz/jNZjAQiPAXgEEE5JK62+S7SOjEF9H952yEjilF8Ra3rZtITJIq52axDQ=
+	t=1723480158; cv=none; b=ejqm3zxkOnHb7PODv6D2e8qy1HcsVR8hY5Vz0Hf5e6RttpNsZltUhGiteaCRvKgGPogKPSsXgpwb/j5FHZZV28FxlLme0CXymJRZBswKGzpfYoeywpqGUWwC56E9Vz6F84aSB+o+M0NT+rMZr2igroXqks0xhShmj/XOaNf0LCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480155; c=relaxed/simple;
-	bh=i/Zm5pJCZfihxifBf2KDHhBApuJ8aEcXPKRdkf2A/IU=;
+	s=arc-20240116; t=1723480158; c=relaxed/simple;
+	bh=nb2mpv8KF6u31meg6HQwqQL9m3dYdo75G/GttHQdv/s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oiXVFaxMD2WxrZsAr49k6msW4J2rPTZucpag286PqFTVczd9hqGyoXIoHf8bdbEMcYOs/xPHpYzSoIE8LLcul3gzUisceP81HrrbWAp7qrE7+US3g9OITvSC0NVeBYhj6uNbSkB9rXeYVJgcBmkI+O9EI5/nS8cIMuKWxINpwcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1ywFa/k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+deCojzxuCb887F6NvVGQDD3oy1oMjgtSfyM61rggjbZhmHD7PwTr1BSAIcs0W0+jRUQIoXsYWse0Za7opfzLyuVRdYBjprmHAjl+lwxqumwWoqu0um65wfMhxMMYWktRB+RGKGSvphGk1nZE/h8WTtHBvI2EEW0Fh3IO2H2Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SjiUC5iK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1ywFa/k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88884C32782;
-	Mon, 12 Aug 2024 16:29:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SjiUC5iK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AD2C32782;
+	Mon, 12 Aug 2024 16:29:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480155;
-	bh=i/Zm5pJCZfihxifBf2KDHhBApuJ8aEcXPKRdkf2A/IU=;
+	s=korg; t=1723480158;
+	bh=nb2mpv8KF6u31meg6HQwqQL9m3dYdo75G/GttHQdv/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1ywFa/k1gyv4DgaFa0oxi12dTQoRzxC1rlz9Xqa3UPPRJ++kw454lZXdrQNaRJEn
-	 3yghQ0ul43CPx+HQ9HVgrg8DVMeWI1/+AEkb3i95PlaDifrqhw1+BZVHlwWxL3jchZ
-	 Ai9YtN5aTvRZ7zmo2pAYtW3MR4vlZcUCZ4Cvsws8=
+	b=SjiUC5iKbV9hEo2/GxX8BytTh08A3e/T1Tc+ixkSQK+wHlzJzG2aKRAZlThRAiy6Q
+	 eeY+l3RTXlzSrsLre2VDxUTD/r4CexFwamXNa4eQMEapRBHGwchpAnOyThxw1SqJ2Q
+	 swQ3ZJdNQ2ID7HVQQE+menp4iYd6docpPyjhZPh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Chi Zhiling <chizhiling@kylinos.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 084/263] btrfs: fix bitmap leak when loading free space cache on duplicate entry
-Date: Mon, 12 Aug 2024 18:01:25 +0200
-Message-ID: <20240812160149.762462881@linuxfoundation.org>
+Subject: [PATCH 6.10 111/263] media: xc2028: avoid use-after-free in load_firmware_cb()
+Date: Mon, 12 Aug 2024 18:01:52 +0200
+Message-ID: <20240812160150.795554984@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,36 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Chi Zhiling <chizhiling@kylinos.cn>
 
-[ Upstream commit 320d8dc612660da84c3b70a28658bb38069e5a9a ]
+[ Upstream commit 68594cec291ff9523b9feb3f43fd853dcddd1f60 ]
 
-If we failed to link a free space entry because there's already a
-conflicting entry for the same offset, we free the free space entry but
-we don't free the associated bitmap that we had just allocated before.
-Fix that by freeing the bitmap before freeing the entry.
+syzkaller reported use-after-free in load_firmware_cb() [1].
+The reason is because the module allocated a struct tuner in tuner_probe(),
+and then the module initialization failed, the struct tuner was released.
+A worker which created during module initialization accesses this struct
+tuner later, it caused use-after-free.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+The process is as follows:
+
+task-6504           worker_thread
+tuner_probe                             <= alloc dvb_frontend [2]
+...
+request_firmware_nowait                 <= create a worker
+...
+tuner_remove                            <= free dvb_frontend
+...
+                    request_firmware_work_func  <= the firmware is ready
+                    load_firmware_cb    <= but now the dvb_frontend has been freed
+
+To fix the issue, check the dvd_frontend in load_firmware_cb(), if it is
+null, report a warning and just return.
+
+[1]:
+    ==================================================================
+     BUG: KASAN: use-after-free in load_firmware_cb+0x1310/0x17a0
+     Read of size 8 at addr ffff8000d7ca2308 by task kworker/2:3/6504
+
+     Call trace:
+      load_firmware_cb+0x1310/0x17a0
+      request_firmware_work_func+0x128/0x220
+      process_one_work+0x770/0x1824
+      worker_thread+0x488/0xea0
+      kthread+0x300/0x430
+      ret_from_fork+0x10/0x20
+
+     Allocated by task 6504:
+      kzalloc
+      tuner_probe+0xb0/0x1430
+      i2c_device_probe+0x92c/0xaf0
+      really_probe+0x678/0xcd0
+      driver_probe_device+0x280/0x370
+      __device_attach_driver+0x220/0x330
+      bus_for_each_drv+0x134/0x1c0
+      __device_attach+0x1f4/0x410
+      device_initial_probe+0x20/0x30
+      bus_probe_device+0x184/0x200
+      device_add+0x924/0x12c0
+      device_register+0x24/0x30
+      i2c_new_device+0x4e0/0xc44
+      v4l2_i2c_new_subdev_board+0xbc/0x290
+      v4l2_i2c_new_subdev+0xc8/0x104
+      em28xx_v4l2_init+0x1dd0/0x3770
+
+     Freed by task 6504:
+      kfree+0x238/0x4e4
+      tuner_remove+0x144/0x1c0
+      i2c_device_remove+0xc8/0x290
+      __device_release_driver+0x314/0x5fc
+      device_release_driver+0x30/0x44
+      bus_remove_device+0x244/0x490
+      device_del+0x350/0x900
+      device_unregister+0x28/0xd0
+      i2c_unregister_device+0x174/0x1d0
+      v4l2_device_unregister+0x224/0x380
+      em28xx_v4l2_init+0x1d90/0x3770
+
+     The buggy address belongs to the object at ffff8000d7ca2000
+      which belongs to the cache kmalloc-2k of size 2048
+     The buggy address is located 776 bytes inside of
+      2048-byte region [ffff8000d7ca2000, ffff8000d7ca2800)
+     The buggy address belongs to the page:
+     page:ffff7fe00035f280 count:1 mapcount:0 mapping:ffff8000c001f000 index:0x0
+     flags: 0x7ff800000000100(slab)
+     raw: 07ff800000000100 ffff7fe00049d880 0000000300000003 ffff8000c001f000
+     raw: 0000000000000000 0000000080100010 00000001ffffffff 0000000000000000
+     page dumped because: kasan: bad access detected
+
+     Memory state around the buggy address:
+      ffff8000d7ca2200: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+      ffff8000d7ca2280: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     >ffff8000d7ca2300: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+                           ^
+      ffff8000d7ca2380: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+      ffff8000d7ca2400: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
+     ==================================================================
+
+[2]
+    Actually, it is allocated for struct tuner, and dvb_frontend is inside.
+
+Signed-off-by: Chi Zhiling <chizhiling@kylinos.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-cache.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/tuners/xc2028.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index d674f2106593a..62c3dea9572ab 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -858,6 +858,7 @@ static int __load_free_space_cache(struct btrfs_root *root, struct inode *inode,
- 				spin_unlock(&ctl->tree_lock);
- 				btrfs_err(fs_info,
- 					"Duplicate entries in free space cache, dumping");
-+				kmem_cache_free(btrfs_free_space_bitmap_cachep, e->bitmap);
- 				kmem_cache_free(btrfs_free_space_cachep, e);
- 				goto free_cache;
- 			}
+diff --git a/drivers/media/tuners/xc2028.c b/drivers/media/tuners/xc2028.c
+index 5a967edceca93..352b8a3679b72 100644
+--- a/drivers/media/tuners/xc2028.c
++++ b/drivers/media/tuners/xc2028.c
+@@ -1361,9 +1361,16 @@ static void load_firmware_cb(const struct firmware *fw,
+ 			     void *context)
+ {
+ 	struct dvb_frontend *fe = context;
+-	struct xc2028_data *priv = fe->tuner_priv;
++	struct xc2028_data *priv;
+ 	int rc;
+ 
++	if (!fe) {
++		pr_warn("xc2028: No frontend in %s\n", __func__);
++		return;
++	}
++
++	priv = fe->tuner_priv;
++
+ 	tuner_dbg("request_firmware_nowait(): %s\n", fw ? "OK" : "error");
+ 	if (!fw) {
+ 		tuner_err("Could not load firmware %s.\n", priv->fname);
 -- 
 2.43.0
 
