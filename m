@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12C1186295;
-	Mon, 12 Aug 2024 16:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ADC18455B;
+	Mon, 12 Aug 2024 16:07:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478872; cv=none; b=MzsO9RnDB3ayF1f0mB+BTKODvGaRct/H6+YbE9iGByjRrgAZGYeLjguMhG9Y8I2SUb6h7jKJkFsFFeGfkJDFf8N/hqoYT2u7tQRpIUwppLu2WBTyBf9FLPhu7viv2TzsLy13T3pEiAVGVJqXUF3QW4wy+O7EF9VJAFP6bIueTko=
+	t=1723478875; cv=none; b=QyM74WhBzueOmF/bqHUk1U615ZPgBi8PXG37AOWotC0PIa3gZUaB59ktmYWDUeFutyISRn2rC7SvSIkZW0uTPO/ZohGDmd5wz1Md6lT3JxWT32uvrapks/MZ3frA01EiCnJ2jBYylVNwtrW1e53mkv0NXxkuQj3Z5KQqQ3a1mKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478872; c=relaxed/simple;
-	bh=pFBaiHu1/VmMZMSTqpf7LTtigz/HXPuftJVv1PkujB8=;
+	s=arc-20240116; t=1723478875; c=relaxed/simple;
+	bh=k0Qj48Y43vMGDRuuU7OrBCexUiutfncYMf/mO+7qSLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RX1h/dpCSYlg13yDBePfWuTSEbwY7Yvn/QI6ZJ+xdqia/MvXmZNdI9P8pOkXwDO1QN6cB+FpdWjtDmBQXHhCjnGK4pmZGDMgGOUSqDmpxjDTXIbMxSRyn3+WqrqiKkb2yP7frjLXsGE9AaY6GeONpkMNRp9RgVJcxwT+pl7ocQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePcd4Wss; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIuha3whTerk0dtO/KLvci/pbI/c9O95XKLWzb8n1dac2S6txAz1wmCNvtIjYh70jy5jKrq+OjzAna7BqeVNN0kcBzZLeWMz46rtFgknN2lUeMevuPSFgOhStGIm9r01EZ12KsLuqlGeCoucopsfUZFi53tX38FFjwH7cMY+ep4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wrcn6ip9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePcd4Wss"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B81C32782;
-	Mon, 12 Aug 2024 16:07:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wrcn6ip9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D52C32782;
+	Mon, 12 Aug 2024 16:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478871;
-	bh=pFBaiHu1/VmMZMSTqpf7LTtigz/HXPuftJVv1PkujB8=;
+	s=korg; t=1723478875;
+	bh=k0Qj48Y43vMGDRuuU7OrBCexUiutfncYMf/mO+7qSLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ePcd4WssMXAauDYCir4XKPNUbWvi9PF6nCT5OyKzWG3/ehvOqVFlXYh8eNpkBueMp
-	 ZRxMwrK2aFQKBfpd2iDRbTTpx6Olzmr2BLa/tIab5gTskc+ruVRDxfAUK9yXQqkNbg
-	 Ky6EUTTsoHrdJa2ZQOorcJa0GFcGX5+1X5+L8vfE=
+	b=Wrcn6ip91V84idrzlQBV+56rAMufeB3kZ0JuW9OcbQQvnuZb8imuDdpxDO8SZ5SCC
+	 0J/+l7OkFadN0Ss+ZbsXA1bY64U1AowB4HPg6/kB7pZGquPAuaZ0vWo3de/o0rmbzA
+	 ewO9asUj4yQ9umk0bfmCUJAD8C9B58M4AGs1zwCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/150] clocksource/drivers/sh_cmt: Address race condition for clock events
-Date: Mon, 12 Aug 2024 18:01:42 +0200
-Message-ID: <20240812160125.980365860@linuxfoundation.org>
+	Zheng Zucheng <zhengzucheng@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 056/150] sched/cputime: Fix mul_u64_u64_div_u64() precision for cputime
+Date: Mon, 12 Aug 2024 18:02:17 +0200
+Message-ID: <20240812160127.335031324@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -45,148 +44,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+From: Zheng Zucheng <zhengzucheng@huawei.com>
 
-[ Upstream commit db19d3aa77612983a02bd223b3f273f896b243cf ]
+commit 77baa5bafcbe1b2a15ef9c37232c21279c95481c upstream.
 
-There is a race condition in the CMT interrupt handler. In the interrupt
-handler the driver sets a driver private flag, FLAG_IRQCONTEXT. This
-flag is used to indicate any call to set_next_event() should not be
-directly propagated to the device, but instead cached. This is done as
-the interrupt handler itself reprograms the device when needed before it
-completes and this avoids this operation to take place twice.
+In extreme test scenarios:
+the 14th field utime in /proc/xx/stat is greater than sum_exec_runtime,
+utime = 18446744073709518790 ns, rtime = 135989749728000 ns
 
-It is unclear why this design was chosen, my suspicion is to allow the
-struct clock_event_device.event_handler callback, which is called while
-the FLAG_IRQCONTEXT is set, can update the next event without having to
-write to the device twice.
+In cputime_adjust() process, stime is greater than rtime due to
+mul_u64_u64_div_u64() precision problem.
+before call mul_u64_u64_div_u64(),
+stime = 175136586720000, rtime = 135989749728000, utime = 1416780000.
+after call mul_u64_u64_div_u64(),
+stime = 135989949653530
 
-Unfortunately there is a race between when the FLAG_IRQCONTEXT flag is
-set and later cleared where the interrupt handler have already started to
-write the next event to the device. If set_next_event() is called in
-this window the value is only cached in the driver but not written. This
-leads to the board to misbehave, or worse lockup and produce a splat.
+unsigned reversion occurs because rtime is less than stime.
+utime = rtime - stime = 135989749728000 - 135989949653530
+		      = -199925530
+		      = (u64)18446744073709518790
 
-   rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
-   rcu:     0-...!: (0 ticks this GP) idle=f5e0/0/0x0 softirq=519/519 fqs=0 (false positive?)
-   rcu:     (detected by 1, t=6502 jiffies, g=-595, q=77 ncpus=2)
-   Sending NMI from CPU 1 to CPUs 0:
-   NMI backtrace for cpu 0
-   CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.10.0-rc5-arm64-renesas-00019-g74a6f86eaf1c-dirty #20
-   Hardware name: Renesas Salvator-X 2nd version board based on r8a77965 (DT)
-   pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-   pc : tick_check_broadcast_expired+0xc/0x40
-   lr : cpu_idle_poll.isra.0+0x8c/0x168
-   sp : ffff800081c63d70
-   x29: ffff800081c63d70 x28: 00000000580000c8 x27: 00000000bfee5610
-   x26: 0000000000000027 x25: 0000000000000000 x24: 0000000000000000
-   x23: ffff00007fbb9100 x22: ffff8000818f1008 x21: ffff8000800ef07c
-   x20: ffff800081c79ec0 x19: ffff800081c70c28 x18: 0000000000000000
-   x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffffc2c717d8
-   x14: 0000000000000000 x13: ffff000009c18080 x12: ffff8000825f7fc0
-   x11: 0000000000000000 x10: ffff8000818f3cd4 x9 : 0000000000000028
-   x8 : ffff800081c79ec0 x7 : ffff800081c73000 x6 : 0000000000000000
-   x5 : 0000000000000000 x4 : ffff7ffffe286000 x3 : 0000000000000000
-   x2 : ffff7ffffe286000 x1 : ffff800082972900 x0 : ffff8000818f1008
-   Call trace:
-    tick_check_broadcast_expired+0xc/0x40
-    do_idle+0x9c/0x280
-    cpu_startup_entry+0x34/0x40
-    kernel_init+0x0/0x11c
-    do_one_initcall+0x0/0x260
-    __primary_switched+0x80/0x88
-   rcu: rcu_preempt kthread timer wakeup didn't happen for 6501 jiffies! g-595 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
-   rcu:     Possible timer handling issue on cpu=0 timer-softirq=262
-   rcu: rcu_preempt kthread starved for 6502 jiffies! g-595 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=0
-   rcu:     Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
-   rcu: RCU grace-period kthread stack dump:
-   task:rcu_preempt     state:I stack:0     pid:15    tgid:15    ppid:2      flags:0x00000008
-   Call trace:
-    __switch_to+0xbc/0x100
-    __schedule+0x358/0xbe0
-    schedule+0x48/0x148
-    schedule_timeout+0xc4/0x138
-    rcu_gp_fqs_loop+0x12c/0x764
-    rcu_gp_kthread+0x208/0x298
-    kthread+0x10c/0x110
-    ret_from_fork+0x10/0x20
+Trigger condition:
+  1). User task run in kernel mode most of time
+  2). ARM64 architecture
+  3). TICK_CPU_ACCOUNTING=y
+      CONFIG_VIRT_CPU_ACCOUNTING_NATIVE is not set
 
-The design have been part of the driver since it was first merged in
-early 2009. It becomes increasingly harder to trigger the issue the
-older kernel version one tries. It only takes a few boots on v6.10-rc5,
-while hundreds of boots are needed to trigger it on v5.10.
+Fix mul_u64_u64_div_u64() conversion precision by reset stime to rtime
 
-Close the race condition by using the CMT channel lock for the two
-competing sections. The channel lock was added to the driver after its
-initial design.
-
-Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
-Link: https://lore.kernel.org/r/20240702190230.3825292-1-niklas.soderlund+renesas@ragnatech.se
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 3dc167ba5729 ("sched/cputime: Improve cputime_adjust()")
+Signed-off-by: Zheng Zucheng <zhengzucheng@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20240726023235.217771-1-zhengzucheng@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clocksource/sh_cmt.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ kernel/sched/cputime.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/clocksource/sh_cmt.c b/drivers/clocksource/sh_cmt.c
-index 7b952aa52c0b9..7a2b83157bf5f 100644
---- a/drivers/clocksource/sh_cmt.c
-+++ b/drivers/clocksource/sh_cmt.c
-@@ -529,6 +529,7 @@ static void sh_cmt_set_next(struct sh_cmt_channel *ch, unsigned long delta)
- static irqreturn_t sh_cmt_interrupt(int irq, void *dev_id)
- {
- 	struct sh_cmt_channel *ch = dev_id;
-+	unsigned long flags;
+--- a/kernel/sched/cputime.c
++++ b/kernel/sched/cputime.c
+@@ -591,6 +591,12 @@ void cputime_adjust(struct task_cputime
+ 	}
  
- 	/* clear flags */
- 	sh_cmt_write_cmcsr(ch, sh_cmt_read_cmcsr(ch) &
-@@ -559,6 +560,8 @@ static irqreturn_t sh_cmt_interrupt(int irq, void *dev_id)
+ 	stime = mul_u64_u64_div_u64(stime, rtime, stime + utime);
++	/*
++	 * Because mul_u64_u64_div_u64() can approximate on some
++	 * achitectures; enforce the constraint that: a*b/(b+c) <= a.
++	 */
++	if (unlikely(stime > rtime))
++		stime = rtime;
  
- 	ch->flags &= ~FLAG_SKIPEVENT;
- 
-+	raw_spin_lock_irqsave(&ch->lock, flags);
-+
- 	if (ch->flags & FLAG_REPROGRAM) {
- 		ch->flags &= ~FLAG_REPROGRAM;
- 		sh_cmt_clock_event_program_verify(ch, 1);
-@@ -571,6 +574,8 @@ static irqreturn_t sh_cmt_interrupt(int irq, void *dev_id)
- 
- 	ch->flags &= ~FLAG_IRQCONTEXT;
- 
-+	raw_spin_unlock_irqrestore(&ch->lock, flags);
-+
- 	return IRQ_HANDLED;
- }
- 
-@@ -781,12 +786,18 @@ static int sh_cmt_clock_event_next(unsigned long delta,
- 				   struct clock_event_device *ced)
- {
- 	struct sh_cmt_channel *ch = ced_to_sh_cmt(ced);
-+	unsigned long flags;
- 
- 	BUG_ON(!clockevent_state_oneshot(ced));
-+
-+	raw_spin_lock_irqsave(&ch->lock, flags);
-+
- 	if (likely(ch->flags & FLAG_IRQCONTEXT))
- 		ch->next_match_value = delta - 1;
- 	else
--		sh_cmt_set_next(ch, delta - 1);
-+		__sh_cmt_set_next(ch, delta - 1);
-+
-+	raw_spin_unlock_irqrestore(&ch->lock, flags);
- 
- 	return 0;
- }
--- 
-2.43.0
-
+ update:
+ 	/*
 
 
