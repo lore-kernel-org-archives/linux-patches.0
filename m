@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C32B186E5E;
-	Mon, 12 Aug 2024 16:31:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A37183CD4;
+	Mon, 12 Aug 2024 16:31:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480300; cv=none; b=KU7637bxFpvLUtIYGoI98+f9eJfPpG/EQkaHtjRVsteR3hJ5wbHgqkbs1zYbWjAbMV45k4yUzT472YOlRH3ojPirLXC9Hqt4Jy38dkgHtOF9lIpMG7/1om/XXKdY5vZ5CEyzsAyV4vZjUfdPBCss8i+uOD32yZ000fmr5o3GQ+I=
+	t=1723480303; cv=none; b=gMaLBstBQ4rdaWbB/3OffcUDo//LZTCwP9a6Y6WcGD53X57I9Xzk5yb4tQgSCT00dBBj8E4utptiYDPKdr6jZ3lCcpgtT+xXuxGdtBYoaRKr4/PJBiatH54Qy7ijbiuzNFUqkCh+1V7Z90OWQA7AZvwFlqh2iR5fGtlZQXoA71M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480300; c=relaxed/simple;
-	bh=fRzxIjokeArFm9j738+96ASEoZSQx4iWDetxiOM2hMo=;
+	s=arc-20240116; t=1723480303; c=relaxed/simple;
+	bh=ed5oih1SK+OjAk7NjufGTV0a2Ym8I+ICspN1WAddIg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S1iYexBX1h9lazoMNbDrQHwRC5vx/41mpjCPXzpOCc7FoCoogXTp8nbt4tngQnSpec218WJf3V+8EfDUxRVZjYGAH6agLTJOlnnvP0dGkmCZ4h2FH91FhpiuwLSiKRVq11UKmgc6wOTr6nwVxFkAgnZSfzaMpxlWkWJCzV9hI4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWJZvqCk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NcSoT2/PrXtqSLG2M/8LUbc6PISA4K0kcBHeadw1FA49PL48gTIweazujwCQo0BAVDRns+2AJ404MAcWEeu5LWpkgK5uVkEV7+PmdwleLCB7sSItSl1eBjm/1myE6xQcSfeOYbMNTFcfVNzPxNtTd6ln2+plUF4YlNEo/j2c4l0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTldKTKD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWJZvqCk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C7BC32782;
-	Mon, 12 Aug 2024 16:31:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTldKTKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65BEC32782;
+	Mon, 12 Aug 2024 16:31:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480300;
-	bh=fRzxIjokeArFm9j738+96ASEoZSQx4iWDetxiOM2hMo=;
+	s=korg; t=1723480303;
+	bh=ed5oih1SK+OjAk7NjufGTV0a2Ym8I+ICspN1WAddIg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWJZvqCkbkSkpIxhXCkdPuKtfTM5RcbOeJcoZoR7a5C9jbGTJg4JlrhWYh5DEi18A
-	 KEmhS15zt8IeYG149IZr3SUypqyBRIjwzFIeoL5hidi0yfnIIlBJFuWvqzMxLz4vlT
-	 f3On0BM+lwts1DBdTmaKaPLky7kup2aYIPPc5Ld4=
+	b=RTldKTKDqxOz+1gKMPYjD3/Q/5YICrNk4+Hn2QKg89hIGkJUTpKdFYy6EeKPhQGy1
+	 BmChDgQv15c1iba4YNuhxTtMts5+XzK8EJoodu8OoHbOjBpwO8RDsM3CXgVL6QgWZz
+	 WvROnCKFOzSjtO6J+dp9Cd4nZADNTPe9mKfp2BIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Bingbu Cao <bingbu.cao@intel.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 124/263] media: intel/ipu6: select AUXILIARY_BUS in Kconfig
-Date: Mon, 12 Aug 2024 18:02:05 +0200
-Message-ID: <20240812160151.295881621@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 115/263] s390/sclp: Prevent release of buffer in I/O
+Date: Mon, 12 Aug 2024 18:01:56 +0200
+Message-ID: <20240812160150.947291056@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,39 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bingbu Cao <bingbu.cao@intel.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-commit 423a77ae3a3f916809ff3ab1c8db6d3d580c3120 upstream.
+[ Upstream commit bf365071ea92b9579d5a272679b74052a5643e35 ]
 
-Intel IPU6 PCI driver need register its devices on auxiliary
-bus, so it needs to select the AUXILIARY_BUS in Kconfig.
+When a task waiting for completion of a Store Data operation is
+interrupted, an attempt is made to halt this operation. If this attempt
+fails due to a hardware or firmware problem, there is a chance that the
+SCLP facility might store data into buffers referenced by the original
+operation at a later time.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202407161833.7BEFXejx-lkp@intel.com/
-Fixes: c70281cc83d6 ("media: intel/ipu6: add Kconfig and Makefile")
-Signed-off-by: Bingbu Cao <bingbu.cao@intel.com>
-Cc: stable@vger.kernel.org # for v6.10
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Handle this situation by not releasing the referenced data buffers if
+the halt attempt fails. For current use cases, this might result in a
+leak of few pages of memory in case of a rare hardware/firmware
+malfunction.
+
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/intel/ipu6/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/char/sclp_sd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/intel/ipu6/Kconfig b/drivers/media/pci/intel/ipu6/Kconfig
-index b7ab24b89836..40e20f0aa5ae 100644
---- a/drivers/media/pci/intel/ipu6/Kconfig
-+++ b/drivers/media/pci/intel/ipu6/Kconfig
-@@ -4,6 +4,7 @@ config VIDEO_INTEL_IPU6
- 	depends on VIDEO_DEV
- 	depends on X86 && X86_64 && HAS_DMA
- 	depends on IPU_BRIDGE || !IPU_BRIDGE
-+	select AUXILIARY_BUS
- 	select DMA_OPS
- 	select IOMMU_IOVA
- 	select VIDEO_V4L2_SUBDEV_API
+diff --git a/drivers/s390/char/sclp_sd.c b/drivers/s390/char/sclp_sd.c
+index f9e164be7568f..944e75beb160c 100644
+--- a/drivers/s390/char/sclp_sd.c
++++ b/drivers/s390/char/sclp_sd.c
+@@ -320,8 +320,14 @@ static int sclp_sd_store_data(struct sclp_sd_data *result, u8 di)
+ 			  &esize);
+ 	if (rc) {
+ 		/* Cancel running request if interrupted */
+-		if (rc == -ERESTARTSYS)
+-			sclp_sd_sync(page, SD_EQ_HALT, di, 0, 0, NULL, NULL);
++		if (rc == -ERESTARTSYS) {
++			if (sclp_sd_sync(page, SD_EQ_HALT, di, 0, 0, NULL, NULL)) {
++				pr_warn("Could not stop Store Data request - leaking at least %zu bytes\n",
++					(size_t)dsize * PAGE_SIZE);
++				data = NULL;
++				asce = 0;
++			}
++		}
+ 		vfree(data);
+ 		goto out;
+ 	}
 -- 
-2.46.0
+2.43.0
 
 
 
