@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF65A183CD4;
-	Mon, 12 Aug 2024 16:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B103915C127;
+	Mon, 12 Aug 2024 16:32:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480366; cv=none; b=ujMZ18ICqtm15XET9RtGCkoHw62/BIBVHuRCru7NFeb5ljbqfHFGrwa50YE1codNFudzA3EMiwHneJgsuBlP1JuTfoqLb3qGcSDJCynK48VXbTZubbkyNEJcktttKW+1/jsuoC6xz6T9At8pgGbUFiQv22hX56WcChtNpty4WLQ=
+	t=1723480369; cv=none; b=pwsrvwTD2i5kEOgAkuRLcVYKhOSOuvHDdDa3rNOKJL6oQ9U3Q53MmvnVjc9j8Un7pQyqE+RFNBxIJ4yU+6EGh93hSbZ5rwFGNdrtuGJRPz4zZ7P4DBtVZDaEe1MLTPGDx8hK3+BxtHIWQpjHNIY64TPpsTG8uY1z4kTaCzHFh8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480366; c=relaxed/simple;
-	bh=P84OWrvw1PfAeOjNKAhazx9sOBRw1FC47su4J/nKcA8=;
+	s=arc-20240116; t=1723480369; c=relaxed/simple;
+	bh=m69+zG2FjI8P7RPtJnVSNlH3/sU1OEb9UKBs2dJIzoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OCfoKVhNTUQrsdVZ1k+YtHVuY4IAGhUh+rGmJpxKvHFZ8YU3WxhosMKF4abJ7JqJXkChA6HO9Ih1BMz0+WztXiR8dpalJ02ZyCzf6464xNvcigpminO0uJd6VK0Fs+tTVUtSJy8etIyEuqsco5ipAizGxhY1kar1RvwbC7O+r2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dbkVLOCv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nvBue3oeGiXHSfO5Qg1lka3r1SX2iOyc5i9ZjD5MvIvRWJ4mA0kxHZXw+yjqrjEIZyrh9XblwMo/AqBquVNI65qhIEe/B3VFdDHV9efCUX+irJWs1oSRrtK5H8zYjbm8gekviuQ1N0uINX1X4m6nt65I8LifQqmEQj//K6E0Chk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfBIe/f8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dbkVLOCv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7508C32782;
-	Mon, 12 Aug 2024 16:32:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfBIe/f8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18187C32782;
+	Mon, 12 Aug 2024 16:32:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480366;
-	bh=P84OWrvw1PfAeOjNKAhazx9sOBRw1FC47su4J/nKcA8=;
+	s=korg; t=1723480369;
+	bh=m69+zG2FjI8P7RPtJnVSNlH3/sU1OEb9UKBs2dJIzoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbkVLOCvsO6lX54WshtVWP3zOdeQGNMA2FnStb5Yq1wW5Y3nAzK0V84pDHFUegXsY
-	 aZP0js4o5iClhUdXoFNR6sccWCVyGClxtQ3dXdbbM8yIqgBKNK6W+q+lIOEaDhj0mq
-	 Gw/BWshkPx8G3jdqDMIYcYPBKxZ6WQceAXX83b8Y=
+	b=mfBIe/f8a2TS2j4Vidva60HgX/vlsf6q4Jo1pFLIgwrCemZxsv17OIkdyefOk3ccB
+	 yEMGhpJ0gVia6zZz7JBaynDAcHRMswKGUVcGFc/nfO4bhp8i2Ek/FrzH7fRjzqZlvW
+	 M70mnagJG0xKwBzNCe5x40RVizkVT/9SVLLU/t18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Subject: [PATCH 6.10 175/263] drm/i915/gem: Adjust vma offset for framebuffer mmap offset
-Date: Mon, 12 Aug 2024 18:02:56 +0200
-Message-ID: <20240812160153.248771045@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.10 176/263] drm/client: fix null pointer dereference in drm_client_modeset_probe
+Date: Mon, 12 Aug 2024 18:02:57 +0200
+Message-ID: <20240812160153.287404475@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,44 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit 1ac5167b3a90c9820daa64cc65e319b2d958d686 upstream.
+commit 113fd6372a5bb3689aba8ef5b8a265ed1529a78f upstream.
 
-When mapping a framebuffer object, the virtual memory area (VMA)
-offset ('vm_pgoff') should be adjusted by the start of the
-'vma_node' associated with the object. This ensures that the VMA
-offset is correctly aligned with the corresponding offset within
-the GGTT aperture.
+In drm_client_modeset_probe(), the return value of drm_mode_duplicate() is
+assigned to modeset->mode, which will lead to a possible NULL pointer
+dereference on failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-Increment vm_pgoff by the start of the vma_node with the offset=
-provided by the user.
-
-Suggested-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: <stable@vger.kernel.org> # v4.9+
-[Joonas: Add Cc: stable]
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240802083850.103694-2-andi.shyti@linux.intel.com
-(cherry picked from commit 60a2066c50058086510c91f404eb582029650970)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: stable@vger.kernel.org
+Fixes: cf13909aee05 ("drm/fb-helper: Move out modeset config code")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240802044736.1570345-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_mman.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/drm_client_modeset.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-@@ -1125,6 +1125,8 @@ int i915_gem_fb_mmap(struct drm_i915_gem
- 		mmo = mmap_offset_attach(obj, mmap_type, NULL);
- 		if (IS_ERR(mmo))
- 			return PTR_ERR(mmo);
-+
-+		vma->vm_pgoff += drm_vma_node_start(&mmo->vma_node);
- 	}
+--- a/drivers/gpu/drm/drm_client_modeset.c
++++ b/drivers/gpu/drm/drm_client_modeset.c
+@@ -880,6 +880,11 @@ int drm_client_modeset_probe(struct drm_
  
- 	/*
+ 			kfree(modeset->mode);
+ 			modeset->mode = drm_mode_duplicate(dev, mode);
++			if (!modeset->mode) {
++				ret = -ENOMEM;
++				break;
++			}
++
+ 			drm_connector_get(connector);
+ 			modeset->connectors[modeset->num_connectors++] = connector;
+ 			modeset->x = offset->x;
 
 
