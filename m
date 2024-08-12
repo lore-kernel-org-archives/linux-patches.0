@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDFE183CA6;
-	Mon, 12 Aug 2024 16:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D97183CA6;
+	Mon, 12 Aug 2024 16:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479743; cv=none; b=mB9gOW4pRR6vX5dKIZnOnGi7WPn0tYdJiWOOCQRCoR4hr6C5uVrOT553sHtcsf2TO7FJRchcxlScHNmix1Y8dJTPPDIBb5VWini72Ws+z4pU+fcJVizuQ+dA33gWUlX0YuMGq7J2T+S92ASlVGtPOYfcL2EKHkavMZwrNWewydM=
+	t=1723479747; cv=none; b=u+my2SlTCbuUHlLr3aHGpHfiE6HnIoPG7tgs289OY0li4FvFsYGjDsAzTpYzXKO/u+I9YZAZ1eQyd/ign2DEedGDKtJg+fsf9ChvswczUD4zB5e70aaZw1w/1XNW/unih3bR63JB88bsHDoABy3+BN30HFxKlkp27+QEHWuJzdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479743; c=relaxed/simple;
-	bh=5EbgAV3bjjBWfqPYxblcSthcVdvg6AXDg/KRVF+W8SU=;
+	s=arc-20240116; t=1723479747; c=relaxed/simple;
+	bh=m98K4kJW6FpTfkbhjP5Pmn/9xgnz+arxYKeIUJAD2CU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mzyNfOdKTtZMIrq1hztj+YVB9sTSl3YZ6RvxpCor+dKUudfH8xGDwjHvnIlLeA7Kl8sv/A5kC181O/rT4/NoJAKWnJjFfMPW8sMrLqSAGjrvxqVyNe0CcCo2rVSDaaILfWqLUnqiGt5yLaKW3z1tHygGs3lbcVDiWRkwWGFhUZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DGt1aAl5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O+sOC7WYxbqT4ywn80Npfe92NuqXkUiGSX/YzvkiXxzto0Uq3z7IGLlFc7O4i6mp3sjwtDLIsgeklFrV5RCqF4lZGjSVxk0Z8GwtxPZax3/GNDAH0SNyvUNuFM+9XIFPGJX30fxYuMmSa6ErcRQrJKf9j4Qj6NIZRjGQSzhYkto=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGvfKCuC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DGt1aAl5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 679EFC32782;
-	Mon, 12 Aug 2024 16:22:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGvfKCuC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA7CCC32782;
+	Mon, 12 Aug 2024 16:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479742;
-	bh=5EbgAV3bjjBWfqPYxblcSthcVdvg6AXDg/KRVF+W8SU=;
+	s=korg; t=1723479746;
+	bh=m98K4kJW6FpTfkbhjP5Pmn/9xgnz+arxYKeIUJAD2CU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DGt1aAl5Rkl/jeylVMUl1S2XTBFVAQnJQ903S8qgR/lh92OBSCtqNP5rLppkrepxx
-	 6ftLxQYRxomHhI84c5PEjhw1Ngm0quQFVEMcQIQRqPShHxphTsCuemuh1VVz5ratov
-	 7XO3nHzC+cZr12p0+SiN7yQwKNGSNCQl4GgTS9dI=
+	b=eGvfKCuC+jPXT1gOVb+JmktUXFspRrxw2D7eFeHkPivLz/iDIpklztx0Y/92+jUzf
+	 HUL1J0zT4f9z4u3DTPGY0BjVYVyS8+WL3vlPwnthfgS1Mvj7/1IRRb7vbSmEV6+DVH
+	 qVxuSEUb+2GvilIzLmc/PtXGW9npjRaV6YMeUfOE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Muchun Song <muchun.song@linux.dev>,
-	Oscar Salvador <osalvador@suse.de>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 179/189] mm/hugetlb: fix potential race in __update_and_free_hugetlb_folio()
-Date: Mon, 12 Aug 2024 18:03:55 +0200
-Message-ID: <20240812160139.036711671@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Harry Wentland <hwentlan@amd.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Wayne Lin <Wayne.Lin@amd.com>
+Subject: [PATCH 6.6 162/189] drm/dp_mst: Skip CSN if topology probing is not done yet
+Date: Mon, 12 Aug 2024 18:03:38 +0200
+Message-ID: <20240812160138.378092076@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,75 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 5596d9e8b553dacb0ac34bcf873cbbfb16c3ba3e upstream.
+commit ddf983488c3e8d30d5c2e2b315ae7d9cd87096ed upstream.
 
-There is a potential race between __update_and_free_hugetlb_folio() and
-try_memory_failure_hugetlb():
+[Why]
+During resume, observe that we receive CSN event before we start topology
+probing. Handling CSN at this moment based on uncertain topology is
+unnecessary.
 
- CPU1					CPU2
- __update_and_free_hugetlb_folio	try_memory_failure_hugetlb
-					 folio_test_hugetlb
-					  -- It's still hugetlb folio.
-  folio_clear_hugetlb_hwpoison
-  					  spin_lock_irq(&hugetlb_lock);
-					   __get_huge_page_for_hwpoison
-					    folio_set_hugetlb_hwpoison
-					  spin_unlock_irq(&hugetlb_lock);
-  spin_lock_irq(&hugetlb_lock);
-  __folio_clear_hugetlb(folio);
-   -- Hugetlb flag is cleared but too late.
-  spin_unlock_irq(&hugetlb_lock);
+[How]
+Add checking condition in drm_dp_mst_handle_up_req() to skip handling CSN
+if the topology is yet to be probed.
 
-When the above race occurs, raw error page info will be leaked.  Even
-worse, raw error pages won't have hwpoisoned flag set and hit
-pcplists/buddy.  Fix this issue by deferring
-folio_clear_hugetlb_hwpoison() until __folio_clear_hugetlb() is done.  So
-all raw error pages will have hwpoisoned flag set.
-
-Link: https://lkml.kernel.org/r/20240708025127.107713-1-linmiaohe@huawei.com
-Fixes: 32c877191e02 ("hugetlb: do not clear hugetlb dtor until allocating vmemmap")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Acked-by: Muchun Song <muchun.song@linux.dev>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Harry Wentland <hwentlan@amd.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: stable@vger.kernel.org
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240626084825.878565-3-Wayne.Lin@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/hugetlb.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/display/drm_dp_mst_topology.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -1770,13 +1770,6 @@ static void __update_and_free_hugetlb_fo
- 	}
+--- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
+@@ -4024,6 +4024,7 @@ static int drm_dp_mst_handle_up_req(stru
+ 	if (up_req->msg.req_type == DP_CONNECTION_STATUS_NOTIFY) {
+ 		const struct drm_dp_connection_status_notify *conn_stat =
+ 			&up_req->msg.u.conn_stat;
++		bool handle_csn;
  
- 	/*
--	 * Move PageHWPoison flag from head page to the raw error pages,
--	 * which makes any healthy subpages reusable.
--	 */
--	if (unlikely(folio_test_hwpoison(folio)))
--		folio_clear_hugetlb_hwpoison(folio);
--
--	/*
- 	 * If vmemmap pages were allocated above, then we need to clear the
- 	 * hugetlb destructor under the hugetlb lock.
- 	 */
-@@ -1787,6 +1780,13 @@ static void __update_and_free_hugetlb_fo
- 	}
- 
- 	/*
-+	 * Move PageHWPoison flag from head page to the raw error pages,
-+	 * which makes any healthy subpages reusable.
-+	 */
-+	if (unlikely(folio_test_hwpoison(folio)))
-+		folio_clear_hugetlb_hwpoison(folio);
+ 		drm_dbg_kms(mgr->dev, "Got CSN: pn: %d ldps:%d ddps: %d mcs: %d ip: %d pdt: %d\n",
+ 			    conn_stat->port_number,
+@@ -4032,6 +4033,16 @@ static int drm_dp_mst_handle_up_req(stru
+ 			    conn_stat->message_capability_status,
+ 			    conn_stat->input_port,
+ 			    conn_stat->peer_device_type);
 +
-+	/*
- 	 * Non-gigantic pages demoted from CMA allocated gigantic pages
- 	 * need to be given back to CMA in free_gigantic_folio.
- 	 */
++		mutex_lock(&mgr->probe_lock);
++		handle_csn = mgr->mst_primary->link_address_sent;
++		mutex_unlock(&mgr->probe_lock);
++
++		if (!handle_csn) {
++			drm_dbg_kms(mgr->dev, "Got CSN before finish topology probing. Skip it.");
++			kfree(up_req);
++			goto out;
++		}
+ 	} else if (up_req->msg.req_type == DP_RESOURCE_STATUS_NOTIFY) {
+ 		const struct drm_dp_resource_status_notify *res_stat =
+ 			&up_req->msg.u.resource_stat;
 
 
