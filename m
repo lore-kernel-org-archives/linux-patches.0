@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740B12C1A5;
-	Mon, 12 Aug 2024 16:34:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11F3E187332;
+	Mon, 12 Aug 2024 16:34:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480450; cv=none; b=F6caRA/x+InQo79hb9LGL0DTAVOMl9uhsugVYfosuuoaK4gV2aliICvXGGcsPGNGPfEvKTurZgxXldYRLUlFTaoW8svqfQypoFKfEIdFf5P3tglSN7cM/7MMtnlm4+pPy0yHWLGGN720dTeO+qWjg041FQaQeN8Nbo3R7s2hsw4=
+	t=1723480454; cv=none; b=VQ3gpOB2rdb94Yqr72j0IhC7jHxF56cveQH5hewr6JrPCA0H2Ri235X0ZgimxvcCdFKAe7P5NuruPM7Qe3bEe9nf6+ZfeECmbm4vJ5Cq3bDOdwbAF9qfE1q+EjEnPfHu3g2/gGjqGWxb9d3IbRnrx7GGUyx3RId/q6xPkaj0Wsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480450; c=relaxed/simple;
-	bh=0ryDO9tZj0C/OgBqafVxeC2wHaAUti486t+mklCk1r0=;
+	s=arc-20240116; t=1723480454; c=relaxed/simple;
+	bh=qBHWYNtfztLra+93+UPWQ30zy0BIhKusgLOOhZo2OoA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EKXL+EWpy/RtTxzGntCrgTpxHZH8PG+wghLBsuycVaEv/AMF0tEk/xbEhN/QRPZ+jDJhkF0rCxDw2Vwh/i/Mwh+g5d/YoHPcWOSxuCieXSv6hms/9GQTIKh5Y+sSy+vI1STYMr/f9sEpqOe0yIQCHi55JtIr9SQBu9RpmpCHf7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wtra1fb7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pEhV8QtxTZiyXNC0xKZwcVtIiCLMLPqDCUI1ttWKTiJvoyh91L/xix0Uc5pfiqF8ifyj+dkVfNH9RCe1Y73fxOLvsFzdd6M7oQlub7yldauY+5dE/tffMDEjnGy0y/ptdYurZFc3rcyqVcgm3ua/2kAyOX+Iiw+YPbNYGMA7e5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=InryaMXV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wtra1fb7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9461CC32782;
-	Mon, 12 Aug 2024 16:34:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="InryaMXV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BDAC32782;
+	Mon, 12 Aug 2024 16:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480450;
-	bh=0ryDO9tZj0C/OgBqafVxeC2wHaAUti486t+mklCk1r0=;
+	s=korg; t=1723480453;
+	bh=qBHWYNtfztLra+93+UPWQ30zy0BIhKusgLOOhZo2OoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wtra1fb7L/ERB1JgZZMe1AIuXGWgnrfhIGG0HnL/umipODUcO3Ni9j9a4umumM4Ad
-	 e4DbcJKZSlxDhJIV9toFpiiA3R5TmY5H8lkRgWz9+Jvd69ErjMGuCxPYvrvuHIbcdY
-	 e2K1fCAn9lYheEXb0Dy0dOxG2ZCWHSbOYGuLKXe8=
+	b=InryaMXV/dSwpVG7qcSp3gs4dO2I1STY4s5qMP07j2PUfcz0awicCPb9Asmrv2wQO
+	 FnqSSFPCsbh9EZee5hNawFPT+ZYcpcnASzw3PcyYygWegZXwc6bavG86sBJa4LK9M/
+	 SS5HnxZjjGnHxsoslYly0hlZXIb0OV0/KAMTy0us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Michal Kubiak <michal.kubiak@intel.com>
-Subject: [PATCH 6.10 200/263] vhost-vdpa: switch to use vmf_insert_pfn() in the fault handler
-Date: Mon, 12 Aug 2024 18:03:21 +0200
-Message-ID: <20240812160154.205760227@linuxfoundation.org>
+	David Collins <quic_collinsd@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 201/263] spmi: pmic-arb: add missing newline in dev_err format strings
+Date: Mon, 12 Aug 2024 18:03:22 +0200
+Message-ID: <20240812160154.244270708@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,45 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: David Collins <quic_collinsd@quicinc.com>
 
-commit 0823dc64586ba5ea13a7d200a5d33e4c5fa45950 upstream.
+[ Upstream commit ffcf2eb4bfa24f7256de53a95182c3e3e23fdc6c ]
 
-remap_pfn_page() should not be called in the fault handler as it may
-change the vma->flags which may trigger lockdep warning since the vma
-write lock is not held. Actually there's no need to modify the
-vma->flags as it has been set in the mmap(). So this patch switches to
-use vmf_insert_pfn() instead.
+dev_err() format strings should end with '\n'.  Several such
+format strings in the spmi-pmic-arb driver are missing it.
+Add newlines where needed.
 
-Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
-Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Fixes: ddd89d0a059d ("vhost_vdpa: support doorbell mapping via mmap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240701033159.18133-1-jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
+Fixes: 02922ccbb330 ("spmi: pmic-arb: Register controller for bus instead of arbiter")
+Signed-off-by: David Collins <quic_collinsd@quicinc.com>
+Link: https://lore.kernel.org/r/20240703221248.3640490-1-quic_collinsd@quicinc.com
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Link: https://lore.kernel.org/r/20240725164636.3362690-4-sboyd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/spmi/spmi-pmic-arb.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1483,13 +1483,7 @@ static vm_fault_t vhost_vdpa_fault(struc
+diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+index 791cdc160c515..c408ded0c00f7 100644
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -398,7 +398,7 @@ static int pmic_arb_fmt_read_cmd(struct spmi_pmic_arb_bus *bus, u8 opc, u8 sid,
  
- 	notify = ops->get_vq_notification(vdpa, index);
+ 	*offset = rc;
+ 	if (bc >= PMIC_ARB_MAX_TRANS_BYTES) {
+-		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested",
++		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested\n",
+ 			PMIC_ARB_MAX_TRANS_BYTES, len);
+ 		return  -EINVAL;
+ 	}
+@@ -477,7 +477,7 @@ static int pmic_arb_fmt_write_cmd(struct spmi_pmic_arb_bus *bus, u8 opc,
  
--	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
--	if (remap_pfn_range(vma, vmf->address & PAGE_MASK,
--			    PFN_DOWN(notify.addr), PAGE_SIZE,
--			    vma->vm_page_prot))
--		return VM_FAULT_SIGBUS;
--
--	return VM_FAULT_NOPAGE;
-+	return vmf_insert_pfn(vma, vmf->address & PAGE_MASK, PFN_DOWN(notify.addr));
- }
+ 	*offset = rc;
+ 	if (bc >= PMIC_ARB_MAX_TRANS_BYTES) {
+-		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested",
++		dev_err(&bus->spmic->dev, "pmic-arb supports 1..%d bytes per trans, but:%zu requested\n",
+ 			PMIC_ARB_MAX_TRANS_BYTES, len);
+ 		return  -EINVAL;
+ 	}
+@@ -1702,7 +1702,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
  
- static const struct vm_operations_struct vhost_vdpa_vm_ops = {
+ 	index = of_property_match_string(node, "reg-names", "cnfg");
+ 	if (index < 0) {
+-		dev_err(dev, "cnfg reg region missing");
++		dev_err(dev, "cnfg reg region missing\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -1712,7 +1712,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
+ 
+ 	index = of_property_match_string(node, "reg-names", "intr");
+ 	if (index < 0) {
+-		dev_err(dev, "intr reg region missing");
++		dev_err(dev, "intr reg region missing\n");
+ 		return -EINVAL;
+ 	}
+ 
+-- 
+2.43.0
+
 
 
