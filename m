@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A25130E27;
-	Mon, 12 Aug 2024 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCA3130E27;
+	Mon, 12 Aug 2024 16:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479205; cv=none; b=LpAzwBGJvVbBHXebTLV8M+yaT9pxXx3QfQDPxYjTaZA161j60i47SKkGFVBnwZAVD0/fTwf9T2XEOXVG7HPo0QtqYelvhr240XxJ4T7fhHH974c6oHJ4T8qaTFjk5z9bG5PZ1Th9mJpe4c6CdP9Rm+iy/R7y/k6c3/H9JX6WBYE=
+	t=1723479208; cv=none; b=JXIrFPCehbC76mdmSlbwpSUKYXmIh5r5Swnvz3bjvDliviIqzUbXaopKoXTBrGGoZBEzP/AhK26SSCTM8B+FN9wOzcb6g5WtsZ+tC/2qbA1J3WRgtMKuXGb1BIHGkvm97pljWlcJrsHoqo42YjaJlDapNSVGRNRLie3utEz4M8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479205; c=relaxed/simple;
-	bh=/hm1kNpx9b/l481ewxT3LvhG2d9hPrllbQr1H37H9kg=;
+	s=arc-20240116; t=1723479208; c=relaxed/simple;
+	bh=jqcJftunb+hTU0mZbKhPqg7arw4E8VFlEHPXHqnLnik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a7Qu00bHgIglCNj0L2FIJWfvwTxsTel0F4ct0ZPhhd137p/kdiDwnj93D40G30pgA3sOHZ2T47o+KtnMW3I5PocFsIiVHJFtyh7eQu8e6KFeh/4mC+6lex778CZYh7kIkQxLxMDm7IveJWLWTAMzjnWV/Ko30JceT6DrtfnmXfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oLqQakKH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e7S9X1j++XGfj8uGe01nqkzgNxGNqh3S0KkXRbrF0CLDt2Dw5ua3e/AumL3XY32tGWW3G2Jjxyzv0fURntj+wYZPQeiGEAyiGkK+QO1vjIAY/AHXmRIfT+bqDOc12Y1F8v+erf/eiK+CUhjjtnykz6NVRM7X4uYU2kJwEQghrGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+icZjQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oLqQakKH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7AF7C32782;
-	Mon, 12 Aug 2024 16:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+icZjQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A2EC32782;
+	Mon, 12 Aug 2024 16:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479205;
-	bh=/hm1kNpx9b/l481ewxT3LvhG2d9hPrllbQr1H37H9kg=;
+	s=korg; t=1723479208;
+	bh=jqcJftunb+hTU0mZbKhPqg7arw4E8VFlEHPXHqnLnik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLqQakKHAzihKf2LR3ehfbjOi9Wg/Ao/rREkgHIbP6Pi2W2wMoNWmcrO6iIX+XbJp
-	 w1a4tNKyLNEWfquTvSz1qsDQ6J0Tou4cCNI6kWEc838N4ZztuS/8F9bopisRTmCwq4
-	 hVxVMZfSrXTSXKoVD1FkqBsW3z+4yJ2msp53RyBw=
+	b=x+icZjQqsm85rJCZf9bYa3cV/PL97m6RjueEDfiGNUh32BiUE845zdG8EDH2cSR1x
+	 Yha5TJ/R+5ki/F+UmdCtLmCvesKOkc9h6yhjQq4c/vunOLyIty6OJ7YXtpkhDt3ses
+	 u5uXuv7mNOmOsa38ZRAD5ookxS81gV9QUSqwH5q0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 015/189] net: linkwatch: use system_unbound_wq
-Date: Mon, 12 Aug 2024 18:01:11 +0200
-Message-ID: <20240812160132.729755692@linuxfoundation.org>
+	Grzegorz Nitka <grzegorz.nitka@intel.com>,
+	Sergey Temerkhanov <sergey.temerkhanov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
+Subject: [PATCH 6.6 016/189] ice: Fix reset handler
+Date: Mon, 12 Aug 2024 18:01:12 +0200
+Message-ID: <20240812160132.767809446@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -53,50 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Grzegorz Nitka <grzegorz.nitka@intel.com>
 
-[ Upstream commit 3e7917c0cdad835a5121520fc5686d954b7a61ab ]
+[ Upstream commit 25a7123579ecac9a89a7e5b8d8a580bee4b68acd ]
 
-linkwatch_event() grabs possibly very contended RTNL mutex.
+Synchronize OICR IRQ when preparing for reset to avoid potential
+race conditions between the reset procedure and OICR
 
-system_wq is not suitable for such work.
-
-Inspired by many noisy syzbot reports.
-
-3 locks held by kworker/0:7/5266:
- #0: ffff888015480948 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3206 [inline]
- #0: ffff888015480948 ((wq_completion)events){+.+.}-{0:0}, at: process_scheduled_works+0x90a/0x1830 kernel/workqueue.c:3312
- #1: ffffc90003f6fd00 ((linkwatch_work).work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3207 [inline]
- , at: process_scheduled_works+0x945/0x1830 kernel/workqueue.c:3312
- #2: ffffffff8fa6f208 (rtnl_mutex){+.+.}-{3:3}, at: linkwatch_event+0xe/0x60 net/core/link_watch.c:276
-
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240805085821.1616528-1-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 4aad5335969f ("ice: add individual interrupt allocation")
+Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
+Signed-off-by: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/link_watch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_main.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/link_watch.c b/net/core/link_watch.c
-index cb43f5aebfbcc..cf867f6e38bf1 100644
---- a/net/core/link_watch.c
-+++ b/net/core/link_watch.c
-@@ -153,9 +153,9 @@ static void linkwatch_schedule_work(int urgent)
- 	 * override the existing timer.
- 	 */
- 	if (test_bit(LW_URGENT, &linkwatch_flags))
--		mod_delayed_work(system_wq, &linkwatch_work, 0);
-+		mod_delayed_work(system_unbound_wq, &linkwatch_work, 0);
- 	else
--		schedule_delayed_work(&linkwatch_work, delay);
-+		queue_delayed_work(system_unbound_wq, &linkwatch_work, delay);
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
+index 600a2f5370875..b168a37a5dfff 100644
+--- a/drivers/net/ethernet/intel/ice/ice_main.c
++++ b/drivers/net/ethernet/intel/ice/ice_main.c
+@@ -557,6 +557,8 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
+ 	if (test_bit(ICE_PREPARED_FOR_RESET, pf->state))
+ 		return;
  
++	synchronize_irq(pf->oicr_irq.virq);
++
+ 	ice_unplug_aux_dev(pf);
  
+ 	/* Notify VFs of impending reset */
 -- 
 2.43.0
 
