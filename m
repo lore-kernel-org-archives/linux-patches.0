@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46CEA2C1A5;
-	Mon, 12 Aug 2024 16:32:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36312C1A5;
+	Mon, 12 Aug 2024 16:32:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480339; cv=none; b=TirB997PoXRUkGTcrqUOw0R/PGbVpUMCtE5oV7unfU53Viy/thKIM/J/0vZqO67IMtaIywackC0kTbwf/aSqltdY4ncPJFk1enOVg4FpCgbbFjsOEdeO95v1ge+EOo4/p6g3A0h6PfUs8mb4+wCxWB5Kzbkr2IA+Q1nCyxxJxxU=
+	t=1723480342; cv=none; b=hLjZMw/+EXNlDzUiI+iWmTh4XgBcA3Ccnb8rscDc1zGLmR0j9vbgQq3cM3P1ZYDFM3tZYxTV4VZCeABR2ggPpIQz5f0tloRHPOVGsPknF+tintgwV9AynoC+4/f4HaK1i36eqkcWgtbNN34MZY47JiSZ2AhuSBMaRaWN8REQNrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480339; c=relaxed/simple;
-	bh=MJlT0KddbSSSTTv3AxhQfq0LelwZ9a0JZRmnQumoabY=;
+	s=arc-20240116; t=1723480342; c=relaxed/simple;
+	bh=HuOpkZzDmdS+a++ce2HyH4Tb3dIvqepbohgCf18b2yQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXRMXiFcWXgzdvWkt/TN6afMS/bCXKN6dabvgvjkRRNqQWxYvYSCfDuj38rvwvTnz+vJAbG3AIGs2Nm9wRE9at/sSIeBZ3M33pIDaeYTwrCuYIasW1StEhFQ6IUImdSnA08HPUcLD8FaCEVYiSjGuCIF2lim5jhk9CdHPbVpyBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPj+qfG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ACmRYMV2D9WOydevnRkzkoz8lAvDgVDaF+WYX2lqR5QhXgza9DEOXbyLrfgTgLMLFkCnJ2TjJuD+O17ovIMVj3l1MG7EwhPbouZGD7oNfIus+dDJj0ca6Tjjo6gPCbuvR9PNdG1WlNktZJwkH7uQnNpVKU0/aqtkzV/eWNK2cwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWe5BIR/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPj+qfG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44541C32782;
-	Mon, 12 Aug 2024 16:32:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWe5BIR/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF04BC32782;
+	Mon, 12 Aug 2024 16:32:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480338;
-	bh=MJlT0KddbSSSTTv3AxhQfq0LelwZ9a0JZRmnQumoabY=;
+	s=korg; t=1723480342;
+	bh=HuOpkZzDmdS+a++ce2HyH4Tb3dIvqepbohgCf18b2yQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPj+qfG8NJtoie4DI2pQWFDtGEsTBwHccoQkdr4EbhCjHryw4opyWiJ1yi7k1y2jj
-	 UXLxg5xqy0WS5pKGC4WalMPwt5fp4mHBsDb3mNOUup90M6YHMiDyH4cnuxSdbgMVr6
-	 ON/DUowC8ugKmFnGyAh1wl+L1t+0h3JJt0/jy3Qc=
+	b=HWe5BIR/iNJ6k3aghQsw+t6jqGNGeyPCmSjgXL6ZM/7xTLEff4NV5ZlY3y/+TgI/9
+	 yDN9Fwf8t5HBvJV+ASUySC8GNCL09rGYPBGQqq9upm57adRhDAzDwYA2NzXJnrQKgN
+	 NfdIfwhELG9Can49DgaiaGMKnZqPNFUAnF0zkDGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 168/263] ASoC: meson: axg-fifo: fix irq scheduling issue with PREEMPT_RT
-Date: Mon, 12 Aug 2024 18:02:49 +0200
-Message-ID: <20240812160152.978792970@linuxfoundation.org>
+Subject: [PATCH 6.10 151/263] kprobes: Fix to check symbol prefixes correctly
+Date: Mon, 12 Aug 2024 18:02:32 +0200
+Message-ID: <20240812160152.327207487@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,84 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 5003d0ce5c7da3a02c0aff771f516f99731e7390 ]
+[ Upstream commit 8c8acb8f26cbde665b233dd1b9bbcbb9b86822dc ]
 
-With PREEMPT_RT enabled a spinlock_t becomes a sleeping lock.
+Since str_has_prefix() takes the prefix as the 2nd argument and the string
+as the first, is_cfi_preamble_symbol() always fails to check the prefix.
+Fix the function parameter order so that it correctly check the prefix.
 
-This is usually not a problem with spinlocks used in IRQ context since
-IRQ handlers get threaded. However, if IRQF_ONESHOT is set, the primary
-handler won't be force-threaded and runs always in hardirq context. This is
-a problem because spinlock_t requires a preemptible context on PREEMPT_RT.
+Link: https://lore.kernel.org/all/172260679559.362040.7360872132937227206.stgit@devnote2/
 
-In this particular instance, regmap mmio uses spinlock_t to protect the
-register access and IRQF_ONESHOT is set on the IRQ. In this case, it is
-actually better to do everything in threaded handler and it solves the
-problem with PREEMPT_RT.
-
-Reported-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Closes: https://lore.kernel.org/linux-amlogic/20240729131652.3012327-1-avkrasnov@salutedevices.com
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Fixes: b11d26660dff ("ASoC: meson: axg-fifo: use threaded irq to check periods")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20240807162705.4024136-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: de02f2ac5d8c ("kprobes: Prohibit probing on CFI preamble symbol")
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-fifo.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ kernel/kprobes.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
-index 59abe0b3c59fb..486c56a84552d 100644
---- a/sound/soc/meson/axg-fifo.c
-+++ b/sound/soc/meson/axg-fifo.c
-@@ -207,25 +207,18 @@ static irqreturn_t axg_fifo_pcm_irq_block(int irq, void *dev_id)
- 	status = FIELD_GET(STATUS1_INT_STS, status);
- 	axg_fifo_ack_irq(fifo, status);
+diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+index 6a76a81000735..85251c254d8a6 100644
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1557,8 +1557,8 @@ static bool is_cfi_preamble_symbol(unsigned long addr)
+ 	if (lookup_symbol_name(addr, symbuf))
+ 		return false;
  
--	/* Use the thread to call period elapsed on nonatomic links */
--	if (status & FIFO_INT_COUNT_REPEAT)
--		return IRQ_WAKE_THREAD;
-+	if (status & ~FIFO_INT_COUNT_REPEAT)
-+		dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
-+			status);
- 
--	dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
--		status);
-+	if (status & FIFO_INT_COUNT_REPEAT) {
-+		snd_pcm_period_elapsed(ss);
-+		return IRQ_HANDLED;
-+	}
- 
- 	return IRQ_NONE;
+-	return str_has_prefix("__cfi_", symbuf) ||
+-		str_has_prefix("__pfx_", symbuf);
++	return str_has_prefix(symbuf, "__cfi_") ||
++		str_has_prefix(symbuf, "__pfx_");
  }
  
--static irqreturn_t axg_fifo_pcm_irq_block_thread(int irq, void *dev_id)
--{
--	struct snd_pcm_substream *ss = dev_id;
--
--	snd_pcm_period_elapsed(ss);
--
--	return IRQ_HANDLED;
--}
--
- int axg_fifo_pcm_open(struct snd_soc_component *component,
- 		      struct snd_pcm_substream *ss)
- {
-@@ -251,8 +244,9 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
- 	if (ret)
- 		return ret;
- 
--	ret = request_threaded_irq(fifo->irq, axg_fifo_pcm_irq_block,
--				   axg_fifo_pcm_irq_block_thread,
-+	/* Use the threaded irq handler only with non-atomic links */
-+	ret = request_threaded_irq(fifo->irq, NULL,
-+				   axg_fifo_pcm_irq_block,
- 				   IRQF_ONESHOT, dev_name(dev), ss);
- 	if (ret)
- 		return ret;
+ static int check_kprobe_address_safe(struct kprobe *p,
 -- 
 2.43.0
 
