@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B549187321;
-	Mon, 12 Aug 2024 16:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D17D183CD4;
+	Mon, 12 Aug 2024 16:30:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480198; cv=none; b=SVvY9FERoKuO6VKts7vCW1Z/x09GJK85r+/g83NofNRfENyUInmdznGb1YCpO3iT1xRWcfAeRbyq2c0RDGEk4S4P0dob8Qygq6ysSEe/yEcvjh1f0+rG8YD80f332kLQbWACiyQz8InjfWvWelVxKC1OCcd/ZmF+mjAlOCvRfac=
+	t=1723480201; cv=none; b=c3HRrB0JWyiWgg6JxJJ5Nvq7Ggt6jT0k+dD14CDpRU0qfW3hAO3+cETwYbEnOrUtLtJNEW1Izhj6Olsrh3zqOb8qkyEGB7awfr7hT1IOm4dBEoKJWbqEX60wAyUylrjb6oq9QB30wL3yHwD8NtqM8FFo0cxe3CZ3ZQ5BWWz2c70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480198; c=relaxed/simple;
-	bh=j2g4SZJtPy4sI0NoSo4H0L0WIL2S8D1TGNrWtE2KwQM=;
+	s=arc-20240116; t=1723480201; c=relaxed/simple;
+	bh=tzycfB+wTbQ4UZ6sFrJYFY0pxpL2hypwg7YJYaGlCXM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tUv0eE9I4iFdJUjSW/bsFIGBChK5NkdOIhLlwZ+IjG29spZ2vX23sjRMCsrx4d6Iw6mbVA97NaQ/6PPwEVYJYa2Js9vqT+G9k8UzaBbNi+b+SnhOwlsJU82gx+HriPTdcC5ZTcDaBI47aFllNqxoVR6K1As6kOoJKthEiitAJ7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imvZ7p97; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQuJH8s8Tm4lywyzmMLfhKYhqoiPpJixLO+Ic1+v0XdzdWW8ekDFrAiubuirH+dqtbuIDC/jUPRLhx4Ln4uW8BsXng/DtPQCD7BwDnTyc2HkF/0/1KH6r0hXTwsybuA4bzeGfsQzbmasyZvM9AarNXVivmkbcM9yFVGU4Qu6hf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKsnkHpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imvZ7p97"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE83C32782;
-	Mon, 12 Aug 2024 16:29:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKsnkHpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE53CC32782;
+	Mon, 12 Aug 2024 16:30:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480198;
-	bh=j2g4SZJtPy4sI0NoSo4H0L0WIL2S8D1TGNrWtE2KwQM=;
+	s=korg; t=1723480201;
+	bh=tzycfB+wTbQ4UZ6sFrJYFY0pxpL2hypwg7YJYaGlCXM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imvZ7p97zvvpc7iUaWzHHaGYV7TLzq9Fn6hJjR7O2aDwmYrnuPKfGU/KBWSI4s8Mf
-	 HaoIIXVA7MVGc7luDR0v7W3kxkOftKvgPiGggf0wBp/nWGufOczpA8YZ5EUQ+KU0wt
-	 sfeutV3y9hpWnqfOv2r1fxraIYMNXOyKPuhuR7Yw=
+	b=PKsnkHpXtYJ8T85NUJY7jXu1SXH0dgysHU7xizeFFoSyrQzaLuyhUp4Ja4ghd2DEG
+	 fbYLq0jaAYcODfIgA2yfTsuc0UUcngCgwyPP5socGoRfITkdQHnIRYkVYTlMttzG4w
+	 jr+1nyT6XxF1SjLpZ/HXUdX71old2TTd/YfdGJrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.10 125/263] irqchip/meson-gpio: Convert meson_gpio_irq_controller::lock to raw_spinlock_t
-Date: Mon, 12 Aug 2024 18:02:06 +0200
-Message-ID: <20240812160151.334959538@linuxfoundation.org>
+	Miao Wang <shankerwangmiao@gmail.com>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH 6.10 126/263] irqchip/loongarch-cpu: Fix return value of lpic_gsi_to_irq()
+Date: Mon, 12 Aug 2024 18:02:07 +0200
+Message-ID: <20240812160151.374603171@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,105 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arseniy Krasnov <avkrasnov@salutedevices.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit f872d4af79fe8c71ae291ce8875b477e1669a6c7 upstream.
+commit 81a91abab1307d7725fa4620952c0767beae7753 upstream.
 
-This lock is acquired under irq_desc::lock with interrupts disabled.
+lpic_gsi_to_irq() should return a valid Linux interrupt number if
+acpi_register_gsi() succeeds, and return 0 otherwise. But lpic_gsi_to_irq()
+converts a negative return value of acpi_register_gsi() to a positive value
+silently.
 
-When PREEMPT_RT is enabled, 'spinlock_t' becomes preemptible, which results
-in invalid lock acquire context;
+Convert the return value explicitly.
 
-  [ BUG: Invalid wait context ]
-  swapper/0/1 is trying to lock:
-  ffff0000008fed30 (&ctl->lock){....}-{3:3}, at: meson_gpio_irq_update_bits0
-  other info that might help us debug this:
-  context-{5:5}
-  3 locks held by swapper/0/1:
-   #0: ffff0000003cd0f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0x90c
-   #1: ffff000004714650 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq0
-   #2: ffff0000047144c8 (&irq_desc_lock_class){-.-.}-{2:2}, at: __setup_irq0
-  stack backtrace:
-  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.9-sdkernel #1
-  Call trace:
-   _raw_spin_lock_irqsave+0x60/0x88
-   meson_gpio_irq_update_bits+0x34/0x70
-   meson8_gpio_irq_set_type+0x78/0xc4
-   meson_gpio_irq_set_type+0x30/0x60
-   __irq_set_trigger+0x60/0x180
-   __setup_irq+0x30c/0x6e0
-   request_threaded_irq+0xec/0x1a4
-
-Fixes: 215f4cc0fb20 ("irqchip/meson: Add support for gpio interrupt controller")
-Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Fixes: e8bba72b396c ("irqchip / ACPI: Introduce ACPI_IRQ_MODEL_LPIC for LoongArch")
+Reported-by: Miao Wang <shankerwangmiao@gmail.com>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240729131850.3015508-1-avkrasnov@salutedevices.com
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20240723064508.35560-1-chenhuacai@loongson.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-meson-gpio.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/irqchip/irq-loongarch-cpu.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/irqchip/irq-meson-gpio.c
-+++ b/drivers/irqchip/irq-meson-gpio.c
-@@ -178,7 +178,7 @@ struct meson_gpio_irq_controller {
- 	void __iomem *base;
- 	u32 channel_irqs[MAX_NUM_CHANNEL];
- 	DECLARE_BITMAP(channel_map, MAX_NUM_CHANNEL);
--	spinlock_t lock;
-+	raw_spinlock_t lock;
- };
+--- a/drivers/irqchip/irq-loongarch-cpu.c
++++ b/drivers/irqchip/irq-loongarch-cpu.c
+@@ -18,11 +18,13 @@ struct fwnode_handle *cpuintc_handle;
  
- static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
-@@ -187,14 +187,14 @@ static void meson_gpio_irq_update_bits(s
- 	unsigned long flags;
- 	u32 tmp;
+ static u32 lpic_gsi_to_irq(u32 gsi)
+ {
++	int irq = 0;
++
+ 	/* Only pch irqdomain transferring is required for LoongArch. */
+ 	if (gsi >= GSI_MIN_PCH_IRQ && gsi <= GSI_MAX_PCH_IRQ)
+-		return acpi_register_gsi(NULL, gsi, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_HIGH);
++		irq = acpi_register_gsi(NULL, gsi, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_HIGH);
  
--	spin_lock_irqsave(&ctl->lock, flags);
-+	raw_spin_lock_irqsave(&ctl->lock, flags);
- 
- 	tmp = readl_relaxed(ctl->base + reg);
- 	tmp &= ~mask;
- 	tmp |= val;
- 	writel_relaxed(tmp, ctl->base + reg);
- 
--	spin_unlock_irqrestore(&ctl->lock, flags);
-+	raw_spin_unlock_irqrestore(&ctl->lock, flags);
+-	return 0;
++	return (irq > 0) ? irq : 0;
  }
  
- static void meson_gpio_irq_init_dummy(struct meson_gpio_irq_controller *ctl)
-@@ -244,12 +244,12 @@ meson_gpio_irq_request_channel(struct me
- 	unsigned long flags;
- 	unsigned int idx;
- 
--	spin_lock_irqsave(&ctl->lock, flags);
-+	raw_spin_lock_irqsave(&ctl->lock, flags);
- 
- 	/* Find a free channel */
- 	idx = find_first_zero_bit(ctl->channel_map, ctl->params->nr_channels);
- 	if (idx >= ctl->params->nr_channels) {
--		spin_unlock_irqrestore(&ctl->lock, flags);
-+		raw_spin_unlock_irqrestore(&ctl->lock, flags);
- 		pr_err("No channel available\n");
- 		return -ENOSPC;
- 	}
-@@ -257,7 +257,7 @@ meson_gpio_irq_request_channel(struct me
- 	/* Mark the channel as used */
- 	set_bit(idx, ctl->channel_map);
- 
--	spin_unlock_irqrestore(&ctl->lock, flags);
-+	raw_spin_unlock_irqrestore(&ctl->lock, flags);
- 
- 	/*
- 	 * Setup the mux of the channel to route the signal of the pad
-@@ -567,7 +567,7 @@ static int meson_gpio_irq_of_init(struct
- 	if (!ctl)
- 		return -ENOMEM;
- 
--	spin_lock_init(&ctl->lock);
-+	raw_spin_lock_init(&ctl->lock);
- 
- 	ctl->base = of_iomap(node, 0);
- 	if (!ctl->base) {
+ static struct fwnode_handle *lpic_get_gsi_domain_id(u32 gsi)
 
 
