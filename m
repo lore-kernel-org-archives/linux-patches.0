@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CD9183CA6;
-	Mon, 12 Aug 2024 16:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA68F183CA6;
+	Mon, 12 Aug 2024 16:19:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479539; cv=none; b=X950/lirDYtU6ohJYYqC+L1iJIe+gng4GyjeopY/MytjhhHfUAOqy7A1jgWzDM0Mnj7nLHSQf2KfEBgnvkFe98oTpv9zNy2H2xSZg0glK2Bv3DBK0OvWShGjCZM2jaup7qWqxsr8qD252bcjbLwWF+3gDUhet0ZhAGJksorTgLs=
+	t=1723479542; cv=none; b=WYJAMTL9/RSaHG0zSGJkvB+MZDNmT35OyEVIBWZpNdu1+tB/wo4lOl6dVTslVhlLyfG0STrP+V1mFf5lc7HwXeFYqepgXcEvrFJ9LmjOkRWXDH78BRJcjUQ5IDVW6fNcAnlqX4GNH9vpCKLOuXLxv/mFG1BWQ+B3ebt58dEdNOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479539; c=relaxed/simple;
-	bh=bgBgSsRPdawA5ER4CZxBCv5Jn7SH7qfICntHIcL4Egs=;
+	s=arc-20240116; t=1723479542; c=relaxed/simple;
+	bh=GevQF1Y4uGMo/lCQ2PVE/O9RMAeDZboS2DXL8qSPiYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uRrTnECRfSObMkbWikBg0Cm1zmxLiwrKdsZc4p2BMQ7yilw1WNioSi7Sj0Js8c57P6gnXve+VxXAF9GXfBFshuRLajAku3YZaz77CHQt3dVfnyrx9fjHPJ3ssn6L0E1wMkaxKiX0tcFod6ouspTYhLeTECklgQac+LHjn0RVjPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0IFuYwTC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O8+vcB1y6uFYxJVaLKQ4XB4tQeY4d6B7L5SPvK3BH9UyDiboI7EXazmXqZNGkLDKxmKitk+uL1cK7q6bGyMNSvHqnAGrr4h2STFycQUtBo4rZQ094etlMrzRnRmlBfZwccx4fKHLW1EsU9uF6oa9Y53pLlpkIx1U26oX8bUciFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SPEq/mcy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0IFuYwTC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00942C4AF09;
-	Mon, 12 Aug 2024 16:18:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SPEq/mcy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37694C32782;
+	Mon, 12 Aug 2024 16:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479539;
-	bh=bgBgSsRPdawA5ER4CZxBCv5Jn7SH7qfICntHIcL4Egs=;
+	s=korg; t=1723479542;
+	bh=GevQF1Y4uGMo/lCQ2PVE/O9RMAeDZboS2DXL8qSPiYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IFuYwTCeSh0WI1S2yuke7Wtu46KBaxXgM35tQJ1oHyfHlki9S2+z27bWsWKNCTRf
-	 komkRxrcO9TLb479WbHMBjxsL3Y/VLDV6HPSqC6koDaKPrnzw8Lq32dUNpkXAT4fGk
-	 xJeRmeANB2KmugMK0XWikIrprikbfSiO0G0guewA=
+	b=SPEq/mcybRlewjfx4vBev6LKNH4mcVW0zvJQdoyJQJigjKUGT+WGJ0lpwCRxfGSAO
+	 tvqdokFZTpIs2F6yxgyHUtAFIoC5EMPIarZIRLxnsUJBpwEbV+AjTOKbycOFeF1V4W
+	 tHhJ6e0VBct8yJjtqr1C2qAJHVn5NZdRFigJVtg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.6 118/189] USB: serial: debug: do not echo input by default
-Date: Mon, 12 Aug 2024 18:02:54 +0200
-Message-ID: <20240812160136.680192031@linuxfoundation.org>
+	Chris Wulff <crwulff@gmail.com>
+Subject: [PATCH 6.6 119/189] usb: gadget: core: Check for unset descriptor
+Date: Mon, 12 Aug 2024 18:02:55 +0200
+Message-ID: <20240812160136.726933431@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -44,72 +43,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+From: Chris Wulff <crwulff@gmail.com>
 
-commit 00af4f3dda1461ec90d892edc10bec6d3c50c554 upstream.
+commit 973a57891608a98e894db2887f278777f564de18 upstream.
 
-This driver is intended as a "client" end of the console connection.
-When connected to a host it's supposed to receive debug logs, and
-possibly allow to interact with whatever debug console is available
-there. Feeding messages back, depending on a configuration may cause log
-messages be executed as shell commands (which can be really bad if one
-is unlucky, imagine a log message like "prevented running `rm -rf
-/home`"). In case of Xen, it exposes sysrq-like debug interface, and
-feeding it its own logs will pretty quickly hit 'R' for "instant
-reboot".
+Make sure the descriptor has been set before looking at maxpacket.
+This fixes a null pointer panic in this case.
 
-Contrary to a classic serial console, the USB one cannot be configured
-ahead of time, as the device shows up only when target OS is up. And at
-the time device is opened to execute relevant ioctl, it's already too
-late, especially when logs start flowing shortly after device is
-initialized.
-Avoid the issue by changing default to no echo for this type of devices.
+This may happen if the gadget doesn't properly set up the endpoint
+for the current speed, or the gadget descriptors are malformed and
+the descriptor for the speed/endpoint are not found.
 
-Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-[ johan: amend summary; disable also ECHONL ]
+No current gadget driver is known to have this problem, but this
+may cause a hard-to-find bug during development of new gadgets.
+
+Fixes: 54f83b8c8ea9 ("USB: gadget: Reject endpoints with 0 maxpacket value")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Chris Wulff <crwulff@gmail.com>
+Link: https://lore.kernel.org/r/20240725010419.314430-2-crwulff@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb_debug.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/gadget/udc/core.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/usb/serial/usb_debug.c
-+++ b/drivers/usb/serial/usb_debug.c
-@@ -76,6 +76,11 @@ static void usb_debug_process_read_urb(s
- 	usb_serial_generic_process_read_urb(urb);
- }
+--- a/drivers/usb/gadget/udc/core.c
++++ b/drivers/usb/gadget/udc/core.c
+@@ -118,12 +118,10 @@ int usb_ep_enable(struct usb_ep *ep)
+ 		goto out;
  
-+static void usb_debug_init_termios(struct tty_struct *tty)
-+{
-+	tty->termios.c_lflag &= ~(ECHO | ECHONL);
-+}
+ 	/* UDC drivers can't handle endpoints with maxpacket size 0 */
+-	if (usb_endpoint_maxp(ep->desc) == 0) {
+-		/*
+-		 * We should log an error message here, but we can't call
+-		 * dev_err() because there's no way to find the gadget
+-		 * given only ep.
+-		 */
++	if (!ep->desc || usb_endpoint_maxp(ep->desc) == 0) {
++		WARN_ONCE(1, "%s: ep%d (%s) has %s\n", __func__, ep->address, ep->name,
++			  (!ep->desc) ? "NULL descriptor" : "maxpacket 0");
 +
- static struct usb_serial_driver debug_device = {
- 	.driver = {
- 		.owner =	THIS_MODULE,
-@@ -85,6 +90,7 @@ static struct usb_serial_driver debug_de
- 	.num_ports =		1,
- 	.bulk_out_size =	USB_DEBUG_MAX_PACKET_SIZE,
- 	.break_ctl =		usb_debug_break_ctl,
-+	.init_termios =		usb_debug_init_termios,
- 	.process_read_urb =	usb_debug_process_read_urb,
- };
- 
-@@ -96,6 +102,7 @@ static struct usb_serial_driver dbc_devi
- 	.id_table =		dbc_id_table,
- 	.num_ports =		1,
- 	.break_ctl =		usb_debug_break_ctl,
-+	.init_termios =		usb_debug_init_termios,
- 	.process_read_urb =	usb_debug_process_read_urb,
- };
- 
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
 
 
