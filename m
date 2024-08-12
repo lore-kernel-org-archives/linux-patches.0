@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEAC134AC;
-	Mon, 12 Aug 2024 16:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8433E183CD9;
+	Mon, 12 Aug 2024 16:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479934; cv=none; b=cU1oD2LfREQ3HuzP+wNQJoxp4FCtTiXjhMtN2xl+x9qvNQCp6s7hJ4Gzovr0qGWELhfpDx2nBUdf/SAMjLxhrptnbbe7VR2UIa0B8Wo4nHFW0yPeYbOgi0jlxh7YwKaoKPMj5qt83Ab35UwVq4KaZSLa6mP/BwC7sh99Y+nnC8E=
+	t=1723479937; cv=none; b=CI11rIU5FtrmqLDl52ipBKAYfk34oqTJ/awobzTUPev7I9E7OpoS78vL7oe6TGe1hIqxT9cU8YdS9NX2Y3eS9XK5RT+IYHrvAAZIpeRdwGKTa+KdGRdDeuHL072Q10SAv0UHjQi73XBccMwWPPzLDYAfeXfQK+7fOiy8EfhRPmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479934; c=relaxed/simple;
-	bh=e2zLxL+5ecTk8eW1nOQt6HuEFJ0D/t5nIyX+sbjH+fM=;
+	s=arc-20240116; t=1723479937; c=relaxed/simple;
+	bh=8HS6s612pH0L3Rx0ImdQT7AZO92xRZy6BJ0FNpm+ILY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kfLrnqgRjrUwo64uUQyfHDJeohfpT4Stn2+VmAd2xymr1JWvYvk+W3sgSm24D1HDV3JZ9+hsKM5r/wcwmAcu1J6R5NZ5Qy/YeUs4JvXxlbL7tkBGvOzpKrIwuyjgv7VqyAfhVRHNppJ1T+4g4bTiIR6u2D5Vyn7PlGvBvSzEFBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOMPdC0I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GOL1509TB7xyma8xW5chI5Dd7bvGOgQtCH0sJY7EjH2KUYY+miUf+2OWTSOvl5ZwDHWSzdZPdn5oNXzPr5+jYvLrQFsoFxfeQmadKRhw5MB+oeQG6OvLKiuSf5UBVOumRilh+jmzKKZyFiX3jQ/YxqrFrCCso/fVwWGdPIJX3vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CPqrfZLU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOMPdC0I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 173ABC32782;
-	Mon, 12 Aug 2024 16:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CPqrfZLU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88901C32782;
+	Mon, 12 Aug 2024 16:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479933;
-	bh=e2zLxL+5ecTk8eW1nOQt6HuEFJ0D/t5nIyX+sbjH+fM=;
+	s=korg; t=1723479937;
+	bh=8HS6s612pH0L3Rx0ImdQT7AZO92xRZy6BJ0FNpm+ILY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOMPdC0I3ROYqD6QYVNFwg0+L/9o5XEhZU1kp1M4fxVfAb+09D+Yi/ffrEN9Atmns
-	 6tHT19m6/rfuIjY8S7tWuPcTL+2cTrz1Y1ajqBjEneenY30s3DVNGWBdhvX8fEhqfB
-	 tL9/tyh5k7X0h0Ov1GAJJttm9vP7G4Bw+E1VWWK8=
+	b=CPqrfZLUooCxQCvucK3zKFirNd0vDjhd+/WOPfH5pjbtP9WCIzixEqavkA13Jbf8V
+	 tw7t4Hv11Z9bURW3Lf+dciIpiT/OSSd742Ek99fYPctBa+DK+/0BTB2lJrM6aYNLAX
+	 DZgG7Fd0dCONUfoK/vubz50C0uqZDYqU5EkA412M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Dustin L. Howett" <dustin@howett.net>,
-	Ben Walsh <ben@jubnut.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	kasan-dev@googlegroups.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 044/263] platform/chrome: cros_ec_lpc: Add a new quirk for ACPI id
-Date: Mon, 12 Aug 2024 18:00:45 +0200
-Message-ID: <20240812160148.232238786@linuxfoundation.org>
+Subject: [PATCH 6.10 045/263] rcutorture: Fix rcu_torture_fwd_cb_cr() data race
+Date: Mon, 12 Aug 2024 18:00:46 +0200
+Message-ID: <20240812160148.270053242@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,128 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Walsh <ben@jubnut.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-[ Upstream commit 040159e0912c31fe959d8671f9700bda105ab63a ]
+[ Upstream commit 6040072f4774a575fa67b912efe7722874be337b ]
 
-Framework Laptops' ACPI exposes the EC with id "PNP0C09". But
-"PNP0C09" is part of the ACPI standard; there are lots of computers
-with EC chips with this id, and most of them don't support the cros_ec
-protocol.
+On powerpc systems, spinlock acquisition does not order prior stores
+against later loads.  This means that this statement:
 
-The driver could find the ACPI device by having "PNP0C09" in the
-acpi_match_table, but this would match devices which don't support the
-cros_ec protocol. Instead, add a new quirk "CROS_EC_LPC_QUIRK_ACPI_ID"
-which allows the id to be specified. This quirk is applied after the
-DMI check shows that the device is supported.
+	rfcp->rfc_next = NULL;
 
-Tested-by: Dustin L. Howett <dustin@howett.net>
-Signed-off-by: Ben Walsh <ben@jubnut.com>
-Link: https://lore.kernel.org/r/20240605063351.14836-4-ben@jubnut.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Can be reordered to follow this statement:
+
+	WRITE_ONCE(*rfcpp, rfcp);
+
+Which is then a data race with rcu_torture_fwd_prog_cr(), specifically,
+this statement:
+
+	rfcpn = READ_ONCE(rfcp->rfc_next)
+
+KCSAN located this data race, which represents a real failure on powerpc.
+
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Acked-by: Marco Elver <elver@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: <kasan-dev@googlegroups.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_lpc.c | 50 ++++++++++++++++++++-------
- 1 file changed, 38 insertions(+), 12 deletions(-)
+ kernel/rcu/rcutorture.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_lpc.c b/drivers/platform/chrome/cros_ec_lpc.c
-index ddfbfec44f4cc..43e0914256a3c 100644
---- a/drivers/platform/chrome/cros_ec_lpc.c
-+++ b/drivers/platform/chrome/cros_ec_lpc.c
-@@ -39,6 +39,11 @@ static bool cros_ec_lpc_acpi_device_found;
-  * be used as the base port for EC mapped memory.
-  */
- #define CROS_EC_LPC_QUIRK_REMAP_MEMORY              BIT(0)
-+/*
-+ * Indicates that lpc_driver_data.quirk_acpi_id should be used to find
-+ * the ACPI device.
-+ */
-+#define CROS_EC_LPC_QUIRK_ACPI_ID                   BIT(1)
- 
- /**
-  * struct lpc_driver_data - driver data attached to a DMI device ID to indicate
-@@ -46,10 +51,12 @@ static bool cros_ec_lpc_acpi_device_found;
-  * @quirks: a bitfield composed of quirks from CROS_EC_LPC_QUIRK_*
-  * @quirk_mmio_memory_base: The first I/O port addressing EC mapped memory (used
-  *                          when quirk ...REMAP_MEMORY is set.)
-+ * @quirk_acpi_id: An ACPI HID to be used to find the ACPI device.
-  */
- struct lpc_driver_data {
- 	u32 quirks;
- 	u16 quirk_mmio_memory_base;
-+	const char *quirk_acpi_id;
- };
- 
- /**
-@@ -374,6 +381,26 @@ static void cros_ec_lpc_acpi_notify(acpi_handle device, u32 value, void *data)
- 		pm_system_wakeup();
- }
- 
-+static acpi_status cros_ec_lpc_parse_device(acpi_handle handle, u32 level,
-+					    void *context, void **retval)
-+{
-+	*(struct acpi_device **)context = acpi_fetch_acpi_dev(handle);
-+	return AE_CTRL_TERMINATE;
-+}
-+
-+static struct acpi_device *cros_ec_lpc_get_device(const char *id)
-+{
-+	struct acpi_device *adev = NULL;
-+	acpi_status status = acpi_get_devices(id, cros_ec_lpc_parse_device,
-+					      &adev, NULL);
-+	if (ACPI_FAILURE(status)) {
-+		pr_warn(DRV_NAME ": Looking for %s failed\n", id);
-+		return NULL;
-+	}
-+
-+	return adev;
-+}
-+
- static int cros_ec_lpc_probe(struct platform_device *pdev)
- {
- 	struct device *dev = &pdev->dev;
-@@ -401,6 +428,16 @@ static int cros_ec_lpc_probe(struct platform_device *pdev)
- 
- 		if (quirks & CROS_EC_LPC_QUIRK_REMAP_MEMORY)
- 			ec_lpc->mmio_memory_base = driver_data->quirk_mmio_memory_base;
-+
-+		if (quirks & CROS_EC_LPC_QUIRK_ACPI_ID) {
-+			adev = cros_ec_lpc_get_device(driver_data->quirk_acpi_id);
-+			if (!adev) {
-+				dev_err(dev, "failed to get ACPI device '%s'",
-+					driver_data->quirk_acpi_id);
-+				return -ENODEV;
-+			}
-+			ACPI_COMPANION_SET(dev, adev);
-+		}
- 	}
- 
- 	/*
-@@ -661,23 +698,12 @@ static struct platform_device cros_ec_lpc_device = {
- 	.name = DRV_NAME
- };
- 
--static acpi_status cros_ec_lpc_parse_device(acpi_handle handle, u32 level,
--					    void *context, void **retval)
--{
--	*(bool *)context = true;
--	return AE_CTRL_TERMINATE;
--}
--
- static int __init cros_ec_lpc_init(void)
- {
- 	int ret;
--	acpi_status status;
- 	const struct dmi_system_id *dmi_match;
- 
--	status = acpi_get_devices(ACPI_DRV_NAME, cros_ec_lpc_parse_device,
--				  &cros_ec_lpc_acpi_device_found, NULL);
--	if (ACPI_FAILURE(status))
--		pr_warn(DRV_NAME ": Looking for %s failed\n", ACPI_DRV_NAME);
-+	cros_ec_lpc_acpi_device_found = !!cros_ec_lpc_get_device(ACPI_DRV_NAME);
- 
- 	dmi_match = dmi_first_match(cros_ec_lpc_dmi_table);
- 
+diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
+index 807fbf6123a77..251cead744603 100644
+--- a/kernel/rcu/rcutorture.c
++++ b/kernel/rcu/rcutorture.c
+@@ -2626,7 +2626,7 @@ static void rcu_torture_fwd_cb_cr(struct rcu_head *rhp)
+ 	spin_lock_irqsave(&rfp->rcu_fwd_lock, flags);
+ 	rfcpp = rfp->rcu_fwd_cb_tail;
+ 	rfp->rcu_fwd_cb_tail = &rfcp->rfc_next;
+-	WRITE_ONCE(*rfcpp, rfcp);
++	smp_store_release(rfcpp, rfcp);
+ 	WRITE_ONCE(rfp->n_launders_cb, rfp->n_launders_cb + 1);
+ 	i = ((jiffies - rfp->rcu_fwd_startat) / (HZ / FWD_CBS_HIST_DIV));
+ 	if (i >= ARRAY_SIZE(rfp->n_launders_hist))
 -- 
 2.43.0
 
