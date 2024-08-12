@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED1A134AC;
-	Mon, 12 Aug 2024 16:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F2B134AC;
+	Mon, 12 Aug 2024 16:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479990; cv=none; b=oA0VCH8N9Hl/5Ky3PxZ+ScE4yBSYq4PIygAxozEJvtYvRPxbN14ejrsCdWzBxZdgvuvW/tWQx8gnGfK6rC1t+4n04VLKtmgLilZcmpl+m9xM2819TTO50cooUNe24qGonoLwnJuQmxUgeEYmn59iMTYMlzrJwbCEIuYZB+GTeo4=
+	t=1723479993; cv=none; b=g3f2ujWafjg1J/hQHgWoSrvgDyQYjrChJiMQ67yS20oJ8qB7v84oDZ/B98zSbZDAClE+wzw6eD/J1soi/qmQp6KAFCgZHngH+QmjWmR41TZoUvzOQrPKYhqg6y3P9lmVpiXRy2LJ3FlJ/ZKqs1znOYZC0KUk7QIUrdC7IXUFXQc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479990; c=relaxed/simple;
-	bh=ZUYaxRmcxPL/9KiNtqxQkqd3ttZZzPuddnN1YFIApuM=;
+	s=arc-20240116; t=1723479993; c=relaxed/simple;
+	bh=72bkisED54y7RcUhaqN2nxAF+iL194/g/qn6S22iqLc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hTZjOp27AjOTKj3YUjFwrKuyPoTJxj6bAkrjAidvdAYJN0gibWuvS/5izTm63R3Yzsf2v3lvufMOlLvBC/DN9GHNDllzNSJSc3F7UwlRfwFWH/DZ7coPsdZ0irp1KB1vZv/2wlBx2nrMV3IdMH52YoeXPHgpQ7g/K8PTOqEQ73U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m4UgPAVL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sNt21SOnurVUB7olCKsjApnAMqgkHKrkUzrJvPn2GUJOIwdajImaGNL7FUG75+t3K8il2ckhjxZlRRzxY7dpeYQDfLaQJ5Qalgakz38sgP1VcuTgLjyQU3KTw0xtlafSu0q8gSMx6Rafiqe8XiQI66aTxQxGubVIKfVZsVqf5Rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hb0SjdSY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m4UgPAVL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 477DEC32782;
-	Mon, 12 Aug 2024 16:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hb0SjdSY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ADB4C32782;
+	Mon, 12 Aug 2024 16:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479990;
-	bh=ZUYaxRmcxPL/9KiNtqxQkqd3ttZZzPuddnN1YFIApuM=;
+	s=korg; t=1723479993;
+	bh=72bkisED54y7RcUhaqN2nxAF+iL194/g/qn6S22iqLc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m4UgPAVLGiJa1TWpRTwm/Y+ubBOxxKg/k3SZYH02sGT20e0iNMKxJ5zYwn6GWKFB6
-	 CGRewhT3U1S4f4Nan/Y512tl45AlI7sWI45FX/hivGmBY9eM1QOiY0ioJtTC71rc6M
-	 ba2kSGHkjh9k+oRgXIsS8ujmIDLcbY0gQw4Votvw=
+	b=hb0SjdSYLs/k73ckSFAAj+sdzySMKifAgYaltAfw0vMK5dH7+OZHRftFWAiLWZ0bB
+	 1bBLPVp+G5AqVd1efVPN9hJI7JMB46KxyPeI0zQVjOm7gQaGCIyBtrhoiGwkK5YU0B
+	 MzHe9AyXGNCAnSKN9qDZyQfTjczAdTgfkoXEgZlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bc0f5b92cc7091f45fb6@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 063/263] wifi: nl80211: disallow setting special AP channel widths
-Date: Mon, 12 Aug 2024 18:01:04 +0200
-Message-ID: <20240812160148.956372326@linuxfoundation.org>
+Subject: [PATCH 6.10 064/263] wifi: ath12k: fix race due to setting ATH12K_FLAG_EXT_IRQ_ENABLED too early
+Date: Mon, 12 Aug 2024 18:01:05 +0200
+Message-ID: <20240812160148.994688689@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,60 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 23daf1b4c91db9b26f8425cc7039cf96d22ccbfe ]
+[ Upstream commit 0a993772e0f0934d730c0d451622c80e03a40ab1 ]
 
-Setting the AP channel width is meant for use with the normal
-20/40/... MHz channel width progression, and switching around
-in S1G or narrow channels isn't supported. Disallow that.
+Commit 5082b3e3027e ("wifi: ath11k: fix race due to setting
+ATH11K_FLAG_EXT_IRQ_ENABLED too early") fixes a race in ath11k
+driver. Since ath12k shares the same logic as ath11k, currently
+the race also exists in ath12k: in ath12k_pci_ext_irq_enable(),
+ATH12K_FLAG_EXT_IRQ_ENABLED is set before NAPI is enabled.
+In cases where only one MSI vector is allocated, this results
+in a race condition: after ATH12K_FLAG_EXT_IRQ_ENABLED is set
+but before NAPI enabled, CE interrupt breaks in. Since IRQ is
+shared by CE and data path, ath12k_pci_ext_interrupt_handler()
+is also called where we call disable_irq_nosync() to disable
+IRQ. Then napi_schedule() is called but it does nothing because
+NAPI is not enabled at that time, meaning that
+ath12k_pci_ext_grp_napi_poll() will never run, so we have
+no chance to call enable_irq() to enable IRQ back. Since IRQ
+is shared, all interrupts are disabled and we would finally
+get no response from target.
 
-Reported-by: syzbot+bc0f5b92cc7091f45fb6@syzkaller.appspotmail.com
-Link: https://msgid.link/20240515141600.d4a9590bfe32.I19a32d60097e81b527eafe6b0924f6c5fbb2dc45@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+So port ath11k fix here, this is done by setting
+ATH12K_FLAG_EXT_IRQ_ENABLED after all NAPI and IRQ work are
+done. With the fix, we are sure that by the time
+ATH12K_FLAG_EXT_IRQ_ENABLED is set, NAPI is enabled.
+
+Note that the fix above also introduce some side effects:
+if ath12k_pci_ext_interrupt_handler() breaks in after NAPI
+enabled but before ATH12K_FLAG_EXT_IRQ_ENABLED set, nothing
+will be done by the handler this time, the work will be
+postponed till the next time the IRQ fires.
+
+This is found during code review.
+
+Tested-on: WCN7850 hw2.0 PCI WLAN.HMT.1.0.c5-00481-QCAHMTSWPL_V1.0_V2.0_SILICONZ-3
+
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://msgid.link/20240524023642.37030-1-quic_bqiang@quicinc.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/net/wireless/ath/ath12k/pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 0fd075238fc74..07538be6805ef 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3422,6 +3422,33 @@ static int __nl80211_set_channel(struct cfg80211_registered_device *rdev,
- 			if (chandef.chan != cur_chan)
- 				return -EBUSY;
+diff --git a/drivers/net/wireless/ath/ath12k/pci.c b/drivers/net/wireless/ath/ath12k/pci.c
+index 55fde0d33183c..f92b4ce49dfd4 100644
+--- a/drivers/net/wireless/ath/ath12k/pci.c
++++ b/drivers/net/wireless/ath/ath12k/pci.c
+@@ -1091,14 +1091,14 @@ void ath12k_pci_ext_irq_enable(struct ath12k_base *ab)
+ {
+ 	int i;
  
-+			/* only allow this for regular channel widths */
-+			switch (wdev->links[link_id].ap.chandef.width) {
-+			case NL80211_CHAN_WIDTH_20_NOHT:
-+			case NL80211_CHAN_WIDTH_20:
-+			case NL80211_CHAN_WIDTH_40:
-+			case NL80211_CHAN_WIDTH_80:
-+			case NL80211_CHAN_WIDTH_80P80:
-+			case NL80211_CHAN_WIDTH_160:
-+			case NL80211_CHAN_WIDTH_320:
-+				break;
-+			default:
-+				return -EINVAL;
-+			}
+-	set_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
+-
+ 	for (i = 0; i < ATH12K_EXT_IRQ_GRP_NUM_MAX; i++) {
+ 		struct ath12k_ext_irq_grp *irq_grp = &ab->ext_irq_grp[i];
+ 
+ 		napi_enable(&irq_grp->napi);
+ 		ath12k_pci_ext_grp_enable(irq_grp);
+ 	}
 +
-+			switch (chandef.width) {
-+			case NL80211_CHAN_WIDTH_20_NOHT:
-+			case NL80211_CHAN_WIDTH_20:
-+			case NL80211_CHAN_WIDTH_40:
-+			case NL80211_CHAN_WIDTH_80:
-+			case NL80211_CHAN_WIDTH_80P80:
-+			case NL80211_CHAN_WIDTH_160:
-+			case NL80211_CHAN_WIDTH_320:
-+				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
- 			result = rdev_set_ap_chanwidth(rdev, dev, link_id,
- 						       &chandef);
- 			if (result)
++	set_bit(ATH12K_FLAG_EXT_IRQ_ENABLED, &ab->dev_flags);
+ }
+ 
+ void ath12k_pci_ext_irq_disable(struct ath12k_base *ab)
 -- 
 2.43.0
 
