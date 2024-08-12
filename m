@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8C7183CD3;
-	Mon, 12 Aug 2024 16:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F88183CD3;
+	Mon, 12 Aug 2024 16:30:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480228; cv=none; b=gEO9sFJmqzas7EyVqwAtf2Zuq1eahWo4CN3raIemMqQvW1XWZkIql+2MJvIi8eXxkhdTzsXM2vPM2TeTJiPaRl+GT76d4kHk/xEVOuy0NsFvqLktinFytICUdP/yUBOZtfTdk9oJQT188MaSpL9LXksttpSRDopg6DDiLIszHVM=
+	t=1723480231; cv=none; b=gVNFSXuBwORH0i9ObFGkniX+ZctLBzDb1v9pVDlBYb0bv90peqjCYM6AI3KuaKiPXp9bk/b9VSTh0Sdbkg0IJrQa59cLIlT0XtUhNqzXhPtshiKa+C2Pybe6ciRIK61UcrB8eAW/7cAd+pO7T9RTpF56Hy+/oUoQCCi5vfcTJYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480228; c=relaxed/simple;
-	bh=dQDHt7cfCRwSxhTVaRfi7Tn1jnc0kC5dNEwswj+ZVl0=;
+	s=arc-20240116; t=1723480231; c=relaxed/simple;
+	bh=riOnGXUXDyI/tIaiBHOfNlHjGCv6nXxkTxG+ZZGuaEI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvnBHZsDUw68o5zUQi07jhD1lMn9TZutupACNoMJWuW88uZbOX3weKPYi5fQHa6qh2CGWGj1PEcDI3D01zWZXV7urWJriFsbt6kI2Oaq+/Q2xLOwVe5wmTGb9bJFXgsfnDIgY6lDG/dyI7xW4TF/1r7FdAWwTQFNL7nrnYXzlF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deVvPL6W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RR+uMT4zdTQCFXg4zGfod3SHNN1FNd+d3MhrYbvUcsi4+CPNSyyIyTdFoekSUOp4wuUNP47qp5jq4fyVF8/Y3+3ICqESyr375HGV7U7T+SMDuK9g467oC2mN4JW95iLIrou9AXxInX1YBTvc25pO8XX5K4GEz9TzgCyBPkJS7OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0w0OJ4z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deVvPL6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9295DC32782;
-	Mon, 12 Aug 2024 16:30:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0w0OJ4z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C81C4AF0C;
+	Mon, 12 Aug 2024 16:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480228;
-	bh=dQDHt7cfCRwSxhTVaRfi7Tn1jnc0kC5dNEwswj+ZVl0=;
+	s=korg; t=1723480231;
+	bh=riOnGXUXDyI/tIaiBHOfNlHjGCv6nXxkTxG+ZZGuaEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deVvPL6W7KvIphdOv2sAukCmbb+f9PGCxIreidt79QSmLoDXrGCMc9o/knjX9xLnk
-	 iZl3+wB2OrXxzzZ6sFs/nt54GeavO7rv/6GBp4h7aX9myOBn7cKMQ5UREOxoayS3us
-	 pJA8Jw1+L/eNBAAocYHA/z2pedY2Mc8wL5IdZQGk=
+	b=r0w0OJ4zyd2axUkkAYgDZtR6SGqqxPk0iIbtDlRPqkTc+PCeLI78/GQzQLEcjNH4d
+	 9ujskVv2356iGur4W0JL3Iu1Y6C2Fum5FepTmNfeFqN6T/1fT+4xTAONWGhDzxMQgW
+	 PWWKrirE88Kvev8xKHLVqcKycHnCK1TjhHZVHtnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 134/263] arm64: cputype: Add Cortex-X1C definitions
-Date: Mon, 12 Aug 2024 18:02:15 +0200
-Message-ID: <20240812160151.678543392@linuxfoundation.org>
+Subject: [PATCH 6.10 117/263] SUNRPC: Fix a race to wake a sync task
+Date: Mon, 12 Aug 2024 18:01:58 +0200
+Message-ID: <20240812160151.024562367@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -54,52 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 58d245e03c324d083a0ec3b9ab8ebd46ec9848d7 ]
+[ Upstream commit ed0172af5d6fc07d1b40ca82f5ca3979300369f7 ]
 
-Add cputype definitions for Cortex-X1C. These will be used for errata
-detection in subsequent patches.
+We've observed NFS clients with sync tasks sleeping in __rpc_execute
+waiting on RPC_TASK_QUEUED that have not responded to a wake-up from
+rpc_make_runnable().  I suspect this problem usually goes unnoticed,
+because on a busy client the task will eventually be re-awoken by another
+task completion or xprt event.  However, if the state manager is draining
+the slot table, a sync task missing a wake-up can result in a hung client.
 
-These values can be found in the Cortex-X1C TRM:
+We've been able to prove that the waker in rpc_make_runnable() successfully
+calls wake_up_bit() (ie- there's no race to tk_runstate), but the
+wake_up_bit() call fails to wake the waiter.  I suspect the waker is
+missing the load of the bit's wait_queue_head, so waitqueue_active() is
+false.  There are some very helpful comments about this problem above
+wake_up_bit(), prepare_to_wait(), and waitqueue_active().
 
-  https://developer.arm.com/documentation/101968/0002/
+Fix this by inserting smp_mb__after_atomic() before the wake_up_bit(),
+which pairs with prepare_to_wait() calling set_current_state().
 
-... in section B2.107 ("MIDR_EL1, Main ID Register, EL1").
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20240801101803.1982459-2-mark.rutland@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-[ Mark: trivial backport ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h | 2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/sched.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index 1cb0704c6163f..5dc68ace305e5 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -86,6 +86,7 @@
- #define ARM_CPU_PART_CORTEX_X2		0xD48
- #define ARM_CPU_PART_NEOVERSE_N2	0xD49
- #define ARM_CPU_PART_CORTEX_A78C	0xD4B
-+#define ARM_CPU_PART_CORTEX_X1C		0xD4C
- #define ARM_CPU_PART_CORTEX_X3		0xD4E
- #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
- #define ARM_CPU_PART_CORTEX_A720	0xD81
-@@ -165,6 +166,7 @@
- #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
- #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
- #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
-+#define MIDR_CORTEX_X1C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X1C)
- #define MIDR_CORTEX_X3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X3)
- #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
- #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
+index 6debf4fd42d4e..cef623ea15060 100644
+--- a/net/sunrpc/sched.c
++++ b/net/sunrpc/sched.c
+@@ -369,8 +369,10 @@ static void rpc_make_runnable(struct workqueue_struct *wq,
+ 	if (RPC_IS_ASYNC(task)) {
+ 		INIT_WORK(&task->u.tk_work, rpc_async_schedule);
+ 		queue_work(wq, &task->u.tk_work);
+-	} else
++	} else {
++		smp_mb__after_atomic();
+ 		wake_up_bit(&task->tk_runstate, RPC_TASK_QUEUED);
++	}
+ }
+ 
+ /*
 -- 
 2.43.0
 
