@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874BD183CD9;
-	Mon, 12 Aug 2024 16:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9856A18787B;
+	Mon, 12 Aug 2024 16:11:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479070; cv=none; b=NSkD2CYksWYMGXG0NLgvRVYGWdfq3yL9WSVR5zzMbDOzuetwXjX9zQqusDlVlAujv7tM4KHBkwMSq4sxU/IimYKxe2ZAvCNy+7cUMaKnCwxwXH4aQzbrUqBWZdxUykg6mbPFkuSsznaW7CZf6mSfPlPA2asZyYbuZv+CqnPbgL0=
+	t=1723479073; cv=none; b=cu3tZvGN0ZJmuu7eceEkjYmxiiRy/ykG9DhB4pwlQkI1tr4w5+Chp78O9Bx1LWQPQ6pa7y7Ut376WqSS4IjD0A1V+S4hOFJlw0pCrnIQsMSxd0U+cKDoxf6ggbzwCzZzekeY+ioUGvsLZc5BAuRosh1n+XGMIRl4OPW6MY9xSxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479070; c=relaxed/simple;
-	bh=eALYMivd+RmZ73Ux+EqL7ianBCtZeCB6vVwTFUg5u/w=;
+	s=arc-20240116; t=1723479073; c=relaxed/simple;
+	bh=3B7QyjttBx03feSyLIXs/RKHWi0lNj8YnD/9KTWxtt8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EIGrJ6KVxuBlg5hTwqlp9mt73zdjFHCHyK03WU4I7geXkEmuEj71NGeUy+PLHTAVl6oO94mzk+zXdAEhBorA6g6+vuQ7UpHRADn+6ZsVxo4rCaE5Q0KGVr2oTxBtf2RJWYGHmBB6snUbqM2w7ylgjznjF0L0nhZn73PeQcXdEhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPUXo/VJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DWp3KtREuUblmbZ33d4LFQ0AnEzb6Y4QnanAbA1wof772+uPAAkX9GIxA01LtQBXZ5VCGrsovE/y3MC7VK/xQgCEXpm6CQvBFLCpsycQLyd/98/HqOIZQar3Gg+lTxigyvkhls0iO0JY8CSaO1lMoJGictdjJg9eorifv9/e3yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThNV5FQK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPUXo/VJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030D0C32782;
-	Mon, 12 Aug 2024 16:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThNV5FQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19853C4AF0D;
+	Mon, 12 Aug 2024 16:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479070;
-	bh=eALYMivd+RmZ73Ux+EqL7ianBCtZeCB6vVwTFUg5u/w=;
+	s=korg; t=1723479073;
+	bh=3B7QyjttBx03feSyLIXs/RKHWi0lNj8YnD/9KTWxtt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fPUXo/VJusZ/gAvJatAhqBl8EbD/52WfRDyGdJAD5nAV/VuFP4HivT7OFsOtPppW3
-	 U+W9e9npOSDzH/bXGcl/i8JjC6i5qiey+bfkqaXxKUJ/U82XUpj1pq0hSt8gXK7kSz
-	 P138H1eZrV/Dk1YBFNn6nXgdkmy2JBoMYWJ9Esf0=
+	b=ThNV5FQKJfWAufzbdAJllj2bnyIkakiTgP6d2GXmPPgOEAxFY/z3DjhGaW6fZJo/l
+	 74pVpPPveVOfOsWWUHn4Vz2uspjsAstPhb4naJh5eE/aU1/fgwUvRv4X1a7VLQpusD
+	 Ec+KP0W+KUUzDNtwnv59kS8Qub61mwa4pVfrg9DY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 122/150] sched/smt: Introduce sched_smt_present_inc/dec() helper
-Date: Mon, 12 Aug 2024 18:03:23 +0200
-Message-ID: <20240812160129.871875732@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>
+Subject: [PATCH 6.1 093/150] usb: vhci-hcd: Do not drop references before new references are gained
+Date: Mon, 12 Aug 2024 18:02:54 +0200
+Message-ID: <20240812160128.752890254@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -51,77 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 31b164e2e4af84d08d2498083676e7eeaa102493 upstream.
+commit afdcfd3d6fcdeca2735ca8d994c5f2d24a368f0a upstream.
 
-Introduce sched_smt_present_inc/dec() helper, so it can be called
-in normal or error path simply. No functional changed.
+At a few places the driver carries stale pointers
+to references that can still be used. Make sure that does not happen.
+This strictly speaking closes ZDI-CAN-22273, though there may be
+similar races in the driver.
 
-Cc: stable@kernel.org
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240703031610.587047-2-yangyingliang@huaweicloud.com
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Cc: stable <stable@kernel.org>
+Acked-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20240709113851.14691-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ drivers/usb/usbip/vhci_hcd.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -9398,6 +9398,22 @@ static int cpuset_cpu_inactive(unsigned
- 	return 0;
- }
+--- a/drivers/usb/usbip/vhci_hcd.c
++++ b/drivers/usb/usbip/vhci_hcd.c
+@@ -745,6 +745,7 @@ static int vhci_urb_enqueue(struct usb_h
+ 	 *
+ 	 */
+ 	if (usb_pipedevice(urb->pipe) == 0) {
++		struct usb_device *old;
+ 		__u8 type = usb_pipetype(urb->pipe);
+ 		struct usb_ctrlrequest *ctrlreq =
+ 			(struct usb_ctrlrequest *) urb->setup_packet;
+@@ -755,14 +756,15 @@ static int vhci_urb_enqueue(struct usb_h
+ 			goto no_need_xmit;
+ 		}
  
-+static inline void sched_smt_present_inc(int cpu)
-+{
-+#ifdef CONFIG_SCHED_SMT
-+	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
-+		static_branch_inc_cpuslocked(&sched_smt_present);
-+#endif
-+}
-+
-+static inline void sched_smt_present_dec(int cpu)
-+{
-+#ifdef CONFIG_SCHED_SMT
-+	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
-+		static_branch_dec_cpuslocked(&sched_smt_present);
-+#endif
-+}
-+
- int sched_cpu_activate(unsigned int cpu)
++		old = vdev->udev;
+ 		switch (ctrlreq->bRequest) {
+ 		case USB_REQ_SET_ADDRESS:
+ 			/* set_address may come when a device is reset */
+ 			dev_info(dev, "SetAddress Request (%d) to port %d\n",
+ 				 ctrlreq->wValue, vdev->rhport);
+ 
+-			usb_put_dev(vdev->udev);
+ 			vdev->udev = usb_get_dev(urb->dev);
++			usb_put_dev(old);
+ 
+ 			spin_lock(&vdev->ud.lock);
+ 			vdev->ud.status = VDEV_ST_USED;
+@@ -781,8 +783,8 @@ static int vhci_urb_enqueue(struct usb_h
+ 				usbip_dbg_vhci_hc(
+ 					"Not yet?:Get_Descriptor to device 0 (get max pipe size)\n");
+ 
+-			usb_put_dev(vdev->udev);
+ 			vdev->udev = usb_get_dev(urb->dev);
++			usb_put_dev(old);
+ 			goto out;
+ 
+ 		default:
+@@ -1067,6 +1069,7 @@ static void vhci_shutdown_connection(str
+ static void vhci_device_reset(struct usbip_device *ud)
  {
- 	struct rq *rq = cpu_rq(cpu);
-@@ -9409,13 +9425,10 @@ int sched_cpu_activate(unsigned int cpu)
- 	 */
- 	balance_push_set(cpu, false);
+ 	struct vhci_device *vdev = container_of(ud, struct vhci_device, ud);
++	struct usb_device *old = vdev->udev;
+ 	unsigned long flags;
  
--#ifdef CONFIG_SCHED_SMT
- 	/*
- 	 * When going up, increment the number of cores with SMT present.
- 	 */
--	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
--		static_branch_inc_cpuslocked(&sched_smt_present);
--#endif
-+	sched_smt_present_inc(cpu);
- 	set_cpu_active(cpu, true);
+ 	spin_lock_irqsave(&ud->lock, flags);
+@@ -1074,8 +1077,8 @@ static void vhci_device_reset(struct usb
+ 	vdev->speed  = 0;
+ 	vdev->devid  = 0;
  
- 	if (sched_smp_initialized) {
-@@ -9485,13 +9498,12 @@ int sched_cpu_deactivate(unsigned int cp
- 	}
- 	rq_unlock_irqrestore(rq, &rf);
+-	usb_put_dev(vdev->udev);
+ 	vdev->udev = NULL;
++	usb_put_dev(old);
  
--#ifdef CONFIG_SCHED_SMT
- 	/*
- 	 * When going down, decrement the number of cores with SMT present.
- 	 */
--	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
--		static_branch_dec_cpuslocked(&sched_smt_present);
-+	sched_smt_present_dec(cpu);
- 
-+#ifdef CONFIG_SCHED_SMT
- 	sched_core_cpu_deactivate(cpu);
- #endif
- 
+ 	if (ud->tcp_socket) {
+ 		sockfd_put(ud->tcp_socket);
 
 
