@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D0C2183CA6;
-	Mon, 12 Aug 2024 16:19:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80101183CA6;
+	Mon, 12 Aug 2024 16:19:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479562; cv=none; b=EBPVrJSMUTs+ukSA0stZTEABwuHq+WHS90krOFk28DFLPOejq8lFn6WfBifNeW7A5WkYw63NPFA8tGPIF4iTt86O0tvIKzltzqQ+m6sjL26A6UBvfGrGyTtob3ReGet7/5YW3mbhDsIx1nCJZHqt5vMefi13SSroVVE26VEkI+c=
+	t=1723479565; cv=none; b=VaOF3HqtO1agUKUiNbNxTtDg9TqpZ85x2UyfEOU9oPiwBsbDzwBmZImR0K77KQyI5PZBr4YUK0wkH34GPqvtN/1sYDgmLWBeJHVvnj0z9mhS1tOAUHKqb1E11ZrujodjDcIF/Sb724L0tMigDJ5f6s18HRisuqG+6Ma5g0Ueuhc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479562; c=relaxed/simple;
-	bh=xb93y6jILMo7QqTeg37fCnt+/qmcfi8/totlVNzC0vg=;
+	s=arc-20240116; t=1723479565; c=relaxed/simple;
+	bh=ug9SzSX3CZIuZQ/kow/gTdSbIjIu1FIj+0ONbDoM9cY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=niQzHJDS9yVZTLNlJnuEr9vbrvOdyheQ9Ju3FZF/pJxs6PlByg4y7QpA4+oxxHUuNEruLAH6fMt3jlYy2d3FLHpW1PMoCUZVlCgMZXZNoav/cRFDqw9a8NInJPnnprAEwUkRBgxm7kPHEcuxCCv3gQUJ2Tjk+gz2nOFHOMAIEN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ckNIHTjD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E6OjcdK3n8EH9fdgAD8SEvx+dBF79yBs9w3KG/66gsmVdcd+r6Tj3R3XeVEL/rbywnaxKTg8+QZj9F5Jsarohb+Mqp8ir0qpDGBpqp+91wr1bcJROz5jKyBXhXvRIYL9rXw0ZQl4rPcgrgMQSPNrSQEbGxc76MtsC9oQGCo/N6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnZauUzS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ckNIHTjD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED945C32782;
-	Mon, 12 Aug 2024 16:19:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnZauUzS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07727C32782;
+	Mon, 12 Aug 2024 16:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479562;
-	bh=xb93y6jILMo7QqTeg37fCnt+/qmcfi8/totlVNzC0vg=;
+	s=korg; t=1723479565;
+	bh=ug9SzSX3CZIuZQ/kow/gTdSbIjIu1FIj+0ONbDoM9cY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckNIHTjD0RCyeEOoo6V1U8kUkj9nIfWopI4uxR9vtZlozPoNt9EQ7dwjEwbehTZaJ
-	 MyQCt8dETohIHtqx/5zsBOY5IGuswop4w+/PAhKn2OHPm2UxQ06vbhgfvV6HsWqMO4
-	 BBAGI6jvkcVfpkTSqP+wpC2Np3GAOifJh7uhp2GU=
+	b=qnZauUzS5O44VZf4B8XZrzasevN69ca/G2H05ObfzDetjyAy/JmnvxZTY9fXQIBZ6
+	 XFgGc7tX2ekPaNxGIPIhcB2mp1kp2c5ARxh4k3arGnT+kfBMi9s53dM908L+Zus280
+	 v36fyZtr2nfVZhBoqHT7HhOQ/ImrbaQRhqpulAQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anjana Hari <quic_ahari@quicinc.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Vamshi Gajjela <vamshigajjela@google.com>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 124/189] scsi: ufs: core: Do not set link to OFF state while waking up from hibernation
-Date: Mon, 12 Aug 2024 18:03:00 +0200
-Message-ID: <20240812160136.918656124@linuxfoundation.org>
+Subject: [PATCH 6.6 125/189] scsi: ufs: core: Fix hba->last_dme_cmd_tstamp timestamp updating logic
+Date: Mon, 12 Aug 2024 18:03:01 +0200
+Message-ID: <20240812160136.958369807@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,52 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Vamshi Gajjela <vamshigajjela@google.com>
 
-commit ac6efb12ca64156f4a94e964acdb96ee7d59630d upstream.
+commit ab9fd06cb8f0db0854291833fc40c789e43a361f upstream.
 
-UFS link is just put into hibern8 state during the 'freeze' process of the
-hibernation. Afterwards, the system may get powered down. But that doesn't
-matter during wakeup. Because during wakeup from hibernation, UFS link is
-again put into hibern8 state by the restore kernel and then the control is
-handed over to the to image kernel.
+The ufshcd_add_delay_before_dme_cmd() always introduces a delay of
+MIN_DELAY_BEFORE_DME_CMDS_US between DME commands even when it's not
+required. The delay is added when the UFS host controller supplies the
+quirk UFSHCD_QUIRK_DELAY_BEFORE_DME_CMDS.
 
-So in both the places, UFS link is never turned OFF. But
-ufshcd_system_restore() just assumes that the link will be in OFF state and
-sets the link state accordingly. And this breaks hibernation wakeup:
+Fix the logic to update hba->last_dme_cmd_tstamp to ensure subsequent DME
+commands have the correct delay in the range of 0 to
+MIN_DELAY_BEFORE_DME_CMDS_US.
 
-[ 2445.371335] phy phy-1d87000.phy.3: phy_power_on was called before phy_init
-[ 2445.427883] ufshcd-qcom 1d84000.ufshc: Controller enable failed
-[ 2445.427890] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore: Host init failed -5
-[ 2445.427906] ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: -5
-[ 2445.427918] ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_restore returns -5
-[ 2445.427973] ufs_device_wlun 0:0:0:49488: PM: failed to restore async: error -5
+Update the timestamp at the end of the function to ensure it captures the
+latest time after any necessary delay has been applied.
 
-So fix the issue by removing the code that sets the link to OFF state.
-
-Cc: Anjana Hari <quic_ahari@quicinc.com>
-Cc: stable@vger.kernel.org # 6.3
-Fixes: 88441a8d355d ("scsi: ufs: core: Add hibernation callbacks")
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/20240718170659.201647-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
+Link: https://lore.kernel.org/r/20240724135126.1786126-1-vamshigajjela@google.com
+Fixes: cad2e03d8607 ("ufs: add support to allow non standard behaviours (quirks)")
+Cc: stable@vger.kernel.org
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/ufs/core/ufshcd.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -10157,9 +10157,6 @@ int ufshcd_system_restore(struct device
- 	 */
- 	ufshcd_readl(hba, REG_UTP_TASK_REQ_LIST_BASE_H);
+@@ -3971,11 +3971,16 @@ static inline void ufshcd_add_delay_befo
+ 			min_sleep_time_us =
+ 				MIN_DELAY_BEFORE_DME_CMDS_US - delta;
+ 		else
+-			return; /* no more delay required */
++			min_sleep_time_us = 0; /* no more delay required */
+ 	}
  
--	/* Resuming from hibernate, assume that link was OFF */
--	ufshcd_set_link_off(hba);
--
- 	return 0;
- 
+-	/* allow sleep for extra 50us if needed */
+-	usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	if (min_sleep_time_us > 0) {
++		/* allow sleep for extra 50us if needed */
++		usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	}
++
++	/* update the last_dme_cmd_tstamp */
++	hba->last_dme_cmd_tstamp = ktime_get();
  }
+ 
+ /**
 
 
