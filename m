@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7448D183CA6;
-	Mon, 12 Aug 2024 16:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14BF183CA6;
+	Mon, 12 Aug 2024 16:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479729; cv=none; b=NGnd8ufvOSfhHtgFfufcZD9cJW69vbKwq4MMjSyt5EJaWXcKdexbtiTe9SEC0+5d8IQioc7S6Tq+STMBOoKHuXRHPbm+3GgCzIiBHRcFrdlUIKG9iLUzjW8V5eDkvYqvoFuIqL/gPuBv8vEjb6DZS/5AX0M3KU6UjanPF8rlJfs=
+	t=1723479732; cv=none; b=HlUXsji1oDNxq7XPmv9f1Mh7aKu6gDRBr70x1I3ddaJYiPEyXggtEb54TpPEnwLo2YdHv6Rq2syYq/4lFrOghw/5iCh5znFpcQZAB7ZlDh7bEaoYzRvC0IP+xGdmDXI8gjC0JRn0zErhZhAZs1laOA+492xnsbfBxI8ySkYpJBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479729; c=relaxed/simple;
-	bh=HlcJ5htXYOVMqaAfs+f0Oj5GmiwDzpLsPuD5Uez8MXs=;
+	s=arc-20240116; t=1723479732; c=relaxed/simple;
+	bh=VGZtKUlxRsmkiKe5VKz29JT0EXXE4hzrBMXgdJbCGLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WkuQasoKpASkZ5CG45xFJyekrYsHcPPG2v3BnCbpgQgQSpF83blQeZN/G+sIrJWYUnGwKmRTW+XNGv0qqQFeJxaDKawcI1CYXMyVt8mf7XbhK7/+eMnCFOLcdJEyHg9qec70a9pF88PtuwU19w+hXp+y/78OhuMsA3Rd74q0YoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sGMqbPgo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HkIb9lv7YILUtpna5QKBOXS7dpOAU+gy0sKAblCUqLQ0jwOXfsy9cJ+wYjyYc7VlielV5WAw0hukkcYk+5M9cS6BPOMQ60isMgk8jEeo5//mmIJ4F6CTrKFD1UyCtKvw0Kxm5+yoZdZVq6gzaot/GgWFHunAxil14DhLdCLbHKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKvHoqSU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sGMqbPgo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAFD6C32782;
-	Mon, 12 Aug 2024 16:22:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKvHoqSU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4691DC32782;
+	Mon, 12 Aug 2024 16:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479729;
-	bh=HlcJ5htXYOVMqaAfs+f0Oj5GmiwDzpLsPuD5Uez8MXs=;
+	s=korg; t=1723479732;
+	bh=VGZtKUlxRsmkiKe5VKz29JT0EXXE4hzrBMXgdJbCGLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGMqbPgoTl6n2sCNV368lzDIHdZlX+5LCpGKSW++1NoixFqHjYucxGSeiFLI0Ed59
-	 AUlpCyETrPEPKYoe2FT83fQdHmBw+g68a2i2kjBKu2eBYCoHM+iu1nfl5MDTIWkz9R
-	 RpvKgqsPhMBtnK/CD92WE1VdfnT2dOMbhOYLMBGM=
+	b=cKvHoqSUhySbLugQVZ4QD+OxmVQafZ+T0OUWYkrwFWNQAnoxfj2rhyywySgrM92TI
+	 FKIYmPi9dNfX5wO7j8p+K41xqIr/kDHIGM379oqs8lNUq7jkDc6tPt9L9tEmt+kNUr
+	 U/JD7PY5bq+wVyngw4NQV80Fj5SKZNarP3Jp70MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hanna Czenczek <hreitz@redhat.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 175/189] btrfs: fix corruption after buffer fault in during direct IO append write
-Date: Mon, 12 Aug 2024 18:03:51 +0200
-Message-ID: <20240812160138.884264463@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.6 176/189] netfilter: nf_tables: prefer nft_chain_validate
+Date: Mon, 12 Aug 2024 18:03:52 +0200
+Message-ID: <20240812160138.923486159@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,252 +50,228 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Florian Westphal <fw@strlen.de>
 
-commit 939b656bc8ab203fdbde26ccac22bcb7f0985be5 upstream.
+commit cff3bd012a9512ac5ed858d38e6ed65f6391008c upstream.
 
-During an append (O_APPEND write flag) direct IO write if the input buffer
-was not previously faulted in, we can corrupt the file in a way that the
-final size is unexpected and it includes an unexpected hole.
+nft_chain_validate already performs loop detection because a cycle will
+result in a call stack overflow (ctx->level >= NFT_JUMP_STACK_SIZE).
 
-The problem happens like this:
+It also follows maps via ->validate callback in nft_lookup, so there
+appears no reason to iterate the maps again.
 
-1) We have an empty file, with size 0, for example;
+nf_tables_check_loops() and all its helper functions can be removed.
+This improves ruleset load time significantly, from 23s down to 12s.
 
-2) We do an O_APPEND direct IO with a length of 4096 bytes and the input
-   buffer is not currently faulted in;
+This also fixes a crash bug. Old loop detection code can result in
+unbounded recursion:
 
-3) We enter btrfs_direct_write(), lock the inode and call
-   generic_write_checks(), which calls generic_write_checks_count(), and
-   that function sets the iocb position to 0 with the following code:
+BUG: TASK stack guard page was hit at ....
+Oops: stack guard page: 0000 [#1] PREEMPT SMP KASAN
+CPU: 4 PID: 1539 Comm: nft Not tainted 6.10.0-rc5+ #1
+[..]
 
-	if (iocb->ki_flags & IOCB_APPEND)
-		iocb->ki_pos = i_size_read(inode);
+with a suitable ruleset during validation of register stores.
 
-4) We call btrfs_dio_write() and enter into iomap, which will end up
-   calling btrfs_dio_iomap_begin() and that calls
-   btrfs_get_blocks_direct_write(), where we update the i_size of the
-   inode to 4096 bytes;
+I can't see any actual reason to attempt to check for this from
+nft_validate_register_store(), at this point the transaction is still in
+progress, so we don't have a full picture of the rule graph.
 
-5) After btrfs_dio_iomap_begin() returns, iomap will attempt to access
-   the page of the write input buffer (at iomap_dio_bio_iter(), with a
-   call to bio_iov_iter_get_pages()) and fail with -EFAULT, which gets
-   returned to btrfs at btrfs_direct_write() via btrfs_dio_write();
+For nf-next it might make sense to either remove it or make this depend
+on table->validate_state in case we could catch an error earlier
+(for improved error reporting to userspace).
 
-6) At btrfs_direct_write() we get the -EFAULT error, unlock the inode,
-   fault in the write buffer and then goto to the label 'relock';
-
-7) We lock again the inode, do all the necessary checks again and call
-   again generic_write_checks(), which calls generic_write_checks_count()
-   again, and there we set the iocb's position to 4K, which is the current
-   i_size of the inode, with the following code pointed above:
-
-        if (iocb->ki_flags & IOCB_APPEND)
-                iocb->ki_pos = i_size_read(inode);
-
-8) Then we go again to btrfs_dio_write() and enter iomap and the write
-   succeeds, but it wrote to the file range [4K, 8K), leaving a hole in
-   the [0, 4K) range and an i_size of 8K, which goes against the
-   expectations of having the data written to the range [0, 4K) and get an
-   i_size of 4K.
-
-Fix this by not unlocking the inode before faulting in the input buffer,
-in case we get -EFAULT or an incomplete write, and not jumping to the
-'relock' label after faulting in the buffer - instead jump to a location
-immediately before calling iomap, skipping all the write checks and
-relocking. This solves this problem and it's fine even in case the input
-buffer is memory mapped to the same file range, since only holding the
-range locked in the inode's io tree can cause a deadlock, it's safe to
-keep the inode lock (VFS lock), as was fixed and described in commit
-51bd9563b678 ("btrfs: fix deadlock due to page faults during direct IO
-reads and writes").
-
-A sample reproducer provided by a reporter is the following:
-
-   $ cat test.c
-   #ifndef _GNU_SOURCE
-   #define _GNU_SOURCE
-   #endif
-
-   #include <fcntl.h>
-   #include <stdio.h>
-   #include <sys/mman.h>
-   #include <sys/stat.h>
-   #include <unistd.h>
-
-   int main(int argc, char *argv[])
-   {
-       if (argc < 2) {
-           fprintf(stderr, "Usage: %s <test file>\n", argv[0]);
-           return 1;
-       }
-
-       int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC | O_DIRECT |
-                     O_APPEND, 0644);
-       if (fd < 0) {
-           perror("creating test file");
-           return 1;
-       }
-
-       char *buf = mmap(NULL, 4096, PROT_READ,
-                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-       ssize_t ret = write(fd, buf, 4096);
-       if (ret < 0) {
-           perror("pwritev2");
-           return 1;
-       }
-
-       struct stat stbuf;
-       ret = fstat(fd, &stbuf);
-       if (ret < 0) {
-           perror("stat");
-           return 1;
-       }
-
-       printf("size: %llu\n", (unsigned long long)stbuf.st_size);
-       return stbuf.st_size == 4096 ? 0 : 1;
-   }
-
-A test case for fstests will be sent soon.
-
-Reported-by: Hanna Czenczek <hreitz@redhat.com>
-Link: https://lore.kernel.org/linux-btrfs/0b841d46-12fe-4e64-9abb-871d8d0de271@redhat.com/
-Fixes: 8184620ae212 ("btrfs: fix lost file sync on direct IO write with nowait and dsync iocb")
-CC: stable@vger.kernel.org # 6.1+
-Tested-by: Hanna Czenczek <hreitz@redhat.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 20a69341f2d0 ("netfilter: nf_tables: add netlink set API")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h |    1 +
- fs/btrfs/file.c  |   55 ++++++++++++++++++++++++++++++++++++++++++-------------
- 2 files changed, 43 insertions(+), 13 deletions(-)
+ net/netfilter/nf_tables_api.c |  154 +++---------------------------------------
+ 1 file changed, 13 insertions(+), 141 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -445,6 +445,7 @@ struct btrfs_file_private {
- 	void *filldir_buf;
- 	u64 last_index;
- 	struct extent_state *llseek_cached_state;
-+	bool fsync_skip_inode_lock;
- };
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3743,6 +3743,15 @@ static void nf_tables_rule_release(const
+ 	nf_tables_rule_destroy(ctx, rule);
+ }
  
- static inline u32 BTRFS_LEAF_DATA_SIZE(const struct btrfs_fs_info *info)
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1535,21 +1535,37 @@ relock:
- 	 * So here we disable page faults in the iov_iter and then retry if we
- 	 * got -EFAULT, faulting in the pages before the retry.
- 	 */
-+again:
- 	from->nofault = true;
- 	dio = btrfs_dio_write(iocb, from, written);
- 	from->nofault = false;
- 
--	/*
--	 * iomap_dio_complete() will call btrfs_sync_file() if we have a dsync
--	 * iocb, and that needs to lock the inode. So unlock it before calling
--	 * iomap_dio_complete() to avoid a deadlock.
--	 */
--	btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
--
--	if (IS_ERR_OR_NULL(dio))
-+	if (IS_ERR_OR_NULL(dio)) {
- 		err = PTR_ERR_OR_ZERO(dio);
--	else
-+	} else {
-+		struct btrfs_file_private stack_private = { 0 };
-+		struct btrfs_file_private *private;
-+		const bool have_private = (file->private_data != NULL);
-+
-+		if (!have_private)
-+			file->private_data = &stack_private;
-+
-+		/*
-+		 * If we have a synchoronous write, we must make sure the fsync
-+		 * triggered by the iomap_dio_complete() call below doesn't
-+		 * deadlock on the inode lock - we are already holding it and we
-+		 * can't call it after unlocking because we may need to complete
-+		 * partial writes due to the input buffer (or parts of it) not
-+		 * being already faulted in.
-+		 */
-+		private = file->private_data;
-+		private->fsync_skip_inode_lock = true;
- 		err = iomap_dio_complete(dio);
-+		private->fsync_skip_inode_lock = false;
-+
-+		if (!have_private)
-+			file->private_data = NULL;
-+	}
- 
- 	/* No increment (+=) because iomap returns a cumulative value. */
- 	if (err > 0)
-@@ -1576,10 +1592,12 @@ relock:
- 		} else {
- 			fault_in_iov_iter_readable(from, left);
- 			prev_left = left;
--			goto relock;
-+			goto again;
- 		}
- 	}
- 
-+	btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
-+
- 	/*
- 	 * If 'err' is -ENOTBLK or we have not written all data, then it means
- 	 * we must fallback to buffered IO.
-@@ -1778,6 +1796,7 @@ static inline bool skip_inode_logging(co
-  */
- int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
++/** nft_chain_validate - loop detection and hook validation
++ *
++ * @ctx: context containing call depth and base chain
++ * @chain: chain to validate
++ *
++ * Walk through the rules of the given chain and chase all jumps/gotos
++ * and set lookups until either the jump limit is hit or all reachable
++ * chains have been validated.
++ */
+ int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
  {
-+	struct btrfs_file_private *private = file->private_data;
- 	struct dentry *dentry = file_dentry(file);
- 	struct inode *inode = d_inode(dentry);
- 	struct btrfs_fs_info *fs_info = btrfs_sb(inode->i_sb);
-@@ -1787,6 +1806,7 @@ int btrfs_sync_file(struct file *file, l
- 	int ret = 0, err;
- 	u64 len;
- 	bool full_sync;
-+	const bool skip_ilock = (private ? private->fsync_skip_inode_lock : false);
+ 	struct nft_expr *expr, *last;
+@@ -3764,6 +3773,9 @@ int nft_chain_validate(const struct nft_
+ 			if (!expr->ops->validate)
+ 				continue;
  
- 	trace_btrfs_sync_file(file, datasync);
++			/* This may call nft_chain_validate() recursively,
++			 * callers that do so must increment ctx->level.
++			 */
+ 			err = expr->ops->validate(ctx, expr, &data);
+ 			if (err < 0)
+ 				return err;
+@@ -10621,146 +10633,6 @@ int nft_chain_validate_hooks(const struc
+ }
+ EXPORT_SYMBOL_GPL(nft_chain_validate_hooks);
  
-@@ -1814,7 +1834,10 @@ int btrfs_sync_file(struct file *file, l
- 	if (ret)
- 		goto out;
- 
--	btrfs_inode_lock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
-+	if (skip_ilock)
-+		down_write(&BTRFS_I(inode)->i_mmap_lock);
-+	else
-+		btrfs_inode_lock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
- 
- 	atomic_inc(&root->log_batch);
- 
-@@ -1838,7 +1861,10 @@ int btrfs_sync_file(struct file *file, l
- 	 */
- 	ret = start_ordered_ops(inode, start, end);
- 	if (ret) {
--		btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
-+		if (skip_ilock)
-+			up_write(&BTRFS_I(inode)->i_mmap_lock);
-+		else
-+			btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
- 		goto out;
- 	}
- 
-@@ -1941,7 +1967,10 @@ int btrfs_sync_file(struct file *file, l
- 	 * file again, but that will end up using the synchronization
- 	 * inside btrfs_sync_log to keep things safe.
- 	 */
--	btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
-+	if (skip_ilock)
-+		up_write(&BTRFS_I(inode)->i_mmap_lock);
-+	else
-+		btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
- 
- 	if (ret == BTRFS_NO_LOG_SYNC) {
- 		ret = btrfs_end_transaction(trans);
+-/*
+- * Loop detection - walk through the ruleset beginning at the destination chain
+- * of a new jump until either the source chain is reached (loop) or all
+- * reachable chains have been traversed.
+- *
+- * The loop check is performed whenever a new jump verdict is added to an
+- * expression or verdict map or a verdict map is bound to a new chain.
+- */
+-
+-static int nf_tables_check_loops(const struct nft_ctx *ctx,
+-				 const struct nft_chain *chain);
+-
+-static int nft_check_loops(const struct nft_ctx *ctx,
+-			   const struct nft_set_ext *ext)
+-{
+-	const struct nft_data *data;
+-	int ret;
+-
+-	data = nft_set_ext_data(ext);
+-	switch (data->verdict.code) {
+-	case NFT_JUMP:
+-	case NFT_GOTO:
+-		ret = nf_tables_check_loops(ctx, data->verdict.chain);
+-		break;
+-	default:
+-		ret = 0;
+-		break;
+-	}
+-
+-	return ret;
+-}
+-
+-static int nf_tables_loop_check_setelem(const struct nft_ctx *ctx,
+-					struct nft_set *set,
+-					const struct nft_set_iter *iter,
+-					struct nft_set_elem *elem)
+-{
+-	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
+-
+-	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
+-	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
+-		return 0;
+-
+-	return nft_check_loops(ctx, ext);
+-}
+-
+-static int nft_set_catchall_loops(const struct nft_ctx *ctx,
+-				  struct nft_set *set)
+-{
+-	u8 genmask = nft_genmask_next(ctx->net);
+-	struct nft_set_elem_catchall *catchall;
+-	struct nft_set_ext *ext;
+-	int ret = 0;
+-
+-	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
+-		ext = nft_set_elem_ext(set, catchall->elem);
+-		if (!nft_set_elem_active(ext, genmask))
+-			continue;
+-
+-		ret = nft_check_loops(ctx, ext);
+-		if (ret < 0)
+-			return ret;
+-	}
+-
+-	return ret;
+-}
+-
+-static int nf_tables_check_loops(const struct nft_ctx *ctx,
+-				 const struct nft_chain *chain)
+-{
+-	const struct nft_rule *rule;
+-	const struct nft_expr *expr, *last;
+-	struct nft_set *set;
+-	struct nft_set_binding *binding;
+-	struct nft_set_iter iter;
+-
+-	if (ctx->chain == chain)
+-		return -ELOOP;
+-
+-	if (fatal_signal_pending(current))
+-		return -EINTR;
+-
+-	list_for_each_entry(rule, &chain->rules, list) {
+-		nft_rule_for_each_expr(expr, last, rule) {
+-			struct nft_immediate_expr *priv;
+-			const struct nft_data *data;
+-			int err;
+-
+-			if (strcmp(expr->ops->type->name, "immediate"))
+-				continue;
+-
+-			priv = nft_expr_priv(expr);
+-			if (priv->dreg != NFT_REG_VERDICT)
+-				continue;
+-
+-			data = &priv->data;
+-			switch (data->verdict.code) {
+-			case NFT_JUMP:
+-			case NFT_GOTO:
+-				err = nf_tables_check_loops(ctx,
+-							data->verdict.chain);
+-				if (err < 0)
+-					return err;
+-				break;
+-			default:
+-				break;
+-			}
+-		}
+-	}
+-
+-	list_for_each_entry(set, &ctx->table->sets, list) {
+-		if (!nft_is_active_next(ctx->net, set))
+-			continue;
+-		if (!(set->flags & NFT_SET_MAP) ||
+-		    set->dtype != NFT_DATA_VERDICT)
+-			continue;
+-
+-		list_for_each_entry(binding, &set->bindings, list) {
+-			if (!(binding->flags & NFT_SET_MAP) ||
+-			    binding->chain != chain)
+-				continue;
+-
+-			iter.genmask	= nft_genmask_next(ctx->net);
+-			iter.skip 	= 0;
+-			iter.count	= 0;
+-			iter.err	= 0;
+-			iter.fn		= nf_tables_loop_check_setelem;
+-
+-			set->ops->walk(ctx, set, &iter);
+-			if (!iter.err)
+-				iter.err = nft_set_catchall_loops(ctx, set);
+-
+-			if (iter.err < 0)
+-				return iter.err;
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+ /**
+  *	nft_parse_u32_check - fetch u32 attribute and check for maximum value
+  *
+@@ -10873,7 +10745,7 @@ static int nft_validate_register_store(c
+ 		if (data != NULL &&
+ 		    (data->verdict.code == NFT_GOTO ||
+ 		     data->verdict.code == NFT_JUMP)) {
+-			err = nf_tables_check_loops(ctx, data->verdict.chain);
++			err = nft_chain_validate(ctx, data->verdict.chain);
+ 			if (err < 0)
+ 				return err;
+ 		}
 
 
