@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9EB29CA;
-	Mon, 12 Aug 2024 16:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E109029CA;
+	Mon, 12 Aug 2024 16:19:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479595; cv=none; b=Cun0cuaZ2QuV6hzJPzBg9Tlrwn7VeKZAAmpLkMvQt0aCx3dxen37enGum4utMetsuU6bD6sja5aeOGbB7UC7zChdMeCd/a3thVvh3Kusg86q+BustDqv3rYDYoLfNCU5Y4wdOTHhah+z4KusYlFq9GalJRXE0mBs5XW7o/PCu3Q=
+	t=1723479599; cv=none; b=C3iW7whIOLQD/DxmDXx2867E4VXWRErTAiK+oeZtVrGOmDICn5E5qZRMcKZLtHfFNadciTT8U2w1b3PCnrJUrYS58JAodPb31X4u1BMwPmmRgWKk2KtlP66EFc0bbAh3qpczmME8zcmGtmlnbtzAnJMaLR38p0VGKQzaI4Q2JHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479595; c=relaxed/simple;
-	bh=K3F1PcUJYI66H5a9NcUq6G0iyjQdsbPmDNlhXO6uQ4E=;
+	s=arc-20240116; t=1723479599; c=relaxed/simple;
+	bh=NjbUJKOhMSto170SXX8HqFGCjqei1nbxncnqBm4mHbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aY/Ao2zwbNbRMrsF9QRBOxsEyMcz87wcQEBK8WaUYCXgWkw1RKfRpbuXWHVEkq0ItJsuH8ZJAqMgD0VvX0k4fioOY85Rtn7QZAEKYtZz1grYqGk+IcE4YM3XgK+P3maH91SIE3B8SZihCM0tlqhTGB6HXe6OKH6+l105S3s+nps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PdQLczsK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SpYQOtP/Mt7P1Gb3Y3hx7pbXS8NNBw+Mjb5HtiWZknGYy1HdXMLgNQOnufdfKzIgNmGGy1r3zinL6fdPKB09LzchNtmlksPf8WmxVtDnu42jdOCCAKMBhOV+bPeN8TM7gloyXT3o15ifJ5on7YymRFlm2J/6llzx33oaaRLJZHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tLuSTYqC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PdQLczsK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C46C32782;
-	Mon, 12 Aug 2024 16:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tLuSTYqC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A05C32782;
+	Mon, 12 Aug 2024 16:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479595;
-	bh=K3F1PcUJYI66H5a9NcUq6G0iyjQdsbPmDNlhXO6uQ4E=;
+	s=korg; t=1723479598;
+	bh=NjbUJKOhMSto170SXX8HqFGCjqei1nbxncnqBm4mHbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PdQLczsKeF3WRzpVH/8M2ts17y1p6XIj1QITVh5YI4OJaKQ1rZgGXbvfa8Msgqfnh
-	 iHEFn0JMbMMiCDLIXMneYzfn+WykoLgJwIrWnZHNMMiLm/V+Zp0ebWf0wo2t0uvZad
-	 m/tQ/xCFwu8KzAQPC980OlKCODWgij0gQS3B/pbE=
+	b=tLuSTYqCwJgj8i48nl08WCmDAWU6bRtTx97sLQA5e+vIz55a0BX7f4s85soZLl6XH
+	 8dC8qqGSV0wAK6giZjiU06iZKegULamyAV+wIRueOWEnpC3YqYag0gRKhBFJH+QtzD
+	 a5rg/LkB2XT5SPjqf+WEawg9obuUxIi3mQtYjuQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Miroslav Lichvar <mlichvar@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 128/189] ntp: Clamp maxerror and esterror to operating range
-Date: Mon, 12 Aug 2024 18:03:04 +0200
-Message-ID: <20240812160137.072000125@linuxfoundation.org>
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.6 137/189] memcg: protect concurrent access to mem_cgroup_idr
+Date: Mon, 12 Aug 2024 18:03:13 +0200
+Message-ID: <20240812160137.418051811@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,74 +54,104 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Shakeel Butt <shakeel.butt@linux.dev>
 
-[ Upstream commit 87d571d6fb77ec342a985afa8744bb9bb75b3622 ]
+commit 9972605a238339b85bd16b084eed5f18414d22db upstream.
 
-Using syzkaller alongside the newly reintroduced signed integer overflow
-sanitizer spits out this report:
+Commit 73f576c04b94 ("mm: memcontrol: fix cgroup creation failure after
+many small jobs") decoupled the memcg IDs from the CSS ID space to fix the
+cgroup creation failures.  It introduced IDR to maintain the memcg ID
+space.  The IDR depends on external synchronization mechanisms for
+modifications.  For the mem_cgroup_idr, the idr_alloc() and idr_replace()
+happen within css callback and thus are protected through cgroup_mutex
+from concurrent modifications.  However idr_remove() for mem_cgroup_idr
+was not protected against concurrency and can be run concurrently for
+different memcgs when they hit their refcnt to zero.  Fix that.
 
-UBSAN: signed-integer-overflow in ../kernel/time/ntp.c:461:16
-9223372036854775807 + 500 cannot be represented in type 'long'
-Call Trace:
- handle_overflow+0x171/0x1b0
- second_overflow+0x2d6/0x500
- accumulate_nsecs_to_secs+0x60/0x160
- timekeeping_advance+0x1fe/0x890
- update_wall_time+0x10/0x30
+We have been seeing list_lru based kernel crashes at a low frequency in
+our fleet for a long time.  These crashes were in different part of
+list_lru code including list_lru_add(), list_lru_del() and reparenting
+code.  Upon further inspection, it looked like for a given object (dentry
+and inode), the super_block's list_lru didn't have list_lru_one for the
+memcg of that object.  The initial suspicions were either the object is
+not allocated through kmem_cache_alloc_lru() or somehow
+memcg_list_lru_alloc() failed to allocate list_lru_one() for a memcg but
+returned success.  No evidence were found for these cases.
 
-time_maxerror is unconditionally incremented and the result is checked
-against NTP_PHASE_LIMIT, but the increment itself can overflow, resulting
-in wrap-around to negative space.
+Looking more deeply, we started seeing situations where valid memcg's id
+is not present in mem_cgroup_idr and in some cases multiple valid memcgs
+have same id and mem_cgroup_idr is pointing to one of them.  So, the most
+reasonable explanation is that these situations can happen due to race
+between multiple idr_remove() calls or race between
+idr_alloc()/idr_replace() and idr_remove().  These races are causing
+multiple memcgs to acquire the same ID and then offlining of one of them
+would cleanup list_lrus on the system for all of them.  Later access from
+other memcgs to the list_lru cause crashes due to missing list_lru_one.
 
-Before commit eea83d896e31 ("ntp: NTP4 user space bits update") the user
-supplied value was sanity checked to be in the operating range. That change
-removed the sanity check and relied on clamping in handle_overflow() which
-does not work correctly when the user supplied value is in the overflow
-zone of the '+ 500' operation.
-
-The operation requires CAP_SYS_TIME and the side effect of the overflow is
-NTP getting out of sync.
-
-Miroslav confirmed that the input value should be clamped to the operating
-range and the same applies to time_esterror. The latter is not used by the
-kernel, but the value still should be in the operating range as it was
-before the sanity check got removed.
-
-Clamp them to the operating range.
-
-[ tglx: Changed it to clamping and included time_esterror ]
-
-Fixes: eea83d896e31 ("ntp: NTP4 user space bits update")
-Signed-off-by: Justin Stitt <justinstitt@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Miroslav Lichvar <mlichvar@redhat.com>
-Link: https://lore.kernel.org/all/20240517-b4-sio-ntp-usec-v2-1-d539180f2b79@google.com
-Closes: https://github.com/KSPP/linux/issues/354
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/20240802235822.1830976-1-shakeel.butt@linux.dev
+Fixes: 73f576c04b94 ("mm: memcontrol: fix cgroup creation failure after many small jobs")
+Signed-off-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/ntp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/memcontrol.c |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/ntp.c b/kernel/time/ntp.c
-index 406dccb79c2b6..502e1e5b7f7f6 100644
---- a/kernel/time/ntp.c
-+++ b/kernel/time/ntp.c
-@@ -727,10 +727,10 @@ static inline void process_adjtimex_modes(const struct __kernel_timex *txc,
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -5167,11 +5167,28 @@ static struct cftype mem_cgroup_legacy_f
+ 
+ #define MEM_CGROUP_ID_MAX	((1UL << MEM_CGROUP_ID_SHIFT) - 1)
+ static DEFINE_IDR(mem_cgroup_idr);
++static DEFINE_SPINLOCK(memcg_idr_lock);
++
++static int mem_cgroup_alloc_id(void)
++{
++	int ret;
++
++	idr_preload(GFP_KERNEL);
++	spin_lock(&memcg_idr_lock);
++	ret = idr_alloc(&mem_cgroup_idr, NULL, 1, MEM_CGROUP_ID_MAX + 1,
++			GFP_NOWAIT);
++	spin_unlock(&memcg_idr_lock);
++	idr_preload_end();
++	return ret;
++}
+ 
+ static void mem_cgroup_id_remove(struct mem_cgroup *memcg)
+ {
+ 	if (memcg->id.id > 0) {
++		spin_lock(&memcg_idr_lock);
+ 		idr_remove(&mem_cgroup_idr, memcg->id.id);
++		spin_unlock(&memcg_idr_lock);
++
+ 		memcg->id.id = 0;
  	}
+ }
+@@ -5294,8 +5311,7 @@ static struct mem_cgroup *mem_cgroup_all
+ 	if (!memcg)
+ 		return ERR_PTR(error);
  
- 	if (txc->modes & ADJ_MAXERROR)
--		time_maxerror = txc->maxerror;
-+		time_maxerror = clamp(txc->maxerror, 0, NTP_PHASE_LIMIT);
+-	memcg->id.id = idr_alloc(&mem_cgroup_idr, NULL,
+-				 1, MEM_CGROUP_ID_MAX + 1, GFP_KERNEL);
++	memcg->id.id = mem_cgroup_alloc_id();
+ 	if (memcg->id.id < 0) {
+ 		error = memcg->id.id;
+ 		goto fail;
+@@ -5430,7 +5446,9 @@ static int mem_cgroup_css_online(struct
+ 	 * publish it here at the end of onlining. This matches the
+ 	 * regular ID destruction during offlining.
+ 	 */
++	spin_lock(&memcg_idr_lock);
+ 	idr_replace(&mem_cgroup_idr, memcg, memcg->id.id);
++	spin_unlock(&memcg_idr_lock);
  
- 	if (txc->modes & ADJ_ESTERROR)
--		time_esterror = txc->esterror;
-+		time_esterror = clamp(txc->esterror, 0, NTP_PHASE_LIMIT);
- 
- 	if (txc->modes & ADJ_TIMECONST) {
- 		time_constant = txc->constant;
--- 
-2.43.0
-
+ 	return 0;
+ offline_kmem:
 
 
