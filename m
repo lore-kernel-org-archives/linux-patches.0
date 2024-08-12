@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D83187343;
-	Mon, 12 Aug 2024 16:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19CE178CE4;
+	Mon, 12 Aug 2024 16:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479302; cv=none; b=sN/ElapIsGP32ACtFcu3CCI8cVdqCF9KKealpL48gP2ESPKkQa16k3L9889e7XByxDIEjzjQAs25ut/Zx3tcqAPf939YUIsxANJgcCuVrJv0fJtL2VsdKAwBgOWHqzuoTkciopxOFXHBKWCKCNMp5VG5r+7cfUVA2A3l/a7g2y4=
+	t=1723479305; cv=none; b=I3vST0WD0RipUbapLIEKPaO3yXk1S5d7qI+YAChVnNr8+P9FJ4jWQt/oOQjbl6QCoHJXIP1oiJn81mpxZ5PC10jF5Nf06/ogmRW05vHqVfTdzaJVLLrtKJlHHHnpmhCkKRsi3qgDK0zP2VWF2uiXdQfFEKYsb9hqWqQ5l236Ys0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479302; c=relaxed/simple;
-	bh=uScv1mny68jhCAJlVOOLH3HJOWEJJmBZsDeXzZcyrtA=;
+	s=arc-20240116; t=1723479305; c=relaxed/simple;
+	bh=uaDu12NnOtIjRaUGjA5F86JhX1v1yOQuHRjoyY9XImM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WqrFohGuSdyzrD7/lU3pZUEUTjUxkpbgK61aNYlRC8L/LozhPx663YZmt8ayBuB5+9T3HeZ7QrEAOaUP1R+NuyNhForhiw9HDeLyTyPjLWhW1sKg4lzq5cLszSJ3G0Br13pj8q+kkVX5WWJiNRet30lQR90GtjvvMgLyNyL3mac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sWFDxoHD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MznU5EfAimrMqUkV5Bnge9QYXeVIQFWXKGViclR9cDNLeUvKHsx1asM4kvKnS4UFtTBZteIihJEwBaxtl3l7D4ATEz8SqaOxytxZKVNpyaqF0vN56FZ7hWUlBVCE2NOEgFZEdhPevwdkCoFq8GdB+ZqNvoEMRu6WuVLQyUT4Wng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NETi/yXM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sWFDxoHD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D943AC32782;
-	Mon, 12 Aug 2024 16:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NETi/yXM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B76AC32782;
+	Mon, 12 Aug 2024 16:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479302;
-	bh=uScv1mny68jhCAJlVOOLH3HJOWEJJmBZsDeXzZcyrtA=;
+	s=korg; t=1723479305;
+	bh=uaDu12NnOtIjRaUGjA5F86JhX1v1yOQuHRjoyY9XImM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWFDxoHDNsB5h2V86hPmzS3MbeONL7qbduHyiwJbhfe4S09Z1g298TAd+qk2eS2bU
-	 jnpgVNxacsKChHMYCuqaq+62z86OlSD/mUG7GoaSwxFZUbRkPgnfCf5f+KadkyiJzT
-	 O6hZk0Iz0BEa9U/WoJa/JU2XaUENCym5kRVfFK8E=
+	b=NETi/yXMhgUGZZBfrfKleNQJwgH07KmzicuBUeya4P/5hjjpftuhgQkr5npvJzFBK
+	 Mr+PO8nHrlvpnkecXluHzJWMEjHd8ET3y2qBuCQE+NNiPRPo/H0ItLt/3ybIe/J5w4
+	 r2CJjwRAp3cgXrJeTl0KstF/I4eNlHSJRdrXcqyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/189] md: do not delete safemode_timer in mddev_suspend
-Date: Mon, 12 Aug 2024 18:01:23 +0200
-Message-ID: <20240812160133.190533569@linuxfoundation.org>
+Subject: [PATCH 6.6 045/189] net: stmmac: qcom-ethqos: enable SGMII loopback during DMA reset on sa8775p-ride-r3
+Date: Mon, 12 Aug 2024 18:01:41 +0200
+Message-ID: <20240812160133.881424473@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,46 +52,117 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit a8768a134518e406d41799a3594aeb74e0889cf7 ]
+[ Upstream commit 3c466d6537b99f801b3f68af3d8124d4312437a0 ]
 
-The deletion of safemode_timer in mddev_suspend() is redundant and
-potentially harmful now. If timer is about to be woken up but gets
-deleted, 'in_sync' will remain 0 until the next write, causing array
-to stay in the 'active' state instead of transitioning to 'clean'.
+On sa8775p-ride-r3 the RX clocks from the AQR115C PHY are not available at
+the time of the DMA reset. We can however extract the RX clock from the
+internal SERDES block. Once the link is up, we can revert to the
+previous state.
 
-Commit 0d9f4f135eb6 ("MD: Add del_timer_sync to mddev_suspend (fix
-nasty panic))" introduced this deletion for dm, because if timer fired
-after dm is destroyed, the resource which the timer depends on might
-have been freed.
+The AQR115C PHY doesn't support in-band signalling so we can count on
+getting the link up notification and safely reuse existing callbacks
+which are already used by another HW quirk workaround which enables the
+functional clock to avoid a DMA reset due to timeout.
 
-However, commit 0dd84b319352 ("md: call __md_stop_writes in md_stop")
-added __md_stop_writes() to md_stop(), which is called before freeing
-resource. Timer is deleted in __md_stop_writes(), and the origin issue
-is resolved. Therefore, delete safemode_timer can be removed safely now.
+Only enable loopback on revision 3 of the board - check the phy_mode to
+make sure.
 
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240508092053.1447930-1-linan666@huaweicloud.com
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20240703181500.28491-3-brgl@bgdev.pl
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c | 1 -
- 1 file changed, 1 deletion(-)
+ .../stmicro/stmmac/dwmac-qcom-ethqos.c        | 23 +++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index b5dea664f946d..35b003b83ef1b 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -456,7 +456,6 @@ void mddev_suspend(struct mddev *mddev)
- 	clear_bit_unlock(MD_ALLOW_SB_UPDATE, &mddev->flags);
- 	wait_event(mddev->sb_wait, !test_bit(MD_UPDATING_SB, &mddev->flags));
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index d5d2a4c776c1c..ded1bbda5266f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -21,6 +21,7 @@
+ #define RGMII_IO_MACRO_CONFIG2		0x1C
+ #define RGMII_IO_MACRO_DEBUG1		0x20
+ #define EMAC_SYSTEM_LOW_POWER_DEBUG	0x28
++#define EMAC_WRAPPER_SGMII_PHY_CNTRL1	0xf4
  
--	del_timer_sync(&mddev->safemode_timer);
- 	/* restrict memory reclaim I/O during raid array is suspend */
- 	mddev->noio_flag = memalloc_noio_save();
+ /* RGMII_IO_MACRO_CONFIG fields */
+ #define RGMII_CONFIG_FUNC_CLK_EN		BIT(30)
+@@ -79,6 +80,9 @@
+ #define ETHQOS_MAC_CTRL_SPEED_MODE		BIT(14)
+ #define ETHQOS_MAC_CTRL_PORT_SEL		BIT(15)
+ 
++/* EMAC_WRAPPER_SGMII_PHY_CNTRL1 bits */
++#define SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN	BIT(3)
++
+ #define SGMII_10M_RX_CLK_DVDR			0x31
+ 
+ struct ethqos_emac_por {
+@@ -95,6 +99,7 @@ struct ethqos_emac_driver_data {
+ 	bool has_integrated_pcs;
+ 	u32 dma_addr_width;
+ 	struct dwmac4_addrs dwmac4_addrs;
++	bool needs_sgmii_loopback;
+ };
+ 
+ struct qcom_ethqos {
+@@ -113,6 +118,7 @@ struct qcom_ethqos {
+ 	unsigned int num_por;
+ 	bool rgmii_config_loopback_en;
+ 	bool has_emac_ge_3;
++	bool needs_sgmii_loopback;
+ };
+ 
+ static int rgmii_readl(struct qcom_ethqos *ethqos, unsigned int offset)
+@@ -187,8 +193,22 @@ ethqos_update_link_clk(struct qcom_ethqos *ethqos, unsigned int speed)
+ 	clk_set_rate(ethqos->link_clk, ethqos->link_clk_rate);
  }
+ 
++static void
++qcom_ethqos_set_sgmii_loopback(struct qcom_ethqos *ethqos, bool enable)
++{
++	if (!ethqos->needs_sgmii_loopback ||
++	    ethqos->phy_mode != PHY_INTERFACE_MODE_2500BASEX)
++		return;
++
++	rgmii_updatel(ethqos,
++		      SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN,
++		      enable ? SGMII_PHY_CNTRL1_SGMII_TX_TO_RX_LOOPBACK_EN : 0,
++		      EMAC_WRAPPER_SGMII_PHY_CNTRL1);
++}
++
+ static void ethqos_set_func_clk_en(struct qcom_ethqos *ethqos)
+ {
++	qcom_ethqos_set_sgmii_loopback(ethqos, true);
+ 	rgmii_updatel(ethqos, RGMII_CONFIG_FUNC_CLK_EN,
+ 		      RGMII_CONFIG_FUNC_CLK_EN, RGMII_IO_MACRO_CONFIG);
+ }
+@@ -273,6 +293,7 @@ static const struct ethqos_emac_driver_data emac_v4_0_0_data = {
+ 	.has_emac_ge_3 = true,
+ 	.link_clk_name = "phyaux",
+ 	.has_integrated_pcs = true,
++	.needs_sgmii_loopback = true,
+ 	.dma_addr_width = 36,
+ 	.dwmac4_addrs = {
+ 		.dma_chan = 0x00008100,
+@@ -646,6 +667,7 @@ static void ethqos_fix_mac_speed(void *priv, unsigned int speed, unsigned int mo
+ {
+ 	struct qcom_ethqos *ethqos = priv;
+ 
++	qcom_ethqos_set_sgmii_loopback(ethqos, false);
+ 	ethqos->speed = speed;
+ 	ethqos_update_link_clk(ethqos, speed);
+ 	ethqos_configure(ethqos);
+@@ -781,6 +803,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	ethqos->num_por = data->num_por;
+ 	ethqos->rgmii_config_loopback_en = data->rgmii_config_loopback_en;
+ 	ethqos->has_emac_ge_3 = data->has_emac_ge_3;
++	ethqos->needs_sgmii_loopback = data->needs_sgmii_loopback;
+ 
+ 	ethqos->link_clk = devm_clk_get(dev, data->link_clk_name ?: "rgmii");
+ 	if (IS_ERR(ethqos->link_clk))
 -- 
 2.43.0
 
