@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80101183CA6;
-	Mon, 12 Aug 2024 16:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E433D18454D;
+	Mon, 12 Aug 2024 16:19:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479565; cv=none; b=VaOF3HqtO1agUKUiNbNxTtDg9TqpZ85x2UyfEOU9oPiwBsbDzwBmZImR0K77KQyI5PZBr4YUK0wkH34GPqvtN/1sYDgmLWBeJHVvnj0z9mhS1tOAUHKqb1E11ZrujodjDcIF/Sb724L0tMigDJ5f6s18HRisuqG+6Ma5g0Ueuhc=
+	t=1723479569; cv=none; b=dEMA8hsmVEDImOQXf4I90einytOl8a1gVMulRCu4C4nuvnzgHV80tTilzY0HsiSZxxQD6PJpnwwUTjLYRolyct7emd7BWos14QoHGmNEerT4HiuEVSlKD9Dn6PyaeaF9mvXiWMBNZ3rUivF7DG43N2wvfL7KcH0RXTADGwzdRPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479565; c=relaxed/simple;
-	bh=ug9SzSX3CZIuZQ/kow/gTdSbIjIu1FIj+0ONbDoM9cY=;
+	s=arc-20240116; t=1723479569; c=relaxed/simple;
+	bh=0JWOFf7W9PNUozfDMP3WYuOZY+6ynzPowl9GcHKKkVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E6OjcdK3n8EH9fdgAD8SEvx+dBF79yBs9w3KG/66gsmVdcd+r6Tj3R3XeVEL/rbywnaxKTg8+QZj9F5Jsarohb+Mqp8ir0qpDGBpqp+91wr1bcJROz5jKyBXhXvRIYL9rXw0ZQl4rPcgrgMQSPNrSQEbGxc76MtsC9oQGCo/N6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnZauUzS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qBXJ2PfCvEz+t2pUzwMBGQDL+njjiA3adVA3TaQHDB8ipsvsJ0JfzWXXVY1hbYLauDViRKYYlOZLXF8+dVTJkupsc8ndOorWF9KHI1M4pWcDXsNvxYCfXAYzaAoWKs1cv4T8FZpdRW3J98y9OHzhmdACf7Q8+hF82/V1ccD7TNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KgFTyltu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnZauUzS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07727C32782;
-	Mon, 12 Aug 2024 16:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KgFTyltu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 500C4C32782;
+	Mon, 12 Aug 2024 16:19:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479565;
-	bh=ug9SzSX3CZIuZQ/kow/gTdSbIjIu1FIj+0ONbDoM9cY=;
+	s=korg; t=1723479568;
+	bh=0JWOFf7W9PNUozfDMP3WYuOZY+6ynzPowl9GcHKKkVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qnZauUzS5O44VZf4B8XZrzasevN69ca/G2H05ObfzDetjyAy/JmnvxZTY9fXQIBZ6
-	 XFgGc7tX2ekPaNxGIPIhcB2mp1kp2c5ARxh4k3arGnT+kfBMi9s53dM908L+Zus280
-	 v36fyZtr2nfVZhBoqHT7HhOQ/ImrbaQRhqpulAQk=
+	b=KgFTyltuE8CFmHRkGjZa0VX3TW/plxlJ5m4+yFZ4bUAhie+ymqndKpDvJdgVI5nQa
+	 SvgEAjiSxiwMnM7ANvfnVWJTLppYZpb8aB2GJe1aWs2UeUCNqY3LZwPJQwEc4ZABy5
+	 t2IQWOyqm9y3k4HQ8+N1gmpkT65EjMjzSR2G0xIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vamshi Gajjela <vamshigajjela@google.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.6 125/189] scsi: ufs: core: Fix hba->last_dme_cmd_tstamp timestamp updating logic
-Date: Mon, 12 Aug 2024 18:03:01 +0200
-Message-ID: <20240812160136.958369807@linuxfoundation.org>
+	David Wang <00107082@163.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yu Liao <liaoyu15@huawei.com>
+Subject: [PATCH 6.6 126/189] tick/broadcast: Move per CPU pointer access into the atomic section
+Date: Mon, 12 Aug 2024 18:03:02 +0200
+Message-ID: <20240812160136.995963125@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,54 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vamshi Gajjela <vamshigajjela@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit ab9fd06cb8f0db0854291833fc40c789e43a361f upstream.
+commit 6881e75237a84093d0986f56223db3724619f26e upstream.
 
-The ufshcd_add_delay_before_dme_cmd() always introduces a delay of
-MIN_DELAY_BEFORE_DME_CMDS_US between DME commands even when it's not
-required. The delay is added when the UFS host controller supplies the
-quirk UFSHCD_QUIRK_DELAY_BEFORE_DME_CMDS.
+The recent fix for making the take over of the broadcast timer more
+reliable retrieves a per CPU pointer in preemptible context.
 
-Fix the logic to update hba->last_dme_cmd_tstamp to ensure subsequent DME
-commands have the correct delay in the range of 0 to
-MIN_DELAY_BEFORE_DME_CMDS_US.
+This went unnoticed as compilers hoist the access into the non-preemptible
+region where the pointer is actually used. But of course it's valid that
+the compiler keeps it at the place where the code puts it which rightfully
+triggers:
 
-Update the timestamp at the end of the function to ensure it captures the
-latest time after any necessary delay has been applied.
+  BUG: using smp_processor_id() in preemptible [00000000] code:
+       caller is hotplug_cpu__broadcast_tick_pull+0x1c/0xc0
 
-Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
-Link: https://lore.kernel.org/r/20240724135126.1786126-1-vamshigajjela@google.com
-Fixes: cad2e03d8607 ("ufs: add support to allow non standard behaviours (quirks)")
+Move it to the actual usage site which is in a non-preemptible region.
+
+Fixes: f7d43dd206e7 ("tick/broadcast: Make takeover of broadcast hrtimer reliable")
+Reported-by: David Wang <00107082@163.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Yu Liao <liaoyu15@huawei.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/all/87ttg56ers.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/time/tick-broadcast.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -3971,11 +3971,16 @@ static inline void ufshcd_add_delay_befo
- 			min_sleep_time_us =
- 				MIN_DELAY_BEFORE_DME_CMDS_US - delta;
- 		else
--			return; /* no more delay required */
-+			min_sleep_time_us = 0; /* no more delay required */
- 	}
+--- a/kernel/time/tick-broadcast.c
++++ b/kernel/time/tick-broadcast.c
+@@ -1141,7 +1141,6 @@ void tick_broadcast_switch_to_oneshot(vo
+ #ifdef CONFIG_HOTPLUG_CPU
+ void hotplug_cpu__broadcast_tick_pull(int deadcpu)
+ {
+-	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
+ 	struct clock_event_device *bc;
+ 	unsigned long flags;
  
--	/* allow sleep for extra 50us if needed */
--	usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
-+	if (min_sleep_time_us > 0) {
-+		/* allow sleep for extra 50us if needed */
-+		usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
-+	}
+@@ -1167,6 +1166,8 @@ void hotplug_cpu__broadcast_tick_pull(in
+ 		 * device to avoid the starvation.
+ 		 */
+ 		if (tick_check_broadcast_expired()) {
++			struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
 +
-+	/* update the last_dme_cmd_tstamp */
-+	hba->last_dme_cmd_tstamp = ktime_get();
- }
- 
- /**
+ 			cpumask_clear_cpu(smp_processor_id(), tick_broadcast_force_mask);
+ 			tick_program_event(td->evtdev->next_event, 1);
+ 		}
 
 
