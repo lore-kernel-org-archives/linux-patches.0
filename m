@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88A3A1EA8D;
-	Mon, 12 Aug 2024 16:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0115C1EA8D;
+	Mon, 12 Aug 2024 16:05:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478732; cv=none; b=eOmGHDpKem2Cpib+Yzds9fJSJv/rzQFLLS1EZBFm3sNNnk5JG+fmcc/A/wit21Fa87tOZOpAUgr4A9PA+uGYElvzK2RDIaS1VSFZIOXFDWZQputNaaduoVVnm/oGxM3zY5bDqxhLucYNI4WDOosFMvos2tdKREv7ub2sUxXH33M=
+	t=1723478736; cv=none; b=YCMJaacJK9X5TRVC1EXib4IcRB/3bu01Fx8pCv9vMyUUseuA30w9uDB7WaLz6o2N0bXYnLSTBscPAyt8VgSEjHNeoXzmrc/yeyuEcWbEk+YFQNcayZ6QVbiGg0xpZqk9+qWF1wfKiwkIijMgHDAH27lMWR+BgdUnl+qrUW3yX/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478732; c=relaxed/simple;
-	bh=CX+PEq8+eYtSidLb5oTv7804uDC157TmgMcwy+GhpR4=;
+	s=arc-20240116; t=1723478736; c=relaxed/simple;
+	bh=eLdf2t6MQStkvQBX7Hllxss8uvOKSIkMp5O9FyGb43w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KzI+yTvpI0nSxlySxvY4lHwFIJIXBMGgISxrGw9STkDhpZqfTQfGWHvL7pmCbZyIb9wVCiH4nVEDsA608/DOsHKJ35Zf3r/50nAAMhIphp6yPgNnB1DZglwZ2JNe7aMD1n0mVTBvu3uY7tIJgLm1vKglyXhoe+BSn2bRi7zEFuI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pX6kUM/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZaEqlWXC6Z99fRkZk3BztT9aaDlr2x5ozcVGSRDxc0txHLiF8nQfshza3G0A/L1c5asdK5PuZVD5QU4TtZgRrqKE5YEea/09RFhr1AKA6BXB/j5EZKKutqC4PCrTGl2DFJ7sReKvtYT5wQS03XQTCOfiDkyERB4VSoXOP+4kxfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1vVMis8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pX6kUM/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2736C32782;
-	Mon, 12 Aug 2024 16:05:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1vVMis8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642E8C32782;
+	Mon, 12 Aug 2024 16:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478732;
-	bh=CX+PEq8+eYtSidLb5oTv7804uDC157TmgMcwy+GhpR4=;
+	s=korg; t=1723478735;
+	bh=eLdf2t6MQStkvQBX7Hllxss8uvOKSIkMp5O9FyGb43w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pX6kUM/oOEtZhklhX0aZdwad8a9lhpdqemnSdIalChmN228nbfHK5UqHunSrBbCip
-	 Om4U7Nu4FJ67QhO4FSd15oyLq/9KO6iER0AIf1QuqPu65qLzXtQPEQppZpdLU/slGD
-	 mzRsom9TpQpwkkJjmzXOOpsie0D2QOK3baTKfE8c=
+	b=C1vVMis8DyyFydVx0MIIN+SRGwrBmN1TqaM9HO8T+S8xE0T4Ra+/Yyvm8+5xAggMn
+	 OixWvdzvIaqg7PYv4Wlaz62IXCNSYPINLmYnOKsjKBVJvj0HYiInEBD3dhfE5g2uFv
+	 6+q4ewGWVUSVb16LAEY3yxsbQw5mf7qRYG6IU/Uk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jithu Joseph <jithu.joseph@intel.com>,
+	Ashok Raj <ashok.raj@intel.com>,
+	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/150] rcu: Fix rcu_barrier() VS post CPUHP_TEARDOWN_CPU invocation
-Date: Mon, 12 Aug 2024 18:01:41 +0200
-Message-ID: <20240812160125.941175374@linuxfoundation.org>
+Subject: [PATCH 6.1 003/150] platform/x86/intel/ifs: Initialize union ifs_status to zero
+Date: Mon, 12 Aug 2024 18:01:24 +0200
+Message-ID: <20240812160125.280021245@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -45,124 +47,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Frederic Weisbecker <frederic@kernel.org>
+From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
 
-[ Upstream commit 55d4669ef1b76823083caecfab12a8bd2ccdcf64 ]
+[ Upstream commit 3114f77e9453daa292ec0906f313a715c69b5943 ]
 
-When rcu_barrier() calls rcu_rdp_cpu_online() and observes a CPU off
-rnp->qsmaskinitnext, it means that all accesses from the offline CPU
-preceding the CPUHP_TEARDOWN_CPU are visible to RCU barrier, including
-callbacks expiration and counter updates.
+If the IFS scan test exits prematurely due to a timeout before
+completing a single run, the union ifs_status remains uninitialized,
+leading to incorrect test status reporting. To prevent this, always
+initialize the union ifs_status to zero.
 
-However interrupts can still fire after stop_machine() re-enables
-interrupts and before rcutree_report_cpu_dead(). The related accesses
-happening between CPUHP_TEARDOWN_CPU and rnp->qsmaskinitnext clearing
-are _NOT_ guaranteed to be seen by rcu_barrier() without proper
-ordering, especially when callbacks are invoked there to the end, making
-rcutree_migrate_callback() bypass barrier_lock.
-
-The following theoretical race example can make rcu_barrier() hang:
-
-CPU 0                                               CPU 1
------                                               -----
-//cpu_down()
-smpboot_park_threads()
-//ksoftirqd is parked now
-<IRQ>
-rcu_sched_clock_irq()
-   invoke_rcu_core()
-do_softirq()
-   rcu_core()
-      rcu_do_batch()
-         // callback storm
-         // rcu_do_batch() returns
-         // before completing all
-         // of them
-   // do_softirq also returns early because of
-   // timeout. It defers to ksoftirqd but
-   // it's parked
-</IRQ>
-stop_machine()
-   take_cpu_down()
-                                                    rcu_barrier()
-                                                        spin_lock(barrier_lock)
-                                                        // observes rcu_segcblist_n_cbs(&rdp->cblist) != 0
-<IRQ>
-do_softirq()
-   rcu_core()
-      rcu_do_batch()
-         //completes all pending callbacks
-         //smp_mb() implied _after_ callback number dec
-</IRQ>
-
-rcutree_report_cpu_dead()
-   rnp->qsmaskinitnext &= ~rdp->grpmask;
-
-rcutree_migrate_callback()
-   // no callback, early return without locking
-   // barrier_lock
-                                                        //observes !rcu_rdp_cpu_online(rdp)
-                                                        rcu_barrier_entrain()
-                                                           rcu_segcblist_entrain()
-                                                              // Observe rcu_segcblist_n_cbs(rsclp) == 0
-                                                              // because no barrier between reading
-                                                              // rnp->qsmaskinitnext and rsclp->len
-                                                              rcu_segcblist_add_len()
-                                                                 smp_mb__before_atomic()
-                                                                 // will now observe the 0 count and empty
-                                                                 // list, but too late, we enqueue regardless
-                                                                 WRITE_ONCE(rsclp->len, rsclp->len + v);
-                                                        // ignored barrier callback
-                                                        // rcu barrier stall...
-
-This could be solved with a read memory barrier, enforcing the message
-passing between rnp->qsmaskinitnext and rsclp->len, matching the full
-memory barrier after rsclp->len addition in rcu_segcblist_add_len()
-performed at the end of rcu_do_batch().
-
-However the rcu_barrier() is complicated enough and probably doesn't
-need too many more subtleties. CPU down is a slowpath and the
-barrier_lock seldom contended. Solve the issue with unconditionally
-locking the barrier_lock on rcutree_migrate_callbacks(). This makes sure
-that either rcu_barrier() sees the empty queue or its entrained
-callback will be migrated.
-
-Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: 2b40e654b73a ("platform/x86/intel/ifs: Add scan test support")
+Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Reviewed-by: Jithu Joseph <jithu.joseph@intel.com>
+Reviewed-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+Link: https://lore.kernel.org/r/20240730155930.1754744-1-sathyanarayanan.kuppuswamy@linux.intel.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/tree.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/platform/x86/intel/ifs/runtest.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
-index 61f9503a5fe9c..cd6144cea5a1a 100644
---- a/kernel/rcu/tree.c
-+++ b/kernel/rcu/tree.c
-@@ -4391,11 +4391,15 @@ void rcutree_migrate_callbacks(int cpu)
- 	struct rcu_data *rdp = per_cpu_ptr(&rcu_data, cpu);
- 	bool needwake;
- 
--	if (rcu_rdp_is_offloaded(rdp) ||
--	    rcu_segcblist_empty(&rdp->cblist))
--		return;  /* No callbacks to migrate. */
-+	if (rcu_rdp_is_offloaded(rdp))
-+		return;
- 
- 	raw_spin_lock_irqsave(&rcu_state.barrier_lock, flags);
-+	if (rcu_segcblist_empty(&rdp->cblist)) {
-+		raw_spin_unlock_irqrestore(&rcu_state.barrier_lock, flags);
-+		return;  /* No callbacks to migrate. */
-+	}
-+
- 	WARN_ON_ONCE(rcu_rdp_cpu_online(rdp));
- 	rcu_barrier_entrain(rdp);
- 	my_rdp = this_cpu_ptr(&rcu_data);
+diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
+index d6bc2f0b61a34..aeb6a3b7a8fd9 100644
+--- a/drivers/platform/x86/intel/ifs/runtest.c
++++ b/drivers/platform/x86/intel/ifs/runtest.c
+@@ -165,8 +165,8 @@ static int doscan(void *data)
+  */
+ static void ifs_test_core(int cpu, struct device *dev)
+ {
++	union ifs_status status = {};
+ 	union ifs_scan activate;
+-	union ifs_status status;
+ 	unsigned long timeout;
+ 	struct ifs_data *ifsd;
+ 	int to_start, to_stop;
 -- 
 2.43.0
 
