@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5903F183CD4;
-	Mon, 12 Aug 2024 16:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7594183CD9;
+	Mon, 12 Aug 2024 16:29:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480188; cv=none; b=KCbY7LMOdeVEwwmaIaTG8bVpWhBvTaDwPPeYpuOc+mQyA3sxIZEkhVWEdvyxDRumUsO1uSeLhQxNkozUdyPsFgFOYf/Sffn5IR6ayE+1ptVP/iLRnbtzTxMqdKiqdg4GqsEzaTMwKxxnQvaKSfQPbZminZbdfGw0TDNcEWtMDOE=
+	t=1723480192; cv=none; b=f7DQ8/TLAt3NHrOBkhWOahZUPjuJFDWWjDfCx0ldtOyN0eU3EadDW2TK1L7UbSrJBUCvYp/mOKCPctPduZQe7a2ZYB3OwBAPX78o+MeTKtf+W81WGQcdDZKpRONtPpx8ARNKsEVaTWowdhVAcT9bWP/NqbCgueztwYWS8T6Ttnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480188; c=relaxed/simple;
-	bh=M0w82wx+vCcWKGkj0SWZMjALpsLoKIm9rFuEdGJ1lFo=;
+	s=arc-20240116; t=1723480192; c=relaxed/simple;
+	bh=5FecJo8hQ21A147wdbnVCfeGdypDcXChAM7izX6E8JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mBafASMTlM+3Pd56H9ziCzoZzGysmGtcXDQjXqeg8Si0Pp8oWlRXfvqkkAkCUeTCX06fIOB9QME/Vz5sEAgYbaX+9my3JlnZIgNfSTZuYWE/Wnm/YCoe8tyhJFVKSHfR2r0JnFDBEnYIv2XWx5TgqAUEqmBBokL4gB6O9CfXJw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IU8TihmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pt/YIQeS+f3RUDF9MLtUeqOnedXU/NJom8eHFaOZyWvMlCWfsDd8/TYa1yyZwIzT/xlUATh9xO9PvETQXJR9biQTEkAa4kwtwq8gEujzq1rnDTaVxqTilqXK2htavrn/kuZW36Z1YKNgFRRKQHHsC+X4uKwWtBjbPJ2Bl6asBdg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQYdbouX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IU8TihmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC92C32782;
-	Mon, 12 Aug 2024 16:29:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQYdbouX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5555DC4AF0C;
+	Mon, 12 Aug 2024 16:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480188;
-	bh=M0w82wx+vCcWKGkj0SWZMjALpsLoKIm9rFuEdGJ1lFo=;
+	s=korg; t=1723480191;
+	bh=5FecJo8hQ21A147wdbnVCfeGdypDcXChAM7izX6E8JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IU8TihmYCdpcydKBNAGCRZn61MnDA+uLGVpYVNyQ5KqG/zQHs+B0OMFS2p5FAX/ra
-	 iwPJLynth6b1VVeU7PSf26I8mAJm1Uc2COzo52r81j80JGVDNsV6PtRPgMq+cMpOeB
-	 Kr9lY3mlzlvpHeanBfWvSM7FRkixLkdV3Ch7825Q=
+	b=tQYdbouXtP1nhYnAuwRCXIpx/JRh3HLwUIK7UkIf/JKbmgN1iyo3GWuZ/hjgzPCY9
+	 vLCJKCFU46cehJUZ5zq4yqsf4TScVwrzFBy53BOugqVI6pbqVbrLczZVyUXz44h4r+
+	 YJBPwOdqqZ5Jsn5CUhjVhN8HdPrGb9Y9OX7SMkfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot+a306f914b4d01b3958fe@syzkaller.appspotmail.com,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 090/263] drm/amdgpu/pm: Fix the param type of set_power_profile_mode
-Date: Mon, 12 Aug 2024 18:01:31 +0200
-Message-ID: <20240812160149.990704280@linuxfoundation.org>
+Subject: [PATCH 6.10 081/263] btrfs: do not BUG_ON() when freeing tree block after error
+Date: Mon, 12 Aug 2024 18:01:22 +0200
+Message-ID: <20240812160149.648106539@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,149 +53,306 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit f683f24093dd94a831085fe0ea8e9dc4c6c1a2d1 ]
+[ Upstream commit bb3868033a4cccff7be57e9145f2117cbdc91c11 ]
 
-Function .set_power_profile_mode need an array as input
-parameter. So define variable workload as an array to fix
-the below coverity warning.
+When freeing a tree block, at btrfs_free_tree_block(), if we fail to
+create a delayed reference we don't deal with the error and just do a
+BUG_ON(). The error most likely to happen is -ENOMEM, and we have a
+comment mentioning that only -ENOMEM can happen, but that is not true,
+because in case qgroups are enabled any error returned from
+btrfs_qgroup_trace_extent_post() (can be -EUCLEAN or anything returned
+from btrfs_search_slot() for example) can be propagated back to
+btrfs_free_tree_block().
 
-"Passing &workload to function hwmgr->hwmgr_func->set_power_profile_mode
-which uses it as an array. This might corrupt or misinterpret adjacent
-memory locations"
+So stop doing a BUG_ON() and return the error to the callers and make
+them abort the transaction to prevent leaking space. Syzbot was
+triggering this, likely due to memory allocation failure injection.
 
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: syzbot+a306f914b4d01b3958fe@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000fcba1e05e998263c@google.com/
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c |  8 ++++----
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c  |  8 ++++----
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c        | 16 ++++++++--------
- 3 files changed, 16 insertions(+), 16 deletions(-)
+ fs/btrfs/ctree.c           | 53 ++++++++++++++++++++++++++++++--------
+ fs/btrfs/extent-tree.c     | 24 ++++++++++-------
+ fs/btrfs/extent-tree.h     |  8 +++---
+ fs/btrfs/free-space-tree.c | 10 ++++---
+ fs/btrfs/ioctl.c           |  6 ++++-
+ fs/btrfs/qgroup.c          |  6 +++--
+ 6 files changed, 76 insertions(+), 31 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 5fb21a0508cd9..f531ce1d2b1dc 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -929,7 +929,7 @@ static int pp_dpm_switch_power_profile(void *handle,
- 		enum PP_SMC_POWER_PROFILE type, bool en)
- {
- 	struct pp_hwmgr *hwmgr = handle;
--	long workload;
-+	long workload[1];
- 	uint32_t index;
+diff --git a/fs/btrfs/ctree.c b/fs/btrfs/ctree.c
+index 1a49b92329908..ca372068226d5 100644
+--- a/fs/btrfs/ctree.c
++++ b/fs/btrfs/ctree.c
+@@ -620,10 +620,16 @@ int btrfs_force_cow_block(struct btrfs_trans_handle *trans,
+ 		atomic_inc(&cow->refs);
+ 		rcu_assign_pointer(root->node, cow);
  
- 	if (!hwmgr || !hwmgr->pm_en)
-@@ -947,12 +947,12 @@ static int pp_dpm_switch_power_profile(void *handle,
- 		hwmgr->workload_mask &= ~(1 << hwmgr->workload_prority[type]);
- 		index = fls(hwmgr->workload_mask);
- 		index = index > 0 && index <= Workload_Policy_Max ? index - 1 : 0;
--		workload = hwmgr->workload_setting[index];
-+		workload[0] = hwmgr->workload_setting[index];
+-		btrfs_free_tree_block(trans, btrfs_root_id(root), buf,
+-				      parent_start, last_ref);
++		ret = btrfs_free_tree_block(trans, btrfs_root_id(root), buf,
++					    parent_start, last_ref);
+ 		free_extent_buffer(buf);
+ 		add_root_to_dirty_list(root);
++		if (ret < 0) {
++			btrfs_tree_unlock(cow);
++			free_extent_buffer(cow);
++			btrfs_abort_transaction(trans, ret);
++			return ret;
++		}
  	} else {
- 		hwmgr->workload_mask |= (1 << hwmgr->workload_prority[type]);
- 		index = fls(hwmgr->workload_mask);
- 		index = index <= Workload_Policy_Max ? index - 1 : 0;
--		workload = hwmgr->workload_setting[index];
-+		workload[0] = hwmgr->workload_setting[index];
+ 		WARN_ON(trans->transid != btrfs_header_generation(parent));
+ 		ret = btrfs_tree_mod_log_insert_key(parent, parent_slot,
+@@ -648,8 +654,14 @@ int btrfs_force_cow_block(struct btrfs_trans_handle *trans,
+ 				return ret;
+ 			}
+ 		}
+-		btrfs_free_tree_block(trans, btrfs_root_id(root), buf,
+-				      parent_start, last_ref);
++		ret = btrfs_free_tree_block(trans, btrfs_root_id(root), buf,
++					    parent_start, last_ref);
++		if (ret < 0) {
++			btrfs_tree_unlock(cow);
++			free_extent_buffer(cow);
++			btrfs_abort_transaction(trans, ret);
++			return ret;
++		}
  	}
+ 	if (unlock_orig)
+ 		btrfs_tree_unlock(buf);
+@@ -983,9 +995,13 @@ static noinline int balance_level(struct btrfs_trans_handle *trans,
+ 		free_extent_buffer(mid);
  
- 	if (type == PP_SMC_POWER_PROFILE_COMPUTE &&
-@@ -962,7 +962,7 @@ static int pp_dpm_switch_power_profile(void *handle,
+ 		root_sub_used_bytes(root);
+-		btrfs_free_tree_block(trans, btrfs_root_id(root), mid, 0, 1);
++		ret = btrfs_free_tree_block(trans, btrfs_root_id(root), mid, 0, 1);
+ 		/* once for the root ptr */
+ 		free_extent_buffer_stale(mid);
++		if (ret < 0) {
++			btrfs_abort_transaction(trans, ret);
++			goto out;
++		}
+ 		return 0;
  	}
+ 	if (btrfs_header_nritems(mid) >
+@@ -1053,10 +1069,14 @@ static noinline int balance_level(struct btrfs_trans_handle *trans,
+ 				goto out;
+ 			}
+ 			root_sub_used_bytes(root);
+-			btrfs_free_tree_block(trans, btrfs_root_id(root), right,
+-					      0, 1);
++			ret = btrfs_free_tree_block(trans, btrfs_root_id(root),
++						    right, 0, 1);
+ 			free_extent_buffer_stale(right);
+ 			right = NULL;
++			if (ret < 0) {
++				btrfs_abort_transaction(trans, ret);
++				goto out;
++			}
+ 		} else {
+ 			struct btrfs_disk_key right_key;
+ 			btrfs_node_key(right, &right_key, 0);
+@@ -1111,9 +1131,13 @@ static noinline int balance_level(struct btrfs_trans_handle *trans,
+ 			goto out;
+ 		}
+ 		root_sub_used_bytes(root);
+-		btrfs_free_tree_block(trans, btrfs_root_id(root), mid, 0, 1);
++		ret = btrfs_free_tree_block(trans, btrfs_root_id(root), mid, 0, 1);
+ 		free_extent_buffer_stale(mid);
+ 		mid = NULL;
++		if (ret < 0) {
++			btrfs_abort_transaction(trans, ret);
++			goto out;
++		}
+ 	} else {
+ 		/* update the parent key to reflect our changes */
+ 		struct btrfs_disk_key mid_key;
+@@ -2883,7 +2907,11 @@ static noinline int insert_new_root(struct btrfs_trans_handle *trans,
+ 	old = root->node;
+ 	ret = btrfs_tree_mod_log_insert_root(root->node, c, false);
+ 	if (ret < 0) {
+-		btrfs_free_tree_block(trans, btrfs_root_id(root), c, 0, 1);
++		int ret2;
++
++		ret2 = btrfs_free_tree_block(trans, btrfs_root_id(root), c, 0, 1);
++		if (ret2 < 0)
++			btrfs_abort_transaction(trans, ret2);
+ 		btrfs_tree_unlock(c);
+ 		free_extent_buffer(c);
+ 		return ret;
+@@ -4452,9 +4480,12 @@ static noinline int btrfs_del_leaf(struct btrfs_trans_handle *trans,
+ 	root_sub_used_bytes(root);
  
- 	if (hwmgr->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL)
--		hwmgr->hwmgr_func->set_power_profile_mode(hwmgr, &workload, 0);
-+		hwmgr->hwmgr_func->set_power_profile_mode(hwmgr, workload, 0);
- 
+ 	atomic_inc(&leaf->refs);
+-	btrfs_free_tree_block(trans, btrfs_root_id(root), leaf, 0, 1);
++	ret = btrfs_free_tree_block(trans, btrfs_root_id(root), leaf, 0, 1);
+ 	free_extent_buffer_stale(leaf);
+-	return 0;
++	if (ret < 0)
++		btrfs_abort_transaction(trans, ret);
++
++	return ret;
+ }
+ /*
+  * delete the item at the leaf level in path.  If that empties
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index b75e14f399a01..153297cb97a4a 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -3420,10 +3420,10 @@ static noinline int check_ref_cleanup(struct btrfs_trans_handle *trans,
  	return 0;
  }
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
-index 1d829402cd2e2..f4bd8e9357e22 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
-@@ -269,7 +269,7 @@ int psm_adjust_power_state_dynamic(struct pp_hwmgr *hwmgr, bool skip_display_set
- 						struct pp_power_state *new_ps)
+ 
+-void btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+-			   u64 root_id,
+-			   struct extent_buffer *buf,
+-			   u64 parent, int last_ref)
++int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
++			  u64 root_id,
++			  struct extent_buffer *buf,
++			  u64 parent, int last_ref)
  {
- 	uint32_t index;
--	long workload;
-+	long workload[1];
- 
- 	if (hwmgr->not_vf) {
- 		if (!skip_display_settings)
-@@ -294,10 +294,10 @@ int psm_adjust_power_state_dynamic(struct pp_hwmgr *hwmgr, bool skip_display_set
- 	if (hwmgr->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL) {
- 		index = fls(hwmgr->workload_mask);
- 		index = index > 0 && index <= Workload_Policy_Max ? index - 1 : 0;
--		workload = hwmgr->workload_setting[index];
-+		workload[0] = hwmgr->workload_setting[index];
- 
--		if (hwmgr->power_profile_mode != workload && hwmgr->hwmgr_func->set_power_profile_mode)
--			hwmgr->hwmgr_func->set_power_profile_mode(hwmgr, &workload, 0);
-+		if (hwmgr->power_profile_mode != workload[0] && hwmgr->hwmgr_func->set_power_profile_mode)
-+			hwmgr->hwmgr_func->set_power_profile_mode(hwmgr, workload, 0);
+ 	struct btrfs_fs_info *fs_info = trans->fs_info;
+ 	struct btrfs_block_group *bg;
+@@ -3450,11 +3450,12 @@ void btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 		btrfs_init_tree_ref(&generic_ref, btrfs_header_level(buf), 0, false);
+ 		btrfs_ref_tree_mod(fs_info, &generic_ref);
+ 		ret = btrfs_add_delayed_tree_ref(trans, &generic_ref, NULL);
+-		BUG_ON(ret); /* -ENOMEM */
++		if (ret < 0)
++			return ret;
  	}
  
- 	return 0;
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-index e1796ecf9c05c..06409133b09b1 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -2220,7 +2220,7 @@ static int smu_adjust_power_state_dynamic(struct smu_context *smu,
- {
- 	int ret = 0;
- 	int index = 0;
--	long workload;
-+	long workload[1];
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
+ 	if (!last_ref)
+-		return;
++		return 0;
  
- 	if (!skip_display_settings) {
-@@ -2260,10 +2260,10 @@ static int smu_adjust_power_state_dynamic(struct smu_context *smu,
- 		smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM) {
- 		index = fls(smu->workload_mask);
- 		index = index > 0 && index <= WORKLOAD_POLICY_MAX ? index - 1 : 0;
--		workload = smu->workload_setting[index];
-+		workload[0] = smu->workload_setting[index];
- 
--		if (smu->power_profile_mode != workload)
--			smu_bump_power_profile_mode(smu, &workload, 0);
-+		if (smu->power_profile_mode != workload[0])
-+			smu_bump_power_profile_mode(smu, workload, 0);
- 	}
- 
- 	return ret;
-@@ -2313,7 +2313,7 @@ static int smu_switch_power_profile(void *handle,
- {
- 	struct smu_context *smu = handle;
- 	struct smu_dpm_context *smu_dpm_ctx = &(smu->smu_dpm);
--	long workload;
-+	long workload[1];
- 	uint32_t index;
- 
- 	if (!smu->pm_enabled || !smu->adev->pm.dpm_enabled)
-@@ -2326,17 +2326,17 @@ static int smu_switch_power_profile(void *handle,
- 		smu->workload_mask &= ~(1 << smu->workload_prority[type]);
- 		index = fls(smu->workload_mask);
- 		index = index > 0 && index <= WORKLOAD_POLICY_MAX ? index - 1 : 0;
--		workload = smu->workload_setting[index];
-+		workload[0] = smu->workload_setting[index];
- 	} else {
- 		smu->workload_mask |= (1 << smu->workload_prority[type]);
- 		index = fls(smu->workload_mask);
- 		index = index <= WORKLOAD_POLICY_MAX ? index - 1 : 0;
--		workload = smu->workload_setting[index];
-+		workload[0] = smu->workload_setting[index];
- 	}
- 
- 	if (smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_MANUAL &&
- 		smu_dpm_ctx->dpm_level != AMD_DPM_FORCED_LEVEL_PERF_DETERMINISM)
--		smu_bump_power_profile_mode(smu, &workload, 0);
-+		smu_bump_power_profile_mode(smu, workload, 0);
- 
- 	return 0;
+ 	if (btrfs_header_generation(buf) != trans->transid)
+ 		goto out;
+@@ -3511,6 +3512,7 @@ void btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+ 	 * matter anymore.
+ 	 */
+ 	clear_bit(EXTENT_BUFFER_CORRUPT, &buf->bflags);
++	return 0;
  }
+ 
+ /* Can return -ENOMEM */
+@@ -5644,7 +5646,7 @@ static noinline int walk_up_proc(struct btrfs_trans_handle *trans,
+ 				 struct walk_control *wc)
+ {
+ 	struct btrfs_fs_info *fs_info = root->fs_info;
+-	int ret;
++	int ret = 0;
+ 	int level = wc->level;
+ 	struct extent_buffer *eb = path->nodes[level];
+ 	u64 parent = 0;
+@@ -5731,12 +5733,14 @@ static noinline int walk_up_proc(struct btrfs_trans_handle *trans,
+ 			goto owner_mismatch;
+ 	}
+ 
+-	btrfs_free_tree_block(trans, btrfs_root_id(root), eb, parent,
+-			      wc->refs[level] == 1);
++	ret = btrfs_free_tree_block(trans, btrfs_root_id(root), eb, parent,
++				    wc->refs[level] == 1);
++	if (ret < 0)
++		btrfs_abort_transaction(trans, ret);
+ out:
+ 	wc->refs[level] = 0;
+ 	wc->flags[level] = 0;
+-	return 0;
++	return ret;
+ 
+ owner_mismatch:
+ 	btrfs_err_rl(fs_info, "unexpected tree owner, have %llu expect %llu",
+diff --git a/fs/btrfs/extent-tree.h b/fs/btrfs/extent-tree.h
+index af9f8800d5aca..2ad51130c037e 100644
+--- a/fs/btrfs/extent-tree.h
++++ b/fs/btrfs/extent-tree.h
+@@ -127,10 +127,10 @@ struct extent_buffer *btrfs_alloc_tree_block(struct btrfs_trans_handle *trans,
+ 					     u64 empty_size,
+ 					     u64 reloc_src_root,
+ 					     enum btrfs_lock_nesting nest);
+-void btrfs_free_tree_block(struct btrfs_trans_handle *trans,
+-			   u64 root_id,
+-			   struct extent_buffer *buf,
+-			   u64 parent, int last_ref);
++int btrfs_free_tree_block(struct btrfs_trans_handle *trans,
++			  u64 root_id,
++			  struct extent_buffer *buf,
++			  u64 parent, int last_ref);
+ int btrfs_alloc_reserved_file_extent(struct btrfs_trans_handle *trans,
+ 				     struct btrfs_root *root, u64 owner,
+ 				     u64 offset, u64 ram_bytes,
+diff --git a/fs/btrfs/free-space-tree.c b/fs/btrfs/free-space-tree.c
+index 90f2938bd743d..7ba50e133921a 100644
+--- a/fs/btrfs/free-space-tree.c
++++ b/fs/btrfs/free-space-tree.c
+@@ -1300,10 +1300,14 @@ int btrfs_delete_free_space_tree(struct btrfs_fs_info *fs_info)
+ 	btrfs_tree_lock(free_space_root->node);
+ 	btrfs_clear_buffer_dirty(trans, free_space_root->node);
+ 	btrfs_tree_unlock(free_space_root->node);
+-	btrfs_free_tree_block(trans, btrfs_root_id(free_space_root),
+-			      free_space_root->node, 0, 1);
+-
++	ret = btrfs_free_tree_block(trans, btrfs_root_id(free_space_root),
++				    free_space_root->node, 0, 1);
+ 	btrfs_put_root(free_space_root);
++	if (ret < 0) {
++		btrfs_abort_transaction(trans, ret);
++		btrfs_end_transaction(trans);
++		return ret;
++	}
+ 
+ 	return btrfs_commit_transaction(trans);
+ }
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index efd5d6e9589e0..c1b0556e40368 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -719,6 +719,8 @@ static noinline int create_subvol(struct mnt_idmap *idmap,
+ 	ret = btrfs_insert_root(trans, fs_info->tree_root, &key,
+ 				root_item);
+ 	if (ret) {
++		int ret2;
++
+ 		/*
+ 		 * Since we don't abort the transaction in this case, free the
+ 		 * tree block so that we don't leak space and leave the
+@@ -729,7 +731,9 @@ static noinline int create_subvol(struct mnt_idmap *idmap,
+ 		btrfs_tree_lock(leaf);
+ 		btrfs_clear_buffer_dirty(trans, leaf);
+ 		btrfs_tree_unlock(leaf);
+-		btrfs_free_tree_block(trans, objectid, leaf, 0, 1);
++		ret2 = btrfs_free_tree_block(trans, objectid, leaf, 0, 1);
++		if (ret2 < 0)
++			btrfs_abort_transaction(trans, ret2);
+ 		free_extent_buffer(leaf);
+ 		goto out;
+ 	}
+diff --git a/fs/btrfs/qgroup.c b/fs/btrfs/qgroup.c
+index 39a15cca58ca9..29d6ca3b874ec 100644
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -1446,9 +1446,11 @@ int btrfs_quota_disable(struct btrfs_fs_info *fs_info)
+ 	btrfs_tree_lock(quota_root->node);
+ 	btrfs_clear_buffer_dirty(trans, quota_root->node);
+ 	btrfs_tree_unlock(quota_root->node);
+-	btrfs_free_tree_block(trans, btrfs_root_id(quota_root),
+-			      quota_root->node, 0, 1);
++	ret = btrfs_free_tree_block(trans, btrfs_root_id(quota_root),
++				    quota_root->node, 0, 1);
+ 
++	if (ret < 0)
++		btrfs_abort_transaction(trans, ret);
+ 
+ out:
+ 	btrfs_put_root(quota_root);
 -- 
 2.43.0
 
