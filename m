@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C931EA8D;
-	Mon, 12 Aug 2024 16:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257CD18800D;
+	Mon, 12 Aug 2024 16:08:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478899; cv=none; b=MBnLpLkUHVIxIcshr55QDIipOMIV/6ClsWabaCHMaID8koD5ybjRv6FX0LLlPHnZjsv6wOR6i/K0fulIrRqy1SjAHRtVA9Q+dc00wd/dUcPHavYPM6rjEi0BDxp4HQYMWxRLrE9g1FDgf4CTteTXjLhyhFVzJQquBRkJQ1JEKyU=
+	t=1723478902; cv=none; b=GRrRcGTgiqrROhfweWhmmg6fpfaglrJykGK/uNMtXtE2LdrEA3yXpGwa6wNz2QD091E0GkDNHIpoGwwneI2pn+j+eqrUk6KTxRE06Le/RRbcn0wiBn8qbdxrpQvDO++XwoA3DmPGXW+V56t28qThYHB4bybeJe9hIswWwRiuJTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478899; c=relaxed/simple;
-	bh=aHKYwyy8MXyzZa5oNYqvqEe92UcMzUWI5quRMFcy5+M=;
+	s=arc-20240116; t=1723478902; c=relaxed/simple;
+	bh=LWj2aQXzUndy9ePQ7HUoZN0yx1BejGFZNpq9QqTlmYI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8pfsd1B6xC3K8M0h/CXlT8VyXvRZJ4NLkDk1KYr4abPdOaR4+puUnsrOu8HeIen2H/UsZnNy/Kw6KQq1wFrWKb2/+mpu1dBueJ3hlmcJCzxOPkVUych2C6SgO4sNl6rtBEWLozDWw+LzJ5eBEh/rCO4bVifmpV2TWjTWKng5L8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZd3IjT7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gz0K18pCm6gZYfUB6Uckiy8pdf+F09xVavcbjGIMJNV3oDsGH2eUkd+oPD8b/x9zHAnunN31vWxkANM2HLGKy4LY3NIaq7DP//tMaYwTZLaVRgfwRrcQIjwelLzkG2PzFKvZww6dtEXeDqooQPNflmZPjeFCjokJ4BG+aM2iTzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mj8I8vit; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZd3IjT7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506D6C32782;
-	Mon, 12 Aug 2024 16:08:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mj8I8vit"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947EFC4AF0F;
+	Mon, 12 Aug 2024 16:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478898;
-	bh=aHKYwyy8MXyzZa5oNYqvqEe92UcMzUWI5quRMFcy5+M=;
+	s=korg; t=1723478902;
+	bh=LWj2aQXzUndy9ePQ7HUoZN0yx1BejGFZNpq9QqTlmYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZd3IjT7uiCflBdUanFAVwlNFKM62dU5A3CsFXTvuzCCP1dLJvBGrVviRjaFgpzOW
-	 Mdsoi1EicLOQrIxC3eiqQUSOFjhWOU4trpyXqNT+i6gHTIst2BjmcgvWfTpcY4LXyY
-	 vodLgdZQupqdYc72cZ72lV+umU2R77u6LNYaPQ8g=
+	b=mj8I8vitUYp35M1aKZ/GUjcAFAuNzd/04AIkHCF+M/y1mBLaot9bXOfaXWFrUglxr
+	 S1QFcpLbDSX6kY7r1KjoUJvykgZIlXyVX5H20RCWsrK1VH5sgj7qVtikamEy3r/+2j
+	 St8dYv9hj3jlGQMzwi/7n3NbaYGFYvNL/TyvG+Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 071/150] i2c: smbus: Improve handling of stuck alerts
-Date: Mon, 12 Aug 2024 18:02:32 +0200
-Message-ID: <20240812160127.915820734@linuxfoundation.org>
+Subject: [PATCH 6.1 072/150] ASoC: codecs: wcd938x-sdw: Correct Soundwire ports mask
+Date: Mon, 12 Aug 2024 18:02:33 +0200
+Message-ID: <20240812160127.952874867@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -51,120 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 37c526f00bc1c4f847fc800085f8f009d2e11be6 ]
+[ Upstream commit 3f6fb03dae9c7dfba7670858d29e03c8faaa89fe ]
 
-The following messages were observed while testing alert functionality
-on systems with multiple I2C devices on a single bus if alert was active
-on more than one chip.
+Device has up to WCD938X_MAX_SWR_PORTS number of ports and the array
+assigned to prop.src_dpn_prop and prop.sink_dpn_prop has
+0..WCD938X_MAX_SWR_PORTS-1 elements.  On the other hand, GENMASK(high,
+low) creates an inclusive mask between <high, low>, so we need the mask
+from 0 up to WCD938X_MAX_SWR_PORTS-1.
 
-smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
-smbus_alert 3-000c: no driver alert()!
+Theoretically, too wide mask could cause an out of bounds read in
+sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
+driver, e.g. adding incorrect number of ports via
+sdw_stream_add_slave().
 
-and:
-
-smbus_alert 3-000c: SMBALERT# from dev 0x28, flag 0
-
-Once it starts, this message repeats forever at high rate. There is no
-device at any of the reported addresses.
-
-Analysis shows that this is seen if multiple devices have the alert pin
-active. Apparently some devices do not support SMBus arbitration correctly.
-They keep sending address bits after detecting an address collision and
-handle the collision not at all or too late.
-Specifically, address 0x0c is seen with ADT7461A at address 0x4c and
-ADM1021 at address 0x18 if alert is active on both chips. Address 0x28 is
-seen with ADT7483 at address 0x2a and ADT7461 at address 0x4c if alert is
-active on both chips.
-
-Once the system is in bad state (alert is set by more than one chip),
-it often only recovers by power cycling.
-
-To reduce the impact of this problem, abort the endless loop in
-smbus_alert() if the same address is read more than once and not
-handled by a driver.
-
-Fixes: b5527a7766f0 ("i2c: Add SMBus alert support")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[wsa: it also fixed an interrupt storm in one of my experiments]
-Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-[wsa: rebased, moved a comment as well, improved the 'invalid' value]
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Fixes: 16572522aece ("ASoC: codecs: wcd938x-sdw: add SoundWire driver")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-2-d4d7a8b56f05@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/i2c-smbus.c | 32 +++++++++++++++++++++++++-------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ sound/soc/codecs/wcd938x-sdw.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
-index 07c92c8495a3c..5f74978874691 100644
---- a/drivers/i2c/i2c-smbus.c
-+++ b/drivers/i2c/i2c-smbus.c
-@@ -34,6 +34,7 @@ static int smbus_do_alert(struct device *dev, void *addrp)
- 	struct i2c_client *client = i2c_verify_client(dev);
- 	struct alert_data *data = addrp;
- 	struct i2c_driver *driver;
-+	int ret;
- 
- 	if (!client || client->addr != data->addr)
- 		return 0;
-@@ -47,16 +48,21 @@ static int smbus_do_alert(struct device *dev, void *addrp)
- 	device_lock(dev);
- 	if (client->dev.driver) {
- 		driver = to_i2c_driver(client->dev.driver);
--		if (driver->alert)
-+		if (driver->alert) {
-+			/* Stop iterating after we find the device */
- 			driver->alert(client, data->type, data->data);
--		else
-+			ret = -EBUSY;
-+		} else {
- 			dev_warn(&client->dev, "no driver alert()!\n");
--	} else
-+			ret = -EOPNOTSUPP;
-+		}
-+	} else {
- 		dev_dbg(&client->dev, "alert with no driver\n");
-+		ret = -ENODEV;
-+	}
- 	device_unlock(dev);
- 
--	/* Stop iterating after we find the device */
--	return -EBUSY;
-+	return ret;
- }
- 
- /*
-@@ -67,6 +73,7 @@ static irqreturn_t smbus_alert(int irq, void *d)
- {
- 	struct i2c_smbus_alert *alert = d;
- 	struct i2c_client *ara;
-+	unsigned short prev_addr = I2C_CLIENT_END; /* Not a valid address */
- 
- 	ara = alert->ara;
- 
-@@ -94,8 +101,19 @@ static irqreturn_t smbus_alert(int irq, void *d)
- 			data.addr, data.data);
- 
- 		/* Notify driver for the device which issued the alert */
--		device_for_each_child(&ara->adapter->dev, &data,
--				      smbus_do_alert);
-+		status = device_for_each_child(&ara->adapter->dev, &data,
-+					       smbus_do_alert);
-+		/*
-+		 * If we read the same address more than once, and the alert
-+		 * was not handled by a driver, it won't do any good to repeat
-+		 * the loop because it will never terminate.
-+		 * Bail out in this case.
-+		 * Note: This assumes that a driver with alert handler handles
-+		 * the alert properly and clears it if necessary.
-+		 */
-+		if (data.addr == prev_addr && status != -EBUSY)
-+			break;
-+		prev_addr = data.addr;
+diff --git a/sound/soc/codecs/wcd938x-sdw.c b/sound/soc/codecs/wcd938x-sdw.c
+index 5b5b7c267a616..061c77d0cd45b 100644
+--- a/sound/soc/codecs/wcd938x-sdw.c
++++ b/sound/soc/codecs/wcd938x-sdw.c
+@@ -1252,12 +1252,12 @@ static int wcd9380_probe(struct sdw_slave *pdev,
+ 	pdev->prop.lane_control_support = true;
+ 	pdev->prop.simple_clk_stop_capable = true;
+ 	if (wcd->is_tx) {
+-		pdev->prop.source_ports = GENMASK(WCD938X_MAX_SWR_PORTS, 0);
++		pdev->prop.source_ports = GENMASK(WCD938X_MAX_SWR_PORTS - 1, 0);
+ 		pdev->prop.src_dpn_prop = wcd938x_dpn_prop;
+ 		wcd->ch_info = &wcd938x_sdw_tx_ch_info[0];
+ 		pdev->prop.wake_capable = true;
+ 	} else {
+-		pdev->prop.sink_ports = GENMASK(WCD938X_MAX_SWR_PORTS, 0);
++		pdev->prop.sink_ports = GENMASK(WCD938X_MAX_SWR_PORTS - 1, 0);
+ 		pdev->prop.sink_dpn_prop = wcd938x_dpn_prop;
+ 		wcd->ch_info = &wcd938x_sdw_rx_ch_info[0];
  	}
- 
- 	return IRQ_HANDLED;
 -- 
 2.43.0
 
