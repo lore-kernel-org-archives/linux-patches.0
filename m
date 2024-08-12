@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1462C1A5;
-	Mon, 12 Aug 2024 16:31:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A602C1A5;
+	Mon, 12 Aug 2024 16:31:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480313; cv=none; b=VCUNWsTWlNrAqHB11v7PwAFyrsDB4DWtOHwLUYpNETtsQBkC1wLGtSeEPfBgSsJGAxeSScZdKOjKnsaEPopl7AMxn9yJ1PnpmLpu6Mrj26dqGwB6UQG2nHNrVnDaY5LZViWQx3NrJL9pSfLfLJSxqvqovVhASLJ/0Xlh2DnnNm4=
+	t=1723480316; cv=none; b=dE/vK3ZeGxnzbRzF3VugnuldgLKuvHt4pEGw+N1DWeMo07B+kTHWR/MZ2wE0ogQjOAYg5yvTnDNtzWRqyQNKHSPbocLEx7gZyfkmqiA3um7Mn3uDCaFmFGeDyEMZH9nLXhdAK/6jURIMV6W/Lscut67p7JNy5MpgFjRDYFBQS8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480313; c=relaxed/simple;
-	bh=CGR7j+3ujGhZUJj7c46knhSCwIUkrKmcurvYhLA+24I=;
+	s=arc-20240116; t=1723480316; c=relaxed/simple;
+	bh=7hGG6RuJ0FS7dNm+RGs/WLRj37tO4t0Oyf5xkocM0OI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LmEclXIxgu8NjArOUYtsg+7DCun78KkjlkbhMhmUOgNknxrlzJ3YikM6GtVecutaoY56OLpDOUGNu+yWafssZzTCaxraC/mVroLA0p46E5X/GiSVAlk8ABeg47BsZlJpodkrJX2dYYSX5zQmLlvPbJjX9jdBE2h5pybYWfLQv68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uObXD1yS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CSigXgORm5289+Rj54rXni5wbPt4yJZBwqr/jFTCpsZrZfbkCFnlTDW0u8U6XTPFxuGpun/oFC3TOGQgTjknlz3ly61Wi8rxMS+F8rZAcQeuEvyI/U0ijBftRviLk47kXxchfZNJ9vz/mkXdIINN4XyAuZ1i85b3RZjmLMvzt0U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c602CSd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uObXD1yS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6059FC32782;
-	Mon, 12 Aug 2024 16:31:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c602CSd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70585C32782;
+	Mon, 12 Aug 2024 16:31:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480312;
-	bh=CGR7j+3ujGhZUJj7c46knhSCwIUkrKmcurvYhLA+24I=;
+	s=korg; t=1723480315;
+	bh=7hGG6RuJ0FS7dNm+RGs/WLRj37tO4t0Oyf5xkocM0OI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uObXD1ySfSTfxPTbp6bkXo+8lr4ROQk54e7O2OVMV2lSzwJgOtewP/V/gDXKo0xTA
-	 bHcq0AeOss9HBbGitVPh6fdj+nZ9VFQY1o27rzsCyer3bCQWnvdVzaHSi5i/b+qFP8
-	 SvPbdUV/slwluqGLs3rR3fy0z2+ozT+fNGsLMt98=
+	b=2c602CSdYDK/uM1VyxyzkuTrmUUC3sDkGLeYr1FkHcThPyJ4YQFhBy7M8gyU1op6u
+	 LwiatNYa8hEB10Au+ScJvRWVC4EPZngrte5sODUC4z+7jUz+x7LbcDdbnMTE26yqfZ
+	 K8zdrSAkAYW+cbR6+gkSRCtNWgRKdv0FIRkgNsdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 160/263] drm/amd/display: Replace dm_execute_dmub_cmd with dc_wake_and_execute_dmub_cmd
-Date: Mon, 12 Aug 2024 18:02:41 +0200
-Message-ID: <20240812160152.672683136@linuxfoundation.org>
+Subject: [PATCH 6.10 161/263] spi: spi-fsl-lpspi: Fix scldiv calculation
+Date: Mon, 12 Aug 2024 18:02:42 +0200
+Message-ID: <20240812160152.710730011@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,42 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+From: Stefan Wahren <wahrenst@gmx.net>
 
-[ Upstream commit f2aaed194a54d78c307c44d1829c7e1ba67e9ba5 ]
+[ Upstream commit 730bbfaf7d4890bd99e637db7767dc68cfeb24e7 ]
 
-In the commit c2cec7a872b6 ("drm/amd/display: Wake DMCUB before sending
-a command for replay feature"), replaced dm_execute_dmub_cmd with
-dc_wake_and_execute_dmub_cmd in multiple areas, but due to merge issues
-the replacement of this function in the dmub_replay_copy_settings was
-missed. This commit replaces the old dm_execute_dmub_cmd with
-dc_wake_and_execute_dmub_cmd.
+The effective SPI clock frequency should never exceed speed_hz
+otherwise this might result in undefined behavior of the SPI device.
 
-Fixes: 3601a35a2e9d ("drm/amd/display: Wake DMCUB before sending a command for replay feature")
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6cc213b9aa34bc3213e20f9256345c5cc1495b0b)
+Currently the scldiv calculation could violate this constraint.
+For the example parameters perclk_rate = 24 MHz and speed_hz = 7 MHz,
+the function fsl_lpspi_set_bitrate will determine perscale = 0 and
+scldiv = 1, which is a effective SPI clock of 8 MHz.
+
+So fix this by rounding up the quotient of perclk_rate and speed_hz.
+While this never change within the loop, we can pull this out.
+
+Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
+Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
+Link: https://patch.msgid.link/20240804113611.83613-1-wahrenst@gmx.net
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/spi/spi-fsl-lpspi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
-index f820647443d16..09cf54586fd5d 100644
---- a/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
-@@ -209,8 +209,7 @@ static bool dmub_replay_copy_settings(struct dmub_replay *dmub,
- 	else
- 		copy_settings_data->flags.bitfields.force_wakeup_by_tps3 = 0;
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index aa5ed254be46c..f2d7eedd324b7 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -296,7 +296,7 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
+ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ {
+ 	struct lpspi_config config = fsl_lpspi->config;
+-	unsigned int perclk_rate, scldiv;
++	unsigned int perclk_rate, scldiv, div;
+ 	u8 prescale;
  
--
--	dm_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
-+	dc_wake_and_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
+ 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
+@@ -313,8 +313,10 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ 		return -EINVAL;
+ 	}
  
- 	return true;
- }
++	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
++
+ 	for (prescale = 0; prescale < 8; prescale++) {
+-		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
++		scldiv = div / (1 << prescale) - 2;
+ 		if (scldiv < 256) {
+ 			fsl_lpspi->config.prescale = prescale;
+ 			break;
 -- 
 2.43.0
 
