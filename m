@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA4187845;
-	Mon, 12 Aug 2024 16:33:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D768E15C127;
+	Mon, 12 Aug 2024 16:33:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480397; cv=none; b=Mb6Uj2xtxqJQ4FdBnLYumMWcG/HzPp1PuJBhq6PWOjeu6ySkFn52YZcku381Xj4BvdHNlcAzCWtxcPCVJHhaaiOXnvgl4GRV9NlWtWMmUtKN3Oy7Uoig5G2hLWb+8sSdBKmROFh8n/nXWRcvomY1yRHKTTDzfMz91UqX0tF7R9Q=
+	t=1723480400; cv=none; b=bOxjchSN68LclY/fFJiQr6enUuXGynWL5Xb0uH3cGBxvPT/9FAdPt+Twt5lSIUWSV1w1QeGLg1vm+kmTaP4p9RNb/D8rKelBQFL0CGyeursVLrK2EkQDJGhwUJFNsFx4N9dmLtDXR3NX+FXXEqzAnVp3xG0zSiUgehR+Qc3n2mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480397; c=relaxed/simple;
-	bh=7cknwIYouWmv1MkN7AJuHxvzawNT0+rYqy6gi44ZhDc=;
+	s=arc-20240116; t=1723480400; c=relaxed/simple;
+	bh=HxGeVvGiYPfgzIPeX2MMMmz/uS9up5I3dCP0XU6EZhw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhHOPpn7voyOkduvlpUN2dBqeJfOlVGmT+oPYEmEJbV4beM1OqorbgHp+EU6cK7rOWHf6hvuC/Pobav6uPzrBiaOlPjd9ecDdzk9BTDrLtJzLgKrMEJwBracwhEgjJSNk8+NcosDlAu4KSlOhmCfVeCHpx75OFIWgEjxmhGGbAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uYGDkrHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=falC9FCrJaehT01wQcv/G/QPbTLI9WxUKth5NYMOw79SAz2daE6cxGr2B9rMwzGFfqNLhsmqjjaBVyFjhBsSrCpyrVTc9EDFmApHLtc2ZVo0y7qFz9e6bsm4I7SBYUvMIcUEbehpRzKGHNLCe8vfaY7yRjsGui0CbaDeE251r8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=18Hxi7Jj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uYGDkrHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2726FC32782;
-	Mon, 12 Aug 2024 16:33:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="18Hxi7Jj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C6C6C4AF0F;
+	Mon, 12 Aug 2024 16:33:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480397;
-	bh=7cknwIYouWmv1MkN7AJuHxvzawNT0+rYqy6gi44ZhDc=;
+	s=korg; t=1723480400;
+	bh=HxGeVvGiYPfgzIPeX2MMMmz/uS9up5I3dCP0XU6EZhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uYGDkrHAxjneN5scIzkQ90Q9VbJSRIZ9RUHgjgttoowWYUCLaz/5mwI5GNyf11gJ+
-	 7LX9FYxNoZgHvKx0CbOiSWYyCAwTwLiSLWk34mhnrvZ4U3dKjl3pdZzexVQ8O9O8Pm
-	 gbnio5ERMr+3ug5RSSLv7BooINoQy8/nuFHA9vbQ=
+	b=18Hxi7Jjr4lYBRczka/PNRK2dP8KK/oGGVnyrM8T2dF8BP37AWuU+F6UvPY0ryrjT
+	 7rwy0FdWe0fkd68x1kiBRSqlB/qB3f8fpmaf/5kBAvH9qNas8GLmt1Z/I1tu6I6Kw3
+	 n0LPdaM3escKDOx8bueTpWhiaNcP9ulQG+KyWMbY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+78eccfb8b3c9a85fc6c5@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 182/263] ALSA: line6: Fix racy access to midibuf
-Date: Mon, 12 Aug 2024 18:03:03 +0200
-Message-ID: <20240812160153.514413303@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 153/263] i2c: qcom-geni: Add missing clk_disable_unprepare in geni_i2c_runtime_resume
+Date: Mon, 12 Aug 2024 18:02:34 +0200
+Message-ID: <20240812160152.403482895@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,60 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 15b7a03205b31bc5623378c190d22b7ff60026f1 upstream.
+[ Upstream commit b93d16bee557302d4e588375ececd833cc048acc ]
 
-There can be concurrent accesses to line6 midibuf from both the URB
-completion callback and the rawmidi API access.  This could be a cause
-of KMSAN warning triggered by syzkaller below (so put as reported-by
-here).
+Add the missing clk_disable_unprepare() before return in
+geni_i2c_runtime_resume().
 
-This patch protects the midibuf call of the former code path with a
-spinlock for avoiding the possible races.
-
-Reported-by: syzbot+78eccfb8b3c9a85fc6c5@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/00000000000000949c061df288c5@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240805130129.10872-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 14d02fbadb5d ("i2c: qcom-geni: add desc struct to prepare support for I2C Master Hub variant")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/line6/driver.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/i2c/busses/i2c-qcom-geni.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/usb/line6/driver.c
-+++ b/sound/usb/line6/driver.c
-@@ -286,12 +286,14 @@ static void line6_data_received(struct u
- {
- 	struct usb_line6 *line6 = (struct usb_line6 *)urb->context;
- 	struct midi_buffer *mb = &line6->line6midi->midibuf_in;
-+	unsigned long flags;
- 	int done;
+diff --git a/drivers/i2c/busses/i2c-qcom-geni.c b/drivers/i2c/busses/i2c-qcom-geni.c
+index 0a8b95ce35f79..78f43648e9f3a 100644
+--- a/drivers/i2c/busses/i2c-qcom-geni.c
++++ b/drivers/i2c/busses/i2c-qcom-geni.c
+@@ -990,8 +990,10 @@ static int __maybe_unused geni_i2c_runtime_resume(struct device *dev)
+ 		return ret;
  
- 	if (urb->status == -ESHUTDOWN)
- 		return;
+ 	ret = geni_se_resources_on(&gi2c->se);
+-	if (ret)
++	if (ret) {
++		clk_disable_unprepare(gi2c->core_clk);
+ 		return ret;
++	}
  
- 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
-+		spin_lock_irqsave(&line6->line6midi->lock, flags);
- 		done =
- 			line6_midibuf_write(mb, urb->transfer_buffer, urb->actual_length);
- 
-@@ -300,12 +302,15 @@ static void line6_data_received(struct u
- 			dev_dbg(line6->ifcdev, "%d %d buffer overflow - message skipped\n",
- 				done, urb->actual_length);
- 		}
-+		spin_unlock_irqrestore(&line6->line6midi->lock, flags);
- 
- 		for (;;) {
-+			spin_lock_irqsave(&line6->line6midi->lock, flags);
- 			done =
- 				line6_midibuf_read(mb, line6->buffer_message,
- 						   LINE6_MIDI_MESSAGE_MAXLEN,
- 						   LINE6_MIDIBUF_READ_RX);
-+			spin_unlock_irqrestore(&line6->line6midi->lock, flags);
- 
- 			if (done <= 0)
- 				break;
+ 	enable_irq(gi2c->irq);
+ 	gi2c->suspended = 0;
+-- 
+2.43.0
+
 
 
