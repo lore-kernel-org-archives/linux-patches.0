@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FCE178CE4;
-	Mon, 12 Aug 2024 16:15:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FE8183CB8;
+	Mon, 12 Aug 2024 16:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479340; cv=none; b=ag5mPd1upveVUOzDWEOxSO42IMhGc4sjHQc/65B34TTE+HVf3v5nIsZGO7H7PGHPlRaQhgWp6zdCHc9juU6ONwzuGwa7Dw/0HiI1a5zNnR5IG+wQmkByJcEJdck8UwFvMEQxCL0JEG/jaxJOWCEVxLIdBwnjsb9nPjD/HgmWhfk=
+	t=1723479344; cv=none; b=pquGGKQyomi8PmFu9TXA8zbDboF5+tzU9aBKF5207QqwydTA2sw6YzSA5M7x3HzeAwMRka4nge5t634GmVNwkqyv/pPcPh34dl4WNkNwsP833Eyjt5XuGqKUDr89cTTN00hFw2eCephRrtrPSWZXLu+MBimEBIqQH8jbjpYS1WQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479340; c=relaxed/simple;
-	bh=QBeoLbIJB1GYZ8wfJfnmyL6LA5UoL4UXdOPkcivLSuo=;
+	s=arc-20240116; t=1723479344; c=relaxed/simple;
+	bh=UGIvxuWtt1Se2uNtA/J2V4zvZc5c0VdJL93DI6NfFes=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kMqaX/tay2WefV1/chTeJpSVp9+U8dqcd2RKTDNAO/qzLalBcaUPWoCqZG0yUwirj49EyXWnt6O/ots8zGRQeuaG+PlJIktnNR2fGznqGsnuZr60jjVdTYaJSNNm3cdCvJ4tKrScilmCKd600Yb7gqCrZZB6emFC3ELTjtM/vlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6t7dRoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GCdCqdEyc86zo0l/LDxcij7M0V6UUPNqvc7Pix9G8FZ2FnSJ5OI47CIaomFb+g8GVxMRd+MQrJaSBaRG4fl7m500I1BUH+rhby5ojGk6C4KMWtIo+FNNsqxIXEA01XIPVPsYZJ9Wn4gGsSfrrO64ng9fEvrLbJTI4hdsid3P0w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmvgFjO5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6t7dRoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52418C4AF0D;
-	Mon, 12 Aug 2024 16:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmvgFjO5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE49C32782;
+	Mon, 12 Aug 2024 16:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479340;
-	bh=QBeoLbIJB1GYZ8wfJfnmyL6LA5UoL4UXdOPkcivLSuo=;
+	s=korg; t=1723479344;
+	bh=UGIvxuWtt1Se2uNtA/J2V4zvZc5c0VdJL93DI6NfFes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j6t7dRoMfovu1S/Ikh0E/a3WAICupdkMQT92vsDzfTLzD9fG8RjBVdgbNM3Ce5iht
-	 yman6kMnxXJvqwR6T7vB8MxATeBWAtxrK4u07vtedq+uGcHX+PDxA2sH8IU6+q3wZT
-	 VQHMZ+obbb8l0njZ0EVdpFna6/I6KWjQJVeKQHCQ=
+	b=tmvgFjO5E/Q6UchKbj9I9siiXwe+FMSP2kd/S40ylJp5eKGlBvb6grlx0vVPvmZOW
+	 sVANPlp9FXAoRuzT6kx4JYETwDoSwlbu5u1ZrMcC1d+zLyh+ZnVKtW3M/+YJ/Y1txF
+	 cIuruMcG1tv748fOXPc/yJpx2ACrwVEyKShHQHSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Zhang <Jesse.Zhang@amd.com>,
-	Tim Huang <Tim.Huang@amd.com>,
+	Victor Skvortsov <victor.skvortsov@amd.com>,
+	Zhigang Luo <zhigang.luo@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 055/189] drm/admgpu: fix dereferencing null pointer context
-Date: Mon, 12 Aug 2024 18:01:51 +0200
-Message-ID: <20240812160134.263720009@linuxfoundation.org>
+Subject: [PATCH 6.6 056/189] drm/amdgpu: Add lock around VF RLCG interface
+Date: Mon, 12 Aug 2024 18:01:52 +0200
+Message-ID: <20240812160134.301682814@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,35 +52,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jesse Zhang <jesse.zhang@amd.com>
+From: Victor Skvortsov <victor.skvortsov@amd.com>
 
-[ Upstream commit 030ffd4d43b433bc6671d9ec34fc12c59220b95d ]
+[ Upstream commit e864180ee49b4d30e640fd1e1d852b86411420c9 ]
 
-When user space sets an invalid ta type, the pointer context will be empty.
-So it need to check the pointer context before using it
+flush_gpu_tlb may be called from another thread while
+device_gpu_recover is running.
 
-Signed-off-by: Jesse Zhang <Jesse.Zhang@amd.com>
-Suggested-by: Tim Huang <Tim.Huang@amd.com>
-Reviewed-by: Tim Huang <Tim.Huang@amd.com>
+Both of these threads access registers through the VF
+RLCG interface during VF Full Access. Add a lock around this interface
+to prevent race conditions between these threads.
+
+Signed-off-by: Victor Skvortsov <victor.skvortsov@amd.com>
+Reviewed-by: Zhigang Luo <zhigang.luo@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 1 +
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   | 6 ++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   | 2 ++
+ 3 files changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-index ca5c86e5f7cd6..8e8afbd237bcd 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-@@ -334,7 +334,7 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index ea1bce13db941..eb663eb811563 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3561,6 +3561,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
+ 	mutex_init(&adev->grbm_idx_mutex);
+ 	mutex_init(&adev->mn_lock);
+ 	mutex_init(&adev->virt.vf_errors.lock);
++	mutex_init(&adev->virt.rlcg_reg_lock);
+ 	hash_init(adev->mn_hash);
+ 	mutex_init(&adev->psp.mutex);
+ 	mutex_init(&adev->notifier_lock);
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+index 96857ae7fb5bc..ff4f52e07cc0d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
+@@ -1003,6 +1003,9 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
+ 	scratch_reg1 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg1;
+ 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
+ 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
++
++	mutex_lock(&adev->virt.rlcg_reg_lock);
++
+ 	if (reg_access_ctrl->spare_int)
+ 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
  
- 	set_ta_context_funcs(psp, ta_type, &context);
+@@ -1058,6 +1061,9 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
+ 	}
  
--	if (!context->initialized) {
-+	if (!context || !context->initialized) {
- 		dev_err(adev->dev, "TA is not initialized\n");
- 		ret = -EINVAL;
- 		goto err_free_shared_buf;
+ 	ret = readl(scratch_reg0);
++
++	mutex_unlock(&adev->virt.rlcg_reg_lock);
++
+ 	return ret;
+ }
+ 
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+index fabb83e9d9aec..23b6efa9d25df 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+@@ -263,6 +263,8 @@ struct amdgpu_virt {
+ 
+ 	/* the ucode id to signal the autoload */
+ 	uint32_t autoload_ucode_id;
++
++	struct mutex rlcg_reg_lock;
+ };
+ 
+ struct amdgpu_video_codec_info;
 -- 
 2.43.0
 
