@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02815183CD9;
-	Mon, 12 Aug 2024 16:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1141862B4;
+	Mon, 12 Aug 2024 16:10:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479036; cv=none; b=f7+o+7Tb0uDzH0YGuzR+t+LEzQRRK4CT7N6dMcEWS2pLBeMkKHd4lY9l5W8Y6rtLTHO6bwT4IuMX0HEr8ypThRG3yJ4RaTtCRs6EiFUT9a4t3SB43tf/ak6jb70REfAsS2d5Kk/9ujGADqlWD8jGnq3KK0D6Frj8bgvKBQX8Jf8=
+	t=1723479039; cv=none; b=ZZghgFIvQTUWZIHqyS3BQDHH24XZnwYZUz1LU62NUgRbz/ZM35G5H7Gke2R4NiGX6mb/uDfTqopk0XTM8w7n2KuVoZ597o1Da9hnVRBkHLZJK52pBGRrh32Kyt8V1SOIY6NizAHUhrL5+c5Vd5t/FfriKDnrXTduelybrBI6pKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479036; c=relaxed/simple;
-	bh=FZn9j9c8EIh678NIaxVzMCrc47jrk5EoO5IshU41YF4=;
+	s=arc-20240116; t=1723479039; c=relaxed/simple;
+	bh=Q5PGwCH3LZNhj//MlzvuTT9abCL52ofYuRlrh5IXYCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbO6WaolfOKqQr6gxkoxc5vI96Z3/tYvCbS5sXeS8QKXDG+gAF0zDzqSKcwYyyYsAuXgXuVVis2XZGLfNMwzCRMibapTHwzufl6Mla+O2QfybEFuG95BqXIi6AwaE1Ilfe8eOf4udoJhpWsu2cTM51aU1HS1UcFlo7aGsaOcmjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KOYEvacu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oq/gFI4MBac4Fs6gK8UX5WjKeXdf8wuizWYjgKmS+HNxlo6X3x/A5WbUBK4AutadAwCuoXHMtOwNV5mJecX0Bx/A5ml4wGGKeBwvOgLnL8whmtpRpnaEZCQEBEqm5UcGdbIU+0C4p9jBQHaxByNNI/ciyvFq9jAs31JvAnwbC6I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tDU0on64; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KOYEvacu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B27AC32782;
-	Mon, 12 Aug 2024 16:10:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tDU0on64"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A15DC32782;
+	Mon, 12 Aug 2024 16:10:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479035;
-	bh=FZn9j9c8EIh678NIaxVzMCrc47jrk5EoO5IshU41YF4=;
+	s=korg; t=1723479038;
+	bh=Q5PGwCH3LZNhj//MlzvuTT9abCL52ofYuRlrh5IXYCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOYEvacuXsOjCCbixs/2Lt0ALk4/MxwTzE5GLkX0X9VeQdMFhavcguRYtMPRgZWzn
-	 FZN6RgkSW38ZSQGEi2qO0LVhnwJ3ZfwNjm74RDT5zCv1428mZ+cb2Lr2F4S3VjUAme
-	 RpO8/w3bVJ57TYeg7U1ZQBHr7bhlUf8bOZjA4W48=
+	b=tDU0on64IXVOzBB/Nwm9vM25BA8Qru2DDHqT2kFkd8Wljq+UPB7KeUE8GNzr6a0Ij
+	 1Fm0wyuqzuAGtu0ewdCvyYPrCU/+h6LgnD26qC6bbtx4O7xZzLJLrHaJiGtADy+KAO
+	 x9YidK6bJ828b3A/JOFaJ1Rz0X6t+dLW2rx5GbQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com,
-	Marco Elver <elver@google.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marcello Sylvester Bauer <sylv@sylv.io>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 112/150] kcov: properly check for softirq context
-Date: Mon, 12 Aug 2024 18:03:13 +0200
-Message-ID: <20240812160129.483576570@linuxfoundation.org>
+	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 113/150] irqchip/xilinx: Fix shift out of bounds
+Date: Mon, 12 Aug 2024 18:03:14 +0200
+Message-ID: <20240812160129.522703557@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -57,96 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@gmail.com>
+From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
 
-commit 7d4df2dad312f270d62fecb0e5c8b086c6d7dcfc upstream.
+commit d73f0f49daa84176c3beee1606e73c7ffb6af8b2 upstream.
 
-When collecting coverage from softirqs, KCOV uses in_serving_softirq() to
-check whether the code is running in the softirq context.  Unfortunately,
-in_serving_softirq() is > 0 even when the code is running in the hardirq
-or NMI context for hardirqs and NMIs that happened during a softirq.
+The device tree property 'xlnx,kind-of-intr' is sanity checked that the
+bitmask contains only set bits which are in the range of the number of
+interrupts supported by the controller.
 
-As a result, if a softirq handler contains a remote coverage collection
-section and a hardirq with another remote coverage collection section
-happens during handling the softirq, KCOV incorrectly detects a nested
-softirq coverate collection section and prints a WARNING, as reported by
-syzbot.
+The check is done by shifting the mask right by the number of supported
+interrupts and checking the result for zero.
 
-This issue was exposed by commit a7f3813e589f ("usb: gadget: dummy_hcd:
-Switch to hrtimer transfer scheduler"), which switched dummy_hcd to using
-hrtimer and made the timer's callback be executed in the hardirq context.
+The data type of the mask is u32 and the number of supported interrupts is
+up to 32. In case of 32 interrupts the shift is out of bounds, resulting in
+a mismatch warning. The out of bounds condition is also reported by UBSAN:
 
-Change the related checks in KCOV to account for this behavior of
-in_serving_softirq() and make KCOV ignore remote coverage collection
-sections in the hardirq and NMI contexts.
+  UBSAN: shift-out-of-bounds in irq-xilinx-intc.c:332:22
+  shift exponent 32 is too large for 32-bit type 'unsigned int'
 
-This prevents the WARNING printed by syzbot but does not fix the inability
-of KCOV to collect coverage from the __usb_hcd_giveback_urb when dummy_hcd
-is in use (caused by a7f3813e589f); a separate patch is required for that.
+Fix it by promoting the mask to u64 for the test.
 
-Link: https://lkml.kernel.org/r/20240729022158.92059-1-andrey.konovalov@linux.dev
-Fixes: 5ff3b30ab57d ("kcov: collect coverage from interrupts")
-Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2388cdaeb6b10f0c13ac
-Acked-by: Marco Elver <elver@google.com>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Aleksandr Nogikh <nogikh@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Marcello Sylvester Bauer <sylv@sylv.io>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d50466c90724 ("microblaze: intc: Refactor DT sanity check")
+Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/1723186944-3571957-1-git-send-email-radhey.shyam.pandey@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcov.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/irqchip/irq-xilinx-intc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -161,6 +161,15 @@ static void kcov_remote_area_put(struct
- 	kmsan_unpoison_memory(&area->list, sizeof(area->list));
- }
+--- a/drivers/irqchip/irq-xilinx-intc.c
++++ b/drivers/irqchip/irq-xilinx-intc.c
+@@ -189,7 +189,7 @@ static int __init xilinx_intc_of_init(st
+ 		irqc->intr_mask = 0;
+ 	}
  
-+/*
-+ * Unlike in_serving_softirq(), this function returns false when called during
-+ * a hardirq or an NMI that happened in the softirq context.
-+ */
-+static inline bool in_softirq_really(void)
-+{
-+	return in_serving_softirq() && !in_hardirq() && !in_nmi();
-+}
-+
- static notrace bool check_kcov_mode(enum kcov_mode needed_mode, struct task_struct *t)
- {
- 	unsigned int mode;
-@@ -170,7 +179,7 @@ static notrace bool check_kcov_mode(enum
- 	 * so we ignore code executed in interrupts, unless we are in a remote
- 	 * coverage collection section in a softirq.
- 	 */
--	if (!in_task() && !(in_serving_softirq() && t->kcov_softirq))
-+	if (!in_task() && !(in_softirq_really() && t->kcov_softirq))
- 		return false;
- 	mode = READ_ONCE(t->kcov_mode);
- 	/*
-@@ -847,7 +856,7 @@ void kcov_remote_start(u64 handle)
+-	if (irqc->intr_mask >> irqc->nr_irq)
++	if ((u64)irqc->intr_mask >> irqc->nr_irq)
+ 		pr_warn("irq-xilinx: mismatch in kind-of-intr param\n");
  
- 	if (WARN_ON(!kcov_check_handle(handle, true, true, true)))
- 		return;
--	if (!in_task() && !in_serving_softirq())
-+	if (!in_task() && !in_softirq_really())
- 		return;
- 
- 	local_lock_irqsave(&kcov_percpu_data.lock, flags);
-@@ -989,7 +998,7 @@ void kcov_remote_stop(void)
- 	int sequence;
- 	unsigned long flags;
- 
--	if (!in_task() && !in_serving_softirq())
-+	if (!in_task() && !in_softirq_really())
- 		return;
- 
- 	local_lock_irqsave(&kcov_percpu_data.lock, flags);
+ 	pr_info("irq-xilinx: %pOF: num_irq=%d, edge=0x%x\n",
 
 
