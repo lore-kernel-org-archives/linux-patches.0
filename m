@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20A3E1EA8D;
-	Mon, 12 Aug 2024 16:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9E31EA8D;
+	Mon, 12 Aug 2024 16:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479105; cv=none; b=dPTJ7PjXonuV8Cd70cLoRsfGmGUuGUItrcCQbHf+Ys4Zah9+mF1Ud4IdFxlrwqHvKD4lf/njFC/0xP4EXGKbBBPK+aVKVERDH6KeBrUHbtBUGQ5bBRWHgs4PibGUxq1os6n3XwwYKF+qskEk7H9R4yzM0CFPJwVpoe9+IVnZWBI=
+	t=1723479108; cv=none; b=IDneGfEEzny9P2cI8K5EpwYIrKg0Vau3VlPI3bEsCfaS/Fr3HWTamU1QeGiHEPvSNpZ2CMVdPcuMwgBUZLD0xvYcs0qf+irMnDDo1gvMYfTejJATloQi1MyDd0bDQQ0gBycmks36Sdaj0ia/EnB6GS2J3gcyJpnkOjtByMN+2Sc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479105; c=relaxed/simple;
-	bh=QGWrqx6QFrNp8KcWVq2lxqaGtKZxHk+tV+S2c4Y7N90=;
+	s=arc-20240116; t=1723479108; c=relaxed/simple;
+	bh=bJbzYe1bB5opsLnAhYNlNDWYJ8qp4ujrggO/ow+QwhM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UhC973jpsULcs2F1QhEx2QrlZ3tB5BzB4QB5OBEHT7nY+CHON0K5hxFReO29aZoUjQJLFtfSOyNlKg9cRW5WmcWfOnSJAI//MkEKaXIFXdPbwoXgZ2cJ7s/1lVPYtvvMr6AbyB8/GPGdMjq73uPJggU+qOBNwHJ9QaGCxKdCbsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZHEnGgC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CS0Cdx9BXVQVUIxNJw6spezrr0nLF1LLuIN+BjNUsE1SpiiijX/6juywgCqoRoQA7YTZDuZdJkfE4cVHnlfb+t6N5almQdi3yvp+sU8L2P2sk46VanOZnRDBQPAr9DMcOPqvxTNcmsCPWWi9dLO1IG7qKJpQ5lofeHhRLTpGuuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fka7ThaN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZHEnGgC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A63AC4AF09;
-	Mon, 12 Aug 2024 16:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fka7ThaN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E7CEC32782;
+	Mon, 12 Aug 2024 16:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479105;
-	bh=QGWrqx6QFrNp8KcWVq2lxqaGtKZxHk+tV+S2c4Y7N90=;
+	s=korg; t=1723479108;
+	bh=bJbzYe1bB5opsLnAhYNlNDWYJ8qp4ujrggO/ow+QwhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZHEnGgC0BGu0oaEYwQV5cZvpNR7HDTPhjvckx9GGPg4FXaS3f6ma0Cb2KuD4KtOVo
-	 vKJdu8q4LosH+dhio1Bcqg+U5h5kAR+BVgSVTxnq71P3bk0sBfimapR8iknUpgDm//
-	 2nUJvz49Qt3LZDHW8JH3w/ToK0rhR6YcxOGG9gAA=
+	b=fka7ThaNu2m+ped8XY29HJhQJPlU0yq+dSkD7QNcDhKTI/YJ+QWvIMe9cI8sVZ2kA
+	 XPdB4o46mYKHKDtOacMaEGlajtpBJO2Braj5uuBRNWaLP1h73DssfbzGJJbUSf3YAC
+	 e85+1jyTmFMoggeTzOB1EXnDqbkHMMaDQJdhaYoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Matthieu Baerts <matttbe@kernel.org>
-Subject: [PATCH 6.1 135/150] block: use the right type for stub rq_integrity_vec()
-Date: Mon, 12 Aug 2024 18:03:36 +0200
-Message-ID: <20240812160130.380106105@linuxfoundation.org>
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	George Zhang <George.zhang@amd.com>,
+	Ivan Lipski <ivlipski@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 136/150] Revert "drm/amd/display: Add NULL check for afb before dereferencing in amdgpu_dm_plane_handle_cursor_update"
+Date: Mon, 12 Aug 2024 18:03:37 +0200
+Message-ID: <20240812160130.417288426@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -50,31 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ivan Lipski <ivlipski@amd.com>
 
-commit 69b6517687a4b1fb250bd8c9c193a0a304c8ba17 upstream.
+commit 778e3979c5dc9cbdb5d1b92afed427de6bc483b4 upstream.
 
-For !CONFIG_BLK_DEV_INTEGRITY, rq_integrity_vec() wasn't updated
-properly. Fix it up.
+[WHY]
+This patch is a dupplicate implementation of 14bcf29b, which we
+are reverting due to a regression with kms_plane_cursor IGT tests.
 
-Fixes: cf546dd289e0 ("block: change rq_integrity_vec to respect the iterator")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Cc: Matthieu Baerts <matttbe@kernel.org>
+This reverts commit 38e6f715b02b572f74677eb2f29d3b4bc6f1ddff.
+
+Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Tested-by: George Zhang <George.zhang@amd.com>
+Signed-off-by: Ivan Lipski <ivlipski@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/blk-integrity.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
---- a/include/linux/blk-integrity.h
-+++ b/include/linux/blk-integrity.h
-@@ -175,7 +175,7 @@ static inline int blk_integrity_rq(struc
- 	return 0;
- }
- 
--static inline struct bio_vec *rq_integrity_vec(struct request *rq)
-+static inline struct bio_vec rq_integrity_vec(struct request *rq)
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -1225,22 +1225,14 @@ void handle_cursor_update(struct drm_pla
  {
- 	/* the optimizer will remove all calls to this function */
- 	return (struct bio_vec){ };
+ 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
+ 	struct amdgpu_framebuffer *afb = to_amdgpu_framebuffer(plane->state->fb);
+-	struct drm_crtc *crtc;
+-	struct dm_crtc_state *crtc_state;
+-	struct amdgpu_crtc *amdgpu_crtc;
+-	u64 address;
++	struct drm_crtc *crtc = afb ? plane->state->crtc : old_plane_state->crtc;
++	struct dm_crtc_state *crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
++	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
++	uint64_t address = afb ? afb->address : 0;
+ 	struct dc_cursor_position position = {0};
+ 	struct dc_cursor_attributes attributes;
+ 	int ret;
+ 
+-	if (!afb)
+-		return;
+-
+-	crtc = plane->state->crtc ? plane->state->crtc : old_plane_state->crtc;
+-	crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
+-	amdgpu_crtc = to_amdgpu_crtc(crtc);
+-	address = afb->address;
+-
+ 	if (!plane->state->fb && !old_plane_state->fb)
+ 		return;
+ 
 
 
