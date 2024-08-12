@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBE8134AC;
-	Mon, 12 Aug 2024 16:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23675187543;
+	Mon, 12 Aug 2024 16:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479865; cv=none; b=uaUQsSqZ7Bz1dlp6+7yXFTIZPZ4Qcc62ixMRKCXpXkwi4JukZxD7XA374NxS/FLkc6R/S0aPqvFDdaSw2sbORY7sCS6BprobvnoXH2/E5cJBeHeDB3oz1xYRS8hPU9WiMTQqt0Ypst9oT/AcqKbxJB6n51Xrwm32xQU9XeITKnE=
+	t=1723479868; cv=none; b=dW1NnUksFbtd3sgebU/SSHFE9pziXvlXXI0EYhIVe/Vl+UL1/eyfnmRagt6SQN1KFM2YrUvqMLVM+dsyQEqmAgFvlfzjXNYYSr1NHvQnIRCQ4a+9Lh7kggQi//U/19X0dFMrQIIIQnP2H5Ofz4weCMIYXZVPdGNARmA9iys41S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479865; c=relaxed/simple;
-	bh=guYaJVXY66/I16Bblk3qAQpVsiASZcdBDtpGhfbZjxY=;
+	s=arc-20240116; t=1723479868; c=relaxed/simple;
+	bh=FmW31XRPqfkdL6FapBq7rRMNNyqn2e4MGMaA8GkS5Fs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RcfWfazEDPO0qtm9n3HTC5CG+J47rz3slvUed3sxQnNE1OOz+2CAizMPUXkdKMmhhjnouErtVVS6f3w8MZ/EwiBgNljaZRMPMNQr8WQPta/Jeevx98O994z32iZtLl1xXaFkpoDsKWdZz0rBa9PY00zZdSb+qzcNiNCYaY1Rqk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNZ0oFAU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oI9JR75z/7j15jn/o1FxSTMDM+1KkF824WsVGdHdHC50ti86trjKrbATEGisCZQY73ueIF0L8IrRFO13IZyurfRzhbBsBw2RhrxZXtF2js1YS1MGNrJTJxqFTPliX7B1XhRCfnk/anJ1vwFTXJLUTEKE1HMLyfFv8hb5PZEU99A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rpNqA29I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNZ0oFAU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F7DC32782;
-	Mon, 12 Aug 2024 16:24:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rpNqA29I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87C1DC4AF11;
+	Mon, 12 Aug 2024 16:24:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479864;
-	bh=guYaJVXY66/I16Bblk3qAQpVsiASZcdBDtpGhfbZjxY=;
+	s=korg; t=1723479868;
+	bh=FmW31XRPqfkdL6FapBq7rRMNNyqn2e4MGMaA8GkS5Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nNZ0oFAUWJnQZ8GFW8SO5XK77ytmri4UT5RNBVM7RDcm4Fx4bpltfBLnvFz1j8OjN
-	 vpxl7ARvy9ifdYd93V9kO98R6f14HANFOBIghv/YpK/n9CuTs+jLQjl54GRYCdw8KZ
-	 cNnEQ4VTZhElJ4j7fICS0/hIYVke25gnicyYM7V8=
+	b=rpNqA29Ia4jg1ejYfj305dJe4pdR1+CLN0yf+ZuLeSBrPGiziGJ+XXGEgYn6hgfv4
+	 QHAWpUoLwkIwVYVlll4edTxK0GkdmzDY9fxmlj7MiUvvtErMpdC+S6Qs5ZW3au2gkJ
+	 m12zLycyARNnQWoPbGw3YxFkB7A3Ams1WXzjU2Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Tristram Ha <tristram.ha@microchip.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 025/263] net: linkwatch: use system_unbound_wq
-Date: Mon, 12 Aug 2024 18:00:26 +0200
-Message-ID: <20240812160147.504236665@linuxfoundation.org>
+Subject: [PATCH 6.10 026/263] net: dsa: microchip: Fix Wake-on-LAN check to not return an error
+Date: Mon, 12 Aug 2024 18:00:27 +0200
+Message-ID: <20240812160147.542228590@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,50 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tristram Ha <tristram.ha@microchip.com>
 
-[ Upstream commit 3e7917c0cdad835a5121520fc5686d954b7a61ab ]
+[ Upstream commit c7a19018bd557c24072b59088ad2684fd83ea3f4 ]
 
-linkwatch_event() grabs possibly very contended RTNL mutex.
+The wol variable in ksz_port_set_mac_address() is declared with random
+data, but the code in ksz_get_wol call may not be executed so the
+WAKE_MAGIC check may be invalid resulting in an error message when
+setting a MAC address after starting the DSA driver.
 
-system_wq is not suitable for such work.
-
-Inspired by many noisy syzbot reports.
-
-3 locks held by kworker/0:7/5266:
- #0: ffff888015480948 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3206 [inline]
- #0: ffff888015480948 ((wq_completion)events){+.+.}-{0:0}, at: process_scheduled_works+0x90a/0x1830 kernel/workqueue.c:3312
- #1: ffffc90003f6fd00 ((linkwatch_work).work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3207 [inline]
- , at: process_scheduled_works+0x945/0x1830 kernel/workqueue.c:3312
- #2: ffffffff8fa6f208 (rtnl_mutex){+.+.}-{3:3}, at: linkwatch_event+0xe/0x60 net/core/link_watch.c:276
-
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://patch.msgid.link/20240805085821.1616528-1-edumazet@google.com
+Fixes: 3b454b6390c3 ("net: dsa: microchip: ksz9477: Add Wake on Magic Packet support")
+Signed-off-by: Tristram Ha <tristram.ha@microchip.com>
+Reviewed-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20240805235200.24982-1-Tristram.Ha@microchip.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/link_watch.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/microchip/ksz_common.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/core/link_watch.c b/net/core/link_watch.c
-index 8ec35194bfcb8..ab150641142aa 100644
---- a/net/core/link_watch.c
-+++ b/net/core/link_watch.c
-@@ -148,9 +148,9 @@ static void linkwatch_schedule_work(int urgent)
- 	 * override the existing timer.
- 	 */
- 	if (test_bit(LW_URGENT, &linkwatch_flags))
--		mod_delayed_work(system_wq, &linkwatch_work, 0);
-+		mod_delayed_work(system_unbound_wq, &linkwatch_work, 0);
- 	else
--		schedule_delayed_work(&linkwatch_work, delay);
-+		queue_delayed_work(system_unbound_wq, &linkwatch_work, delay);
- }
+diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
+index baa1eeb9a1b04..077935cf5e381 100644
+--- a/drivers/net/dsa/microchip/ksz_common.c
++++ b/drivers/net/dsa/microchip/ksz_common.c
+@@ -3763,6 +3763,11 @@ static int ksz_port_set_mac_address(struct dsa_switch *ds, int port,
+ 		return -EBUSY;
+ 	}
  
- 
++	/* Need to initialize variable as the code to fill in settings may
++	 * not be executed.
++	 */
++	wol.wolopts = 0;
++
+ 	ksz_get_wol(ds, dp->index, &wol);
+ 	if (wol.wolopts & WAKE_MAGIC) {
+ 		dev_err(ds->dev,
 -- 
 2.43.0
 
