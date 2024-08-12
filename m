@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCA4183CA6;
-	Mon, 12 Aug 2024 16:22:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F9F183CA6;
+	Mon, 12 Aug 2024 16:22:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479761; cv=none; b=oNoxhai++sk8D10wkHxPNRixMQruKrr0UdzeSbqsBoB8XYP9a0xBDiV9weKLdmnGP33Lb2AS1exXndajeJROp14jy/ek46pkIlryat4VbpJTB/8jPGZQ3lZdvIwVnxkEyc5IPntau2xmMmd3mpFvdAjzmRuxHz5i5aKfqBuIKXI=
+	t=1723479764; cv=none; b=jj0USgvmrcB+Qfu1DJDS9KHBHbmMIAaYZPuUr3RlLZVmdlo422ApYJxVpcJyImN+nLfqGIn48GNmhMe45AuENf5x+nbv+dEQq05jmZX4mUTI7ZMf200HUpFYY1wY44KU8BV1OrvCVuTjNJcT4XcOV+eQPbXqef4dF7ObfP/hFmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479761; c=relaxed/simple;
-	bh=YHefbteDGPVIv6hUya16n4tk96hE5BkSehjwMalBSKg=;
+	s=arc-20240116; t=1723479764; c=relaxed/simple;
+	bh=KUKzSs/oP1WC99t/t8DoP+lD5DPKotR1MaV63SLPe8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tH811rZsaPIKCBteduLCCe5SFMkYdQ4rCnIbe5KtuLB3CG7I9oWIYm4GAIoVeDm7qsi3IHfzUiK50779s2Lv93xEmMzDLr0g22zRODWDMPW9TfH0VExELyaegeWN1ba0sN1j62bQV8SPMAii5OPI+cPcKa8vLBTtQ5sS+RF86WA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ggp/xwQz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EWDoZ5JSfhoD8nfB1AATOLlMnQvKEundr4F3lgko0Bqi8db6jC9s44uoS1atoZfovB31XbHeXTCYw+UVBdvYtQpdbMKruCRaVcng6q5EUvcSutB223w67qLVAbyGz1wnWdadxqlxoK3j4timVtEK1yRlk8Spd4fMVXDMRdVpnXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xITZlxKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ggp/xwQz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86366C32782;
-	Mon, 12 Aug 2024 16:22:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xITZlxKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9859C32782;
+	Mon, 12 Aug 2024 16:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479760;
-	bh=YHefbteDGPVIv6hUya16n4tk96hE5BkSehjwMalBSKg=;
+	s=korg; t=1723479764;
+	bh=KUKzSs/oP1WC99t/t8DoP+lD5DPKotR1MaV63SLPe8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ggp/xwQzyhqzo+N/kuw0Yn6dxt/T3/7HqGcLXxi5sOcZy/cVS7fZWQDe/jtp3zuPc
-	 EgylrSvAFFJF91Ocen4RdA4U0Fz+hguPEDcjawtoLbG0kgwsDaFnH3spxrnNdMnTFB
-	 fkbuGELvaQ6Op81kjUv3FRB48mlxZmE/ooqVEXsk=
+	b=xITZlxKKxR5cjBMmzQi9TulQuB83vZOP9gD/tip1QXoIGwFsrBtb7ZHwxYIsT2Bn2
+	 KzsVQQebPVt9hsknvvnpwEzVXGq92prKJsFmn8JZ0vgqDD4R43vfYKO1USEDymDZ0T
+	 8rxqRY7MuxDy/RUA77zNB64TJqKbte8uR8juTQQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <martineau@kernel.org>,
 	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 183/189] mptcp: pm: reduce indentation blocks
-Date: Mon, 12 Aug 2024 18:03:59 +0200
-Message-ID: <20240812160139.193183027@linuxfoundation.org>
+Subject: [PATCH 6.6 184/189] mptcp: pm: dont try to create sf if alloc failed
+Date: Mon, 12 Aug 2024 18:04:00 +0200
+Message-ID: <20240812160139.232387304@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -54,53 +54,66 @@ Content-Transfer-Encoding: 8bit
 
 From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit c95eb32ced823a00be62202b43966b07b2f20b7f upstream.
+commit cd7c957f936f8cb80d03e5152f4013aae65bd986 upstream.
 
-That will simplify the following commits.
+It sounds better to avoid wasting cycles and / or put extreme memory
+pressure on the system by trying to create new subflows if it was not
+possible to add a new item in the announce list.
 
-No functional changes intended.
+While at it, a warning is now printed if the entry was already in the
+list as it should not happen with the in-kernel path-manager. With this
+PM, mptcp_pm_alloc_anno_list() should only fail in case of memory
+pressure.
 
+Fixes: b6c08380860b ("mptcp: remove addr and subflow in PM netlink")
+Cc: stable@vger.kernel.org
 Suggested-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-3-c8a9b036493b@kernel.org
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-4-c8a9b036493b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: cd7c957f936f ("mptcp: pm: don't try to create sf if alloc failed")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ net/mptcp/pm_netlink.c |   10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -575,16 +575,19 @@ static void mptcp_pm_create_subflow_or_s
+@@ -353,7 +353,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
+ 	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
+ 
+ 	if (add_entry) {
+-		if (mptcp_pm_is_kernel(msk))
++		if (WARN_ON_ONCE(mptcp_pm_is_kernel(msk)))
+ 			return false;
+ 
+ 		sk_reset_timer(sk, &add_entry->add_timer,
+@@ -563,8 +563,6 @@ static void mptcp_pm_create_subflow_or_s
+ 
+ 	/* check first for announce */
+ 	if (msk->pm.add_addr_signaled < add_addr_signal_max) {
+-		local = select_signal_address(pernet, msk);
+-
+ 		/* due to racing events on both ends we can reach here while
+ 		 * previous add address is still running: if we invoke now
+ 		 * mptcp_pm_announce_addr(), that will fail and the
+@@ -575,11 +573,15 @@ static void mptcp_pm_create_subflow_or_s
  		if (msk->pm.addr_signal & BIT(MPTCP_ADD_ADDR_SIGNAL))
  			return;
  
--		if (local) {
--			if (mptcp_pm_alloc_anno_list(msk, &local->addr)) {
--				__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
--				msk->pm.add_addr_signaled++;
--				mptcp_pm_announce_addr(msk, &local->addr, false);
--				mptcp_pm_nl_addr_send_ack(msk);
--			}
--		}
-+		if (!local)
-+			goto subflow;
-+
-+		if (!mptcp_pm_alloc_anno_list(msk, &local->addr))
-+			goto subflow;
-+
-+		__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
-+		msk->pm.add_addr_signaled++;
-+		mptcp_pm_announce_addr(msk, &local->addr, false);
-+		mptcp_pm_nl_addr_send_ack(msk);
- 	}
++		local = select_signal_address(pernet, msk);
+ 		if (!local)
+ 			goto subflow;
  
-+subflow:
- 	/* check if should create a new subflow */
- 	while (msk->pm.local_addr_used < local_addr_max &&
- 	       msk->pm.subflows < subflows_max) {
++		/* If the alloc fails, we are on memory pressure, not worth
++		 * continuing, and trying to create subflows.
++		 */
+ 		if (!mptcp_pm_alloc_anno_list(msk, &local->addr))
+-			goto subflow;
++			return;
+ 
+ 		__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
+ 		msk->pm.add_addr_signaled++;
 
 
