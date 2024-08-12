@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B629183CA6;
-	Mon, 12 Aug 2024 16:18:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6CC6183CA6;
+	Mon, 12 Aug 2024 16:18:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479503; cv=none; b=e7VQ81OLKkXq6kgXwsYwOa2t5WHi0BmXpIEntfpEFpPM+WEY4JuLYiwvVAFgsCgkcBc3N/okcV9qa+2YGgrJPjO1Xk3qbUAdT2t0zcI2QawR0ANCCUiiKJ7INbu+YWCEnwlcZwzb3gTTLBXtYWkgG5fKeLmCkMboa3drg/oeupI=
+	t=1723479506; cv=none; b=NsdwInlZ9y5Ehum7tdIlx9+CHRF149aAaYtszcmXofU4A8P9wD38L+mSKnamlUYPyT5mkD4VoDlaPwqqt+QtjGLI6QiGVVrzqXGErVWCq1YsrbMrE+gUApkoLZKIz/5rcLJdusxGg2HM1wn9CMfUHG72ACWsrZTZFTnrx0TMmyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479503; c=relaxed/simple;
-	bh=RKULDCp81j22hwOPkT8O69Q2JF7x9zxxkyvebAndiIM=;
+	s=arc-20240116; t=1723479506; c=relaxed/simple;
+	bh=g3HhUCC2Xw2fVJMDpO6VQpmdyu1sHTzmM5U8DiSGpmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VoEDZJih3zOeWPzchvgUYIdFwaEIRt8O6XXBvXLfmmbjZZK9+yeJMF/C7q5zgoSWll3W6OQuwgYdlcY+JFBcun5YDWRrrKcX5znr5FBbF/xErdO20x39EFWnWvMxor97SwM74Y39sZmBrNa6qeDVDtOpTqcuc9EwXkndlv0jRuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SYsrE821; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b1cvIBGCneFixkGD7CFniehXuVOuMntRLwOxfo99wCmy8zq94UYKKhxHJ/5x5AdCt4Zvt3VNTH4J7xIN0DsUg6CpSrWaBO8aO6cSgQNGCTyjBNPRj6Rz+TIf/sqlLa51vqMSOnQlwY3pbY/3Ds3lSEdJGO96rAmLllrVpGoPABY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RUgDviq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SYsrE821"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D23D5C32782;
-	Mon, 12 Aug 2024 16:18:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RUgDviq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13476C32782;
+	Mon, 12 Aug 2024 16:18:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479503;
-	bh=RKULDCp81j22hwOPkT8O69Q2JF7x9zxxkyvebAndiIM=;
+	s=korg; t=1723479506;
+	bh=g3HhUCC2Xw2fVJMDpO6VQpmdyu1sHTzmM5U8DiSGpmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SYsrE821/2wvtQ1YWz9q8ngKnHPeC4zGEZFbLJwmi3mQgh7CPD+KRGxIG/+Cfoz1y
-	 lP7r+pHUvb6f69D4qXNqESFskEMG6FHZXEzucS0Kv6IxK26lq0MR4kaI2cRE2KKMux
-	 Ppp14jQzxGNEHn8ruTOBhT8TyoFYxL9ZhAl2sTf8=
+	b=RUgDviq3394II7bMihjUNGnx2s9eHxpiU6cWErl54TWqEMzVfXfDxj0vIWFqHJ08f
+	 u8/SiA4pg5U8JB89EFLhbRcLRoHWUNbRTbnIHVlm0+q+tEWBbBNTDt6M9ZDpWOMtS1
+	 Te1BLodcQBNXMTuT4DZH54Y7Kx++EzLM/MWAd7K4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Jonathan Cavitt <Jonathan.cavitt@intel.com>
-Subject: [PATCH 6.6 108/189] drm/i915/gem: Fix Virtual Memory mapping boundaries calculation
-Date: Mon, 12 Aug 2024 18:02:44 +0200
-Message-ID: <20240812160136.297240691@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rodrigo Siqueira <rodrigo.siqueira@amd.com>,
+	Fangzhi Zuo <Jerry.Zuo@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.6 109/189] drm/amd/display: Skip Recompute DSC Params if no Stream on Link
+Date: Mon, 12 Aug 2024 18:02:45 +0200
+Message-ID: <20240812160136.337453279@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -55,126 +54,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Fangzhi Zuo <Jerry.Zuo@amd.com>
 
-commit 8bdd9ef7e9b1b2a73e394712b72b22055e0e26c3 upstream.
+commit 50e376f1fe3bf571d0645ddf48ad37eb58323919 upstream.
 
-Calculating the size of the mapped area as the lesser value
-between the requested size and the actual size does not consider
-the partial mapping offset. This can cause page fault access.
+[why]
+Encounter NULL pointer dereference uner mst + dsc setup.
 
-Fix the calculation of the starting and ending addresses, the
-total size is now deduced from the difference between the end and
-start addresses.
+BUG: kernel NULL pointer dereference, address: 0000000000000008
+    PGD 0 P4D 0
+    Oops: 0000 [#1] PREEMPT SMP NOPTI
+    CPU: 4 PID: 917 Comm: sway Not tainted 6.3.9-arch1-1 #1 124dc55df4f5272ccb409f39ef4872fc2b3376a2
+    Hardware name: LENOVO 20NKS01Y00/20NKS01Y00, BIOS R12ET61W(1.31 ) 07/28/2022
+    RIP: 0010:drm_dp_atomic_find_time_slots+0x5e/0x260 [drm_display_helper]
+    Code: 01 00 00 48 8b 85 60 05 00 00 48 63 80 88 00 00 00 3b 43 28 0f 8d 2e 01 00 00 48 8b 53 30 48 8d 04 80 48 8d 04 c2 48 8b 40 18 <48> 8>
+    RSP: 0018:ffff960cc2df77d8 EFLAGS: 00010293
+    RAX: 0000000000000000 RBX: ffff8afb87e81280 RCX: 0000000000000224
+    RDX: ffff8afb9ee37c00 RSI: ffff8afb8da1a578 RDI: ffff8afb87e81280
+    RBP: ffff8afb83d67000 R08: 0000000000000001 R09: ffff8afb9652f850
+    R10: ffff960cc2df7908 R11: 0000000000000002 R12: 0000000000000000
+    R13: ffff8afb8d7688a0 R14: ffff8afb8da1a578 R15: 0000000000000224
+    FS:  00007f4dac35ce00(0000) GS:ffff8afe30b00000(0000) knlGS:0000000000000000
+    CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    CR2: 0000000000000008 CR3: 000000010ddc6000 CR4: 00000000003506e0
+    Call Trace:
+<TASK>
+     ? __die+0x23/0x70
+     ? page_fault_oops+0x171/0x4e0
+     ? plist_add+0xbe/0x100
+     ? exc_page_fault+0x7c/0x180
+     ? asm_exc_page_fault+0x26/0x30
+     ? drm_dp_atomic_find_time_slots+0x5e/0x260 [drm_display_helper 0e67723696438d8e02b741593dd50d80b44c2026]
+     ? drm_dp_atomic_find_time_slots+0x28/0x260 [drm_display_helper 0e67723696438d8e02b741593dd50d80b44c2026]
+     compute_mst_dsc_configs_for_link+0x2ff/0xa40 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     ? fill_plane_buffer_attributes+0x419/0x510 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     compute_mst_dsc_configs_for_state+0x1e1/0x250 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     amdgpu_dm_atomic_check+0xecd/0x1190 [amdgpu 62e600d2a75e9158e1cd0a243bdc8e6da040c054]
+     drm_atomic_check_only+0x5c5/0xa40
+     drm_mode_atomic_ioctl+0x76e/0xbc0
 
-Additionally, the calculations have been rewritten in a clearer
-and more understandable form.
+[how]
+dsc recompute should be skipped if no mode change detected on the new
+request. If detected, keep checking whether the stream is already on
+current state or not.
 
-Fixes: c58305af1835 ("drm/i915: Use remap_io_mapping() to prefault all PTE in a single pass")
-Reported-by: Jann Horn <jannh@google.com>
-Co-developed-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: <stable@vger.kernel.org> # v4.9+
-Reviewed-by: Jann Horn <jannh@google.com>
-Reviewed-by: Jonathan Cavitt <Jonathan.cavitt@intel.com>
-[Joonas: Add Requires: tag]
-Requires: 60a2066c5005 ("drm/i915/gem: Adjust vma offset for framebuffer mmap offset")
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240802083850.103694-3-andi.shyti@linux.intel.com
-(cherry picked from commit 97b6784753da06d9d40232328efc5c5367e53417)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Rodrigo Siqueira <rodrigo.siqueira@amd.com>
+Signed-off-by: Fangzhi Zuo <Jerry.Zuo@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8151a6c13111b465dbabe07c19f572f7cbd16fef)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_mman.c |   53 +++++++++++++++++++++++++++----
- 1 file changed, 47 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-@@ -290,6 +290,41 @@ out:
- 	return i915_error_to_vmf_fault(err);
- }
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
+@@ -1266,6 +1266,9 @@ static bool is_dsc_need_re_compute(
+ 		}
+ 	}
  
-+static void set_address_limits(struct vm_area_struct *area,
-+			       struct i915_vma *vma,
-+			       unsigned long obj_offset,
-+			       unsigned long *start_vaddr,
-+			       unsigned long *end_vaddr)
-+{
-+	unsigned long vm_start, vm_end, vma_size; /* user's memory parameters */
-+	long start, end; /* memory boundaries */
++	if (new_stream_on_link_num == 0)
++		return false;
 +
-+	/*
-+	 * Let's move into the ">> PAGE_SHIFT"
-+	 * domain to be sure not to lose bits
-+	 */
-+	vm_start = area->vm_start >> PAGE_SHIFT;
-+	vm_end = area->vm_end >> PAGE_SHIFT;
-+	vma_size = vma->size >> PAGE_SHIFT;
-+
-+	/*
-+	 * Calculate the memory boundaries by considering the offset
-+	 * provided by the user during memory mapping and the offset
-+	 * provided for the partial mapping.
-+	 */
-+	start = vm_start;
-+	start -= obj_offset;
-+	start += vma->gtt_view.partial.offset;
-+	end = start + vma_size;
-+
-+	start = max_t(long, start, vm_start);
-+	end = min_t(long, end, vm_end);
-+
-+	/* Let's move back into the "<< PAGE_SHIFT" domain */
-+	*start_vaddr = (unsigned long)start << PAGE_SHIFT;
-+	*end_vaddr = (unsigned long)end << PAGE_SHIFT;
-+}
-+
- static vm_fault_t vm_fault_gtt(struct vm_fault *vmf)
- {
- #define MIN_CHUNK_PAGES (SZ_1M >> PAGE_SHIFT)
-@@ -302,14 +337,18 @@ static vm_fault_t vm_fault_gtt(struct vm
- 	struct i915_ggtt *ggtt = to_gt(i915)->ggtt;
- 	bool write = area->vm_flags & VM_WRITE;
- 	struct i915_gem_ww_ctx ww;
-+	unsigned long obj_offset;
-+	unsigned long start, end; /* memory boundaries */
- 	intel_wakeref_t wakeref;
- 	struct i915_vma *vma;
- 	pgoff_t page_offset;
-+	unsigned long pfn;
- 	int srcu;
- 	int ret;
- 
--	/* We don't use vmf->pgoff since that has the fake offset */
-+	obj_offset = area->vm_pgoff - drm_vma_node_start(&mmo->vma_node);
- 	page_offset = (vmf->address - area->vm_start) >> PAGE_SHIFT;
-+	page_offset += obj_offset;
- 
- 	trace_i915_gem_object_fault(obj, page_offset, true, write);
- 
-@@ -402,12 +441,14 @@ retry:
- 	if (ret)
- 		goto err_unpin;
- 
-+	set_address_limits(area, vma, obj_offset, &start, &end);
-+
-+	pfn = (ggtt->gmadr.start + i915_ggtt_offset(vma)) >> PAGE_SHIFT;
-+	pfn += (start - area->vm_start) >> PAGE_SHIFT;
-+	pfn += obj_offset - vma->gtt_view.partial.offset;
-+
- 	/* Finally, remap it using the new GTT offset */
--	ret = remap_io_mapping(area,
--			       area->vm_start + (vma->gtt_view.partial.offset << PAGE_SHIFT),
--			       (ggtt->gmadr.start + i915_ggtt_offset(vma)) >> PAGE_SHIFT,
--			       min_t(u64, vma->size, area->vm_end - area->vm_start),
--			       &ggtt->iomap);
-+	ret = remap_io_mapping(area, start, pfn, end - start, &ggtt->iomap);
- 	if (ret)
- 		goto err_fence;
- 
+ 	/* check current_state if there stream on link but it is not in
+ 	 * new request state
+ 	 */
 
 
