@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677DD134AC;
-	Mon, 12 Aug 2024 16:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1902134AC;
+	Mon, 12 Aug 2024 16:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479956; cv=none; b=eTxjGzZlyMKbrrHFOEuNmAKyxPv8nBj9ZU6yWgABM73eyHGETcmEvezz3FSDU2BFOYYTrGsiYjRCdBX5ykVKjhxnwQfq09C4Pru8PYS0yJJ8RgrFGvPl6yWxmGGnfWVv0ojmio10V1Dzn60mQTUcMqgQhTN7dtuxBngGMd/ZnWc=
+	t=1723479960; cv=none; b=ASXASL4/Ruy7lCzXePqDliZTP6fMrIA2LQRjTjcNyFYG6gTdVoB0xASXW7W15wN04GCer0fcB96/tL2GVMrE8euHjB0NjUAoJtv3bhbQ+KrQ17r5LWibQPlZzHmjGGeRRSiu5jpMew2K01tzvBHaxqGGT9BGqLrLbGYI3HJUXI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479956; c=relaxed/simple;
-	bh=vG8XqwvG+ilAnfGqkjGkrzyMzRgjUp0Gma/ve4DHbHk=;
+	s=arc-20240116; t=1723479960; c=relaxed/simple;
+	bh=1FHsjelaq+IOlb6hUbmDnhZFccBX9gALgsjSMfKj4tY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZIFMMfsfJS/sZAg/2Qvp6y0OfrtpucUDGCxXnFkJ8BBqSQy6wrMwzzX0IJCaczGQQSX1Uy5iLJS+OJzxEsB0cMR4Bcrk0clFFbzka3p7JYcXTPKABzls/q0HKYvRUYuZGdwJXG+e5tWXVZDRZElxgtbdlN489vtDTVLOX1x9ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tyCKWZXh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=UZvGXSNccfWXJz4OboQv3IlcN/S+92z/URMe32Men2UDVHotZJlFyTjNQrIhpS3txk2bADFcvKIgBBvCKHANlW3rh3W1RNxtOOV3E3S19lbxX0ws8noFjdQIMUnz6QFJjPj8sP8lfZ7rND1Ylj8/JpJbzXmlU8zuVVtVT5KVzMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FRo/zbNi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tyCKWZXh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D54D2C32782;
-	Mon, 12 Aug 2024 16:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FRo/zbNi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 649EBC4AF0C;
+	Mon, 12 Aug 2024 16:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479956;
-	bh=vG8XqwvG+ilAnfGqkjGkrzyMzRgjUp0Gma/ve4DHbHk=;
+	s=korg; t=1723479959;
+	bh=1FHsjelaq+IOlb6hUbmDnhZFccBX9gALgsjSMfKj4tY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tyCKWZXhT/TPuolIRnKx1jBrr+sgOnxsHAIxpLLxIgaAbfJGe2hTolgCaALPhfUp5
-	 6zsxUqCOGtVJNWstVGd1Ogsc3Za5mpVfiJWIIbZFT6CeT83DruYryK4jDoWHohBJC7
-	 rkPYBkZUovFLd9OB/FLCZn9vAkEmUPjVWh/bGBu8=
+	b=FRo/zbNiBYEgYF4UgIkYngZrX8Vr3fZQ2Pp6eG0BPcudPmjdQ+CltyzccV74aU3JR
+	 63wUs+JKySqK7zDhKkJQ9L3ubAl5lbLdfiVKmYxjgM/lAwICxAK+gy1DN0mxjvVS9T
+	 96Le1bPGrgQUrzbD1s7Csf+RyA8o/fp7qrYQyUrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Praveen Kaligineedi <pkaligineedi@google.com>,
-	Shailend Chand <shailend@google.com>,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Heng Qi <hengqi@linux.alibaba.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	=?UTF-8?q?Eugenio=20P=C3=A9=20rez?= <eperezma@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 021/263] gve: Fix use of netif_carrier_ok()
-Date: Mon, 12 Aug 2024 18:00:22 +0200
-Message-ID: <20240812160147.353506575@linuxfoundation.org>
+Subject: [PATCH 6.10 022/263] virtio-net: unbreak vq resizing when coalescing is not negotiated
+Date: Mon, 12 Aug 2024 18:00:23 +0200
+Message-ID: <20240812160147.391709548@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -47,109 +48,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Praveen Kaligineedi <pkaligineedi@google.com>
+From: Heng Qi <hengqi@linux.alibaba.com>
 
-[ Upstream commit fba917b169bea5f8f2ee300e19d5f7a6341a5251 ]
+[ Upstream commit 4ba8d97083707409822264fd1776aad7233f353e ]
 
-GVE driver wrongly relies on netif_carrier_ok() to check the
-interface administrative state when resources are being
-allocated/deallocated for queue(s). netif_carrier_ok() needs
-to be replaced with netif_running() for all such cases.
+Don't break the resize action if the vq coalescing feature
+named VIRTIO_NET_F_VQ_NOTF_COAL is not negotiated.
 
-Administrative state is the result of "ip link set dev <dev>
-up/down". It reflects whether the administrator wants to use
-the device for traffic and the corresponding resources have
-been allocated.
-
-Fixes: 5f08cd3d6423 ("gve: Alloc before freeing when adjusting queues")
-Signed-off-by: Praveen Kaligineedi <pkaligineedi@google.com>
-Reviewed-by: Shailend Chand <shailend@google.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240801205619.987396-1-pkaligineedi@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f61fe5f081cf ("virtio-net: fix the vq coalescing setting for vq resize")
+Signed-off-by: Heng Qi <hengqi@linux.alibaba.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Acked-by: Eugenio Pé rez <eperezma@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/google/gve/gve_ethtool.c |  2 +-
- drivers/net/ethernet/google/gve/gve_main.c    | 12 ++++++------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/virtio_net.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/google/gve/gve_ethtool.c b/drivers/net/ethernet/google/gve/gve_ethtool.c
-index fe1741d482b4a..cf816ede05f69 100644
---- a/drivers/net/ethernet/google/gve/gve_ethtool.c
-+++ b/drivers/net/ethernet/google/gve/gve_ethtool.c
-@@ -492,7 +492,7 @@ static int gve_set_channels(struct net_device *netdev,
- 		return -EINVAL;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 5161e7efda2cb..f32e017b62e9b 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -3257,7 +3257,11 @@ static int virtnet_set_ringparam(struct net_device *dev,
+ 			err = virtnet_send_tx_ctrl_coal_vq_cmd(vi, i,
+ 							       vi->intr_coal_tx.max_usecs,
+ 							       vi->intr_coal_tx.max_packets);
+-			if (err)
++
++			/* Don't break the tx resize action if the vq coalescing is not
++			 * supported. The same is true for rx resize below.
++			 */
++			if (err && err != -EOPNOTSUPP)
+ 				return err;
+ 		}
+ 
+@@ -3272,7 +3276,7 @@ static int virtnet_set_ringparam(struct net_device *dev,
+ 							       vi->intr_coal_rx.max_usecs,
+ 							       vi->intr_coal_rx.max_packets);
+ 			mutex_unlock(&vi->rq[i].dim_lock);
+-			if (err)
++			if (err && err != -EOPNOTSUPP)
+ 				return err;
+ 		}
  	}
- 
--	if (!netif_carrier_ok(netdev)) {
-+	if (!netif_running(netdev)) {
- 		priv->tx_cfg.num_queues = new_tx;
- 		priv->rx_cfg.num_queues = new_rx;
- 		return 0;
-diff --git a/drivers/net/ethernet/google/gve/gve_main.c b/drivers/net/ethernet/google/gve/gve_main.c
-index cabf7d4bcecb8..8b14efd14a505 100644
---- a/drivers/net/ethernet/google/gve/gve_main.c
-+++ b/drivers/net/ethernet/google/gve/gve_main.c
-@@ -1511,7 +1511,7 @@ static int gve_set_xdp(struct gve_priv *priv, struct bpf_prog *prog,
- 	u32 status;
- 
- 	old_prog = READ_ONCE(priv->xdp_prog);
--	if (!netif_carrier_ok(priv->dev)) {
-+	if (!netif_running(priv->dev)) {
- 		WRITE_ONCE(priv->xdp_prog, prog);
- 		if (old_prog)
- 			bpf_prog_put(old_prog);
-@@ -1784,7 +1784,7 @@ int gve_adjust_queues(struct gve_priv *priv,
- 	rx_alloc_cfg.qcfg = &new_rx_config;
- 	tx_alloc_cfg.num_rings = new_tx_config.num_queues;
- 
--	if (netif_carrier_ok(priv->dev)) {
-+	if (netif_running(priv->dev)) {
- 		err = gve_adjust_config(priv, &tx_alloc_cfg, &rx_alloc_cfg);
- 		return err;
- 	}
-@@ -2001,7 +2001,7 @@ static int gve_set_features(struct net_device *netdev,
- 
- 	if ((netdev->features & NETIF_F_LRO) != (features & NETIF_F_LRO)) {
- 		netdev->features ^= NETIF_F_LRO;
--		if (netif_carrier_ok(netdev)) {
-+		if (netif_running(netdev)) {
- 			err = gve_adjust_config(priv, &tx_alloc_cfg, &rx_alloc_cfg);
- 			if (err) {
- 				/* Revert the change on error. */
-@@ -2290,7 +2290,7 @@ static int gve_reset_recovery(struct gve_priv *priv, bool was_up)
- 
- int gve_reset(struct gve_priv *priv, bool attempt_teardown)
- {
--	bool was_up = netif_carrier_ok(priv->dev);
-+	bool was_up = netif_running(priv->dev);
- 	int err;
- 
- 	dev_info(&priv->pdev->dev, "Performing reset\n");
-@@ -2631,7 +2631,7 @@ static void gve_shutdown(struct pci_dev *pdev)
- {
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct gve_priv *priv = netdev_priv(netdev);
--	bool was_up = netif_carrier_ok(priv->dev);
-+	bool was_up = netif_running(priv->dev);
- 
- 	rtnl_lock();
- 	if (was_up && gve_close(priv->dev)) {
-@@ -2649,7 +2649,7 @@ static int gve_suspend(struct pci_dev *pdev, pm_message_t state)
- {
- 	struct net_device *netdev = pci_get_drvdata(pdev);
- 	struct gve_priv *priv = netdev_priv(netdev);
--	bool was_up = netif_carrier_ok(priv->dev);
-+	bool was_up = netif_running(priv->dev);
- 
- 	priv->suspend_cnt++;
- 	rtnl_lock();
 -- 
 2.43.0
 
