@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83164134AC;
-	Mon, 12 Aug 2024 16:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4764134AC;
+	Mon, 12 Aug 2024 16:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479966; cv=none; b=r+UGNdMvSbF9H6992LIUU/Spx56KNAcVtiaWALCqHuYOmtQLlfObTs6CSIvSloQOFspWSYFR84ROkeJPMBqpeHOW5H9Aw17wcoySYF0lws0qUKUbvtAV3xLyASA0NOyrjNlgeYVmIg8qzwluZFT8URNKZTuKoqhD9dFK3x3nCuw=
+	t=1723479969; cv=none; b=qRqxVjeB8LdG0L1kci1JD2/9Yf9UHj33bSlJg9U21NKVljVF0qa2QHOSD56k7nJ1o2+RLZ27ZjTwzmHMqTwa+5XgSfByUsdq+ZN/TRoynPi6N9cwVgDnD0HbJQGR/AyHSXU6kNFkfv8dlddcdor0bpCFQIJr46MxxasD/0nireU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479966; c=relaxed/simple;
-	bh=N95uTm8mVpIqPTJtgn1zTnUeMkM5LkhBaCS35hJulQ0=;
+	s=arc-20240116; t=1723479969; c=relaxed/simple;
+	bh=8n8a/rqK6aMAbpRRnvpuqfhQUvmKHHsyj2tPmhgwEP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZgBRVUA/HZ7imJsmCncZ+Dquy6Sucn4HoeF6FeGgoh4Glfi2cw0MRSoNIqkyOoVaYtJLbsZQUlXj6rM5m6q0fi555+8TjrbeY0OOAmFfPv2M8/dBAB0mc+tymLrBS53p83HAihxEPIwr3oI4+TGlaGjovajd/1puzRB1pdSBMTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTYxoAOw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HIpMbce6lyvtOHVIqu7Bum2CxKDdEc9fGNl+aLu2LvOdBOVTVCSepjP/xEClpX+SpLloGV020aqtJSKAE927QlA2zFdZFOPTjV0o2dsjzgPGeX0XOAqMRUaw9bEszW5ZW53mzC14THcIGe9OEb5XlUbCGoezclSng36zXu0q+Zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h3/+k8dc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTYxoAOw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED78AC32782;
-	Mon, 12 Aug 2024 16:26:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h3/+k8dc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AAF1C32782;
+	Mon, 12 Aug 2024 16:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479966;
-	bh=N95uTm8mVpIqPTJtgn1zTnUeMkM5LkhBaCS35hJulQ0=;
+	s=korg; t=1723479969;
+	bh=8n8a/rqK6aMAbpRRnvpuqfhQUvmKHHsyj2tPmhgwEP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTYxoAOwxxSvbVac08Tm8mCS1ddRBy/bIr29/BdoBWvzha4XRNnZg6j4sSY7BMfmp
-	 oCSchGQR0lospOLLJ3cg3xQb6z9cg9Fv8+QjyXW2CWR9RHVnkMjM5tY4+mgxKSckzA
-	 gbJ4xyfRoQjR5inc5eRfdUDl3DaGKc63cePAob38=
+	b=h3/+k8dcC5THhLaNx3WU49SKN3cHRNLXHURU8xEzXR9gHXij23LuE3WMfnTyNdxrt
+	 HZWX6ejEnYK0jaxQTK+gqxwqhbzW+zAAzeNbtGPKEedBsw7+a7Yzbd3yGTZyiLth3a
+	 cjgw5dsERy01dWAA6C8wDOO2nBvoSLT1hMSSHp+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Andrei Amuraritei <andamu@posteo.net>,
+	Perry Yuan <perry.yuan@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 048/263] md/raid5: avoid BUG_ON() while continue reshape after reassembling
-Date: Mon, 12 Aug 2024 18:00:49 +0200
-Message-ID: <20240812160148.383221364@linuxfoundation.org>
+Subject: [PATCH 6.10 057/263] cpufreq: amd-pstate: auto-load pstate driver by default
+Date: Mon, 12 Aug 2024 18:00:58 +0200
+Message-ID: <20240812160148.726020594@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,89 +52,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Perry Yuan <perry.yuan@amd.com>
 
-[ Upstream commit 305a5170dc5cf3d395bb4c4e9239bca6d0b54b49 ]
+[ Upstream commit 4e4f600ee750facedf6a5dc97e8ae0b627ab4573 ]
 
-Currently, mdadm support --revert-reshape to abort the reshape while
-reassembling, as the test 07revert-grow. However, following BUG_ON()
-can be triggerred by the test:
+If the `amd-pstate` driver is not loaded automatically by default,
+it is because the kernel command line parameter has not been added.
+To resolve this issue, it is necessary to call the `amd_pstate_set_driver()`
+function to enable the desired mode (passive/active/guided) before registering
+the driver instance.
 
-kernel BUG at drivers/md/raid5.c:6278!
-invalid opcode: 0000 [#1] PREEMPT SMP PTI
-irq event stamp: 158985
-CPU: 6 PID: 891 Comm: md0_reshape Not tainted 6.9.0-03335-g7592a0b0049a #94
-RIP: 0010:reshape_request+0x3f1/0xe60
-Call Trace:
- <TASK>
- raid5_sync_request+0x43d/0x550
- md_do_sync+0xb7a/0x2110
- md_thread+0x294/0x2b0
- kthread+0x147/0x1c0
- ret_from_fork+0x59/0x70
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+This ensures that the driver is loaded correctly without relying on the kernel
+command line parameter.
 
-Root cause is that --revert-reshape update the raid_disks from 5 to 4,
-while reshape position is still set, and after reassembling the array,
-reshape position will be read from super block, then during reshape the
-checking of 'writepos' that is caculated by old reshape position will
-fail.
+When there is no parameter added to command line, Kernel config will
+provide the default mode to load.
 
-Fix this panic the easy way first, by converting the BUG_ON() to
-WARN_ON(), and stop the reshape if checkings fail.
+Meanwhile, user can add driver mode in command line which will override
+the kernel config default option.
 
-Noted that mdadm must fix --revert-shape as well, and probably md/raid
-should enhance metadata validation as well, however this means
-reassemble will fail and there must be user tools to fix the wrong
-metadata.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240611132251.1967786-13-yukuai1@huaweicloud.com
+Reported-by: Andrei Amuraritei <andamu@posteo.net>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=218705
+Signed-off-by: Perry Yuan <perry.yuan@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/83301c4cea4f92fb19e14b23f2bac7facfd8bdbb.1718811234.git.perry.yuan@amd.com
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/raid5.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ drivers/cpufreq/amd-pstate.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index d600030c20f46..ff9f4751c0965 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -6272,7 +6272,9 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
- 	safepos = conf->reshape_safe;
- 	sector_div(safepos, data_disks);
- 	if (mddev->reshape_backwards) {
--		BUG_ON(writepos < reshape_sectors);
-+		if (WARN_ON(writepos < reshape_sectors))
-+			return MaxSector;
+diff --git a/drivers/cpufreq/amd-pstate.c b/drivers/cpufreq/amd-pstate.c
+index 874ee90b1cf10..67c4a6a0ef124 100644
+--- a/drivers/cpufreq/amd-pstate.c
++++ b/drivers/cpufreq/amd-pstate.c
+@@ -1764,8 +1764,13 @@ static int __init amd_pstate_init(void)
+ 	/* check if this machine need CPPC quirks */
+ 	dmi_check_system(amd_pstate_quirks_table);
+ 
+-	switch (cppc_state) {
+-	case AMD_PSTATE_UNDEFINED:
++	/*
++	* determine the driver mode from the command line or kernel config.
++	* If no command line input is provided, cppc_state will be AMD_PSTATE_UNDEFINED.
++	* command line options will override the kernel config settings.
++	*/
 +
- 		writepos -= reshape_sectors;
- 		readpos += reshape_sectors;
- 		safepos += reshape_sectors;
-@@ -6290,14 +6292,18 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
- 	 * to set 'stripe_addr' which is where we will write to.
- 	 */
- 	if (mddev->reshape_backwards) {
--		BUG_ON(conf->reshape_progress == 0);
-+		if (WARN_ON(conf->reshape_progress == 0))
-+			return MaxSector;
++	if (cppc_state == AMD_PSTATE_UNDEFINED) {
+ 		/* Disable on the following configs by default:
+ 		 * 1. Undefined platforms
+ 		 * 2. Server platforms
+@@ -1777,15 +1782,20 @@ static int __init amd_pstate_init(void)
+ 			pr_info("driver load is disabled, boot with specific mode to enable this\n");
+ 			return -ENODEV;
+ 		}
+-		ret = amd_pstate_set_driver(CONFIG_X86_AMD_PSTATE_DEFAULT_MODE);
+-		if (ret)
+-			return ret;
+-		break;
++		/* get driver mode from kernel config option [1:4] */
++		cppc_state = CONFIG_X86_AMD_PSTATE_DEFAULT_MODE;
++	}
 +
- 		stripe_addr = writepos;
--		BUG_ON((mddev->dev_sectors &
--			~((sector_t)reshape_sectors - 1))
--		       - reshape_sectors - stripe_addr
--		       != sector_nr);
-+		if (WARN_ON((mddev->dev_sectors &
-+		    ~((sector_t)reshape_sectors - 1)) -
-+		    reshape_sectors - stripe_addr != sector_nr))
-+			return MaxSector;
- 	} else {
--		BUG_ON(writepos != sector_nr + reshape_sectors);
-+		if (WARN_ON(writepos != sector_nr + reshape_sectors))
-+			return MaxSector;
-+
- 		stripe_addr = sector_nr;
++	switch (cppc_state) {
+ 	case AMD_PSTATE_DISABLE:
++		pr_info("driver load is disabled, boot with specific mode to enable this\n");
+ 		return -ENODEV;
+ 	case AMD_PSTATE_PASSIVE:
+ 	case AMD_PSTATE_ACTIVE:
+ 	case AMD_PSTATE_GUIDED:
++		ret = amd_pstate_set_driver(cppc_state);
++		if (ret)
++			return ret;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+@@ -1806,7 +1816,7 @@ static int __init amd_pstate_init(void)
+ 	/* enable amd pstate feature */
+ 	ret = amd_pstate_enable(true);
+ 	if (ret) {
+-		pr_err("failed to enable with return %d\n", ret);
++		pr_err("failed to enable driver mode(%d)\n", cppc_state);
+ 		return ret;
  	}
  
 -- 
