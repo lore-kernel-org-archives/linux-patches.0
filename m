@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55ADC18455B;
-	Mon, 12 Aug 2024 16:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86F4186295;
+	Mon, 12 Aug 2024 16:07:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478875; cv=none; b=QyM74WhBzueOmF/bqHUk1U615ZPgBi8PXG37AOWotC0PIa3gZUaB59ktmYWDUeFutyISRn2rC7SvSIkZW0uTPO/ZohGDmd5wz1Md6lT3JxWT32uvrapks/MZ3frA01EiCnJ2jBYylVNwtrW1e53mkv0NXxkuQj3Z5KQqQ3a1mKU=
+	t=1723478878; cv=none; b=GeywBOx0rhnxzqxVsm8fGSbXKgGvTqrFaRrpWY947b/SdFTQjpbclJDESt/bN+4G5TRaBo/lbT9GlskNTPmboWZu7VIY8i4/pkNHiSXQCfaHMIgdTUUi5vaqdvHRnPemHNENsFQxH3TEzYUXavCjuKRPVzWJqZuM8WXZHLoaCEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478875; c=relaxed/simple;
-	bh=k0Qj48Y43vMGDRuuU7OrBCexUiutfncYMf/mO+7qSLs=;
+	s=arc-20240116; t=1723478878; c=relaxed/simple;
+	bh=P2UL7ldGITs/9Zvu7xKVJEjnH63pLscVCnYYam10lvE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RIuha3whTerk0dtO/KLvci/pbI/c9O95XKLWzb8n1dac2S6txAz1wmCNvtIjYh70jy5jKrq+OjzAna7BqeVNN0kcBzZLeWMz46rtFgknN2lUeMevuPSFgOhStGIm9r01EZ12KsLuqlGeCoucopsfUZFi53tX38FFjwH7cMY+ep4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wrcn6ip9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YSztnL/8f9Yi1uEPp6y/wzB1L79J95LAI+tP4N6vb7CD1JYEZwBXEi+x/VEJW7dHexL74h3aA9CGv4vJcg77NgksTlh51hDsnJ9afiSw3idWGrczHU/pZ32FJQpGyPYB9XdP5vQFg0ioYjVotH2a814edTeDs65puVGUj6Aw6d4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6GuiaR4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wrcn6ip9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8D52C32782;
-	Mon, 12 Aug 2024 16:07:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6GuiaR4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D7EC32782;
+	Mon, 12 Aug 2024 16:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478875;
-	bh=k0Qj48Y43vMGDRuuU7OrBCexUiutfncYMf/mO+7qSLs=;
+	s=korg; t=1723478878;
+	bh=P2UL7ldGITs/9Zvu7xKVJEjnH63pLscVCnYYam10lvE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wrcn6ip91V84idrzlQBV+56rAMufeB3kZ0JuW9OcbQQvnuZb8imuDdpxDO8SZ5SCC
-	 0J/+l7OkFadN0Ss+ZbsXA1bY64U1AowB4HPg6/kB7pZGquPAuaZ0vWo3de/o0rmbzA
-	 ewO9asUj4yQ9umk0bfmCUJAD8C9B58M4AGs1zwCE=
+	b=T6GuiaR4EPc/OOnqcflyISFUF+9sEVJrPj8POY+l79I6oI8vd+p88qRisBHh5WyEm
+	 DcUr/6oxUrt5r5LCSy9CGTYxa2MtXwCaHl7ZdyiB9Sgy2PZD2GNjCQiyTOnnO3ILmc
+	 YeOj7JQh5prSqTMxse2P/C8v+p/8l46PXUzR3FzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Zucheng <zhengzucheng@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.1 056/150] sched/cputime: Fix mul_u64_u64_div_u64() precision for cputime
-Date: Mon, 12 Aug 2024 18:02:17 +0200
-Message-ID: <20240812160127.335031324@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 065/150] arm64: cputype: Add Cortex-X925 definitions
+Date: Mon, 12 Aug 2024 18:02:26 +0200
+Message-ID: <20240812160127.683141177@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -50,58 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Zucheng <zhengzucheng@huawei.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 77baa5bafcbe1b2a15ef9c37232c21279c95481c upstream.
+[ Upstream commit fd2ff5f0b320f418288e7a1f919f648fbc8a0dfc ]
 
-In extreme test scenarios:
-the 14th field utime in /proc/xx/stat is greater than sum_exec_runtime,
-utime = 18446744073709518790 ns, rtime = 135989749728000 ns
+Add cputype definitions for Cortex-X925. These will be used for errata
+detection in subsequent patches.
 
-In cputime_adjust() process, stime is greater than rtime due to
-mul_u64_u64_div_u64() precision problem.
-before call mul_u64_u64_div_u64(),
-stime = 175136586720000, rtime = 135989749728000, utime = 1416780000.
-after call mul_u64_u64_div_u64(),
-stime = 135989949653530
+These values can be found in Table A-285 ("MIDR_EL1 bit descriptions")
+in issue 0001-05 of the Cortex-X925 TRM, which can be found at:
 
-unsigned reversion occurs because rtime is less than stime.
-utime = rtime - stime = 135989749728000 - 135989949653530
-		      = -199925530
-		      = (u64)18446744073709518790
+  https://developer.arm.com/documentation/102807/0001/?lang=en
 
-Trigger condition:
-  1). User task run in kernel mode most of time
-  2). ARM64 architecture
-  3). TICK_CPU_ACCOUNTING=y
-      CONFIG_VIRT_CPU_ACCOUNTING_NATIVE is not set
-
-Fix mul_u64_u64_div_u64() conversion precision by reset stime to rtime
-
-Fixes: 3dc167ba5729 ("sched/cputime: Improve cputime_adjust()")
-Signed-off-by: Zheng Zucheng <zhengzucheng@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lkml.kernel.org/r/20240726023235.217771-1-zhengzucheng@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-4-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/cputime.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/sched/cputime.c
-+++ b/kernel/sched/cputime.c
-@@ -591,6 +591,12 @@ void cputime_adjust(struct task_cputime
- 	}
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 1e3dbfc81d432..b52d974da8283 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -90,6 +90,7 @@
+ #define ARM_CPU_PART_CORTEX_A720	0xD81
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
++#define ARM_CPU_PART_CORTEX_X925	0xD85
  
- 	stime = mul_u64_u64_div_u64(stime, rtime, stime + utime);
-+	/*
-+	 * Because mul_u64_u64_div_u64() can approximate on some
-+	 * achitectures; enforce the constraint that: a*b/(b+c) <= a.
-+	 */
-+	if (unlikely(stime > rtime))
-+		stime = rtime;
- 
- update:
- 	/*
+ #define APM_CPU_PART_XGENE		0x000
+ #define APM_CPU_VAR_POTENZA		0x00
+@@ -161,6 +162,7 @@
+ #define MIDR_CORTEX_A720 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A720)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
++#define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+ #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
+ #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
+-- 
+2.43.0
+
 
 
