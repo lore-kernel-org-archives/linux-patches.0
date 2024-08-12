@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643D3188CC0;
-	Mon, 12 Aug 2024 16:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512D8183CD9;
+	Mon, 12 Aug 2024 16:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478983; cv=none; b=W15kXej6VmNyAFbIa8Pa9etfATeRTHj5N/KOeCizPZ12GLYe78e+0uZf/+MfNf3J5pS7ZFt1Ywyt6Bmmgg31NPXMcvAuCcuMSdrnKo1gBNvzkpyhcRzIKtXxfsH5IPUSQj6fVE3j9gNnN/2a4iGuhbeIBBC/wir5SFd+xUrCniY=
+	t=1723478986; cv=none; b=J6Kz/vdknCcjM2gmnHJXUeyig5qcybLk1y8bEfDj8sNOVlvFgGoXEJaakX11jo2GuDv183eUcyNlULbAlap1LkO+8PEyMQfdZkvujsdOTTqovJV6SoYyiifyS4Hky4NM0VX/EYLwAj2vkMvAzp0HHqZDYFp4xmtJaOGrn0H8b4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478983; c=relaxed/simple;
-	bh=S1nBEsnyDzky0xi1WwK9ijP0AKn4PQWk7xDzCrz6IhI=;
+	s=arc-20240116; t=1723478986; c=relaxed/simple;
+	bh=FGdDpWmOxzs5Yw20QJajsgSrXB+5jfQcvyiHITvHLO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=igxXg191PeUq0sP8hQydeCeUx1MWI4OjlUZNTeZNrfgWMPWKqec+DftbYG5p6dQw97uZw1KW0xOr8fhuvyLabGST/MBzkG2egghvMyuaAUtOMkzdmsesoqYQm4VAm5oXyV9T/iT/26HAcn2Dpfut0j3VLNSsqz2fjIs5agpyWxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phoUpDIZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lz3Iwf7YEKs7NeKu1H+xFFyvIiRPTdSnd6O756WRnNRf2CS6Ilr6ycCZ7JYK8yTTLeVbt8IaMFFZ6zzVqyq1AxLYYWuXezd0NZGVsINBaUeagdcCF5jPCW/kCGGZVQiZ9blpgw+VXkagkfUnH9PQ1nu27gwK9E7FdhBf+ix/k+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZgaw7f5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phoUpDIZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E83C4AF0F;
-	Mon, 12 Aug 2024 16:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZgaw7f5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA623C32782;
+	Mon, 12 Aug 2024 16:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478983;
-	bh=S1nBEsnyDzky0xi1WwK9ijP0AKn4PQWk7xDzCrz6IhI=;
+	s=korg; t=1723478986;
+	bh=FGdDpWmOxzs5Yw20QJajsgSrXB+5jfQcvyiHITvHLO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phoUpDIZMDXWMVIbDc6Stv23SXAHx9E3rrUnX4EvC59an3VIxdIfUNGZdphlsA2lu
-	 0uStUGlpsD2NWVe1Lp1Yx+RPdk49hUxTsgYm9wHujOJ0ecY6VovHsqLIrueYhIUdE4
-	 Wnlmv9ljCMvFFF6LzHQQrtEPN43/YS2jKZoyyezk=
+	b=kZgaw7f5msSapgAEUUymNfi+iTvTpappChhcx1fpZXyiUyfoYeRmkOw6b9V+IDb5E
+	 MnVKkKWMTsT97DBOqXDA/I+A6o0PXboGxW3USp5tiltAomDGYx6CJaRhmfP+7IDAbC
+	 s+BlxO9l2L3FUYENdSxmlea9wO7yzQtjm1HbnFIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miao Wang <shankerwangmiao@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH 6.1 055/150] irqchip/loongarch-cpu: Fix return value of lpic_gsi_to_irq()
-Date: Mon, 12 Aug 2024 18:02:16 +0200
-Message-ID: <20240812160127.294706626@linuxfoundation.org>
+	Steven Steve Kendall <skend@chromium.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 090/150] ALSA: hda: Add HP MP9 G4 Retail System AMS to force connect list
+Date: Mon, 12 Aug 2024 18:02:51 +0200
+Message-ID: <20240812160128.638679339@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -52,51 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Huacai Chen <chenhuacai@loongson.cn>
+From: Steven 'Steve' Kendall <skend@chromium.org>
 
-commit 81a91abab1307d7725fa4620952c0767beae7753 upstream.
+commit 7e1e206b99f4b3345aeb49d94584a420b7887f1d upstream.
 
-lpic_gsi_to_irq() should return a valid Linux interrupt number if
-acpi_register_gsi() succeeds, and return 0 otherwise. But lpic_gsi_to_irq()
-converts a negative return value of acpi_register_gsi() to a positive value
-silently.
+In recent HP UEFI firmware (likely v2.15 and above, tested on 2.27),
+these pins are incorrectly set for HDMI/DP audio. Tested on
+HP MP9 G4 Retail System AMS. Tested audio with two monitors connected
+via DisplayPort.
 
-Convert the return value explicitly.
-
-Fixes: e8bba72b396c ("irqchip / ACPI: Introduce ACPI_IRQ_MODEL_LPIC for LoongArch")
-Reported-by: Miao Wang <shankerwangmiao@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Link: https://forum.manjaro.org/t/intel-cannon-lake-pch-cavs-conexant-cx20632-no-sound-at-hdmi-or-displayport/133494
+Link: https://bbs.archlinux.org/viewtopic.php?id=270523
+Signed-off-by: Steven 'Steve' Kendall <skend@chromium.org>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20240723064508.35560-1-chenhuacai@loongson.cn
+Link: https://patch.msgid.link/20240806-hdmi-audio-hp-wrongpins-v2-1-d9eb4ad41043@chromium.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-loongarch-cpu.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_hdmi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/irqchip/irq-loongarch-cpu.c b/drivers/irqchip/irq-loongarch-cpu.c
-index 9d8f2c406043..b35903a06902 100644
---- a/drivers/irqchip/irq-loongarch-cpu.c
-+++ b/drivers/irqchip/irq-loongarch-cpu.c
-@@ -18,11 +18,13 @@ struct fwnode_handle *cpuintc_handle;
- 
- static u32 lpic_gsi_to_irq(u32 gsi)
- {
-+	int irq = 0;
-+
- 	/* Only pch irqdomain transferring is required for LoongArch. */
- 	if (gsi >= GSI_MIN_PCH_IRQ && gsi <= GSI_MAX_PCH_IRQ)
--		return acpi_register_gsi(NULL, gsi, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_HIGH);
-+		irq = acpi_register_gsi(NULL, gsi, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_HIGH);
- 
--	return 0;
-+	return (irq > 0) ? irq : 0;
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -1989,6 +1989,7 @@ static int hdmi_add_cvt(struct hda_codec
  }
  
- static struct fwnode_handle *lpic_get_gsi_domain_id(u32 gsi)
--- 
-2.46.0
-
+ static const struct snd_pci_quirk force_connect_list[] = {
++	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
+ 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
 
 
