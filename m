@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EEF186E38;
-	Mon, 12 Aug 2024 16:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12C1186295;
+	Mon, 12 Aug 2024 16:07:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478868; cv=none; b=ur0WU5U1X1q0Y73iF6tIIHl1A8+lxO4fyp2lEXclFMCbQK2+ozA6BgBSun80nYpm6h/RYtKPcI5D1ixT3gf3v6slg4202sRFI2jFgUs8t2aA5AVZthH8mlPMc5WqKrUBUhtBzy2bZzGFmN0YTUhg+TVBG+4Gx+uoZr4g9UBa9fc=
+	t=1723478872; cv=none; b=MzsO9RnDB3ayF1f0mB+BTKODvGaRct/H6+YbE9iGByjRrgAZGYeLjguMhG9Y8I2SUb6h7jKJkFsFFeGfkJDFf8N/hqoYT2u7tQRpIUwppLu2WBTyBf9FLPhu7viv2TzsLy13T3pEiAVGVJqXUF3QW4wy+O7EF9VJAFP6bIueTko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478868; c=relaxed/simple;
-	bh=W/EN7Ay7Q8RU1H3emWcpBEYOaGLZYdgVpQOo6Dm6yB8=;
+	s=arc-20240116; t=1723478872; c=relaxed/simple;
+	bh=pFBaiHu1/VmMZMSTqpf7LTtigz/HXPuftJVv1PkujB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AM1eu1fd5BiQV/M2SMN6R4UgeBkvcqDaVgjaR9Mp7ERPgM3gPybm2m9SQrynom0ndk60FtMspmP6ZIA3Ozs06jZP2HvG5OkqeeHvTsHHDBN9e8AuY3ulw8ygulHoHoAjjbG8FxHY6JqrPGp6S84W7VoIUHG5XHiseOwr1JtqkTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W6i0dJFw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RX1h/dpCSYlg13yDBePfWuTSEbwY7Yvn/QI6ZJ+xdqia/MvXmZNdI9P8pOkXwDO1QN6cB+FpdWjtDmBQXHhCjnGK4pmZGDMgGOUSqDmpxjDTXIbMxSRyn3+WqrqiKkb2yP7frjLXsGE9AaY6GeONpkMNRp9RgVJcxwT+pl7ocQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ePcd4Wss; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W6i0dJFw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36664C32782;
-	Mon, 12 Aug 2024 16:07:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ePcd4Wss"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B81C32782;
+	Mon, 12 Aug 2024 16:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478868;
-	bh=W/EN7Ay7Q8RU1H3emWcpBEYOaGLZYdgVpQOo6Dm6yB8=;
+	s=korg; t=1723478871;
+	bh=pFBaiHu1/VmMZMSTqpf7LTtigz/HXPuftJVv1PkujB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W6i0dJFwvrN7Ldja1QgWnHyPIdnYcoN6P9ifLmSSULCc3ju6hPF3vVJkLlhIL38kq
-	 6N/ZnaGSTcuafnDbCFaY70ahcHTLGptKK8IosEiCxEd9cc3l/9NJ9fCd00x8fzV9oy
-	 nDH9CyfL8+zJuHsLxibZ22uh66BzfO3mszJyk+gI=
+	b=ePcd4WssMXAauDYCir4XKPNUbWvi9PF6nCT5OyKzWG3/ehvOqVFlXYh8eNpkBueMp
+	 ZRxMwrK2aFQKBfpd2iDRbTTpx6Olzmr2BLa/tIab5gTskc+ruVRDxfAUK9yXQqkNbg
+	 Ky6EUTTsoHrdJa2ZQOorcJa0GFcGX5+1X5+L8vfE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/150] wifi: nl80211: dont give key data to userspace
-Date: Mon, 12 Aug 2024 18:01:51 +0200
-Message-ID: <20240812160126.328418424@linuxfoundation.org>
+Subject: [PATCH 6.1 021/150] clocksource/drivers/sh_cmt: Address race condition for clock events
+Date: Mon, 12 Aug 2024 18:01:42 +0200
+Message-ID: <20240812160125.980365860@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -45,59 +45,146 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit a7e5793035792cc46a1a4b0a783655ffa897dfe9 ]
+[ Upstream commit db19d3aa77612983a02bd223b3f273f896b243cf ]
 
-When a key is requested by userspace, there's really no need
-to include the key data, the sequence counter is really what
-userspace needs in this case. The fact that it's included is
-just a historic quirk.
+There is a race condition in the CMT interrupt handler. In the interrupt
+handler the driver sets a driver private flag, FLAG_IRQCONTEXT. This
+flag is used to indicate any call to set_next_event() should not be
+directly propagated to the device, but instead cached. This is done as
+the interrupt handler itself reprograms the device when needed before it
+completes and this avoids this operation to take place twice.
 
-Remove the key data.
+It is unclear why this design was chosen, my suspicion is to allow the
+struct clock_event_device.event_handler callback, which is called while
+the FLAG_IRQCONTEXT is set, can update the next event without having to
+write to the device twice.
 
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240627104411.b6a4f097e4ea.I7e6cc976cb9e8a80ef25a3351330f313373b4578@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Unfortunately there is a race between when the FLAG_IRQCONTEXT flag is
+set and later cleared where the interrupt handler have already started to
+write the next event to the device. If set_next_event() is called in
+this window the value is only cached in the driver but not written. This
+leads to the board to misbehave, or worse lockup and produce a splat.
+
+   rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   rcu:     0-...!: (0 ticks this GP) idle=f5e0/0/0x0 softirq=519/519 fqs=0 (false positive?)
+   rcu:     (detected by 1, t=6502 jiffies, g=-595, q=77 ncpus=2)
+   Sending NMI from CPU 1 to CPUs 0:
+   NMI backtrace for cpu 0
+   CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.10.0-rc5-arm64-renesas-00019-g74a6f86eaf1c-dirty #20
+   Hardware name: Renesas Salvator-X 2nd version board based on r8a77965 (DT)
+   pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+   pc : tick_check_broadcast_expired+0xc/0x40
+   lr : cpu_idle_poll.isra.0+0x8c/0x168
+   sp : ffff800081c63d70
+   x29: ffff800081c63d70 x28: 00000000580000c8 x27: 00000000bfee5610
+   x26: 0000000000000027 x25: 0000000000000000 x24: 0000000000000000
+   x23: ffff00007fbb9100 x22: ffff8000818f1008 x21: ffff8000800ef07c
+   x20: ffff800081c79ec0 x19: ffff800081c70c28 x18: 0000000000000000
+   x17: 0000000000000000 x16: 0000000000000000 x15: 0000ffffc2c717d8
+   x14: 0000000000000000 x13: ffff000009c18080 x12: ffff8000825f7fc0
+   x11: 0000000000000000 x10: ffff8000818f3cd4 x9 : 0000000000000028
+   x8 : ffff800081c79ec0 x7 : ffff800081c73000 x6 : 0000000000000000
+   x5 : 0000000000000000 x4 : ffff7ffffe286000 x3 : 0000000000000000
+   x2 : ffff7ffffe286000 x1 : ffff800082972900 x0 : ffff8000818f1008
+   Call trace:
+    tick_check_broadcast_expired+0xc/0x40
+    do_idle+0x9c/0x280
+    cpu_startup_entry+0x34/0x40
+    kernel_init+0x0/0x11c
+    do_one_initcall+0x0/0x260
+    __primary_switched+0x80/0x88
+   rcu: rcu_preempt kthread timer wakeup didn't happen for 6501 jiffies! g-595 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402
+   rcu:     Possible timer handling issue on cpu=0 timer-softirq=262
+   rcu: rcu_preempt kthread starved for 6502 jiffies! g-595 f0x0 RCU_GP_WAIT_FQS(5) ->state=0x402 ->cpu=0
+   rcu:     Unless rcu_preempt kthread gets sufficient CPU time, OOM is now expected behavior.
+   rcu: RCU grace-period kthread stack dump:
+   task:rcu_preempt     state:I stack:0     pid:15    tgid:15    ppid:2      flags:0x00000008
+   Call trace:
+    __switch_to+0xbc/0x100
+    __schedule+0x358/0xbe0
+    schedule+0x48/0x148
+    schedule_timeout+0xc4/0x138
+    rcu_gp_fqs_loop+0x12c/0x764
+    rcu_gp_kthread+0x208/0x298
+    kthread+0x10c/0x110
+    ret_from_fork+0x10/0x20
+
+The design have been part of the driver since it was first merged in
+early 2009. It becomes increasingly harder to trigger the issue the
+older kernel version one tries. It only takes a few boots on v6.10-rc5,
+while hundreds of boots are needed to trigger it on v5.10.
+
+Close the race condition by using the CMT channel lock for the two
+competing sections. The channel lock was added to the driver after its
+initial design.
+
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Link: https://lore.kernel.org/r/20240702190230.3825292-1-niklas.soderlund+renesas@ragnatech.se
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ drivers/clocksource/sh_cmt.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 603fcd921bd22..214eee6105c7f 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -4421,10 +4421,7 @@ static void get_key_callback(void *c, struct key_params *params)
- 	struct nlattr *key;
- 	struct get_key_cookie *cookie = c;
+diff --git a/drivers/clocksource/sh_cmt.c b/drivers/clocksource/sh_cmt.c
+index 7b952aa52c0b9..7a2b83157bf5f 100644
+--- a/drivers/clocksource/sh_cmt.c
++++ b/drivers/clocksource/sh_cmt.c
+@@ -529,6 +529,7 @@ static void sh_cmt_set_next(struct sh_cmt_channel *ch, unsigned long delta)
+ static irqreturn_t sh_cmt_interrupt(int irq, void *dev_id)
+ {
+ 	struct sh_cmt_channel *ch = dev_id;
++	unsigned long flags;
  
--	if ((params->key &&
--	     nla_put(cookie->msg, NL80211_ATTR_KEY_DATA,
--		     params->key_len, params->key)) ||
--	    (params->seq &&
-+	if ((params->seq &&
- 	     nla_put(cookie->msg, NL80211_ATTR_KEY_SEQ,
- 		     params->seq_len, params->seq)) ||
- 	    (params->cipher &&
-@@ -4436,10 +4433,7 @@ static void get_key_callback(void *c, struct key_params *params)
- 	if (!key)
- 		goto nla_put_failure;
+ 	/* clear flags */
+ 	sh_cmt_write_cmcsr(ch, sh_cmt_read_cmcsr(ch) &
+@@ -559,6 +560,8 @@ static irqreturn_t sh_cmt_interrupt(int irq, void *dev_id)
  
--	if ((params->key &&
--	     nla_put(cookie->msg, NL80211_KEY_DATA,
--		     params->key_len, params->key)) ||
--	    (params->seq &&
-+	if ((params->seq &&
- 	     nla_put(cookie->msg, NL80211_KEY_SEQ,
- 		     params->seq_len, params->seq)) ||
- 	    (params->cipher &&
+ 	ch->flags &= ~FLAG_SKIPEVENT;
+ 
++	raw_spin_lock_irqsave(&ch->lock, flags);
++
+ 	if (ch->flags & FLAG_REPROGRAM) {
+ 		ch->flags &= ~FLAG_REPROGRAM;
+ 		sh_cmt_clock_event_program_verify(ch, 1);
+@@ -571,6 +574,8 @@ static irqreturn_t sh_cmt_interrupt(int irq, void *dev_id)
+ 
+ 	ch->flags &= ~FLAG_IRQCONTEXT;
+ 
++	raw_spin_unlock_irqrestore(&ch->lock, flags);
++
+ 	return IRQ_HANDLED;
+ }
+ 
+@@ -781,12 +786,18 @@ static int sh_cmt_clock_event_next(unsigned long delta,
+ 				   struct clock_event_device *ced)
+ {
+ 	struct sh_cmt_channel *ch = ced_to_sh_cmt(ced);
++	unsigned long flags;
+ 
+ 	BUG_ON(!clockevent_state_oneshot(ced));
++
++	raw_spin_lock_irqsave(&ch->lock, flags);
++
+ 	if (likely(ch->flags & FLAG_IRQCONTEXT))
+ 		ch->next_match_value = delta - 1;
+ 	else
+-		sh_cmt_set_next(ch, delta - 1);
++		__sh_cmt_set_next(ch, delta - 1);
++
++	raw_spin_unlock_irqrestore(&ch->lock, flags);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0
 
