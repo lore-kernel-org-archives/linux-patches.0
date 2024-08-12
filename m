@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2EC186E38;
-	Mon, 12 Aug 2024 16:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF0A18733D;
+	Mon, 12 Aug 2024 16:16:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479366; cv=none; b=dANNHbDP/DgHEUEdMd37feBDx2PrSrS2pqnjQri1eOvgFsM/GtP616GCFHCTG17rNLs1sh4ZCr2CMTIHzRuawHJb2HrbKgqAs9kRTmEJt2b2GX4wFwpFh+sOvvez5SYInMiWt/Wj+alVQ7qWYMec3bshRoDT6hRO23fD6TZH1sU=
+	t=1723479369; cv=none; b=eR5bwebnYTBheFoTq27b3ZBS0aZl+y2tXih1RrDuozNaezXEOwRDLhlLoWshImdiDGHgdhgiJEfSiEmDY9C8Bob6ZOX/6OSHIM4QIUm4a/HSzGPbHr+fxhp0NxBgAFRv2eqx4UhUrqaWoWe8A7ekBcf21fNC58FSCS0EQYN0/RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479366; c=relaxed/simple;
-	bh=ru1D+1ghLFROaiq38/84BXeNDT2QELhYAh92q3XWcv0=;
+	s=arc-20240116; t=1723479369; c=relaxed/simple;
+	bh=lCYih9PBtPVhg/ujxrIUxK93/lzx3wkFTylqwbi7GKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QGvHN1jWQ+aJ/8hE8iWvJY+1dnH9CtkVR6iEqqBCzgBqrUmUDMRIDD+z8FU4d+LyKealeBZ5oqBLvn4q86k+5zhTVuREZ//e9HfEUfPML/E/ftTH7YfU0J6yOGhYWDFbVgttT0S4YlqjKKXipKfpR0NqijNe89rkO9EITUQvB88=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OI7zt7va; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ov07ltJiPL2TaUY6gWQ7Olg6o439VINmPBagmk4IG32QCR3AfRybCd/MAWj1JPj+hJQYzGYuZBTvo0Zy/NXJ2aRaT57D8rq+NDw/RW/C9oekU7/8ZQoFWudzBe1qJhpbOeQ3QC3bU/xD5hPBLSdsff3m0D/I3lxSTH5zRI1df5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LG5Tcj9i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OI7zt7va"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13DAC32782;
-	Mon, 12 Aug 2024 16:16:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LG5Tcj9i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A12AC32782;
+	Mon, 12 Aug 2024 16:16:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479366;
-	bh=ru1D+1ghLFROaiq38/84BXeNDT2QELhYAh92q3XWcv0=;
+	s=korg; t=1723479369;
+	bh=lCYih9PBtPVhg/ujxrIUxK93/lzx3wkFTylqwbi7GKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OI7zt7vaY6R1T20kkXNtzypXxqGBMXlH2lyrlQQDEJIVFKAfPHLlMbrDs/exZmqru
-	 3nSitAZlxd4wEWsFxW2zk9dF9ZS8AWxDVcvh8javv82IHZof28TGNfU3hdghhD8tcL
-	 21eXgqQ/Kj+p//yoZ+GpRb9GsXt/RpUTVbvLZcM4=
+	b=LG5Tcj9iQ77s8BFendgDSwNNSu2fajjzP9lA8CsOc7jAnVAn5Y5g0VqQUdmS5/ums
+	 LvQ8k5c/5iX61pXh4uUadIv0FjR6QL5U9JWs9w0IbK++b1AEUSIGDJMQUvhA1BWJst
+	 C64gvlTUSmaZs/7UFGYyzTEiy24+VNV+evWHLjbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 033/189] ACPI: SBS: manage alarm sysfs attribute through psy core
-Date: Mon, 12 Aug 2024 18:01:29 +0200
-Message-ID: <20240812160133.419818452@linuxfoundation.org>
+Subject: [PATCH 6.6 034/189] xen: privcmd: Switch from mutex to spinlock for irqfds
+Date: Mon, 12 Aug 2024 18:01:30 +0200
+Message-ID: <20240812160133.458301944@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -45,97 +46,131 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Viresh Kumar <viresh.kumar@linaro.org>
 
-[ Upstream commit 6bad28cfc30988a845fb3f59a99f4b8a4ce8fe95 ]
+[ Upstream commit 1c682593096a487fd9aebc079a307ff7a6d054a3 ]
 
-Let the power supply core register the attribute.
+irqfd_wakeup() gets EPOLLHUP, when it is called by
+eventfd_release() by way of wake_up_poll(&ctx->wqh, EPOLLHUP), which
+gets called under spin_lock_irqsave(). We can't use a mutex here as it
+will lead to a deadlock.
 
-This ensures that the attribute is created before the device is
-announced to userspace, avoiding a race condition.
+Fix it by switching over to a spin lock.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reported-by: Al Viro <viro@zeniv.linux.org.uk>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/a66d7a7a9001424d432f52a9fc3931a1f345464f.1718703669.git.viresh.kumar@linaro.org
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/sbs.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/xen/privcmd.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/acpi/sbs.c b/drivers/acpi/sbs.c
-index 94e3c000df2e1..fdeb46ed21d69 100644
---- a/drivers/acpi/sbs.c
-+++ b/drivers/acpi/sbs.c
-@@ -77,7 +77,6 @@ struct acpi_battery {
- 	u16 spec;
- 	u8 id;
- 	u8 present:1;
--	u8 have_sysfs_alarm:1;
- };
+diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
+index da88173bac432..923f064c7e3e9 100644
+--- a/drivers/xen/privcmd.c
++++ b/drivers/xen/privcmd.c
+@@ -841,7 +841,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
+ #ifdef CONFIG_XEN_PRIVCMD_IRQFD
+ /* Irqfd support */
+ static struct workqueue_struct *irqfd_cleanup_wq;
+-static DEFINE_MUTEX(irqfds_lock);
++static DEFINE_SPINLOCK(irqfds_lock);
+ static LIST_HEAD(irqfds_list);
  
- #define to_acpi_battery(x) power_supply_get_drvdata(x)
-@@ -462,12 +461,18 @@ static ssize_t acpi_battery_alarm_store(struct device *dev,
- 	return count;
- }
+ struct privcmd_kernel_irqfd {
+@@ -905,9 +905,11 @@ irqfd_wakeup(wait_queue_entry_t *wait, unsigned int mode, int sync, void *key)
+ 		irqfd_inject(kirqfd);
  
--static const struct device_attribute alarm_attr = {
-+static struct device_attribute alarm_attr = {
- 	.attr = {.name = "alarm", .mode = 0644},
- 	.show = acpi_battery_alarm_show,
- 	.store = acpi_battery_alarm_store,
- };
- 
-+static struct attribute *acpi_battery_attrs[] = {
-+	&alarm_attr.attr,
-+	NULL
-+};
-+ATTRIBUTE_GROUPS(acpi_battery);
+ 	if (flags & EPOLLHUP) {
+-		mutex_lock(&irqfds_lock);
++		unsigned long flags;
 +
- /* --------------------------------------------------------------------------
-                                  Driver Interface
-    -------------------------------------------------------------------------- */
-@@ -518,7 +523,10 @@ static int acpi_battery_read(struct acpi_battery *battery)
- static int acpi_battery_add(struct acpi_sbs *sbs, int id)
- {
- 	struct acpi_battery *battery = &sbs->battery[id];
--	struct power_supply_config psy_cfg = { .drv_data = battery, };
-+	struct power_supply_config psy_cfg = {
-+		.drv_data = battery,
-+		.attr_grp = acpi_battery_groups,
-+	};
- 	int result;
- 
- 	battery->id = id;
-@@ -548,10 +556,6 @@ static int acpi_battery_add(struct acpi_sbs *sbs, int id)
- 		goto end;
++		spin_lock_irqsave(&irqfds_lock, flags);
+ 		irqfd_deactivate(kirqfd);
+-		mutex_unlock(&irqfds_lock);
++		spin_unlock_irqrestore(&irqfds_lock, flags);
  	}
  
--	result = device_create_file(&battery->bat->dev, &alarm_attr);
--	if (result)
--		goto end;
--	battery->have_sysfs_alarm = 1;
-       end:
- 	pr_info("%s [%s]: Battery Slot [%s] (battery %s)\n",
- 	       ACPI_SBS_DEVICE_NAME, acpi_device_bid(sbs->device),
-@@ -563,11 +567,8 @@ static void acpi_battery_remove(struct acpi_sbs *sbs, int id)
+ 	return 0;
+@@ -925,6 +927,7 @@ irqfd_poll_func(struct file *file, wait_queue_head_t *wqh, poll_table *pt)
+ static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
  {
- 	struct acpi_battery *battery = &sbs->battery[id];
+ 	struct privcmd_kernel_irqfd *kirqfd, *tmp;
++	unsigned long flags;
+ 	__poll_t events;
+ 	struct fd f;
+ 	void *dm_op;
+@@ -964,18 +967,18 @@ static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
+ 	init_waitqueue_func_entry(&kirqfd->wait, irqfd_wakeup);
+ 	init_poll_funcptr(&kirqfd->pt, irqfd_poll_func);
  
--	if (battery->bat) {
--		if (battery->have_sysfs_alarm)
--			device_remove_file(&battery->bat->dev, &alarm_attr);
-+	if (battery->bat)
- 		power_supply_unregister(battery->bat);
--	}
+-	mutex_lock(&irqfds_lock);
++	spin_lock_irqsave(&irqfds_lock, flags);
+ 
+ 	list_for_each_entry(tmp, &irqfds_list, list) {
+ 		if (kirqfd->eventfd == tmp->eventfd) {
+ 			ret = -EBUSY;
+-			mutex_unlock(&irqfds_lock);
++			spin_unlock_irqrestore(&irqfds_lock, flags);
+ 			goto error_eventfd;
+ 		}
+ 	}
+ 
+ 	list_add_tail(&kirqfd->list, &irqfds_list);
+-	mutex_unlock(&irqfds_lock);
++	spin_unlock_irqrestore(&irqfds_lock, flags);
+ 
+ 	/*
+ 	 * Check if there was an event already pending on the eventfd before we
+@@ -1007,12 +1010,13 @@ static int privcmd_irqfd_deassign(struct privcmd_irqfd *irqfd)
+ {
+ 	struct privcmd_kernel_irqfd *kirqfd;
+ 	struct eventfd_ctx *eventfd;
++	unsigned long flags;
+ 
+ 	eventfd = eventfd_ctx_fdget(irqfd->fd);
+ 	if (IS_ERR(eventfd))
+ 		return PTR_ERR(eventfd);
+ 
+-	mutex_lock(&irqfds_lock);
++	spin_lock_irqsave(&irqfds_lock, flags);
+ 
+ 	list_for_each_entry(kirqfd, &irqfds_list, list) {
+ 		if (kirqfd->eventfd == eventfd) {
+@@ -1021,7 +1025,7 @@ static int privcmd_irqfd_deassign(struct privcmd_irqfd *irqfd)
+ 		}
+ 	}
+ 
+-	mutex_unlock(&irqfds_lock);
++	spin_unlock_irqrestore(&irqfds_lock, flags);
+ 
+ 	eventfd_ctx_put(eventfd);
+ 
+@@ -1069,13 +1073,14 @@ static int privcmd_irqfd_init(void)
+ static void privcmd_irqfd_exit(void)
+ {
+ 	struct privcmd_kernel_irqfd *kirqfd, *tmp;
++	unsigned long flags;
+ 
+-	mutex_lock(&irqfds_lock);
++	spin_lock_irqsave(&irqfds_lock, flags);
+ 
+ 	list_for_each_entry_safe(kirqfd, tmp, &irqfds_list, list)
+ 		irqfd_deactivate(kirqfd);
+ 
+-	mutex_unlock(&irqfds_lock);
++	spin_unlock_irqrestore(&irqfds_lock, flags);
+ 
+ 	destroy_workqueue(irqfd_cleanup_wq);
  }
- 
- static int acpi_charger_add(struct acpi_sbs *sbs)
 -- 
 2.43.0
 
