@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC18A2C1A5;
-	Mon, 12 Aug 2024 16:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310B7183CA6;
+	Mon, 12 Aug 2024 16:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480385; cv=none; b=F0zMVpnE1FzgI4ltTJQyq1XSC17AVFOhtAyB43/pUte7fOlsbheljQB01sd6IdtMIY2w7M7NL51AS3zkxGxS9rtS3O8RRk9RfTb1p0R/180r8xyAyy2BpYZ2I/JNONUzKdKQJ9z4Mi71+nrSAA/qddevA/Is/ZuXXoxcERSdg/U=
+	t=1723480388; cv=none; b=Eycw2l8ANNfRhQxRvB9yp+02aUBMq/5EOJgoKtw8p2dM40/aptZ+DSeEIW+I/MLSi01uufjyA2JAoBu6/9O3M+1T1HErG415nG+DD/LgdCf2q0Y/fEq+0uV1GAdGWdYadHVn5Ueo6Osmgqy8Ufhs3ON3wrf0VM/FxZ9dYiwCu5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480385; c=relaxed/simple;
-	bh=N/y839FUMLnWyJA7Lc1b5zKBpGNDKC3Lz0YtzrbQizc=;
+	s=arc-20240116; t=1723480388; c=relaxed/simple;
+	bh=4OseameZuHtBWPxRPRVQOm0Yifzkn0DyaiXFvr03cA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gkrus4ftzCfVfeuNTbsM1AJaCZgfma9rvoBncmkil+fKNoJV3CXQMnTJIkZPRhip0BYMUXVrTKGjcPlNQLarDeSO48Ck6H14Jg0OXdHHYhDNeWvIudiUiXHdOqOBaNZJPOdqesS6uAXehlEUxzB9/loMzu1ddnfaasioEKIpzdI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YYBxx0zd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pgfIFTSIdCbPgmrpI9iakrlIiDYaS820JvpoN5GSzmvxynuYNY4va4oWg44tltwaKboAFeaWR40hjuiPBFoC9v9nn53FKG+bhL+wz96UAATPioEa9Wi/i7TKesu8ndGS1VcPU9aKdBXdxwt3DkfIuthl20CTdqcX07BngtS1Ha0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d8c5y4Zi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YYBxx0zd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BA87C32782;
-	Mon, 12 Aug 2024 16:33:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d8c5y4Zi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93A7EC32782;
+	Mon, 12 Aug 2024 16:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480384;
-	bh=N/y839FUMLnWyJA7Lc1b5zKBpGNDKC3Lz0YtzrbQizc=;
+	s=korg; t=1723480388;
+	bh=4OseameZuHtBWPxRPRVQOm0Yifzkn0DyaiXFvr03cA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYBxx0zdzrZH3jwY6J+/qJUeY/l4oGlpXGSxygI79sk8DN4jx0GsCk4JlWoZeSg6+
-	 CKqrKBhWyyXaIbsxXx/rBSH/08M3X465WXs86txL2Z2eK3EgyhJreBd/k7ybQFgGh9
-	 N0VVC1SSvHPh6goEkuCfbhjZA589eQe/tsCc3D9s=
+	b=d8c5y4Zi0uHkLbOI6QhjS9sOJ+lBiBaIICy/Y0hCOweZPJ+gp5qzvacfTyJDYcNvB
+	 5h6TpnJEP9t2hjffHMenyKCH7M1Y4gPNBCy3MFXcjHxQFtq0CudwcCV5yfh5hbiLRk
+	 Rq50HVhP9XOy8usD++VSupZWrBhOHN2lR6Q5vpwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 152/263] ASoC: cs-amp-lib: Fix NULL pointer crash if efi.get_variable is NULL
-Date: Mon, 12 Aug 2024 18:02:33 +0200
-Message-ID: <20240812160152.365329941@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.10 179/263] io_uring/net: ensure expanded bundle recv gets marked for cleanup
+Date: Mon, 12 Aug 2024 18:03:00 +0200
+Message-ID: <20240812160153.401548579@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,37 +49,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit dc268085e499666b9f4f0fcb4c5a94e1c0b193b3 ]
+commit 11893e144ed75be55d99349760513ca104781fc0 upstream.
 
-Call efi_rt_services_supported() to check that efi.get_variable exists
-before calling it.
+If the iovec inside the kmsg isn't already allocated AND one gets
+expanded beyond the fixed size, then the request may not already have
+been marked for cleanup. Ensure that it is.
 
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 1cad8725f2b9 ("ASoC: cs-amp-lib: Add helpers for factory calibration data")
-Link: https://patch.msgid.link/20240805114222.15722-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 2f9c9515bdfd ("io_uring/net: support bundles for recv")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/codecs/cs-amp-lib.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/net.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/cs-amp-lib.c b/sound/soc/codecs/cs-amp-lib.c
-index 287ac01a38735..605964af8afad 100644
---- a/sound/soc/codecs/cs-amp-lib.c
-+++ b/sound/soc/codecs/cs-amp-lib.c
-@@ -108,7 +108,7 @@ static efi_status_t cs_amp_get_efi_variable(efi_char16_t *name,
- 
- 	KUNIT_STATIC_STUB_REDIRECT(cs_amp_get_efi_variable, name, guid, size, buf);
- 
--	if (IS_ENABLED(CONFIG_EFI))
-+	if (efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE))
- 		return efi.get_variable(name, guid, &attr, size, buf);
- 
- 	return EFI_NOT_FOUND;
--- 
-2.43.0
-
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -1084,6 +1084,7 @@ static int io_recv_buf_select(struct io_
+ 		if (arg.iovs != &kmsg->fast_iov && arg.iovs != kmsg->free_iov) {
+ 			kmsg->free_iov_nr = ret;
+ 			kmsg->free_iov = arg.iovs;
++			req->flags |= REQ_F_NEED_CLEANUP;
+ 		}
+ 	} else {
+ 		void __user *buf;
 
 
