@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23CE9186E34;
-	Mon, 12 Aug 2024 16:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA81187321;
+	Mon, 12 Aug 2024 16:24:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479891; cv=none; b=ehTZPc29J0yDDRsMBTyXtgE3YAD7yVzU1IuPge100n1GT3yK0f48+pvF70RWaeQunOAlVTFDitO+RCuQzA57UlEKQJsnzJ7tWGs2hTpq4T9/Pgc+vqqoITD9FxRoMenX89bC3fqh3ns2z8bknIXlxgmJjC5/kE5Rzi+AsBVDfBc=
+	t=1723479894; cv=none; b=W+OflGtvKdTe6fSTOyRqVQFzjQFh1lW4QgtaSaRQX9Qgz6Szhy2QkaJYnbqz2PqaK3xVJ54iBAgv9Bn6u1tMVAEbu/Mq51wGBzOHLyeuyt5Sb345XFpN6zpaNLZmXq0rezIYa2FBUQHh8jEnM2BXJysi9dZMteecwXU8+XHfCQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479891; c=relaxed/simple;
-	bh=6r5Ehxv0Cf4UjT0MYhSW0hTe6mkRDyk9qvpfx0X6oAg=;
+	s=arc-20240116; t=1723479894; c=relaxed/simple;
+	bh=5OJsJN+c2FtTkLSQClpFLJLNwP50RHG1kXQOcuHTCWI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HF1UxOxyw/QCEiZ1w3mtYGu2ve9gvR5FkZ9kCQ1Z7Ks45yCI0wEfIVmOxxAnY3eWX71s4/jrzZDuIjLfngxZSAjROZV8+QHO15L9/V7rTazCHuX/cT6hZN6Mki8kSqm931rRf0dM6ethjlDcbCAyyp4meTAaNX3VtLZL+dhaKpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IEV5ZE1I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHbghhYA9yEBbOCVGdEBVmoo0LstsCj8Hf3aM980Ud4Wl4XoZJeUD0/7dKnDlwBLP4+44pAMdeQPsRQfgUUyPBLTQD8Fs1M55OMgLYxhUz5Pwc6XZgDsmQ3eluJjBP1vO3Jso+HgII/TPg3SyMxJ+9nLiNgnY11+Rxabo9GAMkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV9k4yaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IEV5ZE1I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EDECC32782;
-	Mon, 12 Aug 2024 16:24:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV9k4yaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0056C32782;
+	Mon, 12 Aug 2024 16:24:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479891;
-	bh=6r5Ehxv0Cf4UjT0MYhSW0hTe6mkRDyk9qvpfx0X6oAg=;
+	s=korg; t=1723479894;
+	bh=5OJsJN+c2FtTkLSQClpFLJLNwP50RHG1kXQOcuHTCWI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEV5ZE1Iks4922bjX7bZDRhOYhCxiMJ4VqgqLEN9ab4P5ekQ0dO0RleZ6Yr+bXUEW
-	 WZo4P+c1KGN88ELyGyUCETGgsZywR2QSuANh6+soRo34zG8wuk6IsxvH6GnRGrU+wW
-	 Apz7nLEbVTJysxQcO98wDF1s3p6fVsOCMUJgxIIc=
+	b=nV9k4yaR16/qyMsbdQ4gIU79LnCfBYlkrz/k4jSDfLEVuurTHlMEIjblx9nNOTlHl
+	 3FMX+Ih807QbZpTzSGyX6AcaVG+OXUZI72WK5AjstQhw0A7aJyZMVNXCIn15YUF59A
+	 79pUi0xP4tkj9Vvr1YMm9fldyzeUQJ1o3JjxDVuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Krishneil Singh <krishneil.k.singh@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 015/263] x86/mm: Fix pti_clone_pgtable() alignment assumption
-Date: Mon, 12 Aug 2024 18:00:16 +0200
-Message-ID: <20240812160147.124968119@linuxfoundation.org>
+Subject: [PATCH 6.10 033/263] idpf: fix memory leaks and crashes while performing a soft reset
+Date: Mon, 12 Aug 2024 18:00:34 +0200
+Message-ID: <20240812160147.810653957@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,66 +54,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Alexander Lobakin <aleksander.lobakin@intel.com>
 
-[ Upstream commit 41e71dbb0e0a0fe214545fe64af031303a08524c ]
+[ Upstream commit f01032a2ca099ec8d619aaa916c3762aa62495df ]
 
-Guenter reported dodgy crashes on an i386-nosmp build using GCC-11
-that had the form of endless traps until entry stack exhaust and then
-#DF from the stack guard.
+The second tagged commit introduced a UAF, as it removed restoring
+q_vector->vport pointers after reinitializating the structures.
+This is due to that all queue allocation functions are performed here
+with the new temporary vport structure and those functions rewrite
+the backpointers to the vport. Then, this new struct is freed and
+the pointers start leading to nowhere.
 
-It turned out that pti_clone_pgtable() had alignment assumptions on
-the start address, notably it hard assumes start is PMD aligned. This
-is true on x86_64, but very much not true on i386.
+But generally speaking, the current logic is very fragile. It claims
+to be more reliable when the system is low on memory, but in fact, it
+consumes two times more memory as at the moment of running this
+function, there are two vports allocated with their queues and vectors.
+Moreover, it claims to prevent the driver from running into "bad state",
+but in fact, any error during the rebuild leaves the old vport in the
+partially allocated state.
+Finally, if the interface is down when the function is called, it always
+allocates a new queue set, but when the user decides to enable the
+interface later on, vport_open() allocates them once again, IOW there's
+a clear memory leak here.
 
-These assumptions can cause the end condition to malfunction, leading
-to a 'short' clone. Guess what happens when the user mapping has a
-short copy of the entry text?
+Just don't allocate a new queue set when performing a reset, that solves
+crashes and memory leaks. Readd the old queue number and reopen the
+interface on rollback - that solves limbo states when the device is left
+disabled and/or without HW queues enabled.
 
-Use the correct increment form for addr to avoid alignment
-assumptions.
-
-Fixes: 16a3fe634f6a ("x86/mm/pti: Clone kernel-image on PTE level for 32 bit")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240731163105.GG33588@noisy.programming.kicks-ass.net
+Fixes: 02cbfba1add5 ("idpf: add ethtool callbacks")
+Fixes: e4891e4687c8 ("idpf: split &idpf_queue into 4 strictly-typed queue structures")
+Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://patch.msgid.link/20240806220923.3359860-2-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pti.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_lib.c | 30 +++++++++++-----------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/arch/x86/mm/pti.c b/arch/x86/mm/pti.c
-index 2e69abf4f852a..48c503208c794 100644
---- a/arch/x86/mm/pti.c
-+++ b/arch/x86/mm/pti.c
-@@ -374,14 +374,14 @@ pti_clone_pgtable(unsigned long start, unsigned long end,
- 			 */
- 			*target_pmd = *pmd;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_lib.c b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+index f1ee5584e8fa2..32b6f0d52e3c5 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_lib.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_lib.c
+@@ -1337,9 +1337,8 @@ static void idpf_rx_init_buf_tail(struct idpf_vport *vport)
+ /**
+  * idpf_vport_open - Bring up a vport
+  * @vport: vport to bring up
+- * @alloc_res: allocate queue resources
+  */
+-static int idpf_vport_open(struct idpf_vport *vport, bool alloc_res)
++static int idpf_vport_open(struct idpf_vport *vport)
+ {
+ 	struct idpf_netdev_priv *np = netdev_priv(vport->netdev);
+ 	struct idpf_adapter *adapter = vport->adapter;
+@@ -1352,11 +1351,9 @@ static int idpf_vport_open(struct idpf_vport *vport, bool alloc_res)
+ 	/* we do not allow interface up just yet */
+ 	netif_carrier_off(vport->netdev);
  
--			addr += PMD_SIZE;
-+			addr = round_up(addr + 1, PMD_SIZE);
+-	if (alloc_res) {
+-		err = idpf_vport_queues_alloc(vport);
+-		if (err)
+-			return err;
+-	}
++	err = idpf_vport_queues_alloc(vport);
++	if (err)
++		return err;
  
- 		} else if (level == PTI_CLONE_PTE) {
+ 	err = idpf_vport_intr_alloc(vport);
+ 	if (err) {
+@@ -1541,7 +1538,7 @@ void idpf_init_task(struct work_struct *work)
+ 	np = netdev_priv(vport->netdev);
+ 	np->state = __IDPF_VPORT_DOWN;
+ 	if (test_and_clear_bit(IDPF_VPORT_UP_REQUESTED, vport_config->flags))
+-		idpf_vport_open(vport, true);
++		idpf_vport_open(vport);
  
- 			/* Walk the page-table down to the pte level */
- 			pte = pte_offset_kernel(pmd, addr);
- 			if (pte_none(*pte)) {
--				addr += PAGE_SIZE;
-+				addr = round_up(addr + 1, PAGE_SIZE);
- 				continue;
- 			}
+ 	/* Spawn and return 'idpf_init_task' work queue until all the
+ 	 * default vports are created
+@@ -1900,9 +1897,6 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
+ 		goto free_vport;
+ 	}
  
-@@ -401,7 +401,7 @@ pti_clone_pgtable(unsigned long start, unsigned long end,
- 			/* Clone the PTE */
- 			*target_pte = *pte;
+-	err = idpf_vport_queues_alloc(new_vport);
+-	if (err)
+-		goto free_vport;
+ 	if (current_state <= __IDPF_VPORT_DOWN) {
+ 		idpf_send_delete_queues_msg(vport);
+ 	} else {
+@@ -1974,17 +1968,23 @@ int idpf_initiate_soft_reset(struct idpf_vport *vport,
  
--			addr += PAGE_SIZE;
-+			addr = round_up(addr + 1, PAGE_SIZE);
+ 	err = idpf_set_real_num_queues(vport);
+ 	if (err)
+-		goto err_reset;
++		goto err_open;
  
- 		} else {
- 			BUG();
+ 	if (current_state == __IDPF_VPORT_UP)
+-		err = idpf_vport_open(vport, false);
++		err = idpf_vport_open(vport);
+ 
+ 	kfree(new_vport);
+ 
+ 	return err;
+ 
+ err_reset:
+-	idpf_vport_queues_rel(new_vport);
++	idpf_send_add_queues_msg(vport, vport->num_txq, vport->num_complq,
++				 vport->num_rxq, vport->num_bufq);
++
++err_open:
++	if (current_state == __IDPF_VPORT_UP)
++		idpf_vport_open(vport);
++
+ free_vport:
+ 	kfree(new_vport);
+ 
+@@ -2213,7 +2213,7 @@ static int idpf_open(struct net_device *netdev)
+ 	idpf_vport_ctrl_lock(netdev);
+ 	vport = idpf_netdev_to_vport(netdev);
+ 
+-	err = idpf_vport_open(vport, true);
++	err = idpf_vport_open(vport);
+ 
+ 	idpf_vport_ctrl_unlock(netdev);
+ 
 -- 
 2.43.0
 
