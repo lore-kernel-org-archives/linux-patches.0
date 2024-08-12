@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E0A187561;
-	Mon, 12 Aug 2024 16:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38F4E187341;
+	Mon, 12 Aug 2024 16:15:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479334; cv=none; b=Lkv9/PoLvhQtVj3F82zQIyqzUhpFe0tbwYTZyuA5I6pDQrnEqR4gXfDavtXxPv8KP2HlQ9EOQfd4b0TsnpJopHMIjggQYNeTuN81InjsfVAUcR4Y2S1BosW9EwEO66v8W76Li/GRwlwJ/tSbseFrRMC42Td6rqtzYNl9VJHVbzI=
+	t=1723479338; cv=none; b=KdWi22epEuJjFj767MKQKSBgPX/DpHXsCiowTThsrmphsJhebYa5XRm2ZtCMuHCQbFX5bC0G9pkvZwiEuphQ9db3IWuGmGiZXPP6Y+cbJFSU4PQUC7aSnGI9AjaORFiqjqPyR4wvk+X3Tyqeek3xlkfbG48gYQ+PDktqVvvzPyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479334; c=relaxed/simple;
-	bh=j6WjsizMdiYSnYIaq2cwoTRGK9Bqm0lG801YuaQqDsA=;
+	s=arc-20240116; t=1723479338; c=relaxed/simple;
+	bh=qxt0M05CrYBavKAsj3wOMAdjJaVBLBsKl/AwairAd+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LNXVjhPeRi3CwyrcYxrfWC54QXT4JqAc3GHVFBWEeU8/W1PYJdJwUH6t22F34oKu/Z0ISXp3gRhszq4BZPwm/A1S2AVga40xWXG3EVVYlVIponSUVPm8CSk3jD6UiDohnozG+yAYeulr9H4vTybmDltJeFob/pi1GeJfwt2r8g0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLX0Xupl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ru1puhgRJMXwLnDNIHHGmelAZ6GIW9oHKsCEzVAehmSym1Jfu8J1nQZXyAkkKNH2CfT8WOs1Jqj6JxcEYIUiZHme6hon2HDCp6EJvaZQIyZl8qgLrJIZgb8tyxDgZ7WBnycZVmYv3d+C7rrG6ZU2/U1KuY/spxVGSR05+ky+VRY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v4OhMV7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLX0Xupl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C4A9C4AF0F;
-	Mon, 12 Aug 2024 16:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v4OhMV7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E767C32782;
+	Mon, 12 Aug 2024 16:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479334;
-	bh=j6WjsizMdiYSnYIaq2cwoTRGK9Bqm0lG801YuaQqDsA=;
+	s=korg; t=1723479337;
+	bh=qxt0M05CrYBavKAsj3wOMAdjJaVBLBsKl/AwairAd+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLX0Xupl1oYqzdKibbrgs4r5dJR+F1Abok6Px4KB/DQTCOxqlYs87ciZ9WvowY7tj
-	 cTJAdMWl8MFcMI4tX+57O0iIz/fAQwWn0BgPAgHnXItSyRe3tXEsVZ1K/fmiviafqp
-	 rTc5W23AjUXV+GSaYGood06TLsjotl7ETxWxHSXM=
+	b=v4OhMV7jNSmn/odqzaxqahppQ5Tz4cboqi0wtxskexpyu22sxEVs/axxuPG1hQF43
+	 6KYfuRqqsMNb1RXqCUEJcK+cK04dT4JTfHOLNOuFrEXYXRPSTMBEGpj7IFADeo2NyJ
+	 LOBYiHMHo/9wCQBlUokeGZs107ygehI3i5WrozHs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
-	Ma Jun <Jun.Ma2@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 054/189] drm/amdgpu/pm: Fix the null pointer dereference in apply_state_adjust_rules
-Date: Mon, 12 Aug 2024 18:01:50 +0200
-Message-ID: <20240812160134.225465025@linuxfoundation.org>
+Subject: [PATCH 6.6 028/189] md/raid5: avoid BUG_ON() while continue reshape after reassembling
+Date: Mon, 12 Aug 2024 18:01:24 +0200
+Message-ID: <20240812160133.229812145@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,101 +51,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Jun <Jun.Ma2@amd.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit d19fb10085a49b77578314f69fff21562f7cd054 ]
+[ Upstream commit 305a5170dc5cf3d395bb4c4e9239bca6d0b54b49 ]
 
-Check the pointer value to fix potential null pointer
-dereference
+Currently, mdadm support --revert-reshape to abort the reshape while
+reassembling, as the test 07revert-grow. However, following BUG_ON()
+can be triggerred by the test:
 
-Acked-by: Yang Wang<kevinyang.wang@amd.com>
-Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+kernel BUG at drivers/md/raid5.c:6278!
+invalid opcode: 0000 [#1] PREEMPT SMP PTI
+irq event stamp: 158985
+CPU: 6 PID: 891 Comm: md0_reshape Not tainted 6.9.0-03335-g7592a0b0049a #94
+RIP: 0010:reshape_request+0x3f1/0xe60
+Call Trace:
+ <TASK>
+ raid5_sync_request+0x43d/0x550
+ md_do_sync+0xb7a/0x2110
+ md_thread+0x294/0x2b0
+ kthread+0x147/0x1c0
+ ret_from_fork+0x59/0x70
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Root cause is that --revert-reshape update the raid_disks from 5 to 4,
+while reshape position is still set, and after reassembling the array,
+reshape position will be read from super block, then during reshape the
+checking of 'writepos' that is caculated by old reshape position will
+fail.
+
+Fix this panic the easy way first, by converting the BUG_ON() to
+WARN_ON(), and stop the reshape if checkings fail.
+
+Noted that mdadm must fix --revert-shape as well, and probably md/raid
+should enhance metadata validation as well, however this means
+reassemble will fail and there must be user tools to fix the wrong
+metadata.
+
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240611132251.1967786-13-yukuai1@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c    |  7 +++++--
- .../gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c    | 14 ++++++++------
- .../gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c  |  7 +++++--
- 3 files changed, 18 insertions(+), 10 deletions(-)
+ drivers/md/raid5.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-index 15515025d995b..163864bd51c34 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu7_hwmgr.c
-@@ -3314,8 +3314,7 @@ static int smu7_apply_state_adjust_rules(struct pp_hwmgr *hwmgr,
- 			const struct pp_power_state *current_ps)
- {
- 	struct amdgpu_device *adev = hwmgr->adev;
--	struct smu7_power_state *smu7_ps =
--				cast_phw_smu7_power_state(&request_ps->hardware);
-+	struct smu7_power_state *smu7_ps;
- 	uint32_t sclk;
- 	uint32_t mclk;
- 	struct PP_Clocks minimum_clocks = {0};
-@@ -3332,6 +3331,10 @@ static int smu7_apply_state_adjust_rules(struct pp_hwmgr *hwmgr,
- 	uint32_t latency;
- 	bool latency_allowed = false;
- 
-+	smu7_ps = cast_phw_smu7_power_state(&request_ps->hardware);
-+	if (!smu7_ps)
-+		return -EINVAL;
+diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
+index 1507540a9cb4e..2c7f11e576673 100644
+--- a/drivers/md/raid5.c
++++ b/drivers/md/raid5.c
+@@ -6326,7 +6326,9 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
+ 	safepos = conf->reshape_safe;
+ 	sector_div(safepos, data_disks);
+ 	if (mddev->reshape_backwards) {
+-		BUG_ON(writepos < reshape_sectors);
++		if (WARN_ON(writepos < reshape_sectors))
++			return MaxSector;
 +
- 	data->battery_state = (PP_StateUILabel_Battery ==
- 			request_ps->classification.ui_label);
- 	data->mclk_ignore_signal = false;
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-index b015a601b385a..eb744401e0567 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/smu8_hwmgr.c
-@@ -1065,16 +1065,18 @@ static int smu8_apply_state_adjust_rules(struct pp_hwmgr *hwmgr,
- 				struct pp_power_state  *prequest_ps,
- 			const struct pp_power_state *pcurrent_ps)
- {
--	struct smu8_power_state *smu8_ps =
--				cast_smu8_power_state(&prequest_ps->hardware);
--
--	const struct smu8_power_state *smu8_current_ps =
--				cast_const_smu8_power_state(&pcurrent_ps->hardware);
--
-+	struct smu8_power_state *smu8_ps;
-+	const struct smu8_power_state *smu8_current_ps;
- 	struct smu8_hwmgr *data = hwmgr->backend;
- 	struct PP_Clocks clocks = {0, 0, 0, 0};
- 	bool force_high;
- 
-+	smu8_ps = cast_smu8_power_state(&prequest_ps->hardware);
-+	smu8_current_ps = cast_const_smu8_power_state(&pcurrent_ps->hardware);
+ 		writepos -= reshape_sectors;
+ 		readpos += reshape_sectors;
+ 		safepos += reshape_sectors;
+@@ -6344,14 +6346,18 @@ static sector_t reshape_request(struct mddev *mddev, sector_t sector_nr, int *sk
+ 	 * to set 'stripe_addr' which is where we will write to.
+ 	 */
+ 	if (mddev->reshape_backwards) {
+-		BUG_ON(conf->reshape_progress == 0);
++		if (WARN_ON(conf->reshape_progress == 0))
++			return MaxSector;
 +
-+	if (!smu8_ps || !smu8_current_ps)
-+		return -EINVAL;
+ 		stripe_addr = writepos;
+-		BUG_ON((mddev->dev_sectors &
+-			~((sector_t)reshape_sectors - 1))
+-		       - reshape_sectors - stripe_addr
+-		       != sector_nr);
++		if (WARN_ON((mddev->dev_sectors &
++		    ~((sector_t)reshape_sectors - 1)) -
++		    reshape_sectors - stripe_addr != sector_nr))
++			return MaxSector;
+ 	} else {
+-		BUG_ON(writepos != sector_nr + reshape_sectors);
++		if (WARN_ON(writepos != sector_nr + reshape_sectors))
++			return MaxSector;
 +
- 	smu8_ps->need_dfs_bypass = true;
- 
- 	data->battery_state = (PP_StateUILabel_Battery == prequest_ps->classification.ui_label);
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-index 6d6bc6a380b36..49c984f14e6b1 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
-@@ -3259,8 +3259,7 @@ static int vega10_apply_state_adjust_rules(struct pp_hwmgr *hwmgr,
- 			const struct pp_power_state *current_ps)
- {
- 	struct amdgpu_device *adev = hwmgr->adev;
--	struct vega10_power_state *vega10_ps =
--				cast_phw_vega10_power_state(&request_ps->hardware);
-+	struct vega10_power_state *vega10_ps;
- 	uint32_t sclk;
- 	uint32_t mclk;
- 	struct PP_Clocks minimum_clocks = {0};
-@@ -3278,6 +3277,10 @@ static int vega10_apply_state_adjust_rules(struct pp_hwmgr *hwmgr,
- 	uint32_t stable_pstate_sclk = 0, stable_pstate_mclk = 0;
- 	uint32_t latency;
- 
-+	vega10_ps = cast_phw_vega10_power_state(&request_ps->hardware);
-+	if (!vega10_ps)
-+		return -EINVAL;
-+
- 	data->battery_state = (PP_StateUILabel_Battery ==
- 			request_ps->classification.ui_label);
+ 		stripe_addr = sector_nr;
+ 	}
  
 -- 
 2.43.0
