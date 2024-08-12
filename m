@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CF1186E5E;
-	Mon, 12 Aug 2024 16:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1181187345;
+	Mon, 12 Aug 2024 16:36:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480571; cv=none; b=eTjSGvxCj8WFNS6VNfj/BbXJYl0q0JtujwKWL0mOWIbH70JEFzcajEA+LagRHe9tvLAYW17xz5csEIfKeC8GOwMYgfpsFaWwReyduRo/hg1ALfYfknoKZZaraW2gaqKQQhK/Rt5DZimi4m2H7s6DLmT4k2s6dTufTLzMpMYmbE4=
+	t=1723480574; cv=none; b=oY+wwsCK2lqsMswF1bClqsJTwTFuOVfVjmZyQWWeMiSgRTIWY53PZTI6A7xAOcf9G83EJPZ7vGpCKuuui1H3Eukl3n2H8azfbzlCba9bmuH160gghYM04XnuthXgUAV2eKy9S40NhoB+KX1oxPxhlOZ8DQShZA7uGkQ5WYqcc04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480571; c=relaxed/simple;
-	bh=3f/SAynW2Qc7OgJHbCiuxIP/ig6inyDMzUfRA8uOiss=;
+	s=arc-20240116; t=1723480574; c=relaxed/simple;
+	bh=uphokO5p6RewEQCsRa9oeYz1J+nSszEUi6QP6EzEFWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q4nYoMWPIizq8VfNxUQUvtIofeXZq74e/oERd8arHOq0sEjugxSzt1SUXpY53avO4O2FaYgarQ3F9Saj4lVZlaIBbevFc+XX9Tg4hxy5eWnTDdITuwjeAR5c+mrYo5h9s3u0OR9u0bufxzgb0Z1IENDlSaUQHBeSYRJGSN/9Ask=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J3Ohm3LM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XtEYzCpabaIKrIoF3fCIGsCd48J9o4UGzOWT+nAJJiGtSGrqN3Ndhhxh6rSVxvB6ean9C3jqVxiLwT6/NkhhSfeypzJst+lYpWeQ8ue30EwdKWjRMD7/KQTi5NzxToGrUH1osN2DwtRo0cJbHTFu5qInJwtHlm8MW6mHnA2WPpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ErxrNNg8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J3Ohm3LM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04ACAC32782;
-	Mon, 12 Aug 2024 16:36:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ErxrNNg8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30424C32782;
+	Mon, 12 Aug 2024 16:36:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480571;
-	bh=3f/SAynW2Qc7OgJHbCiuxIP/ig6inyDMzUfRA8uOiss=;
+	s=korg; t=1723480574;
+	bh=uphokO5p6RewEQCsRa9oeYz1J+nSszEUi6QP6EzEFWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J3Ohm3LMPQtf4u9YGVn4QSlqgAEWuYJDk/U7l98zaJOhHjqkrPiyqbRKkndIX8STO
-	 QAomdPwiyHTwcvnr4nECHkZzA7nBaTAbU5RaPO25+HSfeyrG7b32C7l91C7suYWM8I
-	 2hJEWm3FULtTqmrR8W6l2x5aMdXzOmleylMFMVac=
+	b=ErxrNNg8+ZmnhvYtuyNL0AOvJ5Q4Ly1VchTQZUwB1SvBCwVXFd5mJxdYPVNCN+Rv7
+	 9iUFLda0UZ47Fon6iebfT98qzjSNivm62Ix+o9vlJ8xp3MJc6JWL3qao8DGFMHiAsC
+	 8F5hjsWR9l57jXWpIjcAL8zd48sTOQM2XKoTeydQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
+	Andi Kleen <ak@linux.intel.com>,
 	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.10 219/263] irqchip/xilinx: Fix shift out of bounds
-Date: Mon, 12 Aug 2024 18:03:40 +0200
-Message-ID: <20240812160154.925173751@linuxfoundation.org>
+Subject: [PATCH 6.10 237/263] x86/mtrr: Check if fixed MTRRs exist before saving them
+Date: Mon, 12 Aug 2024 18:03:58 +0200
+Message-ID: <20240812160155.607428884@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,46 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Andi Kleen <ak@linux.intel.com>
 
-commit d73f0f49daa84176c3beee1606e73c7ffb6af8b2 upstream.
+commit 919f18f961c03d6694aa726c514184f2311a4614 upstream.
 
-The device tree property 'xlnx,kind-of-intr' is sanity checked that the
-bitmask contains only set bits which are in the range of the number of
-interrupts supported by the controller.
+MTRRs have an obsolete fixed variant for fine grained caching control
+of the 640K-1MB region that uses separate MSRs. This fixed variant has
+a separate capability bit in the MTRR capability MSR.
 
-The check is done by shifting the mask right by the number of supported
-interrupts and checking the result for zero.
+So far all x86 CPUs which support MTRR have this separate bit set, so it
+went unnoticed that mtrr_save_state() does not check the capability bit
+before accessing the fixed MTRR MSRs.
 
-The data type of the mask is u32 and the number of supported interrupts is
-up to 32. In case of 32 interrupts the shift is out of bounds, resulting in
-a mismatch warning. The out of bounds condition is also reported by UBSAN:
+Though on a CPU that does not support the fixed MTRR capability this
+results in a #GP.  The #GP itself is harmless because the RDMSR fault is
+handled gracefully, but results in a WARN_ON().
 
-  UBSAN: shift-out-of-bounds in irq-xilinx-intc.c:332:22
-  shift exponent 32 is too large for 32-bit type 'unsigned int'
+Add the missing capability check to prevent this.
 
-Fix it by promoting the mask to u64 for the test.
-
-Fixes: d50466c90724 ("microblaze: intc: Refactor DT sanity check")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+Fixes: 2b1f6278d77c ("[PATCH] x86: Save the MTRRs of the BSP before booting an AP")
+Signed-off-by: Andi Kleen <ak@linux.intel.com>
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/1723186944-3571957-1-git-send-email-radhey.shyam.pandey@amd.com
+Link: https://lore.kernel.org/all/20240808000244.946864-1-ak@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-xilinx-intc.c |    2 +-
+ arch/x86/kernel/cpu/mtrr/mtrr.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-xilinx-intc.c
-+++ b/drivers/irqchip/irq-xilinx-intc.c
-@@ -189,7 +189,7 @@ static int __init xilinx_intc_of_init(st
- 		irqc->intr_mask = 0;
- 	}
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.c
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
+@@ -609,7 +609,7 @@ void mtrr_save_state(void)
+ {
+ 	int first_cpu;
  
--	if (irqc->intr_mask >> irqc->nr_irq)
-+	if ((u64)irqc->intr_mask >> irqc->nr_irq)
- 		pr_warn("irq-xilinx: mismatch in kind-of-intr param\n");
+-	if (!mtrr_enabled())
++	if (!mtrr_enabled() || !mtrr_state.have_fixed)
+ 		return;
  
- 	pr_info("irq-xilinx: %pOF: num_irq=%d, edge=0x%x\n",
+ 	first_cpu = cpumask_first(cpu_online_mask);
 
 
