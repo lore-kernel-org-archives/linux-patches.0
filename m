@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73BD9183CD4;
-	Mon, 12 Aug 2024 16:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B549187321;
+	Mon, 12 Aug 2024 16:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480195; cv=none; b=DUmRf9JoiWv+Aj4gcN6/PCJUc2Zg6/HRRFCoKNoLRf22JS+OrVoj0je0SOim6chbtzB8g5nyU6RWbwHREybHBAfa4ExIEK5OZ3Ujd38TlltDDkYLaEl+HN9i9o5QOgJXqTFKWJYnryxDm1WEp0bAPFxs8QLyoRjRs3ZrvpyZy1U=
+	t=1723480198; cv=none; b=SVvY9FERoKuO6VKts7vCW1Z/x09GJK85r+/g83NofNRfENyUInmdznGb1YCpO3iT1xRWcfAeRbyq2c0RDGEk4S4P0dob8Qygq6ysSEe/yEcvjh1f0+rG8YD80f332kLQbWACiyQz8InjfWvWelVxKC1OCcd/ZmF+mjAlOCvRfac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480195; c=relaxed/simple;
-	bh=7CxPlVGfCHaQqRU9smrDpd3yYSzv8B3Wl8RUMbVdiTg=;
+	s=arc-20240116; t=1723480198; c=relaxed/simple;
+	bh=j2g4SZJtPy4sI0NoSo4H0L0WIL2S8D1TGNrWtE2KwQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AgDEUSe44uHAsb0TDs77rwKFREUw3F9azMYiaZc5PTl0SVtnrCgJRy0d3vyWtM3en+W/YQK29Em+BzNtdY1Sds+u6OffuV1RQNQwGsDf6oWh3NJVbg0z2MSfPO2NLMtv3vrfTFRmAo0xlnmMpRBaHHC6ql2q6mnedTxk1UUYT0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eNk6ryGG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tUv0eE9I4iFdJUjSW/bsFIGBChK5NkdOIhLlwZ+IjG29spZ2vX23sjRMCsrx4d6Iw6mbVA97NaQ/6PPwEVYJYa2Js9vqT+G9k8UzaBbNi+b+SnhOwlsJU82gx+HriPTdcC5ZTcDaBI47aFllNqxoVR6K1As6kOoJKthEiitAJ7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=imvZ7p97; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eNk6ryGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6912C32782;
-	Mon, 12 Aug 2024 16:29:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="imvZ7p97"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE83C32782;
+	Mon, 12 Aug 2024 16:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480195;
-	bh=7CxPlVGfCHaQqRU9smrDpd3yYSzv8B3Wl8RUMbVdiTg=;
+	s=korg; t=1723480198;
+	bh=j2g4SZJtPy4sI0NoSo4H0L0WIL2S8D1TGNrWtE2KwQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eNk6ryGGijYpcWUsFfNAtjoG/7jOhwwcfrfSvmUDrhCkXhEBRWEuisJZV6OncJItx
-	 WRW4LVvvc/W2JAoCeIEaM7kmNF0k5mX8NfOcgiV2ClSzgwBgye0poABeg0l2Q1fFqj
-	 sFQVpLsLEts1v3hUvntcGHaOSZFcNcyy5Xe7cpOE=
+	b=imvZ7p97zvvpc7iUaWzHHaGYV7TLzq9Fn6hJjR7O2aDwmYrnuPKfGU/KBWSI4s8Mf
+	 HaoIIXVA7MVGc7luDR0v7W3kxkOftKvgPiGggf0wBp/nWGufOczpA8YZ5EUQ+KU0wt
+	 sfeutV3y9hpWnqfOv2r1fxraIYMNXOyKPuhuR7Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+18df508cf00a0598d9a6@syzkaller.appspotmail.com,
-	=?UTF-8?q?Wojciech=20G=C5=82adysz?= <wojciech.gladysz@infogain.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 116/263] ext4: sanity check for NULL pointer after ext4_force_shutdown
-Date: Mon, 12 Aug 2024 18:01:57 +0200
-Message-ID: <20240812160150.986076505@linuxfoundation.org>
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.10 125/263] irqchip/meson-gpio: Convert meson_gpio_irq_controller::lock to raw_spinlock_t
+Date: Mon, 12 Aug 2024 18:02:06 +0200
+Message-ID: <20240812160151.334959538@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -46,139 +44,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Wojciech Gładysz <wojciech.gladysz@infogain.com>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-[ Upstream commit 83f4414b8f84249d538905825b088ff3ae555652 ]
+commit f872d4af79fe8c71ae291ce8875b477e1669a6c7 upstream.
 
-Test case: 2 threads write short inline data to a file.
-In ext4_page_mkwrite the resulting inline data is converted.
-Handling ext4_grp_locked_error with description "block bitmap
-and bg descriptor inconsistent: X vs Y free clusters" calls
-ext4_force_shutdown. The conversion clears
-EXT4_STATE_MAY_INLINE_DATA but fails for
-ext4_destroy_inline_data_nolock and ext4_mark_iloc_dirty due
-to ext4_forced_shutdown. The restoration of inline data fails
-for the same reason not setting EXT4_STATE_MAY_INLINE_DATA.
-Without the flag set a regular process path in ext4_da_write_end
-follows trying to dereference page folio private pointer that has
-not been set. The fix calls early return with -EIO error shall the
-pointer to private be NULL.
+This lock is acquired under irq_desc::lock with interrupts disabled.
 
-Sample crash report:
+When PREEMPT_RT is enabled, 'spinlock_t' becomes preemptible, which results
+in invalid lock acquire context;
 
-Unable to handle kernel paging request at virtual address dfff800000000004
-KASAN: null-ptr-deref in range [0x0000000000000020-0x0000000000000027]
-Mem abort info:
-  ESR = 0x0000000096000005
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x05: level 1 translation fault
-Data abort info:
-  ISV = 0, ISS = 0x00000005, ISS2 = 0x00000000
-  CM = 0, WnR = 0, TnD = 0, TagAccess = 0
-  GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
-[dfff800000000004] address between user and kernel address ranges
-Internal error: Oops: 0000000096000005 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 1 PID: 20274 Comm: syz-executor185 Not tainted 6.9.0-rc7-syzkaller-gfda5695d692c #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : __block_commit_write+0x64/0x2b0 fs/buffer.c:2167
-lr : __block_commit_write+0x3c/0x2b0 fs/buffer.c:2160
-sp : ffff8000a1957600
-x29: ffff8000a1957610 x28: dfff800000000000 x27: ffff0000e30e34b0
-x26: 0000000000000000 x25: dfff800000000000 x24: dfff800000000000
-x23: fffffdffc397c9e0 x22: 0000000000000020 x21: 0000000000000020
-x20: 0000000000000040 x19: fffffdffc397c9c0 x18: 1fffe000367bd196
-x17: ffff80008eead000 x16: ffff80008ae89e3c x15: 00000000200000c0
-x14: 1fffe0001cbe4e04 x13: 0000000000000000 x12: 0000000000000000
-x11: 0000000000000001 x10: 0000000000ff0100 x9 : 0000000000000000
-x8 : 0000000000000004 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : fffffdffc397c9c0 x4 : 0000000000000020 x3 : 0000000000000020
-x2 : 0000000000000040 x1 : 0000000000000020 x0 : fffffdffc397c9c0
-Call trace:
- __block_commit_write+0x64/0x2b0 fs/buffer.c:2167
- block_write_end+0xb4/0x104 fs/buffer.c:2253
- ext4_da_do_write_end fs/ext4/inode.c:2955 [inline]
- ext4_da_write_end+0x2c4/0xa40 fs/ext4/inode.c:3028
- generic_perform_write+0x394/0x588 mm/filemap.c:3985
- ext4_buffered_write_iter+0x2c0/0x4ec fs/ext4/file.c:299
- ext4_file_write_iter+0x188/0x1780
- call_write_iter include/linux/fs.h:2110 [inline]
- new_sync_write fs/read_write.c:497 [inline]
- vfs_write+0x968/0xc3c fs/read_write.c:590
- ksys_write+0x15c/0x26c fs/read_write.c:643
- __do_sys_write fs/read_write.c:655 [inline]
- __se_sys_write fs/read_write.c:652 [inline]
- __arm64_sys_write+0x7c/0x90 fs/read_write.c:652
- __invoke_syscall arch/arm64/kernel/syscall.c:34 [inline]
- invoke_syscall+0x98/0x2b8 arch/arm64/kernel/syscall.c:48
- el0_svc_common+0x130/0x23c arch/arm64/kernel/syscall.c:133
- do_el0_svc+0x48/0x58 arch/arm64/kernel/syscall.c:152
- el0_svc+0x54/0x168 arch/arm64/kernel/entry-common.c:712
- el0t_64_sync_handler+0x84/0xfc arch/arm64/kernel/entry-common.c:730
- el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:598
-Code: 97f85911 f94002da 91008356 d343fec8 (38796908)
----[ end trace 0000000000000000 ]---
-----------------
-Code disassembly (best guess):
-   0:	97f85911 	bl	0xffffffffffe16444
-   4:	f94002da 	ldr	x26, [x22]
-   8:	91008356 	add	x22, x26, #0x20
-   c:	d343fec8 	lsr	x8, x22, #3
-* 10:	38796908 	ldrb	w8, [x8, x25] <-- trapping instruction
+  [ BUG: Invalid wait context ]
+  swapper/0/1 is trying to lock:
+  ffff0000008fed30 (&ctl->lock){....}-{3:3}, at: meson_gpio_irq_update_bits0
+  other info that might help us debug this:
+  context-{5:5}
+  3 locks held by swapper/0/1:
+   #0: ffff0000003cd0f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0x90c
+   #1: ffff000004714650 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq0
+   #2: ffff0000047144c8 (&irq_desc_lock_class){-.-.}-{2:2}, at: __setup_irq0
+  stack backtrace:
+  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.9-sdkernel #1
+  Call trace:
+   _raw_spin_lock_irqsave+0x60/0x88
+   meson_gpio_irq_update_bits+0x34/0x70
+   meson8_gpio_irq_set_type+0x78/0xc4
+   meson_gpio_irq_set_type+0x30/0x60
+   __irq_set_trigger+0x60/0x180
+   __setup_irq+0x30c/0x6e0
+   request_threaded_irq+0xec/0x1a4
 
-Reported-by: syzbot+18df508cf00a0598d9a6@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=18df508cf00a0598d9a6
-Link: https://lore.kernel.org/all/000000000000f19a1406109eb5c5@google.com/T/
-Signed-off-by: Wojciech Gładysz <wojciech.gladysz@infogain.com>
-Link: https://patch.msgid.link/20240703070112.10235-1-wojciech.gladysz@infogain.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 215f4cc0fb20 ("irqchip/meson: Add support for gpio interrupt controller")
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240729131850.3015508-1-avkrasnov@salutedevices.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/buffer.c     | 2 ++
- fs/ext4/inode.c | 5 +++++
- 2 files changed, 7 insertions(+)
+ drivers/irqchip/irq-meson-gpio.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/fs/buffer.c b/fs/buffer.c
-index 8c19e705b9c33..645f0387dfe1d 100644
---- a/fs/buffer.c
-+++ b/fs/buffer.c
-@@ -2187,6 +2187,8 @@ static void __block_commit_write(struct folio *folio, size_t from, size_t to)
- 	struct buffer_head *bh, *head;
+--- a/drivers/irqchip/irq-meson-gpio.c
++++ b/drivers/irqchip/irq-meson-gpio.c
+@@ -178,7 +178,7 @@ struct meson_gpio_irq_controller {
+ 	void __iomem *base;
+ 	u32 channel_irqs[MAX_NUM_CHANNEL];
+ 	DECLARE_BITMAP(channel_map, MAX_NUM_CHANNEL);
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ };
  
- 	bh = head = folio_buffers(folio);
-+	if (!bh)
-+		return;
- 	blocksize = bh->b_size;
+ static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
+@@ -187,14 +187,14 @@ static void meson_gpio_irq_update_bits(s
+ 	unsigned long flags;
+ 	u32 tmp;
  
- 	block_start = 0;
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 4b0d64a76e88e..238e196338234 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -2973,6 +2973,11 @@ static int ext4_da_do_write_end(struct address_space *mapping,
- 	bool disksize_changed = false;
- 	loff_t new_i_size;
+-	spin_lock_irqsave(&ctl->lock, flags);
++	raw_spin_lock_irqsave(&ctl->lock, flags);
  
-+	if (unlikely(!folio_buffers(folio))) {
-+		folio_unlock(folio);
-+		folio_put(folio);
-+		return -EIO;
-+	}
+ 	tmp = readl_relaxed(ctl->base + reg);
+ 	tmp &= ~mask;
+ 	tmp |= val;
+ 	writel_relaxed(tmp, ctl->base + reg);
+ 
+-	spin_unlock_irqrestore(&ctl->lock, flags);
++	raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ }
+ 
+ static void meson_gpio_irq_init_dummy(struct meson_gpio_irq_controller *ctl)
+@@ -244,12 +244,12 @@ meson_gpio_irq_request_channel(struct me
+ 	unsigned long flags;
+ 	unsigned int idx;
+ 
+-	spin_lock_irqsave(&ctl->lock, flags);
++	raw_spin_lock_irqsave(&ctl->lock, flags);
+ 
+ 	/* Find a free channel */
+ 	idx = find_first_zero_bit(ctl->channel_map, ctl->params->nr_channels);
+ 	if (idx >= ctl->params->nr_channels) {
+-		spin_unlock_irqrestore(&ctl->lock, flags);
++		raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ 		pr_err("No channel available\n");
+ 		return -ENOSPC;
+ 	}
+@@ -257,7 +257,7 @@ meson_gpio_irq_request_channel(struct me
+ 	/* Mark the channel as used */
+ 	set_bit(idx, ctl->channel_map);
+ 
+-	spin_unlock_irqrestore(&ctl->lock, flags);
++	raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ 
  	/*
- 	 * block_write_end() will mark the inode as dirty with I_DIRTY_PAGES
- 	 * flag, which all that's needed to trigger page writeback.
--- 
-2.43.0
-
+ 	 * Setup the mux of the channel to route the signal of the pad
+@@ -567,7 +567,7 @@ static int meson_gpio_irq_of_init(struct
+ 	if (!ctl)
+ 		return -ENOMEM;
+ 
+-	spin_lock_init(&ctl->lock);
++	raw_spin_lock_init(&ctl->lock);
+ 
+ 	ctl->base = of_iomap(node, 0);
+ 	if (!ctl->base) {
 
 
