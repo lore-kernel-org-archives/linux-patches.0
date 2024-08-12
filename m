@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F79E16D9B8;
-	Mon, 12 Aug 2024 16:32:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86812C1A5;
+	Mon, 12 Aug 2024 16:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480329; cv=none; b=qevvVcPzozxYheZYQKM7E8UtFC3y8hvRDol48fbT6c0dev+/BfJGJ0ATU2BswA3giO4k4ao6bHjooqabm2WZpx+2l20f91bS2yUQ6/YBi+dkY+gJvSkr/DugBSXtpNU3ysBPhCoUoTDyrfiOeX2Vdbtgib3+Imc11wxRKA5VXbs=
+	t=1723480332; cv=none; b=EFJL2VsFLfAErD6E31Qo7Gaexp9xik74lQ/viaadZpOYU50ypMvWyj9AiQ7WOUqmToNOWqaP733P+nZFwy2ZEemdUHrKYz3n1yHR2Uu9+w01C7nVrpKR+paA6wEfE3CkOUL7wTMbc2jRFQ7wOnJ6SUJ3j1CFFkMklhc3RtxBdJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480329; c=relaxed/simple;
-	bh=taAEyJbjwokAM9a675V93UUrs3cs5gvq+lQdKzlx9ZI=;
+	s=arc-20240116; t=1723480332; c=relaxed/simple;
+	bh=MQI5LO58t9geenFfHxRQ0wN/IZgXXQvRpdtNXJxYaVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DXeuBDpC+OLjbTQvhAk1A/fon9NHObtrQrm4M44IrQQ2MvOEmVz/b2Ts95w3lb+f0YPXKDEeWju/gF0FLlNpRF1WPp4byIQAJHRMDWjhq5qwkQbWzOx9TWPGvyFrjXL76ZoLzm4YsWfuIh7NWcgpmkGFzfF6panNx15P68PFV+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MobRpce7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uGw0kBa7X2vsG2TvradeAyu8pxgPsWRMMO6+pbDb2/PuEtT145jgZR0iKVQbJnXsyRTC3PbW87JEDdiVWHdprMPsTNpXWh//wUUoiDxoRm968GV7tXC76KzJBpqFRP+oExTtNtKy21Nby5Q0kM7fy3Alk5KIHc7BbZ4UpdLa7ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuSdBqpp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MobRpce7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEE4C32782;
-	Mon, 12 Aug 2024 16:32:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuSdBqpp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B31A6C32782;
+	Mon, 12 Aug 2024 16:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480328;
-	bh=taAEyJbjwokAM9a675V93UUrs3cs5gvq+lQdKzlx9ZI=;
+	s=korg; t=1723480332;
+	bh=MQI5LO58t9geenFfHxRQ0wN/IZgXXQvRpdtNXJxYaVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MobRpce7EWD7WLEej+OA/Ozw1HZ1UOzEmhs6ZTMg/jW39UP1EzYw6F/5PykQp+7mV
-	 kAq2p7UWE3P6if8zWmNXyJoTSZzV6iF77yCkhHB1lWknKxgfPp2FwdEiVbNbnqt+CT
-	 jckUhoiA5y5PcmtTfMpG2iZ6RFZ/iOdW6sB/DPyw=
+	b=xuSdBqppKcOW0EBFf9R5WphRiDfB8LkEqEEQkltidI+ExR0YiGaxpItUHPigKIwZP
+	 AvyQHRkalE6D8u5QU/zxaeEBO0dmWejwVjgAZ2if3e7bgkS46ej3JJ7nfGYLzcHhqR
+	 sZKNfdjQWN8qZA8sxhv3FwfQPu4+rsqaUrmr3YqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Karthik Poosa <karthik.poosa@intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>,
+	Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 165/263] drm/xe/hwmon: Fix PL1 disable flow in xe_hwmon_power_max_write
-Date: Mon, 12 Aug 2024 18:02:46 +0200
-Message-ID: <20240812160152.863198387@linuxfoundation.org>
+Subject: [PATCH 6.10 166/263] drm/xe: Minor cleanup in LRC handling
+Date: Mon, 12 Aug 2024 18:02:47 +0200
+Message-ID: <20240812160152.902221234@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,44 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Karthik Poosa <karthik.poosa@intel.com>
+From: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
 
-[ Upstream commit ac3191c5cf47e2d5220a1ed7353a2e498a1f415e ]
+[ Upstream commit 85cfc412579c041f1aaebba71427acec75ceca39 ]
 
-In xe_hwmon_power_max_write, for PL1 disable supported case, instead of
-returning after PL1 disable, PL1 enable path was also being run.
-Fixed it by returning after disable.
+Properly define register fields and remove redundant
+lower_32_bits().
 
-v2: Correct typo and grammar in commit message. (Jonathan)
-
-Signed-off-by: Karthik Poosa <karthik.poosa@intel.com>
-Fixes: fef6dd12b45a ("drm/xe/hwmon: Protect hwmon rw attributes with hwmon_lock")
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Signed-off-by: Niranjana Vishwanathapura <niranjana.vishwanathapura@intel.com>
+Reviewed-by: Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>
+Reviewed-by: Stuart Summers <stuart.summers@intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
 Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240801112424.1841766-1-karthik.poosa@intel.com
-(cherry picked from commit 146458645e505f5eac498759bcd865cf7c0dfd9a)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240507224255.5059-2-niranjana.vishwanathapura@intel.com
+Stable-dep-of: 642dfc9d5964 ("drm/xe: Take ref to VM in delayed snapshot")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_hwmon.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/regs/xe_engine_regs.h | 4 ++--
+ drivers/gpu/drm/xe/xe_lrc.c              | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_hwmon.c b/drivers/gpu/drm/xe/xe_hwmon.c
-index 453e601ddd5e6..d37f1dea9f8b8 100644
---- a/drivers/gpu/drm/xe/xe_hwmon.c
-+++ b/drivers/gpu/drm/xe/xe_hwmon.c
-@@ -200,9 +200,10 @@ static int xe_hwmon_power_max_write(struct xe_hwmon *hwmon, int channel, long va
- 				     PKG_PWR_LIM_1_EN, 0, channel);
+diff --git a/drivers/gpu/drm/xe/regs/xe_engine_regs.h b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+index af71b87d80301..03c6d4d50a839 100644
+--- a/drivers/gpu/drm/xe/regs/xe_engine_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+@@ -44,9 +44,10 @@
+ #define GSCCS_RING_BASE				0x11a000
  
- 		if (reg_val & PKG_PWR_LIM_1_EN) {
-+			drm_warn(&gt_to_xe(hwmon->gt)->drm, "PL1 disable is not supported!\n");
- 			ret = -EOPNOTSUPP;
--			goto unlock;
- 		}
-+		goto unlock;
- 	}
+ #define RING_TAIL(base)				XE_REG((base) + 0x30)
++#define   TAIL_ADDR				REG_GENMASK(20, 3)
  
- 	/* Computation in 64-bits to avoid overflow. Round to nearest. */
+ #define RING_HEAD(base)				XE_REG((base) + 0x34)
+-#define   HEAD_ADDR				0x001FFFFC
++#define   HEAD_ADDR				REG_GENMASK(20, 2)
+ 
+ #define RING_START(base)			XE_REG((base) + 0x38)
+ 
+@@ -135,7 +136,6 @@
+ #define   RING_VALID_MASK			0x00000001
+ #define   RING_VALID				0x00000001
+ #define   STOP_RING				REG_BIT(8)
+-#define   TAIL_ADDR				0x001FFFF8
+ 
+ #define RING_CTX_TIMESTAMP(base)		XE_REG((base) + 0x3a8)
+ #define CSBE_DEBUG_STATUS(base)			XE_REG((base) + 0x3fc)
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index 615bbc372ac62..760f38992ff07 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -1354,7 +1354,7 @@ struct xe_lrc_snapshot *xe_lrc_snapshot_capture(struct xe_lrc *lrc)
+ 	if (!snapshot)
+ 		return NULL;
+ 
+-	snapshot->context_desc = lower_32_bits(xe_lrc_ggtt_addr(lrc));
++	snapshot->context_desc = xe_lrc_ggtt_addr(lrc);
+ 	snapshot->head = xe_lrc_ring_head(lrc);
+ 	snapshot->tail.internal = lrc->ring.tail;
+ 	snapshot->tail.memory = xe_lrc_read_ctx_reg(lrc, CTX_RING_TAIL);
 -- 
 2.43.0
 
