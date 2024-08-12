@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CDA183CA6;
-	Mon, 12 Aug 2024 16:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CCA4183CA6;
+	Mon, 12 Aug 2024 16:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479757; cv=none; b=rWm3XEJl3Z+pZEnehkneXtb78PXvi++mzKm35O0b7PcMGn3Ubvwz6d/WlJzVtRT7I0BIrlStIUtgaJjE6WzCFEpdWLEFv7uUFmng2vx7ED1d9Lmcu9nt4H20IvonA2H1yhffnWsmrFxdx591EUa4JFbP/iA96h64dI/9Bl5gi5U=
+	t=1723479761; cv=none; b=oNoxhai++sk8D10wkHxPNRixMQruKrr0UdzeSbqsBoB8XYP9a0xBDiV9weKLdmnGP33Lb2AS1exXndajeJROp14jy/ek46pkIlryat4VbpJTB/8jPGZQ3lZdvIwVnxkEyc5IPntau2xmMmd3mpFvdAjzmRuxHz5i5aKfqBuIKXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479757; c=relaxed/simple;
-	bh=O4UK4my+hVYpLhhdod3inT0Ofsa6FImipTLkRRjOimg=;
+	s=arc-20240116; t=1723479761; c=relaxed/simple;
+	bh=YHefbteDGPVIv6hUya16n4tk96hE5BkSehjwMalBSKg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cF/9HuZvIpv/1hcyCXrA+AYI4B3UgxD5u6+jSscNgYQJz99aBDPDZgqJKfxeXXxwJQ/5/44AS8B/rYLSG7bijn5bIxx4w0gpKWBPFLXlQGQXXOy+wH+O3MaKEfKnZcMu/aH2ACCVDLDQqkfMyiB8lYP+sqou4Tsew1tm0qMG2+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xcOhW3Kh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tH811rZsaPIKCBteduLCCe5SFMkYdQ4rCnIbe5KtuLB3CG7I9oWIYm4GAIoVeDm7qsi3IHfzUiK50779s2Lv93xEmMzDLr0g22zRODWDMPW9TfH0VExELyaegeWN1ba0sN1j62bQV8SPMAii5OPI+cPcKa8vLBTtQ5sS+RF86WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ggp/xwQz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xcOhW3Kh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4357DC32782;
-	Mon, 12 Aug 2024 16:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ggp/xwQz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86366C32782;
+	Mon, 12 Aug 2024 16:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479757;
-	bh=O4UK4my+hVYpLhhdod3inT0Ofsa6FImipTLkRRjOimg=;
+	s=korg; t=1723479760;
+	bh=YHefbteDGPVIv6hUya16n4tk96hE5BkSehjwMalBSKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcOhW3KhHJ7W5OfUzC0QKhGXQRX8DV5vnUegjNh8H0PAXThbOor9VC7NmDRHQdwGc
-	 I4AQyZdUzb1WOk64iQnYUKH47hPRVluHMkM056c/H9UWV1dTwkFtX65kBE3BBQcpXp
-	 CgAiHx3ihPi44DVoXHVqZb8/RbPcmMOMd7ifSt5U=
+	b=Ggp/xwQzyhqzo+N/kuw0Yn6dxt/T3/7HqGcLXxi5sOcZy/cVS7fZWQDe/jtp3zuPc
+	 EgylrSvAFFJF91Ocen4RdA4U0Fz+hguPEDcjawtoLbG0kgwsDaFnH3spxrnNdMnTFB
+	 fkbuGELvaQ6Op81kjUv3FRB48mlxZmE/ooqVEXsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.6 182/189] drm/amd/display: Defer handling mst up request in resume
-Date: Mon, 12 Aug 2024 18:03:58 +0200
-Message-ID: <20240812160139.155029293@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 183/189] mptcp: pm: reduce indentation blocks
+Date: Mon, 12 Aug 2024 18:03:59 +0200
+Message-ID: <20240812160139.193183027@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -53,42 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <wayne.lin@amd.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 202dc359addab29451d3d18243c3d957da5392c8 upstream.
+commit c95eb32ced823a00be62202b43966b07b2f20b7f upstream.
 
-[Why]
-Like commit ec5fa9fcdeca ("drm/amd/display: Adjust the MST resume flow"), we
-want to avoid handling mst topology changes before restoring the old state.
-If we enable DP_UP_REQ_EN before calling drm_atomic_helper_resume(), have
-changce to handle CSN event first and fire hotplug event before restoring the
-cached state.
+That will simplify the following commits.
 
-[How]
-Disable mst branch sending up request event before we restoring the cached state.
-DP_UP_REQ_EN will be set later when we call drm_dp_mst_topology_mgr_resume().
+No functional changes intended.
 
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hersen Wu <hersenxs.wu@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-3-c8a9b036493b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: cd7c957f936f ("mptcp: pm: don't try to create sf if alloc failed")
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/mptcp/pm_netlink.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2350,7 +2350,6 @@ static void resume_mst_branch_status(str
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -575,16 +575,19 @@ static void mptcp_pm_create_subflow_or_s
+ 		if (msk->pm.addr_signal & BIT(MPTCP_ADD_ADDR_SIGNAL))
+ 			return;
  
- 	ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
- 				 DP_MST_EN |
--				 DP_UP_REQ_EN |
- 				 DP_UPSTREAM_IS_SRC);
- 	if (ret < 0) {
- 		drm_dbg_kms(mgr->dev, "mst write failed - undocked during suspend?\n");
+-		if (local) {
+-			if (mptcp_pm_alloc_anno_list(msk, &local->addr)) {
+-				__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
+-				msk->pm.add_addr_signaled++;
+-				mptcp_pm_announce_addr(msk, &local->addr, false);
+-				mptcp_pm_nl_addr_send_ack(msk);
+-			}
+-		}
++		if (!local)
++			goto subflow;
++
++		if (!mptcp_pm_alloc_anno_list(msk, &local->addr))
++			goto subflow;
++
++		__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
++		msk->pm.add_addr_signaled++;
++		mptcp_pm_announce_addr(msk, &local->addr, false);
++		mptcp_pm_nl_addr_send_ack(msk);
+ 	}
+ 
++subflow:
+ 	/* check if should create a new subflow */
+ 	while (msk->pm.local_addr_used < local_addr_max &&
+ 	       msk->pm.subflows < subflows_max) {
 
 
