@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1810E187339;
-	Mon, 12 Aug 2024 16:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B8881422A8;
+	Mon, 12 Aug 2024 16:07:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478836; cv=none; b=n2ZlBO40lzkGZakB7BcgOq5Cb+J6tLrF+G4vUMLJvawbjVyTn7DS50HvYB4Kbv3qiLPqQYUq7CuOw5vPBuEf/LglSj4ufnaw2OHWFJVYZbJtcPil0SfQQl8d+3Bg89FjWwP+rkG1Cgha8/HbjJRaDk9tRkwizXjFHZrFxuPCqZI=
+	t=1723478839; cv=none; b=mHX1jKcu5l0ObQfGVM1QMgU1yy4ADaTk0J/Dz+XnjazjcPiqtxFze3JsOiilvV3/l0Il8xUjnbQZDY/22ILsq2yf6g7JWIRRdQOI9hHOxYaQyhbWCwxQ/frw9bTLPm8zPV33QGLFcnHofP600u169vsSUVpqg47jKeRUfjpjBx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478836; c=relaxed/simple;
-	bh=Uzb73MNEBRtFXFx5f5dW+YWjZjkbEczrCA1J6R7CKpg=;
+	s=arc-20240116; t=1723478839; c=relaxed/simple;
+	bh=We13SJTMEsCgd7v3K4dK51ye7voYZEAgDR3lQ7n7eIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bu/KuuwsAUeTUqTK/n1UjNiR4Hn94RKkZARISahhmcua7aYKVXf7v+ZOCLhBFB1Op2LOJr+gLkDyyQ9dR7T51AM3ysUmHIaZnP03awJfEnrbBEq66W9y4kyTp01tT4Ga27Vs9mzac7cgRKpuW+wipGpUo3epNxeP2BPnedOSZPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1RnRWHm3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iy437YRsmlQBLrJWCWk71acuh0IxRZyld+a7bdJbhcrg171W2s8f8sBDTjEV8oNdSzzqhqlyIbla7SqOEkn55PnnfrLk1iR2A1xsf5lwHtJ3F1AL3nl3n5npU6bLEhhvwbNm0cqsv9dFWSI7+mDa5AnW+93ZqTQuI2EGGMCOLBI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RyJse4uV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1RnRWHm3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E9DBC32782;
-	Mon, 12 Aug 2024 16:07:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyJse4uV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6DC6C32782;
+	Mon, 12 Aug 2024 16:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478835;
-	bh=Uzb73MNEBRtFXFx5f5dW+YWjZjkbEczrCA1J6R7CKpg=;
+	s=korg; t=1723478839;
+	bh=We13SJTMEsCgd7v3K4dK51ye7voYZEAgDR3lQ7n7eIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1RnRWHm3kOGe9HzAz3m4SXax1/m3P6ca8t34lSl7V08gFTui8e7KbIDq0Np94OFsz
-	 makS3vAefgZeTLpNyAF9hHs4vBUGASkIO8w+aozFH1rI/2GwIUfwrQXsLIL0vGQdIB
-	 4hV6R4oYfSLV5MO9AoXpJdtyVXmDpaveRxp+wPaI=
+	b=RyJse4uVAUquI/lwORZxrTsXEBhSBX60GBEEylB+0Eymrya/PK3jHxh0Km/Oh7i9B
+	 9j+E2/2slwVEuZkr90KeqRj7S28gICdHwBfQW3M19FJPIPp3rzGD9pOqu+pM7sKGXU
+	 SP3dP9JRVbkaGgvNIbPQ9KtFfe6ru1cgaJtc3PKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bc0f5b92cc7091f45fb6@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Tao Chen <chen.dylane@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Quentin Monnet <qmo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/150] wifi: nl80211: disallow setting special AP channel widths
-Date: Mon, 12 Aug 2024 18:01:45 +0200
-Message-ID: <20240812160126.095188800@linuxfoundation.org>
+Subject: [PATCH 6.1 051/150] Revert "bpftool: Mount bpffs when pinmaps path not under the bpffs"
+Date: Mon, 12 Aug 2024 18:02:12 +0200
+Message-ID: <20240812160127.136239973@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -51,62 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 23daf1b4c91db9b26f8425cc7039cf96d22ccbfe ]
+This reverts commit 65dd9cbafec2f6f7908cebcab0386f750fc352af which is
+commit da5f8fd1f0d393d5eaaba9ad8c22d1c26bb2bf9b upstream.
 
-Setting the AP channel width is meant for use with the normal
-20/40/... MHz channel width progression, and switching around
-in S1G or narrow channels isn't supported. Disallow that.
+It breaks the build, so should be dropped.
 
-Reported-by: syzbot+bc0f5b92cc7091f45fb6@syzkaller.appspotmail.com
-Link: https://msgid.link/20240515141600.d4a9590bfe32.I19a32d60097e81b527eafe6b0924f6c5fbb2dc45@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Salvatore Bonaccorso <carnil@debian.org>
+Link: https://lore.kernel.org/r/ZrSe8gZ_GyFv1knq@eldamar.lan
+Cc: Tao Chen <chen.dylane@gmail.com>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Quentin Monnet <qmo@kernel.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ tools/bpf/bpftool/prog.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index a00df7b89ca86..603fcd921bd22 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3346,6 +3346,33 @@ static int __nl80211_set_channel(struct cfg80211_registered_device *rdev,
- 			if (chandef.chan != cur_chan)
- 				return -EBUSY;
+--- a/tools/bpf/bpftool/prog.c
++++ b/tools/bpf/bpftool/prog.c
+@@ -1707,10 +1707,6 @@ static int load_with_options(int argc, c
+ 	}
  
-+			/* only allow this for regular channel widths */
-+			switch (wdev->links[link_id].ap.chandef.width) {
-+			case NL80211_CHAN_WIDTH_20_NOHT:
-+			case NL80211_CHAN_WIDTH_20:
-+			case NL80211_CHAN_WIDTH_40:
-+			case NL80211_CHAN_WIDTH_80:
-+			case NL80211_CHAN_WIDTH_80P80:
-+			case NL80211_CHAN_WIDTH_160:
-+			case NL80211_CHAN_WIDTH_320:
-+				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
-+			switch (chandef.width) {
-+			case NL80211_CHAN_WIDTH_20_NOHT:
-+			case NL80211_CHAN_WIDTH_20:
-+			case NL80211_CHAN_WIDTH_40:
-+			case NL80211_CHAN_WIDTH_80:
-+			case NL80211_CHAN_WIDTH_80P80:
-+			case NL80211_CHAN_WIDTH_160:
-+			case NL80211_CHAN_WIDTH_320:
-+				break;
-+			default:
-+				return -EINVAL;
-+			}
-+
- 			result = rdev_set_ap_chanwidth(rdev, dev, link_id,
- 						       &chandef);
- 			if (result)
--- 
-2.43.0
-
+ 	if (pinmaps) {
+-		err = create_and_mount_bpffs_dir(pinmaps);
+-		if (err)
+-			goto err_unpin;
+-
+ 		err = bpf_object__pin_maps(obj, pinmaps);
+ 		if (err) {
+ 			p_err("failed to pin all maps");
 
 
