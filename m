@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13329CA;
-	Mon, 12 Aug 2024 16:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70AA29CA;
+	Mon, 12 Aug 2024 16:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479644; cv=none; b=vDXUSNgMrNsSBw2StUEcb6Tnzv99gFcgGT7y32bDmFO76XGy4NLTq5hXQiRos/gNeSHI66c5NzTjDU4HhR8flpS41AS9q5n9P0QNvslYF63ejPP3zqGvGIrMSQAXYQqIjiZ1Cv/aybHuDcNMmBqzpjxrFhQBLVnmv3H59kzrGPY=
+	t=1723479647; cv=none; b=l0iti+J0ud/FoGO6iENPusi4rF+oyksJjK3dqQhwL9scA2ux9+bLJqUQ5SL+gzKWXP9ywP/DxbnCRUYynNztfBtXaDKMN2joFhqu+JU7wBrn35MZimtljqIn4Ll1z3YkA+KWY+8PNNx68VxS5e53dea/F2F9teQaDvRG9S/d9r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479644; c=relaxed/simple;
-	bh=lYXC+0wJdcwRMYhLqob9gnem2CiguNZqBEUWhTeDuIc=;
+	s=arc-20240116; t=1723479647; c=relaxed/simple;
+	bh=+WypOlvp5qtTWERsLKg4mEywDLFpnc0dAFDXX5PTC0A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kFtzJZN5rLzh3hSicR9CctFzjolwzDQsFNGJMwHrMmxjFxLRissAAxBu9JsAPzH2N/sKgEhIEOgOEvRPV/MoMWQMuOxp+u22K7T6CbAHSb77Ns3Uzgj/UeDRRNZktx38RtEjTp75I+xoF3TG6+mbJXT1yvQm+ozUYjITEPsJQlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D5jnI0zq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDbMka4bVMCP7qfjJlvEXiUKjr5dReqPl0cGSzREjQvJkpJVL3x7PpQXstoT2U9DFsAPIN9tQIDcRXNDiJFm/ofHY3VHC76SOjbzwa0DeHjO9oWSRxgn9qglqGxshjrckB1fkEpWVzt+s6yI0hPezTj2UsxKaFa6QWRGzA+3OSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTTz6isV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D5jnI0zq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1421C32782;
-	Mon, 12 Aug 2024 16:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTTz6isV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D3FC32782;
+	Mon, 12 Aug 2024 16:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479644;
-	bh=lYXC+0wJdcwRMYhLqob9gnem2CiguNZqBEUWhTeDuIc=;
+	s=korg; t=1723479647;
+	bh=+WypOlvp5qtTWERsLKg4mEywDLFpnc0dAFDXX5PTC0A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D5jnI0zqP49AaCrY5X/upG8K3gKnc4DGkN5e6wQZHYdz4poehOAgU9RBkWPwqk/Gw
-	 RuoAxDKEiziuwjrYg+coBgzTomeYxvfNJVS8GwKFRCyHeYoH04pqrUYPGh0dq74ubg
-	 TLrKsR9d6EqFrR68RY22yFW4+QFOfnGAm3mEq6uo=
+	b=mTTz6isVIfeBZF6p6NOeDQoto/Eetzyxn6ws7hYTs9D67w7G0t+Nh/U0fGXd+ASin
+	 uwH+I1yp3GKizcL59T79uTCn/K16T07s/TXyKNlzNccxe7hUBXce6sdkKI/YiGXi4d
+	 PNl+WeLAyC1i220DgMo++P7GzFTfIL88DJiRvTrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 149/189] padata: Fix possible divide-by-0 panic in padata_mt_helper()
-Date: Mon, 12 Aug 2024 18:03:25 +0200
-Message-ID: <20240812160137.878226473@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 150/189] smb3: fix setting SecurityFlags when encryption is required
+Date: Mon, 12 Aug 2024 18:03:26 +0200
+Message-ID: <20240812160137.916724855@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,65 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit 6d45e1c948a8b7ed6ceddb14319af69424db730c upstream.
+commit 1b5487aefb1ce7a6b1f15a33297d1231306b4122 upstream.
 
-We are hit with a not easily reproducible divide-by-0 panic in padata.c at
-bootup time.
+Setting encryption as required in security flags was broken.
+For example (to require all mounts to be encrypted by setting):
 
-  [   10.017908] Oops: divide error: 0000 1 PREEMPT SMP NOPTI
-  [   10.017908] CPU: 26 PID: 2627 Comm: kworker/u1666:1 Not tainted 6.10.0-15.el10.x86_64 #1
-  [   10.017908] Hardware name: Lenovo ThinkSystem SR950 [7X12CTO1WW]/[7X12CTO1WW], BIOS [PSE140J-2.30] 07/20/2021
-  [   10.017908] Workqueue: events_unbound padata_mt_helper
-  [   10.017908] RIP: 0010:padata_mt_helper+0x39/0xb0
-    :
-  [   10.017963] Call Trace:
-  [   10.017968]  <TASK>
-  [   10.018004]  ? padata_mt_helper+0x39/0xb0
-  [   10.018084]  process_one_work+0x174/0x330
-  [   10.018093]  worker_thread+0x266/0x3a0
-  [   10.018111]  kthread+0xcf/0x100
-  [   10.018124]  ret_from_fork+0x31/0x50
-  [   10.018138]  ret_from_fork_asm+0x1a/0x30
-  [   10.018147]  </TASK>
+  "echo 0x400c5 > /proc/fs/cifs/SecurityFlags"
 
-Looking at the padata_mt_helper() function, the only way a divide-by-0
-panic can happen is when ps->chunk_size is 0.  The way that chunk_size is
-initialized in padata_do_multithreaded(), chunk_size can be 0 when the
-min_chunk in the passed-in padata_mt_job structure is 0.
+Would return "Invalid argument" and log "Unsupported security flags"
+This patch fixes that (e.g. allowing overriding the default for
+SecurityFlags  0x00c5, including 0x40000 to require seal, ie
+SMB3.1.1 encryption) so now that works and forces encryption
+on subsequent mounts.
 
-Fix this divide-by-0 panic by making sure that chunk_size will be at least
-1 no matter what the input parameters are.
-
-Link: https://lkml.kernel.org/r/20240806174647.1050398-1-longman@redhat.com
-Fixes: 004ed42638f4 ("padata: add basic support for multithreaded jobs")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/padata.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ Documentation/admin-guide/cifs/usage.rst |    2 +-
+ fs/smb/client/cifs_debug.c               |    2 +-
+ fs/smb/client/cifsglob.h                 |    8 ++++----
+ fs/smb/client/smb2pdu.c                  |    3 +++
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -516,6 +516,13 @@ void __init padata_do_multithreaded(stru
- 	ps.chunk_size = max(ps.chunk_size, job->min_chunk);
- 	ps.chunk_size = roundup(ps.chunk_size, job->align);
+--- a/Documentation/admin-guide/cifs/usage.rst
++++ b/Documentation/admin-guide/cifs/usage.rst
+@@ -741,7 +741,7 @@ SecurityFlags		Flags which control secur
+ 			  may use NTLMSSP               		0x00080
+ 			  must use NTLMSSP           			0x80080
+ 			  seal (packet encryption)			0x00040
+-			  must seal (not implemented yet)               0x40040
++			  must seal                                     0x40040
  
-+	/*
-+	 * chunk_size can be 0 if the caller sets min_chunk to 0. So force it
-+	 * to at least 1 to prevent divide-by-0 panic in padata_mt_helper().`
-+	 */
-+	if (!ps.chunk_size)
-+		ps.chunk_size = 1U;
-+
- 	list_for_each_entry(pw, &works, pw_list)
- 		queue_work(system_unbound_wq, &pw->pw_work);
+ cifsFYI			If set to non-zero value, additional debug information
+ 			will be logged to the system error log.  This field
+--- a/fs/smb/client/cifs_debug.c
++++ b/fs/smb/client/cifs_debug.c
+@@ -1072,7 +1072,7 @@ static int cifs_security_flags_proc_open
+ static void
+ cifs_security_flags_handle_must_flags(unsigned int *flags)
+ {
+-	unsigned int signflags = *flags & CIFSSEC_MUST_SIGN;
++	unsigned int signflags = *flags & (CIFSSEC_MUST_SIGN | CIFSSEC_MUST_SEAL);
+ 
+ 	if ((*flags & CIFSSEC_MUST_KRB5) == CIFSSEC_MUST_KRB5)
+ 		*flags = CIFSSEC_MUST_KRB5;
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -1922,7 +1922,7 @@ static inline bool is_replayable_error(i
+ #define   CIFSSEC_MAY_SIGN	0x00001
+ #define   CIFSSEC_MAY_NTLMV2	0x00004
+ #define   CIFSSEC_MAY_KRB5	0x00008
+-#define   CIFSSEC_MAY_SEAL	0x00040 /* not supported yet */
++#define   CIFSSEC_MAY_SEAL	0x00040
+ #define   CIFSSEC_MAY_NTLMSSP	0x00080 /* raw ntlmssp with ntlmv2 */
+ 
+ #define   CIFSSEC_MUST_SIGN	0x01001
+@@ -1932,11 +1932,11 @@ require use of the stronger protocol */
+ #define   CIFSSEC_MUST_NTLMV2	0x04004
+ #define   CIFSSEC_MUST_KRB5	0x08008
+ #ifdef CONFIG_CIFS_UPCALL
+-#define   CIFSSEC_MASK          0x8F08F /* flags supported if no weak allowed */
++#define   CIFSSEC_MASK          0xCF0CF /* flags supported if no weak allowed */
+ #else
+-#define	  CIFSSEC_MASK          0x87087 /* flags supported if no weak allowed */
++#define	  CIFSSEC_MASK          0xC70C7 /* flags supported if no weak allowed */
+ #endif /* UPCALL */
+-#define   CIFSSEC_MUST_SEAL	0x40040 /* not supported yet */
++#define   CIFSSEC_MUST_SEAL	0x40040
+ #define   CIFSSEC_MUST_NTLMSSP	0x80080 /* raw ntlmssp with ntlmv2 */
+ 
+ #define   CIFSSEC_DEF (CIFSSEC_MAY_SIGN | CIFSSEC_MAY_NTLMV2 | CIFSSEC_MAY_NTLMSSP | CIFSSEC_MAY_SEAL)
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -80,6 +80,9 @@ int smb3_encryption_required(const struc
+ 	if (tcon->seal &&
+ 	    (tcon->ses->server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
+ 		return 1;
++	if (((global_secflags & CIFSSEC_MUST_SEAL) == CIFSSEC_MUST_SEAL) &&
++	    (tcon->ses->server->capabilities & SMB2_GLOBAL_CAP_ENCRYPTION))
++		return 1;
+ 	return 0;
+ }
  
 
 
