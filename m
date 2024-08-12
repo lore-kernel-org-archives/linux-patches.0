@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E32B183CD4;
-	Mon, 12 Aug 2024 16:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D4E1494B8;
+	Mon, 12 Aug 2024 16:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480683; cv=none; b=NScQhVe8DOvgJSvMLeMof0cWuT/FiPzJGGTXLlO5bZFPRpHzEpJR0Pd8ljA2Pzue/Q7JqFgJRtvlPia8QKh1BMVhRGNIsnz4OeDk5BscX9m5smUlmlzCJDaJNenLhSclIDbxdU1jTDanLXT4AgGpqn5YGfUQucE5Gb0caFbMDjA=
+	t=1723480686; cv=none; b=b529K+ZfoUOXU8T3N6p99tKySAhI+sXP85SkXXFo6vdlxc08MKAMb38Jgz3BjhrlPwqNBn0EG0ZlP2aCYXbdP1sFZPj1miOo30buTtAyiXtTt7xNXcBOWurQFfMpK7ojOJEztpqBCC7p4zKuvXDp8ilW4ID2vW4vbEMVjcWxyyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480683; c=relaxed/simple;
-	bh=zYrb/JpORdtY/68GljPD16yH5KLcAwjJKc8kdSmyypY=;
+	s=arc-20240116; t=1723480686; c=relaxed/simple;
+	bh=eFPnaNBAw8DBfOWTcIWnLcXdYfZG2z5uAcQIYB19hn0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m5Zr0w8bbb6NtcnI9grLzPbv94jcfz2IdS+aCSpV0Cbs6uqw0f3K4aLRv4tBrgqWMFLGmvJZ4rQu3Hbah/aLPYeNeOVHknm16EN4t8pzvlvtTLjZRhoaLpy7Jc0qwz+n5YkbqUNeR6WMAUG2nzy8lRt8ExG41nvCdohZY7fCHw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGvkDyKM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxACzdkEpXvy1Oh9Gi8xiW+OwqGPjPASVJc6+Db9neLPcmFpl8wItgXQSIjChVCeNAz4pKe5j/IYHmiNgn+L78xphxFvSxKA9hw2dafAW/UpnE+d5qpot7rIfb46PfwB3QIYDSoPewoU/cnfqB6fVVT+24pJR4VKtqsk6BafKTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0/hxaeH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGvkDyKM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3ABE5C32782;
-	Mon, 12 Aug 2024 16:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0/hxaeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF17C32782;
+	Mon, 12 Aug 2024 16:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480682;
-	bh=zYrb/JpORdtY/68GljPD16yH5KLcAwjJKc8kdSmyypY=;
+	s=korg; t=1723480686;
+	bh=eFPnaNBAw8DBfOWTcIWnLcXdYfZG2z5uAcQIYB19hn0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EGvkDyKMi3z+WLl/Uy+mfaWU3Opxm3HTQtsk4so2GDDrH9PTQmw8UOavrvHzTHtXq
-	 8sxtY+DGoAilIVG20HnblgHWTQIqrhDCjikUSJDYBT5oP85PfROd/ZuXuFnxwNTNNY
-	 YoBvB2vBrNhl5VcD9VN9Z6cAvwcYG1xTkYRP1FL0=
+	b=S0/hxaeHuGjGLEi3jYqLMDTtuTFidQ2t/gl+BoYJRl4fp5XkXQmUItMc43nTD8Jrz
+	 M1yt4O9jkhDg/+u0W52csTFgvojfhJB9FMAOPY7WiDaiXUGl4AsSlGT9ub6xMqcigN
+	 5VzEsBMuXFgAf8G6Efd3j95hic9/B6FCKXMdYIHA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 260/263] mptcp: pm: do not ignore subflow if signal flag is also set
-Date: Mon, 12 Aug 2024 18:04:21 +0200
-Message-ID: <20240812160156.606495599@linuxfoundation.org>
+	Wenjing Liu <wenjing.liu@amd.com>,
+	Zaeem Mohamed <zaeem.mohamed@amd.com>,
+	Sung-huai Wang <danny.wang@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 251/263] Revert "drm/amd/display: Handle HPD_IRQ for internal link"
+Date: Mon, 12 Aug 2024 18:04:12 +0200
+Message-ID: <20240812160156.152361806@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,100 +53,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Sung-huai Wang <danny.wang@amd.com>
 
-commit 85df533a787bf07bf4367ce2a02b822ff1fba1a3 upstream.
+commit a2919b25778b7479e477cf49af8c680017eafc24 upstream.
 
-Up to the 'Fixes' commit, having an endpoint with both the 'signal' and
-'subflow' flags, resulted in the creation of a subflow and an address
-announcement using the address linked to this endpoint. After this
-commit, only the address announcement was done, ignoring the 'subflow'
-flag.
+[How&Why]
+This reverts commit 239b31bd5c3fef3698440bf6436b2068c6bb08a3.
 
-That's because the same bitmap is used for the two flags. It is OK to
-keep this single bitmap, the already selected local endpoint simply have
-to be re-used, but not via select_local_address() not to look at the
-just modified bitmap.
+Due to the it effects Replay resync.
 
-Note that it is unusual to set the two flags together: creating a new
-subflow using a new local address will implicitly advertise it to the
-other peer. So in theory, no need to advertise it explicitly as well.
-Maybe there are use-cases -- the subflow might not reach the other peer
-that way, we can ask the other peer to try initiating the new subflow
-without delay -- or very likely the user is confused, and put both flags
-"just to be sure at least the right one is set". Still, if it is
-allowed, the kernel should do what has been asked: using this endpoint
-to announce the address and to create a new subflow from it.
-
-An alternative is to forbid the use of the two flags together, but
-that's probably too late, there are maybe use-cases, and it was working
-before. This patch will avoid people complaining subflows are not
-created using the endpoint they added with the 'subflow' and 'signal'
-flag.
-
-Note that with the current patch, the subflow might not be created in
-some corner cases, e.g. if the 'subflows' limit was reached when sending
-the ADD_ADDR, but changed later on. It is probably not worth splitting
-id_avail_bitmap per target ('signal', 'subflow'), which will add another
-large field to the msk "just" to track (again) endpoints. Anyway,
-currently when the limits are changed, the kernel doesn't check if new
-subflows can be created or removed, because we would need to keep track
-of the received ADD_ADDR, and more. It sounds OK to assume that the
-limits should be properly configured before establishing new
-connections.
-
-Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
-Cc: stable@vger.kernel.org
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-5-c8a9b036493b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Wenjing Liu <wenjing.liu@amd.com>
+Acked-by: Zaeem Mohamed <zaeem.mohamed@amd.com>
+Signed-off-by: Sung-huai Wang <danny.wang@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_irq_handler.c |   24 +++-------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -512,8 +512,8 @@ __lookup_addr(struct pm_nl_pernet *perne
+--- a/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_irq_handler.c
++++ b/drivers/gpu/drm/amd/display/dc/link/protocols/link_dp_irq_handler.c
+@@ -373,7 +373,6 @@ bool dp_handle_hpd_rx_irq(struct dc_link
+ 	union device_service_irq device_service_clear = {0};
+ 	enum dc_status result;
+ 	bool status = false;
+-	bool allow_active = false;
  
- static void mptcp_pm_create_subflow_or_signal_addr(struct mptcp_sock *msk)
- {
-+	struct mptcp_pm_addr_entry *local, *signal_and_subflow = NULL;
- 	struct sock *sk = (struct sock *)msk;
--	struct mptcp_pm_addr_entry *local;
- 	unsigned int add_addr_signal_max;
- 	unsigned int local_addr_max;
- 	struct pm_nl_pernet *pernet;
-@@ -579,6 +579,9 @@ static void mptcp_pm_create_subflow_or_s
- 		msk->pm.add_addr_signaled++;
- 		mptcp_pm_announce_addr(msk, &local->addr, false);
- 		mptcp_pm_nl_addr_send_ack(msk);
-+
-+		if (local->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)
-+			signal_and_subflow = local;
+ 	if (out_link_loss)
+ 		*out_link_loss = false;
+@@ -428,6 +427,12 @@ bool dp_handle_hpd_rx_irq(struct dc_link
+ 		return false;
  	}
  
- subflow:
-@@ -589,9 +592,14 @@ subflow:
- 		bool fullmesh;
- 		int i, nr;
++	if (handle_hpd_irq_psr_sink(link))
++		/* PSR-related error was detected and handled */
++		return true;
++
++	handle_hpd_irq_replay_sink(link);
++
+ 	/* If PSR-related error handled, Main link may be off,
+ 	 * so do not handle as a normal sink status change interrupt.
+ 	 */
+@@ -449,8 +454,10 @@ bool dp_handle_hpd_rx_irq(struct dc_link
+ 	 * If we got sink count changed it means
+ 	 * Downstream port status changed,
+ 	 * then DM should call DC to do the detection.
++	 * NOTE: Do not handle link loss on eDP since it is internal link
+ 	 */
+-	if (dp_parse_link_loss_status(
++	if ((link->connector_signal != SIGNAL_TYPE_EDP) &&
++			dp_parse_link_loss_status(
+ 					link,
+ 					&hpd_irq_dpcd_data)) {
+ 		/* Connectivity log: link loss */
+@@ -459,11 +466,6 @@ bool dp_handle_hpd_rx_irq(struct dc_link
+ 					sizeof(hpd_irq_dpcd_data),
+ 					"Status: ");
  
--		local = select_local_address(pernet, msk);
--		if (!local)
--			break;
-+		if (signal_and_subflow) {
-+			local = signal_and_subflow;
-+			signal_and_subflow = NULL;
-+		} else {
-+			local = select_local_address(pernet, msk);
-+			if (!local)
-+				break;
-+		}
+-		if (link->psr_settings.psr_feature_enabled)
+-			edp_set_psr_allow_active(link, &allow_active, true, false, NULL);
+-		else if (link->replay_settings.replay_allow_active)
+-			edp_set_replay_allow_active(link, &allow_active, true, false, NULL);
+-
+ 		if (defer_handling && has_left_work)
+ 			*has_left_work = true;
+ 		else
+@@ -476,14 +478,6 @@ bool dp_handle_hpd_rx_irq(struct dc_link
+ 		dp_trace_link_loss_increment(link);
+ 	}
  
- 		fullmesh = !!(local->flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
- 
+-	if (*out_link_loss == false) {
+-		if (handle_hpd_irq_psr_sink(link))
+-			/* PSR-related error was detected and handled */
+-			return true;
+-
+-		handle_hpd_irq_replay_sink(link);
+-	}
+-
+ 	if (link->type == dc_connection_sst_branch &&
+ 		hpd_irq_dpcd_data.bytes.sink_cnt.bits.SINK_COUNT
+ 			!= link->dpcd_sink_count)
 
 
