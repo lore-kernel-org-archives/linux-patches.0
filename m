@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E531136348;
-	Mon, 12 Aug 2024 16:16:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29292C1A5;
+	Mon, 12 Aug 2024 16:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479394; cv=none; b=RNlKcFENMOgvL1EWeIerBix3nN3Qw0i7IVqdej611ppgC+/bysSWBByvudqnyoZu5oMxSyLWG76Zlxlf8cIA7VcS030do4QkLI78Vzme+fWHrzY+oOzbz8m/N6eVvr58zvG2xAI59hAb7Rncrwbd69WLpx92asvXYUkvh+kU2O4=
+	t=1723479397; cv=none; b=pYiqG9w1TODeRIO49g/Lbest+F6WT+gk97UztXctPIwV//nH9ZbAwHaE5t7RjA3h95ISk91QPY1Tsq7B80PUr5+UtZrzEFt7nj6ctMORhZTbqiWUjCQlmv57oH/UjbOaTam8xiYxkXmfLtyjkMC+3QBgDQxgYlOTPiyUh/R1Twc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479394; c=relaxed/simple;
-	bh=LKdjHNYV+QGlQfxSZhD+mUFHsWskU5kGgakpPb3bb0M=;
+	s=arc-20240116; t=1723479397; c=relaxed/simple;
+	bh=FSoGIVz9GpZSyNftuho6qufpIUb1EjA8fZRAjd9Z5HA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g7/EQquPQc4Cm9CbnJQ/FX4touV2xpmAULH+RGoVGAKAJUq+45QvGV23+IBo9kGoWk+NjRvomOBYcAFGHZIdSidjMz1KRIPzslwJ+rAxP6uia6IxgcmLK9QSlnyUBaHfHpTosm0KGBBwhzPxBsanveFk8iJkOoVPsWWpuhNu70c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=glm//2LE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHPdzmDa56IwRfzZXrdD8v0F1yOJV4sjrydIAGplMrrkGuTH/3TCbPBf4vriu/QL21tICbUggHVgK3yPJ5SX3Dj4+6c9cVfaJ+yfyQG4/kLHILbOTTYv/drD8nhyKyhWLHZl6KWN0zvZKyfSpwp7T/QVuVGpQwb4nywe1c/Mu9I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yox48pEd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="glm//2LE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FE2EC4AF0D;
-	Mon, 12 Aug 2024 16:16:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yox48pEd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C157C32782;
+	Mon, 12 Aug 2024 16:16:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479394;
-	bh=LKdjHNYV+QGlQfxSZhD+mUFHsWskU5kGgakpPb3bb0M=;
+	s=korg; t=1723479397;
+	bh=FSoGIVz9GpZSyNftuho6qufpIUb1EjA8fZRAjd9Z5HA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glm//2LEfsKp9Ja6rvlEM05aQs2BEbSOKDrZq6mFJ+ns9vYHt1IRrVuowE8yw4ZIt
-	 1MkRzJeS4fgE2GFYnINTYuXuPZQeWuI5KgaYxB/VNdpuiodVp1x6xUG4N4OZAOwgBD
-	 jlUStHJEDTpFyOcO9xq8RZXY7hSXZZtWrmDb5+5Y=
+	b=yox48pEdYet6ojSfRsXDS+w9p4ZWBsv6LzMW0GCMkAhgKuj5g8khkCPZzwNKW3j/C
+	 iaBFlegU57VxVPoXHWhBCZlPcyPU0GbnsQvBUfMprsL5hpDPylXvQHsWAmj7H+z2az
+	 NUym0+SkltGA5JA6xgXgE67vjjpncQnPz+zaRJtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	James Clark <james.clark@arm.com>,
-	Will Deacon <will@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 074/189] arm64: Add Neoverse-V2 part
-Date: Mon, 12 Aug 2024 18:02:10 +0200
-Message-ID: <20240812160134.990593482@linuxfoundation.org>
+Subject: [PATCH 6.6 075/189] arm64: barrier: Restore spec_bar() macro
+Date: Mon, 12 Aug 2024 18:02:11 +0200
+Message-ID: <20240812160135.028839965@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -53,43 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Besar Wicaksono <bwicaksono@nvidia.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit f4d9d9dcc70b96b5e5d7801bd5fbf8491b07b13d ]
+[ Upstream commit ebfc726eae3f31bdb5fae1bbd74ef235d71046ca ]
 
-Add the part number and MIDR for Neoverse-V2
+Upcoming errata workarounds will need to use SB from C code. Restore the
+spec_bar() macro so that we can use SB.
 
-Signed-off-by: Besar Wicaksono <bwicaksono@nvidia.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Link: https://lore.kernel.org/r/20240109192310.16234-2-bwicaksono@nvidia.com
+This is effectively a revert of commit:
+
+  4f30ba1cce36d413 ("arm64: barrier: Remove spec_bar() macro")
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240508081400.235362-2-mark.rutland@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 [ Mark: trivial backport ]
 Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/cputype.h | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/include/asm/barrier.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index 52f076afeb960..936389e9aecbc 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -86,6 +86,7 @@
- #define ARM_CPU_PART_CORTEX_X2		0xD48
- #define ARM_CPU_PART_NEOVERSE_N2	0xD49
- #define ARM_CPU_PART_CORTEX_A78C	0xD4B
-+#define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+diff --git a/arch/arm64/include/asm/barrier.h b/arch/arm64/include/asm/barrier.h
+index cf2987464c186..1ca947d5c9396 100644
+--- a/arch/arm64/include/asm/barrier.h
++++ b/arch/arm64/include/asm/barrier.h
+@@ -40,6 +40,10 @@
+  */
+ #define dgh()		asm volatile("hint #6" : : : "memory")
  
- #define APM_CPU_PART_XGENE		0x000
- #define APM_CPU_VAR_POTENZA		0x00
-@@ -159,6 +160,7 @@
- #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
- #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
- #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
-+#define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
- #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
- #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
- #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
++#define spec_bar()	asm volatile(ALTERNATIVE("dsb nsh\nisb\n",		\
++						 SB_BARRIER_INSN"nop\n",	\
++						 ARM64_HAS_SB))
++
+ #ifdef CONFIG_ARM64_PSEUDO_NMI
+ #define pmr_sync()						\
+ 	do {							\
 -- 
 2.43.0
 
