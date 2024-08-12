@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B98134AC;
-	Mon, 12 Aug 2024 16:23:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52EE134AC;
+	Mon, 12 Aug 2024 16:23:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479824; cv=none; b=Dc0SNd2PQve7/k9VzqqPe8ENOYOvrlOxviopG2dVP0bVbvJ1NvCTIEqk1ujb9lUk9YAqOn+ZUBASOkfhrpkF6MahaWtfF4NoVzHGA0BsxOb1BflHtIC5piQxIeCt+O+SCBOvDLMT6SxTF2avggpaY9Pvarj3hMqYTw3LYu1u4Mk=
+	t=1723479827; cv=none; b=od83SH8BbjFMfQwk3H2DJranCACP7MVEtmIeMwiKr/CP/oazCxPUb5iSVOcSXPyAswdMemhBQKMsXqdWGbTAvXULxNiLY50w4bOkkKDSEKBCdBK7ncTLjuoKZTJkJCQ+UEZHOdY1CHbYIA7t8hWCc781j5Su6rrOnW/raJUwjLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479824; c=relaxed/simple;
-	bh=WQM8fFOrL5gEF4XcZ7ITkt1XNRA+UqDKaB1vYuN0x70=;
+	s=arc-20240116; t=1723479827; c=relaxed/simple;
+	bh=NCvueZtja5JJFY81JEMKclZQROjDFPCdJUKyCVBF/c4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P13U2XxKn+NjQZTaDbANT7zBWYFbmJl2rNCMBoSHRKYCvIir6Fa/Oh3ywK6DdHzyKZBrPrBlKF29IJGuAqlHHd2Q5FnbprBU0Ciz3QMKHLdEUz9h1oNrTWlFghboId3LuOZEUjLQzAL6MtUlFwxcuMH0g/hR+PkY0bBy/HVLw14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XFlinwuo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QvdH36H2gDiKK2dvH9lSiqKbm/MOP/SKg/kkyGlIX5+dMAOpwe5zjsRBBs76CSzPAU3poeJMiKtTtvT/xegPz7g7gSvYggxNdjx/SfRqXchJZmCJYSNm9QU4xkSYld7/ghucIO6p91Xla7fkIA+RvvF4ldPC170rpKtYdblcUlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FT4FAtwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XFlinwuo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2113C32782;
-	Mon, 12 Aug 2024 16:23:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FT4FAtwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48246C32782;
+	Mon, 12 Aug 2024 16:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479824;
-	bh=WQM8fFOrL5gEF4XcZ7ITkt1XNRA+UqDKaB1vYuN0x70=;
+	s=korg; t=1723479827;
+	bh=NCvueZtja5JJFY81JEMKclZQROjDFPCdJUKyCVBF/c4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XFlinwuoIascr8UqWZljB1PO3ZLPJZm4QBbeH4Mb9SxieVlTuG1bzaZmgB89e0aFA
-	 3LstYflhSAlhc/MWKVS+at1lr9MygbaB+I73ysOv5hsTASDCRkAqt4rw1qMnPa/Mzt
-	 7Bq0ircp6zs7wf4y8nAgu6wtsA0Hf8GMjFAEEgTQ=
+	b=FT4FAtwgeypbVgYInbjXp2z5Sde/+QL0zOIuaGgZNJgSHp4y8ojZsusb2WNw9WnpV
+	 w38DU3ab7/Z23oEm9XfWm8dM7bFY96Xi0RZDvby7C/5fRrqx9/oFKqNgI7i0bSl4Zb
+	 pdgRdqsRm9FBuL84Dlb3gdQDFVPw+Ym4BQgPE6CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bibo Mao <maobibo@loongson.cn>,
-	Uros Bizjak <ubizjak@gmail.com>,
+	Zhang Rui <rui.zhang@intel.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Waiman Long <longman@redhat.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 002/263] locking/pvqspinlock: Correct the type of "old" variable in pv_kick_node()
-Date: Mon, 12 Aug 2024 18:00:03 +0200
-Message-ID: <20240812160146.615918815@linuxfoundation.org>
+Subject: [PATCH 6.10 003/263] perf/x86/intel/cstate: Add Arrowlake support
+Date: Mon, 12 Aug 2024 18:00:04 +0200
+Message-ID: <20240812160146.653920400@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,42 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Uros Bizjak <ubizjak@gmail.com>
+From: Zhang Rui <rui.zhang@intel.com>
 
-[ Upstream commit 6623b0217d0c9bed80bfa43b778ce1c0eb03b497 ]
+[ Upstream commit a31000753d41305d2fb7faa8cc80a8edaeb7b56b ]
 
-"enum vcpu_state" is not compatible with "u8" type for all targets,
-resulting in:
+Like Alderlake, Arrowlake supports CC1/CC6/CC7 and PC2/PC3/PC6/PC8/PC10.
 
-error: initialization of 'u8 *' {aka 'unsigned char *'} from incompatible pointer type 'enum vcpu_state *'
-
-for LoongArch. Correct the type of "old" variable to "u8".
-
-Fixes: fea0e1820b51 ("locking/pvqspinlock: Use try_cmpxchg() in qspinlock_paravirt.h")
-Closes: https://lore.kernel.org/lkml/20240719024010.3296488-1-maobibo@loongson.cn/
-Reported-by: Bibo Mao <maobibo@loongson.cn>
-Signed-off-by: Uros Bizjak <ubizjak@gmail.com>
+Signed-off-by: Zhang Rui <rui.zhang@intel.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Waiman Long <longman@redhat.com>
-Link: https://lore.kernel.org/r/20240721164552.50175-1-ubizjak@gmail.com
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20240628031758.43103-3-rui.zhang@intel.com
+Stable-dep-of: b1d0e15c8725 ("perf/x86/intel/cstate: Add pkg C2 residency counter for Sierra Forest")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/locking/qspinlock_paravirt.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/cstate.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/locking/qspinlock_paravirt.h b/kernel/locking/qspinlock_paravirt.h
-index f5a36e67b5935..ac2e225027410 100644
---- a/kernel/locking/qspinlock_paravirt.h
-+++ b/kernel/locking/qspinlock_paravirt.h
-@@ -357,7 +357,7 @@ static void pv_wait_node(struct mcs_spinlock *node, struct mcs_spinlock *prev)
- static void pv_kick_node(struct qspinlock *lock, struct mcs_spinlock *node)
- {
- 	struct pv_node *pn = (struct pv_node *)node;
--	enum vcpu_state old = vcpu_halted;
-+	u8 old = vcpu_halted;
- 	/*
- 	 * If the vCPU is indeed halted, advance its state to match that of
- 	 * pv_wait_node(). If OTOH this fails, the vCPU was running and will
+diff --git a/arch/x86/events/intel/cstate.c b/arch/x86/events/intel/cstate.c
+index dd18320558914..cb165af1a1bfd 100644
+--- a/arch/x86/events/intel/cstate.c
++++ b/arch/x86/events/intel/cstate.c
+@@ -41,7 +41,7 @@
+  *	MSR_CORE_C1_RES: CORE C1 Residency Counter
+  *			 perf code: 0x00
+  *			 Available model: SLM,AMT,GLM,CNL,ICX,TNT,ADL,RPL
+- *					  MTL,SRF,GRR
++ *					  MTL,SRF,GRR,ARL
+  *			 Scope: Core (each processor core has a MSR)
+  *	MSR_CORE_C3_RESIDENCY: CORE C3 Residency Counter
+  *			       perf code: 0x01
+@@ -53,30 +53,31 @@
+  *			       Available model: SLM,AMT,NHM,WSM,SNB,IVB,HSW,BDW,
+  *						SKL,KNL,GLM,CNL,KBL,CML,ICL,ICX,
+  *						TGL,TNT,RKL,ADL,RPL,SPR,MTL,SRF,
+- *						GRR
++ *						GRR,ARL
+  *			       Scope: Core
+  *	MSR_CORE_C7_RESIDENCY: CORE C7 Residency Counter
+  *			       perf code: 0x03
+  *			       Available model: SNB,IVB,HSW,BDW,SKL,CNL,KBL,CML,
+- *						ICL,TGL,RKL,ADL,RPL,MTL
++ *						ICL,TGL,RKL,ADL,RPL,MTL,ARL
+  *			       Scope: Core
+  *	MSR_PKG_C2_RESIDENCY:  Package C2 Residency Counter.
+  *			       perf code: 0x00
+  *			       Available model: SNB,IVB,HSW,BDW,SKL,KNL,GLM,CNL,
+  *						KBL,CML,ICL,ICX,TGL,TNT,RKL,ADL,
+- *						RPL,SPR,MTL
++ *						RPL,SPR,MTL,ARL
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C3_RESIDENCY:  Package C3 Residency Counter.
+  *			       perf code: 0x01
+  *			       Available model: NHM,WSM,SNB,IVB,HSW,BDW,SKL,KNL,
+  *						GLM,CNL,KBL,CML,ICL,TGL,TNT,RKL,
+- *						ADL,RPL,MTL
++ *						ADL,RPL,MTL,ARL
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C6_RESIDENCY:  Package C6 Residency Counter.
+  *			       perf code: 0x02
+  *			       Available model: SLM,AMT,NHM,WSM,SNB,IVB,HSW,BDW,
+  *						SKL,KNL,GLM,CNL,KBL,CML,ICL,ICX,
+- *						TGL,TNT,RKL,ADL,RPL,SPR,MTL,SRF
++ *						TGL,TNT,RKL,ADL,RPL,SPR,MTL,SRF,
++ *						ARL
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C7_RESIDENCY:  Package C7 Residency Counter.
+  *			       perf code: 0x03
+@@ -86,7 +87,7 @@
+  *	MSR_PKG_C8_RESIDENCY:  Package C8 Residency Counter.
+  *			       perf code: 0x04
+  *			       Available model: HSW ULT,KBL,CNL,CML,ICL,TGL,RKL,
+- *						ADL,RPL,MTL
++ *						ADL,RPL,MTL,ARL
+  *			       Scope: Package (physical package)
+  *	MSR_PKG_C9_RESIDENCY:  Package C9 Residency Counter.
+  *			       perf code: 0x05
+@@ -95,7 +96,7 @@
+  *	MSR_PKG_C10_RESIDENCY: Package C10 Residency Counter.
+  *			       perf code: 0x06
+  *			       Available model: HSW ULT,KBL,GLM,CNL,CML,ICL,TGL,
+- *						TNT,RKL,ADL,RPL,MTL
++ *						TNT,RKL,ADL,RPL,MTL,ARL
+  *			       Scope: Package (physical package)
+  *	MSR_MODULE_C6_RES_MS:  Module C6 Residency Counter.
+  *			       perf code: 0x00
+@@ -760,6 +761,9 @@ static const struct x86_cpu_id intel_cstates_match[] __initconst = {
+ 	X86_MATCH_VFM(INTEL_RAPTORLAKE_S,	&adl_cstates),
+ 	X86_MATCH_VFM(INTEL_METEORLAKE,		&adl_cstates),
+ 	X86_MATCH_VFM(INTEL_METEORLAKE_L,	&adl_cstates),
++	X86_MATCH_VFM(INTEL_ARROWLAKE,		&adl_cstates),
++	X86_MATCH_VFM(INTEL_ARROWLAKE_H,	&adl_cstates),
++	X86_MATCH_VFM(INTEL_ARROWLAKE_U,	&adl_cstates),
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(x86cpu, intel_cstates_match);
 -- 
 2.43.0
 
