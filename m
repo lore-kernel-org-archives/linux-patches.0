@@ -1,46 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335671EA8D;
-	Mon, 12 Aug 2024 16:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DA41EA8D;
+	Mon, 12 Aug 2024 16:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479111; cv=none; b=r39tBbC85U/z1VfdDnvq4zCETiuD23+6hfiZyEc54KLmQ93sFVKjVk821ErgD5JTpmnAs5CqDr//RWvBc6yx+cgkm6ZZhbzeRe/FmjN/bHUiDrUWzfZgsgz6GHLefEsPieo0ipH/PLSHqh1We3bMYKMG3PBEh673Nrz7Q0M/cUg=
+	t=1723479114; cv=none; b=ulJJ7R2BS16eVO4wNGXfl2rrk3AwMoIUoBWzzMkwtPQXqXeO350tvlMWYuj5iIJbUtUg2q9quQdmq1P2NK42Xutmcxu/2dNlHeFdljf3XsxPfCzjuXQ+bMq7iB5ccSpwmnQHR4YEJVyW8TLrQCV5HM8clSwh6MVX5IKQSgsVTws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479111; c=relaxed/simple;
-	bh=LUo+1eoCO4Zu3JjXSksWH99DT/Z4J5+GNqiB0FpOn/Q=;
+	s=arc-20240116; t=1723479114; c=relaxed/simple;
+	bh=RNsZI1or+yA0LG2dB6qDiwAb2Ks0AwBlfQPp+kooW3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1pV0WhEY3mcsfcSXeB4LHMsCLzImashLbWyM5DUw3pKJyPm7a06M1LhlV6zZVq0rb70/pD9yLVmYCNFngvg/5zD76JNakaZqjyz1QujNOVZDi0y6vlZwAo8PAGbfqM2RTOJLQmMXaN43jVeDBxbRWxByk2BleH41FHtuFDUQ28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fcPGNba2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P3//CyXPNtTqNb87zSJud5Xk0ZrqL4FhK11V+mQ8xJMDjAoXe4qz9IP1IJCkTJ2fSCjRyVNfJyHpSj1GU8pDh1lQ/M/q097M2GCMDbYsuCpEobuAsLtmy16xEXr2ypOfnwgxnWwcVfJyf2GP5b+JlMURctqwPHg94u3t2umAgg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix+GC+sC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fcPGNba2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6194EC32782;
-	Mon, 12 Aug 2024 16:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix+GC+sC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAC1C32782;
+	Mon, 12 Aug 2024 16:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479111;
-	bh=LUo+1eoCO4Zu3JjXSksWH99DT/Z4J5+GNqiB0FpOn/Q=;
+	s=korg; t=1723479114;
+	bh=RNsZI1or+yA0LG2dB6qDiwAb2Ks0AwBlfQPp+kooW3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fcPGNba2ZClynFRkTCLg7OnBrgxpCYmIq+VgbI8Szr2kKHe3xhBnHbZPqo7sOoL4B
-	 jv1us50OYp0hfYSwmvFUPZ3FrADGL5D88KdkiyCb8kSZZSzQf/D0JldiVVzljTsIuO
-	 35qnzLeTaXMM64NZazd8+kzUMzN8/1SBebwNlhvQ=
+	b=Ix+GC+sC/vQjmS9CAV62jXQKBjmbUy8NgOE0xcY6V7d9INV+C+PX6Y9pWkGE7D8dG
+	 IB5i6qLvkyV7NIJDy+yhbg+g11SgrjstDM3QnHVty4s043kxu4zgZfKuRt2oLBG/oD
+	 zrFKR0jSxagRpz1pDo45tZrXWNUWazioBWsCIpCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Shi <yang@os.amperecomputing.com>,
-	Yves-Alexis Perez <corsac@debian.org>,
-	David Hildenbrand <david@redhat.com>,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Christoph Lameter <cl@linux.com>,
-	Jiri Slaby <jirislaby@kernel.org>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Rik van Riel <riel@surriel.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 137/150] mm: huge_memory: use !CONFIG_64BIT to relax huge page alignment on 32 bit machines
-Date: Mon, 12 Aug 2024 18:03:38 +0200
-Message-ID: <20240812160130.455908977@linuxfoundation.org>
+	Hanna Czenczek <hreitz@redhat.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 138/150] btrfs: fix corruption after buffer fault in during direct IO append write
+Date: Mon, 12 Aug 2024 18:03:39 +0200
+Message-ID: <20240812160130.495781228@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -59,49 +52,252 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Shi <yang@os.amperecomputing.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit d9592025000b3cf26c742f3505da7b83aedc26d5 upstream.
+commit 939b656bc8ab203fdbde26ccac22bcb7f0985be5 upstream.
 
-Yves-Alexis Perez reported commit 4ef9ad19e176 ("mm: huge_memory: don't
-force huge page alignment on 32 bit") didn't work for x86_32 [1].  It is
-because x86_32 uses CONFIG_X86_32 instead of CONFIG_32BIT.
+During an append (O_APPEND write flag) direct IO write if the input buffer
+was not previously faulted in, we can corrupt the file in a way that the
+final size is unexpected and it includes an unexpected hole.
 
-!CONFIG_64BIT should cover all 32 bit machines.
+The problem happens like this:
 
-[1] https://lore.kernel.org/linux-mm/CAHbLzkr1LwH3pcTgM+aGQ31ip2bKqiqEQ8=FQB+t2c3dhNKNHA@mail.gmail.com/
+1) We have an empty file, with size 0, for example;
 
-Link: https://lkml.kernel.org/r/20240712155855.1130330-1-yang@os.amperecomputing.com
-Fixes: 4ef9ad19e176 ("mm: huge_memory: don't force huge page alignment on 32 bit")
-Signed-off-by: Yang Shi <yang@os.amperecomputing.com>
-Reported-by: Yves-Alexis Perez <corsac@debian.org>
-Tested-by: Yves-Alexis Perez <corsac@debian.org>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: Ben Hutchings <ben@decadent.org.uk>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: Jiri Slaby <jirislaby@kernel.org>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Rik van Riel <riel@surriel.com>
-Cc: Salvatore Bonaccorso <carnil@debian.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>	[6.8+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Cc: Ben Hutchings <ben@decadent.org.uk>
+2) We do an O_APPEND direct IO with a length of 4096 bytes and the input
+   buffer is not currently faulted in;
+
+3) We enter btrfs_direct_write(), lock the inode and call
+   generic_write_checks(), which calls generic_write_checks_count(), and
+   that function sets the iocb position to 0 with the following code:
+
+	if (iocb->ki_flags & IOCB_APPEND)
+		iocb->ki_pos = i_size_read(inode);
+
+4) We call btrfs_dio_write() and enter into iomap, which will end up
+   calling btrfs_dio_iomap_begin() and that calls
+   btrfs_get_blocks_direct_write(), where we update the i_size of the
+   inode to 4096 bytes;
+
+5) After btrfs_dio_iomap_begin() returns, iomap will attempt to access
+   the page of the write input buffer (at iomap_dio_bio_iter(), with a
+   call to bio_iov_iter_get_pages()) and fail with -EFAULT, which gets
+   returned to btrfs at btrfs_direct_write() via btrfs_dio_write();
+
+6) At btrfs_direct_write() we get the -EFAULT error, unlock the inode,
+   fault in the write buffer and then goto to the label 'relock';
+
+7) We lock again the inode, do all the necessary checks again and call
+   again generic_write_checks(), which calls generic_write_checks_count()
+   again, and there we set the iocb's position to 4K, which is the current
+   i_size of the inode, with the following code pointed above:
+
+        if (iocb->ki_flags & IOCB_APPEND)
+                iocb->ki_pos = i_size_read(inode);
+
+8) Then we go again to btrfs_dio_write() and enter iomap and the write
+   succeeds, but it wrote to the file range [4K, 8K), leaving a hole in
+   the [0, 4K) range and an i_size of 8K, which goes against the
+   expectations of having the data written to the range [0, 4K) and get an
+   i_size of 4K.
+
+Fix this by not unlocking the inode before faulting in the input buffer,
+in case we get -EFAULT or an incomplete write, and not jumping to the
+'relock' label after faulting in the buffer - instead jump to a location
+immediately before calling iomap, skipping all the write checks and
+relocking. This solves this problem and it's fine even in case the input
+buffer is memory mapped to the same file range, since only holding the
+range locked in the inode's io tree can cause a deadlock, it's safe to
+keep the inode lock (VFS lock), as was fixed and described in commit
+51bd9563b678 ("btrfs: fix deadlock due to page faults during direct IO
+reads and writes").
+
+A sample reproducer provided by a reporter is the following:
+
+   $ cat test.c
+   #ifndef _GNU_SOURCE
+   #define _GNU_SOURCE
+   #endif
+
+   #include <fcntl.h>
+   #include <stdio.h>
+   #include <sys/mman.h>
+   #include <sys/stat.h>
+   #include <unistd.h>
+
+   int main(int argc, char *argv[])
+   {
+       if (argc < 2) {
+           fprintf(stderr, "Usage: %s <test file>\n", argv[0]);
+           return 1;
+       }
+
+       int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC | O_DIRECT |
+                     O_APPEND, 0644);
+       if (fd < 0) {
+           perror("creating test file");
+           return 1;
+       }
+
+       char *buf = mmap(NULL, 4096, PROT_READ,
+                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+       ssize_t ret = write(fd, buf, 4096);
+       if (ret < 0) {
+           perror("pwritev2");
+           return 1;
+       }
+
+       struct stat stbuf;
+       ret = fstat(fd, &stbuf);
+       if (ret < 0) {
+           perror("stat");
+           return 1;
+       }
+
+       printf("size: %llu\n", (unsigned long long)stbuf.st_size);
+       return stbuf.st_size == 4096 ? 0 : 1;
+   }
+
+A test case for fstests will be sent soon.
+
+Reported-by: Hanna Czenczek <hreitz@redhat.com>
+Link: https://lore.kernel.org/linux-btrfs/0b841d46-12fe-4e64-9abb-871d8d0de271@redhat.com/
+Fixes: 8184620ae212 ("btrfs: fix lost file sync on direct IO write with nowait and dsync iocb")
+CC: stable@vger.kernel.org # 6.1+
+Tested-by: Hanna Czenczek <hreitz@redhat.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ctree.h |    1 +
+ fs/btrfs/file.c  |   55 ++++++++++++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 43 insertions(+), 13 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -608,7 +608,7 @@ static unsigned long __thp_get_unmapped_
- 	loff_t off_align = round_up(off, size);
- 	unsigned long len_pad, ret;
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -1553,6 +1553,7 @@ struct btrfs_drop_extents_args {
+ struct btrfs_file_private {
+ 	void *filldir_buf;
+ 	u64 last_index;
++	bool fsync_skip_inode_lock;
+ };
  
--	if (IS_ENABLED(CONFIG_32BIT) || in_compat_syscall())
-+	if (!IS_ENABLED(CONFIG_64BIT) || in_compat_syscall())
- 		return 0;
  
- 	if (off_end <= off_align || (off_end - off_align) < size)
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1526,21 +1526,37 @@ relock:
+ 	 * So here we disable page faults in the iov_iter and then retry if we
+ 	 * got -EFAULT, faulting in the pages before the retry.
+ 	 */
++again:
+ 	from->nofault = true;
+ 	dio = btrfs_dio_write(iocb, from, written);
+ 	from->nofault = false;
+ 
+-	/*
+-	 * iomap_dio_complete() will call btrfs_sync_file() if we have a dsync
+-	 * iocb, and that needs to lock the inode. So unlock it before calling
+-	 * iomap_dio_complete() to avoid a deadlock.
+-	 */
+-	btrfs_inode_unlock(inode, ilock_flags);
+-
+-	if (IS_ERR_OR_NULL(dio))
++	if (IS_ERR_OR_NULL(dio)) {
+ 		err = PTR_ERR_OR_ZERO(dio);
+-	else
++	} else {
++		struct btrfs_file_private stack_private = { 0 };
++		struct btrfs_file_private *private;
++		const bool have_private = (file->private_data != NULL);
++
++		if (!have_private)
++			file->private_data = &stack_private;
++
++		/*
++		 * If we have a synchoronous write, we must make sure the fsync
++		 * triggered by the iomap_dio_complete() call below doesn't
++		 * deadlock on the inode lock - we are already holding it and we
++		 * can't call it after unlocking because we may need to complete
++		 * partial writes due to the input buffer (or parts of it) not
++		 * being already faulted in.
++		 */
++		private = file->private_data;
++		private->fsync_skip_inode_lock = true;
+ 		err = iomap_dio_complete(dio);
++		private->fsync_skip_inode_lock = false;
++
++		if (!have_private)
++			file->private_data = NULL;
++	}
+ 
+ 	/* No increment (+=) because iomap returns a cumulative value. */
+ 	if (err > 0)
+@@ -1567,10 +1583,12 @@ relock:
+ 		} else {
+ 			fault_in_iov_iter_readable(from, left);
+ 			prev_left = left;
+-			goto relock;
++			goto again;
+ 		}
+ 	}
+ 
++	btrfs_inode_unlock(inode, ilock_flags);
++
+ 	/*
+ 	 * If 'err' is -ENOTBLK or we have not written all data, then it means
+ 	 * we must fallback to buffered IO.
+@@ -1777,6 +1795,7 @@ static inline bool skip_inode_logging(co
+  */
+ int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
+ {
++	struct btrfs_file_private *private = file->private_data;
+ 	struct dentry *dentry = file_dentry(file);
+ 	struct inode *inode = d_inode(dentry);
+ 	struct btrfs_fs_info *fs_info = btrfs_sb(inode->i_sb);
+@@ -1786,6 +1805,7 @@ int btrfs_sync_file(struct file *file, l
+ 	int ret = 0, err;
+ 	u64 len;
+ 	bool full_sync;
++	const bool skip_ilock = (private ? private->fsync_skip_inode_lock : false);
+ 
+ 	trace_btrfs_sync_file(file, datasync);
+ 
+@@ -1813,7 +1833,10 @@ int btrfs_sync_file(struct file *file, l
+ 	if (ret)
+ 		goto out;
+ 
+-	btrfs_inode_lock(inode, BTRFS_ILOCK_MMAP);
++	if (skip_ilock)
++		down_write(&BTRFS_I(inode)->i_mmap_lock);
++	else
++		btrfs_inode_lock(inode, BTRFS_ILOCK_MMAP);
+ 
+ 	atomic_inc(&root->log_batch);
+ 
+@@ -1837,7 +1860,10 @@ int btrfs_sync_file(struct file *file, l
+ 	 */
+ 	ret = start_ordered_ops(inode, start, end);
+ 	if (ret) {
+-		btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
++		if (skip_ilock)
++			up_write(&BTRFS_I(inode)->i_mmap_lock);
++		else
++			btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
+ 		goto out;
+ 	}
+ 
+@@ -1940,7 +1966,10 @@ int btrfs_sync_file(struct file *file, l
+ 	 * file again, but that will end up using the synchronization
+ 	 * inside btrfs_sync_log to keep things safe.
+ 	 */
+-	btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
++	if (skip_ilock)
++		up_write(&BTRFS_I(inode)->i_mmap_lock);
++	else
++		btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
+ 
+ 	if (ret == BTRFS_NO_LOG_SYNC) {
+ 		ret = btrfs_end_transaction(trans);
 
 
