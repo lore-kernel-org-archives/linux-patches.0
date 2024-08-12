@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A602C1A5;
-	Mon, 12 Aug 2024 16:31:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4CC2C1A5;
+	Mon, 12 Aug 2024 16:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480316; cv=none; b=dE/vK3ZeGxnzbRzF3VugnuldgLKuvHt4pEGw+N1DWeMo07B+kTHWR/MZ2wE0ogQjOAYg5yvTnDNtzWRqyQNKHSPbocLEx7gZyfkmqiA3um7Mn3uDCaFmFGeDyEMZH9nLXhdAK/6jURIMV6W/Lscut67p7JNy5MpgFjRDYFBQS8Q=
+	t=1723480319; cv=none; b=OFH4pCH59PseoHsJ+841zJZ8Hecq7XMZVYQNI2tV0pkSoQyj1s08aTJIsdqC3RUFuV2i/THa22wM4wGeoosT2NOuQZ7FQQ/0Sa8N6aojfS3yRSOVgei4H3y7ppXt6cp+ZYvgOBQxMtj1TRFDIIZ+BiadVRMT+cJn7p0HpciMkIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480316; c=relaxed/simple;
-	bh=7hGG6RuJ0FS7dNm+RGs/WLRj37tO4t0Oyf5xkocM0OI=;
+	s=arc-20240116; t=1723480319; c=relaxed/simple;
+	bh=GlzoEuqh5uJEd/qT3+AnapbB0gnq7XjROH6YECIelJ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSigXgORm5289+Rj54rXni5wbPt4yJZBwqr/jFTCpsZrZfbkCFnlTDW0u8U6XTPFxuGpun/oFC3TOGQgTjknlz3ly61Wi8rxMS+F8rZAcQeuEvyI/U0ijBftRviLk47kXxchfZNJ9vz/mkXdIINN4XyAuZ1i85b3RZjmLMvzt0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2c602CSd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cgLrNWKDsTZCRbN+UrEfZmEmqv3XyMaxkRl/EdtqMLRqG9GaNSX4spb0UCuqvc51FlMDIM6GMXj17njBw49uMBZ1C6i2M0g9nEYBK+u4Lea42qgGvrPh+zjFTrJJgs+Q4mePhz6SCTvdbyVxHwXz7LFmyM/C/1V2tDEyS6TomzU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1un2hE8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2c602CSd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70585C32782;
-	Mon, 12 Aug 2024 16:31:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1un2hE8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81A06C32782;
+	Mon, 12 Aug 2024 16:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480315;
-	bh=7hGG6RuJ0FS7dNm+RGs/WLRj37tO4t0Oyf5xkocM0OI=;
+	s=korg; t=1723480319;
+	bh=GlzoEuqh5uJEd/qT3+AnapbB0gnq7XjROH6YECIelJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2c602CSdYDK/uM1VyxyzkuTrmUUC3sDkGLeYr1FkHcThPyJ4YQFhBy7M8gyU1op6u
-	 LwiatNYa8hEB10Au+ScJvRWVC4EPZngrte5sODUC4z+7jUz+x7LbcDdbnMTE26yqfZ
-	 K8zdrSAkAYW+cbR6+gkSRCtNWgRKdv0FIRkgNsdE=
+	b=1un2hE8LD7mL/FJUXr1BULzL6LDuyuCPwgRJkxDhp0geSrLvQd7/rKks3G/daRdnh
+	 MhSwVFkkQmq6ZTXLsxBz/eim0STO+04m7OIN25cUBdhajeyzU6DJvFN/Yiek6nyJE9
+	 f2pa5nn5dlYSsxvVNoLht9aDqPMCgjZnsELDMSQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 161/263] spi: spi-fsl-lpspi: Fix scldiv calculation
-Date: Mon, 12 Aug 2024 18:02:42 +0200
-Message-ID: <20240812160152.710730011@linuxfoundation.org>
+Subject: [PATCH 6.10 162/263] ALSA: usb-audio: Re-add ScratchAmp quirk entries
+Date: Mon, 12 Aug 2024 18:02:43 +0200
+Message-ID: <20240812160152.749052503@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,55 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Wahren <wahrenst@gmx.net>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 730bbfaf7d4890bd99e637db7767dc68cfeb24e7 ]
+[ Upstream commit 03898691d42e0170e7d00f07cbe21ce0e9f3a8fa ]
 
-The effective SPI clock frequency should never exceed speed_hz
-otherwise this might result in undefined behavior of the SPI device.
+At the code refactoring of USB-audio quirk handling, I assumed that
+the quirk entries of Stanton ScratchAmp devices were only about the
+device name, and moved them completely into the rename table.
+But it seems that the device requires the quirk entry so that it's
+probed by the driver itself.
 
-Currently the scldiv calculation could violate this constraint.
-For the example parameters perclk_rate = 24 MHz and speed_hz = 7 MHz,
-the function fsl_lpspi_set_bitrate will determine perscale = 0 and
-scldiv = 1, which is a effective SPI clock of 8 MHz.
+This re-adds back the quirk entries of ScratchAmp, but in a
+minimalistic manner.
 
-So fix this by rounding up the quotient of perclk_rate and speed_hz.
-While this never change within the loop, we can pull this out.
-
-Fixes: 5314987de5e5 ("spi: imx: add lpspi bus driver")
-Signed-off-by: Stefan Wahren <wahrenst@gmx.net>
-Link: https://patch.msgid.link/20240804113611.83613-1-wahrenst@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 5436f59bc5bc ("ALSA: usb-audio: Move device rename and profile quirks to an internal table")
+Link: https://patch.msgid.link/20240808081803.22300-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-fsl-lpspi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ sound/usb/quirks-table.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
-index aa5ed254be46c..f2d7eedd324b7 100644
---- a/drivers/spi/spi-fsl-lpspi.c
-+++ b/drivers/spi/spi-fsl-lpspi.c
-@@ -296,7 +296,7 @@ static void fsl_lpspi_set_watermark(struct fsl_lpspi_data *fsl_lpspi)
- static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- {
- 	struct lpspi_config config = fsl_lpspi->config;
--	unsigned int perclk_rate, scldiv;
-+	unsigned int perclk_rate, scldiv, div;
- 	u8 prescale;
- 
- 	perclk_rate = clk_get_rate(fsl_lpspi->clk_per);
-@@ -313,8 +313,10 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
- 		return -EINVAL;
+diff --git a/sound/usb/quirks-table.h b/sound/usb/quirks-table.h
+index 73abc38a54006..f13a8d63a019a 100644
+--- a/sound/usb/quirks-table.h
++++ b/sound/usb/quirks-table.h
+@@ -2594,6 +2594,10 @@ YAMAHA_DEVICE(0x7010, "UB99"),
  	}
+ },
  
-+	div = DIV_ROUND_UP(perclk_rate, config.speed_hz);
++/* Stanton ScratchAmp */
++{ USB_DEVICE(0x103d, 0x0100) },
++{ USB_DEVICE(0x103d, 0x0101) },
 +
- 	for (prescale = 0; prescale < 8; prescale++) {
--		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
-+		scldiv = div / (1 << prescale) - 2;
- 		if (scldiv < 256) {
- 			fsl_lpspi->config.prescale = prescale;
- 			break;
+ /* Novation EMS devices */
+ {
+ 	USB_DEVICE_VENDOR_SPEC(0x1235, 0x0001),
 -- 
 2.43.0
 
