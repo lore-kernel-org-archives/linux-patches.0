@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0115C1EA8D;
-	Mon, 12 Aug 2024 16:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369781EA8D;
+	Mon, 12 Aug 2024 16:05:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478736; cv=none; b=YCMJaacJK9X5TRVC1EXib4IcRB/3bu01Fx8pCv9vMyUUseuA30w9uDB7WaLz6o2N0bXYnLSTBscPAyt8VgSEjHNeoXzmrc/yeyuEcWbEk+YFQNcayZ6QVbiGg0xpZqk9+qWF1wfKiwkIijMgHDAH27lMWR+BgdUnl+qrUW3yX/k=
+	t=1723478739; cv=none; b=W9E7b1Y4CyA4PL4xNptIir6GFcyGuiWL5M7N2QmkkG78+PWMH34gf5KkYjJ1Z5l/jN9ScGGSjMoGODwLqfQw3TqdWGMx2/wJWnp0vMKJIQirIeZw4lJ9uznDwHh0a4cCkg3U7yZPnYkIzBjlZUwCTssStxFHbF86TBTEOHQmtEo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478736; c=relaxed/simple;
-	bh=eLdf2t6MQStkvQBX7Hllxss8uvOKSIkMp5O9FyGb43w=;
+	s=arc-20240116; t=1723478739; c=relaxed/simple;
+	bh=2uksZRlt8uQqbZEzOYQePx3yqgeaSMLBISXRUGzTXwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZaEqlWXC6Z99fRkZk3BztT9aaDlr2x5ozcVGSRDxc0txHLiF8nQfshza3G0A/L1c5asdK5PuZVD5QU4TtZgRrqKE5YEea/09RFhr1AKA6BXB/j5EZKKutqC4PCrTGl2DFJ7sReKvtYT5wQS03XQTCOfiDkyERB4VSoXOP+4kxfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C1vVMis8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K6TgNedx5GiQqvOx+n+Z6fybujq/DUqtFfGWglhsv49wEP4Zmv/erUCRwWgnkhACicirBmXlQ7mE0FA5RvO7cR3AH5iTAQwlXE0tmyOemaxaPfditUIoICCDFFu3IadCUmXI9pYcMTpZDpCCFroP8TNLXrUQoGdk4v/YQAzigrI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OSJV3whb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C1vVMis8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 642E8C32782;
-	Mon, 12 Aug 2024 16:05:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OSJV3whb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6ECFC32782;
+	Mon, 12 Aug 2024 16:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478735;
-	bh=eLdf2t6MQStkvQBX7Hllxss8uvOKSIkMp5O9FyGb43w=;
+	s=korg; t=1723478739;
+	bh=2uksZRlt8uQqbZEzOYQePx3yqgeaSMLBISXRUGzTXwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1vVMis8DyyFydVx0MIIN+SRGwrBmN1TqaM9HO8T+S8xE0T4Ra+/Yyvm8+5xAggMn
-	 OixWvdzvIaqg7PYv4Wlaz62IXCNSYPINLmYnOKsjKBVJvj0HYiInEBD3dhfE5g2uFv
-	 6+q4ewGWVUSVb16LAEY3yxsbQw5mf7qRYG6IU/Uk=
+	b=OSJV3whbkogBSriweIGbenj1+eSuy+1PytbfC+nZJITonUozrW+a9GDs2Ixwl09lY
+	 Vh1ANIl0pjXuRKSbAAd8TrdMezAm5QhrlJfQDP7yTuMWot0b8N/SQW1UnVTOtFaOpB
+	 md/U2x4Va7omT2+ABHX3c36oSqTcfOeQM0M1K+o4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jithu Joseph <jithu.joseph@intel.com>,
-	Ashok Raj <ashok.raj@intel.com>,
-	Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/150] platform/x86/intel/ifs: Initialize union ifs_status to zero
-Date: Mon, 12 Aug 2024 18:01:24 +0200
-Message-ID: <20240812160125.280021245@linuxfoundation.org>
+Subject: [PATCH 6.1 004/150] jump_label: Fix the fix, brown paper bags galore
+Date: Mon, 12 Aug 2024 18:01:25 +0200
+Message-ID: <20240812160125.318783055@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -47,49 +45,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 3114f77e9453daa292ec0906f313a715c69b5943 ]
+[ Upstream commit 224fa3552029a3d14bec7acf72ded8171d551b88 ]
 
-If the IFS scan test exits prematurely due to a timeout before
-completing a single run, the union ifs_status remains uninitialized,
-leading to incorrect test status reporting. To prevent this, always
-initialize the union ifs_status to zero.
+Per the example of:
 
-Fixes: 2b40e654b73a ("platform/x86/intel/ifs: Add scan test support")
-Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Reviewed-by: Jithu Joseph <jithu.joseph@intel.com>
-Reviewed-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Kuppuswamy Sathyanarayanan <sathyanarayanan.kuppuswamy@linux.intel.com>
-Link: https://lore.kernel.org/r/20240730155930.1754744-1-sathyanarayanan.kuppuswamy@linux.intel.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+  !atomic_cmpxchg(&key->enabled, 0, 1)
+
+the inverse was written as:
+
+  atomic_cmpxchg(&key->enabled, 1, 0)
+
+except of course, that while !old is only true for old == 0, old is
+true for everything except old == 0.
+
+Fix it to read:
+
+  atomic_cmpxchg(&key->enabled, 1, 0) == 1
+
+such that only the 1->0 transition returns true and goes on to disable
+the keys.
+
+Fixes: 83ab38ef0a0b ("jump_label: Fix concurrency issues in static_key_slow_dec()")
+Reported-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lkml.kernel.org/r/20240731105557.GY33588@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel/ifs/runtest.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/jump_label.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
-index d6bc2f0b61a34..aeb6a3b7a8fd9 100644
---- a/drivers/platform/x86/intel/ifs/runtest.c
-+++ b/drivers/platform/x86/intel/ifs/runtest.c
-@@ -165,8 +165,8 @@ static int doscan(void *data)
-  */
- static void ifs_test_core(int cpu, struct device *dev)
- {
-+	union ifs_status status = {};
- 	union ifs_scan activate;
--	union ifs_status status;
- 	unsigned long timeout;
- 	struct ifs_data *ifsd;
- 	int to_start, to_stop;
+diff --git a/kernel/jump_label.c b/kernel/jump_label.c
+index eec802175ccc6..1ed269b2c4035 100644
+--- a/kernel/jump_label.c
++++ b/kernel/jump_label.c
+@@ -231,7 +231,7 @@ void static_key_disable_cpuslocked(struct static_key *key)
+ 	}
+ 
+ 	jump_label_lock();
+-	if (atomic_cmpxchg(&key->enabled, 1, 0))
++	if (atomic_cmpxchg(&key->enabled, 1, 0) == 1)
+ 		jump_label_update(key);
+ 	jump_label_unlock();
+ }
+@@ -284,7 +284,7 @@ static void __static_key_slow_dec_cpuslocked(struct static_key *key)
+ 		return;
+ 
+ 	guard(mutex)(&jump_label_mutex);
+-	if (atomic_cmpxchg(&key->enabled, 1, 0))
++	if (atomic_cmpxchg(&key->enabled, 1, 0) == 1)
+ 		jump_label_update(key);
+ 	else
+ 		WARN_ON_ONCE(!static_key_slow_try_dec(key));
 -- 
 2.43.0
 
