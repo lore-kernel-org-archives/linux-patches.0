@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B103915C127;
-	Mon, 12 Aug 2024 16:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E5B184527;
+	Mon, 12 Aug 2024 16:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480369; cv=none; b=pwsrvwTD2i5kEOgAkuRLcVYKhOSOuvHDdDa3rNOKJL6oQ9U3Q53MmvnVjc9j8Un7pQyqE+RFNBxIJ4yU+6EGh93hSbZ5rwFGNdrtuGJRPz4zZ7P4DBtVZDaEe1MLTPGDx8hK3+BxtHIWQpjHNIY64TPpsTG8uY1z4kTaCzHFh8M=
+	t=1723480373; cv=none; b=OQDkn0UZoZ4pwxxxP5r1jglyaBRQaj2DSYrLGVrceni7aNaoDp/KFxtCDVBVc24TWD62IdJKzrdv9kRQvLMz9svpvI8B1fiC2vzUr9WsJfU6xeeid6qSZ7Gxi3Rc1E3txcSlzUZZsKKz4G5gYzIZyQfqmevBduD6r44/at77aaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480369; c=relaxed/simple;
-	bh=m69+zG2FjI8P7RPtJnVSNlH3/sU1OEb9UKBs2dJIzoA=;
+	s=arc-20240116; t=1723480373; c=relaxed/simple;
+	bh=WH5Vi8i7eYWxVI0cclLO1EfgIK20d7dNKXdn2MtPQu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nvBue3oeGiXHSfO5Qg1lka3r1SX2iOyc5i9ZjD5MvIvRWJ4mA0kxHZXw+yjqrjEIZyrh9XblwMo/AqBquVNI65qhIEe/B3VFdDHV9efCUX+irJWs1oSRrtK5H8zYjbm8gekviuQ1N0uINX1X4m6nt65I8LifQqmEQj//K6E0Chk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mfBIe/f8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tQ91niL1xGvhXqNO0XRkv7RGK9KgsYNfsxzIYuNMJqgPxHQPaoYUXbFIP3rPKO1TITILJz4em2xbMLnIL7sXLkQEiK5/dBYbaSKMDb5vtceZFYfvKDsEcVu3Ba7ZuvhYD30sQUAMSMz2gufPrwLirrKz9YR0lygL9rFaCcq2kM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NfACpbX5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mfBIe/f8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18187C32782;
-	Mon, 12 Aug 2024 16:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NfACpbX5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5DCC32782;
+	Mon, 12 Aug 2024 16:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480369;
-	bh=m69+zG2FjI8P7RPtJnVSNlH3/sU1OEb9UKBs2dJIzoA=;
+	s=korg; t=1723480373;
+	bh=WH5Vi8i7eYWxVI0cclLO1EfgIK20d7dNKXdn2MtPQu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mfBIe/f8a2TS2j4Vidva60HgX/vlsf6q4Jo1pFLIgwrCemZxsv17OIkdyefOk3ccB
-	 yEMGhpJ0gVia6zZz7JBaynDAcHRMswKGUVcGFc/nfO4bhp8i2Ek/FrzH7fRjzqZlvW
-	 M70mnagJG0xKwBzNCe5x40RVizkVT/9SVLLU/t18=
+	b=NfACpbX5wCTYO6iOs86nnLiHt7uw1kjXlDVDPR39Zy7H7YVZao5cD+K6odRclWB16
+	 ndyKqfarXwtU2AQgPTpGt0Cta7AyGyCVDlk2ILDD3FY95OzUurAumfKBR+uMLwZXfu
+	 +FuTqNnU27l3c1HUeS5pmKfBdwkWUZujWLApH4Qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.10 176/263] drm/client: fix null pointer dereference in drm_client_modeset_probe
-Date: Mon, 12 Aug 2024 18:02:57 +0200
-Message-ID: <20240812160153.287404475@linuxfoundation.org>
+	Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.10 177/263] drm/i915/display: correct dual pps handling for MTL_PCH+
+Date: Mon, 12 Aug 2024 18:02:58 +0200
+Message-ID: <20240812160153.324916104@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,38 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
 
-commit 113fd6372a5bb3689aba8ef5b8a265ed1529a78f upstream.
+commit 1b85bdb0fadb42f5ef75ddcd259fc1ef13ec04de upstream.
 
-In drm_client_modeset_probe(), the return value of drm_mode_duplicate() is
-assigned to modeset->mode, which will lead to a possible NULL pointer
-dereference on failure of drm_mode_duplicate(). Add a check to avoid npd.
+On the PCH side the second PPS was introduced in ICP+.Add condition
+On MTL_PCH and greater platform also having the second PPS.
 
-Cc: stable@vger.kernel.org
-Fixes: cf13909aee05 ("drm/fb-helper: Move out modeset config code")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240802044736.1570345-1-make24@iscas.ac.cn
+Note that DG1/2 south block only has the single PPS, so need
+to exclude the fake DG1/2 PCHs
+
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11488
+Fixes: 93cbc1accbce ("drm/i915/mtl: Add fake PCH for Meteor Lake")
+Cc: <stable@vger.kernel.org> # v6.9+
+Signed-off-by: Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240801111141.574854-1-dnyaneshwar.bhadane@intel.com
+(cherry picked from commit da1878b61c8d480c361ba6a39ce8a31c80b65826)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/i915/display/intel_backlight.c | 3 +++
+ drivers/gpu/drm/i915/display/intel_pps.c       | 3 +++
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -880,6 +880,11 @@ int drm_client_modeset_probe(struct drm_
+diff --git a/drivers/gpu/drm/i915/display/intel_backlight.c b/drivers/gpu/drm/i915/display/intel_backlight.c
+index 071668bfe5d1..6c3333136737 100644
+--- a/drivers/gpu/drm/i915/display/intel_backlight.c
++++ b/drivers/gpu/drm/i915/display/intel_backlight.c
+@@ -1449,6 +1449,9 @@ bxt_setup_backlight(struct intel_connector *connector, enum pipe unused)
  
- 			kfree(modeset->mode);
- 			modeset->mode = drm_mode_duplicate(dev, mode);
-+			if (!modeset->mode) {
-+				ret = -ENOMEM;
-+				break;
-+			}
+ static int cnp_num_backlight_controllers(struct drm_i915_private *i915)
+ {
++	if (INTEL_PCH_TYPE(i915) >= PCH_MTL)
++		return 2;
 +
- 			drm_connector_get(connector);
- 			modeset->connectors[modeset->num_connectors++] = connector;
- 			modeset->x = offset->x;
+ 	if (INTEL_PCH_TYPE(i915) >= PCH_DG1)
+ 		return 1;
+ 
+diff --git a/drivers/gpu/drm/i915/display/intel_pps.c b/drivers/gpu/drm/i915/display/intel_pps.c
+index 42306bc4ba86..7ce926241e83 100644
+--- a/drivers/gpu/drm/i915/display/intel_pps.c
++++ b/drivers/gpu/drm/i915/display/intel_pps.c
+@@ -351,6 +351,9 @@ static int intel_num_pps(struct drm_i915_private *i915)
+ 	if (IS_GEMINILAKE(i915) || IS_BROXTON(i915))
+ 		return 2;
+ 
++	if (INTEL_PCH_TYPE(i915) >= PCH_MTL)
++		return 2;
++
+ 	if (INTEL_PCH_TYPE(i915) >= PCH_DG1)
+ 		return 1;
+ 
+-- 
+2.46.0
+
 
 
