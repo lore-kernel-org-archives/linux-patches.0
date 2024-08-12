@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350FD15C127;
-	Mon, 12 Aug 2024 16:36:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C0E1494B8;
+	Mon, 12 Aug 2024 16:36:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480610; cv=none; b=kyBZ87SLvg4rzIf7EKF1UlGgmCW/gxQiN165uFHe90UmlOY6HDdyzVxkOFch6fFOY7en+Khbm3MAKDSN+sRXM4+ViXbSBJ/u7I8EqSTwBMkl8wvyx26MQyXMtSu7QesVqHBD++bSQnlDVRVVJvKkN8JL+9aBkfGWIZ7yHSQOTrQ=
+	t=1723480613; cv=none; b=rqUB1oGZ2LyOBhIzpfO4dPbAYb0xpFLu/gKrR5ww/LP3bY4KSDzj7UyqAJMGNt70jJrThYGdJmCqXxPnA8OpKiNnkAANFv+xUDnKbz3kB5cTGDK4pgtxMivjJN76Cn7Ue7rYWeXvEMyJzeqAOENpy3OBKtmhr3EI5DepBrbGtuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480610; c=relaxed/simple;
-	bh=ZNuUfSDfBV1LsV5gv+rGwPWPTZsGMHpR+PT+c7DKeHw=;
+	s=arc-20240116; t=1723480613; c=relaxed/simple;
+	bh=RF9tHJV2k9SkjN2JhZSQ/iqYGbUsvBMOAI1Fmkzpe2U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sz5lg6zfpLZjOGMwNXe5Y0uks+jljOhV6kpU2mQH6T0SnlWje4K9of7KPdLY+y96qjlkW6nAnagSq9x8/fIjb/YnsehMx9Al69EU6TzxmRiaXKOa/por2fwbKGsbdXuzEn0YMUdRGDqPdi4M20rJQtG7jxoiiiDZ1jFcrf3F5bI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+kflAhn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1/JyeKE3nRH7estNruV/UhlYu3cIRZMa1igplHiojFEPIhu4xpG6HuFSfztsu2vtGC9zJ7YTXdZRpV0QzMzX+kh7jss6C+TzNDA+IOkZXhaE9FfFO78w+PKaF3oRbuFrXjkLYfu6bncwC4XJEYl4MccdoB9/3aUs1A14WOv8To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KHdTf0vA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+kflAhn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1165C4AF09;
-	Mon, 12 Aug 2024 16:36:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KHdTf0vA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2C43C32782;
+	Mon, 12 Aug 2024 16:36:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480610;
-	bh=ZNuUfSDfBV1LsV5gv+rGwPWPTZsGMHpR+PT+c7DKeHw=;
+	s=korg; t=1723480613;
+	bh=RF9tHJV2k9SkjN2JhZSQ/iqYGbUsvBMOAI1Fmkzpe2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+kflAhnIN/r8m7kKoBEAczSRqt7fDhGYnTPuac4noNmT5jpilXAQIG8BFsdi/eFq
-	 mYMnekiFmHUs6tZBzfwL1J3xXcxxDf6hdf0WBqp+vo+gEnKQFot1hS7xDmgrPTNxle
-	 0rljLqzr3HymBdd8qLVp5+CvDbGeTxu1YVfSbp3c=
+	b=KHdTf0vANcvtT/lj/tFIlk+iA6eIdIeYz5ojvlFtWNtbvwLbJeJAww9C6RzFpj/pL
+	 PCZ68XTOIfkjPd6/SoELnYqyXny2YfH/Lm6lG4lG9wwBs98sL3zdzIaN676Igd8Xy7
+	 3dgIvvfxrE7Xsj/zlRUuJ3HT3HlnwwEwF4Ht3EMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bill Wendling <morbo@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.10 247/263] drm/radeon: Remove __counted_by from StateArray.states[]
-Date: Mon, 12 Aug 2024 18:04:08 +0200
-Message-ID: <20240812160156.000769152@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 248/263] mptcp: fully established after ADD_ADDR echo on MPJ
+Date: Mon, 12 Aug 2024 18:04:09 +0200
+Message-ID: <20240812160156.039625391@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,67 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bill Wendling <morbo@google.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 2bac084468847cfe5bbc7166082b2a208514bb1c upstream.
+commit d67c5649c1541dc93f202eeffc6f49220a4ed71d upstream.
 
-Work for __counted_by on generic pointers in structures (not just
-flexible array members) has started landing in Clang 19 (current tip of
-tree). During the development of this feature, a restriction was added
-to __counted_by to prevent the flexible array member's element type from
-including a flexible array member itself such as:
+Before this patch, receiving an ADD_ADDR echo on the just connected
+MP_JOIN subflow -- initiator side, after the MP_JOIN 3WHS -- was
+resulting in an MP_RESET. That's because only ACKs with a DSS or
+ADD_ADDRs without the echo bit were allowed.
 
-  struct foo {
-    int count;
-    char buf[];
-  };
+Not allowing the ADD_ADDR echo after an MP_CAPABLE 3WHS makes sense, as
+we are not supposed to send an ADD_ADDR before because it requires to be
+in full established mode first. For the MP_JOIN 3WHS, that's different:
+the ADD_ADDR can be sent on a previous subflow, and the ADD_ADDR echo
+can be received on the recently created one. The other peer will already
+be in fully established, so it is allowed to send that.
 
-  struct bar {
-    int count;
-    struct foo data[] __counted_by(count);
-  };
+We can then relax the conditions here to accept the ADD_ADDR echo for
+MPJ subflows.
 
-because the size of data cannot be calculated with the standard array
-size formula:
-
-  sizeof(struct foo) * count
-
-This restriction was downgraded to a warning but due to CONFIG_WERROR,
-it can still break the build. The application of __counted_by on the
-states member of 'struct _StateArray' triggers this restriction,
-resulting in:
-
-  drivers/gpu/drm/radeon/pptable.h:442:5: error: 'counted_by' should not be applied to an array with element of unknown size because 'ATOM_PPLIB_STATE_V2' (aka 'struct _ATOM_PPLIB_STATE_V2') is a struct type with a flexible array member. This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
-    442 |     ATOM_PPLIB_STATE_V2 states[] __counted_by(ucNumEntries);
-        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-Remove this use of __counted_by to fix the warning/error. However,
-rather than remove it altogether, leave it commented, as it may be
-possible to support this in future compiler releases.
-
+Fixes: 67b12f792d5e ("mptcp: full fully established support after ADD_ADDR")
 Cc: stable@vger.kernel.org
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2028
-Fixes: efade6fe50e7 ("drm/radeon: silence UBSAN warning (v3)")
-Signed-off-by: Bill Wendling <morbo@google.com>
-Co-developed-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-1-c8a9b036493b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/radeon/pptable.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/options.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/radeon/pptable.h
-+++ b/drivers/gpu/drm/radeon/pptable.h
-@@ -439,7 +439,7 @@ typedef struct _StateArray{
-     //how many states we have 
-     UCHAR ucNumEntries;
-     
--    ATOM_PPLIB_STATE_V2 states[] __counted_by(ucNumEntries);
-+    ATOM_PPLIB_STATE_V2 states[] /* __counted_by(ucNumEntries) */;
- }StateArray;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -958,7 +958,8 @@ static bool check_fully_established(stru
  
- 
+ 	if (subflow->remote_key_valid &&
+ 	    (((mp_opt->suboptions & OPTION_MPTCP_DSS) && mp_opt->use_ack) ||
+-	     ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) && !mp_opt->echo))) {
++	     ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) &&
++	      (!mp_opt->echo || subflow->mp_join)))) {
+ 		/* subflows are fully established as soon as we get any
+ 		 * additional ack, including ADD_ADDR.
+ 		 */
 
 
