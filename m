@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D015186295;
-	Mon, 12 Aug 2024 16:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4A59186295;
+	Mon, 12 Aug 2024 16:05:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478742; cv=none; b=kPfJ22xGkgNeAdjXpC2mpjHvT3IdDJB56c+EFbFo1Pr4XJX6m8fY3cJggQhaxw5nNaSEnyrGv1KF/vE9W3inNn5WeEQq5ejychWg/hqeHCPVJPJU/obRMqusud8Cziujy+Y0XiEC/zaS2wPmqSZvaM7pjRkLupXB3X8N58dvpoU=
+	t=1723478745; cv=none; b=jpu32KDzECoSVoxmfe99tVEezq9bqKdxMTBaEwIV4SxKxwRMLOikgmceMdXxPgs7Zv41hX06LHquotTBiYGXOtG8GNr25d5sTcnbqtiBu4vE8ypLAbqCTORJQ6xba1nDuU7Ojux7oqWLN5SXjo8DfSc1/dtTdB5xj3VQpeMSMKs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478742; c=relaxed/simple;
-	bh=bsi49ZM1BSif4gY68WpDBXwGyYtolcnbwRpu0eGiaAM=;
+	s=arc-20240116; t=1723478745; c=relaxed/simple;
+	bh=5VqxpUjNMQpqdX20A3/7bV2ZlFqw091uBVBk2MfSZME=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kNLQlnE/dGlTSI6+4aIB4tCSGo4R9B/JIT5xyOY0OSZYAOdwvh5BwXEULe2SqGO7if8JPciW2T/lSG3yG+rCDiIFfJ/Oca8gyFDeqaskkSXH0OlLNGT1DZvDeInVEc9Jc+UUPHbC8SdD2gZgqMSYi1OWNjyiE1IJtV6w+klZxU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CNwpSfon; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KsoM5yk5nXT84EfjIBxrp1OmIY6vb8QPT3GLNDdUDV5wM+vpTm2ArKGaJNJjCL7mIJeiZfHmnt/rOsFgHvWso9VKvl5Qg3MQBb+Zjln7IJvSoS2K7+WmplHA+H1DhUiCskswjEiAoWQYUnw32xdkjYPNc2KepMJYXJrQp1qJbm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vR/Rvbfw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CNwpSfon"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB233C32782;
-	Mon, 12 Aug 2024 16:05:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vR/Rvbfw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53352C32782;
+	Mon, 12 Aug 2024 16:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478742;
-	bh=bsi49ZM1BSif4gY68WpDBXwGyYtolcnbwRpu0eGiaAM=;
+	s=korg; t=1723478745;
+	bh=5VqxpUjNMQpqdX20A3/7bV2ZlFqw091uBVBk2MfSZME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CNwpSfongqq714G7JyFkyGRRcqMG47+U4kSVlL3WEJz7sDwvsg3AZkZSSls2cJTVO
-	 IDlT1Smm/VkD0J5mhE0q2HfQOGSuWK7LoqyF/IVW3UtUwCLaSWn9k5GCKptJK4pQby
-	 /InNXjKkowAsbFG+mx+Zn0tN+xuLTfs2Io2fsWBE=
+	b=vR/RvbfwX2DDkEL/qhr3u9nYDlucmWwqRtLAOZQ+g+GNQb4/OvtmM83tflmKZrz47
+	 SFg4ed7RQhki+S2IB1emKXpOS4IYzEK1z+sbJKqXVLdSnLoMlwIj1AOL7uUcxwLh85
+	 1cOx5Zvbj/B6GsWbHZubAEW9zbhoIEwxKHIBtQ7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Thomas Gleixner <tglx@linutronix.de>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 005/150] x86/mm: Fix pti_clone_pgtable() alignment assumption
-Date: Mon, 12 Aug 2024 18:01:26 +0200
-Message-ID: <20240812160125.357607135@linuxfoundation.org>
+Subject: [PATCH 6.1 006/150] x86/mm: Fix pti_clone_entry_text() for i386
+Date: Mon, 12 Aug 2024 18:01:27 +0200
+Message-ID: <20240812160125.396462533@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -54,64 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit 41e71dbb0e0a0fe214545fe64af031303a08524c ]
+[ Upstream commit 3db03fb4995ef85fc41e86262ead7b4852f4bcf0 ]
 
-Guenter reported dodgy crashes on an i386-nosmp build using GCC-11
-that had the form of endless traps until entry stack exhaust and then
-#DF from the stack guard.
+While x86_64 has PMD aligned text sections, i386 does not have this
+luxery. Notably ALIGN_ENTRY_TEXT_END is empty and _etext has PAGE
+alignment.
 
-It turned out that pti_clone_pgtable() had alignment assumptions on
-the start address, notably it hard assumes start is PMD aligned. This
-is true on x86_64, but very much not true on i386.
+This means that text on i386 can be page granular at the tail end,
+which in turn means that the PTI text clones should consistently
+account for this.
 
-These assumptions can cause the end condition to malfunction, leading
-to a 'short' clone. Guess what happens when the user mapping has a
-short copy of the entry text?
-
-Use the correct increment form for addr to avoid alignment
-assumptions.
+Make pti_clone_entry_text() consistent with pti_clone_kernel_text().
 
 Fixes: 16a3fe634f6a ("x86/mm/pti: Clone kernel-image on PTE level for 32 bit")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Suggested-by: Thomas Gleixner <tglx@linutronix.de>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20240731163105.GG33588@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pti.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/mm/pti.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/x86/mm/pti.c b/arch/x86/mm/pti.c
-index 78414c6d1b5ed..2c4037174ed22 100644
+index 2c4037174ed22..7b804c34c0201 100644
 --- a/arch/x86/mm/pti.c
 +++ b/arch/x86/mm/pti.c
-@@ -374,14 +374,14 @@ pti_clone_pgtable(unsigned long start, unsigned long end,
- 			 */
- 			*target_pmd = *pmd;
+@@ -496,7 +496,7 @@ static void pti_clone_entry_text(void)
+ {
+ 	pti_clone_pgtable((unsigned long) __entry_text_start,
+ 			  (unsigned long) __entry_text_end,
+-			  PTI_CLONE_PMD);
++			  PTI_LEVEL_KERNEL_IMAGE);
+ }
  
--			addr += PMD_SIZE;
-+			addr = round_up(addr + 1, PMD_SIZE);
- 
- 		} else if (level == PTI_CLONE_PTE) {
- 
- 			/* Walk the page-table down to the pte level */
- 			pte = pte_offset_kernel(pmd, addr);
- 			if (pte_none(*pte)) {
--				addr += PAGE_SIZE;
-+				addr = round_up(addr + 1, PAGE_SIZE);
- 				continue;
- 			}
- 
-@@ -401,7 +401,7 @@ pti_clone_pgtable(unsigned long start, unsigned long end,
- 			/* Clone the PTE */
- 			*target_pte = *pte;
- 
--			addr += PAGE_SIZE;
-+			addr = round_up(addr + 1, PAGE_SIZE);
- 
- 		} else {
- 			BUG();
+ /*
 -- 
 2.43.0
 
