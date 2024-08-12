@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51314183CC4;
-	Mon, 12 Aug 2024 16:07:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9C71422A8;
+	Mon, 12 Aug 2024 16:07:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478829; cv=none; b=R6Sq2iH2OdUmLCWA8Fsi7uxRKSaCOMrA8oaeLKEknPtcFu8vlpgOj2V1d2her1Vnn8NdYG/T2GTklCtHtudx6M0wpccjy4w+Q0fUMHP0Js62HaQbe7kn4QUku/657NihVH4/X6iG15Ulsev62u/+nY6UCXZLtF/kkY1xvWGiUEg=
+	t=1723478832; cv=none; b=jm1zjVyxEu9ESS5SeW8efouN+pIuu26CSa7Mzv9nmW4F4Iv+Wy3okkJi2T3zt47basqysTSPoFAxmKYZ5W/+wiggDHTDa79eGMyJPXycxo1dPGPsEZRcTAmWlUrazSw94JNk8LazfJAoNBb0CSy/vHmiLdDMIvcMwpyZu8CGKuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478829; c=relaxed/simple;
-	bh=Yy1p3bYlg4pUSH0ZnZ1RBkw0TkevQxt2urjzfQmGF58=;
+	s=arc-20240116; t=1723478832; c=relaxed/simple;
+	bh=8bFSf51dlJs3T5WU1N/ChkYOU+xJK3o58yyfCstYB6A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fTfys1SZSG1iHsNHbcWcEXlO2Yk2UvpIjm3ekCVZ1QUO96df+K7RJloZBJwaaLtLNt/alUE5I0cDVNdQx/KSL6o3IbCgid2lp/AEgAuugDUZ5VFf+sHdZklsi9FEYcDtXqJy+WXiZdPdX3OKo+WEo6rPXtneE+ctanpSjwdZLok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WYKwhLjp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XvcehhV2rwcTqaRQ3lx1y2QpMR/Okr3gtTDE/7tbwsS/DjG75wKo8FMLzEm7dD4ZizT0epzfnC7I61+7DkpHiEOVS2z6KE4tBH3EbMFwtGqjUUdwwrKNrqXHO+kk2F3piPpIULpFMk5gDRpaL2WRtY7AUNaSo4jl5yST//Fg9qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXvtCEkQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WYKwhLjp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B91C32782;
-	Mon, 12 Aug 2024 16:07:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXvtCEkQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 126BEC32782;
+	Mon, 12 Aug 2024 16:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478829;
-	bh=Yy1p3bYlg4pUSH0ZnZ1RBkw0TkevQxt2urjzfQmGF58=;
+	s=korg; t=1723478832;
+	bh=8bFSf51dlJs3T5WU1N/ChkYOU+xJK3o58yyfCstYB6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WYKwhLjpa8dEYRm8u4eA+OXPtXGbYFcyCAlb2wNRzVU8A57RKwXtpDUBQhVDszotj
-	 g1KnHO20udBWy7IrlZJdId6Y/gP5Dj/SXPe1frmSAqyUCGAHMjOkNQ5a6t7h2FL3Q4
-	 b9K32aFNUMSexX4m4tH6zG7ILiKjGmTHxKoDeaTw=
+	b=DXvtCEkQ6pVH8r98eBCX5e0537gttgxGGgNT6SFa59Y3Cl1JVpc9/jHL5YD1jqbZM
+	 PehVukQjccioaEX6kllkKE78Q1Yhij8Gkbhgs4mFNYmz9346rl1X5Pl8cBP4Iy/Ccj
+	 hvOnNwkAvTZpmGFPzdH6FcLyvC6doYywivo0VSWk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/150] SUNRPC: Fix a race to wake a sync task
-Date: Mon, 12 Aug 2024 18:02:10 +0200
-Message-ID: <20240812160127.057688421@linuxfoundation.org>
+	Daniele Palmas <dnlplm@gmail.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Fabio Porcedda <fabio.porcedda@gmail.com>
+Subject: [PATCH 6.1 050/150] bus: mhi: host: pci_generic: add support for Telit FE990 modem
+Date: Mon, 12 Aug 2024 18:02:11 +0200
+Message-ID: <20240812160127.096560330@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -52,53 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit ed0172af5d6fc07d1b40ca82f5ca3979300369f7 ]
+commit 0724869ede9c169429bb622e2d28f97995a95656 upstream.
 
-We've observed NFS clients with sync tasks sleeping in __rpc_execute
-waiting on RPC_TASK_QUEUED that have not responded to a wake-up from
-rpc_make_runnable().  I suspect this problem usually goes unnoticed,
-because on a busy client the task will eventually be re-awoken by another
-task completion or xprt event.  However, if the state manager is draining
-the slot table, a sync task missing a wake-up can result in a hung client.
+Add support for Telit FE990 that has the same configuration as FN990:
 
-We've been able to prove that the waker in rpc_make_runnable() successfully
-calls wake_up_bit() (ie- there's no race to tk_runstate), but the
-wake_up_bit() call fails to wake the waiter.  I suspect the waker is
-missing the load of the bit's wait_queue_head, so waitqueue_active() is
-false.  There are some very helpful comments about this problem above
-wake_up_bit(), prepare_to_wait(), and waitqueue_active().
+$ lspci -vv
+04:00.0 Unassigned class [ff00]: Qualcomm Device 0308
+    Subsystem: Device 1c5d:2015
 
-Fix this by inserting smp_mb__after_atomic() before the wake_up_bit(),
-which pairs with prepare_to_wait() calling set_current_state().
-
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/20230804094039.365102-1-dnlplm@gmail.com
+[mani: minor update to commit subject and adjusted comment]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: Fabio Porcedda <fabio.porcedda@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/bus/mhi/host/pci_generic.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index 6debf4fd42d4e..cef623ea15060 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -369,8 +369,10 @@ static void rpc_make_runnable(struct workqueue_struct *wq,
- 	if (RPC_IS_ASYNC(task)) {
- 		INIT_WORK(&task->u.tk_work, rpc_async_schedule);
- 		queue_work(wq, &task->u.tk_work);
--	} else
-+	} else {
-+		smp_mb__after_atomic();
- 		wake_up_bit(&task->tk_runstate, RPC_TASK_QUEUED);
-+	}
- }
- 
- /*
--- 
-2.43.0
-
+--- a/drivers/bus/mhi/host/pci_generic.c
++++ b/drivers/bus/mhi/host/pci_generic.c
+@@ -553,6 +553,9 @@ static const struct pci_device_id mhi_pc
+ 	/* Telit FN990 */
+ 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2010),
+ 		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
++	/* Telit FE990 */
++	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_QCOM, 0x0308, 0x1c5d, 0x2015),
++		.driver_data = (kernel_ulong_t) &mhi_telit_fn990_info },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_QCOM, 0x0308),
+ 		.driver_data = (kernel_ulong_t) &mhi_qcom_sdx65_info },
+ 	{ PCI_DEVICE(0x1eac, 0x1001), /* EM120R-GL (sdx24) */
 
 
