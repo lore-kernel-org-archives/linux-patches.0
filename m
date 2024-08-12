@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2210C187552;
-	Mon, 12 Aug 2024 16:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71011EA8D;
+	Mon, 12 Aug 2024 16:05:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478749; cv=none; b=Ony1zCW1AC4pJKD5ZvJOuHDuYVY6pkV7cLJb9SnXlz61XJl8Wxl/QcdrY6dkwTZmYy97+ddDZoRX7G1MTXUTzcnjwRuGz9sd/eHIRsC1rCWr/+e8toqFyFN6fNloHvN5hSVYAoQQC0NPOG8PJE3+gUDZr12DD9bkPr8hiv5Pe4g=
+	t=1723478752; cv=none; b=fziGJjLYiZolXyVzkt6Nx2yhiesx68jgBa8IxsvTr+4O20t17eHdmZn45MpWzi78CjKAML7sAokSEXV3Hh5SzbYfXV0g+7NIQACFxfFwqDE3NbWQBc+vwVvvU/GLbMVPTQR03SKkZx333j+mBygVc1m55yGomZNqBCYLzMnvQU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478749; c=relaxed/simple;
-	bh=arKhlCI8X0YWTVwn8e/2rvb7DheeeZSh/glrDdx0xCg=;
+	s=arc-20240116; t=1723478752; c=relaxed/simple;
+	bh=ZUvohcobtlLU+sPVN2F/A80IIeXle2sThwfH5B7LKy8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P5HkMFCRJe+trcRrX7wDBBF64XW5GSVQhoL8xSlfUVsLVYFv1bs+FA+sVqFf0sDWqgIWZmijhNbNTP0vGgyYtLW2SkSSN6yD3olnvV3uRw7VyFNTn3zFm33Yl79naDg0ozuT2CZF0slQLEpF6sK7N5hKy1qCzI7e/E4/oaVhCWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvPZ1b6b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Q6Sbcan6UxwaepOUHhRazcFj9sIwE98P0j4dazUHDz1+3HqfuK0XZOAb6/nyqyC005Xi8oilEiWWqT5wwzYsePjzeE4Trp9CSiE409Tk8pppXL0jm0tgcME8alC8SVC1OsAUfneQYdgSS9Bg3/30DOCZAKVif+BM2MlRazh7kSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=od4f+zK9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvPZ1b6b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99047C4AF0D;
-	Mon, 12 Aug 2024 16:05:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="od4f+zK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE74C32782;
+	Mon, 12 Aug 2024 16:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478749;
-	bh=arKhlCI8X0YWTVwn8e/2rvb7DheeeZSh/glrDdx0xCg=;
+	s=korg; t=1723478752;
+	bh=ZUvohcobtlLU+sPVN2F/A80IIeXle2sThwfH5B7LKy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EvPZ1b6beg3keFLjSfZr/FcxGYp+LdmcXTwSQYrcAdR5WtEOohKUFemuEEdgD05r/
-	 97LxnJs1oatN8yFrAZ7x1cec88iWAOXT9qZj1d3ovX0wLvXdmWaTMDS/SAziWda3nR
-	 5oyRwK6rGssflcb8eBtuNHhRSJCQPo1+wM8wXypI=
+	b=od4f+zK9K2oTytdBDjzbd7LCAuz59q7xYZJp2i46BMl+PnF/GpdwgzDYMJFcNnE0S
+	 ARZOBbek7ulU8bu44xQooucvk63eWxYpbqFzakFBxEqn8RX8hvxppfnNNS3/TUVi5/
+	 c95nrxDNjMwWcd61wYeveekao2WCrVH2gPnzDQAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniele Palmas <dnlplm@gmail.com>,
+	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/150] sctp: Fix null-ptr-deref in reuseport_add_sock().
-Date: Mon, 12 Aug 2024 18:01:28 +0200
-Message-ID: <20240812160125.435837418@linuxfoundation.org>
+Subject: [PATCH 6.1 008/150] net: usb: qmi_wwan: fix memory leak for not ip packets
+Date: Mon, 12 Aug 2024 18:01:29 +0200
+Message-ID: <20240812160125.474195661@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -47,173 +46,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Daniele Palmas <dnlplm@gmail.com>
 
-[ Upstream commit 9ab0faa7f9ffe31296dbb9bbe6f76c72c14eea18 ]
+[ Upstream commit 7ab107544b777c3bd7feb9fe447367d8edd5b202 ]
 
-syzbot reported a null-ptr-deref while accessing sk2->sk_reuseport_cb in
-reuseport_add_sock(). [0]
+Free the unused skb when not ip packets arrive.
 
-The repro first creates a listener with SO_REUSEPORT.  Then, it creates
-another listener on the same port and concurrently closes the first
-listener.
-
-The second listen() calls reuseport_add_sock() with the first listener as
-sk2, where sk2->sk_reuseport_cb is not expected to be cleared concurrently,
-but the close() does clear it by reuseport_detach_sock().
-
-The problem is SCTP does not properly synchronise reuseport_alloc(),
-reuseport_add_sock(), and reuseport_detach_sock().
-
-The caller of reuseport_alloc() and reuseport_{add,detach}_sock() must
-provide synchronisation for sockets that are classified into the same
-reuseport group.
-
-Otherwise, such sockets form multiple identical reuseport groups, and
-all groups except one would be silently dead.
-
-  1. Two sockets call listen() concurrently
-  2. No socket in the same group found in sctp_ep_hashtable[]
-  3. Two sockets call reuseport_alloc() and form two reuseport groups
-  4. Only one group hit first in __sctp_rcv_lookup_endpoint() receives
-      incoming packets
-
-Also, the reported null-ptr-deref could occur.
-
-TCP/UDP guarantees that would not happen by holding the hash bucket lock.
-
-Let's apply the locking strategy to __sctp_hash_endpoint() and
-__sctp_unhash_endpoint().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-CPU: 1 UID: 0 PID: 10230 Comm: syz-executor119 Not tainted 6.10.0-syzkaller-12585-g301927d2d2eb #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-RIP: 0010:reuseport_add_sock+0x27e/0x5e0 net/core/sock_reuseport.c:350
-Code: 00 0f b7 5d 00 bf 01 00 00 00 89 de e8 1b a4 ff f7 83 fb 01 0f 85 a3 01 00 00 e8 6d a0 ff f7 49 8d 7e 12 48 89 f8 48 c1 e8 03 <42> 0f b6 04 28 84 c0 0f 85 4b 02 00 00 41 0f b7 5e 12 49 8d 7e 14
-RSP: 0018:ffffc9000b947c98 EFLAGS: 00010202
-RAX: 0000000000000002 RBX: ffff8880252ddf98 RCX: ffff888079478000
-RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000012
-RBP: 0000000000000001 R08: ffffffff8993e18d R09: 1ffffffff1fef385
-R10: dffffc0000000000 R11: fffffbfff1fef386 R12: ffff8880252ddac0
-R13: dffffc0000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007f24e45b96c0(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffcced5f7b8 CR3: 00000000241be000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __sctp_hash_endpoint net/sctp/input.c:762 [inline]
- sctp_hash_endpoint+0x52a/0x600 net/sctp/input.c:790
- sctp_listen_start net/sctp/socket.c:8570 [inline]
- sctp_inet_listen+0x767/0xa20 net/sctp/socket.c:8625
- __sys_listen_socket net/socket.c:1883 [inline]
- __sys_listen+0x1b7/0x230 net/socket.c:1894
- __do_sys_listen net/socket.c:1902 [inline]
- __se_sys_listen net/socket.c:1900 [inline]
- __x64_sys_listen+0x5a/0x70 net/socket.c:1900
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f24e46039b9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 91 1a 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f24e45b9228 EFLAGS: 00000246 ORIG_RAX: 0000000000000032
-RAX: ffffffffffffffda RBX: 00007f24e468e428 RCX: 00007f24e46039b9
-RDX: 00007f24e46039b9 RSI: 0000000000000003 RDI: 0000000000000004
-RBP: 00007f24e468e420 R08: 00007f24e45b96c0 R09: 00007f24e45b96c0
-R10: 00007f24e45b96c0 R11: 0000000000000246 R12: 00007f24e468e42c
-R13: 00007f24e465a5dc R14: 0020000000000001 R15: 00007ffcced5f7d8
- </TASK>
-Modules linked in:
-
-Fixes: 6ba845740267 ("sctp: process sk_reuseport in sctp_get_port_local")
-Reported-by: syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e6979a5d2f10ecb700e4
-Tested-by: syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20240731234624.94055-1-kuniyu@amazon.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c6adf77953bc ("net: usb: qmi_wwan: add qmap mux protocol support")
+Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
+Acked-by: Bjørn Mork <bjorn@mork.no>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/usb/qmi_wwan.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 4f43afa8678f9..4ee9374dcfb92 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -748,15 +748,19 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
- 	struct sock *sk = ep->base.sk;
- 	struct net *net = sock_net(sk);
- 	struct sctp_hashbucket *head;
-+	int err = 0;
- 
- 	ep->hashent = sctp_ep_hashfn(net, ep->base.bind_addr.port);
- 	head = &sctp_ep_hashtable[ep->hashent];
- 
-+	write_lock(&head->lock);
- 	if (sk->sk_reuseport) {
- 		bool any = sctp_is_ep_boundall(sk);
- 		struct sctp_endpoint *ep2;
- 		struct list_head *list;
--		int cnt = 0, err = 1;
-+		int cnt = 0;
-+
-+		err = 1;
- 
- 		list_for_each(list, &ep->base.bind_addr.address_list)
- 			cnt++;
-@@ -774,24 +778,24 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
- 			if (!err) {
- 				err = reuseport_add_sock(sk, sk2, any);
- 				if (err)
--					return err;
-+					goto out;
- 				break;
- 			} else if (err < 0) {
--				return err;
-+				goto out;
- 			}
+diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
+index 46e0e1f1c20e0..ee0ea3d0f50ee 100644
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -200,6 +200,7 @@ static int qmimux_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
+ 			break;
+ 		default:
+ 			/* not ip - do not know what to do */
++			kfree_skb(skbn);
+ 			goto skip;
  		}
  
- 		if (err) {
- 			err = reuseport_alloc(sk, any);
- 			if (err)
--				return err;
-+				goto out;
- 		}
- 	}
- 
--	write_lock(&head->lock);
- 	hlist_add_head(&ep->node, &head->chain);
-+out:
- 	write_unlock(&head->lock);
--	return 0;
-+	return err;
- }
- 
- /* Add an endpoint to the hash. Local BH-safe. */
-@@ -816,10 +820,9 @@ static void __sctp_unhash_endpoint(struct sctp_endpoint *ep)
- 
- 	head = &sctp_ep_hashtable[ep->hashent];
- 
-+	write_lock(&head->lock);
- 	if (rcu_access_pointer(sk->sk_reuseport_cb))
- 		reuseport_detach_sock(sk);
--
--	write_lock(&head->lock);
- 	hlist_del_init(&ep->node);
- 	write_unlock(&head->lock);
- }
 -- 
 2.43.0
 
