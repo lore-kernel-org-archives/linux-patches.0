@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C0A134AC;
-	Mon, 12 Aug 2024 16:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48B00134AC;
+	Mon, 12 Aug 2024 16:23:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479778; cv=none; b=MNodRSC4cDy5vfiOumWTwnopCJvNFV5LPDzvu9c80UbzPFCTOiL1wmyN0MDcmi+IXxpbBpE05e664AY00KdVOMA/p3DPu8IVFFCOUCEE+Q7COxuTYduC/K0K9gjBGUyUz1CSD9wGRRPPtlThnPICqsNMgu5pE17eXTHulch+jKo=
+	t=1723479781; cv=none; b=XW7kbmZS42Y8KW3DczUJHXgXJ8L/+qRo/bW/p475wqd50hovQqENQDHVakailJ4M2On29lhsyO+rt/JCj4olzyNr3osi4l6WuiQloGkp2IwJ3GWqEKy3PhTWezWuS1K76AclB/Lz+g+OrmBB5NEi122iBEXAREHn4JaHWHTrG8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479778; c=relaxed/simple;
-	bh=0yye+fSGPH2VkI48ZEJDTsu1SkHIFbVhkRiCej7l4IU=;
+	s=arc-20240116; t=1723479781; c=relaxed/simple;
+	bh=dC+BVcgaxH6rQDmEYfD7vElpk6Xc96MtXHLd14zJBK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=roUascWnFPrJjRZOz6dhFkMRt1yFSvpU2GlZPicjHAY1YmTB19DJQXDvVP4IQwZ6YgWPgfP6+aXBd9xXohktZrycjpTPeSIDlpFHV80iQrBhWja5WbKgBwxx34P6qTcrjgNohMpWPTou5FRZ3S4JL0/eSHgkDATUa4JnaDzcxJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e4qiJMez; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RlVZnFQdSN8Wc+wt6cZMYLfvVk8idmSEYDaYc2Niwy+ZsuvLQGwYcCojxOHhDtad4yWR+G0tgFrxf41ANxopZAmXkyNRNet3EanxDoCuZdDi9oRP/XU8IPubwNiiwI8vyTGqHnfiPO4hXOv5UW8DjCYbG6kA8ljxtxj4UamRWjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=smd+3xjO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e4qiJMez"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68521C32782;
-	Mon, 12 Aug 2024 16:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="smd+3xjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF148C32782;
+	Mon, 12 Aug 2024 16:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479777;
-	bh=0yye+fSGPH2VkI48ZEJDTsu1SkHIFbVhkRiCej7l4IU=;
+	s=korg; t=1723479781;
+	bh=dC+BVcgaxH6rQDmEYfD7vElpk6Xc96MtXHLd14zJBK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e4qiJMezqp8qWqIiGcCKN384/Qw5vR/qtUkBoWIphaJ0egYxq4u30sg8dqw0Ie2t3
-	 xiK+eZYPwDO6a+mnIkuzGlJaQFw8YY60Xw3c3RawmoW6SHeVnxJaBQiEkCMHwdiBeg
-	 BCqbo1l0cOvd7yD0zBGp7nmFfZXCXP0OzvGuG3O4=
+	b=smd+3xjOfYDPjt4/qys8p5y8G2Bpe2odMefHi8yRCaS4ITpdxNsXZMfXQihNrmgLM
+	 Erq729pWKmd1+ka00jeBsVjzcv9m5SXl5Wus4U0e4UjKnPvBrIz6vK5nJidq/22bjp
+	 7F9lf3oS6WHfiCwzwElKhZBmrQh91xY2WuJL6zLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.6 188/189] Revert "selftests: mptcp: simult flows: mark unbalanced tests as flaky"
-Date: Mon, 12 Aug 2024 18:04:04 +0200
-Message-ID: <20240812160139.389555996@linuxfoundation.org>
+	syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 189/189] btrfs: fix double inode unlock for direct IO sync writes
+Date: Mon, 12 Aug 2024 18:04:05 +0200
+Message-ID: <20240812160139.427624371@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -49,52 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-This reverts commit 052c9f0c140c78e5d6826688b5d2f33e19db0ae7.
+commit e0391e92f9ab4fb3dbdeb139c967dcfa7ac4b115 upstream.
 
-If the test doesn't pass, we can get this error:
+If we do a direct IO sync write, at btrfs_sync_file(), and we need to skip
+inode logging or we get an error starting a transaction or an error when
+flushing delalloc, we end up unlocking the inode when we shouldn't under
+the 'out_release_extents' label, and then unlock it again at
+btrfs_direct_write().
 
-  # ./simult_flows.sh: line 275: mptcp_lib_subtest_is_flaky: command not found
+Fix that by checking if we have to skip inode unlocking under that label.
 
-This patch is not needed in v6.6: it is there to mark a test as "flaky",
-but the MPTCP selftests infrastructure in v6.6 doesn't support them. So
-it looks better to revert this patch.
-
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reported-by: syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000dfd631061eaeb4bc@google.com/
+Fixes: 939b656bc8ab ("btrfs: fix corruption after buffer fault in during direct IO append write")
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/simult_flows.sh |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/btrfs/file.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/tools/testing/selftests/net/mptcp/simult_flows.sh
-+++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
-@@ -262,7 +262,7 @@ run_test()
- 	do_transfer $small $large $time
- 	lret=$?
- 	mptcp_lib_result_code "${lret}" "${msg}"
--	if [ $lret -ne 0 ] && ! mptcp_lib_subtest_is_flaky; then
-+	if [ $lret -ne 0 ]; then
- 		ret=$lret
- 		[ $bail -eq 0 ] || exit $ret
- 	fi
-@@ -272,7 +272,7 @@ run_test()
- 	do_transfer $large $small $time
- 	lret=$?
- 	mptcp_lib_result_code "${lret}" "${msg}"
--	if [ $lret -ne 0 ] && ! mptcp_lib_subtest_is_flaky; then
-+	if [ $lret -ne 0 ]; then
- 		ret=$lret
- 		[ $bail -eq 0 ] || exit $ret
- 	fi
-@@ -305,7 +305,7 @@ run_test 10 10 0 0 "balanced bwidth"
- run_test 10 10 1 25 "balanced bwidth with unbalanced delay"
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2038,7 +2038,10 @@ out:
  
- # we still need some additional infrastructure to pass the following test-cases
--MPTCP_LIB_SUBTEST_FLAKY=1 run_test 10 3 0 0 "unbalanced bwidth"
-+run_test 10 3 0 0 "unbalanced bwidth"
- run_test 10 3 1 25 "unbalanced bwidth with unbalanced delay"
- run_test 10 3 25 1 "unbalanced bwidth with opposed, unbalanced delay"
+ out_release_extents:
+ 	btrfs_release_log_ctx_extents(&ctx);
+-	btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
++	if (skip_ilock)
++		up_write(&BTRFS_I(inode)->i_mmap_lock);
++	else
++		btrfs_inode_unlock(BTRFS_I(inode), BTRFS_ILOCK_MMAP);
+ 	goto out;
+ }
  
 
 
