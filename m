@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93DA41EA8D;
-	Mon, 12 Aug 2024 16:11:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3851EA8D;
+	Mon, 12 Aug 2024 16:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479114; cv=none; b=ulJJ7R2BS16eVO4wNGXfl2rrk3AwMoIUoBWzzMkwtPQXqXeO350tvlMWYuj5iIJbUtUg2q9quQdmq1P2NK42Xutmcxu/2dNlHeFdljf3XsxPfCzjuXQ+bMq7iB5ccSpwmnQHR4YEJVyW8TLrQCV5HM8clSwh6MVX5IKQSgsVTws=
+	t=1723479118; cv=none; b=uCu0R0AEQ1glEhcrOShz11qf/yyF7B1ejrgmCpBJKy1I5Bu0/SyZF/5sNtuShCIFjzk8EImDPTsEffosX2r4lqiwgGK7/VUaLf6CEjNU5WKDLOBfZActZkEXC16rl1wCZDSkqt01T7pS5x8sZui0s6OX5NchAjYZcIfMthQ5ljI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479114; c=relaxed/simple;
-	bh=RNsZI1or+yA0LG2dB6qDiwAb2Ks0AwBlfQPp+kooW3M=;
+	s=arc-20240116; t=1723479118; c=relaxed/simple;
+	bh=9dehpreKBimegf5mHRwWZ13Ou85v/FR5PBzFdbam7+A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P3//CyXPNtTqNb87zSJud5Xk0ZrqL4FhK11V+mQ8xJMDjAoXe4qz9IP1IJCkTJ2fSCjRyVNfJyHpSj1GU8pDh1lQ/M/q097M2GCMDbYsuCpEobuAsLtmy16xEXr2ypOfnwgxnWwcVfJyf2GP5b+JlMURctqwPHg94u3t2umAgg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ix+GC+sC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aE25L+wtgObnq3R8oGWRHGugFcBdGi0pAr+wKDcojHT5kNJlGfRu5AMMT/uLynZ19aCzNQvkV+SWRaEca27KZk1jCZ9wkL/Vb95UeqnCS6nRsUdo084+uG/anXJcJkJF97KTfFDVc6Zl+UImr0E5bBWJ7IwcGxy48abNsy8OS2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bWBzabhm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ix+GC+sC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAC1C32782;
-	Mon, 12 Aug 2024 16:11:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bWBzabhm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9A60C32782;
+	Mon, 12 Aug 2024 16:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479114;
-	bh=RNsZI1or+yA0LG2dB6qDiwAb2Ks0AwBlfQPp+kooW3M=;
+	s=korg; t=1723479117;
+	bh=9dehpreKBimegf5mHRwWZ13Ou85v/FR5PBzFdbam7+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ix+GC+sC/vQjmS9CAV62jXQKBjmbUy8NgOE0xcY6V7d9INV+C+PX6Y9pWkGE7D8dG
-	 IB5i6qLvkyV7NIJDy+yhbg+g11SgrjstDM3QnHVty4s043kxu4zgZfKuRt2oLBG/oD
-	 zrFKR0jSxagRpz1pDo45tZrXWNUWazioBWsCIpCI=
+	b=bWBzabhmaeZee+Wk9+0xP1X5EjAPjGcNxVrD46zHfr01330SoJDILBzAWIIZ/zDim
+	 1cyy5UbFWbw6WbzMnibdBrZAbnZCuh9tBF8ScuyumnPKgE6ODh/I+CLjIo5MeXWdY4
+	 yCdvpV61LTlCMnXe31QHe8L1Z3GqchT8gb0BNW7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hanna Czenczek <hreitz@redhat.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 138/150] btrfs: fix corruption after buffer fault in during direct IO append write
-Date: Mon, 12 Aug 2024 18:03:39 +0200
-Message-ID: <20240812160130.495781228@linuxfoundation.org>
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 139/150] ipv6: fix source address selection with route leak
+Date: Mon, 12 Aug 2024 18:03:40 +0200
+Message-ID: <20240812160130.535871748@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -52,252 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-commit 939b656bc8ab203fdbde26ccac22bcb7f0985be5 upstream.
+commit 252442f2ae317d109ef0b4b39ce0608c09563042 upstream.
 
-During an append (O_APPEND write flag) direct IO write if the input buffer
-was not previously faulted in, we can corrupt the file in a way that the
-final size is unexpected and it includes an unexpected hole.
+By default, an address assigned to the output interface is selected when
+the source address is not specified. This is problematic when a route,
+configured in a vrf, uses an interface from another vrf (aka route leak).
+The original vrf does not own the selected source address.
 
-The problem happens like this:
+Let's add a check against the output interface and call the appropriate
+function to select the source address.
 
-1) We have an empty file, with size 0, for example;
-
-2) We do an O_APPEND direct IO with a length of 4096 bytes and the input
-   buffer is not currently faulted in;
-
-3) We enter btrfs_direct_write(), lock the inode and call
-   generic_write_checks(), which calls generic_write_checks_count(), and
-   that function sets the iocb position to 0 with the following code:
-
-	if (iocb->ki_flags & IOCB_APPEND)
-		iocb->ki_pos = i_size_read(inode);
-
-4) We call btrfs_dio_write() and enter into iomap, which will end up
-   calling btrfs_dio_iomap_begin() and that calls
-   btrfs_get_blocks_direct_write(), where we update the i_size of the
-   inode to 4096 bytes;
-
-5) After btrfs_dio_iomap_begin() returns, iomap will attempt to access
-   the page of the write input buffer (at iomap_dio_bio_iter(), with a
-   call to bio_iov_iter_get_pages()) and fail with -EFAULT, which gets
-   returned to btrfs at btrfs_direct_write() via btrfs_dio_write();
-
-6) At btrfs_direct_write() we get the -EFAULT error, unlock the inode,
-   fault in the write buffer and then goto to the label 'relock';
-
-7) We lock again the inode, do all the necessary checks again and call
-   again generic_write_checks(), which calls generic_write_checks_count()
-   again, and there we set the iocb's position to 4K, which is the current
-   i_size of the inode, with the following code pointed above:
-
-        if (iocb->ki_flags & IOCB_APPEND)
-                iocb->ki_pos = i_size_read(inode);
-
-8) Then we go again to btrfs_dio_write() and enter iomap and the write
-   succeeds, but it wrote to the file range [4K, 8K), leaving a hole in
-   the [0, 4K) range and an i_size of 8K, which goes against the
-   expectations of having the data written to the range [0, 4K) and get an
-   i_size of 4K.
-
-Fix this by not unlocking the inode before faulting in the input buffer,
-in case we get -EFAULT or an incomplete write, and not jumping to the
-'relock' label after faulting in the buffer - instead jump to a location
-immediately before calling iomap, skipping all the write checks and
-relocking. This solves this problem and it's fine even in case the input
-buffer is memory mapped to the same file range, since only holding the
-range locked in the inode's io tree can cause a deadlock, it's safe to
-keep the inode lock (VFS lock), as was fixed and described in commit
-51bd9563b678 ("btrfs: fix deadlock due to page faults during direct IO
-reads and writes").
-
-A sample reproducer provided by a reporter is the following:
-
-   $ cat test.c
-   #ifndef _GNU_SOURCE
-   #define _GNU_SOURCE
-   #endif
-
-   #include <fcntl.h>
-   #include <stdio.h>
-   #include <sys/mman.h>
-   #include <sys/stat.h>
-   #include <unistd.h>
-
-   int main(int argc, char *argv[])
-   {
-       if (argc < 2) {
-           fprintf(stderr, "Usage: %s <test file>\n", argv[0]);
-           return 1;
-       }
-
-       int fd = open(argv[1], O_WRONLY | O_CREAT | O_TRUNC | O_DIRECT |
-                     O_APPEND, 0644);
-       if (fd < 0) {
-           perror("creating test file");
-           return 1;
-       }
-
-       char *buf = mmap(NULL, 4096, PROT_READ,
-                        MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-       ssize_t ret = write(fd, buf, 4096);
-       if (ret < 0) {
-           perror("pwritev2");
-           return 1;
-       }
-
-       struct stat stbuf;
-       ret = fstat(fd, &stbuf);
-       if (ret < 0) {
-           perror("stat");
-           return 1;
-       }
-
-       printf("size: %llu\n", (unsigned long long)stbuf.st_size);
-       return stbuf.st_size == 4096 ? 0 : 1;
-   }
-
-A test case for fstests will be sent soon.
-
-Reported-by: Hanna Czenczek <hreitz@redhat.com>
-Link: https://lore.kernel.org/linux-btrfs/0b841d46-12fe-4e64-9abb-871d8d0de271@redhat.com/
-Fixes: 8184620ae212 ("btrfs: fix lost file sync on direct IO write with nowait and dsync iocb")
-CC: stable@vger.kernel.org # 6.1+
-Tested-by: Hanna Czenczek <hreitz@redhat.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+CC: stable@vger.kernel.org
+Fixes: 0d240e7811c4 ("net: vrf: Implement get_saddr for IPv6")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20240710081521.3809742-3-nicolas.dichtel@6wind.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h |    1 +
- fs/btrfs/file.c  |   55 ++++++++++++++++++++++++++++++++++++++++++-------------
- 2 files changed, 43 insertions(+), 13 deletions(-)
+ include/net/ip6_route.h |   20 ++++++++++++++------
+ net/ipv6/ip6_output.c   |    1 +
+ net/ipv6/route.c        |    2 +-
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -1553,6 +1553,7 @@ struct btrfs_drop_extents_args {
- struct btrfs_file_private {
- 	void *filldir_buf;
- 	u64 last_index;
-+	bool fsync_skip_inode_lock;
- };
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -132,18 +132,26 @@ void rt6_age_exceptions(struct fib6_info
  
- 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1526,21 +1526,37 @@ relock:
- 	 * So here we disable page faults in the iov_iter and then retry if we
- 	 * got -EFAULT, faulting in the pages before the retry.
- 	 */
-+again:
- 	from->nofault = true;
- 	dio = btrfs_dio_write(iocb, from, written);
- 	from->nofault = false;
- 
--	/*
--	 * iomap_dio_complete() will call btrfs_sync_file() if we have a dsync
--	 * iocb, and that needs to lock the inode. So unlock it before calling
--	 * iomap_dio_complete() to avoid a deadlock.
--	 */
--	btrfs_inode_unlock(inode, ilock_flags);
--
--	if (IS_ERR_OR_NULL(dio))
-+	if (IS_ERR_OR_NULL(dio)) {
- 		err = PTR_ERR_OR_ZERO(dio);
--	else
-+	} else {
-+		struct btrfs_file_private stack_private = { 0 };
-+		struct btrfs_file_private *private;
-+		const bool have_private = (file->private_data != NULL);
-+
-+		if (!have_private)
-+			file->private_data = &stack_private;
-+
-+		/*
-+		 * If we have a synchoronous write, we must make sure the fsync
-+		 * triggered by the iomap_dio_complete() call below doesn't
-+		 * deadlock on the inode lock - we are already holding it and we
-+		 * can't call it after unlocking because we may need to complete
-+		 * partial writes due to the input buffer (or parts of it) not
-+		 * being already faulted in.
-+		 */
-+		private = file->private_data;
-+		private->fsync_skip_inode_lock = true;
- 		err = iomap_dio_complete(dio);
-+		private->fsync_skip_inode_lock = false;
-+
-+		if (!have_private)
-+			file->private_data = NULL;
-+	}
- 
- 	/* No increment (+=) because iomap returns a cumulative value. */
- 	if (err > 0)
-@@ -1567,10 +1583,12 @@ relock:
- 		} else {
- 			fault_in_iov_iter_readable(from, left);
- 			prev_left = left;
--			goto relock;
-+			goto again;
- 		}
- 	}
- 
-+	btrfs_inode_unlock(inode, ilock_flags);
-+
- 	/*
- 	 * If 'err' is -ENOTBLK or we have not written all data, then it means
- 	 * we must fallback to buffered IO.
-@@ -1777,6 +1795,7 @@ static inline bool skip_inode_logging(co
-  */
- int btrfs_sync_file(struct file *file, loff_t start, loff_t end, int datasync)
+ static inline int ip6_route_get_saddr(struct net *net, struct fib6_info *f6i,
+ 				      const struct in6_addr *daddr,
+-				      unsigned int prefs,
++				      unsigned int prefs, int l3mdev_index,
+ 				      struct in6_addr *saddr)
  {
-+	struct btrfs_file_private *private = file->private_data;
- 	struct dentry *dentry = file_dentry(file);
- 	struct inode *inode = d_inode(dentry);
- 	struct btrfs_fs_info *fs_info = btrfs_sb(inode->i_sb);
-@@ -1786,6 +1805,7 @@ int btrfs_sync_file(struct file *file, l
- 	int ret = 0, err;
- 	u64 len;
- 	bool full_sync;
-+	const bool skip_ilock = (private ? private->fsync_skip_inode_lock : false);
++	struct net_device *l3mdev;
++	struct net_device *dev;
++	bool same_vrf;
+ 	int err = 0;
  
- 	trace_btrfs_sync_file(file, datasync);
- 
-@@ -1813,7 +1833,10 @@ int btrfs_sync_file(struct file *file, l
- 	if (ret)
- 		goto out;
- 
--	btrfs_inode_lock(inode, BTRFS_ILOCK_MMAP);
-+	if (skip_ilock)
-+		down_write(&BTRFS_I(inode)->i_mmap_lock);
+-	if (f6i && f6i->fib6_prefsrc.plen) {
++	rcu_read_lock();
++
++	l3mdev = dev_get_by_index_rcu(net, l3mdev_index);
++	if (!f6i || !f6i->fib6_prefsrc.plen || l3mdev)
++		dev = f6i ? fib6_info_nh_dev(f6i) : NULL;
++	same_vrf = !l3mdev || l3mdev_master_dev_rcu(dev) == l3mdev;
++	if (f6i && f6i->fib6_prefsrc.plen && same_vrf)
+ 		*saddr = f6i->fib6_prefsrc.addr;
+-	} else {
+-		struct net_device *dev = f6i ? fib6_info_nh_dev(f6i) : NULL;
 +	else
-+		btrfs_inode_lock(inode, BTRFS_ILOCK_MMAP);
++		err = ipv6_dev_get_saddr(net, same_vrf ? dev : l3mdev, daddr, prefs, saddr);
  
- 	atomic_inc(&root->log_batch);
+-		err = ipv6_dev_get_saddr(net, dev, daddr, prefs, saddr);
+-	}
++	rcu_read_unlock();
  
-@@ -1837,7 +1860,10 @@ int btrfs_sync_file(struct file *file, l
- 	 */
- 	ret = start_ordered_ops(inode, start, end);
- 	if (ret) {
--		btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
-+		if (skip_ilock)
-+			up_write(&BTRFS_I(inode)->i_mmap_lock);
-+		else
-+			btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
- 		goto out;
+ 	return err;
+ }
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1120,6 +1120,7 @@ static int ip6_dst_lookup_tail(struct ne
+ 		from = rt ? rcu_dereference(rt->from) : NULL;
+ 		err = ip6_route_get_saddr(net, from, &fl6->daddr,
+ 					  sk ? inet6_sk(sk)->srcprefs : 0,
++					  fl6->flowi6_l3mdev,
+ 					  &fl6->saddr);
+ 		rcu_read_unlock();
+ 
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -5681,7 +5681,7 @@ static int rt6_fill_node(struct net *net
+ 				goto nla_put_failure;
+ 	} else if (dest) {
+ 		struct in6_addr saddr_buf;
+-		if (ip6_route_get_saddr(net, rt, dest, 0, &saddr_buf) == 0 &&
++		if (ip6_route_get_saddr(net, rt, dest, 0, 0, &saddr_buf) == 0 &&
+ 		    nla_put_in6_addr(skb, RTA_PREFSRC, &saddr_buf))
+ 			goto nla_put_failure;
  	}
- 
-@@ -1940,7 +1966,10 @@ int btrfs_sync_file(struct file *file, l
- 	 * file again, but that will end up using the synchronization
- 	 * inside btrfs_sync_log to keep things safe.
- 	 */
--	btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
-+	if (skip_ilock)
-+		up_write(&BTRFS_I(inode)->i_mmap_lock);
-+	else
-+		btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
- 
- 	if (ret == BTRFS_NO_LOG_SYNC) {
- 		ret = btrfs_end_transaction(trans);
 
 
