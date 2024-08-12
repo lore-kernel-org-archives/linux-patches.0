@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F283E1494B8;
-	Mon, 12 Aug 2024 16:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DDD115C127;
+	Mon, 12 Aug 2024 16:37:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480663; cv=none; b=t1SwIckHkisN7GhUtZLKXx8pgZLrqI/ZjrhXlksf1Yj/D8jgjcN2WtqIkkndACztsvH8kX6yzVkkONVcLWMuNNYFlvLEo4OJtuPD52nCtbWDlOYJDMi9HQDrjChg6/yWTB5A3mtc3iMs0jyKyLnFbm0ZzZv6wmfljYr4MR1wGAg=
+	t=1723480666; cv=none; b=n9sGxKJcERpXQo1OdlycUnIq0LIwh58SY2DaMlSer3jh7QqMDf0aQvQ8eC3Ys+DgGsSWqJBYe1DnK6VwZT+06Nf1S6vpUtnbJR8qpQukKDVTp2prgasXlFrWfJ/eXDQLrpQjwKimq8dtop60I5D3Ead5DuZmkC+vWyV8veyLikA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480663; c=relaxed/simple;
-	bh=vT+GYHwgwik2puMfVg5gA2Pfrp3xzszbX25u9Q+wWOI=;
+	s=arc-20240116; t=1723480666; c=relaxed/simple;
+	bh=eRezweB8NYDCdswoqnNSFa8M75l9IHWZqnZYDa04iMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jU0zvfNNZ+2u9iWReWfOzATAJFWOOL4/AZu/AA+cN3ykfkIKKTLnsf1xOVLofiJ4IyjAY2rsZ10aOAg1zuehD+2MFVAholPCMUJ/zrs9TdOCU8W+BQG6Tqdys+L+BlNA7dHrPjP0+TcENqUCtT5egg3TKZ0VzZi5LzulHVik+ss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oH55WI0B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WDzc/rkETQIvDrqEvN47u1YlCTqD7adGZvx3nUueQKLVS0e6S9iCRyQqBWo2GNXeC/ToirVO6XnVI2Fz24/lxJO6JjjU2dGq32qBGnsM9dbRo3tJ8CBYo5UZixWF+vThiLT5Wt70rgHhl7LuQS1912qmdJ6cFjX8rACAncGK/M4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJKAZfog; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oH55WI0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60979C32782;
-	Mon, 12 Aug 2024 16:37:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJKAZfog"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872A6C32782;
+	Mon, 12 Aug 2024 16:37:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480662;
-	bh=vT+GYHwgwik2puMfVg5gA2Pfrp3xzszbX25u9Q+wWOI=;
+	s=korg; t=1723480665;
+	bh=eRezweB8NYDCdswoqnNSFa8M75l9IHWZqnZYDa04iMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oH55WI0BcRevxXG/ZTwaWeA2jKzIxkbkncm+Ykrenm3owFkpoAkYTD2OlebGYX7U/
-	 fuHDF9wTJZ9bSt8ghjvx0BkXcNrK5BRXac3ZHscehgYQ4LlG5aALqrKZBXYzYCt5uZ
-	 P1JG628KWN3KUWMdv4GOdcIlgBimUOsGFJnNH4DM=
+	b=kJKAZfoglhpNUi/7c9qhoswt9P6CFg5cxgQJVVvL5KM1rQRv+rEmYMGPpTZk6xTyD
+	 Pab73fnGQxvOHVUA0RznpcKGd1IynwjugLzmIYT1PSTeBwKj8988X+CEBopyw+95JQ
+	 iIWgy8uQTXzvV5uK9wuhVsqgUOe7AMTXslq0VXvM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Kubiak <michal.kubiak@intel.com>,
-	Pavan Kumar Linga <pavan.kumar.linga@intel.com>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Krishneil Singh <krishneil.k.singh@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 254/263] idpf: fix memleak in vport interrupt configuration
-Date: Mon, 12 Aug 2024 18:04:15 +0200
-Message-ID: <20240812160156.267151015@linuxfoundation.org>
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Natanel Roizenman <natanel.roizenman@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 255/263] drm/amd/display: Add null check in resource_log_pipe_topology_update
+Date: Mon, 12 Aug 2024 18:04:16 +0200
+Message-ID: <20240812160156.306003343@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -55,91 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Kubiak <michal.kubiak@intel.com>
+From: Natanel Roizenman <natanel.roizenman@amd.com>
 
-commit 3cc88e8405b8d55e0ff035e31971aadd6baee2b6 upstream.
+commit 899d92fd26fe780aad711322aa671f68058207a6 upstream.
 
-The initialization of vport interrupt consists of two functions:
- 1) idpf_vport_intr_init() where a generic configuration is done
- 2) idpf_vport_intr_req_irq() where the irq for each q_vector is
-   requested.
+[WHY]
+When switching from "Extend" to "Second Display Only" we sometimes
+call resource_get_otg_master_for_stream on a stream for the eDP,
+which is disconnected. This leads to a null pointer dereference.
 
-The first function used to create a base name for each interrupt using
-"kasprintf()" call. Unfortunately, although that call allocated memory
-for a text buffer, that memory was never released.
+[HOW]
+Added a null check in dc_resource.c/resource_log_pipe_topology_update.
 
-Fix this by removing creating the interrupt base name in 1).
-Instead, always create a full interrupt name in the function 2), because
-there is no need to create a base name separately, considering that the
-function 2) is never called out of idpf_vport_intr_init() context.
-
-Fixes: d4d558718266 ("idpf: initialize interrupts and enable vport")
-Cc: stable@vger.kernel.org # 6.7
-Signed-off-by: Michal Kubiak <michal.kubiak@intel.com>
-Reviewed-by: Pavan Kumar Linga <pavan.kumar.linga@intel.com>
-Signed-off-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Krishneil Singh <krishneil.k.singh@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://patch.msgid.link/20240806220923.3359860-3-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CC: stable@vger.kernel.org
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Acked-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Natanel Roizenman <natanel.roizenman@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c |   19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_resource.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -3614,13 +3614,15 @@ void idpf_vport_intr_update_itr_ena_irq(
- /**
-  * idpf_vport_intr_req_irq - get MSI-X vectors from the OS for the vport
-  * @vport: main vport structure
-- * @basename: name for the vector
-  */
--static int idpf_vport_intr_req_irq(struct idpf_vport *vport, char *basename)
-+static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
- {
- 	struct idpf_adapter *adapter = vport->adapter;
-+	const char *drv_name, *if_name, *vec_name;
- 	int vector, err, irq_num, vidx;
--	const char *vec_name;
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_resource.c
+@@ -2267,6 +2267,10 @@ void resource_log_pipe_topology_update(s
+ 
+ 		otg_master = resource_get_otg_master_for_stream(
+ 				&state->res_ctx, state->streams[stream_idx]);
 +
-+	drv_name = dev_driver_string(&adapter->pdev->dev);
-+	if_name = netdev_name(vport->netdev);
- 
- 	for (vector = 0; vector < vport->num_q_vectors; vector++) {
- 		struct idpf_q_vector *q_vector = &vport->q_vectors[vector];
-@@ -3637,8 +3639,8 @@ static int idpf_vport_intr_req_irq(struc
- 		else
- 			continue;
- 
--		q_vector->name = kasprintf(GFP_KERNEL, "%s-%s-%d",
--					   basename, vec_name, vidx);
-+		q_vector->name = kasprintf(GFP_KERNEL, "%s-%s-%s-%d", drv_name,
-+					   if_name, vec_name, vidx);
- 
- 		err = request_irq(irq_num, idpf_vport_intr_clean_queues, 0,
- 				  q_vector->name, q_vector);
-@@ -4148,7 +4150,6 @@ error:
-  */
- int idpf_vport_intr_init(struct idpf_vport *vport)
- {
--	char *int_name;
- 	int err;
- 
- 	err = idpf_vport_intr_init_vec_idx(vport);
-@@ -4162,11 +4163,7 @@ int idpf_vport_intr_init(struct idpf_vpo
- 	if (err)
- 		goto unroll_vectors_alloc;
- 
--	int_name = kasprintf(GFP_KERNEL, "%s-%s",
--			     dev_driver_string(&vport->adapter->pdev->dev),
--			     vport->netdev->name);
--
--	err = idpf_vport_intr_req_irq(vport, int_name);
-+	err = idpf_vport_intr_req_irq(vport);
- 	if (err)
- 		goto unroll_vectors_alloc;
- 
++		if (!otg_master)
++			continue;
++
+ 		resource_log_pipe_for_stream(dc, state, otg_master, stream_idx);
+ 	}
+ 	if (state->phantom_stream_count > 0) {
 
 
