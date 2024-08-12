@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AF5183CD4;
-	Mon, 12 Aug 2024 16:36:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB15215C127;
+	Mon, 12 Aug 2024 16:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480584; cv=none; b=NuYZOnOH8OSosKnheWenjgCRWmU+Nth86UZtghqUJC4MzvXRq6yl3XGSrT642Re5Zx8VNNUlIG27zi2nTwGWkr6citJVArDyBl7sCyl9+4s0ZcSPwupOdqZQBt4zdWOn5DADxKCjqCl7+5KtOS9JZIfYFqj/9Yzy26IeK3YIgic=
+	t=1723480587; cv=none; b=Vd0f4XB6vfhQbqAB3DD5JFng4FQdqcIB8AvjVXSPnBDsgVD+raltXIW7WdRUNDX3gmWVVokTvZXc7lS5GrNdpuawGdWITKdWcL8khMb2si20vAqdgViAFBEYksH7KcwydAkK1g62MPzfspchH0/BBN+/NOyJfE+/olDrpOIuJY8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480584; c=relaxed/simple;
-	bh=YLbBv7kKyR6NWr2I6H0tlrHdk8KSFA4dBdd1kw3FGVQ=;
+	s=arc-20240116; t=1723480587; c=relaxed/simple;
+	bh=gFdGwDpQHBS0fTSjcbi4dNUAFAkEWL4YSQv3kLN5THw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=txQekCz9+qqiYOUS5DGdjLbJmuCaeSYB5pyzlpA/WfElvaHTki1068XC5y2hQPCXJsISsj0m0VvA7gGNSJd9TpVXLQ8sjzHQ2YTXStxyZW4KaRsthK5laStJihe5bsaPePiYgm52dGb42ollnyeAybtUAD7ReUc9T+xoG6cT+rs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtwIL38h; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pTe/1kpI3Fm6tT+6Vxm0Kmf1L1GvOjnPV8XmhgDyDdYUZkqKjRvtxzhGFxYml3BgHOYyTnkfgTTVIz7p8mDwnPHOHfcn5F72LgFK/LzKZ4Wn8mbUUwUxR6AqgFO1Jgv3iiOLVCMvsvM2+uHIn3EI7MDYvHpEdrTbM2U62YUOw/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ThQV4vwm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtwIL38h"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86521C32782;
-	Mon, 12 Aug 2024 16:36:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ThQV4vwm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07055C32782;
+	Mon, 12 Aug 2024 16:36:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480584;
-	bh=YLbBv7kKyR6NWr2I6H0tlrHdk8KSFA4dBdd1kw3FGVQ=;
+	s=korg; t=1723480587;
+	bh=gFdGwDpQHBS0fTSjcbi4dNUAFAkEWL4YSQv3kLN5THw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HtwIL38hiKF0DfAM1XpZxfY8uIOzpmfLsyVwC6AXK6nFTyMbM2ONM23WllClFSIux
-	 ewv+jg5FT8mgrv+ysLi7ySTpr1Bn8dlfo5+jyqtN73joO4bq3KGtdc3AFt+cP2SScO
-	 +bocjlQOC9HT78EJ5OeJ+KY4iE2SNWd1LrQSMCUk=
+	b=ThQV4vwmEjqkIj2QuguMLZKGnh5i7Noqquk1C+w9YKprTNBswjbg3ELWSge5935sx
+	 sJKuLoNJtATzS09crgWyDqnBynG11KYJt7UHs9sKxxowN4KjtD5IUsxR2txQ4T3MGX
+	 3ml6Xv5KV9Skpq1i3smopmWgqCnuAI82N/uAUIrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable@kernel.org,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.10 240/263] sched/core: Introduce sched_set_rq_on/offline() helper
-Date: Mon, 12 Aug 2024 18:04:01 +0200
-Message-ID: <20240812160155.722750958@linuxfoundation.org>
+Subject: [PATCH 6.10 241/263] sched/core: Fix unbalance set_rq_online/offline() in sched_cpu_deactivate()
+Date: Mon, 12 Aug 2024 18:04:02 +0200
+Message-ID: <20240812160155.760845323@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,96 +53,29 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 2f027354122f58ee846468a6f6b48672fff92e9b upstream.
+commit fe7a11c78d2a9bdb8b50afc278a31ac177000948 upstream.
 
-Introduce sched_set_rq_on/offline() helper, so it can be called
-in normal or error path simply. No functional changed.
+If cpuset_cpu_inactive() fails, set_rq_online() need be called to rollback.
 
+Fixes: 120455c514f7 ("sched: Fix hotplug vs CPU bandwidth control")
 Cc: stable@kernel.org
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240703031610.587047-4-yangyingliang@huaweicloud.com
+Link: https://lore.kernel.org/r/20240703031610.587047-5-yangyingliang@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   40 ++++++++++++++++++++++++++--------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+ kernel/sched/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -9604,6 +9604,30 @@ void set_rq_offline(struct rq *rq)
- 	}
- }
- 
-+static inline void sched_set_rq_online(struct rq *rq, int cpu)
-+{
-+	struct rq_flags rf;
-+
-+	rq_lock_irqsave(rq, &rf);
-+	if (rq->rd) {
-+		BUG_ON(!cpumask_test_cpu(cpu, rq->rd->span));
-+		set_rq_online(rq);
-+	}
-+	rq_unlock_irqrestore(rq, &rf);
-+}
-+
-+static inline void sched_set_rq_offline(struct rq *rq, int cpu)
-+{
-+	struct rq_flags rf;
-+
-+	rq_lock_irqsave(rq, &rf);
-+	if (rq->rd) {
-+		BUG_ON(!cpumask_test_cpu(cpu, rq->rd->span));
-+		set_rq_offline(rq);
-+	}
-+	rq_unlock_irqrestore(rq, &rf);
-+}
-+
- /*
-  * used to mark begin/end of suspend/resume:
-  */
-@@ -9673,7 +9697,6 @@ static inline void sched_smt_present_dec
- int sched_cpu_activate(unsigned int cpu)
- {
- 	struct rq *rq = cpu_rq(cpu);
--	struct rq_flags rf;
- 
- 	/*
- 	 * Clear the balance_push callback and prepare to schedule
-@@ -9702,12 +9725,7 @@ int sched_cpu_activate(unsigned int cpu)
- 	 * 2) At runtime, if cpuset_cpu_active() fails to rebuild the
- 	 *    domains.
- 	 */
--	rq_lock_irqsave(rq, &rf);
--	if (rq->rd) {
--		BUG_ON(!cpumask_test_cpu(cpu, rq->rd->span));
--		set_rq_online(rq);
--	}
--	rq_unlock_irqrestore(rq, &rf);
-+	sched_set_rq_online(rq, cpu);
- 
- 	return 0;
- }
-@@ -9715,7 +9733,6 @@ int sched_cpu_activate(unsigned int cpu)
- int sched_cpu_deactivate(unsigned int cpu)
- {
- 	struct rq *rq = cpu_rq(cpu);
--	struct rq_flags rf;
- 	int ret;
- 
- 	/*
-@@ -9746,12 +9763,7 @@ int sched_cpu_deactivate(unsigned int cp
- 	 */
- 	synchronize_rcu();
- 
--	rq_lock_irqsave(rq, &rf);
--	if (rq->rd) {
--		BUG_ON(!cpumask_test_cpu(cpu, rq->rd->span));
--		set_rq_offline(rq);
--	}
--	rq_unlock_irqrestore(rq, &rf);
-+	sched_set_rq_offline(rq, cpu);
- 
- 	/*
- 	 * When going down, decrement the number of cores with SMT present.
+@@ -9781,6 +9781,7 @@ int sched_cpu_deactivate(unsigned int cp
+ 	ret = cpuset_cpu_inactive(cpu);
+ 	if (ret) {
+ 		sched_smt_present_inc(cpu);
++		sched_set_rq_online(rq, cpu);
+ 		balance_push_set(cpu, false);
+ 		set_cpu_active(cpu, true);
+ 		sched_update_numa(cpu, true);
 
 
