@@ -1,45 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36C7618733E;
-	Mon, 12 Aug 2024 16:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C15187342;
+	Mon, 12 Aug 2024 16:28:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480117; cv=none; b=r/nXfU9fG+kZMCsmLg/jNvZ1xeVGD6J8FhNqsmrDn89Q2t6vgJRSVbLEciiEFXhR847y9Kf2TChg2KqmcVKZPl5cNZc8qkLY/rbLoBMdvJ8CDEaiNH9qcg7s2mfuMB4fwZEvJi2ypVtjYcggv0nhSRjPihA9VNSW2xhvD1OBgfc=
+	t=1723480120; cv=none; b=RfDrby36VqXV8dp+HKZr14bbYiXRLsPP9k+Ms6wxTlhchSougQ0/CmbeuaFqwWK3sveTC6qSAfNDEtM6BEBeOQcMMXc1M9wKy/Fjb9041kU6Yv/IZrHzOuYLI0rXFQkxhJIZG/KBHgVAlWSO8zq+c1KBsNYqNwIG4jkbgiGuN0E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480117; c=relaxed/simple;
-	bh=CaRfvWlzPueQ6dhUNx4eDmh4rH/4u12VXpwKMO1iUbY=;
+	s=arc-20240116; t=1723480120; c=relaxed/simple;
+	bh=T1s1+ZR4mt8dAnw+JYADGWhoeYHKcuSUlUXAeGjNWCA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHWW9lZH+HR0VM88Z4+VlHA/1iV8GF30b7cL7/+wAtdvclLUzX9oXPhc8Jpvx6ZF6hmOtXY01fU+dzi6bv9gqvbKPrhBkPMiYryws7DYwgbSgxagX/vSrOYnCRc0+ZudhSAUXcFOxp7vig882pAfSqCF8c1lzahTlXydKZ7KcUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1mfw45fj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mwa5FO/7WKhINzASvQfN7uSs6KHeR7xNPgN1cu2oHb86IrSem0F4ox4UYoe1I09XWu/ebhWe0r591L/LniQ0Jzzg3DvxxguQzFepsa2rQO9E04+T3Kc4Pzi5PO0NPzziOcjsWE10lXRaL1lzOUeglQ/tMT7MlEWbjm8dluw0aK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W5QslYDQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1mfw45fj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5C5C32782;
-	Mon, 12 Aug 2024 16:28:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W5QslYDQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA446C32782;
+	Mon, 12 Aug 2024 16:28:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480117;
-	bh=CaRfvWlzPueQ6dhUNx4eDmh4rH/4u12VXpwKMO1iUbY=;
+	s=korg; t=1723480120;
+	bh=T1s1+ZR4mt8dAnw+JYADGWhoeYHKcuSUlUXAeGjNWCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mfw45fjTDwJJFzDU//I/r/2yDX1cKHJhcNyalZN4/ScyOKy1/yhB2IpP7QtzV5D8
-	 01qmVx4dBdx+W71UcweR4MZtiFDrnbREXS4gCbnU1zeb27AQCtSqkzMkPI1VrK7eht
-	 dqFBYCDj2hMCz30M5vAgccNcgfHrRnyiaZUWUroA=
+	b=W5QslYDQ0UwSXGfV563Se0Tj9X8F1eQ7mfbG8gnNu9HSZhwwMakFGPkTNN1jVCF+E
+	 5u6TK3fd3c6P4RxY+2f8QqTLmjv6KcCZs5nqEkTPFuzrTPAPv7H2hboY89pMgEADNj
+	 O+Cgdcx4drSpWN7triH4sGFhlwsxAI17WDTzeH2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Chung <chiahsuan.chung@amd.com>,
 	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Roman Li <roman.li@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 101/263] drm/amd/display: Add NULL check for afb before dereferencing in amdgpu_dm_plane_handle_cursor_update
-Date: Mon, 12 Aug 2024 18:01:42 +0200
-Message-ID: <20240812160150.410340133@linuxfoundation.org>
+Subject: [PATCH 6.10 102/263] drm/amd/display: Wake DMCUB before sending a command for replay feature
+Date: Mon, 12 Aug 2024 18:01:43 +0200
+Message-ID: <20240812160150.448744874@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -58,64 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
 
-[ Upstream commit 38e6f715b02b572f74677eb2f29d3b4bc6f1ddff ]
+[ Upstream commit 3601a35a2e9d640233f4bc3496f7603b93f9c143 ]
 
-This commit adds a null check for the 'afb' variable in the
-amdgpu_dm_plane_handle_cursor_update function. Previously, 'afb' was
-assumed to be null, but was used later in the code without a null check.
-This could potentially lead to a null pointer dereference.
+[Why]
+We can hang in place trying to send commands when the DMCUB isn't
+powered on.
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:1298 amdgpu_dm_plane_handle_cursor_update() error: we previously assumed 'afb' could be null (see line 1252)
+[How]
+For functions that execute within a DC context or DC lock we can wrap
+the direct calls to dm_execute_dmub_cmd/list with code that exits idle
+power optimizations and reallows once we're done with the command
+submission on success.
 
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Cc: Roman Li <roman.li@amd.com>
-Cc: Hersen Wu <hersenxs.wu@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Cc: Harry Wentland <harry.wentland@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+For DM direct submissions the DM will need to manage the enter/exit
+sequencing manually.
+
+We cannot invoke a DMCUB command directly within the DM execution helper
+or we can deadlock.
+
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c  | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-index 8a4c40b4c27e4..918c880739a2a 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -1231,14 +1231,22 @@ void amdgpu_dm_plane_handle_cursor_update(struct drm_plane *plane,
- {
- 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
- 	struct amdgpu_framebuffer *afb = to_amdgpu_framebuffer(plane->state->fb);
--	struct drm_crtc *crtc = afb ? plane->state->crtc : old_plane_state->crtc;
--	struct dm_crtc_state *crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
--	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
--	uint64_t address = afb ? afb->address : 0;
-+	struct drm_crtc *crtc;
-+	struct dm_crtc_state *crtc_state;
-+	struct amdgpu_crtc *amdgpu_crtc;
-+	u64 address;
- 	struct dc_cursor_position position = {0};
- 	struct dc_cursor_attributes attributes;
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
+index 4f559a025cf00..f820647443d16 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
+@@ -84,7 +84,7 @@ static void dmub_replay_enable(struct dmub_replay *dmub, bool enable, bool wait,
  
-+	if (!afb)
-+		return;
-+
-+	crtc = plane->state->crtc ? plane->state->crtc : old_plane_state->crtc;
-+	crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
-+	amdgpu_crtc = to_amdgpu_crtc(crtc);
-+	address = afb->address;
-+
- 	if (!plane->state->fb && !old_plane_state->fb)
- 		return;
+ 	cmd.replay_enable.header.payload_bytes = sizeof(struct dmub_rb_cmd_replay_enable_data);
  
+-	dm_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
++	dc_wake_and_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
+ 
+ 	/* Below loops 1000 x 500us = 500 ms.
+ 	 *  Exit REPLAY may need to wait 1-2 frames to power up. Timeout after at
+@@ -127,7 +127,7 @@ static void dmub_replay_set_power_opt(struct dmub_replay *dmub, unsigned int pow
+ 	cmd.replay_set_power_opt.replay_set_power_opt_data.power_opt = power_opt;
+ 	cmd.replay_set_power_opt.replay_set_power_opt_data.panel_inst = panel_inst;
+ 
+-	dm_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
++	dc_wake_and_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
+ }
+ 
+ /*
+@@ -231,7 +231,7 @@ static void dmub_replay_set_coasting_vtotal(struct dmub_replay *dmub,
+ 	cmd.replay_set_coasting_vtotal.header.payload_bytes = sizeof(struct dmub_cmd_replay_set_coasting_vtotal_data);
+ 	cmd.replay_set_coasting_vtotal.replay_set_coasting_vtotal_data.coasting_vtotal = coasting_vtotal;
+ 
+-	dm_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
++	dc_wake_and_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
+ }
+ 
+ /*
 -- 
 2.43.0
 
