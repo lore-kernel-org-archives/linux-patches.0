@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B789134AC;
-	Mon, 12 Aug 2024 16:28:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A222D186E47;
+	Mon, 12 Aug 2024 16:29:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480137; cv=none; b=H/97fNVfkKdHYNwdvUscIFJwxojoQWDxll7nQSvqjc0IEuICAlT4iMAK3Dho/59d+lPDL0a/576w1sVK4PWlSsc0ivllIMuBYKIGd/QdYBvfU4X+kD/u9xwpvLOAWmmP40+7PdgbJiZEuEz8LjLoodsvYXzSeBGykKxj6spjBq8=
+	t=1723480145; cv=none; b=evMvVH4YiJNYyhk5isrT673ZcL2SdgRXv1Hp/6TQFso7dzv2oJwDo1kro7XlN8Ga4zQxwajMyIm3bXwXZahwAbCAvPdMpAH6eBa91Zdfbdk2TYZ2IO7Ca9TmSvAS0Oz1M9fPSRIWAtU863mjDnuPD4GYtcB3kzK7bxCBjoZ4IMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480137; c=relaxed/simple;
-	bh=7BmlZ0LQFaP72NymsjSePME+sp4hjBxcQjEK2EdfWoM=;
+	s=arc-20240116; t=1723480145; c=relaxed/simple;
+	bh=M14+GhXuG6mUPJqde1wTj9LzbVJ6UjnIAB3dmiHhIDg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IA0LYJCTQXnKY5neJGrnir15+PGjK3aC9K11wYUq7wkK8AwhbglpGLbKlnVCEb479UZDo33zJkpnzR3D97nIJ5MOpsYvqOeJUuor5GE21ykOLXf4W5vB9+IP8vb8RXWnxbVg+cQqKNhV6JJo0ADuLCdUSYstIhywGRxMOozpjbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yhqoAqL1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QKHLXOs1r6aG9sp/LYLFNSeVno5OGiqOAd3bgOc9bIZUiHf/i+HiVa485ODCwiuVX3r5j3/ydLNTYa7A0jkj7DVv5rnwL/1Sj1srD+seEXl9kUPtYYbeF+pOTUOxnmkN3VrMvLSg6oi0lW519FiwTPQoUm2neKycV+4uZqPR0Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mWC6pi1y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yhqoAqL1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C2AC32782;
-	Mon, 12 Aug 2024 16:28:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mWC6pi1y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29B7C4AF0D;
+	Mon, 12 Aug 2024 16:29:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480136;
-	bh=7BmlZ0LQFaP72NymsjSePME+sp4hjBxcQjEK2EdfWoM=;
+	s=korg; t=1723480145;
+	bh=M14+GhXuG6mUPJqde1wTj9LzbVJ6UjnIAB3dmiHhIDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yhqoAqL1FhPuFAyECeCJyxm+imMxdVp3TwmsLLMiSlU58MWH+qYJDJwGfXPU34Za8
-	 bnQFAIebW00dKyfdqjLyRWhauFJ0pvdwV5oU9YBBTCegnr/R0wz5fb0L4JLW6jcoRu
-	 eEIa74X1lwI6LxBjlL3kRUm0BFnrsDO44hALJU9s=
+	b=mWC6pi1yizWBBmN5grmOdiGZPEtWkPg2mw/CmLM+GWvhSQGMWyhPLG47TGNjyu+7Y
+	 J3K9XwjdjeDc1NtTlV4NmQQIr9AgSAZlLblJ1TS8mu5H8yOlvRr8aGfWG52Igq5NJF
+	 OMHKjpRpXl3nOhpIzenAtOt8CY8biWTQZ4HFTw7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	HungNien Chen <hn.chen@sunplusit.com>,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Tomasz Figa <tfiga@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 107/263] media: i2c: ov5647: replacing of_node_put with __free(device_node)
-Date: Mon, 12 Aug 2024 18:01:48 +0200
-Message-ID: <20240812160150.641474250@linuxfoundation.org>
+Subject: [PATCH 6.10 108/263] media: uvcvideo: Ignore empty TS packets
+Date: Mon, 12 Aug 2024 18:01:49 +0200
+Message-ID: <20240812160150.679376305@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,56 +54,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 971b4eef86ccb8b107ad2875993e510eec4fdeae ]
+[ Upstream commit 5cd7c25f6f0576073b3d03bc4cfb1e8ca63a1195 ]
 
-Replace instance of of_node_put with __free(device_node)
-to protect against any memory leaks due to future changes
-in control flow.
+Some SunplusIT cameras took a borderline interpretation of the UVC 1.5
+standard, and fill the PTS and SCR fields with invalid data if the
+package does not contain data.
 
-Signed-off-by: Abdulrasaq Lawani <abdulrasaqolawani@gmail.com>
-Acked-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+"STC must be captured when the first video data of a video frame is put
+on the USB bus."
+
+Some SunplusIT devices send, e.g.,
+
+buffer: 0xa7755c00 len 000012 header:0x8c stc 00000000 sof 0000 pts 00000000
+buffer: 0xa7755c00 len 000012 header:0x8c stc 00000000 sof 0000 pts 00000000
+buffer: 0xa7755c00 len 000668 header:0x8c stc 73779dba sof 070c pts 7376d37a
+
+While the UVC specification meant that the first two packets shouldn't
+have had the SCR bit set in the header.
+
+This borderline/buggy interpretation has been implemented in a variety
+of devices, from directly SunplusIT and from other OEMs that rebrand
+SunplusIT products. So quirking based on VID:PID will be problematic.
+
+All the affected modules have the following extension unit:
+VideoControl Interface Descriptor:
+  guidExtensionCode         {82066163-7050-ab49-b8cc-b3855e8d221d}
+
+But the vendor plans to use that GUID in the future and fix the bug,
+this means that we should use heuristic to figure out the broken
+packets.
+
+This patch takes care of this.
+
+lsusb of one of the affected cameras:
+
+Bus 001 Device 003: ID 1bcf:2a01 Sunplus Innovation Technology Inc.
+Device Descriptor:
+  bLength                18
+  bDescriptorType         1
+  bcdUSB               2.01
+  bDeviceClass          239 Miscellaneous Device
+  bDeviceSubClass         2 ?
+  bDeviceProtocol         1 Interface Association
+  bMaxPacketSize0        64
+  idVendor           0x1bcf Sunplus Innovation Technology Inc.
+  idProduct          0x2a01
+  bcdDevice            0.02
+  iManufacturer           1 SunplusIT Inc
+  iProduct                2 HanChen Wise Camera
+  iSerial                 3 01.00.00
+  bNumConfigurations      1
+
+Tested-by: HungNien Chen <hn.chen@sunplusit.com>
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Tomasz Figa <tfiga@chromium.org>
+Link: https://lore.kernel.org/r/20240323-resend-hwtimestamp-v10-2-b08e590d97c7@chromium.org
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ov5647.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/media/usb/uvc/uvc_video.c | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ov5647.c b/drivers/media/i2c/ov5647.c
-index 7e1ecdf2485f7..0fb4d7bff9d14 100644
---- a/drivers/media/i2c/ov5647.c
-+++ b/drivers/media/i2c/ov5647.c
-@@ -1360,24 +1360,21 @@ static int ov5647_parse_dt(struct ov5647 *sensor, struct device_node *np)
- 	struct v4l2_fwnode_endpoint bus_cfg = {
- 		.bus_type = V4L2_MBUS_CSI2_DPHY,
- 	};
--	struct device_node *ep;
-+	struct device_node *ep __free(device_node) =
-+		of_graph_get_endpoint_by_regs(np, 0, -1);
- 	int ret;
+diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
+index 51f4f653b983d..0055a05470c47 100644
+--- a/drivers/media/usb/uvc/uvc_video.c
++++ b/drivers/media/usb/uvc/uvc_video.c
+@@ -478,6 +478,7 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
+ 	ktime_t time;
+ 	u16 host_sof;
+ 	u16 dev_sof;
++	u32 dev_stc;
  
--	ep = of_graph_get_endpoint_by_regs(np, 0, -1);
- 	if (!ep)
- 		return -EINVAL;
+ 	switch (data[1] & (UVC_STREAM_PTS | UVC_STREAM_SCR)) {
+ 	case UVC_STREAM_PTS | UVC_STREAM_SCR:
+@@ -526,6 +527,34 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
+ 	if (dev_sof == stream->clock.last_sof)
+ 		return;
  
- 	ret = v4l2_fwnode_endpoint_parse(of_fwnode_handle(ep), &bus_cfg);
- 	if (ret)
--		goto out;
-+		return ret;
++	dev_stc = get_unaligned_le32(&data[header_size - 6]);
++
++	/*
++	 * STC (Source Time Clock) is the clock used by the camera. The UVC 1.5
++	 * standard states that it "must be captured when the first video data
++	 * of a video frame is put on the USB bus". This is generally understood
++	 * as requiring devices to clear the payload header's SCR bit before
++	 * the first packet containing video data.
++	 *
++	 * Most vendors follow that interpretation, but some (namely SunplusIT
++	 * on some devices) always set the `UVC_STREAM_SCR` bit, fill the SCR
++	 * field with 0's,and expect that the driver only processes the SCR if
++	 * there is data in the packet.
++	 *
++	 * Ignore all the hardware timestamp information if we haven't received
++	 * any data for this frame yet, the packet contains no data, and both
++	 * STC and SOF are zero. This heuristics should be safe on compliant
++	 * devices. This should be safe with compliant devices, as in the very
++	 * unlikely case where a UVC 1.1 device would send timing information
++	 * only before the first packet containing data, and both STC and SOF
++	 * happen to be zero for a particular frame, we would only miss one
++	 * clock sample from many and the clock recovery algorithm wouldn't
++	 * suffer from this condition.
++	 */
++	if (buf && buf->bytesused == 0 && len == header_size &&
++	    dev_stc == 0 && dev_sof == 0)
++		return;
++
+ 	stream->clock.last_sof = dev_sof;
  
- 	sensor->clock_ncont = bus_cfg.bus.mipi_csi2.flags &
- 			      V4L2_MBUS_CSI2_NONCONTINUOUS_CLOCK;
+ 	host_sof = usb_get_current_frame_number(stream->dev->udev);
+@@ -575,7 +604,7 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
+ 	spin_lock_irqsave(&stream->clock.lock, flags);
  
--out:
--	of_node_put(ep);
--
--	return ret;
-+	return 0;
- }
- 
- static int ov5647_probe(struct i2c_client *client)
+ 	sample = &stream->clock.samples[stream->clock.head];
+-	sample->dev_stc = get_unaligned_le32(&data[header_size - 6]);
++	sample->dev_stc = dev_stc;
+ 	sample->dev_sof = dev_sof;
+ 	sample->host_sof = host_sof;
+ 	sample->host_time = time;
 -- 
 2.43.0
 
