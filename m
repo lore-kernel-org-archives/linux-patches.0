@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B12329CA;
-	Mon, 12 Aug 2024 16:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC1E29CA;
+	Mon, 12 Aug 2024 16:20:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479624; cv=none; b=JbcKIf1uIMGxZ5cUCtrFx1IzeFFhxeKyXizkG0veHHmYsWtppiZUmIeONM3lDW6Mz30MdYx+NlxRb93v8dh7x7nzNL77z40ZDaQt6NdweeMIpihCoxliQjcqEl3TggAnMzISD8uU8X4ROZ96os6omAoBQt5Vy3BH1FN/GtMW6lY=
+	t=1723479627; cv=none; b=TB5cNfIiv+kaFScQOTFYfhaHUqbtSlA4nw1nfpZ/BA7FU0vuS0Wa7OMBOowVw0n1rOkrITLMQFojK3/lfHLJjL6NHtHbDFqzNMmVXoy0OYyUqJ3Hd7bwGnIRTfIEODKlxPt7XQbXEwfE/LzDxmO7lq8/t9twW0qGC2Ax5zxpe3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479624; c=relaxed/simple;
-	bh=6J20SP2mn4hoP/RLrLF/WBD+6ox6kSlhJKFGUfizfnk=;
+	s=arc-20240116; t=1723479627; c=relaxed/simple;
+	bh=KlT/s5i/q6M7oWa9lopUxeOe0fTKDTygzdxGpQ6JFd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHpFAVvhMdq4MoioWwyqms9oQtO810xTGmouXydmS3mdL8RxQM0MkCWOI0X94jkapt1IDNBKomLtp0wdLjGlM4HayArbVC6ZxW1PqzspgkCmb8aludaCPVepashn1CgJ0xfDwnJ11FTPevQ3YLQAC7p3INAyfqHbaMt9Qg/ZRAI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hNq/MRrW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NfKdBg0WujGqii0ZA441rSlkxPKS0CU9G9D5lFQvR/iGZcMPfhZsHYZjtjrDB01+dxgPrvyXc39Bg/zgRbudgywkSs0jEeljWWwWR6yP2EzMDWhRN1I11OlPehzgS/26SnAGIRAVJawb1WoyIISAXA/NPA39jpxunkoYPRRYiAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9ChXCEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hNq/MRrW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF95BC32782;
-	Mon, 12 Aug 2024 16:20:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9ChXCEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D830C4AF0C;
+	Mon, 12 Aug 2024 16:20:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479624;
-	bh=6J20SP2mn4hoP/RLrLF/WBD+6ox6kSlhJKFGUfizfnk=;
+	s=korg; t=1723479627;
+	bh=KlT/s5i/q6M7oWa9lopUxeOe0fTKDTygzdxGpQ6JFd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hNq/MRrWp1K1GeRncaP24Ock9kgHQ8H9iPRc1oe2tFdPEUX9jBVvXC+XvJVfdc/wP
-	 wRw0wq76WSlF5JAndj6HChQZwOmCBmiC6mcJav5KAcSavQEqr7PtU/hbZ4bUfkjBpz
-	 HhZMQJ26AIscN7gM2I0TZRRiiNRPB3slqz+Ax5B8=
+	b=g9ChXCEMv9y2dIeIecJIxGrsM+APVmx/I/1PblwZal5VxeogN73ozaa5dfOhkklZK
+	 AdmYCX16IDVwmxv1AVxe2xRtU6uBIJRF4/JC/Hg+5Ed0T6zNhvPD1u+VjwWo4QiwKm
+	 RojadxFud3DWgVW81m1RpES/CJtQ+f+a0y6zrkAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Miao Wang <shankerwangmiao@gmail.com>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.6 144/189] LoongArch: Enable general EFI poweroff method
-Date: Mon, 12 Aug 2024 18:03:20 +0200
-Message-ID: <20240812160137.685856084@linuxfoundation.org>
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>
+Subject: [PATCH 6.6 145/189] power: supply: qcom_battmgr: return EAGAIN when firmware service is not up
+Date: Mon, 12 Aug 2024 18:03:21 +0200
+Message-ID: <20240812160137.724250707@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,42 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Miao Wang <shankerwangmiao@gmail.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-commit e688c220732e518c2eb1639e9ef77d4a9311713c upstream.
+commit bf9d5cb588755ee41ac12a8976dccf44ae18281b upstream.
 
-efi_shutdown_init() can register a general sys_off handler named
-efi_power_off(). Enable this by providing efi_poweroff_required(),
-like arm and x86. Since EFI poweroff is also supported on LoongArch,
-and the enablement makes the poweroff function usable for hardwares
-which lack ACPI S5.
+The driver returns -ENODEV when the firmware battmrg service hasn't
+started yet, while per-se -ENODEV is fine, we usually use -EAGAIN to
+tell the user to retry again later. And the power supply core uses
+-EGAIN when the device isn't initialized, let's use the same return.
 
-We prefer ACPI poweroff rather than EFI poweroff (like x86), so we only
-require EFI poweroff if acpi_gbl_reduced_hardware or acpi_no_s5 is true.
+This notably causes an infinite spam of:
+thermal thermal_zoneXX: failed to read out thermal zone (-19)
+because the thermal core doesn't understand -ENODEV, but only
+considers -EAGAIN as a non-fatal error.
 
+While it didn't appear until now, commit [1] fixes thermal core
+and no more ignores thermal zones returning an error at first
+temperature update.
+
+[1] 5725f40698b9 ("thermal: core: Call monitor_thermal_zone() if zone temperature is invalid")
+
+Link: https://lore.kernel.org/all/2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org/
 Cc: stable@vger.kernel.org
-Acked-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Miao Wang <shankerwangmiao@gmail.com>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Tested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+Link: https://lore.kernel.org/r/20240715-topic-sm8x50-upstream-fix-battmgr-temp-tz-warn-v1-1-16e842ccead7@linaro.org
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/efi.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/power/supply/qcom_battmgr.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/arch/loongarch/kernel/efi.c
-+++ b/arch/loongarch/kernel/efi.c
-@@ -66,6 +66,12 @@ void __init efi_runtime_init(void)
- 	set_bit(EFI_RUNTIME_SERVICES, &efi.flags);
- }
+--- a/drivers/power/supply/qcom_battmgr.c
++++ b/drivers/power/supply/qcom_battmgr.c
+@@ -486,7 +486,7 @@ static int qcom_battmgr_bat_get_property
+ 	int ret;
  
-+bool efi_poweroff_required(void)
-+{
-+	return efi_enabled(EFI_RUNTIME_SERVICES) &&
-+		(acpi_gbl_reduced_hardware || acpi_no_s5);
-+}
-+
- unsigned long __initdata screen_info_table = EFI_INVALID_TABLE_ADDR;
+ 	if (!battmgr->service_up)
+-		return -ENODEV;
++		return -EAGAIN;
  
- static void __init init_screen_info(void)
+ 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
+ 		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
+@@ -683,7 +683,7 @@ static int qcom_battmgr_ac_get_property(
+ 	int ret;
+ 
+ 	if (!battmgr->service_up)
+-		return -ENODEV;
++		return -EAGAIN;
+ 
+ 	ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
+ 	if (ret)
+@@ -748,7 +748,7 @@ static int qcom_battmgr_usb_get_property
+ 	int ret;
+ 
+ 	if (!battmgr->service_up)
+-		return -ENODEV;
++		return -EAGAIN;
+ 
+ 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
+ 		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
+@@ -867,7 +867,7 @@ static int qcom_battmgr_wls_get_property
+ 	int ret;
+ 
+ 	if (!battmgr->service_up)
+-		return -ENODEV;
++		return -EAGAIN;
+ 
+ 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
+ 		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
 
 
