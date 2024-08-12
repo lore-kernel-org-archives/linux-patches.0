@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FF01494B8;
-	Mon, 12 Aug 2024 16:34:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F67E1494B8;
+	Mon, 12 Aug 2024 16:34:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480463; cv=none; b=OsYlBiA2ViIQvSr01rsAzpDfzRV4nBJc8oNekgwJcA5oDoQp4v7CP8I87EUyfasfn1q4+GYT/KUNW8USTD0I4a/JzypT0sjtHIFULSHPYLq/bpjNU529i4DSkFTK8ZwXsjpGqJQGXE1l8MzGcLjlvNRZgKBSY+vNnaBmKOBdOKY=
+	t=1723480466; cv=none; b=LV8M12aom2N7r2MoN9Cvu7CIO91hMg0WEFeke3hbP1nJog/Ljw7wRM1oyrSt+a8DzrkgCxdUZjg1jOj1KeZG1OYC3IvI2lhrPjjv2acnJ/0fgj1r+1HmwDWn0H5qVLuljDtjMq2KqANYXwB19akZmdyz8TDwWjBEiAUZtOLS4II=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480463; c=relaxed/simple;
-	bh=w7WguwXXAyiLxfF6jOvEVpCPcuBMvSkb3tfgwUYmOe4=;
+	s=arc-20240116; t=1723480466; c=relaxed/simple;
+	bh=2Vz4XFVMExA/vjQ41kMyGo2xlyxqOIpSNuakI2tF6M4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ECSS6lld3Tbe78d1JabW7S+NfO7T/xqKp5LRyQihl83UmNJwI71oOjM7Nnqx4IEmJOGD7NqlV8UBVP0UHvZxsiu47kPEW94pCsMzT8AtCDa/j0s3fch+s/y6uIuV3SsbWzP3TefsKy3YLABA/ncXvfzB7UC9yej+rmsjskEYUe0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddWKFUN0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dv9f1FY+IrRKVY1rS7q7lnVAXrLV6mHn8TtaCLd63mEParIOxq8EC7Qtjt8ML9qDXe6XpI0FMgHcfp6N3IikH54/d7ghkyQ4jPg1tj/y7nvFEYSiLrWrRiMHJysoRBffocXomrPa8oc3DPenJw/f1XEv2b5hanNTWEpontAym24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdxEk3jK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddWKFUN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C827EC32782;
-	Mon, 12 Aug 2024 16:34:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdxEk3jK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F135CC4AF0C;
+	Mon, 12 Aug 2024 16:34:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480463;
-	bh=w7WguwXXAyiLxfF6jOvEVpCPcuBMvSkb3tfgwUYmOe4=;
+	s=korg; t=1723480466;
+	bh=2Vz4XFVMExA/vjQ41kMyGo2xlyxqOIpSNuakI2tF6M4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddWKFUN0RW37evq9mfSSSdP5eUD8dwoPiCz/MaDUr1qRp9/rtgcWINzkv9q4itz9T
-	 Vk5SW37qsTquqFXwkA5XNp7x6Ahun5ZY6/79fBtbaeko9nbuojOfNV+SAyZBcJJfy8
-	 QUGdbYwq1i5BqZa4DhV2VeiBQn7IDt/mYOZdnLFE=
+	b=XdxEk3jKOIz+BN44vrA1qD9VEaTwqvATkONjqc4ERN7dUTX8BjoIuVRAU8evclozW
+	 luOfK+6vwLYJkx+I9+8NuQDZ58QWp0TJtVJ7v8vgZFB4Q2Yn0U0U5So4TrYAlf2q9h
+	 oCRC1DVuH8tbpoQP0/bOKv0G+nF8VSYTRS1L3poI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Ashish Sangwan <a.sangwan@samsung.com>,
-	Namjae Jeon <namjae.jeon@samsung.com>,
-	Dirk Behme <dirk.behme@de.bosch.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.10 203/263] driver core: Fix uevent_show() vs driver detach race
-Date: Mon, 12 Aug 2024 18:03:24 +0200
-Message-ID: <20240812160154.320737544@linuxfoundation.org>
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Nishanth Menon <nm@ti.com>
+Subject: [PATCH 6.10 204/263] arm64: dts: ti: k3-am62-verdin-dahlia: Keep CTRL_SLEEP_MOCI# regulator on
+Date: Mon, 12 Aug 2024 18:03:25 +0200
+Message-ID: <20240812160154.358247983@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -55,157 +50,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Francesco Dolcini <francesco.dolcini@toradex.com>
 
-commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c upstream.
+commit 9438f970296f9c3a6dd340ae0ad01d2f056c88e6 upstream.
 
-uevent_show() wants to de-reference dev->driver->name. There is no clean
-way for a device attribute to de-reference dev->driver unless that
-attribute is defined via (struct device_driver).dev_groups. Instead, the
-anti-pattern of taking the device_lock() in the attribute handler risks
-deadlocks with code paths that remove device attributes while holding
-the lock.
+This reverts commit 3935fbc87ddebea5439f3ab6a78b1e83e976bf88.
 
-This deadlock is typically invisible to lockdep given the device_lock()
-is marked lockdep_set_novalidate_class(), but some subsystems allocate a
-local lockdep key for @dev->mutex to reveal reports of the form:
+CTRL_SLEEP_MOCI# is a signal that is defined for all the SoM
+implementing the Verdin family specification, this signal is supposed to
+control the power enable in the carrier board when the system is in deep
+sleep mode. However this is not possible with Texas Instruments AM62
+SoC, IOs output buffer is disabled in deep sleep and IOs are in
+tri-state mode.
 
- ======================================================
- WARNING: possible circular locking dependency detected
- 6.10.0-rc7+ #275 Tainted: G           OE    N
- ------------------------------------------------------
- modprobe/2374 is trying to acquire lock:
- ffff8c2270070de0 (kn->active#6){++++}-{0:0}, at: __kernfs_remove+0xde/0x220
+Given that we cannot properly control this pin, force it to be always
+high to minimize potential issues.
 
- but task is already holding lock:
- ffff8c22016e88f8 (&cxl_root_key){+.+.}-{3:3}, at: device_release_driver_internal+0x39/0x210
-
- which lock already depends on the new lock.
-
- the existing dependency chain (in reverse order) is:
-
- -> #1 (&cxl_root_key){+.+.}-{3:3}:
-        __mutex_lock+0x99/0xc30
-        uevent_show+0xac/0x130
-        dev_attr_show+0x18/0x40
-        sysfs_kf_seq_show+0xac/0xf0
-        seq_read_iter+0x110/0x450
-        vfs_read+0x25b/0x340
-        ksys_read+0x67/0xf0
-        do_syscall_64+0x75/0x190
-        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
- -> #0 (kn->active#6){++++}-{0:0}:
-        __lock_acquire+0x121a/0x1fa0
-        lock_acquire+0xd6/0x2e0
-        kernfs_drain+0x1e9/0x200
-        __kernfs_remove+0xde/0x220
-        kernfs_remove_by_name_ns+0x5e/0xa0
-        device_del+0x168/0x410
-        device_unregister+0x13/0x60
-        devres_release_all+0xb8/0x110
-        device_unbind_cleanup+0xe/0x70
-        device_release_driver_internal+0x1c7/0x210
-        driver_detach+0x47/0x90
-        bus_remove_driver+0x6c/0xf0
-        cxl_acpi_exit+0xc/0x11 [cxl_acpi]
-        __do_sys_delete_module.isra.0+0x181/0x260
-        do_syscall_64+0x75/0x190
-        entry_SYSCALL_64_after_hwframe+0x76/0x7e
-
-The observation though is that driver objects are typically much longer
-lived than device objects. It is reasonable to perform lockless
-de-reference of a @driver pointer even if it is racing detach from a
-device. Given the infrequency of driver unregistration, use
-synchronize_rcu() in module_remove_driver() to close any potential
-races.  It is potentially overkill to suffer synchronize_rcu() just to
-handle the rare module removal racing uevent_show() event.
-
-Thanks to Tetsuo Handa for the debug analysis of the syzbot report [1].
-
-Fixes: c0a40097f0bc ("drivers: core: synchronize really_probe() and dev_uevent()")
-Reported-by: syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Closes: http://lore.kernel.org/5aa5558f-90a4-4864-b1b1-5d6784c5607d@I-love.SAKURA.ne.jp [1]
-Link: http://lore.kernel.org/669073b8ea479_5fffa294c1@dwillia2-xfh.jf.intel.com.notmuch
-Cc: stable@vger.kernel.org
-Cc: Ashish Sangwan <a.sangwan@samsung.com>
-Cc: Namjae Jeon <namjae.jeon@samsung.com>
-Cc: Dirk Behme <dirk.behme@de.bosch.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://lore.kernel.org/r/172081332794.577428.9738802016494057132.stgit@dwillia2-xfh.jf.intel.com
+Fixes: 3935fbc87dde ("arm64: dts: ti: k3-am62-verdin-dahlia: support sleep-moci")
+Cc:  <stable@vger.kernel.org>
+Link: https://e2e.ti.com/support/processors-group/processors/f/processors-forum/1361669/am625-gpio-output-state-in-deep-sleep/5244802
+Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Link: https://lore.kernel.org/r/20240731054804.6061-1-francesco@dolcini.it
+Signed-off-by: Nishanth Menon <nm@ti.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/core.c   |   13 ++++++++-----
- drivers/base/module.c |    4 ++++
- 2 files changed, 12 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/ti/k3-am62-verdin-dahlia.dtsi |   22 ----------------------
+ arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi        |    6 ------
+ 2 files changed, 28 deletions(-)
 
---- a/drivers/base/core.c
-+++ b/drivers/base/core.c
-@@ -25,6 +25,7 @@
- #include <linux/mutex.h>
- #include <linux/pm_runtime.h>
- #include <linux/netdevice.h>
-+#include <linux/rcupdate.h>
- #include <linux/sched/signal.h>
- #include <linux/sched/mm.h>
- #include <linux/string_helpers.h>
-@@ -2640,6 +2641,7 @@ static const char *dev_uevent_name(const
- static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
- {
- 	const struct device *dev = kobj_to_dev(kobj);
-+	struct device_driver *driver;
- 	int retval = 0;
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin-dahlia.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin-dahlia.dtsi
+@@ -43,15 +43,6 @@
+ 			sound-dai = <&mcasp0>;
+ 		};
+ 	};
+-
+-	reg_usb_hub: regulator-usb-hub {
+-		compatible = "regulator-fixed";
+-		enable-active-high;
+-		/* Verdin CTRL_SLEEP_MOCI# (SODIMM 256) */
+-		gpio = <&main_gpio0 31 GPIO_ACTIVE_HIGH>;
+-		regulator-boot-on;
+-		regulator-name = "HUB_PWR_EN";
+-	};
+ };
  
- 	/* add device node properties if present */
-@@ -2668,8 +2670,12 @@ static int dev_uevent(const struct kobje
- 	if (dev->type && dev->type->name)
- 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
+ /* Verdin ETHs */
+@@ -193,11 +184,6 @@
+ 	status = "okay";
+ };
  
--	if (dev->driver)
--		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
-+	/* Synchronize with module_remove_driver() */
-+	rcu_read_lock();
-+	driver = READ_ONCE(dev->driver);
-+	if (driver)
-+		add_uevent_var(env, "DRIVER=%s", driver->name);
-+	rcu_read_unlock();
+-/* Do not force CTRL_SLEEP_MOCI# always enabled */
+-&reg_force_sleep_moci {
+-	status = "disabled";
+-};
+-
+ /* Verdin SD_1 */
+ &sdhci1 {
+ 	status = "okay";
+@@ -218,15 +204,7 @@
+ };
  
- 	/* Add common DT information about the device */
- 	of_device_uevent(dev, env);
-@@ -2739,11 +2745,8 @@ static ssize_t uevent_show(struct device
- 	if (!env)
- 		return -ENOMEM;
+ &usb1 {
+-	#address-cells = <1>;
+-	#size-cells = <0>;
+ 	status = "okay";
+-
+-	usb-hub@1 {
+-		compatible = "usb424,2744";
+-		reg = <1>;
+-		vdd-supply = <&reg_usb_hub>;
+-	};
+ };
  
--	/* Synchronize with really_probe() */
--	device_lock(dev);
- 	/* let the kset specific function add its keys */
- 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
--	device_unlock(dev);
- 	if (retval)
- 		goto out;
+ /* Verdin CTRL_WAKE1_MICO# */
+--- a/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
++++ b/arch/arm64/boot/dts/ti/k3-am62-verdin.dtsi
+@@ -138,12 +138,6 @@
+ 		vin-supply = <&reg_1v8>;
+ 	};
  
---- a/drivers/base/module.c
-+++ b/drivers/base/module.c
-@@ -7,6 +7,7 @@
- #include <linux/errno.h>
- #include <linux/slab.h>
- #include <linux/string.h>
-+#include <linux/rcupdate.h>
- #include "base.h"
- 
- static char *make_driver_name(struct device_driver *drv)
-@@ -97,6 +98,9 @@ void module_remove_driver(struct device_
- 	if (!drv)
- 		return;
- 
-+	/* Synchronize with dev_uevent() */
-+	synchronize_rcu();
-+
- 	sysfs_remove_link(&drv->p->kobj, "module");
- 
- 	if (drv->owner)
+-	/*
+-	 * By default we enable CTRL_SLEEP_MOCI#, this is required to have
+-	 * peripherals on the carrier board powered.
+-	 * If more granularity or power saving is required this can be disabled
+-	 * in the carrier board device tree files.
+-	 */
+ 	reg_force_sleep_moci: regulator-force-sleep-moci {
+ 		compatible = "regulator-fixed";
+ 		enable-active-high;
 
 
