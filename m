@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D545518732C;
-	Mon, 12 Aug 2024 16:25:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C18917C7C8;
+	Mon, 12 Aug 2024 16:25:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479923; cv=none; b=ktkI2YBuYhTQY6V84Pi1wXzA8NTI6Gr/g+oR08VmwVaGohwWg1iUrNLvw9Pw5DKzPztJHHS73tI+eGzYB8zTstOvTewgPzLca12fIZH4y6X3WxAQgimBcpjnDr26+Cerf7DrbNcEcjJ2TpwNBSka+UHn/PObXk2/yttRAXQcxgY=
+	t=1723479927; cv=none; b=nkJG5xi959eYQXdL9wXxemD0hwtIjQjALmi7j8wL6cJn0AAKh5h6q4aSFuKLquglxYP1R1A3g3OcDpnGp0MqRdpa1IQPxpp54gas1gTfA1P5PcVUKTRMNOsgISklyBWYsf6hlPv44p4dN3VNqL+oePh2U6YClT2Zo+MI+/phph8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479923; c=relaxed/simple;
-	bh=LHHdRNtQx3NHRcPUNg4Qf+WAJL9IQPW21r/6weLtfOI=;
+	s=arc-20240116; t=1723479927; c=relaxed/simple;
+	bh=eJCgwKdt1mkLBADtkGwgt4GeNiXNXFOH7hmLj1WeSq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gCXwKWsJZ7ltxH2RYJNX+2VszNvxhDpVfjmQpKAU9p8vn02j17IiP9w2yS2QK/C4OjJjsgW2m12VMwkd96tTuEF3UIz/1dbiFAWITCd8qB9g6D7lB/ojX1v7nuc03TLVKXbbP0m5HUZtkop2GRQB0FNy1dZRaKyytz7Y7Wegz7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nV+XF14/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUV4zw7HZgEu2eWes1pUHzwWRrFZQtHYPA3MvORDC0H5YU9eIYTp8gYngE9VPpEp1lbMJXLJotPCeTnOOCUd8eEsKUcJmUeC/x85yawYaZ+TMdDd+XsXPrLXxWclsY9epmOE45FakITs/CgGwvcTwaM1pbYiMDxqJlOC/QzowJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBW9MSye; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nV+XF14/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 595A2C32782;
-	Mon, 12 Aug 2024 16:25:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBW9MSye"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D89AC32782;
+	Mon, 12 Aug 2024 16:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479923;
-	bh=LHHdRNtQx3NHRcPUNg4Qf+WAJL9IQPW21r/6weLtfOI=;
+	s=korg; t=1723479927;
+	bh=eJCgwKdt1mkLBADtkGwgt4GeNiXNXFOH7hmLj1WeSq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nV+XF14/PmCBb8uhbwFi7QxxfkVnLFKv6SHHlW0Wn2B6JPRa2vvY8sF51BBk54hxY
-	 YDe8dcoHBnlYVJbQGX40gBXN69ExMjd2noxRVPMmSVn5EJ1ZAqMdn/2oZomlUcefop
-	 5LTTcyNjeUWBnHMpeR8AXhh6jtP9mHAcPN42azIo=
+	b=tBW9MSye0IvgZV64i7ouu51ODLrD1mM9iju2ZfS4M+qm7Jw/Eq0KBV2okQlSmKasR
+	 4z0hLCRbx+zJPju+t49f6eyF+q6raaxGSj4hZt/hmOT1VvXK8G8clFlh2pbVtkI00c
+	 zo9vvPLUsOYZcz/ZRsx6TDfSTxjrLl6uD7cTm0eQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wilken Gottwalt <wilken.gottwalt@posteo.net>,
-	Guenter Roeck <linux@roeck-us.net>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 042/263] hwmon: corsair-psu: add USB id of HX1200i Series 2023 psu
-Date: Mon, 12 Aug 2024 18:00:43 +0200
-Message-ID: <20240812160148.154585759@linuxfoundation.org>
+Subject: [PATCH 6.10 016/263] x86/mm: Fix pti_clone_entry_text() for i386
+Date: Mon, 12 Aug 2024 18:00:17 +0200
+Message-ID: <20240812160147.162755715@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,67 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wilken Gottwalt <wilken.gottwalt@posteo.net>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit b9c15c96ccb47ad860af2e075c5f3c90c4cd1730 ]
+[ Upstream commit 3db03fb4995ef85fc41e86262ead7b4852f4bcf0 ]
 
-Add the usb id of the HX1200i Series 2023. Update the documentation
-accordingly. Also fix the version comments, there are no Series 2022
-products. That are legacy or first version products going back many
-many years.
+While x86_64 has PMD aligned text sections, i386 does not have this
+luxery. Notably ALIGN_ENTRY_TEXT_END is empty and _etext has PAGE
+alignment.
 
-Signed-off-by: Wilken Gottwalt <wilken.gottwalt@posteo.net>
-Link: https://lore.kernel.org/r/ZlAZs4u0dU7JxtDf@monster.localdomain
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+This means that text on i386 can be page granular at the tail end,
+which in turn means that the PTI text clones should consistently
+account for this.
+
+Make pti_clone_entry_text() consistent with pti_clone_kernel_text().
+
+Fixes: 16a3fe634f6a ("x86/mm/pti: Clone kernel-image on PTE level for 32 bit")
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/hwmon/corsair-psu.rst | 6 +++---
- drivers/hwmon/corsair-psu.c         | 7 ++++---
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ arch/x86/mm/pti.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/hwmon/corsair-psu.rst b/Documentation/hwmon/corsair-psu.rst
-index 16db34d464dd6..7ed794087f848 100644
---- a/Documentation/hwmon/corsair-psu.rst
-+++ b/Documentation/hwmon/corsair-psu.rst
-@@ -15,11 +15,11 @@ Supported devices:
+diff --git a/arch/x86/mm/pti.c b/arch/x86/mm/pti.c
+index 48c503208c794..bfdf5f45b1370 100644
+--- a/arch/x86/mm/pti.c
++++ b/arch/x86/mm/pti.c
+@@ -496,7 +496,7 @@ static void pti_clone_entry_text(void)
+ {
+ 	pti_clone_pgtable((unsigned long) __entry_text_start,
+ 			  (unsigned long) __entry_text_end,
+-			  PTI_CLONE_PMD);
++			  PTI_LEVEL_KERNEL_IMAGE);
+ }
  
-   Corsair HX850i
- 
--  Corsair HX1000i (Series 2022 and 2023)
-+  Corsair HX1000i (Legacy and Series 2023)
- 
--  Corsair HX1200i
-+  Corsair HX1200i (Legacy and Series 2023)
- 
--  Corsair HX1500i (Series 2022 and 2023)
-+  Corsair HX1500i (Legacy and Series 2023)
- 
-   Corsair RM550i
- 
-diff --git a/drivers/hwmon/corsair-psu.c b/drivers/hwmon/corsair-psu.c
-index 2c7c92272fe39..f8f22b8a67cdf 100644
---- a/drivers/hwmon/corsair-psu.c
-+++ b/drivers/hwmon/corsair-psu.c
-@@ -875,15 +875,16 @@ static const struct hid_device_id corsairpsu_idtable[] = {
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c04) }, /* Corsair HX650i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c05) }, /* Corsair HX750i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c06) }, /* Corsair HX850i */
--	{ HID_USB_DEVICE(0x1b1c, 0x1c07) }, /* Corsair HX1000i Series 2022 */
--	{ HID_USB_DEVICE(0x1b1c, 0x1c08) }, /* Corsair HX1200i */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c07) }, /* Corsair HX1000i Legacy */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c08) }, /* Corsair HX1200i Legacy */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c09) }, /* Corsair RM550i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0a) }, /* Corsair RM650i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0b) }, /* Corsair RM750i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0c) }, /* Corsair RM850i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c0d) }, /* Corsair RM1000i */
- 	{ HID_USB_DEVICE(0x1b1c, 0x1c1e) }, /* Corsair HX1000i Series 2023 */
--	{ HID_USB_DEVICE(0x1b1c, 0x1c1f) }, /* Corsair HX1500i Series 2022 and 2023 */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c1f) }, /* Corsair HX1500i Legacy and Series 2023 */
-+	{ HID_USB_DEVICE(0x1b1c, 0x1c23) }, /* Corsair HX1200i Series 2023 */
- 	{ },
- };
- MODULE_DEVICE_TABLE(hid, corsairpsu_idtable);
+ /*
 -- 
 2.43.0
 
