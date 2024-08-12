@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA61C130E27;
-	Mon, 12 Aug 2024 16:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A9F130E27;
+	Mon, 12 Aug 2024 16:13:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479198; cv=none; b=mP8SjuHZOvKG7z3yidOzLJ2otUoYY1acC5YZ/qsxLLWLyusZPRFb3RNXhrf+WU8wQoBvEziqGJvSkyI7AtyWx8vse5d7M5G3Gm7o4/XvTu+NrjDmMRoy4Lb3p+/tnzhPDHx9OL3xpMqClygXiDxMRCTuRK3M29VKxt4tRfArHXo=
+	t=1723479202; cv=none; b=YH1rOm8PsRCcmqT0H3Q4CuNNpvdRvQtEMm+jgP5j8/aJB32KBrfYP5m2P9SG0M5eE2ndWlWf8jrGSWCrpiO0OF5UbPwdUFuNZVlZV5Uouom4xWDPLM/uRyskRY7JzdRopdgChHteiStXg4/yVlXSRgLPKy2iJ/7GL/4A1tbOUhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479198; c=relaxed/simple;
-	bh=QkBxEe3IZ2FiXujbGfQcnmINnN/i2EB0RjrEIIhtQJQ=;
+	s=arc-20240116; t=1723479202; c=relaxed/simple;
+	bh=6MIRbxphhahE2iFpBbeOnMLJ8lRx8PVju6WswegBtB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y2FIlLdfwOQVWSpLDY8Z7tKK0yZs6Cbhy2OEdNVH6qX01nujfvk4DkQtIRw9AKuK4ZZCJmeY9SZ6SvDGkz4RORZfwcNmXmmRN/xf6RlrCR48tU9xAepRQcyevqwGPOJF6PJOQ8q4c9HNOIFtnTdgWlqowxrYg3wleV7qP7JMo/E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mTKWVnKR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HuIvAjilgnSnUt4mqxqrB4/EHphT36Hy+E+fewKsFp8DEFLCvpbes5xlP5HZcsJwXJLl1JU5V4YBdrmMnmHYbEp/bPmuFGfoZ7mdZOPzSoXqST+y3LmnXaS53+y9EfC/TLMktUztJAPKoQlo6VYay3Sr58+T7vgetkKA46ekt1A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+klmxar; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mTKWVnKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597B6C32782;
-	Mon, 12 Aug 2024 16:13:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+klmxar"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CB87C32782;
+	Mon, 12 Aug 2024 16:13:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479198;
-	bh=QkBxEe3IZ2FiXujbGfQcnmINnN/i2EB0RjrEIIhtQJQ=;
+	s=korg; t=1723479202;
+	bh=6MIRbxphhahE2iFpBbeOnMLJ8lRx8PVju6WswegBtB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mTKWVnKRwhWrGhHosKrYuXFRh7xDWLnO1FkK1muk39/wczCyGEmiYnAildoHtundn
-	 gC3x4a8LrW0lY//gfLNkOOpIV20Ht2CV2/4ugSAZnioNhrG2pna2nvIjJkRIgCs1Sx
-	 lz7QG9nWtxmGB+zQ/xRF4jk26pxg3P7uUY5Z0NXI=
+	b=x+klmxarAf8wvdtQWwxzRbEEDdxQCJvq26myo8gmVehelZb5SclcgnJVKmmFxvfar
+	 o/4f3w5jB4Zro0UbRc4t+56ODmObl4yHpwn5ydvb6hC8mD3ZavTBp2IiF/RQ1O1I6R
+	 1UlMjXEztgNtKYYsUVSNncSKfQdfpwtgbYHKnlIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Palmas <dnlplm@gmail.com>,
-	=?UTF-8?q?Bj=C3=B8rn=20Mork?= <bjorn@mork.no>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+263426984509be19c9a0@syzkaller.appspotmail.com,
+	Nikolay Aleksandrov <razor@blackwall.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 013/189] net: usb: qmi_wwan: fix memory leak for not ip packets
-Date: Mon, 12 Aug 2024 18:01:09 +0200
-Message-ID: <20240812160132.653325714@linuxfoundation.org>
+Subject: [PATCH 6.6 014/189] net: bridge: mcast: wait for previous gc cycles when removing port
+Date: Mon, 12 Aug 2024 18:01:10 +0200
+Message-ID: <20240812160132.691132801@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -46,40 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Palmas <dnlplm@gmail.com>
+From: Nikolay Aleksandrov <razor@blackwall.org>
 
-[ Upstream commit 7ab107544b777c3bd7feb9fe447367d8edd5b202 ]
+[ Upstream commit 92c4ee25208d0f35dafc3213cdf355fbe449e078 ]
 
-Free the unused skb when not ip packets arrive.
+syzbot hit a use-after-free[1] which is caused because the bridge doesn't
+make sure that all previous garbage has been collected when removing a
+port. What happens is:
+      CPU 1                   CPU 2
+ start gc cycle           remove port
+                         acquire gc lock first
+ wait for lock
+                         call br_multicasg_gc() directly
+ acquire lock now but    free port
+ the port can be freed
+ while grp timers still
+ running
 
-Fixes: c6adf77953bc ("net: usb: qmi_wwan: add qmap mux protocol support")
-Signed-off-by: Daniele Palmas <dnlplm@gmail.com>
-Acked-by: Bjørn Mork <bjorn@mork.no>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Make sure all previous gc cycles have finished by using flush_work before
+freeing the port.
+
+[1]
+  BUG: KASAN: slab-use-after-free in br_multicast_port_group_expired+0x4c0/0x550 net/bridge/br_multicast.c:861
+  Read of size 8 at addr ffff888071d6d000 by task syz.5.1232/9699
+
+  CPU: 1 PID: 9699 Comm: syz.5.1232 Not tainted 6.10.0-rc5-syzkaller-00021-g24ca36a562d6 #0
+  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/07/2024
+  Call Trace:
+   <IRQ>
+   __dump_stack lib/dump_stack.c:88 [inline]
+   dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:114
+   print_address_description mm/kasan/report.c:377 [inline]
+   print_report+0xc3/0x620 mm/kasan/report.c:488
+   kasan_report+0xd9/0x110 mm/kasan/report.c:601
+   br_multicast_port_group_expired+0x4c0/0x550 net/bridge/br_multicast.c:861
+   call_timer_fn+0x1a3/0x610 kernel/time/timer.c:1792
+   expire_timers kernel/time/timer.c:1843 [inline]
+   __run_timers+0x74b/0xaf0 kernel/time/timer.c:2417
+   __run_timer_base kernel/time/timer.c:2428 [inline]
+   __run_timer_base kernel/time/timer.c:2421 [inline]
+   run_timer_base+0x111/0x190 kernel/time/timer.c:2437
+
+Reported-by: syzbot+263426984509be19c9a0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=263426984509be19c9a0
+Fixes: e12cec65b554 ("net: bridge: mcast: destroy all entries via gc")
+Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20240802080730.3206303-1-razor@blackwall.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/qmi_wwan.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bridge/br_multicast.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/usb/qmi_wwan.c b/drivers/net/usb/qmi_wwan.c
-index befbca01bfe37..b1380cf1b13ab 100644
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -201,6 +201,7 @@ static int qmimux_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 			break;
- 		default:
- 			/* not ip - do not know what to do */
-+			kfree_skb(skbn);
- 			goto skip;
- 		}
+diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
+index 38373b4fb7ddf..c38244d60ff86 100644
+--- a/net/bridge/br_multicast.c
++++ b/net/bridge/br_multicast.c
+@@ -2044,16 +2044,14 @@ void br_multicast_del_port(struct net_bridge_port *port)
+ {
+ 	struct net_bridge *br = port->br;
+ 	struct net_bridge_port_group *pg;
+-	HLIST_HEAD(deleted_head);
+ 	struct hlist_node *n;
  
+ 	/* Take care of the remaining groups, only perm ones should be left */
+ 	spin_lock_bh(&br->multicast_lock);
+ 	hlist_for_each_entry_safe(pg, n, &port->mglist, mglist)
+ 		br_multicast_find_del_pg(br, pg);
+-	hlist_move_list(&br->mcast_gc_list, &deleted_head);
+ 	spin_unlock_bh(&br->multicast_lock);
+-	br_multicast_gc(&deleted_head);
++	flush_work(&br->mcast_gc_work);
+ 	br_multicast_port_ctx_deinit(&port->multicast_ctx);
+ 	free_percpu(port->mcast_stats);
+ }
 -- 
 2.43.0
 
