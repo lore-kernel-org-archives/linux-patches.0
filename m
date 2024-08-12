@@ -1,60 +1,60 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0391914EC59
-	for <patches@lists.linux.dev>; Mon, 12 Aug 2024 21:43:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFC9194AE6
+	for <patches@lists.linux.dev>; Mon, 12 Aug 2024 21:49:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723498983; cv=none; b=uSqKQs+ne8gAdBiueeNOu6Nzg+qc2InPggtKi/XSPB8Scz2mNz7x10Ti8gynDv0ge7i/5Thu9EOFfXcmGR6nfdJgmBioBG8qzr01wlVu5d2nkYHjloyVAj+yATqtSkNffKhP56RBuU99hfEO/hSmr4lr1hrLGkQpYYEGW45YHPE=
+	t=1723499371; cv=none; b=hs31gzXArbfAVgj0CrhFQ1QEbKwBPslfCbSZfcADFy8ubtJ+WrNGYs4eBvdyQJXejsLV+soMz46jaR8xrZcXeItEqcoHIOiFhtmXNQ3aNoip2grrzXB92iyqXpYgmMu3zvpNhwaa2MiiLi2hWqHQs+dszWLE5R6+7hE3/NmT+Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723498983; c=relaxed/simple;
-	bh=wBFeX6FPGRM45SSxmDuM+3/9hZ2b/QoAYqXwuvlW1kU=;
+	s=arc-20240116; t=1723499371; c=relaxed/simple;
+	bh=hiFDacNRvAx6RAGZgYNkIohogQ6jS98j811MjiQEmCg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f40e1KqQi13uNiHAyEx+H4tW0zrGQDTYP3+5nS3sLPvDpQaSNDAi7uv7e3Twv2Vormunx3JYcoKqOi3PQ9nodsXL4K0bl/zf9vwTx8uw3UbHYg7goJXkN+qmrp6nBeArq2KhHZ3hVf6CwBaZ5mvSfpCed2iOVdvd/xpXOa0yZH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L5Z3JzLc; arc=none smtp.client-ip=209.85.216.51
+	 In-Reply-To:Content-Type; b=RSgdYakvAhx4j5z75Wgyf/qlSxBelzfj4RQYbG6V+IFHwntVeAp24lj0PQUBr1KfGNb7z5GOKk54OL+mFoZ0sr3eG1RyhepLABnamvNb1TK9TWd8AuYOAqRG0OAIIa2jE6Us/VeCwa0OKzU9GQ+6aocBeKPz8XwbB6tiixN8jzM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tb5cB0MD; arc=none smtp.client-ip=209.85.215.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roeck-us.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L5Z3JzLc"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-2cb5e0b020eso3748582a91.2
-        for <patches@lists.linux.dev>; Mon, 12 Aug 2024 14:43:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tb5cB0MD"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-7a0b2924e52so2363800a12.2
+        for <patches@lists.linux.dev>; Mon, 12 Aug 2024 14:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723498981; x=1724103781; darn=lists.linux.dev;
+        d=gmail.com; s=20230601; t=1723499369; x=1724104169; darn=lists.linux.dev;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=rbp++JNvUR6aX3uiaZXnZPtpgQrZxet6aSiPIDTv52M=;
-        b=L5Z3JzLchWWWd4MnPci1G7CWLumjYm3iI/nu1BHSyxgvNpu2/8jRbOz4nriqDHTaV4
-         c8ttq3PDzd9aPyNgXyDuUpvNVludUyb3Q4q/RADI0sWAxMLiNGsatcuWXRa094CIG46K
-         Xlgj79//OklmMHTlz5PhFKuEiGHO+sj1wD0Y4x7BdzoJ+73xxNrbmYTXZRnLVjcNFmqE
-         fD/nIdOAOwAwWyQReSRI5qqeEkvyrjvPVM10omtaqIgtoausJjGW7SF8AWrjvPTCWrlu
-         nCUVotBFaf3wSN9GVWO8RjAKnTodnIuwILl7jpUf1d47jI62lxhsKLgpVZ6ea3hH4pWv
-         fi9Q==
+        bh=UFXDQ04x5kB2Iwkc2ou70wPTctsi5xqf7+SwGq1MbDY=;
+        b=Tb5cB0MDvn8uSDgc7CElU9Bz46HW9wIBmtva6rDn8PdiSOSZMjakdS0D6tW3ebEIf6
+         8GBXhtyDxS8s5JXpT9wLv5+PdHdmiRnU3VYHjx9BhvpYBgt/UHaX7H9mgWUq0KktubDO
+         ADadCLaWaYrXz01KIC8ogstk//mrxwtT7JaC932yP3sbFnH008an5JWP9hc4vtESNatw
+         LsFQJ1y1rf2a3TjxUiFwvhgMMlPgxKXO01pcQzTF7c0g68Zu3uud5i6tyNnEnGrBPTyy
+         ql84rJdtPwCez+LTAeZ6zyo0gpfgohPTIQUjpei1es1IsVDdlCU2HS/NvT8CjrJ+fSBb
+         2zbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723498981; x=1724103781;
+        d=1e100.net; s=20230601; t=1723499369; x=1724104169;
         h=content-transfer-encoding:in-reply-to:autocrypt:from
          :content-language:references:cc:to:subject:user-agent:mime-version
          :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rbp++JNvUR6aX3uiaZXnZPtpgQrZxet6aSiPIDTv52M=;
-        b=Ir+CiLQ8S3R1fQy8Y6+pGDSHWoXWk958ngAXXGbG1XzGO/U/R/gcI5tE73fgVeJ5PA
-         /8Np5npiJWqFxcUlWDuRE6cqeB7z2h4qp64FWcNuI+XoDcu2gzBuGfVinhEMlJiPYCpe
-         zhtvRJZGKHF18aJM2a9DCoHfv778k9XCc054vWPa3f6WlmSfZI0RN9r+RDXJgoZYL4qn
-         kicFC4m/rsEUgdtLsvtZjVaMFT5uLHobJnH4NRz9bD8AdfQefDWztZHVu3uEbbq7q0gY
-         TjPHupGwtAvz+u7H19u4Pg/5jExlTDZp3LPAvJAafBmjqSNRMmb6UFUNQL7FW9wzMLw4
-         HbYQ==
-X-Gm-Message-State: AOJu0Yx3YY+78uxYOKL9mNVjYj4os4fR2fnrMjjwrsd62ZtG2iu7mWJ6
-	uRZ0IS6tvYHMORoO5487E0Af6aLs/iVNeARRpvuUSFJ0t3/Dy4Ct
-X-Google-Smtp-Source: AGHT+IH1hD0/oBAF+L+6/VeKCppQioQJBRK7AMZZR8Mze68EcNdguNRWGeokVjdJ+6pW8HNS1k/3zw==
-X-Received: by 2002:a17:90a:c914:b0:2c9:8891:e12a with SMTP id 98e67ed59e1d1-2d3925407fbmr1763845a91.23.1723498981115;
-        Mon, 12 Aug 2024 14:43:01 -0700 (PDT)
+        bh=UFXDQ04x5kB2Iwkc2ou70wPTctsi5xqf7+SwGq1MbDY=;
+        b=m2m53QnnIVImPrCRZLNf4fYPyCgtfYbl4QiOH+GB83vZXBWwjai4ZhR1f/wL6Fz1iy
+         F2p5dYaJUBPQJlU2QCgI+5n0AzuqykxQwzK7CqimqoM0Fw9zWtxAEVcjPq2EsSLgcmYg
+         ME1g4WqKHcDrMGmSwRM57+5AHFDZItt9dAdKTrLdoNXWN6M2Db9tVmourYdwRGjoC4Nd
+         45TQt/Zt9I4m8OqOzmf7JQ+kPxX/zGhjWQI70oExNxPAuvvPzXFmDoTelHRi5wx3Yzv0
+         AzwXP3DB0g0nXt8GaFNS3qmdHaBsdba2kaALs1Gqag534rtSPwT8C8SsPKggeRuiXjYz
+         TiRg==
+X-Gm-Message-State: AOJu0Ywl9xnzMeS+k7VRWaYxX5S08eGlGFKbP2IOXsEAZi6ny+taCTLf
+	sMUHzNqhZzdFdjMxTHceRL8u6I99Z353thiNMFBX9IrqWERd+U24
+X-Google-Smtp-Source: AGHT+IFrZ3ShvYu41KPMUmTdk+DlI47Z09xKfIEborZop8ZDdUXfA0N0y563M+Ez0CX7mr9crWoYRA==
+X-Received: by 2002:a17:90b:1b05:b0:2ca:f39c:8d76 with SMTP id 98e67ed59e1d1-2d3926873abmr1776434a91.39.1723499368581;
+        Mon, 12 Aug 2024 14:49:28 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d1c9daf76dsm8894653a91.36.2024.08.12.14.42.59
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-2d1c9ca7ca5sm8907446a91.25.2024.08.12.14.49.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 Aug 2024 14:43:00 -0700 (PDT)
+        Mon, 12 Aug 2024 14:49:27 -0700 (PDT)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <f514502a-0e89-4fcb-95c4-986a3cba2342@roeck-us.net>
-Date: Mon, 12 Aug 2024 14:42:58 -0700
+Message-ID: <c65c3c23-c945-4fad-9e39-6e229b979592@roeck-us.net>
+Date: Mon, 12 Aug 2024 14:49:26 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,7 +62,7 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.1 000/150] 6.1.105-rc1 review
+Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
@@ -70,7 +70,7 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
  srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
  allen.lkml@gmail.com, broonie@kernel.org
-References: <20240812160125.139701076@linuxfoundation.org>
+References: <20240808091131.014292134@linuxfoundation.org>
 Content-Language: en-US
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
@@ -116,41 +116,102 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
+In-Reply-To: <20240808091131.014292134@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 8/12/24 09:01, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.105 release.
-> There are 150 patches in this series, all will be posted as a response
+Hi,
+
+On 8/8/24 02:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.104 release.
+> There are 86 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Wed, 14 Aug 2024 16:00:26 +0000.
+> Responses should be made by Sat, 10 Aug 2024 09:11:02 +0000.
 > Anything received after that time might be too late.
 > 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.104-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+...
+> Naohiro Aota <naohiro.aota@wdc.com>
+>      btrfs: zoned: fix zone_unusable accounting on making block group read-write again
+> 
 
-Building parisc64:C3700:smp:net=pcnet:initrd ... failed
-------------
-Error log:
-In file included from /home/groeck/src/linux-stable/include/linux/fs.h:45,
-                  from /home/groeck/src/linux-stable/include/linux/huge_mm.h:8,
-                  from /home/groeck/src/linux-stable/include/linux/mm.h:745,
-                  from /home/groeck/src/linux-stable/include/linux/pid_namespace.h:7,
-                  from /home/groeck/src/linux-stable/include/linux/ptrace.h:10,
-                  from /home/groeck/src/linux-stable/arch/parisc/kernel/asm-offsets.c:20:
+This patch results in a variety of problems with the parisc64 qemu emulation.
+Some examples from various test runs:
+
+[   10.527204] alg: akcipher: test 1 failed for rsa-generic, err=-22
+[   10.529743] alg: self-tests for rsa using rsa-generic failed (rc=-22)
+[   10.529905] ------------[ cut here ]------------
+[   10.530276] alg: self-tests for rsa using rsa-generic failed (rc=-22)
+[   10.530732] WARNING: CPU: 0 PID: 50 at crypto/testmgr.c:5907 alg_test+0x618/0x688
+
+[    7.420056] ==================================================================
+[    7.420507] BUG: KFENCE: invalid read in walk_stackframe.isra.0+0xb4/0x138
+[    7.420507]
+[    7.420827] Invalid read at 0x0000000042f07000:
+[    7.421037]  walk_stackframe.isra.0+0xb4/0x138
+[    7.421204]  arch_stack_walk+0x38/0x50
+[    7.421338]  stack_trace_save_regs+0x58/0x70
+[    7.421498]  kfence_report_error+0x14c/0x730
+[    7.421649]  kfence_handle_page_fault+0x2c8/0x2d0
+[    7.421996]  handle_interruption+0x9b0/0xb58
+[    7.422168]  intr_check_sig+0x0/0x3c
+
+[    8.891194] =============================================================================
+[    8.891558] BUG sgpool-32 (Tainted: G    B   W        N): Wrong object count. Counter is 3 but counted were 18
+
+[    0.403174] =============================================================================
+[    0.403568] BUG audit_buffer (Not tainted): Wrong object count. Counter is 1 but counted were 34
+
+[    0.505914] =============================================================================
+[    0.506258] BUG skbuff_head_cache (Tainted: G    B             ): Freechain corrupt
+
+[    2.831636] =============================================================================
+[    2.832144] BUG skbuff_head_cache (Tainted: G    B             ): Left Redzone overwritten
+
+Reverting it fixes the problem.
+
+Bisect log is attached for reference.
+
+
+I tried to repeat the test with v6.1.105-rc1, but that fails to compile for parisc64.
+
 /home/groeck/src/linux-stable/include/linux/slab.h:228: warning: "ARCH_KMALLOC_MINALIGN" redefined
    228 | #define ARCH_KMALLOC_MINALIGN ARCH_DMA_MINALIGN
 
-In file included from /home/groeck/src/linux-stable/arch/parisc/include/asm/atomic.h:23,
-                  from /home/groeck/src/linux-stable/include/linux/atomic.h:7,
-                  from /home/groeck/src/linux-stable/include/linux/rcupdate.h:25,
-                  from /home/groeck/src/linux-stable/include/linux/rculist.h:11,
-                  from /home/groeck/src/linux-stable/include/linux/pid.h:5,
-                  from /home/groeck/src/linux-stable/include/linux/sched.h:14,
-                  from /home/groeck/src/linux-stable/arch/parisc/kernel/asm-offsets.c:18:
-/home/groeck/src/linux-stable/arch/parisc/include/asm/cache.h:28: note: this is the location of the previous definition
-    28 | #define ARCH_KMALLOC_MINALIGN   16      /* ldcw requires 16-byte alignment */
+This is due to commit 96423e23e05b ("parisc: fix a possible DMA corruption").
+After reverting that patch I don't see the above problems anymore in v6.1.105-rc1,
+so it looks like the btrfs patches in v6.1.105-rc1 may have fixed it (or maybe
+there is another hidden bug in the parisc64 qemu emulation).
 
 Guenter
+
+---
+# bad: [36790ef5e00b69ccb92817f95ba1928eea24eebb] Linux 6.1.104
+# good: [48d525b0e4634c487cf46a41c1e2824e9ee258ce] Linux 6.1.103
+git bisect start 'HEAD' 'v6.1.103'
+# good: [d06daf0ad645d9225a3ff6958dd82e1f3988fa64] sched: act_ct: take care of padding in struct zones_ht_key
+git bisect good d06daf0ad645d9225a3ff6958dd82e1f3988fa64
+# good: [ed15fdf30736a255c0e4f5d0263e12cf6636fade] rust: SHADOW_CALL_STACK is incompatible with Rust
+git bisect good ed15fdf30736a255c0e4f5d0263e12cf6636fade
+# bad: [5670466033d14329aaa87e726a481a6c56892eff] drm/i915: Fix possible int overflow in skl_ddi_calculate_wrpll()
+git bisect bad 5670466033d14329aaa87e726a481a6c56892eff
+# bad: [47ab33e1d6a796a82f9b7a70ed95c9649e92d7d2] mptcp: sched: check both directions for backup
+git bisect bad 47ab33e1d6a796a82f9b7a70ed95c9649e92d7d2
+# good: [8bb9cf2edf490e65678f2d57634ac763a778aeb6] HID: wacom: Modify pen IDs
+git bisect good 8bb9cf2edf490e65678f2d57634ac763a778aeb6
+# bad: [5db999fff545b924b24c9afd368ef5c17279b176] protect the fetch of ->fd[fd] in do_dup2() from mispredictions
+git bisect bad 5db999fff545b924b24c9afd368ef5c17279b176
+# bad: [36dac679722e5aa68c9efa822a38a5ea0c107342] btrfs: zoned: fix zone_unusable accounting on making block group read-
+write again
+git bisect bad 36dac679722e5aa68c9efa822a38a5ea0c107342
+# first bad commit: [36dac679722e5aa68c9efa822a38a5ea0c107342] btrfs: zoned: fix zone_unusable accounting on making bloc
+k group read-write again
+
 
