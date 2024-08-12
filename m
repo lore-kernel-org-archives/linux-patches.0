@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65E61862B9;
-	Mon, 12 Aug 2024 16:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CBB186295;
+	Mon, 12 Aug 2024 16:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479172; cv=none; b=k9VM10/VPINJG/k29qV0DzHEVFXOUJmRkrdgmk8eglYny6DZVbvmXvP1N3pxFZe0jGm+UUhVqaiMga7B8XC9bAwdVow+tRWOJG9ySa8bJRzy7qLBzuLqoLZgCfWwqcPkPQc1/mYtHR+tSlkdo4tGATrN0oy2Ync/AwJkPoIwHqI=
+	t=1723479175; cv=none; b=K/8FGsVvoLqvyQJ0ovhkGghSgmGyOybJOHOJGZGN4c3wesFRCSMdXj6RR2bG1bLM497ATNO6gz5+7UG/Jjd9TizKZzgS180p809LclDltcufNNEAUzfu75lmRFmfyUSRG65tGNdv+ucGJQViMFWmgdiHU98haKkGsAr67xsVFBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479172; c=relaxed/simple;
-	bh=xuGsr/emB0M/6tBS9jCdKr+aD5i52gjtOeLiL9GJcQQ=;
+	s=arc-20240116; t=1723479175; c=relaxed/simple;
+	bh=HZ7raxPvS104GvbAT9C31995WnzUJklLjhqpVJZFvjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I9OnEkmCYFs1+n2HjhRT7YTO3mSNsLAH//tQgEKkJioVn64b9+Z4LggZKVFtCl5/9wzljE4DSGupPh7TzHPVo2m6pRVfpipLVlETfcUUk//NFCQ8TJsspW06j+hu+vTBIDExctfnka7ZpDb9y4qpL5AgWoPsZ1hw15OVWE2OVBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CZ6KVInD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lEp7Cd1z/z11b386vinHN5C6WG373RWHo8slrNlxtpO8OXc+tGyEoExOorQ37t6JngwDAZp36sYeeBoNPqngGp2kYT1MDHXl+A1B2LCYxKSTXAJDTUaMbXhiYH11m07WxqZrGWeN/XuoAw7R3lG9ACnA3TRrmrKg/6wX81h35ng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b0rf3vLD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CZ6KVInD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E903CC4AF0D;
-	Mon, 12 Aug 2024 16:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b0rf3vLD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC00C4AF13;
+	Mon, 12 Aug 2024 16:12:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479172;
-	bh=xuGsr/emB0M/6tBS9jCdKr+aD5i52gjtOeLiL9GJcQQ=;
+	s=korg; t=1723479175;
+	bh=HZ7raxPvS104GvbAT9C31995WnzUJklLjhqpVJZFvjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZ6KVInDi9TReFVJmkH0AaDQUvQON4o/cIZuOvlqsj0YQEFk2Do+D7/H4fsJ0didU
-	 TujbJTOUrFvZLZ8m/b1kE+ukifiFJflnAruCSdj20Qplu865zWuA/n/TPAzTPFoYM7
-	 lQRVyXpD/XEeI/1cI5ZTVJPpJov4845XkndYH7Ts=
+	b=b0rf3vLD3UTgmqfJqgONmLgMj8rxiFIOcDfcOmvgyQaOeFgTPh92Ok8dGqIhnimRs
+	 wPxaAmeTAV7Zk4MA4+XoiWe7CnUVSSWgTYI68y1VSbZmO4L+IBFw7xcoHaYvjUEaK1
+	 SlYSQqB0LPIc2o+P5YxthLYiyL2JeizzOxe6lQMc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang.tang@suse.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.1 130/150] mptcp: export local_address
-Date: Mon, 12 Aug 2024 18:03:31 +0200
-Message-ID: <20240812160130.183393088@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 131/150] mptcp: pm: fix backup support in signal endpoints
+Date: Mon, 12 Aug 2024 18:03:32 +0200
+Message-ID: <20240812160130.222231717@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -53,105 +51,156 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit dc886bce753cc2cf3c88ec5c7a6880a4e17d65ba upstream.
+commit 6834097fc38c5416701c793da94558cea49c0a1f upstream.
 
-Rename local_address() with "mptcp_" prefix and export it in protocol.h.
+There was a support for signal endpoints, but only when the endpoint's
+flag was changed during a connection. If an endpoint with the signal and
+backup was already present, the MP_JOIN reply was not containing the
+backup flag as expected.
 
-This function will be re-used in the common PM code (pm.c) in the
-following commit.
+That's confusing to have this inconsistent behaviour. On the other hand,
+the infrastructure to set the backup flag in the SYN + ACK + MP_JOIN was
+already there, it was just never set before. Now when requesting the
+local ID from the path-manager, the backup status is also requested.
 
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 6834097fc38c ("mptcp: pm: fix backup support in signal endpoints")
+Note that when the userspace PM is used, the backup flag can be set if
+the local address was already used before with a backup flag, e.g. if
+the address was announced with the 'backup' flag, or a subflow was
+created with the 'backup' flag.
+
+Fixes: 4596a2c1b7f5 ("mptcp: allow creating non-backup subflows")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/507
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ Conflicts in pm_userspace.c because the context has changed in commit
+  1e07938e29c5 ("net: mptcp: rename netlink handlers to
+  mptcp_pm_nl_<blah>_{doit,dumpit}") which is not in this version. This
+  commit is unrelated to this modification.
+  Conflicts in protocol.h because the context has changed in commit
+  9ae7846c4b6b ("mptcp: dump addrs in userspace pm list") which is not
+  in this version. This commit is unrelated to this modification.
+  Conflicts in pm.c because the context has changed in commit
+  f40be0db0b76 ("mptcp: unify pm get_flags_and_ifindex_by_id") which is
+  not in this version. This commit is unrelated to this modification. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   17 ++++++++---------
- net/mptcp/protocol.h   |    1 +
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ net/mptcp/pm.c           |   12 ++++++++++++
+ net/mptcp/pm_netlink.c   |   18 ++++++++++++++++++
+ net/mptcp/pm_userspace.c |   18 ++++++++++++++++++
+ net/mptcp/protocol.h     |    3 +++
+ net/mptcp/subflow.c      |    3 +++
+ 5 files changed, 54 insertions(+)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -86,8 +86,7 @@ bool mptcp_addresses_equal(const struct
- 	return a->port == b->port;
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -416,6 +416,18 @@ int mptcp_pm_get_local_id(struct mptcp_s
+ 	return mptcp_pm_nl_get_local_id(msk, skc);
  }
  
--static void local_address(const struct sock_common *skc,
--			  struct mptcp_addr_info *addr)
-+void mptcp_local_address(const struct sock_common *skc, struct mptcp_addr_info *addr)
- {
- 	addr->family = skc->skc_family;
- 	addr->port = htons(skc->skc_num);
-@@ -122,7 +121,7 @@ static bool lookup_subflow_by_saddr(cons
- 	list_for_each_entry(subflow, list, node) {
- 		skc = (struct sock_common *)mptcp_subflow_tcp_sock(subflow);
- 
--		local_address(skc, &cur);
-+		mptcp_local_address(skc, &cur);
- 		if (mptcp_addresses_equal(&cur, saddr, saddr->port))
- 			return true;
- 	}
-@@ -274,7 +273,7 @@ bool mptcp_pm_sport_in_anno_list(struct
- 	struct mptcp_addr_info saddr;
- 	bool ret = false;
- 
--	local_address((struct sock_common *)sk, &saddr);
-+	mptcp_local_address((struct sock_common *)sk, &saddr);
- 
- 	spin_lock_bh(&msk->pm.lock);
- 	list_for_each_entry(entry, &msk->pm.anno_list, list) {
-@@ -545,7 +544,7 @@ static void mptcp_pm_create_subflow_or_s
- 		struct mptcp_addr_info mpc_addr;
- 		bool backup = false;
- 
--		local_address((struct sock_common *)msk->first, &mpc_addr);
-+		mptcp_local_address((struct sock_common *)msk->first, &mpc_addr);
- 		rcu_read_lock();
- 		entry = __lookup_addr(pernet, &mpc_addr, false);
- 		if (entry) {
-@@ -753,7 +752,7 @@ int mptcp_pm_nl_mp_prio_send_ack(struct
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 		struct mptcp_addr_info local, remote;
- 
--		local_address((struct sock_common *)ssk, &local);
-+		mptcp_local_address((struct sock_common *)ssk, &local);
- 		if (!mptcp_addresses_equal(&local, addr, addr->port))
- 			continue;
- 
-@@ -1072,8 +1071,8 @@ int mptcp_pm_nl_get_local_id(struct mptc
- 	/* The 0 ID mapping is defined by the first subflow, copied into the msk
- 	 * addr
- 	 */
--	local_address((struct sock_common *)msk, &msk_local);
--	local_address((struct sock_common *)skc, &skc_local);
-+	mptcp_local_address((struct sock_common *)msk, &msk_local);
++bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc)
++{
++	struct mptcp_addr_info skc_local;
++
 +	mptcp_local_address((struct sock_common *)skc, &skc_local);
- 	if (mptcp_addresses_equal(&msk_local, &skc_local, false))
- 		return 0;
++
++	if (mptcp_pm_is_userspace(msk))
++		return mptcp_userspace_pm_is_backup(msk, &skc_local);
++
++	return mptcp_pm_nl_is_backup(msk, &skc_local);
++}
++
+ void mptcp_pm_subflow_chk_stale(const struct mptcp_sock *msk, struct sock *ssk)
+ {
+ 	struct mptcp_subflow_context *subflow = mptcp_subflow_ctx(ssk);
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1110,6 +1110,24 @@ int mptcp_pm_nl_get_local_id(struct mptc
+ 	return ret;
+ }
  
-@@ -1507,7 +1506,7 @@ static int mptcp_nl_remove_id_zero_addre
- 		if (list_empty(&msk->conn_list) || mptcp_pm_is_userspace(msk))
- 			goto next;
++bool mptcp_pm_nl_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc)
++{
++	struct pm_nl_pernet *pernet = pm_nl_get_pernet_from_msk(msk);
++	struct mptcp_pm_addr_entry *entry;
++	bool backup = false;
++
++	rcu_read_lock();
++	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
++		if (mptcp_addresses_equal(&entry->addr, skc, entry->addr.port)) {
++			backup = !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
++			break;
++		}
++	}
++	rcu_read_unlock();
++
++	return backup;
++}
++
+ #define MPTCP_PM_CMD_GRP_OFFSET       0
+ #define MPTCP_PM_EV_GRP_OFFSET        1
  
--		local_address((struct sock_common *)msk, &msk_local);
-+		mptcp_local_address((struct sock_common *)msk, &msk_local);
- 		if (!mptcp_addresses_equal(&msk_local, addr, addr->port))
- 			goto next;
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -159,6 +159,24 @@ int mptcp_userspace_pm_get_local_id(stru
+ 	return mptcp_userspace_pm_append_new_local_addr(msk, &new_entry, true);
+ }
  
++bool mptcp_userspace_pm_is_backup(struct mptcp_sock *msk,
++				  struct mptcp_addr_info *skc)
++{
++	struct mptcp_pm_addr_entry *entry;
++	bool backup = false;
++
++	spin_lock_bh(&msk->pm.lock);
++	list_for_each_entry(entry, &msk->pm.userspace_pm_local_addr_list, list) {
++		if (mptcp_addresses_equal(&entry->addr, skc, false)) {
++			backup = !!(entry->flags & MPTCP_PM_ADDR_FLAG_BACKUP);
++			break;
++		}
++	}
++	spin_unlock_bh(&msk->pm.lock);
++
++	return backup;
++}
++
+ int mptcp_nl_cmd_announce(struct sk_buff *skb, struct genl_info *info)
+ {
+ 	struct nlattr *token = info->attrs[MPTCP_PM_ATTR_TOKEN];
 --- a/net/mptcp/protocol.h
 +++ b/net/mptcp/protocol.h
-@@ -618,6 +618,7 @@ void __mptcp_unaccepted_force_close(stru
+@@ -913,6 +913,9 @@ bool mptcp_pm_rm_addr_signal(struct mptc
+ 			     struct mptcp_rm_list *rm_list);
+ int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
+ int mptcp_userspace_pm_get_local_id(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
++bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc);
++bool mptcp_pm_nl_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
++bool mptcp_userspace_pm_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
  
- bool mptcp_addresses_equal(const struct mptcp_addr_info *a,
- 			   const struct mptcp_addr_info *b, bool use_port);
-+void mptcp_local_address(const struct sock_common *skc, struct mptcp_addr_info *addr);
+ static inline u8 subflow_get_local_id(const struct mptcp_subflow_context *subflow)
+ {
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -99,6 +99,7 @@ static struct mptcp_sock *subflow_token_
+ 		return NULL;
+ 	}
+ 	subflow_req->local_id = local_id;
++	subflow_req->request_bkup = mptcp_pm_is_backup(msk, (struct sock_common *)req);
  
- /* called with sk socket lock held */
- int __mptcp_subflow_connect(struct sock *sk, const struct mptcp_addr_info *loc,
+ 	return msk;
+ }
+@@ -513,6 +514,8 @@ static int subflow_chk_local_id(struct s
+ 		return err;
+ 
+ 	subflow_set_local_id(subflow, err);
++	subflow->request_bkup = mptcp_pm_is_backup(msk, (struct sock_common *)sk);
++
+ 	return 0;
+ }
+ 
 
 
