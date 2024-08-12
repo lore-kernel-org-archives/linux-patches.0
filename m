@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE9491494B8;
-	Mon, 12 Aug 2024 16:34:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296D11494B8;
+	Mon, 12 Aug 2024 16:34:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480480; cv=none; b=o0+LMTetLkGKe4QlBLeoV3cb4GH2V6gxx+hGhzhNlzMzB210iajPYuZtQ9VLcR0USYaEU7/3HppicZDcfDqwxbW6VMMDtXyXaVbWuZq3sK6moxgZpzj3D7ktg/0a+Rspie4jpdyd8jRd/7zYVzCN4F8/gWHKxzmE+CedDq1bPY8=
+	t=1723480483; cv=none; b=P4/rTgTfSwpXxWREUS6YWZQl3bpTK+pQQLHMouG7jSFW/wvzN8tGemiDmwLuzQVdbllqfCcx+5EaA4Pte44+CVNpfQo3V3i19koP9GivrODZ52Ti7kJ9UzEcfm4fv2Qg9AxhyGqx+iIJK5lVeozoZMnbPiL+nBq9B87hDr2cU/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480480; c=relaxed/simple;
-	bh=WTgMTUymh3upxdbBQZV+KBc8PYbDkj4xu97Bfb3PakA=;
+	s=arc-20240116; t=1723480483; c=relaxed/simple;
+	bh=PcRKuyTzRfawKDyuslEQLWo3480NWxUbl7xwDN2vkCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2bCiSLNAS8dFLUus5E3BAOVNdlEKJBK74txF62a7mMsmEsshWtnCIOWepoKJH5dlbU+NPpl8plHbto4WNzwiob881UZhnv5r9ay4buNVVxtSIoCgAm5iIiOpRI9t6DIRQlHptuD1sHjEyRALHPf7fk+A22/LCC4SqkJqQ+XsQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4ciFmy9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E4iuqKc+EJw4j+2L4qSChMmCli8POYiHnah/yev+7v5BIaakibmz5314z0Nti67y+JNk3WYocsAG0L1PoCzw2nJWw+4kjqWmL/SrUSyBpKMvXkLtW/asOHBlKTBRaqvWWMPsAAsfTcXBeU4s8xTsS5VZmn7OuoIsyHQ+rGgnjkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZyeTQoBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4ciFmy9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758C1C32782;
-	Mon, 12 Aug 2024 16:34:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZyeTQoBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2A6C32782;
+	Mon, 12 Aug 2024 16:34:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480479;
-	bh=WTgMTUymh3upxdbBQZV+KBc8PYbDkj4xu97Bfb3PakA=;
+	s=korg; t=1723480483;
+	bh=PcRKuyTzRfawKDyuslEQLWo3480NWxUbl7xwDN2vkCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4ciFmy9hsBwmExz8GaQtrPKdf7RBlncaeApUzj1Lwvjdya2u7Pd9zWoa7dig+WTr
-	 DXZtb/1xmSKRZ/P6HOOVLf0oOhXm166NYrzrc8QYfBSactzq/oAfQgHgYaM/S96u65
-	 1krEV8eU5kxkQGhRfXKGGRwf7NjTEDv9VWtunSFE=
+	b=ZyeTQoBi6D2fAYfGhPmz4//Nkc9N8OkYRZfhrb2mYUCw29eWQzsH446Foe5LnWixl
+	 k2sZF/g7nzQndQO3xdPSVzv7K0ZHivnY8W4II6E8j/i1cdMcXjV8mh8K0rDTmjD0ue
+	 aFH0jqbhLRkVNJKIoClCwXpv2TSYcGnr08FP8gHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.10 208/263] timekeeping: Fix bogus clock_was_set() invocation in do_adjtimex()
-Date: Mon, 12 Aug 2024 18:03:29 +0200
-Message-ID: <20240812160154.510303023@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	George Kennedy <george.kennedy@oracle.com>
+Subject: [PATCH 6.10 209/263] serial: core: check uartclk for zero to avoid divide by zero
+Date: Mon, 12 Aug 2024 18:03:30 +0200
+Message-ID: <20240812160154.546982918@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -49,40 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: George Kennedy <george.kennedy@oracle.com>
 
-commit 5916be8a53de6401871bdd953f6c60237b47d6d3 upstream.
+commit 6eabce6608d6f3440f4c03aa3d3ef50a47a3d193 upstream.
 
-The addition of the bases argument to clock_was_set() fixed up all call
-sites correctly except for do_adjtimex(). This uses CLOCK_REALTIME
-instead of CLOCK_SET_WALL as argument. CLOCK_REALTIME is 0.
+Calling ioctl TIOCSSERIAL with an invalid baud_base can
+result in uartclk being zero, which will result in a
+divide by zero error in uart_get_divisor(). The check for
+uartclk being zero in uart_set_info() needs to be done
+before other settings are made as subsequent calls to
+ioctl TIOCSSERIAL for the same port would be impacted if
+the uartclk check was done where uartclk gets set.
 
-As a result the effect of that clock_was_set() notification is incomplete
-and might result in timers expiring late because the hrtimer code does
-not re-evaluate the affected clock bases.
+Oops: divide error: 0000  PREEMPT SMP KASAN PTI
+RIP: 0010:uart_get_divisor (drivers/tty/serial/serial_core.c:580)
+Call Trace:
+ <TASK>
+serial8250_get_divisor (drivers/tty/serial/8250/8250_port.c:2576
+    drivers/tty/serial/8250/8250_port.c:2589)
+serial8250_do_set_termios (drivers/tty/serial/8250/8250_port.c:502
+    drivers/tty/serial/8250/8250_port.c:2741)
+serial8250_set_termios (drivers/tty/serial/8250/8250_port.c:2862)
+uart_change_line_settings (./include/linux/spinlock.h:376
+    ./include/linux/serial_core.h:608 drivers/tty/serial/serial_core.c:222)
+uart_port_startup (drivers/tty/serial/serial_core.c:342)
+uart_startup (drivers/tty/serial/serial_core.c:368)
+uart_set_info (drivers/tty/serial/serial_core.c:1034)
+uart_set_info_user (drivers/tty/serial/serial_core.c:1059)
+tty_set_serial (drivers/tty/tty_io.c:2637)
+tty_ioctl (drivers/tty/tty_io.c:2647 drivers/tty/tty_io.c:2791)
+__x64_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:907
+    fs/ioctl.c:893 fs/ioctl.c:893)
+do_syscall_64 (arch/x86/entry/common.c:52
+    (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
+entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
 
-Use CLOCK_SET_WALL instead of CLOCK_REALTIME to tell the hrtimers code
-which clock bases need to be re-evaluated.
-
-Fixes: 17a1b8826b45 ("hrtimer: Add bases argument to clock_was_set()")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reported-by: syzkaller <syzkaller@googlegroups.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/877ccx7igo.ffs@tglx
+Signed-off-by: George Kennedy <george.kennedy@oracle.com>
+Rule: add
+Link: https://lore.kernel.org/stable/1721148848-9784-1-git-send-email-george.kennedy%40oracle.com
+Link: https://lore.kernel.org/r/1721219078-3209-1-git-send-email-george.kennedy@oracle.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timekeeping.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/serial_core.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -2479,7 +2479,7 @@ int do_adjtimex(struct __kernel_timex *t
- 		clock_set |= timekeeping_advance(TK_ADV_FREQ);
+--- a/drivers/tty/serial/serial_core.c
++++ b/drivers/tty/serial/serial_core.c
+@@ -881,6 +881,14 @@ static int uart_set_info(struct tty_stru
+ 	new_flags = (__force upf_t)new_info->flags;
+ 	old_custom_divisor = uport->custom_divisor;
  
- 	if (clock_set)
--		clock_was_set(CLOCK_REALTIME);
-+		clock_was_set(CLOCK_SET_WALL);
- 
- 	ntp_notify_cmos_timer();
- 
++	if (!(uport->flags & UPF_FIXED_PORT)) {
++		unsigned int uartclk = new_info->baud_base * 16;
++		/* check needs to be done here before other settings made */
++		if (uartclk == 0) {
++			retval = -EINVAL;
++			goto exit;
++		}
++	}
+ 	if (!capable(CAP_SYS_ADMIN)) {
+ 		retval = -EPERM;
+ 		if (change_irq || change_port ||
 
 
