@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E73A187563;
-	Mon, 12 Aug 2024 16:17:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC261494B8;
+	Mon, 12 Aug 2024 16:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479467; cv=none; b=IgSxrH3FdEtRzXodgHC7FttgtGSWY+lAV2KAPh4Koz23vB0qtAwMYvZQAk5rzlzweCSoeh1Iac0XkD7OEyg6o+1+14D0+e6DWXxTntnIC6ycupaI/DOkaGRiM7si5XuKk8vB1SQjDCjrzB4CmGC+ho4AbfBZz5BbH3DrL+RlVWk=
+	t=1723479470; cv=none; b=HbnW57VJ/GkoxcHk2zTD148M+w43zENbCakOPtX+GFhv1aSmS9dzXjkOzgX5j14mp6OkMLqom8leSVvBrzsxYZCXTbgWslBmAbkffA7wwasX1BMTPssWGjaKurydM8rLpAyCH8dmpA87zFnJm7Ua1ja8TnVoPulFZyexjR1JmDE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479467; c=relaxed/simple;
-	bh=kEx+opdeWDHwzk32oOEaais05MOl6Zze3Leyh5a+R2A=;
+	s=arc-20240116; t=1723479470; c=relaxed/simple;
+	bh=ldsHjqy9q34qglYRCeSHxCFvnmlpH2ZHXbtCljXuqBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TWn0CuiViraBHhlJYzinGAwyshNVjJxYBH7rbdFK9pckZ0fRhOkf3lbslwmFtBL4+ILCpA8GD/iNCILk13V/8x7jPHD4XPR49EvQUl2+Yz1BHT7S5TTBFD2WV8N3g2gIs6cFfgkGPnhTYeJ54/OgraqbcZeHyX1J0Q7WRGS9Gak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IBafokKX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jQwnJnViGb5cw29Obvo3QNfClsYgcivZj46CYA65Pt2Tm3vmEARQwJRj3/G6RSoXjdxeQ+FQ7x4uQpQDMyUPFNtKboNnKS138g9bcecSxcYsGl9OXK2CGOIZvmsgdpL41MKkn7LDxbPVK1GyFku0IqCpzn6N3YJO6xC58+4chYQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BjMOLcop; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IBafokKX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480E4C32782;
-	Mon, 12 Aug 2024 16:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BjMOLcop"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994E6C32782;
+	Mon, 12 Aug 2024 16:17:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479466;
-	bh=kEx+opdeWDHwzk32oOEaais05MOl6Zze3Leyh5a+R2A=;
+	s=korg; t=1723479470;
+	bh=ldsHjqy9q34qglYRCeSHxCFvnmlpH2ZHXbtCljXuqBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IBafokKXVjiozTQVWPXhyqcgmKVZxFYvwH5EWUr3M0rjJIX/G8hyJFPwvudj3M3cL
-	 2/l7/OSQoKQAR0U6hLyZKBuuqZwBzuoWJLbVcsrZn7vkYr4F3rWHwbj901pmzrmuZL
-	 MCmgrt4GsTSl8RUcJjGmRL5FWwJvmvDh3DbfTFbo=
+	b=BjMOLcopPAHKtGPmiFFKv1FvsB++rcX5rjUmyvbxzbkNxwOVHiPKjJTlccCEOCpcM
+	 wS0D/rHLWmA782DG8ugk2tpYvb6U3FJsOA8gJ2W5t7dRjJ98s7vdfr1plAYSnaoV5X
+	 CRDvUhmLQok57JSx08cnyD5bpAB6a1CwhF7meaQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 065/189] jbd2: avoid memleak in jbd2_journal_write_metadata_buffer
-Date: Mon, 12 Aug 2024 18:02:01 +0200
-Message-ID: <20240812160134.645167320@linuxfoundation.org>
+Subject: [PATCH 6.6 066/189] s390/sclp: Prevent release of buffer in I/O
+Date: Mon, 12 Aug 2024 18:02:02 +0200
+Message-ID: <20240812160134.683941500@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -53,35 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kemeng Shi <shikemeng@huaweicloud.com>
+From: Peter Oberparleiter <oberpar@linux.ibm.com>
 
-[ Upstream commit cc102aa24638b90e04364d64e4f58a1fa91a1976 ]
+[ Upstream commit bf365071ea92b9579d5a272679b74052a5643e35 ]
 
-The new_bh is from alloc_buffer_head, we should call free_buffer_head to
-free it in error case.
+When a task waiting for completion of a Store Data operation is
+interrupted, an attempt is made to halt this operation. If this attempt
+fails due to a hardware or firmware problem, there is a chance that the
+SCLP facility might store data into buffers referenced by the original
+operation at a later time.
 
-Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240514112438.1269037-2-shikemeng@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Handle this situation by not releasing the referenced data buffers if
+the halt attempt fails. For current use cases, this might result in a
+leak of few pages of memory in case of a rare hardware/firmware
+malfunction.
+
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/journal.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/s390/char/sclp_sd.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
-index 0168d28427077..57264eb4d9da3 100644
---- a/fs/jbd2/journal.c
-+++ b/fs/jbd2/journal.c
-@@ -399,6 +399,7 @@ int jbd2_journal_write_metadata_buffer(transaction_t *transaction,
- 		tmp = jbd2_alloc(bh_in->b_size, GFP_NOFS);
- 		if (!tmp) {
- 			brelse(new_bh);
-+			free_buffer_head(new_bh);
- 			return -ENOMEM;
- 		}
- 		spin_lock(&jh_in->b_state_lock);
+diff --git a/drivers/s390/char/sclp_sd.c b/drivers/s390/char/sclp_sd.c
+index f9e164be7568f..944e75beb160c 100644
+--- a/drivers/s390/char/sclp_sd.c
++++ b/drivers/s390/char/sclp_sd.c
+@@ -320,8 +320,14 @@ static int sclp_sd_store_data(struct sclp_sd_data *result, u8 di)
+ 			  &esize);
+ 	if (rc) {
+ 		/* Cancel running request if interrupted */
+-		if (rc == -ERESTARTSYS)
+-			sclp_sd_sync(page, SD_EQ_HALT, di, 0, 0, NULL, NULL);
++		if (rc == -ERESTARTSYS) {
++			if (sclp_sd_sync(page, SD_EQ_HALT, di, 0, 0, NULL, NULL)) {
++				pr_warn("Could not stop Store Data request - leaking at least %zu bytes\n",
++					(size_t)dsize * PAGE_SIZE);
++				data = NULL;
++				asce = 0;
++			}
++		}
+ 		vfree(data);
+ 		goto out;
+ 	}
 -- 
 2.43.0
 
