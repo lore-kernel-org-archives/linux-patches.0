@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B393183CA6;
-	Mon, 12 Aug 2024 16:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A936183CA6;
+	Mon, 12 Aug 2024 16:22:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479751; cv=none; b=fIwvDGwbHAD9TC3JDrcjhFsH6mNTLtQ/PqsGJwqYi3di4b1YiPzcWwt1Uj4QtAVunrvKmJE2pdopgemKPVZvJPX8DIbMUqEgZoi1KyrSr/Nf6U2M8C0ggRRMJfZQvJFZNUcizqnUDilhosA+qwdlatwzGU0Fn+RGB8mG+zCPYuI=
+	t=1723479754; cv=none; b=sbwrTU+4aQF5/lDuAfHJ0ygM4Z6pe9E3IgZ+gV01O5BmA49bm+6zaF8f4H3i76nREoGfp8AKHFJ70tRmGwvSRpfujB8VStMxyIZHysJcK7h+yOowKEBryK/1t2zXaoUpu7MN/dko0aPfuCv7cfdDhyavXftL6pNzbNzTnbhM+m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479751; c=relaxed/simple;
-	bh=oqr1o1Rk+kkLIjss6GWEzeCQStU1rJEK4hScVEtdBdc=;
+	s=arc-20240116; t=1723479754; c=relaxed/simple;
+	bh=is3FBxTYkS7FSRoD9NtlavL7FHATqKP6Z3/mIzF2hoI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DhHLUlI0JZwJf1yO/0qEIT+mxPiRWlaRMMFiHKg3mJI5zQkN7j8QgIJ5naGYi5F34aYSvKha0U88JikLccOovzSiUSO0CvpwjLbn4sthYqvp9L8G6z0fLHy24wUrCj8WAwhe4T5B198Y8js/TqMX2AB/HBkxe6em8JVwluEJCbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2FIrf+Gp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JOLBD1SzjSzk1/63MSqoCYhca8lYY6y7T49SU14qGGgEvYdB9aESkaMhwa9TXCzlZ8Ud8Rb1EVGMBc4tEVYXbJQ78VsIVjJohyxtpb4pss6yoc0WTEf+vPUKTwbsVWWEGNEtpXENpX2ZKbCROfHXvNFmV+pX99Hd0Op5oqEWxCo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CeJH5paP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2FIrf+Gp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E25CC32782;
-	Mon, 12 Aug 2024 16:22:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CeJH5paP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D228AC32782;
+	Mon, 12 Aug 2024 16:22:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479751;
-	bh=oqr1o1Rk+kkLIjss6GWEzeCQStU1rJEK4hScVEtdBdc=;
+	s=korg; t=1723479754;
+	bh=is3FBxTYkS7FSRoD9NtlavL7FHATqKP6Z3/mIzF2hoI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FIrf+GpsqZM1JJ2/StQ54OilIi8VZHlXdqfqBKVp4NXZGwnDs24LWjjpc/aipzsk
-	 xrwSFulTtNoDM5y/r0x34HpOHuk/JwAjZCHNGYvJYwnbyNCNnhRq/VOEy7LYK2bAz5
-	 gRdgTaDaRTf1PKAjRLeO2VwEJcjXyhfffRpzJkCM=
+	b=CeJH5paP86zEDfBmZJlRs3mv1GdGKq2KvPLaQ0Ii8anwKq3FTn0wgskqmFvAMWfax
+	 eB82UFyrF8scjuoEMJAACjmM0+P4iSuZA4alPXBbAV7CSrQnnQVcU37f6F+iho9G9a
+	 EdKWSq7noKPGXO7Bf43tweDbHE3AeEF1GfT/RpEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Danilo Krummrich <dakr@redhat.com>,
-	Dave Airlie <airlied@redhat.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.6 180/189] nouveau: set placement to original placement on uvmm validate.
-Date: Mon, 12 Aug 2024 18:03:56 +0200
-Message-ID: <20240812160139.074719796@linuxfoundation.org>
+	Sam Sun <samsun1006219@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Brian Foster <bfoster@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Chandan Babu R <chandanbabu@kernel.org>,
+	Kevin Berry <kpberry@google.com>
+Subject: [PATCH 6.6 181/189] xfs: fix log recovery buffer allocation for the legacy h_size fixup
+Date: Mon, 12 Aug 2024 18:03:57 +0200
+Message-ID: <20240812160139.116618882@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,51 +54,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dave Airlie <airlied@redhat.com>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 9c685f61722d30a22d55bb8a48f7a48bb2e19bcc upstream.
+commit 45cf976008ddef4a9c9a30310c9b4fb2a9a6602a upstream.
 
-When a buffer is evicted for memory pressure or TTM evict all,
-the placement is set to the eviction domain, this means the
-buffer never gets revalidated on the next exec to the correct domain.
+Commit a70f9fe52daa ("xfs: detect and handle invalid iclog size set by
+mkfs") added a fixup for incorrect h_size values used for the initial
+umount record in old xfsprogs versions.  Later commit 0c771b99d6c9
+("xfs: clean up calculation of LR header blocks") cleaned up the log
+reover buffer calculation, but stoped using the fixed up h_size value
+to size the log recovery buffer, which can lead to an out of bounds
+access when the incorrect h_size does not come from the old mkfs
+tool, but a fuzzer.
 
-I think this should be fine to use the initial domain from the
-object creation, as least with VM_BIND this won't change after
-init so this should be the correct answer.
+Fix this by open coding xlog_logrec_hblks and taking the fixed h_size
+into account for this calculation.
 
-Fixes: b88baab82871 ("drm/nouveau: implement new VM_BIND uAPI")
-Cc: Danilo Krummrich <dakr@redhat.com>
-Cc: <stable@vger.kernel.org> # v6.6
-Signed-off-by: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240515025542.2156774-1-airlied@gmail.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Fixes: 0c771b99d6c9 ("xfs: clean up calculation of LR header blocks")
+Reported-by: Sam Sun <samsun1006219@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
+Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
+Signed-off-by: Kevin Berry <kpberry@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/nouveau/nouveau_uvmm.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_log_recover.c |   20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-+++ b/drivers/gpu/drm/nouveau/nouveau_uvmm.c
-@@ -1320,6 +1320,7 @@ nouveau_uvmm_bind_job_submit(struct nouv
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -2965,7 +2965,7 @@ xlog_do_recovery_pass(
+ 	int			error = 0, h_size, h_len;
+ 	int			error2 = 0;
+ 	int			bblks, split_bblks;
+-	int			hblks, split_hblks, wrapped_hblks;
++	int			hblks = 1, split_hblks, wrapped_hblks;
+ 	int			i;
+ 	struct hlist_head	rhash[XLOG_RHASH_SIZE];
+ 	LIST_HEAD		(buffer_list);
+@@ -3021,14 +3021,22 @@ xlog_do_recovery_pass(
+ 		if (error)
+ 			goto bread_err1;
  
- 		drm_gpuva_for_each_op(va_op, op->ops) {
- 			struct drm_gem_object *obj = op_gem_obj(va_op);
-+			struct nouveau_bo *nvbo;
- 
- 			if (unlikely(!obj))
- 				continue;
-@@ -1330,8 +1331,9 @@ nouveau_uvmm_bind_job_submit(struct nouv
- 			if (unlikely(va_op->op == DRM_GPUVA_OP_UNMAP))
- 				continue;
- 
--			ret = nouveau_bo_validate(nouveau_gem_object(obj),
--						  true, false);
-+			nvbo = nouveau_gem_object(obj);
-+			nouveau_bo_placement_set(nvbo, nvbo->valid_domains, 0);
-+			ret = nouveau_bo_validate(nvbo, true, false);
- 			if (ret) {
- 				op = list_last_op(&bind_job->ops);
- 				goto unwind;
+-		hblks = xlog_logrec_hblks(log, rhead);
+-		if (hblks != 1) {
+-			kmem_free(hbp);
+-			hbp = xlog_alloc_buffer(log, hblks);
++		/*
++		 * This open codes xlog_logrec_hblks so that we can reuse the
++		 * fixed up h_size value calculated above.  Without that we'd
++		 * still allocate the buffer based on the incorrect on-disk
++		 * size.
++		 */
++		if (h_size > XLOG_HEADER_CYCLE_SIZE &&
++		    (rhead->h_version & cpu_to_be32(XLOG_VERSION_2))) {
++			hblks = DIV_ROUND_UP(h_size, XLOG_HEADER_CYCLE_SIZE);
++			if (hblks > 1) {
++				kmem_free(hbp);
++				hbp = xlog_alloc_buffer(log, hblks);
++			}
+ 		}
+ 	} else {
+ 		ASSERT(log->l_sectBBsize == 1);
+-		hblks = 1;
+ 		hbp = xlog_alloc_buffer(log, 1);
+ 		h_size = XLOG_BIG_RECORD_BSIZE;
+ 	}
 
 
