@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B45716D9B8;
-	Mon, 12 Aug 2024 16:35:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6F7187324;
+	Mon, 12 Aug 2024 16:35:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480555; cv=none; b=GbhxuH4kteEPujZm7aCsG/PM/xtcOuPK/yqSpWUUPeOAWtcfLPCXApVinAJ2bk6ZCcMyQVynyJcF82Rdp9rDWFWBYqbq3lGczm+GlTBW+ebkyOsAt+meKN7YAC4mmhJOUF2BCyXCO26vre5rjTudHKfwACLTmXPHcy9qS19vbFY=
+	t=1723480558; cv=none; b=llm7+hv9tFJnK206Bn0nM/7D4AltpA6MSoktqtoiwh4BOKICHDKNyg6t/LYIySlft6NIBTRv9gUSFlR55uFxhY5aEdo/HxSFSYLAtTUttAi63amfENBZluqWBnehuwr56WKtZwZ773XRe8qkbTE+0bM4cturjBratOjs+UBUmRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480555; c=relaxed/simple;
-	bh=lQhqu+oIAYP3Q5rwrbSV2lYMLPJQzXyc73qW5X/GUWc=;
+	s=arc-20240116; t=1723480558; c=relaxed/simple;
+	bh=SvVcrLoF/5Oh248bZaKp3nxBAi+iOhV9f4lCs9Cl89k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dgef3Ia9uKCwXQMhg/daMWMfjipbYnrJvYHBUtbgX/LC7FbqBCYpCW485IGT+hZgJcAGUEqiKuhZpdMx0qVDO3Vuf/hiVDooHsGbNDmPuRdpl58wFK1AZgeFJS96BLiMKmamdmD2UvSi/fCyID00gRXpWC+esBCnrLLAIIYh0QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qvb//xDD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bBChbLN+gn58Zej0IY+PYk+J22NxuQ9QHIu6Ajru20midks/kMpUfdIknm4qRK+XEUHhu5KqXOFztLO2eXcW07eZYRJV47rMsLo+cNZjKP/pOj69+DdKUu5eXoAwRjRqvkuZj/x5GbpS03YbryPfbr61yL1ZyTIMJf59f3xj/rQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H4AeApCy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qvb//xDD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D16C32782;
-	Mon, 12 Aug 2024 16:35:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H4AeApCy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2E5BC32782;
+	Mon, 12 Aug 2024 16:35:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480554;
-	bh=lQhqu+oIAYP3Q5rwrbSV2lYMLPJQzXyc73qW5X/GUWc=;
+	s=korg; t=1723480558;
+	bh=SvVcrLoF/5Oh248bZaKp3nxBAi+iOhV9f4lCs9Cl89k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvb//xDDGRG7iKfxhZhVJ4G8g5qtm6wLnCPQJNbZeyCpBdEZ6C8jeDttFtLo73icL
-	 0kT8Ri3Dqp7TT+FuHOiA2BWZEjaT8go82KLcyweH5MuXifPPxuoBWqnmzgt7fNMnx8
-	 WRmbzk1vsqlSSq40jt6W2G6i/MxONC8KW3//t8wI=
+	b=H4AeApCyRscXQCuahTXNdtWEOPrCEqwXdQaBUGgOCe8rDvQQXzVY/imhNB7uX1FEE
+	 J2ugjgHHn4Jdg0EgwYeX8UyFrXLuW70fSVOUI+xoFrsqX802MRAy7SZhyegATkjTdb
+	 5xh3NwuqwL1wbxUNos2R5+WXV2392fgRc1F45twQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nico Pache <npache@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
-	Albert Ou <aou@eecs.berkeley.edu>,
-	Palmer Dabbelt <palmer@dabbelt.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Shuah Khan <shuah@kernel.org>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Nhat Pham <nphamcs@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.10 232/263] selftests: mm: add s390 to ARCH check
-Date: Mon, 12 Aug 2024 18:03:53 +0200
-Message-ID: <20240812160155.416483906@linuxfoundation.org>
+Subject: [PATCH 6.10 233/263] mm: list_lru: fix UAF for memory cgroup
+Date: Mon, 12 Aug 2024 18:03:54 +0200
+Message-ID: <20240812160155.454116053@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -55,46 +54,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nico Pache <npache@redhat.com>
+From: Muchun Song <songmuchun@bytedance.com>
 
-commit 30b651c8bc788c068a978dc760e9d5f824f7019e upstream.
+commit 5161b48712dcd08ec427c450399d4d1483e21dea upstream.
 
-commit 0518dbe97fe6 ("selftests/mm: fix cross compilation with LLVM")
-changed the env variable for the architecture from MACHINE to ARCH.
+The mem_cgroup_from_slab_obj() is supposed to be called under rcu lock or
+cgroup_mutex or others which could prevent returned memcg from being
+freed.  Fix it by adding missing rcu read lock.
 
-This is preventing 3 required TEST_GEN_FILES from being included when
-cross compiling s390x and errors when trying to run the test suite.  This
-is due to the ARCH variable already being set and the arch folder name
-being s390.
+Found by code inspection.
 
-Add "s390" to the filtered list to cover this case and have the 3 files
-included in the build.
-
-Link: https://lkml.kernel.org/r/20240724213517.23918-1-npache@redhat.com
-Fixes: 0518dbe97fe6 ("selftests/mm: fix cross compilation with LLVM")
-Signed-off-by: Nico Pache <npache@redhat.com>
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Albert Ou <aou@eecs.berkeley.edu>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Shuah Khan <shuah@kernel.org>
+[songmuchun@bytedance.com: only grab rcu lock when necessary, per Vlastimil]
+  Link: https://lkml.kernel.org/r/20240801024603.1865-1-songmuchun@bytedance.com
+Link: https://lkml.kernel.org/r/20240718083607.42068-1-songmuchun@bytedance.com
+Fixes: 0a97c01cd20b ("list_lru: allow explicit memcg and NUMA node selection")
+Signed-off-by: Muchun Song <songmuchun@bytedance.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Johannes Weiner <hannes@cmpxchg.org>
+Cc: Nhat Pham <nphamcs@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/mm/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/list_lru.c |   28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
---- a/tools/testing/selftests/mm/Makefile
-+++ b/tools/testing/selftests/mm/Makefile
-@@ -106,7 +106,7 @@ endif
+--- a/mm/list_lru.c
++++ b/mm/list_lru.c
+@@ -85,6 +85,7 @@ list_lru_from_memcg_idx(struct list_lru
+ }
+ #endif /* CONFIG_MEMCG_KMEM */
  
- endif
++/* The caller must ensure the memcg lifetime. */
+ bool list_lru_add(struct list_lru *lru, struct list_head *item, int nid,
+ 		    struct mem_cgroup *memcg)
+ {
+@@ -109,14 +110,22 @@ EXPORT_SYMBOL_GPL(list_lru_add);
  
--ifneq (,$(filter $(ARCH),arm64 ia64 mips64 parisc64 powerpc riscv64 s390x sparc64 x86_64))
-+ifneq (,$(filter $(ARCH),arm64 ia64 mips64 parisc64 powerpc riscv64 s390x sparc64 x86_64 s390))
- TEST_GEN_FILES += va_high_addr_switch
- TEST_GEN_FILES += virtual_address_range
- TEST_GEN_FILES += write_to_hugetlbfs
+ bool list_lru_add_obj(struct list_lru *lru, struct list_head *item)
+ {
++	bool ret;
+ 	int nid = page_to_nid(virt_to_page(item));
+-	struct mem_cgroup *memcg = list_lru_memcg_aware(lru) ?
+-		mem_cgroup_from_slab_obj(item) : NULL;
+ 
+-	return list_lru_add(lru, item, nid, memcg);
++	if (list_lru_memcg_aware(lru)) {
++		rcu_read_lock();
++		ret = list_lru_add(lru, item, nid, mem_cgroup_from_slab_obj(item));
++		rcu_read_unlock();
++	} else {
++		ret = list_lru_add(lru, item, nid, NULL);
++	}
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(list_lru_add_obj);
+ 
++/* The caller must ensure the memcg lifetime. */
+ bool list_lru_del(struct list_lru *lru, struct list_head *item, int nid,
+ 		    struct mem_cgroup *memcg)
+ {
+@@ -139,11 +148,18 @@ EXPORT_SYMBOL_GPL(list_lru_del);
+ 
+ bool list_lru_del_obj(struct list_lru *lru, struct list_head *item)
+ {
++	bool ret;
+ 	int nid = page_to_nid(virt_to_page(item));
+-	struct mem_cgroup *memcg = list_lru_memcg_aware(lru) ?
+-		mem_cgroup_from_slab_obj(item) : NULL;
+ 
+-	return list_lru_del(lru, item, nid, memcg);
++	if (list_lru_memcg_aware(lru)) {
++		rcu_read_lock();
++		ret = list_lru_del(lru, item, nid, mem_cgroup_from_slab_obj(item));
++		rcu_read_unlock();
++	} else {
++		ret = list_lru_del(lru, item, nid, NULL);
++	}
++
++	return ret;
+ }
+ EXPORT_SYMBOL_GPL(list_lru_del_obj);
+ 
 
 
