@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19493130E27;
-	Mon, 12 Aug 2024 16:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EEC130E27;
+	Mon, 12 Aug 2024 16:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479218; cv=none; b=CWoGVFMhsyULbBXo9aB0AY/LVnSyaMh7pYX/WTAGU0VRczY/9mGOK5ystclteWLkApQwx+m3l5NpD65cpDLc2Qqeda1DUrYPsFEBM6O1Lb6cmCEOzl4XmRi2rrkl7keCQ8tRtiR/F1lCh/SJNrt3ONqXSN7Lp38dw0+9nUQYvqc=
+	t=1723479221; cv=none; b=Xah4GBR9D4OX3tHaJNJYy091V2bsksnRNHPGeMUhZD2mphMmPoGWsglnzF3L7IMYpHGGmOVjJK/K1rcH25KtfXRApjO2zejZa2wY9Sf4mCJ14H3FtMImNU6aYy/9yoBdHfJLnfIv9El2pS94uVSKbgtUtarQmmSmu4LRhHZb35Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479218; c=relaxed/simple;
-	bh=rVMlWJJKlthGTqXNFQrxdA1dOtz0M9jH3qWPAbpTSqc=;
+	s=arc-20240116; t=1723479221; c=relaxed/simple;
+	bh=CYX5/52p5n8Wuhfig0DGe84oqkz7Vk2nBX/e4o9ri+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oypbEwkj8hINVhi1xzkF+99z9AtDBVKq/NmLBseUCEPZvQH3sZo/zlhMyVk6K4Q850Ie+bTdLeFvCvEmcaq/dvtu/nWJHklQqRVW1XnMHm3rw68A8umliby6jtnKgWRCkkfrtlxzMkjvv1SE2eYbSO6OTwm+6KUzfBI/dk/iDpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WOo85x43; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OU+fgIh4SxAWZMvtxF/okf+YJ7AjLuUw7qvEphKqewIhHpZhf+E0vdg55G+eUPEMGhRS96/PbOB53dPokvJAYVb9fvs9OgJlH6pSvQ2+pXcdcLFwH+bxO7L7pTIm/pbwcNm3nAkb5zCsy/DTROgfaKdkgkDXQSyYIAPCNyh1O5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEkyr/6k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WOo85x43"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAE0C32782;
-	Mon, 12 Aug 2024 16:13:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEkyr/6k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B56C32782;
+	Mon, 12 Aug 2024 16:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479218;
-	bh=rVMlWJJKlthGTqXNFQrxdA1dOtz0M9jH3qWPAbpTSqc=;
+	s=korg; t=1723479221;
+	bh=CYX5/52p5n8Wuhfig0DGe84oqkz7Vk2nBX/e4o9ri+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WOo85x43qSg2idVKLzHgDWUH0FBaMv28jTfV+Ea625qScWjHprOxdngEkRyFTUTyy
-	 AWJJHxpI4mK5SCsWjoonw/SjqbYqyMz7m9XNGRZsbPUhKDfv+gYWsfqA5QkeqLoN6H
-	 E/rbgi04E7aD6FelgfOs9aZjbaMQT68ITrFB6jv4=
+	b=kEkyr/6kdYQ6Q51yn3deUDVd30CbkBUN7rp5i/HP/i1mVUoEoGJA+sLom6ScD3Bxh
+	 q4QKx0d5RFJIksgjCT5xSN7jjpV0IsGcJ0iorXBTqSfqZfWyi/dtMBvxVQsY+DcLHY
+	 c+sRz2oQ4GAmHwWdZkBo4eBvgrhLyV7kkDFs7rZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jithu Joseph <jithu.joseph@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Pengfei Xu <pengfei.xu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 019/189] net/smc: add the max value of fallback reason count
-Date: Mon, 12 Aug 2024 18:01:15 +0200
-Message-ID: <20240812160132.883125362@linuxfoundation.org>
+Subject: [PATCH 6.6 002/189] platform/x86/intel/ifs: Store IFS generation number
+Date: Mon, 12 Aug 2024 18:00:58 +0200
+Message-ID: <20240812160132.233522780@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -47,46 +47,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Jithu Joseph <jithu.joseph@intel.com>
 
-[ Upstream commit d27a835f41d947f62e6a95e89ba523299c9e6437 ]
+[ Upstream commit 97a5e801b3045c1e800f76bc0fb544972538089d ]
 
-The number of fallback reasons defined in the smc_clc.h file has reached
-36. For historical reasons, some are no longer quoted, and there's 33
-actually in use. So, add the max value of fallback reason count to 36.
+IFS generation number is reported via MSR_INTEGRITY_CAPS.  As IFS
+support gets added to newer CPUs, some differences are expected during
+IFS image loading and test flows.
 
-Fixes: 6ac1e6563f59 ("net/smc: support smc v2.x features validate")
-Fixes: 7f0620b9940b ("net/smc: support max connections per lgr negotiation")
-Fixes: 69b888e3bb4b ("net/smc: support max links per lgr negotiation in clc handshake")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Link: https://patch.msgid.link/20240805043856.565677-1-shaozhengchao@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Define MSR bitmasks to extract and store the generation in driver data,
+so that driver can modify its MSR interaction appropriately.
+
+Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
+Reviewed-by: Tony Luck <tony.luck@intel.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Tested-by: Pengfei Xu <pengfei.xu@intel.com>
+Link: https://lore.kernel.org/r/20231005195137.3117166-2-jithu.joseph@intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Stable-dep-of: 3114f77e9453 ("platform/x86/intel/ifs: Initialize union ifs_status to zero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_stats.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/msr-index.h      | 1 +
+ drivers/platform/x86/intel/ifs/core.c | 3 +++
+ drivers/platform/x86/intel/ifs/ifs.h  | 2 ++
+ 3 files changed, 6 insertions(+)
 
-diff --git a/net/smc/smc_stats.h b/net/smc/smc_stats.h
-index 9d32058db2b5d..e19177ce40923 100644
---- a/net/smc/smc_stats.h
-+++ b/net/smc/smc_stats.h
-@@ -19,7 +19,7 @@
+diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
+index 621bac6b74011..24b7bd255e983 100644
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -237,6 +237,7 @@
+ #define MSR_INTEGRITY_CAPS_ARRAY_BIST          BIT(MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT)
+ #define MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT	4
+ #define MSR_INTEGRITY_CAPS_PERIODIC_BIST	BIT(MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT)
++#define MSR_INTEGRITY_CAPS_SAF_GEN_MASK	GENMASK_ULL(10, 9)
  
- #include "smc_clc.h"
+ #define MSR_LBR_NHM_FROM		0x00000680
+ #define MSR_LBR_NHM_TO			0x000006c0
+diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+index 306f886b52d20..4ff2aa4b484bc 100644
+--- a/drivers/platform/x86/intel/ifs/core.c
++++ b/drivers/platform/x86/intel/ifs/core.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /* Copyright(c) 2022 Intel Corporation. */
  
--#define SMC_MAX_FBACK_RSN_CNT 30
-+#define SMC_MAX_FBACK_RSN_CNT 36
++#include <linux/bitfield.h>
+ #include <linux/module.h>
+ #include <linux/kdev_t.h>
+ #include <linux/semaphore.h>
+@@ -94,6 +95,8 @@ static int __init ifs_init(void)
+ 	for (i = 0; i < IFS_NUMTESTS; i++) {
+ 		if (!(msrval & BIT(ifs_devices[i].test_caps->integrity_cap_bit)))
+ 			continue;
++		ifs_devices[i].rw_data.generation = FIELD_GET(MSR_INTEGRITY_CAPS_SAF_GEN_MASK,
++							      msrval);
+ 		ret = misc_register(&ifs_devices[i].misc);
+ 		if (ret)
+ 			goto err_exit;
+diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
+index 93191855890f2..d666aeed20fc2 100644
+--- a/drivers/platform/x86/intel/ifs/ifs.h
++++ b/drivers/platform/x86/intel/ifs/ifs.h
+@@ -229,6 +229,7 @@ struct ifs_test_caps {
+  * @status: it holds simple status pass/fail/untested
+  * @scan_details: opaque scan status code from h/w
+  * @cur_batch: number indicating the currently loaded test file
++ * @generation: IFS test generation enumerated by hardware
+  */
+ struct ifs_data {
+ 	int	loaded_version;
+@@ -238,6 +239,7 @@ struct ifs_data {
+ 	int	status;
+ 	u64	scan_details;
+ 	u32	cur_batch;
++	u32	generation;
+ };
  
- enum {
- 	SMC_BUF_8K,
+ struct ifs_work {
 -- 
 2.43.0
 
