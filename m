@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14BF183CA6;
-	Mon, 12 Aug 2024 16:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A456183CA6;
+	Mon, 12 Aug 2024 16:22:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479732; cv=none; b=HlUXsji1oDNxq7XPmv9f1Mh7aKu6gDRBr70x1I3ddaJYiPEyXggtEb54TpPEnwLo2YdHv6Rq2syYq/4lFrOghw/5iCh5znFpcQZAB7ZlDh7bEaoYzRvC0IP+xGdmDXI8gjC0JRn0zErhZhAZs1laOA+492xnsbfBxI8ySkYpJBM=
+	t=1723479736; cv=none; b=SoXbJG6LsOL4B2DnHto0jsoZzHMpl6XdSor5veSRloo46BTJVz4w6Pfo1q3F4+9nC1ML/79fI6PYQLEkth16FtIYzcx6V3NY9G4sUE2HRH/Jr35GhjUUvydRXPpdOQ+G7auu8vBACA/yss5l0l+zLTOxYRseqRdDzixFJzr2edo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479732; c=relaxed/simple;
-	bh=VGZtKUlxRsmkiKe5VKz29JT0EXXE4hzrBMXgdJbCGLw=;
+	s=arc-20240116; t=1723479736; c=relaxed/simple;
+	bh=FsJlPp4iQFVlUzvMRAFoHXmI3jOvsP7OpXr08CKsBL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HkIb9lv7YILUtpna5QKBOXS7dpOAU+gy0sKAblCUqLQ0jwOXfsy9cJ+wYjyYc7VlielV5WAw0hukkcYk+5M9cS6BPOMQ60isMgk8jEeo5//mmIJ4F6CTrKFD1UyCtKvw0Kxm5+yoZdZVq6gzaot/GgWFHunAxil14DhLdCLbHKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cKvHoqSU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DP3y2A6CXQSKna0tiSFo7pwuLEjojWrM304vSWmhQobAlKX1jPAEvpdlEcftEGDBAeg+xResZYlK0hEO3D5n3DI1g2FJ+r3qIjKV6co/tuglbMzLXvVeukCOKEs7YicHW6nZFPPes8mdkJeXYT5i5vJJ5h39OuJoqlhQ5O5vOrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zGBpYsUt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cKvHoqSU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4691DC32782;
-	Mon, 12 Aug 2024 16:22:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zGBpYsUt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A2CC32782;
+	Mon, 12 Aug 2024 16:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479732;
-	bh=VGZtKUlxRsmkiKe5VKz29JT0EXXE4hzrBMXgdJbCGLw=;
+	s=korg; t=1723479736;
+	bh=FsJlPp4iQFVlUzvMRAFoHXmI3jOvsP7OpXr08CKsBL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cKvHoqSUhySbLugQVZ4QD+OxmVQafZ+T0OUWYkrwFWNQAnoxfj2rhyywySgrM92TI
-	 FKIYmPi9dNfX5wO7j8p+K41xqIr/kDHIGM379oqs8lNUq7jkDc6tPt9L9tEmt+kNUr
-	 U/JD7PY5bq+wVyngw4NQV80Fj5SKZNarP3Jp70MI=
+	b=zGBpYsUt1cudJW7ICQteIPFCVOFttT7F3nvFnQKKbjDpB30sgVvNIA6u9ZDStSXJL
+	 66SEp3KTOAXC8cgtTEscOEBppI1kFuKC2bHqxsCK/IaDIW6M5PYqqwns6N+0m7dTIQ
+	 cGsxXIEa2dwQyl0Eh1D/mWBzEipW3A8NtJAYArSs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.6 176/189] netfilter: nf_tables: prefer nft_chain_validate
-Date: Mon, 12 Aug 2024 18:03:52 +0200
-Message-ID: <20240812160138.923486159@linuxfoundation.org>
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 177/189] ipv6: fix source address selection with route leak
+Date: Mon, 12 Aug 2024 18:03:53 +0200
+Message-ID: <20240812160138.961375065@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -50,228 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-commit cff3bd012a9512ac5ed858d38e6ed65f6391008c upstream.
+commit 252442f2ae317d109ef0b4b39ce0608c09563042 upstream.
 
-nft_chain_validate already performs loop detection because a cycle will
-result in a call stack overflow (ctx->level >= NFT_JUMP_STACK_SIZE).
+By default, an address assigned to the output interface is selected when
+the source address is not specified. This is problematic when a route,
+configured in a vrf, uses an interface from another vrf (aka route leak).
+The original vrf does not own the selected source address.
 
-It also follows maps via ->validate callback in nft_lookup, so there
-appears no reason to iterate the maps again.
+Let's add a check against the output interface and call the appropriate
+function to select the source address.
 
-nf_tables_check_loops() and all its helper functions can be removed.
-This improves ruleset load time significantly, from 23s down to 12s.
-
-This also fixes a crash bug. Old loop detection code can result in
-unbounded recursion:
-
-BUG: TASK stack guard page was hit at ....
-Oops: stack guard page: 0000 [#1] PREEMPT SMP KASAN
-CPU: 4 PID: 1539 Comm: nft Not tainted 6.10.0-rc5+ #1
-[..]
-
-with a suitable ruleset during validation of register stores.
-
-I can't see any actual reason to attempt to check for this from
-nft_validate_register_store(), at this point the transaction is still in
-progress, so we don't have a full picture of the rule graph.
-
-For nf-next it might make sense to either remove it or make this depend
-on table->validate_state in case we could catch an error earlier
-(for improved error reporting to userspace).
-
-Fixes: 20a69341f2d0 ("netfilter: nf_tables: add netlink set API")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+CC: stable@vger.kernel.org
+Fixes: 0d240e7811c4 ("net: vrf: Implement get_saddr for IPv6")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Link: https://patch.msgid.link/20240710081521.3809742-3-nicolas.dichtel@6wind.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |  154 +++---------------------------------------
- 1 file changed, 13 insertions(+), 141 deletions(-)
+ include/net/ip6_route.h |   20 ++++++++++++++------
+ net/ipv6/ip6_output.c   |    1 +
+ net/ipv6/route.c        |    2 +-
+ 3 files changed, 16 insertions(+), 7 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3743,6 +3743,15 @@ static void nf_tables_rule_release(const
- 	nf_tables_rule_destroy(ctx, rule);
- }
+--- a/include/net/ip6_route.h
++++ b/include/net/ip6_route.h
+@@ -128,18 +128,26 @@ void rt6_age_exceptions(struct fib6_info
  
-+/** nft_chain_validate - loop detection and hook validation
-+ *
-+ * @ctx: context containing call depth and base chain
-+ * @chain: chain to validate
-+ *
-+ * Walk through the rules of the given chain and chase all jumps/gotos
-+ * and set lookups until either the jump limit is hit or all reachable
-+ * chains have been validated.
-+ */
- int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
+ static inline int ip6_route_get_saddr(struct net *net, struct fib6_info *f6i,
+ 				      const struct in6_addr *daddr,
+-				      unsigned int prefs,
++				      unsigned int prefs, int l3mdev_index,
+ 				      struct in6_addr *saddr)
  {
- 	struct nft_expr *expr, *last;
-@@ -3764,6 +3773,9 @@ int nft_chain_validate(const struct nft_
- 			if (!expr->ops->validate)
- 				continue;
++	struct net_device *l3mdev;
++	struct net_device *dev;
++	bool same_vrf;
+ 	int err = 0;
  
-+			/* This may call nft_chain_validate() recursively,
-+			 * callers that do so must increment ctx->level.
-+			 */
- 			err = expr->ops->validate(ctx, expr, &data);
- 			if (err < 0)
- 				return err;
-@@ -10621,146 +10633,6 @@ int nft_chain_validate_hooks(const struc
+-	if (f6i && f6i->fib6_prefsrc.plen) {
++	rcu_read_lock();
++
++	l3mdev = dev_get_by_index_rcu(net, l3mdev_index);
++	if (!f6i || !f6i->fib6_prefsrc.plen || l3mdev)
++		dev = f6i ? fib6_info_nh_dev(f6i) : NULL;
++	same_vrf = !l3mdev || l3mdev_master_dev_rcu(dev) == l3mdev;
++	if (f6i && f6i->fib6_prefsrc.plen && same_vrf)
+ 		*saddr = f6i->fib6_prefsrc.addr;
+-	} else {
+-		struct net_device *dev = f6i ? fib6_info_nh_dev(f6i) : NULL;
++	else
++		err = ipv6_dev_get_saddr(net, same_vrf ? dev : l3mdev, daddr, prefs, saddr);
+ 
+-		err = ipv6_dev_get_saddr(net, dev, daddr, prefs, saddr);
+-	}
++	rcu_read_unlock();
+ 
+ 	return err;
  }
- EXPORT_SYMBOL_GPL(nft_chain_validate_hooks);
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -1122,6 +1122,7 @@ static int ip6_dst_lookup_tail(struct ne
+ 		from = rt ? rcu_dereference(rt->from) : NULL;
+ 		err = ip6_route_get_saddr(net, from, &fl6->daddr,
+ 					  sk ? inet6_sk(sk)->srcprefs : 0,
++					  fl6->flowi6_l3mdev,
+ 					  &fl6->saddr);
+ 		rcu_read_unlock();
  
--/*
-- * Loop detection - walk through the ruleset beginning at the destination chain
-- * of a new jump until either the source chain is reached (loop) or all
-- * reachable chains have been traversed.
-- *
-- * The loop check is performed whenever a new jump verdict is added to an
-- * expression or verdict map or a verdict map is bound to a new chain.
-- */
--
--static int nf_tables_check_loops(const struct nft_ctx *ctx,
--				 const struct nft_chain *chain);
--
--static int nft_check_loops(const struct nft_ctx *ctx,
--			   const struct nft_set_ext *ext)
--{
--	const struct nft_data *data;
--	int ret;
--
--	data = nft_set_ext_data(ext);
--	switch (data->verdict.code) {
--	case NFT_JUMP:
--	case NFT_GOTO:
--		ret = nf_tables_check_loops(ctx, data->verdict.chain);
--		break;
--	default:
--		ret = 0;
--		break;
--	}
--
--	return ret;
--}
--
--static int nf_tables_loop_check_setelem(const struct nft_ctx *ctx,
--					struct nft_set *set,
--					const struct nft_set_iter *iter,
--					struct nft_set_elem *elem)
--{
--	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
--
--	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
--	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
--		return 0;
--
--	return nft_check_loops(ctx, ext);
--}
--
--static int nft_set_catchall_loops(const struct nft_ctx *ctx,
--				  struct nft_set *set)
--{
--	u8 genmask = nft_genmask_next(ctx->net);
--	struct nft_set_elem_catchall *catchall;
--	struct nft_set_ext *ext;
--	int ret = 0;
--
--	list_for_each_entry_rcu(catchall, &set->catchall_list, list) {
--		ext = nft_set_elem_ext(set, catchall->elem);
--		if (!nft_set_elem_active(ext, genmask))
--			continue;
--
--		ret = nft_check_loops(ctx, ext);
--		if (ret < 0)
--			return ret;
--	}
--
--	return ret;
--}
--
--static int nf_tables_check_loops(const struct nft_ctx *ctx,
--				 const struct nft_chain *chain)
--{
--	const struct nft_rule *rule;
--	const struct nft_expr *expr, *last;
--	struct nft_set *set;
--	struct nft_set_binding *binding;
--	struct nft_set_iter iter;
--
--	if (ctx->chain == chain)
--		return -ELOOP;
--
--	if (fatal_signal_pending(current))
--		return -EINTR;
--
--	list_for_each_entry(rule, &chain->rules, list) {
--		nft_rule_for_each_expr(expr, last, rule) {
--			struct nft_immediate_expr *priv;
--			const struct nft_data *data;
--			int err;
--
--			if (strcmp(expr->ops->type->name, "immediate"))
--				continue;
--
--			priv = nft_expr_priv(expr);
--			if (priv->dreg != NFT_REG_VERDICT)
--				continue;
--
--			data = &priv->data;
--			switch (data->verdict.code) {
--			case NFT_JUMP:
--			case NFT_GOTO:
--				err = nf_tables_check_loops(ctx,
--							data->verdict.chain);
--				if (err < 0)
--					return err;
--				break;
--			default:
--				break;
--			}
--		}
--	}
--
--	list_for_each_entry(set, &ctx->table->sets, list) {
--		if (!nft_is_active_next(ctx->net, set))
--			continue;
--		if (!(set->flags & NFT_SET_MAP) ||
--		    set->dtype != NFT_DATA_VERDICT)
--			continue;
--
--		list_for_each_entry(binding, &set->bindings, list) {
--			if (!(binding->flags & NFT_SET_MAP) ||
--			    binding->chain != chain)
--				continue;
--
--			iter.genmask	= nft_genmask_next(ctx->net);
--			iter.skip 	= 0;
--			iter.count	= 0;
--			iter.err	= 0;
--			iter.fn		= nf_tables_loop_check_setelem;
--
--			set->ops->walk(ctx, set, &iter);
--			if (!iter.err)
--				iter.err = nft_set_catchall_loops(ctx, set);
--
--			if (iter.err < 0)
--				return iter.err;
--		}
--	}
--
--	return 0;
--}
--
- /**
-  *	nft_parse_u32_check - fetch u32 attribute and check for maximum value
-  *
-@@ -10873,7 +10745,7 @@ static int nft_validate_register_store(c
- 		if (data != NULL &&
- 		    (data->verdict.code == NFT_GOTO ||
- 		     data->verdict.code == NFT_JUMP)) {
--			err = nf_tables_check_loops(ctx, data->verdict.chain);
-+			err = nft_chain_validate(ctx, data->verdict.chain);
- 			if (err < 0)
- 				return err;
- 		}
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -5678,7 +5678,7 @@ static int rt6_fill_node(struct net *net
+ 				goto nla_put_failure;
+ 	} else if (dest) {
+ 		struct in6_addr saddr_buf;
+-		if (ip6_route_get_saddr(net, rt, dest, 0, &saddr_buf) == 0 &&
++		if (ip6_route_get_saddr(net, rt, dest, 0, 0, &saddr_buf) == 0 &&
+ 		    nla_put_in6_addr(skb, RTA_PREFSRC, &saddr_buf))
+ 			goto nla_put_failure;
+ 	}
 
 
