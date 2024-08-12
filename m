@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48C5D1EA8D;
-	Mon, 12 Aug 2024 16:12:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7EB1EA8D;
+	Mon, 12 Aug 2024 16:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479121; cv=none; b=He3GOEhbZxTr01nSscslA2GqX9sxQEKydRfWk9B4Ww4shwz4mQLeGymuEM+oQYCN42NSPhkY62k8mYxQKn2FIMTQMfjuIqVOrRgbjBErECWh092D/jPhv6B3Q56B2hE1H4fq5YbT/SDkNtupijQVUm4ARH6LZQlYHgCIQbJAk8Y=
+	t=1723479124; cv=none; b=Fbc97aKgj3nBLvfnkKwTYgjcwGmI2mZGngD5WHGAhGS67cnRmtI3V2H78z1lMFaIYWEDiVCApkHaHCgPOwDPRUwgcaOD2UmIaSQYWByB1WvCjBF9tF/Vu2Ywwp/B39rkiSzmYlKOGIHSIFEWgVCrnEiqLkmerPulmc4UuKrTPDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479121; c=relaxed/simple;
-	bh=UqkHympZqQw5qwM/zzEfLegopBJFnYbeS9DslSKxxQs=;
+	s=arc-20240116; t=1723479124; c=relaxed/simple;
+	bh=C0Gts8tyZPfcj2Fp2kEoKPVv5DwUs8Ivlh1Oftg23vY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JulaQbsAmSXzN5OA3WmmmJTy5DWGlPtTnLT7OzXkj7rACmJOQOaeZC92GpxyQb5uFQhblk4uZQ8OOv3V79cAoRArFY1kwe8spnV+8pzhMg9cwNcegnRmXa6qpElFZOXF4Ruzw7d3zbzxo1mHHlPi4jcN1Sy7GBSbqc006oM4I1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OY6szCsp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RHabNoYa3+QS6tebdxTxDho68DNvERgNdUVt5DADZVIEtMrB5dt635VlqbwGZTslDCpuaC0Z82DknDGsgbnf0F/cp/n9TqFB5feVftEh43Sq0I7Mq6FWyKXnNrJ89/D7nBrtrVawYfIPZi7tvJOQemxisMTRoYo+ZfjW7Dv40jQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPv3FhLQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OY6szCsp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 528BAC32782;
-	Mon, 12 Aug 2024 16:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPv3FhLQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91889C32782;
+	Mon, 12 Aug 2024 16:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479120;
-	bh=UqkHympZqQw5qwM/zzEfLegopBJFnYbeS9DslSKxxQs=;
+	s=korg; t=1723479124;
+	bh=C0Gts8tyZPfcj2Fp2kEoKPVv5DwUs8Ivlh1Oftg23vY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OY6szCspxTHS+SjDib6VkMlvT7goQxNLw/GCo4g7O+7PrKg4/Ryv/ZY9vxhYVz5vo
-	 fHnvLg+gzbx0x0TwRwRNpO0wXRvjC9uQJ95FCQgjEqJYNg6yJ3/et9fGpzR5fr+QoQ
-	 OZt19JeV+mKcH5yastH/QxrBY1vTP9M+DmWK82Uc=
+	b=aPv3FhLQAVhAchU0NhseWV3s6d7OUY3t/daQWi0sf+6s7G4C80xK1mleTPilI27OX
+	 L41Ogty8H19IAl5zKaYXROVtAUBVcYOflDBDFAgCVcbW2qpYAdqSPVBWcQipBzv5xs
+	 zbGwmyUf3peq8SsxuOMQRJxbVlAKawz4PWVt7kM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Besar Wicaksono <bwicaksono@nvidia.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Will Deacon <will@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 6.1 140/150] tools headers arm64: Sync arm64s cputype.h with the kernel sources
-Date: Mon, 12 Aug 2024 18:03:41 +0200
-Message-ID: <20240812160130.574430799@linuxfoundation.org>
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Oscar Salvador <osalvador@suse.de>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 141/150] mm/hugetlb: fix potential race in __update_and_free_hugetlb_folio()
+Date: Mon, 12 Aug 2024 18:03:42 +0200
+Message-ID: <20240812160130.613620525@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -57,79 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Miaohe Lin <linmiaohe@huawei.com>
 
-commit dc6abbbde4b099e936cd5428e196d86a5e119aae upstream.
+commit 5596d9e8b553dacb0ac34bcf873cbbfb16c3ba3e upstream.
 
-To get the changes in:
+There is a potential race between __update_and_free_hugetlb_folio() and
+try_memory_failure_hugetlb():
 
-  0ce85db6c2141b7f ("arm64: cputype: Add Neoverse-V3 definitions")
-  02a0a04676fa7796 ("arm64: cputype: Add Cortex-X4 definitions")
-  f4d9d9dcc70b96b5 ("arm64: Add Neoverse-V2 part")
+ CPU1					CPU2
+ __update_and_free_hugetlb_folio	try_memory_failure_hugetlb
+					 folio_test_hugetlb
+					  -- It's still hugetlb folio.
+  folio_clear_hugetlb_hwpoison
+  					  spin_lock_irq(&hugetlb_lock);
+					   __get_huge_page_for_hwpoison
+					    folio_set_hugetlb_hwpoison
+					  spin_unlock_irq(&hugetlb_lock);
+  spin_lock_irq(&hugetlb_lock);
+  __folio_clear_hugetlb(folio);
+   -- Hugetlb flag is cleared but too late.
+  spin_unlock_irq(&hugetlb_lock);
 
-That makes this perf source code to be rebuilt:
+When the above race occurs, raw error page info will be leaked.  Even
+worse, raw error pages won't have hwpoisoned flag set and hit
+pcplists/buddy.  Fix this issue by deferring
+folio_clear_hugetlb_hwpoison() until __folio_clear_hugetlb() is done.  So
+all raw error pages will have hwpoisoned flag set.
 
-  CC      /tmp/build/perf-tools/util/arm-spe.o
-
-The changes in the above patch add MIDR_NEOVERSE_V[23] and
-MIDR_NEOVERSE_V1 is used in arm-spe.c, so probably we need to add those
-and perhaps MIDR_CORTEX_X4 to that array? Or maybe we need to leave this
-for later when this is all tested on those machines?
-
-  static const struct midr_range neoverse_spe[] = {
-          MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N1),
-          MIDR_ALL_VERSIONS(MIDR_NEOVERSE_N2),
-          MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V1),
-          {},
-  };
-
-Mark Rutland recommended about arm-spe.c:
-
-"I would not touch this for now -- someone would have to go audit the
-TRMs to check that those other cores have the same encoding, and I think
-it'd be better to do that as a follow-up."
-
-That addresses this perf build warning:
-
-  Warning: Kernel ABI header differences:
-    diff -u tools/arch/arm64/include/asm/cputype.h arch/arm64/include/asm/cputype.h
-
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Besar Wicaksono <bwicaksono@nvidia.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/lkml/Zl8cYk0Tai2fs7aM@x1
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Link: https://lkml.kernel.org/r/20240708025127.107713-1-linmiaohe@huawei.com
+Fixes: 32c877191e02 ("hugetlb: do not clear hugetlb dtor until allocating vmemmap")
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
+Acked-by: Muchun Song <muchun.song@linux.dev>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/arch/arm64/include/asm/cputype.h |    6 ++++++
- 1 file changed, 6 insertions(+)
+ mm/hugetlb.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/tools/arch/arm64/include/asm/cputype.h
-+++ b/tools/arch/arm64/include/asm/cputype.h
-@@ -83,6 +83,9 @@
- #define ARM_CPU_PART_CORTEX_X2		0xD48
- #define ARM_CPU_PART_NEOVERSE_N2	0xD49
- #define ARM_CPU_PART_CORTEX_A78C	0xD4B
-+#define ARM_CPU_PART_NEOVERSE_V2	0xD4F
-+#define ARM_CPU_PART_CORTEX_X4		0xD82
-+#define ARM_CPU_PART_NEOVERSE_V3	0xD84
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -1786,13 +1786,6 @@ static void __update_and_free_page(struc
+ 	}
  
- #define APM_CPU_PART_POTENZA		0x000
+ 	/*
+-	 * Move PageHWPoison flag from head page to the raw error pages,
+-	 * which makes any healthy subpages reusable.
+-	 */
+-	if (unlikely(PageHWPoison(page)))
+-		hugetlb_clear_page_hwpoison(page);
+-
+-	/*
+ 	 * If vmemmap pages were allocated above, then we need to clear the
+ 	 * hugetlb destructor under the hugetlb lock.
+ 	 */
+@@ -1802,6 +1795,13 @@ static void __update_and_free_page(struc
+ 		spin_unlock_irq(&hugetlb_lock);
+ 	}
  
-@@ -145,6 +148,9 @@
- #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
- #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
- #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
-+#define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
-+#define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
-+#define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
- #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
- #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
- #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
++	/*
++	 * Move PageHWPoison flag from head page to the raw error pages,
++	 * which makes any healthy subpages reusable.
++	 */
++	if (unlikely(PageHWPoison(page)))
++		hugetlb_clear_page_hwpoison(page);
++
+ 	for (i = 0; i < pages_per_huge_page(h); i++) {
+ 		subpage = nth_page(page, i);
+ 		subpage->flags &= ~(1 << PG_locked | 1 << PG_error |
 
 
