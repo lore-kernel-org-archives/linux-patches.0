@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE5C29CA;
-	Mon, 12 Aug 2024 16:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 396CB29CA;
+	Mon, 12 Aug 2024 16:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479607; cv=none; b=XQP2GpzC4GAxpgQgdMwxljaOpnlywOHxUetyTnIn55zHyay84a+mw3DOLw2e5E/sPfdoWM3b2gcvVooP+P+MQxJGr0rXYLaxIiyoyFNtMBBN5QPEfbsBZJPf7Op0wTnoV62EYXcb09kzzgUpS+UYOGYaEe3YpPaQbq52BOgfYUE=
+	t=1723479610; cv=none; b=s1q/Gvru9AsZwfvZ+pw6uS4L3rBW/GTfUKgZGrVuf1HPqV1VPao5NIPv56BKTFVtpbXGa8MTZb+0T9bovRY92BhvoCZzVWOIbxhigMfoucuDlYJs5cFf5eezUe1t0vWgyKu7VpUM4ConyEGWXQFYSxaIzFDuXXsAZXiIVjCQsLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479607; c=relaxed/simple;
-	bh=ppN5hoyl6wr9KTjIp4bSH0gA4BLbULXXBUozj1miyFo=;
+	s=arc-20240116; t=1723479610; c=relaxed/simple;
+	bh=wWo+FqzFZ2CYj+H6YYj6kkjsYQ/oO3/n1CWPVGF8Fzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TmLyzmFdubrzbjRJ/1PIhtGTFpDqsz+/D3n1NhSxwdbghTJc4mvObo5rAdLqGrPPMQqgdfrDztpSnY5SL21iM5UwVk19yZ2dnj2NAV7jmL+Y5A3QdzRebUvQRyD3Ehw8u3UDT3w6/k/TmEHtOfb4H/cZqehMqUajAjHWBHuXmwE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Us2JmkzP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V7dVVZPn52cmfZxo8fDSHlnJRb5omnFjH2dXx6yNKMpwKn62fwIyE6CIuOzjhcHjCUFzAl0PXKiizmx2JmG+sTuEGfDmVC4/8lIe8vxYYJd/suPLjPaN4OJcErEXCxFsRVkUihLBqogD+CzVdXmW33uynJ0kymW0Jqx0fv5EzAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqDXZytr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Us2JmkzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83458C4AF0D;
-	Mon, 12 Aug 2024 16:20:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqDXZytr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B32DBC4AF09;
+	Mon, 12 Aug 2024 16:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479607;
-	bh=ppN5hoyl6wr9KTjIp4bSH0gA4BLbULXXBUozj1miyFo=;
+	s=korg; t=1723479610;
+	bh=wWo+FqzFZ2CYj+H6YYj6kkjsYQ/oO3/n1CWPVGF8Fzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Us2JmkzPWjcgL/j5WvhrSCxqs9F3DAQgLgfXVViVOSA3OQxxmReVY46NdvKDVlMRZ
-	 aq1jJjTIyZ3fPOSbDm4L0S0XFGdRFxUiZQdRxGlkTFUfNZ4GGfvgX5+q83ePQA76dC
-	 wGl5pQAo4Yz68m+3geXWWN1N9GMstKJIN3G4wDBA=
+	b=EqDXZytrRdvB0+4bfNWfsnUVtePbbzl0lZk5ZiM6sPoE8vxe93xeIiVsbRkNgXX/L
+	 fQ0SvSphSUuNkA37tn1xChwDxdMDQzbAc/iIasLE74aQde021AMYdFj7PX8s1m4lAY
+	 m405F6ikqe9xw5XimvtCcBKmsGQsG/2aE4lhji6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 139/189] parisc: fix a possible DMA corruption
-Date: Mon, 12 Aug 2024 18:03:15 +0200
-Message-ID: <20240812160137.492847351@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.6 140/189] ASoC: amd: yc: Add quirk entry for OMEN by HP Gaming Laptop 16-n0xxx
+Date: Mon, 12 Aug 2024 18:03:16 +0200
+Message-ID: <20240812160137.530150571@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -50,62 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 7ae04ba36b381bffe2471eff3a93edced843240f upstream.
+commit 6675e76a5c441b52b1b983ebb714122087020ebe upstream.
 
-ARCH_DMA_MINALIGN was defined as 16 - this is too small - it may be
-possible that two unrelated 16-byte allocations share a cache line. If
-one of these allocations is written using DMA and the other is written
-using cached write, the value that was written with DMA may be
-corrupted.
+Fix the missing mic on OMEN by HP Gaming Laptop 16-n0xxx by adding the
+quirk entry with the board ID 8A44.
 
-This commit changes ARCH_DMA_MINALIGN to be 128 on PA20 and 32 on PA1.1 -
-that's the largest possible cache line size.
-
-As different parisc microarchitectures have different cache line size, we
-define arch_slab_minalign(), cache_line_size() and
-dma_get_cache_alignment() so that the kernel may tune slab cache
-parameters dynamically, based on the detected cache line size.
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://bugzilla.suse.com/show_bug.cgi?id=1227182
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20240807170249.16490-1-tiwai@suse.de
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/Kconfig             |    1 +
- arch/parisc/include/asm/cache.h |   11 ++++++++++-
- 2 files changed, 11 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/arch/parisc/Kconfig
-+++ b/arch/parisc/Kconfig
-@@ -18,6 +18,7 @@ config PARISC
- 	select ARCH_SUPPORTS_HUGETLBFS if PA20
- 	select ARCH_SUPPORTS_MEMORY_FAILURE
- 	select ARCH_STACKWALK
-+	select ARCH_HAS_CACHE_LINE_SIZE
- 	select ARCH_HAS_DEBUG_VM_PGTABLE
- 	select HAVE_RELIABLE_STACKTRACE
- 	select DMA_OPS
---- a/arch/parisc/include/asm/cache.h
-+++ b/arch/parisc/include/asm/cache.h
-@@ -20,7 +20,16 @@
- 
- #define SMP_CACHE_BYTES L1_CACHE_BYTES
- 
--#define ARCH_DMA_MINALIGN	L1_CACHE_BYTES
-+#ifdef CONFIG_PA20
-+#define ARCH_DMA_MINALIGN	128
-+#else
-+#define ARCH_DMA_MINALIGN	32
-+#endif
-+#define ARCH_KMALLOC_MINALIGN	16	/* ldcw requires 16-byte alignment */
-+
-+#define arch_slab_minalign()	((unsigned)dcache_stride)
-+#define cache_line_size()	dcache_stride
-+#define dma_get_cache_alignment cache_line_size
- 
- #define __read_mostly __section(".data..read_mostly")
- 
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -413,6 +413,13 @@ static const struct dmi_system_id yc_acp
+ 		.driver_data = &acp6x_card,
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
++			DMI_MATCH(DMI_BOARD_NAME, "8A44"),
++		}
++	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "HP"),
+ 			DMI_MATCH(DMI_BOARD_NAME, "8A22"),
+ 		}
+ 	},
 
 
