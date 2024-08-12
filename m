@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D17E183CD9;
-	Mon, 12 Aug 2024 16:24:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E82A18732C;
+	Mon, 12 Aug 2024 16:24:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479881; cv=none; b=fjHWb8I0zcPpC45xR54sioMkc1DHBFguxGIcm5kqu7Y3JVKmBwK3S3RbLB63ns1xDi5B0Xa2AbDOYEMKgKLTZan4fArBSzYpIoFtyASN8dt9GLWIBEa7QpDw88gE4axLbT4jvq8AZNknWfzS9OaO5WaQVVtGbHJiX8WF1upgDDI=
+	t=1723479885; cv=none; b=oXDr6NukOnxhQSVqi/+RqSUGfu9Tv2Ng3fTa48APqvS18aNWE0oiRpe9Bo2ltwv8qd2bMlHl3NXxRvUzsXdS79SrW2w4hcsRucxmiCJiOV/Emx5ihpH8RebxL839fF5Z9gji8aZyDfXS7gGYUqxiFbXXnaksjUT+fEIeWol94VQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479881; c=relaxed/simple;
-	bh=JQFGRZk9ZNqIEqorsbr39gqi3VxI/aYZo+txPHdMDJg=;
+	s=arc-20240116; t=1723479885; c=relaxed/simple;
+	bh=QJ8XsaqjKyJKQ/btndW80HrWgUPBW4npWqyactEG3bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWUbc9ugd9HQl4r5ZJ/Wk1rLao1EOpAoYprKXr76+EynVrVw2OpzLO+VTQFj9JSmWqPSD8bWTO69NkHB4d67IBwG8lLidbTvlk1FIzfVOVgq25WA9znELUg2fvVJD05+Sy7+G2fEgHhJ9bBXmxyTE2/CZW3pq6M2xkx3eeyBZOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkRzlb8s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N/YQU72PmM/NFkeKbdrNDt4CTcZZ8OSgNHIHTyMmuv36hPhGDUTZ+IWSF/rNBZLba8qixu9BSVJmnPaTT1wIT28f8cgNJyXf/W+FwOQBdeY68pT8T4IzpHMQEU9HTSjPTQhZ8cZy5jMIHB+vRhjleC+piJwNQEsG5ve4zeoHqaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MhW6t3xR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkRzlb8s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14626C32782;
-	Mon, 12 Aug 2024 16:24:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MhW6t3xR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A8EC32782;
+	Mon, 12 Aug 2024 16:24:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479881;
-	bh=JQFGRZk9ZNqIEqorsbr39gqi3VxI/aYZo+txPHdMDJg=;
+	s=korg; t=1723479884;
+	bh=QJ8XsaqjKyJKQ/btndW80HrWgUPBW4npWqyactEG3bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkRzlb8sE3q+sZtfUaZ0rrDXs4ndHnGgV9TFcC81ZNRNNizvY/S19gqeLAxkC2IZl
-	 Qoi/IMDte2AexesdROFqmhSjCVIP/GyhVjJnQdfYuZ9lOZPXd5NCMGeQaG7haVJ4WA
-	 dXniiPxHAPsDu6DzEnB6mRlqfbjP7jOPfICa7bzY=
+	b=MhW6t3xR/ni78/R2VriIKqoyOvKbo+IvSXp4I7wdvc0S8tuniEYuNAQgWkjwz6Gen
+	 XILrmJI7mZvEDucinbGF13zlT3fW7ia2H5Yu3Nr4FRopaMLBaVX7hUHL4gyAFjS9sX
+	 AHma/2xhmDR0v3aeB7SQ/UApjE+/TwkL2QVIRlpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Wenjia Zhang <wenjia@linux.ibm.com>,
-	"D. Wythe" <alibuda@linux.alibaba.com>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 030/263] net/smc: add the max value of fallback reason count
-Date: Mon, 12 Aug 2024 18:00:31 +0200
-Message-ID: <20240812160147.695625119@linuxfoundation.org>
+Subject: [PATCH 6.10 031/263] net: dsa: bcm_sf2: Fix a possible memory leak in bcm_sf2_mdio_register()
+Date: Mon, 12 Aug 2024 18:00:32 +0200
+Message-ID: <20240812160147.733578835@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,40 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit d27a835f41d947f62e6a95e89ba523299c9e6437 ]
+[ Upstream commit e3862093ee93fcfbdadcb7957f5f8974fffa806a ]
 
-The number of fallback reasons defined in the smc_clc.h file has reached
-36. For historical reasons, some are no longer quoted, and there's 33
-actually in use. So, add the max value of fallback reason count to 36.
+bcm_sf2_mdio_register() calls of_phy_find_device() and then
+phy_device_remove() in a loop to remove existing PHY devices.
+of_phy_find_device() eventually calls bus_find_device(), which calls
+get_device() on the returned struct device * to increment the refcount.
+The current implementation does not decrement the refcount, which causes
+memory leak.
 
-Fixes: 6ac1e6563f59 ("net/smc: support smc v2.x features validate")
-Fixes: 7f0620b9940b ("net/smc: support max connections per lgr negotiation")
-Fixes: 69b888e3bb4b ("net/smc: support max links per lgr negotiation in clc handshake")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Wenjia Zhang <wenjia@linux.ibm.com>
-Reviewed-by: D. Wythe <alibuda@linux.alibaba.com>
-Link: https://patch.msgid.link/20240805043856.565677-1-shaozhengchao@huawei.com
+This commit adds the missing phy_device_free() call to decrement the
+refcount via put_device() to balance the refcount.
+
+Fixes: 771089c2a485 ("net: dsa: bcm_sf2: Ensure that MDIO diversion is used")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20240806011327.3817861-1-joe@pf.is.s.u-tokyo.ac.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/smc/smc_stats.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/bcm_sf2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/smc/smc_stats.h b/net/smc/smc_stats.h
-index 9d32058db2b5d..e19177ce40923 100644
---- a/net/smc/smc_stats.h
-+++ b/net/smc/smc_stats.h
-@@ -19,7 +19,7 @@
+diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
+index ed1e6560df25e..0e663ec0c12a3 100644
+--- a/drivers/net/dsa/bcm_sf2.c
++++ b/drivers/net/dsa/bcm_sf2.c
+@@ -675,8 +675,10 @@ static int bcm_sf2_mdio_register(struct dsa_switch *ds)
+ 			of_remove_property(child, prop);
  
- #include "smc_clc.h"
+ 		phydev = of_phy_find_device(child);
+-		if (phydev)
++		if (phydev) {
+ 			phy_device_remove(phydev);
++			phy_device_free(phydev);
++		}
+ 	}
  
--#define SMC_MAX_FBACK_RSN_CNT 30
-+#define SMC_MAX_FBACK_RSN_CNT 36
- 
- enum {
- 	SMC_BUF_8K,
+ 	err = mdiobus_register(priv->user_mii_bus);
 -- 
 2.43.0
 
