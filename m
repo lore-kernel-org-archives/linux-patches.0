@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6714B18757C;
-	Mon, 12 Aug 2024 16:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874BD183CD9;
+	Mon, 12 Aug 2024 16:11:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479067; cv=none; b=Z6FbJ/AUl+1/rEy4IrHzZGhG4ZW1+qaGaIavwXVfUT1fnRVAdMcpMGK+V3S2eAi65wlY0a7FK7B77BsruIz9Pt2YZcr2mrKB0rpiHe3hqfY6uYt1zE6CwlN0iHWuhPIL6MIEl45DNi6SZ6iR5VxNjYwnjWJsUcJ8Hkw7zn0LD+g=
+	t=1723479070; cv=none; b=NSkD2CYksWYMGXG0NLgvRVYGWdfq3yL9WSVR5zzMbDOzuetwXjX9zQqusDlVlAujv7tM4KHBkwMSq4sxU/IimYKxe2ZAvCNy+7cUMaKnCwxwXH4aQzbrUqBWZdxUykg6mbPFkuSsznaW7CZf6mSfPlPA2asZyYbuZv+CqnPbgL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479067; c=relaxed/simple;
-	bh=oS3RXPe04YP1P0Ju+OkG5XRH+GuUatJu2MnuNWgDQb8=;
+	s=arc-20240116; t=1723479070; c=relaxed/simple;
+	bh=eALYMivd+RmZ73Ux+EqL7ianBCtZeCB6vVwTFUg5u/w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1t2BiGLkvyoapgKYY6VKmx2pA/60f6h1ur+BJfZ8Dr1VykBKGzNulHvHMKFGtoduVmb/qkV+1+Qo9YrvnEY5Dvg6PMB1xaY6QGKltWt+ey8JFGvNT+1kRLyoO49IWq8PADtXqIp9OCMCAIVL8ZKSm0mUtpokDlcC1CabLIvAh0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCK5kjfP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EIGrJ6KVxuBlg5hTwqlp9mt73zdjFHCHyK03WU4I7geXkEmuEj71NGeUy+PLHTAVl6oO94mzk+zXdAEhBorA6g6+vuQ7UpHRADn+6ZsVxo4rCaE5Q0KGVr2oTxBtf2RJWYGHmBB6snUbqM2w7ylgjznjF0L0nhZn73PeQcXdEhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fPUXo/VJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCK5kjfP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD395C32782;
-	Mon, 12 Aug 2024 16:11:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fPUXo/VJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 030D0C32782;
+	Mon, 12 Aug 2024 16:11:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479067;
-	bh=oS3RXPe04YP1P0Ju+OkG5XRH+GuUatJu2MnuNWgDQb8=;
+	s=korg; t=1723479070;
+	bh=eALYMivd+RmZ73Ux+EqL7ianBCtZeCB6vVwTFUg5u/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TCK5kjfPEo4AdTls6I67ZVz+OAJym2mlJQ7upM53G5PUtbE40vfTjyxbmYis4GLdL
-	 RDbH3fK1nmBJFINm25IctL3QUXh521iGuSw4tLivVZrZ8U1P/t7lcwzG6hkuF/F+cf
-	 whsgzpID6UjikgDVK1DyVRIitakTrkPOKgiF6L9A=
+	b=fPUXo/VJusZ/gAvJatAhqBl8EbD/52WfRDyGdJAD5nAV/VuFP4HivT7OFsOtPppW3
+	 U+W9e9npOSDzH/bXGcl/i8JjC6i5qiey+bfkqaXxKUJ/U82XUpj1pq0hSt8gXK7kSz
+	 P138H1eZrV/Dk1YBFNn6nXgdkmy2JBoMYWJ9Esf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Kleen <ak@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 121/150] x86/mtrr: Check if fixed MTRRs exist before saving them
-Date: Mon, 12 Aug 2024 18:03:22 +0200
-Message-ID: <20240812160129.834133005@linuxfoundation.org>
+	stable@kernel.org,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 122/150] sched/smt: Introduce sched_smt_present_inc/dec() helper
+Date: Mon, 12 Aug 2024 18:03:23 +0200
+Message-ID: <20240812160129.871875732@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -50,44 +51,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Kleen <ak@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 919f18f961c03d6694aa726c514184f2311a4614 upstream.
+commit 31b164e2e4af84d08d2498083676e7eeaa102493 upstream.
 
-MTRRs have an obsolete fixed variant for fine grained caching control
-of the 640K-1MB region that uses separate MSRs. This fixed variant has
-a separate capability bit in the MTRR capability MSR.
+Introduce sched_smt_present_inc/dec() helper, so it can be called
+in normal or error path simply. No functional changed.
 
-So far all x86 CPUs which support MTRR have this separate bit set, so it
-went unnoticed that mtrr_save_state() does not check the capability bit
-before accessing the fixed MTRR MSRs.
-
-Though on a CPU that does not support the fixed MTRR capability this
-results in a #GP.  The #GP itself is harmless because the RDMSR fault is
-handled gracefully, but results in a WARN_ON().
-
-Add the missing capability check to prevent this.
-
-Fixes: 2b1f6278d77c ("[PATCH] x86: Save the MTRRs of the BSP before booting an AP")
-Signed-off-by: Andi Kleen <ak@linux.intel.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240808000244.946864-1-ak@linux.intel.com
+Cc: stable@kernel.org
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240703031610.587047-2-yangyingliang@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mtrr/mtrr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/core.c |   26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kernel/cpu/mtrr/mtrr.c
-+++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
-@@ -816,7 +816,7 @@ void mtrr_save_state(void)
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9398,6 +9398,22 @@ static int cpuset_cpu_inactive(unsigned
+ 	return 0;
+ }
+ 
++static inline void sched_smt_present_inc(int cpu)
++{
++#ifdef CONFIG_SCHED_SMT
++	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
++		static_branch_inc_cpuslocked(&sched_smt_present);
++#endif
++}
++
++static inline void sched_smt_present_dec(int cpu)
++{
++#ifdef CONFIG_SCHED_SMT
++	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
++		static_branch_dec_cpuslocked(&sched_smt_present);
++#endif
++}
++
+ int sched_cpu_activate(unsigned int cpu)
  {
- 	int first_cpu;
+ 	struct rq *rq = cpu_rq(cpu);
+@@ -9409,13 +9425,10 @@ int sched_cpu_activate(unsigned int cpu)
+ 	 */
+ 	balance_push_set(cpu, false);
  
--	if (!mtrr_enabled())
-+	if (!mtrr_enabled() || !mtrr_state.have_fixed)
- 		return;
+-#ifdef CONFIG_SCHED_SMT
+ 	/*
+ 	 * When going up, increment the number of cores with SMT present.
+ 	 */
+-	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
+-		static_branch_inc_cpuslocked(&sched_smt_present);
+-#endif
++	sched_smt_present_inc(cpu);
+ 	set_cpu_active(cpu, true);
  
- 	first_cpu = cpumask_first(cpu_online_mask);
+ 	if (sched_smp_initialized) {
+@@ -9485,13 +9498,12 @@ int sched_cpu_deactivate(unsigned int cp
+ 	}
+ 	rq_unlock_irqrestore(rq, &rf);
+ 
+-#ifdef CONFIG_SCHED_SMT
+ 	/*
+ 	 * When going down, decrement the number of cores with SMT present.
+ 	 */
+-	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
+-		static_branch_dec_cpuslocked(&sched_smt_present);
++	sched_smt_present_dec(cpu);
+ 
++#ifdef CONFIG_SCHED_SMT
+ 	sched_core_cpu_deactivate(cpu);
+ #endif
+ 
 
 
