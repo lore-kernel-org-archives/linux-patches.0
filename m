@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2CF1494B8;
-	Mon, 12 Aug 2024 16:33:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1355C15C127;
+	Mon, 12 Aug 2024 16:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480433; cv=none; b=G7+t7Eyl5ZjfPv0/gDFUdLFQc6r5r1dBz0PXAfwUHBKrmu+xD2kkjnJNwj8S06ORuLIFuDEqNUATnUIwAlinSgMsg0sgxCdm8FpDRd1lQh+N751MDiR5kysy26asZFA49+SRZEpbJ74Stjfi8RVnhiq6NlqDPK6o1dFs962O2Qw=
+	t=1723480437; cv=none; b=WsRdm8o2qpdfGLGIEpLBItS0OPWRzkAKFc1RjltGhc7j8WjqS2+EfkriBnEDGY0uzNnq2z8gz5/Pu9Qx4vSbSg/5QS3fZXQaotUnMTMjXBHsj6zcMn3IUKky9DN2O6CQOSccuiKYR3FbVF6arAbbH3VUa02iGl3stNNzeUkvuXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480433; c=relaxed/simple;
-	bh=4gOR3IiO3z4uewJFLrKZgcOVyMjMsjbtfIBTon6oOHo=;
+	s=arc-20240116; t=1723480437; c=relaxed/simple;
+	bh=timkbyYwEf0Ts9MdIzGYRpQkBqBtopaPalQgbQ1El6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sNJjg0gltXcgGSLqkEW6e4jGQdi4+by6oO+pr6BK0i40uzhHgxu6zkoH8oA2lV4Z9ugAhf60gMDvyzQdrVMN+1R8UBGZLABkl0294Na2EHYZLZsF5KiPvTcZM3f1rAdCGA9n7dgMwm6pYeyp9Q/Xw2BHE+5jQ7PQMJYbf7/0xKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1/cKX4IG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eG9Ih6Bra5rsSekQx1VID7cuhhfI1PR8DoPjUDNJ0C/EtqeoTc+XQ4oSMe1VqQYMID3DFwRN3UxxTE/6huSIMmNRXQZl4t1e3jDtChpujNVlOMWCKH6RfOE4+FozanH1PqFvTO5rZGZ1WDFs8OLE+Eza7DkzPLNq12esEy+d6gA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P1sFEGwQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1/cKX4IG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DFBC32782;
-	Mon, 12 Aug 2024 16:33:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P1sFEGwQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61DF4C32782;
+	Mon, 12 Aug 2024 16:33:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480433;
-	bh=4gOR3IiO3z4uewJFLrKZgcOVyMjMsjbtfIBTon6oOHo=;
+	s=korg; t=1723480436;
+	bh=timkbyYwEf0Ts9MdIzGYRpQkBqBtopaPalQgbQ1El6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/cKX4IGs/4qblGoeiVcptheHHngriVJ4ddaUHcWpeXxXQxpHdqf7AlSzy15lf/WP
-	 jospJpdFqeDv/Zg01aE+wk0DREWeBf/kLOAQRkhmmt1lVG/t+oxCHyI//vH4R1Giq9
-	 aj4D9jDHK3eFAxCZfqSOld50D6WEvNSuSsjqJvls=
+	b=P1sFEGwQFOmQwv7qOeOMSbXJYdI/OW2ETjZKryWZaYck6BPAZ46spHDnpfntxpAA4
+	 LXWr2sPMhn049gqLv6GO17ShjtlLM/ka52XYGbmJx8SaoB+kS8QAl4gh6TcoOsR50l
+	 BdUxrHAAP4ZwRwsT79DAI6LRrtpFQhjgP5u6XjPI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bean Huo <beanhuo@micron.com>,
+	Anjana Hari <quic_ahari@quicinc.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.10 195/263] scsi: ufs: core: Fix deadlock during RTC update
-Date: Mon, 12 Aug 2024 18:03:16 +0200
-Message-ID: <20240812160154.009344740@linuxfoundation.org>
+Subject: [PATCH 6.10 196/263] scsi: ufs: core: Do not set link to OFF state while waking up from hibernation
+Date: Mon, 12 Aug 2024 18:03:17 +0200
+Message-ID: <20240812160154.047971001@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,83 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 3911af778f208e5f49d43ce739332b91e26bc48e upstream.
+commit ac6efb12ca64156f4a94e964acdb96ee7d59630d upstream.
 
-There is a deadlock when runtime suspend waits for the flush of RTC work,
-and the RTC work calls ufshcd_rpm_get_sync() to wait for runtime resume.
+UFS link is just put into hibern8 state during the 'freeze' process of the
+hibernation. Afterwards, the system may get powered down. But that doesn't
+matter during wakeup. Because during wakeup from hibernation, UFS link is
+again put into hibern8 state by the restore kernel and then the control is
+handed over to the to image kernel.
 
-Here is deadlock backtrace:
+So in both the places, UFS link is never turned OFF. But
+ufshcd_system_restore() just assumes that the link will be in OFF state and
+sets the link state accordingly. And this breaks hibernation wakeup:
 
-kworker/0:1     D 4892.876354 10 10971 4859 0x4208060 0x8 10 0 120 670730152367
-ptr            f0ffff80c2e40000 0 1 0x00000001 0x000000ff 0x000000ff 0x000000ff
-<ffffffee5e71ddb0> __switch_to+0x1a8/0x2d4
-<ffffffee5e71e604> __schedule+0x684/0xa98
-<ffffffee5e71ea60> schedule+0x48/0xc8
-<ffffffee5e725f78> schedule_timeout+0x48/0x170
-<ffffffee5e71fb74> do_wait_for_common+0x108/0x1b0
-<ffffffee5e71efe0> wait_for_completion+0x44/0x60
-<ffffffee5d6de968> __flush_work+0x39c/0x424
-<ffffffee5d6decc0> __cancel_work_sync+0xd8/0x208
-<ffffffee5d6dee2c> cancel_delayed_work_sync+0x14/0x28
-<ffffffee5e2551b8> __ufshcd_wl_suspend+0x19c/0x480
-<ffffffee5e255fb8> ufshcd_wl_runtime_suspend+0x3c/0x1d4
-<ffffffee5dffd80c> scsi_runtime_suspend+0x78/0xc8
-<ffffffee5df93580> __rpm_callback+0x94/0x3e0
-<ffffffee5df90b0c> rpm_suspend+0x2d4/0x65c
-<ffffffee5df91448> __pm_runtime_suspend+0x80/0x114
-<ffffffee5dffd95c> scsi_runtime_idle+0x38/0x6c
-<ffffffee5df912f4> rpm_idle+0x264/0x338
-<ffffffee5df90f14> __pm_runtime_idle+0x80/0x110
-<ffffffee5e24ce44> ufshcd_rtc_work+0x128/0x1e4
-<ffffffee5d6e3a40> process_one_work+0x26c/0x650
-<ffffffee5d6e65c8> worker_thread+0x260/0x3d8
-<ffffffee5d6edec8> kthread+0x110/0x134
-<ffffffee5d616b18> ret_from_fork+0x10/0x20
+[ 2445.371335] phy phy-1d87000.phy.3: phy_power_on was called before phy_init
+[ 2445.427883] ufshcd-qcom 1d84000.ufshc: Controller enable failed
+[ 2445.427890] ufshcd-qcom 1d84000.ufshc: ufshcd_host_reset_and_restore: Host init failed -5
+[ 2445.427906] ufs_device_wlun 0:0:0:49488: ufshcd_wl_resume failed: -5
+[ 2445.427918] ufs_device_wlun 0:0:0:49488: PM: dpm_run_callback(): scsi_bus_restore returns -5
+[ 2445.427973] ufs_device_wlun 0:0:0:49488: PM: failed to restore async: error -5
 
-Skip updating RTC if RPM state is not RPM_ACTIVE.
+So fix the issue by removing the code that sets the link to OFF state.
 
-Fixes: 6bf999e0eb41 ("scsi: ufs: core: Add UFS RTC support")
-Cc: stable@vger.kernel.org # 6.9.x
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://lore.kernel.org/r/20240715063831.29792-1-peter.wang@mediatek.com
-Reviewed-by: Bean Huo <beanhuo@micron.com>
+Cc: Anjana Hari <quic_ahari@quicinc.com>
+Cc: stable@vger.kernel.org # 6.3
+Fixes: 88441a8d355d ("scsi: ufs: core: Add hibernation callbacks")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20240718170659.201647-1-manivannan.sadhasivam@linaro.org
 Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd-priv.h |    5 +++++
- drivers/ufs/core/ufshcd.c      |    5 ++++-
- 2 files changed, 9 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/drivers/ufs/core/ufshcd-priv.h
-+++ b/drivers/ufs/core/ufshcd-priv.h
-@@ -329,6 +329,11 @@ static inline int ufshcd_rpm_get_sync(st
- 	return pm_runtime_get_sync(&hba->ufs_device_wlun->sdev_gendev);
- }
- 
-+static inline int ufshcd_rpm_get_if_active(struct ufs_hba *hba)
-+{
-+	return pm_runtime_get_if_active(&hba->ufs_device_wlun->sdev_gendev);
-+}
-+
- static inline int ufshcd_rpm_put_sync(struct ufs_hba *hba)
- {
- 	return pm_runtime_put_sync(&hba->ufs_device_wlun->sdev_gendev);
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -8171,7 +8171,10 @@ static void ufshcd_update_rtc(struct ufs
+@@ -10223,9 +10223,6 @@ int ufshcd_system_restore(struct device
  	 */
- 	val = ts64.tv_sec - hba->dev_info.rtc_time_baseline;
+ 	ufshcd_readl(hba, REG_UTP_TASK_REQ_LIST_BASE_H);
  
--	ufshcd_rpm_get_sync(hba);
-+	/* Skip update RTC if RPM state is not RPM_ACTIVE */
-+	if (ufshcd_rpm_get_if_active(hba) <= 0)
-+		return;
-+
- 	err = ufshcd_query_attr(hba, UPIU_QUERY_OPCODE_WRITE_ATTR, QUERY_ATTR_IDN_SECONDS_PASSED,
- 				0, 0, &val);
- 	ufshcd_rpm_put_sync(hba);
+-	/* Resuming from hibernate, assume that link was OFF */
+-	ufshcd_set_link_off(hba);
+-
+ 	return 0;
+ 
+ }
 
 
