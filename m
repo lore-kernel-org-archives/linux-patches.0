@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C58187347;
-	Mon, 12 Aug 2024 16:10:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02EF183CD9;
+	Mon, 12 Aug 2024 16:10:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479019; cv=none; b=laG4aCjoNm9HBMIl0nU+UTR8J631v8DKlwZpvLSKPfPgkEnzh5xeC7byNprax+c5usqUPTGVR0ww1wkl2tcIa9u3CLMoeVLMgqDPXBQ42OolDdiVzWMHpLj7BD8H1F+fYwHa2ct0wsYarkU0KtZjbOvpAFwpLT7WhAl+x3JOVXo=
+	t=1723479022; cv=none; b=q172iLK749JGSlJdS5/JL3hkAWmoXx5Yxv1nJNMr8EtSxaIOJjKe3nTgFLUAGxOySu7kDGLdTK5n5IqNj7iYvp26aXSjatGEe+R8kNvcVO409Qh76DapwnLN9nZp6V6QA8SlQ0xQBLMKkb6PsxMWH4uPJr6SlkolqLhEgq4VU5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479019; c=relaxed/simple;
-	bh=5VpuwUlATsGVhWW7vYhW8xVtVG0Ynunxv3s507DD2GQ=;
+	s=arc-20240116; t=1723479022; c=relaxed/simple;
+	bh=OcvdtBAXjDP6IyosCMpEBFWDUQS2ObuwIm9+QvfO8Hs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mu447IIslV/sFoQShPFeALsvi0EA2la0SrekYWQZOhwbaszjm/UWlf+yLmQyK8ArvupWx9z3EjBT4oqfWog6hIv2L85He8htEyVRurODA0we/vkpgHdmJyRDIClMobWkgHlYnlXuc9PHzpnT8cPqewcTgRy8S93BVkFva9MNlNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=llOk2g+v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BUtE79+jx5TBc5l2tnQJfH98cTAR3Um2DmHDKti1uWlI2lYlX4YTlcdSYqPy8icuSbbqiuimWBRP911VTu4E0CCuXLI3691gTWf8+8H8gP/iEbJi6DZVk7xHSH1s5YJMK4TnAVjW+rVstcGrgTzyemB6JaGnQaFPHgWyIPLFocA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nsmOZl4n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="llOk2g+v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8641CC32782;
-	Mon, 12 Aug 2024 16:10:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nsmOZl4n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2462C32782;
+	Mon, 12 Aug 2024 16:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479019;
-	bh=5VpuwUlATsGVhWW7vYhW8xVtVG0Ynunxv3s507DD2GQ=;
+	s=korg; t=1723479022;
+	bh=OcvdtBAXjDP6IyosCMpEBFWDUQS2ObuwIm9+QvfO8Hs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=llOk2g+vgL80GkRnyCeoQFXFM6OCFfUsZzHRDndBzhiKmJ6DCj9NGaCM6RKO565uK
-	 Oc0VCEE0v9V3HbWgHSFO1f1jIGrL5pIhebqfSMlo7g2mUNkuqUuugtPZXP6TVeZwmy
-	 DgXfmLFyj5Sd5KL9SmUc/nlAC9hlPYnBLt+mija8=
+	b=nsmOZl4nzx77yyRxWCq3zEDotv+6D/pNQ5JUGGnff8zm2rv+17m6dWncMqKiwl1Lq
+	 oZyPKF75sjlFIJgSwZZfd+BMv55PF6nLfUdxngVwYjFjJHZuO801feF6LO+hY1ZFZi
+	 7hMLgDJgRiob+8GOibBXqg7kSuvS+H3ihlBzG/Gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 108/150] timekeeping: Fix bogus clock_was_set() invocation in do_adjtimex()
-Date: Mon, 12 Aug 2024 18:03:09 +0200
-Message-ID: <20240812160129.329056838@linuxfoundation.org>
+	"Dustin L. Howett" <dustin@howett.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 091/150] ALSA: hda/realtek: Add Framework Laptop 13 (Intel Core Ultra) to quirks
+Date: Mon, 12 Aug 2024 18:02:52 +0200
+Message-ID: <20240812160128.676794744@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -49,40 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Dustin L. Howett <dustin@howett.net>
 
-commit 5916be8a53de6401871bdd953f6c60237b47d6d3 upstream.
+commit eb91c456f3714c336f0812dccab422ec0e72bde4 upstream.
 
-The addition of the bases argument to clock_was_set() fixed up all call
-sites correctly except for do_adjtimex(). This uses CLOCK_REALTIME
-instead of CLOCK_SET_WALL as argument. CLOCK_REALTIME is 0.
+The Framework Laptop 13 (Intel Core Ultra) has an ALC285 that ships in a
+similar configuration to the ALC295 in previous models. It requires the
+same quirk for headset detection.
 
-As a result the effect of that clock_was_set() notification is incomplete
-and might result in timers expiring late because the hrtimer code does
-not re-evaluate the affected clock bases.
-
-Use CLOCK_SET_WALL instead of CLOCK_REALTIME to tell the hrtimers code
-which clock bases need to be re-evaluated.
-
-Fixes: 17a1b8826b45 ("hrtimer: Add bases argument to clock_was_set()")
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/877ccx7igo.ffs@tglx
+Signed-off-by: Dustin L. Howett <dustin@howett.net>
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240806-alsa-hda-realtek-add-framework-laptop-13-intel-core-ultra-to-quirks-v1-1-42d6ce2dbf14@howett.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/timekeeping.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/time/timekeeping.c
-+++ b/kernel/time/timekeeping.c
-@@ -2476,7 +2476,7 @@ int do_adjtimex(struct __kernel_timex *t
- 		clock_set |= timekeeping_advance(TK_ADV_FREQ);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -10173,6 +10173,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x8086, 0x3038, "Intel NUC 13", ALC295_FIXUP_CHROME_BOOK),
+ 	SND_PCI_QUIRK(0xf111, 0x0001, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0xf111, 0x0006, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
++	SND_PCI_QUIRK(0xf111, 0x0009, "Framework Laptop", ALC295_FIXUP_FRAMEWORK_LAPTOP_MIC_NO_PRESENCE),
  
- 	if (clock_set)
--		clock_was_set(CLOCK_REALTIME);
-+		clock_was_set(CLOCK_SET_WALL);
- 
- 	ntp_notify_cmos_timer();
- 
+ #if 0
+ 	/* Below is a quirk table taken from the old code.
 
 
