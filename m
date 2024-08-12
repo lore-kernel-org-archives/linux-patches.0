@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68EA91494B8;
-	Mon, 12 Aug 2024 16:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD1B1494B8;
+	Mon, 12 Aug 2024 16:17:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479444; cv=none; b=a/LqYIorXcxfkIL70RX9oDp688BnftCrw48rcVvVD1pdcEP3439iYcZ4WclK9d4dLD8i4PMQUjVuBJHZSrEQL+UO713wM5muER5aXBYW1ecEbgBltI/rBauxe2v5Dz4KwhTmMsvKaaEHWGS4QIRdrHyr/GsJ1n7ygzuqPjzcGhs=
+	t=1723479447; cv=none; b=ZdszYs86naIQw5CHEg24QmepTSsDdWvT7GhrWu9Heo1/elFoBbxKFCKA0VekrUn3fTYSwKm1Iqx/kWRtWOssKPUuzfcRNT48ewYTPuOdLU1V2vrb7+GRammvUFjmOY+Licz33qdXt8+0GgHw3J81sU4pHUsywEmYiLeL7VueU2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479444; c=relaxed/simple;
-	bh=bMbyHEMIf7Zv4WimT+cce7dtJ8EkNDmDxm9p48eo8iY=;
+	s=arc-20240116; t=1723479447; c=relaxed/simple;
+	bh=vP71aW1QqQOcoOdjz5ygJpiLiTFNo7kT4xRDjiU3RWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lU7cEsi9eynwjEaoNg6kzSHPqO5B+GxthYyCzdnnpTLt5hJYh/JhBHRIefJ8gJuPQoCm4R9K9CBCecC3t3XEsI4acGS7tbuUnaQnQ1xZKN9mdsNdFkWlh58TNGmaw5ygrxjQqlcs7dnqXujxQw58iWpuG/sllkB6kuKdRVzaUzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uQwJedvo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WlDEB3q7k99lsxuDNyoM0XZNaG50UvFNgHSmtlh82ZnTgi4JLOkmI7gpmVENHoumfc9grDTJLMo1xOfIUWytCwUv9L5DzhdDSNF2vKe89DxXF6C3jTUx3zOMEY5480kseW/B7AVpz6uv28wCIAVF8i102ABXcb1wvGvfwZzSFxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ItHQbzno; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uQwJedvo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC840C32782;
-	Mon, 12 Aug 2024 16:17:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ItHQbzno"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CD67C32782;
+	Mon, 12 Aug 2024 16:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479444;
-	bh=bMbyHEMIf7Zv4WimT+cce7dtJ8EkNDmDxm9p48eo8iY=;
+	s=korg; t=1723479447;
+	bh=vP71aW1QqQOcoOdjz5ygJpiLiTFNo7kT4xRDjiU3RWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQwJedvo+9+PHzquDM0AIcLBs2JHqD4Bh/jHqgKUSXucGI/Y/cLiCzjd4SN/ifrTo
-	 kjfpMQ2SDtRJUzYoPn1yzYqOjalgk+/nj5hTPDPnNLB2jpO6aRpmNw2uZDEgAen0PP
-	 dPk6SjElFGKlQ/JAcKL+2lJGlJqD0ten/8lOW5nA=
+	b=ItHQbznoqT1PwR7ejE3GkaFtRyrh+VmcHAfklKDl/889ugL3z9W35rJXkrjfvnI6i
+	 uZkRAXjlVBACnvWMRfCLxqzAIezMNP7FzF/9JJ2JCA9of3wDMb/UTrwtbUoXPt9RPd
+	 WlmpQ4JyeSibUIPmzZfSldgsCPIbKxPMmEhaUUQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 062/189] media: uvcvideo: Fix the bandwdith quirk on USB 3.x
-Date: Mon, 12 Aug 2024 18:01:58 +0200
-Message-ID: <20240812160134.530076493@linuxfoundation.org>
+Subject: [PATCH 6.6 089/189] ASoC: codecs: wsa881x: Correct Soundwire ports mask
+Date: Mon, 12 Aug 2024 18:02:25 +0200
+Message-ID: <20240812160135.567503909@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,50 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 9e3d55fbd160b3ca376599a68b4cddfdc67d4153 ]
+[ Upstream commit eb11c3bb64ad0a05aeacdb01039863aa2aa3614b ]
 
-The bandwidth fixup quirk doesn't know that SuperSpeed exists and has
-the same 8 service intervals per millisecond as High Speed, hence its
-calculations are wrong.
+Device has up to WSA881X_MAX_SWR_PORTS number of ports and the array
+assigned to prop.sink_dpn_prop has 0..WSA881X_MAX_SWR_PORTS-1 elements.
+On the other hand, GENMASK(high, low) creates an inclusive mask between
+<high, low>, so we need the mask from 0 up to WSA881X_MAX_SWR_PORTS-1.
 
-Assume that all speeds from HS up use 8 intervals per millisecond.
+Theoretically, too wide mask could cause an out of bounds read in
+sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
+driver, e.g. adding incorrect number of ports via
+sdw_stream_add_slave().
 
-No further changes are needed, updated code has been confirmed to work
-with all speeds from FS to SS.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240414190040.2255a0bc@foxbook
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: a0aab9e1404a ("ASoC: codecs: add wsa881x amplifier support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-4-d4d7a8b56f05@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/codecs/wsa881x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 3e9fdb9192540..91c350b254126 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -214,13 +214,13 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
- 		 * Compute a bandwidth estimation by multiplying the frame
- 		 * size by the number of video frames per second, divide the
- 		 * result by the number of USB frames (or micro-frames for
--		 * high-speed devices) per second and add the UVC header size
--		 * (assumed to be 12 bytes long).
-+		 * high- and super-speed devices) per second and add the UVC
-+		 * header size (assumed to be 12 bytes long).
- 		 */
- 		bandwidth = frame->wWidth * frame->wHeight / 8 * format->bpp;
- 		bandwidth *= 10000000 / interval + 1;
- 		bandwidth /= 1000;
--		if (stream->dev->udev->speed == USB_SPEED_HIGH)
-+		if (stream->dev->udev->speed >= USB_SPEED_HIGH)
- 			bandwidth /= 8;
- 		bandwidth += 12;
- 
+diff --git a/sound/soc/codecs/wsa881x.c b/sound/soc/codecs/wsa881x.c
+index 1253695bebd86..53b828f681020 100644
+--- a/sound/soc/codecs/wsa881x.c
++++ b/sound/soc/codecs/wsa881x.c
+@@ -1152,7 +1152,7 @@ static int wsa881x_probe(struct sdw_slave *pdev,
+ 	wsa881x->sconfig.frame_rate = 48000;
+ 	wsa881x->sconfig.direction = SDW_DATA_DIR_RX;
+ 	wsa881x->sconfig.type = SDW_STREAM_PDM;
+-	pdev->prop.sink_ports = GENMASK(WSA881X_MAX_SWR_PORTS, 0);
++	pdev->prop.sink_ports = GENMASK(WSA881X_MAX_SWR_PORTS - 1, 0);
+ 	pdev->prop.sink_dpn_prop = wsa_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+ 	pdev->prop.clk_stop_mode1 = true;
 -- 
 2.43.0
 
