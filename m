@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D8311862B4;
-	Mon, 12 Aug 2024 16:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914F11862B9;
+	Mon, 12 Aug 2024 16:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479231; cv=none; b=mCGHtK3QSPS3BgEMxqj6jDuDeNpPzb0hia6QED1Wjef3smGd4BVOQWoGR343Ch0uJaALdHvkpfItWgeyQLhlMZ3SEqzI/lRX4N3aSPtymd+UGJhuXqcU7oUagrFrwHvnbdNryx1exh6MT66wCNz/G1gTpi8rMHSAQf+w76muLa8=
+	t=1723479234; cv=none; b=AlK8jqi8WH4F3dHnFb++CZ1P+v+ECqymcYCtkutgKpRdc90aP54eQt2R57ECYYeSAEKmB1zKArDsVlmsnItguLoWg2elRHeLKpsyfFRzqWYy62AXBaCNmaUjquAiINLptvQqFUwCK0F/+cF+0qjPg27V7zgagwTp2FHQOIfnyj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479231; c=relaxed/simple;
-	bh=hosxNisfAjYW4ZVdVwG4DdcKcIx1yqycuyJeEw6LOrA=;
+	s=arc-20240116; t=1723479234; c=relaxed/simple;
+	bh=iPFhmMXbES1rP3eVCtBklbIL/0iFV0Lf7VdxWt1VWjo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rKlmznw7wNtjt5A70lTiDaMEv5sQVY5DVGocy7GyYUrUbqR7NkwPv/6b5RBPE1Sptc2bX9TQtmpicCxAAwJpA3tYeJq6H/+cjkVJ25xboFVQPHhB8o6j8JPrL6lK8JMmmNgXG3YLMxuztEjgvNB83+q5XAkhOP8PypWM05bnnOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MwuwoBEe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=b42ii+jxGAMVybR3iSkeZIu3fX0qD6ylGUcG15PIUFbHGKK9Cy3haLeWFaTyrerNXe6BprRn+3j6RzJmKGKCOweNjIofGK0ECmY2WOk8/NmPWvZJZ3GX8CDGd2iOxzhxyg5OHK1NbGzELxjCkMVZ2EUyKWF3E0KoRntH2lwy8Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCHoqXdR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MwuwoBEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF06C32782;
-	Mon, 12 Aug 2024 16:13:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCHoqXdR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D612BC32782;
+	Mon, 12 Aug 2024 16:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479231;
-	bh=hosxNisfAjYW4ZVdVwG4DdcKcIx1yqycuyJeEw6LOrA=;
+	s=korg; t=1723479234;
+	bh=iPFhmMXbES1rP3eVCtBklbIL/0iFV0Lf7VdxWt1VWjo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MwuwoBEehiF4cbaDEHXsIUoPuUAzYcrr3jySniBM6TN0W1aRv8wV8mfW9AoerjYep
-	 NW9I7XFbNb2DPHHmXPhQJ2AoowfWGkEupapvhTjz6K7p958L2qD7uIub7eWqOa8bwx
-	 4KM+8iQmM/US7+W2ul/51V/IiWccgjuSnlEZW1A0=
+	b=NCHoqXdRUMmkm/mvFZmtasLQAQ3/ZHGetvvN0wcTZRreC2YSnobmZa40wcjhXhDa5
+	 mdgitww3FKgt0VzItEQuOkmKB+lAEXebbZRv4YU5xbE4RZKAu3uWiom8iJIVF0w6Zx
+	 E+MJ7KFEA98hkQI9ZwucixgUg5D+3jBvoyA37qow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Frank Li <Frank.Li@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 022/189] net: bcmgenet: Properly overlay PHY and MAC Wake-on-LAN capabilities
-Date: Mon, 12 Aug 2024 18:01:18 +0200
-Message-ID: <20240812160132.998302999@linuxfoundation.org>
+Subject: [PATCH 6.6 023/189] net: fec: Stop PPS on driver remove
+Date: Mon, 12 Aug 2024 18:01:19 +0200
+Message-ID: <20240812160133.036690102@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -45,59 +49,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Fainelli <florian.fainelli@broadcom.com>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit 9ee09edc05f20422e7ced84b1f8a5d3359926ac8 ]
+[ Upstream commit 8fee6d5ad5fa18c270eedb2a2cdf58dbadefb94b ]
 
-Some Wake-on-LAN modes such as WAKE_FILTER may only be supported by the MAC,
-while others might be only supported by the PHY. Make sure that the .get_wol()
-returns the union of both rather than only that of the PHY if the PHY supports
-Wake-on-LAN.
+PPS was not stopped in `fec_ptp_stop()`, called when
+the adapter was removed. Consequentially, you couldn't
+safely reload the driver with the PPS signal on.
 
-Fixes: 7e400ff35cbe ("net: bcmgenet: Add support for PHY-based Wake-on-LAN")
-Signed-off-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20240806175659.3232204-1-florian.fainelli@broadcom.com
+Fixes: 32cba57ba74b ("net: fec: introduce fec_ptp_stop and use in probe fail path")
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Link: https://lore.kernel.org/netdev/CAOMZO5BzcZR8PwKKwBssQq_wAGzVgf1ffwe_nhpQJjviTdxy-w@mail.gmail.com/T/#m01dcb810bfc451a492140f6797ca77443d0cb79f
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20240807080956.2556602-1-csokas.bence@prolan.hu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/freescale/fec_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-index 1248792d7fd4d..0715ea5bf13ed 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -42,19 +42,15 @@ void bcmgenet_get_wol(struct net_device *dev, struct ethtool_wolinfo *wol)
- 	struct bcmgenet_priv *priv = netdev_priv(dev);
- 	struct device *kdev = &priv->pdev->dev;
+diff --git a/drivers/net/ethernet/freescale/fec_ptp.c b/drivers/net/ethernet/freescale/fec_ptp.c
+index e32f6724f5681..2e4f3e1782a25 100644
+--- a/drivers/net/ethernet/freescale/fec_ptp.c
++++ b/drivers/net/ethernet/freescale/fec_ptp.c
+@@ -775,6 +775,9 @@ void fec_ptp_stop(struct platform_device *pdev)
+ 	struct net_device *ndev = platform_get_drvdata(pdev);
+ 	struct fec_enet_private *fep = netdev_priv(ndev);
  
--	if (dev->phydev) {
-+	if (dev->phydev)
- 		phy_ethtool_get_wol(dev->phydev, wol);
--		if (wol->supported)
--			return;
--	}
- 
--	if (!device_can_wakeup(kdev)) {
--		wol->supported = 0;
--		wol->wolopts = 0;
-+	/* MAC is not wake-up capable, return what the PHY does */
-+	if (!device_can_wakeup(kdev))
- 		return;
--	}
- 
--	wol->supported = WAKE_MAGIC | WAKE_MAGICSECURE | WAKE_FILTER;
-+	/* Overlay MAC capabilities with that of the PHY queried before */
-+	wol->supported |= WAKE_MAGIC | WAKE_MAGICSECURE | WAKE_FILTER;
- 	wol->wolopts = priv->wolopts;
- 	memset(wol->sopass, 0, sizeof(wol->sopass));
- 
++	if (fep->pps_enable)
++		fec_ptp_enable_pps(fep, 0);
++
+ 	cancel_delayed_work_sync(&fep->time_keep);
+ 	hrtimer_cancel(&fep->perout_timer);
+ 	if (fep->ptp_clock)
 -- 
 2.43.0
 
