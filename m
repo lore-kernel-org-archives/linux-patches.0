@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6E1183CA6;
-	Mon, 12 Aug 2024 16:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E790183CA6;
+	Mon, 12 Aug 2024 16:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479152; cv=none; b=d3iiCrlfsi6WH7X2NsLs//DA64f32hSF+bbjUGTI+JE2h8Gxa3OfGpiFdm7mzmGrVBiON7rdnxB9vRrTAtbQvP2SH/+Jdma8zMR7wg1Y2MaZWpeMLmCPsazdFEWRdpa4L3BcDu8wRpXkZH8szZR+FjwqW7VWoKRlmgwZrZCdjD0=
+	t=1723479156; cv=none; b=dVubYnQsrde/7o9o4Gdv6yJyqwqAjw32kSpP32Fw6wJItUWXon3bPosqoBamBpysvKUR/X+T3zfJ7mKQvnA6CttdLLskTeoux4ZXitgFr0PCswLEU37CRD4kDx5bD3RTA8ru3PDvF2Y60hezyVHtStJX45fCCVrnCIOwR5rCHgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479152; c=relaxed/simple;
-	bh=5lbgN162dv0nfYhpDxBC4QgG8fDtzqOfJdGwNEc3Pk4=;
+	s=arc-20240116; t=1723479156; c=relaxed/simple;
+	bh=GFmDbnhAZ8UJL3nSVhU/gdZQ8K3p+iLSDC6MGzihgnY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5iPnyzMOTVqmK4c02WXcW7yecdPgv6s/zsOYTpVScTd9878y0QFsKXAg4DvHtE9IHfTcAfIXcNvkylCfJGPv+y28lAMhnQWJcQxdTTkK/HP7wmcnEf6X0/eXqkytF+9LKx+ykVbIHHIFIo7QZdMiufLdZTW9TY2x3J8EtZN7oI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bG4S93FK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JVT5CpVpQimunzlMC1X5S1ZAZRMCPslH9ttmnKfTljtw9DNbdivCZ3tMvdfFnzdiTybOtRwiW0V9Yevb1kgA3eaSZ7i+oCOoxZ5Q9GyP+FtCn48B3WXNlxrntsdlVcMjZ3eqaksZieWLh/Ff2rcXqOHP+UX5cIu+8ygC6SAQ3Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r6JO51FN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bG4S93FK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 466DCC32782;
-	Mon, 12 Aug 2024 16:12:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r6JO51FN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2133C32782;
+	Mon, 12 Aug 2024 16:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479152;
-	bh=5lbgN162dv0nfYhpDxBC4QgG8fDtzqOfJdGwNEc3Pk4=;
+	s=korg; t=1723479156;
+	bh=GFmDbnhAZ8UJL3nSVhU/gdZQ8K3p+iLSDC6MGzihgnY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bG4S93FKYCVq5LGm4re86faCu7duhUnMWmDxisMyav9bp6UULTGm25VSt5nSVbbcU
-	 kIDuWDLLgaxiU1Ml+ZlyY50X9q7t2y7wXwjNQhWeECAHmEdv+ozKBKG63hiYNYLU9B
-	 HjpOaI984OH2cg5Ru3kSIjMYNqs9vDaLidb7P8Oo=
+	b=r6JO51FNpSqIU+RnpZHIL7QYyOlCArt9bmR4dwfFEzCcMWk75xqKqSSopgwmtkOkP
+	 wzNmXjz9g/WtKVozkkliKJ8oD4HkwIyFaun2NolgKoL7SFwMfBCGzHpxJ4stcgqW2j
+	 scT9jomyYc9v+KjoCMrP0NIWKAhw7EDA2Ur8VZsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 6.1 149/150] i2c: qcom-geni: fix missing clk_disable_unprepare() and geni_se_resources_off()
-Date: Mon, 12 Aug 2024 18:03:50 +0200
-Message-ID: <20240812160130.918897848@linuxfoundation.org>
+	syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 150/150] btrfs: fix double inode unlock for direct IO sync writes
+Date: Mon, 12 Aug 2024 18:03:51 +0200
+Message-ID: <20240812160130.956350577@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -51,53 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 043465b66506e8c647cdd38a2db1f2ee0f369a1b upstream.
+commit e0391e92f9ab4fb3dbdeb139c967dcfa7ac4b115 upstream.
 
-Add missing clk_disable_unprepare() and geni_se_resources_off() in the error
-path in geni_i2c_probe().
+If we do a direct IO sync write, at btrfs_sync_file(), and we need to skip
+inode logging or we get an error starting a transaction or an error when
+flushing delalloc, we end up unlocking the inode when we shouldn't under
+the 'out_release_extents' label, and then unlock it again at
+btrfs_direct_write().
 
-Fixes: 14d02fbadb5d ("i2c: qcom-geni: add desc struct to prepare support for I2C Master Hub variant")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fix that by checking if we have to skip inode unlocking under that label.
+
+Reported-by: syzbot+7dbbb74af6291b5a5a8b@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000dfd631061eaeb4bc@google.com/
+Fixes: 939b656bc8ab ("btrfs: fix corruption after buffer fault in during direct IO append write")
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-qcom-geni.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/btrfs/file.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/i2c/busses/i2c-qcom-geni.c
-+++ b/drivers/i2c/busses/i2c-qcom-geni.c
-@@ -859,6 +859,7 @@ static int geni_i2c_probe(struct platfor
- 	ret = geni_se_resources_on(&gi2c->se);
- 	if (ret) {
- 		dev_err(dev, "Error turning on resources %d\n", ret);
-+		clk_disable_unprepare(gi2c->core_clk);
- 		return ret;
- 	}
- 	proto = geni_se_read_proto(&gi2c->se);
-@@ -878,8 +879,11 @@ static int geni_i2c_probe(struct platfor
- 		/* FIFO is disabled, so we can only use GPI DMA */
- 		gi2c->gpi_mode = true;
- 		ret = setup_gpi_dma(gi2c);
--		if (ret)
-+		if (ret) {
-+			geni_se_resources_off(&gi2c->se);
-+			clk_disable_unprepare(gi2c->core_clk);
- 			return dev_err_probe(dev, ret, "Failed to setup GPI DMA mode\n");
-+		}
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -2037,7 +2037,10 @@ out:
  
- 		dev_dbg(dev, "Using GPI DMA mode for I2C\n");
- 	} else {
-@@ -892,6 +896,8 @@ static int geni_i2c_probe(struct platfor
- 
- 		if (!tx_depth) {
- 			dev_err(dev, "Invalid TX FIFO depth\n");
-+			geni_se_resources_off(&gi2c->se);
-+			clk_disable_unprepare(gi2c->core_clk);
- 			return -EINVAL;
- 		}
+ out_release_extents:
+ 	btrfs_release_log_ctx_extents(&ctx);
+-	btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
++	if (skip_ilock)
++		up_write(&BTRFS_I(inode)->i_mmap_lock);
++	else
++		btrfs_inode_unlock(inode, BTRFS_ILOCK_MMAP);
+ 	goto out;
+ }
  
 
 
