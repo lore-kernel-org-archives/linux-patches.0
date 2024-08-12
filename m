@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F91186E36;
-	Mon, 12 Aug 2024 16:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FA915C127;
+	Mon, 12 Aug 2024 16:36:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480578; cv=none; b=Gur3FFH128Tp/NQ/mORK0f50qufgBLGx5gpHAH5NMvh8AQ9BJXxdj5s4sipVWJYtyQmDmo8syUq3uBlojSQZf2WZCvMpnywu/X2FYoSZjlgWCYpEO3bPCbQSzzzbFVfvtSCJipfljluXLZRb77dS/pAYLQLNmetyqFJX+dddbbA=
+	t=1723480580; cv=none; b=CIIR4OkFO6KPBZhVE0VvkSJfumWIwSrncDLVpU3mkBus43sImab3g5Avj7SUXd1/9UycQA7t6C2NTwMNO3VMmvqOOL4VElLnZwqIbGiB8+gQ5R8JJz2hkBREXvYA0Llo49aqRI8NVEWK7z3DuCSY5waAKCzyA/LDQ8jXqVgXyq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480578; c=relaxed/simple;
-	bh=teMc66VdP/vOekXqs0z68h54vDaTxfjt2lq7HMF0pkE=;
+	s=arc-20240116; t=1723480580; c=relaxed/simple;
+	bh=3sDICfwqOPc2774+Yw/bsYRwAjOjm+mDKDlIbZICblU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmdgYhxppxio278Sb7MvuDtyXySVQafuXLVQGOJFJkc3pNJcOpDUHiNSBQnDKHHjxQOmXOr52JRDyEGcH5zp/8Hh5BIvLXGCIOYAWOb+CMP1Yr7BybXiRjzNwv7fS97SljuCgZeJapg/VlW28yq9FJ8ZoSPStCwNJtNANV+q+Ok=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BOoBSXxH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JeCNsYM95Q+qV2cosVyT6yq1baXd5qhbHI4wfWtlAfJktchOdU7AwMfnJ3ronxuuXVioJygRfblokr5snXu3esDVesM3k2zGFIFYSMyYPuV/tpfBq8mAK9QL87HNVp3Vkv+Ag6uOYTHOaFj3aMOwnAi/4oLY0JCBHzNmGzaKzyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kyuB7EXE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BOoBSXxH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30532C32782;
-	Mon, 12 Aug 2024 16:36:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kyuB7EXE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C70FC32782;
+	Mon, 12 Aug 2024 16:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480577;
-	bh=teMc66VdP/vOekXqs0z68h54vDaTxfjt2lq7HMF0pkE=;
+	s=korg; t=1723480580;
+	bh=3sDICfwqOPc2774+Yw/bsYRwAjOjm+mDKDlIbZICblU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOoBSXxHZrK1zgWRORDUSKf3aQOvw34IFtBfl9uon1nrr93yHtg+tyo6PnpLSXDIr
-	 Wdd9GbhGyTpymTjJhCaQEhvnevZoCc5rbFCEhcaF1bOEmU0N4JVNQwXPYyJ0ogxbMb
-	 Y2Sl4D6+Qmdk4EmnIvdSuDy3Oi45ZKsoq4ObxZME=
+	b=kyuB7EXEKl/MRWtwOGzzlTzgH1J3/a6DYJAl9lEmeUKLsk8gK7mc0s3xPj8PoHOu9
+	 mb1pspZCfuyxwl0gHEnJ+GyxYmWbRtJqQwCAxQlktMx4h05BK6z7CyxwAYIIM6GlF6
+	 93IBU4Y68kmm3tb/nO0UWi59s4dv4zJ0t1ANyKo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable@kernel.org,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.10 238/263] sched/smt: Introduce sched_smt_present_inc/dec() helper
-Date: Mon, 12 Aug 2024 18:03:59 +0200
-Message-ID: <20240812160155.646129753@linuxfoundation.org>
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Chen Yu <yu.c.chen@intel.com>,
+	Tim Chen <tim.c.chen@linux.intel.com>
+Subject: [PATCH 6.10 239/263] sched/smt: Fix unbalance sched_smt_present dec/inc
+Date: Mon, 12 Aug 2024 18:04:00 +0200
+Message-ID: <20240812160155.684829713@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,75 +55,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 31b164e2e4af84d08d2498083676e7eeaa102493 upstream.
+commit e22f910a26cc2a3ac9c66b8e935ef2a7dd881117 upstream.
 
-Introduce sched_smt_present_inc/dec() helper, so it can be called
-in normal or error path simply. No functional changed.
+I got the following warn report while doing stress test:
 
+jump label: negative count!
+WARNING: CPU: 3 PID: 38 at kernel/jump_label.c:263 static_key_slow_try_dec+0x9d/0xb0
+Call Trace:
+ <TASK>
+ __static_key_slow_dec_cpuslocked+0x16/0x70
+ sched_cpu_deactivate+0x26e/0x2a0
+ cpuhp_invoke_callback+0x3ad/0x10d0
+ cpuhp_thread_fun+0x3f5/0x680
+ smpboot_thread_fn+0x56d/0x8d0
+ kthread+0x309/0x400
+ ret_from_fork+0x41/0x70
+ ret_from_fork_asm+0x1b/0x30
+ </TASK>
+
+Because when cpuset_cpu_inactive() fails in sched_cpu_deactivate(),
+the cpu offline failed, but sched_smt_present is decremented before
+calling sched_cpu_deactivate(), it leads to unbalanced dec/inc, so
+fix it by incrementing sched_smt_present in the error path.
+
+Fixes: c5511d03ec09 ("sched/smt: Make sched_smt_present track topology")
 Cc: stable@kernel.org
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240703031610.587047-2-yangyingliang@huaweicloud.com
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Reviewed-by: Tim Chen <tim.c.chen@linux.intel.com>
+Link: https://lore.kernel.org/r/20240703031610.587047-3-yangyingliang@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ kernel/sched/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -9654,6 +9654,22 @@ static int cpuset_cpu_inactive(unsigned
- 	return 0;
- }
- 
-+static inline void sched_smt_present_inc(int cpu)
-+{
-+#ifdef CONFIG_SCHED_SMT
-+	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
-+		static_branch_inc_cpuslocked(&sched_smt_present);
-+#endif
-+}
-+
-+static inline void sched_smt_present_dec(int cpu)
-+{
-+#ifdef CONFIG_SCHED_SMT
-+	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
-+		static_branch_dec_cpuslocked(&sched_smt_present);
-+#endif
-+}
-+
- int sched_cpu_activate(unsigned int cpu)
- {
- 	struct rq *rq = cpu_rq(cpu);
-@@ -9665,13 +9681,10 @@ int sched_cpu_activate(unsigned int cpu)
- 	 */
- 	balance_push_set(cpu, false);
- 
--#ifdef CONFIG_SCHED_SMT
- 	/*
- 	 * When going up, increment the number of cores with SMT present.
- 	 */
--	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
--		static_branch_inc_cpuslocked(&sched_smt_present);
--#endif
-+	sched_smt_present_inc(cpu);
- 	set_cpu_active(cpu, true);
- 
- 	if (sched_smp_initialized) {
-@@ -9740,13 +9753,12 @@ int sched_cpu_deactivate(unsigned int cp
- 	}
- 	rq_unlock_irqrestore(rq, &rf);
- 
--#ifdef CONFIG_SCHED_SMT
- 	/*
- 	 * When going down, decrement the number of cores with SMT present.
- 	 */
--	if (cpumask_weight(cpu_smt_mask(cpu)) == 2)
--		static_branch_dec_cpuslocked(&sched_smt_present);
-+	sched_smt_present_dec(cpu);
- 
-+#ifdef CONFIG_SCHED_SMT
- 	sched_core_cpu_deactivate(cpu);
- #endif
- 
+@@ -9768,6 +9768,7 @@ int sched_cpu_deactivate(unsigned int cp
+ 	sched_update_numa(cpu, false);
+ 	ret = cpuset_cpu_inactive(cpu);
+ 	if (ret) {
++		sched_smt_present_inc(cpu);
+ 		balance_push_set(cpu, false);
+ 		set_cpu_active(cpu, true);
+ 		sched_update_numa(cpu, true);
 
 
