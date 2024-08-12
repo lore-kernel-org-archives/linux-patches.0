@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67BD52B9B5;
-	Mon, 12 Aug 2024 16:30:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E3716D9B8;
+	Mon, 12 Aug 2024 16:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480208; cv=none; b=DrHFWYw533Rdzf/xN27X9uuZtZ8rgFvFpSYdhaYB4dAcz4+TyYg/iSOmV+B4bcR63bToqBcbopc36vWpdWoR626/8UEU6MUgNme3kyD5PcuEtgXqViee2V5JbT+6RaSQG7V7gMyuLVb/Rgn5FdoVkb9Oc0bKDApEFGdPtLigBQc=
+	t=1723480211; cv=none; b=XwLmAQ2dSJW9k4yytpLgM7ARgUaexAnTlzMrBB+Uxrcj4qLlLKYokJ4WSL9zqfMEQp1Ih4WaYSzq4I3PdWs4h9MBRjjNUCAKs66/To9ctVTjKQzvflYoReqeE9Pyn6QGCZE8A0A7uLZCjcKqoyq3gxZUzM+3ELiKKHOqpyZSIQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480208; c=relaxed/simple;
-	bh=GeQmMdESGPobfQIrEGr1r5c0h7bnkhY+NqEHjS68e2Q=;
+	s=arc-20240116; t=1723480211; c=relaxed/simple;
+	bh=X9WkelJvSOTAFS80uK8LMoQ8ix3KwAYFBe4OmB7DoOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eEUkL6FOd7EKHXA58K5tfanXuTmTWAi459mn1SfqaBFhfQULVQmfE2LuOkvKRE5BWhKI+L+OW/X5OlShJlwfKZPE3khijZSB2I4BEfu0iVG+IBeynCcMqwCLzLSdbwIQtt1QRpMF6RLoW/hdkk5XwnqUgoW3gaRrQIogUAsKmko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EpJaoYqE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WlorvrEKZS4yl0jViq8t29kRoxEP2nZ35TKcD+ydI0iqy+jHWRUI+rg8prZPgbM72u65NGfoWQtj0A7ms27Dl6MBMRgIf5MZGifrhrp4GsejkXb5MM3QlYiTFxVNsvIqej9n4QgHmnRnk0vgs92zZ7uxI+LhFxD8hPOdEyMe6bs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQncYofq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EpJaoYqE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE03CC32782;
-	Mon, 12 Aug 2024 16:30:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQncYofq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02CC9C32782;
+	Mon, 12 Aug 2024 16:30:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480208;
-	bh=GeQmMdESGPobfQIrEGr1r5c0h7bnkhY+NqEHjS68e2Q=;
+	s=korg; t=1723480211;
+	bh=X9WkelJvSOTAFS80uK8LMoQ8ix3KwAYFBe4OmB7DoOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpJaoYqEckkWalGLXHK0OPPkdWwzi1oCBMbKY1Q/4BHUVvbomQy8wW2ZKnw2d31G8
-	 s8nuYk1IIq+GvaGYg+U9XdKrhtyEtNIIP3C26k1o272+E6bV+xF7KFUktesWoJYIMF
-	 D9yDnA8zgo74lh6SSdy0XGHJ+GJqYHTy6ewSpqos=
+	b=oQncYofqCzrMzDdF5WBcUAxgbJ2fR+IzdYmXlLK+zXjTmb/H+Ah03brmTfHOj8ZXn
+	 zJufoIASrWXJ7XCvxkqmcf3sdpA52bk+5ntugkTgLqnVbhMMjLuwHy5Bi3dgN+CHsC
+	 pwSekLKOjmZCdM3HbS11oVNUGvfJPmoMr/xsQo7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.10 128/263] net: drop bad gso csum_start and offset in virtio_net_hdr
-Date: Mon, 12 Aug 2024 18:02:09 +0200
-Message-ID: <20240812160151.450427252@linuxfoundation.org>
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 129/263] arm64: cputype: Add Cortex-X3 definitions
+Date: Mon, 12 Aug 2024 18:02:10 +0200
+Message-ID: <20240812160151.488107760@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,147 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Willem de Bruijn <willemb@google.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-commit 89add40066f9ed9abe5f7f886fe5789ff7e0c50e upstream.
+[ Upstream commit be5a6f238700f38b534456608588723fba96c5ab ]
 
-Tighten csum_start and csum_offset checks in virtio_net_hdr_to_skb
-for GSO packets.
+Add cputype definitions for Cortex-X3. These will be used for errata
+detection in subsequent patches.
 
-The function already checks that a checksum requested with
-VIRTIO_NET_HDR_F_NEEDS_CSUM is in skb linear. But for GSO packets
-this might not hold for segs after segmentation.
+These values can be found in Table A-263 ("MIDR_EL1 bit descriptions")
+in issue 07 of the Cortex-X3 TRM, which can be found at:
 
-Syzkaller demonstrated to reach this warning in skb_checksum_help
+  https://developer.arm.com/documentation/101593/0102/?lang=en
 
-	offset = skb_checksum_start_offset(skb);
-	ret = -EINVAL;
-	if (WARN_ON_ONCE(offset >= skb_headlen(skb)))
-
-By injecting a TSO packet:
-
-WARNING: CPU: 1 PID: 3539 at net/core/dev.c:3284 skb_checksum_help+0x3d0/0x5b0
- ip_do_fragment+0x209/0x1b20 net/ipv4/ip_output.c:774
- ip_finish_output_gso net/ipv4/ip_output.c:279 [inline]
- __ip_finish_output+0x2bd/0x4b0 net/ipv4/ip_output.c:301
- iptunnel_xmit+0x50c/0x930 net/ipv4/ip_tunnel_core.c:82
- ip_tunnel_xmit+0x2296/0x2c70 net/ipv4/ip_tunnel.c:813
- __gre_xmit net/ipv4/ip_gre.c:469 [inline]
- ipgre_xmit+0x759/0xa60 net/ipv4/ip_gre.c:661
- __netdev_start_xmit include/linux/netdevice.h:4850 [inline]
- netdev_start_xmit include/linux/netdevice.h:4864 [inline]
- xmit_one net/core/dev.c:3595 [inline]
- dev_hard_start_xmit+0x261/0x8c0 net/core/dev.c:3611
- __dev_queue_xmit+0x1b97/0x3c90 net/core/dev.c:4261
- packet_snd net/packet/af_packet.c:3073 [inline]
-
-The geometry of the bad input packet at tcp_gso_segment:
-
-[   52.003050][ T8403] skb len=12202 headroom=244 headlen=12093 tailroom=0
-[   52.003050][ T8403] mac=(168,24) mac_len=24 net=(192,52) trans=244
-[   52.003050][ T8403] shinfo(txflags=0 nr_frags=1 gso(size=1552 type=3 segs=0))
-[   52.003050][ T8403] csum(0x60000c7 start=199 offset=1536
-ip_summed=3 complete_sw=0 valid=0 level=0)
-
-Mitigate with stricter input validation.
-
-csum_offset: for GSO packets, deduce the correct value from gso_type.
-This is already done for USO. Extend it to TSO. Let UFO be:
-udp[46]_ufo_fragment ignores these fields and always computes the
-checksum in software.
-
-csum_start: finding the real offset requires parsing to the transport
-header. Do not add a parser, use existing segmentation parsing. Thanks
-to SKB_GSO_DODGY, that also catches bad packets that are hw offloaded.
-Again test both TSO and USO. Do not test UFO for the above reason, and
-do not test UDP tunnel offload.
-
-GSO packet are almost always CHECKSUM_PARTIAL. USO packets may be
-CHECKSUM_NONE since commit 10154dbded6d6 ("udp: Allow GSO transmit
-from devices with no checksum offload"), but then still these fields
-are initialized correctly in udp4_hwcsum/udp6_hwcsum_outgoing. So no
-need to test for ip_summed == CHECKSUM_PARTIAL first.
-
-This revises an existing fix mentioned in the Fixes tag, which broke
-small packets with GSO offload, as detected by kselftests.
-
-Link: https://syzkaller.appspot.com/bug?extid=e1db31216c789f552871
-Link: https://lore.kernel.org/netdev/20240723223109.2196886-1-kuba@kernel.org
-Fixes: e269d79c7d35 ("net: missing check virtio")
-Cc: stable@vger.kernel.org
-Signed-off-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240729201108.1615114-1-willemdebruijn.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/virtio_net.h |   16 +++++-----------
- net/ipv4/tcp_offload.c     |    3 +++
- net/ipv4/udp_offload.c     |    4 ++++
- 3 files changed, 12 insertions(+), 11 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/virtio_net.h
-+++ b/include/linux/virtio_net.h
-@@ -56,7 +56,6 @@ static inline int virtio_net_hdr_to_skb(
- 	unsigned int thlen = 0;
- 	unsigned int p_off = 0;
- 	unsigned int ip_proto;
--	u64 ret, remainder, gso_size;
- 
- 	if (hdr->gso_type != VIRTIO_NET_HDR_GSO_NONE) {
- 		switch (hdr->gso_type & ~VIRTIO_NET_HDR_GSO_ECN) {
-@@ -99,16 +98,6 @@ static inline int virtio_net_hdr_to_skb(
- 		u32 off = __virtio16_to_cpu(little_endian, hdr->csum_offset);
- 		u32 needed = start + max_t(u32, thlen, off + sizeof(__sum16));
- 
--		if (hdr->gso_size) {
--			gso_size = __virtio16_to_cpu(little_endian, hdr->gso_size);
--			ret = div64_u64_rem(skb->len, gso_size, &remainder);
--			if (!(ret && (hdr->gso_size > needed) &&
--						((remainder > needed) || (remainder == 0)))) {
--				return -EINVAL;
--			}
--			skb_shinfo(skb)->tx_flags |= SKBFL_SHARED_FRAG;
--		}
--
- 		if (!pskb_may_pull(skb, needed))
- 			return -EINVAL;
- 
-@@ -182,6 +171,11 @@ retry:
- 			if (gso_type != SKB_GSO_UDP_L4)
- 				return -EINVAL;
- 			break;
-+		case SKB_GSO_TCPV4:
-+		case SKB_GSO_TCPV6:
-+			if (skb->csum_offset != offsetof(struct tcphdr, check))
-+				return -EINVAL;
-+			break;
- 		}
- 
- 		/* Kernel has a special handling for GSO_BY_FRAGS. */
---- a/net/ipv4/tcp_offload.c
-+++ b/net/ipv4/tcp_offload.c
-@@ -140,6 +140,9 @@ struct sk_buff *tcp_gso_segment(struct s
- 	if (thlen < sizeof(*th))
- 		goto out;
- 
-+	if (unlikely(skb_checksum_start(skb) != skb_transport_header(skb)))
-+		goto out;
-+
- 	if (!pskb_may_pull(skb, thlen))
- 		goto out;
- 
---- a/net/ipv4/udp_offload.c
-+++ b/net/ipv4/udp_offload.c
-@@ -278,6 +278,10 @@ struct sk_buff *__udp_gso_segment(struct
- 	if (gso_skb->len <= sizeof(*uh) + mss)
- 		return ERR_PTR(-EINVAL);
- 
-+	if (unlikely(skb_checksum_start(gso_skb) !=
-+		     skb_transport_header(gso_skb)))
-+		return ERR_PTR(-EINVAL);
-+
- 	if (skb_gso_ok(gso_skb, features | NETIF_F_GSO_ROBUST)) {
- 		/* Packet is from an untrusted source, reset gso_segs. */
- 		skb_shinfo(gso_skb)->gso_segs = DIV_ROUND_UP(gso_skb->len - sizeof(*uh),
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 7b32b99023a21..72fe207403c83 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -86,6 +86,7 @@
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
++#define ARM_CPU_PART_CORTEX_X3		0xD4E
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+@@ -162,6 +163,7 @@
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+ #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
++#define MIDR_CORTEX_X3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X3)
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
+-- 
+2.43.0
+
 
 
