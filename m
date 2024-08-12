@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C18917C7C8;
-	Mon, 12 Aug 2024 16:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2ABB17C7C8;
+	Mon, 12 Aug 2024 16:25:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479927; cv=none; b=nkJG5xi959eYQXdL9wXxemD0hwtIjQjALmi7j8wL6cJn0AAKh5h6q4aSFuKLquglxYP1R1A3g3OcDpnGp0MqRdpa1IQPxpp54gas1gTfA1P5PcVUKTRMNOsgISklyBWYsf6hlPv44p4dN3VNqL+oePh2U6YClT2Zo+MI+/phph8=
+	t=1723479930; cv=none; b=qMtrD5ALwx3AsiWt9m1A+92rdLVqkLr0AgsoaLHt7l5rTsilcUMK2VATcRYfUXf0+dECUJEMtl2mbLLdKHy3WXsfAdjMaTAapRu6zwM9w1rRA6aP4y3hMnNTNtrEo7/WMcG1GrE1fKk0zPuNrvydpW9dIV49EwU1suIoHdGtlL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479927; c=relaxed/simple;
-	bh=eJCgwKdt1mkLBADtkGwgt4GeNiXNXFOH7hmLj1WeSq4=;
+	s=arc-20240116; t=1723479930; c=relaxed/simple;
+	bh=OXHT3DKSVbBjor2XfeoCGaZzrBPmJub/aaJtrdikwB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qUV4zw7HZgEu2eWes1pUHzwWRrFZQtHYPA3MvORDC0H5YU9eIYTp8gYngE9VPpEp1lbMJXLJotPCeTnOOCUd8eEsKUcJmUeC/x85yawYaZ+TMdDd+XsXPrLXxWclsY9epmOE45FakITs/CgGwvcTwaM1pbYiMDxqJlOC/QzowJQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tBW9MSye; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UeLaklIHlzAucIdK1lLNdDbUOblohCK809uFXVZwCkHTXB3NdYvf/ltDVPsCTSaq2FNc1pGWRmrBJcpdZFthsKGgRCLNhRxiFgYCEWgZhYFO0Q+wcETR7zxO8j5Nsj3RSXo2wvF6GnGwS08+hcXSNqYyMH/QsAVCVtwhvGNZ6dY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eC7zBMzw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tBW9MSye"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D89AC32782;
-	Mon, 12 Aug 2024 16:25:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eC7zBMzw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CBBC32782;
+	Mon, 12 Aug 2024 16:25:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479927;
-	bh=eJCgwKdt1mkLBADtkGwgt4GeNiXNXFOH7hmLj1WeSq4=;
+	s=korg; t=1723479930;
+	bh=OXHT3DKSVbBjor2XfeoCGaZzrBPmJub/aaJtrdikwB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBW9MSye0IvgZV64i7ouu51ODLrD1mM9iju2ZfS4M+qm7Jw/Eq0KBV2okQlSmKasR
-	 4z0hLCRbx+zJPju+t49f6eyF+q6raaxGSj4hZt/hmOT1VvXK8G8clFlh2pbVtkI00c
-	 zo9vvPLUsOYZcz/ZRsx6TDfSTxjrLl6uD7cTm0eQ=
+	b=eC7zBMzwX1sIUGXTfOEbNybGiG8lm0wlDDiZGOEquGiJYAx2iIXiY0N2YEdYEVAZj
+	 pYm2c97whWVWWmKDp9Xe55am6xW6EBjStDzX6nsO0rKuhj2DruL66u8d8YpMBgMivs
+	 9B8JRfGMPTQY+1PjPFJ5SsshmArqawatTeXKJrBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 016/263] x86/mm: Fix pti_clone_entry_text() for i386
-Date: Mon, 12 Aug 2024 18:00:17 +0200
-Message-ID: <20240812160147.162755715@linuxfoundation.org>
+Subject: [PATCH 6.10 043/263] Revert "rcu-tasks: Fix synchronize_rcu_tasks() VS zap_pid_ns_processes()"
+Date: Mon, 12 Aug 2024 18:00:44 +0200
+Message-ID: <20240812160148.193804354@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,40 +52,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Frederic Weisbecker <frederic@kernel.org>
 
-[ Upstream commit 3db03fb4995ef85fc41e86262ead7b4852f4bcf0 ]
+[ Upstream commit 9855c37edf0009cc276cecfee09f7e76e2380212 ]
 
-While x86_64 has PMD aligned text sections, i386 does not have this
-luxery. Notably ALIGN_ENTRY_TEXT_END is empty and _etext has PAGE
-alignment.
+This reverts commit 28319d6dc5e2ffefa452c2377dd0f71621b5bff0. The race
+it fixed was subject to conditions that don't exist anymore since:
 
-This means that text on i386 can be page granular at the tail end,
-which in turn means that the PTI text clones should consistently
-account for this.
+	1612160b9127 ("rcu-tasks: Eliminate deadlocks involving do_exit() and RCU tasks")
 
-Make pti_clone_entry_text() consistent with pti_clone_kernel_text().
+This latter commit removes the use of SRCU that used to cover the
+RCU-tasks blind spot on exit between the tasklist's removal and the
+final preemption disabling. The task is now placed instead into a
+temporary list inside which voluntary sleeps are accounted as RCU-tasks
+quiescent states. This would disarm the deadlock initially reported
+against PID namespace exit.
 
-Fixes: 16a3fe634f6a ("x86/mm/pti: Clone kernel-image on PTE level for 32 bit")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/mm/pti.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/rcupdate.h |  2 --
+ kernel/pid_namespace.c   | 17 -----------------
+ kernel/rcu/tasks.h       | 16 +++-------------
+ 3 files changed, 3 insertions(+), 32 deletions(-)
 
-diff --git a/arch/x86/mm/pti.c b/arch/x86/mm/pti.c
-index 48c503208c794..bfdf5f45b1370 100644
---- a/arch/x86/mm/pti.c
-+++ b/arch/x86/mm/pti.c
-@@ -496,7 +496,7 @@ static void pti_clone_entry_text(void)
+diff --git a/include/linux/rcupdate.h b/include/linux/rcupdate.h
+index dfd2399f2cde0..61cb3de236af1 100644
+--- a/include/linux/rcupdate.h
++++ b/include/linux/rcupdate.h
+@@ -209,7 +209,6 @@ void synchronize_rcu_tasks_rude(void);
+ 
+ #define rcu_note_voluntary_context_switch(t) rcu_tasks_qs(t, false)
+ void exit_tasks_rcu_start(void);
+-void exit_tasks_rcu_stop(void);
+ void exit_tasks_rcu_finish(void);
+ #else /* #ifdef CONFIG_TASKS_RCU_GENERIC */
+ #define rcu_tasks_classic_qs(t, preempt) do { } while (0)
+@@ -218,7 +217,6 @@ void exit_tasks_rcu_finish(void);
+ #define call_rcu_tasks call_rcu
+ #define synchronize_rcu_tasks synchronize_rcu
+ static inline void exit_tasks_rcu_start(void) { }
+-static inline void exit_tasks_rcu_stop(void) { }
+ static inline void exit_tasks_rcu_finish(void) { }
+ #endif /* #else #ifdef CONFIG_TASKS_RCU_GENERIC */
+ 
+diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
+index 25f3cf679b358..bdf0087d64423 100644
+--- a/kernel/pid_namespace.c
++++ b/kernel/pid_namespace.c
+@@ -249,24 +249,7 @@ void zap_pid_ns_processes(struct pid_namespace *pid_ns)
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		if (pid_ns->pid_allocated == init_pids)
+ 			break;
+-		/*
+-		 * Release tasks_rcu_exit_srcu to avoid following deadlock:
+-		 *
+-		 * 1) TASK A unshare(CLONE_NEWPID)
+-		 * 2) TASK A fork() twice -> TASK B (child reaper for new ns)
+-		 *    and TASK C
+-		 * 3) TASK B exits, kills TASK C, waits for TASK A to reap it
+-		 * 4) TASK A calls synchronize_rcu_tasks()
+-		 *                   -> synchronize_srcu(tasks_rcu_exit_srcu)
+-		 * 5) *DEADLOCK*
+-		 *
+-		 * It is considered safe to release tasks_rcu_exit_srcu here
+-		 * because we assume the current task can not be concurrently
+-		 * reaped at this point.
+-		 */
+-		exit_tasks_rcu_stop();
+ 		schedule();
+-		exit_tasks_rcu_start();
+ 	}
+ 	__set_current_state(TASK_RUNNING);
+ 
+diff --git a/kernel/rcu/tasks.h b/kernel/rcu/tasks.h
+index 098e82bcc427f..ba3440a45b6dd 100644
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -858,7 +858,7 @@ static void rcu_tasks_wait_gp(struct rcu_tasks *rtp)
+ //	not know to synchronize with this RCU Tasks grace period) have
+ //	completed exiting.  The synchronize_rcu() in rcu_tasks_postgp()
+ //	will take care of any tasks stuck in the non-preemptible region
+-//	of do_exit() following its call to exit_tasks_rcu_stop().
++//	of do_exit() following its call to exit_tasks_rcu_finish().
+ // check_all_holdout_tasks(), repeatedly until holdout list is empty:
+ //	Scans the holdout list, attempting to identify a quiescent state
+ //	for each task on the list.  If there is a quiescent state, the
+@@ -1220,7 +1220,7 @@ void exit_tasks_rcu_start(void)
+  * Remove the task from the "yet another list" because do_exit() is now
+  * non-preemptible, allowing synchronize_rcu() to wait beyond this point.
+  */
+-void exit_tasks_rcu_stop(void)
++void exit_tasks_rcu_finish(void)
  {
- 	pti_clone_pgtable((unsigned long) __entry_text_start,
- 			  (unsigned long) __entry_text_end,
--			  PTI_CLONE_PMD);
-+			  PTI_LEVEL_KERNEL_IMAGE);
+ 	unsigned long flags;
+ 	struct rcu_tasks_percpu *rtpcp;
+@@ -1231,22 +1231,12 @@ void exit_tasks_rcu_stop(void)
+ 	raw_spin_lock_irqsave_rcu_node(rtpcp, flags);
+ 	list_del_init(&t->rcu_tasks_exit_list);
+ 	raw_spin_unlock_irqrestore_rcu_node(rtpcp, flags);
+-}
+ 
+-/*
+- * Contribute to protect against tasklist scan blind spot while the
+- * task is exiting and may be removed from the tasklist. See
+- * corresponding synchronize_srcu() for further details.
+- */
+-void exit_tasks_rcu_finish(void)
+-{
+-	exit_tasks_rcu_stop();
+-	exit_tasks_rcu_finish_trace(current);
++	exit_tasks_rcu_finish_trace(t);
  }
  
- /*
+ #else /* #ifdef CONFIG_TASKS_RCU */
+ void exit_tasks_rcu_start(void) { }
+-void exit_tasks_rcu_stop(void) { }
+ void exit_tasks_rcu_finish(void) { exit_tasks_rcu_finish_trace(current); }
+ #endif /* #else #ifdef CONFIG_TASKS_RCU */
+ 
 -- 
 2.43.0
 
