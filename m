@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBBB134AC;
-	Mon, 12 Aug 2024 16:25:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C441134AC;
+	Mon, 12 Aug 2024 16:25:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479947; cv=none; b=JjpXVr9RrkOPJ927Wm5cAMGQXbDYuAfw0PRcagh/g+I4l+OKgK4mEZvSxiLB+DaoOLvN1xMLa0EhZKhkdu9rUMSCPaR7N3e7yTKHi4grBqpRZjT+zMllCijc8f/NQvHhlulyQW/8XdR1oHILWx5bX7E3AkllbCvb+IM1BuqxLdI=
+	t=1723479950; cv=none; b=pPVG2p0m7tYRMCwX71VmgsweoqzwwhGr2ZLhmcuo89smGUjNHDINsrD/HjGCgIjaz3FuV6IGDar0LiD0qRTzel7ftq56/2yEeMomlZiJuDGzpBEN+lD5Wl6YNwciog4ZHlgk/2hLm5qfdPtlL7NY2uqVIsXA9E/2o2v3IUid8B8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479947; c=relaxed/simple;
-	bh=haMIGhqyWg0CeX3Q5fcHHTUrl+5IytjpotXO/8VBmMo=;
+	s=arc-20240116; t=1723479950; c=relaxed/simple;
+	bh=RA6oxdYWVJiYELJF1S5G0PPjnQKU5kVYECW7Kzh1nGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZF6YJ6z7Bq1eMec0kSvs7U9b5IufZISOPFWVPlAV7yVEWDOsJ+YBVUX6Mo+6omyFiInWhXjCVx5P/GVokyBd0fiw+VQy6bkQmJUQY9BdZ0Dw6G2jLDhPnOGIVO/XfVL9xYd82JfqtxHGircm571Kgr09ThnaqzkDWZ5cr+UGHp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ei2Ke148; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fA+LfKegptryJiEN+BzY59NsHhI5wuhpJnb3s5+35IV4wYHrRt78UZgAa5bp9OVmqoIw/F6e8pNhySv9VLP1XD5/RPskz5uCUeu95OkYzgfnkZkFn1wqRQ0GoLGsDN6JUY60aYj2mxq8lPOtqet8HnBazKeCTlG9+i8sjYAHJfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcpCHk2/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ei2Ke148"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A670FC32782;
-	Mon, 12 Aug 2024 16:25:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcpCHk2/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81D5C32782;
+	Mon, 12 Aug 2024 16:25:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479947;
-	bh=haMIGhqyWg0CeX3Q5fcHHTUrl+5IytjpotXO/8VBmMo=;
+	s=korg; t=1723479950;
+	bh=RA6oxdYWVJiYELJF1S5G0PPjnQKU5kVYECW7Kzh1nGo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ei2Ke148Rw4r8NCD/J7QO6/A31qAkFSXsLlmseEvJMLVFBcQPcsu64xMrABqxGJzZ
-	 7CUdCj+qA8k56OsHmu/sOLg0ExScGE1n/LL29txxuF9SjQMljwW4nvjjZQ8tEIFHXS
-	 L2y8Bg/+36oxRuWRiI3XpczZXdFr+Kr4zX58yuvk=
+	b=qcpCHk2/4Xo02BDzZpjJrocyOr13qtKZPUAuCeRR0BSuLxXCzVTVS9ritb/Slz69V
+	 2ImmS7LJIf9WBCIBklKudLt5zpChv15S+k/Is/7/NBGjHHPrGRO8SB6UivrDE+H0O1
+	 JxZ+/3i0qeNGKv51uOWTt/gaj8T6MLsVRnLelb4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raymond Hackley <raymondhackley@protonmail.com>,
-	Nikita Travkin <nikita@trvn.ru>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 018/263] power: supply: rt5033: Bring back i2c_set_clientdata
-Date: Mon, 12 Aug 2024 18:00:19 +0200
-Message-ID: <20240812160147.239673088@linuxfoundation.org>
+Subject: [PATCH 6.10 019/263] sctp: Fix null-ptr-deref in reuseport_add_sock().
+Date: Mon, 12 Aug 2024 18:00:20 +0200
+Message-ID: <20240812160147.277455835@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,39 +53,167 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikita Travkin <nikita@trvn.ru>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit d3911f1639e67fc7b12aae0efa5a540976d7443b ]
+[ Upstream commit 9ab0faa7f9ffe31296dbb9bbe6f76c72c14eea18 ]
 
-Commit 3a93da231c12 ("power: supply: rt5033: Use devm_power_supply_register() helper")
-reworked the driver to use devm. While at it, the i2c_set_clientdata
-was dropped along with the remove callback. Unfortunately other parts
-of the driver also rely on i2c clientdata so this causes kernel oops.
+syzbot reported a null-ptr-deref while accessing sk2->sk_reuseport_cb in
+reuseport_add_sock(). [0]
 
-Bring the call back to fix the driver.
+The repro first creates a listener with SO_REUSEPORT.  Then, it creates
+another listener on the same port and concurrently closes the first
+listener.
 
-Fixes: 3a93da231c12 ("power: supply: rt5033: Use devm_power_supply_register() helper")
-Tested-by: Raymond Hackley <raymondhackley@protonmail.com>
-Signed-off-by: Nikita Travkin <nikita@trvn.ru>
-Link: https://lore.kernel.org/r/20240605-rt5033-null-clientdata-v1-1-558d710eeb4d@trvn.ru
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+The second listen() calls reuseport_add_sock() with the first listener as
+sk2, where sk2->sk_reuseport_cb is not expected to be cleared concurrently,
+but the close() does clear it by reuseport_detach_sock().
+
+The problem is SCTP does not properly synchronise reuseport_alloc(),
+reuseport_add_sock(), and reuseport_detach_sock().
+
+The caller of reuseport_alloc() and reuseport_{add,detach}_sock() must
+provide synchronisation for sockets that are classified into the same
+reuseport group.
+
+Otherwise, such sockets form multiple identical reuseport groups, and
+all groups except one would be silently dead.
+
+  1. Two sockets call listen() concurrently
+  2. No socket in the same group found in sctp_ep_hashtable[]
+  3. Two sockets call reuseport_alloc() and form two reuseport groups
+  4. Only one group hit first in __sctp_rcv_lookup_endpoint() receives
+      incoming packets
+
+Also, the reported null-ptr-deref could occur.
+
+TCP/UDP guarantees that would not happen by holding the hash bucket lock.
+
+Let's apply the locking strategy to __sctp_hash_endpoint() and
+__sctp_unhash_endpoint().
+
+[0]:
+Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+CPU: 1 UID: 0 PID: 10230 Comm: syz-executor119 Not tainted 6.10.0-syzkaller-12585-g301927d2d2eb #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
+RIP: 0010:reuseport_add_sock+0x27e/0x5e0 net/core/sock_reuseport.c:350
+Code: 00 0f b7 5d 00 bf 01 00 00 00 89 de e8 1b a4 ff f7 83 fb 01 0f 85 a3 01 00 00 e8 6d a0 ff f7 49 8d 7e 12 48 89 f8 48 c1 e8 03 <42> 0f b6 04 28 84 c0 0f 85 4b 02 00 00 41 0f b7 5e 12 49 8d 7e 14
+RSP: 0018:ffffc9000b947c98 EFLAGS: 00010202
+RAX: 0000000000000002 RBX: ffff8880252ddf98 RCX: ffff888079478000
+RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000012
+RBP: 0000000000000001 R08: ffffffff8993e18d R09: 1ffffffff1fef385
+R10: dffffc0000000000 R11: fffffbfff1fef386 R12: ffff8880252ddac0
+R13: dffffc0000000000 R14: 0000000000000000 R15: 0000000000000000
+FS:  00007f24e45b96c0(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007ffcced5f7b8 CR3: 00000000241be000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ __sctp_hash_endpoint net/sctp/input.c:762 [inline]
+ sctp_hash_endpoint+0x52a/0x600 net/sctp/input.c:790
+ sctp_listen_start net/sctp/socket.c:8570 [inline]
+ sctp_inet_listen+0x767/0xa20 net/sctp/socket.c:8625
+ __sys_listen_socket net/socket.c:1883 [inline]
+ __sys_listen+0x1b7/0x230 net/socket.c:1894
+ __do_sys_listen net/socket.c:1902 [inline]
+ __se_sys_listen net/socket.c:1900 [inline]
+ __x64_sys_listen+0x5a/0x70 net/socket.c:1900
+ do_syscall_x64 arch/x86/entry/common.c:52 [inline]
+ do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f24e46039b9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 91 1a 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f24e45b9228 EFLAGS: 00000246 ORIG_RAX: 0000000000000032
+RAX: ffffffffffffffda RBX: 00007f24e468e428 RCX: 00007f24e46039b9
+RDX: 00007f24e46039b9 RSI: 0000000000000003 RDI: 0000000000000004
+RBP: 00007f24e468e420 R08: 00007f24e45b96c0 R09: 00007f24e45b96c0
+R10: 00007f24e45b96c0 R11: 0000000000000246 R12: 00007f24e468e42c
+R13: 00007f24e465a5dc R14: 0020000000000001 R15: 00007ffcced5f7d8
+ </TASK>
+Modules linked in:
+
+Fixes: 6ba845740267 ("sctp: process sk_reuseport in sctp_get_port_local")
+Reported-by: syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=e6979a5d2f10ecb700e4
+Tested-by: syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://patch.msgid.link/20240731234624.94055-1-kuniyu@amazon.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rt5033_battery.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/sctp/input.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/power/supply/rt5033_battery.c b/drivers/power/supply/rt5033_battery.c
-index 32eafe2c00af5..7a27b262fb84a 100644
---- a/drivers/power/supply/rt5033_battery.c
-+++ b/drivers/power/supply/rt5033_battery.c
-@@ -159,6 +159,7 @@ static int rt5033_battery_probe(struct i2c_client *client)
- 		return -EINVAL;
+diff --git a/net/sctp/input.c b/net/sctp/input.c
+index 17fcaa9b0df94..a8a254a5008e5 100644
+--- a/net/sctp/input.c
++++ b/net/sctp/input.c
+@@ -735,15 +735,19 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
+ 	struct sock *sk = ep->base.sk;
+ 	struct net *net = sock_net(sk);
+ 	struct sctp_hashbucket *head;
++	int err = 0;
+ 
+ 	ep->hashent = sctp_ep_hashfn(net, ep->base.bind_addr.port);
+ 	head = &sctp_ep_hashtable[ep->hashent];
+ 
++	write_lock(&head->lock);
+ 	if (sk->sk_reuseport) {
+ 		bool any = sctp_is_ep_boundall(sk);
+ 		struct sctp_endpoint *ep2;
+ 		struct list_head *list;
+-		int cnt = 0, err = 1;
++		int cnt = 0;
++
++		err = 1;
+ 
+ 		list_for_each(list, &ep->base.bind_addr.address_list)
+ 			cnt++;
+@@ -761,24 +765,24 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
+ 			if (!err) {
+ 				err = reuseport_add_sock(sk, sk2, any);
+ 				if (err)
+-					return err;
++					goto out;
+ 				break;
+ 			} else if (err < 0) {
+-				return err;
++				goto out;
+ 			}
+ 		}
+ 
+ 		if (err) {
+ 			err = reuseport_alloc(sk, any);
+ 			if (err)
+-				return err;
++				goto out;
+ 		}
  	}
  
-+	i2c_set_clientdata(client, battery);
- 	psy_cfg.of_node = client->dev.of_node;
- 	psy_cfg.drv_data = battery;
+-	write_lock(&head->lock);
+ 	hlist_add_head(&ep->node, &head->chain);
++out:
+ 	write_unlock(&head->lock);
+-	return 0;
++	return err;
+ }
  
+ /* Add an endpoint to the hash. Local BH-safe. */
+@@ -803,10 +807,9 @@ static void __sctp_unhash_endpoint(struct sctp_endpoint *ep)
+ 
+ 	head = &sctp_ep_hashtable[ep->hashent];
+ 
++	write_lock(&head->lock);
+ 	if (rcu_access_pointer(sk->sk_reuseport_cb))
+ 		reuseport_detach_sock(sk);
+-
+-	write_lock(&head->lock);
+ 	hlist_del_init(&ep->node);
+ 	write_unlock(&head->lock);
+ }
 -- 
 2.43.0
 
