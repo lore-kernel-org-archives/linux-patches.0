@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BA81186E34;
-	Mon, 12 Aug 2024 16:18:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F190718454D;
+	Mon, 12 Aug 2024 16:18:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479491; cv=none; b=e+cEmGs5wgnUCDGsE5vwbxxFwtSFsn1qCe1RMGM3tWefRafhHfabpqOAJLKsFesOOUGG9VULLe78LiFECEAdbLfOlmEbadHxjFyuUOV4rjVeTTIGoaONCI5h4kuxeHSFzqmRuFC6bpxxq6GQwu8vP5GdHA8I00C6VNwh816gKnQ=
+	t=1723479494; cv=none; b=OSQnqryuShtrWmZ6UVnhKfV6yPVBZeRo/ZuIoBuO3j5ZQ2U0rU1ZpZKxPPFW9lr+6YC/49gjSUOPFREByi8tzNEJPFhPZ4sSNpSmEtAx5IkNZVzkXqUpcoOM/Be4qzHkkrmZYQmkoqQm33crNah6qfRUVPqaYgB0uveqQHDOahs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479491; c=relaxed/simple;
-	bh=DKW0HUdNifbaNccycnemhPUjj0cTOHPVPPgozvtwFCE=;
+	s=arc-20240116; t=1723479494; c=relaxed/simple;
+	bh=prnFRAPI5e48lw1aj+cqDQLbqabaSoO6FoLVk+NIc7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FEUibpkFWOPjbLMPhVR9ouuaQqQ/5DCxAUfkDSLXR3GBerO+A6/e6AkeOYb4Cl2zM4ue8QzVtI8ie+osUOBC+YpAB+RoqogTWN32g/8PKwy3wP/DhMZ1xW+wdV8pl8nHtYmZtk/TdwRb3gk2vMOgFQ/ppjlXwaqqMKwHPD2BDU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rBwdaKh+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ky4K4xCd+1oTTRS/uTFsc7IC5ANS1gHN0dUeCBXjuq7ItyLurbIBzJa/pmmbVEaGLB2rH/X3SorTHsbfUgnAiDbUzt7TAXeCkNjY3m8vCBWj5fQrRj7jnpkHUO2wBXNrjjQPtGUUlOXa4jUfovMC2gJP1QmyakUBeEtDS6ArlqA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OdXItE8Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rBwdaKh+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005C6C32782;
-	Mon, 12 Aug 2024 16:18:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OdXItE8Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74663C32782;
+	Mon, 12 Aug 2024 16:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479490;
-	bh=DKW0HUdNifbaNccycnemhPUjj0cTOHPVPPgozvtwFCE=;
+	s=korg; t=1723479493;
+	bh=prnFRAPI5e48lw1aj+cqDQLbqabaSoO6FoLVk+NIc7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBwdaKh+R08a3FRAt1kb0yAAw66jwdlHzSPoNCFdAaamqlAgOVjQLlwGfCtCIgqev
-	 xdTUP2dJFyBoAjE2z9QY6V7yeqtUIDyplgOovghleMtfFtqsRhJP2gShlcT89S0dJx
-	 ZOjB+8ech6o30cG83QbadxobVYmPxba5AYEu15ks=
+	b=OdXItE8ZAUCh88an4cCZtDYw77dvudA6DTByq6hCFyJJoRvc3qfuP+VqEPliDS3rr
+	 kwnK1ukYEi8Z3KnaOd8t0H+l8IGW5g0mSvDkREiqKQPCGNpj41Gyp7HOw8vvOAVOBG
+	 I8ILxGpznW2/SgAJ6aNTZnJTCKV89WC2RVszzuIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arseniy Krasnov <avkrasnov@salutedevices.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Gleb Korobeynikov <gkorobeynikov@astralinux.ru>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 104/189] ASoC: meson: axg-fifo: fix irq scheduling issue with PREEMPT_RT
-Date: Mon, 12 Aug 2024 18:02:40 +0200
-Message-ID: <20240812160136.145144580@linuxfoundation.org>
+Subject: [PATCH 6.6 105/189] cifs: cifs_inval_name_dfs_link_error: correct the check for fullpath
+Date: Mon, 12 Aug 2024 18:02:41 +0200
+Message-ID: <20240812160136.182978947@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -53,84 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Gleb Korobeynikov <gkorobeynikov@astralinux.ru>
 
-[ Upstream commit 5003d0ce5c7da3a02c0aff771f516f99731e7390 ]
+[ Upstream commit 36bb22a08a69d9984a8399c07310d18b115eae20 ]
 
-With PREEMPT_RT enabled a spinlock_t becomes a sleeping lock.
+Replace the always-true check tcon->origin_fullpath with
+check of server->leaf_fullpath
 
-This is usually not a problem with spinlocks used in IRQ context since
-IRQ handlers get threaded. However, if IRQF_ONESHOT is set, the primary
-handler won't be force-threaded and runs always in hardirq context. This is
-a problem because spinlock_t requires a preemptible context on PREEMPT_RT.
+See https://bugzilla.kernel.org/show_bug.cgi?id=219083
 
-In this particular instance, regmap mmio uses spinlock_t to protect the
-register access and IRQF_ONESHOT is set on the IRQ. In this case, it is
-actually better to do everything in threaded handler and it solves the
-problem with PREEMPT_RT.
+The check of the new @tcon will always be true during mounting,
+since @tcon->origin_fullpath will only be set after the tree is
+connected to the latest common resource, as well as checking if
+the prefix paths from it are fully accessible.
 
-Reported-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
-Closes: https://lore.kernel.org/linux-amlogic/20240729131652.3012327-1-avkrasnov@salutedevices.com
-Suggested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Fixes: b11d26660dff ("ASoC: meson: axg-fifo: use threaded irq to check periods")
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20240807162705.4024136-1-jbrunet@baylibre.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3ae872de4107 ("smb: client: fix shared DFS root mounts with different prefixes")
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Gleb Korobeynikov <gkorobeynikov@astralinux.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/meson/axg-fifo.c | 26 ++++++++++----------------
- 1 file changed, 10 insertions(+), 16 deletions(-)
+ fs/smb/client/misc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/meson/axg-fifo.c b/sound/soc/meson/axg-fifo.c
-index 94b169a5493b5..5218e40aeb1bb 100644
---- a/sound/soc/meson/axg-fifo.c
-+++ b/sound/soc/meson/axg-fifo.c
-@@ -207,25 +207,18 @@ static irqreturn_t axg_fifo_pcm_irq_block(int irq, void *dev_id)
- 	status = FIELD_GET(STATUS1_INT_STS, status);
- 	axg_fifo_ack_irq(fifo, status);
- 
--	/* Use the thread to call period elapsed on nonatomic links */
--	if (status & FIFO_INT_COUNT_REPEAT)
--		return IRQ_WAKE_THREAD;
-+	if (status & ~FIFO_INT_COUNT_REPEAT)
-+		dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
-+			status);
- 
--	dev_dbg(axg_fifo_dev(ss), "unexpected irq - STS 0x%02x\n",
--		status);
-+	if (status & FIFO_INT_COUNT_REPEAT) {
-+		snd_pcm_period_elapsed(ss);
-+		return IRQ_HANDLED;
-+	}
- 
- 	return IRQ_NONE;
- }
- 
--static irqreturn_t axg_fifo_pcm_irq_block_thread(int irq, void *dev_id)
--{
--	struct snd_pcm_substream *ss = dev_id;
--
--	snd_pcm_period_elapsed(ss);
--
--	return IRQ_HANDLED;
--}
--
- int axg_fifo_pcm_open(struct snd_soc_component *component,
- 		      struct snd_pcm_substream *ss)
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 07c468ddb88a8..65d4b72b4d51a 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1288,6 +1288,7 @@ int cifs_inval_name_dfs_link_error(const unsigned int xid,
+ 				   const char *full_path,
+ 				   bool *islink)
  {
-@@ -251,8 +244,9 @@ int axg_fifo_pcm_open(struct snd_soc_component *component,
- 	if (ret)
- 		return ret;
++	struct TCP_Server_Info *server = tcon->ses->server;
+ 	struct cifs_ses *ses = tcon->ses;
+ 	size_t len;
+ 	char *path;
+@@ -1304,12 +1305,12 @@ int cifs_inval_name_dfs_link_error(const unsigned int xid,
+ 	    !is_tcon_dfs(tcon))
+ 		return 0;
  
--	ret = request_threaded_irq(fifo->irq, axg_fifo_pcm_irq_block,
--				   axg_fifo_pcm_irq_block_thread,
-+	/* Use the threaded irq handler only with non-atomic links */
-+	ret = request_threaded_irq(fifo->irq, NULL,
-+				   axg_fifo_pcm_irq_block,
- 				   IRQF_ONESHOT, dev_name(dev), ss);
- 	if (ret)
- 		return ret;
+-	spin_lock(&tcon->tc_lock);
+-	if (!tcon->origin_fullpath) {
+-		spin_unlock(&tcon->tc_lock);
++	spin_lock(&server->srv_lock);
++	if (!server->leaf_fullpath) {
++		spin_unlock(&server->srv_lock);
+ 		return 0;
+ 	}
+-	spin_unlock(&tcon->tc_lock);
++	spin_unlock(&server->srv_lock);
+ 
+ 	/*
+ 	 * Slow path - tcon is DFS and @full_path has prefix path, so attempt
 -- 
 2.43.0
 
