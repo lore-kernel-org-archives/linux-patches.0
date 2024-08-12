@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721BC1494B8;
-	Mon, 12 Aug 2024 16:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A021494B8;
+	Mon, 12 Aug 2024 16:36:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480597; cv=none; b=jD3slWmmij5nBTjB/VRkSYLaqshbA8PMZHUGBPgljq1ug3/pAOGJVzeE7Mgp/YRG4jQEMCtEaqblgT0czt9bNb2Ub4TGe6TN9x6Q9OPBb+jWhQvWN0e8gnXZuPEqezFEh5ct6YfjMiy4vDpEHbncIk1pOeRompA5m1K0rjUh3Z8=
+	t=1723480600; cv=none; b=hPLSSNFLRZoY5lLGgAOSG+Fa/7bEGwQAq5dB1aLFjGNU8fdFbux+lgTq0k6FILlVtldd7tUnljmhITtqBNjp342ghUjdU1CRPtsvIH94xLowGBUtVZJJQGFfQX4n9c14e/KfrqzCCTQowmEDiRm8wj0F0rcH7q8d8tMY4YWpubE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480597; c=relaxed/simple;
-	bh=MpRKz/QqjFEuyYGn6TC/7n59Cc1zh65lZZXkWfQ7lzc=;
+	s=arc-20240116; t=1723480600; c=relaxed/simple;
+	bh=l6BCbczO3IKZsuP+OC4OOV0JP65DEP/p+q1lOSe4bis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=thdwtb8x19sRxBU4Zm5f7ZE0y6opgLZttAOQGVcaI5BOw7n5xFGKFOupd9EKJ97nUZ9s7FSD6DiBHkx0yAjBeKwNSl3eusEIpMffd/ZkiG8cxX0gqjkJD/qrQrdLiYKRgHcETq3Tlq4638JxmQh+VTEODkn8iIUntjJmNUK+X2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhj8WGBE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AzX4f5PnlDeKZ7KGO7kffG5Z96D7+rxHMyE3ZlbfGR0zWWrN8W2p7d3q+z4rgm6pM012sYHOBOPXzDFKPCoc9qZbMOtdrKGcmjGpG1W3npNAxVmSC7nS6D1OcHQC7eP7IVtwytLsp8Xl/+s9loGQLdWz7/dZPwyHt+Mcv2/TtkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PPNNso8l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhj8WGBE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2698C4AF0F;
-	Mon, 12 Aug 2024 16:36:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PPNNso8l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ACCC4AF0C;
+	Mon, 12 Aug 2024 16:36:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480597;
-	bh=MpRKz/QqjFEuyYGn6TC/7n59Cc1zh65lZZXkWfQ7lzc=;
+	s=korg; t=1723480600;
+	bh=l6BCbczO3IKZsuP+OC4OOV0JP65DEP/p+q1lOSe4bis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jhj8WGBEK2YCTYO8NevJu6MfUu/J+jwa1hFwxHpOs+qBtMZ7iiwibJSu+j1/BBDZu
-	 BDINo/N6yYTCnFHLwixnlGFLlUSuxliCfnhuuItZJiW0m9lFI7uCvkOoPtUvWP3FAD
-	 wehjCn9HgoWa/X8gogJUR3cnvQrZvaSS1SbKUY/c=
+	b=PPNNso8ljl62U7toqx/fbyRSzk+SsK+5wfFK/CI9uibk4St6VKz2tEZ5vfhL1pVJX
+	 grAzmzNy59ISjCX5J77OYK1rE3KKqD08VyAWW6Xb5B7DCPj/yxLUdQkgDhkPxgMRCn
+	 mEcDxTW9/it/IQd7ejvMerHLLAQPWtQORgCnomDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Philip Muller <philm@manjaro.org>,
-	Oliver Smith <ollieparanoid@postmarketos.org>,
-	Daniel Smith <danct12@disroot.org>,
-	Dragan Simic <dsimic@manjaro.org>,
-	Qiang Yu <yuq825@gmail.com>
-Subject: [PATCH 6.10 244/263] drm/lima: Mark simple_ondemand governor as softdep
-Date: Mon, 12 Aug 2024 18:04:05 +0200
-Message-ID: <20240812160155.885143390@linuxfoundation.org>
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	Jocelyn Falempe <jfalempe@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	dri-devel@lists.freedesktop.org
+Subject: [PATCH 6.10 245/263] drm/mgag200: Set DDC timeout in milliseconds
+Date: Mon, 12 Aug 2024 18:04:06 +0200
+Message-ID: <20240812160155.922805167@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,55 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragan Simic <dsimic@manjaro.org>
+From: Thomas Zimmermann <tzimmermann@suse.de>
 
-commit 0c94f58cef319ad054fd909b3bf4b7d09c03e11c upstream.
+commit ecde5db1598aecab54cc392282c15114f526f05f upstream.
 
-Lima DRM driver uses devfreq to perform DVFS, while using simple_ondemand
-devfreq governor by default.  This causes driver initialization to fail on
-boot when simple_ondemand governor isn't built into the kernel statically,
-as a result of the missing module dependency and, consequently, the
-required governor module not being included in the initial ramdisk.  Thus,
-let's mark simple_ondemand governor as a softdep for Lima, to have its
-kernel module included in the initial ramdisk.
+Compute the i2c timeout in jiffies from a value in milliseconds. The
+original values of 2 jiffies equals 2 milliseconds if HZ has been
+configured to a value of 1000. This corresponds to 2.2 milliseconds
+used by most other DRM drivers. Update mgag200 accordingly.
 
-This is a rather longstanding issue that has forced distributions to build
-devfreq governors statically into their kernels, [1][2] or may have forced
-some users to introduce unnecessary workarounds.
-
-Having simple_ondemand marked as a softdep for Lima may not resolve this
-issue for all Linux distributions.  In particular, it will remain
-unresolved for the distributions whose utilities for the initial ramdisk
-generation do not handle the available softdep information [3] properly
-yet.  However, some Linux distributions already handle softdeps properly
-while generating their initial ramdisks, [4] and this is a prerequisite
-step in the right direction for the distributions that don't handle them
-properly yet.
-
-[1] https://gitlab.manjaro.org/manjaro-arm/packages/core/linux-pinephone/-/blob/6.7-megi/config?ref_type=heads#L5749
-[2] https://gitlab.com/postmarketOS/pmaports/-/blob/7f64e287e7732c9eaa029653e73ca3d4ba1c8598/main/linux-postmarketos-allwinner/config-postmarketos-allwinner.aarch64#L4654
-[3] https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/commit/?id=49d8e0b59052999de577ab732b719cfbeb89504d
-[4] https://github.com/archlinux/mkinitcpio/commit/97ac4d37aae084a050be512f6d8f4489054668ad
-
-Cc: Philip Muller <philm@manjaro.org>
-Cc: Oliver Smith <ollieparanoid@postmarketos.org>
-Cc: Daniel Smith <danct12@disroot.org>
-Cc: stable@vger.kernel.org
-Fixes: 1996970773a3 ("drm/lima: Add optional devfreq and cooling device support")
-Signed-off-by: Dragan Simic <dsimic@manjaro.org>
-Signed-off-by: Qiang Yu <yuq825@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/fdaf2e41bb6a0c5118ff9cc21f4f62583208d885.1718655070.git.dsimic@manjaro.org
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Reviewed-by: Jocelyn Falempe <jfalempe@redhat.com>
+Fixes: 414c45310625 ("mgag200: initial g200se driver (v2)")
+Cc: Dave Airlie <airlied@redhat.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: dri-devel@lists.freedesktop.org
+Cc: <stable@vger.kernel.org> # v3.5+
+Link: https://patchwork.freedesktop.org/patch/msgid/20240513125620.6337-2-tzimmermann@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/lima/lima_drv.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/mgag200/mgag200_i2c.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/lima/lima_drv.c
-+++ b/drivers/gpu/drm/lima/lima_drv.c
-@@ -501,3 +501,4 @@ module_platform_driver(lima_platform_dri
- MODULE_AUTHOR("Lima Project Developers");
- MODULE_DESCRIPTION("Lima DRM Driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_SOFTDEP("pre: governor_simpleondemand");
+--- a/drivers/gpu/drm/mgag200/mgag200_i2c.c
++++ b/drivers/gpu/drm/mgag200/mgag200_i2c.c
+@@ -114,7 +114,7 @@ int mgag200_i2c_init(struct mga_device *
+ 	i2c->adapter.algo_data = &i2c->bit;
+ 
+ 	i2c->bit.udelay = 10;
+-	i2c->bit.timeout = 2;
++	i2c->bit.timeout = usecs_to_jiffies(2200);
+ 	i2c->bit.data = i2c;
+ 	i2c->bit.setsda		= mga_gpio_setsda;
+ 	i2c->bit.setscl		= mga_gpio_setscl;
 
 
