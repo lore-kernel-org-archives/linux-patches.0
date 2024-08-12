@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4752C1A5;
-	Mon, 12 Aug 2024 16:34:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740B12C1A5;
+	Mon, 12 Aug 2024 16:34:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480447; cv=none; b=UWS4+HF4ltOjrlz/ULEHCzQSu73wD9miPbioXQmkJXdJ6jypfiDlQ5gfC1vJP8jV7fmCXiCfmsjND8s3kKsC+l37HlZJXuG0+FJ+spm3aZ6yseMDOp2Z6qNritYmBeEUArqA0aBQYdshJeE6eGDEJlahn1pNf9S2J6WNwyyamXA=
+	t=1723480450; cv=none; b=F6caRA/x+InQo79hb9LGL0DTAVOMl9uhsugVYfosuuoaK4gV2aliICvXGGcsPGNGPfEvKTurZgxXldYRLUlFTaoW8svqfQypoFKfEIdFf5P3tglSN7cM/7MMtnlm4+pPy0yHWLGGN720dTeO+qWjg041FQaQeN8Nbo3R7s2hsw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480447; c=relaxed/simple;
-	bh=4AKSP0osm8r8nBoYOTn2Ns+23mvsd4bi8rRnxoKRfKM=;
+	s=arc-20240116; t=1723480450; c=relaxed/simple;
+	bh=0ryDO9tZj0C/OgBqafVxeC2wHaAUti486t+mklCk1r0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XWo0H/vWXNN6BXRaPCACGuN9K3ZoEJcpsHJdJqk7cuBFgJjc6ZM2AsoGRuPXdi6vnlNmwMj2QI4ulZLWGllLI7b5ppoV+b4Y+VeMYUM0gjpoJuWCdfn6AH7TjKWCnvhDCywAPqY8eaA1lQRp/FiUi22GMAebCuf5PXimPQAzjcw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcsU+mmQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EKXL+EWpy/RtTxzGntCrgTpxHZH8PG+wghLBsuycVaEv/AMF0tEk/xbEhN/QRPZ+jDJhkF0rCxDw2Vwh/i/Mwh+g5d/YoHPcWOSxuCieXSv6hms/9GQTIKh5Y+sSy+vI1STYMr/f9sEpqOe0yIQCHi55JtIr9SQBu9RpmpCHf7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wtra1fb7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcsU+mmQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B46AC32782;
-	Mon, 12 Aug 2024 16:34:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wtra1fb7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9461CC32782;
+	Mon, 12 Aug 2024 16:34:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480446;
-	bh=4AKSP0osm8r8nBoYOTn2Ns+23mvsd4bi8rRnxoKRfKM=;
+	s=korg; t=1723480450;
+	bh=0ryDO9tZj0C/OgBqafVxeC2wHaAUti486t+mklCk1r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tcsU+mmQwD4gNYze6zjvuM1wxRLE/08oZ4KkXe2Hy+tsqp/XT+sgSYEM9hfK/RiTi
-	 A6ckfAX363slMFtqOyV8Y+9OHicSXnwf+hT7oF34Dp54VogBt3sUeGnMF9k5dM/G1P
-	 jtsaiCoYdDY4rRrdTr1O4KKuxyz37LRTzlUGXx90=
+	b=Wtra1fb7L/ERB1JgZZMe1AIuXGWgnrfhIGG0HnL/umipODUcO3Ni9j9a4umumM4Ad
+	 e4DbcJKZSlxDhJIV9toFpiiA3R5TmY5H8lkRgWz9+Jvd69ErjMGuCxPYvrvuHIbcdY
+	 e2K1fCAn9lYheEXb0Dy0dOxG2ZCWHSbOYGuLKXe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akira Yokosawa <akiyks@gmail.com>,
-	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.10 199/263] media: v4l: Fix missing tabular column hint for Y14P format
-Date: Mon, 12 Aug 2024 18:03:20 +0200
-Message-ID: <20240812160154.166508371@linuxfoundation.org>
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Jason Wang <jasowang@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Michal Kubiak <michal.kubiak@intel.com>
+Subject: [PATCH 6.10 200/263] vhost-vdpa: switch to use vmf_insert_pfn() in the fault handler
+Date: Mon, 12 Aug 2024 18:03:21 +0200
+Message-ID: <20240812160154.205760227@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,45 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+From: Jason Wang <jasowang@redhat.com>
 
-commit 914f8961879de6fadd166ebd75151a778481e09a upstream.
+commit 0823dc64586ba5ea13a7d200a5d33e4c5fa45950 upstream.
 
-The original patch added two columns in the flat-table of Luma-Only
-Image Formats, without updating hints to latex: above it.  This results
-in wrong column count in the output of Sphinx's latex builder.
+remap_pfn_page() should not be called in the fault handler as it may
+change the vma->flags which may trigger lockdep warning since the vma
+write lock is not held. Actually there's no need to modify the
+vma->flags as it has been set in the mmap(). So this patch switches to
+use vmf_insert_pfn() instead.
 
-Fix it.
-
-Reported-by: Akira Yokosawa <akiyks@gmail.com>
-Closes: https://lore.kernel.org/linux-media/bdbc27ba-5098-49fb-aabf-753c81361cc7@gmail.com/
-Fixes: adb1d4655e53 ("media: v4l: Add V4L2-PIX-FMT-Y14P format")
-Cc: stable@vger.kernel.org # for v6.10
-Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
+Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
+Fixes: ddd89d0a059d ("vhost_vdpa: support doorbell mapping via mmap")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Message-Id: <20240701033159.18133-1-jasowang@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/vdpa.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst b/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst
-index f02e6cf3516a..74df19be91f6 100644
---- a/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst
-+++ b/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst
-@@ -21,9 +21,9 @@ are often referred to as greyscale formats.
+--- a/drivers/vhost/vdpa.c
++++ b/drivers/vhost/vdpa.c
+@@ -1483,13 +1483,7 @@ static vm_fault_t vhost_vdpa_fault(struc
  
- .. raw:: latex
+ 	notify = ops->get_vq_notification(vdpa, index);
  
--    \scriptsize
-+    \tiny
+-	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+-	if (remap_pfn_range(vma, vmf->address & PAGE_MASK,
+-			    PFN_DOWN(notify.addr), PAGE_SIZE,
+-			    vma->vm_page_prot))
+-		return VM_FAULT_SIGBUS;
+-
+-	return VM_FAULT_NOPAGE;
++	return vmf_insert_pfn(vma, vmf->address & PAGE_MASK, PFN_DOWN(notify.addr));
+ }
  
--.. tabularcolumns:: |p{3.6cm}|p{3.0cm}|p{1.3cm}|p{2.6cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|
-+.. tabularcolumns:: |p{3.6cm}|p{2.4cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|
- 
- .. flat-table:: Luma-Only Image Formats
-     :header-rows: 1
--- 
-2.46.0
-
+ static const struct vm_operations_struct vhost_vdpa_vm_ops = {
 
 
