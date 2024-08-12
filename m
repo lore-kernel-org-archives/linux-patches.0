@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F88183CD3;
-	Mon, 12 Aug 2024 16:30:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0869D183CD3;
+	Mon, 12 Aug 2024 16:30:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480231; cv=none; b=gVNFSXuBwORH0i9ObFGkniX+ZctLBzDb1v9pVDlBYb0bv90peqjCYM6AI3KuaKiPXp9bk/b9VSTh0Sdbkg0IJrQa59cLIlT0XtUhNqzXhPtshiKa+C2Pybe6ciRIK61UcrB8eAW/7cAd+pO7T9RTpF56Hy+/oUoQCCi5vfcTJYA=
+	t=1723480235; cv=none; b=SS/4GBnTDsSTP0DUfa61YQw4jQ0nkA/dtByVbW2wfAvATsm2j0DRuiyKXuN3OX1xeQ3TwYBk+fAwkRf2vHTjTLuDg5ZwBWczr1/5VKjaa+mZ5EQmF2KCWq3rO8d40OQr7XLDsEJSt8J5Q1tGyjfyYfbGJJbb9bo/boPMml3/JVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480231; c=relaxed/simple;
-	bh=riOnGXUXDyI/tIaiBHOfNlHjGCv6nXxkTxG+ZZGuaEI=;
+	s=arc-20240116; t=1723480235; c=relaxed/simple;
+	bh=YdWkBOfaa+Px1hRvFs37l5oRcG2O0+yi0oAIIxef9tg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RR+uMT4zdTQCFXg4zGfod3SHNN1FNd+d3MhrYbvUcsi4+CPNSyyIyTdFoekSUOp4wuUNP47qp5jq4fyVF8/Y3+3ICqESyr375HGV7U7T+SMDuK9g467oC2mN4JW95iLIrou9AXxInX1YBTvc25pO8XX5K4GEz9TzgCyBPkJS7OA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r0w0OJ4z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfI0cx97faoee05XbKrEcQSp4theFDEskcl8AEyP4QoYxjX5HLDayRQ23fO/QHRsUav6t1lJu9XQAoPTdRX5Io7RunBv8dg6rp1029m3ImByl5QD40u2oN2mW09NAHFq+e+WPQAvsFeg9twVKrwHpL+HV6VUhJE1E+lBwXN7vtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YvWlf+Z2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r0w0OJ4z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C81C4AF0C;
-	Mon, 12 Aug 2024 16:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YvWlf+Z2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 828FDC32782;
+	Mon, 12 Aug 2024 16:30:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480231;
-	bh=riOnGXUXDyI/tIaiBHOfNlHjGCv6nXxkTxG+ZZGuaEI=;
+	s=korg; t=1723480234;
+	bh=YdWkBOfaa+Px1hRvFs37l5oRcG2O0+yi0oAIIxef9tg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r0w0OJ4zyd2axUkkAYgDZtR6SGqqxPk0iIbtDlRPqkTc+PCeLI78/GQzQLEcjNH4d
-	 9ujskVv2356iGur4W0JL3Iu1Y6C2Fum5FepTmNfeFqN6T/1fT+4xTAONWGhDzxMQgW
-	 PWWKrirE88Kvev8xKHLVqcKycHnCK1TjhHZVHtnE=
+	b=YvWlf+Z2WSgoHoeRpZArfBVx9MNXGTkZDroqUfNQhhFffiatJVu9HKEyMZv8sbVlj
+	 qYMjtS1fC012XZqttrB9AFMNDyJ3WuBmheKli4psMrtLikid1lCEUoel+AYisDugk+
+	 NmYvpOWqIvOxBsTv7rIOJfkbG1OazeUbLBeKoSCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 117/263] SUNRPC: Fix a race to wake a sync task
-Date: Mon, 12 Aug 2024 18:01:58 +0200
-Message-ID: <20240812160151.024562367@linuxfoundation.org>
+Subject: [PATCH 6.10 135/263] arm64: cputype: Add Cortex-A725 definitions
+Date: Mon, 12 Aug 2024 18:02:16 +0200
+Message-ID: <20240812160151.716851554@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,51 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit ed0172af5d6fc07d1b40ca82f5ca3979300369f7 ]
+[ Upstream commit 9ef54a384526911095db465e77acc1cb5266b32c ]
 
-We've observed NFS clients with sync tasks sleeping in __rpc_execute
-waiting on RPC_TASK_QUEUED that have not responded to a wake-up from
-rpc_make_runnable().  I suspect this problem usually goes unnoticed,
-because on a busy client the task will eventually be re-awoken by another
-task completion or xprt event.  However, if the state manager is draining
-the slot table, a sync task missing a wake-up can result in a hung client.
+Add cputype definitions for Cortex-A725. These will be used for errata
+detection in subsequent patches.
 
-We've been able to prove that the waker in rpc_make_runnable() successfully
-calls wake_up_bit() (ie- there's no race to tk_runstate), but the
-wake_up_bit() call fails to wake the waiter.  I suspect the waker is
-missing the load of the bit's wait_queue_head, so waitqueue_active() is
-false.  There are some very helpful comments about this problem above
-wake_up_bit(), prepare_to_wait(), and waitqueue_active().
+These values can be found in the Cortex-A725 TRM:
 
-Fix this by inserting smp_mb__after_atomic() before the wake_up_bit(),
-which pairs with prepare_to_wait() calling set_current_state().
+  https://developer.arm.com/documentation/107652/0001/
 
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+... in table A-247 ("MIDR_EL1 bit descriptions").
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
+Link: https://lore.kernel.org/r/20240801101803.1982459-3-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index 6debf4fd42d4e..cef623ea15060 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -369,8 +369,10 @@ static void rpc_make_runnable(struct workqueue_struct *wq,
- 	if (RPC_IS_ASYNC(task)) {
- 		INIT_WORK(&task->u.tk_work, rpc_async_schedule);
- 		queue_work(wq, &task->u.tk_work);
--	} else
-+	} else {
-+		smp_mb__after_atomic();
- 		wake_up_bit(&task->tk_runstate, RPC_TASK_QUEUED);
-+	}
- }
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index 5dc68ace305e5..5fd7caea44193 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -93,6 +93,7 @@
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+ #define ARM_CPU_PART_CORTEX_X925	0xD85
++#define ARM_CPU_PART_CORTEX_A725	0xD87
  
- /*
+ #define APM_CPU_PART_XGENE		0x000
+ #define APM_CPU_VAR_POTENZA		0x00
+@@ -173,6 +174,7 @@
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
+ #define MIDR_CORTEX_X925 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X925)
++#define MIDR_CORTEX_A725 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A725)
+ #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
+ #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
+ #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
 -- 
 2.43.0
 
