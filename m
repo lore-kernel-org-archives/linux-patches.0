@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 512D8183CD9;
-	Mon, 12 Aug 2024 16:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F092189507;
+	Mon, 12 Aug 2024 16:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478986; cv=none; b=J6Kz/vdknCcjM2gmnHJXUeyig5qcybLk1y8bEfDj8sNOVlvFgGoXEJaakX11jo2GuDv183eUcyNlULbAlap1LkO+8PEyMQfdZkvujsdOTTqovJV6SoYyiifyS4Hky4NM0VX/EYLwAj2vkMvAzp0HHqZDYFp4xmtJaOGrn0H8b4Y=
+	t=1723478989; cv=none; b=Yh+BtxFc8LgRsB3vnSctxy2Hrt5krcfnEXCefucazYw9TiBDS022GLwV0CKPO5Taaw39S5OnyHANgoWLblkYk/Wlbl04ne+kqnvQd8Zn69iq21wIMl8YsW9CHQxjazUycsKg7EGcCTFdzjVU9hh+ag0dkC7NVM84hFRN+HHCXdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478986; c=relaxed/simple;
-	bh=FGdDpWmOxzs5Yw20QJajsgSrXB+5jfQcvyiHITvHLO0=;
+	s=arc-20240116; t=1723478989; c=relaxed/simple;
+	bh=0UqkjFyMiIDsUmtHyvggrVaczX2BE2oW4xpQ7Uss6Kg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lz3Iwf7YEKs7NeKu1H+xFFyvIiRPTdSnd6O756WRnNRf2CS6Ilr6ycCZ7JYK8yTTLeVbt8IaMFFZ6zzVqyq1AxLYYWuXezd0NZGVsINBaUeagdcCF5jPCW/kCGGZVQiZ9blpgw+VXkagkfUnH9PQ1nu27gwK9E7FdhBf+ix/k+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kZgaw7f5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pKvTENU8u+Olp9pkBxZP27gApn0GJxpEwS8usBiwmWhLW7exeZKgUNA0D8L8WXW4BkS4dqJUiuuej3LGLFNobAN3cbp3p142x7Yp6zb3R4uU6pf4psZpG+4F9iIdGyCNtYRXAPV83g7+duSsApzK2Lau/msb2GnB+yXrbVObpik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GcjwuvW3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kZgaw7f5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA623C32782;
-	Mon, 12 Aug 2024 16:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GcjwuvW3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DD28C32782;
+	Mon, 12 Aug 2024 16:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478986;
-	bh=FGdDpWmOxzs5Yw20QJajsgSrXB+5jfQcvyiHITvHLO0=;
+	s=korg; t=1723478989;
+	bh=0UqkjFyMiIDsUmtHyvggrVaczX2BE2oW4xpQ7Uss6Kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZgaw7f5msSapgAEUUymNfi+iTvTpappChhcx1fpZXyiUyfoYeRmkOw6b9V+IDb5E
-	 MnVKkKWMTsT97DBOqXDA/I+A6o0PXboGxW3USp5tiltAomDGYx6CJaRhmfP+7IDAbC
-	 s+BlxO9l2L3FUYENdSxmlea9wO7yzQtjm1HbnFIA=
+	b=GcjwuvW3xh9NHBpQXLnF+aZrnJ1IuQiu6sU1WDNNr6UqPrnLxzaVyHfGIyyBQGifV
+	 47nUAqwnL/gNgW9XxzTOFSHdyMyFLo8n6C+RUroTDG3Xfy/7SZv+RzmYHPKt11+CGT
+	 +R/Ey8cBrv4zfBSft1Yp51l+zpYlTvSLtwk5buqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steven Steve Kendall <skend@chromium.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 090/150] ALSA: hda: Add HP MP9 G4 Retail System AMS to force connect list
-Date: Mon, 12 Aug 2024 18:02:51 +0200
-Message-ID: <20240812160128.638679339@linuxfoundation.org>
+	Vamshi Gajjela <vamshigajjela@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 099/150] scsi: ufs: core: Fix hba->last_dme_cmd_tstamp timestamp updating logic
+Date: Mon, 12 Aug 2024 18:03:00 +0200
+Message-ID: <20240812160128.981547121@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -50,35 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven 'Steve' Kendall <skend@chromium.org>
+From: Vamshi Gajjela <vamshigajjela@google.com>
 
-commit 7e1e206b99f4b3345aeb49d94584a420b7887f1d upstream.
+commit ab9fd06cb8f0db0854291833fc40c789e43a361f upstream.
 
-In recent HP UEFI firmware (likely v2.15 and above, tested on 2.27),
-these pins are incorrectly set for HDMI/DP audio. Tested on
-HP MP9 G4 Retail System AMS. Tested audio with two monitors connected
-via DisplayPort.
+The ufshcd_add_delay_before_dme_cmd() always introduces a delay of
+MIN_DELAY_BEFORE_DME_CMDS_US between DME commands even when it's not
+required. The delay is added when the UFS host controller supplies the
+quirk UFSHCD_QUIRK_DELAY_BEFORE_DME_CMDS.
 
-Link: https://forum.manjaro.org/t/intel-cannon-lake-pch-cavs-conexant-cx20632-no-sound-at-hdmi-or-displayport/133494
-Link: https://bbs.archlinux.org/viewtopic.php?id=270523
-Signed-off-by: Steven 'Steve' Kendall <skend@chromium.org>
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240806-hdmi-audio-hp-wrongpins-v2-1-d9eb4ad41043@chromium.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix the logic to update hba->last_dme_cmd_tstamp to ensure subsequent DME
+commands have the correct delay in the range of 0 to
+MIN_DELAY_BEFORE_DME_CMDS_US.
+
+Update the timestamp at the end of the function to ensure it captures the
+latest time after any necessary delay has been applied.
+
+Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
+Link: https://lore.kernel.org/r/20240724135126.1786126-1-vamshigajjela@google.com
+Fixes: cad2e03d8607 ("ufs: add support to allow non standard behaviours (quirks)")
+Cc: stable@vger.kernel.org
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufshcd.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1989,6 +1989,7 @@ static int hdmi_add_cvt(struct hda_codec
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -3909,11 +3909,16 @@ static inline void ufshcd_add_delay_befo
+ 			min_sleep_time_us =
+ 				MIN_DELAY_BEFORE_DME_CMDS_US - delta;
+ 		else
+-			return; /* no more delay required */
++			min_sleep_time_us = 0; /* no more delay required */
+ 	}
+ 
+-	/* allow sleep for extra 50us if needed */
+-	usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	if (min_sleep_time_us > 0) {
++		/* allow sleep for extra 50us if needed */
++		usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	}
++
++	/* update the last_dme_cmd_tstamp */
++	hba->last_dme_cmd_tstamp = ktime_get();
  }
  
- static const struct snd_pci_quirk force_connect_list[] = {
-+	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
- 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
+ /**
 
 
