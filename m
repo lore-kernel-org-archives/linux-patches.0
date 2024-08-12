@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC7616D9B8;
-	Mon, 12 Aug 2024 16:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4268183CD3;
+	Mon, 12 Aug 2024 16:30:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480241; cv=none; b=Qwjlo30yXIjgFIU0Kf8/GrLBu6Dawsme+JW2lmSV6ZU3l3d3A/Z9oOchVD/IWoH/QOlyDho1pAAg/8TPHEo1PsCjNo3rwHGxVeGVyIZP/uv1UmuoE91v20CV2tTSlC6jCDxsTZSAkJuymFpEVy42wHoKQjHAqe04uHbZObXcxhE=
+	t=1723480245; cv=none; b=Ui29h6K6oYRg8Zjca2yeuko7vjMiam3tzBecOSpFwEEsvKuN4ockWRXUcOrYz3c33BaTKOj3KD0vk6JoPuJsVd/jd0/4okLrXRos6zCf2zq11Wq0mviCzYQv9ZhC/a6N9cYe0+876A6PzuWaUTtG0AXUy/ZXuuWfoh8TD+LoNz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480241; c=relaxed/simple;
-	bh=kzREYptvXYI6XyPosbct001zxYa0ooDKAXbKBhCVK+w=;
+	s=arc-20240116; t=1723480245; c=relaxed/simple;
+	bh=75AVoJJ9P49k3VBGF4d1WvYDYJ4gqNekoG1DOseByKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fq+txIZSR+QTeNXrKw0jxfsR8IAujIKSx9GylwcyxT+lkP4RjeyMtJJClmNNtQTRA8lcavemXEt6QwhTJ/p77qt4bfgRKSg6S3nC8vonXr5WRPW3AQyutf4s1DTTcctYS4mf/u0JvQ09VMTXN3W9q5U3COXMbDvz/tdE3TUNEKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ppMFm/DF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0JGj6tHhOrDp4bpYeFgP9M/gruxKw1CRuiveYlLRVe5kSrUfF+nFaKjDUbr1IXITeule0MVY0a9Mj4m2DPPbXVWXQiXgfTTTn+qSXe+XatjHg6xz94rnXUzZRLNRAAKb1NPnqEhvOpYs827YBi/bJYS657/3MGLqMyLbuov53Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0uWTNXIv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ppMFm/DF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E79C4AF09;
-	Mon, 12 Aug 2024 16:30:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0uWTNXIv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F02FEC32782;
+	Mon, 12 Aug 2024 16:30:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480241;
-	bh=kzREYptvXYI6XyPosbct001zxYa0ooDKAXbKBhCVK+w=;
+	s=korg; t=1723480244;
+	bh=75AVoJJ9P49k3VBGF4d1WvYDYJ4gqNekoG1DOseByKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppMFm/DFmvEk+or4s98o2D3w6W96LBD25zKyjFelz7OvzQ/egq8V2GS2PhwG3pF5z
-	 A8bIE8Nz7CeZSXZStbQxIDNKrrIL8NncGKfKXAKtnL1lmbmSUCzrh1jYmm9wZBrsyq
-	 D+myOv36c+YIDp8VElxSVhS4GNb3tUggNYWAHYRg=
+	b=0uWTNXIvmtOiNAgfW8/MGtF5LR2EoBI6avCSQNQK4r+UYgs1nvdDzPYF74MubmwFb
+	 4KuVMlRaE0rgNHKowtepKMlu6spRGT4W3Vx9/AjiZovpGDLqEiWOY17x7F3fREuwe+
+	 SedCM23dY6cHdv4WBHyHLUTnRzOXTQga/5PmEcPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Dickson <steved@redhat.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 137/263] nfsd: dont set SVC_SOCK_ANONYMOUS when creating nfsd sockets
-Date: Mon, 12 Aug 2024 18:02:18 +0200
-Message-ID: <20240812160151.792983243@linuxfoundation.org>
+Subject: [PATCH 6.10 138/263] i2c: smbus: Improve handling of stuck alerts
+Date: Mon, 12 Aug 2024 18:02:19 +0200
+Message-ID: <20240812160151.831587254@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,37 +51,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 91da337e5d506f2c065d20529d105ca40090e320 ]
+[ Upstream commit 37c526f00bc1c4f847fc800085f8f009d2e11be6 ]
 
-When creating nfsd sockets via the netlink interface, we do want to
-register with the portmapper. Don't set SVC_SOCK_ANONYMOUS.
+The following messages were observed while testing alert functionality
+on systems with multiple I2C devices on a single bus if alert was active
+on more than one chip.
 
-Reported-by: Steve Dickson <steved@redhat.com>
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+smbus_alert 3-000c: SMBALERT# from dev 0x0c, flag 0
+smbus_alert 3-000c: no driver alert()!
+
+and:
+
+smbus_alert 3-000c: SMBALERT# from dev 0x28, flag 0
+
+Once it starts, this message repeats forever at high rate. There is no
+device at any of the reported addresses.
+
+Analysis shows that this is seen if multiple devices have the alert pin
+active. Apparently some devices do not support SMBus arbitration correctly.
+They keep sending address bits after detecting an address collision and
+handle the collision not at all or too late.
+Specifically, address 0x0c is seen with ADT7461A at address 0x4c and
+ADM1021 at address 0x18 if alert is active on both chips. Address 0x28 is
+seen with ADT7483 at address 0x2a and ADT7461 at address 0x4c if alert is
+active on both chips.
+
+Once the system is in bad state (alert is set by more than one chip),
+it often only recovers by power cycling.
+
+To reduce the impact of this problem, abort the endless loop in
+smbus_alert() if the same address is read more than once and not
+handled by a driver.
+
+Fixes: b5527a7766f0 ("i2c: Add SMBus alert support")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[wsa: it also fixed an interrupt storm in one of my experiments]
+Tested-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+[wsa: rebased, moved a comment as well, improved the 'invalid' value]
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfsctl.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/i2c/i2c-smbus.c | 32 +++++++++++++++++++++++++-------
+ 1 file changed, 25 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
-index c848ebe5d08f1..0f9b4f7b56cd8 100644
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2053,8 +2053,7 @@ int nfsd_nl_listener_set_doit(struct sk_buff *skb, struct genl_info *info)
- 			continue;
- 		}
+diff --git a/drivers/i2c/i2c-smbus.c b/drivers/i2c/i2c-smbus.c
+index 97f338b123b11..1b4057e1bab09 100644
+--- a/drivers/i2c/i2c-smbus.c
++++ b/drivers/i2c/i2c-smbus.c
+@@ -34,6 +34,7 @@ static int smbus_do_alert(struct device *dev, void *addrp)
+ 	struct i2c_client *client = i2c_verify_client(dev);
+ 	struct alert_data *data = addrp;
+ 	struct i2c_driver *driver;
++	int ret;
  
--		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa,
--					      SVC_SOCK_ANONYMOUS,
-+		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
- 					      get_current_cred());
- 		/* always save the latest error */
- 		if (ret < 0)
+ 	if (!client || client->addr != data->addr)
+ 		return 0;
+@@ -47,16 +48,21 @@ static int smbus_do_alert(struct device *dev, void *addrp)
+ 	device_lock(dev);
+ 	if (client->dev.driver) {
+ 		driver = to_i2c_driver(client->dev.driver);
+-		if (driver->alert)
++		if (driver->alert) {
++			/* Stop iterating after we find the device */
+ 			driver->alert(client, data->type, data->data);
+-		else
++			ret = -EBUSY;
++		} else {
+ 			dev_warn(&client->dev, "no driver alert()!\n");
+-	} else
++			ret = -EOPNOTSUPP;
++		}
++	} else {
+ 		dev_dbg(&client->dev, "alert with no driver\n");
++		ret = -ENODEV;
++	}
+ 	device_unlock(dev);
+ 
+-	/* Stop iterating after we find the device */
+-	return -EBUSY;
++	return ret;
+ }
+ 
+ /*
+@@ -67,6 +73,7 @@ static irqreturn_t smbus_alert(int irq, void *d)
+ {
+ 	struct i2c_smbus_alert *alert = d;
+ 	struct i2c_client *ara;
++	unsigned short prev_addr = I2C_CLIENT_END; /* Not a valid address */
+ 
+ 	ara = alert->ara;
+ 
+@@ -94,8 +101,19 @@ static irqreturn_t smbus_alert(int irq, void *d)
+ 			data.addr, data.data);
+ 
+ 		/* Notify driver for the device which issued the alert */
+-		device_for_each_child(&ara->adapter->dev, &data,
+-				      smbus_do_alert);
++		status = device_for_each_child(&ara->adapter->dev, &data,
++					       smbus_do_alert);
++		/*
++		 * If we read the same address more than once, and the alert
++		 * was not handled by a driver, it won't do any good to repeat
++		 * the loop because it will never terminate.
++		 * Bail out in this case.
++		 * Note: This assumes that a driver with alert handler handles
++		 * the alert properly and clears it if necessary.
++		 */
++		if (data.addr == prev_addr && status != -EBUSY)
++			break;
++		prev_addr = data.addr;
+ 	}
+ 
+ 	return IRQ_HANDLED;
 -- 
 2.43.0
 
