@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBFB0186295;
-	Mon, 12 Aug 2024 16:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33AD0186295;
+	Mon, 12 Aug 2024 16:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478797; cv=none; b=hH5S/0yLGtHR0HM29XeUtynwF4ph4x12YUJ6hNYJFilmL4ENcOobv2rehcsqs39WEVqoi8KhrQ7LnyDaR7PDS73v+XCEX/0ogJF+SUy0CfSEMHDWQ5pMscNYciLghQQDlrApedq9GsKpgM7wcnCpE02NaRO/sBTn3P6/nx2mLOw=
+	t=1723478800; cv=none; b=B4jO6RbmzddG3UQzleuCclTmfTzh6ZobEorBVXMKqzx6dgAU0THS4sCUjImTFAZJv2yJ49+IfRI4oxvIHqPrmdH9MwvM888+/cBTEGY9RYhmbnsqdu2TBYXXxHEzZDMoTQTr3Tav/GKSrVPed1V9wZTKJm1j6wLZo6r5GktxRPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478797; c=relaxed/simple;
-	bh=P5EHO6njLgsFXTB9qjWAj5+GAfxOZvkVJMW8PKVOe0g=;
+	s=arc-20240116; t=1723478800; c=relaxed/simple;
+	bh=4BdxxmfCXSe3q2EB9s504csBGPq8aDAYo+16vZLhqfk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inbR03lQpGS7cp7+7LcniTFenU5x/srLsB6IjfcRsFnD7lWHhCaooaD7hTWjBbBWcld/6GNwjryOAeJZQ6I5e2IgXArzplBdGxID3vpNoCu+qZT98kKkAiUWvEgEWw+bKqbFVEH1N4FIsteVfA4OhelTlPBgMM+JGoy732tl9CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z39+ndPz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H5DYPk4JJM0a7kE6+I93F1xPbz+B1c5rUuHl1xhCMe1a3IkPU0nnA7DoPH7W8rmn+nZx3qgW4HlhUO/isqICnM/T7pIuQvyf+VX2GTPYTfCkHPKxy0djBkPZQdFSSreEOaog6+k0spGTG0Zkl4yd7sWrBcb2YBCAHb67Th9225c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lSxFDJDz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z39+ndPz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 398D0C32782;
-	Mon, 12 Aug 2024 16:06:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lSxFDJDz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7C5C32782;
+	Mon, 12 Aug 2024 16:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478796;
-	bh=P5EHO6njLgsFXTB9qjWAj5+GAfxOZvkVJMW8PKVOe0g=;
+	s=korg; t=1723478800;
+	bh=4BdxxmfCXSe3q2EB9s504csBGPq8aDAYo+16vZLhqfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z39+ndPztREF/aF05Ja7Vb4oM/hcaswBRjiyx4x+HEzploiDwU680m8vbF4/ogOd9
-	 yOHh/OGkYh/tJsi6IPx50Ct3GbeWekuuq58tOZzjduqr5FRjizIGHUjjKNAcw4MsII
-	 Kw04vbZa5inX8oo3nPVAQS6WoyHgpMBNEV5Oaq88=
+	b=lSxFDJDz45bozI6/1Vs4l0LC0/5h11ArSEHwngjS7ozzjR/O3cJWlWXxTka622qWV
+	 kb+rjjwPMkgkWroiuGhfU4K7x67ja1zgHPTvLrM3L4UEsn1TSHJe6FNDTy2v9X3Y7u
+	 XmStEmK4olQGjyAf7igQcwV/dbgavicwIMasVDPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Sebastian Fricke <sebastian.fricke@collabora.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/150] media: amphion: Remove lock in s_ctrl callback
-Date: Mon, 12 Aug 2024 18:02:01 +0200
-Message-ID: <20240812160126.711144856@linuxfoundation.org>
+Subject: [PATCH 6.1 023/150] ACPI: SBS: manage alarm sysfs attribute through psy core
+Date: Mon, 12 Aug 2024 18:01:44 +0200
+Message-ID: <20240812160126.056411681@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -46,69 +45,97 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 065927b51eb1f042c3e026cebfd55e72ccc26093 ]
+[ Upstream commit 6bad28cfc30988a845fb3f59a99f4b8a4ce8fe95 ]
 
-There is no need to add a lock in s_ctrl callback, it has been
-synchronized by the ctrl_handler's lock, otherwise it may led to
-a deadlock if the driver calls v4l2_ctrl_s_ctrl().
+Let the power supply core register the attribute.
 
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Sebastian Fricke <sebastian.fricke@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+This ensures that the attribute is created before the device is
+announced to userspace, avoiding a race condition.
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vdec.c | 2 --
- drivers/media/platform/amphion/venc.c | 2 --
- 2 files changed, 4 deletions(-)
+ drivers/acpi/sbs.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
-index dc35a87e628ec..2bfab4467b81c 100644
---- a/drivers/media/platform/amphion/vdec.c
-+++ b/drivers/media/platform/amphion/vdec.c
-@@ -145,7 +145,6 @@ static int vdec_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct vdec_t *vdec = inst->priv;
- 	int ret = 0;
+diff --git a/drivers/acpi/sbs.c b/drivers/acpi/sbs.c
+index e6a01a8df1b81..7c0eba1a37d87 100644
+--- a/drivers/acpi/sbs.c
++++ b/drivers/acpi/sbs.c
+@@ -77,7 +77,6 @@ struct acpi_battery {
+ 	u16 spec;
+ 	u8 id;
+ 	u8 present:1;
+-	u8 have_sysfs_alarm:1;
+ };
  
--	vpu_inst_lock(inst);
- 	switch (ctrl->id) {
- 	case V4L2_CID_MPEG_VIDEO_DEC_DISPLAY_DELAY_ENABLE:
- 		vdec->params.display_delay_enable = ctrl->val;
-@@ -157,7 +156,6 @@ static int vdec_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 		ret = -EINVAL;
- 		break;
- 	}
--	vpu_inst_unlock(inst);
- 
- 	return ret;
+ #define to_acpi_battery(x) power_supply_get_drvdata(x)
+@@ -462,12 +461,18 @@ static ssize_t acpi_battery_alarm_store(struct device *dev,
+ 	return count;
  }
-diff --git a/drivers/media/platform/amphion/venc.c b/drivers/media/platform/amphion/venc.c
-index 1df2b35c1a240..c9cfef16c5b92 100644
---- a/drivers/media/platform/amphion/venc.c
-+++ b/drivers/media/platform/amphion/venc.c
-@@ -528,7 +528,6 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 	struct venc_t *venc = inst->priv;
- 	int ret = 0;
  
--	vpu_inst_lock(inst);
- 	switch (ctrl->id) {
- 	case V4L2_CID_MPEG_VIDEO_H264_PROFILE:
- 		venc->params.profile = ctrl->val;
-@@ -589,7 +588,6 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
- 		ret = -EINVAL;
- 		break;
+-static const struct device_attribute alarm_attr = {
++static struct device_attribute alarm_attr = {
+ 	.attr = {.name = "alarm", .mode = 0644},
+ 	.show = acpi_battery_alarm_show,
+ 	.store = acpi_battery_alarm_store,
+ };
+ 
++static struct attribute *acpi_battery_attrs[] = {
++	&alarm_attr.attr,
++	NULL
++};
++ATTRIBUTE_GROUPS(acpi_battery);
++
+ /* --------------------------------------------------------------------------
+                                  Driver Interface
+    -------------------------------------------------------------------------- */
+@@ -509,7 +514,10 @@ static int acpi_battery_read(struct acpi_battery *battery)
+ static int acpi_battery_add(struct acpi_sbs *sbs, int id)
+ {
+ 	struct acpi_battery *battery = &sbs->battery[id];
+-	struct power_supply_config psy_cfg = { .drv_data = battery, };
++	struct power_supply_config psy_cfg = {
++		.drv_data = battery,
++		.attr_grp = acpi_battery_groups,
++	};
+ 	int result;
+ 
+ 	battery->id = id;
+@@ -539,10 +547,6 @@ static int acpi_battery_add(struct acpi_sbs *sbs, int id)
+ 		goto end;
  	}
--	vpu_inst_unlock(inst);
  
- 	return ret;
+-	result = device_create_file(&battery->bat->dev, &alarm_attr);
+-	if (result)
+-		goto end;
+-	battery->have_sysfs_alarm = 1;
+       end:
+ 	pr_info("%s [%s]: Battery Slot [%s] (battery %s)\n",
+ 	       ACPI_SBS_DEVICE_NAME, acpi_device_bid(sbs->device),
+@@ -554,11 +558,8 @@ static void acpi_battery_remove(struct acpi_sbs *sbs, int id)
+ {
+ 	struct acpi_battery *battery = &sbs->battery[id];
+ 
+-	if (battery->bat) {
+-		if (battery->have_sysfs_alarm)
+-			device_remove_file(&battery->bat->dev, &alarm_attr);
++	if (battery->bat)
+ 		power_supply_unregister(battery->bat);
+-	}
  }
+ 
+ static int acpi_charger_add(struct acpi_sbs *sbs)
 -- 
 2.43.0
 
