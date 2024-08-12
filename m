@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3784186E52;
-	Mon, 12 Aug 2024 16:12:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9639186E52;
+	Mon, 12 Aug 2024 16:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479136; cv=none; b=IrrRnCs1VKNl+zMbBc2hibyQkUZZGZ496o7u1alJYncIMZohqKc926U65VKQnADNq5gSqjMfQC8YqTzGlPpbxRivdJQl+VR8Hdm9EFDAUhC3jGSbOV6IZuwxNlIKQBMwLe1492gpwczKBekCmaKcpUBVWkLADHg6hVovz/mvhmg=
+	t=1723479140; cv=none; b=LbDJFcGWvlavL8evx1AeVE/vCu1ozQW8dcK0ZXFkTLnmV7YcpPnKR00k+Yt/h21tR3MgYJ8L7HiABglgPRMtKnxL+/r94pPDgEGF6jzDv+xRz+TZEiGQL3YJg34I/+ZzXkoJuO2YuFtijuvI0HJnbOv8sWhBZnnG4BPD6QDqZd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479136; c=relaxed/simple;
-	bh=hgUX3355HK0LOxhWWtkjTQAIAIkZdMnweY6uuVSrao8=;
+	s=arc-20240116; t=1723479140; c=relaxed/simple;
+	bh=DlEcKtyZe6RMV5gUNCgssRZhxbIWryfHd3OQMU5NUwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=usfW1YGreoFw8u1K80Nm9AgccnIWtIoRfmfkK2coJuMzhVYou6ZJXCC5yfMHL7KjozAWWYShCpjjmca2D3BjhFhVjtgTGscBfQlWMPHU8ldWfX2X8pwocc7VTgbpsUni3GZaHp8qdweoUR0bv1SHG0r9nLv2MSywD8Wtd0naOJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsX/pbgF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyGtA7qHVT5uWpTfuyOKKvpf+IbwC9QLcKwbg+vaJGEnOMs2+1tJhWtQ3659j8gSGlIeYIgB0TEPMRbkWtyQY+B5GQJEFhAo7X4cukuIMWly7MI4V/qzvr2DlgBUKBmtOYDXGz5IODpSVAlBsP3IZ2Zkgafhqk1MRFyKpX8IaSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icqZVKJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsX/pbgF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0472DC32782;
-	Mon, 12 Aug 2024 16:12:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icqZVKJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEE4C32782;
+	Mon, 12 Aug 2024 16:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479136;
-	bh=hgUX3355HK0LOxhWWtkjTQAIAIkZdMnweY6uuVSrao8=;
+	s=korg; t=1723479139;
+	bh=DlEcKtyZe6RMV5gUNCgssRZhxbIWryfHd3OQMU5NUwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsX/pbgFZ5MySyn+sMzNAd2IUgyQG6yXw54DLozVNNiq9D3dRfuD2OLj1WoYhOZRP
-	 Ywkq4gKvfhBQoNSYTcnSzfjih1GnmJY5Jkd8mzrqJcVkuws22N/YYQIyv4aREyxW9H
-	 eFoYzcDM1KZ1WGHf9wVQzZ4Nhq1aJDNdfoLy0WGQ=
+	b=icqZVKJFXLJqxGtEtPE13FnTqMG4cvJZiclCfE3O2w1B5HvopYiOMWY0nbJQvFMI/
+	 5xp7u812vcRGPrN+UKZLu5w6LUa5LfE1e48zWSmny5dhw89hpIGismGNso+9mizOZG
+	 XeuYeFYOJbR0ciBjZvQFf+Cpsk4SZpSzrOtf+6GA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Sun <samsun1006219@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Kevin Berry <kpberry@google.com>
-Subject: [PATCH 6.1 144/150] xfs: fix log recovery buffer allocation for the legacy h_size fixup
-Date: Mon, 12 Aug 2024 18:03:45 +0200
-Message-ID: <20240812160130.727927459@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.1 145/150] drm/amd/display: Defer handling mst up request in resume
+Date: Mon, 12 Aug 2024 18:03:46 +0200
+Message-ID: <20240812160130.766759288@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -54,72 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Wayne Lin <wayne.lin@amd.com>
 
-commit 45cf976008ddef4a9c9a30310c9b4fb2a9a6602a upstream.
+commit 202dc359addab29451d3d18243c3d957da5392c8 upstream.
 
-Commit a70f9fe52daa ("xfs: detect and handle invalid iclog size set by
-mkfs") added a fixup for incorrect h_size values used for the initial
-umount record in old xfsprogs versions.  Later commit 0c771b99d6c9
-("xfs: clean up calculation of LR header blocks") cleaned up the log
-reover buffer calculation, but stoped using the fixed up h_size value
-to size the log recovery buffer, which can lead to an out of bounds
-access when the incorrect h_size does not come from the old mkfs
-tool, but a fuzzer.
+[Why]
+Like commit ec5fa9fcdeca ("drm/amd/display: Adjust the MST resume flow"), we
+want to avoid handling mst topology changes before restoring the old state.
+If we enable DP_UP_REQ_EN before calling drm_atomic_helper_resume(), have
+changce to handle CSN event first and fire hotplug event before restoring the
+cached state.
 
-Fix this by open coding xlog_logrec_hblks and taking the fixed h_size
-into account for this calculation.
+[How]
+Disable mst branch sending up request event before we restoring the cached state.
+DP_UP_REQ_EN will be set later when we call drm_dp_mst_topology_mgr_resume().
 
-Fixes: 0c771b99d6c9 ("xfs: clean up calculation of LR header blocks")
-Reported-by: Sam Sun <samsun1006219@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Kevin Berry <kpberry@google.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Hersen Wu <hersenxs.wu@amd.com>
+Signed-off-by: Wayne Lin <wayne.lin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log_recover.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2960,7 +2960,7 @@ xlog_do_recovery_pass(
- 	int			error = 0, h_size, h_len;
- 	int			error2 = 0;
- 	int			bblks, split_bblks;
--	int			hblks, split_hblks, wrapped_hblks;
-+	int			hblks = 1, split_hblks, wrapped_hblks;
- 	int			i;
- 	struct hlist_head	rhash[XLOG_RHASH_SIZE];
- 	LIST_HEAD		(buffer_list);
-@@ -3016,14 +3016,22 @@ xlog_do_recovery_pass(
- 		if (error)
- 			goto bread_err1;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -2363,7 +2363,6 @@ static void resume_mst_branch_status(str
  
--		hblks = xlog_logrec_hblks(log, rhead);
--		if (hblks != 1) {
--			kmem_free(hbp);
--			hbp = xlog_alloc_buffer(log, hblks);
-+		/*
-+		 * This open codes xlog_logrec_hblks so that we can reuse the
-+		 * fixed up h_size value calculated above.  Without that we'd
-+		 * still allocate the buffer based on the incorrect on-disk
-+		 * size.
-+		 */
-+		if (h_size > XLOG_HEADER_CYCLE_SIZE &&
-+		    (rhead->h_version & cpu_to_be32(XLOG_VERSION_2))) {
-+			hblks = DIV_ROUND_UP(h_size, XLOG_HEADER_CYCLE_SIZE);
-+			if (hblks > 1) {
-+				kmem_free(hbp);
-+				hbp = xlog_alloc_buffer(log, hblks);
-+			}
- 		}
- 	} else {
- 		ASSERT(log->l_sectBBsize == 1);
--		hblks = 1;
- 		hbp = xlog_alloc_buffer(log, 1);
- 		h_size = XLOG_BIG_RECORD_BSIZE;
- 	}
+ 	ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
+ 				 DP_MST_EN |
+-				 DP_UP_REQ_EN |
+ 				 DP_UPSTREAM_IS_SRC);
+ 	if (ret < 0) {
+ 		drm_dbg_kms(mgr->dev, "mst write failed - undocked during suspend?\n");
 
 
