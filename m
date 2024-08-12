@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBB318757D;
-	Mon, 12 Aug 2024 16:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6714B18757C;
+	Mon, 12 Aug 2024 16:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479064; cv=none; b=mzhYuw5+tGl4mma4aerMkUI/8qJtrHbotbGqljokCoGRObSN/iKLCNQw+IfT9Jh/rXcEN0Fm7XKGaioO3CNBmLEMsF7e6j8rcOWlyULf5HG14M2/Yyqxhm2Dgxs6RGzfs1JxpVgi7fkOSQRzusTjzW5duwTSF+ZgbsgQFahbD1k=
+	t=1723479067; cv=none; b=Z6FbJ/AUl+1/rEy4IrHzZGhG4ZW1+qaGaIavwXVfUT1fnRVAdMcpMGK+V3S2eAi65wlY0a7FK7B77BsruIz9Pt2YZcr2mrKB0rpiHe3hqfY6uYt1zE6CwlN0iHWuhPIL6MIEl45DNi6SZ6iR5VxNjYwnjWJsUcJ8Hkw7zn0LD+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479064; c=relaxed/simple;
-	bh=XfEOHCFebZTmbJCOdQYVK+wlO1myYGTdCNAm496giZI=;
+	s=arc-20240116; t=1723479067; c=relaxed/simple;
+	bh=oS3RXPe04YP1P0Ju+OkG5XRH+GuUatJu2MnuNWgDQb8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TW8XQWGQEtsKLq4gO0awz1o8bnAr0xnGcRvHEpQgd+0wYwt90lXtgeL9M+i0aHU+gff9W6xNH/GL4I4Nw9mSjhG7BxPcuCbaXEuQd34RLrN0tuZimjT2pxd3loMbchfQnP+kU9L82zP8xqyJf3xrWQ/AKCg6SqlEAVTCFP0bYvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xpTuqIqB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1t2BiGLkvyoapgKYY6VKmx2pA/60f6h1ur+BJfZ8Dr1VykBKGzNulHvHMKFGtoduVmb/qkV+1+Qo9YrvnEY5Dvg6PMB1xaY6QGKltWt+ey8JFGvNT+1kRLyoO49IWq8PADtXqIp9OCMCAIVL8ZKSm0mUtpokDlcC1CabLIvAh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCK5kjfP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xpTuqIqB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1664C32782;
-	Mon, 12 Aug 2024 16:11:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCK5kjfP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD395C32782;
+	Mon, 12 Aug 2024 16:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479064;
-	bh=XfEOHCFebZTmbJCOdQYVK+wlO1myYGTdCNAm496giZI=;
+	s=korg; t=1723479067;
+	bh=oS3RXPe04YP1P0Ju+OkG5XRH+GuUatJu2MnuNWgDQb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xpTuqIqBRnYcPzKU2eZIbK9ii7LTUgRj8eiwy+QIgQmGhg4xunMNNlTalTP3wWRyp
-	 daqoZVOFXALnXFMIQA9Sza3Mo+iEKvZUJYi7+WZkyYlKhReUThf6mzmRux80PAiM19
-	 HvG7y99NqJZrm55MGHVfAselPgbiZVjZcuj6o6pA=
+	b=TCK5kjfPEo4AdTls6I67ZVz+OAJym2mlJQ7upM53G5PUtbE40vfTjyxbmYis4GLdL
+	 RDbH3fK1nmBJFINm25IctL3QUXh521iGuSw4tLivVZrZ8U1P/t7lcwzG6hkuF/F+cf
+	 whsgzpID6UjikgDVK1DyVRIitakTrkPOKgiF6L9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam James <sam@gentoo.org>,
-	Alejandro Colomar <alx@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 120/150] btrfs: avoid using fixed char array size for tree names
-Date: Mon, 12 Aug 2024 18:03:21 +0200
-Message-ID: <20240812160129.794426672@linuxfoundation.org>
+	Andi Kleen <ak@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 121/150] x86/mtrr: Check if fixed MTRRs exist before saving them
+Date: Mon, 12 Aug 2024 18:03:22 +0200
+Message-ID: <20240812160129.834133005@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -47,70 +44,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Andi Kleen <ak@linux.intel.com>
 
-commit 12653ec36112ab55fa06c01db7c4432653d30a8d upstream.
+commit 919f18f961c03d6694aa726c514184f2311a4614 upstream.
 
-[BUG]
-There is a bug report that using the latest trunk GCC 15, btrfs would cause
-unterminated-string-initialization warning:
+MTRRs have an obsolete fixed variant for fine grained caching control
+of the 640K-1MB region that uses separate MSRs. This fixed variant has
+a separate capability bit in the MTRR capability MSR.
 
-  linux-6.6/fs/btrfs/print-tree.c:29:49: error: initializer-string for array of ‘char’ is too long [-Werror=unterminated-string-initialization]
-   29 |         { BTRFS_BLOCK_GROUP_TREE_OBJECTID,      "BLOCK_GROUP_TREE"      },
-      |
-      ^~~~~~~~~~~~~~~~~~
+So far all x86 CPUs which support MTRR have this separate bit set, so it
+went unnoticed that mtrr_save_state() does not check the capability bit
+before accessing the fixed MTRR MSRs.
 
-[CAUSE]
-To print tree names we have an array of root_name_map structure, which
-uses "char name[16];" to store the name string of a tree.
+Though on a CPU that does not support the fixed MTRR capability this
+results in a #GP.  The #GP itself is harmless because the RDMSR fault is
+handled gracefully, but results in a WARN_ON().
 
-But the following trees have names exactly at 16 chars length:
-- "BLOCK_GROUP_TREE"
-- "RAID_STRIPE_TREE"
+Add the missing capability check to prevent this.
 
-This means we will have no space for the terminating '\0', and can lead
-to unexpected access when printing the name.
-
-[FIX]
-Instead of "char name[16];" use "const char *" instead.
-
-Since the name strings are all read-only data, and are all NULL
-terminated by default, there is not much need to bother the length at
-all.
-
-Reported-by: Sam James <sam@gentoo.org>
-Reported-by: Alejandro Colomar <alx@kernel.org>
-Fixes: edde81f1abf29 ("btrfs: add raid stripe tree pretty printer")
-Fixes: 9c54e80ddc6bd ("btrfs: add code to support the block group root")
-CC: stable@vger.kernel.org # 6.1+
-Suggested-by: Alejandro Colomar <alx@kernel.org>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Alejandro Colomar <alx@kernel.org>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 2b1f6278d77c ("[PATCH] x86: Save the MTRRs of the BSP before booting an AP")
+Signed-off-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240808000244.946864-1-ak@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/print-tree.c |    2 +-
+ arch/x86/kernel/cpu/mtrr/mtrr.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/print-tree.c
-+++ b/fs/btrfs/print-tree.c
-@@ -9,7 +9,7 @@
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.c
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
+@@ -816,7 +816,7 @@ void mtrr_save_state(void)
+ {
+ 	int first_cpu;
  
- struct root_name_map {
- 	u64 id;
--	char name[16];
-+	const char *name;
- };
+-	if (!mtrr_enabled())
++	if (!mtrr_enabled() || !mtrr_state.have_fixed)
+ 		return;
  
- static const struct root_name_map root_map[] = {
+ 	first_cpu = cpumask_first(cpu_online_mask);
 
 
