@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6A34183CD4;
-	Mon, 12 Aug 2024 16:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3518E183CD4;
+	Mon, 12 Aug 2024 16:29:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480162; cv=none; b=XThcDNfsJqKevvbq4FsgAdHjTibirNfeY+uOnEs7+Vi4LJI4PdaAwVNs4khXX5jOHWR7/xyaYwWzHsIcYBOhr9gVvyexJzBFRjiP/YzcKmcNMhLVwcElwrdNVtKR4R1QUEqivQHh9HZLnU84FpNu9jPNgk6rloA/gMLX5uJ9EDE=
+	t=1723480165; cv=none; b=tZbVUpo6JuxPtLGhX/fwBZEkWUBrK7h64fJ7ihoWPBidfmv5LKwf0CT8nLNgif+56j78ftZu5kk3S1Yoy4XB9M8VCdRct7+LRHM9DJ783l0J47pOgOcb2WSt0Wev3idudNBQTAFhiAVcnKUBLqJC3vZScepqrs3AVDnri1fRU1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480162; c=relaxed/simple;
-	bh=esnH7aJQ5IZABY5/0G7Jp1N3/vrRO0RklnvDexfawjM=;
+	s=arc-20240116; t=1723480165; c=relaxed/simple;
+	bh=bOYgFfkimAnkg0l5WVY1mV7OiY7arZCSEmnDGcvspmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVtTVt3QywpLBcP8C3nA7NUQ1hdHrngAnN/UY0mGLm0yZUUTFWMm9kZt8dqX9ZOG9mxjd0P+iflw2T9UjhCBCcuB56w81Yjz9MFGe3o2koQtk7sNaYTVj9ClOMDuvAXEhDzgny8nlPvDzmgLIwaNa1JfEnH21yMg3yfjShzByb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Le+UDp5C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eFrJVyPwUxxVqyWtKtoVHsF+s8XXuwxxX8lR3lBjvK5MbQWSiGomsvkLIlrejsNj94o32WouD7Ec8XzBeK4+RbmxhvPRCgKxOS3ztbv36u1NXvRPxHvLxwnvKGnB5FAsBZNnKwK8+bvSvcNeFSZL3MiLmb/DwR/5o+r+mWqHbrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NsUhSR1v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Le+UDp5C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54891C32782;
-	Mon, 12 Aug 2024 16:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NsUhSR1v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCE1C32782;
+	Mon, 12 Aug 2024 16:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480161;
-	bh=esnH7aJQ5IZABY5/0G7Jp1N3/vrRO0RklnvDexfawjM=;
+	s=korg; t=1723480165;
+	bh=bOYgFfkimAnkg0l5WVY1mV7OiY7arZCSEmnDGcvspmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Le+UDp5CEj45m9UaPxyIr3UTiUUr09Kmv3JgkfUctNNDVw9HgyURRHOqvmUgUVh3k
-	 jhWfK8jz3KT5xeZheTMwWasaYwfizMmfk6KhjbAfOPefwlRNMVJe30sHg1CZXAUB/W
-	 X6K0TGzRYG/zROJ7EOJLPJrvCPGtx7Ypvl1ge9a8=
+	b=NsUhSR1vRMs+nDnRqvzjbGDmueOfULWCW9lm1qd+9VaLmcBjENmUKDg8YJJ15Gly6
+	 vpfw58TKsCFkwUOegv7btEaTUnxo21FPkBqT6AVZk1VF+OrUdo7hlX6ofzbIvpPgj/
+	 FnQGgYx+FxZ0z5Ar0L30bNPHnBw0WjXaM/aON0W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaxi Shen <shenxiaxi26@gmail.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+eaba5abe296837a640c0@syzkaller.appspotmail.com
-Subject: [PATCH 6.10 112/263] ext4: fix uninitialized variable in ext4_inlinedir_to_tree
-Date: Mon, 12 Aug 2024 18:01:53 +0200
-Message-ID: <20240812160150.833250681@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 113/263] jbd2: avoid memleak in jbd2_journal_write_metadata_buffer
+Date: Mon, 12 Aug 2024 18:01:54 +0200
+Message-ID: <20240812160150.870746780@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,46 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiaxi Shen <shenxiaxi26@gmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 8dc9c3da79c84b13fdb135e2fb0a149a8175bffe ]
+[ Upstream commit cc102aa24638b90e04364d64e4f58a1fa91a1976 ]
 
-Syzbot has found an uninit-value bug in ext4_inlinedir_to_tree
+The new_bh is from alloc_buffer_head, we should call free_buffer_head to
+free it in error case.
 
-This error happens because ext4_inlinedir_to_tree does not
-handle the case when ext4fs_dirhash returns an error
-
-This can be avoided by checking the return value of ext4fs_dirhash
-and propagating the error,
-similar to how it's done with ext4_htree_store_dirent
-
-Signed-off-by: Xiaxi Shen <shenxiaxi26@gmail.com>
-Reported-and-tested-by: syzbot+eaba5abe296837a640c0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=eaba5abe296837a640c0
-Link: https://patch.msgid.link/20240501033017.220000-1-shenxiaxi26@gmail.com
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240514112438.1269037-2-shikemeng@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inline.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/jbd2/journal.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/inline.c b/fs/ext4/inline.c
-index d5bd1e3a5d36c..e7a09a99837b9 100644
---- a/fs/ext4/inline.c
-+++ b/fs/ext4/inline.c
-@@ -1410,7 +1410,11 @@ int ext4_inlinedir_to_tree(struct file *dir_file,
- 			hinfo->hash = EXT4_DIRENT_HASH(de);
- 			hinfo->minor_hash = EXT4_DIRENT_MINOR_HASH(de);
- 		} else {
--			ext4fs_dirhash(dir, de->name, de->name_len, hinfo);
-+			err = ext4fs_dirhash(dir, de->name, de->name_len, hinfo);
-+			if (err) {
-+				ret = err;
-+				goto out;
-+			}
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index ae5b544ed0cc0..c8d9d85e0e871 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -399,6 +399,7 @@ int jbd2_journal_write_metadata_buffer(transaction_t *transaction,
+ 		tmp = jbd2_alloc(bh_in->b_size, GFP_NOFS);
+ 		if (!tmp) {
+ 			brelse(new_bh);
++			free_buffer_head(new_bh);
+ 			return -ENOMEM;
  		}
- 		if ((hinfo->hash < start_hash) ||
- 		    ((hinfo->hash == start_hash) &&
+ 		spin_lock(&jh_in->b_state_lock);
 -- 
 2.43.0
 
