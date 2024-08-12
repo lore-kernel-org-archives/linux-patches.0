@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C441134AC;
-	Mon, 12 Aug 2024 16:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3D0134AC;
+	Mon, 12 Aug 2024 16:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479950; cv=none; b=pPVG2p0m7tYRMCwX71VmgsweoqzwwhGr2ZLhmcuo89smGUjNHDINsrD/HjGCgIjaz3FuV6IGDar0LiD0qRTzel7ftq56/2yEeMomlZiJuDGzpBEN+lD5Wl6YNwciog4ZHlgk/2hLm5qfdPtlL7NY2uqVIsXA9E/2o2v3IUid8B8=
+	t=1723479953; cv=none; b=gZuQqkZ69Pfk2UXPDliSKUtOCYO0SEGh72HmyqnB1hv0+RfQbk+UKsCTffZISoE3WHtm+2kVRABkIcN2y3h6rHeHa2fpC9tyRDYvwZx5Jt9prwow77bZl9iU2sksDIGZQEOTSq1piIE1am1+1RsM0ryA1xJAoLpzQWD8OlqsRMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479950; c=relaxed/simple;
-	bh=RA6oxdYWVJiYELJF1S5G0PPjnQKU5kVYECW7Kzh1nGo=;
+	s=arc-20240116; t=1723479953; c=relaxed/simple;
+	bh=wRgCno8U63cEZ0Bhr/NpYjCUXeZl26lHdDb0DTNDC+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fA+LfKegptryJiEN+BzY59NsHhI5wuhpJnb3s5+35IV4wYHrRt78UZgAa5bp9OVmqoIw/F6e8pNhySv9VLP1XD5/RPskz5uCUeu95OkYzgfnkZkFn1wqRQ0GoLGsDN6JUY60aYj2mxq8lPOtqet8HnBazKeCTlG9+i8sjYAHJfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qcpCHk2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KV4EZXGagPF16pqEi9NYQmvuKWqFsWJUYoDO3VkRZxPjRIysSlNZ/mt8o2CK2m6NCVPMeJjZpiZZj6gsvY01IWNMz5OMo296kvkO7GsQtWChMnoyKxjvbcQORD/hhJt9Pj3ePQxadxBdUkfLRXTYai661GKzFEzjNdCY9Z+hDJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ebY9e98V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qcpCHk2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A81D5C32782;
-	Mon, 12 Aug 2024 16:25:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ebY9e98V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD28AC32782;
+	Mon, 12 Aug 2024 16:25:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479950;
-	bh=RA6oxdYWVJiYELJF1S5G0PPjnQKU5kVYECW7Kzh1nGo=;
+	s=korg; t=1723479953;
+	bh=wRgCno8U63cEZ0Bhr/NpYjCUXeZl26lHdDb0DTNDC+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcpCHk2/4Xo02BDzZpjJrocyOr13qtKZPUAuCeRR0BSuLxXCzVTVS9ritb/Slz69V
-	 2ImmS7LJIf9WBCIBklKudLt5zpChv15S+k/Is/7/NBGjHHPrGRO8SB6UivrDE+H0O1
-	 JxZ+/3i0qeNGKv51uOWTt/gaj8T6MLsVRnLelb4s=
+	b=ebY9e98V+EB2IClb3jctNZX9grZ3qTmnuhPIqZGD2RWojMhTGZ3ES/teoBG5+aIca
+	 1jc5ZGrmhaUN2gqTwQxEKcLP0kxTD3owrIFZRY/YdTOkiaksz75d1USTR61drnheJX
+	 M2tL1C5MC77/TxCVsceOfV2ZcmVYXjjzCcuy/qVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Xin Long <lucien.xin@gmail.com>,
+	Kyle Swenson <kyle.swenson@est.tech>,
+	Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 019/263] sctp: Fix null-ptr-deref in reuseport_add_sock().
-Date: Mon, 12 Aug 2024 18:00:20 +0200
-Message-ID: <20240812160147.277455835@linuxfoundation.org>
+Subject: [PATCH 6.10 020/263] net: pse-pd: tps23881: Fix the device ID check
+Date: Mon, 12 Aug 2024 18:00:21 +0200
+Message-ID: <20240812160147.315602249@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,167 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Kyle Swenson <kyle.swenson@est.tech>
 
-[ Upstream commit 9ab0faa7f9ffe31296dbb9bbe6f76c72c14eea18 ]
+[ Upstream commit 89108cb5c28527c1882df2987394e5c261a1f4aa ]
 
-syzbot reported a null-ptr-deref while accessing sk2->sk_reuseport_cb in
-reuseport_add_sock(). [0]
+The DEVID register contains two pieces of information: the device ID in
+the upper nibble, and the silicon revision number in the lower nibble.
+The driver should work fine with any silicon revision, so let's mask
+that out in the device ID check.
 
-The repro first creates a listener with SO_REUSEPORT.  Then, it creates
-another listener on the same port and concurrently closes the first
-listener.
-
-The second listen() calls reuseport_add_sock() with the first listener as
-sk2, where sk2->sk_reuseport_cb is not expected to be cleared concurrently,
-but the close() does clear it by reuseport_detach_sock().
-
-The problem is SCTP does not properly synchronise reuseport_alloc(),
-reuseport_add_sock(), and reuseport_detach_sock().
-
-The caller of reuseport_alloc() and reuseport_{add,detach}_sock() must
-provide synchronisation for sockets that are classified into the same
-reuseport group.
-
-Otherwise, such sockets form multiple identical reuseport groups, and
-all groups except one would be silently dead.
-
-  1. Two sockets call listen() concurrently
-  2. No socket in the same group found in sctp_ep_hashtable[]
-  3. Two sockets call reuseport_alloc() and form two reuseport groups
-  4. Only one group hit first in __sctp_rcv_lookup_endpoint() receives
-      incoming packets
-
-Also, the reported null-ptr-deref could occur.
-
-TCP/UDP guarantees that would not happen by holding the hash bucket lock.
-
-Let's apply the locking strategy to __sctp_hash_endpoint() and
-__sctp_unhash_endpoint().
-
-[0]:
-Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] PREEMPT SMP KASAN PTI
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-CPU: 1 UID: 0 PID: 10230 Comm: syz-executor119 Not tainted 6.10.0-syzkaller-12585-g301927d2d2eb #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/27/2024
-RIP: 0010:reuseport_add_sock+0x27e/0x5e0 net/core/sock_reuseport.c:350
-Code: 00 0f b7 5d 00 bf 01 00 00 00 89 de e8 1b a4 ff f7 83 fb 01 0f 85 a3 01 00 00 e8 6d a0 ff f7 49 8d 7e 12 48 89 f8 48 c1 e8 03 <42> 0f b6 04 28 84 c0 0f 85 4b 02 00 00 41 0f b7 5e 12 49 8d 7e 14
-RSP: 0018:ffffc9000b947c98 EFLAGS: 00010202
-RAX: 0000000000000002 RBX: ffff8880252ddf98 RCX: ffff888079478000
-RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000012
-RBP: 0000000000000001 R08: ffffffff8993e18d R09: 1ffffffff1fef385
-R10: dffffc0000000000 R11: fffffbfff1fef386 R12: ffff8880252ddac0
-R13: dffffc0000000000 R14: 0000000000000000 R15: 0000000000000000
-FS:  00007f24e45b96c0(0000) GS:ffff8880b9300000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007ffcced5f7b8 CR3: 00000000241be000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __sctp_hash_endpoint net/sctp/input.c:762 [inline]
- sctp_hash_endpoint+0x52a/0x600 net/sctp/input.c:790
- sctp_listen_start net/sctp/socket.c:8570 [inline]
- sctp_inet_listen+0x767/0xa20 net/sctp/socket.c:8625
- __sys_listen_socket net/socket.c:1883 [inline]
- __sys_listen+0x1b7/0x230 net/socket.c:1894
- __do_sys_listen net/socket.c:1902 [inline]
- __se_sys_listen net/socket.c:1900 [inline]
- __x64_sys_listen+0x5a/0x70 net/socket.c:1900
- do_syscall_x64 arch/x86/entry/common.c:52 [inline]
- do_syscall_64+0xf3/0x230 arch/x86/entry/common.c:83
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7f24e46039b9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 91 1a 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b0 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007f24e45b9228 EFLAGS: 00000246 ORIG_RAX: 0000000000000032
-RAX: ffffffffffffffda RBX: 00007f24e468e428 RCX: 00007f24e46039b9
-RDX: 00007f24e46039b9 RSI: 0000000000000003 RDI: 0000000000000004
-RBP: 00007f24e468e420 R08: 00007f24e45b96c0 R09: 00007f24e45b96c0
-R10: 00007f24e45b96c0 R11: 0000000000000246 R12: 00007f24e468e42c
-R13: 00007f24e465a5dc R14: 0020000000000001 R15: 00007ffcced5f7d8
- </TASK>
-Modules linked in:
-
-Fixes: 6ba845740267 ("sctp: process sk_reuseport in sctp_get_port_local")
-Reported-by: syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=e6979a5d2f10ecb700e4
-Tested-by: syzbot+e6979a5d2f10ecb700e4@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://patch.msgid.link/20240731234624.94055-1-kuniyu@amazon.com
+Fixes: 20e6d190ffe1 ("net: pse-pd: Add TI TPS23881 PSE controller driver")
+Signed-off-by: Kyle Swenson <kyle.swenson@est.tech>
+Reviewed-by: Thomas Petazzoni <thomas.petazzoni@bootlin.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20240731154152.4020668-1-kyle.swenson@est.tech
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/input.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ drivers/net/pse-pd/tps23881.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/input.c b/net/sctp/input.c
-index 17fcaa9b0df94..a8a254a5008e5 100644
---- a/net/sctp/input.c
-+++ b/net/sctp/input.c
-@@ -735,15 +735,19 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
- 	struct sock *sk = ep->base.sk;
- 	struct net *net = sock_net(sk);
- 	struct sctp_hashbucket *head;
-+	int err = 0;
+diff --git a/drivers/net/pse-pd/tps23881.c b/drivers/net/pse-pd/tps23881.c
+index 98ffbb1bbf13c..e95109c1130dc 100644
+--- a/drivers/net/pse-pd/tps23881.c
++++ b/drivers/net/pse-pd/tps23881.c
+@@ -29,6 +29,8 @@
+ #define TPS23881_REG_TPON	BIT(0)
+ #define TPS23881_REG_FWREV	0x41
+ #define TPS23881_REG_DEVID	0x43
++#define TPS23881_REG_DEVID_MASK	0xF0
++#define TPS23881_DEVICE_ID	0x02
+ #define TPS23881_REG_SRAM_CTRL	0x60
+ #define TPS23881_REG_SRAM_DATA	0x61
  
- 	ep->hashent = sctp_ep_hashfn(net, ep->base.bind_addr.port);
- 	head = &sctp_ep_hashtable[ep->hashent];
+@@ -750,7 +752,7 @@ static int tps23881_i2c_probe(struct i2c_client *client)
+ 	if (ret < 0)
+ 		return ret;
  
-+	write_lock(&head->lock);
- 	if (sk->sk_reuseport) {
- 		bool any = sctp_is_ep_boundall(sk);
- 		struct sctp_endpoint *ep2;
- 		struct list_head *list;
--		int cnt = 0, err = 1;
-+		int cnt = 0;
-+
-+		err = 1;
- 
- 		list_for_each(list, &ep->base.bind_addr.address_list)
- 			cnt++;
-@@ -761,24 +765,24 @@ static int __sctp_hash_endpoint(struct sctp_endpoint *ep)
- 			if (!err) {
- 				err = reuseport_add_sock(sk, sk2, any);
- 				if (err)
--					return err;
-+					goto out;
- 				break;
- 			} else if (err < 0) {
--				return err;
-+				goto out;
- 			}
- 		}
- 
- 		if (err) {
- 			err = reuseport_alloc(sk, any);
- 			if (err)
--				return err;
-+				goto out;
- 		}
+-	if (ret != 0x22) {
++	if (FIELD_GET(TPS23881_REG_DEVID_MASK, ret) != TPS23881_DEVICE_ID) {
+ 		dev_err(dev, "Wrong device ID\n");
+ 		return -ENXIO;
  	}
- 
--	write_lock(&head->lock);
- 	hlist_add_head(&ep->node, &head->chain);
-+out:
- 	write_unlock(&head->lock);
--	return 0;
-+	return err;
- }
- 
- /* Add an endpoint to the hash. Local BH-safe. */
-@@ -803,10 +807,9 @@ static void __sctp_unhash_endpoint(struct sctp_endpoint *ep)
- 
- 	head = &sctp_ep_hashtable[ep->hashent];
- 
-+	write_lock(&head->lock);
- 	if (rcu_access_pointer(sk->sk_reuseport_cb))
- 		reuseport_detach_sock(sk);
--
--	write_lock(&head->lock);
- 	hlist_del_init(&ep->node);
- 	write_unlock(&head->lock);
- }
 -- 
 2.43.0
 
