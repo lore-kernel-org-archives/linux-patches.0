@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876A3187328;
-	Mon, 12 Aug 2024 16:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4752C1A5;
+	Mon, 12 Aug 2024 16:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480443; cv=none; b=D5aAIRMS7wzWc4HDEi+RAbj6PkiahWUivh5shsmbJgZcuZdKxMHp/UO8dusMmlAX/pEQtKjZcGuSmymyBBG6i+NBiK+V3yVZSgXyO4gxSux4IeU3R7nF3SZOlPUBh1XiFPln5DKzQzdGL8Ho7jAadgQWwiO8QULKqVSO5hVBYo8=
+	t=1723480447; cv=none; b=UWS4+HF4ltOjrlz/ULEHCzQSu73wD9miPbioXQmkJXdJ6jypfiDlQ5gfC1vJP8jV7fmCXiCfmsjND8s3kKsC+l37HlZJXuG0+FJ+spm3aZ6yseMDOp2Z6qNritYmBeEUArqA0aBQYdshJeE6eGDEJlahn1pNf9S2J6WNwyyamXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480443; c=relaxed/simple;
-	bh=E4Li5F5c/dDYYn/LP/ZdOlBKBjjnz/+FxG9TXK95Uok=;
+	s=arc-20240116; t=1723480447; c=relaxed/simple;
+	bh=4AKSP0osm8r8nBoYOTn2Ns+23mvsd4bi8rRnxoKRfKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFR534pE9RQLtXEQBA5EOCjoYzWJtKeVKnn6WB/bxVnBYR1vE33KYe1adGLqQcpoKtoNlY/OWEU2hQF5V+O/CTr/GDiOqLdwZ4ROI+KL+PrCCK+micTuclmxWkeJ93nZmuKj6X24YgkwSfPstxefMpwjXDS31wX6NK2Vj86dU5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWB9Ww8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XWo0H/vWXNN6BXRaPCACGuN9K3ZoEJcpsHJdJqk7cuBFgJjc6ZM2AsoGRuPXdi6vnlNmwMj2QI4ulZLWGllLI7b5ppoV+b4Y+VeMYUM0gjpoJuWCdfn6AH7TjKWCnvhDCywAPqY8eaA1lQRp/FiUi22GMAebCuf5PXimPQAzjcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tcsU+mmQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWB9Ww8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7F99C32782;
-	Mon, 12 Aug 2024 16:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tcsU+mmQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B46AC32782;
+	Mon, 12 Aug 2024 16:34:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480443;
-	bh=E4Li5F5c/dDYYn/LP/ZdOlBKBjjnz/+FxG9TXK95Uok=;
+	s=korg; t=1723480446;
+	bh=4AKSP0osm8r8nBoYOTn2Ns+23mvsd4bi8rRnxoKRfKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWB9Ww8qdf9ylI5W3agRYyQnoHuN6XHUbKFznvEwuGTWGvqWeJYxtEpCxkcYItYR8
-	 niYOpmQvVbVlqI+EWbTBWt07RE49kWwz2fWas4/ioqcxJRXL/mI9t6a88RxgWEZmIS
-	 RCZOfC1k40JPkByRORNGxRRokTjZf7iMURradgBE=
+	b=tcsU+mmQwD4gNYze6zjvuM1wxRLE/08oZ4KkXe2Hy+tsqp/XT+sgSYEM9hfK/RiTi
+	 A6ckfAX363slMFtqOyV8Y+9OHicSXnwf+hT7oF34Dp54VogBt3sUeGnMF9k5dM/G1P
+	 jtsaiCoYdDY4rRrdTr1O4KKuxyz37LRTzlUGXx90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Wang <00107082@163.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yu Liao <liaoyu15@huawei.com>
-Subject: [PATCH 6.10 198/263] tick/broadcast: Move per CPU pointer access into the atomic section
-Date: Mon, 12 Aug 2024 18:03:19 +0200
-Message-ID: <20240812160154.126298173@linuxfoundation.org>
+	Akira Yokosawa <akiyks@gmail.com>,
+	Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.10 199/263] media: v4l: Fix missing tabular column hint for Y14P format
+Date: Mon, 12 Aug 2024 18:03:20 +0200
+Message-ID: <20240812160154.166508371@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,52 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
 
-commit 6881e75237a84093d0986f56223db3724619f26e upstream.
+commit 914f8961879de6fadd166ebd75151a778481e09a upstream.
 
-The recent fix for making the take over of the broadcast timer more
-reliable retrieves a per CPU pointer in preemptible context.
+The original patch added two columns in the flat-table of Luma-Only
+Image Formats, without updating hints to latex: above it.  This results
+in wrong column count in the output of Sphinx's latex builder.
 
-This went unnoticed as compilers hoist the access into the non-preemptible
-region where the pointer is actually used. But of course it's valid that
-the compiler keeps it at the place where the code puts it which rightfully
-triggers:
+Fix it.
 
-  BUG: using smp_processor_id() in preemptible [00000000] code:
-       caller is hotplug_cpu__broadcast_tick_pull+0x1c/0xc0
-
-Move it to the actual usage site which is in a non-preemptible region.
-
-Fixes: f7d43dd206e7 ("tick/broadcast: Make takeover of broadcast hrtimer reliable")
-Reported-by: David Wang <00107082@163.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Yu Liao <liaoyu15@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/87ttg56ers.ffs@tglx
+Reported-by: Akira Yokosawa <akiyks@gmail.com>
+Closes: https://lore.kernel.org/linux-media/bdbc27ba-5098-49fb-aabf-753c81361cc7@gmail.com/
+Fixes: adb1d4655e53 ("media: v4l: Add V4L2-PIX-FMT-Y14P format")
+Cc: stable@vger.kernel.org # for v6.10
+Signed-off-by: Jean-Michel Hautbois <jeanmichel.hautbois@yoseli.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/tick-broadcast.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -1141,7 +1141,6 @@ void tick_broadcast_switch_to_oneshot(vo
- #ifdef CONFIG_HOTPLUG_CPU
- void hotplug_cpu__broadcast_tick_pull(int deadcpu)
- {
--	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
- 	struct clock_event_device *bc;
- 	unsigned long flags;
+diff --git a/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst b/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst
+index f02e6cf3516a..74df19be91f6 100644
+--- a/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst
++++ b/Documentation/userspace-api/media/v4l/pixfmt-yuv-luma.rst
+@@ -21,9 +21,9 @@ are often referred to as greyscale formats.
  
-@@ -1167,6 +1166,8 @@ void hotplug_cpu__broadcast_tick_pull(in
- 		 * device to avoid the starvation.
- 		 */
- 		if (tick_check_broadcast_expired()) {
-+			struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
-+
- 			cpumask_clear_cpu(smp_processor_id(), tick_broadcast_force_mask);
- 			tick_program_event(td->evtdev->next_event, 1);
- 		}
+ .. raw:: latex
+ 
+-    \scriptsize
++    \tiny
+ 
+-.. tabularcolumns:: |p{3.6cm}|p{3.0cm}|p{1.3cm}|p{2.6cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|
++.. tabularcolumns:: |p{3.6cm}|p{2.4cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|p{1.3cm}|
+ 
+ .. flat-table:: Luma-Only Image Formats
+     :header-rows: 1
+-- 
+2.46.0
+
 
 
