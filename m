@@ -1,37 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4514E1494B8;
-	Mon, 12 Aug 2024 16:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB28183CA6;
+	Mon, 12 Aug 2024 16:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479477; cv=none; b=cX6ZiB7ndm9qsjmSfEzEGb8y6JNlgQ5vZScp7uWw+Nyg9TTEPXc3AVK1Kc6x2yAV3LGdKD5tQH6k3dwWsbSbzf8c3j86JpnLE+uUmb2gEpHbMcExmJgAxlMlr23WoUkDfJisJ1p99hCV7zyhJ5/tVy4UIEj5igPPWDuxKxBzPZk=
+	t=1723479481; cv=none; b=uJ/BUB4qAUCcwfD7PBGn1H3nyT8S9VQkjn0s5cl8sWtKgDGHMazL3StoHYXXjAcWwoL++iOa0SltPTIh7OM9HyXkpZ7Atqd6VHTNnpkaVXVGWSbfQXWrZDorh7f7f3ZCT5fjBSaeDT9ML/JOsSOcRsBgr1HN3KFrfT7rwU9oJFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479477; c=relaxed/simple;
-	bh=UNpLqEipmrSqSrSjsVNkSDx5vNKINU6yWtL40hoIkns=;
+	s=arc-20240116; t=1723479481; c=relaxed/simple;
+	bh=PQRmGC643jD46ncHFybyaXNaSquTxnFdaGjbee9VwPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSoSyuwfm2YEfHxzpsSbp5QTlaMQH91TeBMwt+jwNCBhUEU3FjBgWBrWalNFPomeEixbT5rwZ8eLaDXt0cSEBBzeAfO2BZX9uG17zTA5ps+A9+FuUQKCWfeBog6GgITDR/ekxLA1O7Obd18jl+AjN72eeNZi+zzBSb1zio9JgwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G//JUWSN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eAJXR/FOK1mkaBcYYxbocKncGK/maGQLB90eUPwgusGExdTPyoAXKB07qkhhb9joaRRmKxaNyslxlmWcLMr0mxn88OBjblOgFJjScztbVcsXi3W2A8en6F061O2av8nEmQ0FtfKD993L3fvpGKysfd2QSLcYxvoFdmasdpC08Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=emRY3a+Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G//JUWSN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9CEBC32782;
-	Mon, 12 Aug 2024 16:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="emRY3a+Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EB7C32782;
+	Mon, 12 Aug 2024 16:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479477;
-	bh=UNpLqEipmrSqSrSjsVNkSDx5vNKINU6yWtL40hoIkns=;
+	s=korg; t=1723479480;
+	bh=PQRmGC643jD46ncHFybyaXNaSquTxnFdaGjbee9VwPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G//JUWSNjFa77aUkiEQCbXVeyIwoyRJI8vlxqaRnV/B8lAbsS6/K33F2nbdgyh7yg
-	 XRyb1cU+Duh6Dg6aqMhGqmxIb2MA2T2fg7CBcG2FEbFigwDSyxbB1RUxea6Hv+B/q0
-	 0aJbki+vKttepjKgzhr5tLncznX+Bw0HOaU/cxIQ=
+	b=emRY3a+ZMA7N4XVZ53tPU+FV4XJF2Xix7ZRy7y3yFUzAp1v+gACFi1PQUxPgU0M+8
+	 DO358ed8NfpU2E6CLt0TGe2kObw+Ob4n0lEnXz+jh+5yJn7wOmCtEzcJhfYUF2yEpv
+	 Ks1kT6uD61xkaYkUgIdvg4CbsDht3Na/tET0IeYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 068/189] profiling: remove profile=sleep support
-Date: Mon, 12 Aug 2024 18:02:04 +0200
-Message-ID: <20240812160134.760803824@linuxfoundation.org>
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 059/189] drm/amd/display: Add NULL check for afb before dereferencing in amdgpu_dm_plane_handle_cursor_update
+Date: Mon, 12 Aug 2024 18:01:55 +0200
+Message-ID: <20240812160134.415983217@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -50,125 +58,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit b88f55389ad27f05ed84af9e1026aa64dbfabc9a upstream.
+[ Upstream commit 38e6f715b02b572f74677eb2f29d3b4bc6f1ddff ]
 
-The kernel sleep profile is no longer working due to a recursive locking
-bug introduced by commit 42a20f86dc19 ("sched: Add wrapper for get_wchan()
-to keep task blocked")
+This commit adds a null check for the 'afb' variable in the
+amdgpu_dm_plane_handle_cursor_update function. Previously, 'afb' was
+assumed to be null, but was used later in the code without a null check.
+This could potentially lead to a null pointer dereference.
 
-Booting with the 'profile=sleep' kernel command line option added or
-executing
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm_plane.c:1298 amdgpu_dm_plane_handle_cursor_update() error: we previously assumed 'afb' could be null (see line 1252)
 
-  # echo -n sleep > /sys/kernel/profiling
-
-after boot causes the system to lock up.
-
-Lockdep reports
-
-  kthreadd/3 is trying to acquire lock:
-  ffff93ac82e08d58 (&p->pi_lock){....}-{2:2}, at: get_wchan+0x32/0x70
-
-  but task is already holding lock:
-  ffff93ac82e08d58 (&p->pi_lock){....}-{2:2}, at: try_to_wake_up+0x53/0x370
-
-with the call trace being
-
-   lock_acquire+0xc8/0x2f0
-   get_wchan+0x32/0x70
-   __update_stats_enqueue_sleeper+0x151/0x430
-   enqueue_entity+0x4b0/0x520
-   enqueue_task_fair+0x92/0x6b0
-   ttwu_do_activate+0x73/0x140
-   try_to_wake_up+0x213/0x370
-   swake_up_locked+0x20/0x50
-   complete+0x2f/0x40
-   kthread+0xfb/0x180
-
-However, since nobody noticed this regression for more than two years,
-let's remove 'profile=sleep' support based on the assumption that nobody
-needs this functionality.
-
-Fixes: 42a20f86dc19 ("sched: Add wrapper for get_wchan() to keep task blocked")
-Cc: stable@vger.kernel.org # v5.16+
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Hersen Wu <hersenxs.wu@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |    4 +---
- include/linux/profile.h                         |    1 -
- kernel/profile.c                                |   11 +----------
- kernel/sched/stats.c                            |   10 ----------
- 4 files changed, 2 insertions(+), 24 deletions(-)
+ .../drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c  | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -4655,11 +4655,9 @@
- 
- 	profile=	[KNL] Enable kernel profiling via /proc/profile
- 			Format: [<profiletype>,]<number>
--			Param: <profiletype>: "schedule", "sleep", or "kvm"
-+			Param: <profiletype>: "schedule" or "kvm"
- 				[defaults to kernel profiling]
- 			Param: "schedule" - profile schedule points.
--			Param: "sleep" - profile D-state sleeping (millisecs).
--				Requires CONFIG_SCHEDSTATS
- 			Param: "kvm" - profile VM exits.
- 			Param: <number> - step/bucket size as a power of 2 for
- 				statistical time based profiling.
---- a/include/linux/profile.h
-+++ b/include/linux/profile.h
-@@ -11,7 +11,6 @@
- 
- #define CPU_PROFILING	1
- #define SCHED_PROFILING	2
--#define SLEEP_PROFILING	3
- #define KVM_PROFILING	4
- 
- struct proc_dir_entry;
---- a/kernel/profile.c
-+++ b/kernel/profile.c
-@@ -57,20 +57,11 @@ static DEFINE_MUTEX(profile_flip_mutex);
- int profile_setup(char *str)
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+index cc74dd69acf2b..eb77de95f26f5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -1225,14 +1225,22 @@ void amdgpu_dm_plane_handle_cursor_update(struct drm_plane *plane,
  {
- 	static const char schedstr[] = "schedule";
--	static const char sleepstr[] = "sleep";
- 	static const char kvmstr[] = "kvm";
- 	const char *select = NULL;
- 	int par;
+ 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
+ 	struct amdgpu_framebuffer *afb = to_amdgpu_framebuffer(plane->state->fb);
+-	struct drm_crtc *crtc = afb ? plane->state->crtc : old_plane_state->crtc;
+-	struct dm_crtc_state *crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
+-	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
+-	uint64_t address = afb ? afb->address : 0;
++	struct drm_crtc *crtc;
++	struct dm_crtc_state *crtc_state;
++	struct amdgpu_crtc *amdgpu_crtc;
++	u64 address;
+ 	struct dc_cursor_position position = {0};
+ 	struct dc_cursor_attributes attributes;
+ 	int ret;
  
--	if (!strncmp(str, sleepstr, strlen(sleepstr))) {
--#ifdef CONFIG_SCHEDSTATS
--		force_schedstat_enabled();
--		prof_on = SLEEP_PROFILING;
--		select = sleepstr;
--#else
--		pr_warn("kernel sleep profiling requires CONFIG_SCHEDSTATS\n");
--#endif /* CONFIG_SCHEDSTATS */
--	} else if (!strncmp(str, schedstr, strlen(schedstr))) {
-+	if (!strncmp(str, schedstr, strlen(schedstr))) {
- 		prof_on = SCHED_PROFILING;
- 		select = schedstr;
- 	} else if (!strncmp(str, kvmstr, strlen(kvmstr))) {
---- a/kernel/sched/stats.c
-+++ b/kernel/sched/stats.c
-@@ -92,16 +92,6 @@ void __update_stats_enqueue_sleeper(stru
++	if (!afb)
++		return;
++
++	crtc = plane->state->crtc ? plane->state->crtc : old_plane_state->crtc;
++	crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
++	amdgpu_crtc = to_amdgpu_crtc(crtc);
++	address = afb->address;
++
+ 	if (!plane->state->fb && !old_plane_state->fb)
+ 		return;
  
- 			trace_sched_stat_blocked(p, delta);
- 
--			/*
--			 * Blocking time is in units of nanosecs, so shift by
--			 * 20 to get a milliseconds-range estimation of the
--			 * amount of time that the task spent sleeping:
--			 */
--			if (unlikely(prof_on == SLEEP_PROFILING)) {
--				profile_hits(SLEEP_PROFILING,
--					     (void *)get_wchan(p),
--					     delta >> 20);
--			}
- 			account_scheduler_latency(p, delta >> 10, 0);
- 		}
- 	}
+-- 
+2.43.0
+
 
 
