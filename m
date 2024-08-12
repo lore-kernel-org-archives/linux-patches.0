@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9639186E52;
-	Mon, 12 Aug 2024 16:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D4C1187842;
+	Mon, 12 Aug 2024 16:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479140; cv=none; b=LbDJFcGWvlavL8evx1AeVE/vCu1ozQW8dcK0ZXFkTLnmV7YcpPnKR00k+Yt/h21tR3MgYJ8L7HiABglgPRMtKnxL+/r94pPDgEGF6jzDv+xRz+TZEiGQL3YJg34I/+ZzXkoJuO2YuFtijuvI0HJnbOv8sWhBZnnG4BPD6QDqZd4=
+	t=1723479143; cv=none; b=K4qqZQbHQck/k/n6qGzvrQWEnJXCekhH1GrhgDkZdC6FvkanAR55rsd4xqWsxWlbzTp2u4lzStI+cKtjLJ8IvO4/t9W8yu/I274J9v8wCENK0yXDFf3T7BfGJcIlpL8JV/4kqHAvks8NkYnSEXZ8uW+a/J24gE1s/Sc5dw+IyoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479140; c=relaxed/simple;
-	bh=DlEcKtyZe6RMV5gUNCgssRZhxbIWryfHd3OQMU5NUwc=;
+	s=arc-20240116; t=1723479143; c=relaxed/simple;
+	bh=ZKvY26kTqp46Ior3yBZ83oEflzrZJY3TrNMsjV55jIQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pyGtA7qHVT5uWpTfuyOKKvpf+IbwC9QLcKwbg+vaJGEnOMs2+1tJhWtQ3659j8gSGlIeYIgB0TEPMRbkWtyQY+B5GQJEFhAo7X4cukuIMWly7MI4V/qzvr2DlgBUKBmtOYDXGz5IODpSVAlBsP3IZ2Zkgafhqk1MRFyKpX8IaSw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=icqZVKJF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d2DTHx3uW9dijw03KAPCOw7L0z7ua18GfFLlBxyFPJrrocrDAYiV47aLCIdcMFbAWKw/HWGDZCB3kcO20ADfAeNjbDLtkM8fSXilFNqeYxyiIXUm1HqjcXXK1/CHOVuLHze0jKyBYKTG4potHMCFks9limHzJUm1TCgGcQ7onA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6NsuJs7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="icqZVKJF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EEE4C32782;
-	Mon, 12 Aug 2024 16:12:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6NsuJs7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F17C4AF0F;
+	Mon, 12 Aug 2024 16:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479139;
-	bh=DlEcKtyZe6RMV5gUNCgssRZhxbIWryfHd3OQMU5NUwc=;
+	s=korg; t=1723479143;
+	bh=ZKvY26kTqp46Ior3yBZ83oEflzrZJY3TrNMsjV55jIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=icqZVKJFXLJqxGtEtPE13FnTqMG4cvJZiclCfE3O2w1B5HvopYiOMWY0nbJQvFMI/
-	 5xp7u812vcRGPrN+UKZLu5w6LUa5LfE1e48zWSmny5dhw89hpIGismGNso+9mizOZG
-	 XeuYeFYOJbR0ciBjZvQFf+Cpsk4SZpSzrOtf+6GA=
+	b=E6NsuJs7qgT+7UwSnN5q3Kn67u2Cm5KhIGHAp9/X136oxU0/FiaeYUqcZzR0t3BNa
+	 gXt6PiXtaWTHijYSNR88QCO0ZB4GN54TupJeSEDY6OrfCxk1i5q7PaoYsachzjLrGW
+	 cXC7fESRC0zvYrX2+MsM+x5b7358BxZ10sTLUsbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Hersen Wu <hersenxs.wu@amd.com>,
-	Wayne Lin <wayne.lin@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.1 145/150] drm/amd/display: Defer handling mst up request in resume
-Date: Mon, 12 Aug 2024 18:03:46 +0200
-Message-ID: <20240812160130.766759288@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 146/150] netfilter: nf_tables: bail out if stateful expression provides no .clone
+Date: Mon, 12 Aug 2024 18:03:47 +0200
+Message-ID: <20240812160130.804906372@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -53,42 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <wayne.lin@amd.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 202dc359addab29451d3d18243c3d957da5392c8 upstream.
+commit 3c13725f43dcf43ad8a9bcd6a9f12add19a8f93e upstream.
 
-[Why]
-Like commit ec5fa9fcdeca ("drm/amd/display: Adjust the MST resume flow"), we
-want to avoid handling mst topology changes before restoring the old state.
-If we enable DP_UP_REQ_EN before calling drm_atomic_helper_resume(), have
-changce to handle CSN event first and fire hotplug event before restoring the
-cached state.
+All existing NFT_EXPR_STATEFUL provide a .clone interface, remove
+fallback to copy content of stateful expression since this is never
+exercised and bail out if .clone interface is not defined.
 
-[How]
-Disable mst branch sending up request event before we restoring the cached state.
-DP_UP_REQ_EN will be set later when we call drm_dp_mst_topology_mgr_resume().
-
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hersen Wu <hersenxs.wu@amd.com>
-Signed-off-by: Wayne Lin <wayne.lin@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
- 1 file changed, 1 deletion(-)
+ net/netfilter/nf_tables_api.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2363,7 +2363,6 @@ static void resume_mst_branch_status(str
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3123,14 +3123,13 @@ int nft_expr_clone(struct nft_expr *dst,
+ {
+ 	int err;
  
- 	ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
- 				 DP_MST_EN |
--				 DP_UP_REQ_EN |
- 				 DP_UPSTREAM_IS_SRC);
- 	if (ret < 0) {
- 		drm_dbg_kms(mgr->dev, "mst write failed - undocked during suspend?\n");
+-	if (src->ops->clone) {
+-		dst->ops = src->ops;
+-		err = src->ops->clone(dst, src);
+-		if (err < 0)
+-			return err;
+-	} else {
+-		memcpy(dst, src, src->ops->size);
+-	}
++	if (WARN_ON_ONCE(!src->ops->clone))
++		return -EINVAL;
++
++	dst->ops = src->ops;
++	err = src->ops->clone(dst, src);
++	if (err < 0)
++		return err;
+ 
+ 	__module_get(src->ops->type->owner);
+ 
 
 
