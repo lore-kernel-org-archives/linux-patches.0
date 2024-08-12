@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7375C134AC;
-	Mon, 12 Aug 2024 16:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95E0183CA6;
+	Mon, 12 Aug 2024 16:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479804; cv=none; b=qwNn+6Zt0FvcFn6aac6QPSZMl3S2nILxGmTdVhX2IISlrDQKQQnCp9mNmpNJlJETdFkxj06OVpfiaq7LviiPvp7QYlk3NHgXrouaCRAyWDZsnzksS3liTyOyKTpMYJfPq2eBWhw2njnPbNW0X3SYi475KjT2KwjsBRUMuB80vzQ=
+	t=1723479807; cv=none; b=tAKvDBzS25y8GQMjgbgJPbN8DecXEGTdIUGP8107IgAr0vm+em/jK9AqDKlBMe+0HzTZqC1dPTrO7czhBVS4g/R5nXSpVSCgv+ycBYtNrjJToVcipfdW7InIGvMWVMyVggKvy4QOxiA7xiArwJmngDtSutFxZY188wBY/9pU+Vw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479804; c=relaxed/simple;
-	bh=cUXqJPHHcIHtsUzDkPmUMhvMSoxh5oHxp9HLCgYPYW0=;
+	s=arc-20240116; t=1723479807; c=relaxed/simple;
+	bh=Q95F1W2qq60hEXPla5iz6VrDQBmgPG3RL3Q+q3zcxRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsVrE1oXCZQGM9RS7Tstt5hh5Aef341PQDLSovwESouRuJdNMsFB+/SmVbKpHxwgHYdOrV1/Gxq1WoW2gjCw4X/WBFBnv1mT9PcYPEAlAXla0r9FvDid5oAL4NEloqBgTjaIbmHRl5DzAj82z8mzd+3/Mm9AchjsUSrdnhJWLpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvbgEgzr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BjnAd1ke5vllbKA/jIyPD4oKgkDl4xLOc2rwo88K0Fru0bF6IXCrvAYeh9uxINxWnWlLrshJiqhrZuR7IZEWRlsMxJK9XoEkrjrE917ALfrBraGg4igQNauIasswAAyIfQ2pFOdjKMWR4Z9E8hMRl++GjZlp+eYGNBf3koxbDMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EvxEwISL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvbgEgzr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4E3C32782;
-	Mon, 12 Aug 2024 16:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EvxEwISL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05BA6C32782;
+	Mon, 12 Aug 2024 16:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479804;
-	bh=cUXqJPHHcIHtsUzDkPmUMhvMSoxh5oHxp9HLCgYPYW0=;
+	s=korg; t=1723479807;
+	bh=Q95F1W2qq60hEXPla5iz6VrDQBmgPG3RL3Q+q3zcxRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wvbgEgzrWgTBt8H+Ndcag14oJcR/avtmOd5z/Kvi6R/lV3UskuIWD7s+BDTJoin1j
-	 3YqhhzEBr6nVD/ZzW+i2WITMBC/DVh6Zd+XV6BB8CMrxBj+qZXsXk9reumwx6NHwlo
-	 RfNqUOt8mTNgapgTPY01RWnVqvh8KqkHpwLc1PPE=
+	b=EvxEwISLsX+DTs18069cyxmRsYj66+5QxMiupTqmsO5rtZAz4WJkoNbmQvk6t/ZzK
+	 WzIoQQFD9fmUg1JiecKxpZqBkLLbekzeYnMrVmX0IpW1h+5k1oLGUXVf5Rf7fk6cup
+	 T6Ix5HHRZ9RNiXmcV1gfQTBM1lK96DSKKVMJiyQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.6 169/189] selftests: mptcp: fix error path
-Date: Mon, 12 Aug 2024 18:03:45 +0200
-Message-ID: <20240812160138.651889955@linuxfoundation.org>
+	stable@kernel.org,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.6 160/189] sched/core: Fix unbalance set_rq_online/offline() in sched_cpu_deactivate()
+Date: Mon, 12 Aug 2024 18:03:36 +0200
+Message-ID: <20240812160138.300787886@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,38 +51,31 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 4a2f48992ddf4b8c2fba846c6754089edae6db5a upstream.
+commit fe7a11c78d2a9bdb8b50afc278a31ac177000948 upstream.
 
-pm_nl_check_endpoint() currently calls an not existing helper
-to mark the test as failed. Fix the wrong call.
+If cpuset_cpu_inactive() fails, set_rq_online() need be called to rollback.
 
-Fixes: 03668c65d153 ("selftests: mptcp: join: rework detailed report")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-[ Conflicts in mptcp_join.sh because the context has changed in commit
-  571d79664a4a ("selftests: mptcp: join: update endpoint ops") which is
-  not in this version. This commit is unrelated to this modification. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: 120455c514f7 ("sched: Fix hotplug vs CPU bandwidth control")
+Cc: stable@kernel.org
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240703031610.587047-5-yangyingliang@huaweicloud.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -812,7 +812,7 @@ pm_nl_check_endpoint()
- 	done
- 
- 	if [ -z "$id" ]; then
--		test_fail "bad test - missing endpoint id"
-+		fail_test "bad test - missing endpoint id"
- 		return
- 	fi
- 
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -9773,6 +9773,7 @@ int sched_cpu_deactivate(unsigned int cp
+ 	ret = cpuset_cpu_inactive(cpu);
+ 	if (ret) {
+ 		sched_smt_present_inc(cpu);
++		sched_set_rq_online(rq, cpu);
+ 		balance_push_set(cpu, false);
+ 		set_cpu_active(cpu, true);
+ 		sched_update_numa(cpu, true);
 
 
