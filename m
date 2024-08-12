@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC1E29CA;
-	Mon, 12 Aug 2024 16:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181FF29CA;
+	Mon, 12 Aug 2024 16:20:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479627; cv=none; b=TB5cNfIiv+kaFScQOTFYfhaHUqbtSlA4nw1nfpZ/BA7FU0vuS0Wa7OMBOowVw0n1rOkrITLMQFojK3/lfHLJjL6NHtHbDFqzNMmVXoy0OYyUqJ3Hd7bwGnIRTfIEODKlxPt7XQbXEwfE/LzDxmO7lq8/t9twW0qGC2Ax5zxpe3k=
+	t=1723479631; cv=none; b=uCJkFQNXQEWm83J4g5LKzse1v5maBPY/ngVOvcoMuVoRxV4g/mOdZUUcV1fijKqiImNWl0stxijkNg+zmFeBKjXM3iUmFDqKG6nPT7FNiiNCDmzQlxtF+jrKN70uBBlG1csmaBu8r8uU77fvBDvAa9/SWmVYGa6j0W+YKhP0Q9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479627; c=relaxed/simple;
-	bh=KlT/s5i/q6M7oWa9lopUxeOe0fTKDTygzdxGpQ6JFd0=;
+	s=arc-20240116; t=1723479631; c=relaxed/simple;
+	bh=7YFnXbha9sbcweEb/qh8AAmyN6Z/JknCyACA1/gi/jM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfKdBg0WujGqii0ZA441rSlkxPKS0CU9G9D5lFQvR/iGZcMPfhZsHYZjtjrDB01+dxgPrvyXc39Bg/zgRbudgywkSs0jEeljWWwWR6yP2EzMDWhRN1I11OlPehzgS/26SnAGIRAVJawb1WoyIISAXA/NPA39jpxunkoYPRRYiAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g9ChXCEM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q5a/aOqsbvZhQ1BN0Lwm7XKWav8jpHCLAym9g+jJkJCRr6RzGwTHfkRh7VZFn/2rHJsQplCfOncn9GTNG1HsgM/GrygOwn0tU7mnUzXRDDf6RxES6FzvJf4QxvFo+uFcuj3pitJGVbpWjeKEzVB9d4r2W7birkulNAgGx5icrk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EK0M3Vo0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g9ChXCEM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D830C4AF0C;
-	Mon, 12 Aug 2024 16:20:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EK0M3Vo0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76C84C32782;
+	Mon, 12 Aug 2024 16:20:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479627;
-	bh=KlT/s5i/q6M7oWa9lopUxeOe0fTKDTygzdxGpQ6JFd0=;
+	s=korg; t=1723479631;
+	bh=7YFnXbha9sbcweEb/qh8AAmyN6Z/JknCyACA1/gi/jM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g9ChXCEMv9y2dIeIecJIxGrsM+APVmx/I/1PblwZal5VxeogN73ozaa5dfOhkklZK
-	 AdmYCX16IDVwmxv1AVxe2xRtU6uBIJRF4/JC/Hg+5Ed0T6zNhvPD1u+VjwWo4QiwKm
-	 RojadxFud3DWgVW81m1RpES/CJtQ+f+a0y6zrkAM=
+	b=EK0M3Vo01kwLEaNaMZT4vmBQijMwU9UDO9+DoUdDBMIJosGmyZaY6R0LtuZm6EbC3
+	 aGcOI7RkX/d5Uzey9zDgE8Hq1gp0LKksJ7+GhLkg/bVDMjHonuy/eUQOCzJXVAex9/
+	 FgaihwFOtlBBoqXn8jEyCY3gPsWuMfPkJaPyO0Bc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 145/189] power: supply: qcom_battmgr: return EAGAIN when firmware service is not up
-Date: Mon, 12 Aug 2024 18:03:21 +0200
-Message-ID: <20240812160137.724250707@linuxfoundation.org>
+Subject: [PATCH 6.6 146/189] power: supply: axp288_charger: Fix constant_charge_voltage writes
+Date: Mon, 12 Aug 2024 18:03:22 +0200
+Message-ID: <20240812160137.763290784@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -51,76 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit bf9d5cb588755ee41ac12a8976dccf44ae18281b upstream.
+commit b34ce4a59cfe9cd0d6f870e6408e8ec88a964585 upstream.
 
-The driver returns -ENODEV when the firmware battmrg service hasn't
-started yet, while per-se -ENODEV is fine, we usually use -EAGAIN to
-tell the user to retry again later. And the power supply core uses
--EGAIN when the device isn't initialized, let's use the same return.
+info->max_cv is in millivolts, divide the microvolt value being written
+to constant_charge_voltage by 1000 *before* clamping it to info->max_cv.
 
-This notably causes an infinite spam of:
-thermal thermal_zoneXX: failed to read out thermal zone (-19)
-because the thermal core doesn't understand -ENODEV, but only
-considers -EAGAIN as a non-fatal error.
+Before this fix the code always tried to set constant_charge_voltage
+to max_cv / 1000 = 4 millivolt, which ends up in setting it to 4.1V
+which is the lowest supported value.
 
-While it didn't appear until now, commit [1] fixes thermal core
-and no more ignores thermal zones returning an error at first
-temperature update.
-
-[1] 5725f40698b9 ("thermal: core: Call monitor_thermal_zone() if zone temperature is invalid")
-
-Link: https://lore.kernel.org/all/2ed4c630-204a-4f80-a37f-f2ca838eb455@linaro.org/
+Fixes: 843735b788a4 ("power: axp288_charger: axp288 charger driver")
 Cc: stable@vger.kernel.org
-Fixes: 29e8142b5623 ("power: supply: Introduce Qualcomm PMIC GLINK power supply")
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Tested-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Reviewed-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-Link: https://lore.kernel.org/r/20240715-topic-sm8x50-upstream-fix-battmgr-temp-tz-warn-v1-1-16e842ccead7@linaro.org
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240717200333.56669-1-hdegoede@redhat.com
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/qcom_battmgr.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/power/supply/axp288_charger.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -486,7 +486,7 @@ static int qcom_battmgr_bat_get_property
- 	int ret;
- 
- 	if (!battmgr->service_up)
--		return -ENODEV;
-+		return -EAGAIN;
- 
- 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
- 		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
-@@ -683,7 +683,7 @@ static int qcom_battmgr_ac_get_property(
- 	int ret;
- 
- 	if (!battmgr->service_up)
--		return -ENODEV;
-+		return -EAGAIN;
- 
- 	ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
- 	if (ret)
-@@ -748,7 +748,7 @@ static int qcom_battmgr_usb_get_property
- 	int ret;
- 
- 	if (!battmgr->service_up)
--		return -ENODEV;
-+		return -EAGAIN;
- 
- 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
- 		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
-@@ -867,7 +867,7 @@ static int qcom_battmgr_wls_get_property
- 	int ret;
- 
- 	if (!battmgr->service_up)
--		return -ENODEV;
-+		return -EAGAIN;
- 
- 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP)
- 		ret = qcom_battmgr_bat_sc8280xp_update(battmgr, psp);
+--- a/drivers/power/supply/axp288_charger.c
++++ b/drivers/power/supply/axp288_charger.c
+@@ -337,8 +337,8 @@ static int axp288_charger_usb_set_proper
+ 		}
+ 		break;
+ 	case POWER_SUPPLY_PROP_CONSTANT_CHARGE_VOLTAGE:
+-		scaled_val = min(val->intval, info->max_cv);
+-		scaled_val = DIV_ROUND_CLOSEST(scaled_val, 1000);
++		scaled_val = DIV_ROUND_CLOSEST(val->intval, 1000);
++		scaled_val = min(scaled_val, info->max_cv);
+ 		ret = axp288_charger_set_cv(info, scaled_val);
+ 		if (ret < 0) {
+ 			dev_warn(&info->pdev->dev, "set charge voltage failed\n");
 
 
