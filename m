@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FE8183CB8;
-	Mon, 12 Aug 2024 16:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA509178CE4;
+	Mon, 12 Aug 2024 16:15:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479344; cv=none; b=pquGGKQyomi8PmFu9TXA8zbDboF5+tzU9aBKF5207QqwydTA2sw6YzSA5M7x3HzeAwMRka4nge5t634GmVNwkqyv/pPcPh34dl4WNkNwsP833Eyjt5XuGqKUDr89cTTN00hFw2eCephRrtrPSWZXLu+MBimEBIqQH8jbjpYS1WQ=
+	t=1723479347; cv=none; b=APx885GGK+IcrdJ4IUPODbOzlyZx8G2KkWWbnc6eUlOgQB8K2Cvsx8fWn0Pl8VzWcxE1KVde/5dcp66H/E4A6iJzOxxCleSss8Lf9qSiVkFkfpyI/l7X3JxQ8B49EYJoddUngawxZRILtdh68OyxGe3ZS8AY7hqNgSRDoFFveSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479344; c=relaxed/simple;
-	bh=UGIvxuWtt1Se2uNtA/J2V4zvZc5c0VdJL93DI6NfFes=;
+	s=arc-20240116; t=1723479347; c=relaxed/simple;
+	bh=pgkfcjhro5961CUmggmuaU+U3f14sxe3XkDuHBJX4/M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GCdCqdEyc86zo0l/LDxcij7M0V6UUPNqvc7Pix9G8FZ2FnSJ5OI47CIaomFb+g8GVxMRd+MQrJaSBaRG4fl7m500I1BUH+rhby5ojGk6C4KMWtIo+FNNsqxIXEA01XIPVPsYZJ9Wn4gGsSfrrO64ng9fEvrLbJTI4hdsid3P0w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmvgFjO5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OkFuC0qebXeKyjVJI2M5D0i7lKqcmv8zKoGfCumU3yy4vOKxrHxNpS0XhbMo4Gt05G5wg9eP/Xz9N64Vt241u4xo6NP+XodFOHvYpKBCTAkDneJUuHFCiK1CC4Dw3ZGjV5UBHthOxcEqzxePl9gI9o0Xz2cYaAb2CzR6jQ6djrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIeVyba+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmvgFjO5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE49C32782;
-	Mon, 12 Aug 2024 16:15:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIeVyba+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5DFC32782;
+	Mon, 12 Aug 2024 16:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479344;
-	bh=UGIvxuWtt1Se2uNtA/J2V4zvZc5c0VdJL93DI6NfFes=;
+	s=korg; t=1723479347;
+	bh=pgkfcjhro5961CUmggmuaU+U3f14sxe3XkDuHBJX4/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmvgFjO5E/Q6UchKbj9I9siiXwe+FMSP2kd/S40ylJp5eKGlBvb6grlx0vVPvmZOW
-	 sVANPlp9FXAoRuzT6kx4JYETwDoSwlbu5u1ZrMcC1d+zLyh+ZnVKtW3M/+YJ/Y1txF
-	 cIuruMcG1tv748fOXPc/yJpx2ACrwVEyKShHQHSI=
+	b=OIeVyba+rhuLdhS7AT6ZDsthUqfB6BOCnBhHnY1X+uJnJhs3GLrA3mezcYm3KDmue
+	 B+7STaEviDIV8CZuuHdrIK6LIbwrdJa6ABT/nypKUxeMgkjZioGMwF4qIq9OtbtyL2
+	 RrRpsgQi8FM2yG+zaWDskBCSCsDvlO8xTC0yQjwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Skvortsov <victor.skvortsov@amd.com>,
-	Zhigang Luo <zhigang.luo@amd.com>,
+	Bob Zhou <bob.zhou@amd.com>,
+	Tim Huang <Tim.Huang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 056/189] drm/amdgpu: Add lock around VF RLCG interface
-Date: Mon, 12 Aug 2024 18:01:52 +0200
-Message-ID: <20240812160134.301682814@linuxfoundation.org>
+Subject: [PATCH 6.6 057/189] drm/amd/pm: Fix the null pointer dereference for vega10_hwmgr
+Date: Mon, 12 Aug 2024 18:01:53 +0200
+Message-ID: <20240812160134.339855248@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -52,76 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Skvortsov <victor.skvortsov@amd.com>
+From: Bob Zhou <bob.zhou@amd.com>
 
-[ Upstream commit e864180ee49b4d30e640fd1e1d852b86411420c9 ]
+[ Upstream commit 50151b7f1c79a09117837eb95b76c2de76841dab ]
 
-flush_gpu_tlb may be called from another thread while
-device_gpu_recover is running.
+Check return value and conduct null pointer handling to avoid null pointer dereference.
 
-Both of these threads access registers through the VF
-RLCG interface during VF Full Access. Add a lock around this interface
-to prevent race conditions between these threads.
-
-Signed-off-by: Victor Skvortsov <victor.skvortsov@amd.com>
-Reviewed-by: Zhigang Luo <zhigang.luo@amd.com>
+Signed-off-by: Bob Zhou <bob.zhou@amd.com>
+Reviewed-by: Tim Huang <Tim.Huang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 1 +
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c   | 6 ++++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h   | 2 ++
- 3 files changed, 9 insertions(+)
+ .../drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c | 29 ++++++++++++++++---
+ 1 file changed, 25 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index ea1bce13db941..eb663eb811563 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3561,6 +3561,7 @@ int amdgpu_device_init(struct amdgpu_device *adev,
- 	mutex_init(&adev->grbm_idx_mutex);
- 	mutex_init(&adev->mn_lock);
- 	mutex_init(&adev->virt.vf_errors.lock);
-+	mutex_init(&adev->virt.rlcg_reg_lock);
- 	hash_init(adev->mn_hash);
- 	mutex_init(&adev->psp.mutex);
- 	mutex_init(&adev->notifier_lock);
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-index 96857ae7fb5bc..ff4f52e07cc0d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.c
-@@ -1003,6 +1003,9 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
- 	scratch_reg1 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg1;
- 	scratch_reg2 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg2;
- 	scratch_reg3 = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->scratch_reg3;
-+
-+	mutex_lock(&adev->virt.rlcg_reg_lock);
-+
- 	if (reg_access_ctrl->spare_int)
- 		spare_int = (void __iomem *)adev->rmmio + 4 * reg_access_ctrl->spare_int;
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+index 49c984f14e6b1..d43a530aba0e3 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_hwmgr.c
+@@ -3418,13 +3418,17 @@ static int vega10_find_dpm_states_clocks_in_dpm_table(struct pp_hwmgr *hwmgr, co
+ 	const struct vega10_power_state *vega10_ps =
+ 			cast_const_phw_vega10_power_state(states->pnew_state);
+ 	struct vega10_single_dpm_table *sclk_table = &(data->dpm_table.gfx_table);
+-	uint32_t sclk = vega10_ps->performance_levels
+-			[vega10_ps->performance_level_count - 1].gfx_clock;
+ 	struct vega10_single_dpm_table *mclk_table = &(data->dpm_table.mem_table);
+-	uint32_t mclk = vega10_ps->performance_levels
+-			[vega10_ps->performance_level_count - 1].mem_clock;
++	uint32_t sclk, mclk;
+ 	uint32_t i;
  
-@@ -1058,6 +1061,9 @@ static u32 amdgpu_virt_rlcg_reg_rw(struct amdgpu_device *adev, u32 offset, u32 v
- 	}
- 
- 	ret = readl(scratch_reg0);
++	if (vega10_ps == NULL)
++		return -EINVAL;
++	sclk = vega10_ps->performance_levels
++			[vega10_ps->performance_level_count - 1].gfx_clock;
++	mclk = vega10_ps->performance_levels
++			[vega10_ps->performance_level_count - 1].mem_clock;
 +
-+	mutex_unlock(&adev->virt.rlcg_reg_lock);
+ 	for (i = 0; i < sclk_table->count; i++) {
+ 		if (sclk == sclk_table->dpm_levels[i].value)
+ 			break;
+@@ -3731,6 +3735,9 @@ static int vega10_generate_dpm_level_enable_mask(
+ 			cast_const_phw_vega10_power_state(states->pnew_state);
+ 	int i;
+ 
++	if (vega10_ps == NULL)
++		return -EINVAL;
 +
- 	return ret;
- }
+ 	PP_ASSERT_WITH_CODE(!vega10_trim_dpm_states(hwmgr, vega10_ps),
+ 			"Attempt to Trim DPM States Failed!",
+ 			return -1);
+@@ -4998,6 +5005,8 @@ static int vega10_check_states_equal(struct pp_hwmgr *hwmgr,
  
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index fabb83e9d9aec..23b6efa9d25df 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -263,6 +263,8 @@ struct amdgpu_virt {
+ 	vega10_psa = cast_const_phw_vega10_power_state(pstate1);
+ 	vega10_psb = cast_const_phw_vega10_power_state(pstate2);
++	if (vega10_psa == NULL || vega10_psb == NULL)
++		return -EINVAL;
  
- 	/* the ucode id to signal the autoload */
- 	uint32_t autoload_ucode_id;
+ 	/* If the two states don't even have the same number of performance levels
+ 	 * they cannot be the same state.
+@@ -5131,6 +5140,8 @@ static int vega10_set_sclk_od(struct pp_hwmgr *hwmgr, uint32_t value)
+ 		return -EINVAL;
+ 
+ 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
++	if (vega10_ps == NULL)
++		return -EINVAL;
+ 
+ 	vega10_ps->performance_levels
+ 	[vega10_ps->performance_level_count - 1].gfx_clock =
+@@ -5182,6 +5193,8 @@ static int vega10_set_mclk_od(struct pp_hwmgr *hwmgr, uint32_t value)
+ 		return -EINVAL;
+ 
+ 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
++	if (vega10_ps == NULL)
++		return -EINVAL;
+ 
+ 	vega10_ps->performance_levels
+ 	[vega10_ps->performance_level_count - 1].mem_clock =
+@@ -5423,6 +5436,9 @@ static void vega10_odn_update_power_state(struct pp_hwmgr *hwmgr)
+ 		return;
+ 
+ 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
++	if (vega10_ps == NULL)
++		return;
 +
-+	struct mutex rlcg_reg_lock;
- };
+ 	max_level = vega10_ps->performance_level_count - 1;
  
- struct amdgpu_video_codec_info;
+ 	if (vega10_ps->performance_levels[max_level].gfx_clock !=
+@@ -5445,6 +5461,9 @@ static void vega10_odn_update_power_state(struct pp_hwmgr *hwmgr)
+ 
+ 	ps = (struct pp_power_state *)((unsigned long)(hwmgr->ps) + hwmgr->ps_size * (hwmgr->num_ps - 1));
+ 	vega10_ps = cast_phw_vega10_power_state(&ps->hardware);
++	if (vega10_ps == NULL)
++		return;
++
+ 	max_level = vega10_ps->performance_level_count - 1;
+ 
+ 	if (vega10_ps->performance_levels[max_level].gfx_clock !=
+@@ -5635,6 +5654,8 @@ static int vega10_get_performance_level(struct pp_hwmgr *hwmgr, const struct pp_
+ 		return -EINVAL;
+ 
+ 	vega10_ps = cast_const_phw_vega10_power_state(state);
++	if (vega10_ps == NULL)
++		return -EINVAL;
+ 
+ 	i = index > vega10_ps->performance_level_count - 1 ?
+ 			vega10_ps->performance_level_count - 1 : index;
 -- 
 2.43.0
 
