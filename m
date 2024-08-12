@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1008C1EA8D;
-	Mon, 12 Aug 2024 16:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7E61EA8D;
+	Mon, 12 Aug 2024 16:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723478716; cv=none; b=CCM/tox0hT6eslm5XTTugYc/+7+xcg6EZW22CbWRCw6rB7JvBr0X0yS74CZvlhBCuIpLH4sZGvwuXV0LpQu1vzAGDV83BXtYB6HR/sVs1FaotJ3GOffAiKD+nSaM+0xYAz/EBDZnzHGf7vs9Xotl/WvMC+7H9ZoPhIg6BhplyxE=
+	t=1723478719; cv=none; b=Pxcf31U5ma0+Sh6TfCg/lQlGKMmOH1taTu7SBfiWmdixk/Eyk2OY/nFGhukyuwZniQBXUiaJkCSUzNYF5djvuY5tQNuxik8I9UWsJ9HloVCdJnRD6+V/nZfGHuO+Ir3XUD4VhqmGUI2gESph8yeG6Jg8t7jGbAvEUPP6szJ09PE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723478716; c=relaxed/simple;
-	bh=LoIhXv3y+3Pi0dz+1owLDzeMAh3/Pew8Gs7q3eiYxxc=;
+	s=arc-20240116; t=1723478719; c=relaxed/simple;
+	bh=YX6Gc2qc3I9MbBF7sWOQ+xzcyuFgWO8X26Mf6edCc5o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=exKuwjbWwjbI1xYTiuBSWr6NFaY9ijRAQTzVS2HsON5ZuHnioqrkFfkNhPKkcJSD49erRuiqJN4U5ArVlZDGJm5UNvjbzQqJfLTbyaKyezuuuhOTRUP8Q/LEsO7em9t/pLkNrSFAhMDUJq6oPyDtRBZ5himi3mLzcaKVM3op+0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xKXEoQ3N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rz7DzMWGI2q+iNRzVh/PPBBUhO7GQwQpy2CJnnJtnBNxyNp9vaqVvKLuGqITGkqFcvR5GryvLo/Mf6zLylnPNWeGKLOCebfDui5L77SvSfptc2Nyjcdvq9xzI+4940qFqujlemEdq7XXyUHIR3VN+lHM7A3rOaIXDXmTkyjqpTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yeSHYBQJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xKXEoQ3N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA479C32782;
-	Mon, 12 Aug 2024 16:05:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yeSHYBQJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D381CC32782;
+	Mon, 12 Aug 2024 16:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723478715;
-	bh=LoIhXv3y+3Pi0dz+1owLDzeMAh3/Pew8Gs7q3eiYxxc=;
+	s=korg; t=1723478719;
+	bh=YX6Gc2qc3I9MbBF7sWOQ+xzcyuFgWO8X26Mf6edCc5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xKXEoQ3NvTlLkIPLGLvHsQaCCzjD3kCTPDzAmBcauavCo/0jNhV4qKIY5a0xflBlD
-	 7M2EvMP0paoJnT3ZwhyNcvj/NRYCepl+HKFUPVtapC0tAK6FbuQ7/BoaHXfUbiJtfH
-	 j1iumbPjjdSN/DcvH2AnjzHSd28bhFqubot/2Qic=
+	b=yeSHYBQJms5IyymCCxnXm9Yq4pkJsFhrfVbgkf5quCLQkXrH12dPWuo9L/OktvM6N
+	 BBWZwYzqB47+Ky/WtPxsH89kv4k83mbrTtjpThbTjXxo5FuC8k8vmzS1WS3hk/pTzj
+	 xENpDy0MGQqc4sEt7mObEZTBT8+zaJRdUagC3rnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	kasan-dev@googlegroups.com,
+	Li Nan <linan122@huawei.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 016/150] rcutorture: Fix rcu_torture_fwd_cb_cr() data race
-Date: Mon, 12 Aug 2024 18:01:37 +0200
-Message-ID: <20240812160125.786769750@linuxfoundation.org>
+Subject: [PATCH 6.1 017/150] md: do not delete safemode_timer in mddev_suspend
+Date: Mon, 12 Aug 2024 18:01:38 +0200
+Message-ID: <20240812160125.826098376@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160125.139701076@linuxfoundation.org>
 References: <20240812160125.139701076@linuxfoundation.org>
@@ -53,48 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Li Nan <linan122@huawei.com>
 
-[ Upstream commit 6040072f4774a575fa67b912efe7722874be337b ]
+[ Upstream commit a8768a134518e406d41799a3594aeb74e0889cf7 ]
 
-On powerpc systems, spinlock acquisition does not order prior stores
-against later loads.  This means that this statement:
+The deletion of safemode_timer in mddev_suspend() is redundant and
+potentially harmful now. If timer is about to be woken up but gets
+deleted, 'in_sync' will remain 0 until the next write, causing array
+to stay in the 'active' state instead of transitioning to 'clean'.
 
-	rfcp->rfc_next = NULL;
+Commit 0d9f4f135eb6 ("MD: Add del_timer_sync to mddev_suspend (fix
+nasty panic))" introduced this deletion for dm, because if timer fired
+after dm is destroyed, the resource which the timer depends on might
+have been freed.
 
-Can be reordered to follow this statement:
+However, commit 0dd84b319352 ("md: call __md_stop_writes in md_stop")
+added __md_stop_writes() to md_stop(), which is called before freeing
+resource. Timer is deleted in __md_stop_writes(), and the origin issue
+is resolved. Therefore, delete safemode_timer can be removed safely now.
 
-	WRITE_ONCE(*rfcpp, rfcp);
-
-Which is then a data race with rcu_torture_fwd_prog_cr(), specifically,
-this statement:
-
-	rfcpn = READ_ONCE(rfcp->rfc_next)
-
-KCSAN located this data race, which represents a real failure on powerpc.
-
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: Marco Elver <elver@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: <kasan-dev@googlegroups.com>
+Signed-off-by: Li Nan <linan122@huawei.com>
+Reviewed-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Song Liu <song@kernel.org>
+Link: https://lore.kernel.org/r/20240508092053.1447930-1-linan666@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 8c45df910763a..c14517912cfaa 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -2547,7 +2547,7 @@ static void rcu_torture_fwd_cb_cr(struct rcu_head *rhp)
- 	spin_lock_irqsave(&rfp->rcu_fwd_lock, flags);
- 	rfcpp = rfp->rcu_fwd_cb_tail;
- 	rfp->rcu_fwd_cb_tail = &rfcp->rfc_next;
--	WRITE_ONCE(*rfcpp, rfcp);
-+	smp_store_release(rfcpp, rfcp);
- 	WRITE_ONCE(rfp->n_launders_cb, rfp->n_launders_cb + 1);
- 	i = ((jiffies - rfp->rcu_fwd_startat) / (HZ / FWD_CBS_HIST_DIV));
- 	if (i >= ARRAY_SIZE(rfp->n_launders_hist))
+diff --git a/drivers/md/md.c b/drivers/md/md.c
+index 7dc1c42accccd..b87c6ef0da8ab 100644
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -489,7 +489,6 @@ void mddev_suspend(struct mddev *mddev)
+ 	clear_bit_unlock(MD_ALLOW_SB_UPDATE, &mddev->flags);
+ 	wait_event(mddev->sb_wait, !test_bit(MD_UPDATING_SB, &mddev->flags));
+ 
+-	del_timer_sync(&mddev->safemode_timer);
+ 	/* restrict memory reclaim I/O during raid array is suspend */
+ 	mddev->noio_flag = memalloc_noio_save();
+ }
 -- 
 2.43.0
 
