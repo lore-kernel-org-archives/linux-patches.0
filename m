@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60BEB183CD4;
-	Mon, 12 Aug 2024 16:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55E0134AC;
+	Mon, 12 Aug 2024 16:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480074; cv=none; b=JxxJAGHsmur/Jvof8rlpbQsWdxB7WoKFbE5cWCINqVZdyv6Rq88pGQjEmDyIqgaY81j8CEjmcFj490Z5ZU32t/PDwEKLyRrRvY8ZSWBk0QdNkHY5rKPe47ZmwWo2NrNRODvnnRD6h3rLZKcFyu/8uMn9xjiHxitvR2wE9GeziKM=
+	t=1723480077; cv=none; b=RCS8k8VrFfYlvJzGd6GDExC4wXFolPdEk6E5Rr8SIzK1AEt2L24Kkk10GpWBq8em7s1aq6PVxvdNDTOmVYlRO1L7fVDvM0QVlM5LrQeXLgjhqVtTe5Ed2GujrhvIPDbOokj7X7T8Y3T8traXl/IIt5OF6OED/s4ussHyQWhDnog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480074; c=relaxed/simple;
-	bh=yr6Vc2Zr272Tf33vQiwOaVIujNN3W/Lm+qJ1z0eT1gc=;
+	s=arc-20240116; t=1723480077; c=relaxed/simple;
+	bh=PihX3XsMQKcUrYJiPYtlQC61Ooe9LspFpIaKn3jYfKw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LYmV7AsRoe3evCv1o2J2svmLaMHmQSRyqkH1jd8gMUoPs+BVKsX+uafCXWbPe1diTiqIq+fvnsDNHU21j6CiM1fByIzakAUUtbhypy7mCehVWgP4KUpYLqyN8bxXJo2HVBRXamQsYXqQXZJDErO9DqkqtYB35zuAfdmxZVrkbOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJz8JW3t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pnYk3cQUhtFFmf62yBdI0wyTlM+e6E+MTWEGO0IJzcObWLj4wk5kXVqjvodqfnPTZDTe5KOzjhrBu6Rw5cvNCGZuxKnIiW6NVp/YKL4wBkTj3XfSM0q1nF5sCxrouXG700H/nQi1hMIf1ALSKx1dtYIbEn1LWWtKurDjzzeLeeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpOUwBUV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJz8JW3t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DF3C32782;
-	Mon, 12 Aug 2024 16:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpOUwBUV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40369C32782;
+	Mon, 12 Aug 2024 16:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480074;
-	bh=yr6Vc2Zr272Tf33vQiwOaVIujNN3W/Lm+qJ1z0eT1gc=;
+	s=korg; t=1723480077;
+	bh=PihX3XsMQKcUrYJiPYtlQC61Ooe9LspFpIaKn3jYfKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fJz8JW3tDIoB8bb8w3R+GbAkOzCWGLT6zX0dP1wvJ0uae67tee0P4MxRBU3vlZ0Rf
-	 cErchpIUp6TcxQrpa4sAX4iP4OhK126muXZHqbWa6UyLoDeBf5fej7IxhWfFmxRZTR
-	 aej8AxjEQ9ZDx5aIRSvb8MUTGeIC5pi1+84Y7NcI=
+	b=TpOUwBUVFMqdI7qRwpkfs8qb3x3N7NsP8rEL0Njsmgg/L+HfA5OMr5GrCYd3CmUvU
+	 3F9HeQ6Qq9PeoIgHnK7Ok/7YcOEfM4wv0FcDqAHduHOXVBe6F1YsdaXuRL8QrypY6M
+	 4oTU4CUA2mbbKjXQvNompssLxOVsZ8golJorESrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Nan <linan122@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Song Liu <song@kernel.org>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 047/263] md: change the return value type of md_write_start to void
-Date: Mon, 12 Aug 2024 18:00:48 +0200
-Message-ID: <20240812160148.345614106@linuxfoundation.org>
+Subject: [PATCH 6.10 082/263] btrfs: reduce nesting for extent processing at btrfs_lookup_extent_info()
+Date: Mon, 12 Aug 2024 18:01:23 +0200
+Message-ID: <20240812160149.686265912@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,123 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Nan <linan122@huawei.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 03e792eaf18ec2e93e2c623f9f1a4bdb97fe4126 ]
+[ Upstream commit 5c83b3beaee06aa88d4015408ac2d8bb35380b06 ]
 
-Commit cc27b0c78c79 ("md: fix deadlock between mddev_suspend() and
-md_write_start()") aborted md_write_start() with false when mddev is
-suspended, which fixed a deadlock if calling mddev_suspend() with
-holding reconfig_mutex(). Since mddev_suspend() now includes
-lockdep_assert_not_held(), it no longer holds the reconfig_mutex. This
-makes previous abort unnecessary. Now, remove unnecessary abort and
-change function return value to void.
+Instead of using an if-else statement when processing the extent item at
+btrfs_lookup_extent_info(), use a single if statement for the error case
+since it does a goto at the end and leave the success (expected) case
+following the if statement, reducing indentation and making the logic a
+bit easier to follow. Also make the if statement's condition as unlikely
+since it's not expected to ever happen, as it signals some corruption,
+making it clear and hint the compiler to generate more efficient code.
 
-Signed-off-by: Li Nan <linan122@huawei.com>
-Reviewed-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20240525185257.3896201-2-linan666@huaweicloud.com
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/md.c     | 14 ++++----------
- drivers/md/md.h     |  2 +-
- drivers/md/raid1.c  |  3 +--
- drivers/md/raid10.c |  3 +--
- drivers/md/raid5.c  |  3 +--
- 5 files changed, 8 insertions(+), 17 deletions(-)
+ fs/btrfs/extent-tree.c | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/md/md.c b/drivers/md/md.c
-index 60a5fda7c8aea..a5b5801baa9e8 100644
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -8638,12 +8638,12 @@ EXPORT_SYMBOL(md_done_sync);
-  * A return value of 'false' means that the write wasn't recorded
-  * and cannot proceed as the array is being suspend.
-  */
--bool md_write_start(struct mddev *mddev, struct bio *bi)
-+void md_write_start(struct mddev *mddev, struct bio *bi)
- {
- 	int did_change = 0;
- 
- 	if (bio_data_dir(bi) != WRITE)
--		return true;
-+		return;
- 
- 	BUG_ON(mddev->ro == MD_RDONLY);
- 	if (mddev->ro == MD_AUTO_READ) {
-@@ -8676,15 +8676,9 @@ bool md_write_start(struct mddev *mddev, struct bio *bi)
- 	if (did_change)
- 		sysfs_notify_dirent_safe(mddev->sysfs_state);
- 	if (!mddev->has_superblocks)
--		return true;
-+		return;
- 	wait_event(mddev->sb_wait,
--		   !test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags) ||
--		   is_md_suspended(mddev));
--	if (test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags)) {
--		percpu_ref_put(&mddev->writes_pending);
--		return false;
--	}
--	return true;
-+		   !test_bit(MD_SB_CHANGE_PENDING, &mddev->sb_flags));
- }
- EXPORT_SYMBOL(md_write_start);
- 
-diff --git a/drivers/md/md.h b/drivers/md/md.h
-index ca085ecad5044..487582058f741 100644
---- a/drivers/md/md.h
-+++ b/drivers/md/md.h
-@@ -785,7 +785,7 @@ extern void md_unregister_thread(struct mddev *mddev, struct md_thread __rcu **t
- extern void md_wakeup_thread(struct md_thread __rcu *thread);
- extern void md_check_recovery(struct mddev *mddev);
- extern void md_reap_sync_thread(struct mddev *mddev);
--extern bool md_write_start(struct mddev *mddev, struct bio *bi);
-+extern void md_write_start(struct mddev *mddev, struct bio *bi);
- extern void md_write_inc(struct mddev *mddev, struct bio *bi);
- extern void md_write_end(struct mddev *mddev);
- extern void md_done_sync(struct mddev *mddev, int blocks, int ok);
-diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
-index 22bbd06ba6a29..5ea57b6748c53 100644
---- a/drivers/md/raid1.c
-+++ b/drivers/md/raid1.c
-@@ -1688,8 +1688,7 @@ static bool raid1_make_request(struct mddev *mddev, struct bio *bio)
- 	if (bio_data_dir(bio) == READ)
- 		raid1_read_request(mddev, bio, sectors, NULL);
- 	else {
--		if (!md_write_start(mddev,bio))
--			return false;
-+		md_write_start(mddev,bio);
- 		raid1_write_request(mddev, bio, sectors);
- 	}
- 	return true;
-diff --git a/drivers/md/raid10.c b/drivers/md/raid10.c
-index a4556d2e46bf9..f8d7c02c6ed56 100644
---- a/drivers/md/raid10.c
-+++ b/drivers/md/raid10.c
-@@ -1836,8 +1836,7 @@ static bool raid10_make_request(struct mddev *mddev, struct bio *bio)
- 	    && md_flush_request(mddev, bio))
- 		return true;
- 
--	if (!md_write_start(mddev, bio))
--		return false;
-+	md_write_start(mddev, bio);
- 
- 	if (unlikely(bio_op(bio) == REQ_OP_DISCARD))
- 		if (!raid10_handle_discard(mddev, bio))
-diff --git a/drivers/md/raid5.c b/drivers/md/raid5.c
-index 1c6b58adec133..d600030c20f46 100644
---- a/drivers/md/raid5.c
-+++ b/drivers/md/raid5.c
-@@ -6097,8 +6097,7 @@ static bool raid5_make_request(struct mddev *mddev, struct bio * bi)
- 		ctx.do_flush = bi->bi_opf & REQ_PREFLUSH;
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 153297cb97a4a..844b677d054ec 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -104,10 +104,7 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+ 	struct btrfs_delayed_ref_head *head;
+ 	struct btrfs_delayed_ref_root *delayed_refs;
+ 	struct btrfs_path *path;
+-	struct btrfs_extent_item *ei;
+-	struct extent_buffer *leaf;
+ 	struct btrfs_key key;
+-	u32 item_size;
+ 	u64 num_refs;
+ 	u64 extent_flags;
+ 	u64 owner = 0;
+@@ -157,16 +154,11 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
  	}
  
--	if (!md_write_start(mddev, bi))
--		return false;
-+	md_write_start(mddev, bi);
- 	/*
- 	 * If array is degraded, better not do chunk aligned read because
- 	 * later we might have to read it again in order to reconstruct
+ 	if (ret == 0) {
+-		leaf = path->nodes[0];
+-		item_size = btrfs_item_size(leaf, path->slots[0]);
+-		if (item_size >= sizeof(*ei)) {
+-			ei = btrfs_item_ptr(leaf, path->slots[0],
+-					    struct btrfs_extent_item);
+-			num_refs = btrfs_extent_refs(leaf, ei);
+-			extent_flags = btrfs_extent_flags(leaf, ei);
+-			owner = btrfs_get_extent_owner_root(fs_info, leaf,
+-							    path->slots[0]);
+-		} else {
++		struct extent_buffer *leaf = path->nodes[0];
++		struct btrfs_extent_item *ei;
++		const u32 item_size = btrfs_item_size(leaf, path->slots[0]);
++
++		if (unlikely(item_size < sizeof(*ei))) {
+ 			ret = -EUCLEAN;
+ 			btrfs_err(fs_info,
+ 			"unexpected extent item size, has %u expect >= %zu",
+@@ -179,6 +171,10 @@ int btrfs_lookup_extent_info(struct btrfs_trans_handle *trans,
+ 			goto out_free;
+ 		}
+ 
++		ei = btrfs_item_ptr(leaf, path->slots[0], struct btrfs_extent_item);
++		num_refs = btrfs_extent_refs(leaf, ei);
++		extent_flags = btrfs_extent_flags(leaf, ei);
++		owner = btrfs_get_extent_owner_root(fs_info, leaf, path->slots[0]);
+ 		BUG_ON(num_refs == 0);
+ 	} else {
+ 		num_refs = 0;
 -- 
 2.43.0
 
