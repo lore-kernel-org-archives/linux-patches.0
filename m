@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C521494B8;
-	Mon, 12 Aug 2024 16:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDCC1494B8;
+	Mon, 12 Aug 2024 16:37:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480646; cv=none; b=RuSxI4RpIDU9DkZv9PQOgbWv4HoohA2qm15vb+aPNrpFBygzrzuHWce+dfXS74JabkW18V6Cf50O/oMEfeojQgBoBY+ErL5E4KcroyZfFYjtWIe18dtc7vFdvFDFSR6a3gqyVNiUTRubqJfUvZwQ7Rb9oclInqsLDmwnAa8iOY0=
+	t=1723480649; cv=none; b=hZt+xKQmWL18nAAK/XJ7cOOcYXMGtpXjLsjoC9ynHG23dqxoW/NEI/iQndAvjQ5herA0UJh9hvGZUR6rX2Z28gYdcukDFGcQdqJPR2VhJSscS/JRJEgl486yUMObj/FDzfx3OP/8l9tIxuOn6jn62vhNlV4AcMEMmcG+FdxOUzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480646; c=relaxed/simple;
-	bh=XBz0FAfJB6U7d58uWH/pn5vuxLBZ4akmiv1dX9RLFR0=;
+	s=arc-20240116; t=1723480649; c=relaxed/simple;
+	bh=p1ml1Mgf1OGVxybK0VOP7rgsw/uH4nJIFMpNc1rpkdk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GFnscTio3F8H8hCXrlZJ5oeujv3/R0ztJvzOG+Yy9mXDIvEnCh94uy56BJR+gkyQWY5vZzOjmM6FEMNjPXvDnNj8MTv6Ks6KkYhTuMjaOmmNLOkzksclRuyryVLmTVtu0AksxmuHv8vF5gMXmqJda6LzPfgwVwjE9CKb6Q07Uss=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snmHD1ue; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OI8HBqrTVPEcEtq1sAq8CaVjK9mR3efiGVRI9bO2mp7hjxyfjS2ihUTbeTLTD8B5eLy9vuC7FxIbsWsbTyLLyvCUx4MQgkqVAD0pebIuJHyJ8GGCpmXNYMOSVXM7eZcuFi3ibkc8j4gVCzc1/rfeR1N6TD3XlCmffI8wu2MZ5Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCLDaqgX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snmHD1ue"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B1AC32782;
-	Mon, 12 Aug 2024 16:37:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCLDaqgX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD45FC32782;
+	Mon, 12 Aug 2024 16:37:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480645;
-	bh=XBz0FAfJB6U7d58uWH/pn5vuxLBZ4akmiv1dX9RLFR0=;
+	s=korg; t=1723480649;
+	bh=p1ml1Mgf1OGVxybK0VOP7rgsw/uH4nJIFMpNc1rpkdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=snmHD1ueqqTlwXgZZcdaPOs43RQR5e0v4NMuzjQTdVdtqMhpglT8VyIeqKfrCuBFC
-	 vmFXVGryG2GbxcycDYMf92sExh50uXJb5pHNsI/GWkS7rUD+deVSgBLEbOLF4suifG
-	 efkyHVLPI8dDcRJBmBWWnH7VCxdqlvRMHwVHY1Fc=
+	b=NCLDaqgX66AEX8ST55itoAvfVH+KKot3IZDxjoFtPCbCTKpqJiYPZmHw3H8jNPiUR
+	 lYvVP1L5tdRc/m6YDWP3Al6Eoj2u29eDyVG92VjQ23jF6CkYCUbY1I0dIc3oCp+TBC
+	 z6VCFwPAfm+N3mfscGu+BeTqTJOPR+mKnd95wRHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	George Zhang <George.zhang@amd.com>,
-	Ivan Lipski <ivlipski@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.10 252/263] Revert "drm/amd/display: Add NULL check for afb before dereferencing in amdgpu_dm_plane_handle_cursor_update"
-Date: Mon, 12 Aug 2024 18:04:13 +0200
-Message-ID: <20240812160156.190495950@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.10 261/263] selftests: mptcp: join: ability to invert ADD_ADDR check
+Date: Mon, 12 Aug 2024 18:04:22 +0200
+Message-ID: <20240812160156.644811552@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,53 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ivan Lipski <ivlipski@amd.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 778e3979c5dc9cbdb5d1b92afed427de6bc483b4 upstream.
+commit bec1f3b119ebc613d08dfbcdbaef01a79aa7de92 upstream.
 
-[WHY]
-This patch is a dupplicate implementation of 14bcf29b, which we
-are reverting due to a regression with kms_plane_cursor IGT tests.
+In the following commit, the client will initiate the ADD_ADDR, instead
+of the server. We need to way to verify the ADD_ADDR have been correctly
+sent.
 
-This reverts commit 38e6f715b02b572f74677eb2f29d3b4bc6f1ddff.
+Note: the default expected counters for when the port number is given
+are never changed by the caller, no need to accept them as parameter
+then.
 
-Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Tested-by: George Zhang <George.zhang@amd.com>
-Signed-off-by: Ivan Lipski <ivlipski@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
+
+Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-6-c8a9b036493b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   40 +++++++++++++++---------
+ 1 file changed, 26 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
-@@ -1231,22 +1231,14 @@ void amdgpu_dm_plane_handle_cursor_updat
- {
- 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
- 	struct amdgpu_framebuffer *afb = to_amdgpu_framebuffer(plane->state->fb);
--	struct drm_crtc *crtc;
--	struct dm_crtc_state *crtc_state;
--	struct amdgpu_crtc *amdgpu_crtc;
--	u64 address;
-+	struct drm_crtc *crtc = afb ? plane->state->crtc : old_plane_state->crtc;
-+	struct dm_crtc_state *crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
-+	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
-+	uint64_t address = afb ? afb->address : 0;
- 	struct dc_cursor_position position = {0};
- 	struct dc_cursor_attributes attributes;
- 	int ret;
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -1415,18 +1415,28 @@ chk_add_nr()
+ 	local add_nr=$1
+ 	local echo_nr=$2
+ 	local port_nr=${3:-0}
+-	local syn_nr=${4:-$port_nr}
+-	local syn_ack_nr=${5:-$port_nr}
+-	local ack_nr=${6:-$port_nr}
+-	local mis_syn_nr=${7:-0}
+-	local mis_ack_nr=${8:-0}
++	local ns_invert=${4:-""}
++	local syn_nr=$port_nr
++	local syn_ack_nr=$port_nr
++	local ack_nr=$port_nr
++	local mis_syn_nr=0
++	local mis_ack_nr=0
++	local ns_tx=$ns1
++	local ns_rx=$ns2
++	local extra_msg=""
+ 	local count
+ 	local timeout
  
--	if (!afb)
--		return;
--
--	crtc = plane->state->crtc ? plane->state->crtc : old_plane_state->crtc;
--	crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
--	amdgpu_crtc = to_amdgpu_crtc(crtc);
--	address = afb->address;
--
- 	if (!plane->state->fb && !old_plane_state->fb)
- 		return;
+-	timeout=$(ip netns exec $ns1 sysctl -n net.mptcp.add_addr_timeout)
++	if [[ $ns_invert = "invert" ]]; then
++		ns_tx=$ns2
++		ns_rx=$ns1
++		extra_msg="invert"
++	fi
++
++	timeout=$(ip netns exec ${ns_tx} sysctl -n net.mptcp.add_addr_timeout)
  
+ 	print_check "add"
+-	count=$(mptcp_lib_get_counter ${ns2} "MPTcpExtAddAddr")
++	count=$(mptcp_lib_get_counter ${ns_rx} "MPTcpExtAddAddr")
+ 	if [ -z "$count" ]; then
+ 		print_skip
+ 	# if the test configured a short timeout tolerate greater then expected
+@@ -1438,7 +1448,7 @@ chk_add_nr()
+ 	fi
+ 
+ 	print_check "echo"
+-	count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtEchoAdd")
++	count=$(mptcp_lib_get_counter ${ns_tx} "MPTcpExtEchoAdd")
+ 	if [ -z "$count" ]; then
+ 		print_skip
+ 	elif [ "$count" != "$echo_nr" ]; then
+@@ -1449,7 +1459,7 @@ chk_add_nr()
+ 
+ 	if [ $port_nr -gt 0 ]; then
+ 		print_check "pt"
+-		count=$(mptcp_lib_get_counter ${ns2} "MPTcpExtPortAdd")
++		count=$(mptcp_lib_get_counter ${ns_rx} "MPTcpExtPortAdd")
+ 		if [ -z "$count" ]; then
+ 			print_skip
+ 		elif [ "$count" != "$port_nr" ]; then
+@@ -1459,7 +1469,7 @@ chk_add_nr()
+ 		fi
+ 
+ 		print_check "syn"
+-		count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMPJoinPortSynRx")
++		count=$(mptcp_lib_get_counter ${ns_tx} "MPTcpExtMPJoinPortSynRx")
+ 		if [ -z "$count" ]; then
+ 			print_skip
+ 		elif [ "$count" != "$syn_nr" ]; then
+@@ -1470,7 +1480,7 @@ chk_add_nr()
+ 		fi
+ 
+ 		print_check "synack"
+-		count=$(mptcp_lib_get_counter ${ns2} "MPTcpExtMPJoinPortSynAckRx")
++		count=$(mptcp_lib_get_counter ${ns_rx} "MPTcpExtMPJoinPortSynAckRx")
+ 		if [ -z "$count" ]; then
+ 			print_skip
+ 		elif [ "$count" != "$syn_ack_nr" ]; then
+@@ -1481,7 +1491,7 @@ chk_add_nr()
+ 		fi
+ 
+ 		print_check "ack"
+-		count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMPJoinPortAckRx")
++		count=$(mptcp_lib_get_counter ${ns_tx} "MPTcpExtMPJoinPortAckRx")
+ 		if [ -z "$count" ]; then
+ 			print_skip
+ 		elif [ "$count" != "$ack_nr" ]; then
+@@ -1492,7 +1502,7 @@ chk_add_nr()
+ 		fi
+ 
+ 		print_check "syn"
+-		count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMismatchPortSynRx")
++		count=$(mptcp_lib_get_counter ${ns_tx} "MPTcpExtMismatchPortSynRx")
+ 		if [ -z "$count" ]; then
+ 			print_skip
+ 		elif [ "$count" != "$mis_syn_nr" ]; then
+@@ -1503,7 +1513,7 @@ chk_add_nr()
+ 		fi
+ 
+ 		print_check "ack"
+-		count=$(mptcp_lib_get_counter ${ns1} "MPTcpExtMismatchPortAckRx")
++		count=$(mptcp_lib_get_counter ${ns_tx} "MPTcpExtMismatchPortAckRx")
+ 		if [ -z "$count" ]; then
+ 			print_skip
+ 		elif [ "$count" != "$mis_ack_nr" ]; then
+@@ -1513,6 +1523,8 @@ chk_add_nr()
+ 			print_ok
+ 		fi
+ 	fi
++
++	print_info "$extra_msg"
+ }
+ 
+ chk_add_tx_nr()
 
 
