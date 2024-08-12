@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAFF21494B8;
-	Mon, 12 Aug 2024 16:36:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350FD15C127;
+	Mon, 12 Aug 2024 16:36:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480607; cv=none; b=umrzduTo10PASQZZk4ZLWsqUjOg9gQUV7gvho//xTx9jn//R6TTtAeh2hecTf8WUU23HhnOyzN5iUpyQKId6v6i+jBCVF8GXuia68A4k+Z9793qlrv8QffwkmbZyy8lqbezu0TkgpTJYCwrCyrxYf/GKPdl1x4IQXml/jwc9uko=
+	t=1723480610; cv=none; b=kyBZ87SLvg4rzIf7EKF1UlGgmCW/gxQiN165uFHe90UmlOY6HDdyzVxkOFch6fFOY7en+Khbm3MAKDSN+sRXM4+ViXbSBJ/u7I8EqSTwBMkl8wvyx26MQyXMtSu7QesVqHBD++bSQnlDVRVVJvKkN8JL+9aBkfGWIZ7yHSQOTrQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480607; c=relaxed/simple;
-	bh=vhSjhNGIT7lmdxYAbd9X2TJLjpuZc/oizdtBY2FxHC8=;
+	s=arc-20240116; t=1723480610; c=relaxed/simple;
+	bh=ZNuUfSDfBV1LsV5gv+rGwPWPTZsGMHpR+PT+c7DKeHw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fA8VD2AvTq4umSoj31CHQSYx67iFmaW7Bu7NLRzbMLWYSpiOOFXgB0KFTGjkFyiM5ziRNFAZLPICJf2P27nVNJV3iP746x1W0Y/Zq+UFQCFK2JJxevtk3JxyKNstukdYNl9+t9gxD/Q69uKdzyhfdzygpac1Aj0JEL+nerZyvPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmGoEqUi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sz5lg6zfpLZjOGMwNXe5Y0uks+jljOhV6kpU2mQH6T0SnlWje4K9of7KPdLY+y96qjlkW6nAnagSq9x8/fIjb/YnsehMx9Al69EU6TzxmRiaXKOa/por2fwbKGsbdXuzEn0YMUdRGDqPdi4M20rJQtG7jxoiiiDZ1jFcrf3F5bI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+kflAhn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmGoEqUi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D486C32782;
-	Mon, 12 Aug 2024 16:36:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+kflAhn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1165C4AF09;
+	Mon, 12 Aug 2024 16:36:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480606;
-	bh=vhSjhNGIT7lmdxYAbd9X2TJLjpuZc/oizdtBY2FxHC8=;
+	s=korg; t=1723480610;
+	bh=ZNuUfSDfBV1LsV5gv+rGwPWPTZsGMHpR+PT+c7DKeHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmGoEqUiP95wuI04eRrRU5X5v8wcd8CJ3GAbg664DrYc/Lbsy74x5Z8q/XiwRYww8
-	 iWsM6GSignk6G86jzP5wq5bYUjkhUe7ajTVrzMa0RIakDHHGL+eA+wgSvhmlvmJru4
-	 9KpLk2g5RgryWlCbKpHzSSIyPqiJbq1Mcxu85YDg=
+	b=m+kflAhnIN/r8m7kKoBEAczSRqt7fDhGYnTPuac4noNmT5jpilXAQIG8BFsdi/eFq
+	 mYMnekiFmHUs6tZBzfwL1J3xXcxxDf6hdf0WBqp+vo+gEnKQFot1hS7xDmgrPTNxle
+	 0rljLqzr3HymBdd8qLVp5+CvDbGeTxu1YVfSbp3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Vincent Chen <vincent.chen@sifive.com>,
-	Anup Patel <anup@brainfault.org>
-Subject: [PATCH 6.10 220/263] irqchip/riscv-aplic: Retrigger MSI interrupt on source configuration
-Date: Mon, 12 Aug 2024 18:03:41 +0200
-Message-ID: <20240812160154.961495199@linuxfoundation.org>
+	Bill Wendling <morbo@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 247/263] drm/radeon: Remove __counted_by from StateArray.states[]
+Date: Mon, 12 Aug 2024 18:04:08 +0200
+Message-ID: <20240812160156.000769152@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,97 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Bill Wendling <morbo@google.com>
 
-commit 03f9885c60adf73488fe32aab628ee3d4a39598e upstream.
+commit 2bac084468847cfe5bbc7166082b2a208514bb1c upstream.
 
-The section 4.5.2 of the RISC-V AIA specification says that "any write
-to a sourcecfg register of an APLIC might (or might not) cause the
-corresponding interrupt-pending bit to be set to one if the rectified
-input value is high (= 1) under the new source mode."
+Work for __counted_by on generic pointers in structures (not just
+flexible array members) has started landing in Clang 19 (current tip of
+tree). During the development of this feature, a restriction was added
+to __counted_by to prevent the flexible array member's element type from
+including a flexible array member itself such as:
 
-When the interrupt type is changed in the sourcecfg register, the APLIC
-device might not set the corresponding pending bit, so the interrupt might
-never become pending.
+  struct foo {
+    int count;
+    char buf[];
+  };
 
-To handle sourcecfg register changes for level-triggered interrupts in MSI
-mode, manually set the pending bit for retriggering interrupt so it gets
-retriggered if it was already asserted.
+  struct bar {
+    int count;
+    struct foo data[] __counted_by(count);
+  };
 
-Fixes: ca8df97fe679 ("irqchip/riscv-aplic: Add support for MSI-mode")
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Vincent Chen <vincent.chen@sifive.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
+because the size of data cannot be calculated with the standard array
+size formula:
+
+  sizeof(struct foo) * count
+
+This restriction was downgraded to a warning but due to CONFIG_WERROR,
+it can still break the build. The application of __counted_by on the
+states member of 'struct _StateArray' triggers this restriction,
+resulting in:
+
+  drivers/gpu/drm/radeon/pptable.h:442:5: error: 'counted_by' should not be applied to an array with element of unknown size because 'ATOM_PPLIB_STATE_V2' (aka 'struct _ATOM_PPLIB_STATE_V2') is a struct type with a flexible array member. This will be an error in a future compiler version [-Werror,-Wbounds-safety-counted-by-elt-type-unknown-size]
+    442 |     ATOM_PPLIB_STATE_V2 states[] __counted_by(ucNumEntries);
+        |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+Remove this use of __counted_by to fix the warning/error. However,
+rather than remove it altogether, leave it commented, as it may be
+possible to support this in future compiler releases.
+
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240809071049.2454-1-yongxuan.wang@sifive.com
+Closes: https://github.com/ClangBuiltLinux/linux/issues/2028
+Fixes: efade6fe50e7 ("drm/radeon: silence UBSAN warning (v3)")
+Signed-off-by: Bill Wendling <morbo@google.com>
+Co-developed-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-riscv-aplic-msi.c | 32 +++++++++++++++++++++------
- 1 file changed, 25 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/radeon/pptable.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-riscv-aplic-msi.c b/drivers/irqchip/irq-riscv-aplic-msi.c
-index 028444af48bd..d7773f76e5d0 100644
---- a/drivers/irqchip/irq-riscv-aplic-msi.c
-+++ b/drivers/irqchip/irq-riscv-aplic-msi.c
-@@ -32,15 +32,10 @@ static void aplic_msi_irq_unmask(struct irq_data *d)
- 	aplic_irq_unmask(d);
- }
+--- a/drivers/gpu/drm/radeon/pptable.h
++++ b/drivers/gpu/drm/radeon/pptable.h
+@@ -439,7 +439,7 @@ typedef struct _StateArray{
+     //how many states we have 
+     UCHAR ucNumEntries;
+     
+-    ATOM_PPLIB_STATE_V2 states[] __counted_by(ucNumEntries);
++    ATOM_PPLIB_STATE_V2 states[] /* __counted_by(ucNumEntries) */;
+ }StateArray;
  
--static void aplic_msi_irq_eoi(struct irq_data *d)
-+static void aplic_msi_irq_retrigger_level(struct irq_data *d)
- {
- 	struct aplic_priv *priv = irq_data_get_irq_chip_data(d);
  
--	/*
--	 * EOI handling is required only for level-triggered interrupts
--	 * when APLIC is in MSI mode.
--	 */
--
- 	switch (irqd_get_trigger_type(d)) {
- 	case IRQ_TYPE_LEVEL_LOW:
- 	case IRQ_TYPE_LEVEL_HIGH:
-@@ -59,6 +54,29 @@ static void aplic_msi_irq_eoi(struct irq_data *d)
- 	}
- }
- 
-+static void aplic_msi_irq_eoi(struct irq_data *d)
-+{
-+	/*
-+	 * EOI handling is required only for level-triggered interrupts
-+	 * when APLIC is in MSI mode.
-+	 */
-+	aplic_msi_irq_retrigger_level(d);
-+}
-+
-+static int aplic_msi_irq_set_type(struct irq_data *d, unsigned int type)
-+{
-+	int rc = aplic_irq_set_type(d, type);
-+
-+	if (rc)
-+		return rc;
-+	/*
-+	 * Updating sourcecfg register for level-triggered interrupts
-+	 * requires interrupt retriggering when APLIC is in MSI mode.
-+	 */
-+	aplic_msi_irq_retrigger_level(d);
-+	return 0;
-+}
-+
- static void aplic_msi_write_msg(struct irq_data *d, struct msi_msg *msg)
- {
- 	unsigned int group_index, hart_index, guest_index, val;
-@@ -130,7 +148,7 @@ static const struct msi_domain_template aplic_msi_template = {
- 		.name			= "APLIC-MSI",
- 		.irq_mask		= aplic_msi_irq_mask,
- 		.irq_unmask		= aplic_msi_irq_unmask,
--		.irq_set_type		= aplic_irq_set_type,
-+		.irq_set_type		= aplic_msi_irq_set_type,
- 		.irq_eoi		= aplic_msi_irq_eoi,
- #ifdef CONFIG_SMP
- 		.irq_set_affinity	= irq_chip_set_affinity_parent,
--- 
-2.46.0
-
 
 
