@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C82183CD4;
-	Mon, 12 Aug 2024 16:37:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C521494B8;
+	Mon, 12 Aug 2024 16:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480642; cv=none; b=LLK49nayhwri5f/585EPMF0Nyw2k/i8urZj8ts5p5f/tgwMWqA8KuKUxt8+FRqcA68y/dsJXx4vfOgAAoUAW7qvWjS7pB5bCGGsP0onJwJjJbcJHfW1qep5isFBGGZYALO3pHNTSJZt/6u2OE+wDHANPzsfoFIL7ZotSod2Vc0I=
+	t=1723480646; cv=none; b=RuSxI4RpIDU9DkZv9PQOgbWv4HoohA2qm15vb+aPNrpFBygzrzuHWce+dfXS74JabkW18V6Cf50O/oMEfeojQgBoBY+ErL5E4KcroyZfFYjtWIe18dtc7vFdvFDFSR6a3gqyVNiUTRubqJfUvZwQ7Rb9oclInqsLDmwnAa8iOY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480642; c=relaxed/simple;
-	bh=htZ/LVA03gAibF8FVBQBdNdfoe0vV5/azTwX/j5sGwo=;
+	s=arc-20240116; t=1723480646; c=relaxed/simple;
+	bh=XBz0FAfJB6U7d58uWH/pn5vuxLBZ4akmiv1dX9RLFR0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RMGWLfew5ygofv5RejQRofweAXe41DEVKglgUk41ukqITAYMmGGQoF5nvL5aIoX9+CGev8LTR/InK3dKb7HFn0DICIMAJQgBdT8FALk51ClivgeNNXaMyW5tzwPncHfgDG3cE1F5M0ExcI05HS73E/2vHn7smkTS6ZGqszhig8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xD7ryuC9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GFnscTio3F8H8hCXrlZJ5oeujv3/R0ztJvzOG+Yy9mXDIvEnCh94uy56BJR+gkyQWY5vZzOjmM6FEMNjPXvDnNj8MTv6Ks6KkYhTuMjaOmmNLOkzksclRuyryVLmTVtu0AksxmuHv8vF5gMXmqJda6LzPfgwVwjE9CKb6Q07Uss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=snmHD1ue; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xD7ryuC9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0453CC32782;
-	Mon, 12 Aug 2024 16:37:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="snmHD1ue"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B1AC32782;
+	Mon, 12 Aug 2024 16:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480642;
-	bh=htZ/LVA03gAibF8FVBQBdNdfoe0vV5/azTwX/j5sGwo=;
+	s=korg; t=1723480645;
+	bh=XBz0FAfJB6U7d58uWH/pn5vuxLBZ4akmiv1dX9RLFR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xD7ryuC9c8uzDSDjWl4HmWQtTv7ee83+j9zZjiBff80crVDY3YbCNWKcB2fUt40Kq
-	 +yiRmg6evopvhkYZbq3FioJyXsAEQ+C7tv5SNL+0BMQrDVlpERX5QALOAf7XUuaMGV
-	 hoTBz5tjKPUb3iaoGl9Qi7CBn4Onc9/xo52GWYpA=
+	b=snmHD1ueqqTlwXgZZcdaPOs43RQR5e0v4NMuzjQTdVdtqMhpglT8VyIeqKfrCuBFC
+	 vmFXVGryG2GbxcycDYMf92sExh50uXJb5pHNsI/GWkS7rUD+deVSgBLEbOLF4suifG
+	 efkyHVLPI8dDcRJBmBWWnH7VCxdqlvRMHwVHY1Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.10 217/263] spmi: pmic-arb: Pass the correct of_node to irq_domain_add_tree
-Date: Mon, 12 Aug 2024 18:03:38 +0200
-Message-ID: <20240812160154.850402141@linuxfoundation.org>
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	George Zhang <George.zhang@amd.com>,
+	Ivan Lipski <ivlipski@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.10 252/263] Revert "drm/amd/display: Add NULL check for afb before dereferencing in amdgpu_dm_plane_handle_cursor_update"
+Date: Mon, 12 Aug 2024 18:04:13 +0200
+Message-ID: <20240812160156.190495950@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,51 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Ivan Lipski <ivlipski@amd.com>
 
-commit f38ba5459ced3441852f37f20fcfb7bd39d20f62 upstream.
+commit 778e3979c5dc9cbdb5d1b92afed427de6bc483b4 upstream.
 
-Currently, irqchips for all of the subnodes (which represent a given
-bus master) point to the parent wrapper node. This is no bueno, as
-no interrupts arrive, ever (because nothing references that node).
+[WHY]
+This patch is a dupplicate implementation of 14bcf29b, which we
+are reverting due to a regression with kms_plane_cursor IGT tests.
 
-Fix that by passing a reference to the respective master's of_node.
+This reverts commit 38e6f715b02b572f74677eb2f29d3b4bc6f1ddff.
 
-Worth noting, this is a NOP for devices with only a single master
-described.
-
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20240522-topic-spmi_multi_master_irqfix-v2-1-7ec92a862b9f@linaro.org
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 02922ccbb330 ("spmi: pmic-arb: Register controller for bus instead of arbiter")
-Cc: stable@vger.kernel.org
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20240725164636.3362690-3-sboyd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Tested-by: George Zhang <George.zhang@amd.com>
+Signed-off-by: Ivan Lipski <ivlipski@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spmi/spmi-pmic-arb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c |   16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index f240fcc5a4e1..b6880c13163c 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -1737,8 +1737,7 @@ static int spmi_pmic_arb_bus_init(struct platform_device *pdev,
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_plane.c
+@@ -1231,22 +1231,14 @@ void amdgpu_dm_plane_handle_cursor_updat
+ {
+ 	struct amdgpu_device *adev = drm_to_adev(plane->dev);
+ 	struct amdgpu_framebuffer *afb = to_amdgpu_framebuffer(plane->state->fb);
+-	struct drm_crtc *crtc;
+-	struct dm_crtc_state *crtc_state;
+-	struct amdgpu_crtc *amdgpu_crtc;
+-	u64 address;
++	struct drm_crtc *crtc = afb ? plane->state->crtc : old_plane_state->crtc;
++	struct dm_crtc_state *crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
++	struct amdgpu_crtc *amdgpu_crtc = to_amdgpu_crtc(crtc);
++	uint64_t address = afb ? afb->address : 0;
+ 	struct dc_cursor_position position = {0};
+ 	struct dc_cursor_attributes attributes;
+ 	int ret;
  
- 	dev_dbg(&pdev->dev, "adding irq domain for bus %d\n", bus_index);
+-	if (!afb)
+-		return;
+-
+-	crtc = plane->state->crtc ? plane->state->crtc : old_plane_state->crtc;
+-	crtc_state = crtc ? to_dm_crtc_state(crtc->state) : NULL;
+-	amdgpu_crtc = to_amdgpu_crtc(crtc);
+-	address = afb->address;
+-
+ 	if (!plane->state->fb && !old_plane_state->fb)
+ 		return;
  
--	bus->domain = irq_domain_add_tree(dev->of_node,
--					  &pmic_arb_irq_domain_ops, bus);
-+	bus->domain = irq_domain_add_tree(node, &pmic_arb_irq_domain_ops, bus);
- 	if (!bus->domain) {
- 		dev_err(&pdev->dev, "unable to create irq_domain\n");
- 		return -ENOMEM;
--- 
-2.46.0
-
 
 
