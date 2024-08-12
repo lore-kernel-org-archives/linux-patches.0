@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BB01494B8;
-	Mon, 12 Aug 2024 16:36:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721BC1494B8;
+	Mon, 12 Aug 2024 16:36:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480594; cv=none; b=IKIfnwv9P1qmj4zqIagB6/ErOr/bNxVv2ljriP7lnhdd4A/X6L8HZmu1YhS6uki7hM5Bi1pzER6fgjaoj3FLf5hhr9awUUcEcJWaWQrosu0c6OuBBY2XLIZAI8In1jTR4212QAbmA/eDZ1E60DLMFBkvS4R9nkxRkxLWXL2i7SQ=
+	t=1723480597; cv=none; b=jD3slWmmij5nBTjB/VRkSYLaqshbA8PMZHUGBPgljq1ug3/pAOGJVzeE7Mgp/YRG4jQEMCtEaqblgT0czt9bNb2Ub4TGe6TN9x6Q9OPBb+jWhQvWN0e8gnXZuPEqezFEh5ct6YfjMiy4vDpEHbncIk1pOeRompA5m1K0rjUh3Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480594; c=relaxed/simple;
-	bh=YLUYXgMRyzc86B8fauXS79i3x94fyTqnnMB3r6SmnVo=;
+	s=arc-20240116; t=1723480597; c=relaxed/simple;
+	bh=MpRKz/QqjFEuyYGn6TC/7n59Cc1zh65lZZXkWfQ7lzc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dqPz2HhlJr51Ur2zYJ11gKkHrAByTbB98QnZvL+QNuvmn++BfafotSz0Tcjv3txlWHT5pdHnywUk8TzT5CRNiphkOFmWBqfsB3oe4D1X10+u2P5I2LI0YGjv0jwiFzEtmqUuzjWVJwvOBVYeLxcb4cVJq//49uw/ZyYqih6aqt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XBi0s/BZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=thdwtb8x19sRxBU4Zm5f7ZE0y6opgLZttAOQGVcaI5BOw7n5xFGKFOupd9EKJ97nUZ9s7FSD6DiBHkx0yAjBeKwNSl3eusEIpMffd/ZkiG8cxX0gqjkJD/qrQrdLiYKRgHcETq3Tlq4638JxmQh+VTEODkn8iIUntjJmNUK+X2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhj8WGBE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XBi0s/BZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 762D0C32782;
-	Mon, 12 Aug 2024 16:36:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhj8WGBE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2698C4AF0F;
+	Mon, 12 Aug 2024 16:36:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480593;
-	bh=YLUYXgMRyzc86B8fauXS79i3x94fyTqnnMB3r6SmnVo=;
+	s=korg; t=1723480597;
+	bh=MpRKz/QqjFEuyYGn6TC/7n59Cc1zh65lZZXkWfQ7lzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XBi0s/BZm5ITcegjFVbWH9/Fbi6rXbdPHvHO/7BLJ/BRZMSfTicrN4ZBu1vJ4bzMu
-	 Or7YlLVQgZAkizSTY/QzvQFwLcAGcQ7qbQ4BJ0qrqKFqRItYezralBwkSfB8McrAe3
-	 QNRerP75c/KtKnX/KWq61cS9XuWEDRMMfoPKNU6c=
+	b=jhj8WGBEK2YCTYO8NevJu6MfUu/J+jwa1hFwxHpOs+qBtMZ7iiwibJSu+j1/BBDZu
+	 BDINo/N6yYTCnFHLwixnlGFLlUSuxliCfnhuuItZJiW0m9lFI7uCvkOoPtUvWP3FAD
+	 wehjCn9HgoWa/X8gogJUR3cnvQrZvaSS1SbKUY/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
-	Harry Wentland <hwentlan@amd.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Imre Deak <imre.deak@intel.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Wayne Lin <Wayne.Lin@amd.com>
-Subject: [PATCH 6.10 243/263] drm/dp_mst: Skip CSN if topology probing is not done yet
-Date: Mon, 12 Aug 2024 18:04:04 +0200
-Message-ID: <20240812160155.836931521@linuxfoundation.org>
+	Philip Muller <philm@manjaro.org>,
+	Oliver Smith <ollieparanoid@postmarketos.org>,
+	Daniel Smith <danct12@disroot.org>,
+	Dragan Simic <dsimic@manjaro.org>,
+	Qiang Yu <yuq825@gmail.com>
+Subject: [PATCH 6.10 244/263] drm/lima: Mark simple_ondemand governor as softdep
+Date: Mon, 12 Aug 2024 18:04:05 +0200
+Message-ID: <20240812160155.885143390@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -54,60 +53,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Dragan Simic <dsimic@manjaro.org>
 
-commit ddf983488c3e8d30d5c2e2b315ae7d9cd87096ed upstream.
+commit 0c94f58cef319ad054fd909b3bf4b7d09c03e11c upstream.
 
-[Why]
-During resume, observe that we receive CSN event before we start topology
-probing. Handling CSN at this moment based on uncertain topology is
-unnecessary.
+Lima DRM driver uses devfreq to perform DVFS, while using simple_ondemand
+devfreq governor by default.  This causes driver initialization to fail on
+boot when simple_ondemand governor isn't built into the kernel statically,
+as a result of the missing module dependency and, consequently, the
+required governor module not being included in the initial ramdisk.  Thus,
+let's mark simple_ondemand governor as a softdep for Lima, to have its
+kernel module included in the initial ramdisk.
 
-[How]
-Add checking condition in drm_dp_mst_handle_up_req() to skip handling CSN
-if the topology is yet to be probed.
+This is a rather longstanding issue that has forced distributions to build
+devfreq governors statically into their kernels, [1][2] or may have forced
+some users to introduce unnecessary workarounds.
 
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Harry Wentland <hwentlan@amd.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
+Having simple_ondemand marked as a softdep for Lima may not resolve this
+issue for all Linux distributions.  In particular, it will remain
+unresolved for the distributions whose utilities for the initial ramdisk
+generation do not handle the available softdep information [3] properly
+yet.  However, some Linux distributions already handle softdeps properly
+while generating their initial ramdisks, [4] and this is a prerequisite
+step in the right direction for the distributions that don't handle them
+properly yet.
+
+[1] https://gitlab.manjaro.org/manjaro-arm/packages/core/linux-pinephone/-/blob/6.7-megi/config?ref_type=heads#L5749
+[2] https://gitlab.com/postmarketOS/pmaports/-/blob/7f64e287e7732c9eaa029653e73ca3d4ba1c8598/main/linux-postmarketos-allwinner/config-postmarketos-allwinner.aarch64#L4654
+[3] https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/commit/?id=49d8e0b59052999de577ab732b719cfbeb89504d
+[4] https://github.com/archlinux/mkinitcpio/commit/97ac4d37aae084a050be512f6d8f4489054668ad
+
+Cc: Philip Muller <philm@manjaro.org>
+Cc: Oliver Smith <ollieparanoid@postmarketos.org>
+Cc: Daniel Smith <danct12@disroot.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Signed-off-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240626084825.878565-3-Wayne.Lin@amd.com
+Fixes: 1996970773a3 ("drm/lima: Add optional devfreq and cooling device support")
+Signed-off-by: Dragan Simic <dsimic@manjaro.org>
+Signed-off-by: Qiang Yu <yuq825@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/fdaf2e41bb6a0c5118ff9cc21f4f62583208d885.1718655070.git.dsimic@manjaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/display/drm_dp_mst_topology.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/gpu/drm/lima/lima_drv.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/display/drm_dp_mst_topology.c
-+++ b/drivers/gpu/drm/display/drm_dp_mst_topology.c
-@@ -4069,6 +4069,7 @@ static int drm_dp_mst_handle_up_req(stru
- 	if (up_req->msg.req_type == DP_CONNECTION_STATUS_NOTIFY) {
- 		const struct drm_dp_connection_status_notify *conn_stat =
- 			&up_req->msg.u.conn_stat;
-+		bool handle_csn;
- 
- 		drm_dbg_kms(mgr->dev, "Got CSN: pn: %d ldps:%d ddps: %d mcs: %d ip: %d pdt: %d\n",
- 			    conn_stat->port_number,
-@@ -4077,6 +4078,16 @@ static int drm_dp_mst_handle_up_req(stru
- 			    conn_stat->message_capability_status,
- 			    conn_stat->input_port,
- 			    conn_stat->peer_device_type);
-+
-+		mutex_lock(&mgr->probe_lock);
-+		handle_csn = mgr->mst_primary->link_address_sent;
-+		mutex_unlock(&mgr->probe_lock);
-+
-+		if (!handle_csn) {
-+			drm_dbg_kms(mgr->dev, "Got CSN before finish topology probing. Skip it.");
-+			kfree(up_req);
-+			goto out;
-+		}
- 	} else if (up_req->msg.req_type == DP_RESOURCE_STATUS_NOTIFY) {
- 		const struct drm_dp_resource_status_notify *res_stat =
- 			&up_req->msg.u.resource_stat;
+--- a/drivers/gpu/drm/lima/lima_drv.c
++++ b/drivers/gpu/drm/lima/lima_drv.c
+@@ -501,3 +501,4 @@ module_platform_driver(lima_platform_dri
+ MODULE_AUTHOR("Lima Project Developers");
+ MODULE_DESCRIPTION("Lima DRM Driver");
+ MODULE_LICENSE("GPL v2");
++MODULE_SOFTDEP("pre: governor_simpleondemand");
 
 
