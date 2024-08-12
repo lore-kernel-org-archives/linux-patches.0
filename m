@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 639D21494B8;
-	Mon, 12 Aug 2024 16:35:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8DA1494B8;
+	Mon, 12 Aug 2024 16:35:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480513; cv=none; b=r8YQDDYbfuSqnKQgh/yaPXWOf0yWDKwrcv3ghtJBc5BuUs1Y0urzj41ckwJNZ7sKYSPIN6s6zLfjc/YUiak4+jeSh/cBEVFMwRWp1b7S48E5XVv1o2Yf/2x4XfT8DaGFUKnlGfK7d3kTBU/91BAcLp8F65JvskT/33qFsE5l1nw=
+	t=1723480516; cv=none; b=AgyXv3RHd7AC10O2S2eshRgLtSvbJ/du99bArnUnEIchNIrKyWQ1aZ77skCuYRVxe8ADv5SYeUUOY50Owg1YjRujP+a7zguyWBd+2qIIhUWCGLjqZKT5d6ziIMawf6BtvsjG+rwFlCRnKRXRyG3Kri2D0P36H7rDK5PXTnILV4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480513; c=relaxed/simple;
-	bh=mIwNm6SzEps4/7zLmm3EaI8zpLYM3+LON8lw5QtNraQ=;
+	s=arc-20240116; t=1723480516; c=relaxed/simple;
+	bh=GUfnwlCme03LAGWov74rlEcJ7UdD+cd5t0X45THrzI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ITOoUwbTvfqrccwS4RO0iKF0RGYhqTJSMV2OTVWbeiCqGGmVgi50BJVpcu/b+85NLJgavvqmOLL0jA99+c7O5nAm9NWRyJUDa+fXp9mObZdSMdRPEgHl6zA5hq7Ppq6tOJBKlhLUqEuYvLq893t8iOW7tUokSKbAW0f17JbQeU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qo6S9KsI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZVnAWfigZsLjAqtzlXJUK4pTlkRGGCh/92Vp+c4O8eAuiOGxZannbpjJ0Gdx4ong+HUnSRgFa+fdy6ruV175U/EEOcfTr05L0K6EGknPEqTIKzGDSybXRn8AMGNi4sXqhycJJdmDD7n7HRIrxKOQ0Iui5NkPu+DSZXkXZr+/KbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YJ8ht8D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qo6S9KsI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9EC6C32782;
-	Mon, 12 Aug 2024 16:35:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YJ8ht8D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE565C32782;
+	Mon, 12 Aug 2024 16:35:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480513;
-	bh=mIwNm6SzEps4/7zLmm3EaI8zpLYM3+LON8lw5QtNraQ=;
+	s=korg; t=1723480516;
+	bh=GUfnwlCme03LAGWov74rlEcJ7UdD+cd5t0X45THrzI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qo6S9KsI7sl3IJI2FHdQ76xwsp0KDOMgV/O9jcMfJzZ7Q3rjmpVwMTiZPr9thQCYM
-	 DY8Q0hsu1zP3F1ZnQBVj2ah/ND1YePZYhaFND3Ph3aiiOLRm4l3LRhbKQsM7JEr8/x
-	 CO/NDe0poe9HOKjoO/py52UYmriVeQ0wNMQe8h0s=
+	b=2YJ8ht8DMbaAyCMSpFvb++b6I91+V+Jh/lR9idFhWcRK9NTFiJ9t/2pVTMzvRqDum
+	 9/bT0QJGwkn/vb6ltyCZ+fnc8mSsD6G54wC5X1PB6JvicgLv8W5GjUSMjNtL/tyn73
+	 SUGZLb1jXF8ISXM8pD26hePxYSNI/3fnOOs6tsyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.10 187/263] USB: serial: debug: do not echo input by default
-Date: Mon, 12 Aug 2024 18:03:08 +0200
-Message-ID: <20240812160153.704540456@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>
+Subject: [PATCH 6.10 188/263] usb: typec: fsa4480: Check if the chip is really there
+Date: Mon, 12 Aug 2024 18:03:09 +0200
+Message-ID: <20240812160153.743353645@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -44,72 +45,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-commit 00af4f3dda1461ec90d892edc10bec6d3c50c554 upstream.
+commit e885f5f1f2b43575aa8e4e31404132d77d6663d1 upstream.
 
-This driver is intended as a "client" end of the console connection.
-When connected to a host it's supposed to receive debug logs, and
-possibly allow to interact with whatever debug console is available
-there. Feeding messages back, depending on a configuration may cause log
-messages be executed as shell commands (which can be really bad if one
-is unlucky, imagine a log message like "prevented running `rm -rf
-/home`"). In case of Xen, it exposes sysrq-like debug interface, and
-feeding it its own logs will pretty quickly hit 'R' for "instant
-reboot".
+Currently, the driver will happily register the switch/mux devices, and
+so long as the i2c master doesn't complain, the user would never know
+there's something wrong.
 
-Contrary to a classic serial console, the USB one cannot be configured
-ahead of time, as the device shows up only when target OS is up. And at
-the time device is opened to execute relevant ioctl, it's already too
-late, especially when logs start flowing shortly after device is
-initialized.
-Avoid the issue by changing default to no echo for this type of devices.
+Add a device id check (based on [1]) and return -ENODEV if the read
+fails or returns nonsense.
 
-Signed-off-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
-[ johan: amend summary; disable also ECHONL ]
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Checking the value on a Qualcomm SM6115P-based Lenovo Tab P11 tablet,
+the ID mentioned in the datasheet does indeed show up:
+ fsa4480 1-0042: Found FSA4480 v1.1 (Vendor ID = 0)
+
+[1] https://www.onsemi.com/pdf/datasheet/fsa4480-d.pdf
+
+Fixes: 1dc246320c6b ("usb: typec: mux: Add On Semi fsa4480 driver")
+Cc: stable <stable@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240729-topic-fs4480_check-v3-1-f5bf732d3424@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/usb_debug.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/usb/typec/mux/fsa4480.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/usb/serial/usb_debug.c
-+++ b/drivers/usb/serial/usb_debug.c
-@@ -76,6 +76,11 @@ static void usb_debug_process_read_urb(s
- 	usb_serial_generic_process_read_urb(urb);
- }
+--- a/drivers/usb/typec/mux/fsa4480.c
++++ b/drivers/usb/typec/mux/fsa4480.c
+@@ -13,6 +13,10 @@
+ #include <linux/usb/typec_dp.h>
+ #include <linux/usb/typec_mux.h>
  
-+static void usb_debug_init_termios(struct tty_struct *tty)
-+{
-+	tty->termios.c_lflag &= ~(ECHO | ECHONL);
-+}
++#define FSA4480_DEVICE_ID	0x00
++ #define FSA4480_DEVICE_ID_VENDOR_ID	GENMASK(7, 6)
++ #define FSA4480_DEVICE_ID_VERSION_ID	GENMASK(5, 3)
++ #define FSA4480_DEVICE_ID_REV_ID	GENMASK(2, 0)
+ #define FSA4480_SWITCH_ENABLE	0x04
+ #define FSA4480_SWITCH_SELECT	0x05
+ #define FSA4480_SWITCH_STATUS1	0x07
+@@ -251,6 +255,7 @@ static int fsa4480_probe(struct i2c_clie
+ 	struct typec_switch_desc sw_desc = { };
+ 	struct typec_mux_desc mux_desc = { };
+ 	struct fsa4480 *fsa;
++	int val = 0;
+ 	int ret;
+ 
+ 	fsa = devm_kzalloc(dev, sizeof(*fsa), GFP_KERNEL);
+@@ -268,6 +273,15 @@ static int fsa4480_probe(struct i2c_clie
+ 	if (IS_ERR(fsa->regmap))
+ 		return dev_err_probe(dev, PTR_ERR(fsa->regmap), "failed to initialize regmap\n");
+ 
++	ret = regmap_read(fsa->regmap, FSA4480_DEVICE_ID, &val);
++	if (ret || !val)
++		return dev_err_probe(dev, -ENODEV, "FSA4480 not found\n");
 +
- static struct usb_serial_driver debug_device = {
- 	.driver = {
- 		.owner =	THIS_MODULE,
-@@ -85,6 +90,7 @@ static struct usb_serial_driver debug_de
- 	.num_ports =		1,
- 	.bulk_out_size =	USB_DEBUG_MAX_PACKET_SIZE,
- 	.break_ctl =		usb_debug_break_ctl,
-+	.init_termios =		usb_debug_init_termios,
- 	.process_read_urb =	usb_debug_process_read_urb,
- };
- 
-@@ -96,6 +102,7 @@ static struct usb_serial_driver dbc_devi
- 	.id_table =		dbc_id_table,
- 	.num_ports =		1,
- 	.break_ctl =		usb_debug_break_ctl,
-+	.init_termios =		usb_debug_init_termios,
- 	.process_read_urb =	usb_debug_process_read_urb,
- };
- 
++	dev_dbg(dev, "Found FSA4480 v%lu.%lu (Vendor ID = %lu)\n",
++		FIELD_GET(FSA4480_DEVICE_ID_VERSION_ID, val),
++		FIELD_GET(FSA4480_DEVICE_ID_REV_ID, val),
++		FIELD_GET(FSA4480_DEVICE_ID_VENDOR_ID, val));
++
+ 	/* Safe mode */
+ 	fsa->cur_enable = FSA4480_ENABLE_DEVICE | FSA4480_ENABLE_USB;
+ 	fsa->mode = TYPEC_STATE_SAFE;
 
 
