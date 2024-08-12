@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4147C186E38;
-	Mon, 12 Aug 2024 16:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E16718756D;
+	Mon, 12 Aug 2024 16:31:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480268; cv=none; b=LLzwBFE2nzM9r34euI3RHOPvyeEjoxbWQnVEdT1O2iQrgJwtutlZP4vW7GjzEWuQyyvc6W+Hugj9znVPwyX08qAWSWiW5Br1shobMCvSRAy2M4vSx3229xu98I2Uc/yMXrVofvw7QrTCO72lm4ehpNS7LqjyjTDIcN///gvWE/c=
+	t=1723480271; cv=none; b=L0+pJek9/Nbn/tALgjIM79QcgWp7VyPxkx8GXxSNariqLOYpaRQaUqPoAFjUFK4QAixecGYeQfuXQEQCbh9GnXjb4z9XjLJ70C4r5nUfd6JBZdVmvsW174jCCqb3HFhQgjMdrh9f86rbKNIZzSDBm8mhfzNdCNTPRUF6V7x2iOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480268; c=relaxed/simple;
-	bh=JdrSBIY3qROIfus+I8l2/8NLJ6y/RiLfkVb8bz6/des=;
+	s=arc-20240116; t=1723480271; c=relaxed/simple;
+	bh=5lJvFHQeleZSx779yBawUS/dYGItliRLp8opJMffDLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h9ljTJUZQR0w37CIlqjuev1cMyKd82fgHr3CtIESfoEWFGQ5OY1F2pKT7bzqIcwTSl2v6QIWE1yXaxWs4AS0Mf0h1zuAPqoOqSnatKRjJwQ4HyKmfnbvgcUGNuL70tkXGp/TKWJfFurI+CLKbqevL/ph7/BvMgGEv8QVABbo100=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DZmkOrf5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NkRFQr8SO7SPAYFiKbY0INEDc3QS4y/nSOgOfevXaOQSHOPx5Hwy81EfXo5iBCTtWLu1mMxYFvZ1nAnUajvS7JyC8B17zwIB5dysEB4DMXaMwNaEAg9UH8PZ6Gp51qggict25hbYd4CEJKtn+AmLHXLS6s/q8wMDoAwBP0QAdEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/SFHc9L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DZmkOrf5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B88FC4AF0C;
-	Mon, 12 Aug 2024 16:31:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/SFHc9L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0622C4AF09;
+	Mon, 12 Aug 2024 16:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480268;
-	bh=JdrSBIY3qROIfus+I8l2/8NLJ6y/RiLfkVb8bz6/des=;
+	s=korg; t=1723480271;
+	bh=5lJvFHQeleZSx779yBawUS/dYGItliRLp8opJMffDLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZmkOrf5fMWT5rkrZwsB0LPk67K36hjao3rZGfnWoJ0phCt2EFGBJn9bi4B5jor6C
-	 kPwcTTY92otBSdU5r8pSmduWpqevNJBovUStN0jmT7fBuNe755RRoB0yGKopNT2mea
-	 Kxu49i3LepO+m6qUx7omkMnv9yv/2T3mbioX2cmo=
+	b=t/SFHc9LugpIHIdarvfw3wGSEt3Qzs6p4LFJs/JayuoVeyKGznuaVZSZQLeDLKPrk
+	 vghrUVPEoiVcIlBcEoc176aCuz4ROrMGAUGB04vFSCQJLc8A7mBMcXs1C6SFDFiGYH
+	 altrSX640QhZwXspucUA9SVrVVi+2pYZgt+mS8uY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@meta.com>,
-	stable@kernel.org,
-	Rik van Riel <riel@surriel.com>,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [PATCH 6.10 118/263] mm, slub: do not call do_slab_free for kfence object
-Date: Mon, 12 Aug 2024 18:01:59 +0200
-Message-ID: <20240812160151.063794142@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 145/263] ASoC: codecs: wsa884x: Correct Soundwire ports mask
+Date: Mon, 12 Aug 2024 18:02:26 +0200
+Message-ID: <20240812160152.098986348@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rik van Riel <riel@surriel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit a371d558e6f3aed977a8a7346350557de5d25190 upstream.
+[ Upstream commit dcb6631d05152930e2ea70fd2abfd811b0e970b5 ]
 
-In 782f8906f805 the freeing of kfence objects was moved from deep
-inside do_slab_free to the wrapper functions outside. This is a nice
-change, but unfortunately it missed one spot in __kmem_cache_free_bulk.
+Device has up to WSA884X_MAX_SWR_PORTS number of ports and the array
+assigned to prop.sink_dpn_prop has 0..WSA884X_MAX_SWR_PORTS-1 elements.
+On the other hand, GENMASK(high, low) creates an inclusive mask between
+<high, low>, so we need the mask from 0 up to WSA884X_MAX_SWR_PORTS-1.
 
-This results in a crash like this:
+Theoretically, too wide mask could cause an out of bounds read in
+sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
+driver, e.g. adding incorrect number of ports via
+sdw_stream_add_slave().
 
-BUG skbuff_head_cache (Tainted: G S  B       E     ): Padding overwritten. 0xffff88907fea0f00-0xffff88907fea0fff @offset=3840
-
-slab_err (mm/slub.c:1129)
-free_to_partial_list (mm/slub.c:? mm/slub.c:4036)
-slab_pad_check (mm/slub.c:864 mm/slub.c:1290)
-check_slab (mm/slub.c:?)
-free_to_partial_list (mm/slub.c:3171 mm/slub.c:4036)
-kmem_cache_alloc_bulk (mm/slub.c:? mm/slub.c:4495 mm/slub.c:4586 mm/slub.c:4635)
-napi_build_skb (net/core/skbuff.c:348 net/core/skbuff.c:527 net/core/skbuff.c:549)
-
-All the other callers to do_slab_free appear to be ok.
-
-Add a kfence_free check in __kmem_cache_free_bulk to avoid the crash.
-
-Reported-by: Chris Mason <clm@meta.com>
-Fixes: 782f8906f805 ("mm/slub: free KFENCE objects in slab_free_hook()")
-Cc: stable@kernel.org
-Signed-off-by: Rik van Riel <riel@surriel.com>
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-6-d4d7a8b56f05@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slub.c |    3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/codecs/wsa884x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -4655,6 +4655,9 @@ static void __kmem_cache_free_bulk(struc
- 		if (!df.slab)
- 			continue;
+diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
+index a6034547b4f36..de4caf61eef9e 100644
+--- a/sound/soc/codecs/wsa884x.c
++++ b/sound/soc/codecs/wsa884x.c
+@@ -1895,7 +1895,7 @@ static int wsa884x_probe(struct sdw_slave *pdev,
+ 					WSA884X_MAX_SWR_PORTS))
+ 		dev_dbg(dev, "Static Port mapping not specified\n");
  
-+		if (kfence_free(df.freelist))
-+			continue;
-+
- 		do_slab_free(df.s, df.slab, df.freelist, df.tail, df.cnt,
- 			     _RET_IP_);
- 	} while (likely(size));
+-	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS, 0);
++	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS - 1, 0);
+ 	pdev->prop.simple_clk_stop_capable = true;
+ 	pdev->prop.sink_dpn_prop = wsa884x_sink_dpn_prop;
+ 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+-- 
+2.43.0
+
 
 
