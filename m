@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A5DA187332;
-	Mon, 12 Aug 2024 16:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 033E6134AC;
+	Mon, 12 Aug 2024 16:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479871; cv=none; b=qZsNvUsqw+cwAAFgp0nQl/+DBGFF5cI8phTWdNYPezrgPrQzdsjJbOdwcO6I17HpuNPIy6qPT8N6T/bRpZQt1j1I0GcHYh2KW+vS4kLOfvAaMm0UxBLlo5Ukbh0iFrYF+snkkDPcFDdd5RGLnQixQL6XppILmsc9SThYyRw2Ryk=
+	t=1723479875; cv=none; b=DZUo/Sa9FgcM8MlCDjcXP+FRaYuetGG+KzrOpyFX6KipfZu7kHojl+h9CJA2YV61lx9ZtylVXxfvi6SCsZzAFmFHvTgHXhpGF+yNSU7Umn1xZyYsy6NE8FJs4+MPYdwgBH59uBvYqhL7cKeIzCuUiYQ/JMCOMSzGEXhMpV7pE5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479871; c=relaxed/simple;
-	bh=mqN4kM0c3+G9R3nqMQFv0HrO+KneNe60TV4NuGgFvTs=;
+	s=arc-20240116; t=1723479875; c=relaxed/simple;
+	bh=JOwgg/pDLWWBrzsga8Hm5w/QXB3nDUhPdRTpcgOZ4UU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RqW8HlpFGQtMknMj8WnkY0lCjoqVPKE8hYKCkvtSQ8BOphZQDqJ4npSUSnmFPFVCs+upQSuAepgymznx+r/zSwttxNy7IxAlNejGGbadHDqdBq86+hflOD1YJWDwhyu+OQYR7jp2ksN8h9nIi3Tp3MtNdNpcQcplv4pYq0+7zQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T6Eju8hm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BsLPDJCbG9zMFI5titmoOuAW0nNz2qSMlKLoF1bjjIHS4+nPZsbdZS4Z0I/DA2yOhM4nh2A6rf0kzHIF5d9R7BLay/hYxMxBmZN/f/DanhBO/O1pr45LFpqdwGC6wPs7TTQdFCRswEdGuKkqwG7OFNgFPR+XkzPWZN7KKa+10Vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=niwjlwFQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T6Eju8hm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A36FC32782;
-	Mon, 12 Aug 2024 16:24:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="niwjlwFQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63AC2C32782;
+	Mon, 12 Aug 2024 16:24:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479871;
-	bh=mqN4kM0c3+G9R3nqMQFv0HrO+KneNe60TV4NuGgFvTs=;
+	s=korg; t=1723479874;
+	bh=JOwgg/pDLWWBrzsga8Hm5w/QXB3nDUhPdRTpcgOZ4UU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T6Eju8hmKgkHbDw60lvE1cBip4BHmwA8qjUMYVfdrGI4ZZAZvczIELrip0z4QH4Mk
-	 iE4Gw+hFx7hLVWipBtFjqJaFrLNtFnf3yLgz98RT5EUtPEqNqwGSmHh4OUcRKIWnrS
-	 0aOvGPKj7btQHxShId/Kv/2XAJrOboHlBxiPYZE4=
+	b=niwjlwFQOWVnXKB0ojtD/iaA8CLtplueVLR71yK2gDJQuWw5uF4cYuaxQ5D41r84h
+	 wZdgKQr5FL/WK70rvL5B7Iw+W8xy2dakZKh5q7sdJ/13RZn4kf76LyUY6P/mAvmJvc
+	 CqXp/VFxCYVrNK18In1fn/MKzfE/1g+7icbli4z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Grzegorz Nitka <grzegorz.nitka@intel.com>,
-	Sergey Temerkhanov <sergey.temerkhanov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com>
-Subject: [PATCH 6.10 027/263] ice: Fix reset handler
-Date: Mon, 12 Aug 2024 18:00:28 +0200
-Message-ID: <20240812160147.580010387@linuxfoundation.org>
+	syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com,
+	Dmitry Antipov <dmantipov@yandex.ru>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.10 028/263] Bluetooth: l2cap: always unlock channel in l2cap_conless_channel()
+Date: Mon, 12 Aug 2024 18:00:29 +0200
+Message-ID: <20240812160147.618960434@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -54,37 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Grzegorz Nitka <grzegorz.nitka@intel.com>
+From: Dmitry Antipov <dmantipov@yandex.ru>
 
-[ Upstream commit 25a7123579ecac9a89a7e5b8d8a580bee4b68acd ]
+[ Upstream commit c531e63871c0b50c8c4e62c048535a08886fba3e ]
 
-Synchronize OICR IRQ when preparing for reset to avoid potential
-race conditions between the reset procedure and OICR
+Add missing call to 'l2cap_chan_unlock()' on receive error handling
+path in 'l2cap_conless_channel()'.
 
-Fixes: 4aad5335969f ("ice: add individual interrupt allocation")
-Signed-off-by: Grzegorz Nitka <grzegorz.nitka@intel.com>
-Signed-off-by: Sergey Temerkhanov <sergey.temerkhanov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Pucha Himasekhar Reddy <himasekharx.reddy.pucha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: a24cce144b98 ("Bluetooth: Fix reference counting of global L2CAP channels")
+Reported-by: syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=45ac74737e866894acb0
+Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 9b075dd48889e..f16d13e9ff6e3 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -560,6 +560,8 @@ ice_prepare_for_reset(struct ice_pf *pf, enum ice_reset_req reset_type)
- 	if (test_bit(ICE_PREPARED_FOR_RESET, pf->state))
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index c3c26bbb5ddae..9988ba382b686 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6774,6 +6774,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
+ 	bt_cb(skb)->l2cap.psm = psm;
+ 
+ 	if (!chan->ops->recv(chan, skb)) {
++		l2cap_chan_unlock(chan);
+ 		l2cap_chan_put(chan);
  		return;
- 
-+	synchronize_irq(pf->oicr_irq.virq);
-+
- 	ice_unplug_aux_dev(pf);
- 
- 	/* Notify VFs of impending reset */
+ 	}
 -- 
 2.43.0
 
