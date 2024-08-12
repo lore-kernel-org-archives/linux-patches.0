@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721CB134AC;
-	Mon, 12 Aug 2024 16:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECD28134AC;
+	Mon, 12 Aug 2024 16:26:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480006; cv=none; b=B++KlYKy4O4icUWv6GhFBqyGxSrUPNYIbn4AlL94WwZLzKFL52SflqEODKtmSJgwXpiX/QvLUmcguwIiN+fECNCnAQOQfCFxYEEQetEKRh8DbKd4qFsJ5J0J79ZMTbUULLm0pyM+XbgculyZBnfrPUVnQa8zBEZW1xGThPWa4rU=
+	t=1723480010; cv=none; b=eMdvsaxm1W9rN4J0WCvCOCxetI10Avz14Hc+ji7xWZISUXP2M+ddfNVdDZeK+RrhvecLfP1hRNtH8tTruhTCCfB64urSz84YJiDVw/cx7bUi7llnROBTv/AzlW8a/1HS3Sd9Krvkktw6c5HwvfcAUUqK/wkcuetOOIEGoiCB9e8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480006; c=relaxed/simple;
-	bh=61j13H6xHqIOVzekAN3pSmdKsKu5T9OMpBmeMzo48qk=;
+	s=arc-20240116; t=1723480010; c=relaxed/simple;
+	bh=A9d/wQ5pxjDDzmTISqqoFJ4djxq5zeJ2X22lsom0DVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sV9o5gTPFsQ4orrSZLxRg69oFI46PFyg3m1Zddig+vXTpKqezUFE9PFJvMqZ8ULhnSreuJsddCQUByoEKl8uWQkftkTd3mBdh7KRKO3FVjVJpN+WGijwsKXhScLsp3e61Of1Q4mCtUrMyLJJzMMot+d/wpLMj2RpTov6+clCBbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tKZ8vFHl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IaqHfwpoKb2AJU/c3mTvhxgUTQSqCMqWF9qDSpI1KmPDN2+WXqrwkcRVb6NPOlO5Ue6rPlzSTkDO80+uWRSxoYZzf5DhcElpOaLqKnu7buSFzH6MwnySi9ZPcTzrNCZNL2IcRd+7OJue3glrf3j7TNbGdk2hIt/bo8lxUJdrHvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=elq0Fc3T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tKZ8vFHl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE98C32782;
-	Mon, 12 Aug 2024 16:26:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="elq0Fc3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22E08C32782;
+	Mon, 12 Aug 2024 16:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480006;
-	bh=61j13H6xHqIOVzekAN3pSmdKsKu5T9OMpBmeMzo48qk=;
+	s=korg; t=1723480009;
+	bh=A9d/wQ5pxjDDzmTISqqoFJ4djxq5zeJ2X22lsom0DVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tKZ8vFHlQyqb9kf1Foh5fZD3/Z8xSxZD4sDlIkHt8D+XhylfnnT+y4k7n+SVgOV1H
-	 J8vd1Qw5jANeHa7WqSjP9cTeT3M6HMpjhoN2/oR5aM3HSnfKSI8DR3wmimTSt6mQUY
-	 tp+xKBeYHvCunUi1QXJICbRe+t81ZIoIzMdOIRPY=
+	b=elq0Fc3TNU6LyxUq2Cq4mgJqtAKqMZVcRCbD8gEIItzFm4gDXGqgUhAeWch5eTt6v
+	 gKeZ16jna3BJQPNhM5XVpfGQjtBW3BSjBuTvNjFlQvgtmw7cZctSSBwA8cEphbsGdN
+	 5EKPZEhTuxYHV72TgEE2t63oBLZw4xfMScPuRpPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Yonghong Song <yonghong.song@linux.dev>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 067/263] net/mlx5e: SHAMPO, Fix invalid WQ linked list unlink
-Date: Mon, 12 Aug 2024 18:01:08 +0200
-Message-ID: <20240812160149.108678414@linuxfoundation.org>
+Subject: [PATCH 6.10 068/263] selftests/bpf: Fix send_signal test with nested CONFIG_PARAVIRT
+Date: Mon, 12 Aug 2024 18:01:09 +0200
+Message-ID: <20240812160149.146575200@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,42 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Yonghong Song <yonghong.song@linux.dev>
 
-[ Upstream commit fba8334721e266f92079632598e46e5f89082f30 ]
+[ Upstream commit 7015843afcaf68c132784c89528dfddc0005e483 ]
 
-When all the strides in a WQE have been consumed, the WQE is unlinked
-from the WQ linked list (mlx5_wq_ll_pop()). For SHAMPO, it is possible
-to receive CQEs with 0 consumed strides for the same WQE even after the
-WQE is fully consumed and unlinked. This triggers an additional unlink
-for the same wqe which corrupts the linked list.
+Alexei reported that send_signal test may fail with nested CONFIG_PARAVIRT
+configs. In this particular case, the base VM is AMD with 166 cpus, and I
+run selftests with regular qemu on top of that and indeed send_signal test
+failed. I also tried with an Intel box with 80 cpus and there is no issue.
 
-Fix this scenario by accepting 0 sized consumed strides without
-unlinking the WQE again.
+The main qemu command line includes:
 
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://lore.kernel.org/r/20240603212219.1037656-4-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+  -enable-kvm -smp 16 -cpu host
+
+The failure log looks like:
+
+  $ ./test_progs -t send_signal
+  [   48.501588] watchdog: BUG: soft lockup - CPU#9 stuck for 26s! [test_progs:2225]
+  [   48.503622] Modules linked in: bpf_testmod(O)
+  [   48.503622] CPU: 9 PID: 2225 Comm: test_progs Tainted: G           O       6.9.0-08561-g2c1713a8f1c9-dirty #69
+  [   48.507629] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
+  [   48.511635] RIP: 0010:handle_softirqs+0x71/0x290
+  [   48.511635] Code: [...] 10 0a 00 00 00 31 c0 65 66 89 05 d5 f4 fa 7e fb bb ff ff ff ff <49> c7 c2 cb
+  [   48.518527] RSP: 0018:ffffc90000310fa0 EFLAGS: 00000246
+  [   48.519579] RAX: 0000000000000000 RBX: 00000000ffffffff RCX: 00000000000006e0
+  [   48.522526] RDX: 0000000000000006 RSI: ffff88810791ae80 RDI: 0000000000000000
+  [   48.523587] RBP: ffffc90000fabc88 R08: 00000005a0af4f7f R09: 0000000000000000
+  [   48.525525] R10: 0000000561d2f29c R11: 0000000000006534 R12: 0000000000000280
+  [   48.528525] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+  [   48.528525] FS:  00007f2f2885cd00(0000) GS:ffff888237c40000(0000) knlGS:0000000000000000
+  [   48.531600] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [   48.535520] CR2: 00007f2f287059f0 CR3: 0000000106a28002 CR4: 00000000003706f0
+  [   48.537538] Call Trace:
+  [   48.537538]  <IRQ>
+  [   48.537538]  ? watchdog_timer_fn+0x1cd/0x250
+  [   48.539590]  ? lockup_detector_update_enable+0x50/0x50
+  [   48.539590]  ? __hrtimer_run_queues+0xff/0x280
+  [   48.542520]  ? hrtimer_interrupt+0x103/0x230
+  [   48.544524]  ? __sysvec_apic_timer_interrupt+0x4f/0x140
+  [   48.545522]  ? sysvec_apic_timer_interrupt+0x3a/0x90
+  [   48.547612]  ? asm_sysvec_apic_timer_interrupt+0x1a/0x20
+  [   48.547612]  ? handle_softirqs+0x71/0x290
+  [   48.547612]  irq_exit_rcu+0x63/0x80
+  [   48.551585]  sysvec_apic_timer_interrupt+0x75/0x90
+  [   48.552521]  </IRQ>
+  [   48.553529]  <TASK>
+  [   48.553529]  asm_sysvec_apic_timer_interrupt+0x1a/0x20
+  [   48.555609] RIP: 0010:finish_task_switch.isra.0+0x90/0x260
+  [   48.556526] Code: [...] 9f 58 0a 00 00 48 85 db 0f 85 89 01 00 00 4c 89 ff e8 53 d9 bd 00 fb 66 90 <4d> 85 ed 74
+  [   48.562524] RSP: 0018:ffffc90000fabd38 EFLAGS: 00000282
+  [   48.563589] RAX: 0000000000000000 RBX: 0000000000000000 RCX: ffffffff83385620
+  [   48.563589] RDX: ffff888237c73ae4 RSI: 0000000000000000 RDI: ffff888237c6fd00
+  [   48.568521] RBP: ffffc90000fabd68 R08: 0000000000000000 R09: 0000000000000000
+  [   48.569528] R10: 0000000000000001 R11: 0000000000000000 R12: ffff8881009d0000
+  [   48.573525] R13: ffff8881024e5400 R14: ffff88810791ae80 R15: ffff888237c6fd00
+  [   48.575614]  ? finish_task_switch.isra.0+0x8d/0x260
+  [   48.576523]  __schedule+0x364/0xac0
+  [   48.577535]  schedule+0x2e/0x110
+  [   48.578555]  pipe_read+0x301/0x400
+  [   48.579589]  ? destroy_sched_domains_rcu+0x30/0x30
+  [   48.579589]  vfs_read+0x2b3/0x2f0
+  [   48.579589]  ksys_read+0x8b/0xc0
+  [   48.583590]  do_syscall_64+0x3d/0xc0
+  [   48.583590]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+  [   48.586525] RIP: 0033:0x7f2f28703fa1
+  [   48.587592] Code: [...] 00 00 00 0f 1f 44 00 00 f3 0f 1e fa 80 3d c5 23 14 00 00 74 13 31 c0 0f 05 <48> 3d 00 f0
+  [   48.593534] RSP: 002b:00007ffd90f8cf88 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+  [   48.595589] RAX: ffffffffffffffda RBX: 00007ffd90f8d5e8 RCX: 00007f2f28703fa1
+  [   48.595589] RDX: 0000000000000001 RSI: 00007ffd90f8cfb0 RDI: 0000000000000006
+  [   48.599592] RBP: 00007ffd90f8d2f0 R08: 0000000000000064 R09: 0000000000000000
+  [   48.602527] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  [   48.603589] R13: 00007ffd90f8d608 R14: 00007f2f288d8000 R15: 0000000000f6bdb0
+  [   48.605527]  </TASK>
+
+In the test, two processes are communicating through pipe. Further debugging
+with strace found that the above splat is triggered as read() syscall could
+not receive the data even if the corresponding write() syscall in another
+process successfully wrote data into the pipe.
+
+The failed subtest is "send_signal_perf". The corresponding perf event has
+sample_period 1 and config PERF_COUNT_SW_CPU_CLOCK. sample_period 1 means every
+overflow event will trigger a call to the BPF program. So I suspect this may
+overwhelm the system. So I increased the sample_period to 100,000 and the test
+passed. The sample_period 10,000 still has the test failed.
+
+In other parts of selftest, e.g., [1], sample_freq is used instead. So I
+decided to use sample_freq = 1,000 since the test can pass as well.
+
+  [1] https://lore.kernel.org/bpf/20240604070700.3032142-1-song@kernel.org/
+
+Reported-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Yonghong Song <yonghong.song@linux.dev>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20240605201203.2603846-1-yonghong.song@linux.dev
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/testing/selftests/bpf/prog_tests/send_signal.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-index b5333da20e8a7..cdc84a27a04ed 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
-@@ -2374,6 +2374,9 @@ static void mlx5e_handle_rx_cqe_mpwrq_shampo(struct mlx5e_rq *rq, struct mlx5_cq
- 	if (likely(wi->consumed_strides < rq->mpwqe.num_strides))
- 		return;
- 
-+	if (unlikely(!cstrides))
-+		return;
-+
- 	wq  = &rq->mpwqe.wq;
- 	wqe = mlx5_wq_ll_get_wqe(wq, wqe_id);
- 	mlx5_wq_ll_pop(wq, cqe->wqe_id, &wqe->next.next_wqe_index);
+diff --git a/tools/testing/selftests/bpf/prog_tests/send_signal.c b/tools/testing/selftests/bpf/prog_tests/send_signal.c
+index 920aee41bd58c..6cc69900b3106 100644
+--- a/tools/testing/selftests/bpf/prog_tests/send_signal.c
++++ b/tools/testing/selftests/bpf/prog_tests/send_signal.c
+@@ -156,7 +156,8 @@ static void test_send_signal_tracepoint(bool signal_thread)
+ static void test_send_signal_perf(bool signal_thread)
+ {
+ 	struct perf_event_attr attr = {
+-		.sample_period = 1,
++		.freq = 1,
++		.sample_freq = 1000,
+ 		.type = PERF_TYPE_SOFTWARE,
+ 		.config = PERF_COUNT_SW_CPU_CLOCK,
+ 	};
 -- 
 2.43.0
 
