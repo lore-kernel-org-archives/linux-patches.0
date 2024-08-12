@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36312C1A5;
-	Mon, 12 Aug 2024 16:32:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E4A16D9B8;
+	Mon, 12 Aug 2024 16:32:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480342; cv=none; b=hLjZMw/+EXNlDzUiI+iWmTh4XgBcA3Ccnb8rscDc1zGLmR0j9vbgQq3cM3P1ZYDFM3tZYxTV4VZCeABR2ggPpIQz5f0tloRHPOVGsPknF+tintgwV9AynoC+4/f4HaK1i36eqkcWgtbNN34MZY47JiSZ2AhuSBMaRaWN8REQNrA=
+	t=1723480345; cv=none; b=kpzf7EkLbziN8zpFRcs5nuI2uSg7VzsEw7XWYnu3Bw8m1Xwh20QFRcU61SymXJbTyyrMI/TaugGz03jRLUKpKMrg685/MnAmGd/9EXeElbIUqn6LYf5112YfUM268Tn4QsOjO/HSAtjo/bQajgTLX/EbYN0bmTBE4QkRSSilOy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480342; c=relaxed/simple;
-	bh=HuOpkZzDmdS+a++ce2HyH4Tb3dIvqepbohgCf18b2yQ=;
+	s=arc-20240116; t=1723480345; c=relaxed/simple;
+	bh=nwN0YQzBYaVfIQFhJEblqE2kKPNRFayqkdMlQGzkbig=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ACmRYMV2D9WOydevnRkzkoz8lAvDgVDaF+WYX2lqR5QhXgza9DEOXbyLrfgTgLMLFkCnJ2TjJuD+O17ovIMVj3l1MG7EwhPbouZGD7oNfIus+dDJj0ca6Tjjo6gPCbuvR9PNdG1WlNktZJwkH7uQnNpVKU0/aqtkzV/eWNK2cwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HWe5BIR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rb+5JigemPMIwDP7rhOKYPnsiPXTm/E+Ie0qqd6r+rTYpY88zVwFh7s6v1jeH5J1gSQhWGNRWbd7wvTEBZTObMMay3yofVNdTkLatt7tayYTqp0DasVgcKFvWrS8SogWfa3eoyllBjLF3CYSItP6f516E8BFHIYzsdGdJz2PutQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L/oeqLxb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HWe5BIR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF04BC32782;
-	Mon, 12 Aug 2024 16:32:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L/oeqLxb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184E8C32782;
+	Mon, 12 Aug 2024 16:32:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480342;
-	bh=HuOpkZzDmdS+a++ce2HyH4Tb3dIvqepbohgCf18b2yQ=;
+	s=korg; t=1723480345;
+	bh=nwN0YQzBYaVfIQFhJEblqE2kKPNRFayqkdMlQGzkbig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HWe5BIR/iNJ6k3aghQsw+t6jqGNGeyPCmSjgXL6ZM/7xTLEff4NV5ZlY3y/+TgI/9
-	 yDN9Fwf8t5HBvJV+ASUySC8GNCL09rGYPBGQqq9upm57adRhDAzDwYA2NzXJnrQKgN
-	 NfdIfwhELG9Can49DgaiaGMKnZqPNFUAnF0zkDGQ=
+	b=L/oeqLxbXh0IlLbduDXSr8/dNO62KWlHfdVSdE9yoDZ9wqN1qqcSJ/LK4aERtZ1pW
+	 g9LskQzYiItuc4bVod8OZbFderxLhrhG8fYmCrP8Hh0i6tNONOmD0/buMTQOQK8+sD
+	 5iSzP4R47IC5KqGFsykDSvJ9BlDEmERH0zluQv34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.com>,
+	Gleb Korobeynikov <gkorobeynikov@astralinux.ru>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 151/263] kprobes: Fix to check symbol prefixes correctly
-Date: Mon, 12 Aug 2024 18:02:32 +0200
-Message-ID: <20240812160152.327207487@linuxfoundation.org>
+Subject: [PATCH 6.10 169/263] cifs: cifs_inval_name_dfs_link_error: correct the check for fullpath
+Date: Mon, 12 Aug 2024 18:02:50 +0200
+Message-ID: <20240812160153.017516350@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -50,38 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Gleb Korobeynikov <gkorobeynikov@astralinux.ru>
 
-[ Upstream commit 8c8acb8f26cbde665b233dd1b9bbcbb9b86822dc ]
+[ Upstream commit 36bb22a08a69d9984a8399c07310d18b115eae20 ]
 
-Since str_has_prefix() takes the prefix as the 2nd argument and the string
-as the first, is_cfi_preamble_symbol() always fails to check the prefix.
-Fix the function parameter order so that it correctly check the prefix.
+Replace the always-true check tcon->origin_fullpath with
+check of server->leaf_fullpath
 
-Link: https://lore.kernel.org/all/172260679559.362040.7360872132937227206.stgit@devnote2/
+See https://bugzilla.kernel.org/show_bug.cgi?id=219083
 
-Fixes: de02f2ac5d8c ("kprobes: Prohibit probing on CFI preamble symbol")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+The check of the new @tcon will always be true during mounting,
+since @tcon->origin_fullpath will only be set after the tree is
+connected to the latest common resource, as well as checking if
+the prefix paths from it are fully accessible.
+
+Fixes: 3ae872de4107 ("smb: client: fix shared DFS root mounts with different prefixes")
+Reviewed-by: Paulo Alcantara (Red Hat) <pc@manguebit.com>
+Signed-off-by: Gleb Korobeynikov <gkorobeynikov@astralinux.ru>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/misc.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 6a76a81000735..85251c254d8a6 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1557,8 +1557,8 @@ static bool is_cfi_preamble_symbol(unsigned long addr)
- 	if (lookup_symbol_name(addr, symbuf))
- 		return false;
+diff --git a/fs/smb/client/misc.c b/fs/smb/client/misc.c
+index 07c468ddb88a8..65d4b72b4d51a 100644
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -1288,6 +1288,7 @@ int cifs_inval_name_dfs_link_error(const unsigned int xid,
+ 				   const char *full_path,
+ 				   bool *islink)
+ {
++	struct TCP_Server_Info *server = tcon->ses->server;
+ 	struct cifs_ses *ses = tcon->ses;
+ 	size_t len;
+ 	char *path;
+@@ -1304,12 +1305,12 @@ int cifs_inval_name_dfs_link_error(const unsigned int xid,
+ 	    !is_tcon_dfs(tcon))
+ 		return 0;
  
--	return str_has_prefix("__cfi_", symbuf) ||
--		str_has_prefix("__pfx_", symbuf);
-+	return str_has_prefix(symbuf, "__cfi_") ||
-+		str_has_prefix(symbuf, "__pfx_");
- }
+-	spin_lock(&tcon->tc_lock);
+-	if (!tcon->origin_fullpath) {
+-		spin_unlock(&tcon->tc_lock);
++	spin_lock(&server->srv_lock);
++	if (!server->leaf_fullpath) {
++		spin_unlock(&server->srv_lock);
+ 		return 0;
+ 	}
+-	spin_unlock(&tcon->tc_lock);
++	spin_unlock(&server->srv_lock);
  
- static int check_kprobe_address_safe(struct kprobe *p,
+ 	/*
+ 	 * Slow path - tcon is DFS and @full_path has prefix path, so attempt
 -- 
 2.43.0
 
