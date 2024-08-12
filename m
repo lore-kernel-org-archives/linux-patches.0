@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61752C1A5;
-	Mon, 12 Aug 2024 16:31:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1462C1A5;
+	Mon, 12 Aug 2024 16:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480309; cv=none; b=sCa29S5XbScsIg8K59bWk4Z1xlxyKhMO2XEtsHNztLc7yyRlMpu1XagYPybpeyHYaMj5MlkfYQ+stHXh24hV9aFYZw0C6nK90XblHUusrXqLJNIjxJAD9DXzhT+GK8cO1VR32JZiJNyESMER2imlQ2gJcxIbgT0yE3qNzFsduas=
+	t=1723480313; cv=none; b=VCUNWsTWlNrAqHB11v7PwAFyrsDB4DWtOHwLUYpNETtsQBkC1wLGtSeEPfBgSsJGAxeSScZdKOjKnsaEPopl7AMxn9yJ1PnpmLpu6Mrj26dqGwB6UQG2nHNrVnDaY5LZViWQx3NrJL9pSfLfLJSxqvqovVhASLJ/0Xlh2DnnNm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480309; c=relaxed/simple;
-	bh=LsCaPVwE3QEcTNxwy/AmBVR8I1GRsvYFN7nMRezlY7Q=;
+	s=arc-20240116; t=1723480313; c=relaxed/simple;
+	bh=CGR7j+3ujGhZUJj7c46knhSCwIUkrKmcurvYhLA+24I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UdVFr1CzVbJOpo/u1QznU8OpdARwTUrKyFSCYlXLKlxSC+TsPWHQHqjOt8O26ZM+cCDqr+Tsx82y5Tmh1vXdWQNuIrk6VRIUA8XgLATYNy0cRO+LnqiOsqsjf9620iSLAQ9WlMRc8aDSn+/ifnd5+7PBmHVEjp0JzEyhHUABElA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rDr8aTkt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LmEclXIxgu8NjArOUYtsg+7DCun78KkjlkbhMhmUOgNknxrlzJ3YikM6GtVecutaoY56OLpDOUGNu+yWafssZzTCaxraC/mVroLA0p46E5X/GiSVAlk8ABeg47BsZlJpodkrJX2dYYSX5zQmLlvPbJjX9jdBE2h5pybYWfLQv68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uObXD1yS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rDr8aTkt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC90C32782;
-	Mon, 12 Aug 2024 16:31:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uObXD1yS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6059FC32782;
+	Mon, 12 Aug 2024 16:31:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480309;
-	bh=LsCaPVwE3QEcTNxwy/AmBVR8I1GRsvYFN7nMRezlY7Q=;
+	s=korg; t=1723480312;
+	bh=CGR7j+3ujGhZUJj7c46knhSCwIUkrKmcurvYhLA+24I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rDr8aTkt0VotwdV8SnkTw9NJL3tyiggxsoGW5yn6uT9DPh+A5KEBU4C8tSv7QflwK
-	 KOslYBYaYdetMtLWGab9a3fVympRSDc6J45nm5wmcf6LyOa+Q8LqzYZ0opz+MFTFwJ
-	 t6tVQvgQF+v9o6y0voUxLEDxb84krPXRur+7PEpc=
+	b=uObXD1ySfSTfxPTbp6bkXo+8lr4ROQk54e7O2OVMV2lSzwJgOtewP/V/gDXKo0xTA
+	 bHcq0AeOss9HBbGitVPh6fdj+nZ9VFQY1o27rzsCyer3bCQWnvdVzaHSi5i/b+qFP8
+	 SvPbdUV/slwluqGLs3rR3fy0z2+ozT+fNGsLMt98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <david@davidgow.net>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 159/263] drm/i915: Attempt to get pages without eviction first
-Date: Mon, 12 Aug 2024 18:02:40 +0200
-Message-ID: <20240812160152.633348201@linuxfoundation.org>
+Subject: [PATCH 6.10 160/263] drm/amd/display: Replace dm_execute_dmub_cmd with dc_wake_and_execute_dmub_cmd
+Date: Mon, 12 Aug 2024 18:02:41 +0200
+Message-ID: <20240812160152.672683136@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -53,77 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Gow <david@davidgow.net>
+From: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
 
-[ Upstream commit 787db3bb6ed5cee56fc97fecdd61517d89763f0a ]
+[ Upstream commit f2aaed194a54d78c307c44d1829c7e1ba67e9ba5 ]
 
-In commit a78a8da51b36 ("drm/ttm: replace busy placement with flags v6"),
-__i915_ttm_get_pages was updated to use flags instead of the separate
-'busy' placement list. However, the behaviour was subtly changed.
-Originally, the function would attempt to use the preferred placement
-without eviction, and give an opportunity to restart the operation
-before falling back to allowing eviction.
+In the commit c2cec7a872b6 ("drm/amd/display: Wake DMCUB before sending
+a command for replay feature"), replaced dm_execute_dmub_cmd with
+dc_wake_and_execute_dmub_cmd in multiple areas, but due to merge issues
+the replacement of this function in the dmub_replay_copy_settings was
+missed. This commit replaces the old dm_execute_dmub_cmd with
+dc_wake_and_execute_dmub_cmd.
 
-This was unintentionally changed, as the preferred placement was not
-given the TTM_PL_FLAG_DESIRED flag, and so eviction could be triggered
-in that first pass. This caused thrashing, and a significant performance
-regression on DG2 systems with small BAR. For example, Minecraft and
-Team Fortress 2 would drop to single-digit framerates.
-
-Restore the original behaviour by marking the initial placement as
-desired on that first attempt. Also, rework this to use a separate
-struct ttm_palcement, as the individual placements are marked 'const',
-so hot-patching the flags is even more dodgy than before.
-
-Thanks to Justin Brewer for bisecting this.
-
-Fixes: a78a8da51b36 ("drm/ttm: replace busy placement with flags v6")
-Link: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11255
-Signed-off-by: David Gow <david@davidgow.net>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240804091851.122186-3-david@davidgow.net
-(cherry picked from commit 92653f2a572505adaf7f13f695c1907e71a1dc84)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 3601a35a2e9d ("drm/amd/display: Wake DMCUB before sending a command for replay feature")
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 6cc213b9aa34bc3213e20f9256345c5cc1495b0b)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_ttm.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-index fb848fd8ba15a..5c72462d1f57e 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm.c
-@@ -778,13 +778,16 @@ static int __i915_ttm_get_pages(struct drm_i915_gem_object *obj,
- 		.interruptible = true,
- 		.no_wait_gpu = false,
- 	};
--	int real_num_busy;
-+	struct ttm_placement initial_placement;
-+	struct ttm_place initial_place;
- 	int ret;
+diff --git a/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c b/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
+index f820647443d16..09cf54586fd5d 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
++++ b/drivers/gpu/drm/amd/display/dc/dce/dmub_replay.c
+@@ -209,8 +209,7 @@ static bool dmub_replay_copy_settings(struct dmub_replay *dmub,
+ 	else
+ 		copy_settings_data->flags.bitfields.force_wakeup_by_tps3 = 0;
  
- 	/* First try only the requested placement. No eviction. */
--	real_num_busy = placement->num_placement;
--	placement->num_placement = 1;
--	ret = ttm_bo_validate(bo, placement, &ctx);
-+	initial_placement.num_placement = 1;
-+	memcpy(&initial_place, placement->placement, sizeof(struct ttm_place));
-+	initial_place.flags |= TTM_PL_FLAG_DESIRED;
-+	initial_placement.placement = &initial_place;
-+	ret = ttm_bo_validate(bo, &initial_placement, &ctx);
- 	if (ret) {
- 		ret = i915_ttm_err_to_gem(ret);
- 		/*
-@@ -799,7 +802,6 @@ static int __i915_ttm_get_pages(struct drm_i915_gem_object *obj,
- 		 * If the initial attempt fails, allow all accepted placements,
- 		 * evicting if necessary.
- 		 */
--		placement->num_placement = real_num_busy;
- 		ret = ttm_bo_validate(bo, placement, &ctx);
- 		if (ret)
- 			return i915_ttm_err_to_gem(ret);
+-
+-	dm_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
++	dc_wake_and_execute_dmub_cmd(dc, &cmd, DM_DMUB_WAIT_TYPE_WAIT);
+ 
+ 	return true;
+ }
 -- 
 2.43.0
 
