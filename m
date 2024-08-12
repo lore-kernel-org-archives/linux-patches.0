@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA4EF187332;
-	Mon, 12 Aug 2024 16:24:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBE8134AC;
+	Mon, 12 Aug 2024 16:24:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479861; cv=none; b=JjD4KMVhPmd5YYWGTqhmMjBMyLORa1KxpyN3H5lI3V1Xek6kcizFJ3B5mKr/U4ZQV6nkRwNtdE1/Y9p0WbCcOHi51BllDfi10YFVxHGhbPKxyJaXSbzc1zNnGSS8ZV6xk5r6HN2EQgd5HSL5EBpYtbq9eL8jKnJ6Q7lvTWLrFBY=
+	t=1723479865; cv=none; b=uaUQsSqZ7Bz1dlp6+7yXFTIZPZ4Qcc62ixMRKCXpXkwi4JukZxD7XA374NxS/FLkc6R/S0aPqvFDdaSw2sbORY7sCS6BprobvnoXH2/E5cJBeHeDB3oz1xYRS8hPU9WiMTQqt0Ypst9oT/AcqKbxJB6n51Xrwm32xQU9XeITKnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479861; c=relaxed/simple;
-	bh=zSN2nUJ0EPuwn1LY/unKOmUusC1Y+9Gn+3U1M67y4u4=;
+	s=arc-20240116; t=1723479865; c=relaxed/simple;
+	bh=guYaJVXY66/I16Bblk3qAQpVsiASZcdBDtpGhfbZjxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FL/RQEJoUUcPNVaevDCeVR01qsdQUiLcDckMtrL6ALkP+IEpSEB4cHeL5j8YH4aeCci/7ywG07S6IFt+l8JCb+N/crH/BgWvfqD2zC/xYBVzn5jEThJwECQecJq2cgyx/EI24Vc6CqeyZvsspKNJqyarPtVbHX2TU6YI9YvhkCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ObGv9HKy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RcfWfazEDPO0qtm9n3HTC5CG+J47rz3slvUed3sxQnNE1OOz+2CAizMPUXkdKMmhhjnouErtVVS6f3w8MZ/EwiBgNljaZRMPMNQr8WQPta/Jeevx98O994z32iZtLl1xXaFkpoDsKWdZz0rBa9PY00zZdSb+qzcNiNCYaY1Rqk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nNZ0oFAU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ObGv9HKy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0ED4C32782;
-	Mon, 12 Aug 2024 16:24:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nNZ0oFAU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F7DC32782;
+	Mon, 12 Aug 2024 16:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479861;
-	bh=zSN2nUJ0EPuwn1LY/unKOmUusC1Y+9Gn+3U1M67y4u4=;
+	s=korg; t=1723479864;
+	bh=guYaJVXY66/I16Bblk3qAQpVsiASZcdBDtpGhfbZjxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObGv9HKyCSlUpLOMwn4cLyQWwpqMYG0wEk5UVRqqxLG98JSI0vHcRvthRQvcsGACj
-	 pRrR8tQf07JO3ImP+JapvRG6iv4/hFu/P8VMNSprcilkPpK5rlVWd4Qvd/tdiSG7S1
-	 Kq33jbD0aGHzF1Ye73OriFOXpE8/NRbtpO892EmI=
+	b=nNZ0oFAUWJnQZ8GFW8SO5XK77ytmri4UT5RNBVM7RDcm4Fx4bpltfBLnvFz1j8OjN
+	 vpxl7ARvy9ifdYd93V9kO98R6f14HANFOBIghv/YpK/n9CuTs+jLQjl54GRYCdw8KZ
+	 cNnEQ4VTZhElJ4j7fICS0/hIYVke25gnicyYM7V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+263426984509be19c9a0@syzkaller.appspotmail.com,
-	Nikolay Aleksandrov <razor@blackwall.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 024/263] net: bridge: mcast: wait for previous gc cycles when removing port
-Date: Mon, 12 Aug 2024 18:00:25 +0200
-Message-ID: <20240812160147.466766936@linuxfoundation.org>
+Subject: [PATCH 6.10 025/263] net: linkwatch: use system_unbound_wq
+Date: Mon, 12 Aug 2024 18:00:26 +0200
+Message-ID: <20240812160147.504236665@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,80 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <razor@blackwall.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 92c4ee25208d0f35dafc3213cdf355fbe449e078 ]
+[ Upstream commit 3e7917c0cdad835a5121520fc5686d954b7a61ab ]
 
-syzbot hit a use-after-free[1] which is caused because the bridge doesn't
-make sure that all previous garbage has been collected when removing a
-port. What happens is:
-      CPU 1                   CPU 2
- start gc cycle           remove port
-                         acquire gc lock first
- wait for lock
-                         call br_multicasg_gc() directly
- acquire lock now but    free port
- the port can be freed
- while grp timers still
- running
+linkwatch_event() grabs possibly very contended RTNL mutex.
 
-Make sure all previous gc cycles have finished by using flush_work before
-freeing the port.
+system_wq is not suitable for such work.
 
-[1]
-  BUG: KASAN: slab-use-after-free in br_multicast_port_group_expired+0x4c0/0x550 net/bridge/br_multicast.c:861
-  Read of size 8 at addr ffff888071d6d000 by task syz.5.1232/9699
+Inspired by many noisy syzbot reports.
 
-  CPU: 1 PID: 9699 Comm: syz.5.1232 Not tainted 6.10.0-rc5-syzkaller-00021-g24ca36a562d6 #0
-  Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 06/07/2024
-  Call Trace:
-   <IRQ>
-   __dump_stack lib/dump_stack.c:88 [inline]
-   dump_stack_lvl+0x116/0x1f0 lib/dump_stack.c:114
-   print_address_description mm/kasan/report.c:377 [inline]
-   print_report+0xc3/0x620 mm/kasan/report.c:488
-   kasan_report+0xd9/0x110 mm/kasan/report.c:601
-   br_multicast_port_group_expired+0x4c0/0x550 net/bridge/br_multicast.c:861
-   call_timer_fn+0x1a3/0x610 kernel/time/timer.c:1792
-   expire_timers kernel/time/timer.c:1843 [inline]
-   __run_timers+0x74b/0xaf0 kernel/time/timer.c:2417
-   __run_timer_base kernel/time/timer.c:2428 [inline]
-   __run_timer_base kernel/time/timer.c:2421 [inline]
-   run_timer_base+0x111/0x190 kernel/time/timer.c:2437
+3 locks held by kworker/0:7/5266:
+ #0: ffff888015480948 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3206 [inline]
+ #0: ffff888015480948 ((wq_completion)events){+.+.}-{0:0}, at: process_scheduled_works+0x90a/0x1830 kernel/workqueue.c:3312
+ #1: ffffc90003f6fd00 ((linkwatch_work).work){+.+.}-{0:0}, at: process_one_work kernel/workqueue.c:3207 [inline]
+ , at: process_scheduled_works+0x945/0x1830 kernel/workqueue.c:3312
+ #2: ffffffff8fa6f208 (rtnl_mutex){+.+.}-{3:3}, at: linkwatch_event+0xe/0x60 net/core/link_watch.c:276
 
-Reported-by: syzbot+263426984509be19c9a0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=263426984509be19c9a0
-Fixes: e12cec65b554 ("net: bridge: mcast: destroy all entries via gc")
-Signed-off-by: Nikolay Aleksandrov <razor@blackwall.org>
-Link: https://patch.msgid.link/20240802080730.3206303-1-razor@blackwall.org
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://patch.msgid.link/20240805085821.1616528-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_multicast.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/core/link_watch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bridge/br_multicast.c b/net/bridge/br_multicast.c
-index 9a1cb5079a7a0..b2ae0d2434d2e 100644
---- a/net/bridge/br_multicast.c
-+++ b/net/bridge/br_multicast.c
-@@ -2045,16 +2045,14 @@ void br_multicast_del_port(struct net_bridge_port *port)
- {
- 	struct net_bridge *br = port->br;
- 	struct net_bridge_port_group *pg;
--	HLIST_HEAD(deleted_head);
- 	struct hlist_node *n;
- 
- 	/* Take care of the remaining groups, only perm ones should be left */
- 	spin_lock_bh(&br->multicast_lock);
- 	hlist_for_each_entry_safe(pg, n, &port->mglist, mglist)
- 		br_multicast_find_del_pg(br, pg);
--	hlist_move_list(&br->mcast_gc_list, &deleted_head);
- 	spin_unlock_bh(&br->multicast_lock);
--	br_multicast_gc(&deleted_head);
-+	flush_work(&br->mcast_gc_work);
- 	br_multicast_port_ctx_deinit(&port->multicast_ctx);
- 	free_percpu(port->mcast_stats);
+diff --git a/net/core/link_watch.c b/net/core/link_watch.c
+index 8ec35194bfcb8..ab150641142aa 100644
+--- a/net/core/link_watch.c
++++ b/net/core/link_watch.c
+@@ -148,9 +148,9 @@ static void linkwatch_schedule_work(int urgent)
+ 	 * override the existing timer.
+ 	 */
+ 	if (test_bit(LW_URGENT, &linkwatch_flags))
+-		mod_delayed_work(system_wq, &linkwatch_work, 0);
++		mod_delayed_work(system_unbound_wq, &linkwatch_work, 0);
+ 	else
+-		schedule_delayed_work(&linkwatch_work, delay);
++		queue_delayed_work(system_unbound_wq, &linkwatch_work, delay);
  }
+ 
+ 
 -- 
 2.43.0
 
