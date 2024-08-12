@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E16718756D;
-	Mon, 12 Aug 2024 16:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D3F16D9B8;
+	Mon, 12 Aug 2024 16:31:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480271; cv=none; b=L0+pJek9/Nbn/tALgjIM79QcgWp7VyPxkx8GXxSNariqLOYpaRQaUqPoAFjUFK4QAixecGYeQfuXQEQCbh9GnXjb4z9XjLJ70C4r5nUfd6JBZdVmvsW174jCCqb3HFhQgjMdrh9f86rbKNIZzSDBm8mhfzNdCNTPRUF6V7x2iOE=
+	t=1723480274; cv=none; b=mMxQ/1i2Z+aRVYr0htxMyC7/8fCe8OOS+2wstVnlVljmRTMm67eXW3f81bjGRSqWXxH5qDmz5tI5qJUN+OFSMCtpCYngvoQKGhHJVufBtkGfTKTYNp1yG4wQbEwKiAkMk9Mf3Ojs5dyUiRqx7Z8GGxS71E7k72IRAGtjbyf23aI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480271; c=relaxed/simple;
-	bh=5lJvFHQeleZSx779yBawUS/dYGItliRLp8opJMffDLU=;
+	s=arc-20240116; t=1723480274; c=relaxed/simple;
+	bh=1+XWjnwEDMch54EGfeMToZLhanLegxgowWFa0IjR4bo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NkRFQr8SO7SPAYFiKbY0INEDc3QS4y/nSOgOfevXaOQSHOPx5Hwy81EfXo5iBCTtWLu1mMxYFvZ1nAnUajvS7JyC8B17zwIB5dysEB4DMXaMwNaEAg9UH8PZ6Gp51qggict25hbYd4CEJKtn+AmLHXLS6s/q8wMDoAwBP0QAdEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t/SFHc9L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DLZTm/VGo1W4/G/kpj2bFJr1iUaaa/8xrhKkZdAHYgTEFvw5pQVXj6U5KYLQ9env92x4cVGVJuUbGXjzBS6PeDuzoMqmJx1TfyIDYnpZ29XvR01vn0iLstkL1vM/jz00emidgbogCiBleWVbO+dOcdJA/X5GhMVmbLB7mRCjMMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjttPvQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t/SFHc9L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0622C4AF09;
-	Mon, 12 Aug 2024 16:31:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjttPvQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E953C4AF09;
+	Mon, 12 Aug 2024 16:31:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480271;
-	bh=5lJvFHQeleZSx779yBawUS/dYGItliRLp8opJMffDLU=;
+	s=korg; t=1723480274;
+	bh=1+XWjnwEDMch54EGfeMToZLhanLegxgowWFa0IjR4bo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/SFHc9LugpIHIdarvfw3wGSEt3Qzs6p4LFJs/JayuoVeyKGznuaVZSZQLeDLKPrk
-	 vghrUVPEoiVcIlBcEoc176aCuz4ROrMGAUGB04vFSCQJLc8A7mBMcXs1C6SFDFiGYH
-	 altrSX640QhZwXspucUA9SVrVVi+2pYZgt+mS8uY=
+	b=yjttPvQ3ICUAhy4AC+aFQaQih+/yOFsndjTeXRbYFnToPd/5MIa9zA6QuqFnonutV
+	 DBh6iRb6u6AAOSwYiPL7iWjFAduhJ+L+1mvoXb365+ek452IPM6m5YFMUhwPFxB8tO
+	 5Zj2eDdy7RNR9LqNsU7RKIWlFLvL+zLgQoaANxDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jerome Audu <jau@free.fr>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 145/263] ASoC: codecs: wsa884x: Correct Soundwire ports mask
-Date: Mon, 12 Aug 2024 18:02:26 +0200
-Message-ID: <20240812160152.098986348@linuxfoundation.org>
+Subject: [PATCH 6.10 146/263] ASoC: sti: add missing probe entry for player and reader
+Date: Mon, 12 Aug 2024 18:02:27 +0200
+Message-ID: <20240812160152.137038373@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -51,42 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jerome Audu <jau@free.fr>
 
-[ Upstream commit dcb6631d05152930e2ea70fd2abfd811b0e970b5 ]
+[ Upstream commit 6b99068d5ea0aa295f15f30afc98db74d056ec7b ]
 
-Device has up to WSA884X_MAX_SWR_PORTS number of ports and the array
-assigned to prop.sink_dpn_prop has 0..WSA884X_MAX_SWR_PORTS-1 elements.
-On the other hand, GENMASK(high, low) creates an inclusive mask between
-<high, low>, so we need the mask from 0 up to WSA884X_MAX_SWR_PORTS-1.
+This patch addresses a regression in the ASoC STI drivers that was
+introduced in Linux version 6.6.y. The issue originated from a series of
+patches (see https://lore.kernel.org/all/87wmy5b0wt.wl-kuninori.morimoto.gx@renesas.com/)
+that unintentionally omitted necessary probe functions for the player
+and reader components.
 
-Theoretically, too wide mask could cause an out of bounds read in
-sdw_get_slave_dpn_prop() in stream.c, however only in the case of buggy
-driver, e.g. adding incorrect number of ports via
-sdw_stream_add_slave().
+Probe function in `sound/soc/sti/sti_uniperif.c:415` is being replaced
+by another probe function located at `sound/soc/sti/sti_uniperif.c:453`,
+which should instead be derived from the player and reader components.
+This patch correctly reinserts the missing probe entries,
+restoring the intended functionality.
 
-Fixes: aa21a7d4f68a ("ASoC: codecs: wsa884x: Add WSA884x family of speakers")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://patch.msgid.link/20240726-asoc-wcd-wsa-swr-ports-genmask-v1-6-d4d7a8b56f05@linaro.org
+Fixes: 9f625f5e6cf9 ("ASoC: sti: merge DAI call back functions into ops")
+Signed-off-by: Jerome Audu <jau@free.fr>
+Link: https://patch.msgid.link/20240727-sti-audio-fix-v2-1-208bde546c3f@free.fr
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wsa884x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sti/sti_uniperif.c    | 2 +-
+ sound/soc/sti/uniperif.h        | 1 +
+ sound/soc/sti/uniperif_player.c | 1 +
+ sound/soc/sti/uniperif_reader.c | 1 +
+ 4 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/wsa884x.c b/sound/soc/codecs/wsa884x.c
-index a6034547b4f36..de4caf61eef9e 100644
---- a/sound/soc/codecs/wsa884x.c
-+++ b/sound/soc/codecs/wsa884x.c
-@@ -1895,7 +1895,7 @@ static int wsa884x_probe(struct sdw_slave *pdev,
- 					WSA884X_MAX_SWR_PORTS))
- 		dev_dbg(dev, "Static Port mapping not specified\n");
+diff --git a/sound/soc/sti/sti_uniperif.c b/sound/soc/sti/sti_uniperif.c
+index ba824f14a39cf..a7956e5a4ee5d 100644
+--- a/sound/soc/sti/sti_uniperif.c
++++ b/sound/soc/sti/sti_uniperif.c
+@@ -352,7 +352,7 @@ static int sti_uniperiph_resume(struct snd_soc_component *component)
+ 	return ret;
+ }
  
--	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS, 0);
-+	pdev->prop.sink_ports = GENMASK(WSA884X_MAX_SWR_PORTS - 1, 0);
- 	pdev->prop.simple_clk_stop_capable = true;
- 	pdev->prop.sink_dpn_prop = wsa884x_sink_dpn_prop;
- 	pdev->prop.scp_int1_mask = SDW_SCP_INT1_BUS_CLASH | SDW_SCP_INT1_PARITY;
+-static int sti_uniperiph_dai_probe(struct snd_soc_dai *dai)
++int sti_uniperiph_dai_probe(struct snd_soc_dai *dai)
+ {
+ 	struct sti_uniperiph_data *priv = snd_soc_dai_get_drvdata(dai);
+ 	struct sti_uniperiph_dai *dai_data = &priv->dai_data;
+diff --git a/sound/soc/sti/uniperif.h b/sound/soc/sti/uniperif.h
+index 2a5de328501c1..74e51f0ff85c8 100644
+--- a/sound/soc/sti/uniperif.h
++++ b/sound/soc/sti/uniperif.h
+@@ -1380,6 +1380,7 @@ int uni_reader_init(struct platform_device *pdev,
+ 		    struct uniperif *reader);
+ 
+ /* common */
++int sti_uniperiph_dai_probe(struct snd_soc_dai *dai);
+ int sti_uniperiph_dai_set_fmt(struct snd_soc_dai *dai,
+ 			      unsigned int fmt);
+ 
+diff --git a/sound/soc/sti/uniperif_player.c b/sound/soc/sti/uniperif_player.c
+index dd9013c476649..6d1ce030963c6 100644
+--- a/sound/soc/sti/uniperif_player.c
++++ b/sound/soc/sti/uniperif_player.c
+@@ -1038,6 +1038,7 @@ static const struct snd_soc_dai_ops uni_player_dai_ops = {
+ 		.startup = uni_player_startup,
+ 		.shutdown = uni_player_shutdown,
+ 		.prepare = uni_player_prepare,
++		.probe = sti_uniperiph_dai_probe,
+ 		.trigger = uni_player_trigger,
+ 		.hw_params = sti_uniperiph_dai_hw_params,
+ 		.set_fmt = sti_uniperiph_dai_set_fmt,
+diff --git a/sound/soc/sti/uniperif_reader.c b/sound/soc/sti/uniperif_reader.c
+index 065c5f0d1f5f0..05ea2b794eb92 100644
+--- a/sound/soc/sti/uniperif_reader.c
++++ b/sound/soc/sti/uniperif_reader.c
+@@ -401,6 +401,7 @@ static const struct snd_soc_dai_ops uni_reader_dai_ops = {
+ 		.startup = uni_reader_startup,
+ 		.shutdown = uni_reader_shutdown,
+ 		.prepare = uni_reader_prepare,
++		.probe = sti_uniperiph_dai_probe,
+ 		.trigger = uni_reader_trigger,
+ 		.hw_params = sti_uniperiph_dai_hw_params,
+ 		.set_fmt = sti_uniperiph_dai_set_fmt,
 -- 
 2.43.0
 
