@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33C2C16D9B8;
-	Mon, 12 Aug 2024 16:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A739716D9B8;
+	Mon, 12 Aug 2024 16:32:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480352; cv=none; b=OhypPOjb8lssWr1nEAA5TgXD3iNspj9ybqDWOsuZVvIrCaUam2Y/b//zCluzRim5tJDUBhzbteMWnTLOxzTN7ub2/MoPn3eVP2l4aJlw++nvyYBD8eupLS+e5KEaWRLVHYJUOGQHAxtBILPv/95k0O3jwxo+81dJxBG6hrZrUHE=
+	t=1723480355; cv=none; b=h7cnV/i1nmBBGfbKEiZPfwxRmKbzjiNsvYSqiD0v+B/7p2FYxY/U7bvyHz0OgS86w4yj42hDVeR0fsz6VJYnqH5HbWhqMM0FmOTsJ+c5BWnz+rsTWOS5Tl6gE0Z8/aFqIe0jKHzfINT6HaMq3TSup0h4lndLCsjZ/9Uqdi0so/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480352; c=relaxed/simple;
-	bh=VIoWVf2TyQhojItDqtNhC3A1QrQWRI+wOcMArQytaUo=;
+	s=arc-20240116; t=1723480355; c=relaxed/simple;
+	bh=OroJP+kmB4ANraxsv8cGQ2V007qNc/gUfAPzJ2MuvrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqQ8xR/nfd3viGadQpP/BJKPRrJ0triDCAxTElTPk9m32zHNLLKZfpvj2zyrJQd/7+PLTXJLkpyuVvSPB3VuMr8sKXffvINlD3OgNx/20idGxjtzk46bnRcCJEgIieia+XefPSWkCiUmLyh0g1/GIiPWFgrs2at2t3GznWjMbtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZrwJZzjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PGFcms7HWnq0LA9zrdVOXfqLy7rdUBiYDEPFCLVTZot/hqzJ9apg24o207IFZbi0mGksEsvPhZCTOXL++UhpPoj/sZor2vx78zPGYncAfUob5vBp4jo0ACk2yNAqHE1FDo29i12BeS0YQy9jg6NHM4jyOzklxe5eHrV7ZaltW84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EXtHh5nC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZrwJZzjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9504AC32782;
-	Mon, 12 Aug 2024 16:32:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EXtHh5nC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16001C32782;
+	Mon, 12 Aug 2024 16:32:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480352;
-	bh=VIoWVf2TyQhojItDqtNhC3A1QrQWRI+wOcMArQytaUo=;
+	s=korg; t=1723480355;
+	bh=OroJP+kmB4ANraxsv8cGQ2V007qNc/gUfAPzJ2MuvrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrwJZzjGDlCNapx7kRuQFye+qOHZKOVtSJYED43WLCH0WCzRSLzLOqQL1n4YL9xWE
-	 1Xvt2UkgXSvpj0ZqEvNbS4ZVYVKrAg6jUO4hqr4qitGpsV16DjcmoaA9GMeYBalX0q
-	 GwtfYcCSkdWYbvlXmZU04wrLp/mjbdXqV3nJ989k=
+	b=EXtHh5nCA2MvEE03O6Jw/mibiMMmPON0zESPTTg1alPdd+I5T/FvDk4XzhnR+aRQy
+	 JTE3beJSBxT5ywe5MbXRBQvSaBAU1H8wRGwdl5pqYtk7jefSPlBg3Y2zleQsbdBetW
+	 +j38zcWyuOJnw12esion2Z6dqwL6diKYPjPjEDh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Russell King <linux@armlinux.org.uk>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 171/263] module: make waiting for a concurrent module loader interruptible
-Date: Mon, 12 Aug 2024 18:02:52 +0200
-Message-ID: <20240812160153.094583252@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jonathan Cavitt <Jonathan.cavitt@intel.com>
+Subject: [PATCH 6.10 172/263] drm/i915/gem: Fix Virtual Memory mapping boundaries calculation
+Date: Mon, 12 Aug 2024 18:02:53 +0200
+Message-ID: <20240812160153.133997656@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,108 +55,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Andi Shyti <andi.shyti@linux.intel.com>
 
-[ Upstream commit 2124d84db293ba164059077944e6b429ba530495 ]
+commit 8bdd9ef7e9b1b2a73e394712b72b22055e0e26c3 upstream.
 
-The recursive aes-arm-bs module load situation reported by Russell King
-is getting fixed in the crypto layer, but this in the meantime fixes the
-"recursive load hangs forever" by just making the waiting for the first
-module load be interruptible.
+Calculating the size of the mapped area as the lesser value
+between the requested size and the actual size does not consider
+the partial mapping offset. This can cause page fault access.
 
-This should now match the old behavior before commit 9b9879fc0327
-("modules: catch concurrent module loads, treat them as idempotent"),
-which used the different "wait for module to be ready" code in
-module_patient_check_exists().
+Fix the calculation of the starting and ending addresses, the
+total size is now deduced from the difference between the end and
+start addresses.
 
-End result: a recursive module load will still block, but now a signal
-will interrupt it and fail the second module load, at which point the
-first module will successfully complete loading.
+Additionally, the calculations have been rewritten in a clearer
+and more understandable form.
 
-Fixes: 9b9879fc0327 ("modules: catch concurrent module loads, treat them as idempotent")
-Cc: Russell King <linux@armlinux.org.uk>
-Cc: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c58305af1835 ("drm/i915: Use remap_io_mapping() to prefault all PTE in a single pass")
+Reported-by: Jann Horn <jannh@google.com>
+Co-developed-by: Chris Wilson <chris.p.wilson@linux.intel.com>
+Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: <stable@vger.kernel.org> # v4.9+
+Reviewed-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jonathan Cavitt <Jonathan.cavitt@intel.com>
+[Joonas: Add Requires: tag]
+Requires: 60a2066c5005 ("drm/i915/gem: Adjust vma offset for framebuffer mmap offset")
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240802083850.103694-3-andi.shyti@linux.intel.com
+(cherry picked from commit 97b6784753da06d9d40232328efc5c5367e53417)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/module/main.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_mman.c |   53 +++++++++++++++++++++++++++----
+ 1 file changed, 47 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 7445d27ce3cdc..3f9da537024a1 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -3101,7 +3101,7 @@ static bool idempotent(struct idempotent *u, const void *cookie)
- 	struct idempotent *existing;
- 	bool first;
- 
--	u->ret = 0;
-+	u->ret = -EINTR;
- 	u->cookie = cookie;
- 	init_completion(&u->complete);
- 
-@@ -3137,7 +3137,7 @@ static int idempotent_complete(struct idempotent *u, int ret)
- 	hlist_for_each_entry_safe(pos, next, head, entry) {
- 		if (pos->cookie != cookie)
- 			continue;
--		hlist_del(&pos->entry);
-+		hlist_del_init(&pos->entry);
- 		pos->ret = ret;
- 		complete(&pos->complete);
- 	}
-@@ -3145,6 +3145,28 @@ static int idempotent_complete(struct idempotent *u, int ret)
- 	return ret;
+--- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
+@@ -290,6 +290,41 @@ out:
+ 	return i915_error_to_vmf_fault(err);
  }
  
-+/*
-+ * Wait for the idempotent worker.
-+ *
-+ * If we get interrupted, we need to remove ourselves from the
-+ * the idempotent list, and the completion may still come in.
-+ *
-+ * The 'idem_lock' protects against the race, and 'idem.ret' was
-+ * initialized to -EINTR and is thus always the right return
-+ * value even if the idempotent work then completes between
-+ * the wait_for_completion and the cleanup.
-+ */
-+static int idempotent_wait_for_completion(struct idempotent *u)
++static void set_address_limits(struct vm_area_struct *area,
++			       struct i915_vma *vma,
++			       unsigned long obj_offset,
++			       unsigned long *start_vaddr,
++			       unsigned long *end_vaddr)
 +{
-+	if (wait_for_completion_interruptible(&u->complete)) {
-+		spin_lock(&idem_lock);
-+		if (!hlist_unhashed(&u->entry))
-+			hlist_del(&u->entry);
-+		spin_unlock(&idem_lock);
-+	}
-+	return u->ret;
++	unsigned long vm_start, vm_end, vma_size; /* user's memory parameters */
++	long start, end; /* memory boundaries */
++
++	/*
++	 * Let's move into the ">> PAGE_SHIFT"
++	 * domain to be sure not to lose bits
++	 */
++	vm_start = area->vm_start >> PAGE_SHIFT;
++	vm_end = area->vm_end >> PAGE_SHIFT;
++	vma_size = vma->size >> PAGE_SHIFT;
++
++	/*
++	 * Calculate the memory boundaries by considering the offset
++	 * provided by the user during memory mapping and the offset
++	 * provided for the partial mapping.
++	 */
++	start = vm_start;
++	start -= obj_offset;
++	start += vma->gtt_view.partial.offset;
++	end = start + vma_size;
++
++	start = max_t(long, start, vm_start);
++	end = min_t(long, end, vm_end);
++
++	/* Let's move back into the "<< PAGE_SHIFT" domain */
++	*start_vaddr = (unsigned long)start << PAGE_SHIFT;
++	*end_vaddr = (unsigned long)end << PAGE_SHIFT;
 +}
 +
- static int init_module_from_file(struct file *f, const char __user * uargs, int flags)
+ static vm_fault_t vm_fault_gtt(struct vm_fault *vmf)
  {
- 	struct load_info info = { };
-@@ -3188,20 +3210,8 @@ static int idempotent_init_module(struct file *f, const char __user * uargs, int
+ #define MIN_CHUNK_PAGES (SZ_1M >> PAGE_SHIFT)
+@@ -302,14 +337,18 @@ static vm_fault_t vm_fault_gtt(struct vm
+ 	struct i915_ggtt *ggtt = to_gt(i915)->ggtt;
+ 	bool write = area->vm_flags & VM_WRITE;
+ 	struct i915_gem_ww_ctx ww;
++	unsigned long obj_offset;
++	unsigned long start, end; /* memory boundaries */
+ 	intel_wakeref_t wakeref;
+ 	struct i915_vma *vma;
+ 	pgoff_t page_offset;
++	unsigned long pfn;
+ 	int srcu;
+ 	int ret;
  
- 	/*
- 	 * Somebody else won the race and is loading the module.
--	 *
--	 * We have to wait for it forever, since our 'idem' is
--	 * on the stack and the list entry stays there until
--	 * completed (but we could fix it under the idem_lock)
--	 *
--	 * It's also unclear what a real timeout might be,
--	 * but we could maybe at least make this killable
--	 * and remove the idem entry in that case?
- 	 */
--	for (;;) {
--		if (wait_for_completion_timeout(&idem.complete, 10*HZ))
--			return idem.ret;
--		pr_warn_once("module '%pD' taking a long time to load", f);
--	}
-+	return idempotent_wait_for_completion(&idem);
- }
+-	/* We don't use vmf->pgoff since that has the fake offset */
++	obj_offset = area->vm_pgoff - drm_vma_node_start(&mmo->vma_node);
+ 	page_offset = (vmf->address - area->vm_start) >> PAGE_SHIFT;
++	page_offset += obj_offset;
  
- SYSCALL_DEFINE3(finit_module, int, fd, const char __user *, uargs, int, flags)
--- 
-2.43.0
-
+ 	trace_i915_gem_object_fault(obj, page_offset, true, write);
+ 
+@@ -402,12 +441,14 @@ retry:
+ 	if (ret)
+ 		goto err_unpin;
+ 
++	set_address_limits(area, vma, obj_offset, &start, &end);
++
++	pfn = (ggtt->gmadr.start + i915_ggtt_offset(vma)) >> PAGE_SHIFT;
++	pfn += (start - area->vm_start) >> PAGE_SHIFT;
++	pfn += obj_offset - vma->gtt_view.partial.offset;
++
+ 	/* Finally, remap it using the new GTT offset */
+-	ret = remap_io_mapping(area,
+-			       area->vm_start + (vma->gtt_view.partial.offset << PAGE_SHIFT),
+-			       (ggtt->gmadr.start + i915_ggtt_offset(vma)) >> PAGE_SHIFT,
+-			       min_t(u64, vma->size, area->vm_end - area->vm_start),
+-			       &ggtt->iomap);
++	ret = remap_io_mapping(area, start, pfn, end - start, &ggtt->iomap);
+ 	if (ret)
+ 		goto err_fence;
+ 
 
 
