@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C132134AC;
-	Mon, 12 Aug 2024 16:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB027134AC;
+	Mon, 12 Aug 2024 16:26:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479976; cv=none; b=BESm1N8jQhu6oZZg+nqmZamNtZtay7F6D7CEZv147p9in1COqHV7WrdWvxjFU11uHHbfQG0zmrZmH5DFv1VIaIENkJJ2WfWDViOQOmbisWJbp84xPb4IeXPu15/KAqDtbNvh/bP4D3jxxZ24woNKQnzYXHHjLnwrZ40iW+nyuss=
+	t=1723479979; cv=none; b=Db2qQTeALQFvi6Ug5BeT9DNTaz+D1xgPQjtyttHIDtQZIqxsUywnUZDP2gRIDDmWmDt26N4iJmeAHangl4mJaPaV/pxL+1ciDRxNV9Iw5RYbeosnhOmsStxVnWvfdsTDj5TWijefIA5hAS9OW9OcR1sNH7pnClK1BYqj0TVXGUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479976; c=relaxed/simple;
-	bh=rM76ByfLif6QdzXVUAS9sxaEvFcmC/tZuEx80g2e0KU=;
+	s=arc-20240116; t=1723479979; c=relaxed/simple;
+	bh=gCxdRtfsM3yJS2jgclgqrI/U/f3HaQRe4lhcvVMXjGI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PYGtAXwyM/0MwfGIWj4pDk6/asntjs7/CCXfeUKlUxLk8GyG7jqjrSfIF8j6C3Qn4Ia1KmI6sTOxt34qs1MvbuJll5U39Tg5fIYfUTbRbxbZqC+wIM4IUL3Lax2wJ25kwA6aNU6ob7npiXc9svWj9keHHgCmAqX57uInFPs3jFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ADHr1no1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IM6VDoZJp+8et9BYaZO4z5PFkavxbBMYvBHijP37F1Kaku9yzZor9+8r/e9trtgP3EdNiePDuGL7bxe4sKfPx0Xl5BahOPKMl3nEJUFByFO/hZKP/94acLwWi6du5/0JUcgrNOQdwd/gi31akw0q09tRDSWCNHxoJzDgJKEjKug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcmtCqr7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ADHr1no1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11BF8C32782;
-	Mon, 12 Aug 2024 16:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcmtCqr7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263F2C32782;
+	Mon, 12 Aug 2024 16:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479976;
-	bh=rM76ByfLif6QdzXVUAS9sxaEvFcmC/tZuEx80g2e0KU=;
+	s=korg; t=1723479979;
+	bh=gCxdRtfsM3yJS2jgclgqrI/U/f3HaQRe4lhcvVMXjGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ADHr1no1HC9y2Y0vsly1OhySkzxJE3T+yz1kwmtK6jIMeQ1AwbfnQksLdvUUZUFac
-	 A1yuWHSFStMOBTO5KztY5e24YRG+7AoiudN1YcjndyXgGP5zYto7Ps3dOW7sfmKH3C
-	 Fw4C47X38yqO+9SxMYqFES0BW5wIOAH1q7eqyUYA=
+	b=BcmtCqr7t1sO6kuaWeG71GmGR4DQX0th5QNdJj58Nb+ki4COWa+PuoxhJcc+s9jUK
+	 IB8fK/xgHT3+QWTYi/0Yx87/xGvqMd16AZrO0FaCZCZJukoWAuoxSyxR75AWf4qWaR
+	 bhJxfU4kFUYQUo9Uh2g0L/tZn0nkSPy6UcZ3foZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Juergen Gross <jgross@suse.com>,
+	Lefteris <eleftherios.giapitzakis@gmail.com>,
+	Tamim Khan <tamim@fusetak.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 059/263] xen: privcmd: Switch from mutex to spinlock for irqfds
-Date: Mon, 12 Aug 2024 18:01:00 +0200
-Message-ID: <20240812160148.803297724@linuxfoundation.org>
+Subject: [PATCH 6.10 060/263] ACPI: resource: Skip IRQ override on Asus Vivobook Pro N6506MU
+Date: Mon, 12 Aug 2024 18:01:01 +0200
+Message-ID: <20240812160148.842000884@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -52,125 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Tamim Khan <tamim@fusetak.com>
 
-[ Upstream commit 1c682593096a487fd9aebc079a307ff7a6d054a3 ]
+[ Upstream commit dc41751f9e07889d078e3f06adb6e892c80b7c10 ]
 
-irqfd_wakeup() gets EPOLLHUP, when it is called by
-eventfd_release() by way of wake_up_poll(&ctx->wqh, EPOLLHUP), which
-gets called under spin_lock_irqsave(). We can't use a mutex here as it
-will lead to a deadlock.
+Like various other Asus laptops, the Asus Vivobook Pro N6506MV has a
+DSDT table that describes IRQ 1 as ActiveLow while the kernel is overriding
+it to Edge_High. This prevents the internal keyboard from working. This patch
+prevents this issue by adding this laptop to the override table that prevents
+the kernel from overriding this IRQ
 
-Fix it by switching over to a spin lock.
-
-Reported-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/a66d7a7a9001424d432f52a9fc3931a1f345464f.1718703669.git.viresh.kumar@linaro.org
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=218954
+Tested-by: Lefteris <eleftherios.giapitzakis@gmail.com>
+Signed-off-by: Tamim Khan <tamim@fusetak.com>
+Link: https://patch.msgid.link/20240702125918.34683-1-tamim@fusetak.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/privcmd.c | 25 +++++++++++++++----------
- 1 file changed, 15 insertions(+), 10 deletions(-)
+ drivers/acpi/resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index 67dfa47788649..c9c620e32fa8b 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -845,7 +845,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
- #ifdef CONFIG_XEN_PRIVCMD_EVENTFD
- /* Irqfd support */
- static struct workqueue_struct *irqfd_cleanup_wq;
--static DEFINE_MUTEX(irqfds_lock);
-+static DEFINE_SPINLOCK(irqfds_lock);
- static LIST_HEAD(irqfds_list);
- 
- struct privcmd_kernel_irqfd {
-@@ -909,9 +909,11 @@ irqfd_wakeup(wait_queue_entry_t *wait, unsigned int mode, int sync, void *key)
- 		irqfd_inject(kirqfd);
- 
- 	if (flags & EPOLLHUP) {
--		mutex_lock(&irqfds_lock);
-+		unsigned long flags;
-+
-+		spin_lock_irqsave(&irqfds_lock, flags);
- 		irqfd_deactivate(kirqfd);
--		mutex_unlock(&irqfds_lock);
-+		spin_unlock_irqrestore(&irqfds_lock, flags);
- 	}
- 
- 	return 0;
-@@ -929,6 +931,7 @@ irqfd_poll_func(struct file *file, wait_queue_head_t *wqh, poll_table *pt)
- static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
- {
- 	struct privcmd_kernel_irqfd *kirqfd, *tmp;
-+	unsigned long flags;
- 	__poll_t events;
- 	struct fd f;
- 	void *dm_op;
-@@ -968,18 +971,18 @@ static int privcmd_irqfd_assign(struct privcmd_irqfd *irqfd)
- 	init_waitqueue_func_entry(&kirqfd->wait, irqfd_wakeup);
- 	init_poll_funcptr(&kirqfd->pt, irqfd_poll_func);
- 
--	mutex_lock(&irqfds_lock);
-+	spin_lock_irqsave(&irqfds_lock, flags);
- 
- 	list_for_each_entry(tmp, &irqfds_list, list) {
- 		if (kirqfd->eventfd == tmp->eventfd) {
- 			ret = -EBUSY;
--			mutex_unlock(&irqfds_lock);
-+			spin_unlock_irqrestore(&irqfds_lock, flags);
- 			goto error_eventfd;
- 		}
- 	}
- 
- 	list_add_tail(&kirqfd->list, &irqfds_list);
--	mutex_unlock(&irqfds_lock);
-+	spin_unlock_irqrestore(&irqfds_lock, flags);
- 
- 	/*
- 	 * Check if there was an event already pending on the eventfd before we
-@@ -1011,12 +1014,13 @@ static int privcmd_irqfd_deassign(struct privcmd_irqfd *irqfd)
- {
- 	struct privcmd_kernel_irqfd *kirqfd;
- 	struct eventfd_ctx *eventfd;
-+	unsigned long flags;
- 
- 	eventfd = eventfd_ctx_fdget(irqfd->fd);
- 	if (IS_ERR(eventfd))
- 		return PTR_ERR(eventfd);
- 
--	mutex_lock(&irqfds_lock);
-+	spin_lock_irqsave(&irqfds_lock, flags);
- 
- 	list_for_each_entry(kirqfd, &irqfds_list, list) {
- 		if (kirqfd->eventfd == eventfd) {
-@@ -1025,7 +1029,7 @@ static int privcmd_irqfd_deassign(struct privcmd_irqfd *irqfd)
- 		}
- 	}
- 
--	mutex_unlock(&irqfds_lock);
-+	spin_unlock_irqrestore(&irqfds_lock, flags);
- 
- 	eventfd_ctx_put(eventfd);
- 
-@@ -1073,13 +1077,14 @@ static int privcmd_irqfd_init(void)
- static void privcmd_irqfd_exit(void)
- {
- 	struct privcmd_kernel_irqfd *kirqfd, *tmp;
-+	unsigned long flags;
- 
--	mutex_lock(&irqfds_lock);
-+	spin_lock_irqsave(&irqfds_lock, flags);
- 
- 	list_for_each_entry_safe(kirqfd, tmp, &irqfds_list, list)
- 		irqfd_deactivate(kirqfd);
- 
--	mutex_unlock(&irqfds_lock);
-+	spin_unlock_irqrestore(&irqfds_lock, flags);
- 
- 	destroy_workqueue(irqfd_cleanup_wq);
- }
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index b5bf8b81a050a..b3ae5f9ac5510 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -524,6 +524,13 @@ static const struct dmi_system_id irq1_level_low_skip_override[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "N6506MV"),
+ 		},
+ 	},
++	{
++		/* Asus Vivobook Pro N6506MU */
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "N6506MU"),
++		},
++	},
+ 	{
+ 		/* LG Electronics 17U70P */
+ 		.matches = {
 -- 
 2.43.0
 
