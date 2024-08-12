@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE80B183CA6;
-	Mon, 12 Aug 2024 16:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257EC183CA6;
+	Mon, 12 Aug 2024 16:20:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479637; cv=none; b=L3kGilm8s76/1/h7IsIymTvu/bf/Mom+FkNzuU07ljHm2E8RXuIJz56aqdnDeG1xn9DHofjTU8nenyQCsV/zDsSdGEE9dyG9Nx+y2Cd5+wZWsj9NohtcXonIiSLSA85Ir71It9Oh58VfPNewVt2ZBIjRcNdkKFF39qXvrRDF1VU=
+	t=1723479641; cv=none; b=NI+qai8oG/UFMtLVD5AqkNZrjg2FhrrvyKrjIeDLOCxHZ1BcPRkEtif3jsW06N7xvn/O9DlqVbyAQaADrBQ4NlrgRNBUlV+EQ0iAXoIJ9/Sjp/vd+zHuhFOhz8dgk0/Q7fqtazga8R8snaOKp7ZsPfeTRA4z8F6y/aB70pXQGH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479637; c=relaxed/simple;
-	bh=Xskzmz831tAURcM9wpsceWQbnqBcD6oo3pfubNfEncU=;
+	s=arc-20240116; t=1723479641; c=relaxed/simple;
+	bh=2GEwOOA5u7LphoxHGhtOsNcB7ZvtfRfNgd0zvrkiYyM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T4Ia89SnvhNNDsaG/8hIlcwqLsFBgKd36w/YBH0flrHznowhsPXEgGHuEdBtbxMggvExESGL/osP1+EHaCXQisRoPRoPbBp9vrosFtYLBzTevJFiY6M+ON9qVQrJTSt+XAqNTSkfPJHtYVEApXjSmElAKdzLf7a1Hl8y9AscTI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=utRWqoRq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pqyL6LM2caZu4+MzZDNVke4hqHGdh8KKib1kOpvHGo63aNdHEjFb29pz9lHcV7JMzRetoMREBkMwo9NuqSn3lEHh2ZbyEZQf4a3+g5eLRb5fIucD9b1NZyHHnvPUllRiPoBPWBXgehNYTA+JTSP7t3iGxVjfWfL0y+1SibdL/iE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2C4RYFQL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="utRWqoRq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4210CC32782;
-	Mon, 12 Aug 2024 16:20:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2C4RYFQL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 827AAC32782;
+	Mon, 12 Aug 2024 16:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479637;
-	bh=Xskzmz831tAURcM9wpsceWQbnqBcD6oo3pfubNfEncU=;
+	s=korg; t=1723479641;
+	bh=2GEwOOA5u7LphoxHGhtOsNcB7ZvtfRfNgd0zvrkiYyM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=utRWqoRqXIeeC+4fB5CDFyUYngSUBJpPbb9mbAJZVYgLSFpDYq1DPhA6/q4D1eRga
-	 iO+EYHLPfp8ytPVz48s7AAefMEPNqhjgv3/E/IPp1L3QJexCH+awZeV5pjEG5Ie4Vv
-	 R11V5DHj5zfcttDByOPVWQzydCsMyEM+UFlMbYtg=
+	b=2C4RYFQLjrsZQ9DtVLLcFr6Rgklk/1wfLyAdOHeZ7vu5idNGBm9H3VCjYxqUpu4sE
+	 oPpspNyHujwlfqb9ZaXAwrsBVV55UFobsMO96I+hGc+4mvj8F0jR7z9H/TQgCQlOcV
+	 iTxNvntptY97k/uol2p1MEZ+x2i5YDKhF/IOMM/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>
-Subject: [PATCH 6.6 147/189] power: supply: axp288_charger: Round constant_charge_voltage writes down
-Date: Mon, 12 Aug 2024 18:03:23 +0200
-Message-ID: <20240812160137.800526685@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Cheng-Jui Wang <cheng-jui.wang@mediatek.com>,
+	Tze-nan Wu <Tze-nan.Wu@mediatek.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.6 148/189] tracing: Fix overflow in get_free_elt()
+Date: Mon, 12 Aug 2024 18:03:24 +0200
+Message-ID: <20240812160137.839734351@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -50,56 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
 
-commit 81af7f2342d162e24ac820c10e68684d9f927663 upstream.
+commit bcf86c01ca4676316557dd482c8416ece8c2e143 upstream.
 
-Round constant_charge_voltage writes down to the first supported lower
-value, rather then rounding them up to the first supported higher value.
+"tracing_map->next_elt" in get_free_elt() is at risk of overflowing.
 
-This fixes e.g. writing 4250000 resulting in a value of 4350000 which
-might be dangerous, instead writing 4250000 will now result in a safe
-4200000 value.
+Once it overflows, new elements can still be inserted into the tracing_map
+even though the maximum number of elements (`max_elts`) has been reached.
+Continuing to insert elements after the overflow could result in the
+tracing_map containing "tracing_map->max_size" elements, leaving no empty
+entries.
+If any attempt is made to insert an element into a full tracing_map using
+`__tracing_map_insert()`, it will cause an infinite loop with preemption
+disabled, leading to a CPU hang problem.
 
-Fixes: 843735b788a4 ("power: axp288_charger: axp288 charger driver")
+Fix this by preventing any further increments to "tracing_map->next_elt"
+once it reaches "tracing_map->max_elt".
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20240717200333.56669-2-hdegoede@redhat.com
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 08d43a5fa063e ("tracing: Add lock-free tracing_map")
+Co-developed-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
+Link: https://lore.kernel.org/20240805055922.6277-1-Tze-nan.Wu@mediatek.com
+Signed-off-by: Cheng-Jui Wang <cheng-jui.wang@mediatek.com>
+Signed-off-by: Tze-nan Wu <Tze-nan.Wu@mediatek.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/power/supply/axp288_charger.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ kernel/trace/tracing_map.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/power/supply/axp288_charger.c
-+++ b/drivers/power/supply/axp288_charger.c
-@@ -178,18 +178,18 @@ static inline int axp288_charger_set_cv(
- 	u8 reg_val;
- 	int ret;
+--- a/kernel/trace/tracing_map.c
++++ b/kernel/trace/tracing_map.c
+@@ -454,7 +454,7 @@ static struct tracing_map_elt *get_free_
+ 	struct tracing_map_elt *elt = NULL;
+ 	int idx;
  
--	if (cv <= CV_4100MV) {
--		reg_val = CHRG_CCCV_CV_4100MV;
--		cv = CV_4100MV;
--	} else if (cv <= CV_4150MV) {
--		reg_val = CHRG_CCCV_CV_4150MV;
--		cv = CV_4150MV;
--	} else if (cv <= CV_4200MV) {
-+	if (cv >= CV_4350MV) {
-+		reg_val = CHRG_CCCV_CV_4350MV;
-+		cv = CV_4350MV;
-+	} else if (cv >= CV_4200MV) {
- 		reg_val = CHRG_CCCV_CV_4200MV;
- 		cv = CV_4200MV;
-+	} else if (cv >= CV_4150MV) {
-+		reg_val = CHRG_CCCV_CV_4150MV;
-+		cv = CV_4150MV;
- 	} else {
--		reg_val = CHRG_CCCV_CV_4350MV;
--		cv = CV_4350MV;
-+		reg_val = CHRG_CCCV_CV_4100MV;
-+		cv = CV_4100MV;
- 	}
+-	idx = atomic_inc_return(&map->next_elt);
++	idx = atomic_fetch_add_unless(&map->next_elt, 1, map->max_elts);
+ 	if (idx < map->max_elts) {
+ 		elt = *(TRACING_MAP_ELT(map->elts, idx));
+ 		if (map->ops && map->ops->elt_init)
+@@ -699,7 +699,7 @@ void tracing_map_clear(struct tracing_ma
+ {
+ 	unsigned int i;
  
- 	reg_val = reg_val << CHRG_CCCV_CV_BIT_POS;
+-	atomic_set(&map->next_elt, -1);
++	atomic_set(&map->next_elt, 0);
+ 	atomic64_set(&map->hits, 0);
+ 	atomic64_set(&map->drops, 0);
+ 
+@@ -783,7 +783,7 @@ struct tracing_map *tracing_map_create(u
+ 
+ 	map->map_bits = map_bits;
+ 	map->max_elts = (1 << map_bits);
+-	atomic_set(&map->next_elt, -1);
++	atomic_set(&map->next_elt, 0);
+ 
+ 	map->map_size = (1 << (map_bits + 1));
+ 	map->ops = ops;
 
 
