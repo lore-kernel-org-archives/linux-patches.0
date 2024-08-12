@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E873186E38;
-	Mon, 12 Aug 2024 16:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2EC186E38;
+	Mon, 12 Aug 2024 16:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723479363; cv=none; b=Wwfo1rafPjtJWo4wRF7m74OIdHE2iQiJRzeC82LBLkzBLA+tbaEyWzPCJv4ZgQSeIVMnKJgYUecuUterZmW5iCCSEQx1KEu7/axXkLShrImfGPT8rilQdlzDlv7PR74LMQ8UFkqIO0gfbWFybKICLBxceqQB3YQS+fU2oHfY9Q4=
+	t=1723479366; cv=none; b=dANNHbDP/DgHEUEdMd37feBDx2PrSrS2pqnjQri1eOvgFsM/GtP616GCFHCTG17rNLs1sh4ZCr2CMTIHzRuawHJb2HrbKgqAs9kRTmEJt2b2GX4wFwpFh+sOvvez5SYInMiWt/Wj+alVQ7qWYMec3bshRoDT6hRO23fD6TZH1sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723479363; c=relaxed/simple;
-	bh=Vyw+c2pYEQzScmLKrL+h/mvS4ySSfFj+xeyDMon6L3s=;
+	s=arc-20240116; t=1723479366; c=relaxed/simple;
+	bh=ru1D+1ghLFROaiq38/84BXeNDT2QELhYAh92q3XWcv0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lytFCMhI+UqlDJ+z+FQNP3EXBRn1MC3hh0qefltDb2ACd5T5LMV4teiruXx8BVxtGvZ/SRm5VnTPwTHaSZXXkLEnAc/AEC66JqMUsRWJU+3wN4Nrr+3ycGL6maTQgxpc2v9YgSmWcndYAamc3ZPAW60fwkPiwPhP8MhS3/tolRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LKamJzO2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QGvHN1jWQ+aJ/8hE8iWvJY+1dnH9CtkVR6iEqqBCzgBqrUmUDMRIDD+z8FU4d+LyKealeBZ5oqBLvn4q86k+5zhTVuREZ//e9HfEUfPML/E/ftTH7YfU0J6yOGhYWDFbVgttT0S4YlqjKKXipKfpR0NqijNe89rkO9EITUQvB88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OI7zt7va; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LKamJzO2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97825C4AF09;
-	Mon, 12 Aug 2024 16:16:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OI7zt7va"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C13DAC32782;
+	Mon, 12 Aug 2024 16:16:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723479363;
-	bh=Vyw+c2pYEQzScmLKrL+h/mvS4ySSfFj+xeyDMon6L3s=;
+	s=korg; t=1723479366;
+	bh=ru1D+1ghLFROaiq38/84BXeNDT2QELhYAh92q3XWcv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LKamJzO2JYaeDVCH8dg7uv3thpBQ/LFVHHJTtl+LaQoRfrqd8V9UdK4bpdOgoD+DN
-	 Bhcoxot7qx5vE7zS2djIKRG0gGlSwIdlQm64HkNl+b+Yqx2FXldLqFzculvin3V1Xl
-	 8Ey9CoSy+nU8e6viNZR7aTLwEVAXOYTCOV5vamqg=
+	b=OI7zt7vaY6R1T20kkXNtzypXxqGBMXlH2lyrlQQDEJIVFKAfPHLlMbrDs/exZmqru
+	 3nSitAZlxd4wEWsFxW2zk9dF9ZS8AWxDVcvh8javv82IHZof28TGNfU3hdghhD8tcL
+	 21eXgqQ/Kj+p//yoZ+GpRb9GsXt/RpUTVbvLZcM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 032/189] ACPI: battery: create alarm sysfs attribute atomically
-Date: Mon, 12 Aug 2024 18:01:28 +0200
-Message-ID: <20240812160133.381821146@linuxfoundation.org>
+Subject: [PATCH 6.6 033/189] ACPI: SBS: manage alarm sysfs attribute through psy core
+Date: Mon, 12 Aug 2024 18:01:29 +0200
+Message-ID: <20240812160133.419818452@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160132.135168257@linuxfoundation.org>
 References: <20240812160132.135168257@linuxfoundation.org>
@@ -54,24 +54,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit a231eed10ed5a290129fda36ad7bcc263c53ff7d ]
+[ Upstream commit 6bad28cfc30988a845fb3f59a99f4b8a4ce8fe95 ]
 
 Let the power supply core register the attribute.
+
 This ensures that the attribute is created before the device is
-announced to userspace, avoid a race condition.
+announced to userspace, avoiding a race condition.
 
 Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/battery.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/acpi/sbs.c | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/acpi/battery.c b/drivers/acpi/battery.c
-index 969bf81e8d546..7f7ad94f22b91 100644
---- a/drivers/acpi/battery.c
-+++ b/drivers/acpi/battery.c
-@@ -678,12 +678,18 @@ static ssize_t acpi_battery_alarm_store(struct device *dev,
+diff --git a/drivers/acpi/sbs.c b/drivers/acpi/sbs.c
+index 94e3c000df2e1..fdeb46ed21d69 100644
+--- a/drivers/acpi/sbs.c
++++ b/drivers/acpi/sbs.c
+@@ -77,7 +77,6 @@ struct acpi_battery {
+ 	u16 spec;
+ 	u8 id;
+ 	u8 present:1;
+-	u8 have_sysfs_alarm:1;
+ };
+ 
+ #define to_acpi_battery(x) power_supply_get_drvdata(x)
+@@ -462,12 +461,18 @@ static ssize_t acpi_battery_alarm_store(struct device *dev,
  	return count;
  }
  
@@ -88,38 +97,45 @@ index 969bf81e8d546..7f7ad94f22b91 100644
 +};
 +ATTRIBUTE_GROUPS(acpi_battery);
 +
- /*
-  * The Battery Hooking API
-  *
-@@ -823,7 +829,10 @@ static void __exit battery_hook_exit(void)
- 
- static int sysfs_add_battery(struct acpi_battery *battery)
+ /* --------------------------------------------------------------------------
+                                  Driver Interface
+    -------------------------------------------------------------------------- */
+@@ -518,7 +523,10 @@ static int acpi_battery_read(struct acpi_battery *battery)
+ static int acpi_battery_add(struct acpi_sbs *sbs, int id)
  {
+ 	struct acpi_battery *battery = &sbs->battery[id];
 -	struct power_supply_config psy_cfg = { .drv_data = battery, };
 +	struct power_supply_config psy_cfg = {
 +		.drv_data = battery,
 +		.attr_grp = acpi_battery_groups,
 +	};
- 	bool full_cap_broken = false;
+ 	int result;
  
- 	if (!ACPI_BATTERY_CAPACITY_VALID(battery->full_charge_capacity) &&
-@@ -868,7 +877,7 @@ static int sysfs_add_battery(struct acpi_battery *battery)
- 		return result;
+ 	battery->id = id;
+@@ -548,10 +556,6 @@ static int acpi_battery_add(struct acpi_sbs *sbs, int id)
+ 		goto end;
  	}
- 	battery_hook_add_battery(battery);
--	return device_create_file(&battery->bat->dev, &alarm_attr);
-+	return 0;
+ 
+-	result = device_create_file(&battery->bat->dev, &alarm_attr);
+-	if (result)
+-		goto end;
+-	battery->have_sysfs_alarm = 1;
+       end:
+ 	pr_info("%s [%s]: Battery Slot [%s] (battery %s)\n",
+ 	       ACPI_SBS_DEVICE_NAME, acpi_device_bid(sbs->device),
+@@ -563,11 +567,8 @@ static void acpi_battery_remove(struct acpi_sbs *sbs, int id)
+ {
+ 	struct acpi_battery *battery = &sbs->battery[id];
+ 
+-	if (battery->bat) {
+-		if (battery->have_sysfs_alarm)
+-			device_remove_file(&battery->bat->dev, &alarm_attr);
++	if (battery->bat)
+ 		power_supply_unregister(battery->bat);
+-	}
  }
  
- static void sysfs_remove_battery(struct acpi_battery *battery)
-@@ -879,7 +888,6 @@ static void sysfs_remove_battery(struct acpi_battery *battery)
- 		return;
- 	}
- 	battery_hook_remove_battery(battery);
--	device_remove_file(&battery->bat->dev, &alarm_attr);
- 	power_supply_unregister(battery->bat);
- 	battery->bat = NULL;
- 	mutex_unlock(&battery->sysfs_lock);
+ static int acpi_charger_add(struct acpi_sbs *sbs)
 -- 
 2.43.0
 
