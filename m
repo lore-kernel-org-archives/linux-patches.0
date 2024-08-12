@@ -1,36 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838001494B8;
-	Mon, 12 Aug 2024 16:34:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FF01494B8;
+	Mon, 12 Aug 2024 16:34:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723480460; cv=none; b=n35zBcwJCsPAQkciaid9oFEuMU57DQ+7VqxcS0waKQmKU5zHsCgYrClIiD3S3ryMR9PW/x2RkUC7m+QGjq0aUApH+HokRjexrDJ6dgvGsWkYN1MipVPaK8KqupPWTxeBef7stCjXPnCyrEg4QfPoVWm6UOgZWRgOyIIIa4eOk0M=
+	t=1723480463; cv=none; b=OsYlBiA2ViIQvSr01rsAzpDfzRV4nBJc8oNekgwJcA5oDoQp4v7CP8I87EUyfasfn1q4+GYT/KUNW8USTD0I4a/JzypT0sjtHIFULSHPYLq/bpjNU529i4DSkFTK8ZwXsjpGqJQGXE1l8MzGcLjlvNRZgKBSY+vNnaBmKOBdOKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723480460; c=relaxed/simple;
-	bh=wjsMksbrt90KSprd65lgx4GVCsqMTJ2IJJ71hZy6c/M=;
+	s=arc-20240116; t=1723480463; c=relaxed/simple;
+	bh=w7WguwXXAyiLxfF6jOvEVpCPcuBMvSkb3tfgwUYmOe4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TOJJoznc9HXzd5kIGv8oNkFrJ7hHUrwMZdX2vbHpe4oOLF6lQGDnK+RZNnHRNQ1VLuKqtRgmgbCZbjNMMZbAmRihgVIFAPmWfOG8etAEKic61Y3rTMW7nSDvJQn1qnCfCnt6nZuB+IVlQGfxomm5QRIjK83OBetAIljbfZm3nKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0xym+S++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ECSS6lld3Tbe78d1JabW7S+NfO7T/xqKp5LRyQihl83UmNJwI71oOjM7Nnqx4IEmJOGD7NqlV8UBVP0UHvZxsiu47kPEW94pCsMzT8AtCDa/j0s3fch+s/y6uIuV3SsbWzP3TefsKy3YLABA/ncXvfzB7UC9yej+rmsjskEYUe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ddWKFUN0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0xym+S++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4368C32782;
-	Mon, 12 Aug 2024 16:34:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ddWKFUN0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C827EC32782;
+	Mon, 12 Aug 2024 16:34:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723480460;
-	bh=wjsMksbrt90KSprd65lgx4GVCsqMTJ2IJJ71hZy6c/M=;
+	s=korg; t=1723480463;
+	bh=w7WguwXXAyiLxfF6jOvEVpCPcuBMvSkb3tfgwUYmOe4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xym+S++1Hrq0N+zGV8ZNglYW4ZyZLJvo31BDyBkDUKKcg8wbN5H+xOzCvs9bCUD3
-	 z3RktB5VRkHavgPgfMNRFcPAkyqjj6E6nO1Xck7mdJ+3wWDYfeztyJSIvBvJ4lgghP
-	 AqDrJHEuOixFpaaRaW6i8aH8RtTMHFCnVtc/igEE=
+	b=ddWKFUN0RW37evq9mfSSSdP5eUD8dwoPiCz/MaDUr1qRp9/rtgcWINzkv9q4itz9T
+	 Vk5SW37qsTquqFXwkA5XNp7x6Ahun5ZY6/79fBtbaeko9nbuojOfNV+SAyZBcJJfy8
+	 QUGdbYwq1i5BqZa4DhV2VeiBQn7IDt/mYOZdnLFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.10 185/263] ALSA: hda/hdmi: Yet more pin fix for HP EliteDesk 800 G4
-Date: Mon, 12 Aug 2024 18:03:06 +0200
-Message-ID: <20240812160153.627959121@linuxfoundation.org>
+	syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Ashish Sangwan <a.sangwan@samsung.com>,
+	Namjae Jeon <namjae.jeon@samsung.com>,
+	Dirk Behme <dirk.behme@de.bosch.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.10 203/263] driver core: Fix uevent_show() vs driver detach race
+Date: Mon, 12 Aug 2024 18:03:24 +0200
+Message-ID: <20240812160154.320737544@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240812160146.517184156@linuxfoundation.org>
 References: <20240812160146.517184156@linuxfoundation.org>
@@ -49,30 +55,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 176fd1511dd9086ab4fa9323cb232177c6235288 upstream.
+commit 15fffc6a5624b13b428bb1c6e9088e32a55eb82c upstream.
 
-HP EliteDesk 800 G4 (PCI SSID 103c:83e2) is another Kabylake machine
-where BIOS misses the HDMI pin initializations.  Add the quirk entry.
+uevent_show() wants to de-reference dev->driver->name. There is no clean
+way for a device attribute to de-reference dev->driver unless that
+attribute is defined via (struct device_driver).dev_groups. Instead, the
+anti-pattern of taking the device_lock() in the attribute handler risks
+deadlocks with code paths that remove device attributes while holding
+the lock.
 
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240806064918.11132-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This deadlock is typically invisible to lockdep given the device_lock()
+is marked lockdep_set_novalidate_class(), but some subsystems allocate a
+local lockdep key for @dev->mutex to reveal reports of the form:
+
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.10.0-rc7+ #275 Tainted: G           OE    N
+ ------------------------------------------------------
+ modprobe/2374 is trying to acquire lock:
+ ffff8c2270070de0 (kn->active#6){++++}-{0:0}, at: __kernfs_remove+0xde/0x220
+
+ but task is already holding lock:
+ ffff8c22016e88f8 (&cxl_root_key){+.+.}-{3:3}, at: device_release_driver_internal+0x39/0x210
+
+ which lock already depends on the new lock.
+
+ the existing dependency chain (in reverse order) is:
+
+ -> #1 (&cxl_root_key){+.+.}-{3:3}:
+        __mutex_lock+0x99/0xc30
+        uevent_show+0xac/0x130
+        dev_attr_show+0x18/0x40
+        sysfs_kf_seq_show+0xac/0xf0
+        seq_read_iter+0x110/0x450
+        vfs_read+0x25b/0x340
+        ksys_read+0x67/0xf0
+        do_syscall_64+0x75/0x190
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+ -> #0 (kn->active#6){++++}-{0:0}:
+        __lock_acquire+0x121a/0x1fa0
+        lock_acquire+0xd6/0x2e0
+        kernfs_drain+0x1e9/0x200
+        __kernfs_remove+0xde/0x220
+        kernfs_remove_by_name_ns+0x5e/0xa0
+        device_del+0x168/0x410
+        device_unregister+0x13/0x60
+        devres_release_all+0xb8/0x110
+        device_unbind_cleanup+0xe/0x70
+        device_release_driver_internal+0x1c7/0x210
+        driver_detach+0x47/0x90
+        bus_remove_driver+0x6c/0xf0
+        cxl_acpi_exit+0xc/0x11 [cxl_acpi]
+        __do_sys_delete_module.isra.0+0x181/0x260
+        do_syscall_64+0x75/0x190
+        entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+The observation though is that driver objects are typically much longer
+lived than device objects. It is reasonable to perform lockless
+de-reference of a @driver pointer even if it is racing detach from a
+device. Given the infrequency of driver unregistration, use
+synchronize_rcu() in module_remove_driver() to close any potential
+races.  It is potentially overkill to suffer synchronize_rcu() just to
+handle the rare module removal racing uevent_show() event.
+
+Thanks to Tetsuo Handa for the debug analysis of the syzbot report [1].
+
+Fixes: c0a40097f0bc ("drivers: core: synchronize really_probe() and dev_uevent()")
+Reported-by: syzbot+4762dd74e32532cda5ff@syzkaller.appspotmail.com
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Closes: http://lore.kernel.org/5aa5558f-90a4-4864-b1b1-5d6784c5607d@I-love.SAKURA.ne.jp [1]
+Link: http://lore.kernel.org/669073b8ea479_5fffa294c1@dwillia2-xfh.jf.intel.com.notmuch
+Cc: stable@vger.kernel.org
+Cc: Ashish Sangwan <a.sangwan@samsung.com>
+Cc: Namjae Jeon <namjae.jeon@samsung.com>
+Cc: Dirk Behme <dirk.behme@de.bosch.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Link: https://lore.kernel.org/r/172081332794.577428.9738802016494057132.stgit@dwillia2-xfh.jf.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/core.c   |   13 ++++++++-----
+ drivers/base/module.c |    4 ++++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1989,6 +1989,7 @@ static int hdmi_add_cvt(struct hda_codec
- }
+--- a/drivers/base/core.c
++++ b/drivers/base/core.c
+@@ -25,6 +25,7 @@
+ #include <linux/mutex.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/netdevice.h>
++#include <linux/rcupdate.h>
+ #include <linux/sched/signal.h>
+ #include <linux/sched/mm.h>
+ #include <linux/string_helpers.h>
+@@ -2640,6 +2641,7 @@ static const char *dev_uevent_name(const
+ static int dev_uevent(const struct kobject *kobj, struct kobj_uevent_env *env)
+ {
+ 	const struct device *dev = kobj_to_dev(kobj);
++	struct device_driver *driver;
+ 	int retval = 0;
  
- static const struct snd_pci_quirk force_connect_list[] = {
-+	SND_PCI_QUIRK(0x103c, 0x83e2, "HP EliteDesk 800 G4", 1),
- 	SND_PCI_QUIRK(0x103c, 0x83ef, "HP MP9 G4 Retail System AMS", 1),
- 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
+ 	/* add device node properties if present */
+@@ -2668,8 +2670,12 @@ static int dev_uevent(const struct kobje
+ 	if (dev->type && dev->type->name)
+ 		add_uevent_var(env, "DEVTYPE=%s", dev->type->name);
+ 
+-	if (dev->driver)
+-		add_uevent_var(env, "DRIVER=%s", dev->driver->name);
++	/* Synchronize with module_remove_driver() */
++	rcu_read_lock();
++	driver = READ_ONCE(dev->driver);
++	if (driver)
++		add_uevent_var(env, "DRIVER=%s", driver->name);
++	rcu_read_unlock();
+ 
+ 	/* Add common DT information about the device */
+ 	of_device_uevent(dev, env);
+@@ -2739,11 +2745,8 @@ static ssize_t uevent_show(struct device
+ 	if (!env)
+ 		return -ENOMEM;
+ 
+-	/* Synchronize with really_probe() */
+-	device_lock(dev);
+ 	/* let the kset specific function add its keys */
+ 	retval = kset->uevent_ops->uevent(&dev->kobj, env);
+-	device_unlock(dev);
+ 	if (retval)
+ 		goto out;
+ 
+--- a/drivers/base/module.c
++++ b/drivers/base/module.c
+@@ -7,6 +7,7 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/string.h>
++#include <linux/rcupdate.h>
+ #include "base.h"
+ 
+ static char *make_driver_name(struct device_driver *drv)
+@@ -97,6 +98,9 @@ void module_remove_driver(struct device_
+ 	if (!drv)
+ 		return;
+ 
++	/* Synchronize with dev_uevent() */
++	synchronize_rcu();
++
+ 	sysfs_remove_link(&drv->p->kobj, "module");
+ 
+ 	if (drv->owner)
 
 
