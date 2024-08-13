@@ -1,49 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CCD381C7;
-	Tue, 13 Aug 2024 06:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316E5433C0;
+	Tue, 13 Aug 2024 06:19:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723529284; cv=none; b=GKlC99ybedyiqCnajzlIPhm9lRof+hYbv3zAkrk+vVnvPSJGAboHlWB9Uh+i+o6TfOssE1FFDs4EDU3//GkT9VO275s/7QXClQ+m9ibS2eDKKWh3SA727iimpSVeFnnO1uKDgIiVEf+l3AQ/EyMYNlLS+2YmHdvDuYDFsNffxLQ=
+	t=1723529945; cv=none; b=Yc9R6GBW502gADYwfg+45KjhzUGbUXn4iWHwF5p7Ty1zNScRbInGf7sGTpsW/ZEUbdJ0i7e6x3NlNn7o+B09TO6YALmJ1wWUFtzAB8oFkg03vXMReEiaHkt4ZGsmzhVng95DaaNH4PTzj2aozWvLWmsSV6fS7nFoucJ837zeCeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723529284; c=relaxed/simple;
-	bh=s+FbbMRkTK3j4lNO4+/UV6/0a8n/2EulU//uAt2lfWk=;
+	s=arc-20240116; t=1723529945; c=relaxed/simple;
+	bh=WCl+wZrzT0x1i51/8Vy2Qn3S0hUdMU1X8mN8JKqg/rw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VqdtFEpN8QjChzxXL686jG+0y/95gL4sPbLTQ3Ey2mUv0Xp7qXWA70eRL/vlBeGhfpoYsrzRqHSUMmol3xMu6oUOI/qy3kYjGO/IH33xnbpyBTGvgvuFoL5uLoiVQuDRtgtHshdoXkXe3zzORQfARDaOrZZYSkZIfY73K5cBkJE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mbo+FdGG; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gTt0Tf+NEuvxeVbfY9Iti5tMXRj9CfMWemjGt4hQuJ+KZVCRS7q2nmtAxcdgGpIaLl5XI0KmxcLPlh9KHm2lXuz2+Kzu4pKLKJpI4HmwHRu0RefnLWSAcqzoGqj0UTCzPgLnR/ue5hbnHDx1VQoidurSSP3lsIqVDvuBymOhpWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Tkphu/HT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mbo+FdGG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE48C4AF11;
-	Tue, 13 Aug 2024 06:08:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Tkphu/HT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1F87C4AF11;
+	Tue, 13 Aug 2024 06:19:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723529284;
-	bh=s+FbbMRkTK3j4lNO4+/UV6/0a8n/2EulU//uAt2lfWk=;
+	s=korg; t=1723529944;
+	bh=WCl+wZrzT0x1i51/8Vy2Qn3S0hUdMU1X8mN8JKqg/rw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mbo+FdGG5O5PCt+6E06Cr5+ZIZ7njV+E12wNvjuPH2GWlGAB96oEJgIp8RQ7uzDDG
-	 g4QLOOz4PPQrXV6vcZWcfg/BHFX+mqpxNvKJX7tqJm00BkiXfRzYwDP/JEMhBfOP/o
-	 1VR2PyxQohfgy24pu8cASVX2L7wWERWJ7Ok9CKCQ=
-Date: Tue, 13 Aug 2024 08:08:01 +0200
+	b=Tkphu/HTnTorP81r90waqwL4nRNolOVkD12/CjEHMxkOw8CFIzIDyoD6HCmchP0zE
+	 1lPjZrrJninBx6JyxMwLWbj2vOQvFRYqn0qlTm0umXgF1YYDHz10AIPfCHBJk4g2XK
+	 DsAlzLccnDBRgf/QM93SlrZNuJcwNBcPXDODfFJ8=
+Date: Tue, 13 Aug 2024 08:19:01 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Salvatore Bonaccorso <carnil@debian.org>
+To: Guenter Roeck <linux@roeck-us.net>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org,
-	Akemi Yagi <toracat@elrepo.org>,
-	Hardik Garg <hargar@linux.microsoft.com>,
-	Quentin Monnet <qmo@kernel.org>, bpf@vger.kernel.org
-Subject: Re: [PATCH 6.1 00/86] 6.1.104-rc1 review
-Message-ID: <2024081350-reconcile-rubble-6bb3@gregkh>
-References: <20240807150039.247123516@linuxfoundation.org>
- <ZrPafx6KUuhZZsci@eldamar.lan>
- <2024081117-delusion-halved-9e9c@gregkh>
- <ZrjS0V-tCQ1tGkRu@eldamar.lan>
- <2024081143-grouped-blah-dd52@gregkh>
- <ZrpLLoQeag1Fe_3r@eldamar.lan>
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org,
+	allen.lkml@gmail.com, broonie@kernel.org
+Subject: Re: [PATCH 6.1 000/150] 6.1.105-rc1 review
+Message-ID: <2024081352-harsh-prior-004e@gregkh>
+References: <20240812160125.139701076@linuxfoundation.org>
+ <f514502a-0e89-4fcb-95c4-986a3cba2342@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,52 +45,42 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZrpLLoQeag1Fe_3r@eldamar.lan>
+In-Reply-To: <f514502a-0e89-4fcb-95c4-986a3cba2342@roeck-us.net>
 
-On Mon, Aug 12, 2024 at 07:49:34PM +0200, Salvatore Bonaccorso wrote:
-> Hi Greg,
-> 
-> On Sun, Aug 11, 2024 at 05:40:58PM +0200, Greg Kroah-Hartman wrote:
-> > On Sun, Aug 11, 2024 at 05:03:45PM +0200, Salvatore Bonaccorso wrote:
-> > > Hi Greg,
-> > > 
-> > > On Sun, Aug 11, 2024 at 12:09:30PM +0200, Greg Kroah-Hartman wrote:
-> > > > On Wed, Aug 07, 2024 at 10:35:11PM +0200, Salvatore Bonaccorso wrote:
-> > > > > Hi Greg,
-> > > > > 
-> > > > > On Wed, Aug 07, 2024 at 04:59:39PM +0200, Greg Kroah-Hartman wrote:
-> > > > > > This is the start of the stable review cycle for the 6.1.104 release.
-> > > > > > There are 86 patches in this series, all will be posted as a response
-> > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > let me know.
-> > > > > > 
-> > > > > > Responses should be made by Fri, 09 Aug 2024 15:00:24 +0000.
-> > > > > > Anything received after that time might be too late.
-> > > > > 
-> > > > > 6.1.103 had the regression of bpftool not building, due to a missing
-> > > > > backport:
-> > > > > 
-> > > > > https://lore.kernel.org/stable/v8lqgl$15bq$1@ciao.gmane.io/
-> > > > > 
-> > > > > The problem is that da5f8fd1f0d3 ("bpftool: Mount bpffs when pinmaps
-> > > > > path not under the bpffs") was backported to 6.1.103 but there is no
-> > > > > defintion of create_and_mount_bpffs_dir(). 
-> > > > > 
-> > > > > it was suggested to revert the commit completely.
-> > > > 
-> > > > Thanks for this, I'll fix it up after this release.
-> > > 
-> > > Thanks! Note today Quentin Monnet proposed another solution by
-> > > cherry-picking two commits:
-> > > 
-> > > https://lore.kernel.org/stable/67bfcb8a-e00e-47b2-afe2-970a60e4a173@kernel.org/
+On Mon, Aug 12, 2024 at 02:42:58PM -0700, Guenter Roeck wrote:
+> On 8/12/24 09:01, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.105 release.
+> > There are 150 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
 > > 
-> > They don't apply cleanly, so I'll just add a revert...
+> > Responses should be made by Wed, 14 Aug 2024 16:00:26 +0000.
+> > Anything received after that time might be too late.
+> > 
 > 
-> FYI: Just realized that the breaking commit was as well queued for
-> older series 5.15.y, 5.10.y and 5.4.y, so that needs to be dropped
-> from those queues as well.
+> Building parisc64:C3700:smp:net=pcnet:initrd ... failed
+> ------------
+> Error log:
+> In file included from /home/groeck/src/linux-stable/include/linux/fs.h:45,
+>                  from /home/groeck/src/linux-stable/include/linux/huge_mm.h:8,
+>                  from /home/groeck/src/linux-stable/include/linux/mm.h:745,
+>                  from /home/groeck/src/linux-stable/include/linux/pid_namespace.h:7,
+>                  from /home/groeck/src/linux-stable/include/linux/ptrace.h:10,
+>                  from /home/groeck/src/linux-stable/arch/parisc/kernel/asm-offsets.c:20:
+> /home/groeck/src/linux-stable/include/linux/slab.h:228: warning: "ARCH_KMALLOC_MINALIGN" redefined
+>   228 | #define ARCH_KMALLOC_MINALIGN ARCH_DMA_MINALIGN
+> 
+> In file included from /home/groeck/src/linux-stable/arch/parisc/include/asm/atomic.h:23,
+>                  from /home/groeck/src/linux-stable/include/linux/atomic.h:7,
+>                  from /home/groeck/src/linux-stable/include/linux/rcupdate.h:25,
+>                  from /home/groeck/src/linux-stable/include/linux/rculist.h:11,
+>                  from /home/groeck/src/linux-stable/include/linux/pid.h:5,
+>                  from /home/groeck/src/linux-stable/include/linux/sched.h:14,
+>                  from /home/groeck/src/linux-stable/arch/parisc/kernel/asm-offsets.c:18:
+> /home/groeck/src/linux-stable/arch/parisc/include/asm/cache.h:28: note: this is the location of the previous definition
+>    28 | #define ARCH_KMALLOC_MINALIGN   16      /* ldcw requires 16-byte alignment */
+> 
 
-Good catch, I'll go drop it now from them, thanks!
+Thanks, I'll go drop the offending commit now.
 
 greg k-h
