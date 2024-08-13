@@ -1,79 +1,86 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F131DFD1
-	for <patches@lists.linux.dev>; Tue, 13 Aug 2024 15:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D41DFD1
+	for <patches@lists.linux.dev>; Tue, 13 Aug 2024 15:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723561298; cv=none; b=cxTIif8okwz9pmi5imxPNY+wOtTRtKqyq46zBaItrhc9ll1+JykOb12o4vMZTnPa84G7ntXYmasM/1LrWedI6KVy7YOLeURiCVZvZf97Ebpm6C3iRScCPtHcAUZlJ3VW/eVpn21H54rMXz2/5PKc4guMvBQ+E/XY+bHwn7NF5Pk=
+	t=1723561535; cv=none; b=NbJtIO5AxghtHmQ0mmR9hYoAqNLrvSr1hw5re4rwgKytcy/8Ll017Q2BRjtWF1fq6SctTsbpHkQZpyAWLz51SoXn7eWQfw4tvZ+rf4xQy5yjo+TpyKKxjubUM7DReMMN+gfAh1kFO5g8vs3WPkPoHFsRsOG3JUH4i8xmRdW79AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723561298; c=relaxed/simple;
-	bh=A/AlOxlsuSdpqEDoTvL2YUZyZGDkvhb06MuY9ZUc+a8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nfviZppcHfVLSV0HIVwwW8/qc52/rzvZxCtpwK92qiJwabigsozupgF2AaYD0qcxR0CmLF3QJrq+3pNa4/8XnahH2cFhsiCKTo2KZbtNCykppj3JNNlR0N3HJ1FHJErM7pyf3CKsuEXuAYcrMFVuXlT81kVjHcQCZDPVMN7kw9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de; spf=fail smtp.mailfrom=denx.de; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=denx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=denx.de
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 219491C008E; Tue, 13 Aug 2024 17:01:34 +0200 (CEST)
-Date: Tue, 13 Aug 2024 17:01:33 +0200
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
-	conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-Subject: Re: [PATCH 6.1 000/149] 6.1.105-rc2 review
-Message-ID: <Zrt1TREbs0mmwu31@duo.ucw.cz>
-References: <20240813061957.925312455@linuxfoundation.org>
+	s=arc-20240116; t=1723561535; c=relaxed/simple;
+	bh=kTpXdxzroFSgbIsFrE360Owkl7seIditzzIjeuS4eho=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lt9exEGVXZX2beVMoom0jSGZaCAAusSXlVEG7p5GHautHnGvewrwjxMv33t8DuBLoFYtfScjn3VDUXe6K9VbmhfCKUI2B1CBRcjAAYlLeVpY+RljRrBCjpGOej7huDeqeNjNpiGmh99hofgO0qDynUFVOYUz4XdKNoIFOLFOgfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev; spf=pass smtp.mailfrom=holm.dev; dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b=WTq/3soM; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=holm.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b="WTq/3soM"
+Message-ID: <ef63bf73-18fc-471a-a8a0-c1eedcc47491@holm.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=holm.dev; s=key1;
+	t=1723561530;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JnHW7TTDdCA8zU1Z5ULCGl64SaCeP5gQoJdh/7OfhBI=;
+	b=WTq/3soMD9ONG+ZTvK6rBkip13UXkb3KiYVeGtA8fphk2tqsmqxyJV2ibtmX8UN4qutHBM
+	JayfQfX+qZgFZFLl4+Y5u3w7Ym/23aCMj/LhHtwNhXlHtidgigCEhpuqyz8HHR9bKtymon
+	CCQ7z3ZhibT09g2e8KstuFmidy47V7OF+GE0chywTAGmDCf++EgpO5rg52EDjnUL1LLGWq
+	Mpbdi0VqqHTlC6eQsw33p37P18A59gMM8YkPBMDm7IxjdrltnZkIHiaN0KjrnJYCS/tepg
+	sjs6iJZ5wMPGwkwwaLSrUI4grnRy8UxBA0Ty5xJNZQRiOvSFaWHp6uysPKwCUA==
+Date: Tue, 13 Aug 2024 17:05:26 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="ww8pdUQJyKOAy99S"
-Content-Disposition: inline
-In-Reply-To: <20240813061957.925312455@linuxfoundation.org>
+Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
+ request in resume
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ Mario Limonciello <mario.limonciello@amd.com>,
+ Alex Deucher <alexander.deucher@amd.com>, Hersen Wu <hersenxs.wu@amd.com>,
+ Wayne Lin <wayne.lin@amd.com>, Daniel Wheeler <daniel.wheeler@amd.com>
+References: <20240812160146.517184156@linuxfoundation.org>
+ <20240812160156.489958533@linuxfoundation.org>
+ <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
+ <2024081345-eggnog-unease-7b3c@gregkh>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Kevin Holm <kevin@holm.dev>
+In-Reply-To: <2024081345-eggnog-unease-7b3c@gregkh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
+On 8/13/24 16:21, Greg Kroah-Hartman wrote:
+> On Tue, Aug 13, 2024 at 02:56:18PM +0200, Kevin Holm wrote:
+>>
+>> On 8/12/24 18:04, Greg Kroah-Hartman wrote:
+>>> 6.10-stable review patch.  If anyone has any objections, please let me know.
+>> This patch seems to cause problems with my external screens not getting a signal
+>> after my laptop wakes up from sleep.
+>>
+>> The problem occurs on my Lenovo P14s Gen 2 (type 21A0) connected to a lenovo
+>> usb-c dock (type 40AS) with two 4k display port screens connected. My Laptop
+>> screen wakes up normally, the two external displays are still detected by my
+>> system and shown in the kde system settings, but they show no image.
+>>
+>> The problem only occurs after putting my system to sleep, not on first boot.
+>>
+>> I didn't do a full git bisect, I only tested the full rc and then a build a
+>> kernel with this patch reverted, reverting only this patch solved the problem.
+> 
+> Is this also an issue in 6.11-rc3?
 
---ww8pdUQJyKOAy99S
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No, with 6.11-rc3 my monitors work as expected both on boot and when waking up
+from sleep.
 
-Hi!
+~kevin
 
-> This is the start of the stable review cycle for the 6.1.105 release.
-> There are 149 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+> thanks,
+> 
+> greg k-h
 
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-6.1.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,        Managing Director: Erika Unter
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---ww8pdUQJyKOAy99S
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCZrt1TQAKCRAw5/Bqldv6
-8vU7AKCpgPTbyi9d1inXG6I8lD2r4PhUIQCggyex+DoGYnIxvaVAAWndcQk8AHQ=
-=ZcZd
------END PGP SIGNATURE-----
-
---ww8pdUQJyKOAy99S--
