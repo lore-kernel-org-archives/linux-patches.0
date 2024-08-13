@@ -1,99 +1,71 @@
-Received: from out-185.mta1.migadu.com (out-185.mta1.migadu.com [95.215.58.185])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5670619B580
-	for <patches@lists.linux.dev>; Tue, 13 Aug 2024 12:56:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.185
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 642E73A8CE;
+	Tue, 13 Aug 2024 14:21:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723553788; cv=none; b=HwQyPP+pgMGwCk8qjnBQxr1hHZ6ntZsLUvLje7iIBBAh3S2j8hSlVY1Fv1ZOU10n3N+2O/9xWFZ4PNsGEuGVkCrN7Xyyx3K0RiK53+sNDSKV5JPdKLpccv1U42gLfgf+tuvEV+GYHY3m+oG/ynQ7N59+eG+Kg+8ZYwUBi7JEUik=
+	t=1723558866; cv=none; b=AYWjNyJCIZK12ImY+yWDYPHWFlNqN1wZTFdG1rdvS3dxiUM7u0qYovD7WUtgrr08ZqWebePOwJj9my/acx5MQZxE621PLotjgCWp2lWcp7ZESa+eYhBj11v5mYditsOCpxKXXj4hoWF/dNhMgH+WI9Qn8rp6JT5hxFXan9whNtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723553788; c=relaxed/simple;
-	bh=Vp8CkJbR2Oxr6i4hruj52WJzN1ov+xKRpH8VHWMRVXg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cUZs8mgOjnfPxjGzLbZBKQ2Xgx0R3Od3Am1QjVzMytNZHDhA+nUZUXSHaVGbYrVxyEbVbsF4SVt4bCFIFz4tTvtvmAo3Q37/D2AW00kKB2mLXAFqg7EVnsnjODOrHV4Py24w6QiOimTf2iwogXBm5UZql85RC56O6c/qV6452o0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev; spf=pass smtp.mailfrom=holm.dev; dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b=pmq5kQIO; arc=none smtp.client-ip=95.215.58.185
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=holm.dev
+	s=arc-20240116; t=1723558866; c=relaxed/simple;
+	bh=huR3h3AmWTZYJ7sJJgMy8wBRJAm5Oy/zAK9OtWtxJwI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HTlM+Yt1jWmvGoLns3A1ioIh3bQlBGI3HqnHoj4qaPFFOFstiASJDEDS9DZ7eh4Uu0PJ1U+UfJDl4+ZffazcnvhMrmt0NsRIXViBtL5xcr6Dv8hex0GRTi8n6sKH9Bft4fgVclmcj8DF9rF7ASXlnqqEf17R3A361bJ0Kk9pG4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dD6f9536; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b="pmq5kQIO"
-Message-ID: <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=holm.dev; s=key1;
-	t=1723553782;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Vp8CkJbR2Oxr6i4hruj52WJzN1ov+xKRpH8VHWMRVXg=;
-	b=pmq5kQIOTU06psOfBIhKu7R8UVPxbfXBvkbpVXmkJW8lno3/8LrntoGPqQSux4IgmYPz6C
-	zjfLIcs3ZZKrki3tlPTRfKNgiuvN1vstNnEwLc99snW2X47KjZ4S1j0RGUrVjt1LtP//O3
-	QamcoRxaLMd9/5V9vTuZ7nMk2pR4xOT/Nf3m82ZNGIIFzRmqbRKmjz6gZdwiBWbKtA5bsu
-	jLyU+b+VhgSGDZQG7CtXhaUqfnVGNUCVubub056Rv5A8FY9T4iAmr39AxkvvuYozqT27o8
-	vh+x7oW+1Za4xyUYck6BBMB8JYJOaOAKUjt0Agc8em7lKH0dKDqFC42uGLF4Lw==
-Date: Tue, 13 Aug 2024 14:56:18 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dD6f9536"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FF76C4AF0B;
+	Tue, 13 Aug 2024 14:21:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1723558865;
+	bh=huR3h3AmWTZYJ7sJJgMy8wBRJAm5Oy/zAK9OtWtxJwI=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dD6f95365Pa51QEz6SOX3Qn7YQ8QTlyRueuSbX5H07sCSQN9Pa/jpideKjzQJFBzP
+	 JKDWWxEIdEEP3X2iqE0jlxmS2Zro4cOkw4OXt2fZfwiPK4Udm3vMG8iMuHNOpZm10b
+	 6zP+lPuMUnM37C+jSgUiw/TOHa3vKN99aStW0sJw=
+Date: Tue, 13 Aug 2024 16:21:02 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Kevin Holm <kevin@holm.dev>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Hersen Wu <hersenxs.wu@amd.com>, Wayne Lin <wayne.lin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>
+Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
+ request in resume
+Message-ID: <2024081345-eggnog-unease-7b3c@gregkh>
+References: <20240812160146.517184156@linuxfoundation.org>
+ <20240812160156.489958533@linuxfoundation.org>
+ <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
- request in resume
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Mario Limonciello <mario.limonciello@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>, Hersen Wu <hersenxs.wu@amd.com>,
- Wayne Lin <wayne.lin@amd.com>, Daniel Wheeler <daniel.wheeler@amd.com>
-References: <20240812160146.517184156@linuxfoundation.org>
- <20240812160156.489958533@linuxfoundation.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Kevin Holm <kevin@holm.dev>
-In-Reply-To: <20240812160156.489958533@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
 
-DQpPbiA4LzEyLzI0IDE4OjA0LCBHcmVnIEtyb2FoLUhhcnRtYW4gd3JvdGU6DQo+IDYuMTAt
-c3RhYmxlIHJldmlldyBwYXRjaC4gIElmIGFueW9uZSBoYXMgYW55IG9iamVjdGlvbnMsIHBs
-ZWFzZSBsZXQgbWUga25vdy4NClRoaXMgcGF0Y2ggc2VlbXMgdG8gY2F1c2UgcHJvYmxlbXMg
-d2l0aCBteSBleHRlcm5hbCBzY3JlZW5zIG5vdCBnZXR0aW5nIGEgc2lnbmFsDQphZnRlciBt
-eSBsYXB0b3Agd2FrZXMgdXAgZnJvbSBzbGVlcC4NCg0KVGhlIHByb2JsZW0gb2NjdXJzIG9u
-IG15IExlbm92byBQMTRzIEdlbiAyICh0eXBlIDIxQTApIGNvbm5lY3RlZCB0byBhIGxlbm92
-bw0KdXNiLWMgZG9jayAodHlwZSA0MEFTKSB3aXRoIHR3byA0ayBkaXNwbGF5IHBvcnQgc2Ny
-ZWVucyBjb25uZWN0ZWQuIE15IExhcHRvcA0Kc2NyZWVuIHdha2VzIHVwIG5vcm1hbGx5LCB0
-aGUgdHdvIGV4dGVybmFsIGRpc3BsYXlzIGFyZSBzdGlsbCBkZXRlY3RlZCBieSBteQ0Kc3lz
-dGVtIGFuZCBzaG93biBpbiB0aGUga2RlIHN5c3RlbSBzZXR0aW5ncywgYnV0IHRoZXkgc2hv
-dyBubyBpbWFnZS4NCg0KVGhlIHByb2JsZW0gb25seSBvY2N1cnMgYWZ0ZXIgcHV0dGluZyBt
-eSBzeXN0ZW0gdG8gc2xlZXAsIG5vdCBvbiBmaXJzdCBib290Lg0KDQpJIGRpZG4ndCBkbyBh
-IGZ1bGwgZ2l0IGJpc2VjdCwgSSBvbmx5IHRlc3RlZCB0aGUgZnVsbCByYyBhbmQgdGhlbiBh
-IGJ1aWxkIGENCmtlcm5lbCB3aXRoIHRoaXMgcGF0Y2ggcmV2ZXJ0ZWQsIHJldmVydGluZyBv
-bmx5IHRoaXMgcGF0Y2ggc29sdmVkIHRoZSBwcm9ibGVtLg0KDQp+a2V2aW4NCj4gDQo+IC0t
-LS0tLS0tLS0tLS0tLS0tLQ0KPiANCj4gRnJvbTogV2F5bmUgTGluIDx3YXluZS5saW5AYW1k
-LmNvbT4NCj4gDQo+IGNvbW1pdCAyMDJkYzM1OWFkZGFiMjk0NTFkM2QxODI0M2MzZDk1N2Rh
-NTM5MmM4IHVwc3RyZWFtLg0KPiANCj4gW1doeV0NCj4gTGlrZSBjb21taXQgZWM1ZmE5ZmNk
-ZWNhICgiZHJtL2FtZC9kaXNwbGF5OiBBZGp1c3QgdGhlIE1TVCByZXN1bWUgZmxvdyIpLCB3
-ZQ0KPiB3YW50IHRvIGF2b2lkIGhhbmRsaW5nIG1zdCB0b3BvbG9neSBjaGFuZ2VzIGJlZm9y
-ZSByZXN0b3JpbmcgdGhlIG9sZCBzdGF0ZS4NCj4gSWYgd2UgZW5hYmxlIERQX1VQX1JFUV9F
-TiBiZWZvcmUgY2FsbGluZyBkcm1fYXRvbWljX2hlbHBlcl9yZXN1bWUoKSwgaGF2ZQ0KPiBj
-aGFuZ2NlIHRvIGhhbmRsZSBDU04gZXZlbnQgZmlyc3QgYW5kIGZpcmUgaG90cGx1ZyBldmVu
-dCBiZWZvcmUgcmVzdG9yaW5nIHRoZQ0KPiBjYWNoZWQgc3RhdGUuDQo+IA0KPiBbSG93XQ0K
-PiBEaXNhYmxlIG1zdCBicmFuY2ggc2VuZGluZyB1cCByZXF1ZXN0IGV2ZW50IGJlZm9yZSB3
-ZSByZXN0b3JpbmcgdGhlIGNhY2hlZCBzdGF0ZS4NCj4gRFBfVVBfUkVRX0VOIHdpbGwgYmUg
-c2V0IGxhdGVyIHdoZW4gd2UgY2FsbCBkcm1fZHBfbXN0X3RvcG9sb2d5X21ncl9yZXN1bWUo
-KS4NCj4gDQo+IENjOiBNYXJpbyBMaW1vbmNpZWxsbyA8bWFyaW8ubGltb25jaWVsbG9AYW1k
-LmNvbT4NCj4gQ2M6IEFsZXggRGV1Y2hlciA8YWxleGFuZGVyLmRldWNoZXJAYW1kLmNvbT4N
-Cj4gQ2M6IHN0YWJsZUB2Z2VyLmtlcm5lbC5vcmcNCj4gUmV2aWV3ZWQtYnk6IEhlcnNlbiBX
-dSA8aGVyc2VueHMud3VAYW1kLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogV2F5bmUgTGluIDx3
-YXluZS5saW5AYW1kLmNvbT4NCj4gVGVzdGVkLWJ5OiBEYW5pZWwgV2hlZWxlciA8ZGFuaWVs
-LndoZWVsZXJAYW1kLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogQWxleCBEZXVjaGVyIDxhbGV4
-YW5kZXIuZGV1Y2hlckBhbWQuY29tPg0KPiBTaWduZWQtb2ZmLWJ5OiBHcmVnIEtyb2FoLUhh
-cnRtYW4gPGdyZWdraEBsaW51eGZvdW5kYXRpb24ub3JnPg0KPiAtLS0NCj4gICBkcml2ZXJz
-L2dwdS9kcm0vYW1kL2Rpc3BsYXkvYW1kZ3B1X2RtL2FtZGdwdV9kbS5jIHwgICAgMSAtDQo+
-ICAgMSBmaWxlIGNoYW5nZWQsIDEgZGVsZXRpb24oLSkNCj4gDQo+IC0tLSBhL2RyaXZlcnMv
-Z3B1L2RybS9hbWQvZGlzcGxheS9hbWRncHVfZG0vYW1kZ3B1X2RtLmMNCj4gKysrIGIvZHJp
-dmVycy9ncHUvZHJtL2FtZC9kaXNwbGF5L2FtZGdwdV9kbS9hbWRncHVfZG0uYw0KPiBAQCAt
-MjQxOCw3ICsyNDE4LDYgQEAgc3RhdGljIHZvaWQgcmVzdW1lX21zdF9icmFuY2hfc3RhdHVz
-KHN0cg0KPiAgIA0KPiAgIAlyZXQgPSBkcm1fZHBfZHBjZF93cml0ZWIobWdyLT5hdXgsIERQ
-X01TVE1fQ1RSTCwNCj4gICAJCQkJIERQX01TVF9FTiB8DQo+IC0JCQkJIERQX1VQX1JFUV9F
-TiB8DQo+ICAgCQkJCSBEUF9VUFNUUkVBTV9JU19TUkMpOw0KPiAgIAlpZiAocmV0IDwgMCkg
-ew0KPiAgIAkJZHJtX2RiZ19rbXMobWdyLT5kZXYsICJtc3Qgd3JpdGUgZmFpbGVkIC0gdW5k
-b2NrZWQgZHVyaW5nIHN1c3BlbmQ/XG4iKTsNCj4gDQo+IA0KPiANCg0K
+On Tue, Aug 13, 2024 at 02:56:18PM +0200, Kevin Holm wrote:
+> 
+> On 8/12/24 18:04, Greg Kroah-Hartman wrote:
+> > 6.10-stable review patch.  If anyone has any objections, please let me know.
+> This patch seems to cause problems with my external screens not getting a signal
+> after my laptop wakes up from sleep.
+> 
+> The problem occurs on my Lenovo P14s Gen 2 (type 21A0) connected to a lenovo
+> usb-c dock (type 40AS) with two 4k display port screens connected. My Laptop
+> screen wakes up normally, the two external displays are still detected by my
+> system and shown in the kde system settings, but they show no image.
+> 
+> The problem only occurs after putting my system to sleep, not on first boot.
+> 
+> I didn't do a full git bisect, I only tested the full rc and then a build a
+> kernel with this patch reverted, reverting only this patch solved the problem.
+
+Is this also an issue in 6.11-rc3?
+
+thanks,
+
+greg k-h
