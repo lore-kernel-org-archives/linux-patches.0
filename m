@@ -1,86 +1,66 @@
-Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743D41DFD1
-	for <patches@lists.linux.dev>; Tue, 13 Aug 2024 15:05:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C463D1991BE;
+	Tue, 13 Aug 2024 15:26:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723561535; cv=none; b=NbJtIO5AxghtHmQ0mmR9hYoAqNLrvSr1hw5re4rwgKytcy/8Ll017Q2BRjtWF1fq6SctTsbpHkQZpyAWLz51SoXn7eWQfw4tvZ+rf4xQy5yjo+TpyKKxjubUM7DReMMN+gfAh1kFO5g8vs3WPkPoHFsRsOG3JUH4i8xmRdW79AE=
+	t=1723562795; cv=none; b=CvGiGXHndLzl5L6VtfmnjCr7MIQDuCCoVxLjKCeMdGInb3QZ+RBeZiEjQP7OPJLEd2OmduQMo/8EHUU2nMGIof+y+shBQg4+SvM9sZM3lgRHKoL928+oksMMHZEi1lsJ8/Q6RGWqrBlgQ8DtoC95GRbq98ZCdjeNeEGWzOacajc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723561535; c=relaxed/simple;
-	bh=kTpXdxzroFSgbIsFrE360Owkl7seIditzzIjeuS4eho=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lt9exEGVXZX2beVMoom0jSGZaCAAusSXlVEG7p5GHautHnGvewrwjxMv33t8DuBLoFYtfScjn3VDUXe6K9VbmhfCKUI2B1CBRcjAAYlLeVpY+RljRrBCjpGOej7huDeqeNjNpiGmh99hofgO0qDynUFVOYUz4XdKNoIFOLFOgfg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev; spf=pass smtp.mailfrom=holm.dev; dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b=WTq/3soM; arc=none smtp.client-ip=91.218.175.189
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=holm.dev
+	s=arc-20240116; t=1723562795; c=relaxed/simple;
+	bh=iIAiZN0phYsqjM+qgRg9UxEFlZqkH8oRikCUPpl1qd8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cjBMYQ7uOBijqGC5CKHT7MWf7qrW2U4D01EmJ9+wNlFbTVL0P+PTIZTN1SXDXaMp6FbC2lbkx2j2oh+5BaYO8HUQF6Jkp8SLce9/zprRCAoYaT1qxlSxAzCq8vHaFWGF+LZNtjG1W6O9BsWeOU+zRPs/G/83uP8CIgdFStbsNeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FJxxBris; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b="WTq/3soM"
-Message-ID: <ef63bf73-18fc-471a-a8a0-c1eedcc47491@holm.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=holm.dev; s=key1;
-	t=1723561530;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=JnHW7TTDdCA8zU1Z5ULCGl64SaCeP5gQoJdh/7OfhBI=;
-	b=WTq/3soMD9ONG+ZTvK6rBkip13UXkb3KiYVeGtA8fphk2tqsmqxyJV2ibtmX8UN4qutHBM
-	JayfQfX+qZgFZFLl4+Y5u3w7Ym/23aCMj/LhHtwNhXlHtidgigCEhpuqyz8HHR9bKtymon
-	CCQ7z3ZhibT09g2e8KstuFmidy47V7OF+GE0chywTAGmDCf++EgpO5rg52EDjnUL1LLGWq
-	Mpbdi0VqqHTlC6eQsw33p37P18A59gMM8YkPBMDm7IxjdrltnZkIHiaN0KjrnJYCS/tepg
-	sjs6iJZ5wMPGwkwwaLSrUI4grnRy8UxBA0Ty5xJNZQRiOvSFaWHp6uysPKwCUA==
-Date: Tue, 13 Aug 2024 17:05:26 +0200
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FJxxBris"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5B5DC4AF0B;
+	Tue, 13 Aug 2024 15:26:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1723562795;
+	bh=iIAiZN0phYsqjM+qgRg9UxEFlZqkH8oRikCUPpl1qd8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FJxxBrisrfovhyOF2zGGemc5qLO2allu5MLrbrW7nWLDreBx8IVGhIgBLcYYQHktf
+	 nvsxFqDGEYRoWEURXM/zb0O2XwjKcWFKNOL03O5JY0/PKMge2KT08A4gEYRQzw+xoJ
+	 hdsocouJByBM+D/tAhvpEcp1/K9YfwaxUHU6Z5bg=
+Date: Tue, 13 Aug 2024 17:26:31 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: "Lin, Wayne" <Wayne.Lin@amd.com>
+Cc: Kevin Holm <kevin@holm.dev>,
+	"stable@vger.kernel.org" <stable@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>,
+	"Deucher, Alexander" <Alexander.Deucher@amd.com>,
+	"Wu, Hersen" <hersenxs.wu@amd.com>,
+	"Wheeler, Daniel" <Daniel.Wheeler@amd.com>
+Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
+ request in resume
+Message-ID: <2024081317-penniless-gondola-2c07@gregkh>
+References: <20240812160146.517184156@linuxfoundation.org>
+ <20240812160156.489958533@linuxfoundation.org>
+ <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
+ <2024081345-eggnog-unease-7b3c@gregkh>
+ <CO6PR12MB5489A767C7E0B1CFAEB069A0FC862@CO6PR12MB5489.namprd12.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
- request in resume
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- Mario Limonciello <mario.limonciello@amd.com>,
- Alex Deucher <alexander.deucher@amd.com>, Hersen Wu <hersenxs.wu@amd.com>,
- Wayne Lin <wayne.lin@amd.com>, Daniel Wheeler <daniel.wheeler@amd.com>
-References: <20240812160146.517184156@linuxfoundation.org>
- <20240812160156.489958533@linuxfoundation.org>
- <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
- <2024081345-eggnog-unease-7b3c@gregkh>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: Kevin Holm <kevin@holm.dev>
-In-Reply-To: <2024081345-eggnog-unease-7b3c@gregkh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CO6PR12MB5489A767C7E0B1CFAEB069A0FC862@CO6PR12MB5489.namprd12.prod.outlook.com>
 
-On 8/13/24 16:21, Greg Kroah-Hartman wrote:
-> On Tue, Aug 13, 2024 at 02:56:18PM +0200, Kevin Holm wrote:
->>
->> On 8/12/24 18:04, Greg Kroah-Hartman wrote:
->>> 6.10-stable review patch.  If anyone has any objections, please let me know.
->> This patch seems to cause problems with my external screens not getting a signal
->> after my laptop wakes up from sleep.
->>
->> The problem occurs on my Lenovo P14s Gen 2 (type 21A0) connected to a lenovo
->> usb-c dock (type 40AS) with two 4k display port screens connected. My Laptop
->> screen wakes up normally, the two external displays are still detected by my
->> system and shown in the kde system settings, but they show no image.
->>
->> The problem only occurs after putting my system to sleep, not on first boot.
->>
->> I didn't do a full git bisect, I only tested the full rc and then a build a
->> kernel with this patch reverted, reverting only this patch solved the problem.
+On Tue, Aug 13, 2024 at 02:41:34PM +0000, Lin, Wayne wrote:
+> [AMD Official Use Only - AMD Internal Distribution Only]
 > 
-> Is this also an issue in 6.11-rc3?
-
-No, with 6.11-rc3 my monitors work as expected both on boot and when waking up
-from sleep.
-
-~kevin
-
-> thanks,
+> Hi Greg and Kevin,
 > 
-> greg k-h
+> Sorry for inconvenience, but this one should be reverted by another backport patch:
+> "drm/amd/display: Solve mst monitors blank out problem after resume"
 
+What commit id in Linus's tree is that?
+
+thanks,
+
+greg k-h
