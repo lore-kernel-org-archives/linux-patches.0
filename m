@@ -1,212 +1,105 @@
-Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05on2061.outbound.protection.outlook.com [40.107.20.61])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5854713AA27
-	for <patches@lists.linux.dev>; Wed, 14 Aug 2024 07:19:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.20.61
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723619978; cv=fail; b=qqwXfg3QOHQFwV+w8avTT/6CBWB7q2eAHQTbmfgXLNKtOWQ+5Z/gPvXBM7iJqmffKAKk7mBruo+50w0LZYufI8eTY37kcZspVbOpBTWSUfMy371kHNbpXGwiFIKOuReyu7KMnmGLZ9AyCBKvzcqgqpGApRtNxKyH/YKt+mm/DCM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723619978; c=relaxed/simple;
-	bh=u231pKj/SjTK45djiW1ShtlYtaockuSEU9gB7CeAQi8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=BWXmN6g70BmZpWo7ifFV6tpxanDTx1jMtSznDA1bLCu7ikoP/gKf1G3LV5ye7MBFJkVYxl0zi4YYk5EjWVOPgdXBopNuA1Hy31q1+NhLZhq3VtpAwTultIY4b89zyFo6q7yazdhc0MEU1ENNQMDRDEYnvpR/91k//5jRJE8jt18=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=de.bosch.com; spf=pass smtp.mailfrom=de.bosch.com; dkim=pass (2048-bit key) header.d=de.bosch.com header.i=@de.bosch.com header.b=ZOkgQUzb; arc=fail smtp.client-ip=40.107.20.61
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=de.bosch.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=de.bosch.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937F913B58D
+	for <patches@lists.linux.dev>; Wed, 14 Aug 2024 07:43:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1723621412; cv=none; b=IllKKpwWhP6R5Twh7tYgiONQ7LLy/ExO5sDbUzYpzLSAMvXl2E7FuADMOIjYRY+6uldUqvZLMolWA4IoaTSqIEFR6uZdOxhEIpSVIDG5F3Lk27uO7Z1MMC9kui2XdF4+kGyZ8kfCgJYNW5/SQDaW4DuPWp62HXhXCT+uCTD009I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1723621412; c=relaxed/simple;
+	bh=RE60C9dIjR3xdU+DSCU4Zt5xPZP/MHIQfAfKZ+VgP6w=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=LdkeH31bTsRV8y1laMA+tQcoorZHFE/caVam95vUi01qED3bI59RwXaPkzoNUWinQvduDeKM7yIe2Bd8LrO1P865AnQ29OaYsAspYoDiyFLkg0YZtl7kNTIh57muCth0YUgJwJmUW/JoLq7K3gk+ly0SuTN4yUuLF1hA0IKzujU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev; spf=pass smtp.mailfrom=holm.dev; dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b=FEi6p6jC; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=holm.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=holm.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=de.bosch.com header.i=@de.bosch.com header.b="ZOkgQUzb"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yVqN2+g2Id380wzbhnGSdojLSJ2XcBQubpd5vCfviEwE1t7wlgwbykV7XMQhctDTYhNpkfUvNAPdh5fdeKe8vtithA4kGj6MG6CKeRh5BZzSx5aMhBNJPOWvaTPJnZzbgwWqmZA8SD7WNyXjurItdcLggFUhiMBXmHUViQSmH8/K+c6Gb8QnOGLVgAaerN89zUdRs+E9uGdtw2b8hecBYdfKhHxrk54abXnPiKzCWGn8LYhoub+wKB6WWAd8plBAzrbDz4ShUn4pMVWrn/TydSfEbjFyfeJKs+1XjgEbi1BU4txKQDq89+hydG/WE0IqqCeGah/P/azYTCy5Nq2iLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=i157vzuqEX2FEqTgRZjdFv1qShAcbImC85G1FwPcumY=;
- b=szsNjCHT8ufFVz+FAdTy0G6AH1oMXig1HIakN698gYMHsBaOtLbStTTfSGyHEBwIrj/JWS8xvfd5hyK9Cyt0tjlnPr8ct3iu3so59ePCU5C2uZsIdX1KLeHM8xROeVUhbzW7Io3Z8UP2BMmb0vfaDwO6vAaQ+TMFTdCK1c5p83t/LYo33UWyNp7Rh/L5OZiioadprM93QbSAP7EKlWb0gKxaHcH6oojEsGuwR0Oh6NdVbb2ssH3tE6RKp+pdpM9JtzfrP+Kv1boCj7m1E+iMTfetxi3Qqf309mIMhPbMildhkSMe9Mh4Zf4JrPy+Qojq858/3yYmk5dV6g2e/ILJug==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 139.15.153.205) smtp.rcpttodomain=gmail.com smtp.mailfrom=de.bosch.com;
- dmarc=pass (p=reject sp=none pct=100) action=none header.from=de.bosch.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=de.bosch.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=i157vzuqEX2FEqTgRZjdFv1qShAcbImC85G1FwPcumY=;
- b=ZOkgQUzbwfaYzxQ6VTPTXULfSuw7hO94DtrclEk3PLfZ8FiYoqAOLPmT4x4M25UfA4+2k+BgvzWaJwN/zTo+bFIsFsSR4qHx5wdHeTtcUu2y7UjgymT3b6TfCN9hQsFts1bA9m5Le9mq6ti5c+aG3MN+HthAPJfspH19uwjQJ5HxUtL1GORNrGcbO/ChXHE0HS1MLIbhTjtiUUxqpbyfMtRGdMMA1z0vzP/Jn965+ecZB9OU1j5x0LnRurFUJE7dBvkg46RUiaDhPmWf+bBcvOrz30TlsffcHZanoW2wiG3gadxJhh3Kgyt/RwiAqvtwj0wt8VfrziKEdhT8EceC5w==
-Received: from DUZPR01CA0306.eurprd01.prod.exchangelabs.com
- (2603:10a6:10:4b7::16) by DU0PR10MB6155.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:10:3e7::19) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.22; Wed, 14 Aug
- 2024 07:19:31 +0000
-Received: from DU2PEPF00028D02.eurprd03.prod.outlook.com
- (2603:10a6:10:4b7:cafe::e1) by DUZPR01CA0306.outlook.office365.com
- (2603:10a6:10:4b7::16) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.23 via Frontend
- Transport; Wed, 14 Aug 2024 07:19:31 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 139.15.153.205)
- smtp.mailfrom=de.bosch.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=de.bosch.com;
-Received-SPF: Pass (protection.outlook.com: domain of de.bosch.com designates
- 139.15.153.205 as permitted sender) receiver=protection.outlook.com;
- client-ip=139.15.153.205; helo=eop.bosch-org.com; pr=C
-Received: from eop.bosch-org.com (139.15.153.205) by
- DU2PEPF00028D02.mail.protection.outlook.com (10.167.242.186) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7849.8 via Frontend Transport; Wed, 14 Aug 2024 07:19:31 +0000
-Received: from FE-EXCAS2001.de.bosch.com (10.139.217.200) by eop.bosch-org.com
- (139.15.153.205) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 14 Aug
- 2024 09:19:23 +0200
-Received: from [10.34.219.93] (10.139.217.196) by FE-EXCAS2001.de.bosch.com
- (10.139.217.200) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 14 Aug
- 2024 09:19:23 +0200
-Message-ID: <29eacb0f-fd78-4024-aac5-1606fe002dc6@de.bosch.com>
-Date: Wed, 14 Aug 2024 09:19:17 +0200
+	dkim=pass (2048-bit key) header.d=holm.dev header.i=@holm.dev header.b="FEi6p6jC"
+Message-ID: <2d48c3c0-286d-4ed7-a3b6-5b4742b0e9d1@holm.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=holm.dev; s=key1;
+	t=1723621407;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=XrfB0GMhb8lHryl92k7ibI5+T1BmYcNtqYFF71b3Av4=;
+	b=FEi6p6jCigsTaA6OwHtHCeFysI5w0c2Trf0PRgEJEGRRYqYixoKsIpUB9eOSRLNi3cN7I5
+	jjCc7FN34oUgYagDu0KejypD97g8+hBpPCeTtFNoGdV1GjHNQbSYtv9ng0XTbgHpN5P8NG
+	dWMPXlguhsclffCAJ4Vul2HoK751Wyml4jdx3xfg57AVXTFRt35ZtIQq/DSIpyZQR11vST
+	q/lJ2cKHighVBGgSo/9lpVdb2FN91sbgZ51Ntn7RLZlZXJdiq2ng5tS1QmXidaoUVYy5s3
+	hyU3rtYWWy1pVL/YhR6FbBdDfAEfOuo/mqpoN8ZaK0oBWcCQ2rcAJFDyUDFsYA==
+Date: Wed, 14 Aug 2024 09:43:23 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] kbuild: rust: split up helpers.c
-To: Boqun Feng <boqun.feng@gmail.com>, Miguel Ojeda <ojeda@kernel.org>
-CC: Masahiro Yamada <masahiroy@kernel.org>, Wedson Almeida Filho
-	<wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor
-	<nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Gary Guo
-	<gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
-	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, "Andreas
- Hindborg" <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
-	<linux-kbuild@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
-	=?UTF-8?Q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
-References: <20240507210818.672517-1-ojeda@kernel.org>
- <ZjqmfIhRz99BqXtD@boqun-archlinux>
+Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
+ request in resume
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Kevin Holm <kevin@holm.dev>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Lin, Wayne" <Wayne.Lin@amd.com>
+Cc: "stable@vger.kernel.org" <stable@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "Limonciello, Mario" <Mario.Limonciello@amd.com>,
+ "Deucher, Alexander" <Alexander.Deucher@amd.com>,
+ "Wu, Hersen" <hersenxs.wu@amd.com>, "Wheeler, Daniel"
+ <Daniel.Wheeler@amd.com>
+References: <20240812160146.517184156@linuxfoundation.org>
+ <20240812160156.489958533@linuxfoundation.org>
+ <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
+ <2024081345-eggnog-unease-7b3c@gregkh>
+ <CO6PR12MB5489A767C7E0B1CFAEB069A0FC862@CO6PR12MB5489.namprd12.prod.outlook.com>
+ <2024081317-penniless-gondola-2c07@gregkh>
+ <12516acf-bee6-4371-a745-8f9e221bc657@holm.dev>
 Content-Language: en-US
-From: Dirk Behme <dirk.behme@de.bosch.com>
-In-Reply-To: <ZjqmfIhRz99BqXtD@boqun-archlinux>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DU2PEPF00028D02:EE_|DU0PR10MB6155:EE_
-X-MS-Office365-Filtering-Correlation-Id: deb2d159-d0eb-4aea-f2af-08dcbc3170e2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|7416014|36860700013|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?S2o5ZGl3QVgxNExYdHI2WnNDZENEeDR0QVYwNXd2WDB0cy9VRGQ4T3ExQWxu?=
- =?utf-8?B?YW94NUt4aG5UdW14MGQ5VGZVMjhjR1BBd0dCR0tNcURkOFFHc0d5VGVZeGxO?=
- =?utf-8?B?ZTlGNzFEdnFXTGRwa0E4Q2czS3E4bG43Zm1FRnVrb3dDclk4cURYNEswd09x?=
- =?utf-8?B?MXlmRXBYR2N5eDdWTDBhTFdiYnRjOTFQYzZQQXhWWnNFV1I2a1JCdGdreC90?=
- =?utf-8?B?L3l2NTVsdzdMSVpLeDVvK1grZmNmSFJmdUlPLzhkUU42anhzeE45ZG5hQnls?=
- =?utf-8?B?ek8xd01xTlFrTUQ1V1dKUnovWHNHQ0tuWEhPV05NcE52TFViSHlJdnhDaXB3?=
- =?utf-8?B?UWVFWkV0WmQ4bnhOaUlweXA2cWxEdGgvc1lFZEtPU2g5LzB0aTRwR1JMRFI2?=
- =?utf-8?B?cXBlcko5K2VITUZYNkx2L2ZHQ2V6N0FRUzVZRXJqTWJESnNUVUVMSUZldFJN?=
- =?utf-8?B?dEx0ZnVrVitvVy80SEtGWGlrM2dQQTE0K2NYRXhQZmYxS3NxUjRPcGlNd01C?=
- =?utf-8?B?LzBvanVjS0pyZ0JsaEVSd0RmMFhhY084NDZwQytjc0thOHNXSTk5d2xiUytD?=
- =?utf-8?B?NmpvSG91SFpUanpZNnVqWGZSY0MrUDNnSnR1eVZ5dnNweG5nODA1dnYzaTNz?=
- =?utf-8?B?VGFKVWdINkNadUhQVmwzaEJoZDlIZk50QmkrNDdmU3g3RWUyNkFqNnBHSWt6?=
- =?utf-8?B?RThMeUlRcGtqRjA0SmdhOHhzU0hoUXRLd0lWeDlFZlZBVHZVRks2Y2Z2emNp?=
- =?utf-8?B?Qlh0cWVlUmd0SWQyWmIvYlc1eDR2eHZQRG9kQ1IzWjd2V29vdHJmck12QW9y?=
- =?utf-8?B?bGlhY3JLd0ZwL0tPUDlJL1k0SkxUSTU0OUxEMzN3WGRBM0FNUVpPN1NSZkFm?=
- =?utf-8?B?YW1oQ2o5RXM5YmN4amlXbmk5TDNjVTc1QVNpVmFyeVlKNkRuK1AxT2kwNjNE?=
- =?utf-8?B?UWhpNDZneko1bHJ6VUthUXFDUUZrOVhkYW9IL2lGWUNXeGg2MEYzbkgyT0pL?=
- =?utf-8?B?enlFNUhlRmpJUlZ4aytsclhOL25wbXB3SlFvVkluM1l6QnJZUGRoUGR0bmVO?=
- =?utf-8?B?ek1ZamxRRVdtK3dZUmhNNzhPbEhvaFd0dWVXVkVxL0l4VlB1QUM1MUQvVFJX?=
- =?utf-8?B?Z2Q4Y2wwWEFXLzJ2MndNVEw5MFJqUjMrQ2ZXUy90VE9YYW1RQUNOQ3RZUEc3?=
- =?utf-8?B?bUE1NGh1RFZmK1plYUdKVFZTbGlTL0RLbXRvTFQwajh6MGZRZ2Y3YnhiOWVW?=
- =?utf-8?B?RkVWaDlENDFtMmN5U09PRnd5NHk3NkFESjhWOXo3SzZVYVBsS1R2cEEwV0U0?=
- =?utf-8?B?VjF1NXdmNUp2WDNEek9MZDdNRDU5emJHckUxMGIrbDFwaFZ6a2dvZW5zU1I4?=
- =?utf-8?B?V3lYMVdlQ2Y1VjFnUmVxemFaeWkrZEFtUm5jcXB0QzVPWXVxeGRxNFZHZDQy?=
- =?utf-8?B?RnI3eWJibEVpbXFIRFRPRnhqREt5OTVNUzJFS1hBVDdBSXFFZUNIZll6bWJV?=
- =?utf-8?B?WGJrRlpVMU5IZDZHWkpjVFZRQVNmc1YvZGxrM2taajZoV1k0UFh1K2tZdmMv?=
- =?utf-8?B?elFscHZ5VlM0dU1xUDRpUWYxMzFQTFhsY3VUOHhJeE9wVDl3S0lDNDNPM2U4?=
- =?utf-8?B?bjd5cm5WWExwTUlmLzlrbjdiNmxJQjNBYjVxWUxRNW5sRzZYK0dyWkNPczB2?=
- =?utf-8?B?ZjVOQ0ZLakozQzYya1hBcHFHalVIcHo4eURzTTg5ZDBHeXBiNSsvVWJvajJQ?=
- =?utf-8?B?WDRYTUl5ZHBPM1BwWjk5bCtKVUo3SjNCSzdtTWdiMGhId1ltVGhCNlZFYVM0?=
- =?utf-8?B?WDRPQ1NBd2QrUkwyUHlySWhSaUNlZ05TVG1vaTZFTFVocjJJM3g2UzQxQUg1?=
- =?utf-8?Q?ASsiOQ+cqO0Zv?=
-X-Forefront-Antispam-Report:
-	CIP:139.15.153.205;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:eop.bosch-org.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: de.bosch.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2024 07:19:31.2014
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: deb2d159-d0eb-4aea-f2af-08dcbc3170e2
-X-MS-Exchange-CrossTenant-Id: 0ae51e19-07c8-4e4b-bb6d-648ee58410f4
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0ae51e19-07c8-4e4b-bb6d-648ee58410f4;Ip=[139.15.153.205];Helo=[eop.bosch-org.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DU2PEPF00028D02.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR10MB6155
+In-Reply-To: <12516acf-bee6-4371-a745-8f9e221bc657@holm.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On 08.05.2024 00:09, Boqun Feng wrote:
-> On Tue, May 07, 2024 at 11:08:18PM +0200, Miguel Ojeda wrote:
->> From: Andreas Hindborg <a.hindborg@samsung.com>
->>
->> When rebasing patch sets on top of upstream Linux, merge conflicts in
->> helpers.c are common and time consuming [1]. Thus, split the file so
->> that each kernel component can live in a separate file.
->>
->> Each helper file is listed explicitly and thus conflicts in the file
->> list are still likely. However, they should be simpler to resolve than
->> the conflicts usually seen in helpers.c.
->>
->> Link: https://rust-for-linux.zulipchat.com/#narrow/stream/288089-General/topic/Splitting.20up.20helpers.2Ec/near/426694012 [1]
->> Signed-off-by: Andreas Hindborg <a.hindborg@samsung.com>
->> Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
->> Tested-by: Sergio González Collado <sergio.collado@gmail.com>
->> Link: https://lore.kernel.org/r/20240416074607.1395481-1-nmi@metaspace.dk
->> [ Reworded message slightly and fixed nits in it. Applied commit
->>    84373132b831 ("rust: helpers: Fix grammar in comment") here. Added
->>    SPDX license identifier in new Makefile. Applied Markdown formatting.
->>    Added `.gitignore`. Included `helpers_combined.c` in the `clean`
->>    target. - Miguel ]
->> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On 8/13/24 21:54, Kevin Holm wrote:
+> On 13.08.24 17:26, Greg Kroah-Hartman wrote:
+>  > On Tue, Aug 13, 2024 at 02:41:34PM +0000, Lin, Wayne wrote:
+>  >> [AMD Official Use Only - AMD Internal Distribution Only]
+>  >>
+>  >> Hi Greg and Kevin,
+>  >>
+>  >> Sorry for inconvenience, but this one should be reverted by another backport 
+> patch:
+>  >> "drm/amd/display: Solve mst monitors blank out problem after resume"
+>  >
+>  > What commit id in Linus's tree is that?
 > 
-> This overall looks good to me, one thing below I think should be
-> changed..
+>  From what I can tell it's:
+> e33697141bac18 ("drm/amd/display: Solve mst monitors blank out problem after 
+> resume")
 > 
->> ---
->> This is a patch from Andreas that I was going to apply to `rust-next`
->> with the tweaks mentioned above, but I noticed Kbuild was not Cc'd, so
->> we decided to send this as a "v2" and thus give a chance to Kbuild to
->> take a look for next cycle.
->>
->> If something in the diff to v1 is wrong, it is my fault, not Andreas' :)
->>
+> You've send out a message that it failed to apply to a few of the stable trees:
+> - 6.10: https://lore.kernel.org/stable/2024081212-vitally-baked-7f93@gregkh/
+> - 6.6 : https://lore.kernel.org/stable/2024081213-roast-humorless-fd20@gregkh/
+> - 6.1 : https://lore.kernel.org/stable/2024081213-sweep-hungry-2d10@gregkh/
 > 
-> [...]
+> To apply it on top of 6.10.5-rc1 these two patches need to be applied first:
+> f63f86b5affcc2 ("drm/amd/display: Separate setting and programming of cursor")
+> 1ff6631baeb1f5 ("drm/amd/display: Prevent IPX From Link Detect and Set Mode")
 > 
->> diff --git a/rust/helpers/build_bug.c b/rust/helpers/build_bug.c
->> new file mode 100644
->> index 000000000000..f3106f248485
->> --- /dev/null
->> +++ b/rust/helpers/build_bug.c
->> @@ -0,0 +1,10 @@
->> +// SPDX-License-Identifier: GPL-2.0
->> +
->> +#include <linux/export.h>
->> +#include <linux/errname.h>
->> +
->> +const char *rust_helper_errname(int err)
->> +{
->> +	return errname(err);
->> +}
->> +EXPORT_SYMBOL_GPL(rust_helper_errname);
-> 
-> .. this build_bug.c should be avoided, but this function should go into
-> err.c.
+> I don't know if that solves the problem I initially described as I'm currently
+> on a different setup. What I can say is that it applying those three patches on
 
-It looks to me that this is the only/last open comment? As it seems 
-there is some consensus that this change makes sense it would be nice to 
-get anything like this :) I just stumbled about a local helpers rebase 
-conflict, again ...
+Applying the three patches I listed above, fixes the problem for my setup. My
+external 4k monitors now get a signal both on boot and when resuming from sleep.
 
-Best regards
-
-Dirk
-
+~kevin
+> top of 6.10.5-rc1 works without conflicts and compiles without errors.
+> 
+> ~kevin
+> 
+>  > thanks,
+>  >
+>  > greg k-h
+> 
 
