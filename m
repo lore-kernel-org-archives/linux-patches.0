@@ -1,255 +1,212 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from EUR05-DB8-obe.outbound.protection.outlook.com (mail-db8eur05on2061.outbound.protection.outlook.com [40.107.20.61])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C831A76D9;
-	Tue, 13 Aug 2024 23:17:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5854713AA27
+	for <patches@lists.linux.dev>; Wed, 14 Aug 2024 07:19:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.20.61
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723591047; cv=fail; b=XKC7lqSD8Nk6QbXeW8Wz0eQuSrgXqnQkU+8I0lAGq3v5swOdQnADw7cSy+iq/lMsLnGqzkKoBTqasIZAebHCndxPOW8wX9al+5eLnhLUpSLY9GEfgOcCb88/rqR5xW7awSRZlYaFGzobAys0OfKsvcnnfkq9lctaTw5ug11Uqnk=
+	t=1723619978; cv=fail; b=qqwXfg3QOHQFwV+w8avTT/6CBWB7q2eAHQTbmfgXLNKtOWQ+5Z/gPvXBM7iJqmffKAKk7mBruo+50w0LZYufI8eTY37kcZspVbOpBTWSUfMy371kHNbpXGwiFIKOuReyu7KMnmGLZ9AyCBKvzcqgqpGApRtNxKyH/YKt+mm/DCM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723591047; c=relaxed/simple;
-	bh=dCo9BPRZjSnu1wfsKlkuxeorCC5gR+nXyucffOwZRC0=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=mEIg1NHI1Yy7b3ZqblMI+a/gnRki3RA2Ex0K6b88wt5yIkPcr9u0EsHljQRmdVH6ORNzHbid0dJCgwwev5LtXS8N3HITpSBScJkhNrk9f8e/b/SU5kucVv95xiP4lp7xnKQMyFqg4tQ3g7TAdgD9qrtSqwmUTiqVFAN3ekgWL/U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ETgQ9uER; arc=fail smtp.client-ip=198.175.65.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1723619978; c=relaxed/simple;
+	bh=u231pKj/SjTK45djiW1ShtlYtaockuSEU9gB7CeAQi8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=BWXmN6g70BmZpWo7ifFV6tpxanDTx1jMtSznDA1bLCu7ikoP/gKf1G3LV5ye7MBFJkVYxl0zi4YYk5EjWVOPgdXBopNuA1Hy31q1+NhLZhq3VtpAwTultIY4b89zyFo6q7yazdhc0MEU1ENNQMDRDEYnvpR/91k//5jRJE8jt18=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=de.bosch.com; spf=pass smtp.mailfrom=de.bosch.com; dkim=pass (2048-bit key) header.d=de.bosch.com header.i=@de.bosch.com header.b=ZOkgQUzb; arc=fail smtp.client-ip=40.107.20.61
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=de.bosch.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=de.bosch.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ETgQ9uER"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1723591047; x=1755127047;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=dCo9BPRZjSnu1wfsKlkuxeorCC5gR+nXyucffOwZRC0=;
-  b=ETgQ9uERFj6EesvdNUPUh5wNC8jryt6Lx4zRM49NFHGV4/Jw4wRCYXw/
-   Y+Z2F+bjplyVF7tsRRg/epR/TlEqSdnh0NoyuEarNVWSZ6wcafQjZFF9e
-   xAr2QiJkoVSG/W5m7HQ6cpIa6hBmhvuvexRR4zgNuotS8/BJxYSQj2510
-   p6bTWh2oiKL+CfFc6W95+JVSNWcz5Ym509LzEtA4ZbIKytqs2Bo3wZ+Cc
-   rqcTSHcICm8Gf3CiRMZaWaI4U04t8Lxyu91EHvImAXHt1f83nbrSl/fkK
-   I3zHIGqG4UwdqBc9/lwAGKdTcGKFGnxaLmgQqnMXlcYSJn5b0OtH6xllP
-   Q==;
-X-CSE-ConnectionGUID: d68tvpgPQKms9UM4KyuTOw==
-X-CSE-MsgGUID: eyUdd6t8Rm+dNTZ2VFkx2g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11163"; a="21600321"
-X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; 
-   d="scan'208";a="21600321"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Aug 2024 16:17:26 -0700
-X-CSE-ConnectionGUID: LJbtz16LSDKlRd1WAb/x1Q==
-X-CSE-MsgGUID: LFiW2P05TbKUZXrm4iYbpA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.09,287,1716274800"; 
-   d="scan'208";a="89503822"
-Received: from fmsmsx602.amr.corp.intel.com ([10.18.126.82])
-  by orviesa002.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384; 13 Aug 2024 16:17:25 -0700
-Received: from fmsmsx610.amr.corp.intel.com (10.18.126.90) by
- fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39; Tue, 13 Aug 2024 16:17:24 -0700
-Received: from FMSEDG603.ED.cps.intel.com (10.1.192.133) by
- fmsmsx610.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.39 via Frontend Transport; Tue, 13 Aug 2024 16:17:24 -0700
-Received: from NAM04-DM6-obe.outbound.protection.outlook.com (104.47.73.41) by
- edgegateway.intel.com (192.55.55.68) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Tue, 13 Aug 2024 16:17:24 -0700
+	dkim=pass (2048-bit key) header.d=de.bosch.com header.i=@de.bosch.com header.b="ZOkgQUzb"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mdcV6FzOaFSf13uakpqszMqwZcVt66r1dnEcUcpokdmVDAjWUXbQlNVntAG9k2mGjvAfKHGAb7UktfOKBstvRX4QlYcGmxIDLkHOwZ/NY5WCvn1fKBVeBM5k/WlqyiT2Cr9v+t8ajbqloEmykhb2pkqeKTA9B3m+QnRTZ5by1uMFHpfQq32iFuy2qR08m/pHnRjTCE3AJyPjiB4sFc7BhwfRudS/C6tr6H9C0aPJmUNyUnlj/tvERJBYWrYy9l1OZcVCn8cT8H3HHdT2SoN32PlCVb+hoa+25HoBDPbdxuzqSl0gPQnoc+sJcncEm3Demsyui7ndkvHLrWZIb7ZysA==
+ b=yVqN2+g2Id380wzbhnGSdojLSJ2XcBQubpd5vCfviEwE1t7wlgwbykV7XMQhctDTYhNpkfUvNAPdh5fdeKe8vtithA4kGj6MG6CKeRh5BZzSx5aMhBNJPOWvaTPJnZzbgwWqmZA8SD7WNyXjurItdcLggFUhiMBXmHUViQSmH8/K+c6Gb8QnOGLVgAaerN89zUdRs+E9uGdtw2b8hecBYdfKhHxrk54abXnPiKzCWGn8LYhoub+wKB6WWAd8plBAzrbDz4ShUn4pMVWrn/TydSfEbjFyfeJKs+1XjgEbi1BU4txKQDq89+hydG/WE0IqqCeGah/P/azYTCy5Nq2iLg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Qr9jTD/6jtv9zNFmN1GZbmY0ynLrq4sctbFrwGxV4UM=;
- b=Su+s1Py7BSPaa4AEn/EA37Wr9ERccmMQiyb3LfkLqM2/m6GaPd5Hf2yoD7FTGR+ChUSpHxlBiLaQxy6HcxIO+x1CuCKishGtpv/Os0BlTrsDLAc7wxTfQ/8u12jxjLpvpFlWbwJf2TqYc6rI5TlF+kU1pbEVyb/ftiVF6LnhNeOR8ZFR6IvH8HaS6PSu/hOhw7PwH4fLsJ6Cdbyz6rK76sgeOB4DBSyTyp1Rg9NFkE1f+MSKP7KhFISL1TQtQk+sOrU/JeWAXzQceCD2L2IFK3kYYMF7uDu2BGy58aCy+moGoSgQLo40JrwMGJXMgozwjn+A1sgzs+Fd9sgfu1OxUA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
- by CH3PR11MB8518.namprd11.prod.outlook.com (2603:10b6:610:1b8::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7828.33; Tue, 13 Aug
- 2024 23:17:23 +0000
-Received: from DS0PR11MB7529.namprd11.prod.outlook.com
- ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
- ([fe80::d244:15cd:1060:941a%3]) with mapi id 15.20.7828.030; Tue, 13 Aug 2024
- 23:17:22 +0000
-Message-ID: <4bb6fcee-e16a-4a31-a69a-655bedd952b4@intel.com>
-Date: Wed, 14 Aug 2024 07:21:36 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iommu: Allow ATS to work on VFs when the PF uses IDENTITY
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Lu Baolu <baolu.lu@linux.intel.com>, Bjorn Helgaas <bhelgaas@google.com>,
-	David Woodhouse <dwmw2@infradead.org>, <iommu@lists.linux.dev>, Joerg Roedel
-	<joro@8bytes.org>, <kvm@vger.kernel.org>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-pci@vger.kernel.org>, "Robin
- Murphy" <robin.murphy@arm.com>, Suravee Suthikulpanit
-	<suravee.suthikulpanit@amd.com>, Will Deacon <will@kernel.org>,
-	<patches@lists.linux.dev>
-References: <0-v1-0fb4d2ab6770+7e706-ats_vf_jgg@nvidia.com>
- <a4760303-02cd-4c4b-bd23-eba4379b2947@intel.com>
- <20240813123041.GU8378@nvidia.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20240813123041.GU8378@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0039.apcprd02.prod.outlook.com
- (2603:1096:4:196::9) To DS0PR11MB7529.namprd11.prod.outlook.com
- (2603:10b6:8:141::20)
+ bh=i157vzuqEX2FEqTgRZjdFv1qShAcbImC85G1FwPcumY=;
+ b=szsNjCHT8ufFVz+FAdTy0G6AH1oMXig1HIakN698gYMHsBaOtLbStTTfSGyHEBwIrj/JWS8xvfd5hyK9Cyt0tjlnPr8ct3iu3so59ePCU5C2uZsIdX1KLeHM8xROeVUhbzW7Io3Z8UP2BMmb0vfaDwO6vAaQ+TMFTdCK1c5p83t/LYo33UWyNp7Rh/L5OZiioadprM93QbSAP7EKlWb0gKxaHcH6oojEsGuwR0Oh6NdVbb2ssH3tE6RKp+pdpM9JtzfrP+Kv1boCj7m1E+iMTfetxi3Qqf309mIMhPbMildhkSMe9Mh4Zf4JrPy+Qojq858/3yYmk5dV6g2e/ILJug==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 139.15.153.205) smtp.rcpttodomain=gmail.com smtp.mailfrom=de.bosch.com;
+ dmarc=pass (p=reject sp=none pct=100) action=none header.from=de.bosch.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=de.bosch.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=i157vzuqEX2FEqTgRZjdFv1qShAcbImC85G1FwPcumY=;
+ b=ZOkgQUzbwfaYzxQ6VTPTXULfSuw7hO94DtrclEk3PLfZ8FiYoqAOLPmT4x4M25UfA4+2k+BgvzWaJwN/zTo+bFIsFsSR4qHx5wdHeTtcUu2y7UjgymT3b6TfCN9hQsFts1bA9m5Le9mq6ti5c+aG3MN+HthAPJfspH19uwjQJ5HxUtL1GORNrGcbO/ChXHE0HS1MLIbhTjtiUUxqpbyfMtRGdMMA1z0vzP/Jn965+ecZB9OU1j5x0LnRurFUJE7dBvkg46RUiaDhPmWf+bBcvOrz30TlsffcHZanoW2wiG3gadxJhh3Kgyt/RwiAqvtwj0wt8VfrziKEdhT8EceC5w==
+Received: from DUZPR01CA0306.eurprd01.prod.exchangelabs.com
+ (2603:10a6:10:4b7::16) by DU0PR10MB6155.EURPRD10.PROD.OUTLOOK.COM
+ (2603:10a6:10:3e7::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.22; Wed, 14 Aug
+ 2024 07:19:31 +0000
+Received: from DU2PEPF00028D02.eurprd03.prod.outlook.com
+ (2603:10a6:10:4b7:cafe::e1) by DUZPR01CA0306.outlook.office365.com
+ (2603:10a6:10:4b7::16) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7849.23 via Frontend
+ Transport; Wed, 14 Aug 2024 07:19:31 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 139.15.153.205)
+ smtp.mailfrom=de.bosch.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=de.bosch.com;
+Received-SPF: Pass (protection.outlook.com: domain of de.bosch.com designates
+ 139.15.153.205 as permitted sender) receiver=protection.outlook.com;
+ client-ip=139.15.153.205; helo=eop.bosch-org.com; pr=C
+Received: from eop.bosch-org.com (139.15.153.205) by
+ DU2PEPF00028D02.mail.protection.outlook.com (10.167.242.186) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.7849.8 via Frontend Transport; Wed, 14 Aug 2024 07:19:31 +0000
+Received: from FE-EXCAS2001.de.bosch.com (10.139.217.200) by eop.bosch-org.com
+ (139.15.153.205) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 14 Aug
+ 2024 09:19:23 +0200
+Received: from [10.34.219.93] (10.139.217.196) by FE-EXCAS2001.de.bosch.com
+ (10.139.217.200) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 14 Aug
+ 2024 09:19:23 +0200
+Message-ID: <29eacb0f-fd78-4024-aac5-1606fe002dc6@de.bosch.com>
+Date: Wed, 14 Aug 2024 09:19:17 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] kbuild: rust: split up helpers.c
+To: Boqun Feng <boqun.feng@gmail.com>, Miguel Ojeda <ojeda@kernel.org>
+CC: Masahiro Yamada <masahiroy@kernel.org>, Wedson Almeida Filho
+	<wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor
+	<nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, Gary Guo
+	<gary@garyguo.net>, =?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?=
+	<bjorn3_gh@protonmail.com>, Benno Lossin <benno.lossin@proton.me>, "Andreas
+ Hindborg" <a.hindborg@samsung.com>, Alice Ryhl <aliceryhl@google.com>,
+	<linux-kbuild@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>,
+	=?UTF-8?Q?Sergio_Gonz=C3=A1lez_Collado?= <sergio.collado@gmail.com>
+References: <20240507210818.672517-1-ojeda@kernel.org>
+ <ZjqmfIhRz99BqXtD@boqun-archlinux>
+Content-Language: en-US
+From: Dirk Behme <dirk.behme@de.bosch.com>
+In-Reply-To: <ZjqmfIhRz99BqXtD@boqun-archlinux>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|CH3PR11MB8518:EE_
-X-MS-Office365-Filtering-Correlation-Id: 723c05c7-d394-41ad-75dc-08dcbbee1603
+X-MS-TrafficTypeDiagnostic: DU2PEPF00028D02:EE_|DU0PR10MB6155:EE_
+X-MS-Office365-Filtering-Correlation-Id: deb2d159-d0eb-4aea-f2af-08dcbc3170e2
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?aldTTEIwTmt1ZFdtM1ZxVlBtTitVaDJFWTFUZ0JYSUJ6TGNzMi9wNW80VzFk?=
- =?utf-8?B?VVZvWUMrSFQ4cHRpa0VkRE1ISnk3VG9vTnBqQmZDNzBZNmNsLzdyRTRibDZV?=
- =?utf-8?B?OS81aWVid1Mvd0dVV3pWNnR2amY5UDdNb1E1R3IzaHZrVUlDWnhvVDZLbUVE?=
- =?utf-8?B?clJLcjZ4OWI1UG1Db1gxQld6Myt0YUp6SlRuYk41MWhNRU9SUnVwVkViS1RX?=
- =?utf-8?B?b05oOU5ZejV6VWdGN2RYMUNmMlg0SUFIY1VLQWNlZDAxZ0xRUytKNTZ4TzNj?=
- =?utf-8?B?Q0JZVitLMmE3KzF6a28zS0ttbmlZSHNhVUJhVmN2RmlGMUJwNmg5OW5IVU1n?=
- =?utf-8?B?Y2dMa1JRWE44QlBCcnhQMUl1YzFoRVdvRWlpcUNueHJxV3BBR2pmZ1pBOHJT?=
- =?utf-8?B?T2FvQW53MlZlL1d5WEpENTNLOEhhYTl0MXJ3TGE0Rlk1SjdKMXhaUUhXR3ZH?=
- =?utf-8?B?SnEyWE16eDRkdEhiU001Q2lYMUZ4ajVkSFU5UFUrU255QVZwYm9oVVBWRG82?=
- =?utf-8?B?a29yRjY0WndxdVNLSE5HK2tZbUJLSWRIWGVlSlZQZmFlY3VBVHVwYUQ5aVgw?=
- =?utf-8?B?RTJuWDNxYld3dzJYbWY4UlF5SmxoQUdQb1ZNaU1TMGFSTjQyYmJzRDMwTVgy?=
- =?utf-8?B?N3gvZVlzU1FXaHdnUERJZGltVUxTaGNHQnZMaTV2UEd4VXRqU3BEd01mc3dL?=
- =?utf-8?B?RGdGZ1JPVmIxaUozR3VXN1pmeGNLVFhBZmZQQnF4eHNHZmkvbWZybW96aEFy?=
- =?utf-8?B?OWY1Wm1tamhyaitabTgwbXNjL0dsWjA4d3FoclMzOURhVjZyb013TDZYYjh5?=
- =?utf-8?B?bXliOWlpYTRQTExOR01Xb3Nmc0xlcTN3bWlEaFFIWDI3b0xTT3hDeC9IeVcv?=
- =?utf-8?B?THJGd2MvTFM3UlVhZG9LQ01WMGNvc2xBc25lc1ZJcVJ1VEtaTGFQeTYzdkZS?=
- =?utf-8?B?cS92OGZzL2JFS1Zpc2lwbGY2Qk5OZ2gwZm9TeWliWWxtb1RUL3FtN0R5NGtS?=
- =?utf-8?B?Z2sxWlRDRWxVYlVVRjdEUUpUOUMwejJ0NDdNYUhIU0dwR2F0d04rRW9PQXla?=
- =?utf-8?B?Z1lYT3JOR3VIbEY0cy8waTFCVXNraDZlT1pwUVBZdHRXaDJ5cldHTkM1akoy?=
- =?utf-8?B?c1dZcUlhcjNjcXp2c09GdlpJbXlFZTQvZDVpQ3o1a1lHK3Zzblgwek15ZVEy?=
- =?utf-8?B?YWtDNnV5V2YvUVVNaSt2cFVRQ0RWek8vbXJqenNVc205QUxydWNTUTJrSHJ5?=
- =?utf-8?B?ZVkvM3YrdUo0aTFqV0tURThEL0x0TFZuSm1XUm1rbk5ZbG5RRFhNcU1xOWxW?=
- =?utf-8?B?YkJHV2xCVFJHMEQyei9aVldqaGtmaFVXR1NrSzFBd0hTdnZ2VC9HTmJsb01m?=
- =?utf-8?B?elFsUUo0aXBmMzVCa3hxdlVzL3Q3aGVXMnB5NjFFU3NtZWljQkxvRmwwYitB?=
- =?utf-8?B?WWUvTGhoSGlSY2tIM3QybHJlNXlaK0U4Y1ZxODB2UEVsWTM0KzUyVWIrK0ZQ?=
- =?utf-8?B?Zk1hZ3c5cjJBUHNMdEVBSjUxbUNKVEJaOHA4T3EvRDVCdHdPWmZPcThyZlVa?=
- =?utf-8?B?VElVVXRQd1NtZnZmYWhQZWIwcXg2dStqb1U4S1NrOXYvRkxWWEJQSXprNlk2?=
- =?utf-8?B?eXRiZ3pIdjNNQ2RGVFhRb2IwTUxObVlNRmpKaTdFclNjNVpZN2tUV0tHbEJo?=
- =?utf-8?B?a00wcGJ1MXNiNW5DdXBjTEhzeFNzRS9HMHpGY214WVlNRnBSWXhDZ3pqT1Zj?=
- =?utf-8?B?aGJ5Qy93SW5kcGtpSzV0N3hmT0JTSDRIR0VkelF1KzJScVBTSmt6aGd6ZXdV?=
- =?utf-8?B?Y1VqT0tiSTgxR0cvTjZEdz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DS0PR11MB7529.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(7416014)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RmRyYVpIdlZuYnBkSlgveTNYMHlMVlJRVWVCYUdtdTFWTk9lZ3J5YS8rZEdN?=
- =?utf-8?B?TElCMy81ZXl4WUcxMFNybjEzcUlmRVltUFc2OTJhOGkvRXBHeGpjUGw1WUdn?=
- =?utf-8?B?RnRWWFAySFdjd0JEdkgvRGRhNnpLdlI4NGd6MzZJYUhqSGxFYnFGLzc0T3VV?=
- =?utf-8?B?WEc5ZG1STGpMSFV1OEo3dkoxREhBWDZOUFFJSjVlcGpKY2dCd2I5YjZnbEll?=
- =?utf-8?B?NTFPQ3ppT2srdkEvTUZ4L1lDNGVDWXBDYUF0MkZhU09icmt1NzRIMG1aOXVL?=
- =?utf-8?B?Nk1NWDErd05wd1llekR1YXdIWW85V0c4SlpkMERMZmY3M3Y2OXI5TjRlM1BD?=
- =?utf-8?B?QTFmZFdpWjNKcjJGOXh6K1Z6d29MWFcwbWV6Tk0wNFNxa3diQ01HYVlCWUh4?=
- =?utf-8?B?L3B6VUxqK2ZoOU03RHU3L2ZoM2NnWWJJemkzMFIyZkxiV2NXRlpvUmcxL29L?=
- =?utf-8?B?VXRnSkIvaXRoOTNJam4rMnVDSGRlQklraEcxcEc0MDZXRmF6RWVjdUppMXdD?=
- =?utf-8?B?Qy93MldiTFhkM29UNUk0VmY2dEFIT2pWdkRhZnRSNCtVSzVPMmszRytKOXRv?=
- =?utf-8?B?dnd1WXI3dEJ3MG5TL251SmdUMHhKRDlidzcrdmxKRGtET2ozcGtmakJWZ1lw?=
- =?utf-8?B?c2hvbjk0RG9OdXpaY0lZREF1dFZvV1hWVXVzZWg0WmJpL2hsM1lvOWtlT0hu?=
- =?utf-8?B?MnJobFB4OU9pbmJBbkJCNjA2S2tNaVdhVTQxdmRCeHpOR0xwNStEWG12Zy9C?=
- =?utf-8?B?ay9mQzIvMG0zTGdYRHc2ZkxMUlR1bE5RZEhrMzYrekhRazhmakc5UXh3ejY3?=
- =?utf-8?B?N0x6SUl6YzZHRkxTczBrcjJpWEpQTjkwOTVGMG02d0h6Si9QLzM2dTBwaFEz?=
- =?utf-8?B?NWVGdEowS0swRURCcUJIU1VrVHJXRnhzL2pjTTBZcTFqYXVsS000THUwSkN3?=
- =?utf-8?B?N0tVdHUvcXhGMndDdTZ1YXM1Zlh0MG5wdnl1UnJxZjR5cE1UMEswNzh6Ty91?=
- =?utf-8?B?SnZySElubXNwMTNOSFd0UkF2Tnh4TXJwbUhiOHVHd3J6Z0lvL0t5ZzlteldK?=
- =?utf-8?B?dmk1YXZ2VSt3SVFrc05ZWXpRT2w5NHVhMGNXNXZpbXNOV3lnOStyL1ZVWWVT?=
- =?utf-8?B?Sm05M2hjVzl3bTVzT04wdXExTmxTZEIyWkt2VmFQOWxPanlBVThDSndXZldn?=
- =?utf-8?B?SW9WMk11K2dLQTZLRnUyaVVGc3p4cXVuNTBvdmZGSGFDVlExeHl3TmhnZFNM?=
- =?utf-8?B?a21CWWVwcXdmZ3MvZ3ZQMTc2UWphTXIvYjlXWVJIWXlXZVFGRDVJYU85MHkv?=
- =?utf-8?B?Y2ZLN1BaWFJxVndsMitNOVkzWTlsNnFtcm5hWURFRGc4eks2b2hZQjlOWE54?=
- =?utf-8?B?dFduVUZTSmtQaGVURGNRZXVrVWhtQlkzNFFVMXdJOU9XMWN0U0NFMzVnRDgx?=
- =?utf-8?B?eXRWTnBGU0U4SEs1aGVhS3cwOWJwaFRMaVJJL3V4OFNHK01oQmJMT2N4L0xq?=
- =?utf-8?B?VkdhOGFxTnlnbGZHMit1d25vZGF5bDVFc2N3dXEwdzViVnpPTWE0QytDYk9P?=
- =?utf-8?B?Tm1uM2Y3ZUF2T2lsMmZZUFJrMnZmclB1RTNQWVhFYys1L3pIZy9ZVHlSRHpQ?=
- =?utf-8?B?SkVGSGprUnArRDdpcGdoM0xUQlBYMDZKOHdGZk5uUWdIYkp6c2NzSlQ1dVJm?=
- =?utf-8?B?SlFYd0cyTnpkOGhod0J1R2hLRFV6L3NlK3VTdnluV2daRko3OSs2ZVFOSktq?=
- =?utf-8?B?YzBrQWRlSkxmVk1STkJKNHZuSU56T1N1SXVTMjZMWlNHRTdJYkMzcG1FVlRX?=
- =?utf-8?B?S0Rnckh5R3Ryb0JvM2I4NFd0SnJEU2xVbmhudDVUamFGUE91R1JWRkY4SEho?=
- =?utf-8?B?ZFowWWUyWjRwQVNwZWtZSCszSUhGemp5UUkwdjRYekVSY2pBYnRINW9HTkJU?=
- =?utf-8?B?MFRMVjFmNDdlRHJ0RGdYeUpPT2dkOWJRTGJpM3dxMXRvQXVYbFJNV21mZUtT?=
- =?utf-8?B?ZGdqUG1aQW44WHVFaHJCeWxNSVZrYldjK1FTQkxEcCtUTUVSdHhjVnlxQWU4?=
- =?utf-8?B?bm04eHZadGdPSVhxNnBnUTA5T3FlWEFiMVM2Vjg0RGNjaW4rSEFjR1M4Ri8z?=
- =?utf-8?Q?y7iRZs2hYjtuZuH4ZAILY46kk?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 723c05c7-d394-41ad-75dc-08dcbbee1603
-X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Aug 2024 23:17:22.9063
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|7416014|36860700013|82310400026;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?S2o5ZGl3QVgxNExYdHI2WnNDZENEeDR0QVYwNXd2WDB0cy9VRGQ4T3ExQWxu?=
+ =?utf-8?B?YW94NUt4aG5UdW14MGQ5VGZVMjhjR1BBd0dCR0tNcURkOFFHc0d5VGVZeGxO?=
+ =?utf-8?B?ZTlGNzFEdnFXTGRwa0E4Q2czS3E4bG43Zm1FRnVrb3dDclk4cURYNEswd09x?=
+ =?utf-8?B?MXlmRXBYR2N5eDdWTDBhTFdiYnRjOTFQYzZQQXhWWnNFV1I2a1JCdGdreC90?=
+ =?utf-8?B?L3l2NTVsdzdMSVpLeDVvK1grZmNmSFJmdUlPLzhkUU42anhzeE45ZG5hQnls?=
+ =?utf-8?B?ek8xd01xTlFrTUQ1V1dKUnovWHNHQ0tuWEhPV05NcE52TFViSHlJdnhDaXB3?=
+ =?utf-8?B?UWVFWkV0WmQ4bnhOaUlweXA2cWxEdGgvc1lFZEtPU2g5LzB0aTRwR1JMRFI2?=
+ =?utf-8?B?cXBlcko5K2VITUZYNkx2L2ZHQ2V6N0FRUzVZRXJqTWJESnNUVUVMSUZldFJN?=
+ =?utf-8?B?dEx0ZnVrVitvVy80SEtGWGlrM2dQQTE0K2NYRXhQZmYxS3NxUjRPcGlNd01C?=
+ =?utf-8?B?LzBvanVjS0pyZ0JsaEVSd0RmMFhhY084NDZwQytjc0thOHNXSTk5d2xiUytD?=
+ =?utf-8?B?NmpvSG91SFpUanpZNnVqWGZSY0MrUDNnSnR1eVZ5dnNweG5nODA1dnYzaTNz?=
+ =?utf-8?B?VGFKVWdINkNadUhQVmwzaEJoZDlIZk50QmkrNDdmU3g3RWUyNkFqNnBHSWt6?=
+ =?utf-8?B?RThMeUlRcGtqRjA0SmdhOHhzU0hoUXRLd0lWeDlFZlZBVHZVRks2Y2Z2emNp?=
+ =?utf-8?B?Qlh0cWVlUmd0SWQyWmIvYlc1eDR2eHZQRG9kQ1IzWjd2V29vdHJmck12QW9y?=
+ =?utf-8?B?bGlhY3JLd0ZwL0tPUDlJL1k0SkxUSTU0OUxEMzN3WGRBM0FNUVpPN1NSZkFm?=
+ =?utf-8?B?YW1oQ2o5RXM5YmN4amlXbmk5TDNjVTc1QVNpVmFyeVlKNkRuK1AxT2kwNjNE?=
+ =?utf-8?B?UWhpNDZneko1bHJ6VUthUXFDUUZrOVhkYW9IL2lGWUNXeGg2MEYzbkgyT0pL?=
+ =?utf-8?B?enlFNUhlRmpJUlZ4aytsclhOL25wbXB3SlFvVkluM1l6QnJZUGRoUGR0bmVO?=
+ =?utf-8?B?ek1ZamxRRVdtK3dZUmhNNzhPbEhvaFd0dWVXVkVxL0l4VlB1QUM1MUQvVFJX?=
+ =?utf-8?B?Z2Q4Y2wwWEFXLzJ2MndNVEw5MFJqUjMrQ2ZXUy90VE9YYW1RQUNOQ3RZUEc3?=
+ =?utf-8?B?bUE1NGh1RFZmK1plYUdKVFZTbGlTL0RLbXRvTFQwajh6MGZRZ2Y3YnhiOWVW?=
+ =?utf-8?B?RkVWaDlENDFtMmN5U09PRnd5NHk3NkFESjhWOXo3SzZVYVBsS1R2cEEwV0U0?=
+ =?utf-8?B?VjF1NXdmNUp2WDNEek9MZDdNRDU5emJHckUxMGIrbDFwaFZ6a2dvZW5zU1I4?=
+ =?utf-8?B?V3lYMVdlQ2Y1VjFnUmVxemFaeWkrZEFtUm5jcXB0QzVPWXVxeGRxNFZHZDQy?=
+ =?utf-8?B?RnI3eWJibEVpbXFIRFRPRnhqREt5OTVNUzJFS1hBVDdBSXFFZUNIZll6bWJV?=
+ =?utf-8?B?WGJrRlpVMU5IZDZHWkpjVFZRQVNmc1YvZGxrM2taajZoV1k0UFh1K2tZdmMv?=
+ =?utf-8?B?elFscHZ5VlM0dU1xUDRpUWYxMzFQTFhsY3VUOHhJeE9wVDl3S0lDNDNPM2U4?=
+ =?utf-8?B?bjd5cm5WWExwTUlmLzlrbjdiNmxJQjNBYjVxWUxRNW5sRzZYK0dyWkNPczB2?=
+ =?utf-8?B?ZjVOQ0ZLakozQzYya1hBcHFHalVIcHo4eURzTTg5ZDBHeXBiNSsvVWJvajJQ?=
+ =?utf-8?B?WDRYTUl5ZHBPM1BwWjk5bCtKVUo3SjNCSzdtTWdiMGhId1ltVGhCNlZFYVM0?=
+ =?utf-8?B?WDRPQ1NBd2QrUkwyUHlySWhSaUNlZ05TVG1vaTZFTFVocjJJM3g2UzQxQUg1?=
+ =?utf-8?Q?ASsiOQ+cqO0Zv?=
+X-Forefront-Antispam-Report:
+	CIP:139.15.153.205;CTRY:DE;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:eop.bosch-org.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026);DIR:OUT;SFP:1101;
+X-OriginatorOrg: de.bosch.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Aug 2024 07:19:31.2014
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ASOm/R4zkC0FwDRr5U6pLuABJWtpBPv7Oq+7W3o2u0OZGzqeyGr3iC8R4T92ZyX1R4p7RsgoTAVwsrWy39+0TA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8518
-X-OriginatorOrg: intel.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: deb2d159-d0eb-4aea-f2af-08dcbc3170e2
+X-MS-Exchange-CrossTenant-Id: 0ae51e19-07c8-4e4b-bb6d-648ee58410f4
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=0ae51e19-07c8-4e4b-bb6d-648ee58410f4;Ip=[139.15.153.205];Helo=[eop.bosch-org.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	DU2PEPF00028D02.eurprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR10MB6155
 
-On 2024/8/13 20:30, Jason Gunthorpe wrote:
-> On Tue, Aug 13, 2024 at 11:11:01AM +0800, Yi Liu wrote:
-> 
->>> The simplest solution is to have the iommu driver set the ATS STU when it
->>> probes the device. This way the ATS STU is loaded immediately at boot time
->>> to all PFs and there is no issue when a VF comes to use it.
+On 08.05.2024 00:09, Boqun Feng wrote:
+> On Tue, May 07, 2024 at 11:08:18PM +0200, Miguel Ojeda wrote:
+>> From: Andreas Hindborg <a.hindborg@samsung.com>
 >>
->> This only sets STU without setting the ATS_CTRL.E bit. Is it possible that
->> VF considers the PF's STU field as valid only if PF's ATS_CTRL.E bit is
->> set?
-> 
-> That doesn't seem to be the case. Do you see something in the spec
-> that says so?
-
-no, I didn't find any word that describe it. So it is highly possible this
-is not defined and up to vendors. This means there is possibility for what
-I typed in the above :( I'm not a hw guy, but it seems reasonable to treat
-something valid only when the cap is enabled?
-
->>> @@ -4091,6 +4091,7 @@ static struct iommu_device *intel_iommu_probe_device(struct device *dev)
->>>    	dev_iommu_priv_set(dev, info);
->>>    	if (pdev && pci_ats_supported(pdev)) {
->>> +		pci_prepare_ats(pdev, VTD_PAGE_SHIFT);
+>> When rebasing patch sets on top of upstream Linux, merge conflicts in
+>> helpers.c are common and time consuming [1]. Thus, split the file so
+>> that each kernel component can live in a separate file.
 >>
->> perhaps just do it for PFs? :)
-> 
-> That check is inside pci_perpare_ats(), no reason to duplicate it in
-> all the callers.
-
-got it.
-
->>> +int pci_prepare_ats(struct pci_dev *dev, int ps)
->>> +{
->>> +	u16 ctrl;
->>> +
->>> +	if (!pci_ats_supported(dev))
->>> +		return -EINVAL;
->>> +
->>> +	if (WARN_ON(dev->ats_enabled))
->>> +		return -EBUSY;
->>> +
->>> +	if (ps < PCI_ATS_MIN_STU)
->>> +		return -EINVAL;
->>> +
->>> +	if (dev->is_virtfn)
->>> +		return 0;
->>> +
->>> +	dev->ats_stu = ps;
->>> +	ctrl = PCI_ATS_CTRL_STU(dev->ats_stu - PCI_ATS_MIN_STU);
->>> +	pci_write_config_word(dev, dev->ats_cap + PCI_ATS_CTRL, ctrl);
+>> Each helper file is listed explicitly and thus conflicts in the file
+>> list are still likely. However, they should be simpler to resolve than
+>> the conflicts usually seen in helpers.c.
 >>
->> Is it valuable to have a flag to mark if STU is set or not? Such way can
->> avoid setting STU multiple times.
+>> Link: https://rust-for-linux.zulipchat.com/#narrow/stream/288089-General/topic/Splitting.20up.20helpers.2Ec/near/426694012 [1]
+>> Signed-off-by: Andreas Hindborg <a.hindborg@samsung.com>
+>> Reviewed-by: Sergio González Collado <sergio.collado@gmail.com>
+>> Tested-by: Sergio González Collado <sergio.collado@gmail.com>
+>> Link: https://lore.kernel.org/r/20240416074607.1395481-1-nmi@metaspace.dk
+>> [ Reworded message slightly and fixed nits in it. Applied commit
+>>    84373132b831 ("rust: helpers: Fix grammar in comment") here. Added
+>>    SPDX license identifier in new Makefile. Applied Markdown formatting.
+>>    Added `.gitignore`. Included `helpers_combined.c` in the `clean`
+>>    target. - Miguel ]
+>> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 > 
-> We don't because we only do it for the PF due to the is_virtfn check
+> This overall looks good to me, one thing below I think should be
+> changed..
+> 
+>> ---
+>> This is a patch from Andreas that I was going to apply to `rust-next`
+>> with the tweaks mentioned above, but I noticed Kbuild was not Cc'd, so
+>> we decided to send this as a "v2" and thus give a chance to Kbuild to
+>> take a look for next cycle.
+>>
+>> If something in the diff to v1 is wrong, it is my fault, not Andreas' :)
+>>
+> 
+> [...]
+> 
+>> diff --git a/rust/helpers/build_bug.c b/rust/helpers/build_bug.c
+>> new file mode 100644
+>> index 000000000000..f3106f248485
+>> --- /dev/null
+>> +++ b/rust/helpers/build_bug.c
+>> @@ -0,0 +1,10 @@
+>> +// SPDX-License-Identifier: GPL-2.0
+>> +
+>> +#include <linux/export.h>
+>> +#include <linux/errname.h>
+>> +
+>> +const char *rust_helper_errname(int err)
+>> +{
+>> +	return errname(err);
+>> +}
+>> +EXPORT_SYMBOL_GPL(rust_helper_errname);
+> 
+> .. this build_bug.c should be avoided, but this function should go into
+> err.c.
 
-ok. Doing it only for PF is enough.
+It looks to me that this is the only/last open comment? As it seems 
+there is some consensus that this change makes sense it would be nice to 
+get anything like this :) I just stumbled about a local helpers rebase 
+conflict, again ...
 
--- 
-Regards,
-Yi Liu
+Best regards
+
+Dirk
+
+
