@@ -1,94 +1,109 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D2601B32D1;
-	Wed, 14 Aug 2024 11:39:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4D91AC43C
+	for <patches@lists.linux.dev>; Wed, 14 Aug 2024 12:06:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723635578; cv=none; b=TYpG8Zz5b6y+qa21y6EYM3NPeTbTs7Rw8mBIlpenMlCCnc+EOc3sZ2nMhXLj2wz6qUOMNAeDdIKFVoF9TTb/xYwptbGjl+naKukqJ93jI4ym3u5H5rk+rhQ7JNf+vooZ8EtiEdCUuTSvEWLUsBUnyARVMwDWrQ7pn1rTN7rS0xs=
+	t=1723637165; cv=none; b=jbNIObpSDg1vLLrWeIRjSqCvVYwaMbfHUCHoykgdHRhm1i7QCAWG00Qz6enTM5mK+TlxrLWKxl9h64Go++dhHs1ee5qOWUebcmI3AstZ/GVeRjUpXTDHIQI7pa0AFQagGGGzAA3K56RefK6pZEJjydL0KS8cXtjXquDO4bgy/tw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723635578; c=relaxed/simple;
-	bh=vtH2DCyrfUoe5tu/jyFyQOHn6xoBWrlDJdmP2Jh98gA=;
+	s=arc-20240116; t=1723637165; c=relaxed/simple;
+	bh=gd0IZ5EN8FLvwLtcwZohMxrnj1Hv3wxOAK6EJ8hB1vU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vCGdLrZeq5yzENfkBsa6N++A9vFzY2PNAho00V8IPCVnRZi1ej58sYgSsPzh+tjUk9hy2uvhqCzQaAC4rmJ3Q3mycV6oi1ouQVo5i70/CmCXfZ6u7L/jX0Dn1W633pJhYEeBYeFt/IGuZR00ZQTB7J2l/zkEp3R855femPGeG7Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5MM9oBg; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZYd/rOqxtyaXLYPlqNuLqZ9c9/qQcY03yiD9JCv/TsVSwbsxGS+mF+JXS4a/Yp8Zu6PE7T3uVkaEs6eoiw8qdfZoqtxIEiqP+0GTeCsVhuR5rxSQAKDdatf3YQjMJfTtMm1O8PcOgGwmDdIEhHTnOHOTYRpGnvB1t9IDY19iZ64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=JsLiRieH; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5MM9oBg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675EEC4AF10;
-	Wed, 14 Aug 2024 11:39:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723635577;
-	bh=vtH2DCyrfUoe5tu/jyFyQOHn6xoBWrlDJdmP2Jh98gA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=L5MM9oBg45QC4y6WD4cx5+bOLIi68w4G5yClg1V2kGsRmdetZqHOgH+CuziNINyg1
-	 CGGI08h13wb4uNtotuXDJ2n80LQhMIarFXwwc4FaJ+/X7IGTB70Jh9DA2oQmHYOfV4
-	 GW5B3rlHllvxSsTwGPo9T7vCmDragJ/Td5hibjVw=
-Date: Wed, 14 Aug 2024 13:39:35 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Kevin Holm <kevin@holm.dev>
-Cc: "Lin, Wayne" <Wayne.Lin@amd.com>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>,
-	"Deucher, Alexander" <Alexander.Deucher@amd.com>,
-	"Wu, Hersen" <hersenxs.wu@amd.com>,
-	"Wheeler, Daniel" <Daniel.Wheeler@amd.com>
-Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
- request in resume
-Message-ID: <2024081409-outsell-delay-5031@gregkh>
-References: <20240812160146.517184156@linuxfoundation.org>
- <20240812160156.489958533@linuxfoundation.org>
- <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
- <2024081345-eggnog-unease-7b3c@gregkh>
- <CO6PR12MB5489A767C7E0B1CFAEB069A0FC862@CO6PR12MB5489.namprd12.prod.outlook.com>
- <2024081317-penniless-gondola-2c07@gregkh>
- <12516acf-bee6-4371-a745-8f9e221bc657@holm.dev>
- <2d48c3c0-286d-4ed7-a3b6-5b4742b0e9d1@holm.dev>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="JsLiRieH"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-429d2d7be1eso4737755e9.1
+        for <patches@lists.linux.dev>; Wed, 14 Aug 2024 05:06:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1723637162; x=1724241962; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gd0IZ5EN8FLvwLtcwZohMxrnj1Hv3wxOAK6EJ8hB1vU=;
+        b=JsLiRieH3TcmnkLmboVDwJrOrobq7OrHAFfRyJjzedLyyFphWTko7qrMQeSnB3kXxS
+         BRg9UT5ZC/eONR42CaHvLxhVcIQLz8xAugFuZi/9PClrfoUGoeNsv2U7Wi0IMqwdX+l1
+         hqu0GaWj1QJ2TI2N7Hw+CoCqixjoaq13JT9shPFZ3k7JCZUHSp+AGt83sCZQ2AX4GRPl
+         YTOVxzqAWS/3iBAnN4JnQ1WcTEKrB0dBka+gES8sAlNpJQ7vlL2h3lQo+8XHuAYVZ2cE
+         O+PDSSv23cL2fZvodDYohfsur6YKIwgz1L2XREwx25W1cFmXydDsQAwR+B7swms+b1wv
+         kqyw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723637162; x=1724241962;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gd0IZ5EN8FLvwLtcwZohMxrnj1Hv3wxOAK6EJ8hB1vU=;
+        b=eZ6Hy7EjzeHuWjvdNykmFpSKdtFHntjWGUhqHrZMqY8c2aCEju9m7fXGJp+Jd3Bm/D
+         VXEb3lQKM1UqoY+dy0tK/TkgX+WKecctOK6MOcIdQ7nomhrg5sh4c19C/e+v33wEA5/+
+         i8qfslRDg4C4ik7G91Qf9ygiLhDWIzg8eNdYs2bSpaydm8F2M5zKHJjEv2n2kTQyNKAo
+         /PkKRUI2usMOVnDQeoZdvzm/xkzR0dwOPD72/xEnAsJvgaCXERInfcXIv0X/UMf6yw+D
+         1fMmG5+9JZkL6kZjRkIKc8IZYSBHEZPEZ7U/CYBZHnhfl/j6I+I8ml/R6/7L80s1SvvS
+         0gHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVGWVYN24ay6BHwmoFxWX5k3q/9wEN5lquTpxbNyFvwUnDuqr38yKcX2q497wrzluT/dRok+Y/XqACbAZs7ysU8wDHDvBJNpw==
+X-Gm-Message-State: AOJu0Yx4KG1iEkyzmUo2kcy8Qtp7Vv/fCsky4bacOhR49AtEth6t6rij
+	31eANZQwgId6FSZoMbcDPjVdv1FdoY+hwYw/GeW0f18I9O0/pgysEUJKSQxBhFndyd6aiyddYAq
+	+
+X-Google-Smtp-Source: AGHT+IFK9tItiQFrBm0FFaTbJQ6kU3PJtrSKuDDXaxVjodxyGXKZveXBhaEMoW3T8np6iwQotEm4FA==
+X-Received: by 2002:a05:600c:4514:b0:424:8743:86b4 with SMTP id 5b1f17b1804b1-429d62900cfmr51225855e9.6.1723637161918;
+        Wed, 14 Aug 2024 05:06:01 -0700 (PDT)
+Received: from blackdock.suse.cz ([193.86.92.181])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429ded2882esm17835185e9.13.2024.08.14.05.06.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Aug 2024 05:06:01 -0700 (PDT)
+Date: Wed, 14 Aug 2024 14:05:59 +0200
+From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Chen Ridong <chenridong@huawei.com>, Tejun Heo <tj@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 017/568] cgroup/cpuset: Prevent UAF in
+ proc_cpuset_show()
+Message-ID: <xrc6s5oyf3b5hflsffklogluuvd75h2khanrke2laes3en5js2@6kvpkcxs7ufj>
+References: <20240730151639.792277039@linuxfoundation.org>
+ <20240730151640.503086745@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ewb2dnr3qonsceaz"
+Content-Disposition: inline
+In-Reply-To: <20240730151640.503086745@linuxfoundation.org>
+
+
+--ewb2dnr3qonsceaz
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2d48c3c0-286d-4ed7-a3b6-5b4742b0e9d1@holm.dev>
 
-On Wed, Aug 14, 2024 at 09:43:23AM +0200, Kevin Holm wrote:
-> On 8/13/24 21:54, Kevin Holm wrote:
-> > On 13.08.24 17:26, Greg Kroah-Hartman wrote:
-> >  > On Tue, Aug 13, 2024 at 02:41:34PM +0000, Lin, Wayne wrote:
-> >  >> [AMD Official Use Only - AMD Internal Distribution Only]
-> >  >>
-> >  >> Hi Greg and Kevin,
-> >  >>
-> >  >> Sorry for inconvenience, but this one should be reverted by another
-> > backport patch:
-> >  >> "drm/amd/display: Solve mst monitors blank out problem after resume"
-> >  >
-> >  > What commit id in Linus's tree is that?
-> > 
-> >  From what I can tell it's:
-> > e33697141bac18 ("drm/amd/display: Solve mst monitors blank out problem
-> > after resume")
-> > 
-> > You've send out a message that it failed to apply to a few of the stable trees:
-> > - 6.10: https://lore.kernel.org/stable/2024081212-vitally-baked-7f93@gregkh/
-> > - 6.6 : https://lore.kernel.org/stable/2024081213-roast-humorless-fd20@gregkh/
-> > - 6.1 : https://lore.kernel.org/stable/2024081213-sweep-hungry-2d10@gregkh/
-> > 
-> > To apply it on top of 6.10.5-rc1 these two patches need to be applied first:
-> > f63f86b5affcc2 ("drm/amd/display: Separate setting and programming of cursor")
-> > 1ff6631baeb1f5 ("drm/amd/display: Prevent IPX From Link Detect and Set Mode")
-> > 
-> > I don't know if that solves the problem I initially described as I'm currently
-> > on a different setup. What I can say is that it applying those three patches on
-> 
-> Applying the three patches I listed above, fixes the problem for my setup. My
-> external 4k monitors now get a signal both on boot and when resuming from sleep.
+Hello.
 
-Thanks for the report, I'll drop this commit for now from the trees and
-then add back all of them for the next round of -rc releases for people
-to test.
+On Tue, Jul 30, 2024 at 05:42:04PM GMT, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> ...
+> Fix this problem by using rcu_read_lock in proc_cpuset_show().
+> As cgroup_root is kfree_rcu after commit d23b5c577715
+> ("cgroup: Make operations on the cgroup root_list RCU safe"),
+> css->cgroup won't be freed during the critical section.
+> To call cgroup_path_ns_locked, css_set_lock is needed, so it is safe to
+> replace task_get_css with task_css.
 
-greg k-h
+This backport requires also the mentioned d23b5c577715 to be
+effective (I noticed that is missing in 6.6.y at the moment).
+
+Regards,
+Michal
+
+--ewb2dnr3qonsceaz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTd6mfF2PbEZnpdoAkt3Wney77BSQUCZrydpAAKCRAt3Wney77B
+SZfxAP9ywyRvIKhBVUuIF+3idoVQKQWOlPsRUq+dEm0ScNqbmQD+MtZgzYHXuLkX
+Mby2RxhSRXCwCsXKgpEdCEBqBpKvLw4=
+=VlV7
+-----END PGP SIGNATURE-----
+
+--ewb2dnr3qonsceaz--
