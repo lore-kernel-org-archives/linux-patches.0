@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8253A19DFA6;
-	Thu, 15 Aug 2024 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2E519FA90;
+	Thu, 15 Aug 2024 13:59:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730394; cv=none; b=lHnLYxjV0hIUxQFp4FUroQjG5C2zfiDWp5CaQMUvBC46xADQHP5/4ubE884JsqAEjFVm93brliEVPY6yoKHoU6OjdRaoHi8wKOQceZF9j+ptVdMiGkTPXKAuToiNSVta1OSiqlteJJROn44kv7dT9M889Df289qbj5adDIc7ncI=
+	t=1723730397; cv=none; b=c5bzL2ZM34Nym0WToKQ/SWhkjsSVz7Nw9ercZieFeouWNR5V9+7+sovdN7fBRe1IFK0ho3mdm2AKahZUKEykTkDROmkdhm8eDun79umWHuAB13AqQ7+v28RnbZ4XBgAB56IdhsaTch/ilp1yAP9zt+3wHdF61NVVbCBVpBro+wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730394; c=relaxed/simple;
-	bh=t32yhA0i59JFLL8btd3UEYndgZallchqcaVPjUGY6LI=;
+	s=arc-20240116; t=1723730397; c=relaxed/simple;
+	bh=X5ekKbbxR574IWJkbeQ+oEy6tST9SEmBTUxuPyO/eOI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=owOEuN5snNLK6DgTIGrcpX5AWPWedu5g4XoGzmieNzEVpcEbn1kJBE+ocvWPecXKn2iO8MuLvjulXJLc3lsEsQ1RTaWuT+3mHUMF7NCX5MoUOLy8jscT8awlfckitPiEp7UI7TqSALid7iLl89q///8WZjYndWuj843aW9G32eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oj2VQ6xk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=APIW6zeouer/KowAl4iLfLLYSWkQDToIWrbt1W9AgooaRTnujXgicYp8DuZyaIhZPonyUvLwyvtZH0niPfRcDAPafiO8mvWltH5+Ekl7MWMcLDZsdB8N1pQtNFpyH01BGniMkXYuRftMc/SSZ8CeaWoZj9gfBj3ZKl4lXGBTj+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jhAhENHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oj2VQ6xk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEF3CC32786;
-	Thu, 15 Aug 2024 13:59:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jhAhENHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B218C32786;
+	Thu, 15 Aug 2024 13:59:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730394;
-	bh=t32yhA0i59JFLL8btd3UEYndgZallchqcaVPjUGY6LI=;
+	s=korg; t=1723730397;
+	bh=X5ekKbbxR574IWJkbeQ+oEy6tST9SEmBTUxuPyO/eOI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oj2VQ6xkoY1zTJ4k5+woqdRUuQ65fGDjtlFBju28BuGlAVBYpHG6Vi4P/TPvOdVOe
-	 OQfFIAqfSgFiYTO+6DM/JCFz9UZGZQqzv/zWjduWq2Knwl1pcZdp7hJlqmwiwTznkI
-	 ImzpjyRDV6jAAVXJovxfBLqsyaZkk1sIIiy+rF/4=
+	b=jhAhENHvVv6qL5neG6KvD40Ujgp0g2LFE7CXR9WODOShBqxIG0jQoYeMLv2qjySLx
+	 8TmUHM5aBbDgbunYFZVvEGAko3sjBOEwivl0p/FXP3GIfJoBqq+xCefBZI+tS4PbH1
+	 I6X37ABEr3KDmAf50+VLBIajcYJ4aW6vyJyV0gNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	kasan-dev@googlegroups.com,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 367/484] rcutorture: Fix rcu_torture_fwd_cb_cr() data race
-Date: Thu, 15 Aug 2024 15:23:45 +0200
-Message-ID: <20240815131955.611546451@linuxfoundation.org>
+Subject: [PATCH 5.15 394/484] arm64: barrier: Restore spec_bar() macro
+Date: Thu, 15 Aug 2024 15:24:12 +0200
+Message-ID: <20240815131956.664193898@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,48 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 6040072f4774a575fa67b912efe7722874be337b ]
+[ Upstream commit ebfc726eae3f31bdb5fae1bbd74ef235d71046ca ]
 
-On powerpc systems, spinlock acquisition does not order prior stores
-against later loads.  This means that this statement:
+Upcoming errata workarounds will need to use SB from C code. Restore the
+spec_bar() macro so that we can use SB.
 
-	rfcp->rfc_next = NULL;
+This is effectively a revert of commit:
 
-Can be reordered to follow this statement:
+  4f30ba1cce36d413 ("arm64: barrier: Remove spec_bar() macro")
 
-	WRITE_ONCE(*rfcpp, rfcp);
-
-Which is then a data race with rcu_torture_fwd_prog_cr(), specifically,
-this statement:
-
-	rfcpn = READ_ONCE(rfcp->rfc_next)
-
-KCSAN located this data race, which represents a real failure on powerpc.
-
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Acked-by: Marco Elver <elver@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: <kasan-dev@googlegroups.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240508081400.235362-2-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
+[ Mark: fix conflict ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/rcu/rcutorture.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/barrier.h | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/rcu/rcutorture.c b/kernel/rcu/rcutorture.c
-index 9d8d1f233d7bd..a3bab6af4028f 100644
---- a/kernel/rcu/rcutorture.c
-+++ b/kernel/rcu/rcutorture.c
-@@ -2186,7 +2186,7 @@ static void rcu_torture_fwd_cb_cr(struct rcu_head *rhp)
- 	spin_lock_irqsave(&rfp->rcu_fwd_lock, flags);
- 	rfcpp = rfp->rcu_fwd_cb_tail;
- 	rfp->rcu_fwd_cb_tail = &rfcp->rfc_next;
--	WRITE_ONCE(*rfcpp, rfcp);
-+	smp_store_release(rfcpp, rfcp);
- 	WRITE_ONCE(rfp->n_launders_cb, rfp->n_launders_cb + 1);
- 	i = ((jiffies - rfp->rcu_fwd_startat) / (HZ / FWD_CBS_HIST_DIV));
- 	if (i >= ARRAY_SIZE(rfp->n_launders_hist))
+diff --git a/arch/arm64/include/asm/barrier.h b/arch/arm64/include/asm/barrier.h
+index 1c5a005984582..6e3f4eea1f34d 100644
+--- a/arch/arm64/include/asm/barrier.h
++++ b/arch/arm64/include/asm/barrier.h
+@@ -26,6 +26,10 @@
+ #define __tsb_csync()	asm volatile("hint #18" : : : "memory")
+ #define csdb()		asm volatile("hint #20" : : : "memory")
+ 
++#define spec_bar()	asm volatile(ALTERNATIVE("dsb nsh\nisb\n",		\
++						 SB_BARRIER_INSN"nop\n",	\
++						 ARM64_HAS_SB))
++
+ #ifdef CONFIG_ARM64_PSEUDO_NMI
+ #define pmr_sync()						\
+ 	do {							\
 -- 
 2.43.0
 
