@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606B663C;
-	Thu, 15 Aug 2024 00:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C901317C9;
+	Thu, 15 Aug 2024 00:55:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723683322; cv=none; b=nTwbEa8j6+ndntniC7gHUL8ARbT9N4f2rLfEqIhhPZVty2pTtMDXSmAfJiwSjoqj42VTU49jiqu8yRCdhiud2JiK50PYJgjZ2LhlryFeOvxE7/y/7LLPuxYNdJzLGc0D4M47OE2XFnx28Yy+utkJ5FED/SFl8nZyZrdv1alScHI=
+	t=1723683322; cv=none; b=kp4lEDu3QkpObxRpgmyNwx1SVE4SUM03OFhvoK2+ZglYsymc2OMDs523P5SXIVrWd0l2c8+wVt/b/HXXh7A02a6S4Pw4lcHllpsoM1FZDwA3Ry4n5UUeGtHNdkAldcaeXKoHZl9uZpD4iZ4zn3xv3cQ43f88T2fCuM/7dwrAQ1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1723683322; c=relaxed/simple;
-	bh=xMjGUKON6LLUAWLnJja4K6PiE7W+OUxh2h/3ZA5g+fs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pEIhUTZ3pkPjlc01Ct/aBNyNyhbO23Dkmmy/NCG3ADtn0H2Mjbn+GKqEvU/+BfZBpWJ61GF6rF3P/5XbKYQu11cmzq0terU8cccb/DvQ3dT8q3gbWPakHNLXplJZgMj5/fZOcrRXjmGFlUgye3xcoDRbg8JX58vYWts7+afeqwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hl60/AXk; arc=none smtp.client-ip=10.30.226.201
+	bh=E6GsvcugWdwE3j2MGg8isjW5X4BIFzTI3KQjqfhME5M=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=LLNMjIll4Qq3t2xAL1T0rPayJHJojMZ8KYy3IgR0F6fJ7QVO/upRv2s8DAmWrsngNc6sAeGUFlvTRlV9DS3u6DSYF15U3+NmRA9uktle+XkyQPCDiPtBXwLwf9CY3dGgdXT4qOt2Fk47HOLxFOqv9X2mO3CpLuRX3ywVIGfCqKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WGU1+dlZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hl60/AXk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D2DC116B1;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WGU1+dlZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89F1C4AF0B;
 	Thu, 15 Aug 2024 00:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723683321;
-	bh=xMjGUKON6LLUAWLnJja4K6PiE7W+OUxh2h/3ZA5g+fs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=hl60/AXkRBRAMhBRJRfv3E0Nx2gYuOASZCV7fgOD9pEQYk2ywMUc4DyvzFLl8XDYl
-	 HhvXqtK4sFdAce+V4o9nqrK1SMP+36SJa0GeclXDIzdRgvTQSoikJjrz3qO8wA7fWz
-	 Ds6jCccJHwC20HO3bwjtDz0kfXqjtP04KLYGNuEW5hSMzZsIxm308wih29PwICWDmt
-	 eoMcd4EvmrrPx6hOnpyVjLVN++P8kZAcGVriaaHoM5TS8YwwS9MBaUfGaUwlvo8AB+
-	 llHmuHlKALWNot/IVBjtXbSRUtwezcYP+Yb8agOQ4m6JDpXsXTUD+wdbfYecfX8XxD
-	 WCsF6kBIb+3hA==
+	s=k20201202; t=1723683322;
+	bh=E6GsvcugWdwE3j2MGg8isjW5X4BIFzTI3KQjqfhME5M=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=WGU1+dlZOR0Iftx6+ZCP/6QyznKCgpF/x6hyX4uGaBDZKBCaK9XYlsCj/q55msETM
+	 nSNu0cGnavucJJR5XPpiqH8APnDH6X7QLSpj7Cw93dvIa4Q5N0Fpnyx5bdw4oh4JPg
+	 HTD97Cys/ujGV/n2GNKAJK1Ks/9c5p3olmc19dxkmii0/ipAb4GYmsuU2yK+KNCTb2
+	 NTjm1fHKGIEzZugpEWCrApyPmbTBxokkUfwFz+1IzX/f9fNP6sx+c/p7U3h0gK2zsz
+	 x0MqL+wGw8bwebuYzIzlO8oRVPXFXV8bZhYgy/Ol5exbZ769JHLmdmukLZS/1FoGbj
+	 MqEnZoJagwMYA==
 From: Stephen Boyd <sboyd@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
+Cc: =?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	linux-kernel@vger.kernel.org,
 	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Rae Moar <rmoar@google.com>
-Subject: [PATCH 00/12] clk: Unit test clk unregistration paths
-Date: Wed, 14 Aug 2024 17:55:06 -0700
-Message-ID: <20240815005520.1192374-1-sboyd@kernel.org>
+	patches@lists.linux.dev
+Subject: [PATCH 01/12] clk: Fix clk not being unlinked from consumers list
+Date: Wed, 14 Aug 2024 17:55:07 -0700
+Message-ID: <20240815005520.1192374-2-sboyd@kernel.org>
 X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
+In-Reply-To: <20240815005520.1192374-1-sboyd@kernel.org>
+References: <20240815005520.1192374-1-sboyd@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -47,44 +48,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The clk_hw_unregister() path is rarely used and almost entirely
-untested. Case in point, the first patch in this series that fixes a bug
-due to unregistering a clk_hw and calling clk_put(). Add unit tests for
-this code and test the consumer APIs to make sure the behavior stays
-consistent.
+From: Nuno Sá <nuno.sa@analog.com>
 
-The last patch is a WIP because I haven't gotten around to fixing all
-the problems.
+When a clk_hw is registered we add a struct clk handle to it's
+consumers list. This handle is created in '__clk_register()' per the
+'alloc_clk()' call.
 
-Cc: Brendan Higgins <brendan.higgins@linux.dev>
-Cc: David Gow <davidgow@google.com>
-Cc: Rae Moar <rmoar@google.com>
+As such, we need to remove this handle when unregistering the
+clk_hw. This can actually lead to a use after free if a provider gets
+removed before a consumer. When removing the consumer, '__clk_put()' is
+called and that will do 'hlist_del(&clk->clks_node)' which will touch in
+already freed memory.
 
-Nuno Sá (1):
-  clk: Fix clk not being unlinked from consumers list
+Fixes: 1df4046a93e0 ("clk: Combine __clk_get() and __clk_create_clk()")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20240710-dev-clk-misc-v1-1-cd9d960099a2@analog.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+---
+ drivers/clk/clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Stephen Boyd (11):
-  clk: test: Introduce clk_hw_unregister_kunit()
-  clk: test: Introduce clk_put_kunit()
-  clk: Add tests for unregistering clk_hw and using consumer APIs
-  clk: Fail phase APIs after clk_hw is unregistered
-  clk: Test clk_get_phase() behavior after clk_hw is unregistered
-  clk: Fail duty cycle APIs after clk_hw is unregistered
-  clk: Test clk_set_duty_cycle() behavior after clk_hw is unregistered
-  clk: Prevent unregistered clk_hw from being reinserted into clk tree
-  clk: Test clk_set_parent() behavior after clk_hw is unregistered
-  clk: Test parent/clk flags combos while unregistering a clk_hw
-  WIP: clk: Test behavior of children clks after a parent is
-    unregistered
-
- drivers/clk/clk.c               |  26 +-
- drivers/clk/clk_kunit_helpers.c |  46 ++
- drivers/clk/clk_test.c          | 720 ++++++++++++++++++++++++++++++++
- include/kunit/clk.h             |   2 +
- 4 files changed, 791 insertions(+), 3 deletions(-)
-
-
-base-commit: 274aff8711b2e77c27bbda0ddc24caa39f154bfa
+diff --git a/drivers/clk/clk.c b/drivers/clk/clk.c
+index 285ed1ad8a37..f5415aa70f81 100644
+--- a/drivers/clk/clk.c
++++ b/drivers/clk/clk.c
+@@ -4606,6 +4606,8 @@ void clk_unregister(struct clk *clk)
+ 	if (clk->core->protect_count)
+ 		pr_warn("%s: unregistering protected clock: %s\n",
+ 					__func__, clk->core->name);
++
++	clk_core_unlink_consumer(clk);
+ 	clk_prepare_unlock();
+ 
+ 	kref_put(&clk->core->ref, __clk_release);
 -- 
 https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
 https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
