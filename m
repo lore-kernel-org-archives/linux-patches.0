@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1B91A3BB6;
-	Thu, 15 Aug 2024 14:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F081ABEC0;
+	Thu, 15 Aug 2024 14:03:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730617; cv=none; b=u2ipGSYeHDZ89LI9lvTEDsVYMOxa/+nudy6e5iQqVIOQeteBeGOMdiGzYLJrfcmOoxAwoRj6xNkmG84GfmS+YqMmdKjyNf6aP5ErmjGBDBUPK5UDNvSTxdlkpWt/v2R+RqEuhUsrKYzFykjJdTopvmEdQgrWtNNp9WMjIPhLSmA=
+	t=1723730618; cv=none; b=R/I7cuYrHy10mocDG2XfphDCokgeaymnBPK/znFnc5WgDPNX9wf8atLdx/U8EA1XV4RbNAIrtdCwz7SrbIHqZ7NAbNJgusX4HNkJQQLB7QmKxjE13ePc/6yPosjtDr17o54kki9Ns3whrVMhRUaI7bZHZg8V57gntNehUF7XMNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730617; c=relaxed/simple;
-	bh=vfNwg45G9cUeTBHvSgnmSSC5a67cSvofHqk5cUD6hPM=;
+	s=arc-20240116; t=1723730618; c=relaxed/simple;
+	bh=8fPWL+HUA9CweTFaIa/iTrJEAYZWTdZrOnNCKitCYYo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=irQkdZthAG6qOghNWPiakDS0U+brbETV2siA7T8KFXvFplqy66c5Tp0thz/R6AdbyyxicyOzr3ZD43rAeMLFVXJfrk2j/YUNaI8sw2BGFOu2zh7JPY9vjqYqlShx/nBCIomZ+D3D+YBdvJjA1Bd7tawA/u7nIpOrmS5EUkELAGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=thclKiMI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rV2bWaRfhX3tfENjBisv9Gg23h9E8kb0gFkLhO4D6/mdrkP5BKnZXWyoJC47q+75bLhJ06l6oHEhryd97Doq9LT04Ec5bNFu/cKzF59aGr350abTyPbTvaWu1Tfu9PLphVHxBxolD2aPQlsbWjDJfxZBpesJBYiq3Wmx0JsYTgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UN3C1Mz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="thclKiMI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB307C32786;
-	Thu, 15 Aug 2024 14:03:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UN3C1Mz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D45C32786;
+	Thu, 15 Aug 2024 14:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730615;
-	bh=vfNwg45G9cUeTBHvSgnmSSC5a67cSvofHqk5cUD6hPM=;
+	s=korg; t=1723730618;
+	bh=8fPWL+HUA9CweTFaIa/iTrJEAYZWTdZrOnNCKitCYYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=thclKiMIhASVOEoNaSAqU2da5Eq+ozV3kqkRiIDAm6npr3uhyce37rw/zeyeo0Mea
-	 mQSNkTldkwMFEvsNobz8jTSKJPiIO2FCeyyg0rZJ2x59EKRWAxeUGXA+yK0K5J4c0g
-	 rwJoi65aZhKmbcGMgAP12818UhBf0UkKX0UypEyQ=
+	b=2UN3C1MzbWsGNxyW3LA5GYCIxT9Gd/ibgEMmIkOyanvu6Yz47vlp0h4Pdq2zOne9q
+	 FAZVaBb3m4gZ7DQV6UAy8nc05+Hy/cLZWeN/i+xIZGVYRQJUIGvDB/AMAhIuBJc5Py
+	 xW4ouupwC8K5eHn0kkqMVoTLVFXdElmm4ygYpClI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Sun <samsun1006219@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Chandan Babu R <chandanbabu@kernel.org>,
-	Kevin Berry <kpberry@google.com>
-Subject: [PATCH 5.15 462/484] xfs: fix log recovery buffer allocation for the legacy h_size fixup
-Date: Thu, 15 Aug 2024 15:25:20 +0200
-Message-ID: <20240815131959.322281678@linuxfoundation.org>
+	Arseniy Krasnov <avkrasnov@salutedevices.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 434/484] irqchip/meson-gpio: Convert meson_gpio_irq_controller::lock to raw_spinlock_t
+Date: Thu, 15 Aug 2024 15:24:52 +0200
+Message-ID: <20240815131958.223287288@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -54,72 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Arseniy Krasnov <avkrasnov@salutedevices.com>
 
-commit 45cf976008ddef4a9c9a30310c9b4fb2a9a6602a upstream.
+[ Upstream commit f872d4af79fe8c71ae291ce8875b477e1669a6c7 ]
 
-Commit a70f9fe52daa ("xfs: detect and handle invalid iclog size set by
-mkfs") added a fixup for incorrect h_size values used for the initial
-umount record in old xfsprogs versions.  Later commit 0c771b99d6c9
-("xfs: clean up calculation of LR header blocks") cleaned up the log
-reover buffer calculation, but stoped using the fixed up h_size value
-to size the log recovery buffer, which can lead to an out of bounds
-access when the incorrect h_size does not come from the old mkfs
-tool, but a fuzzer.
+This lock is acquired under irq_desc::lock with interrupts disabled.
 
-Fix this by open coding xlog_logrec_hblks and taking the fixed h_size
-into account for this calculation.
+When PREEMPT_RT is enabled, 'spinlock_t' becomes preemptible, which results
+in invalid lock acquire context;
 
-Fixes: 0c771b99d6c9 ("xfs: clean up calculation of LR header blocks")
-Reported-by: Sam Sun <samsun1006219@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
-Signed-off-by: Chandan Babu R <chandanbabu@kernel.org>
-Signed-off-by: Kevin Berry <kpberry@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  [ BUG: Invalid wait context ]
+  swapper/0/1 is trying to lock:
+  ffff0000008fed30 (&ctl->lock){....}-{3:3}, at: meson_gpio_irq_update_bits0
+  other info that might help us debug this:
+  context-{5:5}
+  3 locks held by swapper/0/1:
+   #0: ffff0000003cd0f8 (&dev->mutex){....}-{4:4}, at: __driver_attach+0x90c
+   #1: ffff000004714650 (&desc->request_mutex){+.+.}-{4:4}, at: __setup_irq0
+   #2: ffff0000047144c8 (&irq_desc_lock_class){-.-.}-{2:2}, at: __setup_irq0
+  stack backtrace:
+  CPU: 1 PID: 1 Comm: swapper/0 Not tainted 6.9.9-sdkernel #1
+  Call trace:
+   _raw_spin_lock_irqsave+0x60/0x88
+   meson_gpio_irq_update_bits+0x34/0x70
+   meson8_gpio_irq_set_type+0x78/0xc4
+   meson_gpio_irq_set_type+0x30/0x60
+   __irq_set_trigger+0x60/0x180
+   __setup_irq+0x30c/0x6e0
+   request_threaded_irq+0xec/0x1a4
+
+Fixes: 215f4cc0fb20 ("irqchip/meson: Add support for gpio interrupt controller")
+Signed-off-by: Arseniy Krasnov <avkrasnov@salutedevices.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240729131850.3015508-1-avkrasnov@salutedevices.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/xfs_log_recover.c |   20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ drivers/irqchip/irq-meson-gpio.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -2972,7 +2972,7 @@ xlog_do_recovery_pass(
- 	int			error = 0, h_size, h_len;
- 	int			error2 = 0;
- 	int			bblks, split_bblks;
--	int			hblks, split_hblks, wrapped_hblks;
-+	int			hblks = 1, split_hblks, wrapped_hblks;
- 	int			i;
- 	struct hlist_head	rhash[XLOG_RHASH_SIZE];
- 	LIST_HEAD		(buffer_list);
-@@ -3028,14 +3028,22 @@ xlog_do_recovery_pass(
- 		if (error)
- 			goto bread_err1;
+diff --git a/drivers/irqchip/irq-meson-gpio.c b/drivers/irqchip/irq-meson-gpio.c
+index 89dab14406e69..6a3d18d5ba2f0 100644
+--- a/drivers/irqchip/irq-meson-gpio.c
++++ b/drivers/irqchip/irq-meson-gpio.c
+@@ -141,7 +141,7 @@ struct meson_gpio_irq_controller {
+ 	void __iomem *base;
+ 	u32 channel_irqs[MAX_NUM_CHANNEL];
+ 	DECLARE_BITMAP(channel_map, MAX_NUM_CHANNEL);
+-	spinlock_t lock;
++	raw_spinlock_t lock;
+ };
  
--		hblks = xlog_logrec_hblks(log, rhead);
--		if (hblks != 1) {
--			kmem_free(hbp);
--			hbp = xlog_alloc_buffer(log, hblks);
-+		/*
-+		 * This open codes xlog_logrec_hblks so that we can reuse the
-+		 * fixed up h_size value calculated above.  Without that we'd
-+		 * still allocate the buffer based on the incorrect on-disk
-+		 * size.
-+		 */
-+		if (h_size > XLOG_HEADER_CYCLE_SIZE &&
-+		    (rhead->h_version & cpu_to_be32(XLOG_VERSION_2))) {
-+			hblks = DIV_ROUND_UP(h_size, XLOG_HEADER_CYCLE_SIZE);
-+			if (hblks > 1) {
-+				kmem_free(hbp);
-+				hbp = xlog_alloc_buffer(log, hblks);
-+			}
- 		}
- 	} else {
- 		ASSERT(log->l_sectBBsize == 1);
--		hblks = 1;
- 		hbp = xlog_alloc_buffer(log, 1);
- 		h_size = XLOG_BIG_RECORD_BSIZE;
+ static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
+@@ -150,14 +150,14 @@ static void meson_gpio_irq_update_bits(struct meson_gpio_irq_controller *ctl,
+ 	unsigned long flags;
+ 	u32 tmp;
+ 
+-	spin_lock_irqsave(&ctl->lock, flags);
++	raw_spin_lock_irqsave(&ctl->lock, flags);
+ 
+ 	tmp = readl_relaxed(ctl->base + reg);
+ 	tmp &= ~mask;
+ 	tmp |= val;
+ 	writel_relaxed(tmp, ctl->base + reg);
+ 
+-	spin_unlock_irqrestore(&ctl->lock, flags);
++	raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ }
+ 
+ static void meson_gpio_irq_init_dummy(struct meson_gpio_irq_controller *ctl)
+@@ -207,12 +207,12 @@ meson_gpio_irq_request_channel(struct meson_gpio_irq_controller *ctl,
+ 	unsigned long flags;
+ 	unsigned int idx;
+ 
+-	spin_lock_irqsave(&ctl->lock, flags);
++	raw_spin_lock_irqsave(&ctl->lock, flags);
+ 
+ 	/* Find a free channel */
+ 	idx = find_first_zero_bit(ctl->channel_map, ctl->params->nr_channels);
+ 	if (idx >= ctl->params->nr_channels) {
+-		spin_unlock_irqrestore(&ctl->lock, flags);
++		raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ 		pr_err("No channel available\n");
+ 		return -ENOSPC;
  	}
+@@ -220,7 +220,7 @@ meson_gpio_irq_request_channel(struct meson_gpio_irq_controller *ctl,
+ 	/* Mark the channel as used */
+ 	set_bit(idx, ctl->channel_map);
+ 
+-	spin_unlock_irqrestore(&ctl->lock, flags);
++	raw_spin_unlock_irqrestore(&ctl->lock, flags);
+ 
+ 	/*
+ 	 * Setup the mux of the channel to route the signal of the pad
+@@ -488,7 +488,7 @@ static int __init meson_gpio_irq_of_init(struct device_node *node,
+ 	if (!ctl)
+ 		return -ENOMEM;
+ 
+-	spin_lock_init(&ctl->lock);
++	raw_spin_lock_init(&ctl->lock);
+ 
+ 	ctl->base = of_iomap(node, 0);
+ 	if (!ctl->base) {
+-- 
+2.43.0
+
 
 
