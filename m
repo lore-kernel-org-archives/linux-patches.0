@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDB11714AE;
-	Thu, 15 Aug 2024 13:36:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791C719F47A;
+	Thu, 15 Aug 2024 13:36:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728993; cv=none; b=fWM2ZwT0/nHkQ1JIHk59Q/DOUeJQft14/a40ZVmS5+wlRz8paF3EtyuXBxLG5Z19w8CnA3gT0GhPYBGehTFQBFHJQvfGjxwa2+69bRZyfl66KykNzp3183qYPTyH/M0DySt8+CYsj0kEizfQTdFPcVwMkuQMI/5U592bHyp8SR8=
+	t=1723728996; cv=none; b=icu/qrzFFKOvnjwIfOa1MFuaxtxN0OjXLfvyjPJLqzYuxhbDDxsPWbEE9/WLNJxz2FjjfAjWKvC/dWj7PgR/Yxxbcovd8MyPQI6/HpAKM5NR2gSX8th+XzJLJJHtO02SWaBRmd2lZqRwYqgnSfri9R8v6eriRuqlLYRS/xYxl+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728993; c=relaxed/simple;
-	bh=SvrWE4YnD5J3f8vVf2iNgSV7Byld1zPhQzpXtSqm9vc=;
+	s=arc-20240116; t=1723728996; c=relaxed/simple;
+	bh=2fYvLAwyj/WaCURXZVkgQhECR30BNgOXXXeoFkinXg4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bRaDrF0aNjwkGQyeGKoTIxfDHd+n7iIh+0zkY6+sT7JZMoCatDmonOYsawc/1xOZqywruneVoWrpjPeUUrSW6Itxp711qWBd1zZSXAqOluFpbYyTWYHtCY4GIa6sXd5hNpGZU7t8Maso4LRTevzoGCnFz1KLpl/8d//ucgzBU9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w7Nj4zZk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lZhzxnjMxQI4s0cGNF5KVzjcnMIfUa1Pe7lt3saEifRIF9QLwgBELCgmVXMvL4NpLfH5tJfewbniRRStMHpRluv3rFmJU3pVZbFkgeVR37FSj/qzsbD01bn9/DvCnIBGx7NcJL1MN0t/nFwM3oWQt00WNkQS+HkXv1dSjIQsMnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+VkMZxj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w7Nj4zZk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A642AC32786;
-	Thu, 15 Aug 2024 13:36:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+VkMZxj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA1B3C32786;
+	Thu, 15 Aug 2024 13:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728993;
-	bh=SvrWE4YnD5J3f8vVf2iNgSV7Byld1zPhQzpXtSqm9vc=;
+	s=korg; t=1723728996;
+	bh=2fYvLAwyj/WaCURXZVkgQhECR30BNgOXXXeoFkinXg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7Nj4zZkrqUDvlrTMc4RaO3ZtNDrk92PCvpAQKesJA+spAK2a1o6wYxf+K40lyWUK
-	 0Dj4n3ZEC91Cbx2jFPs9LCZMDCQVNofs+ycTdxxORRPMmj8s6L49DFf39VWxa++u/p
-	 C1naVmmMZIQaKcueJOuD70XaKkFR26vQUzGQwWf0=
+	b=Q+VkMZxjIOUT+97wn8UjaKGDWj3xuF9Tk1ltBodX1aCKgw6BUFq+1T9Zinq9Bvaiy
+	 qkskFRWxIBqU89Se8k3QoHxP1XoKIMFxE3RpYOfyYTqSUQUSRJt4HRfE2aXbB7+rfA
+	 jUiGyFhcnWnr8LZeKXYe5Mx2HcLiLwO9i8BSnDYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wulff <crwulff@gmail.com>
-Subject: [PATCH 4.19 175/196] usb: gadget: core: Check for unset descriptor
-Date: Thu, 15 Aug 2024 15:24:52 +0200
-Message-ID: <20240815131858.768402975@linuxfoundation.org>
+	Vamshi Gajjela <vamshigajjela@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.19 176/196] scsi: ufs: core: Fix hba->last_dme_cmd_tstamp timestamp updating logic
+Date: Thu, 15 Aug 2024 15:24:53 +0200
+Message-ID: <20240815131858.806932864@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -49,47 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Wulff <crwulff@gmail.com>
+From: Vamshi Gajjela <vamshigajjela@google.com>
 
-commit 973a57891608a98e894db2887f278777f564de18 upstream.
+commit ab9fd06cb8f0db0854291833fc40c789e43a361f upstream.
 
-Make sure the descriptor has been set before looking at maxpacket.
-This fixes a null pointer panic in this case.
+The ufshcd_add_delay_before_dme_cmd() always introduces a delay of
+MIN_DELAY_BEFORE_DME_CMDS_US between DME commands even when it's not
+required. The delay is added when the UFS host controller supplies the
+quirk UFSHCD_QUIRK_DELAY_BEFORE_DME_CMDS.
 
-This may happen if the gadget doesn't properly set up the endpoint
-for the current speed, or the gadget descriptors are malformed and
-the descriptor for the speed/endpoint are not found.
+Fix the logic to update hba->last_dme_cmd_tstamp to ensure subsequent DME
+commands have the correct delay in the range of 0 to
+MIN_DELAY_BEFORE_DME_CMDS_US.
 
-No current gadget driver is known to have this problem, but this
-may cause a hard-to-find bug during development of new gadgets.
+Update the timestamp at the end of the function to ensure it captures the
+latest time after any necessary delay has been applied.
 
-Fixes: 54f83b8c8ea9 ("USB: gadget: Reject endpoints with 0 maxpacket value")
+Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
+Link: https://lore.kernel.org/r/20240724135126.1786126-1-vamshigajjela@google.com
+Fixes: cad2e03d8607 ("ufs: add support to allow non standard behaviours (quirks)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Chris Wulff <crwulff@gmail.com>
-Link: https://lore.kernel.org/r/20240725010419.314430-2-crwulff@gmail.com
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/udc/core.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/scsi/ufs/ufshcd.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -99,12 +99,10 @@ int usb_ep_enable(struct usb_ep *ep)
- 		goto out;
- 
- 	/* UDC drivers can't handle endpoints with maxpacket size 0 */
--	if (usb_endpoint_maxp(ep->desc) == 0) {
--		/*
--		 * We should log an error message here, but we can't call
--		 * dev_err() because there's no way to find the gadget
--		 * given only ep.
--		 */
-+	if (!ep->desc || usb_endpoint_maxp(ep->desc) == 0) {
-+		WARN_ONCE(1, "%s: ep%d (%s) has %s\n", __func__, ep->address, ep->name,
-+			  (!ep->desc) ? "NULL descriptor" : "maxpacket 0");
-+
- 		ret = -EINVAL;
- 		goto out;
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -3592,11 +3592,16 @@ static inline void ufshcd_add_delay_befo
+ 			min_sleep_time_us =
+ 				MIN_DELAY_BEFORE_DME_CMDS_US - delta;
+ 		else
+-			return; /* no more delay required */
++			min_sleep_time_us = 0; /* no more delay required */
  	}
+ 
+-	/* allow sleep for extra 50us if needed */
+-	usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	if (min_sleep_time_us > 0) {
++		/* allow sleep for extra 50us if needed */
++		usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	}
++
++	/* update the last_dme_cmd_tstamp */
++	hba->last_dme_cmd_tstamp = ktime_get();
+ }
+ 
+ /**
 
 
