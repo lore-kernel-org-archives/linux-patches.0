@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6811AC896;
-	Thu, 15 Aug 2024 14:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A09119DF85;
+	Thu, 15 Aug 2024 14:20:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731598; cv=none; b=IALIZU8g8l8F/B3KKhMwk3rd1F3rDfBpsmbebKBhjFumyu8bIlvcpJh072uZj+N0Ewv284KGTGw2AA3Al68z5modWvjJ8xaqmMoU16mk7T2Yk9ogKC+Yhv7ErsF3xiYKlFr1PNtAIPhCGS5I1Hg8hWwT2N2dg/S2UK+HmT0q92c=
+	t=1723731601; cv=none; b=sBaw7dCyZkgrfYpaVdTTM05hqQsghH8J40671cp1DPPRIoAiuwBbhH+vadUoseKNHXz/EIbqOzrQkf93Ujyxx5banQMo7y8j6WMeZ0mqreRGC5HWdDz/zlwN36q/ee/4IMj2bji38P9XGRepLJ590hAHKlIZHR9zh7uPTl8W4Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731598; c=relaxed/simple;
-	bh=uAJP1AjGWD+ZU8mkhg1v0JuFKJHSnQPYCU0EkR+qlP4=;
+	s=arc-20240116; t=1723731601; c=relaxed/simple;
+	bh=tbn0l5xY3pWQvetktJBN4mTC99pvth9ZMeUa8nQFU54=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ApWZ3UPR+7kv80z4EmTTTedh7u79W62KPYubzVsRJj7e0zoQDnUk8PwiFML+PH4oOGwJY6nkWgI8+HkuMHVrpGJ76eB1Y+24ZlhKJBDQ/dVFrRfwWeCgPtOWxYiOeJPJE2zHQHLAUdPj9DPU838zd2MiqwqBaWKnAD0gnQYy2gg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GbBBayE6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VBWUqJKstLxkTayq0zgwVSJMsQpNVn3a/Y9gCjqcYLiz5NgdX9yKV9Es4G8gvm3gfqpv9AA9+HYEaWOusym3Gn85Q9G29FPOR1d5vtCPsoJj9zmOA/Puk8eeJqJF0vDDtmgz5aNptIpGv0yEIwKdXjTRs8TX7lYM9/NPR+peUgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay2vy+dP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GbBBayE6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5CFC32786;
-	Thu, 15 Aug 2024 14:19:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay2vy+dP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E37C32786;
+	Thu, 15 Aug 2024 14:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731597;
-	bh=uAJP1AjGWD+ZU8mkhg1v0JuFKJHSnQPYCU0EkR+qlP4=;
+	s=korg; t=1723731601;
+	bh=tbn0l5xY3pWQvetktJBN4mTC99pvth9ZMeUa8nQFU54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbBBayE63TCBlhGI0TqgM8cBAi4whMTUHuDAuFt27ueKnlOAyj0raQ0Mr6f7GpfpC
-	 f0c0edgsSBUAjz6sr6lTwFBejpWeMb2+BK22wPtA0WZRzpQGbgcKZinlzU/1zwEBpR
-	 jHt/f2HsoZSAnZEzMe5gylZnGG6N85+7mXoc94rE=
+	b=ay2vy+dP0ih8FrXdKzr/aPo3HmFzduhcoOHWfjdoIqKMQkZxd73jHLPsJmBnp8FhR
+	 jU+/cTKPz+0ZzYMPR0XJ7A3Jss6QuPIJcGeXUq2/cj/yAreaJcSmabj/ocnUUa+DU5
+	 whEQkSMbuB9k1/2D+OnMdrq5LUo7tCJ2uMxv5Zmk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sylvain BERTRAND <sylvain.bertrand@legeek.net>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 180/259] ALSA: usb-audio: Correct surround channels in UAC1 channel map
-Date: Thu, 15 Aug 2024 15:25:13 +0200
-Message-ID: <20240815131909.730064865@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Hariprasad Kelam <hkelam@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 181/259] net: usb: sr9700: fix uninitialized variable use in sr_mdio_read
+Date: Thu, 15 Aug 2024 15:25:14 +0200
+Message-ID: <20240815131909.767972426@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -50,41 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit b7b7e1ab7619deb3b299b5e5c619c3e6f183a12d upstream.
+commit 08f3a5c38087d1569e982a121aad1e6acbf145ce upstream.
 
-USB-audio driver puts SNDRV_CHMAP_SL and _SR as left and right
-surround channels for UAC1 channel map, respectively.  But they should
-have been SNDRV_CHMAP_RL and _RR; the current value *_SL and _SR are
-rather "side" channels, not "surround".  I guess I took those
-mistakenly when I read the spec mentioning "surround left".
+It could lead to error happen because the variable res is not updated if
+the call to sr_share_read_word returns an error. In this particular case
+error code was returned and res stayed uninitialized. Same issue also
+applies to sr_read_reg.
 
-This patch corrects those entries to be the right channels.
+This can be avoided by checking the return value of sr_share_read_word
+and sr_read_reg, and propagating the error if the read operation failed.
 
-Suggested-by: Sylvain BERTRAND <sylvain.bertrand@legeek.net>
-Closes: https://lore.kernel.orgZ/qIyJD8lhd8hFhlC@freedom
-Fixes: 04324ccc75f9 ("ALSA: usb-audio: add channel map support")
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20240731142018.24750-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Found by code review.
+
+Cc: stable@vger.kernel.org
+Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Reviewed-by: Shigeru Yoshida <syoshida@redhat.com>
+Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/stream.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/sr9700.c |   11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -245,8 +245,8 @@ static struct snd_pcm_chmap_elem *conver
- 		SNDRV_CHMAP_FR,		/* right front */
- 		SNDRV_CHMAP_FC,		/* center front */
- 		SNDRV_CHMAP_LFE,	/* LFE */
--		SNDRV_CHMAP_SL,		/* left surround */
--		SNDRV_CHMAP_SR,		/* right surround */
-+		SNDRV_CHMAP_RL,		/* left surround */
-+		SNDRV_CHMAP_RR,		/* right surround */
- 		SNDRV_CHMAP_FLC,	/* left of center */
- 		SNDRV_CHMAP_FRC,	/* right of center */
- 		SNDRV_CHMAP_RC,		/* surround */
+--- a/drivers/net/usb/sr9700.c
++++ b/drivers/net/usb/sr9700.c
+@@ -178,6 +178,7 @@ static int sr_mdio_read(struct net_devic
+ 	struct usbnet *dev = netdev_priv(netdev);
+ 	__le16 res;
+ 	int rc = 0;
++	int err;
+ 
+ 	if (phy_id) {
+ 		netdev_dbg(netdev, "Only internal phy supported\n");
+@@ -188,11 +189,17 @@ static int sr_mdio_read(struct net_devic
+ 	if (loc == MII_BMSR) {
+ 		u8 value;
+ 
+-		sr_read_reg(dev, SR_NSR, &value);
++		err = sr_read_reg(dev, SR_NSR, &value);
++		if (err < 0)
++			return err;
++
+ 		if (value & NSR_LINKST)
+ 			rc = 1;
+ 	}
+-	sr_share_read_word(dev, 1, loc, &res);
++	err = sr_share_read_word(dev, 1, loc, &res);
++	if (err < 0)
++		return err;
++
+ 	if (rc == 1)
+ 		res = le16_to_cpu(res) | BMSR_LSTATUS;
+ 	else
 
 
