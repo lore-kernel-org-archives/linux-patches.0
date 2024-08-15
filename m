@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7340F63C;
-	Thu, 15 Aug 2024 14:15:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC7D19EED7;
+	Thu, 15 Aug 2024 14:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731328; cv=none; b=l3sLptvrcDQnfGyn3mkje+MaR1lIp9NoRWJn/KhsvXOUza2uf10jb2MfOXHNtRWcI59J/g0K7/HOx8TYrsugHE0TiZ8hkA7KQH5IwodJgrnQ7vbUwB2m/WsTtXrubJeNuzL9ufCq5pjtKM6hIsxpHg3TJyuTJpK+M1NDFJQWvcU=
+	t=1723731331; cv=none; b=Iywa1GYV1MqvGeXEWrpezofwITsYs0hkMf4ZnopJR32bgpeuN8217Mcw0zcwVBDRMckElR+aS/lJfNYz/bnJOskV4qxqqoowwOjgrwhdJuxJ1lspPsLKRIgldBZUAIkhqUI1wcmfaVBT8+Hz3dPNqEdmjIkmg0JjWI9mIWDRRVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731328; c=relaxed/simple;
-	bh=Ywgg1KriyVcTig7l7qw+nCk8AsuZQL+yn4joOS+a6uA=;
+	s=arc-20240116; t=1723731331; c=relaxed/simple;
+	bh=3DYFirHrInlbN7cZ/XxuHGqEGJWFoY6EpKrcjF8BL9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jPVZ2NURnutDBpauRDvhfeHJ1w41FKPKuCDWp8dFZFOy80RNfMqyllki8GQ6mTjoxMUyLUFHjddAJaUWyXKkeRXDTLd4kd0k+dv8P+qMFmRR5BHpb4BFMeMtTRoFxNwJA2O5NbH5phSFp7i5DWBILmdz90ZxrPRTFU5P9Glhmq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJuvxYbP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VQdCz8LTNFB9a8zZzBz9sy5dHurKb5VORC/4yAgJ5Vm06WcYzH61vW89czyPdNl7wwj6nUu6i30G59IqZDsPCyBvP9uUrcdaPprSgJpV9s5mr24rWHGBtcf0ZSij1vviCVfbBXFs/PndIWorRu/J6Glbe4wYT7whbRwGS1lJg5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZLFLtwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJuvxYbP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFDE5C32786;
-	Thu, 15 Aug 2024 14:15:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZLFLtwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F72C4AF0A;
+	Thu, 15 Aug 2024 14:15:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731328;
-	bh=Ywgg1KriyVcTig7l7qw+nCk8AsuZQL+yn4joOS+a6uA=;
+	s=korg; t=1723731331;
+	bh=3DYFirHrInlbN7cZ/XxuHGqEGJWFoY6EpKrcjF8BL9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJuvxYbPjpIC8fp0P394HF3KyVkOoSL0/acLzTG8WJxqjyqtRt4FJ7mK+r1U5nDAE
-	 DWKuvmCYluwI/FguGuB9cqPJqihrIVBkWq2IavF000zZ32GJete8py+i6TGXj7fAQM
-	 ULMMgfgrFea7SbboBHa/YJVjxqA0Q5/OBTLvsLi4=
+	b=TZLFLtwAI7GdOy4Mp59HC75Or1R+0QmVFf720kx98uGB8KHi1b1W4Trnq+JESxv5r
+	 iZtp/qcwNR3AKRyso8vzcGjOVK36xF3xdS/6TyQvRx77/KboJAZS5tAbO2kI70BBuA
+	 VbFuLGa/o0cLpPx5306PBz1KG9VJnO3bNQFrVS5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.4 093/259] char: tpm: Fix possible memory leak in tpm_bios_measurements_open()
-Date: Thu, 15 Aug 2024 15:23:46 +0200
-Message-ID: <20240815131906.394059054@linuxfoundation.org>
+	syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com,
+	Hugh Dickins <hughd@google.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 064/259] ext4: avoid writing unitialized memory to disk in EA inodes
+Date: Thu, 15 Aug 2024 15:23:17 +0200
+Message-ID: <20240815131905.278604719@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -50,35 +53,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Jan Kara <jack@suse.cz>
 
-commit 5d8e2971e817bb64225fc0b6327a78752f58a9aa upstream.
+[ Upstream commit 65121eff3e4c8c90f8126debf3c369228691c591 ]
 
-In tpm_bios_measurements_open(), get_device() is called on the device
-embedded in struct tpm_chip. In the error path, however, put_device() is
-not called. This results in a reference count leak, which prevents the
-device from being properly released. This commit makes sure to call
-put_device() when the seq_open() call fails.
+If the extended attribute size is not a multiple of block size, the last
+block in the EA inode will have uninitialized tail which will get
+written to disk. We will never expose the data to userspace but still
+this is not a good practice so just zero out the tail of the block as it
+isn't going to cause a noticeable performance overhead.
 
-Cc: stable@vger.kernel.org # +v4.18
-Fixes: 9b01b5356629 ("tpm: Move shared eventlog functions to common.c")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
+Reported-by: syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com
+Reported-by: Hugh Dickins <hughd@google.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240613150234.25176-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/eventlog/common.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/xattr.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/char/tpm/eventlog/common.c
-+++ b/drivers/char/tpm/eventlog/common.c
-@@ -47,6 +47,8 @@ static int tpm_bios_measurements_open(st
- 	if (!err) {
- 		seq = file->private_data;
- 		seq->private = chip;
-+	} else {
-+		put_device(&chip->dev);
- 	}
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index cb7faaa935cc6..d65f1eb85a924 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1396,6 +1396,12 @@ static int ext4_xattr_inode_write(handle_t *handle, struct inode *ea_inode,
+ 			goto out;
  
- 	return err;
+ 		memcpy(bh->b_data, buf, csize);
++		/*
++		 * Zero out block tail to avoid writing uninitialized memory
++		 * to disk.
++		 */
++		if (csize < blocksize)
++			memset(bh->b_data + csize, 0, blocksize - csize);
+ 		set_buffer_uptodate(bh);
+ 		ext4_handle_dirty_metadata(handle, ea_inode, bh);
+ 
+-- 
+2.43.0
+
 
 
