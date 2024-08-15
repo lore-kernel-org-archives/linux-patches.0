@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8E31714A1;
-	Thu, 15 Aug 2024 13:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE06317C9A9;
+	Thu, 15 Aug 2024 13:56:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730165; cv=none; b=b5hNVKLhH/h21IlDmDIhYE3edUVU/mQcgWNYVZd3RvoH/hhhp4PBCGTNI7+W5l948Z0QCZ5qHwrIaxInsQIC/YqeNgCfSsYuEW/1Ybk3AMdKvOp0rQ0b6K8sXZQAaZrVm93iV6hcc6wPhz9S/dOaqsmywZrot9vOyos1c1FjFD0=
+	t=1723730168; cv=none; b=YPnheZQSOPF1I1AWpROyMLjDM7ykcJmgoEwmiGtChwAzRpdBxvh8RSDsr3LcGlwN0TiV0cYcG3o/b+2p5ETLLns9CrIkF27ORsn1p3v1+LQ3C2wN7BuIyR/t0ZDM6p0FapFixVXhwe4/JM7/lYQ6XH91RB2jZFJtmhEjkF0yERI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730165; c=relaxed/simple;
-	bh=ROx8+wGuyQclItzIlv0GSuOAocojXKOrNqix/5OW8yg=;
+	s=arc-20240116; t=1723730168; c=relaxed/simple;
+	bh=T7g3qoKa5YR8ZBBBYG3JS87D/4B0oELWj2QQG+P6jts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BBBM0v6Z/afo89Je0rzEh6FpmE01td4N3g3ND0ZE0AcfO1U9bjOM1qIE2+mysEkjwEq0ZhBNeY03pM89ExpVDrD2JlzQx943E7rm+PPVdBldL3bmtb3tE3gu7s7V/6M7NotupRsSxftcrJGSYUGbqE+wtzmmTPkP0WqR6ZWPOTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2caVNrpO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tY46O4lBfbgWttL/2LSe3Qf5HxHM+jW9au5xI8vfoSc+XyB32Oi9sGrj9tDRcZScPhY5AbiqiuqrekOsbwo75ZpqWr8TP1+e4Sv6g417Ji8LzgTn1UpFnYPd5kR1FVzyCLP4nA/Lkl2aBFPs3Yc9stX99Ab0m5AZdz7DJKGLt+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vifaqXe9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2caVNrpO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4B12C32786;
-	Thu, 15 Aug 2024 13:56:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vifaqXe9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1311C32786;
+	Thu, 15 Aug 2024 13:56:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730165;
-	bh=ROx8+wGuyQclItzIlv0GSuOAocojXKOrNqix/5OW8yg=;
+	s=korg; t=1723730168;
+	bh=T7g3qoKa5YR8ZBBBYG3JS87D/4B0oELWj2QQG+P6jts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2caVNrpO2QYE3Cfy/yxC3rNMvKCn9faeYdYEa4d6S5Na38ZwPnulVAuzqyIS5l5bD
-	 tBajC9oe7nmZaVpNSp/ki9Kbbunu1KegWvyuR7oQG9HE6zXi3e4Ii85jGD1YM6Z9gf
-	 FxFUu6XX4f1DIfxLzL0Vfw4f3EhLxW4RGSwYmLZE=
+	b=vifaqXe9r32ItxtMSE0/24pKZtUUUV0YfncKn+e54UEQcW1piH3reuUmljcRMxlFn
+	 5UIh4IWy7x1t1I03hJqU9E2Y5PReHtNsrzjo7yamYP8YDmzEOMFbpXVnROka1R4Pjt
+	 NnOAVs9DF2mMWkZT33IQxVnRTqyZCE5LXcXA0nzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Binbin Zhou <zhoubinbin@loongson.cn>,
+	WANG Xuerui <git@xen0n.name>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 323/484] remoteproc: imx_rproc: Fix refcount mistake in imx_rproc_addr_init
-Date: Thu, 15 Aug 2024 15:23:01 +0200
-Message-ID: <20240815131953.885934043@linuxfoundation.org>
+Subject: [PATCH 5.15 324/484] MIPS: Loongson64: DTS: Add RTC support to Loongson-2K1000
+Date: Thu, 15 Aug 2024 15:23:02 +0200
+Message-ID: <20240815131953.923986263@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,62 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Binbin Zhou <zhoubinbin@loongson.cn>
 
-[ Upstream commit dce68a49be26abf52712e0ee452a45fa01ab4624 ]
+[ Upstream commit e47084e116fccaa43644360d7c0b997979abce3e ]
 
-In imx_rproc_addr_init() strcmp() is performed over the node after the
-of_node_put() is performed over it.
-Fix this error by moving of_node_put() calls.
+The module is now supported, enable it.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 5e4c1243071d ("remoteproc: imx_rproc: support remote cores booted before Linux Kernel")
-Cc: stable@vger.kernel.org
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Link: https://lore.kernel.org/r/20240612131714.12907-1-amishin@t-argos.ru
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Acked-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Binbin Zhou <zhoubinbin@loongson.cn>
+Signed-off-by: WANG Xuerui <git@xen0n.name>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Stable-dep-of: dbb69b9d6234 ("MIPS: dts: loongson: Fix liointc IRQ polarity")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/imx_rproc.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/remoteproc/imx_rproc.c b/drivers/remoteproc/imx_rproc.c
-index cfdb96cafc7b9..d5ce97e75f027 100644
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -596,25 +596,29 @@ static int imx_rproc_addr_init(struct imx_rproc *priv,
- 			continue;
- 		}
- 		err = of_address_to_resource(node, 0, &res);
--		of_node_put(node);
- 		if (err) {
- 			dev_err(dev, "unable to resolve memory region\n");
-+			of_node_put(node);
- 			return err;
- 		}
+diff --git a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+index b44aedba350a6..03abda568aa60 100644
+--- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
++++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+@@ -84,6 +84,13 @@ liointc1: interrupt-controller@1fe11440 {
+ 						<0x00000000>; /* int3 */
+ 		};
  
--		if (b >= IMX_RPROC_MEM_MAX)
-+		if (b >= IMX_RPROC_MEM_MAX) {
-+			of_node_put(node);
- 			break;
-+		}
- 
- 		/* Not use resource version, because we might share region */
- 		priv->mem[b].cpu_addr = devm_ioremap(&pdev->dev, res.start, resource_size(&res));
- 		if (!priv->mem[b].cpu_addr) {
- 			dev_err(dev, "failed to remap %pr\n", &res);
-+			of_node_put(node);
- 			return -ENOMEM;
- 		}
- 		priv->mem[b].sys_addr = res.start;
- 		priv->mem[b].size = resource_size(&res);
- 		if (!strcmp(node->name, "rsc-table"))
- 			priv->rsc_table = priv->mem[b].cpu_addr;
-+		of_node_put(node);
- 		b++;
- 	}
- 
++		rtc0: rtc@1fe07800 {
++			compatible = "loongson,ls2k1000-rtc";
++			reg = <0 0x1fe07800 0 0x78>;
++			interrupt-parent = <&liointc0>;
++			interrupts = <60 IRQ_TYPE_LEVEL_LOW>;
++		};
++
+ 		uart0: serial@1fe00000 {
+ 			compatible = "ns16550a";
+ 			reg = <0 0x1fe00000 0 0x8>;
 -- 
 2.43.0
 
