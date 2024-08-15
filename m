@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4381F1714A8;
-	Thu, 15 Aug 2024 13:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8602A19EED0;
+	Thu, 15 Aug 2024 13:44:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729447; cv=none; b=Zir0fyJ4NZEu321ic4we5JChH2kJvPcr+ysPP1G8P+DGirqJknPLpr96AyZ+MS6GRTgSHta6KqR+j5n3X0Vd5KvV+yZ0urMKASN1HldMGTywL7hMJYCK9IXg8CR9VLf2Y1OgBtGUwOA5gJv5zAU8lE2hMvtEfAr1526CuTIjN04=
+	t=1723729450; cv=none; b=pNMYao8+4+JJQOVo3UsjdGpAwNW0uqjG3fxtMYeAfyd6X5SbKYY2CMx6K5w3J+SdDjQcAl0mSttUoCyYLS6TS/MnVb8m15sEWx4BEO8Amm5qUdW/hyxAJRLCBdTLb3/iBF5yGqj/pjp9oha2YTXpPjzfUj+oRpf60NRlvJYwJxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729447; c=relaxed/simple;
-	bh=I0lh/rSph3GB5lRZBKakdeVtjtUpQeJUAVofFTUUKgI=;
+	s=arc-20240116; t=1723729450; c=relaxed/simple;
+	bh=6atr6dNWt0jLluxGjMuV7KrvxKADM0YWkQXe64uNCh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HYvLxsy8hfjWxfcxx/zr+D0bI498yZWgRMSOpNiIufoGu+SOWpB2LK08BKlYAEqZKqDP+nCqZoPWj2dmeJQ9O7lspml4UGd3Kh8gRXDTJv1IY5rJqIa8tdTG2bktZUh9ODx22yXHuCMXFu/LXLGjAIAOExVHlx9dlon0dM5fhOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=paXlSIHa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nTfBK2BcRFXaexn8aUIYfufhrHXLCeoN7u+klvOaYKxGXge7OI69elJ5KP/w9cw1xMjCoUMRtvQPYOXNmSLKblmKWO1UZZnWUG53bA0Qjvi9Gue5XcSBglt4fKezTzJ5M8EjSUb6eLgDyL3L94KSVZVUfpv3TVLFSOuuIv3upLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eMMYIP8E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="paXlSIHa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB082C4AF0A;
-	Thu, 15 Aug 2024 13:44:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eMMYIP8E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0219EC32786;
+	Thu, 15 Aug 2024 13:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729447;
-	bh=I0lh/rSph3GB5lRZBKakdeVtjtUpQeJUAVofFTUUKgI=;
+	s=korg; t=1723729450;
+	bh=6atr6dNWt0jLluxGjMuV7KrvxKADM0YWkQXe64uNCh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paXlSIHaFHlGnzSMfpwZoBESFb19DZuqxmy0dz6H3awvlUeCa+E1bk3IyfmZRYfPw
-	 Nzz0fc8I61YFl/rOFGQSUExAvaZ/MYBTXxIaVuHTprV6Fzjf8i/nGKINdWhyMG4p35
-	 m4ywwXbgf3BtvR+avfSyOrioZ6jr6SgNHZ2yg4oc=
+	b=eMMYIP8ES0Ay7ydADq4uUTJ2XjW2mOiKuebbqdpSJo6UjpPAqoYQvv69/XAzyH9F4
+	 bC4AtzN3DYKgOSE36qurcbh+xCwl/m150YvIlHM7BFyIVnU88OheNgqdinjsYW1wIz
+	 uZog33u8/yC1ivPe2sD1kUOdc0N/N+SnHJBc8f1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 069/484] perf: Prevent passing zero nr_pages to rb_alloc_aux()
-Date: Thu, 15 Aug 2024 15:18:47 +0200
-Message-ID: <20240815131943.952102157@linuxfoundation.org>
+Subject: [PATCH 5.15 060/484] wifi: cfg80211: fix typo in cfg80211_calculate_bitrate_he()
+Date: Thu, 15 Aug 2024 15:18:38 +0200
+Message-ID: <20240815131943.602217026@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,49 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit dbc48c8f41c208082cfa95e973560134489e3309 ]
+[ Upstream commit 9ee0d44f055276fe2802b2f65058e920853f4f99 ]
 
-nr_pages is unsigned long but gets passed to rb_alloc_aux() as an int,
-and is stored as an int.
+rates_996 is mistakenly written as rates_969, fix it.
 
-Only power-of-2 values are accepted, so if nr_pages is a 64_bit value, it
-will be passed to rb_alloc_aux() as zero.
-
-That is not ideal because:
- 1. the value is incorrect
- 2. rb_alloc_aux() is at risk of misbehaving, although it manages to
- return -ENOMEM in that case, it is a result of passing zero to get_order()
- even though the get_order() result is documented to be undefined in that
- case.
-
-Fix by simply validating the maximum supported value in the first place.
-Use -ENOMEM error code for consistency with the current error code that
-is returned in that case.
-
-Fixes: 45bfb2e50471 ("perf: Add AUX area to ring buffer for raw data streams")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240624201101.60186-6-adrian.hunter@intel.com
+Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://msgid.link/20240606020653.33205-2-quic_bqiang@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/wireless/util.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 80d9c8fcc30a6..b689b35473a38 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -6401,6 +6401,8 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
- 			return -EINVAL;
- 
- 		nr_pages = vma_size / PAGE_SIZE;
-+		if (nr_pages > INT_MAX)
-+			return -ENOMEM;
- 
- 		mutex_lock(&event->mmap_mutex);
- 		ret = -EINVAL;
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index d40c2cf777dc0..a879d6b310a90 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1363,7 +1363,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 		  5120, /*  0.833333... */
+ 	};
+ 	u32 rates_160M[3] = { 960777777, 907400000, 816666666 };
+-	u32 rates_969[3] =  { 480388888, 453700000, 408333333 };
++	u32 rates_996[3] =  { 480388888, 453700000, 408333333 };
+ 	u32 rates_484[3] =  { 229411111, 216666666, 195000000 };
+ 	u32 rates_242[3] =  { 114711111, 108333333,  97500000 };
+ 	u32 rates_106[3] =  {  40000000,  37777777,  34000000 };
+@@ -1388,7 +1388,7 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	else if (rate->bw == RATE_INFO_BW_80 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+ 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_996))
+-		result = rates_969[rate->he_gi];
++		result = rates_996[rate->he_gi];
+ 	else if (rate->bw == RATE_INFO_BW_40 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
+ 		  rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_484))
 -- 
 2.43.0
 
