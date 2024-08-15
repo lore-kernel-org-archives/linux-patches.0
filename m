@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F068519F49A;
-	Thu, 15 Aug 2024 14:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B357419F462;
+	Thu, 15 Aug 2024 14:07:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730843; cv=none; b=cQxvlCEPOR8y3YSOwNBC1a9+8XAUh5ZJNbg0DZetFgu+JtN+oUo/wdMTaVyxPDfJEm5tncVi6Jif6eRP67C+z6SU0cWenWU9jmcpAqIuouwYKEvbFfZpb/sf41uFVSQ+oFOsG+0HvC7+IugZf7ZceCA03dmEx70GCC9dDOaoouY=
+	t=1723730844; cv=none; b=qxyQKWHANvwjAyLrKDWnfhcm38tjk9i9cZdO0nzS7cYLMYUHYcTWyBiWMpzFZR98t04AT+cSvWKUQ+qb15BQCsq1Xgewg1AKgc6KxTgfaIrFgDD0hyVo+ymQ6RiS3egJOWrZ6N6wWlUEJVQcw0z3qg87hGce1y5cVog3b5BiC3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730843; c=relaxed/simple;
-	bh=kHhjm6Btrii3Nto3tPQBqWfPAzu1tSqqkxCQd/Z30Lo=;
+	s=arc-20240116; t=1723730844; c=relaxed/simple;
+	bh=dgJtxaTDlmtxcXj+cVYy6/1DWqkVB4tXTizU3cI5aHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EEfh/2mi+fT4QtF4qig+jdJNXIYRFoGJ5ta38DCu7Ag9+2pQvAK1emEvMRxspcsFrmzmJeBKIcvTtGsfea+h2uKKSiTU99tr+sb4krzvpVQMqifMwJ7+RHSnGKhhrU02f2MNN6fcVQX3WC0C/o/80WQ/iC0gTfbXNxnei38hveQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MkfKIlu6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ERUwMHtO+aopbFUje3XssWNfBZgfdF5Z54wY7vX2DdqF6Ye+OwfXDptjHWn55BuLyRgg7uESdhOlYbfQABea61trlLZvtA3SdLk4BPBQcLqrILuFqPXCk4CQk3sPiO1uE4RZ/VyGF5SFvHUq75sFMe50URXZrFM6pcBZ3SJ6O6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U7kAunEE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MkfKIlu6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28CA9C4AF0C;
-	Thu, 15 Aug 2024 14:07:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U7kAunEE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3617DC32786;
+	Thu, 15 Aug 2024 14:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730841;
-	bh=kHhjm6Btrii3Nto3tPQBqWfPAzu1tSqqkxCQd/Z30Lo=;
+	s=korg; t=1723730844;
+	bh=dgJtxaTDlmtxcXj+cVYy6/1DWqkVB4tXTizU3cI5aHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MkfKIlu6ttdAs+Rdwh1ehWUCK6P5dAN+tqporc/w6lbiTjZiaC7ytxkf7/YLquuIr
-	 /Fjfyynmsx7TF7qHwarsHGjFm9inAUd0jY6cKacuo2BBN3ht+abWPBcQIYDXPijMiO
-	 ZV595ruGBTM1VO7vUPlGRapQs9SlK/oaNEqutWZ4=
+	b=U7kAunEEsVXONM0RaAjDBnMDND89alv1WeBya3uSrd5muytOdk+w8vhoXscCbOQf/
+	 edhwjViCPGcd1/EWgMQe0cdlWNn5Mh5T381UvuJ4CnAbIoEmtMFXr3Wf0rmMhZKKWf
+	 aAanSJaxFkAYJZLaC5hQeJ3LM7b8U1tWY3Gvka9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 10/67] sunrpc: remove ->pg_stats from svc_program
-Date: Thu, 15 Aug 2024 15:25:24 +0200
-Message-ID: <20240815131838.720311001@linuxfoundation.org>
+Subject: [PATCH 6.6 11/67] sunrpc: use the struct net as the svc proc private
+Date: Thu, 15 Aug 2024 15:25:25 +0200
+Message-ID: <20240815131838.759103238@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -53,38 +53,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 3f6ef182f144dcc9a4d942f97b6a8ed969f13c95 ]
+[ Upstream commit 418b9687dece5bd763c09b5c27a801a7e3387be9 ]
 
-Now that this isn't used anywhere, remove it.
+nfsd is the only thing using this helper, and it doesn't use the private
+currently.  When we switch to per-network namespace stats we will need
+the struct net * in order to get to the nfsd_net.  Use the net as the
+proc private so we can utilize this when we make the switch over.
 
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfssvc.c           |    1 -
- include/linux/sunrpc/svc.h |    1 -
- 2 files changed, 2 deletions(-)
+ net/sunrpc/stats.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -136,7 +136,6 @@ struct svc_program		nfsd_program = {
- 	.pg_vers		= nfsd_version,		/* version table */
- 	.pg_name		= "nfsd",		/* program name */
- 	.pg_class		= "nfsd",		/* authentication class */
--	.pg_stats		= &nfsd_svcstats,	/* version table */
- 	.pg_authenticate	= &svc_set_client,	/* export authentication */
- 	.pg_init_request	= nfsd_init_request,
- 	.pg_rpcbind_set		= nfsd_rpcbind_set,
---- a/include/linux/sunrpc/svc.h
-+++ b/include/linux/sunrpc/svc.h
-@@ -336,7 +336,6 @@ struct svc_program {
- 	const struct svc_version **pg_vers;	/* version array */
- 	char *			pg_name;	/* service name */
- 	char *			pg_class;	/* class name: services sharing authentication */
--	struct svc_stat *	pg_stats;	/* rpc statistics */
- 	enum svc_auth_status	(*pg_authenticate)(struct svc_rqst *rqstp);
- 	__be32			(*pg_init_request)(struct svc_rqst *,
- 						   const struct svc_program *,
+--- a/net/sunrpc/stats.c
++++ b/net/sunrpc/stats.c
+@@ -314,7 +314,7 @@ EXPORT_SYMBOL_GPL(rpc_proc_unregister);
+ struct proc_dir_entry *
+ svc_proc_register(struct net *net, struct svc_stat *statp, const struct proc_ops *proc_ops)
+ {
+-	return do_register(net, statp->program->pg_name, statp, proc_ops);
++	return do_register(net, statp->program->pg_name, net, proc_ops);
+ }
+ EXPORT_SYMBOL_GPL(svc_proc_register);
+ 
 
 
