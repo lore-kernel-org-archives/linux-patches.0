@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4261ABED4;
-	Thu, 15 Aug 2024 14:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCEE41E526;
+	Thu, 15 Aug 2024 14:15:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731306; cv=none; b=de4O3GONNqo0q7nPOVXWYN73OK28hXfaof5Ml0lK7eGHWnWTGTWk1DP7IYJpH2QwhN5EdKQYzp8OntxEIpbPTsqKzq9Oh9RMvWL4CBbvnYwhDsA2Ia3j0+CpsaHeGxs1ZvSTUgqgijvmHcjnNpgPhlVRbLuKMRPNuwBEQXI6uso=
+	t=1723731309; cv=none; b=D5cgZ+HHPuIFcSQPTwV3emgU/HOeztmrRyNJiiO/FvbyWue6+iiPUkkJh8PX10ihsTUVSHuSauEzPsFXWa7z1W7acG9AyV1KiCfVYJUfbk45KEwRxl8kqxDD3/UwE8yE2j/rXrCrKfv/4Fc+YTgS9h+kGImSBRSUyhvbBv9qLBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731306; c=relaxed/simple;
-	bh=FHH8mPEwh0ZgDidsxdYfGk5VU1mjC1TXXmt4et5Kcho=;
+	s=arc-20240116; t=1723731309; c=relaxed/simple;
+	bh=oZLGp73WxzAiAVITevMU3SDmI8VnWJzjHBNaCGArhXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fxIJCYgSpNsIY2ff5rTtDb6UVqgXSVYwtf4O/2OH6AKN9L53EAYDGwPt7BjGFPAr8oRvXtDTZ2visfrhPv88EiAnwkGrbhmTZcuI5pwVVwrm7WyIfrL4TiPNY1lm8tSoU5dheWsKPGVj4Y46utw8trVmhpvq/rR0MPqEcjOtOik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LQpZEGc4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XZv+sJCaN7ZGv+nhPj+tRLZnc030W9cBEDYIog+5FeEx+fZ+chZdlIgieMLLJmTQJhMdHtWcRRwtb40yAadUydi8OUKAzW6mNpH/niziue5RtB5aUvDCxlvsF3ipH1FpOP9qJ85DfPSWXrQvWbk9b0UHFwEj5jj0Ba8/gFmdB/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H/SfOzUu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LQpZEGc4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDDCC32786;
-	Thu, 15 Aug 2024 14:15:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H/SfOzUu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55274C32786;
+	Thu, 15 Aug 2024 14:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731306;
-	bh=FHH8mPEwh0ZgDidsxdYfGk5VU1mjC1TXXmt4et5Kcho=;
+	s=korg; t=1723731309;
+	bh=oZLGp73WxzAiAVITevMU3SDmI8VnWJzjHBNaCGArhXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LQpZEGc49omyS+ndWgrZaXLqOVh1Y7V6O/o2njMAPFZG4R8ZdaBaWUEtwpSkupSEt
-	 UJ+Jiy2AAonSbI9z1hJLrsGsKe9Qi+NQfTaNXhNlgdsSVxAFl05VhCzzHq8TKlg5wy
-	 gHTI4NQb+3sA6thlv7kvnrueq0XCoMd4MWk9yLcE=
+	b=H/SfOzUutRjKMFClb/ThuOYIRNNB63qW2ULyqoXJxLwQA8nVFyeiDHZwX6IAc2+Jc
+	 5hB06mJ4Gn3prNYVzi8krftshLfy+ZonpNTnzVhHNVZ/z9J+Ju68H4omElmIpFAQrd
+	 oR9SrGYcSap71Q+zooQg7pnZa3lyls5c6WsvR5bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 087/259] nilfs2: avoid undefined behavior in nilfs_cnt32_ge macro
-Date: Thu, 15 Aug 2024 15:23:40 +0200
-Message-ID: <20240815131906.160123185@linuxfoundation.org>
+Subject: [PATCH 5.4 088/259] rtc: interface: Add RTC offset to alarm after fix-up
+Date: Thu, 15 Aug 2024 15:23:41 +0200
+Message-ID: <20240815131906.198135706@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -45,51 +46,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-[ Upstream commit 0f3819e8c483771a59cf9d3190cd68a7a990083c ]
+[ Upstream commit 463927a8902a9f22c3633960119410f57d4c8920 ]
 
-According to the C standard 3.4.3p3, the result of signed integer overflow
-is undefined.  The macro nilfs_cnt32_ge(), which compares two sequence
-numbers, uses signed integer subtraction that can overflow, and therefore
-the result of the calculation may differ from what is expected due to
-undefined behavior in different environments.
+`rtc_add_offset()` is called by `__rtc_read_time()`
+and `__rtc_read_alarm()` to add the RTC's offset to
+the raw read-outs from the device drivers. However,
+in the latter case, a fix-up algorithm is run if
+the RTC device does not report a full `struct rtc_time`
+alarm value. In that case, the offset was forgot to be
+added.
 
-Similar to an earlier change to the jiffies-related comparison macros in
-commit 5a581b367b5d ("jiffies: Avoid undefined behavior from signed
-overflow"), avoid this potential issue by changing the definition of the
-macro to perform the subtraction as unsigned integers, then cast the
-result to a signed integer for comparison.
+Fixes: fd6792bb022e ("rtc: fix alarm read and set offset")
 
-Link: https://lkml.kernel.org/r/20130727225828.GA11864@linux.vnet.ibm.com
-Link: https://lkml.kernel.org/r/20240702183512.6390-1-konishi.ryusuke@gmail.com
-Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Link: https://lore.kernel.org/r/20240619140451.2800578-1-csokas.bence@prolan.hu
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/segment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/interface.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
-index 62c83193a5bb8..3c4272762779c 100644
---- a/fs/nilfs2/segment.c
-+++ b/fs/nilfs2/segment.c
-@@ -136,7 +136,7 @@ static void nilfs_dispose_list(struct the_nilfs *, struct list_head *, int);
+diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
+index ba345a379e262..d858cd819932f 100644
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -274,10 +274,9 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 			return err;
  
- #define nilfs_cnt32_ge(a, b)   \
- 	(typecheck(__u32, a) && typecheck(__u32, b) && \
--	 ((__s32)(a) - (__s32)(b) >= 0))
-+	 ((__s32)((a) - (b)) >= 0))
+ 		/* full-function RTCs won't have such missing fields */
+-		if (rtc_valid_tm(&alarm->time) == 0) {
+-			rtc_add_offset(rtc, &alarm->time);
+-			return 0;
+-		}
++		err = rtc_valid_tm(&alarm->time);
++		if (!err)
++			goto done;
  
- static int nilfs_prepare_segment_lock(struct super_block *sb,
- 				      struct nilfs_transaction_info *ti)
+ 		/* get the "after" timestamp, to detect wrapped fields */
+ 		err = rtc_read_time(rtc, &now);
+@@ -379,6 +378,8 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 	if (err)
+ 		dev_warn(&rtc->dev, "invalid alarm value: %ptR\n",
+ 			 &alarm->time);
++	else
++		rtc_add_offset(rtc, &alarm->time);
+ 
+ 	return err;
+ }
 -- 
 2.43.0
 
