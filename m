@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CDA329CE6;
-	Thu, 15 Aug 2024 14:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C82A1AC8BB;
+	Thu, 15 Aug 2024 14:16:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731385; cv=none; b=KaNo5EAcy8J4LEDAYa/6F1/3liCzveapMVs1X9qDTjkoq66eIX9nuUvg4D2i9iaeBckrec29SAmM0WowydOjwCNtoDKuBnnfKyk2bOp1Bb+wc+MFNGMSA6MUJBDiBMo2oXfq4GUqxESLLw3Cn7UK6mlYqiduKtj8SkbdpbvboHg=
+	t=1723731388; cv=none; b=FJcDDWhouW5pjKFNBf8kuxRGnkM5IXIpJqp863ICcYRv4d4JVZznyWCPNOK8fR/ETPoifdxaKfnfNgycykqLLCwbwcJJyIUChalGPhBdTBa0EdlcH7l9IXRYb2VqNbKC0xzMww5ZxoEuijzNRTXQ9Za1kBlIlVeFEzQv0YuVw8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731385; c=relaxed/simple;
-	bh=5Fmckj8cS0tJ8Vkb4T2QJ9lyK6KRQQwU3DObVyEptuA=;
+	s=arc-20240116; t=1723731388; c=relaxed/simple;
+	bh=L7LZyKOjSaErfNlAMfHdXqGgwekCq3MWK9BIn6iK3S8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVaN0gsj0rePvy2Bfbr69+Ck/do2R0rLmc4Mj8tbcRX4z1zNcUxnfg0r32ybbythdTEQOSf2FpbVb8b0myLh96uEvvmWg/vArggipIAfRxQ7Pu34f9gLQCG7HXB653tvMapk6xrQ+Fs90kGOPhSNP4c4FdQ04sAn9MJdnMxGdPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aapxsAB6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X1pL67kB+RAKoxFZDun3NSYdkK9GnwayePfscL1yBWOgs/QxbfLG9uKhfnFLkgk88DIrr94CmITwRM3Q8P3UM78r31dW+/poVpyYKFH+Scywyr2gGE6gse4e3gkfZgcL7fl1hQHHB1kYJUyhcPBa7De+XmdHbvsKB4mCKjwFjtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zSTQyR9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aapxsAB6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE877C32786;
-	Thu, 15 Aug 2024 14:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zSTQyR9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4014C32786;
+	Thu, 15 Aug 2024 14:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731385;
-	bh=5Fmckj8cS0tJ8Vkb4T2QJ9lyK6KRQQwU3DObVyEptuA=;
+	s=korg; t=1723731388;
+	bh=L7LZyKOjSaErfNlAMfHdXqGgwekCq3MWK9BIn6iK3S8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aapxsAB62lRIRMgKM0wc/X8xuypSlI87+wkzItOCGABAoGjXDRIAAGv+8r0nmVu8S
-	 3v60LJWmwU+fLLoNcp9Env76C3CCxMz2Ilnu2eLdcbHFuhFEUCmk7Ljv9irbeWc9Hq
-	 mhQzrSBdX9CXdte1BySwJYiae6rNACPlcJJpuSzI=
+	b=zSTQyR9UqASdxEWHwqpqp7sWXH9EnfREQAETGbd4hB3AgVS/fjqIcIbEzlagSE7/A
+	 Tr7n3T7R9SSjXhhlzZohy+G0zodv3lG8VdjazMDtQFDNWGJu20Es61mUP3gMtnOwcj
+	 mnDUi+crHAxKSE5/K+e0kk3qpuMA7B9NRHmRiYZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Alain Knaff <alain@knaff.lu>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 113/259] decompress_bunzip2: fix rare decompression failure
-Date: Thu, 15 Aug 2024 15:24:06 +0200
-Message-ID: <20240815131907.164524576@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Subject: [PATCH 5.4 096/259] drm/gma500: fix null pointer dereference in cdv_intel_lvds_get_modes
+Date: Thu, 15 Aug 2024 15:23:49 +0200
+Message-ID: <20240815131906.510761664@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,41 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Ma Ke <make24@iscas.ac.cn>
 
-commit bf6acd5d16057d7accbbb1bf7dc6d8c56eeb4ecc upstream.
+commit cb520c3f366c77e8d69e4e2e2781a8ce48d98e79 upstream.
 
-The decompression code parses a huffman tree and counts the number of
-symbols for a given bit length.  In rare cases, there may be >= 256
-symbols with a given bit length, causing the unsigned char to overflow.
-This causes a decompression failure later when the code tries and fails to
-find the bit length for a given symbol.
+In cdv_intel_lvds_get_modes(), the return value of drm_mode_duplicate()
+is assigned to mode, which will lead to a NULL pointer dereference on
+failure of drm_mode_duplicate(). Add a check to avoid npd.
 
-Since the maximum number of symbols is 258, use unsigned short instead.
-
-Link: https://lkml.kernel.org/r/20240717162016.1514077-1-ross.lagerwall@citrix.com
-Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Cc: Alain Knaff <alain@knaff.lu>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: 6a227d5fd6c4 ("gma500: Add support for Cedarview")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240709113311.37168-1-make24@iscas.ac.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/decompress_bunzip2.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/gma500/cdv_intel_lvds.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/lib/decompress_bunzip2.c
-+++ b/lib/decompress_bunzip2.c
-@@ -232,7 +232,8 @@ static int INIT get_next_block(struct bu
- 	   RUNB) */
- 	symCount = symTotal+2;
- 	for (j = 0; j < groupCount; j++) {
--		unsigned char length[MAX_SYMBOLS], temp[MAX_HUFCODE_BITS+1];
-+		unsigned char length[MAX_SYMBOLS];
-+		unsigned short temp[MAX_HUFCODE_BITS+1];
- 		int	minLen,	maxLen, pp;
- 		/* Read Huffman code lengths for each symbol.  They're
- 		   stored in a way similar to mtf; record a starting
+--- a/drivers/gpu/drm/gma500/cdv_intel_lvds.c
++++ b/drivers/gpu/drm/gma500/cdv_intel_lvds.c
+@@ -391,6 +391,9 @@ static int cdv_intel_lvds_get_modes(stru
+ 	if (mode_dev->panel_fixed_mode != NULL) {
+ 		struct drm_display_mode *mode =
+ 		    drm_mode_duplicate(dev, mode_dev->panel_fixed_mode);
++		if (!mode)
++			return 0;
++
+ 		drm_mode_probed_add(connector, mode);
+ 		return 1;
+ 	}
 
 
