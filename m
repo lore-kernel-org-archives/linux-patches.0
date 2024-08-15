@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5462772A;
-	Thu, 15 Aug 2024 14:41:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6E919FA7A;
+	Thu, 15 Aug 2024 14:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732886; cv=none; b=MIyh/55g9pJs79tzzxyc5ootFyEQC9s6XwSuWdGw0d8nhtDVGVIjYRiYL0ahvdGJUEOtC82PqOdcOgDgejKKYOJzToVW+PLTRnFWUhfyp+qrQEQK68QGPXrcfIFUgR6Tm5AXZrNdEE9wsn3e2hknBiXjf+tIuUmLB7dYXHXZdL4=
+	t=1723732889; cv=none; b=FRzACJurTwEq21dtgZrTSvO/sWPK05vAxXfl9xt6ygZBMUuUFitgDiCpki9pJMY8Wz5GmiPkwvqTly8L61gPqpRQMegKNXkv4fgBLofCo7kNJSluizLVEe9f6QlV9V4fZEQPEkQMcGByCCzD/fXWvvaF4s9YzdWPSmBvTRRWie0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732886; c=relaxed/simple;
-	bh=5S3gr/wR2W6Sg6O2FIpSCIVYHlzwGckUGeWSAWpL8f0=;
+	s=arc-20240116; t=1723732889; c=relaxed/simple;
+	bh=BNiTYxtgLy1MOg+VYjLTA40qYOZGe+5sgqh+sFVydV8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=csjEW7EM2yTlA44cyvg2Vmhrowm2vmpY0Wt+L5LTCyB9vBa3Zo7n7saNPt3Pm67Y5d6rVOwQObWnjLt8lTBjmkERA+7YiycXS0EUyEzrV7JgstEaVdQyteaEzqvsfkGbHJIADQeVWPC3QqoC2KQexuPOrSK0SKpzvZ1A2Tza/aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B84ekGpp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uE84WrAMQxriQs9fygc3zDMhUEyK7FZGiRqaoUnD7HiwC9WttGFpJ1nXXUVOgYyHhzbWundPyziGDh97r/P9QCRX4QanNQCkIrQ8ZCMlUre4/DHKiIhcXFGGrnnWApOLD7FpQcznpYJ7PNQ2L2rekjAa3X138NGZsU8jElkqyhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xyfXHaFx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B84ekGpp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07F0C32786;
-	Thu, 15 Aug 2024 14:41:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xyfXHaFx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1A6FC32786;
+	Thu, 15 Aug 2024 14:41:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732886;
-	bh=5S3gr/wR2W6Sg6O2FIpSCIVYHlzwGckUGeWSAWpL8f0=;
+	s=korg; t=1723732889;
+	bh=BNiTYxtgLy1MOg+VYjLTA40qYOZGe+5sgqh+sFVydV8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B84ekGpppW4DSB4D2feHUdUcgG+wdSzD7GgVIbOvmID3MW4t0ionUKMgtAyEZVzIu
-	 tkCdBBdp1NPlmzL/vl7SvJA61RVvQBcvs6nBvcQ0DKQsm+QITDvAWqdWR/Im2Bt52+
-	 iidv+Kic+tSb8UtTX/XufbEgQ9nBZMAUX66NCveI=
+	b=xyfXHaFxujgpSOQfyQAo/H09BHKFIVqTslfrxcjQdAM+BEOz6pgHQyaa8sffhEjdq
+	 OIaTbKPGTlb3d3G+ZBWCAFucyw2XAeofuYbe23bzuy/hVufCTdB6TWTAiQoIRrT2eG
+	 QdXUYqKWhCfEMOS+9N9Vy+f4L8kK27F5pSjoF9Fc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 315/352] scsi: mpt3sas: Avoid IOMMU page faults on REPORT ZONES
-Date: Thu, 15 Aug 2024 15:26:21 +0200
-Message-ID: <20240815131931.632244678@linuxfoundation.org>
+Subject: [PATCH 5.10 286/352] arm64: cputype: Add Cortex-X3 definitions
+Date: Thu, 15 Aug 2024 15:25:52 +0200
+Message-ID: <20240815131930.503665225@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,99 +53,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 82dbb57ac8d06dfe8227ba9ab11a49de2b475ae5 ]
+[ Upstream commit be5a6f238700f38b534456608588723fba96c5ab ]
 
-Some firmware versions of the 9600 series SAS HBA byte-swap the REPORT
-ZONES command reply buffer from ATA-ZAC devices by directly accessing the
-buffer in the host memory. This does not respect the default command DMA
-direction and causes IOMMU page faults on architectures with an IOMMU
-enforcing write-only mappings for DMA_FROM_DEVICE DMA driection (e.g. AMD
-hosts).
+Add cputype definitions for Cortex-X3. These will be used for errata
+detection in subsequent patches.
 
-scsi 18:0:0:0: Direct-Access-ZBC ATA      WDC  WSH722020AL W870 PQ: 0 ANSI: 6
-scsi 18:0:0:0: SATA: handle(0x0027), sas_addr(0x300062b2083e7c40), phy(0), device_name(0x5000cca29dc35e11)
-scsi 18:0:0:0: enclosure logical id (0x300062b208097c40), slot(0)
-scsi 18:0:0:0: enclosure level(0x0000), connector name( C0.0)
-scsi 18:0:0:0: atapi(n), ncq(y), asyn_notify(n), smart(y), fua(y), sw_preserve(y)
-scsi 18:0:0:0: qdepth(32), tagged(1), scsi_level(7), cmd_que(1)
-sd 18:0:0:0: Attached scsi generic sg2 type 20
-sd 18:0:0:0: [sdc] Host-managed zoned block device
-mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b200 flags=0x0050]
-mpt3sas 0000:41:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0021 address=0xfff9b300 flags=0x0050]
-mpt3sas_cm0: mpt3sas_ctl_pre_reset_handler: Releasing the trace buffer due to adapter reset.
-mpt3sas_cm0 fault info from func: mpt3sas_base_make_ioc_ready
-mpt3sas_cm0: fault_state(0x2666)!
-mpt3sas_cm0: sending diag reset !!
-mpt3sas_cm0: diag reset: SUCCESS
-sd 18:0:0:0: [sdc] REPORT ZONES start lba 0 failed
-sd 18:0:0:0: [sdc] REPORT ZONES: Result: hostbyte=DID_RESET driverbyte=DRIVER_OK
-sd 18:0:0:0: [sdc] 0 4096-byte logical blocks: (0 B/0 B)
+These values can be found in Table A-263 ("MIDR_EL1 bit descriptions")
+in issue 07 of the Cortex-X3 TRM, which can be found at:
 
-Avoid such issue by always mapping the buffer of REPORT ZONES commands
-using DMA_BIDIRECTIONAL (read+write IOMMU mapping). This is done by
-introducing the helper function _base_scsi_dma_map() and using this helper
-in _base_build_sg_scmd() and _base_build_sg_scmd_ieee() instead of calling
-directly scsi_dma_map().
+  https://developer.arm.com/documentation/101593/0102/?lang=en
 
-Fixes: 471ef9d4e498 ("mpt3sas: Build MPI SGL LIST on GEN2 HBAs and IEEE SGL LIST on GEN3 HBAs")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240719073913.179559-3-dlemoal@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: trivial backport ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/cputype.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.c b/drivers/scsi/mpt3sas/mpt3sas_base.c
-index de4ec552799dd..53528711dac1f 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.c
-@@ -2492,6 +2492,22 @@ _base_build_zero_len_sge_ieee(struct MPT3SAS_ADAPTER *ioc, void *paddr)
- 	_base_add_sg_single_ieee(paddr, sgl_flags, 0, 0, -1);
- }
- 
-+static inline int _base_scsi_dma_map(struct scsi_cmnd *cmd)
-+{
-+	/*
-+	 * Some firmware versions byte-swap the REPORT ZONES command reply from
-+	 * ATA-ZAC devices by directly accessing in the host buffer. This does
-+	 * not respect the default command DMA direction and causes IOMMU page
-+	 * faults on some architectures with an IOMMU enforcing write mappings
-+	 * (e.g. AMD hosts). Avoid such issue by making the report zones buffer
-+	 * mapping bi-directional.
-+	 */
-+	if (cmd->cmnd[0] == ZBC_IN && cmd->cmnd[1] == ZI_REPORT_ZONES)
-+		cmd->sc_data_direction = DMA_BIDIRECTIONAL;
-+
-+	return scsi_dma_map(cmd);
-+}
-+
- /**
-  * _base_build_sg_scmd - main sg creation routine
-  *		pcie_device is unused here!
-@@ -2538,7 +2554,7 @@ _base_build_sg_scmd(struct MPT3SAS_ADAPTER *ioc,
- 	sgl_flags = sgl_flags << MPI2_SGE_FLAGS_SHIFT;
- 
- 	sg_scmd = scsi_sglist(scmd);
--	sges_left = scsi_dma_map(scmd);
-+	sges_left = _base_scsi_dma_map(scmd);
- 	if (sges_left < 0)
- 		return -ENOMEM;
- 
-@@ -2682,7 +2698,7 @@ _base_build_sg_scmd_ieee(struct MPT3SAS_ADAPTER *ioc,
- 	}
- 
- 	sg_scmd = scsi_sglist(scmd);
--	sges_left = scsi_dma_map(scmd);
-+	sges_left = _base_scsi_dma_map(scmd);
- 	if (sges_left < 0)
- 		return -ENOMEM;
- 
+diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
+index b2887995e575e..e8ceddaba7a06 100644
+--- a/arch/arm64/include/asm/cputype.h
++++ b/arch/arm64/include/asm/cputype.h
+@@ -84,6 +84,7 @@
+ #define ARM_CPU_PART_CORTEX_X2		0xD48
+ #define ARM_CPU_PART_NEOVERSE_N2	0xD49
+ #define ARM_CPU_PART_CORTEX_A78C	0xD4B
++#define ARM_CPU_PART_CORTEX_X3		0xD4E
+ #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
+ #define ARM_CPU_PART_CORTEX_X4		0xD82
+ #define ARM_CPU_PART_NEOVERSE_V3	0xD84
+@@ -139,6 +140,7 @@
+ #define MIDR_CORTEX_X2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X2)
+ #define MIDR_NEOVERSE_N2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_N2)
+ #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
++#define MIDR_CORTEX_X3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X3)
+ #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
+ #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
+ #define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
 -- 
 2.43.0
 
