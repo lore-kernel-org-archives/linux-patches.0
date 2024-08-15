@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C5C210FB;
-	Thu, 15 Aug 2024 14:32:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DAA210FB;
+	Thu, 15 Aug 2024 14:32:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732356; cv=none; b=OKZn+Ip89BQsytiLLA4FwqdlR40INJZKCnrd1VRMWK3vwR0knhCV6r8lA68M9GnvOq5HPSH7zjkxBEwzlJZni/oCtADiv3Ws1AcD85VBD9Y5W0EW+udrmSDdtL1kpiWoIMrgnrrZlj0xoupSRLGwlrH8ys/DgqxXDoMK7zBTu7Y=
+	t=1723732359; cv=none; b=BdvtievmSXFO0uZ/M23HPxnMGUN0xm+ijAaiZvef8KSfU29w6M/SCHBSLLEjFPkyeLe4dwXCdcRhYxbbxvFXOtkrt+IRf0461eh1/HBoSd5SgfT6penq6XrRdT2TRNYFlY8RwQuWRnf+ZX+/f/EFWm+6ikPIXnscrruX2y4lg20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732356; c=relaxed/simple;
-	bh=Tki2Q8pG5mp1Qlgp4W3sUKxBZ+8waB2tCT3TZApz9Vg=;
+	s=arc-20240116; t=1723732359; c=relaxed/simple;
+	bh=qBHMJyN+ljPvU4jLU4Qq+hxpFn5SRIlJdISJAx3/sPI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aej8HnbW4QmYKAwctODPhihtYmMEwU+UEOpnGfu0n6hvmIOfy0naADV15fWHRDTwS6rT1M5a3TTWfN7iKEICQaoNESvAjj4Q0wphwmoPDSY3a8U7F/GOgV0wjkfwQ5WZUvfZOJXwCQwLivr6RLrus40Q2nnqi7lIB6kBQwj81PA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKZx6b0z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MSMu4aXcNMBebW2YV6TG7PBOdvOS0AsgolgJ/hCjIaZBZYo8Wyw9qJKr6frPaVkddkJuUabRBXejkWhfEHohvSLNO0md/0aCigQG8KS20y7IvkVTyOdQhOpVSvD3n35dJTWFjtgJqG1jk4x4fYmm/tm3ReweUzy2TiktRT4TPDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tlvF1v1l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKZx6b0z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E703C32786;
-	Thu, 15 Aug 2024 14:32:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tlvF1v1l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E19C32786;
+	Thu, 15 Aug 2024 14:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732355;
-	bh=Tki2Q8pG5mp1Qlgp4W3sUKxBZ+8waB2tCT3TZApz9Vg=;
+	s=korg; t=1723732359;
+	bh=qBHMJyN+ljPvU4jLU4Qq+hxpFn5SRIlJdISJAx3/sPI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UKZx6b0z2oSRn0GrtPlwb/940j5S9bTWETiEGRgWajxtf1EJlUCBTjhQDT5NkquNF
-	 lxSDXgji5wAX8Z2MqJQygH3pbqz7R3zoBHvIxR9IQTUXghYiZzXIbHfd69NwbsX5OY
-	 i/djv95CkCSrFqT/E/wdrhn/NIUYAEtPt9wShNYo=
+	b=tlvF1v1lRlCAB6AuxDYNGcJ0VdX4iJBWUJDZ7A8T8rBCSikuQUsnOo9sLNLNt8AIa
+	 2grBKmlaU2kek5tXug0TeWiJTgxfWGGjprd3GfCSvO7SF/WK9BmAthWTeQuVgB+Nu/
+	 xWPd+SZMP14oM3A3KjXjde/KD3UDozn+vKG4+A3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Martin Willi <martin@strongswan.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 113/352] net: dsa: b53: Limit chip-wide jumbo frame config to CPU ports
-Date: Thu, 15 Aug 2024 15:22:59 +0200
-Message-ID: <20240815131923.623099332@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 148/352] jbd2: make jbd2_journal_get_max_txn_bufs() internal
+Date: Thu, 15 Aug 2024 15:23:34 +0200
+Message-ID: <20240815131924.982050320@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,49 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Martin Willi <martin@strongswan.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit c5118072e228e7e4385fc5ac46b2e31cf6c4f2d3 ]
+commit 4aa99c71e42ad60178c1154ec24e3df9c684fb67 upstream.
 
-Broadcom switches supported by the b53 driver use a chip-wide jumbo frame
-configuration. In the commit referenced with the Fixes tag, the setting
-is applied just for the last port changing its MTU.
+There's no reason to have jbd2_journal_get_max_txn_bufs() public
+function. Currently all users are internal and can use
+journal->j_max_transaction_buffers instead. This saves some unnecessary
+recomputations of the limit as a bonus which becomes important as this
+function gets more complex in the following patch.
 
-While configuring CPU ports accounts for tagger overhead, user ports do
-not. When setting the MTU for a user port, the chip-wide setting is
-reduced to not include the tagger overhead, resulting in an potentially
-insufficient chip-wide maximum frame size for the CPU port.
-
-As, by design, the CPU port MTU is adjusted for any user port change,
-apply the chip-wide setting only for CPU ports. This aligns the driver
-to the behavior of other switch drivers.
-
-Fixes: 6ae5834b983a ("net: dsa: b53: add MTU configuration support")
-Suggested-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Martin Willi <martin@strongswan.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Link: https://patch.msgid.link/20240624170127.3253-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/b53/b53_common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/jbd2/commit.c     |    2 +-
+ fs/jbd2/journal.c    |    5 +++++
+ include/linux/jbd2.h |    5 -----
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/dsa/b53/b53_common.c b/drivers/net/dsa/b53/b53_common.c
-index d3b37cebcfde8..2bf07a3980544 100644
---- a/drivers/net/dsa/b53/b53_common.c
-+++ b/drivers/net/dsa/b53/b53_common.c
-@@ -2180,6 +2180,9 @@ static int b53_change_mtu(struct dsa_switch *ds, int port, int mtu)
- 	if (is5325(dev) || is5365(dev))
- 		return -EOPNOTSUPP;
+--- a/fs/jbd2/commit.c
++++ b/fs/jbd2/commit.c
+@@ -813,7 +813,7 @@ start_journal_io:
+ 		if (first_block < journal->j_tail)
+ 			freed += journal->j_last - journal->j_first;
+ 		/* Update tail only if we free significant amount of space */
+-		if (freed < jbd2_journal_get_max_txn_bufs(journal))
++		if (freed < journal->j_max_transaction_buffers)
+ 			update_tail = 0;
+ 	}
+ 	J_ASSERT(commit_transaction->t_state == T_COMMIT);
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -1481,6 +1481,11 @@ static void journal_fail_superblock(jour
+ 	journal->j_sb_buffer = NULL;
+ }
  
-+	if (!dsa_is_cpu_port(ds, port))
-+		return 0;
++static int jbd2_journal_get_max_txn_bufs(journal_t *journal)
++{
++	return (journal->j_total_len - journal->j_fc_wbufsize) / 4;
++}
 +
- 	enable_jumbo = (mtu >= JMS_MIN_SIZE);
- 	allow_10_100 = (dev->chip_id == BCM583XX_DEVICE_ID);
+ /*
+  * Given a journal_t structure, initialise the various fields for
+  * startup of a new journaling session.  We use this both when creating
+--- a/include/linux/jbd2.h
++++ b/include/linux/jbd2.h
+@@ -1626,11 +1626,6 @@ int jbd2_wait_inode_data(journal_t *jour
+ int jbd2_fc_wait_bufs(journal_t *journal, int num_blks);
+ int jbd2_fc_release_bufs(journal_t *journal);
  
--- 
-2.43.0
-
+-static inline int jbd2_journal_get_max_txn_bufs(journal_t *journal)
+-{
+-	return (journal->j_total_len - journal->j_fc_wbufsize) / 4;
+-}
+-
+ /*
+  * is_journal_abort
+  *
 
 
