@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40BB918D64F;
-	Thu, 15 Aug 2024 13:55:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A99B1714A1;
+	Thu, 15 Aug 2024 13:55:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730117; cv=none; b=tEz6wuHaV6moRZSgtJlM5VFsdt1iaKQ6MAAaDC3jyrCH2GARPe8rK+kdk5sZ+sFMBupThC+yw3/fXZCXbeifD+QiAzCqLI4mH9iM4xoJfLClCrHKUYrvZD0/Xf+07b5SQdIc5KOWY+gYEBtYCtHCnyl8/++kxj6426UV+tu4q+c=
+	t=1723730120; cv=none; b=tE9PNeJ8SKwarDk5UXj7I/MsnrCONE4phinh3UOXrPHREPLZSaPrfdOiYw57X7gYaD53n8vqodTXtW6N2yM/VyGjTh5hHw1iNQDtESQeVidiG8NywV2UvuolCA9Kw/39W82Qhgmozu7WYQTDAmkYmkY/evfiKnYXynrMpnsIy/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730117; c=relaxed/simple;
-	bh=6kB96IIRnD/TiQ4SYVo6uH4dEaD27+N6rahOj6VdSHI=;
+	s=arc-20240116; t=1723730120; c=relaxed/simple;
+	bh=lLy0Bib9FPuqkxV5aJBi/hEF0Xv7LJ4Ho2bga+rTfbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=om+G36LBPkP7g+pQ+04qafj4lVK0XxzbzTx66apfu/q1dM1z7dddw2SXtVp8n3EBIPk3Q0ahtufIzUQmIlyQ5uHPsH7Svc6TevynffLRWR986Tyq7DFgJLqf+kVKMmbqZ3np8jNMKM7a2JypNObnFTvyGwGGqA+dXJ5YbrunLqQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VWeJsRUh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aUcluRxkToJ+34IskQLrMcXjnVQ2C3FYLreJ7BtnRPyF0gU/cEH6da1o8vFoObYvT9wv9qrPUaqUXUHWRKSO6/euNkdbnHl/TEKsoqs7aI2BnBcz4dJI9h6gMsa3qg6UvparpTjEFReXGkQRDUaGdljf9FtFIjp9elicGKWwe6s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ak0kSz2D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VWeJsRUh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB9D8C32786;
-	Thu, 15 Aug 2024 13:55:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ak0kSz2D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA69C32786;
+	Thu, 15 Aug 2024 13:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730117;
-	bh=6kB96IIRnD/TiQ4SYVo6uH4dEaD27+N6rahOj6VdSHI=;
+	s=korg; t=1723730120;
+	bh=lLy0Bib9FPuqkxV5aJBi/hEF0Xv7LJ4Ho2bga+rTfbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VWeJsRUh3VlZgNK7qcGgYwIIg3BSKk0cPN4bAvlyasgAiw61SlC1qClmHa0NYpVtp
-	 mrxhpJOinzgWZSeDictSAvi1PazFFEbciPMuNhY/pukZ2MMrLMF7Qsx6J28900r4fQ
-	 QCo5SEWc4BAFS9dB6pFK6pYBKVvKqOhBZ4zCy4Sk=
+	b=ak0kSz2DV+4XUz3M9gxU+HPz5RR5brej7PnX3gx3cn96zSOsZhS2j368psyvwAJbx
+	 45cyDKs3REAc8a1nN4x9+T2GMp4bnXuvXiW6gUj6NHs01q1WcDCorSqveajzYb0+zB
+	 DxR+H3r1jS8BK2hYq8d1PKoqsbjvGG19e9ipQUjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Michael Tretter <m.tretter@pengutronix.de>,
+	Michal Simek <michal.simek@xilinx.com>,
+	Rajan Vaja <rajan.vaja@xilinx.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/484] ext4: check the extent status again before inserting delalloc block
-Date: Thu, 15 Aug 2024 15:22:47 +0200
-Message-ID: <20240815131953.345044793@linuxfoundation.org>
+Subject: [PATCH 5.15 310/484] soc: xilinx: move PM_INIT_FINALIZE to zynqmp_pm_domains driver
+Date: Thu, 15 Aug 2024 15:22:48 +0200
+Message-ID: <20240815131953.382597606@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,98 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Michael Tretter <m.tretter@pengutronix.de>
 
-[ Upstream commit 0ea6560abb3bac1ffcfa4bf6b2c4d344fdc27b3c ]
+[ Upstream commit 7fd890b89dea55eb5866640eb8befad26d558161 ]
 
-ext4_da_map_blocks looks up for any extent entry in the extent status
-tree (w/o i_data_sem) and then the looks up for any ondisk extent
-mapping (with i_data_sem in read mode).
+PM_INIT_FINALIZE tells the PMU FW that Linux is able to handle the power
+management nodes that are provided by the PMU FW. Nodes that are not
+requested are shut down after this call.
 
-If it finds a hole in the extent status tree or if it couldn't find any
-entry at all, it then takes the i_data_sem in write mode to add a da
-entry into the extent status tree. This can actually race with page
-mkwrite & fallocate path.
+Calling PM_INIT_FINALIZE from the zynqmp_power driver is wrong. The PM
+node request mechanism is implemented in the zynqmp_pm_domains driver,
+which must also call PM_INIT_FINALIZE.
 
-Note that this is ok between
-1. ext4 buffered-write path v/s ext4_page_mkwrite(), because of the
-   folio lock
-2. ext4 buffered write path v/s ext4 fallocate because of the inode
-   lock.
+Due to the behavior of the PMU FW, all devices must be powered up before
+PM_INIT_FINALIZE is called, because otherwise the devices might
+misbehave. Calling PM_INIT_FINALIZE from the sync_state device callback
+ensures that all users probed successfully before the PMU FW is allowed
+to power off unused domains.
 
-But this can race between ext4_page_mkwrite() & ext4 fallocate path
-
-ext4_page_mkwrite()             ext4_fallocate()
- block_page_mkwrite()
-  ext4_da_map_blocks()
-   //find hole in extent status tree
-                                 ext4_alloc_file_blocks()
-                                  ext4_map_blocks()
-                                   //allocate block and unwritten extent
-   ext4_insert_delayed_block()
-    ext4_da_reserve_space()
-     //reserve one more block
-    ext4_es_insert_delayed_block()
-     //drop unwritten extent and add delayed extent by mistake
-
-Then, the delalloc extent is wrong until writeback and the extra
-reserved block can't be released any more and it triggers below warning:
-
- EXT4-fs (pmem2): Inode 13 (00000000bbbd4d23): i_reserved_data_blocks(1) not cleared!
-
-Fix the problem by looking up extent status tree again while the
-i_data_sem is held in write mode. If it still can't find any entry, then
-we insert a new da entry into the extent status tree.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240517124005.347221-3-yi.zhang@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Michael Tretter <m.tretter@pengutronix.de>
+Acked-by: Michal Simek <michal.simek@xilinx.com>
+Acked-by: Rajan Vaja <rajan.vaja@xilinx.com>
+Link: https://lore.kernel.org/r/20210825150313.4033156-2-m.tretter@pengutronix.de
+Signed-off-by: Michal Simek <michal.simek@xilinx.com>
+Stable-dep-of: 9b003e14801c ("drivers: soc: xilinx: check return status of get_api_version()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/soc/xilinx/zynqmp_pm_domains.c | 16 ++++++++++++++++
+ drivers/soc/xilinx/zynqmp_power.c      |  1 -
+ 2 files changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 403f88662bc30..e765c0d05fea2 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1744,6 +1744,7 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
- 		if (ext4_es_is_hole(&es))
- 			goto add_delayed;
+diff --git a/drivers/soc/xilinx/zynqmp_pm_domains.c b/drivers/soc/xilinx/zynqmp_pm_domains.c
+index 226d343f0a6a5..81e8e10f10929 100644
+--- a/drivers/soc/xilinx/zynqmp_pm_domains.c
++++ b/drivers/soc/xilinx/zynqmp_pm_domains.c
+@@ -152,11 +152,17 @@ static int zynqmp_gpd_power_off(struct generic_pm_domain *domain)
+ static int zynqmp_gpd_attach_dev(struct generic_pm_domain *domain,
+ 				 struct device *dev)
+ {
++	struct device_link *link;
+ 	int ret;
+ 	struct zynqmp_pm_domain *pd;
  
-+found:
- 		/*
- 		 * Delayed extent could be allocated by fallocate.
- 		 * So we need to check it.
-@@ -1788,6 +1789,26 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 	pd = container_of(domain, struct zynqmp_pm_domain, gpd);
  
- add_delayed:
- 	down_write(&EXT4_I(inode)->i_data_sem);
-+	/*
-+	 * Page fault path (ext4_page_mkwrite does not take i_rwsem)
-+	 * and fallocate path (no folio lock) can race. Make sure we
-+	 * lookup the extent status tree here again while i_data_sem
-+	 * is held in write mode, before inserting a new da entry in
-+	 * the extent status tree.
-+	 */
-+	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
-+		if (!ext4_es_is_hole(&es)) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			goto found;
-+		}
-+	} else if (!ext4_has_inline_data(inode)) {
-+		retval = ext4_map_query_blocks(NULL, inode, map);
-+		if (retval) {
-+			up_write(&EXT4_I(inode)->i_data_sem);
-+			return retval;
-+		}
-+	}
++	link = device_link_add(dev, &domain->dev, DL_FLAG_SYNC_STATE_ONLY);
++	if (!link)
++		dev_dbg(&domain->dev, "failed to create device link for %s\n",
++			dev_name(dev));
 +
- 	retval = ext4_insert_delayed_block(inode, map->m_lblk);
- 	up_write(&EXT4_I(inode)->i_data_sem);
- 	if (retval)
+ 	/* If this is not the first device to attach there is nothing to do */
+ 	if (domain->device_count)
+ 		return 0;
+@@ -299,9 +305,19 @@ static int zynqmp_gpd_remove(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
++static void zynqmp_gpd_sync_state(struct device *dev)
++{
++	int ret;
++
++	ret = zynqmp_pm_init_finalize();
++	if (ret)
++		dev_warn(dev, "failed to release power management to firmware\n");
++}
++
+ static struct platform_driver zynqmp_power_domain_driver = {
+ 	.driver	= {
+ 		.name = "zynqmp_power_controller",
++		.sync_state = zynqmp_gpd_sync_state,
+ 	},
+ 	.probe = zynqmp_gpd_probe,
+ 	.remove = zynqmp_gpd_remove,
+diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
+index c556623dae024..f8c301984d4f9 100644
+--- a/drivers/soc/xilinx/zynqmp_power.c
++++ b/drivers/soc/xilinx/zynqmp_power.c
+@@ -178,7 +178,6 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
+ 	u32 pm_api_version;
+ 	struct mbox_client *client;
+ 
+-	zynqmp_pm_init_finalize();
+ 	zynqmp_pm_get_api_version(&pm_api_version);
+ 
+ 	/* Check PM API version number */
 -- 
 2.43.0
 
