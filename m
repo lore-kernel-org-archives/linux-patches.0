@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B6BB7DA9E;
-	Thu, 15 Aug 2024 13:48:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBD019DF58;
+	Thu, 15 Aug 2024 13:48:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729720; cv=none; b=qyxRDMRiRAJ558l+4c/ROyHQ1ZLQE77eKHrvw6ikM+3SSz55fYI5jwzxxXspxaL+ryf79rQB+0/hg8io53qPq7n6RAm0y7KsZhM43ryk5ptf7fg4W/m/OGQUfFtl2z6fKov5lAj4BvND3yC0qYeTnYVpRPNqdlTnrHFsY3+VKV0=
+	t=1723729723; cv=none; b=EVbPTDl4xRt4GH2itKHzZV1/mPY+mOQk/k1mtiINiB1vOSjjpHCmrhfVQnVJjYodN8QczaOUUQkM8c2CqxfqIQNe5pWFQUEEmyLO4gOcSuFfe+yafu0OB/ectZzBskIpllPbMKU8elIscqe+rm6tGMbT16hX3v2dkpcgTq2esjs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729720; c=relaxed/simple;
-	bh=FOd74EXQqUuy17xnoit/dt3rWWiIWGLmBfQKXAid1KY=;
+	s=arc-20240116; t=1723729723; c=relaxed/simple;
+	bh=fwz2vCyUG5RXf4T4Qison5hMhD2pQcy7U1XxXJJqc88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TuKxtNUfc0oNfLgAeN5WmxbiD60fyS4cv0QMMLeWz3c86E7LUmEqVEcUemDmkqJToQfXAKA5UPXaCZISuYhkbEI4ynImo0eRU+lX7A7mnFxINrLv1Kqkib8RKRcydenb20X5luAbkMgx1yH01c5Z+2WRoo4DQsKoSasGbxSsV4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PoshCPiW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Im2+HqkD3tcTqf/N5b4DcnRHZfHogLzjV0yOU3ro+b6dcjBuGemanPxahIAqNcpUDiJdzY/cKRGc8SHAIdAtK96mG4lJNj0QqhjJvGpGIEyWpp4qaJdUHUCyVSYjR4/3E0FG6mm9dCGKo5H0uvvpcdsM6rbT4TBdJIfmQo1O6lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGNvGlmP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PoshCPiW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E53C32786;
-	Thu, 15 Aug 2024 13:48:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGNvGlmP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2F3C32786;
+	Thu, 15 Aug 2024 13:48:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729720;
-	bh=FOd74EXQqUuy17xnoit/dt3rWWiIWGLmBfQKXAid1KY=;
+	s=korg; t=1723729723;
+	bh=fwz2vCyUG5RXf4T4Qison5hMhD2pQcy7U1XxXJJqc88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PoshCPiW/eOPMYLPB457jJ3E8rBAF4VKkLkFwTNSZTCag3Fwh3Qgn0l8Nl57/ZJLN
-	 jygfGyw0wKs0awtuyaNDLfO49wjGM1d8akATumZfC89hHmGGDrFqkF+l0/1UB3Rfl4
-	 AZ0xf+JTk4Ph88pM8aNFVjADjBxtYthLewVr4evc=
+	b=xGNvGlmPF1zHOtFpviTEkPOKcytoZXJAMT9gKR5CpK5TpSWqGoMpdmu0RYY6QxPrr
+	 7mG5I3jrflx+Yw27V32fjw/qrnkDiAAVkpirrvGVoNtCKoovyQ2hJfMu8bVxSXNve7
+	 GmncaJmQKjb07QILdoKnyQqPBNdCCEN54YoVaxoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Pierre Gondois <pierre.gondois@arm.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Qais Yousef <qyousef@layalina.io>
-Subject: [PATCH 5.15 186/484] sched/fair: Use all little CPUs for CPU-bound workloads
-Date: Thu, 15 Aug 2024 15:20:44 +0200
-Message-ID: <20240815131948.600122473@linuxfoundation.org>
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 5.15 187/484] apparmor: use kvfree_sensitive to free data->data
+Date: Thu, 15 Aug 2024 15:20:45 +0200
+Message-ID: <20240815131948.639242959@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,113 +50,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pierre Gondois <pierre.gondois@arm.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 3af7524b14198f5159a86692d57a9f28ec9375ce upstream.
+commit 2bc73505a5cd2a18a7a542022722f136c19e3b87 upstream.
 
-Running N CPU-bound tasks on an N CPUs platform:
+Inside unpack_profile() data->data is allocated using kvmemdup() so it
+should be freed with the corresponding kvfree_sensitive().
 
-- with asymmetric CPU capacity
+Also add missing data->data release for rhashtable insertion failure path
+in unpack_profile().
 
-- not being a DynamIq system (i.e. having a PKG level sched domain
-  without the SD_SHARE_PKG_RESOURCES flag set)
+Found by Linux Verification Center (linuxtesting.org).
 
-.. might result in a task placement where two tasks run on a big CPU
-and none on a little CPU. This placement could be more optimal by
-using all CPUs.
-
-Testing platform:
-
-  Juno-r2:
-    - 2 big CPUs (1-2), maximum capacity of 1024
-    - 4 little CPUs (0,3-5), maximum capacity of 383
-
-Testing workload ([1]):
-
-  Spawn 6 CPU-bound tasks. During the first 100ms (step 1), each tasks
-  is affine to a CPU, except for:
-
-    - one little CPU which is left idle.
-    - one big CPU which has 2 tasks affine.
-
-  After the 100ms (step 2), remove the cpumask affinity.
-
-Behavior before the patch:
-
-  During step 2, the load balancer running from the idle CPU tags sched
-  domains as:
-
-  - little CPUs: 'group_has_spare'. Cf. group_has_capacity() and
-    group_is_overloaded(), 3 CPU-bound tasks run on a 4 CPUs
-    sched-domain, and the idle CPU provides enough spare capacity
-    regarding the imbalance_pct
-
-  - big CPUs: 'group_overloaded'. Indeed, 3 tasks run on a 2 CPUs
-    sched-domain, so the following path is used:
-
-      group_is_overloaded()
-      \-if (sgs->sum_nr_running <= sgs->group_weight) return true;
-
-    The following path which would change the migration type to
-    'migrate_task' is not taken:
-
-      calculate_imbalance()
-      \-if (env->idle != CPU_NOT_IDLE && env->imbalance == 0)
-
-    as the local group has some spare capacity, so the imbalance
-    is not 0.
-
-  The migration type requested is 'migrate_util' and the busiest
-  runqueue is the big CPU's runqueue having 2 tasks (each having a
-  utilization of 512). The idle little CPU cannot pull one of these
-  task as its capacity is too small for the task. The following path
-  is used:
-
-   detach_tasks()
-   \-case migrate_util:
-     \-if (util > env->imbalance) goto next;
-
-After the patch:
-
-As the number of failed balancing attempts grows (with
-'nr_balance_failed'), progressively make it easier to migrate
-a big task to the idling little CPU. A similar mechanism is
-used for the 'migrate_load' migration type.
-
-Improvement:
-
-Running the testing workload [1] with the step 2 representing
-a ~10s load for a big CPU:
-
-  Before patch: ~19.3s
-  After patch:  ~18s (-6.7%)
-
-Similar issue reported at:
-
-  https://lore.kernel.org/lkml/20230716014125.139577-1-qyousef@layalina.io/
-
-Suggested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Pierre Gondois <pierre.gondois@arm.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Acked-by: Qais Yousef <qyousef@layalina.io>
-Link: https://lore.kernel.org/r/20231206090043.634697-1-pierre.gondois@arm.com
+Fixes: e025be0f26d5 ("apparmor: support querying extended trusted helper extra data")
+Cc: stable@vger.kernel.org
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/fair.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/policy.c        |    2 +-
+ security/apparmor/policy_unpack.c |    1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -8241,7 +8241,7 @@ static int detach_tasks(struct lb_env *e
- 		case migrate_util:
- 			util = task_util_est(p);
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -187,7 +187,7 @@ static void aa_free_data(void *ptr, void
+ {
+ 	struct aa_data *data = ptr;
  
--			if (util > env->imbalance)
-+			if (shr_bound(util, env->sd->nr_balance_failed) > env->imbalance)
- 				goto next;
+-	kfree_sensitive(data->data);
++	kvfree_sensitive(data->data, data->size);
+ 	kfree_sensitive(data->key);
+ 	kfree_sensitive(data);
+ }
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -915,6 +915,7 @@ static struct aa_profile *unpack_profile
  
- 			env->imbalance -= util;
+ 			if (rhashtable_insert_fast(profile->data, &data->head,
+ 						   profile->data->p)) {
++				kvfree_sensitive(data->data, data->size);
+ 				kfree_sensitive(data->key);
+ 				kfree_sensitive(data);
+ 				info = "failed to insert data to table";
 
 
