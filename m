@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8A07DA9E;
-	Thu, 15 Aug 2024 13:48:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A157DA9E;
+	Thu, 15 Aug 2024 13:48:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729701; cv=none; b=CUWvh4WaeiBLX+jZYGXJ0jWhvWLQqY4JOn2HI1761Gm9Q3pOcyCSzBrDyOhol7NM20IMmhGzM3gxRsEq8cdiKtSsullBd6m65LhRyrrdV+LnDfSra5E18ENAUJdJ0QrmhcZt9SlLnPyHUyy+r6PPKVwvx5xWUIJ5ZpTvIUlcZxQ=
+	t=1723729704; cv=none; b=mpWS+ie4a0eYEGKprHdf8TGPXqE8p7TUYxEGLQNc+a/gTs5SymvRMxKmgZg2XNjJT42z8i2zRoye4x8Zmvn6sSmghsuocdzxU/v1nmBZFeIfkQiUjKMLKTtQlUbAjpvZ1WlmBAIfJ7PXtU4LUwon/gefJNcL8KfI7XX+LPFDlJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729701; c=relaxed/simple;
-	bh=nZoRRoaATUsqataoianwQQr0WuiUgLBoPCKnZKwHnUM=;
+	s=arc-20240116; t=1723729704; c=relaxed/simple;
+	bh=1Fs2GtjcFIag3Q5uyoH9rK/XmeJvXLGFmEVruoukwOw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LgcSgN6tbohPxBpeq3pVEPKmC6VSgMoEYZqUix0AkHvQgEJxEwenpD5HqjbSiMdn46l4YwB61qaIUIMGr9tI3Niu3FYBW51fh88G2oz7MztYXuq//C0gktuTTvlKi0M7LP04YoXULfapAWEoHfUVFdB+H5leTRhg8uyga8MQCJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PlNVPBev; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Xs/cIUZ4BOHN76ICHxr5SGxQpfHMQpLC0b9iGD/ycmBbJg4YM21vhhJv0vc9NUv24PDN107O6sIeQ9SiI56v2OPcvwQFHtxMKmATExNb8VVVgGkfM0F4zTpXyr6lX8farpuxaqCMOuKCEw6QuNMlN8r7yl9E1zq6kAMTDnAAXN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HNYbcql0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PlNVPBev"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67D21C32786;
-	Thu, 15 Aug 2024 13:48:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HNYbcql0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7226EC32786;
+	Thu, 15 Aug 2024 13:48:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729700;
-	bh=nZoRRoaATUsqataoianwQQr0WuiUgLBoPCKnZKwHnUM=;
+	s=korg; t=1723729703;
+	bh=1Fs2GtjcFIag3Q5uyoH9rK/XmeJvXLGFmEVruoukwOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlNVPBevAoGqluuomVsxjhbF8O23NfIm6Ho7vDZyVXGRyMmqGMfgp0RZcJaFgeoRO
-	 rGtTSX2XXgRl7O3/Fkc/MJNjR04ZCxyMqML3hQ6KErTWqoe6NPrajgEXvZJK+SLPQT
-	 /+zoGWpkIGZ1p1mBZNGfxfa7oH9wYQAFBj+CBNrQ=
+	b=HNYbcql06s9njobAXh+QuvXOzEuXL7foBR1n9V7qYeaXDxj3kCAf2ihoVX1FybDez
+	 rGpz1QRRPRGKXTfabQVJmeBbZlB2uhDosq75NSbsY8DXIa6jMDTNlsPruIYgEalKmF
+	 qYJtbUKOZSr4EL4bWWk0qlFkJPfCB0QkCM4cQHIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.15 181/484] ext2: Verify bitmap and itable block numbers before using them
-Date: Thu, 15 Aug 2024 15:20:39 +0200
-Message-ID: <20240815131948.410114700@linuxfoundation.org>
+	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
+	=20Bence?= <csokas.bence@prolan.hu>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 164/484] rtc: interface: Add RTC offset to alarm after fix-up
+Date: Thu, 15 Aug 2024 15:20:22 +0200
+Message-ID: <20240815131947.744520175@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -43,63 +46,64 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Csókás, Bence <csokas.bence@prolan.hu>
 
-commit 322a6aff03937aa1ece33b4e46c298eafaf9ac41 upstream.
+[ Upstream commit 463927a8902a9f22c3633960119410f57d4c8920 ]
 
-Verify bitmap block numbers and inode table blocks are sane before using
-them for checking bits in the block bitmap.
+`rtc_add_offset()` is called by `__rtc_read_time()`
+and `__rtc_read_alarm()` to add the RTC's offset to
+the raw read-outs from the device drivers. However,
+in the latter case, a fix-up algorithm is run if
+the RTC device does not report a full `struct rtc_time`
+alarm value. In that case, the offset was forgot to be
+added.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: fd6792bb022e ("rtc: fix alarm read and set offset")
+
+Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
+Link: https://lore.kernel.org/r/20240619140451.2800578-1-csokas.bence@prolan.hu
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext2/balloc.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/rtc/interface.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/fs/ext2/balloc.c
-+++ b/fs/ext2/balloc.c
-@@ -79,26 +79,33 @@ static int ext2_valid_block_bitmap(struc
- 	ext2_grpblk_t next_zero_bit;
- 	ext2_fsblk_t bitmap_blk;
- 	ext2_fsblk_t group_first_block;
-+	ext2_grpblk_t max_bit;
+diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
+index f49ab45455d7c..29c12947e73fc 100644
+--- a/drivers/rtc/interface.c
++++ b/drivers/rtc/interface.c
+@@ -274,10 +274,9 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 			return err;
  
- 	group_first_block = ext2_group_first_block_no(sb, block_group);
-+	max_bit = ext2_group_last_block_no(sb, block_group) - group_first_block;
+ 		/* full-function RTCs won't have such missing fields */
+-		if (rtc_valid_tm(&alarm->time) == 0) {
+-			rtc_add_offset(rtc, &alarm->time);
+-			return 0;
+-		}
++		err = rtc_valid_tm(&alarm->time);
++		if (!err)
++			goto done;
  
- 	/* check whether block bitmap block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_block_bitmap);
- 	offset = bitmap_blk - group_first_block;
--	if (!ext2_test_bit(offset, bh->b_data))
-+	if (offset < 0 || offset > max_bit ||
-+	    !ext2_test_bit(offset, bh->b_data))
- 		/* bad block bitmap */
- 		goto err_out;
+ 		/* get the "after" timestamp, to detect wrapped fields */
+ 		err = rtc_read_time(rtc, &now);
+@@ -379,6 +378,8 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
+ 	if (err)
+ 		dev_warn(&rtc->dev, "invalid alarm value: %ptR\n",
+ 			 &alarm->time);
++	else
++		rtc_add_offset(rtc, &alarm->time);
  
- 	/* check whether the inode bitmap block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_inode_bitmap);
- 	offset = bitmap_blk - group_first_block;
--	if (!ext2_test_bit(offset, bh->b_data))
-+	if (offset < 0 || offset > max_bit ||
-+	    !ext2_test_bit(offset, bh->b_data))
- 		/* bad block bitmap */
- 		goto err_out;
- 
- 	/* check whether the inode table block number is set */
- 	bitmap_blk = le32_to_cpu(desc->bg_inode_table);
- 	offset = bitmap_blk - group_first_block;
-+	if (offset < 0 || offset > max_bit ||
-+	    offset + EXT2_SB(sb)->s_itb_per_group - 1 > max_bit)
-+		goto err_out;
- 	next_zero_bit = ext2_find_next_zero_bit(bh->b_data,
- 				offset + EXT2_SB(sb)->s_itb_per_group,
- 				offset);
+ 	return err;
+ }
+-- 
+2.43.0
+
 
 
