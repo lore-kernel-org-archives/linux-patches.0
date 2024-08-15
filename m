@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9585019FA7A;
-	Thu, 15 Aug 2024 14:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCAD17C995;
+	Thu, 15 Aug 2024 14:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732637; cv=none; b=R7acHpX9xMXmQaG5UtWM9C7NdBrMmAJau6cexpqNWQwDQHjHhQ9d1ULuBko8iJbAzjBI/WJR2qySRU92vejyMgIoY7IWNjqrndhFCx6kmuBixqx+xBPpC4cKUDzhvgd3p9V9+XsSPwrLJ/WDg0c8TpieQjVYMf6Ar2ldy09QrQE=
+	t=1723732640; cv=none; b=RQoFNdZXGU2tGGfs8S2JirfnTobGViBBACDYZvLZPJJVoM85FPilt9536XkE7ExgY2aSLxnUu1BrfPYuV+qldD5p06+5q87b9Lq7YMex1mUwQVAASTWVC/w5HsGwe2b0RxRF8owrKc0invTSLc63U5qj+hPnoIW+UB+J4gxhasM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732637; c=relaxed/simple;
-	bh=umC9I5Vc8JKPiyf9AtrCNvEtqqR3T2TGCDvAg2lhFBY=;
+	s=arc-20240116; t=1723732640; c=relaxed/simple;
+	bh=7pteER0M5KkHz0ln59XLEMMnIEdAMI66TvgIPwUrABs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lgwc8D7yb8WbKeRc+TLwLTsjIRBlKbO2on6H7Tgd/RPVJBuDsQNL8BInD5jsnBAZOTKBHv9IFoafy/VbEbbajUUWnjhEyQLpj0FfQl9jS/E9WZpO0/PZcwfCpG3eGPq9sOnRQ3Ku2JVDHgFInsYt4VOCgqbVYTZ99qDwEg1fDj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qJGcPnxS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=srnZdkG3Fyr+ohhf5w/BAP99LDt3m1fRTeo8IXiWouCn6p3wbOwumjaoEkEisMpQ+G3FkYnp1aQc6ndS8BhVbfhZ/JXIZwxP2UvRxZYIyLsVYXN12pYPQH2IR60RqbzT0b6hj8xntM9hIm2PCzOzv0H4MH7JT4Ohlufls3qyID0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y6CRsHAS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qJGcPnxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1871AC32786;
-	Thu, 15 Aug 2024 14:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y6CRsHAS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EAAC32786;
+	Thu, 15 Aug 2024 14:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732637;
-	bh=umC9I5Vc8JKPiyf9AtrCNvEtqqR3T2TGCDvAg2lhFBY=;
+	s=korg; t=1723732640;
+	bh=7pteER0M5KkHz0ln59XLEMMnIEdAMI66TvgIPwUrABs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qJGcPnxS6Ocswr2QGElh9+axT1HF9du6B/Ttq94drh0fP4eYY94aPyi/9YUm2Zosy
-	 gy/Hs5xAxvo75jAcZ2oOnumnKtpx5VnMvHUyTujPuLWGd/S43J/tVHmF8QZAqjY0YC
-	 48+GJS/wijFhrNtALejhNmFPL+T3R9ZKSwT6WlOw=
+	b=y6CRsHASc8PQR/+nuze6vJQ29vZLYbSy8KXh2vqQbK3OjLU66cO+QkgN/hxBd/K5A
+	 gAuXEkYF43dpKfKA6x0Gh/L2pumunefAdqv8qWMoaAcvuB8Ln06nzo0K/Ra5aWrhn9
+	 UbWfTpqW11e9qYCCuoNhDgF/y1A2WSTQNL56rW2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patryk Duda <patrykd@google.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH 5.10 240/352] platform/chrome: cros_ec_proto: Lock device when updating MKBP version
-Date: Thu, 15 Aug 2024 15:25:06 +0200
-Message-ID: <20240815131928.713536149@linuxfoundation.org>
+	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
+	Tatsunosuke Tobita <tatsunosuke.wacom@gmail.com>,
+	Ping Cheng <ping.cheng@wacom.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 5.10 241/352] HID: wacom: Modify pen IDs
+Date: Thu, 15 Aug 2024 15:25:07 +0200
+Message-ID: <20240815131928.752367406@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -50,42 +53,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patryk Duda <patrykd@google.com>
+From: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
 
-commit df615907f1bf907260af01ccb904d0e9304b5278 upstream.
+commit f0d17d696dfce77c9abc830e4ac2d677890a2dad upstream.
 
-The cros_ec_get_host_command_version_mask() function requires that the
-caller must have ec_dev->lock mutex before calling it. This requirement
-was not met and as a result it was possible that two commands were sent
-to the device at the same time.
+The pen ID, 0x80842, was not the correct ID for wacom driver to
+treat. The ID was corrected to 0x8842.
+Also, 0x4200 was not the expected ID used on any Wacom device.
+Therefore, 0x4200 was removed.
 
-The problem was observed while using UART backend which doesn't use any
-additional locks, unlike SPI backend which locks the controller until
-response is received.
-
-Fixes: f74c7557ed0d ("platform/chrome: cros_ec_proto: Update version on GET_NEXT_EVENT failure")
-Cc: stable@vger.kernel.org
-Signed-off-by: Patryk Duda <patrykd@google.com>
-Link: https://lore.kernel.org/r/20240730104425.607083-1-patrykd@google.com
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
+Signed-off-by: Tatsunosuke Tobita <tatsunosuke.wacom@gmail.com>
+Fixes: bfdc750c4cb2 ("HID: wacom: add three styli to wacom_intuos_get_tool_type")
+Cc: stable@kernel.org #6.2
+Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
+Link: https://patch.msgid.link/20240709055729.17158-1-tatsunosuke.wacom@gmail.com
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/chrome/cros_ec_proto.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hid/wacom_wac.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/platform/chrome/cros_ec_proto.c
-+++ b/drivers/platform/chrome/cros_ec_proto.c
-@@ -780,9 +780,11 @@ int cros_ec_get_next_event(struct cros_e
- 	if (ret == -ENOPROTOOPT) {
- 		dev_dbg(ec_dev->dev,
- 			"GET_NEXT_EVENT returned invalid version error.\n");
-+		mutex_lock(&ec_dev->lock);
- 		ret = cros_ec_get_host_command_version_mask(ec_dev,
- 							EC_CMD_GET_NEXT_EVENT,
- 							&ver_mask);
-+		mutex_unlock(&ec_dev->lock);
- 		if (ret < 0 || ver_mask == 0)
- 			/*
- 			 * Do not change the MKBP supported version if we can't
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -714,13 +714,12 @@ static int wacom_intuos_get_tool_type(in
+ 	case 0x8e2: /* IntuosHT2 pen */
+ 	case 0x022:
+ 	case 0x200: /* Pro Pen 3 */
+-	case 0x04200: /* Pro Pen 3 */
+ 	case 0x10842: /* MobileStudio Pro Pro Pen slim */
+ 	case 0x14802: /* Intuos4/5 13HD/24HD Classic Pen */
+ 	case 0x16802: /* Cintiq 13HD Pro Pen */
+ 	case 0x18802: /* DTH2242 Pen */
+ 	case 0x10802: /* Intuos4/5 13HD/24HD General Pen */
+-	case 0x80842: /* Intuos Pro and Cintiq Pro 3D Pen */
++	case 0x8842: /* Intuos Pro and Cintiq Pro 3D Pen */
+ 		tool_type = BTN_TOOL_PEN;
+ 		break;
+ 
 
 
