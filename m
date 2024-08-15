@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5812C1A705B;
-	Thu, 15 Aug 2024 14:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFFD63C;
+	Thu, 15 Aug 2024 14:25:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731953; cv=none; b=U4JLqjZxQzMi50gIg3N8QyKKPz+x7hS4lNP5z6WcTi86hxV+hi95EPFrtJ2V8zHLaiYuLZvCRhZQaSB0j+Ms6wjdZ62CG21TA/9IibJxQ9V49FDY1lniaZ9tNzgP+zH6TXMV9WjbNC+CJn9lTMC/KBjUd9HmO+Jfq7Q/1iwj3ds=
+	t=1723731956; cv=none; b=DGl5TAKUlnWdyhFVvB+NnWJLrm0LVoYqtpJup4zS1PXToRh/eGprB5MjnpFAVsDhf5UzlXYi7ZfK4q9VY6/tz++yZsRXwNg3itLyO8QGaFXpPcFzL3sesba4YI7K5NKTV6KxLTp5uvsNPf/XLNsR8L9IdKlbygGSzpqg728jlcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731953; c=relaxed/simple;
-	bh=cXBLtfNXdW0r/vDtdplKfqtCS5B0zcl9syTv/XChKIs=;
+	s=arc-20240116; t=1723731956; c=relaxed/simple;
+	bh=7+mQV+6P4a6fYnfYNx+apHpxyPPv44sQfMwCSIeDkrw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pwCjanykbAETxVICrZYgJfcGErRNBA3GLeSlTIrR7RxYqlECvdidy9xRBq9SZLh5NbGLnhQIYamx5SB22ze7qvjxjJXHxjkwaDbRLu4ahbw/IwmCjKb4LbN3YKR4bppvrJ1pxjBFX+RLQ4IsMTsYK5bAsRVzxDY4EdudMSaUbu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZF8QkOD2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CeeHjUdZYp7vhgzGjSUipj0bqVYWKGTkee9xFRkchuuwjmFuzcZcd6NFBji47/5t4jiKbUaG7xDJKGIPT9KkvLgmxgTFOFRsgdM4ewNZOCqAnjYhcgC5rVWzr2DTgP3zUREOBNXgEp8QQBolwZ28uPDF4f77JGN4HcgoFuP+81g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVSoEVYo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZF8QkOD2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40DD2C32786;
-	Thu, 15 Aug 2024 14:25:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVSoEVYo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0351C32786;
+	Thu, 15 Aug 2024 14:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731953;
-	bh=cXBLtfNXdW0r/vDtdplKfqtCS5B0zcl9syTv/XChKIs=;
+	s=korg; t=1723731956;
+	bh=7+mQV+6P4a6fYnfYNx+apHpxyPPv44sQfMwCSIeDkrw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZF8QkOD23lIKaKGY/gvL38yWuzRvjsZg5eewefEu4YQ0SDPlQ8dIUGEk0wCDKgBGs
-	 GSc+d82+ex58LsZSmqykxnUEx6CNMCQY0YjbLdsqeQEJWVBMCLY9GvNH3csnukZbpE
-	 2ngLL5/wAdYYL6aRqwc4iFi6OlQ5RZmRQbdRJYeM=
+	b=hVSoEVYowuzFeJRAbaIVDD38BJqheKKd+Envjp6FrN6IPAUw8zFe/zL4J23SNdyGD
+	 aHHW1+8FB7D/scwKuKAKmvLxTDHnWMX8i4OjmMiMPJwBYbiPGp5blmwQxPuOEn9sGJ
+	 QW7BbtvgpMrBLFdgHIZj0Mvn/mv9rwGs1DzFwRFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Juergen Gross <jgross@suse.com>,
+	Thorsten Blum <thorsten.blum@toblux.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/352] x86/xen: Convert comma to semicolon
-Date: Thu, 15 Aug 2024 15:21:35 +0200
-Message-ID: <20240815131920.349608250@linuxfoundation.org>
+Subject: [PATCH 5.10 030/352] m68k: cmpxchg: Fix return value for default case in __arch_xchg()
+Date: Thu, 15 Aug 2024 15:21:36 +0200
+Message-ID: <20240815131920.390469059@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,44 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Thorsten Blum <thorsten.blum@toblux.com>
 
-[ Upstream commit 349d271416c61f82b853336509b1d0dc04c1fcbb ]
+[ Upstream commit 21b9e722ad28c19c2bc83f18f540b3dbd89bf762 ]
 
-Replace a comma between expression statements by a semicolon.
+The return value of __invalid_xchg_size() is assigned to tmp instead of
+the return variable x. Assign it to x instead.
 
-Fixes: 8310b77b48c5 ("Xen/gnttab: handle p2m update errors on a per-slot basis")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20240702031010.1411875-1-nichen@iscas.ac.cn
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: 2501cf768e4009a0 ("m68k: Fix xchg/cmpxchg to fail to link if given an inappropriate pointer")
+Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/20240702034116.140234-2-thorsten.blum@toblux.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/p2m.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/m68k/include/asm/cmpxchg.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/xen/p2m.c b/arch/x86/xen/p2m.c
-index e809f14468464..bfa972f7e8745 100644
---- a/arch/x86/xen/p2m.c
-+++ b/arch/x86/xen/p2m.c
-@@ -736,7 +736,7 @@ int set_foreign_p2m_mapping(struct gnttab_map_grant_ref *map_ops,
- 		 * immediate unmapping.
- 		 */
- 		map_ops[i].status = GNTST_general_error;
--		unmap[0].host_addr = map_ops[i].host_addr,
-+		unmap[0].host_addr = map_ops[i].host_addr;
- 		unmap[0].handle = map_ops[i].handle;
- 		map_ops[i].handle = ~0;
- 		if (map_ops[i].flags & GNTMAP_device_map)
-@@ -746,7 +746,7 @@ int set_foreign_p2m_mapping(struct gnttab_map_grant_ref *map_ops,
+diff --git a/arch/m68k/include/asm/cmpxchg.h b/arch/m68k/include/asm/cmpxchg.h
+index 3a3bdcfcd3754..2035b30d79518 100644
+--- a/arch/m68k/include/asm/cmpxchg.h
++++ b/arch/m68k/include/asm/cmpxchg.h
+@@ -33,7 +33,7 @@ static inline unsigned long __xchg(unsigned long x, volatile void * ptr, int siz
+ 		x = tmp;
+ 		break;
+ 	default:
+-		tmp = __invalid_xchg_size(x, ptr, size);
++		x = __invalid_xchg_size(x, ptr, size);
+ 		break;
+ 	}
  
- 		if (kmap_ops) {
- 			kmap_ops[i].status = GNTST_general_error;
--			unmap[1].host_addr = kmap_ops[i].host_addr,
-+			unmap[1].host_addr = kmap_ops[i].host_addr;
- 			unmap[1].handle = kmap_ops[i].handle;
- 			kmap_ops[i].handle = ~0;
- 			if (kmap_ops[i].flags & GNTMAP_device_map)
 -- 
 2.43.0
 
