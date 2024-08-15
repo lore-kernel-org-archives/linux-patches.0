@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D5E63D5;
-	Thu, 15 Aug 2024 14:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD802772A;
+	Thu, 15 Aug 2024 14:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732411; cv=none; b=Vukfi/Tg+pJ2ckLV+M8qAv2Dj6sKVak90vOu3WCcsjWCrcePYgAo2XujP34M1GcmFTYGY0QIY1SJWdVfG7ca1yINm+xxpdDnNsILa+9eC2dzPggFo7dAXTGVTx/bMiQd4ZaSMYxptJp3owXFmxFzgmhJzvP2S8LvrIDvxqYcToo=
+	t=1723732414; cv=none; b=o2BeWr8XfIc7SzANNLD+lXT/tD6IyhGMjLeU+JjzDz3z/ctiDLzrZ2O+Iz6ZLh4TzFXDqCEO9+ydAyhLoq+Gdx0iV+cDNde2FIjxIKKHXIdK+JRpRg4PeM8iDBIu6a5722og7SRxFFESNUre2sY+CTOCnPpi9mUcwPpRkQOwgqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732411; c=relaxed/simple;
-	bh=ZxvlsEdqCOY1qh6Tt5IDqxU+iJaHYx8W3YsowL//y2k=;
+	s=arc-20240116; t=1723732414; c=relaxed/simple;
+	bh=QBrPjtVlujIr4YzoyfKXfLtGpnYLatQYJ/zIlMlX3KM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aD2Je4nglSdm4oOQ4AyEh2SXVIqAl+li+6yLPh9JkXIZC8u5sUOClTpKmSTmrRyRoOGm0JiCzTDdW0DfjorgoYmhNQiTXOI59TYzE5ZxcJ0Va0bPwZp+NPVUNDO72Lx9ZvmDpNzrYSW0V7wQdEAJwpR1eVV3RTEeT0QQYDFggBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lveWJklY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hBP7B0QcAPrT5Orj6/WRB7ufMKnykWjUOfC2WBuPEXSTT4g9yA0OXXigFbtrwsxloILQkvMYBhm09ZFmphQW2kb+X753Qm/5eYSCS8OhYc4k1UL5jv8Wi1+zqXiHeO0HKjM+/jKNzd+/QBEKeaZVI96uaN0hJHVEIeNVzSgusFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TCII4zWz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lveWJklY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE3FDC32786;
-	Thu, 15 Aug 2024 14:33:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TCII4zWz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF11C32786;
+	Thu, 15 Aug 2024 14:33:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732411;
-	bh=ZxvlsEdqCOY1qh6Tt5IDqxU+iJaHYx8W3YsowL//y2k=;
+	s=korg; t=1723732414;
+	bh=QBrPjtVlujIr4YzoyfKXfLtGpnYLatQYJ/zIlMlX3KM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lveWJklY7iC9wv6VFBSjbsUMjtlbi1eVMGypJ05gpY4pplbRk5wfQb+ldhbClkFyr
-	 BBFasSdRGx0LUl+kN4BxqLeVu+35gerNFTyY59jlJiY2Xzj8yBoJVJ+174E8Y5cFnB
-	 xdXwjf3pKgAl5BPfcsuaaHspZ/xd5cybgXa4avm8=
+	b=TCII4zWzrfTxVwh6/X6dTP22fu+BPZE+huPJqvbxh9nBxwp70qA0vA4jDGbqdkm+o
+	 ZVBHJVPHb5LYTcfnCS8sOwmSed+k5fynm8J2CSQFiZrirHoCm+vwRNAILIP0gyQZOB
+	 19oIt3TmlIsBKU1K88bTJMUHK9B5lDAJ6vY6Kv7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.10 171/352] perf/x86/intel/pt: Fix a topa_entry base address calculation
-Date: Thu, 15 Aug 2024 15:23:57 +0200
-Message-ID: <20240815131925.883273555@linuxfoundation.org>
+	Joy Chakraborty <joychakr@google.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 172/352] rtc: isl1208: Fix return value of nvmem callbacks
+Date: Thu, 15 Aug 2024 15:23:58 +0200
+Message-ID: <20240815131925.922989908@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,46 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Joy Chakraborty <joychakr@google.com>
 
-commit ad97196379d0b8cb24ef3d5006978a6554e6467f upstream.
+commit 70f1ae5f0e7f44edf842444044615da7b59838c1 upstream.
 
-topa_entry->base is a bit-field. Bit-fields are not promoted to a 64-bit
-type, even if the underlying type is 64-bit, and so, if necessary, must
-be cast to a larger type when calculations are done.
+Read/write callbacks registered with nvmem core expect 0 to be returned
+on success and a negative value to be returned on failure.
 
-Fix a topa_entry->base address calculation by adding a cast.
+isl1208_nvmem_read()/isl1208_nvmem_write() currently return the number of
+bytes read/written on success, fix to return 0 on success and negative on
+failure.
 
-Without the cast, the address was limited to 36-bits i.e. 64GiB.
-
-The address calculation is used on systems that do not support Multiple
-Entry ToPA (only Broadwell), and affects physical addresses on or above
-64GiB. Instead of writing to the correct address, the address comprising
-the first 36 bits would be written to.
-
-Intel PT snapshot and sampling modes are not affected.
-
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Reported-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fixes: c3544f6f51ed ("rtc: isl1208: Add new style nvmem support to driver")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240624201101.60186-3-adrian.hunter@intel.com
+Signed-off-by: Joy Chakraborty <joychakr@google.com>
+Link: https://lore.kernel.org/r/20240612080831.1227131-1-joychakr@google.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-isl1208.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -861,7 +861,7 @@ static void pt_update_head(struct pt *pt
-  */
- static void *pt_buffer_region(struct pt_buffer *buf)
+--- a/drivers/rtc/rtc-isl1208.c
++++ b/drivers/rtc/rtc-isl1208.c
+@@ -743,14 +743,13 @@ static int isl1208_nvmem_read(void *priv
  {
--	return phys_to_virt(TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
-+	return phys_to_virt((phys_addr_t)TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
+ 	struct isl1208_state *isl1208 = priv;
+ 	struct i2c_client *client = to_i2c_client(isl1208->rtc->dev.parent);
+-	int ret;
+ 
+ 	/* nvmem sanitizes offset/count for us, but count==0 is possible */
+ 	if (!count)
+ 		return count;
+-	ret = isl1208_i2c_read_regs(client, ISL1208_REG_USR1 + off, buf,
++
++	return isl1208_i2c_read_regs(client, ISL1208_REG_USR1 + off, buf,
+ 				    count);
+-	return ret == 0 ? count : ret;
  }
  
- /**
+ static int isl1208_nvmem_write(void *priv, unsigned int off, void *buf,
+@@ -758,15 +757,13 @@ static int isl1208_nvmem_write(void *pri
+ {
+ 	struct isl1208_state *isl1208 = priv;
+ 	struct i2c_client *client = to_i2c_client(isl1208->rtc->dev.parent);
+-	int ret;
+ 
+ 	/* nvmem sanitizes off/count for us, but count==0 is possible */
+ 	if (!count)
+ 		return count;
+-	ret = isl1208_i2c_set_regs(client, ISL1208_REG_USR1 + off, buf,
+-				   count);
+ 
+-	return ret == 0 ? count : ret;
++	return isl1208_i2c_set_regs(client, ISL1208_REG_USR1 + off, buf,
++				   count);
+ }
+ 
+ static const struct nvmem_config isl1208_nvmem_config = {
 
 
