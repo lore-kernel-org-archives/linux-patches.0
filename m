@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9B17DA9E;
-	Thu, 15 Aug 2024 13:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4D144376;
+	Thu, 15 Aug 2024 13:46:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729560; cv=none; b=Hco7Sm95FWtdiKLHv34SqvXGT8ZICPb8gdkVsOlHai84qHmb8ecPY3DRUJcvdLaBZVFXreZOfb6TtMi7T0brGuyItCMJw8lx0FRlD6TQ90lpqI8tW+E3gYC56dlEaTXZiK39yqkj1diugZAKAEQA0H6c5Mn92E9xczzw4hByIIM=
+	t=1723729563; cv=none; b=gZnRpRpExIbwdEQcpVIEa84YSLUxscRtCiGUrhld7GKLKTLi+KaQVXbedVfPTG0RHqI0yTsowpta2fSaDE6SoruSUOZHFYSpncFLwx53+Wz+jhXX+LGmdYXfCya3tvIPbDB6UmatXfVunFJEY0VNMXdbgJSyGZUvdHW2zaFGnoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729560; c=relaxed/simple;
-	bh=fIXQiFdw5vM22u1MfVln6iTmNzhoXhssmES9LHNvw28=;
+	s=arc-20240116; t=1723729563; c=relaxed/simple;
+	bh=zHMZZQbRpFeOyktIXZvA4ZGNBpkfFLtCQUpa3pizDc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U8twTrxa/ZdE1NX5y6LcoNmZBHsGNdqad5AGbEBjAaOwlvue60yJ4LEflqveDYhxTc/YZuyULiJoQa7HR8M9lqpIvZB5ke4/50uMVlKqNbnVFAlChbY+GkJxRBkliYbUa7CJQjtzWriYPSGszo0BN2H13/2amSViIfgsaQhe4Mg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qE2/xT90; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VlHpoG6hiBEsnhI1VH2tEN+eOuBKPnRL0R2TBfgUswAadq6//a4x+lH+7gpnTEvC1D0MN7PiwPHVa7lqKVZnxMXiiIaZraC+TyN/0KpX1fmGQXarNMcLsnKydJvkYiPog0pIpbNc1/DyQ2cCS8x0ZAuLsjLOj4PSPUFtlMEuDjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpZ3pjun; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qE2/xT90"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B0AAC32786;
-	Thu, 15 Aug 2024 13:45:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpZ3pjun"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF99C4AF0C;
+	Thu, 15 Aug 2024 13:46:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729560;
-	bh=fIXQiFdw5vM22u1MfVln6iTmNzhoXhssmES9LHNvw28=;
+	s=korg; t=1723729563;
+	bh=zHMZZQbRpFeOyktIXZvA4ZGNBpkfFLtCQUpa3pizDc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qE2/xT90fTUT+fpW376zTDYaEIa8T110maGJHt91tgllASx/hPN//DOC3kUBY6y7w
-	 CX1pjYjc7zDBQL/Yp46EbUB67JuMRcNO3XWRhuHChZbzf9ROH6Qd3i4EMbdyZh49Uo
-	 lt0zlFZZOGGKX5I0a53Gzk2fvOykM60FAtXmrvuA=
+	b=cpZ3pjunqnwF5K0u50ua3onUoiILjudw2ejlNkVwcoYSLM3s+u2E+1GP+6Asxv2Lt
+	 AqDB58F4p9VdSvOZ/RMGc9PcVWCfbwOuWebeaX8kOAjY8fvjmZBzOgE8fIzTauC2fk
+	 RyMWGmUYrsF9qpUbDbY/fIIS/Jds7u5oEyiep+YM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Honggang LI <honggangli@163.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/484] RDMA/rxe: Dont set BTH_ACK_MASK for UC or UD QPs
-Date: Thu, 15 Aug 2024 15:19:47 +0200
-Message-ID: <20240815131946.280965799@linuxfoundation.org>
+Subject: [PATCH 5.15 138/484] powerpc/xmon: Fix disassembly CPU feature checks
+Date: Thu, 15 Aug 2024 15:19:56 +0200
+Message-ID: <20240815131946.738243751@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,51 +50,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Honggang LI <honggangli@163.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-[ Upstream commit 4adcaf969d77d3d3aa3871bbadc196258a38aec6 ]
+[ Upstream commit 14196e47c5ffe32af7ed5a51c9e421c5ea5bccce ]
 
-BTH_ACK_MASK bit is used to indicate that an acknowledge
-(for this packet) should be scheduled by the responder.
-Both UC and UD QPs are unacknowledged, so don't set
-BTH_ACK_MASK for UC or UD QPs.
+In the xmon disassembly code there are several CPU feature checks to
+determine what dialects should be passed to the disassembler. The
+dialect controls which instructions the disassembler will recognise.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Honggang LI <honggangli@163.com>
-Link: https://lore.kernel.org/r/20240624020348.494338-1-honggangli@163.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Unfortunately the checks are incorrect, because instead of passing a
+single CPU feature they are passing a mask of feature bits.
+
+For example the code:
+
+  if (cpu_has_feature(CPU_FTRS_POWER5))
+      dialect |= PPC_OPCODE_POWER5;
+
+Is trying to check if the system is running on a Power5 CPU. But
+CPU_FTRS_POWER5 is a mask of *all* the feature bits that are enabled on
+a Power5.
+
+In practice the test will always return true for any 64-bit CPU, because
+at least one bit in the mask will be present in the CPU_FTRS_ALWAYS
+mask.
+
+Similarly for all the other checks against CPU_FTRS_xx masks.
+
+Rather than trying to match the disassembly behaviour exactly to the
+current CPU, just differentiate between 32-bit and 64-bit, and Altivec,
+VSX and HTM.
+
+That will cause some instructions to be shown in disassembly even
+on a CPU that doesn't support them, but that's OK, objdump -d output
+has the same behaviour, and if anything it's less confusing than some
+instructions not being disassembled.
+
+Fixes: 897f112bb42e ("[POWERPC] Import updated version of ppc disassembly code for xmon")
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://msgid.link/20240509121248.270878-2-mpe@ellerman.id.au
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_req.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/powerpc/xmon/ppc-dis.c | 33 +++++++++++----------------------
+ 1 file changed, 11 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index 8c0e7ecd41414..0938084192072 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -374,7 +374,7 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
- 	int			solicited;
- 	u16			pkey;
- 	u32			qp_num;
--	int			ack_req;
-+	int			ack_req = 0;
+diff --git a/arch/powerpc/xmon/ppc-dis.c b/arch/powerpc/xmon/ppc-dis.c
+index 75fa98221d485..af105e1bc3fca 100644
+--- a/arch/powerpc/xmon/ppc-dis.c
++++ b/arch/powerpc/xmon/ppc-dis.c
+@@ -122,32 +122,21 @@ int print_insn_powerpc (unsigned long insn, unsigned long memaddr)
+   bool insn_is_short;
+   ppc_cpu_t dialect;
  
- 	/* length from start of bth to end of icrc */
- 	paylen = rxe_opcode[opcode].length + payload + pad + RXE_ICRC_SIZE;
-@@ -407,8 +407,9 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
- 	qp_num = (pkt->mask & RXE_DETH_MASK) ? ibwr->wr.ud.remote_qpn :
- 					 qp->attr.dest_qp_num;
+-  dialect = PPC_OPCODE_PPC | PPC_OPCODE_COMMON
+-            | PPC_OPCODE_64 | PPC_OPCODE_POWER4 | PPC_OPCODE_ALTIVEC;
++  dialect = PPC_OPCODE_PPC | PPC_OPCODE_COMMON;
  
--	ack_req = ((pkt->mask & RXE_END_MASK) ||
--		(qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
-+	if (qp_type(qp) != IB_QPT_UD && qp_type(qp) != IB_QPT_UC)
-+		ack_req = ((pkt->mask & RXE_END_MASK) ||
-+			   (qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
- 	if (ack_req)
- 		qp->req.noack_pkts = 0;
+-  if (cpu_has_feature(CPU_FTRS_POWER5))
+-    dialect |= PPC_OPCODE_POWER5;
++  if (IS_ENABLED(CONFIG_PPC64))
++    dialect |= PPC_OPCODE_64 | PPC_OPCODE_POWER4 | PPC_OPCODE_CELL |
++	PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7 | PPC_OPCODE_POWER8 |
++	PPC_OPCODE_POWER9;
  
+-  if (cpu_has_feature(CPU_FTRS_CELL))
+-    dialect |= (PPC_OPCODE_CELL | PPC_OPCODE_ALTIVEC);
++  if (cpu_has_feature(CPU_FTR_TM))
++    dialect |= PPC_OPCODE_HTM;
+ 
+-  if (cpu_has_feature(CPU_FTRS_POWER6))
+-    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_ALTIVEC);
++  if (cpu_has_feature(CPU_FTR_ALTIVEC))
++    dialect |= PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2;
+ 
+-  if (cpu_has_feature(CPU_FTRS_POWER7))
+-    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
+-                | PPC_OPCODE_ALTIVEC | PPC_OPCODE_VSX);
+-
+-  if (cpu_has_feature(CPU_FTRS_POWER8))
+-    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
+-		| PPC_OPCODE_POWER8 | PPC_OPCODE_HTM
+-		| PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2 | PPC_OPCODE_VSX);
+-
+-  if (cpu_has_feature(CPU_FTRS_POWER9))
+-    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
+-		| PPC_OPCODE_POWER8 | PPC_OPCODE_POWER9 | PPC_OPCODE_HTM
+-		| PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2
+-		| PPC_OPCODE_VSX | PPC_OPCODE_VSX3);
++  if (cpu_has_feature(CPU_FTR_VSX))
++    dialect |= PPC_OPCODE_VSX | PPC_OPCODE_VSX3;
+ 
+   /* Get the major opcode of the insn.  */
+   opcode = NULL;
 -- 
 2.43.0
 
