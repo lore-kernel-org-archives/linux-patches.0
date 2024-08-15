@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426F73214;
-	Thu, 15 Aug 2024 14:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7083214;
+	Thu, 15 Aug 2024 14:37:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732667; cv=none; b=PrLYPORwSnEHrTGnwqrL5TWak1uhypNf58PoylUKOuPZtmSpLdpLRUeYJpyPBZS2yANzcu0s77ai8Q1dsItt8qvccn95c+Z8uFq7xEz4wvAK5hwOL5ZBvc2mJD5n1vUM1CT4+trdrQ13dqbN45axZL+9Nmxm5h0lJOkYU/Z30kE=
+	t=1723732670; cv=none; b=DXUiO4K7RZkxhZKbh2HXT12LqBwNzv7LacpSDUOrr3F2HueczxuqXk4enkqG0Yrk1bsg8d2PDRweavb28yh5NzFMqr4pRU3IG4/7R1vXeLMdJUFeP3wcJqvr3NMS7wzib3PmIzMyxA21IsbYv0APMquibcXJJEPPzjnOeXu0tjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732667; c=relaxed/simple;
-	bh=N4HgJq0sBNLZOnHnewma1SkZfYzk3tkisEePXjT6D2w=;
+	s=arc-20240116; t=1723732670; c=relaxed/simple;
+	bh=ymx201nHQuVYpjqe9KUkrGCaJa5sdO1DgmcbplGsLoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YLl7gQU9NIgwMioTNByNNjVsLwCO+1c43FmQOD+QuAPAiFBee9qS9SpALCA1Og1lRxzgJPww9zsB8FuIwGqCJtePaKGgy7Cgf2/Uo9+6Bs2qJE9buLk7rVylatFkppEMU7v4DQvlh1pk3kgdueEgowD8An33etPmh1HsLVyr344=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h5k/HcKq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=spnLKArAw8CULXyd2UX/6s6x9099Ve63l45X0t5oWtir5HuDr4F/nNjdG2GfUbu1oGo55qA398jhJUbalDLCAuv4mjsXIW3Lk+R6hqJUGNTkS8oK3ABHFF4vR7pNyVafxuYoK2kptpHPRaB6GUvojKPwxm65VltVVtO4H4rge7s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fv7XZu1g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h5k/HcKq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF165C32786;
-	Thu, 15 Aug 2024 14:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fv7XZu1g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5029C32786;
+	Thu, 15 Aug 2024 14:37:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732667;
-	bh=N4HgJq0sBNLZOnHnewma1SkZfYzk3tkisEePXjT6D2w=;
+	s=korg; t=1723732670;
+	bh=ymx201nHQuVYpjqe9KUkrGCaJa5sdO1DgmcbplGsLoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h5k/HcKqSRI0zuX6Sb4TL+OtkyrISQh+pHkp5PGlhqNtw57c3Z6ynT9kSCnQxUIIQ
-	 56IM4gtXrkMoDbfLms4xGZ9kLvZeJgwUbPracPVIQZ1Ovx7cfpayX0TYJwrWq1Cg8G
-	 jBRuy9VKR3y3IfxR7o6a+XZwWTLGK+K8IMc/Qf7M=
+	b=Fv7XZu1gQYo0xxJDd4iIqKKCMiBiRZ9tSUbXV9UEdgZ+Iq8tyGopXg/ds+Yd7tR0+
+	 yR8SJgJ2Vom4QG8zl7NHEFzXn/nzdDDqMslQKxzbZgj127Y5l1DdxwMgy/Y0gzMPsJ
+	 ySveOI0WPZEiTtoqVZCtoriM/9m9y00Esh4wgkLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Sandeen <sandeen@redhat.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Josef Bacik <josef@toxicpanda.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Joel Granados <j.granados@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 218/352] fuse: verify {g,u}id mount options correctly
-Date: Thu, 15 Aug 2024 15:24:44 +0200
-Message-ID: <20240815131927.715606774@linuxfoundation.org>
+Subject: [PATCH 5.10 219/352] sysctl: always initialize i_uid/i_gid
+Date: Thu, 15 Aug 2024 15:24:45 +0200
+Message-ID: <20240815131927.754421811@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -46,92 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Eric Sandeen <sandeen@redhat.com>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 525bd65aa759ec320af1dc06e114ed69733e9e23 ]
+[ Upstream commit 98ca62ba9e2be5863c7d069f84f7166b45a5b2f4 ]
 
-As was done in
-0200679fc795 ("tmpfs: verify {g,u}id mount options correctly")
-we need to validate that the requested uid and/or gid is representable in
-the filesystem's idmapping.
+Always initialize i_uid/i_gid inside the sysfs core so set_ownership()
+can safely skip setting them.
 
-Cribbing from the above commit log,
+Commit 5ec27ec735ba ("fs/proc/proc_sysctl.c: fix the default values of
+i_uid/i_gid on /proc/sys inodes.") added defaults for i_uid/i_gid when
+set_ownership() was not implemented. It also missed adjusting
+net_ctl_set_ownership() to use the same default values in case the
+computation of a better value failed.
 
-The contract for {g,u}id mount options and {g,u}id values in general set
-from userspace has always been that they are translated according to the
-caller's idmapping. In so far, fuse has been doing the correct thing.
-But since fuse is mountable in unprivileged contexts it is also
-necessary to verify that the resulting {k,g}uid is representable in the
-namespace of the superblock.
-
-Fixes: c30da2e981a7 ("fuse: convert to use the new mount API")
-Cc: stable@vger.kernel.org # 5.4+
-Signed-off-by: Eric Sandeen <sandeen@redhat.com>
-Link: https://lore.kernel.org/r/8f07d45d-c806-484d-a2e3-7a2199df1cd2@redhat.com
-Reviewed-by: Christian Brauner <brauner@kernel.org>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Fixes: 5ec27ec735ba ("fs/proc/proc_sysctl.c: fix the default values of i_uid/i_gid on /proc/sys inodes.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Signed-off-by: Joel Granados <j.granados@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/fuse/inode.c | 24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ fs/proc/proc_sysctl.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/fuse/inode.c b/fs/fuse/inode.c
-index 5f9b2dc59135b..a5d1eb0bc5214 100644
---- a/fs/fuse/inode.c
-+++ b/fs/fuse/inode.c
-@@ -540,6 +540,8 @@ static int fuse_parse_param(struct fs_context *fsc, struct fs_parameter *param)
- 	struct fs_parse_result result;
- 	struct fuse_fs_context *ctx = fsc->fs_private;
- 	int opt;
-+	kuid_t kuid;
-+	kgid_t kgid;
+--- a/fs/proc/proc_sysctl.c
++++ b/fs/proc/proc_sysctl.c
+@@ -471,12 +471,10 @@ static struct inode *proc_sys_make_inode
+ 			make_empty_dir_inode(inode);
+ 	}
  
- 	if (fsc->purpose == FS_CONTEXT_FOR_RECONFIGURE) {
- 		/*
-@@ -584,16 +586,30 @@ static int fuse_parse_param(struct fs_context *fsc, struct fs_parameter *param)
- 		break;
++	inode->i_uid = GLOBAL_ROOT_UID;
++	inode->i_gid = GLOBAL_ROOT_GID;
+ 	if (root->set_ownership)
+ 		root->set_ownership(head, table, &inode->i_uid, &inode->i_gid);
+-	else {
+-		inode->i_uid = GLOBAL_ROOT_UID;
+-		inode->i_gid = GLOBAL_ROOT_GID;
+-	}
  
- 	case OPT_USER_ID:
--		ctx->user_id = make_kuid(fsc->user_ns, result.uint_32);
--		if (!uid_valid(ctx->user_id))
-+		kuid =  make_kuid(fsc->user_ns, result.uint_32);
-+		if (!uid_valid(kuid))
- 			return invalfc(fsc, "Invalid user_id");
-+		/*
-+		 * The requested uid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kuid_has_mapping(fsc->user_ns, kuid))
-+			return invalfc(fsc, "Invalid user_id");
-+		ctx->user_id = kuid;
- 		ctx->user_id_present = true;
- 		break;
- 
- 	case OPT_GROUP_ID:
--		ctx->group_id = make_kgid(fsc->user_ns, result.uint_32);
--		if (!gid_valid(ctx->group_id))
-+		kgid = make_kgid(fsc->user_ns, result.uint_32);;
-+		if (!gid_valid(kgid))
-+			return invalfc(fsc, "Invalid group_id");
-+		/*
-+		 * The requested gid must be representable in the
-+		 * filesystem's idmapping.
-+		 */
-+		if (!kgid_has_mapping(fsc->user_ns, kgid))
- 			return invalfc(fsc, "Invalid group_id");
-+		ctx->group_id = kgid;
- 		ctx->group_id_present = true;
- 		break;
- 
--- 
-2.43.0
-
+ 	return inode;
+ }
 
 
