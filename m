@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5FAB1714A8;
-	Thu, 15 Aug 2024 13:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 577F01714A8;
+	Thu, 15 Aug 2024 13:42:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729374; cv=none; b=ticgSrsjPFFfPnfNxr8jCOCBK5Q4fX+k3e8bDVlPsdQssRqqj6yNdZ0J3YC1RTlQyI10/L7C4C40+qokpk0OueFu/acKKAnQ2KOjgp1sV16o+FcDjj8s1MP4ySBmEv077Bd7oobMSqKEEoTaShfFtCSjqxuhA8v9ZCAGzJ6Uqzo=
+	t=1723729377; cv=none; b=AgJ8mwyQ0WvS1q0G3VTfJFk3eGmmdPjLE0woTvwJ7VK2cVIWsA38oEaufG4/vVLiQBtSAXVz/2zzU4aScnmOtihCfiqZWjbKJ7yVCvw2YE6eBjVgcMaT2hYY4ySC+a1Y/D/1nnXjEzUPcntNZ6CiQp2E+4hFV+CqsMWr/3FC8uA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729374; c=relaxed/simple;
-	bh=QxNWEq/4lHir5Ifb1i7Zpcuh7COn7FUEXpUX8OCPAnY=;
+	s=arc-20240116; t=1723729377; c=relaxed/simple;
+	bh=gWjVIuMRBLDed0YsS5lOWJANS7mFHN9z5z16ZjpV4/k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZCioedg3m63A92/0liy3Yc/sq1blaFZiPkazmpTlG0WoO1tzepfMeI/M7ECIjuvI/qs7yOdC4xDgUN6C+Ufxdk4KLtkQViDKmPVU4OKpp/fgusG3sAOf1Fhvmq6sMkyvBaL22wbfzrqMGgLWLuPuvtTUDO+97iJ1vA0MwxnDG9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAiMLAb/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ksz32vN62aBh/XF0vvJMfKlCLKWNXBIgiXwReQ6tf1Q1xEzJEulJcphc1+3bM/LtU6EbykgDsWxp4g+TRomckqRkNrmDkforrvfK1+sKUpOksPssRexUI4Gy7LDzlmwV1b6H6kLol1n/qcnp7pjiCTfO++0E4UQn7gNzvtRAy8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DgaJeJ4+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAiMLAb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D22B9C32786;
-	Thu, 15 Aug 2024 13:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DgaJeJ4+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5E6EC32786;
+	Thu, 15 Aug 2024 13:42:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729374;
-	bh=QxNWEq/4lHir5Ifb1i7Zpcuh7COn7FUEXpUX8OCPAnY=;
+	s=korg; t=1723729377;
+	bh=gWjVIuMRBLDed0YsS5lOWJANS7mFHN9z5z16ZjpV4/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAiMLAb/15IXS9/BL4s8gQ6NIOwMUFRzTShRHr7jemXHBosdBLCNCYCsEI4IUQWXe
-	 c5oT67W7v/WN/Y+p5eABnuO9N9mHHsvTy/azhaUXRd2wRebhjMPZ2esJBGv5D2njix
-	 mkpUMzkGdtDSwTlkT5SnytxFxzGxcZV+MVl7I+gE=
+	b=DgaJeJ4++6+V6bQ+zE+v++Cr1D6Do0bVLLl4qVn3GEsCXWwg1ndW39SouGQ4Bv36r
+	 2uN4kjc4n5K6c2rO30Jjve6wqNMJ3nGXIDPlF6kJaXQGNBhFEySu/8AlOMxeQAKa6C
+	 OBfVC/YRREu8xSelrzO8flLi5GX7ETjmVWNZrmrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Todorovac <mtodorovac69@gmail.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 078/484] bpf: Eliminate remaining "make W=1" warnings in kernel/bpf/btf.o
-Date: Thu, 15 Aug 2024 15:18:56 +0200
-Message-ID: <20240815131944.298217784@linuxfoundation.org>
+Subject: [PATCH 5.15 079/484] selftests: forwarding: devlink_lib: Wait for udev events after reloading
+Date: Thu, 15 Aug 2024 15:18:57 +0200
+Message-ID: <20240815131944.335796146@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -46,62 +47,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Amit Cohen <amcohen@nvidia.com>
 
-[ Upstream commit 2454075f8e2915cebbe52a1195631bc7efe2b7e1 ]
+[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
 
-As reported by Mirsad [1] we still see format warnings in kernel/bpf/btf.o
-at W=1 warning level:
+Lately, an additional locking was added by commit c0a40097f0bc
+("drivers: core: synchronize really_probe() and dev_uevent()"). The
+locking protects dev_uevent() calling. This function is used to send
+messages from the kernel to user space. Uevent messages notify user space
+about changes in device states, such as when a device is added, removed,
+or changed. These messages are used by udev (or other similar user-space
+tools) to apply device-specific rules.
 
-  CC      kernel/bpf/btf.o
-./kernel/bpf/btf.c: In function ‘btf_type_seq_show_flags’:
-./kernel/bpf/btf.c:7553:21: warning: assignment left-hand side might be a candidate for a format attribute [-Wsuggest-attribute=format]
- 7553 |         sseq.showfn = btf_seq_show;
-      |                     ^
-./kernel/bpf/btf.c: In function ‘btf_type_snprintf_show’:
-./kernel/bpf/btf.c:7604:31: warning: assignment left-hand side might be a candidate for a format attribute [-Wsuggest-attribute=format]
- 7604 |         ssnprintf.show.showfn = btf_snprintf_show;
-      |                               ^
+After reloading devlink instance, udev events should be processed. This
+locking causes a short delay of udev events handling.
 
-Combined with CONFIG_WERROR=y these can halt the build.
+One example for useful udev rule is renaming ports. 'forwading.config'
+can be configured to use names after udev rules are applied. Some tests run
+devlink_reload() and immediately use the updated names. This worked before
+the above mentioned commit was pushed, but now the delay of uevent messages
+causes that devlink_reload() returns before udev events are handled and
+tests fail.
 
-The fix (annotating the structure field with __printf())
-suggested by Mirsad resolves these. Apologies I missed this last time.
-No other W=1 warnings were observed in kernel/bpf after this fix.
+Adjust devlink_reload() to not assume that udev events are already
+processed when devlink reload is done, instead, wait for udev events to
+ensure they are processed before returning from the function.
 
-[1] https://lore.kernel.org/bpf/92c9d047-f058-400c-9c7d-81d4dc1ef71b@gmail.com/
+Without this patch:
+TESTS='rif_mac_profile' ./resource_scale.sh
+TEST: 'rif_mac_profile' 4                                           [ OK ]
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
+sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
+Cannot find device "swp1"
+Cannot find device "swp2"
+TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
 
-Fixes: b3470da314fd ("bpf: annotate BTF show functions with __printf")
-Reported-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Suggested-by: Mirsad Todorovac <mtodorovac69@gmail.com>
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20240712092859.1390960-1-alan.maguire@oracle.com
+With this patch:
+$ TESTS='rif_mac_profile' ./resource_scale.sh
+TEST: 'rif_mac_profile' 4                                           [ OK ]
+TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
+
+This is relevant not only for this test.
+
+Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
+Signed-off-by: Amit Cohen <amcohen@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 0c9d93e2c18f0..d3eb75bfd9718 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -349,7 +349,7 @@ const char *btf_type_str(const struct btf_type *t)
- struct btf_show {
- 	u64 flags;
- 	void *target;	/* target of show operation (seq file, buffer) */
--	void (*showfn)(struct btf_show *show, const char *fmt, va_list args);
-+	__printf(2, 0) void (*showfn)(struct btf_show *show, const char *fmt, va_list args);
- 	const struct btf *btf;
- 	/* below are used during iteration */
- 	struct {
+diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
+index 2c14a86adaaae..6bb0f929dad78 100644
+--- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
++++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
+@@ -122,6 +122,8 @@ devlink_reload()
+ 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
+ 			grep -c "size_new")
+ 	check_err $still_pending "Failed reload - There are still unset sizes"
++
++	udevadm settle
+ }
+ 
+ declare -A DEVLINK_ORIG
 -- 
 2.43.0
 
