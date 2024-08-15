@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFFD63C;
-	Thu, 15 Aug 2024 14:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1F41A08C6;
+	Thu, 15 Aug 2024 14:25:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731956; cv=none; b=DGl5TAKUlnWdyhFVvB+NnWJLrm0LVoYqtpJup4zS1PXToRh/eGprB5MjnpFAVsDhf5UzlXYi7ZfK4q9VY6/tz++yZsRXwNg3itLyO8QGaFXpPcFzL3sesba4YI7K5NKTV6KxLTp5uvsNPf/XLNsR8L9IdKlbygGSzpqg728jlcQ=
+	t=1723731959; cv=none; b=kGHP57kQ/S+LDDoevh+hQw1/fxtuq9jcO2t/0UsTX5V97L/m2fiSisu/zaAHiHFXZqrnaJpqmWnpCJkpD6wUy6PIT3b+/4RH4A7aurNEACGgh0+R28xXeOcGhAMM4/YCfWiI8ndsEqsSCCxtY7x6GUg0S9Mdnih3gwfK3RfVqLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731956; c=relaxed/simple;
-	bh=7+mQV+6P4a6fYnfYNx+apHpxyPPv44sQfMwCSIeDkrw=;
+	s=arc-20240116; t=1723731959; c=relaxed/simple;
+	bh=2ZBIrbi8VL/XriuFx+Q31pWVNanIoxTo0l1pNSuDRlE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CeeHjUdZYp7vhgzGjSUipj0bqVYWKGTkee9xFRkchuuwjmFuzcZcd6NFBji47/5t4jiKbUaG7xDJKGIPT9KkvLgmxgTFOFRsgdM4ewNZOCqAnjYhcgC5rVWzr2DTgP3zUREOBNXgEp8QQBolwZ28uPDF4f77JGN4HcgoFuP+81g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hVSoEVYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TUevjPCTBnUmwj3mOx1L213Vh+uewSxBNi13y9RZmW4TPsQn7qEXtIzEG608AfdYccXPtmr92JLxLxXyHFBS4iYB2FTjqlm3Y2ZH4hasHRV204BrWPgsmUQCHi24+JPgbPwdy77Ox85XKtZu+lnOTmazpSSRkknizpNnEbX8ks0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yZXS9UzC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hVSoEVYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0351C32786;
-	Thu, 15 Aug 2024 14:25:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yZXS9UzC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3F65C32786;
+	Thu, 15 Aug 2024 14:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731956;
-	bh=7+mQV+6P4a6fYnfYNx+apHpxyPPv44sQfMwCSIeDkrw=;
+	s=korg; t=1723731959;
+	bh=2ZBIrbi8VL/XriuFx+Q31pWVNanIoxTo0l1pNSuDRlE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVSoEVYowuzFeJRAbaIVDD38BJqheKKd+Envjp6FrN6IPAUw8zFe/zL4J23SNdyGD
-	 aHHW1+8FB7D/scwKuKAKmvLxTDHnWMX8i4OjmMiMPJwBYbiPGp5blmwQxPuOEn9sGJ
-	 QW7BbtvgpMrBLFdgHIZj0Mvn/mv9rwGs1DzFwRFE=
+	b=yZXS9UzC4J+Zrm25ax4Sui9UsvmjsRjfHibMjrcSlpakZJRby2v4w4UG7RA8jlqM+
+	 DTp0VEXnseoZtuVrWmNTRKpI+j4B24ZUhiMqQFwZYdgLz+3N36vmIa0UJT7xf8i72j
+	 PZCBWtavdSnasCNu8cQoqLMuUTSdiE35Q/qhIORE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@toblux.com>,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 030/352] m68k: cmpxchg: Fix return value for default case in __arch_xchg()
-Date: Thu, 15 Aug 2024 15:21:36 +0200
-Message-ID: <20240815131920.390469059@linuxfoundation.org>
+Subject: [PATCH 5.10 013/352] arm64: dts: qcom: sdm845: add power-domain to UFS PHY
+Date: Thu, 15 Aug 2024 15:21:19 +0200
+Message-ID: <20240815131919.723434930@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,36 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@toblux.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 21b9e722ad28c19c2bc83f18f540b3dbd89bf762 ]
+[ Upstream commit fd39ae8b9bc10419b1e4b849cdbc6755a967ade1 ]
 
-The return value of __invalid_xchg_size() is assigned to tmp instead of
-the return variable x. Assign it to x instead.
+The UFS PHY is powered on via the UFS_PHY_GDSC power domain. Add
+corresponding power-domain the the PHY node.
 
-Fixes: 2501cf768e4009a0 ("m68k: Fix xchg/cmpxchg to fail to link if given an inappropriate pointer")
-Signed-off-by: Thorsten Blum <thorsten.blum@toblux.com>
-Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/20240702034116.140234-2-thorsten.blum@toblux.com
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Fixes: cc16687fbd74 ("arm64: dts: qcom: sdm845: add UFS controller")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240501-qcom-phy-fixes-v1-6-f1fd15c33fb3@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/m68k/include/asm/cmpxchg.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/m68k/include/asm/cmpxchg.h b/arch/m68k/include/asm/cmpxchg.h
-index 3a3bdcfcd3754..2035b30d79518 100644
---- a/arch/m68k/include/asm/cmpxchg.h
-+++ b/arch/m68k/include/asm/cmpxchg.h
-@@ -33,7 +33,7 @@ static inline unsigned long __xchg(unsigned long x, volatile void * ptr, int siz
- 		x = tmp;
- 		break;
- 	default:
--		tmp = __invalid_xchg_size(x, ptr, size);
-+		x = __invalid_xchg_size(x, ptr, size);
- 		break;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index b00f6d8bc8bac..da48ae60155af 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -2125,6 +2125,8 @@ ufs_mem_phy: phy@1d87000 {
+ 			clocks = <&gcc GCC_UFS_MEM_CLKREF_CLK>,
+ 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
  
++			power-domains = <&gcc UFS_PHY_GDSC>;
++
+ 			resets = <&ufs_mem_hc 0>;
+ 			reset-names = "ufsphy";
+ 			status = "disabled";
 -- 
 2.43.0
 
