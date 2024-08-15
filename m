@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F316144376;
-	Thu, 15 Aug 2024 14:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29AEB44376;
+	Thu, 15 Aug 2024 14:02:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730553; cv=none; b=l8Tj6uD0EYScdR7R9DqU/3+GyT1nVnkV9+2L8eCNbtUtvmuyX6vXysdyuQ2RdfLWmRTuXVoUSilO6+gHbIVYplq1iX8OEElLqx6KJZ+8ZuwCooSLEkzMngKbEPd5+/Nudx2zZa1aEt26ELai+vo6dqQWJWZa4bvhzI43AmBns7w=
+	t=1723730556; cv=none; b=gq1CF5cZh/9qnFqWXcRD+JPB8ZJ/CDUvu649l9fL02nuFtpxReaFwnVn5lgfZjyTKVhFugFLwX1HW4iFOB/DeQTypOPM2xWnVUCL8DZW8tmerJqGWgrdiOjb6EQij/8LeKxlOfJG9qRt5qEzEcE/d2fcQbbh65spUDczQaJrlvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730553; c=relaxed/simple;
-	bh=dNioB9qs23oPuwPSDPNNqQYR61Z1TWqKVG3mGcMS2iI=;
+	s=arc-20240116; t=1723730556; c=relaxed/simple;
+	bh=e421JMG2QkD386mC1/ilGUF34IyMEVQ4k/Zidb8B8ho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WKX7o760ESe6LpuY2jAe0vHaoKkE75oxpA88+DskUzRSnui4eMIWNxd7DCARnm4aAr4Ah2aATC44PZ4wJAgJMJp4nf/aJRm4MTxrTgIiHDC88D6zuqip+gctlE2Xa04l/6+MrrM7gLQRjRla+Ab5fsIqapjUGpLVBTusQcnySj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BoJICipv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZjbnUaO+mYnDf837akDX5Fv5BHKFY5BD2jAmytrmkQyh8/W8R/XiJ9kkUbIO56KOwyyNOHi2wo9laVtAKZobQEnGPixQX7W9TzLRH1uWuWW+lXtp5j12DaFZxMBwLJ5ZNpiWu6PVfvWI0VCoVptchEK+lRwwJnnEMb22HdzXEdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZgElZeHB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BoJICipv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78967C4AF0F;
-	Thu, 15 Aug 2024 14:02:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZgElZeHB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E0B9C32786;
+	Thu, 15 Aug 2024 14:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730552;
-	bh=dNioB9qs23oPuwPSDPNNqQYR61Z1TWqKVG3mGcMS2iI=;
+	s=korg; t=1723730556;
+	bh=e421JMG2QkD386mC1/ilGUF34IyMEVQ4k/Zidb8B8ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BoJICipvfV7Qevx21KeksH5BQ16rfw+f30+s+N9kMzmM7x06jufImynA8LxC2/wso
-	 j+ADHMH5VVzHBDEFbAhPfMFjdBAD3p+z46EMv9GLJNc7on5YEOncLlnjviEZev6vmW
-	 XlIzU1iS8RMKeUbtdDtm5o5kKoD0tXi/9Dci9m7I=
+	b=ZgElZeHBe3s1lTYsol9SCGDLm0iVCHq43Yq47uhI9bPUXLeB6EOfdF4L2iQpha4B/
+	 nfSqf/YQDzT4NPCT6e0+8eRD6ygcwJyNbaCaEEK5fKXxuetIr+HEsNqP9iHfM7t5tx
+	 mgyxE25aRJNpcDRzdrYuqyXeQ9fC2hHh/EFdVqQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Waiman Long <longman@redhat.com>,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 445/484] padata: Fix possible divide-by-0 panic in padata_mt_helper()
-Date: Thu, 15 Aug 2024 15:25:03 +0200
-Message-ID: <20240815131958.648426993@linuxfoundation.org>
+	Andi Kleen <ak@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 446/484] x86/mtrr: Check if fixed MTRRs exist before saving them
+Date: Thu, 15 Aug 2024 15:25:04 +0200
+Message-ID: <20240815131958.686299944@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,65 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Waiman Long <longman@redhat.com>
+From: Andi Kleen <ak@linux.intel.com>
 
-commit 6d45e1c948a8b7ed6ceddb14319af69424db730c upstream.
+commit 919f18f961c03d6694aa726c514184f2311a4614 upstream.
 
-We are hit with a not easily reproducible divide-by-0 panic in padata.c at
-bootup time.
+MTRRs have an obsolete fixed variant for fine grained caching control
+of the 640K-1MB region that uses separate MSRs. This fixed variant has
+a separate capability bit in the MTRR capability MSR.
 
-  [   10.017908] Oops: divide error: 0000 1 PREEMPT SMP NOPTI
-  [   10.017908] CPU: 26 PID: 2627 Comm: kworker/u1666:1 Not tainted 6.10.0-15.el10.x86_64 #1
-  [   10.017908] Hardware name: Lenovo ThinkSystem SR950 [7X12CTO1WW]/[7X12CTO1WW], BIOS [PSE140J-2.30] 07/20/2021
-  [   10.017908] Workqueue: events_unbound padata_mt_helper
-  [   10.017908] RIP: 0010:padata_mt_helper+0x39/0xb0
-    :
-  [   10.017963] Call Trace:
-  [   10.017968]  <TASK>
-  [   10.018004]  ? padata_mt_helper+0x39/0xb0
-  [   10.018084]  process_one_work+0x174/0x330
-  [   10.018093]  worker_thread+0x266/0x3a0
-  [   10.018111]  kthread+0xcf/0x100
-  [   10.018124]  ret_from_fork+0x31/0x50
-  [   10.018138]  ret_from_fork_asm+0x1a/0x30
-  [   10.018147]  </TASK>
+So far all x86 CPUs which support MTRR have this separate bit set, so it
+went unnoticed that mtrr_save_state() does not check the capability bit
+before accessing the fixed MTRR MSRs.
 
-Looking at the padata_mt_helper() function, the only way a divide-by-0
-panic can happen is when ps->chunk_size is 0.  The way that chunk_size is
-initialized in padata_do_multithreaded(), chunk_size can be 0 when the
-min_chunk in the passed-in padata_mt_job structure is 0.
+Though on a CPU that does not support the fixed MTRR capability this
+results in a #GP.  The #GP itself is harmless because the RDMSR fault is
+handled gracefully, but results in a WARN_ON().
 
-Fix this divide-by-0 panic by making sure that chunk_size will be at least
-1 no matter what the input parameters are.
+Add the missing capability check to prevent this.
 
-Link: https://lkml.kernel.org/r/20240806174647.1050398-1-longman@redhat.com
-Fixes: 004ed42638f4 ("padata: add basic support for multithreaded jobs")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Cc: Daniel Jordan <daniel.m.jordan@oracle.com>
-Cc: Steffen Klassert <steffen.klassert@secunet.com>
-Cc: Waiman Long <longman@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 2b1f6278d77c ("[PATCH] x86: Save the MTRRs of the BSP before booting an AP")
+Signed-off-by: Andi Kleen <ak@linux.intel.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20240808000244.946864-1-ak@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/padata.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/x86/kernel/cpu/mtrr/mtrr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -508,6 +508,13 @@ void __init padata_do_multithreaded(stru
- 	ps.chunk_size = max(ps.chunk_size, job->min_chunk);
- 	ps.chunk_size = roundup(ps.chunk_size, job->align);
+--- a/arch/x86/kernel/cpu/mtrr/mtrr.c
++++ b/arch/x86/kernel/cpu/mtrr/mtrr.c
+@@ -816,7 +816,7 @@ void mtrr_save_state(void)
+ {
+ 	int first_cpu;
  
-+	/*
-+	 * chunk_size can be 0 if the caller sets min_chunk to 0. So force it
-+	 * to at least 1 to prevent divide-by-0 panic in padata_mt_helper().`
-+	 */
-+	if (!ps.chunk_size)
-+		ps.chunk_size = 1U;
-+
- 	list_for_each_entry(pw, &works, pw_list)
- 		queue_work(system_unbound_wq, &pw->pw_work);
+-	if (!mtrr_enabled())
++	if (!mtrr_enabled() || !mtrr_state.have_fixed)
+ 		return;
  
+ 	first_cpu = cpumask_first(cpu_online_mask);
 
 
