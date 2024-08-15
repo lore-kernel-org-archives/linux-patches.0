@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D81E1714AE;
-	Thu, 15 Aug 2024 13:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABED18D630;
+	Thu, 15 Aug 2024 13:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728721; cv=none; b=C0gEUsEws1fkAQdFax2tnYmfuLiFZz5xBJL4t5RlxzSXx03fPnwECJUoy4yARQmfmQukmXlry80dk6dNfocxBFDeENWo07STLVjyI5C6VyqhhfDxcvtxHwg8M9NUoLli+NXEdFu7i5GO40hpTdbLASPFm62trcQyWc6V66xhkv8=
+	t=1723728724; cv=none; b=BvMDz+C3GcYUb4AfQ0lO+GhPN60egZy9Hi3RtoJ9Y6RNXtL2b3sDldrOaPFYBk3n6DIr7U4R6S4jRaaaYRRT9Zz8ZtShCIuulPenMxIxTcymZm/m+OtbXGPup0nYe1ky6/O4gLJ+9FXYNnowblCekm3trhLE4Ytau/tY/DB9Uy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728721; c=relaxed/simple;
-	bh=CGCv4LLVMlyPxgtAaiNcFhmLMY7XESAPeS/0wAHDFH8=;
+	s=arc-20240116; t=1723728724; c=relaxed/simple;
+	bh=QW8Sk67inKjZPoWIMwIAHgSUrNr/AxhXpdgN+iO+ou4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QPG0vbnU6+AhZxr//+i63KCN3lEHQ4opIEyCo7Y16wog0q9H2s/kbeocuXhzW+vc6o8RBR7YqWQ6Mp5XibJIRdAj//QuExIJG//eJWTcfAl4Bz/rfgb86axEFqXROCjAUnh/ogBBskGtCNfPDnFmi6W3INJq2QxFPTmnjxJhWFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDCI2Xhj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KUQxjdXICP5ilBywl7eU5F6coN7+aePzkwmuhOnvl1KGRBmunLMmJP/pYpBeSIff3LHLIq1Q7X/LPv6kSra5bQEuArkBbfR4wnG8bbNurtOsP2frgm8XLumKpU/mA6ujNtjY6o5iDJlG1bo3ZdWccw+5iMWKwc9t1v6rYfzoR0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L0dPyEm+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDCI2Xhj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C931BC32786;
-	Thu, 15 Aug 2024 13:32:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L0dPyEm+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D96C32786;
+	Thu, 15 Aug 2024 13:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728721;
-	bh=CGCv4LLVMlyPxgtAaiNcFhmLMY7XESAPeS/0wAHDFH8=;
+	s=korg; t=1723728724;
+	bh=QW8Sk67inKjZPoWIMwIAHgSUrNr/AxhXpdgN+iO+ou4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pDCI2XhjCyyIEPlx5lPQKRTYuTcL6VHGOEkgSvjiVUH5/8r4wPoT2BuRDnSWT0lXU
-	 Ut1eiBaKWUFNsV6SvrIe1/7csUMQgsREr2nsQdBaypwApusqXH/RMWkx71dcLy1Ia2
-	 ovvuhGGYIQPlVAByjT8TFzsrBfmkUvK6VdXEdU6Y=
+	b=L0dPyEm+KvjEr9RUfkoEiRKrXJhYJqZePzZJDLN4yftZrC0t9G0O/xPP1jzxR3/ed
+	 FWrNRMtflxtxZcZH6pEabE+jV44V2o5qbDgC8w+8O7a+NwsjO+FRSyiwIKlS/Yg+wp
+	 BkRkQNIP/eJLQHDo//58Leg6Du/yVMufH7fzEOfM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Cavenati <cavenati.marco@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 4.19 089/196] perf/x86/intel/pt: Fix topa_entry base length
-Date: Thu, 15 Aug 2024 15:23:26 +0200
-Message-ID: <20240815131855.487968544@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>,
+	Arjan van de Ven <arjan@linux.intel.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 090/196] watchdog/perf: properly initialize the turbo mode timestamp and rearm counter
+Date: Thu, 15 Aug 2024 15:23:27 +0200
+Message-ID: <20240815131855.525292168@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -51,44 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Cavenati <cavenati.marco@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 5638bd722a44bbe97c1a7b3fae5b9efddb3e70ff upstream.
+commit f944ffcbc2e1c759764850261670586ddf3bdabb upstream.
 
-topa_entry->base needs to store a pfn.  It obviously needs to be
-large enough to store the largest possible x86 pfn which is
-MAXPHYADDR-PAGE_SIZE (52-12).  So it is 4 bits too small.
+For systems on which the performance counter can expire early due to turbo
+modes the watchdog handler has a safety net in place which validates that
+since the last watchdog event there has at least 4/5th of the watchdog
+period elapsed.
 
-Increase the size of topa_entry->base from 36 bits to 40 bits.
+This works reliably only after the first watchdog event because the per
+CPU variable which holds the timestamp of the last event is never
+initialized.
 
-Note, systems where physical addresses can be 256TiB or more are affected.
+So a first spurious event will validate against a timestamp of 0 which
+results in a delta which is likely to be way over the 4/5 threshold of the
+period.  As this might happen before the first watchdog hrtimer event
+increments the watchdog counter, this can lead to false positives.
 
-[ Adrian: Amend commit message as suggested by Dave Hansen ]
+Fix this by initializing the timestamp before enabling the hardware event.
+Reset the rearm counter as well, as that might be non zero after the
+watchdog was disabled and reenabled.
 
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Signed-off-by: Marco Cavenati <cavenati.marco@gmail.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240624201101.60186-2-adrian.hunter@intel.com
+Link: https://lkml.kernel.org/r/87frsfu15a.ffs@tglx
+Fixes: 7edaeb6841df ("kernel/watchdog: Prevent false positives with turbo modes")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Arjan van de Ven <arjan@linux.intel.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/watchdog_hld.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/arch/x86/events/intel/pt.h
-+++ b/arch/x86/events/intel/pt.h
-@@ -78,8 +78,8 @@ struct topa_entry {
- 	u64	rsvd2	: 1;
- 	u64	size	: 4;
- 	u64	rsvd3	: 2;
--	u64	base	: 36;
--	u64	rsvd4	: 16;
-+	u64	base	: 40;
-+	u64	rsvd4	: 12;
- };
+--- a/kernel/watchdog_hld.c
++++ b/kernel/watchdog_hld.c
+@@ -91,11 +91,15 @@ static bool watchdog_check_timestamp(voi
+ 	__this_cpu_write(last_timestamp, now);
+ 	return true;
+ }
+-#else
+-static inline bool watchdog_check_timestamp(void)
++
++static void watchdog_init_timestamp(void)
+ {
+-	return true;
++	__this_cpu_write(nmi_rearmed, 0);
++	__this_cpu_write(last_timestamp, ktime_get_mono_fast_ns());
+ }
++#else
++static inline bool watchdog_check_timestamp(void) { return true; }
++static inline void watchdog_init_timestamp(void) { }
+ #endif
  
- #define PT_CPUID_LEAVES		2
+ static struct perf_event_attr wd_hw_attr = {
+@@ -195,6 +199,7 @@ void hardlockup_detector_perf_enable(voi
+ 	if (!atomic_fetch_inc(&watchdog_cpus))
+ 		pr_info("Enabled. Permanently consumes one hw-PMU counter.\n");
+ 
++	watchdog_init_timestamp();
+ 	perf_event_enable(this_cpu_read(watchdog_ev));
+ }
+ 
 
 
