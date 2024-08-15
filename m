@@ -1,87 +1,133 @@
-Received: from gofer.mess.org (gofer.mess.org [88.97.38.141])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95B463D5
-	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 14:34:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=88.97.38.141
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13261DFFB;
+	Thu, 15 Aug 2024 14:34:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732449; cv=none; b=O7zfjxezfJc16PPr6eCflyk11HhHs2Xg27EEqIb6qPaE0l1b0TVMaFSGuq9JJ4WJyeeLxe8GaGxWYtE1jC0jUipm/S2J5xZyPPyR4O21WKhyaKTBoMEBPUlrLKCs5i82WvGVX2/gEfcsNVl9zukxqeHABud+S1ee4sQGl3giTJc=
+	t=1723732452; cv=none; b=axa+juiRiKFSx3dIHN9vlzWfXePwfsYhEhXnHGYEBfpZYHb486s1aIwNBa6Ojq6ErhN8qXlEe01yTHGOsKXLPQ3qcNLRbxdFfB1tzdPOdU81SIUUMBhGnyhZFZeURYEuZoFIqg3K3w6oahBqQoq5/MrF49eHS2IZ0nKYcwTSNy8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732449; c=relaxed/simple;
-	bh=BO0n+O7EJs1I9dLjyqNtz6bJ9wBbUzVxEOeDNvtyjUg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AcEzTnPZBTq1CW9epiuHZNnEJjOJDaQ9rXXsGoHq9EFH0/I/4Tx3IU+x6UC88Y6vxpSoifSkIfgUGwi7cMLNeY7n9Ayye8FJw5xMfP2koyE2f8LPgFgpMY9G9xnIA7ZnyOBTtMAZQ5Hl5VrCBCWgudlp+q/YHpEwzkKREGz1pxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org; spf=pass smtp.mailfrom=mess.org; dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b=GoSmb/Dy; arc=none smtp.client-ip=88.97.38.141
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=mess.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mess.org
+	s=arc-20240116; t=1723732452; c=relaxed/simple;
+	bh=q1UxZMA3/xS0PLYOxHvwIYwQ6CEwAviAxmHYWZezGNg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=anN80R7bXpjSKN/QXh389j7ji67jf/SC0WM5PxQLIvzrYuIOFBMuhU19tIM0ltDQ8U+qFgrXHgIX518A3WgGEo+9O7LLK+myY+Yp3V712kHmPXkN7Fl2/3rpowYBOdUy1U14fawi0sCfQMOFZr+FjA9oYLK5Gr2+jTKlMMY/pQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MT7YUeGc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mess.org header.i=@mess.org header.b="GoSmb/Dy"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=mess.org; s=2020;
-	t=1723732444; bh=BO0n+O7EJs1I9dLjyqNtz6bJ9wBbUzVxEOeDNvtyjUg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GoSmb/DyL2TyxpsisZ9X4Wp4Ht4nEfTToj9biyMxrnLNLPp2LtOM1XtzcS0+ZlQR0
-	 qgmoY7RWZzSzrRP4d7fneHWB1wA1zYOmOiZqcVgViYLX07o16gkj+KDATAunLncmWj
-	 ZrezKja9QKqspeLowCXaGs52tfpbicpi8dbG61bM8hikAOVi8PHXh6j6evqPnwsqBE
-	 kUyNW18AH62jyV0wsGuiChZnyfKLfcOHo/+6EcfQDixCjHWVo1YqeOHeiEfd/UGxg0
-	 fytb9p3mGSLuSo7QEWtk3iyLUUYe8jgyQ/PcfrfpRiwI6RVlBqBjsWYlPaEjF+7R7h
-	 T1FQWW/YSekzg==
-Received: by gofer.mess.org (Postfix, from userid 1000)
-	id 3EAB1100104; Thu, 15 Aug 2024 15:34:04 +0100 (BST)
-Date: Thu, 15 Aug 2024 15:34:04 +0100
-From: Sean Young <sean@mess.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.10 068/352] media: dvb-usb: Fix unexpected infinite
- loop in dvb_usb_read_remote_control()
-Message-ID: <Zr4R3E207yZPKYjB@gofer.mess.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MT7YUeGc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941EBC32786;
+	Thu, 15 Aug 2024 14:34:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1723732452;
+	bh=q1UxZMA3/xS0PLYOxHvwIYwQ6CEwAviAxmHYWZezGNg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=MT7YUeGcus0e8c1lAOIHHkw8Lwz3PT3O0pCi8+886qcMckbBVaL+6XQWX49T90y3z
+	 AnUezWoaPD58uwxn6J3Oumri1Y/3IUrFBI78hW4fUK4IA4dZKWM36vtWKyp/eNNbKG
+	 bI4NK0XL51rSsCDMsEhu4ld6LxokYlpGenTL+MMI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Slark Xiao <slark_xiao@163.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 5.10 153/352] PCI: rockchip: Use GPIOD_OUT_LOW flag while requesting ep_gpio
+Date: Thu, 15 Aug 2024 15:23:39 +0200
+Message-ID: <20240815131925.179839759@linuxfoundation.org>
+X-Mailer: git-send-email 2.46.0
+In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
- <20240815131921.871240885@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20240815131921.871240885@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 15, 2024 at 03:22:14PM +0200, Greg Kroah-Hartman wrote:
-> 5.10-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Zheng Yejian <zhengyejian1@huawei.com>
-> 
-> [ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
-> 
-> Infinite log printing occurs during fuzz test:
-> 
->   rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
->   ...
->   dvb-usb: schedule remote query interval to 100 msecs.
->   dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
->   dvb-usb: bulk message failed: -22 (1/0)
->   dvb-usb: bulk message failed: -22 (1/0)
->   dvb-usb: bulk message failed: -22 (1/0)
->   ...
->   dvb-usb: bulk message failed: -22 (1/0)
-> 
-> Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
-> that is in rc_core_dvb_usb_remote_init() create a work that will call
-> dvb_usb_read_remote_control(), and this work will reschedule itself at
-> 'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
-> see following code snippet:
+5.10-stable review patch.  If anyone has any objections, please let me know.
 
-This commit causes problems and has been reverted upstream.
+------------------
 
-https://git.linuxtv.org/media_stage.git/commit/?h=fixes&id=0c84bde4f37ba27d50e4c70ecacd33fe4a57030d
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-Please don't apply.
+commit 840b7a5edf88fe678c60dee88a135647c0ea4375 upstream.
 
-Thanks,
+Rockchip platforms use 'GPIO_ACTIVE_HIGH' flag in the devicetree definition
+for ep_gpio. This means, whatever the logical value set by the driver for
+the ep_gpio, physical line will output the same logic level.
 
-Sean
+For instance,
+
+  gpiod_set_value_cansleep(rockchip->ep_gpio, 0); --> Level low
+  gpiod_set_value_cansleep(rockchip->ep_gpio, 1); --> Level high
+
+But while requesting the ep_gpio, GPIOD_OUT_HIGH flag is currently used.
+Now, this also causes the physical line to output 'high' creating trouble
+for endpoint devices during host reboot.
+
+When host reboot happens, the ep_gpio will initially output 'low' due to
+the GPIO getting reset to its POR value. Then during host controller probe,
+it will output 'high' due to GPIOD_OUT_HIGH flag. Then during
+rockchip_pcie_host_init_port(), it will first output 'low' and then 'high'
+indicating the completion of controller initialization.
+
+On the endpoint side, each output 'low' of ep_gpio is accounted for PERST#
+assert and 'high' for PERST# deassert. With the above mentioned flow during
+host reboot, endpoint will witness below state changes for PERST#:
+
+  (1) PERST# assert - GPIO POR state
+  (2) PERST# deassert - GPIOD_OUT_HIGH while requesting GPIO
+  (3) PERST# assert - rockchip_pcie_host_init_port()
+  (4) PERST# deassert - rockchip_pcie_host_init_port()
+
+Now the time interval between (2) and (3) is very short as both happen
+during the driver probe(), and this results in a race in the endpoint.
+Because, before completing the PERST# deassertion in (2), endpoint got
+another PERST# assert in (3).
+
+A proper way to fix this issue is to change the GPIOD_OUT_HIGH flag in (2)
+to GPIOD_OUT_LOW. Because the usual convention is to request the GPIO with
+a state corresponding to its 'initial/default' value and let the driver
+change the state of the GPIO when required.
+
+As per that, the ep_gpio should be requested with GPIOD_OUT_LOW as it
+corresponds to the POR value of '0' (PERST# assert in the endpoint). Then
+the driver can change the state of the ep_gpio later in
+rockchip_pcie_host_init_port() as per the initialization sequence.
+
+This fixes the firmware crash issue in Qcom based modems connected to
+Rockpro64 based board.
+
+Fixes: e77f847df54c ("PCI: rockchip: Add Rockchip PCIe controller support")
+Closes: https://lore.kernel.org/mhi/20240402045647.GG2933@thinkpad/
+Link: https://lore.kernel.org/linux-pci/20240416-pci-rockchip-perst-fix-v1-1-4800b1d4d954@linaro.org
+Reported-by: Slark Xiao <slark_xiao@163.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Cc: stable@vger.kernel.org	# v4.9
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/pci/controller/pcie-rockchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/pci/controller/pcie-rockchip.c
++++ b/drivers/pci/controller/pcie-rockchip.c
+@@ -120,7 +120,7 @@ int rockchip_pcie_parse_dt(struct rockch
+ 
+ 	if (rockchip->is_rc) {
+ 		rockchip->ep_gpio = devm_gpiod_get_optional(dev, "ep",
+-							    GPIOD_OUT_HIGH);
++							    GPIOD_OUT_LOW);
+ 		if (IS_ERR(rockchip->ep_gpio))
+ 			return dev_err_probe(dev, PTR_ERR(rockchip->ep_gpio),
+ 					     "failed to get ep GPIO\n");
+
+
