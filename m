@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173C01A3BB6;
-	Thu, 15 Aug 2024 14:03:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E1719DF5F;
+	Thu, 15 Aug 2024 14:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730639; cv=none; b=H+wfBl/cMrrqWb+5xEO/QMOWURcnSq41jeo2n9IlxVV99jUBiaShFYJuNbh3SdGN24CLKCC1F//ghthdHSX39dJNMZRMz8qv/vtqys2UzlbtATpoLmKO9AwsiXvFe1VXvekSbyL++2KrVRohX4Yp9I2pdt2PcRwUXzraPqK3eVY=
+	t=1723730642; cv=none; b=h5x4NODBKzgmt6gyEvyBTRGdokfrn3e14PsWB0jKOwtz6w89x5HUwVqbvorH+dQDQctDCtPp8ZIsBgzFq+4mA2ipBA3ZCVEXXH8yX5pyFcrFRXludcvAxnUY6B/x79sTXO9ghTKmFFupRynbwMFWXGJzZwa9MZr959jGYvFO0Cg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730639; c=relaxed/simple;
-	bh=s4XNLMr/2Dkiv/6Fr3nxj2WU5jHOQ64jnmbSqNn+Jww=;
+	s=arc-20240116; t=1723730642; c=relaxed/simple;
+	bh=wjcpV582u/xrOg5/DtGh8xwczv0ouK32wndca+HAne4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r/aOINFlTICLT1VnQZycCIctoL0cIcRQbIIsDmh7Gr1CVF5L9VfLaVJunoi7YOcZiI7tKiw6/U4cIggpxgUANOkJ530SSZQ3ddLZve5E+criqvUGrG77mr+TrbR0rVpPFrQLf9ONzyB7D5I9Py82hBY4pSDJRLLfoR2v6B1tK/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+K7cQGg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cinUcC2YtUsxmKQIEkfaJ0JgUWALYRiJXmsU9pKWuvvpQzFsB3TTPrW3qI0rINgaaTuWfeHXsZ+cN8PtLuDXQGTRHGma7QNx3MO5IT1qPFYEFKSefKlmaqKLf59tXtvHSfFzeYHzS2EMxnje4uXLFoinS5fn0VGG8DGjgrA7Tt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=um+OH/2E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+K7cQGg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D41AC32786;
-	Thu, 15 Aug 2024 14:03:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="um+OH/2E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76EC6C32786;
+	Thu, 15 Aug 2024 14:04:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730638;
-	bh=s4XNLMr/2Dkiv/6Fr3nxj2WU5jHOQ64jnmbSqNn+Jww=;
+	s=korg; t=1723730641;
+	bh=wjcpV582u/xrOg5/DtGh8xwczv0ouK32wndca+HAne4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+K7cQGguCQlxd3dSH1tA8U0MIIEZObHhUaO/KVQbSlZUy8JnHKW04rSexnkM+E9Z
-	 xMyqrbwVu+nTsbAP/LzS8vSbIIZjolT3cKJ0TUpHSC9XKHOb2av/pp7ZTCoYEKS4LJ
-	 ddVuuvxRcp6uf0zpJvfrYVRaycuAT04ES6h4UBvU=
+	b=um+OH/2EtYXOruyzDyYCe/LmpbkErRxiKdxablpWHmpm+My3VhsiBO6Sp/KlJpnzQ
+	 ZlbV1XhlMyjKHTI7xpLBZjARdE19EJvf8oJDCbYET1S2umDtsfRQ0YC71+tL8qite4
+	 AT+38sf+g4zbcSl40bGmIZ26MmXJA90o0J2EK1e8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 430/484] torture: Enable clocksource watchdog with "tsc=watchdog"
-Date: Thu, 15 Aug 2024 15:24:48 +0200
-Message-ID: <20240815131958.066259308@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Lukas Wunner <lukas@wunner.de>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 5.15 464/484] PCI/DPC: Fix use-after-free on concurrent DPC and hot-removal
+Date: Thu, 15 Aug 2024 15:25:22 +0200
+Message-ID: <20240815131959.398265890@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -45,53 +46,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Paul E. McKenney <paulmck@kernel.org>
+From: Lukas Wunner <lukas@wunner.de>
 
-[ Upstream commit 877a0e83c57fa5e2a7fd628ec2e1733ed70c8792 ]
+commit 11a1f4bc47362700fcbde717292158873fb847ed upstream.
 
-This commit tests the "tsc=watchdog" kernel boot parameter when running
-the clocksourcewd torture tests.
+Keith reports a use-after-free when a DPC event occurs concurrently to
+hot-removal of the same portion of the hierarchy:
 
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
-Stable-dep-of: f2655ac2c06a ("clocksource: Fix brown-bag boolean thinko in cs_watchdog_read()")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The dpc_handler() awaits readiness of the secondary bus below the
+Downstream Port where the DPC event occurred.  To do so, it polls the
+config space of the first child device on the secondary bus.  If that
+child device is concurrently removed, accesses to its struct pci_dev
+cause the kernel to oops.
+
+That's because pci_bridge_wait_for_secondary_bus() neglects to hold a
+reference on the child device.  Before v6.3, the function was only
+called on resume from system sleep or on runtime resume.  Holding a
+reference wasn't necessary back then because the pciehp IRQ thread
+could never run concurrently.  (On resume from system sleep, IRQs are
+not enabled until after the resume_noirq phase.  And runtime resume is
+always awaited before a PCI device is removed.)
+
+However starting with v6.3, pci_bridge_wait_for_secondary_bus() is also
+called on a DPC event.  Commit 53b54ad074de ("PCI/DPC: Await readiness
+of secondary bus after reset"), which introduced that, failed to
+appreciate that pci_bridge_wait_for_secondary_bus() now needs to hold a
+reference on the child device because dpc_handler() and pciehp may
+indeed run concurrently.  The commit was backported to v5.10+ stable
+kernels, so that's the oldest one affected.
+
+Add the missing reference acquisition.
+
+Abridged stack trace:
+
+  BUG: unable to handle page fault for address: 00000000091400c0
+  CPU: 15 PID: 2464 Comm: irq/53-pcie-dpc 6.9.0
+  RIP: pci_bus_read_config_dword+0x17/0x50
+  pci_dev_wait()
+  pci_bridge_wait_for_secondary_bus()
+  dpc_reset_link()
+  pcie_do_recovery()
+  dpc_handler()
+
+Fixes: 53b54ad074de ("PCI/DPC: Await readiness of secondary bus after reset")
+Closes: https://lore.kernel.org/r/20240612181625.3604512-3-kbusch@meta.com/
+Link: https://lore.kernel.org/linux-pci/8e4bcd4116fd94f592f2bf2749f168099c480ddf.1718707743.git.lukas@wunner.de
+Reported-by: Keith Busch <kbusch@kernel.org>
+Tested-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/rcutorture/bin/torture.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pci/pci.c |   19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/rcutorture/bin/torture.sh b/tools/testing/selftests/rcutorture/bin/torture.sh
-index 66f0f724a1a6d..33ba08ea10a73 100755
---- a/tools/testing/selftests/rcutorture/bin/torture.sh
-+++ b/tools/testing/selftests/rcutorture/bin/torture.sh
-@@ -386,16 +386,16 @@ fi
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -4916,7 +4916,7 @@ int pci_bridge_wait_for_secondary_bus(st
+ 				      int timeout)
+ {
+ 	struct pci_dev *child;
+-	int delay;
++	int delay, ret = 0;
  
- if test "$do_clocksourcewd" = "yes"
- then
--	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000"
-+	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 tsc=watchdog"
- 	torture_set "clocksourcewd-1" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --kconfig "CONFIG_TEST_CLOCKSOURCE_WATCHDOG=y" --trust-make
+ 	if (pci_dev_is_disconnected(dev))
+ 		return 0;
+@@ -4944,8 +4944,8 @@ int pci_bridge_wait_for_secondary_bus(st
+ 		return 0;
+ 	}
  
--	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 clocksource.max_cswd_read_retries=1"
-+	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 clocksource.max_cswd_read_retries=1 tsc=watchdog"
- 	torture_set "clocksourcewd-2" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --kconfig "CONFIG_TEST_CLOCKSOURCE_WATCHDOG=y" --trust-make
+-	child = list_first_entry(&dev->subordinate->devices, struct pci_dev,
+-				 bus_list);
++	child = pci_dev_get(list_first_entry(&dev->subordinate->devices,
++					     struct pci_dev, bus_list));
+ 	up_read(&pci_bus_sem);
  
- 	# In case our work is already done...
- 	if test "$do_rcutorture" != "yes"
- 	then
--		torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000"
-+		torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 tsc=watchdog"
- 		torture_set "clocksourcewd-3" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --trust-make
- 	fi
- fi
--- 
-2.43.0
-
+ 	/*
+@@ -4955,7 +4955,7 @@ int pci_bridge_wait_for_secondary_bus(st
+ 	if (!pci_is_pcie(dev)) {
+ 		pci_dbg(dev, "waiting %d ms for secondary bus\n", 1000 + delay);
+ 		msleep(1000 + delay);
+-		return 0;
++		goto put_child;
+ 	}
+ 
+ 	/*
+@@ -4976,7 +4976,7 @@ int pci_bridge_wait_for_secondary_bus(st
+ 	 * until the timeout expires.
+ 	 */
+ 	if (!pcie_downstream_port(dev))
+-		return 0;
++		goto put_child;
+ 
+ 	if (pcie_get_speed_cap(dev) <= PCIE_SPEED_5_0GT) {
+ 		pci_dbg(dev, "waiting %d ms for downstream link\n", delay);
+@@ -4987,11 +4987,16 @@ int pci_bridge_wait_for_secondary_bus(st
+ 		if (!pcie_wait_for_link_delay(dev, true, delay)) {
+ 			/* Did not train, no need to wait any further */
+ 			pci_info(dev, "Data Link Layer Link Active not set in 1000 msec\n");
+-			return -ENOTTY;
++			ret = -ENOTTY;
++			goto put_child;
+ 		}
+ 	}
+ 
+-	return pci_dev_wait(child, reset_type, timeout - delay);
++	ret = pci_dev_wait(child, reset_type, timeout - delay);
++
++put_child:
++	pci_dev_put(child);
++	return ret;
+ }
+ 
+ void pci_reset_secondary_bus(struct pci_dev *dev)
 
 
