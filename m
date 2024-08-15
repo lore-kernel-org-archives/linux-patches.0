@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCED863C;
-	Thu, 15 Aug 2024 14:29:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0958663C;
+	Thu, 15 Aug 2024 14:29:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732146; cv=none; b=spxXf6yoRbK3evb25apdXFUZ7+KgQ5IM5ZWyafw0im2Uiihb6VJrpnQfZI/FvXE50uTPr427QYbneUIm9/DjaRgKMZYRvChSgOihuIEJaSo090mt5wk7Cg1vdeq45TWGk4B/q/KdT6gBd3JYG6SLv5Cp5ieAyryWrmFpoj2/VD0=
+	t=1723732150; cv=none; b=Xhy/EmLkaqBNfCqhM7SVHsXqxtrEez8ivCgiOcejhcG0TIidwGpNP43iH5MgyVE8Ur32p6PmZhfpFuqVFEItzrRgO+p5nhDgGcuEw77XBSZ+O2lXoibTpkciamfFsH9O13x2XXMs+3HU61hCBOb0iYFwTPo47/ZNMP1PFctfJmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732146; c=relaxed/simple;
-	bh=+2VYYxJAAWf2Vl/mWMIswrf0NPZGPoF7TINoBrqePzM=;
+	s=arc-20240116; t=1723732150; c=relaxed/simple;
+	bh=vdaeN55AAtSDuums/DF0XxD0xfzMk88dE+72nQQnpTE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpsDsJz8RQ3WIRGsiplJevBVT22hHp1yot7TC0L4LoexBqLck2x75MXx2Yqe4zZqkVUrkYRI3wX/KzTDfbBT5xrpfZTyWkyLY1u2yD895bYc+x50WcrEbq8yL0gpIQ6FYEnZUoU13YgsJ5x4Kkfm8wPUJ9gkhNHs527SUH7XpDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th45l/6A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpmu1rDgU06efm1j4sO3sI/YEHpDCRDXv1Kqq8k5a9mn+N3DqR3OwzGU/1QtTBpLILYC2gr8mB+x5bOzOUB750N7bOK8NslL90TWEtT7LDt+0DQ8yCqoH/KvhH7SEempTzGLcTT2BxlC5McuQvCLo5SKN8U8hORnC4I3w6q6Xyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEvMvixy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th45l/6A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B58FC32786;
-	Thu, 15 Aug 2024 14:29:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEvMvixy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F791C32786;
+	Thu, 15 Aug 2024 14:29:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732146;
-	bh=+2VYYxJAAWf2Vl/mWMIswrf0NPZGPoF7TINoBrqePzM=;
+	s=korg; t=1723732149;
+	bh=vdaeN55AAtSDuums/DF0XxD0xfzMk88dE+72nQQnpTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=th45l/6AlRTVi38DHOcM+Peu4Gmv949b85hAyeYiJ1or67e2+Qu209QkYH/5aBU92
-	 nj0vCv5L+CRWKXxuXyGVkTZCRZoN5LEuO4FrO6zYkiSBKs9HXl/DmNfbRfezNWtkce
-	 15CZzhnxMwPFKg+5QCJsZekGEC9m8ntkPXIkzc+s=
+	b=HEvMvixy8oeDu+sCyTEmzKulzgVGf3WRoIkiyT/+GzhD117KPOIla59g3LBgZcCNj
+	 4HaaeU0LyI4IWBa24pHl1FTiWSRVb01Q3bMKJrzbjFMWA6DU6YOjatSRB4HVe+tgBI
+	 e+b/ctZojaKyL4aPoFtPFQVtNMurzdafe9G1+xpY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
-	Lee Jones <lee@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/352] mfd: omap-usb-tll: Use struct_size to allocate tll
-Date: Thu, 15 Aug 2024 15:22:35 +0200
-Message-ID: <20240815131922.699812084@linuxfoundation.org>
+Subject: [PATCH 5.10 090/352] xprtrdma: Rename frwr_release_mr()
+Date: Thu, 15 Aug 2024 15:22:36 +0200
+Message-ID: <20240815131922.738577782@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,67 +51,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 40176714c818b0b6a2ca8213cdb7654fbd49b742 ]
+[ Upstream commit f912af77e2c1ba25bd40534668b10da5b20f686a ]
 
-Commit 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
-changed the memory allocation of 'tll' to consolidate it into a single
-allocation, introducing an incorrect size calculation.
+Clean up: To be consistent with other functions in this source file,
+follow the naming convention of putting the object being acted upon
+before the action itself.
 
-In particular, the allocation for the array of pointers was converted
-into a single-pointer allocation.
-
-The memory allocation used to occur in two steps:
-
-tll = devm_kzalloc(dev, sizeof(struct usbtll_omap), GFP_KERNEL);
-tll->ch_clk = devm_kzalloc(dev, sizeof(struct clk *) * tll->nch,
-                           GFP_KERNEL);
-
-And it turned that into the following allocation:
-
-tll = devm_kzalloc(dev, sizeof(*tll) + sizeof(tll->ch_clk[nch]),
-                   GFP_KERNEL);
-
-sizeof(tll->ch_clk[nch]) returns the size of a single pointer instead of
-the expected nch pointers.
-
-This bug went unnoticed because the allocation size was small enough to
-fit within the minimum size of a memory allocation for this particular
-case [1].
-
-The complete allocation can still be done at once with the struct_size
-macro, which comes in handy for structures with a trailing flexible
-array.
-
-Fix the memory allocation to obtain the original size again.
-
-Link: https://lore.kernel.org/all/202406261121.2FFD65647@keescook/ [1]
-Fixes: 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
-Reviewed-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
-Fixes: commit 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
-Link: https://lore.kernel.org/r/20240626-omap-usb-tll-counted_by-v2-1-4bedf20d1b51@gmail.com
-Signed-off-by: Lee Jones <lee@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Stable-dep-of: acd9f2dd23c6 ("xprtrdma: Fix rpcrdma_reqs_reset()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/omap-usb-tll.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/sunrpc/xprtrdma/frwr_ops.c  | 6 +++---
+ net/sunrpc/xprtrdma/verbs.c     | 4 ++--
+ net/sunrpc/xprtrdma/xprt_rdma.h | 2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mfd/omap-usb-tll.c b/drivers/mfd/omap-usb-tll.c
-index 16fad79c73f1f..99ca0dfa127b5 100644
---- a/drivers/mfd/omap-usb-tll.c
-+++ b/drivers/mfd/omap-usb-tll.c
-@@ -237,8 +237,7 @@ static int usbtll_omap_probe(struct platform_device *pdev)
- 		break;
+diff --git a/net/sunrpc/xprtrdma/frwr_ops.c b/net/sunrpc/xprtrdma/frwr_ops.c
+index bf3627dce5529..177099f6ae182 100644
+--- a/net/sunrpc/xprtrdma/frwr_ops.c
++++ b/net/sunrpc/xprtrdma/frwr_ops.c
+@@ -50,11 +50,11 @@
+ #endif
+ 
+ /**
+- * frwr_release_mr - Destroy one MR
++ * frwr_mr_release - Destroy one MR
+  * @mr: MR allocated by frwr_mr_init
+  *
+  */
+-void frwr_release_mr(struct rpcrdma_mr *mr)
++void frwr_mr_release(struct rpcrdma_mr *mr)
+ {
+ 	int rc;
+ 
+@@ -83,7 +83,7 @@ static void frwr_mr_recycle(struct rpcrdma_mr *mr)
+ 	r_xprt->rx_stats.mrs_recycled++;
+ 	spin_unlock(&r_xprt->rx_buf.rb_lock);
+ 
+-	frwr_release_mr(mr);
++	frwr_mr_release(mr);
+ }
+ 
+ /* frwr_reset - Place MRs back on the free list
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 9e9df38b29f74..167f0d99b8580 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -1100,7 +1100,7 @@ void rpcrdma_req_destroy(struct rpcrdma_req *req)
+ 		list_del(&mr->mr_all);
+ 		spin_unlock(&buf->rb_lock);
+ 
+-		frwr_release_mr(mr);
++		frwr_mr_release(mr);
  	}
  
--	tll = devm_kzalloc(dev, sizeof(*tll) + sizeof(tll->ch_clk[nch]),
--			   GFP_KERNEL);
-+	tll = devm_kzalloc(dev, struct_size(tll, ch_clk, nch), GFP_KERNEL);
- 	if (!tll) {
- 		pm_runtime_put_sync(dev);
- 		pm_runtime_disable(dev);
+ 	rpcrdma_regbuf_free(req->rl_recvbuf);
+@@ -1131,7 +1131,7 @@ static void rpcrdma_mrs_destroy(struct rpcrdma_xprt *r_xprt)
+ 		list_del(&mr->mr_all);
+ 		spin_unlock(&buf->rb_lock);
+ 
+-		frwr_release_mr(mr);
++		frwr_mr_release(mr);
+ 
+ 		spin_lock(&buf->rb_lock);
+ 	}
+diff --git a/net/sunrpc/xprtrdma/xprt_rdma.h b/net/sunrpc/xprtrdma/xprt_rdma.h
+index 702f0344523cc..73c8ab89456b0 100644
+--- a/net/sunrpc/xprtrdma/xprt_rdma.h
++++ b/net/sunrpc/xprtrdma/xprt_rdma.h
+@@ -520,7 +520,7 @@ rpcrdma_data_dir(bool writing)
+ void frwr_reset(struct rpcrdma_req *req);
+ int frwr_query_device(struct rpcrdma_ep *ep, const struct ib_device *device);
+ int frwr_mr_init(struct rpcrdma_xprt *r_xprt, struct rpcrdma_mr *mr);
+-void frwr_release_mr(struct rpcrdma_mr *mr);
++void frwr_mr_release(struct rpcrdma_mr *mr);
+ struct rpcrdma_mr_seg *frwr_map(struct rpcrdma_xprt *r_xprt,
+ 				struct rpcrdma_mr_seg *seg,
+ 				int nsegs, bool writing, __be32 xid,
 -- 
 2.43.0
 
