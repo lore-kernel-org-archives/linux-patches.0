@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9036063C;
-	Thu, 15 Aug 2024 14:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCED863C;
+	Thu, 15 Aug 2024 14:29:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732143; cv=none; b=Ie0OupJZ7pC2YzAC81sXTx7Ax6+cRM/06LPJBPiiaX7z41ZReSVrxGew4FkvIf9A8Hj+ZWNlGJsuFaddQ80dkzjNgocq8KGtkGPFGg30K1ctmBPpPmNGJgQwP7m0ogtfLtJe2aBdfftowxp/11q3tLvWK+XzFe564PgWj5mBFsg=
+	t=1723732146; cv=none; b=spxXf6yoRbK3evb25apdXFUZ7+KgQ5IM5ZWyafw0im2Uiihb6VJrpnQfZI/FvXE50uTPr427QYbneUIm9/DjaRgKMZYRvChSgOihuIEJaSo090mt5wk7Cg1vdeq45TWGk4B/q/KdT6gBd3JYG6SLv5Cp5ieAyryWrmFpoj2/VD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732143; c=relaxed/simple;
-	bh=8fwVee6dhvTkcIonHdIZfRtlVGqCU1LMQrAxrlnZ/uA=;
+	s=arc-20240116; t=1723732146; c=relaxed/simple;
+	bh=+2VYYxJAAWf2Vl/mWMIswrf0NPZGPoF7TINoBrqePzM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MWwRgGgSZ8Bh5+SaI/OCjG+ZI8iVH5CMoZFUjv9iHFCft4GohQj6QtJvYzh7IWe+vZNIdjCj0LLn5DBFT8x2UoTP8jssWBkGP5sms7/oMn3of2D35Od8Sapr9GoKDeQsolswzHOPNnVkeW4uIQvVNS88Jvt7dPNi9j0VtVv95Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EAHhqB1k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpsDsJz8RQ3WIRGsiplJevBVT22hHp1yot7TC0L4LoexBqLck2x75MXx2Yqe4zZqkVUrkYRI3wX/KzTDfbBT5xrpfZTyWkyLY1u2yD895bYc+x50WcrEbq8yL0gpIQ6FYEnZUoU13YgsJ5x4Kkfm8wPUJ9gkhNHs527SUH7XpDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=th45l/6A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EAHhqB1k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 166EDC32786;
-	Thu, 15 Aug 2024 14:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="th45l/6A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B58FC32786;
+	Thu, 15 Aug 2024 14:29:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732143;
-	bh=8fwVee6dhvTkcIonHdIZfRtlVGqCU1LMQrAxrlnZ/uA=;
+	s=korg; t=1723732146;
+	bh=+2VYYxJAAWf2Vl/mWMIswrf0NPZGPoF7TINoBrqePzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAHhqB1kuaw03iiSDHgWvjWThDGvVcw+DOskWm7ebMJXq55AQwRoqbeEYyUoql+7v
-	 50g3VWvVXIOHUjPiwaudmDHDlAMRjDcyI/UADPVI4JPse+RNw7bfWEn4vS9z5LyndA
-	 P1HOP1bAAzBHsm+KY2fu0LunVatdVjgF38/LYPEw=
+	b=th45l/6AlRTVi38DHOcM+Peu4Gmv949b85hAyeYiJ1or67e2+Qu209QkYH/5aBU92
+	 nj0vCv5L+CRWKXxuXyGVkTZCRZoN5LEuO4FrO6zYkiSBKs9HXl/DmNfbRfezNWtkce
+	 15CZzhnxMwPFKg+5QCJsZekGEC9m8ntkPXIkzc+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Kees Cook <kees@kernel.org>,
+	Javier Carrasco <javier.carrasco.cruz@gmail.com>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/352] media: renesas: vsp1: Fix _irqsave and _irq mix
-Date: Thu, 15 Aug 2024 15:22:26 +0200
-Message-ID: <20240815131922.335933834@linuxfoundation.org>
+Subject: [PATCH 5.10 089/352] mfd: omap-usb-tll: Use struct_size to allocate tll
+Date: Thu, 15 Aug 2024 15:22:35 +0200
+Message-ID: <20240815131922.699812084@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,115 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Javier Carrasco <javier.carrasco.cruz@gmail.com>
 
-[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
+[ Upstream commit 40176714c818b0b6a2ca8213cdb7654fbd49b742 ]
 
-The histogram support mixes _irqsave and _irq, causing the following
-smatch warning:
+Commit 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
+changed the memory allocation of 'tll' to consolidate it into a single
+allocation, introducing an incorrect size calculation.
 
-     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
-     warn: mixing irqsave and irq
+In particular, the allocation for the array of pointers was converted
+into a single-pointer allocation.
 
-The histo_stop_streaming() calls spin_lock_irqsave() followed by
-wait_event_lock_irq(). The former hints that interrupts may be disabled
-by the caller, while the latter reenables interrupts unconditionally.
-This doesn't cause any real bug, as the function is always called with
-interrupts enabled, but the pattern is still incorrect.
+The memory allocation used to occur in two steps:
 
-Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
-in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
-spin_lock() as appropriate elsewhere.
+tll = devm_kzalloc(dev, sizeof(struct usbtll_omap), GFP_KERNEL);
+tll->ch_clk = devm_kzalloc(dev, sizeof(struct clk *) * tll->nch,
+                           GFP_KERNEL);
 
-Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+And it turned that into the following allocation:
+
+tll = devm_kzalloc(dev, sizeof(*tll) + sizeof(tll->ch_clk[nch]),
+                   GFP_KERNEL);
+
+sizeof(tll->ch_clk[nch]) returns the size of a single pointer instead of
+the expected nch pointers.
+
+This bug went unnoticed because the allocation size was small enough to
+fit within the minimum size of a memory allocation for this particular
+case [1].
+
+The complete allocation can still be done at once with the struct_size
+macro, which comes in handy for structures with a trailing flexible
+array.
+
+Fix the memory allocation to obtain the original size again.
+
+Link: https://lore.kernel.org/all/202406261121.2FFD65647@keescook/ [1]
+Fixes: 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
+Reviewed-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Javier Carrasco <javier.carrasco.cruz@gmail.com>
+Fixes: commit 16c2004d9e4d ("mfd: omap-usb-tll: Allocate driver data at once")
+Link: https://lore.kernel.org/r/20240626-omap-usb-tll-counted_by-v2-1-4bedf20d1b51@gmail.com
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/vsp1/vsp1_histo.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/mfd/omap-usb-tll.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/vsp1/vsp1_histo.c b/drivers/media/platform/vsp1/vsp1_histo.c
-index a91e142bcb948..37df7d2d4639e 100644
---- a/drivers/media/platform/vsp1/vsp1_histo.c
-+++ b/drivers/media/platform/vsp1/vsp1_histo.c
-@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
- vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- {
- 	struct vsp1_histogram_buffer *buf = NULL;
--	unsigned long flags;
+diff --git a/drivers/mfd/omap-usb-tll.c b/drivers/mfd/omap-usb-tll.c
+index 16fad79c73f1f..99ca0dfa127b5 100644
+--- a/drivers/mfd/omap-usb-tll.c
++++ b/drivers/mfd/omap-usb-tll.c
+@@ -237,8 +237,7 @@ static int usbtll_omap_probe(struct platform_device *pdev)
+ 		break;
+ 	}
  
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
- 
- 	if (list_empty(&histo->irqqueue))
- 		goto done;
-@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- 	histo->readout = true;
- 
- done:
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- 	return buf;
- }
- 
-@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 				    size_t size)
- {
- 	struct vsp1_pipeline *pipe = histo->entity.pipe;
--	unsigned long flags;
- 
- 	/*
- 	 * The pipeline pointer is guaranteed to be valid as this function is
-@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
- 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
- 	histo->readout = false;
- 	wake_up(&histo->wait_queue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- }
- 
- /* -----------------------------------------------------------------------------
-@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
- 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
- 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 	list_add_tail(&buf->queue, &histo->irqqueue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
-@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- {
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
- 	struct vsp1_histogram_buffer *buffer;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 
- 	/* Remove all buffers from the IRQ queue. */
- 	list_for_each_entry(buffer, &histo->irqqueue, queue)
-@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- 	/* Wait for the buffer being read out (if any) to complete. */
- 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
- 
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static const struct vb2_ops histo_video_queue_qops = {
+-	tll = devm_kzalloc(dev, sizeof(*tll) + sizeof(tll->ch_clk[nch]),
+-			   GFP_KERNEL);
++	tll = devm_kzalloc(dev, struct_size(tll, ch_clk, nch), GFP_KERNEL);
+ 	if (!tll) {
+ 		pm_runtime_put_sync(dev);
+ 		pm_runtime_disable(dev);
 -- 
 2.43.0
 
