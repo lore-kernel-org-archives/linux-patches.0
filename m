@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CC419FA99;
-	Thu, 15 Aug 2024 14:01:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798261A7061;
+	Thu, 15 Aug 2024 14:01:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730490; cv=none; b=VT4wbyAOkNUb99316k8pkBdMoAY1N/erQqN4s6e1KNXxpC7BFI87N5c5ymtV3PH+1rX/48hj+1crn2H8mh0peyo8Gg7foBpAxYhDS9f7qxjzTTCCZ9NDdXrM3EcHBDK40WBNAzhRpKteMpbI/pL0Fa9QEzeol9NYwx1/hfQ6y1A=
+	t=1723730493; cv=none; b=kBeG3S0qWrYwReJQYfZTX+fpFPccrn5k3uo4xAg5qOu8LCCvfWDmchoJUJHCBOVGjVAeThYZPtDwFI8XBfvHn0YUQmAKvt5ZiQfhN1bZH8a6tma8HMSZAxymivLI2gMtkHkLBXqJyw9S/M9r26IYosqrmZ0pZ/CSrAxHBSopdhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730490; c=relaxed/simple;
-	bh=b27hLjxZJyAMs2D7OUnRtttirqI3oKfP2wH33ExcBQo=;
+	s=arc-20240116; t=1723730493; c=relaxed/simple;
+	bh=mCY/7e1ockswfPh8bNn7rLpD4hkt2TK5J3txCwDcDK0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lLc+1y7zAaZe/kit3ZVShXwwYJU90l4LkBIZY3h5zeFPNH8T3ZEz1x9EzbwJ4y3RN1gdaq+hNFRqEWSj7sFeq2i0CYBayeVibDCHO8yZqJ4nJ7Q/B+YRIIP4uXljgO3jM9O8QzaFxqPwbYaSYLjHu1X2QFvG61xI/VjTefy2A/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=znBlNZSA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RwwNYmDQAcukAr7p2pyBTJssYiOjTzG6ThaUrZPiAN+1sS1ODxMc1bNWc0QBV6ugzTtWeHsqbe+I5i3lIJ5/WVhK4j6lw3LJQtaOW51qnpBAIIeFALQrghlLhcaLufsWyWt5ZgxmeS1wmQA0MpiaxVuy23FWJTaZwTo6cIs3QME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XC5EJAel; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="znBlNZSA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C50C8C4AF0C;
-	Thu, 15 Aug 2024 14:01:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XC5EJAel"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D886FC4AF0E;
+	Thu, 15 Aug 2024 14:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730490;
-	bh=b27hLjxZJyAMs2D7OUnRtttirqI3oKfP2wH33ExcBQo=;
+	s=korg; t=1723730493;
+	bh=mCY/7e1ockswfPh8bNn7rLpD4hkt2TK5J3txCwDcDK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=znBlNZSArja7DrHLWfkY3i5eoiPtiR4Oks54TeW7v73Z+iH3wKMyvfzWagndD3WWH
-	 NgEaur0RJHFwJCwVZSku53emxmEu1oB1zuJcnahaCzqTl7NhL1YluXLxK1T3ICs6WT
-	 71QPYvo9bnW0BOn29xwUIumvedYGGaeIJpWBMXOw=
+	b=XC5EJAelBUhmW/ZbMCD1HDWADiCL5EZgV82+p565yRnnZ+Z8X2ReMjG1w/cbs5QCa
+	 /BRULrYJ/6T4ZjfGwv7Bq9lToy6gQUomTz8UbqVN9DQ6kNWYKi9RSDrSw2CKy/8j5F
+	 r0rF1aFRNj5TmxYHwadmHxH2VzInxnziq4VnFWQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Vamshi Gajjela <vamshigajjela@google.com>,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 5.15 424/484] scsi: mpi3mr: Avoid IOMMU page faults on REPORT ZONES
-Date: Thu, 15 Aug 2024 15:24:42 +0200
-Message-ID: <20240815131957.833117807@linuxfoundation.org>
+Subject: [PATCH 5.15 425/484] scsi: ufs: core: Fix hba->last_dme_cmd_tstamp timestamp updating logic
+Date: Thu, 15 Aug 2024 15:24:43 +0200
+Message-ID: <20240815131957.870454091@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,66 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Vamshi Gajjela <vamshigajjela@google.com>
 
-commit 1abc900ddda8ad2ef739fedf498d415655b6c3b8 upstream.
+commit ab9fd06cb8f0db0854291833fc40c789e43a361f upstream.
 
-Some firmware versions of the 9600 series SAS HBA byte-swap the REPORT
-ZONES command reply buffer from ATA-ZAC devices by directly accessing the
-buffer in the host memory. This does not respect the default command DMA
-direction and causes IOMMU page faults on architectures with an IOMMU
-enforcing write-only mappings for DMA_FROM_DEVICE DMA direction (e.g. AMD
-hosts), leading to the device capacity to be dropped to 0:
+The ufshcd_add_delay_before_dme_cmd() always introduces a delay of
+MIN_DELAY_BEFORE_DME_CMDS_US between DME commands even when it's not
+required. The delay is added when the UFS host controller supplies the
+quirk UFSHCD_QUIRK_DELAY_BEFORE_DME_CMDS.
 
-scsi 18:0:58:0: Direct-Access-ZBC ATA      WDC  WSH722626AL W930 PQ: 0 ANSI: 7
-scsi 18:0:58:0: Power-on or device reset occurred
-sd 18:0:58:0: Attached scsi generic sg9 type 20
-sd 18:0:58:0: [sdj] Host-managed zoned block device
-mpi3mr 0000:c1:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0001 address=0xfec0c400 flags=0x0050]
-mpi3mr 0000:c1:00.0: AMD-Vi: Event logged [IO_PAGE_FAULT domain=0x0001 address=0xfec0c500 flags=0x0050]
-sd 18:0:58:0: [sdj] REPORT ZONES start lba 0 failed
-sd 18:0:58:0: [sdj] REPORT ZONES: Result: hostbyte=DID_SOFT_ERROR driverbyte=DRIVER_OK
-sd 18:0:58:0: [sdj] 0 4096-byte logical blocks: (0 B/0 B)
-sd 18:0:58:0: [sdj] Write Protect is off
-sd 18:0:58:0: [sdj] Mode Sense: 6b 00 10 08
-sd 18:0:58:0: [sdj] Write cache: enabled, read cache: enabled, supports DPO and FUA
-sd 18:0:58:0: [sdj] Attached SCSI disk
+Fix the logic to update hba->last_dme_cmd_tstamp to ensure subsequent DME
+commands have the correct delay in the range of 0 to
+MIN_DELAY_BEFORE_DME_CMDS_US.
 
-Avoid this issue by always mapping the buffer of REPORT ZONES commands
-using DMA_BIDIRECTIONAL, that is, using a read-write IOMMU mapping.
+Update the timestamp at the end of the function to ensure it captures the
+latest time after any necessary delay has been applied.
 
-Suggested-by: Christoph Hellwig <hch@lst.de>
-Fixes: 023ab2a9b4ed ("scsi: mpi3mr: Add support for queue command processing")
+Signed-off-by: Vamshi Gajjela <vamshigajjela@google.com>
+Link: https://lore.kernel.org/r/20240724135126.1786126-1-vamshigajjela@google.com
+Fixes: cad2e03d8607 ("ufs: add support to allow non standard behaviours (quirks)")
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20240719073913.179559-2-dlemoal@kernel.org
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_os.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/scsi/ufs/ufshcd.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/scsi/mpi3mr/mpi3mr_os.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_os.c
-@@ -2411,6 +2411,17 @@ static int mpi3mr_prepare_sg_scmd(struct
- 		    scmd->sc_data_direction);
- 		priv->meta_sg_valid = 1; /* To unmap meta sg DMA */
- 	} else {
-+		/*
-+		 * Some firmware versions byte-swap the REPORT ZONES command
-+		 * reply from ATA-ZAC devices by directly accessing in the host
-+		 * buffer. This does not respect the default command DMA
-+		 * direction and causes IOMMU page faults on some architectures
-+		 * with an IOMMU enforcing write mappings (e.g. AMD hosts).
-+		 * Avoid such issue by making the REPORT ZONES buffer mapping
-+		 * bi-directional.
-+		 */
-+		if (scmd->cmnd[0] == ZBC_IN && scmd->cmnd[1] == ZI_REPORT_ZONES)
-+			scmd->sc_data_direction = DMA_BIDIRECTIONAL;
- 		sg_scmd = scsi_sglist(scmd);
- 		sges_left = scsi_dma_map(scmd);
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -3795,11 +3795,16 @@ static inline void ufshcd_add_delay_befo
+ 			min_sleep_time_us =
+ 				MIN_DELAY_BEFORE_DME_CMDS_US - delta;
+ 		else
+-			return; /* no more delay required */
++			min_sleep_time_us = 0; /* no more delay required */
  	}
+ 
+-	/* allow sleep for extra 50us if needed */
+-	usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	if (min_sleep_time_us > 0) {
++		/* allow sleep for extra 50us if needed */
++		usleep_range(min_sleep_time_us, min_sleep_time_us + 50);
++	}
++
++	/* update the last_dme_cmd_tstamp */
++	hba->last_dme_cmd_tstamp = ktime_get();
+ }
+ 
+ /**
 
 
