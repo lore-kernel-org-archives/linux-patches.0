@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBA27DA78;
-	Thu, 15 Aug 2024 13:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7F97DA78;
+	Thu, 15 Aug 2024 13:31:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728685; cv=none; b=iQ5knm9uI9HcJ5sZu73d2WZvy2KAdhruNChcPnQKYh2LVA346mrHfexcrXDxoA0sXYKUpbSyJlU+ezX9r7wlHwt1ds8ZS+e8DT8+RSoM3W7Sx+Ee5sQ8j48YpG5Qpc52jv9eie7ABc4+8pwj2067CxqdUBcNYmC8H1HoUL2u2mA=
+	t=1723728688; cv=none; b=dpDhAtTm435SGBm97gluBo8x4eYlKmqRFI7sj7gNounRFf+G9ZscJtpBl3+gGuuViwQ1hm2RNwxepdypo/iu3WJ8NgMXXw7XFluWhNCIyZqw1xw2ieqqknNpOdMWO+coq+UjSrc92DtHlu13vm8GawCS8BQahNhkX74H4S7U8yQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728685; c=relaxed/simple;
-	bh=ciK62ypz9rYpcP1rbJimNvkuOZQSJXyUXQ+pqzjcvQE=;
+	s=arc-20240116; t=1723728688; c=relaxed/simple;
+	bh=C6og4SYTiViBIhE5ymK4e3WmnPZSwWbv9ejiZseF2Z8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KSkADesyupCI+PRq8/76x2+vFIER8NvzPhoXPQLoZpGR1mY3QwznKQZDPOSbF6UuYeo+zpmgLyBPA+HcAG5JkC+aDwsnYhzrsgFEBvkJ9CsOI6Y6Va0wXFxvO53zdlFKBbAHFDRGSXKejMweN/HY5ebo4Ig7XhfWpZyKREGruJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HT0iGrwo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEJ46cL/ZhKSg00EKYyNFdKcn3n65Qfzki5BITkIquP1dSbU61fkdaNwYHVYSHRl4xelK2Th7JNk/Uaz5vEggqf41irOzs8ssADlAQOohzXwZVKNXUG98mAz4pNIlrC4K0FngbEydTPi/1kOx7Xy51fHB1+2ePor8r70ZXKNP5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a3NfHLL0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HT0iGrwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B5AC32786;
-	Thu, 15 Aug 2024 13:31:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a3NfHLL0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A93C32786;
+	Thu, 15 Aug 2024 13:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728684;
-	bh=ciK62ypz9rYpcP1rbJimNvkuOZQSJXyUXQ+pqzjcvQE=;
+	s=korg; t=1723728687;
+	bh=C6og4SYTiViBIhE5ymK4e3WmnPZSwWbv9ejiZseF2Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HT0iGrwoqBmwLtD3ikA6CQa4oL2RYFPWrtneSJvHZF8KyTMmaTyEQHBlirzf1T0RU
-	 dpTte2IaN0TZDMpMH3ptkdbJkJG3BTTZZDnos1yFNAH8szXli02peN4f3/JUBeN7D1
-	 oJTk4KgypGP9e1ZeCX2OpGsbL5o2BUmBbpajJbG0=
+	b=a3NfHLL0nixQddcua1Cs5RMUyl2v7pQWViaj5naAZWEvtdEFIeFnNDQDX0x64Foi3
+	 plJaucqy0Cy4VbZ/Xj31xD1rYcvj7eg25Rdz/+jMNu5jmVyT2oZ3Tosl/E5U2BWbYn
+	 qKPoacVIARmXh3q28qQS44RSlfZTA1yQu7jYOC+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Honggang LI <honggangli@163.com>,
-	Zhu Yanjun <yanjun.zhu@linux.dev>,
-	Leon Romanovsky <leon@kernel.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 046/196] RDMA/rxe: Dont set BTH_ACK_MASK for UC or UD QPs
-Date: Thu, 15 Aug 2024 15:22:43 +0200
-Message-ID: <20240815131853.846902947@linuxfoundation.org>
+Subject: [PATCH 4.19 047/196] mtd: make mtd_test.c a separate module
+Date: Thu, 15 Aug 2024 15:22:44 +0200
+Message-ID: <20240815131853.884128481@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -53,51 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Honggang LI <honggangli@163.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 4adcaf969d77d3d3aa3871bbadc196258a38aec6 ]
+[ Upstream commit a5cf054d325e6f362e82fe6d124a1871a4af8174 ]
 
-BTH_ACK_MASK bit is used to indicate that an acknowledge
-(for this packet) should be scheduled by the responder.
-Both UC and UD QPs are unacknowledged, so don't set
-BTH_ACK_MASK for UC or UD QPs.
+This file gets linked into nine different modules, which causes a warning:
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Signed-off-by: Honggang LI <honggangli@163.com>
-Link: https://lore.kernel.org/r/20240624020348.494338-1-honggangli@163.com
-Reviewed-by: Zhu Yanjun <yanjun.zhu@linux.dev>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+scripts/Makefile.build:236: drivers/mtd/tests/Makefile: mtd_test.o is added to multiple modules: mtd_nandbiterrs mtd_oobtest mtd_pagetest mtd_readtest mtd_speedtest mtd_stresstest mtd_subpagetest mtd_torturetest
+
+Make it a separate module instead.
+
+Fixes: a995c792280d ("mtd: tests: rename sources in order to link a helper object")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20240529095049.1915393-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_req.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/mtd/tests/Makefile   | 34 +++++++++++++++++-----------------
+ drivers/mtd/tests/mtd_test.c |  9 +++++++++
+ 2 files changed, 26 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_req.c b/drivers/infiniband/sw/rxe/rxe_req.c
-index 4008ab2da0526..aa57a9cb53886 100644
---- a/drivers/infiniband/sw/rxe/rxe_req.c
-+++ b/drivers/infiniband/sw/rxe/rxe_req.c
-@@ -390,7 +390,7 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
- 	int			solicited;
- 	u16			pkey;
- 	u32			qp_num;
--	int			ack_req;
-+	int			ack_req = 0;
+diff --git a/drivers/mtd/tests/Makefile b/drivers/mtd/tests/Makefile
+index 5de0378f90dbd..7dae831ee8b6b 100644
+--- a/drivers/mtd/tests/Makefile
++++ b/drivers/mtd/tests/Makefile
+@@ -1,19 +1,19 @@
+ # SPDX-License-Identifier: GPL-2.0
+-obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o
+-obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o
++obj-$(CONFIG_MTD_TESTS) += mtd_oobtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_pagetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_readtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_speedtest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_stresstest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_subpagetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_torturetest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_nandecctest.o mtd_test.o
++obj-$(CONFIG_MTD_TESTS) += mtd_nandbiterrs.o mtd_test.o
  
- 	/* length from start of bth to end of icrc */
- 	paylen = rxe_opcode[opcode].length + payload + pad + RXE_ICRC_SIZE;
-@@ -426,8 +426,9 @@ static struct sk_buff *init_req_packet(struct rxe_qp *qp,
- 	qp_num = (pkt->mask & RXE_DETH_MASK) ? ibwr->wr.ud.remote_qpn :
- 					 qp->attr.dest_qp_num;
+-mtd_oobtest-objs := oobtest.o mtd_test.o
+-mtd_pagetest-objs := pagetest.o mtd_test.o
+-mtd_readtest-objs := readtest.o mtd_test.o
+-mtd_speedtest-objs := speedtest.o mtd_test.o
+-mtd_stresstest-objs := stresstest.o mtd_test.o
+-mtd_subpagetest-objs := subpagetest.o mtd_test.o
+-mtd_torturetest-objs := torturetest.o mtd_test.o
+-mtd_nandbiterrs-objs := nandbiterrs.o mtd_test.o
++mtd_oobtest-objs := oobtest.o
++mtd_pagetest-objs := pagetest.o
++mtd_readtest-objs := readtest.o
++mtd_speedtest-objs := speedtest.o
++mtd_stresstest-objs := stresstest.o
++mtd_subpagetest-objs := subpagetest.o
++mtd_torturetest-objs := torturetest.o
++mtd_nandbiterrs-objs := nandbiterrs.o
+diff --git a/drivers/mtd/tests/mtd_test.c b/drivers/mtd/tests/mtd_test.c
+index c84250beffdc9..f391e0300cdc9 100644
+--- a/drivers/mtd/tests/mtd_test.c
++++ b/drivers/mtd/tests/mtd_test.c
+@@ -25,6 +25,7 @@ int mtdtest_erase_eraseblock(struct mtd_info *mtd, unsigned int ebnum)
  
--	ack_req = ((pkt->mask & RXE_END_MASK) ||
--		(qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
-+	if (qp_type(qp) != IB_QPT_UD && qp_type(qp) != IB_QPT_UC)
-+		ack_req = ((pkt->mask & RXE_END_MASK) ||
-+			   (qp->req.noack_pkts++ > RXE_MAX_PKT_PER_ACK));
- 	if (ack_req)
- 		qp->req.noack_pkts = 0;
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_erase_eraseblock);
  
+ static int is_block_bad(struct mtd_info *mtd, unsigned int ebnum)
+ {
+@@ -57,6 +58,7 @@ int mtdtest_scan_for_bad_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_scan_for_bad_eraseblocks);
+ 
+ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 				unsigned int eb, int ebcnt)
+@@ -75,6 +77,7 @@ int mtdtest_erase_good_eraseblocks(struct mtd_info *mtd, unsigned char *bbt,
+ 
+ 	return 0;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_erase_good_eraseblocks);
+ 
+ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
+ {
+@@ -92,6 +95,7 @@ int mtdtest_read(struct mtd_info *mtd, loff_t addr, size_t size, void *buf)
+ 
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_read);
+ 
+ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
+ 		const void *buf)
+@@ -107,3 +111,8 @@ int mtdtest_write(struct mtd_info *mtd, loff_t addr, size_t size,
+ 
+ 	return err;
+ }
++EXPORT_SYMBOL_GPL(mtdtest_write);
++
++MODULE_LICENSE("GPL");
++MODULE_DESCRIPTION("MTD function test helpers");
++MODULE_AUTHOR("Akinobu Mita");
 -- 
 2.43.0
 
