@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B471A01D2;
-	Thu, 15 Aug 2024 14:36:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6601DFFB;
+	Thu, 15 Aug 2024 14:36:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732614; cv=none; b=YBaWnMAqRl4WeRoDCHomfhgOeCfX8cazoX6jFCUZIyiWZQ2uX8qkCW7MAJXyaxGPF5UlBT7uQu6h8F1doHb7ZgCKw9jQxgZBsl2rI65/nFUOJpyO2I3MVl5D4lPk2wXPPbS1M4MKmr0HitMOxYwPLOth2pikl3Bdvp+P5m3twS4=
+	t=1723732618; cv=none; b=b4bez20hkteZB2Rb5NJxUgomxAfhwEGhF97RtQ1eSOQlZaj5+F98+Q6n9akMZNYBi7UjY9bf0zAtZbleXwPS3nD/y4OHHlZGDmk/+8/y8S8Aq2v3jPST50LhGUeW1xEl390cWSls0RBl6R9CK4caKQewjkkqzafiOwub0MblHqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732614; c=relaxed/simple;
-	bh=/kYK6IZU6os24KGZoHjiLprMZUgdT9LWjXR0Y/yUrMI=;
+	s=arc-20240116; t=1723732618; c=relaxed/simple;
+	bh=NdmxRZ/Eu87FpZLaQuHLARz523kTFj4vS6NrF1Cmu6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=utaXhnunXxxp5Zy87mRiANxXbnioAXNnsAoDVKDgGwAei3PUCPJG3TS7oqUhcMKulsHZw5tEw2hwckezeNjdYSmM0BvqPlH2nUXnTKlSlXO9CJrMTxl36UBT99C1xcMQPQxZCy9GrVjzsywl1RriNYYedtbv67UACyttgWUsfRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0UivNbO7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eXHJ/33ClRciw3TRd2Vy0OCKy+rFqP3/FT9FEq71n4oh9FEjRaVpCsmpjNhGLjfwfwLh7QjK/Mt5czHtKNt9wpYUYP52UqF9s2R4M+dys0qewcEfMHv4KNvTLHMHXAcLhlopSFp2v3YDMcTfHP4QPSC7hPkqsUeF77O83Yrmqmw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nrQcuDe7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0UivNbO7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2400DC4AF0C;
-	Thu, 15 Aug 2024 14:36:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nrQcuDe7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB78C32786;
+	Thu, 15 Aug 2024 14:36:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732614;
-	bh=/kYK6IZU6os24KGZoHjiLprMZUgdT9LWjXR0Y/yUrMI=;
+	s=korg; t=1723732618;
+	bh=NdmxRZ/Eu87FpZLaQuHLARz523kTFj4vS6NrF1Cmu6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0UivNbO7F5JilX+hxtxjpBALY9lqr9rdrS9Rr4H7SXJxqUB//u1hGNG0bfeHDKJ+y
-	 HAg7jL3s3zJDHUqnpTI3BG3p3r9glP0pCc1RRcT32c+PYe1BdUlmjRKGot91XRGTCJ
-	 tq6fCnrPegECX46i2CbfNAE+CfkBZZyCJ1kH2yco=
+	b=nrQcuDe765WsBVXja256hPuWsJQw0wjYAU7TEASvUewcxEP5kkZ+I42G/vdH58vcq
+	 LEcf+CJua5hMii3CId7JYsCsJStANWSbvNcpbe2u+ejiuGinxGDQCmy9/vC6mawoPV
+	 krXnFAIXl3NsfqTUFS3UtMgM7BRYnzzOtmrCoScI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esben Haabendal <esben@geanix.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.10 216/352] powerpc/configs: Update defconfig with now user-visible CONFIG_FSL_IFC
-Date: Thu, 15 Aug 2024 15:24:42 +0200
-Message-ID: <20240815131927.638563668@linuxfoundation.org>
+	Doug Brown <doug@schmorgal.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 234/352] drm/vmwgfx: Fix overlay when using Screen Targets
+Date: Thu, 15 Aug 2024 15:25:00 +0200
+Message-ID: <20240815131928.481191884@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,41 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-commit 45547a0a93d85f704b49788cde2e1d9ab9cd363b upstream.
+[ Upstream commit cb372a505a994cb39aa75acfb8b3bcf94787cf94 ]
 
-With CONFIG_FSL_IFC now being user-visible, and thus changed from a select
-to depends in CONFIG_MTD_NAND_FSL_IFC, the dependencies needs to be
-selected in defconfigs.
+This code was never updated to support Screen Targets.
+Fixes a bug where Xv playback displays a green screen instead of actual
+video contents when 3D acceleration is disabled in the guest.
 
-Depends-on: 9ba0cae3cac0 ("memory: fsl_ifc: Make FSL_IFC config visible and selectable")
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240530-fsl-ifc-config-v3-2-1fd2c3d233dd@geanix.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c8261a961ece ("vmwgfx: Major KMS refactoring / cleanup in preparation of screen targets")
+Reported-by: Doug Brown <doug@schmorgal.com>
+Closes: https://lore.kernel.org/all/bd9cb3c7-90e8-435d-bc28-0e38fee58977@schmorgal.com
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Tested-by: Doug Brown <doug@schmorgal.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240719163627.20888-1-ian.forbes@broadcom.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/configs/85xx-hw.config |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/powerpc/configs/85xx-hw.config
-+++ b/arch/powerpc/configs/85xx-hw.config
-@@ -24,6 +24,7 @@ CONFIG_FS_ENET=y
- CONFIG_FSL_CORENET_CF=y
- CONFIG_FSL_DMA=y
- CONFIG_FSL_HV_MANAGER=y
-+CONFIG_FSL_IFC=y
- CONFIG_FSL_PQ_MDIO=y
- CONFIG_FSL_RIO=y
- CONFIG_FSL_XGMAC_MDIO=y
-@@ -58,6 +59,7 @@ CONFIG_INPUT_FF_MEMLESS=m
- CONFIG_MARVELL_PHY=y
- CONFIG_MDIO_BUS_MUX_GPIO=y
- CONFIG_MDIO_BUS_MUX_MMIOREG=y
-+CONFIG_MEMORY=y
- CONFIG_MMC_SDHCI_OF_ESDHC=y
- CONFIG_MMC_SDHCI_PLTFM=y
- CONFIG_MMC_SDHCI=y
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
+index cd7ed1650d60c..7aa1d9218ea6b 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
+@@ -98,7 +98,7 @@ static int vmw_overlay_send_put(struct vmw_private *dev_priv,
+ {
+ 	struct vmw_escape_video_flush *flush;
+ 	size_t fifo_size;
+-	bool have_so = (dev_priv->active_display_unit == vmw_du_screen_object);
++	bool have_so = (dev_priv->active_display_unit != vmw_du_legacy);
+ 	int i, num_items;
+ 	SVGAGuestPtr ptr;
+ 
+-- 
+2.43.0
+
 
 
