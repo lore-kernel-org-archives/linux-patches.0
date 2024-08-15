@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A121714A8;
-	Thu, 15 Aug 2024 13:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174E518D627;
+	Thu, 15 Aug 2024 13:41:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729305; cv=none; b=Fb9qT+UOxo2zQvVj1D5w3O3OfI6nxjx5DNuWaAKB4fUcqWYqBmhsQXa+XGhWse9WP84H4pkYBV6mudtKQu0CwOP2g60vc2ZAtSoZVVjBTB1Dn5dzrphJ3o8MtckDYH1gB7lvJEHBJp5xmjOUnVN8dZSHlvdbfcdkNjO0cMHqQX8=
+	t=1723729308; cv=none; b=Zrt+XIGoVj4iy9TnNz8QGyNtbHrMHtMgavzhTkOFW1vb9VhsyUAm+W6BStv3RsfYkLZUA8s8Yi14mWFz36R8BBPxPZmem9WOnCBvDf+ymvH+oPMqKaxXC0WvKurkzSBuMBj40ZESVKAOuBKW+YGd2Bhzw6Bgoh89Ch9gTkxpu9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729305; c=relaxed/simple;
-	bh=be+YzGj4qwikjUaTcSSn7jYaS1TLN/28imCM264Tb/4=;
+	s=arc-20240116; t=1723729308; c=relaxed/simple;
+	bh=R7iRD62EOvW9VIc6cUg5J0C25E5krCHiuHbQdZjchR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H3aR8FxLgT1ByN3lXNnyRxU4zYsL3bQQbVI75KmaAWbDq9UeXPORg+6UKThIfjsdr0vsjLR/h6GQ3CXPzcFNjL+PHuaBBuB7SsWSk07v/fHQSptUEXupZCf+X//BczCfDRHCFkDFn8MsF91MldSserCEt6gGN7Jr/xABzxPp43s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gy2q+DR2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dCzDcPuixSAdz3nro3H+fTAsgIOiAKrsQ+Z9xQRslGam0J5zHqusXUdbhPX1LASP8vr18KeUlHB7DR/ImM/koikQpeIIsqJjuhORqBOfYElgXtoSwv68TaH4jsPfmR9VtRnMQaeOjMM2CdOONq5lkDY2xGECbWi/TSn5dfnNwKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8LW+/37; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gy2q+DR2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85F1CC32786;
-	Thu, 15 Aug 2024 13:41:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8LW+/37"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92358C32786;
+	Thu, 15 Aug 2024 13:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729304;
-	bh=be+YzGj4qwikjUaTcSSn7jYaS1TLN/28imCM264Tb/4=;
+	s=korg; t=1723729308;
+	bh=R7iRD62EOvW9VIc6cUg5J0C25E5krCHiuHbQdZjchR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gy2q+DR2OhQYpFyZYoVqtef+6tzdrIrJgcx04CZBnAhz/XuXd3HWeoaJOAAtqo2Qe
-	 bjlWW4ZLJ6wK8snKakOD7AnzN2+qy6sxmCtzn4EicZ+l/UyrfjunF1v/8uq0x2UTHC
-	 zuMbpPG0o2Dl012CJWPRLiolSRuoCGBa6LEyEzgs=
+	b=i8LW+/37WZThWufTh7IJsvATWue+RA7SSvzChWqOIqWTWpktMDKXLnsGrLudMAqS2
+	 RxhULBrfgOJk+FOAp3ghvaG3z9Sk37qLtafI+lMKebjJOEIEKppeo/pghKpUK4/auL
+	 yED6juOxsaCm2q7IFxvzN/z4Z3DC/xRrk/Pr3EIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Zubkov <green@qrator.net>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Amit Cohen <amcohen@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Michael Walle <mwalle@kernel.org>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 055/484] lib: objagg: Fix general protection fault
-Date: Thu, 15 Aug 2024 15:18:33 +0200
-Message-ID: <20240815131943.407765702@linuxfoundation.org>
+Subject: [PATCH 5.15 029/484] ARM: dts: imx6qdl-kontron-samx6i: fix board reset
+Date: Thu, 15 Aug 2024 15:18:07 +0200
+Message-ID: <20240815131942.401483796@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -55,73 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Michael Walle <mwalle@kernel.org>
 
-[ Upstream commit b4a3a89fffcdf09702b1f161b914e52abca1894d ]
+[ Upstream commit b972d6b3b46345023aee56a95df8e2c137aa4ee4 ]
 
-The library supports aggregation of objects into other objects only if
-the parent object does not have a parent itself. That is, nesting is not
-supported.
+On i.MX6 the board is reset by the watchdog. But in turn to do a
+complete board reset, we have to assert the WDOG_B output which is
+routed also to the CPLD which then do a complete power-cycle of the
+board.
 
-Aggregation happens in two cases: Without and with hints, where hints
-are a pre-computed recommendation on how to aggregate the provided
-objects.
-
-Nesting is not possible in the first case due to a check that prevents
-it, but in the second case there is no check because the assumption is
-that nesting cannot happen when creating objects based on hints. The
-violation of this assumption leads to various warnings and eventually to
-a general protection fault [1].
-
-Before fixing the root cause, error out when nesting happens and warn.
-
-[1]
-general protection fault, probably for non-canonical address 0xdead000000000d90: 0000 [#1] PREEMPT SMP PTI
-CPU: 1 PID: 1083 Comm: kworker/1:9 Tainted: G        W          6.9.0-rc6-custom-gd9b4f1cca7fb #7
-Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
-Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
-RIP: 0010:mlxsw_sp_acl_erp_bf_insert+0x25/0x80
-[...]
-Call Trace:
- <TASK>
- mlxsw_sp_acl_atcam_entry_add+0x256/0x3c0
- mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
- mlxsw_sp_acl_tcam_vchunk_migrate_one+0x16b/0x270
- mlxsw_sp_acl_tcam_vregion_rehash_work+0xbe/0x510
- process_one_work+0x151/0x370
- worker_thread+0x2cb/0x3e0
- kthread+0xd0/0x100
- ret_from_fork+0x34/0x50
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-Fixes: 9069a3817d82 ("lib: objagg: implement optimization hints assembly and use hints for object creation")
-Reported-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Amit Cohen <amcohen@nvidia.com>
-Tested-by: Alexander Zubkov <green@qrator.net>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2125212785c9 ("ARM: dts: imx6qdl-kontron-samx6i: add Kontron SMARC SoM Support")
+Signed-off-by: Michael Walle <mwalle@kernel.org>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/objagg.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/lib/objagg.c b/lib/objagg.c
-index 5e1676ccdaddd..73d7116025736 100644
---- a/lib/objagg.c
-+++ b/lib/objagg.c
-@@ -167,6 +167,9 @@ static int objagg_obj_parent_assign(struct objagg *objagg,
- {
- 	void *delta_priv;
- 
-+	if (WARN_ON(!objagg_obj_is_root(parent)))
-+		return -EINVAL;
-+
- 	delta_priv = objagg->ops->delta_create(objagg->priv, parent->obj,
- 					       objagg_obj->obj);
- 	if (IS_ERR(delta_priv))
+diff --git a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
+index 0ff80a5013f20..c420a3b80943e 100644
+--- a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
++++ b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
+@@ -817,5 +817,6 @@ &wdog1 {
+ 	/* CPLD is feeded by watchdog (hardwired) */
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_wdog1>;
++	fsl,ext-reset-output;
+ 	status = "okay";
+ };
 -- 
 2.43.0
 
