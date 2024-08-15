@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C30BF17BEC0;
-	Thu, 15 Aug 2024 14:32:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6FD1A0733;
+	Thu, 15 Aug 2024 14:32:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732369; cv=none; b=jvCpFKWiKUD+BKxGFxm0OJb3DzG7mhBQc7L5Y5Qc42uw4NrwCPCjukeNVA6Nc3xx37yKU2mP3DKWPtpbTLc+7uPZh4BfuwCi0xRNg3WLt1OtGZfmfpXQtG5w+4j2ad1flXtF85O9366d/tYcoGUuxOgJXOEZ5JWDFV4I8whD96M=
+	t=1723732373; cv=none; b=Y+9SI83C5pt6LUCXGUiHtPTY23ezYFz1R0+PMm9IdP6Mdjw5kKkTPKVfaeRnri036x2Br3xAzKoehaq6DhX1wcD0QDWAPZb9aWtHfqDNVcihTLwt3l2yv+tr7qEqvmeu/GaDuXOCtvbrODU5WbYOVOhy+X7wqPErLZ0ruj70zK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732369; c=relaxed/simple;
-	bh=neJ48RiwWdumaDChLN0/soc09FoYvdISkqhDFGzeGQg=;
+	s=arc-20240116; t=1723732373; c=relaxed/simple;
+	bh=DXtV6wtaYHwXcJJYsQXEKUxMcFpP+jNYCVkI8RIxOBE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d8YYXVVggfLAkhKXHKOZUUkNqlGKGSC1hcwSnACHgzTfiY9jBuApN+XrpFF21fkUSOyQjCPGt+baGIgZmWLbQCTznDdEXRor77LRdVBDvhJiDQsfYE0bdEcE5G2xTjK/ifPgUGbtk+ZMlWdWYiSgpbRyageqJJXR483HSBBmllI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0+IlkuK+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hd6kU7/ruEyuAQVwsHUpj5C56jQfd12sWsgPmxlh3ehV8ZgrAabhXQjiiBSU6OZhUjKo5NYgM32lBGKGQozHuRj/xg7CcTKyGHUHfvhcOArjNfa/GVysBkO9Thy88gvWxE0IPol/T5neaxKQ7zig+ND3Uvswy43ypqmE83K2Sis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pizz7J60; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0+IlkuK+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A61C4AF0C;
-	Thu, 15 Aug 2024 14:32:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pizz7J60"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA2EC4AF0C;
+	Thu, 15 Aug 2024 14:32:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732369;
-	bh=neJ48RiwWdumaDChLN0/soc09FoYvdISkqhDFGzeGQg=;
+	s=korg; t=1723732373;
+	bh=DXtV6wtaYHwXcJJYsQXEKUxMcFpP+jNYCVkI8RIxOBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+IlkuK+52MqQYMtrVMfR9rIvHfIlAXCzrQgN8OPUp9ae8M7vV+zEBfrmPs7z36kF
-	 VCeBM7UEZES57LfcWkZqeKXGLpUN2Ud/DwAtAbcf+olJkbfTN4SF3DRLo8TpXwgWOk
-	 RxJPo1PIF5RKXaXnYNLvmSOtZzMaMcYou4bxiDsA=
+	b=Pizz7J60W4MzDcNeE9eEgh68jYqj94gtMMcUpDB1PiUTGtWwxsMHWQwJZU9cQNEV6
+	 fzMjwIfvu/cTZsaBQvXlwkv8Z+h8G1ZJBEG6eTKKyRdjlkeaxyxobaJo962tDe3NqP
+	 TPdEPdIvKGI0ZottpyfdIoqXx/GW7VNX2aZzI2dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Richard Weinberger <richard@nod.at>
-Subject: [PATCH 5.10 159/352] ubi: eba: properly rollback inside self_check_eba
-Date: Thu, 15 Aug 2024 15:23:45 +0200
-Message-ID: <20240815131925.415201101@linuxfoundation.org>
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
+	Alain Knaff <alain@knaff.lu>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 160/352] decompress_bunzip2: fix rare decompression failure
+Date: Thu, 15 Aug 2024 15:23:46 +0200
+Message-ID: <20240815131925.453438041@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,44 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-commit 745d9f4a31defec731119ee8aad8ba9f2536dd9a upstream.
+commit bf6acd5d16057d7accbbb1bf7dc6d8c56eeb4ecc upstream.
 
-In case of a memory allocation failure in the volumes loop we can only
-process the already allocated scan_eba and fm_eba array elements on the
-error path - others are still uninitialized.
+The decompression code parses a huffman tree and counts the number of
+symbols for a given bit length.  In rare cases, there may be >= 256
+symbols with a given bit length, causing the unsigned char to overflow.
+This causes a decompression failure later when the code tries and fails to
+find the bit length for a given symbol.
 
-Found by Linux Verification Center (linuxtesting.org).
+Since the maximum number of symbols is 258, use unsigned short instead.
 
-Fixes: 00abf3041590 ("UBI: Add self_check_eba()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Reviewed-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Signed-off-by: Richard Weinberger <richard@nod.at>
+Link: https://lkml.kernel.org/r/20240717162016.1514077-1-ross.lagerwall@citrix.com
+Fixes: bc22c17e12c1 ("bzip2/lzma: library support for gzip, bzip2 and lzma decompression")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
+Cc: Alain Knaff <alain@knaff.lu>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/ubi/eba.c |    3 ++-
+ lib/decompress_bunzip2.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/ubi/eba.c
-+++ b/drivers/mtd/ubi/eba.c
-@@ -1560,6 +1560,7 @@ int self_check_eba(struct ubi_device *ub
- 					  GFP_KERNEL);
- 		if (!fm_eba[i]) {
- 			ret = -ENOMEM;
-+			kfree(scan_eba[i]);
- 			goto out_free;
- 		}
- 
-@@ -1595,7 +1596,7 @@ int self_check_eba(struct ubi_device *ub
- 	}
- 
- out_free:
--	for (i = 0; i < num_volumes; i++) {
-+	while (--i >= 0) {
- 		if (!ubi->volumes[i])
- 			continue;
- 
+--- a/lib/decompress_bunzip2.c
++++ b/lib/decompress_bunzip2.c
+@@ -232,7 +232,8 @@ static int INIT get_next_block(struct bu
+ 	   RUNB) */
+ 	symCount = symTotal+2;
+ 	for (j = 0; j < groupCount; j++) {
+-		unsigned char length[MAX_SYMBOLS], temp[MAX_HUFCODE_BITS+1];
++		unsigned char length[MAX_SYMBOLS];
++		unsigned short temp[MAX_HUFCODE_BITS+1];
+ 		int	minLen,	maxLen, pp;
+ 		/* Read Huffman code lengths for each symbol.  They're
+ 		   stored in a way similar to mtf; record a starting
 
 
