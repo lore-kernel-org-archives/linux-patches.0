@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2672314AD0A;
-	Thu, 15 Aug 2024 13:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148D618D630;
+	Thu, 15 Aug 2024 13:49:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729782; cv=none; b=XpHOENuJNElOtxedZfTVe88o6nOkOWcqQmrYIn2/q+aidVVPbW4cwxeBtcwOd+jrKiHd+lePuVvUdgfs8SkxQlFI598sSL+5suds4qyIVyOwhZ9l83A3FefrL9tzSMw9Km9YynABiYMSq0dXL1KnXRAP1x+DTotOzb3FvCDSVds=
+	t=1723729785; cv=none; b=H3z3rlQDNeKWmJ2b/4Sqoym8frmW0PILGOSmgAlm9tD1M2+yBqSeg0jufvRsQThBlPDH9jjQQpWqh0aAzC6gYTR4mlW+i0P73BpbmDkMaazXfQh+VMNx0Myk11Udrysubw/myZc0dyBSF7A1By0LSwto8ZzDBG1eo5CHT5ergk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729782; c=relaxed/simple;
-	bh=XWmTSw2l2YI61Iu+4Wk3PEk4UJ0gH8F2gY5MNbLjBTE=;
+	s=arc-20240116; t=1723729785; c=relaxed/simple;
+	bh=5ULIQtNMd6TI4UizeBtyHj58WecbFb7Au5Ngfit5LmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gEhSW7VwEbo096k2ZNSacsiR7jEcv5Sftv0jTOUmbgbBUPFQP+tl5+cqoVTsQJj5iVMJlIvNHWd0wMzBzuz54492TpVWXHklyqlKqIn8Hx3YAiBw9h3G7NFQjSRKAFsYyMJ+0IROlwN76zTP8SK6BmJUntjK00SwDrKFaP+Ztiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iVffYFhV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bVx+LqVMflDlfX1KB6cNI2quokylCH9wvPEp2hwFlhcGWDdTofOQqwFcjw3DJKcf5k/PDAMDHCLhDDLjwATiiMdyxLnI0j4b0yE1UCPq5s8KgYfMrZQrBqqohcq5jR8How0WHk39epCVgQWM8FhWo5/paDyFcd7otXzhritw33E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ehhHmecn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iVffYFhV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67185C32786;
-	Thu, 15 Aug 2024 13:49:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ehhHmecn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79786C32786;
+	Thu, 15 Aug 2024 13:49:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729781;
-	bh=XWmTSw2l2YI61Iu+4Wk3PEk4UJ0gH8F2gY5MNbLjBTE=;
+	s=korg; t=1723729785;
+	bh=5ULIQtNMd6TI4UizeBtyHj58WecbFb7Au5Ngfit5LmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVffYFhVQm31vwFy9jUKDNSqu03Cum6QwxPyNvDQFzQ5UuOyaYasiCghphpzvU2Hh
-	 XcGGmWCW0ovnfb93nblOn0n6vx16URoVzvfBdAy5yVqZWGODI0U0iPMLEGN6/pss+Z
-	 YDFuAJGw2PLFd5HTBrRZvMpAnLeZ3BTAVURHEZ/g=
+	b=ehhHmecnLRgDZSAdIXQ5tr0q2eMbAmDNX6IPDO3sKFjgw7byTooxffc3OEKmZpv/w
+	 9vzR2CJ99klavugGmzN+onikXczjtz67/NJRs6HCxyBxQ45LTCHDZc1qPDry8Sn0Ci
+	 o5FQsQInoNRQh4K+fFwTnqWtNcrW40CsOti/G4pg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Liu <wei.liu@kernel.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Jianfeng Liu <liujianfeng1994@gmail.com>,
+	Niklas Cassel <cassel@kernel.org>,
 	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Michael Kelley <mhklinux@outlook.com>,
-	stable@kernel.org
-Subject: [PATCH 5.15 206/484] PCI: hv: Return zero, not garbage, when reading PCI_INTERRUPT_PIN
-Date: Thu, 15 Aug 2024 15:21:04 +0200
-Message-ID: <20240815131949.369816432@linuxfoundation.org>
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 5.15 207/484] PCI: dw-rockchip: Fix initial PERST# GPIO value
+Date: Thu, 15 Aug 2024 15:21:05 +0200
+Message-ID: <20240815131949.409595755@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,45 +55,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wei Liu <wei.liu@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-commit fea93a3e5d5e6a09eb153866d2ce60ea3287a70d upstream.
+commit 28b8d7793b8573563b3d45321376f36168d77b1e upstream.
 
-The intent of the code snippet is to always return 0 for both
-PCI_INTERRUPT_LINE and PCI_INTERRUPT_PIN.
+PERST# is active low according to the PCIe specification.
 
-The check misses PCI_INTERRUPT_PIN. This patch fixes that.
+However, the existing pcie-dw-rockchip.c driver does:
 
-This is discovered by this call in VFIO:
+  gpiod_set_value(..., 0); msleep(100); gpiod_set_value(..., 1);
 
-    pci_read_config_byte(vdev->pdev, PCI_INTERRUPT_PIN, &pin);
+when asserting + deasserting PERST#.
 
-The old code does not set *val to 0 because it misses the check for
-PCI_INTERRUPT_PIN. Garbage is returned in that case.
+This is of course wrong, but because all the device trees for this
+compatible string have also incorrectly marked this GPIO as ACTIVE_HIGH:
 
-Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
-Link: https://lore.kernel.org/linux-pci/20240701202606.129606-1-wei.liu@kernel.org
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+  $ git grep -B 10 reset-gpios arch/arm64/boot/dts/rockchip/rk3568*
+  $ git grep -B 10 reset-gpios arch/arm64/boot/dts/rockchip/rk3588*
+
+The actual toggling of PERST# is correct, and we cannot change it anyway,
+since that would break device tree compatibility.
+
+However, this driver does request the GPIO to be initialized as
+GPIOD_OUT_HIGH, which does cause a silly sequence where PERST# gets
+toggled back and forth for no good reason.
+
+Fix this by requesting the GPIO to be initialized as GPIOD_OUT_LOW (which
+for this driver means PERST# asserted).
+
+This will avoid an unnecessary signal change where PERST# gets deasserted
+(by devm_gpiod_get_optional()) and then gets asserted (by
+rockchip_pcie_start_link()) just a few instructions later.
+
+Before patch, debug prints on EP side, when booting RC:
+
+  [  845.606810] pci: PERST# asserted by host!
+  [  852.483985] pci: PERST# de-asserted by host!
+  [  852.503041] pci: PERST# asserted by host!
+  [  852.610318] pci: PERST# de-asserted by host!
+
+After patch, debug prints on EP side, when booting RC:
+
+  [  125.107921] pci: PERST# asserted by host!
+  [  132.111429] pci: PERST# de-asserted by host!
+
+This extra, very short, PERST# assertion + deassertion has been reported to
+cause issues with certain WLAN controllers, e.g. RTL8822CE.
+
+Fixes: 0e898eb8df4e ("PCI: rockchip-dwc: Add Rockchip RK356X host controller driver")
+Link: https://lore.kernel.org/linux-pci/20240417164227.398901-1-cassel@kernel.org
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Cc: stable@kernel.org
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc: stable@vger.kernel.org	# v5.15+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/controller/pci-hyperv.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/controller/pci-hyperv.c
-+++ b/drivers/pci/controller/pci-hyperv.c
-@@ -707,8 +707,8 @@ static void _hv_pcifront_read_config(str
- 		   PCI_CAPABILITY_LIST) {
- 		/* ROM BARs are unimplemented */
- 		*val = 0;
--	} else if (where >= PCI_INTERRUPT_LINE && where + size <=
--		   PCI_INTERRUPT_PIN) {
-+	} else if ((where >= PCI_INTERRUPT_LINE && where + size <= PCI_INTERRUPT_PIN) ||
-+		   (where >= PCI_INTERRUPT_PIN && where + size <= PCI_MIN_GNT)) {
- 		/*
- 		 * Interrupt Line and Interrupt PIN are hard-wired to zero
- 		 * because this front-end only supports message-signaled
+--- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
++++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
+@@ -148,7 +148,7 @@ static int rockchip_pcie_resource_get(st
+ 		return PTR_ERR(rockchip->apb_base);
+ 
+ 	rockchip->rst_gpio = devm_gpiod_get_optional(&pdev->dev, "reset",
+-						     GPIOD_OUT_HIGH);
++						     GPIOD_OUT_LOW);
+ 	if (IS_ERR(rockchip->rst_gpio))
+ 		return PTR_ERR(rockchip->rst_gpio);
+ 
 
 
