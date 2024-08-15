@@ -1,103 +1,81 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659BEBA53
-	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 19:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791B474059
+	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 19:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.72
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723749695; cv=none; b=u7zRHZmO0i0TlyNYGLfgjjjuIy1PdUx5HJB5jCiJlUxmih0XsbiEexo4nURc9B0NEERn/x5mc/CzH/uDhZOlDrsHmSkkoa/LNFS3ZTibGgoxUu1fXzWSRdz91uKU2cYlHIDhl1E0JlFipqo6LEIh0RdgASIeUQJuVwOAeFTgHWY=
+	t=1723750560; cv=none; b=KbWZ7nfqEZTnHJICpv1fa6q3WGfDkKw/SmWRprm3oKgfsV+SsY9zobrtppqUx7YdjvltDec2UcjWhFbzuwIRxKV7eHDwZo9qi0FcMjNAOznioGZ8hKfskQ1cW64N8lYLl2B2ojnHbXOpDdM2eUqdW9neaj580Y8X074W4PhNJe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723749695; c=relaxed/simple;
-	bh=L8EPgfErufotgtcVogDTGa11kdtq+O4nYORBDNA/Lgw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RgfjtflPYdqLCsLV12V+0TTF4n9zPG6LeCWQ6YzPy0PaiofGvanlFbYkdNp59A6PYH4szpd88lNHMr5V7qrG/mnlXvrzBR3nYL4/Jro3UPQ7bSXi7Tjcv5f2ULJPhMYGyeIHRHFr9X6edHgDhm9aadgAQ8CuYAfsp7kKqcGx9aQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dx3+2kWc; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1723750560; c=relaxed/simple;
+	bh=EKsx3kPPXwzdhd+E8N+BmlJsiSEoAZoQpsBQKM9fd7U=;
+	h=MIME-Version:In-Reply-To:Message-ID:Date:Subject:From:To:Cc:
+	 Content-Type; b=YGPuEHjr65uciElI4GNVLa6NbB67XUHz7iIIwAkCTrFOBbm58NoNI0GcnAE7q2PKRK86h5sf0FVWjHuYBllZTKSFZcXQwkuC54FGQyY1t1iS0x76uMsdUSyPjUMApTGeI927SKEdl6Yje00/O0gvlcmcKs5ZGze/crSys7iMggo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=cros-rc-feedback.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=wBlWmkY+; arc=none smtp.client-ip=209.85.216.72
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cros-rc-feedback.bounces.google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dx3+2kWc"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-201f2b7fe0dso7750245ad.1
-        for <patches@lists.linux.dev>; Thu, 15 Aug 2024 12:21:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="wBlWmkY+"
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-2d3e42ef85eso125088a91.2
+        for <patches@lists.linux.dev>; Thu, 15 Aug 2024 12:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1723749694; x=1724354494; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Umz9hDXFSz3YBUb9yk0tQ3KFZaZp7tJt+ZRbi1r2fU0=;
-        b=Dx3+2kWcxod4dP/b7CU/bjQHJ6GWwNix+2DysfGP9OFuhgbs93SWjR2F/c8ZNxYXlZ
-         TQ2SPSIGYVnsBGWewgImByX9fVqx/CnyhKKzPdVksJ5D8zj9rP/F9BJEPYCTsX+Uzryd
-         Y5EFz6KVP+o2MG1Y55UiFZk0BtxUFgGiFLwXAW/6OcD29VSFckBPfk0574jc3PlvjSo/
-         1uukQnYmmIU+MNR7VcecSdfZqvnjzBpz4PfRkE48xW6fc0l5iyfTyhDJYRzv5UzNpAJb
-         /FHGslOp3K3UBT1+VC262+7kSGBIc+El7Qv1u6iABbs2YgL8ACXXDZF74TFdfnd2JxT5
-         mc/A==
+        d=google.com; s=20230601; t=1723750559; x=1724355359; darn=lists.linux.dev;
+        h=cc:to:from:subject:date:message-id:in-reply-to:mime-version:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=EKsx3kPPXwzdhd+E8N+BmlJsiSEoAZoQpsBQKM9fd7U=;
+        b=wBlWmkY+mnYNpU5B5SAbD5KUGuBuoIUZZ/pokbED6zYsH9FJLmII8hae4IqkXu0loj
+         QlfchT6lOckoe0iYLl3l35ULRIT0CvSd0kfKcmZSFJd/Cph2lfUpI8mdXoXThWD1A9vj
+         9OYvo14Vqy0GUmspu3S+dSTfSSrc0cxC5dG4kWcU6zWxM3Ze+uMFyyoZwI8LHLVOz9SJ
+         2axUs74rUs7uB6YemV8ubWK/IV7Yi9clcv7wNcCgJSKlr9e06X9tc54ohbCjyMkkEWXI
+         EDPjuXTDegDYZnRtECOzNrj+PVgmm0XtXQWiUAXO54Bcbh8YDTPparhZTTDrXpjm/rQF
+         PdQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723749694; x=1724354494;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1723750559; x=1724355359;
+        h=cc:to:from:subject:date:message-id:in-reply-to:mime-version
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Umz9hDXFSz3YBUb9yk0tQ3KFZaZp7tJt+ZRbi1r2fU0=;
-        b=s655OThA0Cbcrcu+5FKiQSjlNUPHSTL2q5Qaz6oTfjmL1+mkxv+h110tVQ4pO8wRAK
-         de6AQYT5Mf14CIP+mZcyzHflPbRpiUAu/m69KhvuFzf9EG+OhDBq3DAFGfQMUpN15d7y
-         9TbIZmDczf3tsoy5zIDlndt7yRmSAoFQgKWb65oV/GSeP3XjHEiOHOCL9gqXwm6Jvwvy
-         MGrZNLqmbDZbEFL+YUUpSZUzkZ7jAlz9FVElWNRDSskOib/vmQuqv464WEnADVsSOZSq
-         aMI3w3xOMikCaZ4wsJ7CQB2AjhGM7b+SAA5Q+LGyQfla8ch7l9LaOYZcQIVpG4pzt7gR
-         nQGQ==
-X-Gm-Message-State: AOJu0YwBGwrlM/3hF0e3AWKqlFPMjaoMO/61dwk+SBQDef+XtqP2EM4x
-	jkUIWH2hyK0a7PNrhNp3LqtT1pJD7xsU0TrhbMQuGA/6u9YZ8gY6
-X-Google-Smtp-Source: AGHT+IF7fvFs+8/4+eEtd/uO/sToK/u6WOiwUJ3JPwO8p43BjJXgCpRgn8uVmQNMyQanV4QZgamreg==
-X-Received: by 2002:a17:902:f68c:b0:201:febc:436a with SMTP id d9443c01a7336-20203e868dbmr7931075ad.15.1723749693535;
-        Thu, 15 Aug 2024 12:21:33 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d9443c01a7336-201f03a1468sm13274725ad.271.2024.08.15.12.21.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 15 Aug 2024 12:21:33 -0700 (PDT)
-Message-ID: <d203bdb1-1ee3-4de5-9d20-1e2b08e710e7@gmail.com>
-Date: Thu, 15 Aug 2024 12:21:31 -0700
+        bh=EKsx3kPPXwzdhd+E8N+BmlJsiSEoAZoQpsBQKM9fd7U=;
+        b=r7G7z6SQ2DGJ2CCOPq2sUbLy78lRr6Kb5okAWsh//QsE+B/u/QoZZ6N54ey0Y32zSR
+         aWt6bmd63qHfZxuMPBL6+Vthm4z/WemnWKPZRW2QNFlPbDLqZSzp8QcC98R8rqjrSkcT
+         lN5pJZfJkPOUNBa+mgTzOpz7L7fQOxQQrAf/t/51LFWUY+gsx4/+r6AAVveOD2FLfzON
+         NfRNrBbYDrXHiXJx/DqnXg6PDyJ5o1qArGU28g4WccjlojryLt0b5y8GcQo49PFphtWR
+         JcYUo8f8eRPRAgXYYS05LnUD4ExFdQweyXg4xm5eerW7Famh3hKBFF+QOV8SjlZjs03p
+         Iwxg==
+X-Forwarded-Encrypted: i=1; AJvYcCWD+YKQGzsfHtvZBRZygRvPc/DfgGDg8LQLdg73Czwc2Pf656//9w/oK/smOU1zqipm26yWMz9YAjt+2n4DqyYRUqHPuv2ZLQ==
+X-Gm-Message-State: AOJu0Yzss1x1eetiSE4sm99FU4y7VBI5aDxqTuAsxhIgeLS+njbHPGx1
+	oWW34RKWbCSaKxSL5NNxZYGtqP8csKT+BA5wmH34sRTW3y5s87qDESOLGYsyP5El4qURRZ/lSkZ
+	8v7I3omj7DvXmEb1o/Rv2p5NS97gO3H/eI7Fr57c5ZvKr6huGjOXUFV73jXHyx5zMXh52zLSU0X
+	SZDzkuQsQyAizIdyr/pm1aakZyhmV2
+X-Google-Smtp-Source: AGHT+IFJ8ECkDnS3k6jLL8zhyaYh5sBo9rZan0khf2zhxhubUiLbYf5E8Mdgyd3AX7JdK2Z99hTuFPWJxxCSsc1t0GftFzbA4HHOdCdosaLvHrR7Qg==
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.4 000/259] 5.4.282-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
- conor@kernel.org, allen.lkml@gmail.com, broonie@kernel.org
-References: <20240815131902.779125794@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-Received: by 2002:a17:903:11d1:b0:1f7:b45:f2d4 with SMTP id
+ d9443c01a7336-20203e5e808mr642225ad.4.1723750558750; Thu, 15 Aug 2024
+ 12:35:58 -0700 (PDT)
+In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
+Message-ID: <000000000000bd15a9061fbdf348@google.com>
+Date: Thu, 15 Aug 2024 19:35:58 +0000
+Subject: Re: [PATCH 6.6 00/67] 6.6.47-rc1 review
+From: ChromeOS Kernel Stable Merge <mdb.chromeos-kernel-auto-merge+noreply@google.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, chromeos-kernel-stable-merge@google.com, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, conor@kernel.org, allen.lkml@gmail.com, 
+	broonie@kernel.org
+Content-Type: text/plain; charset="UTF-8"; format=flowed; delsp=yes
 
-On 8/15/24 06:22, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.282 release.
-> There are 259 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sat, 17 Aug 2024 13:18:17 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.282-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hello,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+This rc kernel passed ChromeOS CQ tests:
+https://chromium-review.googlesource.com/c/chromiumos/third_party/kernel/+/5791538/1?tab=checks
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
--- 
-Florian
+Thanks,
 
+Tested-by: ChromeOS CQ Test <chromeos-kernel-stable-merge@google.com>
