@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5023419F470;
-	Thu, 15 Aug 2024 13:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5539919EEB6;
+	Thu, 15 Aug 2024 13:57:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730228; cv=none; b=blTHb1WclsjeOo95+5n8yW4SzWz6FWYaQ/Id3JtKwZyksw40GLAE248y/NgGXeAoBxWHr05OBQJFnuGDmm6e56cC+JmYEArMDCfU4rDofARC+PBUlr8VtcencJ23ECg0mK0k5d/VLhCW4DYfxeI0HvG7aXd3nnWEfaDJbctN5sc=
+	t=1723730231; cv=none; b=AhNCTp7j1iEY9oRg3JFNZ6d5KTftogH7ekBkSAHhSbL5dqg5Bviw++DopLaOo0r7XDLcPe4ex1qCBzE6xsoV3rhZKHL+ef3fPhiLkkJf4sai7l8M31JcLbEblDJRX5U9YipdT6Oa1Uab9orffot2LoxPY70da58B5WCyNE7+it0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730228; c=relaxed/simple;
-	bh=EeglIGJJta+nA9c3vmml8ules9kKrs4TMVZIoMuXvTQ=;
+	s=arc-20240116; t=1723730231; c=relaxed/simple;
+	bh=NowLLmeRDg3l+HiruaRghpFivwomHBKD+q83nZ1pPNg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k1E7p0gv09QA23TQ4OKEw5gEmu+nbijbWqjumy6ill/TWmGHGxiqqdfsvnMhWQJraJRXnhEVW/VrD9kO4j/g85jTGGYAf+dqojzWo8+H0+hG0ViAjFKD0bNT9hZi5Wwda+zGhWOzE9v9NxZuNswDViLhHJShHyXy/ajx/UbuRoU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rGZt04aV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dGlKkbXw4Ttv0E8GW3Azd64GgmPbpNVWGQ/+f68v9aGfn+lUv8m3UZhVH+Ki/JhqlLxDsFAhdHA+Ra9x/mijUhnTpgkVhM4KZpTT0F55M4bPlOYj4Yofq1CIrfZl00g2BLLvwGtVpL9Nlb2Y2BUzml2gpt3wlvl3E5g950XadX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ei0SXfG6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rGZt04aV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1EFC32786;
-	Thu, 15 Aug 2024 13:57:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ei0SXfG6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCEADC32786;
+	Thu, 15 Aug 2024 13:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730228;
-	bh=EeglIGJJta+nA9c3vmml8ules9kKrs4TMVZIoMuXvTQ=;
+	s=korg; t=1723730231;
+	bh=NowLLmeRDg3l+HiruaRghpFivwomHBKD+q83nZ1pPNg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGZt04aVFYRiYwANJtSQ1mY8i99j06qNQWGHRoCn3bE4kGs0+AxrqlwjHM+t3CRGA
-	 tKxdaoRHxUEv9edMiyEoH/Fbn+R2YkBd1p2D6/rYIL+ETrvBz197/k6Q2Ik05et1ln
-	 4hJLqKHvehDhsjT77vjj4yDlYvWiwWu03BcmIvZc=
+	b=ei0SXfG6hrO0AZyXNja+jxMdIfmGuGv2rCvIRCVWDSYN10IjgXIHmocK+1dIelIyq
+	 /Npbw1nKyeZScO7vkNwxHAcUiOtxNffLnQP4LLjcsTuTHHNIia454vwN7R961wDlif
+	 uVNu7K6j2o4YwN45tLf4OaRTj8VsYqKozAGH2gSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 5.15 344/484] protect the fetch of ->fd[fd] in do_dup2() from mispredictions
-Date: Thu, 15 Aug 2024 15:23:22 +0200
-Message-ID: <20240815131954.707901929@linuxfoundation.org>
+	Sylvain BERTRAND <sylvain.bertrand@legeek.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 345/484] ALSA: usb-audio: Correct surround channels in UAC1 channel map
+Date: Thu, 15 Aug 2024 15:23:23 +0200
+Message-ID: <20240815131954.747320623@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -49,34 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 8aa37bde1a7b645816cda8b80df4753ecf172bf1 upstream.
+commit b7b7e1ab7619deb3b299b5e5c619c3e6f183a12d upstream.
 
-both callers have verified that fd is not greater than ->max_fds;
-however, misprediction might end up with
-        tofree = fdt->fd[fd];
-being speculatively executed.  That's wrong for the same reasons
-why it's wrong in close_fd()/file_close_fd_locked(); the same
-solution applies - array_index_nospec(fd, fdt->max_fds) could differ
-from fd only in case of speculative execution on mispredicted path.
+USB-audio driver puts SNDRV_CHMAP_SL and _SR as left and right
+surround channels for UAC1 channel map, respectively.  But they should
+have been SNDRV_CHMAP_RL and _RR; the current value *_SL and _SR are
+rather "side" channels, not "surround".  I guess I took those
+mistakenly when I read the spec mentioning "surround left".
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+This patch corrects those entries to be the right channels.
+
+Suggested-by: Sylvain BERTRAND <sylvain.bertrand@legeek.net>
+Closes: https://lore.kernel.orgZ/qIyJD8lhd8hFhlC@freedom
+Fixes: 04324ccc75f9 ("ALSA: usb-audio: add channel map support")
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240731142018.24750-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/stream.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -1148,6 +1148,7 @@ __releases(&files->file_lock)
- 	 * tables and this condition does not arise without those.
- 	 */
- 	fdt = files_fdtable(files);
-+	fd = array_index_nospec(fd, fdt->max_fds);
- 	tofree = fdt->fd[fd];
- 	if (!tofree && fd_is_open(fd, fdt))
- 		goto Ebusy;
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -244,8 +244,8 @@ static struct snd_pcm_chmap_elem *conver
+ 		SNDRV_CHMAP_FR,		/* right front */
+ 		SNDRV_CHMAP_FC,		/* center front */
+ 		SNDRV_CHMAP_LFE,	/* LFE */
+-		SNDRV_CHMAP_SL,		/* left surround */
+-		SNDRV_CHMAP_SR,		/* right surround */
++		SNDRV_CHMAP_RL,		/* left surround */
++		SNDRV_CHMAP_RR,		/* right surround */
+ 		SNDRV_CHMAP_FLC,	/* left of center */
+ 		SNDRV_CHMAP_FRC,	/* right of center */
+ 		SNDRV_CHMAP_RC,		/* surround */
 
 
