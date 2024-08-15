@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D77FB44376;
-	Thu, 15 Aug 2024 14:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD0F1A00E7;
+	Thu, 15 Aug 2024 14:08:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730878; cv=none; b=op4kOeXtlOLM7yHZe3SFSEwAJ24r6tdUO35RvoSLUYApFuoHrD2ZuKsccwkBwIaBkzSBLVuAXB+ttFoEwK0E69swNQhjqVRlndyHwGCEXRlBYOtnigMpiiC/0Au9PBSCMNW+Cb06YkPkUYYV5YRb28FuvfySYvWKzXUuhQW5Yl8=
+	t=1723730882; cv=none; b=iFD5k/0dBsA8V8usP4pSjcpcY1rG3fcKODdQv97ykuEoMSN1SSEhjBAu0vIJTugPHpNhs29exp3r37myAi0bcz5RzNGz1Cla0W394qMxTl0Y57Cs2o0UfLHhjugB4fVMmGpyKUH7I2Iza0J32eMFCeDwpfAeEY35FkBXdVIyM3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730878; c=relaxed/simple;
-	bh=iIfBBTsl5LscD6MkBMyOGk3jET6AQ5ozsUjGsok8Cgs=;
+	s=arc-20240116; t=1723730882; c=relaxed/simple;
+	bh=Iu08SWYymgMYTqND5oqPXvmFx4lbLmrIu+0A4KVM0CI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CX5+jbk7P4HG65LWomGMC84ja5xcISX7Bi892jdZEqJHdLry5+9aHj6aqWPXjy4xugyOefok8TXDVBQ/QmNtFXCXoTAvdERcpi1Z5EJLt4YOUxmp34MfJ1uMhzHSek2Omjblk1a3KlFHcnKhut5OsBVyWuwBJX+2YkEKxJCPsVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HtN7Y1k/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BGePwpuV9Q8oBG0aV+AkncX8ggaUDvMhynHQFsg80652YSi5z2q46aDMS6qo0008ZV65/laUXkoa4CEaznOEJlkHGvVA7oUVNWF8M2XMQcNDZJSjJW3Byjz1+fTtY3Ublcg8OSUfBqAahDYMSyGvBH3dqjod5OdO9YGOoEzZXfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVCjtruw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HtN7Y1k/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55264C32786;
-	Thu, 15 Aug 2024 14:07:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVCjtruw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85100C32786;
+	Thu, 15 Aug 2024 14:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730878;
-	bh=iIfBBTsl5LscD6MkBMyOGk3jET6AQ5ozsUjGsok8Cgs=;
+	s=korg; t=1723730881;
+	bh=Iu08SWYymgMYTqND5oqPXvmFx4lbLmrIu+0A4KVM0CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HtN7Y1k/tzxUWAZnjxWLoU7SJEyOLitWy4xFN2+uV2/0rY8OB1sVGqvdnwxZiPtnl
-	 LtgqYY1XXg6/AC/LOzQqTgWQEi1Q5PFO+0HTk5P4NIIy02I69MZPVy5ICY+bbxPVVs
-	 tQoMpnpMsnJdfpEN3TT+KIk1nVvpyLqnyKQLjmbM=
+	b=uVCjtruwMz1jO2G7fiBKUH0d9/4USIkqbHwfisr9XA/fRhS72MemVdYC9OUVn3itZ
+	 Mzot2s6r4wpOnyDSVOfRscnjLktWHuMudoPj8zy8vP8FPbbggHa7qRJxq6DSjIWNRA
+	 XkoTx48W2HF4yxo1VoQhqA0jum4wn1QWNHQ/i/8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 07/67] sunrpc: dont change ->sv_stats if it doesnt exist
-Date: Thu, 15 Aug 2024 15:25:21 +0200
-Message-ID: <20240815131838.601982028@linuxfoundation.org>
+Subject: [PATCH 6.6 08/67] nfsd: stop setting ->pg_stats for unused stats
+Date: Thu, 15 Aug 2024 15:25:22 +0200
+Message-ID: <20240815131838.642134029@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -53,110 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit ab42f4d9a26f1723dcfd6c93fcf768032b2bb5e7 ]
+[ Upstream commit a2214ed588fb3c5b9824a21cff870482510372bb ]
 
-We check for the existence of ->sv_stats elsewhere except in the core
-processing code.  It appears that only nfsd actual exports these values
-anywhere, everybody else just has a write only copy of sv_stats in their
-svc_program.  Add a check for ->sv_stats before every adjustment to
-allow us to eliminate the stats struct from all the users who don't
-report the stats.
+A lot of places are setting a blank svc_stats in ->pg_stats and never
+utilizing these stats.  Remove all of these extra structs as we're not
+reporting these stats anywhere.
 
 Signed-off-by: Josef Bacik <josef@toxicpanda.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/svc.c |   27 ++++++++++++++++++---------
- 1 file changed, 18 insertions(+), 9 deletions(-)
+ fs/lockd/svc.c    |    3 ---
+ fs/nfs/callback.c |    3 ---
+ fs/nfsd/nfssvc.c  |    5 -----
+ 3 files changed, 11 deletions(-)
 
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1377,7 +1377,8 @@ svc_process_common(struct svc_rqst *rqst
- 		goto err_bad_proc;
+--- a/fs/lockd/svc.c
++++ b/fs/lockd/svc.c
+@@ -712,8 +712,6 @@ static const struct svc_version *nlmsvc_
+ #endif
+ };
  
- 	/* Syntactic check complete */
--	serv->sv_stats->rpccnt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpccnt++;
- 	trace_svc_process(rqstp, progp->pg_name);
+-static struct svc_stat		nlmsvc_stats;
+-
+ #define NLM_NRVERS	ARRAY_SIZE(nlmsvc_version)
+ static struct svc_program	nlmsvc_program = {
+ 	.pg_prog		= NLM_PROGRAM,		/* program number */
+@@ -721,7 +719,6 @@ static struct svc_program	nlmsvc_program
+ 	.pg_vers		= nlmsvc_version,	/* version table */
+ 	.pg_name		= "lockd",		/* service name */
+ 	.pg_class		= "nfsd",		/* share authentication with nfsd */
+-	.pg_stats		= &nlmsvc_stats,	/* stats table */
+ 	.pg_authenticate	= &lockd_authenticate,	/* export authentication */
+ 	.pg_init_request	= svc_generic_init_request,
+ 	.pg_rpcbind_set		= svc_generic_rpcbind_set,
+--- a/fs/nfs/callback.c
++++ b/fs/nfs/callback.c
+@@ -399,15 +399,12 @@ static const struct svc_version *nfs4_ca
+ 	[4] = &nfs4_callback_version4,
+ };
  
- 	aoffset = xdr_stream_pos(xdr);
-@@ -1429,7 +1430,8 @@ err_short_len:
- 	goto close_xprt;
+-static struct svc_stat nfs4_callback_stats;
+-
+ static struct svc_program nfs4_callback_program = {
+ 	.pg_prog = NFS4_CALLBACK,			/* RPC service number */
+ 	.pg_nvers = ARRAY_SIZE(nfs4_callback_version),	/* Number of entries */
+ 	.pg_vers = nfs4_callback_version,		/* version table */
+ 	.pg_name = "NFSv4 callback",			/* service name */
+ 	.pg_class = "nfs",				/* authentication class */
+-	.pg_stats = &nfs4_callback_stats,
+ 	.pg_authenticate = nfs_callback_authenticate,
+ 	.pg_init_request = svc_generic_init_request,
+ 	.pg_rpcbind_set	= svc_generic_rpcbind_set,
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -89,7 +89,6 @@ unsigned long	nfsd_drc_max_mem;
+ unsigned long	nfsd_drc_mem_used;
  
- err_bad_rpc:
--	serv->sv_stats->rpcbadfmt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadfmt++;
- 	xdr_stream_encode_u32(xdr, RPC_MSG_DENIED);
- 	xdr_stream_encode_u32(xdr, RPC_MISMATCH);
- 	/* Only RPCv2 supported */
-@@ -1440,7 +1442,8 @@ err_bad_rpc:
- err_bad_auth:
- 	dprintk("svc: authentication failed (%d)\n",
- 		be32_to_cpu(rqstp->rq_auth_stat));
--	serv->sv_stats->rpcbadauth++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadauth++;
- 	/* Restore write pointer to location of reply status: */
- 	xdr_truncate_encode(xdr, XDR_UNIT * 2);
- 	xdr_stream_encode_u32(xdr, RPC_MSG_DENIED);
-@@ -1450,7 +1453,8 @@ err_bad_auth:
+ #if defined(CONFIG_NFSD_V2_ACL) || defined(CONFIG_NFSD_V3_ACL)
+-static struct svc_stat	nfsd_acl_svcstats;
+ static const struct svc_version *nfsd_acl_version[] = {
+ # if defined(CONFIG_NFSD_V2_ACL)
+ 	[2] = &nfsd_acl_version2,
+@@ -108,15 +107,11 @@ static struct svc_program	nfsd_acl_progr
+ 	.pg_vers		= nfsd_acl_version,
+ 	.pg_name		= "nfsacl",
+ 	.pg_class		= "nfsd",
+-	.pg_stats		= &nfsd_acl_svcstats,
+ 	.pg_authenticate	= &svc_set_client,
+ 	.pg_init_request	= nfsd_acl_init_request,
+ 	.pg_rpcbind_set		= nfsd_acl_rpcbind_set,
+ };
  
- err_bad_prog:
- 	dprintk("svc: unknown program %d\n", rqstp->rq_prog);
--	serv->sv_stats->rpcbadfmt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadfmt++;
- 	*rqstp->rq_accept_statp = rpc_prog_unavail;
- 	goto sendit;
+-static struct svc_stat	nfsd_acl_svcstats = {
+-	.program	= &nfsd_acl_program,
+-};
+ #endif /* defined(CONFIG_NFSD_V2_ACL) || defined(CONFIG_NFSD_V3_ACL) */
  
-@@ -1458,7 +1462,8 @@ err_bad_vers:
- 	svc_printk(rqstp, "unknown version (%d for prog %d, %s)\n",
- 		       rqstp->rq_vers, rqstp->rq_prog, progp->pg_name);
- 
--	serv->sv_stats->rpcbadfmt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadfmt++;
- 	*rqstp->rq_accept_statp = rpc_prog_mismatch;
- 
- 	/*
-@@ -1472,19 +1477,22 @@ err_bad_vers:
- err_bad_proc:
- 	svc_printk(rqstp, "unknown procedure (%d)\n", rqstp->rq_proc);
- 
--	serv->sv_stats->rpcbadfmt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadfmt++;
- 	*rqstp->rq_accept_statp = rpc_proc_unavail;
- 	goto sendit;
- 
- err_garbage_args:
- 	svc_printk(rqstp, "failed to decode RPC header\n");
- 
--	serv->sv_stats->rpcbadfmt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadfmt++;
- 	*rqstp->rq_accept_statp = rpc_garbage_args;
- 	goto sendit;
- 
- err_system_err:
--	serv->sv_stats->rpcbadfmt++;
-+	if (serv->sv_stats)
-+		serv->sv_stats->rpcbadfmt++;
- 	*rqstp->rq_accept_statp = rpc_system_err;
- 	goto sendit;
- }
-@@ -1536,7 +1544,8 @@ void svc_process(struct svc_rqst *rqstp)
- out_baddir:
- 	svc_printk(rqstp, "bad direction 0x%08x, dropping request\n",
- 		   be32_to_cpu(*p));
--	rqstp->rq_server->sv_stats->rpcbadfmt++;
-+	if (rqstp->rq_server->sv_stats)
-+		rqstp->rq_server->sv_stats->rpcbadfmt++;
- out_drop:
- 	svc_drop(rqstp);
- }
+ static const struct svc_version *nfsd_version[] = {
 
 
