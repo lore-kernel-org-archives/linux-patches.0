@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB4917BEA5;
-	Thu, 15 Aug 2024 13:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645CB19AA53;
+	Thu, 15 Aug 2024 13:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729939; cv=none; b=pSHARl/7CPspG5HSFoZRttrDdMpOaFvjy0phmVdQukNZxRNVpPUxXsC9Me1VCiYh46Yv1p3aXgadyz1xrvIcDOArUb5Wkr36nYPsthwwlQFC5aKYqTGNTfoopHWvJJ/tJK6Ebqtjryl+5yOBkedCfRFokquCLgfFYIjihwUQvsY=
+	t=1723729942; cv=none; b=ke2WNJiNKoR2Z0uoUz7IKt57Wgc2Z2SFU+sMHBSncvxDXyRLMAcbs8HvGLqJhGO/q+n5FxypxA9p8qrwCUWo7SA0n4u7C8fwjrEQ1BH6w8pXTuqO12FyaQ7eZ7yh2T7R/GQvOcqUPL3yDh/ItCjrvdN0W2BByEcKKSWFezBiTnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729939; c=relaxed/simple;
-	bh=yqIwJFbjfwdbBDL/+MCOxvbMxMtYwYdelp5p6JqBgGI=;
+	s=arc-20240116; t=1723729942; c=relaxed/simple;
+	bh=FUCJSLBpmQXsg/Cu+yUJdrF9L1WYlXujtST6ilMMPgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUMQQE8stDOXbF0H0WbSUBBjvH9rvPgtcHunaxFKeFUO86pc7CGAMbuOXSCk3xQuENzwBWhFDtufLG0eNHAWd0meFnxROB8vOhfoCfWOTAxVXvLgFsJ71zbQIyhg6qTJT8E7JpVRBQSHHsflL9XdArOyloz6xqwnqTbK1FdI+E8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fqbOEIeQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ifjMWMBOrFnXoe4PAkZ85+vBgE1TIwOBFKoJMBlP4fDeCtkWfxkthX8KADJ9XtB9CzYbpFAsEvnpCkbI/WAD+Oy3dXDoww/ClIQKE4rTw8N3nMc8HfJJvsjkznBQ45Jk04/bX7aiu83/1T+pXG0vSsSW+PI38iovzdFCCdxWxEA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XVLrm6oh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fqbOEIeQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6389C32786;
-	Thu, 15 Aug 2024 13:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XVLrm6oh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFEDC32786;
+	Thu, 15 Aug 2024 13:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729939;
-	bh=yqIwJFbjfwdbBDL/+MCOxvbMxMtYwYdelp5p6JqBgGI=;
+	s=korg; t=1723729942;
+	bh=FUCJSLBpmQXsg/Cu+yUJdrF9L1WYlXujtST6ilMMPgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fqbOEIeQbrWuTdwFbqS+22acu43Jrf7IGWmZD7Al0nb+aADhfqAsfJWqnNndEV+9i
-	 8gmKHUTr/WdjPLbapiS+6Idx1j7/HHr/l3xT4siomTKhdlYXrhi5QfjVx+uW79/rbJ
-	 2JDG+c969BxDVVdIw+bPke8/K09LFhRjfdcFRZZ8=
+	b=XVLrm6oh9zq6pkspZPUnAGi+suwQcQzdqabsO7XQWnbiXwLxIMSSHYt3C/GFgg3pE
+	 LqmsgMPYqW14Zp1HqAQgdroDlVZ00W3BEA1S9u1n5b+bNZKICyrEHFMFQRNUTEj1Yh
+	 ZYysCYrv9zxTabMd1wcZ0tVzMB3nyTIWB1cKjVhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 5.15 254/484] rbd: dont assume RBD_LOCK_STATE_LOCKED for exclusive mappings
-Date: Thu, 15 Aug 2024 15:21:52 +0200
-Message-ID: <20240815131951.213266356@linuxfoundation.org>
+	Hilda Wu <hildawu@realtek.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Erpeng Xu <xuerpeng@uniontech.com>
+Subject: [PATCH 5.15 255/484] Bluetooth: btusb: Add RTL8852BE device 0489:e125 to device tables
+Date: Thu, 15 Aug 2024 15:21:53 +0200
+Message-ID: <20240815131951.252654660@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,74 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Hilda Wu <hildawu@realtek.com>
 
-commit 2237ceb71f89837ac47c5dce2aaa2c2b3a337a3c upstream.
+commit 295ef07a9dae6182ad4b689aa8c6a7dbba21474c upstream.
 
-Every time a watch is reestablished after getting lost, we need to
-update the cookie which involves quiescing exclusive lock.  For this,
-we transition from RBD_LOCK_STATE_LOCKED to RBD_LOCK_STATE_QUIESCING
-roughly for the duration of rbd_reacquire_lock() call.  If the mapping
-is exclusive and I/O happens to arrive in this time window, it's failed
-with EROFS (later translated to EIO) based on the wrong assumption in
-rbd_img_exclusive_lock() -- "lock got released?" check there stopped
-making sense with commit a2b1da09793d ("rbd: lock should be quiesced on
-reacquire").
+Add the support ID 0489:e125 to usb_device_id table for
+Realtek RTL8852B chip.
 
-To make it worse, any such I/O is added to the acquiring list before
-EROFS is returned and this sets up for violating rbd_lock_del_request()
-precondition that the request is either on the running list or not on
-any list at all -- see commit ded080c86b3f ("rbd: don't move requests
-to the running list on errors").  rbd_lock_del_request() ends up
-processing these requests as if they were on the running list which
-screws up quiescing_wait completion counter and ultimately leads to
+The device info from /sys/kernel/debug/usb/devices as below.
 
-    rbd_assert(!completion_done(&rbd_dev->quiescing_wait));
+T:  Bus=01 Lev=01 Prnt=01 Port=07 Cnt=03 Dev#=  5 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=0489 ProdID=e125 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
 
-being triggered on the next watch error.
-
-Cc: stable@vger.kernel.org # 06ef84c4e9c4: rbd: rename RBD_LOCK_STATE_RELEASING and releasing_wait
-Cc: stable@vger.kernel.org
-Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Hilda Wu <hildawu@realtek.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -3459,6 +3459,7 @@ static void rbd_lock_del_request(struct
- 	lockdep_assert_held(&rbd_dev->lock_rwsem);
- 	spin_lock(&rbd_dev->lock_lists_lock);
- 	if (!list_empty(&img_req->lock_item)) {
-+		rbd_assert(!list_empty(&rbd_dev->running_list));
- 		list_del_init(&img_req->lock_item);
- 		need_wakeup = (rbd_dev->lock_state == RBD_LOCK_STATE_QUIESCING &&
- 			       list_empty(&rbd_dev->running_list));
-@@ -3478,11 +3479,6 @@ static int rbd_img_exclusive_lock(struct
- 	if (rbd_lock_add_request(img_req))
- 		return 1;
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -559,6 +559,8 @@ static const struct usb_device_id blackl
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0cb5, 0xc547), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
  
--	if (rbd_dev->opts->exclusive) {
--		WARN_ON(1); /* lock got released? */
--		return -EROFS;
--	}
--
- 	/*
- 	 * Note the use of mod_delayed_work() in rbd_acquire_lock()
- 	 * and cancel_delayed_work() in wake_lock_waiters().
-@@ -4603,6 +4599,10 @@ static void rbd_reacquire_lock(struct rb
- 			rbd_warn(rbd_dev, "failed to update lock cookie: %d",
- 				 ret);
- 
-+		if (rbd_dev->opts->exclusive)
-+			rbd_warn(rbd_dev,
-+			     "temporarily releasing lock on exclusive mapping");
-+
- 		/*
- 		 * Lock cookie cannot be updated on older OSDs, so do
- 		 * a manual release and queue an acquire.
+ 	/* Silicon Wave based devices */
+ 	{ USB_DEVICE(0x0c10, 0x0000), .driver_info = BTUSB_SWAVE },
 
 
