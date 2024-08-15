@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757401AC432;
-	Thu, 15 Aug 2024 14:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8934D1AC432;
+	Thu, 15 Aug 2024 14:13:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731192; cv=none; b=h7K6w78VNPFU8B1FgIOBwkkUhi/yFsHUpoJha9eBoOYT2y0cRAQUruAwOkjRViYmbQ+s9Ho3Vj3toZdCPbjjWu5XPyRT7E4aCJjY4X8NHVbCaM04xjkS58VAbRldqYpZSzPND8bNnyuENLsjRM7JbzYEQfktGEBcAyIbPrBSq6I=
+	t=1723731195; cv=none; b=o/K5MRd7mFDVZMvCzQqJaB736TBRDoZJ1O1bFZFMmQorcgDM3ag00sA6NNl2p1Tl5SB3Y63gnxCUQFdPZ5ieg0zPvZAKvPiPLpbzarH70zll9lilA5dwKjNHAPKEYsLlq7LEot3TXFEG8sMn0OUZ3Vjx/BF4v0zND35tJm7p3GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731192; c=relaxed/simple;
-	bh=fRcub9Kzz2qLRaJxO7KE0EBWd6+BDEPrMLo36K/8KoE=;
+	s=arc-20240116; t=1723731195; c=relaxed/simple;
+	bh=v68AnRE94YeJ5QQiZB2f5EfcEV95UKgFHVTnlHRKdLI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lHRjjv764ZJ+PNUXrDf/NnG7LRZCTILyNl+2UUEyQWeBTKBn3jSKX9+Ph0nImpjWkKyIe6LLZfDcG9HFZbZsysXzq4F9APCIW34IlTBPESE+APY24sIvJBIFaZc2kaPWoQLM2rlY24hLUkbkBOsnxaycU+jMb3f/NeBXnVhKMI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xQurYDgw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X4talEhGLbdAEe407Zw+83Zz6AasXqRFE8FEQ9P9RTvue+QHCkX2hm9VRnpAtf7qZMVb/ajaN9/oRu7nSd9evYXpsEoCA4LSXBdIubldWBsdUQdMhxQX5PxaCVaS8oOw9OOjhdSecb4+DTj52UQTUYa1KanLORWCP7zWUsht3q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1kF62PDu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xQurYDgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1291C32786;
-	Thu, 15 Aug 2024 14:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1kF62PDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81F1C32786;
+	Thu, 15 Aug 2024 14:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731192;
-	bh=fRcub9Kzz2qLRaJxO7KE0EBWd6+BDEPrMLo36K/8KoE=;
+	s=korg; t=1723731195;
+	bh=v68AnRE94YeJ5QQiZB2f5EfcEV95UKgFHVTnlHRKdLI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQurYDgwG28ZFstGLV4Zz7QZaipQa5uuOuHzp09g4hKF8Ual3XIqWkkIW1PAqcPVN
-	 +gsquBCLzM1/VYI0alOU7zmFYE/9pYdpwDgCyQvN+FjOcILGIXZs8EqSg2KeTE5o+B
-	 Tj8Mducjva9o36mpnu3ddZyFURWRg4iWhfdaOBO8=
+	b=1kF62PDuSIQ8PcecNGsQ7bJzFzc+lyvh5hnqnu3kF5Dqz94EzmZ+TErQlDLQO7qj2
+	 6tWfYjiMbVlGSfPOv50dlteeosyuemC0N8FdcFnsT5h7QVz1iG4RUemhsg7nXrQHZ5
+	 SEx6i+h8IV3f8ELfWvRrrgyHY0EveoI2WUkKzbCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
+	Ricardo Ribalda <ribalda@chromium.org>,
 	Sean Young <sean@mess.org>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/259] media: dvb-usb: Fix unexpected infinite loop in dvb_usb_read_remote_control()
-Date: Thu, 15 Aug 2024 15:23:04 +0200
-Message-ID: <20240815131904.776800293@linuxfoundation.org>
+Subject: [PATCH 5.4 052/259] media: imon: Fix race getting ictx->lock
+Date: Thu, 15 Aug 2024 15:23:05 +0200
+Message-ID: <20240815131904.817130323@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,141 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 2052138b7da52ad5ccaf74f736d00f39a1c9198c ]
+[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
 
-Infinite log printing occurs during fuzz test:
+Lets fix a race between mutex_is_lock() and mutex_lock().
 
-  rc rc1: DViCO FusionHDTV DVB-T USB (LGZ201) as ...
-  ...
-  dvb-usb: schedule remote query interval to 100 msecs.
-  dvb-usb: DViCO FusionHDTV DVB-T USB (LGZ201) successfully initialized ...
-  dvb-usb: bulk message failed: -22 (1/0)
-  dvb-usb: bulk message failed: -22 (1/0)
-  dvb-usb: bulk message failed: -22 (1/0)
-  ...
-  dvb-usb: bulk message failed: -22 (1/0)
+<-mutex is not locked
+if (!mutex_is_locked(&ictx->lock)) {
+	unlock = true; <- mutex is locked externaly
+	mutex_lock(&ictx->lock);
+}
 
-Looking into the codes, there is a loop in dvb_usb_read_remote_control(),
-that is in rc_core_dvb_usb_remote_init() create a work that will call
-dvb_usb_read_remote_control(), and this work will reschedule itself at
-'rc_interval' intervals to recursively call dvb_usb_read_remote_control(),
-see following code snippet:
+Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
+atomically.
 
-  rc_core_dvb_usb_remote_init() {
-    ...
-    INIT_DELAYED_WORK(&d->rc_query_work, dvb_usb_read_remote_control);
-    schedule_delayed_work(&d->rc_query_work,
-                          msecs_to_jiffies(rc_interval));
-    ...
-  }
+Fix the following cocci warning:
+drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
 
-  dvb_usb_read_remote_control() {
-    ...
-    err = d->props.rc.core.rc_query(d);
-    if (err)
-      err(...)  // Did not return even if query failed
-    schedule_delayed_work(&d->rc_query_work,
-                          msecs_to_jiffies(rc_interval));
-  }
-
-When the infinite log printing occurs, the query callback
-'d->props.rc.core.rc_query' is cxusb_rc_query(). And the log is due to
-the failure of finding a valid 'generic_bulk_ctrl_endpoint'
-in usb_bulk_msg(), see following code snippet:
-
-  cxusb_rc_query() {
-    cxusb_ctrl_msg() {
-      dvb_usb_generic_rw() {
-        ret = usb_bulk_msg(d->udev, usb_sndbulkpipe(d->udev,
-                           d->props.generic_bulk_ctrl_endpoint),...);
-        if (ret)
-          err("bulk message failed: %d (%d/%d)",ret,wlen,actlen);
-          ...
-      }
-  ...
-  }
-
-By analyzing the corresponding USB descriptor, it shows that the
-bNumEndpoints is 0 in its interface descriptor, but
-the 'generic_bulk_ctrl_endpoint' is 1, that means user don't configure
-a valid endpoint for 'generic_bulk_ctrl_endpoint', therefore this
-'invalid' USB device should be rejected before it calls into
-dvb_usb_read_remote_control().
-
-To fix it, we need to add endpoint check for 'generic_bulk_ctrl_endpoint'.
-And as Sean suggested, the same check and clear halts should be done for
-'generic_bulk_ctrl_endpoint_response'. So introduce
-dvb_usb_check_bulk_endpoint() to do it for both of them.
-
-Fixes: 4d43e13f723e ("V4L/DVB (4643): Multi-input patch for DVB-USB device")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
 Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/dvb-usb-init.c | 35 +++++++++++++++++++++---
- 1 file changed, 31 insertions(+), 4 deletions(-)
+ drivers/media/rc/imon.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
-index cb5bf119df9f1..6c7a56b178e52 100644
---- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
-+++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
-@@ -23,11 +23,40 @@ static int dvb_usb_force_pid_filter_usage;
- module_param_named(force_pid_filter_usage, dvb_usb_force_pid_filter_usage, int, 0444);
- MODULE_PARM_DESC(force_pid_filter_usage, "force all dvb-usb-devices to use a PID filter, if any (default: 0).");
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index d8401ef9b0a79..38f6dd12d8706 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -1117,10 +1117,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
  
-+static int dvb_usb_check_bulk_endpoint(struct dvb_usb_device *d, u8 endpoint)
-+{
-+	if (endpoint) {
-+		int ret;
-+
-+		ret = usb_pipe_type_check(d->udev, usb_sndbulkpipe(d->udev, endpoint));
-+		if (ret)
-+			return ret;
-+		ret = usb_pipe_type_check(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
-+		if (ret)
-+			return ret;
-+	}
-+	return 0;
-+}
-+
-+static void dvb_usb_clear_halt(struct dvb_usb_device *d, u8 endpoint)
-+{
-+	if (endpoint) {
-+		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, endpoint));
-+		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, endpoint));
-+	}
-+}
-+
- static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
- {
- 	struct dvb_usb_adapter *adap;
- 	int ret, n, o;
+ 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
  
-+	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint);
-+	if (ret)
-+		return ret;
-+	ret = dvb_usb_check_bulk_endpoint(d, d->props.generic_bulk_ctrl_endpoint_response);
-+	if (ret)
-+		return ret;
- 	for (n = 0; n < d->props.num_adapters; n++) {
- 		adap = &d->adapter[n];
- 		adap->dev = d;
-@@ -103,10 +132,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
- 	 * when reloading the driver w/o replugging the device
- 	 * sometimes a timeout occurs, this helps
- 	 */
--	if (d->props.generic_bulk_ctrl_endpoint != 0) {
--		usb_clear_halt(d->udev, usb_sndbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
--		usb_clear_halt(d->udev, usb_rcvbulkpipe(d->udev, d->props.generic_bulk_ctrl_endpoint));
+-	if (!mutex_is_locked(&ictx->lock)) {
+-		unlock = true;
+-		mutex_lock(&ictx->lock);
 -	}
-+	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint);
-+	dvb_usb_clear_halt(d, d->props.generic_bulk_ctrl_endpoint_response);
++	unlock = mutex_trylock(&ictx->lock);
  
- 	return 0;
- 
+ 	retval = send_packet(ictx);
+ 	if (retval)
 -- 
 2.43.0
 
