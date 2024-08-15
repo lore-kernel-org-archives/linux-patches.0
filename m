@@ -1,44 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752E819DF5F;
-	Thu, 15 Aug 2024 14:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173C01A3BB6;
+	Thu, 15 Aug 2024 14:03:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730635; cv=none; b=j3oqMh/p8mGPlxwnN8OVN3bf3WTiW3aub6rYhd4BOy4mX3toNncMMRA+0SPmYDn4Nty1IigeCtnzTo4crQJpVeu19oUY/Be+qyrBquy+2Z1pa/mexgzFl80CidQDhEFIqmT7+9qdEyasTuQLpC69OjtK5k4o67Md4HXxDPPcsDg=
+	t=1723730639; cv=none; b=H+wfBl/cMrrqWb+5xEO/QMOWURcnSq41jeo2n9IlxVV99jUBiaShFYJuNbh3SdGN24CLKCC1F//ghthdHSX39dJNMZRMz8qv/vtqys2UzlbtATpoLmKO9AwsiXvFe1VXvekSbyL++2KrVRohX4Yp9I2pdt2PcRwUXzraPqK3eVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730635; c=relaxed/simple;
-	bh=KaOeRqYTxdVTLb3PhAP5c9vm2F4CxIkX/Sh5iMpQq6g=;
+	s=arc-20240116; t=1723730639; c=relaxed/simple;
+	bh=s4XNLMr/2Dkiv/6Fr3nxj2WU5jHOQ64jnmbSqNn+Jww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=knNSZOMAKhjbULH9jzrMrNn+vT/dAibVAwVk8TsdOqH569+wHsTVvD4INiKW3b4VR+65GPiP3Bf8T2xInQq7S0DqbT6yGs49NvXax985p/vrVNcXS7Khuws5i+VFFj0APyYw3bphOLWaLTumjVtFlW1vtdK5fnOKZw1d0njEUSA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne5qEFCZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r/aOINFlTICLT1VnQZycCIctoL0cIcRQbIIsDmh7Gr1CVF5L9VfLaVJunoi7YOcZiI7tKiw6/U4cIggpxgUANOkJ530SSZQ3ddLZve5E+criqvUGrG77mr+TrbR0rVpPFrQLf9ONzyB7D5I9Py82hBY4pSDJRLLfoR2v6B1tK/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1+K7cQGg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne5qEFCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C88C32786;
-	Thu, 15 Aug 2024 14:03:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1+K7cQGg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D41AC32786;
+	Thu, 15 Aug 2024 14:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730635;
-	bh=KaOeRqYTxdVTLb3PhAP5c9vm2F4CxIkX/Sh5iMpQq6g=;
+	s=korg; t=1723730638;
+	bh=s4XNLMr/2Dkiv/6Fr3nxj2WU5jHOQ64jnmbSqNn+Jww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ne5qEFCZI16OSVaHoAfIVwHQv1v69vEReybj5VyzqR6wPHyPhDT5AqXKL/Y6Lbhf7
-	 fJNLie9jldN9N70Men1dxw/o8vnHqU+G/+rqurEWeBmLGLUAuqEFDnREmIsqjgYBdT
-	 marMT7A35kwMHb0BFS7DUS7KoGVFCwyE/inGmg8k=
+	b=1+K7cQGguCQlxd3dSH1tA8U0MIIEZObHhUaO/KVQbSlZUy8JnHKW04rSexnkM+E9Z
+	 xMyqrbwVu+nTsbAP/LzS8vSbIIZjolT3cKJ0TUpHSC9XKHOb2av/pp7ZTCoYEKS4LJ
+	 ddVuuvxRcp6uf0zpJvfrYVRaycuAT04ES6h4UBvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com,
-	Marco Elver <elver@google.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Aleksandr Nogikh <nogikh@google.com>,
-	Alexander Potapenko <glider@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Marcello Sylvester Bauer <sylv@sylv.io>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 439/484] kcov: properly check for softirq context
-Date: Thu, 15 Aug 2024 15:24:57 +0200
-Message-ID: <20240815131958.414267677@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 430/484] torture: Enable clocksource watchdog with "tsc=watchdog"
+Date: Thu, 15 Aug 2024 15:24:48 +0200
+Message-ID: <20240815131958.066259308@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -57,96 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrey Konovalov <andreyknvl@gmail.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit 7d4df2dad312f270d62fecb0e5c8b086c6d7dcfc upstream.
+[ Upstream commit 877a0e83c57fa5e2a7fd628ec2e1733ed70c8792 ]
 
-When collecting coverage from softirqs, KCOV uses in_serving_softirq() to
-check whether the code is running in the softirq context.  Unfortunately,
-in_serving_softirq() is > 0 even when the code is running in the hardirq
-or NMI context for hardirqs and NMIs that happened during a softirq.
+This commit tests the "tsc=watchdog" kernel boot parameter when running
+the clocksourcewd torture tests.
 
-As a result, if a softirq handler contains a remote coverage collection
-section and a hardirq with another remote coverage collection section
-happens during handling the softirq, KCOV incorrectly detects a nested
-softirq coverate collection section and prints a WARNING, as reported by
-syzbot.
-
-This issue was exposed by commit a7f3813e589f ("usb: gadget: dummy_hcd:
-Switch to hrtimer transfer scheduler"), which switched dummy_hcd to using
-hrtimer and made the timer's callback be executed in the hardirq context.
-
-Change the related checks in KCOV to account for this behavior of
-in_serving_softirq() and make KCOV ignore remote coverage collection
-sections in the hardirq and NMI contexts.
-
-This prevents the WARNING printed by syzbot but does not fix the inability
-of KCOV to collect coverage from the __usb_hcd_giveback_urb when dummy_hcd
-is in use (caused by a7f3813e589f); a separate patch is required for that.
-
-Link: https://lkml.kernel.org/r/20240729022158.92059-1-andrey.konovalov@linux.dev
-Fixes: 5ff3b30ab57d ("kcov: collect coverage from interrupts")
-Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
-Reported-by: syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2388cdaeb6b10f0c13ac
-Acked-by: Marco Elver <elver@google.com>
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Aleksandr Nogikh <nogikh@google.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Marcello Sylvester Bauer <sylv@sylv.io>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Signed-off-by: Boqun Feng <boqun.feng@gmail.com>
+Stable-dep-of: f2655ac2c06a ("clocksource: Fix brown-bag boolean thinko in cs_watchdog_read()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcov.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ tools/testing/selftests/rcutorture/bin/torture.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/kcov.c
-+++ b/kernel/kcov.c
-@@ -151,6 +151,15 @@ static void kcov_remote_area_put(struct
- 	list_add(&area->list, &kcov_remote_areas);
- }
+diff --git a/tools/testing/selftests/rcutorture/bin/torture.sh b/tools/testing/selftests/rcutorture/bin/torture.sh
+index 66f0f724a1a6d..33ba08ea10a73 100755
+--- a/tools/testing/selftests/rcutorture/bin/torture.sh
++++ b/tools/testing/selftests/rcutorture/bin/torture.sh
+@@ -386,16 +386,16 @@ fi
  
-+/*
-+ * Unlike in_serving_softirq(), this function returns false when called during
-+ * a hardirq or an NMI that happened in the softirq context.
-+ */
-+static inline bool in_softirq_really(void)
-+{
-+	return in_serving_softirq() && !in_hardirq() && !in_nmi();
-+}
-+
- static notrace bool check_kcov_mode(enum kcov_mode needed_mode, struct task_struct *t)
- {
- 	unsigned int mode;
-@@ -160,7 +169,7 @@ static notrace bool check_kcov_mode(enum
- 	 * so we ignore code executed in interrupts, unless we are in a remote
- 	 * coverage collection section in a softirq.
- 	 */
--	if (!in_task() && !(in_serving_softirq() && t->kcov_softirq))
-+	if (!in_task() && !(in_softirq_really() && t->kcov_softirq))
- 		return false;
- 	mode = READ_ONCE(t->kcov_mode);
- 	/*
-@@ -822,7 +831,7 @@ void kcov_remote_start(u64 handle)
+ if test "$do_clocksourcewd" = "yes"
+ then
+-	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000"
++	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 tsc=watchdog"
+ 	torture_set "clocksourcewd-1" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --kconfig "CONFIG_TEST_CLOCKSOURCE_WATCHDOG=y" --trust-make
  
- 	if (WARN_ON(!kcov_check_handle(handle, true, true, true)))
- 		return;
--	if (!in_task() && !in_serving_softirq())
-+	if (!in_task() && !in_softirq_really())
- 		return;
+-	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 clocksource.max_cswd_read_retries=1"
++	torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 clocksource.max_cswd_read_retries=1 tsc=watchdog"
+ 	torture_set "clocksourcewd-2" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --kconfig "CONFIG_TEST_CLOCKSOURCE_WATCHDOG=y" --trust-make
  
- 	local_irq_save(flags);
-@@ -963,7 +972,7 @@ void kcov_remote_stop(void)
- 	int sequence;
- 	unsigned long flags;
- 
--	if (!in_task() && !in_serving_softirq())
-+	if (!in_task() && !in_softirq_really())
- 		return;
- 
- 	local_irq_save(flags);
+ 	# In case our work is already done...
+ 	if test "$do_rcutorture" != "yes"
+ 	then
+-		torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000"
++		torture_bootargs="rcupdate.rcu_cpu_stall_suppress_at_boot=1 torture.disable_onoff_at_boot rcupdate.rcu_task_stall_timeout=30000 tsc=watchdog"
+ 		torture_set "clocksourcewd-3" tools/testing/selftests/rcutorture/bin/kvm.sh --allcpus --duration 45s --configs TREE03 --trust-make
+ 	fi
+ fi
+-- 
+2.43.0
+
 
 
