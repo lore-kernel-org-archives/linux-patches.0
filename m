@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8679819DF6A;
-	Thu, 15 Aug 2024 13:37:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE8F219E7EF;
+	Thu, 15 Aug 2024 13:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729037; cv=none; b=hqJb5c2cQfebdnvf6uRxJQOy5eVa+lafZR+CimU+575o/epMz2dpn7yfuQMmDm2S/NpWMXh+cFkZhAxajl+w1E/XNihknkHnLm2Pu67ukaRvVTjLZhlUETn+k3Isg32iZYmDoJpqGE3+6ZsW197thcdMltIunAvC++SusodaGFo=
+	t=1723729040; cv=none; b=foSpM5sa7K4MH3BYuZcXTEuuFuFrwqgU/jbcXh+YaQxqpFQ194O7iLwyRElwmAQJu2KgSyhElN/X6eXUEvfzCGstllr5trHPICiw4WF2+qJxMB5VwAZYUBQP72ldUwtF2eQ8NRibERwzpowR7AZOuLz1qOF1WIFUKGi6QN1mhQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729037; c=relaxed/simple;
-	bh=EB++U3eDi29KH1j6UKuznAoMY5lcLYHpTTQ46ZcLksk=;
+	s=arc-20240116; t=1723729040; c=relaxed/simple;
+	bh=F9ltnEpaIH40Y2Lz6nivc0RVFL88Nl6ay4rCUcUYtIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tsRaHofkUExSZXRdhxhNX+5KBrHyRuRMWdlxu8ee1wfFA785PhmYvAt4u3MEnJaD4KnPhtOdeG98s7G2mgC5WcTmIJ08O/Fx+aBx04MtepbC21ZO541vYVEEdlHKRkMU1Rn6Llex4JkeyaEOMuUF3RhMQNOMA1TedEd6/TCplnQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPasz6pY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M2jevWg1OfMW0b7lIJqXMtwn0z00icJR1Q5dAljMYL4+z+Tje+RaZ+VlFNG5IibZ8LvbSfgiAnKXOStAP6bLDWyxGmCUaApjMt/4JBtf1wzkgOS/PVO0qowrUsRuyn7LDJCBDDSyonvmCyFj6B1tkubqdm0oJRJzXfUqMDgU8vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ob9zOc7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPasz6pY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1FFBC4AF0E;
-	Thu, 15 Aug 2024 13:37:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ob9zOc7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B044EC32786;
+	Thu, 15 Aug 2024 13:37:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729037;
-	bh=EB++U3eDi29KH1j6UKuznAoMY5lcLYHpTTQ46ZcLksk=;
+	s=korg; t=1723729040;
+	bh=F9ltnEpaIH40Y2Lz6nivc0RVFL88Nl6ay4rCUcUYtIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPasz6pYPObeET3XVHHNCcM3gcByp2q8uKYQj6b384sSx/VhOTvIftTaO7hN7/Kzc
-	 uZwCSoxH8DpWMItjln0nnwVFgENJtcpzDpfXxAu5k6zg53f4Ewx8VUXjsM5uT9Sw0t
-	 UXfuHcq7ELZIuqY/K/T+fuu0HZNRar819K/vq52E=
+	b=2Ob9zOc7ItuqgsCx/rZ2/s9nsWwYDqIzxdsBQ1Sx0EQYTreyj8dJFiAZBs2VrgE6F
+	 FhTs4Pb97HrI9qhyI7oqGgvfXJ/degaydU0OIXBdXryhT8lRyTE0/wK4SolbhZ3BeM
+	 gPo82w5jsLA3sc07Ob4hA15sQI5zVBrlhu/9TNhs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	netfilter-devel@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 4.19 191/196] netfilter: nf_tables: prefer nft_chain_validate
-Date: Thu, 15 Aug 2024 15:25:08 +0200
-Message-ID: <20240815131859.378766438@linuxfoundation.org>
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Amit Daniel Kachhap <amit.kachhap@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>
+Subject: [PATCH 4.19 192/196] arm64: cpufeature: Fix the visibility of compat hwcaps
+Date: Thu, 15 Aug 2024 15:25:09 +0200
+Message-ID: <20240815131859.417000648@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -51,188 +52,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Amit Daniel Kachhap <amit.kachhap@arm.com>
 
-commit cff3bd012a9512ac5ed858d38e6ed65f6391008c upstream
+commit 85f1506337f0c79a4955edfeee86a18628e3735f upstream.
 
-nft_chain_validate already performs loop detection because a cycle will
-result in a call stack overflow (ctx->level >= NFT_JUMP_STACK_SIZE).
+Commit 237405ebef58 ("arm64: cpufeature: Force HWCAP to be based on the
+sysreg visible to user-space") forced the hwcaps to use sanitised
+user-space view of the id registers. However, the ID register structures
+used to select few compat cpufeatures (vfp, crc32, ...) are masked and
+hence such hwcaps do not appear in /proc/cpuinfo anymore for PER_LINUX32
+personality.
 
-It also follows maps via ->validate callback in nft_lookup, so there
-appears no reason to iterate the maps again.
+Add the ID register structures explicitly and set the relevant entry as
+visible. As these ID registers are now of type visible so make them
+available in 64-bit userspace by making necessary changes in register
+emulation logic and documentation.
 
-nf_tables_check_loops() and all its helper functions can be removed.
-This improves ruleset load time significantly, from 23s down to 12s.
+While at it, update the comment for structure ftr_generic_32bits[] which
+lists the ID register that use it.
 
-This also fixes a crash bug. Old loop detection code can result in
-unbounded recursion:
-
-BUG: TASK stack guard page was hit at ....
-Oops: stack guard page: 0000 [#1] PREEMPT SMP KASAN
-CPU: 4 PID: 1539 Comm: nft Not tainted 6.10.0-rc5+ #1
-[..]
-
-with a suitable ruleset during validation of register stores.
-
-I can't see any actual reason to attempt to check for this from
-nft_validate_register_store(), at this point the transaction is still in
-progress, so we don't have a full picture of the rule graph.
-
-For nf-next it might make sense to either remove it or make this depend
-on table->validate_state in case we could catch an error earlier
-(for improved error reporting to userspace).
-
-Fixes: 20a69341f2d0 ("netfilter: nf_tables: add netlink set API")
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 237405ebef58 ("arm64: cpufeature: Force HWCAP to be based on the sysreg visible to user-space")
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>
+Reviewed-by: James Morse <james.morse@arm.com>
+Signed-off-by: Amit Daniel Kachhap <amit.kachhap@arm.com>
+Link: https://lore.kernel.org/r/20221103082232.19189-1-amit.kachhap@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_tables_api.c |  114 ++++--------------------------------------
- 1 file changed, 13 insertions(+), 101 deletions(-)
+ arch/arm64/kernel/cpufeature.c |   42 ++++++++++++++++++++++++++++++++---------
+ 1 file changed, 33 insertions(+), 9 deletions(-)
 
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -2698,6 +2698,15 @@ static void nf_tables_rule_release(const
- 	nf_tables_rule_destroy(ctx, rule);
+--- a/arch/arm64/kernel/cpufeature.c
++++ b/arch/arm64/kernel/cpufeature.c
+@@ -274,6 +274,30 @@ static const struct arm64_ftr_bits ftr_i
+ 	ARM64_FTR_END,
+ };
+ 
++static const struct arm64_ftr_bits ftr_mvfr0[] = {
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPROUND_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPSHVEC_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPSQRT_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPDIVIDE_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPTRAP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPDP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_FPSP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR0_SIMD_SHIFT, 4, 0),
++	ARM64_FTR_END,
++};
++
++static const struct arm64_ftr_bits ftr_mvfr1[] = {
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDFMAC_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_FPHP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDHP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDSP_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDINT_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_SIMDLS_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_FPDNAN_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, MVFR1_FPFTZ_SHIFT, 4, 0),
++	ARM64_FTR_END,
++};
++
+ static const struct arm64_ftr_bits ftr_mvfr2[] = {
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, 4, 4, 0),		/* FPMisc */
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, 0, 4, 0),		/* SIMDMisc */
+@@ -289,10 +313,10 @@ static const struct arm64_ftr_bits ftr_d
+ 
+ static const struct arm64_ftr_bits ftr_id_isar5[] = {
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_RDM_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_CRC32_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA2_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA1_SHIFT, 4, 0),
+-	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_AES_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_CRC32_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA2_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SHA1_SHIFT, 4, 0),
++	ARM64_FTR_BITS(FTR_VISIBLE, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_AES_SHIFT, 4, 0),
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, ID_ISAR5_SEVL_SHIFT, 4, 0),
+ 	ARM64_FTR_END,
+ };
+@@ -332,7 +356,7 @@ static const struct arm64_ftr_bits ftr_z
+  * Common ftr bits for a 32bit register with all hidden, strict
+  * attributes, with 4bit feature fields and a default safe value of
+  * 0. Covers the following 32bit registers:
+- * id_isar[0-4], id_mmfr[1-3], id_pfr1, mvfr[0-1]
++ * id_isar[1-3], id_mmfr[1-3]
+  */
+ static const struct arm64_ftr_bits ftr_generic_32bits[] = {
+ 	ARM64_FTR_BITS(FTR_HIDDEN, FTR_STRICT, FTR_LOWER_SAFE, 28, 4, 0),
+@@ -387,8 +411,8 @@ static const struct __ftr_reg_entry {
+ 	ARM64_FTR_REG(SYS_ID_MMFR4_EL1, ftr_id_mmfr4),
+ 
+ 	/* Op1 = 0, CRn = 0, CRm = 3 */
+-	ARM64_FTR_REG(SYS_MVFR0_EL1, ftr_generic_32bits),
+-	ARM64_FTR_REG(SYS_MVFR1_EL1, ftr_generic_32bits),
++	ARM64_FTR_REG(SYS_MVFR0_EL1, ftr_mvfr0),
++	ARM64_FTR_REG(SYS_MVFR1_EL1, ftr_mvfr1),
+ 	ARM64_FTR_REG(SYS_MVFR2_EL1, ftr_mvfr2),
+ 
+ 	/* Op1 = 0, CRn = 0, CRm = 4 */
+@@ -1887,7 +1911,7 @@ cpufeature_pan_not_uao(const struct arm6
+ 
+ /*
+  * We emulate only the following system register space.
+- * Op0 = 0x3, CRn = 0x0, Op1 = 0x0, CRm = [0, 4 - 7]
++ * Op0 = 0x3, CRn = 0x0, Op1 = 0x0, CRm = [0, 2 - 7]
+  * See Table C5-6 System instruction encodings for System register accesses,
+  * ARMv8 ARM(ARM DDI 0487A.f) for more details.
+  */
+@@ -1897,7 +1921,7 @@ static inline bool __attribute_const__ i
+ 		sys_reg_CRn(id) == 0x0 &&
+ 		sys_reg_Op1(id) == 0x0 &&
+ 		(sys_reg_CRm(id) == 0 ||
+-		 ((sys_reg_CRm(id) >= 4) && (sys_reg_CRm(id) <= 7))));
++		 ((sys_reg_CRm(id) >= 2) && (sys_reg_CRm(id) <= 7))));
  }
  
-+/** nft_chain_validate - loop detection and hook validation
-+ *
-+ * @ctx: context containing call depth and base chain
-+ * @chain: chain to validate
-+ *
-+ * Walk through the rules of the given chain and chase all jumps/gotos
-+ * and set lookups until either the jump limit is hit or all reachable
-+ * chains have been validated.
-+ */
- int nft_chain_validate(const struct nft_ctx *ctx, const struct nft_chain *chain)
- {
- 	struct nft_expr *expr, *last;
-@@ -2716,6 +2725,9 @@ int nft_chain_validate(const struct nft_
- 			if (!expr->ops->validate)
- 				continue;
- 
-+			/* This may call nft_chain_validate() recursively,
-+			 * callers that do so must increment ctx->level.
-+			 */
- 			err = expr->ops->validate(ctx, expr, &data);
- 			if (err < 0)
- 				return err;
-@@ -7418,106 +7430,6 @@ int nft_chain_validate_hooks(const struc
- }
- EXPORT_SYMBOL_GPL(nft_chain_validate_hooks);
- 
--/*
-- * Loop detection - walk through the ruleset beginning at the destination chain
-- * of a new jump until either the source chain is reached (loop) or all
-- * reachable chains have been traversed.
-- *
-- * The loop check is performed whenever a new jump verdict is added to an
-- * expression or verdict map or a verdict map is bound to a new chain.
-- */
--
--static int nf_tables_check_loops(const struct nft_ctx *ctx,
--				 const struct nft_chain *chain);
--
--static int nf_tables_loop_check_setelem(const struct nft_ctx *ctx,
--					struct nft_set *set,
--					const struct nft_set_iter *iter,
--					struct nft_set_elem *elem)
--{
--	const struct nft_set_ext *ext = nft_set_elem_ext(set, elem->priv);
--	const struct nft_data *data;
--
--	if (nft_set_ext_exists(ext, NFT_SET_EXT_FLAGS) &&
--	    *nft_set_ext_flags(ext) & NFT_SET_ELEM_INTERVAL_END)
--		return 0;
--
--	data = nft_set_ext_data(ext);
--	switch (data->verdict.code) {
--	case NFT_JUMP:
--	case NFT_GOTO:
--		return nf_tables_check_loops(ctx, data->verdict.chain);
--	default:
--		return 0;
--	}
--}
--
--static int nf_tables_check_loops(const struct nft_ctx *ctx,
--				 const struct nft_chain *chain)
--{
--	const struct nft_rule *rule;
--	const struct nft_expr *expr, *last;
--	struct nft_set *set;
--	struct nft_set_binding *binding;
--	struct nft_set_iter iter;
--
--	if (ctx->chain == chain)
--		return -ELOOP;
--
--	list_for_each_entry(rule, &chain->rules, list) {
--		nft_rule_for_each_expr(expr, last, rule) {
--			struct nft_immediate_expr *priv;
--			const struct nft_data *data;
--			int err;
--
--			if (strcmp(expr->ops->type->name, "immediate"))
--				continue;
--
--			priv = nft_expr_priv(expr);
--			if (priv->dreg != NFT_REG_VERDICT)
--				continue;
--
--			data = &priv->data;
--			switch (data->verdict.code) {
--			case NFT_JUMP:
--			case NFT_GOTO:
--				err = nf_tables_check_loops(ctx,
--							data->verdict.chain);
--				if (err < 0)
--					return err;
--			default:
--				break;
--			}
--		}
--	}
--
--	list_for_each_entry(set, &ctx->table->sets, list) {
--		if (!nft_is_active_next(ctx->net, set))
--			continue;
--		if (!(set->flags & NFT_SET_MAP) ||
--		    set->dtype != NFT_DATA_VERDICT)
--			continue;
--
--		list_for_each_entry(binding, &set->bindings, list) {
--			if (!(binding->flags & NFT_SET_MAP) ||
--			    binding->chain != chain)
--				continue;
--
--			iter.genmask	= nft_genmask_next(ctx->net);
--			iter.skip 	= 0;
--			iter.count	= 0;
--			iter.err	= 0;
--			iter.fn		= nf_tables_loop_check_setelem;
--
--			set->ops->walk(ctx, set, &iter);
--			if (iter.err < 0)
--				return iter.err;
--		}
--	}
--
--	return 0;
--}
--
- /**
-  *	nft_parse_u32_check - fetch u32 attribute and check for maximum value
-  *
-@@ -7653,7 +7565,7 @@ static int nft_validate_register_store(c
- 		if (data != NULL &&
- 		    (data->verdict.code == NFT_GOTO ||
- 		     data->verdict.code == NFT_JUMP)) {
--			err = nf_tables_check_loops(ctx, data->verdict.chain);
-+			err = nft_chain_validate(ctx, data->verdict.chain);
- 			if (err < 0)
- 				return err;
- 		}
+ /*
 
 
