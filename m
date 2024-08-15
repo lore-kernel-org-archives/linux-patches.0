@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813FE17BEAD;
-	Thu, 15 Aug 2024 14:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211FC1E526;
+	Thu, 15 Aug 2024 14:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731504; cv=none; b=AVZCMfxMHmDdM872HdtvR4qu8id8+cZCkBxBYbCkRTY6lyHtIFI/S0dEudjLs8J2+58kTUqtpV4R3cBKkgI8C9/0Cj8i89uVVMYptWbIGjp7udKZhahHN/et4tw7ZaroCQCe3e8cTBp3p5455xW1vlqff308Ok+Br23JQvQw8dU=
+	t=1723731508; cv=none; b=rh/esRaVFBxPZ8RmmgaayFgK3lN81L0cve6Aecfr0L11VrpDm21DRta61CncPEadpDEIhkFeJzYsgekMdSNnUFXlFztym8WZS3oQn+/vMYeDQhMUhlUZzT8aaX6S6omGvDGphfU/dvHkbpVHIVxbNQ+NcQxFlZwmn3ETbn/dR1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731504; c=relaxed/simple;
-	bh=iD+G9MPpgEykq0WmY7qjGJTAr/UIFLOz+t1WdD6dKho=;
+	s=arc-20240116; t=1723731508; c=relaxed/simple;
+	bh=8U6BkqfiY8eG+oF2guFx7s4crljo2ycxR1MxwKmPeR4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngleWaJ7g/s6Vahlv8e23uYxuMjTp4c76BbBVFGRWlED3JKYyqHraNBwfU6S7KHHIOVYZV4zkrlioIn4r+ulSvyJrZkCuDmqZLLyxsSmDMR4tvzSnfcowl+OA99tyEJPyFdXj5rozwaxqC5oS1l2bVaVgr2wnVc0O7zsue5RJeY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N2dhAEDQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=k49jaOn/LoYde8PMgSg0FJt6xfAhCFY2KRZzH2NLYFpnXzjWHQP9laZioRtU2BTXWW6nmvpL6vJPXGfLET1wrgtc+n432TjNCJ1naX31KD2s1ggjuUF40QOtNUXLbwonzP84QelVVcXa1J8wAiyJLnbS+AlpYDcdqnvN8di1pHY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT1h66ld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N2dhAEDQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06C13C32786;
-	Thu, 15 Aug 2024 14:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT1h66ld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34A71C32786;
+	Thu, 15 Aug 2024 14:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731504;
-	bh=iD+G9MPpgEykq0WmY7qjGJTAr/UIFLOz+t1WdD6dKho=;
+	s=korg; t=1723731507;
+	bh=8U6BkqfiY8eG+oF2guFx7s4crljo2ycxR1MxwKmPeR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2dhAEDQ2W/CM6CCMl75ktuUSHF9oLQD77JjgYOPgCOsUpg9lEIb/fBWU8rRK+sQx
-	 wop+wGt06pl2i4beBZoOQZHrYbu+7g7oIyedsNo0YThAtL09h8EjjV/khikl4JF28N
-	 dvV63iQRhQD4xK+8rDZoaH1gziRIMVJLhN24mnX4=
+	b=LT1h66ldZHEY90ZPxQx2H0dFYqIDD4g4a8ujmwNlH8xmvsP8tOZSgGqBPGa8URaWX
+	 aI8AYbUSbGfjPa4VfB8WXsDrU60uhDDK0Tg3n0INlQl4y0c6mMmyUHD/igFCpUFTO7
+	 C86dLTmCVXXYSo2GEvu8f9PP7hKuCOGosyrEL/mU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
-	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 150/259] ASoC: Intel: Move soc_intel_is_foo() helpers to a generic header
-Date: Thu, 15 Aug 2024 15:24:43 +0200
-Message-ID: <20240815131908.581482308@linuxfoundation.org>
+Subject: [PATCH 5.4 151/259] ASoC: Intel: use soc_intel_is_byt_cr() only when IOSF_MBI is reachable
+Date: Thu, 15 Aug 2024 15:24:44 +0200
+Message-ID: <20240815131908.618219865@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -46,180 +49,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit cd45c9bf8b43cd387e167cf166ae5c517f56d658 ]
+[ Upstream commit 9931f7d5d251882a147cc5811060097df43e79f5 ]
 
-The soc_intel_is_foo() helpers from
-sound/soc/intel/common/soc-intel-quirks.h are useful outside of the
-sound subsystem too.
+the Intel kbuild bot reports a link failure when IOSF_MBI is built-in
+but the Merrifield driver is configured as a module. The
+soc-intel-quirks.h is included for Merrifield platforms, but IOSF_MBI
+is not selected for that platform.
 
-Move these to include/linux/platform_data/x86/soc.h, so that
-other code can use them too.
+ld.lld: error: undefined symbol: iosf_mbi_read
+>>> referenced by atom.c
+>>>               sound/soc/sof/intel/atom.o:(atom_machine_select) in archive vmlinux.a
 
-Suggested-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Acked-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20211018143324.296961-2-hdegoede@redhat.com
-Stable-dep-of: 9931f7d5d251 ("ASoC: Intel: use soc_intel_is_byt_cr() only when IOSF_MBI is reachable")
+This patch forces the use of the fallback static inline when IOSF_MBI is not reachable.
+
+Fixes: 536cfd2f375d ("ASoC: Intel: use common helpers to detect CPUs")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407160704.zpdhJ8da-lkp@intel.com/
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20240722083002.10800-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/platform_data/x86/soc.h     | 65 +++++++++++++++++++++++
- sound/soc/intel/common/soc-intel-quirks.h | 51 ++----------------
- 2 files changed, 68 insertions(+), 48 deletions(-)
- create mode 100644 include/linux/platform_data/x86/soc.h
+ sound/soc/intel/common/soc-intel-quirks.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/platform_data/x86/soc.h b/include/linux/platform_data/x86/soc.h
-new file mode 100644
-index 0000000000000..da05f425587a0
---- /dev/null
-+++ b/include/linux/platform_data/x86/soc.h
-@@ -0,0 +1,65 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Helpers for Intel SoC model detection
-+ *
-+ * Copyright (c) 2019, Intel Corporation.
-+ */
-+
-+#ifndef __PLATFORM_DATA_X86_SOC_H
-+#define __PLATFORM_DATA_X86_SOC_H
-+
-+#if IS_ENABLED(CONFIG_X86)
-+
-+#include <asm/cpu_device_id.h>
-+#include <asm/intel-family.h>
-+
-+#define SOC_INTEL_IS_CPU(soc, type)				\
-+static inline bool soc_intel_is_##soc(void)			\
-+{								\
-+	static const struct x86_cpu_id soc##_cpu_ids[] = {	\
-+		X86_MATCH_INTEL_FAM6_MODEL(type, NULL),		\
-+		{}						\
-+	};							\
-+	const struct x86_cpu_id *id;				\
-+								\
-+	id = x86_match_cpu(soc##_cpu_ids);			\
-+	if (id)							\
-+		return true;					\
-+	return false;						\
-+}
-+
-+SOC_INTEL_IS_CPU(byt, ATOM_SILVERMONT);
-+SOC_INTEL_IS_CPU(cht, ATOM_AIRMONT);
-+SOC_INTEL_IS_CPU(apl, ATOM_GOLDMONT);
-+SOC_INTEL_IS_CPU(glk, ATOM_GOLDMONT_PLUS);
-+SOC_INTEL_IS_CPU(cml, KABYLAKE_L);
-+
-+#else /* IS_ENABLED(CONFIG_X86) */
-+
-+static inline bool soc_intel_is_byt(void)
-+{
-+	return false;
-+}
-+
-+static inline bool soc_intel_is_cht(void)
-+{
-+	return false;
-+}
-+
-+static inline bool soc_intel_is_apl(void)
-+{
-+	return false;
-+}
-+
-+static inline bool soc_intel_is_glk(void)
-+{
-+	return false;
-+}
-+
-+static inline bool soc_intel_is_cml(void)
-+{
-+	return false;
-+}
-+#endif /* IS_ENABLED(CONFIG_X86) */
-+
-+#endif /* __PLATFORM_DATA_X86_SOC_H */
 diff --git a/sound/soc/intel/common/soc-intel-quirks.h b/sound/soc/intel/common/soc-intel-quirks.h
-index a88a91995ce1a..a46be331c178e 100644
+index a46be331c178e..a7960b41a6a34 100644
 --- a/sound/soc/intel/common/soc-intel-quirks.h
 +++ b/sound/soc/intel/common/soc-intel-quirks.h
-@@ -9,34 +9,13 @@
- #ifndef _SND_SOC_INTEL_QUIRKS_H
- #define _SND_SOC_INTEL_QUIRKS_H
+@@ -11,7 +11,7 @@
  
-+#include <linux/platform_data/x86/soc.h>
-+
- #if IS_ENABLED(CONFIG_X86)
+ #include <linux/platform_data/x86/soc.h>
+ 
+-#if IS_ENABLED(CONFIG_X86)
++#if IS_REACHABLE(CONFIG_IOSF_MBI)
  
  #include <linux/dmi.h>
--#include <asm/cpu_device_id.h>
--#include <asm/intel-family.h>
  #include <asm/iosf_mbi.h>
- 
--#define SOC_INTEL_IS_CPU(soc, type)				\
--static inline bool soc_intel_is_##soc(void)			\
--{								\
--	static const struct x86_cpu_id soc##_cpu_ids[] = {	\
--		X86_MATCH_INTEL_FAM6_MODEL(type, NULL),		\
--		{}						\
--	};							\
--	const struct x86_cpu_id *id;				\
--								\
--	id = x86_match_cpu(soc##_cpu_ids);			\
--	if (id)							\
--		return true;					\
--	return false;						\
--}
--
--SOC_INTEL_IS_CPU(byt, ATOM_SILVERMONT);
--SOC_INTEL_IS_CPU(cht, ATOM_AIRMONT);
--SOC_INTEL_IS_CPU(apl, ATOM_GOLDMONT);
--SOC_INTEL_IS_CPU(glk, ATOM_GOLDMONT_PLUS);
--SOC_INTEL_IS_CPU(cml, KABYLAKE_L);
--
- static inline bool soc_intel_is_byt_cr(struct platform_device *pdev)
- {
- 	/*
-@@ -114,30 +93,6 @@ static inline bool soc_intel_is_byt_cr(struct platform_device *pdev)
- 	return false;
- }
- 
--static inline bool soc_intel_is_byt(void)
--{
--	return false;
--}
--
--static inline bool soc_intel_is_cht(void)
--{
--	return false;
--}
--
--static inline bool soc_intel_is_apl(void)
--{
--	return false;
--}
--
--static inline bool soc_intel_is_glk(void)
--{
--	return false;
--}
--
--static inline bool soc_intel_is_cml(void)
--{
--	return false;
--}
- #endif
- 
-- #endif /* _SND_SOC_INTEL_QUIRKS_H */
-+#endif /* _SND_SOC_INTEL_QUIRKS_H */
 -- 
 2.43.0
 
