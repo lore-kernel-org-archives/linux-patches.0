@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFDFE1A00E7;
-	Thu, 15 Aug 2024 14:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA971A4F1F;
+	Thu, 15 Aug 2024 14:28:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732084; cv=none; b=BOYMWgx7b9XpDx/7aHSI3FYSfheybjk4z8hs24DcTt171jdCBJwoymXxVv+rLK+I+THKnRWptCbQzHtqP5/eknNY8b2sfRpaL5D6YfQK1v/LSE9tPmzPGBNdAC0WV1qeDQFP2DwsJ0pHWVOLUVVl0roUIQRAD3S/Cg+aed9eGJ4=
+	t=1723732088; cv=none; b=Pa7fJBdYzhIUTCBX0f4aGxkaEVrpQLj04R67bibU9wIEtq/vbXFxGEv0YE+PReEAylCsXljNUusCK00QhQ9M9xrJkJkMV5hjmeX7M6FKM/1o0yqiVFWo/GYk/ohZEb/08wwF9cgFEZmm0DPlfEUXJeINdex3ZVpAzkk1bWeKyYg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732084; c=relaxed/simple;
-	bh=5MILrqzmaqr/Wo3L2VIX0LVaQZe4kEcCLZ5L0bvG0FA=;
+	s=arc-20240116; t=1723732088; c=relaxed/simple;
+	bh=8JgdGXLYrH5Nfijaae7egC34tctCmaftybd8EKFhDDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FNPNEwjjzOJeYwBZHuwouoKrOAlnvhkkz6RWGGn8xYUL7EGJQaw5x7KWNjFq8DizCukB4klkEnXXrpcvV7qsxp+CVtne5uhEVsdwJnme3AuQ8Uxu/n+zvm5oEqleqEB2XmjSuJhoJlGI6OE8NcDN164UTTM+PTTfkTNwMUfsB4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjAsrkWe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RPDQFpgbAmdfhNY8W3pp0tkzAMHL+aJc6GXXZT5O7ho9ZOa8K8Y8d5LH9+r+WosCjvEh+Nn3+BpPk4reCpssynROIjr903MDCqHIkVWL7vIBpSETNPiU6p3X8b91PWwZR6I1Jtk20j1kVQpz9/+2sy82ivMerXiiKSYIxQHCkXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mRQxCWBK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjAsrkWe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EE6AC32786;
-	Thu, 15 Aug 2024 14:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mRQxCWBK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 557EFC4AF0D;
+	Thu, 15 Aug 2024 14:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732084;
-	bh=5MILrqzmaqr/Wo3L2VIX0LVaQZe4kEcCLZ5L0bvG0FA=;
+	s=korg; t=1723732087;
+	bh=8JgdGXLYrH5Nfijaae7egC34tctCmaftybd8EKFhDDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjAsrkWeSIrxAvZiHg58FRH86Av4xANlnFF9SFwhPhQHel2Ch6GdVAZPyMZL5deqT
-	 w6tjJBaMD1dyiBHU/Bel1QWv7ekS1XSDHxUOjmsp6lm2iAXw44U7QQikZiR10d48TF
-	 HZ4DnCgkzVV+Gg6ZLecVkD6Vk9qze5U0cv9naO7w=
+	b=mRQxCWBK/18Tj8M0Snqc2I1tHUh9NEfsi1tIlbbGVKKFe967h1g/pvUItI0ZBUFtj
+	 Lr4AZOImrzEOVl6SzUWzvwhlK8lmWJH8njFbn0J8HU2R0akwwpuoCOO2tBd00lDfW8
+	 vKhG0jxyPf6zeyzrWvXPPOApIBc8CnavsWTnuVG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sean Young <sean@mess.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Christian Borntraeger <borntraeger@de.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 069/352] media: imon: Fix race getting ictx->lock
-Date: Thu, 15 Aug 2024 15:22:15 +0200
-Message-ID: <20240815131921.909198306@linuxfoundation.org>
+Subject: [PATCH 5.10 070/352] KVM: s390: pv: avoid stalls when making pages secure
+Date: Thu, 15 Aug 2024 15:22:16 +0200
+Message-ID: <20240815131921.948731199@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,49 +52,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Claudio Imbrenda <imbrenda@linux.ibm.com>
 
-[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
+[ Upstream commit f0a1a0615a6ff6d38af2c65a522698fb4bb85df6 ]
 
-Lets fix a race between mutex_is_lock() and mutex_lock().
+Improve make_secure_pte to avoid stalls when the system is heavily
+overcommitted. This was especially problematic in kvm_s390_pv_unpack,
+because of the loop over all pages that needed unpacking.
 
-<-mutex is not locked
-if (!mutex_is_locked(&ictx->lock)) {
-	unlock = true; <- mutex is locked externaly
-	mutex_lock(&ictx->lock);
-}
+Due to the locks being held, it was not possible to simply replace
+uv_call with uv_call_sched. A more complex approach was
+needed, in which uv_call is replaced with __uv_call, which does not
+loop. When the UVC needs to be executed again, -EAGAIN is returned, and
+the caller (or its caller) will try again.
 
-Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
-atomically.
+When -EAGAIN is returned, the path is the same as when the page is in
+writeback (and the writeback check is also performed, which is
+harmless).
 
-Fix the following cocci warning:
-drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
-
-Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 214d9bbcd3a672 ("s390/mm: provide memory management functions for protected KVM guests")
+Signed-off-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@de.ibm.com>
+Link: https://lore.kernel.org/r/20210920132502.36111-5-imbrenda@linux.ibm.com
+Signed-off-by: Christian Borntraeger <borntraeger@de.ibm.com>
+Stable-dep-of: 3f29f6537f54 ("s390/uv: Don't call folio_wait_writeback() without a folio reference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ arch/s390/kernel/uv.c     | 29 +++++++++++++++++++++++------
+ arch/s390/kvm/intercept.c |  5 +++++
+ 2 files changed, 28 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 253a1d1a840a0..cd4995e74b977 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -1153,10 +1153,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
+diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
+index c811b2313100b..422765c81dd69 100644
+--- a/arch/s390/kernel/uv.c
++++ b/arch/s390/kernel/uv.c
+@@ -186,7 +186,7 @@ static int make_secure_pte(pte_t *ptep, unsigned long addr,
+ {
+ 	pte_t entry = READ_ONCE(*ptep);
+ 	struct page *page;
+-	int expected, rc = 0;
++	int expected, cc = 0;
  
- 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
+ 	if (!pte_present(entry))
+ 		return -ENXIO;
+@@ -202,12 +202,25 @@ static int make_secure_pte(pte_t *ptep, unsigned long addr,
+ 	if (!page_ref_freeze(page, expected))
+ 		return -EBUSY;
+ 	set_bit(PG_arch_1, &page->flags);
+-	rc = uv_call(0, (u64)uvcb);
++	/*
++	 * If the UVC does not succeed or fail immediately, we don't want to
++	 * loop for long, or we might get stall notifications.
++	 * On the other hand, this is a complex scenario and we are holding a lot of
++	 * locks, so we can't easily sleep and reschedule. We try only once,
++	 * and if the UVC returned busy or partial completion, we return
++	 * -EAGAIN and we let the callers deal with it.
++	 */
++	cc = __uv_call(0, (u64)uvcb);
+ 	page_ref_unfreeze(page, expected);
+-	/* Return -ENXIO if the page was not mapped, -EINVAL otherwise */
+-	if (rc)
+-		rc = uvcb->rc == 0x10a ? -ENXIO : -EINVAL;
+-	return rc;
++	/*
++	 * Return -ENXIO if the page was not mapped, -EINVAL for other errors.
++	 * If busy or partially completed, return -EAGAIN.
++	 */
++	if (cc == UVC_CC_OK)
++		return 0;
++	else if (cc == UVC_CC_BUSY || cc == UVC_CC_PARTIAL)
++		return -EAGAIN;
++	return uvcb->rc == 0x10a ? -ENXIO : -EINVAL;
+ }
  
--	if (!mutex_is_locked(&ictx->lock)) {
--		unlock = true;
--		mutex_lock(&ictx->lock);
--	}
-+	unlock = mutex_trylock(&ictx->lock);
+ /*
+@@ -260,6 +273,10 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 	mmap_read_unlock(gmap->mm);
  
- 	retval = send_packet(ictx);
- 	if (retval)
+ 	if (rc == -EAGAIN) {
++		/*
++		 * If we are here because the UVC returned busy or partial
++		 * completion, this is just a useless check, but it is safe.
++		 */
+ 		wait_on_page_writeback(page);
+ 	} else if (rc == -EBUSY) {
+ 		/*
+diff --git a/arch/s390/kvm/intercept.c b/arch/s390/kvm/intercept.c
+index 8bf72a323e4fa..8f13943c9160d 100644
+--- a/arch/s390/kvm/intercept.c
++++ b/arch/s390/kvm/intercept.c
+@@ -535,6 +535,11 @@ static int handle_pv_uvc(struct kvm_vcpu *vcpu)
+ 	 */
+ 	if (rc == -EINVAL)
+ 		return 0;
++	/*
++	 * If we got -EAGAIN here, we simply return it. It will eventually
++	 * get propagated all the way to userspace, which should then try
++	 * again.
++	 */
+ 	return rc;
+ }
+ 
 -- 
 2.43.0
 
