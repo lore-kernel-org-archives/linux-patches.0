@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80001A08CB;
-	Thu, 15 Aug 2024 13:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D131A0733;
+	Thu, 15 Aug 2024 13:53:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729978; cv=none; b=tYbpL6qsmNCGGwz+8eRxad1eMSOYLQwxJgaGyxIiW7kf7ZvdU8usYIQyqR5aD+ym9SHsx1Qa8e0i+DKS+aze+PUHrwNx8lJmLEzQjFsrpNlc+ZuEz67GRFdCfm46YjqwbgHaBv8ITccynkTHa/h5/JRHScsYE4XajKsmccHsLOI=
+	t=1723729981; cv=none; b=VTLfcj7GF4j3dk+BNZWLfsb0RKrCxBvTCqR1aPn7+bKs4BCYqlgJTKXeIV4kQwy7Ej+kxD0noT2bFIiTQufqOc8y2Y6LRABCBzkBDfMqZx5EHvCg0nwIUFq3Dq/6PRd7lsFbkM50Z24PXZ668Se23oAj86B0qRAjQDp7mKKX0BE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729978; c=relaxed/simple;
-	bh=mFMF1TEx8+RKdztRi8ZqSUeajBPcqPfbhHr7MeagixA=;
+	s=arc-20240116; t=1723729981; c=relaxed/simple;
+	bh=vKexqOPRBakwZYGllTaJEtMFpRmF0qqmEEjgesx2kqI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VxLAAnjOj4dvOu3x90s/xnSKCDL3efa4AOHf5iAVDMUzYVUWe2u7xfVlmRUoeknC+feTqEsgHXwV+OCEP42Tt6Wd3QRtJWQBvoVE+X9WBN+ErTPSqChlNRz3SsKbXglIQXAbKVMdPwEHWqzdXrag1fdHOuvCS16pZjTRDPUW6zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+kySxdJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DFP8Tu9286FtYM5zBWXPr5ne/1HutIIEfM9sFjZ6D+RWGIR+BuaoK9/m7yCNCczFJU/HKtsdYojHB2yu5sttmCSAiSSTy+rwCxzoBGaPumnwFXFGAzpFSSj46L/3WjzWtMv3NeQoJpEiSxPy6MBXOQBz2zegT4aZeUeH0WssWwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmZHaY54; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+kySxdJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9A2C32786;
-	Thu, 15 Aug 2024 13:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmZHaY54"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33D51C32786;
+	Thu, 15 Aug 2024 13:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729978;
-	bh=mFMF1TEx8+RKdztRi8ZqSUeajBPcqPfbhHr7MeagixA=;
+	s=korg; t=1723729981;
+	bh=vKexqOPRBakwZYGllTaJEtMFpRmF0qqmEEjgesx2kqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+kySxdJJ4X90kicWdB9dGy3OBv1XChGz/3x35SQ8SA4aYspZNdFbM8zRtyQ9JjWA
-	 6dgUu6ak9Udw3+TIjCResL0zpnEKN0jCUlONNTQBsidQEjCzhLHL23V1sktRlgmkAv
-	 36zsRTpofr4CPxy4d3rQT2GyNR3yJRcptUc3TbVE=
+	b=RmZHaY54atbxIH9zsnbdYkDhk7ix2c/2kwxWEkipeu0iaEaVsBSPjCE9RQ3GYocay
+	 8G4Wq9O3c7L3mdvWLFbpzedZQHyiwrTpvuhnAGkOTh50mcAtO6CB6gWiFaK+l5iVMS
+	 Wqw84/A+8arjEsZyozUGcMoAJlZ4rAVO+rwK+mKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andi Shyti <andi.shyti@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 5.15 235/484] drm/i915/gt: Do not consider preemption during execlists_dequeue for gen8
-Date: Thu, 15 Aug 2024 15:21:33 +0200
-Message-ID: <20240815131950.482530323@linuxfoundation.org>
+	Friedrich Vock <friedrich.vock@gmx.de>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 236/484] drm/amdgpu/sdma5.2: Update wptr registers as well as doorbell
+Date: Thu, 15 Aug 2024 15:21:34 +0200
+Message-ID: <20240815131950.521416419@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -54,63 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nitin Gote <nitin.r.gote@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 65564157ae64cec0f527583f96e32f484f730f92 upstream.
+commit a03ebf116303e5d13ba9a2b65726b106cb1e96f6 upstream.
 
-We're seeing a GPU hang issue on a CHV platform, which was caused by commit
-bac24f59f454 ("drm/i915/execlists: Enable coarse preemption boundaries for
-Gen8").
+We seem to have a case where SDMA will sometimes miss a doorbell
+if GFX is entering the powergating state when the doorbell comes in.
+To workaround this, we can update the wptr via MMIO, however,
+this is only safe because we disallow gfxoff in begin_ring() for
+SDMA 5.2 and then allow it again in end_ring().
 
-The Gen8 platform only supports timeslicing and doesn't have a preemption
-mechanism, as its engines do not have a preemption timer.
+Enable this workaround while we are root causing the issue with
+the HW team.
 
-Commit 751f82b353a6 ("drm/i915/gt: Only disable preemption on Gen8 render
-engines") addressed this issue only for render engines. This patch extends
-that fix by ensuring that preemption is not considered for all engines on
-Gen8 platforms.
-
-v4:
- - Use the correct Fixes tag (Rodrigo Vivi)
- - Reworded commit log (Andi Shyti)
-
-v3:
- - Inside need_preempt(), condition of can_preempt() is not required
-   as simplified can_preempt() is enough. (Chris Wilson)
-
-v2: Simplify can_preempt() function (Tvrtko Ursulin)
-
-Fixes: 751f82b353a6 ("drm/i915/gt: Only disable preemption on gen8 render engines")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11396
-Suggested-by: Andi Shyti <andi.shyti@intel.com>
-Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
-Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
-CC: <stable@vger.kernel.org> # v5.12+
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240711163208.1355736-1-nitin.r.gote@intel.com
-(cherry picked from commit 7df0be6e6280c6fca01d039864bb123e5e36604b)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/3440
+Tested-by: Friedrich Vock <friedrich.vock@gmx.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+(cherry picked from commit f2ac52634963fc38e4935e11077b6f7854e5d700)
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_execlists_submission.c |    6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-+++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
-@@ -3231,11 +3231,7 @@ static void remove_from_engine(struct i9
- 
- static bool can_preempt(struct intel_engine_cs *engine)
- {
--	if (GRAPHICS_VER(engine->i915) > 8)
--		return true;
--
--	/* GPGPU on bdw requires extra w/a; not implemented */
--	return engine->class != RENDER_CLASS;
-+	return GRAPHICS_VER(engine->i915) > 8;
+--- a/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/sdma_v5_2.c
+@@ -298,6 +298,14 @@ static void sdma_v5_2_ring_set_wptr(stru
+ 		DRM_DEBUG("calling WDOORBELL64(0x%08x, 0x%016llx)\n",
+ 				ring->doorbell_index, ring->wptr << 2);
+ 		WDOORBELL64(ring->doorbell_index, ring->wptr << 2);
++		/* SDMA seems to miss doorbells sometimes when powergating kicks in.
++		 * Updating the wptr directly will wake it. This is only safe because
++		 * we disallow gfxoff in begin_use() and then allow it again in end_use().
++		 */
++		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR),
++		       lower_32_bits(ring->wptr << 2));
++		WREG32(sdma_v5_2_get_reg_offset(adev, ring->me, mmSDMA0_GFX_RB_WPTR_HI),
++		       upper_32_bits(ring->wptr << 2));
+ 	} else {
+ 		DRM_DEBUG("Not using doorbell -- "
+ 				"mmSDMA%i_GFX_RB_WPTR == 0x%08x "
+@@ -1675,6 +1683,10 @@ static void sdma_v5_2_ring_begin_use(str
+ 	 * but it shouldn't hurt for other parts since
+ 	 * this GFXOFF will be disallowed anyway when SDMA is
+ 	 * active, this just makes it explicit.
++	 * sdma_v5_2_ring_set_wptr() takes advantage of this
++	 * to update the wptr because sometimes SDMA seems to miss
++	 * doorbells when entering PG.  If you remove this, update
++	 * sdma_v5_2_ring_set_wptr() as well!
+ 	 */
+ 	amdgpu_gfx_off_ctrl(adev, false);
  }
- 
- static void kick_execlists(const struct i915_request *rq, int prio)
 
 
