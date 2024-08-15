@@ -1,38 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFBE1AC8A2;
-	Thu, 15 Aug 2024 13:38:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D271AC8A2;
+	Thu, 15 Aug 2024 13:38:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729125; cv=none; b=hQvvzNIfzLglAU1x3x7V3qKz6HlKi9ygLomyE+uaSBQUdlW/1yumMmxbVUXWBaAN6s6q2OjD375/wEPv4jVVht/wb2WufOw1MXnMiuZiUyF42eJ+Lo9b9MzJpwX+xU86HFNH84xxcLmCtdXBAZ3iH9kI4y1WOQ1KOA3sohoWzIg=
+	t=1723729128; cv=none; b=j/xJBqqp8bxWte+Zgoig1Fk1xmJGPYAkEcP6cSeDe5AGjJKTPB2+l/sbSqElVaYXO7wlZ2IVXuONyJNoxoKo1kbhssVSZPw9nXwuyd7kk/ny0pTxLEsYT8yVNLiDEKfqz0bGfEQ3NJ7hV5wdtxxKQWrlZkhAuSL/Na2CpGifHdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729125; c=relaxed/simple;
-	bh=LYOl6wybieI/MXHceiEba8E/5z1gBhRX6wQ6/9fTDTk=;
+	s=arc-20240116; t=1723729128; c=relaxed/simple;
+	bh=pCZlyR5SklaQDaxaA9wd6flreForvcy3ExLbALzU8RU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9YqFqDtpYDNpmSjzWDRIToZgy2z0kWfbmZh4MheMYDcpkFwNDFUZ/Y1NCNaKolSrnG7C3t80oS710C+tey/0bDkXm2xU+IhatghAJABZbTza8NKLMynMMCBNymhZT0cE22algeBoTYXU7zT001+41u2wkhSYQBnWQCLBdEi89g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NY8Klw3L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+WTAKl1Ak22gQgIsCWcjBPNeZFtA4KENvs9qt+eYM1kngkf7Rdd5Snpx+u0i86UvGWaIRkm3p2vp0E4iLeAYzBrAFmQWKYh+PICSowUunDcug6DQjqZpW1fXFbhgL0H9KJmbWuJhad6te+NxFHtKf8tfmwiyuwVBVIT3ef7dJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A8k9N5mV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NY8Klw3L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51C7C32786;
-	Thu, 15 Aug 2024 13:38:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A8k9N5mV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DB9C4AF0C;
+	Thu, 15 Aug 2024 13:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729125;
-	bh=LYOl6wybieI/MXHceiEba8E/5z1gBhRX6wQ6/9fTDTk=;
+	s=korg; t=1723729128;
+	bh=pCZlyR5SklaQDaxaA9wd6flreForvcy3ExLbALzU8RU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NY8Klw3L5oINJmYRgp0xHKJH8HqO69kDGwaxJpvsGyak5cvq9FdFL4nLMHjFI6/Ha
-	 cB6/bKhaB8hXzNg22YVAJVuvmJgyLQFy+YZvxQzmMvAdaWTQo/C92eal+MHB2FYbhb
-	 MiFPN0w7t5M/erSeBcflDFwbDt94I5Mo7kBoX8QQ=
+	b=A8k9N5mVznuCuwiOBz0K7Lh0cUkNIY5OGMrh61o9XIPRWjzK4S6EakWg0I+24Bhgk
+	 KbERfnlewVWzAZ7eEkHoan37Jg90hUEJatpslHwmdgdjvT/CrNhUc1tBRneLX2J9PR
+	 D0Rqif3v3ovV1d1FrcLMizXA3OgvniJts9PMI7vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Fangzhi Zuo <jerry.zuo@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.10 21/22] drm/amd/display: Solve mst monitors blank out problem after resume
-Date: Thu, 15 Aug 2024 15:25:29 +0200
-Message-ID: <20240815131832.074200528@linuxfoundation.org>
+Subject: [PATCH 6.10 22/22] drm/amdgpu/display: Fix null pointer dereference in dc_stream_program_cursor_position
+Date: Thu, 15 Aug 2024 15:25:30 +0200
+Message-ID: <20240815131832.111555892@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131831.265729493@linuxfoundation.org>
 References: <20240815131831.265729493@linuxfoundation.org>
@@ -51,47 +56,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-commit e33697141bac18906345ea46533a240f1ad3cd21 upstream.
+commit fa4c500ce93f4f933c38e6d6388970e121e27b21 upstream.
 
-[Why]
-In dm resume, we firstly restore dc state and do the mst resume for topology
-probing thereafter. If we change dpcd DP_MSTM_CTRL value after LT in mst reume,
-it will cause light up problem on the hub.
+The fix involves adding a null check for 'stream' at the beginning of
+the function. If 'stream' is NULL, the function immediately returns
+false. This ensures that 'stream' is not NULL when we dereference it to
+access 'ctx' in 'dc = stream->ctx->dc;' the function.
 
-[How]
-Revert commit 202dc359adda ("drm/amd/display: Defer handling mst up request in resume").
-And adjust the reason to trigger dc_link_detect by DETECT_REASON_RESUMEFROMS3S4.
+Fixes the below:
+	drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_stream.c:398 dc_stream_program_cursor_position()
+	error: we previously assumed 'stream' could be null (see line 397)
 
-Cc: stable@vger.kernel.org
-Fixes: 202dc359adda ("drm/amd/display: Defer handling mst up request in resume")
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Reviewed-by: Fangzhi Zuo <jerry.zuo@amd.com>
+drivers/gpu/drm/amd/amdgpu/../display/dc/core/dc_stream.c
+    389 bool dc_stream_program_cursor_position(
+    390         struct dc_stream_state *stream,
+    391         const struct dc_cursor_position *position)
+    392 {
+    393         struct dc *dc;
+    394         bool reset_idle_optimizations = false;
+    395         const struct dc_cursor_position *old_position;
+    396
+    397         old_position = stream ? &stream->cursor_position : NULL;
+                               ^^^^^^^^
+The patch adds a NULL check
+
+--> 398         dc = stream->ctx->dc;
+                     ^^^^^^^^
+The old code didn't check
+
+    399
+    400         if (dc_stream_set_cursor_position(stream, position)) {
+    401                 dc_z10_restore(dc);
+    402
+    403                 /* disable idle optimizations if enabling cursor */
+    404                 if (dc->idle_optimizations_allowed &&
+    405                     (!old_position->enable || dc->debug.exit_idle_opt_for_cursor_updates) &&
+    406                     position->enable) {
+    407                         dc_allow_idle_optimizations(dc, false);
+
+Fixes: f63f86b5affc ("drm/amd/display: Separate setting and programming of cursor")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Harry Wentland <harry.wentland@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Cc: Roman Li <roman.li@amd.com>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_stream.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -2418,6 +2418,7 @@ static void resume_mst_branch_status(str
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
+@@ -394,7 +394,10 @@ bool dc_stream_program_cursor_position(
+ 	bool reset_idle_optimizations = false;
+ 	const struct dc_cursor_position *old_position;
  
- 	ret = drm_dp_dpcd_writeb(mgr->aux, DP_MSTM_CTRL,
- 				 DP_MST_EN |
-+				 DP_UP_REQ_EN |
- 				 DP_UPSTREAM_IS_SRC);
- 	if (ret < 0) {
- 		drm_dbg_kms(mgr->dev, "mst write failed - undocked during suspend?\n");
-@@ -3017,7 +3018,7 @@ static int dm_resume(void *handle)
- 		} else {
- 			mutex_lock(&dm->dc_lock);
- 			dc_exit_ips_for_hw_access(dm->dc);
--			dc_link_detect(aconnector->dc_link, DETECT_REASON_HPD);
-+			dc_link_detect(aconnector->dc_link, DETECT_REASON_RESUMEFROMS3S4);
- 			mutex_unlock(&dm->dc_lock);
- 		}
+-	old_position = stream ? &stream->cursor_position : NULL;
++	if (!stream)
++		return false;
++
++	old_position = &stream->cursor_position;
+ 	dc = stream->ctx->dc;
  
+ 	if (dc_stream_set_cursor_position(stream, position)) {
 
 
