@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EAD1AC896;
-	Thu, 15 Aug 2024 14:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F651AC896;
+	Thu, 15 Aug 2024 14:26:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731990; cv=none; b=ovwFB07AIzCB6Ioh9xXkGg7FuenXPmgmxXidtO5yY3Eums86SNQwVgWvUwH2bIevoHlS1zn6H+aYqRsQiKAp6s1aO+fj9dfUxj7DF4+C3WFVnTw/HNSLrXVWnlkvePdcEtuuKCIboMvrH41sGOBS+o1YEemggb5dIAG0sDrpJfU=
+	t=1723731993; cv=none; b=LBStWhLpmrIACnEkqx+cuDFLkLYUZ0nsl/Jmgew/8wzJ8w800qMEsrvl0QPPxo7G5/x64qW5wxsLYTP7nsgwt/6VGmhUHlMNl+L0RY+T9xsKtQpYQO6w/GgpjMg65K4Z4+Nyq31KYg97GSVJOrfX9Yg5Ky5zeIpjvZN+LTbl+SA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731990; c=relaxed/simple;
-	bh=HuVMTq0DyeDDopxu/D1NIeSIVimNSCDHOjIAyGY7IXw=;
+	s=arc-20240116; t=1723731993; c=relaxed/simple;
+	bh=kDBLUUnRhrRoghIFdJ5TEOIYuvvn34ELV7z0GL1CyDw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bjFg3HclVko4HgS4u+uoDpUzagCqTNkVITTRZzPeITNgf6Jg0PWcxa3HGoQYS1+DYNFdSmmyG3unv4Ix/+O1/MTEAHgTCsaIzuIaVtY1g8LeDR+AOhNgmVwC91KAVL/A3ASUOhDpTZ7F9DuoVe9JON1vP6+bcT/2zGPtTvpPOeA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a1sF5YlK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ua67fP6+Rlws/dMxCOkoyGW0Nc6SpGhvAtekvo+Kxlmp1FyOHpBmiaQc96/LOUtKfXZaWrMGfsJlbuSGtP7DcnZJ3LD3p0Cj7ILyt3wYf+XC4U4cgW9Vqas6OdbZefDyWbI6tev1kVEbrOdx7L2E2waj9iecpWshfi1dY8M5AvE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1WxHe7aL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a1sF5YlK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31D3AC32786;
-	Thu, 15 Aug 2024 14:26:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1WxHe7aL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D43C32786;
+	Thu, 15 Aug 2024 14:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731990;
-	bh=HuVMTq0DyeDDopxu/D1NIeSIVimNSCDHOjIAyGY7IXw=;
+	s=korg; t=1723731993;
+	bh=kDBLUUnRhrRoghIFdJ5TEOIYuvvn34ELV7z0GL1CyDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a1sF5YlK5jT3eyfxIgfmX9bkGPWGlVcRLQsLdJR++TUhmMEkf1ZMpK4iDW6ehTAkd
-	 s+YdG2TDxa/wSN2CEYw8gT8jOXmAT6Kdhs7RTRuHsWH+bResCrh9sX5++2OTljLFs1
-	 uKz8ewhRfy50fRSPz/YxVAfzG4iqSTVceufIWZxA=
+	b=1WxHe7aLElSriKb7bjvOF4py2lth73jF6bVU99M1bM+ezyTIJ2/jMeaDfAsqEiXqs
+	 fpxWvTeBV0qXjWjTMeUo90UncWM0Bfu+yV/ZpAFDM/3GokYcmqCZw5nkgVDnS4irxN
+	 LqV92+V3JSZPwxR4TszufqK0vB0hSGe7lq1kZ2FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 040/352] selftests/bpf: Check length of recv in test_sockmap
-Date: Thu, 15 Aug 2024 15:21:46 +0200
-Message-ID: <20240815131920.782568613@linuxfoundation.org>
+Subject: [PATCH 5.10 014/352] soc: qcom: rpmh-rsc: Ensure irqs arent disabled by rpmh_rsc_send_data() callers
+Date: Thu, 15 Aug 2024 15:21:20 +0200
+Message-ID: <20240815131919.762336806@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,38 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit de1b5ea789dc28066cc8dc634b6825bd6148f38b ]
+[ Upstream commit e43111f52b9ec5c2d700f89a1d61c8d10dc2d9e9 ]
 
-The value of recv in msg_loop may be negative, like EWOULDBLOCK, so it's
-necessary to check if it is positive before accumulating it to bytes_recvd.
+Dan pointed out that Smatch is concerned about this code because it uses
+spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
+irqs before going to sleep. The comment above the function says it
+should be called with interrupts enabled, but we simply hope that's true
+without really confirming that. Let's add a might_sleep() here to
+confirm that interrupts and preemption aren't disabled. Once we do that,
+we can change the lock to be non-saving, spin_lock_irq(), to clarify
+that we don't expect irqs to be disabled. If irqs are disabled by
+callers they're going to be enabled anyway in the wait_event_lock_irq()
+call which would be bad.
 
-Fixes: 16962b2404ac ("bpf: sockmap, add selftests")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/5172563f7c7b2a2e953cef02e89fc34664a7b190.1716446893.git.tanggeliang@kylinos.cn
+This should make Smatch happier and find bad callers faster with the
+might_sleep(). We can drop the WARN_ON() in the caller because we have
+the might_sleep() now, simplifying the code.
+
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Closes: https://lore.kernel.org/r/911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain
+Fixes: 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free")
+Cc: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240509184129.3924422-1-swboyd@chromium.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/rpmh-rsc.c | 7 ++++---
+ drivers/soc/qcom/rpmh.c     | 1 -
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index daf848258410e..61be5993416e9 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -663,7 +663,8 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
- 				}
- 			}
+diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+index a297911afe571..26e6dd860b5d9 100644
+--- a/drivers/soc/qcom/rpmh-rsc.c
++++ b/drivers/soc/qcom/rpmh-rsc.c
+@@ -629,13 +629,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ {
+ 	struct tcs_group *tcs;
+ 	int tcs_id;
+-	unsigned long flags;
++
++	might_sleep();
  
--			s->bytes_recvd += recv;
-+			if (recv > 0)
-+				s->bytes_recvd += recv;
+ 	tcs = get_tcs_for_msg(drv, msg);
+ 	if (IS_ERR(tcs))
+ 		return PTR_ERR(tcs);
  
- 			if (data) {
- 				int chunk_sz = opt->sendpage ?
+-	spin_lock_irqsave(&drv->lock, flags);
++	spin_lock_irq(&drv->lock);
+ 
+ 	/* Wait forever for a free tcs. It better be there eventually! */
+ 	wait_event_lock_irq(drv->tcs_wait,
+@@ -654,7 +655,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
+ 		write_tcs_reg_sync(drv, RSC_DRV_CMD_WAIT_FOR_CMPL, tcs_id, 0);
+ 		enable_tcs_irq(drv, tcs_id, true);
+ 	}
+-	spin_unlock_irqrestore(&drv->lock, flags);
++	spin_unlock_irq(&drv->lock);
+ 
+ 	/*
+ 	 * These two can be done after the lock is released because:
+diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
+index b61e183ede694..707e176ed4ed8 100644
+--- a/drivers/soc/qcom/rpmh.c
++++ b/drivers/soc/qcom/rpmh.c
+@@ -193,7 +193,6 @@ static int __rpmh_write(const struct device *dev, enum rpmh_state state,
+ 	rpm_msg->msg.state = state;
+ 
+ 	if (state == RPMH_ACTIVE_ONLY_STATE) {
+-		WARN_ON(irqs_disabled());
+ 		ret = rpmh_rsc_send_data(ctrlr_to_drv(ctrlr), &rpm_msg->msg);
+ 	} else {
+ 		/* Clean up our call by spoofing tx_done */
 -- 
 2.43.0
 
