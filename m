@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C4A1A705B;
-	Thu, 15 Aug 2024 13:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E80C19EED2;
+	Thu, 15 Aug 2024 13:33:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728830; cv=none; b=HTxj+0bl0GbOUnHvyjswXOcc8joyCbFDE1Ev/SaWP3tV+9pY7L//wWjiIAqsRJbYI6V/S9n7Lq0KszYy3l++95UqbBpAk4WnlP+IPkWbG4LG4Lg082Q7HyboxXQaq4ZAx/Jbzddaug/RZZ6WBE5/kv8GrgCYWX69Rymd5fuvvqo=
+	t=1723728833; cv=none; b=ZqOWlsOxPoRfwWHoXzptrTH//ATdmCKC/N0zCNvhYXT+XteuSu3SqllqynpatyejL+erY8+eFkg9AREKiemMwwHQHdC/oYj1BWu575lqpe3l8DdsvfvCjaYobph15bNunRf9iluVNAD5/DbrBrJu//acdoFR64uPEflJr+9sc8M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728830; c=relaxed/simple;
-	bh=1V78jLOaWm/uhyGu5tUqDbtM9RxLYQ63VLnP/xML01w=;
+	s=arc-20240116; t=1723728833; c=relaxed/simple;
+	bh=h7iZ2mQ0fXDoyyHop0ETSKUqP9IsnetMP0qgyyg+kZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MW2NRBB+uGji7d4d3VrJljfosOGIBAAOJ50TGADiLHXGtUex4hNjn+WG5GzCKEnmONnaWPhqgJjNYujmioYF6XtwXq5n/6E9LbKSd6UjNSuGM9vqP5jAcG/QX8ChDPjumU2R5Q+IY4SLcAokWUeJJkLy0EH+a+c36ynh+5igPvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rr4r9vl6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HCrbgJeg34GtXSu/0v1wgGQQ2m3XaHuujMQ/bA9HX/hCe34tgAfZHdxGzY2R+lhe+uL8/flz76cO9nN5KZrn6gBjRqQ7nw/KLzHG1TkaC52Q4GCvOVtL6TLhuMKx4XvYHh65BB1L3Da/NNTZoXQPRyt5Mtrw2OklO4q4JC9DR+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mtK0lPfz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rr4r9vl6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A659BC32786;
-	Thu, 15 Aug 2024 13:33:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mtK0lPfz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF4CC32786;
+	Thu, 15 Aug 2024 13:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728830;
-	bh=1V78jLOaWm/uhyGu5tUqDbtM9RxLYQ63VLnP/xML01w=;
+	s=korg; t=1723728833;
+	bh=h7iZ2mQ0fXDoyyHop0ETSKUqP9IsnetMP0qgyyg+kZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rr4r9vl6xBCyyV1ZhJwjPKYTtYFgsdS94dykoqEMI7bRmNchA5Y4pBN24roNwegtg
-	 GFuQ2s64Z/oIB9jmT4GVLT7zwAJVlYnAjbbRIfMabxYp4QeVrnO2hjXk9ZPFfrPEs3
-	 MS4hI7J30BUdlydEUEygeOdBck7DxtTIRPZaVukU=
+	b=mtK0lPfzbaJRW2cBDeYlQsg/Z4HvPkfQ9FJDgOIUZvzlwYv+GjdY95VT5v/xFimvq
+	 Xc+xjYU45uHKuG2voUJ/b4lIVCKTyP4VGDjINGACC8a53FPttL+owiw48/fCNn9Qm/
+	 HbTUT2j6+CDXlr1xOJ0yX6K7mIlqLEhAMLZRxcYk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Halil Pasic <pasic@linux.ibm.com>,
-	Alexandra Winter <wintera@linux.ibm.com>,
+	Jen Linkova <furry@google.com>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Patrick Rohr <prohr@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	=?UTF-8?q?YOSHIFUJI=20Hideaki=20/=20=E5=90=89=E8=97=A4=E8=8B=B1=E6=98=8E?= <yoshfuji@linux-ipv6.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 124/196] net/iucv: fix use after free in iucv_sock_close()
-Date: Thu, 15 Aug 2024 15:24:01 +0200
-Message-ID: <20240815131856.820244386@linuxfoundation.org>
+Subject: [PATCH 4.19 125/196] ipv6: fix ndisc_is_useropt() handling for PIO
+Date: Thu, 15 Aug 2024 15:24:02 +0200
+Message-ID: <20240815131856.857105431@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -46,81 +51,91 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alexandra Winter <wintera@linux.ibm.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-[ Upstream commit f558120cd709682b739207b48cf7479fd9568431 ]
+[ Upstream commit a46c68debf3be3a477a69ccbf0a1d050df841676 ]
 
-iucv_sever_path() is called from process context and from bh context.
-iucv->path is used as indicator whether somebody else is taking care of
-severing the path (or it is already removed / never existed).
-This needs to be done with atomic compare and swap, otherwise there is a
-small window where iucv_sock_close() will try to work with a path that has
-already been severed and freed by iucv_callback_connrej() called by
-iucv_tasklet_fn().
+The current logic only works if the PIO is between two
+other ND user options.  This fixes it so that the PIO
+can also be either before or after other ND user options
+(for example the first or last option in the RA).
 
-Example:
-[452744.123844] Call Trace:
-[452744.123845] ([<0000001e87f03880>] 0x1e87f03880)
-[452744.123966]  [<00000000d593001e>] iucv_path_sever+0x96/0x138
-[452744.124330]  [<000003ff801ddbca>] iucv_sever_path+0xc2/0xd0 [af_iucv]
-[452744.124336]  [<000003ff801e01b6>] iucv_sock_close+0xa6/0x310 [af_iucv]
-[452744.124341]  [<000003ff801e08cc>] iucv_sock_release+0x3c/0xd0 [af_iucv]
-[452744.124345]  [<00000000d574794e>] __sock_release+0x5e/0xe8
-[452744.124815]  [<00000000d5747a0c>] sock_close+0x34/0x48
-[452744.124820]  [<00000000d5421642>] __fput+0xba/0x268
-[452744.124826]  [<00000000d51b382c>] task_work_run+0xbc/0xf0
-[452744.124832]  [<00000000d5145710>] do_notify_resume+0x88/0x90
-[452744.124841]  [<00000000d5978096>] system_call+0xe2/0x2c8
-[452744.125319] Last Breaking-Event-Address:
-[452744.125321]  [<00000000d5930018>] iucv_path_sever+0x90/0x138
-[452744.125324]
-[452744.125325] Kernel panic - not syncing: Fatal exception in interrupt
+side note: there's actually Android tests verifying
+a portion of the old broken behaviour, so:
+  https://android-review.googlesource.com/c/kernel/tests/+/3196704
+fixes those up.
 
-Note that bh_lock_sock() is not serializing the tasklet context against
-process context, because the check for sock_owned_by_user() and
-corresponding handling is missing.
-
-Ideas for a future clean-up patch:
-A) Correct usage of bh_lock_sock() in tasklet context, as described in
-Link: https://lore.kernel.org/netdev/1280155406.2899.407.camel@edumazet-laptop/
-Re-enqueue, if needed. This may require adding return values to the
-tasklet functions and thus changes to all users of iucv.
-
-B) Change iucv tasklet into worker and use only lock_sock() in af_iucv.
-
-Fixes: 7d316b945352 ("af_iucv: remove IUCV-pathes completely")
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
-Link: https://patch.msgid.link/20240729122818.947756-1-wintera@linux.ibm.com
+Cc: Jen Linkova <furry@google.com>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: Patrick Rohr <prohr@google.com>
+Cc: David Ahern <dsahern@kernel.org>
+Cc: YOSHIFUJI Hideaki / 吉藤英明 <yoshfuji@linux-ipv6.org>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Fixes: 048c796beb6e ("ipv6: adjust ndisc_is_useropt() to also return true for PIO")
+Link: https://patch.msgid.link/20240730001748.147636-1-maze@google.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/iucv/af_iucv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv6/ndisc.c |   34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
-index 1ff2860dd3ffe..50725e2198f4c 100644
---- a/net/iucv/af_iucv.c
-+++ b/net/iucv/af_iucv.c
-@@ -456,8 +456,8 @@ static void iucv_sever_path(struct sock *sk, int with_user_data)
- 	struct iucv_sock *iucv = iucv_sk(sk);
- 	struct iucv_path *path = iucv->path;
- 
--	if (iucv->path) {
--		iucv->path = NULL;
-+	/* Whoever resets the path pointer, must sever and free it. */
-+	if (xchg(&iucv->path, NULL)) {
- 		if (with_user_data) {
- 			low_nmcpy(user_data, iucv->src_name);
- 			high_nmcpy(user_data, iucv->dst_name);
--- 
-2.43.0
-
+--- a/net/ipv6/ndisc.c
++++ b/net/ipv6/ndisc.c
+@@ -223,6 +223,7 @@ struct ndisc_options *ndisc_parse_option
+ 		return NULL;
+ 	memset(ndopts, 0, sizeof(*ndopts));
+ 	while (opt_len) {
++		bool unknown = false;
+ 		int l;
+ 		if (opt_len < sizeof(struct nd_opt_hdr))
+ 			return NULL;
+@@ -258,22 +259,23 @@ struct ndisc_options *ndisc_parse_option
+ 			break;
+ #endif
+ 		default:
+-			if (ndisc_is_useropt(dev, nd_opt)) {
+-				ndopts->nd_useropts_end = nd_opt;
+-				if (!ndopts->nd_useropts)
+-					ndopts->nd_useropts = nd_opt;
+-			} else {
+-				/*
+-				 * Unknown options must be silently ignored,
+-				 * to accommodate future extension to the
+-				 * protocol.
+-				 */
+-				ND_PRINTK(2, notice,
+-					  "%s: ignored unsupported option; type=%d, len=%d\n",
+-					  __func__,
+-					  nd_opt->nd_opt_type,
+-					  nd_opt->nd_opt_len);
+-			}
++			unknown = true;
++		}
++		if (ndisc_is_useropt(dev, nd_opt)) {
++			ndopts->nd_useropts_end = nd_opt;
++			if (!ndopts->nd_useropts)
++				ndopts->nd_useropts = nd_opt;
++		} else if (unknown) {
++			/*
++			 * Unknown options must be silently ignored,
++			 * to accommodate future extension to the
++			 * protocol.
++			 */
++			ND_PRINTK(2, notice,
++				  "%s: ignored unsupported option; type=%d, len=%d\n",
++				  __func__,
++				  nd_opt->nd_opt_type,
++				  nd_opt->nd_opt_len);
+ 		}
+ next_opt:
+ 		opt_len -= l;
 
 
