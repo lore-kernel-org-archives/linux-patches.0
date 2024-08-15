@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A72A7DA9E;
-	Thu, 15 Aug 2024 13:40:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1DBB1714A8;
+	Thu, 15 Aug 2024 13:40:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729203; cv=none; b=n3CtP6TPBZsp4WGxIQRTMYan8OXv2ocbHrxonlevsEwzzIZWn/xDGJ6KJFu99Lt4OkvyXEVZwCNq+dlJd4C3I3FYeYdS91l+AUvV0P8W6evldqO4cAU9MZ5OZX11dmgTpIg55WN8T7WzP95t3RRnx5KTA/VLWNKlkLFfQVsCSTY=
+	t=1723729206; cv=none; b=RBSCMYjqGC4R5Ok4wxI+/iN5s1Y4epUR3iFK5vDguNBgcGdC6VHaJAZtPDYEBOF78POH8WgdXZrDTgoUc4agTsiGKFJYhpwqR0g+/RMzgaIYvTMjjR26iU9+ZJwEiLLPIQBFLd73umUJzrYiFflG+iOItQs4/dzUcRLLfD/OVPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729203; c=relaxed/simple;
-	bh=VDCNKyNGO+sLMhJKRjXj3S4hx2LTvWV1+A1iZ0ZegI4=;
+	s=arc-20240116; t=1723729206; c=relaxed/simple;
+	bh=D6D7oop62HjEo+w/e/5AnVsSpp1mTPPrHNGVtSpn4jk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fvVmMjTBs1Xjbc3CczfM7tGRk7x2MxWR92jRlkMBC0yX3TyJakt9nl01egN5nNL/FB/VdVqsn9Ob1fQu3jL1kT3xjMeLv9ygbcXF0hviEX2qYYfBdizt6w+ulU/9P3h6HVgoFvPsW08E39fDnVg32pGLO9FmtRUQ7zph2VPqqpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HD2vakuh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRAz7b8n6bqQpU/nX5DiaJOF6LovVstacC1jTZ6bFheDRZ1jYkRTdmUS0tLDCNBntXaOUSEnBAsFMdezj+HSRhc9D03bFcs95pSw/eEZ73WqaaS12FcbE5vVlMBosByBz0wwMHeTM2mAv0o9t5aoASTFWhjpYVgtX+Eh8TUbAwo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmSaxKU9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HD2vakuh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B8EC32786;
-	Thu, 15 Aug 2024 13:40:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmSaxKU9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AC9C32786;
+	Thu, 15 Aug 2024 13:40:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729203;
-	bh=VDCNKyNGO+sLMhJKRjXj3S4hx2LTvWV1+A1iZ0ZegI4=;
+	s=korg; t=1723729206;
+	bh=D6D7oop62HjEo+w/e/5AnVsSpp1mTPPrHNGVtSpn4jk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HD2vakuhQkD0vVEUR5ZLV3uU/4RZD5Ob3GOL0e6rhzMcEspG2IooeLaWPx5DoZTSS
-	 6zRKehmPZT+jSM58mODPgEkjQHT8PS/n4Vu+Yyu96JEQaOqG9diXE6NCB7PudbuUG8
-	 4XkFCXrlF28KoiZDv9RAJ9FHYv3KfyPBblQOVLdU=
+	b=wmSaxKU908PVVNvEVJh8DgBQ+5FUTrj274hiCtgBx4PGqITkLBzueRKs0IzQ3EAUs
+	 92xbkkYM9ma0s2hpq1y11RURm5OrC+F/a+QQ1B15lBL4iiHUh69fKLSKtnGwpU2wOt
+	 wUX7zy3+ZaQ3mX1m0y+++D27WSVdJGC20tcOS7ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Esben Haabendal <esben@geanix.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/484] memory: fsl_ifc: Make FSL_IFC config visible and selectable
-Date: Thu, 15 Aug 2024 15:18:01 +0200
-Message-ID: <20240815131942.169401751@linuxfoundation.org>
+	Steev Klimaszewski <steev@kali.org>,
+	Alexey Minnekhanov <alexeymin@postmarketos.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 024/484] soc: qcom: pdr: protect locator_addr with the main mutex
+Date: Thu, 15 Aug 2024 15:18:02 +0200
+Message-ID: <20240815131942.207704270@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,52 +54,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Esben Haabendal <esben@geanix.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 9ba0cae3cac07c21c583f9ff194f74043f90d29c ]
+[ Upstream commit 107924c14e3ddd85119ca43c26a4ee1056fa9b84 ]
 
-While use of fsl_ifc driver with NAND flash is fine, as the fsl_ifc_nand
-driver selects FSL_IFC automatically, we need the CONFIG_FSL_IFC option to
-be selectable for platforms using fsl_ifc with NOR flash.
+If the service locator server is restarted fast enough, the PDR can
+rewrite locator_addr fields concurrently. Protect them by placing
+modification of those fields under the main pdr->lock.
 
-Fixes: ea0c0ad6b6eb ("memory: Enable compile testing for most of the drivers")
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Signed-off-by: Esben Haabendal <esben@geanix.com>
-Link: https://lore.kernel.org/r/20240530-fsl-ifc-config-v3-1-1fd2c3d233dd@geanix.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: fbe639b44a82 ("soc: qcom: Introduce Protection Domain Restart helpers")
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-QRD
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Tested-by: Alexey Minnekhanov <alexeymin@postmarketos.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240622-qcom-pd-mapper-v9-1-a84ee3591c8e@linaro.org
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/Kconfig       | 2 +-
- drivers/mtd/nand/raw/Kconfig | 3 +--
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/pdr_interface.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/memory/Kconfig b/drivers/memory/Kconfig
-index 72c0df129d5c5..5a410a40f914a 100644
---- a/drivers/memory/Kconfig
-+++ b/drivers/memory/Kconfig
-@@ -168,7 +168,7 @@ config FSL_CORENET_CF
- 	  represents a coherency violation.
+diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+index 915d5bc3d46e6..b308d942bbd6c 100644
+--- a/drivers/soc/qcom/pdr_interface.c
++++ b/drivers/soc/qcom/pdr_interface.c
+@@ -76,12 +76,12 @@ static int pdr_locator_new_server(struct qmi_handle *qmi,
+ 					      locator_hdl);
+ 	struct pdr_service *pds;
  
- config FSL_IFC
--	bool "Freescale IFC driver" if COMPILE_TEST
-+	bool "Freescale IFC driver"
- 	depends on FSL_SOC || ARCH_LAYERSCAPE || SOC_LS1021A || COMPILE_TEST
- 	depends on HAS_IOMEM
++	mutex_lock(&pdr->lock);
+ 	/* Create a local client port for QMI communication */
+ 	pdr->locator_addr.sq_family = AF_QIPCRTR;
+ 	pdr->locator_addr.sq_node = svc->node;
+ 	pdr->locator_addr.sq_port = svc->port;
  
-diff --git a/drivers/mtd/nand/raw/Kconfig b/drivers/mtd/nand/raw/Kconfig
-index 67b7cb67c0307..aa584aaf8ae3f 100644
---- a/drivers/mtd/nand/raw/Kconfig
-+++ b/drivers/mtd/nand/raw/Kconfig
-@@ -254,8 +254,7 @@ config MTD_NAND_FSL_IFC
- 	tristate "Freescale IFC NAND controller"
- 	depends on FSL_SOC || ARCH_LAYERSCAPE || SOC_LS1021A || COMPILE_TEST
- 	depends on HAS_IOMEM
--	select FSL_IFC
--	select MEMORY
-+	depends on FSL_IFC
- 	help
- 	  Various Freescale chips e.g P1010, include a NAND Flash machine
- 	  with built-in hardware ECC capabilities.
+-	mutex_lock(&pdr->lock);
+ 	pdr->locator_init_complete = true;
+ 	mutex_unlock(&pdr->lock);
+ 
+@@ -104,10 +104,10 @@ static void pdr_locator_del_server(struct qmi_handle *qmi,
+ 
+ 	mutex_lock(&pdr->lock);
+ 	pdr->locator_init_complete = false;
+-	mutex_unlock(&pdr->lock);
+ 
+ 	pdr->locator_addr.sq_node = 0;
+ 	pdr->locator_addr.sq_port = 0;
++	mutex_unlock(&pdr->lock);
+ }
+ 
+ static const struct qmi_ops pdr_locator_ops = {
+@@ -366,12 +366,14 @@ static int pdr_get_domain_list(struct servreg_get_domain_list_req *req,
+ 	if (ret < 0)
+ 		return ret;
+ 
++	mutex_lock(&pdr->lock);
+ 	ret = qmi_send_request(&pdr->locator_hdl,
+ 			       &pdr->locator_addr,
+ 			       &txn, SERVREG_GET_DOMAIN_LIST_REQ,
+ 			       SERVREG_GET_DOMAIN_LIST_REQ_MAX_LEN,
+ 			       servreg_get_domain_list_req_ei,
+ 			       req);
++	mutex_unlock(&pdr->lock);
+ 	if (ret < 0) {
+ 		qmi_txn_cancel(&txn);
+ 		return ret;
 -- 
 2.43.0
 
