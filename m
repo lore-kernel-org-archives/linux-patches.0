@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A42D1A7057;
-	Thu, 15 Aug 2024 14:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B801AC8AE;
+	Thu, 15 Aug 2024 14:08:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730907; cv=none; b=uqE3+37/rF3UnaYkBRbqW7uiGOtWxSIWUlqGYC6tD6KFTfqAywQEC5BJbZhZLxmCNJ9zzXf6qVMlU1XNdngefzrLUC0o72SWa0ScyumKh6xeSpIcPBCjV7m9eaoVDZZe/wR98nKblW18Mgda1wEDnV/wEcjXWhx6qNIvicqNlZ8=
+	t=1723730910; cv=none; b=ggRITfnne+KFjYePwf1wz7bi/KPmIt8GRiMFadU150FxKAuyERek+dFlsDAjR+5+LFOc4Q2Xn8+mUuMT06plfyFnZbt6L4a47GeKMkzIXv5iKcliR/3/g7IteTvp1waV4Zs572M9c5NV8EgY+atqfqmPtjV9LobjopTF9yD2tC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730907; c=relaxed/simple;
-	bh=S13t7G3xqQelV53Y5ONNp3x6tvNC6yK5WdLDNlUq1/M=;
+	s=arc-20240116; t=1723730910; c=relaxed/simple;
+	bh=jIwXN2ibJiyLAK+Nka0JFM3vMCW4IkepeXpVEA1JRTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N3coLidDV7bhf6kjswfEI5JZS5eMr0FxNyV4NJyt6ZVFYVpgzsJmTI/bLejQ5JAZMZRd7E/FYTVOJEc/CY5KB+vWTn6LEux/Oo21ygw6CYwt0WdB+jbjNybzk9Rq0tP40j7pGHEe5br9dmV6oisV1YRw3UWuLKuZ85KCKpy3MwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eO01xhMv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=soBqld6k8cVsNt8sI204OxS9FWWsqJvIHL8dEPhJNxxUjzPPKl5nioTq8eawNx/gPPNkosnkOupvNBeKKpT1PIVT1Q7hJdOGDSRgqIJ9JJ5A5h4hkaxhxA+O+ba64xMHvERWs/xpwDJ5P5ThZHva8gKmKJZzEmXN8iDSTsvJbOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dn4hG9ry; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eO01xhMv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 204F5C32786;
-	Thu, 15 Aug 2024 14:08:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dn4hG9ry"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45935C4AF0D;
+	Thu, 15 Aug 2024 14:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730907;
-	bh=S13t7G3xqQelV53Y5ONNp3x6tvNC6yK5WdLDNlUq1/M=;
+	s=korg; t=1723730910;
+	bh=jIwXN2ibJiyLAK+Nka0JFM3vMCW4IkepeXpVEA1JRTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eO01xhMvhybM/Ts+Velku/Jju+tOIneWiUgdD/eDKeMTsYmjl3jUC5TjWssA60K1c
-	 A0+UKZ3FFzLrkL+Ok2IU6Elx4DhRyyDYuJ9RZAY/29MBNfyRbFqLFA53MBqnqugN+H
-	 NyUmG2wrsCvgLBkb8y0c6E4B0zOgo/5d5BPqgnhE=
+	b=Dn4hG9ry6OwHV6gi4ENA+o/pDjNNC+U8yWWbT2Hzs1PZLviXAeOBd2PJCzEWiMf+f
+	 bS8LwHT0plaEPaEI6ZTcNpuiguRcqyFlJZ1Hl/+R5ToWqFyAI582vhjLK7oEqMYxWR
+	 k/tHOpJJHNcjgeo0syb95E9TqeNi5aA+g0J70sUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	syzbot+604424eb051c2f696163@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 31/67] Squashfs: fix variable overflow triggered by sysbot
-Date: Thu, 15 Aug 2024 15:25:45 +0200
-Message-ID: <20240815131839.521744936@linuxfoundation.org>
+	Edward Adam Davis <eadavis@qq.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+b3b14fb9f8a14c5d0267@syzkaller.appspotmail.com
+Subject: [PATCH 6.6 32/67] reiserfs: fix uninit-value in comp_keys
+Date: Thu, 15 Aug 2024 15:25:46 +0200
+Message-ID: <20240815131839.559446678@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -52,60 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 12427de9439d68b8e96ba6f50b601ef15f437612 ]
+[ Upstream commit dd8f87f21dc3da2eaf46e7401173f935b90b13a8 ]
 
-Sysbot reports a slab out of bounds write in squashfs_readahead().
+The cpu_key was not initialized in reiserfs_delete_solid_item(), which triggered
+this issue.
 
-This is ultimately caused by a file reporting an (infeasibly) large file
-size (1407374883553280 bytes) with the minimum block size of 4K.
-
-This causes variable overflow.
-
-Link: https://lkml.kernel.org/r/20231113160901.6444-1-phillip@squashfs.org.uk
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: syzbot+604424eb051c2f696163@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/000000000000b1fda20609ede0d1@google.com/
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-and-tested-by:  <syzbot+b3b14fb9f8a14c5d0267@syzkaller.appspotmail.com>
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://lore.kernel.org/r/tencent_9EA7E746DE92DBC66049A62EDF6ED64CA706@qq.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/file.c        | 3 ++-
- fs/squashfs/file_direct.c | 6 +++---
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ fs/reiserfs/stree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/squashfs/file.c b/fs/squashfs/file.c
-index 8ba8c4c507707..e8df6430444b0 100644
---- a/fs/squashfs/file.c
-+++ b/fs/squashfs/file.c
-@@ -544,7 +544,8 @@ static void squashfs_readahead(struct readahead_control *ractl)
- 	struct squashfs_page_actor *actor;
- 	unsigned int nr_pages = 0;
- 	struct page **pages;
--	int i, file_end = i_size_read(inode) >> msblk->block_log;
-+	int i;
-+	loff_t file_end = i_size_read(inode) >> msblk->block_log;
- 	unsigned int max_pages = 1UL << shift;
+diff --git a/fs/reiserfs/stree.c b/fs/reiserfs/stree.c
+index 3676e02a0232a..4ab8cab6ea614 100644
+--- a/fs/reiserfs/stree.c
++++ b/fs/reiserfs/stree.c
+@@ -1407,7 +1407,7 @@ void reiserfs_delete_solid_item(struct reiserfs_transaction_handle *th,
+ 	INITIALIZE_PATH(path);
+ 	int item_len = 0;
+ 	int tb_init = 0;
+-	struct cpu_key cpu_key;
++	struct cpu_key cpu_key = {};
+ 	int retval;
+ 	int quota_cut_bytes = 0;
  
- 	readahead_expand(ractl, start, (len | mask) + 1);
-diff --git a/fs/squashfs/file_direct.c b/fs/squashfs/file_direct.c
-index f1ccad519e28c..763a3f7a75f6d 100644
---- a/fs/squashfs/file_direct.c
-+++ b/fs/squashfs/file_direct.c
-@@ -26,10 +26,10 @@ int squashfs_readpage_block(struct page *target_page, u64 block, int bsize,
- 	struct inode *inode = target_page->mapping->host;
- 	struct squashfs_sb_info *msblk = inode->i_sb->s_fs_info;
- 
--	int file_end = (i_size_read(inode) - 1) >> PAGE_SHIFT;
-+	loff_t file_end = (i_size_read(inode) - 1) >> PAGE_SHIFT;
- 	int mask = (1 << (msblk->block_log - PAGE_SHIFT)) - 1;
--	int start_index = target_page->index & ~mask;
--	int end_index = start_index | mask;
-+	loff_t start_index = target_page->index & ~mask;
-+	loff_t end_index = start_index | mask;
- 	int i, n, pages, bytes, res = -ENOMEM;
- 	struct page **page;
- 	struct squashfs_page_actor *actor;
 -- 
 2.43.0
 
