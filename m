@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536C118D630;
-	Thu, 15 Aug 2024 13:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B63A1714A8;
+	Thu, 15 Aug 2024 13:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729348; cv=none; b=HdB5Ar8rYduBScd3xDenxLdoGXj2ynVAqOsCJLfEHtkc/CUj3bb9HdVQLt3FaYuo1hprgiXDUzwlTVyBKErWxyrHicFhfXmsTwsTqcDwQGanCUOmoAqMbHToyIvNjnFQgHY+EnCxPBP75uQfj5xenRf/e5sepxTF3GAKVnLDwyU=
+	t=1723729351; cv=none; b=F7PrDlnmjtjsrUgvoBcKnq5e+8N0n/Tddxvj2NOwah2lW5U8DGq+MlaiJkCEExud+2BW+68N1IEUqBksh19XmrG43il9fEnO5lRHxPOwn3U1ol0uMzVKCl8LdfYUErR6Cjf3YPqmiW6IS5via945WM0TdxVmny2CjrEWKBZFiKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729348; c=relaxed/simple;
-	bh=jQLiF9G/ONdZ//XjAwUGmUXGwqRKEL3J6Yql9nIDFuY=;
+	s=arc-20240116; t=1723729351; c=relaxed/simple;
+	bh=0N3dfpBj5itQFuxuJbUyI3+b4Zs7jiRBdmYf2EaYPRU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D6XkRYiymt84o2oXcfUWSuyMqY6f/gH3HDB/NTtSbA7S3jo6txu3hmrg7eoZZiivsGD7p0RkAdhuUD+Dv6fjWS/lB6w4LuMMwHAat+AqtM91DazQr6vJaWZ7oMysUWZgfCF8Vni3c1PwRCbvEVt7Et/ZWavh83ppuQSyRhZMOHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=abtpcTRc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k+OYyzzNN2BVoAArDt20BS3RpMK8XF/ZoO3rtekJcVCKPYRkMp+CEBcnNNNb3brO6joYdU3NuubS3aUMKxkvt20k113cS/2jjLBmbn0aytRb5KtLMGMXORizAqi24d//es4VrGlNU1+343ETpazqONV7GbQbQIQGQNW7NT+h8hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vmvmQNFO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="abtpcTRc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4871C32786;
-	Thu, 15 Aug 2024 13:42:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vmvmQNFO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24D7C32786;
+	Thu, 15 Aug 2024 13:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729348;
-	bh=jQLiF9G/ONdZ//XjAwUGmUXGwqRKEL3J6Yql9nIDFuY=;
+	s=korg; t=1723729351;
+	bh=0N3dfpBj5itQFuxuJbUyI3+b4Zs7jiRBdmYf2EaYPRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abtpcTRci1HwPaivx9+RNpQ+nABSxPmeG/3mvYo5Dygp5a0RKJUS87IyJuFfIOvw7
-	 68Jz32tzJ55i86sRM0mSFPAQsteHuPNwouT98yLFuy2czvsThQobbmIutbB7T0po2s
-	 45iAkpS9S0pL8UEtNQZ+/R5Z1SI8nNijw5s6aQUs=
+	b=vmvmQNFOzdlKY2f8+lyp8OdrazJqU8slLIPnCkYhkUVjwlzclAicAr8DchWe4AzKa
+	 XB9dHwuA8hxbNDRWCJt+lmjyxiRR91thzqTNR7hWfsHpS0kPvStI2+z4RDjF3PXDaE
+	 XmAViSx+waLxf04AgA/wboOltS+MrzFsaVii0OAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com,
+	En-Wei Wu <en-wei.wu@canonical.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 070/484] perf: Fix default aux_watermark calculation
-Date: Thu, 15 Aug 2024 15:18:48 +0200
-Message-ID: <20240815131943.989965217@linuxfoundation.org>
+Subject: [PATCH 5.15 071/484] wifi: virt_wifi: avoid reporting connection success with wrong SSID
+Date: Thu, 15 Aug 2024 15:18:49 +0200
+Message-ID: <20240815131944.028317057@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,45 +52,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: En-Wei Wu <en-wei.wu@canonical.com>
 
-[ Upstream commit 43deb76b19663a96ec2189d8f4eb9a9dc2d7623f ]
+[ Upstream commit b5d14b0c6716fad7f0c94ac6e1d6f60a49f985c7 ]
 
-The default aux_watermark is half the AUX area buffer size. In general,
-on a 64-bit architecture, the AUX area buffer size could be a bigger than
-fits in a 32-bit type, but the calculation does not allow for that
-possibility.
+When user issues a connection with a different SSID than the one
+virt_wifi has advertised, the __cfg80211_connect_result() will
+trigger the warning: WARN_ON(bss_not_found).
 
-However the aux_watermark value is recorded in a u32, so should not be
-more than U32_MAX either.
+The issue is because the connection code in virt_wifi does not
+check the SSID from user space (it only checks the BSSID), and
+virt_wifi will call cfg80211_connect_result() with WLAN_STATUS_SUCCESS
+even if the SSID is different from the one virt_wifi has advertised.
+Eventually cfg80211 won't be able to find the cfg80211_bss and generate
+the warning.
 
-Fix by doing the calculation in a correctly sized type, and limiting the
-result to U32_MAX.
+Fixed it by checking the SSID (from user space) in the connection code.
 
-Fixes: d68e6799a5c8 ("perf: Cap allocation order at aux_watermark")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20240624201101.60186-7-adrian.hunter@intel.com
+Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
+Reported-by: syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com
+Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
+Link: https://patch.msgid.link/20240705023756.10954-1-en-wei.wu@canonical.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/ring_buffer.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/wireless/virt_wifi.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/ring_buffer.c b/kernel/events/ring_buffer.c
-index 45965f13757e4..f3a3c294ff2b3 100644
---- a/kernel/events/ring_buffer.c
-+++ b/kernel/events/ring_buffer.c
-@@ -683,7 +683,9 @@ int rb_alloc_aux(struct perf_buffer *rb, struct perf_event *event,
- 		 * max_order, to aid PMU drivers in double buffering.
- 		 */
- 		if (!watermark)
--			watermark = nr_pages << (PAGE_SHIFT - 1);
-+			watermark = min_t(unsigned long,
-+					  U32_MAX,
-+					  (unsigned long)nr_pages << (PAGE_SHIFT - 1));
+diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
+index 514f2c1124b61..ec730bc44adc1 100644
+--- a/drivers/net/wireless/virt_wifi.c
++++ b/drivers/net/wireless/virt_wifi.c
+@@ -136,6 +136,8 @@ static struct ieee80211_supported_band band_5ghz = {
+ /* Assigned at module init. Guaranteed locally-administered and unicast. */
+ static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
  
- 		/*
- 		 * Use aux_watermark as the basis for chunking to
++#define VIRT_WIFI_SSID "VirtWifi"
++
+ static void virt_wifi_inform_bss(struct wiphy *wiphy)
+ {
+ 	u64 tsf = div_u64(ktime_get_boottime_ns(), 1000);
+@@ -146,8 +148,8 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
+ 		u8 ssid[8];
+ 	} __packed ssid = {
+ 		.tag = WLAN_EID_SSID,
+-		.len = 8,
+-		.ssid = "VirtWifi",
++		.len = strlen(VIRT_WIFI_SSID),
++		.ssid = VIRT_WIFI_SSID,
+ 	};
+ 
+ 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
+@@ -213,6 +215,8 @@ struct virt_wifi_netdev_priv {
+ 	struct net_device *upperdev;
+ 	u32 tx_packets;
+ 	u32 tx_failed;
++	u32 connect_requested_ssid_len;
++	u8 connect_requested_ssid[IEEE80211_MAX_SSID_LEN];
+ 	u8 connect_requested_bss[ETH_ALEN];
+ 	bool is_up;
+ 	bool is_connected;
+@@ -229,6 +233,12 @@ static int virt_wifi_connect(struct wiphy *wiphy, struct net_device *netdev,
+ 	if (priv->being_deleted || !priv->is_up)
+ 		return -EBUSY;
+ 
++	if (!sme->ssid)
++		return -EINVAL;
++
++	priv->connect_requested_ssid_len = sme->ssid_len;
++	memcpy(priv->connect_requested_ssid, sme->ssid, sme->ssid_len);
++
+ 	could_schedule = schedule_delayed_work(&priv->connect, HZ * 2);
+ 	if (!could_schedule)
+ 		return -EBUSY;
+@@ -252,12 +262,15 @@ static void virt_wifi_connect_complete(struct work_struct *work)
+ 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
+ 	u8 *requested_bss = priv->connect_requested_bss;
+ 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
++	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
++			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
++				  priv->connect_requested_ssid_len);
+ 	u16 status = WLAN_STATUS_SUCCESS;
+ 
+ 	if (is_zero_ether_addr(requested_bss))
+ 		requested_bss = NULL;
+ 
+-	if (!priv->is_up || (requested_bss && !right_addr))
++	if (!priv->is_up || (requested_bss && !right_addr) || !right_ssid)
+ 		status = WLAN_STATUS_UNSPECIFIED_FAILURE;
+ 	else
+ 		priv->is_connected = true;
 -- 
 2.43.0
 
