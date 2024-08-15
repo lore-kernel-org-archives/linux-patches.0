@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BA719DF9C;
-	Thu, 15 Aug 2024 13:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADFE1A00FF;
+	Thu, 15 Aug 2024 13:44:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729472; cv=none; b=lpwJ6tjw5RN7i2BdOWTljdAvgOOSRhkCObOj062seifPh2iaI95Qic6SElMkqCh+2lzyAsMlc8fOWhM2R9gbgmm2XDwfNupT/QgOtKgknQsIoyAQqErQkyzeVg/0vZ4MnUaNT1hfUsi7pcqQreOHbnNtW9Swxc3wCR90XSnfzZs=
+	t=1723729475; cv=none; b=DcEblZypuxiyaLEZJico8DGdU05tZWv9QPOpreHA1a8Yta5E2soDT0tWi0ZzYnjCQh/PPhmyqKx3JVF4sjzWn34zyWOiHfntLJILmrXVzW5Zo8uBYvYufASIRpeV7zsKCydcCVdNAEaOHtnKmdnLjOmGALapNg5sOt4WlBSVe3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729472; c=relaxed/simple;
-	bh=e4yXR1a4FZPY84QbeTe25RsKopmCBuGFVG8KYhQmgP0=;
+	s=arc-20240116; t=1723729475; c=relaxed/simple;
+	bh=EFPmrhRQYEQbx8kBh6ZrHxLTyrNvOmJnc6sphUYVRS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t6PDIisBx0rf7E4u3RF3GbJ9ZhHqP4VhaZ8raMGqSI936VVac4Il17DNVg+HMtKS9segvrVHLXKOTHZ8HtGs01YEOkSWNIICUrL2rXAvoKFDjjIIGlkQMIuvckJgLUqiXFjCivP+EtuX87o2vrY9JwXgVj/GfV+G6u37Uv3FHeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bqhL8e5M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sgXkRrIYJpLn3omwQNkFtzKO+5FNFrO+jDiAS9BZmA5DnOoWmGQsAR06iXsxX7xxQSD7VjwlDG6lfRwB74ZEC23s1kGAJGdXNR6DwkMeL/RKnOMNwJ/qa/9BcNxhPvjINV3TECjGU7DEdv7DC7QRIbIkrlT8swmfrUaMGj+VDmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jr6QM0ip; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bqhL8e5M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD395C32786;
-	Thu, 15 Aug 2024 13:44:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jr6QM0ip"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E60BCC32786;
+	Thu, 15 Aug 2024 13:44:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729472;
-	bh=e4yXR1a4FZPY84QbeTe25RsKopmCBuGFVG8KYhQmgP0=;
+	s=korg; t=1723729475;
+	bh=EFPmrhRQYEQbx8kBh6ZrHxLTyrNvOmJnc6sphUYVRS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bqhL8e5MWevN4EDeELyRGBFmf2AQe9J9rrvYV2An9WJMCkhAY3RKxSwQpRd0rp43S
-	 hRKR8v94TRJWvg8hN0jgy16bktdjDzCwAz5kclbEkznix3Wb44hYOhhFYQ0vhjL+7k
-	 mWNBICvbzEa6ec9+U2EQP9VNEiyJINUv8crK/rWM=
+	b=jr6QM0ippJsEf5uNKTuzdxTgdDmexC2Qi5BaD0MsxcrWI5+2NSTr2S+Qi0CU9tD49
+	 i5SaLDWqSuIJasKe30g2T4yDthyNMVg56aIu2GpZvFrl0MNTQJNaGUnQ9+8MkNTedI
+	 hTl9MjfEmgGL30A426aTmj8z9YUCAILBeyi1FUio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/484] perf intel-pt: Fix exclude_guest setting
-Date: Thu, 15 Aug 2024 15:19:27 +0200
-Message-ID: <20240815131945.504482319@linuxfoundation.org>
+Subject: [PATCH 5.15 110/484] mfd: rsmu: Split core code into separate module
+Date: Thu, 15 Aug 2024 15:19:28 +0200
+Message-ID: <20240815131945.542416830@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,67 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit b40934ae32232140e85dc7dc1c3ea0e296986723 ]
+[ Upstream commit c879a8c39dd55e7fabdd8d13341f7bc5200db377 ]
 
-In the past, the exclude_guest setting has had no effect on Intel PT
-tracing, but that may not be the case in the future.
+Linking a file into two modules can have unintended side-effects
+and produces a W=1 warning:
 
-Set the flag correctly based upon whether KVM is using Intel PT
-"Host/Guest" mode, which is determined by the kvm_intel module
-parameter pt_mode:
+scripts/Makefile.build:236: drivers/mfd/Makefile: rsmu_core.o is added to multiple modules: rsmu-i2c rsmu-spi
 
- pt_mode=0	System-wide mode : host and guest output to host buffer
- pt_mode=1	Host/Guest mode : host/guest output to host/guest
-                buffers respectively
+Make this one a separate module instead.
 
-Fixes: 6e86bfdc4a60 ("perf intel-pt: Support decoding of guest kernel")
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Link: https://lore.kernel.org/r/20240625104532.11990-3-adrian.hunter@intel.com
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Fixes: a1867f85e06e ("mfd: Add Renesas Synchronization Management Unit (SMU) support")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20240529094856.1869543-1-arnd@kernel.org
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/arch/x86/util/intel-pt.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/mfd/Makefile    | 6 ++----
+ drivers/mfd/rsmu_core.c | 2 ++
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/arch/x86/util/intel-pt.c b/tools/perf/arch/x86/util/intel-pt.c
-index 99ae6d4d3ae3c..7cb21803455a9 100644
---- a/tools/perf/arch/x86/util/intel-pt.c
-+++ b/tools/perf/arch/x86/util/intel-pt.c
-@@ -31,6 +31,7 @@
- #include "../../../util/tsc.h"
- #include <internal/lib.h> // page_size
- #include "../../../util/intel-pt.h"
-+#include <api/fs/fs.h>
+diff --git a/drivers/mfd/Makefile b/drivers/mfd/Makefile
+index 2ba6646e874cd..aa0d439142691 100644
+--- a/drivers/mfd/Makefile
++++ b/drivers/mfd/Makefile
+@@ -274,7 +274,5 @@ obj-$(CONFIG_MFD_INTEL_M10_BMC)   += intel-m10-bmc.o
+ obj-$(CONFIG_MFD_ATC260X)	+= atc260x-core.o
+ obj-$(CONFIG_MFD_ATC260X_I2C)	+= atc260x-i2c.o
  
- #define KiB(x) ((x) * 1024)
- #define MiB(x) ((x) * 1024 * 1024)
-@@ -438,6 +439,16 @@ static int intel_pt_track_switches(struct evlist *evlist)
- 	return 0;
+-rsmu-i2c-objs			:= rsmu_core.o rsmu_i2c.o
+-rsmu-spi-objs			:= rsmu_core.o rsmu_spi.o
+-obj-$(CONFIG_MFD_RSMU_I2C)	+= rsmu-i2c.o
+-obj-$(CONFIG_MFD_RSMU_SPI)	+= rsmu-spi.o
++obj-$(CONFIG_MFD_RSMU_I2C)	+= rsmu_i2c.o rsmu_core.o
++obj-$(CONFIG_MFD_RSMU_SPI)	+= rsmu_spi.o rsmu_core.o
+diff --git a/drivers/mfd/rsmu_core.c b/drivers/mfd/rsmu_core.c
+index 29437fd0bd5bf..fd04a6e5dfa31 100644
+--- a/drivers/mfd/rsmu_core.c
++++ b/drivers/mfd/rsmu_core.c
+@@ -78,11 +78,13 @@ int rsmu_core_init(struct rsmu_ddata *rsmu)
+ 
+ 	return ret;
  }
++EXPORT_SYMBOL_GPL(rsmu_core_init);
  
-+static bool intel_pt_exclude_guest(void)
-+{
-+	int pt_mode;
-+
-+	if (sysfs__read_int("module/kvm_intel/parameters/pt_mode", &pt_mode))
-+		pt_mode = 0;
-+
-+	return pt_mode == 1;
-+}
-+
- static void intel_pt_valid_str(char *str, size_t len, u64 valid)
+ void rsmu_core_exit(struct rsmu_ddata *rsmu)
  {
- 	unsigned int val, last = 0, state = 1;
-@@ -641,6 +652,7 @@ static int intel_pt_recording_options(struct auxtrace_record *itr,
- 			}
- 			evsel->core.attr.freq = 0;
- 			evsel->core.attr.sample_period = 1;
-+			evsel->core.attr.exclude_guest = intel_pt_exclude_guest();
- 			evsel->no_aux_samples = true;
- 			intel_pt_evsel = evsel;
- 			opts->full_auxtrace = true;
+ 	mutex_destroy(&rsmu->lock);
+ }
++EXPORT_SYMBOL_GPL(rsmu_core_exit);
+ 
+ MODULE_DESCRIPTION("Renesas SMU core driver");
+ MODULE_LICENSE("GPL");
 -- 
 2.43.0
 
