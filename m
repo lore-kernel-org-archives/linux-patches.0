@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EB619DFA4;
-	Thu, 15 Aug 2024 14:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE0F19DFA4;
+	Thu, 15 Aug 2024 14:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732107; cv=none; b=HPOgRXnqX4zCYiwf6sXpFXnNmuJ4eeGHFTLaG/rUBSzMUx4j5bcqdQIopiQNdpXHfjqIlE7dlM2Q8H5RlmwbN20mmkH5KHtlSdnHAUqacBmphP5n5fBJmoZRZrDbKEnFTkERb4105AufH+fylXvUSsDv/dgwgYqBjN3SdgF1cD4=
+	t=1723732110; cv=none; b=MLeiFGU1lKUieAhrTrsY176dYWfD7J+id61nsI2DhklI/rUQOA/YdP527k6cApOk9yJb3FR1kgszqiTZHKKnrW+gIFv8W3XStupFZDIABfw55WDeEINMJGpgxwmHrhUHgXJmhES+VeE7XFDwGIVtloJ9y/cO42MgRrhxkwZdp4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732107; c=relaxed/simple;
-	bh=M8tRIlPRg48nUX+maOArMcBx+rlmmdrXD8PrXks3tyY=;
+	s=arc-20240116; t=1723732110; c=relaxed/simple;
+	bh=NFhZmzEG6KhDXWzeR/4KyloH/jrUEOmlgPUYlpuoPAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGOys9ZLGhz6U9n/QVhN2XBmTtQ1FO1IdGslNDpMh5sgL3j9sM17NgvxUL3vu6hzPSwIoQFR1EBhJwI1Qgsz9aLHrJC+nxiaJwC1m84J8SW3tLzku9CLv4CuiXUp3H1We6My98Nk+xmUzu4mbcrTbMzSSdD9owJKBNbHLY+4dfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k5KLTEqx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BEp4Jbf8hGCVYoghaZCpAhZ5AYk4mqk3Ezk4WUn636h7G339uUBb3dM3QPtd7iqhNFRUCUv39zm+oNgu0miB9A+e88G/uhHYUprV4xbSBELAq1S2rWxl1pRdzoSZyqzI14w2yrjJDr8r3ZgekSxCTaXx8a6uYrrxIsLr/n+PIAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HjWW19uU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k5KLTEqx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF88C32786;
-	Thu, 15 Aug 2024 14:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HjWW19uU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C718DC32786;
+	Thu, 15 Aug 2024 14:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732107;
-	bh=M8tRIlPRg48nUX+maOArMcBx+rlmmdrXD8PrXks3tyY=;
+	s=korg; t=1723732110;
+	bh=NFhZmzEG6KhDXWzeR/4KyloH/jrUEOmlgPUYlpuoPAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5KLTEqxwpGN2OZ7oldGA+LcotPNMxeX03cVyDWUbRmyYD8UPcApCj1Wl8sTOW6yy
-	 EY7w4Y2WMUAdIoP7K7eJsbHyFSJWZOe3iJaHYfl/D1ufsNSnOPbeYEO2XVB/E0xExi
-	 DRgW7hifzY/MzaftAA3mi1ItmdT7W8kGMashM840=
+	b=HjWW19uUaXQVwXp1McgaH9q6r+nY9vGAEOFQH1MJrsJg+4sxlYv48ZrN5tHFgogd0
+	 FQ6xCd/48K6vbTDdJUHjfiyyc2o5YKTK1xNyeiGyD9xW39Q7UOquOOTePrfe3eQN6x
+	 pQC9EfFAlWDVgIdLawFqIm/0IiGEGhBTIz9he4NI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	David Hildenbrand <david@redhat.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Alexander Gordeev <agordeev@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 075/352] s390/mm: Convert gmap_make_secure to use a folio
-Date: Thu, 15 Aug 2024 15:22:21 +0200
-Message-ID: <20240815131922.141821409@linuxfoundation.org>
+Subject: [PATCH 5.10 076/352] s390/uv: Dont call folio_wait_writeback() without a folio reference
+Date: Thu, 15 Aug 2024 15:22:22 +0200
+Message-ID: <20240815131922.180958015@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,100 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit d35c34bb32f2cc4ec0b52e91ad7a8fcab55d7856 ]
+[ Upstream commit 3f29f6537f54d74e64bac0a390fb2e26da25800d ]
 
-Remove uses of deprecated page APIs, and move the check for large
-folios to here to avoid taking the folio lock if the folio is too large.
-We could do better here by attempting to split the large folio, but I'll
-leave that improvement for someone who can test it.
+folio_wait_writeback() requires that no spinlocks are held and that
+a folio reference is held, as documented. After we dropped the PTL, the
+folio could get freed concurrently. So grab a temporary reference.
 
-Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/r/20240322161149.2327518-3-willy@infradead.org
+Fixes: 214d9bbcd3a6 ("s390/mm: provide memory management functions for protected KVM guests")
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Link: https://lore.kernel.org/r/20240508182955.358628-2-david@redhat.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: 3f29f6537f54 ("s390/uv: Don't call folio_wait_writeback() without a folio reference")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/uv.c | 27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ arch/s390/kernel/uv.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
 diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
-index c99b7f9de1e1f..8c73d4901e145 100644
+index 8c73d4901e145..03a8a9a52186a 100644
 --- a/arch/s390/kernel/uv.c
 +++ b/arch/s390/kernel/uv.c
-@@ -213,13 +213,10 @@ static int expected_folio_refs(struct folio *folio)
- 	return res;
- }
- 
--static int make_page_secure(struct page *page, struct uv_cb_header *uvcb)
-+static int make_folio_secure(struct folio *folio, struct uv_cb_header *uvcb)
- {
--	struct folio *folio = page_folio(page);
- 	int expected, cc = 0;
- 
--	if (folio_test_large(folio))
--		return -EINVAL;
- 	if (folio_test_writeback(folio))
- 		return -EAGAIN;
- 	expected = expected_folio_refs(folio);
-@@ -285,7 +282,7 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
- 	bool local_drain = false;
- 	spinlock_t *ptelock;
- 	unsigned long uaddr;
--	struct page *page;
-+	struct folio *folio;
- 	pte_t *ptep;
- 	int rc;
- 
-@@ -312,15 +309,19 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
- 	rc = -ENXIO;
- 	ptep = get_locked_pte(gmap->mm, uaddr, &ptelock);
- 	if (pte_present(*ptep) && !(pte_val(*ptep) & _PAGE_INVALID) && pte_write(*ptep)) {
--		page = pte_page(*ptep);
-+		folio = page_folio(pte_page(*ptep));
-+		rc = -EINVAL;
-+		if (folio_test_large(folio))
-+			goto unlock;
- 		rc = -EAGAIN;
--		if (trylock_page(page)) {
-+		if (folio_trylock(folio)) {
- 			if (should_export_before_import(uvcb, gmap->mm))
--				uv_convert_from_secure(page_to_phys(page));
--			rc = make_page_secure(page, uvcb);
--			unlock_page(page);
-+				uv_convert_from_secure(PFN_PHYS(folio_pfn(folio)));
-+			rc = make_folio_secure(folio, uvcb);
-+			folio_unlock(folio);
+@@ -320,6 +320,13 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
+ 			rc = make_folio_secure(folio, uvcb);
+ 			folio_unlock(folio);
  		}
++
++		/*
++		 * Once we drop the PTL, the folio may get unmapped and
++		 * freed immediately. We need a temporary reference.
++		 */
++		if (rc == -EAGAIN)
++			folio_get(folio);
  	}
-+unlock:
+ unlock:
  	pte_unmap_unlock(ptep, ptelock);
- out:
- 	mmap_read_unlock(gmap->mm);
-@@ -330,10 +331,10 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
- 		 * If we are here because the UVC returned busy or partial
+@@ -332,6 +339,7 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
  		 * completion, this is just a useless check, but it is safe.
  		 */
--		wait_on_page_writeback(page);
-+		folio_wait_writeback(folio);
+ 		folio_wait_writeback(folio);
++		folio_put(folio);
  	} else if (rc == -EBUSY) {
  		/*
--		 * If we have tried a local drain and the page refcount
-+		 * If we have tried a local drain and the folio refcount
- 		 * still does not match our expected safe value, try with a
- 		 * system wide drain. This is needed if the pagevecs holding
- 		 * the page are on a different CPU.
-@@ -344,7 +345,7 @@ int gmap_make_secure(struct gmap *gmap, unsigned long gaddr, void *uvcb)
- 			return -EAGAIN;
- 		}
- 		/*
--		 * We are here if the page refcount does not match the
-+		 * We are here if the folio refcount does not match the
- 		 * expected safe value. The main culprits are usually
- 		 * pagevecs. With lru_add_drain() we drain the pagevecs
- 		 * on the local CPU so that hopefully the refcount will
+ 		 * If we have tried a local drain and the folio refcount
 -- 
 2.43.0
 
