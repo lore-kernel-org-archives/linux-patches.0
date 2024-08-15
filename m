@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C9351A00CE;
-	Thu, 15 Aug 2024 13:45:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2AB19F49B;
+	Thu, 15 Aug 2024 13:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729501; cv=none; b=oMBOdsVoq6lbuv8dHQSLk/qu4bCc39PSmr+Omir1Dh4VcimG/RdX1OlnQcIXbYYQV6NqkYRRdoyF8QwyLorBM4iostD2dH+JCUg+ttsZf7P00aI0uKrB395Y16zOAvMFhfrY9wS56CNpSlDl0+lYlwHkrAhTiMnkgYeI7R37474=
+	t=1723729504; cv=none; b=hwF0et50tU3OTuZ1AcfvJRiO2SGv7yVtblwv5qnLrJHNMTn4ylEP7UWKP1pDvtZ81o8UsQqlxDagx5T6cazOd5fQeKRG9MNTBVTup3hpkWGBcqJlGR1e0vfc1GiuJh9NjYZewy0jQSixhiRZPTPfoKQcsCfmR8aHIwd+59GTH9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729501; c=relaxed/simple;
-	bh=C9VjhH+DUpfbPIG1iwkLL0Op/8DTk5HlMi6BMprgnfE=;
+	s=arc-20240116; t=1723729504; c=relaxed/simple;
+	bh=pLrW6ZxiCZ/vHYjw0wZ2H2B4B4Oo8ipwxneYBfLtc+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pTfmcU4a3HzLqtqZc9wQ9QJFf3Aat97ayQMBku15yEyhVjJ7kGJly/3NL54Tt5bGCTB00ZyCIClCJ6VE7W5urvIqzv3AooneLaronuoEZ8pZw2zeYxDELGLHsvVHvtYS3z8obb43OxpK0lTgA13PWd+1H1J34HGa1RWdM5G09O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ARhzPECs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ACweo4smfeqWzm4R8Ol26rhJIxPL83H7gmVVs8rPu5SeOha4sbUTTLLQherX8c45uRByxfUbCXB/SV74YqELnSt121BtjiDnbLMPJLXDSoiKOJvD9l7UEb3eezbZMUZct0Nxxssyw+2xJ6S6I6y9vvJIxIQsj26lqA0v7w4EBY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AZb2n8FQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ARhzPECs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F11FC32786;
-	Thu, 15 Aug 2024 13:45:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AZb2n8FQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FD5C32786;
+	Thu, 15 Aug 2024 13:45:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729501;
-	bh=C9VjhH+DUpfbPIG1iwkLL0Op/8DTk5HlMi6BMprgnfE=;
+	s=korg; t=1723729504;
+	bh=pLrW6ZxiCZ/vHYjw0wZ2H2B4B4Oo8ipwxneYBfLtc+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARhzPECsZM8LmrsKstB75kFkxRn47jPxJazn3IAtIoH10fJLej453apggzNY+DfKa
-	 igoG0e7zhoeY8L9FzCiQEoI9ZC24yo3eUHfNt1k0SCZrURZ6ByTNa8ScER2Dw2QUYp
-	 8sVhhkTun0P9Wk9uPbrqnOhO1aNF5UpxqD8qVYlI=
+	b=AZb2n8FQAbADXvVldE4VFIwO3BtuxXLoVG4ZPS0TRUTB5oKhXv/aE2ksHO9Cko+HG
+	 bz7bqCSqlP3Q4AY+w/J7ZaSRij7kycMVsFlLG+NQJimBTgtb9bE2auPf5JdloQ9yvd
+	 72PfakyFKi9ywtg9wc8lzti9Gxk92VGPzlA++1d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com,
-	Hugh Dickins <hughd@google.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
+	Andreas Larsson <andreas@gaisler.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/484] ext4: avoid writing unitialized memory to disk in EA inodes
-Date: Thu, 15 Aug 2024 15:19:35 +0200
-Message-ID: <20240815131945.812597236@linuxfoundation.org>
+Subject: [PATCH 5.15 118/484] sparc64: Fix incorrect function signature and add prototype for prom_cif_init
+Date: Thu, 15 Aug 2024 15:19:36 +0200
+Message-ID: <20240815131945.850250698@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -47,50 +44,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Andreas Larsson <andreas@gaisler.com>
 
-[ Upstream commit 65121eff3e4c8c90f8126debf3c369228691c591 ]
+[ Upstream commit a6c3ea1ec96307dbfbb2f16d96c674c5cc80f445 ]
 
-If the extended attribute size is not a multiple of block size, the last
-block in the EA inode will have uninitialized tail which will get
-written to disk. We will never expose the data to userspace but still
-this is not a good practice so just zero out the tail of the block as it
-isn't going to cause a noticeable performance overhead.
+Remove the unused cif_stack argument and add a protype in oplib_64.h
+Commit ef3e035c3a9b ("sparc64: Fix register corruption in top-most
+kernel stack frame during boot.") removed the cif_stack argument to
+prom_cif init in the declaration at the caller site and the usage of it
+within prom_cif_init, but not in the function signature of the function
+itself.
 
-Fixes: e50e5129f384 ("ext4: xattr-in-inode support")
-Reported-by: syzbot+9c1fe13fcb51574b249b@syzkaller.appspotmail.com
-Reported-by: Hugh Dickins <hughd@google.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://patch.msgid.link/20240613150234.25176-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This also fixes the following warning:
+arch/sparc/prom/p1275.c:52:6: warning: no previous prototype for ‘prom_cif_init’
+
+Fixes: ef3e035c3a9b ("sparc64: Fix register corruption in top-most kernel stack frame during boot.")
+Link: https://lore.kernel.org/r/20240710094155.458731-3-andreas@gaisler.com
+Signed-off-by: Andreas Larsson <andreas@gaisler.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/sparc/include/asm/oplib_64.h | 1 +
+ arch/sparc/prom/init_64.c         | 3 ---
+ arch/sparc/prom/p1275.c           | 2 +-
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 37f3c2ebe6f82..e788f291ae86d 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1384,6 +1384,12 @@ static int ext4_xattr_inode_write(handle_t *handle, struct inode *ea_inode,
- 			goto out;
+diff --git a/arch/sparc/include/asm/oplib_64.h b/arch/sparc/include/asm/oplib_64.h
+index a67abebd43592..1b86d02a84556 100644
+--- a/arch/sparc/include/asm/oplib_64.h
++++ b/arch/sparc/include/asm/oplib_64.h
+@@ -247,6 +247,7 @@ void prom_sun4v_guest_soft_state(void);
+ int prom_ihandle2path(int handle, char *buffer, int bufsize);
  
- 		memcpy(bh->b_data, buf, csize);
-+		/*
-+		 * Zero out block tail to avoid writing uninitialized memory
-+		 * to disk.
-+		 */
-+		if (csize < blocksize)
-+			memset(bh->b_data + csize, 0, blocksize - csize);
- 		set_buffer_uptodate(bh);
- 		ext4_handle_dirty_metadata(handle, ea_inode, bh);
+ /* Client interface level routines. */
++void prom_cif_init(void *cif_handler);
+ void p1275_cmd_direct(unsigned long *);
  
+ #endif /* !(__SPARC64_OPLIB_H) */
+diff --git a/arch/sparc/prom/init_64.c b/arch/sparc/prom/init_64.c
+index 103aa91043185..f7b8a1a865b8f 100644
+--- a/arch/sparc/prom/init_64.c
++++ b/arch/sparc/prom/init_64.c
+@@ -26,9 +26,6 @@ phandle prom_chosen_node;
+  * routines in the prom library.
+  * It gets passed the pointer to the PROM vector.
+  */
+-
+-extern void prom_cif_init(void *);
+-
+ void __init prom_init(void *cif_handler)
+ {
+ 	phandle node;
+diff --git a/arch/sparc/prom/p1275.c b/arch/sparc/prom/p1275.c
+index 889aa602f8d86..51c3f984bbf72 100644
+--- a/arch/sparc/prom/p1275.c
++++ b/arch/sparc/prom/p1275.c
+@@ -49,7 +49,7 @@ void p1275_cmd_direct(unsigned long *args)
+ 	local_irq_restore(flags);
+ }
+ 
+-void prom_cif_init(void *cif_handler, void *cif_stack)
++void prom_cif_init(void *cif_handler)
+ {
+ 	p1275buf.prom_cif_handler = (void (*)(long *))cif_handler;
+ }
 -- 
 2.43.0
 
