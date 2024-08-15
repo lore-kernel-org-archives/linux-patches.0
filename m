@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA401E526;
-	Thu, 15 Aug 2024 14:18:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A371DFDE;
+	Thu, 15 Aug 2024 14:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731511; cv=none; b=K/wZL5D3sK9LphVHBmST7s9/ENKOV/idB8dTApcSxECME7WKWW+ZEywaW+72GCDOfZ9pK9KK29eAjh2YVzLXnI4SuME1xGDB+I9hO+my0w8614eDmq/73hpVQ3OOHsvgVwI7TWk93SUvSw8H12PYJ2k2dwkkC+/H9h6tzLZ4v2s=
+	t=1723731514; cv=none; b=NUgvAMQm/Tmhdkez4acKv5NdgCPhJjV5en5BpnLBKA7jf7KmvVBUP6DA43+yn97Vlu1VeVv2Mh8MzA+jOUu71tbgrpHw4XilcmgSWFFOeIZH1EZI/V/Auo6JQ34XvsWZAMMCt0s8ZwVToLxiAYs3COORY/q7253evtQX6u9Q5PU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731511; c=relaxed/simple;
-	bh=ldId1vg9iQEcUDfTRryjcNUnUPys5Dz55RLsYpngSTY=;
+	s=arc-20240116; t=1723731514; c=relaxed/simple;
+	bh=LVBbfHmXgKmWJ897t+IX7Ug/UnN+8eCendhbaairmDE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qHZzWJznD5X5C5rUgQR8u5/gWYqtVddZJHnq1dRvrnxmrZaYcoKQCfIvgm3GovBHMGioqR5924Ig++h437EqcKwE5QrxhsI+Z94uChCTlLVfvMtZi2LHawNEPNMEaQluTUnHMA+EkjeYsU4fGwkkITHY3Bzy6Yg/Ms98/ve1DmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b3as8XTs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CRRfMel1VJttVuiXWtyzFohlS0n3S8QRRFKCLQ72/WfhyY7hS2WfauXCFyOJONAJHTAQDz3phZr1vLLgK1+iwWMWD4o8QPEIdZXQfp2nDSChffia0n80NwNmb6Zp8gRDTwxobP3M/vpcDZ9ZJH7qotJeeDmnkcfKLOgiGOFQ5Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvROlnto; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b3as8XTs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73700C32786;
-	Thu, 15 Aug 2024 14:18:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvROlnto"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B998C32786;
+	Thu, 15 Aug 2024 14:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731510;
-	bh=ldId1vg9iQEcUDfTRryjcNUnUPys5Dz55RLsYpngSTY=;
+	s=korg; t=1723731513;
+	bh=LVBbfHmXgKmWJ897t+IX7Ug/UnN+8eCendhbaairmDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3as8XTs35y7MC16br/w2h5IsyUX5DwVI9/PTY3gOdcRgCHjp4cnzaB3n531BAM+M
-	 quk2VbFaDhK1uwytoUMOix6vQQw9Mhz9Ct0wKuWOoUPae/mH9S8DnLvckp+1qc3BWt
-	 P6UssHJ/oLesW5QwbVvMaSg1S53wyoRFTvuVBW8E=
+	b=zvROlntoF3wugnU7fBA04qO0Ix0YicgcfO3+UunO/HyEk3+mRPNVlwrwItKSCL2lI
+	 rhmjDMxXzSirI8XEVp31zCYZWa+SYMCPKQGY6oMep/Mi9PzSi4TtlyL4F8mHvCCyHv
+	 zL0N2+0SetUpZzbmZzFrrMkEOZMRoTPUsRCUAMmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Halil Pasic <pasic@linux.ibm.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 152/259] s390/pci: fix CPU address in MSI for directed IRQ
-Date: Thu, 15 Aug 2024 15:24:45 +0200
-Message-ID: <20240815131908.656419305@linuxfoundation.org>
+Subject: [PATCH 5.4 153/259] s390/pci: Do not mask MSI[-X] entries on teardown
+Date: Thu, 15 Aug 2024 15:24:46 +0200
+Message-ID: <20240815131908.696424366@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,75 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit a2bd4097b3ec242f4de4924db463a9c94530e03a ]
+[ Upstream commit 3998527d2e3ee2bfdf710a45b7b90968ff87babc ]
 
-The directed MSIs are delivered to CPUs whose address is
-written to the MSI message address. The current code assumes
-that a CPU logical number (as it is seen by the kernel)
-is also the CPU address.
+The PCI core already ensures that the MSI[-X] state is correct when MSI[-X]
+is disabled. For MSI the reset state is all entries unmasked and for MSI-X
+all vectors are masked.
 
-The above assumption is not correct, as the CPU address
-is rather the value returned by STAP instruction. That
-value does not necessarily match the kernel logical CPU
-number.
+S390 masks all MSI entries and masks the already masked MSI-X entries
+again. Remove it and let the device in the correct state.
 
-Fixes: e979ce7bced2 ("s390/pci: provide support for CPU directed interrupts")
-Cc: <stable@vger.kernel.org> # v5.2+
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Tested-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Link: https://lore.kernel.org/r/20210729222542.939798136@linutronix.de
 Stable-dep-of: ab42fcb511fd ("s390/pci: Allow allocation of more than 1 MSI interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_irq.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ arch/s390/pci/pci_irq.c | 4 ----
+ drivers/pci/msi.c       | 4 ++--
+ include/linux/msi.h     | 2 --
+ 3 files changed, 2 insertions(+), 8 deletions(-)
 
 diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index 743f257cf2cbd..75217fb63d7b3 100644
+index 75217fb63d7b3..5036e00b7ec1b 100644
 --- a/arch/s390/pci/pci_irq.c
 +++ b/arch/s390/pci/pci_irq.c
-@@ -103,9 +103,10 @@ static int zpci_set_irq_affinity(struct irq_data *data, const struct cpumask *de
+@@ -341,10 +341,6 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
+ 	for_each_pci_msi_entry(msi, pdev) {
+ 		if (!msi->irq)
+ 			continue;
+-		if (msi->msi_attrib.is_msix)
+-			__pci_msix_desc_mask_irq(msi, 1);
+-		else
+-			__pci_msi_desc_mask_irq(msi, 1, 1);
+ 		irq_set_msi_desc(msi->irq, NULL);
+ 		irq_free_desc(msi->irq);
+ 		msi->msg.address_lo = 0;
+diff --git a/drivers/pci/msi.c b/drivers/pci/msi.c
+index 1701d3de24da7..a37e3541c9377 100644
+--- a/drivers/pci/msi.c
++++ b/drivers/pci/msi.c
+@@ -170,7 +170,7 @@ static inline __attribute_const__ u32 msi_mask(unsigned x)
+  * reliably as devices without an INTx disable bit will then generate a
+  * level IRQ which will never be cleared.
+  */
+-void __pci_msi_desc_mask_irq(struct msi_desc *desc, u32 mask, u32 flag)
++static void __pci_msi_desc_mask_irq(struct msi_desc *desc, u32 mask, u32 flag)
  {
- 	struct msi_desc *entry = irq_get_msi_desc(data->irq);
- 	struct msi_msg msg = entry->msg;
-+	int cpu_addr = smp_cpu_get_cpu_address(cpumask_first(dest));
+ 	raw_spinlock_t *lock = &desc->dev->msi_lock;
+ 	unsigned long flags;
+@@ -207,7 +207,7 @@ static void __iomem *pci_msix_desc_addr(struct msi_desc *desc)
+  * file.  This saves a few milliseconds when initialising devices with lots
+  * of MSI-X interrupts.
+  */
+-u32 __pci_msix_desc_mask_irq(struct msi_desc *desc, u32 flag)
++static u32 __pci_msix_desc_mask_irq(struct msi_desc *desc, u32 flag)
+ {
+ 	u32 mask_bits = desc->masked;
+ 	void __iomem *desc_addr;
+diff --git a/include/linux/msi.h b/include/linux/msi.h
+index 758e32f0d4434..31193305807d0 100644
+--- a/include/linux/msi.h
++++ b/include/linux/msi.h
+@@ -193,8 +193,6 @@ void free_msi_entry(struct msi_desc *entry);
+ void __pci_read_msi_msg(struct msi_desc *entry, struct msi_msg *msg);
+ void __pci_write_msi_msg(struct msi_desc *entry, struct msi_msg *msg);
  
- 	msg.address_lo &= 0xff0000ff;
--	msg.address_lo |= (cpumask_first(dest) << 8);
-+	msg.address_lo |= (cpu_addr << 8);
- 	pci_write_msi_msg(data->irq, &msg);
+-u32 __pci_msix_desc_mask_irq(struct msi_desc *desc, u32 flag);
+-void __pci_msi_desc_mask_irq(struct msi_desc *desc, u32 mask, u32 flag);
+ void pci_msi_mask_irq(struct irq_data *data);
+ void pci_msi_unmask_irq(struct irq_data *data);
  
- 	return IRQ_SET_MASK_OK;
-@@ -238,6 +239,7 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 	unsigned long bit;
- 	struct msi_desc *msi;
- 	struct msi_msg msg;
-+	int cpu_addr;
- 	int rc, irq;
- 
- 	zdev->aisb = -1UL;
-@@ -287,9 +289,15 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
- 					 handle_percpu_irq);
- 		msg.data = hwirq - bit;
- 		if (irq_delivery == DIRECTED) {
-+			if (msi->affinity)
-+				cpu = cpumask_first(&msi->affinity->mask);
-+			else
-+				cpu = 0;
-+			cpu_addr = smp_cpu_get_cpu_address(cpu);
-+
- 			msg.address_lo = zdev->msi_addr & 0xff0000ff;
--			msg.address_lo |= msi->affinity ?
--				(cpumask_first(&msi->affinity->mask) << 8) : 0;
-+			msg.address_lo |= (cpu_addr << 8);
-+
- 			for_each_possible_cpu(cpu) {
- 				airq_iv_set_data(zpci_ibv[cpu], hwirq, irq);
- 			}
 -- 
 2.43.0
 
