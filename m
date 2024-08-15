@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE30A19F49A;
-	Thu, 15 Aug 2024 13:49:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267D61714A1;
+	Thu, 15 Aug 2024 13:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729794; cv=none; b=IdtW/YuxDE63ReN/3HXGa54GmxL1naMQ8lFBLokKlnwgxrutQ//X/27vdyORj/O3I2n2EqLJbEG4LuClKWQp3G9xOiScdcnFeet5VEPdzLWjga9H+DfL/30a/bmfZ4xCd1vj8vrgfHJlZo1U/m7SXec2slsHzzYcAnlw7gZ6IoQ=
+	t=1723729798; cv=none; b=UI0hRddpPF0tpaLFUNF6YHxRyQobuVK55KaFLGGIy7JI4n7AmRMVI2NRvgAlSpqJ8oovD7siDp+CJvgPgNS3azCEVUz74Nsrw12cEfnU7MmpYEktaK5TYAHp3iaMmItjlAiq6J1YSF2w0O3S1ae32R9JOiqfSDH08kSNL+rqHDk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729794; c=relaxed/simple;
-	bh=Vmv/DFf/zmPv/aN3W6thsivzUXE5CRKW6mNUhIeWu6c=;
+	s=arc-20240116; t=1723729798; c=relaxed/simple;
+	bh=FYG4DCLTdWqt+fsZ3I1eWnW6e9lS/0WkpTtAbpRHRYE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bcztCU4ttkL+NwRp+mMnFY9+DAisAYpk9I+pSucvNMTxBc7R+GJ0R6QPT06GIWRJjquTnKVIJULXbj8uFM9rlsgpaC+dkyDkuz0QQM5DazeX6CuWvEay/6JDyscSl98hwWjMt+tkeEnRVj5dkSfbTd8CouGVXlY4PXwhC64Hr6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VNTOIo4k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IUn3OXA5vs1KCgnkDi35c+iv75qYOmu5DfNz/7v/P1uVyJJW65GQ/aJ7iNm9sHGc9hOHc8IpORn6/7RQxL318kTysHiw9XgdrGqI5QopFEIlZ8+wa9LdFT5flu2kf9MMxcUOoMEED9hUfOGm3xfQQOxCTZBGg8HxZT9OLOnOApA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1b2FsLe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VNTOIo4k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE34C32786;
-	Thu, 15 Aug 2024 13:49:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1b2FsLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47DF0C4AF0F;
+	Thu, 15 Aug 2024 13:49:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729794;
-	bh=Vmv/DFf/zmPv/aN3W6thsivzUXE5CRKW6mNUhIeWu6c=;
+	s=korg; t=1723729797;
+	bh=FYG4DCLTdWqt+fsZ3I1eWnW6e9lS/0WkpTtAbpRHRYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNTOIo4k2QuQxDmEBI792BJhJOhhme2ds0bB/r2NWKFykH7OI8pRL3fWhyc87paWO
-	 XKwpC+oZSIitXMtQutf03xLHpbVLtfpuwToRH1k9w+Mdny+i1HOleBLih3I/Jrafjo
-	 LvPc2wucZBrmZQWqYTRq6sJoXXUKRRChEV6SjzXw=
+	b=Z1b2FsLexHeV6rXNHRtCHkMI/xHX4ZMZyoSYw3uwxt76peB38ft6Mztq5vgyo1cut
+	 KU6ZXXIQNuDv/9GK3O2Es4QXZh7Z9DHH4vPQARaoOOjwjcQ9Djym9PgADR9k1SWYup
+	 srmPt5bH6nYniuorrbEF5et1fcwx13vbw1sJQJHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tuhaowen <tuhaowen@uniontech.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 210/484] dev/parport: fix the array out-of-bounds risk
-Date: Thu, 15 Aug 2024 15:21:08 +0200
-Message-ID: <20240815131949.524563352@linuxfoundation.org>
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Subject: [PATCH 5.15 211/484] fs/ntfs3: Update log->page_{mask,bits} if log->page_size changed
+Date: Thu, 15 Aug 2024 15:21:09 +0200
+Message-ID: <20240815131949.562188595@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,125 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: tuhaowen <tuhaowen@uniontech.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit ab11dac93d2d568d151b1918d7b84c2d02bacbd5 upstream.
+commit 2fef55d8f78383c8e6d6d4c014b9597375132696 upstream.
 
-Fixed array out-of-bounds issues caused by sprintf
-by replacing it with snprintf for safer data copying,
-ensuring the destination buffer is not overflowed.
+If an NTFS file system is mounted to another system with different
+PAGE_SIZE from the original system, log->page_size will change in
+log_replay(), but log->page_{mask,bits} don't change correspondingly.
+This will cause a panic because "u32 bytes = log->page_size - page_off"
+will get a negative value in the later read_log_page().
 
-Below is the stack trace I encountered during the actual issue:
-
-[ 66.575408s] [pid:5118,cpu4,QThread,4]Kernel panic - not syncing: stack-protector:
-Kernel stack is corrupted in: do_hardware_base_addr+0xcc/0xd0 [parport]
-[ 66.575408s] [pid:5118,cpu4,QThread,5]CPU: 4 PID: 5118 Comm:
-QThread Tainted: G S W O 5.10.97-arm64-desktop #7100.57021.2
-[ 66.575439s] [pid:5118,cpu4,QThread,6]TGID: 5087 Comm: EFileApp
-[ 66.575439s] [pid:5118,cpu4,QThread,7]Hardware name: HUAWEI HUAWEI QingYun
-PGUX-W515x-B081/SP1PANGUXM, BIOS 1.00.07 04/29/2024
-[ 66.575439s] [pid:5118,cpu4,QThread,8]Call trace:
-[ 66.575469s] [pid:5118,cpu4,QThread,9] dump_backtrace+0x0/0x1c0
-[ 66.575469s] [pid:5118,cpu4,QThread,0] show_stack+0x14/0x20
-[ 66.575469s] [pid:5118,cpu4,QThread,1] dump_stack+0xd4/0x10c
-[ 66.575500s] [pid:5118,cpu4,QThread,2] panic+0x1d8/0x3bc
-[ 66.575500s] [pid:5118,cpu4,QThread,3] __stack_chk_fail+0x2c/0x38
-[ 66.575500s] [pid:5118,cpu4,QThread,4] do_hardware_base_addr+0xcc/0xd0 [parport]
-
-Signed-off-by: tuhaowen <tuhaowen@uniontech.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20240708080430.8221-1-tuhaowen@uniontech.com
+Cc: stable@vger.kernel.org
+Fixes: b46acd6a6a627d876898e ("fs/ntfs3: Add NTFS journal")
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parport/procfs.c |   24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ fs/ntfs3/fslog.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/parport/procfs.c
-+++ b/drivers/parport/procfs.c
-@@ -51,12 +51,12 @@ static int do_active_device(struct ctl_t
- 	
- 	for (dev = port->devices; dev ; dev = dev->next) {
- 		if(dev == port->cad) {
--			len += sprintf(buffer, "%s\n", dev->name);
-+			len += snprintf(buffer, sizeof(buffer), "%s\n", dev->name);
- 		}
+--- a/fs/ntfs3/fslog.c
++++ b/fs/ntfs3/fslog.c
+@@ -3935,6 +3935,9 @@ init_log_instance:
+ 		goto out;
  	}
  
- 	if(!len) {
--		len += sprintf(buffer, "%s\n", "none");
-+		len += snprintf(buffer, sizeof(buffer), "%s\n", "none");
- 	}
- 
- 	if (len > *lenp)
-@@ -87,19 +87,19 @@ static int do_autoprobe(struct ctl_table
- 	}
- 	
- 	if ((str = info->class_name) != NULL)
--		len += sprintf (buffer + len, "CLASS:%s;\n", str);
-+		len += snprintf (buffer + len, sizeof(buffer) - len, "CLASS:%s;\n", str);
- 
- 	if ((str = info->model) != NULL)
--		len += sprintf (buffer + len, "MODEL:%s;\n", str);
-+		len += snprintf (buffer + len, sizeof(buffer) - len, "MODEL:%s;\n", str);
- 
- 	if ((str = info->mfr) != NULL)
--		len += sprintf (buffer + len, "MANUFACTURER:%s;\n", str);
-+		len += snprintf (buffer + len, sizeof(buffer) - len, "MANUFACTURER:%s;\n", str);
- 
- 	if ((str = info->description) != NULL)
--		len += sprintf (buffer + len, "DESCRIPTION:%s;\n", str);
-+		len += snprintf (buffer + len, sizeof(buffer) - len, "DESCRIPTION:%s;\n", str);
- 
- 	if ((str = info->cmdset) != NULL)
--		len += sprintf (buffer + len, "COMMAND SET:%s;\n", str);
-+		len += snprintf (buffer + len, sizeof(buffer) - len, "COMMAND SET:%s;\n", str);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -117,7 +117,7 @@ static int do_hardware_base_addr(struct
- 				 void *result, size_t *lenp, loff_t *ppos)
- {
- 	struct parport *port = (struct parport *)table->extra1;
--	char buffer[20];
-+	char buffer[64];
- 	int len = 0;
- 
- 	if (*ppos) {
-@@ -128,7 +128,7 @@ static int do_hardware_base_addr(struct
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += sprintf (buffer, "%lu\t%lu\n", port->base, port->base_hi);
-+	len += snprintf (buffer, sizeof(buffer), "%lu\t%lu\n", port->base, port->base_hi);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -155,7 +155,7 @@ static int do_hardware_irq(struct ctl_ta
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += sprintf (buffer, "%d\n", port->irq);
-+	len += snprintf (buffer, sizeof(buffer), "%d\n", port->irq);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -182,7 +182,7 @@ static int do_hardware_dma(struct ctl_ta
- 	if (write) /* permissions prevent this anyway */
- 		return -EACCES;
- 
--	len += sprintf (buffer, "%d\n", port->dma);
-+	len += snprintf (buffer, sizeof(buffer), "%d\n", port->dma);
- 
- 	if (len > *lenp)
- 		len = *lenp;
-@@ -213,7 +213,7 @@ static int do_hardware_modes(struct ctl_
- #define printmode(x)							\
- do {									\
- 	if (port->modes & PARPORT_MODE_##x)				\
--		len += sprintf(buffer + len, "%s%s", f++ ? "," : "", #x); \
-+		len += snprintf(buffer + len, sizeof(buffer) - len, "%s%s", f++ ? "," : "", #x); \
- } while (0)
- 		int f = 0;
- 		printmode(PCSPP);
++	log->page_mask = log->page_size - 1;
++	log->page_bits = blksize_bits(log->page_size);
++
+ 	/* If the file size has shrunk then we won't mount it. */
+ 	if (l_size < le64_to_cpu(ra2->l_size)) {
+ 		err = -EINVAL;
 
 
