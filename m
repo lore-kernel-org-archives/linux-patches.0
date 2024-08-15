@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE1E19FA99;
-	Thu, 15 Aug 2024 14:27:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E6291A705B;
+	Thu, 15 Aug 2024 14:27:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732032; cv=none; b=gTzksLIki2DY47LWFpfTRcE9QlcJAmtfHnEHMzuS+ncwKawtZGXLggDBwLfPjkNozD8XJgIyfinFy+MONcvKmYLnCUjaf1f9FpuH1NWm3em6/KqsK7q5Q/LyKEboOhBw1vKPx9pQ7fxONcx/tOlkxtMUEMEh7sqLVjr/DZ+mPKg=
+	t=1723732035; cv=none; b=lJXotQxzRKO+5v5AjsaPgKyVNvZTQwR+U8K3NU8TdxCEOE6ZFdlpn29Mkxkb6Q4hBmRQy9dFoE2XRiwz5h8bs+wH5t1Qh/0EVUCV6sLog65ht4JXNg2Trqdoou/gjFJbu0VcdkMOnV7YCsBee62xbk16qfWoAJdHy3xA0q7seZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732032; c=relaxed/simple;
-	bh=74iFhPzaMqfAol1ooKtgXLcsIFIBZtjlhjiwgnZhNRs=;
+	s=arc-20240116; t=1723732035; c=relaxed/simple;
+	bh=DQf0JD3MXXY4U5simKbGOzeXmwQdgAscKX/0+Imh20A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V/23nLkEcPyU3r2R0bcUAK7HJW+55wZLu6Yv4rUoswAj8OTXDKhkXhbAEkXUiIyr0jBvkHbl9oG65+7XqUhQjFeJ6kMOjbmXD5k6gWcw59ief8chkuG8JgxfMZpn+KyZrfMHyPJg71Do8n8CQTpMAsAXVDtlw6THw434YIKut/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aserpDvV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A0C2QdnoDjZsbucGvK1oB3M/u4ttE9BEiHlapPhXeUMK8ugHNgCOeVKTlDaOrj2hcALNXBerjiIBNvtDOR8jtFN0F3oZJQ7Z+RopqMAX+KfdydAf+BTacnsMX5ejNz1jOY50HCmEVh4Ki+Zz8zJYinKAZIwKOYpom1m2dulw22w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jtX3JYkf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aserpDvV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E8A6C32786;
-	Thu, 15 Aug 2024 14:27:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jtX3JYkf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1FDC32786;
+	Thu, 15 Aug 2024 14:27:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732031;
-	bh=74iFhPzaMqfAol1ooKtgXLcsIFIBZtjlhjiwgnZhNRs=;
+	s=korg; t=1723732034;
+	bh=DQf0JD3MXXY4U5simKbGOzeXmwQdgAscKX/0+Imh20A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aserpDvVS5Rx69mKx/iKf4l35q8F1r5krjcgQ4GMbBn3V2+hxAamN2HkqIge+rc7W
-	 zZ5nRBVfPL0EhzS41UL7PVKWzjWgaJ6SlRvbNH9xze9RapjeuNqCWMcN+LBJBP/93R
-	 XlLSofGT/7IkyH5QL1hbTEAIWele25vIM4qbqJB0=
+	b=jtX3JYkfisvpRSAJ/Suvogd4aZb3hhyb/42wc89G+9/rm9Z4kEYHdi2E075QvEaX4
+	 AcpTvDMObUROvhnsb4YZruDVPLTxipD5ImGl3mMJPkdfB9eJdIyti7Uue7xIHgJYgK
+	 YDUarENOpBkFZlTVVb+oB24AYPq72JVBTHPFWGrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yaroslav Isakov <yaroslav.isakov@gmail.com>,
-	Baochen Qiang <quic_bqiang@quicinc.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/352] wifi: ath11k: fix wrong handling of CCMP256 and GCMP ciphers
-Date: Thu, 15 Aug 2024 15:21:52 +0200
-Message-ID: <20240815131921.018036494@linuxfoundation.org>
+Subject: [PATCH 5.10 055/352] perf: Prevent passing zero nr_pages to rb_alloc_aux()
+Date: Thu, 15 Aug 2024 15:22:01 +0200
+Message-ID: <20240815131921.365829505@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,131 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baochen Qiang <quic_bqiang@quicinc.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit d2b0ca38d362ebf16ca79cd7f309d5bb8b581deb ]
+[ Upstream commit dbc48c8f41c208082cfa95e973560134489e3309 ]
 
-Currently for CCMP256, GCMP128 and GCMP256 ciphers, in ath11k_install_key()
-IEEE80211_KEY_FLAG_GENERATE_IV_MGMT is not set. And in ath11k_mac_mgmt_tx_wmi()
-a length of IEEE80211_CCMP_MIC_LEN is reserved for all ciphers.
+nr_pages is unsigned long but gets passed to rb_alloc_aux() as an int,
+and is stored as an int.
 
-This results in unexpected management frame drop in case either of above 3 ciphers
-is used. The reason is, without IEEE80211_KEY_FLAG_GENERATE_IV_MGMT set, mac80211
-will not generate CCMP/GCMP headers in frame for ath11k. Also MIC length reserved
-is wrong. Such frame is dropped later by hardware:
+Only power-of-2 values are accepted, so if nr_pages is a 64_bit value, it
+will be passed to rb_alloc_aux() as zero.
 
-ath11k_pci 0000:5a:00.0: mac tx mgmt frame, buf id 0
-ath11k_pci 0000:5a:00.0: mgmt tx compl ev pdev_id 1, desc_id 0, status 1
+That is not ideal because:
+ 1. the value is incorrect
+ 2. rb_alloc_aux() is at risk of misbehaving, although it manages to
+ return -ENOMEM in that case, it is a result of passing zero to get_order()
+ even though the get_order() result is documented to be undefined in that
+ case.
 
->From user point of view, we have observed very low throughput due to this issue:
-action frames are all dropped so ADDBA response from DUT never reaches AP. AP
-can not use aggregation thus throughput is low.
+Fix by simply validating the maximum supported value in the first place.
+Use -ENOMEM error code for consistency with the current error code that
+is returned in that case.
 
-Fix this by setting IEEE80211_KEY_FLAG_GENERATE_IV_MGMT flag and by reserving proper
-MIC length for those ciphers.
-
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3.6510.30
-Tested-on: QCN9074 hw1.0 PCI WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1
-
-Fixes: d5c65159f289 ("ath11k: driver for Qualcomm IEEE 802.11ax devices")
-Reported-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Tested-by: Yaroslav Isakov <yaroslav.isakov@gmail.com>
-Closes: https://lore.kernel.org/all/CADS+iDX5=JtJr0apAtAQ02WWBxgOFEv8G063vuGYwDTC8AVZaw@mail.gmail.com
-Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
-Acked-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://msgid.link/20240605014826.22498-1-quic_bqiang@quicinc.com
+Fixes: 45bfb2e50471 ("perf: Add AUX area to ring buffer for raw data streams")
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20240624201101.60186-6-adrian.hunter@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath11k/dp_rx.c |  3 +--
- drivers/net/wireless/ath/ath11k/dp_rx.h |  3 +++
- drivers/net/wireless/ath/ath11k/mac.c   | 15 +++++++++++----
- 3 files changed, 15 insertions(+), 6 deletions(-)
+ kernel/events/core.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.c b/drivers/net/wireless/ath/ath11k/dp_rx.c
-index a83b5edea66b9..6c4b84282e44c 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.c
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.c
-@@ -1852,8 +1852,7 @@ static void ath11k_dp_rx_h_csum_offload(struct sk_buff *msdu)
- 			  CHECKSUM_NONE : CHECKSUM_UNNECESSARY;
- }
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 3a191bec69aca..b60325cc8604d 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -6239,6 +6239,8 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
+ 			return -EINVAL;
  
--static int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar,
--				       enum hal_encrypt_type enctype)
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype)
- {
- 	switch (enctype) {
- 	case HAL_ENCRYPT_TYPE_OPEN:
-diff --git a/drivers/net/wireless/ath/ath11k/dp_rx.h b/drivers/net/wireless/ath/ath11k/dp_rx.h
-index 623da3bf9dc81..c322e30caa968 100644
---- a/drivers/net/wireless/ath/ath11k/dp_rx.h
-+++ b/drivers/net/wireless/ath/ath11k/dp_rx.h
-@@ -1,6 +1,7 @@
- /* SPDX-License-Identifier: BSD-3-Clause-Clear */
- /*
-  * Copyright (c) 2018-2019 The Linux Foundation. All rights reserved.
-+ * Copyright (c) 2024 Qualcomm Innovation Center, Inc. All rights reserved.
-  */
- #ifndef ATH11K_DP_RX_H
- #define ATH11K_DP_RX_H
-@@ -95,4 +96,6 @@ int ath11k_peer_rx_frag_setup(struct ath11k *ar, const u8 *peer_mac, int vdev_id
- int ath11k_dp_rx_pktlog_start(struct ath11k_base *ab);
- int ath11k_dp_rx_pktlog_stop(struct ath11k_base *ab, bool stop_timer);
+ 		nr_pages = vma_size / PAGE_SIZE;
++		if (nr_pages > INT_MAX)
++			return -ENOMEM;
  
-+int ath11k_dp_rx_crypto_mic_len(struct ath11k *ar, enum hal_encrypt_type enctype);
-+
- #endif /* ATH11K_DP_RX_H */
-diff --git a/drivers/net/wireless/ath/ath11k/mac.c b/drivers/net/wireless/ath/ath11k/mac.c
-index 835e181d22cb7..b66b6a7072d82 100644
---- a/drivers/net/wireless/ath/ath11k/mac.c
-+++ b/drivers/net/wireless/ath/ath11k/mac.c
-@@ -2410,6 +2410,7 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 
- 	switch (key->cipher) {
- 	case WLAN_CIPHER_SUITE_CCMP:
-+	case WLAN_CIPHER_SUITE_CCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_CCM;
- 		/* TODO: Re-check if flag is valid */
- 		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
-@@ -2419,12 +2420,10 @@ static int ath11k_install_key(struct ath11k_vif *arvif,
- 		arg.key_txmic_len = 8;
- 		arg.key_rxmic_len = 8;
- 		break;
--	case WLAN_CIPHER_SUITE_CCMP_256:
--		arg.key_cipher = WMI_CIPHER_AES_CCM;
--		break;
- 	case WLAN_CIPHER_SUITE_GCMP:
- 	case WLAN_CIPHER_SUITE_GCMP_256:
- 		arg.key_cipher = WMI_CIPHER_AES_GCM;
-+		key->flags |= IEEE80211_KEY_FLAG_GENERATE_IV_MGMT;
- 		break;
- 	default:
- 		ath11k_warn(ar->ab, "cipher %d is not supported\n", key->cipher);
-@@ -3946,7 +3945,10 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- {
- 	struct ath11k_base *ab = ar->ab;
- 	struct ieee80211_hdr *hdr = (struct ieee80211_hdr *)skb->data;
-+	struct ath11k_skb_cb *skb_cb = ATH11K_SKB_CB(skb);
- 	struct ieee80211_tx_info *info;
-+	enum hal_encrypt_type enctype;
-+	unsigned int mic_len;
- 	dma_addr_t paddr;
- 	int buf_id;
- 	int ret;
-@@ -3966,7 +3968,12 @@ static int ath11k_mac_mgmt_tx_wmi(struct ath11k *ar, struct ath11k_vif *arvif,
- 		     ieee80211_is_deauth(hdr->frame_control) ||
- 		     ieee80211_is_disassoc(hdr->frame_control)) &&
- 		     ieee80211_has_protected(hdr->frame_control)) {
--			skb_put(skb, IEEE80211_CCMP_MIC_LEN);
-+			if (!(skb_cb->flags & ATH11K_SKB_CIPHER_SET))
-+				ath11k_warn(ab, "WMI management tx frame without ATH11K_SKB_CIPHER_SET");
-+
-+			enctype = ath11k_dp_tx_get_encrypt_type(skb_cb->cipher);
-+			mic_len = ath11k_dp_rx_crypto_mic_len(ar, enctype);
-+			skb_put(skb, mic_len);
- 		}
- 	}
- 
+ 		mutex_lock(&event->mmap_mutex);
+ 		ret = -EINVAL;
 -- 
 2.43.0
 
