@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEF81714A8;
-	Thu, 15 Aug 2024 13:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230641714A8;
+	Thu, 15 Aug 2024 13:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729403; cv=none; b=U3eg+ejU/q2ggZRIPB1kzKyqekz7EEWfAfnr/FW278YqaWZ6mYZHnqndC4qqAmh6R3WNHYkBuJ9CkeCWCfAKwW0f23Yjvy3tD8bjotSTe/l5oKxMOzAPw1EqjWz/953RYg1+Tvr1PXR5VmlIg1F28ehISJnOnOke9BA8VjpsjR8=
+	t=1723729406; cv=none; b=fez1Ib6tfvbO+mKJ0VOly/BdmlBbYKvOyZalD0SJgKc6yBtLCD2VcMBMQn1+n5EhgUcdejM3x3LOpWQucjMwClpoHA1hi+qux3FB5L9Sfq96Gt2Ud6a4DdSrn7fTrG1zMxSq0OQAQql/pxWN7h1lI4oOpsfuFTDC9wlGVqat6bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729403; c=relaxed/simple;
-	bh=zrT4qumGE1RCQPK8mb1E14HfdjP03BwBoYOpeNkvt5w=;
+	s=arc-20240116; t=1723729406; c=relaxed/simple;
+	bh=8Yxln4ZwMw8K0ML3/rMzwUwhN8GSn6SmmgzvH5Qk10w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lsSc3ZjZkV7odIzkhJzZIwJhqNnxSsyHCj82OvCJINoWd0MWv8+caHlAuWk7jvCpkNLQeCIyHiklqWDb9AX6vWlhp0DFEUf2OyUUOnobJQcv0ZNXECG7H4pi0nAvU4Fne4MC63CXpw8JJCRTgMbQENRsmdAkdfaqqQsgkzYgSi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bLt9RRX3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwhDkbz7UbbqmNaiZqj/xej0xCTDGVZYJUM+74b1d0ZETMQKYNv2Zhs4/2JRJB+h0IO0LlcpLfLSR7lXbgjDMPbc6uhpyywg76CZHmW+DRfWPp8IXxJkzv92amANqwKA6gtGqeifvSEp0z9NNWBlJydM8kqC76VRCb28j7KmNdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AJYSi/U4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bLt9RRX3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50660C32786;
-	Thu, 15 Aug 2024 13:43:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AJYSi/U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97FC0C32786;
+	Thu, 15 Aug 2024 13:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729402;
-	bh=zrT4qumGE1RCQPK8mb1E14HfdjP03BwBoYOpeNkvt5w=;
+	s=korg; t=1723729406;
+	bh=8Yxln4ZwMw8K0ML3/rMzwUwhN8GSn6SmmgzvH5Qk10w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bLt9RRX3tzYjP9CStkRjrWpu7bPaaSCVqXQnHtJzyTy29iXBAD94/K0iONExp7C5o
-	 lva8Eab8TJWL9B53ECNxsV689NewQysOIanKyXLUHLBDfWJVeZjzcgg64hPyFpK0XA
-	 j1eLMu1+2lmYviNRytTm+je8JzwoacfWvYzSyeQI=
+	b=AJYSi/U4MVW0qeINv8tKa2QT9Bevj61+n57RnSrIurIzyyPVurSUBlQlXMgH0C2uY
+	 4dpxgHFhfEsclIT6lThzzCnS4DAZy91e6JUNbS34MAunL8GUs+jIRg7QqH987DwYNT
+	 exA2kaDcyfFZjYtWkIlzuL12jXTpYEgnpk9xBt2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sean Young <sean@mess.org>,
+	Jacopo Mondi <jacopo.mondi@ideasonboard.com>,
+	Gjorgji Rosikopulos <quic_grosikop@quicinc.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/484] media: imon: Fix race getting ictx->lock
-Date: Thu, 15 Aug 2024 15:19:04 +0200
-Message-ID: <20240815131944.608443671@linuxfoundation.org>
+Subject: [PATCH 5.15 087/484] media: i2c: Fix imx412 exposure control
+Date: Thu, 15 Aug 2024 15:19:05 +0200
+Message-ID: <20240815131944.646188743@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,49 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
+[ Upstream commit a1956bf53a2774014ee1768b484af2c38c633a25 ]
 
-Lets fix a race between mutex_is_lock() and mutex_lock().
+Currently we have the following algorithm to calculate what value should be
+written to the exposure control of imx412.
 
-<-mutex is not locked
-if (!mutex_is_locked(&ictx->lock)) {
-	unlock = true; <- mutex is locked externaly
-	mutex_lock(&ictx->lock);
-}
+lpfr = imx412->vblank + imx412->cur_mode->height;
+shutter = lpfr - exposure;
 
-Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
-atomically.
+The 'shutter' value is given to IMX412_REG_EXPOSURE_CIT however, the above
+algorithm will result in the value given to IMX412_REG_EXPOSURE_CIT
+decreasing as the requested exposure value from user-space goes up.
 
-Fix the following cocci warning:
-drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
+e.g.
+[ 2255.713989] imx412 20-001a: Received exp 1608, analog gain 0
+[ 2255.714002] imx412 20-001a: Set exp 1608, analog gain 0, shutter 1938, lpfr 3546
+[ 2256.302770] imx412 20-001a: Received exp 2586, analog gain 100
+[ 2256.302800] imx412 20-001a: Set exp 2586, analog gain 100, shutter 960, lpfr 3546
+[ 2256.753755] imx412 20-001a: Received exp 3524, analog gain 110
+[ 2256.753772] imx412 20-001a: Set exp 3524, analog gain 110, shutter 22, lpfr 3546
 
-Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sean Young <sean@mess.org>
+This behaviour results in the image having less exposure as the requested
+exposure value from user-space increases.
+
+Other sensor drivers such as ov5675, imx218, hid556 and others take the
+requested exposure value and use the value directly.
+
+Take the example of the above cited sensor drivers and directly apply the
+requested exposure value from user-space. The 'lpfr' variable still
+functions as before but the 'shutter' variable can be dispensed with as a
+result.
+
+Once done a similar run of the test application requesting higher exposure
+looks like this, with 'exp' written directly to the sensor.
+
+[  133.207884] imx412 20-001a: Received exp 1608, analog gain 0
+[  133.207899] imx412 20-001a: Set exp 1608, analog gain 0, lpfr 3546
+[  133.905309] imx412 20-001a: Received exp 2844, analog gain 100
+[  133.905344] imx412 20-001a: Set exp 2844, analog gain 100, lpfr 3546
+[  134.241705] imx412 20-001a: Received exp 3524, analog gain 110
+[  134.241775] imx412 20-001a: Set exp 3524, analog gain 110, lpfr 3546
+
+The result is then setting the sensor exposure to lower values results in
+darker, less exposure images and vice versa with higher exposure values.
+
+Fixes: 9214e86c0cc1 ("media: i2c: Add imx412 camera sensor driver")
+Tested-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org> # qrb5165-rb5/imx577
+Reviewed-by: Jacopo Mondi <jacopo.mondi@ideasonboard.com>
+Reviewed-by: Gjorgji Rosikopulos <quic_grosikop@quicinc.com>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/media/i2c/imx412.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 4e7c3d889d5ce..9faf8365afa71 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -1150,10 +1150,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
+diff --git a/drivers/media/i2c/imx412.c b/drivers/media/i2c/imx412.c
+index 84279a6808730..3d4d813923918 100644
+--- a/drivers/media/i2c/imx412.c
++++ b/drivers/media/i2c/imx412.c
+@@ -535,14 +535,13 @@ static int imx412_update_controls(struct imx412 *imx412,
+  */
+ static int imx412_update_exp_gain(struct imx412 *imx412, u32 exposure, u32 gain)
+ {
+-	u32 lpfr, shutter;
++	u32 lpfr;
+ 	int ret;
  
- 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
+ 	lpfr = imx412->vblank + imx412->cur_mode->height;
+-	shutter = lpfr - exposure;
  
--	if (!mutex_is_locked(&ictx->lock)) {
--		unlock = true;
--		mutex_lock(&ictx->lock);
--	}
-+	unlock = mutex_trylock(&ictx->lock);
+-	dev_dbg(imx412->dev, "Set exp %u, analog gain %u, shutter %u, lpfr %u",
+-		exposure, gain, shutter, lpfr);
++	dev_dbg(imx412->dev, "Set exp %u, analog gain %u, lpfr %u",
++		exposure, gain, lpfr);
  
- 	retval = send_packet(ictx);
- 	if (retval)
+ 	ret = imx412_write_reg(imx412, IMX412_REG_HOLD, 1, 1);
+ 	if (ret)
+@@ -552,7 +551,7 @@ static int imx412_update_exp_gain(struct imx412 *imx412, u32 exposure, u32 gain)
+ 	if (ret)
+ 		goto error_release_group_hold;
+ 
+-	ret = imx412_write_reg(imx412, IMX412_REG_EXPOSURE_CIT, 2, shutter);
++	ret = imx412_write_reg(imx412, IMX412_REG_EXPOSURE_CIT, 2, exposure);
+ 	if (ret)
+ 		goto error_release_group_hold;
+ 
 -- 
 2.43.0
 
