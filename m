@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFBF19FA7A;
-	Thu, 15 Aug 2024 13:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 740421714A1;
+	Thu, 15 Aug 2024 13:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729926; cv=none; b=V6ClwZwldFeou626NUxOg+trKzA95ui3CniKEo+hFKbCREJtc2YXLTHYYfuqflHZ0OczBDVBm7IO227IE3lO/HYHt/Jl2xzB9vn5ev5HKvAmKPuDOl1/mHCRjWEZka3zdTD+cD4FRCxDBkRaYOE/Qsf46s6IZOJ2IrLIjc3S12Q=
+	t=1723729929; cv=none; b=oCQmwfSTvrBoO5f0GOUlwPsD9ee4PaQLfGsmUsGSr8q6/82YvIPbS3npkM+hia1ny8U2lqyOw+6kwZ6AnwBT9LhQPJN4YVcBSn+iguYQYJdVBUq9k7iGdLgKjHO/DlYW+LKqg9QkJy/P35GlU3ycoPlRFLrbbd9gwcsXUGzCbJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729926; c=relaxed/simple;
-	bh=hjepkz6ID/wsKDtHDCBUF4XAhN/NCVTq+iNG4mpDHRQ=;
+	s=arc-20240116; t=1723729929; c=relaxed/simple;
+	bh=3fn7zE18ha115YChRPAsAJ+GlyIu4+4WX6F4XRwqnpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p9jt/WzJELbinKIOV8JYwbeoitfrhVtX5jHl3DsZMNdmQH0YVDGo/KhE8hMVktNDuwHE17eJDVOTrvdaVh5cC6sBM4Gn1DPX2SCQ+woPSqaFaBxkH3nt7J8Q8windyQ3sV9rgrXej/5Qwncb7wxF4yK+7xe8YZoUkGl8aP8CE1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSQVll5Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oHNgMJRcuRmAGmdkoQO0oEXZXZH54Mb6ExpcqtcmXvwqCncuhQ4YC0BAVLj05QXe+pCr/s0g9ysilmLsLw6UIMZJTkabC/rYaYWXJ2LKKKGmt0MeU1T5dvEAEN56jUuDv1GdKkIHRI4iNoSyDL2yJ9qOiwCDnbzTQOoVzw6Dn08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r4gf1Pr0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSQVll5Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A91F0C32786;
-	Thu, 15 Aug 2024 13:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r4gf1Pr0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE52EC32786;
+	Thu, 15 Aug 2024 13:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729926;
-	bh=hjepkz6ID/wsKDtHDCBUF4XAhN/NCVTq+iNG4mpDHRQ=;
+	s=korg; t=1723729929;
+	bh=3fn7zE18ha115YChRPAsAJ+GlyIu4+4WX6F4XRwqnpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSQVll5YBAExNYNV0wM+DaKoDn67+pG0SrR9J/JVqPhOCSST8lguPGfd04czPPH7i
-	 vuD02TcFZeG4r1LpYBMuh937Km69/oKeAev1dHpWrIVJy3Z8D0st3PhseG+EDxPERQ
-	 j84Xrl2OMz14iijyZyu+0GLIbC6IQ+fVWXuRMsME=
+	b=r4gf1Pr0EUSSgLLk10Oe16RURWRIasaYcq7uf3KtoV3MCeWM3aQQrn+hOcNggD8t0
+	 wVXrwVliDUu80R2xTSZzmuPpmV5W4dxMPqGpMmcE4hPpUHwydnFyp901AsC945kLvV
+	 StNehzlRNk8Pyywym1esggm+wMbISq44F0vUe8dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.15 250/484] MIPS: Loongson64: reset: Prioritise firmware service
-Date: Thu, 15 Aug 2024 15:21:48 +0200
-Message-ID: <20240815131951.056668773@linuxfoundation.org>
+Subject: [PATCH 5.15 251/484] MIPS: Loongson64: Test register availability before use
+Date: Thu, 15 Aug 2024 15:21:49 +0200
+Message-ID: <20240815131951.094974023@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,100 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 4e7ca0b57f3bc09ba3e4ab86bf6b7c35134bfd04 upstream.
+commit c04366b1207a036b7de02dfcc1ac7138d3343c9b upstream.
 
-We should always use firmware's poweroff & reboot service
-if it's available as firmware may need to perform more task
-than platform's syscon etc.
-
-However _machine_restart & poweroff hooks are registered at
-low priority, which means platform reboot driver can override
-them.
-
-Register firmware based reboot/poweroff implementation with
-register_sys_off_handler with appropriate priority so that
-they will be prioritised. Remove _machine_halt hook as it's
-deemed to be unnecessary.
+Some global register address variable may be missing on
+specific CPU type, test them before use them.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/loongson64/reset.c |   38 ++++++++++++++++----------------------
- 1 file changed, 16 insertions(+), 22 deletions(-)
+ arch/mips/loongson64/smp.c |   23 +++++++++++++++++++++--
+ 1 file changed, 21 insertions(+), 2 deletions(-)
 
---- a/arch/mips/loongson64/reset.c
-+++ b/arch/mips/loongson64/reset.c
-@@ -11,6 +11,7 @@
- #include <linux/init.h>
- #include <linux/kexec.h>
- #include <linux/pm.h>
-+#include <linux/reboot.h>
- #include <linux/slab.h>
- 
- #include <asm/bootinfo.h>
-@@ -21,36 +22,21 @@
- #include <loongson.h>
- #include <boot_param.h>
- 
--static void loongson_restart(char *command)
-+static int firmware_restart(struct sys_off_data *unusedd)
+--- a/arch/mips/loongson64/smp.c
++++ b/arch/mips/loongson64/smp.c
+@@ -479,12 +479,25 @@ static void loongson3_smp_finish(void)
+ static void __init loongson3_smp_setup(void)
  {
+ 	int i = 0, num = 0; /* i: physical id, num: logical id */
++	int max_cpus = 0;
  
- 	void (*fw_restart)(void) = (void *)loongson_sysconf.restart_addr;
+ 	init_cpu_possible(cpu_none_mask);
  
- 	fw_restart();
--	while (1) {
--		if (cpu_wait)
--			cpu_wait();
--	}
-+	return NOTIFY_DONE;
- }
- 
--static void loongson_poweroff(void)
-+static int firmware_poweroff(struct sys_off_data *unused)
- {
- 	void (*fw_poweroff)(void) = (void *)loongson_sysconf.poweroff_addr;
- 
- 	fw_poweroff();
--	while (1) {
--		if (cpu_wait)
--			cpu_wait();
--	}
--}
--
--static void loongson_halt(void)
--{
--	pr_notice("\n\n** You can safely turn off the power now **\n\n");
--	while (1) {
--		if (cpu_wait)
--			cpu_wait();
--	}
-+	return NOTIFY_DONE;
- }
- 
- #ifdef CONFIG_KEXEC
-@@ -154,9 +140,17 @@ static void loongson_crash_shutdown(stru
- 
- static int __init mips_reboot_setup(void)
- {
--	_machine_restart = loongson_restart;
--	_machine_halt = loongson_halt;
--	pm_power_off = loongson_poweroff;
-+	if (loongson_sysconf.restart_addr) {
-+		register_sys_off_handler(SYS_OFF_MODE_RESTART,
-+				 SYS_OFF_PRIO_FIRMWARE,
-+				 firmware_restart, NULL);
++	for (i = 0; i < ARRAY_SIZE(smp_group); i++) {
++		if (!smp_group[i])
++			break;
++		max_cpus += loongson_sysconf.cores_per_node;
 +	}
 +
-+	if (loongson_sysconf.poweroff_addr) {
-+		register_sys_off_handler(SYS_OFF_MODE_POWER_OFF,
-+				 SYS_OFF_PRIO_FIRMWARE,
-+				 firmware_poweroff, NULL);
++	if (max_cpus < loongson_sysconf.nr_cpus) {
++		pr_err("SMP Groups are less than the number of CPUs\n");
++		loongson_sysconf.nr_cpus = max_cpus ? max_cpus : 1;
 +	}
++
+ 	/* For unified kernel, NR_CPUS is the maximum possible value,
+ 	 * loongson_sysconf.nr_cpus is the really present value
+ 	 */
++	i = 0;
+ 	while (i < loongson_sysconf.nr_cpus) {
+ 		if (loongson_sysconf.reserved_cpus_mask & (1<<i)) {
+ 			/* Reserved physical CPU cores */
+@@ -505,14 +518,14 @@ static void __init loongson3_smp_setup(v
+ 		__cpu_logical_map[num] = -1;
+ 		num++;
+ 	}
+-
+ 	csr_ipi_probe();
+ 	ipi_set0_regs_init();
+ 	ipi_clear0_regs_init();
+ 	ipi_status0_regs_init();
+ 	ipi_en0_regs_init();
+ 	ipi_mailbox_buf_init();
+-	ipi_write_enable(0);
++	if (smp_group[0])
++		ipi_write_enable(0);
  
- #ifdef CONFIG_KEXEC
- 	kexec_argv = kmalloc(KEXEC_ARGV_SIZE, GFP_KERNEL);
+ 	cpu_set_core(&cpu_data[0],
+ 		     cpu_logical_map(0) % loongson_sysconf.cores_per_package);
+@@ -830,6 +843,9 @@ static int loongson3_disable_clock(unsig
+ 	uint64_t core_id = cpu_core(&cpu_data[cpu]);
+ 	uint64_t package_id = cpu_data[cpu].package;
+ 
++	if (!loongson_chipcfg[package_id] || !loongson_freqctrl[package_id])
++		return 0;
++
+ 	if ((read_c0_prid() & PRID_REV_MASK) == PRID_REV_LOONGSON3A_R1) {
+ 		LOONGSON_CHIPCFG(package_id) &= ~(1 << (12 + core_id));
+ 	} else {
+@@ -844,6 +860,9 @@ static int loongson3_enable_clock(unsign
+ 	uint64_t core_id = cpu_core(&cpu_data[cpu]);
+ 	uint64_t package_id = cpu_data[cpu].package;
+ 
++	if (!loongson_chipcfg[package_id] || !loongson_freqctrl[package_id])
++		return 0;
++
+ 	if ((read_c0_prid() & PRID_REV_MASK) == PRID_REV_LOONGSON3A_R1) {
+ 		LOONGSON_CHIPCFG(package_id) |= 1 << (12 + core_id);
+ 	} else {
 
 
