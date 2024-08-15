@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A5231A01D4;
-	Thu, 15 Aug 2024 14:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6551AAE38;
+	Thu, 15 Aug 2024 14:09:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730944; cv=none; b=H/hAjn0L90/YCxwMlvvT1o7R/19/sMbfXL+VL1u0hz42mlHd8aV2P0WKE9pvl46DUshP6ZE6rp0FkETcMFzrkHjWsHN1hb3EC1Sq0y6QvwMTHXj5dNNHakf2fGuYpetoAwxh0dqw320SnXAf6PtIZmI2+SAIon+H92lc5XO2/CY=
+	t=1723730947; cv=none; b=pNUkU/bIJQsDXTt3aIISgj2kmDyS/lsabrj3hf8ocEL8IraDWlLE0DwWG/ItCzN6kcniY4STjQmVo7W/wDlxDaNpPWMkOp8AHT553PjhgGbjJHi5S3pOtscZhv3Y80Rr/OTGtcoC7IWYUqYHT7f1n+gud9zo1QrKkUxi1qTa0/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730944; c=relaxed/simple;
-	bh=QG1Tz1S5Lwe2alfITdxDGfA+HsyM0BG4M2V4aWAGbTE=;
+	s=arc-20240116; t=1723730947; c=relaxed/simple;
+	bh=2YwUS8tsC2XSBmWKSfgW8NRL+tT/EaHHtoJzLZzArps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UL9t6zh2mzOShgEg9WdAaDCHHC4sQZ0RBuJ45uiymU5SuCcL+BOEX7A+Zo32XSmsmMtEQ/RgEW+9YKCNlFrCrQ6ja8BBKHTLZM3ro1LBgva+KHiVGhtDI9jGe70VfiPA2Uy3i2EPmu9sle+tQCdBURMevNBBRghlbJ7BN5LRcBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgWQZsuZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b4P+dmQtyjaTMuWA4FnhS6WMwwYdeENHs7xPqMDTkgMVYy/0lN5dI8jiXPpyJhmQ/vfa9C2wh1tO9EpEql8o9bUEwwLjjWzVINBUvyy8NlFkdtFAteTj5UFhKNkSPnFiSI1cZ74RRSqe46JDh3rr5QQLus6gL4qLRoVQoFWRgnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SszHka/C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgWQZsuZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E4F7C32786;
-	Thu, 15 Aug 2024 14:09:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SszHka/C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D4B7C32786;
+	Thu, 15 Aug 2024 14:09:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730943;
-	bh=QG1Tz1S5Lwe2alfITdxDGfA+HsyM0BG4M2V4aWAGbTE=;
+	s=korg; t=1723730946;
+	bh=2YwUS8tsC2XSBmWKSfgW8NRL+tT/EaHHtoJzLZzArps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgWQZsuZwoX66btfH1L5mlyOP0nABK7xuIPqoYlCv4dCp7UXYp0KAWYEdlc1grMFG
-	 h4j2Ui4crgPqlaiDxRx01/yArEWUy6NlV66J3ZM9GuPUjeC9E17vMr+T4abTAiBf8d
-	 ovNI4Sqz/vmszuDM4UBgh1elJxkbWkQjtoGxG+Ag=
+	b=SszHka/CiAcAX4uyhaaOs1Oy2InIDbZKrd7UGh1eAUkchYLnllHCNbLkYjrtRwAlg
+	 dP/iGAQ0LkiYw1u9xdJ/qPt7ggIHj1XhD9Cp4Cne6RTR/WzPRVKIbdiEckVx7q7P0D
+	 nO67HTBbdpc1F1Te3UtD/YL+6KD14v6B7y2f6FA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+1fa663a2100308ab6eab@syzkaller.appspotmail.com,
-	Alexei Starovoitov <ast@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	syzbot+4139435cb1b34cf759c2@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 41/67] bpf: Avoid kfree_rcu() under lock in bpf_lpm_trie.
-Date: Thu, 15 Aug 2024 15:25:55 +0200
-Message-ID: <20240815131839.895503593@linuxfoundation.org>
+Subject: [PATCH 6.6 42/67] fs: Annotate struct file_handle with __counted_by() and use struct_size()
+Date: Thu, 15 Aug 2024 15:25:56 +0200
+Message-ID: <20240815131839.932956707@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -52,100 +54,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexei Starovoitov <ast@kernel.org>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 59f2f841179aa6a0899cb9cf53659149a35749b7 ]
+[ Upstream commit 68d6f4f3fbd9b1baae53e7cf33fb3362b5a21494 ]
 
-syzbot reported the following lock sequence:
-cpu 2:
-  grabs timer_base lock
-    spins on bpf_lpm lock
+Prepare for the coming implementation by GCC and Clang of the __counted_by
+attribute. Flexible array members annotated with __counted_by can have
+their accesses bounds-checked at run-time via CONFIG_UBSAN_BOUNDS (for
+array indexing) and CONFIG_FORTIFY_SOURCE (for strcpy/memcpy-family
+functions).
 
-cpu 1:
-  grab rcu krcp lock
-    spins on timer_base lock
+While there, use struct_size() helper, instead of the open-coded
+version.
 
-cpu 0:
-  grab bpf_lpm lock
-    spins on rcu krcp lock
-
-bpf_lpm lock can be the same.
-timer_base lock can also be the same due to timer migration.
-but rcu krcp lock is always per-cpu, so it cannot be the same lock.
-Hence it's a false positive.
-To avoid lockdep complaining move kfree_rcu() after spin_unlock.
-
-Reported-by: syzbot+1fa663a2100308ab6eab@syzkaller.appspotmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20240329171439.37813-1-alexei.starovoitov@gmail.com
+[brauner@kernel.org: contains a fix by Edward for an OOB access]
+Reported-by: syzbot+4139435cb1b34cf759c2@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://lore.kernel.org/r/tencent_A7845DD769577306D813742365E976E3A205@qq.com
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Link: https://lore.kernel.org/r/ZgImCXTdGDTeBvSS@neat
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/lpm_trie.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/fhandle.c       | 6 +++---
+ include/linux/fs.h | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/lpm_trie.c b/kernel/bpf/lpm_trie.c
-index 050fe1ebf0f7d..d0febf07051ed 100644
---- a/kernel/bpf/lpm_trie.c
-+++ b/kernel/bpf/lpm_trie.c
-@@ -308,6 +308,7 @@ static long trie_update_elem(struct bpf_map *map,
- {
- 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
- 	struct lpm_trie_node *node, *im_node = NULL, *new_node = NULL;
-+	struct lpm_trie_node *free_node = NULL;
- 	struct lpm_trie_node __rcu **slot;
- 	struct bpf_lpm_trie_key_u8 *key = _key;
- 	unsigned long irq_flags;
-@@ -382,7 +383,7 @@ static long trie_update_elem(struct bpf_map *map,
- 			trie->n_entries--;
+diff --git a/fs/fhandle.c b/fs/fhandle.c
+index 99dcf07cfecfe..c361d7ff1b88d 100644
+--- a/fs/fhandle.c
++++ b/fs/fhandle.c
+@@ -40,7 +40,7 @@ static long do_sys_name_to_handle(const struct path *path,
+ 	if (f_handle.handle_bytes > MAX_HANDLE_SZ)
+ 		return -EINVAL;
  
- 		rcu_assign_pointer(*slot, new_node);
--		kfree_rcu(node, rcu);
-+		free_node = node;
- 
- 		goto out;
+-	handle = kzalloc(sizeof(struct file_handle) + f_handle.handle_bytes,
++	handle = kzalloc(struct_size(handle, f_handle, f_handle.handle_bytes),
+ 			 GFP_KERNEL);
+ 	if (!handle)
+ 		return -ENOMEM;
+@@ -75,7 +75,7 @@ static long do_sys_name_to_handle(const struct path *path,
+ 	/* copy the mount id */
+ 	if (put_user(real_mount(path->mnt)->mnt_id, mnt_id) ||
+ 	    copy_to_user(ufh, handle,
+-			 sizeof(struct file_handle) + handle_bytes))
++			 struct_size(handle, f_handle, handle_bytes)))
+ 		retval = -EFAULT;
+ 	kfree(handle);
+ 	return retval;
+@@ -196,7 +196,7 @@ static int handle_to_path(int mountdirfd, struct file_handle __user *ufh,
+ 		retval = -EINVAL;
+ 		goto out_err;
  	}
-@@ -429,6 +430,7 @@ static long trie_update_elem(struct bpf_map *map,
- 	}
+-	handle = kmalloc(sizeof(struct file_handle) + f_handle.handle_bytes,
++	handle = kmalloc(struct_size(handle, f_handle, f_handle.handle_bytes),
+ 			 GFP_KERNEL);
+ 	if (!handle) {
+ 		retval = -ENOMEM;
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 5ca9e859c042b..43e640fb4a7f7 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1036,7 +1036,7 @@ struct file_handle {
+ 	__u32 handle_bytes;
+ 	int handle_type;
+ 	/* file identifier */
+-	unsigned char f_handle[];
++	unsigned char f_handle[] __counted_by(handle_bytes);
+ };
  
- 	spin_unlock_irqrestore(&trie->lock, irq_flags);
-+	kfree_rcu(free_node, rcu);
- 
- 	return ret;
- }
-@@ -437,6 +439,7 @@ static long trie_update_elem(struct bpf_map *map,
- static long trie_delete_elem(struct bpf_map *map, void *_key)
- {
- 	struct lpm_trie *trie = container_of(map, struct lpm_trie, map);
-+	struct lpm_trie_node *free_node = NULL, *free_parent = NULL;
- 	struct bpf_lpm_trie_key_u8 *key = _key;
- 	struct lpm_trie_node __rcu **trim, **trim2;
- 	struct lpm_trie_node *node, *parent;
-@@ -506,8 +509,8 @@ static long trie_delete_elem(struct bpf_map *map, void *_key)
- 		else
- 			rcu_assign_pointer(
- 				*trim2, rcu_access_pointer(parent->child[0]));
--		kfree_rcu(parent, rcu);
--		kfree_rcu(node, rcu);
-+		free_parent = parent;
-+		free_node = node;
- 		goto out;
- 	}
- 
-@@ -521,10 +524,12 @@ static long trie_delete_elem(struct bpf_map *map, void *_key)
- 		rcu_assign_pointer(*trim, rcu_access_pointer(node->child[1]));
- 	else
- 		RCU_INIT_POINTER(*trim, NULL);
--	kfree_rcu(node, rcu);
-+	free_node = node;
- 
- out:
- 	spin_unlock_irqrestore(&trie->lock, irq_flags);
-+	kfree_rcu(free_parent, rcu);
-+	kfree_rcu(free_node, rcu);
- 
- 	return ret;
- }
+ static inline struct file *get_file(struct file *f)
 -- 
 2.43.0
 
