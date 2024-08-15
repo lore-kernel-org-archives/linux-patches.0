@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A4019D068;
-	Thu, 15 Aug 2024 14:07:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91EA19D068;
+	Thu, 15 Aug 2024 14:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730832; cv=none; b=gZiDmhCvXCAsgYWW+9NR8ltnJ6WDgPoRWUx41w9gyDQh2MHEgNdA7KpkRVHLO5vqEkTkBAFmdEyDcc1PKnz72galPMovL0vSlVDZ1m9Xi5wR9fARm3tcwrHDZTSttyjMwnRBW5q3DW1t+uHFRibEC90E4JPtZKiHEMABXP+2v7w=
+	t=1723730835; cv=none; b=akT3ioqEEetglXxswS+YuBYVxxydr9nEt92oVOi1sJeYhKXZiL0ZJ/qw2aM+n3W/MfpBvxZAfRM8uUcXA6kdGhsR3JxXPvV3lXXwbx5C0dq8I1nkE4irZi4oJUQD0HCeBeQJJwtl10Znuxab0oS5O4SME5eJMS+tIJQKMTlbKiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730832; c=relaxed/simple;
-	bh=gD85yB2i4Ii3eVd+PtkA0b1Twt+Spg7r1pIeilwHRCM=;
+	s=arc-20240116; t=1723730835; c=relaxed/simple;
+	bh=Jh8KQXbLm68ZvPBNBwY/zKZCBouOznE2HBeZXoTI1WY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZHkyL6fmH348xitl/hzafZD0Bw5uk4tnpmby2hLQB8n/+g7QTc1SrMsToDM5VACIJF7mkYyHXzG9PXUGQccs0pLyfpJs0tJ/W/QPSlPlestnzQai9wJqgEH57pYb2yvVQlLnwSn3ctf1LAjY7jKiyOkLmAJURIEatH1Zv4CLlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gp+Z1L0c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bG2zMdidPP6ZtyAXu5IFSf36Rx9d9A11X2qC59j6KQtX38WeIOUBYVExVyuKQcZQfVB7NjZKIbWp9mo8QgQr7Xj5zNSn3lHzvRSa2jRgXQRj9KeprmidptCR8CWW21mZW54ioaAWpiGlDdM64qZslDSyWF5h0ZUFO6p0q9/t+rE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JuHCGD4n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gp+Z1L0c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86D4EC32786;
-	Thu, 15 Aug 2024 14:07:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JuHCGD4n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B25C5C4AF0C;
+	Thu, 15 Aug 2024 14:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730832;
-	bh=gD85yB2i4Ii3eVd+PtkA0b1Twt+Spg7r1pIeilwHRCM=;
+	s=korg; t=1723730835;
+	bh=Jh8KQXbLm68ZvPBNBwY/zKZCBouOznE2HBeZXoTI1WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gp+Z1L0cl+2WI4cwTLsIk5QChlLQo1IdLIDzcwYZD0+hC2EDBsZ/UYIQdnR9qG1sX
-	 feFfkpzv4bV9czMkdwTK8lUY6quW8RliuzYBV/lZEQ4Jdmdw1G9HLIj7xbvB3bAF9x
-	 U/QkwmzJwBzpi9zvq71sxbuub/3hX0kywxgwV5W8=
+	b=JuHCGD4nliuhm6ksR/u0KX94mItGiFTGMfcexJPOEl4zCA7hfM8F30GE4eon7GJtl
+	 M1obgblTZFj6T055o5Dzc+oNFF84Ai19eGWetU52FpZIlaEPFF5fpPtC/PcduEQP0P
+	 sg5U4a3FKpQK7Tmiu1hOsQo45fUvmCsAu16+x0UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 04/38] mptcp: pm: do not ignore subflow if signal flag is also set
-Date: Thu, 15 Aug 2024 15:25:38 +0200
-Message-ID: <20240815131833.124139178@linuxfoundation.org>
+	Gavin Shan <gshan@redhat.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Quentin Perret <qperret@google.com>,
+	Shaoqin Huang <shahuang@redhat.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
+	Will Deacon <will@kernel.org>
+Subject: [PATCH 6.1 38/38] KVM: arm64: Dont pass a TLBI level hint when zapping table entries
+Date: Thu, 15 Aug 2024 15:26:12 +0200
+Message-ID: <20240815131834.416876331@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -52,100 +54,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Will Deacon <will@kernel.org>
 
-commit 85df533a787bf07bf4367ce2a02b822ff1fba1a3 upstream.
+commit 36e008323926036650299cfbb2dca704c7aba849 upstream.
 
-Up to the 'Fixes' commit, having an endpoint with both the 'signal' and
-'subflow' flags, resulted in the creation of a subflow and an address
-announcement using the address linked to this endpoint. After this
-commit, only the address announcement was done, ignoring the 'subflow'
-flag.
+The TLBI level hints are for leaf entries only, so take care not to pass
+them incorrectly after clearing a table entry.
 
-That's because the same bitmap is used for the two flags. It is OK to
-keep this single bitmap, the already selected local endpoint simply have
-to be re-used, but not via select_local_address() not to look at the
-just modified bitmap.
-
-Note that it is unusual to set the two flags together: creating a new
-subflow using a new local address will implicitly advertise it to the
-other peer. So in theory, no need to advertise it explicitly as well.
-Maybe there are use-cases -- the subflow might not reach the other peer
-that way, we can ask the other peer to try initiating the new subflow
-without delay -- or very likely the user is confused, and put both flags
-"just to be sure at least the right one is set". Still, if it is
-allowed, the kernel should do what has been asked: using this endpoint
-to announce the address and to create a new subflow from it.
-
-An alternative is to forbid the use of the two flags together, but
-that's probably too late, there are maybe use-cases, and it was working
-before. This patch will avoid people complaining subflows are not
-created using the endpoint they added with the 'subflow' and 'signal'
-flag.
-
-Note that with the current patch, the subflow might not be created in
-some corner cases, e.g. if the 'subflows' limit was reached when sending
-the ADD_ADDR, but changed later on. It is probably not worth splitting
-id_avail_bitmap per target ('signal', 'subflow'), which will add another
-large field to the msk "just" to track (again) endpoints. Anyway,
-currently when the limits are changed, the kernel doesn't check if new
-subflows can be created or removed, because we would need to keep track
-of the received ADD_ADDR, and more. It sounds OK to assume that the
-limits should be properly configured before establishing new
-connections.
-
-Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
-Cc: stable@vger.kernel.org
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-5-c8a9b036493b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Cc: Gavin Shan <gshan@redhat.com>
+Cc: Marc Zyngier <maz@kernel.org>
+Cc: Quentin Perret <qperret@google.com>
+Fixes: 82bb02445de5 ("KVM: arm64: Implement kvm_pgtable_hyp_unmap() at EL2")
+Fixes: 6d9d2115c480 ("KVM: arm64: Add support for stage-2 map()/unmap() in generic page-table")
+Reviewed-by: Shaoqin Huang <shahuang@redhat.com>
+Reviewed-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20240327124853.11206-3-will@kernel.org
+Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+Cc: <stable@vger.kernel.org> # 6.1.y only
+[will@: Use '0' instead of TLBI_TTL_UNKNOWN_to indicate "no level". Force
+        level to 0 in stage2_put_pte() if we're clearing a table entry.]
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ arch/arm64/kvm/hyp/pgtable.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -524,8 +524,8 @@ __lookup_addr(struct pm_nl_pernet *perne
+--- a/arch/arm64/kvm/hyp/pgtable.c
++++ b/arch/arm64/kvm/hyp/pgtable.c
+@@ -475,7 +475,7 @@ static int hyp_unmap_walker(u64 addr, u6
  
- static void mptcp_pm_create_subflow_or_signal_addr(struct mptcp_sock *msk)
- {
-+	struct mptcp_pm_addr_entry *local, *signal_and_subflow = NULL;
- 	struct sock *sk = (struct sock *)msk;
--	struct mptcp_pm_addr_entry *local;
- 	unsigned int add_addr_signal_max;
- 	unsigned int local_addr_max;
- 	struct pm_nl_pernet *pernet;
-@@ -591,6 +591,9 @@ static void mptcp_pm_create_subflow_or_s
- 		msk->pm.add_addr_signaled++;
- 		mptcp_pm_announce_addr(msk, &local->addr, false);
- 		mptcp_pm_nl_addr_send_ack(msk);
+ 		kvm_clear_pte(ptep);
+ 		dsb(ishst);
+-		__tlbi_level(vae2is, __TLBI_VADDR(addr, 0), level);
++		__tlbi_level(vae2is, __TLBI_VADDR(addr, 0), 0);
+ 	} else {
+ 		if (end - addr < granule)
+ 			return -EINVAL;
+@@ -699,8 +699,14 @@ static void stage2_put_pte(kvm_pte_t *pt
+ 	 * Clear the existing PTE, and perform break-before-make with
+ 	 * TLB maintenance if it was valid.
+ 	 */
+-	if (kvm_pte_valid(*ptep)) {
++	kvm_pte_t pte = *ptep;
 +
-+		if (local->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)
-+			signal_and_subflow = local;
++	if (kvm_pte_valid(pte)) {
+ 		kvm_clear_pte(ptep);
++
++		if (kvm_pte_table(pte, level))
++			level = 0;
++
+ 		kvm_call_hyp(__kvm_tlb_flush_vmid_ipa, mmu, addr, level);
  	}
- 
- subflow:
-@@ -601,9 +604,14 @@ subflow:
- 		bool fullmesh;
- 		int i, nr;
- 
--		local = select_local_address(pernet, msk);
--		if (!local)
--			break;
-+		if (signal_and_subflow) {
-+			local = signal_and_subflow;
-+			signal_and_subflow = NULL;
-+		} else {
-+			local = select_local_address(pernet, msk);
-+			if (!local)
-+				break;
-+		}
- 
- 		fullmesh = !!(local->flags & MPTCP_PM_ADDR_FLAG_FULLMESH);
  
 
 
