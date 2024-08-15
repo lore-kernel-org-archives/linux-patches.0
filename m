@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0C21AC893;
-	Thu, 15 Aug 2024 14:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235721AC893;
+	Thu, 15 Aug 2024 14:38:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732737; cv=none; b=oouVhzP5DLc0SKb/saEjV8EQHFbgI2DQXZUBPYUQdhojLO1fu+GKVt624l7LITkj+FpCxz+zqPlJzGekAhSz3lzerk+OEu7DjWfEPBpk4zQnfvxWMKLNFDVAkwUIubofP2HXOWLB2LOniRiWNxl47J0oQ3nrWLpbRstcm4y+5fw=
+	t=1723732740; cv=none; b=dYuEMWq/sY1QH88vmyQEf2ccTZTPBglzCwCGUdq7SoeL44FLlBZcEBgrjHVOFuFgF1rwoSSke/3LRlDi/v0VFh/ytYGaI4ckVACPsVkCN6m9ccWCzGGLQ52FE5uIaHkAfRcRFca+jYQ2i2K4tvv/inkZBWAd2X7FOgPTBQUudpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732737; c=relaxed/simple;
-	bh=DrIo/oSUV9g1c8D7MpOPL8zXuNIiSvlxQP1OGj/iTdw=;
+	s=arc-20240116; t=1723732740; c=relaxed/simple;
+	bh=WCdFpOBj50uSNiJvHpME9an8b1zf1uA5ERRFPrNcabI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdAhR5/xeHkgNzhCDCjcLKkCLm0CPhP3c881hcHylpvuytupPLYPrCjKx1DRlw+KwWs4/lzv2PNTfpnxa0AtjQHNZeWzyeVsrnufH/mZmVxV91Bv2QnOiwr8rPEyucVTrhxsLuhaU/G2+8EQs+1OLb7D2q44nD/NoR0Q2MReCBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uarbaSTp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AK777eUwCRGTFB6Uftk8/wUk4JKLt6wVVPsihnp2cEpXFBGyfE63/YRqCU8PJkqDlIjGvdEnlPEBOixybdMQ+E6Fx5HEPbhkrAoiopIidLIVBIgUwNh3wbpsssfNJbIGY2vzeRZAQP/+fhoFDhGKTG936cvhFFwK3kstegT7Gl8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek+8bFiI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uarbaSTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD124C32786;
-	Thu, 15 Aug 2024 14:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek+8bFiI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E4C32786;
+	Thu, 15 Aug 2024 14:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732736;
-	bh=DrIo/oSUV9g1c8D7MpOPL8zXuNIiSvlxQP1OGj/iTdw=;
+	s=korg; t=1723732739;
+	bh=WCdFpOBj50uSNiJvHpME9an8b1zf1uA5ERRFPrNcabI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uarbaSTpFQHIhr8Ib2mcL6Vck2NHB6suxiUInswBAdnE1jtENPBvhwRzhvoGdjl2Q
-	 uoBZf5Xqj795nazNpSA1Y5oLEd+ueneyHDqV0OsbC4t5O/yGXeftTBSSXWr9h4xgWq
-	 WJF/ftGZCgqnF38EZH3gpVYWkGvlJYdSi4PxLkN8=
+	b=ek+8bFiI/03v4KwrAb1aYtQYyT+jrgaQoQF71P588b+YZa7IMBNq4WWkUE5ihZyeU
+	 Ttib0w1+z2kgg519dw6xv1bfemtuzOwP30qsYkKeKSjP51JhiddpJCIroN8c2kAZhf
+	 34KO+7AkRlo5tqI+Wt82AllTGlAbyfuTVuRDtq34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 270/352] wifi: nl80211: dont give key data to userspace
-Date: Thu, 15 Aug 2024 15:25:36 +0200
-Message-ID: <20240815131929.886108226@linuxfoundation.org>
+Subject: [PATCH 5.10 271/352] btrfs: fix bitmap leak when loading free space cache on duplicate entry
+Date: Thu, 15 Aug 2024 15:25:37 +0200
+Message-ID: <20240815131929.925714640@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,53 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit a7e5793035792cc46a1a4b0a783655ffa897dfe9 ]
+[ Upstream commit 320d8dc612660da84c3b70a28658bb38069e5a9a ]
 
-When a key is requested by userspace, there's really no need
-to include the key data, the sequence counter is really what
-userspace needs in this case. The fact that it's included is
-just a historic quirk.
+If we failed to link a free space entry because there's already a
+conflicting entry for the same offset, we free the free space entry but
+we don't free the associated bitmap that we had just allocated before.
+Fix that by freeing the bitmap before freeing the entry.
 
-Remove the key data.
-
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20240627104411.b6a4f097e4ea.I7e6cc976cb9e8a80ef25a3351330f313373b4578@changeid
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/nl80211.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ fs/btrfs/free-space-cache.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/nl80211.c b/net/wireless/nl80211.c
-index 846e40dc00bb6..f9ad7de710cb4 100644
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -3968,10 +3968,7 @@ static void get_key_callback(void *c, struct key_params *params)
- 	struct nlattr *key;
- 	struct get_key_cookie *cookie = c;
- 
--	if ((params->key &&
--	     nla_put(cookie->msg, NL80211_ATTR_KEY_DATA,
--		     params->key_len, params->key)) ||
--	    (params->seq &&
-+	if ((params->seq &&
- 	     nla_put(cookie->msg, NL80211_ATTR_KEY_SEQ,
- 		     params->seq_len, params->seq)) ||
- 	    (params->cipher &&
-@@ -3983,10 +3980,7 @@ static void get_key_callback(void *c, struct key_params *params)
- 	if (!key)
- 		goto nla_put_failure;
- 
--	if ((params->key &&
--	     nla_put(cookie->msg, NL80211_KEY_DATA,
--		     params->key_len, params->key)) ||
--	    (params->seq &&
-+	if ((params->seq &&
- 	     nla_put(cookie->msg, NL80211_KEY_SEQ,
- 		     params->seq_len, params->seq)) ||
- 	    (params->cipher &&
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index 4989c60b1df9c..af52c9e005b3c 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -798,6 +798,7 @@ static int __load_free_space_cache(struct btrfs_root *root, struct inode *inode,
+ 				spin_unlock(&ctl->tree_lock);
+ 				btrfs_err(fs_info,
+ 					"Duplicate entries in free space cache, dumping");
++				kmem_cache_free(btrfs_free_space_bitmap_cachep, e->bitmap);
+ 				kmem_cache_free(btrfs_free_space_cachep, e);
+ 				goto free_cache;
+ 			}
 -- 
 2.43.0
 
