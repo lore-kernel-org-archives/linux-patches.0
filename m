@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C39A17DA9E;
-	Thu, 15 Aug 2024 13:37:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22DB17C9A9;
+	Thu, 15 Aug 2024 13:38:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729077; cv=none; b=ZE2PW6YKEZJlDK65lmbB0odfPhoGGXvZtInDvUzipHGbldTlF8haprGGExV30FUtKgRcX2mouQNxjMQXFEv4IkgJrvYsE2B+xOekPTauie2b/dEgDK/QcYOcMK9PgKDtPZqH7FB9Zc/N1ly8rHcugW4qLfOEzck8R8KvcvgEIZ8=
+	t=1723729080; cv=none; b=sQnONPYXKzjHVfycLqGjxlLjx0LN+9NVUIAvLQ6QcXUNSz5bTcEsC6Wg7is+Rgninu33Yv0f0W34eHCOck1zoi9Jb0niOxUFG9Od6iF7l9MGUHeLnVv2NBmUqbu0YnXkaFbj2UHoPE5YRc+DiYVe2coMWchB+Y3gjfDnDcICtLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729077; c=relaxed/simple;
-	bh=V6w8yhROoi+NDGF47CKFI5uBDn93drMbS5wjQ3nV4NI=;
+	s=arc-20240116; t=1723729080; c=relaxed/simple;
+	bh=7SsDyiPEX+jzh/kSRjU+ZOejz4yHoC71F6SfT5jgWqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RB5dR4orPIGvurqfiRJObkpOG5NAXLE0F5bzjK/CcRMvWzt6yCpZlDo3xQWQo1avmwr/Nr0+sxTZkym8OJ59W6WnfBPvX8jUNBXh34AjzLr6Lgr4rhZ3wF0rkZ4yH/b5w4gJff6o6jY2OoC+Jz1odocumi5m7izxKZwWaso3A18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyZU9any; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p7ejckeQwdgd5ccSjgnCRqKLBjKEcTIjeyhOb/1fp+hBDMgb3tTF+r/ccHLemOVRivSVtkdc26YRU0VUnbnhPYYfl6rqeS8SuL+hhh9AQc6AWb/5tmVniOJEBdVAw8iuHpgxC+MPBa9vfCEKp1QBwYlRQ7aEgYPH0O/DBbBmx/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSJ5jEfC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyZU9any"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4332DC32786;
-	Thu, 15 Aug 2024 13:37:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSJ5jEfC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E158C32786;
+	Thu, 15 Aug 2024 13:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729077;
-	bh=V6w8yhROoi+NDGF47CKFI5uBDn93drMbS5wjQ3nV4NI=;
+	s=korg; t=1723729080;
+	bh=7SsDyiPEX+jzh/kSRjU+ZOejz4yHoC71F6SfT5jgWqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyZU9anyrTO7Rp6z7rHOx1Y2VpdBP02owbWS+5/tbjcxLInJNeowfnHqNOcZvojlI
-	 4ZzukQkF314uQhjQyt3kFUtrxzPLvj0yrytPYssqUGtwtcSbAQAkX3CYKBa1LkJK9i
-	 NCrFXfq8IksEdVjUTx7zU3J6tTcgl9+hSlEY1FDw=
+	b=rSJ5jEfC9bMeBZEfxx7yGDpLPjguWGfd8TqjCLcz4+GBWdgTSLT7Z4lAOOoQpxJRv
+	 BzRYLT2cxtBHmsKcQsU4CH4NaDFYBjVml1jFJnQXgMis3kdY37n34KBZ7xDWWfXmjs
+	 571GuueUCm6J6U2P6ZXKKJ5GwYWh9EDFNPDhvRM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Robert Foss <rfoss@kernel.org>
-Subject: [PATCH 4.19 186/196] drm/bridge: analogix_dp: properly handle zero sized AUX transactions
-Date: Thu, 15 Aug 2024 15:25:03 +0200
-Message-ID: <20240815131859.186266455@linuxfoundation.org>
+	David Wang <00107082@163.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yu Liao <liaoyu15@huawei.com>
+Subject: [PATCH 4.19 177/196] tick/broadcast: Move per CPU pointer access into the atomic section
+Date: Thu, 15 Aug 2024 15:24:54 +0200
+Message-ID: <20240815131858.844942955@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -50,58 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit e82290a2e0e8ec5e836ecad1ca025021b3855c2d upstream.
+commit 6881e75237a84093d0986f56223db3724619f26e upstream.
 
-Address only transactions without any data are valid and should not
-be flagged as short transactions. Simply return the message size when
-no transaction errors occured.
+The recent fix for making the take over of the broadcast timer more
+reliable retrieves a per CPU pointer in preemptible context.
 
-CC: stable@vger.kernel.org
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Robert Foss <rfoss@kernel.org>
-Signed-off-by: Robert Foss <rfoss@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240318203925.2837689-1-l.stach@pengutronix.de
+This went unnoticed as compilers hoist the access into the non-preemptible
+region where the pointer is actually used. But of course it's valid that
+the compiler keeps it at the place where the code puts it which rightfully
+triggers:
+
+  BUG: using smp_processor_id() in preemptible [00000000] code:
+       caller is hotplug_cpu__broadcast_tick_pull+0x1c/0xc0
+
+Move it to the actual usage site which is in a non-preemptible region.
+
+Fixes: f7d43dd206e7 ("tick/broadcast: Make takeover of broadcast hrtimer reliable")
+Reported-by: David Wang <00107082@163.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Yu Liao <liaoyu15@huawei.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/87ttg56ers.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c |    5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ kernel/time/tick-broadcast.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
-+++ b/drivers/gpu/drm/bridge/analogix/analogix_dp_reg.c
-@@ -1109,7 +1109,6 @@ ssize_t analogix_dp_transfer(struct anal
- 	u32 status_reg;
- 	u8 *buffer = msg->buffer;
- 	unsigned int i;
--	int num_transferred = 0;
- 	int ret;
+--- a/kernel/time/tick-broadcast.c
++++ b/kernel/time/tick-broadcast.c
+@@ -941,7 +941,6 @@ void tick_broadcast_switch_to_oneshot(vo
+ #ifdef CONFIG_HOTPLUG_CPU
+ void hotplug_cpu__broadcast_tick_pull(int deadcpu)
+ {
+-	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
+ 	struct clock_event_device *bc;
+ 	unsigned long flags;
  
- 	/* Buffer size of AUX CH is 16 bytes */
-@@ -1161,7 +1160,6 @@ ssize_t analogix_dp_transfer(struct anal
- 			reg = buffer[i];
- 			writel(reg, dp->reg_base + ANALOGIX_DP_BUF_DATA_0 +
- 			       4 * i);
--			num_transferred++;
+@@ -967,6 +966,8 @@ void hotplug_cpu__broadcast_tick_pull(in
+ 		 * device to avoid the starvation.
+ 		 */
+ 		if (tick_check_broadcast_expired()) {
++			struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
++
+ 			cpumask_clear_cpu(smp_processor_id(), tick_broadcast_force_mask);
+ 			tick_program_event(td->evtdev->next_event, 1);
  		}
- 	}
- 
-@@ -1209,7 +1207,6 @@ ssize_t analogix_dp_transfer(struct anal
- 			reg = readl(dp->reg_base + ANALOGIX_DP_BUF_DATA_0 +
- 				    4 * i);
- 			buffer[i] = (unsigned char)reg;
--			num_transferred++;
- 		}
- 	}
- 
-@@ -1226,7 +1223,7 @@ ssize_t analogix_dp_transfer(struct anal
- 		 (msg->request & ~DP_AUX_I2C_MOT) == DP_AUX_NATIVE_READ)
- 		msg->reply = DP_AUX_NATIVE_REPLY_ACK;
- 
--	return num_transferred > 0 ? num_transferred : -EBUSY;
-+	return msg->size;
- 
- aux_error:
- 	/* if aux err happen, reset aux */
 
 
