@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3087E17C9B0;
-	Thu, 15 Aug 2024 13:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E0211714D0;
+	Thu, 15 Aug 2024 13:30:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728603; cv=none; b=aWLtVnG1rSitNJY4eNOPrAaXyYA1HAUfnyRyxn2fnFPiUAEutccgcd2xLSqthwsY1bGP59EaY4zErsby5B6ShW+qPXz1eQxCP5stbJQqMtgAgv7I9pgd3yZ+ujSL4UHZACPi0/1rlxEko5c2gHOjXSgdD/JFXIab95pCkzY8R/s=
+	t=1723728606; cv=none; b=bkYsZ6mCVerAX2NH0Z8CU39DwUY762fOCzgDZ2E1rC/uWL4vURRMt9YoBLt1DbikP8rxLba1OwSMC0ImgnTYZatp4BA1n45Qi3KKRNwqecn9ONY6Yzajqksr0MZW+3gfphOm3lhpVef/QliB2pF2GoJQz0Hqz9iXOP9TzulJa2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728603; c=relaxed/simple;
-	bh=krO16avhouH72C31fCPzhN7qjgoREyJ9F20bCqIbuOY=;
+	s=arc-20240116; t=1723728606; c=relaxed/simple;
+	bh=nuejmWtq2x+68voBFiFmBZKG/AnE83J5QdcRWVJ3lgc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZxhsSXlhRBE97VSSswnCnY/A1ua6wDchMvOqpIa5ZkjAD+wADWZKsii4kLJVlC/neH70MZzvhErVvN07s4jtOtSSk4SKMxb3jAxO9Jd4Ig1rypaki15qS/4wlOhbWcRvId+WsJDMxXrUn0uPrUtRbg3xRuLCz8DB1VItsU+pvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v/kTNBCK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K4kEfiEBDHIRnmBcEE+TAOiMuOpdAc4mwnXfFwynrygaWP7DdVtwiTRCSmt/dkGDzfqkDe80y4cb6I4bcWUv6ho9FjXqew6Vj9nRUMkAWCCsSWNfdAwiNiKg6ET85FoYJtoE3G8471fu74ftDi8XMeS2LgJiJHA0pZkhINHFYoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aFW0KjPv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v/kTNBCK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C34AC32786;
-	Thu, 15 Aug 2024 13:30:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aFW0KjPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32D3C4AF0A;
+	Thu, 15 Aug 2024 13:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728603;
-	bh=krO16avhouH72C31fCPzhN7qjgoREyJ9F20bCqIbuOY=;
+	s=korg; t=1723728606;
+	bh=nuejmWtq2x+68voBFiFmBZKG/AnE83J5QdcRWVJ3lgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/kTNBCKRFDNjwZzv+hfXWdcDkKXco6env5akT8G2gOVTEOb1jRRwctxTfpUn+/sP
-	 FtN631e5OXkjBjk870ua1g8SkbM1N8I/6Q7YM6IcJP30Y7VK4helK/xI+cnb+BqwuJ
-	 h2bcFcakW+FdPhygsDXb4EKHNJI/rWSbRYyk4PgI=
+	b=aFW0KjPvexzNaH1I+5Xpi66KYMaNfkYtiA0HTRDcRvGvI9s3P2z5jWHmr1we011Cx
+	 hq7MDx7SeGxnxfO6uTOSCxVlVcXTd837iF3Pb7EvqsEh+qhx5TSac4QWUbooHof0dr
+	 qVP8anbI1SwE84W+9TlnamnGJPzvHwIR9NUAfxvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>,
+	Tony Brelinski <tonyx.brelinski@intel.com>,
+	Jeff Kirsher <jeffrey.t.kirsher@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 052/196] bnxt_re: Fix imm_data endianness
-Date: Thu, 15 Aug 2024 15:22:49 +0200
-Message-ID: <20240815131854.072320993@linuxfoundation.org>
+Subject: [PATCH 4.19 053/196] ice: Rework flex descriptor programming
+Date: Thu, 15 Aug 2024 15:22:50 +0200
+Message-ID: <20240815131854.109703267@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,103 +52,204 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jack Wang <jinpu.wang@ionos.com>
+From: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
 
-[ Upstream commit 95b087f87b780daafad1dbb2c84e81b729d5d33f ]
+[ Upstream commit 22ef683b48182f4d6125a2fb2725eb8a141514ff ]
 
-When map a device between servers with MLX and BCM RoCE nics, RTRS
-server complain about unknown imm type, and can't map the device,
+The driver can support two flex descriptor profiles, ICE_RXDID_FLEX_NIC
+and ICE_RXDID_FLEX_NIC_2. This patch reworks the current flex programming
+logic to add support for the latter profile.
 
-After more debug, it seems bnxt_re wrongly handle the
-imm_data, this patch fixed the compat issue with MLX for us.
-
-In off list discussion, Selvin confirmed HW is working in little endian format
-and all data needs to be converted to LE while providing.
-
-This patch fix the endianness for imm_data
-
-Fixes: 1ac5a4047975 ("RDMA/bnxt_re: Add bnxt_re RoCE driver")
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Link: https://lore.kernel.org/r/20240710122102.37569-1-jinpu.wang@ionos.com
-Acked-by: Selvin Xavier <selvin.xavier@broadcom.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
+Tested-by: Tony Brelinski <tonyx.brelinski@intel.com>
+Signed-off-by: Jeff Kirsher <jeffrey.t.kirsher@intel.com>
+Stable-dep-of: 782161895eb4 ("netfilter: ctnetlink: use helper function to calculate expect ID")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/bnxt_re/ib_verbs.c | 8 ++++----
- drivers/infiniband/hw/bnxt_re/qplib_fp.h | 6 +++---
- 2 files changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c   | 102 ++++++++++++++----
+ .../net/ethernet/intel/ice/ice_lan_tx_rx.h    |  24 +++--
+ 2 files changed, 92 insertions(+), 34 deletions(-)
 
-diff --git a/drivers/infiniband/hw/bnxt_re/ib_verbs.c b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-index e365fa8251c16..e2c93a50fe762 100644
---- a/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-+++ b/drivers/infiniband/hw/bnxt_re/ib_verbs.c
-@@ -2112,7 +2112,7 @@ static int bnxt_re_build_send_wqe(struct bnxt_re_qp *qp,
- 		break;
- 	case IB_WR_SEND_WITH_IMM:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_SEND_WITH_IMM;
--		wqe->send.imm_data = wr->ex.imm_data;
-+		wqe->send.imm_data = be32_to_cpu(wr->ex.imm_data);
- 		break;
- 	case IB_WR_SEND_WITH_INV:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_SEND_WITH_INV;
-@@ -2142,7 +2142,7 @@ static int bnxt_re_build_rdma_wqe(const struct ib_send_wr *wr,
- 		break;
- 	case IB_WR_RDMA_WRITE_WITH_IMM:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_RDMA_WRITE_WITH_IMM;
--		wqe->rdma.imm_data = wr->ex.imm_data;
-+		wqe->rdma.imm_data = be32_to_cpu(wr->ex.imm_data);
- 		break;
- 	case IB_WR_RDMA_READ:
- 		wqe->type = BNXT_QPLIB_SWQE_TYPE_RDMA_READ;
-@@ -3110,7 +3110,7 @@ static void bnxt_re_process_res_shadow_qp_wc(struct bnxt_re_qp *qp,
- 	wc->byte_len = orig_cqe->length;
- 	wc->qp = &qp1_qp->ib_qp;
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index f8d00263d9019..72a6f22ee423f 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -7,16 +7,16 @@
  
--	wc->ex.imm_data = orig_cqe->immdata;
-+	wc->ex.imm_data = cpu_to_be32(le32_to_cpu(orig_cqe->immdata));
- 	wc->src_qp = orig_cqe->src_qp;
- 	memcpy(wc->smac, orig_cqe->smac, ETH_ALEN);
- 	if (bnxt_re_is_vlan_pkt(orig_cqe, &vlan_id, &sl)) {
-@@ -3231,7 +3231,7 @@ int bnxt_re_poll_cq(struct ib_cq *ib_cq, int num_entries, struct ib_wc *wc)
- 				continue;
- 			}
- 			wc->qp = &qp->ib_qp;
--			wc->ex.imm_data = cqe->immdata;
-+			wc->ex.imm_data = cpu_to_be32(le32_to_cpu(cqe->immdata));
- 			wc->src_qp = cqe->src_qp;
- 			memcpy(wc->smac, cqe->smac, ETH_ALEN);
- 			wc->port_num = 1;
-diff --git a/drivers/infiniband/hw/bnxt_re/qplib_fp.h b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-index 72352ca80ace7..d0b24e961511a 100644
---- a/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-+++ b/drivers/infiniband/hw/bnxt_re/qplib_fp.h
-@@ -145,7 +145,7 @@ struct bnxt_qplib_swqe {
- 		/* Send, with imm, inval key */
- 		struct {
- 			union {
--				__be32	imm_data;
-+				u32	imm_data;
- 				u32	inv_key;
- 			};
- 			u32		q_key;
-@@ -163,7 +163,7 @@ struct bnxt_qplib_swqe {
- 		/* RDMA write, with imm, read */
- 		struct {
- 			union {
--				__be32	imm_data;
-+				u32	imm_data;
- 				u32	inv_key;
- 			};
- 			u64		remote_va;
-@@ -349,7 +349,7 @@ struct bnxt_qplib_cqe {
- 	u32				length;
- 	u64				wr_id;
- 	union {
--		__be32			immdata;
-+		__le32			immdata;
- 		u32			invrkey;
- 	};
- 	u64				qp_handle;
+ #define ICE_PF_RESET_WAIT_COUNT	200
+ 
+-#define ICE_NIC_FLX_ENTRY(hw, mdid, idx) \
+-	wr32((hw), GLFLXP_RXDID_FLX_WRD_##idx(ICE_RXDID_FLEX_NIC), \
++#define ICE_PROG_FLEX_ENTRY(hw, rxdid, mdid, idx) \
++	wr32((hw), GLFLXP_RXDID_FLX_WRD_##idx(rxdid), \
+ 	     ((ICE_RX_OPC_MDID << \
+ 	       GLFLXP_RXDID_FLX_WRD_##idx##_RXDID_OPCODE_S) & \
+ 	      GLFLXP_RXDID_FLX_WRD_##idx##_RXDID_OPCODE_M) | \
+ 	     (((mdid) << GLFLXP_RXDID_FLX_WRD_##idx##_PROT_MDID_S) & \
+ 	      GLFLXP_RXDID_FLX_WRD_##idx##_PROT_MDID_M))
+ 
+-#define ICE_NIC_FLX_FLG_ENTRY(hw, flg_0, flg_1, flg_2, flg_3, idx) \
+-	wr32((hw), GLFLXP_RXDID_FLAGS(ICE_RXDID_FLEX_NIC, idx), \
++#define ICE_PROG_FLG_ENTRY(hw, rxdid, flg_0, flg_1, flg_2, flg_3, idx) \
++	wr32((hw), GLFLXP_RXDID_FLAGS(rxdid, idx), \
+ 	     (((flg_0) << GLFLXP_RXDID_FLAGS_FLEXIFLAG_4N_S) & \
+ 	      GLFLXP_RXDID_FLAGS_FLEXIFLAG_4N_M) | \
+ 	     (((flg_1) << GLFLXP_RXDID_FLAGS_FLEXIFLAG_4N_1_S) & \
+@@ -290,30 +290,85 @@ ice_aq_get_link_info(struct ice_port_info *pi, bool ena_lse,
+ }
+ 
+ /**
+- * ice_init_flex_parser - initialize rx flex parser
++ * ice_init_flex_flags
+  * @hw: pointer to the hardware structure
++ * @prof_id: Rx Descriptor Builder profile ID
+  *
+- * Function to initialize flex descriptors
++ * Function to initialize Rx flex flags
+  */
+-static void ice_init_flex_parser(struct ice_hw *hw)
++static void ice_init_flex_flags(struct ice_hw *hw, enum ice_rxdid prof_id)
+ {
+ 	u8 idx = 0;
+ 
+-	ICE_NIC_FLX_ENTRY(hw, ICE_RX_MDID_HASH_LOW, 0);
+-	ICE_NIC_FLX_ENTRY(hw, ICE_RX_MDID_HASH_HIGH, 1);
+-	ICE_NIC_FLX_ENTRY(hw, ICE_RX_MDID_FLOW_ID_LOWER, 2);
+-	ICE_NIC_FLX_ENTRY(hw, ICE_RX_MDID_FLOW_ID_HIGH, 3);
+-	ICE_NIC_FLX_FLG_ENTRY(hw, ICE_RXFLG_PKT_FRG, ICE_RXFLG_UDP_GRE,
+-			      ICE_RXFLG_PKT_DSI, ICE_RXFLG_FIN, idx++);
+-	ICE_NIC_FLX_FLG_ENTRY(hw, ICE_RXFLG_SYN, ICE_RXFLG_RST,
+-			      ICE_RXFLG_PKT_DSI, ICE_RXFLG_PKT_DSI, idx++);
+-	ICE_NIC_FLX_FLG_ENTRY(hw, ICE_RXFLG_PKT_DSI, ICE_RXFLG_PKT_DSI,
+-			      ICE_RXFLG_EVLAN_x8100, ICE_RXFLG_EVLAN_x9100,
+-			      idx++);
+-	ICE_NIC_FLX_FLG_ENTRY(hw, ICE_RXFLG_VLAN_x8100, ICE_RXFLG_TNL_VLAN,
+-			      ICE_RXFLG_TNL_MAC, ICE_RXFLG_TNL0, idx++);
+-	ICE_NIC_FLX_FLG_ENTRY(hw, ICE_RXFLG_TNL1, ICE_RXFLG_TNL2,
+-			      ICE_RXFLG_PKT_DSI, ICE_RXFLG_PKT_DSI, idx);
++	/* Flex-flag fields (0-2) are programmed with FLG64 bits with layout:
++	 * flexiflags0[5:0] - TCP flags, is_packet_fragmented, is_packet_UDP_GRE
++	 * flexiflags1[3:0] - Not used for flag programming
++	 * flexiflags2[7:0] - Tunnel and VLAN types
++	 * 2 invalid fields in last index
++	 */
++	switch (prof_id) {
++	/* Rx flex flags are currently programmed for the NIC profiles only.
++	 * Different flag bit programming configurations can be added per
++	 * profile as needed.
++	 */
++	case ICE_RXDID_FLEX_NIC:
++	case ICE_RXDID_FLEX_NIC_2:
++		ICE_PROG_FLG_ENTRY(hw, prof_id, ICE_RXFLG_PKT_FRG,
++				   ICE_RXFLG_UDP_GRE, ICE_RXFLG_PKT_DSI,
++				   ICE_RXFLG_FIN, idx++);
++		/* flex flag 1 is not used for flexi-flag programming, skipping
++		 * these four FLG64 bits.
++		 */
++		ICE_PROG_FLG_ENTRY(hw, prof_id, ICE_RXFLG_SYN, ICE_RXFLG_RST,
++				   ICE_RXFLG_PKT_DSI, ICE_RXFLG_PKT_DSI, idx++);
++		ICE_PROG_FLG_ENTRY(hw, prof_id, ICE_RXFLG_PKT_DSI,
++				   ICE_RXFLG_PKT_DSI, ICE_RXFLG_EVLAN_x8100,
++				   ICE_RXFLG_EVLAN_x9100, idx++);
++		ICE_PROG_FLG_ENTRY(hw, prof_id, ICE_RXFLG_VLAN_x8100,
++				   ICE_RXFLG_TNL_VLAN, ICE_RXFLG_TNL_MAC,
++				   ICE_RXFLG_TNL0, idx++);
++		ICE_PROG_FLG_ENTRY(hw, prof_id, ICE_RXFLG_TNL1, ICE_RXFLG_TNL2,
++				   ICE_RXFLG_PKT_DSI, ICE_RXFLG_PKT_DSI, idx);
++		break;
++
++	default:
++		ice_debug(hw, ICE_DBG_INIT,
++			  "Flag programming for profile ID %d not supported\n",
++			  prof_id);
++	}
++}
++
++/**
++ * ice_init_flex_flds
++ * @hw: pointer to the hardware structure
++ * @prof_id: Rx Descriptor Builder profile ID
++ *
++ * Function to initialize flex descriptors
++ */
++static void ice_init_flex_flds(struct ice_hw *hw, enum ice_rxdid prof_id)
++{
++	enum ice_flex_rx_mdid mdid;
++
++	switch (prof_id) {
++	case ICE_RXDID_FLEX_NIC:
++	case ICE_RXDID_FLEX_NIC_2:
++		ICE_PROG_FLEX_ENTRY(hw, prof_id, ICE_RX_MDID_HASH_LOW, 0);
++		ICE_PROG_FLEX_ENTRY(hw, prof_id, ICE_RX_MDID_HASH_HIGH, 1);
++		ICE_PROG_FLEX_ENTRY(hw, prof_id, ICE_RX_MDID_FLOW_ID_LOWER, 2);
++
++		mdid = (prof_id == ICE_RXDID_FLEX_NIC_2) ?
++			ICE_RX_MDID_SRC_VSI : ICE_RX_MDID_FLOW_ID_HIGH;
++
++		ICE_PROG_FLEX_ENTRY(hw, prof_id, mdid, 3);
++
++		ice_init_flex_flags(hw, prof_id);
++		break;
++
++	default:
++		ice_debug(hw, ICE_DBG_INIT,
++			  "Field init for profile ID %d not supported\n",
++			  prof_id);
++	}
+ }
+ 
+ /**
+@@ -494,7 +549,8 @@ enum ice_status ice_init_hw(struct ice_hw *hw)
+ 	if (status)
+ 		goto err_unroll_fltr_mgmt_struct;
+ 
+-	ice_init_flex_parser(hw);
++	ice_init_flex_flds(hw, ICE_RXDID_FLEX_NIC);
++	ice_init_flex_flds(hw, ICE_RXDID_FLEX_NIC_2);
+ 
+ 	return 0;
+ 
+diff --git a/drivers/net/ethernet/intel/ice/ice_lan_tx_rx.h b/drivers/net/ethernet/intel/ice/ice_lan_tx_rx.h
+index 068dbc740b766..94504023d86e2 100644
+--- a/drivers/net/ethernet/intel/ice/ice_lan_tx_rx.h
++++ b/drivers/net/ethernet/intel/ice/ice_lan_tx_rx.h
+@@ -188,23 +188,25 @@ struct ice_32b_rx_flex_desc_nic {
+  * with a specific metadata (profile 7 reserved for HW)
+  */
+ enum ice_rxdid {
+-	ICE_RXDID_START			= 0,
+-	ICE_RXDID_LEGACY_0		= ICE_RXDID_START,
+-	ICE_RXDID_LEGACY_1,
+-	ICE_RXDID_FLX_START,
+-	ICE_RXDID_FLEX_NIC		= ICE_RXDID_FLX_START,
+-	ICE_RXDID_FLX_LAST		= 63,
+-	ICE_RXDID_LAST			= ICE_RXDID_FLX_LAST
++	ICE_RXDID_LEGACY_0		= 0,
++	ICE_RXDID_LEGACY_1		= 1,
++	ICE_RXDID_FLEX_NIC		= 2,
++	ICE_RXDID_FLEX_NIC_2		= 6,
++	ICE_RXDID_HW			= 7,
++	ICE_RXDID_LAST			= 63,
+ };
+ 
+ /* Receive Flex Descriptor Rx opcode values */
+ #define ICE_RX_OPC_MDID		0x01
+ 
+ /* Receive Descriptor MDID values */
+-#define ICE_RX_MDID_FLOW_ID_LOWER	5
+-#define ICE_RX_MDID_FLOW_ID_HIGH	6
+-#define ICE_RX_MDID_HASH_LOW		56
+-#define ICE_RX_MDID_HASH_HIGH		57
++enum ice_flex_rx_mdid {
++	ICE_RX_MDID_FLOW_ID_LOWER	= 5,
++	ICE_RX_MDID_FLOW_ID_HIGH,
++	ICE_RX_MDID_SRC_VSI		= 19,
++	ICE_RX_MDID_HASH_LOW		= 56,
++	ICE_RX_MDID_HASH_HIGH,
++};
+ 
+ /* Rx Flag64 packet flag bits */
+ enum ice_rx_flg64_bits {
 -- 
 2.43.0
 
