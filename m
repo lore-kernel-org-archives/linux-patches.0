@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9D41DFFB;
-	Thu, 15 Aug 2024 14:30:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB8663D5;
+	Thu, 15 Aug 2024 14:30:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732249; cv=none; b=bllFxwH//yB7GZBI40ptwPpU00EcoQ7c1tvj+17DH6yklWQ1+OnGHCX+wVLZCvd/8cMtd8+lbaD0qZmxmRXRmoo7ATMhk40YlLa7pes7VERGImXjuZLYDALND4mstECtuvnERCqtg0bdJx29gvvP8hTypIknfLzDiFTy+6Q+t9E=
+	t=1723732252; cv=none; b=PkQ5iTHIo1Q0dYmgrWzcc8yITs2iB8sMy0V3NQ2pD6hxp7vcqvOoWOE3hzHcRFYdLuqWVcwEoR3XaLRjjnRTF3p7pyk8bv8AltHTxoxT3yi/wpchWfvlutSzFlc0YiRdbgRIMKWNKqhLJqTLl8dSJkV8Prlvhkf3c3eAEqTztk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732249; c=relaxed/simple;
-	bh=afGvrBZsAf451x4ICbCfcuR99HJjIVSPEp8++mbQLWw=;
+	s=arc-20240116; t=1723732252; c=relaxed/simple;
+	bh=LLLUW34qoERu2LQEyUPHqgFJAClGOs30xRgcmTm49RE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GeIqxqVU7psxr+N4BR8s/v36P72P03UdHrwfumKdDi+OWeXGYxZWcT6OQt9qG/SVupF6nXyG1HitWrqpg3KsIpUcTMQQvBe52tjJ02JV60pBxRUlC3CAuv6stOJSj1xOXTBEoAn4z3kRFTfUtr0cfBEYI33+u58mfUOPdJ+JaUI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mdKk67Br; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V8RIa+dGMnWlx8NWVLKUNkAW+to5Ro6sQA+e3geLKltPEbz1oxiBh08a2i21Ck2Z/JE1sMCK4uC3GabLhIinQWGm1vgtGmSzkSZBQyDk1v7JDVow5dyPHhU+9oglq+Ucb9ottq99z2mhT3LMR4TN43U6U917dDZ65ypPPuaHkxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Sd95+Ies; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mdKk67Br"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06B8C32786;
-	Thu, 15 Aug 2024 14:30:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Sd95+Ies"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA6BC32786;
+	Thu, 15 Aug 2024 14:30:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732249;
-	bh=afGvrBZsAf451x4ICbCfcuR99HJjIVSPEp8++mbQLWw=;
+	s=korg; t=1723732252;
+	bh=LLLUW34qoERu2LQEyUPHqgFJAClGOs30xRgcmTm49RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mdKk67Bryj/FqzHvKM5O1v2jrTr8TY075y80t72Su8HcCcYZqZs+kn1uXvsRxCYwl
-	 wJANT22T9o8o9i1LhUG51UjWsElJtM512W0eF4vVYgR6GyRRM6tzD9wBSmoMepGsNO
-	 7340+Rl88dTJ4GFEBRWffrv2VfaimMtM3tVzhbNg=
+	b=Sd95+Ies62kbi5xbntRYbvzSacajLN5pQ9r/dKAWjHQwnMPf3d0dTMJmSD4ohSVRU
+	 y2DPoXx9Vbbp7PIH81bCggwgIaBvPrb5rwr8aEGT4Jf9kuhvXvJLaPkTuye9ArZG7V
+	 99qurCAccInJm1lz+ZwS5Xs0ngwV6NT4n1VU7AIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Schaefer <dhs@frame.work>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Dmitry Yashin <dmt.yashin@gmail.com>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/352] media: uvcvideo: Override default flags
-Date: Thu, 15 Aug 2024 15:22:25 +0200
-Message-ID: <20240815131922.298216682@linuxfoundation.org>
+Subject: [PATCH 5.10 114/352] pinctrl: rockchip: update rk3308 iomux routes
+Date: Thu, 15 Aug 2024 15:23:00 +0200
+Message-ID: <20240815131923.661323111@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,66 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Schaefer <dhs@frame.work>
+From: Dmitry Yashin <dmt.yashin@gmail.com>
 
-[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
+[ Upstream commit a8f2548548584549ea29d43431781d67c4afa42b ]
 
-When the UVC device has a control that is readonly it doesn't set the
-SET_CUR flag. For example the privacy control has SET_CUR flag set in
-the defaults in the `uvc_ctrls` variable. Even if the device does not
-have it set, it's not cleared by uvc_ctrl_get_flags().
+Some of the rk3308 iomux routes in rk3308_mux_route_data belong to
+the rk3308b SoC. Remove them and correct i2c3 routes.
 
-Originally written with assignment in commit 859086ae3636 ("media:
-uvcvideo: Apply flags from device to actual properties"). But changed to
-|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
-flags"). It would not clear the default flags.
-
-With this patch applied the correct flags are reported to user space.
-Tested with:
-
-```
-> v4l2-ctl --list-ctrls | grep privacy
-privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
-```
-
-Signed-off-by: Daniel Schaefer <dhs@frame.work>
-Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Fixes: 7825aeb7b208 ("pinctrl: rockchip: add rk3308 SoC support")
+Signed-off-by: Dmitry Yashin <dmt.yashin@gmail.com>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20240515121634.23945-2-dmt.yashin@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-rockchip.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
-index e1a98c95b7854..c89f582bd5320 100644
---- a/drivers/media/usb/uvc/uvc_ctrl.c
-+++ b/drivers/media/usb/uvc/uvc_ctrl.c
-@@ -1734,7 +1734,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 	else
- 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
- 				     dev->intfnum, info->selector, data, 1);
--	if (!ret)
-+
-+	if (!ret) {
-+		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
-+				 UVC_CTRL_FLAG_SET_CUR |
-+				 UVC_CTRL_FLAG_AUTO_UPDATE |
-+				 UVC_CTRL_FLAG_ASYNCHRONOUS);
-+
- 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
- 				UVC_CTRL_FLAG_GET_CUR : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
-@@ -1743,6 +1749,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
- 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
- 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
- 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
-+	}
+diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
+index 02b41f1bafe71..e0f22ce219ee8 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.c
++++ b/drivers/pinctrl/pinctrl-rockchip.c
+@@ -720,9 +720,8 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
+ 	RK_MUXROUTE_SAME(0, RK_PC3, 1, 0x314, BIT(16 + 0) | BIT(0)), /* rtc_clk */
+ 	RK_MUXROUTE_SAME(1, RK_PC6, 2, 0x314, BIT(16 + 2) | BIT(16 + 3)), /* uart2_rxm0 */
+ 	RK_MUXROUTE_SAME(4, RK_PD2, 2, 0x314, BIT(16 + 2) | BIT(16 + 3) | BIT(2)), /* uart2_rxm1 */
+-	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x608, BIT(16 + 8) | BIT(16 + 9)), /* i2c3_sdam0 */
+-	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(8)), /* i2c3_sdam1 */
+-	RK_MUXROUTE_SAME(2, RK_PA0, 3, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(9)), /* i2c3_sdam2 */
++	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x314, BIT(16 + 4)), /* i2c3_sdam0 */
++	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x314, BIT(16 + 4) | BIT(4)), /* i2c3_sdam1 */
+ 	RK_MUXROUTE_SAME(1, RK_PA3, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclktxm0 */
+ 	RK_MUXROUTE_SAME(1, RK_PA4, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclkrxm0 */
+ 	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x308, BIT(16 + 3) | BIT(3)), /* i2s-8ch-1-sclktxm1 */
+@@ -731,18 +730,6 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
+ 	RK_MUXROUTE_SAME(1, RK_PB6, 4, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* pdm-clkm1 */
+ 	RK_MUXROUTE_SAME(2, RK_PA6, 2, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* pdm-clkm2 */
+ 	RK_MUXROUTE_SAME(2, RK_PA4, 3, 0x600, BIT(16 + 2) | BIT(2)), /* pdm-clkm-m2 */
+-	RK_MUXROUTE_SAME(3, RK_PB2, 3, 0x314, BIT(16 + 9)), /* spi1_miso */
+-	RK_MUXROUTE_SAME(2, RK_PA4, 2, 0x314, BIT(16 + 9) | BIT(9)), /* spi1_miso_m1 */
+-	RK_MUXROUTE_SAME(0, RK_PB3, 3, 0x314, BIT(16 + 10) | BIT(16 + 11)), /* owire_m0 */
+-	RK_MUXROUTE_SAME(1, RK_PC6, 7, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(10)), /* owire_m1 */
+-	RK_MUXROUTE_SAME(2, RK_PA2, 5, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(11)), /* owire_m2 */
+-	RK_MUXROUTE_SAME(0, RK_PB3, 2, 0x314, BIT(16 + 12) | BIT(16 + 13)), /* can_rxd_m0 */
+-	RK_MUXROUTE_SAME(1, RK_PC6, 5, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* can_rxd_m1 */
+-	RK_MUXROUTE_SAME(2, RK_PA2, 4, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* can_rxd_m2 */
+-	RK_MUXROUTE_SAME(1, RK_PC4, 3, 0x314, BIT(16 + 14)), /* mac_rxd0_m0 */
+-	RK_MUXROUTE_SAME(4, RK_PA2, 2, 0x314, BIT(16 + 14) | BIT(14)), /* mac_rxd0_m1 */
+-	RK_MUXROUTE_SAME(3, RK_PB4, 4, 0x314, BIT(16 + 15)), /* uart3_rx */
+-	RK_MUXROUTE_SAME(0, RK_PC1, 3, 0x314, BIT(16 + 15) | BIT(15)), /* uart3_rx_m1 */
+ };
  
- 	kfree(data);
- 	return ret;
+ static struct rockchip_mux_route_data rk3328_mux_route_data[] = {
 -- 
 2.43.0
 
