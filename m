@@ -1,37 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270EE19DF5F;
-	Thu, 15 Aug 2024 14:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752E819DF5F;
+	Thu, 15 Aug 2024 14:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730632; cv=none; b=Tfs603JUC+XUih24AwWzU5UWwJY/YN2SmQNqYFG9xovt2IcMMwhCgSSblm8V+1ADsRm4FIz6H8qybjNsxGWN3gckLHD1RhDbofd3d/kLg3Wv9x0/0n6eydaHbEbmCmdL8cdzWl7axBZSPlSVJz9uu+D1r8RrluBqlA8eHFFj5L4=
+	t=1723730635; cv=none; b=j3oqMh/p8mGPlxwnN8OVN3bf3WTiW3aub6rYhd4BOy4mX3toNncMMRA+0SPmYDn4Nty1IigeCtnzTo4crQJpVeu19oUY/Be+qyrBquy+2Z1pa/mexgzFl80CidQDhEFIqmT7+9qdEyasTuQLpC69OjtK5k4o67Md4HXxDPPcsDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730632; c=relaxed/simple;
-	bh=T3ZzHXVa+6ABWsbCdFkhCdCwT5AdGrz7wIqmOUJS7is=;
+	s=arc-20240116; t=1723730635; c=relaxed/simple;
+	bh=KaOeRqYTxdVTLb3PhAP5c9vm2F4CxIkX/Sh5iMpQq6g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gg7cHiLLGgXeIKV6Dfh1ruHLB9h6SXiCKGv8ufkkSpgXGdKP8+/gNc0TYijvaw/VoDCOG+omYpUBy9NPZ8AsejOZ0ayi76W5bsM9F26KRcjrgfKdX2+kDbRA4dsVsTuR7fkyZ/NQqbRqQnny3rE6v5IK+8kdMKqlUgy7fcH1Tp4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=188ZZFUk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=knNSZOMAKhjbULH9jzrMrNn+vT/dAibVAwVk8TsdOqH569+wHsTVvD4INiKW3b4VR+65GPiP3Bf8T2xInQq7S0DqbT6yGs49NvXax985p/vrVNcXS7Khuws5i+VFFj0APyYw3bphOLWaLTumjVtFlW1vtdK5fnOKZw1d0njEUSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ne5qEFCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="188ZZFUk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF32C32786;
-	Thu, 15 Aug 2024 14:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ne5qEFCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5C88C32786;
+	Thu, 15 Aug 2024 14:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730632;
-	bh=T3ZzHXVa+6ABWsbCdFkhCdCwT5AdGrz7wIqmOUJS7is=;
+	s=korg; t=1723730635;
+	bh=KaOeRqYTxdVTLb3PhAP5c9vm2F4CxIkX/Sh5iMpQq6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=188ZZFUkt7hLyBAHswCfi3K6cmSfng4o39j8P1OFsUKhzuMKSQ2W/RUphQT+5mIfP
-	 gR6eoKIlI+07nxlrRBF5r6tVnP0w93fenRV+2ikqut+PW89P+3pXynNdJTKZxvWGa3
-	 fQ0lxJZ2sQRuEu0XfrQYo8DmTgOy+ztIdoq3xeik=
+	b=Ne5qEFCZI16OSVaHoAfIVwHQv1v69vEReybj5VyzqR6wPHyPhDT5AqXKL/Y6Lbhf7
+	 fJNLie9jldN9N70Men1dxw/o8vnHqU+G/+rqurEWeBmLGLUAuqEFDnREmIsqjgYBdT
+	 marMT7A35kwMHb0BFS7DUS7KoGVFCwyE/inGmg8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzkaller <syzkaller@googlegroups.com>,
-	George Kennedy <george.kennedy@oracle.com>
-Subject: [PATCH 5.15 438/484] serial: core: check uartclk for zero to avoid divide by zero
-Date: Thu, 15 Aug 2024 15:24:56 +0200
-Message-ID: <20240815131958.375437770@linuxfoundation.org>
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com,
+	Marco Elver <elver@google.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Aleksandr Nogikh <nogikh@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Marcello Sylvester Bauer <sylv@sylv.io>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 439/484] kcov: properly check for softirq context
+Date: Thu, 15 Aug 2024 15:24:57 +0200
+Message-ID: <20240815131958.414267677@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,68 +57,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: George Kennedy <george.kennedy@oracle.com>
+From: Andrey Konovalov <andreyknvl@gmail.com>
 
-commit 6eabce6608d6f3440f4c03aa3d3ef50a47a3d193 upstream.
+commit 7d4df2dad312f270d62fecb0e5c8b086c6d7dcfc upstream.
 
-Calling ioctl TIOCSSERIAL with an invalid baud_base can
-result in uartclk being zero, which will result in a
-divide by zero error in uart_get_divisor(). The check for
-uartclk being zero in uart_set_info() needs to be done
-before other settings are made as subsequent calls to
-ioctl TIOCSSERIAL for the same port would be impacted if
-the uartclk check was done where uartclk gets set.
+When collecting coverage from softirqs, KCOV uses in_serving_softirq() to
+check whether the code is running in the softirq context.  Unfortunately,
+in_serving_softirq() is > 0 even when the code is running in the hardirq
+or NMI context for hardirqs and NMIs that happened during a softirq.
 
-Oops: divide error: 0000  PREEMPT SMP KASAN PTI
-RIP: 0010:uart_get_divisor (drivers/tty/serial/serial_core.c:580)
-Call Trace:
- <TASK>
-serial8250_get_divisor (drivers/tty/serial/8250/8250_port.c:2576
-    drivers/tty/serial/8250/8250_port.c:2589)
-serial8250_do_set_termios (drivers/tty/serial/8250/8250_port.c:502
-    drivers/tty/serial/8250/8250_port.c:2741)
-serial8250_set_termios (drivers/tty/serial/8250/8250_port.c:2862)
-uart_change_line_settings (./include/linux/spinlock.h:376
-    ./include/linux/serial_core.h:608 drivers/tty/serial/serial_core.c:222)
-uart_port_startup (drivers/tty/serial/serial_core.c:342)
-uart_startup (drivers/tty/serial/serial_core.c:368)
-uart_set_info (drivers/tty/serial/serial_core.c:1034)
-uart_set_info_user (drivers/tty/serial/serial_core.c:1059)
-tty_set_serial (drivers/tty/tty_io.c:2637)
-tty_ioctl (drivers/tty/tty_io.c:2647 drivers/tty/tty_io.c:2791)
-__x64_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:907
-    fs/ioctl.c:893 fs/ioctl.c:893)
-do_syscall_64 (arch/x86/entry/common.c:52
-    (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))
-entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+As a result, if a softirq handler contains a remote coverage collection
+section and a hardirq with another remote coverage collection section
+happens during handling the softirq, KCOV incorrectly detects a nested
+softirq coverate collection section and prints a WARNING, as reported by
+syzbot.
 
-Reported-by: syzkaller <syzkaller@googlegroups.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: George Kennedy <george.kennedy@oracle.com>
-Rule: add
-Link: https://lore.kernel.org/stable/1721148848-9784-1-git-send-email-george.kennedy%40oracle.com
-Link: https://lore.kernel.org/r/1721219078-3209-1-git-send-email-george.kennedy@oracle.com
+This issue was exposed by commit a7f3813e589f ("usb: gadget: dummy_hcd:
+Switch to hrtimer transfer scheduler"), which switched dummy_hcd to using
+hrtimer and made the timer's callback be executed in the hardirq context.
+
+Change the related checks in KCOV to account for this behavior of
+in_serving_softirq() and make KCOV ignore remote coverage collection
+sections in the hardirq and NMI contexts.
+
+This prevents the WARNING printed by syzbot but does not fix the inability
+of KCOV to collect coverage from the __usb_hcd_giveback_urb when dummy_hcd
+is in use (caused by a7f3813e589f); a separate patch is required for that.
+
+Link: https://lkml.kernel.org/r/20240729022158.92059-1-andrey.konovalov@linux.dev
+Fixes: 5ff3b30ab57d ("kcov: collect coverage from interrupts")
+Signed-off-by: Andrey Konovalov <andreyknvl@gmail.com>
+Reported-by: syzbot+2388cdaeb6b10f0c13ac@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2388cdaeb6b10f0c13ac
+Acked-by: Marco Elver <elver@google.com>
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Aleksandr Nogikh <nogikh@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Marcello Sylvester Bauer <sylv@sylv.io>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ kernel/kcov.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -836,6 +836,14 @@ static int uart_set_info(struct tty_stru
- 	new_flags = (__force upf_t)new_info->flags;
- 	old_custom_divisor = uport->custom_divisor;
+--- a/kernel/kcov.c
++++ b/kernel/kcov.c
+@@ -151,6 +151,15 @@ static void kcov_remote_area_put(struct
+ 	list_add(&area->list, &kcov_remote_areas);
+ }
  
-+	if (!(uport->flags & UPF_FIXED_PORT)) {
-+		unsigned int uartclk = new_info->baud_base * 16;
-+		/* check needs to be done here before other settings made */
-+		if (uartclk == 0) {
-+			retval = -EINVAL;
-+			goto exit;
-+		}
-+	}
- 	if (!capable(CAP_SYS_ADMIN)) {
- 		retval = -EPERM;
- 		if (change_irq || change_port ||
++/*
++ * Unlike in_serving_softirq(), this function returns false when called during
++ * a hardirq or an NMI that happened in the softirq context.
++ */
++static inline bool in_softirq_really(void)
++{
++	return in_serving_softirq() && !in_hardirq() && !in_nmi();
++}
++
+ static notrace bool check_kcov_mode(enum kcov_mode needed_mode, struct task_struct *t)
+ {
+ 	unsigned int mode;
+@@ -160,7 +169,7 @@ static notrace bool check_kcov_mode(enum
+ 	 * so we ignore code executed in interrupts, unless we are in a remote
+ 	 * coverage collection section in a softirq.
+ 	 */
+-	if (!in_task() && !(in_serving_softirq() && t->kcov_softirq))
++	if (!in_task() && !(in_softirq_really() && t->kcov_softirq))
+ 		return false;
+ 	mode = READ_ONCE(t->kcov_mode);
+ 	/*
+@@ -822,7 +831,7 @@ void kcov_remote_start(u64 handle)
+ 
+ 	if (WARN_ON(!kcov_check_handle(handle, true, true, true)))
+ 		return;
+-	if (!in_task() && !in_serving_softirq())
++	if (!in_task() && !in_softirq_really())
+ 		return;
+ 
+ 	local_irq_save(flags);
+@@ -963,7 +972,7 @@ void kcov_remote_stop(void)
+ 	int sequence;
+ 	unsigned long flags;
+ 
+-	if (!in_task() && !in_serving_softirq())
++	if (!in_task() && !in_softirq_really())
+ 		return;
+ 
+ 	local_irq_save(flags);
 
 
