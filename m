@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704DE1A0710;
-	Thu, 15 Aug 2024 14:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5154E1AC8BB;
+	Thu, 15 Aug 2024 14:03:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730589; cv=none; b=Vy7wjGGJOvOlpDikPap3ZD8UrBBXnCT2qoxZykJviwTF1qjOEkNkgz7YXF4DWPItESD4YFMQ4DFsZCc7RmxHj8Typ8Y/vsp1305eRiRcr+A2jYFK3KaoURdXwjQHXkzu2JzuTKkOfGdqzuxNUuwqsDWG/IKOAmBU8rXlg+rdY3U=
+	t=1723730592; cv=none; b=B9es9mBjO0zHJcTrgekgbOteCxhEY5S1m+qbqNU6iL/SLPJx4CpK4Yz2w1r+UFoPlP1Sv+lnrlRpNG7gBEv8IG4pgeQmEJg0x8g/fobeP85fwqiMmfKFeI0Lhr/sKtYlqhCzsYEiI8VF0Xu9jo6nJmJ2AX87qFK6cB+1WOv/j9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730589; c=relaxed/simple;
-	bh=coubS2iPOSyG2XDTEAXXin0O+Qdo/3LH6iWskwDua28=;
+	s=arc-20240116; t=1723730592; c=relaxed/simple;
+	bh=XFMXoQLdaMmumu4Br9HlEyN3CDtbIAlEkLGn1ENkCI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I1sW5DiGDtvNSGa7rn0hdsTRbMkENHYMQtDdlTt2Z2XW55d3scAUGK1Ml8bk0uMJ0e9P/Z4fkpQuW1vr4CX16nhTQUvV9++v0rOp9koKlKgZxpV7GVUkY3beqaMwwR1aKDYI+VBpC9w/mrhrJHG5C+VVqDW1RDbB5+xZEeVB9ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns4MWvFB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n4XEUHeOMDcWtRVsJtL2s5tWq1yc0shogheB0JKBsth0x3rKHueCyuct8Upvii5b8qdNbWk5WJGRucLBrq2d4bLbf0qZX8Fz4ZvpJ2MdYS0Lq9hh19sSq3nzznfB6fgx/qafltWDQ5el+jsa8qKjcPi4ERkmmOANp3WoNE1cIdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1NCd8XTk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns4MWvFB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 874AAC32786;
-	Thu, 15 Aug 2024 14:03:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1NCd8XTk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B169DC32786;
+	Thu, 15 Aug 2024 14:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730589;
-	bh=coubS2iPOSyG2XDTEAXXin0O+Qdo/3LH6iWskwDua28=;
+	s=korg; t=1723730592;
+	bh=XFMXoQLdaMmumu4Br9HlEyN3CDtbIAlEkLGn1ENkCI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ns4MWvFB4gEPO4dsj9ovJdTy8y39EUMwWZ3XfSpMsxdIyQsU13VKv7aD3GP48AJCs
-	 RsfdiNDCSUvVTeDXTugb6WxVI9y1tczXCRYTEBeHTCZneYO78Pnqwf5s+lgGdSBfzX
-	 MW/AcLaj8pm2K6xHimfCoPGB7mtzMrZRMShohiaE=
+	b=1NCd8XTkRA8FrPKiFg8CqsTO6yyL07eYY2dbav1EzwNU7Jjbi0bhV3Ib1NTJzCCDX
+	 WFaG7VeJD2Dnag9nSUrC961A8u5mulwSwPU1L2zL3OFqU8iIRS1Rzlm3K05e7KmvRg
+	 Dgzn5CBJEYB8MBPHZo2BWNJgMy23uhT4bNYx2NzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
 	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 5.15 455/484] mptcp: fix bad RCVPRUNED mib accounting
-Date: Thu, 15 Aug 2024 15:25:13 +0200
-Message-ID: <20240815131959.041709030@linuxfoundation.org>
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 456/484] mptcp: pm: only set request_bkup flag when sending MP_PRIO
+Date: Thu, 15 Aug 2024 15:25:14 +0200
+Message-ID: <20240815131959.080875055@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,57 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 0a567c2a10033bf04ed618368d179bce6977984b upstream.
+commit 4258b94831bb7ff28ab80e3c8d94db37db930728 upstream.
 
-Since its introduction, the mentioned MIB accounted for the wrong
-event: wake-up being skipped as not-needed on some edge condition
-instead of incoming skb being dropped after landing in the (subflow)
-receive queue.
+The 'backup' flag from mptcp_subflow_context structure is supposed to be
+set only when the other peer flagged a subflow as backup, not the
+opposite.
 
-Move the increment in the correct location.
-
-Fixes: ce599c516386 ("mptcp: properly account bulk freed memory")
+Fixes: 067065422fcd ("mptcp: add the outgoing MP_PRIO support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Reviewed-by: Mat Martineau <martineau@kernel.org>
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Conflicts in protocol.c, because the commit 6511882cdd82 ("mptcp:
-  allocate fwd memory separately on the rx and tx path") is not in this
-  version. The fix can still be applied before the 'goto drop'. ]
+[ Conflicts in pm_netlink.c, because the commit f5360e9b314c ("mptcp:
+  introduce and use mptcp_pm_send_ack()") is not in this version. This
+  code is in mptcp_pm_nl_mp_prio_send_ack() instead of in a dedicated
+  helper. The same modification can be applied there. ]
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/pm_netlink.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -288,8 +288,10 @@ static bool __mptcp_move_skb(struct mptc
- 	if (!sk_rmem_schedule(sk, skb, skb->truesize)) {
- 		int amount = sk_mem_pages(skb->truesize) << SK_MEM_QUANTUM_SHIFT;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -699,7 +699,6 @@ int mptcp_pm_nl_mp_prio_send_ack(struct
  
--		if (ssk->sk_forward_alloc < amount)
-+		if (ssk->sk_forward_alloc < amount) {
-+			MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
- 			goto drop;
-+		}
- 
- 		ssk->sk_forward_alloc -= amount;
- 		sk->sk_forward_alloc += amount;
-@@ -774,10 +776,8 @@ void mptcp_data_ready(struct sock *sk, s
- 		sk_rbuf = ssk_rbuf;
- 
- 	/* over limit? can't append more skbs to msk, Also, no need to wake-up*/
--	if (__mptcp_rmem(sk) > sk_rbuf) {
--		MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_RCVPRUNED);
-+	if (__mptcp_rmem(sk) > sk_rbuf)
- 		return;
--	}
- 
- 	/* Wake-up the reader only for in-sequence data */
- 	mptcp_data_lock(sk);
+ 		if (subflow->backup != bkup)
+ 			msk->last_snd = NULL;
+-		subflow->backup = bkup;
+ 		subflow->send_mp_prio = 1;
+ 		subflow->request_bkup = bkup;
+ 		__MPTCP_INC_STATS(sock_net(sk), MPTCP_MIB_MPPRIOTX);
 
 
