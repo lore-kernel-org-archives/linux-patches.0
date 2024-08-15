@@ -1,96 +1,107 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 670F0CA62;
-	Thu, 15 Aug 2024 08:20:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9041448FD
+	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 10:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723710021; cv=none; b=h7yaLjQQCvid2FvkGwiKnrHpNF4Z2KCTZS8zDkaIuym/J8DA1hhF5tkqRpwgBSoOXTaIV/OxxKbQIjd3uD4lhTmpfu42nFDG6qH2xZLtKnFMpqxAjVo4nXhEpjl1dmqycd/sKTvztek/AOd3Tsb5vA6trSM4IFG/h9+1QbcAu1M=
+	t=1723716041; cv=none; b=FSlE3PM1zOb1jJQA78QzhLZgZIM8ztiR/Qc0vQw8aI/gSGK+KFeMt1UXtcMAfn2BLmi+1fH1CXiLJlengUMYCRpPBow7cH0v5kh6PVUEzUxVYi9nEFVzJvhZhw6FGceTQngEcJj8YqT/sylRMK11+Gqz+IT2qneJeRSVpiJckoM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723710021; c=relaxed/simple;
-	bh=wd/Y+TeYN12Lhnm2jpny0XtOIGAI+2cFoEeolW+p4wo=;
+	s=arc-20240116; t=1723716041; c=relaxed/simple;
+	bh=6GHbETPPC/B/1h8t6uB9Eun0Lhnp/zyhCpFIMq/RNB0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r5xIJyGp8wGeFI+lqo2vt0qU2yEB+y3VTskjR8Ud+5icKroRQ9qBcxdpVB9OqzQxz0uOaghGWA6v97ZIaF+rflhuOh5/ojDGbvBW01EQFnMuViL8g4qUgdqRRRjE3nfKfMO0yji5S8YB92I+g18f6jF65V4e8Bd5MiegX+ck+3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pvo7UfAA; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=uORx8+VvwR4cxhPP2v1Cy/AIhkXzKOP9cE+JeFLQkrkOlEyBWZlFKEbWJWuqL/E2trOUl3S3tJQue3zDkI3Ssd2atJORh8QN/n6BEHKdmT2I941uAQR+7ObeZaKLorsGE99/ZKfHz+ARamug6kUBIwoRvOTBPZFrgGERsH3NjHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=eueamjz+; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pvo7UfAA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B22B9C32786;
-	Thu, 15 Aug 2024 08:20:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723710020;
-	bh=wd/Y+TeYN12Lhnm2jpny0XtOIGAI+2cFoEeolW+p4wo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pvo7UfAAcuYqLzpfuRr62Ufr7z30dSfnDKrmRdxpQg2OikS2qSa1g/waDKyns6obl
-	 rSPUYYm3UYNg5HyI9N2BdRkC8U/7mjquoINEW9jgbc6GVtPRNhN+SC3/xc7rX1oXNA
-	 /fGq8pcKBpcocHtMEsz+oGxLJ+/VFrFCZQrQa7xs=
-Date: Thu, 15 Aug 2024 10:20:09 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Kevin Holm <kevin@holm.dev>
-Cc: "Lin, Wayne" <Wayne.Lin@amd.com>,
-	"stable@vger.kernel.org" <stable@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>,
-	"Deucher, Alexander" <Alexander.Deucher@amd.com>,
-	"Wu, Hersen" <hersenxs.wu@amd.com>,
-	"Wheeler, Daniel" <Daniel.Wheeler@amd.com>
-Subject: Re: [PATCH 6.10 257/263] drm/amd/display: Defer handling mst up
- request in resume
-Message-ID: <2024081529-decidable-visor-6b22@gregkh>
-References: <20240812160146.517184156@linuxfoundation.org>
- <20240812160156.489958533@linuxfoundation.org>
- <235aa62e-271e-4e2b-b308-e29b561d6419@holm.dev>
- <2024081345-eggnog-unease-7b3c@gregkh>
- <CO6PR12MB5489A767C7E0B1CFAEB069A0FC862@CO6PR12MB5489.namprd12.prod.outlook.com>
- <2024081317-penniless-gondola-2c07@gregkh>
- <12516acf-bee6-4371-a745-8f9e221bc657@holm.dev>
- <2d48c3c0-286d-4ed7-a3b6-5b4742b0e9d1@holm.dev>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="eueamjz+"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-42817f1eb1fso4735475e9.1
+        for <patches@lists.linux.dev>; Thu, 15 Aug 2024 03:00:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1723716038; x=1724320838; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QhqqyUskTcZ04Sd5gpzfZtw99v7GyBxBE1TibBPMa0Y=;
+        b=eueamjz+K0gtQY4sRgD1tqe7kUwI9efWXWuTjAdS8tK1KZkINrjQnTAIKQBVS9YCgc
+         AkLjtKErgbHyqv3gOPSoJHq3bDZXULOjx8t/fxHUZCmg1sya2dYWP0dcW9u1Za58AoIn
+         Od6LWjqOoHK7dKxYy7l54sNaic91Spn6hO2SyaqkwhcN070se+gcw17yfpVP5cWgoY2R
+         rNYokWVxvhJpZDjvyrvc9kkKNxeJdm4x5Cr/flOiS+eGuBR5KjYeW++KDdKYLj2Nqe6p
+         PjiHzPQ48Pxo8p4snc334YXYRwMNO24Z4+HsQG/e2X4DLLZpZzyuB7Dbu8t+J1C3jQje
+         QUuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723716038; x=1724320838;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QhqqyUskTcZ04Sd5gpzfZtw99v7GyBxBE1TibBPMa0Y=;
+        b=SlSkXXc4xIGQ69ycQGL5da3/A7Vrl0ZKykavQ5gMxXOuJ+cRiEA9iRb9ESKALtVsQy
+         QYiCV4JzxGuiliwizGagyh8LZyzqlaYYuR+Q7XxPD6Fev87+v4a/gEVHGhDhnSoFh0E7
+         FvPerU3cyHteHWwQzcqjbTYT0hWA+iv7sZC37T3jqHze1zNYjR+a8QlY8HG+I0I6XxLE
+         zrILygSV5oNXeyUMIOWzXYyh/P+485c34L9ZyjH6STOxzl9xEcOV7/dyPHsuGtKkZUz/
+         XjWLAykeqM/pE+1P5Btu8D3QZyPUvPy3ByCt9P1+Vd9H4owkZcFio3rx32m2wXIGhlS0
+         X2wQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUttiKJBJ254FMWIIPKnqo8MmNgKiHDLWf7CLDZmbWCl1jEVmAfdfC5Zy/3yG2opG5gnD8pdz6/DZ/K1+kKjvSWkFWiumLN1g==
+X-Gm-Message-State: AOJu0YxOcphDMPJZB0J0UI30yr1wA/hxNYtAThgVnqamM4cBe7wne2F+
+	0hedkmzIjBfl7iHx8CXqwCWNjOofOiHRwFiPurhLkGSf0juvy7lVp9KzG38m2zk=
+X-Google-Smtp-Source: AGHT+IHww4OWyanfDio0T5TudWyimzwe45bbB7fxk4PgsGoDlm0bZ4uZHM/UyNZ4rOvkr9MZ39oZpg==
+X-Received: by 2002:a05:600c:6d4:b0:426:647b:1bf7 with SMTP id 5b1f17b1804b1-429dd32c3efmr45142765e9.32.1723716038150;
+        Thu, 15 Aug 2024 03:00:38 -0700 (PDT)
+Received: from blackdock.suse.cz ([193.86.92.181])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-429e7e1ca56sm14468855e9.45.2024.08.15.03.00.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Aug 2024 03:00:37 -0700 (PDT)
+Date: Thu, 15 Aug 2024 12:00:35 +0200
+From: Michal =?utf-8?Q?Koutn=C3=BD?= <mkoutny@suse.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	Chen Ridong <chenridong@huawei.com>, Tejun Heo <tj@kernel.org>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 6.6 017/568] cgroup/cpuset: Prevent UAF in
+ proc_cpuset_show()
+Message-ID: <vxrjoloxbtddsmdqybntugwocztrjrnu4urqdfkcm3oybusyeq@4rqtm5foijgs>
+References: <20240730151639.792277039@linuxfoundation.org>
+ <20240730151640.503086745@linuxfoundation.org>
+ <xrc6s5oyf3b5hflsffklogluuvd75h2khanrke2laes3en5js2@6kvpkcxs7ufj>
+ <2024081444-outwit-panic-83fa@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="v6y3yibrc3ombwdo"
+Content-Disposition: inline
+In-Reply-To: <2024081444-outwit-panic-83fa@gregkh>
+
+
+--v6y3yibrc3ombwdo
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2d48c3c0-286d-4ed7-a3b6-5b4742b0e9d1@holm.dev>
 
-On Wed, Aug 14, 2024 at 09:43:23AM +0200, Kevin Holm wrote:
-> On 8/13/24 21:54, Kevin Holm wrote:
-> > On 13.08.24 17:26, Greg Kroah-Hartman wrote:
-> >  > On Tue, Aug 13, 2024 at 02:41:34PM +0000, Lin, Wayne wrote:
-> >  >> [AMD Official Use Only - AMD Internal Distribution Only]
-> >  >>
-> >  >> Hi Greg and Kevin,
-> >  >>
-> >  >> Sorry for inconvenience, but this one should be reverted by another
-> > backport patch:
-> >  >> "drm/amd/display: Solve mst monitors blank out problem after resume"
-> >  >
-> >  > What commit id in Linus's tree is that?
-> > 
-> >  From what I can tell it's:
-> > e33697141bac18 ("drm/amd/display: Solve mst monitors blank out problem
-> > after resume")
-> > 
-> > You've send out a message that it failed to apply to a few of the stable trees:
-> > - 6.10: https://lore.kernel.org/stable/2024081212-vitally-baked-7f93@gregkh/
-> > - 6.6 : https://lore.kernel.org/stable/2024081213-roast-humorless-fd20@gregkh/
-> > - 6.1 : https://lore.kernel.org/stable/2024081213-sweep-hungry-2d10@gregkh/
-> > 
-> > To apply it on top of 6.10.5-rc1 these two patches need to be applied first:
-> > f63f86b5affcc2 ("drm/amd/display: Separate setting and programming of cursor")
-> > 1ff6631baeb1f5 ("drm/amd/display: Prevent IPX From Link Detect and Set Mode")
-> > 
-> > I don't know if that solves the problem I initially described as I'm currently
-> > on a different setup. What I can say is that it applying those three patches on
-> 
-> Applying the three patches I listed above, fixes the problem for my setup. My
-> external 4k monitors now get a signal both on boot and when resuming from sleep.
+On Wed, Aug 14, 2024 at 07:45:54PM GMT, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> It is in 6.6.44.
 
-Ok, that worked for 6.10.y, but the dependant patches did not apply to
-6.6.y or 6.1.y, so I'll only pick this up for 6.10.y for now unless
-someone sends me a series of patches backported.
+I meant the commit d23b5c577715 is missing in the backports:
 
-thanks,
+git grep "list_del.*root_list" torvalds/master -- kernel/cgroup/cgroup.c
+torvalds/master:kernel/cgroup/cgroup.c: list_del_rcu(&root->root_list);
 
-greg k-h
+git grep "list_del.*root_list" v6.6.44 -- kernel/cgroup/cgroup.c
+v6.6.44:kernel/cgroup/cgroup.c:         list_del(&root->root_list);
+
+HTH,
+Michal
+
+--v6y3yibrc3ombwdo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTd6mfF2PbEZnpdoAkt3Wney77BSQUCZr3RwQAKCRAt3Wney77B
+SbgOAP9wFVcU+bcey3YCLyDxbJVX5DJM8ZJugdei99xgJdTRPwEA4b/v/m3Pl8z6
+WIu3n0VkSM7SS/slmDgwGpLn/akU6wI=
+=JKW6
+-----END PGP SIGNATURE-----
+
+--v6y3yibrc3ombwdo--
