@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0887DA78;
-	Thu, 15 Aug 2024 13:31:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3511F1714D0;
+	Thu, 15 Aug 2024 13:31:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728662; cv=none; b=bdZcS8GwN9yuDlrUURUdfEhXtMNfNgRrsZ9ippH23Bw0Co2D1/9YOe86TOhB2M8SvMOuJvhvaf2J92E1S4tjT4UEXpCQoIhjT6iazHRBTvUZ49WCAIrWhhm36+Kei/PdS6WTks3w4mjVqtEKY8QyHcW7n5dmRqJ7ZNQsBC/ytmI=
+	t=1723728665; cv=none; b=l8VFPeVUF/SKUgl/v2vKvZXDGIoOYpa3LvSUvJJ15WeVENzX/p2CtbBOmUxiZawUPJr7xxhygtdcgLXux68mbVjd2U0JU6NwXNuX6SiQroLniS7UgIi39Ru0VQUMjMXWGNBRswAbkP9zPM83+qi6YG9wHpko/5s//lOm8rqg3sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728662; c=relaxed/simple;
-	bh=nfqGgK+sQijgK5ZPjKB+e7yNzbMGgXLEUlGLLJKvojQ=;
+	s=arc-20240116; t=1723728665; c=relaxed/simple;
+	bh=ZR7ngSpaI4tsHDFL5W9NiYkEf6YV9V2B2PzMGm/ZbWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nPiLiqkYXGhw33j4jGUkPOD2gbcKA2IDCnCMk3uMy1cPha5Sxca751sc3rgcjtcJE+vI0/GLpwEdmtLj90D/KVSNfwQ0j/ucUI1ZglzsL/RSHoynhMCrAD5Efa47G9Rp+QVwpbXbasXyHKpmDkLRv3Rj3JxoqaqhVENPV2NzAxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T0sshmbJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Wz4zTr0omZN1kPNLHkI0kn6Kr/zb/Rs4aUrJAef/8nMX16qam1C2KLGHi+fseBTBEZRBahmKh7RpQQoCBEwmm/3vwX7Gw/Xm2RuOTxleSPtYBgRx1kN3MID7k1mTIXfb/Q1mmvCq4fXLXs91BCuFyfsQ3KsB54H09bD1P8ui7ps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1sMBcF++; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T0sshmbJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99D29C32786;
-	Thu, 15 Aug 2024 13:31:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1sMBcF++"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD407C32786;
+	Thu, 15 Aug 2024 13:31:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728662;
-	bh=nfqGgK+sQijgK5ZPjKB+e7yNzbMGgXLEUlGLLJKvojQ=;
+	s=korg; t=1723728665;
+	bh=ZR7ngSpaI4tsHDFL5W9NiYkEf6YV9V2B2PzMGm/ZbWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T0sshmbJIF2IxhA2301jMOFcf9g4ta7wH1mta97VGNuEVwTkSOdeJ2Pv1wNiZ4Srv
-	 UYsoDnai5tYiOJhqn5zXmbQVg3AEautQhyeouwMiT48NdwVUSWdZ2dMZhkDKnafgsD
-	 pMZqWBzwZWhHVexEmOEWG5oLA1jBCTDqZZDZKyms=
+	b=1sMBcF++ZkyICqXkSnCUziibfDOxU9MGgbfMy6CmmUp/tWW0fMr1+zhBrNhRa1rQo
+	 2GIRaANLKM/liclCzmfRPn4+aoriHFtV8YfwVdLDdbTM6YkMdB1sJblzctz/i4OgfZ
+	 eIpntJ6fUtJtDO6waJfrFJ88cT6iUL0NCPjBeDZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Subject: [PATCH 4.19 070/196] drm/gma500: fix null pointer dereference in psb_intel_lvds_get_modes
-Date: Thu, 15 Aug 2024 15:23:07 +0200
-Message-ID: <20240815131854.755561403@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 044/196] RDMA/mlx4: Fix truncated output warning in mad.c
+Date: Thu, 15 Aug 2024 15:22:41 +0200
+Message-ID: <20240815131853.770150018@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -44,41 +45,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit 2df7aac81070987b0f052985856aa325a38debf6 upstream.
+[ Upstream commit 0d2e6992fc956e3308cd5376c18567def4cb3967 ]
 
-In psb_intel_lvds_get_modes(), the return value of drm_mode_duplicate() is
-assigned to mode, which will lead to a possible NULL pointer dereference
-on failure of drm_mode_duplicate(). Add a check to avoid npd.
+Increase size of the name array to avoid truncated output warning.
 
-Cc: stable@vger.kernel.org
-Fixes: 89c78134cc54 ("gma500: Add Poulsbo support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Signed-off-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240709092011.3204970-1-make24@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+drivers/infiniband/hw/mlx4/mad.c: In function ‘mlx4_ib_alloc_demux_ctx’:
+drivers/infiniband/hw/mlx4/mad.c:2197:47: error: ‘%d’ directive output
+may be truncated writing between 1 and 11 bytes into a region of size 4
+[-Werror=format-truncation=]
+ 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
+      |                                               ^~
+drivers/infiniband/hw/mlx4/mad.c:2197:38: note: directive argument in
+the range [-2147483645, 2147483647]
+ 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
+      |                                      ^~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2197:9: note: ‘snprintf’ output between
+10 and 20 bytes into a destination of size 12
+ 2197 |         snprintf(name, sizeof(name), "mlx4_ibt%d", port);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2205:48: error: ‘%d’ directive output
+may be truncated writing between 1 and 11 bytes into a region of size 3
+[-Werror=format-truncation=]
+ 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
+      |                                                ^~
+drivers/infiniband/hw/mlx4/mad.c:2205:38: note: directive argument in
+the range [-2147483645, 2147483647]
+ 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
+      |                                      ^~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2205:9: note: ‘snprintf’ output between
+11 and 21 bytes into a destination of size 12
+ 2205 |         snprintf(name, sizeof(name), "mlx4_ibwi%d", port);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2213:48: error: ‘%d’ directive output
+may be truncated writing between 1 and 11 bytes into a region of size 3
+[-Werror=format-truncation=]
+ 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
+      |                                                ^~
+drivers/infiniband/hw/mlx4/mad.c:2213:38: note: directive argument in
+the range [-2147483645, 2147483647]
+ 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
+      |                                      ^~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/mad.c:2213:9: note: ‘snprintf’ output between
+11 and 21 bytes into a destination of size 12
+ 2213 |         snprintf(name, sizeof(name), "mlx4_ibud%d", port);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+make[6]: *** [scripts/Makefile.build:244: drivers/infiniband/hw/mlx4/mad.o] Error 1
+
+Fixes: fc06573dfaf8 ("IB/mlx4: Initialize SR-IOV IB support for slaves in master context")
+Link: https://lore.kernel.org/r/f3798b3ce9a410257d7e1ec7c9e285f1352e256a.1718554569.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/gma500/psb_intel_lvds.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/mlx4/mad.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/gma500/psb_intel_lvds.c
-+++ b/drivers/gpu/drm/gma500/psb_intel_lvds.c
-@@ -519,6 +519,9 @@ static int psb_intel_lvds_get_modes(stru
- 	if (mode_dev->panel_fixed_mode != NULL) {
- 		struct drm_display_mode *mode =
- 		    drm_mode_duplicate(dev, mode_dev->panel_fixed_mode);
-+		if (!mode)
-+			return 0;
-+
- 		drm_mode_probed_add(connector, mode);
- 		return 1;
- 	}
+diff --git a/drivers/infiniband/hw/mlx4/mad.c b/drivers/infiniband/hw/mlx4/mad.c
+index 418b9312fb2d7..a034cb3fa7cad 100644
+--- a/drivers/infiniband/hw/mlx4/mad.c
++++ b/drivers/infiniband/hw/mlx4/mad.c
+@@ -2158,7 +2158,7 @@ static int mlx4_ib_alloc_demux_ctx(struct mlx4_ib_dev *dev,
+ 				       struct mlx4_ib_demux_ctx *ctx,
+ 				       int port)
+ {
+-	char name[12];
++	char name[21];
+ 	int ret = 0;
+ 	int i;
+ 
+-- 
+2.43.0
+
 
 
