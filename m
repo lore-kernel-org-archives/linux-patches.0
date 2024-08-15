@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA2821714A1;
-	Thu, 15 Aug 2024 13:57:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04371714A1;
+	Thu, 15 Aug 2024 13:57:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730250; cv=none; b=X1j2bGgQKINd6shNv3D1HDBU90IOuMli8ypa7HStR/t9ynMswnPDRLFHbF1qBRVQI6W+5iKGIPiZwgX61MFiQ+RglJpSNWGH7kAWLRq4hGaocpmrdyC6b+4FqZ/OqtVBm0BWe+0BGfI7vwXGlhbgjQ1ayJFO+43fw9wXjqx7oyM=
+	t=1723730254; cv=none; b=KmQoaZJt/p5fUxT8qLyj1AEkYsypCCAT8/6vC1r+ODzXC141GsDsQCNt0qcWtaNvoICIAlwG7Atwm6fLiHvSgaYTPEZWYQ4mkhklS2LYNSonbTWbBh8MyaM+gvF1etJ7S9vyXTPXR0MhZxvX8BRXX0khE7wJBe//lGa9NxGgP4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730250; c=relaxed/simple;
-	bh=HrtKBLFzwdAchFyUPYndErfFSxj8Dhh+qfsIALUhPyo=;
+	s=arc-20240116; t=1723730254; c=relaxed/simple;
+	bh=pVt6r0XEqxrCFFScv/zZzp8Vmt94iIEXa4abpduRy/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mR2/6ksxbd39Ok4rl04plhNrU+yi5K1GjQjoQOD7cEDuW7FP84tEyNChyEGI3JfWJd/DAyQbLRXkLeM+LZ/B2/thCg2kNG7wLvSwAW/Bxhj8V5ZQ0353QhwBM+MZNgvr5ci+vA5WchCYqXxc4sQAP/69ruDd7XF7ODErOpo4AMc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVyIfiCf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=evKkDqRhOj+1Meo1gyjWGYEfOgNijspQGwclg1z666//XJIGRL8d+6tpXL0xHcCcjv2UGHZYWRn3lxhozfjhxdSGVRmY11fqXJgze/B+wob2IwwMLfRIXhlLe1D0Sc4yTf3dH9e7NV6oBwQxh2ggiXzjqRulP7OzvdCGk/vv9kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M1Za4p0f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVyIfiCf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6C1C4AF0C;
-	Thu, 15 Aug 2024 13:57:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M1Za4p0f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6033CC32786;
+	Thu, 15 Aug 2024 13:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730250;
-	bh=HrtKBLFzwdAchFyUPYndErfFSxj8Dhh+qfsIALUhPyo=;
+	s=korg; t=1723730253;
+	bh=pVt6r0XEqxrCFFScv/zZzp8Vmt94iIEXa4abpduRy/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVyIfiCfHDuyLFIkiL/DCEh0JOaMYgzp50y4GREs5XxlFOSdJAOy4KICJEZKSR5Eo
-	 qXI2XlIY+bcygu3fEbyn/cOdz4JSuWzrtqVm+hjPHyaWEJl0qzXTmQYwtNZK3P/jas
-	 RzyMk2SfzL0rTdWxNhzH8FMFpgnbVQ8NZ7u7d3Ws=
+	b=M1Za4p0f4BgZXMIm45mD6nI4NFEj/mIjJjqr+pp/2rsMGmH1/nL/h0GEYxYCuCqUf
+	 hQLglMRCByx9Pg7OHkJzh34SEEbOx2y+HL9Sbg4Y3IsbYbDxKgATIe9JaUba6T2PyW
+	 Ykm3Pb0tkFo9fyAFlg//DBvI1xnleStxr1ur4lvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 333/484] rtnetlink: Dont ignore IFLA_TARGET_NETNSID when ifname is specified in rtnl_dellink().
-Date: Thu, 15 Aug 2024 15:23:11 +0200
-Message-ID: <20240815131954.273504926@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>
+Subject: [PATCH 5.15 351/484] r8169: dont increment tx_dropped in case of NETDEV_TX_BUSY
+Date: Thu, 15 Aug 2024 15:23:29 +0200
+Message-ID: <20240815131954.985473851@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,41 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 9415d375d8520e0ed55f0c0b058928da9a5b5b3d ]
+commit d516b187a9cc2e842030dd005be2735db3e8f395 upstream.
 
-The cited commit accidentally replaced tgt_net with net in rtnl_dellink().
+The skb isn't consumed in case of NETDEV_TX_BUSY, therefore don't
+increment the tx_dropped counter.
 
-As a result, IFLA_TARGET_NETNSID is ignored if the interface is specified
-with IFLA_IFNAME or IFLA_ALT_IFNAME.
-
-Let's pass tgt_net to rtnl_dev_get().
-
-Fixes: cc6090e985d7 ("net: rtnetlink: introduce helper to get net_device instance by ifname")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 188f4af04618 ("r8169: use NETDEV_TX_{BUSY/OK}")
+Cc: stable@vger.kernel.org
+Suggested-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/bbba9c48-8bac-4932-9aa1-d2ed63bc9433@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/rtnetlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/rtnetlink.c b/net/core/rtnetlink.c
-index 4284406740932..eca7f6f4a52f5 100644
---- a/net/core/rtnetlink.c
-+++ b/net/core/rtnetlink.c
-@@ -3115,7 +3115,7 @@ static int rtnl_dellink(struct sk_buff *skb, struct nlmsghdr *nlh,
- 	if (ifm->ifi_index > 0)
- 		dev = __dev_get_by_index(tgt_net, ifm->ifi_index);
- 	else if (tb[IFLA_IFNAME] || tb[IFLA_ALT_IFNAME])
--		dev = rtnl_dev_get(net, tb);
-+		dev = rtnl_dev_get(tgt_net, tb);
- 	else if (tb[IFLA_GROUP])
- 		err = rtnl_group_dellink(tgt_net, nla_get_u32(tb[IFLA_GROUP]));
- 	else
--- 
-2.43.0
-
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -4283,7 +4283,8 @@ static netdev_tx_t rtl8169_start_xmit(st
+ 	if (unlikely(!rtl_tx_slots_avail(tp))) {
+ 		if (net_ratelimit())
+ 			netdev_err(dev, "BUG! Tx Ring full when queue awake!\n");
+-		goto err_stop_0;
++		netif_stop_queue(dev);
++		return NETDEV_TX_BUSY;
+ 	}
+ 
+ 	opts[1] = rtl8169_tx_vlan_tag(skb);
+@@ -4356,11 +4357,6 @@ err_dma_0:
+ 	dev_kfree_skb_any(skb);
+ 	dev->stats.tx_dropped++;
+ 	return NETDEV_TX_OK;
+-
+-err_stop_0:
+-	netif_stop_queue(dev);
+-	dev->stats.tx_dropped++;
+-	return NETDEV_TX_BUSY;
+ }
+ 
+ static unsigned int rtl_last_frag_len(struct sk_buff *skb)
 
 
