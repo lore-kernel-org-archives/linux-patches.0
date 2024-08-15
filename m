@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FB01A08DB;
-	Thu, 15 Aug 2024 14:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B10419DF92;
+	Thu, 15 Aug 2024 14:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731744; cv=none; b=Xu6hso8svRVHwIyEj8WDLtBDgeLnojT2ZDCaQw4533Iw2TKfVfRKMWTeKHds5nvNH8gl6Dzvw1fKumsvrXm2soke+A1t5bSYatUtlOFiNsTwdIN/bcumVF1W9ApQBdhoSSLvCZB51Wce9C4QGtoiwAl9hN0csCcQxbhjt132zrw=
+	t=1723731747; cv=none; b=Iiz8yrBAi5Z8AC00VjrTSv3kyGO4YEQXTbAOZs1/3knW1mG/PMXyIptejv9loC7Mfk7vc4ntOrXIQI7ZYwozqsZE9FQXJ0BEX7cFTKkRrMyYcdaDbWODBwlg6Cxu0twZFurSdMI+K0N2dGMNAjyxBlpgvs0dCjfnwsWmwzXSnew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731744; c=relaxed/simple;
-	bh=JMlw46eIIs+2Pnombax2VRQXtA8RkCQl/b4QS1LJgS8=;
+	s=arc-20240116; t=1723731747; c=relaxed/simple;
+	bh=3NLqioVRavUotdvV8xxvUxdNXfoHZeXXKyzQvGTzV90=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X4yo1yCbZ0d/T94Ep4capYYCqJCN0DoU8DFXqppB718s8+BMcUAAAlw9OcOT1MxeFQRLVWi8985ovY7sqrMzrynZxFrbVZpUBhNZLOK+NTUwKHgl0ORsdYP550RXzJ4uJY5w9lRVFxZAyxQK7JIkELhPS4sd36IglGgP4dRaG1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HUpEI4qs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NS/+vViLmn6vGtvBESA197Er2LR80ebEtFkeJyVVKMVH+YcuhHKubGa23yynJKlp4RnE6PRgNhoDDrbmDykoHeldgTWXT6FnZcB4cCsK/pXESp8O/P6G0QB51ecw6zCp0T9fHPYybQc+eK6cuDitldl+5axKKZJPkX6KW6hDy6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTSSF2tn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HUpEI4qs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B790EC32786;
-	Thu, 15 Aug 2024 14:22:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTSSF2tn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE095C4AF0C;
+	Thu, 15 Aug 2024 14:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731744;
-	bh=JMlw46eIIs+2Pnombax2VRQXtA8RkCQl/b4QS1LJgS8=;
+	s=korg; t=1723731747;
+	bh=3NLqioVRavUotdvV8xxvUxdNXfoHZeXXKyzQvGTzV90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUpEI4qsdL6O0seedaO8C6ofSUkUhyrCJ0btlKuKu09naH57Gyk4KFr8OdE2S9Nv/
-	 zfJjIIuKHHCizcEBU6ZMiel1rmAH0wyv94rllVGaTeW8q1pCJLkalCAVQMC3qegi3E
-	 2Sv7Zh2lgHobmpM3gbbWEwrHA8lJYlNYaYUjhpsc=
+	b=kTSSF2tnFOeoXh1rErwjuUkfLLuzrhuvv52TGgaeQH+j91TLmqkNTAx35tTOpsU7V
+	 0lQc3QaeLpIF/MzQgR/jCY+8AwtJNnSAWKYXeFdt6rzaMWLZA0WJBNyAwI0nYl2qMl
+	 SK1a0js5VpGoZFVPsfhHJJ52XMxII4tmzD/oYLOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Oleksandr Suvorov <oleksandr.suvorov@toradex.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 224/259] bpf: kprobe: remove unused declaring of bpf_kprobe_override
-Date: Thu, 15 Aug 2024 15:25:57 +0200
-Message-ID: <20240815131911.424589821@linuxfoundation.org>
+Subject: [PATCH 5.4 225/259] spi: fsl-lpspi: remove unneeded array
+Date: Thu, 15 Aug 2024 15:25:58 +0200
+Message-ID: <20240815131911.463275579@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,37 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
 
-[ Upstream commit 0e8b53979ac86eddb3fd76264025a70071a25574 ]
+[ Upstream commit 2fa98705a9289c758b6154a22174aa8d4041a285 ]
 
-After the commit 66665ad2f102 ("tracing/kprobe: bpf: Compare instruction
-pointer with original one"), "bpf_kprobe_override" is not used anywhere
-anymore, and we can remove it now.
+- replace the array with the shift operation
+- remove the extra comparing operation.
 
-Link: https://lore.kernel.org/all/20240710085939.11520-1-dongml2@chinatelecom.cn/
-
-Fixes: 66665ad2f102 ("tracing/kprobe: bpf: Compare instruction pointer with original one")
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Oleksandr Suvorov <oleksandr.suvorov@toradex.com>
+Link: https://lore.kernel.org/r/20200220141143.3902922-2-oleksandr.suvorov@toradex.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 730bbfaf7d48 ("spi: spi-fsl-lpspi: Fix scldiv calculation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/trace_events.h | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/spi/spi-fsl-lpspi.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 12ee8973ea6f9..d88622a9db7bc 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -578,7 +578,6 @@ do {									\
- struct perf_event;
+diff --git a/drivers/spi/spi-fsl-lpspi.c b/drivers/spi/spi-fsl-lpspi.c
+index 58b2da91be1c0..5351185fd9af7 100644
+--- a/drivers/spi/spi-fsl-lpspi.c
++++ b/drivers/spi/spi-fsl-lpspi.c
+@@ -86,8 +86,6 @@
+ #define TCR_RXMSK	BIT(19)
+ #define TCR_TXMSK	BIT(18)
  
- DECLARE_PER_CPU(struct pt_regs, perf_trace_regs);
--DECLARE_PER_CPU(int, bpf_kprobe_override);
+-static int clkdivs[] = {1, 2, 4, 8, 16, 32, 64, 128};
+-
+ struct lpspi_config {
+ 	u8 bpw;
+ 	u8 chip_select;
+@@ -331,15 +329,14 @@ static int fsl_lpspi_set_bitrate(struct fsl_lpspi_data *fsl_lpspi)
+ 	}
  
- extern int  perf_trace_init(struct perf_event *event);
- extern void perf_trace_destroy(struct perf_event *event);
+ 	for (prescale = 0; prescale < 8; prescale++) {
+-		scldiv = perclk_rate /
+-			 (clkdivs[prescale] * config.speed_hz) - 2;
++		scldiv = perclk_rate / config.speed_hz / (1 << prescale) - 2;
+ 		if (scldiv < 256) {
+ 			fsl_lpspi->config.prescale = prescale;
+ 			break;
+ 		}
+ 	}
+ 
+-	if (prescale == 8 && scldiv >= 256)
++	if (scldiv >= 256)
+ 		return -EINVAL;
+ 
+ 	writel(scldiv | (scldiv << 8) | ((scldiv >> 1) << 16),
 -- 
 2.43.0
 
