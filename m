@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795EE1714DD;
-	Thu, 15 Aug 2024 14:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBF51A00DF;
+	Thu, 15 Aug 2024 14:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730446; cv=none; b=OZ5OH1+ryNxHTwpRs/nC6mIKcMn5wqyg33fB2WppXd2IEqMR+4AdNYHrNpX0IP8mtLpigKReuFU0CUZ54nz55Z6+vRssndbyC2ddk35WgCfqTPtSnIOq8HxLIvqBVhP6bnFyPpWlhf719JsrHa5cUZ4DOgDTFPq6aay0157PPXk=
+	t=1723730449; cv=none; b=DLinVY3Pm1XTC1tR0Ytyv3mQyrta4Hz/FSS7O629LSy4iwhFWHXA1fSTMGZ7Irn2+Ew/9YeFlDG2QQQyNMFCEpMEC+ovvMWes0HmdizVR9cCMKf4/GyAgPsuv2kPzWob3xw8WLsesz4dywab2Jn8QunSWzlnClXV8mdlyNc9RbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730446; c=relaxed/simple;
-	bh=lH/vhQFxezme1BN2/9GKbFZq31f8XxdedNokhH+a+bA=;
+	s=arc-20240116; t=1723730449; c=relaxed/simple;
+	bh=Zm3GFrM/RFdF3gp5azbbS0wXHgW6vBTK61JIqAD1tpU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MaVB2wOImUGXmqSWB7eGC27Snkdq5wSMpzgftj+6gVa5lHlV5nohM/v8SVDZhwK3IDzZ1KjWoCD24jM9g5Fyv0tr/jT6pBVeGJezCdevdhnCENl4lMtGYnc4kgk2WE9gYSmEXmn0pr+XbXHjG+QiOtSb6sEATBRBjWGsyyqLNgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dkYJ5jtZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AOWKNx1kNFywR1DJVpLRgPGhw6U+dfcMmthxUtlg/JT80XBzdVuqoxQAbTtnNN6Q5YiZGH9MMyNLQG3q+3q+YLTW5+piRP1w7LkHeEM0mn55x7IEi83v0Vc7xDH4qrSrb3AdGmcHH3BFvZcm4UsKki/m/KiK2Zi4HawnJGizPHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QwcUe/CH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dkYJ5jtZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF115C4AF0C;
-	Thu, 15 Aug 2024 14:00:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QwcUe/CH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14D82C4AF0D;
+	Thu, 15 Aug 2024 14:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730446;
-	bh=lH/vhQFxezme1BN2/9GKbFZq31f8XxdedNokhH+a+bA=;
+	s=korg; t=1723730449;
+	bh=Zm3GFrM/RFdF3gp5azbbS0wXHgW6vBTK61JIqAD1tpU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkYJ5jtZtPl+9dWLBnsncwck5gsv0d+vucBCp8HKurvNnUfodISk9ooWOR2+XUaR9
-	 5d72tbAIe831ExODF8djENkweDFytr1NxaOp5FDIUO6JgsEHAMXga8lfCpmtGtaWNd
-	 TT7qyNC0oRjxpFGJPOHEko7HcYWO5qa/qGy5zhcM=
+	b=QwcUe/CHKIznYU5sAM2CvCsN5U6fjVQ+G0i5qH7UAPOe1FSq19Dx7FFmgxTZO0Qt+
+	 SB4VznmHU19YiBJeidOrLOLi/zNgtdPhxcLBmlFnfFRL9Q9QfOk4FuAnvY+kIFvxyA
+	 1XJFM26xfu5N0Coz2QHXq28lMtOvdqDa4qEF8ebU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Menglong Dong <dongml2@chinatelecom.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/484] bpf: kprobe: remove unused declaring of bpf_kprobe_override
-Date: Thu, 15 Aug 2024 15:24:29 +0200
-Message-ID: <20240815131957.325812299@linuxfoundation.org>
+Subject: [PATCH 5.15 412/484] kprobes: Fix to check symbol prefixes correctly
+Date: Thu, 15 Aug 2024 15:24:30 +0200
+Message-ID: <20240815131957.368656218@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,37 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Menglong Dong <menglong8.dong@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 0e8b53979ac86eddb3fd76264025a70071a25574 ]
+[ Upstream commit 8c8acb8f26cbde665b233dd1b9bbcbb9b86822dc ]
 
-After the commit 66665ad2f102 ("tracing/kprobe: bpf: Compare instruction
-pointer with original one"), "bpf_kprobe_override" is not used anywhere
-anymore, and we can remove it now.
+Since str_has_prefix() takes the prefix as the 2nd argument and the string
+as the first, is_cfi_preamble_symbol() always fails to check the prefix.
+Fix the function parameter order so that it correctly check the prefix.
 
-Link: https://lore.kernel.org/all/20240710085939.11520-1-dongml2@chinatelecom.cn/
+Link: https://lore.kernel.org/all/172260679559.362040.7360872132937227206.stgit@devnote2/
 
-Fixes: 66665ad2f102 ("tracing/kprobe: bpf: Compare instruction pointer with original one")
-Signed-off-by: Menglong Dong <dongml2@chinatelecom.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
+Fixes: de02f2ac5d8c ("kprobes: Prohibit probing on CFI preamble symbol")
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/trace_events.h | 1 -
- 1 file changed, 1 deletion(-)
+ kernel/kprobes.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/trace_events.h b/include/linux/trace_events.h
-index 511c43ce94213..d5618d96ade67 100644
---- a/include/linux/trace_events.h
-+++ b/include/linux/trace_events.h
-@@ -828,7 +828,6 @@ do {									\
- struct perf_event;
+diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+index 258d425b2c4a5..0d463859ad329 100644
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1545,8 +1545,8 @@ static bool is_cfi_preamble_symbol(unsigned long addr)
+ 	if (lookup_symbol_name(addr, symbuf))
+ 		return false;
  
- DECLARE_PER_CPU(struct pt_regs, perf_trace_regs);
--DECLARE_PER_CPU(int, bpf_kprobe_override);
+-	return str_has_prefix("__cfi_", symbuf) ||
+-		str_has_prefix("__pfx_", symbuf);
++	return str_has_prefix(symbuf, "__cfi_") ||
++		str_has_prefix(symbuf, "__pfx_");
+ }
  
- extern int  perf_trace_init(struct perf_event *event);
- extern void perf_trace_destroy(struct perf_event *event);
+ static int check_kprobe_address_safe(struct kprobe *p,
 -- 
 2.43.0
 
