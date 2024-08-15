@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50A0919DF8C;
-	Thu, 15 Aug 2024 14:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E2817BEAD;
+	Thu, 15 Aug 2024 14:15:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731316; cv=none; b=Flo02Qhwf+ukxxRDFjxmq05oLxBskPE2DUfOA1+oCIUtioP/rX9dATjWgQurRonSJnSn0o8/OP4lEAkCBdhStxXv87He4zbYVybio6U/W84916y3u8r2mOt8Ju8WtszI/EaKyXNmZ88CO5VpFCgzkXzcgam7jA7+MGCN58FDmRU=
+	t=1723731319; cv=none; b=RASTUWRYJkn9ascjwfceMGNm/T29kcv3kK3s7PpI6HeHEx2ifQgef/Pd5yeBjufo4gKjfu72uF3nwQwfKFIdZvFWnlojukCPhAgFUXQPSvdagWfC9lNvITFx4QLdHDR3Wsmm5SeHS0LdczQPnyOcatoHXxzoiOEF//cSKY4Ap5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731316; c=relaxed/simple;
-	bh=8g5I7tvQnVDlX3XMnwiy/7kocWIv/7Wz2wjT8504tqQ=;
+	s=arc-20240116; t=1723731319; c=relaxed/simple;
+	bh=wDm0VU9wP60CxTk3XiQpx6oQ3ZIM1f/6UgMdnlKyGUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O+msB/FA0v4+dlLYqa6r5N9v1mMLY7RLWe+mVwow3qUMvM8AFBbtCvRQfKWFhE/aYl+H0lninARRz8OtuWU9SyzIhr7YvQlkRFewLXt99X5fc7E8/lGsMsH5HhSCyS00IvAeYoXTjaZcw9idqJD9JJuV8k02zjI9UwHnMDz3rFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XdCeDP/6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YkKVnABjfQzZFyI3ZO2HjXNul70/vzbRzbA+/Gt3SeeMXiGVs3jdrQRsP8cWjtfqOFkQywO35/9snUuJb3UpTIkAH3bQuzPDLKtwLESQoUhnv11e/z1npRG+AIOT/EreROIpi2Rh3VTZByTesC5Wu2Bs1ZFEwIblE4UBtSjcux4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iC+g30Gb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XdCeDP/6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ED86C4AF0A;
-	Thu, 15 Aug 2024 14:15:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iC+g30Gb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBD39C32786;
+	Thu, 15 Aug 2024 14:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731316;
-	bh=8g5I7tvQnVDlX3XMnwiy/7kocWIv/7Wz2wjT8504tqQ=;
+	s=korg; t=1723731319;
+	bh=wDm0VU9wP60CxTk3XiQpx6oQ3ZIM1f/6UgMdnlKyGUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdCeDP/6+nmbQT8Ql8vpMxnyDqMes2LPmSIMr8FqUJUlpZX7oU9TIGO3TJ+Kc+oSP
-	 jbdGPRTQHLXlQJDFaAdJO12uev5921ivANB0rzStc0d2lc/S7c0ow6nfg6U5hsu3yD
-	 smrX236MSe9JK4m2fIowTKqIVOVqIckNEJrBrJfc=
+	b=iC+g30GbF1Ep5pl0MaV5HGA3ubA6NE11xMkkRz/+A0lwGfxX+MUHlMDEjpo1XyM5z
+	 aIzhciGWfMAEADBdqoMibKt3iaG7pI024zTW0RssgSyhs89IqylkYxtmgOXd3UeATs
+	 lE0GDMICawoWjxDw4LRFFtT+/0Qwz1cNsiSYWV2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 063/259] SUNRPC: avoid soft lockup when transmitting UDP to reachable server.
-Date: Thu, 15 Aug 2024 15:23:16 +0200
-Message-ID: <20240815131905.240495298@linuxfoundation.org>
+	Breno Leitao <leitao@debian.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.4 090/259] net: netconsole: Disable target before netpoll cleanup
+Date: Thu, 15 Aug 2024 15:23:43 +0200
+Message-ID: <20240815131906.277783091@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -51,57 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 6258cf25d5e3155c3219ab5a79b970eef7996356 ]
+commit 97d9fba9a812cada5484667a46e14a4c976ca330 upstream.
 
-Prior to the commit identified below, call_transmit_status() would
-handle -EPERM and other errors related to an unreachable server by
-falling through to call_status() which added a 3-second delay and
-handled the failure as a timeout.
+Currently, netconsole cleans up the netpoll structure before disabling
+the target. This approach can lead to race conditions, as message
+senders (write_ext_msg() and write_msg()) check if the target is
+enabled before using netpoll. The sender can validate that the target is
+enabled, but, the netpoll might be de-allocated already, causing
+undesired behaviours.
 
-Since that commit, call_transmit_status() falls through to
-handle_bind().  For UDP this moves straight on to handle_connect() and
-handle_transmit() so we immediately retransmit - and likely get the same
-error.
+This patch reverses the order of operations:
+1. Disable the target
+2. Clean up the netpoll structure
 
-This results in an indefinite loop in __rpc_execute() which triggers a
-soft-lockup warning.
+This change eliminates the potential race condition, ensuring that
+no messages are sent through a partially cleaned-up netpoll structure.
 
-For the errors that indicate an unreachable server,
-call_transmit_status() should fall back to call_status() as it did
-before.  This cannot cause the thundering herd that the previous patch
-was avoiding, as the call_status() will insert a delay.
-
-Fixes: ed7dc973bd91 ("SUNRPC: Prevent thundering herd when the socket is not connected")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2382b15bcc39 ("netconsole: take care of NETDEV_UNREGISTER event")
+Cc: stable@vger.kernel.org
+Signed-off-by: Breno Leitao <leitao@debian.org>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20240712143415.1141039-1-leitao@debian.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/clnt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/netconsole.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 2e08876bf8564..f689c7b0c304d 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2236,12 +2236,13 @@ call_transmit_status(struct rpc_task *task)
- 		task->tk_action = call_transmit;
- 		task->tk_status = 0;
- 		break;
--	case -ECONNREFUSED:
- 	case -EHOSTDOWN:
- 	case -ENETDOWN:
- 	case -EHOSTUNREACH:
- 	case -ENETUNREACH:
- 	case -EPERM:
-+		break;
-+	case -ECONNREFUSED:
- 		if (RPC_IS_SOFTCONN(task)) {
- 			if (!task->tk_msg.rpc_proc->p_proc)
- 				trace_xprt_ping(task->tk_xprt,
--- 
-2.43.0
-
+--- a/drivers/net/netconsole.c
++++ b/drivers/net/netconsole.c
+@@ -715,6 +715,7 @@ restart:
+ 				/* rtnl_lock already held
+ 				 * we might sleep in __netpoll_cleanup()
+ 				 */
++				nt->enabled = false;
+ 				spin_unlock_irqrestore(&target_list_lock, flags);
+ 
+ 				__netpoll_cleanup(&nt->np);
+@@ -722,7 +723,6 @@ restart:
+ 				spin_lock_irqsave(&target_list_lock, flags);
+ 				dev_put(nt->np.dev);
+ 				nt->np.dev = NULL;
+-				nt->enabled = false;
+ 				stopped = true;
+ 				netconsole_target_put(nt);
+ 				goto restart;
 
 
