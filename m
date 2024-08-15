@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5063214;
-	Thu, 15 Aug 2024 14:36:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450623214;
+	Thu, 15 Aug 2024 14:36:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732578; cv=none; b=KkAT9gaFgQO+gFjccCNWe9yMtrFpM5UV+oo/QYRYRhGALEJkQ2zNFaB6Z+uXq3LaJ5J/07ETw41O2YqSjt7W3m+c1vXJWr+dNH+jOJZ9NMN3aXjhRgbuwm5eaVDAPdDO8sK0LKUrEvmpwZefmpjnROj2Q8yhhcafJAe3VPMuaFI=
+	t=1723732581; cv=none; b=TO4cVzcM0B4gZuIHYvy3tFpPfdQOX8VJTPzb2xYseLhU580ihjgPnwvUOQSsb5dWze3KYSX6Z0wPzEKBjuG85/D21H4IusHTUZLZkwriflJO0SJD2X/MyIdu+sixY/d5w9PyvlXRehwiQg52xqp8zhAMRrhI9hhfNyjhmcK8IgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732578; c=relaxed/simple;
-	bh=jefw/6TJwXntIrNQDTN/KfGl9WXs5Dki06Lo7+vJjcM=;
+	s=arc-20240116; t=1723732581; c=relaxed/simple;
+	bh=IIZeBfxNsYAxk9SbyWARSDORvMfT0WAkZpi6qBp3pvM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rw7Bwituig1I+U+D9NSyVZp0kXIAZfnUYkpInNyM37DjnPNn6w+UiGV6xAswFSdiJQfrjy3Ah8BHSf/woJZCBQ5wcq972Y+HOgoQvxsycHJca3gYQMYIYS0O7ADKxkX0TvC0k8nRhsSwOrcsmqu+qq9KlVbtbMti03/WhB6EvO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M48AK3pm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlTqM8/3INVY9/pPFp12sinplIfMJNkTGzEKkWAWj9LNmkkXzbOHaTUbY9+j9LbSc39ORnSP0GgIqpwhHMAzUS7gUmx+z9++7EJJus4AmJGnD85Qam/u8ljDqJSPF0o3CbtMQUWeORsCRgMD4IpI6QxAXtCTlgED/1stF25FKM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g1+EooHx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M48AK3pm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C42CC32786;
-	Thu, 15 Aug 2024 14:36:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g1+EooHx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD699C32786;
+	Thu, 15 Aug 2024 14:36:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732577;
-	bh=jefw/6TJwXntIrNQDTN/KfGl9WXs5Dki06Lo7+vJjcM=;
+	s=korg; t=1723732581;
+	bh=IIZeBfxNsYAxk9SbyWARSDORvMfT0WAkZpi6qBp3pvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M48AK3pmO8z0pe+ROktS+eFm1he8P8g+1vT4Of0IXSv/sRQf7FkO2xSIVGbOKuN3P
-	 pWMnvSDtW/t8Ne24sZq5HITi+yS2XQUkUSnSY2Y0tLw5bGJV9hm+KDy8kYLVdKK3Yc
-	 qpw4BdoSxietKCPHco9NMMrlDV75b5n1Npbtnw+M=
+	b=g1+EooHxfYA6lFVHLR9+cvgnFJunPmK903Ws/VdB53vVbNJfQMuThcruVxDyuzIYi
+	 WeHY8kwOzSGLk5Sfpg+E+tmMfceZEhqQDRNXALcwaZuqr8FTo4Dz7GvuxxNs9P7+RO
+	 r+chXnPZ1ei8GMSQUQwMCh4tgGyrO4tLemtXiUxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 215/352] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
-Date: Thu, 15 Aug 2024 15:24:41 +0200
-Message-ID: <20240815131927.599035294@linuxfoundation.org>
+Subject: [PATCH 5.10 224/352] driver core: Cast to (void *) with __force for __percpu pointer
+Date: Thu, 15 Aug 2024 15:24:50 +0200
+Message-ID: <20240815131928.089754678@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,62 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
+[ Upstream commit d7aa44f5a1f86cb40659eef06035d8d92604b9d5 ]
 
-Christian noticed that it is possible for a privileged user to mount
-most filesystems with a non-initial user namespace in sb->s_user_ns.
-When fsopen() is called in a non-init namespace the caller's namespace
-is recorded in fs_context->user_ns. If the returned file descriptor is
-then passed to a process priviliged in init_user_ns, that process can
-call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
-with sb->s_user_ns set to the namespace of the process which called
-fsopen().
+Sparse is not happy:
 
-This is problematic. We cannot assume that any filesystem which does not
-set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
-mind, increasing the risk for bugs and security issues.
+  drivers/base/devres.c:1230:9: warning: cast removes address space '__percpu' of expression
 
-Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
-not set for the filesystem and a non-initial user namespace will be
-used. sget() does not need to be updated as it always uses the user
-namespace of the current context, or the initial user namespace if
-SB_SUBMOUNT is set.
+Use __force attribute to make it happy.
 
-Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
-Reported-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
-Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20210401171030.60527-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: bd50a974097b ("devres: Fix memory leakage caused by driver API devm_free_percpu()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/super.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/base/devres.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/super.c b/fs/super.c
-index f9795e72e3bf8..282aa36901eb1 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -518,6 +518,17 @@ struct super_block *sget_fc(struct fs_context *fc,
- 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
- 	int err;
- 
-+	/*
-+	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
-+	 * not set, as the filesystem is likely unprepared to handle it.
-+	 * This can happen when fsconfig() is called from init_user_ns with
-+	 * an fs_fd opened in another user namespace.
-+	 */
-+	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
-+		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
-+		return ERR_PTR(-EPERM);
-+	}
-+
- retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
+diff --git a/drivers/base/devres.c b/drivers/base/devres.c
+index 452541ce0dc82..a1508eeb8ebd1 100644
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -1231,6 +1231,6 @@ EXPORT_SYMBOL_GPL(__devm_alloc_percpu);
+ void devm_free_percpu(struct device *dev, void __percpu *pdata)
+ {
+ 	WARN_ON(devres_destroy(dev, devm_percpu_release, devm_percpu_match,
+-			       (void *)pdata));
++			       (__force void *)pdata));
+ }
+ EXPORT_SYMBOL_GPL(devm_free_percpu);
 -- 
 2.43.0
 
