@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335711AC8AE;
-	Thu, 15 Aug 2024 14:21:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392F91AC896;
+	Thu, 15 Aug 2024 14:21:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731716; cv=none; b=b2Tih+x5Q4fnsBPHY8n8CeofEJ0yeT0PhJTQ0kuOKPAUrqEE0T/m5E7KyNN8qBQgz9vapgIq3CYGyzPNI9Ocr6XZ/esO7uIg8Vo1YD/iUItHShincpXFMU+HnO0z/2jVnXxxXe9D03eIgzkilrSC3shM1Pa180bArOu5W5wZuBw=
+	t=1723731719; cv=none; b=j3KfLu6UyP+d7dOj0kL71EBztH+4J4sKcGzAE1JTAa6wciV6TlafRAaBtq7kT3YzAUxiWyz2uzwCLw3APtPKIiSDaZtrWt5lUQItGIe9Om/q3AvYxJ90B1CwnhgseF5UPphYKB/JcOq4Vh7WXgQ5TWHuyTQhucDNoyLXhf4+iwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731716; c=relaxed/simple;
-	bh=N8rBfg/TFXNE+9SoQdAzpJV5IErdgIQkbXYa9ZwZGj4=;
+	s=arc-20240116; t=1723731719; c=relaxed/simple;
+	bh=y9BSpmUKiIIjJptnHQRx7aTwyuR/L8/3xrwFqFnUNc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=klwq/udgg7+OfYxpMbpF1wx/zdmXj3g/Nae1X39DIU1a7PMb7GI7a86qMk/XwsOYXxoCBCXkwfW3zxg3Oc/wnkvkmUkZ+NsqoOXowaVu+LpyHr52FdWy+0HWB+2aVT6zwsh9FNo2EjeKaol/WVFysqphY057q1m4gUIBYc8eFsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2NerKOvF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iEHTJJ/OmALGLM4bmlOPD92pjIbApo+f0YAUhIsCrJJqOdM0u8GVbPuhQV+TMGPDQJ+oqYc+jo9UrOyt9uv5zLOD4EuntSIADsjP5HF9EU7f3W1F3rRRzmQSttvIHjr2wodhJQPn5QoNJhLy48jIJ1B4Dt2i3lsws+MO78YBVvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=12n5E63o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2NerKOvF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D12C32786;
-	Thu, 15 Aug 2024 14:21:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="12n5E63o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6B2C32786;
+	Thu, 15 Aug 2024 14:21:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731716;
-	bh=N8rBfg/TFXNE+9SoQdAzpJV5IErdgIQkbXYa9ZwZGj4=;
+	s=korg; t=1723731719;
+	bh=y9BSpmUKiIIjJptnHQRx7aTwyuR/L8/3xrwFqFnUNc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2NerKOvFp1Z2CMP+yLkHZgFHNgm8lVU/RN49m5ZRPMYjXMCXG+0ihWoY3keAcr88+
-	 OYPRDoF29IadEBbyEYljxuLRFaG6PYtufKGe6x9712m4alxrq/09/GOV/upNughIye
-	 EuEGpkDYc2llbQcGI79uDaKxD58wz8PgAbvEPOXg=
+	b=12n5E63o4n+olY+ZE4Up5FlQXcd8PDB/SnWdvW4URyyXaq4pvTL9w8faytE+HH/M6
+	 4EjEm4ugBvJ74nJzaN94joOUvg8CTqd7QgbhS/WZeLcGkOQ1XSK/gzSfv0RjXDPTa4
+	 zUV3cyY94nwxmJEk3bGHGA0FlSYFhzhl8bD1KJ+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.com>,
-	Roman Smirnov <r.smirnov@omp.ru>,
-	Jan Kara <jack@suse.cz>,
+	Mark Rutland <mark.rutland@arm.com>,
+	James Morse <james.morse@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 198/259] udf: prevent integer overflow in udf_bitmap_free_blocks()
-Date: Thu, 15 Aug 2024 15:25:31 +0200
-Message-ID: <20240815131910.422079165@linuxfoundation.org>
+Subject: [PATCH 5.4 216/259] arm64: errata: Unify speculative SSBS errata logic
+Date: Thu, 15 Aug 2024 15:25:49 +0200
+Message-ID: <20240815131911.112483290@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,111 +53,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roman Smirnov <r.smirnov@omp.ru>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 56e69e59751d20993f243fb7dd6991c4e522424c ]
+[ Upstream commit ec768766608092087dfb5c1fc45a16a6f524dee2 ]
 
-An overflow may occur if the function is called with the last
-block and an offset greater than zero. It is necessary to add
-a check to avoid this.
+Cortex-X4 erratum 3194386 and Neoverse-V3 erratum 3312417 are identical,
+with duplicate Kconfig text and some unsightly ifdeffery. While we try
+to share code behind CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS, having
+separate options results in a fair amount of boilerplate code, and this
+will only get worse as we expand the set of affected CPUs.
 
-Found by Linux Verification Center (linuxtesting.org) with Svace.
+To reduce this boilerplate, unify the two behind a common Kconfig
+option. This removes the duplicate text and Kconfig logic, and removes
+the need for the intermediate ARM64_WORKAROUND_SPECULATIVE_SSBS option.
+The set of affected CPUs is described as a list so that this can easily
+be extended.
 
-[JK: Make test cover also unalloc table freeing]
+I've used ARM64_ERRATUM_3194386 (matching the Neoverse-V3 erratum ID) as
+the common option, matching the way we use ARM64_ERRATUM_1319367 to
+cover Cortex-A57 erratum 1319537 and Cortex-A72 erratum 1319367.
 
-Link: https://patch.msgid.link/20240620072413.7448-1-r.smirnov@omp.ru
-Suggested-by: Jan Kara <jack@suse.com>
-Signed-off-by: Roman Smirnov <r.smirnov@omp.ru>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: James Morse <james.morse@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20240603111812.1514101-5-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+[ Mark: fix conflicts & renames, drop unneeded cpucaps.h ]
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/balloc.c | 36 +++++++++++++-----------------------
- 1 file changed, 13 insertions(+), 23 deletions(-)
+ Documentation/arm64/silicon-errata.rst |  2 +-
+ arch/arm64/Kconfig                     | 28 ++++----------------------
+ arch/arm64/kernel/cpu_errata.c         | 10 +++------
+ 3 files changed, 8 insertions(+), 32 deletions(-)
 
-diff --git a/fs/udf/balloc.c b/fs/udf/balloc.c
-index c4c18eeacb60c..aa73ab1b50a52 100644
---- a/fs/udf/balloc.c
-+++ b/fs/udf/balloc.c
-@@ -22,6 +22,7 @@
- #include "udfdecl.h"
+diff --git a/Documentation/arm64/silicon-errata.rst b/Documentation/arm64/silicon-errata.rst
+index 003424286dda4..b2db2492bd131 100644
+--- a/Documentation/arm64/silicon-errata.rst
++++ b/Documentation/arm64/silicon-errata.rst
+@@ -96,7 +96,7 @@ stable kernels.
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | Neoverse-N1     | #1542419        | ARM64_ERRATUM_1542419       |
+ +----------------+-----------------+-----------------+-----------------------------+
+-| ARM            | Neoverse-V3     | #3312417        | ARM64_ERRATUM_3312417       |
++| ARM            | Neoverse-V3     | #3312417        | ARM64_ERRATUM_3194386       |
+ +----------------+-----------------+-----------------+-----------------------------+
+ | ARM            | MMU-500         | #841119,826419  | N/A                         |
+ +----------------+-----------------+-----------------+-----------------------------+
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 122f2b068e28d..1455a81ee8687 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -590,34 +590,14 @@ config ARM64_ERRATUM_1742098
  
- #include <linux/bitops.h>
-+#include <linux/overflow.h>
+ 	  If unsure, say Y.
  
- #include "udf_i.h"
- #include "udf_sb.h"
-@@ -144,7 +145,6 @@ static void udf_bitmap_free_blocks(struct super_block *sb,
- {
- 	struct udf_sb_info *sbi = UDF_SB(sb);
- 	struct buffer_head *bh = NULL;
--	struct udf_part_map *partmap;
- 	unsigned long block;
- 	unsigned long block_group;
- 	unsigned long bit;
-@@ -153,19 +153,9 @@ static void udf_bitmap_free_blocks(struct super_block *sb,
- 	unsigned long overflow;
- 
- 	mutex_lock(&sbi->s_alloc_mutex);
--	partmap = &sbi->s_partmaps[bloc->partitionReferenceNum];
--	if (bloc->logicalBlockNum + count < count ||
--	    (bloc->logicalBlockNum + count) > partmap->s_partition_len) {
--		udf_debug("%u < %d || %u + %u > %u\n",
--			  bloc->logicalBlockNum, 0,
--			  bloc->logicalBlockNum, count,
--			  partmap->s_partition_len);
--		goto error_return;
--	}
+-config ARM64_WORKAROUND_SPECULATIVE_SSBS
+-	bool
 -
-+	/* We make sure this cannot overflow when mounting the filesystem */
- 	block = bloc->logicalBlockNum + offset +
- 		(sizeof(struct spaceBitmapDesc) << 3);
+ config ARM64_ERRATUM_3194386
+-	bool "Cortex-X4: 3194386: workaround for MSR SSBS not self-synchronizing"
+-	select ARM64_WORKAROUND_SPECULATIVE_SSBS
++	bool "Cortex-X4/Neoverse-V3: workaround for MSR SSBS not self-synchronizing"
+ 	default y
+ 	help
+-	  This option adds the workaround for ARM Cortex-X4 erratum 3194386.
 -
- 	do {
- 		overflow = 0;
- 		block_group = block >> (sb->s_blocksize_bits + 3);
-@@ -395,7 +385,6 @@ static void udf_table_free_blocks(struct super_block *sb,
- 				  uint32_t count)
- {
- 	struct udf_sb_info *sbi = UDF_SB(sb);
--	struct udf_part_map *partmap;
- 	uint32_t start, end;
- 	uint32_t elen;
- 	struct kernel_lb_addr eloc;
-@@ -404,16 +393,6 @@ static void udf_table_free_blocks(struct super_block *sb,
- 	struct udf_inode_info *iinfo;
- 
- 	mutex_lock(&sbi->s_alloc_mutex);
--	partmap = &sbi->s_partmaps[bloc->partitionReferenceNum];
--	if (bloc->logicalBlockNum + count < count ||
--	    (bloc->logicalBlockNum + count) > partmap->s_partition_len) {
--		udf_debug("%u < %d || %u + %u > %u\n",
--			  bloc->logicalBlockNum, 0,
--			  bloc->logicalBlockNum, count,
--			  partmap->s_partition_len);
--		goto error_return;
--	}
+-	  On affected cores "MSR SSBS, #0" instructions may not affect
+-	  subsequent speculative instructions, which may permit unexepected
+-	  speculative store bypassing.
 -
- 	iinfo = UDF_I(table);
- 	udf_add_free_space(sb, sbi->s_partition, count);
+-	  Work around this problem by placing a speculation barrier after
+-	  kernel changes to SSBS. The presence of the SSBS special-purpose
+-	  register is hidden from hwcaps and EL0 reads of ID_AA64PFR1_EL1, such
+-	  that userspace will use the PR_SPEC_STORE_BYPASS prctl to change
+-	  SSBS.
++	  This option adds the workaround for the following errata:
  
-@@ -688,6 +667,17 @@ void udf_free_blocks(struct super_block *sb, struct inode *inode,
- {
- 	uint16_t partition = bloc->partitionReferenceNum;
- 	struct udf_part_map *map = &UDF_SB(sb)->s_partmaps[partition];
-+	uint32_t blk;
-+
-+	if (check_add_overflow(bloc->logicalBlockNum, offset, &blk) ||
-+	    check_add_overflow(blk, count, &blk) ||
-+	    bloc->logicalBlockNum + count > map->s_partition_len) {
-+		udf_debug("Invalid request to free blocks: (%d, %u), off %u, "
-+			  "len %u, partition len %u\n",
-+			  partition, bloc->logicalBlockNum, offset, count,
-+			  map->s_partition_len);
-+		return;
-+	}
+-	  If unsure, say Y.
+-
+-config ARM64_ERRATUM_3312417
+-	bool "Neoverse-V3: 3312417: workaround for MSR SSBS not self-synchronizing"
+-	select ARM64_WORKAROUND_SPECULATIVE_SSBS
+-	default y
+-	help
+-	  This option adds the workaround for ARM Neoverse-V3 erratum 3312417.
++	  * ARM Cortex-X4 erratum 3194386
++	  * ARM Neoverse-V3 erratum 3312417
  
- 	if (map->s_partition_flags & UDF_PART_FLAG_UNALLOC_BITMAP) {
- 		udf_bitmap_free_blocks(sb, map->s_uspace.s_bitmap,
+ 	  On affected cores "MSR SSBS, #0" instructions may not affect
+ 	  subsequent speculative instructions, which may permit unexepected
+diff --git a/arch/arm64/kernel/cpu_errata.c b/arch/arm64/kernel/cpu_errata.c
+index dd8be391e595d..5e77a7595059b 100644
+--- a/arch/arm64/kernel/cpu_errata.c
++++ b/arch/arm64/kernel/cpu_errata.c
+@@ -382,7 +382,7 @@ void arm64_set_ssbd_mitigation(bool state)
+ 		 * CPUs could mis-speculate branches and bypass a conditional
+ 		 * barrier.
+ 		 */
+-		if (IS_ENABLED(CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS))
++		if (IS_ENABLED(CONFIG_ARM64_ERRATUM_3194386))
+ 			spec_bar();
+ 
+ 		return;
+@@ -841,14 +841,10 @@ static struct midr_range broken_aarch32_aes[] = {
+ };
+ #endif
+ 
+-#ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS
+-static const struct midr_range erratum_spec_ssbs_list[] = {
+ #ifdef CONFIG_ARM64_ERRATUM_3194386
++static const struct midr_range erratum_spec_ssbs_list[] = {
+ 	MIDR_ALL_VERSIONS(MIDR_CORTEX_X4),
+-#endif
+-#ifdef CONFIG_ARM64_ERRATUM_3312417
+ 	MIDR_ALL_VERSIONS(MIDR_NEOVERSE_V3),
+-#endif
+ 	{}
+ };
+ #endif
+@@ -1042,7 +1038,7 @@ const struct arm64_cpu_capabilities arm64_errata[] = {
+ 		.type = ARM64_CPUCAP_LOCAL_CPU_ERRATUM,
+ 	},
+ #endif
+-#ifdef CONFIG_ARM64_WORKAROUND_SPECULATIVE_SSBS
++#ifdef CONFIG_ARM64_ERRATUM_3194386
+ 	{
+ 		.desc = "ARM errata 3194386, 3312417",
+ 		.capability = ARM64_WORKAROUND_SPECULATIVE_SSBS,
 -- 
 2.43.0
 
