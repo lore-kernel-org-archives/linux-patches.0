@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234F61A00F5;
-	Thu, 15 Aug 2024 14:05:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366DE19F49A;
+	Thu, 15 Aug 2024 14:05:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730713; cv=none; b=dmfF6c9HdW8pNzmqLmaUMQPqY+LYfrMDDPTmGpGYtfRliJOiz2o9dXhubH7eS/GHb6wtKZrZCP7MSemCcjiOfsF/NnJUG6YT4hUgVwiidFkwf/8CBAC4mLf8Owlpef0GFFa1rBvoJYE2TD+HOt4S0ibTSSdC9Rhbc/A1ZeOj3+g=
+	t=1723730716; cv=none; b=M6sv7KMLiP95RZgQnVmc8wVIIbImDT9kKd74ASsmZ8h2GSOAN48NnUFHnuaySzYg60B9eO/fDDMX4Nz2rZCJu90RG8Jm4L+20ap5J488XXj/nLs+mucpEUYiVkIgT2jzkecfHWvIaQle2Hwl8D0v1WWWgCkTCzYizE3mno64BJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730713; c=relaxed/simple;
-	bh=fsy3qJFMATI9LqKH4/i1OFCurY/A3Nb2Ngi2uSeK5Yc=;
+	s=arc-20240116; t=1723730716; c=relaxed/simple;
+	bh=+0gUZK33TChAGhYpYSOSUYr+1V21TAa3TayiVMtSj28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oj9IEzOpSsFaDUIPuJIR4vaeL4S7fwpr0ujv6RV/tftRyEKdHJXSKB6+lU+T8q/eOp1ifUCPNGLhoFxQGfYuoMqwo9yzHOE1QSZq000iliJg/ByboYJHLuv93DwrFUf2xDC4wKwsi6MXqtWIU0jS6M/Fl+wOOWfd2Gr3RpNM9Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=agP4OXU6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pTcXLLOpclgP+tHgFDa7hrT4NKg5awFMY9QXTmfj73r3R7j7cN3UJRmDYT3F/8YpmbWOxdaZvQ7kVRcVu4ADYnjwaYFrp8YUPbp9Bs24U/5frw6Z7BsfpesjKoP2bsyGfcnKwBd6D3AuYyaF6WTRsiMxhV1NM3GeXYAeM6zN9CU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NlJy4Wz4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="agP4OXU6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 706C4C4AF0C;
-	Thu, 15 Aug 2024 14:05:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NlJy4Wz4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45C6C32786;
+	Thu, 15 Aug 2024 14:05:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730713;
-	bh=fsy3qJFMATI9LqKH4/i1OFCurY/A3Nb2Ngi2uSeK5Yc=;
+	s=korg; t=1723730716;
+	bh=+0gUZK33TChAGhYpYSOSUYr+1V21TAa3TayiVMtSj28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agP4OXU6rzURubm4QrB6nJ+0TR0Yr9QuQhCUomFlayg9YnBNhXK4TS3buQl5skK9H
-	 48QGWBUGEt5tH2Onj1Kw2kTZ322xNvmAQeceoc6t93eQU4WGh7Tt+7uRRQ7o8ZS5PW
-	 gG8utg6L65UMQjQqMu+KbUuebDHjnxq8r3ik2KFc=
+	b=NlJy4Wz4t8bAQtc+ChdOioJPDuF3LoSW7QGWjmVLCxwW5D4qvCZAu73rw6rDSNi2K
+	 2m0oRbUY/rowT21tIqYJ/oSw4SCZGnFtvLnKkJAW+G7xQtIxi5xgzdsLk8ItxB9+ZW
+	 myJgyKkef+WYLEGQwCBQzE36ovZeKHUBNL6QRzHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <geliang.tang@suse.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>
-Subject: [PATCH 6.1 01/38] mptcp: pass addr to mptcp_pm_alloc_anno_list
-Date: Thu, 15 Aug 2024 15:25:35 +0200
-Message-ID: <20240815131833.005686056@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 02/38] mptcp: pm: reduce indentation blocks
+Date: Thu, 15 Aug 2024 15:25:36 +0200
+Message-ID: <20240815131833.044733772@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -52,86 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <geliang.tang@suse.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 528cb5f2a1e859522f36f091f29f5c81ec6d4a4c upstream.
+commit c95eb32ced823a00be62202b43966b07b2f20b7f upstream.
 
-Pass addr parameter to mptcp_pm_alloc_anno_list() instead of entry. We
-can reduce the scope, e.g. in mptcp_pm_alloc_anno_list(), we only access
-"entry->addr", we can then restrict to the pointer to "addr" then.
+That will simplify the following commits.
 
-Signed-off-by: Geliang Tang <geliang.tang@suse.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+No functional changes intended.
+
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-3-c8a9b036493b@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: c95eb32ced82 ("mptcp: pm: reduce indentation blocks")
+Stable-dep-of: cd7c957f936f ("mptcp: pm: don't try to create sf if alloc failed")
 Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_netlink.c   |    8 ++++----
- net/mptcp/pm_userspace.c |    2 +-
- net/mptcp/protocol.h     |    2 +-
- 3 files changed, 6 insertions(+), 6 deletions(-)
+ net/mptcp/pm_netlink.c |   19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -352,7 +352,7 @@ mptcp_pm_del_add_timer(struct mptcp_sock
- }
- 
- bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
--			      const struct mptcp_pm_addr_entry *entry)
-+			      const struct mptcp_addr_info *addr)
- {
- 	struct mptcp_pm_add_entry *add_entry = NULL;
- 	struct sock *sk = (struct sock *)msk;
-@@ -360,7 +360,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 
- 	lockdep_assert_held(&msk->pm.lock);
- 
--	add_entry = mptcp_lookup_anno_list_by_saddr(msk, &entry->addr);
-+	add_entry = mptcp_lookup_anno_list_by_saddr(msk, addr);
- 
- 	if (add_entry) {
- 		if (mptcp_pm_is_kernel(msk))
-@@ -377,7 +377,7 @@ bool mptcp_pm_alloc_anno_list(struct mpt
- 
- 	list_add(&add_entry->list, &msk->pm.anno_list);
- 
--	add_entry->addr = entry->addr;
-+	add_entry->addr = *addr;
- 	add_entry->sock = msk;
- 	add_entry->retrans_times = 0;
- 
-@@ -580,7 +580,7 @@ static void mptcp_pm_create_subflow_or_s
+@@ -579,16 +579,19 @@ static void mptcp_pm_create_subflow_or_s
+ 		if (msk->pm.addr_signal & BIT(MPTCP_ADD_ADDR_SIGNAL))
  			return;
  
- 		if (local) {
--			if (mptcp_pm_alloc_anno_list(msk, local)) {
-+			if (mptcp_pm_alloc_anno_list(msk, &local->addr)) {
- 				__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
- 				msk->pm.add_addr_signaled++;
- 				mptcp_pm_announce_addr(msk, &local->addr, false);
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -225,7 +225,7 @@ int mptcp_nl_cmd_announce(struct sk_buff
- 	lock_sock((struct sock *)msk);
- 	spin_lock_bh(&msk->pm.lock);
+-		if (local) {
+-			if (mptcp_pm_alloc_anno_list(msk, &local->addr)) {
+-				__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
+-				msk->pm.add_addr_signaled++;
+-				mptcp_pm_announce_addr(msk, &local->addr, false);
+-				mptcp_pm_nl_addr_send_ack(msk);
+-			}
+-		}
++		if (!local)
++			goto subflow;
++
++		if (!mptcp_pm_alloc_anno_list(msk, &local->addr))
++			goto subflow;
++
++		__clear_bit(local->addr.id, msk->pm.id_avail_bitmap);
++		msk->pm.add_addr_signaled++;
++		mptcp_pm_announce_addr(msk, &local->addr, false);
++		mptcp_pm_nl_addr_send_ack(msk);
+ 	}
  
--	if (mptcp_pm_alloc_anno_list(msk, &addr_val)) {
-+	if (mptcp_pm_alloc_anno_list(msk, &addr_val.addr)) {
- 		msk->pm.add_addr_signaled++;
- 		mptcp_pm_announce_addr(msk, &addr_val.addr, false);
- 		mptcp_pm_nl_addr_send_ack(msk);
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -812,7 +812,7 @@ int mptcp_pm_nl_mp_prio_send_ack(struct
- 				 struct mptcp_addr_info *rem,
- 				 u8 bkup);
- bool mptcp_pm_alloc_anno_list(struct mptcp_sock *msk,
--			      const struct mptcp_pm_addr_entry *entry);
-+			      const struct mptcp_addr_info *addr);
- void mptcp_pm_free_anno_list(struct mptcp_sock *msk);
- bool mptcp_pm_sport_in_anno_list(struct mptcp_sock *msk, const struct sock *sk);
- struct mptcp_pm_add_entry *
++subflow:
+ 	/* check if should create a new subflow */
+ 	while (msk->pm.local_addr_used < local_addr_max &&
+ 	       msk->pm.subflows < subflows_max) {
 
 
