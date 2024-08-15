@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D4363D5;
-	Thu, 15 Aug 2024 14:30:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2640863D5;
+	Thu, 15 Aug 2024 14:30:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732243; cv=none; b=uyYaRTcwMwDchDn8JMEnSH09eNLuOcFIo8lbQns1JkGPVUvYkUQbJVLcJFOtGOSPjxlWBIlomveaEMUiEWGUeGVSLN+x+kS77WcdbcBfruQziL6rBoFCvzmnzJOVJlQCqmDy927BpmaiUvpqKhEh/1T+6epRZNCO98/3iGwu5NA=
+	t=1723732246; cv=none; b=CFJhBIMWXs3R2S9G6z1s3Jm7qBOdSWefvkbED8cZXXceWWIj5kx5tu7UoJ4OOxnwSqL6f7qM6ODHV2QEQegntPgQOj9tW8Kqd/yXls+EtoKxmZgagqG75akGEA0tQtVy47Ip7s1D2rXP0T+FVJjJ4um9vnUJ5hdCIaFFMf3DFR4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732243; c=relaxed/simple;
-	bh=EM7ku2TAfeoXs5IZMf2EkZ0ozEgfAoOgqylguXup5bk=;
+	s=arc-20240116; t=1723732246; c=relaxed/simple;
+	bh=DqOhuGOd0Pn3VJpwSdCxWvBmO4HqtgNpLMefvwKvjck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xahx7CHLZezgqpmQjd2Mn8mNA8q5Ruh5JpP/wCJGfyp7hCc7AkCeDnkNYWbpiewyDR/3pxhkdaVvZK6lT2/rVHyMj1/xjpl4zLyTYbnOHSD+tOjFgisvOYd9RTqm0k2Rr5nqvA27baw+JyvIJsRE50x2c+Jwn15pzZfyx43q/Gw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0FwUlpA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lgiz6k1JbsECy53KnwBkqL442fH6liBVtGvSB6fY+3e/Q0yCiPia6ygepHViydYAOaWI8YgD9W7OIXdUkeQsL0LfSzIG3Wy6lp6OZK9p0iMOr/fwjtrFWyHkSo6whhuFOWXBnBr/pqK/S6UqUaKtJyyo0jfD3p2KiIb9vC5qiHc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S80Xmx5I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0FwUlpA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B227C4AF0D;
-	Thu, 15 Aug 2024 14:30:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S80Xmx5I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966CBC32786;
+	Thu, 15 Aug 2024 14:30:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732242;
-	bh=EM7ku2TAfeoXs5IZMf2EkZ0ozEgfAoOgqylguXup5bk=;
+	s=korg; t=1723732246;
+	bh=DqOhuGOd0Pn3VJpwSdCxWvBmO4HqtgNpLMefvwKvjck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0FwUlpAW6WsUbqoFtSzxqFQprRurIwiaTlFihmbWpGCDD8iWXM97FWEVB4DEz1Zw
-	 f1IAL9NgegP/UoNdsEyMwvFTaG2b6w3yyWjSJsvWtePGmyxJzJlX9d0HtDEYWHaDlZ
-	 FeGB/2s6ff6JJ6Rbbm6Kaa6gUMtTlNYWXhtyjuh8=
+	b=S80Xmx5ICurFuwewzL0RGtXoEqyBvs7aN4zNOq2n4OoF5RfmI9bXrjuWc/v2W3kHE
+	 wqxHi/3tuRuio8x886LB1Etf0U0OU7dJyPTRbKVX1SG/YGDSjq8TBLEDrpBLCKjDm2
+	 /cIil+zshpeh0azeZH+zliyoKmarFQnO5iVbas7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Luis Henriques (SUSE)" <luis.henriques@linux.dev>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Nathan Hebert <nhebert@chromium.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 087/352] ext4: fix infinite loop when replaying fast_commit
-Date: Thu, 15 Aug 2024 15:22:33 +0200
-Message-ID: <20240815131922.622890007@linuxfoundation.org>
+Subject: [PATCH 5.10 088/352] media: venus: flush all buffers in output plane streamoff
+Date: Thu, 15 Aug 2024 15:22:34 +0200
+Message-ID: <20240815131922.661427215@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,46 +54,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luis Henriques (SUSE) <luis.henriques@linux.dev>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-[ Upstream commit 907c3fe532253a6ef4eb9c4d67efb71fab58c706 ]
+[ Upstream commit e750a4b1224142bd8dd057b0d5adf8a5608b7e77 ]
 
-When doing fast_commit replay an infinite loop may occur due to an
-uninitialized extent_status struct.  ext4_ext_determine_insert_hole() does
-not detect the replay and calls ext4_es_find_extent_range(), which will
-return immediately without initializing the 'es' variable.
+For scenarios, when source change is followed by VIDIOC_STREAMOFF
+on output plane, driver should discard any queued OUTPUT
+buffers, which are not decoded or dequeued.
+Flush with HFI_FLUSH_INPUT does not have any actual impact.
+So, fix it, by invoking HFI_FLUSH_ALL, which will flush all
+queued buffers.
 
-Because 'es' contains garbage, an integer overflow may happen causing an
-infinite loop in this function, easily reproducible using fstest generic/039.
-
-This commit fixes this issue by unconditionally initializing the structure
-in function ext4_es_find_extent_range().
-
-Thanks to Zhang Yi, for figuring out the real problem!
-
-Fixes: 8016e29f4362 ("ext4: fast commit recovery path")
-Signed-off-by: Luis Henriques (SUSE) <luis.henriques@linux.dev>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20240515082857.32730-1-luis.henriques@linux.dev
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 85872f861d4c ("media: venus: Mark last capture buffer")
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Tested-by: Nathan Hebert <nhebert@chromium.org>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents_status.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/vdec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index f37e62546745b..be3b3ccbf70b6 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -312,6 +312,8 @@ void ext4_es_find_extent_range(struct inode *inode,
- 			       ext4_lblk_t lblk, ext4_lblk_t end,
- 			       struct extent_status *es)
- {
-+	es->es_lblk = es->es_len = es->es_pblk = 0;
-+
- 	if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
- 		return;
- 
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index c437a929a5451..b6edfa812bb7d 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1142,7 +1142,7 @@ static int vdec_stop_output(struct venus_inst *inst)
+ 		break;
+ 	case VENUS_DEC_STATE_INIT:
+ 	case VENUS_DEC_STATE_CAPTURE_SETUP:
+-		ret = hfi_session_flush(inst, HFI_FLUSH_INPUT, true);
++		ret = hfi_session_flush(inst, HFI_FLUSH_ALL, true);
+ 		break;
+ 	default:
+ 		break;
 -- 
 2.43.0
 
