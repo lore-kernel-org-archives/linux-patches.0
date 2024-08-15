@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994551A01CC;
-	Thu, 15 Aug 2024 13:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6AE91714A1;
+	Thu, 15 Aug 2024 13:51:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729916; cv=none; b=emvIrY/WGaQIovefHwkPow7kP+Sqo3rC1HyhVl67mJy7mNcxj52yzm3CqtLZG+zkFAYCImb3T1C2NCzvSF7smdhvRVjHgQbXY0rpfJjKsBQrO1TV50/24htB8bTlslh7O63vfSgBXjfh2cvPkHxnSRssc0ekpo6u3KY1erfjA+k=
+	t=1723729920; cv=none; b=Jr2earafgaKVGcB/Tzd/zTFoLRGCxwZff5Xp7U8mE+6z+UfbqiBqQbZry1qPQEger+U1UmbkdP2/iXGgGtmwtbeXTDg+0NSG+Rb7EcpAigbx6xfqCTzZlv2ThNmGMmvMOLFol8OTEmqdc0g0r9mfa3y5bIRAg7H7ihlc7sr4N/M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729916; c=relaxed/simple;
-	bh=5sFX3aRX4NYWd5Uu2G8H5HIM6bFo1BEdw0BT2tyvt+0=;
+	s=arc-20240116; t=1723729920; c=relaxed/simple;
+	bh=AlSi/MaBItUvEpvtObuVL6xoSlF5Vrs7s5orFYyMcc8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KAqE7ort2AMtLUQgII0Cwz+aeTlBq5r8gipQmcgNeeIO6cgt4OYAoi5vKAIkii3u4BNDZKrW+BlsyfLlQSgGPfrdiPC44UFHcf+iCWkrzR+Y0tfmhfRDFpLykDgr3BysaWaaZG1FOrebUuvD7yfrpQmtRyU4EqsmTg5OPoH9Ro4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z0OC41o6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kaGNau3P6M/plR0qnGB3RZQQmhZVEOQdiFX/9SArcU+CQ0Fxv6GUj9oPu+qxTBmfbbf4Jt4oIa15M6RITy/wMAgFTOzI6qpPxgwFPtFi0vwE72LzIfDXkONWrH+PyeNoyxK4E4+MTONOQiybYeIJHi6/VEFB8UyztXCbWfjdbwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ACbg+gSw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z0OC41o6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 199BAC4AF0A;
-	Thu, 15 Aug 2024 13:51:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ACbg+gSw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58152C4AF0A;
+	Thu, 15 Aug 2024 13:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729916;
-	bh=5sFX3aRX4NYWd5Uu2G8H5HIM6bFo1BEdw0BT2tyvt+0=;
+	s=korg; t=1723729919;
+	bh=AlSi/MaBItUvEpvtObuVL6xoSlF5Vrs7s5orFYyMcc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0OC41o6ITRffTJHzSMhLEGROKDIyU8sqNiVLYilxZTZZKIfWotR2gOXI+acfV5WJ
-	 DOjeVnwYKDfaVpBOjWCcX8Gn2JsfKNi9W23WfAKkcdKiCO2kPc+cmChXfulF/cN+zl
-	 vrc+1YuzlXdSWnrUWf7wtmUmjTZEsxHc5as3jk68=
+	b=ACbg+gSwu4yYtmMeZdQyS9WaIVpQnAocbW3e0X9COAwG2L5hwQtvui853S0UQLaK5
+	 Eu2txhElttt8z/55bYi1hx0MdpJPpZLB7OOIu3AtmEPe9edifCwNP8NbamM7YJ1EFn
+	 CRMXUb30oIggUFSg1pe+xtpMO1M5/MNzD6xVRPL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jiaxun Yang <jiaxun.yang@flygoat.com>,
 	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.15 248/484] MIPS: Loongson64: env: Hook up Loongsson-2K
-Date: Thu, 15 Aug 2024 15:21:46 +0200
-Message-ID: <20240815131950.978545812@linuxfoundation.org>
+Subject: [PATCH 5.15 249/484] MIPS: Loongson64: Remove memory node for builtin-dtb
+Date: Thu, 15 Aug 2024 15:21:47 +0200
+Message-ID: <20240815131951.016477722@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,63 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 77543269ff23c75bebfb8e6e9a1177b350908ea7 upstream.
+commit b81656c37acf1e682dde02f3e07987784b0f3634 upstream.
 
-Somehow those enablement bits were left over when we were
-adding initial Loongson-2K support.
+Builtin DTBS should never contain memory node as memory is
+going to be managed by LEFI interface.
 
-Set up basic information and select proper builtin DTB for
-Loongson-2K.
+Remove memory node to prevent confliction.
 
+Fixes: b1a792601f26 ("MIPS: Loongson64: DeviceTree for Loongson-2K1000")
 Cc: stable@vger.kernel.org
 Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
 Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/mach-loongson64/boot_param.h |    2 ++
- arch/mips/loongson64/env.c                         |    8 ++++++++
- 2 files changed, 10 insertions(+)
+ arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/arch/mips/include/asm/mach-loongson64/boot_param.h
-+++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
-@@ -42,12 +42,14 @@ enum loongson_cpu_type {
- 	Legacy_1B = 0x5,
- 	Legacy_2G = 0x6,
- 	Legacy_2H = 0x7,
-+	Legacy_2K = 0x8,
- 	Loongson_1A = 0x100,
- 	Loongson_1B = 0x101,
- 	Loongson_2E = 0x200,
- 	Loongson_2F = 0x201,
- 	Loongson_2G = 0x202,
- 	Loongson_2H = 0x203,
-+	Loongson_2K = 0x204,
- 	Loongson_3A = 0x300,
- 	Loongson_3B = 0x301
- };
---- a/arch/mips/loongson64/env.c
-+++ b/arch/mips/loongson64/env.c
-@@ -88,6 +88,12 @@ void __init prom_lefi_init_env(void)
- 	cpu_clock_freq = ecpu->cpu_clock_freq;
- 	loongson_sysconf.cputype = ecpu->cputype;
- 	switch (ecpu->cputype) {
-+	case Legacy_2K:
-+	case Loongson_2K:
-+		smp_group[0] = 0x900000001fe11000;
-+		loongson_sysconf.cores_per_node = 2;
-+		loongson_sysconf.cores_per_package = 2;
-+		break;
- 	case Legacy_3A:
- 	case Loongson_3A:
- 		loongson_sysconf.cores_per_node = 4;
-@@ -221,6 +227,8 @@ void __init prom_lefi_init_env(void)
- 		default:
- 			break;
- 		}
-+	} else if ((read_c0_prid() & PRID_IMP_MASK) == PRID_IMP_LOONGSON_64R) {
-+		loongson_fdt_blob = __dtb_loongson64_2core_2k1000_begin;
- 	} else if ((read_c0_prid() & PRID_IMP_MASK) == PRID_IMP_LOONGSON_64G) {
- 		if (loongson_sysconf.bridgetype == LS7A)
- 			loongson_fdt_blob = __dtb_loongson64g_4core_ls7a_begin;
+--- a/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
++++ b/arch/mips/boot/dts/loongson/loongson64-2k1000.dtsi
+@@ -23,14 +23,6 @@
+ 		};
+ 	};
+ 
+-	memory@200000 {
+-		compatible = "memory";
+-		device_type = "memory";
+-		reg = <0x00000000 0x00200000 0x00000000 0x0ee00000>, /* 238 MB at 2 MB */
+-			<0x00000000 0x20000000 0x00000000 0x1f000000>, /* 496 MB at 512 MB */
+-			<0x00000001 0x10000000 0x00000001 0xb0000000>; /* 6912 MB at 4352MB */
+-	};
+-
+ 	cpu_clk: cpu_clk {
+ 		#clock-cells = <0>;
+ 		compatible = "fixed-clock";
 
 
