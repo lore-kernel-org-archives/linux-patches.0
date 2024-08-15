@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B96D1494C5;
-	Thu, 15 Aug 2024 13:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220881494C5;
+	Thu, 15 Aug 2024 13:51:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729901; cv=none; b=U/G7Ex0oiOnFheufJ4pWp2frnrmehiXrNz4IEqJE/zTE5iw4cEkxabioPNFaQTmOVdGKZTd6vjCZlYOEjxQPdVh/kunx4YxNqgcHtv4gKACYgQysqsVG/tvUTTUxLfO11XB6SKZreWXv1QSeKm7HfC2elz9J033Ii9YM6LFOC+o=
+	t=1723729904; cv=none; b=cBvGZwYoAWbl/N3N6KgInIaj7EnvAuddExAHelnlPwHu+8nkCm68aGjy8JGynZXjTmlByv8Y0IAKu9cUkw7L7+XhYYAR3NdIxtVy+J6EivkhjSIfUOFtQ3V/le8fn6iMcEltNbDKlnA6GrGry/MZLVxSZ/WqpfRVlhSd8q+6B0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729901; c=relaxed/simple;
-	bh=00Jid4JLyQKXNCuqDRCEvEuTywCH2nu0R0cOp5OqAqw=;
+	s=arc-20240116; t=1723729904; c=relaxed/simple;
+	bh=iWs4yPooq4A4c1qSP7NiD4Am+BhBruRuv0hJmfSz4ik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mZs0GDxnG/cuBnKZSrPneEYFVVPX7GhEMgg/IROtIDLhYo8bc0cq6o663eDeVuUz5gQslCT8c22bt7Otl0H/INzGdiS55/iRVrtalZyXVVZZorvbLdezP8ngEo6eIziy93ZD/1EvhtTGnNXq95pJsQ/dvFYN/cHIPPBElV8H7Xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IDWuSbPM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kR8m9h8UG8tGkxSxlova4fn7tYEWTX20w6bAbhorKDTf+CA3FgGlo27oE18Csk0j7yIaxFndaeoasMrjIuY/OrP+tTmAfseXoWhS7UHTsJT14V78EiZzdRMdcVaGGnE5Pscgv917Rfehv+HKiUs97UqCU3sU2ltyCAv+R/bBYxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8L4Vdyw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IDWuSbPM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981BFC32786;
-	Thu, 15 Aug 2024 13:51:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8L4Vdyw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA40C32786;
+	Thu, 15 Aug 2024 13:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729901;
-	bh=00Jid4JLyQKXNCuqDRCEvEuTywCH2nu0R0cOp5OqAqw=;
+	s=korg; t=1723729904;
+	bh=iWs4yPooq4A4c1qSP7NiD4Am+BhBruRuv0hJmfSz4ik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDWuSbPMioqpDmE0+4n2yBcz7nKZlbASM8qIeJ/NWGXxqt1PRIQrlOSmSEFZ0GGOT
-	 y247JQIGK1vDJ0yhe4gnUrbdGf7JNxWyWjRU6iHlUuvpnqN/zJ3U5Rz3smvf95fXuV
-	 oxbeYJEAsYjnmM2KQCZTLX9groKL+mpm8/l6x+sI=
+	b=m8L4Vdywv6dbUDE1Brb4kc4D7aJcKVr4TxZ5LIiICG1ZD88cPE3LwisdCQGBSwd7u
+	 t9VvBXwJ6tlmiOpNEHiBN4xlxxIMjHw2G13IHaaDnxjUwrhFTQ4dfRWjYTFdRF1Uus
+	 wUocgF3iCP0kFNWb8nx70h82F74JYLQk5cuLHoB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Dongsheng Yang <dongsheng.yang@easystack.cn>
-Subject: [PATCH 5.15 243/484] rbd: dont assume rbd_is_lock_owner() for exclusive mappings
-Date: Thu, 15 Aug 2024 15:21:41 +0200
-Message-ID: <20240815131950.789297466@linuxfoundation.org>
+	Gwenael Treuveur <gwenael.treuveur@foss.st.com>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 5.15 244/484] remoteproc: stm32_rproc: Fix mailbox interrupts queuing
+Date: Thu, 15 Aug 2024 15:21:42 +0200
+Message-ID: <20240815131950.827457375@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,43 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Gwenael Treuveur <gwenael.treuveur@foss.st.com>
 
-commit 3ceccb14f5576e02b81cc8b105ab81f224bd87f6 upstream.
+commit c3281abea67c9c0dc6219bbc41d1feae05a16da3 upstream.
 
-Expanding on the previous commit, assuming that rbd_is_lock_owner()
-always returns true (i.e. that we are either in RBD_LOCK_STATE_LOCKED
-or RBD_LOCK_STATE_QUIESCING) if the mapping is exclusive is wrong too.
-In case ceph_cls_set_cookie() fails, the lock would be temporarily
-released even if the mapping is exclusive, meaning that we can end up
-even in RBD_LOCK_STATE_UNLOCKED.
+Manage interrupt coming from coprocessor also when state is
+ATTACHED.
 
-IOW, exclusive mappings are really "just" about disabling automatic
-lock transitions (as documented in the man page), not about grabbing
-the lock and holding on to it whatever it takes.
-
+Fixes: 35bdafda40cc ("remoteproc: stm32_rproc: Add mutex protection for workqueue")
 Cc: stable@vger.kernel.org
-Fixes: 637cd060537d ("rbd: new exclusive lock wait/wake code")
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Dongsheng Yang <dongsheng.yang@easystack.cn>
+Signed-off-by: Gwenael Treuveur <gwenael.treuveur@foss.st.com>
+Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Link: https://lore.kernel.org/r/20240521162316.156259-1-gwenael.treuveur@foss.st.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/rbd.c |    5 -----
- 1 file changed, 5 deletions(-)
+ drivers/remoteproc/stm32_rproc.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/block/rbd.c
-+++ b/drivers/block/rbd.c
-@@ -6592,11 +6592,6 @@ static int rbd_add_acquire_lock(struct r
- 	if (ret)
- 		return ret;
+--- a/drivers/remoteproc/stm32_rproc.c
++++ b/drivers/remoteproc/stm32_rproc.c
+@@ -293,7 +293,7 @@ static void stm32_rproc_mb_vq_work(struc
  
--	/*
--	 * The lock may have been released by now, unless automatic lock
--	 * transitions are disabled.
--	 */
--	rbd_assert(!rbd_dev->opts->exclusive || rbd_is_lock_owner(rbd_dev));
- 	return 0;
- }
+ 	mutex_lock(&rproc->lock);
  
+-	if (rproc->state != RPROC_RUNNING)
++	if (rproc->state != RPROC_RUNNING && rproc->state != RPROC_ATTACHED)
+ 		goto unlock_mutex;
+ 
+ 	if (rproc_vq_interrupt(rproc, mb->vq_id) == IRQ_NONE)
 
 
