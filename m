@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996341AC893;
-	Thu, 15 Aug 2024 14:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDF51AC893;
+	Thu, 15 Aug 2024 14:39:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732766; cv=none; b=pq7rIsfPstDILCV9NZ2fDG5WnpCk0thNSydX9dz6CHD2LVdmn35xC2O5nd7LCm2Hqk1L21KBsA5QrB0NWzH1X8w9u0iUjt+NBZUYmk9YlVQks+qCQIb1oGXUyrSUrRGjVJeHaHyc6iHJkOEsux61w7A6Ez/LC3TJTLVhWnKESd0=
+	t=1723732769; cv=none; b=JKyt3YiVc/zl9LIyuEI0ubCwRbvpuRouAec6uMwK/5bV68ILPAyV/D5rX2qYnLrRbmsfth+E6wWDJKwMErRI4h/KCfk1jVpdvRcAHA2EH+q8IUnJBuvZq+sFY1s13G0yJA+YCctBzcr5gB9/NtBxkwy4SJ8Nq7kOFCf7QBPqqfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732766; c=relaxed/simple;
-	bh=oYJN5em6vu9jvfj85TIiOiAPN5AyXOPJUgM8m9wX9ro=;
+	s=arc-20240116; t=1723732769; c=relaxed/simple;
+	bh=jMwdlFELDhZso+HEaXZZAI2WkuJUdsrplkyJ5DLrN08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RQKd73ieeQ11gQ8+fyYMtp2Mer4RoJE0Pk2YrvJQ78UkO8TD6/b24phs57Z+G/Tg6fGehw4rLsEfS2KzINb/PVKb7wRXLU/8XSrLkW6/3OLIO1fBqo3JXbEjvEkEr18whnDPeeVBMF3H2CVu0seSOeUy0z2UOwGPg4BWaW5HsXE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zfh7QRCe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KV6rloAuZ8Ke5cWGyIG7Vbk3LvtuMjQiCQsxuku72yfZ7SfCV8DNe9TMvJ3jyWHYMF33gg4ucjXl1+XhMCkwRKWHMXplFecrWDxEj3YBbQzdk3LItYIyBdOeaA4J1Hlu/I82mDwrnOyjGtTqwD2oEDN5tbRF6MKorPdbQt/CuH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MyGHx8vu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zfh7QRCe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACBB4C32786;
-	Thu, 15 Aug 2024 14:39:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MyGHx8vu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC1CC32786;
+	Thu, 15 Aug 2024 14:39:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732766;
-	bh=oYJN5em6vu9jvfj85TIiOiAPN5AyXOPJUgM8m9wX9ro=;
+	s=korg; t=1723732769;
+	bh=jMwdlFELDhZso+HEaXZZAI2WkuJUdsrplkyJ5DLrN08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zfh7QRCeELyC11RZpdoFLuNYaz0/8M1s3ubOM2O59ppzd+2Km008FRwnps7je8BA3
-	 AZcNT4hhD2nB2HLqlmFZz8KQtPQtUCqfUbYjRDrVFao6Y2+0BcQQiHFfYZTTA56Gy+
-	 pXwnThp3sVzF5DYjyT/fsfKVyr4pPcj1mFenvQKo=
+	b=MyGHx8vuZso5AJsKd1XxayEhiZhR1ZUgUyn8vaZIUAS63g+O3bLwtxa7AWOo5+S1i
+	 nRAr/2f3YIOk4UFXrAbmcrGtrInNIcyz4Ii4SJdD+5ILJCldcl8Sxp/eTv4G4izXro
+	 7HawIJ0/mhgryXPe5oEZIvcQe/lf+1GT5r1Pd25w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 278/352] SUNRPC: Fix a race to wake a sync task
-Date: Thu, 15 Aug 2024 15:25:44 +0200
-Message-ID: <20240815131930.197385839@linuxfoundation.org>
+	Zheng Zucheng <zhengzucheng@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.10 279/352] sched/cputime: Fix mul_u64_u64_div_u64() precision for cputime
+Date: Thu, 15 Aug 2024 15:25:45 +0200
+Message-ID: <20240815131930.235891007@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,53 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Zheng Zucheng <zhengzucheng@huawei.com>
 
-[ Upstream commit ed0172af5d6fc07d1b40ca82f5ca3979300369f7 ]
+commit 77baa5bafcbe1b2a15ef9c37232c21279c95481c upstream.
 
-We've observed NFS clients with sync tasks sleeping in __rpc_execute
-waiting on RPC_TASK_QUEUED that have not responded to a wake-up from
-rpc_make_runnable().  I suspect this problem usually goes unnoticed,
-because on a busy client the task will eventually be re-awoken by another
-task completion or xprt event.  However, if the state manager is draining
-the slot table, a sync task missing a wake-up can result in a hung client.
+In extreme test scenarios:
+the 14th field utime in /proc/xx/stat is greater than sum_exec_runtime,
+utime = 18446744073709518790 ns, rtime = 135989749728000 ns
 
-We've been able to prove that the waker in rpc_make_runnable() successfully
-calls wake_up_bit() (ie- there's no race to tk_runstate), but the
-wake_up_bit() call fails to wake the waiter.  I suspect the waker is
-missing the load of the bit's wait_queue_head, so waitqueue_active() is
-false.  There are some very helpful comments about this problem above
-wake_up_bit(), prepare_to_wait(), and waitqueue_active().
+In cputime_adjust() process, stime is greater than rtime due to
+mul_u64_u64_div_u64() precision problem.
+before call mul_u64_u64_div_u64(),
+stime = 175136586720000, rtime = 135989749728000, utime = 1416780000.
+after call mul_u64_u64_div_u64(),
+stime = 135989949653530
 
-Fix this by inserting smp_mb__after_atomic() before the wake_up_bit(),
-which pairs with prepare_to_wait() calling set_current_state().
+unsigned reversion occurs because rtime is less than stime.
+utime = rtime - stime = 135989749728000 - 135989949653530
+		      = -199925530
+		      = (u64)18446744073709518790
 
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Trigger condition:
+  1). User task run in kernel mode most of time
+  2). ARM64 architecture
+  3). TICK_CPU_ACCOUNTING=y
+      CONFIG_VIRT_CPU_ACCOUNTING_NATIVE is not set
+
+Fix mul_u64_u64_div_u64() conversion precision by reset stime to rtime
+
+Fixes: 3dc167ba5729 ("sched/cputime: Improve cputime_adjust()")
+Signed-off-by: Zheng Zucheng <zhengzucheng@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lkml.kernel.org/r/20240726023235.217771-1-zhengzucheng@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/sched.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/sched/cputime.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/sunrpc/sched.c b/net/sunrpc/sched.c
-index a4c9d410eb8d5..f4b1b7fee2c05 100644
---- a/net/sunrpc/sched.c
-+++ b/net/sunrpc/sched.c
-@@ -348,8 +348,10 @@ static void rpc_make_runnable(struct workqueue_struct *wq,
- 	if (RPC_IS_ASYNC(task)) {
- 		INIT_WORK(&task->u.tk_work, rpc_async_schedule);
- 		queue_work(wq, &task->u.tk_work);
--	} else
-+	} else {
-+		smp_mb__after_atomic();
- 		wake_up_bit(&task->tk_runstate, RPC_TASK_QUEUED);
-+	}
- }
+--- a/kernel/sched/cputime.c
++++ b/kernel/sched/cputime.c
+@@ -579,6 +579,12 @@ void cputime_adjust(struct task_cputime
+ 	}
  
- /*
--- 
-2.43.0
-
+ 	stime = mul_u64_u64_div_u64(stime, rtime, stime + utime);
++	/*
++	 * Because mul_u64_u64_div_u64() can approximate on some
++	 * achitectures; enforce the constraint that: a*b/(b+c) <= a.
++	 */
++	if (unlikely(stime > rtime))
++		stime = rtime;
+ 
+ update:
+ 	/*
 
 
