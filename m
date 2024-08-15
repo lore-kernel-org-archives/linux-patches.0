@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B68E718D630;
-	Thu, 15 Aug 2024 13:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F5618D630;
+	Thu, 15 Aug 2024 13:54:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730084; cv=none; b=td2FibY8PzpuDTFDpoNfLJ3UqEXl930vESfCuc8q6z1q/gr1CdrVrCjwUsQr7P1qqSmfIPBBGqG+hXYE29DbV9P/KEYGgcVjN+kAZ06Sq07cPxlQuyZVuSYUttnO/286j4FLSROO75lCBVlLrMp6sab9M7aucNikqBVbGz6b6M4=
+	t=1723730087; cv=none; b=ABuyIkHpIJtr4VCQDAY86i25UpVE1wWzgfNZgeK7z6noem03jCdXTnjrWk6ljoKcG2J6aMwmIkTFgGifwRKM542m0Cisuk3qzMS0uDILMYjPmEInZVEZldKUdQNK406unqGumvv66iU+LElUsy3KJQMaJ30tPmmnm2013FTjmos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730084; c=relaxed/simple;
-	bh=GT2SSdGaTUmbNR6ukWX73Q98KDBPoTkHd32XV8bgqKU=;
+	s=arc-20240116; t=1723730087; c=relaxed/simple;
+	bh=IbozPNPm2WIjulk4lJL74GM1+MxMCM2E57o7xWQte9g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEcm19ux7h3Twpguus9S66H8rU6RXzl0NCGKo7b36Hrw2jUbAAMWr7DJMG1O/7+AdFK7JVrbebZGDQA+otrXQSapDSFxwKZMDZ/n2hLuSO0Ak9NoFjD9zt5rU9OyEIEAqfny1UiHVjQCuYmIE0rAsw3LRQnX73+R0pV62ECXB4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wXYZV44y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lu6T6PGw37LEgQzkimfxWtsx8qYpapwGdLD7MfSzLnna/0ecIox3c5MprSTAyhqLyLGlT4/PU4/CLT9IrizG1b1Tzwalu+U6a27U3tpo6F4Ah6II6QWnRnWVQ79IeDFjLROR3EGyJghOf+1Fs0T7RBIJr7a+xoJBXzeSMRWYBoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFMaYIJG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wXYZV44y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D57FC32786;
-	Thu, 15 Aug 2024 13:54:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFMaYIJG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B79C32786;
+	Thu, 15 Aug 2024 13:54:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730084;
-	bh=GT2SSdGaTUmbNR6ukWX73Q98KDBPoTkHd32XV8bgqKU=;
+	s=korg; t=1723730087;
+	bh=IbozPNPm2WIjulk4lJL74GM1+MxMCM2E57o7xWQte9g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXYZV44ynB5z0RNWm6QnJu54MQ1ecaw+KFn9tr/9FKWj22eMgL8j5wsW7ugXNy/xJ
-	 cJlFTXzOtDAut1L+IrXBezRFH7FKhmY1m1+5swJOORhICJG7mfAxFBdzke0sXdYqK+
-	 0/zhQd2uwXh32iq0IO+5kYxKvHp8QyplUFRhHb9U=
+	b=bFMaYIJGFVkiM/iT9lB27OYlBiOGOE2cOWCaqYC6ics+xG0qjYW7tpEGIlecXXyIp
+	 IFbKAMc7morLrZp35H4ty8RnPWE5BlimTZlWkTyPy3SAlHw045+FiHxK4o2HYkl4Kf
+	 qZrLTmPMulPOmNbQS56VV++jytLfguOmXMbsBjEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Krister Johansen <kjlx@templeofstupid.com>,
-	Jiri Olsa <jolsa@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 269/484] bpf, events: Use prog to emit ksymbol event for main program
-Date: Thu, 15 Aug 2024 15:22:07 +0200
-Message-ID: <20240815131951.793192871@linuxfoundation.org>
+Subject: [PATCH 5.15 270/484] MIPS: SMP-CPS: Fix address for GCR_ACCESS register for CM3 and later
+Date: Thu, 15 Aug 2024 15:22:08 +0200
+Message-ID: <20240815131951.832627565@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -54,78 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hou Tao <houtao1@huawei.com>
+From: Gregory CLEMENT <gregory.clement@bootlin.com>
 
-[ Upstream commit 0be9ae5486cd9e767138c13638820d240713f5f1 ]
+[ Upstream commit a263e5f309f32301e1f3ad113293f4e68a82a646 ]
 
-Since commit 0108a4e9f358 ("bpf: ensure main program has an extable"),
-prog->aux->func[0]->kallsyms is left as uninitialized. For BPF programs
-with subprogs, the symbol for the main program is missing just as shown
-in the output of perf script below:
+When the CM block migrated from CM2.5 to CM3.0, the address offset for
+the Global CSR Access Privilege register was modified. We saw this in
+the "MIPS64 I6500 Multiprocessing System Programmer's Guide," it is
+stated that "the Global CSR Access Privilege register is located at
+offset 0x0120" in section 5.4. It is at least the same for I6400.
 
- ffffffff81284b69 qp_trie_lookup_elem+0xb9 ([kernel.kallsyms])
- ffffffffc0011125 bpf_prog_a4a0eb0651e6af8b_lookup_qp_trie+0x5d (bpf...)
- ffffffff8127bc2b bpf_for_each_array_elem+0x7b ([kernel.kallsyms])
- ffffffffc00110a1 +0x25 ()
- ffffffff8121a89a trace_call_bpf+0xca ([kernel.kallsyms])
+This fix allows to use the VP cores in SMP mode if the reset values
+were modified by the bootloader.
 
-Fix it by always using prog instead prog->aux->func[0] to emit ksymbol
-event for the main program. After the fix, the output of perf script
-will be correct:
+Based on the work of Vladimir Kondratiev
+<vladimir.kondratiev@mobileye.com> and the feedback from Jiaxun Yang
+<jiaxun.yang@flygoat.com>.
 
- ffffffff81284b96 qp_trie_lookup_elem+0xe6 ([kernel.kallsyms])
- ffffffffc001382d bpf_prog_a4a0eb0651e6af8b_lookup_qp_trie+0x5d (bpf...)
- ffffffff8127bc2b bpf_for_each_array_elem+0x7b ([kernel.kallsyms])
- ffffffffc0013779 bpf_prog_245c55ab25cfcf40_qp_trie_lookup+0x25 (bpf...)
- ffffffff8121a89a trace_call_bpf+0xca ([kernel.kallsyms])
-
-Fixes: 0108a4e9f358 ("bpf: ensure main program has an extable")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Yonghong Song <yonghong.song@linux.dev>
-Reviewed-by: Krister Johansen <kjlx@templeofstupid.com>
-Reviewed-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/bpf/20240714065533.1112616-1-houtao@huaweicloud.com
+Fixes: 197e89e0984a ("MIPS: mips-cm: Implement mips_cm_revision")
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c |   26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ arch/mips/include/asm/mips-cm.h | 4 ++++
+ arch/mips/kernel/smp-cps.c      | 5 ++++-
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9194,21 +9194,19 @@ static void perf_event_bpf_emit_ksymbols
- 	bool unregister = type == PERF_BPF_EVENT_PROG_UNLOAD;
- 	int i;
+diff --git a/arch/mips/include/asm/mips-cm.h b/arch/mips/include/asm/mips-cm.h
+index 23c67c0871b17..696b40beb774f 100644
+--- a/arch/mips/include/asm/mips-cm.h
++++ b/arch/mips/include/asm/mips-cm.h
+@@ -228,6 +228,10 @@ GCR_ACCESSOR_RO(32, 0x0d0, gic_status)
+ GCR_ACCESSOR_RO(32, 0x0f0, cpc_status)
+ #define CM_GCR_CPC_STATUS_EX			BIT(0)
  
--	if (prog->aux->func_cnt == 0) {
--		perf_event_ksymbol(PERF_RECORD_KSYMBOL_TYPE_BPF,
--				   (u64)(unsigned long)prog->bpf_func,
--				   prog->jited_len, unregister,
--				   prog->aux->ksym.name);
--	} else {
--		for (i = 0; i < prog->aux->func_cnt; i++) {
--			struct bpf_prog *subprog = prog->aux->func[i];
-+	perf_event_ksymbol(PERF_RECORD_KSYMBOL_TYPE_BPF,
-+			   (u64)(unsigned long)prog->bpf_func,
-+			   prog->jited_len, unregister,
-+			   prog->aux->ksym.name);
- 
--			perf_event_ksymbol(
--				PERF_RECORD_KSYMBOL_TYPE_BPF,
--				(u64)(unsigned long)subprog->bpf_func,
--				subprog->jited_len, unregister,
--				subprog->aux->ksym.name);
--		}
-+	for (i = 1; i < prog->aux->func_cnt; i++) {
-+		struct bpf_prog *subprog = prog->aux->func[i];
++/* GCR_ACCESS - Controls core/IOCU access to GCRs */
++GCR_ACCESSOR_RW(32, 0x120, access_cm3)
++#define CM_GCR_ACCESS_ACCESSEN			GENMASK(7, 0)
 +
-+		perf_event_ksymbol(
-+			PERF_RECORD_KSYMBOL_TYPE_BPF,
-+			(u64)(unsigned long)subprog->bpf_func,
-+			subprog->jited_len, unregister,
-+			subprog->aux->ksym.name);
- 	}
- }
+ /* GCR_L2_CONFIG - Indicates L2 cache configuration when Config5.L2C=1 */
+ GCR_ACCESSOR_RW(32, 0x130, l2_config)
+ #define CM_GCR_L2_CONFIG_BYPASS			BIT(20)
+diff --git a/arch/mips/kernel/smp-cps.c b/arch/mips/kernel/smp-cps.c
+index f2df0cae1b4d9..7409d46ce31a8 100644
+--- a/arch/mips/kernel/smp-cps.c
++++ b/arch/mips/kernel/smp-cps.c
+@@ -230,7 +230,10 @@ static void boot_core(unsigned int core, unsigned int vpe_id)
+ 	write_gcr_co_reset_ext_base(CM_GCR_Cx_RESET_EXT_BASE_UEB);
  
+ 	/* Ensure the core can access the GCRs */
+-	set_gcr_access(1 << core);
++	if (mips_cm_revision() < CM_REV_CM3)
++		set_gcr_access(1 << core);
++	else
++		set_gcr_access_cm3(1 << core);
+ 
+ 	if (mips_cpc_present()) {
+ 		/* Reset the core */
+-- 
+2.43.0
+
 
 
