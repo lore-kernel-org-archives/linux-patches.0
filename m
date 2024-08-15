@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FFBC1AC8BB;
-	Thu, 15 Aug 2024 14:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C701AC8BB;
+	Thu, 15 Aug 2024 14:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731913; cv=none; b=LH40+gLBXJDXHvm1fa9BAA1jFOS8MftfnoM+3Y7CgCBzz16Y4fjnHJsVCI4I9T+nY5GVjR+pkV+ZNI2hGZE0m+arnNCtMH5kMhdlZP6QzlEisC832lJy7UMP3rt5TFOx5/3NHPaooCim+SEnlCtGRBQXu82Pt/O0b6cdpELMvL0=
+	t=1723731916; cv=none; b=K2gH7Lo1A9EXGZrelVBXxcfVlerEoNBqnMyctGcXTR0//SNegjV81yto2SH243L4gc2y/QCWTJWf9kp12wc2N4PboOVhBb8OC7tkk8qKL/62Z8+J/p6X+KArwAieLrCAnyr1WR2H9PkKugPrIrGfO5u0GgWbaDuakcNEE+P+yw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731913; c=relaxed/simple;
-	bh=7QJfsdG+kT9bR3oRWriUGpZsE5QBoDa+JT5y7Pp049s=;
+	s=arc-20240116; t=1723731916; c=relaxed/simple;
+	bh=War0Nr4M3e+pzv7l8K6ZSKUB+cAnrO1eYABXnkw3pfs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OrpsD2eILtLtSjDB2qgcw71KpmGgvfo9UlgnQowN2KZY2hvZWrxIRQDkzMSPhMZUFBMzZ/NNTHfLnabiMBM0KCneSI0L5iMY2vIhQBTqk4QrWjj/Hi8riSrCLpoJttYSEFvzW7UHzhgFYDKK175y2z1NhXWA/vNhn6xHGNRBvxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OzSKVjQF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rp7h/m9+NuP0VyE1NbBE6URsNTfFOb/Qcfoh/RjngFt9DRwB89NLKfm6pNiVCTE2msP2/3hMzcyjE3E4CIQ9dwd6/P2kD2mnDWjC40dGQL8tgEK44XsPg98XjB4l99ryx7DWbZdUK4i5omMO6UI+hp23rpu4G74R2AiSF9uYvZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=js3knlwk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OzSKVjQF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA552C32786;
-	Thu, 15 Aug 2024 14:25:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="js3knlwk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB910C4AF0A;
+	Thu, 15 Aug 2024 14:25:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731913;
-	bh=7QJfsdG+kT9bR3oRWriUGpZsE5QBoDa+JT5y7Pp049s=;
+	s=korg; t=1723731916;
+	bh=War0Nr4M3e+pzv7l8K6ZSKUB+cAnrO1eYABXnkw3pfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OzSKVjQF+U2zVCH3qf1iaG10oAfVQHztnvu9hpJUgCg3xQ1T0Q3+WPx4Lr7sAKKsC
-	 R4a0ieaKG8Xh5d7Sxj+6v0rNzyW+wW3YROnxCHxraS+hKAFFPMD0tDdwfWGde/6mj6
-	 ylniWdge51PKAd0R04plAEUheamO0RXQP1kJMVU8=
+	b=js3knlwkqQ070DQkX3TRX7e576s8uDhfQRHwQHXFEbCzY6Ku4lclsgCfx1YokfJJb
+	 hFMw27xfh17g/gReXVPVGNLKyExG9ee/ERX9Hw7bGSAgOxDO6elBbUE9YshEl9YlQ4
+	 BAY7yZ/aUQG2aLw2yepjrgMfz69fgPv57Z7qFmG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Wayne Tung <chineweff@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 008/352] x86/platform/iosf_mbi: Convert PCIBIOS_* return codes to errnos
-Date: Thu, 15 Aug 2024 15:21:14 +0200
-Message-ID: <20240815131919.531717943@linuxfoundation.org>
+Subject: [PATCH 5.10 009/352] hwmon: (adt7475) Fix default duty on fan is disabled
+Date: Thu, 15 Aug 2024 15:21:15 +0200
+Message-ID: <20240815131919.570147002@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -45,56 +45,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Wayne Tung <chineweff@gmail.com>
 
-[ Upstream commit 7821fa101eab529521aa4b724bf708149d70820c ]
+[ Upstream commit 39b24cced70fdc336dbc0070f8b3bde61d8513a8 ]
 
-iosf_mbi_pci_{read,write}_mdr() use pci_{read,write}_config_dword()
-that return PCIBIOS_* codes but functions also return -ENODEV which are
-not compatible error codes. As neither of the functions are related to
-PCI read/write functions, they should return normal errnos.
+According to the comments on fan is disabled, we change to manual mode
+and set the duty cycle to 0.
+For setting the duty cycle part, the register is wrong. Fix it.
 
-Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
-errno before returning it.
-
-Fixes: 46184415368a ("arch: x86: New MailBox support driver for Intel SOC's")
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20240527125538.13620-4-ilpo.jarvinen@linux.intel.com
+Fixes: 1c301fc5394f ("hwmon: Add a driver for the ADT7475 hardware monitoring chip")
+Signed-off-by: Wayne Tung <chineweff@gmail.com>
+Link: https://lore.kernel.org/r/20240701073252.317397-1-chineweff@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/platform/intel/iosf_mbi.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/adt7475.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/platform/intel/iosf_mbi.c b/arch/x86/platform/intel/iosf_mbi.c
-index 526f70f27c1c3..70a1c3877f8e3 100644
---- a/arch/x86/platform/intel/iosf_mbi.c
-+++ b/arch/x86/platform/intel/iosf_mbi.c
-@@ -62,7 +62,7 @@ static int iosf_mbi_pci_read_mdr(u32 mcrx, u32 mcr, u32 *mdr)
+diff --git a/drivers/hwmon/adt7475.c b/drivers/hwmon/adt7475.c
+index 22e314725def0..b4c0f01f52c4f 100644
+--- a/drivers/hwmon/adt7475.c
++++ b/drivers/hwmon/adt7475.c
+@@ -1770,7 +1770,7 @@ static void adt7475_read_pwm(struct i2c_client *client, int index)
+ 		data->pwm[CONTROL][index] &= ~0xE0;
+ 		data->pwm[CONTROL][index] |= (7 << 5);
  
- fail_read:
- 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
--	return result;
-+	return pcibios_err_to_errno(result);
- }
+-		i2c_smbus_write_byte_data(client, PWM_CONFIG_REG(index),
++		i2c_smbus_write_byte_data(client, PWM_REG(index),
+ 					  data->pwm[INPUT][index]);
  
- static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
-@@ -91,7 +91,7 @@ static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
- 
- fail_write:
- 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
--	return result;
-+	return pcibios_err_to_errno(result);
- }
- 
- int iosf_mbi_read(u8 port, u8 opcode, u32 offset, u32 *mdr)
+ 		i2c_smbus_write_byte_data(client, PWM_CONFIG_REG(index),
 -- 
 2.43.0
 
