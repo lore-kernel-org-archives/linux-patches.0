@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CF544376;
-	Thu, 15 Aug 2024 13:46:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A1A744376;
+	Thu, 15 Aug 2024 13:46:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729566; cv=none; b=ijXNWNbbPG3KDeHjfnVLkAjZGIiOaFnT+WFHgGOmQGcDYbyEzCjp7spPIFwqVqnuzsX5LCVyPvvxnk/zOl+8rwU5PapuKQ/Fuk5dnhSDdieAK9erLCwr4wp64KeqD3qugW5wzQj0DrfOusFsoqr0HTI9FoDZBzJjrc65V/xyjIM=
+	t=1723729569; cv=none; b=cQJoGHi5T3Zw6exYXPigJCpqsipVKh1AC48PcY4fJ8CtD5v8RGFR5dVWGpWG2ruE6GB0n7qAYfwj+eR/+EiRGERMvSnHjwMfLgiUiBreWO8pbCQlFERc2K3aMk0IIDYbF8IEQKIts23OVeDVK7cfP1A61sfRftIsRFrVIzxRtPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729566; c=relaxed/simple;
-	bh=qYZnwUxG76+N3wW1/XxdO6eU3zWWkCcKrZNsVUD+rVM=;
+	s=arc-20240116; t=1723729569; c=relaxed/simple;
+	bh=NVieRT+8FWo6QvJK4A62RUtt0aRnXvv9wRQV6suPawc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=diGoPZ9ZEFaqcINk9GV1BCh3fIFXLtRBB6Mb776Zo3fzoSB5fWhQC7X5n6HNWrjB7DLYuI4mpB9Zo9unTIdGbLRA94OpVsrMIgBHAcfYcUN1NDSyewVWLY+4+/PcLZrjbbWVQw5dArA5WapFjgyez0XVGalrUrnp4Lbo4zxTiLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrVHA12M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTLtg40ckNQ+W/fVovN36BTOmX8MVUALYBeuOvjc1g1AQV57zlPKMTSpyovmW6Rq9qQAffx8Yvbj5C2/4cB4l/wO8VgoagHHCKI4FMdn+jPEOZ20tM/uMJlVLVkQX8Y6taDgVZxh1V+V0SCmlHJ1hZ4L/PhVj4gu2waUkWvPzWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFbJ/+7P; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrVHA12M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B61AC32786;
-	Thu, 15 Aug 2024 13:46:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFbJ/+7P"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD95AC32786;
+	Thu, 15 Aug 2024 13:46:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729566;
-	bh=qYZnwUxG76+N3wW1/XxdO6eU3zWWkCcKrZNsVUD+rVM=;
+	s=korg; t=1723729569;
+	bh=NVieRT+8FWo6QvJK4A62RUtt0aRnXvv9wRQV6suPawc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HrVHA12M2sKbmpe7V3lyRAUxztf2X2+4e3yJVlSTziuKTdBW9bEcswaMPJDfS3aSc
-	 4+DMm96GOZC5XYLaBijigxXP27sN2Gh6vb0dqXl0w+KG5NGXsMFVp4gdZZ1/aZNQIv
-	 +xUex9EQvu8OWKWtxBLWWwx3nvq6D9lh2UxCpeg8=
+	b=OFbJ/+7PmsGBClB15rCmLpp/nIYLz3V4hYYdJRHpnUTyiAApgpRt2/Zih0GVX2eeZ
+	 yN+m+mg/gpFMJrLI/T4/YJRXzqn0rfe8lwE6M2r8ulYQgWlSO2iJeCYlrkTlWSR+KN
+	 K7yJBQEtuxCm2FWaraLBt3MrqfiXO4XahyWqUdXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Bowler <nbowler@draconx.ca>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Junxian Huang <huangjunxian6@hisilicon.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 139/484] macintosh/therm_windtunnel: fix module unload.
-Date: Thu, 15 Aug 2024 15:19:57 +0200
-Message-ID: <20240815131946.777074457@linuxfoundation.org>
+Subject: [PATCH 5.15 140/484] RDMA/hns: Fix missing pagesize and alignment check in FRMR
+Date: Thu, 15 Aug 2024 15:19:58 +0200
+Message-ID: <20240815131946.820936602@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,46 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Bowler <nbowler@draconx.ca>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit fd748e177194ebcbbaf98df75152a30e08230cc6 ]
+[ Upstream commit d387d4b54eb84208bd4ca13572e106851d0a0819 ]
 
-The of_device_unregister call in therm_windtunnel's module_exit procedure
-does not fully reverse the effects of of_platform_device_create in the
-module_init prodedure.  Once you unload this module, it is impossible
-to load it ever again since only the first of_platform_device_create
-call on the fan node succeeds.
+The offset requires 128B alignment and the page size ranges from
+4K to 128M.
 
-This driver predates first git commit, and it turns out back then
-of_platform_device_create worked differently than it does today.
-So this is actually an old regression.
-
-The appropriate function to undo of_platform_device_create now appears
-to be of_platform_device_destroy, and switching to use this makes it
-possible to unload and load the module as expected.
-
-Signed-off-by: Nick Bowler <nbowler@draconx.ca>
-Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240711035428.16696-1-nbowler@draconx.ca
+Fixes: 68a997c5d28c ("RDMA/hns: Add FRMR support for hip08")
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Junxian Huang <huangjunxian6@hisilicon.com>
+Link: https://lore.kernel.org/r/20240710133705.896445-5-huangjunxian6@hisilicon.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/therm_windtunnel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_device.h | 4 ++++
+ drivers/infiniband/hw/hns/hns_roce_mr.c     | 5 +++++
+ 2 files changed, 9 insertions(+)
 
-diff --git a/drivers/macintosh/therm_windtunnel.c b/drivers/macintosh/therm_windtunnel.c
-index f55f6adf5e5ff..49805eb4d145a 100644
---- a/drivers/macintosh/therm_windtunnel.c
-+++ b/drivers/macintosh/therm_windtunnel.c
-@@ -549,7 +549,7 @@ g4fan_exit( void )
- 	platform_driver_unregister( &therm_of_driver );
+diff --git a/drivers/infiniband/hw/hns/hns_roce_device.h b/drivers/infiniband/hw/hns/hns_roce_device.h
+index e02107123c970..f234fd8e4a2be 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_device.h
++++ b/drivers/infiniband/hw/hns/hns_roce_device.h
+@@ -100,6 +100,7 @@
+ #define MR_TYPE_DMA				0x03
  
- 	if( x.of_dev )
--		of_device_unregister( x.of_dev );
-+		of_platform_device_destroy(&x.of_dev->dev, NULL);
- }
+ #define HNS_ROCE_FRMR_MAX_PA			512
++#define HNS_ROCE_FRMR_ALIGN_SIZE		128
  
- module_init(g4fan_init);
+ #define PKEY_ID					0xffff
+ #define GUID_LEN				8
+@@ -220,6 +221,9 @@ enum {
+ #define HNS_HW_PAGE_SHIFT			12
+ #define HNS_HW_PAGE_SIZE			(1 << HNS_HW_PAGE_SHIFT)
+ 
++#define HNS_HW_MAX_PAGE_SHIFT			27
++#define HNS_HW_MAX_PAGE_SIZE			(1 << HNS_HW_MAX_PAGE_SHIFT)
++
+ struct hns_roce_uar {
+ 	u64		pfn;
+ 	unsigned long	index;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 7106e51d5fad1..938db3f5aabe6 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -446,6 +446,11 @@ int hns_roce_map_mr_sg(struct ib_mr *ibmr, struct scatterlist *sg, int sg_nents,
+ 	struct hns_roce_mtr *mtr = &mr->pbl_mtr;
+ 	int ret, sg_num = 0;
+ 
++	if (!IS_ALIGNED(*sg_offset, HNS_ROCE_FRMR_ALIGN_SIZE) ||
++	    ibmr->page_size < HNS_HW_PAGE_SIZE ||
++	    ibmr->page_size > HNS_HW_MAX_PAGE_SIZE)
++		return sg_num;
++
+ 	mr->npages = 0;
+ 	mr->page_list = kvcalloc(mr->pbl_mtr.hem_cfg.buf_pg_count,
+ 				 sizeof(dma_addr_t), GFP_KERNEL);
 -- 
 2.43.0
 
