@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C231DDF5;
-	Thu, 15 Aug 2024 13:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC9519E811;
+	Thu, 15 Aug 2024 13:28:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728477; cv=none; b=UgKzeMD3waWqQ+Mn95f89t2t64+SjJuoPFKO9goAFIwoHKJo29BAXY8kAs1rSMAGBRi2rzHAzcyN4Jg9qTIEFl/FHuVTIBWXu6sbv9e3/PpJOxWsdxVDZSTfcrzru7hFDiSmhIw2cm7rWTp4qyzsnpNkQnGm45o/SjewDKJJiWs=
+	t=1723728480; cv=none; b=ZdPdD87HPfD48qzvQ2/aup7LTy/eMjeIMTZwZUS/IyLwr5mVF8nmRf5ocXC1o/Nqv9dIt4KFuE7lQLK6xNdwVATYut29JgsPKPc0HjHng+/dQUboT4wHYSK0TnT+uTsEvLspfSWcY2sosMaHPntxGul6mDl+CCSRDirmonKl0Os=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728477; c=relaxed/simple;
-	bh=EF7qd0uWmsnV6LJLf4URwdJAmqooiyORzJsw2+PMeRE=;
+	s=arc-20240116; t=1723728480; c=relaxed/simple;
+	bh=xnrQBacFWT24vj8rhJEaa3YTgivdMGDlAJkFF66r4T8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l2LmhaPTdEaUL/CTRP6Ml46SVnZUSruSxezozmKqwakpZuJeIAbbuhPs8y8KIu56nekSvby1gwcl4UBlzRjwy+bxmoSxhdLi+wGmb1TJGUMnIVHC6yJnamXvJykhlLgWKRXMGQfxRxnu6pLLMNPKTReagouIJdqEkZZrI4EdEVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2kWuHlxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ejrD1faEnW7ZIfVS+zYSGOlZGcYl9UR8VOp+lzRcPVft/HoOubPtLmj4XKb9BCtIXFmRh6eAfNO/LG02USJSFr8FSro+QP3a0mNRBSVZ0EfzPsIvFd/cJQXFP5Z1qYEFhS8x7gX1t0fjsfMrSmwfPsSlF+AwnGQQj/JAGdDJV9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zgp045s9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2kWuHlxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23ADC32786;
-	Thu, 15 Aug 2024 13:27:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zgp045s9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD146C32786;
+	Thu, 15 Aug 2024 13:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728477;
-	bh=EF7qd0uWmsnV6LJLf4URwdJAmqooiyORzJsw2+PMeRE=;
+	s=korg; t=1723728480;
+	bh=xnrQBacFWT24vj8rhJEaa3YTgivdMGDlAJkFF66r4T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2kWuHlxCYQ09UK7D7RjYUI3+7Anb/hPCiltM1uo/XPKRJZThBGGIMLxUgC6lRlkhB
-	 OZ+pe9nBXYCP6NU+sydyOoQAbRknj8IsVw+N8Xm2bL8qwkME2VmeKRlBr8FzTFESQ5
-	 8NyVSn6xx+w3JqAzW/2Gfxlvs3yT1el8ZY6WzkLc=
+	b=zgp045s9H9XwyuK0Eik8CjlVCKhpwKevsj9vXx68SyLlINFhIs5PCcfjiwNrbOu9Q
+	 Ku7sshYs+2Iu+tPPp5xB21d4gIq5oTP5CFJ7S+CwPQx7QeZmuCsHmWiQYV3rYxvB+c
+	 iXpD48npUZqp3UsohE70vEzoSl6GoCF1dj26BxW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 005/196] x86/pci/xen: Fix PCIBIOS_* return code handling
-Date: Thu, 15 Aug 2024 15:22:02 +0200
-Message-ID: <20240815131852.279235042@linuxfoundation.org>
+Subject: [PATCH 4.19 006/196] x86/platform/iosf_mbi: Convert PCIBIOS_* return codes to errnos
+Date: Thu, 15 Aug 2024 15:22:03 +0200
+Message-ID: <20240815131852.317159644@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -55,47 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit e9d7b435dfaec58432f4106aaa632bf39f52ce9f ]
+[ Upstream commit 7821fa101eab529521aa4b724bf708149d70820c ]
 
-xen_pcifront_enable_irq() uses pci_read_config_byte() that returns
-PCIBIOS_* codes. The error handling, however, assumes the codes are
-normal errnos because it checks for < 0.
+iosf_mbi_pci_{read,write}_mdr() use pci_{read,write}_config_dword()
+that return PCIBIOS_* codes but functions also return -ENODEV which are
+not compatible error codes. As neither of the functions are related to
+PCI read/write functions, they should return normal errnos.
 
-xen_pcifront_enable_irq() also returns the PCIBIOS_* code back to the
-caller but the function is used as the (*pcibios_enable_irq) function
-which should return normal errnos.
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning it.
 
-Convert the error check to plain non-zero check which works for
-PCIBIOS_* return codes and convert the PCIBIOS_* return code using
-pcibios_err_to_errno() into normal errno before returning it.
-
-Fixes: 3f2a230caf21 ("xen: handled remapped IRQs when enabling a pcifront PCI device.")
+Fixes: 46184415368a ("arch: x86: New MailBox support driver for Intel SOC's")
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20240527125538.13620-3-ilpo.jarvinen@linux.intel.com
+Link: https://lore.kernel.org/r/20240527125538.13620-4-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/pci/xen.c | 4 ++--
+ arch/x86/platform/intel/iosf_mbi.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/pci/xen.c b/arch/x86/pci/xen.c
-index bacf8d988f65f..d308057aec0b9 100644
---- a/arch/x86/pci/xen.c
-+++ b/arch/x86/pci/xen.c
-@@ -36,10 +36,10 @@ static int xen_pcifront_enable_irq(struct pci_dev *dev)
- 	u8 gsi;
+diff --git a/arch/x86/platform/intel/iosf_mbi.c b/arch/x86/platform/intel/iosf_mbi.c
+index 6f37a2137a795..dfeedbd6467fc 100644
+--- a/arch/x86/platform/intel/iosf_mbi.c
++++ b/arch/x86/platform/intel/iosf_mbi.c
+@@ -68,7 +68,7 @@ static int iosf_mbi_pci_read_mdr(u32 mcrx, u32 mcr, u32 *mdr)
  
- 	rc = pci_read_config_byte(dev, PCI_INTERRUPT_LINE, &gsi);
--	if (rc < 0) {
-+	if (rc) {
- 		dev_warn(&dev->dev, "Xen PCI: failed to read interrupt line: %d\n",
- 			 rc);
--		return rc;
-+		return pcibios_err_to_errno(rc);
- 	}
- 	/* In PV DomU the Xen PCI backend puts the PIRQ in the interrupt line.*/
- 	pirq = gsi;
+ fail_read:
+ 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
+-	return result;
++	return pcibios_err_to_errno(result);
+ }
+ 
+ static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
+@@ -97,7 +97,7 @@ static int iosf_mbi_pci_write_mdr(u32 mcrx, u32 mcr, u32 mdr)
+ 
+ fail_write:
+ 	dev_err(&mbi_pdev->dev, "PCI config access failed with %d\n", result);
+-	return result;
++	return pcibios_err_to_errno(result);
+ }
+ 
+ int iosf_mbi_read(u8 port, u8 opcode, u32 offset, u32 *mdr)
 -- 
 2.43.0
 
