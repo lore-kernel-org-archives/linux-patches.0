@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0BFF1AB51B;
-	Thu, 15 Aug 2024 14:05:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DFC1991D0;
+	Thu, 15 Aug 2024 14:05:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730726; cv=none; b=VFK7Wq6ToMeh7t/pS05SOJdpqPeZoBBbjYzuSVQCzAexrUiZUpaAlk1GC2CYnQRE0Iv12qJZ23RDqT06BSDhFYvehojOho4s2DH2zi/bX4g8+lhRAcS/6n57rf8/GRJzYe2yXQPRbjeesTJ75EUuDEFECGRToPawZMT8POL04/g=
+	t=1723730729; cv=none; b=mGQh+CFDW42Y00Jp5YzJpQbsGZlf8nJlTYmoU083pyX5ruCl8W7lrQQYa83pOPOosnoJxwO+OptMgDDmXZQrzUffRzhBZiiXFB06Oe3KlxLg4H8D11IWuR6w9Yvw3U4A21FtVLk2WxoVVfpaxOZeaZJAieNISBnBV0dF17LfkhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730726; c=relaxed/simple;
-	bh=bGzmPexXs+za00+EKWikSYOM/Cd6JvaWIp+/RmI8gcc=;
+	s=arc-20240116; t=1723730729; c=relaxed/simple;
+	bh=Ja1Ff6zeFvwYUs6ECbw1MuAt09s6AXeZ83ldSA3EFc0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IOIMTDTdyhIOL0EqrIyEtmfdJ5/j4EVMdpln17Z9l6Fg5dpG10dBecMsGRl8bBV8aoHFBZtg6cAaiaNii0He+au+ZYvUeOBtuw9Fs/LoG5wwD48ZdaJOUBbwh18cn9vYUWbHsxGeXDAqF9p3uTFowgYwfCl3LK+bkS1RNluRMLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s28Qnf2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TzA1hIszKtRotfM3zrWpSZ8AI0lh47WqneUjE2AvAvJMfLveXv2sraBoc0DV0vqyGRRfVbRKdGy9z8P2Dog08ryYfZ8v1r1ZbLoHXTOCfUr8sgTW2NH3vWxb2qdiFSl/WTpt0YTjH5ienoAzUfWYrkGnRbZVR1wkBEFyVtjp4E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GK2xEQ/L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s28Qnf2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72410C4AF0C;
-	Thu, 15 Aug 2024 14:05:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GK2xEQ/L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA0FFC4AF0C;
+	Thu, 15 Aug 2024 14:05:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730725;
-	bh=bGzmPexXs+za00+EKWikSYOM/Cd6JvaWIp+/RmI8gcc=;
+	s=korg; t=1723730729;
+	bh=Ja1Ff6zeFvwYUs6ECbw1MuAt09s6AXeZ83ldSA3EFc0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s28Qnf2/2j9fa8APriBCf6wPZ/LtBgomfQl3yW9kq0HhYoF407+fdeHfUgtp2KhAf
-	 7tkYgEqwVRofYrXg9TCpmJuzFgQVQu5hslGANWQJZcJmb7AOLKrqwfb9ZeOB8DL4JX
-	 88FZk9csjl0zUTjS6YXaYJYkgZveqJ4rFnpbS4RA=
+	b=GK2xEQ/LWOcaN6JZrsB0eptvNFaAbNlybRPMFr1RJFKJK+Xj2/xcjJzShHAYCVBtr
+	 nXQnSPHCl9GbrACBj/0RVMyVAsrTMyjbCl6QStWQ5bRPz2PovCseHr/DJPhIDMhTAt
+	 XdPF5uPogq1pDJkeajxVscMvbp/aKd0XYsYcZQ2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 05/38] selftests: mptcp: join: test both signal & subflow
-Date: Thu, 15 Aug 2024 15:25:39 +0200
-Message-ID: <20240815131833.163060005@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 14/38] NFSD: Replace nfsd_prune_bucket()
+Date: Thu, 15 Aug 2024 15:25:48 +0200
+Message-ID: <20240815131833.501178263@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -51,69 +50,184 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 4d2868b5d191c74262f7407972d68d1bf3245d6a upstream.
+[ Upstream commit a9507f6af1450ed26a4a36d979af518f5bb21e5d ]
 
-It should be quite uncommon to set both the subflow and the signal
-flags: the initiator of the connection is typically the one creating new
-subflows, not the other peer, then no need to announce additional local
-addresses, and use it to create subflows.
+Enable nfsd_prune_bucket() to drop the bucket lock while calling
+kfree(). Use the same pattern that Jeff recently introduced in the
+NFSD filecache.
 
-But some people might be confused about the flags, and set both "just to
-be sure at least the right one is set". To verify the previous fix, and
-avoid future regressions, this specific case is now validated: the
-client announces a new address, and initiates a new subflow from the
-same address.
+A few percpu operations are moved outside the lock since they
+temporarily disable local IRQs which is expensive and does not
+need to be done while the lock is held.
 
-While working on this, another bug has been noticed, where the client
-reset the new subflow because an ADD_ADDR echo got received as the 3rd
-ACK: this new test also explicitly checks that no RST have been sent by
-the client and server.
-
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 86e39e04482b ("mptcp: keep track of local endpoint still available for each msk")
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-7-c8a9b036493b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ No conflicts, but not using 'chk_add_nr 1 1 0 invert': in this
-  version, 'chk_add_nr' cannot be used with 'invert': d73bb9d3957b
-  ("selftests: mptcp: join: ability to invert ADD_ADDR check") is not in
-  this version, and backporting it causes a lot of conflicts. That's
-  fine, checking that there is an additional subflow should be enough. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Stable-dep-of: c135e1269f34 ("NFSD: Refactor the duplicate reply cache shrinker")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ fs/nfsd/nfscache.c |   78 ++++++++++++++++++++++++++++++++++++++++++-----------
+ fs/nfsd/trace.h    |   22 ++++++++++++++
+ 2 files changed, 85 insertions(+), 15 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2090,6 +2090,20 @@ signal_address_tests()
- 		chk_add_nr 1 1
- 	fi
+--- a/fs/nfsd/nfscache.c
++++ b/fs/nfsd/nfscache.c
+@@ -117,6 +117,21 @@ static void nfsd_cacherep_free(struct sv
+ 	kmem_cache_free(drc_slab, rp);
+ }
  
-+	# uncommon: subflow and signal flags on the same endpoint
-+	# or because the user wrongly picked both, but still expects the client
-+	# to create additional subflows
-+	if reset "subflow and signal together"; then
-+		pm_nl_set_limits $ns1 0 2
-+		pm_nl_set_limits $ns2 0 2
-+		pm_nl_add_endpoint $ns2 10.0.3.2 flags signal,subflow
-+		run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 1 1 1
-+		chk_add_nr 0 0 0         # none initiated by ns1
-+		chk_rst_nr 0 0 invert    # no RST sent by the client
-+		chk_rst_nr 0 0           # no RST sent by the server
-+	fi
++static unsigned long
++nfsd_cacherep_dispose(struct list_head *dispose)
++{
++	struct svc_cacherep *rp;
++	unsigned long freed = 0;
 +
- 	# accept and use add_addr with additional subflows
- 	if reset "multiple subflows and signal"; then
- 		pm_nl_set_limits $ns1 0 3
++	while (!list_empty(dispose)) {
++		rp = list_first_entry(dispose, struct svc_cacherep, c_lru);
++		list_del(&rp->c_lru);
++		nfsd_cacherep_free(rp);
++		freed++;
++	}
++	return freed;
++}
++
+ static void
+ nfsd_cacherep_unlink_locked(struct nfsd_net *nn, struct nfsd_drc_bucket *b,
+ 			    struct svc_cacherep *rp)
+@@ -260,6 +275,41 @@ nfsd_cache_bucket_find(__be32 xid, struc
+ 	return &nn->drc_hashtbl[hash];
+ }
+ 
++/*
++ * Remove and return no more than @max expired entries in bucket @b.
++ * If @max is zero, do not limit the number of removed entries.
++ */
++static void
++nfsd_prune_bucket_locked(struct nfsd_net *nn, struct nfsd_drc_bucket *b,
++			 unsigned int max, struct list_head *dispose)
++{
++	unsigned long expiry = jiffies - RC_EXPIRE;
++	struct svc_cacherep *rp, *tmp;
++	unsigned int freed = 0;
++
++	lockdep_assert_held(&b->cache_lock);
++
++	/* The bucket LRU is ordered oldest-first. */
++	list_for_each_entry_safe(rp, tmp, &b->lru_head, c_lru) {
++		/*
++		 * Don't free entries attached to calls that are still
++		 * in-progress, but do keep scanning the list.
++		 */
++		if (rp->c_state == RC_INPROG)
++			continue;
++
++		if (atomic_read(&nn->num_drc_entries) <= nn->max_drc_entries &&
++		    time_before(expiry, rp->c_timestamp))
++			break;
++
++		nfsd_cacherep_unlink_locked(nn, b, rp);
++		list_add(&rp->c_lru, dispose);
++
++		if (max && ++freed > max)
++			break;
++	}
++}
++
+ static long prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn,
+ 			 unsigned int max)
+ {
+@@ -283,11 +333,6 @@ static long prune_bucket(struct nfsd_drc
+ 	return freed;
+ }
+ 
+-static long nfsd_prune_bucket(struct nfsd_drc_bucket *b, struct nfsd_net *nn)
+-{
+-	return prune_bucket(b, nn, 3);
+-}
+-
+ /*
+  * Walk the LRU list and prune off entries that are older than RC_EXPIRE.
+  * Also prune the oldest ones when the total exceeds the max number of entries.
+@@ -466,6 +511,8 @@ int nfsd_cache_lookup(struct svc_rqst *r
+ 	__wsum			csum;
+ 	struct nfsd_drc_bucket	*b;
+ 	int type = rqstp->rq_cachetype;
++	unsigned long freed;
++	LIST_HEAD(dispose);
+ 	int rtn = RC_DOIT;
+ 
+ 	rqstp->rq_cacherep = NULL;
+@@ -490,20 +537,18 @@ int nfsd_cache_lookup(struct svc_rqst *r
+ 	found = nfsd_cache_insert(b, rp, nn);
+ 	if (found != rp)
+ 		goto found_entry;
+-
+-	nfsd_stats_rc_misses_inc();
+ 	rqstp->rq_cacherep = rp;
+ 	rp->c_state = RC_INPROG;
++	nfsd_prune_bucket_locked(nn, b, 3, &dispose);
++	spin_unlock(&b->cache_lock);
+ 
++	freed = nfsd_cacherep_dispose(&dispose);
++	trace_nfsd_drc_gc(nn, freed);
++
++	nfsd_stats_rc_misses_inc();
+ 	atomic_inc(&nn->num_drc_entries);
+ 	nfsd_stats_drc_mem_usage_add(nn, sizeof(*rp));
+-
+-	nfsd_prune_bucket(b, nn);
+-
+-out_unlock:
+-	spin_unlock(&b->cache_lock);
+-out:
+-	return rtn;
++	goto out;
+ 
+ found_entry:
+ 	/* We found a matching entry which is either in progress or done. */
+@@ -541,7 +586,10 @@ found_entry:
+ 
+ out_trace:
+ 	trace_nfsd_drc_found(nn, rqstp, rtn);
+-	goto out_unlock;
++out_unlock:
++	spin_unlock(&b->cache_lock);
++out:
++	return rtn;
+ }
+ 
+ /**
+--- a/fs/nfsd/trace.h
++++ b/fs/nfsd/trace.h
+@@ -1261,6 +1261,28 @@ TRACE_EVENT(nfsd_drc_mismatch,
+ 		__entry->ingress)
+ );
+ 
++TRACE_EVENT_CONDITION(nfsd_drc_gc,
++	TP_PROTO(
++		const struct nfsd_net *nn,
++		unsigned long freed
++	),
++	TP_ARGS(nn, freed),
++	TP_CONDITION(freed > 0),
++	TP_STRUCT__entry(
++		__field(unsigned long long, boot_time)
++		__field(unsigned long, freed)
++		__field(int, total)
++	),
++	TP_fast_assign(
++		__entry->boot_time = nn->boot_time;
++		__entry->freed = freed;
++		__entry->total = atomic_read(&nn->num_drc_entries);
++	),
++	TP_printk("boot_time=%16llx total=%d freed=%lu",
++		__entry->boot_time, __entry->total, __entry->freed
++	)
++);
++
+ TRACE_EVENT(nfsd_cb_args,
+ 	TP_PROTO(
+ 		const struct nfs4_client *clp,
 
 
