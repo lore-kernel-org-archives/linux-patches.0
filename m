@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95A337DA9E;
-	Thu, 15 Aug 2024 13:39:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A332F7DA9E;
+	Thu, 15 Aug 2024 13:40:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729197; cv=none; b=YV2/Vq8Ye3zFDuCkh2STKUp2uc5eqXIE4LaVdsgxVXKdWxokFXP/HXaIPxRZNv1AzUsMmLNixHpGG54lYobc5Dn9i2gdmUXV05uro7B7u5aw5atCY8dBD5AsD6Wrsc2hDvyVOSruNOnWXDGWCsrxk8vqGlanJ9DmNu8h0At1/80=
+	t=1723729200; cv=none; b=JY5GJa6nPQCMCJtVBk2YxqUunOUJ7QgPZQz7a6/tZi7FURJ+hJfMhMJ4Qz2oUh3LDkdfMTYjRQsjK8tcEN179e8g6B/oniTDNGr1KwHCl5F4jkUnRls7ez5F5/oYmOhf6WkissTg6KKdrh9jqq0n7ArCs6OcMIkgb5bO1tei/88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729197; c=relaxed/simple;
-	bh=CQ3+SbWz/GSPKcLbAG0sffZ1IEsg0U2Te2aasLqX2JQ=;
+	s=arc-20240116; t=1723729200; c=relaxed/simple;
+	bh=XBFgiqbDDy3rZHHoKGv/+ilGhzHzkwQfXaa3S1jttck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZOYdhpXN90pUlSG6h+5LvnObKjkH5osY8cBhXsgaMXSkC+33qc0Uh0B4XUJJxyUDr3OlceIVS/EaeWJbRaiQTvYEi/0RQiy6rXirDZnZ/GQJv0lr36HK7MC5LfaAQ80bw27nP7wF+VV5RTD/A7bkqQKT4uBSoXixz+3X1GMazdk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0P8A5tUl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xocg4cO+ujQE7vdVkPOsfBpDMGToEQZw/60F5+hAOcG2Il2FYDENIiq4uhyBJw4FlxDmRH3U/XSQRKlJvbncyNP8gBO4b38ZgtpxBhCURH4nlrFluRZS8INggCPeWN9rI8+0tHFi8iUPNVDYmRf9q3Wsfn5qov7PTBPe+L5Up2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySpRzpwo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0P8A5tUl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04A1DC32786;
-	Thu, 15 Aug 2024 13:39:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySpRzpwo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B7BC32786;
+	Thu, 15 Aug 2024 13:39:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729197;
-	bh=CQ3+SbWz/GSPKcLbAG0sffZ1IEsg0U2Te2aasLqX2JQ=;
+	s=korg; t=1723729200;
+	bh=XBFgiqbDDy3rZHHoKGv/+ilGhzHzkwQfXaa3S1jttck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0P8A5tUlfUhnQgVoFYcJAAjvji8oLvOK7QpG1dakLLLs2t2WXwi6Z7WT/sMRzPkOI
-	 RyMsRIzU50QMnxBOaR07aUba2zHEg6VkVeSNW7rSEIAXD9x+cbBzKZkvzH25IOUJlm
-	 izCiLkTY/5KIlLTG8w9jEB76cnnK0DLFIEXdPZvY=
+	b=ySpRzpwoGD6KVWp6EpLVtXz/IPQz5/xKFR3v0WboGUX7hXlpMWJp868c2jiTAxBQ1
+	 8nxWMfsTRFcRyIEHlFVl4zWO/LiVZ9PKI00sNzhgGRIwfXz+ZZUioTvvU6tdWEgy/m
+	 g5Rkk4EOF8ZH6g4kZKppqgaSar5gaCMlqfMyZ7Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
+	Nitin Rawat <quic_nitirawa@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 021/484] soc: qcom: rpmh-rsc: Ensure irqs arent disabled by rpmh_rsc_send_data() callers
-Date: Thu, 15 Aug 2024 15:17:59 +0200
-Message-ID: <20240815131942.092269364@linuxfoundation.org>
+Subject: [PATCH 5.15 022/484] arm64: dts: qcom: msm8996: specify UFS core_clk frequencies
+Date: Thu, 15 Aug 2024 15:18:00 +0200
+Message-ID: <20240815131942.131854578@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,81 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit e43111f52b9ec5c2d700f89a1d61c8d10dc2d9e9 ]
+[ Upstream commit 02f838b7f8cdfb7a96b7f08e7f6716f230bdecba ]
 
-Dan pointed out that Smatch is concerned about this code because it uses
-spin_lock_irqsave() and then calls wait_event_lock_irq() which enables
-irqs before going to sleep. The comment above the function says it
-should be called with interrupts enabled, but we simply hope that's true
-without really confirming that. Let's add a might_sleep() here to
-confirm that interrupts and preemption aren't disabled. Once we do that,
-we can change the lock to be non-saving, spin_lock_irq(), to clarify
-that we don't expect irqs to be disabled. If irqs are disabled by
-callers they're going to be enabled anyway in the wait_event_lock_irq()
-call which would be bad.
+Follow the example of other platforms and specify core_clk frequencies
+in the frequency table in addition to the core_clk_src frequencies. The
+driver should be setting the leaf frequency instead of some interim
+clock freq.
 
-This should make Smatch happier and find bad callers faster with the
-might_sleep(). We can drop the WARN_ON() in the caller because we have
-the might_sleep() now, simplifying the code.
-
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/r/911181ed-c430-4592-ad26-4dc948834e08@moroto.mountain
-Fixes: 2bc20f3c8487 ("soc: qcom: rpmh-rsc: Sleep waiting for tcs slots to be free")
-Cc: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20240509184129.3924422-1-swboyd@chromium.org
+Suggested-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Fixes: 57fc67ef0d35 ("arm64: dts: qcom: msm8996: Add ufs related nodes")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20240408-msm8996-fix-ufs-v4-1-ee1a28bf8579@linaro.org
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/rpmh-rsc.c | 7 ++++---
- drivers/soc/qcom/rpmh.c     | 1 -
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
-index b722e28d9ed62..4c9400cf6686b 100644
---- a/drivers/soc/qcom/rpmh-rsc.c
-+++ b/drivers/soc/qcom/rpmh-rsc.c
-@@ -608,13 +608,14 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- {
- 	struct tcs_group *tcs;
- 	int tcs_id;
--	unsigned long flags;
-+
-+	might_sleep();
- 
- 	tcs = get_tcs_for_msg(drv, msg);
- 	if (IS_ERR(tcs))
- 		return PTR_ERR(tcs);
- 
--	spin_lock_irqsave(&drv->lock, flags);
-+	spin_lock_irq(&drv->lock);
- 
- 	/* Wait forever for a free tcs. It better be there eventually! */
- 	wait_event_lock_irq(drv->tcs_wait,
-@@ -632,7 +633,7 @@ int rpmh_rsc_send_data(struct rsc_drv *drv, const struct tcs_request *msg)
- 		write_tcs_reg_sync(drv, RSC_DRV_CMD_ENABLE, tcs_id, 0);
- 		enable_tcs_irq(drv, tcs_id, true);
- 	}
--	spin_unlock_irqrestore(&drv->lock, flags);
-+	spin_unlock_irq(&drv->lock);
- 
- 	/*
- 	 * These two can be done after the lock is released because:
-diff --git a/drivers/soc/qcom/rpmh.c b/drivers/soc/qcom/rpmh.c
-index 01765ee9cdfb8..c6df7ac0afebc 100644
---- a/drivers/soc/qcom/rpmh.c
-+++ b/drivers/soc/qcom/rpmh.c
-@@ -189,7 +189,6 @@ static int __rpmh_write(const struct device *dev, enum rpmh_state state,
- 	}
- 
- 	if (state == RPMH_ACTIVE_ONLY_STATE) {
--		WARN_ON(irqs_disabled());
- 		ret = rpmh_rsc_send_data(ctrlr_to_drv(ctrlr), &rpm_msg->msg);
- 	} else {
- 		/* Clean up our call by spoofing tx_done */
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 8b3e753c1a2a1..210016ff50449 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1756,7 +1756,7 @@ ufshc: ufshc@624000 {
+ 				<&gcc GCC_UFS_RX_SYMBOL_0_CLK>;
+ 			freq-table-hz =
+ 				<100000000 200000000>,
+-				<0 0>,
++				<100000000 200000000>,
+ 				<0 0>,
+ 				<0 0>,
+ 				<0 0>,
 -- 
 2.43.0
 
