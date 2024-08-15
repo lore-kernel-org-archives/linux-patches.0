@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A5E1A01B5;
-	Thu, 15 Aug 2024 14:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22E261DFFB;
+	Thu, 15 Aug 2024 14:35:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732552; cv=none; b=KZrNxB1Sehx726+Hi19Wi+9Ulyk1LgF2RxiFbEAUTlk/2QbQE+Rd9ShRqqBR7zaRQH0SRJTVfCyCwQmnNBLkFnSnvkLo+FsxrxYbRcneKlk0YZX6b5NLDe44VfvNKVQjW/CV7tcBG0aE2PRwtcOFnXZzOaQGNV+c45VY3Dc4MFA=
+	t=1723732555; cv=none; b=cFahafeJohMkUZuMRf6OIjjhTF+iL0uizDCEGcFvItbLLgln3ua+2aR7scZ1n9bbEu+8Z6a2iczbakKt9nBXCMAex8vYry0KGuN6DZdhANJ0KIUdFfVy8dyT1n2O29tS8kROXx5i2M94cVo6v1JsU/mbtU/4xFL3Z5gbn8rUraI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732552; c=relaxed/simple;
-	bh=gsXg4gmZUJtUANxElKVSnuziQ73uStvnFo5M5QIKYGw=;
+	s=arc-20240116; t=1723732555; c=relaxed/simple;
+	bh=tbcnlEZfRB1mMZPQAUIvF+3tIEEo8djG07muPbybBaM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JTaCOWnftgIjgfxLPWpyKLblNpgwp1QDuo/xZ1cbQBYICAUh8MkSi7L690Olqf8goFqb7JTRwNPJxawbjmJQ7qeK7lpIBf/5vrSBDYXYC7j8SU2ouIu/Oy8s+DrDZpZYrmAx0qACr3a/X9S+5Prd7Iqj661P9OeNMAn27N3JV+c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlOJcvpZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uKCz8Dz4IwBIBQ8PagUIZuBmttCqeIUzwLSJ448FLK3z4nVsLAQykBrW4aOKbQX/J/hMEGm1wccsgN43bPqHS3cGGU5zR6I4aacQHX7Nuer7ZQlAheSvoGV1xBRGXabRPjK8c9R5oXNU2O/sk3GsWeC6fERzITlkyAelr4Ivzb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gEEukjE0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlOJcvpZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72079C32786;
-	Thu, 15 Aug 2024 14:35:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gEEukjE0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9629DC32786;
+	Thu, 15 Aug 2024 14:35:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732551;
-	bh=gsXg4gmZUJtUANxElKVSnuziQ73uStvnFo5M5QIKYGw=;
+	s=korg; t=1723732555;
+	bh=tbcnlEZfRB1mMZPQAUIvF+3tIEEo8djG07muPbybBaM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlOJcvpZokt8CpLotULAy7D+MGehBX0wE8xWqU2R0OqR6XN7QjmipHyLbHtxAoSJv
-	 weRbnV/Bw+U4wDYwMT+oQYpa6X57e2g4V1GwDr6Umw3RJFFJcSPywqtR/ehTnJP1Xg
-	 1iNx8dXI0+2nuPzJhMOpyV7pK8OYsDyWrXTzhbzk=
+	b=gEEukjE0lZjeGf7fL+URZU94R3uLANLS9aHUjXqK/z3g6ZYmTYyidR3ZybiJAgZne
+	 anGbPhs7PS66PqPrRu13QrZJkvdVyr/pp2otTOfr3lcqZbeezMzpR3n3O6WmvzTO9K
+	 Fjt3g/CSZaZORGJTfzQVrqtREEs2dFkoVlwY0D24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 213/352] nvme: split command copy into a helper
-Date: Thu, 15 Aug 2024 15:24:39 +0200
-Message-ID: <20240815131927.521161891@linuxfoundation.org>
+	Wentao Guan <guanwentao@uniontech.com>,
+	WangYuli <wangyuli@uniontech.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Erpeng Xu <xuerpeng@uniontech.com>
+Subject: [PATCH 5.10 184/352] Bluetooth: btusb: Add Realtek RTL8852BE support ID 0x13d3:0x3591
+Date: Thu, 15 Aug 2024 15:24:10 +0200
+Message-ID: <20240815131926.391384293@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -54,81 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: WangYuli <wangyuli@uniontech.com>
 
-[ Upstream commit 3233b94cf842984ea7e208d5be1ad2f2af02d495 ]
+commit 473a89b4ed7fd52a419340f7c540d5c8fc96fc75 upstream.
 
-We'll need it for batched submit as well. Since we now have a copy
-helper, get rid of the nvme_submit_cmd() wrapper.
+Add the support ID(0x13d3, 0x3591) to usb_device_id table for
+Realtek RTL8852BE.
 
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: c31fad147038 ("nvme-pci: add missing condition check for existence of mapped data")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The device table is as follows:
+
+T:  Bus=01 Lev=02 Prnt=03 Port=00 Cnt=01 Dev#=  5 Spd=12   MxCh= 0
+D:  Ver= 1.00 Cls=e0(wlcon) Sub=01 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=13d3 ProdID=3591 Rev= 0.00
+S:  Manufacturer=Realtek
+S:  Product=Bluetooth Radio
+S:  SerialNumber=00e04c000001
+C:* #Ifs= 2 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:* If#= 0 Alt= 0 #EPs= 3 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=81(I) Atr=03(Int.) MxPS=  16 Ivl=1ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS=  64 Ivl=0ms
+I:* If#= 1 Alt= 0 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   0 Ivl=1ms
+I:  If#= 1 Alt= 1 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=   9 Ivl=1ms
+I:  If#= 1 Alt= 2 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  17 Ivl=1ms
+I:  If#= 1 Alt= 3 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  25 Ivl=1ms
+I:  If#= 1 Alt= 4 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  33 Ivl=1ms
+I:  If#= 1 Alt= 5 #EPs= 2 Cls=e0(wlcon) Sub=01 Prot=01 Driver=btusb
+E:  Ad=03(O) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+E:  Ad=83(I) Atr=01(Isoc) MxPS=  49 Ivl=1ms
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
+Signed-off-by: WangYuli <wangyuli@uniontech.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Erpeng Xu <xuerpeng@uniontech.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ drivers/bluetooth/btusb.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index a7131f4752e28..1436aee1f861d 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -486,22 +486,13 @@ static inline void nvme_write_sq_db(struct nvme_queue *nvmeq, bool write_sq)
- 	nvmeq->last_sq_tail = nvmeq->sq_tail;
- }
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -428,6 +428,8 @@ static const struct usb_device_id blackl
+ 						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x13d3, 0x3571), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
++	{ USB_DEVICE(0x13d3, 0x3591), .driver_info = BTUSB_REALTEK |
++						     BTUSB_WIDEBAND_SPEECH },
+ 	{ USB_DEVICE(0x0489, 0xe125), .driver_info = BTUSB_REALTEK |
+ 						     BTUSB_WIDEBAND_SPEECH },
  
--/**
-- * nvme_submit_cmd() - Copy a command into a queue and ring the doorbell
-- * @nvmeq: The queue to use
-- * @cmd: The command to send
-- * @write_sq: whether to write to the SQ doorbell
-- */
--static void nvme_submit_cmd(struct nvme_queue *nvmeq, struct nvme_command *cmd,
--			    bool write_sq)
-+static inline void nvme_sq_copy_cmd(struct nvme_queue *nvmeq,
-+				    struct nvme_command *cmd)
- {
--	spin_lock(&nvmeq->sq_lock);
- 	memcpy(nvmeq->sq_cmds + (nvmeq->sq_tail << nvmeq->sqes),
--	       cmd, sizeof(*cmd));
-+		absolute_pointer(cmd), sizeof(*cmd));
- 	if (++nvmeq->sq_tail == nvmeq->q_depth)
- 		nvmeq->sq_tail = 0;
--	nvme_write_sq_db(nvmeq, write_sq);
--	spin_unlock(&nvmeq->sq_lock);
- }
- 
- static void nvme_commit_rqs(struct blk_mq_hw_ctx *hctx)
-@@ -945,7 +936,10 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
- 	}
- 
- 	blk_mq_start_request(req);
--	nvme_submit_cmd(nvmeq, cmnd, bd->last);
-+	spin_lock(&nvmeq->sq_lock);
-+	nvme_sq_copy_cmd(nvmeq, &iod->cmd);
-+	nvme_write_sq_db(nvmeq, bd->last);
-+	spin_unlock(&nvmeq->sq_lock);
- 	return BLK_STS_OK;
- out_unmap_data:
- 	nvme_unmap_data(dev, req);
-@@ -1120,7 +1114,11 @@ static void nvme_pci_submit_async_event(struct nvme_ctrl *ctrl)
- 	memset(&c, 0, sizeof(c));
- 	c.common.opcode = nvme_admin_async_event;
- 	c.common.command_id = NVME_AQ_BLK_MQ_DEPTH;
--	nvme_submit_cmd(nvmeq, &c, true);
-+
-+	spin_lock(&nvmeq->sq_lock);
-+	nvme_sq_copy_cmd(nvmeq, &c);
-+	nvme_write_sq_db(nvmeq, true);
-+	spin_unlock(&nvmeq->sq_lock);
- }
- 
- static int adapter_delete_queue(struct nvme_dev *dev, u8 opcode, u16 id)
--- 
-2.43.0
-
 
 
