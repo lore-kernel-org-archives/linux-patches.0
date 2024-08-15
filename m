@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D526117BEC0;
-	Thu, 15 Aug 2024 14:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F8B01DFFB;
+	Thu, 15 Aug 2024 14:35:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732526; cv=none; b=b1THP74oK5coUm5qSEhnIT9HJk2clNsraJlEHjoilXwezf4k7MVxBRVrvXAofIfXTVJ1ckW7RFt73CemEsq+HrobQ96HR5sVhVEt8fOcTjmxwZXNSbaUsOOYIce9K4BSPwpjD8/RV3Dt8t0gS4eoKj/25Vky6f6gbqNwYI4VVfM=
+	t=1723732530; cv=none; b=ZbMOU1S5RVVbdABDzBfjVuA6q9czIQD0qdA0pgbHY9eTdyWHJefExXGbAivmMux3YFw8DBfkcp2WPB/Szh9bWYWLWLe8z+FwAmHtlBHI6qCGMqVOLmKioXb40kUcLZocA5nMLKv1Jhx6SUk6vXmFaUGuoWRqgStyezokxqxqgR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732526; c=relaxed/simple;
-	bh=+7FmUXAD/PTkkDxGAXeBuWnXH1e37DeIbTddjrWgbHA=;
+	s=arc-20240116; t=1723732530; c=relaxed/simple;
+	bh=BW2icoxrXV5z+SFQOXk/4UHGl55NnS6iQbwjP76hNgs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DZxt0qeuUXjVPnEDGROAO0zNBoJaA+Ou7CTvoMc9zCoTiGUv2E5zsh3c+mCrSQRJH73j0RaI8dFhofGEpBUkHlwueDutTZn1HAQlckX2otbWViGudWVDcJZRLsnSKSLYDoF7ti+9fpA31vERnQsx/x64wAwc4LGliCdAl2U66lY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2PmwIKmi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RE7XfnzoIxBBZBPUrKAsxzZuy7q67TqFRjx1/Crs3elESohQFRr5THFEaNJkYacixNBxJKswWBfD/Shg2AAflzslFVOy00tbRYrDp8qNXdrOPtd8kzl3kqhf2T4u3pDlKmHxVvcWqsPMaSoTJkkLAnr1+5K2DAg4SRTjGF3AGjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXoIy+PF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2PmwIKmi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57163C32786;
-	Thu, 15 Aug 2024 14:35:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXoIy+PF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A412EC32786;
+	Thu, 15 Aug 2024 14:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732526;
-	bh=+7FmUXAD/PTkkDxGAXeBuWnXH1e37DeIbTddjrWgbHA=;
+	s=korg; t=1723732530;
+	bh=BW2icoxrXV5z+SFQOXk/4UHGl55NnS6iQbwjP76hNgs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PmwIKmiaz03QzvxjPi1UBUAB+YsCOG2SECe1r4hEOzlb0WhbkeTKs7M09NzEDAoo
-	 Uys+dZVQlW8h7g0s/giDgDYbd+WXGHUpobRXFIbogHokDROJ38exX44mszbEz4wcNa
-	 DLCfzz1CkMA/MeEL5NCEHVBHhBIAnQ1wDkrIuEjE=
+	b=UXoIy+PFi2nRMl8swaRlfa+hNSo11hGJ6QlRF+N17QfK+W/cANN1MEouq/X83+S4G
+	 ch3p0qxkWSjM1GGWsw/LGh0wQp1+snr8ARLQ+DuD75Eveh+qaz6TRRaMTCishFyg1A
+	 LUq4aLtWuj0VbVZpmnutWsjrQBT5oyPNTuV0HQbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	kernel test robot <lkp@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 206/352] lirc: rc_dev_get_from_fd(): fix file leak
-Date: Thu, 15 Aug 2024 15:24:32 +0200
-Message-ID: <20240815131927.241120158@linuxfoundation.org>
+Subject: [PATCH 5.10 207/352] ASoC: Intel: use soc_intel_is_byt_cr() only when IOSF_MBI is reachable
+Date: Thu, 15 Aug 2024 15:24:33 +0200
+Message-ID: <20240815131927.279782535@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -44,41 +49,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit bba1f6758a9ec90c1adac5dcf78f8a15f1bad65b ]
+[ Upstream commit 9931f7d5d251882a147cc5811060097df43e79f5 ]
 
-missing fdput() on a failure exit
+the Intel kbuild bot reports a link failure when IOSF_MBI is built-in
+but the Merrifield driver is configured as a module. The
+soc-intel-quirks.h is included for Merrifield platforms, but IOSF_MBI
+is not selected for that platform.
 
-Fixes: 6a9d552483d50 "media: rc: bpf attach/detach requires write permission" # v6.9
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+ld.lld: error: undefined symbol: iosf_mbi_read
+>>> referenced by atom.c
+>>>               sound/soc/sof/intel/atom.o:(atom_machine_select) in archive vmlinux.a
+
+This patch forces the use of the fallback static inline when IOSF_MBI is not reachable.
+
+Fixes: 536cfd2f375d ("ASoC: Intel: use common helpers to detect CPUs")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202407160704.zpdhJ8da-lkp@intel.com/
+Suggested-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://patch.msgid.link/20240722083002.10800-1-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/lirc_dev.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/intel/common/soc-intel-quirks.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/lirc_dev.c b/drivers/media/rc/lirc_dev.c
-index 14243ce03b46e..c59601487334c 100644
---- a/drivers/media/rc/lirc_dev.c
-+++ b/drivers/media/rc/lirc_dev.c
-@@ -840,8 +840,10 @@ struct rc_dev *rc_dev_get_from_fd(int fd, bool write)
- 		return ERR_PTR(-EINVAL);
- 	}
+diff --git a/sound/soc/intel/common/soc-intel-quirks.h b/sound/soc/intel/common/soc-intel-quirks.h
+index de4e550c5b34d..42bd51456b945 100644
+--- a/sound/soc/intel/common/soc-intel-quirks.h
++++ b/sound/soc/intel/common/soc-intel-quirks.h
+@@ -11,7 +11,7 @@
  
--	if (write && !(f.file->f_mode & FMODE_WRITE))
-+	if (write && !(f.file->f_mode & FMODE_WRITE)) {
-+		fdput(f);
- 		return ERR_PTR(-EPERM);
-+	}
+ #include <linux/platform_data/x86/soc.h>
  
- 	fh = f.file->private_data;
- 	dev = fh->rc;
+-#if IS_ENABLED(CONFIG_X86)
++#if IS_REACHABLE(CONFIG_IOSF_MBI)
+ 
+ #include <linux/dmi.h>
+ #include <asm/iosf_mbi.h>
 -- 
 2.43.0
 
