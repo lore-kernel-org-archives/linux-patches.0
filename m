@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10EF314AD0A;
-	Thu, 15 Aug 2024 13:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748C11AC8AE;
+	Thu, 15 Aug 2024 13:47:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729674; cv=none; b=UWDBB4yudne2HMhHW3ZqEs23LAdafARA6TGGEyUo/ZLipUXbV4e9xrDUP1fNlaV++sdzuMTKCdE2w79i75WA33KrSTJyTWACbZAJz5qxvu0axS9ZayoImSRrJMU/oEcxjkOsutQoCEvNOZpV9z3kpSxeAz+kwjar4S1wVfs8fAg=
+	t=1723729677; cv=none; b=ocpfXsuOcrvjqKJiHW8V421aMxKSv2/s7IIuQTVd7v48rwtBYWndzwuE4vGcObYgOQlLNJbuy5rRUbk6sihY9LA6JKl3nfmjLj+kJPap9aS/T5XhpP8vkj7w6g1UrUXMcuAulDDfxzi/1P24o/tOGzwDk2zhhW38VZ7os1uvDFc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729674; c=relaxed/simple;
-	bh=IwQqEwejpBRo0I6254/lRvscWR9wSFEIC+YiMlsC5zY=;
+	s=arc-20240116; t=1723729677; c=relaxed/simple;
+	bh=ZPl9NhOnnezoCvWa6ILHprIYELDfM/0YmvI1J+15Oyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R70Tp7pSvqweIi1VCo4YdRnKwn1jJePaqP74DaZty/YeZj9xpPtfpfmj0M6/TUTYJtIVastRdCqAuw3ep1dpRpOrdu0JmHQCiHff6uQSpDwR0ZitNhkHjsRKTLxcBHO3E5scc/TX5vNbxXmt64coGOoOCpqzTh55UEs1cP4Eq2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAWecQBu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UgdLvLOR5ZRS7joT+PoEUDh3mxB0UIQXInQh2D6PU1XYH9N1W9LXXzLnTAI8g8xnTu1rrYUK8TxM9gno7We31k7uJB1ddxIIaesZqjnV8UR9scgNsRjnNxtTSYcIiia4RQNo+7L2959sLRITA4NYVx/D2G29kPpSpZBmv9SeVz0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wnqRge8K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAWecQBu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F5BC32786;
-	Thu, 15 Aug 2024 13:47:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wnqRge8K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A363AC32786;
+	Thu, 15 Aug 2024 13:47:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729673;
-	bh=IwQqEwejpBRo0I6254/lRvscWR9wSFEIC+YiMlsC5zY=;
+	s=korg; t=1723729677;
+	bh=ZPl9NhOnnezoCvWa6ILHprIYELDfM/0YmvI1J+15Oyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TAWecQBuBu5LeAyYz3Izrrc01Yv9o8BAGCvhKVAI0tqfsujAfceYakxkU8T2uFJkz
-	 SjQbs/mspuf2dxB52xZQDaf8EMIIVmzeSGI6Povkfgn0GgkRVQRZDnquRP0EPQL+ZQ
-	 S0e+6lGNibfKFlZydX6WTLibkuJXVqodWilxl1Xw=
+	b=wnqRge8KoDGvsPD1i7K6ptUq03gC+svUy1Ygk3ume6Fd3KU8O3ImIJ0CNEehHTkai
+	 dgmtfm0FJM+zYIqkdMjT2dGpCfosZG/0G4i4ByjzX6876Qfb9IqC43WIh2sx7RUx8B
+	 YsGPcTniqqtizFSlgPyFfwiJnih9dbpythQafaqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengen Du <chengen.du@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 173/484] af_packet: Handle outgoing VLAN packets without hardware offloading
-Date: Thu, 15 Aug 2024 15:20:31 +0200
-Message-ID: <20240815131948.096784655@linuxfoundation.org>
+Subject: [PATCH 5.15 174/484] ipv6: take care of scope when choosing the src addr
+Date: Thu, 15 Aug 2024 15:20:32 +0200
+Message-ID: <20240815131948.135902891@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,173 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengen Du <chengen.du@canonical.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-commit 79eecf631c14e7f4057186570ac20e2cfac3802e upstream.
+commit abb9a68d2c64dd9b128ae1f2e635e4d805e7ce64 upstream.
 
-The issue initially stems from libpcap. The ethertype will be overwritten
-as the VLAN TPID if the network interface lacks hardware VLAN offloading.
-In the outbound packet path, if hardware VLAN offloading is unavailable,
-the VLAN tag is inserted into the payload but then cleared from the sk_buff
-struct. Consequently, this can lead to a false negative when checking for
-the presence of a VLAN tag, causing the packet sniffing outcome to lack
-VLAN tag information (i.e., TCI-TPID). As a result, the packet capturing
-tool may be unable to parse packets as expected.
+When the source address is selected, the scope must be checked. For
+example, if a loopback address is assigned to the vrf device, it must not
+be chosen for packets sent outside.
 
-The TCI-TPID is missing because the prb_fill_vlan_info() function does not
-modify the tp_vlan_tci/tp_vlan_tpid values, as the information is in the
-payload and not in the sk_buff struct. The skb_vlan_tag_present() function
-only checks vlan_all in the sk_buff struct. In cooked mode, the L2 header
-is stripped, preventing the packet capturing tool from determining the
-correct TCI-TPID value. Additionally, the protocol in SLL is incorrect,
-which means the packet capturing tool cannot parse the L3 header correctly.
-
-Link: https://github.com/the-tcpdump-group/libpcap/issues/1105
-Link: https://lore.kernel.org/netdev/20240520070348.26725-1-chengen.du@canonical.com/T/#u
-Fixes: 393e52e33c6c ("packet: deliver VLAN TCI to userspace")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chengen Du <chengen.du@canonical.com>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240713114735.62360-1-chengen.du@canonical.com
+CC: stable@vger.kernel.org
+Fixes: afbac6010aec ("net: ipv6: Address selection needs to consider L3 domains")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20240710081521.3809742-4-nicolas.dichtel@6wind.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   86 +++++++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 84 insertions(+), 2 deletions(-)
+ net/ipv6/addrconf.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -505,6 +505,61 @@ static void *packet_current_frame(struct
- 	return packet_lookup_frame(po, rb, rb->head, status);
- }
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -1831,7 +1831,8 @@ int ipv6_dev_get_saddr(struct net *net,
+ 							    master, &dst,
+ 							    scores, hiscore_idx);
  
-+static u16 vlan_get_tci(struct sk_buff *skb, struct net_device *dev)
-+{
-+	u8 *skb_orig_data = skb->data;
-+	int skb_orig_len = skb->len;
-+	struct vlan_hdr vhdr, *vh;
-+	unsigned int header_len;
-+
-+	if (!dev)
-+		return 0;
-+
-+	/* In the SOCK_DGRAM scenario, skb data starts at the network
-+	 * protocol, which is after the VLAN headers. The outer VLAN
-+	 * header is at the hard_header_len offset in non-variable
-+	 * length link layer headers. If it's a VLAN device, the
-+	 * min_header_len should be used to exclude the VLAN header
-+	 * size.
-+	 */
-+	if (dev->min_header_len == dev->hard_header_len)
-+		header_len = dev->hard_header_len;
-+	else if (is_vlan_dev(dev))
-+		header_len = dev->min_header_len;
-+	else
-+		return 0;
-+
-+	skb_push(skb, skb->data - skb_mac_header(skb));
-+	vh = skb_header_pointer(skb, header_len, sizeof(vhdr), &vhdr);
-+	if (skb_orig_data != skb->data) {
-+		skb->data = skb_orig_data;
-+		skb->len = skb_orig_len;
-+	}
-+	if (unlikely(!vh))
-+		return 0;
-+
-+	return ntohs(vh->h_vlan_TCI);
-+}
-+
-+static __be16 vlan_get_protocol_dgram(struct sk_buff *skb)
-+{
-+	__be16 proto = skb->protocol;
-+
-+	if (unlikely(eth_type_vlan(proto))) {
-+		u8 *skb_orig_data = skb->data;
-+		int skb_orig_len = skb->len;
-+
-+		skb_push(skb, skb->data - skb_mac_header(skb));
-+		proto = __vlan_get_protocol(skb, proto, NULL);
-+		if (skb_orig_data != skb->data) {
-+			skb->data = skb_orig_data;
-+			skb->len = skb_orig_len;
-+		}
-+	}
-+
-+	return proto;
-+}
-+
- static void prb_del_retire_blk_timer(struct tpacket_kbdq_core *pkc)
- {
- 	del_timer_sync(&pkc->retire_blk_timer);
-@@ -974,10 +1029,16 @@ static void prb_clear_rxhash(struct tpac
- static void prb_fill_vlan_info(struct tpacket_kbdq_core *pkc,
- 			struct tpacket3_hdr *ppd)
- {
-+	struct packet_sock *po = container_of(pkc, struct packet_sock, rx_ring.prb_bdqc);
-+
- 	if (skb_vlan_tag_present(pkc->skb)) {
- 		ppd->hv1.tp_vlan_tci = skb_vlan_tag_get(pkc->skb);
- 		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->vlan_proto);
- 		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+	} else if (unlikely(po->sk.sk_type == SOCK_DGRAM && eth_type_vlan(pkc->skb->protocol))) {
-+		ppd->hv1.tp_vlan_tci = vlan_get_tci(pkc->skb, pkc->skb->dev);
-+		ppd->hv1.tp_vlan_tpid = ntohs(pkc->skb->protocol);
-+		ppd->tp_status = TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
- 	} else {
- 		ppd->hv1.tp_vlan_tci = 0;
- 		ppd->hv1.tp_vlan_tpid = 0;
-@@ -2393,6 +2454,10 @@ static int tpacket_rcv(struct sk_buff *s
- 			h.h2->tp_vlan_tci = skb_vlan_tag_get(skb);
- 			h.h2->tp_vlan_tpid = ntohs(skb->vlan_proto);
- 			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+		} else if (unlikely(sk->sk_type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
-+			h.h2->tp_vlan_tci = vlan_get_tci(skb, skb->dev);
-+			h.h2->tp_vlan_tpid = ntohs(skb->protocol);
-+			status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
- 		} else {
- 			h.h2->tp_vlan_tci = 0;
- 			h.h2->tp_vlan_tpid = 0;
-@@ -2422,7 +2487,8 @@ static int tpacket_rcv(struct sk_buff *s
- 	sll->sll_halen = dev_parse_header(skb, sll->sll_addr);
- 	sll->sll_family = AF_PACKET;
- 	sll->sll_hatype = dev->type;
--	sll->sll_protocol = skb->protocol;
-+	sll->sll_protocol = (sk->sk_type == SOCK_DGRAM) ?
-+		vlan_get_protocol_dgram(skb) : skb->protocol;
- 	sll->sll_pkttype = skb->pkt_type;
- 	if (unlikely(packet_sock_flag(po, PACKET_SOCK_ORIGDEV)))
- 		sll->sll_ifindex = orig_dev->ifindex;
-@@ -3447,7 +3513,8 @@ static int packet_recvmsg(struct socket
- 		/* Original length was stored in sockaddr_ll fields */
- 		origlen = PACKET_SKB_CB(skb)->sa.origlen;
- 		sll->sll_family = AF_PACKET;
--		sll->sll_protocol = skb->protocol;
-+		sll->sll_protocol = (sock->type == SOCK_DGRAM) ?
-+			vlan_get_protocol_dgram(skb) : skb->protocol;
- 	}
+-			if (scores[hiscore_idx].ifa)
++			if (scores[hiscore_idx].ifa &&
++			    scores[hiscore_idx].scopedist >= 0)
+ 				goto out;
+ 		}
  
- 	sock_recv_ts_and_drops(msg, sk, skb);
-@@ -3502,6 +3569,21 @@ static int packet_recvmsg(struct socket
- 			aux.tp_vlan_tci = skb_vlan_tag_get(skb);
- 			aux.tp_vlan_tpid = ntohs(skb->vlan_proto);
- 			aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+		} else if (unlikely(sock->type == SOCK_DGRAM && eth_type_vlan(skb->protocol))) {
-+			struct sockaddr_ll *sll = &PACKET_SKB_CB(skb)->sa.ll;
-+			struct net_device *dev;
-+
-+			rcu_read_lock();
-+			dev = dev_get_by_index_rcu(sock_net(sk), sll->sll_ifindex);
-+			if (dev) {
-+				aux.tp_vlan_tci = vlan_get_tci(skb, dev);
-+				aux.tp_vlan_tpid = ntohs(skb->protocol);
-+				aux.tp_status |= TP_STATUS_VLAN_VALID | TP_STATUS_VLAN_TPID_VALID;
-+			} else {
-+				aux.tp_vlan_tci = 0;
-+				aux.tp_vlan_tpid = 0;
-+			}
-+			rcu_read_unlock();
- 		} else {
- 			aux.tp_vlan_tci = 0;
- 			aux.tp_vlan_tpid = 0;
 
 
