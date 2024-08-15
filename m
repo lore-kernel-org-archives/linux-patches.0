@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF4363D5;
-	Thu, 15 Aug 2024 14:34:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9C4863D5;
+	Thu, 15 Aug 2024 14:34:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732441; cv=none; b=EF8TUnekRjwFOtN5ZgmwulqL7Yu1CqyyGl+jK29DU9jxscoJq5nDr3CSE1460GJ0OatKz0GnBtu0wKazkpx0JIzO3ObG489yQjtFWFb6k2t2EhR59xpTSoyzdtB8y9filH5ZHKEmoNYD6+Bh+LpaRz8VOTbMwI9WNbWKL+86EmE=
+	t=1723732445; cv=none; b=jnOGFOMeG7Uchl/cn7t9390QAlxyGfSuXbwCp6nQ4s/InotUx57k0fBASdlX6vCnDTMMPCyQw47aMwreB4KxgZ5ISoQSRIsnYZyydJsD49m7U/5h6ERUmNJIe/H6gPSWGtqAKtziosC5RQ+QPhIO9rzpRMC6p1uODvZ41b8Y7u4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732441; c=relaxed/simple;
-	bh=gWYicl5PWw0fOU+jVEMLiPIZLMnNpLK1ptjWpQUt7gE=;
+	s=arc-20240116; t=1723732445; c=relaxed/simple;
+	bh=PjGMRq7+1RF8dKlZFbZyYtDQer8NAjXBPPAkfJZDlSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AZ7coy/z7fcnphOYwPkTM+/or1fsZa0EnYRcKJPKg6du4eiFjzmKQBH9y7hCi6DyIRAGTV4zX2VQMYZcPZO4I3Lu7g+hIZ2ohqjklJRpqI8B4KZ9nvpCcxenxptsuw27+pBnyPLu53R8e1x+OZf8bG658tJTfIzvW/tLagjMnKs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yuesH6dF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RHVYK8TJl/d167COM61WaGW07p+Ih0DxnbhyHwsVXbuEw3mqPGLog/ND+4EWYivimz/hXVWOZWGmQunhkSQURjL/uZEVU+VfjaEQZ/09ZNfEk5mNf8RCyV7eee7kACgkU7TDpg6A2Oa31Qlh6snq//XF+gro7KEfJDV1hZCZVqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YMfJDCfK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yuesH6dF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04D18C4AF0D;
-	Thu, 15 Aug 2024 14:34:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YMfJDCfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AA28C4AF0D;
+	Thu, 15 Aug 2024 14:34:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732441;
-	bh=gWYicl5PWw0fOU+jVEMLiPIZLMnNpLK1ptjWpQUt7gE=;
+	s=korg; t=1723732444;
+	bh=PjGMRq7+1RF8dKlZFbZyYtDQer8NAjXBPPAkfJZDlSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuesH6dFc98k+BAzIJlfwkqlORdIlmQxNGlt3RYEJ3lT2lPDKz4I1/95PjC0lsPnZ
-	 gyEupPK9QfPlReqW1KrpiekvrP/6x0g7EZZN9mmXu244m4ui7OdfOq9tt8aAcQ0Smn
-	 DJfNlLy4EGtJgJcTzGSxtOW7ENIbq/dX2/CWt7JI=
+	b=YMfJDCfK+m+3jTIPEbiBC8K7TtAHfzo20UGOxo+aVBJYofqhGakQcv3N5otM7gCdA
+	 9eXoDgmGiB1s/AJmxYpYGOvhJ9t4Ugjmw9JXJFLoKCFppyjJWh//tUqkXYfXKiNCaA
+	 0ghBmXVSp6a5ULgJYW8mOEQAClqHvfXAjN8MP9/k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiaxun Yang <jiaxun.yang@flygoat.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Subject: [PATCH 5.10 179/352] MIPS: Loongson64: env: Hook up Loongsson-2K
-Date: Thu, 15 Aug 2024 15:24:05 +0200
-Message-ID: <20240815131926.195961283@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 5.10 151/352] hwrng: amd - Convert PCIBIOS_* return codes to errnos
+Date: Thu, 15 Aug 2024 15:23:37 +0200
+Message-ID: <20240815131925.102077545@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -44,71 +44,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiaxun Yang <jiaxun.yang@flygoat.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 77543269ff23c75bebfb8e6e9a1177b350908ea7 upstream.
+commit 14cba6ace79627a57fb9058582b03f0ed3832390 upstream.
 
-Somehow those enablement bits were left over when we were
-adding initial Loongson-2K support.
+amd_rng_mod_init() uses pci_read_config_dword() that returns PCIBIOS_*
+codes. The return code is then returned as is but amd_rng_mod_init() is
+a module_init() function that should return normal errnos.
 
-Set up basic information and select proper builtin DTB for
-Loongson-2K.
+Convert PCIBIOS_* returns code using pcibios_err_to_errno() into normal
+errno before returning it.
 
+Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/mips/include/asm/mach-loongson64/boot_param.h |    2 ++
- arch/mips/loongson64/env.c                         |    8 ++++++++
- 2 files changed, 10 insertions(+)
+ drivers/char/hw_random/amd-rng.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/mips/include/asm/mach-loongson64/boot_param.h
-+++ b/arch/mips/include/asm/mach-loongson64/boot_param.h
-@@ -38,12 +38,14 @@ enum loongson_cpu_type {
- 	Legacy_1B = 0x5,
- 	Legacy_2G = 0x6,
- 	Legacy_2H = 0x7,
-+	Legacy_2K = 0x8,
- 	Loongson_1A = 0x100,
- 	Loongson_1B = 0x101,
- 	Loongson_2E = 0x200,
- 	Loongson_2F = 0x201,
- 	Loongson_2G = 0x202,
- 	Loongson_2H = 0x203,
-+	Loongson_2K = 0x204,
- 	Loongson_3A = 0x300,
- 	Loongson_3B = 0x301
- };
---- a/arch/mips/loongson64/env.c
-+++ b/arch/mips/loongson64/env.c
-@@ -65,6 +65,12 @@ void __init prom_init_env(void)
- 	cpu_clock_freq = ecpu->cpu_clock_freq;
- 	loongson_sysconf.cputype = ecpu->cputype;
- 	switch (ecpu->cputype) {
-+	case Legacy_2K:
-+	case Loongson_2K:
-+		smp_group[0] = 0x900000001fe11000;
-+		loongson_sysconf.cores_per_node = 2;
-+		loongson_sysconf.cores_per_package = 2;
-+		break;
- 	case Legacy_3A:
- 	case Loongson_3A:
- 		loongson_sysconf.cores_per_node = 4;
-@@ -213,6 +219,8 @@ void __init prom_init_env(void)
- 		default:
- 			break;
- 		}
-+	} else if ((read_c0_prid() & PRID_IMP_MASK) == PRID_IMP_LOONGSON_64R) {
-+		loongson_fdt_blob = __dtb_loongson64_2core_2k1000_begin;
- 	} else if ((read_c0_prid() & PRID_IMP_MASK) == PRID_IMP_LOONGSON_64G) {
- 		if (loongson_sysconf.bridgetype == LS7A)
- 			loongson_fdt_blob = __dtb_loongson64g_4core_ls7a_begin;
+--- a/drivers/char/hw_random/amd-rng.c
++++ b/drivers/char/hw_random/amd-rng.c
+@@ -142,8 +142,10 @@ static int __init mod_init(void)
+ 
+ found:
+ 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
+-	if (err)
++	if (err) {
++		err = pcibios_err_to_errno(err);
+ 		goto put_dev;
++	}
+ 
+ 	pmbase &= 0x0000FF00;
+ 	if (pmbase == 0) {
 
 
