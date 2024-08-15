@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE4ED19E825;
-	Thu, 15 Aug 2024 13:33:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3019919E7FA;
+	Thu, 15 Aug 2024 13:33:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728790; cv=none; b=TV3VNN5YWP4Q2yWlkwDoB6w364FdW7yHwwJvvxJC3mnLaM+Pr5DxTsBoMbkHTvn3BNrk8oaqkC8tr3/1BNEgx2DeJpcdJXv05q8TH5ZmKVccxhoS6GrkyrbngsqeHxHUVl9yhClT5xT07OUlUc/sBjG54LE1KCxqB7BfxlhlosE=
+	t=1723728793; cv=none; b=a8dO5NMufv2QcPAW+UffpSUp2T7/TSIJaYvddejs3jZUh70VRqHIQtoxA+bENEhqCvX6lfXr+mP8Ttjr9e66OWrc1CtjOREBEmPwQtVCkORsoyH1QzIS6LcowvFnd3R8GmlvHbsjJLNCvaseICmbaS+YO9CQ1m3T8YNjmd8nrZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728790; c=relaxed/simple;
-	bh=TNKyA5eiVsn4Ff3JKqxy8yjU0D4jF8zWolKfuTQRbtQ=;
+	s=arc-20240116; t=1723728793; c=relaxed/simple;
+	bh=TRslK+USR1uVIjq9+65XrZkRn55nq3AB2NfQmt+OLck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NuFXTBkVExF1K+yh0Exeyvv1DHDk4CC4dX94vtu6oLGfRgC5Sc1wjLCbkgtGP+eHvf7VU/kpspdMtkoHGwS8+vedd3zPu9S24uW/m/JDZKqvt0WCe0BRPu0+DViUZCDG5xvhtqQskLAh5zKULDSpJA2XbFP+OayK52wriw+jJIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qana+M1q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSJtQKdFMIcUhU3qgl0ESaeFKoGGx11NcvXRuc9oxol05TvS+nCcTp46ikUSu0r5b62rFG2htsKYbMR8LOQCKJWh1JDZZRHQgMqwj089y/52xd2gPVKywze7Pw0U5ym+7QEppIBDmrJUcZG2U3+kTaNZ0ZQxUSLPVLS2kQeunDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9wAABje; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qana+M1q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7714FC32786;
-	Thu, 15 Aug 2024 13:33:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9wAABje"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3056C32786;
+	Thu, 15 Aug 2024 13:33:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728789;
-	bh=TNKyA5eiVsn4Ff3JKqxy8yjU0D4jF8zWolKfuTQRbtQ=;
+	s=korg; t=1723728793;
+	bh=TRslK+USR1uVIjq9+65XrZkRn55nq3AB2NfQmt+OLck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qana+M1qAI1vPHLQQNpi2J5pKHiZBPIz9/rKVasnyVY7H/aZmYf6f27LL2tM/AyfG
-	 QZLGLqYRRsBL/NHLV2hwgiqagFJZsCNiNILU9rGIQt840PH/qDcvHg8o22cBUmLbUR
-	 bsYZ/OOpA7B+ZB4OjPrFEHvF5PpE4Ql8RMtF22q8=
+	b=f9wAABje+vamgU0LHKHSZjtcEei2IwSi0xES7ieaY2gujNWzgOX/SxZjQwk2L/9p9
+	 +IkVA3e8+lGGKDYjdj6bfaJbv2N6ioyNUb7gqiydgODqbEgD5mOUAReYz1H3/XaWlG
+	 60iCAlI3HkN1yPCgsj6qbenzHCr1zCI8kM2WYKRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martijn Coenen <maco@google.com>,
-	=?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 4.19 079/196] binder: fix hang of unregistered readers
-Date: Thu, 15 Aug 2024 15:23:16 +0200
-Message-ID: <20240815131855.098603776@linuxfoundation.org>
+	Saurav Kashyap <skashyap@marvell.com>,
+	Nilesh Javali <njavali@marvell.com>,
+	Himanshu Madhani <himanshu.madhani@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 4.19 080/196] scsi: qla2xxx: Return ENOBUFS if sg_cnt is more than one for ELS cmds
+Date: Thu, 15 Aug 2024 15:23:17 +0200
+Message-ID: <20240815131855.136919306@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -45,55 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Saurav Kashyap <skashyap@marvell.com>
 
-commit 31643d84b8c3d9c846aa0e20bc033e46c68c7e7d upstream.
+commit ce2065c4cc4f05635413f63f6dc038d7d4842e31 upstream.
 
-With the introduction of binder_available_for_proc_work_ilocked() in
-commit 1b77e9dcc3da ("ANDROID: binder: remove proc waitqueue") a binder
-thread can only "wait_for_proc_work" after its thread->looper has been
-marked as BINDER_LOOPER_STATE_{ENTERED|REGISTERED}.
+Firmware only supports single DSDs in ELS Pass-through IOCB (0x53h), sg cnt
+is decided by the SCSI ML. User is not aware of the cause of an acutal
+error.
 
-This means an unregistered reader risks waiting indefinitely for work
-since it never gets added to the proc->waiting_threads. If there are no
-further references to its waitqueue either the task will hang. The same
-applies to readers using the (e)poll interface.
+Return the appropriate return code that will be decoded by API and
+application and proper error message will be displayed to user.
 
-I couldn't find the rationale behind this restriction. So this patch
-restores the previous behavior of allowing unregistered threads to
-"wait_for_proc_work". Note that an error message for this scenario,
-which had previously become unreachable, is now re-enabled.
-
-Fixes: 1b77e9dcc3da ("ANDROID: binder: remove proc waitqueue")
+Fixes: 6e98016ca077 ("[SCSI] qla2xxx: Re-organized BSG interface specific code.")
 Cc: stable@vger.kernel.org
-Cc: Martijn Coenen <maco@google.com>
-Cc: Arve Hjønnevåg <arve@google.com>
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Link: https://lore.kernel.org/r/20240711201452.2017543-1-cmllamas@google.com
+Signed-off-by: Saurav Kashyap <skashyap@marvell.com>
+Signed-off-by: Nilesh Javali <njavali@marvell.com>
+Link: https://lore.kernel.org/r/20240710171057.35066-5-njavali@marvell.com
+Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/scsi/qla2xxx/qla_bsg.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/android/binder.c
-+++ b/drivers/android/binder.c
-@@ -998,9 +998,7 @@ static bool binder_has_work(struct binde
- static bool binder_available_for_proc_work_ilocked(struct binder_thread *thread)
- {
- 	return !thread->transaction_stack &&
--		binder_worklist_empty_ilocked(&thread->todo) &&
--		(thread->looper & (BINDER_LOOPER_STATE_ENTERED |
--				   BINDER_LOOPER_STATE_REGISTERED));
-+		binder_worklist_empty_ilocked(&thread->todo);
- }
+--- a/drivers/scsi/qla2xxx/qla_bsg.c
++++ b/drivers/scsi/qla2xxx/qla_bsg.c
+@@ -302,7 +302,7 @@ qla2x00_process_els(struct bsg_job *bsg_
+ 		    "request_sg_cnt=%x reply_sg_cnt=%x.\n",
+ 		    bsg_job->request_payload.sg_cnt,
+ 		    bsg_job->reply_payload.sg_cnt);
+-		rval = -EPERM;
++		rval = -ENOBUFS;
+ 		goto done;
+ 	}
  
- static void binder_wakeup_poll_threads_ilocked(struct binder_proc *proc,
 
 
