@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A371DFDE;
-	Thu, 15 Aug 2024 14:18:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3EFC17C987;
+	Thu, 15 Aug 2024 14:18:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731514; cv=none; b=NUgvAMQm/Tmhdkez4acKv5NdgCPhJjV5en5BpnLBKA7jf7KmvVBUP6DA43+yn97Vlu1VeVv2Mh8MzA+jOUu71tbgrpHw4XilcmgSWFFOeIZH1EZI/V/Auo6JQ34XvsWZAMMCt0s8ZwVToLxiAYs3COORY/q7253evtQX6u9Q5PU=
+	t=1723731517; cv=none; b=nN8sTVBf0GmAQmAoyQ4TWFUmJ+VeY0BQyXnrn7cQoi46JBGT8XP7OxgxpTOY4PPbKu5KXoAALCZe28ik4E4nkXX/no3iOX2S71C7IHdgg22nKwr7O4rDBtTcwTn406AeTM1oftE4gzdgfYqyLE5Ajl5g0yxqcmPfMHkPvZmVDMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731514; c=relaxed/simple;
-	bh=LVBbfHmXgKmWJ897t+IX7Ug/UnN+8eCendhbaairmDE=;
+	s=arc-20240116; t=1723731517; c=relaxed/simple;
+	bh=1Pq3Hm6ravv1EfWVdGck0oSBYHdexn2LYoMwmxa3DXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CRRfMel1VJttVuiXWtyzFohlS0n3S8QRRFKCLQ72/WfhyY7hS2WfauXCFyOJONAJHTAQDz3phZr1vLLgK1+iwWMWD4o8QPEIdZXQfp2nDSChffia0n80NwNmb6Zp8gRDTwxobP3M/vpcDZ9ZJH7qotJeeDmnkcfKLOgiGOFQ5Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvROlnto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bHkZX8vocSo/NNH5Vbn++C/br93NlXTLjZY3Ta3eCS2pUvMM/EFpg73S2M2VL1+HP8vah+I6/k4K1I5zlKsX1hz43QLI8qbgnpKTAZt2Q0b9N2x+x/C5wqJV8QgolLbXKO1lZzr7E3LvzBrYY9O5YjhZ1POPH7p8kRBfhkGu1S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZGOaRoHn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvROlnto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B998C32786;
-	Thu, 15 Aug 2024 14:18:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZGOaRoHn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C89AAC32786;
+	Thu, 15 Aug 2024 14:18:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731513;
-	bh=LVBbfHmXgKmWJ897t+IX7Ug/UnN+8eCendhbaairmDE=;
+	s=korg; t=1723731517;
+	bh=1Pq3Hm6ravv1EfWVdGck0oSBYHdexn2LYoMwmxa3DXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zvROlntoF3wugnU7fBA04qO0Ix0YicgcfO3+UunO/HyEk3+mRPNVlwrwItKSCL2lI
-	 rhmjDMxXzSirI8XEVp31zCYZWa+SYMCPKQGY6oMep/Mi9PzSi4TtlyL4F8mHvCCyHv
-	 zL0N2+0SetUpZzbmZzFrrMkEOZMRoTPUsRCUAMmM=
+	b=ZGOaRoHnHpkWSomkmjbbdOoJtoxJO0IOH0wXV0VjEGhmWp/4mD0Ure8v1TKvykOhs
+	 BwwtvAGXVfKM3Ihc/9F9eEB6iR0Lx52bEnlCD1ABB23DzHMt7aXGo9x/+B860TOrzf
+	 u512oqvVjtZaiG9aWK/ZTKT/nuFe/Gr36npPZ0fs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Thomas Gleixner <tglx@linutronix.de>,
 	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 153/259] s390/pci: Do not mask MSI[-X] entries on teardown
-Date: Thu, 15 Aug 2024 15:24:46 +0200
-Message-ID: <20240815131908.696424366@linuxfoundation.org>
+Subject: [PATCH 5.4 154/259] s390/pci: Rework MSI descriptor walk
+Date: Thu, 15 Aug 2024 15:24:47 +0200
+Message-ID: <20240815131908.734471037@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -54,79 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 3998527d2e3ee2bfdf710a45b7b90968ff87babc ]
+[ Upstream commit 2ca5e908d0f4cde61d9d3595e8314adca5d914a1 ]
 
-The PCI core already ensures that the MSI[-X] state is correct when MSI[-X]
-is disabled. For MSI the reset state is all entries unmasked and for MSI-X
-all vectors are masked.
-
-S390 masks all MSI entries and masks the already masked MSI-X entries
-again. Remove it and let the device in the correct state.
+Replace the about to vanish iterators and make use of the filtering.
 
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
 Tested-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Tested-by: Marc Zyngier <maz@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
 Acked-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20210729222542.939798136@linutronix.de
+Link: https://lore.kernel.org/r/20211206210748.305656158@linutronix.de
 Stable-dep-of: ab42fcb511fd ("s390/pci: Allow allocation of more than 1 MSI interrupt")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/pci/pci_irq.c | 4 ----
- drivers/pci/msi.c       | 4 ++--
- include/linux/msi.h     | 2 --
- 3 files changed, 2 insertions(+), 8 deletions(-)
+ arch/s390/pci/pci_irq.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
 diff --git a/arch/s390/pci/pci_irq.c b/arch/s390/pci/pci_irq.c
-index 75217fb63d7b3..5036e00b7ec1b 100644
+index 5036e00b7ec1b..9ed76fa9391cb 100644
 --- a/arch/s390/pci/pci_irq.c
 +++ b/arch/s390/pci/pci_irq.c
-@@ -341,10 +341,6 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
- 	for_each_pci_msi_entry(msi, pdev) {
- 		if (!msi->irq)
- 			continue;
--		if (msi->msi_attrib.is_msix)
--			__pci_msix_desc_mask_irq(msi, 1);
--		else
--			__pci_msi_desc_mask_irq(msi, 1, 1);
+@@ -273,7 +273,7 @@ int arch_setup_msi_irqs(struct pci_dev *pdev, int nvec, int type)
+ 
+ 	/* Request MSI interrupts */
+ 	hwirq = bit;
+-	for_each_pci_msi_entry(msi, pdev) {
++	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_NOTASSOCIATED) {
+ 		rc = -EIO;
+ 		if (hwirq - bit >= msi_vecs)
+ 			break;
+@@ -338,9 +338,7 @@ void arch_teardown_msi_irqs(struct pci_dev *pdev)
+ 		return;
+ 
+ 	/* Release MSI interrupts */
+-	for_each_pci_msi_entry(msi, pdev) {
+-		if (!msi->irq)
+-			continue;
++	msi_for_each_desc(msi, &pdev->dev, MSI_DESC_ASSOCIATED) {
  		irq_set_msi_desc(msi->irq, NULL);
  		irq_free_desc(msi->irq);
  		msi->msg.address_lo = 0;
-diff --git a/drivers/pci/msi.c b/drivers/pci/msi.c
-index 1701d3de24da7..a37e3541c9377 100644
---- a/drivers/pci/msi.c
-+++ b/drivers/pci/msi.c
-@@ -170,7 +170,7 @@ static inline __attribute_const__ u32 msi_mask(unsigned x)
-  * reliably as devices without an INTx disable bit will then generate a
-  * level IRQ which will never be cleared.
-  */
--void __pci_msi_desc_mask_irq(struct msi_desc *desc, u32 mask, u32 flag)
-+static void __pci_msi_desc_mask_irq(struct msi_desc *desc, u32 mask, u32 flag)
- {
- 	raw_spinlock_t *lock = &desc->dev->msi_lock;
- 	unsigned long flags;
-@@ -207,7 +207,7 @@ static void __iomem *pci_msix_desc_addr(struct msi_desc *desc)
-  * file.  This saves a few milliseconds when initialising devices with lots
-  * of MSI-X interrupts.
-  */
--u32 __pci_msix_desc_mask_irq(struct msi_desc *desc, u32 flag)
-+static u32 __pci_msix_desc_mask_irq(struct msi_desc *desc, u32 flag)
- {
- 	u32 mask_bits = desc->masked;
- 	void __iomem *desc_addr;
-diff --git a/include/linux/msi.h b/include/linux/msi.h
-index 758e32f0d4434..31193305807d0 100644
---- a/include/linux/msi.h
-+++ b/include/linux/msi.h
-@@ -193,8 +193,6 @@ void free_msi_entry(struct msi_desc *entry);
- void __pci_read_msi_msg(struct msi_desc *entry, struct msi_msg *msg);
- void __pci_write_msi_msg(struct msi_desc *entry, struct msi_msg *msg);
- 
--u32 __pci_msix_desc_mask_irq(struct msi_desc *desc, u32 flag);
--void __pci_msi_desc_mask_irq(struct msi_desc *desc, u32 mask, u32 flag);
- void pci_msi_mask_irq(struct irq_data *data);
- void pci_msi_unmask_irq(struct irq_data *data);
- 
 -- 
 2.43.0
 
