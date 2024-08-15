@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 390911714A1;
-	Thu, 15 Aug 2024 13:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87F6D1714A1;
+	Thu, 15 Aug 2024 13:55:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730133; cv=none; b=R/BC7QWXH5uwjeuH/8/qzmPuvXD/2XWZGUOePkHV7Xf+SHgQoiBImsfbOfccDVSD132RjxBHPOOxd6XwteFHyBB2ElIHqGtHYiwXXUr0O7YGs9ETyGYDqotU+9GM8noOHE1iT4jN0lggfM5e926KAHeEaerhctGXkv52L4xmqbY=
+	t=1723730136; cv=none; b=BdvGSqMexkHCkjqed3oL+ibJNRN62I3e3U2GH0OPzyYvJtZtRuLhEKNKjeX21Fx8d0CGaYRMnLiok9WdUpSakPYEn7ZtZ5uMXKkXXUUEsyhxahdIL/HHHMCVyy7cG36raYn/LoXrAwUtkWgNgHAL8i1SKFOeGCOxQunvuqMhIPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730133; c=relaxed/simple;
-	bh=/Xaxb8MLZMu7TaB7gnp/oDkO/KRfLBJl94etI2CEFjY=;
+	s=arc-20240116; t=1723730136; c=relaxed/simple;
+	bh=0HIDXnwwC/FgxJsuoyFNL4I0kUagwyPb2ee1SIJkzw4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rCbH0gsNblfxVTEPwq+fVte9aS4kAuaYcksqY4A2IF7AKBbnh7gVwAvzZMxuu1dqBYO98iHuJdhjqyW9cuIuzcucuCO7Y1RJRb2KRZyIorKlijTqgmB9JYazOLZbmW7swK1Lh6KJDgtMmA2+O5Om4HYdw4ibq6xMNX71XVfle80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GLu2Ym/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cci+RQoRJGvo67FFYlMIS9ku6h/xOD3GjIra3e+AeIWDcnVXk6sVc1QQXjadO7R1qEVo7exu72qmtzfV3GcwHTxXfYWChEHsLvOQa6oNgKUVgcPhtqiiW5hx5aHuXHl4Yn1/e/hNqTRZxU9/k028QK8YbOB9kI9IFLJZjo6FyxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LayFKaMi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GLu2Ym/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2F2CC32786;
-	Thu, 15 Aug 2024 13:55:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LayFKaMi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4F1DC32786;
+	Thu, 15 Aug 2024 13:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730133;
-	bh=/Xaxb8MLZMu7TaB7gnp/oDkO/KRfLBJl94etI2CEFjY=;
+	s=korg; t=1723730136;
+	bh=0HIDXnwwC/FgxJsuoyFNL4I0kUagwyPb2ee1SIJkzw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GLu2Ym/O88es8g1xM4MzSTZE+XEej2K9tadJRAydtfxklXN/9zWlejOp6skAspJUO
-	 8A031M8A+vmCZ0RzN/86Lu3HtvmUq5kKD37WwUGwVKttenp4UE2syFqj9bcgnQz6wk
-	 jQswj8EGbgk8kh3W2SP2Z5RYf9awQ19fEnXMGqls=
+	b=LayFKaMiv8efFjbRMUb9Q9daMQAXVMEL67ObZ2Tr9vRua9Y9NIJ8a2aQlkzEo5AJX
+	 rBcFxgVE79CQv8WBhf7hAAd9036reAZrMoaForlhMyB3ewJyrfM9MXElXCuELoEG/5
+	 YoM7dRV6HITJBu6K+rDlmQyEF/LAcHL6kYm3jzxQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 314/484] leds: trigger: Store brightness set by led_trigger_event()
-Date: Thu, 15 Aug 2024 15:22:52 +0200
-Message-ID: <20240815131953.532594428@linuxfoundation.org>
+Subject: [PATCH 5.15 315/484] leds: trigger: Call synchronize_rcu() before calling trig->activate()
+Date: Thu, 15 Aug 2024 15:22:53 +0200
+Message-ID: <20240815131953.570324130@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,96 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 822c91e72eac568ed8d83765634f00decb45666c ]
+[ Upstream commit b1bbd20f35e19774ea01989320495e09ac44fba3 ]
 
-If a simple trigger is assigned to a LED, then the LED may be off until
-the next led_trigger_event() call. This may be an issue for simple
-triggers with rare led_trigger_event() calls, e.g. power supply
-charging indicators (drivers/power/supply/power_supply_leds.c).
-Therefore persist the brightness value of the last led_trigger_event()
-call and use this value if the trigger is assigned to a LED.
-In addition add a getter for the trigger brightness value.
+Some triggers call led_trigger_event() from their activate() callback
+to initialize the brightness of the LED for which the trigger is being
+activated.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Takashi Iwai <tiwai@suse.de>
-Link: https://lore.kernel.org/r/b1358b25-3f30-458d-8240-5705ae007a8a@gmail.com
+In order for the LED's initial state to be set correctly this requires that
+the led_trigger_event() call uses the new version of trigger->led_cdevs,
+which has the new LED.
+
+AFAICT led_trigger_event() will always use the new version when it is
+running on the same CPU as where the list_add_tail_rcu() call was made,
+which is why the missing synchronize_rcu() has not lead to bug reports.
+But if activate() is pre-empted, sleeps or uses a worker then
+the led_trigger_event() call may run on another CPU which may still use
+the old trigger->led_cdevs list.
+
+Add a synchronize_rcu() call to ensure that any led_trigger_event() calls
+done from activate() always use the new list.
+
+Triggers using led_trigger_event() from their activate() callback are:
+net/bluetooth/leds.c, net/rfkill/core.c and drivers/tty/vt/keyboard.c.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20240531120124.75662-1-hdegoede@redhat.com
 Signed-off-by: Lee Jones <lee@kernel.org>
 Stable-dep-of: ab477b766edd ("leds: triggers: Flush pending brightness before activating trigger")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-triggers.c |  6 ++++--
- include/linux/leds.h        | 15 +++++++++++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ drivers/leds/led-triggers.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/drivers/leds/led-triggers.c b/drivers/leds/led-triggers.c
-index dddfc301d3414..cdb446cb84af2 100644
+index cdb446cb84af2..fe7fb2e7149c5 100644
 --- a/drivers/leds/led-triggers.c
 +++ b/drivers/leds/led-triggers.c
-@@ -193,11 +193,11 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
+@@ -193,6 +193,13 @@ int led_trigger_set(struct led_classdev *led_cdev, struct led_trigger *trig)
  		spin_unlock(&trig->leddev_list_lock);
  		led_cdev->trigger = trig;
  
-+		ret = 0;
++		/*
++		 * Some activate() calls use led_trigger_event() to initialize
++		 * the brightness of the LED for which the trigger is being set.
++		 * Ensure the led_cdev is visible on trig->led_cdevs for this.
++		 */
++		synchronize_rcu();
++
+ 		ret = 0;
  		if (trig->activate)
  			ret = trig->activate(led_cdev);
- 		else
--			ret = 0;
--
-+			led_set_brightness(led_cdev, trig->brightness);
- 		if (ret)
- 			goto err_activate;
- 
-@@ -372,6 +372,8 @@ void led_trigger_event(struct led_trigger *trig,
- 	if (!trig)
- 		return;
- 
-+	trig->brightness = brightness;
-+
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(led_cdev, &trig->led_cdevs, trig_list)
- 		led_set_brightness(led_cdev, brightness);
-diff --git a/include/linux/leds.h b/include/linux/leds.h
-index 2bbff7519b731..79ab2dfd3c72f 100644
---- a/include/linux/leds.h
-+++ b/include/linux/leds.h
-@@ -356,6 +356,9 @@ struct led_trigger {
- 	int		(*activate)(struct led_classdev *led_cdev);
- 	void		(*deactivate)(struct led_classdev *led_cdev);
- 
-+	/* Brightness set by led_trigger_event */
-+	enum led_brightness brightness;
-+
- 	/* LED-private triggers have this set */
- 	struct led_hw_trigger_type *trigger_type;
- 
-@@ -409,6 +412,12 @@ static inline void *led_get_trigger_data(struct led_classdev *led_cdev)
- 	return led_cdev->trigger_data;
- }
- 
-+static inline enum led_brightness
-+led_trigger_get_brightness(const struct led_trigger *trigger)
-+{
-+	return trigger ? trigger->brightness : LED_OFF;
-+}
-+
- #define module_led_trigger(__led_trigger) \
- 	module_driver(__led_trigger, led_trigger_register, \
- 		      led_trigger_unregister)
-@@ -445,6 +454,12 @@ static inline void *led_get_trigger_data(struct led_classdev *led_cdev)
- 	return NULL;
- }
- 
-+static inline enum led_brightness
-+led_trigger_get_brightness(const struct led_trigger *trigger)
-+{
-+	return LED_OFF;
-+}
-+
- #endif /* CONFIG_LEDS_TRIGGERS */
- 
- /* Trigger specific functions */
 -- 
 2.43.0
 
