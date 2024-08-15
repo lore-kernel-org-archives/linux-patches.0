@@ -1,103 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731187DA7D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011477DA7D;
 	Thu, 15 Aug 2024 13:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730355; cv=none; b=oHtqEADHqVjsbysI6NssTrxJZ21ebhytwDMFMHaupeEk1H8hZXayC34PCMDSnEzKraULKzbbAMlfc3s/Usc7QtSlpZh1ufeZgD+H4uy3q+Texe/jXsbzpoPK740BUZQ9cfNX5UhOCARQAy9GdNrSoJV5ibqC8IgD/oQTT1v2STg=
+	t=1723730356; cv=none; b=fgForomexKVlzytdhQl1BWfI3hXQH7OId028ZpfxLITXwY5d8N7YVTPXYMKWSGZ2KI0zAgEWJQcEi1+vuKtMq63UgkjhGzbiH3gyWBdCFMjHyY2ii75DC9nbimHN0BLwVKzPSfrGpDEqNO2nXkiwKFVDTixdHzWkP//gTAJztO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730355; c=relaxed/simple;
-	bh=qM+0MYMlaIo0YLccsGeUSzlnBmiBON1/ngZOXPxBYRM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T6BhvhRhDAZSWPjdNMhcm22P/OjekEh0YxLc2BcLErG109cBT2AjuXjzkn4uPL8OwTA+Q/r3NStCYDcn/5Sso5LhCzFu0nFFKYJphSjV/zY64f7OVuzzh/vz0OZ/WCynC8JOaMT8pJupzDRnGyLw70H+783EIml21zRJf832NP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AsImfU1C; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1723730356; c=relaxed/simple;
+	bh=GV1s2gxXjTJmssSykOOdlmiPF/wPYTMo7Noojt7TNGY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mJ2coVklwtAjYAB3jgMSBH/Ac+KN95OdH7JDo7gKWU/ShbW8P2gcntIMLA2v/SfQ9834yOLXGQXVsSes4vIXoLppqAmMZrilbrshytjo5innRbl462zKc5iV/2wKklvRkygZkcfez9S5W/IqHd9Q9DHqWWrsaTFNwslk9Sp3o4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PjhgaDbK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsImfU1C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15C5C4AF0C;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PjhgaDbK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C4EAC32786;
 	Thu, 15 Aug 2024 13:59:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730355;
-	bh=qM+0MYMlaIo0YLccsGeUSzlnBmiBON1/ngZOXPxBYRM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AsImfU1Cc+74RzYHjKBL5HXdhrO4jv5MI7RJljGyg7rqoHrVAoXsdpSpfrj2vWiKy
-	 K/fXnxAHvycKGiqxa+IPNt/S04BrySB2Kwv+zEUSRqS2OJpt6mbeOpX3+kwFYplovg
-	 onyn7EXwUrRvU9WmitlfMRfxHjroJcc764JUrJIk=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 383/484] media: uvcvideo: Fix the bandwdith quirk on USB 3.x
-Date: Thu, 15 Aug 2024 15:24:01 +0200
-Message-ID: <20240815131956.240840555@linuxfoundation.org>
-X-Mailer: git-send-email 2.46.0
-In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1723730355;
+	bh=GV1s2gxXjTJmssSykOOdlmiPF/wPYTMo7Noojt7TNGY=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PjhgaDbK6GgO70eg+Agi6sCY/HxpZyIfT1Kecn/7nJLuVozswnXhXVNBFvyKa7VaP
+	 Kt2I59Vw7Xs6b4te1YhGbpsewR7Y8CP8W1vF/0HRpnTVN2vBbUYVB9I74EqbYcIYFr
+	 1UAVBD96XTZCRnAvCpIvSpqk1MBc4nqPJuHQAVke37COznV4t7VletXA1ztt3CksfD
+	 oIqQRuVU2PXL3dCfUXeF35jEC19BT0Aawmtd0C89GU+zREtxsOn5Yy/qffO+SgghSV
+	 GDMeMkGczsBTWsavFkp647kjy9af5IqpbMgmIqzggLOoFLRCsq+Hyp/jfRLzrzunKL
+	 UwitcxutFB80w==
+Date: Thu, 15 Aug 2024 15:59:11 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Igor Pylypiv <ipylypiv@google.com>, Hannes Reinecke <hare@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>
+Subject: Re: [PATCH 5.15 179/484] ata: libata-scsi: Honor the D_SENSE bit for
+ CK_COND=1 and no error
+Message-ID: <Zr4Jr520dIGvkIN6@ryzen.lan>
 References: <20240815131941.255804951@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
+ <20240815131948.331340891@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20240815131948.331340891@linuxfoundation.org>
 
-5.15-stable review patch.  If anyone has any objections, please let me know.
+On Thu, Aug 15, 2024 at 03:20:37PM +0200, Greg Kroah-Hartman wrote:
+> 5.15-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Igor Pylypiv <ipylypiv@google.com>
+> 
+> commit 28ab9769117ca944cb6eb537af5599aa436287a4 upstream.
+> 
+> SAT-5 revision 8 specification removed the text about the ANSI INCITS
+> 431-2007 compliance which was requiring SCSI/ATA Translation (SAT) to
+> return descriptor format sense data for the ATA PASS-THROUGH commands
+> regardless of the setting of the D_SENSE bit.
+> 
+> Let's honor the D_SENSE bit for ATA PASS-THROUGH commands while
+> generating the "ATA PASS-THROUGH INFORMATION AVAILABLE" sense data.
+> 
+> SAT-5 revision 7
+> ================
+> 
+> 12.2.2.8 Fixed format sense data
+> 
+> Table 212 shows the fields returned in the fixed format sense data
+> (see SPC-5) for ATA PASS-THROUGH commands. SATLs compliant with ANSI
+> INCITS 431-2007, SCSI/ATA Translation (SAT) return descriptor format
+> sense data for the ATA PASS-THROUGH commands regardless of the setting
+> of the D_SENSE bit.
+> 
+> SAT-5 revision 8
+> ================
+> 
+> 12.2.2.8 Fixed format sense data
+> 
+> Table 211 shows the fields returned in the fixed format sense data
+> (see SPC-5) for ATA PASS-THROUGH commands.
+> 
+> Cc: stable@vger.kernel.org # 4.19+
+> Reported-by: Niklas Cassel <cassel@kernel.org>
+> Closes: https://lore.kernel.org/linux-ide/Zn1WUhmLglM4iais@ryzen.lan
+> Reviewed-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Igor Pylypiv <ipylypiv@google.com>
+> Reviewed-by: Hannes Reinecke <hare@suse.de>
+> Link: https://lore.kernel.org/r/20240702024735.1152293-4-ipylypiv@google.com
+> Signed-off-by: Niklas Cassel <cassel@kernel.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>  drivers/ata/libata-scsi.c |    7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
+> 
+> --- a/drivers/ata/libata-scsi.c
+> +++ b/drivers/ata/libata-scsi.c
+> @@ -872,11 +872,8 @@ static void ata_gen_passthru_sense(struc
+>  				   &sense_key, &asc, &ascq, verbose);
+>  		ata_scsi_set_sense(qc->dev, cmd, sense_key, asc, ascq);
+>  	} else {
+> -		/*
+> -		 * ATA PASS-THROUGH INFORMATION AVAILABLE
+> -		 * Always in descriptor format sense.
+> -		 */
+> -		scsi_build_sense(cmd, 1, RECOVERED_ERROR, 0, 0x1D);
+> +		/* ATA PASS-THROUGH INFORMATION AVAILABLE */
+> +		ata_scsi_set_sense(qc->dev, cmd, RECOVERED_ERROR, 0, 0x1D);
+>  	}
+>  
+>  	if ((cmd->sense_buffer[0] & 0x7f) >= 0x72) {
+> 
+> 
 
-------------------
+Hello Greg,
 
-From: Michal Pecio <michal.pecio@gmail.com>
+This commit unfortunately breaks hdparm, hddtemp and udisks,
+and I have just sent a PR to Linus that reverts this commit, see:
+https://lore.kernel.org/linux-ide/20240815124310.1349324-1-cassel@kernel.org/T/#u
+and
+https://git.kernel.org/pub/scm/linux/kernel/git/libata/linux.git/commit/?h=ata-6.11-rc4
 
-[ Upstream commit 9e3d55fbd160b3ca376599a68b4cddfdc67d4153 ]
-
-The bandwidth fixup quirk doesn't know that SuperSpeed exists and has
-the same 8 service intervals per millisecond as High Speed, hence its
-calculations are wrong.
-
-Assume that all speeds from HS up use 8 intervals per millisecond.
-
-No further changes are needed, updated code has been confirmed to work
-with all speeds from FS to SS.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240414190040.2255a0bc@foxbook
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/media/usb/uvc/uvc_video.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index a45d3b85e828c..446fe67e07c47 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -210,13 +210,13 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
- 		/* Compute a bandwidth estimation by multiplying the frame
- 		 * size by the number of video frames per second, divide the
- 		 * result by the number of USB frames (or micro-frames for
--		 * high-speed devices) per second and add the UVC header size
--		 * (assumed to be 12 bytes long).
-+		 * high- and super-speed devices) per second and add the UVC
-+		 * header size (assumed to be 12 bytes long).
- 		 */
- 		bandwidth = frame->wWidth * frame->wHeight / 8 * format->bpp;
- 		bandwidth *= 10000000 / interval + 1;
- 		bandwidth /= 1000;
--		if (stream->dev->udev->speed == USB_SPEED_HIGH)
-+		if (stream->dev->udev->speed >= USB_SPEED_HIGH)
- 			bandwidth /= 8;
- 		bandwidth += 12;
- 
--- 
-2.43.0
+So it might be a good idea to not include this patch in v5.15.x in the
+first place, so that we avoid having a v5.15.x release that will be broken
+until the revert gets backported (in v5.15.x+1).
 
 
-
+Kind regards,
+Niklas
