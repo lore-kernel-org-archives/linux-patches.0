@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19AD11A2564;
-	Thu, 15 Aug 2024 13:32:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C60E41A76B7;
+	Thu, 15 Aug 2024 13:32:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728772; cv=none; b=o6fjukDbt25lxiXq7EKOV1wd1iQCcUKCmPQjfD2Zvrnaa34R9bNDLEQXO+AGTgPPWV8pavAaWw3oUspyVG9uQagOWso/kwFQi/awotx5LQqK6Pi1v0c109/LCBUcSEMR3zpG1u7ll/wlARC35rg5L7tbMEJmqRFUZE+16giwnOM=
+	t=1723728774; cv=none; b=tUhjBgNkEn7TXYylE3p/2f++DyAw/iLrYVxfbzg8GwQTSF3gAyLZRPAQal2MCTS0ltuPwJyQ8Sjh90qcS5M8atI1/fpd2Rl8CLKv/SNqOhUFA+FFgyh61qGILD5YS/rZBIUMtzDAZjBjR6W94+XcJp9ocufU100Ta/FhB9KVsL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728772; c=relaxed/simple;
-	bh=DANKfrVSBRDYs7LpruvSwhbW00j75qypBKgOuT8oHiQ=;
+	s=arc-20240116; t=1723728774; c=relaxed/simple;
+	bh=CTBsuA7LxTZt/eZfFw4Ukm5h8RCIpWpDHwkzyPj26iU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CSFXDvJU62A4z1lkzy8AFrcxYz6e5mw9BB4MNZWBenlESdq74+d0Ci1S61/ubCpPnlgwoIM3389BFz2OxPEhNcs4r27NsOosi9XKDxE2lUyPMNYDCHhEXx5T08jnDmeKyxNPe0E20D+XsQ3yShlJr357U3osbY6y1EubLJ/e+xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWf0O8gD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=unugrDh8rKMC3aG3aePQyH+MCZW3Zp6pVHdSCpRFz4+KaGomWhiFTFEypYJcr7dCQGxk78AeJsVenD2f0g2zrgH0R8/ofrMQjOd62Zt1kUF6Ea5+LRsqervxpYzZRvxNFtF2FK9Osi+pv8YI/cufEvmrrnULIYjlz4rdXQW4O7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=arEDeeIo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWf0O8gD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5EEC32786;
-	Thu, 15 Aug 2024 13:32:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="arEDeeIo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AB0C4AF0E;
+	Thu, 15 Aug 2024 13:32:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728771;
-	bh=DANKfrVSBRDYs7LpruvSwhbW00j75qypBKgOuT8oHiQ=;
+	s=korg; t=1723728774;
+	bh=CTBsuA7LxTZt/eZfFw4Ukm5h8RCIpWpDHwkzyPj26iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWf0O8gDbkMCtWaVbhTXefukXX1Y7LhicIDPHIQCWQdYleWhFGBjnVL4l75w+o7T4
-	 74u0o6L5VLBaV4FSw5mbpPtPN149aoo41Cn/QEUnMz9K7DswcUvPOBn38GQOJFmiD8
-	 ykfEyGcAXuWg9AXLZNl8WPNFFSD7ynM4NpvsBecg=
+	b=arEDeeIoDjBDDDCpBshJ4STvCSIOL3oPE7w+QLLm4iAbkyDzLV0EZylT4j0Wi7pxQ
+	 NsdSUjRnHNekq4Yzqi+laScPHrX3bj2gEUjeUBgqlPRfJg0BPm68nljPXlxz5386Xq
+	 tARGkIRhaTqmNg6zOxeQj4GCN1dbDdQbDKpa8Guo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Tung Nguyen <tung.q.nguyen@endava.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 104/196] tipc: Return non-zero value from tipc_udp_addr2str() on error
-Date: Thu, 15 Aug 2024 15:23:41 +0200
-Message-ID: <20240815131856.061620881@linuxfoundation.org>
+	Wei Liu <wei.liu@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Michael Kelley <mhklinux@outlook.com>,
+	stable@kernel.org
+Subject: [PATCH 4.19 078/196] PCI: hv: Return zero, not garbage, when reading PCI_INTERRUPT_PIN
+Date: Thu, 15 Aug 2024 15:23:15 +0200
+Message-ID: <20240815131855.061263542@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -46,49 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Wei Liu <wei.liu@kernel.org>
 
-[ Upstream commit fa96c6baef1b5385e2f0c0677b32b3839e716076 ]
+commit fea93a3e5d5e6a09eb153866d2ce60ea3287a70d upstream.
 
-tipc_udp_addr2str() should return non-zero value if the UDP media
-address is invalid. Otherwise, a buffer overflow access can occur in
-tipc_media_addr_printf(). Fix this by returning 1 on an invalid UDP
-media address.
+The intent of the code snippet is to always return 0 for both
+PCI_INTERRUPT_LINE and PCI_INTERRUPT_PIN.
 
-Fixes: d0f91938bede ("tipc: add ip/udp media type")
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Tung Nguyen <tung.q.nguyen@endava.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The check misses PCI_INTERRUPT_PIN. This patch fixes that.
+
+This is discovered by this call in VFIO:
+
+    pci_read_config_byte(vdev->pdev, PCI_INTERRUPT_PIN, &pin);
+
+The old code does not set *val to 0 because it misses the check for
+PCI_INTERRUPT_PIN. Garbage is returned in that case.
+
+Fixes: 4daace0d8ce8 ("PCI: hv: Add paravirtual PCI front-end for Microsoft Hyper-V VMs")
+Link: https://lore.kernel.org/linux-pci/20240701202606.129606-1-wei.liu@kernel.org
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
+Signed-off-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Cc: stable@kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/udp_media.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/controller/pci-hyperv.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/tipc/udp_media.c b/net/tipc/udp_media.c
-index 1d62354797061..796309b50bb6a 100644
---- a/net/tipc/udp_media.c
-+++ b/net/tipc/udp_media.c
-@@ -127,8 +127,11 @@ static int tipc_udp_addr2str(struct tipc_media_addr *a, char *buf, int size)
- 		snprintf(buf, size, "%pI4:%u", &ua->ipv4, ntohs(ua->port));
- 	else if (ntohs(ua->proto) == ETH_P_IPV6)
- 		snprintf(buf, size, "%pI6:%u", &ua->ipv6, ntohs(ua->port));
--	else
-+	else {
- 		pr_err("Invalid UDP media address\n");
-+		return 1;
-+	}
-+
- 	return 0;
- }
- 
--- 
-2.43.0
-
+--- a/drivers/pci/controller/pci-hyperv.c
++++ b/drivers/pci/controller/pci-hyperv.c
+@@ -650,8 +650,8 @@ static void _hv_pcifront_read_config(str
+ 		   PCI_CAPABILITY_LIST) {
+ 		/* ROM BARs are unimplemented */
+ 		*val = 0;
+-	} else if (where >= PCI_INTERRUPT_LINE && where + size <=
+-		   PCI_INTERRUPT_PIN) {
++	} else if ((where >= PCI_INTERRUPT_LINE && where + size <= PCI_INTERRUPT_PIN) ||
++		   (where >= PCI_INTERRUPT_PIN && where + size <= PCI_MIN_GNT)) {
+ 		/*
+ 		 * Interrupt Line and Interrupt PIN are hard-wired to zero
+ 		 * because this front-end only supports message-signaled
 
 
