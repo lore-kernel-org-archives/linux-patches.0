@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A09119DF85;
-	Thu, 15 Aug 2024 14:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF8919DF85;
+	Thu, 15 Aug 2024 14:20:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731601; cv=none; b=sBaw7dCyZkgrfYpaVdTTM05hqQsghH8J40671cp1DPPRIoAiuwBbhH+vadUoseKNHXz/EIbqOzrQkf93Ujyxx5banQMo7y8j6WMeZ0mqreRGC5HWdDz/zlwN36q/ee/4IMj2bji38P9XGRepLJ590hAHKlIZHR9zh7uPTl8W4Rc=
+	t=1723731604; cv=none; b=RfNVJzCL7uMgOfgmFcaG5mn4CBn9LOUHRo+T46ZvKyyPK7JILB65oy1HwXhIRDEuVqlTdxJkjS59iPGeQpwb/G2RRIFvU88rDkhCFQaHOu2Mh2rtptbKxyYwBibZ0IQLNlOj5LvOdQSbBBkidDL3v+JL5Uf9G1GLYPZIKd8ZyQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731601; c=relaxed/simple;
-	bh=tbn0l5xY3pWQvetktJBN4mTC99pvth9ZMeUa8nQFU54=;
+	s=arc-20240116; t=1723731604; c=relaxed/simple;
+	bh=i93hdX1UYNLzPeSSJ6xbJ9K+Fb5E01erLsPwC/dEeRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VBWUqJKstLxkTayq0zgwVSJMsQpNVn3a/Y9gCjqcYLiz5NgdX9yKV9Es4G8gvm3gfqpv9AA9+HYEaWOusym3Gn85Q9G29FPOR1d5vtCPsoJj9zmOA/Puk8eeJqJF0vDDtmgz5aNptIpGv0yEIwKdXjTRs8TX7lYM9/NPR+peUgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ay2vy+dP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MQUpyowXnijzBRM5nlM8/gCujlXLGK/f7yh7yVLyd4apZZ6R3SMH1fprEBGJj8G/kOdqfCu49dWyTil/rxO8cwWeP98jnFrzt/eMvFLaiNvvJd/LM3CmAJpIizMTELnVMkVyJPoLFqpkRLoMAk6dITs+zCjN7M/0D2lfiXWyUv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bUheH34T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ay2vy+dP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91E37C32786;
-	Thu, 15 Aug 2024 14:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bUheH34T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B91CCC32786;
+	Thu, 15 Aug 2024 14:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731601;
-	bh=tbn0l5xY3pWQvetktJBN4mTC99pvth9ZMeUa8nQFU54=;
+	s=korg; t=1723731604;
+	bh=i93hdX1UYNLzPeSSJ6xbJ9K+Fb5E01erLsPwC/dEeRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ay2vy+dP0ih8FrXdKzr/aPo3HmFzduhcoOHWfjdoIqKMQkZxd73jHLPsJmBnp8FhR
-	 jU+/cTKPz+0ZzYMPR0XJ7A3Jss6QuPIJcGeXUq2/cj/yAreaJcSmabj/ocnUUa+DU5
-	 whEQkSMbuB9k1/2D+OnMdrq5LUo7tCJ2uMxv5Zmk=
+	b=bUheH34TvxHRtLxzfyvfBslr9P40lCOSAQgfFb4rr/GMWzH3brmqYy/DlNa8G2Ivc
+	 Q09ovuiHwQN96oD0y7wnDujCNJLqKTmXDDONbuRMd4qQSoDRKanvyw6EVkKZelVZYb
+	 T/3mmpf91i4TjORynAjI27TW0sDvr4bBX6mYiahs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.4 181/259] net: usb: sr9700: fix uninitialized variable use in sr_mdio_read
-Date: Thu, 15 Aug 2024 15:25:14 +0200
-Message-ID: <20240815131909.767972426@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 164/259] driver core: Cast to (void *) with __force for __percpu pointer
+Date: Thu, 15 Aug 2024 15:24:57 +0200
+Message-ID: <20240815131909.117378583@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,60 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 08f3a5c38087d1569e982a121aad1e6acbf145ce upstream.
+[ Upstream commit d7aa44f5a1f86cb40659eef06035d8d92604b9d5 ]
 
-It could lead to error happen because the variable res is not updated if
-the call to sr_share_read_word returns an error. In this particular case
-error code was returned and res stayed uninitialized. Same issue also
-applies to sr_read_reg.
+Sparse is not happy:
 
-This can be avoided by checking the return value of sr_share_read_word
-and sr_read_reg, and propagating the error if the read operation failed.
+  drivers/base/devres.c:1230:9: warning: cast removes address space '__percpu' of expression
 
-Found by code review.
+Use __force attribute to make it happy.
 
-Cc: stable@vger.kernel.org
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20210401171030.60527-1-andriy.shevchenko@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: bd50a974097b ("devres: Fix memory leakage caused by driver API devm_free_percpu()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/base/devres.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -178,6 +178,7 @@ static int sr_mdio_read(struct net_devic
- 	struct usbnet *dev = netdev_priv(netdev);
- 	__le16 res;
- 	int rc = 0;
-+	int err;
- 
- 	if (phy_id) {
- 		netdev_dbg(netdev, "Only internal phy supported\n");
-@@ -188,11 +189,17 @@ static int sr_mdio_read(struct net_devic
- 	if (loc == MII_BMSR) {
- 		u8 value;
- 
--		sr_read_reg(dev, SR_NSR, &value);
-+		err = sr_read_reg(dev, SR_NSR, &value);
-+		if (err < 0)
-+			return err;
-+
- 		if (value & NSR_LINKST)
- 			rc = 1;
- 	}
--	sr_share_read_word(dev, 1, loc, &res);
-+	err = sr_share_read_word(dev, 1, loc, &res);
-+	if (err < 0)
-+		return err;
-+
- 	if (rc == 1)
- 		res = le16_to_cpu(res) | BMSR_LSTATUS;
- 	else
+diff --git a/drivers/base/devres.c b/drivers/base/devres.c
+index 0bbb328bd17f8..e8ad6a41ad4ce 100644
+--- a/drivers/base/devres.c
++++ b/drivers/base/devres.c
+@@ -1112,6 +1112,6 @@ EXPORT_SYMBOL_GPL(__devm_alloc_percpu);
+ void devm_free_percpu(struct device *dev, void __percpu *pdata)
+ {
+ 	WARN_ON(devres_destroy(dev, devm_percpu_release, devm_percpu_match,
+-			       (void *)pdata));
++			       (__force void *)pdata));
+ }
+ EXPORT_SYMBOL_GPL(devm_free_percpu);
+-- 
+2.43.0
+
 
 
