@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAAC1B3753;
-	Thu, 15 Aug 2024 14:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3894A1B3753;
+	Thu, 15 Aug 2024 14:09:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730956; cv=none; b=e/vftD8iqBnp8neYDfTfJnCf84WoXp/rRvMaBf0iXJUFQDztqzvhlfznEcSFpek/w/vneJIVSXsquecGJBsiSlBnS37S+s7/fKA8+vGrIGgADgzZdBD9GBlqXtXwF5Uj4RZHkJ/HLk/FKD1h1dwR6nqJFiClhbzp0PGRHM6Y0fI=
+	t=1723730959; cv=none; b=Bm9YNupxbxZHhAVlJXg/nAnkOY0gNsI829Syp07fZGYfwl5LFQOY9Hawe9cM/DFPLXsOAH1VacQDYBU+BjKNjyjHou/rZlbTquVDRJD0FZYY6mQT6T/OPXuxLnCv0uJ8LsliQiSQZOUM3oPqHMApQp0fR8cint2vN1UkVT9830Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730956; c=relaxed/simple;
-	bh=CwSj/sC4+XcyoAKK2/ji2OuCJCyeMrN7oQ2mvXc6dys=;
+	s=arc-20240116; t=1723730959; c=relaxed/simple;
+	bh=nh0BvCUVkXpkZzetoN6eb4roRoHkR+yc+6cukihhySs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aYxVusQ2zD0mh5iC4qxJbYv3cnaWL+L7epsncyb0NPqI8SIgoszPuT6hoOVRLUoaY4HluEjDPj5p27ZPMeC6wPTHThOCFkF8MNL/qxD6AC8FP3hX8xpvh6W+ttqjygi00RXBPf6PzQND7CFRWiu6vfgyI5hG1POgEUKVckOotmk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOGW3klY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E5VNsiv+PQdv/ZRNms3Bx0e50Ih1KkL0nOxt7IkZ//4m1DIPmb5AjoGjJ5HfcWWcEqVtCPpwJ/smT4cUYAGraYu8GXlGsewTBYqMSYAsnMc1Z1X+iNlkm5IZpHVSksdBYRGCQFZIjZFKehDLl5JNt5Ac7N4wAkIH+Kr4ogGFXfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QWXWjm0k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOGW3klY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADD7EC32786;
-	Thu, 15 Aug 2024 14:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QWXWjm0k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4489C4AF0A;
+	Thu, 15 Aug 2024 14:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730956;
-	bh=CwSj/sC4+XcyoAKK2/ji2OuCJCyeMrN7oQ2mvXc6dys=;
+	s=korg; t=1723730959;
+	bh=nh0BvCUVkXpkZzetoN6eb4roRoHkR+yc+6cukihhySs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOGW3klYt2L5jsRTRYTuLUJXO4RSATo7Qr2zJwIFLVVRP/gHxJu6ipMnOW8zDaeqG
-	 zfcSBlxDa5TnY3b2oehBcZJzYDybbSFgwisYcXTWdoMclXzztxUZaCXtBNZ4uGti3P
-	 U28o8xy/5q3PuDlFCqr7YgBY8OwgbPrCsfgsb7cI=
+	b=QWXWjm0k/8keYIlluZOuQSQY+5bDtMqlyBrEqZpGl2xTTQFLJlCsJGfBpjgB4WHsW
+	 xyVsuYfEnlI8nXycYqgcDl8MhV6o2g6wyPR8qs6F8aTwNWscUL5zr/ODXh8cOQycMU
+	 Q3WEgqnEmGCQkj/vOBzeX2FJSmkXPBdflKKFiDj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
 	syzbot <syzkaller@googlegroups.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 45/67] nfc: llcp: fix nfc_llcp_setsockopt() unsafe copies
-Date: Thu, 15 Aug 2024 15:25:59 +0200
-Message-ID: <20240815131840.045778435@linuxfoundation.org>
+Subject: [PATCH 6.6 46/67] Bluetooth: RFCOMM: Fix not validating setsockopt user input
+Date: Thu, 15 Aug 2024 15:26:00 +0200
+Message-ID: <20240815131840.083071569@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -53,91 +52,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 7a87441c9651ba37842f4809224aca13a554a26f ]
+[ Upstream commit a97de7bff13b1cc825c1b1344eaed8d6c2d3e695 ]
 
-syzbot reported unsafe calls to copy_from_sockptr() [1]
+syzbot reported rfcomm_sock_setsockopt_old() is copying data without
+checking user input length.
 
-Use copy_safe_from_sockptr() instead.
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset
+include/linux/sockptr.h:49 [inline]
+BUG: KASAN: slab-out-of-bounds in copy_from_sockptr
+include/linux/sockptr.h:55 [inline]
+BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt_old
+net/bluetooth/rfcomm/sock.c:632 [inline]
+BUG: KASAN: slab-out-of-bounds in rfcomm_sock_setsockopt+0x893/0xa70
+net/bluetooth/rfcomm/sock.c:673
+Read of size 4 at addr ffff8880209a8bc3 by task syz-executor632/5064
 
-[1]
-
-BUG: KASAN: slab-out-of-bounds in copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
- BUG: KASAN: slab-out-of-bounds in copy_from_sockptr include/linux/sockptr.h:55 [inline]
- BUG: KASAN: slab-out-of-bounds in nfc_llcp_setsockopt+0x6c2/0x850 net/nfc/llcp_sock.c:255
-Read of size 4 at addr ffff88801caa1ec3 by task syz-executor459/5078
-
-CPU: 0 PID: 5078 Comm: syz-executor459 Not tainted 6.8.0-syzkaller-08951-gfe46a7dd189e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Call Trace:
- <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x241/0x360 lib/dump_stack.c:114
-  print_address_description mm/kasan/report.c:377 [inline]
-  print_report+0x169/0x550 mm/kasan/report.c:488
-  kasan_report+0x143/0x180 mm/kasan/report.c:601
-  copy_from_sockptr_offset include/linux/sockptr.h:49 [inline]
-  copy_from_sockptr include/linux/sockptr.h:55 [inline]
-  nfc_llcp_setsockopt+0x6c2/0x850 net/nfc/llcp_sock.c:255
-  do_sock_setsockopt+0x3b1/0x720 net/socket.c:2311
-  __sys_setsockopt+0x1ae/0x250 net/socket.c:2334
-  __do_sys_setsockopt net/socket.c:2343 [inline]
-  __se_sys_setsockopt net/socket.c:2340 [inline]
-  __x64_sys_setsockopt+0xb5/0xd0 net/socket.c:2340
- do_syscall_64+0xfd/0x240
- entry_SYSCALL_64_after_hwframe+0x6d/0x75
-RIP: 0033:0x7f7fac07fd89
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 91 18 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fff660eb788 EFLAGS: 00000246 ORIG_RAX: 0000000000000036
-RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f7fac07fd89
-RDX: 0000000000000000 RSI: 0000000000000118 RDI: 0000000000000004
-RBP: 0000000000000000 R08: 0000000000000002 R09: 0000000000000000
-R10: 0000000020000a80 R11: 0000000000000246 R12: 0000000000000000
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Fixes: 9f2c8a03fbb3 ("Bluetooth: Replace RFCOMM link mode with security level")
+Fixes: bb23c0ab8246 ("Bluetooth: Add support for deferring RFCOMM connection setup")
 Reported-by: syzbot <syzkaller@googlegroups.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20240408082845.3957374-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/llcp_sock.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/bluetooth/rfcomm/sock.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/net/nfc/llcp_sock.c b/net/nfc/llcp_sock.c
-index 819157bbb5a2c..d5344563e525c 100644
---- a/net/nfc/llcp_sock.c
-+++ b/net/nfc/llcp_sock.c
-@@ -252,10 +252,10 @@ static int nfc_llcp_setsockopt(struct socket *sock, int level, int optname,
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index b54e8a530f55a..29aa07e9db9d7 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -629,7 +629,7 @@ static int rfcomm_sock_setsockopt_old(struct socket *sock, int optname,
+ 
+ 	switch (optname) {
+ 	case RFCOMM_LM:
+-		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
++		if (bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen)) {
+ 			err = -EFAULT;
+ 			break;
+ 		}
+@@ -664,7 +664,6 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 	struct sock *sk = sock->sk;
+ 	struct bt_security sec;
+ 	int err = 0;
+-	size_t len;
+ 	u32 opt;
+ 
+ 	BT_DBG("sk %p", sk);
+@@ -686,11 +685,9 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
+ 
+ 		sec.level = BT_SECURITY_LOW;
+ 
+-		len = min_t(unsigned int, sizeof(sec), optlen);
+-		if (copy_from_sockptr(&sec, optval, len)) {
+-			err = -EFAULT;
++		err = bt_copy_from_sockptr(&sec, sizeof(sec), optval, optlen);
++		if (err)
+ 			break;
+-		}
+ 
+ 		if (sec.level > BT_SECURITY_HIGH) {
+ 			err = -EINVAL;
+@@ -706,10 +703,9 @@ static int rfcomm_sock_setsockopt(struct socket *sock, int level, int optname,
  			break;
  		}
  
 -		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
 -			err = -EFAULT;
-+		err = copy_safe_from_sockptr(&opt, sizeof(opt),
-+					     optval, optlen);
++		err = bt_copy_from_sockptr(&opt, sizeof(opt), optval, optlen);
 +		if (err)
  			break;
 -		}
  
- 		if (opt > LLCP_MAX_RW) {
- 			err = -EINVAL;
-@@ -274,10 +274,10 @@ static int nfc_llcp_setsockopt(struct socket *sock, int level, int optname,
- 			break;
- 		}
- 
--		if (copy_from_sockptr(&opt, optval, sizeof(u32))) {
--			err = -EFAULT;
-+		err = copy_safe_from_sockptr(&opt, sizeof(opt),
-+					     optval, optlen);
-+		if (err)
- 			break;
--		}
- 
- 		if (opt > LLCP_MAX_MIUX) {
- 			err = -EINVAL;
+ 		if (opt)
+ 			set_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags);
 -- 
 2.43.0
 
