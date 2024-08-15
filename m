@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1645B1A00EC;
-	Thu, 15 Aug 2024 13:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418A41A0733;
+	Thu, 15 Aug 2024 13:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729972; cv=none; b=TvUFrTgR7Yt9WRDHDx5kSP1PJJb0wpE6SIlgM2Ty9LkamI/QqSm8JxuMFOAxuv7BTOS2qQuZE+wirLBvf20MblZNzrPBRcF4KQ5AQr11VlB/NYSGWTumP9hgfSau2umwX0TxJ9iQdodOmSNzOR6eQXoMhtefXgBqtx0agTmzGDo=
+	t=1723729975; cv=none; b=EvOvDgjsSKoGzdvvpgIP9Th+/n6MsHgEvppK6cRV4I1wgTv7iyni1QZjB8Nyf1zX9KvR7iarmMP3KAYq90RFQAL3RJKtNO2Eqyj8taOYzy/7935Z+5dyvLSnZeCssb8AY5u0dDl3ufhJ88C9afl7hJwO4jQ7hSBcq7D9XRmtrQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729972; c=relaxed/simple;
-	bh=A+d8em/E+DYLe8X3kaFhqyh/iQWLzb6LXQYL0VZZEuQ=;
+	s=arc-20240116; t=1723729975; c=relaxed/simple;
+	bh=cOCamALYCh7n7arrB/2srFbrPuBhjrjGPsd2T+Z9CT0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rk76CVxESaOi/0svlDfOEXiZ5RNewunt/jfOG4/MpFrSFOQTQapC0rDjibw4orEdLZx2cRbhuShBeq8W88wyeDi5qbsn6uoKNF0NCoHD+juXvTXvLfNYcyf+sI3EkpdjoqnIKU1KSEs+6jlRhkeEegxLFCaHg0hMV5RD0fwypPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/jgJArm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1zeQHXde9Eknyi/ovr7LIz1IbKw6+6x732WageRdGGXHt2tKa+596YQhqoGNwNeudQTJ4gwz4Zz1/kXTKszZvpq6l3TSAoZhzOg9gAS3PD83/63wOGxa1xWaukOGhG6LFC5ixM0zOwZ5RPseWE2xdjCV/SGfIn7SfwK9NhJm7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTTquKId; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/jgJArm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C94C32786;
-	Thu, 15 Aug 2024 13:52:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTTquKId"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1509C32786;
+	Thu, 15 Aug 2024 13:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729971;
-	bh=A+d8em/E+DYLe8X3kaFhqyh/iQWLzb6LXQYL0VZZEuQ=;
+	s=korg; t=1723729975;
+	bh=cOCamALYCh7n7arrB/2srFbrPuBhjrjGPsd2T+Z9CT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/jgJArmm5JfjnCb8DiAWcGBl7PKfiuErmcjfDXxN5uVuLaIBR6NjXGUyfwM3cFIN
-	 ATxSCigSn3hz5bVfSICgzp2PGB0m2xXfkHbOFOxmOGUk2iNr2YTRMq6TnWjZEPmVvg
-	 t8A0YtIF2quW1SIjfjZcYDhP9v8uKHk9ZZ06pxuU=
+	b=tTTquKIdE5duqdI0Pt30NRzJXGTEW4c1fHv8tl3K5HK8NJSsxkmP1fvdbwZC9WsC2
+	 PNrHoanC8xysTWSKJEWxh89hwUoTBjG67s63/NRIQ5wMMhB8cYtDdO4yg7iKmsLsRq
+	 RQQ+anCbKSfI+i5KdBYZY8qh6Td418pLv5q0vf7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Jai Luthra <j-luthra@ti.com>,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 263/484] dmaengine: ti: k3-udma: Fix BCHAN count with UHC and HC channels
-Date: Thu, 15 Aug 2024 15:22:01 +0200
-Message-ID: <20240815131951.560064921@linuxfoundation.org>
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 5.15 234/484] perf/x86/intel/pt: Fix a topa_entry base address calculation
+Date: Thu, 15 Aug 2024 15:21:32 +0200
+Message-ID: <20240815131950.443851445@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -53,42 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vignesh Raghavendra <vigneshr@ti.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 372f8b3621294173f539b32976e41e6e12f5decf ]
+commit ad97196379d0b8cb24ef3d5006978a6554e6467f upstream.
 
-Unlike other channel counts in CAPx registers, BCDMA BCHAN CNT doesn't
-include UHC and HC BC channels. So include them explicitly to arrive at
-total BC channel in the instance.
+topa_entry->base is a bit-field. Bit-fields are not promoted to a 64-bit
+type, even if the underlying type is 64-bit, and so, if necessary, must
+be cast to a larger type when calculations are done.
 
-Fixes: 8844898028d4 ("dmaengine: ti: k3-udma: Add support for BCDMA channel TPL handling")
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Signed-off-by: Jai Luthra <j-luthra@ti.com>
-Tested-by: Jayesh Choudhary <j-choudhary@ti.com>
-Link: https://lore.kernel.org/r/20240607-bcdma_chan_cnt-v2-1-bf1a55529d91@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix a topa_entry->base address calculation by adding a cast.
+
+Without the cast, the address was limited to 36-bits i.e. 64GiB.
+
+The address calculation is used on systems that do not support Multiple
+Entry ToPA (only Broadwell), and affects physical addresses on or above
+64GiB. Instead of writing to the correct address, the address comprising
+the first 36 bits would be written to.
+
+Intel PT snapshot and sampling modes are not affected.
+
+Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
+Reported-by: Dave Hansen <dave.hansen@linux.intel.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20240624201101.60186-3-adrian.hunter@intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/ti/k3-udma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/pt.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 698fb898847c1..9db45c4eaaf24 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -4415,7 +4415,9 @@ static int udma_get_mmrs(struct platform_device *pdev, struct udma_dev *ud)
- 		ud->rchan_cnt = UDMA_CAP2_RCHAN_CNT(cap2);
- 		break;
- 	case DMA_TYPE_BCDMA:
--		ud->bchan_cnt = BCDMA_CAP2_BCHAN_CNT(cap2);
-+		ud->bchan_cnt = BCDMA_CAP2_BCHAN_CNT(cap2) +
-+				BCDMA_CAP3_HBCHAN_CNT(cap3) +
-+				BCDMA_CAP3_UBCHAN_CNT(cap3);
- 		ud->tchan_cnt = BCDMA_CAP2_TCHAN_CNT(cap2);
- 		ud->rchan_cnt = BCDMA_CAP2_RCHAN_CNT(cap2);
- 		ud->rflow_cnt = ud->rchan_cnt;
--- 
-2.43.0
-
+--- a/arch/x86/events/intel/pt.c
++++ b/arch/x86/events/intel/pt.c
+@@ -861,7 +861,7 @@ static void pt_update_head(struct pt *pt
+  */
+ static void *pt_buffer_region(struct pt_buffer *buf)
+ {
+-	return phys_to_virt(TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
++	return phys_to_virt((phys_addr_t)TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
+ }
+ 
+ /**
 
 
