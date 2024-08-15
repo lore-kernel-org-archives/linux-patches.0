@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F18717C9A9;
-	Thu, 15 Aug 2024 13:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FA5717C9A9;
+	Thu, 15 Aug 2024 13:56:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730159; cv=none; b=EUqO/NXXNwBGRbuicmLffE6xXG+K1QlXUUFaTdxIRb7fEFzti6XwRoFo8pItzlGGW0i7rRmKCna6mbKmaKSO4aSdFCkmuHbtmQGiDWke0LZGBHOu0PG5eOpKV6eHr5ATsClhaGM+Rkx53AO50CnyI7LZGPBjMrVCqRQIxreFmDY=
+	t=1723730162; cv=none; b=HO2yeP/21CF/otBwR4ylD1i0CcVFVcPVSMHy87JUQNcLrkF9upcEvvHlMskPz3j/lODpCe0PcNL+6QsVfuskDG6Z0q8KeQ79iOkxIrxlaf0dcWbuXfSkDezKutUvtDgNOpka7jv14zva3CA4xSML970ejbRQm3b/UEnsCyIN+tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730159; c=relaxed/simple;
-	bh=Bv1j8g7LghvxbO2JahIf4AnYJcAcPsBzYZemsZmg3hg=;
+	s=arc-20240116; t=1723730162; c=relaxed/simple;
+	bh=LUgA+1lR9RH3Y2vlRbhomDpLeIv2heOszqRdtfcjtl4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uL4Ul+m7xGMRe17I4irkpNqKtYjVsJhudGwbqg9YWoi6sU3VQ61RNbL9Hl8RNj5cnfrUwEbFeQNAA+e9dfzVNeyWgHF8vuMN2bgluXCnkf0sqQObQ8PmAk8TUSojmpvXfZElZl+lUbp/mwLgF4hHRqIcftYxPDARBMfL8ntcTyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oBLkr5bf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IO5jVQoQnB1lwRqLQBbYd/ut5ZO1ybpZJn92X86WW0emIL34+UXVM4r7IW1JnHIDMp77/HdAoPItnSmtASay8+5JtU9FrIBiEzZvnNsXlZg55pvT3CHUauxij0sI6ttU1ceF5E5urS3tU2PIdfa0FQjQZ1iDtuohDV1JpRLhLfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e9QcKr5E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oBLkr5bf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 985FAC32786;
-	Thu, 15 Aug 2024 13:55:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e9QcKr5E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1607C32786;
+	Thu, 15 Aug 2024 13:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730159;
-	bh=Bv1j8g7LghvxbO2JahIf4AnYJcAcPsBzYZemsZmg3hg=;
+	s=korg; t=1723730162;
+	bh=LUgA+1lR9RH3Y2vlRbhomDpLeIv2heOszqRdtfcjtl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oBLkr5bfSqj0O1uEpOOGw9iKsG6Vv7SnFrVSjSrPyZ4qGO2IuYLR+tMbH2s6iRALe
-	 W4aRvbCRpuT2cvwT+kVd0egLLiOkZkC6Fv4kmmLuCeGvWrous4bYyHNhXAxaa3F1Gn
-	 gdXiHn5Hweih34WYrbM16iu+3oqrlYVFotIhQp7g=
+	b=e9QcKr5ER7mxNAqjnu979ANSQNsA/XZTAWPfPgnv53wnmIj68O9J5+thvsikUHyXx
+	 okSYWTZpd2q46yS9cBB5qwpCuP/iSXaBRgAh29wxO/psx2rAqdwsgv0KdAuZ2pfG7K
+	 +1RZs9vjhJ3NT7EJld5jphwdxSc4DYZTN+8izwDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Lyude Paul <lyude@redhat.com>,
+	Harry Wentland <hwentlan@amd.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 321/484] irqchip/imx-irqsteer: Handle runtime power management correctly
-Date: Thu, 15 Aug 2024 15:22:59 +0200
-Message-ID: <20240815131953.808480257@linuxfoundation.org>
+Subject: [PATCH 5.15 322/484] drm/dp_mst: Fix all mstb marked as not probed after suspend/resume
+Date: Thu, 15 Aug 2024 15:23:00 +0200
+Message-ID: <20240815131953.847056686@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,105 +55,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-[ Upstream commit 33b1c47d1fc0b5f06a393bb915db85baacba18ea ]
+[ Upstream commit d63d81094d208abb20fc444514b2d9ec2f4b7c4e ]
 
-The power domain is automatically activated from clk_prepare(). However, on
-certain platforms like i.MX8QM and i.MX8QXP, the power-on handling invokes
-sleeping functions, which triggers the 'scheduling while atomic' bug in the
-context switch path during device probing:
+[Why]
+After supend/resume, with topology unchanged, observe that
+link_address_sent of all mstb are marked as false even the topology probing
+is done without any error.
 
- BUG: scheduling while atomic: kworker/u13:1/48/0x00000002
- Call trace:
-  __schedule_bug+0x54/0x6c
-  __schedule+0x7f0/0xa94
-  schedule+0x5c/0xc4
-  schedule_preempt_disabled+0x24/0x40
-  __mutex_lock.constprop.0+0x2c0/0x540
-  __mutex_lock_slowpath+0x14/0x20
-  mutex_lock+0x48/0x54
-  clk_prepare_lock+0x44/0xa0
-  clk_prepare+0x20/0x44
-  imx_irqsteer_resume+0x28/0xe0
-  pm_generic_runtime_resume+0x2c/0x44
-  __genpd_runtime_resume+0x30/0x80
-  genpd_runtime_resume+0xc8/0x2c0
-  __rpm_callback+0x48/0x1d8
-  rpm_callback+0x6c/0x78
-  rpm_resume+0x490/0x6b4
-  __pm_runtime_resume+0x50/0x94
-  irq_chip_pm_get+0x2c/0xa0
-  __irq_do_set_handler+0x178/0x24c
-  irq_set_chained_handler_and_data+0x60/0xa4
-  mxc_gpio_probe+0x160/0x4b0
+It is caused by wrongly also include "ret == 0" case as a probing failure
+case.
 
-Cure this by implementing the irq_bus_lock/sync_unlock() interrupt chip
-callbacks and handle power management in them as they are invoked from
-non-atomic context.
+[How]
+Remove inappropriate checking conditions.
 
-[ tglx: Rewrote change log, added Fixes tag ]
-
-Fixes: 0136afa08967 ("irqchip: Add driver for imx-irqsteer controller")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Harry Wentland <hwentlan@amd.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Imre Deak <imre.deak@intel.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240703163250.47887-1-shenwei.wang@nxp.com
+Fixes: 37dfdc55ffeb ("drm/dp_mst: Cleanup drm_dp_send_link_address() a bit")
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240626084825.878565-2-Wayne.Lin@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-imx-irqsteer.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/drm_dp_mst_topology.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-imx-irqsteer.c b/drivers/irqchip/irq-imx-irqsteer.c
-index 96230a04ec238..44ce85c27f57a 100644
---- a/drivers/irqchip/irq-imx-irqsteer.c
-+++ b/drivers/irqchip/irq-imx-irqsteer.c
-@@ -35,6 +35,7 @@ struct irqsteer_data {
- 	int			channel;
- 	struct irq_domain	*domain;
- 	u32			*saved_reg;
-+	struct device		*dev;
- };
+diff --git a/drivers/gpu/drm/drm_dp_mst_topology.c b/drivers/gpu/drm/drm_dp_mst_topology.c
+index 865c7f39143ec..f24667a003a2b 100644
+--- a/drivers/gpu/drm/drm_dp_mst_topology.c
++++ b/drivers/gpu/drm/drm_dp_mst_topology.c
+@@ -2974,7 +2974,7 @@ static int drm_dp_send_link_address(struct drm_dp_mst_topology_mgr *mgr,
  
- static int imx_irqsteer_get_reg_index(struct irqsteer_data *data,
-@@ -71,10 +72,26 @@ static void imx_irqsteer_irq_mask(struct irq_data *d)
- 	raw_spin_unlock_irqrestore(&data->lock, flags);
- }
+ 	/* FIXME: Actually do some real error handling here */
+ 	ret = drm_dp_mst_wait_tx_reply(mstb, txmsg);
+-	if (ret <= 0) {
++	if (ret < 0) {
+ 		drm_err(mgr->dev, "Sending link address failed with %d\n", ret);
+ 		goto out;
+ 	}
+@@ -3026,7 +3026,7 @@ static int drm_dp_send_link_address(struct drm_dp_mst_topology_mgr *mgr,
+ 	mutex_unlock(&mgr->lock);
  
-+static void imx_irqsteer_irq_bus_lock(struct irq_data *d)
-+{
-+	struct irqsteer_data *data = d->chip_data;
-+
-+	pm_runtime_get_sync(data->dev);
-+}
-+
-+static void imx_irqsteer_irq_bus_sync_unlock(struct irq_data *d)
-+{
-+	struct irqsteer_data *data = d->chip_data;
-+
-+	pm_runtime_put_autosuspend(data->dev);
-+}
-+
- static const struct irq_chip imx_irqsteer_irq_chip = {
--	.name		= "irqsteer",
--	.irq_mask	= imx_irqsteer_irq_mask,
--	.irq_unmask	= imx_irqsteer_irq_unmask,
-+	.name			= "irqsteer",
-+	.irq_mask		= imx_irqsteer_irq_mask,
-+	.irq_unmask		= imx_irqsteer_irq_unmask,
-+	.irq_bus_lock		= imx_irqsteer_irq_bus_lock,
-+	.irq_bus_sync_unlock	= imx_irqsteer_irq_bus_sync_unlock,
- };
- 
- static int imx_irqsteer_irq_map(struct irq_domain *h, unsigned int irq,
-@@ -149,6 +166,7 @@ static int imx_irqsteer_probe(struct platform_device *pdev)
- 	if (!data)
- 		return -ENOMEM;
- 
-+	data->dev = &pdev->dev;
- 	data->regs = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(data->regs)) {
- 		dev_err(&pdev->dev, "failed to initialize reg\n");
+ out:
+-	if (ret <= 0)
++	if (ret < 0)
+ 		mstb->link_address_sent = false;
+ 	kfree(txmsg);
+ 	return ret < 0 ? ret : changed;
 -- 
 2.43.0
 
