@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67E31AED33;
-	Thu, 15 Aug 2024 14:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FD7719F49C;
+	Thu, 15 Aug 2024 14:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730683; cv=none; b=RANdSBBuFCLBHC5BvnbF+G80vpfF3lwBdOSoiXeexXcfz7Ycj1xPn7owFtBSYoANsBD1CW/ocGJrXyHee+FkNWCHhHN9lwr3ie3qL9TkziDCpPAqM85WSBLVnuxGDOEW9S6R+n1ULoSHdTybGi8G3WHnxV+PqQceSMkXmMl25d8=
+	t=1723730687; cv=none; b=sYh6n3qySP1VkET3NxPGCS7S+G7SI7bTKpReAmHXCem06c/L6/HrlyKPZMRWNg1it+7n9lT/QGToOUJicXMgHleM08SxOVXlPmshjRE5EUTTlD3LFBBTzHydlY/WKgrZLkHjDiSakQCcrEpjhHG53OSBCVnPYqvWzlxxYk/R3SI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730683; c=relaxed/simple;
-	bh=1GK7O2m4lMOBZHBR5ucNw/gQOLNbSI/z0hy2e4iqxTQ=;
+	s=arc-20240116; t=1723730687; c=relaxed/simple;
+	bh=AsV4oErpSQF2rVODKV4dDokNSDEubvDJ1qNDOD5rgwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hepc9xL/57Gqd7+4wVibxMhQ39rDFCi3hJQPtGyFdo5evjnG1R+JDhJq0YgYJP90zhVkLBl7wtUZuD31zc7MIdEEiWhz5WZhKzuPWceE+BE6VVbo/CRjJazZbFQkfZXKrwrF37zlRjxA/bugBvLUKCoTPoig9Zj4WJsNEw9eGqI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jIrtShV/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rAQ5c9XKsa1E7GZpiICEeb2jjGBI59nCCdAygsbfLM0zk8HCJLckHlmEL1TbOJ6+qUytplSYE4ZujzSPNTXTmZxlkwsM6hiQoUVjpsA4KBDGvAut5IhLw/Z06aXUfxiX1q+YmOjpGqSZz5nVj+s2ekuBVdNwoBgd9Q+q2jYu5q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQ+QxUvk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jIrtShV/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D535C4AF0A;
-	Thu, 15 Aug 2024 14:04:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQ+QxUvk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A5FC32786;
+	Thu, 15 Aug 2024 14:04:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730683;
-	bh=1GK7O2m4lMOBZHBR5ucNw/gQOLNbSI/z0hy2e4iqxTQ=;
+	s=korg; t=1723730686;
+	bh=AsV4oErpSQF2rVODKV4dDokNSDEubvDJ1qNDOD5rgwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jIrtShV/Sm7gd3IiPfd8+eVP20LXFv0WreL8V/AT7pW+Ohh1Gh1LMJrScgdLG4g8o
-	 KxxIzu4I8J6rSp7vOUWfp7k5347s5ZmREGd+vr3n1KJBqZNFEfVk4pJHJnIOpu6Bjo
-	 g7TMIi33uSk5YtxvJy86iHt4ZzfKMvuEvWggyeTI=
+	b=CQ+QxUvkVzaELvK7LE+KT5auO0ndOdB2KglipYohd1vJ5VW1wpWQ7346VqGwwyafA
+	 Hc+sV6LzScVlxS2FOY9JTCmReSKJVFeDJtAgG28z+8ye3hyPiKJ2BZIk8q4DNqGrNn
+	 z8XcdDCRLie/Z5ZAeJXY0/nM0ggAJNtWVvKciHKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	netfilter-devel@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <mwalle@kernel.org>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 5.15 484/484] ARM: dts: imx6qdl-kontron-samx6i: fix phy-mode
-Date: Thu, 15 Aug 2024 15:25:42 +0200
-Message-ID: <20240815132000.178625341@linuxfoundation.org>
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.15 466/484] netfilter: nf_tables: set element extended ACK reporting support
+Date: Thu, 15 Aug 2024 15:25:24 +0200
+Message-ID: <20240815131959.478016394@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,32 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Walle <mwalle@kernel.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 0df3c7d7a73d75153090637392c0b73a63cdc24a upstream.
+commit b53c116642502b0c85ecef78bff4f826a7dd4145 upstream.
 
-The i.MX6 cannot add any RGMII delays. The PHY has to add both the RX
-and TX delays on the RGMII interface. Fix the interface mode. While at
-it, use the new phy-connection-type property name.
+Report the element that causes problems via netlink extended ACK for set
+element commands.
 
-Fixes: 5694eed98cca ("ARM: dts: imx6qdl-kontron-samx6i: move phy reset into phy-node")
-Signed-off-by: Michael Walle <mwalle@kernel.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_tables_api.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-kontron-samx6i.dtsi
-@@ -260,7 +260,7 @@
- &fec {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_enet>;
--	phy-mode = "rgmii";
-+	phy-connection-type = "rgmii-id";
- 	phy-handle = <&ethphy>;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -5769,8 +5769,10 @@ static int nf_tables_getsetelem(struct s
  
- 	mdio {
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+ 		err = nft_get_set_elem(&ctx, set, attr);
+-		if (err < 0)
++		if (err < 0) {
++			NL_SET_BAD_ATTR(extack, attr);
+ 			break;
++		}
+ 	}
+ 
+ 	return err;
+@@ -6589,8 +6591,10 @@ static int nf_tables_newsetelem(struct s
+ 
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+ 		err = nft_add_set_elem(&ctx, set, attr, info->nlh->nlmsg_flags);
+-		if (err < 0)
++		if (err < 0) {
++			NL_SET_BAD_ATTR(extack, attr);
+ 			return err;
++		}
+ 	}
+ 
+ 	if (nft_net->validate_state == NFT_VALIDATE_DO)
+@@ -6866,8 +6870,10 @@ static int nf_tables_delsetelem(struct s
+ 
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+ 		err = nft_del_setelem(&ctx, set, attr);
+-		if (err < 0)
++		if (err < 0) {
++			NL_SET_BAD_ATTR(extack, attr);
+ 			break;
++		}
+ 	}
+ 	return err;
+ }
 
 
