@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 235721AC893;
-	Thu, 15 Aug 2024 14:38:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772573214;
+	Thu, 15 Aug 2024 14:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732740; cv=none; b=dYuEMWq/sY1QH88vmyQEf2ccTZTPBglzCwCGUdq7SoeL44FLlBZcEBgrjHVOFuFgF1rwoSSke/3LRlDi/v0VFh/ytYGaI4ckVACPsVkCN6m9ccWCzGGLQ52FE5uIaHkAfRcRFca+jYQ2i2K4tvv/inkZBWAd2X7FOgPTBQUudpE=
+	t=1723732743; cv=none; b=hUuM0dprY/mmrS8rPE/VzdNlP6VxrUwLVCgWowttqi4Ol3aK1LMTq9TIJVCVv1aB8k85oLYPITlRq2jaLDlR8+Tog5XtpO7skNcs0pMxj4mo2ZsVRl86ZycJi7yNnXwqqOXgnZZkBeCote9NHEeZN1AkmUjc43dkgFP1+AfcEIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732740; c=relaxed/simple;
-	bh=WCdFpOBj50uSNiJvHpME9an8b1zf1uA5ERRFPrNcabI=;
+	s=arc-20240116; t=1723732743; c=relaxed/simple;
+	bh=wA1CyrHqGbtB7MgYrop8WKR/I4Lp3U997aEFsvxJHuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AK777eUwCRGTFB6Uftk8/wUk4JKLt6wVVPsihnp2cEpXFBGyfE63/YRqCU8PJkqDlIjGvdEnlPEBOixybdMQ+E6Fx5HEPbhkrAoiopIidLIVBIgUwNh3wbpsssfNJbIGY2vzeRZAQP/+fhoFDhGKTG936cvhFFwK3kstegT7Gl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ek+8bFiI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FUqnUIfHCggJaFGXqr+tfVVzaeChofkLMdkxRgpGpjWIvkskWQHHsb1WVlikFEBu4apVOdhGOQh9Vzqsm1YV6Wofgt38LGYcipt9MMdhbf5oJ4lJAlfzRA1HBYvDOoR/P6incDvpLcgLOwdMPTdEzCY47XQKRcxhuO6WJcFAvAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFurZwdL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ek+8bFiI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 474E4C32786;
-	Thu, 15 Aug 2024 14:38:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFurZwdL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEE5AC32786;
+	Thu, 15 Aug 2024 14:39:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732739;
-	bh=WCdFpOBj50uSNiJvHpME9an8b1zf1uA5ERRFPrNcabI=;
+	s=korg; t=1723732743;
+	bh=wA1CyrHqGbtB7MgYrop8WKR/I4Lp3U997aEFsvxJHuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ek+8bFiI/03v4KwrAb1aYtQYyT+jrgaQoQF71P588b+YZa7IMBNq4WWkUE5ihZyeU
-	 Ttib0w1+z2kgg519dw6xv1bfemtuzOwP30qsYkKeKSjP51JhiddpJCIroN8c2kAZhf
-	 34KO+7AkRlo5tqI+Wt82AllTGlAbyfuTVuRDtq34=
+	b=OFurZwdLzv61hQRU1sOzcW7M9tYzhB8pYrcsIh5iheoxqDmTMjc1GvaxsNrxTMaFf
+	 KZsPA6jhyuurzU3hQ+9knW4jlJkxn8PgrUGG9FCCB3uodLLkhehlpsUhHYfc5C2dKG
+	 K2AM4Rr8B1aZstwHrvsMwwT7ch889l4uMVzqFdFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Ma Jun <Jun.Ma2@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 271/352] btrfs: fix bitmap leak when loading free space cache on duplicate entry
-Date: Thu, 15 Aug 2024 15:25:37 +0200
-Message-ID: <20240815131929.925714640@linuxfoundation.org>
+Subject: [PATCH 5.10 272/352] drm/amdgpu: Fix the null pointer dereference to ras_manager
+Date: Thu, 15 Aug 2024 15:25:38 +0200
+Message-ID: <20240815131929.965377663@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,36 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Ma Jun <Jun.Ma2@amd.com>
 
-[ Upstream commit 320d8dc612660da84c3b70a28658bb38069e5a9a ]
+[ Upstream commit 4c11d30c95576937c6c35e6f29884761f2dddb43 ]
 
-If we failed to link a free space entry because there's already a
-conflicting entry for the same offset, we free the free space entry but
-we don't free the associated bitmap that we had just allocated before.
-Fix that by freeing the bitmap before freeing the entry.
+Check ras_manager before using it
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Ma Jun <Jun.Ma2@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/free-space-cache.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index 4989c60b1df9c..af52c9e005b3c 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -798,6 +798,7 @@ static int __load_free_space_cache(struct btrfs_root *root, struct inode *inode,
- 				spin_unlock(&ctl->tree_lock);
- 				btrfs_err(fs_info,
- 					"Duplicate entries in free space cache, dumping");
-+				kmem_cache_free(btrfs_free_space_bitmap_cachep, e->bitmap);
- 				kmem_cache_free(btrfs_free_space_cachep, e);
- 				goto free_cache;
- 			}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+index e971d2b9e3c00..56f10679a26d1 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras.c
+@@ -1351,12 +1351,15 @@ static void amdgpu_ras_interrupt_process_handler(struct work_struct *work)
+ int amdgpu_ras_interrupt_dispatch(struct amdgpu_device *adev,
+ 		struct ras_dispatch_if *info)
+ {
+-	struct ras_manager *obj = amdgpu_ras_find_obj(adev, &info->head);
+-	struct ras_ih_data *data = &obj->ih_data;
++	struct ras_manager *obj;
++	struct ras_ih_data *data;
+ 
++	obj = amdgpu_ras_find_obj(adev, &info->head);
+ 	if (!obj)
+ 		return -EINVAL;
+ 
++	data = &obj->ih_data;
++
+ 	if (data->inuse == 0)
+ 		return 0;
+ 
 -- 
 2.43.0
 
