@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E898B7DA7D;
-	Thu, 15 Aug 2024 13:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187007DA7D;
+	Thu, 15 Aug 2024 13:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730307; cv=none; b=Ws+O9N3FYcLfpTPnx3HzSxJyeeuD8koUMHbGJxC8jzPtc9v9J0S1r5LMYcM/wBsVNXjpsFATJk5I1DUIiqHtyk1IKUZkcBdB7JkwqNSKgQFDHebmNhw/8E33AsqrSeddLiAijWbDPRIWC98l3ASpbGVulyfo94pRrHJPtzSsG8w=
+	t=1723730310; cv=none; b=sxrOb2eardY/heeuLUzFt06yDx7TJpDInyGWdGSWpsg+h2hXNDVYgpJsO58pwVpjuoUNzBNoZQ+Ybn5IgBCLyajM+5uCVpAFUY/WlUSk7ufrzwyC24d8SczQnQK9tBQtj4p+VjY+o3B6Ew7FLIwXNTagi5eDVJK1eYSrmMbUhKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730307; c=relaxed/simple;
-	bh=3/W/BjpvRl7QhTa97yIsH222KmlLYmon3CbP85VDdWE=;
+	s=arc-20240116; t=1723730310; c=relaxed/simple;
+	bh=mITI4jZHmpodd5tRUm1PDoQmYA1bB5uoaCGG+tXFbvk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IMVHX+xwmrZIjDiHvi+Oybp7ac18onRUb4ARlgd6RlJ06gY+tvoo2XwV+Y3H3lTRZt+RoZ0ymGoALnKwOZWlebbt5EKI72ogrGnHzbmp92WFHI2LTAMcTkKz6sAMuBS9P8KPiAn9Wth09jwzUiBiKCeV809iMMyRGF0aHtlfwXU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PRbhmB/z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=toKBNqjLs1fNEm84RxgtnujQ/cZP703I0cLiB9wZ9C53SN942AGspdwMHaaBxXKYg8BGdSZfH6pofT4ILXngS5A16U91OT9g6psFDBVXUfBPuNPMTrDU3sqJnpvN7hb85VgKm3voULECjHjkn9AV9Q9oOVD5oopxTlstQRwfABk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GrkyF0R4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PRbhmB/z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70FDCC32786;
-	Thu, 15 Aug 2024 13:58:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GrkyF0R4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90DFFC32786;
+	Thu, 15 Aug 2024 13:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730306;
-	bh=3/W/BjpvRl7QhTa97yIsH222KmlLYmon3CbP85VDdWE=;
+	s=korg; t=1723730310;
+	bh=mITI4jZHmpodd5tRUm1PDoQmYA1bB5uoaCGG+tXFbvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PRbhmB/zg5XjCRy1GuRY/s9fewvFCltNFaoKdOQopuDzKtqPV0rCmG70vrd4y+1Hu
-	 lwlpThVx8ED0qwg2lK5/+oNRGZkWeKPZAIrtZvGhXj0GnO4fEZLBxcmftEE32cEVQM
-	 pQJ0DVCtqb9p+wGovNv87iwtHxk/KzybFEdobA/g=
+	b=GrkyF0R4gqNXA31U7K9v5QQtB7I6Zagf5C7h1C67q89XD9X8VowLb7uZsvtLfevVs
+	 /kpH8luI3KzQ8OdjkvNzZU0VPmPCYND9RmFIRzf/LWQRioWECJ1uWw8YcfV0Mck7G2
+	 4ddxcubPTnClXERRZgZljWUp4zvzN99g8gD3ECL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shahar Shitrit <shshitrit@nvidia.com>,
+	Carolina Jubran <cjubran@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Wojciech Drewek <wojciech.drewek@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 337/484] netfilter: iptables: Fix potential null-ptr-deref in ip6table_nat_table_init().
-Date: Thu, 15 Aug 2024 15:23:15 +0200
-Message-ID: <20240815131954.430131747@linuxfoundation.org>
+Subject: [PATCH 5.15 338/484] net/mlx5e: Add a check for the return value from mlx5_port_set_eth_ptys
+Date: Thu, 15 Aug 2024 15:23:16 +0200
+Message-ID: <20240815131954.468374797@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,62 +54,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Shahar Shitrit <shshitrit@nvidia.com>
 
-[ Upstream commit c22921df777de5606f1047b1345b8d22ef1c0b34 ]
+[ Upstream commit 3f8e82a020a5c22f9b791f4ac499b8e18007fbda ]
 
-ip6table_nat_table_init() accesses net->gen->ptr[ip6table_nat_net_ops.id],
-but the function is exposed to user space before the entry is allocated
-via register_pernet_subsys().
+Since the documentation for mlx5_toggle_port_link states that it should
+only be used after setting the port register, we add a check for the
+return value from mlx5_port_set_eth_ptys to ensure the register was
+successfully set before calling it.
 
-Let's call register_pernet_subsys() before xt_register_template().
-
-Fixes: fdacd57c79b7 ("netfilter: x_tables: never register tables by default")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 667daedaecd1 ("net/mlx5e: Toggle link only after modifying port parameters")
+Signed-off-by: Shahar Shitrit <shshitrit@nvidia.com>
+Reviewed-by: Carolina Jubran <cjubran@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Reviewed-by: Wojciech Drewek <wojciech.drewek@intel.com>
+Link: https://patch.msgid.link/20240730061638.1831002-9-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/netfilter/ip6table_nat.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv6/netfilter/ip6table_nat.c b/net/ipv6/netfilter/ip6table_nat.c
-index 921c1723a01e4..229a81cf1a729 100644
---- a/net/ipv6/netfilter/ip6table_nat.c
-+++ b/net/ipv6/netfilter/ip6table_nat.c
-@@ -154,23 +154,27 @@ static struct pernet_operations ip6table_nat_net_ops = {
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+index 2d3cd237355a6..06f6809b1c2b7 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_ethtool.c
+@@ -1181,7 +1181,12 @@ int mlx5e_ethtool_set_link_ksettings(struct mlx5e_priv *priv,
+ 	if (!an_changes && link_modes == eproto.admin)
+ 		goto out;
  
- static int __init ip6table_nat_init(void)
- {
--	int ret = xt_register_template(&nf_nat_ipv6_table,
--				       ip6table_nat_table_init);
-+	int ret;
+-	mlx5_port_set_eth_ptys(mdev, an_disable, link_modes, ext);
++	err = mlx5_port_set_eth_ptys(mdev, an_disable, link_modes, ext);
++	if (err) {
++		netdev_err(priv->netdev, "%s: failed to set ptys reg: %d\n", __func__, err);
++		goto out;
++	}
++
+ 	mlx5_toggle_port_link(mdev);
  
-+	/* net->gen->ptr[ip6table_nat_net_id] must be allocated
-+	 * before calling ip6t_nat_register_lookups().
-+	 */
-+	ret = register_pernet_subsys(&ip6table_nat_net_ops);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = register_pernet_subsys(&ip6table_nat_net_ops);
-+	ret = xt_register_template(&nf_nat_ipv6_table,
-+				   ip6table_nat_table_init);
- 	if (ret)
--		xt_unregister_template(&nf_nat_ipv6_table);
-+		unregister_pernet_subsys(&ip6table_nat_net_ops);
- 
- 	return ret;
- }
- 
- static void __exit ip6table_nat_exit(void)
- {
--	unregister_pernet_subsys(&ip6table_nat_net_ops);
- 	xt_unregister_template(&nf_nat_ipv6_table);
-+	unregister_pernet_subsys(&ip6table_nat_net_ops);
- }
- 
- module_init(ip6table_nat_init);
+ out:
 -- 
 2.43.0
 
