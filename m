@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D85063D5;
-	Thu, 15 Aug 2024 14:34:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4369463D5;
+	Thu, 15 Aug 2024 14:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732472; cv=none; b=FfyKUgODUmi2xVNXGBHAOR5FnvWqu3LAoT1yL6UTSM98BHCfyc52thX+vG8nva1OKPLqTtKpWyZHERR383zpSIrE8SeQbcx2tiXvt4NTi7KJW66ZW5SRj7UNOTbr2MP+PrNaEKi1V3KEte0+8vYKfzF8ROteABFNuMgLxz0/PPs=
+	t=1723732475; cv=none; b=lPO5SuuwRiPGO1RACTz5jzAjHrZKz/3pfdkMpk0j7Use5jRPBTC7w2Qx3uNIQYL4cnhIj4TipYezrv9jC/00mSix6eWFjlhSfTKMc587u32D4YGKTn1h+ODQB8U49YO/AVgJHNl39EyQGRB1j3d7/l/cQSXzydURi/FIC8mPpSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732472; c=relaxed/simple;
-	bh=2y7cHl+dlIMjkzQ6cLQGBI3Q+2TZQz5DWur+lBR6orA=;
+	s=arc-20240116; t=1723732475; c=relaxed/simple;
+	bh=39fiNUQSlcDzFEx2wPzu0Edl/0dO/ottnwCUhckgYmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DapvV0yppWQX82Q10iVlRaF2Zqey3iRZP9ny7h+SDdUix3RVox5gPIoIBlflJjES2/sNsES4e9K6oiRRvwhFewCtCIfbJ/tglYMVxL1pvQocqBGzY1S0vwyAlWF+jVn8wSR6+QZz73X/d0VNWy6Fu0cxY6i3z3/YHOyJ3rePoaY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bbXTcH8d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OTI+8q6YKjjIuSLwXdxJyRl3CuwG7e/mFqIgh0WLPeTIJOmGnSzacnJrlg2ETc249wCjF7u/HGWfSdQYuknLZZFWzCxecmz/cWp8wUN6oBkSKpKuF1qAWAhXJtnnKR7U3pwBJ+ApNS+05suxzHyCc/FXvGdzz3JWfwM/vhec7yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gVO6D1kn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bbXTcH8d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90CC5C32786;
-	Thu, 15 Aug 2024 14:34:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gVO6D1kn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1031C32786;
+	Thu, 15 Aug 2024 14:34:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732472;
-	bh=2y7cHl+dlIMjkzQ6cLQGBI3Q+2TZQz5DWur+lBR6orA=;
+	s=korg; t=1723732475;
+	bh=39fiNUQSlcDzFEx2wPzu0Edl/0dO/ottnwCUhckgYmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bbXTcH8dxmWciThaKX6s9o+5nRXitooS527Tj2BBOXdcd9eUJ4rNxGKy6ADXMgyZM
-	 ufPddPp4+aU7fr1iBGW6dNFdAwxokCdXB/WRbY8vG2nVemRlHGPQk/IxQg8p9Ey2BQ
-	 hSAceX/nHdbCo/gEbIHvx45g1V74xPrjz6PJ3Vlo=
+	b=gVO6D1kngbKzBjTffESJzjJAb2O5sJxCC5m2dwHhb33AnwdINQ1VX/51qw3b8yWqc
+	 9kbrsHUzdQPU0obwebdBgbOFp4ApMhvdoCS3+ndqHiU3+QA4IK6u1HlF3sJFWgDv/y
+	 sn2DzfcoF11a2KkRSOQ5s7kTE9EzF1CjhHbIqlSU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+241c815bda521982cb49@syzkaller.appspotmail.com,
-	Jeongjun Park <aha310510@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 190/352] jfs: Fix array-index-out-of-bounds in diFree
-Date: Thu, 15 Aug 2024 15:24:16 +0200
-Message-ID: <20240815131926.620601851@linuxfoundation.org>
+Subject: [PATCH 5.10 191/352] um: time-travel: fix time-travel-start option
+Date: Thu, 15 Aug 2024 15:24:17 +0200
+Message-ID: <20240815131926.659265159@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,44 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit f73f969b2eb39ad8056f6c7f3a295fa2f85e313a ]
+[ Upstream commit 7d0a8a490aa3a2a82de8826aaf1dfa38575cb77a ]
 
-Reported-by: syzbot+241c815bda521982cb49@syzkaller.appspotmail.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+We need to have the = as part of the option so that the
+value can be parsed properly. Also document that it must
+be given in nanoseconds, not seconds.
+
+Fixes: 065038706f77 ("um: Support time travel mode")
+Link: https://patch.msgid.link/20240417102744.14b9a9d4eba0.Ib22e9136513126b2099d932650f55f193120cd97@changeid
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_imap.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/um/kernel/time.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/jfs/jfs_imap.c b/fs/jfs/jfs_imap.c
-index b0965f3ef1865..36ed756820648 100644
---- a/fs/jfs/jfs_imap.c
-+++ b/fs/jfs/jfs_imap.c
-@@ -292,7 +292,7 @@ int diSync(struct inode *ipimap)
- int diRead(struct inode *ip)
- {
- 	struct jfs_sb_info *sbi = JFS_SBI(ip->i_sb);
--	int iagno, ino, extno, rc;
-+	int iagno, ino, extno, rc, agno;
- 	struct inode *ipimap;
- 	struct dinode *dp;
- 	struct iag *iagp;
-@@ -341,8 +341,11 @@ int diRead(struct inode *ip)
+diff --git a/arch/um/kernel/time.c b/arch/um/kernel/time.c
+index 8dafc3f2add42..9a0fcafafd00b 100644
+--- a/arch/um/kernel/time.c
++++ b/arch/um/kernel/time.c
+@@ -756,9 +756,9 @@ int setup_time_travel_start(char *str)
+ 	return 1;
+ }
  
- 	/* get the ag for the iag */
- 	agstart = le64_to_cpu(iagp->agstart);
-+	agno = BLKTOAG(agstart, JFS_SBI(ip->i_sb));
- 
- 	release_metapage(mp);
-+	if (agno >= MAXAG || agno < 0)
-+		return -EIO;
- 
- 	rel_inode = (ino & (INOSPERPAGE - 1));
- 	pageno = blkno >> sbi->l2nbperpage;
+-__setup("time-travel-start", setup_time_travel_start);
++__setup("time-travel-start=", setup_time_travel_start);
+ __uml_help(setup_time_travel_start,
+-"time-travel-start=<seconds>\n"
++"time-travel-start=<nanoseconds>\n"
+ "Configure the UML instance's wall clock to start at this value rather than\n"
+ "the host's wall clock at the time of UML boot.\n");
+ #endif
 -- 
 2.43.0
 
