@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1629A19DFA4;
-	Thu, 15 Aug 2024 14:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F048A1A3BB6;
+	Thu, 15 Aug 2024 14:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730626; cv=none; b=q/Az0wzl4qP599K8Qi6qzy2oLJiwCGY7ejkMhZgnLTIRvCL5RpjC4Ca2Ajyk6DetG8ymhJxeeTjaFSHPsvZ5+z/s8ZyK9wlWM9SwwACxNIWtFhtViMozdbFMur4v2H6Aruq4Vqn5IjEAfyOj5gIHAPaoF+UxUoTh2L3b7zUGt2c=
+	t=1723730629; cv=none; b=QJB0RKUb2P0RezHJYF1bzQs3JGcSCNXouq17dRytv2EOXT+4id/u9ZoKcV9PEzSxbTh+9UhpxuHtPZoITjiLSbKCLhzV59oj+Hzo16ysDOGy/ju9LOTzMUUD45U7CbhFMTwLZyLYCSWgh5U2DP1UYEP/JzBIDi97kR2+6X6Z5eI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730626; c=relaxed/simple;
-	bh=6gIVCketxtqy+biVW9e1fWVErrQ1JhF5O3gxeaccXgg=;
+	s=arc-20240116; t=1723730629; c=relaxed/simple;
+	bh=79uUR7O/NWjIEcVEcDMP6OVUlh/oZYdFfuoabd2mbms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p7QH3cZNquBWinCDakfuUlsnICYpeLlxSkspVZFPwtF9ARckCHsTfCi/OWH1FEqYtp0jPJLPOErF0JGf6D1w7+XyKWcwnrmc+RtDy3EGzdbssPUOgOD/2Zz0LyWw6Dw0cOYJA3nr1zjzmp6p715GOj3/3+WOKw8PQK3BhxUeWUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eW00TXF7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=URaikBDNrLBFtPl1y+cx1XanRb7ajYmM3VdGcUjVfxlPlUIV8sDs6uofEREPljUTjqCLF1EoyrKMiSp09RTe618K5ABh1DvDHb9QYZuComQv+J6A9+0O/RGOGIGLeaXPqiB8e6/Lkb9sCISNxdPYAE9PSCwy6OA16iUDaml8by4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BmrIMVa4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eW00TXF7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66466C32786;
-	Thu, 15 Aug 2024 14:03:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BmrIMVa4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76F9AC32786;
+	Thu, 15 Aug 2024 14:03:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730625;
-	bh=6gIVCketxtqy+biVW9e1fWVErrQ1JhF5O3gxeaccXgg=;
+	s=korg; t=1723730628;
+	bh=79uUR7O/NWjIEcVEcDMP6OVUlh/oZYdFfuoabd2mbms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eW00TXF7pFGvLmKE4qX67U8hakpvzdsPRGAP8RpH6jUx8cNONW5mCtwQ32OSK2/Cy
-	 JckbzJqccJJdO+oyKRSj3rsCudnlX2TxdwOmtrFnh9YwQeLXOYpKM0tQUUl5mH5KGY
-	 CtqVdib8yn+H+BGsNuZ1oCkoMXfTJ73gDaIhSSyU=
+	b=BmrIMVa4MUd9c8mAtj2vgJ1kM0lYa12RPGEQMYU43YO2yfuWuqYJlOr/1XU2eOsqT
+	 YjhEvHMXU9qOQtiBA41qCBM3ISwx8v/Xed+EA2+URFNTMDC2VJgv+clcLu307ohQF+
+	 iLa6yM2twg+6uz2yxQ/gBPICJGbQNgHtCL2gZyGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Stitt <justinstitt@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Miroslav Lichvar <mlichvar@redhat.com>
-Subject: [PATCH 5.15 436/484] ntp: Safeguard against time_constant overflow
-Date: Thu, 15 Aug 2024 15:24:54 +0200
-Message-ID: <20240815131958.299011490@linuxfoundation.org>
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 437/484] timekeeping: Fix bogus clock_was_set() invocation in do_adjtimex()
+Date: Thu, 15 Aug 2024 15:24:55 +0200
+Message-ID: <20240815131958.337805087@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,64 +49,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Stitt <justinstitt@google.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 06c03c8edce333b9ad9c6b207d93d3a5ae7c10c0 upstream.
+commit 5916be8a53de6401871bdd953f6c60237b47d6d3 upstream.
 
-Using syzkaller with the recently reintroduced signed integer overflow
-sanitizer produces this UBSAN report:
+The addition of the bases argument to clock_was_set() fixed up all call
+sites correctly except for do_adjtimex(). This uses CLOCK_REALTIME
+instead of CLOCK_SET_WALL as argument. CLOCK_REALTIME is 0.
 
-UBSAN: signed-integer-overflow in ../kernel/time/ntp.c:738:18
-9223372036854775806 + 4 cannot be represented in type 'long'
-Call Trace:
- handle_overflow+0x171/0x1b0
- __do_adjtimex+0x1236/0x1440
- do_adjtimex+0x2be/0x740
+As a result the effect of that clock_was_set() notification is incomplete
+and might result in timers expiring late because the hrtimer code does
+not re-evaluate the affected clock bases.
 
-The user supplied time_constant value is incremented by four and then
-clamped to the operating range.
+Use CLOCK_SET_WALL instead of CLOCK_REALTIME to tell the hrtimers code
+which clock bases need to be re-evaluated.
 
-Before commit eea83d896e31 ("ntp: NTP4 user space bits update") the user
-supplied value was sanity checked to be in the operating range. That change
-removed the sanity check and relied on clamping after incrementing which
-does not work correctly when the user supplied value is in the overflow
-zone of the '+ 4' operation.
-
-The operation requires CAP_SYS_TIME and the side effect of the overflow is
-NTP getting out of sync.
-
-Similar to the fixups for time_maxerror and time_esterror, clamp the user
-space supplied value to the operating range.
-
-[ tglx: Switch to clamping ]
-
-Fixes: eea83d896e31 ("ntp: NTP4 user space bits update")
-Signed-off-by: Justin Stitt <justinstitt@google.com>
+Fixes: 17a1b8826b45 ("hrtimer: Add bases argument to clock_was_set()")
 Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: Miroslav Lichvar <mlichvar@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20240517-b4-sio-ntp-c-v2-1-f3a80096f36f@google.com
-Closes: https://github.com/KSPP/linux/issues/352
+Link: https://lore.kernel.org/all/877ccx7igo.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/time/ntp.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/time/timekeeping.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/kernel/time/ntp.c
-+++ b/kernel/time/ntp.c
-@@ -733,11 +733,10 @@ static inline void process_adjtimex_mode
- 		time_esterror = clamp(txc->esterror, 0, NTP_PHASE_LIMIT);
+--- a/kernel/time/timekeeping.c
++++ b/kernel/time/timekeeping.c
+@@ -2459,7 +2459,7 @@ int do_adjtimex(struct __kernel_timex *t
+ 		clock_set |= timekeeping_advance(TK_ADV_FREQ);
  
- 	if (txc->modes & ADJ_TIMECONST) {
--		time_constant = txc->constant;
-+		time_constant = clamp(txc->constant, 0, MAXTC);
- 		if (!(time_status & STA_NANO))
- 			time_constant += 4;
--		time_constant = min(time_constant, (long)MAXTC);
--		time_constant = max(time_constant, 0l);
-+		time_constant = clamp(time_constant, 0, MAXTC);
- 	}
+ 	if (clock_set)
+-		clock_was_set(CLOCK_REALTIME);
++		clock_was_set(CLOCK_SET_WALL);
  
- 	if (txc->modes & ADJ_TAI &&
+ 	ntp_notify_cmos_timer();
+ 
 
 
