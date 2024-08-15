@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7746E1714A8;
-	Thu, 15 Aug 2024 13:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A8E1714A8;
+	Thu, 15 Aug 2024 13:43:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729393; cv=none; b=PlZyxV0cfC0yEYnFzDX+U02bfBVDVg7gJxmxJ48kHp/t25TrM99MuiDIgbeB6kNzVdfS3A6ak8K3GsvKCffEq5/9rPfsOcF5fFPyFaj4ZuYsoM7AJCtaAazGNfMvJk6dQ9BVT70CmOlGwG0W9AadDgtXMp5QWLn8jYubfnWPWPk=
+	t=1723729396; cv=none; b=sgRX3kECBdhO1pPUHej/Ovz1vrjqVMBzNcpkT+YMMc0/Pc9w1nZ6/BIlkeMHjmK6xuBm+rhi36zl8KwfiNGv1eODmS9TmEX8OcPDVy9ydksQDuTyWdu7ZsLalpBP+FhrbL1WxRxQI448UV4ofgB3LFei/dZxt7RYrakf15HaIOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729393; c=relaxed/simple;
-	bh=TMCGIifXMvqhriBaLB5gC3OgfRUzWIzAOPPt1mgGQ8c=;
+	s=arc-20240116; t=1723729396; c=relaxed/simple;
+	bh=/jJ4YgOPyFxNybTgSXqcSA45TFDMuKHLRS1NAifUbWs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lQNQEZXJUkpwi775f7xIFsmtxQrtiL1khLB6jg64HlhEBWN6hoG7mgQuWLF1LuL4JHlPEp8rlT6l6kKfYgvlyJJJQ89hX9vu43pETGnBbya2qADswmJDt9CxMofIMchh+N5USBl6UEWaSQtmLHl5gFZKn9dOcufyE53U51/x2EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N52luds4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TxhNfjUnmAWe2gJLRvEVbjBEUOtH5hl/y3wis4HcotXBSFIqo/eeGhujL0r7Hv1QLlv5oliS6Gl87Op3nBUc1UObqt6ROf6rH5RuSLPPNUn2J7VO2p6+OEeKAnehT+xytZ57l43vVAJRx3WZPVqn7wHlWWQmC2celiDGAN7XpHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkURTO/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N52luds4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E05C3C32786;
-	Thu, 15 Aug 2024 13:43:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkURTO/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC27C32786;
+	Thu, 15 Aug 2024 13:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729393;
-	bh=TMCGIifXMvqhriBaLB5gC3OgfRUzWIzAOPPt1mgGQ8c=;
+	s=korg; t=1723729396;
+	bh=/jJ4YgOPyFxNybTgSXqcSA45TFDMuKHLRS1NAifUbWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N52luds45jwfrimGgOZEcVyWzu2PlPUanwWiackAGrhDlc67uI2MCPG6ub1JPiaWF
-	 EwLeqj8Gizwn3tchaFOu1h/7L3jAYS4cjsY98xk4GNTMYBsTxRTv6ubllpHHmFBoCQ
-	 MeimFDswUz1G24EP9WV9pQxy1zCwUWKCQWoB4EDc=
+	b=lkURTO/5lNIaM37v40S0HdqAKGcLLE2T+zvfc/iEdJM2lEHVtKIJSIgOHRGWI8o9o
+	 4MT3MzCdZVhBr33jv38Qk3BgniFUSx09pzM5kA+Iq11gHbJMqzEyGJ70udSXbIGyud
+	 X3wxyTTy96q3JinSN7gJuFDAAt9WsqsDHO8Ds/ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Douglas Anderson <dianders@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 083/484] drm/panel: boe-tv101wum-nl6: If prepare fails, disable GPIO before regulators
-Date: Thu, 15 Aug 2024 15:19:01 +0200
-Message-ID: <20240815131944.494573189@linuxfoundation.org>
+Subject: [PATCH 5.15 084/484] drm/panel: boe-tv101wum-nl6: Check for errors on the NOP in prepare()
+Date: Thu, 15 Aug 2024 15:19:02 +0200
+Message-ID: <20240815131944.532469091@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -55,43 +56,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 587c48f622374e5d47b1d515c6006a4df4dee882 ]
+[ Upstream commit 6320b9199dd99622668649c234d4e8a99e44a9c8 ]
 
-The enable GPIO should clearly be set low before turning off
-regulators. That matches both the inverse order that things were
-enabled and also the order in unprepare().
+The mipi_dsi_dcs_nop() function returns an error but we weren't
+checking it in boe_panel_prepare(). Add a check. This is highly
+unlikely to matter in practice. If the NOP failed then likely later
+MIPI commands would fail too.
 
-Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+Found by code inspection.
+
+Fixes: 812562b8d881 ("drm/panel: boe-tv101wum-nl6: Fine tune the panel power sequence")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
+Link: https://lore.kernel.org/r/20240517143643.3.Ibffbaa5b4999ac0e55f43bf353144433b099d727@changeid
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.3.Ibffbaa5b4999ac0e55f43bf353144433b099d727@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-index 9e518213a54ff..c448be3d01d16 100644
+index c448be3d01d16..0a2d5f461aee8 100644
 --- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
 +++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-@@ -574,13 +574,13 @@ static int boe_panel_prepare(struct drm_panel *panel)
- 	return 0;
+@@ -553,7 +553,11 @@ static int boe_panel_prepare(struct drm_panel *panel)
+ 	usleep_range(5000, 10000);
  
- poweroff:
-+	gpiod_set_value(boe->enable_gpio, 0);
- 	regulator_disable(boe->avee);
- poweroffavdd:
- 	regulator_disable(boe->avdd);
- poweroff1v8:
- 	usleep_range(5000, 7000);
- 	regulator_disable(boe->pp1800);
--	gpiod_set_value(boe->enable_gpio, 0);
- 
- 	return ret;
- }
+ 	if (boe->desc->lp11_before_reset) {
+-		mipi_dsi_dcs_nop(boe->dsi);
++		ret = mipi_dsi_dcs_nop(boe->dsi);
++		if (ret < 0) {
++			dev_err(&boe->dsi->dev, "Failed to send NOP: %d\n", ret);
++			goto poweroff;
++		}
+ 		usleep_range(1000, 2000);
+ 	}
+ 	gpiod_set_value(boe->enable_gpio, 1);
 -- 
 2.43.0
 
