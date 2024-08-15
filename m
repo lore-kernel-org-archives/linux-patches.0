@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1E519E7F5;
-	Thu, 15 Aug 2024 13:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B3B17CA1D;
+	Thu, 15 Aug 2024 13:28:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728532; cv=none; b=HLrrqU6CstX1QxxvHo9uomxSTzTSekI/7t0KEKxNt/vGHTRDk1PZdkN2mz3VpBhHb64+qtbNa86lLPFkNJPKcmXzpycZhgO6QvZ7vT9OhK9Iu7BaIXgRMdnrQ8s+YgI68rYTWofIIxv95ZcL1CL0vkUY8SZ/Ke/Sr7+Z3x/KehA=
+	t=1723728535; cv=none; b=g8nM4lJtKKkn2eZnQv1L0x4WUsqKc1dua72gizbIKgQrVh2EU0prX7TeaKNKVG8CCI4SIUnI71lO4FATLJ1HCjwvYlSON3lPnLj3gIRmaMgslt2QNXIVwoeylZlkzyerQJHdagNM7dcsfxJmv662C5Tr3F+q0b8dRrFIMhEAK1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728532; c=relaxed/simple;
-	bh=kINH2A4FZpBFkkE4Kg7DMKX+Jj18UZdk352Y8agaB5o=;
+	s=arc-20240116; t=1723728535; c=relaxed/simple;
+	bh=wslGucgzhkjIuJbEQOmva8PAuEImQmbZ6EfyvKGFJK8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGl1Vba8dEynykoCLm8bKBykWwHYr8w0WCjVm1KhUWp/fjVHRX0eUF8MvY02bLy32JjRtYwI670iB4WWlYeoQ6NZUilM16G67xBTU9FfKuhKbrrkXg9nDDf39Yk4Ek2Wm7hsO2eBBnC5ZODdiWBMryOv/QljNhP69g8rdYVszsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RVHH7Ufk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djVRWzhgWLN4Dad4UgGW2ysPImEYD439eLAoKr7GblHdZ7ZNAA3Az3v4224RgXWhkZIVSsMvQKyxIPApEi3DDrnfMWeZ80LQ1wST859bU8UMTerBs+2ALvyn1waqubU+fzwqPCuTSI219xw7fehivG6lpBluZKuSWBc+UhsctrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBjqwEjV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RVHH7Ufk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64353C32786;
-	Thu, 15 Aug 2024 13:28:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBjqwEjV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90586C32786;
+	Thu, 15 Aug 2024 13:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728531;
-	bh=kINH2A4FZpBFkkE4Kg7DMKX+Jj18UZdk352Y8agaB5o=;
+	s=korg; t=1723728535;
+	bh=wslGucgzhkjIuJbEQOmva8PAuEImQmbZ6EfyvKGFJK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVHH7UfkztjKcqmAjdpYeCcWe+mqYzzT+tsbfHeFKr9PVdyuxOIhL2zoS9CeWBDTc
-	 ZQ03za58cxuj9JU7AHHXYERSfSPYZf0VReccvpB6AUHHJ9l0TKClEYan7CtuAjb144
-	 I65N1+g8bSUZCQI4eOq+ymu3TNWFNxAwJ8jVUy6k=
+	b=uBjqwEjVHCID2UEpxkcOi1nr+rao0+0IoVsP08IA5Uydwz5S1uW1DhzlcIVvRuOmu
+	 DImoycQCL7L6NOd3frPjV+/Hb8seHKBNv1gA0o8fCNyXWloEAOuRGT3BS6lgvmKija
+	 eSoRX3E7iYgC+KyxGTXq6J8KTG8YMNdsa8weCGNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Cohen <amcohen@nvidia.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sean Young <sean@mess.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/196] selftests: forwarding: devlink_lib: Wait for udev events after reloading
-Date: Thu, 15 Aug 2024 15:22:26 +0200
-Message-ID: <20240815131853.201736487@linuxfoundation.org>
+Subject: [PATCH 4.19 030/196] media: imon: Fix race getting ictx->lock
+Date: Thu, 15 Aug 2024 15:22:27 +0200
+Message-ID: <20240815131853.239600449@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -53,72 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Amit Cohen <amcohen@nvidia.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit f67a90a0c8f5b3d0acc18f10650d90fec44775f9 ]
+[ Upstream commit 24147897507cd3a7d63745d1518a638bf4132238 ]
 
-Lately, an additional locking was added by commit c0a40097f0bc
-("drivers: core: synchronize really_probe() and dev_uevent()"). The
-locking protects dev_uevent() calling. This function is used to send
-messages from the kernel to user space. Uevent messages notify user space
-about changes in device states, such as when a device is added, removed,
-or changed. These messages are used by udev (or other similar user-space
-tools) to apply device-specific rules.
+Lets fix a race between mutex_is_lock() and mutex_lock().
 
-After reloading devlink instance, udev events should be processed. This
-locking causes a short delay of udev events handling.
+<-mutex is not locked
+if (!mutex_is_locked(&ictx->lock)) {
+	unlock = true; <- mutex is locked externaly
+	mutex_lock(&ictx->lock);
+}
 
-One example for useful udev rule is renaming ports. 'forwading.config'
-can be configured to use names after udev rules are applied. Some tests run
-devlink_reload() and immediately use the updated names. This worked before
-the above mentioned commit was pushed, but now the delay of uevent messages
-causes that devlink_reload() returns before udev events are handled and
-tests fail.
+Let's use mutex_trylock() that does mutex_is_lock() and mutex_lock()
+atomically.
 
-Adjust devlink_reload() to not assume that udev events are already
-processed when devlink reload is done, instead, wait for udev events to
-ensure they are processed before returning from the function.
+Fix the following cocci warning:
+drivers/media/rc/imon.c:1167:1-7: preceding lock on line 1153
 
-Without this patch:
-TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp1/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-sysctl: cannot stat /proc/sys/net/ipv6/conf/swp2/disable_ipv6: No such file or directory
-Cannot find device "swp1"
-Cannot find device "swp2"
-TEST: setup_wait_dev (: Interface swp1 does not come up.) [FAIL]
-
-With this patch:
-$ TESTS='rif_mac_profile' ./resource_scale.sh
-TEST: 'rif_mac_profile' 4                                           [ OK ]
-TEST: 'rif_mac_profile' overflow 5                                  [ OK ]
-
-This is relevant not only for this test.
-
-Fixes: bc7cbb1e9f4c ("selftests: forwarding: Add devlink_lib.sh")
-Signed-off-by: Amit Cohen <amcohen@nvidia.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Signed-off-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/89367666e04b38a8993027f1526801ca327ab96a.1720709333.git.petrm@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 23ef710e1a6c ("[media] imon: add conditional locking in change_protocol")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/devlink_lib.sh | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/rc/imon.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/devlink_lib.sh b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-index 5ab1e5f430221..ea708b6c1e002 100644
---- a/tools/testing/selftests/net/forwarding/devlink_lib.sh
-+++ b/tools/testing/selftests/net/forwarding/devlink_lib.sh
-@@ -105,4 +105,6 @@ devlink_reload()
- 	still_pending=$(devlink resource show "$DEVLINK_DEV" | \
- 			grep -c "size_new")
- 	check_err $still_pending "Failed reload - There are still unset sizes"
-+
-+	udevadm settle
- }
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 99bb7380ee0e5..c78e1a4a10ec5 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -1126,10 +1126,7 @@ static int imon_ir_change_protocol(struct rc_dev *rc, u64 *rc_proto)
+ 
+ 	memcpy(ictx->usb_tx_buf, &ir_proto_packet, sizeof(ir_proto_packet));
+ 
+-	if (!mutex_is_locked(&ictx->lock)) {
+-		unlock = true;
+-		mutex_lock(&ictx->lock);
+-	}
++	unlock = mutex_trylock(&ictx->lock);
+ 
+ 	retval = send_packet(ictx);
+ 	if (retval)
 -- 
 2.43.0
 
