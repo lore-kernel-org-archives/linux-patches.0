@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA5417BEAD;
-	Thu, 15 Aug 2024 14:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4ABF1AC896;
+	Thu, 15 Aug 2024 14:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731982; cv=none; b=rLmQ3nuM/HTlsOcgZg5/y7dY2uigl6DgBpls7ZktAgMnrj8qsqsuD3BUPw6wtPjdDClB9RO1ngz1lE0rnOq5lMVd6Gg0iEbqBDNHbyFiPfoFgxrlhSNRxy5isynLuVUMaXc2qADFnQaS51YdPH6ijywJKayjRx/mBD96NgZ9vGo=
+	t=1723731984; cv=none; b=URR7H08388rgtmmwbBt0QfuKudtvdr+XHWoE1T53vzcRhzOrXhaSsn6G9rU7lzhXcNLjzmEEvNJufYn8a0/Rjeb48ynfWBmAh+HOXNvGPH5fgvUzXReaHcl7PJOEuQNWRHy1ogztPOcRQQTsT6hf+whbsHnkmfRMHKN4INpRQqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731982; c=relaxed/simple;
-	bh=v2Djgr7jNyMEXFgHy0GCoY/BU3QtnqSrg7xHSnnHw88=;
+	s=arc-20240116; t=1723731984; c=relaxed/simple;
+	bh=8RiSu2xWxCZbtC2wjk3GgN9h/JlwpjOiS3kHcCD63+0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eg0XZLwDVMl/n0pcIVYSaGOdkZapRodzlWGXkvwC7oPAHlPASEM5PzJRQ35/DXtiD90UBKTDFHkSPAr2H6hmuSHPdrNDrGWgHAn8rb37h5yUwTM8f9QR/OgyUJjWhlldpEUKU0QH7I6IfoROr3EPH/Ae4/3cywfMEFqMozmMuEU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGsIkEpI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X0n5Th9FfjfXkLT+J03fisJb5m90DJl02gPibIxoKPVp0+IkQEz+GVPRSawAXo6nccRMG+YhCj+N86iOWDMJjacnOxZry73YSdt2ZgYbrlehIp2bYQ9T5H1VGohhqN8H8nUJM9IMTsnL5V3mthEfBj6wfM3z6ChwKtSd3sRA0WI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x3JL6rE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGsIkEpI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F0DEC32786;
-	Thu, 15 Aug 2024 14:26:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x3JL6rE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6CFC32786;
+	Thu, 15 Aug 2024 14:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731981;
-	bh=v2Djgr7jNyMEXFgHy0GCoY/BU3QtnqSrg7xHSnnHw88=;
+	s=korg; t=1723731984;
+	bh=8RiSu2xWxCZbtC2wjk3GgN9h/JlwpjOiS3kHcCD63+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGsIkEpIBeI9sHRDdye7OzKJkPaK+EmBNL4H+PnmOE7/buw0QzodlcAJSvFWUDMWe
-	 varap+bwQRa5vf/yCeUcF8vGKpqg7aOluHv9vhA+KGt/C7dm088RdHr+HtI0RbHiRO
-	 43/5fXh+fIQ1Zv38HSAz0VlIdOcTWYFQGohnIsKg=
+	b=x3JL6rE+wx80DGUS2ACq2LOplQiKJtwHyDacLeHjVjexhlVkG5yTPOJCpJV59nzZi
+	 wk9C28GZvGlUfRWeiPqTHE5crw71IkXRRWV7thmo6QP2WjIFOitUPOtbwuBe1vZ1aR
+	 Fg0+Vz+UMQvOj25EHy37/3fDXROG4s6720QWjupU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hagar Hemdan <hagarhem@amazon.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
+	Stefan Raspl <raspl@linux.ibm.com>,
+	Guvenc Gulce <guvenc@linux.ibm.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/352] net: esp: cleanup esp_output_tail_tcp() in case of unsupported ESPINTCP
-Date: Thu, 15 Aug 2024 15:21:43 +0200
-Message-ID: <20240815131920.664686957@linuxfoundation.org>
+Subject: [PATCH 5.10 038/352] net/smc: Allow SMC-D 1MB DMB allocations
+Date: Thu, 15 Aug 2024 15:21:44 +0200
+Message-ID: <20240815131920.703491184@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,60 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hagar Hemdan <hagarhem@amazon.com>
+From: Stefan Raspl <raspl@linux.ibm.com>
 
-[ Upstream commit 96f887a612e4cda89efc3f54bc10c1997e3ab0e9 ]
+[ Upstream commit 67161779a9ea926fccee8de047ae66cbd3482b91 ]
 
-xmit() functions should consume skb or return error codes in error
-paths.
-When the configuration "CONFIG_INET_ESPINTCP" is not set, the
-implementation of the function "esp_output_tail_tcp" violates this rule.
-The function frees the skb and returns the error code.
-This change removes the kfree_skb from both functions, for both
-esp4 and esp6.
-WARN_ON is added because esp_output_tail_tcp() should never be called if
-CONFIG_INET_ESPINTCP is not set.
+Commit a3fe3d01bd0d7 ("net/smc: introduce sg-logic for RMBs") introduced
+a restriction for RMB allocations as used by SMC-R. However, SMC-D does
+not use scatter-gather lists to back its DMBs, yet it was limited by
+this restriction, still.
+This patch exempts SMC, but limits allocations to the maximum RMB/DMB
+size respectively.
 
-This bug was discovered and resolved using Coverity Static Analysis
-Security Testing (SAST) by Synopsys, Inc.
-
-Fixes: e27cca96cd68 ("xfrm: add espintcp (RFC 8229)")
-Signed-off-by: Hagar Hemdan <hagarhem@amazon.com>
-Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Stefan Raspl <raspl@linux.ibm.com>
+Signed-off-by: Guvenc Gulce <guvenc@linux.ibm.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 3ac14b9dfbd3 ("net/smc: set rmb's SG_MAX_SINGLE_ALLOC limitation only when CONFIG_ARCH_NO_SG_CHAIN is defined")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/esp4.c | 3 +--
- net/ipv6/esp6.c | 3 +--
- 2 files changed, 2 insertions(+), 4 deletions(-)
+ net/smc/smc_core.c | 31 ++++++++++++++++---------------
+ 1 file changed, 16 insertions(+), 15 deletions(-)
 
-diff --git a/net/ipv4/esp4.c b/net/ipv4/esp4.c
-index 412a3c153cad3..adfefcd88bbcc 100644
---- a/net/ipv4/esp4.c
-+++ b/net/ipv4/esp4.c
-@@ -239,8 +239,7 @@ static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
- #else
- static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
- {
--	kfree_skb(skb);
--
-+	WARN_ON(1);
- 	return -EOPNOTSUPP;
+diff --git a/net/smc/smc_core.c b/net/smc/smc_core.c
+index ab9ecdd1af0ac..701bfc2bab239 100644
+--- a/net/smc/smc_core.c
++++ b/net/smc/smc_core.c
+@@ -1375,21 +1375,30 @@ int smc_conn_create(struct smc_sock *smc, struct smc_init_info *ini)
+ 	return rc;
  }
- #endif
-diff --git a/net/ipv6/esp6.c b/net/ipv6/esp6.c
-index fddc811bbde1f..39154531d4559 100644
---- a/net/ipv6/esp6.c
-+++ b/net/ipv6/esp6.c
-@@ -255,8 +255,7 @@ static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
- #else
- static int esp_output_tail_tcp(struct xfrm_state *x, struct sk_buff *skb)
+ 
+-/* convert the RMB size into the compressed notation - minimum 16K.
++#define SMCD_DMBE_SIZES		6 /* 0 -> 16KB, 1 -> 32KB, .. 6 -> 1MB */
++#define SMCR_RMBE_SIZES		5 /* 0 -> 16KB, 1 -> 32KB, .. 5 -> 512KB */
++
++/* convert the RMB size into the compressed notation (minimum 16K, see
++ * SMCD/R_DMBE_SIZES.
+  * In contrast to plain ilog2, this rounds towards the next power of 2,
+  * so the socket application gets at least its desired sndbuf / rcvbuf size.
+  */
+-static u8 smc_compress_bufsize(int size)
++static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
  {
--	kfree_skb(skb);
--
-+	WARN_ON(1);
- 	return -EOPNOTSUPP;
++	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
+ 	u8 compressed;
+ 
+ 	if (size <= SMC_BUF_MIN_SIZE)
+ 		return 0;
+ 
+-	size = (size - 1) >> 14;
+-	compressed = ilog2(size) + 1;
+-	if (compressed >= SMC_RMBE_SIZES)
+-		compressed = SMC_RMBE_SIZES - 1;
++	size = (size - 1) >> 14;  /* convert to 16K multiple */
++	compressed = min_t(u8, ilog2(size) + 1,
++			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
++
++	if (!is_smcd && is_rmb)
++		/* RMBs are backed by & limited to max size of scatterlists */
++		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
++
+ 	return compressed;
  }
- #endif
+ 
+@@ -1608,17 +1617,12 @@ static int smcr_buf_map_usable_links(struct smc_link_group *lgr,
+ 	return rc;
+ }
+ 
+-#define SMCD_DMBE_SIZES		6 /* 0 -> 16KB, 1 -> 32KB, .. 6 -> 1MB */
+-
+ static struct smc_buf_desc *smcd_new_buf_create(struct smc_link_group *lgr,
+ 						bool is_dmb, int bufsize)
+ {
+ 	struct smc_buf_desc *buf_desc;
+ 	int rc;
+ 
+-	if (smc_compress_bufsize(bufsize) > SMCD_DMBE_SIZES)
+-		return ERR_PTR(-EAGAIN);
+-
+ 	/* try to alloc a new DMB */
+ 	buf_desc = kzalloc(sizeof(*buf_desc), GFP_KERNEL);
+ 	if (!buf_desc)
+@@ -1666,9 +1670,8 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 		/* use socket send buffer size (w/o overhead) as start value */
+ 		sk_buf_size = smc->sk.sk_sndbuf / 2;
+ 
+-	for (bufsize_short = smc_compress_bufsize(sk_buf_size);
++	for (bufsize_short = smc_compress_bufsize(sk_buf_size, is_smcd, is_rmb);
+ 	     bufsize_short >= 0; bufsize_short--) {
+-
+ 		if (is_rmb) {
+ 			lock = &lgr->rmbs_lock;
+ 			buf_list = &lgr->rmbs[bufsize_short];
+@@ -1677,8 +1680,6 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
+ 			buf_list = &lgr->sndbufs[bufsize_short];
+ 		}
+ 		bufsize = smc_uncompress_bufsize(bufsize_short);
+-		if ((1 << get_order(bufsize)) > SG_MAX_SINGLE_ALLOC)
+-			continue;
+ 
+ 		/* check for reusable slot in the link group */
+ 		buf_desc = smc_buf_get_slot(bufsize_short, lock, buf_list);
 -- 
 2.43.0
 
