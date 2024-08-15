@@ -1,37 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF04819F499;
-	Thu, 15 Aug 2024 13:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0647919DF9A;
+	Thu, 15 Aug 2024 13:49:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729772; cv=none; b=pzitlHRjacUzJbxZu6fVwz3tJfzv+LPnPT3Z9FIZVkFqtcaw6sx35HmE0RhYJrPI4iuGdSUPx4Wc+4jOeCKVg3a/kllCE7W4XHxXqB82EctxKSj0xPExbJxfJqo+4Z2jWG9w0e8/U1s/XbFGpP6lU3wIu5mdr6Aww+7ylK+cnkM=
+	t=1723729776; cv=none; b=VjyKsyvPNnTPyhtATHpG7jQrWfizd+xsuueeJng+Qrwpm/cUXB5KQgQdnCKDenGRNkSrBoSP9KpBnhcUvmtI4/J+3164+aiu03BOh2KplcjziksSnZkweaBDFM2wEaBO4+BlyefcjtVwIuWjd7E6dOZ0wx96SKK0t2kAP2sSBJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729772; c=relaxed/simple;
-	bh=gDNhebjAcY63RItyjTDhStBq1wLldF4lrFeciyS2EQo=;
+	s=arc-20240116; t=1723729776; c=relaxed/simple;
+	bh=xPKTyq/bRfh/8AaKL/yFesAtJ9e21CCWWBsZvVnervs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LHZYeh0yx6iQ+qdQeeroXnHdZk0JuY6CaNeYjwQw86+/hHnyQbWLGavD6g0ATb5mmwcUlk+fJ7xG7VcZm16rlCNYACgGZfuy6XZU0mSRxyIGKg62SDUzgWmH6qE6AMRLdxOdfQWgamRVoRpRqOYPS/zqHBqZuXRh85+OJElsUjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WTKx6sAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7oAaBiqbUO/LR+XNnLsA2W7HOoHGQnNVwLGwUWnj9bLZlRjZwq1VSkptPpTQlypGZADi1maqqD8fGno66A5C/eRFpdJ1XyZ6Anikc6fAIs8RfL4Fu7jBIczMgNWqYqE7xIOb8f0bWsr1JKqWWao+hsqLj2K/SkaypdKBPWOxLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ara0RWXY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WTKx6sAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4A41C4AF0D;
-	Thu, 15 Aug 2024 13:49:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ara0RWXY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B594C32786;
+	Thu, 15 Aug 2024 13:49:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729772;
-	bh=gDNhebjAcY63RItyjTDhStBq1wLldF4lrFeciyS2EQo=;
+	s=korg; t=1723729775;
+	bh=xPKTyq/bRfh/8AaKL/yFesAtJ9e21CCWWBsZvVnervs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WTKx6sAzilwmSvGbpmpCs8XE96Y/UscB+MDHtrgn64ElieBkV491yF+IqM618CFcL
-	 xyR5HUeBnLHWfsHAl14yhvYQrq89iFw8OmCMRY6YMi4TWoSUH63iYuV3fLL2nF8PDQ
-	 ZZTMT//1LgWgP+nUpLZKpukGf0JcOiZnwiPr1EAE=
+	b=ara0RWXYT1twlLfMS6oc7XsBzcTiqjw8iWahJG6Bif6pHC6/h/+y+Bh73cmzpscwn
+	 7+8aobPwNSeZzExteZ+IGw6B9k4fYmvGwTO6xJoIulDxtnlDosXofVvNQpPgrBBswk
+	 /0zyG8xm4ZZjlXKWeoMSmg8/EfO/7IsUBzeZVtp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Liao <liaoyu15@huawei.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 171/484] tick/broadcast: Make takeover of broadcast hrtimer reliable
-Date: Thu, 15 Aug 2024 15:20:29 +0200
-Message-ID: <20240815131948.019471871@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	"Kirill A. Shutemov" <kirill.shutemov@linux.intel.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 162/484] fs/proc/task_mmu: indicate PM_FILE for PMD-mapped file THP
+Date: Thu, 15 Aug 2024 15:20:20 +0200
+Message-ID: <20240815131947.668037817@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,109 +56,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yu Liao <liaoyu15@huawei.com>
+From: David Hildenbrand <david@redhat.com>
 
-commit f7d43dd206e7e18c182f200e67a8db8c209907fa upstream.
+[ Upstream commit 3f9f022e975d930709848a86a1c79775b0585202 ]
 
-Running the LTP hotplug stress test on a aarch64 machine results in
-rcu_sched stall warnings when the broadcast hrtimer was owned by the
-un-plugged CPU. The issue is the following:
+Patch series "fs/proc: move page_mapcount() to fs/proc/internal.h".
 
-CPU1 (owns the broadcast hrtimer)	CPU2
+With all other page_mapcount() users in the tree gone, move
+page_mapcount() to fs/proc/internal.h, rename it and extend the
+documentation to prevent future (ab)use.
 
-				tick_broadcast_enter()
-				  // shutdown local timer device
-				  broadcast_shutdown_local()
-				...
-				tick_broadcast_exit()
-				  clockevents_switch_state(dev, CLOCK_EVT_STATE_ONESHOT)
-				  // timer device is not programmed
-				  cpumask_set_cpu(cpu, tick_broadcast_force_mask)
+... of course, I find some issues while working on that code that I sort
+first ;)
 
-				initiates offlining of CPU1
-take_cpu_down()
-/*
- * CPU1 shuts down and does not
- * send broadcast IPI anymore
- */
-				takedown_cpu()
-				  hotplug_cpu__broadcast_tick_pull()
-				    // move broadcast hrtimer to this CPU
-				    clockevents_program_event()
-				      bc_set_next()
-					hrtimer_start()
-					/*
-					 * timer device is not programmed
-					 * because only the first expiring
-					 * timer will trigger clockevent
-					 * device reprogramming
-					 */
+We'll now only end up calling page_mapcount() [now
+folio_precise_page_mapcount()] on pages mapped via present page table
+entries.  Except for /proc/kpagecount, that still does questionable
+things, but we'll leave that legacy interface as is for now.
 
-What happens is that CPU2 exits broadcast mode with force bit set, then the
-local timer device is not reprogrammed and CPU2 expects to receive the
-expired event by the broadcast IPI. But this does not happen because CPU1
-is offlined by CPU2. CPU switches the clockevent device to ONESHOT state,
-but does not reprogram the device.
+Did a quick sanity check.  Likely we would want some better selfestest for
+/proc/$/pagemap + smaps.  I'll see if I can find some time to write some
+more.
 
-The subsequent reprogramming of the hrtimer broadcast device does not
-program the clockevent device of CPU2 either because the pending expiry
-time is already in the past and the CPU expects the event to be delivered.
-As a consequence all CPUs which wait for a broadcast event to be delivered
-are stuck forever.
+This patch (of 6):
 
-Fix this issue by reprogramming the local timer device if the broadcast
-force bit of the CPU is set so that the broadcast hrtimer is delivered.
+Looks like we never taught pagemap_pmd_range() about the existence of
+PMD-mapped file THPs.  Seems to date back to the times when we first added
+support for non-anon THPs in the form of shmem THP.
 
-[ tglx: Massage comment and change log. Add Fixes tag ]
-
-Fixes: 989dcb645ca7 ("tick: Handle broadcast wakeup of multiple cpus")
-Signed-off-by: Yu Liao <liaoyu15@huawei.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240711124843.64167-1-liaoyu15@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lkml.kernel.org/r/20240607122357.115423-1-david@redhat.com
+Link: https://lkml.kernel.org/r/20240607122357.115423-2-david@redhat.com
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Fixes: 800d8c63b2e9 ("shmem: add huge pages support")
+Acked-by: Kirill A. Shutemov <kirill.shutemov@linux.intel.com>
+Reviewed-by: Lance Yang <ioworker0@gmail.com>
+Reviewed-by: Oscar Salvador <osalvador@suse.de>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/tick-broadcast.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ fs/proc/task_mmu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/time/tick-broadcast.c
-+++ b/kernel/time/tick-broadcast.c
-@@ -1137,6 +1137,7 @@ void tick_broadcast_switch_to_oneshot(vo
- #ifdef CONFIG_HOTPLUG_CPU
- void hotplug_cpu__broadcast_tick_pull(int deadcpu)
- {
-+	struct tick_device *td = this_cpu_ptr(&tick_cpu_device);
- 	struct clock_event_device *bc;
- 	unsigned long flags;
+diff --git a/fs/proc/task_mmu.c b/fs/proc/task_mmu.c
+index 705a41f4d6b36..b255e3dfded14 100644
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -1471,6 +1471,8 @@ static int pagemap_pmd_range(pmd_t *pmdp, unsigned long addr, unsigned long end,
+ 		}
+ #endif
  
-@@ -1144,6 +1145,28 @@ void hotplug_cpu__broadcast_tick_pull(in
- 	bc = tick_broadcast_device.evtdev;
++		if (page && !PageAnon(page))
++			flags |= PM_FILE;
+ 		if (page && !migration && page_mapcount(page) == 1)
+ 			flags |= PM_MMAP_EXCLUSIVE;
  
- 	if (bc && broadcast_needs_cpu(bc, deadcpu)) {
-+		/*
-+		 * If the broadcast force bit of the current CPU is set,
-+		 * then the current CPU has not yet reprogrammed the local
-+		 * timer device to avoid a ping-pong race. See
-+		 * ___tick_broadcast_oneshot_control().
-+		 *
-+		 * If the broadcast device is hrtimer based then
-+		 * programming the broadcast event below does not have any
-+		 * effect because the local clockevent device is not
-+		 * running and not programmed because the broadcast event
-+		 * is not earlier than the pending event of the local clock
-+		 * event device. As a consequence all CPUs waiting for a
-+		 * broadcast event are stuck forever.
-+		 *
-+		 * Detect this condition and reprogram the cpu local timer
-+		 * device to avoid the starvation.
-+		 */
-+		if (tick_check_broadcast_expired()) {
-+			cpumask_clear_cpu(smp_processor_id(), tick_broadcast_force_mask);
-+			tick_program_event(td->evtdev->next_event, 1);
-+		}
-+
- 		/* This moves the broadcast assignment to this CPU: */
- 		clockevents_program_event(bc, bc->next_event, 1);
- 	}
+-- 
+2.43.0
+
 
 
