@@ -1,191 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F05342AB1;
-	Thu, 15 Aug 2024 00:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F294B17BB25
+	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 07:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723683328; cv=none; b=CdE1JsrLbQRA+A1hP+AJV0BBqWxkX2M5JzBiG81Y1wmFfoxqsXMSqO+ikwUE2GIMmnoxwrv1nmIfB8iGLiTr6e+djqvfFDRiiiG4vqwZcXpz/MUc8EiQZz+KmfJCWIWqIeCZ5UQoHhX0MYg4JAS/Js/8NfbfDrGd7BQ4jEdkuDY=
+	t=1723708625; cv=none; b=d1r2aizVZQsHfZUbUhLAIrxpBI+b/TFh9/AJly/tFvZ16k8w9tJUXGOBExctSvhEbNiyunFl7JHhH/OojgPY+7m/5l8IAodVzAmg1UYaymailblXYTacKLeIKJIy+/L49CTYFQiPpO0cucH5hAWFUqj4ZH7zlYqpfQqhn7k5p6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723683328; c=relaxed/simple;
-	bh=xSrynoas2VR4X6Sh/7Pxh/r2s4reqen1keWxuGVhuPE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=I4KwXB7+Zk7pNjFxif3Oac1kPUeTz6/sZZKfPcuWkuNdAEKk5RH4qv7FSTFNN2wUh5/d0JKn7qqV23KF6puw6wR+m/AJXCyuRp0sl8Wt11v2mCORGlX9UBsui17ISaxJKGl67TEUKo/h0Y0w7jjEUjyJ0eGHmp+GoKFCcUq7imc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qV0705xE; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1723708625; c=relaxed/simple;
+	bh=lFaxAIKnjHKxlZBdeFXofarPjUb1JU4bQlq7BQ4PqII=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=e0sB8JhUcK2iMs28ALFgeXlZoQsCduqE3O0n+Ni9tWLmHIcp8uz6I7cooL2nOdH+5RUC7Kh+gwWgHJAMD+29XOX0pEa2eY7dFsiVOHrLQN5EdTsnVOKS+ZwPIArgRzjfo2vsJa4qBBAWo6zCpnHSDoTq9bhlX8r/aw69i+/ZOiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=NVC0+4Be; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qV0705xE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B45EC4AF14;
-	Thu, 15 Aug 2024 00:55:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1723683327;
-	bh=xSrynoas2VR4X6Sh/7Pxh/r2s4reqen1keWxuGVhuPE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qV0705xEMZwtGF2ZlkTzkye7gxkDlAuQ9fauHQdiryKGfcut8ofEbiHtB3ahQnALL
-	 x2QxUVPobSybFfuzHGmDsHgnDTYQJxo4e3lUeO2Ua9m4Ht4NAre1Dw0AoHGuNsw6hO
-	 BJ/A6PjfBeNjQ9Dcgn9HyVCmzD70JePnIUOLI6pOYEwccNQ2oNHVOuIOxsdy9h9fpT
-	 XXLD0HLikrwYcAytkYZrdr8knVKcjeRKBq1oK4/0PaF6uTDt8EDeFHy48kO7hEyxeL
-	 M4BNYAajWppc6mhTMB+elHJktzsVEHGt6QxqEIloMs3LMdwTbct0J4gwJTA8kcT13l
-	 dZVvChLI5Taxg==
-From: Stephen Boyd <sboyd@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>
-Subject: [PATCH 12/12] WIP: clk: Test behavior of children clks after a parent is unregistered
-Date: Wed, 14 Aug 2024 17:55:18 -0700
-Message-ID: <20240815005520.1192374-13-sboyd@kernel.org>
-X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
-In-Reply-To: <20240815005520.1192374-1-sboyd@kernel.org>
-References: <20240815005520.1192374-1-sboyd@kernel.org>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="NVC0+4Be"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-36bcc168cdaso384907f8f.0
+        for <patches@lists.linux.dev>; Thu, 15 Aug 2024 00:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1723708622; x=1724313422; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uFDgfr18jKgjWjTVFgaR01eg1gTio0cJGxh6b91x9kI=;
+        b=NVC0+4BeYEivHHVnTRCAMPAumCWbLWNwfKrEsGeZ7krHQm54PsHZhq5NmCIHsksRGk
+         OxvY+M21oxQ7o4AMNY0BKWIim3WyHRmZAQfGCyg8jP56s/0uSXm+TTiC07zOd9xq/hoX
+         oGez4yGyZRZGSgMYBks1LQHfsn9RrC3H7iiyXPAPBSp92ngRfGUdbGRew3fNn6XCovyM
+         8hwrHODq3/qVImkpO5msdidP+wZRt1f12eAmSQ/mtShEaMNMqlqX7JIR+/nFdRwCBmF7
+         Q5a40UDOFtIeTu5ilrvS6t4VtHerali8N0crJ4TAEyS1UHaTNjJSurKi0piS9JQ0oxMf
+         XZkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1723708622; x=1724313422;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uFDgfr18jKgjWjTVFgaR01eg1gTio0cJGxh6b91x9kI=;
+        b=TVGzeCUnu6pYB9xiFwEsLWKsGYQq+2/oJKBiGlyDYopzzTsumFQf8MSWuBwiUlZeXg
+         F0wjzDg7iDr0julMSqpbDhdl1xA1E6+CB3cYzuw8mWNLFikpdr2LCrXhEvhAy97/2iTk
+         5WmkBnw1+I8Kvy9VbXMYYmZtrjrGThw5LS+KvQOxbvCPoPHLi/iCFHsVbZ4cHb10jmg3
+         L18Yxf6l37g2Jl0xu5mzcgp3IZQFf0Hn+tcScUln4+18fnqcaePsf/D0xUrJF/e3L11m
+         Gi7Zym6DGk3ypCRYdg3aDoi/lOn4P3AaJ4T6t8vt8YdTBbaaqXa33yeMnV4mfeICYVE+
+         6NGA==
+X-Forwarded-Encrypted: i=1; AJvYcCUtdKevvg+ef29/N9nk8llOWbYV0Hml4T43w6M6JWpPu0TvaBeSEGGwXi9T7XpGSmV7CdnoSG3mjRBQmvkDtJ9y0/uoqU2nAQ==
+X-Gm-Message-State: AOJu0Ywol8sec472u0+ELRxicDjrVl8kkyT8dJY3ikpMYgasi5CDU2Kq
+	g3G8AY98FBDoatQGsuRhid+0f5jXkDSHNwU/CaBGY7dq4EGA0P2ijXu5o15xC3vspWceZuQMzyv
+	5VFQYfaBqpwS8efqFrlLzdbBGTzwct8UpySnS
+X-Google-Smtp-Source: AGHT+IF44XjYngCZ8eLUhbWGRFsRASvEhApV5Zb7EnuduDNmFQ2HllL4LplMRCeD/E33eirS9R2OR5QzF4QYcVIzYOc=
+X-Received: by 2002:a5d:4985:0:b0:368:4910:8f43 with SMTP id
+ ffacd0b85a97d-37177744ee0mr3834274f8f.3.1723708621922; Thu, 15 Aug 2024
+ 00:57:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20240814163722.1550064-1-ojeda@kernel.org>
+In-Reply-To: <20240814163722.1550064-1-ojeda@kernel.org>
+From: Alice Ryhl <aliceryhl@google.com>
+Date: Thu, 15 Aug 2024 09:56:49 +0200
+Message-ID: <CAH5fLgi1xpuH1KpwSTPkiVsPsQ6YUC1=XhEusf3bXoRVyJefQQ@mail.gmail.com>
+Subject: Re: [PATCH] rust: enable bindgen's `--enable-function-attribute-detection`
+ flag
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@samsung.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When a parent clk is unregistered, descendant clks are orphaned and
-removed from the clk tree. Test this scenario to make sure clk consumer
-APIs with a child clk don't cause problems.
+On Wed, Aug 14, 2024 at 6:37=E2=80=AFPM Miguel Ojeda <ojeda@kernel.org> wro=
+te:
+>
+> `bindgen` is able to detect certain function attributes and annotate
+> functions correspondingly in its output for the Rust side, when the
+> `--enable-function-attribute-detection` is passed.
+>
+> In particular, it is currently able to use `__must_check` in C
+> (`#[must_use]` in Rust), which give us a bunch of annotations that are
+> nice to have to prevent possible issues in Rust abstractions, e.g.:
+>
+>      extern "C" {
+>     +    #[must_use]
+>          pub fn kobject_add(
+>              kobj: *mut kobject,
+>              parent: *mut kobject,
+>              fmt: *const core::ffi::c_char,
+>              ...
+>          ) -> core::ffi::c_int;
+>      }
+>
+> Apparently, there are edge cases where this can make generation very slow=
+,
+> which is why it is behind a flag [1], but it does not seem to affect us
+> in any major way at the moment.
+>
+> Link: https://github.com/rust-lang/rust-bindgen/issues/1465 [1]
+> Link: https://lore.kernel.org/rust-for-linux/CANiq72=3Du5Nrz_NW3U3_VqywJk=
+D8pECA07q2pFDd1wjtXOWdkAQ@mail.gmail.com/
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-TODO: Fix the crashes
-
-Cc: Nuno Sá <nuno.sa@analog.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/clk_test.c | 60 +++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 57 insertions(+), 3 deletions(-)
-
-diff --git a/drivers/clk/clk_test.c b/drivers/clk/clk_test.c
-index 591897162056..e6479c002023 100644
---- a/drivers/clk/clk_test.c
-+++ b/drivers/clk/clk_test.c
-@@ -3133,6 +3133,17 @@ static void clk_unregister_consumer_clk_unregister(struct kunit *test)
- 	ctx->unregistered = true;
- }
- 
-+static void clk_unregister_parent_consumer_clk_unregister(struct kunit *test)
-+{
-+	struct clk_unregister_consumer_clk_ctx *ctx = test->priv;
-+	struct clk_hw *parent_hw = &ctx->parents[0].ctx.hw;
-+	struct clk *parent_clk = ctx->parents[0].clk;
-+
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, parent_clk);
-+	KUNIT_ASSERT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), parent_clk));
-+	KUNIT_ASSERT_EQ(test, 0, clk_hw_unregister_kunit(test, parent_hw));
-+}
-+
- /* Test that clk_put() can be called after the clk_hw has been unregistered. */
- static void clk_unregister_consumer_clk_put(struct kunit *test)
- {
-@@ -3143,6 +3154,15 @@ static void clk_unregister_consumer_clk_put(struct kunit *test)
- 	KUNIT_EXPECT_EQ(test, 0, clk_put_kunit(test, ctx->clk));
- }
- 
-+static void clk_unregister_parent_consumer_clk_put(struct kunit *test)
-+{
-+	struct clk_unregister_consumer_clk_ctx *ctx = test->priv;
-+
-+	clk_unregister_parent_consumer_clk_unregister(test);
-+
-+	KUNIT_EXPECT_EQ(test, 0, clk_put_kunit(test, ctx->clk));
-+}
-+
- /* Test that clk_prepare() fails after the clk_hw has been unregistered. */
- static void clk_unregister_consumer_clk_prepare_fails(struct kunit *test)
- {
-@@ -3358,6 +3378,24 @@ static void clk_unregister_consumer_clk_set_parent_fails(struct kunit *test)
- 	KUNIT_EXPECT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), ctx->parents[0].clk));
- }
- 
-+/*
-+ * Test that clk_set_parent() doesn't re-parent the clk back to the clk that
-+ * was unregistered.
-+ */
-+static void clk_unregister_parent_consumer_clk_set_parent(struct kunit *test)
-+{
-+	struct clk_unregister_consumer_clk_ctx *ctx = test->priv;
-+
-+	kunit_skip(test, "Fix in the core. This blows up spectacularly!");
-+	KUNIT_ASSERT_NOT_ERR_OR_NULL(test, ctx->parents[0].clk);
-+	KUNIT_ASSERT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), ctx->parents[0].clk));
-+	KUNIT_ASSERT_EQ(test, 0, clk_hw_unregister_kunit(test, &ctx->parents[0].ctx.hw));
-+
-+	KUNIT_EXPECT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), NULL));
-+	KUNIT_EXPECT_GT(test, 0, clk_set_parent(ctx->clk, ctx->parents[0].clk));
-+	KUNIT_EXPECT_TRUE(test, clk_is_match(clk_get_parent(ctx->clk), NULL));
-+}
-+
- /*
-  * Test that clk_get_parent() doesn't call the clk_op after the clk_hw has been
-  * unregistered and returns original parent.
-@@ -3396,6 +3434,8 @@ static void clk_register_params_to_desc(const char *test_name,
-  * @test_name: Test name
-  * @_prev: Previous return value from this function
-  * @desc: Test description (to be filled in)
-+ * @must_have_parents: True if struct clk_register_params::num_parents must be
-+ * 1 or greater
-  *
-  * Use this function in KUNIT_CASE_PARAM to generate struct clk_init_data
-  * parameters for a test that registers clks. It will return combinations of
-@@ -3404,7 +3444,8 @@ static void clk_register_params_to_desc(const char *test_name,
-  * Return: Test parameters in a struct clk_register_params.
-  */
- static const void *clk_register_gen_params(const char *test_name,
--					   const void *_prev, char *desc)
-+					   const void *_prev, char *desc,
-+					   bool must_have_parents)
- {
- 	const struct clk_register_params *prev = _prev;
- 	struct clk_register_params *next;
-@@ -3412,8 +3453,11 @@ static const void *clk_register_gen_params(const char *test_name,
- 	next = krealloc(prev, sizeof(*next), GFP_KERNEL);
- 	if (!next)
- 		return NULL;
--	if (!prev)
-+	if (!prev) {
- 		memset(next, 0, sizeof(*next));
-+		if (must_have_parents)
-+			next->num_parents = 1;
-+	}
- 
- 	if (prev) {
- 		if (next->clk_flags == 0)
-@@ -3433,11 +3477,19 @@ static const void *clk_register_gen_params(const char *test_name,
- 	return next;
- }
- 
-+static const void *
-+clk_unregister_parent_consumer_clk_gen_params(const void *prev,
-+					      char *desc)
-+{
-+	return clk_register_gen_params("parent", prev, desc, true);
-+}
-+
- #define CLK_REGISTER_GEN_PARAMS(name)					\
- 	static const void *name##_gen_params(const void *prev,		\
- 					    char *desc)			\
- 	{								\
--		return clk_register_gen_params(#name, prev, desc);	\
-+		return clk_register_gen_params(#name, prev, desc,	\
-+					       false);			\
- 	}
- 
- #define CLK_REGISTER_KUNIT_CASE_PARAM(name)				\
-@@ -3475,6 +3527,8 @@ static struct kunit_case clk_unregister_consumer_clk_test_cases[] = {
- 	CLK_REGISTER_KUNIT_CASE_PARAM(clk_unregister_consumer_clk_set_parent_fails),
- 	CLK_REGISTER_KUNIT_CASE_PARAM(clk_unregister_consumer_clk_get_parent_skips),
- 	CLK_REGISTER_KUNIT_CASE_PARAM(clk_unregister_consumer_clk_put),
-+	KUNIT_CASE_PARAM(clk_unregister_parent_consumer_clk_put, clk_unregister_parent_consumer_clk_gen_params),
-+	KUNIT_CASE_PARAM(clk_unregister_parent_consumer_clk_set_parent, clk_unregister_parent_consumer_clk_gen_params),
- 	{}
- };
- 
--- 
-https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
-
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Tested-by: Alice Ryhl <aliceryhl@google.com>
