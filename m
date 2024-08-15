@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A567DA7D;
-	Thu, 15 Aug 2024 13:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21897DA7D;
+	Thu, 15 Aug 2024 13:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730297; cv=none; b=H3r852sdw0tA5xDoU0fBGFxiobqM8vtg1puNCXU1VsxIX/q8RsgF7ilSOFqlzZ2ThZoslN+ybXqerCeAJblnDHSjINloz95JSMv/LTjApjGr3rR3Dwnww+Hs13Ru7Mmsy3/yzDUiaIqn7PUFylJHo0M5ep/CoadltT25oqBCfzk=
+	t=1723730300; cv=none; b=N5Ii0EAKT9i5dHp9zHrC3ABGzlO8k/Nj47+smEp/rqgBGGPCrh0oOxw2F0DbFRB7t+ZKmcmuVqdR4Ld3XseN6/On9lPeDpFHz19FxiJw25C5DFwl7s94/pbVTds+fQsNe2sPjhniqkTz9rUBuazbeAyKF4IcITZxfnr+UAZPy+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730297; c=relaxed/simple;
-	bh=kxNToy70nvYBkQRrCNJNUlwkpYbkzqRfoEZHLlhGN3M=;
+	s=arc-20240116; t=1723730300; c=relaxed/simple;
+	bh=IEbPbYbr+00EaTj+UIVOgrHuuUmpTrkapmZZ9qiLHEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NfBOgJveUuIPPN/SW8nil8PCKFM4p1Bb7dR7XH2QdGYr4MzZwL4BJvyB7PxqAFuyk6hEmeTvl65H+PtPXmuPABzt1AmWjv1ohpJsAFhVELiTAhw/D5BLTI7a19W0/qeZW7UnaRwRIwaf2CKW2we5jOQejDk8kD54MZRrrxErcbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mHWJZhit; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X6bOMOvTyQ7hR8am5qKiBJbJUhc+H3fx935Ds7yz5aU+A0jSNUKL5u33zonSdZxbGVtXJXIuDHQ75nE65epPhfWRbXeYVdv1GX7EKuShJWy+xz3YzYOVxbeor2GQDhNq1rFiuY+tIZy3Z/Yp6EY5tmhwvBluKipF/xwBW+5n5jY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c8Dk+E0S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mHWJZhit"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30EDC32786;
-	Thu, 15 Aug 2024 13:58:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c8Dk+E0S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AD3C4AF0A;
+	Thu, 15 Aug 2024 13:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730297;
-	bh=kxNToy70nvYBkQRrCNJNUlwkpYbkzqRfoEZHLlhGN3M=;
+	s=korg; t=1723730300;
+	bh=IEbPbYbr+00EaTj+UIVOgrHuuUmpTrkapmZZ9qiLHEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHWJZhitjPMw1HpJIYCPCUSyJG7kU+uj2Q49BTn0hZq7bqm+y5A3v5xH6HJOmMGSK
-	 Ff/Wn/62YlQFThNC1qYcLWntmtQj8TYUS7Sa8dKhWDQneTxyA4JDFCDOUZkbE24o9M
-	 UPDmXcC+0RtQNfT7peitC1G6UvB9bjsoYQTsiY/0=
+	b=c8Dk+E0Sq1l66dgxq96cOJqLrNQPTR7KNhsPEB3fURsbVLOOOeTZ5WC45IRKRU+pI
+	 +UywUgQIRibqfYO6IMFlYO01eCGxNnxQVbWgk/jpTQnDirtyXtmtf3tJ8ZmUgC/n4Y
+	 CnQwXuzbJZ9XlLWNJVPwRwGJBKYqh+Pjg0PEJ6WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com,
-	Dmitry Antipov <dmantipov@yandex.ru>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 363/484] Bluetooth: l2cap: always unlock channel in l2cap_conless_channel()
-Date: Thu, 15 Aug 2024 15:23:41 +0200
-Message-ID: <20240815131955.454286862@linuxfoundation.org>
+Subject: [PATCH 5.15 335/484] net: mvpp2: Dont re-use loop iterator
+Date: Thu, 15 Aug 2024 15:23:13 +0200
+Message-ID: <20240815131954.351099259@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,35 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Antipov <dmantipov@yandex.ru>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit c531e63871c0b50c8c4e62c048535a08886fba3e ]
+[ Upstream commit 0aa3ca956c46d849775eae1816cef8fe4bc8b50e ]
 
-Add missing call to 'l2cap_chan_unlock()' on receive error handling
-path in 'l2cap_conless_channel()'.
+This function has a nested loop.  The problem is that both the inside
+and outside loop use the same variable as an iterator.  I found this
+via static analysis so I'm not sure the impact.  It could be that it
+loops forever or, more likely, the loop exits early.
 
-Fixes: a24cce144b98 ("Bluetooth: Fix reference counting of global L2CAP channels")
-Reported-by: syzbot+45ac74737e866894acb0@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=45ac74737e866894acb0
-Signed-off-by: Dmitry Antipov <dmantipov@yandex.ru>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3a616b92a9d1 ("net: mvpp2: Add TX flow control support for jumbo frames")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/eaa8f403-7779-4d81-973d-a9ecddc0bf6f@stanley.mountain
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 43a21a90619d9..4d5dd82f26144 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -7767,6 +7767,7 @@ static void l2cap_conless_channel(struct l2cap_conn *conn, __le16 psm,
- 	bt_cb(skb)->l2cap.psm = psm;
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index ba44d1d9cfcd4..2a60f949d9532 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -953,13 +953,13 @@ static void mvpp2_bm_pool_update_fc(struct mvpp2_port *port,
+ static void mvpp2_bm_pool_update_priv_fc(struct mvpp2 *priv, bool en)
+ {
+ 	struct mvpp2_port *port;
+-	int i;
++	int i, j;
  
- 	if (!chan->ops->recv(chan, skb)) {
-+		l2cap_chan_unlock(chan);
- 		l2cap_chan_put(chan);
- 		return;
- 	}
+ 	for (i = 0; i < priv->port_count; i++) {
+ 		port = priv->port_list[i];
+ 		if (port->priv->percpu_pools) {
+-			for (i = 0; i < port->nrxqs; i++)
+-				mvpp2_bm_pool_update_fc(port, &port->priv->bm_pools[i],
++			for (j = 0; j < port->nrxqs; j++)
++				mvpp2_bm_pool_update_fc(port, &port->priv->bm_pools[j],
+ 							port->tx_fc & en);
+ 		} else {
+ 			mvpp2_bm_pool_update_fc(port, port->pool_long, port->tx_fc & en);
 -- 
 2.43.0
 
