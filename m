@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418A41A0733;
-	Thu, 15 Aug 2024 13:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80001A08CB;
+	Thu, 15 Aug 2024 13:52:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729975; cv=none; b=EvOvDgjsSKoGzdvvpgIP9Th+/n6MsHgEvppK6cRV4I1wgTv7iyni1QZjB8Nyf1zX9KvR7iarmMP3KAYq90RFQAL3RJKtNO2Eqyj8taOYzy/7935Z+5dyvLSnZeCssb8AY5u0dDl3ufhJ88C9afl7hJwO4jQ7hSBcq7D9XRmtrQ0=
+	t=1723729978; cv=none; b=tYbpL6qsmNCGGwz+8eRxad1eMSOYLQwxJgaGyxIiW7kf7ZvdU8usYIQyqR5aD+ym9SHsx1Qa8e0i+DKS+aze+PUHrwNx8lJmLEzQjFsrpNlc+ZuEz67GRFdCfm46YjqwbgHaBv8ITccynkTHa/h5/JRHScsYE4XajKsmccHsLOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729975; c=relaxed/simple;
-	bh=cOCamALYCh7n7arrB/2srFbrPuBhjrjGPsd2T+Z9CT0=;
+	s=arc-20240116; t=1723729978; c=relaxed/simple;
+	bh=mFMF1TEx8+RKdztRi8ZqSUeajBPcqPfbhHr7MeagixA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h1zeQHXde9Eknyi/ovr7LIz1IbKw6+6x732WageRdGGXHt2tKa+596YQhqoGNwNeudQTJ4gwz4Zz1/kXTKszZvpq6l3TSAoZhzOg9gAS3PD83/63wOGxa1xWaukOGhG6LFC5ixM0zOwZ5RPseWE2xdjCV/SGfIn7SfwK9NhJm7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tTTquKId; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VxLAAnjOj4dvOu3x90s/xnSKCDL3efa4AOHf5iAVDMUzYVUWe2u7xfVlmRUoeknC+feTqEsgHXwV+OCEP42Tt6Wd3QRtJWQBvoVE+X9WBN+ErTPSqChlNRz3SsKbXglIQXAbKVMdPwEHWqzdXrag1fdHOuvCS16pZjTRDPUW6zs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t+kySxdJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tTTquKId"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1509C32786;
-	Thu, 15 Aug 2024 13:52:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t+kySxdJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB9A2C32786;
+	Thu, 15 Aug 2024 13:52:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729975;
-	bh=cOCamALYCh7n7arrB/2srFbrPuBhjrjGPsd2T+Z9CT0=;
+	s=korg; t=1723729978;
+	bh=mFMF1TEx8+RKdztRi8ZqSUeajBPcqPfbhHr7MeagixA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTTquKIdE5duqdI0Pt30NRzJXGTEW4c1fHv8tl3K5HK8NJSsxkmP1fvdbwZC9WsC2
-	 PNrHoanC8xysTWSKJEWxh89hwUoTBjG67s63/NRIQ5wMMhB8cYtDdO4yg7iKmsLsRq
-	 RQQ+anCbKSfI+i5KdBYZY8qh6Td418pLv5q0vf7Q=
+	b=t+kySxdJJ4X90kicWdB9dGy3OBv1XChGz/3x35SQ8SA4aYspZNdFbM8zRtyQ9JjWA
+	 6dgUu6ak9Udw3+TIjCResL0zpnEKN0jCUlONNTQBsidQEjCzhLHL23V1sktRlgmkAv
+	 36zsRTpofr4CPxy4d3rQT2GyNR3yJRcptUc3TbVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 5.15 234/484] perf/x86/intel/pt: Fix a topa_entry base address calculation
-Date: Thu, 15 Aug 2024 15:21:32 +0200
-Message-ID: <20240815131950.443851445@linuxfoundation.org>
+	Andi Shyti <andi.shyti@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Jonathan Cavitt <jonathan.cavitt@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 5.15 235/484] drm/i915/gt: Do not consider preemption during execlists_dequeue for gen8
+Date: Thu, 15 Aug 2024 15:21:33 +0200
+Message-ID: <20240815131950.482530323@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,46 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Nitin Gote <nitin.r.gote@intel.com>
 
-commit ad97196379d0b8cb24ef3d5006978a6554e6467f upstream.
+commit 65564157ae64cec0f527583f96e32f484f730f92 upstream.
 
-topa_entry->base is a bit-field. Bit-fields are not promoted to a 64-bit
-type, even if the underlying type is 64-bit, and so, if necessary, must
-be cast to a larger type when calculations are done.
+We're seeing a GPU hang issue on a CHV platform, which was caused by commit
+bac24f59f454 ("drm/i915/execlists: Enable coarse preemption boundaries for
+Gen8").
 
-Fix a topa_entry->base address calculation by adding a cast.
+The Gen8 platform only supports timeslicing and doesn't have a preemption
+mechanism, as its engines do not have a preemption timer.
 
-Without the cast, the address was limited to 36-bits i.e. 64GiB.
+Commit 751f82b353a6 ("drm/i915/gt: Only disable preemption on Gen8 render
+engines") addressed this issue only for render engines. This patch extends
+that fix by ensuring that preemption is not considered for all engines on
+Gen8 platforms.
 
-The address calculation is used on systems that do not support Multiple
-Entry ToPA (only Broadwell), and affects physical addresses on or above
-64GiB. Instead of writing to the correct address, the address comprising
-the first 36 bits would be written to.
+v4:
+ - Use the correct Fixes tag (Rodrigo Vivi)
+ - Reworded commit log (Andi Shyti)
 
-Intel PT snapshot and sampling modes are not affected.
+v3:
+ - Inside need_preempt(), condition of can_preempt() is not required
+   as simplified can_preempt() is enough. (Chris Wilson)
 
-Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
-Reported-by: Dave Hansen <dave.hansen@linux.intel.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240624201101.60186-3-adrian.hunter@intel.com
+v2: Simplify can_preempt() function (Tvrtko Ursulin)
+
+Fixes: 751f82b353a6 ("drm/i915/gt: Only disable preemption on gen8 render engines")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/11396
+Suggested-by: Andi Shyti <andi.shyti@intel.com>
+Signed-off-by: Nitin Gote <nitin.r.gote@intel.com>
+Cc: Chris Wilson <chris.p.wilson@linux.intel.com>
+CC: <stable@vger.kernel.org> # v5.12+
+Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240711163208.1355736-1-nitin.r.gote@intel.com
+(cherry picked from commit 7df0be6e6280c6fca01d039864bb123e5e36604b)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/pt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_execlists_submission.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/arch/x86/events/intel/pt.c
-+++ b/arch/x86/events/intel/pt.c
-@@ -861,7 +861,7 @@ static void pt_update_head(struct pt *pt
-  */
- static void *pt_buffer_region(struct pt_buffer *buf)
+--- a/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
++++ b/drivers/gpu/drm/i915/gt/intel_execlists_submission.c
+@@ -3231,11 +3231,7 @@ static void remove_from_engine(struct i9
+ 
+ static bool can_preempt(struct intel_engine_cs *engine)
  {
--	return phys_to_virt(TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
-+	return phys_to_virt((phys_addr_t)TOPA_ENTRY(buf->cur, buf->cur_idx)->base << TOPA_SHIFT);
+-	if (GRAPHICS_VER(engine->i915) > 8)
+-		return true;
+-
+-	/* GPGPU on bdw requires extra w/a; not implemented */
+-	return engine->class != RENDER_CLASS;
++	return GRAPHICS_VER(engine->i915) > 8;
  }
  
- /**
+ static void kick_execlists(const struct i915_request *rq, int prio)
 
 
