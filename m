@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5197D1AC893;
-	Thu, 15 Aug 2024 14:40:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724821AC893;
+	Thu, 15 Aug 2024 14:40:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732838; cv=none; b=eIXt0i05YKfoQ2SBTvvrHroYZ706BbE8a54eHdicQzEckXBN4MWZzgoW2oflsWBG8VEk7+OZWucm7/QkiTZfycMOdGWqLYjLErkKQ7F5uQXykjtnLliPfYy6DxVV/ytXrsNxdl0LP8hjokOZSjBGcTyZRY1PUJTXtsnm845hfig=
+	t=1723732841; cv=none; b=LH76bAk4ZW/yKQEC+vJiFbDogVlqlEHfZ8emFv5mOxln+AQxPLykXKGx7V/CSbbQ5t7zFbOWvDC04Sa4OAmdVTtosMq18fxbHW41E6mhocToNXpmEt1jXbzA9HDNO/icUejM815/77EY8MVS1OVvsd7wKupOJqio2BwBhCvcKmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732838; c=relaxed/simple;
-	bh=BP6lCl/DnF8AdIKXkclwLksPbgkA4PH+DRKq6kvs7mY=;
+	s=arc-20240116; t=1723732841; c=relaxed/simple;
+	bh=YB4ypPWgUT6WNHtbTM/vMcV+49w2Hpm4ZLO2kHNSNBY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbhWs9b0UvAbqQiJhkPI4EnuRn9Jbkfmp1PzzSPiZGYr4HibW6XGJjC/XqPpnLOgNNjvcFdn4tEdcPc3Vgxluz8RL1rQeoy+iCHWge6reAqXQ5zrlSFymmsGlWm6VXiC2qjMID/VJpd5yQcTa+jqAbb/DrdJUJnjqgeaBOtakrI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOiSiCPg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KsOWEiPYJXX3U/xWw53xZNcPKxw35pnKcLG12KTYWFw31dpnJzZzRo0IYyi7q8hHbByMh7prrmSRctO0ScJKUbj2HKeGdD48SUgoonXGF8dehAqX9R7JIWuf/J1PDJLtLcqL1A+LmC4UxKermQpoEUY0IKtvDOwDaf/sSbEgalU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZRQtMnT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOiSiCPg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB10FC32786;
-	Thu, 15 Aug 2024 14:40:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZRQtMnT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1EF7C32786;
+	Thu, 15 Aug 2024 14:40:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732838;
-	bh=BP6lCl/DnF8AdIKXkclwLksPbgkA4PH+DRKq6kvs7mY=;
+	s=korg; t=1723732841;
+	bh=YB4ypPWgUT6WNHtbTM/vMcV+49w2Hpm4ZLO2kHNSNBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOiSiCPgSBn50mJFr9NpW6Th1qCJ21LajLNKRHaTwfniz1onaBH2+TwSYqQdC+soU
-	 5rQNbkbnHA0uXovBT1O6G+PBmoKIOAVRM896O1sDb/HSnrbKW64i2gedM8z6CQBtVv
-	 qHl6WyBVh+x6Se+IWojO8QI5WKRVdv9Y8hBgH/dA=
+	b=RZRQtMnTOlvdSPIHusHuy9HwZQqnPQCIzD0ySoSPKTq8XzBI6qpGtTuTjWroLKpaB
+	 7LEmxfBm0IlTrD7qH5vNa2kLVmASSvhHvdR7gbvrHgpPu3H8KLGMr/01OCu+5BciqO
+	 TD/u3w6ZPJds1rgIXfNKTi9LqufK3MUoAwy/Az2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 284/352] arm64: cputype: Add Neoverse-V3 definitions
-Date: Thu, 15 Aug 2024 15:25:50 +0200
-Message-ID: <20240815131930.426586039@linuxfoundation.org>
+	syzbot+78eccfb8b3c9a85fc6c5@syzkaller.appspotmail.com,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 302/352] ALSA: line6: Fix racy access to midibuf
+Date: Thu, 15 Aug 2024 15:26:08 +0200
+Message-ID: <20240815131931.133286690@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -53,53 +50,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 0ce85db6c2141b7ffb95709d76fc55a27ff3cdc1 ]
+commit 15b7a03205b31bc5623378c190d22b7ff60026f1 upstream.
 
-Add cputype definitions for Neoverse-V3. These will be used for errata
-detection in subsequent patches.
+There can be concurrent accesses to line6 midibuf from both the URB
+completion callback and the rawmidi API access.  This could be a cause
+of KMSAN warning triggered by syzkaller below (so put as reported-by
+here).
 
-These values can be found in Table B-249 ("MIDR_EL1 bit descriptions")
-in issue 0001-04 of the Neoverse-V3 TRM, which can be found at:
+This patch protects the midibuf call of the former code path with a
+spinlock for avoiding the possible races.
 
-  https://developer.arm.com/documentation/107734/0001/?lang=en
-
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: James Morse <james.morse@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20240508081400.235362-4-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
-[ Mark: trivial backport ]
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+78eccfb8b3c9a85fc6c5@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/00000000000000949c061df288c5@google.com
+Cc: <stable@vger.kernel.org>
+Link: https://patch.msgid.link/20240805130129.10872-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/cputype.h | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/usb/line6/driver.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/include/asm/cputype.h b/arch/arm64/include/asm/cputype.h
-index a6d1276751dcc..b2887995e575e 100644
---- a/arch/arm64/include/asm/cputype.h
-+++ b/arch/arm64/include/asm/cputype.h
-@@ -86,6 +86,7 @@
- #define ARM_CPU_PART_CORTEX_A78C	0xD4B
- #define ARM_CPU_PART_NEOVERSE_V2	0xD4F
- #define ARM_CPU_PART_CORTEX_X4		0xD82
-+#define ARM_CPU_PART_NEOVERSE_V3	0xD84
+--- a/sound/usb/line6/driver.c
++++ b/sound/usb/line6/driver.c
+@@ -286,12 +286,14 @@ static void line6_data_received(struct u
+ {
+ 	struct usb_line6 *line6 = (struct usb_line6 *)urb->context;
+ 	struct midi_buffer *mb = &line6->line6midi->midibuf_in;
++	unsigned long flags;
+ 	int done;
  
- #define APM_CPU_PART_POTENZA		0x000
+ 	if (urb->status == -ESHUTDOWN)
+ 		return;
  
-@@ -140,6 +141,7 @@
- #define MIDR_CORTEX_A78C	MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_A78C)
- #define MIDR_NEOVERSE_V2 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V2)
- #define MIDR_CORTEX_X4 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_CORTEX_X4)
-+#define MIDR_NEOVERSE_V3 MIDR_CPU_MODEL(ARM_CPU_IMP_ARM, ARM_CPU_PART_NEOVERSE_V3)
- #define MIDR_THUNDERX	MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX)
- #define MIDR_THUNDERX_81XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_81XX)
- #define MIDR_THUNDERX_83XX MIDR_CPU_MODEL(ARM_CPU_IMP_CAVIUM, CAVIUM_CPU_PART_THUNDERX_83XX)
--- 
-2.43.0
-
+ 	if (line6->properties->capabilities & LINE6_CAP_CONTROL_MIDI) {
++		spin_lock_irqsave(&line6->line6midi->lock, flags);
+ 		done =
+ 			line6_midibuf_write(mb, urb->transfer_buffer, urb->actual_length);
+ 
+@@ -300,12 +302,15 @@ static void line6_data_received(struct u
+ 			dev_dbg(line6->ifcdev, "%d %d buffer overflow - message skipped\n",
+ 				done, urb->actual_length);
+ 		}
++		spin_unlock_irqrestore(&line6->line6midi->lock, flags);
+ 
+ 		for (;;) {
++			spin_lock_irqsave(&line6->line6midi->lock, flags);
+ 			done =
+ 				line6_midibuf_read(mb, line6->buffer_message,
+ 						   LINE6_MIDI_MESSAGE_MAXLEN,
+ 						   LINE6_MIDIBUF_READ_RX);
++			spin_unlock_irqrestore(&line6->line6midi->lock, flags);
+ 
+ 			if (done <= 0)
+ 				break;
 
 
