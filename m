@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35BAF1A00F5;
-	Thu, 15 Aug 2024 14:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911A01A00F5;
+	Thu, 15 Aug 2024 14:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730703; cv=none; b=oXm6I6e+21eB1gBa8TQ0XSuBRHRlKbEGt2yvqNbqAHtFdR8Ik/PtJyDHf9XnJkhGpQV719IIiSJKbpTR0yvGDzcBaSNduHLIArXw1XKpof0zuHzFTskVaJNLjar8MTXxgECcGvJiZaG76EgWseBgf68EuB8bH3/SfxlOukJJDkM=
+	t=1723730706; cv=none; b=WeuCWrmkrjFPqYyCJepk3XdvzxhKGtrHpWmZ2+tMSnKKfRYV0H4v42h6VUWyrNH74U2qaRLFRXzfP57n1JJw1FmS09YdDsMx8+iCjJ1Bkji+g0qeJkF4SiGcaC+S4vtCMcIbotuCkqcVx0Yw9EMIcKEmRNB/MBwNYB9yMzURFxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730703; c=relaxed/simple;
-	bh=FlboqxrMcOtJhKIBFADqJkNQJ79yHVF8m5acUTmmepg=;
+	s=arc-20240116; t=1723730706; c=relaxed/simple;
+	bh=zxh6cJhs7xCBjgNYZo/02HETLXRP/BGMQ5q2Z6oXCBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=osdkqIK25TkzOoCarGEuYiJKs38sxNoYk8cashoS5durBCQxuWRw4eF9AAiOtTAsSg9YLlOD9L9PnMrk0pTydKxdOeRB0W3Z3TTObCW89pp8iEVSPOcR7Jwnw2fDLtK1sWzPLLWlWdLQwGMOBuNdJozhll3KCebxKWqpGA48THw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+K75C5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bQoxFJQTJX8SHMcEenKSsmUqgdSL/vOMjDeeDcV110hg3vd0m3Nr1/nPd0cRrBc9vyNDHMmeismg0YumtSLiSg9AO7uVekzzS2S12Ndf53SL3paWrbOCbSz+Yu22SPjsavnX4XJSzVfzpvsOtGoiOhgZZ9kPcRF/UBUSuFIrvFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sawvZoGm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+K75C5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14FFC32786;
-	Thu, 15 Aug 2024 14:05:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sawvZoGm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 019E9C32786;
+	Thu, 15 Aug 2024 14:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730703;
-	bh=FlboqxrMcOtJhKIBFADqJkNQJ79yHVF8m5acUTmmepg=;
+	s=korg; t=1723730706;
+	bh=zxh6cJhs7xCBjgNYZo/02HETLXRP/BGMQ5q2Z6oXCBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+K75C5lOxYxr97o06Ol+PLQY1agY5VUW6kcLX0kAZ3UEpQrJ+QrYpjOdqc5BGyo0
-	 4/eVeRwR1NTqiYedUn61xqpboYRRpCsKKIIAi6LejaW+0qzPJd9nL9+STix5MG9uf3
-	 9FjJ91yq+Y4585EdesV/PfrCR+CbAiQE0NgMPjng=
+	b=sawvZoGmvqF/n2z0JZFU4q7Xw75zhaQUYyjYEN+N6Dx9a5Lv2YhB19qJpl1c7TfnW
+	 /bG/hBAbuiN4/mt52KA6dK1KsncB0WQGrYzw9YApiTtXsSunxpn4r4/+mg4XtY/AQm
+	 4bGEwKi1iJl7PtNvMM84RIHP0cQNNiZpfpqrr0nE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Jisheng Zhang <jszhang@kernel.org>
-Subject: [PATCH 5.15 471/484] net: stmmac: Enable mac_managed_pm phylink config
-Date: Thu, 15 Aug 2024 15:25:29 +0200
-Message-ID: <20240815131959.669102793@linuxfoundation.org>
+	Richard Zhu <hongxing.zhu@nxp.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 472/484] PCI: dwc: Restore MSI Receiver mask during resume
+Date: Thu, 15 Aug 2024 15:25:30 +0200
+Message-ID: <20240815131959.707523521@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,33 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shenwei Wang <shenwei.wang@nxp.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-commit f151c147b3afcf92dedff53f5f0e965414e4fd2c upstream
+commit 815953dc2011ad7a34de355dfa703dcef1085219 upstream
 
-Enable the mac_managed_pm configuration in the phylink_config
-structure to avoid the kernel warning during system resume.
+If a host that uses the IP's integrated MSI Receiver lost power
+during suspend, we call dw_pcie_setup_rc() to reinit the RC. But
+dw_pcie_setup_rc() always sets pp->irq_mask[ctrl] to ~0, so the mask
+register is always set as 0xffffffff incorrectly, thus the MSI can't
+work after resume.
 
-Fixes: 744d23c71af3 ("net: phy: Warn about incorrect mdio_bus_phy_resume() state")
-Signed-off-by: Shenwei Wang <shenwei.wang@nxp.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fix this issue by moving pp->irq_mask[ctrl] initialization to
+dw_pcie_host_init() so we can correctly set the mask reg during both
+boot and resume.
+
+Tested-by: Richard Zhu <hongxing.zhu@nxp.com>
+Link: https://lore.kernel.org/r/20211226074019.2556-1-jszhang@kernel.org
 Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Signed-off-by: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/dwc/pcie-designware-host.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1286,6 +1286,8 @@ static int stmmac_phy_setup(struct stmma
- 	if (!fwnode)
- 		fwnode = dev_fwnode(priv->device);
- 
-+	priv->phylink_config.mac_managed_pm = true;
+--- a/drivers/pci/controller/dwc/pcie-designware-host.c
++++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+@@ -352,6 +352,12 @@ int dw_pcie_host_init(struct pcie_port *
+ 			if (ret < 0)
+ 				return ret;
+ 		} else if (pp->has_msi_ctrl) {
++			u32 ctrl, num_ctrls;
 +
- 	phylink = phylink_create(&priv->phylink_config, fwnode,
- 				 mode, &stmmac_phylink_mac_ops);
- 	if (IS_ERR(phylink))
++			num_ctrls = pp->num_vectors / MAX_MSI_IRQS_PER_CTRL;
++			for (ctrl = 0; ctrl < num_ctrls; ctrl++)
++				pp->irq_mask[ctrl] = ~0;
++
+ 			if (!pp->msi_irq) {
+ 				pp->msi_irq = platform_get_irq_byname_optional(pdev, "msi");
+ 				if (pp->msi_irq < 0) {
+@@ -550,7 +556,6 @@ void dw_pcie_setup_rc(struct pcie_port *
+ 
+ 		/* Initialize IRQ Status array */
+ 		for (ctrl = 0; ctrl < num_ctrls; ctrl++) {
+-			pp->irq_mask[ctrl] = ~0;
+ 			dw_pcie_writel_dbi(pci, PCIE_MSI_INTR0_MASK +
+ 					    (ctrl * MSI_REG_CTRL_BLOCK_SIZE),
+ 					    pp->irq_mask[ctrl]);
 
 
