@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBD619EEAA;
-	Thu, 15 Aug 2024 13:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9220718D630;
+	Thu, 15 Aug 2024 13:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730034; cv=none; b=eok0srF3t4S4zt6nWLpVFe1IQ6SyyZhA/WEaSJYY8JmRHCmYo/2vVcipPNgxonEYWzPDtZCyaW9hQHkntd0TzorXUzbSjb+Rij3Na722XWiDN8PI+ldCtDSzZjWoj7YKk51PngL6k9ilWoK7PpgifTtn/9P+Wcyq290Ds+PE8HE=
+	t=1723730038; cv=none; b=o2hD7iboI2wA4vluGSzuPXmByhjB3bX23BRT2Mmc/QaNLKfN0w74fHyAzBQjC8T7HQd4VLgLnn9fdWaFSym1XI/p6fmPxq7wHktpIpLMgx8wW5sCkdLchx3RVGmP95K/t7kPFETJbwWczF1myg01QHBpfADsnx/ZmUnLE8rvKKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730034; c=relaxed/simple;
-	bh=GceAD3fvhq95irpcIKaPW25zJQG01noIM1wXGHstzZc=;
+	s=arc-20240116; t=1723730038; c=relaxed/simple;
+	bh=8zzxwEk5Q88IpKQdClk/DhE32X+gCV4XPBHyytRBWzI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dNrTvUfPP/HsjL+4TYAZUcKOI6SwiPSfWIr9vRx18XrkJiIcfGqLFOdYPW5V6Fan6K9fWEHhbfkS8P3OsFpvTBN6m8U1S7wz+fYfwsvWzhYgMA8M0lKeOrxrMEDsqk+reTEnlE73yYYKuYkqFlLpQpvrr80CV894if1djw6chT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJ+j3W5l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sYNZPCsb8jAZmt5fA+ymV5Hob+1ur9e6nnFXQYjJaMj9VKMHoyoyChfyetQLckV9B+wUU2r0fw7bCY0R6YWZvepebiHS/vNbHQzy5jTGYHW1Iemhl4JCAotV2TGFrwbeOYtXr5WIYoxo0CV9zNZVqx8En44L0lKE1kEPFIqyoKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QNgYKEbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJ+j3W5l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 257AFC4AF0A;
-	Thu, 15 Aug 2024 13:53:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QNgYKEbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B41C3C32786;
+	Thu, 15 Aug 2024 13:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730034;
-	bh=GceAD3fvhq95irpcIKaPW25zJQG01noIM1wXGHstzZc=;
+	s=korg; t=1723730038;
+	bh=8zzxwEk5Q88IpKQdClk/DhE32X+gCV4XPBHyytRBWzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJ+j3W5lbS+txLzVy1DlOksuZ17FSpKk0C0okQwV/9qi3Jt3P7k2svrWj+JhilZiC
-	 g4hM4T/nZgEsT1MJC3bPB9NK79Jmdk4HeV/cp6WVNRB6cPHuz4bXJPczhyvqaDHR2e
-	 RIZhe0Ysy1f3yDJo+CPDOKDc7vmkaIXK90qYH8K4=
+	b=QNgYKEbpXabnaXF5XQb7jiQEeuxHn69QkgIHs7mQRQf0I9dWa+ZTgj7VKy5g5/s1Y
+	 wpAd14T/X9X0FQmAqKjwOzFtVurHOZ3L35EQjRvfSSIS5SwCRcTjRSaqcYsIeRSRxz
+	 AN8ZvDGl0WTp4i3WMN5Q+yU625za2vupvoZsewc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 266/484] um: time-travel: fix signal blocking race/hang
-Date: Thu, 15 Aug 2024 15:22:04 +0200
-Message-ID: <20240815131951.676141922@linuxfoundation.org>
+Subject: [PATCH 5.15 284/484] spi: spidev: Replace OF specific code by device property API
+Date: Thu, 15 Aug 2024 15:22:22 +0200
+Message-ID: <20240815131952.377458267@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,252 +51,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 2cf3a3c4b84def5406b830452b1cb8bbfffe0ebe ]
+[ Upstream commit 88a285192084edab6657e819f7f130f9cfcb0579 ]
 
-When signals are hard-blocked in order to do time-travel
-socket processing, we set signals_blocked and then handle
-SIGIO signals by setting the SIGIO bit in signals_pending.
-When unblocking, we first set signals_blocked to 0, and
-then handle all pending signals. We have to set it first,
-so that we can again properly block/unblock inside the
-unblock, if the time-travel handlers need to be processed.
+Instead of calling the OF specific APIs, use device property ones.
 
-Unfortunately, this is racy. We can get into this situation:
+It also prevents misusing PRP0001 in ACPI when trying to instantiate
+spidev directly. We only support special SPI test devices there.
 
-// signals_pending = SIGIO_MASK
-
-unblock_signals_hard()
-   signals_blocked = 0;
-   if (signals_pending && signals_enabled) {
-     block_signals();
-     unblock_signals()
-       ...
-       sig_handler_common(SIGIO, NULL, NULL);
-         sigio_handler()
-           ...
-           sigio_reg_handler()
-             irq_do_timetravel_handler()
-               reg->timetravel_handler() ==
-               vu_req_interrupt_comm_handler()
-                 vu_req_read_message()
-                   vhost_user_recv_req()
-                     vhost_user_recv()
-                       vhost_user_recv_header()
-                         // reads 12 bytes header of
-                         // 20 bytes message
-<-- receive SIGIO here <--
-sig_handler()
-   int enabled = signals_enabled; // 1
-   if ((signals_blocked || !enabled) && (sig == SIGIO)) {
-     if (!signals_blocked && time_travel_mode == TT_MODE_EXTERNAL)
-       sigio_run_timetravel_handlers()
-         _sigio_handler()
-           sigio_reg_handler()
-             ... as above ...
-               vhost_user_recv_header()
-                 // reads 8 bytes that were message payload
-                 // as if it were header - but aborts since
-                 // it then gets -EAGAIN
-...
---> end signal handler -->
-                       // continue in vhost_user_recv()
-                       // full_read() for 8 bytes payload busy loops
-                       // entire process hangs here
-
-Conceptually, to fix this, we need to ensure that the
-signal handler cannot run while we hard-unblock signals.
-The thing that makes this more complex is that we can be
-doing hard-block/unblock while unblocking. Introduce a
-new signals_blocked_pending variable that we can keep at
-non-zero as long as pending signals are being processed,
-then we only need to ensure it's decremented safely and
-the signal handler will only increment it if it's already
-non-zero (or signals_blocked is set, of course.)
-
-Note also that only the outermost call to hard-unblock is
-allowed to decrement signals_blocked_pending, since it
-could otherwise reach zero in an inner call, and leave
-the same race happening if the timetravel_handler loops,
-but that's basically required of it.
-
-Fixes: d6b399a0e02a ("um: time-travel/signals: fix ndelay() in interrupt")
-Link: https://patch.msgid.link/20240703110144.28034-2-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20220323140215.2568-4-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: fc28d1c1fe3b ("spi: spidev: add correct compatible for Rohm BH2228FV")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/um/os-Linux/signal.c | 118 +++++++++++++++++++++++++++++++-------
- 1 file changed, 98 insertions(+), 20 deletions(-)
+ drivers/spi/spidev.c | 45 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 23 deletions(-)
 
-diff --git a/arch/um/os-Linux/signal.c b/arch/um/os-Linux/signal.c
-index 24a403a70a020..850d21e6473ee 100644
---- a/arch/um/os-Linux/signal.c
-+++ b/arch/um/os-Linux/signal.c
-@@ -8,6 +8,7 @@
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 8c69ab348a7f7..4a19c2142e474 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -20,8 +20,6 @@
+ #include <linux/property.h>
+ #include <linux/slab.h>
+ #include <linux/compat.h>
+-#include <linux/of.h>
+-#include <linux/of_device.h>
  
- #include <stdlib.h>
- #include <stdarg.h>
-+#include <stdbool.h>
- #include <errno.h>
- #include <signal.h>
- #include <string.h>
-@@ -65,9 +66,7 @@ static void sig_handler_common(int sig, struct siginfo *si, mcontext_t *mc)
+ #include <linux/spi/spi.h>
+ #include <linux/spi/spidev.h>
+@@ -696,20 +694,31 @@ static const struct spi_device_id spidev_spi_ids[] = {
+ };
+ MODULE_DEVICE_TABLE(spi, spidev_spi_ids);
  
- int signals_enabled;
- #ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
--static int signals_blocked;
--#else
--#define signals_blocked 0
-+static int signals_blocked, signals_blocked_pending;
- #endif
- static unsigned int signals_pending;
- static unsigned int signals_active = 0;
-@@ -76,14 +75,27 @@ void sig_handler(int sig, struct siginfo *si, mcontext_t *mc)
- {
- 	int enabled = signals_enabled;
- 
--	if ((signals_blocked || !enabled) && (sig == SIGIO)) {
-+#ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
-+	if ((signals_blocked ||
-+	     __atomic_load_n(&signals_blocked_pending, __ATOMIC_SEQ_CST)) &&
-+	    (sig == SIGIO)) {
-+		/* increment so unblock will do another round */
-+		__atomic_add_fetch(&signals_blocked_pending, 1,
-+				   __ATOMIC_SEQ_CST);
-+		return;
-+	}
-+#endif
+-#ifdef CONFIG_OF
++/*
++ * spidev should never be referenced in DT without a specific compatible string,
++ * it is a Linux implementation thing rather than a description of the hardware.
++ */
++static int spidev_of_check(struct device *dev)
++{
++	if (device_property_match_string(dev, "compatible", "spidev") < 0)
++		return 0;
 +
-+	if (!enabled && (sig == SIGIO)) {
- 		/*
- 		 * In TT_MODE_EXTERNAL, need to still call time-travel
--		 * handlers unless signals are also blocked for the
--		 * external time message processing. This will mark
--		 * signals_pending by itself (only if necessary.)
-+		 * handlers. This will mark signals_pending by itself
-+		 * (only if necessary.)
-+		 * Note we won't get here if signals are hard-blocked
-+		 * (which is handled above), in that case the hard-
-+		 * unblock will handle things.
- 		 */
--		if (!signals_blocked && time_travel_mode == TT_MODE_EXTERNAL)
-+		if (time_travel_mode == TT_MODE_EXTERNAL)
- 			sigio_run_timetravel_handlers();
- 		else
- 			signals_pending |= SIGIO_MASK;
-@@ -380,33 +392,99 @@ int um_set_signals_trace(int enable)
- #ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
- void mark_sigio_pending(void)
- {
-+	/*
-+	 * It would seem that this should be atomic so
-+	 * it isn't a read-modify-write with a signal
-+	 * that could happen in the middle, losing the
-+	 * value set by the signal.
-+	 *
-+	 * However, this function is only called when in
-+	 * time-travel=ext simulation mode, in which case
-+	 * the only signal ever pending is SIGIO, which
-+	 * is blocked while this can be called, and the
-+	 * timer signal (SIGALRM) cannot happen.
-+	 */
- 	signals_pending |= SIGIO_MASK;
- }
++	dev_err(dev, "spidev listed directly in DT is not supported\n");
++	return -EINVAL;
++}
++
+ static const struct of_device_id spidev_dt_ids[] = {
+-	{ .compatible = "rohm,dh2228fv" },
+-	{ .compatible = "lineartechnology,ltc2488" },
+-	{ .compatible = "semtech,sx1301" },
+-	{ .compatible = "lwn,bk4" },
+-	{ .compatible = "dh,dhcom-board" },
+-	{ .compatible = "menlo,m53cpld" },
+-	{ .compatible = "cisco,spi-petra" },
+-	{ .compatible = "micron,spi-authenta" },
++	{ .compatible = "rohm,dh2228fv", .data = &spidev_of_check },
++	{ .compatible = "lineartechnology,ltc2488", .data = &spidev_of_check },
++	{ .compatible = "semtech,sx1301", .data = &spidev_of_check },
++	{ .compatible = "lwn,bk4", .data = &spidev_of_check },
++	{ .compatible = "dh,dhcom-board", .data = &spidev_of_check },
++	{ .compatible = "menlo,m53cpld", .data = &spidev_of_check },
++	{ .compatible = "cisco,spi-petra", .data = &spidev_of_check },
++	{ .compatible = "micron,spi-authenta", .data = &spidev_of_check },
+ 	{},
+ };
+ MODULE_DEVICE_TABLE(of, spidev_dt_ids);
+-#endif
  
- void block_signals_hard(void)
- {
--	if (signals_blocked)
--		return;
--	signals_blocked = 1;
-+	signals_blocked++;
- 	barrier();
- }
+ /* Dummy SPI devices not to be used in production systems */
+ static int spidev_acpi_check(struct device *dev)
+@@ -741,16 +750,6 @@ static int spidev_probe(struct spi_device *spi)
+ 	int			status;
+ 	unsigned long		minor;
  
- void unblock_signals_hard(void)
- {
-+	static bool unblocking;
-+
- 	if (!signals_blocked)
-+		panic("unblocking signals while not blocked");
-+
-+	if (--signals_blocked)
- 		return;
--	/* Must be set to 0 before we check the pending bits etc. */
--	signals_blocked = 0;
-+	/*
-+	 * Must be set to 0 before we check pending so the
-+	 * SIGIO handler will run as normal unless we're still
-+	 * going to process signals_blocked_pending.
-+	 */
- 	barrier();
- 
--	if (signals_pending && signals_enabled) {
--		/* this is a bit inefficient, but that's not really important */
--		block_signals();
--		unblock_signals();
--	} else if (signals_pending & SIGIO_MASK) {
--		/* we need to run time-travel handlers even if not enabled */
--		sigio_run_timetravel_handlers();
-+	/*
-+	 * Note that block_signals_hard()/unblock_signals_hard() can be called
-+	 * within the unblock_signals()/sigio_run_timetravel_handlers() below.
-+	 * This would still be prone to race conditions since it's actually a
-+	 * call _within_ e.g. vu_req_read_message(), where we observed this
-+	 * issue, which loops. Thus, if the inner call handles the recorded
-+	 * pending signals, we can get out of the inner call with the real
-+	 * signal hander no longer blocked, and still have a race. Thus don't
-+	 * handle unblocking in the inner call, if it happens, but only in
-+	 * the outermost call - 'unblocking' serves as an ownership for the
-+	 * signals_blocked_pending decrement.
-+	 */
-+	if (unblocking)
-+		return;
-+	unblocking = true;
-+
-+	while (__atomic_load_n(&signals_blocked_pending, __ATOMIC_SEQ_CST)) {
-+		if (signals_enabled) {
-+			/* signals are enabled so we can touch this */
-+			signals_pending |= SIGIO_MASK;
-+			/*
-+			 * this is a bit inefficient, but that's
-+			 * not really important
-+			 */
-+			block_signals();
-+			unblock_signals();
-+		} else {
-+			/*
-+			 * we need to run time-travel handlers even
-+			 * if not enabled
-+			 */
-+			sigio_run_timetravel_handlers();
-+		}
-+
-+		/*
-+		 * The decrement of signals_blocked_pending must be atomic so
-+		 * that the signal handler will either happen before or after
-+		 * the decrement, not during a read-modify-write:
-+		 *  - If it happens before, it can increment it and we'll
-+		 *    decrement it and do another round in the loop.
-+		 *  - If it happens after it'll see 0 for both signals_blocked
-+		 *    and signals_blocked_pending and thus run the handler as
-+		 *    usual (subject to signals_enabled, but that's unrelated.)
-+		 *
-+		 * Note that a call to unblock_signals_hard() within the calls
-+		 * to unblock_signals() or sigio_run_timetravel_handlers() above
-+		 * will do nothing due to the 'unblocking' state, so this cannot
-+		 * underflow as the only one decrementing will be the outermost
-+		 * one.
-+		 */
-+		if (__atomic_sub_fetch(&signals_blocked_pending, 1,
-+				       __ATOMIC_SEQ_CST) < 0)
-+			panic("signals_blocked_pending underflow");
- 	}
-+
-+	unblocking = false;
- }
- #endif
- 
+-	/*
+-	 * spidev should never be referenced in DT without a specific
+-	 * compatible string, it is a Linux implementation thing
+-	 * rather than a description of the hardware.
+-	 */
+-	if (spi->dev.of_node && of_device_is_compatible(spi->dev.of_node, "spidev")) {
+-		dev_err(&spi->dev, "spidev listed directly in DT is not supported\n");
+-		return -EINVAL;
+-	}
+-
+ 	match = device_get_match_data(&spi->dev);
+ 	if (match) {
+ 		status = match(&spi->dev);
+@@ -827,7 +826,7 @@ static int spidev_remove(struct spi_device *spi)
+ static struct spi_driver spidev_spi_driver = {
+ 	.driver = {
+ 		.name =		"spidev",
+-		.of_match_table = of_match_ptr(spidev_dt_ids),
++		.of_match_table = spidev_dt_ids,
+ 		.acpi_match_table = spidev_acpi_ids,
+ 	},
+ 	.probe =	spidev_probe,
 -- 
 2.43.0
 
