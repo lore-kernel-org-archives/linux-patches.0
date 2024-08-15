@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19271AC8AE;
-	Thu, 15 Aug 2024 13:47:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7C018D630;
+	Thu, 15 Aug 2024 13:47:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729664; cv=none; b=U82NDYdxdsKY+bH5O+fb6kBTmwn2jKSqTdMm1oQ5XR/dMz1cOhXQPucWcc7vOByWW6WXSETBDZW/4RXGd66OwH2Oq6SP5Cv5Te9YR4TbvFXD0XRfTzgkqnt/Z+WqxkFTIHMhz8dX0iM5jCzHKbnAp068I+1/SeMS733catqCItg=
+	t=1723729668; cv=none; b=fp+5u95teffSGFsgfiKrwYIpcw0l7JvRlS9jlN7OUrEDr4z+Zo1f0frugF5mNE6PqWxYFO0JfZ3aGVcuvV+uf2BYmNF6AAsViPNpYVfluStenPwBNYw0k+XVr0yBl/CgBSWGrdmeoad8HVHMt5GXy0MU8BHsKnZojIavCUtl1B0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729664; c=relaxed/simple;
-	bh=Lme6ybrAiaAkGM/bMVlub1EMAQB0oJTq90C40Cm/+8M=;
+	s=arc-20240116; t=1723729668; c=relaxed/simple;
+	bh=zsS3kL5aE2VfrvcEDiDFrmu9ldSc3i00XT0OsXNbab0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U8O3eMi9xzAge0Qlolk/Pas4y4whj2/c/+5wa2jtcmhjbN90Rgye0AU/e2Srr4z/0vcV6tYDhZgYySfBloDtf5jFaisD4cPzhMacC63an4K9VbsASQxXgoqA9fcX00IMIAMK3thxD68zANE41a5vC0B7s4xUVVdRpVrC2xXKpck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DHMOX7Hi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tiwrML64ZBfZjRUrdz0etuBAE7tR9bTJ39VbBwYf5fYbMBhgf0Ku3u++v3k+7azFHzCPAKYPUG4O0uO1EDCQxRY5pvSQtF7xLQnftBtShOJP6W5U4B+oaoaAb8EPP6NvDWkHI1lmltskbelPRX7JtUhm2ighmwi73FCptrhRpuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KM1tD3Qh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DHMOX7Hi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12A5CC32786;
-	Thu, 15 Aug 2024 13:47:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KM1tD3Qh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51489C32786;
+	Thu, 15 Aug 2024 13:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729664;
-	bh=Lme6ybrAiaAkGM/bMVlub1EMAQB0oJTq90C40Cm/+8M=;
+	s=korg; t=1723729667;
+	bh=zsS3kL5aE2VfrvcEDiDFrmu9ldSc3i00XT0OsXNbab0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHMOX7HiZM/ufXk8oLHPnORrml4TxajJRZnhKfHYNf9AdSEbhagtKo327j+JYLuGp
-	 wJzyiA45jFeh6vheLLiLiHfEhCwz+VV0knCdUKWaq4T+ItYeseYmdLJLn5cL3KTBur
-	 KpyUqSXshSCdoUIQ2vjgdV1y1LWXnH9ngBfqW6LY=
+	b=KM1tD3QhjxKo43Ru3Sa7wOizqbo1wjQhVJS7Xh6UUm4HE9u6zW1OFuvbUgkUjREep
+	 rOGbpZm2+5H464wnjl2DyOm88u0G9BL061eaUcT7kcBlX8HG1jzgY11to7GpTKN0pP
+	 J9onltvJNAtUqhuA/xjzZg73j4/wBm1p8/RRBaHc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/484] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
-Date: Thu, 15 Aug 2024 15:19:46 +0200
-Message-ID: <20240815131946.242607779@linuxfoundation.org>
+Subject: [PATCH 5.15 163/484] nilfs2: avoid undefined behavior in nilfs_cnt32_ge macro
+Date: Thu, 15 Aug 2024 15:20:21 +0200
+Message-ID: <20240815131947.706253916@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -45,54 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Leon Romanovsky <leonro@nvidia.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
+[ Upstream commit 0f3819e8c483771a59cf9d3190cd68a7a990083c ]
 
-drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
-output may be truncated writing between 1 and 11 bytes into a region of
-size 5 [-Werror=format-truncation=]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                                          ^~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                                                               ^~~~~~~~~~~~~~
-drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
-between 12 and 22 bytes into a destination of size 15
-  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+According to the C standard 3.4.3p3, the result of signed integer overflow
+is undefined.  The macro nilfs_cnt32_ge(), which compares two sequence
+numbers, uses signed integer subtraction that can overflow, and therefore
+the result of the calculation may differ from what is expected due to
+undefined behavior in different environments.
 
-Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
-Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Similar to an earlier change to the jiffies-related comparison macros in
+commit 5a581b367b5d ("jiffies: Avoid undefined behavior from signed
+overflow"), avoid this potential issue by changing the definition of the
+macro to perform the subtraction as unsigned integers, then cast the
+result to a signed integer for comparison.
+
+Link: https://lkml.kernel.org/r/20130727225828.GA11864@linux.vnet.ibm.com
+Link: https://lkml.kernel.org/r/20240702183512.6390-1-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
+ fs/nilfs2/segment.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
-index 571d9c542024c..6b8ad58590145 100644
---- a/drivers/infiniband/hw/mlx4/alias_GUID.c
-+++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
-@@ -832,7 +832,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 440e628f9d4fc..c90435e8e7489 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -136,7 +136,7 @@ static void nilfs_dispose_list(struct the_nilfs *, struct list_head *, int);
  
- int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
- {
--	char alias_wq_name[15];
-+	char alias_wq_name[22];
- 	int ret = 0;
- 	int i, j;
- 	union ib_gid gid;
+ #define nilfs_cnt32_ge(a, b)   \
+ 	(typecheck(__u32, a) && typecheck(__u32, b) && \
+-	 ((__s32)(a) - (__s32)(b) >= 0))
++	 ((__s32)((a) - (b)) >= 0))
+ 
+ static int nilfs_prepare_segment_lock(struct super_block *sb,
+ 				      struct nilfs_transaction_info *ti)
 -- 
 2.43.0
 
