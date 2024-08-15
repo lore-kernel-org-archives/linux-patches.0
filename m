@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B60E17BEC0;
-	Thu, 15 Aug 2024 14:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750E31A0733;
+	Thu, 15 Aug 2024 14:38:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732690; cv=none; b=VXGRw4oL/wPftcZ67ezSay6A6YAxvbFNcygXy++uaWMDk7N7gBuxt0V5IkkBQx548uofKnaCJ/8pAk6YB99jnx4qom4uezJD5ZwoANthc5ecxV9CBRQnNp+XTydTEHFYaP5U0kMcBjF26D41QqXrY8NorlQPj2yusQ3M8kowZ0Q=
+	t=1723732693; cv=none; b=pc0tMqPkjO9mRurik7LrEn6my0R/FdV2vQ1kc770ZPx7TA41s1SKzzIpEVUOxR8ahmN5DkITtxkHRq5pUbK6g83cvVClYx2eeHqy/g6H7u1n+WgeqpBVgM7jAOygX05s/bwR7Z+bcHk8eG1VAo2d0DViImgrAn76x7K3mRwSyBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732690; c=relaxed/simple;
-	bh=vImAuHCCvHBwvnvnQNW4gWSlTxNeh5KNcLAxpRy3hK4=;
+	s=arc-20240116; t=1723732693; c=relaxed/simple;
+	bh=lRMrOls95I6t6IdCESuy6j9BxWAkgbJXhO6vj1vkhJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvJzAS7p8rLr6zNW77GjGpOSSgGgjiCRndwdswo8kCkEguUs2ahgsR5PHEH7X/XxXuR4kwBfFTE3SN4OIyxzJJ5SD52UNPGCUqwjifNjJs+k+AJ7gWA/DLoZQ/8ZW2wswq2HuRPjyW4OF4IB2ixzyXg3R78DJ9B2Y7cBgjsBoq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNQwpnYh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ia5ko7BsG3dXofKMBgSBmTC4Its7NKtRLYlApa/yDrsu6z+JzNjtJuRaM3OpdxKNd2a55SpcCrcgr85yJcTS52RNfBYZN7mcNBcvnC9X8EzdMxht7v5fVQZagf/Q+1eGHLcHky58n1AAQLJUQv6V6i3SlFUcGPGS8w20j+QYqRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNGFPcfL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNQwpnYh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AFB1C32786;
-	Thu, 15 Aug 2024 14:38:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNGFPcfL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E410BC4AF0D;
+	Thu, 15 Aug 2024 14:38:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732690;
-	bh=vImAuHCCvHBwvnvnQNW4gWSlTxNeh5KNcLAxpRy3hK4=;
+	s=korg; t=1723732693;
+	bh=lRMrOls95I6t6IdCESuy6j9BxWAkgbJXhO6vj1vkhJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KNQwpnYh6fQa+BqjYVxooxIxtIeOUYgANTmlSdCdnGyJmn8QDX57N7stuex1yPpwy
-	 1NA8m1etj6IlXSy2qF9+4RM++VJiWxUvoNj+qlgsr7AQgS+FBSa4TkBaQ5c1/37wLB
-	 rStAHR0WzBhtUXlICsXa+0/3Q19XPvyl4S0giLi4=
+	b=DNGFPcfLc6k07MNyrpPu8ke4eeIhyDlQ21womMZmRWjCqkwcbqrjgdUhIWBaBRsIe
+	 Oxts+3I/9ZOZZjfwf7PVFT1aWQJe96Hzgx/O1avf4hzQa0xF+LMsxwXBbFsQpm1uxx
+	 rPGe2P1SaHG890xFyTUMhQutz+nk3T07DQvHNh3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 249/352] genirq: Allow irq_chip registration functions to take a const irq_chip
-Date: Thu, 15 Aug 2024 15:25:15 +0200
-Message-ID: <20240815131929.061439530@linuxfoundation.org>
+Subject: [PATCH 5.10 258/352] net: dsa: bcm_sf2: Fix a possible memory leak in bcm_sf2_mdio_register()
+Date: Thu, 15 Aug 2024 15:25:24 +0200
+Message-ID: <20240815131929.416524387@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,84 +52,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
 
-[ Upstream commit 393e1280f765661cf39785e967676a4e57324126 ]
+[ Upstream commit e3862093ee93fcfbdadcb7957f5f8974fffa806a ]
 
-In order to let a const irqchip be fed to the irqchip layer, adjust
-the various prototypes. An extra cast in irq_set_chip()() is required
-to avoid a warning.
+bcm_sf2_mdio_register() calls of_phy_find_device() and then
+phy_device_remove() in a loop to remove existing PHY devices.
+of_phy_find_device() eventually calls bus_find_device(), which calls
+get_device() on the returned struct device * to increment the refcount.
+The current implementation does not decrement the refcount, which causes
+memory leak.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20220209162607.1118325-3-maz@kernel.org
+This commit adds the missing phy_device_free() call to decrement the
+refcount via put_device() to balance the refcount.
+
+Fixes: 771089c2a485 ("net: dsa: bcm_sf2: Ensure that MDIO diversion is used")
+Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20240806011327.3817861-1-joe@pf.is.s.u-tokyo.ac.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/irq.h | 7 ++++---
- kernel/irq/chip.c   | 9 +++------
- 2 files changed, 7 insertions(+), 9 deletions(-)
+ drivers/net/dsa/bcm_sf2.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/irq.h b/include/linux/irq.h
-index b89a8ac83d1bc..eb7af809e6e53 100644
---- a/include/linux/irq.h
-+++ b/include/linux/irq.h
-@@ -708,10 +708,11 @@ extern struct irq_chip no_irq_chip;
- extern struct irq_chip dummy_irq_chip;
+diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
+index a5849663f65c3..d0f94a5fae5ae 100644
+--- a/drivers/net/dsa/bcm_sf2.c
++++ b/drivers/net/dsa/bcm_sf2.c
+@@ -558,8 +558,10 @@ static int bcm_sf2_mdio_register(struct dsa_switch *ds)
+ 			of_remove_property(child, prop);
  
- extern void
--irq_set_chip_and_handler_name(unsigned int irq, struct irq_chip *chip,
-+irq_set_chip_and_handler_name(unsigned int irq, const struct irq_chip *chip,
- 			      irq_flow_handler_t handle, const char *name);
+ 		phydev = of_phy_find_device(child);
+-		if (phydev)
++		if (phydev) {
+ 			phy_device_remove(phydev);
++			phy_device_free(phydev);
++		}
+ 	}
  
--static inline void irq_set_chip_and_handler(unsigned int irq, struct irq_chip *chip,
-+static inline void irq_set_chip_and_handler(unsigned int irq,
-+					    const struct irq_chip *chip,
- 					    irq_flow_handler_t handle)
- {
- 	irq_set_chip_and_handler_name(irq, chip, handle, NULL);
-@@ -801,7 +802,7 @@ static inline void irq_set_percpu_devid_flags(unsigned int irq)
- }
- 
- /* Set/get chip/data for an IRQ: */
--extern int irq_set_chip(unsigned int irq, struct irq_chip *chip);
-+extern int irq_set_chip(unsigned int irq, const struct irq_chip *chip);
- extern int irq_set_handler_data(unsigned int irq, void *data);
- extern int irq_set_chip_data(unsigned int irq, void *data);
- extern int irq_set_irq_type(unsigned int irq, unsigned int type);
-diff --git a/kernel/irq/chip.c b/kernel/irq/chip.c
-index b8aa9e22105f9..09b91aebb90b1 100644
---- a/kernel/irq/chip.c
-+++ b/kernel/irq/chip.c
-@@ -38,7 +38,7 @@ struct irqaction chained_action = {
-  *	@irq:	irq number
-  *	@chip:	pointer to irq chip description structure
-  */
--int irq_set_chip(unsigned int irq, struct irq_chip *chip)
-+int irq_set_chip(unsigned int irq, const struct irq_chip *chip)
- {
- 	unsigned long flags;
- 	struct irq_desc *desc = irq_get_desc_lock(irq, &flags, 0);
-@@ -46,10 +46,7 @@ int irq_set_chip(unsigned int irq, struct irq_chip *chip)
- 	if (!desc)
- 		return -EINVAL;
- 
--	if (!chip)
--		chip = &no_irq_chip;
--
--	desc->irq_data.chip = chip;
-+	desc->irq_data.chip = (struct irq_chip *)(chip ?: &no_irq_chip);
- 	irq_put_desc_unlock(desc, flags);
- 	/*
- 	 * For !CONFIG_SPARSE_IRQ make the irq show up in
-@@ -1102,7 +1099,7 @@ irq_set_chained_handler_and_data(unsigned int irq, irq_flow_handler_t handle,
- EXPORT_SYMBOL_GPL(irq_set_chained_handler_and_data);
- 
- void
--irq_set_chip_and_handler_name(unsigned int irq, struct irq_chip *chip,
-+irq_set_chip_and_handler_name(unsigned int irq, const struct irq_chip *chip,
- 			      irq_flow_handler_t handle, const char *name)
- {
- 	irq_set_chip(irq, chip);
+ 	err = mdiobus_register(priv->slave_mii_bus);
 -- 
 2.43.0
 
