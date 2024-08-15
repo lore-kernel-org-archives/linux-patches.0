@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221001AC44F;
-	Thu, 15 Aug 2024 14:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3886A63C;
+	Thu, 15 Aug 2024 14:15:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731338; cv=none; b=lSXF1gQU+Ct2Q3jd5p7ZVc4i21oU61TPMaFOfBJYFSQHRy/26cHcqdZoVBoVXLp657Lm1leoHpW38Jx3+tuBATv/CrVh3fc0NFIb7gMt6qCm74dX6g1ee9GQziWiT1DMpmSyMkh6E51kcS6UjZCF2mwFoZM9a0EjjY85okpCvlQ=
+	t=1723731341; cv=none; b=EanoKVKOJtmUmmPkjlKWv0GZuRQwRPYgW5eP40Ak5cGKGe1pFRES9RIdkYpVdAEdHTPzg3qhWAjYLjn7mftC3uQSSyEHjX3f/kyh5QkFxOgShsK0h1Izf0ZSWEOH9fGEQThMe61lV8XR2KIyZmTPWOogbWa0COLXFWh49a4G9Zk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731338; c=relaxed/simple;
-	bh=f82BVEn0+qe8czBxLolKoptMTVhkp9smwM2guZfOhsk=;
+	s=arc-20240116; t=1723731341; c=relaxed/simple;
+	bh=K1MWt6vmKr+LTaqL4o3yGbMGeBAMMgMznZPZf6uf2Bc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M4WfY9b84CuyxmpdhnQlHFjMqiTU2lgN0+Qjx3cu9MyC/JYU9lxv5WDNcOxcJx54QA3SNl6oTfnJWZoQpx30PvB+oyfDOV3x7ZCCsgAy9M45IJyuBQra86jW/RmEqR+W7Mufa9KxFA963JQOzJpx7fyO9kHyrSazSTju09B3Fm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Drp966zg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hQM+oBeP3jLe/5ZeiUA3jqchX757fjIN43qjm3opi0p7oEtOhkp1u+8SP8Ypzt1nDKvptR7UgBQXDQDxY2BCTt0Mw3+0erahd3ZHAq9zuHB9WGQ6QYlwMJrK0TxcJX2uzdZylaySsuDmNbyTMevdSkXDS8Z4yaUEv/DOL/XXzss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I8krcZux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Drp966zg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BC3C32786;
-	Thu, 15 Aug 2024 14:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I8krcZux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4579C32786;
+	Thu, 15 Aug 2024 14:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731338;
-	bh=f82BVEn0+qe8czBxLolKoptMTVhkp9smwM2guZfOhsk=;
+	s=korg; t=1723731341;
+	bh=K1MWt6vmKr+LTaqL4o3yGbMGeBAMMgMznZPZf6uf2Bc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Drp966zgUlH1QhbZID6q1A4CaKD+AWLcRvjvVUTvKJuokdapRs4Yvxg6sO/xEGNwn
-	 nF7QOg5SDqJyTgvMzKf0lnrUcupKff6Qps+9IeRPZ9rpcGgF0GANIy2smYOrn9BZhO
-	 3flxZoRuG+2v1pOwlUCCnexQNdc2JrdtzFpaQMR4=
+	b=I8krcZux8snIa56isjrZu9i96gf5gNKBsRZly4Bus4FttYWWbDHFIlBIZudsp5tJC
+	 y5XWinpNztwSIfe1KilKKv7Ak+QRQWHvWIimTFp6hlIRDgbFD/exbeOlba3qGyEuaX
+	 oIbwemhZum1Rah4M/ZkyP01q9COqs3PG+R/YQAKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Coddington <bcodding@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Lidong Wang <lidong.wang@intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 066/259] SUNRPC: Fixup gss_status tracepoint error output
-Date: Thu, 15 Aug 2024 15:23:19 +0200
-Message-ID: <20240815131905.354065533@linuxfoundation.org>
+Subject: [PATCH 5.4 067/259] PCI: Fix resource double counting on remove & rescan
+Date: Thu, 15 Aug 2024 15:23:20 +0200
+Message-ID: <20240815131905.392264253@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -46,40 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Benjamin Coddington <bcodding@redhat.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit b9fae9f06d84ffab0f3f9118f3a96bbcdc528bf6 ]
+[ Upstream commit 903534fa7d30214d8ba840ab1cd9e917e0c88e41 ]
 
-The GSS routine errors are values, not flags.
+pbus_size_mem() keeps the size of the optional resources in
+children_add_size. When calculating the PCI bridge window size,
+calculate_memsize() lower bounds size by old_size before adding
+children_add_size and performing the window size alignment. This
+results in double counting for the resources in children_add_size
+because old_size may be based on the previous size of the bridge
+window after it has already included children_add_size (that is,
+size1 in pbus_size_mem() from an earlier invocation of that
+function).
 
-Fixes: 0c77668ddb4e ("SUNRPC: Introduce trace points in rpc_auth_gss.ko")
-Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
-Reviewed-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+As a result, on repeated remove of the bus & rescan cycles the resource
+size keeps increasing when children_add_size is non-zero as can be seen
+from this extract:
+
+  iomem0:  23fffd00000-23fffdfffff : PCI Bus 0000:03    # 1MiB
+  iomem1:  20000000000-200001fffff : PCI Bus 0000:03    # 2MiB
+  iomem2:  20000000000-200002fffff : PCI Bus 0000:03    # 3MiB
+  iomem3:  20000000000-200003fffff : PCI Bus 0000:03    # 4MiB
+  iomem4:  20000000000-200004fffff : PCI Bus 0000:03    # 5MiB
+
+Solve the double counting by moving old_size check later in
+calculate_memsize() so that children_add_size is already accounted for.
+
+After the patch, the bridge window retains its size as expected:
+
+  iomem0:  23fffd00000-23fffdfffff : PCI Bus 0000:03    # 1MiB
+  iomem1:  20000000000-200000fffff : PCI Bus 0000:03    # 1MiB
+  iomem2:  20000000000-200000fffff : PCI Bus 0000:03    # 1MiB
+
+Fixes: a4ac9fea016f ("PCI : Calculate right add_size")
+Link: https://lore.kernel.org/r/20240507102523.57320-2-ilpo.jarvinen@linux.intel.com
+Tested-by: Lidong Wang <lidong.wang@intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/trace/events/rpcgss.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pci/setup-bus.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/include/trace/events/rpcgss.h b/include/trace/events/rpcgss.h
-index d1f7fe1b6fe44..23e8288a76b5c 100644
---- a/include/trace/events/rpcgss.h
-+++ b/include/trace/events/rpcgss.h
-@@ -42,7 +42,7 @@ TRACE_DEFINE_ENUM(GSS_S_UNSEQ_TOKEN);
- TRACE_DEFINE_ENUM(GSS_S_GAP_TOKEN);
+diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
+index 44f4866d95d8c..32e34ade736c3 100644
+--- a/drivers/pci/setup-bus.c
++++ b/drivers/pci/setup-bus.c
+@@ -818,11 +818,9 @@ static resource_size_t calculate_memsize(resource_size_t size,
+ 		size = min_size;
+ 	if (old_size == 1)
+ 		old_size = 0;
+-	if (size < old_size)
+-		size = old_size;
  
- #define show_gss_status(x)						\
--	__print_flags(x, "|",						\
-+	__print_symbolic(x, 						\
- 		{ GSS_S_BAD_MECH, "GSS_S_BAD_MECH" },			\
- 		{ GSS_S_BAD_NAME, "GSS_S_BAD_NAME" },			\
- 		{ GSS_S_BAD_NAMETYPE, "GSS_S_BAD_NAMETYPE" },		\
+-	size = ALIGN(max(size, add_size) + children_add_size, align);
+-	return size;
++	size = max(size, add_size) + children_add_size;
++	return ALIGN(max(size, old_size), align);
+ }
+ 
+ resource_size_t __weak pcibios_window_alignment(struct pci_bus *bus,
 -- 
 2.43.0
 
