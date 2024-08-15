@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D9E19DFA4;
-	Thu, 15 Aug 2024 14:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7AA017BEC0;
+	Thu, 15 Aug 2024 14:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732113; cv=none; b=azpYj8uBtFheLaefgL0IH+/HZsR4AKc5ZzpYUCSzalqXbzehjKG3qmFMjarV2IIe6331bfA/Wy2xaKMqg0NDXJ1ZiJKN65zroxVplc0SPoBzpHR37XaZLRyW2YnetmpQxTjkvi9CVk6/PoBejQjki5wX9LcnPsBrneGzR/fbA5Y=
+	t=1723732117; cv=none; b=d7WIoqMeO20kKXN8Ua/W3dNiXlL9jmctwjTk5uqUuGJcnP/z3KnHpSIas1I72Ny2lbIfpR220lPT8BAkI+/SJsb2IlGxOrrUXJ55dfcI0rJ9LQhBcBdfCS4l63SP8hzZuyd42ni1v9h2AqaG8+mYLqEGa79q8LuNt6wvSUp/UI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732113; c=relaxed/simple;
-	bh=bav8GNLeO7SiEDTw0BCq4WGtvKpqUwkjyriA8nXSTwg=;
+	s=arc-20240116; t=1723732117; c=relaxed/simple;
+	bh=E8gAiXC2Sctv7gtIk+XoOzE4rcG3EJma1FZVuLtNOzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MN0LpSA/WB6fhsv4hdq9XmiBQ352e37VC5JjkiHUhEFHUwmJf0KTHyF75Tn7Hzp/9Nn2dLeSm69bBlO4t3NM+vusETP8+o5fROQPZJ8CXp8nzzGQizeDL5I0WG5uD0wRYlu1piv9pZOUmn/aO76UIXURFGWKKCfrGa2Kvwj9ecU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZP5uddp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VVpmMj0MUCgi/UtjhiVxRP0TQeOjjNuM8h7qAPTjb/DUz78usmihl7/5lGAu0Efpu6MQy/RMiSdqC6t7uKPSeUNxI26DmCH7VcXzueFBuZiJtiWhNvN6Qfcm6acKuVD6OH91dXJ6xdg2uORKZPdfG/I75YtdQM2smCymc0VHqH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XeVhNAUH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZP5uddp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00837C32786;
-	Thu, 15 Aug 2024 14:28:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XeVhNAUH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B237C32786;
+	Thu, 15 Aug 2024 14:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732113;
-	bh=bav8GNLeO7SiEDTw0BCq4WGtvKpqUwkjyriA8nXSTwg=;
+	s=korg; t=1723732116;
+	bh=E8gAiXC2Sctv7gtIk+XoOzE4rcG3EJma1FZVuLtNOzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZP5uddpVJsoLDbllFcFakwF+QeIIQ3XSCmO4ktm0AOAaSIo/kMsEkuFPqbEeRGCO
-	 GglLUcv99g+1i8spie7EdGdZlY8h2kAl6XqZZIfWCRHsv4RppONNAiABa/0Ule8UrM
-	 nF9uLoAVz1NY1k+gCj56VwpR6eV0E4CVcwxyfyZI=
+	b=XeVhNAUHGsNtMrXVw+NkLbkoin4HZ1FGfTU0V53K/gux9Mf0V52kAhOCSIzgaZxX2
+	 aUsuHTDUJXAH7KY3yBnbyj3gwfOJ2EVo3lmM6S4IAK1Z64PFZJbDvuD5CGA1aclkbk
+	 1LuS8ITcwMT0uKYhH29xODLsMQraTyzgLJn5AwxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Burakov <a.burakov@rosalinux.ru>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 077/352] saa7134: Unchecked i2c_transfer function result fixed
-Date: Thu, 15 Aug 2024 15:22:23 +0200
-Message-ID: <20240815131922.219641232@linuxfoundation.org>
+Subject: [PATCH 5.10 078/352] media: uvcvideo: Allow entity-defined get_info and get_cur
+Date: Thu, 15 Aug 2024 15:22:24 +0200
+Message-ID: <20240815131922.259601454@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,49 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Aleksandr Burakov <a.burakov@rosalinux.ru>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 9d8683b3fd93f0e378f24dc3d9604e5d7d3e0a17 ]
+[ Upstream commit 65900c581d014499f0f8ceabfc02c652e9a88771 ]
 
-Return value of function 'i2c_transfer' is not checked that
-may cause undefined behaviour.
+Allows controls to get their properties and current value
+from an entity-defined function instead of via a query to the USB
+device.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 2cf36ac44730 ("[PATCH] v4l: 656: added support for the following cards")
-Signed-off-by: Aleksandr Burakov <a.burakov@rosalinux.ru>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: 86419686e66d ("media: uvcvideo: Override default flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7134/saa7134-dvb.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 22 ++++++++++++++++++----
+ drivers/media/usb/uvc/uvcvideo.h |  5 +++++
+ 2 files changed, 23 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/pci/saa7134/saa7134-dvb.c b/drivers/media/pci/saa7134/saa7134-dvb.c
-index f359cd5c006a7..c786b83a69d2b 100644
---- a/drivers/media/pci/saa7134/saa7134-dvb.c
-+++ b/drivers/media/pci/saa7134/saa7134-dvb.c
-@@ -466,7 +466,9 @@ static int philips_europa_tuner_sleep(struct dvb_frontend *fe)
- 	/* switch the board to analog mode */
- 	if (fe->ops.i2c_gate_ctrl)
- 		fe->ops.i2c_gate_ctrl(fe, 1);
--	i2c_transfer(&dev->i2c_adap, &analog_msg, 1);
-+	if (i2c_transfer(&dev->i2c_adap, &analog_msg, 1) != 1)
-+		return -EIO;
-+
- 	return 0;
- }
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 5e0acabed37a0..e1a98c95b7854 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1002,10 +1002,20 @@ static int __uvc_ctrl_get(struct uvc_video_chain *chain,
+ 		return -EACCES;
  
-@@ -1018,7 +1020,9 @@ static int md8800_set_voltage2(struct dvb_frontend *fe,
- 	else
- 		wbuf[1] = rbuf & 0xef;
- 	msg[0].len = 2;
--	i2c_transfer(&dev->i2c_adap, msg, 1);
-+	if (i2c_transfer(&dev->i2c_adap, msg, 1) != 1)
-+		return -EIO;
-+
- 	return 0;
- }
+ 	if (!ctrl->loaded) {
+-		ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR, ctrl->entity->id,
+-				chain->dev->intfnum, ctrl->info.selector,
++		if (ctrl->entity->get_cur) {
++			ret = ctrl->entity->get_cur(chain->dev,
++				ctrl->entity,
++				ctrl->info.selector,
+ 				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
+ 				ctrl->info.size);
++		} else {
++			ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR,
++				ctrl->entity->id,
++				chain->dev->intfnum,
++				ctrl->info.selector,
++				uvc_ctrl_data(ctrl, UVC_CTRL_DATA_CURRENT),
++				ctrl->info.size);
++		}
+ 		if (ret < 0)
+ 			return ret;
  
+@@ -1718,8 +1728,12 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 	if (data == NULL)
+ 		return -ENOMEM;
+ 
+-	ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id, dev->intfnum,
+-			     info->selector, data, 1);
++	if (ctrl->entity->get_info)
++		ret = ctrl->entity->get_info(dev, ctrl->entity,
++					     ctrl->info.selector, data);
++	else
++		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
++				     dev->intfnum, info->selector, data, 1);
+ 	if (!ret)
+ 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
+ 				UVC_CTRL_FLAG_GET_CUR : 0)
+diff --git a/drivers/media/usb/uvc/uvcvideo.h b/drivers/media/usb/uvc/uvcvideo.h
+index c75990c0957e7..c3241cf5f7b43 100644
+--- a/drivers/media/usb/uvc/uvcvideo.h
++++ b/drivers/media/usb/uvc/uvcvideo.h
+@@ -354,6 +354,11 @@ struct uvc_entity {
+ 	u8 bNrInPins;
+ 	u8 *baSourceID;
+ 
++	int (*get_info)(struct uvc_device *dev, struct uvc_entity *entity,
++			u8 cs, u8 *caps);
++	int (*get_cur)(struct uvc_device *dev, struct uvc_entity *entity,
++		       u8 cs, void *data, u16 size);
++
+ 	unsigned int ncontrols;
+ 	struct uvc_control *controls;
+ };
 -- 
 2.43.0
 
