@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E798519E7F6;
-	Thu, 15 Aug 2024 14:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE9D1AC8BB;
+	Thu, 15 Aug 2024 14:01:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730503; cv=none; b=VkwHWcyp+ux+Omexo+ihAFpkllORziaUvhj3kAtxFyYHCxqg27Uqqz+rThN40Wm7GrXA4eqRNC3BQ9xL40FiuZSdF/KzauBLmGu3M9H3A1UOjN2nF9+voIy06GEN9z2q/v7RtrWdLsu2kZhByxPCfWY4HwnCeVqhxNS3J2QDo9s=
+	t=1723730506; cv=none; b=NlvJT5sPvpTXfgYIwVmqHYcSb+r1HnlknKft8Yokgg5QU6EGt9UyAMuOlHy3cC9uRY/Q7O08DzA/lQjq4mYJMkZGavJ61hdRyhKYODrCY0XDrJZa4PCn/7ouM5dHpSVLLjry9sy+ACI/v5kbrVDCaTMweoTrazVjgwy5ufqMP7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730503; c=relaxed/simple;
-	bh=HXyuVhTnkZzdxySFoctGQeEZm1GaskpMf11ubx2p5Bs=;
+	s=arc-20240116; t=1723730506; c=relaxed/simple;
+	bh=U3A31N3zw1rwXplX3SaNgepd68aQFcdtcaonebNIYKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NvPmregZhqLS7Of8QsBTfvn+qdiyHxCe6weXcE+HDGsSB3GXV6sOuQayAGOmuENsjLwkVF0YdGorDvpKcj44qRuthOczHYnefOy/nGbX6hBMM1XyK0DUojxIxJB9tMgpcVuue4I9SSFTRVHQ4yg6LAZoaopC1jlvLTYjVpWnLH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QLcIjxJO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VYIg9EsCmBTdAfpXJgUu79Frx3Lmh4GTKCJHde2yGFnX6eKEaD2wo8tIPVpPgSHV+Q8ZShNa7oKHgzydHVhgKrEUBRm9PB0iHueZf4c03TnG9RzCP+kbioQBtGS+8xwojq4DDrOJapUs/dYjaEiWPtyzDhMW7bxqOsmXmZ0sz5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qP7ft859; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QLcIjxJO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C2EC32786;
-	Thu, 15 Aug 2024 14:01:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qP7ft859"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62580C4AF0A;
+	Thu, 15 Aug 2024 14:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730502;
-	bh=HXyuVhTnkZzdxySFoctGQeEZm1GaskpMf11ubx2p5Bs=;
+	s=korg; t=1723730505;
+	bh=U3A31N3zw1rwXplX3SaNgepd68aQFcdtcaonebNIYKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QLcIjxJO1mU8jzD3k0jrweGL0Udzy0ba8se/5mS5uVZN4AstfMXUshNCsgZSdYKR/
-	 JpYi72xaE3kpJLBPSOR2MSRBa9S95Fv8iMwXS/19QJ6WdTY/q2+YkhGDmyPzevzb0e
-	 ExpQfjCXegslk2+j60vMwwpMKXOaEpYjBO9n2G9k=
+	b=qP7ft859KzS5R0iiKLCIR3RTykrj306xdnp8uVG9kQj4MwSpWyhGX1JuMnn+rGKc0
+	 e6j6sQOyvvlI+0oo3RZN0wTfRrS1Ak0wYlEVY3vS6C3xlf/qTjdCYBBFzAZH8nAORz
+	 LtTIwI4lvxB0jf5Y/fMhYrHa3AwSo5ZMG+Kd4OiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Michal Kubiak <michal.kubiak@intel.com>
-Subject: [PATCH 5.15 427/484] vhost-vdpa: switch to use vmf_insert_pfn() in the fault handler
-Date: Thu, 15 Aug 2024 15:24:45 +0200
-Message-ID: <20240815131957.949725598@linuxfoundation.org>
+	Justin Stitt <justinstitt@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Miroslav Lichvar <mlichvar@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 428/484] ntp: Clamp maxerror and esterror to operating range
+Date: Thu, 15 Aug 2024 15:24:46 +0200
+Message-ID: <20240815131957.990157358@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,45 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Wang <jasowang@redhat.com>
+From: Justin Stitt <justinstitt@google.com>
 
-commit 0823dc64586ba5ea13a7d200a5d33e4c5fa45950 upstream.
+[ Upstream commit 87d571d6fb77ec342a985afa8744bb9bb75b3622 ]
 
-remap_pfn_page() should not be called in the fault handler as it may
-change the vma->flags which may trigger lockdep warning since the vma
-write lock is not held. Actually there's no need to modify the
-vma->flags as it has been set in the mmap(). So this patch switches to
-use vmf_insert_pfn() instead.
+Using syzkaller alongside the newly reintroduced signed integer overflow
+sanitizer spits out this report:
 
-Reported-by: Dragos Tatulea <dtatulea@nvidia.com>
-Tested-by: Dragos Tatulea <dtatulea@nvidia.com>
-Fixes: ddd89d0a059d ("vhost_vdpa: support doorbell mapping via mmap")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason Wang <jasowang@redhat.com>
-Message-Id: <20240701033159.18133-1-jasowang@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Michal Kubiak <michal.kubiak@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+UBSAN: signed-integer-overflow in ../kernel/time/ntp.c:461:16
+9223372036854775807 + 500 cannot be represented in type 'long'
+Call Trace:
+ handle_overflow+0x171/0x1b0
+ second_overflow+0x2d6/0x500
+ accumulate_nsecs_to_secs+0x60/0x160
+ timekeeping_advance+0x1fe/0x890
+ update_wall_time+0x10/0x30
+
+time_maxerror is unconditionally incremented and the result is checked
+against NTP_PHASE_LIMIT, but the increment itself can overflow, resulting
+in wrap-around to negative space.
+
+Before commit eea83d896e31 ("ntp: NTP4 user space bits update") the user
+supplied value was sanity checked to be in the operating range. That change
+removed the sanity check and relied on clamping in handle_overflow() which
+does not work correctly when the user supplied value is in the overflow
+zone of the '+ 500' operation.
+
+The operation requires CAP_SYS_TIME and the side effect of the overflow is
+NTP getting out of sync.
+
+Miroslav confirmed that the input value should be clamped to the operating
+range and the same applies to time_esterror. The latter is not used by the
+kernel, but the value still should be in the operating range as it was
+before the sanity check got removed.
+
+Clamp them to the operating range.
+
+[ tglx: Changed it to clamping and included time_esterror ]
+
+Fixes: eea83d896e31 ("ntp: NTP4 user space bits update")
+Signed-off-by: Justin Stitt <justinstitt@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Cc: Miroslav Lichvar <mlichvar@redhat.com>
+Link: https://lore.kernel.org/all/20240517-b4-sio-ntp-usec-v2-1-d539180f2b79@google.com
+Closes: https://github.com/KSPP/linux/issues/354
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vdpa.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ kernel/time/ntp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/vhost/vdpa.c
-+++ b/drivers/vhost/vdpa.c
-@@ -1059,13 +1059,7 @@ static vm_fault_t vhost_vdpa_fault(struc
+diff --git a/kernel/time/ntp.c b/kernel/time/ntp.c
+index 406dccb79c2b6..502e1e5b7f7f6 100644
+--- a/kernel/time/ntp.c
++++ b/kernel/time/ntp.c
+@@ -727,10 +727,10 @@ static inline void process_adjtimex_modes(const struct __kernel_timex *txc,
+ 	}
  
- 	notify = ops->get_vq_notification(vdpa, index);
+ 	if (txc->modes & ADJ_MAXERROR)
+-		time_maxerror = txc->maxerror;
++		time_maxerror = clamp(txc->maxerror, 0, NTP_PHASE_LIMIT);
  
--	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
--	if (remap_pfn_range(vma, vmf->address & PAGE_MASK,
--			    PFN_DOWN(notify.addr), PAGE_SIZE,
--			    vma->vm_page_prot))
--		return VM_FAULT_SIGBUS;
--
--	return VM_FAULT_NOPAGE;
-+	return vmf_insert_pfn(vma, vmf->address & PAGE_MASK, PFN_DOWN(notify.addr));
- }
+ 	if (txc->modes & ADJ_ESTERROR)
+-		time_esterror = txc->esterror;
++		time_esterror = clamp(txc->esterror, 0, NTP_PHASE_LIMIT);
  
- static const struct vm_operations_struct vhost_vdpa_vm_ops = {
+ 	if (txc->modes & ADJ_TIMECONST) {
+ 		time_constant = txc->constant;
+-- 
+2.43.0
+
 
 
