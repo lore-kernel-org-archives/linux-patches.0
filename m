@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A204417BEA5;
-	Thu, 15 Aug 2024 13:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C4B19DFA6;
+	Thu, 15 Aug 2024 13:53:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730004; cv=none; b=gmx+QONl32dEWMBGcpNMVP0jZoizFS1NsKhM69cDliFkK7dKhqFs5Ftlp1faZEWBJUDQe6eER0+qnM4/51ZevOdRXsrMdhe7yl30UhrCtVbeZFXVkE+OF1caB/gRzlQ6oElmUvZT13rNfRsaN3L1ID7hjiBU12u0Bb2DsOJXli4=
+	t=1723730008; cv=none; b=qFCUBkEQG8iBaDHKJ7P8nKC/5uUNTZ7Fiu1L8npfI7LXTrrRjt88HoUEBgAzJ3GXChuxfJYaVCAltGuSIOXwKFCsETvxIb3A2AeeJatGXWP5IonR5j+3sjn4IRR5XsXrw+Gk9tNhnKc4bm1ItYJ9MEPikOasjXvzQxaGscI2ZVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730004; c=relaxed/simple;
-	bh=XL0+tSD6FvqPk4RWhehTwwUa0CUnbm797NVleGAl87I=;
+	s=arc-20240116; t=1723730008; c=relaxed/simple;
+	bh=q4NEaEkci7wB7aCQQ3dzmHZpyqgz+Ka9O8hCTr4E6Yk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i7Swk0NFNNA9Cbu0T/xU7wwjhlwpeKhb0RFUTSbGLoPSfiNHk/whs5HUUd5+wcDo22EfcImoH4RW/Odbt9YowQ06u1wR3erTTOEWysS/Sss4BXdE9vi/Lz7nyCju/lFlZRK9irRyx3OAxA3rzxCDQs7QBxskEUBL6ZBtTcsOtZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rACcIWqS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T1ATNZIXgC9P+OlgRW8GMUUqKaN7/5MY10I4GBldNMHp0g16lJlN/JpoomheLPpxdsOofbjd2F4JI7MJrR92d9vmWAVhNcervMKptokHtR2wT4Gre6LTiEGYT65PnoLK7ZyRiOoAwwRsqymNetTWDpkR4gb23GvgafrAGpaSzMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gGf/LM+j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rACcIWqS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD1EC4AF0C;
-	Thu, 15 Aug 2024 13:53:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gGf/LM+j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FB66C4AF0A;
+	Thu, 15 Aug 2024 13:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730004;
-	bh=XL0+tSD6FvqPk4RWhehTwwUa0CUnbm797NVleGAl87I=;
+	s=korg; t=1723730007;
+	bh=q4NEaEkci7wB7aCQQ3dzmHZpyqgz+Ka9O8hCTr4E6Yk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rACcIWqSN1LOgL5ChEJZMgxrnc6Ya2gJnSbiU7obDIlneC/dZiVTJVznG8RpZSOWe
-	 w0xjyJkoUcxCPMnYZxBubYfZx7NvqaC5bQjxcY6k4ALO1mTyYRfT85AjDPI08yGExG
-	 SdrU+0/bmZnTYuFtRKDFrWESxab1PSO12/Xyzs0o=
+	b=gGf/LM+jXkU30LI8vMcy9h94feEXviESvm0zK9IqU0Me5rkpu7k0+WD0JV1F7mdmy
+	 ci2LgRVQ+ayzlilfdRZhEa74hwZBcFrRTLht1R27kBRvTVJyywu1cXIV5Gr6Eh6I/D
+	 gyMk6a257SWKSqmvOk+52SKeqFb8Q6In57w9ENoE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 275/484] net: stmmac: Correct byte order of perfect_match
-Date: Thu, 15 Aug 2024 15:22:13 +0200
-Message-ID: <20240815131952.028172943@linuxfoundation.org>
+Subject: [PATCH 5.15 276/484] net: nexthop: Initialize all fields in dumped nexthops
+Date: Thu, 15 Aug 2024 15:22:14 +0200
+Message-ID: <20240815131952.067510898@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,108 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Simon Horman <horms@kernel.org>
+From: Petr Machata <petrm@nvidia.com>
 
-[ Upstream commit e9dbebae2e3c338122716914fe105458f41e3a4a ]
+[ Upstream commit 6d745cd0e9720282cd291d36b9db528aea18add2 ]
 
-The perfect_match parameter of the update_vlan_hash operation is __le16,
-and is correctly converted from host byte-order in the lone caller,
-stmmac_vlan_update().
+struct nexthop_grp contains two reserved fields that are not initialized by
+nla_put_nh_group(), and carry garbage. This can be observed e.g. with
+strace (edited for clarity):
 
-However, the implementations of this caller, dwxgmac2_update_vlan_hash()
-and dwxgmac2_update_vlan_hash(), both treat this parameter as host byte
-order, using the following pattern:
+    # ip nexthop add id 1 dev lo
+    # ip nexthop add id 101 group 1
+    # strace -e recvmsg ip nexthop get id 101
+    ...
+    recvmsg(... [{nla_len=12, nla_type=NHA_GROUP},
+                 [{id=1, weight=0, resvd1=0x69, resvd2=0x67}]] ...) = 52
 
-	u32 value = ...
-	...
-	writel(value | perfect_match, ...);
+The fields are reserved and therefore not currently used. But as they are, they
+leak kernel memory, and the fact they are not just zero complicates repurposing
+of the fields for new ends. Initialize the full structure.
 
-This is not correct because both:
-1) value is host byte order; and
-2) writel expects a host byte order value as it's first argument
-
-I believe that this will break on big endian systems. And I expect it
-has gone unnoticed by only being exercised on little endian systems.
-
-The approach taken by this patch is to update the callback, and it's
-caller to simply use a host byte order value.
-
-Flagged by Sparse.
-Compile tested only.
-
-Fixes: c7ab0b8088d7 ("net: stmmac: Fallback to VLAN Perfect filtering if HASH is not available")
-Signed-off-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Fixes: 430a049190de ("nexthop: Add support for nexthop groups")
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c   | 2 +-
- drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c | 2 +-
- drivers/net/ethernet/stmicro/stmmac/hwif.h          | 2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c   | 4 ++--
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ net/ipv4/nexthop.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index 026e3645e566a..e5c5a9c5389c3 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -972,7 +972,7 @@ static void dwmac4_set_mac_loopback(void __iomem *ioaddr, bool enable)
- }
+diff --git a/net/ipv4/nexthop.c b/net/ipv4/nexthop.c
+index c140a36bd1e65..633eab6ff55dd 100644
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -675,9 +675,10 @@ static int nla_put_nh_group(struct sk_buff *skb, struct nh_group *nhg)
  
- static void dwmac4_update_vlan_hash(struct mac_device_info *hw, u32 hash,
--				    __le16 perfect_match, bool is_double)
-+				    u16 perfect_match, bool is_double)
- {
- 	void __iomem *ioaddr = hw->pcsr;
- 	u32 value;
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-index dd73f38ec08d8..813327d04c56f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
-@@ -582,7 +582,7 @@ static int dwxgmac2_rss_configure(struct mac_device_info *hw,
- }
- 
- static void dwxgmac2_update_vlan_hash(struct mac_device_info *hw, u32 hash,
--				      __le16 perfect_match, bool is_double)
-+				      u16 perfect_match, bool is_double)
- {
- 	void __iomem *ioaddr = hw->pcsr;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index 58e5c6c428dc0..414b63d5b9ebe 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -370,7 +370,7 @@ struct stmmac_ops {
- 			     struct stmmac_rss *cfg, u32 num_rxq);
- 	/* VLAN */
- 	void (*update_vlan_hash)(struct mac_device_info *hw, u32 hash,
--				 __le16 perfect_match, bool is_double);
-+				 u16 perfect_match, bool is_double);
- 	void (*enable_vlan)(struct mac_device_info *hw, u32 type);
- 	int (*add_hw_vlan_rx_fltr)(struct net_device *dev,
- 				   struct mac_device_info *hw,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index b0ab8f6986f8b..a5cbb495b5581 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6237,7 +6237,7 @@ static u32 stmmac_vid_crc32_le(__le16 vid_le)
- static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
- {
- 	u32 crc, hash = 0;
--	__le16 pmatch = 0;
-+	u16 pmatch = 0;
- 	int count = 0;
- 	u16 vid = 0;
- 
-@@ -6252,7 +6252,7 @@ static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
- 		if (count > 2) /* VID = 0 always passes filter */
- 			return -EOPNOTSUPP;
- 
--		pmatch = cpu_to_le16(vid);
-+		pmatch = vid;
- 		hash = 0;
+ 	p = nla_data(nla);
+ 	for (i = 0; i < nhg->num_nh; ++i) {
+-		p->id = nhg->nh_entries[i].nh->id;
+-		p->weight = nhg->nh_entries[i].weight - 1;
+-		p += 1;
++		*p++ = (struct nexthop_grp) {
++			.id = nhg->nh_entries[i].nh->id,
++			.weight = nhg->nh_entries[i].weight - 1,
++		};
  	}
  
+ 	if (nhg->resilient && nla_put_nh_group_res(skb, nhg))
 -- 
 2.43.0
 
