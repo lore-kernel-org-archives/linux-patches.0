@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D9C1A00D1;
-	Thu, 15 Aug 2024 14:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F2F2772A;
+	Thu, 15 Aug 2024 14:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732320; cv=none; b=nvhrLT1jeuBu7lDUhj8ds1So+bbrvq5atChcFFTDSDg+1PtmQcYkya07P1P+oWIuy1qyRYT2yJfJs0f7SNTiEr3iUXHkoBB+0bBZ4rxYoXPQWZHlsEUnbMK5bxKJYUReywD6/33VLLgGLtV1Yo+eaEsdoKZhbnBEIXjdp6FPUdk=
+	t=1723732323; cv=none; b=Iby/dv0LIBLg3OdK9lU7IJk7ifZ8U/IFJlhDTfvG+cxduMXCBNxUHzTfbff9AL1YgIhhiQosk2ariJ2NqJ+1luNkzN3nwPqvvtx1L+pTyuC2llHQC8nnSMm/fx3YNMT8odWggw2zlnDoJ2LWjOXPWy1F0jwpWu/KRWAszJjYSCU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732320; c=relaxed/simple;
-	bh=/QbhHnkUiS47F3OC4pI4DdX3rhlzrckdEVsu9jJBhUk=;
+	s=arc-20240116; t=1723732323; c=relaxed/simple;
+	bh=aTTqMMAbiGWB9ozP2Y86ZxN1mKGHQI7UNFYeTSN+Poc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oa9+pKNDBk90RfSpm0w8qCL6jESzHeRUBIghj5sefyp7M8D1OUCTrBB6MvZeck3r3DZKuco/6O6WPiuJu3M1/rTje1LSOpgoOs2lR5TB0O4kt0Ff+jm3O9uUtQXdznWW97fflW+9L9n9iJrBjA6kJlimUXc5DlghthBV50pz+Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcmVXAAu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WEx3xfHZbB7VG73VsslETqxukTn571fEktXrbyWIeWoSNVundHGKzR4VvoUftpgkeJQl7892au4EMPmxD287t0xdog+RP6/Bj1veaQRh+OEz/aE6SjUBnY6AW6b8VGJmStgBQnmtHRXTaTU8ErClYHFGqoHGumPCqYO8beQhm8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MuOUU22y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcmVXAAu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63C4C32786;
-	Thu, 15 Aug 2024 14:31:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MuOUU22y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C410DC32786;
+	Thu, 15 Aug 2024 14:32:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732320;
-	bh=/QbhHnkUiS47F3OC4pI4DdX3rhlzrckdEVsu9jJBhUk=;
+	s=korg; t=1723732323;
+	bh=aTTqMMAbiGWB9ozP2Y86ZxN1mKGHQI7UNFYeTSN+Poc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcmVXAAuGWqQFngSbhrN8MHMnwMlBKMTdQHeI09GpEbZC2z8qXMdGZDfd1SkYO100
-	 pRkAZaJbWnjBn76ng4b+0/6O6yAPVmkXkaBrhPiTDsS79P0hujN9Kef9zIuM5ihvj0
-	 KbtqTKZv0baHtWRb0Y9QGUSRliThTy4rKs7ueXxQ=
+	b=MuOUU22yZi0Cu58IwxnoWBTaQLHbfUrELkvVODQbhxk5iMwZM2p0ZdNtB6ZQ5+d9M
+	 ZNx2jc55kxLL8JibvI2XJ4Qm4p3IGfDBsqzUE+5rRnkgKX/7PKRQezMKb8Tip4mzO8
+	 5/M3l6sRojIii6Rhtld2DMg0dbIOGEoLM0Rm80yM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 116/352] pinctrl: single: fix possible memory leak when pinctrl_enable() fails
-Date: Thu, 15 Aug 2024 15:23:02 +0200
-Message-ID: <20240815131923.738003930@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Paolo Pisati <p.pisati@gmail.com>,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: [PATCH 5.10 143/352] m68k: amiga: Turn off Warp1260 interrupts during boot
+Date: Thu, 15 Aug 2024 15:23:29 +0200
+Message-ID: <20240815131924.787484306@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,60 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Paolo Pisati <p.pisati@gmail.com>
 
-[ Upstream commit 8f773bfbdd428819328a2d185976cfc6ae811cd3 ]
+commit 1d8491d3e726984343dd8c3cdbe2f2b47cfdd928 upstream.
 
-This driver calls pinctrl_register_and_init() which is not
-devm_ managed, it will leads memory leak if pinctrl_enable()
-fails. Replace it with devm_pinctrl_register_and_init().
-And call pcs_free_resources() if pinctrl_enable() fails.
+On an Amiga 1200 equipped with a Warp1260 accelerator, an interrupt
+storm coming from the accelerator board causes the machine to crash in
+local_irq_enable() or auto_irq_enable().  Disabling interrupts for the
+Warp1260 in amiga_parse_bootinfo() fixes the problem.
 
-Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://lore.kernel.org/r/20240606023704.3931561-3-yangyingliang@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/ZkjwzVwYeQtyAPrL@amaterasu.local
+Cc: stable <stable@kernel.org>
+Signed-off-by: Paolo Pisati <p.pisati@gmail.com>
+Reviewed-by: Michael Schmitz <schmitzmic@gmail.com>
+Reviewed-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240601153254.186225-1-p.pisati@gmail.com
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/m68k/amiga/config.c       |    9 +++++++++
+ include/uapi/linux/zorro_ids.h |    3 +++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 22e471933b373..4860c4dd853f3 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -1332,7 +1332,6 @@ static void pcs_irq_free(struct pcs_device *pcs)
- static void pcs_free_resources(struct pcs_device *pcs)
- {
- 	pcs_irq_free(pcs);
--	pinctrl_unregister(pcs->pctl);
+--- a/arch/m68k/amiga/config.c
++++ b/arch/m68k/amiga/config.c
+@@ -179,6 +179,15 @@ int __init amiga_parse_bootinfo(const st
+ 			dev->slotsize = be16_to_cpu(cd->cd_SlotSize);
+ 			dev->boardaddr = be32_to_cpu(cd->cd_BoardAddr);
+ 			dev->boardsize = be32_to_cpu(cd->cd_BoardSize);
++
++			/* CS-LAB Warp 1260 workaround */
++			if (be16_to_cpu(dev->rom.er_Manufacturer) == ZORRO_MANUF(ZORRO_PROD_CSLAB_WARP_1260) &&
++			    dev->rom.er_Product == ZORRO_PROD(ZORRO_PROD_CSLAB_WARP_1260)) {
++
++				/* turn off all interrupts */
++				pr_info("Warp 1260 card detected: applying interrupt storm workaround\n");
++				*(uint32_t *)(dev->boardaddr + 0x1000) = 0xfff;
++			}
+ 		} else
+ 			pr_warn("amiga_parse_bootinfo: too many AutoConfig devices\n");
+ #endif /* CONFIG_ZORRO */
+--- a/include/uapi/linux/zorro_ids.h
++++ b/include/uapi/linux/zorro_ids.h
+@@ -449,6 +449,9 @@
+ #define  ZORRO_PROD_VMC_ISDN_BLASTER_Z2				ZORRO_ID(VMC, 0x01, 0)
+ #define  ZORRO_PROD_VMC_HYPERCOM_4				ZORRO_ID(VMC, 0x02, 0)
  
- #if IS_BUILTIN(CONFIG_PINCTRL_SINGLE)
- 	if (pcs->missing_nr_pinctrl_cells)
-@@ -1889,7 +1888,7 @@ static int pcs_probe(struct platform_device *pdev)
- 	if (ret < 0)
- 		goto free;
++#define ZORRO_MANUF_CSLAB					0x1400
++#define  ZORRO_PROD_CSLAB_WARP_1260				ZORRO_ID(CSLAB, 0x65, 0)
++
+ #define ZORRO_MANUF_INFORMATION					0x157C
+ #define  ZORRO_PROD_INFORMATION_ISDN_ENGINE_I			ZORRO_ID(INFORMATION, 0x64, 0)
  
--	ret = pinctrl_register_and_init(&pcs->desc, pcs->dev, pcs, &pcs->pctl);
-+	ret = devm_pinctrl_register_and_init(pcs->dev, &pcs->desc, pcs, &pcs->pctl);
- 	if (ret) {
- 		dev_err(pcs->dev, "could not register single pinctrl driver\n");
- 		goto free;
-@@ -1922,8 +1921,10 @@ static int pcs_probe(struct platform_device *pdev)
- 
- 	dev_info(pcs->dev, "%i pins, size %u\n", pcs->desc.npins, pcs->size);
- 
--	return pinctrl_enable(pcs->pctl);
-+	if (pinctrl_enable(pcs->pctl))
-+		goto free;
- 
-+	return 0;
- free:
- 	pcs_free_resources(pcs);
- 
--- 
-2.43.0
-
 
 
