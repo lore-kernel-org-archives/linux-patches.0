@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4358A19DF5F;
-	Thu, 15 Aug 2024 14:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC01AC432;
+	Thu, 15 Aug 2024 14:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730645; cv=none; b=l4XCisLTJZ9nbnw861z6UZO8UuYvrw1+F0vg7fI3UVsKpGVYhvb2yuq/uHI/QIEUtp5OolD/l1FlUu8VRa8JE6sYnhQoOXj+UrDc3u0EPUq35Zjeesny++hhTq07sVjTUeY9myzf/6x430fmd5JNwVvywJMWIIVQpgU/CFj6GxQ=
+	t=1723730648; cv=none; b=aGITgL085ExjXrW5S1qln1+JYEP2Yy9xawlnWStwKaMeY+ev9ex6K0R8VVSnNMUFoXPU5V7nGTaxJc6P71c06r2lMs+kltG2L0QtZMv4/3iNpQIbL9Dbis3K3tati3V5tLLn9nCcU5GEnjXxSEKYNpYWyrItwTmm9TbLJ9sjvdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730645; c=relaxed/simple;
-	bh=3QJ5XFc2jSgWVwWINsxZRlU/3T0NkZfsws9SJoM93wo=;
+	s=arc-20240116; t=1723730648; c=relaxed/simple;
+	bh=RPRMQ7FK9HsCuLpzFnFbeHY6T+JUfmBWJPRp5KHUDh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MSLofZiThqnowckM0gJyZc+lUHNtXFV68gXh99hUzHHvkAzTba3ZDglqy/yqOHApY+fm+sWGxIRA6KsrHTMtjakeNHN8kFlof6VdqqgqwwvMn2rR2PP/Jmx0wdpS0GTY9JjDq3WdvUQZNKq7gbEOcoEKXI+FUH3GZ0BEcr7mZdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xoWLvbPR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uVQ4sIzzHBvkVbUfAq1QRwmFwhr0DFve9rYC/X2BsX8L+WZz75M5xG9iTRHJoIChxxn9hZJJcNGkLoqYc7AIPSnqoka81o46YkVKk1HOBDqe3nlV7R51nQE3MdUsTQuS+muqtcq6jRYaD8T3EvQKqyMJItaljJzNGT8wDCWEmGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1KYZJ3a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xoWLvbPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3944C32786;
-	Thu, 15 Aug 2024 14:04:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1KYZJ3a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE598C32786;
+	Thu, 15 Aug 2024 14:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730645;
-	bh=3QJ5XFc2jSgWVwWINsxZRlU/3T0NkZfsws9SJoM93wo=;
+	s=korg; t=1723730648;
+	bh=RPRMQ7FK9HsCuLpzFnFbeHY6T+JUfmBWJPRp5KHUDh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xoWLvbPR5yW6SadIeSsnmzvHMdY/TYtj5zAle/Ffhqu/leC4naMBinrE6eZlBY1FP
-	 YOJ1LIUtWYAQ7OmUNDKkTG6tosw7sQoeb3wTjvii1FuQDZl2t0GzRCD1gHpSS1bGBV
-	 091UReRlr3OtrkPr7JHuEQHUY1eIJ9YDkeKU0rK0=
+	b=T1KYZJ3alHzJQqQ8mlT0oFFCwbj8zURs5Fu62aZ98YzsIY9UT7t6H0oA74LyymfKe
+	 UIf8/ZXoOX/gCqAipPYk9ucbPg+hA9IXewkRpDSJOvT/sjv7tzbH8SSjioVj2nPYaR
+	 Tf1NC5F8xoS0pjw80m6a6JPdbp0t8L1SLMGdk6yI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	syzbot+19013115c9786bfd0c4e@syzkaller.appspotmail.com,
-	Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
-Subject: [PATCH 5.15 473/484] wifi: mac80211: check basic rates validity
-Date: Thu, 15 Aug 2024 15:25:31 +0200
-Message-ID: <20240815131959.747094574@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 474/484] mptcp: fully established after ADD_ADDR echo on MPJ
+Date: Thu, 15 Aug 2024 15:25:32 +0200
+Message-ID: <20240815131959.785983201@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,63 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit ce04abc3fcc62cd5640af981ebfd7c4dc3bded28 upstream.
+commit d67c5649c1541dc93f202eeffc6f49220a4ed71d upstream.
 
-When userspace sets basic rates, it might send us some rates
-list that's empty or consists of invalid values only. We're
-currently ignoring invalid values and then may end up with a
-rates bitmap that's empty, which later results in a warning.
+Before this patch, receiving an ADD_ADDR echo on the just connected
+MP_JOIN subflow -- initiator side, after the MP_JOIN 3WHS -- was
+resulting in an MP_RESET. That's because only ACKs with a DSS or
+ADD_ADDRs without the echo bit were allowed.
 
-Reject the call if there were no valid rates.
+Not allowing the ADD_ADDR echo after an MP_CAPABLE 3WHS makes sense, as
+we are not supposed to send an ADD_ADDR before because it requires to be
+in full established mode first. For the MP_JOIN 3WHS, that's different:
+the ADD_ADDR can be sent on a previous subflow, and the ADD_ADDR echo
+can be received on the recently created one. The other peer will already
+be in fully established, so it is allowed to send that.
 
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Reported-by: syzbot+19013115c9786bfd0c4e@syzkaller.appspotmail.com
-Tested-by: syzbot+19013115c9786bfd0c4e@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=19013115c9786bfd0c4e
-Signed-off-by: Vincenzo Mezzela <vincenzo.mezzela@gmail.com>
+We can then relax the conditions here to accept the ADD_ADDR echo for
+MPJ subflows.
+
+Fixes: 67b12f792d5e ("mptcp: full fully established support after ADD_ADDR")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-1-c8a9b036493b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in options.c, because the context has changed in commit
+  b3ea6b272d79 ("mptcp: consolidate initial ack seq generation"), which
+  is not in this version. This commit is unrelated to this
+  modification. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/cfg.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ net/mptcp/options.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -2339,6 +2339,17 @@ static int ieee80211_change_bss(struct w
- 	if (!sband)
- 		return -EINVAL;
- 
-+	if (params->basic_rates) {
-+		if (!ieee80211_parse_bitrates(&sdata->vif.bss_conf.chandef,
-+					      wiphy->bands[sband->band],
-+					      params->basic_rates,
-+					      params->basic_rates_len,
-+					      &sdata->vif.bss_conf.basic_rates))
-+			return -EINVAL;
-+		changed |= BSS_CHANGED_BASIC_RATES;
-+		ieee80211_check_rate_mask(sdata);
-+	}
-+
- 	if (params->use_cts_prot >= 0) {
- 		sdata->vif.bss_conf.use_cts_prot = params->use_cts_prot;
- 		changed |= BSS_CHANGED_ERP_CTS_PROT;
-@@ -2362,16 +2373,6 @@ static int ieee80211_change_bss(struct w
- 		changed |= BSS_CHANGED_ERP_SLOT;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -923,7 +923,8 @@ static bool check_fully_established(stru
  	}
  
--	if (params->basic_rates) {
--		ieee80211_parse_bitrates(&sdata->vif.bss_conf.chandef,
--					 wiphy->bands[sband->band],
--					 params->basic_rates,
--					 params->basic_rates_len,
--					 &sdata->vif.bss_conf.basic_rates);
--		changed |= BSS_CHANGED_BASIC_RATES;
--		ieee80211_check_rate_mask(sdata);
--	}
--
- 	if (params->ap_isolate >= 0) {
- 		if (params->ap_isolate)
- 			sdata->flags |= IEEE80211_SDATA_DONT_BRIDGE_PACKETS;
+ 	if (((mp_opt->suboptions & OPTION_MPTCP_DSS) && mp_opt->use_ack) ||
+-	    ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) && !mp_opt->echo)) {
++	    ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) &&
++	     (!mp_opt->echo || subflow->mp_join))) {
+ 		/* subflows are fully established as soon as we get any
+ 		 * additional ack, including ADD_ADDR.
+ 		 */
 
 
