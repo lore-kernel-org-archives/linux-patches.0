@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373A53214;
-	Thu, 15 Aug 2024 14:39:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58DA1AC893;
+	Thu, 15 Aug 2024 14:39:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732753; cv=none; b=UXh+ZusUmpFUXdnv2IzJgX5QbfvPNRkWNoQu40d+EGBxdwB22KOZ73eQXcQ+53xHzwRQ9/tx9usGzECpFXe6GLbJnN6A8jgTLgzs5EI4JTsKdk2zaTWwm2owNZknIsAlEYcjEiwE8recrdkDGHfPVYUQmTZLP/rF21ch2DD3qI4=
+	t=1723732756; cv=none; b=NCeKmlMpURBUeY0s3x5LPU3pvIV+e0zmquusX14H8uja+yA33afm6mSvMXxu2yrXLp6JUiNq9zx4hPYUMSxrrvApXpkqKWvr62lKPd4lkcy3mR3WxKZv/WNF7zcBGrECqGwjcxZw3z6svsgUUwBGFSGIThiiamh/0L4UPzVsOw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732753; c=relaxed/simple;
-	bh=+GLnSjzjqF7U4zzvx5ney4i03qDr+IbEY14nOMAMmgk=;
+	s=arc-20240116; t=1723732756; c=relaxed/simple;
+	bh=yo9718unBGlHVDwumQmyOc24eGEsAi/82bfzEG4QBaY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bPh5ja+cAUPU1wh4WIjLbnDWdl3Byc+S9D9YogRfG1KveEaF8w67wEJY8aPeNIVpaogg6KxH76RH6bsPsmqON+8BGr7e+4SYIjDLCAJxGJqClZpNwE8fLUXAdPmKrOAQxBdeqQEYELOLQTFK1amWMXoM1o45kPSHf6rBuxvprgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K3sjTbHK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KDnJHtXnyTZOUg0GH/HuhPZWtzF5dT1BPajYfyC8rNbxIzBUbaZv2V6cO49gS8k9Z++JxC0xyvGXmCKYVBNn4GDJnvwgEp2yxtHP3Cn+rvNuAJWJ7b9XqLwGMsdkrmn4xjvPtF8HiouvQvhCVvdpTKweP9QsSGsE7SA10UhnUak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UwdV+YrM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K3sjTbHK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A31C9C32786;
-	Thu, 15 Aug 2024 14:39:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UwdV+YrM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5969C32786;
+	Thu, 15 Aug 2024 14:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732753;
-	bh=+GLnSjzjqF7U4zzvx5ney4i03qDr+IbEY14nOMAMmgk=;
+	s=korg; t=1723732756;
+	bh=yo9718unBGlHVDwumQmyOc24eGEsAi/82bfzEG4QBaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3sjTbHKugDc1q273GcBnuHgo8QyW0Aoy9FxjdDHjiFXOZPOBTiVbTQTuXTYQYQ62
-	 3+4GVLIdUkbX1fJx+TkzVTazc/ASCo8PnM84jQnZXcL1Uv5F4PUAryfH9ZNTjNPg41
-	 QX2C3sWF01pZJLoz0e7Aq5XAsMyib1DPv6+IKDSo=
+	b=UwdV+YrMDZ2A0Qj/h0veWlOJRjQ8zjcc1Pao9mC47OtPmkDngE8zqU9QM50vaHn14
+	 WjqpXTTY0LekN2bH4XWjE6nLhsN5POzl2F4E5/BplfrKdtj3xr7NG/Tgnb0gyan6FU
+	 jjOu9KTpg/Hewlux4pY6JxvWYf1oKSPae5q3TX/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 275/352] media: uvcvideo: Fix the bandwdith quirk on USB 3.x
-Date: Thu, 15 Aug 2024 15:25:41 +0200
-Message-ID: <20240815131930.081286466@linuxfoundation.org>
+Subject: [PATCH 5.10 276/352] jbd2: avoid memleak in jbd2_journal_write_metadata_buffer
+Date: Thu, 15 Aug 2024 15:25:42 +0200
+Message-ID: <20240815131930.120014663@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,50 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michal Pecio <michal.pecio@gmail.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-[ Upstream commit 9e3d55fbd160b3ca376599a68b4cddfdc67d4153 ]
+[ Upstream commit cc102aa24638b90e04364d64e4f58a1fa91a1976 ]
 
-The bandwidth fixup quirk doesn't know that SuperSpeed exists and has
-the same 8 service intervals per millisecond as High Speed, hence its
-calculations are wrong.
+The new_bh is from alloc_buffer_head, we should call free_buffer_head to
+free it in error case.
 
-Assume that all speeds from HS up use 8 intervals per millisecond.
-
-No further changes are needed, updated code has been confirmed to work
-with all speeds from FS to SS.
-
-Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Link: https://lore.kernel.org/r/20240414190040.2255a0bc@foxbook
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://patch.msgid.link/20240514112438.1269037-2-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/jbd2/journal.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 9a4c730943a90..288f097e2e6f2 100644
---- a/drivers/media/usb/uvc/uvc_video.c
-+++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -207,13 +207,13 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
- 		/* Compute a bandwidth estimation by multiplying the frame
- 		 * size by the number of video frames per second, divide the
- 		 * result by the number of USB frames (or micro-frames for
--		 * high-speed devices) per second and add the UVC header size
--		 * (assumed to be 12 bytes long).
-+		 * high- and super-speed devices) per second and add the UVC
-+		 * header size (assumed to be 12 bytes long).
- 		 */
- 		bandwidth = frame->wWidth * frame->wHeight / 8 * format->bpp;
- 		bandwidth *= 10000000 / interval + 1;
- 		bandwidth /= 1000;
--		if (stream->dev->udev->speed == USB_SPEED_HIGH)
-+		if (stream->dev->udev->speed >= USB_SPEED_HIGH)
- 			bandwidth /= 8;
- 		bandwidth += 12;
- 
+diff --git a/fs/jbd2/journal.c b/fs/jbd2/journal.c
+index 4ae4b85ea1877..205e6c7c2fd0c 100644
+--- a/fs/jbd2/journal.c
++++ b/fs/jbd2/journal.c
+@@ -412,6 +412,7 @@ int jbd2_journal_write_metadata_buffer(transaction_t *transaction,
+ 		tmp = jbd2_alloc(bh_in->b_size, GFP_NOFS);
+ 		if (!tmp) {
+ 			brelse(new_bh);
++			free_buffer_head(new_bh);
+ 			return -ENOMEM;
+ 		}
+ 		spin_lock(&jh_in->b_state_lock);
 -- 
 2.43.0
 
