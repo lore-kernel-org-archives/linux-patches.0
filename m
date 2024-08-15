@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C0919E7F5;
-	Thu, 15 Aug 2024 13:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0C119F471;
+	Thu, 15 Aug 2024 13:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729484; cv=none; b=BDOOw6Mtf4LUYk3ohitHuOFkid7VnSXeAlmtZBytxloFrLCx0gj927pJY5v9DIX/L3EkPFEHPdqcR+Q50YjRh3iC21Vl0rxHjzPacd44Pn9cgAkQWk3GdZ/YraXyA2dFxELtiqi7Q1/4g4uDMCxSzKHCiS9dhovSR+akyBLpmOg=
+	t=1723729488; cv=none; b=GRSANKg+UU9fYZ2sCyxgVLgCZy/U8hMEXk/Ug1bWgWCBKJDmw3xbREom6y2cHeXg0K2pYm7IMTWEBdySoYfywTH0B9jVjuqdabab5o8Od8Nx6BY4QcYnRZ2YNu7gIfm66PuVUYRZG0VruqIvVLrPLQZze1eTJfeOFW+6O03mIqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729484; c=relaxed/simple;
-	bh=UpPkjYfDS/2rjU66vpwioUsMcMGiYJVrJNl94mwxY2w=;
+	s=arc-20240116; t=1723729488; c=relaxed/simple;
+	bh=4lKe875HXw64bsGhUrJyfs7hO8fWmNNFRmAy52NtN74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CdEbx3WI3jwqqtxEl7nLJPl9Ko+nQ2IRlJ3zJTH0Hcb0fQ6C9a8EWuBo65eBEZUNPDBQ9H0llmni8/Gaq+LjrAVRF5Zh3g2ErpiYTc25Rg4JpOlGsd7JTZlEWCMpY6gYUxpAEmJ/qDIf5nMSY7dWjWCwJpaOv+8koLmsoIVPAJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LWGb4zKl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lAQSGuscIQmTG+JAIuHdbMUFWogttVmZewe1Sl1fCAM7K84/N1Z1F4GN3kUyR/fZcNNwdCiywJ3VAHOVpKYY3P7Lu7L7XhvutFcTwpqiG3xxW4xR+ZnXrFZU38/nQXVFhkOoxHwNVeSeW/xVdKVAcp8KhI/Lq3PufIFyWWcQ6VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rz23jGAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LWGb4zKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E725C32786;
-	Thu, 15 Aug 2024 13:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rz23jGAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E04C32786;
+	Thu, 15 Aug 2024 13:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729484;
-	bh=UpPkjYfDS/2rjU66vpwioUsMcMGiYJVrJNl94mwxY2w=;
+	s=korg; t=1723729488;
+	bh=4lKe875HXw64bsGhUrJyfs7hO8fWmNNFRmAy52NtN74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LWGb4zKlE798bGXXhWhjw7IR8OYgnVPHWlpTOXhePvYM3DOu4qxhmYMvwcfjXfNDo
-	 IagZQ0P1iOuGcmto95Nfby3eGcrY4ol+TyKtTryYTDy7ufREYHkyIqLB3ZxHcPzFW1
-	 osFR0x4d0L5GXE7fx6ECmCb2GZPQlvgvYGZdgeFc=
+	b=Rz23jGAO9LMIDMWZPfJLPZXAuNgSJtRAKeW+intEXYyDTxDBLd/Ne0lC7j/i03kKH
+	 Fml43TNP586RQfaxmCHclOk/9AymQeUTINAn/mchSoGUhVECJQDf9/u9qHRYpCcW7i
+	 KkLZz9PGqmfiQDDuYSytXafF8GtS3UFWf2E7EKNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	NeilBrown <neilb@suse.de>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Daniel Schaefer <dhs@frame.work>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 113/484] SUNRPC: avoid soft lockup when transmitting UDP to reachable server.
-Date: Thu, 15 Aug 2024 15:19:31 +0200
-Message-ID: <20240815131945.657291988@linuxfoundation.org>
+Subject: [PATCH 5.15 096/484] media: uvcvideo: Override default flags
+Date: Thu, 15 Aug 2024 15:19:14 +0200
+Message-ID: <20240815131945.000141536@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,55 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: NeilBrown <neilb@suse.de>
+From: Daniel Schaefer <dhs@frame.work>
 
-[ Upstream commit 6258cf25d5e3155c3219ab5a79b970eef7996356 ]
+[ Upstream commit 86419686e66da5b90a07fb8a40ab138fe97189b5 ]
 
-Prior to the commit identified below, call_transmit_status() would
-handle -EPERM and other errors related to an unreachable server by
-falling through to call_status() which added a 3-second delay and
-handled the failure as a timeout.
+When the UVC device has a control that is readonly it doesn't set the
+SET_CUR flag. For example the privacy control has SET_CUR flag set in
+the defaults in the `uvc_ctrls` variable. Even if the device does not
+have it set, it's not cleared by uvc_ctrl_get_flags().
 
-Since that commit, call_transmit_status() falls through to
-handle_bind().  For UDP this moves straight on to handle_connect() and
-handle_transmit() so we immediately retransmit - and likely get the same
-error.
+Originally written with assignment in commit 859086ae3636 ("media:
+uvcvideo: Apply flags from device to actual properties"). But changed to
+|= in commit 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable
+flags"). It would not clear the default flags.
 
-This results in an indefinite loop in __rpc_execute() which triggers a
-soft-lockup warning.
+With this patch applied the correct flags are reported to user space.
+Tested with:
 
-For the errors that indicate an unreachable server,
-call_transmit_status() should fall back to call_status() as it did
-before.  This cannot cause the thundering herd that the previous patch
-was avoiding, as the call_status() will insert a delay.
+```
+> v4l2-ctl --list-ctrls | grep privacy
+privacy 0x009a0910 (bool)   : default=0 value=0 flags=read-only
+```
 
-Fixes: ed7dc973bd91 ("SUNRPC: Prevent thundering herd when the socket is not connected")
-Signed-off-by: NeilBrown <neilb@suse.de>
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Daniel Schaefer <dhs@frame.work>
+Fixes: 0dc68cabdb62 ("media: uvcvideo: Prevent setting unavailable flags")
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Link: https://lore.kernel.org/r/20240602065053.36850-1-dhs@frame.work
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_ctrl.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index f73d4593625cd..38071a6780211 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -2226,12 +2226,13 @@ call_transmit_status(struct rpc_task *task)
- 		task->tk_action = call_transmit;
- 		task->tk_status = 0;
- 		break;
--	case -ECONNREFUSED:
- 	case -EHOSTDOWN:
- 	case -ENETDOWN:
- 	case -EHOSTUNREACH:
- 	case -ENETUNREACH:
- 	case -EPERM:
-+		break;
-+	case -ECONNREFUSED:
- 		if (RPC_IS_SOFTCONN(task)) {
- 			if (!task->tk_msg.rpc_proc->p_proc)
- 				trace_xprt_ping(task->tk_xprt,
+diff --git a/drivers/media/usb/uvc/uvc_ctrl.c b/drivers/media/usb/uvc/uvc_ctrl.c
+index 05335866e6d62..050d334265828 100644
+--- a/drivers/media/usb/uvc/uvc_ctrl.c
++++ b/drivers/media/usb/uvc/uvc_ctrl.c
+@@ -1868,7 +1868,13 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 	else
+ 		ret = uvc_query_ctrl(dev, UVC_GET_INFO, ctrl->entity->id,
+ 				     dev->intfnum, info->selector, data, 1);
+-	if (!ret)
++
++	if (!ret) {
++		info->flags &= ~(UVC_CTRL_FLAG_GET_CUR |
++				 UVC_CTRL_FLAG_SET_CUR |
++				 UVC_CTRL_FLAG_AUTO_UPDATE |
++				 UVC_CTRL_FLAG_ASYNCHRONOUS);
++
+ 		info->flags |= (data[0] & UVC_CONTROL_CAP_GET ?
+ 				UVC_CTRL_FLAG_GET_CUR : 0)
+ 			    |  (data[0] & UVC_CONTROL_CAP_SET ?
+@@ -1877,6 +1883,7 @@ static int uvc_ctrl_get_flags(struct uvc_device *dev,
+ 				UVC_CTRL_FLAG_AUTO_UPDATE : 0)
+ 			    |  (data[0] & UVC_CONTROL_CAP_ASYNCHRONOUS ?
+ 				UVC_CTRL_FLAG_ASYNCHRONOUS : 0);
++	}
+ 
+ 	kfree(data);
+ 	return ret;
 -- 
 2.43.0
 
