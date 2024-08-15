@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DAF14AD0A;
-	Thu, 15 Aug 2024 14:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2AD63D5;
+	Thu, 15 Aug 2024 14:31:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732277; cv=none; b=GWoC04AvbesaZ0nRO1gaVDDlwHkVYDrDPaDXAckRkHHLb7SoDd7fDgZgKYA7hfjQh2E90xDngU5l19bsamRLR0i1VoQCsCfVXAf2pmfci9k2fhm4JrCwgLf9NLdRaSqBb8LKzOUa2EVhMdWtQFV6MSKdE467xI47WviF6N6cHEA=
+	t=1723732281; cv=none; b=Ji2e4PqVyZeb3N9so9+Q7/Q2E+MlfUfpDv+NraNJethZnfvL8bk/NTsG7g+nzhN6m1dR2aoKXcXZqdraOVrJxlZFz1eI8dbKyvZpuw5X2ympXqsQPpx8D8hvEAops2o2LasxV/k+uGnZNekIJ2r1k9HcPICUFEn7TEL40Hplxl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732277; c=relaxed/simple;
-	bh=+QOiAUjNmffHVZG8O0QE42q3QlgprsKOwQSffyOODOw=;
+	s=arc-20240116; t=1723732281; c=relaxed/simple;
+	bh=gOrxdRKLrx1CVJqMW9aLAIIRCGf0itMZzPX4O52BZX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kux5cGZm+fl+XFQHnVh0QK0T3qinfJo4GWE74f2djzxXYTuXlckzdqvPegpEYl2vXDk8wA3wt25WoahOi2LC9CLgBec7EwT7MVLyNtbs1owLYvRq1KVRVc/IiIw54c1/UrFF9F9iyC10GduR2eElz7lkTM6n8KETImGL+X2UH5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B0lHcrZX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oy0N7+dlLO7Xy0QepkfxarX87qdUQXjupgPZFZRpMj0Oas4snvZLsSckSqzazgKtBUqhvmGTyN+Zt154r9Fsl76ZxtA1IrJC/vi2MeCQiELyHB/wIc3JvClbb9VytJ3LZ1WX323nvT2qYAHsNvFfLoJfuoKiRFX03EtEeBDnylY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AyviLQSL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B0lHcrZX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0633AC4AF0D;
-	Thu, 15 Aug 2024 14:31:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AyviLQSL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB99C32786;
+	Thu, 15 Aug 2024 14:31:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732277;
-	bh=+QOiAUjNmffHVZG8O0QE42q3QlgprsKOwQSffyOODOw=;
+	s=korg; t=1723732280;
+	bh=gOrxdRKLrx1CVJqMW9aLAIIRCGf0itMZzPX4O52BZX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B0lHcrZXEhtA80LmX5sawb+O1lg1hemjuX0r+MU7RT2DX1IXsX/hSiVPyAnyy47Ho
-	 XMesbD8d6l8ZOzVkrj79VDaGcMhCQI4vK03lYMuJgGPOMp2UF0Ul0Xu7sdASyeQMgC
-	 m0ETqgYhnQUuj9xteAWcRTs04CS/4UU2r+AEgylw=
+	b=AyviLQSLreqxz/5KiIMIp2L5Z9CIhWduJ7AIBnluBZz5LoEoIo9rjMOlQzN/NiUYs
+	 Nd19G1xZueWY9OmhN+/qhVn+iIbsay7JhrBS/P9whbBM1y5K5tVpoMNtnEjJcv3aNP
+	 9n63j/NttDCQ+mvu6D0os6a6JgtryFZzUrO/fu9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.10 130/352] char: tpm: Fix possible memory leak in tpm_bios_measurements_open()
-Date: Thu, 15 Aug 2024 15:23:16 +0200
-Message-ID: <20240815131924.279330319@linuxfoundation.org>
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Stanimir Varbanov <stanimir.k.varbanov@gmail.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.10 131/352] media: venus: fix use after free in vdec_close
+Date: Thu, 15 Aug 2024 15:23:17 +0200
+Message-ID: <20240815131924.320388606@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -50,35 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
-commit 5d8e2971e817bb64225fc0b6327a78752f58a9aa upstream.
+commit a0157b5aa34eb43ec4c5510f9c260bbb03be937e upstream.
 
-In tpm_bios_measurements_open(), get_device() is called on the device
-embedded in struct tpm_chip. In the error path, however, put_device() is
-not called. This results in a reference count leak, which prevents the
-device from being properly released. This commit makes sure to call
-put_device() when the seq_open() call fails.
+There appears to be a possible use after free with vdec_close().
+The firmware will add buffer release work to the work queue through
+HFI callbacks as a normal part of decoding. Randomly closing the
+decoder device from userspace during normal decoding can incur
+a read after free for inst.
 
-Cc: stable@vger.kernel.org # +v4.18
-Fixes: 9b01b5356629 ("tpm: Move shared eventlog functions to common.c")
-Signed-off-by: Joe Hattori <joe@pf.is.s.u-tokyo.ac.jp>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fix it by cancelling the work in vdec_close.
+
+Cc: stable@vger.kernel.org
+Fixes: af2c3834c8ca ("[media] media: venus: adding core part and helper functions")
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Acked-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Signed-off-by: Stanimir Varbanov <stanimir.k.varbanov@gmail.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/eventlog/common.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/qcom/venus/vdec.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/char/tpm/eventlog/common.c
-+++ b/drivers/char/tpm/eventlog/common.c
-@@ -47,6 +47,8 @@ static int tpm_bios_measurements_open(st
- 	if (!err) {
- 		seq = file->private_data;
- 		seq->private = chip;
-+	} else {
-+		put_device(&chip->dev);
- 	}
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1587,6 +1587,7 @@ static int vdec_close(struct file *file)
  
- 	return err;
+ 	vdec_pm_get(inst);
+ 
++	cancel_work_sync(&inst->delayed_process_work);
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
+ 	vdec_ctrl_deinit(inst);
 
 
