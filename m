@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFD87DA78;
-	Thu, 15 Aug 2024 13:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667D17DA78;
+	Thu, 15 Aug 2024 13:31:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728677; cv=none; b=VAJfzeV6WzWu3/rmFXKbhNF8Orn3Kx6hPtg52dGiD+oyF8hCDaiv6SjbVwEkCeYuq9BkTVB85h1gz9VRsDt7S8mYHc6Czu5atvp0RgyMhry0FLx1XiggcE24rSlSxvu2XgD4xIttt76M2Vy3RLMMPgqq++jtxOdtBC4nzcYcmAM=
+	t=1723728681; cv=none; b=bDZlyyIQu8fjCjoZtq6Kon8rUsaUmNaZVJ9KlM12gwdKOXEFKGh/M6mN5mcbsvkP00cuco+KUhtPEqb4MWkRYjj1Hy0s+10g2AY2rfImReGu5VVJ/w0mD7HgrKwyuDcMBHCxD1bHVNAuHx83hGRERN/SmWT779TIIvq0sBxS5Zc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728677; c=relaxed/simple;
-	bh=usukGFcMiEHLaFfhD4Tg6RnGiwXlydHJGX6u9qwBWKk=;
+	s=arc-20240116; t=1723728681; c=relaxed/simple;
+	bh=de//cc2XRfoa0mohWZuatx0JMP6C47iF8lwcxYfPdPg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ntor0yvGJXIJ4XkuMCPfCCp79XnTJCJc3rhAyMKkI5lz3Kqoze8hDgYk9cIoUPLWQ2rTMkXktWqDbjY0U0tL4V3duLfRG1VKJ8X+uH09wI38Y28CKsKtHIdd0tHnp13W37yPa+ixAz3fxDfobj6A4roDezBV3DicP21FP+7/UdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOjnnE8Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=H/EqIJFBpGQR3HqCNhP0D9yCF9hvZrBbHUfnOFX7i0G/RkPl82KeEZ2vNaCjePXhI1S+b6Mv/lecJFvCd3Ku8BCThzXCvbLNAQef1M6WLqa5M0vCKKgaFxZA++AAqwlmPax+YxmB6zIPNK4yY/wzooj1iCCLrWgvHTkOpRLltIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JlqdKgU2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOjnnE8Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52D60C32786;
-	Thu, 15 Aug 2024 13:31:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JlqdKgU2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D654EC32786;
+	Thu, 15 Aug 2024 13:31:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728677;
-	bh=usukGFcMiEHLaFfhD4Tg6RnGiwXlydHJGX6u9qwBWKk=;
+	s=korg; t=1723728681;
+	bh=de//cc2XRfoa0mohWZuatx0JMP6C47iF8lwcxYfPdPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOjnnE8YV9f9XzuEpotlq0fLluyRttXktaxBWXEQdlgiaLVJCPK2dYkFxJ42l0y3j
-	 wAihjt6ZILp18z9MRh/K81bqhjIDb+BpovQtIYCZTNnjtFFQwQr34Cyz/eeI0Mb1HI
-	 YxYhWtuKoCJ0b1pbs0+xLMKxaQQnDooIliDpfWTE=
+	b=JlqdKgU2fHWEWmnNNNC1KBIkJAHchn5toNs4LUm2oN8PnkaEGxlQK539J0uYzwacJ
+	 yoQsdQ/GvVbTGjtFL9dqBtDFGrzsCraBUEduoC+vamkuCMmi8tS0uahoRTt+eqUlY0
+	 F0WIwSL0LcmPm4FRJ1qsCwcU60h/tkIZAQ2Mpku0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Beims <rafael.beims@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.19 074/196] wifi: mwifiex: Fix interface type change
-Date: Thu, 15 Aug 2024 15:23:11 +0200
-Message-ID: <20240815131854.910206795@linuxfoundation.org>
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 045/196] RDMA/mlx4: Fix truncated output warning in alias_GUID.c
+Date: Thu, 15 Aug 2024 15:22:42 +0200
+Message-ID: <20240815131853.806578265@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -45,46 +45,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rafael Beims <rafael.beims@toradex.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-commit a17b9f590f6ec2b9f1b12b1db3bf1d181de6b272 upstream.
+[ Upstream commit 5953e0647cec703ef436ead37fed48943507b433 ]
 
-When changing the interface type we also need to update the bss_num, the
-driver private data is searched based on a unique (bss_type, bss_num)
-tuple, therefore every time bss_type changes, bss_num must also change.
+drivers/infiniband/hw/mlx4/alias_GUID.c: In function ‘mlx4_ib_init_alias_guid_service’:
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:74: error: ‘%d’ directive
+output may be truncated writing between 1 and 11 bytes into a region of
+size 5 [-Werror=format-truncation=]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                                          ^~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:63: note: directive argument in the range [-2147483641, 2147483646]
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                                                               ^~~~~~~~~~~~~~
+drivers/infiniband/hw/mlx4/alias_GUID.c:878:17: note: ‘snprintf’ output
+between 12 and 22 bytes into a destination of size 15
+  878 |                 snprintf(alias_wq_name, sizeof alias_wq_name, "alias_guid%d", i);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
 
-This fixes for example an issue in which, after the mode changed, a
-wireless scan on the changed interface would not finish, leading to
-repeated -EBUSY messages to userspace when other scan requests were
-sent.
-
-Fixes: c606008b7062 ("mwifiex: Properly initialize private structure on interface type changes")
-Cc: stable@vger.kernel.org
-Signed-off-by: Rafael Beims <rafael.beims@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://msgid.link/20240510110458.15475-1-francesco@dolcini.it
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a0c64a17aba8 ("mlx4: Add alias_guid mechanism")
+Link: https://lore.kernel.org/r/1951c9500109ca7e36dcd523f8a5f2d0d2a608d1.1718554641.git.leon@kernel.org
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/cfg80211.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/mlx4/alias_GUID.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-+++ b/drivers/net/wireless/marvell/mwifiex/cfg80211.c
-@@ -934,6 +934,8 @@ mwifiex_init_new_priv_params(struct mwif
- 		return -EOPNOTSUPP;
- 	}
+diff --git a/drivers/infiniband/hw/mlx4/alias_GUID.c b/drivers/infiniband/hw/mlx4/alias_GUID.c
+index baab9afa9174b..f2d975c2659d8 100644
+--- a/drivers/infiniband/hw/mlx4/alias_GUID.c
++++ b/drivers/infiniband/hw/mlx4/alias_GUID.c
+@@ -832,7 +832,7 @@ void mlx4_ib_destroy_alias_guid_service(struct mlx4_ib_dev *dev)
  
-+	priv->bss_num = mwifiex_get_unused_bss_num(adapter, priv->bss_type);
-+
- 	spin_lock_irqsave(&adapter->main_proc_lock, flags);
- 	adapter->main_locked = false;
- 	spin_unlock_irqrestore(&adapter->main_proc_lock, flags);
+ int mlx4_ib_init_alias_guid_service(struct mlx4_ib_dev *dev)
+ {
+-	char alias_wq_name[15];
++	char alias_wq_name[22];
+ 	int ret = 0;
+ 	int i, j;
+ 	union ib_gid gid;
+-- 
+2.43.0
+
 
 
