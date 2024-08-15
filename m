@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE94A1A3BCE;
-	Thu, 15 Aug 2024 14:42:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B5A1B86C6;
+	Thu, 15 Aug 2024 14:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732938; cv=none; b=Db439VschDMyir0Xp3XoH7rZo7cCYJYY7WBgDcU65eEVw6YIc6M9kkF9Tcjtdn4VvhRdFTFP1P8ie+MuRE13pwmdCHAgJRCMaGUhDLd4csmXcKuKsrCb2aXF9gvaU9uTvCmvFXj3Ur8fMUul2EvWdedsQ6usF3yqrKBzuetafU0=
+	t=1723732942; cv=none; b=aN65uUXpQKJuaK+rW3sbAe/FfF83u6fcGtxOghosG+M7SADlTC1qIBQ9eLLn3PwDBn+XCDTb4+fTjlghQILivtdzXFRwnrl6YSZigZM1qzYz6RBcgpnHeEWgE5CyEgNWruRVHWzGDpQUF+NnM2GTt+er0p75S6qD/v/BXEyRY7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732938; c=relaxed/simple;
-	bh=meE47LVii7aeEC2b7sEsBCmCxzV6dblQ+GkCwIsn+nk=;
+	s=arc-20240116; t=1723732942; c=relaxed/simple;
+	bh=WwyNgrug3XUbtXtg7xRNINkgmOFw3QRZYGKE8EJWW+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=O0oWG0gWzbdR/1thOfKIv0LIfZHu0c2dXuvzbBNgBBRgaqq2yhmg1NSkeyF9JtwBjNxMrmeyyqwQlim+FRCFskCdb3BAOOQn8IpoSPqJCpWvW3gfYy6G/AvPMGmXvYkxEBDNL0vPRW1+LQosB+3Aqt+WoziF0XRSI6x1ChR+/wQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aiigpwqe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=POmyIRV6vkqcXtiocTd/aPRRsW7q3ar1tSdFGSjbmqv18VlRHXZ3xUwATB1Vsfq1rTrqySEanH/uW6KlvNzE/RWEw/pZHtyERulSBMKDyAsk2j9FbT8AI+GMTFLy+OphPFmQ35p3qZIy5VLAaby1o1DWx6uxdT1DGM345Qgf/Ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cWq3kGzn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aiigpwqe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5C1C32786;
-	Thu, 15 Aug 2024 14:42:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cWq3kGzn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68CE0C32786;
+	Thu, 15 Aug 2024 14:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732938;
-	bh=meE47LVii7aeEC2b7sEsBCmCxzV6dblQ+GkCwIsn+nk=;
+	s=korg; t=1723732941;
+	bh=WwyNgrug3XUbtXtg7xRNINkgmOFw3QRZYGKE8EJWW+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aiigpwqegmp6gsFjGVf1rsIZMUhvMFpeBF428WHGnByW5WNEUPA6jatO8tiOHQRM9
-	 JX76LELGuafc+CmJSvhOuVQlobVWH2CbLDV6roczFN9nG1kwvUhp6Bo2agp0wxuzdC
-	 jKNRy53caMr20zjBGN+ZCEWtX2TY07OxRek5JeFY=
+	b=cWq3kGzn6/pMspQFd20M4HSczr3/nSq1LMmQo2aQ+ojMaqv5HNtOtZBiNPoCylgKW
+	 iDzXKklLb8q264f62Uy34SgyoD7RJxoOGoljcCWvCPBqJCsotmsz69Q9GQXS+eTrsW
+	 LXOSyqDOoGcCXwnTSJzbgXHYpwxftDTTiEDYOU7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.10 333/352] mptcp: pm: fix backup support in signal endpoints
-Date: Thu, 15 Aug 2024 15:26:39 +0200
-Message-ID: <20240815131932.329974809@linuxfoundation.org>
+	Amir Goldstein <amir73il@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Gabriel Krisman Bertazi <krisman@collabora.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.10 334/352] samples: Add fs error monitoring example
+Date: Thu, 15 Aug 2024 15:26:40 +0200
+Message-ID: <20240815131932.369694102@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,144 +52,209 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Gabriel Krisman Bertazi <krisman@collabora.com>
 
-commit 6834097fc38c5416701c793da94558cea49c0a1f upstream.
+[ Upstream commit 5451093081db6ca1a708d149e11cfd219800bc4c ]
 
-There was a support for signal endpoints, but only when the endpoint's
-flag was changed during a connection. If an endpoint with the signal and
-backup was already present, the MP_JOIN reply was not containing the
-backup flag as expected.
+Introduce an example of a FAN_FS_ERROR fanotify user to track filesystem
+errors.
 
-That's confusing to have this inconsistent behaviour. On the other hand,
-the infrastructure to set the backup flag in the SYN + ACK + MP_JOIN was
-already there, it was just never set before. Now when requesting the
-local ID from the path-manager, the backup status is also requested.
-
-Note that when the userspace PM is used, the backup flag can be set if
-the local address was already used before with a backup flag, e.g. if
-the address was announced with the 'backup' flag, or a subflow was
-created with the 'backup' flag.
-
-Fixes: 4596a2c1b7f5 ("mptcp: allow creating non-backup subflows")
-Cc: stable@vger.kernel.org
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/507
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ Conflicts in pm_userspace.c because the context has changed in commit
-  1e07938e29c5 ("net: mptcp: rename netlink handlers to
-  mptcp_pm_nl_<blah>_{doit,dumpit}") which is not in this version. This
-  commit is unrelated to this modification.
-  Conflicts in protocol.h because the context has changed in commit
-  9ae7846c4b6b ("mptcp: dump addrs in userspace pm list") which is not
-  in this version. This commit is unrelated to this modification.
-  Conflicts in pm.c because the context has changed in commit
-  f40be0db0b76 ("mptcp: unify pm get_flags_and_ifindex_by_id") and
-  commit 71b7dec27f34 ("mptcp: less aggressive retransmission strategy")
-  which are not in this version. These commits are unrelated to this
-  modification.
-  Conflicts in subflow.c, because the commit 4cf86ae84c71 ("mptcp:
-  strict local address ID selection") is not in this version. It is then
-  not needed to modify the subflow_chk_local_id() helper, which is not
-  in this version.
-  Also, in this version, there is no pm_userspace.c, because this PM has
-  been added in v5.19, which also causes conflicts in protocol.h, and
-  pm_netlink.c. Plus the code in pm.c can be simplified, as there is no
-  userspace PM. And the code in pm_netlink.c needs to use
-  addresses_equal() instead of mptcp_addresses_equal(), see commit
-  4638de5aefe5 ("mptcp: handle local addrs announced by userspace PMs").
-  The code in pm_netlink.c also needs to be adapted because the
-  pm_nl_get_pernet_from_msk() helper is not in this version, introduced
-  later in commit c682bf536cf4 ("mptcp: add pm_nl_pernet helpers"), and
-  also because the 'flags' are in mptcp_addr_info structure, see commit
-  daa83ab03954 ("mptcp: move flags and ifindex out of
-  mptcp_addr_info"). ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://lore.kernel.org/r/20211025192746.66445-31-krisman@collabora.com
+Reviewed-by: Amir Goldstein <amir73il@gmail.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Gabriel Krisman Bertazi <krisman@collabora.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+[ cel: adjusted to squelch a missing file warning on v5.10.y ]
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c         |    9 +++++++++
- net/mptcp/pm_netlink.c |   20 ++++++++++++++++++++
- net/mptcp/protocol.h   |    2 ++
- net/mptcp/subflow.c    |    1 +
- 4 files changed, 32 insertions(+)
+ samples/Kconfig               |    8 ++
+ samples/Makefile              |    1 
+ samples/fanotify/Makefile     |    5 +
+ samples/fanotify/fs-monitor.c |  142 ++++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 156 insertions(+)
+ create mode 100644 samples/fanotify/Makefile
+ create mode 100644 samples/fanotify/fs-monitor.c
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -225,6 +225,15 @@ int mptcp_pm_get_local_id(struct mptcp_s
- 	return mptcp_pm_nl_get_local_id(msk, skc);
- }
+--- a/samples/Kconfig
++++ b/samples/Kconfig
+@@ -120,6 +120,14 @@ config SAMPLE_CONNECTOR
+ 	  with it.
+ 	  See also Documentation/driver-api/connector.rst
  
-+bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc)
++config SAMPLE_FANOTIFY_ERROR
++	bool "Build fanotify error monitoring sample"
++	depends on FANOTIFY
++	help
++	  When enabled, this builds an example code that uses the
++	  FAN_FS_ERROR fanotify mechanism to monitor filesystem
++	  errors.
++
+ config SAMPLE_HIDRAW
+ 	bool "hidraw sample"
+ 	depends on CC_CAN_LINK && HEADERS_INSTALL
+--- a/samples/Makefile
++++ b/samples/Makefile
+@@ -5,6 +5,7 @@ subdir-$(CONFIG_SAMPLE_AUXDISPLAY)	+= au
+ subdir-$(CONFIG_SAMPLE_ANDROID_BINDERFS) += binderfs
+ obj-$(CONFIG_SAMPLE_CONFIGFS)		+= configfs/
+ obj-$(CONFIG_SAMPLE_CONNECTOR)		+= connector/
++obj-$(CONFIG_SAMPLE_FANOTIFY_ERROR)	+= fanotify/
+ subdir-$(CONFIG_SAMPLE_HIDRAW)		+= hidraw
+ obj-$(CONFIG_SAMPLE_HW_BREAKPOINT)	+= hw_breakpoint/
+ obj-$(CONFIG_SAMPLE_KDB)		+= kdb/
+--- /dev/null
++++ b/samples/fanotify/Makefile
+@@ -0,0 +1,5 @@
++# SPDX-License-Identifier: GPL-2.0-only
++userprogs-always-y += fs-monitor
++
++userccflags += -I usr/include -Wall
++
+--- /dev/null
++++ b/samples/fanotify/fs-monitor.c
+@@ -0,0 +1,142 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright 2021, Collabora Ltd.
++ */
++
++#define _GNU_SOURCE
++#include <errno.h>
++#include <err.h>
++#include <stdlib.h>
++#include <stdio.h>
++#include <fcntl.h>
++#include <sys/fanotify.h>
++#include <sys/types.h>
++#include <unistd.h>
++#include <sys/types.h>
++
++#ifndef FAN_FS_ERROR
++#define FAN_FS_ERROR		0x00008000
++#define FAN_EVENT_INFO_TYPE_ERROR	5
++
++struct fanotify_event_info_error {
++	struct fanotify_event_info_header hdr;
++	__s32 error;
++	__u32 error_count;
++};
++#endif
++
++#ifndef FILEID_INO32_GEN
++#define FILEID_INO32_GEN	1
++#endif
++
++#ifndef FILEID_INVALID
++#define	FILEID_INVALID		0xff
++#endif
++
++static void print_fh(struct file_handle *fh)
 +{
-+	struct mptcp_addr_info skc_local;
++	int i;
++	uint32_t *h = (uint32_t *) fh->f_handle;
 +
-+	mptcp_local_address((struct sock_common *)skc, &skc_local);
++	printf("\tfh: ");
++	for (i = 0; i < fh->handle_bytes; i++)
++		printf("%hhx", fh->f_handle[i]);
++	printf("\n");
 +
-+	return mptcp_pm_nl_is_backup(msk, &skc_local);
++	printf("\tdecoded fh: ");
++	if (fh->handle_type == FILEID_INO32_GEN)
++		printf("inode=%u gen=%u\n", h[0], h[1]);
++	else if (fh->handle_type == FILEID_INVALID && !fh->handle_bytes)
++		printf("Type %d (Superblock error)\n", fh->handle_type);
++	else
++		printf("Type %d (Unknown)\n", fh->handle_type);
++
 +}
 +
- void mptcp_pm_data_init(struct mptcp_sock *msk)
- {
- 	msk->pm.add_addr_signaled = 0;
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -568,6 +568,26 @@ int mptcp_pm_nl_get_local_id(struct mptc
- 	return ret;
- }
- 
-+bool mptcp_pm_nl_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc)
++static void handle_notifications(char *buffer, int len)
 +{
-+	struct mptcp_pm_addr_entry *entry;
-+	struct pm_nl_pernet *pernet;
-+	bool backup = false;
++	struct fanotify_event_metadata *event =
++		(struct fanotify_event_metadata *) buffer;
++	struct fanotify_event_info_header *info;
++	struct fanotify_event_info_error *err;
++	struct fanotify_event_info_fid *fid;
++	int off;
 +
-+	pernet = net_generic(sock_net((struct sock *)msk), pm_nl_pernet_id);
++	for (; FAN_EVENT_OK(event, len); event = FAN_EVENT_NEXT(event, len)) {
 +
-+	rcu_read_lock();
-+	list_for_each_entry_rcu(entry, &pernet->local_addr_list, list) {
-+		if (addresses_equal(&entry->addr, skc, entry->addr.port)) {
-+			backup = !!(entry->addr.flags & MPTCP_PM_ADDR_FLAG_BACKUP);
-+			break;
++		if (event->mask != FAN_FS_ERROR) {
++			printf("unexpected FAN MARK: %llx\n", event->mask);
++			goto next_event;
 +		}
-+	}
-+	rcu_read_unlock();
 +
-+	return backup;
++		if (event->fd != FAN_NOFD) {
++			printf("Unexpected fd (!= FAN_NOFD)\n");
++			goto next_event;
++		}
++
++		printf("FAN_FS_ERROR (len=%d)\n", event->event_len);
++
++		for (off = sizeof(*event) ; off < event->event_len;
++		     off += info->len) {
++			info = (struct fanotify_event_info_header *)
++				((char *) event + off);
++
++			switch (info->info_type) {
++			case FAN_EVENT_INFO_TYPE_ERROR:
++				err = (struct fanotify_event_info_error *) info;
++
++				printf("\tGeneric Error Record: len=%d\n",
++				       err->hdr.len);
++				printf("\terror: %d\n", err->error);
++				printf("\terror_count: %d\n", err->error_count);
++				break;
++
++			case FAN_EVENT_INFO_TYPE_FID:
++				fid = (struct fanotify_event_info_fid *) info;
++
++				printf("\tfsid: %x%x\n",
++				       fid->fsid.val[0], fid->fsid.val[1]);
++				print_fh((struct file_handle *) &fid->handle);
++				break;
++
++			default:
++				printf("\tUnknown info type=%d len=%d:\n",
++				       info->info_type, info->len);
++			}
++		}
++next_event:
++		printf("---\n\n");
++	}
 +}
 +
- void mptcp_pm_nl_data_init(struct mptcp_sock *msk)
- {
- 	struct mptcp_pm_data *pm = &msk->pm;
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -481,6 +481,7 @@ bool mptcp_pm_add_addr_signal(struct mpt
- bool mptcp_pm_rm_addr_signal(struct mptcp_sock *msk, unsigned int remaining,
- 			     u8 *rm_id);
- int mptcp_pm_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
-+bool mptcp_pm_is_backup(struct mptcp_sock *msk, struct sock_common *skc);
- 
- void __init mptcp_pm_nl_init(void);
- void mptcp_pm_nl_data_init(struct mptcp_sock *msk);
-@@ -490,6 +491,7 @@ void mptcp_pm_nl_add_addr_received(struc
- void mptcp_pm_nl_rm_addr_received(struct mptcp_sock *msk);
- void mptcp_pm_nl_rm_subflow_received(struct mptcp_sock *msk, u8 rm_id);
- int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct sock_common *skc);
-+bool mptcp_pm_nl_is_backup(struct mptcp_sock *msk, struct mptcp_addr_info *skc);
- 
- static inline struct mptcp_ext *mptcp_get_ext(struct sk_buff *skb)
- {
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -80,6 +80,7 @@ static struct mptcp_sock *subflow_token_
- 		return NULL;
- 	}
- 	subflow_req->local_id = local_id;
-+	subflow_req->request_bkup = mptcp_pm_is_backup(msk, (struct sock_common *)req);
- 
- 	get_random_bytes(&subflow_req->local_nonce, sizeof(u32));
- 
++int main(int argc, char **argv)
++{
++	int fd;
++
++	char buffer[BUFSIZ];
++
++	if (argc < 2) {
++		printf("Missing path argument\n");
++		return 1;
++	}
++
++	fd = fanotify_init(FAN_CLASS_NOTIF|FAN_REPORT_FID, O_RDONLY);
++	if (fd < 0)
++		errx(1, "fanotify_init");
++
++	if (fanotify_mark(fd, FAN_MARK_ADD|FAN_MARK_FILESYSTEM,
++			  FAN_FS_ERROR, AT_FDCWD, argv[1])) {
++		errx(1, "fanotify_mark");
++	}
++
++	while (1) {
++		int n = read(fd, buffer, BUFSIZ);
++
++		if (n < 0)
++			errx(1, "read");
++
++		handle_notifications(buffer, n);
++	}
++
++	return 0;
++}
 
 
