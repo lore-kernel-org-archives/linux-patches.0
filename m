@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4614914AD0A;
-	Thu, 15 Aug 2024 14:20:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3EBE1AC8AE;
+	Thu, 15 Aug 2024 14:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731655; cv=none; b=FQiFhgpTjEaAo9EuSPACNMhU9I/goMHQzM2wr0LYb3EpcRSbIvhHETfktFHem9IyfGUiywGtEzRKj0c9JZ7qiRKXPtqeXTERvXPWZrsE4fGH+4EJzupqEnfCq571iUeF8UQLQY1eFnzRdkQuJJ18uxrTARuo8LFf1kJFZXaxTw4=
+	t=1723731659; cv=none; b=jsRe9Ufg3eWpXziN5xk6mx0jytBZ4byawhu9CB9/1UEIlEDNMRK2vnxVlCs3ubtTJ0lvePVFm1Q3tihdjOLHzlByz8JLJZS2KxQ4/dtKiN+feZNNJK1yA7wL0mhsxNtcbWrB4+ffExso4ZCyik9SSqSK8BXnvHnHkQRvOZBzqhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731655; c=relaxed/simple;
-	bh=8T07X+o5nZuYaZejah8nM3D1NRkytSodn3uiZDfq108=;
+	s=arc-20240116; t=1723731659; c=relaxed/simple;
+	bh=8fTYuASD+cBndhUToR0cH/CBy/3CMKJsfu+JgxUbbJA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pItr5+lJD/8TD2tJH9Sn7Sx/PMG7M67/kQPnxjdVW08wR48Za6u3WxSvVtspZpFmFjIHmoI/riHCRBsMEG1cJ1lS4XdDwoa26ezW3n9buJk9uo4xGotQVSCTSUQyACvvUnaIZH9hmlmIMjs2zGS0sL0NbDRJcwz6lyVNjEpAXI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tiX5WOvX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HyAN1j2FyzkdQ596DxMrpxugOhEblsNaUzA7AVjIPdKgtegNk4b1pQbaAMQAhe/Ckj+jcLE57LZz3fYNVMysXCD4vXj1hXxTCmEyUxVo5pFQbECR0QF/X7efjNfFmRvi77E+zhWhD6WO0GtN/9i8IJhdQrqpNVf91TNOfM/xg9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BMJT8sVe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tiX5WOvX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6300C32786;
-	Thu, 15 Aug 2024 14:20:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BMJT8sVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C8ACC32786;
+	Thu, 15 Aug 2024 14:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731655;
-	bh=8T07X+o5nZuYaZejah8nM3D1NRkytSodn3uiZDfq108=;
+	s=korg; t=1723731658;
+	bh=8fTYuASD+cBndhUToR0cH/CBy/3CMKJsfu+JgxUbbJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiX5WOvXr8HqBWVPSEU6xCZfYsjkNt55UWXCuu4WR121IUdQTOcYv/xYI1zGLv14F
-	 TwiMh4+VcAxwNaevis9COyK6D+t6qD8lquVGBp68atWclTvJf7GFT9GIm2wFWHncQZ
-	 FrFYWGjjA3XWo9sPydGVe7VPzkp8LFicLymruVlE=
+	b=BMJT8sVe3NEv7gMH7DteUo3NOsXoVvc3e28aB86BsD4epOdAFNQST1yqTWV174pd/
+	 7cplna7uBmhqH51HvxtQhTWtBjja4L4eyfcl3mbzCiiF2NUMCJyiq6/SsAHSAsOvIc
+	 cNtLREMpzc8E/PoyB5zAX56HUGlQfBFVKnBGPcDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Tony Lindgren <tony@atomide.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 195/259] ACPI: SBS: manage alarm sysfs attribute through psy core
-Date: Thu, 15 Aug 2024 15:25:28 +0200
-Message-ID: <20240815131910.308733209@linuxfoundation.org>
+Subject: [PATCH 5.4 166/259] genirq: Allow the PM device to originate from irq domain
+Date: Thu, 15 Aug 2024 15:24:59 +0200
+Message-ID: <20240815131909.193678113@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -45,97 +47,126 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Marc Zyngier <maz@kernel.org>
 
-[ Upstream commit 6bad28cfc30988a845fb3f59a99f4b8a4ce8fe95 ]
+[ Upstream commit 1f8863bfb5ca500ea1c7669b16b1931ba27fce20 ]
 
-Let the power supply core register the attribute.
+As a preparation to moving the reference to the device used for
+runtime power management, add a new 'dev' field to the irqdomain
+structure for that exact purpose.
 
-This ensures that the attribute is created before the device is
-announced to userspace, avoiding a race condition.
+The irq_chip_pm_{get,put}() helpers are made aware of the dual
+location via a new private helper.
 
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+No functional change intended.
+
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Tested-by: Tony Lindgren <tony@atomide.com>
+Acked-by: Bartosz Golaszewski <brgl@bgdev.pl>
+Link: https://lore.kernel.org/r/20220201120310.878267-2-maz@kernel.org
+Stable-dep-of: 33b1c47d1fc0 ("irqchip/imx-irqsteer: Handle runtime power management correctly")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/sbs.c | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ include/linux/irqdomain.h | 10 ++++++++++
+ kernel/irq/chip.c         | 23 ++++++++++++++++++-----
+ 2 files changed, 28 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/acpi/sbs.c b/drivers/acpi/sbs.c
-index 6e88224f60f09..4aa55d8d43859 100644
---- a/drivers/acpi/sbs.c
-+++ b/drivers/acpi/sbs.c
-@@ -80,7 +80,6 @@ struct acpi_battery {
- 	u16 spec;
- 	u8 id;
- 	u8 present:1;
--	u8 have_sysfs_alarm:1;
- };
- 
- #define to_acpi_battery(x) power_supply_get_drvdata(x)
-@@ -465,12 +464,18 @@ static ssize_t acpi_battery_alarm_store(struct device *dev,
- 	return count;
+diff --git a/include/linux/irqdomain.h b/include/linux/irqdomain.h
+index 2552f66a7a891..289556413ad90 100644
+--- a/include/linux/irqdomain.h
++++ b/include/linux/irqdomain.h
+@@ -147,6 +147,8 @@ struct irq_domain_chip_generic;
+  * @gc: Pointer to a list of generic chips. There is a helper function for
+  *      setting up one or more generic chips for interrupt controllers
+  *      drivers using the generic chip library which uses this pointer.
++ * @dev: Pointer to a device that the domain represent, and that will be
++ *       used for power management purposes.
+  * @parent: Pointer to parent irq_domain to support hierarchy irq_domains
+  * @debugfs_file: dentry for the domain debugfs file
+  *
+@@ -169,6 +171,7 @@ struct irq_domain {
+ 	struct fwnode_handle *fwnode;
+ 	enum irq_domain_bus_token bus_token;
+ 	struct irq_domain_chip_generic *gc;
++	struct device *dev;
+ #ifdef	CONFIG_IRQ_DOMAIN_HIERARCHY
+ 	struct irq_domain *parent;
+ #endif
+@@ -225,6 +228,13 @@ static inline struct device_node *irq_domain_get_of_node(struct irq_domain *d)
+ 	return to_of_node(d->fwnode);
  }
  
--static const struct device_attribute alarm_attr = {
-+static struct device_attribute alarm_attr = {
- 	.attr = {.name = "alarm", .mode = 0644},
- 	.show = acpi_battery_alarm_show,
- 	.store = acpi_battery_alarm_store,
- };
- 
-+static struct attribute *acpi_battery_attrs[] = {
-+	&alarm_attr.attr,
-+	NULL
-+};
-+ATTRIBUTE_GROUPS(acpi_battery);
++static inline void irq_domain_set_pm_device(struct irq_domain *d,
++					    struct device *dev)
++{
++	if (d)
++		d->dev = dev;
++}
 +
- /* --------------------------------------------------------------------------
-                                  Driver Interface
-    -------------------------------------------------------------------------- */
-@@ -512,7 +517,10 @@ static int acpi_battery_read(struct acpi_battery *battery)
- static int acpi_battery_add(struct acpi_sbs *sbs, int id)
- {
- 	struct acpi_battery *battery = &sbs->battery[id];
--	struct power_supply_config psy_cfg = { .drv_data = battery, };
-+	struct power_supply_config psy_cfg = {
-+		.drv_data = battery,
-+		.attr_grp = acpi_battery_groups,
-+	};
- 	int result;
- 
- 	battery->id = id;
-@@ -542,10 +550,6 @@ static int acpi_battery_add(struct acpi_sbs *sbs, int id)
- 		goto end;
- 	}
- 
--	result = device_create_file(&battery->bat->dev, &alarm_attr);
--	if (result)
--		goto end;
--	battery->have_sysfs_alarm = 1;
-       end:
- 	printk(KERN_INFO PREFIX "%s [%s]: Battery Slot [%s] (battery %s)\n",
- 	       ACPI_SBS_DEVICE_NAME, acpi_device_bid(sbs->device),
-@@ -557,11 +561,8 @@ static void acpi_battery_remove(struct acpi_sbs *sbs, int id)
- {
- 	struct acpi_battery *battery = &sbs->battery[id];
- 
--	if (battery->bat) {
--		if (battery->have_sysfs_alarm)
--			device_remove_file(&battery->bat->dev, &alarm_attr);
-+	if (battery->bat)
- 		power_supply_unregister(battery->bat);
--	}
+ #ifdef CONFIG_IRQ_DOMAIN
+ struct fwnode_handle *__irq_domain_alloc_fwnode(unsigned int type, int id,
+ 						const char *name, phys_addr_t *pa);
+diff --git a/kernel/irq/chip.c b/kernel/irq/chip.c
+index 521121c2666ce..498f76beb8766 100644
+--- a/kernel/irq/chip.c
++++ b/kernel/irq/chip.c
+@@ -1528,6 +1528,17 @@ int irq_chip_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+ 	return 0;
  }
  
- static int acpi_charger_add(struct acpi_sbs *sbs)
++static struct device *irq_get_parent_device(struct irq_data *data)
++{
++	if (data->chip->parent_device)
++		return data->chip->parent_device;
++
++	if (data->domain)
++		return data->domain->dev;
++
++	return NULL;
++}
++
+ /**
+  * irq_chip_pm_get - Enable power for an IRQ chip
+  * @data:	Pointer to interrupt specific data
+@@ -1537,12 +1548,13 @@ int irq_chip_compose_msi_msg(struct irq_data *data, struct msi_msg *msg)
+  */
+ int irq_chip_pm_get(struct irq_data *data)
+ {
++	struct device *dev = irq_get_parent_device(data);
+ 	int retval;
+ 
+-	if (IS_ENABLED(CONFIG_PM) && data->chip->parent_device) {
+-		retval = pm_runtime_get_sync(data->chip->parent_device);
++	if (IS_ENABLED(CONFIG_PM) && dev) {
++		retval = pm_runtime_get_sync(dev);
+ 		if (retval < 0) {
+-			pm_runtime_put_noidle(data->chip->parent_device);
++			pm_runtime_put_noidle(dev);
+ 			return retval;
+ 		}
+ 	}
+@@ -1560,10 +1572,11 @@ int irq_chip_pm_get(struct irq_data *data)
+  */
+ int irq_chip_pm_put(struct irq_data *data)
+ {
++	struct device *dev = irq_get_parent_device(data);
+ 	int retval = 0;
+ 
+-	if (IS_ENABLED(CONFIG_PM) && data->chip->parent_device)
+-		retval = pm_runtime_put(data->chip->parent_device);
++	if (IS_ENABLED(CONFIG_PM) && dev)
++		retval = pm_runtime_put(dev);
+ 
+ 	return (retval < 0) ? retval : 0;
+ }
 -- 
 2.43.0
 
