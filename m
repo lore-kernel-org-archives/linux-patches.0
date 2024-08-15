@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936F91A2C0F;
-	Thu, 15 Aug 2024 14:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC061A2570;
+	Thu, 15 Aug 2024 14:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731063; cv=none; b=ROvTJ0RjdA3pWtt+02pXFoDTYnlRHJJ8KWlEfsNndxFrDgsfWgmvNIho58NUBplO3AqGYpRvZamyyVmLQoORl3U7zbiGvHsFYKT9KHZ30rmL3gRhoN7KWKU8Oxic2nS5Gnv7F3UFtwRtB6L9GwC10U4EdqLgihmXIYyZoBCArfQ=
+	t=1723731066; cv=none; b=ae4JCYYypQz9mnDE7LVzrWJsDXt0cViczIijZe0a54T2f4peMsHRZvz69cN1eMnK/vtnVZBxR19AqCERKSkF0FNDpHbj8RWFLqoyaVXMk/iNzqbCHekAfaCJIVNmMQxVnEazhbiyVa4RbinpP0/cGLudzDGM1s0RIFUigqIisCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731063; c=relaxed/simple;
-	bh=A6oJ/rdARD/bJkFye4nEjl2AxeGQNIifz8AdZprThWQ=;
+	s=arc-20240116; t=1723731066; c=relaxed/simple;
+	bh=E8rJfzpLrgBtMxz+h9kz+pMH3Hb3cc/XbVn9QrucjqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=l6Gq493l06XmXoWbURv8DcT8xCgaXt42OKYZTYAbmfdVd9l14cV2GaluB/Y/D3Z3MzMeqZUm5rO/xk1TprAqUbTD3/hAU6HRXG7uMG4aOyfskL0vFi7Q44aNCQIfcwC+AeVcXfLvr7bMh1Y7zHuhaW9hWIRdnvInLWftGpKJqn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cTnf/55M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEtRou8P86l8HGoC0g9nRckZDGqix6o9Zb8MtLx35gyp7KEomYoH1YshNZk0GksvV2aeEMmODtiPusLtTGRYVKJxnlahVa49kRgsNSSYrLWmZJwajIIGy+8YhQgTtNdEH7cK/+PBtYkVuCqNyWFOd2vwBlheyvhCD722WeCAm14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERa/nqQT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cTnf/55M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D3FC4AF0C;
-	Thu, 15 Aug 2024 14:11:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERa/nqQT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E709C32786;
+	Thu, 15 Aug 2024 14:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731063;
-	bh=A6oJ/rdARD/bJkFye4nEjl2AxeGQNIifz8AdZprThWQ=;
+	s=korg; t=1723731066;
+	bh=E8rJfzpLrgBtMxz+h9kz+pMH3Hb3cc/XbVn9QrucjqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cTnf/55MCW5aR5zNxbmvVjh7mgEh9QjzhEdKIPy5SlaAteDHrTE59o2GxCqV2mrF/
-	 HKTXZXIvyI4KPh0gkfOpbT7LMBtJW+VzcsQiW64rU4AIkY3zQMYZZhnwA6j/irPsVy
-	 Se3YlCX5RWH0iFK59cde7b7O3jdRi1hWLA68mMEU=
+	b=ERa/nqQTKfgsJ65LpTgrJudNGvOQzd3Oon1IA65fga4oy9/KaaDGGbhc5xS4OugKG
+	 w9NaeJ1QLRdznGg+VJpWUGo/NQXpyuddzVbSKDvLiaO4l8y5TP/h+yA294faokeKrg
+	 YSOiEaSuJiUTmwNZhB+iILhwBU4IKbe0m/PbmgSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 012/259] pwm: stm32: Always do lazy disabling
-Date: Thu, 15 Aug 2024 15:22:25 +0200
-Message-ID: <20240815131903.267873749@linuxfoundation.org>
+Subject: [PATCH 5.4 013/259] hwmon: (max6697) Fix underflow when writing limit attributes
+Date: Thu, 15 Aug 2024 15:22:26 +0200
+Message-ID: <20240815131903.305713500@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -45,58 +45,44 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 7346e7a058a2c9aa9ff1cc699c7bf18a402d9f84 ]
+[ Upstream commit cbf7467828cd4ec7ceac7a8b5b5ddb2f69f07b0e ]
 
-When the state changes from enabled to disabled, polarity, duty_cycle
-and period are not configured in hardware and TIM_CCER_CCxE is just
-cleared. However if the state changes from one disabled state to
-another, all parameters are written to hardware because the early exit
-from stm32_pwm_apply() is only taken if the pwm is currently enabled.
+Using DIV_ROUND_CLOSEST() on an unbound value can result in underflows.
+Indeed, module test scripts report:
 
-This yields surprises like: Applying
+temp1_max: Suspected underflow: [min=0, read 255000, written -9223372036854775808]
+temp1_crit: Suspected underflow: [min=0, read 255000, written -9223372036854775808]
 
-	{ .period = 1, .duty_cycle = 0, .enabled = false }
+Fix by introducing an extra set of clamping.
 
-succeeds if the pwm is initially on, but fails if it's already off
-because 1 is a too small period.
-
-Update the check for lazy disable to always exit early if the target
-state is disabled, no matter what is currently configured.
-
-Fixes: 7edf7369205b ("pwm: Add driver for STM32 plaftorm")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@baylibre.com>
-Link: https://lore.kernel.org/r/20240703110010.672654-2-u.kleine-koenig@baylibre.com
-Signed-off-by: Uwe Kleine-König <ukleinek@kernel.org>
+Fixes: 5372d2d71c46 ("hwmon: Driver for Maxim MAX6697 and compatibles")
+Reviewed-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-stm32.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/max6697.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pwm/pwm-stm32.c b/drivers/pwm/pwm-stm32.c
-index 4b20ff6f687b8..9e94a797dcf31 100644
---- a/drivers/pwm/pwm-stm32.c
-+++ b/drivers/pwm/pwm-stm32.c
-@@ -451,8 +451,9 @@ static int stm32_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
+diff --git a/drivers/hwmon/max6697.c b/drivers/hwmon/max6697.c
+index 64122eb38060d..cfd5815e60dfa 100644
+--- a/drivers/hwmon/max6697.c
++++ b/drivers/hwmon/max6697.c
+@@ -305,6 +305,7 @@ static ssize_t temp_store(struct device *dev,
+ 		return ret;
  
- 	enabled = pwm->state.enabled;
- 
--	if (enabled && !state->enabled) {
--		stm32_pwm_disable(priv, pwm->hwpwm);
-+	if (!state->enabled) {
-+		if (enabled)
-+			stm32_pwm_disable(priv, pwm->hwpwm);
- 		return 0;
- 	}
- 
+ 	mutex_lock(&data->update_lock);
++	temp = clamp_val(temp, -1000000, 1000000);	/* prevent underflow */
+ 	temp = DIV_ROUND_CLOSEST(temp, 1000) + data->temp_offset;
+ 	temp = clamp_val(temp, 0, data->type == max6581 ? 255 : 127);
+ 	data->temp[nr][index] = temp;
 -- 
 2.43.0
 
