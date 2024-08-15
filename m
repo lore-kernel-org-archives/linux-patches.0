@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F441B3F05;
-	Thu, 15 Aug 2024 14:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793C41B32CD;
+	Thu, 15 Aug 2024 14:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731170; cv=none; b=A2S6AdIj6gwu73thEEmo2Wxk53vEKiYt73jLXmgu3kkWkoqBsIlyXcL63K8p+otyUFKbGChRnJ1GUW8o+JWEemQA91p8+C7aOByzXGHP+Sisnwm3OGNueqjQMmHVKGk+rjuu8/VmNE8a/xLc1rjtZc1qNRJVXB1ffuBG/OvYJpA=
+	t=1723731173; cv=none; b=FMsodcFqgsGbSVwMDSN66XEvpmqFODmpywZXtU9H6t+IkCJP72PQm1K4WqdjtxFAGPYBOTcCzmT4IWIv9q+knLFcZI5Vvg2UgxXqlqtbCRiCvIWU08u0Jx2XXUEkGyN6y5Df9nI8Pz5+n0xBF2JJC+67QW+ze28s8378h/m1ejw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731170; c=relaxed/simple;
-	bh=tNxhW9cltJtiM0xGVO4lGOjugJDlxQi1/tIKHQNF+lI=;
+	s=arc-20240116; t=1723731173; c=relaxed/simple;
+	bh=EGM5VYOwPMWl291bCBpPPDcDlfPi/s/i1ubBxqQfxzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Cz6O6TRXzSgUP8TlLLlTmT3mnPXLrQCk70/BYlI2pa46QdL3+1G8kq2m7gf5ATswUKHwTEMrXGyIsW17LyJsnyAbEN8cFPezZbbLvRFxcUFOcliPied4J+7vScBj4AVo8AoP1UVA90JY1l9kmR15LAqipDbW0fcZiLZq/JqzyWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HilwaCWP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=dXTyq0OxngyLSzV6vQwrqvb7jrRft0TnUmVPurFP9hunGAAMeeM3KS0jwQgOCMGizp2bAOfsv4SKKSyPFYSuyqnUxYuJUqheZ2s+fpeTZqm+iLaYIeObPKQy8YZ5RuRFY+uU8e3VmOVloP+GwKDtR2ra3nMeN+k6Ua4hKn45YDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g6v7Vuu1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HilwaCWP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77071C32786;
-	Thu, 15 Aug 2024 14:12:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g6v7Vuu1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A509FC4AF0C;
+	Thu, 15 Aug 2024 14:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731169;
-	bh=tNxhW9cltJtiM0xGVO4lGOjugJDlxQi1/tIKHQNF+lI=;
+	s=korg; t=1723731173;
+	bh=EGM5VYOwPMWl291bCBpPPDcDlfPi/s/i1ubBxqQfxzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HilwaCWPhqevKzP3F+5uOOIl7xYLPBR6WnIcZmttGwCoRbnLPKE+pcQUlB8UjGEfm
-	 p+dBVgwXujhv52xJBO8U6Uegt22OT8YHvgk7igRxcArwBrFlq+P/cwQSLmBJ9x8w5J
-	 s5fMmQbK1udqjFXh/nUX9xY6q0BZYh31XIzDlmmc=
+	b=g6v7Vuu1rvkejgGT4WuMYq+9vp+Q3gKFJ1gQHS9Yd40SLJtX2X1ix4zMFAKPfO5Lw
+	 uyaZbqYZyfBAqSULYteLEGnTxfKySX6K/7bETw/GIX8lhWX0Ic8q6MNvUYoDDir1Sg
+	 uTe18Ht8BqjUQVSnkLU7tDwGpp5SIoqWQvVv9Kzk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com,
-	En-Wei Wu <en-wei.wu@canonical.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 045/259] wifi: virt_wifi: avoid reporting connection success with wrong SSID
-Date: Thu, 15 Aug 2024 15:22:58 +0200
-Message-ID: <20240815131904.545151484@linuxfoundation.org>
+Subject: [PATCH 5.4 028/259] firmware: turris-mox-rwtm: Initialize completion before mailbox
+Date: Thu, 15 Aug 2024 15:22:41 +0200
+Message-ID: <20240815131903.886227177@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -46,102 +46,49 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.4-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: En-Wei Wu <en-wei.wu@canonical.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit b5d14b0c6716fad7f0c94ac6e1d6f60a49f985c7 ]
+[ Upstream commit 49e24c80d3c81c43e2a56101449e1eea32fcf292 ]
 
-When user issues a connection with a different SSID than the one
-virt_wifi has advertised, the __cfg80211_connect_result() will
-trigger the warning: WARN_ON(bss_not_found).
+Initialize the completion before the mailbox channel is requested.
 
-The issue is because the connection code in virt_wifi does not
-check the SSID from user space (it only checks the BSSID), and
-virt_wifi will call cfg80211_connect_result() with WLAN_STATUS_SUCCESS
-even if the SSID is different from the one virt_wifi has advertised.
-Eventually cfg80211 won't be able to find the cfg80211_bss and generate
-the warning.
-
-Fixed it by checking the SSID (from user space) in the connection code.
-
-Fixes: c7cdba31ed8b ("mac80211-next: rtnetlink wifi simulation device")
-Reported-by: syzbot+d6eb9cee2885ec06f5e3@syzkaller.appspotmail.com
-Signed-off-by: En-Wei Wu <en-wei.wu@canonical.com>
-Link: https://patch.msgid.link/20240705023756.10954-1-en-wei.wu@canonical.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 389711b37493 ("firmware: Add Turris Mox rWTM firmware driver")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/virt_wifi.c | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/firmware/turris-mox-rwtm.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/virt_wifi.c b/drivers/net/wireless/virt_wifi.c
-index 4e906910f110b..be5201bd824c2 100644
---- a/drivers/net/wireless/virt_wifi.c
-+++ b/drivers/net/wireless/virt_wifi.c
-@@ -136,6 +136,8 @@ static struct ieee80211_supported_band band_5ghz = {
- /* Assigned at module init. Guaranteed locally-administered and unicast. */
- static u8 fake_router_bssid[ETH_ALEN] __ro_after_init = {};
+diff --git a/drivers/firmware/turris-mox-rwtm.c b/drivers/firmware/turris-mox-rwtm.c
+index 852d911c78f6b..212a463973737 100644
+--- a/drivers/firmware/turris-mox-rwtm.c
++++ b/drivers/firmware/turris-mox-rwtm.c
+@@ -337,6 +337,7 @@ static int turris_mox_rwtm_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, rwtm);
  
-+#define VIRT_WIFI_SSID "VirtWifi"
-+
- static void virt_wifi_inform_bss(struct wiphy *wiphy)
- {
- 	u64 tsf = div_u64(ktime_get_boottime_ns(), 1000);
-@@ -146,8 +148,8 @@ static void virt_wifi_inform_bss(struct wiphy *wiphy)
- 		u8 ssid[8];
- 	} __packed ssid = {
- 		.tag = WLAN_EID_SSID,
--		.len = 8,
--		.ssid = "VirtWifi",
-+		.len = strlen(VIRT_WIFI_SSID),
-+		.ssid = VIRT_WIFI_SSID,
- 	};
+ 	mutex_init(&rwtm->busy);
++	init_completion(&rwtm->cmd_done);
  
- 	informed_bss = cfg80211_inform_bss(wiphy, &channel_5ghz,
-@@ -213,6 +215,8 @@ struct virt_wifi_netdev_priv {
- 	struct net_device *upperdev;
- 	u32 tx_packets;
- 	u32 tx_failed;
-+	u32 connect_requested_ssid_len;
-+	u8 connect_requested_ssid[IEEE80211_MAX_SSID_LEN];
- 	u8 connect_requested_bss[ETH_ALEN];
- 	bool is_up;
- 	bool is_connected;
-@@ -229,6 +233,12 @@ static int virt_wifi_connect(struct wiphy *wiphy, struct net_device *netdev,
- 	if (priv->being_deleted || !priv->is_up)
- 		return -EBUSY;
+ 	rwtm->mbox_client.dev = dev;
+ 	rwtm->mbox_client.rx_callback = mox_rwtm_rx_callback;
+@@ -350,8 +351,6 @@ static int turris_mox_rwtm_probe(struct platform_device *pdev)
+ 		goto remove_files;
+ 	}
  
-+	if (!sme->ssid)
-+		return -EINVAL;
-+
-+	priv->connect_requested_ssid_len = sme->ssid_len;
-+	memcpy(priv->connect_requested_ssid, sme->ssid, sme->ssid_len);
-+
- 	could_schedule = schedule_delayed_work(&priv->connect, HZ * 2);
- 	if (!could_schedule)
- 		return -EBUSY;
-@@ -252,12 +262,15 @@ static void virt_wifi_connect_complete(struct work_struct *work)
- 		container_of(work, struct virt_wifi_netdev_priv, connect.work);
- 	u8 *requested_bss = priv->connect_requested_bss;
- 	bool right_addr = ether_addr_equal(requested_bss, fake_router_bssid);
-+	bool right_ssid = priv->connect_requested_ssid_len == strlen(VIRT_WIFI_SSID) &&
-+			  !memcmp(priv->connect_requested_ssid, VIRT_WIFI_SSID,
-+				  priv->connect_requested_ssid_len);
- 	u16 status = WLAN_STATUS_SUCCESS;
- 
- 	if (is_zero_ether_addr(requested_bss))
- 		requested_bss = NULL;
- 
--	if (!priv->is_up || (requested_bss && !right_addr))
-+	if (!priv->is_up || (requested_bss && !right_addr) || !right_ssid)
- 		status = WLAN_STATUS_UNSPECIFIED_FAILURE;
- 	else
- 		priv->is_connected = true;
+-	init_completion(&rwtm->cmd_done);
+-
+ 	ret = mox_get_board_info(rwtm);
+ 	if (ret < 0)
+ 		dev_warn(dev, "Cannot read board information: %i\n", ret);
 -- 
 2.43.0
 
