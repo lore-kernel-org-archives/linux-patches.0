@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08131714A1;
-	Thu, 15 Aug 2024 13:54:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463D01714A1;
+	Thu, 15 Aug 2024 13:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730075; cv=none; b=FnNmnwLB61oCreOGGcoStTRNal39Vnooq3LL0/2WtlDLdJRGC3ctJy7kXR8VtdQ0eDfnMz2fMU02H9ybFv7Z+whcDUht5DCSa0b15ZNmkR8avLQWtv4QQropaXjgM8M3eIRqzNQsY//5lyYP04gN+s+88xjmvftiPgUYTef085g=
+	t=1723730078; cv=none; b=tWzBHujHGzk7gZyTodJiNECuaGde6UtdBvxYEZHqG0ibIECJBfergRGFKPDzQ8LcCXb+alUg38ci+n+L4cK4B6X5hUVW9x9gok5sIe1I+pweLZtvMzJl1NdzDAMlceunHORjnGc7jJRF84RGXenuAxz1X1AhhtRFhzY7vIpZ2jw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730075; c=relaxed/simple;
-	bh=9KrbPeEVpmvjXYgypTORFMY/ANLOOjhkgj81vjHVdRo=;
+	s=arc-20240116; t=1723730078; c=relaxed/simple;
+	bh=TgwfJey8obEZUaciqYmUir+J8g2Af0x4SRVvjNJ08Zk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HuPiipfdCikgZmmpdwTq3sIC57Dhegh6oQhA3FGU6i7OWMPQ+MvDaoqRg8hERDFxKd3rDXY6OBo8MFGhZHIDEezqYRSDvHyP+gucyNHpJC2W6FYBprtPgPxGRjAFrdUaRHPgZhMYRmPdTGYRNAkzJbgKRE8uSNaHOukac46zxGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2ccYOi1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R6pSVfTakoMUdCM41k+h8x4xqdud84j+oZeUZ6ErQoOq9lhr7y2CaRMA+wQ+ZTrMRT3MH3yuIYjNBN7cPiqKwCHt5S77cZ83x3Ug2qky0cxfU9lOHsFnqMG5ttAOxov+xbaTgxAV7UpjPwEJdB2Ycf3wKQWDg/WR0/EgvNq0T9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aB9rlKqk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2ccYOi1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61082C32786;
-	Thu, 15 Aug 2024 13:54:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aB9rlKqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD22EC32786;
+	Thu, 15 Aug 2024 13:54:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730074;
-	bh=9KrbPeEVpmvjXYgypTORFMY/ANLOOjhkgj81vjHVdRo=;
+	s=korg; t=1723730078;
+	bh=TgwfJey8obEZUaciqYmUir+J8g2Af0x4SRVvjNJ08Zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G2ccYOi1Vf1yGaJMiQcD1XnqAHUcOaKkbAWqMmBaYazSLXo7ONRNcQRCcBah2hwTY
-	 /UmDv3dDbppRKaoBkV50ErhbkRmB85UoJax71ZKI2DWlIQfT1ZqS96a87d6wwsEOSn
-	 ySDDTbNb7Yil9oIuPznvq0aiOVZcRCJTpPart6NI=
+	b=aB9rlKqkjRErCReo/b7EjHYA6DJhaIdHprYq50s9Sr793HX2hta13yR+VtjdWSbM/
+	 SSoGRtvqKW8xXLRAs1jB1vAlNV9TBgCpffNGXtzpvy6x6ar5Tw3S5rMpKPd/0IEPNM
+	 D61sMQHaL9o/1HqxAMNIgmAfYFPMkeJr9UYKNasw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaitanya Kulkarni <kch@nvidia.com>,
 	Hannes Reinecke <hare@suse.de>,
-	Max Gurtovoy <mgurtovoy@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 294/484] nvme: split command copy into a helper
-Date: Thu, 15 Aug 2024 15:22:32 +0200
-Message-ID: <20240815131952.761542154@linuxfoundation.org>
+Subject: [PATCH 5.15 295/484] nvme: separate command prep and issue
+Date: Thu, 15 Aug 2024 15:22:33 +0200
+Message-ID: <20240815131952.801069318@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -56,77 +54,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 3233b94cf842984ea7e208d5be1ad2f2af02d495 ]
+[ Upstream commit 62451a2b2e7ea17c4a547ada6a5deebf8787a27a ]
 
-We'll need it for batched submit as well. Since we now have a copy
-helper, get rid of the nvme_submit_cmd() wrapper.
+Add a nvme_prep_rq() helper to setup a command, and nvme_queue_rq() is
+adapted to use this helper.
 
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Reviewed-by: Hannes Reinecke <hare@suse.de>
-Reviewed-by: Max Gurtovoy <mgurtovoy@nvidia.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: c31fad147038 ("nvme-pci: add missing condition check for existence of mapped data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ drivers/nvme/host/pci.c | 63 +++++++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 27 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 5a3ba7e390546..04e51134165dd 100644
+index 04e51134165dd..01f16989d0d84 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -479,22 +479,13 @@ static inline void nvme_write_sq_db(struct nvme_queue *nvmeq, bool write_sq)
- 	nvmeq->last_sq_tail = nvmeq->sq_tail;
+@@ -886,55 +886,32 @@ static blk_status_t nvme_map_metadata(struct nvme_dev *dev, struct request *req,
+ 	return BLK_STS_OK;
  }
  
--/**
-- * nvme_submit_cmd() - Copy a command into a queue and ring the doorbell
-- * @nvmeq: The queue to use
-- * @cmd: The command to send
-- * @write_sq: whether to write to the SQ doorbell
+-/*
+- * NOTE: ns is NULL when called on the admin queue.
 - */
--static void nvme_submit_cmd(struct nvme_queue *nvmeq, struct nvme_command *cmd,
--			    bool write_sq)
-+static inline void nvme_sq_copy_cmd(struct nvme_queue *nvmeq,
-+				    struct nvme_command *cmd)
+-static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+-			 const struct blk_mq_queue_data *bd)
++static blk_status_t nvme_prep_rq(struct nvme_dev *dev, struct request *req)
  {
--	spin_lock(&nvmeq->sq_lock);
- 	memcpy(nvmeq->sq_cmds + (nvmeq->sq_tail << nvmeq->sqes),
--	       cmd, sizeof(*cmd));
-+		absolute_pointer(cmd), sizeof(*cmd));
- 	if (++nvmeq->sq_tail == nvmeq->q_depth)
- 		nvmeq->sq_tail = 0;
--	nvme_write_sq_db(nvmeq, write_sq);
--	spin_unlock(&nvmeq->sq_lock);
- }
+-	struct nvme_ns *ns = hctx->queue->queuedata;
+-	struct nvme_queue *nvmeq = hctx->driver_data;
+-	struct nvme_dev *dev = nvmeq->dev;
+-	struct request *req = bd->rq;
+ 	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
+-	struct nvme_command *cmnd = &iod->cmd;
+ 	blk_status_t ret;
  
- static void nvme_commit_rqs(struct blk_mq_hw_ctx *hctx)
-@@ -940,7 +931,10 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	iod->aborted = 0;
+ 	iod->npages = -1;
+ 	iod->nents = 0;
+ 
+-	/*
+-	 * We should not need to do this, but we're still using this to
+-	 * ensure we can drain requests on a dying queue.
+-	 */
+-	if (unlikely(!test_bit(NVMEQ_ENABLED, &nvmeq->flags)))
+-		return BLK_STS_IOERR;
+-
+-	if (!nvme_check_ready(&dev->ctrl, req, true))
+-		return nvme_fail_nonready_command(&dev->ctrl, req);
+-
+-	ret = nvme_setup_cmd(ns, req);
++	ret = nvme_setup_cmd(req->q->queuedata, req);
+ 	if (ret)
+ 		return ret;
+ 
+ 	if (blk_rq_nr_phys_segments(req)) {
+-		ret = nvme_map_data(dev, req, cmnd);
++		ret = nvme_map_data(dev, req, &iod->cmd);
+ 		if (ret)
+ 			goto out_free_cmd;
+ 	}
+ 
+ 	if (blk_integrity_rq(req)) {
+-		ret = nvme_map_metadata(dev, req, cmnd);
++		ret = nvme_map_metadata(dev, req, &iod->cmd);
+ 		if (ret)
+ 			goto out_unmap_data;
  	}
  
  	blk_mq_start_request(req);
--	nvme_submit_cmd(nvmeq, cmnd, bd->last);
+-	spin_lock(&nvmeq->sq_lock);
+-	nvme_sq_copy_cmd(nvmeq, &iod->cmd);
+-	nvme_write_sq_db(nvmeq, bd->last);
+-	spin_unlock(&nvmeq->sq_lock);
+ 	return BLK_STS_OK;
+ out_unmap_data:
+ 	nvme_unmap_data(dev, req);
+@@ -943,6 +920,38 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	return ret;
+ }
+ 
++/*
++ * NOTE: ns is NULL when called on the admin queue.
++ */
++static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
++			 const struct blk_mq_queue_data *bd)
++{
++	struct nvme_queue *nvmeq = hctx->driver_data;
++	struct nvme_dev *dev = nvmeq->dev;
++	struct request *req = bd->rq;
++	struct nvme_iod *iod = blk_mq_rq_to_pdu(req);
++	blk_status_t ret;
++
++	/*
++	 * We should not need to do this, but we're still using this to
++	 * ensure we can drain requests on a dying queue.
++	 */
++	if (unlikely(!test_bit(NVMEQ_ENABLED, &nvmeq->flags)))
++		return BLK_STS_IOERR;
++
++	if (unlikely(!nvme_check_ready(&dev->ctrl, req, true)))
++		return nvme_fail_nonready_command(&dev->ctrl, req);
++
++	ret = nvme_prep_rq(dev, req);
++	if (unlikely(ret))
++		return ret;
 +	spin_lock(&nvmeq->sq_lock);
 +	nvme_sq_copy_cmd(nvmeq, &iod->cmd);
 +	nvme_write_sq_db(nvmeq, bd->last);
 +	spin_unlock(&nvmeq->sq_lock);
- 	return BLK_STS_OK;
- out_unmap_data:
- 	nvme_unmap_data(dev, req);
-@@ -1109,7 +1103,11 @@ static void nvme_pci_submit_async_event(struct nvme_ctrl *ctrl)
- 
- 	c.common.opcode = nvme_admin_async_event;
- 	c.common.command_id = NVME_AQ_BLK_MQ_DEPTH;
--	nvme_submit_cmd(nvmeq, &c, true);
++	return BLK_STS_OK;
++}
 +
-+	spin_lock(&nvmeq->sq_lock);
-+	nvme_sq_copy_cmd(nvmeq, &c);
-+	nvme_write_sq_db(nvmeq, true);
-+	spin_unlock(&nvmeq->sq_lock);
- }
- 
- static int adapter_delete_queue(struct nvme_dev *dev, u8 opcode, u16 id)
+ static void nvme_pci_complete_rq(struct request *req)
+ {
+ 	struct nvme_queue *nvmeq = req->mq_hctx->driver_data;
 -- 
 2.43.0
 
