@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC01AC432;
-	Thu, 15 Aug 2024 14:04:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A8B1A7060;
+	Thu, 15 Aug 2024 14:04:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730648; cv=none; b=aGITgL085ExjXrW5S1qln1+JYEP2Yy9xawlnWStwKaMeY+ev9ex6K0R8VVSnNMUFoXPU5V7nGTaxJc6P71c06r2lMs+kltG2L0QtZMv4/3iNpQIbL9Dbis3K3tati3V5tLLn9nCcU5GEnjXxSEKYNpYWyrItwTmm9TbLJ9sjvdc=
+	t=1723730651; cv=none; b=VFLwNIHdVbSAnhZ7hTvm6DeDuwFJw2pKm1ZaEAxffEHcGWueZNXcsFLFA0O/xCvRvmCJkptCJUhzORPqwQyW+Ds8UdJFInP5I6Ex5csX3WKiNSUlW+PJc3lsOJP3tM48eQeMiLFatyzxThPP8pQGTRh+kuUUdtKYugSy8hb/GTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730648; c=relaxed/simple;
-	bh=RPRMQ7FK9HsCuLpzFnFbeHY6T+JUfmBWJPRp5KHUDh0=;
+	s=arc-20240116; t=1723730651; c=relaxed/simple;
+	bh=9ATMyHnP5pVIdhXNmz8kbczuVUgzMJNc9JvsAINgza0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uVQ4sIzzHBvkVbUfAq1QRwmFwhr0DFve9rYC/X2BsX8L+WZz75M5xG9iTRHJoIChxxn9hZJJcNGkLoqYc7AIPSnqoka81o46YkVKk1HOBDqe3nlV7R51nQE3MdUsTQuS+muqtcq6jRYaD8T3EvQKqyMJItaljJzNGT8wDCWEmGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T1KYZJ3a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XVjBHgf8LwG2Ul8QuC67cPgTYgPgoSyP3oeEDGjJhVsrE3OTXRve+Fp91BtamoML92tDxRwb6IK0WOYMA7i80kUrjVtAyjM5RdFti6Ghc7CmrOlCwWOMG9dU7nNLhNOBQ4bpQjWXJaB1OcEngS/JSGHwv5DRaBeKPFSzcgzQt4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fh3ityFa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T1KYZJ3a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE598C32786;
-	Thu, 15 Aug 2024 14:04:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fh3ityFa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03E95C4AF0A;
+	Thu, 15 Aug 2024 14:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730648;
-	bh=RPRMQ7FK9HsCuLpzFnFbeHY6T+JUfmBWJPRp5KHUDh0=;
+	s=korg; t=1723730651;
+	bh=9ATMyHnP5pVIdhXNmz8kbczuVUgzMJNc9JvsAINgza0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1KYZJ3alHzJQqQ8mlT0oFFCwbj8zURs5Fu62aZ98YzsIY9UT7t6H0oA74LyymfKe
-	 UIf8/ZXoOX/gCqAipPYk9ucbPg+hA9IXewkRpDSJOvT/sjv7tzbH8SSjioVj2nPYaR
-	 Tf1NC5F8xoS0pjw80m6a6JPdbp0t8L1SLMGdk6yI=
+	b=fh3ityFa/0CenRKxoijf82XWLVFzPoA9wP++poMZl14tYbmm3DVbgXK3YuK4e+ak6
+	 ufECFSonJii6ICe7NJo8ft6uuLXMuN9YD5wZgj0AW2cx5/+4uKqN0seyhehbTwy0Og
+	 C3TvJSF5X5QPVmDtVfOMz4VcgOvuc5O38H/vY3eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 474/484] mptcp: fully established after ADD_ADDR echo on MPJ
-Date: Thu, 15 Aug 2024 15:25:32 +0200
-Message-ID: <20240815131959.785983201@linuxfoundation.org>
+	Jann Horn <jannh@google.com>,
+	Chris Wilson <chris.p.wilson@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Jonathan Cavitt <Jonathan.cavitt@intel.com>
+Subject: [PATCH 5.15 475/484] drm/i915/gem: Fix Virtual Memory mapping boundaries calculation
+Date: Thu, 15 Aug 2024 15:25:33 +0200
+Message-ID: <20240815131959.826627740@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,52 +55,126 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Andi Shyti <andi.shyti@linux.intel.com>
 
-commit d67c5649c1541dc93f202eeffc6f49220a4ed71d upstream.
+commit 8bdd9ef7e9b1b2a73e394712b72b22055e0e26c3 upstream.
 
-Before this patch, receiving an ADD_ADDR echo on the just connected
-MP_JOIN subflow -- initiator side, after the MP_JOIN 3WHS -- was
-resulting in an MP_RESET. That's because only ACKs with a DSS or
-ADD_ADDRs without the echo bit were allowed.
+Calculating the size of the mapped area as the lesser value
+between the requested size and the actual size does not consider
+the partial mapping offset. This can cause page fault access.
 
-Not allowing the ADD_ADDR echo after an MP_CAPABLE 3WHS makes sense, as
-we are not supposed to send an ADD_ADDR before because it requires to be
-in full established mode first. For the MP_JOIN 3WHS, that's different:
-the ADD_ADDR can be sent on a previous subflow, and the ADD_ADDR echo
-can be received on the recently created one. The other peer will already
-be in fully established, so it is allowed to send that.
+Fix the calculation of the starting and ending addresses, the
+total size is now deduced from the difference between the end and
+start addresses.
 
-We can then relax the conditions here to accept the ADD_ADDR echo for
-MPJ subflows.
+Additionally, the calculations have been rewritten in a clearer
+and more understandable form.
 
-Fixes: 67b12f792d5e ("mptcp: full fully established support after ADD_ADDR")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-1-c8a9b036493b@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ Conflicts in options.c, because the context has changed in commit
-  b3ea6b272d79 ("mptcp: consolidate initial ack seq generation"), which
-  is not in this version. This commit is unrelated to this
-  modification. ]
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Fixes: c58305af1835 ("drm/i915: Use remap_io_mapping() to prefault all PTE in a single pass")
+Reported-by: Jann Horn <jannh@google.com>
+Co-developed-by: Chris Wilson <chris.p.wilson@linux.intel.com>
+Signed-off-by: Chris Wilson <chris.p.wilson@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: <stable@vger.kernel.org> # v4.9+
+Reviewed-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jonathan Cavitt <Jonathan.cavitt@intel.com>
+[Joonas: Add Requires: tag]
+Requires: 60a2066c5005 ("drm/i915/gem: Adjust vma offset for framebuffer mmap offset")
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240802083850.103694-3-andi.shyti@linux.intel.com
+(cherry picked from commit 97b6784753da06d9d40232328efc5c5367e53417)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/options.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_mman.c |   53 +++++++++++++++++++++++++++----
+ 1 file changed, 47 insertions(+), 6 deletions(-)
 
---- a/net/mptcp/options.c
-+++ b/net/mptcp/options.c
-@@ -923,7 +923,8 @@ static bool check_fully_established(stru
- 	}
+--- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
+@@ -286,6 +286,41 @@ out:
+ 	return i915_error_to_vmf_fault(err);
+ }
  
- 	if (((mp_opt->suboptions & OPTION_MPTCP_DSS) && mp_opt->use_ack) ||
--	    ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) && !mp_opt->echo)) {
-+	    ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) &&
-+	     (!mp_opt->echo || subflow->mp_join))) {
- 		/* subflows are fully established as soon as we get any
- 		 * additional ack, including ADD_ADDR.
- 		 */
++static void set_address_limits(struct vm_area_struct *area,
++			       struct i915_vma *vma,
++			       unsigned long obj_offset,
++			       unsigned long *start_vaddr,
++			       unsigned long *end_vaddr)
++{
++	unsigned long vm_start, vm_end, vma_size; /* user's memory parameters */
++	long start, end; /* memory boundaries */
++
++	/*
++	 * Let's move into the ">> PAGE_SHIFT"
++	 * domain to be sure not to lose bits
++	 */
++	vm_start = area->vm_start >> PAGE_SHIFT;
++	vm_end = area->vm_end >> PAGE_SHIFT;
++	vma_size = vma->size >> PAGE_SHIFT;
++
++	/*
++	 * Calculate the memory boundaries by considering the offset
++	 * provided by the user during memory mapping and the offset
++	 * provided for the partial mapping.
++	 */
++	start = vm_start;
++	start -= obj_offset;
++	start += vma->ggtt_view.partial.offset;
++	end = start + vma_size;
++
++	start = max_t(long, start, vm_start);
++	end = min_t(long, end, vm_end);
++
++	/* Let's move back into the "<< PAGE_SHIFT" domain */
++	*start_vaddr = (unsigned long)start << PAGE_SHIFT;
++	*end_vaddr = (unsigned long)end << PAGE_SHIFT;
++}
++
+ static vm_fault_t vm_fault_gtt(struct vm_fault *vmf)
+ {
+ #define MIN_CHUNK_PAGES (SZ_1M >> PAGE_SHIFT)
+@@ -298,14 +333,18 @@ static vm_fault_t vm_fault_gtt(struct vm
+ 	struct i915_ggtt *ggtt = &i915->ggtt;
+ 	bool write = area->vm_flags & VM_WRITE;
+ 	struct i915_gem_ww_ctx ww;
++	unsigned long obj_offset;
++	unsigned long start, end; /* memory boundaries */
+ 	intel_wakeref_t wakeref;
+ 	struct i915_vma *vma;
+ 	pgoff_t page_offset;
++	unsigned long pfn;
+ 	int srcu;
+ 	int ret;
+ 
+-	/* We don't use vmf->pgoff since that has the fake offset */
++	obj_offset = area->vm_pgoff - drm_vma_node_start(&mmo->vma_node);
+ 	page_offset = (vmf->address - area->vm_start) >> PAGE_SHIFT;
++	page_offset += obj_offset;
+ 
+ 	trace_i915_gem_object_fault(obj, page_offset, true, write);
+ 
+@@ -376,12 +415,14 @@ retry:
+ 	if (ret)
+ 		goto err_unpin;
+ 
++	set_address_limits(area, vma, obj_offset, &start, &end);
++
++	pfn = (ggtt->gmadr.start + i915_ggtt_offset(vma)) >> PAGE_SHIFT;
++	pfn += (start - area->vm_start) >> PAGE_SHIFT;
++	pfn += obj_offset - vma->ggtt_view.partial.offset;
++
+ 	/* Finally, remap it using the new GTT offset */
+-	ret = remap_io_mapping(area,
+-			       area->vm_start + (vma->ggtt_view.partial.offset << PAGE_SHIFT),
+-			       (ggtt->gmadr.start + vma->node.start) >> PAGE_SHIFT,
+-			       min_t(u64, vma->size, area->vm_end - area->vm_start),
+-			       &ggtt->iomap);
++	ret = remap_io_mapping(area, start, pfn, end - start, &ggtt->iomap);
+ 	if (ret)
+ 		goto err_fence;
+ 
 
 
