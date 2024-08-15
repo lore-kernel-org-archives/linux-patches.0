@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5619C1AC896;
-	Thu, 15 Aug 2024 14:19:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3ED1AC896;
+	Thu, 15 Aug 2024 14:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731578; cv=none; b=GZaWjXHSTIuV8mtbKKzuCLXQJ3vJbuHzMGjCw88tzYTW6uqOCRlsDD03B+xraIHJuntCbsegW5Up8bEjCI91T0vvhKW0nrt/q+FqSyIf20ggNY7meSglm5CNkivM6KnUAt0k/BHLxelNfybHmwQK1HkOnRIU/L6lQFlXVrV2ETs=
+	t=1723731581; cv=none; b=Ak17jO6Cgc9emgYejJUWTNZ/v3A/A3CwwETDmWnbN4FOfQzUISSKt+/kWSWLbA/GU7E6I7NlPZ8XbXEPpimwufg7dlCBoA3K64Nc7MoYjbfuQnIBkUJlKtzE0RXa8S3eunsdZDn/bpS5zX5dSvWCty4m4GZpAh+7tniLkkrZhFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731578; c=relaxed/simple;
-	bh=rLhK/IYwpkowLg05Sf5Ft79nKcVxqsygNVzSeqa5teo=;
+	s=arc-20240116; t=1723731581; c=relaxed/simple;
+	bh=T3mPAjS5e7rXAFVwFpLHlpyHqLbef4233vPicsckW3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cJ994Z3XMYmxjgKOyz83F6UP3VpApe5XjS/VBqmbE55T+HfI1XN4x8v29hYaByaBXhQX/RLrY5Dmf5nDv2tdeNTN8UOAm1fvNb22YoUDDboidHDT6c2IgmRQxo94AE6dinJ8ZxEvesENBqOwsVX9N33yLLP8dq2rM6FAVipu1cQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ifp8Sq36; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GJsIQMH5Nctz83xDWrxm0l+gTp1UAUamDE+lNH7tz6el40XQeWaG7Q1wTstHAxm8Yct+AqONf0wXIuAubFGZYiOmLWLYivPj/gzoSooWT/7SxcoE7fyd2bMdi5IVtzmljP+M8E2Cn7GcL/+olZSWojCLHzCkQmN9ETaNG01P2Mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/2xpYKK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ifp8Sq36"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFDB3C32786;
-	Thu, 15 Aug 2024 14:19:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/2xpYKK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8776C32786;
+	Thu, 15 Aug 2024 14:19:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731578;
-	bh=rLhK/IYwpkowLg05Sf5Ft79nKcVxqsygNVzSeqa5teo=;
+	s=korg; t=1723731581;
+	bh=T3mPAjS5e7rXAFVwFpLHlpyHqLbef4233vPicsckW3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ifp8Sq364QXxKFEFRjsK4pSr6SjLS8veRL40KBuNRp2rz7lZM1iOTYP6+4mQ2FxOy
-	 odS5OOrDgD7dSebDDvGZIotDJNXEFQYLr6LrwCE31IgSJIqROs9uIHQdCMM4thJDfb
-	 tonGFbt5nMvRW3+j6Frcbn3A+px7czwXBxjBtnsY=
+	b=u/2xpYKKJgh78e1MLMKQziJ0RPjlDfJlJYPP9aHK9d5NgO4vY+PoK9MSSENu6QXlo
+	 v0GtO7O2MTNnCXdcTR0H5LrKoPMPzyLaHQCoOHZwVnFkE0RKzd1tCVV31vJUaCrz/Q
+	 Rz3jewn7HuG+w1vKh6xJq8WXCJ5ZBG22nIRietqQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 174/259] drm/vmwgfx: Fix overlay when using Screen Targets
-Date: Thu, 15 Aug 2024 15:25:07 +0200
-Message-ID: <20240815131909.496655944@linuxfoundation.org>
+Subject: [PATCH 5.4 175/259] net/iucv: fix use after free in iucv_sock_close()
+Date: Thu, 15 Aug 2024 15:25:08 +0200
+Message-ID: <20240815131909.535441661@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -52,39 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Alexandra Winter <wintera@linux.ibm.com>
 
-[ Upstream commit cb372a505a994cb39aa75acfb8b3bcf94787cf94 ]
+[ Upstream commit f558120cd709682b739207b48cf7479fd9568431 ]
 
-This code was never updated to support Screen Targets.
-Fixes a bug where Xv playback displays a green screen instead of actual
-video contents when 3D acceleration is disabled in the guest.
+iucv_sever_path() is called from process context and from bh context.
+iucv->path is used as indicator whether somebody else is taking care of
+severing the path (or it is already removed / never existed).
+This needs to be done with atomic compare and swap, otherwise there is a
+small window where iucv_sock_close() will try to work with a path that has
+already been severed and freed by iucv_callback_connrej() called by
+iucv_tasklet_fn().
 
-Fixes: c8261a961ece ("vmwgfx: Major KMS refactoring / cleanup in preparation of screen targets")
-Reported-by: Doug Brown <doug@schmorgal.com>
-Closes: https://lore.kernel.org/all/bd9cb3c7-90e8-435d-bc28-0e38fee58977@schmorgal.com
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Tested-by: Doug Brown <doug@schmorgal.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240719163627.20888-1-ian.forbes@broadcom.com
+Example:
+[452744.123844] Call Trace:
+[452744.123845] ([<0000001e87f03880>] 0x1e87f03880)
+[452744.123966]  [<00000000d593001e>] iucv_path_sever+0x96/0x138
+[452744.124330]  [<000003ff801ddbca>] iucv_sever_path+0xc2/0xd0 [af_iucv]
+[452744.124336]  [<000003ff801e01b6>] iucv_sock_close+0xa6/0x310 [af_iucv]
+[452744.124341]  [<000003ff801e08cc>] iucv_sock_release+0x3c/0xd0 [af_iucv]
+[452744.124345]  [<00000000d574794e>] __sock_release+0x5e/0xe8
+[452744.124815]  [<00000000d5747a0c>] sock_close+0x34/0x48
+[452744.124820]  [<00000000d5421642>] __fput+0xba/0x268
+[452744.124826]  [<00000000d51b382c>] task_work_run+0xbc/0xf0
+[452744.124832]  [<00000000d5145710>] do_notify_resume+0x88/0x90
+[452744.124841]  [<00000000d5978096>] system_call+0xe2/0x2c8
+[452744.125319] Last Breaking-Event-Address:
+[452744.125321]  [<00000000d5930018>] iucv_path_sever+0x90/0x138
+[452744.125324]
+[452744.125325] Kernel panic - not syncing: Fatal exception in interrupt
+
+Note that bh_lock_sock() is not serializing the tasklet context against
+process context, because the check for sock_owned_by_user() and
+corresponding handling is missing.
+
+Ideas for a future clean-up patch:
+A) Correct usage of bh_lock_sock() in tasklet context, as described in
+Link: https://lore.kernel.org/netdev/1280155406.2899.407.camel@edumazet-laptop/
+Re-enqueue, if needed. This may require adding return values to the
+tasklet functions and thus changes to all users of iucv.
+
+B) Change iucv tasklet into worker and use only lock_sock() in af_iucv.
+
+Fixes: 7d316b945352 ("af_iucv: remove IUCV-pathes completely")
+Reviewed-by: Halil Pasic <pasic@linux.ibm.com>
+Signed-off-by: Alexandra Winter <wintera@linux.ibm.com>
+Link: https://patch.msgid.link/20240729122818.947756-1-wintera@linux.ibm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/iucv/af_iucv.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-index fdb52f6d29fb1..395614f2b7bd4 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_overlay.c
-@@ -98,7 +98,7 @@ static int vmw_overlay_send_put(struct vmw_private *dev_priv,
- {
- 	struct vmw_escape_video_flush *flush;
- 	size_t fifo_size;
--	bool have_so = (dev_priv->active_display_unit == vmw_du_screen_object);
-+	bool have_so = (dev_priv->active_display_unit != vmw_du_legacy);
- 	int i, num_items;
- 	SVGAGuestPtr ptr;
+diff --git a/net/iucv/af_iucv.c b/net/iucv/af_iucv.c
+index 652285191da1e..74cf37f17ea90 100644
+--- a/net/iucv/af_iucv.c
++++ b/net/iucv/af_iucv.c
+@@ -453,8 +453,8 @@ static void iucv_sever_path(struct sock *sk, int with_user_data)
+ 	struct iucv_sock *iucv = iucv_sk(sk);
+ 	struct iucv_path *path = iucv->path;
  
+-	if (iucv->path) {
+-		iucv->path = NULL;
++	/* Whoever resets the path pointer, must sever and free it. */
++	if (xchg(&iucv->path, NULL)) {
+ 		if (with_user_data) {
+ 			low_nmcpy(user_data, iucv->src_name);
+ 			high_nmcpy(user_data, iucv->dst_name);
 -- 
 2.43.0
 
