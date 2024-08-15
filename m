@@ -1,54 +1,54 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA17828683
-	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 00:34:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A66F239855
+	for <patches@lists.linux.dev>; Thu, 15 Aug 2024 00:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723682075; cv=none; b=toydHTOWN1LOABADDBr1O84cjU9IvR8QD47WJ3rKptXFZL/4QDjAhxhsJXyGcjEa7VJ9UnhSy4rxVVr0yBsbz81+oMT2IiwkNPgCUPBXmwqsRw9k6mGDLcZ9V/TtO6T58Fn2RxX+5zkSixP9NGCL1Yqsa2EOUXFz/iuvJ2Fh4J4=
+	t=1723682078; cv=none; b=CjqK6cNnTxsJQM8Yaa4SRF833dsyYWCC9IbFC307v3xbkgOFBM/DgfLqh3CfcMB8g5hDrnMdpNOS2RAYa3KqRfh75LfwUJPbIGtv1G2ZKNIjt1ZL4U62ARzVYNOgiPEqE0J5dMPYIsmL5unnZHvwqgqk5SctGnsxIVjdhJukLoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723682075; c=relaxed/simple;
-	bh=/jcJ+rI0gKZr/IVP6XjS/Ak4IPjJQVitYadHxzTrZ4s=;
+	s=arc-20240116; t=1723682078; c=relaxed/simple;
+	bh=TumcHWw87aylU9A2iL70884Gdnzc7x4bQe8WzgEWOQ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cHL1bhVD2f725nWKTllYwvbMx3TB8nh/7Rjm1de+0ju9NomYqaZHlEobTmHxt3I/dT07QRxleciVUTjuzOVymod+pnx/DTyBoQwmYTT8Em8Cn7GH8dtbQrg8lDdWZ+YQ0eiNQGa/kU5Q8kSIEceaYLwyILuwHkK2uz7YGEIVlYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=A69DsFGd; arc=none smtp.client-ip=209.85.214.176
+	 MIME-Version; b=bXl7O3qTLcblJGwLWjawNi3+YRx61ompGLftIqwlAwjjXUg9IhOIgur5p03Ooo8n1XqUGhyfCe0QySaiNLJkw1impK2Dpb2H/eFspWHFnoLWAGyzAQpTw17Sntsr7otnd5PhyyEVm4at/Mni9zdbiZFZ3XRvQQDjT37NS7jSwFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lbGTClEo; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="A69DsFGd"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-201f2b7fe0dso28725ad.1
-        for <patches@lists.linux.dev>; Wed, 14 Aug 2024 17:34:33 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lbGTClEo"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-1fc569440e1so4243695ad.3
+        for <patches@lists.linux.dev>; Wed, 14 Aug 2024 17:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1723682073; x=1724286873; darn=lists.linux.dev;
+        d=chromium.org; s=google; t=1723682076; x=1724286876; darn=lists.linux.dev;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/yiv0xFPMhU7ZUs+XvuB/ZZA+l47REHWpzG575OPKPI=;
-        b=A69DsFGdMednrGF3pFnSkOQHqKt66AlUBP8RpG7Bf8QF5hyrKqyQ7YNxajAtQanD6u
-         pzdHBFTlQY8XVYgbqoMf+t2XOyXiIaWeux9pFU0wAx7DAnegBnP8Tc6hghS5uG6UpovE
-         6ALKrL7x0YMFhbGJazypRXx9/jAOQOiifqeSY=
+        bh=1sRgulPJ1+mkqgVa6mf/3UC8LhJzrRLUVCX/M4EQ0c4=;
+        b=lbGTClEofy+bIriVhE3zIDM3KVV+Fj7fVcjHw4F8sFqN7xJKQJd3lT0xHK5Ce2VThK
+         f2K10qb8u+oz3QQ6q9mkI6qm3KIjqVf8BNP3yzZjhGQAAe2ZRJIsxftYUJm8Wne+CD7I
+         EaUErK75mkep63kUcckJBYg0IL68Bxb+3UoG8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1723682073; x=1724286873;
+        d=1e100.net; s=20230601; t=1723682076; x=1724286876;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/yiv0xFPMhU7ZUs+XvuB/ZZA+l47REHWpzG575OPKPI=;
-        b=Rchc34XVFsTL4Q8DNpj2O3Zgv5bB6MrmwoRpYJOFFDy2eVjGR94G7Vif6pNGj+58Aw
-         Bsnv+vdVgk1NwNhzYgxCuj3dlBxrOCbmrfm2dUWLF+0xHbcO69DjBXs5OPsr0xzNKFkM
-         xMZCWR2p8l+2l1BJz9tqBYzVoVw5Uz/GI6l9cohIi0ur0gl4PQDQiATTij3ZhxdrXPBj
-         MwZwuwA4+zCUlFb6KR1SmDmyCnazw2E2OrWx0HcHEpEwfLNumhaWR9PICU7AFrBrCLpS
-         5KaP0gu60/5R/ZZhuVXAIL8pmoPOJmKhdjrazg0U2laoe3rFFXjjBPOQcTPJX+TN3iJc
-         /s7w==
-X-Forwarded-Encrypted: i=1; AJvYcCVIOk+rabe7/U+nZwFOcThnql3/+Q0DB0PhVKMvrHtDd24w5B74Jo+CkQNe1bLoiVXEso/g/HyimTE39KeWZsZ++KLOLHFo5A==
-X-Gm-Message-State: AOJu0Yxe/TPyFu/Y4rWVB1YwgXdamQBN5/poelfMg90IBkuJuP5MEo2w
-	N9iEBC/55Y9aAFlfX/UO6Gzzfl+wQMRlwKddFKqoSV8rY2is2wLt8ddJCd9Ujg==
-X-Google-Smtp-Source: AGHT+IHJN+4iBjtg5BFHkoM0j1LHWILoEX4QehkqxO/ua5YPwB+wrtI73F9/wcxBEBcJXyMVg84zJg==
-X-Received: by 2002:a17:902:7c92:b0:1fc:6b8b:4918 with SMTP id d9443c01a7336-201d64b09ddmr38089775ad.41.1723682072985;
-        Wed, 14 Aug 2024 17:34:32 -0700 (PDT)
+        bh=1sRgulPJ1+mkqgVa6mf/3UC8LhJzrRLUVCX/M4EQ0c4=;
+        b=nIcl60CsSBPdODL3jiu4SI/4m9f63g5dQmkGZs/AAYNhvqs2Vw77OJnUNttZ8HliMU
+         16trxQEliSCWEX0U1pgqB50gJv8pWJc6McMgjhaEkaY1nfnAYwo7S00+NdSqrr4YEyEm
+         TTCclCG+xb1E2szrnPIQ8rUF2xO83vhN0yFIVHrOUyuKdnG3sDwZNFQSnW9D6EWo8FT7
+         qsuWYkO/9i6tVrS1m32dDhP/jNcWg9BxeyZd+c1xo2TJFlaMHsxcKHys4/jKBq5R1PXI
+         uphgvaY+4gn55/2brHaNALKtHN909QpjuHFjC3eMTBP5FmwoOAr6Xq8kivQZlwoQqyAR
+         J31Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXd6qWVk4oVCiJMjNuCOk+OFOEpkUzftuo7y/Wkj7QST2jJ8iJaAGIO4b0KxKWj62ixEciNuxUaydpxzEsax64DnhfOGjTGXw==
+X-Gm-Message-State: AOJu0YxOwMfr0VROTIsHKtMX8AcL3BQRcA0efR19OpSiY2/wN7tecCk6
+	Eoj5FKglLAHCRpY34Psfj/Q/OqeedUm6w3RcM8VTsDY1v5XDxLFzOrp5U1wSaA==
+X-Google-Smtp-Source: AGHT+IHbVzloJcEMHTMRWtdVRBjc1XqfslsElu4LQA8xI/W2vRG5qbpPTju2PgzgyOJIJKY/OqqVPg==
+X-Received: by 2002:a17:902:ced0:b0:1fd:91b1:7897 with SMTP id d9443c01a7336-201d64d0e79mr53482475ad.65.1723682075829;
+        Wed, 14 Aug 2024 17:34:35 -0700 (PDT)
 Received: from localhost (210.73.125.34.bc.googleusercontent.com. [34.125.73.210])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f03a16b2sm1970445ad.268.2024.08.14.17.34.31
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-201f02faa5dsm2033485ad.2.2024.08.14.17.34.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Aug 2024 17:34:32 -0700 (PDT)
+        Wed, 14 Aug 2024 17:34:34 -0700 (PDT)
 From: Stephen Boyd <swboyd@chromium.org>
 To: chrome-platform@lists.linux.dev
 Cc: linux-kernel@vger.kernel.org,
@@ -77,9 +77,9 @@ Cc: linux-kernel@vger.kernel.org,
 	Rob Herring <robh+dt@kernel.org>,
 	Thomas Zimmermann <tzimmermann@suse.de>,
 	Tzung-Bi Shih <tzungbi@kernel.org>
-Subject: [PATCH v2 06/11] drm/bridge: dp_typec: Allow users to hook hpd notify path
-Date: Wed, 14 Aug 2024 17:34:11 -0700
-Message-ID: <20240815003417.1175506-7-swboyd@chromium.org>
+Subject: [PATCH v2 07/11] dt-bindings: chrome: Add ports to google,cros-ec-typec for DP altmode
+Date: Wed, 14 Aug 2024 17:34:12 -0700
+Message-ID: <20240815003417.1175506-8-swboyd@chromium.org>
 X-Mailer: git-send-email 2.46.0.76.ge559c4bf1a-goog
 In-Reply-To: <20240815003417.1175506-1-swboyd@chromium.org>
 References: <20240815003417.1175506-1-swboyd@chromium.org>
@@ -91,100 +91,362 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The previous patch added support for no-hpd to drm_dp_typec_bridge code.
-Allow users of this bridge to hook the HPD notification path of the
-bridge chain so that they can be made aware of the connector status
-changing. This helps HPD-less users of the bridge inject the HPD state
-into their code by using the connector status as a proxy for HPD being
-asserted or deasserted.
+Add a DT graph binding to google,cros-ec-typec so that it can combine
+DisplayPort (DP) and USB SuperSpeed (SS) data into a USB type-c endpoint
+that is connected to the usb-c-connector node's SS endpoint. This also
+allows us to connect the DP and USB nodes in the graph to the USB type-c
+connectors, providing the full picture of the USB type-c data flows in
+the system.
 
-In particular, this will help Trogdor/Strongbad boards that need to read
-the EC's analog mux which steers the DP signal to one or the other USB
-type-c ports to figure out which type-c port has HPD asserted.
+Allow there to be multiple typec nodes underneath the EC node so that
+one DT graph exists per DP bridge. The EC is actually controlling TCPCs
+and redrivers that combine the DP and USB signals together so this more
+accurately reflects the hardware design without introducing yet another
+DT node underneath the EC for USB type-c.
 
-Cc: Prashant Malani <pmalani@chromium.org>
+If the type-c ports are being shared between a single DP controller then
+the ports need to know about each other and determine a policy to drive
+DP to one type-c port. If the type-c ports each have their own dedicated
+DP controller then they're able to operate independently and enter/exit
+DP altmode independently as well. We can't connect the DP controller's
+endpoint to one usb-c-connector port@1 endpoint and the USB controller's
+endpoint to another usb-c-connector port@1 endpoint either because the
+DP muxing case would have DP connected to two usb-c-connector endpoints
+which the graph binding doesn't support.
+
+Therefore, one typec node is required per the capabilities of the type-c
+port(s) being managed. This also lets us indicate which type-c ports the
+DP controller is wired to. For example, if DP was connected to ports 0
+and 2, while port 1 was connected to another DP controller we wouldn't
+be able to implement that without having some other DT property to
+indicate which output ports are connected to the DP endpoint.
+
+Cc: Rob Herring <robh+dt@kernel.org>
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: Conor Dooley <conor+dt@kernel.org>
+Cc: Lee Jones <lee@kernel.org>
 Cc: Benson Leung <bleung@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Prashant Malani <pmalani@chromium.org>
 Cc: Tzung-Bi Shih <tzungbi@kernel.org>
+Cc: <devicetree@vger.kernel.org>
 Cc: <chrome-platform@lists.linux.dev>
 Cc: Pin-yen Lin <treapking@chromium.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/gpu/drm/bridge/aux-hpd-bridge.c | 19 +++++++++++++++++++
- include/drm/bridge/aux-bridge.h         |  5 +++++
- 2 files changed, 24 insertions(+)
+ .../bindings/chrome/google,cros-ec-typec.yaml | 260 ++++++++++++++++++
+ .../bindings/mfd/google,cros-ec.yaml          |   7 +-
+ 2 files changed, 264 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/aux-hpd-bridge.c b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-index a5a434b7d5ec..32c0171c512c 100644
---- a/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-+++ b/drivers/gpu/drm/bridge/aux-hpd-bridge.c
-@@ -55,6 +55,9 @@ to_drm_dp_typec_bridge_data(struct drm_bridge *bridge)
- struct drm_dp_typec_bridge_dev {
- 	struct auxiliary_device adev;
- 	size_t max_lanes;
-+	void (*hpd_notify)(struct drm_dp_typec_bridge_dev *dev,
-+			   void *data, enum drm_connector_status status);
-+	void *hpd_data;
- 	bool no_hpd;
- };
+diff --git a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml b/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
+index 9f9816fbecbc..1238adfbea21 100644
+--- a/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
++++ b/Documentation/devicetree/bindings/chrome/google,cros-ec-typec.yaml
+@@ -26,6 +26,137 @@ properties:
+   '#size-cells':
+     const: 0
  
-@@ -235,6 +238,8 @@ devm_drm_dp_typec_bridge_alloc(struct device *parent, const struct drm_dp_typec_
- 	adev->dev.platform_data = of_node_get(desc->of_node);
- 	typec_bridge_dev->max_lanes = desc->num_dp_lanes;
- 	typec_bridge_dev->no_hpd = desc->no_hpd;
-+	typec_bridge_dev->hpd_notify = desc->hpd_notify;
-+	typec_bridge_dev->hpd_data = desc->hpd_data;
- 
- 	ret = auxiliary_device_init(adev);
- 	if (ret) {
-@@ -305,6 +310,19 @@ void drm_dp_typec_bridge_notify(struct drm_dp_typec_bridge_dev *typec_bridge_dev
- }
- EXPORT_SYMBOL_GPL(drm_dp_typec_bridge_notify);
- 
-+static void drm_dp_typec_bridge_hpd_notify(struct drm_bridge *bridge,
-+					    enum drm_connector_status status)
-+{
-+	struct drm_dp_typec_bridge_data *data;
-+	struct drm_dp_typec_bridge_dev *typec_bridge_dev;
++  mux-gpios:
++    description: GPIOs indicating which way the DP mux is steered
++    maxItems: 1
 +
-+	data = to_drm_dp_typec_bridge_data(bridge);
-+	typec_bridge_dev = to_drm_dp_typec_bridge_dev(data->hpd_bridge.dev);
++  no-hpd:
++    description: Indicates this endpoint doesn't signal HPD for DisplayPort
++    type: boolean
 +
-+	if (typec_bridge_dev->hpd_notify)
-+		typec_bridge_dev->hpd_notify(typec_bridge_dev, typec_bridge_dev->hpd_data, status);
-+}
++  orientation:
++    description:
++      Indicates this endpoint assigns lanes based on altmode and
++      type-c port orientation
++    type: boolean
 +
- static int drm_aux_hpd_bridge_attach(struct drm_bridge *bridge,
- 				     enum drm_bridge_attach_flags flags)
- {
-@@ -460,6 +478,7 @@ static const struct drm_bridge_funcs drm_dp_typec_bridge_funcs = {
- 	.atomic_reset = drm_atomic_helper_bridge_reset,
- 	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
- 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
-+	.hpd_notify = drm_dp_typec_bridge_hpd_notify,
- };
++  ports:
++    $ref: /schemas/graph.yaml#/properties/ports
++
++    properties:
++      port@0:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        description:
++          Input port to receive DisplayPort (DP) data
++        unevaluatedProperties: false
++
++        properties:
++          endpoint@0:
++            $ref: /schemas/graph.yaml#/$defs/endpoint-base
++            description: DisplayPort data for the type-c port(s)
++            unevaluatedProperties: false
++            properties:
++              data-lanes:
++                $ref: /schemas/types.yaml#/definitions/uint32-array
++                description: |
++                  An array of physical DP data lane indexes
++                  - 0 is DP ML0 lane
++                  - 1 is DP ML1 lane
++                  - 2 is DP ML2 lane
++                  - 3 is DP ML3 lane
++                oneOf:
++                  - items:
++                      - const: 0
++                      - const: 1
++                  - items:
++                      - const: 0
++                      - const: 1
++                      - const: 2
++                      - const: 3
++
++        required:
++          - endpoint@0
++
++      port@1:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description:
++          Input port to receive USB SuperSpeed (SS) data
++        patternProperties:
++          "^endpoint@([0-8])$":
++            $ref: /schemas/graph.yaml#/properties/endpoint
++
++        anyOf:
++          - required:
++              - endpoint@0
++          - required:
++              - endpoint@1
++          - required:
++              - endpoint@2
++          - required:
++              - endpoint@3
++          - required:
++              - endpoint@4
++          - required:
++              - endpoint@5
++          - required:
++              - endpoint@6
++          - required:
++              - endpoint@7
++          - required:
++              - endpoint@8
++
++      port@2:
++        $ref: /schemas/graph.yaml#/$defs/port-base
++        unevaluatedProperties: false
++        description: Output ports for combined DP and USB SS data
++        patternProperties:
++          "^endpoint@([0-8])$":
++            $ref: /schemas/graph.yaml#/$defs/endpoint-base
++            unevaluatedProperties: false
++
++            properties:
++              data-lanes:
++                $ref: /schemas/types.yaml#/definitions/uint32-array
++                description: |
++                  An array of physical USB Type-C data lane indexes.
++                  - 0 is SSRX1 lane
++                  - 1 is SSTX1 lane
++                  - 2 is SSTX2 lane
++                  - 3 is SSRX2 lane
++                minItems: 4
++                maxItems: 4
++                items:
++                  maximum: 3
++
++        anyOf:
++          - required:
++              - endpoint@0
++          - required:
++              - endpoint@1
++          - required:
++              - endpoint@2
++          - required:
++              - endpoint@3
++          - required:
++              - endpoint@4
++          - required:
++              - endpoint@5
++          - required:
++              - endpoint@6
++          - required:
++              - endpoint@7
++          - required:
++              - endpoint@8
++
++    required:
++      - port@2
++    anyOf:
++      - required:
++          - port@0
++      - required:
++          - port@1
++
+ patternProperties:
+   '^connector@[0-9a-f]+$':
+     $ref: /schemas/connector/usb-connector.yaml#
+@@ -35,6 +166,38 @@ patternProperties:
+ required:
+   - compatible
  
- enum drm_aux_bridge_type {
-diff --git a/include/drm/bridge/aux-bridge.h b/include/drm/bridge/aux-bridge.h
-index 13f5e98b4d31..3229f200f0df 100644
---- a/include/drm/bridge/aux-bridge.h
-+++ b/include/drm/bridge/aux-bridge.h
-@@ -28,11 +28,16 @@ struct drm_dp_typec_bridge_dev;
-  * struct drm_dp_typec_bridge_desc - drm_dp_typec_bridge descriptor
-  * @of_node: device node pointer corresponding to this bridge instance
-  * @num_dp_lanes: number of input DP lanes possible (1, 2 or 4)
-+ * @hpd_notify: callback for bridge hot plug detect events
-+ * @hpd_data: data passed to @hpd_notify callback
-  * @no_hpd: true if this bridge can't signal HPD state with drm_dp_typec_bridge_notify()
-  */
- struct drm_dp_typec_bridge_desc {
- 	struct device_node *of_node;
- 	size_t num_dp_lanes;
-+	void (*hpd_notify)(struct drm_dp_typec_bridge_dev *typec_bridge_dev,
-+			   void *data, enum drm_connector_status status);
-+	void *hpd_data;
- 	bool no_hpd;
- };
++allOf:
++  - if:
++      properties:
++        no-hpd: true
++      required:
++        - no-hpd
++    then:
++      properties:
++        ports:
++          required:
++            - port@0
++  - if:
++      properties:
++        mux-gpios: true
++      required:
++        - mux-gpios
++    then:
++      properties:
++        ports:
++          required:
++            - port@0
++  - if:
++      properties:
++        orientation: true
++      required:
++        - orientation
++    then:
++      properties:
++        ports:
++          required:
++            - port@0
++
+ additionalProperties: false
+ 
+ examples:
+@@ -60,6 +223,103 @@ examples:
+             power-role = "dual";
+             data-role = "dual";
+             try-power-role = "source";
++
++            ports {
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              port@0 {
++                reg = <0>;
++                usb_c0_hs: endpoint {
++                  remote-endpoint = <&usb_hub_dfp3_hs>;
++                };
++              };
++
++              port@1 {
++                reg = <1>;
++                usb_c0_ss: endpoint {
++                  remote-endpoint = <&cros_typec_c0_ss>;
++                };
++              };
++            };
++          };
++
++          connector@1 {
++            compatible = "usb-c-connector";
++            reg = <1>;
++            power-role = "dual";
++            data-role = "dual";
++            try-power-role = "source";
++
++            ports {
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              port@0 {
++                reg = <0>;
++                usb_c1_hs: endpoint {
++                  remote-endpoint = <&usb_hub_dfp2_hs>;
++                };
++              };
++
++              port@1 {
++                reg = <1>;
++                usb_c1_ss: endpoint {
++                  remote-endpoint = <&cros_typec_c1_ss>;
++                };
++              };
++            };
++          };
++
++          ports {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            port@0 {
++              reg = <0>;
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              dp_in: endpoint@0 {
++                reg = <0>;
++                remote-endpoint = <&dp_phy>;
++                data-lanes = <0 1>;
++              };
++            };
++
++            port@1 {
++              reg = <1>;
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              usb_in_0: endpoint@0 {
++                reg = <0>;
++                remote-endpoint = <&usb_ss_0_out>;
++              };
++
++              usb_in_1: endpoint@1 {
++                reg = <1>;
++                remote-endpoint = <&usb_ss_1_out>;
++              };
++            };
++
++            port@2 {
++              reg = <2>;
++              #address-cells = <1>;
++              #size-cells = <0>;
++
++              cros_typec_c0_ss: endpoint@0 {
++                reg = <0>;
++                remote-endpoint = <&usb_c0_ss>;
++                data-lanes = <0 1 2 3>;
++              };
++
++              cros_typec_c1_ss: endpoint@1 {
++                reg = <1>;
++                remote-endpoint = <&usb_c1_ss>;
++                data-lanes = <2 3 0 1>;
++              };
++            };
+           };
+         };
+       };
+diff --git a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+index aac8819bd00b..c860eb7ed3f5 100644
+--- a/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
++++ b/Documentation/devicetree/bindings/mfd/google,cros-ec.yaml
+@@ -98,9 +98,6 @@ properties:
+ 
+   gpio-controller: true
+ 
+-  typec:
+-    $ref: /schemas/chrome/google,cros-ec-typec.yaml#
+-
+   ec-pwm:
+     $ref: /schemas/pwm/google,cros-ec-pwm.yaml#
+     deprecated: true
+@@ -166,6 +163,10 @@ patternProperties:
+     type: object
+     $ref: /schemas/extcon/extcon-usbc-cros-ec.yaml#
+ 
++  "^typec(-[0-9])*$":
++    type: object
++    $ref: /schemas/chrome/google,cros-ec-typec.yaml#
++
+ required:
+   - compatible
  
 -- 
 https://chromeos.dev
