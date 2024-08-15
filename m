@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C241DFFB;
-	Thu, 15 Aug 2024 14:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24053214;
+	Thu, 15 Aug 2024 14:38:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732683; cv=none; b=C4omKMmljUeiUy9jQahPBbRh/eDKTEE/fGlgLm+sP3ScLPhgo1mVGYoEtbnPQq8ga/q+B005ruClwBAZAsgJjwADbZDbSYYoczE18w0noFRKWZT54QLVAuC6dnO45JgpIMUcszIo8AYIpFc8ZZMd+oJwABNmVteqdECOPl1voTI=
+	t=1723732686; cv=none; b=dNQYThDBxjBG3nksXD83d0jRjhADzhBj6wEn5iWTPDK4L+7L+dX0Kon9ZffSXD/vXpXK7jljHMcTfOPZoglY5jpAYzd8BDmwK6M7BQCXGgC0J9MORcXa1HX75y3bf3AXq3j97rjtUqL0h43jW2uZA8fgx13Cc9X/FFvo3r+043U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732683; c=relaxed/simple;
-	bh=mSJTekFY5JUnBJAP0HWXk22rDEYViO3jWswdq04DDu0=;
+	s=arc-20240116; t=1723732686; c=relaxed/simple;
+	bh=8gjTky3/3QHKEmdg0mrdqZxgtxVtDuXDVnJZ5iKgvZs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kGQQzftnUNpC5sZRitdHfp6AOaf/0eDF14ufBZWA3XXNlMzRdMuOi6Yua5UMToqYtaZB27Nj00Z6E86kLH8df5X6B31iD4/T9sibr9/6YbiRHHgAtCmb1ylfc9DH6TOrJWeii7Xvm6ZSPZ6jXg9iKWLof3JxHFH3qCGtPdv5zVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d6aUXihh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IrCqukQhYG0T6jDaq5YBqvvPSs68BL7K2MYB2jiicq08A3k2C/w0DVeBC/Jg1GiyU8gSiE8KzAncoBsvM4162ZgLudU+0TxobgIoy8dcMMgKdBNj6DAFJhtbGm70cE7AHYarZa1DWeA0QMZy8oT9E172XF4+Ku/T/tdaW0P6zN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XtKckIQX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d6aUXihh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8042C32786;
-	Thu, 15 Aug 2024 14:38:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XtKckIQX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22499C4AF0E;
+	Thu, 15 Aug 2024 14:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732683;
-	bh=mSJTekFY5JUnBJAP0HWXk22rDEYViO3jWswdq04DDu0=;
+	s=korg; t=1723732686;
+	bh=8gjTky3/3QHKEmdg0mrdqZxgtxVtDuXDVnJZ5iKgvZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d6aUXihhVq4+J5+0pLg2nGdjHcYYS2bl+jMwiAqnMGW5z+llPk5pqWrqoQE1DormL
-	 p50P6e3tLseGpx2EGWYIaX+3lmxvD3yXWEogUKtMu9oLQyt0tKlVXmDr5Yom9L+Egv
-	 pF99PZzfRY9ACUJuXiGiCeoi6xjJFJ7dKtRABf2c=
+	b=XtKckIQXIU+I5yLWlb2baWG9mIkuepvdCADOCtFlqfOmRNZXeWrH9a+EBCWO+zWsL
+	 hrgwrwLqTNpb/qlLihTat4Y+1gvcgy3glZw9+YWqAqd7huy4wsejCUcv2eU4ZUiTjz
+	 /Fx449iwsxK0G0xISgyCKOf4KHZ1w8u4pbkhPwdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Buddhabhatti <jay.buddhabhatti@amd.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 223/352] drivers: soc: xilinx: check return status of get_api_version()
-Date: Thu, 15 Aug 2024 15:24:49 +0200
-Message-ID: <20240815131928.051333089@linuxfoundation.org>
+Subject: [PATCH 5.10 214/352] nvme-pci: add missing condition check for existence of mapped data
+Date: Thu, 15 Aug 2024 15:24:40 +0200
+Message-ID: <20240815131927.560143497@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,51 +53,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 9b003e14801cf85a8cebeddc87bc9fc77100fdce ]
+[ Upstream commit c31fad1470389666ac7169fe43aa65bf5b7e2cfd ]
 
-Currently return status is not getting checked for get_api_version
-and because of that for x86 arch we are getting below smatch error.
+nvme_map_data() is called when request has physical segments, hence
+the nvme_unmap_data() should have same condition to avoid dereference.
 
-    CC      drivers/soc/xilinx/zynqmp_power.o
-drivers/soc/xilinx/zynqmp_power.c: In function 'zynqmp_pm_probe':
-drivers/soc/xilinx/zynqmp_power.c:295:12: warning: 'pm_api_version' is
-used uninitialized [-Wuninitialized]
-    295 |         if (pm_api_version < ZYNQMP_PM_VERSION)
-        |            ^
-    CHECK   drivers/soc/xilinx/zynqmp_power.c
-drivers/soc/xilinx/zynqmp_power.c:295 zynqmp_pm_probe() error:
-uninitialized symbol 'pm_api_version'.
-
-So, check return status of pm_get_api_version and return error in case
-of failure to avoid checking uninitialized pm_api_version variable.
-
-Fixes: b9b3a8be28b3 ("firmware: xilinx: Remove eemi ops for get_api_version")
-Signed-off-by: Jay Buddhabhatti <jay.buddhabhatti@amd.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240515112345.24673-1-jay.buddhabhatti@amd.com
-Signed-off-by: Michal Simek <michal.simek@amd.com>
+Fixes: 4aedb705437f ("nvme-pci: split metadata handling from nvme_map_data / nvme_unmap_data")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Nitesh Shetty <nj.shetty@samsung.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/xilinx/zynqmp_power.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/xilinx/zynqmp_power.c b/drivers/soc/xilinx/zynqmp_power.c
-index f8c301984d4f9..2653d29ba829b 100644
---- a/drivers/soc/xilinx/zynqmp_power.c
-+++ b/drivers/soc/xilinx/zynqmp_power.c
-@@ -178,7 +178,9 @@ static int zynqmp_pm_probe(struct platform_device *pdev)
- 	u32 pm_api_version;
- 	struct mbox_client *client;
- 
--	zynqmp_pm_get_api_version(&pm_api_version);
-+	ret = zynqmp_pm_get_api_version(&pm_api_version);
-+	if (ret)
-+		return ret;
- 
- 	/* Check PM API version number */
- 	if (pm_api_version < ZYNQMP_PM_VERSION)
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 1436aee1f861d..4a4b7aa748354 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -942,7 +942,8 @@ static blk_status_t nvme_queue_rq(struct blk_mq_hw_ctx *hctx,
+ 	spin_unlock(&nvmeq->sq_lock);
+ 	return BLK_STS_OK;
+ out_unmap_data:
+-	nvme_unmap_data(dev, req);
++	if (blk_rq_nr_phys_segments(req))
++		nvme_unmap_data(dev, req);
+ out_free_cmd:
+ 	nvme_cleanup_cmd(req);
+ 	return ret;
 -- 
 2.43.0
 
