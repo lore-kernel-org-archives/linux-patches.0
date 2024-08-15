@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E8519F49B;
-	Thu, 15 Aug 2024 14:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BE8338DC8;
+	Thu, 15 Aug 2024 14:08:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730927; cv=none; b=X/mXMR8FJiKS7QGhNUTQqeF4yt5xPdXZtoDGjp2uJZaeEC5lLZDWeW94Knz/MvsbnrFA8WYT2cg2HwJU64ASye/0xelgWH91s/QYkKG4OINTG4R6RxiIlw8nSi+kqNqQoQ4pmxwdqQjrOVPybDeLKmoEfUtowmG2pXcpiuiiAsk=
+	t=1723730931; cv=none; b=SGJ1ntmqCT7q7tLBOI6rs2jo9I38/94gnaQUVk/KmqThK7OxajweAUpAcUEpLYbhR10NolKAswWVc0ZF8JB+zwhE4fBeHBSUXYAlrVGwgYLFQYaihpQr1xD2Deg3BS803rTYWHDlabI8ZAQHysRTo716A8qYfouuIa2wNzWhmBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730927; c=relaxed/simple;
-	bh=uJS12TQZxTvxBieztMSj+uoatkTe8LQ4O+Dw6otxEWo=;
+	s=arc-20240116; t=1723730931; c=relaxed/simple;
+	bh=RIEJGtCzt3m+yd+QEwFM+bExX14r/3V4Hq4Y9cXOzX8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dX8iQlDm+Ikn/L7/pXPtvOcyQy763S/4Z3zWR7GzImg/cb/CuoUxYNRcKHod3V6bHFf63OHvtCtUS2AUkrxQm6LrdbuKSbLWti7HRgXgksEGITdktt0sZ3ZwbgojOiDYxJLI3r2G6N5g2rOVGT2bqQSN2hysuHgPBUMUTABaoCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rYs+eypa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oAfA6pCbpWgUXxlLirMYHJZNrvcMgRlwUgTDf1FuLKZEx3PJ86M4z0fjJ+cmRidmmFEiBRcmf5btvf+I7I+AvXcmrJAkK+g3O0KhgRY1DPUmCxlIRgVf43YzN//rsgeig+Vqpb19CL4yoryg2GrYOpHbqTqZ6rI/avgira+wb0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QcYpmGHw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rYs+eypa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D76C32786;
-	Thu, 15 Aug 2024 14:08:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QcYpmGHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E61EC32786;
+	Thu, 15 Aug 2024 14:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730927;
-	bh=uJS12TQZxTvxBieztMSj+uoatkTe8LQ4O+Dw6otxEWo=;
+	s=korg; t=1723730931;
+	bh=RIEJGtCzt3m+yd+QEwFM+bExX14r/3V4Hq4Y9cXOzX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rYs+eyparGduc1Gs1dJdfcuON0LP/TgaXU/K6k1U2hbfnBbCl/xvGKYM4LRWRdRCN
-	 n192bSn6B2S+YJ5gEOfKwTB56O001Y9W30oPiRTqcdrtnCkDOoKwBB6/RLI/QqysWa
-	 FP2a7jmef8BK/0Ux+ml4kR4BSTfMztDqzYa8jpqU=
+	b=QcYpmGHwIjkmCpFoc3lJmCzD+s2ZSj3WvkDrrPBwZHy2OYmOjw1jKLWG+ZqonDB/z
+	 ebDbCFiOxdd96Kl3MHbkOG0breB5ubJ4JP9WuzVVdXpfTx/QAyh6DkHn3TcdoA26AO
+	 Zhkj3znzZ7Npn/fB6l5vtXW7gNrLDDfbbuixXaY4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Stevens <stevensd@chromium.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Bart Van Assche <bvanassche@acm.org>
-Subject: [PATCH 6.6 19/67] genirq/cpuhotplug: Skip suspended interrupts when restoring affinity
-Date: Thu, 15 Aug 2024 15:25:33 +0200
-Message-ID: <20240815131839.073104291@linuxfoundation.org>
+	syzbot+f9db6ff27b9bfdcfeca0@syzkaller.appspotmail.com,
+	syzbot+dcd73ff9291e6d34b3ab@syzkaller.appspotmail.com,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 37/67] net:rds: Fix possible deadlock in rds_message_put
+Date: Thu, 15 Aug 2024 15:25:51 +0200
+Message-ID: <20240815131839.743957868@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131838.311442229@linuxfoundation.org>
 References: <20240815131838.311442229@linuxfoundation.org>
@@ -51,71 +53,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Stevens <stevensd@chromium.org>
+From: Allison Henderson <allison.henderson@oracle.com>
 
-commit a60dd06af674d3bb76b40da5d722e4a0ecefe650 upstream.
+[ Upstream commit f1acf1ac84d2ae97b7889b87223c1064df850069 ]
 
-irq_restore_affinity_of_irq() restarts managed interrupts unconditionally
-when the first CPU in the affinity mask comes online. That's correct during
-normal hotplug operations, but not when resuming from S3 because the
-drivers are not resumed yet and interrupt delivery is not expected by them.
+Functions rds_still_queued and rds_clear_recv_queue lock a given socket
+in order to safely iterate over the incoming rds messages. However
+calling rds_inc_put while under this lock creates a potential deadlock.
+rds_inc_put may eventually call rds_message_purge, which will lock
+m_rs_lock. This is the incorrect locking order since m_rs_lock is
+meant to be locked before the socket. To fix this, we move the message
+item to a local list or variable that wont need rs_recv_lock protection.
+Then we can safely call rds_inc_put on any item stored locally after
+rs_recv_lock is released.
 
-Skip the startup of suspended interrupts and let resume_device_irqs() deal
-with restoring them. This ensures that irqs are not delivered to drivers
-during the noirq phase of resuming from S3, after non-boot CPUs are brought
-back online.
-
-Signed-off-by: David Stevens <stevensd@chromium.org>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20240424090341.72236-1-stevensd@chromium.org
-Cc: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: bdbe6fbc6a2f ("RDS: recv.c")
+Reported-by: syzbot+f9db6ff27b9bfdcfeca0@syzkaller.appspotmail.com
+Reported-by: syzbot+dcd73ff9291e6d34b3ab@syzkaller.appspotmail.com
+Signed-off-by: Allison Henderson <allison.henderson@oracle.com>
+Link: https://lore.kernel.org/r/20240209022854.200292-1-allison.henderson@oracle.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/irq/cpuhotplug.c |   11 ++++++++---
- kernel/irq/manage.c     |   12 ++++++++----
- 2 files changed, 16 insertions(+), 7 deletions(-)
+ net/rds/recv.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/kernel/irq/cpuhotplug.c
-+++ b/kernel/irq/cpuhotplug.c
-@@ -195,10 +195,15 @@ static void irq_restore_affinity_of_irq(
- 	    !irq_data_get_irq_chip(data) || !cpumask_test_cpu(cpu, affinity))
- 		return;
+diff --git a/net/rds/recv.c b/net/rds/recv.c
+index c71b923764fd7..5627f80013f8b 100644
+--- a/net/rds/recv.c
++++ b/net/rds/recv.c
+@@ -425,6 +425,7 @@ static int rds_still_queued(struct rds_sock *rs, struct rds_incoming *inc,
+ 	struct sock *sk = rds_rs_to_sk(rs);
+ 	int ret = 0;
+ 	unsigned long flags;
++	struct rds_incoming *to_drop = NULL;
  
--	if (irqd_is_managed_and_shutdown(data)) {
--		irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
-+	/*
-+	 * Don't restore suspended interrupts here when a system comes back
-+	 * from S3. They are reenabled via resume_device_irqs().
-+	 */
-+	if (desc->istate & IRQS_SUSPENDED)
- 		return;
--	}
+ 	write_lock_irqsave(&rs->rs_recv_lock, flags);
+ 	if (!list_empty(&inc->i_item)) {
+@@ -435,11 +436,14 @@ static int rds_still_queued(struct rds_sock *rs, struct rds_incoming *inc,
+ 					      -be32_to_cpu(inc->i_hdr.h_len),
+ 					      inc->i_hdr.h_dport);
+ 			list_del_init(&inc->i_item);
+-			rds_inc_put(inc);
++			to_drop = inc;
+ 		}
+ 	}
+ 	write_unlock_irqrestore(&rs->rs_recv_lock, flags);
+ 
++	if (to_drop)
++		rds_inc_put(to_drop);
 +
-+	if (irqd_is_managed_and_shutdown(data))
-+		irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
+ 	rdsdebug("inc %p rs %p still %d dropped %d\n", inc, rs, ret, drop);
+ 	return ret;
+ }
+@@ -758,16 +762,21 @@ void rds_clear_recv_queue(struct rds_sock *rs)
+ 	struct sock *sk = rds_rs_to_sk(rs);
+ 	struct rds_incoming *inc, *tmp;
+ 	unsigned long flags;
++	LIST_HEAD(to_drop);
  
- 	/*
- 	 * If the interrupt can only be directed to a single target
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -796,10 +796,14 @@ void __enable_irq(struct irq_desc *desc)
- 		irq_settings_set_noprobe(desc);
- 		/*
- 		 * Call irq_startup() not irq_enable() here because the
--		 * interrupt might be marked NOAUTOEN. So irq_startup()
--		 * needs to be invoked when it gets enabled the first
--		 * time. If it was already started up, then irq_startup()
--		 * will invoke irq_enable() under the hood.
-+		 * interrupt might be marked NOAUTOEN so irq_startup()
-+		 * needs to be invoked when it gets enabled the first time.
-+		 * This is also required when __enable_irq() is invoked for
-+		 * a managed and shutdown interrupt from the S3 resume
-+		 * path.
-+		 *
-+		 * If it was already started up, then irq_startup() will
-+		 * invoke irq_enable() under the hood.
- 		 */
- 		irq_startup(desc, IRQ_RESEND, IRQ_START_FORCE);
- 		break;
+ 	write_lock_irqsave(&rs->rs_recv_lock, flags);
+ 	list_for_each_entry_safe(inc, tmp, &rs->rs_recv_queue, i_item) {
+ 		rds_recv_rcvbuf_delta(rs, sk, inc->i_conn->c_lcong,
+ 				      -be32_to_cpu(inc->i_hdr.h_len),
+ 				      inc->i_hdr.h_dport);
++		list_move(&inc->i_item, &to_drop);
++	}
++	write_unlock_irqrestore(&rs->rs_recv_lock, flags);
++
++	list_for_each_entry_safe(inc, tmp, &to_drop, i_item) {
+ 		list_del_init(&inc->i_item);
+ 		rds_inc_put(inc);
+ 	}
+-	write_unlock_irqrestore(&rs->rs_recv_lock, flags);
+ }
+ 
+ /*
+-- 
+2.43.0
+
 
 
