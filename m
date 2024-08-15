@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5560617CA1D;
-	Thu, 15 Aug 2024 13:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643227DA78;
+	Thu, 15 Aug 2024 13:34:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728843; cv=none; b=DN+gd6A9KbWuG6KV6r2Jd7KHGQT2eZW3cVK+2eZgqwhMnaLW4Mf6Sz4eLZItZ7ejFOOGKiyRrT4BqqsELorgRilWeDXEKnRBUXCgpv9T73G5TCabzN0U5EGL7349Of59rGs1L2MH29Io8urkF/usyCy2ZNPf3OuY6QOrGvETdOc=
+	t=1723728846; cv=none; b=V8kZUFMkY3XT8m9y45D6EiIrXtFWK2OeON2Qtyb/6JusIHqy3wMH7qlmhkhN9toExBLehk+BPUcUVts0do6TAQkNX+UoQq+WWzdB0joACnaPOwfGSMS1y93kTqSZ9Dj4ST8LSjp0QwCrBqodrdzhjojdqFnBNpjCBbSmoQfjy8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728843; c=relaxed/simple;
-	bh=k/K5xXga6o7G6Zos+MsTFtkVWFEfiTZQyXVxXeYvTuk=;
+	s=arc-20240116; t=1723728846; c=relaxed/simple;
+	bh=CVjWmUfWJXiOiU3h/vU5V8Z37XCli6WBSovmA40Ut74=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dVtzrntruh+/RoUo0agrlMfBtX+xvqdUsB4zjrK9LlVjBj625AA2KjhxUCHXaqMJULCUGVcfzrCxTw+X0H7PPZV37j2hK4VPz/lwOwLQ6ADKVGLmfqIYSansG0a5PnE8qbjVRRHFbxauKMUPPF40xs3IPnXIiTETvceqfIarr8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VAyI7ZwT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BJzSVQlaLDrWz27zfDdSpRG0YU03Tt3yhf67fe/N4CkvxIOK43J+BMS8JH9yDgh4c0flmIh8oIA3DBJLfva/h7urf7KVDnrkyr71C5f6zkZWcXzT963wwBH5+CJGhp9ShEQZbjc/K7MbEBJJzI4xo2Hf6Stb9hwKXDjI2PIDCuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vm9eP1Iw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VAyI7ZwT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4F2FC32786;
-	Thu, 15 Aug 2024 13:34:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vm9eP1Iw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31A6C32786;
+	Thu, 15 Aug 2024 13:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728843;
-	bh=k/K5xXga6o7G6Zos+MsTFtkVWFEfiTZQyXVxXeYvTuk=;
+	s=korg; t=1723728846;
+	bh=CVjWmUfWJXiOiU3h/vU5V8Z37XCli6WBSovmA40Ut74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAyI7ZwTfD2IgOpQWIrI4UBd1CBERxRm9SYSrzgPnFZ+KQVf9eavXPSRxDyauyKgb
-	 fyb2ueL2Rn1KZAw9FNZ/mlp6sZG1hB+YOoI94Ee5OQQlEQIlgoo2zyNWkZBd37jO0G
-	 BCmAg+OSwub4HPba7EGO5qSqIbs1Ac8fUOzvBchU=
+	b=Vm9eP1Iw7Jr9cIGTLJq4AB7ER/y4jxcx3n9nTlmhIjMf78L/yDFyYS05BDd/e+yMD
+	 RZaA+5I/l1bngbJuDIrKNj7pfLDYpatIILqwNHYcsR2YwPrnHuZEP21F2S7r4OGVcX
+	 mtCc5VccCw5qwS1zDvbp9PTEGhkj478EHgiHFZWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Hariprasad Kelam <hkelam@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 128/196] net: usb: sr9700: fix uninitialized variable use in sr_mdio_read
-Date: Thu, 15 Aug 2024 15:24:05 +0200
-Message-ID: <20240815131856.972983986@linuxfoundation.org>
+	Joe Perches <joe@perches.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Sudip Mukherjee <sudipm.mukherjee@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 111/196] parport: Standardize use of printmode
+Date: Thu, 15 Aug 2024 15:23:48 +0200
+Message-ID: <20240815131856.327161760@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -52,60 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ma Ke <make24@iscas.ac.cn>
+From: Joe Perches <joe@perches.com>
 
-commit 08f3a5c38087d1569e982a121aad1e6acbf145ce upstream.
+[ Upstream commit a6abfdff4fe5dd19d1f1b37d72ba34cd4492fd4d ]
 
-It could lead to error happen because the variable res is not updated if
-the call to sr_share_read_word returns an error. In this particular case
-error code was returned and res stayed uninitialized. Same issue also
-applies to sr_read_reg.
+Standardize the define and the uses of printmode.
 
-This can be avoided by checking the return value of sr_share_read_word
-and sr_read_reg, and propagating the error if the read operation failed.
+Miscellanea:
 
-Found by code review.
+o Add missing statement termination ; where necessary
 
-Cc: stable@vger.kernel.org
-Fixes: c9b37458e956 ("USB2NET : SR9700 : One chip USB 1.1 USB2NET SR9700Device Driver Support")
-Signed-off-by: Ma Ke <make24@iscas.ac.cn>
-Reviewed-by: Shigeru Yoshida <syoshida@redhat.com>
-Reviewed-by: Hariprasad Kelam <hkelam@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Joe Perches <joe@perches.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Link: https://lore.kernel.org/r/20200403134325.11523-8-sudipm.mukherjee@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ab11dac93d2d ("dev/parport: fix the array out-of-bounds risk")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/parport/parport_gsc.c |  8 ++++++--
+ drivers/parport/parport_pc.c  | 14 ++++++--------
+ drivers/parport/procfs.c      |  6 +++++-
+ 3 files changed, 17 insertions(+), 11 deletions(-)
 
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -178,6 +178,7 @@ static int sr_mdio_read(struct net_devic
- 	struct usbnet *dev = netdev_priv(netdev);
- 	__le16 res;
- 	int rc = 0;
-+	int err;
+diff --git a/drivers/parport/parport_gsc.c b/drivers/parport/parport_gsc.c
+index 7e2dd330831cf..467bc0ab95ec1 100644
+--- a/drivers/parport/parport_gsc.c
++++ b/drivers/parport/parport_gsc.c
+@@ -304,12 +304,16 @@ struct parport *parport_gsc_probe_port(unsigned long base,
+ 		p->dma = PARPORT_DMA_NONE;
  
- 	if (phy_id) {
- 		netdev_dbg(netdev, "Only internal phy supported\n");
-@@ -188,11 +189,17 @@ static int sr_mdio_read(struct net_devic
- 	if (loc == MII_BMSR) {
- 		u8 value;
+ 	pr_cont(" [");
+-#define printmode(x) {if(p->modes&PARPORT_MODE_##x){pr_cont("%s%s",f?",":"",#x);f++;}}
++#define printmode(x)							\
++do {									\
++	if (p->modes & PARPORT_MODE_##x)				\
++		pr_cont("%s%s", f++ ? "," : "", #x);			\
++} while (0)
+ 	{
+ 		int f = 0;
+ 		printmode(PCSPP);
+ 		printmode(TRISTATE);
+-		printmode(COMPAT)
++		printmode(COMPAT);
+ 		printmode(EPP);
+ //		printmode(ECP);
+ //		printmode(DMA);
+diff --git a/drivers/parport/parport_pc.c b/drivers/parport/parport_pc.c
+index 2bc5593b76067..ad2acafb68506 100644
+--- a/drivers/parport/parport_pc.c
++++ b/drivers/parport/parport_pc.c
+@@ -2142,19 +2142,17 @@ struct parport *parport_pc_probe_port(unsigned long int base,
  
--		sr_read_reg(dev, SR_NSR, &value);
-+		err = sr_read_reg(dev, SR_NSR, &value);
-+		if (err < 0)
-+			return err;
-+
- 		if (value & NSR_LINKST)
- 			rc = 1;
- 	}
--	sr_share_read_word(dev, 1, loc, &res);
-+	err = sr_share_read_word(dev, 1, loc, &res);
-+	if (err < 0)
-+		return err;
-+
- 	if (rc == 1)
- 		res = le16_to_cpu(res) | BMSR_LSTATUS;
- 	else
+ 	pr_cont(" [");
+ 
+-#define printmode(x) \
+-	{\
+-		if (p->modes & PARPORT_MODE_##x) {\
+-			pr_cont("%s%s", f ? "," : "", #x);	\
+-			f++;\
+-		} \
+-	}
++#define printmode(x)							\
++do {									\
++	if (p->modes & PARPORT_MODE_##x)				\
++		pr_cont("%s%s", f++ ? "," : "", #x);			\
++} while (0)
+ 
+ 	{
+ 		int f = 0;
+ 		printmode(PCSPP);
+ 		printmode(TRISTATE);
+-		printmode(COMPAT)
++		printmode(COMPAT);
+ 		printmode(EPP);
+ 		printmode(ECP);
+ 		printmode(DMA);
+diff --git a/drivers/parport/procfs.c b/drivers/parport/procfs.c
+index 48804049d6972..e957beb94f142 100644
+--- a/drivers/parport/procfs.c
++++ b/drivers/parport/procfs.c
+@@ -213,7 +213,11 @@ static int do_hardware_modes(struct ctl_table *table, int write,
+ 		return -EACCES;
+ 
+ 	{
+-#define printmode(x) {if(port->modes&PARPORT_MODE_##x){len+=sprintf(buffer+len,"%s%s",f?",":"",#x);f++;}}
++#define printmode(x)							\
++do {									\
++	if (port->modes & PARPORT_MODE_##x)				\
++		len += sprintf(buffer + len, "%s%s", f++ ? "," : "", #x); \
++} while (0)
+ 		int f = 0;
+ 		printmode(PCSPP);
+ 		printmode(TRISTATE);
+-- 
+2.43.0
+
 
 
