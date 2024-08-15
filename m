@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F7D19DF85;
-	Thu, 15 Aug 2024 14:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 366761A2C35;
+	Thu, 15 Aug 2024 14:19:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731550; cv=none; b=VhiPD71/8VAmBHDc8GN82JhtfP9SvTXTYhNt1cw81B2M+OVjx/LGddrhHy16iYeZl+9sjnbfxFn7J6dL3RvAVXJVK/TTw1rxErQlwgzRNzoexpm2rW9vcTKxyo/sYkeiK65lvRwuuJsSdY90PAkhshKjvxvIFnMi388LCTsMdh4=
+	t=1723731553; cv=none; b=Oa3Tsj4m8/AkX8QZ+kWtLPqDkCraF1JS2uJeaCctTpvqGR1NDpkET0j3DgFU+Tdukg6Smw3hvMBTty8BGVKTrBI4TdBlHxpHJfqxNV5VSApeA4/Ehoq5/qhqHVs+PyRwxsJ7hzeAtYm1RYFcNDIWhQv49pJUrYrdndw/GSCpEP4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731550; c=relaxed/simple;
-	bh=4VvyQvqC7dtdlDAerrY6XJyc0MzkrlZUxF23N8X2pek=;
+	s=arc-20240116; t=1723731553; c=relaxed/simple;
+	bh=OZKD8M85Hf0J4ZIvRZrVgi4len/NbVOSnWlx5QiL1LE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bt0hk2U8bItkogTSOX1DZ5z/LWLqoLwK3gyV9wk26chDtPygCtvQpL+lbWaxkakX8VxW45+WXWdWBvFG4AQyywZTFGdSoALPWnH91zBrnnSYtvPcxE4rP+KRtT50wKZ6PpVnh0+5uBtXcFH21KpRie/f5kDS7LEBCwJO5Kv3xYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0tOxvPNE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b051z9X6xb23qbBQek3HY/D0FGUgIegFgEUEJW7AJga7XporiR0yLJOAe4+VLKIM3/9mFLFVfhgYCSQaIL8AJ1dZ4pmzsodG257GYcX583XdU8eSrQXAU260pVzv1WY1OwJDEboY7nfHqKrxv68udvwyTaQsWFYEZQ/KpDGVLyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XU2XwOYe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0tOxvPNE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 254FCC32786;
-	Thu, 15 Aug 2024 14:19:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XU2XwOYe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 530AEC4AF0F;
+	Thu, 15 Aug 2024 14:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731549;
-	bh=4VvyQvqC7dtdlDAerrY6XJyc0MzkrlZUxF23N8X2pek=;
+	s=korg; t=1723731552;
+	bh=OZKD8M85Hf0J4ZIvRZrVgi4len/NbVOSnWlx5QiL1LE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0tOxvPNEpxgh9tddnJhedG4D1QnKkjusXXDc4yaBbu5iL8tQNGgp7gRfQmMSciRo0
-	 KrouuydYZtAXbLl1Vyg5RZC/wsdPaxJ/LoKlKUfqhY/Sv38pBAMOgRgibPVqa+wazT
-	 Q1BzhhqKQrWrUS4SRW7pRh2EGTXQqiEkW0CmjL7M=
+	b=XU2XwOYeDKyorLogX3JMp4l0eUAQ+G6NecueTMMrpFEpaXBjMrFDw3zdv1TIU/jvd
+	 Itq8OtXxtb1nYN1C1W71T7iNKj/8Rhwc7EfTX8UannMedptHP7Z2TLF5N12D8fxs71
+	 /SaoFKAPwcMSngDdobkGrnJLpguod9K/4mNDPnRE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 133/259] nilfs2: handle inconsistent state in nilfs_btnode_create_block()
-Date: Thu, 15 Aug 2024 15:24:26 +0200
-Message-ID: <20240815131907.929832780@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Douglas Anderson <dianders@chromium.org>,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 134/259] kdb: address -Wformat-security warnings
+Date: Thu, 15 Aug 2024 15:24:27 +0200
+Message-ID: <20240815131907.968792116@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -51,97 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 4811f7af6090e8f5a398fbdd766f903ef6c0d787 upstream.
+[ Upstream commit 70867efacf4370b6c7cdfc7a5b11300e9ef7de64 ]
 
-Syzbot reported that a buffer state inconsistency was detected in
-nilfs_btnode_create_block(), triggering a kernel bug.
+When -Wformat-security is not disabled, using a string pointer
+as a format causes a warning:
 
-It is not appropriate to treat this inconsistency as a bug; it can occur
-if the argument block address (the buffer index of the newly created
-block) is a virtual block number and has been reallocated due to
-corruption of the bitmap used to manage its allocation state.
+kernel/debug/kdb/kdb_io.c: In function 'kdb_read':
+kernel/debug/kdb/kdb_io.c:365:36: error: format not a string literal and no format arguments [-Werror=format-security]
+  365 |                         kdb_printf(kdb_prompt_str);
+      |                                    ^~~~~~~~~~~~~~
+kernel/debug/kdb/kdb_io.c: In function 'kdb_getstr':
+kernel/debug/kdb/kdb_io.c:456:20: error: format not a string literal and no format arguments [-Werror=format-security]
+  456 |         kdb_printf(kdb_prompt_str);
+      |                    ^~~~~~~~~~~~~~
 
-So, modify nilfs_btnode_create_block() and its callers to treat it as a
-possible filesystem error, rather than triggering a kernel bug.
+Use an explcit "%s" format instead.
 
-Link: https://lkml.kernel.org/r/20240725052007.4562-1-konishi.ryusuke@gmail.com
-Fixes: a60be987d45d ("nilfs2: B-tree node cache")
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+89cc4f2324ed37988b60@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=89cc4f2324ed37988b60
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: 5d5314d6795f ("kdb: core for kgdb back end (1 of 2)")
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20240528121154.3662553-1-arnd@kernel.org
+Signed-off-by: Daniel Thompson <daniel.thompson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/btnode.c |   25 ++++++++++++++++++++-----
- fs/nilfs2/btree.c  |    4 ++--
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ kernel/debug/kdb/kdb_io.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/nilfs2/btnode.c
-+++ b/fs/nilfs2/btnode.c
-@@ -51,12 +51,21 @@ nilfs_btnode_create_block(struct address
- 
- 	bh = nilfs_grab_buffer(inode, btnc, blocknr, BIT(BH_NILFS_Node));
- 	if (unlikely(!bh))
--		return NULL;
-+		return ERR_PTR(-ENOMEM);
- 
- 	if (unlikely(buffer_mapped(bh) || buffer_uptodate(bh) ||
- 		     buffer_dirty(bh))) {
--		brelse(bh);
--		BUG();
-+		/*
-+		 * The block buffer at the specified new address was already
-+		 * in use.  This can happen if it is a virtual block number
-+		 * and has been reallocated due to corruption of the bitmap
-+		 * used to manage its allocation state (if not, the buffer
-+		 * clearing of an abandoned b-tree node is missing somewhere).
-+		 */
-+		nilfs_error(inode->i_sb,
-+			    "state inconsistency probably due to duplicate use of b-tree node block address %llu (ino=%lu)",
-+			    (unsigned long long)blocknr, inode->i_ino);
-+		goto failed;
- 	}
- 	memset(bh->b_data, 0, i_blocksize(inode));
- 	bh->b_bdev = inode->i_sb->s_bdev;
-@@ -67,6 +76,12 @@ nilfs_btnode_create_block(struct address
- 	unlock_page(bh->b_page);
- 	put_page(bh->b_page);
- 	return bh;
-+
-+failed:
-+	unlock_page(bh->b_page);
-+	put_page(bh->b_page);
-+	brelse(bh);
-+	return ERR_PTR(-EIO);
+diff --git a/kernel/debug/kdb/kdb_io.c b/kernel/debug/kdb/kdb_io.c
+index 5358e8a8b6f11..9ce4e52532b77 100644
+--- a/kernel/debug/kdb/kdb_io.c
++++ b/kernel/debug/kdb/kdb_io.c
+@@ -368,7 +368,7 @@ static char *kdb_read(char *buffer, size_t bufsize)
+ 			if (i >= dtab_count)
+ 				kdb_printf("...");
+ 			kdb_printf("\n");
+-			kdb_printf(kdb_prompt_str);
++			kdb_printf("%s",  kdb_prompt_str);
+ 			kdb_printf("%s", buffer);
+ 			if (cp != lastchar)
+ 				kdb_position_cursor(kdb_prompt_str, buffer, cp);
+@@ -460,7 +460,7 @@ char *kdb_getstr(char *buffer, size_t bufsize, const char *prompt)
+ {
+ 	if (prompt && kdb_prompt_str != prompt)
+ 		strscpy(kdb_prompt_str, prompt, CMD_BUFLEN);
+-	kdb_printf(kdb_prompt_str);
++	kdb_printf("%s", kdb_prompt_str);
+ 	kdb_nextline = 1;	/* Prompt and input resets line number */
+ 	return kdb_read(buffer, bufsize);
  }
- 
- int nilfs_btnode_submit_block(struct address_space *btnc, __u64 blocknr,
-@@ -217,8 +232,8 @@ retry:
- 	}
- 
- 	nbh = nilfs_btnode_create_block(btnc, newkey);
--	if (!nbh)
--		return -ENOMEM;
-+	if (IS_ERR(nbh))
-+		return PTR_ERR(nbh);
- 
- 	BUG_ON(nbh == obh);
- 	ctxt->newbh = nbh;
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -63,8 +63,8 @@ static int nilfs_btree_get_new_block(con
- 	struct buffer_head *bh;
- 
- 	bh = nilfs_btnode_create_block(btnc, ptr);
--	if (!bh)
--		return -ENOMEM;
-+	if (IS_ERR(bh))
-+		return PTR_ERR(bh);
- 
- 	set_buffer_nilfs_volatile(bh);
- 	*bhp = bh;
+-- 
+2.43.0
+
 
 
