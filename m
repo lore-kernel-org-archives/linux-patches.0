@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF5E7DA78;
-	Thu, 15 Aug 2024 13:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D81E1714AE;
+	Thu, 15 Aug 2024 13:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728717; cv=none; b=PJKW6sDEdkN73msdfWqESRQ/IlJQgziB0Qk8aGB5qwtM3mPSwLLHRUhZ+MKydETYsVvelQJ8n22TdLqhmszSrBS+qxEW26yoF0xQveBwJToEzuuafLDV+i1N3QZH73AiVOEycRd8SmHejWJFkKPQxIMpoZRKucEgY2DEfu5ySbo=
+	t=1723728721; cv=none; b=C0gEUsEws1fkAQdFax2tnYmfuLiFZz5xBJL4t5RlxzSXx03fPnwECJUoy4yARQmfmQukmXlry80dk6dNfocxBFDeENWo07STLVjyI5C6VyqhhfDxcvtxHwg8M9NUoLli+NXEdFu7i5GO40hpTdbLASPFm62trcQyWc6V66xhkv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728717; c=relaxed/simple;
-	bh=YJi8YRr6gIAoID9N2Wi9Zj8WihMvuO3FGflO6qL3kdg=;
+	s=arc-20240116; t=1723728721; c=relaxed/simple;
+	bh=CGCv4LLVMlyPxgtAaiNcFhmLMY7XESAPeS/0wAHDFH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WmTDFTE9J1JbSgZQOQ9fCctxjVtRK8H0QvyZCKjmFYtlWtA0PiO7Ei68dh+egUC0afaDxGPBElzhppsaNDP04haL503qyX6AmkMfAUa+AWj+Fw8g2xEV4Qbp1sXWG0VNjlA7oI/qdZ1bW0TYxXJOs5fbInnfDE3B8Ni3LQeu2K0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SHGQmz5c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QPG0vbnU6+AhZxr//+i63KCN3lEHQ4opIEyCo7Y16wog0q9H2s/kbeocuXhzW+vc6o8RBR7YqWQ6Mp5XibJIRdAj//QuExIJG//eJWTcfAl4Bz/rfgb86axEFqXROCjAUnh/ogBBskGtCNfPDnFmi6W3INJq2QxFPTmnjxJhWFA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pDCI2Xhj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SHGQmz5c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43635C32786;
-	Thu, 15 Aug 2024 13:31:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pDCI2Xhj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C931BC32786;
+	Thu, 15 Aug 2024 13:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728717;
-	bh=YJi8YRr6gIAoID9N2Wi9Zj8WihMvuO3FGflO6qL3kdg=;
+	s=korg; t=1723728721;
+	bh=CGCv4LLVMlyPxgtAaiNcFhmLMY7XESAPeS/0wAHDFH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SHGQmz5ciKJlmFAH0dmKYU1B2ouLkJjQ0PNaoxInTYumnIfS+OLVl8IodnjX3MfMO
-	 wvGSJlFkseObGfOsbVTDb4ADeSt3WLmoSYn4nFuwJnWf68nwwHMzKJ/oevtv6NmuBw
-	 E/F6gKKocx7Y33QOtFoIUdJzux8zqx8jWXby/5e4=
+	b=pDCI2XhjCyyIEPlx5lPQKRTYuTcL6VHGOEkgSvjiVUH5/8r4wPoT2BuRDnSWT0lXU
+	 Ut1eiBaKWUFNsV6SvrIe1/7csUMQgsREr2nsQdBaypwApusqXH/RMWkx71dcLy1Ia2
+	 ovvuhGGYIQPlVAByjT8TFzsrBfmkUvK6VdXEdU6Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 4.19 088/196] scsi: qla2xxx: validate nvme_local_port correctly
-Date: Thu, 15 Aug 2024 15:23:25 +0200
-Message-ID: <20240815131855.449612255@linuxfoundation.org>
+	Marco Cavenati <cavenati.marco@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 4.19 089/196] perf/x86/intel/pt: Fix topa_entry base length
+Date: Thu, 15 Aug 2024 15:23:26 +0200
+Message-ID: <20240815131855.487968544@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -51,60 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nilesh Javali <njavali@marvell.com>
+From: Marco Cavenati <cavenati.marco@gmail.com>
 
-commit eb1d4ce2609584eeb7694866f34d4b213caa3af9 upstream.
+commit 5638bd722a44bbe97c1a7b3fae5b9efddb3e70ff upstream.
 
-The driver load failed with error message,
+topa_entry->base needs to store a pfn.  It obviously needs to be
+large enough to store the largest possible x86 pfn which is
+MAXPHYADDR-PAGE_SIZE (52-12).  So it is 4 bits too small.
 
-qla2xxx [0000:04:00.0]-ffff:0: register_localport failed: ret=ffffffef
+Increase the size of topa_entry->base from 36 bits to 40 bits.
 
-and with a kernel crash,
+Note, systems where physical addresses can be 256TiB or more are affected.
 
-	BUG: unable to handle kernel NULL pointer dereference at 0000000000000070
-	Workqueue: events_unbound qla_register_fcport_fn [qla2xxx]
-	RIP: 0010:nvme_fc_register_remoteport+0x16/0x430 [nvme_fc]
-	RSP: 0018:ffffaaa040eb3d98 EFLAGS: 00010282
-	RAX: 0000000000000000 RBX: ffff9dfb46b78c00 RCX: 0000000000000000
-	RDX: ffff9dfb46b78da8 RSI: ffffaaa040eb3e08 RDI: 0000000000000000
-	RBP: ffff9dfb612a0a58 R08: ffffffffaf1d6270 R09: 3a34303a30303030
-	R10: 34303a303030305b R11: 2078787832616c71 R12: ffff9dfb46b78dd4
-	R13: ffff9dfb46b78c24 R14: ffff9dfb41525300 R15: ffff9dfb46b78da8
-	FS:  0000000000000000(0000) GS:ffff9dfc67c00000(0000) knlGS:0000000000000000
-	CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-	CR2: 0000000000000070 CR3: 000000018da10004 CR4: 00000000000206f0
-	Call Trace:
-	qla_nvme_register_remote+0xeb/0x1f0 [qla2xxx]
-	? qla2x00_dfs_create_rport+0x231/0x270 [qla2xxx]
-	qla2x00_update_fcport+0x2a1/0x3c0 [qla2xxx]
-	qla_register_fcport_fn+0x54/0xc0 [qla2xxx]
+[ Adrian: Amend commit message as suggested by Dave Hansen ]
 
-Exit the qla_nvme_register_remote() function when qla_nvme_register_hba()
-fails and correctly validate nvme_local_port.
-
+Fixes: 52ca9ced3f70 ("perf/x86/intel/pt: Add Intel PT PMU driver")
+Signed-off-by: Marco Cavenati <cavenati.marco@gmail.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Link: https://lore.kernel.org/r/20240710171057.35066-3-njavali@marvell.com
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20240624201101.60186-2-adrian.hunter@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/pt.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -30,7 +30,10 @@ int qla_nvme_register_remote(struct scsi
- 		return 0;
- 	}
+--- a/arch/x86/events/intel/pt.h
++++ b/arch/x86/events/intel/pt.h
+@@ -78,8 +78,8 @@ struct topa_entry {
+ 	u64	rsvd2	: 1;
+ 	u64	size	: 4;
+ 	u64	rsvd3	: 2;
+-	u64	base	: 36;
+-	u64	rsvd4	: 16;
++	u64	base	: 40;
++	u64	rsvd4	: 12;
+ };
  
--	if (!vha->nvme_local_port && qla_nvme_register_hba(vha))
-+	if (qla_nvme_register_hba(vha))
-+		return 0;
-+
-+	if (!vha->nvme_local_port)
- 		return 0;
- 
- 	if (!(fcport->nvme_prli_service_param &
+ #define PT_CPUID_LEAVES		2
 
 
