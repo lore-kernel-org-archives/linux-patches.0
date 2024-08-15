@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940A81714AE;
-	Thu, 15 Aug 2024 13:38:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04CDE19E7F5;
+	Thu, 15 Aug 2024 13:38:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729096; cv=none; b=OV+CltstyaHM08RrwZRcbcYQfVQlWlXtELMBPKs9799qcmHrlO2BN9mOfmPiEaVEj9mCUoD+ygJxnMeuN1ZKcd0K1gjIto1Hn2GyCQjMAJuVDXP559n+wGtQ1mA2mbCtEQ117MbUM6AltUCiOSbYOCJIf8m56k6n1YMMd1VwcJM=
+	t=1723729100; cv=none; b=dKYhZtO0gnu6xIUjSdM3ATm5/C1dIwumGpr5XAL0JN8bTxeqxp+LIg1DaAqzXd2GNWJfQKykzAuKnnpIg23aIpJ1Myw1W2kV/0emvA2MnsgbZt1U9py+J8vZEX/89FZGTi/uc6+z3pvCLu+oh9vfFujVY4Xt20zgrSxpCevkUJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729096; c=relaxed/simple;
-	bh=J11mafeUnBmCB7D2iDiVQSNJ3qUV2JAl/JpVzUbWIss=;
+	s=arc-20240116; t=1723729100; c=relaxed/simple;
+	bh=aOpIzDSzZqYiXEefkQSfvZY52wwaL1a9IqEgOn+M1lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RRSmzDLsXpX5Jf4gqwtS+UQg+a0wCMlsckKZZZoZXxeQecoYDgBefXe0tqbpgjOg2FVXFkjJ8a3bkfsxaZsas+JTueoZEpFkMvHCbMv1WalqK8yV5Zh4VhXB6YCwkenn5UeZsr9IXobKO4HxX9vI1PAnwzguBtCepkuSxS4475o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gBIatPTp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mpuG7eCQvRBlwSTATJqiEb69uuv/31DEKTYv+DdgTa4z5hdtLJdjF+r2Btpy6ay31+iXIzvcBYk95bBtnxDd/wFvduAMh//a5UPfXkb8Bo9ekcV3WWwJUAAZT1uQ9q5PmNmz63cnW9DIqph9WH3lbillFaqxHCv/oWliO6prjdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hglwSt8M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gBIatPTp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C476C32786;
-	Thu, 15 Aug 2024 13:38:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hglwSt8M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D84C4AF0A;
+	Thu, 15 Aug 2024 13:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729096;
-	bh=J11mafeUnBmCB7D2iDiVQSNJ3qUV2JAl/JpVzUbWIss=;
+	s=korg; t=1723729099;
+	bh=aOpIzDSzZqYiXEefkQSfvZY52wwaL1a9IqEgOn+M1lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBIatPTpfQdjNiINKY2NYvzgv5VvleF3lwPkMt0N+BhVtmN9mgJvQ6YfCL8hGOv6q
-	 EdUG098JCGt0BMFtc3JA7kNP6PQZGUbREHH6rCbfpCW8L+IJLGdX9bhYLm40CULRDE
-	 yPEc0vTzKIogPlVxMPK1d5d1eZbGp/wCxJXt7utk=
+	b=hglwSt8MlyBBBNctNraB3teJxtFSbpILKXU/cNHy3UdLkAIRZRDry87s9SjZtkCJE
+	 0t9uzQk9QngPsnZq1SRxLSFrp8vqjfxHsZWIp62AF1IW2RggiQfofc4XnONrclXw5j
+	 d1znoIb7Vy5MgL/M8bYEpHTrJSIt7a37E9t+LUWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+61be3359d2ee3467e7e4@syzkaller.appspotmail.com,
-	Pei Li <peili.dev@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	syzbot+36bb70085ef6edc2ebb9@syzkaller.appspotmail.com,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.10 13/22] jfs: Fix shift-out-of-bounds in dbDiscardAG
-Date: Thu, 15 Aug 2024 15:25:21 +0200
-Message-ID: <20240815131831.770471259@linuxfoundation.org>
+Subject: [PATCH 6.10 14/22] fs/ntfs3: Do copy_to_user out of run_lock
+Date: Thu, 15 Aug 2024 15:25:22 +0200
+Message-ID: <20240815131831.809934953@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131831.265729493@linuxfoundation.org>
 References: <20240815131831.265729493@linuxfoundation.org>
@@ -52,38 +51,143 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pei Li <peili.dev@gmail.com>
+From: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 
-[ Upstream commit 7063b80268e2593e58bee8a8d709c2f3ff93e2f2 ]
+[ Upstream commit d57431c6f511bf020e474026d9f3123d7bfbea8c ]
 
-When searching for the next smaller log2 block, BLKSTOL2() returned 0,
-causing shift exponent -1 to be negative.
+In order not to call copy_to_user (from fiemap_fill_next_extent)
+we allocate memory in the kernel, fill it and copy it to user memory
+after up_read(run_lock).
 
-This patch fixes the issue by exiting the loop directly when negative
-shift is found.
-
-Reported-by: syzbot+61be3359d2ee3467e7e4@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=61be3359d2ee3467e7e4
-Signed-off-by: Pei Li <peili.dev@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reported-by: syzbot+36bb70085ef6edc2ebb9@syzkaller.appspotmail.com
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ntfs3/frecord.c | 75 ++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 72 insertions(+), 3 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index cb3cda1390adb..5713994328cbc 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -1626,6 +1626,8 @@ s64 dbDiscardAG(struct inode *ip, int agno, s64 minlen)
- 		} else if (rc == -ENOSPC) {
- 			/* search for next smaller log2 block */
- 			l2nb = BLKSTOL2(nblocks) - 1;
-+			if (unlikely(l2nb < 0))
-+				break;
- 			nblocks = 1LL << l2nb;
- 		} else {
- 			/* Trim any already allocated blocks */
+diff --git a/fs/ntfs3/frecord.c b/fs/ntfs3/frecord.c
+index 4822cfd6351c2..ded451a84b773 100644
+--- a/fs/ntfs3/frecord.c
++++ b/fs/ntfs3/frecord.c
+@@ -1896,6 +1896,47 @@ enum REPARSE_SIGN ni_parse_reparse(struct ntfs_inode *ni, struct ATTRIB *attr,
+ 	return REPARSE_LINK;
+ }
+ 
++/*
++ * fiemap_fill_next_extent_k - a copy of fiemap_fill_next_extent
++ * but it accepts kernel address for fi_extents_start
++ */
++static int fiemap_fill_next_extent_k(struct fiemap_extent_info *fieinfo,
++				     u64 logical, u64 phys, u64 len, u32 flags)
++{
++	struct fiemap_extent extent;
++	struct fiemap_extent __user *dest = fieinfo->fi_extents_start;
++
++	/* only count the extents */
++	if (fieinfo->fi_extents_max == 0) {
++		fieinfo->fi_extents_mapped++;
++		return (flags & FIEMAP_EXTENT_LAST) ? 1 : 0;
++	}
++
++	if (fieinfo->fi_extents_mapped >= fieinfo->fi_extents_max)
++		return 1;
++
++	if (flags & FIEMAP_EXTENT_DELALLOC)
++		flags |= FIEMAP_EXTENT_UNKNOWN;
++	if (flags & FIEMAP_EXTENT_DATA_ENCRYPTED)
++		flags |= FIEMAP_EXTENT_ENCODED;
++	if (flags & (FIEMAP_EXTENT_DATA_TAIL | FIEMAP_EXTENT_DATA_INLINE))
++		flags |= FIEMAP_EXTENT_NOT_ALIGNED;
++
++	memset(&extent, 0, sizeof(extent));
++	extent.fe_logical = logical;
++	extent.fe_physical = phys;
++	extent.fe_length = len;
++	extent.fe_flags = flags;
++
++	dest += fieinfo->fi_extents_mapped;
++	memcpy(dest, &extent, sizeof(extent));
++
++	fieinfo->fi_extents_mapped++;
++	if (fieinfo->fi_extents_mapped == fieinfo->fi_extents_max)
++		return 1;
++	return (flags & FIEMAP_EXTENT_LAST) ? 1 : 0;
++}
++
+ /*
+  * ni_fiemap - Helper for file_fiemap().
+  *
+@@ -1906,6 +1947,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 	      __u64 vbo, __u64 len)
+ {
+ 	int err = 0;
++	struct fiemap_extent __user *fe_u = fieinfo->fi_extents_start;
++	struct fiemap_extent *fe_k = NULL;
+ 	struct ntfs_sb_info *sbi = ni->mi.sbi;
+ 	u8 cluster_bits = sbi->cluster_bits;
+ 	struct runs_tree *run;
+@@ -1953,6 +1996,18 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 		goto out;
+ 	}
+ 
++	/*
++	 * To avoid lock problems replace pointer to user memory by pointer to kernel memory.
++	 */
++	fe_k = kmalloc_array(fieinfo->fi_extents_max,
++			     sizeof(struct fiemap_extent),
++			     GFP_NOFS | __GFP_ZERO);
++	if (!fe_k) {
++		err = -ENOMEM;
++		goto out;
++	}
++	fieinfo->fi_extents_start = fe_k;
++
+ 	end = vbo + len;
+ 	alloc_size = le64_to_cpu(attr->nres.alloc_size);
+ 	if (end > alloc_size)
+@@ -2041,8 +2096,9 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 			if (vbo + dlen >= end)
+ 				flags |= FIEMAP_EXTENT_LAST;
+ 
+-			err = fiemap_fill_next_extent(fieinfo, vbo, lbo, dlen,
+-						      flags);
++			err = fiemap_fill_next_extent_k(fieinfo, vbo, lbo, dlen,
++							flags);
++
+ 			if (err < 0)
+ 				break;
+ 			if (err == 1) {
+@@ -2062,7 +2118,8 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 		if (vbo + bytes >= end)
+ 			flags |= FIEMAP_EXTENT_LAST;
+ 
+-		err = fiemap_fill_next_extent(fieinfo, vbo, lbo, bytes, flags);
++		err = fiemap_fill_next_extent_k(fieinfo, vbo, lbo, bytes,
++						flags);
+ 		if (err < 0)
+ 			break;
+ 		if (err == 1) {
+@@ -2075,7 +2132,19 @@ int ni_fiemap(struct ntfs_inode *ni, struct fiemap_extent_info *fieinfo,
+ 
+ 	up_read(run_lock);
+ 
++	/*
++	 * Copy to user memory out of lock
++	 */
++	if (copy_to_user(fe_u, fe_k,
++			 fieinfo->fi_extents_max *
++				 sizeof(struct fiemap_extent))) {
++		err = -EFAULT;
++	}
++
+ out:
++	/* Restore original pointer. */
++	fieinfo->fi_extents_start = fe_u;
++	kfree(fe_k);
+ 	return err;
+ }
+ 
 -- 
 2.43.0
 
