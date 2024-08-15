@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3953F1494C5;
-	Thu, 15 Aug 2024 13:51:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F211494C5;
+	Thu, 15 Aug 2024 13:51:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729907; cv=none; b=Y5Gl8Ejd14/SAIw513sPBSBAlhkZbf7kjC/tidcghzuW5GAyQZq30qQZR9yiWzB+pgkoe1J31VBtf5CuHKNrZVhekv+5WfSt3Dylp11hH9yPLYiZ1WRcQrvYlB2P8O67tTfNONPL0K65pG409z7dt+JD+tYAC9X8aynufVsM3ZM=
+	t=1723729910; cv=none; b=O34YUtVPQgAUY/aL+8rBof5kWDx7PrNn/TtCmZG9HQ+oD0VkJeFyBjNboYjfB75bVkmA12goIXb7/Il7YlrUlFO68TrQD+1X8uI26u9RuV+wC7nfnv9jodq74Xrf4emWVdCwaR9WX0RJ4USg2jOsu/JZNkFokkMEfUVPW1kGtzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729907; c=relaxed/simple;
-	bh=ivHJyalYEghpkP39gHqTf2QLFF1PsRl9SZFlSH9JNyU=;
+	s=arc-20240116; t=1723729910; c=relaxed/simple;
+	bh=zxgzfDx1NYin+wEfyn7zrhJyzThZ+dgsDKxjDz7/Nuo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gz66VQhowSGqVTdx2NCpb02u87OdEY5UlcEYKQ3GzaLkBNmb02Me+Cj1MloJ3+hsiR6nWwEgYAP4mDwVaFCCvg2mJZnw5zW51eYWEYrCAYdRpoVDD1QQQ4FAXRS1IyKOaRLaQ/HV0yVtoKqDjr5M5KJkPP3WrjkdQl8PhUmrlDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NnasSQOD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hCT84GUD6JGH+0Z3J0+0ZBd2xDEQaPqvpzbhaKL3KtrhwD55i/d1c5qJ+W3s9iID6jWkDjbExmQOpabqsbpIG8Qlh71x2j4je9MDHgHrDviXBuynXbpJVL9vfPm1NxWFdm9NLFfzohkmBDVt0ERpHDwAf6opjbrI9K6uiWXrgB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W/bf1kg9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NnasSQOD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B385CC32786;
-	Thu, 15 Aug 2024 13:51:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W/bf1kg9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCB16C32786;
+	Thu, 15 Aug 2024 13:51:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729907;
-	bh=ivHJyalYEghpkP39gHqTf2QLFF1PsRl9SZFlSH9JNyU=;
+	s=korg; t=1723729910;
+	bh=zxgzfDx1NYin+wEfyn7zrhJyzThZ+dgsDKxjDz7/Nuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NnasSQODH5CUIrQ63e80iDy7AFFiCMRDjIPgcPn16+30GD0wmCEoOab0K7iIne0d1
-	 08XCgIw5UZE1ZH6xn+m4chWvpnabmIRmLnf2occJeobqeN8dmr9uDyzPMNYzaassUe
-	 zCPquyjLxNAVPNXH3BUMR2HxFdMvEPz8eDwekeio=
+	b=W/bf1kg95MjrFDzl+/td6eUdKszY0LICQ0MvKuVp4JEXzJYcM6MMdtDi8VEGdWLN2
+	 0ARwaaDa6RYYDkwSy2s0NqTsXIPbMA2WkT7VbVudfMzIsPw2hCOQtqY+XxM7+B9aIw
+	 8hpPf/gahYVyk3eUnOjt1ApgkLwbykLFPBN00xQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Mishin <amishin@t-argos.ru>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 5.15 245/484] remoteproc: imx_rproc: Skip over memory region when node value is NULL
-Date: Thu, 15 Aug 2024 15:21:43 +0200
-Message-ID: <20240815131950.865283846@linuxfoundation.org>
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Subject: [PATCH 5.15 246/484] MIPS: ip30: ip30-console: Add missing include
+Date: Thu, 15 Aug 2024 15:21:44 +0200
+Message-ID: <20240815131950.902253012@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -45,45 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.15-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Aleksandr Mishin <amishin@t-argos.ru>
+From: Jiaxun Yang <jiaxun.yang@flygoat.com>
 
-commit 2fa26ca8b786888673689ccc9da6094150939982 upstream.
+commit 8de4ed75bd14ed197119ac509c6902a8561e0c1c upstream.
 
-In imx_rproc_addr_init() "nph = of_count_phandle_with_args()" just counts
-number of phandles. But phandles may be empty. So of_parse_phandle() in
-the parsing loop (0 < a < nph) may return NULL which is later dereferenced.
-Adjust this issue by adding NULL-return check.
+Include linux/processor.h to fix build error:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+arch/mips/sgi-ip30/ip30-console.c: In function ‘prom_putchar’:
+arch/mips/sgi-ip30/ip30-console.c:21:17: error: implicit declaration of function ‘cpu_relax’ [-Werror=implicit-function-declaration]
+   21 |                 cpu_relax();
 
-Fixes: a0ff4aa6f010 ("remoteproc: imx_rproc: add a NXP/Freescale imx_rproc driver")
-Signed-off-by: Aleksandr Mishin <amishin@t-argos.ru>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20240606075204.12354-1-amishin@t-argos.ru
-[Fixed title to fit within the prescribed 70-75 charcters]
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Signed-off-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/imx_rproc.c |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/mips/sgi-ip30/ip30-console.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/remoteproc/imx_rproc.c
-+++ b/drivers/remoteproc/imx_rproc.c
-@@ -588,6 +588,8 @@ static int imx_rproc_addr_init(struct im
- 		struct resource res;
+--- a/arch/mips/sgi-ip30/ip30-console.c
++++ b/arch/mips/sgi-ip30/ip30-console.c
+@@ -1,6 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0
  
- 		node = of_parse_phandle(np, "memory-region", a);
-+		if (!node)
-+			continue;
- 		/* Not map vdevbuffer, vdevring region */
- 		if (!strncmp(node->name, "vdev", strlen("vdev"))) {
- 			of_node_put(node);
+ #include <linux/io.h>
++#include <linux/processor.h>
+ 
+ #include <asm/sn/ioc3.h>
+ 
 
 
