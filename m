@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE44F18D630;
-	Thu, 15 Aug 2024 13:55:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D47C219AA53;
+	Thu, 15 Aug 2024 13:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730104; cv=none; b=aSo4WZhsXvfNrLmpV2HiC4I9QsfM+KeM62qsk3JbXE+lHfjzX6fSr6h9K7Zh10FmOwtJa7YLVyZaAnP6T9uSnIiNl5iQrfJRaN/uk56m2A9jpIrCG1n/ZpeXWENhC8xss8sttMosEjDO6X4AH1a7EP1jNLz/iUr7HqyWfbeAz1U=
+	t=1723730107; cv=none; b=lkIaF4tuhlnuZxB+H3155yXhWVN1UREauLpEROzIewneIyPs/eItnTiBnqbj0QQ7rfjqedIAan3b5F6Ap6lF6C/H72KcIg5Klf+LztTDFxTy7FVKoPEgIcLD2POA0QmNNsGBlHh63yqhRdV9VYRajPJkNjVLM+ABLoPoODgL0Bw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730104; c=relaxed/simple;
-	bh=p7ur+wTVLgIFDagZMzc+hVpjsdgp1Kys7XZBxNcZmMI=;
+	s=arc-20240116; t=1723730107; c=relaxed/simple;
+	bh=Z/gHYIchP9Qc4TsK567dQydv4kTfn5KEg3Ki2YNs1j8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eur3CVyTbIGVq8XdCw7Gc3ZW6OSmm0z9B0BGdX+lPXKI1fGg+i508XWdGptLwV0Hx50GnSdCF3Q4ZVNz+PwuT+VFf3ZbORqw9rvaE6XL0YGZfba2WBZrThIrVHMb1g6a9uxfzZqpAWCNODsT2p3YTMixI7DXxXJmem3M8LrQeqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yT5oaaQs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A5yne3YiI417h82rVXPeiLKBJRoQ6tsT0NW0bglZnE2VOPxP5CzMnKw41q5emrpAiKzuTFmAAc61aV68SJa2w7zI/zWIaffa2gZ1RERK/Lhvg1tlP2rBqTx/Xv1Nt16dWLLlxP9ZM5AZb9ttK0SapEzSlA+554qBzbuSjUxWcdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QMH21UYN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yT5oaaQs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3005EC32786;
-	Thu, 15 Aug 2024 13:55:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QMH21UYN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5781EC32786;
+	Thu, 15 Aug 2024 13:55:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730104;
-	bh=p7ur+wTVLgIFDagZMzc+hVpjsdgp1Kys7XZBxNcZmMI=;
+	s=korg; t=1723730107;
+	bh=Z/gHYIchP9Qc4TsK567dQydv4kTfn5KEg3Ki2YNs1j8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yT5oaaQsZZ0j/EemjJRGgfndlb6oV7q85lev7LPd4Kf4MqeIJ0qAXCFagVSc5szw7
-	 R2DF7ajqIazt97wljcc2ghW3G9dumLYoZI8zhyxGquSV9xHOkDMnBeRLZZ9BKt2NXZ
-	 HF3+4UTtUKY0dRY7i4GdpF2NC3o8QYolR9q/ZF5M=
+	b=QMH21UYNlccukb92NnuKa/09ASM4sV5bBqbdKci4b5ev3lBl0m1rutYsjodsvoTMZ
+	 WJOdlSy7CcK+88svfDbyPw5wzykkrc+nhp7uOiATXBCPDQ1TGQRjAuRFFllaWnVm0L
+	 ZDZGRBW/get6Z4R3zTKDAENGAnOspBrFEz787OGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Brauner <brauner@kernel.org>,
-	"Seth Forshee (DigitalOcean)" <sforshee@kernel.org>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/484] fs: dont allow non-init s_user_ns for filesystems without FS_USERNS_MOUNT
-Date: Thu, 15 Aug 2024 15:22:35 +0200
-Message-ID: <20240815131952.876637392@linuxfoundation.org>
+Subject: [PATCH 5.15 306/484] ext4: refactor ext4_da_map_blocks()
+Date: Thu, 15 Aug 2024 15:22:44 +0200
+Message-ID: <20240815131953.227924456@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,62 +52,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit e1c5ae59c0f22f7fe5c07fb5513a29e4aad868c9 ]
+[ Upstream commit 3fcc2b887a1ba4c1f45319cd8c54daa263ecbc36 ]
 
-Christian noticed that it is possible for a privileged user to mount
-most filesystems with a non-initial user namespace in sb->s_user_ns.
-When fsopen() is called in a non-init namespace the caller's namespace
-is recorded in fs_context->user_ns. If the returned file descriptor is
-then passed to a process priviliged in init_user_ns, that process can
-call fsconfig(fd_fs, FSCONFIG_CMD_CREATE), creating a new superblock
-with sb->s_user_ns set to the namespace of the process which called
-fsopen().
+Refactor and cleanup ext4_da_map_blocks(), reduce some unnecessary
+parameters and branches, no logic changes.
 
-This is problematic. We cannot assume that any filesystem which does not
-set FS_USERNS_MOUNT has been written with a non-initial s_user_ns in
-mind, increasing the risk for bugs and security issues.
-
-Prevent this by returning EPERM from sget_fc() when FS_USERNS_MOUNT is
-not set for the filesystem and a non-initial user namespace will be
-used. sget() does not need to be updated as it always uses the user
-namespace of the current context, or the initial user namespace if
-SB_SUBMOUNT is set.
-
-Fixes: cb50b348c71f ("convenience helpers: vfs_get_super() and sget_fc()")
-Reported-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Seth Forshee (DigitalOcean) <sforshee@kernel.org>
-Link: https://lore.kernel.org/r/20240724-s_user_ns-fix-v1-1-895d07c94701@kernel.org
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@canonical.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20240127015825.1608160-2-yi.zhang@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 0ea6560abb3b ("ext4: check the extent status again before inserting delalloc block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/super.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ fs/ext4/inode.c | 39 +++++++++++++++++----------------------
+ 1 file changed, 17 insertions(+), 22 deletions(-)
 
-diff --git a/fs/super.c b/fs/super.c
-index 048576b19af63..39d866f7d7c6b 100644
---- a/fs/super.c
-+++ b/fs/super.c
-@@ -528,6 +528,17 @@ struct super_block *sget_fc(struct fs_context *fc,
- 	struct user_namespace *user_ns = fc->global ? &init_user_ns : fc->user_ns;
- 	int err;
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 7ad37c807147b..bfd81ff29afcf 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1713,7 +1713,6 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 	/* Lookup extent status tree firstly */
+ 	if (ext4_es_lookup_extent(inode, iblock, NULL, &es)) {
+ 		if (ext4_es_is_hole(&es)) {
+-			retval = 0;
+ 			down_read(&EXT4_I(inode)->i_data_sem);
+ 			goto add_delayed;
+ 		}
+@@ -1758,26 +1757,9 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 		retval = ext4_ext_map_blocks(NULL, inode, map, 0);
+ 	else
+ 		retval = ext4_ind_map_blocks(NULL, inode, map, 0);
+-
+-add_delayed:
+-	if (retval == 0) {
+-		int ret;
+-
+-		/*
+-		 * XXX: __block_prepare_write() unmaps passed block,
+-		 * is it OK?
+-		 */
+-
+-		ret = ext4_insert_delayed_block(inode, map->m_lblk);
+-		if (ret != 0) {
+-			retval = ret;
+-			goto out_unlock;
+-		}
+-
+-		map_bh(bh, inode->i_sb, invalid_block);
+-		set_buffer_new(bh);
+-		set_buffer_delay(bh);
+-	} else if (retval > 0) {
++	if (retval < 0)
++		goto out_unlock;
++	if (retval > 0) {
+ 		unsigned int status;
  
+ 		if (unlikely(retval != map->m_len)) {
+@@ -1792,11 +1774,24 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
+ 		ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
+ 				      map->m_pblk, status);
++		goto out_unlock;
+ 	}
+ 
++add_delayed:
 +	/*
-+	 * Never allow s_user_ns != &init_user_ns when FS_USERNS_MOUNT is
-+	 * not set, as the filesystem is likely unprepared to handle it.
-+	 * This can happen when fsconfig() is called from init_user_ns with
-+	 * an fs_fd opened in another user namespace.
++	 * XXX: __block_prepare_write() unmaps passed block,
++	 * is it OK?
 +	 */
-+	if (user_ns != &init_user_ns && !(fc->fs_type->fs_flags & FS_USERNS_MOUNT)) {
-+		errorfc(fc, "VFS: Mounting from non-initial user namespace is not allowed");
-+		return ERR_PTR(-EPERM);
-+	}
++	retval = ext4_insert_delayed_block(inode, map->m_lblk);
++	if (retval)
++		goto out_unlock;
 +
- retry:
- 	spin_lock(&sb_lock);
- 	if (test) {
++	map_bh(bh, inode->i_sb, invalid_block);
++	set_buffer_new(bh);
++	set_buffer_delay(bh);
++
+ out_unlock:
+ 	up_read((&EXT4_I(inode)->i_data_sem));
+-
+ 	return retval;
+ }
+ 
 -- 
 2.43.0
 
