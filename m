@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A949D3214;
-	Thu, 15 Aug 2024 14:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B93BC18CBE1;
+	Thu, 15 Aug 2024 14:28:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732100; cv=none; b=MvUja/u17UixJwi3SFRei3ZXdusprlD9N5fQzbOUCqaZFTzh5ur4bL2t+AmjnmgkMDSwVkXUhDdySv5oOzw7fwmCKbUbFkVD5uKiMcvQG46o/NSQJEA72YGDRCTtkq3TX9ZfQ9dyEEl2lCy7PPEh1SsA6eXKQSCwZK1UNmLNY2Y=
+	t=1723732103; cv=none; b=JcdQ4C3a9DemLTeJ3y8/5SW5Gs3eSFjebBBFIojNvK7SNfyWAKKArN+qnktprZ2GabwYh+eWYyVxyS/G174G6phfNXJz2cLYw+iXwWS4IS+2cnyZIMDA5UeF4YW0sehNivzNwURNu+fmDQLRn9Wo2in3IIKX6KkpAWht3hRHpCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732100; c=relaxed/simple;
-	bh=ULw1uyoYgtkX9YTEQaIcgN04jNrD8/NCKe5jsWF20yo=;
+	s=arc-20240116; t=1723732103; c=relaxed/simple;
+	bh=weel5j/r9PwRo+CJKHYGfx8O8jZfExWh2xRMaCm/7o0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XvPpmYrU+svK1Ka99VHTF9l9GvNvDs/zdSt0utYVqAWUEEyUllpRd3gur+YbK7Y5DhT2mqivSgHvUaFgzknoJjFBrs03n8E9eps2Pnanwn/MzNrrEcDc/JX6/ZrJynaCsef9cZfYcdGkNfI1gWnpXyrSXSmE4k3B5wXs4wiGZYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PKROg/Gc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wv+pa0Fy4MSMGFIb9InizhnDsfnsMRJNrPE76PhuXWlZQDv8475qCL5y4uh8KfOAAizU2dtwSSKDqflshg09fygCPjjgVUTibSBYDjJQdrBo4tbytRu3XbyCHRgMOTYrXSE/1NJXj1vRVN8VMosD3yX4C9q/gSSQHUzIbdgaHBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rKFFyHQa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PKROg/Gc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D7FC32786;
-	Thu, 15 Aug 2024 14:28:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rKFFyHQa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299BAC32786;
+	Thu, 15 Aug 2024 14:28:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732100;
-	bh=ULw1uyoYgtkX9YTEQaIcgN04jNrD8/NCKe5jsWF20yo=;
+	s=korg; t=1723732103;
+	bh=weel5j/r9PwRo+CJKHYGfx8O8jZfExWh2xRMaCm/7o0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKROg/Gcl3yZh8+fJhBqtMkp7aC4vVbVJqDj7TI7lCEJ/9n3InEk8nAcx7PQ+UG6f
-	 BuhY0OroyJnkkhjVXaPTfMQ/aGCbL7480o0kikRQnrQGnaxLEzfDoeav+MDPEgpJQ4
-	 JBI58NCfAWndm7dEAm31fggxQLuZURuizT0H1XSs=
+	b=rKFFyHQahzwSbwyh4Zqp+bBMw5fClLvuQ6arSXOkNFicFg1VV0Na3OV+f2wFjHTBs
+	 UNkupnXo4UnsckQ/h2SfBGtKUlxz+yK1SbErGcC8p8XAc9JB4BftpFGxJf2kevCwV8
+	 xdoRfX5C4cLteCQI9iStfZk4BY6KuqaUOQnh47e0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Baochen Qiang <quic_bqiang@quicinc.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 074/352] s390/mm: Convert make_page_secure to use a folio
-Date: Thu, 15 Aug 2024 15:22:20 +0200
-Message-ID: <20240815131922.102962152@linuxfoundation.org>
+Subject: [PATCH 5.10 048/352] wifi: cfg80211: handle 2x996 RU allocation in cfg80211_calculate_bitrate_he()
+Date: Thu, 15 Aug 2024 15:21:54 +0200
+Message-ID: <20240815131921.096685594@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -52,91 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Wilcox (Oracle) <willy@infradead.org>
+From: Baochen Qiang <quic_bqiang@quicinc.com>
 
-[ Upstream commit 259e660d91d0e7261ae0ee37bb37266d6006a546 ]
+[ Upstream commit bcbd771cd5d68c0c52567556097d75f9fc4e7cd6 ]
 
-These page APIs are deprecated, so convert the incoming page to a folio
-and use the folio APIs instead.  The ultravisor API cannot handle large
-folios, so return -EINVAL if one has slipped through.
+Currently NL80211_RATE_INFO_HE_RU_ALLOC_2x996 is not handled in
+cfg80211_calculate_bitrate_he(), leading to below warning:
 
-Acked-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
-Link: https://lore.kernel.org/r/20240322161149.2327518-2-willy@infradead.org
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Stable-dep-of: 3f29f6537f54 ("s390/uv: Don't call folio_wait_writeback() without a folio reference")
+kernel: invalid HE MCS: bw:6, ru:6
+kernel: WARNING: CPU: 0 PID: 2312 at net/wireless/util.c:1501 cfg80211_calculate_bitrate_he+0x22b/0x270 [cfg80211]
+
+Fix it by handling 2x996 RU allocation in the same way as 160 MHz bandwidth.
+
+Fixes: c4cbaf7973a7 ("cfg80211: Add support for HE")
+Signed-off-by: Baochen Qiang <quic_bqiang@quicinc.com>
+Link: https://msgid.link/20240606020653.33205-3-quic_bqiang@quicinc.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/uv.c | 29 ++++++++++++++++-------------
- 1 file changed, 16 insertions(+), 13 deletions(-)
+ net/wireless/util.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/kernel/uv.c b/arch/s390/kernel/uv.c
-index 6abf73e832445..c99b7f9de1e1f 100644
---- a/arch/s390/kernel/uv.c
-+++ b/arch/s390/kernel/uv.c
-@@ -193,21 +193,21 @@ int uv_convert_owned_from_secure(unsigned long paddr)
- }
+diff --git a/net/wireless/util.c b/net/wireless/util.c
+index 0d5b1c18d62f2..37719fc39f64d 100644
+--- a/net/wireless/util.c
++++ b/net/wireless/util.c
+@@ -1354,7 +1354,9 @@ static u32 cfg80211_calculate_bitrate_he(struct rate_info *rate)
+ 	if (WARN_ON_ONCE(rate->nss < 1 || rate->nss > 8))
+ 		return 0;
  
- /*
-- * Calculate the expected ref_count for a page that would otherwise have no
-+ * Calculate the expected ref_count for a folio that would otherwise have no
-  * further pins. This was cribbed from similar functions in other places in
-  * the kernel, but with some slight modifications. We know that a secure
-- * page can not be a huge page for example.
-+ * folio can not be a large folio, for example.
-  */
--static int expected_page_refs(struct page *page)
-+static int expected_folio_refs(struct folio *folio)
- {
- 	int res;
- 
--	res = page_mapcount(page);
--	if (PageSwapCache(page)) {
-+	res = folio_mapcount(folio);
-+	if (folio_test_swapcache(folio)) {
- 		res++;
--	} else if (page_mapping(page)) {
-+	} else if (folio_mapping(folio)) {
- 		res++;
--		if (page_has_private(page))
-+		if (folio->private)
- 			res++;
- 	}
- 	return res;
-@@ -215,14 +215,17 @@ static int expected_page_refs(struct page *page)
- 
- static int make_page_secure(struct page *page, struct uv_cb_header *uvcb)
- {
-+	struct folio *folio = page_folio(page);
- 	int expected, cc = 0;
- 
--	if (PageWriteback(page))
-+	if (folio_test_large(folio))
-+		return -EINVAL;
-+	if (folio_test_writeback(folio))
- 		return -EAGAIN;
--	expected = expected_page_refs(page);
--	if (!page_ref_freeze(page, expected))
-+	expected = expected_folio_refs(folio);
-+	if (!folio_ref_freeze(folio, expected))
- 		return -EBUSY;
--	set_bit(PG_arch_1, &page->flags);
-+	set_bit(PG_arch_1, &folio->flags);
- 	/*
- 	 * If the UVC does not succeed or fail immediately, we don't want to
- 	 * loop for long, or we might get stall notifications.
-@@ -232,9 +235,9 @@ static int make_page_secure(struct page *page, struct uv_cb_header *uvcb)
- 	 * -EAGAIN and we let the callers deal with it.
- 	 */
- 	cc = __uv_call(0, (u64)uvcb);
--	page_ref_unfreeze(page, expected);
-+	folio_ref_unfreeze(folio, expected);
- 	/*
--	 * Return -ENXIO if the page was not mapped, -EINVAL for other errors.
-+	 * Return -ENXIO if the folio was not mapped, -EINVAL for other errors.
- 	 * If busy or partially completed, return -EAGAIN.
- 	 */
- 	if (cc == UVC_CC_OK)
+-	if (rate->bw == RATE_INFO_BW_160)
++	if (rate->bw == RATE_INFO_BW_160 ||
++	    (rate->bw == RATE_INFO_BW_HE_RU &&
++	     rate->he_ru_alloc == NL80211_RATE_INFO_HE_RU_ALLOC_2x996))
+ 		result = rates_160M[rate->he_gi];
+ 	else if (rate->bw == RATE_INFO_BW_80 ||
+ 		 (rate->bw == RATE_INFO_BW_HE_RU &&
 -- 
 2.43.0
 
