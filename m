@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ABAC19F470;
-	Thu, 15 Aug 2024 14:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1A11A3BCE;
+	Thu, 15 Aug 2024 14:13:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731211; cv=none; b=XSd9/zztSK+pPlFgExheatCUB0nvRny/pWegCi2TyByRPysVR1SEiTln02OAXHFGdmjkwwqLoPpU7Jlp97gTRmzmCBt2OpF70QS6aanssbRCBC2D87dxovXZkei9zLcLC1cJVwidwrBx3coTLVb0eUUQWAE8LMaxVxA3f2ulBlc=
+	t=1723731215; cv=none; b=j18PXNGKacpCmbgwIV4vFxCYi53pP0O99qw6O+k2IQ8iCaZ4VS2nCmy4lxCrrg9Tik6SBxI2MrYN/lU5Jm0yNgS1201qrjkEJL8fvJI6fpSuRli7n+iuejS4DbSqtoTMZouEUdbzbfuB0cGlKaWvE9VgbkKNnIDptIQ7GRsSqss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731211; c=relaxed/simple;
-	bh=MdrU9OOf0TGZp1RNMMESTS+OxHt0EnkTLknJ7UACMGw=;
+	s=arc-20240116; t=1723731215; c=relaxed/simple;
+	bh=EO/91a0NZIiyu8+EVniVCqIiqTPdgvEcIXKYn8cwsiI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShVQX2hR1mlHtI6JBoXPTnNyywvhSKYhEq74XW0H3JjcgbxrlfrZ/yspBexeR9T4CFgvEcQ8k2RywUqlKmbFbq+YAueRRkX9ggxQn1nhav7Qe4ayng5uhZRKQ11z9Pp0a952kLLLFeTyNk3cZy40FgHfGBB44XVGgyWmN83UuCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZM74Bjm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sQM1rNFXRwNYZg5hOGxakhHVkvvA9YNY/Yw24N5H1FQ6RnYzXlU2XAbkJ3hgWalq6J1ng/OyXGHSThoAzXhFeldhIhAuYS9KYyvpm8I/fWEfrzzUJNsOSJy732JVVfqsfStPscqECI6TrcIkuZLxzn20gyRGwDZAfVQdFhrR9d0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMWoaMxv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZM74Bjm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C462C32786;
-	Thu, 15 Aug 2024 14:13:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMWoaMxv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F38DC32786;
+	Thu, 15 Aug 2024 14:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731211;
-	bh=MdrU9OOf0TGZp1RNMMESTS+OxHt0EnkTLknJ7UACMGw=;
+	s=korg; t=1723731214;
+	bh=EO/91a0NZIiyu8+EVniVCqIiqTPdgvEcIXKYn8cwsiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZM74BjmVM0w45wMuAs4y58POsKhUv9UGEHiTxwXYl4q094+5NR7P+AN5iP/etzFS
-	 luAmAytSCM2SHStr/Ldl5akoNz5IhujKcSEdeaVtiPJhZeOBNzYFLWI+JelGTXl6A4
-	 O2G7InGd6crbHATj80sp7ZEPDQCCbF6EYqShjS5w=
+	b=aMWoaMxv/JGpaDNJE5mM2I332BH+yrSN81uebakn+N6REv1aa6tXEcziewVzUb9MQ
+	 zsvf03snWTXTYRLiPqMTWRI5W1Sq2ESG2lXYdZ3dKfZRm6+rRJBUhSnSEWvitXyoPv
+	 aTN0pq5cxO/vLBdJv1lQCDw8QCS/N7/FBwG25srU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
 	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/259] media: renesas: vsp1: Fix _irqsave and _irq mix
-Date: Thu, 15 Aug 2024 15:23:09 +0200
-Message-ID: <20240815131904.974582572@linuxfoundation.org>
+Subject: [PATCH 5.4 057/259] media: renesas: vsp1: Store RPF partition configuration per RPF instance
+Date: Thu, 15 Aug 2024 15:23:10 +0200
+Message-ID: <20240815131905.013067480@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -54,113 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
 
-[ Upstream commit 57edbbcf5258c378a9b9d0c80d33b03a010b22c8 ]
+[ Upstream commit a213bc09b1025c771ee722ee341af1d84375db8a ]
 
-The histogram support mixes _irqsave and _irq, causing the following
-smatch warning:
+The vsp1_partition structure stores the RPF partition configuration in a
+single field for all RPF instances, while each RPF can have its own
+configuration. Fix it by storing the configuration separately for each
+RPF instance.
 
-     drivers/media/platform/renesas/vsp1/vsp1_histo.c:153 histo_stop_streaming()
-     warn: mixing irqsave and irq
-
-The histo_stop_streaming() calls spin_lock_irqsave() followed by
-wait_event_lock_irq(). The former hints that interrupts may be disabled
-by the caller, while the latter reenables interrupts unconditionally.
-This doesn't cause any real bug, as the function is always called with
-interrupts enabled, but the pattern is still incorrect.
-
-Fix the problem by using spin_lock_irq() instead of spin_lock_irqsave()
-in histo_stop_streaming(). While at it, switch to spin_lock_irq() and
-spin_lock() as appropriate elsewhere.
-
-Fixes: 99362e32332b ("[media] v4l: vsp1: Add histogram support")
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Closes: https://lore.kernel.org/linux-renesas-soc/164d74ff-312c-468f-be64-afa7182cd2f4@moroto.mountain/
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
 Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Fixes: ab45e8585182 ("media: v4l: vsp1: Allow entities to participate in the partition algorithm")
+Reviewed-by: Jacopo Mondi <jacopo.mondi+renesas@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/vsp1/vsp1_histo.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/media/platform/vsp1/vsp1_pipe.h | 2 +-
+ drivers/media/platform/vsp1/vsp1_rpf.c  | 8 +++++---
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/vsp1/vsp1_histo.c b/drivers/media/platform/vsp1/vsp1_histo.c
-index 30d751f2cccf1..83c50628926ba 100644
---- a/drivers/media/platform/vsp1/vsp1_histo.c
-+++ b/drivers/media/platform/vsp1/vsp1_histo.c
-@@ -36,9 +36,8 @@ struct vsp1_histogram_buffer *
- vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
+diff --git a/drivers/media/platform/vsp1/vsp1_pipe.h b/drivers/media/platform/vsp1/vsp1_pipe.h
+index ae646c9ef3373..15daf35bda216 100644
+--- a/drivers/media/platform/vsp1/vsp1_pipe.h
++++ b/drivers/media/platform/vsp1/vsp1_pipe.h
+@@ -73,7 +73,7 @@ struct vsp1_partition_window {
+  * @wpf: The WPF partition window configuration
+  */
+ struct vsp1_partition {
+-	struct vsp1_partition_window rpf;
++	struct vsp1_partition_window rpf[VSP1_MAX_RPF];
+ 	struct vsp1_partition_window uds_sink;
+ 	struct vsp1_partition_window uds_source;
+ 	struct vsp1_partition_window sru;
+diff --git a/drivers/media/platform/vsp1/vsp1_rpf.c b/drivers/media/platform/vsp1/vsp1_rpf.c
+index 75083cb234fe3..996a3058d5b76 100644
+--- a/drivers/media/platform/vsp1/vsp1_rpf.c
++++ b/drivers/media/platform/vsp1/vsp1_rpf.c
+@@ -271,8 +271,8 @@ static void rpf_configure_partition(struct vsp1_entity *entity,
+ 	 * 'width' need to be adjusted.
+ 	 */
+ 	if (pipe->partitions > 1) {
+-		crop.width = pipe->partition->rpf.width;
+-		crop.left += pipe->partition->rpf.left;
++		crop.width = pipe->partition->rpf[rpf->entity.index].width;
++		crop.left += pipe->partition->rpf[rpf->entity.index].left;
+ 	}
+ 
+ 	if (pipe->interlaced) {
+@@ -327,7 +327,9 @@ static void rpf_partition(struct vsp1_entity *entity,
+ 			  unsigned int partition_idx,
+ 			  struct vsp1_partition_window *window)
  {
- 	struct vsp1_histogram_buffer *buf = NULL;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
- 
- 	if (list_empty(&histo->irqqueue))
- 		goto done;
-@@ -49,7 +48,7 @@ vsp1_histogram_buffer_get(struct vsp1_histogram *histo)
- 	histo->readout = true;
- 
- done:
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- 	return buf;
+-	partition->rpf = *window;
++	struct vsp1_rwpf *rpf = to_rwpf(&entity->subdev);
++
++	partition->rpf[rpf->entity.index] = *window;
  }
  
-@@ -58,7 +57,6 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 				    size_t size)
- {
- 	struct vsp1_pipeline *pipe = histo->entity.pipe;
--	unsigned long flags;
- 
- 	/*
- 	 * The pipeline pointer is guaranteed to be valid as this function is
-@@ -70,10 +68,10 @@ void vsp1_histogram_buffer_complete(struct vsp1_histogram *histo,
- 	vb2_set_plane_payload(&buf->buf.vb2_buf, 0, size);
- 	vb2_buffer_done(&buf->buf.vb2_buf, VB2_BUF_STATE_DONE);
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock(&histo->irqlock);
- 	histo->readout = false;
- 	wake_up(&histo->wait_queue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock(&histo->irqlock);
- }
- 
- /* -----------------------------------------------------------------------------
-@@ -124,11 +122,10 @@ static void histo_buffer_queue(struct vb2_buffer *vb)
- 	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vb->vb2_queue);
- 	struct vsp1_histogram_buffer *buf = to_vsp1_histogram_buffer(vbuf);
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 	list_add_tail(&buf->queue, &histo->irqqueue);
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static int histo_start_streaming(struct vb2_queue *vq, unsigned int count)
-@@ -140,9 +137,8 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- {
- 	struct vsp1_histogram *histo = vb2_get_drv_priv(vq);
- 	struct vsp1_histogram_buffer *buffer;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&histo->irqlock, flags);
-+	spin_lock_irq(&histo->irqlock);
- 
- 	/* Remove all buffers from the IRQ queue. */
- 	list_for_each_entry(buffer, &histo->irqqueue, queue)
-@@ -152,7 +148,7 @@ static void histo_stop_streaming(struct vb2_queue *vq)
- 	/* Wait for the buffer being read out (if any) to complete. */
- 	wait_event_lock_irq(histo->wait_queue, !histo->readout, histo->irqlock);
- 
--	spin_unlock_irqrestore(&histo->irqlock, flags);
-+	spin_unlock_irq(&histo->irqlock);
- }
- 
- static const struct vb2_ops histo_video_queue_qops = {
+ static const struct vsp1_entity_operations rpf_entity_ops = {
 -- 
 2.43.0
 
