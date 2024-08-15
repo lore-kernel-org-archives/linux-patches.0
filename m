@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3E71714A1;
-	Thu, 15 Aug 2024 13:56:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335161714A1;
+	Thu, 15 Aug 2024 13:56:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730197; cv=none; b=t1VzLjktZTAOmN2rt/QegIvVLm/22OdfGiJlvk4D2ZtqQ8QprRs44hggm7ebbGFICMoIbusq9yI9HEK8sFqyKAzaA6xhwGm8zq6zKnNdBL6R62zKdcRYADLsL2NmPHGuvwWxf34uewAi2tEDPxJYvCCMVpw1gVT4FyXyOTYeFJw=
+	t=1723730200; cv=none; b=EiHbueOd71bA7+eYoFNhWsE0HCJP0SymsgQwrzIHOFS8jEjXL8qc4TeJpDVTM44rDDmolFrbDVYv4FEQkBi/e7bCk5IZNbgfXL/ulF+fu/PrWkEpeHYGxlaWP+KIB+rt8Wl5N2hdHhKYzHanoNQPG99xnqTvoh6QSAD7WJZy8+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730197; c=relaxed/simple;
-	bh=ESQZ0of3ve/GHIneBhnc42dYbvB/1ky3VDyN4Cs09xs=;
+	s=arc-20240116; t=1723730200; c=relaxed/simple;
+	bh=NhfZc0w/lkBQDuXf9B/m/US5oiKldJ5cXuTGhTOqNJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lBAKtCtgUcKjVpXePp0g256yNTpyJUjhzcFEQa13a0AlLVztX84IXDFDcLWW8H0K1wEGPpeHNTRoHyoiNkSt+FseH88befJgcTRLnSc3K5+B/x0S+eipnfrQumc0C4cp03Bs6h8d0WweWhmJ72jw8DS9j4cdYF3RppnBP3ZmHwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1VIwcFCI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UDB2BSyi57Mu6JjeVbqhTqvczrqoxDiD6yuZ78hjwQKU9b/IMAvDkXf0o0P0HrgZlgCDAhz/LZ9duTBGdQqv2yPwrvPfAcz5j9WUZYv+U7lsRNPi+hmhKDKeQFIOxZMSiaY/WSnwzinf5CHlx2ohfuY9s7Jh60he65eLV21mqes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E0CVVgwd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1VIwcFCI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC426C32786;
-	Thu, 15 Aug 2024 13:56:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E0CVVgwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3AE0C32786;
+	Thu, 15 Aug 2024 13:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730197;
-	bh=ESQZ0of3ve/GHIneBhnc42dYbvB/1ky3VDyN4Cs09xs=;
+	s=korg; t=1723730200;
+	bh=NhfZc0w/lkBQDuXf9B/m/US5oiKldJ5cXuTGhTOqNJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1VIwcFCIM8u+BRA0Bet0Q4cqUQOs2jtfj/qxwMgh5i6mScuekFZ34OrMUQCKRo7SA
-	 ZBLhCyLmFB0fZ6ayCBd8MJuBUsZboUyr2RW4DFrhZHOH/T2oHCePUqqvcjniC41A2Q
-	 aznKG7kZEawv53hueXRD8r11+Eon59MyE7gkLqQk=
+	b=E0CVVgwdAbixjgvo3aXZCHTT8UT25mNij2Z5oMySn3MShmY6dF5iCug3nTegBrUU6
+	 O84ggQaktRbWBGH7UJPhwsGzNqYbjJdb6JDLZsADiBQKa6Y8n0OXQNFAVFaMAuL7l7
+	 3DTJA8wdr+XGrAiS2D75WngBenXihBO6B9uuXt7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 301/484] arm64: dts: qcom: msm8998: switch USB QMP PHY to new style of bindings
-Date: Thu, 15 Aug 2024 15:22:39 +0200
-Message-ID: <20240815131953.033704581@linuxfoundation.org>
+Subject: [PATCH 5.15 302/484] arm64: dts: qcom: msm8998: Disable SS instance in Parkmode for USB
+Date: Thu, 15 Aug 2024 15:22:40 +0200
+Message-ID: <20240815131953.072359529@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,82 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Krishna Kurapati <quic_kriskura@quicinc.com>
 
-[ Upstream commit b7efebfeb2e8ad8187cdabba5f0212ba2e6c1069 ]
+[ Upstream commit 0046325ae52079b46da13a7f84dd7b2a6f7c38f8 ]
 
-Change the USB QMP PHY to use newer style of QMP PHY bindings (single
-resource region, no per-PHY subnodes).
+For Gen-1 targets like MSM8998, it is seen that stressing out the
+controller in host mode results in HC died error:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20230824211952.1397699-11-dmitry.baryshkov@linaro.org
+ xhci-hcd.12.auto: xHCI host not responding to stop endpoint command
+ xhci-hcd.12.auto: xHCI host controller not responding, assume dead
+ xhci-hcd.12.auto: HC died; cleaning up
+
+And at this instant only restarting the host mode fixes it. Disable
+SuperSpeed instance in park mode for MSM8998 to mitigate this issue.
+
+Cc: stable@vger.kernel.org
+Fixes: 026dad8f5873 ("arm64: dts: qcom: msm8998: Add USB-related nodes")
+Signed-off-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Link: https://lore.kernel.org/r/20240704152848.3380602-4-quic_kriskura@quicinc.com
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Stable-dep-of: 0046325ae520 ("arm64: dts: qcom: msm8998: Disable SS instance in Parkmode for USB")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 35 +++++++++++----------------
- 1 file changed, 14 insertions(+), 21 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index f5772d6efaa8b..8037288359482 100644
+index 8037288359482..8ca6a6f1a541d 100644
 --- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -1982,7 +1982,7 @@ usb3_dwc3: dwc3@a800000 {
+@@ -1982,6 +1982,7 @@ usb3_dwc3: dwc3@a800000 {
  				interrupts = <GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>;
  				snps,dis_u2_susphy_quirk;
  				snps,dis_enblslpm_quirk;
--				phys = <&qusb2phy>, <&usb1_ssphy>;
-+				phys = <&qusb2phy>, <&usb3phy>;
++				snps,parkmode-disable-ss-quirk;
+ 				phys = <&qusb2phy>, <&usb3phy>;
  				phy-names = "usb2-phy", "usb3-phy";
  				snps,has-lpm-erratum;
- 				snps,hird-threshold = /bits/ 8 <0x10>;
-@@ -1991,33 +1991,26 @@ usb3_dwc3: dwc3@a800000 {
- 
- 		usb3phy: phy@c010000 {
- 			compatible = "qcom,msm8998-qmp-usb3-phy";
--			reg = <0x0c010000 0x18c>;
--			status = "disabled";
--			#address-cells = <1>;
--			#size-cells = <1>;
--			ranges;
-+			reg = <0x0c010000 0x1000>;
- 
- 			clocks = <&gcc GCC_USB3_PHY_AUX_CLK>,
-+				 <&gcc GCC_USB3_CLKREF_CLK>,
- 				 <&gcc GCC_USB_PHY_CFG_AHB2PHY_CLK>,
--				 <&gcc GCC_USB3_CLKREF_CLK>;
--			clock-names = "aux", "cfg_ahb", "ref";
-+				 <&gcc GCC_USB3_PHY_PIPE_CLK>;
-+			clock-names = "aux",
-+				      "ref",
-+				      "cfg_ahb",
-+				      "pipe";
-+			clock-output-names = "usb3_phy_pipe_clk_src";
-+			#clock-cells = <0>;
-+			#phy-cells = <0>;
- 
- 			resets = <&gcc GCC_USB3_PHY_BCR>,
- 				 <&gcc GCC_USB3PHY_PHY_BCR>;
--			reset-names = "phy", "common";
-+			reset-names = "phy",
-+				      "phy_phy";
- 
--			usb1_ssphy: phy@c010200 {
--				reg = <0xc010200 0x128>,
--				      <0xc010400 0x200>,
--				      <0xc010c00 0x20c>,
--				      <0xc010600 0x128>,
--				      <0xc010800 0x200>;
--				#phy-cells = <0>;
--				#clock-cells = <0>;
--				clocks = <&gcc GCC_USB3_PHY_PIPE_CLK>;
--				clock-names = "pipe0";
--				clock-output-names = "usb3_phy_pipe_clk_src";
--			};
-+			status = "disabled";
- 		};
- 
- 		qusb2phy: phy@c012000 {
 -- 
 2.43.0
 
