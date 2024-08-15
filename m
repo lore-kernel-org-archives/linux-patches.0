@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AA257DA7D;
-	Thu, 15 Aug 2024 13:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 731187DA7D;
+	Thu, 15 Aug 2024 13:59:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730352; cv=none; b=bmB4db2AW3BYajzjsz/Sq1LkmbOspkJH7ELHeGEf5AZIPZftDey/hrvVUYCj83+7OkH86DnUT0ojO1waNuK7780Gqbj/CUonAOS0Ez5RcxLBAahwSDuGddq7FWkH9aeVzbUErsZTzyr5wxUMRKif1aAmbDLBTLFVg8WZNeBsoys=
+	t=1723730355; cv=none; b=oHtqEADHqVjsbysI6NssTrxJZ21ebhytwDMFMHaupeEk1H8hZXayC34PCMDSnEzKraULKzbbAMlfc3s/Usc7QtSlpZh1ufeZgD+H4uy3q+Texe/jXsbzpoPK740BUZQ9cfNX5UhOCARQAy9GdNrSoJV5ibqC8IgD/oQTT1v2STg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730352; c=relaxed/simple;
-	bh=/ntx/fkaYPt6Ew3mBvOvDd75ZETt9ug0o9z0RVNiF6s=;
+	s=arc-20240116; t=1723730355; c=relaxed/simple;
+	bh=qM+0MYMlaIo0YLccsGeUSzlnBmiBON1/ngZOXPxBYRM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwQphDOWLPEj/EYYyU5OofmLKpyd/B5aRquKReEsK7hHX4u5VYo4bm+tu7qSr7agFsRgCEQVZayMT/cSbZ33ES2Db4xb6LgpbPyk8vbuTJptQzH0RakXlyLYPRmhscoomrcPzGvcsJ4aNuWDRSf90nYteHdCb5STR/XbcOq9XAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DSXJwBY4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=T6BhvhRhDAZSWPjdNMhcm22P/OjekEh0YxLc2BcLErG109cBT2AjuXjzkn4uPL8OwTA+Q/r3NStCYDcn/5Sso5LhCzFu0nFFKYJphSjV/zY64f7OVuzzh/vz0OZ/WCynC8JOaMT8pJupzDRnGyLw70H+783EIml21zRJf832NP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AsImfU1C; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DSXJwBY4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7445C32786;
-	Thu, 15 Aug 2024 13:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AsImfU1C"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E15C5C4AF0C;
+	Thu, 15 Aug 2024 13:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730352;
-	bh=/ntx/fkaYPt6Ew3mBvOvDd75ZETt9ug0o9z0RVNiF6s=;
+	s=korg; t=1723730355;
+	bh=qM+0MYMlaIo0YLccsGeUSzlnBmiBON1/ngZOXPxBYRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSXJwBY4tT7SRw5vBEJpUzAKW2mJo8WGM6Dd85jbXjlrFHi4p50QHhl9QvXHsIZxw
-	 ShSQud6muNqIX815jIaWSlFM6Ho0hVVBIe1dlcwIlHkTF5eZt1SQxgICfDhUOpSbnW
-	 jstN+KQlm+vXop7iQm5hqOcPYvnfgEFC32XmClkA=
+	b=AsImfU1Cc+74RzYHjKBL5HXdhrO4jv5MI7RJljGyg7rqoHrVAoXsdpSpfrj2vWiKy
+	 K/fXnxAHvycKGiqxa+IPNt/S04BrySB2Kwv+zEUSRqS2OJpt6mbeOpX3+kwFYplovg
+	 onyn7EXwUrRvU9WmitlfMRfxHjroJcc764JUrJIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	HungNien Chen <hn.chen@sunplusit.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
 	Ricardo Ribalda <ribalda@chromium.org>,
-	Tomasz Figa <tfiga@chromium.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 382/484] media: uvcvideo: Ignore empty TS packets
-Date: Thu, 15 Aug 2024 15:24:00 +0200
-Message-ID: <20240815131956.202787964@linuxfoundation.org>
+Subject: [PATCH 5.15 383/484] media: uvcvideo: Fix the bandwdith quirk on USB 3.x
+Date: Thu, 15 Aug 2024 15:24:01 +0200
+Message-ID: <20240815131956.240840555@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -54,127 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Michal Pecio <michal.pecio@gmail.com>
 
-[ Upstream commit 5cd7c25f6f0576073b3d03bc4cfb1e8ca63a1195 ]
+[ Upstream commit 9e3d55fbd160b3ca376599a68b4cddfdc67d4153 ]
 
-Some SunplusIT cameras took a borderline interpretation of the UVC 1.5
-standard, and fill the PTS and SCR fields with invalid data if the
-package does not contain data.
+The bandwidth fixup quirk doesn't know that SuperSpeed exists and has
+the same 8 service intervals per millisecond as High Speed, hence its
+calculations are wrong.
 
-"STC must be captured when the first video data of a video frame is put
-on the USB bus."
+Assume that all speeds from HS up use 8 intervals per millisecond.
 
-Some SunplusIT devices send, e.g.,
+No further changes are needed, updated code has been confirmed to work
+with all speeds from FS to SS.
 
-buffer: 0xa7755c00 len 000012 header:0x8c stc 00000000 sof 0000 pts 00000000
-buffer: 0xa7755c00 len 000012 header:0x8c stc 00000000 sof 0000 pts 00000000
-buffer: 0xa7755c00 len 000668 header:0x8c stc 73779dba sof 070c pts 7376d37a
-
-While the UVC specification meant that the first two packets shouldn't
-have had the SCR bit set in the header.
-
-This borderline/buggy interpretation has been implemented in a variety
-of devices, from directly SunplusIT and from other OEMs that rebrand
-SunplusIT products. So quirking based on VID:PID will be problematic.
-
-All the affected modules have the following extension unit:
-VideoControl Interface Descriptor:
-  guidExtensionCode         {82066163-7050-ab49-b8cc-b3855e8d221d}
-
-But the vendor plans to use that GUID in the future and fix the bug,
-this means that we should use heuristic to figure out the broken
-packets.
-
-This patch takes care of this.
-
-lsusb of one of the affected cameras:
-
-Bus 001 Device 003: ID 1bcf:2a01 Sunplus Innovation Technology Inc.
-Device Descriptor:
-  bLength                18
-  bDescriptorType         1
-  bcdUSB               2.01
-  bDeviceClass          239 Miscellaneous Device
-  bDeviceSubClass         2 ?
-  bDeviceProtocol         1 Interface Association
-  bMaxPacketSize0        64
-  idVendor           0x1bcf Sunplus Innovation Technology Inc.
-  idProduct          0x2a01
-  bcdDevice            0.02
-  iManufacturer           1 SunplusIT Inc
-  iProduct                2 HanChen Wise Camera
-  iSerial                 3 01.00.00
-  bNumConfigurations      1
-
-Tested-by: HungNien Chen <hn.chen@sunplusit.com>
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Michal Pecio <michal.pecio@gmail.com>
+Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
 Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Tomasz Figa <tfiga@chromium.org>
-Link: https://lore.kernel.org/r/20240323-resend-hwtimestamp-v10-2-b08e590d97c7@chromium.org
+Link: https://lore.kernel.org/r/20240414190040.2255a0bc@foxbook
 Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/uvc/uvc_video.c | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ drivers/media/usb/uvc/uvc_video.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/media/usb/uvc/uvc_video.c b/drivers/media/usb/uvc/uvc_video.c
-index 0ccd5a4518131..a45d3b85e828c 100644
+index a45d3b85e828c..446fe67e07c47 100644
 --- a/drivers/media/usb/uvc/uvc_video.c
 +++ b/drivers/media/usb/uvc/uvc_video.c
-@@ -471,6 +471,7 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
- 	ktime_t time;
- 	u16 host_sof;
- 	u16 dev_sof;
-+	u32 dev_stc;
+@@ -210,13 +210,13 @@ static void uvc_fixup_video_ctrl(struct uvc_streaming *stream,
+ 		/* Compute a bandwidth estimation by multiplying the frame
+ 		 * size by the number of video frames per second, divide the
+ 		 * result by the number of USB frames (or micro-frames for
+-		 * high-speed devices) per second and add the UVC header size
+-		 * (assumed to be 12 bytes long).
++		 * high- and super-speed devices) per second and add the UVC
++		 * header size (assumed to be 12 bytes long).
+ 		 */
+ 		bandwidth = frame->wWidth * frame->wHeight / 8 * format->bpp;
+ 		bandwidth *= 10000000 / interval + 1;
+ 		bandwidth /= 1000;
+-		if (stream->dev->udev->speed == USB_SPEED_HIGH)
++		if (stream->dev->udev->speed >= USB_SPEED_HIGH)
+ 			bandwidth /= 8;
+ 		bandwidth += 12;
  
- 	switch (data[1] & (UVC_STREAM_PTS | UVC_STREAM_SCR)) {
- 	case UVC_STREAM_PTS | UVC_STREAM_SCR:
-@@ -515,6 +516,34 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
- 	if (dev_sof == stream->clock.last_sof)
- 		return;
- 
-+	dev_stc = get_unaligned_le32(&data[header_size - 6]);
-+
-+	/*
-+	 * STC (Source Time Clock) is the clock used by the camera. The UVC 1.5
-+	 * standard states that it "must be captured when the first video data
-+	 * of a video frame is put on the USB bus". This is generally understood
-+	 * as requiring devices to clear the payload header's SCR bit before
-+	 * the first packet containing video data.
-+	 *
-+	 * Most vendors follow that interpretation, but some (namely SunplusIT
-+	 * on some devices) always set the `UVC_STREAM_SCR` bit, fill the SCR
-+	 * field with 0's,and expect that the driver only processes the SCR if
-+	 * there is data in the packet.
-+	 *
-+	 * Ignore all the hardware timestamp information if we haven't received
-+	 * any data for this frame yet, the packet contains no data, and both
-+	 * STC and SOF are zero. This heuristics should be safe on compliant
-+	 * devices. This should be safe with compliant devices, as in the very
-+	 * unlikely case where a UVC 1.1 device would send timing information
-+	 * only before the first packet containing data, and both STC and SOF
-+	 * happen to be zero for a particular frame, we would only miss one
-+	 * clock sample from many and the clock recovery algorithm wouldn't
-+	 * suffer from this condition.
-+	 */
-+	if (buf && buf->bytesused == 0 && len == header_size &&
-+	    dev_stc == 0 && dev_sof == 0)
-+		return;
-+
- 	stream->clock.last_sof = dev_sof;
- 
- 	host_sof = usb_get_current_frame_number(stream->dev->udev);
-@@ -552,7 +581,7 @@ uvc_video_clock_decode(struct uvc_streaming *stream, struct uvc_buffer *buf,
- 	spin_lock_irqsave(&stream->clock.lock, flags);
- 
- 	sample = &stream->clock.samples[stream->clock.head];
--	sample->dev_stc = get_unaligned_le32(&data[header_size - 6]);
-+	sample->dev_stc = dev_stc;
- 	sample->dev_sof = dev_sof;
- 	sample->host_sof = host_sof;
- 	sample->host_time = time;
 -- 
 2.43.0
 
