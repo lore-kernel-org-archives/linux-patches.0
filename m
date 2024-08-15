@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F6E63D5;
-	Thu, 15 Aug 2024 14:30:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D07963D5;
+	Thu, 15 Aug 2024 14:30:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732255; cv=none; b=Kf1ay5cYSHEsQ6EG+NKToj4H0b+8RWw/+8j02CjaknynaB1CzYbVkJFTBgLq/9iYYHzeFuLSjJw7xCoE2dOovMgCIQUgbR8Zt1CgYBLvbOkjjKPAtUWOwMdc4I7Y/NilqzgnhIdJbyavTvAAPe7nJ+Ui7piUgwi4lyV8Dqmda54=
+	t=1723732258; cv=none; b=hpXphTEAF1dHdCS6U9yG9JwIvf2e1UHhlWNeU7px2KY3xX31GtN4kaB+Inj1AhzlxkXENTVRiT8owKEZ644lxVRnxW/FgFoo2c+4WRxDL5CZO7TZzyxTq+3Kp80Hr9BAojnCcy2sQQCz4RJj/OkkvKIrCSE0VmtenZ2tFsWo58c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732255; c=relaxed/simple;
-	bh=2IFtMuNV5RAAHviundxOn/iotZIHs1tTwoj1b6/PgBE=;
+	s=arc-20240116; t=1723732258; c=relaxed/simple;
+	bh=2bNieHbKqbvEPzPirvjopy/G8WKw6GauGGTx9P8pJD4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=U/IM6yXaQdA46f9YHEpf4XDABDJCW/qGSdLZmDG9/m3J27dmg+xGtTwmk08dRC6UTS5ZOzi1pH6xk1+7b/jb+mKrOkk+Rs9IBfm25v9vRu9eV8M46wT3rco4oqxLer6e4Ex1JuGCOikzj5W7qSaRaB8UNqU/NMPKBWMyDtDFkjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k/Y5//j9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B4hAlt9Mymxmz78htQDD6mdWHoci25W1w0p6Tw5yoXh/gTAsea4kaUDb+iSD6rmwDXZx82BHIYV1DytmO8f1Ul106LR5V0pGyHP5LkzkawbBQ7YUr68HxQhi5YptUqPwo6kk/X86yYvpcmTS8Jl4dejTKmKlZk8xbMGFfsh+/ZM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sbQ9Rx7l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k/Y5//j9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B50EEC32786;
-	Thu, 15 Aug 2024 14:30:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sbQ9Rx7l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7F4DC32786;
+	Thu, 15 Aug 2024 14:30:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732255;
-	bh=2IFtMuNV5RAAHviundxOn/iotZIHs1tTwoj1b6/PgBE=;
+	s=korg; t=1723732258;
+	bh=2bNieHbKqbvEPzPirvjopy/G8WKw6GauGGTx9P8pJD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k/Y5//j9++J/cIpzS8fLXMbGgsTSy8AufYWlHKEL4KtvkjWIrMr6hFHM2n3uN1QYC
-	 EIPbw6+BKs1QU13vgPY2tq/6eN3asijbULVtKQMm6wc2sj0mfI4ulh3QAs09UIcDp/
-	 zOZnQ1z8rXVMnq1uZH5qcGmcrsh+sURahQ0aHX3M=
+	b=sbQ9Rx7lFQ0B/Y/KBc6B32YMNLyRk7qF38poFiKU1OLkwpFBbBcgW3EOs4OMH9M3b
+	 VCNXMYRAV0EN7tzLQox10ODlbbhx/dgxFmh5Ovs5YBIgoE9GGScEw3misvdHxaFoQD
+	 m12N6PGkBD45zs9Ql7dTkZ037ORQ3pdS5mpmB4uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cs=C3=B3k=C3=A1s,
-	=20Bence?= <csokas.bence@prolan.hu>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 123/352] rtc: interface: Add RTC offset to alarm after fix-up
-Date: Thu, 15 Aug 2024 15:23:09 +0200
-Message-ID: <20240815131924.006493385@linuxfoundation.org>
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH 5.10 124/352] dt-bindings: thermal: correct thermal zone node name limit
+Date: Thu, 15 Aug 2024 15:23:10 +0200
+Message-ID: <20240815131924.046286358@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -46,64 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 5.10-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Csókás, Bence <csokas.bence@prolan.hu>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 463927a8902a9f22c3633960119410f57d4c8920 ]
+commit 97e32381d0fc6c2602a767b0c46e15eb2b75971d upstream.
 
-`rtc_add_offset()` is called by `__rtc_read_time()`
-and `__rtc_read_alarm()` to add the RTC's offset to
-the raw read-outs from the device drivers. However,
-in the latter case, a fix-up algorithm is run if
-the RTC device does not report a full `struct rtc_time`
-alarm value. In that case, the offset was forgot to be
-added.
+Linux kernel uses thermal zone node name during registering thermal
+zones and has a hard-coded limit of 20 characters, including terminating
+NUL byte.  The bindings expect node names to finish with '-thermal'
+which is eight bytes long, thus we have only 11 characters for the reset
+of the node name (thus 10 for the pattern after leading fixed character).
 
-Fixes: fd6792bb022e ("rtc: fix alarm read and set offset")
-
-Signed-off-by: Csókás, Bence <csokas.bence@prolan.hu>
-Link: https://lore.kernel.org/r/20240619140451.2800578-1-csokas.bence@prolan.hu
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Rob Herring <robh@kernel.org>
+Closes: https://lore.kernel.org/all/CAL_JsqKogbT_4DPd1n94xqeHaU_J8ve5K09WOyVsRX3jxxUW3w@mail.gmail.com/
+Fixes: 1202a442a31f ("dt-bindings: thermal: Add yaml bindings for thermal zones")
+Cc: stable@vger.kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20240702145248.47184-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/rtc/interface.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ Documentation/devicetree/bindings/thermal/thermal-zones.yaml | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/interface.c b/drivers/rtc/interface.c
-index 146056858135e..154ea5ae2c0c3 100644
---- a/drivers/rtc/interface.c
-+++ b/drivers/rtc/interface.c
-@@ -274,10 +274,9 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
- 			return err;
+diff --git a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+index 68398e7e8655..606b80965a44 100644
+--- a/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
++++ b/Documentation/devicetree/bindings/thermal/thermal-zones.yaml
+@@ -49,7 +49,10 @@ properties:
+       to take when the temperature crosses those thresholds.
  
- 		/* full-function RTCs won't have such missing fields */
--		if (rtc_valid_tm(&alarm->time) == 0) {
--			rtc_add_offset(rtc, &alarm->time);
--			return 0;
--		}
-+		err = rtc_valid_tm(&alarm->time);
-+		if (!err)
-+			goto done;
- 
- 		/* get the "after" timestamp, to detect wrapped fields */
- 		err = rtc_read_time(rtc, &now);
-@@ -379,6 +378,8 @@ int __rtc_read_alarm(struct rtc_device *rtc, struct rtc_wkalrm *alarm)
- 	if (err)
- 		dev_warn(&rtc->dev, "invalid alarm value: %ptR\n",
- 			 &alarm->time);
-+	else
-+		rtc_add_offset(rtc, &alarm->time);
- 
- 	return err;
- }
+ patternProperties:
+-  "^[a-zA-Z][a-zA-Z0-9\\-]{1,12}-thermal$":
++  # Node name is limited in size due to Linux kernel requirements - 19
++  # characters in total (see THERMAL_NAME_LENGTH, including terminating NUL
++  # byte):
++  "^[a-zA-Z][a-zA-Z0-9\\-]{1,10}-thermal$":
+     type: object
+     description:
+       Each thermal zone node contains information about how frequently it
 -- 
-2.43.0
+2.45.2
 
 
 
