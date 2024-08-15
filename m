@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBF0D19F473;
-	Thu, 15 Aug 2024 14:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AEE1A3BCE;
+	Thu, 15 Aug 2024 14:06:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730800; cv=none; b=KyVOcHoMV25759fQIWsn7+NSshX52bAQiolOEY0ATDTcyaSKvIbeRys1uScpSq3YNVLS7j/chcXEawYAgKAGBfeyC6qaHv3DLU6Og+ckq/6ORj9bREYM+F3GU9l/y9UJqEatIfpwsznWT3+ob4UzITdi3FBzWvk+rRKmTErnuac=
+	t=1723730803; cv=none; b=QHho2bv7Kolmq+2Cx/L+f8DdFdJX5ryod05bF7K+yfTYi0D+9glDMvK0WeE6KNiQCDbUI/AI8oZG5KcFUCepvFxfLPDwMUMOS3rKn9ZedDpDrYe7XayoI1DGjgPKtMPt17ZAMVnQQ755wH43aeG7GKhzixNB2ZNgosDG0CPa0vU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730800; c=relaxed/simple;
-	bh=IJy+5fuvu9hJ9IvkgQefMtM9rlKNJpRZT4DaAEa7U9Y=;
+	s=arc-20240116; t=1723730803; c=relaxed/simple;
+	bh=UgvyV6ELQBeEh40cw7O/6Ti5JVZmWNmiReN6uGJDdE0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VmskQAbgh8pEwzDzjNnbP5pd9v9TwZIhZEheuJy3b2H8+yQ7TsigjIUYaNLMpgiMrbAx4HU00zQdo+dKorwVqfiAbH4gyDkfUbtycY/iNuZWi4e8O6Z1C9gwBSpra9TjWH7IGn+FliVzqzokVnJGLIN2Zr5ZK4IPKedgjRqEUPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BcV9coWy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mVFJ43hX09eECf+FYurEWXQEK8no3jru3ESsdjOTgUwDX50wJlUFV3aoMv+quoQejBZJ4YN5bk6wpGbUVXhS7JNWAiPs1p5m2NoVtEfYRP3ZKoE78kwS5qDsNX+oJtNaTeMQJbD0B/R59GtEIVokjV+W2uTmry26BTPENfY0fJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0wKuzaja; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BcV9coWy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBBCC32786;
-	Thu, 15 Aug 2024 14:06:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0wKuzaja"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9F6C32786;
+	Thu, 15 Aug 2024 14:06:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730800;
-	bh=IJy+5fuvu9hJ9IvkgQefMtM9rlKNJpRZT4DaAEa7U9Y=;
+	s=korg; t=1723730803;
+	bh=UgvyV6ELQBeEh40cw7O/6Ti5JVZmWNmiReN6uGJDdE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BcV9coWyBW4I9J5kSoQwjyurmAHt6bYV7k8NsBysdfJRVk5F1LGijSr/sY0WK8tc5
-	 7IoN7ASN9dCj7SbSFTOTBXQ3+Hdy+cTBBEhrYp7R27+U8ZlTdy5BytqR1aGGbJch+x
-	 klZl60+mA8haOLcsE15XyGuc+pHKixkdfftov4Cs=
+	b=0wKuzajapFFIE3cr9A9TEjRK4nUdQchN+sUYSa75P5eyxWU5ysk1PdP8gUfTwH3xk
+	 VsjFeyN15V2WRPQEH7w87GGBssNGEI1x25y+IDyU9sIjG4/DrEMJiRNeQM5OTm4W4H
+	 XcBUGRA2JLKxanpKZ3MbW5oOka1N293IYhugAuIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Stefan ORear <sorear@fastmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Greg Ungerer <gerg@linux-m68k.org>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 34/38] drm/i915/gem: Adjust vma offset for framebuffer mmap offset
-Date: Thu, 15 Aug 2024 15:26:08 +0200
-Message-ID: <20240815131834.267200726@linuxfoundation.org>
+Subject: [PATCH 6.1 35/38] binfmt_flat: Fix corruption when not offsetting data start
+Date: Thu, 15 Aug 2024 15:26:09 +0200
+Message-ID: <20240815131834.305227567@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -54,47 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andi Shyti <andi.shyti@linux.intel.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit 1ac5167b3a90c9820daa64cc65e319b2d958d686 ]
+[ Upstream commit 3eb3cd5992f7a0c37edc8d05b4c38c98758d8671 ]
 
-When mapping a framebuffer object, the virtual memory area (VMA)
-offset ('vm_pgoff') should be adjusted by the start of the
-'vma_node' associated with the object. This ensures that the VMA
-offset is correctly aligned with the corresponding offset within
-the GGTT aperture.
+Commit 04d82a6d0881 ("binfmt_flat: allow not offsetting data start")
+introduced a RISC-V specific variant of the FLAT format which does
+not allocate any space for the (obsolete) array of shared library
+pointers. However, it did not disable the code which initializes the
+array, resulting in the corruption of sizeof(long) bytes before the DATA
+segment, generally the end of the TEXT segment.
 
-Increment vm_pgoff by the start of the vma_node with the offset=
-provided by the user.
+Introduce MAX_SHARED_LIBS_UPDATE which depends on the state of
+CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET to guard the initialization of
+the shared library pointer region so that it will only be initialized
+if space is reserved for it.
 
-Suggested-by: Chris Wilson <chris.p.wilson@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: <stable@vger.kernel.org> # v4.9+
-[Joonas: Add Cc: stable]
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20240802083850.103694-2-andi.shyti@linux.intel.com
-(cherry picked from commit 60a2066c50058086510c91f404eb582029650970)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 04d82a6d0881 ("binfmt_flat: allow not offsetting data start")
+Co-developed-by: Stefan O'Rear <sorear@fastmail.com>
+Signed-off-by: Stefan O'Rear <sorear@fastmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Acked-by: Greg Ungerer <gerg@linux-m68k.org>
+Link: https://lore.kernel.org/r/20240807195119.it.782-kees@kernel.org
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_mman.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/binfmt_flat.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gem/i915_gem_mman.c b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-index 4a291d29c5af5..7e9310d01dfdd 100644
---- a/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_mman.c
-@@ -1120,6 +1120,8 @@ int i915_gem_fb_mmap(struct drm_i915_gem_object *obj, struct vm_area_struct *vma
- 		mmo = mmap_offset_attach(obj, mmap_type, NULL);
- 		if (IS_ERR(mmo))
- 			return PTR_ERR(mmo);
-+
-+		vma->vm_pgoff += drm_vma_node_start(&mmo->vma_node);
- 	}
+diff --git a/fs/binfmt_flat.c b/fs/binfmt_flat.c
+index c26545d71d39a..cd6d5bbb4b9df 100644
+--- a/fs/binfmt_flat.c
++++ b/fs/binfmt_flat.c
+@@ -72,8 +72,10 @@
  
- 	/*
+ #ifdef CONFIG_BINFMT_FLAT_NO_DATA_START_OFFSET
+ #define DATA_START_OFFSET_WORDS		(0)
++#define MAX_SHARED_LIBS_UPDATE		(0)
+ #else
+ #define DATA_START_OFFSET_WORDS		(MAX_SHARED_LIBS)
++#define MAX_SHARED_LIBS_UPDATE		(MAX_SHARED_LIBS)
+ #endif
+ 
+ struct lib_info {
+@@ -880,7 +882,7 @@ static int load_flat_binary(struct linux_binprm *bprm)
+ 		return res;
+ 
+ 	/* Update data segment pointers for all libraries */
+-	for (i = 0; i < MAX_SHARED_LIBS; i++) {
++	for (i = 0; i < MAX_SHARED_LIBS_UPDATE; i++) {
+ 		if (!libinfo.lib_list[i].loaded)
+ 			continue;
+ 		for (j = 0; j < MAX_SHARED_LIBS; j++) {
 -- 
 2.43.0
 
