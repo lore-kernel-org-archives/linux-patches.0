@@ -1,40 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431D61A4F22;
-	Thu, 15 Aug 2024 14:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AC21AC896;
+	Thu, 15 Aug 2024 14:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731591; cv=none; b=qkBc056Moh11/ujcLwWBJd/Ccp7aaob1VwF4ou5J1R/JCCdDwwLFN2n7WptoAPVSJ4l/YhJBIMR5B1TZpJ4z80uYiDMPq8lrjzRmZ2u184+zHM3eSrXS/znaOYZPFsSou0b1JQyFD2N1SZQ4HmmZfyXNjL2lDJWgOgrV3TdFQgI=
+	t=1723731594; cv=none; b=Gx2hX248/wgXT8hf0r0n0PJt9dTG1+bs2qjaoMpM1znd/fgL1f8/4F92lWpJIiHcZYJFfSTKmHUWujHxQa23BDCwuGfaPRS4II7b0uumjnBwXegAW8o/VorED9eTiBct4ezsVQfNmS24DMgFgIZ9KPhBgeGFrFZHj0pkOk8Fm7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731591; c=relaxed/simple;
-	bh=R65dzwqoiX6c12McE9yHT1Au1TyGyovnKaArqQ+g9MA=;
+	s=arc-20240116; t=1723731594; c=relaxed/simple;
+	bh=iCxfgtAlR+xJiZuFxkWjVG2RHGPKw/uVPERCweTxjHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jH2eHfaggO9TTSNj7380PwPX1q+/TqqIBg7iYoU2l9GlYcNylE4tCxBytGe62he8HU5rFtTeIV1mX07BCuZtdWbbSRGxZnK/lspacHyuC4C93j6jgpL+p9UenV8AWgWC6PaVprdmAzgMbvmP588s6zISYcjlv+sCa5PSVfeIBU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FEntuOJe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uQOkgd2cCbxNZA1YUX6gOBeVCgjYDzQSBwUp0L5fm9PMKlZZpbHHlaibC7kMeBActubhGvf8JJdbw9KgwIWS9FLENlNLvmOMiXSI/TDdqLMiYHz15I+dcEOllwmlzjJ+8Lo5Ac1iSBCcaL0aEZfIwXRK2GUdmksAKBQTcNKWoIw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yxCFAlla; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FEntuOJe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EBAC4AF0D;
-	Thu, 15 Aug 2024 14:19:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yxCFAlla"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E327EC32786;
+	Thu, 15 Aug 2024 14:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731591;
-	bh=R65dzwqoiX6c12McE9yHT1Au1TyGyovnKaArqQ+g9MA=;
+	s=korg; t=1723731594;
+	bh=iCxfgtAlR+xJiZuFxkWjVG2RHGPKw/uVPERCweTxjHI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FEntuOJe3T5ncl6ygIMc0hY7lcLk5d7sja8/coFDV4ENHLfKoMik0OvJDB17OB9Os
-	 qAjXz5+pAjHaY7JG3Y0dZnWOvYfmbfyY8K7xZ5sucvFUcB7kFq5sFUcz+kTTb4nM5O
-	 br/mkRwu1KPnOTRTox8ng2J0KJFum5HgWwkSC/iI=
+	b=yxCFAllaAYngUxQOM7QhSS4OpHl5BAyh77nNjpnCqSsybnLjXBUiDfxaA/S4uQiIy
+	 wpyUOYak1PUYosKSPWDTQy9ZJyiyK7ihyNmPM9kLycm/jbUtxTrTSUyHrB/02VS3bz
+	 7SAMeN1Estu9c/Bx2ANov3LD5LIbqJZSSTWqMOeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
-	Tatsunosuke Tobita <tatsunosuke.wacom@gmail.com>,
-	Ping Cheng <ping.cheng@wacom.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 5.4 178/259] HID: wacom: Modify pen IDs
-Date: Thu, 15 Aug 2024 15:25:11 +0200
-Message-ID: <20240815131909.652819519@linuxfoundation.org>
+	Al Viro <viro@zeniv.linux.org.uk>
+Subject: [PATCH 5.4 179/259] protect the fetch of ->fd[fd] in do_dup2() from mispredictions
+Date: Thu, 15 Aug 2024 15:25:12 +0200
+Message-ID: <20240815131909.691966354@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,43 +49,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-commit f0d17d696dfce77c9abc830e4ac2d677890a2dad upstream.
+commit 8aa37bde1a7b645816cda8b80df4753ecf172bf1 upstream.
 
-The pen ID, 0x80842, was not the correct ID for wacom driver to
-treat. The ID was corrected to 0x8842.
-Also, 0x4200 was not the expected ID used on any Wacom device.
-Therefore, 0x4200 was removed.
+both callers have verified that fd is not greater than ->max_fds;
+however, misprediction might end up with
+        tofree = fdt->fd[fd];
+being speculatively executed.  That's wrong for the same reasons
+why it's wrong in close_fd()/file_close_fd_locked(); the same
+solution applies - array_index_nospec(fd, fdt->max_fds) could differ
+from fd only in case of speculative execution on mispredicted path.
 
-Signed-off-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
-Signed-off-by: Tatsunosuke Tobita <tatsunosuke.wacom@gmail.com>
-Fixes: bfdc750c4cb2 ("HID: wacom: add three styli to wacom_intuos_get_tool_type")
-Cc: stable@kernel.org #6.2
-Reviewed-by: Ping Cheng <ping.cheng@wacom.com>
-Link: https://patch.msgid.link/20240709055729.17158-1-tatsunosuke.wacom@gmail.com
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/wacom_wac.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/file.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -714,13 +714,12 @@ static int wacom_intuos_get_tool_type(in
- 	case 0x8e2: /* IntuosHT2 pen */
- 	case 0x022:
- 	case 0x200: /* Pro Pen 3 */
--	case 0x04200: /* Pro Pen 3 */
- 	case 0x10842: /* MobileStudio Pro Pro Pen slim */
- 	case 0x14802: /* Intuos4/5 13HD/24HD Classic Pen */
- 	case 0x16802: /* Cintiq 13HD Pro Pen */
- 	case 0x18802: /* DTH2242 Pen */
- 	case 0x10802: /* Intuos4/5 13HD/24HD General Pen */
--	case 0x80842: /* Intuos Pro and Cintiq Pro 3D Pen */
-+	case 0x8842: /* Intuos Pro and Cintiq Pro 3D Pen */
- 		tool_type = BTN_TOOL_PEN;
- 		break;
- 
+--- a/fs/file.c
++++ b/fs/file.c
+@@ -908,6 +908,7 @@ __releases(&files->file_lock)
+ 	 * tables and this condition does not arise without those.
+ 	 */
+ 	fdt = files_fdtable(files);
++	fd = array_index_nospec(fd, fdt->max_fds);
+ 	tofree = fdt->fd[fd];
+ 	if (!tofree && fd_is_open(fd, fdt))
+ 		goto Ebusy;
 
 
