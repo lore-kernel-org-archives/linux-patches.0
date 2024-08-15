@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429D81BC067;
-	Thu, 15 Aug 2024 14:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFEF41BC9F9;
+	Thu, 15 Aug 2024 14:06:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730778; cv=none; b=nnUVbjO0/kQmXbgI925MRMzOb+HjmNuYZ/bzIrbYYJry0MHX+tjkxNQcNoi/E8Ra91PXyDppTy5I5jAykPdV2LlsmRsy6XgjfUliTYbhbtIg2s7UQX0hePMIQ0kkgNe/RhhhcXmJHqYO3KtkBsGARbCvNLW3JNgisFrvGuNKPm4=
+	t=1723730781; cv=none; b=D/7r7ytgSLkP8oy1jukmBtjm2qp3pCC4U16ltgP6gQAQq2hmEwzsLq7phLfpu5W275rznnc9hRubrbUZLAYtcdMqK5vXigjgn1wtCfd/tdNiasjizIs5S1qcESPilu9VoQxXWgmXnfFcqinOteL+F79bcjGqvcxp6kctcv0tmJk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730778; c=relaxed/simple;
-	bh=mU2Ommb+vtnjDdOjtMujex3BEb0n7WXmaq6Vy7sR5wI=;
+	s=arc-20240116; t=1723730781; c=relaxed/simple;
+	bh=Op8R5ebSLX8lZn2mW8QsPH459E4iDNBpev3ENWcayEQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JT4DcaHSPIuJALOUo9EKBn9fay3MVrjcSQVbyaZ0X6x59/iIKpS38I3t6fx7DAykhqsOMhn/Erh7v6cmIw4HNydgSIPCs5DZhlhc7WlyFzEkuDULfhwMFDXSX5oGkIZKM7It3c76bDNz0OsDHzvCfJjv4/3uqvLq35mUEJAN8Z0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gykr7V93; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RoAaUUdV4B3CvwHl7wwsOF60GeegjcEVgtOAQ5FXWe6Cb9PXkV3cXwiACPJN7a9g8gUug9c3xWv8W9zqo5EXRmAX6OMVKqBaf///HT0t2td0yNgdO8Kz6uAZydwSZFThnB4V/EaRmLmABP5Nuw0nyqvQVjQBwmQFQvCaLuf1Yn4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iq+qbADQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gykr7V93"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B044DC32786;
-	Thu, 15 Aug 2024 14:06:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iq+qbADQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0870EC4AF0A;
+	Thu, 15 Aug 2024 14:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730778;
-	bh=mU2Ommb+vtnjDdOjtMujex3BEb0n7WXmaq6Vy7sR5wI=;
+	s=korg; t=1723730781;
+	bh=Op8R5ebSLX8lZn2mW8QsPH459E4iDNBpev3ENWcayEQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gykr7V93L0bILLTt+AV04l/mU+fz8+i74yNQDllkEJCzGF29nqdhbJL37gpLpSiGG
-	 MYkvJKU4csmXclzMyT4n4v2wpCmQyPthMv8FPJiuNHfB3UHlXU6NrYu+jnUXpGhstQ
-	 tp1LZcRQCI4SM/D4mL+SIpi2iMDoaPEbMjn77PQA=
+	b=iq+qbADQarr+sLY7gnSmBHPPAnf0D57PsZ5V0usa2r1SsJEh+ir1BLt3xu4nb4qDL
+	 LQR3OOklgA1UL4WHLjFXJYevNDfbhjomgsIQ3gtnK1iqeQxVPwWjegoUMwlKorwNjY
+	 gPaaEDrUgBT1WD4FWIkqI83noS0jKCSdTkQfqCB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	hmy <huanglin@uniontech.com>,
-	Wentao Guan <guanwentao@uniontech.com>,
-	WangYuli <wangyuli@uniontech.com>,
-	Keith Busch <kbusch@kernel.org>
-Subject: [PATCH 6.1 28/38] nvme/pci: Add APST quirk for Lenovo N60z laptop
-Date: Thu, 15 Aug 2024 15:26:02 +0200
-Message-ID: <20240815131834.040603743@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 29/38] mptcp: fully established after ADD_ADDR echo on MPJ
+Date: Thu, 15 Aug 2024 15:26:03 +0200
+Message-ID: <20240815131834.077943347@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -52,39 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: WangYuli <wangyuli@uniontech.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit ab091ec536cb7b271983c0c063b17f62f3591583 upstream.
+commit d67c5649c1541dc93f202eeffc6f49220a4ed71d upstream.
 
-There is a hardware power-saving problem with the Lenovo N60z
-board. When turn it on and leave it for 10 hours, there is a
-20% chance that a nvme disk will not wake up until reboot.
+Before this patch, receiving an ADD_ADDR echo on the just connected
+MP_JOIN subflow -- initiator side, after the MP_JOIN 3WHS -- was
+resulting in an MP_RESET. That's because only ACKs with a DSS or
+ADD_ADDRs without the echo bit were allowed.
 
-Link: https://lore.kernel.org/all/2B5581C46AC6E335+9c7a81f1-05fb-4fd0-9fbb-108757c21628@uniontech.com
-Signed-off-by: hmy <huanglin@uniontech.com>
-Signed-off-by: Wentao Guan <guanwentao@uniontech.com>
-Signed-off-by: WangYuli <wangyuli@uniontech.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Not allowing the ADD_ADDR echo after an MP_CAPABLE 3WHS makes sense, as
+we are not supposed to send an ADD_ADDR before because it requires to be
+in full established mode first. For the MP_JOIN 3WHS, that's different:
+the ADD_ADDR can be sent on a previous subflow, and the ADD_ADDR echo
+can be received on the recently created one. The other peer will already
+be in fully established, so it is allowed to send that.
+
+We can then relax the conditions here to accept the ADD_ADDR echo for
+MPJ subflows.
+
+Fixes: 67b12f792d5e ("mptcp: full fully established support after ADD_ADDR")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20240731-upstream-net-20240731-mptcp-endp-subflow-signal-v1-1-c8a9b036493b@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Conflicts in options.c, because the context has changed in commit
+  b3ea6b272d79 ("mptcp: consolidate initial ack seq generation"), which
+  is not in this version. This commit is unrelated to this
+  modification. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/mptcp/options.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -3109,6 +3109,13 @@ static unsigned long check_vendor_combin
- 			return NVME_QUIRK_FORCE_NO_SIMPLE_SUSPEND;
+--- a/net/mptcp/options.c
++++ b/net/mptcp/options.c
+@@ -950,7 +950,8 @@ static bool check_fully_established(stru
  	}
  
-+	/*
-+	 * NVMe SSD drops off the PCIe bus after system idle
-+	 * for 10 hours on a Lenovo N60z board.
-+	 */
-+	if (dmi_match(DMI_BOARD_NAME, "LXKT-ZXEG-N6"))
-+		return NVME_QUIRK_NO_APST;
-+
- 	return 0;
- }
- 
+ 	if (((mp_opt->suboptions & OPTION_MPTCP_DSS) && mp_opt->use_ack) ||
+-	    ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) && !mp_opt->echo)) {
++	    ((mp_opt->suboptions & OPTION_MPTCP_ADD_ADDR) &&
++	     (!mp_opt->echo || subflow->mp_join))) {
+ 		/* subflows are fully established as soon as we get any
+ 		 * additional ack, including ADD_ADDR.
+ 		 */
 
 
