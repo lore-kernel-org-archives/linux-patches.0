@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01F341AC896;
-	Thu, 15 Aug 2024 14:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442773214;
+	Thu, 15 Aug 2024 14:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723732071; cv=none; b=rLmb7ZfP+OK4Fm5GGGgUKqEpKm9zr0d7un6A9nsdn+KoWAlNeqj4h7BjbGcqoJIbA+R0LmCkAmMQueDZZQzV32j/soSTTaVApu8B8YLp31EhlpV3Aa1kCOv7dDz7SdTOP3zbkuQYHDuRh44ubnsya1nQqNLeLqbEudsyU8uGuCM=
+	t=1723732075; cv=none; b=b7/ZfPjKywW5KEkQT95GDHhIc2sb/i7KmSZuERSoxRYy2UO4e5CBtCqLl8Alr5unkGlcLVDdfRnSdrmQVP3WfMAPTwy+QTqVl+ZOHZ4d8pI6xOKXcd4eKaKuicUNLijoAZB3WOVNPBNciS2+6M35MyF8TYLgWbxT95AV1NHSg48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723732071; c=relaxed/simple;
-	bh=NaOJe9ylIKducEnZtwUFQdimQEN8X7LobZJc6e2DO50=;
+	s=arc-20240116; t=1723732075; c=relaxed/simple;
+	bh=6v9adXiWeHWnmeKE8AdZGJxAlKKnnKMNXDdGlwIVOO0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ILEzwVzrT7dRKuzlrZPBXP2LrctWYGP7arwKYz3z8USnQ0KrXJOfl+lVaZjTyv4FkApn/sRg63opQ+Aa4RTqrAe5pO6kcPyVkW8/8TA9BbDqrJA0QEyIIeOtdZTGEmll0zUBFgYUPSJfovLjzNP+QyFMz/3/O3QrxR2pPXydKVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yektTyhi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XTEP3Czss8HrCqiuu0W1G5BRX6U2QEIZNE59WzRnxDDaWJekzXs+P6g+RSNRAXHCgjrOy4ZDOQ16IYxKvvdTGNdw1bmqB7T60oDraCrlHY6ETf4bP4pwAsr3hAQZCunSF6fgk/jsJAD9hAjpUKEgT1D6mwFBfSkuy/7+yu2ei9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BC/k7buW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yektTyhi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C9CCC32786;
-	Thu, 15 Aug 2024 14:27:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BC/k7buW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BAFBC4AF0D;
+	Thu, 15 Aug 2024 14:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723732070;
-	bh=NaOJe9ylIKducEnZtwUFQdimQEN8X7LobZJc6e2DO50=;
+	s=korg; t=1723732074;
+	bh=6v9adXiWeHWnmeKE8AdZGJxAlKKnnKMNXDdGlwIVOO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yektTyhiMU+NF96bxfaA4hqHntz7NyM0D/7XyUB3Z1TSe6MonUYTjkoZiiDSKD9Ew
-	 QKM09H1aCMlPaVPJ8hlxdoJRcuzfV5p3iajFOpZl6nLXrxhKzxBqjKVf3tjmm3gzAT
-	 EnQGWr/uUZHlwhzbC0AcUA2XF3pZvoaPvI9FOtno=
+	b=BC/k7buWIYuOex+75XLPkCCGfAecjB9QSErlt2jzw0KL440QPoQFR4UuS/WgvdL9p
+	 SMeI7L5rxtg3dQs3II5LoSNsNhcWgYuJRd5yi6pkakN1nC8TaDTH7p0vYBxKuwV2Ip
+	 IBNaeUZVe9TzxSj+hINDE90xxwEREL5IqH0clekY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taehee Yoo <ap420073@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 065/352] xdp: fix invalid wait context of page_pool_destroy()
-Date: Thu, 15 Aug 2024 15:22:11 +0200
-Message-ID: <20240815131921.754972862@linuxfoundation.org>
+Subject: [PATCH 5.10 066/352] drm/panel: boe-tv101wum-nl6: If prepare fails, disable GPIO before regulators
+Date: Thu, 15 Aug 2024 15:22:12 +0200
+Message-ID: <20240815131921.794613256@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131919.196120297@linuxfoundation.org>
 References: <20240815131919.196120297@linuxfoundation.org>
@@ -51,140 +53,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Taehee Yoo <ap420073@gmail.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 59a931c5b732ca5fc2ca727f5a72aeabaafa85ec ]
+[ Upstream commit 587c48f622374e5d47b1d515c6006a4df4dee882 ]
 
-If the driver uses a page pool, it creates a page pool with
-page_pool_create().
-The reference count of page pool is 1 as default.
-A page pool will be destroyed only when a reference count reaches 0.
-page_pool_destroy() is used to destroy page pool, it decreases a
-reference count.
-When a page pool is destroyed, ->disconnect() is called, which is
-mem_allocator_disconnect().
-This function internally acquires mutex_lock().
+The enable GPIO should clearly be set low before turning off
+regulators. That matches both the inverse order that things were
+enabled and also the order in unprepare().
 
-If the driver uses XDP, it registers a memory model with
-xdp_rxq_info_reg_mem_model().
-The xdp_rxq_info_reg_mem_model() internally increases a page pool
-reference count if a memory model is a page pool.
-Now the reference count is 2.
-
-To destroy a page pool, the driver should call both page_pool_destroy()
-and xdp_unreg_mem_model().
-The xdp_unreg_mem_model() internally calls page_pool_destroy().
-Only page_pool_destroy() decreases a reference count.
-
-If a driver calls page_pool_destroy() then xdp_unreg_mem_model(), we
-will face an invalid wait context warning.
-Because xdp_unreg_mem_model() calls page_pool_destroy() with
-rcu_read_lock().
-The page_pool_destroy() internally acquires mutex_lock().
-
-Splat looks like:
-=============================
-[ BUG: Invalid wait context ]
-6.10.0-rc6+ #4 Tainted: G W
------------------------------
-ethtool/1806 is trying to lock:
-ffffffff90387b90 (mem_id_lock){+.+.}-{4:4}, at: mem_allocator_disconnect+0x73/0x150
-other info that might help us debug this:
-context-{5:5}
-3 locks held by ethtool/1806:
-stack backtrace:
-CPU: 0 PID: 1806 Comm: ethtool Tainted: G W 6.10.0-rc6+ #4 f916f41f172891c800f2fed
-Hardware name: ASUS System Product Name/PRIME Z690-P D4, BIOS 0603 11/01/2021
-Call Trace:
-<TASK>
-dump_stack_lvl+0x7e/0xc0
-__lock_acquire+0x1681/0x4de0
-? _printk+0x64/0xe0
-? __pfx_mark_lock.part.0+0x10/0x10
-? __pfx___lock_acquire+0x10/0x10
-lock_acquire+0x1b3/0x580
-? mem_allocator_disconnect+0x73/0x150
-? __wake_up_klogd.part.0+0x16/0xc0
-? __pfx_lock_acquire+0x10/0x10
-? dump_stack_lvl+0x91/0xc0
-__mutex_lock+0x15c/0x1690
-? mem_allocator_disconnect+0x73/0x150
-? __pfx_prb_read_valid+0x10/0x10
-? mem_allocator_disconnect+0x73/0x150
-? __pfx_llist_add_batch+0x10/0x10
-? console_unlock+0x193/0x1b0
-? lockdep_hardirqs_on+0xbe/0x140
-? __pfx___mutex_lock+0x10/0x10
-? tick_nohz_tick_stopped+0x16/0x90
-? __irq_work_queue_local+0x1e5/0x330
-? irq_work_queue+0x39/0x50
-? __wake_up_klogd.part.0+0x79/0xc0
-? mem_allocator_disconnect+0x73/0x150
-mem_allocator_disconnect+0x73/0x150
-? __pfx_mem_allocator_disconnect+0x10/0x10
-? mark_held_locks+0xa5/0xf0
-? rcu_is_watching+0x11/0xb0
-page_pool_release+0x36e/0x6d0
-page_pool_destroy+0xd7/0x440
-xdp_unreg_mem_model+0x1a7/0x2a0
-? __pfx_xdp_unreg_mem_model+0x10/0x10
-? kfree+0x125/0x370
-? bnxt_free_ring.isra.0+0x2eb/0x500
-? bnxt_free_mem+0x5ac/0x2500
-xdp_rxq_info_unreg+0x4a/0xd0
-bnxt_free_mem+0x1356/0x2500
-bnxt_close_nic+0xf0/0x3b0
-? __pfx_bnxt_close_nic+0x10/0x10
-? ethnl_parse_bit+0x2c6/0x6d0
-? __pfx___nla_validate_parse+0x10/0x10
-? __pfx_ethnl_parse_bit+0x10/0x10
-bnxt_set_features+0x2a8/0x3e0
-__netdev_update_features+0x4dc/0x1370
-? ethnl_parse_bitset+0x4ff/0x750
-? __pfx_ethnl_parse_bitset+0x10/0x10
-? __pfx___netdev_update_features+0x10/0x10
-? mark_held_locks+0xa5/0xf0
-? _raw_spin_unlock_irqrestore+0x42/0x70
-? __pm_runtime_resume+0x7d/0x110
-ethnl_set_features+0x32d/0xa20
-
-To fix this problem, it uses rhashtable_lookup_fast() instead of
-rhashtable_lookup() with rcu_read_lock().
-Using xa without rcu_read_lock() here is safe.
-xa is freed by __xdp_mem_allocator_rcu_free() and this is called by
-call_rcu() of mem_xa_remove().
-The mem_xa_remove() is called by page_pool_destroy() if a reference
-count reaches 0.
-The xa is already protected by the reference count mechanism well in the
-control plane.
-So removing rcu_read_lock() for page_pool_destroy() is safe.
-
-Fixes: c3f812cea0d7 ("page_pool: do not release pool until inflight == 0.")
-Signed-off-by: Taehee Yoo <ap420073@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20240712095116.3801586-1-ap420073@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20240517143643.2.Ieac346cd0f1606948ba39ceea06b55359fe972b6@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/xdp.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/xdp.c b/net/core/xdp.c
-index fd98d6059007c..b2ad644df21f1 100644
---- a/net/core/xdp.c
-+++ b/net/core/xdp.c
-@@ -124,10 +124,8 @@ void xdp_unreg_mem_model(struct xdp_mem_info *mem)
- 		return;
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index 9e518213a54ff..c448be3d01d16 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -574,13 +574,13 @@ static int boe_panel_prepare(struct drm_panel *panel)
+ 	return 0;
  
- 	if (type == MEM_TYPE_PAGE_POOL) {
--		rcu_read_lock();
--		xa = rhashtable_lookup(mem_id_ht, &id, mem_id_rht_params);
-+		xa = rhashtable_lookup_fast(mem_id_ht, &id, mem_id_rht_params);
- 		page_pool_destroy(xa->page_pool);
--		rcu_read_unlock();
- 	}
+ poweroff:
++	gpiod_set_value(boe->enable_gpio, 0);
+ 	regulator_disable(boe->avee);
+ poweroffavdd:
+ 	regulator_disable(boe->avdd);
+ poweroff1v8:
+ 	usleep_range(5000, 7000);
+ 	regulator_disable(boe->pp1800);
+-	gpiod_set_value(boe->enable_gpio, 0);
+ 
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(xdp_unreg_mem_model);
 -- 
 2.43.0
 
