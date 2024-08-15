@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC701714D0;
-	Thu, 15 Aug 2024 13:30:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A291714D0;
+	Thu, 15 Aug 2024 13:30:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723728632; cv=none; b=WfHs+1Fzqi9mTpQxXdOYtkhuGpTJwmMA6ID4r0xtSFrgPa9aShxkoMbact08UAIAuCVG9OIUsbX/cmaOviUoMSh0KWtNvhXaT35UXOzkrF8ZyyJIDy5hVy8TwX+ldMDUubmct3ql0IAJy+ila9sug+FoFQrTiVJ+Ri1xGAU2rxs=
+	t=1723728634; cv=none; b=ar5GDxQh/nSFVkveL06bMrvUIV0A1F3egRuKAkjbjklypANaZt0MIHzHQNcWbE1Ibvta6PjhqweHVbudtALV0AXXnSdLApJ678VEsjEoRWFQ9JcsZu/FSxhZAPqESUqsnf2a2xT4bJQbTYAtlU6zyytkqq3IWiX262UTVctoFg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723728632; c=relaxed/simple;
-	bh=79mAW10kLEx27krBKASFmqC6eukB7dBofVbTFfGOiaM=;
+	s=arc-20240116; t=1723728634; c=relaxed/simple;
+	bh=Wc58GbuW6E0V1fPhENk6kdMLtB4ylouaqJGqud4G6wk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tVFLPXhqPbXAK0ICK5ltyfcsUSNf699pBryyLKLJDkd3mkRlazicXuZcWmPupdwFfYUZnWipA24g80I4CR0sWMJe+b85DqJNVHXvXNlHVY3YBlL1ScwafSM6H9aoT8zBC5BcVUoaXFwe7w+DSwquH+2bIJ9/08mYP2sJ5IssChg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mOSNB7f3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PZGjknRqERk08V/HGjYTbLnh4bThctGcTaCplng/5SD80mirsDR9JgYFZvxKd3na6drvuzlftqXo63YJ601kXGodiqFdjSQTPRMmHeePNx2tsv6AMsdviCeLmpP7OvlxY2TaC011plfqztA285Olvo7VsI4oeu4YsXFu7CESD9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aplbmylC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mOSNB7f3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B965C32786;
-	Thu, 15 Aug 2024 13:30:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aplbmylC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B850C32786;
+	Thu, 15 Aug 2024 13:30:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723728630;
-	bh=79mAW10kLEx27krBKASFmqC6eukB7dBofVbTFfGOiaM=;
+	s=korg; t=1723728634;
+	bh=Wc58GbuW6E0V1fPhENk6kdMLtB4ylouaqJGqud4G6wk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mOSNB7f3cbG5xfyujSoG2DkpgZfR915PsqhdS5FpSMVr+BiesCNfHo/ZXJ/5DTvHk
-	 pD3LkwqFECUgN/gIzrVzYQYlIJwFNBVZzndPnxXbBsLpGSRx80dZHNLMGsABqU2HoR
-	 SReS0qo26BqZT+mIG6uNC+iuqQjyjMU4zEDCj10s=
+	b=aplbmylCnNQsgTJQz0Butb8ULe/COPi+35ft/Hnl7W5ZvV+Rcbmob932k1bHKsvXR
+	 mdlpbkLf83DiZv0YFVa3HtTKZWRyVBAMJ9fyKgBwpEAUbYZZ/uUUIR1KFLPcfPno7A
+	 LpHWXUYQxAI5lOLKOWCSbXM20Xvg2USQFTXTgCvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lidong Wang <lidong.wang@intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 043/196] PCI: Fix resource double counting on remove & rescan
-Date: Thu, 15 Aug 2024 15:22:40 +0200
-Message-ID: <20240815131853.731744219@linuxfoundation.org>
+Subject: [PATCH 4.19 061/196] nilfs2: avoid undefined behavior in nilfs_cnt32_ge macro
+Date: Thu, 15 Aug 2024 15:22:58 +0200
+Message-ID: <20240815131854.411365005@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131852.063866671@linuxfoundation.org>
 References: <20240815131852.063866671@linuxfoundation.org>
@@ -47,75 +45,51 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 4.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 903534fa7d30214d8ba840ab1cd9e917e0c88e41 ]
+[ Upstream commit 0f3819e8c483771a59cf9d3190cd68a7a990083c ]
 
-pbus_size_mem() keeps the size of the optional resources in
-children_add_size. When calculating the PCI bridge window size,
-calculate_memsize() lower bounds size by old_size before adding
-children_add_size and performing the window size alignment. This
-results in double counting for the resources in children_add_size
-because old_size may be based on the previous size of the bridge
-window after it has already included children_add_size (that is,
-size1 in pbus_size_mem() from an earlier invocation of that
-function).
+According to the C standard 3.4.3p3, the result of signed integer overflow
+is undefined.  The macro nilfs_cnt32_ge(), which compares two sequence
+numbers, uses signed integer subtraction that can overflow, and therefore
+the result of the calculation may differ from what is expected due to
+undefined behavior in different environments.
 
-As a result, on repeated remove of the bus & rescan cycles the resource
-size keeps increasing when children_add_size is non-zero as can be seen
-from this extract:
+Similar to an earlier change to the jiffies-related comparison macros in
+commit 5a581b367b5d ("jiffies: Avoid undefined behavior from signed
+overflow"), avoid this potential issue by changing the definition of the
+macro to perform the subtraction as unsigned integers, then cast the
+result to a signed integer for comparison.
 
-  iomem0:  23fffd00000-23fffdfffff : PCI Bus 0000:03    # 1MiB
-  iomem1:  20000000000-200001fffff : PCI Bus 0000:03    # 2MiB
-  iomem2:  20000000000-200002fffff : PCI Bus 0000:03    # 3MiB
-  iomem3:  20000000000-200003fffff : PCI Bus 0000:03    # 4MiB
-  iomem4:  20000000000-200004fffff : PCI Bus 0000:03    # 5MiB
-
-Solve the double counting by moving old_size check later in
-calculate_memsize() so that children_add_size is already accounted for.
-
-After the patch, the bridge window retains its size as expected:
-
-  iomem0:  23fffd00000-23fffdfffff : PCI Bus 0000:03    # 1MiB
-  iomem1:  20000000000-200000fffff : PCI Bus 0000:03    # 1MiB
-  iomem2:  20000000000-200000fffff : PCI Bus 0000:03    # 1MiB
-
-Fixes: a4ac9fea016f ("PCI : Calculate right add_size")
-Link: https://lore.kernel.org/r/20240507102523.57320-2-ilpo.jarvinen@linux.intel.com
-Tested-by: Lidong Wang <lidong.wang@intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Link: https://lkml.kernel.org/r/20130727225828.GA11864@linux.vnet.ibm.com
+Link: https://lkml.kernel.org/r/20240702183512.6390-1-konishi.ryusuke@gmail.com
+Fixes: 9ff05123e3bf ("nilfs2: segment constructor")
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/setup-bus.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/nilfs2/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/setup-bus.c b/drivers/pci/setup-bus.c
-index 7f58360b42b7e..7f866c3f036fe 100644
---- a/drivers/pci/setup-bus.c
-+++ b/drivers/pci/setup-bus.c
-@@ -807,11 +807,9 @@ static resource_size_t calculate_memsize(resource_size_t size,
- 		size = min_size;
- 	if (old_size == 1)
- 		old_size = 0;
--	if (size < old_size)
--		size = old_size;
+diff --git a/fs/nilfs2/segment.c b/fs/nilfs2/segment.c
+index 62c83193a5bb8..3c4272762779c 100644
+--- a/fs/nilfs2/segment.c
++++ b/fs/nilfs2/segment.c
+@@ -136,7 +136,7 @@ static void nilfs_dispose_list(struct the_nilfs *, struct list_head *, int);
  
--	size = ALIGN(max(size, add_size) + children_add_size, align);
--	return size;
-+	size = max(size, add_size) + children_add_size;
-+	return ALIGN(max(size, old_size), align);
- }
+ #define nilfs_cnt32_ge(a, b)   \
+ 	(typecheck(__u32, a) && typecheck(__u32, b) && \
+-	 ((__s32)(a) - (__s32)(b) >= 0))
++	 ((__s32)((a) - (b)) >= 0))
  
- resource_size_t __weak pcibios_window_alignment(struct pci_bus *bus,
+ static int nilfs_prepare_segment_lock(struct super_block *sb,
+ 				      struct nilfs_transaction_info *ti)
 -- 
 2.43.0
 
