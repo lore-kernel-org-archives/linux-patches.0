@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 792E81A00F8;
-	Thu, 15 Aug 2024 14:13:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D631A08C6;
+	Thu, 15 Aug 2024 14:13:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723731230; cv=none; b=AXuTtO3QuQBGi42RB/Ixlc8KNmtox/0HH7/4SRaYTs5pjDURdZZrSjLKZb5TLAHi/p2v7MESY049drjDdOTrMw3XwWXdGvMleAaVnTgNqPUlxsYscE3ItDKRN+nOfSWUfQeXQ6bL08O1pI+Y1GTvyI8wafzfWD2EHgYF/o2cRbA=
+	t=1723731233; cv=none; b=FCI20j4GLnhQNC1xEqdASn64crlmk1M/JYF5dMN2Co2eDYps6OzCRgCR0i7Y821997l/ywruTEcH9pU6C++Xw6pKj86D9Ou2P6zFrfOsjsUmYU4w4IpwX4Y/c2KLgFe5Hor4BtePUSa83W6J3KtiMLUj9LEJnw9xFfy1WERfUJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723731230; c=relaxed/simple;
-	bh=xijjj36egfT6yOp5QhTsJ1rZc2c0RZnnLAbmeo0t7s4=;
+	s=arc-20240116; t=1723731233; c=relaxed/simple;
+	bh=eXUPHuTGj3cl6tvRXKjcaap6w/9uARGBqWzY80hfMuA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AmTkXg/UBeOGK6d9DDbsGk4ZMR/N/KEIJ3HIZh+m6kdM1rsR+9KGXmdg8hjLp6RomjP/CvdtPNzauJRcigq3SuDE3jm6Csembigjx3SdM86l3zc0QGVPYw8WyOQ9/Du4jKj2ckPsqjOoHyq6gGQX8xKzI4WlWOtkwddZjGr9QFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKk6LC+g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RzG0d891U7UopNaS+TbRuptw2mYxkr/wfx2ZpsrGE1JQSUPgJG5vdYM2dihFqaL7cUbeabpa2EGIMsdRRvuSJKniehhkH/io21fTKRlzOvQiYXrXgzeoLgFEOsk1YiCzT6pGA2oz5eG+AX/GuV5Ik2aZWDxbI8fE3rIcY2q0Fbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LGaAp/lh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKk6LC+g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1E39C32786;
-	Thu, 15 Aug 2024 14:13:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LGaAp/lh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420E8C4AF0A;
+	Thu, 15 Aug 2024 14:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723731230;
-	bh=xijjj36egfT6yOp5QhTsJ1rZc2c0RZnnLAbmeo0t7s4=;
+	s=korg; t=1723731233;
+	bh=eXUPHuTGj3cl6tvRXKjcaap6w/9uARGBqWzY80hfMuA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EKk6LC+gIuho/2d3PiBSK4YtI7ynSR0qsaooxmmvit7Wp1v7Q8n00y5G9hZAfoOIK
-	 hQsW/HwAYVsi4MOR8TJCgSmL3yMvk2HqoODVa4zvusH1FCtHtw+ls9TW6MgsnZvXob
-	 N4CaGu3t2ZLOh2N3+H6GalvvogOlYd+ixK5GahIU=
+	b=LGaAp/lhgo/G0QDiM2DtlPOiFkA534zNRTMJtaBnH12hAmpBZwQgqLUfNaC2Jxkgn
+	 Msz1OjL3MsXdPL1psdmSdXb9YqiXCaI3B5bR9W1pAVeJNtOxDOWIGJSRYrPQ5l+keL
+	 bsYH3KePF5SOZ9gqeN+OAW3GfZX6g0tU2JpxYv4Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geliang Tang <tanggeliang@kylinos.cn>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
+	Alexander Zubkov <green@qrator.net>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Amit Cohen <amcohen@nvidia.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/259] selftests/bpf: Check length of recv in test_sockmap
-Date: Thu, 15 Aug 2024 15:22:45 +0200
-Message-ID: <20240815131904.037320634@linuxfoundation.org>
+Subject: [PATCH 5.4 033/259] lib: objagg: Fix general protection fault
+Date: Thu, 15 Aug 2024 15:22:46 +0200
+Message-ID: <20240815131904.076391320@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131902.779125794@linuxfoundation.org>
 References: <20240815131902.779125794@linuxfoundation.org>
@@ -53,38 +55,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geliang Tang <tanggeliang@kylinos.cn>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit de1b5ea789dc28066cc8dc634b6825bd6148f38b ]
+[ Upstream commit b4a3a89fffcdf09702b1f161b914e52abca1894d ]
 
-The value of recv in msg_loop may be negative, like EWOULDBLOCK, so it's
-necessary to check if it is positive before accumulating it to bytes_recvd.
+The library supports aggregation of objects into other objects only if
+the parent object does not have a parent itself. That is, nesting is not
+supported.
 
-Fixes: 16962b2404ac ("bpf: sockmap, add selftests")
-Signed-off-by: Geliang Tang <tanggeliang@kylinos.cn>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Tested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/bpf/5172563f7c7b2a2e953cef02e89fc34664a7b190.1716446893.git.tanggeliang@kylinos.cn
+Aggregation happens in two cases: Without and with hints, where hints
+are a pre-computed recommendation on how to aggregate the provided
+objects.
+
+Nesting is not possible in the first case due to a check that prevents
+it, but in the second case there is no check because the assumption is
+that nesting cannot happen when creating objects based on hints. The
+violation of this assumption leads to various warnings and eventually to
+a general protection fault [1].
+
+Before fixing the root cause, error out when nesting happens and warn.
+
+[1]
+general protection fault, probably for non-canonical address 0xdead000000000d90: 0000 [#1] PREEMPT SMP PTI
+CPU: 1 PID: 1083 Comm: kworker/1:9 Tainted: G        W          6.9.0-rc6-custom-gd9b4f1cca7fb #7
+Hardware name: Mellanox Technologies Ltd. MSN3700/VMOD0005, BIOS 5.11 01/06/2019
+Workqueue: mlxsw_core mlxsw_sp_acl_tcam_vregion_rehash_work
+RIP: 0010:mlxsw_sp_acl_erp_bf_insert+0x25/0x80
+[...]
+Call Trace:
+ <TASK>
+ mlxsw_sp_acl_atcam_entry_add+0x256/0x3c0
+ mlxsw_sp_acl_tcam_entry_create+0x5e/0xa0
+ mlxsw_sp_acl_tcam_vchunk_migrate_one+0x16b/0x270
+ mlxsw_sp_acl_tcam_vregion_rehash_work+0xbe/0x510
+ process_one_work+0x151/0x370
+ worker_thread+0x2cb/0x3e0
+ kthread+0xd0/0x100
+ ret_from_fork+0x34/0x50
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
+
+Fixes: 9069a3817d82 ("lib: objagg: implement optimization hints assembly and use hints for object creation")
+Reported-by: Alexander Zubkov <green@qrator.net>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Amit Cohen <amcohen@nvidia.com>
+Tested-by: Alexander Zubkov <green@qrator.net>
+Signed-off-by: Petr Machata <petrm@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/test_sockmap.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/objagg.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/test_sockmap.c b/tools/testing/selftests/bpf/test_sockmap.c
-index 779e11da979c8..5e5648ed0b11f 100644
---- a/tools/testing/selftests/bpf/test_sockmap.c
-+++ b/tools/testing/selftests/bpf/test_sockmap.c
-@@ -552,7 +552,8 @@ static int msg_loop(int fd, int iov_count, int iov_length, int cnt,
- 				}
- 			}
+diff --git a/lib/objagg.c b/lib/objagg.c
+index 55621fb82e0a3..e380e95de7702 100644
+--- a/lib/objagg.c
++++ b/lib/objagg.c
+@@ -167,6 +167,9 @@ static int objagg_obj_parent_assign(struct objagg *objagg,
+ {
+ 	void *delta_priv;
  
--			s->bytes_recvd += recv;
-+			if (recv > 0)
-+				s->bytes_recvd += recv;
- 
- 			if (data) {
- 				int chunk_sz = opt->sendpage ?
++	if (WARN_ON(!objagg_obj_is_root(parent)))
++		return -EINVAL;
++
+ 	delta_priv = objagg->ops->delta_create(objagg->priv, parent->obj,
+ 					       objagg_obj->obj);
+ 	if (IS_ERR(delta_priv))
 -- 
 2.43.0
 
