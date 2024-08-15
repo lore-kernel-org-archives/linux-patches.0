@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F901714A1;
-	Thu, 15 Aug 2024 13:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FCE1714D9;
+	Thu, 15 Aug 2024 13:47:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729617; cv=none; b=MyZqBa3U/u1P/zPJtJ5CxjaFscuT3Ls+SlmkoVoTBk3Mr5OSP9SpaTQUOWpiK8ZT5GmstgwPpgLtyiW3LaiMrVTNu1EWvIwLoAHGG3EejT7cZO7kdlQRvQwE4mr4P8takxnLbWCX4Idt872pNVfvUsSGor6deamHNNpTpZKpOSw=
+	t=1723729620; cv=none; b=lUbcPx9/xoT+tRpNCQCV6PgFzSlKEpJBLiKB4n5fhS4sUfCqVXvRC4qWqvdoBzQcF0G9Idaj/0TRpKr6Ez7PEda/KYcCAU+nqx6VldgtFm956uoIPYi7ktMu0nXv6p4jzCdt6uL4vl65Jpg0rn+HT8mF/tG2gFdc0DF7pDurPGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729617; c=relaxed/simple;
-	bh=lD2JUS0piJenY8WGqZO4St/DL4kQ26r6gRK/2/8gc04=;
+	s=arc-20240116; t=1723729620; c=relaxed/simple;
+	bh=4uqR8v+ohzKwGDQ9TnzVFfc11Ewv6ibORF+eSE6+LhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GVRlhqTOlSfdyw3IpwB+mSJbFfAF8trdXrn5VkULUshkyWjt1gIxYJBiJyt688u5EF1y3WiGBPI8RjqIZyEbMN4YR6zsEQK5lv8tMl3IF78RPn/XlOYRCv7UbYTTTJY+C/6O5eSZOt5b71XF//ZLuV/sWIfXOqIJkQEfzsfdpgc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wUhy3hPR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hW5GYgLsPsvTmEmrVFap9aAzBKrQHHhl4eoghKpEUPwruGuHQdohUPYyEeCye0G6CUiBwuJU0Lu4o0oaHE+IrI0SSRgTJti7hlLpPTY9o8T4CBheNWU3bYKHIy6bYG9y+9JknQ2q8MxYTePeDY5uvpZMg8mlR0eOA2x4mYNBl24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OIrH5g/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wUhy3hPR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7075CC32786;
-	Thu, 15 Aug 2024 13:46:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OIrH5g/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8609FC32786;
+	Thu, 15 Aug 2024 13:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729616;
-	bh=lD2JUS0piJenY8WGqZO4St/DL4kQ26r6gRK/2/8gc04=;
+	s=korg; t=1723729619;
+	bh=4uqR8v+ohzKwGDQ9TnzVFfc11Ewv6ibORF+eSE6+LhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wUhy3hPRL7JAMZ7TZXy8pZ+r7P/i/PESHG/ctWSFnQWkDf08F2vEKml9AgiqIXvNY
-	 26lzf+A1GUY5cbPnUXTuMu5Bh/zzoha30ZQcmYwJyX0zM7/iog1NuCoi68EEtxLjJg
-	 fJchxrJfFpL3WrMy0TnWWBbGVmuVXewThB6rP0R0=
+	b=OIrH5g/Ro3b8wKGbiVZltgYuTqEVgTe9gNWI64QJxKFQGWhxot8pb+aE7gfgmxJDZ
+	 mSIWAsoTYWhcADRZ62dDN3B6i+b5mC5FIj9U9ovyiTFrjI6Rz0Ox1o88ESzTVHMRqP
+	 X/nJmfM3Mw65jbk2kzDFT/fWDDlqxjSdT9pqtJ7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Yashin <dmt.yashin@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/484] pinctrl: rockchip: update rk3308 iomux routes
-Date: Thu, 15 Aug 2024 15:20:12 +0200
-Message-ID: <20240815131947.364652868@linuxfoundation.org>
+Subject: [PATCH 5.15 155/484] pinctrl: core: fix possible memory leak when pinctrl_enable() fails
+Date: Thu, 15 Aug 2024 15:20:13 +0200
+Message-ID: <20240815131947.401945803@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -52,58 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Yashin <dmt.yashin@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a8f2548548584549ea29d43431781d67c4afa42b ]
+[ Upstream commit ae1cf4759972c5fe665ee4c5e0c29de66fe3cf4a ]
 
-Some of the rk3308 iomux routes in rk3308_mux_route_data belong to
-the rk3308b SoC. Remove them and correct i2c3 routes.
+In devm_pinctrl_register(), if pinctrl_enable() fails in pinctrl_register(),
+the "pctldev" has not been added to dev resources, so devm_pinctrl_dev_release()
+can not be called, it leads memory leak.
 
-Fixes: 7825aeb7b208 ("pinctrl: rockchip: add rk3308 SoC support")
-Signed-off-by: Dmitry Yashin <dmt.yashin@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20240515121634.23945-2-dmt.yashin@gmail.com
+Introduce pinctrl_uninit_controller(), call it in the error path to free memory.
+
+Fixes: 5038a66dad01 ("pinctrl: core: delete incorrect free in pinctrl_enable()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://lore.kernel.org/r/20240606023704.3931561-2-yangyingliang@huawei.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 17 ++---------------
- 1 file changed, 2 insertions(+), 15 deletions(-)
+ drivers/pinctrl/core.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index 4ff70527755a3..790467dcde4f5 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -748,9 +748,8 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(0, RK_PC3, 1, 0x314, BIT(16 + 0) | BIT(0)), /* rtc_clk */
- 	RK_MUXROUTE_SAME(1, RK_PC6, 2, 0x314, BIT(16 + 2) | BIT(16 + 3)), /* uart2_rxm0 */
- 	RK_MUXROUTE_SAME(4, RK_PD2, 2, 0x314, BIT(16 + 2) | BIT(16 + 3) | BIT(2)), /* uart2_rxm1 */
--	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x608, BIT(16 + 8) | BIT(16 + 9)), /* i2c3_sdam0 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(8)), /* i2c3_sdam1 */
--	RK_MUXROUTE_SAME(2, RK_PA0, 3, 0x608, BIT(16 + 8) | BIT(16 + 9) | BIT(9)), /* i2c3_sdam2 */
-+	RK_MUXROUTE_SAME(0, RK_PB7, 2, 0x314, BIT(16 + 4)), /* i2c3_sdam0 */
-+	RK_MUXROUTE_SAME(3, RK_PB4, 2, 0x314, BIT(16 + 4) | BIT(4)), /* i2c3_sdam1 */
- 	RK_MUXROUTE_SAME(1, RK_PA3, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclktxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PA4, 2, 0x308, BIT(16 + 3)), /* i2s-8ch-1-sclkrxm0 */
- 	RK_MUXROUTE_SAME(1, RK_PB5, 2, 0x308, BIT(16 + 3) | BIT(3)), /* i2s-8ch-1-sclktxm1 */
-@@ -759,18 +758,6 @@ static struct rockchip_mux_route_data rk3308_mux_route_data[] = {
- 	RK_MUXROUTE_SAME(1, RK_PB6, 4, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* pdm-clkm1 */
- 	RK_MUXROUTE_SAME(2, RK_PA6, 2, 0x308, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* pdm-clkm2 */
- 	RK_MUXROUTE_SAME(2, RK_PA4, 3, 0x600, BIT(16 + 2) | BIT(2)), /* pdm-clkm-m2 */
--	RK_MUXROUTE_SAME(3, RK_PB2, 3, 0x314, BIT(16 + 9)), /* spi1_miso */
--	RK_MUXROUTE_SAME(2, RK_PA4, 2, 0x314, BIT(16 + 9) | BIT(9)), /* spi1_miso_m1 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 3, 0x314, BIT(16 + 10) | BIT(16 + 11)), /* owire_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 7, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(10)), /* owire_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 5, 0x314, BIT(16 + 10) | BIT(16 + 11) | BIT(11)), /* owire_m2 */
--	RK_MUXROUTE_SAME(0, RK_PB3, 2, 0x314, BIT(16 + 12) | BIT(16 + 13)), /* can_rxd_m0 */
--	RK_MUXROUTE_SAME(1, RK_PC6, 5, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(12)), /* can_rxd_m1 */
--	RK_MUXROUTE_SAME(2, RK_PA2, 4, 0x314, BIT(16 + 12) | BIT(16 + 13) | BIT(13)), /* can_rxd_m2 */
--	RK_MUXROUTE_SAME(1, RK_PC4, 3, 0x314, BIT(16 + 14)), /* mac_rxd0_m0 */
--	RK_MUXROUTE_SAME(4, RK_PA2, 2, 0x314, BIT(16 + 14) | BIT(14)), /* mac_rxd0_m1 */
--	RK_MUXROUTE_SAME(3, RK_PB4, 4, 0x314, BIT(16 + 15)), /* uart3_rx */
--	RK_MUXROUTE_SAME(0, RK_PC1, 3, 0x314, BIT(16 + 15) | BIT(15)), /* uart3_rx_m1 */
- };
+diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
+index f567805cbde8e..8f4cc52b2a066 100644
+--- a/drivers/pinctrl/core.c
++++ b/drivers/pinctrl/core.c
+@@ -2062,6 +2062,14 @@ pinctrl_init_controller(struct pinctrl_desc *pctldesc, struct device *dev,
+ 	return ERR_PTR(ret);
+ }
  
- static struct rockchip_mux_route_data rk3328_mux_route_data[] = {
++static void pinctrl_uninit_controller(struct pinctrl_dev *pctldev, struct pinctrl_desc *pctldesc)
++{
++	pinctrl_free_pindescs(pctldev, pctldesc->pins,
++			      pctldesc->npins);
++	mutex_destroy(&pctldev->mutex);
++	kfree(pctldev);
++}
++
+ static int pinctrl_claim_hogs(struct pinctrl_dev *pctldev)
+ {
+ 	pctldev->p = create_pinctrl(pctldev->dev, pctldev);
+@@ -2142,8 +2150,10 @@ struct pinctrl_dev *pinctrl_register(struct pinctrl_desc *pctldesc,
+ 		return pctldev;
+ 
+ 	error = pinctrl_enable(pctldev);
+-	if (error)
++	if (error) {
++		pinctrl_uninit_controller(pctldev, pctldesc);
+ 		return ERR_PTR(error);
++	}
+ 
+ 	return pctldev;
+ }
 -- 
 2.43.0
 
