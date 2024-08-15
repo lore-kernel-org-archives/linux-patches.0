@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C4D144376;
-	Thu, 15 Aug 2024 13:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27CF544376;
+	Thu, 15 Aug 2024 13:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729563; cv=none; b=gZnRpRpExIbwdEQcpVIEa84YSLUxscRtCiGUrhld7GKLKTLi+KaQVXbedVfPTG0RHqI0yTsowpta2fSaDE6SoruSUOZHFYSpncFLwx53+Wz+jhXX+LGmdYXfCya3tvIPbDB6UmatXfVunFJEY0VNMXdbgJSyGZUvdHW2zaFGnoY=
+	t=1723729566; cv=none; b=ijXNWNbbPG3KDeHjfnVLkAjZGIiOaFnT+WFHgGOmQGcDYbyEzCjp7spPIFwqVqnuzsX5LCVyPvvxnk/zOl+8rwU5PapuKQ/Fuk5dnhSDdieAK9erLCwr4wp64KeqD3qugW5wzQj0DrfOusFsoqr0HTI9FoDZBzJjrc65V/xyjIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729563; c=relaxed/simple;
-	bh=zHMZZQbRpFeOyktIXZvA4ZGNBpkfFLtCQUpa3pizDc8=;
+	s=arc-20240116; t=1723729566; c=relaxed/simple;
+	bh=qYZnwUxG76+N3wW1/XxdO6eU3zWWkCcKrZNsVUD+rVM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VlHpoG6hiBEsnhI1VH2tEN+eOuBKPnRL0R2TBfgUswAadq6//a4x+lH+7gpnTEvC1D0MN7PiwPHVa7lqKVZnxMXiiIaZraC+TyN/0KpX1fmGQXarNMcLsnKydJvkYiPog0pIpbNc1/DyQ2cCS8x0ZAuLsjLOj4PSPUFtlMEuDjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cpZ3pjun; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=diGoPZ9ZEFaqcINk9GV1BCh3fIFXLtRBB6Mb776Zo3fzoSB5fWhQC7X5n6HNWrjB7DLYuI4mpB9Zo9unTIdGbLRA94OpVsrMIgBHAcfYcUN1NDSyewVWLY+4+/PcLZrjbbWVQw5dArA5WapFjgyez0XVGalrUrnp4Lbo4zxTiLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HrVHA12M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cpZ3pjun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF99C4AF0C;
-	Thu, 15 Aug 2024 13:46:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HrVHA12M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B61AC32786;
+	Thu, 15 Aug 2024 13:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729563;
-	bh=zHMZZQbRpFeOyktIXZvA4ZGNBpkfFLtCQUpa3pizDc8=;
+	s=korg; t=1723729566;
+	bh=qYZnwUxG76+N3wW1/XxdO6eU3zWWkCcKrZNsVUD+rVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cpZ3pjunqnwF5K0u50ua3onUoiILjudw2ejlNkVwcoYSLM3s+u2E+1GP+6Asxv2Lt
-	 AqDB58F4p9VdSvOZ/RMGc9PcVWCfbwOuWebeaX8kOAjY8fvjmZBzOgE8fIzTauC2fk
-	 RyMWGmUYrsF9qpUbDbY/fIIS/Jds7u5oEyiep+YM=
+	b=HrVHA12M2sKbmpe7V3lyRAUxztf2X2+4e3yJVlSTziuKTdBW9bEcswaMPJDfS3aSc
+	 4+DMm96GOZC5XYLaBijigxXP27sN2Gh6vb0dqXl0w+KG5NGXsMFVp4gdZZ1/aZNQIv
+	 +xUex9EQvu8OWKWtxBLWWwx3nvq6D9lh2UxCpeg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Nick Bowler <nbowler@draconx.ca>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 138/484] powerpc/xmon: Fix disassembly CPU feature checks
-Date: Thu, 15 Aug 2024 15:19:56 +0200
-Message-ID: <20240815131946.738243751@linuxfoundation.org>
+Subject: [PATCH 5.15 139/484] macintosh/therm_windtunnel: fix module unload.
+Date: Thu, 15 Aug 2024 15:19:57 +0200
+Message-ID: <20240815131946.777074457@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -50,97 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Nick Bowler <nbowler@draconx.ca>
 
-[ Upstream commit 14196e47c5ffe32af7ed5a51c9e421c5ea5bccce ]
+[ Upstream commit fd748e177194ebcbbaf98df75152a30e08230cc6 ]
 
-In the xmon disassembly code there are several CPU feature checks to
-determine what dialects should be passed to the disassembler. The
-dialect controls which instructions the disassembler will recognise.
+The of_device_unregister call in therm_windtunnel's module_exit procedure
+does not fully reverse the effects of of_platform_device_create in the
+module_init prodedure.  Once you unload this module, it is impossible
+to load it ever again since only the first of_platform_device_create
+call on the fan node succeeds.
 
-Unfortunately the checks are incorrect, because instead of passing a
-single CPU feature they are passing a mask of feature bits.
+This driver predates first git commit, and it turns out back then
+of_platform_device_create worked differently than it does today.
+So this is actually an old regression.
 
-For example the code:
+The appropriate function to undo of_platform_device_create now appears
+to be of_platform_device_destroy, and switching to use this makes it
+possible to unload and load the module as expected.
 
-  if (cpu_has_feature(CPU_FTRS_POWER5))
-      dialect |= PPC_OPCODE_POWER5;
-
-Is trying to check if the system is running on a Power5 CPU. But
-CPU_FTRS_POWER5 is a mask of *all* the feature bits that are enabled on
-a Power5.
-
-In practice the test will always return true for any 64-bit CPU, because
-at least one bit in the mask will be present in the CPU_FTRS_ALWAYS
-mask.
-
-Similarly for all the other checks against CPU_FTRS_xx masks.
-
-Rather than trying to match the disassembly behaviour exactly to the
-current CPU, just differentiate between 32-bit and 64-bit, and Altivec,
-VSX and HTM.
-
-That will cause some instructions to be shown in disassembly even
-on a CPU that doesn't support them, but that's OK, objdump -d output
-has the same behaviour, and if anything it's less confusing than some
-instructions not being disassembled.
-
-Fixes: 897f112bb42e ("[POWERPC] Import updated version of ppc disassembly code for xmon")
+Signed-off-by: Nick Bowler <nbowler@draconx.ca>
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://msgid.link/20240509121248.270878-2-mpe@ellerman.id.au
+Link: https://msgid.link/20240711035428.16696-1-nbowler@draconx.ca
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/xmon/ppc-dis.c | 33 +++++++++++----------------------
- 1 file changed, 11 insertions(+), 22 deletions(-)
+ drivers/macintosh/therm_windtunnel.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/xmon/ppc-dis.c b/arch/powerpc/xmon/ppc-dis.c
-index 75fa98221d485..af105e1bc3fca 100644
---- a/arch/powerpc/xmon/ppc-dis.c
-+++ b/arch/powerpc/xmon/ppc-dis.c
-@@ -122,32 +122,21 @@ int print_insn_powerpc (unsigned long insn, unsigned long memaddr)
-   bool insn_is_short;
-   ppc_cpu_t dialect;
+diff --git a/drivers/macintosh/therm_windtunnel.c b/drivers/macintosh/therm_windtunnel.c
+index f55f6adf5e5ff..49805eb4d145a 100644
+--- a/drivers/macintosh/therm_windtunnel.c
++++ b/drivers/macintosh/therm_windtunnel.c
+@@ -549,7 +549,7 @@ g4fan_exit( void )
+ 	platform_driver_unregister( &therm_of_driver );
  
--  dialect = PPC_OPCODE_PPC | PPC_OPCODE_COMMON
--            | PPC_OPCODE_64 | PPC_OPCODE_POWER4 | PPC_OPCODE_ALTIVEC;
-+  dialect = PPC_OPCODE_PPC | PPC_OPCODE_COMMON;
+ 	if( x.of_dev )
+-		of_device_unregister( x.of_dev );
++		of_platform_device_destroy(&x.of_dev->dev, NULL);
+ }
  
--  if (cpu_has_feature(CPU_FTRS_POWER5))
--    dialect |= PPC_OPCODE_POWER5;
-+  if (IS_ENABLED(CONFIG_PPC64))
-+    dialect |= PPC_OPCODE_64 | PPC_OPCODE_POWER4 | PPC_OPCODE_CELL |
-+	PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7 | PPC_OPCODE_POWER8 |
-+	PPC_OPCODE_POWER9;
- 
--  if (cpu_has_feature(CPU_FTRS_CELL))
--    dialect |= (PPC_OPCODE_CELL | PPC_OPCODE_ALTIVEC);
-+  if (cpu_has_feature(CPU_FTR_TM))
-+    dialect |= PPC_OPCODE_HTM;
- 
--  if (cpu_has_feature(CPU_FTRS_POWER6))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_ALTIVEC);
-+  if (cpu_has_feature(CPU_FTR_ALTIVEC))
-+    dialect |= PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2;
- 
--  if (cpu_has_feature(CPU_FTRS_POWER7))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
--                | PPC_OPCODE_ALTIVEC | PPC_OPCODE_VSX);
--
--  if (cpu_has_feature(CPU_FTRS_POWER8))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
--		| PPC_OPCODE_POWER8 | PPC_OPCODE_HTM
--		| PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2 | PPC_OPCODE_VSX);
--
--  if (cpu_has_feature(CPU_FTRS_POWER9))
--    dialect |= (PPC_OPCODE_POWER5 | PPC_OPCODE_POWER6 | PPC_OPCODE_POWER7
--		| PPC_OPCODE_POWER8 | PPC_OPCODE_POWER9 | PPC_OPCODE_HTM
--		| PPC_OPCODE_ALTIVEC | PPC_OPCODE_ALTIVEC2
--		| PPC_OPCODE_VSX | PPC_OPCODE_VSX3);
-+  if (cpu_has_feature(CPU_FTR_VSX))
-+    dialect |= PPC_OPCODE_VSX | PPC_OPCODE_VSX3;
- 
-   /* Get the major opcode of the insn.  */
-   opcode = NULL;
+ module_init(g4fan_init);
 -- 
 2.43.0
 
