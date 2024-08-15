@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3EC1714A8;
-	Thu, 15 Aug 2024 13:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365FA7DA9E;
+	Thu, 15 Aug 2024 13:40:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723729216; cv=none; b=J7HK4x0EjRDV15XPohTICMhThSKhqJBNvx3dHqgvN70SNstr72XrZTO+7sOx0YqMNtdzQ7pjxb/ZgjutFlOSI0zVEpsrReUQ8TBcT+wBKkFzubvtR4zfIar9+HUTN/jfaM20cUdO9+Ph+e8YB5e8l28iqN6sayXfiFcn2Y5pSsU=
+	t=1723729219; cv=none; b=OMKklrjOpkbvG/qVBid4hJ29sJTGJmuENkq0dCmQG0EkQSukCvnoB/adjU2kJ6JZ7pbQGJPC9USLC1U0WJkKCJQsWjKKT3s5COYwY1OMDI+eKlsJcTw9Q20HFiGIWJLm9+/0NHFDQ1+tmFg3GmnDu7Ml0V01jQQST1pmlQSWpk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723729216; c=relaxed/simple;
-	bh=7MweDqZkshe9Plotrs1ju4jUS58dUJHWJyFDD3CTals=;
+	s=arc-20240116; t=1723729219; c=relaxed/simple;
+	bh=+lkgELnGgAswoFj/MndNZq2Ps4Y91ktLxufGGIc7ODE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NSDCE9rJMHW79IRnt+QpSZSIiYMhxaZAx/ppDiua7XZPt8teYvDmK6oReCvwxemTATZpP6QrR89qVu/senr33o9GOsBh3LwA9w79M5k0NinV93AlefDOYdxqpltiuVegrRYnFN9S2X6SwDDEjhEl+6Do2OArxlvHd418NSLsE94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i/6yF+ds; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b8nOmgzEN+lb8tZzt9PLiBDeFaAmXnbFjQuBag8CJej1Sd+JSVd9+Mzr9Mt5HDMf0PyA+dlenVb/YfLLLDPgZKUmWaLB0tgE3rAUKeSvkzxWhZQRyBEz9YaUmL5BZbb5/nmsCcdVOCTshmV9OmB7Ma6jcK3/h9yU7J67ZcCak1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hHMboS82; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i/6yF+ds"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F59C32786;
-	Thu, 15 Aug 2024 13:40:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hHMboS82"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9976FC32786;
+	Thu, 15 Aug 2024 13:40:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723729215;
-	bh=7MweDqZkshe9Plotrs1ju4jUS58dUJHWJyFDD3CTals=;
+	s=korg; t=1723729219;
+	bh=+lkgELnGgAswoFj/MndNZq2Ps4Y91ktLxufGGIc7ODE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/6yF+dsNEyjXK5O1I0mGeUWEWqnmBtBYn1Q+ENLkPGAzbxm/+g3XN5HlComRoEvL
-	 7yKzqG9b9k3cgXf0ylmJg9uSL8VtUvhqLcT5Y6+QApDk6SCB8qiLHmUs9AGVHO7TTq
-	 RzPLPBw1tYOeo8UyFDmMbKMzGQkqkS3zKhaVfutQ=
+	b=hHMboS82TBRk8LiNcU7FYuIhoR25GkSm3b/waZB0aKFAXdNtM3sbTmGpBdSJh/Qy+
+	 A5enqBSeU90C+s4Nb642nwEiGljlnGRl88JmeZd62GfFGRdyS7em/NvRXg5RIxpdDL
+	 xN7fFMfBU2IOKNdepOmnzjEedF4kMluTnfNdsZNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <groeck@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Nitesh Shetty <nj.shetty@samsung.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/484] platform/chrome: cros_ec_debugfs: fix wrong EC message version
-Date: Thu, 15 Aug 2024 15:17:42 +0200
-Message-ID: <20240815131941.434099617@linuxfoundation.org>
+Subject: [PATCH 5.15 005/484] block: refactor to use helper
+Date: Thu, 15 Aug 2024 15:17:43 +0200
+Message-ID: <20240815131941.472296317@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131941.255804951@linuxfoundation.org>
 References: <20240815131941.255804951@linuxfoundation.org>
@@ -51,36 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: Nitesh Shetty <nj.shetty@samsung.com>
 
-[ Upstream commit c2a28647bbb4e0894e8824362410f72b06ac57a4 ]
+[ Upstream commit 8f63fef5867fb5e8c29d9c14b6d739bfc1869d32 ]
 
-ec_read_version_supported() uses ec_params_get_cmd_versions_v1 but it
-wrongly uses message version 0.
+Reduce some code by making use of bio_integrity_bytes().
 
-Fix it.
-
-Fixes: e86264595225 ("mfd: cros_ec: add debugfs, console log file")
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Link: https://lore.kernel.org/r/20240611113110.16955-1-tzungbi@kernel.org
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
+Signed-off-by: Nitesh Shetty <nj.shetty@samsung.com>
+Reviewed-by: "Martin K. Petersen" <martin.petersen@oracle.com>
+Link: https://lore.kernel.org/r/20230719121608.32105-1-nj.shetty@samsung.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 899ee2c3829c ("block: initialize integrity buffer to zero before writing it to media")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_debugfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/bio-integrity.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_debugfs.c b/drivers/platform/chrome/cros_ec_debugfs.c
-index 0dbceee87a4b1..2928c3cb37854 100644
---- a/drivers/platform/chrome/cros_ec_debugfs.c
-+++ b/drivers/platform/chrome/cros_ec_debugfs.c
-@@ -326,6 +326,7 @@ static int ec_read_version_supported(struct cros_ec_dev *ec)
- 	if (!msg)
- 		return 0;
+diff --git a/block/bio-integrity.c b/block/bio-integrity.c
+index 4f34ac27c47dd..a11c4cac269f1 100644
+--- a/block/bio-integrity.c
++++ b/block/bio-integrity.c
+@@ -203,7 +203,6 @@ bool bio_integrity_prep(struct bio *bio)
+ 	unsigned long start, end;
+ 	unsigned int len, nr_pages;
+ 	unsigned int bytes, offset, i;
+-	unsigned int intervals;
+ 	blk_status_t status;
  
-+	msg->version = 1;
- 	msg->command = EC_CMD_GET_CMD_VERSIONS + ec->cmd_offset;
- 	msg->outsize = sizeof(*params);
- 	msg->insize = sizeof(*response);
+ 	if (!bi)
+@@ -228,10 +227,9 @@ bool bio_integrity_prep(struct bio *bio)
+ 		    !(bi->flags & BLK_INTEGRITY_GENERATE))
+ 			return true;
+ 	}
+-	intervals = bio_integrity_intervals(bi, bio_sectors(bio));
+ 
+ 	/* Allocate kernel buffer for protection data */
+-	len = intervals * bi->tuple_size;
++	len = bio_integrity_bytes(bi, bio_sectors(bio));
+ 	buf = kmalloc(len, GFP_NOIO);
+ 	status = BLK_STS_RESOURCE;
+ 	if (unlikely(buf == NULL)) {
 -- 
 2.43.0
 
