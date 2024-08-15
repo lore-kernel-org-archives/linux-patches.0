@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3706119F473;
-	Thu, 15 Aug 2024 14:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9410C19F473;
+	Thu, 15 Aug 2024 14:06:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1723730810; cv=none; b=EXpHPGtcEhtoUNcw8ZtYrDKG9jTMlrrX0RxT7P4YjyxPZKdW5hlydyD3sjkAcIHzDWvvS+ZYLEk8jFnlrT6hbU0BkUVERdnkwPc8tUq6xQXnLBhz69I3Pvi/W1S+uuT77FC3F2AKOg/mlr4Z1QFSP+KvPjPXoDBDsn/c7Koe2qs=
+	t=1723730813; cv=none; b=tJErcPvigGjOGZW/ZceZEGsvVdC33zSc3bw3F9QNdzO+uS0xIa3YWAfQBQAoIYnvbTCmgLnvA8EjX2ZWpxm831P+cO1o7x7U77wWRlF/9RmG+kmooiCqgZdLRG6Db6Ur/TZiGks0U31mhn5rHgHY/qPWXH0uPR2QYEo731Fm6RU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1723730810; c=relaxed/simple;
-	bh=GAWNmtLWXjZYiBq850ZwAjYo0BPI1OypsiI894aOTKA=;
+	s=arc-20240116; t=1723730813; c=relaxed/simple;
+	bh=i7UNYnHnV9n+dH6qi8BfTR5yIxB4k2EbBInW++rTkP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ijObXs2g2eTViAJnYOELIRJtvGqhOc0PA5t4gP+pyosRPIG/K4nIfAhJaFNq/st2oGaQdfvx0cL7T0K1gciXWuklXx+MEIRfrzrHRadZrcM6TjdHceaXgy+T2TffndRWNq8rzF8xcv3AQgG99OdslvvzWlsyfFJkU5cFnoQCMwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MTCYaeX5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j3VfkWUDw/DR/z0WHdv21lJjtcWQzlo4KtT10YDGGiBYJtnx9w71YI/aeZ8S8bb9oYTaoK29iCCInf7MQR7PbkF5WZgTgDZV4NLjcSXQRswJvJK7RMZOL4WVW+lwcENSdE/W7f5sXZebVRTtPJnfEvBNcdH861s4qPew+UTr9FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qlurq4rq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MTCYaeX5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF919C4AF0A;
-	Thu, 15 Aug 2024 14:06:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qlurq4rq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE01AC4AF0A;
+	Thu, 15 Aug 2024 14:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1723730810;
-	bh=GAWNmtLWXjZYiBq850ZwAjYo0BPI1OypsiI894aOTKA=;
+	s=korg; t=1723730813;
+	bh=i7UNYnHnV9n+dH6qi8BfTR5yIxB4k2EbBInW++rTkP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTCYaeX5fC7ZbuKcTI5990m+Il0O4OEsRMFdVJ92zHWHja9LU6X48Cv0zngpi27SU
-	 LfdontvBk3XKKTv7KwpJe8FEAoQSJUub4ZwlYNY4y+EMsTRnSPCVlqDTIea3UHV3nS
-	 xlsqfxK4ehKC1yVHb7su6UJgWM9/rDkx8VRLqxgU=
+	b=Qlurq4rqJT8eSi8JxdHRwH2tLjSNZX4opP2sJiC636voOQ/yMiXLwP1Ib1nlyxel3
+	 BPrcHv9xjy7C5oia3RxH9A1QGI1aoN+U0FA/+DwrLGsEduCkMFSVGXz7AAZEBC+g9t
+	 X9nkHY1zFKJ2EZWTGwH8UD+sdTBNthtnPXEiQxX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 37/38] wifi: cfg80211: restrict NL80211_ATTR_TXQ_QUANTUM values
-Date: Thu, 15 Aug 2024 15:26:11 +0200
-Message-ID: <20240815131834.380356813@linuxfoundation.org>
+	Marco Vanotti <mvanotti@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>,
+	Kees Cook <kees@kernel.org>
+Subject: [PATCH 6.1 08/38] exec: Fix ToCToU between perm check and set-uid/gid usage
+Date: Thu, 15 Aug 2024 15:25:42 +0200
+Message-ID: <20240815131833.274695720@linuxfoundation.org>
 X-Mailer: git-send-email 2.46.0
 In-Reply-To: <20240815131832.944273699@linuxfoundation.org>
 References: <20240815131832.944273699@linuxfoundation.org>
@@ -51,119 +54,95 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit d1cba2ea8121e7fdbe1328cea782876b1dd80993 ]
+commit f50733b45d865f91db90919f8311e2127ce5a0cb upstream.
 
-syzbot is able to trigger softlockups, setting NL80211_ATTR_TXQ_QUANTUM
-to 2^31.
+When opening a file for exec via do_filp_open(), permission checking is
+done against the file's metadata at that moment, and on success, a file
+pointer is passed back. Much later in the execve() code path, the file
+metadata (specifically mode, uid, and gid) is used to determine if/how
+to set the uid and gid. However, those values may have changed since the
+permissions check, meaning the execution may gain unintended privileges.
 
-We had a similar issue in sch_fq, fixed with commit
-d9e15a273306 ("pkt_sched: fq: do not accept silly TCA_FQ_QUANTUM")
+For example, if a file could change permissions from executable and not
+set-id:
 
-watchdog: BUG: soft lockup - CPU#1 stuck for 26s! [kworker/1:0:24]
-Modules linked in:
-irq event stamp: 131135
- hardirqs last  enabled at (131134): [<ffff80008ae8778c>] __exit_to_kernel_mode arch/arm64/kernel/entry-common.c:85 [inline]
- hardirqs last  enabled at (131134): [<ffff80008ae8778c>] exit_to_kernel_mode+0xdc/0x10c arch/arm64/kernel/entry-common.c:95
- hardirqs last disabled at (131135): [<ffff80008ae85378>] __el1_irq arch/arm64/kernel/entry-common.c:533 [inline]
- hardirqs last disabled at (131135): [<ffff80008ae85378>] el1_interrupt+0x24/0x68 arch/arm64/kernel/entry-common.c:551
- softirqs last  enabled at (125892): [<ffff80008907e82c>] neigh_hh_init net/core/neighbour.c:1538 [inline]
- softirqs last  enabled at (125892): [<ffff80008907e82c>] neigh_resolve_output+0x268/0x658 net/core/neighbour.c:1553
- softirqs last disabled at (125896): [<ffff80008904166c>] local_bh_disable+0x10/0x34 include/linux/bottom_half.h:19
-CPU: 1 PID: 24 Comm: kworker/1:0 Not tainted 6.9.0-rc7-syzkaller-gfda5695d692c #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 03/27/2024
-Workqueue: mld mld_ifc_work
-pstate: 80400005 (Nzcv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __list_del include/linux/list.h:195 [inline]
- pc : __list_del_entry include/linux/list.h:218 [inline]
- pc : list_move_tail include/linux/list.h:310 [inline]
- pc : fq_tin_dequeue include/net/fq_impl.h:112 [inline]
- pc : ieee80211_tx_dequeue+0x6b8/0x3b4c net/mac80211/tx.c:3854
- lr : __list_del_entry include/linux/list.h:218 [inline]
- lr : list_move_tail include/linux/list.h:310 [inline]
- lr : fq_tin_dequeue include/net/fq_impl.h:112 [inline]
- lr : ieee80211_tx_dequeue+0x67c/0x3b4c net/mac80211/tx.c:3854
-sp : ffff800093d36700
-x29: ffff800093d36a60 x28: ffff800093d36960 x27: dfff800000000000
-x26: ffff0000d800ad50 x25: ffff0000d800abe0 x24: ffff0000d800abf0
-x23: ffff0000e0032468 x22: ffff0000e00324d4 x21: ffff0000d800abf0
-x20: ffff0000d800abf8 x19: ffff0000d800abf0 x18: ffff800093d363c0
-x17: 000000000000d476 x16: ffff8000805519dc x15: ffff7000127a6cc8
-x14: 1ffff000127a6cc8 x13: 0000000000000004 x12: ffffffffffffffff
-x11: ffff7000127a6cc8 x10: 0000000000ff0100 x9 : 0000000000000000
-x8 : 0000000000000000 x7 : 0000000000000000 x6 : 0000000000000000
-x5 : ffff80009287aa08 x4 : 0000000000000008 x3 : ffff80008034c7fc
-x2 : ffff0000e0032468 x1 : 00000000da0e46b8 x0 : ffff0000e0032470
-Call trace:
-  __list_del include/linux/list.h:195 [inline]
-  __list_del_entry include/linux/list.h:218 [inline]
-  list_move_tail include/linux/list.h:310 [inline]
-  fq_tin_dequeue include/net/fq_impl.h:112 [inline]
-  ieee80211_tx_dequeue+0x6b8/0x3b4c net/mac80211/tx.c:3854
-  wake_tx_push_queue net/mac80211/util.c:294 [inline]
-  ieee80211_handle_wake_tx_queue+0x118/0x274 net/mac80211/util.c:315
-  drv_wake_tx_queue net/mac80211/driver-ops.h:1350 [inline]
-  schedule_and_wake_txq net/mac80211/driver-ops.h:1357 [inline]
-  ieee80211_queue_skb+0x18e8/0x2244 net/mac80211/tx.c:1664
-  ieee80211_tx+0x260/0x400 net/mac80211/tx.c:1966
-  ieee80211_xmit+0x278/0x354 net/mac80211/tx.c:2062
-  __ieee80211_subif_start_xmit+0xab8/0x122c net/mac80211/tx.c:4338
-  ieee80211_subif_start_xmit+0xe0/0x438 net/mac80211/tx.c:4532
-  __netdev_start_xmit include/linux/netdevice.h:4903 [inline]
-  netdev_start_xmit include/linux/netdevice.h:4917 [inline]
-  xmit_one net/core/dev.c:3531 [inline]
-  dev_hard_start_xmit+0x27c/0x938 net/core/dev.c:3547
-  __dev_queue_xmit+0x1678/0x33fc net/core/dev.c:4341
-  dev_queue_xmit include/linux/netdevice.h:3091 [inline]
-  neigh_resolve_output+0x558/0x658 net/core/neighbour.c:1563
-  neigh_output include/net/neighbour.h:542 [inline]
-  ip6_finish_output2+0x104c/0x1ee8 net/ipv6/ip6_output.c:137
-  ip6_finish_output+0x428/0x7a0 net/ipv6/ip6_output.c:222
-  NF_HOOK_COND include/linux/netfilter.h:303 [inline]
-  ip6_output+0x270/0x594 net/ipv6/ip6_output.c:243
-  dst_output include/net/dst.h:450 [inline]
-  NF_HOOK+0x160/0x4f0 include/linux/netfilter.h:314
-  mld_sendpack+0x7b4/0x10f4 net/ipv6/mcast.c:1818
-  mld_send_cr net/ipv6/mcast.c:2119 [inline]
-  mld_ifc_work+0x840/0xd0c net/ipv6/mcast.c:2650
-  process_one_work+0x7b8/0x15d4 kernel/workqueue.c:3267
-  process_scheduled_works kernel/workqueue.c:3348 [inline]
-  worker_thread+0x938/0xef4 kernel/workqueue.c:3429
-  kthread+0x288/0x310 kernel/kthread.c:388
-  ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
+---------x 1 root root 16048 Aug  7 13:16 target
 
-Fixes: 52539ca89f36 ("cfg80211: Expose TXQ stats and parameters to userspace")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20240615160800.250667-1-edumazet@google.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+to set-id and non-executable:
+
+---S------ 1 root root 16048 Aug  7 13:16 target
+
+it is possible to gain root privileges when execution should have been
+disallowed.
+
+While this race condition is rare in real-world scenarios, it has been
+observed (and proven exploitable) when package managers are updating
+the setuid bits of installed programs. Such files start with being
+world-executable but then are adjusted to be group-exec with a set-uid
+bit. For example, "chmod o-x,u+s target" makes "target" executable only
+by uid "root" and gid "cdrom", while also becoming setuid-root:
+
+-rwxr-xr-x 1 root cdrom 16048 Aug  7 13:16 target
+
+becomes:
+
+-rwsr-xr-- 1 root cdrom 16048 Aug  7 13:16 target
+
+But racing the chmod means users without group "cdrom" membership can
+get the permission to execute "target" just before the chmod, and when
+the chmod finishes, the exec reaches brpm_fill_uid(), and performs the
+setuid to root, violating the expressed authorization of "only cdrom
+group members can setuid to root".
+
+Re-check that we still have execute permissions in case the metadata
+has changed. It would be better to keep a copy from the perm-check time,
+but until we can do that refactoring, the least-bad option is to do a
+full inode_permission() call (under inode lock). It is understood that
+this is safe against dead-locks, but hardly optimal.
+
+Reported-by: Marco Vanotti <mvanotti@google.com>
+Tested-by: Marco Vanotti <mvanotti@google.com>
+Suggested-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/nl80211.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/exec.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/net/wireless/nl80211.c
-+++ b/net/wireless/nl80211.c
-@@ -463,6 +463,10 @@ nl80211_sta_wme_policy[NL80211_STA_WME_M
- 	[NL80211_STA_WME_MAX_SP] = { .type = NLA_U8 },
- };
+--- a/fs/exec.c
++++ b/fs/exec.c
+@@ -1603,6 +1603,7 @@ static void bprm_fill_uid(struct linux_b
+ 	unsigned int mode;
+ 	kuid_t uid;
+ 	kgid_t gid;
++	int err;
  
-+static struct netlink_range_validation q_range = {
-+	.max = INT_MAX,
-+};
+ 	if (!mnt_may_suid(file->f_path.mnt))
+ 		return;
+@@ -1619,12 +1620,17 @@ static void bprm_fill_uid(struct linux_b
+ 	/* Be careful if suid/sgid is set */
+ 	inode_lock(inode);
+ 
+-	/* reload atomically mode/uid/gid now that lock held */
++	/* Atomically reload and check mode/uid/gid now that lock held. */
+ 	mode = inode->i_mode;
+ 	uid = i_uid_into_mnt(mnt_userns, inode);
+ 	gid = i_gid_into_mnt(mnt_userns, inode);
++	err = inode_permission(mnt_userns, inode, MAY_EXEC);
+ 	inode_unlock(inode);
+ 
++	/* Did the exec bit vanish out from under us? Give up. */
++	if (err)
++		return;
 +
- static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
- 	[0] = { .strict_start_type = NL80211_ATTR_HE_OBSS_PD },
- 	[NL80211_ATTR_WIPHY] = { .type = NLA_U32 },
-@@ -745,7 +749,7 @@ static const struct nla_policy nl80211_p
- 
- 	[NL80211_ATTR_TXQ_LIMIT] = { .type = NLA_U32 },
- 	[NL80211_ATTR_TXQ_MEMORY_LIMIT] = { .type = NLA_U32 },
--	[NL80211_ATTR_TXQ_QUANTUM] = { .type = NLA_U32 },
-+	[NL80211_ATTR_TXQ_QUANTUM] = NLA_POLICY_FULL_RANGE(NLA_U32, &q_range),
- 	[NL80211_ATTR_HE_CAPABILITY] =
- 		NLA_POLICY_VALIDATE_FN(NLA_BINARY, validate_he_capa,
- 				       NL80211_HE_MAX_CAPABILITY_LEN),
+ 	/* We ignore suid/sgid if there are no mappings for them in the ns */
+ 	if (!kuid_has_mapping(bprm->cred->user_ns, uid) ||
+ 		 !kgid_has_mapping(bprm->cred->user_ns, gid))
 
 
